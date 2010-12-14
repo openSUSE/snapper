@@ -1,0 +1,9 @@
+#
+To setup a new build tree:
+
+  mkdir BUILD_DIR
+  cd    BUILD_DIR
+  cmake SOURCE_DIR
+
+If you want the BUILD_DIR being located inside the sourcetree, use
+'BUILD' as directory name. This name is ignored by git (via .gitignore).
