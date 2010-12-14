@@ -1,5 +1,6 @@
 PROJECT(SNAPPER)
 SET( PACKAGE "snapper" )
+SET( LIBSNAP_PACKAGE "libsnap" )
 SET( CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules )
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
@@ -66,13 +67,14 @@ ENDIF ( NOT DOXYGEN )
 MESSAGE(STATUS "soname: ${LIBSNAP_VERSION_INFO}")
 MESSAGE(STATUS "version: ${VERSION}")
 
-#MESSAGE(STATUS "Writing pkg-config file...")
-#CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/libzypp.pc.cmake ${CMAKE_BINARY_DIR}/libzypp.pc @ONLY)
-#INSTALL( FILES ${CMAKE_BINARY_DIR}/libzypp.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig )
+SPECFILE()
 
-#MESSAGE(STATUS "FindZypp.cmake will be installed in ${CMAKE_INSTALL_PREFIX}/share/cmake/Modules")
-#INSTALL( FILES ${CMAKE_SOURCE_DIR}/cmake/modules/FindZypp.cmake DESTINATION ${CMAKE_INSTALL_PREFIX}/share/cmake/Modules )
-#INSTALL( FILES ${CMAKE_SOURCE_DIR}/cmake/modules/ZyppCommon.cmake DESTINATION ${CMAKE_INSTALL_PREFIX}/share/cmake/Modules )
+MESSAGE(STATUS "Writing pkg-config file...")
+CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/package/${LIBSNAP_PACKAGE}.pc.cmake ${CMAKE_BINARY_DIR}/${LIBSNAP_PACKAGE}.pc @ONLY)
+INSTALL( FILES ${CMAKE_BINARY_DIR}/${LIBSNAP_PACKAGE}.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig )
+
+MESSAGE(STATUS "FindSnap.cmake will be installed in ${CMAKE_INSTALL_PREFIX}/share/cmake/Modules")
+INSTALL( FILES ${CMAKE_SOURCE_DIR}/cmake/modules/FindSnap.cmake DESTINATION ${CMAKE_INSTALL_PREFIX}/share/cmake/Modules )
 
 ####################################################################
 # SUBDIRECTORIES                                                   #

@@ -1,4 +1,18 @@
 #
+Suggested directory layout:
+
+  ./cmake
+  ./cmake/modules	common cmake modules
+  ./doc			common documentation
+  ./doc/autodoc		libsnap docs created by doxygen
+  ./doc/autoinclude	additional pages merged into autodoc
+  ./examples		Example code
+  ./package		BUID: specfile, tarball and changes file
+  ./snap		libsnap sourcecode
+  ./snapper		snapper sourcecode
+  ./tests		testsuite
+
+#
 To setup a new build tree:
 
   mkdir BUILD_DIR

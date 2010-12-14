@@ -8,7 +8,7 @@ ELSE ( NOT DOT )
    SET( HAVE_DOT YES )
 ENDIF ( NOT DOT )
 
-SET( SNAPDOC_PACKAGE        libsnap )
+SET( SNAPDOC_PACKAGE        ${LIBSNAP_PACKAGE} )
 SET( SNAPDOC_VERSION        ${LIBSNAP_VERSION} )
 SET( SNAPDOC_SOURCE_DIR     ${CMAKE_SOURCE_DIR}/snap )
 SET( SNAPDOC_DOCINCLUDE_DIR ${CMAKE_SOURCE_DIR}/doc/autoinclude )
@@ -24,7 +24,7 @@ CONFIGURE_FILE(
    ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.cmake
    ${DOXYGEN_INPUT}
    @ONLY
-   )
+)
 
 ### ##################################################
 
@@ -40,7 +40,7 @@ ADD_CUSTOM_COMMAND (
 ADD_CUSTOM_TARGET( doc ALL
    DEPENDS ${DOXYGEN_OUTPUT}
 )
-ADD_DEPENDENCIES(doc zypp)
+ADD_DEPENDENCIES(doc snap)
 
 ADD_CUSTOM_TARGET( doc_forced
    COMMAND ${CMAKE_COMMAND} -E echo_append "Building Documentation..."
@@ -54,14 +54,14 @@ ADD_CUSTOM_TARGET( doc_forced
 
 INSTALL( FILES
    ${CMAKE_CURRENT_BINARY_DIR}/libsnap.doxytag
-   DESTINATION ${DOC_INSTALL_DIR}/libzypp/libsnap.doxytag
+   DESTINATION ${DOC_INSTALL_DIR}/${LIBSNAP_PACKAGE}/libsnap.doxytag
 )
 
 # We could use the thing below but it wont work with cmake older than 2.4.4
 FILE(GLOB docfiles ${CMAKE_CURRENT_BINARY_DIR}/html/*)
 INSTALL( FILES
    ${docfiles}
-   DESTINATION ${DOC_INSTALL_DIR}/libzypp/html
+   DESTINATION ${DOC_INSTALL_DIR}/${LIBSNAP_PACKAGE}/html
 )
 
 #INSTALL( DIRECTORY

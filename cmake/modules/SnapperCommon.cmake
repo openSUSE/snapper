@@ -60,7 +60,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_SOURCE_DIR} ${CMAKE_CUR
 
 MACRO(SPECFILE)
   MESSAGE(STATUS "Writing spec file...")
-  CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/${PACKAGE}.spec.cmake ${CMAKE_BINARY_DIR}/package/${PACKAGE}.spec @ONLY)
+  CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/package/${PACKAGE}.spec.cmake ${CMAKE_BINARY_DIR}/package/${PACKAGE}.spec @ONLY)
   MESSAGE(STATUS "I hate you rpm-lint...!!!")
   IF (EXISTS ${CMAKE_SOURCE_DIR}/package/${PACKAGE}-rpmlint.cmake)
     CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/package/${PACKAGE}-rpmlint.cmake ${CMAKE_BINARY_DIR}/package/${PACKAGE}-rpmlintrc @ONLY)
