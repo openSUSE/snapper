@@ -26,8 +26,9 @@ set( CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O3" )
 ADD_DEFINITIONS( -D_FILE_OFFSET_BITS=64 )
 
 ####################################################################
+# make package based on git archive
 
-#INCLUDE(CPack)
+GENERATE_PACKAGING(${PACKAGE} ${VERSION})
 #INCLUDE(CTest)
 #ENABLE_TESTING()
 

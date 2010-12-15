@@ -72,3 +72,28 @@ MACRO(PKGCONFGFILE)
   CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/lib${PACKAGE}.pc.cmake ${CMAKE_BINARY_DIR}/lib${PACKAGE}.pc @ONLY)
   INSTALL( FILES ${CMAKE_BINARY_DIR}/lib${PACKAGE}.pc DESTINATION ${LIB_INSTALL_DIR}/pkgconfig )
 ENDMACRO(PKGCONFGFILE)
+
+####################################################################
+# make package                                                          #
+####################################################################
+
+MACRO(GENERATE_PACKAGING PACKAGE VERSION)
+
+  SPECFILE()
+
+  ADD_CUSTOM_TARGET( svncheck
+    # git ls-files -t -d -m
+    COMMAND cd $(CMAKE_SOURCE_DIR) && LC_ALL=C git status || true
+    #| grep -q "nothing to commit .working directory clean."
+  )
+
+  SET( AUTOBUILD_COMMAND
+    COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_BINARY_DIR}/package/*.tar.bz2
+    COMMAND cd $(CMAKE_SOURCE_DIR) && git archive --format=tar --prefix="${PACKAGE}-${VERSION}/" HEAD | bzip2 -9 > ${CMAKE_BINARY_DIR}/package/"${PACKAGE}-${VERSION}".tar.bz2
+  )
+
+  ADD_CUSTOM_TARGET( package
+    COMMAND ${CMAKE_MAKE_PROGRAM} svncheck
+    ${AUTOBUILD_COMMAND}
+  )
+ENDMACRO(GENERATE_PACKAGING)
