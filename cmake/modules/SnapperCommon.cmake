@@ -89,6 +89,7 @@ MACRO(GENERATE_PACKAGING PACKAGE VERSION)
 
   SET( AUTOBUILD_COMMAND
     COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_BINARY_DIR}/package/*.tar.bz2
+    COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_SOURCE_DIR}/package/${PACKAGE}.changes" "${CMAKE_BINARY_DIR}/package/${PACKAGE}.changes"
     COMMAND cd $(CMAKE_SOURCE_DIR) && git archive --format=tar --prefix="${PACKAGE}-${VERSION}/" HEAD | bzip2 -9 > ${CMAKE_BINARY_DIR}/package/"${PACKAGE}-${VERSION}".tar.bz2
   )
 
