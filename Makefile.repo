@@ -1,0 +1,20 @@
+#
+# Makefile.repo for libsnapper
+#
+
+configure: all
+	./configure
+
+all:
+	aclocal
+	autoconf
+	autoheader
+	autoreconf --force --install
+
+install: configure
+	make
+	make install
+
+reconf: all
+	./config.status --recheck
+	./config.status

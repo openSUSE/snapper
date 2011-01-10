@@ -1,0 +1,33 @@
+
+PROGRAMS = TestDisk TestDiskLog TestProbing TestLvm TestMd TestLoop		\
+	 SaveGraph ShowBytes
+
+all: $(PROGRAMS)
+
+TestDisk: TestDisk.cc
+	g++ $< -o $@ -Wall -O2 -lstorage
+
+TestDiskLog: TestDiskLog.cc
+	g++ $< -o $@ -Wall -O2 -lstorage
+
+TestProbing: TestProbing.cc
+	g++ $< -o $@ -Wall -O2 -lstorage
+
+TestLvm: TestLvm.cc
+	g++ $< -o $@ -Wall -O2 -lstorage
+
+TestMd: TestMd.cc
+	g++ $< -o $@ -Wall -O2 -lstorage
+
+TestLoop: TestLoop.cc
+	g++ $< -o $@ -Wall -O2 -lstorage
+
+SaveGraph: SaveGraph.cc
+	g++ $< -o $@ -Wall -O2 -lstorage
+
+ShowBytes: ShowBytes.cc
+	g++ $< -o $@ -Wall -O2 -lstorage
+
+clean:
+	rm $(PROGRAMS)
+

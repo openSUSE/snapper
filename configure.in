@@ -1,0 +1,36 @@
+
+AC_INIT(snapper/Snapper.h)
+
+VERSION=`cat ./VERSION`
+
+AM_INIT_AUTOMAKE(snapper, $VERSION)
+AM_CONFIG_HEADER(config.h)
+
+AC_DISABLE_STATIC
+
+AC_PROG_CXX
+AC_PROG_LIBTOOL
+AM_PROG_LIBTOOL
+
+AC_PREFIX_DEFAULT(/usr)
+
+dnl Automake 1.11 enables silent compilation
+dnl Disable it by "configure --disable-silent-rules" or "make V=1"
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+
+CFLAGS="${CFLAGS} -Wall -Wformat=2 -Wmissing-prototypes"
+CXXFLAGS="${CXXFLAGS} -std=c++0x -DHAVE_CXX0X -Wall -Wextra -Wformat=2 -Wnon-virtual-dtor -Wno-unused-parameter"
+
+docdir=\${prefix}/share/doc/packages/snapper
+fillupdir=/var/adm/fillup-templates
+
+AC_SUBST(VERSION)
+AC_SUBST(docdir)
+AC_SUBST(fillupdir)
+
+AC_OUTPUT(
+	Makefile
+	snapper/Makefile
+	examples/Makefile
+	package/snapper.spec:snapper.spec.in
+)
