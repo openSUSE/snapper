@@ -43,9 +43,11 @@ namespace snapper
     {
     public:
 
-	Snapshot() : type(SINGLE), pre_num(0) {}
+	Snapshot() : type(SINGLE), num(0), pre_num(0) {}
 
 	SnapshotType type;
+
+	unsigned int num;
 
 	string date;
 
@@ -56,7 +58,9 @@ namespace snapper
     };
 
 
-    const map<unsigned int, Snapshot>& getSnapshots();
+    bool getSnapshot(unsigned int num, Snapshot& snapshot);
+
+    const list<Snapshot>& getSnapshots();
 
     void listSnapshots();	// only for testing
 
@@ -66,6 +70,49 @@ namespace snapper
     unsigned int createPreSnapshot(string description);
 
     unsigned int createPostSnapshot(unsigned int pre_num);
+
+
+
+    enum StatusFlags
+    {
+	CREATED = 1, DELETED = 2, TYPE = 4, CONTENT = 8, PERMISSIONS = 16, OWNER = 32
+    };
+
+    enum Cmp
+    {
+	CMP_PRE_TO_POST, CMP_PRE_TO_SYSTEM, CMP_POST_TO_SYSTEM
+    };
+
+    enum Location
+    {
+	LOC_PRE, LOC_POST, LOC_SYSTEM
+    };
+
+
+    // use num = 0 for system
+
+    bool setComparisonNums(unsigned int num1, unsigned int num2);
+
+    unsigned int getComparisonNum1();
+    unsigned int getComparisonNum2();
+
+    const list<string>& getFiles();
+
+    // return bitfield of StatusFlags
+    unsigned int getStatus(const string& file, Cmp cmp);
+
+    string getAbsolutePath(const string& file, Location loc);
+
+    void setRollback(const string& file, bool rollback);
+    bool getRollback(const string& file);
+
+    // check rollback? (e.g. to be deleted dirs are empty, required type changes)
+    bool checkRollback();
+
+    bool doRollback();
+
+
+    // progress callbacks, e.g. during snapshot comparision
 
 }
 

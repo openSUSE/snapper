@@ -34,7 +34,26 @@ namespace snapper
 
     extern bool initialized;
 
-    extern map<unsigned int, Snapshot> snapshots;
+
+    extern list<Snapshot> snapshots;
+
+
+    extern Snapshot& snapshot1;
+    extern Snapshot& snapshot2;
+
+    extern list<string> files;
+
+
+    struct Statuses
+    {
+	unsigned int pre_to_post;
+	unsigned int pre_to_system;
+	unsigned int post_to_system;
+    };
+
+    extern map<string, Statuses> statuses;
+
+    extern list<string> files_to_rollback;
 
 };
 

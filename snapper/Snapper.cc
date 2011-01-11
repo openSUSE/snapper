@@ -38,20 +38,32 @@ namespace snapper
 
     bool initialized = false;
 
-    map<unsigned int, Snapshot> snapshots;
+    list<Snapshot> snapshots;
+
+
+    Snapshot& snapshot1;
+    Snapshot& snapshot2;
 
 
     std::ostream& operator<<(std::ostream& s, const Snapshot& x)
     {
-	s << "type:" << toString(x.type) << " date:" << x.date;
-
-	if (!x.description.empty())
-	    s << " description:" << x.description;
+	s << "type:" << toString(x.type) << " num:" << x.num;
 
 	if (x.pre_num != 0)
 	    s << " pre-num:" << x.pre_num;
 
+	s << " date:" << x.date;
+
+	if (!x.description.empty())
+	    s << " description:" << x.description;
+
 	return s;
+    }
+
+
+    bool operator<(Snapshot a, Snapshot b)
+    {
+	return a.num < b.num;
     }
 
 
@@ -79,14 +91,19 @@ namespace snapper
 		}
 	    }
 
+	    getChildValue(node, "num", snapshot.num);
+	    assert(num == snapshot.num);
+
 	    getChildValue(node, "date", snapshot.date);
 
 	    getChildValue(node, "description", snapshot.description);
 
 	    getChildValue(node, "pre_num", snapshot.pre_num);
 
-	    snapshots[num] = snapshot;
+	    snapshots.push_back(snapshot);
 	}
+
+	snapshots.sort();
     }
 
 
@@ -107,7 +124,26 @@ namespace snapper
     }
 
 
-    const map<unsigned int, Snapshot>&
+    bool
+    getSnapshot(unsigned int num, Snapshot& snapshot)
+    {
+	assertInit();
+
+	for (list<Snapshot>::const_iterator it = snapshots.begin();
+	     it != snapshots.end(); ++it)
+	{
+	    if (it->num == num)
+	    {
+		snapshot = *it;
+		return true;
+	    }
+	}
+
+	return false;
+    }
+
+
+    const list<Snapshot>&
     getSnapshots()
     {
 	assertInit();
@@ -121,10 +157,10 @@ namespace snapper
     {
 	assertInit();
 
-	for (map<unsigned int, Snapshot>::const_iterator it = snapshots.begin();
+	for (list<Snapshot>::const_iterator it = snapshots.begin();
 	     it != snapshots.end(); ++it)
 	{
-	    cout << it->first << " " << it->second << endl;
+	    cout << *it << endl;
 	}
     }
 
@@ -137,22 +173,24 @@ namespace snapper
 	unsigned int num = 1;
 
 	if (!snapshots.empty())
-	    num = snapshots.rbegin()->first + 1;
+	    num = snapshots.rbegin()->num + 1;
 
 	return num;
     }
 
 
     bool
-    writeInfo(unsigned int num, const Snapshot& snapshot)
+    writeInfo(const Snapshot& snapshot)
     {
-	createPath("/snapshots/" + decString(num));
+	createPath("/snapshots/" + decString(snapshot.num));
 
 	XmlFile xml;
 	xmlNode* node = xmlNewNode("snapshot");
 	xml.setRootElement(node);
 
 	setChildValue(node, "type", toString(snapshot.type));
+
+	setChildValue(node, "num", snapshot.num);
 
 	setChildValue(node, "date", snapshot.date);
 
@@ -162,7 +200,7 @@ namespace snapper
 	if (snapshot.type == POST)
 	    setChildValue(node, "pre_num", snapshot.pre_num);
 
-	xml.save("/snapshots/" + decString(num) + "/snapshot.info");
+	xml.save("/snapshots/" + decString(snapshot.num) + "/snapshot.info");
 
 	return true;
     }
@@ -173,13 +211,14 @@ namespace snapper
     {
 	Snapshot snapshot;
 	snapshot.type = SINGLE;
+	snapshot.num = nextSnapshotNumber();
 	snapshot.date = datetime();
 	snapshot.description = description;
 
-	unsigned int num = nextSnapshotNumber();
-	snapshots[num] = snapshot;
-	writeInfo(num, snapshot);
-	return num;
+	snapshots.push_back(snapshot);
+	writeInfo(snapshot);
+
+	return snapshot.num;
     }
 
 
@@ -188,13 +227,14 @@ namespace snapper
     {
 	Snapshot snapshot;
 	snapshot.type = PRE;
+	snapshot.num = nextSnapshotNumber();
 	snapshot.date = datetime();
 	snapshot.description = description;
 
-	unsigned int num = nextSnapshotNumber();
-	snapshots[num] = snapshot;
-	writeInfo(num, snapshot);
-	return num;
+	snapshots.push_back(snapshot);
+	writeInfo(snapshot);
+
+	return snapshot.num;
     }
 
 
@@ -203,13 +243,33 @@ namespace snapper
     {
 	Snapshot snapshot;
 	snapshot.type = POST;
+	snapshot.num = nextSnapshotNumber();
 	snapshot.date = datetime();
 	snapshot.pre_num = pre_num;
 
-	unsigned int num = nextSnapshotNumber();
-	snapshots[num] = snapshot;
-	writeInfo(num, snapshot);
-	return num;
+	snapshots.push_back(snapshot);
+	writeInfo(snapshot);
+
+	return snapshot.num;
+    }
+
+
+
+    bool
+    setComparisonNums(unsigned int num1, unsigned int num2)
+    {
+	if (num1 == 0 || !getSnapshot(num1, snapshot1))
+	    return false;
+
+	if (num2 != 0 && !getSnapshot(num2, snapshot2))
+	    return false;
+
+	if (snapshot1.num != snapshot2.pre_num)
+	    return false;
+
+	// load or generate file list
+
+	return true;
     }
 
 }
