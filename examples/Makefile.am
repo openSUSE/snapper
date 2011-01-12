@@ -1,20 +1,22 @@
 #
-# Makefile.am for libsnapper/examples
+# Makefile.am for snapper/examples
 #
 
 INCLUDES = -I$(top_srcdir)
 
 LDADD = ../snapper/libsnapper.la
 
-noinst_PROGRAMS = List Create
+noinst_PROGRAMS = List Create CmpDirs
 
 List_SOURCES = List.cc
 
 Create_SOURCES = Create.cc
 
+CmpDirs_SOURCES = CmpDirs.cc
+
 exampledir = $(docdir)/examples
 
-example_DATA = List.cc Create.cc
+example_DATA = List.cc Create.cc CmpDirs.cc
 
 EXTRA_DIST = $(example_DATA) Makefile.example
 

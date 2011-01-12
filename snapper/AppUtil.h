@@ -48,6 +48,8 @@ bool setStatMode(const string& Path_Cv, mode_t val );
 
     list<string> glob(const string& path, int flags);
 
+    bool readlink(const string& path, string& buf);
+
 template<class StreamType>
 void classic(StreamType& stream)
 {
