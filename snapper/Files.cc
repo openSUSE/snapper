@@ -328,25 +328,21 @@ namespace snapper
 	{
 	    if (first1 == last1)
 	    {
-		assert(*first1 != *first2);
 		lonesome(base_path2, path, *first2, CREATED, cb);
 		++first2;
 	    }
 	    else if (first2 == last2)
 	    {
-		assert(*first1 != *first2);
 		lonesome(base_path1, path, *first1, DELETED, cb);
 		++first1;
 	    }
 	    else if (*first2 < *first1)
 	    {
-		assert(*first1 != *first2);
 		lonesome(base_path2, path, *first2, CREATED, cb);
 		++first2;
 	    }
 	    else if (*first1 < *first2)
 	    {
-		assert(*first1 != *first2);
 		lonesome(base_path1, path, *first1, DELETED, cb);
 		++first1;
 	    }
