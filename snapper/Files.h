@@ -42,6 +42,9 @@ namespace snapper
     string
     statusToString(unsigned int status);
 
+    unsigned int
+    stringToStatus(const string& str);
+
 }
 
 

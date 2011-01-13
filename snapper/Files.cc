@@ -378,8 +378,10 @@ namespace snapper
 	y2mil("path1:" << path1 << " path2:" << path2);
 
 	CmpData cmp_data;
+
 	cmp_data.base_path1 = path1;
 	cmp_data.base_path2 = path2;
+
 	cmp_data.cb = cb;
 
 	struct stat stat1;
@@ -417,6 +419,46 @@ namespace snapper
 	ret += status & PERMISSIONS ? "p" : ".";
 	ret += status & USER ? "u" : ".";
 	ret += status & GROUP ? "g" : ".";
+
+	return ret;
+    }
+
+
+    unsigned int
+    stringToStatus(const string& str)
+    {
+	unsigned int ret = 0;
+
+	assert(str.length() == 4);
+
+	if (str.length() >= 1)
+	{
+	    switch (str[0])
+	    {
+		case '+': ret |= CREATED; break;
+		case '-': ret |= DELETED; break;
+		case 't': ret |= TYPE; break;
+		case 'c': ret |= CONTENT; break;
+	    }
+	}
+
+	if (str.length() >= 2)
+	{
+	    if (str[1] == 'p')
+		ret |= PERMISSIONS;
+	}
+
+	if (str.length() >= 3)
+	{
+	    if (str[2] == 'u')
+		ret |= USER;
+	}
+
+	if (str.length() >= 4)
+	{
+	    if (str[3] == 'g')
+		ret |= GROUP;
+	}
 
 	return ret;
     }
