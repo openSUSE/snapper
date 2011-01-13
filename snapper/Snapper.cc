@@ -29,6 +29,8 @@
 #include "snapper/XmlFile.h"
 #include "snapper/Enum.h"
 #include "snapper/SnapperTmpl.h"
+#include "snapper/SystemCmd.h"
+#include "snapper/SnapperDefines.h"
 
 
 namespace snapper
@@ -70,7 +72,7 @@ namespace snapper
     void
     readSnapshots()
     {
-	list<string> infos = glob("/snapshots/*/snapshot.info", GLOB_NOSORT);
+	list<string> infos = glob(SNAPSHOTSDIR "/*/snapshot.info", GLOB_NOSORT);
 	for (list<string>::const_iterator it = infos.begin(); it != infos.end(); ++it)
 	{
 	    unsigned int num;
@@ -182,7 +184,7 @@ namespace snapper
     bool
     writeInfo(const Snapshot& snapshot)
     {
-	createPath("/snapshots/" + decString(snapshot.num));
+	createPath(SNAPSHOTSDIR "/" + decString(snapshot.num));
 
 	XmlFile xml;
 	xmlNode* node = xmlNewNode("snapshot");
@@ -200,9 +202,19 @@ namespace snapper
 	if (snapshot.type == POST)
 	    setChildValue(node, "pre_num", snapshot.pre_num);
 
-	xml.save("/snapshots/" + decString(snapshot.num) + "/snapshot.info");
+	xml.save(SNAPSHOTSDIR "/" + decString(snapshot.num) + "/snapshot.info");
 
 	return true;
+    }
+
+
+    bool
+    createBtrfsSnapshot(const Snapshot& snapshot)
+    {
+	string dest = SNAPSHOTSDIR "/" + decString(snapshot.num) + "/snapshot";
+
+	SystemCmd cmd(BTRFSBIN " subvolume snapshot / " + dest);
+	return cmd.retcode() == 0;
     }
 
 
@@ -217,6 +229,7 @@ namespace snapper
 
 	snapshots.push_back(snapshot);
 	writeInfo(snapshot);
+	createBtrfsSnapshot(snapshot);
 
 	return snapshot.num;
     }
@@ -233,6 +246,7 @@ namespace snapper
 
 	snapshots.push_back(snapshot);
 	writeInfo(snapshot);
+	createBtrfsSnapshot(snapshot);
 
 	return snapshot.num;
     }
@@ -249,6 +263,7 @@ namespace snapper
 
 	snapshots.push_back(snapshot);
 	writeInfo(snapshot);
+	createBtrfsSnapshot(snapshot);
 
 	return snapshot.num;
     }
