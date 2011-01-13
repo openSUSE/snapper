@@ -69,12 +69,36 @@ void showDifference( const list<string>& args )
     unsigned n2 = 0;
     list<string>::const_iterator s = args.begin();
     if( s!=args.end() )
+	{
 	if( *s != "CURRENT" )
-	    *s++ >> n1;
+	    *s >> n1;
+	++s;
+	}
     if( s!=args.end() )
+	{
 	if( *s != "CURRENT" )
-	    *s++ >> n2;
+	    *s >> n2;
+	++s;
+	}
     y2mil( "n1:" << n1 << " n2:" << n2 );
+    Snapshot sn;
+    bool ok = true;
+    if( n1>0 && !getSnapshot( n1, sn ))
+	{
+	cerr << "No snapshot with number " << n1 << endl;
+	ok = false;
+	}
+    if( n2>0 && !getSnapshot( n2, sn ))
+	{
+	cerr << "No snapshot with number " << n2 << endl;
+	ok = false;
+	}
+    if( ok )
+	{
+	string p1 = (n1==0) ? "/" : "/snapshots/" + decString(n1);
+	string p2 = (n2==0) ? "/" : "/snapshots/" + decString(n2);
+	y2mil( "p1:" << p1 << " p2:" << p2 );
+	}
     }
 
 int
@@ -104,7 +128,7 @@ main(int argc, char** argv)
     cmds["list"] = listSnap;
     cmds["help"] = showHelp;
     cmds["create"] = createSnap;
-    cmds["show"] = showDifference;
+    cmds["diff"] = showDifference;
 
     for( int i=0; i<argc; i++ )
 	args.push_back(argv[i]);
