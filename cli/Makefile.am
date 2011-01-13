@@ -6,7 +6,7 @@ INCLUDES = -I$(top_srcdir)
 
 LDADD = ../snapper/libsnapper.la
 
-bin_PROGRAMS = snapper_cl
+bin_PROGRAMS = snapper
 
-snapper_cl_SOURCES = cli.cc
+snapper_SOURCES = cli.cc
 
