@@ -13,7 +13,8 @@ libsnapper_la_SOURCES =					\
 	Enum.cc			Enum.h			\
 	AppUtil.cc		AppUtil.h		\
 	Files.cc		Files.h			\
-	SnapperTmpl.h
+	SystemCmd.cc		SystemCmd.h		\
+	SnapperTmpl.h		SnapperDefines.h
 
 libsnapper_la_LDFLAGS = -version-info 2:0
 libsnapper_la_LIBADD = -lblocxx -lxml2
