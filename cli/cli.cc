@@ -6,6 +6,7 @@
 #include <snapper/Snapper.h>
 #include <snapper/AppUtil.h>
 #include <snapper/SnapperTmpl.h>
+#include <snapper/Files.h>
 
 using namespace snapper;
 using namespace std;
@@ -81,24 +82,11 @@ void showDifference( const list<string>& args )
 	++s;
 	}
     y2mil( "n1:" << n1 << " n2:" << n2 );
-    Snapshot sn;
-    bool ok = true;
-    if( n1>0 && !getSnapshot( n1, sn ))
-	{
-	cerr << "No snapshot with number " << n1 << endl;
-	ok = false;
-	}
-    if( n2>0 && !getSnapshot( n2, sn ))
-	{
-	cerr << "No snapshot with number " << n2 << endl;
-	ok = false;
-	}
-    if( ok )
-	{
-	string p1 = (n1==0) ? "/" : "/snapshots/" + decString(n1);
-	string p2 = (n2==0) ? "/" : "/snapshots/" + decString(n2);
-	y2mil( "p1:" << p1 << " p2:" << p2 );
-	}
+
+    setComparisonNums(n1, n2);
+    const list<string>& files = getFiles();
+    for (list<string>::const_iterator it = files.begin(); it != files.end(); ++it)
+	cout << statusToString(getStatus(*it, CMP_PRE_TO_POST)) << " " << *it << endl;
     }
 
 int

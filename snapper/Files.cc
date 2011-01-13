@@ -361,6 +361,7 @@ namespace snapper
     cmpDirs(const string& path1, const string& path2, void(*cb)(const string& name,
 								unsigned int status))
     {
+	y2mil("path1:" << path1 << " path2:" << path2);
 	cmpDirsWorker(path1, path2, "", cb);
     }
 

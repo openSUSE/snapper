@@ -31,6 +31,7 @@
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
+#include "snapper/Files.h"
 
 
 namespace snapper
@@ -43,8 +44,17 @@ namespace snapper
     list<Snapshot> snapshots;
 
 
-    Snapshot& snapshot1;
-    Snapshot& snapshot2;
+    Snapshot snapshot1;
+    Snapshot snapshot2;
+
+
+    bool files_loaded = false;
+
+    list<string> files;
+
+    map<string, unsigned int> pre_to_post_status;
+    map<string, unsigned int> pre_to_system_status;
+    map<string, unsigned int> post_to_system_status;
 
 
     std::ostream& operator<<(std::ostream& s, const Snapshot& x)
@@ -269,7 +279,6 @@ namespace snapper
     }
 
 
-
     bool
     setComparisonNums(unsigned int num1, unsigned int num2)
     {
@@ -282,9 +291,49 @@ namespace snapper
 	if (snapshot1.num != snapshot2.pre_num)
 	    return false;
 
-	// load or generate file list
-
 	return true;
+    }
+
+
+    void
+    log(const string& file, unsigned int status)
+    {
+	files.push_back(file);
+	pre_to_post_status[file] = status;
+    }
+
+
+    void
+    compareBtrfsSnapshots()
+    {
+	string dir1 = SNAPSHOTSDIR "/" + decString(snapshot1.num) + "/snapshot";
+	string dir2 = SNAPSHOTSDIR "/" + decString(snapshot2.num) + "/snapshot";
+
+	files.clear();
+	pre_to_post_status.clear();
+
+	cmpDirs(dir1, dir2, log);
+    }
+
+
+    const list<string>&
+    getFiles()
+    {
+	if (!files_loaded)
+	{
+	    compareBtrfsSnapshots();
+
+	    files_loaded = true;
+	}
+
+	return files;
+    }
+
+
+    unsigned int
+    getStatus(const string& file, Cmp cmp)
+    {
+	return pre_to_post_status[file];
     }
 
 }
