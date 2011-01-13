@@ -255,9 +255,20 @@ namespace snapper
     }
 
 
+    struct CmpData
+    {
+	string base_path1;
+	string base_path2;
+
+	dev_t dev1;
+	dev_t dev2;
+
+	void(*cb)(const string& name, unsigned int status);
+    };
+
+
     void
-    cmpDirsWorker(const string& base_path1, const string& base_path2, const string& path,
-		  void(*cb)(const string& name, unsigned int status));
+    cmpDirsWorker(const CmpData& cmp_data, const string& path);
 
 
     void
@@ -276,51 +287,54 @@ namespace snapper
 
 
     void
-    twosome(const string& base_path1, const string& base_path2, const string& path,
-	    const string& name, void(*cb)(const string& name, unsigned int status))
+    twosome(const CmpData& cmp_data, const string& path, const string& name)
     {
-	string fullname1 = base_path1 + path + "/" + name;
+	string fullname1 = cmp_data.base_path1 + path + "/" + name;
 	struct stat stat1;
 	int r1 = lstat(fullname1.c_str(), &stat1);
 	assert(r1 == 0);
 
-	string fullname2 = base_path2 + path + "/" + name;
+	string fullname2 = cmp_data.base_path2 + path + "/" + name;
 	struct stat stat2;
 	int r2 = lstat(fullname2.c_str(), &stat2);
 	assert(r2 == 0);
 
-	unsigned int status = cmpFiles(fullname1, stat1, fullname2, stat2);
+	unsigned int status = 0;
+	if (stat1.st_dev == cmp_data.dev1 && stat2.st_dev == cmp_data.dev2)
+	    status = cmpFiles(fullname1, stat1, fullname2, stat2);
 
 	if (status != 0)
 	{
-	    (*cb)(path + "/" + name, status);
+	    (*cmp_data.cb)(path + "/" + name, status);
 	}
 
 	if (!(status & TYPE))
 	{
 	    if (S_ISDIR(stat1.st_mode))
-		cmpDirsWorker(base_path1, base_path2, path + "/" + name, cb);
+		if (stat1.st_dev == cmp_data.dev1 && stat2.st_dev == cmp_data.dev2)
+		    cmpDirsWorker(cmp_data, path + "/" + name);
 	}
 	else
 	{
 	    if (S_ISDIR(stat1.st_mode))
-		listSubdirs(base_path1, path + "/" + name, DELETED, cb);
+		if (stat1.st_dev == cmp_data.dev1)
+		    listSubdirs(cmp_data.base_path1, path + "/" + name, DELETED, cmp_data.cb);
 
 	    if (S_ISDIR(stat2.st_mode))
-		listSubdirs(base_path2, path + "/" + name, CREATED, cb);
+		if (stat2.st_dev == cmp_data.dev2)
+		    listSubdirs(cmp_data.base_path2, path + "/" + name, CREATED, cmp_data.cb);
 	}
     }
 
 
     void
-    cmpDirsWorker(const string& base_path1, const string& base_path2, const string& path,
-		  void(*cb)(const string& name, unsigned int status))
+    cmpDirsWorker(const CmpData& cmp_data, const string& path)
     {
-	const vector<string> pre = readDirectory(base_path1, path);
+	const vector<string> pre = readDirectory(cmp_data.base_path1, path);
 	vector<string>::const_iterator first1 = pre.begin();
 	vector<string>::const_iterator last1 = pre.end();
 
-	const vector<string> post = readDirectory(base_path2, path);
+	const vector<string> post = readDirectory(cmp_data.base_path2, path);
 	vector<string>::const_iterator first2 = post.begin();
 	vector<string>::const_iterator last2 = post.end();
 
@@ -328,28 +342,28 @@ namespace snapper
 	{
 	    if (first1 == last1)
 	    {
-		lonesome(base_path2, path, *first2, CREATED, cb);
+		lonesome(cmp_data.base_path2, path, *first2, CREATED, cmp_data.cb);
 		++first2;
 	    }
 	    else if (first2 == last2)
 	    {
-		lonesome(base_path1, path, *first1, DELETED, cb);
+		lonesome(cmp_data.base_path1, path, *first1, DELETED, cmp_data.cb);
 		++first1;
 	    }
 	    else if (*first2 < *first1)
 	    {
-		lonesome(base_path2, path, *first2, CREATED, cb);
+		lonesome(cmp_data.base_path2, path, *first2, CREATED, cmp_data.cb);
 		++first2;
 	    }
 	    else if (*first1 < *first2)
 	    {
-		lonesome(base_path1, path, *first1, DELETED, cb);
+		lonesome(cmp_data.base_path1, path, *first1, DELETED, cmp_data.cb);
 		++first1;
 	    }
 	    else
 	    {
 		assert(*first1 == *first2);
-		twosome(base_path1, base_path2, path, *first1, cb);
+		twosome(cmp_data, path, *first1);
 		++first1;
 		++first2;
 	    }
@@ -362,7 +376,25 @@ namespace snapper
 								unsigned int status))
     {
 	y2mil("path1:" << path1 << " path2:" << path2);
-	cmpDirsWorker(path1, path2, "", cb);
+
+	CmpData cmp_data;
+	cmp_data.base_path1 = path1;
+	cmp_data.base_path2 = path2;
+	cmp_data.cb = cb;
+
+	struct stat stat1;
+	int r1 = stat(path1.c_str(), &stat1);
+	assert(r1 == 0);
+	cmp_data.dev1 = stat1.st_dev;
+
+	struct stat stat2;
+	int r2 = stat(path2.c_str(), &stat2);
+	assert(r2 == 0);
+	cmp_data.dev2 = stat2.st_dev;
+
+	y2mil("dev1:" << cmp_data.dev1 << " dev1:" << cmp_data.dev2);
+
+	cmpDirsWorker(cmp_data, "");
     }
 
 
