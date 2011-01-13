@@ -73,9 +73,19 @@ namespace snapper
     }
 
 
-    bool operator<(Snapshot a, Snapshot b)
+    bool operator<(const Snapshot& a, const Snapshot& b)
     {
 	return a.num < b.num;
+    }
+
+
+    string
+    snapshotDir(const Snapshot& snapshot)
+    {
+	if (snapshot.num == 0)
+	    return "/";
+	else
+	    return SNAPSHOTSDIR "/" + decString(snapshot.num) + "/snapshot";
     }
 
 
@@ -306,13 +316,10 @@ namespace snapper
     void
     compareBtrfsSnapshots()
     {
-	string dir1 = SNAPSHOTSDIR "/" + decString(snapshot1.num) + "/snapshot";
-	string dir2 = SNAPSHOTSDIR "/" + decString(snapshot2.num) + "/snapshot";
-
 	files.clear();
 	pre_to_post_status.clear();
 
-	cmpDirs(dir1, dir2, log);
+	cmpDirs(snapshotDir(snapshot1), snapshotDir(snapshot2), log);
     }
 
 
