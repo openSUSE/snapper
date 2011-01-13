@@ -1,2 +1,4 @@
 compare-dirs.o
 compare-dirs
+cli.o
+snapper
