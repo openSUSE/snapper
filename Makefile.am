@@ -2,7 +2,7 @@
 # Makefile.am for snapper
 #
 
-SUBDIRS = snapper examples
+SUBDIRS = snapper examples cli
 
 AUTOMAKE_OPTIONS = foreign dist-bzip2 no-dist-gzip
 

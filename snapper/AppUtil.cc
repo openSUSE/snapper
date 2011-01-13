@@ -30,6 +30,7 @@
 #include <sys/types.h>
 #include <sys/utsname.h>
 #include <dirent.h>
+#include <pwd.h>
 #include <string>
 #include <boost/algorithm/string.hpp>
 
@@ -269,6 +270,31 @@ logStreamClose(LogLevel level, const char* file, unsigned line, const char* func
     delete stream;
 }
 
+void initDefaultLogger()
+    {
+    string path;
+    string file;
+    if (geteuid ())
+	{
+	struct passwd* pw = getpwuid (geteuid ());
+	if (pw)
+	    {
+	    path = pw->pw_dir;
+	    file = "snapper.log";
+	    }
+	else
+	    {
+	    path = "/";
+	    file = "snapper.log";
+	    }
+	}
+    else
+	{
+	path = "/var/log";
+	file = "snapper.log";
+	}
+    createLogger("default", path, file);
+    }
 
 bool
 readlink(const string& path, string& buf)
@@ -394,7 +420,6 @@ readlink(const string& path, string& buf)
 
 	return s << fixed << double(tv.tv_sec) + (double)(tv.tv_usec) / 1000000.0 << "s";
     }
-
 
 const string app_ws = " \t\n";
 

@@ -32,5 +32,6 @@ AC_OUTPUT(
 	Makefile
 	snapper/Makefile
 	examples/Makefile
+	cli/Makefile
 	package/snapper.spec:snapper.spec.in
 )
