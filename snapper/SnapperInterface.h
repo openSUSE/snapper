@@ -60,7 +60,7 @@ namespace snapper
 
     bool getSnapshot(unsigned int num, Snapshot& snapshot);
 
-    const list<Snapshot>& getSnapshots();
+    list<Snapshot> getSnapshots();
 
     void listSnapshots();	// only for testing
 
@@ -99,7 +99,7 @@ namespace snapper
     unsigned int getComparisonNum1();
     unsigned int getComparisonNum2();
 
-    const list<string>& getFiles();
+    list<string> getFiles();
 
     // return bitfield of StatusFlags
     unsigned int getStatus(const string& file, Cmp cmp);

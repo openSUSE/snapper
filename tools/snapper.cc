@@ -87,9 +87,9 @@ void showDifference( const list<string>& args )
     y2mil( "n1:" << n1 << " n2:" << n2 );
 
     setComparisonNums(n1, n2);
-    const list<string>& files = getFiles();
-    for (list<string>::const_iterator it = files.begin(); it != files.end(); ++it)
-	cout << statusToString(getStatus(*it, CMP_PRE_TO_POST)) << " " << *it << endl;
+
+    for (vector<File>::const_iterator it = filelist.begin(); it != filelist.end(); ++it)
+	cout << statusToString(it->pre_to_post_status) << " " << it->name << endl;
     }
 
 int

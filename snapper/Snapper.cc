@@ -49,13 +49,7 @@ namespace snapper
     Snapshot snapshot2;
 
 
-    bool files_loaded = false;
-
-    list<string> files;
-
-    map<string, unsigned int> pre_to_post_status;
-    map<string, unsigned int> pre_to_system_status;
-    map<string, unsigned int> post_to_system_status;
+    Filelist filelist;
 
 
     std::ostream& operator<<(std::ostream& s, const Snapshot& x)
@@ -74,12 +68,6 @@ namespace snapper
     }
 
 
-    bool operator<(const Snapshot& a, const Snapshot& b)
-    {
-	return a.num < b.num;
-    }
-
-
     string
     snapshotDir(const Snapshot& snapshot)
     {
@@ -93,7 +81,7 @@ namespace snapper
     void
     readSnapshots()
     {
-	list<string> infos = glob(SNAPSHOTSDIR "/*/snapshot.info", GLOB_NOSORT);
+	list<string> infos = glob(SNAPSHOTSDIR "/*/info.xml", GLOB_NOSORT);
 	for (list<string>::const_iterator it = infos.begin(); it != infos.end(); ++it)
 	{
 	    unsigned int num;
@@ -166,7 +154,7 @@ namespace snapper
     }
 
 
-    const list<Snapshot>&
+    list<Snapshot>
     getSnapshots()
     {
 	assertInit();
@@ -223,7 +211,7 @@ namespace snapper
 	if (snapshot.type == POST)
 	    setChildValue(node, "pre_num", snapshot.pre_num);
 
-	xml.save(SNAPSHOTSDIR "/" + decString(snapshot.num) + "/snapshot.info");
+	xml.save(SNAPSHOTSDIR "/" + decString(snapshot.num) + "/info.xml");
 
 	return true;
     }
@@ -307,75 +295,91 @@ namespace snapper
     bool
     setComparisonNums(unsigned int num1, unsigned int num2)
     {
-	if (num1 == 0 || !getSnapshot(num1, snapshot1))
+	y2mil("num1:" << num1 << " num2:" << num2);
+
+	if (!getSnapshot(num1, snapshot1))
 	    return false;
 
-	if (num2 != 0 && !getSnapshot(num2, snapshot2))
+	if (!getSnapshot(num2, snapshot2))
 	    return false;
 
-	if (snapshot1.num != snapshot2.pre_num)
-	    return false;
+	filelist.assertInit();
 
 	return true;
     }
 
 
     void
-    log(const string& file, unsigned int status)
+    Filelist::append(const string& name, unsigned int status)
     {
-	files.push_back(file);
-	pre_to_post_status[file] = status;
+	files.push_back(File(name, status));
     }
 
 
     void
-    createFilelist()
+    append_helper(const string& name, unsigned int status)
+    {
+	filelist.append(name, status);
+    }
+
+
+    void
+    Filelist::create()
     {
 	y2mil("num1:" << snapshot1.num << " num2:" << snapshot2.num);
 
 	files.clear();
-	pre_to_post_status.clear();
 
-	cmpDirs(snapshotDir(snapshot1), snapshotDir(snapshot2), log);
+	cmpDirs(snapshotDir(snapshot1), snapshotDir(snapshot2), append_helper);
+
+	sort(files.begin(), files.end());
+
+	y2mil("found " << files.size() << " lines");
     }
 
 
     bool
-    loadFilelist()
+    Filelist::load()
     {
 	y2mil("num1:" << snapshot1.num << " num2:" << snapshot2.num);
 
 	files.clear();
-	pre_to_post_status.clear();
 
 	string input = SNAPSHOTSDIR "/" + decString(snapshot2.num) + "/filelist-" +
 	    decString(snapshot1.num) + ".txt";
 
 	FILE* file = fopen(input.c_str(), "r");
 	if (file == NULL)
+	{
+	    y2mil("file not found");
 	    return false;
+	}
 
 	char* line = NULL;
 	size_t len = 0;
 
 	while (getline(&line, &len, file) != -1)
 	{
-	    string file = string(line, 5, strlen(line) - 6);
+	    string name = string(line, 5, strlen(line) - 6);
 
+	    File file(name, stringToStatus(string(line, 0, 4)));
 	    files.push_back(file);
-	    pre_to_post_status[file] = stringToStatus(string(line, 0, 4));
 	}
 
 	free(line);
 
 	fclose(file);
 
+	sort(files.begin(), files.end());
+
+	y2mil("read " << files.size() << " lines");
+
 	return true;
     }
 
 
     bool
-    saveFilelist()
+    Filelist::save()
     {
 	y2mil("num1:" << snapshot1.num << " num2:" << snapshot2.num);
 
@@ -390,8 +394,8 @@ namespace snapper
 
 	FILE* file = fdopen(fd, "w");
 
-	for (list<string>::const_iterator it = files.begin(); it != files.end(); ++it)
-	    fprintf(file, "%s %s\n", statusToString(getStatus(*it, CMP_PRE_TO_POST)).c_str(), it->c_str());
+	for (vector<File>::const_iterator it = files.begin(); it != files.end(); ++it)
+	    fprintf(file, "%s %s\n", statusToString(it->pre_to_post_status).c_str(), it->name.c_str());
 
 	fclose(file);
 
@@ -403,28 +407,81 @@ namespace snapper
     }
 
 
-    const list<string>&
-    getFiles()
+    void
+    Filelist::assertInit()
     {
-	if (!files_loaded)
-	{
-	    if (!loadFilelist())
-	    {
-		createFilelist();
-		saveFilelist();
-	    }
+	if (!initialized)
+	    initialize();
+    }
 
-	    files_loaded = true;
+
+    void
+    Filelist::initialize()
+    {
+	if (initialized)
+	    return;
+
+	if (!load())
+	{
+	    create();
+	    save();
 	}
 
-	return files;
+	initialized = true;
+    }
+
+
+    list<string>
+    getFiles()
+    {
+	filelist.assertInit();
+
+	list<string> ret;
+	for (vector<File>::const_iterator it = filelist.begin(); it != filelist.end(); ++it)
+	    ret.push_back(it->name);
+
+	return ret;
+    }
+
+
+    inline bool
+    file_name_less(const File& file, const string& name)
+    {
+	return file.name < name;
+    }
+
+
+    vector<File>::iterator
+    Filelist::find(const string& name)
+    {
+	return lower_bound(files.begin(), files.end(), name, file_name_less);
+    }
+
+
+    vector<File>::const_iterator
+    Filelist::find(const string& name) const
+    {
+	return lower_bound(files.begin(), files.end(), name, file_name_less);
     }
 
 
     unsigned int
-    getStatus(const string& file, Cmp cmp)
+    getStatus(const string& name, Cmp cmp)
     {
-	return pre_to_post_status[file];
-    }
+	vector<File>::const_iterator it = filelist.find(name);
+	if (it != filelist.end())
+	{
+	    switch (cmp)
+	    {
+		case CMP_PRE_TO_POST:
+		    return it->pre_to_post_status;
+		case CMP_PRE_TO_SYSTEM:
+		    return it->pre_to_system_status;
+		case CMP_POST_TO_SYSTEM:
+		    return it->post_to_system_status;
+	    }
+	}
 
+	return -1;
+    }
 }
