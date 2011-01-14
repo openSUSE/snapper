@@ -30,5 +30,7 @@
 
 #define BTRFSBIN "/sbin/btrfs"
 
+#define COMPAREDIRSBIN "/usr/lib/snapper/bin/compare-dirs"
+
 
 #endif

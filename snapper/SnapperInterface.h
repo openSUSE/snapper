@@ -92,6 +92,8 @@ namespace snapper
 
     // use num = 0 for system
 
+    void startBackgroundComparsion(unsigned int num1, unsigned int num2);
+
     bool setComparisonNums(unsigned int num1, unsigned int num2);
 
     unsigned int getComparisonNum1();

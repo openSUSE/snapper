@@ -289,6 +289,20 @@ namespace snapper
     }
 
 
+    void
+    startBackgroundComparsion(unsigned int num1, unsigned int num2)
+    {
+	y2mil("num1:" << num1 << " num2:" << num2);
+
+	string dir1 = SNAPSHOTSDIR "/" + decString(num1) + "/snapshot";
+	string dir2 = SNAPSHOTSDIR "/" + decString(num2) + "/snapshot";
+
+	string output = SNAPSHOTSDIR "/" + decString(num2) + "/files-" + decString(num1) + ".txt";
+
+	SystemCmd(COMPAREDIRSBIN " " + quote(dir1) + " " + quote(dir2) + " " + quote(output));
+    }
+
+
     bool
     setComparisonNums(unsigned int num1, unsigned int num2)
     {

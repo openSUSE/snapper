@@ -59,7 +59,10 @@ void createSnap( const list<string>& args )
     else if( type=="pre" )
 	createPreSnapshot(desc);
     else if( type=="post" )
-	createPostSnapshot(number);
+    {
+	unsigned int num2 = createPostSnapshot(number);
+	startBackgroundComparsion(number, num2);
+    }
     else
 	y2war( "unknown type:\"" << type << "\"" );
     }
