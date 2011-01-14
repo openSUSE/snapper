@@ -67,5 +67,7 @@ main(int argc, char** argv)
 
     rename(tmp_name, argv[3]);
 
+    free(tmp_name);
+
     exit(EXIT_SUCCESS);
 }

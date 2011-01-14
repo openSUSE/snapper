@@ -21,6 +21,7 @@
 
 
 #include <glob.h>
+#include <string.h>
 #include <map>
 #include <iostream>
 
@@ -297,7 +298,7 @@ namespace snapper
 	string dir1 = SNAPSHOTSDIR "/" + decString(num1) + "/snapshot";
 	string dir2 = SNAPSHOTSDIR "/" + decString(num2) + "/snapshot";
 
-	string output = SNAPSHOTSDIR "/" + decString(num2) + "/files-" + decString(num1) + ".txt";
+	string output = SNAPSHOTSDIR "/" + decString(num2) + "/filelist-" + decString(num1) + ".txt";
 
 	SystemCmd(COMPAREDIRSBIN " " + quote(dir1) + " " + quote(dir2) + " " + quote(output));
     }
@@ -328,12 +329,77 @@ namespace snapper
 
 
     void
-    compareBtrfsSnapshots()
+    createFilelist()
     {
+	y2mil("num1:" << snapshot1.num << " num2:" << snapshot2.num);
+
 	files.clear();
 	pre_to_post_status.clear();
 
 	cmpDirs(snapshotDir(snapshot1), snapshotDir(snapshot2), log);
+    }
+
+
+    bool
+    loadFilelist()
+    {
+	y2mil("num1:" << snapshot1.num << " num2:" << snapshot2.num);
+
+	files.clear();
+	pre_to_post_status.clear();
+
+	string input = SNAPSHOTSDIR "/" + decString(snapshot2.num) + "/filelist-" +
+	    decString(snapshot1.num) + ".txt";
+
+	FILE* file = fopen(input.c_str(), "r");
+	if (file == NULL)
+	    return false;
+
+	char* line = NULL;
+	size_t len = 0;
+
+	while (getline(&line, &len, file) != -1)
+	{
+	    string file = string(line, 5, strlen(line) - 6);
+
+	    files.push_back(file);
+	    pre_to_post_status[file] = stringToStatus(string(line, 0, 4));
+	}
+
+	free(line);
+
+	fclose(file);
+
+	return true;
+    }
+
+
+    bool
+    saveFilelist()
+    {
+	y2mil("num1:" << snapshot1.num << " num2:" << snapshot2.num);
+
+	string output = SNAPSHOTSDIR "/" + decString(snapshot2.num) + "/filelist-" +
+	    decString(snapshot1.num) + ".txt";
+
+	char* tmp_name = (char*) malloc(output.length() + 12);
+	strcpy(tmp_name, output.c_str());
+	strcat(tmp_name, ".tmp-XXXXXX");
+
+	int fd = mkstemp(tmp_name);
+
+	FILE* file = fdopen(fd, "w");
+
+	for (list<string>::const_iterator it = files.begin(); it != files.end(); ++it)
+	    fprintf(file, "%s %s\n", statusToString(getStatus(*it, CMP_PRE_TO_POST)).c_str(), it->c_str());
+
+	fclose(file);
+
+	rename(tmp_name, output.c_str());
+
+	free(tmp_name);
+
+	return true;
     }
 
 
@@ -342,7 +408,11 @@ namespace snapper
     {
 	if (!files_loaded)
 	{
-	    compareBtrfsSnapshots();
+	    if (!loadFilelist())
+	    {
+		createFilelist();
+		saveFilelist();
+	    }
 
 	    files_loaded = true;
 	}
