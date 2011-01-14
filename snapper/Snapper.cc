@@ -310,16 +310,9 @@ namespace snapper
 
 
     void
-    Filelist::append(const string& name, unsigned int status)
-    {
-	files.push_back(File(name, status));
-    }
-
-
-    void
     append_helper(const string& name, unsigned int status)
     {
-	filelist.append(name, status);
+	filelist.files.push_back(File(name, status));
     }
 
 

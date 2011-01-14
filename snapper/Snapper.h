@@ -89,8 +89,6 @@ namespace snapper
 	vector<File>::iterator find(const string& name);
 	vector<File>::const_iterator find(const string& name) const;
 
-	void append(const string& name, unsigned int status); // should be private
-
     private:
 
 	void initialize();
@@ -102,6 +100,8 @@ namespace snapper
 	bool initialized;
 
 	vector<File> files;
+
+	friend void append_helper(const string& name, unsigned int status);
 
     };
 
