@@ -14,4 +14,4 @@ compare_dirs_SOURCES = compare-dirs.cc
 
 bin_PROGRAMS = snapper
 
-snapper_SOURCES = cli.cc
+snapper_SOURCES = snapper.cc
