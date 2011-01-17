@@ -78,6 +78,25 @@ namespace snapper
     }
 
 
+    string
+    getAbsolutePath(const string& name, Location loc)
+    {
+	switch (loc)
+	{
+	    case LOC_PRE:
+		return snapshotDir(snapshot1) + name;
+
+	    case LOC_POST:
+		return snapshotDir(snapshot2) + name;
+
+	    case LOC_SYSTEM:
+		return name;
+	}
+
+	return "error";
+    }
+
+
     void
     readSnapshots()
     {
@@ -459,22 +478,59 @@ namespace snapper
 
 
     unsigned int
-    getStatus(const string& name, Cmp cmp)
+    File::getPreToPostStatus()
     {
-	vector<File>::const_iterator it = filelist.find(name);
-	if (it != filelist.end())
+	return pre_to_post_status;
+    }
+
+
+    unsigned int
+    File::getPreToSystemStatus()
+    {
+	if (pre_to_system_status == (unsigned int)(-1))
+	    pre_to_system_status = cmpFiles(getAbsolutePath(name, LOC_PRE),
+					    getAbsolutePath(name, LOC_SYSTEM));
+	return pre_to_system_status;
+    }
+
+
+    unsigned int
+    File::getPostToSystemStatus()
+    {
+	if (post_to_system_status == (unsigned int)(-1))
+	    post_to_system_status = cmpFiles(getAbsolutePath(name, LOC_POST),
+					     getAbsolutePath(name, LOC_SYSTEM));
+	return post_to_system_status;
+    }
+
+
+    unsigned int
+    File::getStatus(Cmp cmp)
+    {
+	switch (cmp)
 	{
-	    switch (cmp)
-	    {
-		case CMP_PRE_TO_POST:
-		    return it->pre_to_post_status;
-		case CMP_PRE_TO_SYSTEM:
-		    return it->pre_to_system_status;
-		case CMP_POST_TO_SYSTEM:
-		    return it->post_to_system_status;
-	    }
+	    case CMP_PRE_TO_POST:
+		return getPreToPostStatus();
+
+	    case CMP_PRE_TO_SYSTEM:
+		return getPreToSystemStatus();
+
+	    case CMP_POST_TO_SYSTEM:
+		return getPostToSystemStatus();
 	}
 
 	return -1;
     }
+
+
+    unsigned int
+    getStatus(const string& name, Cmp cmp)
+    {
+	vector<File>::iterator it = filelist.find(name);
+	if (it != filelist.end())
+	    return it->getStatus(cmp);
+
+	return -1;
+    }
+
 }

@@ -58,6 +58,12 @@ namespace snapper
 	      post_to_system_status(-1), rollback(false)
 	{}
 
+	unsigned int getPreToPostStatus();
+	unsigned int getPreToSystemStatus();
+	unsigned int getPostToSystemStatus();
+
+	unsigned int getStatus(Cmp cmp);
+
 	string name;
 
 	unsigned int pre_to_post_status; // -1 if invalid

@@ -102,12 +102,12 @@ namespace snapper
     list<string> getFiles();
 
     // return bitfield of StatusFlags
-    unsigned int getStatus(const string& file, Cmp cmp);
+    unsigned int getStatus(const string& name, Cmp cmp);
 
-    string getAbsolutePath(const string& file, Location loc);
+    string getAbsolutePath(const string& name, Location loc);
 
-    void setRollback(const string& file, bool rollback);
-    bool getRollback(const string& file);
+    void setRollback(const string& name, bool rollback);
+    bool getRollback(const string& name);
 
     // check rollback? (e.g. to be deleted dirs are empty, required type changes)
     bool checkRollback();
