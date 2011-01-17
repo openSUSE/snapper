@@ -533,4 +533,23 @@ namespace snapper
 	return -1;
     }
 
+
+    void
+    setRollback(const string& name, bool rollback)
+    {
+	vector<File>::iterator it = filelist.find(name);
+	if (it != filelist.end())
+	    it->rollback = rollback;
+    }
+
+
+    bool
+    getRollback(const string& name, bool rollback)
+    {
+	vector<File>::const_iterator it = filelist.find(name);
+	if (it != filelist.end())
+	    return it->rollback;
+	return false;
+    }
+
 }
