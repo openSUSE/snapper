@@ -14,10 +14,12 @@ using namespace std;
 typedef void (*cmd_fnc)( const list<string>& args );
 map<string,cmd_fnc> cmds;
 
+int print_number = 0;
+
 void showHelp( const list<string>& args )
     {
     cout << 
-"Usage: snapper_cl [-h] [ command [ params ] ] ...\n"
+"Usage: snapper [-h] [ command [ params ] ] ...\n"
 "\n"
 "Possible commands are:\n"
 "    help                 -- show this help\n"
@@ -39,7 +41,7 @@ void listSnap( const list<string>& args )
 
 void createSnap( const list<string>& args )
     {
-    unsigned number = 0;
+    unsigned int number1 = 0;
     string type;
     string desc;
     list<string>::const_iterator s = args.begin();
@@ -48,20 +50,30 @@ void createSnap( const list<string>& args )
     if( s!=args.end() )
 	{
 	if( type == "post" )
-	    *s >> number;
+	    *s >> number1;
 	else
 	    desc = *s;
 	++s;
 	}
-    y2mil( "type:" << type << " desc:\"" << desc << "\" number:" << number );
+    y2mil( "type:" << type << " desc:\"" << desc << "\" number1:" << number1 );
     if( type=="single" )
-	createSingleSnapshot(desc);
+    {
+	number1 = createSingleSnapshot(desc);
+	if (print_number)
+	    cout << number1 << endl;
+    }
     else if( type=="pre" )
-	createPreSnapshot(desc);
+    {
+	number1 = createPreSnapshot(desc);
+	if (print_number)
+	    cout << number1 << endl;
+    }
     else if( type=="post" )
     {
-	unsigned int num2 = createPostSnapshot(number);
-	startBackgroundComparsion(number, num2);
+	unsigned int number2 = createPostSnapshot(number1);
+	if (print_number)
+	    cout << number2 << endl;
+	startBackgroundComparsion(number1, number2);
     }
     else
 	y2war( "unknown type:\"" << type << "\"" );
@@ -101,7 +113,9 @@ main(int argc, char** argv)
 
     static struct option long_options[] = {
 	{ "help", 0, 0, 'h' },
-	{ 0, 0, 0, 0 } };
+	{ "print-number", 0, &print_number, 1 },
+	{ 0, 0, 0, 0 }
+    };
     int ch;
     while( (ch=getopt_long( argc, argv, "h", long_options, NULL )) != -1 )
 	{
@@ -121,17 +135,13 @@ main(int argc, char** argv)
     cmds["create"] = createSnap;
     cmds["diff"] = showDifference;
 
-    for( int i=0; i<argc; i++ )
-	args.push_back(argv[i]);
-    y2mil( "argv:" << args );
-
-    map<string,cmd_fnc>::iterator c;
-    int cnt=1;
+    int cnt = optind;
     while( cnt<argc )
 	{
-	if( (c=cmds.find(argv[cnt]))!=cmds.end() )
+	map<string, cmd_fnc>::const_iterator c = cmds.find(argv[cnt]);
+	if( c != cmds.end() )
 	    {
-	    args.clear();
+	    list<string> args;
 	    while( ++cnt<argc && cmds.find(argv[cnt])==cmds.end() )
 		args.push_back(argv[cnt]);
 	    (*c->second)(args);
