@@ -20,6 +20,8 @@
  */
 
 
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <glob.h>
 #include <string.h>
 #include <map>
@@ -205,6 +207,10 @@ namespace snapper
 	if (!snapshots.empty())
 	    num = snapshots.rbegin()->num + 1;
 
+	mkdir((SNAPSHOTSDIR "/" + decString(num)).c_str(), 0777);
+
+	// TODO check EEXIST
+
 	return num;
     }
 
@@ -212,8 +218,6 @@ namespace snapper
     bool
     writeInfo(const Snapshot& snapshot)
     {
-	createPath(SNAPSHOTSDIR "/" + decString(snapshot.num));
-
 	XmlFile xml;
 	xmlNode* node = xmlNewNode("snapshot");
 	xml.setRootElement(node);
