@@ -139,7 +139,7 @@ namespace snapper
     {
 	vector<File>::iterator it = filelist.find(name);
 	if (it != filelist.end())
-	    it->rollback = rollback;
+	    it->setRollback(rollback);
     }
 
 
@@ -148,7 +148,7 @@ namespace snapper
     {
 	vector<File>::const_iterator it = filelist.find(name);
 	if (it != filelist.end())
-	    return it->rollback;
+	    return it->getRollback();
 	return false;
     }
 

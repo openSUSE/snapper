@@ -44,15 +44,20 @@ namespace snapper
 
 	const string& getName() const { return name; }
 
-	string name;
-
-	unsigned int getPreToPostStatus();
+	unsigned int getPreToPostStatus() const { return pre_to_post_status; }
 	unsigned int getPreToSystemStatus();
 	unsigned int getPostToSystemStatus();
 
 	unsigned int getStatus(Cmp cmp);
 
-	unsigned int pre_to_post_status; // -1 if invalid
+	bool getRollback() const { return rollback; }
+	void setRollback(bool value) { rollback = value; }
+
+    private:
+
+	string name;
+
+	unsigned int pre_to_post_status;
 	unsigned int pre_to_system_status; // -1 if invalid
 	unsigned int post_to_system_status; // -1 if invalid
 
@@ -63,7 +68,7 @@ namespace snapper
 
     inline int operator<(const File& a, const File& b)
     {
-	return a.name < b.name;
+	return a.getName() < b.getName();
     }
 
 

@@ -118,7 +118,7 @@ namespace snapper
 	FILE* file = fdopen(fd, "w");
 
 	for (vector<File>::const_iterator it = files.begin(); it != files.end(); ++it)
-	    fprintf(file, "%s %s\n", statusToString(it->pre_to_post_status).c_str(),
+	    fprintf(file, "%s %s\n", statusToString(it->getPreToPostStatus()).c_str(),
 		    it->getName().c_str());
 
 	fclose(file);
@@ -158,7 +158,7 @@ namespace snapper
     inline bool
     file_name_less(const File& file, const string& name)
     {
-	return file.name < name;
+	return file.getName() < name;
     }
 
 
@@ -173,13 +173,6 @@ namespace snapper
     Filelist::find(const string& name) const
     {
 	return lower_bound(files.begin(), files.end(), name, file_name_less);
-    }
-
-
-    unsigned int
-    File::getPreToPostStatus()
-    {
-	return pre_to_post_status;
     }
 
 

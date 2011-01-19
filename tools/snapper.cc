@@ -109,7 +109,7 @@ void showDifference( const list<string>& args )
     setComparisonNums(n1, n2);
 
     for (vector<File>::const_iterator it = filelist.begin(); it != filelist.end(); ++it)
-	cout << statusToString(it->pre_to_post_status) << " " << it->name << endl;
+	cout << statusToString(it->getPreToPostStatus()) << " " << it->getName() << endl;
     }
 
 int
