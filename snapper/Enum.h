@@ -29,7 +29,7 @@
 #include <vector>
 #include <algorithm>
 
-#include "snapper/Snapper.h"
+#include "snapper/Snapshot.h"
 #include "snapper/AppUtil.h"
 
 

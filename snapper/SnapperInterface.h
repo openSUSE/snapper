@@ -25,52 +25,11 @@
 
 
 #include <string>
-#include <map>
-#include <list>
 
 
 namespace snapper
 {
     using std::string;
-    using std::map;
-    using std::list;
-
-
-    enum SnapshotType { SINGLE, PRE, POST };
-
-
-    class Snapshot
-    {
-    public:
-
-	Snapshot() : type(SINGLE), num(0), pre_num(0) {}
-
-	SnapshotType type;
-
-	unsigned int num;
-
-	string date;
-
-	string description;	// empty for type=POST
-
-	unsigned int pre_num;	// valid only for type=POST
-
-    };
-
-
-    bool getSnapshot(unsigned int num, Snapshot& snapshot);
-
-    list<Snapshot> getSnapshots();
-
-    void listSnapshots();	// only for testing
-
-
-    unsigned int createSingleSnapshot(string description);
-
-    unsigned int createPreSnapshot(string description);
-
-    unsigned int createPostSnapshot(unsigned int pre_num);
-
 
 
     enum StatusFlags
@@ -90,7 +49,7 @@ namespace snapper
     };
 
 
-    // use num = 0 for system
+    // use num = 0 for current system
 
     void startBackgroundComparsion(unsigned int num1, unsigned int num2);
 
@@ -99,7 +58,6 @@ namespace snapper
     unsigned int getComparisonNum1();
     unsigned int getComparisonNum2();
 
-    list<string> getFiles();
 
     // return bitfield of StatusFlags
     unsigned int getStatus(const string& name, Cmp cmp);

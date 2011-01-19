@@ -4,9 +4,11 @@
 #include <iostream>
 
 #include <snapper/Snapper.h>
+#include <snapper/Snapshot.h>
+#include <snapper/File.h>
 #include <snapper/AppUtil.h>
 #include <snapper/SnapperTmpl.h>
-#include <snapper/Files.h>
+#include <snapper/Compare.h>
 
 using namespace snapper;
 using namespace std;
@@ -36,7 +38,13 @@ void showHelp( const list<string>& args )
 
 void listSnap( const list<string>& args )
     {
-    listSnapshots();
+    snapshotlist.assertInit();
+
+    for (vector<Snapshot>::const_iterator it = snapshotlist.begin();
+	 it != snapshotlist.end(); ++it)
+	{
+	cout << *it << endl;
+	}
     }
 
 void createSnap( const list<string>& args )
@@ -58,19 +66,19 @@ void createSnap( const list<string>& args )
     y2mil( "type:" << type << " desc:\"" << desc << "\" number1:" << number1 );
     if( type=="single" )
     {
-	number1 = createSingleSnapshot(desc);
+	number1 = snapshotlist.createSingleSnapshot(desc);
 	if (print_number)
 	    cout << number1 << endl;
     }
     else if( type=="pre" )
     {
-	number1 = createPreSnapshot(desc);
+	number1 = snapshotlist.createPreSnapshot(desc);
 	if (print_number)
 	    cout << number1 << endl;
     }
     else if( type=="post" )
     {
-	unsigned int number2 = createPostSnapshot(number1);
+	unsigned int number2 = snapshotlist.createPostSnapshot(number1);
 	if (print_number)
 	    cout << number2 << endl;
 	startBackgroundComparsion(number1, number2);

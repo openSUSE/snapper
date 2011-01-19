@@ -20,8 +20,8 @@
  */
 
 
-#ifndef FILES_H
-#define FILES_H
+#ifndef COMPARE_H
+#define COMPARE_H
 
 
 #include <string>

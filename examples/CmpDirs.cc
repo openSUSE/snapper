@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <iostream>
 
-#include <snapper/Files.h>
+#include <snapper/Compare.h>
 
 using namespace snapper;
 using namespace std;

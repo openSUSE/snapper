@@ -3,7 +3,7 @@
 #include <signal.h>
 #include <string.h>
 
-#include <snapper/Files.h>
+#include <snapper/Compare.h>
 
 using namespace snapper;
 using namespace std;
