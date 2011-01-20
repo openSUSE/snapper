@@ -87,30 +87,55 @@ void createSnap( const list<string>& args )
 	y2war( "unknown type:\"" << type << "\"" );
     }
 
-void showDifference( const list<string>& args )
-    {
-    unsigned n1 = 0;
-    unsigned n2 = 0;
+
+void readNums(const list<string>& args, unsigned int& num1, unsigned int& num2)
+{
     list<string>::const_iterator s = args.begin();
     if( s!=args.end() )
 	{
-	if( *s != "CURRENT" )
-	    *s >> n1;
+	if( *s != "current" )
+	    *s >> num1;
 	++s;
 	}
     if( s!=args.end() )
 	{
-	if( *s != "CURRENT" )
-	    *s >> n2;
+	if( *s != "current" )
+	    *s >> num2;
 	++s;
 	}
-    y2mil( "n1:" << n1 << " n2:" << n2 );
+    y2mil("num1:" << num1 << " num2:" << num2);
+}
 
-    setComparisonNums(n1, n2);
+
+void showDifference( const list<string>& args )
+    {
+    unsigned int num1 = 0;
+    unsigned int num2 = 0;
+
+    readNums(args, num1, num2);
+
+    setComparisonNums(num1, num2);
 
     for (vector<File>::const_iterator it = filelist.begin(); it != filelist.end(); ++it)
 	cout << statusToString(it->getPreToPostStatus()) << " " << it->getName() << endl;
     }
+
+
+void doRollback( const list<string>& args )
+    {
+    unsigned int num1 = 0;
+    unsigned int num2 = 0;
+
+    readNums(args, num1, num2);
+
+    setComparisonNums(num1, num2);
+
+    for (vector<File>::iterator it = filelist.begin(); it != filelist.end(); ++it)
+	it->setRollback(true);
+
+    filelist.doRollback();
+    }
+
 
 int
 main(int argc, char** argv)
@@ -142,6 +167,7 @@ main(int argc, char** argv)
     cmds["help"] = showHelp;
     cmds["create"] = createSnap;
     cmds["diff"] = showDifference;
+    cmds["rollback"] = doRollback;
 
     int cnt = optind;
     while( cnt<argc )

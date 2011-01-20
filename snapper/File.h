@@ -53,6 +53,8 @@ namespace snapper
 	bool getRollback() const { return rollback; }
 	void setRollback(bool value) { rollback = value; }
 
+	bool doRollback();
+
     private:
 
 	string name;
@@ -80,7 +82,12 @@ namespace snapper
 
 	void assertInit();
 
+	bool doRollback();
+
+	vector<File>::iterator begin() { return files.begin(); }
 	vector<File>::const_iterator begin() const { return files.begin(); }
+
+	vector<File>::iterator end() { return files.end(); }
 	vector<File>::const_iterator end() const { return files.end(); }
 
 	vector<File>::iterator find(const string& name);

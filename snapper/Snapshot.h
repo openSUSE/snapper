@@ -56,7 +56,7 @@ namespace snapper
 	string snapshotDir() const;
 
 	bool writeInfo() const;
-	bool createBtrfsSnapshot() const;
+	bool createFilesystemSnapshot() const;
 
     };
 

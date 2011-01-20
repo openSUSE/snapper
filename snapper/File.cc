@@ -214,4 +214,53 @@ namespace snapper
 	return -1;
     }
 
+
+    bool
+    File::doRollback()
+    {
+	if (getPreToPostStatus() == CREATED)
+	{
+	    cout << "delete " << name << endl;
+	}
+	else if (getPreToPostStatus() == DELETED)
+	{
+	    cout << "create " << name << endl;
+	}
+	else
+	{
+	    cout << "modify " << name << endl;
+	}
+
+	return true;
+    }
+
+
+    bool
+    Filelist::doRollback()
+    {
+	for (vector<File>::reverse_iterator it = files.rbegin(); it != files.rend(); ++it)
+	{
+	    if (it->getRollback())
+	    {
+		if (it->getPreToPostStatus() == CREATED)
+		{
+		    it->doRollback();
+		}
+	    }
+	}
+
+	for (vector<File>::iterator it = files.begin(); it != files.end(); ++it)
+	{
+	    if (it->getRollback())
+	    {
+		if (it->getPreToPostStatus() != CREATED)
+		{
+		    it->doRollback();
+		}
+	    }
+	}
+
+	return true;
+    }
+
 }

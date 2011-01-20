@@ -188,7 +188,7 @@ namespace snapper
 
 
     bool
-    Snapshot::createBtrfsSnapshot() const
+    Snapshot::createFilesystemSnapshot() const
     {
 	SystemCmd cmd(BTRFSBIN " subvolume snapshot / " + snapshotDir());
 	return cmd.retcode() == 0;
@@ -207,7 +207,7 @@ namespace snapper
 	snapshots.push_back(snapshot);
 
 	snapshot.writeInfo();
-	snapshot.createBtrfsSnapshot();
+	snapshot.createFilesystemSnapshot();
 
 	return snapshot.num;
     }
@@ -225,7 +225,7 @@ namespace snapper
 	snapshots.push_back(snapshot);
 
 	snapshot.writeInfo();
-	snapshot.createBtrfsSnapshot();
+	snapshot.createFilesystemSnapshot();
 
 	return snapshot.num;
     }
@@ -243,7 +243,7 @@ namespace snapper
 	snapshots.push_back(snapshot);
 
 	snapshot.writeInfo();
-	snapshot.createBtrfsSnapshot();
+	snapshot.createFilesystemSnapshot();
 
 	return snapshot.num;
     }
