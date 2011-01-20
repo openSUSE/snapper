@@ -1,0 +1,7 @@
+## Path: System/Yast2/Snapper
+
+## Type:        yesno
+## Default:     no
+# Enable snapper.
+ENABLE_SNAPPER="no"
+
