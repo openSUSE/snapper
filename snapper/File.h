@@ -50,6 +50,8 @@ namespace snapper
 
 	unsigned int getStatus(Cmp cmp);
 
+	string getAbsolutePath(Location loc);
+
 	bool getRollback() const { return rollback; }
 	void setRollback(bool value) { rollback = value; }
 

@@ -40,24 +40,6 @@ namespace snapper
     using namespace std;
 
 
-    string
-    getAbsolutePath(const string& name, Location loc)
-    {
-	switch (loc)
-	{
-	    case LOC_PRE:
-		return snapshot1->snapshotDir() + name;
-
-	    case LOC_POST:
-		return snapshot2->snapshotDir() + name;
-
-	    case LOC_SYSTEM:
-		return name;
-	}
-
-	return "error";
-    }
-
 /*
     void
     listSnapshots()

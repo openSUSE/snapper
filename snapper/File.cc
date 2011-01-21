@@ -180,8 +180,8 @@ namespace snapper
     File::getPreToSystemStatus()
     {
 	if (pre_to_system_status == (unsigned int)(-1))
-	    pre_to_system_status = cmpFiles(getAbsolutePath(name, LOC_PRE),
-					    getAbsolutePath(name, LOC_SYSTEM));
+	    pre_to_system_status = cmpFiles(getAbsolutePath(LOC_PRE),
+					    getAbsolutePath(LOC_SYSTEM));
 	return pre_to_system_status;
     }
 
@@ -190,8 +190,8 @@ namespace snapper
     File::getPostToSystemStatus()
     {
 	if (post_to_system_status == (unsigned int)(-1))
-	    post_to_system_status = cmpFiles(getAbsolutePath(name, LOC_POST),
-					     getAbsolutePath(name, LOC_SYSTEM));
+	    post_to_system_status = cmpFiles(getAbsolutePath(LOC_POST),
+					     getAbsolutePath(LOC_SYSTEM));
 	return post_to_system_status;
     }
 
@@ -212,6 +212,25 @@ namespace snapper
 	}
 
 	return -1;
+    }
+
+
+    string
+    File::getAbsolutePath(Location loc)
+    {
+	switch (loc)
+	{
+	    case LOC_PRE:
+		return snapshot1->snapshotDir() + name;
+
+	    case LOC_POST:
+		return snapshot2->snapshotDir() + name;
+
+	    case LOC_SYSTEM:
+		return name;
+	}
+
+	return "error";
     }
 
 
