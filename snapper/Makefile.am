@@ -24,5 +24,8 @@ libsnapper_la_LIBADD = -lblocxx -lxml2
 pkgincludedir = $(includedir)/snapper
 
 pkginclude_HEADERS =					\
-	SnapperInterface.h
+	SnapperInterface.h				\
+	Snapper.h					\
+	Snapshot.h					\
+	File.h
 

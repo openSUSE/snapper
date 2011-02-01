@@ -11,18 +11,13 @@ Group:		System/Libraries
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 Source:		snapper-%{version}.tar.bz2
 Source1:	snapper-rpmlintrc
-
-prefix:		/usr
-
+Prefix:		/usr
 BuildRequires:	gcc-c++ boost-devel blocxx-devel doxygen dejagnu libxml2-devel
-
-Requires:	btrfs-progs
-
-PreReq:		%fillup_prereq
-Summary:	Library for snapper management
+Requires:	libsnapper = %version
+Summary:	Tool for filesystem snapshot management
 
 %description
-This package contains snapper, a library for filesystem snapshot management.
+This package contains snapper, a tool for filesystem snapshot management.
 
 Authors:
 --------
@@ -51,36 +46,20 @@ LOCALEDIR=$RPM_BUILD_ROOT/usr/share/locale make check
 %install
 make install DESTDIR="$RPM_BUILD_ROOT"
 
-install -d -m 755 $RPM_BUILD_ROOT/var/lock/snapper
-
-%{find_lang} snapper
-
 %clean
 rm -rf "$RPM_BUILD_ROOT"
 
-%files -f snapper.lang
+%files
 %defattr(-,root,root)
-%{_libdir}/libsnapper.so.*
-%dir /var/lock/libsnapper
-/var/adm/fillup-templates/sysconfig.snapper-libsnapper
-%doc %dir %{prefix}/share/doc/packages/libsnapper
-%doc %{prefix}/share/doc/packages/snapper/AUTHORS
-%doc %{prefix}/share/doc/packages/snapper/COPYING
+/usr/bin/snapper
 
-%post
-/sbin/ldconfig
-%{fillup_only -an snapper}
-
-%postun
-/sbin/ldconfig
-
-%package devel
-Requires:	libsnapper = %version
-Requires:	gcc-c++ libstdc++-devel boost-devel blocxx-devel libxml2-devel
-Summary:	Header files and documentation for libsnapper
+%package -n libsnapper
+Summary:	Library for filesystem snapper management
 Group:		Development/Languages/C and C++
+Requires:	btrfs-progs
+PreReq:		%fillup_prereq
 
-%description devel
+%description -n libsnapper
 This package contains header files and documentation for developing with
 libsnapper.
 
@@ -88,11 +67,38 @@ Authors:
 --------
     Arvin Schnell <aschnell@suse.de>
 
-%files devel
+%files -n libsnapper
+%defattr(-,root,root)
+%{_libdir}/libsnapper.so.*
+%doc %{prefix}/share/doc/packages/snapper/AUTHORS
+%doc %{prefix}/share/doc/packages/snapper/COPYING
+/var/adm/fillup-templates/sysconfig.snapper
+%dir /usr/lib/snapper/bin
+/usr/lib/snapper/bin/compare-dirs
+
+%post -n libsnapper
+/sbin/ldconfig
+%{fillup_only -n snapper}
+
+%postun -n libsnapper
+/sbin/ldconfig
+
+%package -n libsnapper-devel
+Requires:	libsnapper = %version
+Requires:	gcc-c++ libstdc++-devel boost-devel blocxx-devel libxml2-devel
+Summary:	Header files and documentation for libsnapper
+Group:		Development/Languages/C and C++
+
+%description -n libsnapper-devel
+This package contains header files and documentation for developing with
+libsnapper.
+
+Authors:
+--------
+    Arvin Schnell <aschnell@suse.de>
+
+%files -n libsnapper-devel
 %defattr(-,root,root)
 %{_libdir}/libsnapper.la
 %{_libdir}/libsnapper.so
 %{prefix}/include/snapper
-%doc %{prefix}/share/doc/packages/libsnapper/autodocs
-%doc %{prefix}/share/doc/packages/libsnapper/examples
-
