@@ -10,10 +10,9 @@ using namespace std;
 int
 main(int argc, char** argv)
 {
-    snapshotlist.assertInit();
+    snapshots.assertInit();
 
-    for (vector<Snapshot>::const_iterator it = snapshotlist.begin();
-	 it != snapshotlist.end(); ++it)
+    for (vector<Snapshot>::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
     {
 	cout << *it << endl;
     }

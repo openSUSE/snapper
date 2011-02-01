@@ -74,17 +74,17 @@ namespace snapper
     {
 	y2mil("num1:" << num1 << " num2:" << num2);
 
-	snapshotlist.assertInit();
+	snapshots.assertInit();
 
-	snapshot1 = snapshotlist.find(num1);
-	if (snapshot1 == snapshotlist.end())
+	snapshot1 = snapshots.find(num1);
+	if (snapshot1 == snapshots.end())
 	    return false;
 
-	snapshot2 = snapshotlist.find(num2);
-	if (snapshot2 == snapshotlist.end())
+	snapshot2 = snapshots.find(num2);
+	if (snapshot2 == snapshots.end())
 	    return false;
 
-	filelist.assertInit();
+	files.assertInit();
 
 	return true;
     }
@@ -108,8 +108,8 @@ namespace snapper
     unsigned int
     getStatus(const string& name, Cmp cmp)
     {
-	vector<File>::iterator it = filelist.find(name);
-	if (it != filelist.end())
+	vector<File>::iterator it = files.find(name);
+	if (it != files.end())
 	    return it->getStatus(cmp);
 
 	return -1;
@@ -119,8 +119,8 @@ namespace snapper
     void
     setRollback(const string& name, bool rollback)
     {
-	vector<File>::iterator it = filelist.find(name);
-	if (it != filelist.end())
+	vector<File>::iterator it = files.find(name);
+	if (it != files.end())
 	    it->setRollback(rollback);
     }
 
@@ -128,8 +128,8 @@ namespace snapper
     bool
     getRollback(const string& name, bool rollback)
     {
-	vector<File>::const_iterator it = filelist.find(name);
-	if (it != filelist.end())
+	vector<File>::const_iterator it = files.find(name);
+	if (it != files.end())
 	    return it->getRollback();
 	return false;
     }

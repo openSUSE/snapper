@@ -42,7 +42,7 @@ namespace snapper
     vector<Snapshot>::const_iterator snapshot1;
     vector<Snapshot>::const_iterator snapshot2;
 
-    Snapshotlist snapshotlist;
+    Snapshots snapshots;
 
 
     std::ostream& operator<<(std::ostream& s, const Snapshot& x)
@@ -81,7 +81,7 @@ namespace snapper
 
 
     void
-    Snapshotlist::read()
+    Snapshots::read()
     {
 	list<string> infos = glob(SNAPSHOTSDIR "/*/info.xml", GLOB_NOSORT);
 	for (list<string>::const_iterator it = infos.begin(); it != infos.end(); ++it)
@@ -113,15 +113,15 @@ namespace snapper
 
 	    getChildValue(node, "pre_num", snapshot.pre_num);
 
-	    snapshots.push_back(snapshot);
+	    entries.push_back(snapshot);
 	}
 
-	sort(snapshots.begin(), snapshots.end());
+	sort(entries.begin(), entries.end());
     }
 
 
     void
-    Snapshotlist::initialize()
+    Snapshots::initialize()
     {
 	initialized = true;
 
@@ -130,14 +130,14 @@ namespace snapper
 	snapshot.num = 0;
 	snapshot.date = "now";
 	snapshot.description = "current";
-	snapshots.push_back(snapshot);
+	entries.push_back(snapshot);
 
 	read();
     }
 
 
     void
-    Snapshotlist::assertInit()
+    Snapshots::assertInit()
     {
 	if (!initialized)
 	    initialize();
@@ -145,14 +145,14 @@ namespace snapper
 
 
     unsigned int
-    Snapshotlist::nextNumber()
+    Snapshots::nextNumber()
     {
 	assertInit();
 
 	unsigned int num = 1;
 
-	if (!snapshots.empty())
-	    num = snapshots.rbegin()->num + 1;
+	if (!entries.empty())
+	    num = entries.rbegin()->num + 1;
 
 	mkdir((SNAPSHOTSDIR "/" + decString(num)).c_str(), 0777);
 
@@ -196,7 +196,7 @@ namespace snapper
 
 
     unsigned int
-    Snapshotlist::createSingleSnapshot(string description)
+    Snapshots::createSingleSnapshot(string description)
     {
 	Snapshot snapshot;
 	snapshot.type = SINGLE;
@@ -204,7 +204,7 @@ namespace snapper
 	snapshot.date = datetime();
 	snapshot.description = description;
 
-	snapshots.push_back(snapshot);
+	entries.push_back(snapshot);
 
 	snapshot.writeInfo();
 	snapshot.createFilesystemSnapshot();
@@ -214,7 +214,7 @@ namespace snapper
 
 
     unsigned int
-    Snapshotlist::createPreSnapshot(string description)
+    Snapshots::createPreSnapshot(string description)
     {
 	Snapshot snapshot;
 	snapshot.type = PRE;
@@ -222,7 +222,7 @@ namespace snapper
 	snapshot.date = datetime();
 	snapshot.description = description;
 
-	snapshots.push_back(snapshot);
+	entries.push_back(snapshot);
 
 	snapshot.writeInfo();
 	snapshot.createFilesystemSnapshot();
@@ -232,7 +232,7 @@ namespace snapper
 
 
     unsigned int
-    Snapshotlist::createPostSnapshot(unsigned int pre_num)
+    Snapshots::createPostSnapshot(unsigned int pre_num)
     {
 	Snapshot snapshot;
 	snapshot.type = POST;
@@ -240,7 +240,7 @@ namespace snapper
 	snapshot.date = datetime();
 	snapshot.pre_num = pre_num;
 
-	snapshots.push_back(snapshot);
+	entries.push_back(snapshot);
 
 	snapshot.writeInfo();
 	snapshot.createFilesystemSnapshot();
@@ -257,16 +257,16 @@ namespace snapper
 
 
     vector<Snapshot>::iterator
-    Snapshotlist::find(unsigned int num)
+    Snapshots::find(unsigned int num)
     {
-	return lower_bound(snapshots.begin(), snapshots.end(), num, snapshot_num_less);
+	return lower_bound(entries.begin(), entries.end(), num, snapshot_num_less);
     }
 
 
     vector<Snapshot>::const_iterator
-    Snapshotlist::find(unsigned int num) const
+    Snapshots::find(unsigned int num) const
     {
-	return lower_bound(snapshots.begin(), snapshots.end(), num, snapshot_num_less);
+	return lower_bound(entries.begin(), entries.end(), num, snapshot_num_less);
     }
 
 }

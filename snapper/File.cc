@@ -38,37 +38,37 @@
 
 namespace snapper
 {
-    Filelist filelist;
+    Files files;
 
 
     void
     append_helper(const string& name, unsigned int status)
     {
-	filelist.files.push_back(File(name, status));
+	files.entries.push_back(File(name, status));
     }
 
 
     void
-    Filelist::create()
+    Files::create()
     {
 	y2mil("num1:" << snapshot1->num << " num2:" << snapshot2->num);
 
-	files.clear();
+	entries.clear();
 
 	cmpDirs(snapshot1->snapshotDir(), snapshot2->snapshotDir(), append_helper);
 
-	sort(files.begin(), files.end());
+	sort(entries.begin(), entries.end());
 
-	y2mil("found " << files.size() << " lines");
+	y2mil("found " << entries.size() << " lines");
     }
 
 
     bool
-    Filelist::load()
+    Files::load()
     {
 	y2mil("num1:" << snapshot1->num << " num2:" << snapshot2->num);
 
-	files.clear();
+	entries.clear();
 
 	string input = snapshot2->baseDir() + "/filelist-" + decString(snapshot1->num) + ".txt";
 
@@ -87,23 +87,23 @@ namespace snapper
 	    string name = string(line, 5, strlen(line) - 6);
 
 	    File file(name, stringToStatus(string(line, 0, 4)));
-	    files.push_back(file);
+	    entries.push_back(file);
 	}
 
 	free(line);
 
 	fclose(file);
 
-	sort(files.begin(), files.end());
+	sort(entries.begin(), entries.end());
 
-	y2mil("read " << files.size() << " lines");
+	y2mil("read " << entries.size() << " lines");
 
 	return true;
     }
 
 
     bool
-    Filelist::save()
+    Files::save()
     {
 	y2mil("num1:" << snapshot1->num << " num2:" << snapshot2->num);
 
@@ -117,7 +117,7 @@ namespace snapper
 
 	FILE* file = fdopen(fd, "w");
 
-	for (vector<File>::const_iterator it = files.begin(); it != files.end(); ++it)
+	for (vector<File>::const_iterator it = entries.begin(); it != entries.end(); ++it)
 	    fprintf(file, "%s %s\n", statusToString(it->getPreToPostStatus()).c_str(),
 		    it->getName().c_str());
 
@@ -132,7 +132,7 @@ namespace snapper
 
 
     void
-    Filelist::assertInit()
+    Files::assertInit()
     {
 	if (!initialized)
 	    initialize();
@@ -140,7 +140,7 @@ namespace snapper
 
 
     void
-    Filelist::initialize()
+    Files::initialize()
     {
 	if (initialized)
 	    return;
@@ -163,16 +163,16 @@ namespace snapper
 
 
     vector<File>::iterator
-    Filelist::find(const string& name)
+    Files::find(const string& name)
     {
-	return lower_bound(files.begin(), files.end(), name, file_name_less);
+	return lower_bound(entries.begin(), entries.end(), name, file_name_less);
     }
 
 
     vector<File>::const_iterator
-    Filelist::find(const string& name) const
+    Files::find(const string& name) const
     {
-	return lower_bound(files.begin(), files.end(), name, file_name_less);
+	return lower_bound(entries.begin(), entries.end(), name, file_name_less);
     }
 
 
@@ -255,9 +255,9 @@ namespace snapper
 
 
     bool
-    Filelist::doRollback()
+    Files::doRollback()
     {
-	for (vector<File>::reverse_iterator it = files.rbegin(); it != files.rend(); ++it)
+	for (vector<File>::reverse_iterator it = entries.rbegin(); it != entries.rend(); ++it)
 	{
 	    if (it->getRollback())
 	    {
@@ -268,7 +268,7 @@ namespace snapper
 	    }
 	}
 
-	for (vector<File>::iterator it = files.begin(); it != files.end(); ++it)
+	for (vector<File>::iterator it = entries.begin(); it != entries.end(); ++it)
 	{
 	    if (it->getRollback())
 	    {

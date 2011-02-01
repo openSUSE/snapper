@@ -38,10 +38,9 @@ void showHelp( const list<string>& args )
 
 void listSnap( const list<string>& args )
     {
-    snapshotlist.assertInit();
+    snapshots.assertInit();
 
-    for (vector<Snapshot>::const_iterator it = snapshotlist.begin();
-	 it != snapshotlist.end(); ++it)
+    for (vector<Snapshot>::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
 	{
 	cout << *it << endl;
 	}
@@ -66,19 +65,19 @@ void createSnap( const list<string>& args )
     y2mil( "type:" << type << " desc:\"" << desc << "\" number1:" << number1 );
     if( type=="single" )
     {
-	number1 = snapshotlist.createSingleSnapshot(desc);
+	number1 = snapshots.createSingleSnapshot(desc);
 	if (print_number)
 	    cout << number1 << endl;
     }
     else if( type=="pre" )
     {
-	number1 = snapshotlist.createPreSnapshot(desc);
+	number1 = snapshots.createPreSnapshot(desc);
 	if (print_number)
 	    cout << number1 << endl;
     }
     else if( type=="post" )
     {
-	unsigned int number2 = snapshotlist.createPostSnapshot(number1);
+	unsigned int number2 = snapshots.createPostSnapshot(number1);
 	if (print_number)
 	    cout << number2 << endl;
 	startBackgroundComparsion(number1, number2);
@@ -116,7 +115,7 @@ void showDifference( const list<string>& args )
 
     setComparisonNums(num1, num2);
 
-    for (vector<File>::const_iterator it = filelist.begin(); it != filelist.end(); ++it)
+    for (vector<File>::const_iterator it = files.begin(); it != files.end(); ++it)
 	cout << statusToString(it->getPreToPostStatus()) << " " << it->getName() << endl;
     }
 
@@ -130,10 +129,10 @@ void doRollback( const list<string>& args )
 
     setComparisonNums(num1, num2);
 
-    for (vector<File>::iterator it = filelist.begin(); it != filelist.end(); ++it)
+    for (vector<File>::iterator it = files.begin(); it != files.end(); ++it)
 	it->setRollback(true);
 
-    filelist.doRollback();
+    files.doRollback();
     }
 
 

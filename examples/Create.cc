@@ -10,7 +10,7 @@ using namespace std;
 int
 main(int argc, char** argv)
 {
-    snapshotlist.createSingleSnapshot("test");
+    snapshots.createSingleSnapshot("test");
 
     exit(EXIT_SUCCESS);
 }

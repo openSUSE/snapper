@@ -76,21 +76,21 @@ namespace snapper
     }
 
 
-    class Filelist
+    class Files
     {
     public:
 
-	Filelist() : initialized(false) {}
+	Files() : initialized(false) {}
 
 	void assertInit();
 
 	bool doRollback();
 
-	vector<File>::iterator begin() { return files.begin(); }
-	vector<File>::const_iterator begin() const { return files.begin(); }
+	vector<File>::iterator begin() { return entries.begin(); }
+	vector<File>::const_iterator begin() const { return entries.begin(); }
 
-	vector<File>::iterator end() { return files.end(); }
-	vector<File>::const_iterator end() const { return files.end(); }
+	vector<File>::iterator end() { return entries.end(); }
+	vector<File>::const_iterator end() const { return entries.end(); }
 
 	vector<File>::iterator find(const string& name);
 	vector<File>::const_iterator find(const string& name) const;
@@ -105,14 +105,14 @@ namespace snapper
 
 	bool initialized;
 
-	vector<File> files;
+	vector<File> entries;
 
 	friend void append_helper(const string& name, unsigned int status);
 
     };
 
 
-    extern Filelist filelist;
+    extern Files files;
 
 }
 

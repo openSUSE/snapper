@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) 2011 Novell, Inc.
  *
@@ -74,16 +73,16 @@ namespace snapper
     extern vector<Snapshot>::const_iterator snapshot2;
 
 
-    class Snapshotlist
+    class Snapshots
     {
     public:
 
-	Snapshotlist() : initialized(false) {}
+	Snapshots() : initialized(false) {}
 
 	void assertInit();
 
-	vector<Snapshot>::const_iterator begin() const { return snapshots.begin(); }
-	vector<Snapshot>::const_iterator end() const { return snapshots.end(); }
+	vector<Snapshot>::const_iterator begin() const { return entries.begin(); }
+	vector<Snapshot>::const_iterator end() const { return entries.end(); }
 
 	vector<Snapshot>::iterator find(unsigned int num);
 	vector<Snapshot>::const_iterator find(unsigned int num) const;
@@ -102,12 +101,12 @@ namespace snapper
 
 	bool initialized;
 
-	vector<Snapshot> snapshots;
+	vector<Snapshot> entries;
 
     };
 
 
-    extern Snapshotlist snapshotlist;
+    extern Snapshots snapshots;
 
 }
 
