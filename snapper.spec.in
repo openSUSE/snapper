@@ -53,7 +53,7 @@ rm -rf "$RPM_BUILD_ROOT"
 %package -n libsnapper
 Summary:	Library for filesystem snapshot management
 Group:		System/Libraries
-Requires:	btrfs-progs
+Requires:	btrfsprogs
 PreReq:		%fillup_prereq
 
 %description -n libsnapper
