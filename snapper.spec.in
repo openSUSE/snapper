@@ -7,7 +7,7 @@ Name:		snapper
 Version:	@VERSION@
 Release:	0
 License:	GPL
-Group:		System/Libraries
+Group:		System/Packages
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 Source:		snapper-%{version}.tar.bz2
 Source1:	snapper-rpmlintrc
@@ -40,9 +40,6 @@ autoconf
 ./configure --libdir=%{_libdir} --prefix=%{prefix} --mandir=%{_mandir} --disable-silent-rules
 make %{?jobs:-j%jobs}
 
-%check
-LOCALEDIR=$RPM_BUILD_ROOT/usr/share/locale make check
-
 %install
 make install DESTDIR="$RPM_BUILD_ROOT"
 
@@ -51,17 +48,16 @@ rm -rf "$RPM_BUILD_ROOT"
 
 %files
 %defattr(-,root,root)
-/usr/bin/snapper
+%{prefix}/bin/snapper
 
 %package -n libsnapper
-Summary:	Library for filesystem snapper management
-Group:		Development/Languages/C and C++
+Summary:	Library for filesystem snapshot management
+Group:		System/Libraries
 Requires:	btrfs-progs
 PreReq:		%fillup_prereq
 
 %description -n libsnapper
-This package contains header files and documentation for developing with
-libsnapper.
+This package contains libsnapper, a library for filesystem snapshot management.
 
 Authors:
 --------
@@ -70,11 +66,13 @@ Authors:
 %files -n libsnapper
 %defattr(-,root,root)
 %{_libdir}/libsnapper.so.*
+%doc %dir %{prefix}/share/doc/packages/snapper
 %doc %{prefix}/share/doc/packages/snapper/AUTHORS
 %doc %{prefix}/share/doc/packages/snapper/COPYING
 /var/adm/fillup-templates/sysconfig.snapper
-%dir /usr/lib/snapper/bin
-/usr/lib/snapper/bin/compare-dirs
+%dir %{prefix}/lib/snapper
+%dir %{prefix}/lib/snapper/bin
+%{prefix}/lib/snapper/bin/compare-dirs
 
 %post -n libsnapper
 /sbin/ldconfig
