@@ -34,6 +34,7 @@ namespace snapper
     using namespace std;
 
 
+    extern CompareCallback* compare_callback;
 
 
 };

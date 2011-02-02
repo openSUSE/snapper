@@ -53,11 +53,17 @@ namespace snapper
     {
 	y2mil("num1:" << snapshot1->num << " num2:" << snapshot2->num);
 
+	if (compare_callback)
+	    compare_callback->start();
+
 	entries.clear();
 
 	cmpDirs(snapshot1->snapshotDir(), snapshot2->snapshotDir(), append_helper);
 
 	sort(entries.begin(), entries.end());
+
+	if (compare_callback)
+	    compare_callback->stop();
 
 	y2mil("found " << entries.size() << " lines");
     }
@@ -66,11 +72,12 @@ namespace snapper
     bool
     Files::load()
     {
-	y2mil("num1:" << snapshot1->num << " num2:" << snapshot2->num);
+	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
 
 	entries.clear();
 
-	string input = snapshot2->baseDir() + "/filelist-" + decString(snapshot1->num) + ".txt";
+	string input = snapshot2->baseDir() + "/filelist-" + decString(snapshot1->getNum()) +
+	    ".txt";
 
 	FILE* file = fopen(input.c_str(), "r");
 	if (file == NULL)

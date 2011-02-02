@@ -73,7 +73,20 @@ namespace snapper
     bool doRollback();
 
 
-    // progress callbacks, e.g. during snapshot comparision
+    // progress callbacks, e.g. during snapshot comparision, during rollback,
+    // errors during rollback
+
+    struct CompareCallback
+    {
+	CompareCallback() {}
+	virtual ~CompareCallback() {}
+
+	virtual void start() {}
+	virtual void stop() {}
+    };
+
+    void setCompareCallback(CompareCallback* p);
+
 
 }
 

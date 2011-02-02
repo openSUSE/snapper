@@ -134,4 +134,14 @@ namespace snapper
 	return false;
     }
 
+
+    CompareCallback* compare_callback = NULL;
+
+    void
+    setCompareCallback(CompareCallback* p)
+    {
+	compare_callback = p;
+    }
+
+
 }

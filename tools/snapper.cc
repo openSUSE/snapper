@@ -46,6 +46,16 @@ void listSnap( const list<string>& args )
 	}
     }
 
+
+struct CompareCallbackImpl : public CompareCallback
+{
+    void start() {  cout << "comparing snapshots..." << flush; }
+    void stop() { cout << " done" << endl; }
+};
+
+CompareCallbackImpl compare_callback_impl;
+
+
 void createSnap( const list<string>& args )
     {
     unsigned int number1 = 0;
@@ -167,6 +177,8 @@ main(int argc, char** argv)
     cmds["create"] = createSnap;
     cmds["diff"] = showDifference;
     cmds["rollback"] = doRollback;
+
+    setCompareCallback(&compare_callback_impl);
 
     int cnt = optind;
     while( cnt<argc )
