@@ -51,7 +51,7 @@ namespace snapper
     void
     Files::create()
     {
-	y2mil("num1:" << snapshot1->num << " num2:" << snapshot2->num);
+	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
 
 	if (compare_callback)
 	    compare_callback->start();
@@ -112,9 +112,10 @@ namespace snapper
     bool
     Files::save()
     {
-	y2mil("num1:" << snapshot1->num << " num2:" << snapshot2->num);
+	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
 
-	string output = snapshot2->baseDir() + "/filelist-" + decString(snapshot1->num) + ".txt";
+	string output = snapshot2->baseDir() + "/filelist-" + decString(snapshot1->getNum()) +
+	    ".txt";
 
 	char* tmp_name = (char*) malloc(output.length() + 12);
 	strcpy(tmp_name, output.c_str());

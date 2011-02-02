@@ -252,7 +252,7 @@ namespace snapper
     inline bool
     snapshot_num_less(const Snapshot& snapshot, unsigned int num)
     {
-	return snapshot.num < num;
+	return snapshot.getNum() < num;
     }
 
 

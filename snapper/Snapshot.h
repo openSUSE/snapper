@@ -39,7 +39,28 @@ namespace snapper
     {
     public:
 
+	friend class Snapshots;
+
 	Snapshot() : type(SINGLE), num(0), pre_num(0) {}
+
+	SnapshotType getType() const { return type; }
+
+	unsigned int getNum() const { return num; }
+
+	string getDate() const { return date; }
+
+	string getDescription() const { return description; }
+
+	unsigned int getPreNum() const { return pre_num; }
+
+	string baseDir() const;
+	string snapshotDir() const;
+
+	friend std::ostream& operator<<(std::ostream& s, const Snapshot& x);
+
+	friend bool operator<(const Snapshot& a, const Snapshot& b);
+
+    private:
 
 	SnapshotType type;
 
@@ -51,16 +72,10 @@ namespace snapper
 
 	unsigned int pre_num;	// valid only for type=POST
 
-	string baseDir() const;
-	string snapshotDir() const;
-
 	bool writeInfo() const;
 	bool createFilesystemSnapshot() const;
 
     };
-
-
-    std::ostream& operator<<(std::ostream& s, const Snapshot& x);
 
 
     inline bool operator<(const Snapshot& a, const Snapshot& b)
