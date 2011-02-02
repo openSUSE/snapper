@@ -117,6 +117,8 @@ namespace snapper
 	}
 
 	sort(entries.begin(), entries.end());
+
+	y2mil("found " << entries.size() << " snapshots");
     }
 
 
