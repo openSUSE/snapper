@@ -24,7 +24,7 @@
 #define SNAPSHOT_H
 
 
-#include <vector>
+#include <list>
 
 
 namespace snapper
@@ -84,8 +84,8 @@ namespace snapper
     }
 
 
-    extern vector<Snapshot>::const_iterator snapshot1;
-    extern vector<Snapshot>::const_iterator snapshot2;
+    extern list<Snapshot>::const_iterator snapshot1;
+    extern list<Snapshot>::const_iterator snapshot2;
 
 
     class Snapshots
@@ -96,11 +96,11 @@ namespace snapper
 
 	void assertInit();
 
-	vector<Snapshot>::const_iterator begin() const { return entries.begin(); }
-	vector<Snapshot>::const_iterator end() const { return entries.end(); }
+	list<Snapshot>::const_iterator begin() const { return entries.begin(); }
+	list<Snapshot>::const_iterator end() const { return entries.end(); }
 
-	vector<Snapshot>::iterator find(unsigned int num);
-	vector<Snapshot>::const_iterator find(unsigned int num) const;
+	list<Snapshot>::iterator find(unsigned int num);
+	list<Snapshot>::const_iterator find(unsigned int num) const;
 
 	unsigned int createSingleSnapshot(string description);
 	unsigned int createPreSnapshot(string description);
@@ -116,7 +116,7 @@ namespace snapper
 
 	bool initialized;
 
-	vector<Snapshot> entries;
+	list<Snapshot> entries;
 
     };
 

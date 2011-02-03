@@ -39,8 +39,8 @@ namespace snapper
     using std::list;
 
 
-    vector<Snapshot>::const_iterator snapshot1;
-    vector<Snapshot>::const_iterator snapshot2;
+    list<Snapshot>::const_iterator snapshot1;
+    list<Snapshot>::const_iterator snapshot2;
 
     Snapshots snapshots;
 
@@ -116,7 +116,7 @@ namespace snapper
 	    entries.push_back(snapshot);
 	}
 
-	sort(entries.begin(), entries.end());
+	entries.sort();
 
 	y2mil("found " << entries.size() << " snapshots");
     }
@@ -258,14 +258,14 @@ namespace snapper
     }
 
 
-    vector<Snapshot>::iterator
+    list<Snapshot>::iterator
     Snapshots::find(unsigned int num)
     {
 	return lower_bound(entries.begin(), entries.end(), num, snapshot_num_less);
     }
 
 
-    vector<Snapshot>::const_iterator
+    list<Snapshot>::const_iterator
     Snapshots::find(unsigned int num) const
     {
 	return lower_bound(entries.begin(), entries.end(), num, snapshot_num_less);

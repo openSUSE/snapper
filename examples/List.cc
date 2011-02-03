@@ -12,7 +12,7 @@ main(int argc, char** argv)
 {
     snapshots.assertInit();
 
-    for (vector<Snapshot>::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
+    for (list<Snapshot>::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
     {
 	cout << *it << endl;
     }

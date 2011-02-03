@@ -25,11 +25,12 @@
 
 
 #include <string>
+#include <list>
 
 
 namespace snapper
 {
-    using std::string;
+    using namespace std;
 
 
     enum StatusFlags
@@ -49,28 +50,13 @@ namespace snapper
     };
 
 
-    // use num = 0 for current system
+    class Snapshot;
 
-    void startBackgroundComparsion(unsigned int num1, unsigned int num2);
+    void startBackgroundComparsion(list<Snapshot>::const_iterator snapshot1,
+				   list<Snapshot>::const_iterator snapshot2);
 
-    bool setComparisonNums(unsigned int num1, unsigned int num2);
-
-    unsigned int getComparisonNum1();
-    unsigned int getComparisonNum2();
-
-
-    // return bitfield of StatusFlags
-    unsigned int getStatus(const string& name, Cmp cmp);
-
-    string getAbsolutePath(const string& name, Location loc);
-
-    void setRollback(const string& name, bool rollback);
-    bool getRollback(const string& name);
-
-    // check rollback? (e.g. to be deleted dirs are empty, required type changes)
-    bool checkRollback();
-
-    bool doRollback();
+    bool setComparisonNums(list<Snapshot>::const_iterator snapshot1,
+			   list<Snapshot>::const_iterator snapshot2);
 
 
     // progress callbacks, e.g. during snapshot comparision, during rollback,

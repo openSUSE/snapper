@@ -40,98 +40,34 @@ namespace snapper
     using namespace std;
 
 
-/*
     void
-    listSnapshots()
+    startBackgroundComparsion(list<Snapshot>::const_iterator snapshot1,
+			      list<Snapshot>::const_iterator snapshot2)
     {
-	assertInit();
+	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
 
-	for (list<Snapshot>::const_iterator it = snapshots.begin();
-	     it != snapshots.end(); ++it)
-	{
-	    cout << *it << endl;
-	}
-    }
-*/
+	string dir1 = snapshot1->snapshotDir();
+	string dir2 = snapshot2->snapshotDir();
 
-
-    void
-    startBackgroundComparsion(unsigned int num1, unsigned int num2)
-    {
-	y2mil("num1:" << num1 << " num2:" << num2);
-
-	string dir1 = SNAPSHOTSDIR "/" + decString(num1) + "/snapshot";
-	string dir2 = SNAPSHOTSDIR "/" + decString(num2) + "/snapshot";
-
-	string output = SNAPSHOTSDIR "/" + decString(num2) + "/filelist-" + decString(num1) + ".txt";
+	string output = snapshot2->baseDir() + "/filelist-" + decString(snapshot1->getNum()) +
+	    ".txt";
 
 	SystemCmd(COMPAREDIRSBIN " " + quote(dir1) + " " + quote(dir2) + " " + quote(output));
     }
 
 
     bool
-    setComparisonNums(unsigned int num1, unsigned int num2)
+    setComparisonNums(list<Snapshot>::const_iterator new_snapshot1,
+		      list<Snapshot>::const_iterator new_snapshot2)
     {
-	y2mil("num1:" << num1 << " num2:" << num2);
+	y2mil("num1:" << new_snapshot1->getNum() << " num2:" << new_snapshot2->getNum());
 
-	snapshots.assertInit();
-
-	snapshot1 = snapshots.find(num1);
-	if (snapshot1 == snapshots.end())
-	    return false;
-
-	snapshot2 = snapshots.find(num2);
-	if (snapshot2 == snapshots.end())
-	    return false;
+	snapshot1 = new_snapshot1;
+	snapshot2 = new_snapshot2;
 
 	files.assertInit();
 
 	return true;
-    }
-
-
-/*
-    list<string>
-    getFiles()
-    {
-	filelist.assertInit();
-
-	list<string> ret;
-	for (vector<File>::const_iterator it = filelist.begin(); it != filelist.end(); ++it)
-	    ret.push_back(it->name);
-
-	return ret;
-    }
-*/
-
-
-    unsigned int
-    getStatus(const string& name, Cmp cmp)
-    {
-	vector<File>::iterator it = files.find(name);
-	if (it != files.end())
-	    return it->getStatus(cmp);
-
-	return -1;
-    }
-
-
-    void
-    setRollback(const string& name, bool rollback)
-    {
-	vector<File>::iterator it = files.find(name);
-	if (it != files.end())
-	    it->setRollback(rollback);
-    }
-
-
-    bool
-    getRollback(const string& name, bool rollback)
-    {
-	vector<File>::const_iterator it = files.find(name);
-	if (it != files.end())
-	    return it->getRollback();
-	return false;
     }
 
 

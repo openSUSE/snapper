@@ -40,7 +40,7 @@ void listSnap( const list<string>& args )
     {
     snapshots.assertInit();
 
-    for (vector<Snapshot>::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
+    for (list<Snapshot>::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
 	{
 	cout << *it << endl;
 	}
@@ -90,7 +90,7 @@ void createSnap( const list<string>& args )
 	unsigned int number2 = snapshots.createPostSnapshot(number1);
 	if (print_number)
 	    cout << number2 << endl;
-	startBackgroundComparsion(number1, number2);
+	startBackgroundComparsion(snapshots.find(number1), snapshots.find(number2));
     }
     else
 	y2war( "unknown type:\"" << type << "\"" );
@@ -123,7 +123,7 @@ void showDifference( const list<string>& args )
 
     readNums(args, num1, num2);
 
-    setComparisonNums(num1, num2);
+    setComparisonNums(snapshots.find(num1), snapshots.find(num2));
 
     for (vector<File>::const_iterator it = files.begin(); it != files.end(); ++it)
 	cout << statusToString(it->getPreToPostStatus()) << " " << it->getName() << endl;
@@ -137,7 +137,7 @@ void doRollback( const list<string>& args )
 
     readNums(args, num1, num2);
 
-    setComparisonNums(num1, num2);
+    setComparisonNums(snapshots.find(num1), snapshots.find(num2));
 
     for (vector<File>::iterator it = files.begin(); it != files.end(); ++it)
 	it->setRollback(true);
@@ -179,6 +179,8 @@ main(int argc, char** argv)
     cmds["rollback"] = doRollback;
 
     setCompareCallback(&compare_callback_impl);
+
+    snapshots.assertInit();
 
     int cnt = optind;
     while( cnt<argc )
