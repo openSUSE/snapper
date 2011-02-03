@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <iostream>
 
-#include <snapper/Snapshot.h>
+#include <snapper/Snapper.h>
 
 using namespace snapper;
 using namespace std;
@@ -10,7 +10,7 @@ using namespace std;
 int
 main(int argc, char** argv)
 {
-    snapshots.createSingleSnapshot("test");
+    getSnapper()->createSingleSnapshot("test");
 
     exit(EXIT_SUCCESS);
 }

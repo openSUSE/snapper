@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <iostream>
 
-#include <snapper/Snapshot.h>
+#include <snapper/Snapper.h>
 
 using namespace snapper;
 using namespace std;
@@ -10,9 +10,8 @@ using namespace std;
 int
 main(int argc, char** argv)
 {
-    snapshots.assertInit();
-
-    for (list<Snapshot>::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
+    const Snapshots& snapshots = getSnapper()->getSnapshots();
+    for (Snapshots::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
     {
 	cout << *it << endl;
     }

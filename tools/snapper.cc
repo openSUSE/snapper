@@ -9,6 +9,7 @@
 #include <snapper/AppUtil.h>
 #include <snapper/SnapperTmpl.h>
 #include <snapper/Compare.h>
+#include <snapper/Enum.h>
 
 using namespace snapper;
 using namespace std;
@@ -17,6 +18,8 @@ typedef void (*cmd_fnc)( const list<string>& args );
 map<string,cmd_fnc> cmds;
 
 int print_number = 0;
+
+Snapper* sh = NULL;
 
 void showHelp( const list<string>& args )
     {
@@ -38,9 +41,9 @@ void showHelp( const list<string>& args )
 
 void listSnap( const list<string>& args )
     {
-    snapshots.assertInit();
 
-    for (list<Snapshot>::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
+    const Snapshots& snapshots = sh->getSnapshots();
+    for (Snapshots::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
 	{
 	cout << *it << endl;
 	}
@@ -59,41 +62,53 @@ CompareCallbackImpl compare_callback_impl;
 void createSnap( const list<string>& args )
     {
     unsigned int number1 = 0;
-    string type;
+    SnapshotType type;
     string desc;
     list<string>::const_iterator s = args.begin();
     if( s!=args.end() )
-	type = *s++;
+    {
+	if (!toValue(*s++, type, true))
+	{
+	    cerr << "unknown type" << endl;
+	    return;
+	}
+    }
+
     if( s!=args.end() )
 	{
-	if( type == "post" )
+	if( type == POST )
 	    *s >> number1;
 	else
 	    desc = *s;
 	++s;
 	}
-    y2mil( "type:" << type << " desc:\"" << desc << "\" number1:" << number1 );
-    if( type=="single" )
+    y2mil( "type:" << toString(type) << " desc:\"" << desc << "\" number1:" << number1 );
+
+    switch (type)
     {
-	number1 = snapshots.createSingleSnapshot(desc);
-	if (print_number)
-	    cout << number1 << endl;
+	case SINGLE:
+	{
+	    Snapshots::const_iterator snap1 = sh->createSingleSnapshot(desc);
+	    if (print_number)
+		cout << snap1->getNum() << endl;
+	} break;
+
+	case PRE:
+	{
+	    Snapshots::const_iterator snap1 = sh->createPreSnapshot(desc);
+	    if (print_number)
+		cout << snap1->getNum() << endl;
+	} break;
+
+	case POST:
+	{
+	    Snapshots::const_iterator snap1 = sh->getSnapshots().find(number1);
+	    Snapshots::const_iterator snap2 = sh->createPostSnapshot(snap1);
+	    if (print_number)
+		cout << snap2->getNum() << endl;
+	    sh->startBackgroundComparsion(snap1, snap2);
+	} break;
     }
-    else if( type=="pre" )
-    {
-	number1 = snapshots.createPreSnapshot(desc);
-	if (print_number)
-	    cout << number1 << endl;
-    }
-    else if( type=="post" )
-    {
-	unsigned int number2 = snapshots.createPostSnapshot(number1);
-	if (print_number)
-	    cout << number2 << endl;
-	startBackgroundComparsion(snapshots.find(number1), snapshots.find(number2));
-    }
-    else
-	y2war( "unknown type:\"" << type << "\"" );
     }
 
 
@@ -123,9 +138,11 @@ void showDifference( const list<string>& args )
 
     readNums(args, num1, num2);
 
-    setComparisonNums(snapshots.find(num1), snapshots.find(num2));
+    const Snapshots& snapshots = sh->getSnapshots();
+    sh->setComparisonNums(snapshots.find(num1), snapshots.find(num2));
 
-    for (vector<File>::const_iterator it = files.begin(); it != files.end(); ++it)
+    const Files& files = sh->getFiles();
+    for (Files::const_iterator it = files.begin(); it != files.end(); ++it)
 	cout << statusToString(it->getPreToPostStatus()) << " " << it->getName() << endl;
     }
 
@@ -137,9 +154,11 @@ void doRollback( const list<string>& args )
 
     readNums(args, num1, num2);
 
-    setComparisonNums(snapshots.find(num1), snapshots.find(num2));
+    const Snapshots& snapshots = sh->getSnapshots();
+    sh->setComparisonNums(snapshots.find(num1), snapshots.find(num2));
 
-    for (vector<File>::iterator it = files.begin(); it != files.end(); ++it)
+    Files& files = sh->getFiles();
+    for (Files::iterator it = files.begin(); it != files.end(); ++it)
 	it->setRollback(true);
 
     files.doRollback();
@@ -178,9 +197,9 @@ main(int argc, char** argv)
     cmds["diff"] = showDifference;
     cmds["rollback"] = doRollback;
 
-    setCompareCallback(&compare_callback_impl);
-
-    snapshots.assertInit();
+    sh = getSnapper();
+    
+    sh->setCompareCallback(&compare_callback_impl);
 
     int cnt = optind;
     while( cnt<argc )

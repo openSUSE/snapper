@@ -24,14 +24,32 @@
 #define FILE_H
 
 
+#include <string>
 #include <vector>
-
-#include "snapper/SnapperInterface.h"
-#include "snapper/Snapshot.h"
 
 
 namespace snapper
 {
+    using std::string;
+    using std::vector;
+
+
+    enum StatusFlags
+    {
+	CREATED = 1, DELETED = 2, TYPE = 4, CONTENT = 8, PERMISSIONS = 16, USER = 32,
+	GROUP = 64
+    };
+
+    enum Cmp
+    {
+	CMP_PRE_TO_POST, CMP_PRE_TO_SYSTEM, CMP_POST_TO_SYSTEM
+    };
+
+    enum Location
+    {
+	LOC_PRE, LOC_POST, LOC_SYSTEM
+    };
+
 
     class File
     {
@@ -86,14 +104,17 @@ namespace snapper
 
 	bool doRollback();
 
-	vector<File>::iterator begin() { return entries.begin(); }
-	vector<File>::const_iterator begin() const { return entries.begin(); }
+	typedef vector<File>::iterator iterator;
+	typedef vector<File>::const_iterator const_iterator;
 
-	vector<File>::iterator end() { return entries.end(); }
-	vector<File>::const_iterator end() const { return entries.end(); }
+	iterator begin() { return entries.begin(); }
+	const_iterator begin() const { return entries.begin(); }
 
-	vector<File>::iterator find(const string& name);
-	vector<File>::const_iterator find(const string& name) const;
+	iterator end() { return entries.end(); }
+	const_iterator end() const { return entries.end(); }
+
+	iterator find(const string& name);
+	const_iterator find(const string& name) const;
 
     private:
 
@@ -110,9 +131,6 @@ namespace snapper
 	friend void append_helper(const string& name, unsigned int status);
 
     };
-
-
-    extern Files files;
 
 }
 

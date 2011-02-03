@@ -24,12 +24,14 @@
 #define SNAPSHOT_H
 
 
+#include <string>
 #include <list>
 
 
 namespace snapper
 {
-    using namespace std;
+    using std::string;
+    using std::list;
 
 
     enum SnapshotType { SINGLE, PRE, POST };
@@ -56,9 +58,7 @@ namespace snapper
 	string baseDir() const;
 	string snapshotDir() const;
 
-	friend std::ostream& operator<<(std::ostream& s, const Snapshot& x);
-
-	friend bool operator<(const Snapshot& a, const Snapshot& b);
+	friend std::ostream& operator<<(std::ostream& s, const Snapshot& snapshot);
 
     private:
 
@@ -80,12 +80,8 @@ namespace snapper
 
     inline bool operator<(const Snapshot& a, const Snapshot& b)
     {
-	return a.num < b.num;
+	return a.getNum() < b.getNum();
     }
-
-
-    extern list<Snapshot>::const_iterator snapshot1;
-    extern list<Snapshot>::const_iterator snapshot2;
 
 
     class Snapshots
@@ -96,15 +92,18 @@ namespace snapper
 
 	void assertInit();
 
-	list<Snapshot>::const_iterator begin() const { return entries.begin(); }
-	list<Snapshot>::const_iterator end() const { return entries.end(); }
+	typedef list<Snapshot>::iterator iterator;
+	typedef list<Snapshot>::const_iterator const_iterator;
 
-	list<Snapshot>::iterator find(unsigned int num);
-	list<Snapshot>::const_iterator find(unsigned int num) const;
+	const_iterator begin() const { return entries.begin(); }
+	const_iterator end() const { return entries.end(); }
 
-	unsigned int createSingleSnapshot(string description);
-	unsigned int createPreSnapshot(string description);
-	unsigned int createPostSnapshot(unsigned int pre_num);
+	iterator find(unsigned int num);
+	const_iterator find(unsigned int num) const;
+
+	iterator createSingleSnapshot(string description);
+	iterator createPreSnapshot(string description);
+	iterator createPostSnapshot(const_iterator pre);
 
     private:
 
@@ -119,9 +118,6 @@ namespace snapper
 	list<Snapshot> entries;
 
     };
-
-
-    extern Snapshots snapshots;
 
 }
 

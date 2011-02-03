@@ -25,7 +25,7 @@
 #include <glob.h>
 #include <string.h>
 
-#include "snapper/Snapper.h"
+#include "snapper/Snapshot.h"
 #include "snapper/AppUtil.h"
 #include "snapper/XmlFile.h"
 #include "snapper/Enum.h"
@@ -39,23 +39,17 @@ namespace snapper
     using std::list;
 
 
-    list<Snapshot>::const_iterator snapshot1;
-    list<Snapshot>::const_iterator snapshot2;
-
-    Snapshots snapshots;
-
-
-    std::ostream& operator<<(std::ostream& s, const Snapshot& x)
+    std::ostream& operator<<(std::ostream& s, const Snapshot& snapshot)
     {
-	s << "type:" << toString(x.type) << " num:" << x.num;
+	s << "type:" << toString(snapshot.type) << " num:" << snapshot.num;
 
-	if (x.pre_num != 0)
-	    s << " pre-num:" << x.pre_num;
+	if (snapshot.pre_num != 0)
+	    s << " pre-num:" << snapshot.pre_num;
 
-	s << " date:" << x.date;
+	s << " date:" << snapshot.date;
 
-	if (!x.description.empty())
-	    s << " description:" << x.description;
+	if (!snapshot.description.empty())
+	    s << " description:" << snapshot.description;
 
 	return s;
     }
@@ -197,7 +191,7 @@ namespace snapper
     }
 
 
-    unsigned int
+    Snapshots::iterator
     Snapshots::createSingleSnapshot(string description)
     {
 	Snapshot snapshot;
@@ -206,16 +200,14 @@ namespace snapper
 	snapshot.date = datetime();
 	snapshot.description = description;
 
-	entries.push_back(snapshot);
-
 	snapshot.writeInfo();
 	snapshot.createFilesystemSnapshot();
 
-	return snapshot.num;
+	return entries.insert(entries.end(), snapshot);
     }
 
 
-    unsigned int
+    Snapshots::iterator
     Snapshots::createPreSnapshot(string description)
     {
 	Snapshot snapshot;
@@ -224,30 +216,26 @@ namespace snapper
 	snapshot.date = datetime();
 	snapshot.description = description;
 
-	entries.push_back(snapshot);
-
 	snapshot.writeInfo();
 	snapshot.createFilesystemSnapshot();
 
-	return snapshot.num;
+	return entries.insert(entries.end(), snapshot);
     }
 
 
-    unsigned int
-    Snapshots::createPostSnapshot(unsigned int pre_num)
+    Snapshots::iterator
+    Snapshots::createPostSnapshot(Snapshots::const_iterator pre)
     {
 	Snapshot snapshot;
 	snapshot.type = POST;
 	snapshot.num = nextNumber();
 	snapshot.date = datetime();
-	snapshot.pre_num = pre_num;
-
-	entries.push_back(snapshot);
+	snapshot.pre_num = pre->getNum();
 
 	snapshot.writeInfo();
 	snapshot.createFilesystemSnapshot();
 
-	return snapshot.num;
+	return entries.insert(entries.end(), snapshot);
     }
 
 
@@ -258,14 +246,14 @@ namespace snapper
     }
 
 
-    list<Snapshot>::iterator
+    Snapshots::iterator
     Snapshots::find(unsigned int num)
     {
 	return lower_bound(entries.begin(), entries.end(), num, snapshot_num_less);
     }
 
 
-    list<Snapshot>::const_iterator
+    Snapshots::const_iterator
     Snapshots::find(unsigned int num) const
     {
 	return lower_bound(entries.begin(), entries.end(), num, snapshot_num_less);

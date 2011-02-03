@@ -24,18 +24,68 @@
 #define SNAPPER_H
 
 
-#include <vector>
-
-#include "snapper/SnapperInterface.h"
+#include "snapper/Snapshot.h"
+#include "snapper/File.h"
 
 
 namespace snapper
 {
-    using namespace std;
+
+    struct CompareCallback
+    {
+	CompareCallback() {}
+	virtual ~CompareCallback() {}
+
+	virtual void start() {}
+	virtual void stop() {}
+    };
 
 
-    extern CompareCallback* compare_callback;
+    class Snapper
+    {
+    public:
 
+	Snapper();
+	~Snapper();
+
+	const Snapshots& getSnapshots() const { return snapshots; }
+
+	Snapshots::iterator createSingleSnapshot(string description);
+	Snapshots::iterator createPreSnapshot(string description);
+	Snapshots::iterator createPostSnapshot(Snapshots::const_iterator pre);
+
+	void startBackgroundComparsion(Snapshots::const_iterator snapshot1,
+				       Snapshots::const_iterator snapshot2);
+
+	bool setComparisonNums(Snapshots::const_iterator new_snapshot1,
+			       Snapshots::const_iterator new_snapshot2);
+
+	Snapshots::const_iterator getSnapshot1() const { return snapshot1; }
+	Snapshots::const_iterator getSnapshot2() const { return snapshot2; }
+
+	Files& getFiles() { return files; }
+	const Files& getFiles() const { return files; }
+
+	void setCompareCallback(CompareCallback* p) { compare_callback = p; }
+	CompareCallback* getCompareCallback() const { return compare_callback; }
+
+    private:
+
+	Snapshots snapshots;
+
+	Snapshots::const_iterator snapshot1;
+	Snapshots::const_iterator snapshot2;
+
+	Files files;
+
+	CompareCallback* compare_callback;
+
+	friend void append_helper(const string& name, unsigned int status);
+
+    };
+
+
+    Snapper* getSnapper();
 
 };
 

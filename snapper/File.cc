@@ -25,8 +25,8 @@
 #include <glob.h>
 #include <string.h>
 
-#include "snapper/Snapper.h"
 #include "snapper/File.h"
+#include "snapper/Snapper.h"
 #include "snapper/AppUtil.h"
 #include "snapper/XmlFile.h"
 #include "snapper/Enum.h"
@@ -38,32 +38,35 @@
 
 namespace snapper
 {
-    Files files;
+
+    inline Snapshots::const_iterator getSnapshot1() { return getSnapper()->getSnapshot1(); }
+    inline Snapshots::const_iterator getSnapshot2() { return getSnapper()->getSnapshot2(); }
 
 
     void
     append_helper(const string& name, unsigned int status)
     {
-	files.entries.push_back(File(name, status));
+	// TODO
+	getSnapper()->files.entries.push_back(File(name, status));
     }
 
 
     void
     Files::create()
     {
-	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
+	y2mil("num1:" << getSnapshot1()->getNum() << " num2:" << getSnapshot2()->getNum());
 
-	if (compare_callback)
-	    compare_callback->start();
+	if (getSnapper()->getCompareCallback())
+	    getSnapper()->getCompareCallback()->start();
 
 	entries.clear();
 
-	cmpDirs(snapshot1->snapshotDir(), snapshot2->snapshotDir(), append_helper);
+	cmpDirs(getSnapshot1()->snapshotDir(), getSnapshot2()->snapshotDir(), append_helper);
 
 	sort(entries.begin(), entries.end());
 
-	if (compare_callback)
-	    compare_callback->stop();
+	if (getSnapper()->getCompareCallback())
+	    getSnapper()->getCompareCallback()->stop();
 
 	y2mil("found " << entries.size() << " lines");
     }
@@ -72,12 +75,12 @@ namespace snapper
     bool
     Files::load()
     {
-	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
+	y2mil("num1:" << getSnapshot1()->getNum() << " num2:" << getSnapshot2()->getNum());
 
 	entries.clear();
 
-	string input = snapshot2->baseDir() + "/filelist-" + decString(snapshot1->getNum()) +
-	    ".txt";
+	string input = getSnapshot2()->baseDir() + "/filelist-" +
+	    decString(getSnapshot1()->getNum()) + ".txt";
 
 	FILE* file = fopen(input.c_str(), "r");
 	if (file == NULL)
@@ -112,10 +115,10 @@ namespace snapper
     bool
     Files::save()
     {
-	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
+	y2mil("num1:" << getSnapshot1()->getNum() << " num2:" << getSnapshot2()->getNum());
 
-	string output = snapshot2->baseDir() + "/filelist-" + decString(snapshot1->getNum()) +
-	    ".txt";
+	string output = getSnapshot2()->baseDir() + "/filelist-" +
+	    decString(getSnapshot1()->getNum()) + ".txt";
 
 	char* tmp_name = (char*) malloc(output.length() + 12);
 	strcpy(tmp_name, output.c_str());
@@ -125,7 +128,7 @@ namespace snapper
 
 	FILE* file = fdopen(fd, "w");
 
-	for (vector<File>::const_iterator it = entries.begin(); it != entries.end(); ++it)
+	for (const_iterator it = entries.begin(); it != entries.end(); ++it)
 	    fprintf(file, "%s %s\n", statusToString(it->getPreToPostStatus()).c_str(),
 		    it->getName().c_str());
 
@@ -170,14 +173,14 @@ namespace snapper
     }
 
 
-    vector<File>::iterator
+    Files::iterator
     Files::find(const string& name)
     {
 	return lower_bound(entries.begin(), entries.end(), name, file_name_less);
     }
 
 
-    vector<File>::const_iterator
+    Files::const_iterator
     Files::find(const string& name) const
     {
 	return lower_bound(entries.begin(), entries.end(), name, file_name_less);
@@ -229,10 +232,10 @@ namespace snapper
 	switch (loc)
 	{
 	    case LOC_PRE:
-		return snapshot1->snapshotDir() + name;
+		return getSnapshot1()->snapshotDir() + name;
 
 	    case LOC_POST:
-		return snapshot2->snapshotDir() + name;
+		return getSnapshot2()->snapshotDir() + name;
 
 	    case LOC_SYSTEM:
 		return name;

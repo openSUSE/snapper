@@ -40,9 +40,58 @@ namespace snapper
     using namespace std;
 
 
+    Snapper* snapper_singleton = NULL;
+
+
+    Snapper*
+    getSnapper()
+    {
+	if (!snapper_singleton)
+	    snapper_singleton = new Snapper();
+
+	return snapper_singleton;
+    }
+
+
+    Snapper::Snapper()
+	: compare_callback(NULL)
+    {
+	y2mil("Snapper constructor");
+
+	snapshots.assertInit();
+    }
+
+
+    Snapper::~Snapper()
+    {
+	y2mil("Snapper destructor");
+    }
+
+
+    Snapshots::iterator
+    Snapper::createSingleSnapshot(string description)
+    {
+	return snapshots.createSingleSnapshot(description);
+    }
+
+
+    Snapshots::iterator
+    Snapper::createPreSnapshot(string description)
+    {
+	return snapshots.createPreSnapshot(description);
+    }
+
+
+    Snapshots::iterator
+    Snapper::createPostSnapshot(Snapshots::const_iterator pre)
+    {
+	return snapshots.createPostSnapshot(pre);
+    }
+
+
     void
-    startBackgroundComparsion(list<Snapshot>::const_iterator snapshot1,
-			      list<Snapshot>::const_iterator snapshot2)
+    Snapper::startBackgroundComparsion(Snapshots::const_iterator snapshot1,
+				       Snapshots::const_iterator snapshot2)
     {
 	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
 
@@ -57,8 +106,8 @@ namespace snapper
 
 
     bool
-    setComparisonNums(list<Snapshot>::const_iterator new_snapshot1,
-		      list<Snapshot>::const_iterator new_snapshot2)
+    Snapper::setComparisonNums(Snapshots::const_iterator new_snapshot1,
+			       Snapshots::const_iterator new_snapshot2)
     {
 	y2mil("num1:" << new_snapshot1->getNum() << " num2:" << new_snapshot2->getNum());
 
@@ -69,15 +118,5 @@ namespace snapper
 
 	return true;
     }
-
-
-    CompareCallback* compare_callback = NULL;
-
-    void
-    setCompareCallback(CompareCallback* p)
-    {
-	compare_callback = p;
-    }
-
 
 }

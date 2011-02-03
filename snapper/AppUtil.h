@@ -69,6 +69,7 @@ std::ostringstream* logStreamOpen();
 
 void logStreamClose(LogLevel level, const char* file, unsigned line,
 		    const char* func, std::ostringstream*);
+
 void initDefaultLogger();
 
 #define y2deb(op) y2log_op(snapper::DEBUG, __FILE__, __LINE__, __FUNCTION__, op)

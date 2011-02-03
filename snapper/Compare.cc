@@ -31,7 +31,7 @@
 #include <algorithm>
 
 #include "snapper/AppUtil.h"
-#include "snapper/SnapperInterface.h"
+#include "snapper/File.h"
 
 
 namespace snapper
