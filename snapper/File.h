@@ -75,6 +75,8 @@ namespace snapper
 
 	bool doRollback();
 
+	friend std::ostream& operator<<(std::ostream& s, const File& file);
+
     private:
 
 	string name;

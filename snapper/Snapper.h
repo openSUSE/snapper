@@ -82,8 +82,6 @@ namespace snapper
 
 	CompareCallback* compare_callback;
 
-	friend void append_helper(const string& name, unsigned int status);
-
     };
 
 };

@@ -44,11 +44,27 @@ namespace snapper
     inline Snapshots::const_iterator getSnapshot2() { return getSnapper()->getSnapshot2(); }
 
 
+    std::ostream& operator<<(std::ostream& s, const File& file)
+    {
+	s << "name:\"" << file.name << "\"";
+
+	s << " pre_to_post_status:\"" << statusToString(file.pre_to_post_status) << "\"";
+
+	if (file.pre_to_system_status != (unsigned int)(-1))
+	    s << " pre_to_post_status:\"" << statusToString(file.pre_to_system_status) << "\"";
+
+	if (file.post_to_system_status != (unsigned int)(-1))
+	    s << " post_to_post_status:\"" << statusToString(file.post_to_system_status) << "\n";
+
+	return s;
+    }
+
+
     void
     append_helper(const string& name, unsigned int status)
     {
 	// TODO
-	getSnapper()->files.entries.push_back(File(name, status));
+	getSnapper()->getFiles().entries.push_back(File(name, status));
     }
 
 

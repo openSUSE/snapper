@@ -46,10 +46,10 @@ namespace snapper
 	if (snapshot.pre_num != 0)
 	    s << " pre-num:" << snapshot.pre_num;
 
-	s << " date:" << snapshot.date;
+	s << " date:\"" << snapshot.date << "\"";
 
 	if (!snapshot.description.empty())
-	    s << " description:" << snapshot.description;
+	    s << " description:\"" << snapshot.description << "\"";
 
 	return s;
     }
