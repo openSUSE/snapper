@@ -48,6 +48,7 @@ namespace snapper
 	SnapshotType getType() const { return type; }
 
 	unsigned int getNum() const { return num; }
+	bool isCurrent() const { return num == 0; }
 
 	string getDate() const { return date; }
 

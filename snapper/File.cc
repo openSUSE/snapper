@@ -78,6 +78,8 @@ namespace snapper
     {
 	y2mil("num1:" << getSnapshot1()->getNum() << " num2:" << getSnapshot2()->getNum());
 
+	assert(!getSnapshot1()->isCurrent() && !getSnapshot2()->isCurrent());
+
 	entries.clear();
 
 	string input = getSnapshot2()->baseDir() + "/filelist-" +
@@ -118,6 +120,8 @@ namespace snapper
     {
 	y2mil("num1:" << getSnapshot1()->getNum() << " num2:" << getSnapshot2()->getNum());
 
+	assert(!getSnapshot1()->isCurrent() && !getSnapshot2()->isCurrent());
+
 	string output = getSnapshot2()->baseDir() + "/filelist-" +
 	    decString(getSnapshot1()->getNum()) + ".txt";
 
@@ -157,10 +161,17 @@ namespace snapper
 	if (initialized)
 	    return;
 
-	if (!load())
+	if (getSnapshot1()->isCurrent() || getSnapshot2()->isCurrent())
 	{
 	    create();
-	    save();
+	}
+	else
+	{
+	    if (!load())
+	    {
+		create();
+		save();
+	    }
 	}
 
 	initialized = true;
