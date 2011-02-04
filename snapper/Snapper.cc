@@ -72,6 +72,8 @@ namespace snapper
     Snapshots::iterator
     Snapper::createPostSnapshot(Snapshots::const_iterator pre)
     {
+	assert(pre != snapshots.end());
+
 	return snapshots.createPostSnapshot(pre);
     }
 
@@ -80,6 +82,8 @@ namespace snapper
     Snapper::startBackgroundComparsion(Snapshots::const_iterator snapshot1,
 				       Snapshots::const_iterator snapshot2)
     {
+	assert(snapshot1 != snapshots.end() && snapshot2 != snapshots.end());
+
 	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
 
 	string dir1 = snapshot1->snapshotDir();
@@ -96,6 +100,8 @@ namespace snapper
     Snapper::setComparisonNums(Snapshots::const_iterator new_snapshot1,
 			       Snapshots::const_iterator new_snapshot2)
     {
+	assert(new_snapshot1 != snapshots.end() && new_snapshot2 != snapshots.end());
+
 	y2mil("num1:" << new_snapshot1->getNum() << " num2:" << new_snapshot2->getNum());
 
 	snapshot1 = new_snapshot1;
