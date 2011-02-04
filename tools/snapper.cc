@@ -3,6 +3,7 @@
 #include <getopt.h>
 #include <iostream>
 
+#include <snapper/Factory.h>
 #include <snapper/Snapper.h>
 #include <snapper/Snapshot.h>
 #include <snapper/File.h>
@@ -197,7 +198,7 @@ main(int argc, char** argv)
     cmds["diff"] = showDifference;
     cmds["rollback"] = doRollback;
 
-    sh = getSnapper();
+    sh = createSnapper();
     
     sh->setCompareCallback(&compare_callback_impl);
 
@@ -219,5 +220,8 @@ main(int argc, char** argv)
 	    ++cnt;
 	    }
 	}
+
+    deleteSnapper(sh);
+
     exit(EXIT_SUCCESS);
 }

@@ -27,6 +27,7 @@
 
 #include "snapper/File.h"
 #include "snapper/Snapper.h"
+#include "snapper/Factory.h"
 #include "snapper/AppUtil.h"
 #include "snapper/XmlFile.h"
 #include "snapper/Enum.h"

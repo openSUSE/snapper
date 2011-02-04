@@ -40,19 +40,6 @@ namespace snapper
     using namespace std;
 
 
-    Snapper* snapper_singleton = NULL;
-
-
-    Snapper*
-    getSnapper()
-    {
-	if (!snapper_singleton)
-	    snapper_singleton = new Snapper();
-
-	return snapper_singleton;
-    }
-
-
     Snapper::Snapper()
 	: compare_callback(NULL)
     {

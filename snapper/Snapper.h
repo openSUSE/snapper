@@ -84,9 +84,6 @@ namespace snapper
 
     };
 
-
-    Snapper* getSnapper();
-
 };
 
 
