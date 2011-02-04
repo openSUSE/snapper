@@ -57,14 +57,16 @@ namespace snapper
 	void startBackgroundComparsion(Snapshots::const_iterator snapshot1,
 				       Snapshots::const_iterator snapshot2);
 
-	bool setComparisonNums(Snapshots::const_iterator new_snapshot1,
-			       Snapshots::const_iterator new_snapshot2);
+	bool setComparisonNums(Snapshots::const_iterator snapshot1,
+			       Snapshots::const_iterator snapshot2);
 
 	Snapshots::const_iterator getSnapshot1() const { return snapshot1; }
 	Snapshots::const_iterator getSnapshot2() const { return snapshot2; }
 
 	Files& getFiles() { return files; }
 	const Files& getFiles() const { return files; }
+
+	bool doRollback();
 
 	void setCompareCallback(CompareCallback* p) { compare_callback = p; }
 	CompareCallback* getCompareCallback() const { return compare_callback; }

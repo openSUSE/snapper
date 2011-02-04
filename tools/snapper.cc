@@ -132,38 +132,77 @@ void readNums(const list<string>& args, unsigned int& num1, unsigned int& num2)
 }
 
 
-void showDifference( const list<string>& args )
-    {
-    unsigned int num1 = 0;
-    unsigned int num2 = 0;
-
-    readNums(args, num1, num2);
-
+void
+readNums(const list<string>& args, Snapshots::const_iterator& snap1, Snapshots::const_iterator& snap2)
+{
     const Snapshots& snapshots = sh->getSnapshots();
-    sh->setComparisonNums(snapshots.find(num1), snapshots.find(num2));
+
+    list<string>::const_iterator s = args.begin();
+    if (s != args.end())
+    {
+	unsigned int num1 = 0;
+	if (*s != "current")
+	    *s >> num1;
+	s++;
+
+	snap1 = snapshots.find(num1);
+	if (snap1 == snapshots.end())
+	{
+	    cerr << "snapshots not found" << endl;
+	    exit(EXIT_FAILURE);
+	}
+    }
+    if (s != args.end())
+    {
+	unsigned int num2 = 0;
+	if (*s != "current")
+	    *s >> num2;
+	s++;
+
+	snap2 = snapshots.find(num2);
+	if (snap2 == snapshots.end())
+	{
+	    cerr << "snapshots not found" << endl;
+	    exit(EXIT_FAILURE);
+	}
+    }
+
+    y2mil("num1:" << snap1->getNum() << " num2:" << snap2->getNum());
+}
+
+
+void
+showDifference( const list<string>& args )
+{
+    Snapshots::const_iterator snap1;
+    Snapshots::const_iterator snap2;
+
+    readNums(args, snap1, snap2);
+
+    sh->setComparisonNums(snap1, snap2);
 
     const Files& files = sh->getFiles();
     for (Files::const_iterator it = files.begin(); it != files.end(); ++it)
 	cout << statusToString(it->getPreToPostStatus()) << " " << it->getName() << endl;
-    }
+}
 
 
-void doRollback( const list<string>& args )
-    {
-    unsigned int num1 = 0;
-    unsigned int num2 = 0;
+void
+doRollback( const list<string>& args )
+{
+    Snapshots::const_iterator snap1;
+    Snapshots::const_iterator snap2;
 
-    readNums(args, num1, num2);
+    readNums(args, snap1, snap2);
 
-    const Snapshots& snapshots = sh->getSnapshots();
-    sh->setComparisonNums(snapshots.find(num1), snapshots.find(num2));
+    sh->setComparisonNums(snap1, snap2);
 
     Files& files = sh->getFiles();
     for (Files::iterator it = files.begin(); it != files.end(); ++it)
 	it->setRollback(true);
 
-    files.doRollback();
-    }
+    sh->doRollback();
+}
 
 
 int

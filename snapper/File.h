@@ -98,11 +98,9 @@ namespace snapper
     {
     public:
 
+	friend class Snapper;
+
 	Files() : initialized(false) {}
-
-	void assertInit();
-
-	bool doRollback();
 
 	typedef vector<File>::iterator iterator;
 	typedef vector<File>::const_iterator const_iterator;
@@ -118,11 +116,15 @@ namespace snapper
 
     private:
 
+	void assertInit();
+
 	void initialize();
 
 	void create();
 	bool load();
 	bool save();
+
+	bool doRollback();
 
 	bool initialized;
 

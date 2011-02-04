@@ -239,24 +239,25 @@ namespace snapper
     }
 
 
-    inline bool
-    snapshot_num_less(const Snapshot& snapshot, unsigned int num)
+    struct num_is
     {
-	return snapshot.getNum() < num;
-    }
+        num_is(unsigned int num) : num(num) {}
+        bool operator()(const Snapshot& s) const { return s.getNum() == num; }
+        const unsigned int num;
+    };
 
 
     Snapshots::iterator
     Snapshots::find(unsigned int num)
     {
-	return lower_bound(entries.begin(), entries.end(), num, snapshot_num_less);
+	return find_if(entries.begin(), entries.end(), num_is(num));
     }
 
 
     Snapshots::const_iterator
     Snapshots::find(unsigned int num) const
     {
-	return lower_bound(entries.begin(), entries.end(), num, snapshot_num_less);
+	return find_if(entries.begin(), entries.end(), num_is(num));
     }
 
 }

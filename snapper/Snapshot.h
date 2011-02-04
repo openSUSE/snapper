@@ -88,9 +88,9 @@ namespace snapper
     {
     public:
 
-	Snapshots() : initialized(false) {}
+	friend class Snapper;
 
-	void assertInit();
+	Snapshots() : initialized(false) {}
 
 	typedef list<Snapshot>::iterator iterator;
 	typedef list<Snapshot>::const_iterator const_iterator;
@@ -101,15 +101,17 @@ namespace snapper
 	iterator find(unsigned int num);
 	const_iterator find(unsigned int num) const;
 
-	iterator createSingleSnapshot(string description);
-	iterator createPreSnapshot(string description);
-	iterator createPostSnapshot(const_iterator pre);
-
     private:
+
+	void assertInit();
 
 	void initialize();
 
 	void read();
+
+	iterator createSingleSnapshot(string description);
+	iterator createPreSnapshot(string description);
+	iterator createPostSnapshot(const_iterator pre);
 
 	unsigned int nextNumber();
 

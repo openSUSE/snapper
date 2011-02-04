@@ -106,4 +106,11 @@ namespace snapper
 	return true;
     }
 
+
+    bool
+    Snapper::doRollback()
+    {
+	return files.doRollback();
+    }
+
 }
