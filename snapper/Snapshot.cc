@@ -151,18 +151,23 @@ namespace snapper
 			if (i2->pre_num == i1->num)
 			    n++;
 		    if (n > 1)
-			y2err("num " << i1->num << " has " << n << " post-nums");
+			y2err("pre-num " << i1->num << " has " << n << " post-nums");
 		}
 		break;
 
 		case POST:
 		{
 		    if (i1->pre_num > i1->num)
-			y2err("pre-num " << i1->pre_num << " larger than num " << i1->num);
+			y2err("pre-num " << i1->pre_num << " larger than post-num " << i1->num);
 
 		    const_iterator i2 = find(i1->pre_num);
 		    if (i2 == end())
-			y2err("pre-num " << i1->pre_num << " for num " << i1->num << " does not exist");
+			y2err("pre-num " << i1->pre_num << " for post-num " << i1->num <<
+			      " does not exist");
+		    else
+			if (i2->type != PRE)
+			    y2err("pre-num " << i1->pre_num << " for post-num " << i1->num <<
+				  " is of type " << toString(i2->type));
 		}
 		break;
 	    }
