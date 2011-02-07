@@ -133,25 +133,6 @@ void createSnap( const list<string>& args )
     }
 
 
-void readNums(const list<string>& args, unsigned int& num1, unsigned int& num2)
-{
-    list<string>::const_iterator s = args.begin();
-    if( s!=args.end() )
-	{
-	if( *s != "current" )
-	    *s >> num1;
-	++s;
-	}
-    if( s!=args.end() )
-	{
-	if( *s != "current" )
-	    *s >> num2;
-	++s;
-	}
-    y2mil("num1:" << num1 << " num2:" << num2);
-}
-
-
 void
 readNums(const list<string>& args, Snapshots::const_iterator& snap1, Snapshots::const_iterator& snap2)
 {
@@ -228,9 +209,8 @@ doRollback( const list<string>& args )
 int
 main(int argc, char** argv)
     {
-    setlocale (LC_ALL, "");
+    setlocale(LC_ALL, "");
 
-    list<string> args;
     initDefaultLogger();
     y2mil( "argc:" << argc );
 
@@ -245,9 +225,11 @@ main(int argc, char** argv)
 	switch( ch )
 	    {
 	    case 'h':
+	    {
+		list<string> args;
 		showHelp(args);
 		exit(0);
-		break;
+	    } break;
 	    default:
 		break;
 	    }
