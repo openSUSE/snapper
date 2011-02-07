@@ -2,9 +2,9 @@
 # Makefile.am for snapper/snapper
 #
 
-lib_LTLIBRARIES = libsnapper.la
-
 AM_CXXFLAGS = -D_FILE_OFFSET_BITS=64
+
+lib_LTLIBRARIES = libsnapper.la
 
 libsnapper_la_SOURCES =					\
 	Snapper.cc		Snapper.h		\

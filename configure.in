@@ -33,6 +33,7 @@ AC_OUTPUT(
 	snapper/Makefile
 	examples/Makefile
 	tools/Makefile
+	tools/utils/Makefile
 	data/Makefile
 	package/snapper.spec:snapper.spec.in
 )

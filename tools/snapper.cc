@@ -12,6 +12,8 @@
 #include <snapper/Compare.h>
 #include <snapper/Enum.h>
 
+#include <utils/Table.h>
+
 using namespace snapper;
 using namespace std;
 
@@ -40,15 +42,33 @@ void showHelp( const list<string>& args )
 "It is possible to have multiple commands on one command line.\n";
     }
 
-void listSnap( const list<string>& args )
-    {
+void
+listSnap( const list<string>& args )
+{
+    Table table;
+
+    TableHeader header;
+    header.add("Type");
+    header.add("#");
+    header.add("Pre #");
+    header.add("Date");
+    header.add("Description");
+    table.setHeader(header);
 
     const Snapshots& snapshots = sh->getSnapshots();
     for (Snapshots::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
-	{
-	cout << *it << endl;
-	}
+    {
+	TableRow row;
+	row.add(toString(it->getType()));
+	row.add(decString(it->getNum()));
+	row.add(it->getType() == POST ? decString(it->getPreNum()) : "");
+	row.add(it->getDate());
+	row.add(it->getDescription());
+	table.add(row);
     }
+
+    cout << table;
+}
 
 
 struct CompareCallbackImpl : public CompareCallback
