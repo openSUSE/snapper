@@ -107,6 +107,12 @@ namespace snapper
 
 	    getChildValue(node, "pre_num", snapshot.pre_num);
 
+	    if (!checkDir(snapshot.snapshotDir()))
+	    {
+		y2err("snapshot directory does not exist. not adding snapshot " << num);
+		continue;
+	    }
+
 	    entries.push_back(snapshot);
 	}
 
