@@ -24,6 +24,8 @@
 #define SNAPSHOT_H
 
 
+#include <time.h>
+
 #include <string>
 #include <list>
 
@@ -50,7 +52,7 @@ namespace snapper
 	unsigned int getNum() const { return num; }
 	bool isCurrent() const { return num == 0; }
 
-	string getDate() const { return date; }
+	time_t getDate() const { return date; }
 
 	string getDescription() const { return description; }
 
@@ -67,7 +69,7 @@ namespace snapper
 
 	unsigned int num;
 
-	string date;
+	time_t date;
 
 	string description;	// empty for type=POST
 

@@ -392,15 +392,26 @@ readlink(const string& path, string& buf)
 
 
     string
-    datetime()
+    datetime(time_t t1, bool utc, bool classic)
     {
-	time_t t1 = time(NULL);
 	struct tm t2;
-	gmtime_r(&t1, &t2);
+	utc ? gmtime_r(&t1, &t2) : localtime_r(&t1, &t2);
 	char buf[64 + 1];
-	if (strftime(buf, sizeof(buf), "%F %T %Z", &t2) == 0)
+	if (strftime(buf, sizeof(buf), classic ? "%F %T" : "%c", &t2) == 0)
 	    return string("unknown");
 	return string(buf);
+    }
+
+
+    time_t
+    scan_datetime(const string& str, bool utc)
+    {
+	struct tm s;
+	memset(&s, 0, sizeof(s));
+	const char* p = strptime(str.c_str(), "%F %T", &s);
+	if (!p || *p != '\0')
+	    return (time_t)(-1);
+	return utc ? timegm(&s) : timelocal(&s);
     }
 
 

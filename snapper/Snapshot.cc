@@ -24,6 +24,7 @@
 #include <sys/types.h>
 #include <glob.h>
 #include <string.h>
+#include <boost/algorithm/string.hpp>
 
 #include "snapper/Snapshot.h"
 #include "snapper/AppUtil.h"
@@ -46,7 +47,7 @@ namespace snapper
 	if (snapshot.pre_num != 0)
 	    s << " pre-num:" << snapshot.pre_num;
 
-	s << " date:\"" << snapshot.date << "\"";
+	s << " date:\"" << datetime(snapshot.date, true, true) << "\"";
 
 	if (!snapshot.description.empty())
 	    s << " description:\"" << snapshot.description << "\"";
@@ -101,7 +102,16 @@ namespace snapper
 	    getChildValue(node, "num", snapshot.num);
 	    assert(num == snapshot.num);
 
-	    getChildValue(node, "date", snapshot.date);
+	    if (getChildValue(node, "date", tmp))
+	    {
+		// TODO: remove someday
+		if (boost::ends_with(tmp, " GMT"))
+		    tmp.erase(19);
+
+		assert(tmp.size() == 19);
+
+		snapshot.date = scan_datetime(tmp, true);
+	    }
 
 	    getChildValue(node, "description", snapshot.description);
 
@@ -130,7 +140,7 @@ namespace snapper
 	Snapshot snapshot;
 	snapshot.type = SINGLE;
 	snapshot.num = 0;
-	snapshot.date = "now";
+	snapshot.date = (time_t)(-1);
 	snapshot.description = "current";
 	entries.push_back(snapshot);
 
@@ -175,7 +185,7 @@ namespace snapper
 
 	setChildValue(node, "num", num);
 
-	setChildValue(node, "date", date);
+	setChildValue(node, "date", datetime(date, true, true));
 
 	if (type == SINGLE || type == PRE)
 	    setChildValue(node, "description", description);
@@ -203,7 +213,7 @@ namespace snapper
 	Snapshot snapshot;
 	snapshot.type = SINGLE;
 	snapshot.num = nextNumber();
-	snapshot.date = datetime();
+	snapshot.date = time(NULL);
 	snapshot.description = description;
 
 	snapshot.writeInfo();
@@ -219,7 +229,7 @@ namespace snapper
 	Snapshot snapshot;
 	snapshot.type = PRE;
 	snapshot.num = nextNumber();
-	snapshot.date = datetime();
+	snapshot.date = time(NULL);
 	snapshot.description = description;
 
 	snapshot.writeInfo();
@@ -235,7 +245,7 @@ namespace snapper
 	Snapshot snapshot;
 	snapshot.type = POST;
 	snapshot.num = nextNumber();
-	snapshot.date = datetime();
+	snapshot.date = time(NULL);
 	snapshot.pre_num = pre->getNum();
 
 	snapshot.writeInfo();

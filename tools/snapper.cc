@@ -62,7 +62,7 @@ listSnap( const list<string>& args )
 	row.add(toString(it->getType()));
 	row.add(decString(it->getNum()));
 	row.add(it->getType() == POST ? decString(it->getPreNum()) : "");
-	row.add(it->getDate());
+	row.add(it->isCurrent() ? "" : datetime(it->getDate(), false, false));
 	row.add(it->getDescription());
 	table.add(row);
     }
@@ -228,6 +228,8 @@ doRollback( const list<string>& args )
 int
 main(int argc, char** argv)
     {
+    setlocale (LC_ALL, "");
+
     list<string> args;
     initDefaultLogger();
     y2mil( "argc:" << argc );

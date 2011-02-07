@@ -89,7 +89,9 @@ void initDefaultLogger();
 
 
     string hostname();
-    string datetime();
+
+    string datetime(time_t time, bool utc, bool classic);
+    time_t scan_datetime(const string& str, bool utc);
 
 
     class StopWatch
