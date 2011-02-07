@@ -199,7 +199,7 @@ showDifference( const list<string>& args )
 
     readNums(args, snap1, snap2);
 
-    sh->setComparisonNums(snap1, snap2);
+    sh->setComparison(snap1, snap2);
 
     const Files& files = sh->getFiles();
     for (Files::const_iterator it = files.begin(); it != files.end(); ++it)
@@ -215,7 +215,7 @@ doRollback( const list<string>& args )
 
     readNums(args, snap1, snap2);
 
-    sh->setComparisonNums(snap1, snap2);
+    sh->setComparison(snap1, snap2);
 
     Files& files = sh->getFiles();
     for (Files::iterator it = files.begin(); it != files.end(); ++it)

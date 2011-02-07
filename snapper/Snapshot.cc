@@ -159,8 +159,6 @@ namespace snapper
     unsigned int
     Snapshots::nextNumber()
     {
-	assertInit();
-
 	unsigned int num = 1;
 
 	if (!entries.empty())

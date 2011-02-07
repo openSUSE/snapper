@@ -57,8 +57,8 @@ namespace snapper
 	void startBackgroundComparsion(Snapshots::const_iterator snapshot1,
 				       Snapshots::const_iterator snapshot2);
 
-	bool setComparisonNums(Snapshots::const_iterator snapshot1,
-			       Snapshots::const_iterator snapshot2);
+	bool setComparison(Snapshots::const_iterator snapshot1,
+			   Snapshots::const_iterator snapshot2);
 
 	Snapshots::const_iterator getSnapshot1() const { return snapshot1; }
 	Snapshots::const_iterator getSnapshot2() const { return snapshot2; }

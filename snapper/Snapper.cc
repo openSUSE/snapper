@@ -97,8 +97,8 @@ namespace snapper
 
 
     bool
-    Snapper::setComparisonNums(Snapshots::const_iterator new_snapshot1,
-			       Snapshots::const_iterator new_snapshot2)
+    Snapper::setComparison(Snapshots::const_iterator new_snapshot1,
+			   Snapshots::const_iterator new_snapshot2)
     {
 	assert(new_snapshot1 != snapshots.end() && new_snapshot2 != snapshots.end());
 
