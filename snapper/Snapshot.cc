@@ -133,6 +133,44 @@ namespace snapper
 
 
     void
+    Snapshots::check() const
+    {
+	for (const_iterator i1 = begin(); i1 != end(); ++i1)
+	{
+	    switch (i1->type)
+	    {
+		case SINGLE:
+		{
+		}
+		break;
+
+		case PRE:
+		{
+		    int n = 0;
+		    for (const_iterator i2 = begin(); i2 != end(); ++i2)
+			if (i2->pre_num == i1->num)
+			    n++;
+		    if (n > 1)
+			y2err("num " << i1->num << " has " << n << " post-nums");
+		}
+		break;
+
+		case POST:
+		{
+		    if (i1->pre_num > i1->num)
+			y2err("pre-num " << i1->pre_num << " larger than num " << i1->num);
+
+		    const_iterator i2 = find(i1->pre_num);
+		    if (i2 == end())
+			y2err("pre-num " << i1->pre_num << " for num " << i1->num << " does not exist");
+		}
+		break;
+	    }
+	}
+    }
+
+
+    void
     Snapshots::initialize()
     {
 	initialized = true;
@@ -145,6 +183,8 @@ namespace snapper
 	entries.push_back(snapshot);
 
 	read();
+
+	check();
     }
 
 

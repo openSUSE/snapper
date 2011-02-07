@@ -112,6 +112,8 @@ namespace snapper
 
 	void read();
 
+	void check() const;
+
 	iterator createSingleSnapshot(string description);
 	iterator createPreSnapshot(string description);
 	iterator createPostSnapshot(const_iterator pre);
