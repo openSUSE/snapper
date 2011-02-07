@@ -107,6 +107,7 @@ namespace snapper
 	snapshot1 = new_snapshot1;
 	snapshot2 = new_snapshot2;
 
+	files.initialized = false;
 	files.assertInit();
 
 	return true;
