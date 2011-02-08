@@ -120,6 +120,9 @@ void initDefaultLogger();
 
 	string native;
 	string text;
+
+	friend std::ostream& operator<<(std::ostream& s, const Text& text)
+	    { return s << text.text; }
     };
 
 

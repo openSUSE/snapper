@@ -1,6 +1,5 @@
 
 #include <stdlib.h>
-#include <getopt.h>
 #include <iostream>
 
 #include <snapper/Factory.h>
@@ -12,39 +11,79 @@
 #include <snapper/Compare.h>
 #include <snapper/Enum.h>
 
-#include <utils/Table.h>
+#include "utils/Table.h"
+#include "utils/GetOpts.h"
 
 using namespace snapper;
 using namespace std;
 
-typedef void (*cmd_fnc)( const list<string>& args );
-map<string,cmd_fnc> cmds;
 
-int print_number = 0;
+typedef void (*cmd_fnc)();
+map<string, cmd_fnc> cmds;
+
+GetOpts getopts;
+
+bool quiet = false;
 
 Snapper* sh = NULL;
 
-void showHelp( const list<string>& args )
+
+Snapshots::iterator
+readNum(const string& str)
+{
+    Snapshots& snapshots = sh->getSnapshots();
+
+    unsigned int num = 0;
+    if (str != "current")
+	str >> num;
+
+    Snapshots::iterator snap = snapshots.find(num);
+    if (snap == snapshots.end())
     {
-    cout << 
-"Usage: snapper [-h] [ command [ params ] ] ...\n"
-"\n"
-"Possible commands are:\n"
-"    help                 -- show this help\n"
-"    list                 -- list all snapshots\n"
-"    create single [desc] -- create single snapshot with \"descr\" as description\n"
-"    create pre [desc]    -- create pre snapshot with \"descr\" as description\n"
-"    create post num      -- create post snapshot that corresponds to\n"
-"                            pre snapshot number \"num\"\n"
-"    diff num1 num2       -- show difference between snapnots num1 and num2.\n"
-"                            current version of filesystem is indicated by number 0.\n"
-"\n"
-"It is possible to have multiple commands on one command line.\n";
+	cerr << sformat(_("Snapshot '%u' not found"), num) << endl;
+	exit(EXIT_FAILURE);
     }
 
+    return snap;
+}
+
+
 void
-listSnap( const list<string>& args )
+showHelp()
 {
+    getopts.parse(GetOpts::no_options);
+    if (getopts.hasArgs())
+    {
+	cerr << _("Command 'help' does not take arguments") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    cout <<
+	"Usage: snapper [--global-opts] <command> [--command-opts] [command-arguments]\n"
+	"\n"
+	"Possible commands are:\n"
+	"    help                 -- show this help\n"
+	"    list                 -- list all snapshots\n"
+	"    create single [desc] -- create single snapshot with \"descr\" as description\n"
+	"    create pre [desc]    -- create pre snapshot with \"descr\" as description\n"
+	"    create post num      -- create post snapshot that corresponds to\n"
+	"                            pre snapshot number \"num\"\n"
+	"    diff num1 num2       -- show difference between snapnots num1 and num2.\n"
+	"                            current version of filesystem is indicated by number 0.\n"
+	"\n";
+}
+
+
+void
+listSnap()
+{
+    getopts.parse(GetOpts::no_options);
+    if (getopts.hasArgs())
+    {
+	cerr << _("Command 'list' does not take arguments") << endl;
+	exit(EXIT_FAILURE);
+    }
+
     Table table;
 
     TableHeader header;
@@ -71,138 +110,97 @@ listSnap( const list<string>& args )
 }
 
 
-struct CompareCallbackImpl : public CompareCallback
+void
+createSnap()
 {
-    void start() {  cout << "comparing snapshots..." << flush; }
-    void stop() { cout << " done" << endl; }
-};
+    const struct option options[] = {
+	{ "type",		required_argument,	0,	't' },
+	{ "pre-number",		required_argument,	0,	0 },
+	{ "description",	required_argument,	0,	'd' },
+	{ "print-number",	no_argument,		0,	'p' },
+	{ 0, 0, 0, 0 }
+    };
 
-CompareCallbackImpl compare_callback_impl;
-
-
-void createSnap( const list<string>& args )
+    GetOpts::parsed_opts opts = getopts.parse(options);
+    if (getopts.hasArgs())
     {
-    unsigned int number1 = 0;
-    SnapshotType type;
-    string desc;
-    list<string>::const_iterator s = args.begin();
-    if( s!=args.end() )
-    {
-	if (!toValue(*s++, type, true))
-	{
-	    cerr << "unknown type" << endl;
-	    return;
-	}
+	cerr << _("Command 'create' does not take arguments") << endl;
+	exit(EXIT_FAILURE);
     }
 
-    if( s!=args.end() )
-	{
-	if( type == POST )
-	    *s >> number1;
-	else
-	    desc = *s;
-	++s;
-	}
-    y2mil( "type:" << toString(type) << " desc:\"" << desc << "\" number1:" << number1 );
+    SnapshotType type = SINGLE;
+    Snapshots::const_iterator snap1;
+    string description;
+    bool print_number = false;
+
+    GetOpts::parsed_opts::const_iterator it;
+
+    if ((it = opts.find("type")) != opts.end())
+	toValue(it->second, type, SINGLE);
+
+    if ((it = opts.find("pre-number")) != opts.end())
+	snap1 = readNum(it->second);
+
+    if ((it = opts.find("description")) != opts.end())
+	description = it->second;
+
+    if ((it = opts.find("print-number")) != opts.end())
+	print_number = true;
 
     switch (type)
     {
-	case SINGLE:
-	{
-	    Snapshots::const_iterator snap1 = sh->createSingleSnapshot(desc);
+	case SINGLE: {
+	    Snapshots::const_iterator snap1 = sh->createSingleSnapshot(description);
 	    if (print_number)
 		cout << snap1->getNum() << endl;
 	} break;
 
-	case PRE:
-	{
-	    Snapshots::const_iterator snap1 = sh->createPreSnapshot(desc);
+	case PRE: {
+	    Snapshots::const_iterator snap1 = sh->createPreSnapshot(description);
 	    if (print_number)
 		cout << snap1->getNum() << endl;
 	} break;
 
-	case POST:
-	{
-	    Snapshots::const_iterator snap1 = sh->getSnapshots().find(number1);
+	case POST: {
 	    Snapshots::const_iterator snap2 = sh->createPostSnapshot(snap1);
 	    if (print_number)
 		cout << snap2->getNum() << endl;
 	    sh->startBackgroundComparsion(snap1, snap2);
 	} break;
     }
-    }
+}
 
 
 void
-deleteSnap(const list<string>& args)
+deleteSnap()
 {
-    Snapshots& snapshots = sh->getSnapshots();
-
-    list<string>::const_iterator s = args.begin();
-    while (s != args.end())
+    getopts.parse(GetOpts::no_options);
+    if (!getopts.hasArgs())
     {
-	unsigned int number;
-	*s >> number;
-	s++;
+	cerr << _("Command 'delete' needs at least one argument") << endl;
+	exit(EXIT_FAILURE);
+    }
 
-	Snapshots::iterator snapshot = snapshots.find(number);
-	if (snapshot == snapshots.end())
-	{
-	    cerr << "snapshots not found" << endl;
-	    exit(EXIT_FAILURE);
-	}
-
+    while (getopts.hasArgs())
+    {
+	Snapshots::iterator snapshot = readNum(getopts.popArg());
 	sh->deleteSnapshot(snapshot);
     }
 }
 
 
 void
-readNums(const list<string>& args, Snapshots::const_iterator& snap1, Snapshots::const_iterator& snap2)
+showDifference()
 {
-    const Snapshots& snapshots = sh->getSnapshots();
-
-    list<string>::const_iterator s = args.begin();
-    if (s != args.end())
+    getopts.parse(GetOpts::no_options);
+    if (getopts.numArgs() != 2)
     {
-	unsigned int num1 = 0;
-	if (*s != "current")
-	    *s >> num1;
-	s++;
-
-	snap1 = snapshots.find(num1);
-	if (snap1 == snapshots.end())
-	{
-	    cerr << "snapshots not found" << endl;
-	    exit(EXIT_FAILURE);
-	}
-    }
-    if (s != args.end())
-    {
-	unsigned int num2 = 0;
-	if (*s != "current")
-	    *s >> num2;
-	s++;
-
-	snap2 = snapshots.find(num2);
-	if (snap2 == snapshots.end())
-	{
-	    cerr << "snapshots not found" << endl;
-	    exit(EXIT_FAILURE);
-	}
+	cerr << _("Command 'diff' needs two arguments") << endl;
+	exit(EXIT_FAILURE);
     }
 
-    y2mil("num1:" << snap1->getNum() << " num2:" << snap2->getNum());
-}
-
-
-void
-showDifference( const list<string>& args )
-{
-    Snapshots::const_iterator snap1;
-    Snapshots::const_iterator snap2;
-
-    readNums(args, snap1, snap2);
+    Snapshots::const_iterator snap1 = readNum(getopts.popArg());
+    Snapshots::const_iterator snap2 = readNum(getopts.popArg());
 
     sh->setComparison(snap1, snap2);
 
@@ -213,12 +211,17 @@ showDifference( const list<string>& args )
 
 
 void
-doRollback( const list<string>& args )
+doRollback()
 {
-    Snapshots::const_iterator snap1;
-    Snapshots::const_iterator snap2;
+    getopts.parse(GetOpts::no_options);
+    if (getopts.numArgs() != 2)
+    {
+	cerr << _("Command 'rollback' needs two arguments") << endl;
+	exit(EXIT_FAILURE);
+    }
 
-    readNums(args, snap1, snap2);
+    Snapshots::const_iterator snap1 = readNum(getopts.popArg());
+    Snapshots::const_iterator snap2 = readNum(getopts.popArg());
 
     sh->setComparison(snap1, snap2);
 
@@ -230,64 +233,61 @@ doRollback( const list<string>& args )
 }
 
 
+struct CompareCallbackImpl : public CompareCallback
+{
+    void start() {  cout << "comparing snapshots..." << flush; }
+    void stop() { cout << " done" << endl; }
+};
+
+CompareCallbackImpl compare_callback_impl;
+
+
 int
 main(int argc, char** argv)
-    {
+{
     setlocale(LC_ALL, "");
 
     initDefaultLogger();
-    y2mil( "argc:" << argc );
 
-    static struct option long_options[] = {
-	{ "help", 0, 0, 'h' },
-	{ "print-number", 0, &print_number, 1 },
-	{ 0, 0, 0, 0 }
-    };
-    int ch;
-    while( (ch=getopt_long( argc, argv, "h", long_options, NULL )) != -1 )
-	{
-	switch( ch )
-	    {
-	    case 'h':
-	    {
-		list<string> args;
-		showHelp(args);
-		exit(0);
-	    } break;
-	    default:
-		break;
-	    }
-	}
-
-    cmds["list"] = listSnap;
     cmds["help"] = showHelp;
+    cmds["list"] = listSnap;
     cmds["create"] = createSnap;
     cmds["delete"] = deleteSnap;
     cmds["diff"] = showDifference;
     cmds["rollback"] = doRollback;
 
+    const struct option options[] = {
+	{ "quiet",		no_argument,		0,	'q' },
+	{ 0, 0, 0, 0 }
+    };
+
+    getopts.init(argc, argv);
+
+    GetOpts::parsed_opts opts = getopts.parse(options);
+    if (!getopts.hasArgs())
+    {
+	cerr << _("No command provided") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    const char* command = getopts.popArg();
+    map<string, cmd_fnc>::const_iterator cmd = cmds.find(command);
+    if (cmd == cmds.end())
+    {
+	cerr << sformat(_("Unknown command '%s'"), command) << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    GetOpts::parsed_opts::const_iterator it;
+    if ((it = opts.find("quiet")) != opts.end())
+	quiet = true;
+
     sh = createSnapper();
 
-    sh->setCompareCallback(&compare_callback_impl);
+    if (!quiet)
+	sh->setCompareCallback(&compare_callback_impl);
 
-    int cnt = optind;
-    while( cnt<argc )
-	{
-	map<string, cmd_fnc>::const_iterator c = cmds.find(argv[cnt]);
-	if( c != cmds.end() )
-	    {
-	    list<string> args;
-	    while( ++cnt<argc && cmds.find(argv[cnt])==cmds.end() )
-		args.push_back(argv[cnt]);
-	    (*c->second)(args);
-	    }
-	else 
-	    {
-	    y2war( "Unknown command: \"" << argv[cnt] << "\"" );
-	    cerr << "Unknown command: \"" << argv[cnt] << "\"" << endl;
-	    ++cnt;
-	    }
-	}
+    (*cmd->second)();
 
     deleteSnapper(sh);
 
