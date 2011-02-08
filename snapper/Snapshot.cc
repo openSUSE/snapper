@@ -230,7 +230,7 @@ namespace snapper
 
 	setChildValue(node, "date", datetime(date, true, true));
 
-	if (type == SINGLE || type == PRE)
+	if ((type == SINGLE || type == PRE) && !description.empty())
 	    setChildValue(node, "description", description);
 
 	if (type == POST)
