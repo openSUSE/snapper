@@ -79,6 +79,15 @@ namespace snapper
 
 
     void
+    Snapper::deleteSnapshot(Snapshots::iterator snapshot)
+    {
+	assert(snapshot != snapshots.end());
+
+	snapshots.deleteSnapshot(snapshot);
+    }
+
+
+    void
     Snapper::startBackgroundComparsion(Snapshots::const_iterator snapshot1,
 				       Snapshots::const_iterator snapshot2)
     {

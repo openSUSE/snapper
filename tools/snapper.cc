@@ -134,6 +134,30 @@ void createSnap( const list<string>& args )
 
 
 void
+deleteSnap(const list<string>& args)
+{
+    Snapshots& snapshots = sh->getSnapshots();
+
+    list<string>::const_iterator s = args.begin();
+    while (s != args.end())
+    {
+	unsigned int number;
+	*s >> number;
+	s++;
+
+	Snapshots::iterator snapshot = snapshots.find(number);
+	if (snapshot == snapshots.end())
+	{
+	    cerr << "snapshots not found" << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	sh->deleteSnapshot(snapshot);
+    }
+}
+
+
+void
 readNums(const list<string>& args, Snapshots::const_iterator& snap1, Snapshots::const_iterator& snap2)
 {
     const Snapshots& snapshots = sh->getSnapshots();
@@ -238,11 +262,12 @@ main(int argc, char** argv)
     cmds["list"] = listSnap;
     cmds["help"] = showHelp;
     cmds["create"] = createSnap;
+    cmds["delete"] = deleteSnap;
     cmds["diff"] = showDifference;
     cmds["rollback"] = doRollback;
 
     sh = createSnapper();
-    
+
     sh->setCompareCallback(&compare_callback_impl);
 
     int cnt = optind;

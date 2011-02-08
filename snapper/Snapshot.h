@@ -77,7 +77,7 @@ namespace snapper
 
 	bool writeInfo() const;
 	bool createFilesystemSnapshot() const;
-
+	bool deleteFilesystemSnapshot() const;
     };
 
 
@@ -117,6 +117,8 @@ namespace snapper
 	iterator createSingleSnapshot(string description);
 	iterator createPreSnapshot(string description);
 	iterator createPostSnapshot(const_iterator pre);
+
+	void deleteSnapshot(iterator snapshot);
 
 	unsigned int nextNumber();
 

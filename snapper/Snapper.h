@@ -48,11 +48,14 @@ namespace snapper
 	Snapper();
 	~Snapper();
 
+	Snapshots& getSnapshots() { return snapshots; }
 	const Snapshots& getSnapshots() const { return snapshots; }
 
 	Snapshots::iterator createSingleSnapshot(string description);
 	Snapshots::iterator createPreSnapshot(string description);
 	Snapshots::iterator createPostSnapshot(Snapshots::const_iterator pre);
+
+	void deleteSnapshot(Snapshots::iterator snapshot);
 
 	void startBackgroundComparsion(Snapshots::const_iterator snapshot1,
 				       Snapshots::const_iterator snapshot2);

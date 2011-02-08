@@ -250,6 +250,14 @@ namespace snapper
     }
 
 
+    bool
+    Snapshot::deleteFilesystemSnapshot() const
+    {
+	SystemCmd cmd(BTRFSBIN " subvolume delete /" + snapshotDir());
+	return cmd.retcode() == 0;
+    }
+
+
     Snapshots::iterator
     Snapshots::createSingleSnapshot(string description)
     {
@@ -295,6 +303,23 @@ namespace snapper
 	snapshot.createFilesystemSnapshot();
 
 	return entries.insert(entries.end(), snapshot);
+    }
+
+
+    void
+    Snapshots::deleteSnapshot(iterator snapshot)
+    {
+	assert(!snapshot->isCurrent());
+
+	snapshot->deleteFilesystemSnapshot();
+
+	unlink((snapshot->baseDir() + "/info.xml").c_str());
+
+	list<string> tmp = glob(snapshot->baseDir() + "/filelist-*.txt", GLOB_NOSORT);
+	for (list<string>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
+	    unlink(it->c_str());
+
+	rmdir(snapshot->baseDir().c_str());
     }
 
 
