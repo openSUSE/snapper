@@ -201,6 +201,22 @@ namespace snapper
     }
 
 
+    Snapshots::const_iterator
+    Snapshots::findPost(const_iterator pre) const
+    {
+	assert(pre != end());
+	assert(pre->getType() == PRE);
+
+	for (const_iterator it = begin(); it != end(); ++it)
+	{
+	    if (it->getType() == POST && it->getPreNum() == pre->getNum())
+		return it;
+	}
+
+	return end();
+    }
+
+
     unsigned int
     Snapshots::nextNumber()
     {
