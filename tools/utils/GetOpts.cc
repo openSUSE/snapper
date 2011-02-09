@@ -32,6 +32,13 @@ GetOpts::init(int new_argc, char** new_argv)
 GetOpts::parsed_opts
 GetOpts::parse(const struct option* longopts)
 {
+    return parse(NULL, longopts);
+}
+
+
+GetOpts::parsed_opts
+GetOpts::parse(const char* command, const struct option* longopts)
+{
     parsed_opts result;
     opterr = 0;			// we report errors on our own
 
@@ -49,11 +56,17 @@ GetOpts::parse(const struct option* longopts)
 		return result;
 
 	    case '?':
-		cerr << sformat(_("Unknown option '%s'"), argv[optind - 1]) << endl;
+		if (!command)
+		    cerr << sformat(_("Unknown global option '%s'"), argv[optind - 1]) << endl;
+		else
+		    cerr << sformat(_("Unknown option '%s' for command '%s'"), argv[optind - 1], command) << endl;
 		exit(EXIT_FAILURE);
 
 	    case ':':
-		cerr << sformat(_("Missing argument for option '%s'"), argv[optind - 1]) << endl;
+		if (!command)
+		    cerr << sformat(_("Missing argument for global option '%s'"), argv[optind - 1]) << endl;
+		else
+		    cerr << sformat(_("Missing argument for command option '%s'"), argv[optind - 1]) << endl;
 		exit(EXIT_FAILURE);
 
 	    default:
@@ -63,6 +76,7 @@ GetOpts::parse(const struct option* longopts)
 	}
     }
 }
+
 
 string
 GetOpts::make_optstring(const struct option* longopts) const

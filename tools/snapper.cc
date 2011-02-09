@@ -51,7 +51,7 @@ readNum(const string& str)
 void
 showHelp()
 {
-    getopts.parse(GetOpts::no_options);
+    getopts.parse("help", GetOpts::no_options);
     if (getopts.hasArgs())
     {
 	cerr << _("Command 'help' does not take arguments") << endl;
@@ -77,7 +77,7 @@ showHelp()
 void
 listSnap()
 {
-    getopts.parse(GetOpts::no_options);
+    getopts.parse("list", GetOpts::no_options);
     if (getopts.hasArgs())
     {
 	cerr << _("Command 'list' does not take arguments") << endl;
@@ -121,7 +121,7 @@ createSnap()
 	{ 0, 0, 0, 0 }
     };
 
-    GetOpts::parsed_opts opts = getopts.parse(options);
+    GetOpts::parsed_opts opts = getopts.parse("create", options);
     if (getopts.hasArgs())
     {
 	cerr << _("Command 'create' does not take arguments") << endl;
@@ -174,7 +174,7 @@ createSnap()
 void
 deleteSnap()
 {
-    getopts.parse(GetOpts::no_options);
+    getopts.parse("delete", GetOpts::no_options);
     if (!getopts.hasArgs())
     {
 	cerr << _("Command 'delete' needs at least one argument") << endl;
@@ -192,7 +192,7 @@ deleteSnap()
 void
 showDifference()
 {
-    getopts.parse(GetOpts::no_options);
+    getopts.parse("diff", GetOpts::no_options);
     if (getopts.numArgs() != 2)
     {
 	cerr << _("Command 'diff' needs two arguments") << endl;
@@ -213,7 +213,7 @@ showDifference()
 void
 doRollback()
 {
-    getopts.parse(GetOpts::no_options);
+    getopts.parse("rollback", GetOpts::no_options);
     if (getopts.numArgs() != 2)
     {
 	cerr << _("Command 'rollback' needs two arguments") << endl;
