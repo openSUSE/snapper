@@ -57,16 +57,16 @@ GetOpts::parse(const char* command, const struct option* longopts)
 
 	    case '?':
 		if (!command)
-		    cerr << sformat(_("Unknown global option '%s'"), argv[optind - 1]) << endl;
+		    cerr << sformat(_("Unknown global option '%s'."), argv[optind - 1]) << endl;
 		else
-		    cerr << sformat(_("Unknown option '%s' for command '%s'"), argv[optind - 1], command) << endl;
+		    cerr << sformat(_("Unknown option '%s' for command '%s'."), argv[optind - 1], command) << endl;
 		exit(EXIT_FAILURE);
 
 	    case ':':
 		if (!command)
-		    cerr << sformat(_("Missing argument for global option '%s'"), argv[optind - 1]) << endl;
+		    cerr << sformat(_("Missing argument for global option '%s'."), argv[optind - 1]) << endl;
 		else
-		    cerr << sformat(_("Missing argument for command option '%s'"), argv[optind - 1]) << endl;
+		    cerr << sformat(_("Missing argument for command option '%s'."), argv[optind - 1]) << endl;
 		exit(EXIT_FAILURE);
 
 	    default:

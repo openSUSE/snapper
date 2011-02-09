@@ -41,7 +41,7 @@ readNum(const string& str)
     Snapshots::iterator snap = snapshots.find(num);
     if (snap == snapshots.end())
     {
-	cerr << sformat(_("Snapshot '%u' not found"), num) << endl;
+	cerr << sformat(_("Snapshot '%u' not found."), num) << endl;
 	exit(EXIT_FAILURE);
     }
 
@@ -50,38 +50,21 @@ readNum(const string& str)
 
 
 void
-showHelp()
+help_list()
 {
-    getopts.parse("help", GetOpts::no_options);
-    if (getopts.hasArgs())
-    {
-	cerr << _("Command 'help' does not take arguments") << endl;
-	exit(EXIT_FAILURE);
-    }
-
-    cout <<
-	"Usage: snapper [--global-opts] <command> [--command-opts] [command-arguments]\n"
-	"\n"
-	"Possible commands are:\n"
-	"    help                 -- show this help\n"
-	"    list                 -- list all snapshots\n"
-	"    create single [desc] -- create single snapshot with \"descr\" as description\n"
-	"    create pre [desc]    -- create pre snapshot with \"descr\" as description\n"
-	"    create post num      -- create post snapshot that corresponds to\n"
-	"                            pre snapshot number \"num\"\n"
-	"    diff num1 num2       -- show difference between snapnots num1 and num2.\n"
-	"                            current version of filesystem is indicated by number 0.\n"
-	"\n";
+    cout << _("  List snapshots:") << endl
+	 << _("\tsnapper list") << endl
+	 << endl;
 }
 
 
 void
-listSnap()
+command_list()
 {
     getopts.parse("list", GetOpts::no_options);
     if (getopts.hasArgs())
     {
-	cerr << _("Command 'list' does not take arguments") << endl;
+	cerr << _("Command 'list' does not take arguments.") << endl;
 	exit(EXIT_FAILURE);
     }
 
@@ -112,7 +95,22 @@ listSnap()
 
 
 void
-createSnap()
+help_create()
+{
+    cout << _("  Create snapshot:") << endl
+	 << _("\tsnapper create") << endl
+	 << endl
+	 << _("    Options for 'create' command:") << endl
+	 << _("\t--type, -t <type>\t\tType for snapshot.") << endl
+	 << _("\t--pre-numbner <number>\t\tNumber of corresponding pre snapshot.") << endl
+	 << _("\t--description, -d <description>\tDescription for snapshot.") << endl
+	 << _("\t--print-number, -p\t\tPrint number of created snapshot.") << endl
+	 << endl;
+}
+
+
+void
+command_create()
 {
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
@@ -125,7 +123,7 @@ createSnap()
     GetOpts::parsed_opts opts = getopts.parse("create", options);
     if (getopts.hasArgs())
     {
-	cerr << _("Command 'create' does not take arguments") << endl;
+	cerr << _("Command 'create' does not take arguments.") << endl;
 	exit(EXIT_FAILURE);
     }
 
@@ -173,12 +171,21 @@ createSnap()
 
 
 void
-deleteSnap()
+help_delete()
+{
+    cout << _("  Delete snapshot:") << endl
+	 << _("\tsnapper delete <number>") << endl
+	 << endl;
+}
+
+
+void
+command_delete()
 {
     getopts.parse("delete", GetOpts::no_options);
     if (!getopts.hasArgs())
     {
-	cerr << _("Command 'delete' needs at least one argument") << endl;
+	cerr << _("Command 'delete' needs at least one argument.") << endl;
 	exit(EXIT_FAILURE);
     }
 
@@ -191,7 +198,19 @@ deleteSnap()
 
 
 void
-showDifference()
+help_diff()
+{
+    cout << _("  Comparing snapshots:") << endl
+	 << _("\tsnapper diff <number1> <number2>") << endl
+	 << endl
+	 << _("    Options for 'diff' command:") << endl
+	 << _("\t--output, -o <file>\t\tSave diff to file.") << endl
+	 << endl;
+}
+
+
+void
+command_diff()
 {
     const struct option options[] = {
 	{ "output",		required_argument,	0,	'o' },
@@ -201,7 +220,7 @@ showDifference()
     GetOpts::parsed_opts opts = getopts.parse("diff", options);
     if (getopts.numArgs() != 2)
     {
-	cerr << _("Command 'diff' needs two arguments") << endl;
+	cerr << _("Command 'diff' needs two arguments.") << endl;
 	exit(EXIT_FAILURE);
     }
 
@@ -229,7 +248,19 @@ showDifference()
 
 
 void
-doRollback()
+help_rollback()
+{
+    cout << _("  Rollback snapshots:") << endl
+	 << _("\tsnapper rollback <number1> <number2>") << endl
+	 << endl
+	 << _("    Options for 'rollback' command:") << endl
+	 << _("\t--file, -f <file>\t\tRead files to rollback from file.") << endl
+	 << endl;
+}
+
+
+void
+command_rollback()
 {
     const struct option options[] = {
 	{ "file",		required_argument,	0,	'f' },
@@ -239,7 +270,7 @@ doRollback()
     GetOpts::parsed_opts opts = getopts.parse("rollback", options);
     if (getopts.numArgs() != 2)
     {
-	cerr << _("Command 'rollback' needs two arguments") << endl;
+	cerr << _("Command 'rollback' needs two arguments.") << endl;
 	exit(EXIT_FAILURE);
     }
 
@@ -273,7 +304,7 @@ doRollback()
 	    Files::iterator it = files.find(name);
 	    if (it == files.end())
 	    {
-		cerr << sformat(_("File '%s' not found in diff"), name.c_str()) << endl;
+		cerr << sformat(_("File '%s' not found in diff."), name.c_str()) << endl;
 		exit(EXIT_FAILURE);
 	    }
 
@@ -294,6 +325,32 @@ doRollback()
 }
 
 
+void
+command_help()
+{
+    getopts.parse("help", GetOpts::no_options);
+    if (getopts.hasArgs())
+    {
+	cerr << _("Command 'help' does not take arguments.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    cout << _("usage: snapper [--global-opts] <command> [--command-opts] [command-arguments]") << endl
+	 << endl;
+
+    cout << _("    Global options:") << endl
+	 << _("\t--quiet, -q\t\t\tSuppress normal output.") << endl
+	 << _("\t--table-style, -s <int>\t\tTable style (integer).") << endl
+	 << endl;
+
+    help_list();
+    help_create();
+    help_delete();
+    help_diff();
+    help_rollback();
+}
+
+
 struct CompareCallbackImpl : public CompareCallback
 {
     void start() {  cout << "comparing snapshots..." << flush; }
@@ -310,12 +367,12 @@ main(int argc, char** argv)
 
     initDefaultLogger();
 
-    cmds["help"] = showHelp;
-    cmds["list"] = listSnap;
-    cmds["create"] = createSnap;
-    cmds["delete"] = deleteSnap;
-    cmds["diff"] = showDifference;
-    cmds["rollback"] = doRollback;
+    cmds["list"] = command_list;
+    cmds["create"] = command_create;
+    cmds["delete"] = command_delete;
+    cmds["diff"] = command_diff;
+    cmds["rollback"] = command_rollback;
+    cmds["help"] = command_help;
 
     const struct option options[] = {
 	{ "quiet",		no_argument,		0,	'q' },
@@ -328,7 +385,8 @@ main(int argc, char** argv)
     GetOpts::parsed_opts opts = getopts.parse(options);
     if (!getopts.hasArgs())
     {
-	cerr << _("No command provided") << endl;
+	cerr << _("No command provided.") << endl
+	     << _("Try 'snapper help' for more information.") << endl;
 	exit(EXIT_FAILURE);
     }
 
@@ -336,7 +394,8 @@ main(int argc, char** argv)
     map<string, cmd_fnc>::const_iterator cmd = cmds.find(command);
     if (cmd == cmds.end())
     {
-	cerr << sformat(_("Unknown command '%s'"), command) << endl;
+	cerr << sformat(_("Unknown command '%s'."), command) << endl
+	     << _("Try 'snapper help' for more information.") << endl;
 	exit(EXIT_FAILURE);
     }
 
