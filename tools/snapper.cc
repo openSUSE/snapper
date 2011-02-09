@@ -258,6 +258,7 @@ main(int argc, char** argv)
 
     const struct option options[] = {
 	{ "quiet",		no_argument,		0,	'q' },
+	{ "table-style",	required_argument,	0,	's' },
 	{ 0, 0, 0, 0 }
     };
 
@@ -281,6 +282,19 @@ main(int argc, char** argv)
     GetOpts::parsed_opts::const_iterator it;
     if ((it = opts.find("quiet")) != opts.end())
 	quiet = true;
+
+    if ((it = opts.find("table-style")) != opts.end())
+    {
+	unsigned int s;
+	it->second >> s;
+	if (s >= _End)
+	{
+	    cerr << sformat(_("Invalid table style %d."), s) << " "
+		 << sformat(_("Use an integer number from %d to %d"), 0, _End - 1) << endl;
+	    exit(EXIT_FAILURE);
+	}
+	Table::defaultStyle = (TableLineStyle) s;
+    }
 
     sh = createSnapper();
 
