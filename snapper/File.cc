@@ -204,14 +204,16 @@ namespace snapper
     Files::iterator
     Files::find(const string& name)
     {
-	return lower_bound(entries.begin(), entries.end(), name, file_name_less);
+	iterator ret = lower_bound(entries.begin(), entries.end(), name, file_name_less);
+	return ret->getName() == name ? ret : end();
     }
 
 
     Files::const_iterator
     Files::find(const string& name) const
     {
-	return lower_bound(entries.begin(), entries.end(), name, file_name_less);
+	const_iterator ret = lower_bound(entries.begin(), entries.end(), name, file_name_less);
+	return ret->getName() == name ? ret : end();
     }
 
 
