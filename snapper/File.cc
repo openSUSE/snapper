@@ -113,6 +113,8 @@ namespace snapper
 
 	while (getline(&line, &len, file) != -1)
 	{
+	    // TODO: more robust splitting
+
 	    string name = string(line, 5, strlen(line) - 6);
 
 	    File file(name, stringToStatus(string(line, 0, 4)));

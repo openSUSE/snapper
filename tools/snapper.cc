@@ -1,5 +1,6 @@
 
 #include <stdlib.h>
+#include <string.h>
 #include <iostream>
 
 #include <snapper/Factory.h>
@@ -192,11 +193,25 @@ deleteSnap()
 void
 showDifference()
 {
-    getopts.parse("diff", GetOpts::no_options);
+    const struct option options[] = {
+	{ "output",		required_argument,	0,	'o' },
+	{ 0, 0, 0, 0 }
+    };
+
+    GetOpts::parsed_opts opts = getopts.parse("diff", options);
     if (getopts.numArgs() != 2)
     {
 	cerr << _("Command 'diff' needs two arguments") << endl;
 	exit(EXIT_FAILURE);
+    }
+
+    FILE* file = stdout;
+
+    GetOpts::parsed_opts::const_iterator it;
+
+    if ((it = opts.find("output")) != opts.end())
+    {
+	file = fopen(it->second.c_str(), "w");
     }
 
     Snapshots::const_iterator snap1 = readNum(getopts.popArg());
@@ -206,14 +221,22 @@ showDifference()
 
     const Files& files = sh->getFiles();
     for (Files::const_iterator it = files.begin(); it != files.end(); ++it)
-	cout << statusToString(it->getPreToPostStatus()) << " " << it->getName() << endl;
+	fprintf(file, "%s %s\n", statusToString(it->getPreToPostStatus()).c_str(), it->getName().c_str());
+
+    if (file != stdout)
+	fclose(file);
 }
 
 
 void
 doRollback()
 {
-    getopts.parse("rollback", GetOpts::no_options);
+    const struct option options[] = {
+	{ "file",		required_argument,	0,	'f' },
+	{ 0, 0, 0, 0 }
+    };
+
+    GetOpts::parsed_opts opts = getopts.parse("rollback", options);
     if (getopts.numArgs() != 2)
     {
 	cerr << _("Command 'rollback' needs two arguments") << endl;
@@ -223,11 +246,49 @@ doRollback()
     Snapshots::const_iterator snap1 = readNum(getopts.popArg());
     Snapshots::const_iterator snap2 = readNum(getopts.popArg());
 
+    FILE* file = NULL;
+
+    GetOpts::parsed_opts::const_iterator it;
+
+    if ((it = opts.find("file")) != opts.end())
+    {
+	file = fopen(it->second.c_str(), "r");
+    }
+
     sh->setComparison(snap1, snap2);
 
     Files& files = sh->getFiles();
-    for (Files::iterator it = files.begin(); it != files.end(); ++it)
-	it->setRollback(true);
+
+    if (file)
+    {
+	char* line = NULL;
+	size_t len = 0;
+
+	while (getline(&line, &len, file) != -1)
+	{
+	    // TODO: more robust splitting, make status optional
+
+	    string name = string(line, 5, strlen(line) - 6);
+
+	    Files::iterator it = files.find(name);
+	    if (it == files.end())
+	    {
+		cerr << sformat(_("File '%s' not found in diff"), name.c_str()) << endl;
+		exit(EXIT_FAILURE);
+	    }
+
+	    it->setRollback(true);
+	}
+
+	free(line);
+
+	fclose(file);
+    }
+    else
+    {
+	for (Files::iterator it = files.begin(); it != files.end(); ++it)
+	    it->setRollback(true);
+    }
 
     sh->doRollback();
 }
