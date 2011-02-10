@@ -171,6 +171,42 @@ command_create()
 
 
 void
+help_modify()
+{
+    cout << _("  Modify snapshot:") << endl
+	 << _("\tsnapper modify <number>") << endl
+	 << endl
+	 << _("    Options for 'modify' command:") << endl
+	 << _("\t--description, -d <description>\tDescription for snapshot.") << endl
+	 << endl;
+}
+
+
+void
+command_modify()
+{
+    const struct option options[] = {
+	{ "description",	required_argument,	0,	'd' },
+	{ 0, 0, 0, 0 }
+    };
+
+    GetOpts::parsed_opts opts = getopts.parse("modify", options);
+    if (getopts.numArgs() != 1)
+    {
+	cerr << _("Command 'modify' need one argument.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    Snapshots::iterator snapshot = readNum(getopts.popArg());
+
+    GetOpts::parsed_opts::const_iterator it;
+
+    if ((it = opts.find("description")) != opts.end())
+	snapshot->setDescription(it->second);
+}
+
+
+void
 help_delete()
 {
     cout << _("  Delete snapshot:") << endl
@@ -345,6 +381,7 @@ command_help()
 
     help_list();
     help_create();
+    help_modify();
     help_delete();
     help_diff();
     help_rollback();
@@ -369,6 +406,7 @@ main(int argc, char** argv)
 
     cmds["list"] = command_list;
     cmds["create"] = command_create;
+    cmds["modify"] = command_modify;
     cmds["delete"] = command_delete;
     cmds["diff"] = command_diff;
     cmds["rollback"] = command_rollback;

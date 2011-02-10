@@ -54,6 +54,7 @@ namespace snapper
 
 	time_t getDate() const { return date; }
 
+	void setDescription(const string& description);
 	string getDescription() const { return description; }
 
 	unsigned int getPreNum() const { return pre_num; }
@@ -71,13 +72,14 @@ namespace snapper
 
 	time_t date;
 
-	string description;	// empty for type=POST
+	string description;	// likely empty for type=POST
 
 	unsigned int pre_num;	// valid only for type=POST
 
 	bool writeInfo() const;
 	bool createFilesystemSnapshot() const;
 	bool deleteFilesystemSnapshot() const;
+
     };
 
 

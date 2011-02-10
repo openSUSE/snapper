@@ -76,6 +76,14 @@ namespace snapper
 
 
     void
+    Snapshot::setDescription(const string& desc)
+    {
+	description = desc;
+	writeInfo();
+    }
+
+
+    void
     Snapshots::read()
     {
 	list<string> infos = glob(SNAPSHOTSDIR "/*/info.xml", GLOB_NOSORT);
@@ -246,7 +254,7 @@ namespace snapper
 
 	setChildValue(node, "date", datetime(date, true, true));
 
-	if ((type == SINGLE || type == PRE) && !description.empty())
+	if (!description.empty())
 	    setChildValue(node, "description", description);
 
 	if (type == POST)
