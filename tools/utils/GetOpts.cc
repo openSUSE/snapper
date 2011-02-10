@@ -24,8 +24,7 @@ GetOpts::init(int new_argc, char** new_argv)
     argc = new_argc;
     argv = new_argv;
 
-    list<string> tmp(&argv[1], &argv[argc]);
-    y2mil("args: " << boost::join(tmp, " "));
+    y2mil("args: " << boost::join(list<string>(&argv[1], &argv[argc]), " "));
 }
 
 
