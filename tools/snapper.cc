@@ -267,6 +267,11 @@ command_diff()
     if ((it = opts.find("output")) != opts.end())
     {
 	file = fopen(it->second.c_str(), "w");
+	if (!file)
+	{
+	    cerr << sformat(_("Opening file '%s' failed."), it->second.c_str()) << endl;
+	    exit(EXIT_FAILURE);
+	}
     }
 
     Snapshots::const_iterator snap1 = readNum(getopts.popArg());
@@ -320,6 +325,11 @@ command_rollback()
     if ((it = opts.find("file")) != opts.end())
     {
 	file = fopen(it->second.c_str(), "r");
+	if (!file)
+	{
+	    cerr << sformat(_("Opening file '%s' failed."), it->second.c_str()) << endl;
+	    exit(EXIT_FAILURE);
+	}
     }
 
     sh->setComparison(snap1, snap2);
@@ -438,6 +448,7 @@ main(int argc, char** argv)
     }
 
     GetOpts::parsed_opts::const_iterator it;
+
     if ((it = opts.find("quiet")) != opts.end())
 	quiet = true;
 
