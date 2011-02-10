@@ -102,7 +102,7 @@ help_create()
 	 << endl
 	 << _("    Options for 'create' command:") << endl
 	 << _("\t--type, -t <type>\t\tType for snapshot.") << endl
-	 << _("\t--pre-numbner <number>\t\tNumber of corresponding pre snapshot.") << endl
+	 << _("\t--pre-number <number>\t\tNumber of corresponding pre snapshot.") << endl
 	 << _("\t--description, -d <description>\tDescription for snapshot.") << endl
 	 << _("\t--print-number, -p\t\tPrint number of created snapshot.") << endl
 	 << endl;
@@ -371,12 +371,12 @@ command_help()
 	exit(EXIT_FAILURE);
     }
 
-    cout << _("usage: snapper [--global-opts] <command> [--command-opts] [command-arguments]") << endl
+    cout << _("usage: snapper [--global-options] <command> [--command-options] [command-arguments]") << endl
 	 << endl;
 
     cout << _("    Global options:") << endl
 	 << _("\t--quiet, -q\t\t\tSuppress normal output.") << endl
-	 << _("\t--table-style, -s <int>\t\tTable style (integer).") << endl
+	 << _("\t--table-style, -s <style>\tTable style (integer).") << endl
 	 << endl;
 
     help_list();
