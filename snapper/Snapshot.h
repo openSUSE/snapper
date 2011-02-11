@@ -36,6 +36,9 @@ namespace snapper
     using std::list;
 
 
+    class Snapper;
+
+
     enum SnapshotType { SINGLE, PRE, POST };
 
 
@@ -45,7 +48,7 @@ namespace snapper
 
 	friend class Snapshots;
 
-	Snapshot() : type(SINGLE), num(0), pre_num(0) {}
+	Snapshot(const Snapper* s) : snapper(s), type(SINGLE), num(0), pre_num(0) {}
 
 	SnapshotType getType() const { return type; }
 
@@ -65,6 +68,8 @@ namespace snapper
 	friend std::ostream& operator<<(std::ostream& s, const Snapshot& snapshot);
 
     private:
+
+	const Snapper* snapper;
 
 	SnapshotType type;
 
@@ -95,7 +100,7 @@ namespace snapper
 
 	friend class Snapper;
 
-	Snapshots() : initialized(false) {}
+	Snapshots(const Snapper* s) : snapper(s) {}
 
 	typedef list<Snapshot>::iterator iterator;
 	typedef list<Snapshot>::const_iterator const_iterator;
@@ -109,8 +114,6 @@ namespace snapper
 	const_iterator findPost(const_iterator pre) const;
 
     private:
-
-	void assertInit();
 
 	void initialize();
 
@@ -126,7 +129,7 @@ namespace snapper
 
 	unsigned int nextNumber();
 
-	bool initialized;
+	const Snapper* snapper;
 
 	list<Snapshot> entries;
 

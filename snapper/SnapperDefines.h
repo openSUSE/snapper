@@ -26,6 +26,7 @@
 
 #define SYSCONFIGFILE "/etc/sysconfig/snapper"
 
+#define SNAPSHOTDIR "/snapshot"
 #define SNAPSHOTSDIR "/snapshots"
 
 #define BTRFSBIN "/sbin/btrfs"

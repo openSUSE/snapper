@@ -39,6 +39,9 @@
 
 namespace snapper
 {
+    // TODO
+    Snapper* getSnapper();
+
 
     inline Snapshots::const_iterator getSnapshot1() { return getSnapper()->getSnapshot1(); }
     inline Snapshots::const_iterator getSnapshot2() { return getSnapper()->getSnapshot2(); }
@@ -76,8 +79,6 @@ namespace snapper
 	if (getSnapper()->getCompareCallback())
 	    getSnapper()->getCompareCallback()->start();
 
-	entries.clear();
-
 	cmpDirs(getSnapshot1()->snapshotDir(), getSnapshot2()->snapshotDir(), append_helper);
 
 	sort(entries.begin(), entries.end());
@@ -95,8 +96,6 @@ namespace snapper
 	y2mil("num1:" << getSnapshot1()->getNum() << " num2:" << getSnapshot2()->getNum());
 
 	assert(!getSnapshot1()->isCurrent() && !getSnapshot2()->isCurrent());
-
-	entries.clear();
 
 	string input = getSnapshot2()->baseDir() + "/filelist-" +
 	    decString(getSnapshot1()->getNum()) + ".txt";
@@ -166,18 +165,9 @@ namespace snapper
 
 
     void
-    Files::assertInit()
-    {
-	if (!initialized)
-	    initialize();
-    }
-
-
-    void
     Files::initialize()
     {
-	if (initialized)
-	    return;
+	entries.clear();
 
 	if (getSnapshot1()->isCurrent() || getSnapshot2()->isCurrent())
 	{
@@ -191,8 +181,6 @@ namespace snapper
 		save();
 	    }
 	}
-
-	initialized = true;
     }
 
 
@@ -270,7 +258,10 @@ namespace snapper
 		return getSnapshot2()->snapshotDir() + name;
 
 	    case LOC_SYSTEM:
-		return name;
+		if (getSnapper()->rootDir() == "/")
+		    return name;
+		else
+		    return getSnapper()->rootDir() + name;
 	}
 
 	return "error";

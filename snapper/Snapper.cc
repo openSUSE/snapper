@@ -41,17 +41,37 @@ namespace snapper
 
 
     Snapper::Snapper()
-	: compare_callback(NULL)
+	: snapshots(this), compare_callback(NULL)
     {
 	y2mil("Snapper constructor");
 
-	snapshots.assertInit();
+	snapshots.initialize();
     }
 
 
     Snapper::~Snapper()
     {
 	y2mil("Snapper destructor");
+    }
+
+
+    // Directory of which snapshots are made, e.g. "/" or "/home".
+    string
+    Snapper::rootDir() const
+    {
+	return "/";
+    }
+
+
+    // Directory containing directories for all snapshots, e.g. "/snapshots"
+    // or "/home/snapshots".
+    string
+    Snapper::snapshotsDir() const
+    {
+	if (rootDir() == "/")
+	    return SNAPSHOTSDIR;
+	else
+	    return rootDir() + SNAPSHOTSDIR;
     }
 
 
@@ -116,8 +136,7 @@ namespace snapper
 	snapshot1 = new_snapshot1;
 	snapshot2 = new_snapshot2;
 
-	files.initialized = false;
-	files.assertInit();
+	files.initialize();
 
 	return true;
     }

@@ -27,6 +27,7 @@
 #include <boost/algorithm/string.hpp>
 
 #include "snapper/Snapshot.h"
+#include "snapper/Snapper.h"
 #include "snapper/AppUtil.h"
 #include "snapper/XmlFile.h"
 #include "snapper/Enum.h"
@@ -56,22 +57,27 @@ namespace snapper
     }
 
 
+    // Directory where the info file is saved, e.g. "/snapshots/1" or
+    // "/home/snapshots/1". Obviously not available for current.
     string
     Snapshot::baseDir() const
     {
 	assert(num != 0);
 
-	return SNAPSHOTSDIR "/" + decString(num);
+	return snapper->snapshotsDir() + "/" + decString(num);
     }
 
 
+    // Directory containing the actual snapshot, e.g. "/" or "/home" for
+    // current and "/snapshots/1/snapshot" or "/home/snapshots/1/snapshot"
+    // otherwise.
     string
     Snapshot::snapshotDir() const
     {
 	if (num == 0)
-	    return "/";
+	    return snapper->rootDir();
 	else
-	    return baseDir() + "/snapshot";
+	    return baseDir() + SNAPSHOTDIR;
     }
 
 
@@ -86,17 +92,17 @@ namespace snapper
     void
     Snapshots::read()
     {
-	list<string> infos = glob(SNAPSHOTSDIR "/*/info.xml", GLOB_NOSORT);
+	list<string> infos = glob(snapper->snapshotsDir() + "/*/info.xml", GLOB_NOSORT);
 	for (list<string>::const_iterator it = infos.begin(); it != infos.end(); ++it)
 	{
 	    unsigned int num;
-	    it->substr(11) >> num;
+	    it->substr(snapper->snapshotsDir().length() + 1) >> num;
 
 	    XmlFile file(*it);
 	    const xmlNode* root = file.getRootElement();
 	    const xmlNode* node = getChildNode(root, "snapshot");
 
-	    Snapshot snapshot;
+	    Snapshot snapshot(snapper);
 
 	    string tmp;
 
@@ -186,9 +192,9 @@ namespace snapper
     void
     Snapshots::initialize()
     {
-	initialized = true;
+	entries.clear();
 
-	Snapshot snapshot;
+	Snapshot snapshot(snapper);
 	snapshot.type = SINGLE;
 	snapshot.num = 0;
 	snapshot.date = (time_t)(-1);
@@ -198,14 +204,6 @@ namespace snapper
 	read();
 
 	check();
-    }
-
-
-    void
-    Snapshots::assertInit()
-    {
-	if (!initialized)
-	    initialize();
     }
 
 
@@ -233,7 +231,7 @@ namespace snapper
 	if (!entries.empty())
 	    num = entries.rbegin()->num + 1;
 
-	mkdir((SNAPSHOTSDIR "/" + decString(num)).c_str(), 0777);
+	mkdir((snapper->snapshotsDir() + "/" + decString(num)).c_str(), 0777);
 
 	// TODO check EEXIST
 
@@ -269,7 +267,7 @@ namespace snapper
     bool
     Snapshot::createFilesystemSnapshot() const
     {
-	SystemCmd cmd(BTRFSBIN " subvolume snapshot / " + snapshotDir());
+	SystemCmd cmd(BTRFSBIN " subvolume snapshot " + snapper->rootDir() + " " + snapshotDir());
 	return cmd.retcode() == 0;
     }
 
@@ -285,7 +283,7 @@ namespace snapper
     Snapshots::iterator
     Snapshots::createSingleSnapshot(string description)
     {
-	Snapshot snapshot;
+	Snapshot snapshot(snapper);
 	snapshot.type = SINGLE;
 	snapshot.num = nextNumber();
 	snapshot.date = time(NULL);
@@ -301,7 +299,7 @@ namespace snapper
     Snapshots::iterator
     Snapshots::createPreSnapshot(string description)
     {
-	Snapshot snapshot;
+	Snapshot snapshot(snapper);
 	snapshot.type = PRE;
 	snapshot.num = nextNumber();
 	snapshot.date = time(NULL);
@@ -317,7 +315,7 @@ namespace snapper
     Snapshots::iterator
     Snapshots::createPostSnapshot(Snapshots::const_iterator pre)
     {
-	Snapshot snapshot;
+	Snapshot snapshot(snapper);
 	snapshot.type = POST;
 	snapshot.num = nextNumber();
 	snapshot.date = time(NULL);

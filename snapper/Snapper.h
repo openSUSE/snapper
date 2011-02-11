@@ -48,6 +48,9 @@ namespace snapper
 	Snapper();
 	~Snapper();
 
+	string rootDir() const;
+	string snapshotsDir() const;
+
 	Snapshots& getSnapshots() { return snapshots; }
 	const Snapshots& getSnapshots() const { return snapshots; }
 

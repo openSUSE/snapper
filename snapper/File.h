@@ -102,7 +102,7 @@ namespace snapper
 
 	friend class Snapper;
 
-	Files() : initialized(false) {}
+	Files() {}
 
 	typedef vector<File>::iterator iterator;
 	typedef vector<File>::const_iterator const_iterator;
@@ -118,8 +118,6 @@ namespace snapper
 
     private:
 
-	void assertInit();
-
 	void initialize();
 
 	void create();
@@ -127,8 +125,6 @@ namespace snapper
 	bool save();
 
 	bool doRollback();
-
-	bool initialized;
 
 	vector<File> entries;
 

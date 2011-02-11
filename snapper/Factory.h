@@ -30,8 +30,6 @@ namespace snapper
 
     Snapper* createSnapper();
 
-    Snapper* getSnapper();
-
     void deleteSnapper(Snapper*);
 
 }
