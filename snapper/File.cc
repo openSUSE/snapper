@@ -63,12 +63,13 @@ namespace snapper
     }
 
 
-    void
-    append_helper(const string& name, unsigned int status)
+    struct AppendHelper
     {
-	// TODO
-	getSnapper()->getFiles().entries.push_back(File(name, status));
-    }
+	AppendHelper(vector<File>& entries) : entries(entries) {}
+	void operator()(const string& name, unsigned int status)
+	    { entries.push_back(File(name, status)); }
+	vector<File>& entries;
+    };
 
 
     void
@@ -79,7 +80,14 @@ namespace snapper
 	if (getSnapper()->getCompareCallback())
 	    getSnapper()->getCompareCallback()->start();
 
-	cmpDirs(getSnapshot1()->snapshotDir(), getSnapshot2()->snapshotDir(), append_helper);
+#if 1
+	cmpdirs_cb_t cb = AppendHelper(entries);
+#else
+	cmpdirs_cb_t cb = [&entries](const string& name, unsigned int status) {
+	    entries.push_back(File(name, status));
+	};
+#endif
+	cmpDirs(getSnapshot1()->snapshotDir(), getSnapshot2()->snapshotDir(), cb);
 
 	sort(entries.begin(), entries.end());
 

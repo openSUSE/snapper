@@ -25,6 +25,7 @@
 
 
 #include <string>
+#include <functional>
 
 
 namespace snapper
@@ -32,12 +33,14 @@ namespace snapper
     using std::string;
 
 
+    typedef std::function<void(const string&, unsigned int)> cmpdirs_cb_t;
+
+
     unsigned int
     cmpFiles(const string& name1, const string& name2);
 
     void
-    cmpDirs(const string& path1, const string& path2, void(*cb)(const string& name,
-								unsigned int status));
+    cmpDirs(const string& path1, const string& path2, cmpdirs_cb_t cb);
 
     string
     statusToString(unsigned int status);

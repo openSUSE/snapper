@@ -128,8 +128,6 @@ namespace snapper
 
 	vector<File> entries;
 
-	friend void append_helper(const string& name, unsigned int status);
-
     };
 
 }

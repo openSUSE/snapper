@@ -32,6 +32,7 @@
 
 #include "snapper/AppUtil.h"
 #include "snapper/File.h"
+#include "snapper/Compare.h"
 
 
 namespace snapper
@@ -235,14 +236,13 @@ namespace snapper
 
 
     void
-    listSubdirs(const string& base_path, const string& path, unsigned int status,
-		void(*cb)(const string& name, unsigned int status))
+    listSubdirs(const string& base_path, const string& path, unsigned int status, cmpdirs_cb_t cb)
     {
 	vector<string> tmp = readDirectory(base_path, path);
 
 	for (vector<string>::const_iterator it1 = tmp.begin(); it1 != tmp.end(); ++it1)
 	{
-	    (*cb)(path + "/" + *it1, status);
+	    cb(path + "/" + *it1, status);
 
 	    struct stat stat;
 	    int r = lstat((base_path + path + "/" + *it1).c_str(), &stat);
@@ -262,7 +262,7 @@ namespace snapper
 	dev_t dev1;
 	dev_t dev2;
 
-	void(*cb)(const string& name, unsigned int status);
+	cmpdirs_cb_t cb;
     };
 
 
@@ -272,9 +272,9 @@ namespace snapper
 
     void
     lonesome(const string& base_path, const string& path, const string& name, unsigned int status,
-	     void(*cb)(const string& name, unsigned int status))
+	     cmpdirs_cb_t cb)
     {
-	(*cb)(path + "/" + name, status);
+	cb(path + "/" + name, status);
 
 	struct stat stat;
 	int r = lstat((base_path + path + "/" + name).c_str(), &stat);
@@ -304,7 +304,7 @@ namespace snapper
 
 	if (status != 0)
 	{
-	    (*cmp_data.cb)(path + "/" + name, status);
+	    cmp_data.cb(path + "/" + name, status);
 	}
 
 	if (!(status & TYPE))
@@ -371,8 +371,7 @@ namespace snapper
 
 
     void
-    cmpDirs(const string& path1, const string& path2, void(*cb)(const string& name,
-								unsigned int status))
+    cmpDirs(const string& path1, const string& path2, cmpdirs_cb_t cb)
     {
 	y2mil("path1:" << path1 << " path2:" << path2);
 
