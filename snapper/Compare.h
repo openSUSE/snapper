@@ -33,7 +33,7 @@ namespace snapper
     using std::string;
 
 
-    typedef std::function<void(const string&, unsigned int)> cmpdirs_cb_t;
+    typedef std::function<void(const string& name, unsigned int status)> cmpdirs_cb_t;
 
 
     unsigned int
