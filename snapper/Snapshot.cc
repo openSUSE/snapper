@@ -337,8 +337,13 @@ namespace snapper
 
 	unlink((snapshot->baseDir() + "/info.xml").c_str());
 
-	list<string> tmp = glob(snapshot->baseDir() + "/filelist-*.txt", GLOB_NOSORT);
-	for (list<string>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
+	list<string> tmp1 = glob(snapshot->baseDir() + "/filelist-*.txt", GLOB_NOSORT);
+	for (list<string>::const_iterator it = tmp1.begin(); it != tmp1.end(); ++it)
+	    unlink(it->c_str());
+
+	list<string> tmp2 = glob(snapper->snapshotsDir() + "/*/filelist-" +
+				 decString(snapshot->getNum()) + ".txt", GLOB_NOSORT);
+	for (list<string>::const_iterator it = tmp2.begin(); it != tmp2.end(); ++it)
 	    unlink(it->c_str());
 
 	rmdir(snapshot->baseDir().c_str());
