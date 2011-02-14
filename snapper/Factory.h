@@ -24,15 +24,20 @@
 #define FACTORY_H
 
 
+#include <string>
+
+
 namespace snapper
 {
+    using std::string;
+
 
     class Snapper;
 
 
     // Only one Snapper can be created at a time.
 
-    Snapper* createSnapper();
+    Snapper* createSnapper(const string& root = "/");
 
     void deleteSnapper(Snapper*);
 

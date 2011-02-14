@@ -25,6 +25,7 @@ map<string, cmd_fnc> cmds;
 GetOpts getopts;
 
 bool quiet = false;
+string root = "/";
 
 Snapper* sh = NULL;
 
@@ -387,6 +388,7 @@ command_help()
     cout << _("    Global options:") << endl
 	 << _("\t--quiet, -q\t\t\tSuppress normal output.") << endl
 	 << _("\t--table-style, -s <style>\tTable style (integer).") << endl
+	 << _("\t--root, -r <path>\t\tSet root directory.") << endl
 	 << endl;
 
     help_list();
@@ -425,6 +427,7 @@ main(int argc, char** argv)
     const struct option options[] = {
 	{ "quiet",		no_argument,		0,	'q' },
 	{ "table-style",	required_argument,	0,	's' },
+	{ "root",		required_argument,	0,	'r' },
 	{ 0, 0, 0, 0 }
     };
 
@@ -465,7 +468,10 @@ main(int argc, char** argv)
 	Table::defaultStyle = (TableLineStyle) s;
     }
 
-    sh = createSnapper();
+    if ((it = opts.find("root")) != opts.end())
+	root = it->second;
+
+    sh = createSnapper(root);
 
     if (!quiet)
 	sh->setCompareCallback(&compare_callback_impl);

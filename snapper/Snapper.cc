@@ -40,8 +40,8 @@ namespace snapper
     using namespace std;
 
 
-    Snapper::Snapper()
-	: snapshots(this), files(this), compare_callback(NULL)
+    Snapper::Snapper(const string& root)
+	: root(root), snapshots(this), files(this), compare_callback(NULL)
     {
 	y2mil("Snapper constructor");
 
@@ -59,7 +59,7 @@ namespace snapper
     string
     Snapper::rootDir() const
     {
-	return "/";
+	return root;
     }
 
 

@@ -45,7 +45,7 @@ namespace snapper
     {
     public:
 
-	Snapper();
+	Snapper(const string& root = "/");
 	~Snapper();
 
 	string rootDir() const;
@@ -78,6 +78,8 @@ namespace snapper
 	CompareCallback* getCompareCallback() const { return compare_callback; }
 
     private:
+
+	const string root;
 
 	Snapshots snapshots;
 

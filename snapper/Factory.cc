@@ -33,10 +33,10 @@ namespace snapper
 
 
     Snapper*
-    createSnapper()
+    createSnapper(const string& root)
     {
 	assert(!haha.get());
-	haha.reset(new Snapper);
+	haha.reset(new Snapper(root));
 	return haha.get();
     }
 
