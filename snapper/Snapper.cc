@@ -25,6 +25,7 @@
 #include <glob.h>
 #include <string.h>
 
+#include "config.h"
 #include "snapper/Snapper.h"
 #include "snapper/AppUtil.h"
 #include "snapper/XmlFile.h"
@@ -44,6 +45,8 @@ namespace snapper
 	: root(root), snapshots(this), files(this), compare_callback(NULL)
     {
 	y2mil("Snapper constructor");
+	y2mil("libsnapper version " VERSION);
+	y2mil("root:" << root);
 
 	snapshots.initialize();
     }
