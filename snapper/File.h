@@ -54,6 +54,20 @@ namespace snapper
     };
 
 
+    struct RollbackStatistic
+    {
+	RollbackStatistic();
+
+	bool empty() const;
+
+	unsigned int numCreate;
+	unsigned int numModify;
+	unsigned int numDelete;
+
+	friend std::ostream& operator<<(std::ostream& s, const RollbackStatistic& rs);
+    };
+
+
     class File
     {
     public:
@@ -128,6 +142,8 @@ namespace snapper
 	void create();
 	bool load();
 	bool save();
+
+	RollbackStatistic getRollbackStatistic() const;
 
 	bool doRollback();
 

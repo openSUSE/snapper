@@ -93,6 +93,13 @@ setStatMode(const string& Path_Cv, mode_t val )
 }
 
 
+    bool
+    getLStat(const string& path, struct stat& fs)
+    {
+	return lstat(path.c_str(), &fs) == 0;
+    }
+
+
 bool
 checkNormalFile(const string& Path_Cv)
 {

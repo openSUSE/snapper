@@ -24,6 +24,7 @@
 #include <sys/types.h>
 #include <glob.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "snapper/File.h"
 #include "snapper/Snapper.h"
@@ -39,6 +40,29 @@
 
 namespace snapper
 {
+
+    std::ostream& operator<<(std::ostream& s, const RollbackStatistic& rs)
+    {
+	s << "numCreate:" << rs.numCreate
+	  << " numModify:" << rs.numModify
+	  << " numDelete:" << rs.numDelete;
+
+	return s;
+    }
+
+
+    RollbackStatistic::RollbackStatistic()
+	: numCreate(0), numModify(0), numDelete(0)
+    {
+    }
+
+
+    bool
+    RollbackStatistic::empty() const
+    {
+	return numCreate == 0 && numModify == 0 && numDelete == 0;
+    }
+
 
     std::ostream& operator<<(std::ostream& s, const File& file)
     {
@@ -279,17 +303,73 @@ namespace snapper
 	if (getPreToPostStatus() == CREATED)
 	{
 	    cout << "delete " << name << endl;
+
+	    struct stat fs;
+	    getLStat(getAbsolutePath(LOC_POST), fs);
+
+	    if (S_ISREG(fs.st_mode) || S_ISLNK(fs.st_mode))
+	    {
+		unlink(getAbsolutePath(LOC_SYSTEM).c_str());
+	    }
+	    else if (S_ISDIR(fs.st_mode))
+	    {
+		rmdir(getAbsolutePath(LOC_SYSTEM).c_str());
+	    }
 	}
 	else if (getPreToPostStatus() == DELETED)
 	{
 	    cout << "create " << name << endl;
+
+	    struct stat fs;
+	    getLStat(getAbsolutePath(LOC_PRE), fs);
+
+	    if (S_ISREG(fs.st_mode) || S_ISLNK(fs.st_mode))
+	    {
+		SystemCmd cmd(CPBIN " --no-dereference --preserve=mode,ownership,links " +
+			      getAbsolutePath(LOC_PRE) + " " + getAbsolutePath(LOC_SYSTEM));
+	    }
+	    else if (S_ISDIR(fs.st_mode))
+	    {
+		mkdir(getAbsolutePath(LOC_SYSTEM).c_str(), 0777);
+	    }
 	}
 	else
 	{
 	    cout << "modify " << name << endl;
+
+	    struct stat fs;
+	    getLStat(getAbsolutePath(LOC_PRE), fs);
+
+	    if (S_ISREG(fs.st_mode) || S_ISLNK(fs.st_mode))
+	    {
+		SystemCmd cmd(CPBIN " --no-dereference --preserve=mode,ownership,links " +
+			      getAbsolutePath(LOC_PRE) + " " + getAbsolutePath(LOC_SYSTEM));
+	    }
 	}
 
 	return true;
+    }
+
+
+    RollbackStatistic
+    Files::getRollbackStatistic() const
+    {
+	RollbackStatistic rs;
+
+	for (vector<File>::const_iterator it = entries.begin(); it != entries.end(); ++it)
+	{
+	    if (it->getRollback())
+	    {
+		if (it->getPreToPostStatus() == CREATED)
+		    rs.numDelete++;
+		else if (it->getPreToPostStatus() == DELETED)
+		    rs.numCreate++;
+		else
+		    rs.numModify++;
+	    }
+	}
+
+	return rs;
     }
 
 

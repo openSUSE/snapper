@@ -72,6 +72,8 @@ namespace snapper
 	Files& getFiles() { return files; }
 	const Files& getFiles() const { return files; }
 
+	RollbackStatistic getRollbackStatistic() const;
+
 	bool doRollback();
 
 	void setCompareCallback(CompareCallback* p) { compare_callback = p; }

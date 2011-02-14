@@ -46,6 +46,8 @@ bool checkDir(const string& Path_Cv);
 bool getStatMode(const string& Path_Cv, mode_t& val );
 bool setStatMode(const string& Path_Cv, mode_t val );
 
+    bool getLStat(const string& path, struct stat& fs);
+
     list<string> glob(const string& path, int flags);
 
     bool readlink(const string& path, string& buf);

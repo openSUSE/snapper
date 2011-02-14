@@ -368,6 +368,17 @@ command_rollback()
 	    it->setRollback(true);
     }
 
+    RollbackStatistic rs = sh->getRollbackStatistic();
+
+    if (rs.empty())
+    {
+	cout << "nothing to do" << endl;
+	return;
+    }
+
+    cout << "create:" << rs.numCreate << " modify:" << rs.numModify << " delete:" << rs.numDelete
+	 << endl;
+
     sh->doRollback();
 }
 

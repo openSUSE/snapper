@@ -33,5 +33,7 @@
 
 #define COMPAREDIRSBIN "/usr/lib/snapper/bin/compare-dirs"
 
+#define CPBIN "/bin/cp"
+
 
 #endif

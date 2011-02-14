@@ -142,6 +142,13 @@ namespace snapper
     }
 
 
+    RollbackStatistic
+    Snapper::getRollbackStatistic() const
+    {
+	return files.getRollbackStatistic();
+    }
+
+
     bool
     Snapper::doRollback()
     {
