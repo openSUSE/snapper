@@ -41,7 +41,7 @@ namespace snapper
 
 
     Snapper::Snapper()
-	: snapshots(this), compare_callback(NULL)
+	: snapshots(this), files(this), compare_callback(NULL)
     {
 	y2mil("Snapper constructor");
 

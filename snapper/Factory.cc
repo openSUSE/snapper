@@ -41,14 +41,6 @@ namespace snapper
     }
 
 
-    Snapper*
-    getSnapper()
-    {
-	assert(haha.get());
-	return haha.get();
-    }
-
-
     void
     deleteSnapper(Snapper* s)
     {

@@ -48,7 +48,7 @@ namespace snapper
 
 	friend class Snapshots;
 
-	Snapshot(const Snapper* s) : snapper(s), type(SINGLE), num(0), pre_num(0) {}
+	Snapshot(const Snapper* snapper) : snapper(snapper), type(SINGLE), num(0), pre_num(0) {}
 
 	SnapshotType getType() const { return type; }
 
@@ -100,7 +100,7 @@ namespace snapper
 
 	friend class Snapper;
 
-	Snapshots(const Snapper* s) : snapper(s) {}
+	Snapshots(const Snapper* snapper) : snapper(snapper) {}
 
 	typedef list<Snapshot>::iterator iterator;
 	typedef list<Snapshot>::const_iterator const_iterator;

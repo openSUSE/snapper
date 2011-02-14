@@ -39,13 +39,6 @@
 
 namespace snapper
 {
-    // TODO
-    Snapper* getSnapper();
-
-
-    inline Snapshots::const_iterator getSnapshot1() { return getSnapper()->getSnapshot1(); }
-    inline Snapshots::const_iterator getSnapshot2() { return getSnapper()->getSnapshot2(); }
-
 
     std::ostream& operator<<(std::ostream& s, const File& file)
     {
@@ -65,9 +58,11 @@ namespace snapper
 
     struct AppendHelper
     {
-	AppendHelper(vector<File>& entries) : entries(entries) {}
+	AppendHelper(const Snapper* snapper, vector<File>& entries)
+	    : snapper(snapper), entries(entries) {}
 	void operator()(const string& name, unsigned int status)
-	    { entries.push_back(File(name, status)); }
+	    { entries.push_back(File(snapper, name, status)); }
+	const Snapper* snapper;
 	vector<File>& entries;
     };
 
@@ -75,24 +70,25 @@ namespace snapper
     void
     Files::create()
     {
-	y2mil("num1:" << getSnapshot1()->getNum() << " num2:" << getSnapshot2()->getNum());
+	y2mil("num1:" << snapper->getSnapshot1()->getNum() << " num2:" <<
+	      snapper->getSnapshot2()->getNum());
 
-	if (getSnapper()->getCompareCallback())
-	    getSnapper()->getCompareCallback()->start();
+	if (snapper->getCompareCallback())
+	    snapper->getCompareCallback()->start();
 
 #if 1
-	cmpdirs_cb_t cb = AppendHelper(entries);
+	cmpdirs_cb_t cb = AppendHelper(snapper, entries);
 #else
-	cmpdirs_cb_t cb = [&entries](const string& name, unsigned int status) {
-	    entries.push_back(File(name, status));
+	cmpdirs_cb_t cb = [&snapper, &entries](const string& name, unsigned int status) {
+	    entries.push_back(File(snapper, name, status));
 	};
 #endif
-	cmpDirs(getSnapshot1()->snapshotDir(), getSnapshot2()->snapshotDir(), cb);
+	cmpDirs(snapper->getSnapshot1()->snapshotDir(), snapper->getSnapshot2()->snapshotDir(), cb);
 
 	sort(entries.begin(), entries.end());
 
-	if (getSnapper()->getCompareCallback())
-	    getSnapper()->getCompareCallback()->stop();
+	if (snapper->getCompareCallback())
+	    snapper->getCompareCallback()->stop();
 
 	y2mil("found " << entries.size() << " lines");
     }
@@ -101,12 +97,13 @@ namespace snapper
     bool
     Files::load()
     {
-	y2mil("num1:" << getSnapshot1()->getNum() << " num2:" << getSnapshot2()->getNum());
+	y2mil("num1:" << snapper->getSnapshot1()->getNum() << " num2:" <<
+	      snapper->getSnapshot2()->getNum());
 
-	assert(!getSnapshot1()->isCurrent() && !getSnapshot2()->isCurrent());
+	assert(!snapper->getSnapshot1()->isCurrent() && !snapper->getSnapshot2()->isCurrent());
 
-	string input = getSnapshot2()->baseDir() + "/filelist-" +
-	    decString(getSnapshot1()->getNum()) + ".txt";
+	string input = snapper->getSnapshot2()->baseDir() + "/filelist-" +
+	    decString(snapper->getSnapshot1()->getNum()) + ".txt";
 
 	FILE* file = fopen(input.c_str(), "r");
 	if (file == NULL)
@@ -124,7 +121,7 @@ namespace snapper
 
 	    string name = string(line, 5, strlen(line) - 6);
 
-	    File file(name, stringToStatus(string(line, 0, 4)));
+	    File file(snapper, name, stringToStatus(string(line, 0, 4)));
 	    entries.push_back(file);
 	}
 
@@ -143,12 +140,12 @@ namespace snapper
     bool
     Files::save()
     {
-	y2mil("num1:" << getSnapshot1()->getNum() << " num2:" << getSnapshot2()->getNum());
+	y2mil("num1:" << snapper->getSnapshot1()->getNum() << " num2:" << snapper->getSnapshot2()->getNum());
 
-	assert(!getSnapshot1()->isCurrent() && !getSnapshot2()->isCurrent());
+	assert(!snapper->getSnapshot1()->isCurrent() && !snapper->getSnapshot2()->isCurrent());
 
-	string output = getSnapshot2()->baseDir() + "/filelist-" +
-	    decString(getSnapshot1()->getNum()) + ".txt";
+	string output = snapper->getSnapshot2()->baseDir() + "/filelist-" +
+	    decString(snapper->getSnapshot1()->getNum()) + ".txt";
 
 	char* tmp_name = (char*) malloc(output.length() + 12);
 	strcpy(tmp_name, output.c_str());
@@ -177,7 +174,7 @@ namespace snapper
     {
 	entries.clear();
 
-	if (getSnapshot1()->isCurrent() || getSnapshot2()->isCurrent())
+	if (snapper->getSnapshot1()->isCurrent() || snapper->getSnapshot2()->isCurrent())
 	{
 	    create();
 	}
@@ -260,16 +257,16 @@ namespace snapper
 	switch (loc)
 	{
 	    case LOC_PRE:
-		return getSnapshot1()->snapshotDir() + name;
+		return snapper->getSnapshot1()->snapshotDir() + name;
 
 	    case LOC_POST:
-		return getSnapshot2()->snapshotDir() + name;
+		return snapper->getSnapshot2()->snapshotDir() + name;
 
 	    case LOC_SYSTEM:
-		if (getSnapper()->rootDir() == "/")
+		if (snapper->rootDir() == "/")
 		    return name;
 		else
-		    return getSnapper()->rootDir() + name;
+		    return snapper->rootDir() + name;
 	}
 
 	return "error";

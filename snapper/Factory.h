@@ -20,11 +20,15 @@
  */
 
 
-#include "snapper/Snapper.h"
+#ifndef FACTORY_H
+#define FACTORY_H
 
 
 namespace snapper
 {
+
+    class Snapper;
+
 
     // Only one Snapper can be created at a time.
 
@@ -33,3 +37,6 @@ namespace snapper
     void deleteSnapper(Snapper*);
 
 }
+
+
+#endif

@@ -34,6 +34,9 @@ namespace snapper
     using std::vector;
 
 
+    class Snapper;
+
+
     enum StatusFlags
     {
 	CREATED = 1, DELETED = 2, TYPE = 4, CONTENT = 8, PERMISSIONS = 16, USER = 32,
@@ -55,9 +58,9 @@ namespace snapper
     {
     public:
 
-	File(const string& name, unsigned int pre_to_post_status)
-	    : name(name), pre_to_post_status(pre_to_post_status), pre_to_system_status(-1),
-	      post_to_system_status(-1), rollback(false)
+	File(const Snapper* snapper, const string& name, unsigned int pre_to_post_status)
+	    : snapper(snapper), name(name), pre_to_post_status(pre_to_post_status),
+	      pre_to_system_status(-1), post_to_system_status(-1), rollback(false)
 	{}
 
 	const string& getName() const { return name; }
@@ -78,6 +81,8 @@ namespace snapper
 	friend std::ostream& operator<<(std::ostream& s, const File& file);
 
     private:
+
+	const Snapper* snapper;
 
 	string name;
 
@@ -102,7 +107,7 @@ namespace snapper
 
 	friend class Snapper;
 
-	Files() {}
+	Files(const Snapper* snapper) : snapper(snapper) {}
 
 	typedef vector<File>::iterator iterator;
 	typedef vector<File>::const_iterator const_iterator;
@@ -125,6 +130,8 @@ namespace snapper
 	bool save();
 
 	bool doRollback();
+
+	const Snapper* snapper;
 
 	vector<File> entries;
 
