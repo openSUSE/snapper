@@ -461,4 +461,13 @@ namespace snapper
 	return ret;
     }
 
+
+    unsigned int
+    invertStatus(unsigned int status)
+    {
+	if (status & (CREATED | DELETED))
+	    return status ^ (CREATED | DELETED);
+	return status;
+    }
+
 }

@@ -118,6 +118,11 @@ namespace snapper
 
 	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
 
+	bool invert = snapshot1->getNum() > snapshot2->getNum();
+
+	if (invert)
+	    swap(snapshot1, snapshot1);
+
 	string dir1 = snapshot1->snapshotDir();
 	string dir2 = snapshot2->snapshotDir();
 
@@ -133,6 +138,7 @@ namespace snapper
 			   Snapshots::const_iterator new_snapshot2)
     {
 	assert(new_snapshot1 != snapshots.end() && new_snapshot2 != snapshots.end());
+	assert(new_snapshot1 != new_snapshot2);
 
 	y2mil("num1:" << new_snapshot1->getNum() << " num2:" << new_snapshot2->getNum());
 

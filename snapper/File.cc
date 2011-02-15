@@ -126,8 +126,16 @@ namespace snapper
 
 	assert(!snapper->getSnapshot1()->isCurrent() && !snapper->getSnapshot2()->isCurrent());
 
-	string input = snapper->getSnapshot2()->baseDir() + "/filelist-" +
-	    decString(snapper->getSnapshot1()->getNum()) + ".txt";
+	unsigned int num1 = snapper->getSnapshot1()->getNum();
+	unsigned int num2 = snapper->getSnapshot2()->getNum();
+
+	bool invert = num1 > num2;
+
+	if (invert)
+	    swap(num1, num2);
+
+	string input = snapper->snapshotsDir() + "/" + decString(num2) + "/filelist-" +
+	    decString(num1) + ".txt";
 
 	FILE* file = fopen(input.c_str(), "r");
 	if (file == NULL)
@@ -145,7 +153,12 @@ namespace snapper
 
 	    string name = string(line, 5, strlen(line) - 6);
 
-	    File file(snapper, name, stringToStatus(string(line, 0, 4)));
+	    unsigned int status = stringToStatus(string(line, 0, 4));
+
+	    if (invert)
+		status = invertStatus(status);
+
+	    File file(snapper, name, status);
 	    entries.push_back(file);
 	}
 
@@ -168,8 +181,16 @@ namespace snapper
 
 	assert(!snapper->getSnapshot1()->isCurrent() && !snapper->getSnapshot2()->isCurrent());
 
-	string output = snapper->getSnapshot2()->baseDir() + "/filelist-" +
-	    decString(snapper->getSnapshot1()->getNum()) + ".txt";
+	unsigned int num1 = snapper->getSnapshot1()->getNum();
+	unsigned int num2 = snapper->getSnapshot2()->getNum();
+
+	bool invert = num1 > num2;
+
+	if (invert)
+	    swap(num1, num2);
+
+	string output = snapper->snapshotsDir() + "/" + decString(num2) + "/filelist-" +
+	    decString(num1) + ".txt";
 
 	char* tmp_name = (char*) malloc(output.length() + 12);
 	strcpy(tmp_name, output.c_str());
@@ -180,8 +201,14 @@ namespace snapper
 	FILE* file = fdopen(fd, "w");
 
 	for (const_iterator it = entries.begin(); it != entries.end(); ++it)
-	    fprintf(file, "%s %s\n", statusToString(it->getPreToPostStatus()).c_str(),
-		    it->getName().c_str());
+	{
+	    unsigned int status = it->getPreToPostStatus();
+
+	    if (invert)
+		status = invertStatus(status);
+
+	    fprintf(file, "%s %s\n", statusToString(status).c_str(), it->getName().c_str());
+	}
 
 	fclose(file);
 
