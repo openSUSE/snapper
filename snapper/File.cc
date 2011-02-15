@@ -300,50 +300,88 @@ namespace snapper
     bool
     File::doRollback()
     {
-	if (getPreToPostStatus() == CREATED)
+	if (getPreToPostStatus() & CREATED || getPreToPostStatus() & TYPE)
 	{
 	    cout << "delete " << name << endl;
 
 	    struct stat fs;
 	    getLStat(getAbsolutePath(LOC_POST), fs);
 
-	    if (S_ISREG(fs.st_mode) || S_ISLNK(fs.st_mode))
+	    switch (fs.st_mode & S_IFMT)
 	    {
-		unlink(getAbsolutePath(LOC_SYSTEM).c_str());
-	    }
-	    else if (S_ISDIR(fs.st_mode))
-	    {
-		rmdir(getAbsolutePath(LOC_SYSTEM).c_str());
+		case S_IFDIR: {
+		    rmdir(getAbsolutePath(LOC_SYSTEM).c_str());
+		} break;
+
+		case S_IFREG: {
+		    unlink(getAbsolutePath(LOC_SYSTEM).c_str());
+		} break;
+
+		case S_IFLNK: {
+		    unlink(getAbsolutePath(LOC_SYSTEM).c_str());
+		} break;
 	    }
 	}
-	else if (getPreToPostStatus() == DELETED)
+
+	if (getPreToPostStatus() & DELETED || getPreToPostStatus() & TYPE)
 	{
 	    cout << "create " << name << endl;
 
 	    struct stat fs;
 	    getLStat(getAbsolutePath(LOC_PRE), fs);
 
-	    if (S_ISREG(fs.st_mode) || S_ISLNK(fs.st_mode))
+	    switch (fs.st_mode & S_IFMT)
 	    {
-		SystemCmd cmd(CPBIN " --no-dereference --preserve=mode,ownership,links " +
-			      getAbsolutePath(LOC_PRE) + " " + getAbsolutePath(LOC_SYSTEM));
-	    }
-	    else if (S_ISDIR(fs.st_mode))
-	    {
-		mkdir(getAbsolutePath(LOC_SYSTEM).c_str(), 0777);
+		case S_IFDIR: {
+		    mkdir(getAbsolutePath(LOC_SYSTEM).c_str(), 0777);
+		} break;
+
+		case S_IFREG: {
+		    SystemCmd cmd(CPBIN " --preserve=mode,ownership " +
+				  getAbsolutePath(LOC_PRE) + " " + getAbsolutePath(LOC_SYSTEM));
+		} break;
+
+		case S_IFLNK: {
+		    string tmp;
+		    readlink(getAbsolutePath(LOC_PRE), tmp);
+		    symlink(tmp, getAbsolutePath(LOC_SYSTEM));
+		} break;
 	    }
 	}
-	else
+
+	if (getPreToPostStatus() & (CONTENT | PERMISSIONS | USER | GROUP))
 	{
 	    cout << "modify " << name << endl;
 
 	    struct stat fs;
 	    getLStat(getAbsolutePath(LOC_PRE), fs);
 
-	    if (S_ISREG(fs.st_mode) || S_ISLNK(fs.st_mode))
+	    if (getPreToPostStatus() & CONTENT)
 	    {
-		SystemCmd cmd(CPBIN " --no-dereference --preserve=mode,ownership,links " +
-			      getAbsolutePath(LOC_PRE) + " " + getAbsolutePath(LOC_SYSTEM));
+		switch (fs.st_mode & S_IFMT)
+		{
+		    case S_IFREG: {
+			SystemCmd cmd(CPBIN " --preserve=mode,ownership " +
+				      getAbsolutePath(LOC_PRE) + " " + getAbsolutePath(LOC_SYSTEM));
+		    } break;
+
+		    case S_IFLNK: {
+			unlink(getAbsolutePath(LOC_SYSTEM).c_str());
+			string tmp;
+			readlink(getAbsolutePath(LOC_PRE), tmp);
+			symlink(tmp, getAbsolutePath(LOC_SYSTEM));
+		    } break;
+		}
+	    }
+
+	    if (getPreToPostStatus() & PERMISSIONS)
+	    {
+		chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode);
+	    }
+
+	    if (getPreToPostStatus() & (USER | GROUP))
+	    {
+		chown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid);
 	    }
 	}
 

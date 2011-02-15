@@ -303,25 +303,22 @@ void initDefaultLogger()
     createLogger("default", path, file);
     }
 
-bool
-readlink(const string& path, string& buf)
-{
-    char tmp[1024];
-    int count = ::readlink(path.c_str(), tmp, sizeof(tmp));
-    if (count >= 0)
-	buf = string(tmp, count);
-    return count != -1;
-}
 
-
-    bool
-    readlinkat(int fd, const string& path, string& buf)
+    int
+    readlink(const string& path, string& buf)
     {
 	char tmp[1024];
-	int count = ::readlinkat(fd, path.c_str(), tmp, sizeof(tmp));
-	if (count >= 0)
-	    buf = string(tmp, count);
-	return count != -1;
+	int ret = ::readlink(path.c_str(), tmp, sizeof(tmp));
+	if (ret >= 0)
+	    buf = string(tmp, ret);
+	return ret;
+    }
+
+
+    int
+    symlink(const string& oldpath, const string& newpath)
+    {
+	return ::symlink(oldpath.c_str(), newpath.c_str());
     }
 
 
