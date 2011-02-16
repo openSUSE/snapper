@@ -360,7 +360,8 @@ namespace snapper
 	    switch (fs.st_mode & S_IFMT)
 	    {
 		case S_IFDIR: {
-		    mkdir(getAbsolutePath(LOC_SYSTEM).c_str(), 0777);
+		    mkdir(getAbsolutePath(LOC_SYSTEM).c_str(), 0);
+		    chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode);
 		} break;
 
 		case S_IFREG: {
