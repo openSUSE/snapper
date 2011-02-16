@@ -362,6 +362,7 @@ namespace snapper
 		case S_IFDIR: {
 		    mkdir(getAbsolutePath(LOC_SYSTEM).c_str(), 0);
 		    chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode);
+		    chown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid);
 		} break;
 
 		case S_IFREG: {
@@ -373,6 +374,7 @@ namespace snapper
 		    string tmp;
 		    readlink(getAbsolutePath(LOC_PRE), tmp);
 		    symlink(tmp, getAbsolutePath(LOC_SYSTEM));
+		    lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid);
 		} break;
 	    }
 	}
