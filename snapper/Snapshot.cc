@@ -347,6 +347,8 @@ namespace snapper
 	    unlink(it->c_str());
 
 	rmdir(snapshot->baseDir().c_str());
+
+	entries.erase(snapshot);
     }
 
 
