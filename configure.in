@@ -35,5 +35,6 @@ AC_OUTPUT(
 	tools/Makefile
 	tools/utils/Makefile
 	data/Makefile
+	testsuite-real/Makefile
 	package/snapper.spec:snapper.spec.in
 )

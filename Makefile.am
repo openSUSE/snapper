@@ -2,7 +2,7 @@
 # Makefile.am for snapper
 #
 
-SUBDIRS = snapper examples tools data
+SUBDIRS = snapper examples tools data testsuite-real
 
 AUTOMAKE_OPTIONS = foreign dist-bzip2 no-dist-gzip
 

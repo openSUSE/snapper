@@ -132,6 +132,8 @@ namespace snapper
 	iterator end() { return entries.end(); }
 	const_iterator end() const { return entries.end(); }
 
+	bool empty() const { return entries.empty(); }
+
 	iterator find(const string& name);
 	const_iterator find(const string& name) const;
 

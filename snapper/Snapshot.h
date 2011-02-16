@@ -113,6 +113,8 @@ namespace snapper
 
 	const_iterator findPost(const_iterator pre) const;
 
+	const_iterator getSnapshotCurrent() const { return entries.begin(); }
+
     private:
 
 	void initialize();

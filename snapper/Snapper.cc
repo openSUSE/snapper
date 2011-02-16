@@ -78,6 +78,13 @@ namespace snapper
     }
 
 
+    Snapshots::const_iterator
+    Snapper::getSnapshotCurrent() const
+    {
+	return snapshots.getSnapshotCurrent();
+    }
+
+
     Snapshots::iterator
     Snapper::createSingleSnapshot(string description)
     {

@@ -54,6 +54,8 @@ namespace snapper
 	Snapshots& getSnapshots() { return snapshots; }
 	const Snapshots& getSnapshots() const { return snapshots; }
 
+	Snapshots::const_iterator getSnapshotCurrent() const;
+
 	Snapshots::iterator createSingleSnapshot(string description);
 	Snapshots::iterator createPreSnapshot(string description);
 	Snapshots::iterator createPostSnapshot(Snapshots::const_iterator pre);

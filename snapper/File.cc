@@ -444,6 +444,8 @@ namespace snapper
     bool
     Files::doRollback()
     {
+	y2mil("begin rollback");
+
 	for (vector<File>::reverse_iterator it = entries.rbegin(); it != entries.rend(); ++it)
 	{
 	    if (it->getRollback())
@@ -465,6 +467,8 @@ namespace snapper
 		}
 	    }
 	}
+
+	y2mil("end rollback");
 
 	return true;
     }
