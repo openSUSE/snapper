@@ -34,9 +34,9 @@ check_failure(const char* str, Type actual, Type expected, const char* file,
     } while (0)
 
 
-#define check_int_equal(expr, expected)					\
+#define check_equal(expr, expected)					\
     do {								\
-	unsigned int actual = (expr);					\
+	typeof (expected) actual = (expr);				\
 	if (actual != expected)						\
 	    check_failure(#expr, actual, expected, __FILE__, __LINE__,	\
 			  __PRETTY_FUNCTION__);				\

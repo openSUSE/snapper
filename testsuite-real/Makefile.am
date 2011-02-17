@@ -2,6 +2,8 @@
 # Makefile.am for snapper/testsuite-real
 #
 
+CXXFLAGS += -std=gnu++0x
+
 INCLUDES = -I$(top_srcdir)
 
 LDADD = ../snapper/libsnapper.la

@@ -64,9 +64,9 @@ check_rollback_statistics(unsigned int numCreate, unsigned int numModify, unsign
 
     RollbackStatistic rs = sh->getRollbackStatistic();
 
-    check_int_equal(rs.numCreate, numCreate);
-    check_int_equal(rs.numModify, numModify);
-    check_int_equal(rs.numDelete, numDelete);
+    check_equal(rs.numCreate, numCreate);
+    check_equal(rs.numModify, numModify);
+    check_equal(rs.numDelete, numDelete);
 }
 
 
