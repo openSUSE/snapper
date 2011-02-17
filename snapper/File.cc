@@ -411,7 +411,7 @@ namespace snapper
 
 	    if (getPreToPostStatus() & (USER | GROUP))
 	    {
-		chown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid);
+		lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid);
 	    }
 	}
 

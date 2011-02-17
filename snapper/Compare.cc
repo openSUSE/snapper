@@ -178,10 +178,10 @@ namespace snapper
     cmpFiles(const string& fullname1, const string& fullname2)
     {
 	struct stat stat1;
-	int r1 = stat(fullname1.c_str(), &stat1);
+	int r1 = lstat(fullname1.c_str(), &stat1);
 
 	struct stat stat2;
-	int r2 = stat(fullname2.c_str(), &stat2);
+	int r2 = lstat(fullname2.c_str(), &stat2);
 
 	if (r1 != 0 && r2 == 0)
 	    return CREATED;
@@ -383,12 +383,12 @@ namespace snapper
 	cmp_data.cb = cb;
 
 	struct stat stat1;
-	int r1 = stat(path1.c_str(), &stat1);
+	int r1 = lstat(path1.c_str(), &stat1);
 	assert(r1 == 0);
 	cmp_data.dev1 = stat1.st_dev;
 
 	struct stat stat2;
-	int r2 = stat(path2.c_str(), &stat2);
+	int r2 = lstat(path2.c_str(), &stat2);
 	assert(r2 == 0);
 	cmp_data.dev2 = stat2.st_dev;
 
