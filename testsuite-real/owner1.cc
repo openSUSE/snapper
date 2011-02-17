@@ -29,6 +29,8 @@ main()
 
     second_snapshot();
 
+    check_rollback_statistics(3, 0, 0);
+
     rollback();
 
     check_first();

@@ -30,6 +30,8 @@ main()
 
     second_snapshot();
 
+    check_rollback_statistics(4, 0, 0);
+
     rollback();
 
     check_first();

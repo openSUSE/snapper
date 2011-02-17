@@ -54,6 +54,23 @@ second_snapshot()
 
 
 void
+check_rollback_statistics(unsigned int numCreate, unsigned int numModify, unsigned int numDelete)
+{
+    sh->setComparison(first, second);
+
+    Files& files = sh->getFiles();
+    for (Files::iterator it = files.begin(); it != files.end(); ++it)
+	it->setRollback(true);
+
+    RollbackStatistic rs = sh->getRollbackStatistic();
+
+    check_int_equal(rs.numCreate, numCreate);
+    check_int_equal(rs.numModify, numModify);
+    check_int_equal(rs.numDelete, numDelete);
+}
+
+
+void
 rollback()
 {
     sh->setComparison(first, second);
