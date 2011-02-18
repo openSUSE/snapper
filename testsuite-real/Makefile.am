@@ -20,3 +20,5 @@ permissions2_SOURCES = permissions2.cc common.h common.cc
 owner1_SOURCES = owner1.cc common.h common.cc
 owner2_SOURCES = owner2.cc common.h common.cc
 
+EXTRA_DIST = $(noinst_SCRIPTS)
+
