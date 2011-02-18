@@ -16,15 +16,11 @@ main()
     run_command("echo test > file");
     run_command("ln --symbolic test link");
 
-    run_command("ls -l");
-
     first_snapshot();
 
     run_command("chown nobody directory");
     run_command("chown nobody file");
     run_command("chown --no-dereference nobody link");
-
-    run_command("ls -l");
 
     second_snapshot();
 
