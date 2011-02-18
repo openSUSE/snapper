@@ -1,11 +1,30 @@
 #!/bin/bash
 
 
-./simple1
+function run()
+{
+    cmd=$1
+    shift
+    args=$*
 
-./permissions1
-./permissions2
+    echo
+    echo "*** running $cmd $args ***"
+    echo
 
-./owner1
-./owner2
+    ./$cmd $args
+
+    if [ $? != 0 ] ; then
+        echo "failed"
+        exit 1
+    fi
+}
+
+
+run simple1
+
+run permissions1
+run permissions2
+
+run owner1
+run owner2
 
