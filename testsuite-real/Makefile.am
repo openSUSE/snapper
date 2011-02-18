@@ -8,6 +8,8 @@ INCLUDES = -I$(top_srcdir)
 
 LDADD = ../snapper/libsnapper.la
 
+noinst_SCRIPTS = run-all
+
 noinst_PROGRAMS = simple1 permissions1 permissions2 owner1 owner2
 
 simple1_SOURCES = simple1.cc common.h common.cc

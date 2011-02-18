@@ -1,0 +1,11 @@
+#!/bin/bash
+
+
+./simple1
+
+./permissions1
+./permissions2
+
+./owner1
+./owner2
+
