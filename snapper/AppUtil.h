@@ -50,6 +50,8 @@ bool setStatMode(const string& Path_Cv, mode_t val );
 
     list<string> glob(const string& path, int flags);
 
+    int clonefile(const string& dest, const string& src, mode_t mode);
+
     int readlink(const string& path, string& buf);
     int symlink(const string& oldpath, const string& newpath);
 

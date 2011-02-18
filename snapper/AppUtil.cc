@@ -29,6 +29,7 @@
 #include <sys/statvfs.h>
 #include <sys/types.h>
 #include <sys/utsname.h>
+#include <sys/ioctl.h>
 #include <dirent.h>
 #include <pwd.h>
 #include <string>
@@ -301,6 +302,28 @@ void initDefaultLogger()
 	file = "snapper.log";
 	}
     createLogger("default", path, file);
+    }
+
+
+    int
+    clonefile(const string& dest, const string& src, mode_t mode)
+    {
+	int src_fd = open(src.c_str(), O_RDONLY | O_LARGEFILE);
+
+	int dest_fd = open(dest.c_str(), O_WRONLY | O_LARGEFILE | O_CREAT | O_TRUNC, mode);
+
+#undef BTRFS_IOCTL_MAGIC
+#define BTRFS_IOCTL_MAGIC 0x94
+#undef BTRFS_IOC_CLONE
+#define BTRFS_IOC_CLONE _IOW (BTRFS_IOCTL_MAGIC, 9, int)
+
+	int ret = ioctl(dest_fd, BTRFS_IOC_CLONE, src_fd);
+
+	close(dest_fd);
+
+	close(src_fd);
+
+	return ret;
     }
 
 
