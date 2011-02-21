@@ -53,6 +53,9 @@ namespace snapper
 	if (!snapshot.description.empty())
 	    s << " description:\"" << snapshot.description << "\"";
 
+	if (!snapshot.cleanup.empty())
+	    s << " cleanup:\"" << snapshot.cleanup << "\"";
+
 	return s;
     }
 
@@ -82,9 +85,17 @@ namespace snapper
 
 
     void
-    Snapshot::setDescription(const string& desc)
+    Snapshot::setDescription(const string& val)
     {
-	description = desc;
+	description = val;
+	writeInfo();
+    }
+
+
+    void
+    Snapshot::setCleanup(const string& val)
+    {
+	cleanup = val;
 	writeInfo();
     }
 
@@ -130,6 +141,8 @@ namespace snapper
 	    getChildValue(node, "description", snapshot.description);
 
 	    getChildValue(node, "pre_num", snapshot.pre_num);
+
+	    getChildValue(node, "cleanup", snapshot.cleanup);
 
 	    if (!checkDir(snapshot.snapshotDir()))
 	    {
@@ -257,6 +270,9 @@ namespace snapper
 
 	if (type == POST)
 	    setChildValue(node, "pre_num", pre_num);
+
+	if (!cleanup.empty())
+	    setChildValue(node, "cleanup", cleanup);
 
 	xml.save(baseDir() + "/info.xml");
 

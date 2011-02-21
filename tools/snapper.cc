@@ -76,6 +76,7 @@ command_list()
     header.add("#");
     header.add("Pre #");
     header.add("Date");
+    header.add("Cleanup");
     header.add("Description");
     table.setHeader(header);
 
@@ -87,6 +88,7 @@ command_list()
 	row.add(decString(it->getNum()));
 	row.add(it->getType() == POST ? decString(it->getPreNum()) : "");
 	row.add(it->isCurrent() ? "" : datetime(it->getDate(), false, false));
+	row.add(it->getCleanup());
 	row.add(it->getDescription());
 	table.add(row);
     }
@@ -106,6 +108,7 @@ help_create()
 	 << _("\t--pre-number <number>\t\tNumber of corresponding pre snapshot.") << endl
 	 << _("\t--description, -d <description>\tDescription for snapshot.") << endl
 	 << _("\t--print-number, -p\t\tPrint number of created snapshot.") << endl
+	 << _("\t--cleanup-algorithm, -c\t\tCleanup algorithm for snapshot.") << endl
 	 << endl;
 }
 
@@ -118,6 +121,7 @@ command_create()
 	{ "pre-number",		required_argument,	0,	0 },
 	{ "description",	required_argument,	0,	'd' },
 	{ "print-number",	no_argument,		0,	'p' },
+	{ "cleanup",		required_argument,	0,	'c' },
 	{ 0, 0, 0, 0 }
     };
 
@@ -132,6 +136,7 @@ command_create()
     Snapshots::const_iterator snap1;
     string description;
     bool print_number = false;
+    string cleanup;
 
     GetOpts::parsed_opts::const_iterator it;
 
@@ -147,22 +152,28 @@ command_create()
     if ((it = opts.find("print-number")) != opts.end())
 	print_number = true;
 
+    if ((it = opts.find("cleanup")) != opts.end())
+	cleanup = it->second;
+
     switch (type)
     {
 	case SINGLE: {
-	    Snapshots::const_iterator snap1 = sh->createSingleSnapshot(description);
+	    Snapshots::iterator snap1 = sh->createSingleSnapshot(description);
+	    snap1->setCleanup(cleanup);
 	    if (print_number)
 		cout << snap1->getNum() << endl;
 	} break;
 
 	case PRE: {
-	    Snapshots::const_iterator snap1 = sh->createPreSnapshot(description);
+	    Snapshots::iterator snap1 = sh->createPreSnapshot(description);
+	    snap1->setCleanup(cleanup);
 	    if (print_number)
 		cout << snap1->getNum() << endl;
 	} break;
 
 	case POST: {
-	    Snapshots::const_iterator snap2 = sh->createPostSnapshot(snap1);
+	    Snapshots::iterator snap2 = sh->createPostSnapshot(snap1);
+	    snap2->setCleanup(cleanup);
 	    if (print_number)
 		cout << snap2->getNum() << endl;
 	    sh->startBackgroundComparsion(snap1, snap2);
@@ -384,6 +395,47 @@ command_rollback()
 
 
 void
+help_cleanup()
+{
+    cout << _("  Cleanup snapshots:") << endl
+	 << _("\tsnapper cleanup <cleanup-algorithm>") << endl
+	 << endl;
+}
+
+
+void
+command_cleanup()
+{
+    const struct option options[] = {
+	{ 0, 0, 0, 0 }
+    };
+
+    GetOpts::parsed_opts opts = getopts.parse("cleanup", options);
+    if (getopts.numArgs() != 1)
+    {
+	cerr << _("Command 'cleanup' needs one arguments.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    string cleanup = getopts.popArg();
+
+    if (cleanup == "amount")
+    {
+	sh->doCleanupAmount();
+    }
+    else if (cleanup == "timeline")
+    {
+	sh->doCleanupTimeline();
+    }
+    else
+    {
+	cerr << sformat(_("Unknown cleanup algorithm '%s'."), cleanup.c_str()) << endl;
+	exit(EXIT_FAILURE);
+    }
+}
+
+
+void
 command_help()
 {
     getopts.parse("help", GetOpts::no_options);
@@ -408,6 +460,7 @@ command_help()
     help_delete();
     help_diff();
     help_rollback();
+    help_cleanup();
 }
 
 
@@ -433,6 +486,7 @@ main(int argc, char** argv)
     cmds["delete"] = command_delete;
     cmds["diff"] = command_diff;
     cmds["rollback"] = command_rollback;
+    cmds["cleanup"] = command_cleanup;
     cmds["help"] = command_help;
 
     const struct option options[] = {

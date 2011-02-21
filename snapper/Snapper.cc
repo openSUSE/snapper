@@ -171,4 +171,48 @@ namespace snapper
 	return files.doRollback();
     }
 
+
+    bool
+    Snapper::doCleanupAmount()
+    {
+	size_t n = 10;		// TODO
+
+	y2mil("n:" << n);
+
+	vector<Snapshots::iterator> tmp;
+
+	for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); ++it)
+	{
+	    if (it->getCleanup() == "amount")
+		tmp.push_back(it);
+	}
+
+	y2mil("filtered " << tmp.size() << " snapshots");
+
+	if (tmp.size() > n)
+	{
+	    tmp.erase(tmp.end() - n, tmp.end());
+
+	    // TODO: only remove pre and post together
+
+	    y2mil("deleting " << tmp.size() << " snapshots");
+
+	    for (vector<Snapshots::iterator>::iterator it = tmp.begin(); it != tmp.end(); ++it)
+	    {
+		deleteSnapshot(*it);
+	    }
+	}
+
+	return true;
+    }
+
+
+    bool
+    Snapper::doCleanupTimeline()
+    {
+	// TODO: hourly, daily, monthly, yearly algorithm
+
+	return false;
+    }
+
 }
