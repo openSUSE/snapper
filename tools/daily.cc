@@ -1,4 +1,6 @@
 
+#include <stdlib.h>
+
 #include <snapper/Snapper.h>
 #include <snapper/Factory.h>
 
