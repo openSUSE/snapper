@@ -303,7 +303,7 @@ namespace snapper
 
 
     string
-    File::getAbsolutePath(Location loc)
+    File::getAbsolutePath(Location loc) const
     {
 	switch (loc)
 	{
