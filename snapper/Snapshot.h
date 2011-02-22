@@ -120,6 +120,7 @@ namespace snapper
 	iterator find(unsigned int num);
 	const_iterator find(unsigned int num) const;
 
+	const_iterator findPre(const_iterator pre) const { return find(pre->pre_num); }
 	const_iterator findPost(const_iterator pre) const;
 
 	const_iterator getSnapshotCurrent() const { return entries.begin(); }

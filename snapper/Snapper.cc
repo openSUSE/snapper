@@ -172,6 +172,42 @@ namespace snapper
     }
 
 
+    // Removes pre and post snapshots from tmp that do have a corresponding
+    // snapshot but which is not included in tmp.
+    void
+    Snapper::filter1(vector<Snapshots::iterator>& tmp1)
+    {
+	vector<Snapshots::iterator> ret;
+
+	for (vector<Snapshots::iterator>::const_iterator it1 = tmp1.begin(); it1 != tmp1.end(); ++it1)
+	{
+	    if ((*it1)->getType() == PRE)
+	    {
+		Snapshots::const_iterator it2 = snapshots.findPost(*it1);
+		if (it2 != snapshots.end())
+		{
+		    if (find(tmp1.begin(), tmp1.end(), it2) == tmp1.end())
+			continue;
+		}
+	    }
+
+	    if ((*it1)->getType() == POST)
+	    {
+		Snapshots::const_iterator it2 = snapshots.findPre(*it1);
+		if (it2 != snapshots.end())
+		{
+		    if (find(tmp1.begin(), tmp1.end(), it2) == tmp1.end())
+			continue;
+		}
+	    }
+
+	    ret.push_back(*it1);
+	}
+
+	swap(ret, tmp1);
+    }
+
+
     bool
     Snapper::doCleanupAmount()
     {
@@ -187,20 +223,15 @@ namespace snapper
 		tmp.push_back(it);
 	}
 
-	y2mil("filtered " << tmp.size() << " snapshots");
-
 	if (tmp.size() > n)
 	{
 	    tmp.erase(tmp.end() - n, tmp.end());
-
-	    // TODO: only remove pre and post together
+	    filter1(tmp);
 
 	    y2mil("deleting " << tmp.size() << " snapshots");
 
 	    for (vector<Snapshots::iterator>::iterator it = tmp.begin(); it != tmp.end(); ++it)
-	    {
 		deleteSnapshot(*it);
-	    }
 	}
 
 	return true;

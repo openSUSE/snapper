@@ -86,6 +86,8 @@ namespace snapper
 
     private:
 
+	void filter1(vector<Snapshots::iterator>& tmp1);
+
 	const string root;
 
 	Snapshots snapshots;
