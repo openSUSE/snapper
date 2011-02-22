@@ -2,3 +2,7 @@ compare-dirs.o
 compare-dirs
 snapper.o
 snapper
+hourly.o
+hourly
+daily.o
+daily

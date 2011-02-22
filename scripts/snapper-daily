@@ -1,0 +1,24 @@
+#!/bin/sh
+
+#
+# paranoia settings
+#
+umask 022
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+export PATH
+
+#
+# get information from /etc/sysconfig
+#
+if [ -f /etc/sysconfig/snapper ] ; then
+    . /etc/sysconfig/snapper
+fi
+
+#
+# run special program for every rootdir
+#
+for root in $SNAPPER_ROOTDIRS ; do
+    /usr/lib/snapper/bin/daily $root
+done
+
+exit 0

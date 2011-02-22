@@ -211,9 +211,9 @@ namespace snapper
     bool
     Snapper::doCleanupAmount()
     {
-	size_t n = 10;		// TODO
+	size_t limit = 10;		// TODO
 
-	y2mil("n:" << n);
+	y2mil("limit:" << limit);
 
 	vector<Snapshots::iterator> tmp;
 
@@ -223,9 +223,9 @@ namespace snapper
 		tmp.push_back(it);
 	}
 
-	if (tmp.size() > n)
+	if (tmp.size() > limit)
 	{
-	    tmp.erase(tmp.end() - n, tmp.end());
+	    tmp.erase(tmp.end() - limit, tmp.end());
 	    filter1(tmp);
 
 	    y2mil("deleting " << tmp.size() << " snapshots");
@@ -243,7 +243,28 @@ namespace snapper
     {
 	// TODO: hourly, daily, monthly, yearly algorithm
 
-	return false;
+	size_t limit = 30;
+
+	vector<Snapshots::iterator> tmp;
+
+	for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); ++it)
+	{
+	    if (it->getCleanup() == "timeline")
+		tmp.push_back(it);
+	}
+
+	if (tmp.size() > limit)
+	{
+	    tmp.erase(tmp.end() - limit, tmp.end());
+	    filter1(tmp);
+
+	    y2mil("deleting " << tmp.size() << " snapshots");
+
+	    for (vector<Snapshots::iterator>::iterator it = tmp.begin(); it != tmp.end(); ++it)
+		deleteSnapshot(*it);
+	}
+
+	return true;
     }
 
 }
