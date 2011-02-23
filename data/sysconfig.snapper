@@ -5,3 +5,8 @@
 # Enable snapper.
 ENABLE_SNAPPER="no"
 
+## Type:        string
+## Default:     "/"
+# Directories for which snapper ...
+SNAPPER_ROOTDIRS="/"
+
