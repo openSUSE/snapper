@@ -33,10 +33,10 @@ namespace snapper
 
 
     Snapper*
-    createSnapper(const string& root)
+    createSnapper(const string& subvolume)
     {
 	assert(!haha.get());
-	haha.reset(new Snapper(root));
+	haha.reset(new Snapper(subvolume));
 	return haha.get();
     }
 

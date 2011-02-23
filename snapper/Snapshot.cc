@@ -78,7 +78,7 @@ namespace snapper
     Snapshot::snapshotDir() const
     {
 	if (num == 0)
-	    return snapper->rootDir();
+	    return snapper->subvolumeDir();
 	else
 	    return baseDir() + SNAPSHOTDIR;
     }
@@ -283,7 +283,7 @@ namespace snapper
     bool
     Snapshot::createFilesystemSnapshot() const
     {
-	SystemCmd cmd(BTRFSBIN " subvolume snapshot " + snapper->rootDir() + " " + snapshotDir());
+	SystemCmd cmd(BTRFSBIN " subvolume snapshot " + snapper->subvolumeDir() + " " + snapshotDir());
 	return cmd.retcode() == 0;
     }
 

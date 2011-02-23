@@ -41,12 +41,12 @@ namespace snapper
     using namespace std;
 
 
-    Snapper::Snapper(const string& root)
-	: root(root), snapshots(this), files(this), compare_callback(NULL)
+    Snapper::Snapper(const string& subvolume)
+	: subvolume(subvolume), snapshots(this), files(this), compare_callback(NULL)
     {
 	y2mil("Snapper constructor");
 	y2mil("libsnapper version " VERSION);
-	y2mil("root:" << root);
+	y2mil("subvolume:" << subvolume);
 
 	snapshots.initialize();
     }
@@ -60,9 +60,9 @@ namespace snapper
 
     // Directory of which snapshots are made, e.g. "/" or "/home".
     string
-    Snapper::rootDir() const
+    Snapper::subvolumeDir() const
     {
-	return root;
+	return subvolume;
     }
 
 
@@ -71,10 +71,10 @@ namespace snapper
     string
     Snapper::snapshotsDir() const
     {
-	if (rootDir() == "/")
+	if (subvolumeDir() == "/")
 	    return SNAPSHOTSDIR;
 	else
-	    return rootDir() + SNAPSHOTSDIR;
+	    return subvolumeDir() + SNAPSHOTSDIR;
     }
 
 

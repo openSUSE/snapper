@@ -45,10 +45,10 @@ namespace snapper
     {
     public:
 
-	Snapper(const string& root = "/");
+	Snapper(const string& subvolume = "/");
 	~Snapper();
 
-	string rootDir() const;
+	string subvolumeDir() const;
 	string snapshotsDir() const;
 
 	Snapshots& getSnapshots() { return snapshots; }
@@ -88,7 +88,7 @@ namespace snapper
 
 	void filter1(vector<Snapshots::iterator>& tmp1);
 
-	const string root;
+	const string subvolume;
 
 	Snapshots snapshots;
 

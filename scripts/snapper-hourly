@@ -15,10 +15,10 @@ if [ -f /etc/sysconfig/snapper ] ; then
 fi
 
 #
-# run special program for every rootdir
+# run special program for every subvolume
 #
-for root in $SNAPPER_ROOTDIRS ; do
-    /usr/lib/snapper/bin/hourly $root
+for subvolume in $SNAPPER_SUBVOLUMES ; do
+    /usr/lib/snapper/bin/hourly $subvolume
 done
 
 exit 0

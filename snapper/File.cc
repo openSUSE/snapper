@@ -314,10 +314,10 @@ namespace snapper
 		return snapper->getSnapshot2()->snapshotDir() + name;
 
 	    case LOC_SYSTEM:
-		if (snapper->rootDir() == "/")
+		if (snapper->subvolumeDir() == "/")
 		    return name;
 		else
-		    return snapper->rootDir() + name;
+		    return snapper->subvolumeDir() + name;
 	}
 
 	return "error";

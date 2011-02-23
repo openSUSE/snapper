@@ -13,20 +13,20 @@ main(int argc, char** argv)
 {
     if (argc != 2)
     {
-	fprintf(stderr, "usage: hourly root\n");
+	fprintf(stderr, "usage: hourly subvolume\n");
 	exit(EXIT_FAILURE);
     }
 
     initDefaultLogger();
 
-    string root = argv[1];
+    string subvolume = argv[1];
 
-    y2mil("hourly root:" << root);
+    y2mil("hourly subvolume:" << subvolume);
 
-    if (root != "/")		// TODO
+    if (subvolume != "/")		// TODO
 	exit(EXIT_SUCCESS);
 
-    Snapper* sh = createSnapper(root);
+    Snapper* sh = createSnapper(subvolume);
 
     Snapshots::iterator snap = sh->createSingleSnapshot("timeline");
     snap->setCleanup("timeline");

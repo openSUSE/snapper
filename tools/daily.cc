@@ -13,17 +13,17 @@ main(int argc, char** argv)
 {
     if (argc != 2)
     {
-	fprintf(stderr, "usage: daily root\n");
+	fprintf(stderr, "usage: daily subvolume\n");
 	exit(EXIT_FAILURE);
     }
 
     initDefaultLogger();
 
-    string root = argv[1];
+    string subvolume = argv[1];
 
-    y2mil("daily root:" << root);
+    y2mil("daily subvolume:" << subvolume);
 
-    Snapper* sh = createSnapper(root);
+    Snapper* sh = createSnapper(subvolume);
 
     sh->doCleanupAmount();
     sh->doCleanupTimeline();
