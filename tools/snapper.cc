@@ -138,22 +138,22 @@ command_create()
     bool print_number = false;
     string cleanup;
 
-    GetOpts::parsed_opts::const_iterator it;
+    GetOpts::parsed_opts::const_iterator opt;
 
-    if ((it = opts.find("type")) != opts.end())
-	toValue(it->second, type, SINGLE);
+    if ((opt = opts.find("type")) != opts.end())
+	toValue(opt->second, type, SINGLE);
 
-    if ((it = opts.find("pre-number")) != opts.end())
-	snap1 = readNum(it->second);
+    if ((opt = opts.find("pre-number")) != opts.end())
+	snap1 = readNum(opt->second);
 
-    if ((it = opts.find("description")) != opts.end())
-	description = it->second;
+    if ((opt = opts.find("description")) != opts.end())
+	description = opt->second;
 
-    if ((it = opts.find("print-number")) != opts.end())
+    if ((opt = opts.find("print-number")) != opts.end())
 	print_number = true;
 
-    if ((it = opts.find("cleanup")) != opts.end())
-	cleanup = it->second;
+    if ((opt = opts.find("cleanup")) != opts.end())
+	cleanup = opt->second;
 
     switch (type)
     {
@@ -211,10 +211,10 @@ command_modify()
 
     Snapshots::iterator snapshot = readNum(getopts.popArg());
 
-    GetOpts::parsed_opts::const_iterator it;
+    GetOpts::parsed_opts::const_iterator opt;
 
-    if ((it = opts.find("description")) != opts.end())
-	snapshot->setDescription(it->second);
+    if ((opt = opts.find("description")) != opts.end())
+	snapshot->setDescription(opt->second);
 }
 
 
@@ -253,6 +253,7 @@ help_diff()
 	 << endl
 	 << _("    Options for 'diff' command:") << endl
 	 << _("\t--output, -o <file>\t\tSave diff to file.") << endl
+	 << _("\t--file, -f <file>\t\tRun diff for file.") << endl
 	 << endl;
 }
 
@@ -262,6 +263,7 @@ command_diff()
 {
     const struct option options[] = {
 	{ "output",		required_argument,	0,	'o' },
+	{ "file",		required_argument,	0,	'f' },
 	{ 0, 0, 0, 0 }
     };
 
@@ -272,19 +274,7 @@ command_diff()
 	exit(EXIT_FAILURE);
     }
 
-    FILE* file = stdout;
-
-    GetOpts::parsed_opts::const_iterator it;
-
-    if ((it = opts.find("output")) != opts.end())
-    {
-	file = fopen(it->second.c_str(), "w");
-	if (!file)
-	{
-	    cerr << sformat(_("Opening file '%s' failed."), it->second.c_str()) << endl;
-	    exit(EXIT_FAILURE);
-	}
-    }
+    GetOpts::parsed_opts::const_iterator opt;
 
     Snapshots::const_iterator snap1 = readNum(getopts.popArg());
     Snapshots::const_iterator snap2 = readNum(getopts.popArg());
@@ -292,8 +282,42 @@ command_diff()
     sh->setComparison(snap1, snap2);
 
     const Files& files = sh->getFiles();
-    for (Files::const_iterator it = files.begin(); it != files.end(); ++it)
-	fprintf(file, "%s %s\n", statusToString(it->getPreToPostStatus()).c_str(), it->getName().c_str());
+
+    Files::const_iterator tmp = files.end();
+
+    if ((opt = opts.find("file")) != opts.end())
+    {
+	tmp = files.find(opt->second);
+	if (tmp == files.end())
+	{
+	    cerr << sformat(_("File '%s' not included in diff."), opt->second.c_str()) << endl;
+	    exit(EXIT_FAILURE);
+	}
+    }
+
+    FILE* file = stdout;
+
+    if ((opt = opts.find("output")) != opts.end())
+    {
+	file = fopen(opt->second.c_str(), "w");
+	if (!file)
+	{
+	    cerr << sformat(_("Opening file '%s' failed."), opt->second.c_str()) << endl;
+	    exit(EXIT_FAILURE);
+	}
+    }
+
+    if (tmp == files.end())
+    {
+	for (Files::const_iterator it = files.begin(); it != files.end(); ++it)
+	    fprintf(file, "%s %s\n", statusToString(it->getPreToPostStatus()).c_str(), it->getName().c_str());
+    }
+    else
+    {
+	vector<string> lines = tmp->getDiff("-u");
+	for (vector<string>::const_iterator it = lines.begin(); it != lines.end(); ++it)
+	    fprintf(file, "%s\n", it->c_str());
+    }
 
     if (file != stdout)
 	fclose(file);
@@ -332,14 +356,14 @@ command_rollback()
 
     FILE* file = NULL;
 
-    GetOpts::parsed_opts::const_iterator it;
+    GetOpts::parsed_opts::const_iterator opt;
 
-    if ((it = opts.find("file")) != opts.end())
+    if ((opt = opts.find("file")) != opts.end())
     {
-	file = fopen(it->second.c_str(), "r");
+	file = fopen(opt->second.c_str(), "r");
 	if (!file)
 	{
-	    cerr << sformat(_("Opening file '%s' failed."), it->second.c_str()) << endl;
+	    cerr << sformat(_("Opening file '%s' failed."), opt->second.c_str()) << endl;
 	    exit(EXIT_FAILURE);
 	}
     }
@@ -515,15 +539,15 @@ main(int argc, char** argv)
 	exit(EXIT_FAILURE);
     }
 
-    GetOpts::parsed_opts::const_iterator it;
+    GetOpts::parsed_opts::const_iterator opt;
 
-    if ((it = opts.find("quiet")) != opts.end())
+    if ((opt = opts.find("quiet")) != opts.end())
 	quiet = true;
 
-    if ((it = opts.find("table-style")) != opts.end())
+    if ((opt = opts.find("table-style")) != opts.end())
     {
 	unsigned int s;
-	it->second >> s;
+	opt->second >> s;
 	if (s >= _End)
 	{
 	    cerr << sformat(_("Invalid table style %d."), s) << " "
@@ -533,8 +557,8 @@ main(int argc, char** argv)
 	Table::defaultStyle = (TableLineStyle) s;
     }
 
-    if ((it = opts.find("root")) != opts.end())
-	root = it->second;
+    if ((opt = opts.find("root")) != opts.end())
+	root = opt->second;
 
     sh = createSnapper(root);
 

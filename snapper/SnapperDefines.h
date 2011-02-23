@@ -35,5 +35,7 @@
 
 #define CPBIN "/bin/cp"
 
+#define DIFFBIN "/usr/bin/diff"
+
 
 #endif

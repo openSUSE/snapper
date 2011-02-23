@@ -87,6 +87,8 @@ namespace snapper
 
 	string getAbsolutePath(Location loc) const;
 
+	vector<string> getDiff(const string& options) const;
+
 	bool getRollback() const { return rollback; }
 	void setRollback(bool value) { rollback = value; }
 
