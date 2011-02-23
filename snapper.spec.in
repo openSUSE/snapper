@@ -13,7 +13,7 @@ Source:		snapper-%{version}.tar.bz2
 Source1:	snapper-rpmlintrc
 Prefix:		/usr
 BuildRequires:	gcc-c++ boost-devel blocxx-devel doxygen dejagnu libxml2-devel
-Requires:	libsnapper = %version
+Requires:	libsnapper = %version cron
 Summary:	Tool for filesystem snapshot management
 
 %description
