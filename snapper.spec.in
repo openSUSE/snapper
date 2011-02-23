@@ -58,6 +58,7 @@ rm -rf "$RPM_BUILD_ROOT"
 Summary:	Library for filesystem snapshot management
 Group:		System/Libraries
 Requires:	btrfsprogs
+Recommends:	logrotate
 PreReq:		%fillup_prereq
 
 %description -n libsnapper
@@ -70,6 +71,7 @@ Authors:
 %files -n libsnapper
 %defattr(-,root,root)
 %{_libdir}/libsnapper.so.*
+%config(noreplace) %{_sysconfdir}/logrotate.d/snapper
 %doc %dir %{prefix}/share/doc/packages/snapper
 %doc %{prefix}/share/doc/packages/snapper/AUTHORS
 %doc %{prefix}/share/doc/packages/snapper/COPYING

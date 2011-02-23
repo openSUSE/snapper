@@ -4,5 +4,7 @@
 
 fillup_DATA = sysconfig.snapper
 
-EXTRA_DIST = $(fillup_DATA)
+logrotate_DATA = snapper
+
+EXTRA_DIST = $(fillup_DATA) $(logrotate_DATA)
 
