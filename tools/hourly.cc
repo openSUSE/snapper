@@ -1,6 +1,7 @@
 
 #include <stdlib.h>
 
+#include <snapper/AppUtil.h>
 #include <snapper/Snapper.h>
 #include <snapper/Factory.h>
 
@@ -16,7 +17,11 @@ main(int argc, char** argv)
 	exit(EXIT_FAILURE);
     }
 
+    initDefaultLogger();
+
     string root = argv[1];
+
+    y2mil("hourly root:" << root);
 
     if (root != "/")		// TODO
 	exit(EXIT_SUCCESS);
