@@ -392,7 +392,7 @@ namespace snapper
 	assert(r2 == 0);
 	cmp_data.dev2 = stat2.st_dev;
 
-	y2mil("dev1:" << cmp_data.dev1 << " dev1:" << cmp_data.dev2);
+	y2mil("dev1:" << cmp_data.dev1 << " dev2:" << cmp_data.dev2);
 
 	cmpDirsWorker(cmp_data, "");
     }
