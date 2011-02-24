@@ -339,24 +339,48 @@ namespace snapper
 
 	while (first1 != last1 || first2 != last2)
 	{
+	    // TODO: move stat to readDirectory
+
+	    struct stat stat1;
+	    if (first1 != last1)
+	    {
+		int r1 = lstat((cmp_data.base_path1 + path + "/" + *first1).c_str(), &stat1);
+		assert(r1 == 0);
+	    }
+
+	    struct stat stat2;
+	    if (first2 != last2)
+	    {
+		int r2 = lstat((cmp_data.base_path2 + path + "/" + *first2).c_str(), &stat2);
+		assert(r2 == 0);
+	    }
+
 	    if (first1 == last1)
 	    {
-		lonesome(cmp_data.base_path2, path, *first2, CREATED, cmp_data.cb);
+		if (stat2.st_dev == cmp_data.dev2)
+		    lonesome(cmp_data.base_path2, path, *first2, CREATED, cmp_data.cb);
+
 		++first2;
 	    }
 	    else if (first2 == last2)
 	    {
-		lonesome(cmp_data.base_path1, path, *first1, DELETED, cmp_data.cb);
+		if (stat1.st_dev == cmp_data.dev1)
+		    lonesome(cmp_data.base_path1, path, *first1, DELETED, cmp_data.cb);
+
 		++first1;
 	    }
 	    else if (*first2 < *first1)
 	    {
-		lonesome(cmp_data.base_path2, path, *first2, CREATED, cmp_data.cb);
+		if (stat2.st_dev == cmp_data.dev2)
+		    lonesome(cmp_data.base_path2, path, *first2, CREATED, cmp_data.cb);
+
 		++first2;
 	    }
 	    else if (*first1 < *first2)
 	    {
-		lonesome(cmp_data.base_path1, path, *first1, DELETED, cmp_data.cb);
+		if (stat1.st_dev == cmp_data.dev1)
+		    lonesome(cmp_data.base_path1, path, *first1, DELETED, cmp_data.cb);
+
 		++first1;
 	    }
 	    else
