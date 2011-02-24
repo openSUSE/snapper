@@ -10,7 +10,7 @@ using namespace snapper;
 using namespace std;
 
 
-char* tmp_name = NULL;
+string tmp_name;
 
 FILE* file = NULL;
 
@@ -21,8 +21,8 @@ terminate(int)
     if (file != NULL)
 	fclose(file);
 
-    if (tmp_name != NULL)
-	unlink(tmp_name);
+    if (!tmp_name.empty())
+	unlink(tmp_name.c_str());
 
     exit(EXIT_FAILURE);
 }
@@ -62,21 +62,15 @@ main(int argc, char** argv)
     sigaction(SIGINT, &act, NULL);
     sigaction(SIGTERM, &act, NULL);
 
-    tmp_name = (char*) malloc(output.length() + 12);
-    strcpy(tmp_name, output.c_str());
-    strcat(tmp_name, ".tmp-XXXXXX");
+    tmp_name = output + ".tmp-XXXXXX";
 
-    int fd = mkstemp(tmp_name);
-
-    file = fdopen(fd, "w");
+    file = mkstemp(tmp_name);
 
     cmpDirs(path1, path2, write_line);
 
     fclose(file);
 
-    rename(tmp_name, output.c_str());
-
-    free(tmp_name);
+    rename(tmp_name.c_str(), output.c_str());
 
     exit(EXIT_SUCCESS);
 }

@@ -128,6 +128,22 @@ checkNormalFile(const string& Path_Cv)
     }
 
 
+    FILE*
+    mkstemp(string& path)
+    {
+	char* tmp = strdup(path.c_str());
+
+	int fd = ::mkstemp(tmp);
+	if (fd == -1)
+	    return NULL;
+
+	path = tmp;
+	free(tmp);
+
+	return fdopen(fd, "w");
+    }
+
+
 static const blocxx::String component = "libsnapper";
 
 

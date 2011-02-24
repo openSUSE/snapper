@@ -192,13 +192,9 @@ namespace snapper
 	string output = snapper->snapshotsDir() + "/" + decString(num2) + "/filelist-" +
 	    decString(num1) + ".txt";
 
-	char* tmp_name = (char*) malloc(output.length() + 12);
-	strcpy(tmp_name, output.c_str());
-	strcat(tmp_name, ".tmp-XXXXXX");
+	string tmp_name = output + ".tmp-XXXXXX";
 
-	int fd = mkstemp(tmp_name);
-
-	FILE* file = fdopen(fd, "w");
+	FILE* file = mkstemp(tmp_name);
 
 	for (const_iterator it = entries.begin(); it != entries.end(); ++it)
 	{
@@ -212,9 +208,7 @@ namespace snapper
 
 	fclose(file);
 
-	rename(tmp_name, output.c_str());
-
-	free(tmp_name);
+	rename(tmp_name.c_str(), output.c_str());
 
 	return true;
     }
