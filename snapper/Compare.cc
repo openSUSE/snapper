@@ -203,10 +203,23 @@ namespace snapper
     }
 
 
-    vector<string>
+    struct NameStat
+    {
+	NameStat(const string& name, const struct stat& stat)
+	    : name(name), stat(stat) {}
+
+	string name;
+	struct stat stat;
+
+	friend bool operator<(const NameStat& lhs, const NameStat& rhs)
+	    { return lhs.name < rhs.name; }
+    };
+
+
+    vector<NameStat>
     readDirectory(const string& base_path, const string& path)
     {
-	vector<string> ret;
+	vector<NameStat> ret;
 
 	int fd = open((base_path + path).c_str(), O_RDONLY | O_NOATIME);
 	assert(fd >= 0);
@@ -224,7 +237,11 @@ namespace snapper
 	    if (filter(fullname))
 		continue;
 
-	    ret.push_back(ep->d_name);
+	    struct stat stat;
+	    int r = fstatat(fd, ep->d_name, &stat, AT_SYMLINK_NOFOLLOW);
+	    assert(r == 0);
+
+	    ret.push_back(NameStat(ep->d_name, stat));
 	}
 
 	closedir(dp);
@@ -238,18 +255,14 @@ namespace snapper
     void
     listSubdirs(const string& base_path, const string& path, unsigned int status, cmpdirs_cb_t cb)
     {
-	vector<string> tmp = readDirectory(base_path, path);
+	vector<NameStat> tmp = readDirectory(base_path, path);
 
-	for (vector<string>::const_iterator it1 = tmp.begin(); it1 != tmp.end(); ++it1)
+	for (vector<NameStat>::const_iterator it1 = tmp.begin(); it1 != tmp.end(); ++it1)
 	{
-	    cb(path + "/" + *it1, status);
+	    cb(path + "/" + it1->name, status);
 
-	    struct stat stat;
-	    int r = lstat((base_path + path + "/" + *it1).c_str(), &stat);
-	    assert(r == 0);
-
-	    if (S_ISDIR(stat.st_mode))
-		listSubdirs(base_path, path + "/" + *it1, status, cb);
+	    if (S_ISDIR(it1->stat.st_mode))
+		listSubdirs(base_path, path + "/" + it1->name, status, cb);
 	}
     }
 
@@ -271,14 +284,10 @@ namespace snapper
 
 
     void
-    lonesome(const string& base_path, const string& path, const string& name, unsigned int status,
-	     cmpdirs_cb_t cb)
+    lonesome(const string& base_path, const string& path, const string& name, const struct stat& stat,
+	     unsigned int status, cmpdirs_cb_t cb)
     {
 	cb(path + "/" + name, status);
-
-	struct stat stat;
-	int r = lstat((base_path + path + "/" + name).c_str(), &stat);
-	assert(r == 0);
 
 	if (S_ISDIR(stat.st_mode))
 	    listSubdirs(base_path, path + "/" + name, status, cb);
@@ -286,17 +295,11 @@ namespace snapper
 
 
     void
-    twosome(const CmpData& cmp_data, const string& path, const string& name)
+    twosome(const CmpData& cmp_data, const string& path, const string& name, const struct stat& stat1,
+	    const struct stat& stat2)
     {
 	string fullname1 = cmp_data.base_path1 + path + "/" + name;
-	struct stat stat1;
-	int r1 = lstat(fullname1.c_str(), &stat1);
-	assert(r1 == 0);
-
 	string fullname2 = cmp_data.base_path2 + path + "/" + name;
-	struct stat stat2;
-	int r2 = lstat(fullname2.c_str(), &stat2);
-	assert(r2 == 0);
 
 	unsigned int status = 0;
 	if (stat1.st_dev == cmp_data.dev1 && stat2.st_dev == cmp_data.dev2)
@@ -329,64 +332,48 @@ namespace snapper
     void
     cmpDirsWorker(const CmpData& cmp_data, const string& path)
     {
-	const vector<string> pre = readDirectory(cmp_data.base_path1, path);
-	vector<string>::const_iterator first1 = pre.begin();
-	vector<string>::const_iterator last1 = pre.end();
+	const vector<NameStat> pre = readDirectory(cmp_data.base_path1, path);
+	vector<NameStat>::const_iterator first1 = pre.begin();
+	vector<NameStat>::const_iterator last1 = pre.end();
 
-	const vector<string> post = readDirectory(cmp_data.base_path2, path);
-	vector<string>::const_iterator first2 = post.begin();
-	vector<string>::const_iterator last2 = post.end();
+	const vector<NameStat> post = readDirectory(cmp_data.base_path2, path);
+	vector<NameStat>::const_iterator first2 = post.begin();
+	vector<NameStat>::const_iterator last2 = post.end();
 
 	while (first1 != last1 || first2 != last2)
 	{
-	    // TODO: move stat to readDirectory
-
-	    struct stat stat1;
-	    if (first1 != last1)
-	    {
-		int r1 = lstat((cmp_data.base_path1 + path + "/" + *first1).c_str(), &stat1);
-		assert(r1 == 0);
-	    }
-
-	    struct stat stat2;
-	    if (first2 != last2)
-	    {
-		int r2 = lstat((cmp_data.base_path2 + path + "/" + *first2).c_str(), &stat2);
-		assert(r2 == 0);
-	    }
-
 	    if (first1 == last1)
 	    {
-		if (stat2.st_dev == cmp_data.dev2)
-		    lonesome(cmp_data.base_path2, path, *first2, CREATED, cmp_data.cb);
+		if (first2->stat.st_dev == cmp_data.dev2)
+		    lonesome(cmp_data.base_path2, path, first2->name, first2->stat, CREATED, cmp_data.cb);
 
 		++first2;
 	    }
 	    else if (first2 == last2)
 	    {
-		if (stat1.st_dev == cmp_data.dev1)
-		    lonesome(cmp_data.base_path1, path, *first1, DELETED, cmp_data.cb);
+		if (first1->stat.st_dev == cmp_data.dev1)
+		    lonesome(cmp_data.base_path1, path, first1->name, first1->stat, DELETED, cmp_data.cb);
 
 		++first1;
 	    }
-	    else if (*first2 < *first1)
+	    else if (first2->name < first1->name)
 	    {
-		if (stat2.st_dev == cmp_data.dev2)
-		    lonesome(cmp_data.base_path2, path, *first2, CREATED, cmp_data.cb);
+		if (first2->stat.st_dev == cmp_data.dev2)
+		    lonesome(cmp_data.base_path2, path, first2->name, first2->stat, CREATED, cmp_data.cb);
 
 		++first2;
 	    }
-	    else if (*first1 < *first2)
+	    else if (first1->name < first2->name)
 	    {
-		if (stat1.st_dev == cmp_data.dev1)
-		    lonesome(cmp_data.base_path1, path, *first1, DELETED, cmp_data.cb);
+		if (first1->stat.st_dev == cmp_data.dev1)
+		    lonesome(cmp_data.base_path1, path, first1->name, first1->stat, DELETED, cmp_data.cb);
 
 		++first1;
 	    }
 	    else
 	    {
-		assert(*first1 == *first2);
-		twosome(cmp_data, path, *first1);
+		assert(first1->name == first2->name);
+		twosome(cmp_data, path, first1->name, first1->stat, first2->stat);
 		++first1;
 		++first2;
 	    }
