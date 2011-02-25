@@ -78,7 +78,7 @@ namespace snapper
 
 	bool doRollback();
 
-	bool doCleanupAmount();
+	bool doCleanupNumber();
 	bool doCleanupTimeline();
 
 	void setCompareCallback(CompareCallback* p) { compare_callback = p; }

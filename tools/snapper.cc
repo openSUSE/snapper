@@ -443,9 +443,9 @@ command_cleanup()
 
     string cleanup = getopts.popArg();
 
-    if (cleanup == "amount")
+    if (cleanup == "number")
     {
-	sh->doCleanupAmount();
+	sh->doCleanupNumber();
     }
     else if (cleanup == "timeline")
     {

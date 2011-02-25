@@ -209,9 +209,9 @@ namespace snapper
 
 
     bool
-    Snapper::doCleanupAmount()
+    Snapper::doCleanupNumber()
     {
-	size_t limit = 10;		// TODO
+	size_t limit = 50;		// TODO
 
 	y2mil("limit:" << limit);
 
@@ -219,7 +219,7 @@ namespace snapper
 
 	for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); ++it)
 	{
-	    if (it->getCleanup() == "amount")
+	    if (it->getCleanup() == "number")
 		tmp.push_back(it);
 	}
 

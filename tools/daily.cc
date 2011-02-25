@@ -25,7 +25,7 @@ main(int argc, char** argv)
 
     Snapper* sh = createSnapper(subvolume);
 
-    sh->doCleanupAmount();
+    sh->doCleanupNumber();
     sh->doCleanupTimeline();
 
     deleteSnapper(sh);
