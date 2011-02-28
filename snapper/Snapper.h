@@ -30,6 +30,8 @@
 
 namespace snapper
 {
+    class SysconfigFile;
+
 
     struct CompareCallback
     {
@@ -45,7 +47,7 @@ namespace snapper
     {
     public:
 
-	Snapper(const string& subvolume = "/");
+	Snapper(const string& config_name = "root");
 	~Snapper();
 
 	string subvolumeDir() const;
@@ -88,7 +90,11 @@ namespace snapper
 
 	void filter1(vector<Snapshots::iterator>& tmp1);
 
-	const string subvolume;
+	const string config_name;
+
+	SysconfigFile* config;
+
+	string subvolume;
 
 	Snapshots snapshots;
 

@@ -7,6 +7,7 @@ umask 022
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 export PATH
 
+
 #
 # get information from /etc/sysconfig
 #
@@ -14,11 +15,25 @@ if [ -f /etc/sysconfig/snapper ] ; then
     . /etc/sysconfig/snapper
 fi
 
+
 #
-# run special program for every subvolume
+# run snapper for all configs
 #
-for subvolume in $SNAPPER_SUBVOLUMES ; do
-    /usr/lib/snapper/bin/daily $subvolume
+for CONFIG in $CONFIGS ; do
+
+    NUMBER_CLEANUP="no"
+    TIMELINE_CLEANUP="no"
+
+    . /etc/sysconfig/snapper.d/$CONFIG
+
+    if [ "$NUMBER_CLEANUP" = "yes" ] ; then
+	snapper --config=$CONFIG cleanup number
+    fi
+
+    if [ "$TIMELINE_CLEANUP" = "yes" ] ; then
+	snapper --config=$CONFIG cleanup timeline
+    fi
+
 done
 
 exit 0

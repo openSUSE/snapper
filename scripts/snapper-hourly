@@ -7,6 +7,7 @@ umask 022
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 export PATH
 
+
 #
 # get information from /etc/sysconfig
 #
@@ -14,11 +15,20 @@ if [ -f /etc/sysconfig/snapper ] ; then
     . /etc/sysconfig/snapper
 fi
 
+
 #
-# run special program for every subvolume
+# run snapper for all configs
 #
-for subvolume in $SNAPPER_SUBVOLUMES ; do
-    /usr/lib/snapper/bin/hourly $subvolume
+for CONFIG in $CONFIGS ; do
+
+    TIMELINE_CREATE="no"
+
+    . /etc/sysconfig/snapper.d/$CONFIG
+
+    if [ "$TIMELINE_CREATE" = "yes" ] ; then
+	snapper --config=$CONFIG create --description="timeline" --cleanup="timeline"
+    fi
+
 done
 
 exit 0

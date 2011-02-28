@@ -37,7 +37,7 @@ namespace snapper
 
     // Only one Snapper can be created at a time.
 
-    Snapper* createSnapper(const string& subvolume = "/");
+    Snapper* createSnapper(const string& config_name = "root");
 
     void deleteSnapper(Snapper*);
 

@@ -34,6 +34,7 @@
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/File.h"
+#include "snapper/AsciiFile.h"
 
 
 namespace snapper
@@ -41,11 +42,20 @@ namespace snapper
     using namespace std;
 
 
-    Snapper::Snapper(const string& subvolume)
-	: subvolume(subvolume), snapshots(this), files(this), compare_callback(NULL)
+    Snapper::Snapper(const string& config_name)
+	: config_name(config_name), config(NULL), subvolume("/"), snapshots(this), files(this),
+	  compare_callback(NULL)
     {
 	y2mil("Snapper constructor");
 	y2mil("libsnapper version " VERSION);
+	y2mil("config_name:" << config_name);
+
+	config = new SysconfigFile((CONFIGDIR "/" + config_name).c_str());
+
+	string val;
+	if (config->getValue("SUBVOLUME", val))
+	    subvolume = val;
+
 	y2mil("subvolume:" << subvolume);
 
 	snapshots.initialize();
@@ -55,6 +65,8 @@ namespace snapper
     Snapper::~Snapper()
     {
 	y2mil("Snapper destructor");
+
+	delete config;
     }
 
 
@@ -211,7 +223,11 @@ namespace snapper
     bool
     Snapper::doCleanupNumber()
     {
-	size_t limit = 50;		// TODO
+	size_t limit = 50;
+
+	string val;
+	if (config->getValue("NUMBER_LIMIT", val))
+	    val >> limit;
 
 	y2mil("limit:" << limit);
 

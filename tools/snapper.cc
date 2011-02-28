@@ -25,7 +25,7 @@ map<string, cmd_fnc> cmds;
 GetOpts getopts;
 
 bool quiet = false;
-string subvolume = "/";
+string config_name = "root";
 
 Snapper* sh = NULL;
 
@@ -475,7 +475,7 @@ command_help()
     cout << _("    Global options:") << endl
 	 << _("\t--quiet, -q\t\t\tSuppress normal output.") << endl
 	 << _("\t--table-style, -t <style>\tTable style (integer).") << endl
-	 << _("\t--subvolume, -s <path>\t\tSet subvolume.") << endl
+	 << _("\t--config, -c <name>\t\tSet name of config to use.") << endl
 	 << endl;
 
     help_list();
@@ -516,7 +516,7 @@ main(int argc, char** argv)
     const struct option options[] = {
 	{ "quiet",		no_argument,		0,	'q' },
 	{ "table-style",	required_argument,	0,	't' },
-	{ "subvolume",		required_argument,	0,	's' },
+	{ "config",		required_argument,	0,	'c' },
 	{ 0, 0, 0, 0 }
     };
 
@@ -557,10 +557,10 @@ main(int argc, char** argv)
 	Table::defaultStyle = (TableLineStyle) s;
     }
 
-    if ((opt = opts.find("subvolume")) != opts.end())
-	subvolume = opt->second;
+    if ((opt = opts.find("config")) != opts.end())
+	config_name = opt->second;
 
-    sh = createSnapper(subvolume);
+    sh = createSnapper(config_name);
 
     if (!quiet)
 	sh->setCompareCallback(&compare_callback_impl);

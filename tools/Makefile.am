@@ -9,16 +9,10 @@ INCLUDES = -I$(top_srcdir)
 
 toolsbindir = /usr/lib/snapper/bin
 
-toolsbin_PROGRAMS = compare-dirs hourly daily
+toolsbin_PROGRAMS = compare-dirs
 
 compare_dirs_SOURCES = compare-dirs.cc
 compare_dirs_LDADD = ../snapper/libsnapper.la
-
-hourly_SOURCES = hourly.cc
-hourly_LDADD = ../snapper/libsnapper.la
-
-daily_SOURCES = daily.cc
-daily_LDADD = ../snapper/libsnapper.la
 
 
 bin_PROGRAMS = snapper
