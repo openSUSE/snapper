@@ -75,6 +75,7 @@ Authors:
 %doc %dir %{prefix}/share/doc/packages/snapper
 %doc %{prefix}/share/doc/packages/snapper/AUTHORS
 %doc %{prefix}/share/doc/packages/snapper/COPYING
+%{prefix}/share/doc/packages/snapper/example-config
 /var/adm/fillup-templates/sysconfig.snapper
 %dir %{prefix}/lib/snapper
 %dir %{prefix}/lib/snapper/bin

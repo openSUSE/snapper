@@ -1,0 +1,18 @@
+
+# subvolume to snapshot
+SUBVOLUME="/"
+
+
+# run daily number cleanup
+NUMBER_CLEANUP="yes"
+
+# limit for number cleanup
+NUMBER_LIMIT="100"
+
+
+# create hourly snapshots
+TIMELINE_CREATE="yes"
+
+# cleanup hourly snapshots after some time
+TIMELINE_CLEANUP="yes"
+
