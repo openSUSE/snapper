@@ -14,7 +14,7 @@ Source1:	snapper-rpmlintrc
 Prefix:		/usr
 BuildRequires:	gcc-c++ boost-devel blocxx-devel doxygen dejagnu libxml2-devel
 Requires:	libsnapper = %version
-Recommends:	cron
+Recommends:	cron logrotate
 Summary:	Tool for filesystem snapshot management
 
 %description
@@ -50,14 +50,14 @@ rm -rf "$RPM_BUILD_ROOT"
 %files
 %defattr(-,root,root)
 %{prefix}/bin/snapper
-/etc/cron.hourly/snapper-hourly
-/etc/cron.daily/snapper-daily
+%config(noreplace) %{_sysconfdir}/logrotate.d/snapper
+/etc/cron.hourly/suse.de-snapper
+/etc/cron.daily/suse.de-snapper
 
 %package -n libsnapper
 Summary:	Library for filesystem snapshot management
 Group:		System/Libraries
 Requires:	btrfsprogs diffutils
-Recommends:	logrotate
 PreReq:		%fillup_prereq
 
 %description -n libsnapper
@@ -70,8 +70,8 @@ Authors:
 %files -n libsnapper
 %defattr(-,root,root)
 %{_libdir}/libsnapper.so.*
-%dir %{_sysconfdir}/sysconfig/snapper.d
-%config(noreplace) %{_sysconfdir}/logrotate.d/snapper
+%dir %{_sysconfdir}/snapper
+%dir %{_sysconfdir}/snapper/configs
 %doc %dir %{prefix}/share/doc/packages/snapper
 %doc %{prefix}/share/doc/packages/snapper/AUTHORS
 %doc %{prefix}/share/doc/packages/snapper/COPYING

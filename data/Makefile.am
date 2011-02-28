@@ -4,10 +4,9 @@
 
 fillup_DATA = sysconfig.snapper
 
-logrotate_DATA = snapper
-
-EXTRA_DIST = $(fillup_DATA) $(logrotate_DATA)
+EXTRA_DIST = $(fillup_DATA) snapper.logrotate
 
 install-data-local:
-	mkdir -p $(DESTDIR)/etc/sysconfig/snapper.d
+	install -D -m 644 snapper.logrotate $(DESTDIR)/etc/logrotate.d/snapper
+	install -d -m 755 $(DESTDIR)/etc/snapper/configs
 

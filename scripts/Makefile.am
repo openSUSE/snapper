@@ -2,15 +2,9 @@
 # Makefile.am for snapper/scripts
 #
 
-hourlydir = /etc/cron.hourly
+EXTRA_DIST = snapper-hourly snapper-daily
 
-hourly_SCRIPTS = snapper-hourly
-
-
-dailydir = /etc/cron.daily
-
-daily_SCRIPTS = snapper-daily
-
-
-EXTRA_DIST = $(hourly_SCRIPTS) $(daily_SCRIPTS)
+install-data-local:
+	install -D snapper-hourly $(DESTDIR)/etc/cron.hourly/suse.de-snapper
+	install -D snapper-daily $(DESTDIR)/etc/cron.daily/suse.de-snapper
 

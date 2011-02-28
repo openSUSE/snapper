@@ -24,7 +24,7 @@ for CONFIG in $SNAPPER_CONFIGS ; do
     NUMBER_CLEANUP="no"
     TIMELINE_CLEANUP="no"
 
-    . /etc/sysconfig/snapper.d/$CONFIG
+    . /etc/snapper/configs/$CONFIG
 
     if [ "$NUMBER_CLEANUP" = "yes" ] ; then
 	snapper --config=$CONFIG cleanup number

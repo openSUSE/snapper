@@ -50,7 +50,7 @@ namespace snapper
 	y2mil("libsnapper version " VERSION);
 	y2mil("config_name:" << config_name);
 
-	config = new SysconfigFile((CONFIGDIR "/" + config_name).c_str());
+	config = new SysconfigFile((CONFIGSDIR "/" + config_name).c_str());
 
 	string val;
 	if (config->getValue("SUBVOLUME", val))

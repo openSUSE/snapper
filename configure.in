@@ -23,12 +23,10 @@ CXXFLAGS="${CXXFLAGS} -std=c++0x -DHAVE_CXX0X -Wall -Wextra -Wformat=2 -Wnon-vir
 
 docdir=\${prefix}/share/doc/packages/snapper
 fillupdir=/var/adm/fillup-templates
-logrotatedir=/etc/logrotate.d
 
 AC_SUBST(VERSION)
 AC_SUBST(docdir)
 AC_SUBST(fillupdir)
-AC_SUBST(logrotatedir)
 
 AC_OUTPUT(
 	Makefile

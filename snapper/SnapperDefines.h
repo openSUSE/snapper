@@ -24,7 +24,7 @@
 #define SNAPPER_DEFINES_H
 
 
-#define CONFIGDIR "/etc/sysconfig/snapper.d"
+#define CONFIGSDIR "/etc/snapper/configs"
 
 #define SNAPSHOTDIR "/snapshot"
 #define SNAPSHOTSDIR "/snapshots"
