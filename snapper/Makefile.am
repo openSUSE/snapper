@@ -16,7 +16,10 @@ libsnapper_la_SOURCES =					\
 	AppUtil.cc		AppUtil.h		\
 	Compare.cc		Compare.h		\
 	SystemCmd.cc		SystemCmd.h		\
+	AsciiFile.cc		AsciiFile.h		\
+	Regex.cc		Regex.h			\
 	SnapperTmpl.h					\
+	SnapperTypes.h					\
 	SnapperDefines.h
 
 libsnapper_la_LDFLAGS = -version-info 2:0
