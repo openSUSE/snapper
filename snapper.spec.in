@@ -52,8 +52,6 @@ rm -rf "$RPM_BUILD_ROOT"
 %{prefix}/bin/snapper
 /etc/cron.hourly/snapper-hourly
 /etc/cron.daily/snapper-daily
-%{prefix}/lib/snapper/bin/hourly
-%{prefix}/lib/snapper/bin/daily
 
 %package -n libsnapper
 Summary:	Library for filesystem snapshot management
