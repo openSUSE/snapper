@@ -19,7 +19,7 @@ fi
 #
 # run snapper for all configs
 #
-for CONFIG in $CONFIGS ; do
+for CONFIG in $SNAPPER_CONFIGS ; do
 
     TIMELINE_CREATE="no"
 

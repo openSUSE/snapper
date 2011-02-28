@@ -19,7 +19,7 @@ extern char* program_invocation_short_name;
 
 using namespace snapper;
 
-#define ROOTDIR "/test"
+#define SUBVOLUME "/test"
 
 Snapper* sh = NULL;
 
@@ -30,12 +30,12 @@ Snapshots::iterator second;
 void
 setup()
 {
-    system("/usr/bin/find " ROOTDIR " -mindepth 1 -maxdepth 1 -not -path " ROOTDIR "/snapshots "
+    system("/usr/bin/find " SUBVOLUME " -mindepth 1 -maxdepth 1 -not -path " SUBVOLUME "/snapshots "
 	   "-exec rm -r {} \\;");
 
     initDefaultLogger();
 
-    sh = createSnapper(ROOTDIR);
+    sh = createSnapper("testsuite");
 }
 
 
@@ -103,6 +103,6 @@ check_first()
 void
 run_command(const char* command)
 {
-    string tmp = string("cd " ROOTDIR " ; ") + command;
+    string tmp = string("cd " SUBVOLUME " ; ") + command;
     check_zero(system(tmp.c_str()));
 }
