@@ -93,6 +93,7 @@ namespace snapper
     public:
 
 	SysconfigFile(const char* name) : AsciiFile(name) {}
+	SysconfigFile(const string& name) : AsciiFile(name) {}
 
 	bool getValue(const string& key, string& value) const;
 
