@@ -405,7 +405,9 @@ namespace snapper
 
 	y2mil("dev1:" << cmp_data.dev1 << " dev2:" << cmp_data.dev2);
 
+	StopWatch stopwatch;
 	cmpDirsWorker(cmp_data, "");
+	y2mil("stopwatch " << stopwatch << " for comparing directories");
     }
 
 
