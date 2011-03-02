@@ -162,6 +162,9 @@ namespace snapper
     void
     Snapshots::check() const
     {
+	time_t t0 = time(NULL);
+	time_t t1 = (time_t)(-1);
+
 	for (const_iterator i1 = begin(); i1 != end(); ++i1)
 	{
 	    switch (i1->type)
@@ -197,6 +200,17 @@ namespace snapper
 				  " is of type " << toString(i2->type));
 		}
 		break;
+	    }
+
+	    if (!i1->isCurrent())
+	    {
+		if (i1->date > t0)
+		    y2err("snapshot num " << i1->num << " in future");
+
+		if (t1 != (time_t)(-1) && i1->date < t1)
+		    y2err("time shift detected at snapshot num " << i1->num);
+
+		t1 = i1->date;
 	    }
 	}
     }
