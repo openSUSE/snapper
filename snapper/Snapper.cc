@@ -187,11 +187,11 @@ namespace snapper
     // Removes pre and post snapshots from tmp that do have a corresponding
     // snapshot but which is not included in tmp.
     void
-    Snapper::filter1(vector<Snapshots::iterator>& tmp1)
+    Snapper::filter1(list<Snapshots::iterator>& tmp1)
     {
-	vector<Snapshots::iterator> ret;
+	list<Snapshots::iterator> ret;
 
-	for (vector<Snapshots::iterator>::const_iterator it1 = tmp1.begin(); it1 != tmp1.end(); ++it1)
+	for (list<Snapshots::iterator>::const_iterator it1 = tmp1.begin(); it1 != tmp1.end(); ++it1)
 	{
 	    if ((*it1)->getType() == PRE)
 	    {
@@ -231,7 +231,7 @@ namespace snapper
 
 	y2mil("limit:" << limit);
 
-	vector<Snapshots::iterator> tmp;
+	list<Snapshots::iterator> tmp;
 
 	for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); ++it)
 	{
@@ -241,12 +241,15 @@ namespace snapper
 
 	if (tmp.size() > limit)
 	{
-	    tmp.erase(tmp.end() - limit, tmp.end());
+	    list<Snapshots::iterator>::iterator it = tmp.end();
+	    advance(it, - limit);
+	    tmp.erase(it, tmp.end());
+
 	    filter1(tmp);
 
 	    y2mil("deleting " << tmp.size() << " snapshots");
 
-	    for (vector<Snapshots::iterator>::iterator it = tmp.begin(); it != tmp.end(); ++it)
+	    for (list<Snapshots::iterator>::iterator it = tmp.begin(); it != tmp.end(); ++it)
 		deleteSnapshot(*it);
 	}
 
@@ -255,30 +258,161 @@ namespace snapper
 
 
     bool
+    is_first(list<Snapshots::iterator>::const_iterator first,
+	     list<Snapshots::iterator>::const_iterator last,
+	     Snapshots::const_iterator it1,
+	     std::function<bool(const struct tm& tmp1, const struct tm& tmp2)> pred)
+    {
+	time_t t1 = it1->getDate();
+	struct tm tmp1;
+	localtime_r(&t1, &tmp1);
+
+	for (list<Snapshots::iterator>::const_iterator it2 = first; it2 != last; ++it2)
+	{
+	    if (it1 == *it2)
+		continue;
+
+	    time_t t2 = (*it2)->getDate();
+	    struct tm tmp2;
+	    localtime_r(&t2, &tmp2);
+
+	    if (pred(tmp1, tmp2) && t1 > t2)
+		return false;
+	}
+
+	return true;
+    }
+
+
+    bool
+    equal_year(const struct tm& tmp1, const struct tm& tmp2)
+    {
+	return tmp1.tm_year == tmp2.tm_year;
+    }
+
+    bool
+    equal_month(const struct tm& tmp1, const struct tm& tmp2)
+    {
+	return equal_year(tmp1, tmp2) && tmp1.tm_mon == tmp2.tm_mon;
+    }
+
+    bool
+    equal_day(const struct tm& tmp1, const struct tm& tmp2)
+    {
+	return equal_month(tmp1, tmp2) && tmp1.tm_mday == tmp2.tm_mday;
+    }
+
+    bool
+    equal_hour(const struct tm& tmp1, const struct tm& tmp2)
+    {
+	return equal_day(tmp1, tmp2) && tmp1.tm_hour == tmp2.tm_hour;
+    }
+
+
+    bool
+    is_first_yearly(list<Snapshots::iterator>::const_iterator first,
+		    list<Snapshots::iterator>::const_iterator last,
+		    Snapshots::const_iterator it1)
+    {
+	return is_first(first, last, it1, equal_year);
+    }
+
+    bool
+    is_first_monthly(list<Snapshots::iterator>::const_iterator first,
+		     list<Snapshots::iterator>::const_iterator last,
+		     Snapshots::const_iterator it1)
+    {
+	return is_first(first, last, it1, equal_month);
+    }
+
+    bool
+    is_first_daily(list<Snapshots::iterator>::const_iterator first,
+		   list<Snapshots::iterator>::const_iterator last,
+		   Snapshots::const_iterator it1)
+    {
+	return is_first(first, last, it1, equal_day);
+    }
+
+    bool
+    is_first_hourly(list<Snapshots::iterator>::const_iterator first,
+		    list<Snapshots::iterator>::const_iterator last,
+		    Snapshots::const_iterator it1)
+    {
+	return is_first(first, last, it1, equal_hour);
+    }
+
+
+    bool
     Snapper::doCleanupTimeline()
     {
-	// TODO: hourly, daily, monthly, yearly algorithm
+	size_t limit_hourly = 10;
+	size_t limit_daily = 10;
+	size_t limit_monthly = 10;
+	size_t limit_yearly = 10;
 
-	size_t limit = 30;
+	string val;
+	if (config->getValue("TIMELINE_LIMIT_HOURLY", val))
+	    val >> limit_hourly;
+	if (config->getValue("TIMELINE_LIMIT_DAILY", val))
+	    val >> limit_daily;
+	if (config->getValue("TIMELINE_LIMIT_MONTHLY", val))
+	    val >> limit_monthly;
+	if (config->getValue("TIMELINE_LIMIT_YEARLY", val))
+	    val >> limit_yearly;
 
-	vector<Snapshots::iterator> tmp;
+	y2mil("limit_hourly:" << limit_hourly << " limit_daily:" << limit_daily <<
+	      " limit_monthly:" << limit_monthly << " limit_yearly:" << limit_yearly);
+
+	size_t num_hourly = 0;
+	size_t num_daily = 0;
+	size_t num_monthly = 0;
+	size_t num_yearly = 0;
+
+	list<Snapshots::iterator> tmp;
 
 	for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); ++it)
 	{
 	    if (it->getCleanup() == "timeline")
-		tmp.push_back(it);
+		tmp.push_front(it);
 	}
 
-	if (tmp.size() > limit)
+	list<Snapshots::iterator>::iterator it = tmp.begin();
+	while (it != tmp.end())
 	{
-	    tmp.erase(tmp.end() - limit, tmp.end());
-	    filter1(tmp);
-
-	    y2mil("deleting " << tmp.size() << " snapshots");
-
-	    for (vector<Snapshots::iterator>::iterator it = tmp.begin(); it != tmp.end(); ++it)
-		deleteSnapshot(*it);
+	    if (num_hourly < limit_hourly && is_first_hourly(it, tmp.end(), *it))
+	    {
+		++num_hourly;
+		it = tmp.erase(it);
+	    }
+	    else if (num_daily < limit_daily && is_first_daily(it, tmp.end(), *it))
+	    {
+		++num_daily;
+		it = tmp.erase(it);
+	    }
+	    else if (num_monthly < limit_monthly && is_first_monthly(it, tmp.end(), *it))
+	    {
+		++num_monthly;
+		it = tmp.erase(it);
+	    }
+	    else if (num_yearly < limit_yearly && is_first_yearly(it, tmp.end(), *it))
+	    {
+		++num_yearly;
+		it = tmp.erase(it);
+	    }
+	    else
+	    {
+		++it;
+	    }
 	}
+
+	tmp.reverse();
+
+	filter1(tmp);
+
+	y2mil("deleting " << tmp.size() << " snapshots");
+
+	for (list<Snapshots::iterator>::iterator it = tmp.begin(); it != tmp.end(); ++it)
+	    deleteSnapshot(*it);
 
 	return true;
     }

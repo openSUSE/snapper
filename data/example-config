@@ -16,3 +16,9 @@ TIMELINE_CREATE="yes"
 # cleanup hourly snapshots after some time
 TIMELINE_CLEANUP="yes"
 
+# limits for timeline cleanup
+TIMELINE_LIMIT_HOURLY="10"
+TIMELINE_LIMIT_DAILY="10"
+TIMELINE_LIMIT_MONTHLY="10"
+TIMELINE_LIMIT_YEARLY="10"
+
