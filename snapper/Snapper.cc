@@ -277,7 +277,10 @@ namespace snapper
 	    struct tm tmp2;
 	    localtime_r(&t2, &tmp2);
 
-	    if (pred(tmp1, tmp2) && t1 > t2)
+	    if (!pred(tmp1, tmp2))
+		return true;
+
+	    if (t1 > t2)
 		return false;
 	}
 
