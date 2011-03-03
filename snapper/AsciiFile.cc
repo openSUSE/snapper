@@ -66,6 +66,9 @@ AsciiFile::reload()
     classic(File_Ci);
     string Line_Ci;
 
+    if (!File_Ci.good())
+	throw;
+
     bool Ret_bi = File_Ci.good();
     File_Ci.unsetf(ifstream::skipws);
     getline( File_Ci, Line_Ci );
