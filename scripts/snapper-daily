@@ -23,6 +23,7 @@ for CONFIG in $SNAPPER_CONFIGS ; do
 
     NUMBER_CLEANUP="no"
     TIMELINE_CLEANUP="no"
+    EMPTY_PRE_POST_CLEANUP="no"
 
     . /etc/snapper/configs/$CONFIG
 
@@ -32,6 +33,10 @@ for CONFIG in $SNAPPER_CONFIGS ; do
 
     if [ "$TIMELINE_CLEANUP" = "yes" ] ; then
 	snapper --config=$CONFIG cleanup timeline
+    fi
+
+    if [ "$EMPTY_PRE_POST_CLEANUP" = "yes" ] ; then
+	snapper --config=$CONFIG cleanup empty-pre-post
     fi
 
 done

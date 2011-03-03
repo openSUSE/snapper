@@ -421,4 +421,39 @@ namespace snapper
 	return true;
     }
 
+
+    bool
+    Snapper::doCleanupEmptyPrePost()
+    {
+	list<Snapshots::iterator> tmp;
+
+	for (Snapshots::iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
+	{
+	    if (it1->getType() == PRE)
+	    {
+		Snapshots::iterator it2 = snapshots.findPost(it1);
+
+		if (it2 != snapshots.end())
+		{
+		    // TODO changing the comparsion snapshots is surprising
+		    // for library users
+		    setComparison(it1, it2);
+
+		    if (getFiles().empty())
+		    {
+			tmp.push_back(it1);
+			tmp.push_back(it2);
+		    }
+		}
+	    }
+	}
+
+	y2mil("deleting " << tmp.size() << " snapshots");
+
+	for (list<Snapshots::iterator>::iterator it = tmp.begin(); it != tmp.end(); ++it)
+	    deleteSnapshot(*it);
+
+	return true;
+    }
+
 }

@@ -451,6 +451,10 @@ command_cleanup()
     {
 	sh->doCleanupTimeline();
     }
+    else if (cleanup == "empty-pre-post")
+    {
+	sh->doCleanupEmptyPrePost();
+    }
     else
     {
 	cerr << sformat(_("Unknown cleanup algorithm '%s'."), cleanup.c_str()) << endl;

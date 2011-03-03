@@ -82,6 +82,7 @@ namespace snapper
 
 	bool doCleanupNumber();
 	bool doCleanupTimeline();
+	bool doCleanupEmptyPrePost();
 
 	void setCompareCallback(CompareCallback* p) { compare_callback = p; }
 	CompareCallback* getCompareCallback() const { return compare_callback; }
