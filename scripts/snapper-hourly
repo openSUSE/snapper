@@ -26,7 +26,7 @@ for CONFIG in $SNAPPER_CONFIGS ; do
     . /etc/snapper/configs/$CONFIG
 
     if [ "$TIMELINE_CREATE" = "yes" ] ; then
-	snapper --config=$CONFIG create --description="timeline" --cleanup="timeline"
+	snapper --config=$CONFIG --quiet create --description="timeline" --cleanup="timeline"
     fi
 
 done
