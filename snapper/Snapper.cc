@@ -50,6 +50,7 @@ namespace snapper
 	y2mil("libsnapper version " VERSION);
 	y2mil("config_name:" << config_name);
 
+	// TODO error checking
 	config = new SysconfigFile(CONFIGSDIR "/" + config_name);
 
 	string val;
