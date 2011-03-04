@@ -6,9 +6,10 @@
 
 #include "common.h"
 
-#include <snapper/Snapper.h>
 #include <snapper/Factory.h>
+#include <snapper/Snapper.h>
 #include <snapper/Snapshot.h>
+#include <snapper/Comparison.h>
 #include <snapper/File.h>
 
 #include "snapper/AppUtil.h"
@@ -58,13 +59,13 @@ second_snapshot()
 void
 check_rollback_statistics(unsigned int numCreate, unsigned int numModify, unsigned int numDelete)
 {
-    sh->setComparison(first, second);
+    Comparison comparison(sh, first, second);
 
-    Files& files = sh->getFiles();
+    Files& files = comparison.getFiles();
     for (Files::iterator it = files.begin(); it != files.end(); ++it)
 	it->setRollback(true);
 
-    RollbackStatistic rs = sh->getRollbackStatistic();
+    RollbackStatistic rs = comparison.getRollbackStatistic();
 
     check_equal(rs.numCreate, numCreate);
     check_equal(rs.numModify, numModify);
@@ -75,13 +76,13 @@ check_rollback_statistics(unsigned int numCreate, unsigned int numModify, unsign
 void
 rollback()
 {
-    sh->setComparison(first, second);
+    Comparison comparison(sh, first, second);
 
-    Files& files = sh->getFiles();
+    Files& files = comparison.getFiles();
     for (Files::iterator it = files.begin(); it != files.end(); ++it)
 	it->setRollback(true);
 
-    sh->doRollback();
+    comparison.doRollback();
 }
 
 
@@ -90,9 +91,9 @@ check_first()
 {
     Snapshots::const_iterator current = sh->getSnapshotCurrent();
 
-    sh->setComparison(first, current);
+    Comparison comparison(sh, first, current);
 
-    const Files& files = sh->getFiles();
+    const Files& files = comparison.getFiles();
     for (Files::const_iterator it = files.begin(); it != files.end(); ++it)
 	cout << *it << endl;
 

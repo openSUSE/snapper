@@ -7,9 +7,10 @@ AM_CXXFLAGS = -D_FILE_OFFSET_BITS=64
 lib_LTLIBRARIES = libsnapper.la
 
 libsnapper_la_SOURCES =					\
-	Snapper.cc		Snapper.h		\
 	Factory.cc		Factory.h		\
+	Snapper.cc		Snapper.h		\
 	Snapshot.cc		Snapshot.h		\
+	Comparison.cc		Comparison.h		\
 	File.cc			File.h			\
 	XmlFile.cc		XmlFile.h		\
 	Enum.cc			Enum.h			\
@@ -28,8 +29,9 @@ libsnapper_la_LIBADD = -lblocxx -lxml2
 pkgincludedir = $(includedir)/snapper
 
 pkginclude_HEADERS =					\
-	Snapper.h					\
 	Factory.h					\
+	Snapper.h					\
 	Snapshot.h					\
+	Comparison.h					\
 	File.h
 

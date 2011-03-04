@@ -25,7 +25,6 @@
 
 
 #include "snapper/Snapshot.h"
-#include "snapper/File.h"
 
 
 namespace snapper
@@ -67,19 +66,6 @@ namespace snapper
 	void startBackgroundComparsion(Snapshots::const_iterator snapshot1,
 				       Snapshots::const_iterator snapshot2);
 
-	bool setComparison(Snapshots::const_iterator snapshot1,
-			   Snapshots::const_iterator snapshot2);
-
-	Snapshots::const_iterator getSnapshot1() const { return snapshot1; }
-	Snapshots::const_iterator getSnapshot2() const { return snapshot2; }
-
-	Files& getFiles() { return files; }
-	const Files& getFiles() const { return files; }
-
-	RollbackStatistic getRollbackStatistic() const;
-
-	bool doRollback();
-
 	bool doCleanupNumber();
 	bool doCleanupTimeline();
 	bool doCleanupEmptyPrePost();
@@ -98,11 +84,6 @@ namespace snapper
 	string subvolume;
 
 	Snapshots snapshots;
-
-	Snapshots::const_iterator snapshot1;
-	Snapshots::const_iterator snapshot2;
-
-	Files files;
 
 	CompareCallback* compare_callback;
 

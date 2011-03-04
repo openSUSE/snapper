@@ -400,9 +400,9 @@ namespace snapper
 
     struct num_is
     {
-        num_is(unsigned int num) : num(num) {}
-        bool operator()(const Snapshot& s) const { return s.getNum() == num; }
-        const unsigned int num;
+	num_is(unsigned int num) : num(num) {}
+	bool operator()(const Snapshot& s) const { return s.getNum() == num; }
+	const unsigned int num;
     };
 
 

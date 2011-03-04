@@ -28,6 +28,7 @@
 
 #include "snapper/File.h"
 #include "snapper/Snapper.h"
+#include "snapper/Comparison.h"
 #include "snapper/Factory.h"
 #include "snapper/AppUtil.h"
 #include "snapper/XmlFile.h"
@@ -80,39 +81,55 @@ namespace snapper
     }
 
 
+    const Snapper*
+    File::getSnapper() const
+    {
+	return comparison->getSnapper();
+    }
+
+
+    const Snapper*
+    Files::getSnapper() const
+    {
+	return comparison->getSnapper();
+    }
+
+
+#if 1
     struct AppendHelper
     {
-	AppendHelper(const Snapper* snapper, vector<File>& entries)
-	    : snapper(snapper), entries(entries) {}
+	AppendHelper(const Comparison* comparison, vector<File>& entries)
+	    : comparison(comparison), entries(entries) {}
 	void operator()(const string& name, unsigned int status)
-	    { entries.push_back(File(snapper, name, status)); }
-	const Snapper* snapper;
+	    { entries.push_back(File(comparison, name, status)); }
+	const Comparison* comparison;
 	vector<File>& entries;
     };
+#endif
 
 
     void
     Files::create()
     {
-	y2mil("num1:" << snapper->getSnapshot1()->getNum() << " num2:" <<
-	      snapper->getSnapshot2()->getNum());
+	y2mil("num1:" << comparison->getSnapshot1()->getNum() << " num2:" <<
+	      comparison->getSnapshot2()->getNum());
 
-	if (snapper->getCompareCallback())
-	    snapper->getCompareCallback()->start();
+	if (getSnapper()->getCompareCallback())
+	    getSnapper()->getCompareCallback()->start();
 
 #if 1
-	cmpdirs_cb_t cb = AppendHelper(snapper, entries);
+	cmpdirs_cb_t cb = AppendHelper(comparison, entries);
 #else
-	cmpdirs_cb_t cb = [&snapper, &entries](const string& name, unsigned int status) {
-	    entries.push_back(File(snapper, name, status));
+	cmpdirs_cb_t cb = [&comparison, &entries](const string& name, unsigned int status) {
+	    entries.push_back(File(comparison, name, status));
 	};
 #endif
-	cmpDirs(snapper->getSnapshot1()->snapshotDir(), snapper->getSnapshot2()->snapshotDir(), cb);
+	cmpDirs(comparison->getSnapshot1()->snapshotDir(), comparison->getSnapshot2()->snapshotDir(), cb);
 
 	sort(entries.begin(), entries.end());
 
-	if (snapper->getCompareCallback())
-	    snapper->getCompareCallback()->stop();
+	if (getSnapper()->getCompareCallback())
+	    getSnapper()->getCompareCallback()->stop();
 
 	y2mil("found " << entries.size() << " lines");
     }
@@ -121,20 +138,20 @@ namespace snapper
     bool
     Files::load()
     {
-	y2mil("num1:" << snapper->getSnapshot1()->getNum() << " num2:" <<
-	      snapper->getSnapshot2()->getNum());
+	y2mil("num1:" << comparison->getSnapshot1()->getNum() << " num2:" <<
+	      comparison->getSnapshot2()->getNum());
 
-	assert(!snapper->getSnapshot1()->isCurrent() && !snapper->getSnapshot2()->isCurrent());
+	assert(!comparison->getSnapshot1()->isCurrent() && !comparison->getSnapshot2()->isCurrent());
 
-	unsigned int num1 = snapper->getSnapshot1()->getNum();
-	unsigned int num2 = snapper->getSnapshot2()->getNum();
+	unsigned int num1 = comparison->getSnapshot1()->getNum();
+	unsigned int num2 = comparison->getSnapshot2()->getNum();
 
 	bool invert = num1 > num2;
 
 	if (invert)
 	    swap(num1, num2);
 
-	string input = snapper->snapshotsDir() + "/" + decString(num2) + "/filelist-" +
+	string input = getSnapper()->snapshotsDir() + "/" + decString(num2) + "/filelist-" +
 	    decString(num1) + ".txt";
 
 	FILE* file = fopen(input.c_str(), "r");
@@ -158,7 +175,7 @@ namespace snapper
 	    if (invert)
 		status = invertStatus(status);
 
-	    File file(snapper, name, status);
+	    File file(comparison, name, status);
 	    entries.push_back(file);
 	}
 
@@ -177,19 +194,19 @@ namespace snapper
     bool
     Files::save()
     {
-	y2mil("num1:" << snapper->getSnapshot1()->getNum() << " num2:" << snapper->getSnapshot2()->getNum());
+	y2mil("num1:" << comparison->getSnapshot1()->getNum() << " num2:" << comparison->getSnapshot2()->getNum());
 
-	assert(!snapper->getSnapshot1()->isCurrent() && !snapper->getSnapshot2()->isCurrent());
+	assert(!comparison->getSnapshot1()->isCurrent() && !comparison->getSnapshot2()->isCurrent());
 
-	unsigned int num1 = snapper->getSnapshot1()->getNum();
-	unsigned int num2 = snapper->getSnapshot2()->getNum();
+	unsigned int num1 = comparison->getSnapshot1()->getNum();
+	unsigned int num2 = comparison->getSnapshot2()->getNum();
 
 	bool invert = num1 > num2;
 
 	if (invert)
 	    swap(num1, num2);
 
-	string output = snapper->snapshotsDir() + "/" + decString(num2) + "/filelist-" +
+	string output = getSnapper()->snapshotsDir() + "/" + decString(num2) + "/filelist-" +
 	    decString(num1) + ".txt";
 
 	string tmp_name = output + ".tmp-XXXXXX";
@@ -219,7 +236,7 @@ namespace snapper
     {
 	entries.clear();
 
-	if (snapper->getSnapshot1()->isCurrent() || snapper->getSnapshot2()->isCurrent())
+	if (comparison->getSnapshot1()->isCurrent() || comparison->getSnapshot2()->isCurrent())
 	{
 	    create();
 	}
@@ -302,16 +319,16 @@ namespace snapper
 	switch (loc)
 	{
 	    case LOC_PRE:
-		return snapper->getSnapshot1()->snapshotDir() + name;
+		return comparison->getSnapshot1()->snapshotDir() + name;
 
 	    case LOC_POST:
-		return snapper->getSnapshot2()->snapshotDir() + name;
+		return comparison->getSnapshot2()->snapshotDir() + name;
 
 	    case LOC_SYSTEM:
-		if (snapper->subvolumeDir() == "/")
+		if (getSnapper()->subvolumeDir() == "/")
 		    return name;
 		else
-		    return snapper->subvolumeDir() + name;
+		    return getSnapper()->subvolumeDir() + name;
 	}
 
 	return "error";

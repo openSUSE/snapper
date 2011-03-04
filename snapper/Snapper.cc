@@ -27,6 +27,7 @@
 
 #include "config.h"
 #include "snapper/Snapper.h"
+#include "snapper/Comparison.h"
 #include "snapper/AppUtil.h"
 #include "snapper/XmlFile.h"
 #include "snapper/Enum.h"
@@ -43,7 +44,7 @@ namespace snapper
 
 
     Snapper::Snapper(const string& config_name)
-	: config_name(config_name), config(NULL), subvolume("/"), snapshots(this), files(this),
+	: config_name(config_name), config(NULL), subvolume("/"), snapshots(this),
 	  compare_callback(NULL)
     {
 	y2mil("Snapper constructor");
@@ -150,38 +151,6 @@ namespace snapper
 	    ".txt";
 
 	SystemCmd(COMPAREDIRSBIN " " + quote(dir1) + " " + quote(dir2) + " " + quote(output));
-    }
-
-
-    bool
-    Snapper::setComparison(Snapshots::const_iterator new_snapshot1,
-			   Snapshots::const_iterator new_snapshot2)
-    {
-	assert(new_snapshot1 != snapshots.end() && new_snapshot2 != snapshots.end());
-	assert(new_snapshot1 != new_snapshot2);
-
-	y2mil("num1:" << new_snapshot1->getNum() << " num2:" << new_snapshot2->getNum());
-
-	snapshot1 = new_snapshot1;
-	snapshot2 = new_snapshot2;
-
-	files.initialize();
-
-	return true;
-    }
-
-
-    RollbackStatistic
-    Snapper::getRollbackStatistic() const
-    {
-	return files.getRollbackStatistic();
-    }
-
-
-    bool
-    Snapper::doRollback()
-    {
-	return files.doRollback();
     }
 
 
@@ -435,11 +404,8 @@ namespace snapper
 
 		if (it2 != snapshots.end())
 		{
-		    // TODO changing the comparsion snapshots is surprising
-		    // for library users
-		    setComparison(it1, it2);
-
-		    if (getFiles().empty())
+		    Comparison comparison(this, it1, it2);
+		    if (comparison.getFiles().empty())
 		    {
 			tmp.push_back(it1);
 			tmp.push_back(it2);

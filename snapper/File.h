@@ -35,6 +35,7 @@ namespace snapper
 
 
     class Snapper;
+    class Comparison;
 
 
     enum StatusFlags
@@ -72,8 +73,9 @@ namespace snapper
     {
     public:
 
-	File(const Snapper* snapper, const string& name, unsigned int pre_to_post_status)
-	    : snapper(snapper), name(name), pre_to_post_status(pre_to_post_status),
+	File(const Comparison* comparison, const string& name,
+	     unsigned int pre_to_post_status)
+	    : comparison(comparison), name(name), pre_to_post_status(pre_to_post_status),
 	      pre_to_system_status(-1), post_to_system_status(-1), rollback(false)
 	{}
 
@@ -98,7 +100,9 @@ namespace snapper
 
     private:
 
-	const Snapper* snapper;
+	const Snapper* getSnapper() const;
+
+	const Comparison* comparison;
 
 	string name;
 
@@ -121,9 +125,12 @@ namespace snapper
     {
     public:
 
-	friend class Snapper;
+	friend class Comparison;
 
-	Files(const Snapper* snapper) : snapper(snapper) {}
+	Files(const Comparison* comparison)
+	    : comparison(comparison) {}
+
+	const Snapper* getSnapper() const;
 
 	typedef vector<File>::iterator iterator;
 	typedef vector<File>::const_iterator const_iterator;
@@ -151,7 +158,7 @@ namespace snapper
 
 	bool doRollback();
 
-	const Snapper* snapper;
+	const Comparison* comparison;
 
 	vector<File> entries;
 

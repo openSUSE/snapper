@@ -6,6 +6,7 @@
 #include <snapper/Factory.h>
 #include <snapper/Snapper.h>
 #include <snapper/Snapshot.h>
+#include <snapper/Comparison.h>
 #include <snapper/File.h>
 #include <snapper/AppUtil.h>
 #include <snapper/SnapperTmpl.h>
@@ -279,9 +280,9 @@ command_diff()
     Snapshots::const_iterator snap1 = readNum(getopts.popArg());
     Snapshots::const_iterator snap2 = readNum(getopts.popArg());
 
-    sh->setComparison(snap1, snap2);
+    Comparison comparison(sh, snap1, snap2);
 
-    const Files& files = sh->getFiles();
+    const Files& files = comparison.getFiles();
 
     Files::const_iterator tmp = files.end();
 
@@ -368,9 +369,9 @@ command_rollback()
 	}
     }
 
-    sh->setComparison(snap1, snap2);
+    Comparison comparison(sh, snap1, snap2);
 
-    Files& files = sh->getFiles();
+    Files& files = comparison.getFiles();
 
     if (file)
     {
@@ -403,7 +404,7 @@ command_rollback()
 	    it->setRollback(true);
     }
 
-    RollbackStatistic rs = sh->getRollbackStatistic();
+    RollbackStatistic rs = comparison.getRollbackStatistic();
 
     if (rs.empty())
     {
@@ -414,7 +415,7 @@ command_rollback()
     cout << "create:" << rs.numCreate << " modify:" << rs.numModify << " delete:" << rs.numDelete
 	 << endl;
 
-    sh->doRollback();
+    comparison.doRollback();
 }
 
 
@@ -564,14 +565,21 @@ main(int argc, char** argv)
     if ((opt = opts.find("config")) != opts.end())
 	config_name = opt->second;
 
-    sh = createSnapper(config_name);
+    if (cmd->first == "help")
+    {
+	command_help();
+    }
+    else
+    {
+	sh = createSnapper(config_name);
 
-    if (!quiet)
-	sh->setCompareCallback(&compare_callback_impl);
+	if (!quiet)
+	    sh->setCompareCallback(&compare_callback_impl);
 
-    (*cmd->second)();
+	(*cmd->second)();
 
-    deleteSnapper(sh);
+	deleteSnapper(sh);
+    }
 
     exit(EXIT_SUCCESS);
 }
