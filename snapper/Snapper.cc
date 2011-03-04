@@ -150,7 +150,8 @@ namespace snapper
 	string output = snapshot2->baseDir() + "/filelist-" + decString(snapshot1->getNum()) +
 	    ".txt";
 
-	SystemCmd(COMPAREDIRSBIN " " + quote(dir1) + " " + quote(dir2) + " " + quote(output));
+	SystemCmd(NICEBIN " -n 19 " IONICEBIN " -c 3 " COMPAREDIRSBIN " " + quote(dir1) + " " +
+		  quote(dir2) + " " + quote(output));
     }
 
 

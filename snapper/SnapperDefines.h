@@ -33,6 +33,9 @@
 
 #define COMPAREDIRSBIN "/usr/lib/snapper/bin/compare-dirs"
 
+#define NICEBIN "/usr/bin/nice"
+#define IONICEBIN "/usr/bin/ionice"
+
 #define CPBIN "/bin/cp"
 
 #define DIFFBIN "/usr/bin/diff"
