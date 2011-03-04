@@ -2,6 +2,6 @@
 
 ## Type:        string
 ## Default:     ""
-# Directories for which snapper ...
+# List of snapper configurations.
 SNAPPER_CONFIGS=""
 
