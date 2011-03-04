@@ -75,7 +75,8 @@ namespace snapper
 
     private:
 
-	void filter1(list<Snapshots::iterator>& tmp1);
+	void filter1(list<Snapshots::iterator>& tmp, time_t min_age);
+	void filter2(list<Snapshots::iterator>& tmp);
 
 	const string config_name;
 

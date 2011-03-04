@@ -7,6 +7,7 @@ SUBVOLUME="/"
 NUMBER_CLEANUP="yes"
 
 # limit for number cleanup
+NUMBER_MIN_AGE="1800"
 NUMBER_LIMIT="100"
 
 
@@ -17,12 +18,16 @@ TIMELINE_CREATE="yes"
 TIMELINE_CLEANUP="yes"
 
 # limits for timeline cleanup
+TIMELINE_MIN_AGE="1800"
 TIMELINE_LIMIT_HOURLY="10"
 TIMELINE_LIMIT_DAILY="10"
 TIMELINE_LIMIT_MONTHLY="10"
 TIMELINE_LIMIT_YEARLY="10"
 
 
-# cleanup empty pre post pairs
+# cleanup empty pre-post-pairs
 EMPTY_PRE_POST_CLEANUP="yes"
+
+# limits for empty pre-post-pair cleanup
+EMPTY_PRE_POST_MIN_AGE="1800"
 

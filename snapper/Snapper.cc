@@ -154,21 +154,39 @@ namespace snapper
     }
 
 
+    struct younger_than
+    {
+	younger_than(time_t t)
+	    : t(t) {}
+	bool operator()(Snapshots::const_iterator it)
+	    { return it->getDate() > t; }
+	const time_t t;
+    };
+
+
+    // Removes snapshots younger than min_age from tmp
+    void
+    Snapper::filter1(list<Snapshots::iterator>& tmp, time_t min_age)
+    {
+	tmp.remove_if(younger_than(time(NULL) - min_age));
+    }
+
+
     // Removes pre and post snapshots from tmp that do have a corresponding
     // snapshot but which is not included in tmp.
     void
-    Snapper::filter1(list<Snapshots::iterator>& tmp1)
+    Snapper::filter2(list<Snapshots::iterator>& tmp)
     {
 	list<Snapshots::iterator> ret;
 
-	for (list<Snapshots::iterator>::const_iterator it1 = tmp1.begin(); it1 != tmp1.end(); ++it1)
+	for (list<Snapshots::iterator>::const_iterator it1 = tmp.begin(); it1 != tmp.end(); ++it1)
 	{
 	    if ((*it1)->getType() == PRE)
 	    {
 		Snapshots::const_iterator it2 = snapshots.findPost(*it1);
 		if (it2 != snapshots.end())
 		{
-		    if (find(tmp1.begin(), tmp1.end(), it2) == tmp1.end())
+		    if (find(tmp.begin(), tmp.end(), it2) == tmp.end())
 			continue;
 		}
 	    }
@@ -178,7 +196,7 @@ namespace snapper
 		Snapshots::const_iterator it2 = snapshots.findPre(*it1);
 		if (it2 != snapshots.end())
 		{
-		    if (find(tmp1.begin(), tmp1.end(), it2) == tmp1.end())
+		    if (find(tmp.begin(), tmp.end(), it2) == tmp.end())
 			continue;
 		}
 	    }
@@ -186,20 +204,23 @@ namespace snapper
 	    ret.push_back(*it1);
 	}
 
-	swap(ret, tmp1);
+	swap(ret, tmp);
     }
 
 
     bool
     Snapper::doCleanupNumber()
     {
+	time_t min_age = 1800;
 	size_t limit = 50;
 
 	string val;
+	if (config->getValue("NUMBER_MIN_AGE", val))
+	    val >> min_age;
 	if (config->getValue("NUMBER_LIMIT", val))
 	    val >> limit;
 
-	y2mil("limit:" << limit);
+	y2mil("min_age:" << min_age << " limit:" << limit);
 
 	list<Snapshots::iterator> tmp;
 
@@ -215,7 +236,8 @@ namespace snapper
 	    advance(it, - limit);
 	    tmp.erase(it, tmp.end());
 
-	    filter1(tmp);
+	    filter1(tmp, min_age);
+	    filter2(tmp);
 
 	    y2mil("deleting " << tmp.size() << " snapshots");
 
@@ -318,12 +340,15 @@ namespace snapper
     bool
     Snapper::doCleanupTimeline()
     {
+	time_t min_age = 1800;
 	size_t limit_hourly = 10;
 	size_t limit_daily = 10;
 	size_t limit_monthly = 10;
 	size_t limit_yearly = 10;
 
 	string val;
+	if (config->getValue("TIMELINE_MIN_AGE", val))
+	    val >> min_age;
 	if (config->getValue("TIMELINE_LIMIT_HOURLY", val))
 	    val >> limit_hourly;
 	if (config->getValue("TIMELINE_LIMIT_DAILY", val))
@@ -333,8 +358,9 @@ namespace snapper
 	if (config->getValue("TIMELINE_LIMIT_YEARLY", val))
 	    val >> limit_yearly;
 
-	y2mil("limit_hourly:" << limit_hourly << " limit_daily:" << limit_daily <<
-	      " limit_monthly:" << limit_monthly << " limit_yearly:" << limit_yearly);
+	y2mil("min_age:" << min_age <<" limit_hourly:" << limit_hourly << " limit_daily:" <<
+	      limit_daily << " limit_monthly:" << limit_monthly << " limit_yearly:" <<
+	      limit_yearly);
 
 	size_t num_hourly = 0;
 	size_t num_daily = 0;
@@ -380,7 +406,8 @@ namespace snapper
 
 	tmp.reverse();
 
-	filter1(tmp);
+	filter1(tmp, min_age);
+	filter2(tmp);
 
 	y2mil("deleting " << tmp.size() << " snapshots");
 
@@ -394,6 +421,14 @@ namespace snapper
     bool
     Snapper::doCleanupEmptyPrePost()
     {
+	time_t min_age = 1800;
+
+	string val;
+	if (config->getValue("EMPTY_PRE_POST_MIN_AGE", val))
+	    val >> min_age;
+
+	y2mil("min_age:" << min_age);
+
 	list<Snapshots::iterator> tmp;
 
 	for (Snapshots::iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
@@ -413,6 +448,9 @@ namespace snapper
 		}
 	    }
 	}
+
+	filter1(tmp, min_age);
+	filter2(tmp);
 
 	y2mil("deleting " << tmp.size() << " snapshots");
 
