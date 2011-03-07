@@ -1,0 +1,32 @@
+-------------------------------------------------------------------
+Mon Mar  7 08:26:14 CET 2011 - jsuchome@suse.cz
+
+- first release for Factory
+- 2.21.0 
+
+-------------------------------------------------------------------
+Thu Mar  3 15:03:55 CET 2011 - jsuchome@suse.cz
+
+- check selected file mode and ownership
+
+-------------------------------------------------------------------
+Mon Feb 28 10:37:40 CET 2011 - jsuchome@suse.cz
+
+- added option to compare with arbitrary snapshot 
+
+-------------------------------------------------------------------
+Thu Feb 24 14:37:00 CET 2011 - jsuchome@suse.cz
+
+- tree handling in YCP
+- added restore function
+- show 3 possible ways to diff
+
+-------------------------------------------------------------------
+Wed Feb  2 15:55:03 CET 2011 - jsuchome@suse.cz
+
+- added scr agent to access snapper library 
+
+-------------------------------------------------------------------
+Mon Dec 13 18:51:43 2010 - jsuchome@suse.cz
+
+- initial version

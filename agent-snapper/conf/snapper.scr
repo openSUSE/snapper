@@ -1,0 +1,14 @@
+/**
+ * File:	snapper.scr
+ * Summary:	snapper agent: access to snapper library
+ * Author:	Jiri Suchomel <jsuchome@suse.cz>
+ * Access:	read / write / execute
+ *
+ * Example:
+ *
+ */
+.snapper
+
+`ag_snapper(
+  `SnapperAgent()
+)
