@@ -1,1 +1,1 @@
-SUBDIRS = conf doc src testsuite
+SUBDIRS = conf doc src
