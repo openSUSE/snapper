@@ -4,7 +4,7 @@
 Requires:	yast2
 BuildRequires:	update-desktop-files yast2 yast2-devtools yast2-testsuite libsnapper libsnapper-devel doxygen yast2-core-devel gcc-c++ perl-XML-Writer
 
-Summary:	System snapshots configuration
+Summary:	YaST - file system snapshots review
 
 %description
 YaST module for accessing and managing btrfs system snapshots
