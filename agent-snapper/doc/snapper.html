@@ -1,0 +1,114 @@
+<html>
+<head>
+<title>Snapper agent description</title>
+</head>
+<body>
+<h1>Snapper agent description</h1>
+<hr>
+
+<h2>Purpose</h2> 
+The Snapper agent (<tt>ag_snapper</tt>) is used to access API of <tt>libsnapper<tt> library from YaST
+(libsnapper is a library for managing btrfs filesystem snapshots).
+
+It is part of YaST2 SCR, the system configuration repository,
+used to access configuration data on the target system. The general
+SCR API allows <tt>Read()</tt> and <tt>Write()</tt> access to get and
+change data. However, snapper agent currently provides only Read calls.
+
+<p>
+<h2>Implementation</h2>
+It is simple wrapper for libsnapper C++ library. The library initialization routines are used to read list of current snapshots and their data.
+<p>
+Each snapshot is described in YCPMap. Snapshot is identified by number. The map also contains the snapshot type (`SINGLE, `PRE, `POST) and the date of snapshot creation. SINGLE and PRE types of snapshot have the description string. The snapshot of PRE type contains number of relevant POST snapshot and vice versa.
+
+<P>
+<i><b>Note:</b> The complete development documentation is available in the
+<a href="autodocs/index.html"><tt>autodocs/</tt></a> directory.</i>
+
+<P>
+<h2>Interface for snapper-agent</h2>
+The interface is implemented as a SCR agent with the usual <tt>Read()</tt>,
+<tt>Write()</tt> and <tt>Dir()</tt> interface. The path prefix used is
+
+<ul><tt>.snapper</tt></ul>
+
+<P>
+<h2>Complete Read paths table</h2>
+
+<table border=3>
+    <tr>
+	<th width="20%" align="left">Path</th>
+        <th width="10%" align="left">Argument</th>
+	<th width="10%" align="left">Type of Result</th>
+	<th align="left">Result</th>
+    </tr>
+
+	<tr><td><tt>.snapper.snapshots</td><td></td><td align="left">YCPList</td>
+	<td>Return list of current snapshot maps.<br>
+	<b>Example of result</b>:
+	<pre>
+	  [
+	    $[
+		"date"		: 1297364138,
+		"description"	: "before yast2-users",
+		"name"		: "1",
+		"num"		: 1,
+		"post_num"	: 2,
+		"type"		: `PRE
+	    ],
+	    $[
+		"date"		: 1297364204,
+		"name"		: "2",
+		"num"		: 2,
+		"pre_num"	: 1,
+		"type"		: `POST
+	    ],
+	    $[
+		"date"		: 1297758106,
+		"description"	: "Tuesday",
+		"name"		: "3",
+		"num"		: 3,
+		"type"		: `SINGLE
+	    ]
+	  ]
+	</pre>
+	</td>
+	</tr>
+
+	<tr><td><tt>.snapper.diff</td><td>YCPMap</td><td align="left">YCPList</td>
+	<td>Returns the list of files modified between given snapshots.
+	Each file is described by YCPMap which contains file path and type of the change.
+	Argument map contains 2 integers, identifying the snapshots.<br>
+	<b>Example of argument map</b>:
+	    <pre>
+	    $[
+		"from" 	: 1,
+		"to" 	: 2
+	    $]
+	    </pre>
+	<b>Example of result</b>:
+	<pre>
+	  [
+	    $[
+		"changes"	: "c...",
+		"name"		: "/etc/group"
+	    ],
+	    $[
+		"changes"	: "c...",
+		"name"		: "/etc/group.YaST2save"
+	    ]
+	  ]
+	</pre>
+	</td></tr>
+</table>
+
+<P>
+
+<P>
+<address>
+Jiri Suchomel &lt;jsuchome@suse.cz&gt;
+</address>
+
+
+</body>
+</html>
