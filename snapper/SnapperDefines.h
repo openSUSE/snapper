@@ -25,6 +25,7 @@
 
 
 #define CONFIGSDIR "/etc/snapper/configs"
+#define FILTERSDIR "/etc/snapper/filters"
 
 #define SNAPSHOTDIR "/snapshot"
 #define SNAPSHOTSDIR "/snapshots"

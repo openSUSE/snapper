@@ -22,9 +22,9 @@
 
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <glob.h>
 #include <string.h>
 #include <unistd.h>
+#include <fnmatch.h>
 
 #include "snapper/File.h"
 #include "snapper/Snapper.h"
@@ -231,6 +231,30 @@ namespace snapper
     }
 
 
+    struct FilterHelper
+    {
+	FilterHelper(const vector<string>& patterns)
+	    : patterns(patterns) {}
+	bool operator()(const File& file)
+	    {
+		for (vector<string>::const_iterator it = patterns.begin(); it != patterns.end(); ++it)
+		    if (fnmatch(it->c_str(), file.getName().c_str(), 0) == 0)
+			return true;
+		return false;
+	    }
+	const vector<string>& patterns;
+    };
+
+
+    void
+    Files::filter()
+    {
+	const vector<string>& filter_patterns = getSnapper()->getFilterPatterns();
+	entries.erase(remove_if(entries.begin(), entries.end(), FilterHelper(filter_patterns)),
+		      entries.end());
+    }
+
+
     void
     Files::initialize()
     {
@@ -248,6 +272,8 @@ namespace snapper
 		save();
 	    }
 	}
+
+	filter();
     }
 
 

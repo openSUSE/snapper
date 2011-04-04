@@ -1,0 +1,2 @@
+/etc/mtab
+/etc/adjtime

@@ -24,11 +24,16 @@
 #define SNAPPER_H
 
 
+#include <vector>
+
 #include "snapper/Snapshot.h"
 
 
 namespace snapper
 {
+    using std::vector;
+
+
     class SysconfigFile;
 
 
@@ -73,16 +78,22 @@ namespace snapper
 	void setCompareCallback(CompareCallback* p) { compare_callback = p; }
 	CompareCallback* getCompareCallback() const { return compare_callback; }
 
+	const vector<string>& getFilterPatterns() const { return filter_patterns; }
+
     private:
 
 	void filter1(list<Snapshots::iterator>& tmp, time_t min_age);
 	void filter2(list<Snapshots::iterator>& tmp);
+
+	void loadPatterns();
 
 	const string config_name;
 
 	SysconfigFile* config;
 
 	string subvolume;
+
+	vector<string> filter_patterns;
 
 	Snapshots snapshots;
 

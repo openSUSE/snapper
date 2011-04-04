@@ -153,6 +153,7 @@ namespace snapper
 	void create();
 	bool load();
 	bool save();
+	void filter();
 
 	RollbackStatistic getRollbackStatistic() const;
 

@@ -60,6 +60,8 @@ namespace snapper
 
 	y2mil("subvolume:" << subvolume);
 
+	loadPatterns();
+
 	snapshots.initialize();
     }
 
@@ -69,6 +71,40 @@ namespace snapper
 	y2mil("Snapper destructor");
 
 	delete config;
+    }
+
+
+    void
+    Snapper::loadPatterns()
+    {
+	const list<string> files = glob(FILTERSDIR "/*.txt", GLOB_NOSORT);
+	for (list<string>::const_iterator it = files.begin(); it != files.end(); ++it)
+	{
+	    FILE* file = fopen(it->c_str(), "r");
+	    if (file == NULL)
+	    {
+		y2err("file not found");
+		continue;
+	    }
+
+	    char* line = NULL;
+	    size_t len = 0;
+
+	    while (getline(&line, &len, file) != -1)
+	    {
+		// TODO: more robust
+
+		string filter_pattern = string(line, 0, strlen(line) - 1);
+
+		filter_patterns.push_back(filter_pattern);
+	    }
+
+	    free(line);
+
+	    fclose(file);
+	}
+
+	y2mil("number of filter patterns:" << filter_patterns.size());
     }
 
 
