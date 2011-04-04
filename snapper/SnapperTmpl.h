@@ -29,7 +29,6 @@
 #include <sstream>
 #include <list>
 #include <map>
-#include <deque>
 #include <iostream>
 
 #include "snapper/AppUtil.h"
@@ -70,19 +69,6 @@ namespace snapper
     {
 	s << "<";
 	for( typename std::list<Value>::const_iterator i=l.begin(); i!=l.end(); i++ )
-	{
-	    if( i!=l.begin() )
-		s << " ";
-	    s << *i;
-	}
-	s << ">";
-	return( s );
-    }
-
-    template<class Value> std::ostream& operator<<( std::ostream& s, const std::deque<Value>& l )
-    {
-	s << "<";
-	for( typename std::deque<Value>::const_iterator i=l.begin(); i!=l.end(); i++ )
 	{
 	    if( i!=l.begin() )
 		s << " ";
