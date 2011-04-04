@@ -249,8 +249,8 @@ namespace snapper
     void
     Files::filter()
     {
-	const vector<string>& filter_patterns = getSnapper()->getFilterPatterns();
-	entries.erase(remove_if(entries.begin(), entries.end(), FilterHelper(filter_patterns)),
+	const vector<string>& ignore_patterns = getSnapper()->getIgnorePatterns();
+	entries.erase(remove_if(entries.begin(), entries.end(), FilterHelper(ignore_patterns)),
 		      entries.end());
     }
 

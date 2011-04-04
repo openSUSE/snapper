@@ -94,9 +94,9 @@ namespace snapper
 	    {
 		// TODO: more robust
 
-		string filter_pattern = string(line, 0, strlen(line) - 1);
+		string ignore_pattern = string(line, 0, strlen(line) - 1);
 
-		filter_patterns.push_back(filter_pattern);
+		ignore_patterns.push_back(ignore_pattern);
 	    }
 
 	    free(line);
@@ -104,7 +104,7 @@ namespace snapper
 	    fclose(file);
 	}
 
-	y2mil("number of filter patterns:" << filter_patterns.size());
+	y2mil("number of ignore patterns:" << ignore_patterns.size());
     }
 
 

@@ -78,7 +78,7 @@ namespace snapper
 	void setCompareCallback(CompareCallback* p) { compare_callback = p; }
 	CompareCallback* getCompareCallback() const { return compare_callback; }
 
-	const vector<string>& getFilterPatterns() const { return filter_patterns; }
+	const vector<string>& getIgnorePatterns() const { return ignore_patterns; }
 
     private:
 
@@ -93,7 +93,7 @@ namespace snapper
 
 	string subvolume;
 
-	vector<string> filter_patterns;
+	vector<string> ignore_patterns;
 
 	Snapshots snapshots;
 
