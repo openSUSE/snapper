@@ -37,6 +37,7 @@
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/Compare.h"
+#include "snapper/AsciiFile.h"
 
 
 namespace snapper
@@ -154,40 +155,36 @@ namespace snapper
 	string input = getSnapper()->snapshotsDir() + "/" + decString(num2) + "/filelist-" +
 	    decString(num1) + ".txt";
 
-	FILE* file = fopen(input.c_str(), "r");
-	if (file == NULL)
+	try
 	{
-	    y2mil("file not found");
+	    AsciiFileReader file(input);
+
+	    string line;
+	    while (file.getline(line))
+	    {
+		// TODO: more robust splitting
+
+		string name = string(line, 5);
+
+		unsigned int status = stringToStatus(string(line, 0, 4));
+
+		if (invert)
+		    status = invertStatus(status);
+
+		File file(comparison, name, status);
+		entries.push_back(file);
+	    }
+
+	    sort(entries.begin(), entries.end());
+
+	    y2mil("read " << entries.size() << " lines");
+
+	    return true;
+	}
+	catch (...)		// TODO
+	{
 	    return false;
 	}
-
-	char* line = NULL;
-	size_t len = 0;
-
-	while (getline(&line, &len, file) != -1)
-	{
-	    // TODO: more robust splitting
-
-	    string name = string(line, 5, strlen(line) - 6);
-
-	    unsigned int status = stringToStatus(string(line, 0, 4));
-
-	    if (invert)
-		status = invertStatus(status);
-
-	    File file(comparison, name, status);
-	    entries.push_back(file);
-	}
-
-	free(line);
-
-	fclose(file);
-
-	sort(entries.begin(), entries.end());
-
-	y2mil("read " << entries.size() << " lines");
-
-	return true;
     }
 
 

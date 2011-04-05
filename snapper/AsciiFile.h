@@ -35,6 +35,24 @@ namespace snapper
     using std::vector;
 
 
+    class AsciiFileReader
+    {
+    public:
+
+	AsciiFileReader(const string& filename);
+	~AsciiFileReader();
+
+	bool getline(string& line);
+
+    private:
+
+	FILE* file;
+	char* buffer;
+	size_t len;
+
+    };
+
+
     class AsciiFile
     {
     public:

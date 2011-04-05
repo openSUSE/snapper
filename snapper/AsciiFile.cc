@@ -34,6 +34,41 @@ namespace snapper
     using namespace std;
 
 
+    AsciiFileReader::AsciiFileReader(const string& filename)
+	: file(NULL), buffer(NULL), len(0)
+    {
+	file = fopen(filename.c_str(), "r");
+	if (file == NULL)
+	{
+	    y2err("open for '" << filename << "' failed");
+	    throw exception();	// TODO
+	}
+    }
+
+
+    AsciiFileReader::~AsciiFileReader()
+    {
+	free(buffer);
+	fclose(file);
+    }
+
+
+    bool
+    AsciiFileReader::getline(string& line)
+    {
+	ssize_t n = ::getline(&buffer, &len, file);
+	if (n == -1)
+	    return false;
+
+	if (buffer[n - 1] != '\n')
+	    line = string(buffer, 0, n);
+	else
+	    line = string(buffer, 0, n - 1);
+
+	return true;
+    }
+
+
 AsciiFile::AsciiFile(const char* Name_Cv, bool remove_empty)
     : Name_C(Name_Cv),
       remove_empty(remove_empty)
@@ -53,43 +88,29 @@ AsciiFile::AsciiFile(const string& Name_Cv, bool remove_empty)
 bool
 AsciiFile::reload()
 {
-    if (Name_C.empty())
-    {
-	y2err("trying to load nameless AsciiFile");
-	return false;
-    }
-
     y2mil("loading file " << Name_C);
     clear();
 
-    ifstream File_Ci(Name_C.c_str());
-    classic(File_Ci);
-    string Line_Ci;
-
-    if (!File_Ci.good())
-	throw;
-
-    bool Ret_bi = File_Ci.good();
-    File_Ci.unsetf(ifstream::skipws);
-    getline( File_Ci, Line_Ci );
-    while( File_Ci.good() )
+    try
     {
-	Lines_C.push_back( Line_Ci );
-	getline( File_Ci, Line_Ci );
+	AsciiFileReader file(Name_C);
+
+	string line;
+	while (file.getline(line))
+	    Lines_C.push_back(line);
+
+	return true;
     }
-    return Ret_bi;
+    catch (...)			// TODO
+    {
+	return false;
+    }
 }
 
 
 bool
 AsciiFile::save()
 {
-    if (Name_C.empty())
-    {
-	y2err("trying to save nameless AsciiFile");
-	return false;
-    }
-
     if (remove_empty && Lines_C.empty())
     {
 	y2mil("deleting file " << Name_C);

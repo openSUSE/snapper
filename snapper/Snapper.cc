@@ -80,28 +80,17 @@ namespace snapper
 	const list<string> files = glob(FILTERSDIR "/*.txt", GLOB_NOSORT);
 	for (list<string>::const_iterator it = files.begin(); it != files.end(); ++it)
 	{
-	    FILE* file = fopen(it->c_str(), "r");
-	    if (file == NULL)
+	    try
 	    {
-		y2err("file not found");
-		continue;
+		AsciiFileReader file(*it);
+
+		string line;
+		while (file.getline(line))
+		    ignore_patterns.push_back(line);
 	    }
-
-	    char* line = NULL;
-	    size_t len = 0;
-
-	    while (getline(&line, &len, file) != -1)
+	    catch (...)		// TODO
 	    {
-		// TODO: more robust
-
-		string ignore_pattern = string(line, 0, strlen(line) - 1);
-
-		ignore_patterns.push_back(ignore_pattern);
 	    }
-
-	    free(line);
-
-	    fclose(file);
 	}
 
 	y2mil("number of ignore patterns:" << ignore_patterns.size());
