@@ -1,2 +1,3 @@
 /etc/mtab
 /etc/adjtime
+/var/lib/misc/random-seed

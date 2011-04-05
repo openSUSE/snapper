@@ -73,7 +73,7 @@ Authors:
 %dir %{_sysconfdir}/snapper
 %dir %{_sysconfdir}/snapper/configs
 %dir %{_sysconfdir}/snapper/filters
-%config(noreplace) %{_sysconfdir}/snapper/filters/base.txt
+%config(noreplace) %{_sysconfdir}/snapper/filters/*.txt
 %doc %dir %{prefix}/share/doc/packages/snapper
 %doc %{prefix}/share/doc/packages/snapper/AUTHORS
 %doc %{prefix}/share/doc/packages/snapper/COPYING
