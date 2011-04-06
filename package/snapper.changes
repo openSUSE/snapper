@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Apr 06 16:44:43 CEST 2011 - aschnell@suse.de
+
+- simplified setup
+
+-------------------------------------------------------------------
 Mon Apr 04 14:20:43 CEST 2011 - aschnell@suse.de
 
 - allow to ignore files during snapshot comparison

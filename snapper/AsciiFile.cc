@@ -275,6 +275,23 @@ void AsciiFile::removeLastIf (string& Text_Cr, char Char_cv) const
 }
 
 
+    void
+    SysconfigFile::setValue(const string& key, const string& value)
+    {
+	string line = key + "=\"" + value + "\"";
+
+	Regex rx('^' + Regex::ws + key + '=' + "(['\"]?)([^'\"]*)\\1" + Regex::ws + '$');
+
+	vector<string>::iterator it = find_if(lines(), regex_matches(rx));
+	if (it == lines().end())
+	    append(line);
+	else
+	    *it = line;
+
+	modified = true;
+    }
+
+
     bool
     SysconfigFile::getValue(const string& key, string& value) const
     {
@@ -285,6 +302,25 @@ void AsciiFile::removeLastIf (string& Text_Cr, char Char_cv) const
 
 	value = rx.cap(2);
 	y2mil("key:" << key << " value:" << value);
+	return true;
+    }
+
+
+    void
+    SysconfigFile::setValue(const string& key, const vector<string>& values)
+    {
+	setValue(key, boost::join(values, " "));
+    }
+
+
+    bool
+    SysconfigFile::getValue(const string& key, vector<string>& values) const
+    {
+	string tmp;
+	if (!getValue("SNAPPER_CONFIGS", tmp))
+	    return false;
+
+	boost::split(values, tmp, boost::is_any_of(" \t"));
 	return true;
     }
 

@@ -60,7 +60,7 @@ namespace snapper
 
 	y2mil("subvolume:" << subvolume);
 
-	loadPatterns();
+	loadIgnorePatterns();
 
 	snapshots.initialize();
     }
@@ -75,7 +75,7 @@ namespace snapper
 
 
     void
-    Snapper::loadPatterns()
+    Snapper::loadIgnorePatterns()
     {
 	const list<string> files = glob(FILTERSDIR "/*.txt", GLOB_NOSORT);
 	for (list<string>::const_iterator it = files.begin(); it != files.end(); ++it)
@@ -482,6 +482,60 @@ namespace snapper
 
 	for (list<Snapshots::iterator>::iterator it = tmp.begin(); it != tmp.end(); ++it)
 	    deleteSnapshot(*it);
+
+	return true;
+    }
+
+
+    list<ConfigInfo>
+    Snapper::getConfigs()
+    {
+	y2mil("Snapper get-configs");
+	y2mil("libsnapper version " VERSION);
+
+	list<ConfigInfo> config_infos;
+
+	SysconfigFile sysconfig(SYSCONFIGFILE);
+	vector<string> config_names;
+	sysconfig.getValue("SNAPPER_CONFIGS", config_names);
+
+	for (vector<string>::const_iterator it = config_names.begin(); it != config_names.end(); ++it)
+	{
+	    // TODO error checking
+	    SysconfigFile config(CONFIGSDIR "/" + *it);
+
+	    string subvolume = "/";
+	    config.getValue("SUBVOLUME", subvolume);
+	    config_infos.push_back(ConfigInfo(*it, subvolume));
+	}
+
+	return config_infos;
+    }
+
+
+    bool
+    Snapper::addConfig(const string& config_name, const string& subvolume)
+    {
+	y2mil("Snapper add-config");
+	y2mil("libsnapper version " VERSION);
+	y2mil("config_name:" << config_name << " subvolume:" << subvolume);
+
+	// TODO: error handling
+
+	SysconfigFile sysconfig(SYSCONFIGFILE);
+	vector<string> config_names;
+	sysconfig.getValue("SNAPPER_CONFIGS", config_names);
+	if (find(config_names.begin(), config_names.end(), config_name) != config_names.end())
+	    return false;
+	config_names.push_back(config_name);
+	sysconfig.setValue("SNAPPER_CONFIGS", config_names);
+
+	SystemCmd cmd1(CPBIN " " DEFAULTCONFIGTEMPLATEFILE " " CONFIGSDIR "/" + config_name);
+
+	SysconfigFile config(CONFIGSDIR "/" + config_name);
+	config.setValue("SUBVOLUME", subvolume);
+
+	SystemCmd cmd2(BTRFSBIN " subvolume create " + subvolume + "/snapshots");
 
 	return true;
     }

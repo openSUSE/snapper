@@ -32,6 +32,74 @@ string config_name = "root";
 Snapper* sh = NULL;
 
 
+void
+help_list_configs()
+{
+    cout << _("  List configs:") << endl
+	 << _("\tsnapper list-configs") << endl
+	 << endl;
+}
+
+
+void
+command_list_configs()
+{
+    getopts.parse("list-configs", GetOpts::no_options);
+    if (getopts.hasArgs())
+    {
+	cerr << _("Command 'list-configs' does not take arguments.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    Table table;
+
+    TableHeader header;
+    header.add("Config");
+    header.add("Subvolume");
+    table.setHeader(header);
+
+    list<ConfigInfo> config_infos = Snapper::getConfigs();
+    for (list<ConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
+    {
+	TableRow row;
+	row.add(it->config_name);
+	row.add(it->subvolume);
+	table.add(row);
+    }
+
+    cout << table;
+}
+
+
+void
+help_create_config()
+{
+    cout << _("  Create config:") << endl
+	 << _("\tsnapper create-config <subvolume>") << endl
+	 << endl;
+}
+
+
+void
+command_create_config()
+{
+    getopts.parse("create-config", GetOpts::no_options);
+    if (getopts.numArgs() != 1)
+    {
+	cerr << _("Command 'create-config' needs one argument.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    string subvolume = getopts.popArg();
+
+    if (!Snapper::addConfig(config_name, subvolume))
+    {
+	cerr << _("Creating config failed.") << endl;
+	exit(EXIT_FAILURE);
+    }
+}
+
+
 Snapshots::iterator
 readNum(const string& str)
 {
@@ -207,7 +275,7 @@ command_modify()
     GetOpts::parsed_opts opts = getopts.parse("modify", options);
     if (getopts.numArgs() != 1)
     {
-	cerr << _("Command 'modify' need one argument.") << endl;
+	cerr << _("Command 'modify' needs one argument.") << endl;
 	exit(EXIT_FAILURE);
     }
 
@@ -491,6 +559,8 @@ command_help()
 	 << _("\t--config, -c <name>\t\tSet name of config to use.") << endl
 	 << endl;
 
+    help_list_configs();
+    help_create_config();
     help_list();
     help_create();
     help_modify();
@@ -517,6 +587,8 @@ main(int argc, char** argv)
 
     initDefaultLogger();
 
+    cmds["list-configs"] = command_list_configs;
+    cmds["create-config"] = command_create_config;
     cmds["list"] = command_list;
     cmds["create"] = command_create;
     cmds["modify"] = command_modify;
@@ -573,9 +645,9 @@ main(int argc, char** argv)
     if ((opt = opts.find("config")) != opts.end())
 	config_name = opt->second;
 
-    if (cmd->first == "help")
+    if (cmd->first == "help" || cmd->first == "list-configs" || cmd->first == "create-config")
     {
-	command_help();
+	(*cmd->second)();
     }
     else
     {

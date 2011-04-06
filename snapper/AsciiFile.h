@@ -111,10 +111,19 @@ namespace snapper
     {
     public:
 
-	SysconfigFile(const char* name) : AsciiFile(name) {}
-	SysconfigFile(const string& name) : AsciiFile(name) {}
+	SysconfigFile(const char* name) : AsciiFile(name), modified(false) {}
+	SysconfigFile(const string& name) : AsciiFile(name), modified(false) {}
+	~SysconfigFile() { if (modified) save(); }
 
+	void setValue(const string& key, const string& value);
 	bool getValue(const string& key, string& value) const;
+
+	void setValue(const string& key, const vector<string>& values);
+	bool getValue(const string& key, vector<string>& values) const;
+
+    private:
+
+	bool modified;
 
     };
 

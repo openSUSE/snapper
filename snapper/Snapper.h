@@ -47,6 +47,15 @@ namespace snapper
     };
 
 
+    struct ConfigInfo
+    {
+	ConfigInfo(const string& config_name, const string& subvolume)
+	    : config_name(config_name), subvolume(subvolume) {}
+	string config_name;
+	string subvolume;
+    };
+
+
     class Snapper
     {
     public:
@@ -80,12 +89,15 @@ namespace snapper
 
 	const vector<string>& getIgnorePatterns() const { return ignore_patterns; }
 
+	static list<ConfigInfo> getConfigs();
+	static bool addConfig(const string& config_name, const string& subvolume);
+
     private:
 
 	void filter1(list<Snapshots::iterator>& tmp, time_t min_age);
 	void filter2(list<Snapshots::iterator>& tmp);
 
-	void loadPatterns();
+	void loadIgnorePatterns();
 
 	const string config_name;
 

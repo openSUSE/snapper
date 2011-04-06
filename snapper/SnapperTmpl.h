@@ -29,7 +29,6 @@
 #include <sstream>
 #include <list>
 #include <map>
-#include <iostream>
 
 #include "snapper/AppUtil.h"
 

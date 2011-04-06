@@ -25,6 +25,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <fnmatch.h>
+#include <iostream>
 
 #include "snapper/File.h"
 #include "snapper/Snapper.h"

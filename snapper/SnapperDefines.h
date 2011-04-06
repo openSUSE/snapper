@@ -24,8 +24,12 @@
 #define SNAPPER_DEFINES_H
 
 
+#define SYSCONFIGFILE "/etc/sysconfig/snapper"
+
 #define CONFIGSDIR "/etc/snapper/configs"
 #define FILTERSDIR "/etc/snapper/filters"
+
+#define DEFAULTCONFIGTEMPLATEFILE "/etc/snapper/config-templates/default"
 
 #define SNAPSHOTDIR "/snapshot"
 #define SNAPSHOTSDIR "/snapshots"
