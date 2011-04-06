@@ -29,24 +29,24 @@
 namespace snapper
 {
 
-    std::auto_ptr<Snapper> haha;
+    std::auto_ptr<Snapper> the_one;
 
 
     Snapper*
     createSnapper(const string& config_name)
     {
-	assert(!haha.get());
-	haha.reset(new Snapper(config_name));
-	return haha.get();
+	assert(!the_one.get());
+	the_one.reset(new Snapper(config_name));
+	return the_one.get();
     }
 
 
     void
     deleteSnapper(Snapper* s)
     {
-	assert(haha.get());
-	assert(s == haha.get());
-	haha.reset();
+	assert(the_one.get());
+	assert(s == the_one.get());
+	the_one.reset();
     }
 
 }
