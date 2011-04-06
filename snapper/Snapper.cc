@@ -82,10 +82,10 @@ namespace snapper
 	{
 	    try
 	    {
-		AsciiFileReader file(*it);
+		AsciiFileReader asciifile(*it);
 
 		string line;
-		while (file.getline(line))
+		while (asciifile.getline(line))
 		    ignore_patterns.push_back(line);
 	    }
 	    catch (...)		// TODO

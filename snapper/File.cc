@@ -157,16 +157,17 @@ namespace snapper
 
 	try
 	{
-	    AsciiFileReader file(input);
+	    AsciiFileReader asciifile(input);
 
 	    string line;
-	    while (file.getline(line))
+	    while (asciifile.getline(line))
 	    {
-		// TODO: more robust splitting
+		string::size_type pos = line.find(" ");
+		if (pos == string::npos)
+		    continue;
 
-		string name = string(line, 5);
-
-		unsigned int status = stringToStatus(string(line, 0, 4));
+		unsigned int status = stringToStatus(string(line, 0, pos));
+		string name = string(line, pos + 1);
 
 		if (invert)
 		    status = invertStatus(status);

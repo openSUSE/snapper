@@ -12,6 +12,7 @@
 #include <snapper/SnapperTmpl.h>
 #include <snapper/Compare.h>
 #include <snapper/Enum.h>
+#include <snapper/AsciiFile.h>
 
 #include "utils/Table.h"
 #include "utils/GetOpts.h"
@@ -375,14 +376,25 @@ command_rollback()
 
     if (file)
     {
-	char* line = NULL;
-	size_t len = 0;
+	AsciiFileReader asciifile(file);
 
-	while (getline(&line, &len, file) != -1)
+	string line;
+	while (asciifile.getline(line))
 	{
-	    // TODO: more robust splitting, make status optional
+	    if (line.empty())
+		continue;
 
-	    string name = string(line, 5, strlen(line) - 6);
+	    string name = line;
+
+	    // strip optional status
+	    if (name[0] != '/')
+	    {
+		string::size_type pos = name.find(" ");
+		if (pos == string::npos)
+		    continue;
+
+		name.erase(0, pos + 1);
+	    }
 
 	    Files::iterator it = files.find(name);
 	    if (it == files.end())
@@ -393,10 +405,6 @@ command_rollback()
 
 	    it->setRollback(true);
 	}
-
-	free(line);
-
-	fclose(file);
     }
     else
     {

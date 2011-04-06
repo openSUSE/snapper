@@ -34,6 +34,17 @@ namespace snapper
     using namespace std;
 
 
+    AsciiFileReader::AsciiFileReader(FILE* file)
+	: file(file), buffer(NULL), len(0)
+    {
+	if (file == NULL)
+	{
+	    y2err("file is NULL");
+	    throw exception();	// TODO
+	}
+    }
+
+
     AsciiFileReader::AsciiFileReader(const string& filename)
 	: file(NULL), buffer(NULL), len(0)
     {
