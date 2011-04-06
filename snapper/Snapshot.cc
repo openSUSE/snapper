@@ -129,12 +129,7 @@ namespace snapper
 
 	    if (getChildValue(node, "date", tmp))
 	    {
-		// TODO: remove someday
-		if (boost::ends_with(tmp, " GMT"))
-		    tmp.erase(19);
-
 		assert(tmp.size() == 19);
-
 		snapshot.date = scan_datetime(tmp, true);
 	    }
 
