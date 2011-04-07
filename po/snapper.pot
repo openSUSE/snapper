@@ -1,0 +1,250 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR SUSE Linux Products GmbH, Nuernberg
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-04-07 10:21+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../tools/snapper.cc:181
+msgid "\t--cleanup-algorithm, -c\t\tCleanup algorithm for snapshot."
+msgstr ""
+
+#: ../tools/snapper.cc:559
+msgid "\t--config, -c <name>\t\tSet name of config to use."
+msgstr ""
+
+#: ../tools/snapper.cc:179 ../tools/snapper.cc:262
+msgid "\t--description, -d <description>\tDescription for snapshot."
+msgstr ""
+
+#: ../tools/snapper.cc:404
+msgid "\t--file, -f <file>\t\tRead files to rollback from file."
+msgstr ""
+
+#: ../tools/snapper.cc:326
+msgid "\t--file, -f <file>\t\tRun diff for file."
+msgstr ""
+
+#: ../tools/snapper.cc:325
+msgid "\t--output, -o <file>\t\tSave diff to file."
+msgstr ""
+
+#: ../tools/snapper.cc:178
+msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
+msgstr ""
+
+#: ../tools/snapper.cc:180
+msgid "\t--print-number, -p\t\tPrint number of created snapshot."
+msgstr ""
+
+#: ../tools/snapper.cc:557
+msgid "\t--quiet, -q\t\t\tSuppress normal output."
+msgstr ""
+
+#: ../tools/snapper.cc:558
+msgid "\t--table-style, -t <style>\tTable style (integer)."
+msgstr ""
+
+#: ../tools/snapper.cc:177
+msgid "\t--type, -t <type>\t\tType for snapshot."
+msgstr ""
+
+#: ../tools/snapper.cc:502
+msgid "\tsnapper cleanup <cleanup-algorithm>"
+msgstr ""
+
+#: ../tools/snapper.cc:174
+msgid "\tsnapper create"
+msgstr ""
+
+#: ../tools/snapper.cc:78
+msgid "\tsnapper create-config <subvolume>"
+msgstr ""
+
+#: ../tools/snapper.cc:295
+msgid "\tsnapper delete <number>"
+msgstr ""
+
+#: ../tools/snapper.cc:322
+msgid "\tsnapper diff <number1> <number2>"
+msgstr ""
+
+#: ../tools/snapper.cc:127
+msgid "\tsnapper list"
+msgstr ""
+
+#: ../tools/snapper.cc:39
+msgid "\tsnapper list-configs"
+msgstr ""
+
+#: ../tools/snapper.cc:259
+msgid "\tsnapper modify <number>"
+msgstr ""
+
+#: ../tools/snapper.cc:401
+msgid "\tsnapper rollback <number1> <number2>"
+msgstr ""
+
+#: ../tools/snapper.cc:556
+msgid "    Global options:"
+msgstr ""
+
+#: ../tools/snapper.cc:176
+msgid "    Options for 'create' command:"
+msgstr ""
+
+#: ../tools/snapper.cc:324
+msgid "    Options for 'diff' command:"
+msgstr ""
+
+#: ../tools/snapper.cc:261
+msgid "    Options for 'modify' command:"
+msgstr ""
+
+#: ../tools/snapper.cc:403
+msgid "    Options for 'rollback' command:"
+msgstr ""
+
+#: ../tools/snapper.cc:501
+msgid "  Cleanup snapshots:"
+msgstr ""
+
+#: ../tools/snapper.cc:321
+msgid "  Comparing snapshots:"
+msgstr ""
+
+#: ../tools/snapper.cc:77
+msgid "  Create config:"
+msgstr ""
+
+#: ../tools/snapper.cc:173
+msgid "  Create snapshot:"
+msgstr ""
+
+#: ../tools/snapper.cc:294
+msgid "  Delete snapshot:"
+msgstr ""
+
+#: ../tools/snapper.cc:38
+msgid "  List configs:"
+msgstr ""
+
+#: ../tools/snapper.cc:126
+msgid "  List snapshots:"
+msgstr ""
+
+#: ../tools/snapper.cc:258
+msgid "  Modify snapshot:"
+msgstr ""
+
+#: ../tools/snapper.cc:400
+msgid "  Rollback snapshots:"
+msgstr ""
+
+#: ../tools/snapper.cc:517
+msgid "Command 'cleanup' needs one arguments."
+msgstr ""
+
+#: ../tools/snapper.cc:201
+msgid "Command 'create' does not take arguments."
+msgstr ""
+
+#: ../tools/snapper.cc:89
+msgid "Command 'create-config' needs one argument."
+msgstr ""
+
+#: ../tools/snapper.cc:306
+msgid "Command 'delete' needs at least one argument."
+msgstr ""
+
+#: ../tools/snapper.cc:343
+msgid "Command 'diff' needs two arguments."
+msgstr ""
+
+#: ../tools/snapper.cc:549
+msgid "Command 'help' does not take arguments."
+msgstr ""
+
+#: ../tools/snapper.cc:138
+msgid "Command 'list' does not take arguments."
+msgstr ""
+
+#: ../tools/snapper.cc:50
+msgid "Command 'list-configs' does not take arguments."
+msgstr ""
+
+#: ../tools/snapper.cc:278
+msgid "Command 'modify' needs one argument."
+msgstr ""
+
+#: ../tools/snapper.cc:420
+msgid "Command 'rollback' needs two arguments."
+msgstr ""
+
+#: ../tools/snapper.cc:97
+msgid "Creating config failed."
+msgstr ""
+
+#: ../tools/snapper.cc:470
+#, c-format
+msgid "File '%s' not found in diff."
+msgstr ""
+
+#: ../tools/snapper.cc:363
+#, c-format
+msgid "File '%s' not included in diff."
+msgstr ""
+
+#: ../tools/snapper.cc:638
+#, c-format
+msgid "Invalid table style %d."
+msgstr ""
+
+#: ../tools/snapper.cc:613
+msgid "No command provided."
+msgstr ""
+
+#: ../tools/snapper.cc:375 ../tools/snapper.cc:436
+#, c-format
+msgid "Opening file '%s' failed."
+msgstr ""
+
+#: ../tools/snapper.cc:115
+#, c-format
+msgid "Snapshot '%u' not found."
+msgstr ""
+
+#: ../tools/snapper.cc:614 ../tools/snapper.cc:623
+msgid "Try 'snapper help' for more information."
+msgstr ""
+
+#: ../tools/snapper.cc:537
+#, c-format
+msgid "Unknown cleanup algorithm '%s'."
+msgstr ""
+
+#: ../tools/snapper.cc:622
+#, c-format
+msgid "Unknown command '%s'."
+msgstr ""
+
+#: ../tools/snapper.cc:639
+#, c-format
+msgid "Use an integer number from %d to %d"
+msgstr ""
+
+#: ../tools/snapper.cc:553
+msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr ""
