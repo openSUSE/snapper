@@ -514,11 +514,13 @@ namespace snapper
 
 
     bool
-    Snapper::addConfig(const string& config_name, const string& subvolume)
+    Snapper::addConfig(const string& config_name, const string& subvolume,
+		       const string& template_name)
     {
 	y2mil("Snapper add-config");
 	y2mil("libsnapper version " VERSION);
-	y2mil("config_name:" << config_name << " subvolume:" << subvolume);
+	y2mil("config_name:" << config_name << " subvolume:" << subvolume <<
+	      " template_name:" << template_name);
 
 	// TODO: error handling
 
@@ -530,7 +532,8 @@ namespace snapper
 	config_names.push_back(config_name);
 	sysconfig.setValue("SNAPPER_CONFIGS", config_names);
 
-	SystemCmd cmd1(CPBIN " " DEFAULTCONFIGTEMPLATEFILE " " CONFIGSDIR "/" + config_name);
+	SystemCmd cmd1(CPBIN " " CONFIGTEMPLATEDIR "/" + template_name + " " CONFIGSDIR "/" +
+		       config_name);
 
 	SysconfigFile config(CONFIGSDIR "/" + config_name);
 	config.setValue("SUBVOLUME", subvolume);

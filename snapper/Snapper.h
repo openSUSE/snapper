@@ -90,7 +90,8 @@ namespace snapper
 	const vector<string>& getIgnorePatterns() const { return ignore_patterns; }
 
 	static list<ConfigInfo> getConfigs();
-	static bool addConfig(const string& config_name, const string& subvolume);
+	static bool addConfig(const string& config_name, const string& subvolume,
+			      const string& template_name);
 
     private:
 

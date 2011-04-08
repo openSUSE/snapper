@@ -76,6 +76,9 @@ help_create_config()
 {
     cout << _("  Create config:") << endl
 	 << _("\tsnapper create-config <subvolume>") << endl
+	 << endl
+	 << _("    Options for 'create-config' command:") << endl
+	 << _("\t--template, -t <name>\t\tName of config template to use.") << endl
 	 << endl;
 }
 
@@ -83,7 +86,12 @@ help_create_config()
 void
 command_create_config()
 {
-    getopts.parse("create-config", GetOpts::no_options);
+    const struct option options[] = {
+	{ "template",		required_argument,	0,	't' },
+	{ 0, 0, 0, 0 }
+    };
+
+    GetOpts::parsed_opts opts = getopts.parse("create-config", options);
     if (getopts.numArgs() != 1)
     {
 	cerr << _("Command 'create-config' needs one argument.") << endl;
@@ -92,7 +100,14 @@ command_create_config()
 
     string subvolume = getopts.popArg();
 
-    if (!Snapper::addConfig(config_name, subvolume))
+    string template_name = "default";
+
+    GetOpts::parsed_opts::const_iterator opt;
+
+    if ((opt = opts.find("template")) != opts.end())
+	template_name = opt->second;
+
+    if (!Snapper::addConfig(config_name, subvolume, template_name))
     {
 	cerr << _("Creating config failed.") << endl;
 	exit(EXIT_FAILURE);
