@@ -20,7 +20,7 @@ extern char* program_invocation_short_name;
 
 using namespace snapper;
 
-#define SUBVOLUME "/test"
+#define SUBVOLUME "/testsuite"
 
 Snapper* sh = NULL;
 

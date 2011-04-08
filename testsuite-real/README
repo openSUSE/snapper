@@ -1,0 +1,17 @@
+
+To run testsuite:
+
+- read the CAUTION file
+
+- create subvolume /testsuite
+
+  btrfs subvolume create /testsuite
+
+- create snapper config for testsuite
+
+  snapper --config=testsuite create-config /testsuite
+
+- run test
+
+  ./run-all
+
