@@ -1,3 +1,4 @@
 /etc/mtab
 /etc/adjtime
 /var/lib/misc/random-seed
+/var/lib/ntp/drift/ntp.drift
