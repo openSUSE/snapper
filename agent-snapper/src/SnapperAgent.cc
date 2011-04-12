@@ -9,6 +9,7 @@
 
 #include "SnapperAgent.h"
 #include <ctype.h>
+#include <boost/algorithm/string.hpp>
 
 #define PC(n)       (path->component_str(n))
 
@@ -93,6 +94,21 @@ YCPList SnapperAgent::Dir(const YCPPath& path)
     return YCPNull();
 }
 
+
+struct Tree { map<string, Tree> trees; };
+
+static YCPMap
+make_ycpmap(const Tree& tree)
+{
+    YCPMap ret;
+
+    for (map<string, Tree>::const_iterator it = tree.trees.begin(); it != tree.trees.end(); ++it)
+	ret->add(YCPString(it->first), make_ycpmap(it->second));
+
+    return ret;
+}
+
+
 /**
  * Read
  */
@@ -152,9 +168,9 @@ YCPValue SnapperAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPV
 	}
 
 	/**
-	 * Read(.snapper.diff) -> show difference between snapnots num1 and num2.
+	 * Read(.snapper.diff_list) -> show difference between snapnots num1 and num2 as list.
 	 */
-	if (PC(0) == "diff") {
+	if (PC(0) == "diff_list") {
 	    YCPList retlist;
 	    unsigned int num1	= getIntValue (argmap, "from", 0);
 	    unsigned int num2	= getIntValue (argmap, "to", 0);
@@ -173,6 +189,37 @@ YCPValue SnapperAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPV
 		retlist->add (filemap);
 	    }
 	    return retlist;
+	}
+	/**
+	 * Read(.snapper.diff_tree) -> show difference between snapnots num1 and num2 as tree.
+	 */
+	else if (PC(0) == "diff_tree")
+	{
+	    Tree ret1;
+
+	    unsigned int num1 = getIntValue(argmap, "from", 0);
+	    unsigned int num2 = getIntValue(argmap, "to", 0);
+
+	    const Snapshots& snapshots = sh->getSnapshots();
+	    const Comparison comparison(sh, snapshots.find(num1), snapshots.find(num2));
+	    const Files& files = comparison.getFiles();
+	    for (Files::const_iterator it = files.begin(); it != files.end(); ++it)
+	    {
+		deque<string> parts;
+		boost::split(parts, it->getName(), boost::is_any_of("/"));
+		parts.pop_front();
+
+		Tree* tmp = &ret1;
+		for (deque<string>::const_iterator it = parts.begin(); it != parts.end(); ++it)
+		{
+		    map<string, Tree>::iterator pos = tmp->trees.find(*it);
+		    if (pos == tmp->trees.end())
+			pos = tmp->trees.insert(tmp->trees.begin(), make_pair(*it, Tree()));
+		    tmp = &pos->second;
+		}
+	    }
+
+	    return make_ycpmap(ret1);
 	}
 	else {
 	    y2error("Wrong path '%s' in Read().", path->toString().c_str());

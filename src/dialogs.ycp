@@ -180,7 +180,7 @@ any ShowDialog () {
 
     map snapshot		= Snapper::selected_snapshot;
     integer snapshot_num	= snapshot["num"]:0;
-    list<map> file_list		= snapshot["files"]:[];
+    map<string, map> tree_map	= snapshot["tree_map"]:$[];
     integer previous_num	= snapshot["pre_num"]:snapshot_num;
 
     integer pre_index		= Snapper::id2index[previous_num]:0;
@@ -213,39 +213,17 @@ any ShowDialog () {
 	}
 	// busy popup message
 	Popup::ShowFeedback ("", _("Calculating changed files..."));
-	snapshot["files"]	= Snapper::ReadModifiedFiles (from, to);
+	snapshot["tree_map"]	= Snapper::ReadModifiedFiles (from, to);
 	Popup::ClearFeedback ();
-	file_list	= snapshot["files"]:[];
+	tree_map	= snapshot["tree_map"]:$[];
 	// update the global snapshots list
 	Snapper::snapshots[Snapper::selected_snapshot_index]	= snapshot;
     }
 
     string snapshot_name	= tostring (snapshot_num);
 
-    // map of tree (recursive)
-    map<string,map> tree_map	= $[];
-
     // map of all items in tree (just one level)
     map<string,boolean> selected_items	= $[];
-
-    // helper function: update the global map with directory tree structure
-    map<string,map> update_tree_map (map<string,map> current_map, list<string> path_list)
-    {
-	string first	= path_list[0]:"";
-
-	if (current_map[first]:nil == nil)
-	{
-	    current_map[first]	= $[];
-	}
-	if (size (path_list) > 1)
-	{
-	    current_map[first]	=
-		update_tree_map ((map<string,map>)current_map[first]:$[],
-				 (list<string>) remove (path_list, 0)
-		);
-	}
-	return current_map;
-    }
 
     // save full paths of files marked as modified
     map<string,map> files_index	= $[];
@@ -486,19 +464,7 @@ any ShowDialog () {
 	    // button label
 	    Label::CancelButton(), _("Restore Selected"));
 
-    // generate the map with directory tree structure
-    foreach (map file, file_list, {
-	string full_path	= file["name"]:"";
-	list<string> path_l	= splitstring (full_path, "/");
-	if (path_l[0]:"" == "")
-	    path_l		= remove (path_l, 0);
-	tree_map		= update_tree_map (tree_map, path_l);
-	files_index[full_path]	= $[
-	    "changes"		: file["changes"]:""
-	];
-    });
-
-    tree_items	= generate_tree_items ("", tree_map);
+    tree_items = generate_tree_items ("", tree_map);
 
     if (size (tree_items) > 0)
     {

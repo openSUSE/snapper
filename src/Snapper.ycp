@@ -56,9 +56,8 @@ global integer selected_snapshot_index	= 0;
  * Return list of files modified between given snapshots
  * File is a map with name (path) and some parameters
  */
-global list<map> ReadModifiedFiles (integer from, integer to) {
-
-    return (list<map>) SCR::Read (.snapper.diff, $[ "from" : from, "to" : to]);
+global map<string, map> ReadModifiedFiles (integer from, integer to) {
+    return (map<string, map>) SCR::Read (.snapper.diff_tree, $[ "from" : from, "to" : to]);
 }
 
 /**
