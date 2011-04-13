@@ -46,6 +46,19 @@ int SnapperAgent::getIntValue (const YCPMap map, const string key, int deflt)
     return deflt;
 }
 
+/**
+ * Search the map for value of given key;
+ * key is string and value is YCPList
+ */
+YCPList SnapperAgent::getListValue (const YCPMap map, const string key)
+{
+    if (!map->value(YCPString(key)).isNull() && map->value(YCPString(key))->isList())
+	return map->value(YCPString(key))->asList();
+    else
+	return YCPList();
+}
+
+
 string statusToString(unsigned int status)
 {
 	string ret;
@@ -268,7 +281,52 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
 {
     y2internal ("path in Execute: '%s'.", path->toString().c_str());
     YCPValue ret = YCPBoolean (true);
-    return ret;
+
+    YCPMap argmap;
+    if (!arg.isNull() && arg->isMap())
+    	argmap = arg->asMap();
+
+    if (path->length() == 1) {
+
+	/**
+	 * Rollback the list of given files from snapshot num1 to num2 (system by default)
+	 */
+	if (PC(0) == "rollback") {
+
+	    unsigned int num1	= getIntValue (argmap, "from", 0);
+	    unsigned int num2	= getIntValue (argmap, "to", 0);
+	    const Snapshots& snapshots = sh->getSnapshots();
+// FIXME this takes too long, it should not be needed to do whole snapshot comparision
+	    Comparison comparison(sh, snapshots.find(num1), snapshots.find(num2));
+	    Files& files = comparison.getFiles();
+
+	    YCPList selected = getListValue (argmap, "files");
+	    for (int i=0; i < selected->size(); i++) {
+		if (selected.value(i)->isString())
+		{
+		    string name = selected->value(i)->asString()->value();
+		    y2internal ("file to rollback: %s", name.c_str());
+		    Files::iterator it = files.find(name);
+		    if (it == files.end())
+		    {
+			y2error ("file %s not found in diff", name.c_str());
+		    }
+		    else
+		    {
+			it->setRollback(true);
+			it->doRollback ();
+		    }
+		}
+	    }
+	    return ret;
+	}
+
+    }
+    else {
+	y2error("Wrong path '%s' in Execute().", path->toString().c_str());
+    }
+
+    return YCPVoid ();
 }
 
 /**
