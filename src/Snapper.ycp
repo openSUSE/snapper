@@ -53,10 +53,18 @@ global map<integer,integer> id2index	= $[];
 global integer selected_snapshot_index	= 0;
 
 /**
- * Return list of files modified between given snapshots
- * File is a map with name (path) and some parameters
+ * Return map of files modified between given snapshots
+ * Return structure has just one level, and maps each modified file to it's modification map
  */
-global map<string, map> ReadModifiedFiles (integer from, integer to) {
+global map<string,string> ReadModifiedFilesIndex (integer from, integer to) {
+    return (map<string,string>) SCR::Read (.snapper.diff_index, $[ "from" : from, "to" : to]);
+}
+
+/**
+ * Return map of files modified between given snapshots
+ * Map is recursively describing the filesystem structure; helps to build Tree widget contents
+ */
+global map<string, map> ReadModifiedFilesMap (integer from, integer to) {
     return (map<string, map>) SCR::Read (.snapper.diff_tree, $[ "from" : from, "to" : to]);
 }
 

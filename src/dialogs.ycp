@@ -180,9 +180,9 @@ any ShowDialog () {
 
     map snapshot		= Snapper::selected_snapshot;
     integer snapshot_num	= snapshot["num"]:0;
+    // map of whole tree (recursive)
     map<string, map> tree_map	= snapshot["tree_map"]:$[];
     integer previous_num	= snapshot["pre_num"]:snapshot_num;
-
     integer pre_index		= Snapper::id2index[previous_num]:0;
     string description		= Snapper::snapshots[pre_index,"description"]:"";
     string pre_date		= timestring ("%c", Snapper::snapshots[pre_index,"date"]:0, false);
@@ -198,35 +198,43 @@ any ShowDialog () {
 	}
     });
 
-    if (!haskey (snapshot, "files"))
+    integer from	= snapshot_num;
+    integer to	= 0; // current system
+    if (snapshot["type"]:`NONE == `POST)
     {
-	integer from	= snapshot_num;
-	integer to	= 0; // current system
-	if (snapshot["type"]:`NONE == `POST)
-	{
-	    from	= snapshot["pre_num"]:0;
-	    to		= snapshot_num;
-	}
-	else if (snapshot["type"]:`NONE == `PRE)
-	{
-	    to		= snapshot["post_num"]:0;
-	}
-	// busy popup message
-	Popup::ShowFeedback ("", _("Calculating changed files..."));
-	snapshot["tree_map"]	= Snapper::ReadModifiedFiles (from, to);
+	from	= snapshot["pre_num"]:0;
+	to	= snapshot_num;
+    }
+    else if (snapshot["type"]:`NONE == `PRE)
+    {
+	to	= snapshot["post_num"]:0;
+    }
+
+    // busy popup message
+    Popup::ShowFeedback ("", _("Calculating changed files..."));
+
+    if (!haskey (snapshot, "tree_map"))
+    {
+	snapshot["tree_map"]	= Snapper::ReadModifiedFilesMap (from, to);
 	Popup::ClearFeedback ();
 	tree_map	= snapshot["tree_map"]:$[];
-	// update the global snapshots list
+    }
+    // full paths of files marked as modified, mapping to changes string
+    map<string,string> files_index	= $[];
+    if (!haskey (snapshot, "files_index"))
+    {
+	snapshot["files_index"]	= Snapper::ReadModifiedFilesIndex (from, to);
 	Snapper::snapshots[Snapper::selected_snapshot_index]	= snapshot;
     }
+    files_index	= snapshot["files_index"]:$[];
+
+    // update the global snapshots list
+    Snapper::snapshots[Snapper::selected_snapshot_index]	= snapshot;
 
     string snapshot_name	= tostring (snapshot_num);
 
     // map of all items in tree (just one level)
     map<string,boolean> selected_items	= $[];
-
-    // save full paths of files marked as modified
-    map<string,map> files_index	= $[];
 
     // go through the map defining filesystem tree and create the widget items
     list<term> generate_tree_items (string current_path, map<string,map> current_branch) {
@@ -234,9 +242,9 @@ any ShowDialog () {
 	list<term> ret	= [];
 	foreach (string node, map branch, current_branch, {
 	    string new_path	= current_path + "/" + node;
-	    if (files_index[new_path]:$[] != $[])
+	    if (haskey (files_index, new_path))
 	    {
-		string changes	= files_index[new_path,"changes"]:"";
+		string changes	= files_index[new_path]:"";
 		string icon_f	= "16x16/apps/gdu-smart-unknown.png";
 		if (substring (changes, 0, 1) == "+")
 		{
@@ -347,7 +355,7 @@ any ShowDialog () {
 
     // create the term for selected file
     void set_entry_term () {
-	if (current_file != "" && files_index[current_file]:$[] != $[])
+	if (current_file != "" && haskey (files_index, current_file))
 	{
 	    if (type == `SINGLE)
 	    {
@@ -496,7 +504,7 @@ any ShowDialog () {
 	if (ret == `tree && event["EventReason"]:"" == "ValueChanged")
 	{
 	    // non-tracked file (so, it should be directory)
-	    if (current_file != "" && files_index[current_file]:$[] == $[])
+	    if (current_file != "" && ! haskey (files_index, current_file))
 	    {
 		void select_items (map<string,map> current_map, string prefix) {
 		    selected_items[prefix]	= ! selected_items[prefix]:false;
