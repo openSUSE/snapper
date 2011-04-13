@@ -32,6 +32,7 @@
 textdomain "snapper";
 
 import "Confirm";
+import "FileUtils";
 import "Label";
 import "Popup";
 import "Wizard";
@@ -503,8 +504,9 @@ any ShowDialog () {
 	// tree checkbox clicked
 	if (ret == `tree && event["EventReason"]:"" == "ValueChanged")
 	{
-	    // non-tracked file (so, it should be directory)
-	    if (current_file != "" && ! haskey (files_index, current_file))
+	    // non-tracked file should be directory
+	    if (current_file != "" &&
+		(! haskey (files_index, current_file) || FileUtils::IsDirectory (current_file)))
 	    {
 		void select_items (map<string,map> current_map, string prefix) {
 		    selected_items[prefix]	= ! selected_items[prefix]:false;
