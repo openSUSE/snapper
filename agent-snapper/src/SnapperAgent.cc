@@ -127,7 +127,7 @@ make_ycpmap(const Tree& tree)
  */
 YCPValue SnapperAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPValue& opt) {
 
-    y2internal ("path in Read: '%s'.", path->toString().c_str());
+    y2debug ("path in Read: '%s'.", path->toString().c_str());
     YCPValue ret = YCPVoid();
 
     YCPMap argmap;
@@ -174,7 +174,7 @@ YCPValue SnapperAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPV
 		    s->add (YCPString ("pre_num"), YCPInteger (it->getPreNum()));
 		}
 
-		y2internal ("snapshot %s", s.toString().c_str());
+		y2debug ("snapshot %s", s.toString().c_str());
 		retlist->add (s);
 	    }
 	    return retlist;
@@ -267,7 +267,7 @@ YCPValue SnapperAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPV
 YCPBoolean SnapperAgent::Write(const YCPPath &path, const YCPValue& arg,
        const YCPValue& arg2)
 {
-    y2internal ("path in Write: '%s'.", path->toString().c_str());
+    y2debug ("path in Write: '%s'.", path->toString().c_str());
 
     YCPBoolean ret = YCPBoolean(true);
     return ret;
@@ -279,7 +279,7 @@ YCPBoolean SnapperAgent::Write(const YCPPath &path, const YCPValue& arg,
 YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
 	const YCPValue& arg2)
 {
-    y2internal ("path in Execute: '%s'.", path->toString().c_str());
+    y2debug ("path in Execute: '%s'.", path->toString().c_str());
     YCPValue ret = YCPBoolean (true);
 
     YCPMap argmap;
@@ -296,7 +296,6 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
 	    unsigned int num1	= getIntValue (argmap, "from", 0);
 	    unsigned int num2	= getIntValue (argmap, "to", 0);
 	    const Snapshots& snapshots = sh->getSnapshots();
-// FIXME this takes too long, it should not be needed to do whole snapshot comparision
 	    Comparison comparison(sh, snapshots.find(num1), snapshots.find(num2));
 	    Files& files = comparison.getFiles();
 
@@ -305,7 +304,7 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
 		if (selected.value(i)->isString())
 		{
 		    string name = selected->value(i)->asString()->value();
-		    y2internal ("file to rollback: %s", name.c_str());
+		    y2debug ("file to rollback: %s", name.c_str());
 		    Files::iterator it = files.find(name);
 		    if (it == files.end())
 		    {
