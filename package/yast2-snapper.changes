@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Fri Apr 15 11:35:28 CEST 2011 - jsuchome@suse.cz
+
+- return map structures from agent, to speed up building tree
+  content (bnc#686639)
+- solve restoring directories (bnc#686619)
+- 2.21.3 
+
+-------------------------------------------------------------------
 Thu Mar 24 13:21:37 CET 2011 - jsuchome@suse.cz
 
 - added agent documentation 
