@@ -42,7 +42,7 @@ import "Progress";
 // global list of all snapshot
 global list<map> snapshots	= [];
 
-global string snapshots_path	= "/snapshots"; // FIXME
+global string snapshots_path	= "/snapshots";
 
 global map selected_snapshot	= $[];
 
@@ -196,6 +196,9 @@ global boolean Read() {
     return true;
 }
 
+/**
+ * Return the given file mode as octal number
+ */
 integer GetFileMode (string file) {
 
     map out = (map) SCR::Execute (.target.bash_output, "/bin/stat --printf=%a " + file);
@@ -204,6 +207,9 @@ integer GetFileMode (string file) {
 
 /**
  * Copy given files from selected snapshot to current filesystem
+ * @param snapshot_num snapshot identifier
+ * @param files list of full paths to files
+ * @return success
  */
 global boolean RestoreFiles (integer snapshot_num, list<string> files) {
 
