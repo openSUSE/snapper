@@ -123,6 +123,10 @@ any SummaryDialog() {
     Wizard::HideAbortButton ();
 
     UI::SetFocus (`id (`snapshots_table));
+    if (snapshot_items == [])
+    {
+	UI::ChangeWidget (`id (`show_c), `Enabled, false);
+    }
 
     any ret = nil;
     while(true) {
@@ -237,6 +241,13 @@ any ShowDialog () {
     // map of all items in tree (just one level)
     map<string,boolean> selected_items	= $[];
 
+    boolean file_was_created (string file) {
+	return (substring (files_index[file]:"", 0, 1) == "+");
+    }
+    boolean file_was_removed (string file) {
+	return (substring (files_index[file]:"", 0, 1) == "-");
+    }
+
     // go through the map defining filesystem tree and create the widget items
     list<term> generate_tree_items (string current_path, map<string,map> current_branch) {
 
@@ -245,13 +256,12 @@ any ShowDialog () {
 	    string new_path	= current_path + "/" + node;
 	    if (haskey (files_index, new_path))
 	    {
-		string changes	= files_index[new_path]:"";
 		string icon_f	= "16x16/apps/gdu-smart-unknown.png";
-		if (substring (changes, 0, 1) == "+")
+		if (file_was_created (new_path))
 		{
 		    icon_f	= "16x16/apps/gdu-smart-healthy.png";
 		}
-		else if (substring (changes, 0, 1) == "-")
+		else if (file_was_removed (new_path))
 		{
 		    icon_f	= "16x16/apps/gdu-smart-failing.png";
 		}
@@ -345,12 +355,30 @@ any ShowDialog () {
 	    content,
 	    `VSquash (`HBox (
 		`HStretch (),
-		type == `SINGLE ? `Empty () : `PushButton (`id (`restore_pre), _("Restore From First")),
 		// button label
-		`PushButton (`id (`restore), type == `SINGLE ? _("Restore") : _("Restore From Second"))
+		type == `SINGLE ? `Empty () : `PushButton (`id (`restore_pre), _("R&estore From First")),
+		// button label
+		`PushButton (`id (`restore), type == `SINGLE ? _("Restore") : _("Res&tore From Second"))
 	    ))
 	    ), `HSpacing (0.5))
 	);
+	if (file_was_created (file))
+	{
+	    // file created after taking first snapshot cannot be restored from that snapshot
+	    if (type == `SINGLE)
+	    {
+		UI::ChangeWidget (`id (`restore), `Enabled, false);
+	    }
+	    else
+	    {
+		UI::ChangeWidget (`id (`restore_pre), `Enabled, false);
+	    }
+	}
+	else if (type != `SINGLE && file_was_removed (file))
+	{
+	    // file removed in 2nd snapshot cannot be restored from that snapshot
+	    UI::ChangeWidget (`id (`restore), `Enabled, false);
+	}
     }
 
 
