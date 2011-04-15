@@ -102,7 +102,7 @@ global map GetFileModification (string file, integer old, integer new) {
 
 	// check mode and ownerships
 	out = (map) SCR::Execute (.target.bash_output,
-	    sformat ("ls -l %1 %2 | cut -f 1,3,4 -d ' '", file1, file2));
+	    sformat ("ls -ld %1 %2 | cut -f 1,3,4 -d ' '", file1, file2));
 	list<string> parts	= splitstring (out["stdout"]:""," \n");
 
 	if (parts[0]:"" != parts[3]:"")
@@ -196,6 +196,12 @@ global boolean Read() {
     return true;
 }
 
+integer GetFileMode (string file) {
+
+    map out = SCR::Execute (.target.output, "/bin/stat --printf=%a " + file);
+    return out["stdout"]:755;
+}
+
 /**
  * Copy given files from selected snapshot to current filesystem
  */
@@ -224,7 +230,16 @@ global boolean RestoreFiles (integer snapshot_num, list<string> files) {
 	y2milestone ("copying file %1 to %2 (dir: %3)", orig, file, dir);
 	if (FileUtils::CheckAndCreatePath (dir))
 	{
-	    SCR::Execute (.target.bash, sformat ("/bin/cp -a %1 %2", orig, file));
+	    if (FileUtils::IsDirectory (file))
+	    {
+		map stat	= SCR::Read (.target.stat, file);
+		SCR::Execute (.target.mkdir, file, GetFileMode (file));
+		SCR::Execute (.target.bash, sformat ("/bin/chown %1:%2 '%3'", stat["uid"]:0, stat["gid"]:0, file));
+	    }
+	    else
+	    {
+		SCR::Execute (.target.bash, sformat ("/bin/cp -a %1 %2", orig, file));
+	    }
 	    UI::ChangeWidget (`id (`log), `LastLine, file + "\n");
 	}
 	else
