@@ -198,8 +198,8 @@ global boolean Read() {
 
 integer GetFileMode (string file) {
 
-    map out = SCR::Execute (.target.output, "/bin/stat --printf=%a " + file);
-    return out["stdout"]:755;
+    map out = (map) SCR::Execute (.target.bash_output, "/bin/stat --printf=%a " + file);
+    return tointeger (out["stdout"]:"755");
 }
 
 /**
@@ -227,14 +227,23 @@ global boolean RestoreFiles (integer snapshot_num, list<string> files) {
 	string orig	= sformat ("%1/%2/snapshot", snapshots_path, snapshot_num) + file;
 
 	string dir	= substring (file, 0, findlastof (file, "/"));
-	y2milestone ("copying file %1 to %2 (dir: %3)", orig, file, dir);
-	if (FileUtils::CheckAndCreatePath (dir))
+	if (!FileUtils::Exists (orig))
 	{
-	    if (FileUtils::IsDirectory (file))
+	    // log entry (%1 is file name)
+	    UI::ChangeWidget (`id (`log), `LastLine, sformat (_("%1 does not exist in snapshot %2\n"), file, snapshot_num));
+	}
+	else if (FileUtils::CheckAndCreatePath (dir))
+	{
+	    y2milestone ("copying '%1' to '%2' (dir: %3)", orig, file, dir);
+	    if (FileUtils::IsDirectory (orig) == true)
 	    {
-		map stat	= SCR::Read (.target.stat, file);
-		SCR::Execute (.target.mkdir, file, GetFileMode (file));
+		map stat	= (map) SCR::Read (.target.stat, orig);
+		if (!FileUtils::Exists (file))
+		{
+		    SCR::Execute (.target.mkdir, file);
+		}
 		SCR::Execute (.target.bash, sformat ("/bin/chown %1:%2 '%3'", stat["uid"]:0, stat["gid"]:0, file));
+		SCR::Execute (.target.bash, sformat ("/bin/chmod %1 '%2'", GetFileMode (orig), file));
 	    }
 	    else
 	    {
@@ -244,6 +253,7 @@ global boolean RestoreFiles (integer snapshot_num, list<string> files) {
 	}
 	else
 	{
+	    y2milestone ("failed to copy file '%1' to '%2' (dir: %3)", orig, file, dir);
 	    // log entry (%1 is file name)
 	    UI::ChangeWidget (`id (`log), `LastLine, sformat (_("%1 skipped\n"), file));
 	}
