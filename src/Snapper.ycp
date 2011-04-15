@@ -224,7 +224,7 @@ global boolean RestoreFiles (integer snapshot_num, list<string> files) {
 
 	UI::ChangeWidget (`id (`progress ), `Value, progress);
 
-	string orig	= sformat ("%1/%2/snapshot%3", snapshots_path, snapshot_num, file);
+	string orig	= sformat ("%1/%2/snapshot", snapshots_path, snapshot_num) + file;
 
 	string dir	= substring (file, 0, findlastof (file, "/"));
 	y2milestone ("copying file %1 to %2 (dir: %3)", orig, file, dir);
@@ -238,7 +238,7 @@ global boolean RestoreFiles (integer snapshot_num, list<string> files) {
 	    }
 	    else
 	    {
-		SCR::Execute (.target.bash, sformat ("/bin/cp -a %1 %2", orig, file));
+		SCR::Execute (.target.bash, sformat ("/bin/cp -a '%1' '%2'", orig, file));
 	    }
 	    UI::ChangeWidget (`id (`log), `LastLine, file + "\n");
 	}
