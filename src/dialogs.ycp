@@ -506,7 +506,7 @@ any ShowDialog () {
 	{
 	    // non-tracked file should be directory
 	    if (current_file != "" &&
-		(! haskey (files_index, current_file) || FileUtils::IsDirectory (current_file)))
+		(! haskey (files_index, current_file) || FileUtils::IsDirectory (current_file) == true))
 	    {
 		void select_items (map<string,map> current_map, string prefix) {
 		    selected_items[prefix]	= ! selected_items[prefix]:false;
