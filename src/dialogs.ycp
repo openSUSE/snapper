@@ -506,7 +506,7 @@ any ShowDialog () {
     if (size (tree_items) > 0)
     {
 	UI::ReplaceWidget (`id (`reptree),
-	    `Tree (`id(`tree), `opt (`notify, `immediate, `multiSelection), tree_label, tree_items)
+	    `Tree (`id(`tree), `opt (`notify, `immediate, `multiSelection, `recursiveSelection), tree_label, tree_items)
 	);
 	// no item is selected
 	UI::ChangeWidget (`tree, `CurrentItem, nil);
@@ -529,58 +529,8 @@ any ShowDialog () {
 	current_file = (string) UI::QueryWidget (`id(`tree),`CurrentItem);
         if (current_file == nil) current_file	= "";
 
-	// tree checkbox clicked
-	if (ret == `tree && event["EventReason"]:"" == "ValueChanged")
-	{
-	    // non-tracked file should be directory
-	    if (current_file != "" &&
-		(! haskey (files_index, current_file) || FileUtils::IsDirectory (current_file) == true))
-	    {
-		void select_items (map<string,map> current_map, string prefix) {
-		    selected_items[prefix]	= ! selected_items[prefix]:false;
-		    foreach (string key, map submap, current_map, {
-			string new_path			= prefix + "/" + key;
-			if (submap != $[])
-			{
-			    select_items ((map<string,map>) submap, new_path);
-			}
-			else
-			{
-			    selected_items[new_path]	= ! selected_items[new_path]:false;
-			}
-		    });
-		}
-		void update_selection (map<string,map> current_map, list<string> path_list)
-		{
-		    string first	= path_list[0]:"";
-		    if (size (path_list) == 0)
-		    {
-			select_items (current_map, current_file);
-		    }
-		    else if (haskey (current_map, first))
-		    {
-			update_selection ((map<string,map>)current_map[first]:$[],
-					  (list<string>) remove (path_list, 0)
-			);
-		    }
-		}
-		list<string> path_l	= splitstring (current_file, "/");
-		if (path_l[0]:"" == "")
-		    path_l		= remove (path_l, 0);
-
-		update_selection (tree_map, path_l);
-
-		list<string> selection	= [];
-		foreach (string key, boolean val, selected_items, {
-		    if (val)
-			selection	= add (selection, key);
-		});
-		UI::ChangeWidget (`tree, `SelectedItems, selection);
-	    }
-
-	}
 	// other tree events
-	else if (ret == `tree)
+	if (ret == `tree)
 	{
 	    // seems like tree widget emits 2 SelectionChanged events
 	    if (current_file != previous_file)

@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Apr 18 09:16:36 CEST 2011 - jsuchome@suse.cz
+
+- removed YCP code for Tree recursive selection, widget can do it
+  itself now (bnc#686639) 
+- 2.21.4
+
+-------------------------------------------------------------------
 Fri Apr 15 11:35:28 CEST 2011 - jsuchome@suse.cz
 
 - return map structures from agent, to speed up building tree
