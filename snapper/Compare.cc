@@ -26,13 +26,13 @@
 #include <fcntl.h>
 #include <dirent.h>
 #include <unistd.h>
-#include <assert.h>
 #include <vector>
 #include <algorithm>
 
 #include "snapper/AppUtil.h"
 #include "snapper/File.h"
 #include "snapper/Compare.h"
+#include "snapper/Exception.h"
 
 
 namespace snapper
@@ -57,11 +57,21 @@ namespace snapper
 	    return true;
 
 	int fd1 = open(fullname1.c_str(), O_RDONLY | O_NOATIME);
-	assert(fd1 >= 0);
-	posix_fadvise(fd1, 0, stat1.st_size, POSIX_FADV_SEQUENTIAL);
+	if (fd1 < 0)
+	{
+	    y2err("open failed path:" << fullname1 << " errno:" << errno);
+	    return false;
+	}
 
 	int fd2 = open(fullname2.c_str(), O_RDONLY | O_NOATIME);
-	assert(fd2 >= 0);
+	if (fd2 < 0)
+	{
+	    y2err("open failed path:" << fullname2 << " errno:" << errno);
+	    close(fd1);
+	    return false;
+	}
+
+	posix_fadvise(fd1, 0, stat1.st_size, POSIX_FADV_SEQUENTIAL);
 	posix_fadvise(fd2, 0, stat2.st_size, POSIX_FADV_SEQUENTIAL);
 
 	static_assert(sizeof(off_t) >= 8, "off_t is too small");
@@ -79,10 +89,20 @@ namespace snapper
 	    off_t t = min(block_size, length);
 
 	    int r1 = read(fd1, block1, t);
-	    assert(r1 == t);
+	    if (r1 != t)
+	    {
+		y2err("read failed path:" << fullname1 << " errno:" << errno);
+		equal = false;
+		break;
+	    }
 
 	    int r2 = read(fd2, block2, t);
-	    assert(r2 == t);
+	    if (r2 != t)
+	    {
+		y2err("read failed path:" << fullname2 << " errno:" << errno);
+		equal = false;
+		break;
+	    }
 
 	    if (memcmp(block1, block2, t) != 0)
 	    {
@@ -109,11 +129,19 @@ namespace snapper
 
 	string tmp1;
 	bool r1 = readlink(fullname1, tmp1);
-	assert(r1);
+	if (!r1)
+	{
+	    y2err("readlink failed path:" << fullname1 << " errno:" << errno);
+	    return false;
+	}
 
 	string tmp2;
 	bool r2 = readlink(fullname2, tmp2);
-	assert(r2);
+	if (!r2)
+	{
+	    y2err("readlink failed path:" << fullname2 << " errno:" << errno);
+	    return false;
+	}
 
 	return tmp1 == tmp2;
     }
@@ -123,7 +151,8 @@ namespace snapper
     cmpFilesContent(const string& fullname1, struct stat stat1, const string& fullname2,
 		    struct stat stat2)
     {
-	assert((stat1.st_mode & S_IFMT) == (stat2.st_mode & S_IFMT));
+	if ((stat1.st_mode & S_IFMT) != (stat2.st_mode & S_IFMT))
+	    throw LogicErrorException();
 
 	switch (stat1.st_mode & S_IFMT)
 	{
@@ -189,6 +218,18 @@ namespace snapper
 	if (r1 == 0 && r2 != 0)
 	    return DELETED;
 
+	if (r1 != 0)
+	{
+	    y2err("lstats failed path:" << fullname1);
+	    throw IOErrorException();
+	}
+
+	if (r2 != 0)
+	{
+	    y2err("lstats failed path:" << fullname2);
+	    throw IOErrorException();
+	}
+
 	return cmpFiles(fullname1, stat1, fullname2, stat2);
     }
 
@@ -222,10 +263,19 @@ namespace snapper
 	vector<NameStat> ret;
 
 	int fd = open((base_path + path).c_str(), O_RDONLY | O_NOATIME);
-	assert(fd >= 0);
+	if (fd < 0)
+	{
+	    y2err("open failed path:" << base_path + path << " error:" << errno);
+	    return ret;
+	}
 
 	DIR* dp = fdopendir(fd);
-	assert(dp != NULL);
+	if (dp == NULL)
+	{
+	    y2err("fdopendir failed path:" << base_path + path << " error:" << errno);
+	    close(fd);
+	    return ret;
+	}
 
 	struct dirent* ep;
 	while ((ep = readdir(dp)))
@@ -239,7 +289,11 @@ namespace snapper
 
 	    struct stat stat;
 	    int r = fstatat(fd, ep->d_name, &stat, AT_SYMLINK_NOFOLLOW);
-	    assert(r == 0);
+	    if (r != 0)
+	    {
+		y2err("fstatat failed path:" << ep->d_name << " errno:" << errno);
+		continue;
+	    }
 
 	    ret.push_back(NameStat(ep->d_name, stat));
 	}
@@ -372,7 +426,9 @@ namespace snapper
 	    }
 	    else
 	    {
-		assert(first1->name == first2->name);
+		if (first1->name != first2->name)
+		    throw LogicErrorException();
+
 		twosome(cmp_data, path, first1->name, first1->stat, first2->stat);
 		++first1;
 		++first2;
@@ -395,12 +451,23 @@ namespace snapper
 
 	struct stat stat1;
 	int r1 = lstat(path1.c_str(), &stat1);
-	assert(r1 == 0);
-	cmp_data.dev1 = stat1.st_dev;
 
 	struct stat stat2;
 	int r2 = lstat(path2.c_str(), &stat2);
-	assert(r2 == 0);
+
+	if (r1 != 0)
+	{
+	    y2err("lstats failed path:" << path1);
+	    throw IOErrorException();
+	}
+
+	if (r2 != 0)
+	{
+	    y2err("lstats failed path:" << path2);
+	    throw IOErrorException();
+	}
+
+	cmp_data.dev1 = stat1.st_dev;
 	cmp_data.dev2 = stat2.st_dev;
 
 	y2mil("dev1:" << cmp_data.dev1 << " dev2:" << cmp_data.dev2);
@@ -439,8 +506,6 @@ namespace snapper
     stringToStatus(const string& str)
     {
 	unsigned int ret = 0;
-
-	assert(str.length() == 4);
 
 	if (str.length() >= 1)
 	{

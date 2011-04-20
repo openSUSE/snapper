@@ -39,7 +39,7 @@ namespace snapper
     {
 	if (file == NULL)
 	{
-	    y2err("file is NULL");
+	    y2war("file is NULL");
 	    throw FileNotFoundException();
 	}
     }
@@ -51,7 +51,7 @@ namespace snapper
 	file = fopen(filename.c_str(), "r");
 	if (file == NULL)
 	{
-	    y2err("open for '" << filename << "' failed");
+	    y2war("open for '" << filename << "' failed");
 	    throw FileNotFoundException();
 	}
     }

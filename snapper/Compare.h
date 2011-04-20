@@ -33,6 +33,13 @@ namespace snapper
     using std::string;
 
 
+    struct IOErrorException : public std::exception
+    {
+	explicit IOErrorException() throw() {}
+	virtual const char* what() const throw() { return "IO error"; }
+    };
+
+
     typedef std::function<void(const string& name, unsigned int status)> cmpdirs_cb_t;
 
 

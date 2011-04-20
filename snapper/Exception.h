@@ -43,6 +43,12 @@ namespace snapper
 	virtual const char* what() const throw() { return "illegal snapshot"; }
     };
 
+    struct LogicErrorException : public std::exception
+    {
+	explicit LogicErrorException() throw() {}
+	virtual const char* what() const throw() { return "logic error"; }
+    };
+
 }
 
 
