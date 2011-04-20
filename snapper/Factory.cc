@@ -20,10 +20,10 @@
  */
 
 
-#include "assert.h"
 #include "auto_ptr.h"
 
 #include "snapper/Snapper.h"
+#include "snapper/Exception.h"
 
 
 namespace snapper
@@ -35,7 +35,9 @@ namespace snapper
     Snapper*
     createSnapper(const string& config_name)
     {
-	assert(!the_one.get());
+	if (the_one.get())
+	    throw LogicErrorException();
+
 	the_one.reset(new Snapper(config_name));
 	return the_one.get();
     }
@@ -44,8 +46,9 @@ namespace snapper
     void
     deleteSnapper(Snapper* s)
     {
-	assert(the_one.get());
-	assert(s == the_one.get());
+	if (!the_one.get() || s != the_one.get())
+	    throw LogicErrorException();
+
 	the_one.reset();
     }
 
