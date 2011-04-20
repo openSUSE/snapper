@@ -20,12 +20,11 @@
  */
 
 
-#include <assert.h>
-
 #include "snapper/Comparison.h"
 #include "snapper/Snapper.h"
 #include "snapper/AppUtil.h"
 #include "snapper/File.h"
+#include "snapper/Exception.h"
 
 
 namespace snapper
@@ -35,9 +34,10 @@ namespace snapper
 			   Snapshots::const_iterator snapshot2)
 	: snapper(snapper), snapshot1(snapshot1), snapshot2(snapshot2), files(this)
     {
-	assert(snapshot1 != snapper->getSnapshots().end());
-	assert(snapshot2 != snapper->getSnapshots().end());
-	assert(snapshot1 != snapshot2);
+	if (snapshot1 == snapper->getSnapshots().end() ||
+	    snapshot2 == snapper->getSnapshots().end() ||
+	    snapshot1 == snapshot2)
+	    throw IllegalSnapshotException();
 
 	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
 

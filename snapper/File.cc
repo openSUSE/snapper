@@ -39,6 +39,7 @@
 #include "snapper/SnapperDefines.h"
 #include "snapper/Compare.h"
 #include "snapper/AsciiFile.h"
+#include "snapper/Exception.h"
 
 
 namespace snapper
@@ -143,7 +144,8 @@ namespace snapper
 	y2mil("num1:" << comparison->getSnapshot1()->getNum() << " num2:" <<
 	      comparison->getSnapshot2()->getNum());
 
-	assert(!comparison->getSnapshot1()->isCurrent() && !comparison->getSnapshot2()->isCurrent());
+	if (comparison->getSnapshot1()->isCurrent() || comparison->getSnapshot2()->isCurrent())
+	    throw IllegalSnapshotException();
 
 	unsigned int num1 = comparison->getSnapshot1()->getNum();
 	unsigned int num2 = comparison->getSnapshot2()->getNum();
@@ -183,10 +185,12 @@ namespace snapper
 
 	    return true;
 	}
-	catch (...)		// TODO
+	catch (const FileNotFoundException& e)
 	{
 	    return false;
 	}
+
+	return true;
     }
 
 
@@ -195,7 +199,8 @@ namespace snapper
     {
 	y2mil("num1:" << comparison->getSnapshot1()->getNum() << " num2:" << comparison->getSnapshot2()->getNum());
 
-	assert(!comparison->getSnapshot1()->isCurrent() && !comparison->getSnapshot2()->isCurrent());
+	if (comparison->getSnapshot1()->isCurrent() || comparison->getSnapshot2()->isCurrent())
+	    throw IllegalSnapshotException();
 
 	unsigned int num1 = comparison->getSnapshot1()->getNum();
 	unsigned int num2 = comparison->getSnapshot2()->getNum();

@@ -19,6 +19,7 @@ libsnapper_la_SOURCES =					\
 	SystemCmd.cc		SystemCmd.h		\
 	AsciiFile.cc		AsciiFile.h		\
 	Regex.cc		Regex.h			\
+	Exception.h					\
 	SnapperTmpl.h					\
 	SnapperTypes.h					\
 	SnapperDefines.h
@@ -32,6 +33,7 @@ pkginclude_HEADERS =					\
 	Factory.h					\
 	Snapper.h					\
 	Snapshot.h					\
+	File.h						\
 	Comparison.h					\
-	File.h
+	Exception.h
 

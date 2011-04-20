@@ -63,7 +63,7 @@ namespace snapper
 
 	string name() const { return Name_C; }
 
-	bool reload();
+	void reload();
 	bool save();
 
 	void logContent() const;

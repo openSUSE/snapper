@@ -36,6 +36,7 @@
 #include "snapper/SnapperDefines.h"
 #include "snapper/File.h"
 #include "snapper/AsciiFile.h"
+#include "snapper/Exception.h"
 
 
 namespace snapper
@@ -51,7 +52,6 @@ namespace snapper
 	y2mil("libsnapper version " VERSION);
 	y2mil("config_name:" << config_name);
 
-	// TODO error checking
 	config = new SysconfigFile(CONFIGSDIR "/" + config_name);
 
 	string val;
@@ -88,7 +88,7 @@ namespace snapper
 		while (asciifile.getline(line))
 		    ignore_patterns.push_back(line);
 	    }
-	    catch (...)		// TODO
+	    catch (const FileNotFoundException& e)
 	    {
 	    }
 	}
@@ -141,8 +141,6 @@ namespace snapper
     Snapshots::iterator
     Snapper::createPostSnapshot(Snapshots::const_iterator pre)
     {
-	assert(pre != snapshots.end());
-
 	return snapshots.createPostSnapshot(pre);
     }
 
@@ -150,8 +148,6 @@ namespace snapper
     void
     Snapper::deleteSnapshot(Snapshots::iterator snapshot)
     {
-	assert(snapshot != snapshots.end());
-
 	snapshots.deleteSnapshot(snapshot);
     }
 
@@ -160,7 +156,11 @@ namespace snapper
     Snapper::startBackgroundComparsion(Snapshots::const_iterator snapshot1,
 				       Snapshots::const_iterator snapshot2)
     {
-	assert(snapshot1 != snapshots.end() && snapshot2 != snapshots.end());
+	if (snapshot1 == snapshots.end() || snapshot1->isCurrent())
+	    throw IllegalSnapshotException();
+
+	if (snapshot2 == snapshots.end() || snapshot2->isCurrent())
+	    throw IllegalSnapshotException();
 
 	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
 

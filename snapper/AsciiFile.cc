@@ -27,6 +27,7 @@
 #include "snapper/AppUtil.h"
 #include "snapper/AsciiFile.h"
 #include "snapper/SnapperTypes.h"
+#include "snapper/Exception.h"
 
 
 namespace snapper
@@ -40,7 +41,7 @@ namespace snapper
 	if (file == NULL)
 	{
 	    y2err("file is NULL");
-	    throw exception();	// TODO
+	    throw FileNotFoundException();
 	}
     }
 
@@ -52,7 +53,7 @@ namespace snapper
 	if (file == NULL)
 	{
 	    y2err("open for '" << filename << "' failed");
-	    throw exception();	// TODO
+	    throw FileNotFoundException();
 	}
     }
 
@@ -96,27 +97,18 @@ AsciiFile::AsciiFile(const string& Name_Cv, bool remove_empty)
 }
 
 
-bool
-AsciiFile::reload()
-{
-    y2mil("loading file " << Name_C);
-    clear();
-
-    try
+    void
+    AsciiFile::reload()
     {
+	y2mil("loading file " << Name_C);
+	clear();
+
 	AsciiFileReader file(Name_C);
 
 	string line;
 	while (file.getline(line))
 	    Lines_C.push_back(line);
-
-	return true;
     }
-    catch (...)			// TODO
-    {
-	return false;
-    }
-}
 
 
 bool

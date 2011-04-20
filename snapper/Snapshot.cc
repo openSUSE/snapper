@@ -34,6 +34,7 @@
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
+#include "snapper/Exception.h"
 
 
 namespace snapper
@@ -232,8 +233,8 @@ namespace snapper
     Snapshots::iterator
     Snapshots::findPost(const_iterator pre)
     {
-	assert(pre != end());
-	assert(pre->getType() == PRE);
+	if (pre == entries.end() || pre->isCurrent() || pre->getType() != PRE)
+	    throw IllegalSnapshotException();
 
 	for (iterator it = begin(); it != end(); ++it)
 	{
@@ -248,8 +249,8 @@ namespace snapper
     Snapshots::const_iterator
     Snapshots::findPost(const_iterator pre) const
     {
-	assert(pre != end());
-	assert(pre->getType() == PRE);
+	if (pre == entries.end() || pre->isCurrent() || pre->getType() != PRE)
+	    throw IllegalSnapshotException();
 
 	for (const_iterator it = begin(); it != end(); ++it)
 	{
@@ -356,6 +357,9 @@ namespace snapper
     Snapshots::iterator
     Snapshots::createPostSnapshot(Snapshots::const_iterator pre)
     {
+	if (pre == entries.end() || pre->isCurrent() || pre->getType() != PRE)
+	    throw IllegalSnapshotException();
+
 	Snapshot snapshot(snapper);
 	snapshot.type = POST;
 	snapshot.num = nextNumber();
@@ -372,7 +376,8 @@ namespace snapper
     void
     Snapshots::deleteSnapshot(iterator snapshot)
     {
-	assert(!snapshot->isCurrent());
+	if (snapshot == entries.end() || snapshot->isCurrent())
+	    throw IllegalSnapshotException();
 
 	snapshot->deleteFilesystemSnapshot();
 
