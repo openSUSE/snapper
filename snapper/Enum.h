@@ -24,10 +24,10 @@
 #define ENUM_H
 
 
-#include <assert.h>
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <exception>
 
 #include "snapper/Snapshot.h"
 #include "snapper/AppUtil.h"
@@ -37,6 +37,13 @@ namespace snapper
 {
     using std::string;
     using std::vector;
+
+
+    struct OutOfRangeException : public std::exception
+    {
+	explicit OutOfRangeException() throw() {}
+	virtual const char* what() const throw() { return "out of range"; }
+    };
 
 
     template <typename EnumType> struct EnumInfo {};
@@ -53,7 +60,8 @@ namespace snapper
 
 	// Comparisons must not be done with type of enum since the enum may
 	// define comparison operators.
-	assert((size_t)(value) < names.size());
+	if ((size_t)(value) >= names.size())
+	    throw OutOfRangeException();
 
 	return names[value];
     }
