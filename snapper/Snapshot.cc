@@ -66,7 +66,8 @@ namespace snapper
     string
     Snapshot::baseDir() const
     {
-	assert(num != 0);
+	if (isCurrent())
+	    throw IllegalSnapshotException();
 
 	return snapper->snapshotsDir() + "/" + decString(num);
     }
