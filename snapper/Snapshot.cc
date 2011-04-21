@@ -23,6 +23,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <glob.h>
+#include <errno.h>
 #include <string.h>
 #include <boost/algorithm/string.hpp>
 
