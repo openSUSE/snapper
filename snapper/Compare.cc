@@ -26,6 +26,7 @@
 #include <fcntl.h>
 #include <dirent.h>
 #include <unistd.h>
+#include <errno.h>
 #include <vector>
 #include <algorithm>
 
