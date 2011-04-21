@@ -273,9 +273,13 @@ namespace snapper
 	if (!entries.empty())
 	    num = entries.rbegin()->num + 1;
 
-	mkdir((snapper->snapshotsDir() + "/" + decString(num)).c_str(), 0777);
+	int r;
+	while ((r = mkdir((snapper->snapshotsDir() + "/" + decString(num)).c_str(), 0777)) == -1 &&
+	       errno == EEXIST)
+	    ++num;
 
-	// TODO check EEXIST
+	if (r != 0)
+	    throw IOErrorException();
 
 	return num;
     }

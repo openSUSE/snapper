@@ -49,6 +49,12 @@ namespace snapper
 	virtual const char* what() const throw() { return "logic error"; }
     };
 
+    struct IOErrorException : public std::exception
+    {
+	explicit IOErrorException() throw() {}
+	virtual const char* what() const throw() { return "IO error"; }
+    };
+
 }
 
 
