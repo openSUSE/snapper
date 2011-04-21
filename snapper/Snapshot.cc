@@ -119,20 +119,22 @@ namespace snapper
 
 	    string tmp;
 
-	    if (getChildValue(node, "type", tmp))
+	    if (!getChildValue(node, "type", tmp) || !toValue(tmp, snapshot.type, true))
 	    {
-		if (!toValue(tmp, snapshot.type, true))
-		{
-		}
+		y2err("type missing or invalid. not adding snapshot " << num);
+		continue;
 	    }
 
-	    getChildValue(node, "num", snapshot.num);
-	    assert(num == snapshot.num);
-
-	    if (getChildValue(node, "date", tmp))
+	    if (!getChildValue(node, "num", snapshot.num) || num != snapshot.num)
 	    {
-		assert(tmp.size() == 19);
-		snapshot.date = scan_datetime(tmp, true);
+		y2err("num missing or invalid. not adding snapshot " << num);
+		continue;
+	    }
+
+	    if (!getChildValue(node, "date", tmp) || (snapshot.date = scan_datetime(tmp, true)) == -1)
+	    {
+		y2err("date missing or invalid. not adding snapshot " << num);
+		continue;
 	    }
 
 	    getChildValue(node, "description", snapshot.description);
