@@ -501,12 +501,18 @@ namespace snapper
 
 	for (vector<string>::const_iterator it = config_names.begin(); it != config_names.end(); ++it)
 	{
-	    // TODO error checking
-	    SysconfigFile config(CONFIGSDIR "/" + *it);
+	    try
+	    {
+		SysconfigFile config(CONFIGSDIR "/" + *it);
 
-	    string subvolume = "/";
-	    config.getValue("SUBVOLUME", subvolume);
-	    config_infos.push_back(ConfigInfo(*it, subvolume));
+		string subvolume = "/";
+		config.getValue("SUBVOLUME", subvolume);
+		config_infos.push_back(ConfigInfo(*it, subvolume));
+	    }
+	    catch (const FileNotFoundException& e)
+	    {
+		y2err("config '" << *it << "' not found");
+	    }
 	}
 
 	return config_infos;
