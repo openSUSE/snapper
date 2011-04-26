@@ -68,6 +68,20 @@ namespace snapper
 	virtual const char* what() const throw() { return "invalid config"; }
     };
 
+    struct ListConfigsFailedException : public std::exception
+    {
+	explicit ListConfigsFailedException(const char* msg) throw() : msg(msg) {}
+	virtual const char* what() const throw() { return msg; }
+	const char* msg;
+    };
+
+    struct AddConfigFailedException : public std::exception
+    {
+	explicit AddConfigFailedException(const char* msg) throw() : msg(msg) {}
+	virtual const char* what() const throw() { return msg; }
+	const char* msg;
+    };
+
 
     class Snapper
     {
@@ -103,7 +117,7 @@ namespace snapper
 	const vector<string>& getIgnorePatterns() const { return ignore_patterns; }
 
 	static list<ConfigInfo> getConfigs();
-	static bool addConfig(const string& config_name, const string& subvolume,
+	static void addConfig(const string& config_name, const string& subvolume,
 			      const string& template_name);
 
     private:

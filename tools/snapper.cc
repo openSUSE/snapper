@@ -58,13 +58,21 @@ command_list_configs()
     header.add("Subvolume");
     table.setHeader(header);
 
-    list<ConfigInfo> config_infos = Snapper::getConfigs();
-    for (list<ConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
+    try
     {
-	TableRow row;
-	row.add(it->config_name);
-	row.add(it->subvolume);
-	table.add(row);
+	list<ConfigInfo> config_infos = Snapper::getConfigs();
+	for (list<ConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
+	{
+	    TableRow row;
+	    row.add(it->config_name);
+	    row.add(it->subvolume);
+	    table.add(row);
+	}
+    }
+    catch (const ListConfigsFailedException& e)
+    {
+	cerr << sformat(_("Listing configs failed (%s)."), e.what()) << endl;
+	exit(EXIT_FAILURE);
     }
 
     cout << table;
@@ -107,9 +115,13 @@ command_create_config()
     if ((opt = opts.find("template")) != opts.end())
 	template_name = opt->second;
 
-    if (!Snapper::addConfig(config_name, subvolume, template_name))
+    try
     {
-	cerr << _("Creating config failed.") << endl;
+	Snapper::addConfig(config_name, subvolume, template_name);
+    }
+    catch (const AddConfigFailedException& e)
+    {
+	cerr << sformat(_("Creating config failed (%s)."), e.what()) << endl;
 	exit(EXIT_FAILURE);
     }
 }

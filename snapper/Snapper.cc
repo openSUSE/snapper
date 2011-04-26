@@ -503,31 +503,38 @@ namespace snapper
 
 	list<ConfigInfo> config_infos;
 
-	SysconfigFile sysconfig(SYSCONFIGFILE);
-	vector<string> config_names;
-	sysconfig.getValue("SNAPPER_CONFIGS", config_names);
-
-	for (vector<string>::const_iterator it = config_names.begin(); it != config_names.end(); ++it)
+	try
 	{
-	    try
-	    {
-		SysconfigFile config(CONFIGSDIR "/" + *it);
+	    SysconfigFile sysconfig(SYSCONFIGFILE);
+	    vector<string> config_names;
+	    sysconfig.getValue("SNAPPER_CONFIGS", config_names);
 
-		string subvolume = "/";
-		config.getValue("SUBVOLUME", subvolume);
-		config_infos.push_back(ConfigInfo(*it, subvolume));
-	    }
-	    catch (const FileNotFoundException& e)
+	    for (vector<string>::const_iterator it = config_names.begin(); it != config_names.end(); ++it)
 	    {
-		y2err("config '" << *it << "' not found");
+		try
+		{
+		    SysconfigFile config(CONFIGSDIR "/" + *it);
+
+		    string subvolume = "/";
+		    config.getValue("SUBVOLUME", subvolume);
+		    config_infos.push_back(ConfigInfo(*it, subvolume));
+		}
+		catch (const FileNotFoundException& e)
+		{
+		    y2err("config '" << *it << "' not found");
+		}
 	    }
+	}
+	catch (const FileNotFoundException& e)
+	{
+	    throw ListConfigsFailedException("sysconfig file not found");
 	}
 
 	return config_infos;
     }
 
 
-    bool
+    void
     Snapper::addConfig(const string& config_name, const string& subvolume,
 		       const string& template_name)
     {
@@ -536,25 +543,46 @@ namespace snapper
 	y2mil("config_name:" << config_name << " subvolume:" << subvolume <<
 	      " template_name:" << template_name);
 
-	// TODO: error handling
+	try
+	{
+	    SysconfigFile sysconfig(SYSCONFIGFILE);
+	    vector<string> config_names;
+	    sysconfig.getValue("SNAPPER_CONFIGS", config_names);
+	    if (find(config_names.begin(), config_names.end(), config_name) != config_names.end())
+	    {
+		throw AddConfigFailedException("config already exists");
+	    }
 
-	SysconfigFile sysconfig(SYSCONFIGFILE);
-	vector<string> config_names;
-	sysconfig.getValue("SNAPPER_CONFIGS", config_names);
-	if (find(config_names.begin(), config_names.end(), config_name) != config_names.end())
-	    return false;
-	config_names.push_back(config_name);
-	sysconfig.setValue("SNAPPER_CONFIGS", config_names);
+	    config_names.push_back(config_name);
+	    sysconfig.setValue("SNAPPER_CONFIGS", config_names);
+	}
+	catch (const FileNotFoundException& e)
+	{
+	    throw AddConfigFailedException("sysconfig file not found");
+	}
 
-	SystemCmd cmd1(CPBIN " " CONFIGTEMPLATEDIR "/" + template_name + " " CONFIGSDIR "/" +
-		       config_name);
+	SystemCmd cmd1(CPBIN " " + quote(CONFIGTEMPLATEDIR "/" + template_name) + " " +
+		       quote(CONFIGSDIR "/" + config_name));
+	if (cmd1.retcode() != 0)
+	{
+	    throw AddConfigFailedException("copying template failed");
+	}
 
-	SysconfigFile config(CONFIGSDIR "/" + config_name);
-	config.setValue("SUBVOLUME", subvolume);
+	try
+	{
+	    SysconfigFile config(CONFIGSDIR "/" + config_name);
+	    config.setValue("SUBVOLUME", subvolume);
+	}
+	catch (const FileNotFoundException& e)
+	{
+	    throw AddConfigFailedException("modifying config failed");
+	}
 
 	SystemCmd cmd2(BTRFSBIN " subvolume create " + subvolume + "/snapshots");
-
-	return true;
+	if (cmd2.retcode() != 0)
+	{
+	    throw AddConfigFailedException("creating snapshot failed");
+	}
     }
 
 }
