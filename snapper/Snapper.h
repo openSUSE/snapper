@@ -56,6 +56,19 @@ namespace snapper
     };
 
 
+    struct ConfigNotFoundException : public std::exception
+    {
+	explicit ConfigNotFoundException() throw() {}
+	virtual const char* what() const throw() { return "config not found"; }
+    };
+
+    struct InvalidConfigException : public std::exception
+    {
+	explicit InvalidConfigException() throw() {}
+	virtual const char* what() const throw() { return "invalid config"; }
+    };
+
+
     class Snapper
     {
     public:

@@ -52,11 +52,19 @@ namespace snapper
 	y2mil("libsnapper version " VERSION);
 	y2mil("config_name:" << config_name);
 
-	config = new SysconfigFile(CONFIGSDIR "/" + config_name);
+	try
+	{
+	    config = new SysconfigFile(CONFIGSDIR "/" + config_name);
+	}
+	catch (const FileNotFoundException& e)
+	{
+	    throw ConfigNotFoundException();
+	}
 
 	string val;
-	if (config->getValue("SUBVOLUME", val))
-	    subvolume = val;
+	if (!config->getValue("SUBVOLUME", val))
+	    throw InvalidConfigException();
+	subvolume = val;
 
 	y2mil("subvolume:" << subvolume);
 

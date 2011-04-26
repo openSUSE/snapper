@@ -666,7 +666,20 @@ main(int argc, char** argv)
     }
     else
     {
-	sh = createSnapper(config_name);
+	try
+	{
+	    sh = createSnapper(config_name);
+	}
+	catch (const ConfigNotFoundException& e)
+	{
+	    cerr << sformat(_("Config '%s' not found."), config_name.c_str()) << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const InvalidConfigException& e)
+	{
+	    cerr << sformat(_("Config '%s' is invalid."), config_name.c_str()) << endl;
+	    exit(EXIT_FAILURE);
+	}
 
 	if (!quiet)
 	    sh->setCompareCallback(&compare_callback_impl);

@@ -314,19 +314,21 @@ namespace snapper
     }
 
 
-    bool
+    void
     Snapshot::createFilesystemSnapshot() const
     {
 	SystemCmd cmd(BTRFSBIN " subvolume snapshot " + snapper->subvolumeDir() + " " + snapshotDir());
-	return cmd.retcode() == 0;
+	if (cmd.retcode() != 0)
+	    throw CreateSnapshotFailedException();
     }
 
 
-    bool
+    void
     Snapshot::deleteFilesystemSnapshot() const
     {
-	SystemCmd cmd(BTRFSBIN " subvolume delete /" + snapshotDir());
-	return cmd.retcode() == 0;
+	SystemCmd cmd(BTRFSBIN " subvolume delete " + snapshotDir());
+	if (cmd.retcode() != 0)
+	    throw DeleteSnapshotFailedException();
     }
 
 

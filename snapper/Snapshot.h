@@ -41,6 +41,19 @@ namespace snapper
     enum SnapshotType { SINGLE, PRE, POST };
 
 
+    struct CreateSnapshotFailedException : public std::exception
+    {
+	explicit CreateSnapshotFailedException() throw() {}
+	virtual const char* what() const throw() { return "create snapshot failed"; }
+    };
+
+    struct DeleteSnapshotFailedException : public std::exception
+    {
+	explicit DeleteSnapshotFailedException() throw() {}
+	virtual const char* what() const throw() { return "delete snapshot failed"; }
+    };
+
+
     class Snapshot
     {
     public:
@@ -87,8 +100,8 @@ namespace snapper
 	string cleanup;
 
 	bool writeInfo() const;
-	bool createFilesystemSnapshot() const;
-	bool deleteFilesystemSnapshot() const;
+	void createFilesystemSnapshot() const;
+	void deleteFilesystemSnapshot() const;
 
     };
 
