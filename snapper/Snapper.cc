@@ -543,6 +543,11 @@ namespace snapper
 	y2mil("config_name:" << config_name << " subvolume:" << subvolume <<
 	      " template_name:" << template_name);
 
+	if (access(string(CONFIGTEMPLATEDIR "/" + template_name).c_str(), R_OK) != 0)
+	{
+	    throw AddConfigFailedException("cannot access template config");
+	}
+
 	try
 	{
 	    SysconfigFile sysconfig(SYSCONFIGFILE);
