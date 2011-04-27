@@ -367,8 +367,6 @@ namespace snapper
     vector<string>
     File::getDiff(const string& options) const
     {
-	// TODO check for created/deleted
-
 	SystemCmd cmd(DIFFBIN " " + options + " " + quote(getAbsolutePath(LOC_PRE)) + " " +
 		      quote(getAbsolutePath(LOC_POST)));
 	return cmd.stdout();

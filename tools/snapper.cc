@@ -411,7 +411,7 @@ command_diff()
     }
     else
     {
-	vector<string> lines = tmp->getDiff("-u");
+	vector<string> lines = tmp->getDiff("--unified --new-file");
 	for (vector<string>::const_iterator it = lines.begin(); it != lines.end(); ++it)
 	    fprintf(file, "%s\n", it->c_str());
     }
