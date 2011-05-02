@@ -607,6 +607,16 @@ struct CompareCallbackImpl : public CompareCallback
 CompareCallbackImpl compare_callback_impl;
 
 
+struct RollbackProgressCallbackImpl : public RollbackProgressCallback
+{
+    void createInfo(const string& name) { cout << "create " << name << endl; }
+    void modifyInfo(const string& name) { cout << "modify " << name << endl; }
+    void deleteInfo(const string& name) { cout << "delete " << name << endl; }
+};
+
+RollbackProgressCallbackImpl rollback_progress_callback_impl;
+
+
 int
 main(int argc, char** argv)
 {
@@ -694,7 +704,10 @@ main(int argc, char** argv)
 	}
 
 	if (!quiet)
+	{
 	    sh->setCompareCallback(&compare_callback_impl);
+	    sh->setRollbackProgressCallback(&rollback_progress_callback_impl);
+	}
 
 	(*cmd->second)();
 

@@ -28,6 +28,25 @@ Snapshots::iterator first;
 Snapshots::iterator second;
 
 
+struct CompareCallbackImpl : public CompareCallback
+{
+    void start() {  cout << "comparing snapshots..." << flush; }
+    void stop() { cout << " done" << endl; }
+};
+
+CompareCallbackImpl compare_callback_impl;
+
+
+struct RollbackProgressCallbackImpl : public RollbackProgressCallback
+{
+    void createInfo(const string& name) { cout << "create " << name << endl; }
+    void modifyInfo(const string& name) { cout << "modify " << name << endl; }
+    void deleteInfo(const string& name) { cout << "delete " << name << endl; }
+};
+
+RollbackProgressCallbackImpl rollback_progress_callback_impl;
+
+
 void
 setup()
 {
@@ -37,6 +56,9 @@ setup()
     initDefaultLogger();
 
     sh = createSnapper("testsuite");
+
+    sh->setCompareCallback(&compare_callback_impl);
+    sh->setRollbackProgressCallback(&rollback_progress_callback_impl);
 }
 
 

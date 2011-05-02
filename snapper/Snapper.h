@@ -42,8 +42,19 @@ namespace snapper
 	CompareCallback() {}
 	virtual ~CompareCallback() {}
 
-	virtual void start() {}
-	virtual void stop() {}
+	virtual void start() = 0;
+	virtual void stop() = 0;
+    };
+
+
+    struct RollbackProgressCallback
+    {
+	RollbackProgressCallback() {}
+	virtual ~RollbackProgressCallback() {}
+
+	virtual void createInfo(const string& name) = 0;
+	virtual void modifyInfo(const string& name) = 0;
+	virtual void deleteInfo(const string& name) = 0;
     };
 
 
@@ -114,6 +125,9 @@ namespace snapper
 	void setCompareCallback(CompareCallback* p) { compare_callback = p; }
 	CompareCallback* getCompareCallback() const { return compare_callback; }
 
+	void setRollbackProgressCallback(RollbackProgressCallback* p) { rollback_progress_callback = p; }
+	RollbackProgressCallback* getRollbackProgressCallback() const { return rollback_progress_callback; }
+
 	const vector<string>& getIgnorePatterns() const { return ignore_patterns; }
 
 	static list<ConfigInfo> getConfigs();
@@ -138,6 +152,7 @@ namespace snapper
 	Snapshots snapshots;
 
 	CompareCallback* compare_callback;
+	RollbackProgressCallback* rollback_progress_callback;
 
     };
 

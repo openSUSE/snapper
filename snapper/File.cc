@@ -25,7 +25,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <fnmatch.h>
-#include <iostream>
 
 #include "snapper/File.h"
 #include "snapper/Snapper.h"
@@ -378,7 +377,8 @@ namespace snapper
     {
 	if (getPreToPostStatus() & CREATED || getPreToPostStatus() & TYPE)
 	{
-	    cout << "delete " << name << endl;
+	    if (getSnapper()->getRollbackProgressCallback())
+		getSnapper()->getRollbackProgressCallback()->deleteInfo(name);
 
 	    struct stat fs;
 	    getLStat(getAbsolutePath(LOC_POST), fs);
@@ -401,7 +401,8 @@ namespace snapper
 
 	if (getPreToPostStatus() & DELETED || getPreToPostStatus() & TYPE)
 	{
-	    cout << "create " << name << endl;
+	    if (getSnapper()->getRollbackProgressCallback())
+		getSnapper()->getRollbackProgressCallback()->createInfo(name);
 
 	    struct stat fs;
 	    getLStat(getAbsolutePath(LOC_PRE), fs);
@@ -430,7 +431,8 @@ namespace snapper
 
 	if (getPreToPostStatus() & (CONTENT | PERMISSIONS | USER | GROUP))
 	{
-	    cout << "modify " << name << endl;
+	    if (getSnapper()->getRollbackProgressCallback())
+		getSnapper()->getRollbackProgressCallback()->modifyInfo(name);
 
 	    struct stat fs;
 	    getLStat(getAbsolutePath(LOC_PRE), fs);
