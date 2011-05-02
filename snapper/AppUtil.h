@@ -116,31 +116,11 @@ void initDefaultLogger();
     };
 
 
-    struct Text
-    {
-	Text() : native(), text() {}
-	Text(const string& native, const string& text) : native(native), text(text) {}
+    string sformat(const string& format, ...);
 
-	void clear();
+    string _(const char* msgid);
+    string _(const char* msgid, const char* msgid_plural, unsigned long int n);
 
-	const Text& operator+=(const Text& a);
-
-	string native;
-	string text;
-
-	friend std::ostream& operator<<(std::ostream& s, const Text& text)
-	    { return s << text.text; }
-    };
-
-
-    Text sformat(const Text& format, ...);
-
-
-    Text _(const char* msgid);
-    Text _(const char* msgid, const char* msgid_plural, unsigned long int n);
-
-
-extern const string app_ws;
 
 }
 

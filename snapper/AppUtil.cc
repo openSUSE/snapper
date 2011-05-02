@@ -361,30 +361,16 @@ void initDefaultLogger()
     }
 
 
-    void
-    Text::clear()
-    {
-	native.clear();
-	text.clear();
-    }
-
-
-    const Text&
-    Text::operator+=(const Text& a)
-    {
-	native += a.native;
-	text += a.text;
-	return *this;
-    }
-
-
     string
-    sformat(const string& format, va_list ap)
+    sformat(const string& format, ...)
     {
 	char* result;
 
+	va_list ap;
+	va_start(ap, format);
 	if (vasprintf(&result, format.c_str(), ap) == -1)
 	    return string();
+	va_end(ap);
 
 	string str(result);
 	free(result);
@@ -392,32 +378,14 @@ void initDefaultLogger()
     }
 
 
-    Text
-    sformat(const Text& format, ...)
+    string _(const char* msgid)
     {
-	Text text;
-	va_list ap;
-
-	va_start(ap, format);
-	text.native = sformat(format.native, ap);
-	va_end(ap);
-
-	va_start(ap, format);
-	text.text = sformat(format.text, ap);
-	va_end(ap);
-
-	return text;
+	return dgettext("snapper", msgid);
     }
 
-
-    Text _(const char* msgid)
+    string _(const char* msgid, const char* msgid_plural, unsigned long int n)
     {
-	return Text(msgid, dgettext("libsnapper", msgid));
-    }
-
-    Text _(const char* msgid, const char* msgid_plural, unsigned long int n)
-    {
-	return Text(n == 1 ? msgid : msgid_plural, dngettext("libsnapper", msgid, msgid_plural, n));
+	return dngettext("snapper", msgid, msgid_plural, n);
     }
 
 

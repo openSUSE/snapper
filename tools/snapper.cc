@@ -54,8 +54,8 @@ command_list_configs()
     Table table;
 
     TableHeader header;
-    header.add("Config");
-    header.add("Subvolume");
+    header.add(_("Config"));
+    header.add(_("Subvolume"));
     table.setHeader(header);
 
     try
@@ -152,6 +152,9 @@ help_list()
 {
     cout << _("  List snapshots:") << endl
 	 << _("\tsnapper list") << endl
+	 << endl
+	 << _("    Options for 'list' command:") << endl
+	 << _("\t--type, -t <type>\t\tType of snapshots to list.") << endl
 	 << endl;
 }
 
@@ -159,35 +162,121 @@ help_list()
 void
 command_list()
 {
-    getopts.parse("list", GetOpts::no_options);
+    const struct option options[] = {
+	{ "type",		required_argument,	0,	't' },
+	{ 0, 0, 0, 0 }
+    };
+
+    GetOpts::parsed_opts opts = getopts.parse("list", options);
     if (getopts.hasArgs())
     {
 	cerr << _("Command 'list' does not take arguments.") << endl;
 	exit(EXIT_FAILURE);
     }
 
+    enum ListMode { LM_ALL, LM_SINGLE, LM_PRE_POST };
+    ListMode list_mode = LM_ALL;
+
+    GetOpts::parsed_opts::const_iterator opt;
+
+    if ((opt = opts.find("type")) != opts.end())
+    {
+	if (opt->second == "all")
+	    list_mode = LM_ALL;
+	else if (opt->second == "single")
+	    list_mode = LM_SINGLE;
+	else if (opt->second == "pre-post")
+	    list_mode = LM_PRE_POST;
+	else
+	{
+	    cerr << _("Unknown type of snapshots.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+    }
+
     Table table;
 
-    TableHeader header;
-    header.add("Type");
-    header.add("#");
-    header.add("Pre #");
-    header.add("Date");
-    header.add("Cleanup");
-    header.add("Description");
-    table.setHeader(header);
-
-    const Snapshots& snapshots = sh->getSnapshots();
-    for (Snapshots::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
+    switch (list_mode)
     {
-	TableRow row;
-	row.add(toString(it->getType()));
-	row.add(decString(it->getNum()));
-	row.add(it->getType() == POST ? decString(it->getPreNum()) : "");
-	row.add(it->isCurrent() ? "" : datetime(it->getDate(), false, false));
-	row.add(it->getCleanup());
-	row.add(it->getDescription());
-	table.add(row);
+	case LM_ALL:
+	{
+	    TableHeader header;
+	    header.add(_("Type"));
+	    header.add(_("#"));
+	    header.add(_("Pre #"));
+	    header.add(_("Date"));
+	    header.add(_("Cleanup"));
+	    header.add(_("Description"));
+	    table.setHeader(header);
+
+	    const Snapshots& snapshots = sh->getSnapshots();
+	    for (Snapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
+	    {
+		TableRow row;
+		row.add(toString(it1->getType()));
+		row.add(decString(it1->getNum()));
+		row.add(it1->getType() == POST ? decString(it1->getPreNum()) : "");
+		row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), false, false));
+		row.add(it1->getCleanup());
+		row.add(it1->getDescription());
+		table.add(row);
+	    }
+	}
+	break;
+
+	case LM_SINGLE:
+	{
+	    TableHeader header;
+	    header.add(_("#"));
+	    header.add(_("Date"));
+	    header.add(_("Description"));
+	    table.setHeader(header);
+
+	    const Snapshots& snapshots = sh->getSnapshots();
+	    for (Snapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
+	    {
+		if (it1->getType() != SINGLE)
+		    continue;
+
+		TableRow row;
+		row.add(decString(it1->getNum()));
+		row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), false, false));
+		row.add(it1->getDescription());
+		table.add(row);
+	    }
+	}
+	break;
+
+	case LM_PRE_POST:
+	{
+	    TableHeader header;
+	    header.add(_("Pre #"));
+	    header.add(_("Post #"));
+	    header.add(_("Pre Date"));
+	    header.add(_("Post Date"));
+	    header.add(_("Description"));
+	    table.setHeader(header);
+
+	    const Snapshots& snapshots = sh->getSnapshots();
+	    for (Snapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
+	    {
+		if (it1->getType() != PRE)
+		    continue;
+
+		Snapshots::const_iterator it2 = snapshots.findPost(it1);
+		if (it2 == snapshots.end())
+		    continue;
+
+		TableRow row;
+		row.add(decString(it1->getNum()));
+		row.add(decString(it2->getNum()));
+		row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), false, false));
+		row.add(it2->isCurrent() ? "" : datetime(it2->getDate(), false, false));
+		row.add(it1->getDescription());
+		table.add(row);
+	    }
+	}
+	break;
     }
 
     cout << table;
@@ -238,7 +327,13 @@ command_create()
     GetOpts::parsed_opts::const_iterator opt;
 
     if ((opt = opts.find("type")) != opts.end())
-	toValue(opt->second, type, SINGLE);
+    {
+	if (!toValue(opt->second, type, SINGLE))
+	{
+	    cerr << _("Unknown type of snapshot.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+    }
 
     if ((opt = opts.find("pre-number")) != opts.end())
 	snap1 = readNum(opt->second);
