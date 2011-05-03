@@ -706,12 +706,16 @@ CompareCallbackImpl compare_callback_impl;
 
 struct RollbackCallbackImpl : public RollbackCallback
 {
-    void start() { if (!verbose) cout << "running rollback..." << flush; }
-    void stop() { if (!verbose) cout << " done" << endl; }
+    void start() { cout << "running rollback..." << endl; }
+    void stop() { cout << "rollback done" << endl; }
 
-    void createInfo(const string& name) { if (verbose) cout << "create " << name << endl; }
-    void modifyInfo(const string& name) { if (verbose) cout << "modify " << name << endl; }
-    void deleteInfo(const string& name) { if (verbose) cout << "delete " << name << endl; }
+    void createInfo(const string& name) { if (verbose) cout << "creating " << name << endl; }
+    void modifyInfo(const string& name) { if (verbose) cout << "modifying " << name << endl; }
+    void deleteInfo(const string& name) { if (verbose) cout << "deleting " << name << endl; }
+
+    void createError(const string& name) { cerr << "failed to create " << name << endl; }
+    void modifyError(const string& name) { cerr << "failed to modify " << name << endl; }
+    void deleteError(const string& name) { cerr << "failed to delete " << name << endl; }
 };
 
 RollbackCallbackImpl rollback_callback_impl;

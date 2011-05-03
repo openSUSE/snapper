@@ -58,6 +58,10 @@ namespace snapper
 	virtual void createInfo(const string& name) = 0;
 	virtual void modifyInfo(const string& name) = 0;
 	virtual void deleteInfo(const string& name) = 0;
+
+	virtual void createError(const string& name) = 0;
+	virtual void modifyError(const string& name) = 0;
+	virtual void deleteError(const string& name) = 0;
     };
 
 

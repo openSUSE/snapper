@@ -386,15 +386,30 @@ namespace snapper
 	    switch (fs.st_mode & S_IFMT)
 	    {
 		case S_IFDIR: {
-		    rmdir(getAbsolutePath(LOC_SYSTEM).c_str());
+		    if (rmdir(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
+		    {
+			y2err("rmdir failed for " << getAbsolutePath(LOC_SYSTEM));
+			if (getSnapper()->getRollbackCallback())
+			    getSnapper()->getRollbackCallback()->deleteError(name);
+		    }
 		} break;
 
 		case S_IFREG: {
-		    unlink(getAbsolutePath(LOC_SYSTEM).c_str());
+		    if (unlink(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
+		    {
+			y2err("unlink failed for " << getAbsolutePath(LOC_SYSTEM));
+			if (getSnapper()->getRollbackCallback())
+			    getSnapper()->getRollbackCallback()->deleteError(name);
+		    }
 		} break;
 
 		case S_IFLNK: {
-		    unlink(getAbsolutePath(LOC_SYSTEM).c_str());
+		    if (unlink(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
+		    {
+			y2err("unlink failed for " << getAbsolutePath(LOC_SYSTEM));
+			if (getSnapper()->getRollbackCallback())
+			    getSnapper()->getRollbackCallback()->deleteError(name);
+		    }
 		} break;
 	    }
 	}
@@ -457,12 +472,22 @@ namespace snapper
 
 	    if (getPreToPostStatus() & PERMISSIONS)
 	    {
-		chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode);
+		if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode) != 0)
+		{
+		    y2err("chmod failed for " << getAbsolutePath(LOC_SYSTEM));
+		    if (getSnapper()->getRollbackCallback())
+			getSnapper()->getRollbackCallback()->modifyError(name);
+		}
 	    }
 
 	    if (getPreToPostStatus() & (USER | GROUP))
 	    {
-		lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid);
+		if (lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid) != 0)
+		{
+		    y2err("lchown failed for " << getAbsolutePath(LOC_SYSTEM));
+		    if (getSnapper()->getRollbackCallback())
+			getSnapper()->getRollbackCallback()->modifyError(name);
+		}
 	    }
 	}
 

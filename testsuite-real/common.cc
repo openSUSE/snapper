@@ -27,6 +27,8 @@ Snapper* sh = NULL;
 Snapshots::iterator first;
 Snapshots::iterator second;
 
+unsigned int numCreateErrors, numModifyErrors, numDeleteErrors;
+
 
 struct CompareCallbackImpl : public CompareCallback
 {
@@ -42,9 +44,13 @@ struct RollbackCallbackImpl : public RollbackCallback
     void start() { cout << "running rollback..." << endl; }
     void stop() { cout << "rollback done" << endl; }
 
-    void createInfo(const string& name) { cout << "create " << name << endl; }
-    void modifyInfo(const string& name) { cout << "modify " << name << endl; }
-    void deleteInfo(const string& name) { cout << "delete " << name << endl; }
+    void createInfo(const string& name) { cout << "creating " << name << endl; }
+    void modifyInfo(const string& name) { cout << "modifying " << name << endl; }
+    void deleteInfo(const string& name) { cout << "deleting " << name << endl; }
+
+    void createError(const string& name) { cout << "failed to create " << name << endl; numCreateErrors++; }
+    void modifyError(const string& name) { cout << "failed to modify " << name << endl; numModifyErrors++; }
+    void deleteError(const string& name) { cout << "failed to delete " << name << endl; numDeleteErrors++; }
 };
 
 RollbackCallbackImpl rollback_callback_impl;
@@ -101,6 +107,8 @@ check_rollback_statistics(unsigned int numCreate, unsigned int numModify, unsign
 void
 rollback()
 {
+    numCreateErrors = numModifyErrors = numDeleteErrors = 0;
+
     Comparison comparison(sh, first, second);
 
     Files& files = comparison.getFiles();
@@ -108,6 +116,15 @@ rollback()
 	it->setRollback(true);
 
     comparison.doRollback();
+}
+
+
+void
+check_rollback_errors(unsigned int numCreate, unsigned int numModify, unsigned int numDelete)
+{
+    check_equal(numCreateErrors, numCreate);
+    check_equal(numModifyErrors, numModify);
+    check_equal(numDeleteErrors, numDelete);
 }
 
 

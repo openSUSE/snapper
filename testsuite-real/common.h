@@ -49,6 +49,8 @@ void second_snapshot();
 void check_rollback_statistics(unsigned int numCreate, unsigned int numModify,
 			       unsigned int numDelete);
 void rollback();
+void check_rollback_errors(unsigned int numCreate, unsigned int numModify,
+			   unsigned int numDelete);
 void check_first();
 
 void run_command(const char* command);
