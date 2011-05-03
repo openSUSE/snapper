@@ -27,6 +27,7 @@ map<string, cmd_fnc> cmds;
 GetOpts getopts;
 
 bool quiet = false;
+bool verbose = false;
 string config_name = "root";
 
 Snapper* sh = NULL;
@@ -677,6 +678,7 @@ command_help()
 
     cout << _("    Global options:") << endl
 	 << _("\t--quiet, -q\t\t\tSuppress normal output.") << endl
+	 << _("\t--verbose, -v\t\t\tIncrease verbosity.") << endl
 	 << _("\t--table-style, -t <style>\tTable style (integer).") << endl
 	 << _("\t--config, -c <name>\t\tSet name of config to use.") << endl
 	 << endl;
@@ -695,21 +697,24 @@ command_help()
 
 struct CompareCallbackImpl : public CompareCallback
 {
-    void start() {  cout << "comparing snapshots..." << flush; }
+    void start() { cout << "comparing snapshots..." << flush; }
     void stop() { cout << " done" << endl; }
 };
 
 CompareCallbackImpl compare_callback_impl;
 
 
-struct RollbackProgressCallbackImpl : public RollbackProgressCallback
+struct RollbackCallbackImpl : public RollbackCallback
 {
-    void createInfo(const string& name) { cout << "create " << name << endl; }
-    void modifyInfo(const string& name) { cout << "modify " << name << endl; }
-    void deleteInfo(const string& name) { cout << "delete " << name << endl; }
+    void start() { if (!verbose) cout << "running rollback..." << flush; }
+    void stop() { if (!verbose) cout << " done" << endl; }
+
+    void createInfo(const string& name) { if (verbose) cout << "create " << name << endl; }
+    void modifyInfo(const string& name) { if (verbose) cout << "modify " << name << endl; }
+    void deleteInfo(const string& name) { if (verbose) cout << "delete " << name << endl; }
 };
 
-RollbackProgressCallbackImpl rollback_progress_callback_impl;
+RollbackCallbackImpl rollback_callback_impl;
 
 
 int
@@ -732,6 +737,7 @@ main(int argc, char** argv)
 
     const struct option options[] = {
 	{ "quiet",		no_argument,		0,	'q' },
+	{ "verbose",		no_argument,		0,	'v' },
 	{ "table-style",	required_argument,	0,	't' },
 	{ "config",		required_argument,	0,	'c' },
 	{ 0, 0, 0, 0 }
@@ -760,6 +766,9 @@ main(int argc, char** argv)
 
     if ((opt = opts.find("quiet")) != opts.end())
 	quiet = true;
+
+    if ((opt = opts.find("verbose")) != opts.end())
+	verbose = true;
 
     if ((opt = opts.find("table-style")) != opts.end())
     {
@@ -801,7 +810,7 @@ main(int argc, char** argv)
 	if (!quiet)
 	{
 	    sh->setCompareCallback(&compare_callback_impl);
-	    sh->setRollbackProgressCallback(&rollback_progress_callback_impl);
+	    sh->setRollbackCallback(&rollback_callback_impl);
 	}
 
 	(*cmd->second)();

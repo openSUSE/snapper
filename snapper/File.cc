@@ -377,8 +377,8 @@ namespace snapper
     {
 	if (getPreToPostStatus() & CREATED || getPreToPostStatus() & TYPE)
 	{
-	    if (getSnapper()->getRollbackProgressCallback())
-		getSnapper()->getRollbackProgressCallback()->deleteInfo(name);
+	    if (getSnapper()->getRollbackCallback())
+		getSnapper()->getRollbackCallback()->deleteInfo(name);
 
 	    struct stat fs;
 	    getLStat(getAbsolutePath(LOC_POST), fs);
@@ -401,8 +401,8 @@ namespace snapper
 
 	if (getPreToPostStatus() & DELETED || getPreToPostStatus() & TYPE)
 	{
-	    if (getSnapper()->getRollbackProgressCallback())
-		getSnapper()->getRollbackProgressCallback()->createInfo(name);
+	    if (getSnapper()->getRollbackCallback())
+		getSnapper()->getRollbackCallback()->createInfo(name);
 
 	    struct stat fs;
 	    getLStat(getAbsolutePath(LOC_PRE), fs);
@@ -431,8 +431,8 @@ namespace snapper
 
 	if (getPreToPostStatus() & (CONTENT | PERMISSIONS | USER | GROUP))
 	{
-	    if (getSnapper()->getRollbackProgressCallback())
-		getSnapper()->getRollbackProgressCallback()->modifyInfo(name);
+	    if (getSnapper()->getRollbackCallback())
+		getSnapper()->getRollbackCallback()->modifyInfo(name);
 
 	    struct stat fs;
 	    getLStat(getAbsolutePath(LOC_PRE), fs);
@@ -497,6 +497,9 @@ namespace snapper
     {
 	y2mil("begin rollback");
 
+	if (getSnapper()->getRollbackCallback())
+	    getSnapper()->getRollbackCallback()->start();
+
 	for (vector<File>::reverse_iterator it = entries.rbegin(); it != entries.rend(); ++it)
 	{
 	    if (it->getRollback())
@@ -518,6 +521,9 @@ namespace snapper
 		}
 	    }
 	}
+
+	if (getSnapper()->getRollbackCallback())
+	    getSnapper()->getRollbackCallback()->stop();
 
 	y2mil("end rollback");
 
