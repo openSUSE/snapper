@@ -697,8 +697,8 @@ command_help()
 
 struct CompareCallbackImpl : public CompareCallback
 {
-    void start() { cout << "comparing snapshots..." << flush; }
-    void stop() { cout << " done" << endl; }
+    void start() { cout << _("comparing snapshots...") << flush; }
+    void stop() { cout << " " << _("done") << endl; }
 };
 
 CompareCallbackImpl compare_callback_impl;
@@ -706,16 +706,22 @@ CompareCallbackImpl compare_callback_impl;
 
 struct RollbackCallbackImpl : public RollbackCallback
 {
-    void start() { cout << "running rollback..." << endl; }
-    void stop() { cout << "rollback done" << endl; }
+    void start() { cout << _("running rollback...") << endl; }
+    void stop() { cout << _("rollback done") << endl; }
 
-    void createInfo(const string& name) { if (verbose) cout << "creating " << name << endl; }
-    void modifyInfo(const string& name) { if (verbose) cout << "modifying " << name << endl; }
-    void deleteInfo(const string& name) { if (verbose) cout << "deleting " << name << endl; }
+    void createInfo(const string& name)
+	{ if (verbose) cout << sformat(_("creating %s"), name.c_str()) << endl; }
+    void modifyInfo(const string& name)
+	{ if (verbose) cout << sformat(_("modifying %s"), name.c_str()) << endl; }
+    void deleteInfo(const string& name)
+	{ if (verbose) cout << sformat(_("deleting %s"), name.c_str()) << endl; }
 
-    void createError(const string& name) { cerr << "failed to create " << name << endl; }
-    void modifyError(const string& name) { cerr << "failed to modify " << name << endl; }
-    void deleteError(const string& name) { cerr << "failed to delete " << name << endl; }
+    void createError(const string& name)
+	{ cerr << sformat(_("failed to create %s"), name.c_str()) << endl; }
+    void modifyError(const string& name)
+	{ cerr << sformat(_("failed to modify %s"), name.c_str()) << endl; }
+    void deleteError(const string& name)
+	{ cerr << sformat(_("failed to delete %s"), name.c_str()) << endl; }
 };
 
 RollbackCallbackImpl rollback_callback_impl;
