@@ -44,10 +44,12 @@ make %{?jobs:-j%jobs}
 %install
 make install DESTDIR="$RPM_BUILD_ROOT"
 
+%{find_lang} snapper
+
 %clean
 rm -rf "$RPM_BUILD_ROOT"
 
-%files
+%files -f snapper.lang
 %defattr(-,root,root)
 %{prefix}/bin/snapper
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
