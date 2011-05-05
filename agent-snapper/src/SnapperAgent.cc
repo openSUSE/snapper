@@ -86,7 +86,8 @@ string statusToString(unsigned int status)
  */
 SnapperAgent::SnapperAgent() : SCRAgent()
 {
-    sh = createSnapper();
+    snapper_initialized	= false;
+    snapper_error	= "";
 }
 
 /**
@@ -94,7 +95,10 @@ SnapperAgent::SnapperAgent() : SCRAgent()
  */
 SnapperAgent::~SnapperAgent()
 {
-    deleteSnapper(sh);
+    if (sh)
+    {
+	deleteSnapper(sh);
+    }
 }
 
 
@@ -133,14 +137,21 @@ YCPValue SnapperAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPV
     YCPMap argmap;
     if (!arg.isNull() && arg->isMap())
     	argmap = arg->asMap();
+
+    if (!snapper_initialized && PC(0) != "error") {
+	y2error ("snapper not initialized: use Execute (.snapper) first!");
+	snapper_error = "not_initialized";
+	return YCPVoid();
+    }
 	
     if (path->length() == 1) {
 
 	/**
-	 * error: Read(.snapper.error) -> returns last error message
+	 * error: Read (.snapper.error) -> returns last error message
 	 */
 	if (PC(0) == "error") {
 	    YCPMap retmap;
+	    retmap->add (YCPString ("type"), YCPString (snapper_error));
 	    return retmap;
 	}
 	/**
@@ -285,6 +296,36 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
     YCPMap argmap;
     if (!arg.isNull() && arg->isMap())
     	argmap = arg->asMap();
+
+    /**
+     * Execute (.snapper) call: Initialize snapper object
+     */
+    if (path->length() == 0) {
+
+	try {
+	    sh = createSnapper();
+	}
+	catch (const ConfigNotFoundException& e)
+	{
+	    y2error ("Config not found.");
+	    snapper_error	= "config_not_found";
+	    return YCPBoolean (false);
+	}
+	catch (const InvalidConfigException& e)
+	{
+	    y2error ("Config is invalid.");
+	    snapper_error	= "config_invalid";
+	    return YCPBoolean (false);
+	}
+	snapper_initialized	= true;
+	return ret;
+    }
+
+    if (!snapper_initialized) {
+	y2error ("snapper not initialized: use Execute (.snapper) first!");
+	snapper_error = "not_initialized";
+	return YCPVoid();
+    }
 
     if (path->length() == 1) {
 

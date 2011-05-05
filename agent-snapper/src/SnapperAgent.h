@@ -29,6 +29,10 @@ private:
      * Agent private variables and methods
      */
 
+    snapper::Snapper* sh;
+    bool snapper_initialized;
+    string snapper_error;
+
     /**
      * search the map for value of given key; both key and value have to be strings
      * when key is not present, empty string is returned
@@ -92,11 +96,6 @@ public:
      * Used for mounting the agent.
      */
     virtual YCPValue otherCommand(const YCPTerm& term);
-
-private:
-
-    snapper::Snapper* sh;
-
 };
 
 #endif /* _SnapperAgent_h */
