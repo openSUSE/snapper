@@ -37,6 +37,7 @@ textdomain "snapper";
 import "FileUtils";
 import "Label";
 import "Progress";
+import "Report";
 
 
 // global list of all snapshot
@@ -163,6 +164,41 @@ global boolean ReadSnapshots () {
     return true;
 }
 
+global map LastSnapperErrorMap () {
+
+    return (map) SCR::Read (.snapper.error);
+}
+
+/**
+ * Initialize snapper agent
+ * Return true on success
+ */
+global boolean InitializeSnapper () {
+
+    boolean init	= (boolean) SCR::Execute (.snapper);
+    if (!init)
+    {
+	map err_map	= LastSnapperErrorMap ();
+	string type	= err_map["type"]:"";
+	string details	= _("Reason not known.");
+	if (type == "config_not_found")
+	{
+	    details	= _("Configuration not found.");
+	}
+	else if (type == "config_invalid")
+	{
+	    details	= _("Configuration is not valid.");
+	}
+
+	y2warning ("init failed with '%1'", err_map);
+	// error popup
+	Report::Error (sformat (_("Failed to initialize snapper library:
+%1"), details));
+    }
+    return init;
+
+}
+
 /**
  * Read all snapper settings
  * @return true on success
@@ -188,7 +224,11 @@ global boolean Read() {
     );
 
     Progress::NextStage();
-    // read database
+
+    if (!InitializeSnapper ())
+    {
+	return false;
+    }
 
     ReadSnapshots ();
 
