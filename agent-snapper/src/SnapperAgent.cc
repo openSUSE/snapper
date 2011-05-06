@@ -86,6 +86,7 @@ string statusToString(unsigned int status)
  */
 SnapperAgent::SnapperAgent() : SCRAgent()
 {
+    sh			= NULL;
     snapper_initialized	= false;
     snapper_error	= "";
 }
@@ -309,12 +310,14 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
 	{
 	    y2error ("Config not found.");
 	    snapper_error	= "config_not_found";
+	    sh			= NULL;
 	    return YCPBoolean (false);
 	}
 	catch (const InvalidConfigException& e)
 	{
 	    y2error ("Config is invalid.");
 	    snapper_error	= "config_invalid";
+	    sh			= NULL;
 	    return YCPBoolean (false);
 	}
 	snapper_initialized	= true;
