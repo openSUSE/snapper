@@ -12,7 +12,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 Source:		snapper-%{version}.tar.bz2
 Prefix:		/usr
 BuildRequires:	gcc-c++ boost-devel blocxx-devel doxygen dejagnu libxml2-devel
-Requires:	libsnapper0 = %version
+Requires:	libsnapper@LIBVERSION_MAJOR@ = %version
 Recommends:	cron logrotate
 Summary:	Tool for filesystem snapshot management
 
@@ -55,20 +55,20 @@ rm -rf "$RPM_BUILD_ROOT"
 /etc/cron.hourly/suse.de-snapper
 /etc/cron.daily/suse.de-snapper
 
-%package -n libsnapper0
+%package -n libsnapper@LIBVERSION_MAJOR@
 Summary:	Library for filesystem snapshot management
 Group:		System/Libraries
 Requires:	btrfsprogs diffutils util-linux
 PreReq:		%fillup_prereq
 
-%description -n libsnapper0
+%description -n libsnapper@LIBVERSION_MAJOR@
 This package contains libsnapper, a library for filesystem snapshot management.
 
 Authors:
 --------
     Arvin Schnell <aschnell@suse.de>
 
-%files -n libsnapper0
+%files -n libsnapper@LIBVERSION_MAJOR@
 %defattr(-,root,root)
 %{_libdir}/libsnapper.so.*
 %dir %{_sysconfdir}/snapper
@@ -85,15 +85,15 @@ Authors:
 %dir %{prefix}/lib/snapper/bin
 %{prefix}/lib/snapper/bin/compare-dirs
 
-%post -n libsnapper0
+%post -n libsnapper@LIBVERSION_MAJOR@
 /sbin/ldconfig
 %{fillup_only -n snapper}
 
-%postun -n libsnapper0
+%postun -n libsnapper@LIBVERSION_MAJOR@
 /sbin/ldconfig
 
 %package -n libsnapper-devel
-Requires:	libsnapper0 = %version
+Requires:	libsnapper@LIBVERSION_MAJOR@ = %version
 Requires:	gcc-c++ libstdc++-devel boost-devel blocxx-devel libxml2-devel
 Summary:	Header files and documentation for libsnapper
 Group:		Development/Languages/C and C++

@@ -24,7 +24,7 @@ libsnapper_la_SOURCES =					\
 	SnapperTypes.h					\
 	SnapperDefines.h
 
-libsnapper_la_LDFLAGS = -version-info 0:0
+libsnapper_la_LDFLAGS = -version-info @LIBVERSION_INFO@
 libsnapper_la_LIBADD = -lblocxx -lxml2
 
 pkgincludedir = $(includedir)/snapper

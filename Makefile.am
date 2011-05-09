@@ -8,7 +8,7 @@ AUTOMAKE_OPTIONS = foreign dist-bzip2 no-dist-gzip
 
 doc_DATA = AUTHORS COPYING
 
-EXTRA_DIST = $(doc_DATA) VERSION
+EXTRA_DIST = $(doc_DATA) VERSION LIBVERSION
 
 
 snapper-$(VERSION).tar.bz2: dist-bzip2
