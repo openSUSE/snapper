@@ -24,6 +24,7 @@
 #include <sys/types.h>
 #include <glob.h>
 #include <string.h>
+#include <boost/algorithm/string.hpp>
 
 #include "config.h"
 #include "snapper/Snapper.h"
@@ -542,6 +543,16 @@ namespace snapper
 	y2mil("libsnapper version " VERSION);
 	y2mil("config_name:" << config_name << " subvolume:" << subvolume <<
 	      " template_name:" << template_name);
+
+	if (config_name.empty() || config_name.find_first_of(" \t") != string::npos)
+	{
+	    throw AddConfigFailedException("illegal config");
+	}
+
+	if (!boost::starts_with(subvolume, "/"))
+	{
+	    throw AddConfigFailedException("illegal subvolume");
+	}
 
 	if (access(string(CONFIGTEMPLATEDIR "/" + template_name).c_str(), R_OK) != 0)
 	{
