@@ -546,7 +546,7 @@ namespace snapper
 
 	if (config_name.empty() || config_name.find_first_of(" \t") != string::npos)
 	{
-	    throw AddConfigFailedException("illegal config");
+	    throw AddConfigFailedException("illegal config name");
 	}
 
 	if (!boost::starts_with(subvolume, "/"))
@@ -581,7 +581,7 @@ namespace snapper
 		       quote(CONFIGSDIR "/" + config_name));
 	if (cmd1.retcode() != 0)
 	{
-	    throw AddConfigFailedException("copying template failed");
+	    throw AddConfigFailedException("copying config template failed");
 	}
 
 	try
