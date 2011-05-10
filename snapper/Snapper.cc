@@ -549,7 +549,7 @@ namespace snapper
 	    throw AddConfigFailedException("illegal config name");
 	}
 
-	if (!boost::starts_with(subvolume, "/"))
+	if (!boost::starts_with(subvolume, "/") || !checkDir(subvolume))
 	{
 	    throw AddConfigFailedException("illegal subvolume");
 	}
