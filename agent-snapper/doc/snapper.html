@@ -32,6 +32,8 @@ The interface is implemented as a SCR agent with the usual <tt>Read()</tt>,
 
 <ul><tt>.snapper</tt></ul>
 
+The initialization call of Execute (.snapper) must be done before any other calls.
+
 <P>
 <h2>Complete Read paths table</h2>
 
@@ -43,7 +45,18 @@ The interface is implemented as a SCR agent with the usual <tt>Read()</tt>,
 	<th align="left">Result</th>
     </tr>
 
-	<tr><td><tt>.snapper.snapshots</td><td></td><td align="left">YCPList</td>
+	<tr><td><tt>.snapper.error</td><td>(none)</td><td align="left">YCPMap</td>
+	<td>Return information about last error.<br>
+	<b>Example of result</b>:
+	<pre>
+	    $[
+		"type"		: "config_not_found"
+	    ]
+	</pre>
+	</td>
+	</tr>
+
+	<tr><td><tt>.snapper.snapshots</td><td>(none)</td><td align="left">YCPList</td>
 	<td>Return list of current snapshot maps.<br>
 	<b>Example of result</b>:
 	<pre>
@@ -75,7 +88,7 @@ The interface is implemented as a SCR agent with the usual <tt>Read()</tt>,
 	</td>
 	</tr>
 
-	<tr><td><tt>.snapper.diff</td><td>YCPMap</td><td align="left">YCPList</td>
+	<tr><td><tt>.snapper.diff_list</td><td>YCPMap</td><td align="left">YCPList</td>
 	<td>Returns the list of files modified between given snapshots.
 	Each file is described by YCPMap which contains file path and type of the change.
 	Argument map contains 2 integers, identifying the snapshots.<br>
@@ -99,6 +112,93 @@ The interface is implemented as a SCR agent with the usual <tt>Read()</tt>,
 	    ]
 	  ]
 	</pre>
+	</td></tr>
+
+	<tr><td><tt>.snapper.diff_index</td><td>YCPMap</td><td align="left">YCPMap</td>
+	<td>Returns the differences between snapnots num1 and num2 as one-level map
+	(mapping each file to its changes).<br>
+	<b>Example of argument map</b>:
+	    <pre>
+	    $[
+		"from" 	: 1,
+		"to" 	: 2
+	    $]
+	    </pre>
+	<b>Example of result</b>:
+	<pre>
+	  $[
+		"/etc/group"		: "c...",
+		"/etc/group.YaST2save"	: "c..."
+	  ]
+	</pre>
+	</td></tr>
+
+	<tr><td><tt>.snapper.diff_tree</td><td>YCPMap</td><td align="left">YCPMap</td>
+	<td>Returns the differences between snapnots num1 and num2 as a tree.
+	Map is recursively describing the filesystem structure; it is used to build Tree widget contents
+	in yast2-snapper UI.
+	<br>
+	<b>Example of argument map</b>:
+	    <pre>
+	    $[
+		"from" 	: 1,
+		"to" 	: 2
+	    $]
+	    </pre>
+	<b>Example of result</b>:
+	<pre>
+	    $[
+		"etc"	: $[
+		    "group"		: $[],
+		    "group.YaST2save"	: $[],
+		    "passwd"		: $[],
+		    "passwd.YaST2save"	: $[]
+		],
+		"var"	: $[
+		    "log"		: $[
+			"YaST2"		: $[
+			    "y2changes"	: $[],
+			    "y2log"	: $[]
+			],
+			"messages"	: $[],
+			"snapper.log"	: $[]
+		    ]
+		]
+	    ]
+	</pre>
+	</td></tr>
+</table>
+
+<P>
+<h2>Complete Execute paths table</h2>
+
+<table border=3>
+    <tr>
+	<th width="20%" align="left">Path</th>
+        <th width="10%" align="left">Argument</th>
+	<th width="10%" align="left">Type of Result</th>
+	<th align="left">Result</th>
+    </tr>
+
+	<tr><td><tt>.snapper</td><td>(none)</td><td align="left">YCPBoolean</td>
+	<td>Initializes snapper object. In case of init failure, sets the internal error ID.
+	Use Read (.snapper.error) to get the error info.
+	</td>
+	</tr>
+
+	<tr><td><tt>.snapper.rollback</td><td>YCPMap</td><td align="left">YCPBoolean</td>
+	<td>Rollback the list of given files from snapshot num1 to num2. If num2 is not present,
+	current system is used as a default.
+	<b>Example of argument map</b>:
+	    <pre>
+	    $[
+		"files" : [
+		    "/etc/passwd",
+		    "/etc/group"
+		]
+		"from" 	: 1,
+	    $]
+	    </pre>
 	</td></tr>
 </table>
 
