@@ -380,6 +380,8 @@ namespace snapper
 	    if (getSnapper()->getRollbackCallback())
 		getSnapper()->getRollbackCallback()->deleteInfo(name);
 
+	    bool delete_error = false;
+
 	    struct stat fs;
 	    getLStat(getAbsolutePath(LOC_POST), fs);
 
@@ -389,8 +391,7 @@ namespace snapper
 		    if (rmdir(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
 		    {
 			y2err("rmdir failed for " << getAbsolutePath(LOC_SYSTEM));
-			if (getSnapper()->getRollbackCallback())
-			    getSnapper()->getRollbackCallback()->deleteError(name);
+			delete_error = true;
 		    }
 		} break;
 
@@ -398,8 +399,7 @@ namespace snapper
 		    if (unlink(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
 		    {
 			y2err("unlink failed for " << getAbsolutePath(LOC_SYSTEM));
-			if (getSnapper()->getRollbackCallback())
-			    getSnapper()->getRollbackCallback()->deleteError(name);
+			delete_error = true;
 		    }
 		} break;
 
@@ -407,11 +407,13 @@ namespace snapper
 		    if (unlink(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
 		    {
 			y2err("unlink failed for " << getAbsolutePath(LOC_SYSTEM));
-			if (getSnapper()->getRollbackCallback())
-			    getSnapper()->getRollbackCallback()->deleteError(name);
+			delete_error = true;
 		    }
 		} break;
 	    }
+
+	    if (delete_error && getSnapper()->getRollbackCallback())
+		getSnapper()->getRollbackCallback()->deleteError(name);
 	}
 
 	if (getPreToPostStatus() & DELETED || getPreToPostStatus() & TYPE)
@@ -419,13 +421,19 @@ namespace snapper
 	    if (getSnapper()->getRollbackCallback())
 		getSnapper()->getRollbackCallback()->createInfo(name);
 
+	    bool create_error = false;
+
 	    struct stat fs;
 	    getLStat(getAbsolutePath(LOC_PRE), fs);
 
 	    switch (fs.st_mode & S_IFMT)
 	    {
 		case S_IFDIR: {
-		    mkdir(getAbsolutePath(LOC_SYSTEM).c_str(), 0);
+		    if (mkdir(getAbsolutePath(LOC_SYSTEM).c_str(), 0) != 0)
+		    {
+			y2err("mkdir failed for " << getAbsolutePath(LOC_SYSTEM));
+			create_error = true;
+		    }
 		    chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode);
 		    chown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid);
 		} break;
@@ -442,12 +450,17 @@ namespace snapper
 		    lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid);
 		} break;
 	    }
+
+	    if (create_error && getSnapper()->getRollbackCallback())
+		getSnapper()->getRollbackCallback()->createError(name);
 	}
 
 	if (getPreToPostStatus() & (CONTENT | PERMISSIONS | USER | GROUP))
 	{
 	    if (getSnapper()->getRollbackCallback())
 		getSnapper()->getRollbackCallback()->modifyInfo(name);
+
+	    bool modify_error = false;
 
 	    struct stat fs;
 	    getLStat(getAbsolutePath(LOC_PRE), fs);
@@ -475,8 +488,7 @@ namespace snapper
 		if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode) != 0)
 		{
 		    y2err("chmod failed for " << getAbsolutePath(LOC_SYSTEM));
-		    if (getSnapper()->getRollbackCallback())
-			getSnapper()->getRollbackCallback()->modifyError(name);
+		    modify_error = true;
 		}
 	    }
 
@@ -485,10 +497,12 @@ namespace snapper
 		if (lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid) != 0)
 		{
 		    y2err("lchown failed for " << getAbsolutePath(LOC_SYSTEM));
-		    if (getSnapper()->getRollbackCallback())
-			getSnapper()->getRollbackCallback()->modifyError(name);
+		    modify_error = true;
 		}
 	    }
+
+	    if (modify_error && getSnapper()->getRollbackCallback())
+		getSnapper()->getRollbackCallback()->modifyError(name);
 	}
 
 	return true;
