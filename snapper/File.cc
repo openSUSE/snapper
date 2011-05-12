@@ -390,7 +390,8 @@ namespace snapper
 		case S_IFDIR: {
 		    if (rmdir(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
 		    {
-			y2err("rmdir failed for " << getAbsolutePath(LOC_SYSTEM));
+			y2err("rmdir failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+			      " errno:" << errno);
 			delete_error = true;
 		    }
 		} break;
@@ -398,7 +399,8 @@ namespace snapper
 		case S_IFREG: {
 		    if (unlink(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
 		    {
-			y2err("unlink failed for " << getAbsolutePath(LOC_SYSTEM));
+			y2err("unlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+			      " errno:" << errno);
 			delete_error = true;
 		    }
 		} break;
@@ -406,7 +408,8 @@ namespace snapper
 		case S_IFLNK: {
 		    if (unlink(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
 		    {
-			y2err("unlink failed for " << getAbsolutePath(LOC_SYSTEM));
+			y2err("unlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+			      " errno:" << errno);
 			delete_error = true;
 		    }
 		} break;
@@ -431,7 +434,8 @@ namespace snapper
 		case S_IFDIR: {
 		    if (mkdir(getAbsolutePath(LOC_SYSTEM).c_str(), 0) != 0)
 		    {
-			y2err("mkdir failed for " << getAbsolutePath(LOC_SYSTEM));
+			y2err("mkdir failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+			      " errno:" << errno);
 			create_error = true;
 		    }
 		    chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode);
@@ -439,6 +443,7 @@ namespace snapper
 		} break;
 
 		case S_IFREG: {
+		    // TODO: use clonefile
 		    SystemCmd cmd(CPBIN " --preserve=mode,ownership " +
 				  getAbsolutePath(LOC_PRE) + " " + getAbsolutePath(LOC_SYSTEM));
 		} break;
@@ -446,7 +451,12 @@ namespace snapper
 		case S_IFLNK: {
 		    string tmp;
 		    readlink(getAbsolutePath(LOC_PRE), tmp);
-		    symlink(tmp, getAbsolutePath(LOC_SYSTEM));
+		    if (symlink(tmp, getAbsolutePath(LOC_SYSTEM)) != 0)
+		    {
+			y2err("symlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+			      " errno:" << errno);
+			create_error = true;
+		    }
 		    lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid);
 		} break;
 	    }
@@ -470,6 +480,7 @@ namespace snapper
 		switch (fs.st_mode & S_IFMT)
 		{
 		    case S_IFREG: {
+			// TODO: use clonefile
 			SystemCmd cmd(CPBIN " --preserve=mode,ownership " +
 				      getAbsolutePath(LOC_PRE) + " " + getAbsolutePath(LOC_SYSTEM));
 		    } break;
@@ -487,7 +498,8 @@ namespace snapper
 	    {
 		if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode) != 0)
 		{
-		    y2err("chmod failed for " << getAbsolutePath(LOC_SYSTEM));
+		    y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+			  " errno:" << errno);
 		    modify_error = true;
 		}
 	    }
@@ -496,7 +508,8 @@ namespace snapper
 	    {
 		if (lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid) != 0)
 		{
-		    y2err("lchown failed for " << getAbsolutePath(LOC_SYSTEM));
+		    y2err("lchown failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+			  " errno:" << errno);
 		    modify_error = true;
 		}
 	    }
