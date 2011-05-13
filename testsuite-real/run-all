@@ -4,14 +4,12 @@
 function run()
 {
     cmd=$1
-    shift
-    args=$*
 
     echo
-    echo "*** running $cmd $args ***"
+    echo "*** running $cmd ***"
     echo
 
-    ./$cmd $args
+    ./$cmd
 
     if [ $? != 0 ] ; then
         echo "failed"
