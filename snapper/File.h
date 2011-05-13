@@ -96,6 +96,10 @@ namespace snapper
 
 	bool doRollback();
 
+	enum Action { CREATE, MODIFY, DELETE };
+
+	Action getAction() const;
+
 	friend std::ostream& operator<<(std::ostream& s, const File& file);
 
     private:

@@ -376,110 +376,83 @@ namespace snapper
     bool
     File::doRollback()
     {
+	if (getSnapper()->getRollbackCallback())
+	{
+	    switch (getAction())
+	    {
+		case CREATE: getSnapper()->getRollbackCallback()->createInfo(name); break;
+		case MODIFY: getSnapper()->getRollbackCallback()->modifyInfo(name); break;
+		case DELETE: getSnapper()->getRollbackCallback()->deleteInfo(name); break;
+	    }
+	}
+
+	bool error = false;
+
 	if (getPreToPostStatus() & CREATED || getPreToPostStatus() & TYPE)
 	{
-	    if (getSnapper()->getRollbackCallback())
-		getSnapper()->getRollbackCallback()->deleteInfo(name);
-
-	    bool delete_error = false;
-
 	    struct stat fs;
-	    getLStat(getAbsolutePath(LOC_POST), fs);
-
-	    switch (fs.st_mode & S_IFMT)
+	    if (lstat(getAbsolutePath(LOC_POST).c_str(), &fs) != 0)
 	    {
-		case S_IFDIR: {
-		    if (rmdir(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
-		    {
-			y2err("rmdir failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-			      " errno:" << errno);
-			delete_error = true;
-		    }
-		} break;
-
-		case S_IFREG: {
-		    if (unlink(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
-		    {
-			y2err("unlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-			      " errno:" << errno);
-			delete_error = true;
-		    }
-		} break;
-
-		case S_IFLNK: {
-		    if (unlink(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
-		    {
-			y2err("unlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-			      " errno:" << errno);
-			delete_error = true;
-		    }
-		} break;
+		y2err("lstat failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+		error = true;
 	    }
+	    else
+	    {
+		switch (fs.st_mode & S_IFMT)
+		{
+		    case S_IFDIR: {
+			if (rmdir(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
+			{
+			    y2err("rmdir failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+				  " errno:" << errno);
+			    error = true;
+			}
+		    } break;
 
-	    if (delete_error && getSnapper()->getRollbackCallback())
-		getSnapper()->getRollbackCallback()->deleteError(name);
+		    case S_IFREG: {
+			if (unlink(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
+			{
+			    y2err("unlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+				  " errno:" << errno);
+			    error = true;
+			}
+		    } break;
+
+		    case S_IFLNK: {
+			if (unlink(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
+			{
+			    y2err("unlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+				  " errno:" << errno);
+			    error = true;
+			}
+		    } break;
+		}
+	    }
 	}
 
 	if (getPreToPostStatus() & DELETED || getPreToPostStatus() & TYPE)
 	{
-	    if (getSnapper()->getRollbackCallback())
-		getSnapper()->getRollbackCallback()->createInfo(name);
-
-	    bool create_error = false;
-
 	    struct stat fs;
-	    getLStat(getAbsolutePath(LOC_PRE), fs);
-
-	    switch (fs.st_mode & S_IFMT)
+	    if (lstat(getAbsolutePath(LOC_PRE).c_str(), &fs) != 0)
 	    {
-		case S_IFDIR: {
-		    if (mkdir(getAbsolutePath(LOC_SYSTEM).c_str(), 0) != 0)
-		    {
-			y2err("mkdir failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-			      " errno:" << errno);
-			create_error = true;
-		    }
-		    chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode);
-		    chown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid);
-		} break;
-
-		case S_IFREG: {
-		    // TODO: use clonefile
-		    SystemCmd cmd(CPBIN " --preserve=mode,ownership " +
-				  getAbsolutePath(LOC_PRE) + " " + getAbsolutePath(LOC_SYSTEM));
-		} break;
-
-		case S_IFLNK: {
-		    string tmp;
-		    readlink(getAbsolutePath(LOC_PRE), tmp);
-		    if (symlink(tmp, getAbsolutePath(LOC_SYSTEM)) != 0)
-		    {
-			y2err("symlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-			      " errno:" << errno);
-			create_error = true;
-		    }
-		    lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid);
-		} break;
+		y2err("lstat failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+		error = true;
 	    }
-
-	    if (create_error && getSnapper()->getRollbackCallback())
-		getSnapper()->getRollbackCallback()->createError(name);
-	}
-
-	if (getPreToPostStatus() & (CONTENT | PERMISSIONS | USER | GROUP))
-	{
-	    if (getSnapper()->getRollbackCallback())
-		getSnapper()->getRollbackCallback()->modifyInfo(name);
-
-	    bool modify_error = false;
-
-	    struct stat fs;
-	    getLStat(getAbsolutePath(LOC_PRE), fs);
-
-	    if (getPreToPostStatus() & CONTENT)
+	    else
 	    {
 		switch (fs.st_mode & S_IFMT)
 		{
+		    case S_IFDIR: {
+			if (mkdir(getAbsolutePath(LOC_SYSTEM).c_str(), 0) != 0)
+			{
+			    y2err("mkdir failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+				  " errno:" << errno);
+			    error = true;
+			}
+			chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode);
+			chown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid);
+		    } break;
+
 		    case S_IFREG: {
 			// TODO: use clonefile
 			SystemCmd cmd(CPBIN " --preserve=mode,ownership " +
@@ -487,39 +460,93 @@ namespace snapper
 		    } break;
 
 		    case S_IFLNK: {
-			unlink(getAbsolutePath(LOC_SYSTEM).c_str());
 			string tmp;
 			readlink(getAbsolutePath(LOC_PRE), tmp);
-			symlink(tmp, getAbsolutePath(LOC_SYSTEM));
+			if (symlink(tmp, getAbsolutePath(LOC_SYSTEM)) != 0)
+			{
+			    y2err("symlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+				  " errno:" << errno);
+			    error = true;
+			}
+			lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid);
 		    } break;
 		}
 	    }
+	}
 
-	    if (getPreToPostStatus() & PERMISSIONS)
+	if (getPreToPostStatus() & (CONTENT | PERMISSIONS | USER | GROUP))
+	{
+	    struct stat fs;
+	    if (lstat(getAbsolutePath(LOC_PRE).c_str(), &fs) != 0)
 	    {
-		if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode) != 0)
+		y2err("lstat failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+		error = true;
+	    }
+	    else
+	    {
+		if (getPreToPostStatus() & CONTENT)
 		{
-		    y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-			  " errno:" << errno);
-		    modify_error = true;
+		    switch (fs.st_mode & S_IFMT)
+		    {
+			case S_IFREG: {
+			    // TODO: use clonefile
+			    SystemCmd cmd(CPBIN " --preserve=mode,ownership " +
+					  getAbsolutePath(LOC_PRE) + " " + getAbsolutePath(LOC_SYSTEM));
+			} break;
+
+			case S_IFLNK: {
+			    unlink(getAbsolutePath(LOC_SYSTEM).c_str());
+			    string tmp;
+			    readlink(getAbsolutePath(LOC_PRE), tmp);
+			    symlink(tmp, getAbsolutePath(LOC_SYSTEM));
+			} break;
+		    }
+		}
+
+		if (getPreToPostStatus() & PERMISSIONS)
+		{
+		    if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode) != 0)
+		    {
+			y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+			      " errno:" << errno);
+			error = true;
+		    }
+		}
+
+		if (getPreToPostStatus() & (USER | GROUP))
+		{
+		    if (lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid) != 0)
+		    {
+			y2err("lchown failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+			      " errno:" << errno);
+			error = true;
+		    }
 		}
 	    }
+	}
 
-	    if (getPreToPostStatus() & (USER | GROUP))
+	if (error && getSnapper()->getRollbackCallback())
+	{
+	    switch (getAction())
 	    {
-		if (lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid) != 0)
-		{
-		    y2err("lchown failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-			  " errno:" << errno);
-		    modify_error = true;
-		}
+		case CREATE: getSnapper()->getRollbackCallback()->createError(name); break;
+		case MODIFY: getSnapper()->getRollbackCallback()->modifyError(name); break;
+		case DELETE: getSnapper()->getRollbackCallback()->deleteError(name); break;
 	    }
-
-	    if (modify_error && getSnapper()->getRollbackCallback())
-		getSnapper()->getRollbackCallback()->modifyError(name);
 	}
 
 	return true;
+    }
+
+
+    File::Action
+    File::getAction() const
+    {
+	if (getPreToPostStatus() == CREATED)
+	    return DELETE;
+	if (getPreToPostStatus() == DELETED)
+	    return CREATE;
+	return MODIFY;
     }
 
 
@@ -532,12 +559,12 @@ namespace snapper
 	{
 	    if (it->getRollback())
 	    {
-		if (it->getPreToPostStatus() == CREATED)
-		    rs.numDelete++;
-		else if (it->getPreToPostStatus() == DELETED)
-		    rs.numCreate++;
-		else
-		    rs.numModify++;
+		switch (it->getAction())
+		{
+		    case File::CREATE: rs.numCreate++; break;
+		    case File::MODIFY: rs.numModify++; break;
+		    case File::DELETE: rs.numDelete++; break;
+		}
 	    }
 	}
 
