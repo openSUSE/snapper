@@ -108,6 +108,10 @@ namespace snapper
 
 	bool createParentDirectories(const string& path) const;
 
+	bool createDirectory(mode_t mode, uid_t owner, gid_t group) const;
+	bool createFile(mode_t mode, uid_t owner, gid_t group) const;
+	bool createLink(uid_t owner, gid_t group) const;
+
 	const Comparison* comparison;
 
 	string name;

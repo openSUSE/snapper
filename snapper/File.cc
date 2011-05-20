@@ -384,12 +384,87 @@ namespace snapper
 
 	struct stat fs;
 	if (stat(leading_path.c_str(), &fs) == 0)
-	    return S_ISDIR(fs.st_mode);
+	{
+	    if (!S_ISDIR(fs.st_mode))
+	    {
+		y2err("not a directory path:" << leading_path);
+		return false;
+	    }
+
+	    return true;
+	}
 
 	if (!createParentDirectories(leading_path))
 	    return false;
 
-	return mkdir(leading_path.c_str(), 0777) == 0;
+	if (mkdir(leading_path.c_str(), 0777) != 0)
+	{
+	    y2err("mkdir failed path:" << leading_path << " errno:" << errno);
+	    return false;
+	}
+
+	return true;
+    }
+
+
+    bool
+    File::createDirectory(mode_t mode, uid_t owner, gid_t group) const
+    {
+	if (mkdir(getAbsolutePath(LOC_SYSTEM).c_str(), 0) != 0)
+	{
+	    if (errno == EEXIST && !checkDir(getAbsolutePath(LOC_SYSTEM)))
+	    {
+		y2err("mkdir failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+		return false;
+	    }
+	}
+
+	if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), mode) != 0)
+	{
+	    y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+	    return false;
+	}
+
+	if (chown(getAbsolutePath(LOC_SYSTEM).c_str(), owner, group) != 0)
+	{
+	    y2err("chown failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+	    return false;
+	}
+
+	return true;
+    }
+
+
+    bool
+    File::createFile(mode_t mode, uid_t owner, gid_t group) const
+    {
+	// TODO: use clonefile
+	SystemCmd cmd(CPBIN " --preserve=mode,ownership " +
+		      getAbsolutePath(LOC_PRE) + " " + getAbsolutePath(LOC_SYSTEM));
+	return cmd.retcode() == 0;
+    }
+
+
+    bool
+    File::createLink(uid_t owner, gid_t group) const
+    {
+	string tmp;
+	readlink(getAbsolutePath(LOC_PRE), tmp);
+
+	if (symlink(tmp, getAbsolutePath(LOC_SYSTEM)) != 0)
+	{
+	    y2err("symlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+		  " errno:" << errno);
+	    return false;
+	}
+
+	if (lchown(getAbsolutePath(LOC_SYSTEM).c_str(), owner, group) != 0)
+	{
+	    y2err("lchown failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+	    return false;
+	}
+
+	return true;
     }
 
 
@@ -458,46 +533,28 @@ namespace snapper
 		y2err("lstat failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
 		error = true;
 	    }
+	    else if (!createParentDirectories(getAbsolutePath(LOC_SYSTEM)))
+	    {
+		error = true;
+	    }
 	    else
 	    {
-		if (!createParentDirectories(getAbsolutePath(LOC_SYSTEM)))
+		switch (fs.st_mode & S_IFMT)
 		{
-		    y2err("createParentDirectories failed path:" << getAbsolutePath(LOC_SYSTEM));
-		    error = true;
-		}
-		else
-		{
-		    switch (fs.st_mode & S_IFMT)
-		    {
-			case S_IFDIR: {
-			    if (mkdir(getAbsolutePath(LOC_SYSTEM).c_str(), 0) != 0)
-			    {
-				y2err("mkdir failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-				      " errno:" << errno);
-				error = true;
-			    }
-			    chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode);
-			    chown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid);
-			} break;
+		    case S_IFDIR: {
+			if (!createDirectory(fs.st_mode, fs.st_uid, fs.st_gid))
+			    error = true;
+		    } break;
 
-			case S_IFREG: {
-			    // TODO: use clonefile
-			    SystemCmd cmd(CPBIN " --preserve=mode,ownership " +
-					  getAbsolutePath(LOC_PRE) + " " + getAbsolutePath(LOC_SYSTEM));
-			} break;
+		    case S_IFREG: {
+			if (!createFile(fs.st_mode, fs.st_uid, fs.st_gid))
+			    error = true;
+		    } break;
 
-			case S_IFLNK: {
-			    string tmp;
-			    readlink(getAbsolutePath(LOC_PRE), tmp);
-			    if (symlink(tmp, getAbsolutePath(LOC_SYSTEM)) != 0)
-			    {
-				y2err("symlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-				      " errno:" << errno);
-				error = true;
-			    }
-			    lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid);
-			} break;
-		    }
+		    case S_IFLNK: {
+			if (!createLink(fs.st_uid, fs.st_gid))
+			    error = true;
+		    } break;
 		}
 	    }
 	}
@@ -510,58 +567,47 @@ namespace snapper
 		y2err("lstat failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
 		error = true;
 	    }
+	    else if (!createParentDirectories(getAbsolutePath(LOC_SYSTEM)))
+	    {
+		error = true;
+	    }
 	    else
 	    {
-		if (!createParentDirectories(getAbsolutePath(LOC_SYSTEM)))
+		if (getPreToPostStatus() & CONTENT)
 		{
-		    y2err("createParentDirectories failed path:" << getAbsolutePath(LOC_SYSTEM));
-		    error = true;
+		    switch (fs.st_mode & S_IFMT)
+		    {
+			case S_IFREG: {
+			    unlink(getAbsolutePath(LOC_SYSTEM).c_str());
+			    if (!createFile(fs.st_mode, fs.st_uid, fs.st_gid))
+				error = true;
+			} break;
+
+			case S_IFLNK: {
+			    unlink(getAbsolutePath(LOC_SYSTEM).c_str());
+			    if (!createLink(fs.st_uid, fs.st_gid))
+				error = true;
+			} break;
+		    }
 		}
-		else
+
+		if (getPreToPostStatus() & PERMISSIONS)
 		{
-		    if (getPreToPostStatus() & CONTENT)
+		    if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode) != 0)
 		    {
-			switch (fs.st_mode & S_IFMT)
-			{
-			    case S_IFREG: {
-				// TODO: use clonefile
-				SystemCmd cmd(CPBIN " --preserve=mode,ownership " +
-					      getAbsolutePath(LOC_PRE) + " " + getAbsolutePath(LOC_SYSTEM));
-			    } break;
-
-			    case S_IFLNK: {
-				unlink(getAbsolutePath(LOC_SYSTEM).c_str());
-				string tmp;
-				readlink(getAbsolutePath(LOC_PRE), tmp);
-				if (symlink(tmp, getAbsolutePath(LOC_SYSTEM)) != 0)
-				{
-				    y2err("symlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-					  " errno:" << errno);
-				    error = true;
-				}
-				lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid);
-			    } break;
-			}
+			y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+			      " errno:" << errno);
+			error = true;
 		    }
+		}
 
-		    if (getPreToPostStatus() & PERMISSIONS)
+		if (getPreToPostStatus() & (USER | GROUP))
+		{
+		    if (lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid) != 0)
 		    {
-			if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode) != 0)
-			{
-			    y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-				  " errno:" << errno);
-			    error = true;
-			}
-		    }
-
-		    if (getPreToPostStatus() & (USER | GROUP))
-		    {
-			if (lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid) != 0)
-			{
-			    y2err("lchown failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-				  " errno:" << errno);
-			    error = true;
-			}
+			y2err("lchown failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+			      " errno:" << errno);
+			error = true;
 		    }
 		}
 	    }

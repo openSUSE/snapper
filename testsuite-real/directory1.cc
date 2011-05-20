@@ -26,7 +26,9 @@ main()
 
     rollback();
 
-    check_rollback_errors(1, 0, 0);
+    check_rollback_errors(0, 0, 0);
+
+    check_first();
 
     exit(EXIT_SUCCESS);
 }
