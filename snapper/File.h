@@ -106,6 +106,8 @@ namespace snapper
 
 	const Snapper* getSnapper() const;
 
+	bool createParentDirectories(const string& path) const;
+
 	const Comparison* comparison;
 
 	string name;

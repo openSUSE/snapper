@@ -26,7 +26,10 @@ run permissions2
 run owner1
 run owner2
 
+run missing-directory1
+
 run error1
 run error2
 run error3
+run error4
 
