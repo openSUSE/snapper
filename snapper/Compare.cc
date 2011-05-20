@@ -45,7 +45,7 @@ namespace snapper
     cmpFilesContentReg(const string& fullname1, struct stat stat1, const string& fullname2,
 		       struct stat stat2)
     {
-	if (stat1.st_mtime == stat2.st_mtime)
+	if (stat1.st_mtim.tv_sec == stat2.st_mtim.tv_sec && stat1.st_mtim.tv_nsec == stat2.st_mtim.tv_nsec)
 	    return true;
 
 	if (stat1.st_size != stat2.st_size)
@@ -125,7 +125,7 @@ namespace snapper
     cmpFilesContentLnk(const string& fullname1, struct stat stat1, const string& fullname2,
 		       struct stat stat2)
     {
-	if (stat1.st_mtime == stat2.st_mtime)
+	if (stat1.st_mtim.tv_sec == stat2.st_mtim.tv_sec && stat1.st_mtim.tv_nsec == stat2.st_mtim.tv_nsec)
 	    return true;
 
 	string tmp1;
