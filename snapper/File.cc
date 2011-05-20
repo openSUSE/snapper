@@ -533,7 +533,13 @@ namespace snapper
 				unlink(getAbsolutePath(LOC_SYSTEM).c_str());
 				string tmp;
 				readlink(getAbsolutePath(LOC_PRE), tmp);
-				symlink(tmp, getAbsolutePath(LOC_SYSTEM));
+				if (symlink(tmp, getAbsolutePath(LOC_SYSTEM)) != 0)
+				{
+				    y2err("symlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+					  " errno:" << errno);
+				    error = true;
+				}
+				lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid);
 			    } break;
 			}
 		    }

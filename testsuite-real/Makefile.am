@@ -10,7 +10,7 @@ LDADD = ../snapper/libsnapper.la
 
 noinst_SCRIPTS = run-all
 
-noinst_PROGRAMS = simple1 permissions1 permissions2 owner1 owner2	\
+noinst_PROGRAMS = simple1 permissions1 permissions2 owner1 owner2 owner3	\
 	missing-directory1 error1 error2 error3 error4
 
 simple1_SOURCES = simple1.cc common.h common.cc
@@ -20,6 +20,7 @@ permissions2_SOURCES = permissions2.cc common.h common.cc
 
 owner1_SOURCES = owner1.cc common.h common.cc
 owner2_SOURCES = owner2.cc common.h common.cc
+owner3_SOURCES = owner3.cc common.h common.cc
 
 missing_directory1_SOURCES = missing-directory1.cc common.h common.cc
 

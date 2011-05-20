@@ -25,6 +25,7 @@ run permissions2
 
 run owner1
 run owner2
+run owner3
 
 run missing-directory1
 
