@@ -24,6 +24,8 @@
 #define FILE_H
 
 
+#include <sys/stat.h>
+
 #include <string>
 #include <vector>
 
@@ -108,11 +110,14 @@ namespace snapper
 
 	bool createParentDirectories(const string& path) const;
 
+	bool createAllTypes() const;
 	bool createDirectory(mode_t mode, uid_t owner, gid_t group) const;
 	bool createFile(mode_t mode, uid_t owner, gid_t group) const;
 	bool createLink(uid_t owner, gid_t group) const;
 
 	bool deleteAllTypes() const;
+
+	bool modifyAllTypes() const;
 
 	const Comparison* comparison;
 

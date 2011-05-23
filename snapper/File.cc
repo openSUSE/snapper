@@ -408,6 +408,44 @@ namespace snapper
 
 
     bool
+    File::createAllTypes() const
+    {
+	struct stat fs;
+	if (lstat(getAbsolutePath(LOC_PRE).c_str(), &fs) != 0)
+	{
+	    y2err("lstat failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+	    return false;
+	}
+	else if (!createParentDirectories(getAbsolutePath(LOC_SYSTEM)))
+	{
+	    return false;
+	}
+	else
+	{
+	    switch (fs.st_mode & S_IFMT)
+	    {
+		case S_IFDIR: {
+		    if (!createDirectory(fs.st_mode, fs.st_uid, fs.st_gid))
+			return false;
+		} break;
+
+		case S_IFREG: {
+		    if (!createFile(fs.st_mode, fs.st_uid, fs.st_gid))
+			return false;
+		} break;
+
+		case S_IFLNK: {
+		    if (!createLink(fs.st_uid, fs.st_gid))
+			return false;
+		} break;
+	    }
+	}
+
+	return true;
+    }
+
+
+    bool
     File::createDirectory(mode_t mode, uid_t owner, gid_t group) const
     {
 	if (mkdir(getAbsolutePath(LOC_SYSTEM).c_str(), 0) != 0)
@@ -502,6 +540,66 @@ namespace snapper
 
 
     bool
+    File::modifyAllTypes() const
+    {
+	struct stat fs;
+	if (lstat(getAbsolutePath(LOC_PRE).c_str(), &fs) != 0)
+	{
+	    y2err("lstat failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+	    return false;
+	}
+	else if (!createParentDirectories(getAbsolutePath(LOC_SYSTEM)))
+	{
+	    return false;
+	}
+	else
+	{
+	    if (getPreToPostStatus() & CONTENT)
+	    {
+		switch (fs.st_mode & S_IFMT)
+		{
+		    case S_IFREG: {
+			if (!deleteAllTypes())
+			    return false;
+			else if (!createFile(fs.st_mode, fs.st_uid, fs.st_gid))
+			    return false;
+		    } break;
+
+		    case S_IFLNK: {
+			if (!deleteAllTypes())
+			    return false;
+			else if (!createLink(fs.st_uid, fs.st_gid))
+			    return false;
+		    } break;
+		}
+	    }
+
+	    if (getPreToPostStatus() & PERMISSIONS)
+	    {
+		if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode) != 0)
+		{
+		    y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+			  " errno:" << errno);
+		    return false;
+		}
+	    }
+
+	    if (getPreToPostStatus() & (USER | GROUP))
+	    {
+		if (lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid) != 0)
+		{
+		    y2err("lchown failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+			  " errno:" << errno);
+		    return false;
+		}
+	    }
+	}
+
+	return true;
+    }
+
+
+    bool
     File::doRollback()
     {
 	if (getSnapper()->getRollbackCallback())
@@ -524,92 +622,14 @@ namespace snapper
 
 	if (getPreToPostStatus() & DELETED || getPreToPostStatus() & TYPE)
 	{
-	    struct stat fs;
-	    if (lstat(getAbsolutePath(LOC_PRE).c_str(), &fs) != 0)
-	    {
-		y2err("lstat failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+	    if (!createAllTypes())
 		error = true;
-	    }
-	    else if (!createParentDirectories(getAbsolutePath(LOC_SYSTEM)))
-	    {
-		error = true;
-	    }
-	    else
-	    {
-		switch (fs.st_mode & S_IFMT)
-		{
-		    case S_IFDIR: {
-			if (!createDirectory(fs.st_mode, fs.st_uid, fs.st_gid))
-			    error = true;
-		    } break;
-
-		    case S_IFREG: {
-			if (!createFile(fs.st_mode, fs.st_uid, fs.st_gid))
-			    error = true;
-		    } break;
-
-		    case S_IFLNK: {
-			if (!createLink(fs.st_uid, fs.st_gid))
-			    error = true;
-		    } break;
-		}
-	    }
 	}
 
 	if (getPreToPostStatus() & (CONTENT | PERMISSIONS | USER | GROUP))
 	{
-	    struct stat fs;
-	    if (lstat(getAbsolutePath(LOC_PRE).c_str(), &fs) != 0)
-	    {
-		y2err("lstat failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+	    if (!modifyAllTypes())
 		error = true;
-	    }
-	    else if (!createParentDirectories(getAbsolutePath(LOC_SYSTEM)))
-	    {
-		error = true;
-	    }
-	    else
-	    {
-		if (getPreToPostStatus() & CONTENT)
-		{
-		    switch (fs.st_mode & S_IFMT)
-		    {
-			case S_IFREG: {
-			    if (!deleteAllTypes())
-				error = true;
-			    else if (!createFile(fs.st_mode, fs.st_uid, fs.st_gid))
-				error = true;
-			} break;
-
-			case S_IFLNK: {
-			    if (!deleteAllTypes())
-				error = true;
-			    else if (!createLink(fs.st_uid, fs.st_gid))
-				error = true;
-			} break;
-		    }
-		}
-
-		if (getPreToPostStatus() & PERMISSIONS)
-		{
-		    if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode) != 0)
-		    {
-			y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-			      " errno:" << errno);
-			error = true;
-		    }
-		}
-
-		if (getPreToPostStatus() & (USER | GROUP))
-		{
-		    if (lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid) != 0)
-		    {
-			y2err("lchown failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-			      " errno:" << errno);
-			error = true;
-		    }
-		}
-	    }
 	}
 
 	if (error && getSnapper()->getRollbackCallback())
