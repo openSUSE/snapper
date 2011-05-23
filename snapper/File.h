@@ -112,6 +112,8 @@ namespace snapper
 	bool createFile(mode_t mode, uid_t owner, gid_t group) const;
 	bool createLink(uid_t owner, gid_t group) const;
 
+	bool deleteAllTypes() const;
+
 	const Comparison* comparison;
 
 	string name;

@@ -469,6 +469,39 @@ namespace snapper
 
 
     bool
+    File::deleteAllTypes() const
+    {
+	struct stat fs;
+	if (lstat(getAbsolutePath(LOC_POST).c_str(), &fs) == 0)
+	{
+	    switch (fs.st_mode & S_IFMT)
+	    {
+		case S_IFDIR: {
+		    if (rmdir(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
+		    {
+			y2err("rmdir failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+			      " errno:" << errno);
+			return false;
+		    }
+		} break;
+
+		case S_IFREG:
+		case S_IFLNK: {
+		    if (unlink(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
+		    {
+			y2err("unlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+			      " errno:" << errno);
+			return false;
+		    }
+		} break;
+	    }
+	}
+
+	return true;
+    }
+
+
+    bool
     File::doRollback()
     {
 	if (getSnapper()->getRollbackCallback())
@@ -485,44 +518,8 @@ namespace snapper
 
 	if (getPreToPostStatus() & CREATED || getPreToPostStatus() & TYPE)
 	{
-	    struct stat fs;
-	    if (lstat(getAbsolutePath(LOC_POST).c_str(), &fs) != 0)
-	    {
-		y2err("lstat failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+	    if (!deleteAllTypes())
 		error = true;
-	    }
-	    else
-	    {
-		switch (fs.st_mode & S_IFMT)
-		{
-		    case S_IFDIR: {
-			if (rmdir(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
-			{
-			    y2err("rmdir failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-				  " errno:" << errno);
-			    error = true;
-			}
-		    } break;
-
-		    case S_IFREG: {
-			if (unlink(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
-			{
-			    y2err("unlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-				  " errno:" << errno);
-			    error = true;
-			}
-		    } break;
-
-		    case S_IFLNK: {
-			if (unlink(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
-			{
-			    y2err("unlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-				  " errno:" << errno);
-			    error = true;
-			}
-		    } break;
-		}
-	    }
 	}
 
 	if (getPreToPostStatus() & DELETED || getPreToPostStatus() & TYPE)
@@ -578,14 +575,16 @@ namespace snapper
 		    switch (fs.st_mode & S_IFMT)
 		    {
 			case S_IFREG: {
-			    unlink(getAbsolutePath(LOC_SYSTEM).c_str());
-			    if (!createFile(fs.st_mode, fs.st_uid, fs.st_gid))
+			    if (!deleteAllTypes())
+				error = true;
+			    else if (!createFile(fs.st_mode, fs.st_uid, fs.st_gid))
 				error = true;
 			} break;
 
 			case S_IFLNK: {
-			    unlink(getAbsolutePath(LOC_SYSTEM).c_str());
-			    if (!createLink(fs.st_uid, fs.st_gid))
+			    if (!deleteAllTypes())
+				error = true;
+			    else if (!createLink(fs.st_uid, fs.st_gid))
 				error = true;
 			} break;
 		    }
