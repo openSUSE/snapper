@@ -43,8 +43,6 @@ import "Report";
 // global list of all snapshot
 global list<map> snapshots	= [];
 
-global string snapshots_path	= "/snapshots";
-
 global map selected_snapshot	= $[];
 
 // mapping of snapshot number to index in snapshots list
@@ -70,15 +68,28 @@ global map<string, map> ReadModifiedFilesMap (integer from, integer to) {
 }
 
 /**
+ * Return the path to given snapshot
+ */
+global string GetSnapshotPath (integer snapshot_num) {
+    string ret	= (string) SCR::Read (.snapper.path, $[ "num" : snapshot_num ]);
+    if (ret == nil)
+    {
+	ret	= "";
+	// popup error
+	Report::Error (sformat (_("Snapshot '%1' was not found."), snapshot_num));
+    }
+    return ret;
+}
+
+/**
  * Describe what was done with given file between given snapshots
  * - when new is 0, meaning is 'current system'
  */
 global map GetFileModification (string file, integer old, integer new) {
 
     map ret	= $[];
-
-    string file1	= sformat ("%1/%2/snapshot%3", snapshots_path, old, file);
-    string file2	= sformat ("%1/%2/snapshot%3", snapshots_path, new, file);
+    string file1	= sformat ("%1%2", GetSnapshotPath (old), file);
+    string file2	= sformat ("%1%2", GetSnapshotPath (new), file);
     if (new == 0)
 	file2	= file;
 
@@ -270,7 +281,7 @@ global boolean RestoreFiles (integer snapshot_num, list<string> files) {
 
 	UI::ChangeWidget (`id (`progress ), `Value, progress);
 
-	string orig	= sformat ("%1/%2/snapshot", snapshots_path, snapshot_num) + file;
+	string orig	= GetSnapshotPath (snapshot_num) + file;
 
 	string dir	= substring (file, 0, findlastof (file, "/"));
 	if (!FileUtils::Exists (orig))

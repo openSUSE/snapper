@@ -148,13 +148,28 @@ YCPValue SnapperAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPV
     if (path->length() == 1) {
 
 	/**
-	 * error: Read (.snapper.error) -> returns last error message
+	 * Read (.snapper.error) -> returns last error message
 	 */
 	if (PC(0) == "error") {
 	    YCPMap retmap;
 	    retmap->add (YCPString ("type"), YCPString (snapper_error));
 	    return retmap;
 	}
+	/**
+	 * Read (.snapper.path, $[ "num" : num]) -> returns the path to directory with given snapshot
+	 */
+	if (PC(0) == "path") {
+	    unsigned int num    = getIntValue (argmap, "num", 0);
+	    const Snapshots& snapshots = sh->getSnapshots();
+	    Snapshots::const_iterator snap = snapshots.find(num);
+	    if (snap == snapshots.end())
+	    {
+		y2error ("snapshot '%d' not found", num);
+		return ret;
+	    }
+	    return YCPString (snap->snapshotDir());
+	}
+
 	/**
 	 * Read(.snapper.snapshots) -> return list of snapshot description maps
 	 */
