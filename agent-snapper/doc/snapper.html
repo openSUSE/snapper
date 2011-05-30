@@ -56,6 +56,21 @@ The initialization call of Execute (.snapper) must be done before any other call
 	</td>
 	</tr>
 
+	<tr><td><tt>.snapper.path</td><td>YCPMap</td><td align="left">YCPMap</td>
+	<td>Return the path to directory with given snapshot<br>
+	<b>Example of argument map</b>:
+	    <pre>
+	    $[
+		"num" 	: 1,
+	    $]
+	    </pre>
+	<b>Example of result</b>:
+	<pre>
+	    "/snapshots/1/snapshot"
+	</pre>
+	</td>
+	</tr>
+
 	<tr><td><tt>.snapper.snapshots</td><td>(none)</td><td align="left">YCPList</td>
 	<td>Return list of current snapshot maps.<br>
 	<b>Example of result</b>:

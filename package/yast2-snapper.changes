@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon May 30 14:55:11 CEST 2011 - jsuchome@suse.cz
+
+- ask snapper library for snapshot paths
+- 2.21.6 
+
+-------------------------------------------------------------------
 Wed May 11 10:41:42 CEST 2011 - jsuchome@suse.cz
 
 - added initialization code to agent, check for exceptions
