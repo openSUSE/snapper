@@ -190,10 +190,14 @@ AsciiFile::save()
     SysconfigFile::getValue(const string& key, vector<string>& values) const
     {
 	string tmp;
-	if (!getValue("SNAPPER_CONFIGS", tmp))
+	if (!getValue(key, tmp))
 	    return false;
 
-	boost::split(values, tmp, boost::is_any_of(" \t"));
+	values.clear();
+
+	if (!tmp.empty())
+	    boost::split(values, tmp, boost::is_any_of(" \t"), boost::token_compress_on);
+
 	return true;
     }
 
