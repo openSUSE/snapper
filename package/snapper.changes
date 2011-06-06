@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Jun 06 15:01:13 CEST 2011 - aschnell@suse.de
+
+- place snapshots in .snapshots directory
+- version 0.0.6
+
+-------------------------------------------------------------------
 Wed Apr 06 16:44:43 CEST 2011 - aschnell@suse.de
 
 - simplified setup

@@ -11,6 +11,7 @@
 #include <snapper/Snapshot.h>
 #include <snapper/Comparison.h>
 #include <snapper/File.h>
+#include <snapper/SnapperDefines.h>
 
 #include "snapper/AppUtil.h"
 
@@ -59,7 +60,7 @@ RollbackCallbackImpl rollback_callback_impl;
 void
 setup()
 {
-    system("/usr/bin/find " SUBVOLUME " -mindepth 1 -maxdepth 1 -not -path " SUBVOLUME "/snapshots "
+    system("/usr/bin/find " SUBVOLUME " -mindepth 1 -maxdepth 1 -not -path " SUBVOLUME SNAPSHOTSDIR " "
 	   "-exec rm -r {} \\;");
 
     initDefaultLogger();

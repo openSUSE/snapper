@@ -32,7 +32,7 @@
 #define FILTERSDIR "/etc/snapper/filters"
 
 #define SNAPSHOTDIR "/snapshot"
-#define SNAPSHOTSDIR "/snapshots"
+#define SNAPSHOTSDIR "/.snapshots"
 
 #define BTRFSBIN "/sbin/btrfs"
 
