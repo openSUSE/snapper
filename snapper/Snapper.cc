@@ -594,7 +594,7 @@ namespace snapper
 	    throw AddConfigFailedException("modifying config failed");
 	}
 
-	SystemCmd cmd2(BTRFSBIN " subvolume create " + subvolume + "/snapshots");
+	SystemCmd cmd2(BTRFSBIN " subvolume create " + subvolume + SNAPSHOTSDIR);
 	if (cmd2.retcode() != 0)
 	{
 	    throw AddConfigFailedException("creating snapshot failed");
