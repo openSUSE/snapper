@@ -15,6 +15,7 @@ BuildRequires:	gcc-c++ boost-devel blocxx-devel doxygen dejagnu libxml2-devel
 Requires:	libsnapper@LIBVERSION_MAJOR@ = %version
 Recommends:	cron logrotate
 Summary:	Tool for filesystem snapshot management
+Url:		http://en.opensuse.org/Portal:Snapper
 
 %description
 This package contains snapper, a tool for filesystem snapshot management.
