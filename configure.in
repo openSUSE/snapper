@@ -48,6 +48,7 @@ AC_OUTPUT(
 	tools/utils/Makefile
 	scripts/Makefile
 	data/Makefile
+	doc/Makefile
 	po/Makefile
 	testsuite-real/Makefile
 	package/snapper.spec:snapper.spec.in

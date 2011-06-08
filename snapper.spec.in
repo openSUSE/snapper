@@ -51,6 +51,7 @@ rm -rf "$RPM_BUILD_ROOT"
 %files -f snapper.lang
 %defattr(-,root,root)
 %{prefix}/bin/snapper
+%doc %{_mandir}/*/*
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
 /etc/cron.hourly/suse.de-snapper
 /etc/cron.daily/suse.de-snapper

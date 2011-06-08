@@ -1,0 +1,144 @@
+.TH "snapper" "8" "0.0.6" "snapper" "System Tools"
+.SH "NAME"
+.LP
+snapper - Command\-line program
+
+.SH "SYNTAX"
+.LP
+snapper [\fI\-\-global\-opts\fR] <\fBcommand\fR> [\fI\-\-command\-opts\fR] [\fBcommand-arguments\fR]
+
+snapper \fBhelp\fR
+.SH "DESCRIPTION"
+.LP
+snapper is a command\-line interface to ZYpp system management library.
+It can be used to install, update, remove software, manage repositories, perform
+various queries, and more.
+
+.SH "COMMANDS"
+.LP
+snapper provides a number of \fBcommands\fR. Each command accepts the options
+listed in the GLOBAL OPTIONS section. These options must be specified
+\fIbefore\fR the command name. In addition, many commands have specific
+options, which are listed in this section. These command-specific options must
+be specified \fIafter\fR the name of the command and \fIbefore\fR any
+of the command arguments.
+
+.TP
+.B help
+Shows help texts.
+
+.TP
+.B list-configs
+List
+
+.TP
+.B create-config [options] <name>
+Displays detailed informaion about the specified packages.
+
+.TP
+\fI\-t, \-\-template\fR name
+Work only with the repository specified by the alias, name, number or URI. This
+option can be used multiple times.
+
+.TP
+.B list [options]
+List
+.TP
+\fI\-t, \-\-type\fR type
+Type
+
+.TP
+.B create [options]
+Create
+.TP
+\fI\-t, \-\-type\fR type
+Type
+.TP
+\fI\-t, \-\-pre\-number\fR type
+Type
+.TP
+\fI\-d, \-\-description\fR description
+Description
+.TP
+\fI\-d, \-\-print\-number\fR description
+Description
+.TP
+\fI\-d, \-\-cleanup\-algorithm\fR description
+Description
+
+.TP
+.B modify [options] <number>
+Modify
+.TP
+\fI\-d, \-\-description\fR description
+Description
+
+.TP
+.B delete <number>
+Delete
+
+.TP
+.B diff [options] <number1> <number2>
+Diff
+.TP
+\fI\-o, \-\-output\fR description
+Output
+.TP
+\fI\-f, \-\-file\fR file
+Diff file
+
+.TP
+.B rollback [options] <number1> <number2>
+Rollback
+.TP
+\fI\-f, \-\-file\fR file
+Files
+
+.TP
+.B cleanup <cleanup-algorithm>
+Cleanup
+
+.SH "GLOBAL OPTIONS"
+
+.TP
+.I \-q, \-\-quiet
+Suppress normal output. Brief (esp. result notification) messages and error
+messages will still be printed, though. If used together with conflicting
+--verbose option, the --verbose option takes preference.
+.TP
+.I \-v, \-\-verbose
+Increase verbosity. For debugging output specify this option twice.
+.TP
+.I \-t, \-\-table\-style
+Specifies table style to use. Table style is identified by an integer number. TODO
+.TP
+.I \-c, \-\-config <name>
+Use specified config file instead of the default files.
+Other command line options specified together with --config and having
+their counterpart in the config file are still prefered.
+
+.SH "FILES"
+.TP
+.B /etc/sysconfig/snapper
+Global
+.TP
+.B /etc/snapper/configs
+Directory containing
+.TP
+.B /etc/snapper/config-templates
+Directory containing
+.TP
+.B /etc/snapper/filters
+Directory containing 
+
+.SH "HOMEPAGE"
+
+http://en.opensuse.org/Portal:Snapper
+
+.SH "AUTHORS"
+.LP
+Arvin Schnell <aschnell@suse.de>
+
+.SH "SEE ALSO"
+.LP
+btrfs(8)
