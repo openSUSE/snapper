@@ -60,6 +60,28 @@ monthly and yearly snapshots.
 .LP
 \fBempty\-pre\-post\fR - Deletes pre/post pairs with empty diffs.
 
+.SH "GLOBAL OPTIONS"
+
+.TP
+.I \-q, \-\-quiet
+Suppress normal output. Brief (esp. result notification) messages and error
+messages will still be printed, though. If used together with conflicting
+--verbose option, the --verbose option takes preference.
+.TP
+.I \-v, \-\-verbose
+Increase verbosity. For debugging output specify this option twice.
+.TP
+.I \-t, \-\-table\-style
+Specifies table style to use. Table style is identified by an integer number. TODO
+.TP
+.I \-c, \-\-config <name>
+Use specified config file instead of the default files.
+Other command line options specified together with --config and having
+their counterpart in the config file are still prefered.
+.TP
+.I \-\-version
+Print version and exit.
+
 .SH "COMMANDS"
 .LP
 snapper provides a number of \fBcommands\fR. Each command accepts the options
@@ -145,25 +167,6 @@ Read the files to rollback from the file <file>.
 Run the cleanup algorithm <cleanup-algorithm>. Currently implemented cleanup
 algorithms are number, timeline and empty-pre-post.
 
-.SH "GLOBAL OPTIONS"
-
-.TP
-.I \-q, \-\-quiet
-Suppress normal output. Brief (esp. result notification) messages and error
-messages will still be printed, though. If used together with conflicting
---verbose option, the --verbose option takes preference.
-.TP
-.I \-v, \-\-verbose
-Increase verbosity. For debugging output specify this option twice.
-.TP
-.I \-t, \-\-table\-style
-Specifies table style to use. Table style is identified by an integer number. TODO
-.TP
-.I \-c, \-\-config <name>
-Use specified config file instead of the default files.
-Other command line options specified together with --config and having
-their counterpart in the config file are still prefered.
-
 .SH "FILES"
 .TP
 .B /etc/sysconfig/snapper
@@ -176,7 +179,7 @@ Directory containing
 Directory containing
 .TP
 .B /etc/snapper/filters
-Directory containing 
+Directory containing
 
 .SH "HOMEPAGE"
 

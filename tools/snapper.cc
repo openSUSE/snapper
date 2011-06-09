@@ -3,6 +3,7 @@
 #include <string.h>
 #include <iostream>
 
+#include "config.h"
 #include <snapper/Factory.h>
 #include <snapper/Snapper.h>
 #include <snapper/Snapshot.h>
@@ -681,6 +682,7 @@ command_help()
 	 << _("\t--verbose, -v\t\t\tIncrease verbosity.") << endl
 	 << _("\t--table-style, -t <style>\tTable style (integer).") << endl
 	 << _("\t--config, -c <name>\t\tSet name of config to use.") << endl
+	 << _("\t--version\t\t\tPrint version and exit.") << endl
 	 << endl;
 
     help_list_configs();
@@ -750,27 +752,13 @@ main(int argc, char** argv)
 	{ "verbose",		no_argument,		0,	'v' },
 	{ "table-style",	required_argument,	0,	't' },
 	{ "config",		required_argument,	0,	'c' },
+	{ "version",		no_argument,		0,	0 },
 	{ 0, 0, 0, 0 }
     };
 
     getopts.init(argc, argv);
 
     GetOpts::parsed_opts opts = getopts.parse(options);
-    if (!getopts.hasArgs())
-    {
-	cerr << _("No command provided.") << endl
-	     << _("Try 'snapper help' for more information.") << endl;
-	exit(EXIT_FAILURE);
-    }
-
-    const char* command = getopts.popArg();
-    map<string, cmd_fnc>::const_iterator cmd = cmds.find(command);
-    if (cmd == cmds.end())
-    {
-	cerr << sformat(_("Unknown command '%s'."), command) << endl
-	     << _("Try 'snapper help' for more information.") << endl;
-	exit(EXIT_FAILURE);
-    }
 
     GetOpts::parsed_opts::const_iterator opt;
 
@@ -795,6 +783,28 @@ main(int argc, char** argv)
 
     if ((opt = opts.find("config")) != opts.end())
 	config_name = opt->second;
+
+    if ((opt = opts.find("version")) != opts.end())
+    {
+	cout << "snapper " << VERSION << endl;
+	exit(EXIT_SUCCESS);
+    }
+
+    if (!getopts.hasArgs())
+    {
+	cerr << _("No command provided.") << endl
+	     << _("Try 'snapper help' for more information.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    const char* command = getopts.popArg();
+    map<string, cmd_fnc>::const_iterator cmd = cmds.find(command);
+    if (cmd == cmds.end())
+    {
+	cerr << sformat(_("Unknown command '%s'."), command) << endl
+	     << _("Try 'snapper help' for more information.") << endl;
+	exit(EXIT_FAILURE);
+    }
 
     if (cmd->first == "help" || cmd->first == "list-configs" || cmd->first == "create-config")
     {
