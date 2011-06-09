@@ -170,19 +170,19 @@ algorithms are number, timeline and empty-pre-post.
 .SH "FILES"
 .TP
 .B /etc/sysconfig/snapper
-Global
+Global configuration file.
 .TP
 .B /etc/snapper/configs
-Directory containing
+Directory containing configuration files.
 .TP
 .B /etc/snapper/config-templates
-Directory containing
+Directory containing configuration templates.
 .TP
 .B /etc/snapper/filters
-Directory containing
+Directory containing filter files.
 
 .SH "HOMEPAGE"
-
+.LP
 http://en.opensuse.org/Portal:Snapper
 
 .SH "AUTHORS"

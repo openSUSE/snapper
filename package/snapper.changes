@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Jun 09 17:52:41 CEST 2011 - aschnell@suse.de
+
+- added man-page
+
+-------------------------------------------------------------------
 Mon Jun 06 15:01:13 CEST 2011 - aschnell@suse.de
 
 - place snapshots in .snapshots directory
