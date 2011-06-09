@@ -12,8 +12,46 @@ snapper \fBhelp\fR
 
 .SH "DESCRIPTION"
 .LP
-snapper is a command\-line program for btrfs snapshot management. It can
+Snapper is a command\-line program for btrfs snapshot management. It can
 create, delete and compare snapshots and rollback changes between snapshots.
+
+.SH CONCEPTS
+
+.SS Configurations
+.LP
+Subvolume
+
+.SS Snapshots
+.LP
+Snapper distinguishes three types of snapshots.
+.LP
+\fBsingle\fR -
+.LP
+\fBpre\fR -
+.LP
+\fBpost\fR -
+
+.SS Automatic Snapshot Creation
+Next to manual snapshot creation snapshots are also created automatically.
+.LP
+\fBcron\-job\fR - A cron\-job creates hourly snapshots.
+.LP
+\fBcertain programs\fR - Certain programs like YaST and zypper create pre and
+post snapshots before and after they modify the system.
+
+.SS Cleanup Algorithms
+.LP
+Snapper provides several algorithms to cleanup old snapshots. The algorithms
+are executed in a daily cron\-job. This can be configured in the corresponding
+configurations files along with parameters for every algorithm.
+.LP
+\fBnumber\fR - Deletes the oldest snapshots when a certain number limit it
+reached.
+.LP
+\fBtimeline\fR - Deletes old snapshots but keeps a number of hourly, daily,
+monthly and yearly snapshots.
+.LP
+\fBempty\-pre\-post\fR - Deletes pre/post pairs with empty diffs.
 
 .SH "COMMANDS"
 .LP
