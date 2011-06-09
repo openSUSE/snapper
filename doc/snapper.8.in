@@ -65,8 +65,7 @@ monthly and yearly snapshots.
 .TP
 .I \-q, \-\-quiet
 Suppress normal output. Brief (esp. result notification) messages and error
-messages will still be printed, though. If used together with conflicting
---verbose option, the --verbose option takes preference.
+messages will still be printed, though.
 .TP
 .I \-v, \-\-verbose
 Increase verbosity. For debugging output specify this option twice.
@@ -75,9 +74,7 @@ Increase verbosity. For debugging output specify this option twice.
 Specifies table style to use. Table style is identified by an integer number. TODO
 .TP
 .I \-c, \-\-config <name>
-Use specified config file instead of the default files.
-Other command line options specified together with --config and having
-their counterpart in the config file are still prefered.
+Use specified configuration instead of the default.
 .TP
 .I \-\-version
 Print version and exit.
