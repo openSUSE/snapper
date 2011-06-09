@@ -19,17 +19,24 @@ create, delete and compare snapshots and rollback changes between snapshots.
 
 .SS Configurations
 .LP
-Subvolume
+For each btrfs subvolume that should be snapshotted by snapper a configuration
+file is required. The complete setup can be done with the create-config
+command.
 
 .SS Snapshots
 .LP
 Snapper distinguishes three types of snapshots.
 .LP
-\fBsingle\fR -
+\fBpre\fR - Pre snapshots should always have a corresponding post
+snapshot. The intention of pre/post pairs is to snapshot the filesystem before
+and after a change.
 .LP
-\fBpre\fR -
+\fBpost\fR - See pre type.
 .LP
-\fBpost\fR -
+\fBsingle\fR - These snapshots have no special relationship to other
+snapshots.
+.LP
+Note that btrfs\-wise all three types are the same.
 
 .SS Automatic Snapshot Creation
 Next to manual snapshot creation snapshots are also created automatically.
