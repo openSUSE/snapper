@@ -1,18 +1,19 @@
 .TH "snapper" "8" "0.0.6" "snapper" "System Tools"
 .SH "NAME"
 .LP
-snapper - Command\-line program
+snapper - Command\-line program for btrfs snapshot management
 
 .SH "SYNTAX"
 .LP
-snapper [\fI\-\-global\-opts\fR] <\fBcommand\fR> [\fI\-\-command\-opts\fR] [\fBcommand-arguments\fR]
+snapper [\fI\-\-global\-opts\fR] <\fBcommand\fR> [\fI\-\-command\-opts\fR]
+[\fBcommand-arguments\fR]
 
 snapper \fBhelp\fR
+
 .SH "DESCRIPTION"
 .LP
-snapper is a command\-line interface to ZYpp system management library.
-It can be used to install, update, remove software, manage repositories, perform
-various queries, and more.
+snapper is a command\-line program for btrfs snapshot management. It can
+create, delete and compare snapshots and rollback changes between snapshots.
 
 .SH "COMMANDS"
 .LP
@@ -20,83 +21,84 @@ snapper provides a number of \fBcommands\fR. Each command accepts the options
 listed in the GLOBAL OPTIONS section. These options must be specified
 \fIbefore\fR the command name. In addition, many commands have specific
 options, which are listed in this section. These command-specific options must
-be specified \fIafter\fR the name of the command and \fIbefore\fR any
-of the command arguments.
+be specified \fIafter\fR the name of the command and \fIbefore\fR any of the
+command arguments.
 
 .TP
 .B help
-Shows help texts.
+Shows short help texts.
 
 .TP
 .B list-configs
-List
+Lists available configurations.
 
 .TP
-.B create-config [options] <name>
-Displays detailed informaion about the specified packages.
-
+.B create-config [options] <subvolume>
+Creates a new configuration for a subvolume.
 .TP
-\fI\-t, \-\-template\fR name
-Work only with the repository specified by the alias, name, number or URI. This
-option can be used multiple times.
+\fI\-t, \-\-template\fR <name>
+Name of template for the new configuration file.
 
 .TP
 .B list [options]
-List
+Lists snapshots.
 .TP
-\fI\-t, \-\-type\fR type
-Type
+\fI\-t, \-\-type\fR <type>
+Selects type of snapshots to list. Possible values are all, single and pre-post.
 
 .TP
 .B create [options]
-Create
+Creates a new snapshot.
 .TP
-\fI\-t, \-\-type\fR type
-Type
+\fI\-t, \-\-type\fR <type>
+Specifies the type of the new snapshot. Possible values are single, pre and post.
 .TP
-\fI\-t, \-\-pre\-number\fR type
-Type
+\fI\-\-pre\-number\fR <number>
+For post snapshots the number of the pre snapshot must be provided.
 .TP
-\fI\-d, \-\-description\fR description
-Description
+\fI\-d, \-\-description\fR <description>
+Description for the snapshot.
 .TP
-\fI\-d, \-\-print\-number\fR description
-Description
+\fI\-p, \-\-print\-number\fR
+Print number of the created snapshot.
 .TP
-\fI\-d, \-\-cleanup\-algorithm\fR description
-Description
+\fI\-c, \-\-cleanup\-algorithm\fR <cleanup-algorithm>
+Sets the cleanup-algorithm for the snapshot.
 
 .TP
 .B modify [options] <number>
-Modify
+Modify a snapshot.
 .TP
-\fI\-d, \-\-description\fR description
-Description
+\fI\-d, \-\-description\fR <description>
+New description for snapshot.
 
 .TP
 .B delete <number>
-Delete
+Delete a snapshot.
 
 .TP
 .B diff [options] <number1> <number2>
-Diff
+Compare two snapshots. This will show a list of files and directories
+that have been created, modified or deleted in the time between the two
+snapshots have been made.
 .TP
-\fI\-o, \-\-output\fR description
-Output
+\fI\-o, \-\-output\fR <file>
+Write output to file <file>.
 .TP
-\fI\-f, \-\-file\fR file
-Diff file
+\fI\-f, \-\-file\fR <file>
+Compare the file <file> between the two snapshots.
 
 .TP
 .B rollback [options] <number1> <number2>
-Rollback
+Rollback changes between the two snapshots.
 .TP
-\fI\-f, \-\-file\fR file
-Files
+\fI\-f, \-\-file\fR <file>
+Read the files to rollback from the file <file>.
 
 .TP
 .B cleanup <cleanup-algorithm>
-Cleanup
+Run the cleanup algorithm <cleanup-algorithm>. Currently implemented cleanup
+algorithms are number, timeline and empty-pre-post.
 
 .SH "GLOBAL OPTIONS"
 
