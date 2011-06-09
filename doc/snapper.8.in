@@ -1,4 +1,4 @@
-.TH "snapper" "8" "0.0.6" "snapper" "System Tools"
+.TH "snapper" "8" @VERSION@ "snapper" "System Tools"
 .SH "NAME"
 .LP
 snapper - Command\-line program for btrfs snapshot management
