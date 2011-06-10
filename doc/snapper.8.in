@@ -28,8 +28,8 @@ command.
 Snapper distinguishes three types of snapshots.
 .LP
 \fBpre\fR - Pre snapshots should always have a corresponding post
-snapshot. The intention of pre/post pairs is to snapshot the filesystem before
-and after a change.
+snapshot. The intention of pre/post shotshot pairs is to snapshot the
+filesystem before and after a modification.
 .LP
 \fBpost\fR - See pre type.
 .LP
@@ -43,8 +43,8 @@ Next to manual snapshot creation snapshots are also created automatically.
 .LP
 \fBcron\-job\fR - A cron\-job creates hourly snapshots.
 .LP
-\fBcertain programs\fR - Certain programs like YaST and zypper create pre and
-post snapshots before and after they modify the system.
+\fBcertain programs\fR - Certain programs like YaST and zypper create pre/post
+snapshot pairs when modifying the system.
 
 .SS Cleanup Algorithms
 .LP
@@ -52,26 +52,25 @@ Snapper provides several algorithms to cleanup old snapshots. The algorithms
 are executed in a daily cron\-job. This can be configured in the corresponding
 configurations files along with parameters for every algorithm.
 .LP
-\fBnumber\fR - Deletes the oldest snapshots when a certain number limit it
+\fBnumber\fR - Deletes old snapshots when a certain number of snapshots is
 reached.
 .LP
 \fBtimeline\fR - Deletes old snapshots but keeps a number of hourly, daily,
 monthly and yearly snapshots.
 .LP
-\fBempty\-pre\-post\fR - Deletes pre/post pairs with empty diffs.
+\fBempty\-pre\-post\fR - Deletes pre/post snapshot pairs with empty diffs.
 
 .SH "GLOBAL OPTIONS"
 
 .TP
 .I \-q, \-\-quiet
-Suppress normal output. Brief (esp. result notification) messages and error
-messages will still be printed, though.
+Suppress normal output. Error messages will still be printed, though.
 .TP
 .I \-v, \-\-verbose
-Increase verbosity. For debugging output specify this option twice.
+Increase verbosity.
 .TP
 .I \-t, \-\-table\-style
-Specifies table style to use. Table style is identified by an integer number. TODO
+Specifies table style to use. Table style is identified by an integer number.
 .TP
 .I \-c, \-\-config <name>
 Use specified configuration instead of the default.
@@ -90,29 +89,29 @@ command arguments.
 
 .TP
 .B help
-Shows short help texts.
+Show short help text.
 
 .TP
 .B list-configs
-Lists available configurations.
+List available configurations.
 
 .TP
 .B create-config [options] <subvolume>
-Creates a new configuration for a subvolume.
+Create a new configuration for a btrfs subvolume.
 .TP
 \fI\-t, \-\-template\fR <name>
 Name of template for the new configuration file.
 
 .TP
 .B list [options]
-Lists snapshots.
+List snapshots.
 .TP
 \fI\-t, \-\-type\fR <type>
 Selects type of snapshots to list. Possible values are all, single and pre-post.
 
 .TP
 .B create [options]
-Creates a new snapshot.
+Create a new snapshot.
 .TP
 \fI\-t, \-\-type\fR <type>
 Specifies the type of the new snapshot. Possible values are single, pre and post.
