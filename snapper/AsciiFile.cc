@@ -189,11 +189,13 @@ AsciiFile::save()
     bool
     SysconfigFile::getValue(const string& key, vector<string>& values) const
     {
+	values.clear();
+
 	string tmp;
 	if (!getValue(key, tmp))
 	    return false;
 
-	values.clear();
+	boost::trim(tmp, locale::classic());
 
 	if (!tmp.empty())
 	    boost::split(values, tmp, boost::is_any_of(" \t"), boost::token_compress_on);
