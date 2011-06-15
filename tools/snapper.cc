@@ -30,6 +30,7 @@ GetOpts getopts;
 bool quiet = false;
 bool verbose = false;
 string config_name = "root";
+bool disable_filters = false;
 
 Snapper* sh = NULL;
 
@@ -682,6 +683,7 @@ command_help()
 	 << _("\t--verbose, -v\t\t\tIncrease verbosity.") << endl
 	 << _("\t--table-style, -t <style>\tTable style (integer).") << endl
 	 << _("\t--config, -c <name>\t\tSet name of config to use.") << endl
+	 << _("\t--disable-filters\t\tDisable filters.") << endl
 	 << _("\t--version\t\t\tPrint version and exit.") << endl
 	 << endl;
 
@@ -752,6 +754,7 @@ main(int argc, char** argv)
 	{ "verbose",		no_argument,		0,	'v' },
 	{ "table-style",	required_argument,	0,	't' },
 	{ "config",		required_argument,	0,	'c' },
+	{ "disable-filters",	no_argument,		0,	0 },
 	{ "version",		no_argument,		0,	0 },
 	{ 0, 0, 0, 0 }
     };
@@ -784,6 +787,9 @@ main(int argc, char** argv)
     if ((opt = opts.find("config")) != opts.end())
 	config_name = opt->second;
 
+    if ((opt = opts.find("disable-filters")) != opts.end())
+	disable_filters = true;
+
     if ((opt = opts.find("version")) != opts.end())
     {
 	cout << "snapper " << VERSION << endl;
@@ -814,7 +820,7 @@ main(int argc, char** argv)
     {
 	try
 	{
-	    sh = createSnapper(config_name);
+	    sh = createSnapper(config_name, disable_filters);
 	}
 	catch (const ConfigNotFoundException& e)
 	{

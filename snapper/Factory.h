@@ -37,7 +37,7 @@ namespace snapper
 
     // Only one Snapper can be created at a time.
 
-    Snapper* createSnapper(const string& config_name = "root");
+    Snapper* createSnapper(const string& config_name = "root", bool disable_filters = false);
 
     void deleteSnapper(Snapper*);
 

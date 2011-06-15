@@ -105,7 +105,7 @@ namespace snapper
     {
     public:
 
-	Snapper(const string& config_name = "root");
+	Snapper(const string& config_name = "root", bool disable_filters = false);
 	~Snapper();
 
 	string subvolumeDir() const;

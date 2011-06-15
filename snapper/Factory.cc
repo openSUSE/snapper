@@ -22,6 +22,7 @@
 
 #include "auto_ptr.h"
 
+#include "snapper/Factory.h"
 #include "snapper/Snapper.h"
 #include "snapper/Exception.h"
 
@@ -33,12 +34,12 @@ namespace snapper
 
 
     Snapper*
-    createSnapper(const string& config_name)
+    createSnapper(const string& config_name, bool disable_filters)
     {
 	if (the_one.get())
 	    throw LogicErrorException();
 
-	the_one.reset(new Snapper(config_name));
+	the_one.reset(new Snapper(config_name, disable_filters));
 	return the_one.get();
     }
 
