@@ -345,22 +345,24 @@ namespace snapper
     string
     File::getAbsolutePath(Location loc) const
     {
+	string prefix;
+
 	switch (loc)
 	{
 	    case LOC_PRE:
-		return comparison->getSnapshot1()->snapshotDir() + name;
+		prefix = comparison->getSnapshot1()->snapshotDir();
+		break;
 
 	    case LOC_POST:
-		return comparison->getSnapshot2()->snapshotDir() + name;
+		prefix = comparison->getSnapshot2()->snapshotDir();
+		break;
 
 	    case LOC_SYSTEM:
-		if (getSnapper()->subvolumeDir() == "/")
-		    return name;
-		else
-		    return getSnapper()->subvolumeDir() + name;
+		prefix = getSnapper()->subvolumeDir();
+		break;
 	}
 
-	return "error";
+	return prefix == "/" ? name : prefix + name;
     }
 
 
