@@ -75,6 +75,9 @@ Specifies table style to use. Table style is identified by an integer number.
 .I \-c, \-\-config <name>
 Use specified configuration instead of the default.
 .TP
+.I \-\-disable\-filters
+Disable filters.
+.TP
 .I \-\-version
 Print version and exit.
 
