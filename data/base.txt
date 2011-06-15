@@ -1,4 +1,5 @@
-/etc/mtab
 /etc/adjtime
+/etc/mtab
+/var/lib/logrotate.status
 /var/lib/misc/random-seed
 /var/lib/ntp/drift/ntp.drift
