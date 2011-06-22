@@ -1,0 +1,17 @@
+{
+    // testedfiles: Snapper.ycp
+
+    import "Snapper";
+    import "Testsuite";
+
+    map READ	= $[
+	"snapper"	: $[
+	    "path"	: nil
+	]
+    ];
+    Testsuite::Test (``(Snapper::GetSnapshotPath (0)), [ READ, $[], $[] ], 0);
+
+    READ["snapper","path"]	= "/snapshots/0/snapshot";
+
+    Testsuite::Test (``(Snapper::GetSnapshotPath (0)), [ READ, $[], $[] ], 0);
+}

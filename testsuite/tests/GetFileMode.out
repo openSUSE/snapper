@@ -1,0 +1,4 @@
+Execute	.target.bash_output "/bin/stat --printf=%a /tmp/1" $["stdout":"755"]
+Return	755
+Execute	.target.bash_output "/bin/stat --printf=%a /tmp/2" $["stderr":"/bin/stat: cannot stat `/tmp/2': No such file or directory\n", "stdout":""]
+Return	644

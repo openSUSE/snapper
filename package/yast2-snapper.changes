@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Jun 22 12:58:17 CEST 2011 - jsuchome@suse.cz
+
+- added testsuite
+- 2.21.7 
+
+-------------------------------------------------------------------
 Mon May 30 14:55:11 CEST 2011 - jsuchome@suse.cz
 
 - ask snapper library for snapshot paths

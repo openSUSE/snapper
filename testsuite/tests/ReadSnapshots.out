@@ -1,0 +1,7 @@
+Read	.snapper.snapshots nil
+Return	true
+Return	[]
+Read	.snapper.snapshots [$["date":1297364138, "description":"current system", "num":0, "type":`SINGLE], $["date":1297364138, "description":"before yast2-users", "num":1, "post_num":2, "type":`PRE]]
+Return	true
+Return	[$["date":1297364138, "description":"before yast2-users", "name":"1", "num":1, "post_num":2, "type":`PRE]]
+Return	$[1:0]

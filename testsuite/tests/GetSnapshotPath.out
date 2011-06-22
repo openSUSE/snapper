@@ -1,0 +1,4 @@
+Read	.snapper.path $["num":0] nil
+Return	
+Read	.snapper.path $["num":0] "/snapshots/0/snapshot"
+Return	/snapshots/0/snapshot

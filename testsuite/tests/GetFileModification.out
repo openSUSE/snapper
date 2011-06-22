@@ -1,0 +1,13 @@
+Read	.snapper.path $["num":1] "/snapshots/1/snapshot"
+Execute	.target.bash_output "/usr/bin/diff -u /snapshots/1/snapshot/etc/passwd /etc/passwd" $["stderr":"error while diffing"]
+Log	out: $["stderr":"error while diffing"]
+Execute	.target.bash_output "ls -ld /snapshots/1/snapshot/etc/passwd /etc/passwd | cut -f 1,3,4 -d ' '" $["stderr":"error while diffing"]
+Return	$["diff":"error while diffing", "status":["no_change"]]
+Read	.snapper.path $["num":1] "/snapshots/1/snapshot"
+Read	.snapper.path $["num":2] "/snapshots/1/snapshot"
+Execute	.target.bash_output "/usr/bin/diff -u /snapshots/1/snapshot/etc/passwd /snapshots/1/snapshot/etc/passwd" $["stdout":"+new user line"]
+Execute	.target.bash_output "ls -ld /snapshots/1/snapshot/etc/passwd /snapshots/1/snapshot/etc/passwd | cut -f 1,3,4 -d ' '" $["stdout":"+new user line"]
+Return	$["diff":"+new user line", "group1":"line", "group2":"", "mode1":"+new", "mode2":"", "status":["diff", "mode", "user", "group"], "user1":"user", "user2":""]
+Read	.snapper.path $["num":1] "/snapshots/1/snapshot"
+Read	.snapper.path $["num":2] "/snapshots/1/snapshot"
+Return	$["status":["none"]]
