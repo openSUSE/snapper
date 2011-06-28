@@ -13,7 +13,7 @@ Source:		snapper-%{version}.tar.bz2
 Prefix:		/usr
 BuildRequires:	gcc-c++ boost-devel blocxx-devel doxygen dejagnu libxml2-devel
 Requires:	libsnapper@LIBVERSION_MAJOR@ = %version
-Recommends:	cron logrotate
+Recommends:	cron logrotate snapper-zypp-plugin
 Summary:	Tool for filesystem snapshot management
 Url:		http://en.opensuse.org/Portal:Snapper
 
@@ -113,3 +113,20 @@ Authors:
 %{_libdir}/libsnapper.la
 %{_libdir}/libsnapper.so
 %{prefix}/include/snapper
+
+%package -n snapper-zypp-plugin
+Requires:	snapper zypp-plugin-python > 0.2
+Summary:	Plugin for zypp for calling snapper
+Group:		System/Packages
+
+%description -n snapper-zypp-plugin
+This package contains a plugin for zypp that makes snapshots with snapper
+during commits.
+
+Authors:
+--------
+    Arvin Schnell <aschnell@suse.de>
+
+%files -n snapper-zypp-plugin
+%defattr(-,root,root)
+/usr/lib/zypp/plugins/commit/snapper.py

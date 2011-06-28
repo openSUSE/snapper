@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Jun 28 11:46:28 CEST 2011 - aschnell@suse.de
+
+- added snapper-zypp-plugin subpackage (fate #308626)
+
+-------------------------------------------------------------------
 Fri Jun 17 11:02:48 CEST 2011 - aschnell@suse.de
 
 - updated translations
