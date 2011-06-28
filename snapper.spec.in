@@ -12,6 +12,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 Source:		snapper-%{version}.tar.bz2
 Prefix:		/usr
 BuildRequires:	gcc-c++ boost-devel libblocxx-devel doxygen dejagnu libxml2-devel
+BuildRequires:	libzypp
 Requires:	libsnapper@LIBVERSION_MAJOR@ = %version
 Recommends:	cron logrotate snapper-zypp-plugin
 Summary:	Tool for filesystem snapshot management
