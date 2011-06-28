@@ -18,7 +18,6 @@ class MyPlugin(Plugin):
     Popen(args)
 
     self.ack()
-    sys.exit(0)
 
 plugin = MyPlugin()
 plugin.main()
