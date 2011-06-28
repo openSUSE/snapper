@@ -12,7 +12,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 Source:		snapper-%{version}.tar.bz2
 Prefix:		/usr
 BuildRequires:	gcc-c++ boost-devel libblocxx-devel doxygen dejagnu libxml2-devel
-BuildRequires:	libzypp
+BuildRequires:	libzypp(plugin:commit)
 Requires:	libsnapper@LIBVERSION_MAJOR@ = %version
 Recommends:	cron logrotate snapper-zypp-plugin
 Summary:	Tool for filesystem snapshot management
@@ -116,13 +116,13 @@ Authors:
 %{prefix}/include/snapper
 
 %package -n snapper-zypp-plugin
-Requires:	snapper zypp-plugin-python > 0.2
-Summary:	Plugin for zypp for calling snapper
+Requires:	snapper libzypp(plugin:commit) zypp-plugin-python
+Summary:	A zypp commit plugin for calling snapper
 Group:		System/Packages
 
 %description -n snapper-zypp-plugin
-This package contains a plugin for zypp that makes snapshots with snapper
-during commits.
+This package contains a plugin for zypp that makes filesystem snapshots with
+snapper during commits.
 
 Authors:
 --------
