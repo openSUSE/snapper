@@ -15,7 +15,8 @@ class MyPlugin(Plugin):
 
   def PLUGINEND(self, headers, body):
 
-    args = ["snapper", "create", "--type=post", "--pre-number=%s" % self.o]
+    args = ["snapper", "create", "--type=post", "--pre-number=%s" % self.o,
+            "--cleanup-algorithm=number"]
     Popen(args)
 
     self.ack()
