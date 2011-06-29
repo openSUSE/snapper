@@ -310,7 +310,7 @@ command_create()
 	{ "pre-number",		required_argument,	0,	0 },
 	{ "description",	required_argument,	0,	'd' },
 	{ "print-number",	no_argument,		0,	'p' },
-	{ "cleanup",		required_argument,	0,	'c' },
+	{ "cleanup-algorithm",	required_argument,	0,	'c' },
 	{ 0, 0, 0, 0 }
     };
 
