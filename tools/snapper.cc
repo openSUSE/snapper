@@ -347,7 +347,7 @@ command_create()
     if ((opt = opts.find("print-number")) != opts.end())
 	print_number = true;
 
-    if ((opt = opts.find("cleanup")) != opts.end())
+    if ((opt = opts.find("cleanup-algorithm")) != opts.end())
 	cleanup = opt->second;
 
     switch (type)
