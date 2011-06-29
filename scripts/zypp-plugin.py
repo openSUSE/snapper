@@ -7,7 +7,8 @@ class MyPlugin(Plugin):
 
   def PLUGINBEGIN(self, headers, body):
 
-    args = ["snapper", "create", "--type=pre", "--print-number", "--description=zypp"]
+    args = ["snapper", "create", "--type=pre", "--print-number",
+            "--cleanup-algorithm=number", "--description=zypp"]
     self.o = Popen(args, stdout=PIPE).communicate()[0].strip()
 
     self.ack()
