@@ -177,7 +177,7 @@ namespace snapper
 	bool invert = snapshot1->getNum() > snapshot2->getNum();
 
 	if (invert)
-	    swap(snapshot1, snapshot1);
+	    swap(snapshot1, snapshot2);
 
 	string dir1 = snapshot1->snapshotDir();
 	string dir2 = snapshot2->snapshotDir();
