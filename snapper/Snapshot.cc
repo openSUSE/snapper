@@ -280,7 +280,10 @@ namespace snapper
 	    ++num;
 
 	if (r != 0)
+	{
+	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
 	    throw IOErrorException();
+	}
 
 	return num;
     }
