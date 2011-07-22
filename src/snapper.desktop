@@ -17,9 +17,8 @@ X-SuSE-YaST-SortKey=
 X-SuSE-YaST-AutoInstResource=snapper
 
 Icon=yast-snapper
-Exec=/sbin/yast2 snapper 
+Exec=/usr/bin/xdg-su -c '/sbin/yast2 snapper'
 
 Name=Snapper
 GenericName=snapper
-X-KDE-SubstituteUID=true
 StartupNotify=true

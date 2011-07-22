@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Jul 22 15:52:51 CEST 2011 - locilka@suse.cz
+
+- Obsoleted X-KDE-SubstituteUID replaced with xdg-su in Exec in
+  desktop file (bnc#540627)
+
+-------------------------------------------------------------------
 Wed Jun 22 12:58:17 CEST 2011 - jsuchome@suse.cz
 
 - added testsuite
