@@ -121,6 +121,10 @@ namespace snapper
     void
     Ext4::deleteFilesystemSnapshot(unsigned int num) const
     {
+	SystemCmd cmd(CHSNAPBIN " -S " + snapshotFile(num));
+	if (cmd.retcode() != 0)
+            throw DeleteSnapshotFailedException();
+
 	// TODO
     }
 
@@ -130,14 +134,14 @@ namespace snapper
     {
 	SystemCmd cmd1(CHSNAPBIN " +n " + snapshotFile(num));
 	if (cmd1.retcode() != 0)
-	    throw CreateSnapshotFailedException();
+	    throw MountSnapshotFailedException();
 
 	mkdir(snapshotDir(num).c_str(), 0755);
 
 	SystemCmd cmd2(MOUNTBIN " -t ext4 -r -o loop,noload " + snapshotFile(num) +
 		       " " + snapshotDir(num));
 	if (cmd2.retcode() != 0)
-	    throw CreateSnapshotFailedException();
+	    throw MountSnapshotFailedException();
     }
 
 
@@ -151,9 +155,7 @@ namespace snapper
     bool
     Ext4::checkFilesystemSnapshot(unsigned int num) const
     {
-	// TODO
-
-	return true;
+	return checkNormalFile(snapshotFile(num));
     }
 
 }

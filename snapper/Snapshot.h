@@ -54,6 +54,19 @@ namespace snapper
     };
 
 
+    struct MountSnapshotFailedException : public std::exception
+    {
+	explicit MountSnapshotFailedException() throw() {}
+	virtual const char* what() const throw() { return "mount snapshot failed"; }
+    };
+
+    struct UmountSnapshotFailedException : public std::exception
+    {
+	explicit UmountSnapshotFailedException() throw() {}
+	virtual const char* what() const throw() { return "umount snapshot failed"; }
+    };
+
+
     class Snapshot
     {
     public:
