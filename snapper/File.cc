@@ -215,6 +215,11 @@ namespace snapper
 	string tmp_name = output + ".tmp-XXXXXX";
 
 	FILE* file = mkstemp(tmp_name);
+	if (!file)
+	{
+	    y2err("mkstemp failed errno:" << errno << " (" << strerror(errno) << ")");
+	    throw IOErrorException();
+	}
 
 	for (const_iterator it = entries.begin(); it != entries.end(); ++it)
 	{
