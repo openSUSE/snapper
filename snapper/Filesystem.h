@@ -94,6 +94,7 @@ namespace snapper
 
 	virtual string infosDir() const;
 	virtual string snapshotDir(unsigned int num) const;
+	virtual string snapshotFile(unsigned int num) const;
 
 	virtual void createFilesystemSnapshot(unsigned int num) const;
 	virtual void deleteFilesystemSnapshot(unsigned int num) const;

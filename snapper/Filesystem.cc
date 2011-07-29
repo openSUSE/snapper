@@ -41,23 +41,9 @@ namespace snapper
 
 
     string
-    Ext4::infosDir() const
-    {
-	return snapper->subvolumeDir() + "/.snapshots-info";
-    }
-
-
-    string
     Btrfs::snapshotDir(unsigned int num) const
     {
 	return snapper->subvolumeDir() + "/.snapshots/" + decString(num) + "/snapshot";
-    }
-
-
-    string
-    Ext4::snapshotDir(unsigned int num) const
-    {
-	return snapper->subvolumeDir() + "@" + decString(num);
     }
 
 
@@ -66,19 +52,6 @@ namespace snapper
     {
 	SystemCmd cmd(BTRFSBIN " subvolume snapshot " + snapper->subvolumeDir() + " " + snapshotDir(num));
 	if (cmd.retcode() != 0)
-	    throw CreateSnapshotFailedException();
-    }
-
-
-    void
-    Ext4::createFilesystemSnapshot(unsigned int num) const
-    {
-	SystemCmd cmd1(TOUCHBIN " " "/mnt/.snapshots/" + decString(num));
-	if (cmd1.retcode() != 0)
-	    throw CreateSnapshotFailedException();
-
-	SystemCmd cmd2(CHSNAPBIN " +S " "/mnt/.snapshots/" + decString(num));
-	if (cmd2.retcode() != 0)
 	    throw CreateSnapshotFailedException();
     }
 
@@ -93,31 +66,8 @@ namespace snapper
 
 
     void
-    Ext4::deleteFilesystemSnapshot(unsigned int num) const
-    {
-	// TODO
-    }
-
-
-    void
     Btrfs::mountFilesystemSnapshot(unsigned int num) const
     {
-    }
-
-
-    void
-    Ext4::mountFilesystemSnapshot(unsigned int num) const
-    {
-	SystemCmd cmd1(CHSNAPBIN " +n " "/mnt/.snapshots/" + decString(num));
-	if (cmd1.retcode() != 0)
-	    throw CreateSnapshotFailedException();
-
-	mkdir(("/mnt@" + decString(num)).c_str(), 0666);
-
-	SystemCmd cmd2(MOUNTBIN " -t ext4 -r -o loop,noload " "/mnt/.snapshots/" + decString(num) + " "
-		       "/mnt@" + decString(num));
-	if (cmd2.retcode() != 0)
-	    throw CreateSnapshotFailedException();
     }
 
 
@@ -127,17 +77,74 @@ namespace snapper
     }
 
 
+    bool
+    Btrfs::checkFilesystemSnapshot(unsigned int num) const
+    {
+	return checkDir(snapshotDir(num));
+    }
+
+
+    string
+    Ext4::infosDir() const
+    {
+	return snapper->subvolumeDir() + "/.snapshots-info";
+    }
+
+
+    string
+    Ext4::snapshotDir(unsigned int num) const
+    {
+	return snapper->subvolumeDir() + "@" + decString(num);
+    }
+
+
+    string
+    Ext4::snapshotFile(unsigned int num) const
+    {
+	return snapper->subvolumeDir() + "/.snapshots/" + decString(num);
+    }
+
+
     void
-    Ext4::umountFilesystemSnapshot(unsigned int num) const
+    Ext4::createFilesystemSnapshot(unsigned int num) const
+    {
+	SystemCmd cmd1(TOUCHBIN " " + snapshotFile(num));
+	if (cmd1.retcode() != 0)
+	    throw CreateSnapshotFailedException();
+
+	SystemCmd cmd2(CHSNAPBIN " +S " + snapshotFile(num));
+	if (cmd2.retcode() != 0)
+	    throw CreateSnapshotFailedException();
+    }
+
+
+    void
+    Ext4::deleteFilesystemSnapshot(unsigned int num) const
     {
 	// TODO
     }
 
 
-    bool
-    Btrfs::checkFilesystemSnapshot(unsigned int num) const
+    void
+    Ext4::mountFilesystemSnapshot(unsigned int num) const
     {
-	return checkDir(snapshotDir(num));
+	SystemCmd cmd1(CHSNAPBIN " +n " + snapshotFile(num));
+	if (cmd1.retcode() != 0)
+	    throw CreateSnapshotFailedException();
+
+	mkdir(snapshotDir(num).c_str(), 0755);
+
+	SystemCmd cmd2(MOUNTBIN " -t ext4 -r -o loop,noload " + snapshotFile(num) +
+		       " " + snapshotDir(num));
+	if (cmd2.retcode() != 0)
+	    throw CreateSnapshotFailedException();
+    }
+
+
+    void
+    Ext4::umountFilesystemSnapshot(unsigned int num) const
+    {
+	// TODO
     }
 
 
