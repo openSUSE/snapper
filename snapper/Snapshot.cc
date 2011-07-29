@@ -31,6 +31,7 @@
 #include "snapper/Snapper.h"
 #include "snapper/AppUtil.h"
 #include "snapper/XmlFile.h"
+#include "snapper/Filesystem.h"
 #include "snapper/Enum.h"
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SystemCmd.h"
@@ -62,28 +63,32 @@ namespace snapper
     }
 
 
-    // Directory where the info file is saved, e.g. "/snapshots/1" or
-    // "/home/snapshots/1". Obviously not available for current.
+    // Directory where the info file is saved. Obviously not available for
+    // current.
+    // For btrfs e.g. "/.snapshots/1" or "/home/.snapshots/1".
+    // For ext4 e.g. "/.snapshots-info/1" or "/home/.snapshots-info/1".
     string
-    Snapshot::baseDir() const
+    Snapshot::infoDir() const
     {
 	if (isCurrent())
 	    throw IllegalSnapshotException();
 
-	return snapper->snapshotsDir() + "/" + decString(num);
+	return snapper->infosDir() + "/" + decString(num);
     }
 
 
-    // Directory containing the actual snapshot, e.g. "/" or "/home" for
-    // current and "/snapshots/1/snapshot" or "/home/snapshots/1/snapshot"
+    // Directory containing the actual content of the snapshot.
+    // For btrfs , e.g. "/" or "/home" for current and
+    // "/.snapshots/1/snapshot" or "/home/.snapshots/1/snapshot" otherwise.
+    // For ext4 , e.g. "/" or "/home" for current and "/@1" or "/home@1"
     // otherwise.
     string
     Snapshot::snapshotDir() const
     {
-	if (num == 0)
+	if (isCurrent())
 	    return snapper->subvolumeDir();
-	else
-	    return baseDir() + SNAPSHOTDIR;
+
+	return snapper->getFilesystem()->snapshotDir(num);
     }
 
 
@@ -106,11 +111,11 @@ namespace snapper
     void
     Snapshots::read()
     {
-	list<string> infos = glob(snapper->snapshotsDir() + "/*/info.xml", GLOB_NOSORT);
+	list<string> infos = glob(snapper->infosDir() + "/*/info.xml", GLOB_NOSORT);
 	for (list<string>::const_iterator it = infos.begin(); it != infos.end(); ++it)
 	{
 	    unsigned int num;
-	    it->substr(snapper->snapshotsDir().length() + 1) >> num;
+	    it->substr(snapper->infosDir().length() + 1) >> num;
 
 	    XmlFile file(*it);
 	    const xmlNode* root = file.getRootElement();
@@ -144,9 +149,9 @@ namespace snapper
 
 	    getChildValue(node, "cleanup", snapshot.cleanup);
 
-	    if (!checkDir(snapshot.snapshotDir()))
+	    if (!snapper->getFilesystem()->checkFilesystemSnapshot(num))
 	    {
-		y2err("snapshot directory does not exist. not adding snapshot " << num);
+		y2err("snapshot check failed. not adding snapshot " << num);
 		continue;
 	    }
 
@@ -275,7 +280,7 @@ namespace snapper
 	    num = entries.rbegin()->num + 1;
 
 	int r;
-	while ((r = mkdir((snapper->snapshotsDir() + "/" + decString(num)).c_str(), 0777)) == -1 &&
+	while ((r = mkdir((snapper->infosDir() + "/" + decString(num)).c_str(), 0777)) == -1 &&
 	       errno == EEXIST)
 	    ++num;
 
@@ -311,27 +316,37 @@ namespace snapper
 	if (!cleanup.empty())
 	    setChildValue(node, "cleanup", cleanup);
 
-	xml.save(baseDir() + "/info.xml");
+	xml.save(infoDir() + "/info.xml");
 
 	return true;
     }
 
 
     void
+    Snapshot::mountFilesystemSnapshot() const
+    {
+	snapper->getFilesystem()->mountFilesystemSnapshot(num);
+    }
+
+
+    void
+    Snapshot::umountFilesystemSnapshot() const
+    {
+	snapper->getFilesystem()->umountFilesystemSnapshot(num);
+    }
+
+
+    void
     Snapshot::createFilesystemSnapshot() const
     {
-	SystemCmd cmd(BTRFSBIN " subvolume snapshot " + snapper->subvolumeDir() + " " + snapshotDir());
-	if (cmd.retcode() != 0)
-	    throw CreateSnapshotFailedException();
+	snapper->getFilesystem()->createFilesystemSnapshot(num);
     }
 
 
     void
     Snapshot::deleteFilesystemSnapshot() const
     {
-	SystemCmd cmd(BTRFSBIN " subvolume delete " + snapshotDir());
-	if (cmd.retcode() != 0)
-	    throw DeleteSnapshotFailedException();
+	snapper->getFilesystem()->deleteFilesystemSnapshot(num);
     }
 
 
@@ -394,18 +409,18 @@ namespace snapper
 
 	snapshot->deleteFilesystemSnapshot();
 
-	unlink((snapshot->baseDir() + "/info.xml").c_str());
+	unlink((snapshot->infoDir() + "/info.xml").c_str());
 
-	list<string> tmp1 = glob(snapshot->baseDir() + "/filelist-*.txt", GLOB_NOSORT);
+	list<string> tmp1 = glob(snapshot->infoDir() + "/filelist-*.txt", GLOB_NOSORT);
 	for (list<string>::const_iterator it = tmp1.begin(); it != tmp1.end(); ++it)
 	    unlink(it->c_str());
 
-	list<string> tmp2 = glob(snapper->snapshotsDir() + "/*/filelist-" +
+	list<string> tmp2 = glob(snapper->infosDir() + "/*/filelist-" +
 				 decString(snapshot->getNum()) + ".txt", GLOB_NOSORT);
 	for (list<string>::const_iterator it = tmp2.begin(); it != tmp2.end(); ++it)
 	    unlink(it->c_str());
 
-	rmdir(snapshot->baseDir().c_str());
+	rmdir(snapshot->infoDir().c_str());
 
 	entries.erase(snapshot);
     }

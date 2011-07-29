@@ -119,6 +119,9 @@ namespace snapper
 	if (getSnapper()->getCompareCallback())
 	    getSnapper()->getCompareCallback()->start();
 
+	comparison->getSnapshot1()->mountFilesystemSnapshot();
+	comparison->getSnapshot2()->mountFilesystemSnapshot();
+
 #if 1
 	cmpdirs_cb_t cb = AppendHelper(comparison, entries);
 #else
@@ -154,7 +157,7 @@ namespace snapper
 	if (invert)
 	    swap(num1, num2);
 
-	string input = getSnapper()->snapshotsDir() + "/" + decString(num2) + "/filelist-" +
+	string input = getSnapper()->infosDir() + "/" + decString(num2) + "/filelist-" +
 	    decString(num1) + ".txt";
 
 	try
@@ -209,7 +212,7 @@ namespace snapper
 	if (invert)
 	    swap(num1, num2);
 
-	string output = getSnapper()->snapshotsDir() + "/" + decString(num2) + "/filelist-" +
+	string output = getSnapper()->infosDir() + "/" + decString(num2) + "/filelist-" +
 	    decString(num1) + ".txt";
 
 	string tmp_name = output + ".tmp-XXXXXX";

@@ -78,8 +78,11 @@ namespace snapper
 	void setCleanup(const string& cleanup);
 	string getCleanup() const { return cleanup; }
 
-	string baseDir() const;
+	string infoDir() const;
 	string snapshotDir() const;
+
+	void mountFilesystemSnapshot() const;
+	void umountFilesystemSnapshot() const;
 
 	friend std::ostream& operator<<(std::ostream& s, const Snapshot& snapshot);
 
@@ -100,6 +103,7 @@ namespace snapper
 	string cleanup;
 
 	bool writeInfo() const;
+
 	void createFilesystemSnapshot() const;
 	void deleteFilesystemSnapshot() const;
 

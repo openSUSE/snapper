@@ -30,8 +30,8 @@
 #include "snapper/Snapper.h"
 #include "snapper/Comparison.h"
 #include "snapper/AppUtil.h"
-#include "snapper/XmlFile.h"
 #include "snapper/Enum.h"
+#include "snapper/Filesystem.h"
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
@@ -46,8 +46,8 @@ namespace snapper
 
 
     Snapper::Snapper(const string& config_name, bool disable_filters)
-	: config_name(config_name), config(NULL), subvolume("/"), snapshots(this),
-	  compare_callback(NULL), rollback_callback(NULL)
+	: config_name(config_name), config(NULL), subvolume("/"), filesystem(NULL),
+	  snapshots(this), compare_callback(NULL), rollback_callback(NULL)
     {
 	y2mil("Snapper constructor");
 	y2mil("libsnapper version " VERSION);
@@ -69,6 +69,10 @@ namespace snapper
 
 	y2mil("subvolume:" << subvolume);
 
+	filesystem = new Btrfs(this);
+
+	y2mil("filesystem:" << filesystem->name());
+
 	if (!disable_filters)
 	    loadIgnorePatterns();
 
@@ -80,6 +84,7 @@ namespace snapper
     {
 	y2mil("Snapper destructor");
 
+	delete filesystem;
 	delete config;
     }
 
@@ -115,15 +120,13 @@ namespace snapper
     }
 
 
-    // Directory containing directories for all snapshots, e.g. "/snapshots"
-    // or "/home/snapshots".
+    // Directory that contains the per snapshot directory with info files.
+    // For btrfs e.g. "/.snapshots" or "/home/.snapshots".
+    // For ext4 e.g. "/.snapshots-info" or "/home/.snapshots-info".
     string
-    Snapper::snapshotsDir() const
+    Snapper::infosDir() const
     {
-	if (subvolumeDir() == "/")
-	    return SNAPSHOTSDIR;
-	else
-	    return subvolumeDir() + SNAPSHOTSDIR;
+	return filesystem->infosDir();
     }
 
 
@@ -174,6 +177,9 @@ namespace snapper
 
 	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
 
+	snapshot1->mountFilesystemSnapshot();
+	snapshot2->mountFilesystemSnapshot();
+
 	bool invert = snapshot1->getNum() > snapshot2->getNum();
 
 	if (invert)
@@ -182,7 +188,7 @@ namespace snapper
 	string dir1 = snapshot1->snapshotDir();
 	string dir2 = snapshot2->snapshotDir();
 
-	string output = snapshot2->baseDir() + "/filelist-" + decString(snapshot1->getNum()) +
+	string output = snapshot2->infoDir() + "/filelist-" + decString(snapshot1->getNum()) +
 	    ".txt";
 
 	SystemCmd(NICEBIN " -n 19 " IONICEBIN " -c 3 " COMPAREDIRSBIN " " + quote(dir1) + " " +
@@ -595,7 +601,7 @@ namespace snapper
 	    throw AddConfigFailedException("modifying config failed");
 	}
 
-	SystemCmd cmd2(BTRFSBIN " subvolume create " + subvolume + SNAPSHOTSDIR);
+	SystemCmd cmd2(BTRFSBIN " subvolume create " + subvolume + "/.snapshots");
 	if (cmd2.retcode() != 0)
 	{
 	    throw AddConfigFailedException("creating snapshot failed");

@@ -238,7 +238,7 @@ namespace snapper
     bool
     filter(const string& name)
     {
-	if (name == "/snapshots")
+	if (name == "/.snapshots" || name == "/.snapshots-info")
 	    return true;
 
 	return false;

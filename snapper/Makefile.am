@@ -11,6 +11,7 @@ libsnapper_la_SOURCES =					\
 	Snapper.cc		Snapper.h		\
 	Snapshot.cc		Snapshot.h		\
 	Comparison.cc		Comparison.h		\
+	Filesystem.cc		Filesystem.h		\
 	File.cc			File.h			\
 	XmlFile.cc		XmlFile.h		\
 	Enum.cc			Enum.h			\

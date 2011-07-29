@@ -60,7 +60,7 @@ RollbackCallbackImpl rollback_callback_impl;
 void
 setup()
 {
-    system("/usr/bin/find " SUBVOLUME " -mindepth 1 -maxdepth 1 -not -path " SUBVOLUME SNAPSHOTSDIR " "
+    system("/usr/bin/find " SUBVOLUME " -mindepth 1 -maxdepth 1 -not -path " SUBVOLUME "/.snapshots "
 	   "-exec rm -r {} \\;");
 
     initDefaultLogger();

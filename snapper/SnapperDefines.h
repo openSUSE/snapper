@@ -31,10 +31,9 @@
 
 #define FILTERSDIR "/etc/snapper/filters"
 
-#define SNAPSHOTDIR "/snapshot"
-#define SNAPSHOTSDIR "/.snapshots"
-
 #define BTRFSBIN "/sbin/btrfs"
+
+#define CHSNAPBIN "/sbin/chsnap"
 
 #define COMPAREDIRSBIN "/usr/lib/snapper/bin/compare-dirs"
 
@@ -42,8 +41,10 @@
 #define IONICEBIN "/usr/bin/ionice"
 
 #define CPBIN "/bin/cp"
-
+#define TOUCHBIN "/usr/bin/touch"
 #define DIFFBIN "/usr/bin/diff"
+
+#define MOUNTBIN "/bin/mount"
 
 
 #endif

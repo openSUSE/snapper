@@ -35,6 +35,7 @@ namespace snapper
 
 
     class SysconfigFile;
+    class Filesystem;
 
 
     struct CompareCallback
@@ -109,7 +110,7 @@ namespace snapper
 	~Snapper();
 
 	string subvolumeDir() const;
-	string snapshotsDir() const;
+	string infosDir() const;
 
 	Snapshots& getSnapshots() { return snapshots; }
 	const Snapshots& getSnapshots() const { return snapshots; }
@@ -141,6 +142,8 @@ namespace snapper
 	static void addConfig(const string& config_name, const string& subvolume,
 			      const string& template_name);
 
+	const Filesystem* getFilesystem() const { return filesystem; }
+
     private:
 
 	void filter1(list<Snapshots::iterator>& tmp, time_t min_age);
@@ -153,6 +156,8 @@ namespace snapper
 	SysconfigFile* config;
 
 	string subvolume;
+
+	Filesystem* filesystem;
 
 	vector<string> ignore_patterns;
 
