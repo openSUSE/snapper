@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Sat Jul 30 16:15:42 CEST 2011 - aschnell@suse.de
+
+- added missing shell quoting
+
+-------------------------------------------------------------------
 Tue Jun 28 11:46:28 CEST 2011 - aschnell@suse.de
 
 - added snapper-zypp-plugin subpackage (fate #308626)

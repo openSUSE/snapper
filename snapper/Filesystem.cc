@@ -36,7 +36,7 @@ namespace snapper
     void
     Btrfs::addConfig() const
     {
-	SystemCmd cmd2(BTRFSBIN " subvolume create " + subvolume + "/.snapshots");
+	SystemCmd cmd2(BTRFSBIN " subvolume create " + quote(subvolume + "/.snapshots"));
 	if (cmd2.retcode() != 0)
 	{
 	    throw AddConfigFailedException("creating btrfs snapshot failed");
@@ -61,7 +61,8 @@ namespace snapper
     void
     Btrfs::createFilesystemSnapshot(unsigned int num) const
     {
-	SystemCmd cmd(BTRFSBIN " subvolume snapshot " + subvolume + " " + snapshotDir(num));
+	SystemCmd cmd(BTRFSBIN " subvolume snapshot " + quote(subvolume) + " " +
+		      quote(snapshotDir(num)));
 	if (cmd.retcode() != 0)
 	    throw CreateSnapshotFailedException();
     }
@@ -70,7 +71,7 @@ namespace snapper
     void
     Btrfs::deleteFilesystemSnapshot(unsigned int num) const
     {
-	SystemCmd cmd(BTRFSBIN " subvolume delete " + snapshotDir(num));
+	SystemCmd cmd(BTRFSBIN " subvolume delete " + quote(snapshotDir(num)));
 	if (cmd.retcode() != 0)
 	    throw DeleteSnapshotFailedException();
     }
@@ -125,11 +126,11 @@ namespace snapper
     void
     Ext4::createFilesystemSnapshot(unsigned int num) const
     {
-	SystemCmd cmd1(TOUCHBIN " " + snapshotFile(num));
+	SystemCmd cmd1(TOUCHBIN " " + quote(snapshotFile(num)));
 	if (cmd1.retcode() != 0)
 	    throw CreateSnapshotFailedException();
 
-	SystemCmd cmd2(CHSNAPBIN " +S " + snapshotFile(num));
+	SystemCmd cmd2(CHSNAPBIN " +S " + quote(snapshotFile(num)));
 	if (cmd2.retcode() != 0)
 	    throw CreateSnapshotFailedException();
     }
@@ -138,7 +139,7 @@ namespace snapper
     void
     Ext4::deleteFilesystemSnapshot(unsigned int num) const
     {
-	SystemCmd cmd(CHSNAPBIN " -S " + snapshotFile(num));
+	SystemCmd cmd(CHSNAPBIN " -S " + quote(snapshotFile(num)));
 	if (cmd.retcode() != 0)
             throw DeleteSnapshotFailedException();
 
@@ -149,14 +150,14 @@ namespace snapper
     void
     Ext4::mountFilesystemSnapshot(unsigned int num) const
     {
-	SystemCmd cmd1(CHSNAPBIN " +n " + snapshotFile(num));
+	SystemCmd cmd1(CHSNAPBIN " +n " + quote(snapshotFile(num)));
 	if (cmd1.retcode() != 0)
 	    throw MountSnapshotFailedException();
 
 	mkdir(snapshotDir(num).c_str(), 0755);
 
-	SystemCmd cmd2(MOUNTBIN " -t ext4 -r -o loop,noload " + snapshotFile(num) +
-		       " " + snapshotDir(num));
+	SystemCmd cmd2(MOUNTBIN " -t ext4 -r -o loop,noload " + quote(snapshotFile(num)) +
+		       " " + quote(snapshotDir(num)));
 	if (cmd2.retcode() != 0)
 	    throw MountSnapshotFailedException();
     }
