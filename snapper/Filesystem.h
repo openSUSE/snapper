@@ -39,10 +39,12 @@ namespace snapper
     {
     public:
 
-	Filesystem(Snapper* snapper) : snapper(snapper) {}
+	Filesystem(const string& subvolume) : subvolume(subvolume) {}
 	virtual ~Filesystem() {}
 
 	virtual string name() const = 0;
+
+	virtual void addConfig() const = 0;
 
 	virtual string infosDir() const = 0;
 	virtual string snapshotDir(unsigned int num) const = 0;
@@ -57,7 +59,7 @@ namespace snapper
 
     protected:
 
-	Snapper* snapper;
+	const string subvolume;
 
     };
 
@@ -66,9 +68,11 @@ namespace snapper
     {
     public:
 
-	Btrfs(Snapper* snapper) : Filesystem(snapper) {}
+	Btrfs(const string& subvolume) : Filesystem(subvolume) {}
 
 	virtual string name() const { return "btrfs"; }
+
+	virtual void addConfig() const;
 
 	virtual string infosDir() const;
 	virtual string snapshotDir(unsigned int num) const;
@@ -88,9 +92,11 @@ namespace snapper
     {
     public:
 
-	Ext4(Snapper* snapper) : Filesystem(snapper) {}
+	Ext4(const string& subvolume) : Filesystem(subvolume) {}
 
 	virtual string name() const { return "ext4"; }
+
+	virtual void addConfig() const;
 
 	virtual string infosDir() const;
 	virtual string snapshotDir(unsigned int num) const;

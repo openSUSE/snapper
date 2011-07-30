@@ -67,11 +67,9 @@ namespace snapper
 	    throw InvalidConfigException();
 	subvolume = val;
 
-	y2mil("subvolume:" << subvolume);
+	filesystem = new Btrfs(subvolume);
 
-	filesystem = new Btrfs(this);
-
-	y2mil("filesystem:" << filesystem->name());
+	y2mil("subvolume:" << subvolume << " filesystem:" << filesystem->name());
 
 	if (!disable_filters)
 	    loadIgnorePatterns();
@@ -601,11 +599,8 @@ namespace snapper
 	    throw AddConfigFailedException("modifying config failed");
 	}
 
-	SystemCmd cmd2(BTRFSBIN " subvolume create " + subvolume + "/.snapshots");
-	if (cmd2.retcode() != 0)
-	{
-	    throw AddConfigFailedException("creating snapshot failed");
-	}
+	auto_ptr<Filesystem> filesystem(new Btrfs(subvolume));
+	filesystem->addConfig();
     }
 
 }

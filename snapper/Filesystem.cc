@@ -33,24 +33,35 @@
 namespace snapper
 {
 
+    void
+    Btrfs::addConfig() const
+    {
+	SystemCmd cmd2(BTRFSBIN " subvolume create " + subvolume + "/.snapshots");
+	if (cmd2.retcode() != 0)
+	{
+	    throw AddConfigFailedException("creating btrfs snapshot failed");
+	}
+    }
+
+
     string
     Btrfs::infosDir() const
     {
-	return snapper->subvolumeDir() + "/.snapshots";
+	return subvolume + "/.snapshots";
     }
 
 
     string
     Btrfs::snapshotDir(unsigned int num) const
     {
-	return snapper->subvolumeDir() + "/.snapshots/" + decString(num) + "/snapshot";
+	return subvolume + "/.snapshots/" + decString(num) + "/snapshot";
     }
 
 
     void
     Btrfs::createFilesystemSnapshot(unsigned int num) const
     {
-	SystemCmd cmd(BTRFSBIN " subvolume snapshot " + snapper->subvolumeDir() + " " + snapshotDir(num));
+	SystemCmd cmd(BTRFSBIN " subvolume snapshot " + subvolume + " " + snapshotDir(num));
 	if (cmd.retcode() != 0)
 	    throw CreateSnapshotFailedException();
     }
@@ -84,24 +95,30 @@ namespace snapper
     }
 
 
+    void
+    Ext4::addConfig() const
+    {
+    }
+
+
     string
     Ext4::infosDir() const
     {
-	return snapper->subvolumeDir() + "/.snapshots-info";
+	return subvolume + "/.snapshots-info";
     }
 
 
     string
     Ext4::snapshotDir(unsigned int num) const
     {
-	return snapper->subvolumeDir() + "@" + decString(num);
+	return subvolume + "@" + decString(num);
     }
 
 
     string
     Ext4::snapshotFile(unsigned int num) const
     {
-	return snapper->subvolumeDir() + "/.snapshots/" + decString(num);
+	return subvolume + "/.snapshots/" + decString(num);
     }
 
 
