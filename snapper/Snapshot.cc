@@ -78,9 +78,9 @@ namespace snapper
 
 
     // Directory containing the actual content of the snapshot.
-    // For btrfs , e.g. "/" or "/home" for current and
-    // "/.snapshots/1/snapshot" or "/home/.snapshots/1/snapshot" otherwise.
-    // For ext4 , e.g. "/" or "/home" for current and "/@1" or "/home@1"
+    // For btrfs e.g. "/" or "/home" for current and "/.snapshots/1/snapshot"
+    // or "/home/.snapshots/1/snapshot" otherwise.
+    // For ext4 e.g. "/" or "/home" for current and "/@1" or "/home@1"
     // otherwise.
     string
     Snapshot::snapshotDir() const
