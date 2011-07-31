@@ -99,13 +99,36 @@ namespace snapper
     void
     Ext4::addConfig() const
     {
+	int r1 = mkdir((subvolume + "/.snapshots").c_str(), 700);
+	if (r1 == 0)
+	{
+	    SystemCmd cmd1(CHATTRBIN " +x " + quote(subvolume + "/.snapshots"));
+	    if (cmd1.retcode() != 0)
+		throw AddConfigFailedException("chattr failed");
+	}
+	else if (errno != EEXIST)
+	{
+	    throw AddConfigFailedException("mkdir failed");
+	}
+
+	int r2 = mkdir((subvolume + "/.snapshots/.info").c_str(), 700);
+	if (r2 == 0)
+	{
+	    SystemCmd cmd2(CHATTRBIN " -x " + quote(subvolume + "/.snapshots/.info"));
+	    if (cmd2.retcode() != 0)
+		throw AddConfigFailedException("chattr failed");
+	}
+	else if (errno != EEXIST)
+	{
+	    throw AddConfigFailedException("mkdir failed");
+	}
     }
 
 
     string
     Ext4::infosDir() const
     {
-	return subvolume + "/.snapshots-info";
+	return subvolume + "/.snapshots/.info";
     }
 
 
@@ -141,7 +164,7 @@ namespace snapper
     {
 	SystemCmd cmd(CHSNAPBIN " -S " + quote(snapshotFile(num)));
 	if (cmd.retcode() != 0)
-            throw DeleteSnapshotFailedException();
+	    throw DeleteSnapshotFailedException();
 
 	// TODO
     }
