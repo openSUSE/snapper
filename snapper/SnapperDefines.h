@@ -46,6 +46,7 @@
 #define CHATTRBIN "/usr/bin/chattr"
 
 #define MOUNTBIN "/bin/mount"
+#define UMOUNTBIN "/bin/umount"
 
 
 #endif

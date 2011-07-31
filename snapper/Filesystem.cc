@@ -191,7 +191,9 @@ namespace snapper
 	if (cmd1.retcode() != 0)
 	    throw MountSnapshotFailedException();
 
-	mkdir(snapshotDir(num).c_str(), 0755);
+	int r1 = mkdir(snapshotDir(num).c_str(), 0755);
+	if (r1 != 0 && errno != EEXIST)
+	    throw MountSnapshotFailedException();
 
 	SystemCmd cmd2(MOUNTBIN " -t ext4 -r -o loop,noload " + quote(snapshotFile(num)) +
 		       " " + quote(snapshotDir(num)));
@@ -203,7 +205,13 @@ namespace snapper
     void
     Ext4::umountFilesystemSnapshot(unsigned int num) const
     {
-	// TODO
+	SystemCmd cmd1(UMOUNTBIN " " + quote(snapshotDir(num)));
+	if (cmd1.retcode() != 0)
+	    throw UmountSnapshotFailedException();
+
+	SystemCmd cmd2(CHSNAPBIN " -n " + quote(snapshotFile(num)));
+	if (cmd2.retcode() != 0)
+	    throw UmountSnapshotFailedException();
     }
 
 
