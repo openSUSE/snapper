@@ -22,6 +22,7 @@
 
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <errno.h>
 
 #include "snapper/Filesystem.h"
 #include "snapper/Snapper.h"
