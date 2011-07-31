@@ -62,12 +62,12 @@ namespace snapper
 	    throw ConfigNotFoundException();
 	}
 
-	string val;
-	if (!config->getValue("SUBVOLUME", val))
+	if (!config->getValue("SUBVOLUME", subvolume))
 	    throw InvalidConfigException();
-	subvolume = val;
 
-	filesystem = new Btrfs(subvolume);
+	string fstype = "btrfs";
+	config->getValue("FSTYPE", fstype);
+	filesystem = Filesystem::create(fstype, subvolume);
 
 	y2mil("subvolume:" << subvolume << " filesystem:" << filesystem->name());
 

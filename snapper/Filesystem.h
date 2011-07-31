@@ -42,6 +42,8 @@ namespace snapper
 	Filesystem(const string& subvolume) : subvolume(subvolume) {}
 	virtual ~Filesystem() {}
 
+	static Filesystem* create(const string& fstype, const string& subvolume);
+
 	virtual string name() const = 0;
 
 	virtual void addConfig() const = 0;

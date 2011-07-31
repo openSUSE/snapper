@@ -34,6 +34,19 @@
 namespace snapper
 {
 
+    Filesystem*
+    Filesystem::create(const string& fstype, const string& subvolume)
+    {
+	if (fstype == "btrfs")
+	    return new Btrfs(subvolume);
+
+	if (fstype == "ext4")
+	    return new Ext4(subvolume);
+
+	throw InvalidConfigException();
+    }
+
+
     void
     Btrfs::addConfig() const
     {

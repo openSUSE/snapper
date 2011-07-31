@@ -2,6 +2,9 @@
 # subvolume to snapshot
 SUBVOLUME="/"
 
+# filesystem type
+FSTYPE="btrfs"
+
 
 # run daily number cleanup
 NUMBER_CLEANUP="yes"
