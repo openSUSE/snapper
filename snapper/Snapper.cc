@@ -549,6 +549,8 @@ namespace snapper
 	y2mil("config_name:" << config_name << " subvolume:" << subvolume <<
 	      " template_name:" << template_name);
 
+	string fstype = "ext4";
+
 	if (config_name.empty() || config_name.find_first_of(" \t") != string::npos)
 	{
 	    throw AddConfigFailedException("illegal config name");
@@ -593,13 +595,14 @@ namespace snapper
 	{
 	    SysconfigFile config(CONFIGSDIR "/" + config_name);
 	    config.setValue("SUBVOLUME", subvolume);
+	    config.setValue("FSTYPE", fstype);
 	}
 	catch (const FileNotFoundException& e)
 	{
 	    throw AddConfigFailedException("modifying config failed");
 	}
 
-	auto_ptr<Filesystem> filesystem(new Btrfs(subvolume));
+	auto_ptr<Filesystem> filesystem(Filesystem::create(fstype, subvolume));
 	filesystem->addConfig();
     }
 
