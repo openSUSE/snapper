@@ -274,10 +274,7 @@ namespace snapper
     unsigned int
     Snapshots::nextNumber()
     {
-	unsigned int num = 1;
-
-	if (!entries.empty())
-	    num = entries.rbegin()->num + 1;
+	unsigned int num = entries.empty() ? 1 : entries.rbegin()->num + 1;
 
 	int r;
 	while ((r = mkdir((snapper->infosDir() + "/" + decString(num)).c_str(), 0777)) == -1 &&
