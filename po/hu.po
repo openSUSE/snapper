@@ -1,93 +1,86 @@
-# Dutch translations for PACKAGE package
-# Nederlandse vertalingen voor het pakket PACKAGE.
-# Copyright (C) 2011 SUSE Linux Products GmbH, Nuernberg
-# This file is distributed under the same license as the PACKAGE package.
-#
-# Automatically generated, 2011.
-# Freek de Kruijf <freek@opensuse.org>, 2011.
+# Kalman Kemenczy <kkemenczy@opensuse.org>, 2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-21 17:23+0200\n"
-"PO-Revision-Date: 2011-06-17 13:28+0200\n"
-"Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
-"Language-Team: Dutch <yast-nl-l10n@lists.sf.kovoks.nl>\n"
-"Language: nl\n"
+"POT-Creation-Date: 2011-08-01 12:33+0200\n"
+"PO-Revision-Date: 2011-07-02 22:32+0200\n"
+"Last-Translator: Kalman Kemenczy <kkemenczy@opensuse.org>\n"
+"Language-Team: Hungarian <en@li.org>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../tools/snapper.cc:300
 msgid "\t--cleanup-algorithm, -c\t\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c\t\tOpschoonalgorithe voor momentopname."
+msgstr "\t--cleanup-algorithm, -c\t\tPillanatkép tisztítási algoritmus."
 
 #: ../tools/snapper.cc:685
 msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <name>\t\tStel naam van te gebruiken configuratie in."
+msgstr "\t--config, -c <név>\t\tFelhasznált beállítás nevének megadása."
 
 #: ../tools/snapper.cc:298 ../tools/snapper.cc:387
 msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <description>\tBeschrijving van momentopname."
+msgstr "\t--description, -d <leírás>\tPillanatkép leírása."
 
 #: ../tools/snapper.cc:686
 msgid "\t--disable-filters\t\tDisable filters."
-msgstr "\t--disable-filters\t\tFilters uitschakelen."
+msgstr "\t--disable-filters\t\tSzűrők letiltása."
 
 #: ../tools/snapper.cc:529
 msgid "\t--file, -f <file>\t\tRead files to rollback from file."
-msgstr "\t--file, -f <file>\t\tLees bestanden om terug te rollen uit bestand."
+msgstr "\t--file, -f <fájl>\t\tFájlok betöltése a fájlból való visszagörgetéshez."
 
 #: ../tools/snapper.cc:451
 msgid "\t--file, -f <file>\t\tRun diff for file."
-msgstr "\t--file, -f <file>\t\tVoer diff uit voor bestand."
+msgstr "\t--file, -f <fájl>\t\tDiff futtatása fájlhoz."
 
 #: ../tools/snapper.cc:450
 msgid "\t--output, -o <file>\t\tSave diff to file."
-msgstr "\t--output, -o <file>\t\tSla diff op naar bestand."
+msgstr "\t--output, -o <fájl>\t\tDiff mentése fájlba."
 
 #: ../tools/snapper.cc:297
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr ""
-"\t--pre-number <number>\t\tNummer van overeenkomende eerdere momentopname."
+msgstr "\t--pre-number <szám>\t\tMegelőző pillanatfelvételek megfelelő száma."
 
 #: ../tools/snapper.cc:299
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tToon nummer van aangemaakte momentopname."
+msgstr "\t--print-number, -p\t\tPillanatfelvételek számának kiírása."
 
 #: ../tools/snapper.cc:682
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\tOnderdruk normale uitvoer."
+msgstr "\t--quiet, -q\t\t\tNormál kimenet elhagyása."
 
 #: ../tools/snapper.cc:684
 msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <style>\tTabelstijl (geheel getal)."
+msgstr "\t--table-style, -t <stílus>\tTáblastílus (integer)."
 
 #: ../tools/snapper.cc:92
 msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <name>\t\tNaam van te gebruiken configuratiesjabloon."
+msgstr "\t--template, -t <név>\t\tFelhasznált beállítássablon neve."
 
 #: ../tools/snapper.cc:296
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <type>\t\tType momentopname."
+msgstr "\t--type, -t <típus>\t\tPillanatkép típusa."
 
 #: ../tools/snapper.cc:160
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <type>\t\tTe tonen type momentopname."
+msgstr "\t--type, -t <típus>\t\tPillanatképtípusok listázása."
 
 #: ../tools/snapper.cc:683
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tHoeveelheid informatie verhogen."
+msgstr "\t--verbose, -v\t\t\tRészletesség fokozása."
 
 #: ../tools/snapper.cc:687
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tVersie tonen en beëindigen."
+msgstr "\t--version\t\t\tVerzió kiírása és kilépés."
 
 #: ../tools/snapper.cc:627
 msgid "\tsnapper cleanup <cleanup-algorithm>"
-msgstr "\tsnapper cleanup <opschoonalgoritme>"
+msgstr "\tsnapper cleanup <tisztítás-algoritmus>"
 
 #: ../tools/snapper.cc:293
 msgid "\tsnapper create"
@@ -95,15 +88,15 @@ msgstr "\tsnapper create"
 
 #: ../tools/snapper.cc:89
 msgid "\tsnapper create-config <subvolume>"
-msgstr "\tsnapper create-config <subvolume>"
+msgstr "\tsnapper create-config <alkötet>"
 
 #: ../tools/snapper.cc:420
 msgid "\tsnapper delete <number>"
-msgstr "\tsnapper delete <nummer>"
+msgstr "\tsnapper delete <szám>"
 
 #: ../tools/snapper.cc:447
 msgid "\tsnapper diff <number1> <number2>"
-msgstr "\tsnapper diff <nummer1> <nummer2>"
+msgstr "\tsnapper diff <szám1> <szám2>"
 
 #: ../tools/snapper.cc:157
 msgid "\tsnapper list"
@@ -115,75 +108,75 @@ msgstr "\tsnapper list-configs"
 
 #: ../tools/snapper.cc:384
 msgid "\tsnapper modify <number>"
-msgstr "\tsnapper modify <nummer>"
+msgstr "\tsnapper modify <szám>"
 
 #: ../tools/snapper.cc:526
 msgid "\tsnapper rollback <number1> <number2>"
-msgstr "\tsnapper rollback <nummer1> <nummer2>"
+msgstr "\tsnapper rollback <szám1> <szám2>"
 
 #: ../tools/snapper.cc:681
 msgid "    Global options:"
-msgstr "    Globale opties:"
+msgstr "    Globális kapcsolói:"
 
 #: ../tools/snapper.cc:295
 msgid "    Options for 'create' command:"
-msgstr "    Opties voor 'create' commando:"
+msgstr "    'create' parancs kapcsolói:"
 
 #: ../tools/snapper.cc:91
 msgid "    Options for 'create-config' command:"
-msgstr "    Opties voor 'create-config' commando:"
+msgstr "    'create-config' parancs kapcsolói:"
 
 #: ../tools/snapper.cc:449
 msgid "    Options for 'diff' command:"
-msgstr "    Opties voor 'diff' commando:"
+msgstr "    'diff' parancs kapcsolói:"
 
 #: ../tools/snapper.cc:159
 msgid "    Options for 'list' command:"
-msgstr "    Opties voor 'list' commando:"
+msgstr "    'list' parancs kapcsolói:"
 
 #: ../tools/snapper.cc:386
 msgid "    Options for 'modify' command:"
-msgstr "    Opties voor 'modify' commando:"
+msgstr "    'modify' parancs kapcsolói:"
 
 #: ../tools/snapper.cc:528
 msgid "    Options for 'rollback' command:"
-msgstr "    Opties voor 'rollback' commando:"
+msgstr "    'rollback' parancs kapcsolói:"
 
 #: ../tools/snapper.cc:626
 msgid "  Cleanup snapshots:"
-msgstr "  Momentopnamen opschonen:"
+msgstr "  Pillanatképek tisztítása:"
 
 #: ../tools/snapper.cc:446
 msgid "  Comparing snapshots:"
-msgstr "  Momentopnamen vergelijken:"
+msgstr "  Pillanatképek összehasonlítása:"
 
 #: ../tools/snapper.cc:88
 msgid "  Create config:"
-msgstr "  Configuratie aanmaken:"
+msgstr "  Beállítás létrehozása:"
 
 #: ../tools/snapper.cc:292
 msgid "  Create snapshot:"
-msgstr "  Momentopname aanmaken:"
+msgstr "  Pillanatkép létrehozása:"
 
 #: ../tools/snapper.cc:419
 msgid "  Delete snapshot:"
-msgstr "  Momentopname verwijderen:"
+msgstr "  Pillanatkép törlése:"
 
 #: ../tools/snapper.cc:41
 msgid "  List configs:"
-msgstr "  Configuraties tonen:"
+msgstr "  Beállítások listázása:"
 
 #: ../tools/snapper.cc:156
 msgid "  List snapshots:"
-msgstr "  Momentopnamen tonen:"
+msgstr "  Pillanatképek listázása:"
 
 #: ../tools/snapper.cc:383
 msgid "  Modify snapshot:"
-msgstr "  Momentopname wijzigen:"
+msgstr "  Pillanatkép módosítása:"
 
 #: ../tools/snapper.cc:525
 msgid "  Rollback snapshots:"
-msgstr "  Momentopnamen terugrollen:"
+msgstr "  Pillanatképek visszagörgetése:"
 
 #: ../tools/snapper.cc:208 ../tools/snapper.cc:233
 msgid "#"
@@ -191,230 +184,226 @@ msgstr "#"
 
 #: ../tools/snapper.cc:211
 msgid "Cleanup"
-msgstr "Opschonen"
+msgstr "Tisztítás"
 
 #: ../tools/snapper.cc:642
 msgid "Command 'cleanup' needs one arguments."
-msgstr "Commando 'cleanup' heeft één argument."
+msgstr "A 'cleanup' parancshoz meg kell adni egy paraméter."
 
 #: ../tools/snapper.cc:320
 msgid "Command 'create' does not take arguments."
-msgstr "Commando 'create' heeft geen argumenten."
+msgstr "A 'create' parancs nem értelmezi a paramétereket."
 
 #: ../tools/snapper.cc:108
 msgid "Command 'create-config' needs one argument."
-msgstr "Commando 'create-config' heeft één argument."
+msgstr "A 'create-config' parancshoz meg kell adni egy paraméter."
 
 #: ../tools/snapper.cc:431
 msgid "Command 'delete' needs at least one argument."
-msgstr "Commando 'delete' heeft minstens één argument."
+msgstr "A 'delete' parancshoz meg kell adni legalább egy paraméter."
 
 #: ../tools/snapper.cc:468
 msgid "Command 'diff' needs two arguments."
-msgstr "Commando 'diff' heeft twee argumenten."
+msgstr "A 'diff' parancshoz meg kell adni két paraméter."
 
 #: ../tools/snapper.cc:674
 msgid "Command 'help' does not take arguments."
-msgstr "Commando 'help' heeft geen argumenten."
+msgstr "A 'help' parancs nem értelmezi a paramétereket."
 
 #: ../tools/snapper.cc:176
 msgid "Command 'list' does not take arguments."
-msgstr "Commando 'list' heeft geen argumenten."
+msgstr "A 'list' parancs nem értelmezi a paramétereket."
 
 #: ../tools/snapper.cc:53
 msgid "Command 'list-configs' does not take arguments."
-msgstr "Commando 'list-configs' heeft geen argumenten."
+msgstr "A 'list-configs' parancs nem értelmezi a paramétereket."
 
 #: ../tools/snapper.cc:403
 msgid "Command 'modify' needs one argument."
-msgstr "Commando 'modify' heeft één argument."
+msgstr "A 'modify' parancs nem értelmezi a paramétereket."
 
 #: ../tools/snapper.cc:545
 msgid "Command 'rollback' needs two arguments."
-msgstr "Commando 'rollback' heeft twee argumenten."
+msgstr "A 'rollback' parancshoz meg kell adni két paraméter."
 
 #: ../tools/snapper.cc:60
 msgid "Config"
-msgstr "Configuratie"
+msgstr "Beállítás"
 
 #: ../tools/snapper.cc:832
 #, c-format
 msgid "Config '%s' is invalid."
-msgstr "Configuratie '%s' is ongeldig."
+msgstr "A(z) %s beállítás nem érvényes."
 
 #: ../tools/snapper.cc:827
 #, c-format
 msgid "Config '%s' not found."
-msgstr "Configuratie '%s' niet gevonden."
+msgstr "A(z) '%s' beállítás nem található."
 
 #: ../tools/snapper.cc:127
 #, c-format
 msgid "Creating config failed (%s)."
-msgstr "Configuratie aanmaken is mislukt (%s)."
+msgstr "A beállítás létrehozása sikertelen (%s)."
 
 #: ../tools/snapper.cc:210 ../tools/snapper.cc:234
 msgid "Date"
-msgstr "Datum"
+msgstr "Dátum"
 
 #: ../tools/snapper.cc:212 ../tools/snapper.cc:235 ../tools/snapper.cc:260
 msgid "Description"
-msgstr "Beschrijving"
+msgstr "Leírás"
 
 #: ../tools/snapper.cc:595
 #, c-format
 msgid "File '%s' not found in diff."
-msgstr "Bestand '%s' in diff niet gevonden."
+msgstr "A(z) '%s' fájl nem található a diff-ben."
 
 #: ../tools/snapper.cc:488
 #, c-format
 msgid "File '%s' not included in diff."
-msgstr "Bestand '%s' niet in diff ingevoegd."
+msgstr "Az '%s' fájl nem része a diff-nek."
 
 #: ../tools/snapper.cc:780
 #, c-format
 msgid "Invalid table style %d."
-msgstr "Ongeldige tabelstijl %d."
+msgstr "Érvénytelen táblázatstílus: %d."
 
 #: ../tools/snapper.cc:77
 #, c-format
 msgid "Listing configs failed (%s)."
-msgstr "Lijst maken van configuraties is mislukt (%s)."
+msgstr "Beállítások listázása sikertelen (%s)."
 
 #: ../tools/utils/GetOpts.cc:68
 #, c-format
 msgid "Missing argument for command option '%s'."
-msgstr "Argument ontbreekt voor commando-optie '%s'."
+msgstr "A(z) '%s' parancs kapcsolójához hiányzik egy paraméter."
 
 #: ../tools/utils/GetOpts.cc:66
 #, c-format
 msgid "Missing argument for global option '%s'."
-msgstr "Argument ontbreekt voor globale optie '%s'."
+msgstr "A(z) '%s' globális kapcsolóhoz hiányzik egy paraméter."
 
 #: ../tools/snapper.cc:801
 msgid "No command provided."
-msgstr "Geen commando aangeleverd."
+msgstr "Nincs kiadva parancs."
 
 #: ../tools/snapper.cc:500 ../tools/snapper.cc:561
 #, c-format
 msgid "Opening file '%s' failed."
-msgstr "Openen van bestand '%s' is mislukt."
+msgstr "A(z) '%s' fájl megnyitása sikertelen."
 
 #: ../tools/snapper.cc:257
 msgid "Post #"
-msgstr "Post #"
+msgstr "Utáni #"
 
 #: ../tools/snapper.cc:259
 msgid "Post Date"
-msgstr "Postdatum"
+msgstr "Bejegyzés dátuma"
 
 #: ../tools/snapper.cc:209 ../tools/snapper.cc:256
 msgid "Pre #"
-msgstr "Pre #"
+msgstr "Előtti #"
 
 #: ../tools/snapper.cc:258
 msgid "Pre Date"
-msgstr "Pre-datum"
+msgstr "Dátum"
 
 #: ../tools/snapper.cc:145
 #, c-format
 msgid "Snapshot '%u' not found."
-msgstr "Momentopname '%u' niet gevonden."
+msgstr "A(z) '%u' pillanatkép nem található."
 
 #: ../tools/snapper.cc:61
 msgid "Subvolume"
-msgstr "Subvolume"
+msgstr "Alkötet"
 
 #: ../tools/snapper.cc:802 ../tools/snapper.cc:811
 msgid "Try 'snapper help' for more information."
-msgstr "Probeer 'snapper help' voor meer informatie."
+msgstr "További információ a 'snapper help' parancs segítségével érhető el."
 
 #: ../tools/snapper.cc:207
 msgid "Type"
-msgstr "Type"
+msgstr "Típus"
 
 #: ../tools/snapper.cc:662
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
-msgstr "Onbekend opschoonalgoritme '%s'."
+msgstr "Ismeretlen tisztító algoritmus: '%s'."
 
 #: ../tools/snapper.cc:810
 #, c-format
 msgid "Unknown command '%s'."
-msgstr "Onbekend commando '%s'."
+msgstr "Ismeretlen parancs: '%s'."
 
 #: ../tools/utils/GetOpts.cc:59
 #, c-format
 msgid "Unknown global option '%s'."
-msgstr "Onbekende globale optie '%s'."
+msgstr "Ismeretlen globális kapcsoló: '%s'."
 
 #: ../tools/utils/GetOpts.cc:61
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
-msgstr "Onbekende optie '%s' voor commando '%s'."
+msgstr "Ismeretlen '%s' kapcsoló a(z) '%s' parancshoz."
 
 #: ../tools/snapper.cc:336
 msgid "Unknown type of snapshot."
-msgstr "Onbekend type momentopname."
+msgstr "Ismeretlen típusú pillanatkép."
 
 #: ../tools/snapper.cc:195
 msgid "Unknown type of snapshots."
-msgstr "Onbekend type momentopnamen."
+msgstr "Ismeretlen típusú pillanatképek."
 
 #: ../tools/snapper.cc:781
 #, c-format
 msgid "Use an integer number from %d to %d"
-msgstr "Gebruik een geheel getal van %d tot %d"
+msgstr "Használjon egy %d és %d közötti egész számot"
 
 #: ../tools/snapper.cc:704
 msgid "comparing snapshots..."
-msgstr "momentopnamen vergelijken..."
+msgstr "pillanatképek összehasonlítása…"
 
 #: ../tools/snapper.cc:717
 #, c-format
 msgid "creating %s"
-msgstr "%s aanmaken"
+msgstr "%s létrehozása"
 
 #: ../tools/snapper.cc:721
 #, c-format
 msgid "deleting %s"
-msgstr "%s verwijderen"
+msgstr "%s törlése"
 
 #: ../tools/snapper.cc:705
 msgid "done"
-msgstr "gereed"
+msgstr "kész"
 
 #: ../tools/snapper.cc:724
 #, c-format
 msgid "failed to create %s"
-msgstr "aanmaken van %s is mislukt"
+msgstr "a(z) %s létrehozása sikertelen"
 
 #: ../tools/snapper.cc:728
 #, c-format
 msgid "failed to delete %s"
-msgstr "verwijderen van %s is mislukt"
+msgstr "a(z) %s törlése sikertelen"
 
 #: ../tools/snapper.cc:726
 #, c-format
 msgid "failed to modify %s"
-msgstr "wijzigen van %s is mislukt"
+msgstr "a(z) %s módosítása sikertelen"
 
 #: ../tools/snapper.cc:719
 #, c-format
 msgid "modifying %s"
-msgstr "%s wordt gewijzigd"
+msgstr "%s módosítása"
 
 #: ../tools/snapper.cc:714
 msgid "rollback done"
-msgstr "terugdraaien is gereed"
+msgstr "a visszagörgetés elkészült"
 
 #: ../tools/snapper.cc:713
 msgid "running rollback..."
-msgstr "terugdraaien is bezig..."
+msgstr "visszagörgetés futtatása…"
 
 #: ../tools/snapper.cc:678
-msgid ""
-"usage: snapper [--global-options] <command> [--command-options] [command-"
-"arguments]"
-msgstr ""
-"gebruik: snapper [--global-options] <commando> [--commando-options] "
-"[commando-arguments]"
+msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr "használat: snapper [--global-options] <parancs> [--command-options] [command-arguments]"

@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-15 15:29+0200\n"
-"PO-Revision-Date: 2011-06-16 11:20+0200\n"
+"POT-Creation-Date: 2011-08-01 12:33+0200\n"
+"PO-Revision-Date: 2011-06-17 21:19+0200\n"
 "Last-Translator: David Montero Isusi <dark.orion@gmail.com>\n"
 "Language-Team: Spanish <opensuse-translation-es@opensuse.org>\n"
 "Language: \n"
@@ -28,7 +28,7 @@ msgstr "\t--description, -d <description>\tDescripción de la imagen."
 
 #: ../tools/snapper.cc:686
 msgid "\t--disable-filters\t\tDisable filters."
-msgstr ""
+msgstr "\t--disable-filters\t\tDeshabilitar filtros."
 
 #: ../tools/snapper.cc:529
 msgid "\t--file, -f <file>\t\tRead files to rollback from file."

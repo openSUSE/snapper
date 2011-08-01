@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-15 15:29+0200\n"
-"PO-Revision-Date: 2011-05-14 00:01+0400\n"
+"POT-Creation-Date: 2011-08-01 12:33+0200\n"
+"PO-Revision-Date: 2011-07-23 22:34+0400\n"
 "Last-Translator: Alexander Melentiev <minton@opensuse.org>\n"
 "Language-Team: Russian <opensuse-translation-ru@opensuse.org>\n"
 "Language: \n"
@@ -28,7 +28,7 @@ msgstr "\t--description, -d <описание>\tОписание снимка."
 
 #: ../tools/snapper.cc:686
 msgid "\t--disable-filters\t\tDisable filters."
-msgstr ""
+msgstr "\t--disable-filters\t\tОтключить фильтры."
 
 #: ../tools/snapper.cc:529
 msgid "\t--file, -f <file>\t\tRead files to rollback from file."
@@ -75,9 +75,8 @@ msgid "\t--verbose, -v\t\t\tIncrease verbosity."
 msgstr "\t--verbose, -v\t\t\tУвеличить детальность вывода."
 
 #: ../tools/snapper.cc:687
-#, fuzzy
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr "Показать версию программы и выйти"
+msgstr "\t--version\t\t\tВывести версию программы и выйти."
 
 #: ../tools/snapper.cc:627
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -295,22 +294,19 @@ msgstr "Сбой при открытии файла '%s'."
 
 #: ../tools/snapper.cc:257
 msgid "Post #"
-msgstr ""
+msgstr "№ последующего снимка"
 
 #: ../tools/snapper.cc:259
-#, fuzzy
 msgid "Post Date"
-msgstr "Датировано будущим числом"
+msgstr "Дата последующего снимка"
 
 #: ../tools/snapper.cc:209 ../tools/snapper.cc:256
-#, fuzzy
 msgid "Pre #"
-msgstr "Предварительная аутентификация"
+msgstr "№ предварительного снимка"
 
 #: ../tools/snapper.cc:258
-#, fuzzy
 msgid "Pre Date"
-msgstr "Предварительная аутентификация"
+msgstr "Дата предварительного снимка"
 
 #: ../tools/snapper.cc:145
 #, c-format

@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-15 15:29+0200\n"
-"PO-Revision-Date: 2011-05-12 23:00+0100\n"
+"POT-Creation-Date: 2011-08-01 12:33+0200\n"
+"PO-Revision-Date: 2011-07-02 22:58+0100\n"
 "Last-Translator: Andrea Turrini <andrea.turrini@gmail.com>\n"
-"Language-Team: Novell Language <language@novell.com>\n"
+"Language-Team: Italiano <opensuse-translation@opensuse.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,7 +28,7 @@ msgstr "\t--description, -d <descrizione>\tDescrizione dell'istantanea."
 
 #: ../tools/snapper.cc:686
 msgid "\t--disable-filters\t\tDisable filters."
-msgstr ""
+msgstr "\t--disable-filters\t\tDisabilita i filtri."
 
 #: ../tools/snapper.cc:529
 msgid "\t--file, -f <file>\t\tRead files to rollback from file."
@@ -75,9 +75,8 @@ msgid "\t--verbose, -v\t\t\tIncrease verbosity."
 msgstr "\t--verbose, -v\t\t\tIncrementa la verbosità."
 
 #: ../tools/snapper.cc:687
-#, fuzzy
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr "Mostra la versione del programma ed esci"
+msgstr "\t--version\t\t\tStampa la versione ed esce."
 
 #: ../tools/snapper.cc:627
 msgid "\tsnapper cleanup <cleanup-algorithm>"
