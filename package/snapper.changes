@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Aug 01 14:42:16 CEST 2011 - aschnell@suse.de
+
+- preparations for supporting multiple filesystem types
+- version 0.0.7
+
+-------------------------------------------------------------------
 Mon Aug 01 12:34:40 CEST 2011 - aschnell@suse.de
 
 - updated translations
