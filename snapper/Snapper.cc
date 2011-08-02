@@ -542,14 +542,12 @@ namespace snapper
 
     void
     Snapper::addConfig(const string& config_name, const string& subvolume,
-		       const string& template_name)
+		       const string& fstype, const string& template_name)
     {
 	y2mil("Snapper add-config");
 	y2mil("libsnapper version " VERSION);
 	y2mil("config_name:" << config_name << " subvolume:" << subvolume <<
-	      " template_name:" << template_name);
-
-	string fstype = "ext4";
+	      " fstype:" << fstype << " template_name:" << template_name);
 
 	if (config_name.empty() || config_name.find_first_of(" \t") != string::npos)
 	{
@@ -564,6 +562,16 @@ namespace snapper
 	if (access(string(CONFIGTEMPLATEDIR "/" + template_name).c_str(), R_OK) != 0)
 	{
 	    throw AddConfigFailedException("cannot access template config");
+	}
+
+	auto_ptr<Filesystem> filesystem;
+	try
+	{
+	    filesystem.reset(Filesystem::create(fstype, subvolume));
+	}
+	catch (const InvalidConfigException& e)
+	{
+	    throw AddConfigFailedException("invalid filesystem type");
 	}
 
 	try
@@ -602,8 +610,17 @@ namespace snapper
 	    throw AddConfigFailedException("modifying config failed");
 	}
 
-	auto_ptr<Filesystem> filesystem(Filesystem::create(fstype, subvolume));
 	filesystem->addConfig();
+    }
+
+
+    bool
+    Snapper::detectFstype(const string& subvolume, string& fstype)
+    {
+	// TODO
+
+	fstype = "btrfs";
+	return true;
     }
 
 }

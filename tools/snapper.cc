@@ -98,6 +98,7 @@ void
 command_create_config()
 {
     const struct option options[] = {
+	{ "fstype",		required_argument,	0,	'f' },
 	{ "template",		required_argument,	0,	't' },
 	{ 0, 0, 0, 0 }
     };
@@ -111,16 +112,26 @@ command_create_config()
 
     string subvolume = getopts.popArg();
 
+    string fstype = "";
     string template_name = "default";
 
     GetOpts::parsed_opts::const_iterator opt;
 
+    if ((opt = opts.find("fstype")) != opts.end())
+	fstype = opt->second;
+
     if ((opt = opts.find("template")) != opts.end())
 	template_name = opt->second;
 
+    if (fstype.empty() && !Snapper::detectFstype(subvolume, fstype))
+    {
+	cerr << _("Detecting filesystem type failed.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
     try
     {
-	Snapper::addConfig(config_name, subvolume, template_name);
+	Snapper::addConfig(config_name, subvolume, fstype, template_name);
     }
     catch (const AddConfigFailedException& e)
     {

@@ -140,7 +140,9 @@ namespace snapper
 
 	static list<ConfigInfo> getConfigs();
 	static void addConfig(const string& config_name, const string& subvolume,
-			      const string& template_name);
+			      const string& fstype, const string& template_name);
+
+	static bool detectFstype(const string& subvolume, string& fstype);
 
 	const Filesystem* getFilesystem() const { return filesystem; }
 
