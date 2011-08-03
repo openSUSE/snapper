@@ -179,8 +179,6 @@ namespace snapper
 	SystemCmd cmd(CHSNAPBIN " -S " + quote(snapshotFile(num)));
 	if (cmd.retcode() != 0)
 	    throw DeleteSnapshotFailedException();
-
-	// TODO
     }
 
 
@@ -212,6 +210,8 @@ namespace snapper
 	SystemCmd cmd2(CHSNAPBIN " -n " + quote(snapshotFile(num)));
 	if (cmd2.retcode() != 0)
 	    throw UmountSnapshotFailedException();
+
+	rmdir(snapshotDir(num).c_str());
     }
 
 

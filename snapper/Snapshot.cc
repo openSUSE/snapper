@@ -274,15 +274,21 @@ namespace snapper
     unsigned int
     Snapshots::nextNumber()
     {
-	unsigned int num = entries.empty() ? 1 : entries.rbegin()->num + 1;
+	unsigned int num = entries.empty() ? 0 : entries.rbegin()->num;
 
-	int r;
-	while ((r = mkdir((snapper->infosDir() + "/" + decString(num)).c_str(), 0777)) == -1 &&
-	       errno == EEXIST)
+	while (true)
+	{
 	    ++num;
 
-	if (r != 0)
-	{
+	    if (snapper->getFilesystem()->checkFilesystemSnapshot(num))
+		continue;
+
+	    if (mkdir((snapper->infosDir() + "/" + decString(num)).c_str(), 0777) == 0)
+		break;
+
+	    if (errno == EEXIST)
+		continue;
+
 	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
 	    throw IOErrorException();
 	}
@@ -322,6 +328,9 @@ namespace snapper
     void
     Snapshot::mountFilesystemSnapshot() const
     {
+	if (isCurrent())
+	    return;		// TODO?
+
 	snapper->getFilesystem()->mountFilesystemSnapshot(num);
     }
 
@@ -329,6 +338,9 @@ namespace snapper
     void
     Snapshot::umountFilesystemSnapshot() const
     {
+	if (isCurrent())
+	    return;		// TODO?
+
 	snapper->getFilesystem()->umountFilesystemSnapshot(num);
     }
 
