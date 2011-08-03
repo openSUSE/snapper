@@ -26,6 +26,7 @@
 #include <unistd.h>
 #include <fnmatch.h>
 #include <errno.h>
+#include <boost/algorithm/string.hpp>
 
 #include "snapper/File.h"
 #include "snapper/Snapper.h"
@@ -308,6 +309,26 @@ namespace snapper
     {
 	const_iterator ret = lower_bound(entries.begin(), entries.end(), name, file_name_less);
 	return ret->getName() == name ? ret : end();
+    }
+
+
+    Files::iterator
+    Files::findAbsolutePath(const string& filename)
+    {
+	if (!boost::starts_with(filename, getSnapper()->subvolumeDir()))
+	    return end();
+
+	return find(string(filename, getSnapper()->subvolumeDir().size()));
+    }
+
+
+    Files::const_iterator
+    Files::findAbsolutePath(const string& filename) const
+    {
+	if (!boost::starts_with(filename, getSnapper()->subvolumeDir()))
+	    return end();
+
+	return find(string(filename, getSnapper()->subvolumeDir().size()));
     }
 
 

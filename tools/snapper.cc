@@ -568,7 +568,7 @@ command_diff()
 
     if ((opt = opts.find("file")) != opts.end())
     {
-	tmp = files.find(opt->second);
+	tmp = files.findAbsolutePath(opt->second);
 	if (tmp == files.end())
 	{
 	    cerr << sformat(_("File '%s' not included in diff."), opt->second.c_str()) << endl;
@@ -591,7 +591,8 @@ command_diff()
     if (tmp == files.end())
     {
 	for (Files::const_iterator it = files.begin(); it != files.end(); ++it)
-	    fprintf(file, "%s %s\n", statusToString(it->getPreToPostStatus()).c_str(), it->getName().c_str());
+	    fprintf(file, "%s %s\n", statusToString(it->getPreToPostStatus()).c_str(),
+		    it->getAbsolutePath(LOC_SYSTEM).c_str());
     }
     else
     {
@@ -675,7 +676,7 @@ command_rollback()
 		name.erase(0, pos + 1);
 	    }
 
-	    Files::iterator it = files.find(name);
+	    Files::iterator it = files.findAbsolutePath(name);
 	    if (it == files.end())
 	    {
 		cerr << sformat(_("File '%s' not found in diff."), name.c_str()) << endl;

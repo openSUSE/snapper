@@ -163,6 +163,9 @@ namespace snapper
 	iterator find(const string& name);
 	const_iterator find(const string& name) const;
 
+	iterator findAbsolutePath(const string& name);
+	const_iterator findAbsolutePath(const string& name) const;
+
     private:
 
 	void initialize();
