@@ -61,14 +61,15 @@ namespace snapper
     string
     Btrfs::infosDir() const
     {
-	return subvolume + "/.snapshots";
+	return (subvolume == "/" ? "" : subvolume) + "/.snapshots";
     }
 
 
     string
     Btrfs::snapshotDir(unsigned int num) const
     {
-	return subvolume + "/.snapshots/" + decString(num) + "/snapshot";
+	return (subvolume == "/" ? "" : subvolume) + "/.snapshots/" +
+	    decString(num) + "/snapshot";
     }
 
 
@@ -142,7 +143,7 @@ namespace snapper
     string
     Ext4::infosDir() const
     {
-	return subvolume + "/.snapshots/.info";
+	return (subvolume == "/" ? "" : subvolume) + "/.snapshots/.info";
     }
 
 
@@ -156,7 +157,7 @@ namespace snapper
     string
     Ext4::snapshotFile(unsigned int num) const
     {
-	return subvolume + "/.snapshots/" + decString(num);
+	return (subvolume == "/" ? "" : subvolume) + "/.snapshots/" + decString(num);
     }
 
 

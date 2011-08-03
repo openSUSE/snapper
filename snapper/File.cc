@@ -315,20 +315,30 @@ namespace snapper
     Files::iterator
     Files::findAbsolutePath(const string& filename)
     {
-	if (!boost::starts_with(filename, getSnapper()->subvolumeDir()))
+	string subvolume = getSnapper()->subvolumeDir();
+
+	if (!boost::starts_with(filename, subvolume))
 	    return end();
 
-	return find(string(filename, getSnapper()->subvolumeDir().size()));
+	if (subvolume == "/")
+	    return find(filename);
+	else
+	    return find(string(filename, subvolume.size()));
     }
 
 
     Files::const_iterator
     Files::findAbsolutePath(const string& filename) const
     {
-	if (!boost::starts_with(filename, getSnapper()->subvolumeDir()))
+	string subvolume = getSnapper()->subvolumeDir();
+
+	if (!boost::starts_with(filename, subvolume))
 	    return end();
 
-	return find(string(filename, getSnapper()->subvolumeDir().size()));
+	if (subvolume == "/")
+	    return find(filename);
+	else
+	    return find(string(filename, subvolume.size()));
     }
 
 
