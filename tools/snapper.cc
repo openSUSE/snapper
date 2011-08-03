@@ -1,3 +1,24 @@
+/*
+ * Copyright (c) 2011 Novell, Inc.
+ *
+ * All Rights Reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of version 2 of the GNU General Public License as published
+ * by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, contact Novell, Inc.
+ *
+ * To contact Novell about this file by physical or electronic mail, you may
+ * find current contact information at www.novell.com.
+ */
+
 
 #include <stdlib.h>
 #include <string.h>
@@ -452,6 +473,60 @@ command_delete()
 
 
 void
+help_mount()
+{
+    cout << _("  Mount snapshot:") << endl
+	 << _("\tsnapper mount <number>") << endl
+	 << endl;
+}
+
+
+void
+command_mount()
+{
+    getopts.parse("mount", GetOpts::no_options);
+    if (!getopts.hasArgs())
+    {
+	cerr << _("Command 'mount' needs at least one argument.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    while (getopts.hasArgs())
+    {
+	Snapshots::iterator snapshot = readNum(getopts.popArg());
+	snapshot->mountFilesystemSnapshot();
+    }
+}
+
+
+void
+help_umount()
+{
+    cout << _("  Umount snapshot:") << endl
+	 << _("\tsnapper umount <number>") << endl
+	 << endl;
+}
+
+
+void
+command_umount()
+{
+    getopts.parse("mount", GetOpts::no_options);
+    if (!getopts.hasArgs())
+    {
+	cerr << _("Command 'mount' needs at least one argument.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    while (getopts.hasArgs())
+    {
+	Snapshots::iterator snapshot = readNum(getopts.popArg());
+	snapshot->umountFilesystemSnapshot();
+    }
+}
+
+
+void
 help_diff()
 {
     cout << _("  Comparing snapshots:") << endl
@@ -704,6 +779,8 @@ command_help()
     help_create();
     help_modify();
     help_delete();
+    // help_mount();	// secret until ext4 finished
+    // help_umount();	// secret until ext4 finished
     help_diff();
     help_rollback();
     help_cleanup();
@@ -755,6 +832,8 @@ main(int argc, char** argv)
     cmds["create"] = command_create;
     cmds["modify"] = command_modify;
     cmds["delete"] = command_delete;
+    cmds["mount"] = command_mount;
+    cmds["umount"] = command_umount;
     cmds["diff"] = command_diff;
     cmds["rollback"] = command_rollback;
     cmds["cleanup"] = command_cleanup;
