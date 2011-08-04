@@ -54,9 +54,7 @@ namespace snapper
     {
 	SystemCmd cmd2(BTRFSBIN " subvolume create " + quote(subvolume + "/.snapshots"));
 	if (cmd2.retcode() != 0)
-	{
 	    throw AddConfigFailedException("creating btrfs snapshot failed");
-	}
     }
 
 
@@ -132,6 +130,7 @@ namespace snapper
 	}
 	else if (errno != EEXIST)
 	{
+	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
 	    throw AddConfigFailedException("mkdir failed");
 	}
 
@@ -144,6 +143,7 @@ namespace snapper
 	}
 	else if (errno != EEXIST)
 	{
+	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
 	    throw AddConfigFailedException("mkdir failed");
 	}
     }
@@ -235,7 +235,10 @@ namespace snapper
 
 	int r1 = mkdir(snapshotDir(num).c_str(), 0755);
 	if (r1 != 0 && errno != EEXIST)
+	{
+	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
 	    throw MountSnapshotFailedException();
+	}
 
 	SystemCmd cmd2(MOUNTBIN " -t ext4 -r -o loop,noload " + quote(snapshotFile(num)) +
 		       " " + quote(snapshotDir(num)));
