@@ -24,6 +24,7 @@
 #include <sys/types.h>
 #include <glob.h>
 #include <string.h>
+#include <mntent.h>
 #include <boost/algorithm/string.hpp>
 
 #include "config.h"
@@ -614,13 +615,61 @@ namespace snapper
     }
 
 
+    static bool
+    is_subpath(const string& a, const string& b)
+    {
+	if (b == "/")
+	    return true;
+
+	size_t len = b.length();
+
+	if (len > a.length())
+	    return false;
+
+	return (len == a.length() || a[len] == '/') && a.compare(0, len, b) == 0;
+    }
+
+
     bool
     Snapper::detectFstype(const string& subvolume, string& fstype)
     {
-	// TODO
+	y2mil("subvolume:" << subvolume);
 
-	fstype = "btrfs";
-	return true;
+	if (!boost::starts_with(subvolume, "/") || !checkDir(subvolume))
+	    return false;
+
+	FILE* f = setmntent("/etc/mtab", "r");
+	if (!f)
+	{
+	    y2err("setmntent failed");
+	    return false;
+	}
+
+	fstype.clear();
+
+	string best_match;
+
+	struct mntent* m;
+	while ((m = getmntent(f)))
+	{
+	    if (strcmp(m->mnt_type, "rootfs") == 0)
+		continue;
+
+	    if (strlen(m->mnt_dir) > best_match.length() && is_subpath(subvolume, m->mnt_dir))
+	    {
+		best_match = m->mnt_dir;
+		fstype = m->mnt_type;
+	    }
+	}
+
+	endmntent(f);
+
+	if (fstype == "ext4dev")
+	    fstype = "ext4";
+
+	y2mil("fstype:" << fstype);
+
+	return !best_match.empty();
     }
 
 }
