@@ -1,7 +1,7 @@
 .TH "snapper" "8" @VERSION@ "snapper" "System Tools"
 .SH "NAME"
 .LP
-snapper - Command\-line program for btrfs snapshot management
+snapper - Command\-line program for filesystem snapshot management
 
 .SH "SYNTAX"
 .LP
@@ -12,16 +12,17 @@ snapper \fBhelp\fR
 
 .SH "DESCRIPTION"
 .LP
-Snapper is a command\-line program for btrfs snapshot management. It can
-create, delete and compare snapshots and rollback changes between snapshots.
+Snapper is a command\-line program for filesystem snapshot management. It can
+create, delete and compare snapshots and rollback changes between
+snapshots. Supported filesystems are btrfs and ext4.
 
 .SH CONCEPTS
 
 .SS Configurations
 .LP
-For each btrfs subvolume that should be snapshotted by snapper a configuration
-file is required. The complete setup can be done with the create-config
-command.
+For each filesystem or subvolume that should be snapshotted by snapper a
+configuration file is required. The complete setup can be done with the
+create-config command.
 
 .SS Snapshots
 .LP
@@ -36,7 +37,7 @@ filesystem before and after a modification.
 \fBsingle\fR - These snapshots have no special relationship to other
 snapshots.
 .LP
-Note that btrfs\-wise all three types are the same.
+Note that filesystem\-wise all three types are the same.
 
 .SS Automatic Snapshot Creation
 Next to manual snapshot creation snapshots are also created automatically.
@@ -70,7 +71,7 @@ Suppress normal output. Error messages will still be printed, though.
 Increase verbosity.
 .TP
 .I \-t, \-\-table\-style
-Specifies table style to use. Table style is identified by an integer number.
+Specifies table style. Table style is identified by an integer number.
 .TP
 .I \-c, \-\-config <name>
 Use specified configuration instead of the default.
@@ -100,7 +101,11 @@ List available configurations.
 
 .TP
 .B create-config [options] <subvolume>
-Create a new configuration for a btrfs subvolume.
+Create a new configuration for a filesystem or subvolume.
+.TP
+\fI\-f, \-\-fstype\fR <fstype>
+Manually set filesystem type. Supported values are btrfs and ext4. Without
+this option snapper detect the filesystem.
 .TP
 \fI\-t, \-\-template\fR <name>
 Name of template for the new configuration file.
@@ -141,6 +146,14 @@ New description for snapshot.
 .TP
 .B delete <number>
 Delete a snapshot.
+
+.TP
+.B mount <number>
+Mount a snapshot. Not required for all filesystem types.
+
+.TP
+.B umount <number>
+Unmount a snapshot. Not required for all filesystem types.
 
 .TP
 .B diff [options] <number1> <number2>

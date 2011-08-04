@@ -110,6 +110,7 @@ help_create_config()
 	 << _("\tsnapper create-config <subvolume>") << endl
 	 << endl
 	 << _("    Options for 'create-config' command:") << endl
+	 << _("\t--fstype, -f <fstype>\t\tManually set filesystem type.") << endl
 	 << _("\t--template, -t <name>\t\tName of config template to use.") << endl
 	 << endl;
 }
@@ -785,8 +786,8 @@ command_help()
     help_create();
     help_modify();
     help_delete();
-    // help_mount();	// secret until ext4 finished
-    // help_umount();	// secret until ext4 finished
+    help_mount();
+    help_umount();
     help_diff();
     help_rollback();
     help_cleanup();

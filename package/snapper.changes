@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Aug 04 20:51:59 CEST 2011 - aschnell@suse.de
+
+- added experimental ext4 support
+
+-------------------------------------------------------------------
 Mon Aug 01 14:42:16 CEST 2011 - aschnell@suse.de
 
 - preparations for supporting multiple filesystem types
