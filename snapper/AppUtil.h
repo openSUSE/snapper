@@ -53,6 +53,8 @@ bool checkDir(const string& Path_Cv);
     int readlink(const string& path, string& buf);
     int symlink(const string& oldpath, const string& newpath);
 
+    string realpath(const string& path);
+
 template<class StreamType>
 void classic(StreamType& stream)
 {

@@ -331,6 +331,18 @@ void initDefaultLogger()
 
 
     string
+    realpath(const string& path)
+    {
+	char* buf = ::realpath(path.c_str(), NULL);
+	if (!buf)
+	    return string();
+	string s(buf);
+	free(buf);
+	return s;
+    }
+
+
+    string
     sformat(const string& format, ...)
     {
 	char* result;
