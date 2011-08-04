@@ -51,13 +51,14 @@ namespace snapper
 	virtual string infosDir() const = 0;
 	virtual string snapshotDir(unsigned int num) const = 0;
 
-	virtual void createFilesystemSnapshot(unsigned int num) const = 0;
-	virtual void deleteFilesystemSnapshot(unsigned int num) const = 0;
+	virtual void createSnapshot(unsigned int num) const = 0;
+	virtual void deleteSnapshot(unsigned int num) const = 0;
 
-	virtual void mountFilesystemSnapshot(unsigned int num) const = 0;
-	virtual void umountFilesystemSnapshot(unsigned int num) const = 0;
+	virtual bool isSnapshotMounted(unsigned int num) const = 0;
+	virtual void mountSnapshot(unsigned int num) const = 0;
+	virtual void umountSnapshot(unsigned int num) const = 0;
 
-	virtual bool checkFilesystemSnapshot(unsigned int num) const = 0;
+	virtual bool checkSnapshot(unsigned int num) const = 0;
 
     protected:
 
@@ -79,13 +80,14 @@ namespace snapper
 	virtual string infosDir() const;
 	virtual string snapshotDir(unsigned int num) const;
 
-	virtual void createFilesystemSnapshot(unsigned int num) const;
-	virtual void deleteFilesystemSnapshot(unsigned int num) const;
+	virtual void createSnapshot(unsigned int num) const;
+	virtual void deleteSnapshot(unsigned int num) const;
 
-	virtual void mountFilesystemSnapshot(unsigned int num) const;
-	virtual void umountFilesystemSnapshot(unsigned int num) const;
+	virtual bool isSnapshotMounted(unsigned int num) const;
+	virtual void mountSnapshot(unsigned int num) const;
+	virtual void umountSnapshot(unsigned int num) const;
 
-	virtual bool checkFilesystemSnapshot(unsigned int num) const;
+	virtual bool checkSnapshot(unsigned int num) const;
 
     };
 
@@ -104,13 +106,14 @@ namespace snapper
 	virtual string snapshotDir(unsigned int num) const;
 	virtual string snapshotFile(unsigned int num) const;
 
-	virtual void createFilesystemSnapshot(unsigned int num) const;
-	virtual void deleteFilesystemSnapshot(unsigned int num) const;
+	virtual void createSnapshot(unsigned int num) const;
+	virtual void deleteSnapshot(unsigned int num) const;
 
-	virtual void mountFilesystemSnapshot(unsigned int num) const;
-	virtual void umountFilesystemSnapshot(unsigned int num) const;
+	virtual bool isSnapshotMounted(unsigned int num) const;
+	virtual void mountSnapshot(unsigned int num) const;
+	virtual void umountSnapshot(unsigned int num) const;
 
-	virtual bool checkFilesystemSnapshot(unsigned int num) const;
+	virtual bool checkSnapshot(unsigned int num) const;
 
     };
 

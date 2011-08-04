@@ -54,6 +54,12 @@ namespace snapper
     };
 
 
+    struct IsSnapshotMountedFailedException : public std::exception
+    {
+	explicit IsSnapshotMountedFailedException() throw() {}
+	virtual const char* what() const throw() { return "is snapshot mounted failed"; }
+    };
+
     struct MountSnapshotFailedException : public std::exception
     {
 	explicit MountSnapshotFailedException() throw() {}

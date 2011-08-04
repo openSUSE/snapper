@@ -149,7 +149,7 @@ namespace snapper
 
 	    getChildValue(node, "cleanup", snapshot.cleanup);
 
-	    if (!snapper->getFilesystem()->checkFilesystemSnapshot(num))
+	    if (!snapper->getFilesystem()->checkSnapshot(num))
 	    {
 		y2err("snapshot check failed. not adding snapshot " << num);
 		continue;
@@ -280,7 +280,7 @@ namespace snapper
 	{
 	    ++num;
 
-	    if (snapper->getFilesystem()->checkFilesystemSnapshot(num))
+	    if (snapper->getFilesystem()->checkSnapshot(num))
 		continue;
 
 	    if (mkdir((snapper->infosDir() + "/" + decString(num)).c_str(), 0777) == 0)
@@ -329,9 +329,9 @@ namespace snapper
     Snapshot::mountFilesystemSnapshot() const
     {
 	if (isCurrent())
-	    return;		// TODO?
+	    return;
 
-	snapper->getFilesystem()->mountFilesystemSnapshot(num);
+	snapper->getFilesystem()->mountSnapshot(num);
     }
 
 
@@ -339,23 +339,30 @@ namespace snapper
     Snapshot::umountFilesystemSnapshot() const
     {
 	if (isCurrent())
-	    return;		// TODO?
+	    return;
 
-	snapper->getFilesystem()->umountFilesystemSnapshot(num);
+	snapper->getFilesystem()->umountSnapshot(num);
     }
 
 
     void
     Snapshot::createFilesystemSnapshot() const
     {
-	snapper->getFilesystem()->createFilesystemSnapshot(num);
+	if (isCurrent())
+	    throw IllegalSnapshotException();
+
+	snapper->getFilesystem()->createSnapshot(num);
     }
 
 
     void
     Snapshot::deleteFilesystemSnapshot() const
     {
-	snapper->getFilesystem()->deleteFilesystemSnapshot(num);
+	if (isCurrent())
+	    throw IllegalSnapshotException();
+
+	snapper->getFilesystem()->umountSnapshot(num);
+	snapper->getFilesystem()->deleteSnapshot(num);
     }
 
 

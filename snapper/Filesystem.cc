@@ -20,9 +20,11 @@
  */
 
 
+#include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <errno.h>
+#include <mntent.h>
 
 #include "snapper/Filesystem.h"
 #include "snapper/Snapper.h"
@@ -74,7 +76,7 @@ namespace snapper
 
 
     void
-    Btrfs::createFilesystemSnapshot(unsigned int num) const
+    Btrfs::createSnapshot(unsigned int num) const
     {
 	SystemCmd cmd(BTRFSBIN " subvolume snapshot " + quote(subvolume) + " " +
 		      quote(snapshotDir(num)));
@@ -84,7 +86,7 @@ namespace snapper
 
 
     void
-    Btrfs::deleteFilesystemSnapshot(unsigned int num) const
+    Btrfs::deleteSnapshot(unsigned int num) const
     {
 	SystemCmd cmd(BTRFSBIN " subvolume delete " + quote(snapshotDir(num)));
 	if (cmd.retcode() != 0)
@@ -92,20 +94,27 @@ namespace snapper
     }
 
 
+    bool
+    Btrfs::isSnapshotMounted(unsigned int num) const
+    {
+	return true;
+    }
+
+
     void
-    Btrfs::mountFilesystemSnapshot(unsigned int num) const
+    Btrfs::mountSnapshot(unsigned int num) const
     {
     }
 
 
     void
-    Btrfs::umountFilesystemSnapshot(unsigned int num) const
+    Btrfs::umountSnapshot(unsigned int num) const
     {
     }
 
 
     bool
-    Btrfs::checkFilesystemSnapshot(unsigned int num) const
+    Btrfs::checkSnapshot(unsigned int num) const
     {
 	return checkDir(snapshotDir(num));
     }
@@ -162,7 +171,7 @@ namespace snapper
 
 
     void
-    Ext4::createFilesystemSnapshot(unsigned int num) const
+    Ext4::createSnapshot(unsigned int num) const
     {
 	SystemCmd cmd1(TOUCHBIN " " + quote(snapshotFile(num)));
 	if (cmd1.retcode() != 0)
@@ -175,7 +184,7 @@ namespace snapper
 
 
     void
-    Ext4::deleteFilesystemSnapshot(unsigned int num) const
+    Ext4::deleteSnapshot(unsigned int num) const
     {
 	SystemCmd cmd(CHSNAPBIN " -S " + quote(snapshotFile(num)));
 	if (cmd.retcode() != 0)
@@ -183,9 +192,43 @@ namespace snapper
     }
 
 
-    void
-    Ext4::mountFilesystemSnapshot(unsigned int num) const
+    bool
+    Ext4::isSnapshotMounted(unsigned int num) const
     {
+	FILE* f = setmntent("/etc/mtab", "r");
+	if (!f)
+	{
+	    y2err("setmntent failed");
+	    throw IsSnapshotMountedFailedException();
+	}
+
+	bool mounted = false;
+
+	struct mntent* m;
+	while ((m = getmntent(f)))
+	{
+	    if (strcmp(m->mnt_type, "rootfs") == 0)
+		continue;
+
+	    if (m->mnt_dir == snapshotDir(num))
+	    {
+		mounted = true;
+		break;
+	    }
+	}
+
+	endmntent(f);
+
+	return mounted;
+    }
+
+
+    void
+    Ext4::mountSnapshot(unsigned int num) const
+    {
+	if (isSnapshotMounted(num))
+	    return;
+
 	SystemCmd cmd1(CHSNAPBIN " +n " + quote(snapshotFile(num)));
 	if (cmd1.retcode() != 0)
 	    throw MountSnapshotFailedException();
@@ -202,8 +245,11 @@ namespace snapper
 
 
     void
-    Ext4::umountFilesystemSnapshot(unsigned int num) const
+    Ext4::umountSnapshot(unsigned int num) const
     {
+	if (!isSnapshotMounted(num))
+	    return;
+
 	SystemCmd cmd1(UMOUNTBIN " " + quote(snapshotDir(num)));
 	if (cmd1.retcode() != 0)
 	    throw UmountSnapshotFailedException();
@@ -217,7 +263,7 @@ namespace snapper
 
 
     bool
-    Ext4::checkFilesystemSnapshot(unsigned int num) const
+    Ext4::checkSnapshot(unsigned int num) const
     {
 	return checkNormalFile(snapshotFile(num));
     }
