@@ -131,7 +131,12 @@ command_create_config()
 	exit(EXIT_FAILURE);
     }
 
-    string subvolume = getopts.popArg();
+    string subvolume = realpath(getopts.popArg());
+    if (subvolume.empty())
+    {
+	cerr << _("Invalid subvolume.") << endl;
+	exit(EXIT_FAILURE);
+    }
 
     string fstype = "";
     string template_name = "default";
