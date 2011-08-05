@@ -655,7 +655,7 @@ namespace snapper
 	    if (strcmp(m->mnt_type, "rootfs") == 0)
 		continue;
 
-	    if (strlen(m->mnt_dir) > best_match.length() && is_subpath(subvolume, m->mnt_dir))
+	    if (strlen(m->mnt_dir) >= best_match.length() && is_subpath(subvolume, m->mnt_dir))
 	    {
 		best_match = m->mnt_dir;
 		fstype = m->mnt_type;
