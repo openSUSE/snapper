@@ -63,7 +63,7 @@ Summary:	Library for filesystem snapshot management
 Group:		System/Libraries
 Requires:	diffutils util-linux
 PreReq:		%fillup_prereq
-Supplements:	btrfsprogs e2fsprogs
+Supplements:	btrfsprogs
 
 %description -n libsnapper@LIBVERSION_MAJOR@
 This package contains libsnapper, a library for filesystem snapshot management.
