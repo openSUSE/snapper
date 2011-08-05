@@ -192,6 +192,9 @@ Directory containing configuration templates.
 .TP
 .B /etc/snapper/filters
 Directory containing filter files.
+.TP
+.B /var/log/snapper.log
+Logfile. Please include this file in bug reports.
 
 .SH "HOMEPAGE"
 .LP
