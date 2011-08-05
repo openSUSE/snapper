@@ -3,7 +3,6 @@ Type=Application
 Categories=Settings;System;Qt;X-SuSE-YaST;X-SuSE-YaST-Misc;
 
 X-KDE-ModuleType=Library
-X-KDE-RootOnly=true
 X-KDE-HasReadOnlyMode=true
 X-KDE-Library=yast2
 X-SuSE-YaST-Call=snapper
