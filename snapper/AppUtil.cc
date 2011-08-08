@@ -174,7 +174,7 @@ testLogLevel(LogLevel level)
     switch (level)
     {
 	case DEBUG:
-	    return curLevel >= ::blocxx::E_DEBUG_LEVEL;
+	    return false; // curLevel >= ::blocxx::E_DEBUG_LEVEL;
 	case MILESTONE:
 	    return curLevel >= ::blocxx::E_INFO_LEVEL;
 	case WARNING:
