@@ -359,8 +359,10 @@ command_create()
 	exit(EXIT_FAILURE);
     }
 
+    const Snapshots& snapshots = sh->getSnapshots();
+
     SnapshotType type = SINGLE;
-    Snapshots::const_iterator snap1;
+    Snapshots::const_iterator snap1 = snapshots.end();
     string description;
     bool print_number = false;
     string cleanup;
@@ -387,6 +389,12 @@ command_create()
 
     if ((opt = opts.find("cleanup-algorithm")) != opts.end())
 	cleanup = opt->second;
+
+    if (type == POST && (snap1 == snapshots.end() || snap1->isCurrent()))
+    {
+	cerr << _("Missing or invalid pre-number.") << endl;
+	exit(EXIT_FAILURE);
+    }
 
     switch (type)
     {
