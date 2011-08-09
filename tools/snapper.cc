@@ -173,9 +173,15 @@ readNum(const string& str)
 {
     Snapshots& snapshots = sh->getSnapshots();
 
+    istringstream s(str);
     unsigned int num = 0;
-    if (str != "current")
-	str >> num;
+    s >> num;
+
+    if (s.fail() || !s.eof())
+    {
+	cerr << sformat(_("Invalid snapshot '%s'."), str.c_str()) << endl;
+	exit(EXIT_FAILURE);
+    }
 
     Snapshots::iterator snap = snapshots.find(num);
     if (snap == snapshots.end())
