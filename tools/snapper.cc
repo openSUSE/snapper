@@ -311,8 +311,8 @@ command_list()
 		TableRow row;
 		row.add(decString(it1->getNum()));
 		row.add(decString(it2->getNum()));
-		row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), false, false));
-		row.add(it2->isCurrent() ? "" : datetime(it2->getDate(), false, false));
+		row.add(datetime(it1->getDate(), false, false));
+		row.add(datetime(it2->getDate(), false, false));
 		row.add(it1->getDescription());
 		table.add(row);
 	    }
@@ -451,6 +451,11 @@ command_modify()
     }
 
     Snapshots::iterator snapshot = readNum(getopts.popArg());
+    if (snapshot->isCurrent())
+    {
+	cerr << _("Invalid snapshot.") << endl;
+	exit(EXIT_FAILURE);
+    }
 
     GetOpts::parsed_opts::const_iterator opt;
 
@@ -481,6 +486,12 @@ command_delete()
     while (getopts.hasArgs())
     {
 	Snapshots::iterator snapshot = readNum(getopts.popArg());
+	if (snapshot->isCurrent())
+	{
+	    cerr << _("Invalid snapshot.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+
 	sh->deleteSnapshot(snapshot);
     }
 }
@@ -508,6 +519,12 @@ command_mount()
     while (getopts.hasArgs())
     {
 	Snapshots::iterator snapshot = readNum(getopts.popArg());
+	if (snapshot->isCurrent())
+	{
+	    cerr << _("Invalid snapshot.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+
 	snapshot->mountFilesystemSnapshot();
     }
 }
@@ -535,6 +552,12 @@ command_umount()
     while (getopts.hasArgs())
     {
 	Snapshots::iterator snapshot = readNum(getopts.popArg());
+	if (snapshot->isCurrent())
+	{
+	    cerr << _("Invalid snapshot.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+
 	snapshot->umountFilesystemSnapshot();
     }
 }
