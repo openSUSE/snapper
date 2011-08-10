@@ -300,7 +300,7 @@ namespace snapper
     Files::find(const string& name)
     {
 	iterator ret = lower_bound(entries.begin(), entries.end(), name, file_name_less);
-	return ret->getName() == name ? ret : end();
+	return (ret != end() && ret->getName() == name) ? ret : end();
     }
 
 
@@ -308,7 +308,7 @@ namespace snapper
     Files::find(const string& name) const
     {
 	const_iterator ret = lower_bound(entries.begin(), entries.end(), name, file_name_less);
-	return ret->getName() == name ? ret : end();
+	return (ret != end() && ret->getName() == name) ? ret : end();
     }
 
 
