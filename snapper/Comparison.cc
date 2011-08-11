@@ -36,7 +36,7 @@ namespace snapper
     {
 	if (snapshot1 == snapper->getSnapshots().end() ||
 	    snapshot2 == snapper->getSnapshots().end() ||
-	    snapshot1 == snapshot2 || snapshot1->isCurrent())
+	    snapshot1 == snapshot2)
 	    throw IllegalSnapshotException();
 
 	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());

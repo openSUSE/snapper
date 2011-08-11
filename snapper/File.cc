@@ -643,6 +643,9 @@ namespace snapper
     bool
     File::doUndo()
     {
+	if (comparison->getSnapshot1()->isCurrent())
+	    throw IllegalSnapshotException();
+
 	if (getSnapper()->getUndoCallback())
 	{
 	    switch (getAction())
@@ -701,6 +704,9 @@ namespace snapper
     UndoStatistic
     Files::getUndoStatistic() const
     {
+	if (comparison->getSnapshot1()->isCurrent())
+	    throw IllegalSnapshotException();
+
 	UndoStatistic rs;
 
 	for (vector<File>::const_iterator it = entries.begin(); it != entries.end(); ++it)
@@ -723,6 +729,9 @@ namespace snapper
     bool
     Files::doUndo()
     {
+	if (comparison->getSnapshot1()->isCurrent())
+	    throw IllegalSnapshotException();
+
 	y2mil("begin doUndo");
 
 	if (getSnapper()->getUndoCallback())

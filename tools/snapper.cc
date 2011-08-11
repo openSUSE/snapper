@@ -207,9 +207,9 @@ readNums(const string& str)
     Snapshots::iterator snap1 = readNum(str.substr(0, pos));
     Snapshots::iterator snap2 = readNum(str.substr(pos + 2));
 
-    if (snap1 == snap2 || snap1->isCurrent())
+    if (snap1 == snap2)
     {
-	cerr << _("Invalid snapshots.") << endl;
+	cerr << _("Identical snapshots.") << endl;
 	exit(EXIT_FAILURE);
     }
 
@@ -738,6 +738,12 @@ command_undo()
 	    cerr << sformat(_("Opening file '%s' failed."), opt->second.c_str()) << endl;
 	    exit(EXIT_FAILURE);
 	}
+    }
+
+    if (snaps.first->isCurrent())
+    {
+	cerr << _("Invalid snapshots.") << endl;
+	exit(EXIT_FAILURE);
     }
 
     Comparison comparison(sh, snaps.first, snaps.second);
