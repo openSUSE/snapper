@@ -29,11 +29,11 @@ main()
 
     second_snapshot();
 
-    check_rollback_statistics(3, 0, 0);
+    check_undo_statistics(3, 0, 0);
 
-    rollback();
+    undo();
 
-    check_rollback_errors(0, 0, 0);
+    check_undo_errors(0, 0, 0);
 
     check_first();
 

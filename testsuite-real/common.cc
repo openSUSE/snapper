@@ -40,10 +40,10 @@ struct CompareCallbackImpl : public CompareCallback
 CompareCallbackImpl compare_callback_impl;
 
 
-struct RollbackCallbackImpl : public RollbackCallback
+struct UndoCallbackImpl : public UndoCallback
 {
-    void start() { cout << "running rollback..." << endl; }
-    void stop() { cout << "rollback done" << endl; }
+    void start() { cout << "undoing..." << endl; }
+    void stop() { cout << "undoing done" << endl; }
 
     void createInfo(const string& name) { cout << "creating " << name << endl; }
     void modifyInfo(const string& name) { cout << "modifying " << name << endl; }
@@ -54,7 +54,7 @@ struct RollbackCallbackImpl : public RollbackCallback
     void deleteError(const string& name) { cout << "failed to delete " << name << endl; numDeleteErrors++; }
 };
 
-RollbackCallbackImpl rollback_callback_impl;
+UndoCallbackImpl undo_callback_impl;
 
 
 void
@@ -68,7 +68,7 @@ setup()
     sh = createSnapper("testsuite");
 
     sh->setCompareCallback(&compare_callback_impl);
-    sh->setRollbackCallback(&rollback_callback_impl);
+    sh->setUndoCallback(&undo_callback_impl);
 }
 
 
@@ -89,15 +89,15 @@ second_snapshot()
 
 
 void
-check_rollback_statistics(unsigned int numCreate, unsigned int numModify, unsigned int numDelete)
+check_undo_statistics(unsigned int numCreate, unsigned int numModify, unsigned int numDelete)
 {
     Comparison comparison(sh, first, second);
 
     Files& files = comparison.getFiles();
     for (Files::iterator it = files.begin(); it != files.end(); ++it)
-	it->setRollback(true);
+	it->setUndo(true);
 
-    RollbackStatistic rs = comparison.getRollbackStatistic();
+    UndoStatistic rs = comparison.getUndoStatistic();
 
     check_equal(rs.numCreate, numCreate);
     check_equal(rs.numModify, numModify);
@@ -106,7 +106,7 @@ check_rollback_statistics(unsigned int numCreate, unsigned int numModify, unsign
 
 
 void
-rollback()
+undo()
 {
     numCreateErrors = numModifyErrors = numDeleteErrors = 0;
 
@@ -114,14 +114,14 @@ rollback()
 
     Files& files = comparison.getFiles();
     for (Files::iterator it = files.begin(); it != files.end(); ++it)
-	it->setRollback(true);
+	it->setUndo(true);
 
-    comparison.doRollback();
+    comparison.doUndo();
 }
 
 
 void
-check_rollback_errors(unsigned int numCreate, unsigned int numModify, unsigned int numDelete)
+check_undo_errors(unsigned int numCreate, unsigned int numModify, unsigned int numDelete)
 {
     check_equal(numCreateErrors, numCreate);
     check_equal(numModifyErrors, numModify);

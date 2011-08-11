@@ -194,6 +194,29 @@ readNum(const string& str)
 }
 
 
+pair<Snapshots::iterator, Snapshots::iterator>
+readNums(const string& str)
+{
+    string::size_type pos = str.find("..");
+    if (pos == string::npos)
+    {
+	cerr << _("Invalid snapshots.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    Snapshots::iterator snap1 = readNum(str.substr(0, pos));
+    Snapshots::iterator snap2 = readNum(str.substr(pos + 2));
+
+    if (snap1 == snap2 || snap1->isCurrent())
+    {
+	cerr << _("Invalid snapshots.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    return pair<Snapshots::iterator, Snapshots::iterator>(snap1, snap2);
+}
+
+
 void
 help_list()
 {
@@ -573,11 +596,10 @@ void
 help_diff()
 {
     cout << _("  Comparing snapshots:") << endl
-	 << _("\tsnapper diff <number1> <number2>") << endl
+	 << _("\tsnapper diff <number1>..<number2>") << endl
 	 << endl
 	 << _("    Options for 'diff' command:") << endl
 	 << _("\t--output, -o <file>\t\tSave diff to file.") << endl
-	 << _("\t--file, -f <file>\t\tRun diff for file.") << endl
 	 << endl;
 }
 
@@ -587,37 +609,23 @@ command_diff()
 {
     const struct option options[] = {
 	{ "output",		required_argument,	0,	'o' },
-	{ "file",		required_argument,	0,	'f' },
 	{ 0, 0, 0, 0 }
     };
 
     GetOpts::parsed_opts opts = getopts.parse("diff", options);
-    if (getopts.numArgs() != 2)
+    if (getopts.numArgs() != 1)
     {
-	cerr << _("Command 'diff' needs two arguments.") << endl;
+	cerr << _("Command 'diff' needs one argument.") << endl;
 	exit(EXIT_FAILURE);
     }
 
     GetOpts::parsed_opts::const_iterator opt;
 
-    Snapshots::const_iterator snap1 = readNum(getopts.popArg());
-    Snapshots::const_iterator snap2 = readNum(getopts.popArg());
+    pair<Snapshots::const_iterator, Snapshots::const_iterator> snaps(readNums(getopts.popArg()));
 
-    Comparison comparison(sh, snap1, snap2);
+    Comparison comparison(sh, snaps.first, snaps.second);
 
     const Files& files = comparison.getFiles();
-
-    Files::const_iterator tmp = files.end();
-
-    if ((opt = opts.find("file")) != opts.end())
-    {
-	tmp = files.findAbsolutePath(opt->second);
-	if (tmp == files.end())
-	{
-	    cerr << sformat(_("File '%s' not included in diff."), opt->second.c_str()) << endl;
-	    exit(EXIT_FAILURE);
-	}
-    }
 
     FILE* file = stdout;
 
@@ -631,18 +639,9 @@ command_diff()
 	}
     }
 
-    if (tmp == files.end())
-    {
-	for (Files::const_iterator it = files.begin(); it != files.end(); ++it)
-	    fprintf(file, "%s %s\n", statusToString(it->getPreToPostStatus()).c_str(),
-		    it->getAbsolutePath(LOC_SYSTEM).c_str());
-    }
-    else
-    {
-	vector<string> lines = tmp->getDiff("--unified --new-file");
-	for (vector<string>::const_iterator it = lines.begin(); it != lines.end(); ++it)
-	    fprintf(file, "%s\n", it->c_str());
-    }
+    for (Files::const_iterator it = files.begin(); it != files.end(); ++it)
+	fprintf(file, "%s %s\n", statusToString(it->getPreToPostStatus()).c_str(),
+		it->getAbsolutePath(LOC_SYSTEM).c_str());
 
     if (file != stdout)
 	fclose(file);
@@ -650,40 +649,88 @@ command_diff()
 
 
 void
-help_rollback()
+help_contentdiff()
 {
-    cout << _("  Rollback snapshots:") << endl
-	 << _("\tsnapper rollback <number1> <number2>") << endl
-	 << endl
-	 << _("    Options for 'rollback' command:") << endl
-	 << _("\t--file, -f <file>\t\tRead files to rollback from file.") << endl
+    cout << _("  Comparing snapshots:") << endl
+	 << _("\tsnapper contentdiff <number1>..<number2> [files]") << endl
 	 << endl;
 }
 
 
 void
-command_rollback()
+command_contentdiff()
+{
+    GetOpts::parsed_opts opts = getopts.parse("contentdiff", GetOpts::no_options);
+
+    GetOpts::parsed_opts::const_iterator opt;
+
+    pair<Snapshots::const_iterator, Snapshots::const_iterator> snaps(readNums(getopts.popArg()));
+
+    Comparison comparison(sh, snaps.first, snaps.second);
+
+    const Files& files = comparison.getFiles();
+
+    if (getopts.numArgs() == 0)
+    {
+	for (Files::const_iterator it1 = files.begin(); it1 != files.end(); ++it1)
+	{
+	    vector<string> lines = it1->getDiff("--unified --new-file");
+	    for (vector<string>::const_iterator it2 = lines.begin(); it2 != lines.end(); ++it2)
+		cout << it2->c_str() << endl;
+	}
+    }
+    else
+    {
+	while (getopts.numArgs() > 0)
+	{
+	    string name = getopts.popArg();
+
+	    Files::const_iterator tmp = files.findAbsolutePath(name);
+	    if (tmp == files.end())
+		continue;
+
+	    vector<string> lines = tmp->getDiff("--unified --new-file");
+	    for (vector<string>::const_iterator it2 = lines.begin(); it2 != lines.end(); ++it2)
+		cout << it2->c_str() << endl;
+	}
+    }
+}
+
+
+void
+help_undo()
+{
+    cout << _("  Undo changes:") << endl
+	 << _("\tsnapper undochange <number1>..<number2> [files]") << endl
+	 << endl
+	 << _("    Options for 'undochange' command:") << endl
+	 << _("\t--input, -i <file>\t\tRead files for which to undo changes from file.") << endl
+	 << endl;
+}
+
+
+void
+command_undo()
 {
     const struct option options[] = {
-	{ "file",		required_argument,	0,	'f' },
+	{ "input",		required_argument,	0,	'i' },
 	{ 0, 0, 0, 0 }
     };
 
-    GetOpts::parsed_opts opts = getopts.parse("rollback", options);
-    if (getopts.numArgs() != 2)
+    GetOpts::parsed_opts opts = getopts.parse("undochange", options);
+    if (getopts.numArgs() < 1)
     {
-	cerr << _("Command 'rollback' needs two arguments.") << endl;
+	cerr << _("Command 'undochange' needs at least one argument.") << endl;
 	exit(EXIT_FAILURE);
     }
 
-    Snapshots::const_iterator snap1 = readNum(getopts.popArg());
-    Snapshots::const_iterator snap2 = readNum(getopts.popArg());
+    pair<Snapshots::const_iterator, Snapshots::const_iterator> snaps(readNums(getopts.popArg()));
 
     FILE* file = NULL;
 
     GetOpts::parsed_opts::const_iterator opt;
 
-    if ((opt = opts.find("file")) != opts.end())
+    if ((opt = opts.find("input")) != opts.end())
     {
 	file = fopen(opt->second.c_str(), "r");
 	if (!file)
@@ -693,7 +740,7 @@ command_rollback()
 	}
     }
 
-    Comparison comparison(sh, snap1, snap2);
+    Comparison comparison(sh, snaps.first, snaps.second);
 
     Files& files = comparison.getFiles();
 
@@ -726,16 +773,32 @@ command_rollback()
 		exit(EXIT_FAILURE);
 	    }
 
-	    it->setRollback(true);
+	    it->setUndo(true);
 	}
     }
     else
     {
-	for (Files::iterator it = files.begin(); it != files.end(); ++it)
-	    it->setRollback(true);
+	if (getopts.numArgs() == 0)
+	{
+	    for (Files::iterator it = files.begin(); it != files.end(); ++it)
+		it->setUndo(true);
+	}
+	else
+	{
+	    while (getopts.numArgs() > 0)
+	    {
+		string name = getopts.popArg();
+
+		Files::iterator tmp = files.findAbsolutePath(name);
+		if (tmp == files.end())
+		    continue;
+
+		tmp->setUndo(true);
+	    }
+	}
     }
 
-    RollbackStatistic rs = comparison.getRollbackStatistic();
+    UndoStatistic rs = comparison.getUndoStatistic();
 
     if (rs.empty())
     {
@@ -746,7 +809,7 @@ command_rollback()
     cout << "create:" << rs.numCreate << " modify:" << rs.numModify << " delete:" << rs.numDelete
 	 << endl;
 
-    comparison.doRollback();
+    comparison.doUndo();
 }
 
 
@@ -826,7 +889,8 @@ command_help()
     help_mount();
     help_umount();
     help_diff();
-    help_rollback();
+    help_contentdiff();
+    help_undo();
     help_cleanup();
 }
 
@@ -840,10 +904,10 @@ struct CompareCallbackImpl : public CompareCallback
 CompareCallbackImpl compare_callback_impl;
 
 
-struct RollbackCallbackImpl : public RollbackCallback
+struct UndoCallbackImpl : public UndoCallback
 {
-    void start() { cout << _("running rollback...") << endl; }
-    void stop() { cout << _("rollback done") << endl; }
+    void start() { cout << _("undoing change...") << endl; }
+    void stop() { cout << _("undoing change done") << endl; }
 
     void createInfo(const string& name)
 	{ if (verbose) cout << sformat(_("creating %s"), name.c_str()) << endl; }
@@ -860,7 +924,7 @@ struct RollbackCallbackImpl : public RollbackCallback
 	{ cerr << sformat(_("failed to delete %s"), name.c_str()) << endl; }
 };
 
-RollbackCallbackImpl rollback_callback_impl;
+UndoCallbackImpl undo_callback_impl;
 
 
 int
@@ -879,7 +943,8 @@ main(int argc, char** argv)
     cmds["mount"] = command_mount;
     cmds["umount"] = command_umount;
     cmds["diff"] = command_diff;
-    cmds["rollback"] = command_rollback;
+    cmds["contentdiff"] = command_contentdiff;
+    cmds["undochange"] = command_undo;
     cmds["cleanup"] = command_cleanup;
     cmds["help"] = command_help;
 
@@ -970,7 +1035,7 @@ main(int argc, char** argv)
 	if (!quiet)
 	{
 	    sh->setCompareCallback(&compare_callback_impl);
-	    sh->setRollbackCallback(&rollback_callback_impl);
+	    sh->setUndoCallback(&undo_callback_impl);
 	}
 
 	(*cmd->second)();

@@ -47,9 +47,9 @@ namespace snapper
 	Files& getFiles() { return files; }
 	const Files& getFiles() const { return files; }
 
-	RollbackStatistic getRollbackStatistic() const;
+	UndoStatistic getUndoStatistic() const;
 
-	bool doRollback();
+	bool doUndo();
 
     private:
 

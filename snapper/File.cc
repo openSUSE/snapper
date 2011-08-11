@@ -45,7 +45,7 @@
 namespace snapper
 {
 
-    std::ostream& operator<<(std::ostream& s, const RollbackStatistic& rs)
+    std::ostream& operator<<(std::ostream& s, const UndoStatistic& rs)
     {
 	s << "numCreate:" << rs.numCreate
 	  << " numModify:" << rs.numModify
@@ -55,14 +55,14 @@ namespace snapper
     }
 
 
-    RollbackStatistic::RollbackStatistic()
+    UndoStatistic::UndoStatistic()
 	: numCreate(0), numModify(0), numDelete(0)
     {
     }
 
 
     bool
-    RollbackStatistic::empty() const
+    UndoStatistic::empty() const
     {
 	return numCreate == 0 && numModify == 0 && numDelete == 0;
     }
@@ -641,15 +641,15 @@ namespace snapper
 
 
     bool
-    File::doRollback()
+    File::doUndo()
     {
-	if (getSnapper()->getRollbackCallback())
+	if (getSnapper()->getUndoCallback())
 	{
 	    switch (getAction())
 	    {
-		case CREATE: getSnapper()->getRollbackCallback()->createInfo(name); break;
-		case MODIFY: getSnapper()->getRollbackCallback()->modifyInfo(name); break;
-		case DELETE: getSnapper()->getRollbackCallback()->deleteInfo(name); break;
+		case CREATE: getSnapper()->getUndoCallback()->createInfo(name); break;
+		case MODIFY: getSnapper()->getUndoCallback()->modifyInfo(name); break;
+		case DELETE: getSnapper()->getUndoCallback()->deleteInfo(name); break;
 	    }
 	}
 
@@ -673,13 +673,13 @@ namespace snapper
 		error = true;
 	}
 
-	if (error && getSnapper()->getRollbackCallback())
+	if (error && getSnapper()->getUndoCallback())
 	{
 	    switch (getAction())
 	    {
-		case CREATE: getSnapper()->getRollbackCallback()->createError(name); break;
-		case MODIFY: getSnapper()->getRollbackCallback()->modifyError(name); break;
-		case DELETE: getSnapper()->getRollbackCallback()->deleteError(name); break;
+		case CREATE: getSnapper()->getUndoCallback()->createError(name); break;
+		case MODIFY: getSnapper()->getUndoCallback()->modifyError(name); break;
+		case DELETE: getSnapper()->getUndoCallback()->deleteError(name); break;
 	    }
 	}
 
@@ -698,14 +698,14 @@ namespace snapper
     }
 
 
-    RollbackStatistic
-    Files::getRollbackStatistic() const
+    UndoStatistic
+    Files::getUndoStatistic() const
     {
-	RollbackStatistic rs;
+	UndoStatistic rs;
 
 	for (vector<File>::const_iterator it = entries.begin(); it != entries.end(); ++it)
 	{
-	    if (it->getRollback())
+	    if (it->getUndo())
 	    {
 		switch (it->getAction())
 		{
@@ -721,39 +721,39 @@ namespace snapper
 
 
     bool
-    Files::doRollback()
+    Files::doUndo()
     {
-	y2mil("begin rollback");
+	y2mil("begin doUndo");
 
-	if (getSnapper()->getRollbackCallback())
-	    getSnapper()->getRollbackCallback()->start();
+	if (getSnapper()->getUndoCallback())
+	    getSnapper()->getUndoCallback()->start();
 
 	for (vector<File>::reverse_iterator it = entries.rbegin(); it != entries.rend(); ++it)
 	{
-	    if (it->getRollback())
+	    if (it->getUndo())
 	    {
 		if (it->getPreToPostStatus() == CREATED)
 		{
-		    it->doRollback();
+		    it->doUndo();
 		}
 	    }
 	}
 
 	for (vector<File>::iterator it = entries.begin(); it != entries.end(); ++it)
 	{
-	    if (it->getRollback())
+	    if (it->getUndo())
 	    {
 		if (it->getPreToPostStatus() != CREATED)
 		{
-		    it->doRollback();
+		    it->doUndo();
 		}
 	    }
 	}
 
-	if (getSnapper()->getRollbackCallback())
-	    getSnapper()->getRollbackCallback()->stop();
+	if (getSnapper()->getUndoCallback())
+	    getSnapper()->getUndoCallback()->stop();
 
-	y2mil("end rollback");
+	y2mil("end doUndo");
 
 	return true;
     }

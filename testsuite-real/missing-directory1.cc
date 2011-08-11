@@ -25,11 +25,11 @@ main()
 
     run_command("rmdir not-here");
 
-    check_rollback_statistics(2, 0, 0);
+    check_undo_statistics(2, 0, 0);
 
-    rollback();
+    undo();
 
-    check_rollback_errors(0, 0, 0);
+    check_undo_errors(0, 0, 0);
 
     check_first();
 

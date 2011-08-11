@@ -20,11 +20,11 @@ main()
 
     run_command("touch not-empty/bad");
 
-    check_rollback_statistics(0, 0, 1);
+    check_undo_statistics(0, 0, 1);
 
-    rollback();
+    undo();
 
-    check_rollback_errors(0, 0, 1);
+    check_undo_errors(0, 0, 1);
 
     exit(EXIT_SUCCESS);
 }

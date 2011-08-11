@@ -24,11 +24,11 @@ main()
     run_command("rmdir wrong-type");
     run_command("touch wrong-type");
 
-    check_rollback_statistics(1, 0, 0);
+    check_undo_statistics(1, 0, 0);
 
-    rollback();
+    undo();
 
-    check_rollback_errors(1, 0, 0);
+    check_undo_errors(1, 0, 0);
 
     exit(EXIT_SUCCESS);
 }

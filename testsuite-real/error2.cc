@@ -23,11 +23,11 @@ main()
 
     run_command("rm not-here");
 
-    check_rollback_statistics(0, 1, 0);
+    check_undo_statistics(0, 1, 0);
 
-    rollback();
+    undo();
 
-    check_rollback_errors(0, 1, 0);
+    check_undo_errors(0, 1, 0);
 
     exit(EXIT_SUCCESS);
 }

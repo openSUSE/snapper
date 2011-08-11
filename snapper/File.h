@@ -57,9 +57,9 @@ namespace snapper
     };
 
 
-    struct RollbackStatistic
+    struct UndoStatistic
     {
-	RollbackStatistic();
+	UndoStatistic();
 
 	bool empty() const;
 
@@ -67,7 +67,7 @@ namespace snapper
 	unsigned int numModify;
 	unsigned int numDelete;
 
-	friend std::ostream& operator<<(std::ostream& s, const RollbackStatistic& rs);
+	friend std::ostream& operator<<(std::ostream& s, const UndoStatistic& rs);
     };
 
 
@@ -78,7 +78,7 @@ namespace snapper
 	File(const Comparison* comparison, const string& name,
 	     unsigned int pre_to_post_status)
 	    : comparison(comparison), name(name), pre_to_post_status(pre_to_post_status),
-	      pre_to_system_status(-1), post_to_system_status(-1), rollback(false)
+	      pre_to_system_status(-1), post_to_system_status(-1), undo(false)
 	{}
 
 	const string& getName() const { return name; }
@@ -93,10 +93,12 @@ namespace snapper
 
 	vector<string> getDiff(const string& options) const;
 
-	bool getRollback() const { return rollback; }
-	void setRollback(bool value) { rollback = value; }
+	bool getUndo() const { return undo; }
+	void setUndo(bool value) { undo = value; }
+	bool doUndo();
 
-	bool doRollback();
+	void setRollback(bool value) __attribute__ ((deprecated)) { setUndo(value); }
+	bool doRollback() __attribute__ ((deprecated)) { return doUndo(); }
 
 	enum Action { CREATE, MODIFY, DELETE };
 
@@ -127,7 +129,7 @@ namespace snapper
 	unsigned int pre_to_system_status; // -1 if invalid
 	unsigned int post_to_system_status; // -1 if invalid
 
-	bool rollback;
+	bool undo;
 
     };
 
@@ -175,9 +177,9 @@ namespace snapper
 	bool save();
 	void filter();
 
-	RollbackStatistic getRollbackStatistic() const;
+	UndoStatistic getUndoStatistic() const;
 
-	bool doRollback();
+	bool doUndo();
 
 	const Comparison* comparison;
 

@@ -36,7 +36,7 @@ namespace snapper
     {
 	if (snapshot1 == snapper->getSnapshots().end() ||
 	    snapshot2 == snapper->getSnapshots().end() ||
-	    snapshot1 == snapshot2)
+	    snapshot1 == snapshot2 || snapshot1->isCurrent())
 	    throw IllegalSnapshotException();
 
 	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
@@ -45,17 +45,17 @@ namespace snapper
     }
 
 
-    RollbackStatistic
-    Comparison::getRollbackStatistic() const
+    UndoStatistic
+    Comparison::getUndoStatistic() const
     {
-	return files.getRollbackStatistic();
+	return files.getUndoStatistic();
     }
 
 
     bool
-    Comparison::doRollback()
+    Comparison::doUndo()
     {
-	return files.doRollback();
+	return files.doUndo();
     }
 
 }

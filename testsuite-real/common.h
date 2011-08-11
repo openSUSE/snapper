@@ -46,11 +46,11 @@ check_failure(const char* str, Type actual, Type expected, const char* file,
 void setup();
 void first_snapshot();
 void second_snapshot();
-void check_rollback_statistics(unsigned int numCreate, unsigned int numModify,
-			       unsigned int numDelete);
-void rollback();
-void check_rollback_errors(unsigned int numCreate, unsigned int numModify,
+void check_undo_statistics(unsigned int numCreate, unsigned int numModify,
 			   unsigned int numDelete);
+void undo();
+void check_undo_errors(unsigned int numCreate, unsigned int numModify,
+		       unsigned int numDelete);
 void check_first();
 
 void run_command(const char* command);

@@ -48,7 +48,7 @@ namespace snapper
 
     Snapper::Snapper(const string& config_name, bool disable_filters)
 	: config_name(config_name), config(NULL), subvolume("/"), filesystem(NULL),
-	  snapshots(this), compare_callback(NULL), rollback_callback(NULL)
+	  snapshots(this), compare_callback(NULL), undo_callback(NULL)
     {
 	y2mil("Snapper constructor");
 	y2mil("libsnapper version " VERSION);

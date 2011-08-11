@@ -48,10 +48,10 @@ namespace snapper
     };
 
 
-    struct RollbackCallback
+    struct UndoCallback
     {
-	RollbackCallback() {}
-	virtual ~RollbackCallback() {}
+	UndoCallback() {}
+	virtual ~UndoCallback() {}
 
 	virtual void start() = 0;
 	virtual void stop() = 0;
@@ -133,8 +133,8 @@ namespace snapper
 	void setCompareCallback(CompareCallback* p) { compare_callback = p; }
 	CompareCallback* getCompareCallback() const { return compare_callback; }
 
-	void setRollbackCallback(RollbackCallback* p) { rollback_callback = p; }
-	RollbackCallback* getRollbackCallback() const { return rollback_callback; }
+	void setUndoCallback(UndoCallback* p) { undo_callback = p; }
+	UndoCallback* getUndoCallback() const { return undo_callback; }
 
 	const vector<string>& getIgnorePatterns() const { return ignore_patterns; }
 
@@ -166,7 +166,7 @@ namespace snapper
 	Snapshots snapshots;
 
 	CompareCallback* compare_callback;
-	RollbackCallback* rollback_callback;
+	UndoCallback* undo_callback;
 
     };
 

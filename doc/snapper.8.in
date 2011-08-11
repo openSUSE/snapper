@@ -13,7 +13,7 @@ snapper \fBhelp\fR
 .SH "DESCRIPTION"
 .LP
 Snapper is a command\-line program for filesystem snapshot management. It can
-create, delete and compare snapshots and rollback changes between
+create, delete and compare snapshots and undo changes between
 snapshots. Supported filesystems are btrfs and ext4.
 
 .SH CONCEPTS
@@ -156,23 +156,26 @@ Mount a snapshot. Not required for all filesystem types.
 Unmount a snapshot. Not required for all filesystem types.
 
 .TP
-.B diff [options] <number1> <number2>
+.B diff [options] <number1>..<number2>
 Compare the snapshots number1 and number2. This will show a list of files and
 directories that have been created, modified or deleted in the time between
 the two snapshots have been made.
 .TP
 \fI\-o, \-\-output\fR <file>
 Write output to file <file>.
-.TP
-\fI\-f, \-\-file\fR <file>
-Compare the file <file> between the two snapshots.
 
 .TP
-.B rollback [options] <number1> <number2>
-Rollback changes done between snapshot number1 and number2.
+.B contentdiff [options] <number1>..<number2> [files]
+Compare the snapshots number1 and number2. This will show a diff of the
+content of files and directories that have been created, modified or deleted
+in the time between the two snapshots have been made.
+
 .TP
-\fI\-f, \-\-file\fR <file>
-Read the files to rollback from the file <file>.
+.B undochange [options] <number1>..<number2> [files]
+Undo changes done between snapshot number1 and number2.
+.TP
+\fI\-i, \-\-input\fR <file>
+Read files for which to undo changes from file <file>.
 
 .TP
 .B cleanup <cleanup-algorithm>

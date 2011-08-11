@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Aug 11 12:09:19 CEST 2011 - aschnell@suse.de
+
+- improvements to command-line interface
+
+-------------------------------------------------------------------
 Thu Aug 04 20:51:59 CEST 2011 - aschnell@suse.de
 
 - added experimental ext4 support
