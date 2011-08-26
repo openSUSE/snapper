@@ -290,25 +290,66 @@ void initDefaultLogger()
     }
 
 
-    int
-    clonefile(const string& dest, const string& src, mode_t mode)
+    bool
+    clonefile(int src_fd, int dest_fd)
     {
-	int src_fd = open(src.c_str(), O_RDONLY | O_LARGEFILE);
-
-	int dest_fd = open(dest.c_str(), O_WRONLY | O_LARGEFILE | O_CREAT | O_TRUNC, mode);
-
 #undef BTRFS_IOCTL_MAGIC
 #define BTRFS_IOCTL_MAGIC 0x94
 #undef BTRFS_IOC_CLONE
 #define BTRFS_IOC_CLONE _IOW (BTRFS_IOCTL_MAGIC, 9, int)
 
-	int ret = ioctl(dest_fd, BTRFS_IOC_CLONE, src_fd);
+	int r1 = ioctl(dest_fd, BTRFS_IOC_CLONE, src_fd);
+	if (r1 != 0)
+	{
+	    y2err("ioctl failed errno:" << errno << " (" << strerror(errno) << ")");
+	}
 
-	close(dest_fd);
+	return r1 == 0;
+    }
 
-	close(src_fd);
 
-	return ret;
+    bool
+    copyfile(int src_fd, int dest_fd)
+    {
+	struct stat src_stat;
+	int r1 = fstat(src_fd, &src_stat);
+	if (r1 != 0)
+	{
+	    y2err("fstat failed errno:" << errno << " (" << strerror(errno) << ")");
+	    return false;
+	}
+
+	posix_fadvise(src_fd, 0, src_stat.st_size, POSIX_FADV_SEQUENTIAL);
+
+	static_assert(sizeof(off_t) >= 8, "off_t is too small");
+
+	const off_t block_size = 4096;
+
+	char block[block_size];
+
+	off_t length = src_stat.st_size;
+	while (length > 0)
+	{
+	    off_t t = min(block_size, length);
+
+	    int r2 = read(src_fd, block, t);
+	    if (r2 != t)
+	    {
+		y2err("read failed errno:" << errno << " (" << strerror(errno) << ")");
+		return false;
+	    }
+
+	    int r3 = write(dest_fd, block, t);
+	    if (r3 != t)
+	    {
+		y2err("write failed errno:" << errno << " (" << strerror(errno) << ")");
+		return false;
+	    }
+
+	    length -= t;
+	}
+
+	return true;
     }
 
 

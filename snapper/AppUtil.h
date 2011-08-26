@@ -48,7 +48,8 @@ bool checkDir(const string& Path_Cv);
 
     FILE* mkstemp(string& path);
 
-    int clonefile(const string& dest, const string& src, mode_t mode);
+    bool clonefile(int src_fd, int dest_fd);
+    bool copyfile(int src_fd, int dest_fd);
 
     int readlink(const string& path, string& buf);
     int symlink(const string& oldpath, const string& newpath);

@@ -26,6 +26,7 @@
 #include <unistd.h>
 #include <fnmatch.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <boost/algorithm/string.hpp>
 
 #include "snapper/File.h"
@@ -517,10 +518,46 @@ namespace snapper
     bool
     File::createFile(mode_t mode, uid_t owner, gid_t group) const
     {
-	// TODO: use clonefile
-	SystemCmd cmd(CPBIN " --preserve=mode,ownership " +
-		      getAbsolutePath(LOC_PRE) + " " + getAbsolutePath(LOC_SYSTEM));
-	return cmd.retcode() == 0;
+	int src_fd = open(getAbsolutePath(LOC_PRE).c_str(), O_RDONLY | O_LARGEFILE);
+	if (src_fd < 0)
+	{
+	    y2err("open failed errno:" << errno << " (" << strerror(errno) << ")");
+	    return false;
+	}
+
+	int dest_fd = open(getAbsolutePath(LOC_SYSTEM).c_str(), O_WRONLY | O_LARGEFILE |
+			   O_CREAT | O_TRUNC, mode);
+	if (dest_fd < 0)
+	{
+	    y2err("open failed errno:" << errno << " (" << strerror(errno) << ")");
+	    return false;
+	}
+
+	int r1 = fchmod(dest_fd, mode);
+	if (r1 != 0)
+	{
+	    y2err("fchmod failed errno:" << errno << " (" << strerror(errno) << ")");
+	    return false;
+	}
+
+	int r2 = fchown(dest_fd, owner, group);
+	if (r2 != 0)
+	{
+	    y2err("fchown failed errno:" << errno << " (" << strerror(errno) << ")");
+	    return false;
+	}
+
+	bool ret = clonefile(src_fd, dest_fd) || copyfile(src_fd, dest_fd);
+	if (!ret)
+	{
+	    y2err("clone and copy failed " << getAbsolutePath(LOC_SYSTEM));
+	}
+
+	close(dest_fd);
+
+	close(src_fd);
+
+	return ret;
     }
 
 
