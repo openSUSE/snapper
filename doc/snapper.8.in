@@ -74,7 +74,8 @@ Increase verbosity.
 Specifies table style. Table style is identified by an integer number.
 .TP
 .I \-c, \-\-config <name>
-Use specified configuration instead of the default.
+Use specified configuration instead of the default configuration. The default
+configuration is named "root".
 .TP
 .I \-\-disable\-filters
 Disable filters.
@@ -101,7 +102,9 @@ List available configurations.
 
 .TP
 .B create-config [options] <subvolume>
-Create a new configuration for a filesystem or subvolume.
+Create a new configuration for a filesystem or subvolume. For this command you
+will likely need to global option \fI--config\fR, see \fBGLOBAL OPTIONS\fR and
+\fBCONCEPTS\fR.
 .TP
 \fI\-f, \-\-fstype\fR <fstype>
 Manually set filesystem type. Supported values are btrfs and ext4. Without
@@ -198,6 +201,15 @@ Directory containing filter files.
 .TP
 .B /var/log/snapper.log
 Logfile. Please include this file in bug reports.
+
+.SH "NOTES"
+.LP
+There is no mechanism to ensure consistency of the files while a snapshot it
+made. E.g. the files of a database can be inconsistence while the database is
+running.
+.LP
+Consistency after undochange is not guaranteed. E.g. when the creation of a
+user is undone there might still exist files from that user.
 
 .SH "HOMEPAGE"
 .LP

@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Aug 29 16:17:11 CEST 2011 - aschnell@suse.de
+
+- improved manpage (bnc #710858)
+
+-------------------------------------------------------------------
 Thu Aug 11 12:09:19 CEST 2011 - aschnell@suse.de
 
 - improvements to command-line interface
