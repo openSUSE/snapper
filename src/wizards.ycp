@@ -90,7 +90,7 @@ any SnapperSequence() {
     ];
 
     Wizard::CreateDialog ();
-
+    Wizard::SetDesktopIcon ("snapper");
     any ret = Sequencer::Run(aliases, sequence);
 
     UI::CloseDialog();
