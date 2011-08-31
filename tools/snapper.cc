@@ -593,29 +593,29 @@ command_umount()
 
 
 void
-help_diff()
+help_status()
 {
     cout << _("  Comparing snapshots:") << endl
-	 << _("\tsnapper diff <number1>..<number2>") << endl
+	 << _("\tsnapper status <number1>..<number2>") << endl
 	 << endl
-	 << _("    Options for 'diff' command:") << endl
-	 << _("\t--output, -o <file>\t\tSave diff to file.") << endl
+	 << _("    Options for 'status' command:") << endl
+	 << _("\t--output, -o <file>\t\tSave status to file.") << endl
 	 << endl;
 }
 
 
 void
-command_diff()
+command_status()
 {
     const struct option options[] = {
 	{ "output",		required_argument,	0,	'o' },
 	{ 0, 0, 0, 0 }
     };
 
-    GetOpts::parsed_opts opts = getopts.parse("diff", options);
+    GetOpts::parsed_opts opts = getopts.parse("status", options);
     if (getopts.numArgs() != 1)
     {
-	cerr << _("Command 'diff' needs one argument.") << endl;
+	cerr << _("Command 'status' needs one argument.") << endl;
 	exit(EXIT_FAILURE);
     }
 
@@ -649,18 +649,18 @@ command_diff()
 
 
 void
-help_contentdiff()
+help_diff()
 {
     cout << _("  Comparing snapshots:") << endl
-	 << _("\tsnapper contentdiff <number1>..<number2> [files]") << endl
+	 << _("\tsnapper diff <number1>..<number2> [files]") << endl
 	 << endl;
 }
 
 
 void
-command_contentdiff()
+command_diff()
 {
-    GetOpts::parsed_opts opts = getopts.parse("contentdiff", GetOpts::no_options);
+    GetOpts::parsed_opts opts = getopts.parse("diff", GetOpts::no_options);
 
     GetOpts::parsed_opts::const_iterator opt;
 
@@ -775,7 +775,7 @@ command_undo()
 	    Files::iterator it = files.findAbsolutePath(name);
 	    if (it == files.end())
 	    {
-		cerr << sformat(_("File '%s' not found in diff."), name.c_str()) << endl;
+		cerr << sformat(_("File '%s' not found."), name.c_str()) << endl;
 		exit(EXIT_FAILURE);
 	    }
 
@@ -894,8 +894,8 @@ command_help()
     help_delete();
     help_mount();
     help_umount();
+    help_status();
     help_diff();
-    help_contentdiff();
     help_undo();
     help_cleanup();
 }
@@ -948,8 +948,8 @@ main(int argc, char** argv)
     cmds["delete"] = command_delete;
     cmds["mount"] = command_mount;
     cmds["umount"] = command_umount;
+    cmds["status"] = command_status;
     cmds["diff"] = command_diff;
-    cmds["contentdiff"] = command_contentdiff;
     cmds["undochange"] = command_undo;
     cmds["cleanup"] = command_cleanup;
     cmds["help"] = command_help;

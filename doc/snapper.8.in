@@ -159,7 +159,7 @@ Mount a snapshot. Not required for all filesystem types.
 Unmount a snapshot. Not required for all filesystem types.
 
 .TP
-.B diff [options] <number1>..<number2>
+.B status [options] <number1>..<number2>
 Compare the snapshots number1 and number2. This will show a list of files and
 directories that have been created, modified or deleted in the time between
 the two snapshots have been made.
@@ -168,7 +168,7 @@ the two snapshots have been made.
 Write output to file <file>.
 
 .TP
-.B contentdiff [options] <number1>..<number2> [files]
+.B diff [options] <number1>..<number2> [files]
 Compare the snapshots number1 and number2. This will show a diff of the
 content of files and directories that have been created, modified or deleted
 in the time between the two snapshots have been made.

@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Aug 31 15:44:42 CEST 2011 - aschnell@suse.de
+
+- renamed snapper command diff to status and contentdiff to diff
+
+-------------------------------------------------------------------
 Mon Aug 29 16:17:11 CEST 2011 - aschnell@suse.de
 
 - improved manpage (bnc #710858)
