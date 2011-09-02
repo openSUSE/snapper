@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-01 12:33+0200\n"
-"PO-Revision-Date: 2011-07-23 22:34+0400\n"
+"POT-Creation-Date: 2011-09-02 10:25+0200\n"
+"PO-Revision-Date: 2011-08-13 20:17+0400\n"
 "Last-Translator: Alexander Melentiev <minton@opensuse.org>\n"
 "Language-Team: Russian <opensuse-translation-ru@opensuse.org>\n"
 "Language: \n"
@@ -14,261 +14,311 @@ msgstr ""
 "X-Generator: Lokalize 1.2\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../tools/snapper.cc:300
+#: ../tools/snapper.cc:367
 msgid "\t--cleanup-algorithm, -c\t\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c\t\tАлгоритм очистки для снимка."
 
-#: ../tools/snapper.cc:685
+#: ../tools/snapper.cc:884
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <имя>\t\tНазвание используемой конфигурации."
 
-#: ../tools/snapper.cc:298 ../tools/snapper.cc:387
+#: ../tools/snapper.cc:365 ../tools/snapper.cc:462
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <описание>\tОписание снимка."
 
-#: ../tools/snapper.cc:686
+#: ../tools/snapper.cc:885
 msgid "\t--disable-filters\t\tDisable filters."
 msgstr "\t--disable-filters\t\tОтключить фильтры."
 
-#: ../tools/snapper.cc:529
-msgid "\t--file, -f <file>\t\tRead files to rollback from file."
-msgstr "\t--file, -f <файл>\t\tПрочитать файлы для отката из файла."
+#: ../tools/snapper.cc:113
+msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
+msgstr "\t--fstype, -f <тип ФС>\t\tЗадать тип файловой системы вручную."
 
-#: ../tools/snapper.cc:451
-msgid "\t--file, -f <file>\t\tRun diff for file."
-msgstr "\t--file, -f <файл>\t\tЗапустить diff для файла."
+#: ../tools/snapper.cc:707
+msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
+msgstr "\t--input, -i <файл>\t\tПрочесть файлы для отката изменений из файла."
 
-#: ../tools/snapper.cc:450
-msgid "\t--output, -o <file>\t\tSave diff to file."
+#: ../tools/snapper.cc:602
+#, fuzzy
+msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <файл>\t\tСохранить diff в файл."
 
-#: ../tools/snapper.cc:297
+#: ../tools/snapper.cc:364
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <число>\t\tНомер соответствующего предварительного снимка."
 
-#: ../tools/snapper.cc:299
+#: ../tools/snapper.cc:366
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
 msgstr "\t--print-number, -p\t\tВывести номер созданного снимка."
 
-#: ../tools/snapper.cc:682
+#: ../tools/snapper.cc:881
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\tПодавить нормальный вывод."
 
-#: ../tools/snapper.cc:684
+#: ../tools/snapper.cc:883
 msgid "\t--table-style, -t <style>\tTable style (integer)."
 msgstr "\t--table-style, -t <стиль>\tСтиль таблицы (целое число)."
 
-#: ../tools/snapper.cc:92
+#: ../tools/snapper.cc:114
 msgid "\t--template, -t <name>\t\tName of config template to use."
 msgstr "\t--template, -t <имя>\t\tНазвание используемого шаблона конфигурации."
 
-#: ../tools/snapper.cc:296
+#: ../tools/snapper.cc:363
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <тип>\t\tТип снимка."
 
-#: ../tools/snapper.cc:160
+#: ../tools/snapper.cc:227
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
 msgstr "\t--type, -t <тип>\t\tТип перечисляемых снимков."
 
-#: ../tools/snapper.cc:683
+#: ../tools/snapper.cc:882
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
 msgstr "\t--verbose, -v\t\t\tУвеличить детальность вывода."
 
-#: ../tools/snapper.cc:687
+#: ../tools/snapper.cc:886
 msgid "\t--version\t\t\tPrint version and exit."
 msgstr "\t--version\t\t\tВывести версию программы и выйти."
 
-#: ../tools/snapper.cc:627
+#: ../tools/snapper.cc:826
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <алгоритм очистки>"
 
-#: ../tools/snapper.cc:293
+#: ../tools/snapper.cc:360
 msgid "\tsnapper create"
 msgstr "\tsnapper create"
 
-#: ../tools/snapper.cc:89
+#: ../tools/snapper.cc:110
 msgid "\tsnapper create-config <subvolume>"
 msgstr "\tsnapper create-config <подраздел>"
 
-#: ../tools/snapper.cc:420
+#: ../tools/snapper.cc:500
 msgid "\tsnapper delete <number>"
 msgstr "\tsnapper delete <число>"
 
-#: ../tools/snapper.cc:447
-msgid "\tsnapper diff <number1> <number2>"
-msgstr "\tsnapper diff <число1> <число2>"
+#: ../tools/snapper.cc:655
+#, fuzzy
+msgid "\tsnapper diff <number1>..<number2> [files]"
+msgstr "\tsnapper contentdiff <число1>..<число2> [файлы]"
 
-#: ../tools/snapper.cc:157
+#: ../tools/snapper.cc:224
 msgid "\tsnapper list"
 msgstr "\tsnapper list"
 
-#: ../tools/snapper.cc:42
+#: ../tools/snapper.cc:63
 msgid "\tsnapper list-configs"
 msgstr "\tsnapper list-configs"
 
-#: ../tools/snapper.cc:384
+#: ../tools/snapper.cc:459
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <число>"
 
-#: ../tools/snapper.cc:526
-msgid "\tsnapper rollback <number1> <number2>"
-msgstr "\tsnapper rollback <число1> <число2>"
+#: ../tools/snapper.cc:533
+msgid "\tsnapper mount <number>"
+msgstr "\tsnapper mount <число>"
 
-#: ../tools/snapper.cc:681
+#: ../tools/snapper.cc:599
+#, fuzzy
+msgid "\tsnapper status <number1>..<number2>"
+msgstr "\tsnapper diff <число1>..<число2>"
+
+#: ../tools/snapper.cc:566
+msgid "\tsnapper umount <number>"
+msgstr "\tsnapper umount <число>"
+
+#: ../tools/snapper.cc:704
+msgid "\tsnapper undochange <number1>..<number2> [files]"
+msgstr "\tsnapper undochange <число1>..<число2> [файлы]"
+
+#: ../tools/snapper.cc:880
 msgid "    Global options:"
 msgstr "    Общие параметры:"
 
-#: ../tools/snapper.cc:295
+#: ../tools/snapper.cc:362
 msgid "    Options for 'create' command:"
 msgstr "    Опции команды 'create':"
 
-#: ../tools/snapper.cc:91
+#: ../tools/snapper.cc:112
 msgid "    Options for 'create-config' command:"
 msgstr "    Опции команды 'create-config':"
 
-#: ../tools/snapper.cc:449
-msgid "    Options for 'diff' command:"
-msgstr "    Опции команды 'diff':"
-
-#: ../tools/snapper.cc:159
+#: ../tools/snapper.cc:226
 msgid "    Options for 'list' command:"
 msgstr "    Опции команды 'list':"
 
-#: ../tools/snapper.cc:386
+#: ../tools/snapper.cc:461
 msgid "    Options for 'modify' command:"
 msgstr "    Опции команды 'modify':"
 
-#: ../tools/snapper.cc:528
-msgid "    Options for 'rollback' command:"
-msgstr "    Опции команды 'rollback':"
+#: ../tools/snapper.cc:601
+#, fuzzy
+msgid "    Options for 'status' command:"
+msgstr "    Опции команды 'list':"
 
-#: ../tools/snapper.cc:626
+#: ../tools/snapper.cc:706
+msgid "    Options for 'undochange' command:"
+msgstr "    Опции команды 'undochange':"
+
+#: ../tools/snapper.cc:825
 msgid "  Cleanup snapshots:"
 msgstr "  Очистка снимков:"
 
-#: ../tools/snapper.cc:446
+#: ../tools/snapper.cc:598 ../tools/snapper.cc:654
 msgid "  Comparing snapshots:"
 msgstr "  Сравнение снимков:"
 
-#: ../tools/snapper.cc:88
+#: ../tools/snapper.cc:109
 msgid "  Create config:"
 msgstr "  Создание конфигурации:"
 
-#: ../tools/snapper.cc:292
+#: ../tools/snapper.cc:359
 msgid "  Create snapshot:"
 msgstr "  Создание снимка:"
 
-#: ../tools/snapper.cc:419
+#: ../tools/snapper.cc:499
 msgid "  Delete snapshot:"
 msgstr "  Удаление снимка:"
 
-#: ../tools/snapper.cc:41
+#: ../tools/snapper.cc:62
 msgid "  List configs:"
 msgstr "  Список конфигураций:"
 
-#: ../tools/snapper.cc:156
+#: ../tools/snapper.cc:223
 msgid "  List snapshots:"
 msgstr "  Список снимков:"
 
-#: ../tools/snapper.cc:383
+#: ../tools/snapper.cc:458
 msgid "  Modify snapshot:"
 msgstr "  Изменение снимка:"
 
-#: ../tools/snapper.cc:525
-msgid "  Rollback snapshots:"
-msgstr "  Откат снимков:"
+#: ../tools/snapper.cc:532
+msgid "  Mount snapshot:"
+msgstr "  Монтировать снимок:"
 
-#: ../tools/snapper.cc:208 ../tools/snapper.cc:233
+#: ../tools/snapper.cc:565
+msgid "  Umount snapshot:"
+msgstr "  Отмонтировать снимок:"
+
+#: ../tools/snapper.cc:703
+msgid "  Undo changes:"
+msgstr "  Откат изменений:"
+
+#: ../tools/snapper.cc:275 ../tools/snapper.cc:300
 msgid "#"
 msgstr "#"
 
-#: ../tools/snapper.cc:211
+#: ../tools/snapper.cc:278
 msgid "Cleanup"
 msgstr "Очистка"
 
-#: ../tools/snapper.cc:642
+#: ../tools/snapper.cc:841
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Команде 'cleanup' нужен один аргумент."
 
-#: ../tools/snapper.cc:320
+#: ../tools/snapper.cc:387
 msgid "Command 'create' does not take arguments."
 msgstr "Команде 'create' не нужны аргументы."
 
-#: ../tools/snapper.cc:108
+#: ../tools/snapper.cc:131
 msgid "Command 'create-config' needs one argument."
 msgstr "Команде 'create-config' нужен один аргумент."
 
-#: ../tools/snapper.cc:431
+#: ../tools/snapper.cc:511
 msgid "Command 'delete' needs at least one argument."
 msgstr "Команде 'delete' нужен хотя бы один аргумент."
 
-#: ../tools/snapper.cc:468
-msgid "Command 'diff' needs two arguments."
-msgstr "Команде 'diff' нужно два аргумента."
-
-#: ../tools/snapper.cc:674
+#: ../tools/snapper.cc:873
 msgid "Command 'help' does not take arguments."
 msgstr "Команде 'help' не нужны аргументы."
 
-#: ../tools/snapper.cc:176
+#: ../tools/snapper.cc:243
 msgid "Command 'list' does not take arguments."
 msgstr "Команде 'list' не нужны аргументы."
 
-#: ../tools/snapper.cc:53
+#: ../tools/snapper.cc:74
 msgid "Command 'list-configs' does not take arguments."
 msgstr "Команде 'list-configs' не нужны аргументы."
 
-#: ../tools/snapper.cc:403
+#: ../tools/snapper.cc:478
 msgid "Command 'modify' needs one argument."
 msgstr "Команде 'modify' нужен один аргумент."
 
-#: ../tools/snapper.cc:545
-msgid "Command 'rollback' needs two arguments."
-msgstr "Команде 'rollback' нужно два аргумента."
+#: ../tools/snapper.cc:544 ../tools/snapper.cc:577
+msgid "Command 'mount' needs at least one argument."
+msgstr "Команде 'mount' нужен хотя бы один аргумент."
 
-#: ../tools/snapper.cc:60
+#: ../tools/snapper.cc:618
+#, fuzzy
+msgid "Command 'status' needs one argument."
+msgstr "Команде 'cleanup' нужен один аргумент."
+
+#: ../tools/snapper.cc:723
+msgid "Command 'undochange' needs at least one argument."
+msgstr "Команде 'undochange' нужен хотя бы один аргумент."
+
+#: ../tools/snapper.cc:81
 msgid "Config"
 msgstr "Конфигурация"
 
-#: ../tools/snapper.cc:832
+#: ../tools/snapper.cc:1037
 #, c-format
 msgid "Config '%s' is invalid."
 msgstr "Конфигурация '%s' неверна."
 
-#: ../tools/snapper.cc:827
+#: ../tools/snapper.cc:1032
 #, c-format
 msgid "Config '%s' not found."
 msgstr "Конфигурация '%s' не найдена."
 
-#: ../tools/snapper.cc:127
+#: ../tools/snapper.cc:165
 #, c-format
 msgid "Creating config failed (%s)."
 msgstr "Сбой при создании конфигурации (%s)."
 
-#: ../tools/snapper.cc:210 ../tools/snapper.cc:234
+#: ../tools/snapper.cc:277 ../tools/snapper.cc:301
 msgid "Date"
 msgstr "Дата"
 
-#: ../tools/snapper.cc:212 ../tools/snapper.cc:235 ../tools/snapper.cc:260
+#: ../tools/snapper.cc:279 ../tools/snapper.cc:302 ../tools/snapper.cc:327
 msgid "Description"
 msgstr "Описание"
 
-#: ../tools/snapper.cc:595
-#, c-format
-msgid "File '%s' not found in diff."
+#: ../tools/snapper.cc:155
+msgid "Detecting filesystem type failed."
+msgstr "Сбой при определении типа файловой системы."
+
+#: ../tools/snapper.cc:778
+#, fuzzy, c-format
+msgid "File '%s' not found."
 msgstr "Файл '%s' не найден в diff-е."
 
-#: ../tools/snapper.cc:488
-#, c-format
-msgid "File '%s' not included in diff."
-msgstr "Файл '%s' не включён в diff."
+#: ../tools/snapper.cc:212
+msgid "Identical snapshots."
+msgstr "Снимки идентичны."
 
-#: ../tools/snapper.cc:780
+#: ../tools/snapper.cc:182
+#, c-format
+msgid "Invalid snapshot '%s'."
+msgstr "Некорректный снимок '%s'."
+
+#: ../tools/snapper.cc:485 ../tools/snapper.cc:520 ../tools/snapper.cc:553
+#: ../tools/snapper.cc:586
+msgid "Invalid snapshot."
+msgstr "Некорректный снимок."
+
+#: ../tools/snapper.cc:203 ../tools/snapper.cc:745
+msgid "Invalid snapshots."
+msgstr "Некорректные снимки."
+
+#: ../tools/snapper.cc:138
+msgid "Invalid subvolume."
+msgstr "Некорректный подтом."
+
+#: ../tools/snapper.cc:985
 #, c-format
 msgid "Invalid table style %d."
 msgstr "Неверный стиль таблицы %d."
 
-#: ../tools/snapper.cc:77
+#: ../tools/snapper.cc:98
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Сбой при перечислении конфигураций (%s)."
@@ -283,54 +333,58 @@ msgstr "Отсутствует аргумент для опции команды
 msgid "Missing argument for global option '%s'."
 msgstr "Отсутствует аргумент для опции '%s'."
 
-#: ../tools/snapper.cc:801
+#: ../tools/snapper.cc:424
+msgid "Missing or invalid pre-number."
+msgstr "Номер пред-снимка отсутствует или неверен."
+
+#: ../tools/snapper.cc:1006
 msgid "No command provided."
 msgstr "Не указана команда."
 
-#: ../tools/snapper.cc:500 ../tools/snapper.cc:561
+#: ../tools/snapper.cc:637 ../tools/snapper.cc:738
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "Сбой при открытии файла '%s'."
 
-#: ../tools/snapper.cc:257
+#: ../tools/snapper.cc:324
 msgid "Post #"
 msgstr "№ последующего снимка"
 
-#: ../tools/snapper.cc:259
+#: ../tools/snapper.cc:326
 msgid "Post Date"
 msgstr "Дата последующего снимка"
 
-#: ../tools/snapper.cc:209 ../tools/snapper.cc:256
+#: ../tools/snapper.cc:276 ../tools/snapper.cc:323
 msgid "Pre #"
 msgstr "№ предварительного снимка"
 
-#: ../tools/snapper.cc:258
+#: ../tools/snapper.cc:325
 msgid "Pre Date"
 msgstr "Дата предварительного снимка"
 
-#: ../tools/snapper.cc:145
+#: ../tools/snapper.cc:189
 #, c-format
 msgid "Snapshot '%u' not found."
 msgstr "Снимок '%u' не найден."
 
-#: ../tools/snapper.cc:61
+#: ../tools/snapper.cc:82
 msgid "Subvolume"
 msgstr "Субтом"
 
-#: ../tools/snapper.cc:802 ../tools/snapper.cc:811
+#: ../tools/snapper.cc:1007 ../tools/snapper.cc:1016
 msgid "Try 'snapper help' for more information."
 msgstr "Больше сведений можно найти в 'snapper help'."
 
-#: ../tools/snapper.cc:207
+#: ../tools/snapper.cc:274
 msgid "Type"
 msgstr "Тип"
 
-#: ../tools/snapper.cc:662
+#: ../tools/snapper.cc:861
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
 msgstr "Неизвестный алгоритм очистки '%s'."
 
-#: ../tools/snapper.cc:810
+#: ../tools/snapper.cc:1015
 #, c-format
 msgid "Unknown command '%s'."
 msgstr "Неизвестная команда '%s'."
@@ -345,65 +399,99 @@ msgstr "Неизвестная опция '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Неизвестная опция '%s' для команды '%s'."
 
-#: ../tools/snapper.cc:336
+#: ../tools/snapper.cc:405
 msgid "Unknown type of snapshot."
 msgstr "Неизвестный тип снимка."
 
-#: ../tools/snapper.cc:195
+#: ../tools/snapper.cc:262
 msgid "Unknown type of snapshots."
 msgstr "Неизвестный тип снимков."
 
-#: ../tools/snapper.cc:781
+#: ../tools/snapper.cc:986
 #, c-format
 msgid "Use an integer number from %d to %d"
 msgstr "Используйте целое число от %d до %d"
 
-#: ../tools/snapper.cc:704
+#: ../tools/snapper.cc:906
 msgid "comparing snapshots..."
 msgstr "сравнение снимков..."
 
-#: ../tools/snapper.cc:717
+#: ../tools/snapper.cc:919
 #, c-format
 msgid "creating %s"
 msgstr "создание %s"
 
-#: ../tools/snapper.cc:721
+#: ../tools/snapper.cc:923
 #, c-format
 msgid "deleting %s"
 msgstr "удаление %s"
 
-#: ../tools/snapper.cc:705
+#: ../tools/snapper.cc:907
 msgid "done"
 msgstr "готово"
 
-#: ../tools/snapper.cc:724
+#: ../tools/snapper.cc:926
 #, c-format
 msgid "failed to create %s"
 msgstr "сбой при создании %s"
 
-#: ../tools/snapper.cc:728
+#: ../tools/snapper.cc:930
 #, c-format
 msgid "failed to delete %s"
 msgstr "сбой при удалении %s"
 
-#: ../tools/snapper.cc:726
+#: ../tools/snapper.cc:928
 #, c-format
 msgid "failed to modify %s"
 msgstr "сбой при изменении %s"
 
-#: ../tools/snapper.cc:719
+#: ../tools/snapper.cc:921
 #, c-format
 msgid "modifying %s"
 msgstr "изменение %s"
 
-#: ../tools/snapper.cc:714
-msgid "rollback done"
-msgstr "откат выполнен"
+#: ../tools/snapper.cc:916
+msgid "undoing change done"
+msgstr "откат изменений выполнен"
 
-#: ../tools/snapper.cc:713
-msgid "running rollback..."
-msgstr "выполнение отката..."
+#: ../tools/snapper.cc:915
+msgid "undoing change..."
+msgstr "откат изменений..."
 
-#: ../tools/snapper.cc:678
+#: ../tools/snapper.cc:877
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "использование: snapper [--общие-параметры] <команда> [--опции-команды] [аргументы-команды]"
+
+#~ msgid "    Options for 'diff' command:"
+#~ msgstr "    Опции команды 'diff':"
+
+#~| msgid "Command 'modify' needs one argument."
+#~ msgid "Command 'diff' needs one argument."
+#~ msgstr "Команде 'diff' нужен один аргумент."
+
+#~ msgid "\t--file, -f <file>\t\tRun diff for file."
+#~ msgstr "\t--file, -f <файл>\t\tЗапустить diff для файла."
+
+#~ msgid "\tsnapper rollback <number1> <number2>"
+#~ msgstr "\tsnapper rollback <число1> <число2>"
+
+#~ msgid "    Options for 'rollback' command:"
+#~ msgstr "    Опции команды 'rollback':"
+
+#~ msgid "  Rollback snapshots:"
+#~ msgstr "  Откат снимков:"
+
+#~ msgid "Command 'diff' needs two arguments."
+#~ msgstr "Команде 'diff' нужно два аргумента."
+
+#~ msgid "Command 'rollback' needs two arguments."
+#~ msgstr "Команде 'rollback' нужно два аргумента."
+
+#~ msgid "File '%s' not included in diff."
+#~ msgstr "Файл '%s' не включён в diff."
+
+#~ msgid "rollback done"
+#~ msgstr "откат выполнен"
+
+#~ msgid "running rollback..."
+#~ msgstr "выполнение отката..."

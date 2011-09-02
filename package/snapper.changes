@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Sep 02 10:27:46 CEST 2011 - aschnell@suse.de
+
+- updated translations
+
+-------------------------------------------------------------------
 Wed Aug 31 15:44:42 CEST 2011 - aschnell@suse.de
 
 - renamed snapper command diff to status and contentdiff to diff
