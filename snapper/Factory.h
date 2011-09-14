@@ -35,7 +35,7 @@ namespace snapper
     class Snapper;
 
 
-    // Only one Snapper can be created at a time.
+    // Using the factory functions only one Snapper can exist at a time.
 
     Snapper* createSnapper(const string& config_name = "root", bool disable_filters = false);
 

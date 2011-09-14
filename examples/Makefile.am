@@ -6,9 +6,11 @@ INCLUDES = -I$(top_srcdir)
 
 LDADD = ../snapper/libsnapper.la
 
-noinst_PROGRAMS = List Create CmpDirs CreateTimeline
+noinst_PROGRAMS = List ListAll Create CmpDirs CreateTimeline
 
 List_SOURCES = List.cc
+
+ListAll_SOURCES = ListAll.cc
 
 Create_SOURCES = Create.cc
 

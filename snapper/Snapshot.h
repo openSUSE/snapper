@@ -145,12 +145,15 @@ namespace snapper
 
 	typedef list<Snapshot>::iterator iterator;
 	typedef list<Snapshot>::const_iterator const_iterator;
+	typedef list<Snapshot>::size_type size_type;
 
 	iterator begin() { return entries.begin(); }
 	const_iterator begin() const { return entries.begin(); }
 
 	iterator end() { return entries.end(); }
 	const_iterator end() const { return entries.end(); }
+
+	size_type size() const { return entries.size(); }
 
 	iterator find(unsigned int num);
 	const_iterator find(unsigned int num) const;
