@@ -98,6 +98,9 @@ namespace snapper
     void
     Snapshot::setDescription(const string& val)
     {
+	if (isCurrent())
+	    throw IllegalSnapshotException();
+
 	description = val;
 	info_modified = true;
     }
@@ -106,6 +109,9 @@ namespace snapper
     void
     Snapshot::setCleanup(const string& val)
     {
+	if (isCurrent())
+	    throw IllegalSnapshotException();
+
 	cleanup = val;
 	info_modified = true;
     }
@@ -114,6 +120,9 @@ namespace snapper
     void
     Snapshot::setUserdata(const map<string, string>& val)
     {
+	if (isCurrent())
+	    throw IllegalSnapshotException();
+
 	for (map<string, string>::const_iterator it = val.begin(); it != val.end(); ++it)
 	{
 	    if (it->first.empty())
