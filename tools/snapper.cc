@@ -553,31 +553,35 @@ command_modify()
     };
 
     GetOpts::parsed_opts opts = getopts.parse("modify", options);
-    if (getopts.numArgs() != 1)
+
+    if (!getopts.hasArgs())
     {
-	cerr << _("Command 'modify' needs one argument.") << endl;
+	cerr << _("Command 'modify' needs at least one argument.") << endl;
 	exit(EXIT_FAILURE);
     }
 
-    Snapshots::iterator snapshot = read_num(getopts.popArg());
-    if (snapshot->isCurrent())
+    while (getopts.hasArgs())
     {
-	cerr << _("Invalid snapshot.") << endl;
-	exit(EXIT_FAILURE);
+	Snapshots::iterator snapshot = read_num(getopts.popArg());
+	if (snapshot->isCurrent())
+	{
+	    cerr << _("Invalid snapshot.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	GetOpts::parsed_opts::const_iterator opt;
+
+	if ((opt = opts.find("description")) != opts.end())
+	    snapshot->setDescription(opt->second);
+
+	if ((opt = opts.find("cleanup-algorithm")) != opts.end())
+	    snapshot->setCleanup(opt->second);
+
+	if ((opt = opts.find("userdata")) != opts.end())
+	    snapshot->setUserdata(read_userdata(opt->second, snapshot->getUserdata()));
+
+	snapshot->flushInfo();
     }
-
-    GetOpts::parsed_opts::const_iterator opt;
-
-    if ((opt = opts.find("description")) != opts.end())
-	snapshot->setDescription(opt->second);
-
-    if ((opt = opts.find("cleanup-algorithm")) != opts.end())
-	snapshot->setCleanup(opt->second);
-
-    if ((opt = opts.find("userdata")) != opts.end())
-	snapshot->setUserdata(read_userdata(opt->second, snapshot->getUserdata()));
-
-    snapshot->flushInfo();
 }
 
 
