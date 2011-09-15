@@ -59,6 +59,9 @@ namespace snapper
 	if (!snapshot.cleanup.empty())
 	    s << " cleanup:\"" << snapshot.cleanup << "\"";
 
+	if (!snapshot.userdata.empty())
+	    s << " userdata:\"" << snapshot.userdata << "\"";
+
 	return s;
     }
 
@@ -96,7 +99,7 @@ namespace snapper
     Snapshot::setDescription(const string& val)
     {
 	description = val;
-	writeInfo();
+	info_modified = true;
     }
 
 
@@ -104,7 +107,21 @@ namespace snapper
     Snapshot::setCleanup(const string& val)
     {
 	cleanup = val;
-	writeInfo();
+	info_modified = true;
+    }
+
+
+    void
+    Snapshot::setUserdata(const map<string, string>& val)
+    {
+	for (map<string, string>::const_iterator it = val.begin(); it != val.end(); ++it)
+	{
+	    if (it->first.empty())
+		throw InvalidUserdataException();
+	}
+
+	userdata = val;
+	info_modified = true;
     }
 
 
@@ -148,6 +165,16 @@ namespace snapper
 	    getChildValue(node, "pre_num", snapshot.pre_num);
 
 	    getChildValue(node, "cleanup", snapshot.cleanup);
+
+	    const list<const xmlNode*> l = getChildNodes(node, "userdata");
+	    for (list<const xmlNode*>::const_iterator it = l.begin(); it != l.end(); ++it)
+	    {
+		string key, value;
+		getChildValue(*it, "key", key);
+		getChildValue(*it, "value", value);
+		if (!key.empty())
+		    snapshot.userdata[key] = value;
+	    }
 
 	    if (!snapper->getFilesystem()->checkSnapshot(num))
 	    {
@@ -298,6 +325,20 @@ namespace snapper
 
 
     bool
+    Snapshot::flushInfo()
+    {
+	if (!info_modified)
+	    return true;
+
+	if (!writeInfo())
+	    return false;
+
+	info_modified = false;
+	return true;
+    }
+
+
+    bool
     Snapshot::writeInfo() const
     {
 	XmlFile xml;
@@ -318,6 +359,13 @@ namespace snapper
 
 	if (!cleanup.empty())
 	    setChildValue(node, "cleanup", cleanup);
+
+	for (map<string, string>::const_iterator it = userdata.begin(); it != userdata.end(); ++it)
+	{
+	    xmlNode* userdata_node = xmlNewChild(node, "userdata");
+	    setChildValue(userdata_node, "key", it->first);
+	    setChildValue(userdata_node, "value", it->second);
+	}
 
 	xml.save(infoDir() + "/info.xml");
 
@@ -374,8 +422,8 @@ namespace snapper
 	snapshot.num = nextNumber();
 	snapshot.date = time(NULL);
 	snapshot.description = description;
+	snapshot.info_modified = true;
 
-	snapshot.writeInfo();
 	snapshot.createFilesystemSnapshot();
 
 	return entries.insert(entries.end(), snapshot);
@@ -390,8 +438,8 @@ namespace snapper
 	snapshot.num = nextNumber();
 	snapshot.date = time(NULL);
 	snapshot.description = description;
+	snapshot.info_modified = true;
 
-	snapshot.writeInfo();
 	snapshot.createFilesystemSnapshot();
 
 	return entries.insert(entries.end(), snapshot);
@@ -409,8 +457,8 @@ namespace snapper
 	snapshot.num = nextNumber();
 	snapshot.date = time(NULL);
 	snapshot.pre_num = pre->getNum();
+	snapshot.info_modified = true;
 
-	snapshot.writeInfo();
 	snapshot.createFilesystemSnapshot();
 
 	return entries.insert(entries.end(), snapshot);

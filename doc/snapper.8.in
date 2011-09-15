@@ -39,6 +39,12 @@ snapshots.
 .LP
 Note that filesystem\-wise all three types are the same.
 
+.SS Snapshot Description und Userdata
+.LP
+With each snapshot a description and some userdata can be associated. The
+description is a string. The userdata is a list of key-value pairs where the
+keys and values are strings.
+
 .SS Automatic Snapshot Creation
 Next to manual snapshot creation snapshots are also created automatically.
 .LP
@@ -130,14 +136,19 @@ Specifies the type of the new snapshot. Possible values are single, pre and post
 \fI\-\-pre\-number\fR <number>
 For post snapshots the number of the pre snapshot must be provided.
 .TP
-\fI\-d, \-\-description\fR <description>
-Description for the snapshot.
-.TP
 \fI\-p, \-\-print\-number\fR
 Print number of the created snapshot.
 .TP
+\fI\-d, \-\-description\fR <description>
+Description for the snapshot.
+.TP
 \fI\-c, \-\-cleanup\-algorithm\fR <cleanup-algorithm>
-Sets the cleanup-algorithm for the snapshot.
+Set the cleanup-algorithm for the snapshot.
+.TP
+\fI\-u, \-\-userdata\fR <userdata>
+Set userdata for the snapshot. The key-value pairs must be seperated by comma
+and the key and value must be seperated by an equal sign,
+e.g. requestid=42,user=arthur.
 
 .TP
 .B modify [options] <number>
@@ -145,6 +156,14 @@ Modify a snapshot.
 .TP
 \fI\-d, \-\-description\fR <description>
 New description for snapshot.
+.TP
+\fI\-c, \-\-cleanup\-algorithm\fR <cleanup-algorithm>
+Set the cleanup-algorithm for the snapshot.
+.TP
+\fI\-u, \-\-userdata\fR <userdata>
+Set userdata for the snapshot. The key-value pairs must be seperated by comma
+and the key and value must be seperated by an equal sign,
+e.g. requestid=42,user=arthur.
 
 .TP
 .B delete <number>

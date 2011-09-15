@@ -87,6 +87,12 @@ namespace snapper
 	virtual const char* what() const throw() { return "invalid config"; }
     };
 
+    struct InvalidUserdataException : public std::exception
+    {
+	explicit InvalidUserdataException() throw() {}
+	virtual const char* what() const throw() { return "invalid userdata"; }
+    };
+
     struct ListConfigsFailedException : public std::exception
     {
 	explicit ListConfigsFailedException(const char* msg) throw() : msg(msg) {}

@@ -83,6 +83,9 @@ namespace snapper
     {
 	y2mil("Snapper destructor");
 
+	for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); ++it)
+	    it->flushInfo();
+
 	delete filesystem;
 	delete config;
     }

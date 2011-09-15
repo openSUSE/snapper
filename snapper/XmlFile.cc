@@ -104,7 +104,11 @@ namespace snapper
 	    if (cur_node->type == XML_ELEMENT_NODE &&
 		strcmp(name, (const char*) cur_node->name) == 0)
 	    {
-		value = (const char*) cur_node->children->content;
+		if (cur_node->children && cur_node->children->content)
+		    value = (const char*) cur_node->children->content;
+		else
+		    value = "";
+
 		return true;
 	    }
 	}

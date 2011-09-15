@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
+#include <boost/algorithm/string.hpp>
 
 #include "config.h"
 #include <snapper/Factory.h>
@@ -169,7 +170,7 @@ command_create_config()
 
 
 Snapshots::iterator
-readNum(const string& str)
+read_num(const string& str)
 {
     Snapshots& snapshots = sh->getSnapshots();
 
@@ -195,7 +196,7 @@ readNum(const string& str)
 
 
 pair<Snapshots::iterator, Snapshots::iterator>
-readNums(const string& str)
+read_nums(const string& str)
 {
     string::size_type pos = str.find("..");
     if (pos == string::npos)
@@ -204,8 +205,8 @@ readNums(const string& str)
 	exit(EXIT_FAILURE);
     }
 
-    Snapshots::iterator snap1 = readNum(str.substr(0, pos));
-    Snapshots::iterator snap2 = readNum(str.substr(pos + 2));
+    Snapshots::iterator snap1 = read_num(str.substr(0, pos));
+    Snapshots::iterator snap2 = read_num(str.substr(pos + 2));
 
     if (snap1 == snap2)
     {
@@ -214,6 +215,63 @@ readNums(const string& str)
     }
 
     return pair<Snapshots::iterator, Snapshots::iterator>(snap1, snap2);
+}
+
+
+map<string, string>
+read_userdata(const string& s, const map<string, string>& old = map<string, string>())
+{
+    map<string, string> userdata = old;
+
+    list<string> tmp;
+    boost::split(tmp, s, boost::is_any_of(","), boost::token_compress_on);
+    if (tmp.empty())
+    {
+	cerr << _("Invalid userdata.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    for (list<string>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
+    {
+	string::size_type pos = it->find("=");
+	if (pos == string::npos)
+	{
+	    cerr << _("Invalid userdata.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	string key = boost::trim_copy(it->substr(0, pos));
+	string value = boost::trim_copy(it->substr(pos + 1));
+
+	if (key.empty())
+	{
+	    cerr << _("Invalid userdata.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	if (value.empty())
+	    userdata.erase(key);
+	else
+	    userdata[key] = value;
+    }
+
+    return userdata;
+}
+
+
+string
+show_userdata(const map<string, string>& userdata)
+{
+    string s;
+
+    for (map<string, string>::const_iterator it = userdata.begin(); it != userdata.end(); ++it)
+    {
+	if (!s.empty())
+	    s += ", ";
+	s += it->first + "=" + it->second;
+    }
+
+    return s;
 }
 
 
@@ -277,6 +335,7 @@ command_list()
 	    header.add(_("Date"));
 	    header.add(_("Cleanup"));
 	    header.add(_("Description"));
+	    header.add(_("Userdata"));
 	    table.setHeader(header);
 
 	    const Snapshots& snapshots = sh->getSnapshots();
@@ -289,6 +348,7 @@ command_list()
 		row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), false, false));
 		row.add(it1->getCleanup());
 		row.add(it1->getDescription());
+		row.add(show_userdata(it1->getUserdata()));
 		table.add(row);
 	    }
 	}
@@ -300,6 +360,7 @@ command_list()
 	    header.add(_("#"));
 	    header.add(_("Date"));
 	    header.add(_("Description"));
+	    header.add(_("Userdata"));
 	    table.setHeader(header);
 
 	    const Snapshots& snapshots = sh->getSnapshots();
@@ -312,6 +373,7 @@ command_list()
 		row.add(decString(it1->getNum()));
 		row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), false, false));
 		row.add(it1->getDescription());
+		row.add(show_userdata(it1->getUserdata()));
 		table.add(row);
 	    }
 	}
@@ -325,6 +387,7 @@ command_list()
 	    header.add(_("Pre Date"));
 	    header.add(_("Post Date"));
 	    header.add(_("Description"));
+	    header.add(_("Userdata"));
 	    table.setHeader(header);
 
 	    const Snapshots& snapshots = sh->getSnapshots();
@@ -343,6 +406,7 @@ command_list()
 		row.add(datetime(it1->getDate(), false, false));
 		row.add(datetime(it2->getDate(), false, false));
 		row.add(it1->getDescription());
+		row.add(show_userdata(it1->getUserdata()));
 		table.add(row);
 	    }
 	}
@@ -362,9 +426,10 @@ help_create()
 	 << _("    Options for 'create' command:") << endl
 	 << _("\t--type, -t <type>\t\tType for snapshot.") << endl
 	 << _("\t--pre-number <number>\t\tNumber of corresponding pre snapshot.") << endl
-	 << _("\t--description, -d <description>\tDescription for snapshot.") << endl
 	 << _("\t--print-number, -p\t\tPrint number of created snapshot.") << endl
-	 << _("\t--cleanup-algorithm, -c\t\tCleanup algorithm for snapshot.") << endl
+	 << _("\t--description, -d <description>\tDescription for snapshot.") << endl
+	 << _("\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot.") << endl
+	 << _("\t--userdata, -u <userdata>\tUserdata for snapshot.") << endl
 	 << endl;
 }
 
@@ -375,9 +440,10 @@ command_create()
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
 	{ "pre-number",		required_argument,	0,	0 },
-	{ "description",	required_argument,	0,	'd' },
 	{ "print-number",	no_argument,		0,	'p' },
+	{ "description",	required_argument,	0,	'd' },
 	{ "cleanup-algorithm",	required_argument,	0,	'c' },
+	{ "userdata",		required_argument,	0,	'u' },
 	{ 0, 0, 0, 0 }
     };
 
@@ -395,6 +461,7 @@ command_create()
     string description;
     bool print_number = false;
     string cleanup;
+    map<string, string> userdata;
 
     GetOpts::parsed_opts::const_iterator opt;
 
@@ -408,16 +475,19 @@ command_create()
     }
 
     if ((opt = opts.find("pre-number")) != opts.end())
-	snap1 = readNum(opt->second);
-
-    if ((opt = opts.find("description")) != opts.end())
-	description = opt->second;
+	snap1 = read_num(opt->second);
 
     if ((opt = opts.find("print-number")) != opts.end())
 	print_number = true;
 
+    if ((opt = opts.find("description")) != opts.end())
+	description = opt->second;
+
     if ((opt = opts.find("cleanup-algorithm")) != opts.end())
 	cleanup = opt->second;
+
+    if ((opt = opts.find("userdata")) != opts.end())
+	userdata = read_userdata(opt->second);
 
     if (type == POST && (snap1 == snapshots.end() || snap1->isCurrent()))
     {
@@ -430,6 +500,8 @@ command_create()
 	case SINGLE: {
 	    Snapshots::iterator snap1 = sh->createSingleSnapshot(description);
 	    snap1->setCleanup(cleanup);
+	    snap1->setUserdata(userdata);
+	    snap1->flushInfo();
 	    if (print_number)
 		cout << snap1->getNum() << endl;
 	} break;
@@ -437,6 +509,8 @@ command_create()
 	case PRE: {
 	    Snapshots::iterator snap1 = sh->createPreSnapshot(description);
 	    snap1->setCleanup(cleanup);
+	    snap1->setUserdata(userdata);
+	    snap1->flushInfo();
 	    if (print_number)
 		cout << snap1->getNum() << endl;
 	} break;
@@ -444,6 +518,8 @@ command_create()
 	case POST: {
 	    Snapshots::iterator snap2 = sh->createPostSnapshot(snap1);
 	    snap2->setCleanup(cleanup);
+	    snap2->setUserdata(userdata);
+	    snap2->flushInfo();
 	    if (print_number)
 		cout << snap2->getNum() << endl;
 	    sh->startBackgroundComparsion(snap1, snap2);
@@ -460,6 +536,8 @@ help_modify()
 	 << endl
 	 << _("    Options for 'modify' command:") << endl
 	 << _("\t--description, -d <description>\tDescription for snapshot.") << endl
+	 << _("\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot.") << endl
+	 << _("\t--userdata, -u <userdata>\tUserdata for snapshot.") << endl
 	 << endl;
 }
 
@@ -469,6 +547,8 @@ command_modify()
 {
     const struct option options[] = {
 	{ "description",	required_argument,	0,	'd' },
+	{ "cleanup-algorithm",	required_argument,	0,	'c' },
+	{ "userdata",		required_argument,	0,	'u' },
 	{ 0, 0, 0, 0 }
     };
 
@@ -479,7 +559,7 @@ command_modify()
 	exit(EXIT_FAILURE);
     }
 
-    Snapshots::iterator snapshot = readNum(getopts.popArg());
+    Snapshots::iterator snapshot = read_num(getopts.popArg());
     if (snapshot->isCurrent())
     {
 	cerr << _("Invalid snapshot.") << endl;
@@ -490,6 +570,14 @@ command_modify()
 
     if ((opt = opts.find("description")) != opts.end())
 	snapshot->setDescription(opt->second);
+
+    if ((opt = opts.find("cleanup-algorithm")) != opts.end())
+	snapshot->setCleanup(opt->second);
+
+    if ((opt = opts.find("userdata")) != opts.end())
+	snapshot->setUserdata(read_userdata(opt->second, snapshot->getUserdata()));
+
+    snapshot->flushInfo();
 }
 
 
@@ -514,7 +602,7 @@ command_delete()
 
     while (getopts.hasArgs())
     {
-	Snapshots::iterator snapshot = readNum(getopts.popArg());
+	Snapshots::iterator snapshot = read_num(getopts.popArg());
 	if (snapshot->isCurrent())
 	{
 	    cerr << _("Invalid snapshot.") << endl;
@@ -547,7 +635,7 @@ command_mount()
 
     while (getopts.hasArgs())
     {
-	Snapshots::iterator snapshot = readNum(getopts.popArg());
+	Snapshots::iterator snapshot = read_num(getopts.popArg());
 	if (snapshot->isCurrent())
 	{
 	    cerr << _("Invalid snapshot.") << endl;
@@ -580,7 +668,7 @@ command_umount()
 
     while (getopts.hasArgs())
     {
-	Snapshots::iterator snapshot = readNum(getopts.popArg());
+	Snapshots::iterator snapshot = read_num(getopts.popArg());
 	if (snapshot->isCurrent())
 	{
 	    cerr << _("Invalid snapshot.") << endl;
@@ -621,7 +709,7 @@ command_status()
 
     GetOpts::parsed_opts::const_iterator opt;
 
-    pair<Snapshots::const_iterator, Snapshots::const_iterator> snaps(readNums(getopts.popArg()));
+    pair<Snapshots::const_iterator, Snapshots::const_iterator> snaps(read_nums(getopts.popArg()));
 
     Comparison comparison(sh, snaps.first, snaps.second);
 
@@ -664,7 +752,7 @@ command_diff()
 
     GetOpts::parsed_opts::const_iterator opt;
 
-    pair<Snapshots::const_iterator, Snapshots::const_iterator> snaps(readNums(getopts.popArg()));
+    pair<Snapshots::const_iterator, Snapshots::const_iterator> snaps(read_nums(getopts.popArg()));
 
     Comparison comparison(sh, snaps.first, snaps.second);
 
@@ -724,7 +812,7 @@ command_undo()
 	exit(EXIT_FAILURE);
     }
 
-    pair<Snapshots::const_iterator, Snapshots::const_iterator> snaps(readNums(getopts.popArg()));
+    pair<Snapshots::const_iterator, Snapshots::const_iterator> snaps(read_nums(getopts.popArg()));
 
     FILE* file = NULL;
 

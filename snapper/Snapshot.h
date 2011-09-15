@@ -27,12 +27,14 @@
 #include <time.h>
 #include <string>
 #include <list>
+#include <map>
 
 
 namespace snapper
 {
     using std::string;
     using std::list;
+    using std::map;
 
 
     class Snapper;
@@ -80,7 +82,8 @@ namespace snapper
 	friend class Snapshots;
 
 	Snapshot(const Snapper* snapper)
-	    : snapper(snapper), type(SINGLE), num(0), date((time_t)(-1)), pre_num(0) {}
+	    : snapper(snapper), type(SINGLE), num(0), date((time_t)(-1)), pre_num(0),
+	      info_modified(false) {}
 
 	SnapshotType getType() const { return type; }
 
@@ -96,6 +99,11 @@ namespace snapper
 
 	void setCleanup(const string& cleanup);
 	string getCleanup() const { return cleanup; }
+
+	void setUserdata(const map<string, string>& userdata);
+	map<string, string> getUserdata() const { return userdata; }
+
+	bool flushInfo();
 
 	string infoDir() const;
 	string snapshotDir() const;
@@ -120,6 +128,10 @@ namespace snapper
 	unsigned int pre_num;	// valid only for type=POST
 
 	string cleanup;
+
+	map<string, string> userdata;
+
+	bool info_modified;
 
 	bool writeInfo() const;
 
