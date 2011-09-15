@@ -458,8 +458,8 @@ command_create()
 
     SnapshotType type = SINGLE;
     Snapshots::const_iterator snap1 = snapshots.end();
-    string description;
     bool print_number = false;
+    string description;
     string cleanup;
     map<string, string> userdata;
 
