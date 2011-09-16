@@ -142,6 +142,11 @@ namespace snapper
 	{
 	    unsigned int num;
 	    it->substr(snapper->infosDir().length() + 1) >> num;
+	    if (num == 0)
+	    {
+		y2err("invalid num 0. not adding snapshot");
+		continue;
+	    }
 
 	    XmlFile file(*it);
 	    const xmlNode* root = file.getRootElement();
@@ -169,9 +174,9 @@ namespace snapper
 		continue;
 	    }
 
-	    getChildValue(node, "description", snapshot.description);
-
 	    getChildValue(node, "pre_num", snapshot.pre_num);
+
+	    getChildValue(node, "description", snapshot.description);
 
 	    getChildValue(node, "cleanup", snapshot.cleanup);
 
@@ -360,11 +365,11 @@ namespace snapper
 
 	setChildValue(node, "date", datetime(date, true, true));
 
-	if (!description.empty())
-	    setChildValue(node, "description", description);
-
 	if (type == POST)
 	    setChildValue(node, "pre_num", pre_num);
+
+	if (!description.empty())
+	    setChildValue(node, "description", description);
 
 	if (!cleanup.empty())
 	    setChildValue(node, "cleanup", cleanup);
