@@ -563,6 +563,15 @@ namespace snapper
 	    throw AddConfigFailedException("illegal subvolume");
 	}
 
+	list<ConfigInfo> configs = getConfigs();
+	for (list<ConfigInfo>::const_iterator it = configs.begin(); it != configs.end(); ++it)
+	{
+	    if (it->subvolume == subvolume)
+	    {
+		throw AddConfigFailedException("subvolume already covered");
+	    }
+	}
+
 	if (access(string(CONFIGTEMPLATEDIR "/" + template_name).c_str(), R_OK) != 0)
 	{
 	    throw AddConfigFailedException("cannot access template config");
