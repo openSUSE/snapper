@@ -138,39 +138,41 @@ namespace snapper
     Snapshots::read()
     {
 	list<string> infos = glob(snapper->infosDir() + "/*/info.xml", GLOB_NOSORT);
-	for (list<string>::const_iterator it = infos.begin(); it != infos.end(); ++it)
+	for (list<string>::const_iterator it1 = infos.begin(); it1 != infos.end(); ++it1)
 	{
-	    unsigned int num;
-	    it->substr(snapper->infosDir().length() + 1) >> num;
-	    if (num == 0)
-	    {
-		y2err("invalid num 0. not adding snapshot");
-		continue;
-	    }
-
-	    XmlFile file(*it);
+	    XmlFile file(*it1);
 	    const xmlNode* root = file.getRootElement();
 	    const xmlNode* node = getChildNode(root, "snapshot");
 
-	    Snapshot snapshot(snapper);
-
 	    string tmp;
 
-	    if (!getChildValue(node, "type", tmp) || !toValue(tmp, snapshot.type, true))
+	    SnapshotType type;
+	    if (!getChildValue(node, "type", tmp) || !toValue(tmp, type, true))
 	    {
-		y2err("type missing or invalid. not adding snapshot " << num);
+		y2err("type missing or invalid. not adding snapshot " << *it1);
 		continue;
 	    }
 
-	    if (!getChildValue(node, "num", snapshot.num) || num != snapshot.num)
+	    unsigned int num;
+	    if (!getChildValue(node, "num", num) || num == 0)
 	    {
-		y2err("num missing or invalid. not adding snapshot " << num);
+		y2err("num missing or invalid. not adding snapshot " << *it1);
 		continue;
 	    }
 
-	    if (!getChildValue(node, "date", tmp) || (snapshot.date = scan_datetime(tmp, true)) == -1)
+	    unsigned int date;
+	    if (!getChildValue(node, "date", tmp) || (date = scan_datetime(tmp, true)) == -1)
 	    {
-		y2err("date missing or invalid. not adding snapshot " << num);
+		y2err("date missing or invalid. not adding snapshot " << *it1);
+		continue;
+	    }
+
+	    Snapshot snapshot(snapper, type, num, date);
+
+	    it1->substr(snapper->infosDir().length() + 1) >> num;
+	    if (num != snapshot.num)
+	    {
+		y2err("num mismatch. not adding snapshot " << *it1);
 		continue;
 	    }
 
@@ -181,18 +183,18 @@ namespace snapper
 	    getChildValue(node, "cleanup", snapshot.cleanup);
 
 	    const list<const xmlNode*> l = getChildNodes(node, "userdata");
-	    for (list<const xmlNode*>::const_iterator it = l.begin(); it != l.end(); ++it)
+	    for (list<const xmlNode*>::const_iterator it2 = l.begin(); it2 != l.end(); ++it2)
 	    {
 		string key, value;
-		getChildValue(*it, "key", key);
-		getChildValue(*it, "value", value);
+		getChildValue(*it2, "key", key);
+		getChildValue(*it2, "value", value);
 		if (!key.empty())
 		    snapshot.userdata[key] = value;
 	    }
 
-	    if (!snapper->getFilesystem()->checkSnapshot(num))
+	    if (!snapper->getFilesystem()->checkSnapshot(snapshot.num))
 	    {
-		y2err("snapshot check failed. not adding snapshot " << num);
+		y2err("snapshot check failed. not adding snapshot " << *it1);
 		continue;
 	    }
 
@@ -267,10 +269,7 @@ namespace snapper
     {
 	entries.clear();
 
-	Snapshot snapshot(snapper);
-	snapshot.type = SINGLE;
-	snapshot.num = 0;
-	snapshot.date = (time_t)(-1);
+	Snapshot snapshot(snapper, SINGLE, 0, (time_t)(-1));
 	snapshot.description = "current";
 	entries.push_back(snapshot);
 
@@ -431,10 +430,7 @@ namespace snapper
     Snapshots::iterator
     Snapshots::createSingleSnapshot(string description)
     {
-	Snapshot snapshot(snapper);
-	snapshot.type = SINGLE;
-	snapshot.num = nextNumber();
-	snapshot.date = time(NULL);
+	Snapshot snapshot(snapper, SINGLE, nextNumber(), time(NULL));
 	snapshot.description = description;
 	snapshot.info_modified = true;
 
@@ -447,10 +443,7 @@ namespace snapper
     Snapshots::iterator
     Snapshots::createPreSnapshot(string description)
     {
-	Snapshot snapshot(snapper);
-	snapshot.type = PRE;
-	snapshot.num = nextNumber();
-	snapshot.date = time(NULL);
+	Snapshot snapshot(snapper, PRE, nextNumber(), time(NULL));
 	snapshot.description = description;
 	snapshot.info_modified = true;
 
@@ -466,10 +459,7 @@ namespace snapper
 	if (pre == entries.end() || pre->isCurrent() || pre->getType() != PRE)
 	    throw IllegalSnapshotException();
 
-	Snapshot snapshot(snapper);
-	snapshot.type = POST;
-	snapshot.num = nextNumber();
-	snapshot.date = time(NULL);
+	Snapshot snapshot(snapper, POST, nextNumber(), time(NULL));
 	snapshot.pre_num = pre->getNum();
 	snapshot.info_modified = true;
 

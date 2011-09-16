@@ -81,8 +81,8 @@ namespace snapper
 
 	friend class Snapshots;
 
-	Snapshot(const Snapper* snapper)
-	    : snapper(snapper), type(SINGLE), num(0), date((time_t)(-1)), pre_num(0),
+	Snapshot(const Snapper* snapper, SnapshotType type, unsigned int num, time_t date)
+	    : snapper(snapper), type(type), num(num), date(date), pre_num(0),
 	      info_modified(false) {}
 
 	SnapshotType getType() const { return type; }
@@ -92,10 +92,10 @@ namespace snapper
 
 	time_t getDate() const { return date; }
 
+	unsigned int getPreNum() const { return pre_num; }
+
 	void setDescription(const string& description);
 	string getDescription() const { return description; }
-
-	unsigned int getPreNum() const { return pre_num; }
 
 	void setCleanup(const string& cleanup);
 	string getCleanup() const { return cleanup; }
@@ -117,15 +117,15 @@ namespace snapper
 
 	const Snapper* snapper;
 
-	SnapshotType type;
+	const SnapshotType type;
 
-	unsigned int num;
+	const unsigned int num;
 
-	time_t date;
-
-	string description;	// likely empty for type=POST
+	const time_t date;
 
 	unsigned int pre_num;	// valid only for type=POST
+
+	string description;	// likely empty for type=POST
 
 	string cleanup;
 
