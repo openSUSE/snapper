@@ -182,17 +182,15 @@ namespace snapper
 		File file(comparison, name, status);
 		entries.push_back(file);
 	    }
-
-	    sort(entries.begin(), entries.end());
-
-	    y2mil("read " << entries.size() << " lines");
-
-	    return true;
 	}
 	catch (const FileNotFoundException& e)
 	{
 	    return false;
 	}
+
+	sort(entries.begin(), entries.end());
+
+	y2mil("read " << entries.size() << " lines");
 
 	return true;
     }
