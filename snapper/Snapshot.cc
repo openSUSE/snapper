@@ -160,8 +160,8 @@ namespace snapper
 		continue;
 	    }
 
-	    unsigned int date;
-	    if (!getChildValue(node, "date", tmp) || (date = scan_datetime(tmp, true)) == -1)
+	    time_t date;
+	    if (!getChildValue(node, "date", tmp) || (date = scan_datetime(tmp, true)) == (time_t)(-1))
 	    {
 		y2err("date missing or invalid. not adding snapshot " << *it1);
 		continue;
