@@ -49,6 +49,16 @@ namespace snapper
     }
 
 
+    Btrfs::Btrfs(const string& subvolume)
+	: Filesystem(subvolume)
+    {
+	if (access(BTRFSBIN, X_OK) != 0)
+	{
+	    throw ProgramNotInstalledException(BTRFSBIN " not installed");
+	}
+    }
+
+
     void
     Btrfs::addConfig() const
     {
@@ -115,6 +125,21 @@ namespace snapper
     Btrfs::checkSnapshot(unsigned int num) const
     {
 	return checkDir(snapshotDir(num));
+    }
+
+
+    Ext4::Ext4(const string& subvolume)
+	: Filesystem(subvolume)
+    {
+	if (access(CHSNAPBIN, X_OK) != 0)
+	{
+	    throw ProgramNotInstalledException(CHSNAPBIN " not installed");
+	}
+
+	if (access(CHATTRBIN, X_OK) != 0)
+	{
+	    throw ProgramNotInstalledException(CHATTRBIN " not installed");
+	}
     }
 
 

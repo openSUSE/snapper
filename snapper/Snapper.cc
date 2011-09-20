@@ -586,6 +586,10 @@ namespace snapper
 	{
 	    throw AddConfigFailedException("invalid filesystem type");
 	}
+	catch (const ProgramNotInstalledException& e)
+	{
+	    throw AddConfigFailedException(e.what());
+	}
 
 	try
 	{

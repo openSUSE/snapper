@@ -71,7 +71,7 @@ namespace snapper
     {
     public:
 
-	Btrfs(const string& subvolume) : Filesystem(subvolume) {}
+	Btrfs(const string& subvolume);
 
 	virtual string name() const { return "btrfs"; }
 
@@ -96,7 +96,7 @@ namespace snapper
     {
     public:
 
-	Ext4(const string& subvolume) : Filesystem(subvolume) {}
+	Ext4(const string& subvolume);
 
 	virtual string name() const { return "ext4"; }
 

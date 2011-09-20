@@ -62,6 +62,13 @@ namespace snapper
 	virtual const char* what() const throw() { return "IO error"; }
     };
 
+    struct ProgramNotInstalledException : public SnapperException
+    {
+	explicit ProgramNotInstalledException(const char* msg) throw() : msg(msg) {}
+	virtual const char* what() const throw() { return msg; }
+	const char* msg;
+    };
+
 }
 
 
