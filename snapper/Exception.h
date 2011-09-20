@@ -30,26 +30,33 @@
 namespace snapper
 {
 
-    struct FileNotFoundException : public std::exception
+    struct SnapperException : public std::exception
+    {
+	explicit SnapperException() throw() {}
+	virtual const char* what() const throw() { return "generic snapper exception"; }
+    };
+
+
+    struct FileNotFoundException : public SnapperException
     {
 	explicit FileNotFoundException() throw() {}
 	virtual const char* what() const throw() { return "file not found"; }
     };
 
 
-    struct IllegalSnapshotException : public std::exception
+    struct IllegalSnapshotException : public SnapperException
     {
 	explicit IllegalSnapshotException() throw() {}
 	virtual const char* what() const throw() { return "illegal snapshot"; }
     };
 
-    struct LogicErrorException : public std::exception
+    struct LogicErrorException : public SnapperException
     {
 	explicit LogicErrorException() throw() {}
 	virtual const char* what() const throw() { return "logic error"; }
     };
 
-    struct IOErrorException : public std::exception
+    struct IOErrorException : public SnapperException
     {
 	explicit IOErrorException() throw() {}
 	virtual const char* what() const throw() { return "IO error"; }

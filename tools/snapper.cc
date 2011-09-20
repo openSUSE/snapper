@@ -1136,7 +1136,17 @@ main(int argc, char** argv)
 	    sh->setUndoCallback(&undo_callback_impl);
 	}
 
-	(*cmd->second)();
+	try
+	{
+	    (*cmd->second)();
+	}
+	catch (const SnapperException& e)
+	{
+	    y2err("caught final exception");
+	    cerr << sformat(_("Command failed (%s). See log for more information."),
+			    e.what()) << endl;
+	    exit(EXIT_FAILURE);
+	}
 
 	deleteSnapper(sh);
     }

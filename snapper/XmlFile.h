@@ -48,7 +48,7 @@ namespace snapper
 	~XmlFile();
 
 	bool save(const string& filename)
-	    { return xmlSaveFormatFile(filename.c_str(), doc, 1); }
+	    { return xmlSaveFormatFile(filename.c_str(), doc, 1) != -1; }
 
 	void setRootElement(xmlNode* node)
 	    { xmlDocSetRootElement(doc, node); }

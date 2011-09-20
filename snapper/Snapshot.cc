@@ -337,21 +337,18 @@ namespace snapper
     }
 
 
-    bool
+    void
     Snapshot::flushInfo()
     {
 	if (!info_modified)
-	    return true;
+	    return;
 
-	if (!writeInfo())
-	    return false;
-
+	writeInfo();
 	info_modified = false;
-	return true;
     }
 
 
-    bool
+    void
     Snapshot::writeInfo() const
     {
 	XmlFile xml;
@@ -380,9 +377,19 @@ namespace snapper
 	    setChildValue(userdata_node, "value", it->second);
 	}
 
-	xml.save(infoDir() + "/info.xml");
+	if (!xml.save(infoDir() + "/info.xml.tmp"))
+	{
+	    y2err("saving info.xml failed infoDir: " << infoDir() << " errno: << " << errno <<
+		  " (" << strerror(errno) << ")");
+	    throw IOErrorException();
+	}
 
-	return true;
+	if (rename(string(infoDir() + "/info.xml.tmp").c_str(), string(infoDir() + "/info.xml").c_str()) != 0)
+	{
+	    y2err("rename info.xml failed infoDir: " << infoDir() << " errno: << " << errno <<
+		  " (" << strerror(errno) << ")");
+	    throw IOErrorException();
+	}
     }
 
 
@@ -434,9 +441,7 @@ namespace snapper
 	snapshot.description = description;
 	snapshot.info_modified = true;
 
-	snapshot.createFilesystemSnapshot();
-
-	return entries.insert(entries.end(), snapshot);
+	return createHelper(snapshot);
     }
 
 
@@ -447,9 +452,7 @@ namespace snapper
 	snapshot.description = description;
 	snapshot.info_modified = true;
 
-	snapshot.createFilesystemSnapshot();
-
-	return entries.insert(entries.end(), snapshot);
+	return createHelper(snapshot);
     }
 
 
@@ -463,7 +466,33 @@ namespace snapper
 	snapshot.pre_num = pre->getNum();
 	snapshot.info_modified = true;
 
-	snapshot.createFilesystemSnapshot();
+	return createHelper(snapshot);
+    }
+
+
+    Snapshots::iterator
+    Snapshots::createHelper(Snapshot& snapshot)
+    {
+	try
+	{
+	    snapshot.createFilesystemSnapshot();
+	}
+	catch (const CreateSnapshotFailedException& e)
+	{
+	    rmdir(snapshot.infoDir().c_str());
+	    throw;
+	}
+
+	try
+	{
+	    snapshot.flushInfo();
+	}
+	catch (const IOErrorException& e)
+	{
+	    snapshot.deleteFilesystemSnapshot();
+	    rmdir(snapshot.infoDir().c_str());
+	    throw;
+	}
 
 	return entries.insert(entries.end(), snapshot);
     }

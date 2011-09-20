@@ -75,32 +75,32 @@ namespace snapper
     };
 
 
-    struct ConfigNotFoundException : public std::exception
+    struct ConfigNotFoundException : public SnapperException
     {
 	explicit ConfigNotFoundException() throw() {}
 	virtual const char* what() const throw() { return "config not found"; }
     };
 
-    struct InvalidConfigException : public std::exception
+    struct InvalidConfigException : public SnapperException
     {
 	explicit InvalidConfigException() throw() {}
 	virtual const char* what() const throw() { return "invalid config"; }
     };
 
-    struct InvalidUserdataException : public std::exception
+    struct InvalidUserdataException : public SnapperException
     {
 	explicit InvalidUserdataException() throw() {}
 	virtual const char* what() const throw() { return "invalid userdata"; }
     };
 
-    struct ListConfigsFailedException : public std::exception
+    struct ListConfigsFailedException : public SnapperException
     {
 	explicit ListConfigsFailedException(const char* msg) throw() : msg(msg) {}
 	virtual const char* what() const throw() { return msg; }
 	const char* msg;
     };
 
-    struct AddConfigFailedException : public std::exception
+    struct AddConfigFailedException : public SnapperException
     {
 	explicit AddConfigFailedException(const char* msg) throw() : msg(msg) {}
 	virtual const char* what() const throw() { return msg; }

@@ -29,6 +29,8 @@
 #include <list>
 #include <map>
 
+#include "snapper/Exception.h"
+
 
 namespace snapper
 {
@@ -43,32 +45,32 @@ namespace snapper
     enum SnapshotType { SINGLE, PRE, POST };
 
 
-    struct CreateSnapshotFailedException : public std::exception
+    struct CreateSnapshotFailedException : public SnapperException
     {
 	explicit CreateSnapshotFailedException() throw() {}
 	virtual const char* what() const throw() { return "create snapshot failed"; }
     };
 
-    struct DeleteSnapshotFailedException : public std::exception
+    struct DeleteSnapshotFailedException : public SnapperException
     {
 	explicit DeleteSnapshotFailedException() throw() {}
 	virtual const char* what() const throw() { return "delete snapshot failed"; }
     };
 
 
-    struct IsSnapshotMountedFailedException : public std::exception
+    struct IsSnapshotMountedFailedException : public SnapperException
     {
 	explicit IsSnapshotMountedFailedException() throw() {}
 	virtual const char* what() const throw() { return "is snapshot mounted failed"; }
     };
 
-    struct MountSnapshotFailedException : public std::exception
+    struct MountSnapshotFailedException : public SnapperException
     {
 	explicit MountSnapshotFailedException() throw() {}
 	virtual const char* what() const throw() { return "mount snapshot failed"; }
     };
 
-    struct UmountSnapshotFailedException : public std::exception
+    struct UmountSnapshotFailedException : public SnapperException
     {
 	explicit UmountSnapshotFailedException() throw() {}
 	virtual const char* what() const throw() { return "umount snapshot failed"; }
@@ -103,7 +105,7 @@ namespace snapper
 	void setUserdata(const map<string, string>& userdata);
 	map<string, string> getUserdata() const { return userdata; }
 
-	bool flushInfo();
+	void flushInfo();
 
 	string infoDir() const;
 	string snapshotDir() const;
@@ -133,7 +135,7 @@ namespace snapper
 
 	bool info_modified;
 
-	bool writeInfo() const;
+	void writeInfo() const;
 
 	void createFilesystemSnapshot() const;
 	void deleteFilesystemSnapshot() const;
@@ -189,6 +191,8 @@ namespace snapper
 	iterator createSingleSnapshot(string description);
 	iterator createPreSnapshot(string description);
 	iterator createPostSnapshot(const_iterator pre);
+
+	iterator createHelper(Snapshot& snapshot);
 
 	void deleteSnapshot(iterator snapshot);
 
