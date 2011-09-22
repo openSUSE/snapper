@@ -22,6 +22,8 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 
@@ -1028,6 +1030,8 @@ UndoCallbackImpl undo_callback_impl;
 int
 main(int argc, char** argv)
 {
+    umask(0027);
+
     setlocale(LC_ALL, "");
 
     initDefaultLogger();
