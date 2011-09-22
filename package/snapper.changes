@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Sep 22 16:28:53 CEST 2011 - aschnell@suse.de
+
+- do not log output of diff command
+
+-------------------------------------------------------------------
 Tue Sep 20 11:05:47 CEST 2011 - aschnell@suse.de
 
 - improved error handling (bnc#718914)

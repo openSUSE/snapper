@@ -44,8 +44,8 @@ class SystemCmd : boost::noncopyable
 
 	enum OutputStream { IDX_STDOUT, IDX_STDERR };
 
-	SystemCmd(const string& Command_Cv);
-	SystemCmd();
+	SystemCmd(const string& Command_Cv, bool log_output = true);
+	SystemCmd(bool log_output = true);
 
 	virtual ~SystemCmd();
 
@@ -100,6 +100,7 @@ class SystemCmd : boost::noncopyable
 	std::vector<string*> SelLines_aC[2];
 	bool NewLineSeen_ab[2];
 	bool Combine_b;
+	bool log_output;
 	bool Background_b;
 	string lastCmd;
 	int Ret_i;

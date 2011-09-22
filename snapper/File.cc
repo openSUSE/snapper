@@ -408,7 +408,7 @@ namespace snapper
     File::getDiff(const string& options) const
     {
 	SystemCmd cmd(DIFFBIN " " + options + " " + quote(getAbsolutePath(LOC_PRE)) + " " +
-		      quote(getAbsolutePath(LOC_POST)));
+		      quote(getAbsolutePath(LOC_POST)), false);
 	return cmd.stdout();
     }
 

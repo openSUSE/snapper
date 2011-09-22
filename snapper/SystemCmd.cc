@@ -39,8 +39,8 @@ namespace snapper
     using namespace std;
 
 
-SystemCmd::SystemCmd( const string& Command_Cv )
-	: Combine_b(false)
+    SystemCmd::SystemCmd(const string& Command_Cv, bool log_output)
+	: Combine_b(false), log_output(log_output)
 {
     y2mil("constructor SystemCmd:\"" << Command_Cv << "\"");
     init();
@@ -48,8 +48,8 @@ SystemCmd::SystemCmd( const string& Command_Cv )
 }
 
 
-SystemCmd::SystemCmd()
-	: Combine_b(false)
+    SystemCmd::SystemCmd(bool log_output)
+	: Combine_b(false), log_output(log_output)
 {
     y2mil("constructor SystemCmd");
     init();
@@ -292,7 +292,7 @@ SystemCmd::doExecute( const string& Cmd )
     if( !testmode )
 	checkOutput();
     y2mil("system() Returns:" << Ret_i);
-    if( Ret_i!=0 )
+    if (Ret_i != 0 && log_output)
 	logOutput();
     return Ret_i;
     }
@@ -560,13 +560,16 @@ SystemCmd::extractNewline(const string& Buf_ti, int Cnt_iv, bool& NewLine_br,
 void
 SystemCmd::addLine(const string& Text_Cv, vector<string>& Lines_Cr)
 {
-    if (Lines_Cr.size() < line_limit)
+    if (log_output)
     {
-	y2mil("Adding Line " << Lines_Cr.size() + 1 << " \"" << Text_Cv << "\"");
-    }
-    else
-    {
-	y2deb("Adding Line " << Lines_Cr.size() + 1 << " \"" << Text_Cv << "\"");
+	if (Lines_Cr.size() < line_limit)
+	{
+	    y2mil("Adding Line " << Lines_Cr.size() + 1 << " \"" << Text_Cv << "\"");
+	}
+	else
+	{
+	    y2deb("Adding Line " << Lines_Cr.size() + 1 << " \"" << Text_Cv << "\"");
+	}
     }
 
     Lines_Cr.push_back(Text_Cv);
