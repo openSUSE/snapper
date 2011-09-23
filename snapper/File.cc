@@ -121,8 +121,10 @@ namespace snapper
 	if (getSnapper()->getCompareCallback())
 	    getSnapper()->getCompareCallback()->start();
 
-	comparison->getSnapshot1()->mountFilesystemSnapshot();
-	comparison->getSnapshot2()->mountFilesystemSnapshot();
+	if (!comparison->getSnapshot1()->isCurrent())
+	    comparison->getSnapshot1()->mountFilesystemSnapshot();
+	if (!comparison->getSnapshot2()->isCurrent())
+	    comparison->getSnapshot2()->mountFilesystemSnapshot();
 
 #if 1
 	cmpdirs_cb_t cb = AppendHelper(comparison, entries);

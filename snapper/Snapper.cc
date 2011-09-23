@@ -179,8 +179,10 @@ namespace snapper
 
 	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
 
-	snapshot1->mountFilesystemSnapshot();
-	snapshot2->mountFilesystemSnapshot();
+	if (!snapshot1->isCurrent())
+	    snapshot1->mountFilesystemSnapshot();
+	if (!snapshot2->isCurrent())
+	    snapshot2->mountFilesystemSnapshot();
 
 	bool invert = snapshot1->getNum() > snapshot2->getNum();
 
@@ -553,7 +555,7 @@ namespace snapper
 	y2mil("config_name:" << config_name << " subvolume:" << subvolume <<
 	      " fstype:" << fstype << " template_name:" << template_name);
 
-	if (config_name.empty() || config_name.find_first_of(" \t") != string::npos)
+	if (config_name.empty() || config_name.find_first_of(", \t") != string::npos)
 	{
 	    throw AddConfigFailedException("illegal config name");
 	}

@@ -59,6 +59,112 @@ bool disable_filters = false;
 Snapper* sh = NULL;
 
 
+Snapshots::iterator
+read_num(const string& str)
+{
+    Snapshots& snapshots = sh->getSnapshots();
+
+    istringstream s(str);
+    unsigned int num = 0;
+    s >> num;
+
+    if (s.fail() || !s.eof())
+    {
+	cerr << sformat(_("Invalid snapshot '%s'."), str.c_str()) << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    Snapshots::iterator snap = snapshots.find(num);
+    if (snap == snapshots.end())
+    {
+	cerr << sformat(_("Snapshot '%u' not found."), num) << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    return snap;
+}
+
+
+pair<Snapshots::iterator, Snapshots::iterator>
+read_nums(const string& str)
+{
+    string::size_type pos = str.find("..");
+    if (pos == string::npos)
+    {
+	cerr << _("Invalid snapshots.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    Snapshots::iterator snap1 = read_num(str.substr(0, pos));
+    Snapshots::iterator snap2 = read_num(str.substr(pos + 2));
+
+    if (snap1 == snap2)
+    {
+	cerr << _("Identical snapshots.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    return pair<Snapshots::iterator, Snapshots::iterator>(snap1, snap2);
+}
+
+
+map<string, string>
+read_userdata(const string& s, const map<string, string>& old = map<string, string>())
+{
+    map<string, string> userdata = old;
+
+    list<string> tmp;
+    boost::split(tmp, s, boost::is_any_of(","), boost::token_compress_on);
+    if (tmp.empty())
+    {
+	cerr << _("Invalid userdata.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    for (list<string>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
+    {
+	string::size_type pos = it->find("=");
+	if (pos == string::npos)
+	{
+	    cerr << _("Invalid userdata.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	string key = boost::trim_copy(it->substr(0, pos));
+	string value = boost::trim_copy(it->substr(pos + 1));
+
+	if (key.empty())
+	{
+	    cerr << _("Invalid userdata.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	if (value.empty())
+	    userdata.erase(key);
+	else
+	    userdata[key] = value;
+    }
+
+    return userdata;
+}
+
+
+string
+show_userdata(const map<string, string>& userdata)
+{
+    string s;
+
+    for (map<string, string>::const_iterator it = userdata.begin(); it != userdata.end(); ++it)
+    {
+	if (!s.empty())
+	    s += ", ";
+	s += it->first + "=" + it->second;
+    }
+
+    return s;
+}
+
+
 void
 help_list_configs()
 {
@@ -168,112 +274,6 @@ command_create_config()
 	cerr << sformat(_("Creating config failed (%s)."), e.what()) << endl;
 	exit(EXIT_FAILURE);
     }
-}
-
-
-Snapshots::iterator
-read_num(const string& str)
-{
-    Snapshots& snapshots = sh->getSnapshots();
-
-    istringstream s(str);
-    unsigned int num = 0;
-    s >> num;
-
-    if (s.fail() || !s.eof())
-    {
-	cerr << sformat(_("Invalid snapshot '%s'."), str.c_str()) << endl;
-	exit(EXIT_FAILURE);
-    }
-
-    Snapshots::iterator snap = snapshots.find(num);
-    if (snap == snapshots.end())
-    {
-	cerr << sformat(_("Snapshot '%u' not found."), num) << endl;
-	exit(EXIT_FAILURE);
-    }
-
-    return snap;
-}
-
-
-pair<Snapshots::iterator, Snapshots::iterator>
-read_nums(const string& str)
-{
-    string::size_type pos = str.find("..");
-    if (pos == string::npos)
-    {
-	cerr << _("Invalid snapshots.") << endl;
-	exit(EXIT_FAILURE);
-    }
-
-    Snapshots::iterator snap1 = read_num(str.substr(0, pos));
-    Snapshots::iterator snap2 = read_num(str.substr(pos + 2));
-
-    if (snap1 == snap2)
-    {
-	cerr << _("Identical snapshots.") << endl;
-	exit(EXIT_FAILURE);
-    }
-
-    return pair<Snapshots::iterator, Snapshots::iterator>(snap1, snap2);
-}
-
-
-map<string, string>
-read_userdata(const string& s, const map<string, string>& old = map<string, string>())
-{
-    map<string, string> userdata = old;
-
-    list<string> tmp;
-    boost::split(tmp, s, boost::is_any_of(","), boost::token_compress_on);
-    if (tmp.empty())
-    {
-	cerr << _("Invalid userdata.") << endl;
-	exit(EXIT_FAILURE);
-    }
-
-    for (list<string>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
-    {
-	string::size_type pos = it->find("=");
-	if (pos == string::npos)
-	{
-	    cerr << _("Invalid userdata.") << endl;
-	    exit(EXIT_FAILURE);
-	}
-
-	string key = boost::trim_copy(it->substr(0, pos));
-	string value = boost::trim_copy(it->substr(pos + 1));
-
-	if (key.empty())
-	{
-	    cerr << _("Invalid userdata.") << endl;
-	    exit(EXIT_FAILURE);
-	}
-
-	if (value.empty())
-	    userdata.erase(key);
-	else
-	    userdata[key] = value;
-    }
-
-    return userdata;
-}
-
-
-string
-show_userdata(const map<string, string>& userdata)
-{
-    string s;
-
-    for (map<string, string>::const_iterator it = userdata.begin(); it != userdata.end(); ++it)
-    {
-	if (!s.empty())
-	    s += ", ";
-	s += it->first + "=" + it->second;
-    }
-
-    return s;
 }
 
 
@@ -497,35 +497,43 @@ command_create()
 	exit(EXIT_FAILURE);
     }
 
-    switch (type)
+    try
     {
-	case SINGLE: {
-	    Snapshots::iterator snap1 = sh->createSingleSnapshot(description);
-	    snap1->setCleanup(cleanup);
-	    snap1->setUserdata(userdata);
-	    snap1->flushInfo();
-	    if (print_number)
-		cout << snap1->getNum() << endl;
-	} break;
+	switch (type)
+	{
+	    case SINGLE: {
+		Snapshots::iterator snap1 = sh->createSingleSnapshot(description);
+		snap1->setCleanup(cleanup);
+		snap1->setUserdata(userdata);
+		snap1->flushInfo();
+		if (print_number)
+		    cout << snap1->getNum() << endl;
+	    } break;
 
-	case PRE: {
-	    Snapshots::iterator snap1 = sh->createPreSnapshot(description);
-	    snap1->setCleanup(cleanup);
-	    snap1->setUserdata(userdata);
-	    snap1->flushInfo();
-	    if (print_number)
-		cout << snap1->getNum() << endl;
-	} break;
+	    case PRE: {
+		Snapshots::iterator snap1 = sh->createPreSnapshot(description);
+		snap1->setCleanup(cleanup);
+		snap1->setUserdata(userdata);
+		snap1->flushInfo();
+		if (print_number)
+		    cout << snap1->getNum() << endl;
+	    } break;
 
-	case POST: {
-	    Snapshots::iterator snap2 = sh->createPostSnapshot(snap1);
-	    snap2->setCleanup(cleanup);
-	    snap2->setUserdata(userdata);
-	    snap2->flushInfo();
-	    if (print_number)
-		cout << snap2->getNum() << endl;
-	    sh->startBackgroundComparsion(snap1, snap2);
-	} break;
+	    case POST: {
+		Snapshots::iterator snap2 = sh->createPostSnapshot(snap1);
+		snap2->setCleanup(cleanup);
+		snap2->setUserdata(userdata);
+		snap2->flushInfo();
+		if (print_number)
+		    cout << snap2->getNum() << endl;
+		sh->startBackgroundComparsion(snap1, snap2);
+	    } break;
+	}
+    }
+    catch (const InvalidUserdataException& e)
+    {
+	cerr << _("Invalid userdata.") << endl;
+	exit(EXIT_FAILURE);
     }
 }
 
@@ -562,27 +570,35 @@ command_modify()
 	exit(EXIT_FAILURE);
     }
 
-    while (getopts.hasArgs())
+    try
     {
-	Snapshots::iterator snapshot = read_num(getopts.popArg());
-	if (snapshot->isCurrent())
+	while (getopts.hasArgs())
 	{
-	    cerr << _("Invalid snapshot.") << endl;
-	    exit(EXIT_FAILURE);
+	    Snapshots::iterator snapshot = read_num(getopts.popArg());
+
+	    GetOpts::parsed_opts::const_iterator opt;
+
+	    if ((opt = opts.find("description")) != opts.end())
+		snapshot->setDescription(opt->second);
+
+	    if ((opt = opts.find("cleanup-algorithm")) != opts.end())
+		snapshot->setCleanup(opt->second);
+
+	    if ((opt = opts.find("userdata")) != opts.end())
+		snapshot->setUserdata(read_userdata(opt->second, snapshot->getUserdata()));
+
+	    snapshot->flushInfo();
 	}
-
-	GetOpts::parsed_opts::const_iterator opt;
-
-	if ((opt = opts.find("description")) != opts.end())
-	    snapshot->setDescription(opt->second);
-
-	if ((opt = opts.find("cleanup-algorithm")) != opts.end())
-	    snapshot->setCleanup(opt->second);
-
-	if ((opt = opts.find("userdata")) != opts.end())
-	    snapshot->setUserdata(read_userdata(opt->second, snapshot->getUserdata()));
-
-	snapshot->flushInfo();
+    }
+    catch (const IllegalSnapshotException& e)
+    {
+	cerr << _("Invalid snapshot.") << endl;
+	exit(EXIT_FAILURE);
+    }
+    catch (const InvalidUserdataException& e)
+    {
+	cerr << _("Invalid userdata.") << endl;
+	exit(EXIT_FAILURE);
     }
 }
 
@@ -606,16 +622,19 @@ command_delete()
 	exit(EXIT_FAILURE);
     }
 
-    while (getopts.hasArgs())
+    try
     {
-	Snapshots::iterator snapshot = read_num(getopts.popArg());
-	if (snapshot->isCurrent())
+	while (getopts.hasArgs())
 	{
-	    cerr << _("Invalid snapshot.") << endl;
-	    exit(EXIT_FAILURE);
-	}
+	    Snapshots::iterator snapshot = read_num(getopts.popArg());
 
-	sh->deleteSnapshot(snapshot);
+	    sh->deleteSnapshot(snapshot);
+	}
+    }
+    catch (const IllegalSnapshotException& e)
+    {
+	cerr << _("Invalid snapshot.") << endl;
+	exit(EXIT_FAILURE);
     }
 }
 
@@ -639,16 +658,19 @@ command_mount()
 	exit(EXIT_FAILURE);
     }
 
-    while (getopts.hasArgs())
+    try
     {
-	Snapshots::iterator snapshot = read_num(getopts.popArg());
-	if (snapshot->isCurrent())
+	while (getopts.hasArgs())
 	{
-	    cerr << _("Invalid snapshot.") << endl;
-	    exit(EXIT_FAILURE);
-	}
+	    Snapshots::iterator snapshot = read_num(getopts.popArg());
 
-	snapshot->mountFilesystemSnapshot();
+	    snapshot->mountFilesystemSnapshot();
+	}
+    }
+    catch (const IllegalSnapshotException& e)
+    {
+	cerr << _("Invalid snapshot.") << endl;
+	exit(EXIT_FAILURE);
     }
 }
 
@@ -672,16 +694,19 @@ command_umount()
 	exit(EXIT_FAILURE);
     }
 
-    while (getopts.hasArgs())
+    try
     {
-	Snapshots::iterator snapshot = read_num(getopts.popArg());
-	if (snapshot->isCurrent())
+	while (getopts.hasArgs())
 	{
-	    cerr << _("Invalid snapshot.") << endl;
-	    exit(EXIT_FAILURE);
-	}
+	    Snapshots::iterator snapshot = read_num(getopts.popArg());
 
-	snapshot->umountFilesystemSnapshot();
+	    snapshot->umountFilesystemSnapshot();
+	}
+    }
+    catch (const IllegalSnapshotException& e)
+    {
+	cerr << _("Invalid snapshot.") << endl;
+	exit(EXIT_FAILURE);
     }
 }
 

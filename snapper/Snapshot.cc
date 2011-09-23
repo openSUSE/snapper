@@ -125,7 +125,10 @@ namespace snapper
 
 	for (map<string, string>::const_iterator it = val.begin(); it != val.end(); ++it)
 	{
-	    if (it->first.empty())
+	    if (it->first.empty() || it->first.find_first_of(",=") != string::npos)
+		throw InvalidUserdataException();
+
+	    if (it->second.find_first_of(",=") != string::npos)
 		throw InvalidUserdataException();
 	}
 
@@ -397,7 +400,7 @@ namespace snapper
     Snapshot::mountFilesystemSnapshot() const
     {
 	if (isCurrent())
-	    return;
+	    throw IllegalSnapshotException();
 
 	snapper->getFilesystem()->mountSnapshot(num);
     }
@@ -407,7 +410,7 @@ namespace snapper
     Snapshot::umountFilesystemSnapshot() const
     {
 	if (isCurrent())
-	    return;
+	    throw IllegalSnapshotException();
 
 	snapper->getFilesystem()->umountSnapshot(num);
     }
