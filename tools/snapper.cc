@@ -1082,6 +1082,7 @@ main(int argc, char** argv)
 	{ "config",		required_argument,	0,	'c' },
 	{ "disable-filters",	no_argument,		0,	0 },
 	{ "version",		no_argument,		0,	0 },
+	{ "help",		no_argument,		0,	0 },
 	{ 0, 0, 0, 0 }
     };
 
@@ -1119,6 +1120,12 @@ main(int argc, char** argv)
     if ((opt = opts.find("version")) != opts.end())
     {
 	cout << "snapper " << VERSION << endl;
+	exit(EXIT_SUCCESS);
+    }
+
+    if ((opt = opts.find("help")) != opts.end())
+    {
+	command_help();
 	exit(EXIT_SUCCESS);
     }
 
