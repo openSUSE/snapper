@@ -520,7 +520,7 @@ command_create()
 	    } break;
 
 	    case POST: {
-		Snapshots::iterator snap2 = sh->createPostSnapshot(snap1);
+		Snapshots::iterator snap2 = sh->createPostSnapshot(description, snap1);
 		snap2->setCleanup(cleanup);
 		snap2->setUserdata(userdata);
 		snap2->flushInfo();

@@ -190,7 +190,7 @@ namespace snapper
 
 	iterator createSingleSnapshot(string description);
 	iterator createPreSnapshot(string description);
-	iterator createPostSnapshot(const_iterator pre);
+	iterator createPostSnapshot(string description, const_iterator pre);
 
 	iterator createHelper(Snapshot& snapshot);
 

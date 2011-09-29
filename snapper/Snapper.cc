@@ -154,9 +154,9 @@ namespace snapper
 
 
     Snapshots::iterator
-    Snapper::createPostSnapshot(Snapshots::const_iterator pre)
+    Snapper::createPostSnapshot(string description, Snapshots::const_iterator pre)
     {
-	return snapshots.createPostSnapshot(pre);
+	return snapshots.createPostSnapshot(description, pre);
     }
 
 

@@ -460,12 +460,13 @@ namespace snapper
 
 
     Snapshots::iterator
-    Snapshots::createPostSnapshot(Snapshots::const_iterator pre)
+    Snapshots::createPostSnapshot(string description, Snapshots::const_iterator pre)
     {
 	if (pre == entries.end() || pre->isCurrent() || pre->getType() != PRE)
 	    throw IllegalSnapshotException();
 
 	Snapshot snapshot(snapper, POST, nextNumber(), time(NULL));
+	snapshot.description = description;
 	snapshot.pre_num = pre->getNum();
 	snapshot.info_modified = true;
 
