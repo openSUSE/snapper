@@ -314,6 +314,26 @@ namespace snapper
     }
 
 
+    Snapshots::iterator
+    Snapshots::findPre(const_iterator post)
+    {
+	if (post == entries.end() || post->isCurrent() || post->getType() != POST)
+	    throw IllegalSnapshotException();
+
+	return find(post->pre_num);
+    }
+
+
+    Snapshots::const_iterator
+    Snapshots::findPre(const_iterator post) const
+    {
+	if (post == entries.end() || post->isCurrent() || post->getType() != POST)
+	    throw IllegalSnapshotException();
+
+	return find(post->pre_num);
+    }
+
+
     unsigned int
     Snapshots::nextNumber()
     {

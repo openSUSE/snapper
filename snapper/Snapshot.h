@@ -172,8 +172,8 @@ namespace snapper
 	iterator find(unsigned int num);
 	const_iterator find(unsigned int num) const;
 
-	iterator findPre(const_iterator pre) { return find(pre->pre_num); }
-	const_iterator findPre(const_iterator pre) const { return find(pre->pre_num); }
+	iterator findPre(const_iterator post);
+	const_iterator findPre(const_iterator post) const;
 
 	iterator findPost(const_iterator pre);
 	const_iterator findPost(const_iterator pre) const;
