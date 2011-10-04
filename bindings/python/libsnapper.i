@@ -39,6 +39,14 @@ using namespace std;
 %ignore snapper::Snapshots::getSnapshotCurrent() const;
 %ignore snapper::Comparison::getSnapshot1() const;
 %ignore snapper::Comparison::getSnapshot2() const;
+%ignore snapper::Files::begin();
+%ignore snapper::Files::begin() const;
+%ignore snapper::Files::end();
+%ignore snapper::Files::end() const;
+%ignore snapper::Files::find();
+%ignore snapper::Files::find() const;
+%ignore snapper::Files::findAbsolutePath();
+%ignore snapper::Files::findAbsolutePath() const;
 
 %include "../../snapper/Factory.h"
 %include "../../snapper/Exception.h"
@@ -52,7 +60,7 @@ using namespace snapper;
 
 %template(vectorstring) std::vector<string>;
 %std_nodefconst_type(File);
-%template(VectorFile) std::vector<File>;
+%template(vectorFile) std::vector<File, allocator< File > >;
 %template(mapstringstring) std::map<string,string>;
 %template(pairstringstring) std::pair<string,string>;
 %template(paircstringstring) std::pair<const string,string>;
@@ -228,6 +236,16 @@ swig::SwigPyIterator* __iter__(PyObject **PYTHON_SELF)
     {
     return new MyFileIt(self->begin(), self->begin(),
                         self->end(), *PYTHON_SELF);
+    }
+swig::SwigPyIterator* begin(PyObject **PYTHON_SELF)
+    {
+    return new MyFileIt(self->begin(), self->begin(),
+	                self->end(), *PYTHON_SELF);
+    }
+swig::SwigPyIterator* end(PyObject **PYTHON_SELF)
+    {
+    return new MyFileIt(self->end(), self->begin(),
+			self->end(), *PYTHON_SELF);
     }
 }
 
