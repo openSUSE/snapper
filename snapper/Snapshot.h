@@ -119,11 +119,11 @@ namespace snapper
 
 	const Snapper* snapper;
 
-	const SnapshotType type;
+	SnapshotType type;
 
-	const unsigned int num;
+	unsigned int num;
 
-	const time_t date;
+	time_t date;
 
 	unsigned int pre_num;	// valid only for type=POST
 

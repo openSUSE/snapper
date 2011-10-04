@@ -42,15 +42,6 @@ namespace snapper
     void
     cmpDirs(const string& path1, const string& path2, cmpdirs_cb_t cb);
 
-    string
-    statusToString(unsigned int status);
-
-    unsigned int
-    stringToStatus(const string& str);
-
-    unsigned int
-    invertStatus(unsigned int status);
-
 }
 
 

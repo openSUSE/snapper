@@ -8,3 +8,5 @@ CmpDirs.o
 CmpDirs
 CreateTimeline.o
 CreateTimeline
+SnapTest.o
+SnapTest

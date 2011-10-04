@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include <snapper/Compare.h>
+#include <snapper/File.h>
 
 using namespace snapper;
 using namespace std;

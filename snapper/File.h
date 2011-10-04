@@ -97,8 +97,10 @@ namespace snapper
 	void setUndo(bool value) { undo = value; }
 	bool doUndo();
 
+#ifndef SWIG
 	void setRollback(bool value) __attribute__ ((deprecated)) { setUndo(value); }
 	bool doRollback() __attribute__ ((deprecated)) { return doUndo(); }
+#endif
 
 	enum Action { CREATE, MODIFY, DELETE };
 
@@ -153,6 +155,7 @@ namespace snapper
 
 	typedef vector<File>::iterator iterator;
 	typedef vector<File>::const_iterator const_iterator;
+	typedef vector<File>::size_type size_type;
 
 	iterator begin() { return entries.begin(); }
 	const_iterator begin() const { return entries.begin(); }
@@ -160,6 +163,7 @@ namespace snapper
 	iterator end() { return entries.end(); }
 	const_iterator end() const { return entries.end(); }
 
+	size_type size() const { return entries.size(); }
 	bool empty() const { return entries.empty(); }
 
 	iterator find(const string& name);
@@ -186,6 +190,16 @@ namespace snapper
 	vector<File> entries;
 
     };
+
+
+    string
+    statusToString(unsigned int status);
+
+    unsigned int
+    stringToStatus(const string& str);
+
+    unsigned int
+    invertStatus(unsigned int status);
 
 }
 
