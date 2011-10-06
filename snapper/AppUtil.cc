@@ -33,6 +33,7 @@
 #include <dirent.h>
 #include <pwd.h>
 #include <string>
+#include <libxml/tree.h>
 #include <boost/algorithm/string.hpp>
 
 #include <blocxx/AppenderLogger.hpp>
@@ -263,6 +264,15 @@ logStreamClose(LogLevel level, const char* file, unsigned line, const char* func
     delete stream;
 }
 
+
+    void
+    xml_error_func(void* ctx, const char* msg, ...)
+    {
+    }
+
+    xmlGenericErrorFunc xml_error_func_ptr = &xml_error_func;
+
+
 void initDefaultLogger()
     {
     string path;
@@ -287,6 +297,8 @@ void initDefaultLogger()
 	file = "snapper.log";
 	}
     createLogger("default", path, file);
+
+    initGenericErrorDefaultFunc(&xml_error_func_ptr);
     }
 
 
