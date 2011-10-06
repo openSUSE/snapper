@@ -33,7 +33,6 @@
 #include "snapper/Snapper.h"
 #include "snapper/Comparison.h"
 #include "snapper/AppUtil.h"
-#include "snapper/XmlFile.h"
 #include "snapper/Enum.h"
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SystemCmd.h"
