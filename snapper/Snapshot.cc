@@ -143,65 +143,72 @@ namespace snapper
 	list<string> infos = glob(snapper->infosDir() + "/*/info.xml", GLOB_NOSORT);
 	for (list<string>::const_iterator it1 = infos.begin(); it1 != infos.end(); ++it1)
 	{
-	    XmlFile file(*it1);
-	    const xmlNode* root = file.getRootElement();
-	    const xmlNode* node = getChildNode(root, "snapshot");
-
-	    string tmp;
-
-	    SnapshotType type;
-	    if (!getChildValue(node, "type", tmp) || !toValue(tmp, type, true))
+	    try
 	    {
-		y2err("type missing or invalid. not adding snapshot " << *it1);
-		continue;
-	    }
+		XmlFile file(*it1);
+		const xmlNode* root = file.getRootElement();
+		const xmlNode* node = getChildNode(root, "snapshot");
 
-	    unsigned int num;
-	    if (!getChildValue(node, "num", num) || num == 0)
+		string tmp;
+
+		SnapshotType type;
+		if (!getChildValue(node, "type", tmp) || !toValue(tmp, type, true))
+		{
+		    y2err("type missing or invalid. not adding snapshot " << *it1);
+		    continue;
+		}
+
+		unsigned int num;
+		if (!getChildValue(node, "num", num) || num == 0)
+		{
+		    y2err("num missing or invalid. not adding snapshot " << *it1);
+		    continue;
+		}
+
+		time_t date;
+		if (!getChildValue(node, "date", tmp) || (date = scan_datetime(tmp, true)) == (time_t)(-1))
+		{
+		    y2err("date missing or invalid. not adding snapshot " << *it1);
+		    continue;
+		}
+
+		Snapshot snapshot(snapper, type, num, date);
+
+		it1->substr(snapper->infosDir().length() + 1) >> num;
+		if (num != snapshot.num)
+		{
+		    y2err("num mismatch. not adding snapshot " << *it1);
+		    continue;
+		}
+
+		getChildValue(node, "pre_num", snapshot.pre_num);
+
+		getChildValue(node, "description", snapshot.description);
+
+		getChildValue(node, "cleanup", snapshot.cleanup);
+
+		const list<const xmlNode*> l = getChildNodes(node, "userdata");
+		for (list<const xmlNode*>::const_iterator it2 = l.begin(); it2 != l.end(); ++it2)
+		{
+		    string key, value;
+		    getChildValue(*it2, "key", key);
+		    getChildValue(*it2, "value", value);
+		    if (!key.empty())
+			snapshot.userdata[key] = value;
+		}
+
+		if (!snapper->getFilesystem()->checkSnapshot(snapshot.num))
+		{
+		    y2err("snapshot check failed. not adding snapshot " << *it1);
+		    continue;
+		}
+
+		entries.push_back(snapshot);
+	    }
+	    catch (const IOErrorException& e)
 	    {
-		y2err("num missing or invalid. not adding snapshot " << *it1);
-		continue;
+		y2err("loading " << *it1 << " failed");
 	    }
-
-	    time_t date;
-	    if (!getChildValue(node, "date", tmp) || (date = scan_datetime(tmp, true)) == (time_t)(-1))
-	    {
-		y2err("date missing or invalid. not adding snapshot " << *it1);
-		continue;
-	    }
-
-	    Snapshot snapshot(snapper, type, num, date);
-
-	    it1->substr(snapper->infosDir().length() + 1) >> num;
-	    if (num != snapshot.num)
-	    {
-		y2err("num mismatch. not adding snapshot " << *it1);
-		continue;
-	    }
-
-	    getChildValue(node, "pre_num", snapshot.pre_num);
-
-	    getChildValue(node, "description", snapshot.description);
-
-	    getChildValue(node, "cleanup", snapshot.cleanup);
-
-	    const list<const xmlNode*> l = getChildNodes(node, "userdata");
-	    for (list<const xmlNode*>::const_iterator it2 = l.begin(); it2 != l.end(); ++it2)
-	    {
-		string key, value;
-		getChildValue(*it2, "key", key);
-		getChildValue(*it2, "value", value);
-		if (!key.empty())
-		    snapshot.userdata[key] = value;
-	    }
-
-	    if (!snapper->getFilesystem()->checkSnapshot(snapshot.num))
-	    {
-		y2err("snapshot check failed. not adding snapshot " << *it1);
-		continue;
-	    }
-
-	    entries.push_back(snapshot);
 	}
 
 	entries.sort();
@@ -400,11 +407,15 @@ namespace snapper
 	    setChildValue(userdata_node, "value", it->second);
 	}
 
-	if (!xml.save(infoDir() + "/info.xml.tmp"))
+	try
+	{
+	    xml.save(infoDir() + "/info.xml.tmp");
+	}
+	catch (const IOErrorException& e)
 	{
 	    y2err("saving info.xml failed infoDir: " << infoDir() << " errno: << " << errno <<
 		  " (" << strerror(errno) << ")");
-	    throw IOErrorException();
+	    throw;
 	}
 
 	if (rename(string(infoDir() + "/info.xml.tmp").c_str(), string(infoDir() + "/info.xml").c_str()) != 0)

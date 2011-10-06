@@ -22,6 +22,7 @@
 
 #include <string.h>
 
+#include "snapper/Exception.h"
 #include "snapper/XmlFile.h"
 
 
@@ -37,6 +38,8 @@ namespace snapper
     XmlFile::XmlFile(const string& filename)
 	: doc(xmlReadFile(filename.c_str(), NULL, XML_PARSE_NOBLANKS | XML_PARSE_NONET))
     {
+	if (!doc)
+	    throw IOErrorException();
     }
 
 
@@ -44,6 +47,14 @@ namespace snapper
     {
 	if (doc)
 	    xmlFreeDoc(doc);
+    }
+
+
+    void
+    XmlFile::save(const string& filename)
+    {
+	if (xmlSaveFormatFile(filename.c_str(), doc, 1) == -1)
+	    throw IOErrorException();
     }
 
 
