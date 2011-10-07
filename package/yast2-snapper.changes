@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Fri Oct  7 11:15:53 CEST 2011 - jsuchome@suse.cz
+
+- support more snapper configurations (bnc#719482)
+- show path to current subvolume above filesystem tree (bnc#719482)
+- close the feedback window correctly (bnc#722477)
+- 2.21.11 
+
+-------------------------------------------------------------------
 Wed Sep 28 23:04:59 CEST 2011 - visnov@suse.cz
 
 - set dialog title

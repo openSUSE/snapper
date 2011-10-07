@@ -67,12 +67,16 @@ any SummaryDialog() {
     /* summary dialog caption */
     string caption = _("Snapshots");
 
-    list<map> snapshots	= Snapper::snapshots;
-    integer i	= -1;
+    list<map> snapshots		= Snapper::snapshots;
+    list<string> configs	= Snapper::configs;
 
     list snapshot_items	= [];
 
-    foreach (map s, snapshots, {
+    list get_snapshot_items () {
+
+      integer i	= -1;
+      snapshot_items	= [];
+      foreach (map s, snapshots, {
 	i	= i + 1;
 
 	integer num	= s["num"]:0;
@@ -103,13 +107,23 @@ any SummaryDialog() {
 	{
 	    y2milestone ("skipping pre snapshot: %1", num);
 	}
-    });
+      });
+      return snapshot_items;
+    }
 
     term contents = `VBox (
+	`HBox (
+	    // combo box label
+	    `Label (_("Current Configuration")),
+	    `ComboBox (`id (`configs), `opt (`notify), "", maplist (string config, configs, {
+		return `item (`id (config), config, config == Snapper::current_config);
+	    })),
+	    `HStretch ()
+	),
 	`Table (`id (`snapshots_table), `opt(`notify, `keepSorting), `header (
 		// table header
 		_("ID"), _("Type"), _("Start Date"), _("End Date"), _("Description")),
-		snapshot_items
+		get_snapshot_items ()
 	),
 	`HBox (
 	    `PushButton (`id (`show_c), `opt (`default), _("Show Changes")),
@@ -127,6 +141,7 @@ any SummaryDialog() {
     {
 	UI::ChangeWidget (`id (`show_c), `Enabled, false);
     }
+    UI::ChangeWidget (`id (`configs), `Enabled, size (configs) > 1);
 
     any ret = nil;
     while(true) {
@@ -150,8 +165,25 @@ any SummaryDialog() {
 	    Snapper::selected_snapshot_index	= selected;
             break;
         }
-        else if(ret == `next) {
-	    // TODO check if something needs to be written (description)
+	else if (ret == `configs) {
+	    string config	= (string) UI::QueryWidget (`id (ret), `Value);
+	    if (config != Snapper::current_config)
+	    {
+		Snapper::current_config	= config;
+
+		// busy popup message
+		Popup::ShowFeedback ("", _("Reading list of snapshots..."));
+
+	        Snapper::InitializeSnapper (config);
+	        Snapper::ReadSnapshots ();
+		snapshots		= Snapper::snapshots;
+		Popup::ClearFeedback ();
+
+		UI::ChangeWidget (`id (`snapshots_table), `Items, get_snapshot_items ());
+		continue;
+	    }
+	}
+        else if (ret == `next) {
             break;
         }
         else {
@@ -221,16 +253,16 @@ any ShowDialog () {
     if (!haskey (snapshot, "tree_map"))
     {
 	snapshot["tree_map"]	= Snapper::ReadModifiedFilesMap (from, to);
-	Popup::ClearFeedback ();
 	tree_map	= snapshot["tree_map"]:$[];
     }
     // full paths of files marked as modified, mapping to changes string
-    map<string,string> files_index	= $[];
+    map<string,map> files_index	= $[];
     if (!haskey (snapshot, "files_index"))
     {
 	snapshot["files_index"]	= Snapper::ReadModifiedFilesIndex (from, to);
 	Snapper::snapshots[Snapper::selected_snapshot_index]	= snapshot;
     }
+    Popup::ClearFeedback ();
     files_index	= snapshot["files_index"]:$[];
 
     // update the global snapshots list
@@ -242,12 +274,11 @@ any ShowDialog () {
     map<string,boolean> selected_items	= $[];
 
     boolean file_was_created (string file) {
-	return (substring (files_index[file]:"", 0, 1) == "+");
+	return (substring (files_index[file,"status"]:"", 0, 1) == "+");
     }
     boolean file_was_removed (string file) {
-	return (substring (files_index[file]:"", 0, 1) == "-");
+	return (substring (files_index[file,"status"]:"", 0, 1) == "-");
     }
-
     // go through the map defining filesystem tree and create the widget items
     list<term> generate_tree_items (string current_path, map<string,map> current_branch) {
 
@@ -439,6 +470,10 @@ any ShowDialog () {
     }
 
     string tree_label	= sformat ("%1 - %2", previous_num, snapshot_num);
+    // find out the path to current subvolume
+    string subtree_path = Snapper::GetSnapshotPath (snapshot_num);
+    subtree_path = substring (subtree_path, 0, find (subtree_path, ".snapshots/"));
+
     term date_widget	= `VBox (
 	    `HBox (
 		// label, date string will follow at the end of line
@@ -465,9 +500,10 @@ any ShowDialog () {
 	`HWeight (1, `HBox (`VSpacing (20), `VBox (`HSpacing(70),
 	    `HBox (
 		`HSpacing (),
-		`ReplacePoint (`id (`reptree),
+		`ReplacePoint (`id (`reptree), `VBox (
+		    `Left (`Label (subtree_path)),
 		    `Tree (`id(`tree), tree_label, [])
-		),
+		)),
 		`HSpacing ()
 	    ),
 	    `HBox (
@@ -505,9 +541,10 @@ any ShowDialog () {
 
     if (size (tree_items) > 0)
     {
-	UI::ReplaceWidget (`id (`reptree),
+	UI::ReplaceWidget (`id (`reptree), `VBox (
+	    `Left (`Label (subtree_path)),
 	    `Tree (`id(`tree), `opt (`notify, `immediate, `multiSelection, `recursiveSelection), tree_label, tree_items)
-	);
+	));
 	// no item is selected
 	UI::ChangeWidget (`tree, `CurrentItem, nil);
     }
@@ -575,7 +612,7 @@ any ShowDialog () {
 
 %1
 
-from snapshot '%2' to current system?", current_file, previous_num)))
+from snapshot '%2' to current system?", Snapper::GetFileFullPath (current_file), previous_num)))
 	    {
 		Snapper::RestoreFiles (previous_num, [current_file]);
 	    }
@@ -587,7 +624,7 @@ from snapshot '%2' to current system?", current_file, previous_num)))
 
 %1
 
-from snapshot '%2' to current system?", current_file, snapshot_num)))
+from snapshot '%2' to current system?", Snapper::GetFileFullPath (current_file), snapshot_num)))
 	    {
 		Snapper::RestoreFiles (snapshot_num, [current_file]);
 	    }
@@ -595,22 +632,30 @@ from snapshot '%2' to current system?", current_file, snapshot_num)))
 	}
         else if (ret == `next) {
 	    list<string> files	= (list<string>) UI::QueryWidget (`id (`tree), `SelectedItems);
+	    list<string> to_restore	= [];
 	    files = filter (string file, files, {
-		return haskey (files_index, file);
+		if (haskey (files_index, file))
+		{
+		    to_restore	= add (to_restore, Snapper::GetFileFullPath (file));
+		    return true;
+		}
+		else
+		{
+		    return false;
+		}
 	    });
 
-	    if (files == [])
+	    if (to_restore == [])
 	    {
 		// popup message
 		Popup::Message (_("No file was selected for restoring"));
 		continue;
 	    }
-	    // FIXME restore from PRE or POST? (PRE by default)
 	    // popup headline
 	    if (Popup::AnyQuestionRichText (_("Restoring files"),
 		// popup message, %1 is snapshot number, %2 list of files
 		sformat (_("These files will be copied from snapshot '%1' to current system: <p>%2</p>Are you sure?"),
-		    previous_num, mergestring (files, "<br>")),
+		    previous_num, mergestring (to_restore, "<br>")),
 		60, 20,  Label::YesButton (), Label::NoButton (), `focus_no))
 	    {
 		Snapper::RestoreFiles (previous_num, files);

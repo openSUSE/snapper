@@ -35,9 +35,9 @@ private:
 
     /**
      * search the map for value of given key; both key and value have to be strings
-     * when key is not present, empty string is returned
+     * when key is not present, default value is returned
      */
-    string getValue (const YCPMap map, const string key);
+    string getValue (const YCPMap map, const string key, string deflt);
 
     /**
      * Search the map for value of given key

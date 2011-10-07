@@ -51,12 +51,17 @@ global map<integer,integer> id2index	= $[];
 // index to snapshots list
 global integer selected_snapshot_index	= 0;
 
+// list of configurations
+global list<string> configs	= [ "root" ];
+
+global string current_config	= "root";
+
 /**
  * Return map of files modified between given snapshots
  * Return structure has just one level, and maps each modified file to it's modification map
  */
-global map<string,string> ReadModifiedFilesIndex (integer from, integer to) {
-    return (map<string,string>) SCR::Read (.snapper.diff_index, $[ "from" : from, "to" : to]);
+global map<string,map> ReadModifiedFilesIndex (integer from, integer to) {
+    return (map<string,map>) SCR::Read (.snapper.diff_index, $[ "from" : from, "to" : to]);
 }
 
 /**
@@ -82,6 +87,16 @@ global string GetSnapshotPath (integer snapshot_num) {
 }
 
 /**
+ * Return the full path to the given file from currently selected configuration (subvolume)
+ * @param file path, relatively to current config
+ * GetFileFullPath ("/testfile.txt") -> /abc/testfile.txt for /abc subvolume
+ */
+global string GetFileFullPath (string file) {
+
+    return snapshots[selected_snapshot_index,"files_index",file,"full_path"]:file;
+}
+
+/**
  * Describe what was done with given file between given snapshots
  * - when new is 0, meaning is 'current system'
  */
@@ -89,10 +104,10 @@ global map GetFileModification (string file, integer old, integer new) {
 
     map ret	= $[];
     string file1	= sformat ("%1%2", GetSnapshotPath (old), file);
-    string file2	= file;
-    if (new != 0)
+    string file2	= sformat ("%1%2", GetSnapshotPath (new), file);
+    if (new == 0)
     {
-	file2	= sformat ("%1%2", GetSnapshotPath (new), file);
+	file2	= GetFileFullPath (file);
     }
 
     y2milestone ("comparing '%1' and '%2'", file1, file2);
@@ -159,7 +174,7 @@ global map GetFileModification (string file, integer old, integer new) {
  */
 global boolean ReadSnapshots () {
 
-
+    snapshots		= [];
     list<map> snapshot_maps	= (list<map>) SCR::Read (.snapper.snapshots);
     if (snapshot_maps == nil) snapshot_maps = [];
     integer i	= 0;
@@ -172,8 +187,6 @@ global boolean ReadSnapshots () {
 	id2index[id]	= i;
 	i		= i + 1;
     });
-
-
     return true;
 }
 
@@ -182,13 +195,28 @@ global map LastSnapperErrorMap () {
     return (map) SCR::Read (.snapper.error);
 }
 
+
+global list<string> ReadConfigs () {
+
+    configs		= (list<string>) SCR::Read (.snapper.configs);
+    if (configs == nil)
+    {
+	// error popup
+	Report::Error (_("File /etc/sysconfig/snapper is not available"));
+	configs	= [ "root" ];
+    }
+    return configs;
+}
+
+
+
 /**
  * Initialize snapper agent
  * Return true on success
  */
-global boolean InitializeSnapper () {
+global boolean InitializeSnapper (string config) {
 
-    boolean init	= (boolean) SCR::Execute (.snapper);
+    boolean init	= (boolean) SCR::Execute (.snapper, $[ "config" : config ]);
     if (!init)
     {
 	map err_map	= LastSnapperErrorMap ();
@@ -238,7 +266,9 @@ global boolean Read() {
 
     Progress::NextStage();
 
-    if (!InitializeSnapper ())
+    ReadConfigs ();
+
+    if (!InitializeSnapper (current_config))
     {
 	return false;
     }
@@ -252,13 +282,10 @@ global boolean Read() {
 /**
  * Return the given file mode as octal number
  */
-global integer GetFileMode (string file) {
+integer GetFileMode (string file) {
 
     map out = (map) SCR::Execute (.target.bash_output, "/bin/stat --printf=%a " + file);
-    string mode	= out["stdout"]:"";
-    if (mode == nil || mode == "")
-	return 644;
-    return tointeger (mode);
+    return tointeger (out["stdout"]:"755");
 }
 
 /**
@@ -287,8 +314,9 @@ global boolean RestoreFiles (integer snapshot_num, list<string> files) {
 	UI::ChangeWidget (`id (`progress ), `Value, progress);
 
 	string orig	= GetSnapshotPath (snapshot_num) + file;
+	string full_path= GetFileFullPath (file);
+	string dir	= substring (full_path, 0, findlastof (full_path, "/"));
 
-	string dir	= substring (file, 0, findlastof (file, "/"));
 	if (!FileUtils::Exists (orig))
 	{
 	    // log entry (%1 is file name)
@@ -300,24 +328,24 @@ global boolean RestoreFiles (integer snapshot_num, list<string> files) {
 	    if (FileUtils::IsDirectory (orig) == true)
 	    {
 		map stat	= (map) SCR::Read (.target.stat, orig);
-		if (!FileUtils::Exists (file))
+		if (!FileUtils::Exists (full_path))
 		{
-		    SCR::Execute (.target.mkdir, file);
+		    SCR::Execute (.target.mkdir, full_path);
 		}
-		SCR::Execute (.target.bash, sformat ("/bin/chown %1:%2 '%3'", stat["uid"]:0, stat["gid"]:0, file));
-		SCR::Execute (.target.bash, sformat ("/bin/chmod %1 '%2'", GetFileMode (orig), file));
+		SCR::Execute (.target.bash, sformat ("/bin/chown %1:%2 '%3'", stat["uid"]:0, stat["gid"]:0, full_path));
+		SCR::Execute (.target.bash, sformat ("/bin/chmod %1 '%2'", GetFileMode (orig), full_path));
 	    }
 	    else
 	    {
-		SCR::Execute (.target.bash, sformat ("/bin/cp -a '%1' '%2'", orig, file));
+		SCR::Execute (.target.bash, sformat ("/bin/cp -a '%1' '%2'", orig, full_path));
 	    }
-	    UI::ChangeWidget (`id (`log), `LastLine, file + "\n");
+	    UI::ChangeWidget (`id (`log), `LastLine, full_path + "\n");
 	}
 	else
 	{
-	    y2milestone ("failed to copy file '%1' to '%2' (dir: %3)", orig, file, dir);
+	    y2milestone ("failed to copy file '%1' to '%2' (dir: %3)", orig, full_path, dir);
 	    // log entry (%1 is file name)
-	    UI::ChangeWidget (`id (`log), `LastLine, sformat (_("%1 skipped\n"), file));
+	    UI::ChangeWidget (`id (`log), `LastLine, sformat (_("%1 skipped\n"), full_path));
 	}
 	sleep (100);
 	progress        = progress + 1;
