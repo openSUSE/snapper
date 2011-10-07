@@ -32,6 +32,8 @@ namespace snapper
     XmlFile::XmlFile()
 	: doc(xmlNewDoc((const xmlChar*) "1.0"))
     {
+	if (!doc)
+	    throw BadAllocException();
     }
 
 
@@ -45,8 +47,7 @@ namespace snapper
 
     XmlFile::~XmlFile()
     {
-	if (doc)
-	    xmlFreeDoc(doc);
+	xmlFreeDoc(doc);
     }
 
 

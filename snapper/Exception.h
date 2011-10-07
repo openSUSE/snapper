@@ -50,6 +50,12 @@ namespace snapper
 	virtual const char* what() const throw() { return "illegal snapshot"; }
     };
 
+    struct BadAllocException : public SnapperException
+    {
+	explicit BadAllocException() throw() {}
+	virtual const char* what() const throw() { return "bad alloc"; }
+    };
+
     struct LogicErrorException : public SnapperException
     {
 	explicit LogicErrorException() throw() {}
