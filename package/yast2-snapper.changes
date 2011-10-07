@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Oct  7 14:36:51 CEST 2011 - jsuchome@suse.cz
+
+- removed conflicting statusToString
+- 2.21.12
+
+-------------------------------------------------------------------
 Fri Oct  7 11:15:53 CEST 2011 - jsuchome@suse.cz
 
 - support more snapper configurations (bnc#719482)
