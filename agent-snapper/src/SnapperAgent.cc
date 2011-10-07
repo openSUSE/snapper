@@ -59,28 +59,6 @@ YCPList SnapperAgent::getListValue (const YCPMap map, const string key)
 }
 
 
-string statusToString(unsigned int status)
-{
-	string ret;
-
-	if (status & CREATED)
-	    ret += "+";
-	else if (status & DELETED)
-	    ret += "-";
-	else if (status & TYPE)
-	    ret += "t";
-	else if (status & CONTENT)
-	    ret += "c";
-	else
-	    ret += ".";
-
-	ret += status & PERMISSIONS ? "p" : ".";
-	ret += status & USER ? "u" : ".";
-	ret += status & GROUP ? "g" : ".";
-
-	return ret;
-}
-
 /**
  * Constructor
  */
@@ -400,8 +378,8 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
 		    }
 		    else
 		    {
-			it->setRollback(true);
-			it->doRollback ();
+			it->setUndo(true);
+			it->doUndo();
 		    }
 		}
 	    }
