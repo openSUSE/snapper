@@ -20,8 +20,8 @@
  */
 
 
-#ifndef FACTORY_H
-#define FACTORY_H
+#ifndef SNAPPER_FACTORY_H
+#define SNAPPER_FACTORY_H
 
 
 #include <string>

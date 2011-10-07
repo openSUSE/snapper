@@ -20,8 +20,8 @@
  */
 
 
-#ifndef SNAPPER_DEFINES_H
-#define SNAPPER_DEFINES_H
+#ifndef SNAPPER_SNAPPER_DEFINES_H
+#define SNAPPER_SNAPPER_DEFINES_H
 
 
 #define SYSCONFIGFILE "/etc/sysconfig/snapper"

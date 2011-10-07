@@ -20,8 +20,8 @@
  */
 
 
-#ifndef SNAPPER_H
-#define SNAPPER_H
+#ifndef SNAPPER_SNAPPER_H
+#define SNAPPER_SNAPPER_H
 
 
 #include <vector>

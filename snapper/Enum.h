@@ -20,8 +20,8 @@
  */
 
 
-#ifndef ENUM_H
-#define ENUM_H
+#ifndef SNAPPER_ENUM_H
+#define SNAPPER_ENUM_H
 
 
 #include <string>

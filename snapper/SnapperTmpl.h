@@ -20,8 +20,8 @@
  */
 
 
-#ifndef SNAPPER_TMPL_H
-#define SNAPPER_TMPL_H
+#ifndef SNAPPER_SNAPPER_TMPL_H
+#define SNAPPER_SNAPPER_TMPL_H
 
 #include <functional>
 #include <ostream>

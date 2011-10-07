@@ -20,8 +20,8 @@
  */
 
 
-#ifndef FILE_H
-#define FILE_H
+#ifndef SNAPPER_FILE_H
+#define SNAPPER_FILE_H
 
 
 #include <sys/stat.h>

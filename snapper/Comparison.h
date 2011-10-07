@@ -20,8 +20,8 @@
  */
 
 
-#ifndef COMPARISON_H
-#define COMPARISON_H
+#ifndef SNAPPER_COMPARISON_H
+#define SNAPPER_COMPARISON_H
 
 
 #include "snapper/Comparison.h"

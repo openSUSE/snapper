@@ -20,8 +20,8 @@
  */
 
 
-#ifndef XML_FILE_H
-#define XML_FILE_H
+#ifndef SNAPPER_XML_FILE_H
+#define SNAPPER_XML_FILE_H
 
 
 #include <libxml/tree.h>

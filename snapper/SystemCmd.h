@@ -20,8 +20,8 @@
  */
 
 
-#ifndef SYSTEM_CMD_H
-#define SYSTEM_CMD_H
+#ifndef SNAPPER_SYSTEM_CMD_H
+#define SNAPPER_SYSTEM_CMD_H
 
 #include <sys/poll.h>
 #include <stdio.h>

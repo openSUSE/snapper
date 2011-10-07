@@ -20,8 +20,8 @@
  */
 
 
-#ifndef LOG_H
-#define LOG_H
+#ifndef SNAPPER_LOG_H
+#define SNAPPER_LOG_H
 
 #include <sstream>
 #include <string>

@@ -20,8 +20,8 @@
  */
 
 
-#ifndef SNAPPER_TYPES_H
-#define SNAPPER_TYPES_H
+#ifndef SNAPPER_SNAPPER_TYPES_H
+#define SNAPPER_SNAPPER_TYPES_H
 
 
 #include <string>

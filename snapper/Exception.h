@@ -20,8 +20,8 @@
  */
 
 
-#ifndef EXCEPTION_H
-#define EXCEPTION_H
+#ifndef SNAPPER_EXCEPTION_H
+#define SNAPPER_EXCEPTION_H
 
 
 #include <exception>

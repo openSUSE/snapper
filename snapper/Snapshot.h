@@ -20,8 +20,8 @@
  */
 
 
-#ifndef SNAPSHOT_H
-#define SNAPSHOT_H
+#ifndef SNAPPER_SNAPSHOT_H
+#define SNAPPER_SNAPSHOT_H
 
 
 #include <time.h>

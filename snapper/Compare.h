@@ -20,8 +20,8 @@
  */
 
 
-#ifndef COMPARE_H
-#define COMPARE_H
+#ifndef SNAPPER_COMPARE_H
+#define SNAPPER_COMPARE_H
 
 
 #include <string>

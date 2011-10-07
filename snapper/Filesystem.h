@@ -20,8 +20,8 @@
  */
 
 
-#ifndef FILESYSTEM_H
-#define FILESYSTEM_H
+#ifndef SNAPPER_FILESYSTEM_H
+#define SNAPPER_FILESYSTEM_H
 
 
 #include <string>
