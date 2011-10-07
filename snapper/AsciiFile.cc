@@ -23,6 +23,7 @@
 #include <unistd.h>
 #include <fstream>
 
+#include "snapper/Log.h"
 #include "snapper/AppUtil.h"
 #include "snapper/AsciiFile.h"
 #include "snapper/SnapperTypes.h"

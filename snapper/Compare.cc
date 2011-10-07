@@ -30,6 +30,7 @@
 #include <vector>
 #include <algorithm>
 
+#include "snapper/Log.h"
 #include "snapper/AppUtil.h"
 #include "snapper/File.h"
 #include "snapper/Compare.h"

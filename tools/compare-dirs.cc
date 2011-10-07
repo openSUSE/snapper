@@ -3,6 +3,7 @@
 #include <signal.h>
 #include <string.h>
 
+#include <snapper/Log.h>
 #include <snapper/AppUtil.h>
 #include <snapper/Compare.h>
 #include <snapper/File.h>

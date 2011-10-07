@@ -30,6 +30,7 @@
 #include <string>
 #include <boost/algorithm/string.hpp>
 
+#include "snapper/Log.h"
 #include "snapper/AppUtil.h"
 #include "snapper/SystemCmd.h"
 

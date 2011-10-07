@@ -2,6 +2,7 @@
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 
+#include <snapper/Log.h>
 #include <snapper/AppUtil.h>
 
 #include "GetOpts.h"

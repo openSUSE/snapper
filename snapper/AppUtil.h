@@ -40,9 +40,9 @@ namespace snapper
     using std::map;
 
 
-void createPath(const string& Path_Cv);
-bool checkNormalFile(const string& Path_Cv);
-bool checkDir(const string& Path_Cv);
+    void createPath(const string& Path_Cv);
+    bool checkNormalFile(const string& Path_Cv);
+    bool checkDir(const string& Path_Cv);
 
     list<string> glob(const string& path, int flags);
 
@@ -56,42 +56,11 @@ bool checkDir(const string& Path_Cv);
 
     string realpath(const string& path);
 
-template<class StreamType>
-void classic(StreamType& stream)
-{
-    stream.imbue(std::locale::classic());
-}
-
-
-enum LogLevel { DEBUG, MILESTONE, WARNING, ERROR };
-
-void createLogger(const string& name, const string& logpath, const string& logfile);
-
-bool testLogLevel(LogLevel level);
-
-void prepareLogStream(std::ostringstream& stream);
-
-std::ostringstream* logStreamOpen();
-
-void logStreamClose(LogLevel level, const char* file, unsigned line,
-		    const char* func, std::ostringstream*);
-
-void initDefaultLogger();
-
-#define y2deb(op) y2log_op(snapper::DEBUG, __FILE__, __LINE__, __FUNCTION__, op)
-#define y2mil(op) y2log_op(snapper::MILESTONE, __FILE__, __LINE__, __FUNCTION__, op)
-#define y2war(op) y2log_op(snapper::WARNING, __FILE__, __LINE__, __FUNCTION__, op)
-#define y2err(op) y2log_op(snapper::ERROR, __FILE__, __LINE__, __FUNCTION__, op)
-
-#define y2log_op(level, file, line, func, op)				\
-    do {								\
-	if (snapper::testLogLevel(level))				\
-	{								\
-	    std::ostringstream* __buf = snapper::logStreamOpen();	\
-	    *__buf << op;						\
-	    snapper::logStreamClose(level, file, line, func, __buf);	\
-	}								\
-    } while (0)
+    template<class StreamType>
+    void classic(StreamType& stream)
+    {
+	stream.imbue(std::locale::classic());
+    }
 
 
     string hostname();
@@ -119,7 +88,6 @@ void initDefaultLogger();
 
     string _(const char* msgid);
     string _(const char* msgid, const char* msgid_plural, unsigned long int n);
-
 
 }
 

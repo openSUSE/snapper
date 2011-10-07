@@ -26,6 +26,7 @@
 #include <errno.h>
 #include <mntent.h>
 
+#include "snapper/Log.h"
 #include "snapper/Filesystem.h"
 #include "snapper/Snapper.h"
 #include "snapper/SnapperTmpl.h"

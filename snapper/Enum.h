@@ -29,8 +29,8 @@
 #include <algorithm>
 #include <exception>
 
+#include "snapper/Log.h"
 #include "snapper/Snapshot.h"
-#include "snapper/AppUtil.h"
 
 
 namespace snapper

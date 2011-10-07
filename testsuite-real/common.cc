@@ -12,8 +12,7 @@
 #include <snapper/Comparison.h>
 #include <snapper/File.h>
 #include <snapper/SnapperDefines.h>
-
-#include "snapper/AppUtil.h"
+#include <snapper/Log.h>
 
 
 extern char* program_invocation_short_name;

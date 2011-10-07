@@ -27,6 +27,7 @@
 #include <libxml/tree.h>
 #include <string>
 #include <list>
+#include <sstream>
 #include <boost/noncopyable.hpp>
 
 #include "snapper/AppUtil.h"

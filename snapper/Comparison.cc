@@ -22,7 +22,7 @@
 
 #include "snapper/Comparison.h"
 #include "snapper/Snapper.h"
-#include "snapper/AppUtil.h"
+#include "snapper/Log.h"
 #include "snapper/File.h"
 #include "snapper/Exception.h"
 

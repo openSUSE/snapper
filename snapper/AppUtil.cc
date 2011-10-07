@@ -31,16 +31,11 @@
 #include <sys/utsname.h>
 #include <sys/ioctl.h>
 #include <dirent.h>
-#include <pwd.h>
 #include <string>
 #include <libxml/tree.h>
 #include <boost/algorithm/string.hpp>
 
-#include <blocxx/AppenderLogger.hpp>
-#include <blocxx/FileAppender.hpp>
-#include <blocxx/Logger.hpp>
-#include <blocxx/LogMessage.hpp>
-
+#include "snapper/Log.h"
 #include "snapper/AppUtil.h"
 
 
@@ -49,36 +44,33 @@ namespace snapper
     using namespace std;
 
 
-void createPath(const string& Path_Cv)
-{
-  string::size_type Pos_ii = 0;
-  while ((Pos_ii = Path_Cv.find('/', Pos_ii + 1)) != string::npos)
+    void
+    createPath(const string& Path_Cv)
     {
-      string Tmp_Ci = Path_Cv.substr(0, Pos_ii);
-      mkdir(Tmp_Ci.c_str(), 0777);
+	string::size_type Pos_ii = 0;
+	while ((Pos_ii = Path_Cv.find('/', Pos_ii + 1)) != string::npos)
+	{
+	    string Tmp_Ci = Path_Cv.substr(0, Pos_ii);
+	    mkdir(Tmp_Ci.c_str(), 0777);
+	}
+	mkdir(Path_Cv.c_str(), 0777);
     }
-  mkdir(Path_Cv.c_str(), 0777);
-}
 
 
-bool
-checkDir(const string& Path_Cv)
-{
-  struct stat Stat_ri;
-
-  return (stat(Path_Cv.c_str(), &Stat_ri) >= 0 &&
-	  S_ISDIR(Stat_ri.st_mode));
-}
+    bool
+    checkDir(const string& Path_Cv)
+    {
+	struct stat Stat_ri;
+	return stat(Path_Cv.c_str(), &Stat_ri) >= 0 && S_ISDIR(Stat_ri.st_mode);
+    }
 
 
-bool
-checkNormalFile(const string& Path_Cv)
-{
-  struct stat Stat_ri;
-
-  return (stat(Path_Cv.c_str(), &Stat_ri) >= 0 &&
-	  S_ISREG(Stat_ri.st_mode));
-}
+    bool
+    checkNormalFile(const string& Path_Cv)
+    {
+	struct stat Stat_ri;
+	return stat(Path_Cv.c_str(), &Stat_ri) >= 0 && S_ISREG(Stat_ri.st_mode);
+    }
 
 
     list<string>
@@ -111,194 +103,6 @@ checkNormalFile(const string& Path_Cv)
 	free(tmp);
 
 	return fdopen(fd, "w");
-    }
-
-
-static const blocxx::String component = "libsnapper";
-
-
-void createLogger(const string& name, const string& logpath, const string& logfile)
-{
-    using namespace blocxx;
-
-    if (logpath != "NULL" && logfile != "NULL")
-    {
-	String nm = name.c_str();
-	LoggerConfigMap configItems;
-	LogAppenderRef logApp;
-	if (logpath != "STDERR" && logfile != "STDERR" &&
-	    logpath != "SYSLOG" && logfile != "SYSLOG")
-	{
-	    String StrKey;
-	    String StrPath;
-	    StrKey.format("log.%s.location", name.c_str());
-	    StrPath = (logpath + "/" + logfile).c_str();
-	    configItems[StrKey] = StrPath;
-	    logApp =
-		LogAppender::createLogAppender(nm, LogAppender::ALL_COMPONENTS,
-					       LogAppender::ALL_CATEGORIES,
-					       "%d %-5p %c(%P) %F(%M):%L - %m",
-					       LogAppender::TYPE_FILE,
-					       configItems);
-	}
-	else if (logpath == "STDERR" && logfile == "STDERR")
-	{
-	    logApp =
-		LogAppender::createLogAppender(nm, LogAppender::ALL_COMPONENTS,
-					       LogAppender::ALL_CATEGORIES,
-					       "%d %-5p %c(%P) %F(%M):%L - %m",
-					       LogAppender::TYPE_STDERR,
-					       configItems);
-	}
-	else
-	{
-	    logApp =
-		LogAppender::createLogAppender(nm, LogAppender::ALL_COMPONENTS,
-					       LogAppender::ALL_CATEGORIES,
-					       "%d %-5p %c(%P) %F(%M):%L - %m",
-					       LogAppender::TYPE_SYSLOG,
-					       configItems);
-	}
-
-	LogAppender::setDefaultLogAppender(logApp);
-    }
-}
-
-
-bool
-testLogLevel(LogLevel level)
-{
-    using namespace blocxx;
-
-    ELogLevel curLevel = LogAppender::getCurrentLogAppender()->getLogLevel();
-
-    switch (level)
-    {
-	case DEBUG:
-	    return false; // curLevel >= ::blocxx::E_DEBUG_LEVEL;
-	case MILESTONE:
-	    return curLevel >= ::blocxx::E_INFO_LEVEL;
-	case WARNING:
-	    return curLevel >= ::blocxx::E_WARNING_LEVEL;
-	case ERROR:
-	    return curLevel >= ::blocxx::E_ERROR_LEVEL;
-	default:
-	    return curLevel >= ::blocxx::E_FATAL_ERROR_LEVEL;
-    }
-}
-
-
-void
-prepareLogStream(ostringstream& stream)
-{
-    stream.imbue(std::locale::classic());
-    stream.setf(std::ios::boolalpha);
-    stream.setf(std::ios::showbase);
-}
-
-
-ostringstream*
-logStreamOpen()
-{
-    std::ostringstream* stream = new ostringstream;
-    prepareLogStream(*stream);
-    return stream;
-}
-
-
-void
-logStreamClose(LogLevel level, const char* file, unsigned line, const char* func,
-	       ostringstream* stream)
-{
-    using namespace blocxx;
-
-    ELogLevel curLevel = LogAppender::getCurrentLogAppender()->getLogLevel();
-    String category;
-
-    switch (level)
-    {
-	case DEBUG:
-	    if (curLevel >= ::blocxx::E_DEBUG_LEVEL)
-		category = Logger::STR_DEBUG_CATEGORY;
-	    break;
-	case MILESTONE:
-	    if (curLevel >= ::blocxx::E_INFO_LEVEL)
-		category = Logger::STR_INFO_CATEGORY;
-	    break;
-	case WARNING:
-	    if (curLevel >= ::blocxx::E_WARNING_LEVEL)
-		category = Logger::STR_WARNING_CATEGORY;
-	    break;
-	case ERROR:
-	    if (curLevel >= ::blocxx::E_ERROR_LEVEL)
-		category = Logger::STR_ERROR_CATEGORY;
-	    break;
-	default:
-	    if (curLevel >= ::blocxx::E_FATAL_ERROR_LEVEL)
-		category = Logger::STR_FATAL_CATEGORY;
-	    break;
-    }
-
-    if (!category.empty())
-    {
-	string tmp = stream->str();
-
-	string::size_type pos1 = 0;
-
-	while (true)
-	{
-	    string::size_type pos2 = tmp.find('\n', pos1);
-
-	    if (pos2 != string::npos || pos1 != tmp.length())
-		LogAppender::getCurrentLogAppender()->logMessage(LogMessage(component, category,
-									    String(tmp.substr(pos1, pos2 - pos1)),
-									    file, line, func));
-
-	    if (pos2 == string::npos)
-		break;
-
-	    pos1 = pos2 + 1;
-	}
-    }
-
-    delete stream;
-}
-
-
-    void
-    xml_error_func(void* ctx, const char* msg, ...)
-    {
-    }
-
-    xmlGenericErrorFunc xml_error_func_ptr = &xml_error_func;
-
-
-void initDefaultLogger()
-    {
-    string path;
-    string file;
-    if (geteuid ())
-	{
-	struct passwd* pw = getpwuid (geteuid ());
-	if (pw)
-	    {
-	    path = pw->pw_dir;
-	    file = "snapper.log";
-	    }
-	else
-	    {
-	    path = "/";
-	    file = "snapper.log";
-	    }
-	}
-    else
-	{
-	path = "/var/log";
-	file = "snapper.log";
-	}
-    createLogger("default", path, file);
-
-    initGenericErrorDefaultFunc(&xml_error_func_ptr);
     }
 
 
@@ -477,6 +281,6 @@ void initDefaultLogger()
 	return s << fixed << double(tv.tv_sec) + (double)(tv.tv_usec) / 1000000.0 << "s";
     }
 
-const string app_ws = " \t\n";
+    const string app_ws = " \t\n";
 
 }
