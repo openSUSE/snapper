@@ -97,11 +97,6 @@ namespace snapper
 	void setUndo(bool value) { undo = value; }
 	bool doUndo();
 
-#ifndef SWIG
-	void setRollback(bool value) __attribute__ ((deprecated)) { setUndo(value); }
-	bool doRollback() __attribute__ ((deprecated)) { return doUndo(); }
-#endif
-
 	enum Action { CREATE, MODIFY, DELETE };
 
 	Action getAction() const;
