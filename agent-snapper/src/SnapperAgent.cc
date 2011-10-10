@@ -18,7 +18,7 @@ using namespace snapper;
 /*
  * search the map for value of given key; both key and value have to be strings
  */
-string SnapperAgent::getValue (const YCPMap map, const string key, string deflt)
+string SnapperAgent::getValue (const YCPMap &map, const string key, const string deflt)
 {
     if (!map->value(YCPString(key)).isNull()
 	&& map->value(YCPString(key))->isString())
@@ -33,7 +33,7 @@ string SnapperAgent::getValue (const YCPMap map, const string key, string deflt)
  * @param key key we are looking for
  * @param deflt the default value to be returned if key is not found
  */
-int SnapperAgent::getIntValue (const YCPMap map, const string key, int deflt)
+int SnapperAgent::getIntValue (const YCPMap &map, const string key, const int deflt)
 {
     if (!map->value(YCPString(key)).isNull() && map->value(YCPString(key))->isInteger()) {
 	return map->value(YCPString(key))->asInteger()->value(); 
@@ -50,7 +50,7 @@ int SnapperAgent::getIntValue (const YCPMap map, const string key, int deflt)
  * Search the map for value of given key;
  * key is string and value is YCPList
  */
-YCPList SnapperAgent::getListValue (const YCPMap map, const string key)
+YCPList SnapperAgent::getListValue (const YCPMap &map, const string key)
 {
     if (!map->value(YCPString(key)).isNull() && map->value(YCPString(key))->isList())
 	return map->value(YCPString(key))->asList();

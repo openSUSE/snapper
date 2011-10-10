@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Mon Oct 10 12:44:44 CEST 2011 - jsuchome@suse.cz
+
+- agent: pass map refereces as arguments
+- quote strings passed to bash commands
+- fixed testsuite
+- 2.21.13
+
+-------------------------------------------------------------------
 Fri Oct  7 14:36:51 CEST 2011 - jsuchome@suse.cz
 
 - removed conflicting statusToString

@@ -38,7 +38,7 @@ import "FileUtils";
 import "Label";
 import "Progress";
 import "Report";
-
+import "String";
 
 // global list of all snapshot
 global list<map> snapshots	= [];
@@ -116,7 +116,7 @@ global map GetFileModification (string file, integer old, integer new) {
     {
 	list<string> status	= [ "no_change" ];
 	map out	= (map) SCR::Execute (.target.bash_output,
-	    sformat ("/usr/bin/diff -u %1 %2", file1, file2));
+	    sformat ("/usr/bin/diff -u '%1' '%2'", String::Quote (file1), String::Quote (file2)));
 	if (out["stderr"]:"" != "")
 	{
 	    y2warning ("out: %1", out);
@@ -131,7 +131,8 @@ global map GetFileModification (string file, integer old, integer new) {
 
 	// check mode and ownerships
 	out = (map) SCR::Execute (.target.bash_output,
-	    sformat ("ls -ld %1 %2 | cut -f 1,3,4 -d ' '", file1, file2));
+	    sformat ("ls -ld -- '%1' '%2' | cut -f 1,3,4 -d ' '",
+	    String::Quote (file1), String::Quote (file2)));
 	list<string> parts	= splitstring (out["stdout"]:""," \n");
 
 	if (parts[0]:"" != parts[3]:"")
@@ -284,8 +285,12 @@ global boolean Read() {
  */
 integer GetFileMode (string file) {
 
-    map out = (map) SCR::Execute (.target.bash_output, "/bin/stat --printf=%a " + file);
-    return tointeger (out["stdout"]:"755");
+    map out = (map) SCR::Execute (.target.bash_output,
+	sformat ("/bin/stat --printf=%%a '%1'", String::Quote (file)));
+    string mode        = out["stdout"]:"";
+    if (mode == nil || mode == "")
+	return 644;
+    return tointeger (mode);
 }
 
 /**
@@ -332,12 +337,15 @@ global boolean RestoreFiles (integer snapshot_num, list<string> files) {
 		{
 		    SCR::Execute (.target.mkdir, full_path);
 		}
-		SCR::Execute (.target.bash, sformat ("/bin/chown %1:%2 '%3'", stat["uid"]:0, stat["gid"]:0, full_path));
-		SCR::Execute (.target.bash, sformat ("/bin/chmod %1 '%2'", GetFileMode (orig), full_path));
+		SCR::Execute (.target.bash, sformat ("/bin/chown -- %1:%2 '%3'",
+		    stat["uid"]:0, stat["gid"]:0, String::Quote (full_path)));
+		SCR::Execute (.target.bash, sformat ("/bin/chmod -- %1 '%2'",
+		    GetFileMode (orig), String::Quote (full_path)));
 	    }
 	    else
 	    {
-		SCR::Execute (.target.bash, sformat ("/bin/cp -a '%1' '%2'", orig, full_path));
+		SCR::Execute (.target.bash, sformat ("/bin/cp -a -- '%1' '%2'",
+		    String::Quote (orig), String::Quote (full_path)));
 	    }
 	    UI::ChangeWidget (`id (`log), `LastLine, full_path + "\n");
 	}

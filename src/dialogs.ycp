@@ -37,6 +37,7 @@ import "Label";
 import "Popup";
 import "Wizard";
 import "Snapper";
+import "String";
 
 include "snapper/helps.ycp";
 
@@ -636,7 +637,7 @@ from snapshot '%2' to current system?", Snapper::GetFileFullPath (current_file),
 	    files = filter (string file, files, {
 		if (haskey (files_index, file))
 		{
-		    to_restore	= add (to_restore, Snapper::GetFileFullPath (file));
+		    to_restore	= add (to_restore, String::Quote (Snapper::GetFileFullPath (file)));
 		    return true;
 		}
 		else
