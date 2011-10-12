@@ -33,7 +33,7 @@ string SnapperAgent::getValue (const YCPMap &map, const YCPString &key, const st
  * @param key key we are looking for
  * @param deflt the default value to be returned if key is not found
  */
-int SnapperAgent::getIntValue (const YCPMap &map, const YCPString &key, const int &deflt)
+int SnapperAgent::getIntValue (const YCPMap &map, const YCPString &key, const int deflt)
 {
     YCPValue val = map->value(key);
 

@@ -45,7 +45,7 @@ private:
      * @param key key we are looking for
      * @param deflt the default value to be returned if key is not found
      */
-    int getIntValue ( const YCPMap &map, const YCPString &key, const int &deflt);
+    int getIntValue ( const YCPMap &map, const YCPString &key, const int deflt);
 
     /**
      * Search the map for value of given key;
