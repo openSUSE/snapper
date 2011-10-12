@@ -374,8 +374,10 @@ any ShowDialog () {
 
 	if (haskey (modification, "diff"))
 	{
-	    string diff	= modification["diff"]:"";
+	    string diff	= String::EscapeTags (modification["diff"]:"");
 	    diff	= mergestring (splitstring (diff, "\n"), "<br>");
+	    // show fixed font in diff
+	    diff	= "<tt>" + diff + "</tt>";
 	    content	= add (content, `RichText (`id (`diff), diff));
 	}
 	else

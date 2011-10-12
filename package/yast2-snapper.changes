@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Wed Oct 12 16:40:44 CEST 2011 - jsuchome@suse.cz
+
+- more optimalization in C++ code
+- use fixed font for showing the diff (bnc#723621)
+- escape HTML tags in diff output
+- 2.21.14
+
+-------------------------------------------------------------------
 Mon Oct 10 12:44:44 CEST 2011 - jsuchome@suse.cz
 
 - agent: pass map refereces as arguments
