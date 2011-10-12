@@ -637,7 +637,7 @@ from snapshot '%2' to current system?", Snapper::GetFileFullPath (current_file),
 	    files = filter (string file, files, {
 		if (haskey (files_index, file))
 		{
-		    to_restore	= add (to_restore, String::Quote (Snapper::GetFileFullPath (file)));
+		    to_restore	= add (to_restore, String::EscapeTags (Snapper::GetFileFullPath (file)));
 		    return true;
 		}
 		else
