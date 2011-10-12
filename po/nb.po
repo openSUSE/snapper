@@ -1,95 +1,96 @@
-# translation of snapper.po to Japanese
-# Japanese translations for PACKAGE package.
-# Copyright (C) 2011 SUSE Linux Products GmbH, Nuernberg
-# This file is distributed under the same license as the PACKAGE package.
+# @TITLE@
+# Copyright (C) 2006, SUSE Linux GmbH, Nuremberg
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# This file is distributed under the same license as @PACKAGE@ package. FIRST
 #
-# Yasuhiko Kamata <belphegor@belbel.or.jp>, 2011.
 msgid ""
 msgstr ""
-"Project-Id-Version: snapper\n"
+"Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-10-12 15:11+0200\n"
-"PO-Revision-Date: 2011-10-06 16:24+0900\n"
-"Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese <opensuse-ja@opensuse.org>\n"
-"Language: ja\n"
+"PO-Revision-Date: 2005-08-11 20:37+0200\n"
+"Last-Translator: Olav Pettershagen <olav.pet@online.no>\n"
+"Language-Team:  <nb@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: KBabel 1.10.2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../tools/snapper.cc:433 ../tools/snapper.cc:549
+#, fuzzy
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <アルゴリズム>\t\tスナップショットに対するクリーンアップアルゴリズムの指定"
+msgstr "\t--cleanup-algorithm, -c\t\tOppryddingsalgoritme for øyeblikksbilde."
 
 #: ../tools/snapper.cc:1003
 msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <名前>\t\t使用する設定ファイル名を指定する"
+msgstr "\t--config, -c <navn>\t\tNavn som skal brukes i oppsettet."
 
 #: ../tools/snapper.cc:432 ../tools/snapper.cc:548
 msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <説明>\tスナップショットの説明を指定"
+msgstr "\t--description, -d <beskrivelse>\tBeskrivelse av øyeblikksbilde."
 
 #: ../tools/snapper.cc:1004
 msgid "\t--disable-filters\t\tDisable filters."
-msgstr "\t--disable-filters\t\tフィルタを無効にする"
+msgstr "\t--disable-filters\t\tDeaktiver filtre."
 
 #: ../tools/snapper.cc:222
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--fstype, -f <種類>\t\t手動でファイルシステムの種類を指定する"
+msgstr "\t--fstype, -f <fstype>\t\tAngi filsystemtype manuelt."
 
 #: ../tools/snapper.cc:826
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <ファイル>\t\tファイルから巻き戻すべきファイルを読み込む"
+msgstr "\t--input, -i <fil>\t\tLes filer der endringer skal angres."
 
 #: ../tools/snapper.cc:721
 msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <ファイル>\t\t状態をファイルに保存する"
+msgstr "\t--output, -o <fil>\t\tLagre status i fil."
 
 #: ../tools/snapper.cc:430
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <番号>\t\tプリ・スナップショットの番号を指定"
+msgstr "\t--pre-number <antall>\t\tAntall samsvarende før øyeblikksbilde."
 
 #: ../tools/snapper.cc:431
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\t作成したスナップショットの数を表示"
+msgstr "\t--print-number, -p\t\tVis antall opprettede øyeblikksbilder."
 
 #: ../tools/snapper.cc:1000
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\t通常出力される項目の省略"
+msgstr "\t--quiet, -q\t\t\tUndertrykk vanlig visning."
 
 #: ../tools/snapper.cc:1002
 msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <スタイル>\t表のスタイル (整数) "
+msgstr "\t--table-style, -t <style>\tTabellformat (heltall)."
 
 #: ../tools/snapper.cc:223
 msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <名前>\t\t使用する設定雛型の指定"
+msgstr "\t--template, -t <navn>\t\tNavn på oppsettmal som skal brukes."
 
 #: ../tools/snapper.cc:429
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <種類>\t\tスナップショットの種類"
+msgstr "\t--type, -t <type>\t\tType øyeblikksbilde."
 
 #: ../tools/snapper.cc:287
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <種類>\t\t一覧表示するスナップショットの種類"
+msgstr "\t--type, -t <type>\t\tType øyeblikksbilder som skal vises."
 
 #: ../tools/snapper.cc:434 ../tools/snapper.cc:550
+#, fuzzy
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <データ>\tスナップショットに対するユーザデータの指定"
+msgstr "\t--type, -t <type>\t\tType øyeblikksbilde."
 
 #: ../tools/snapper.cc:1001
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tより詳しい出力を行なう"
+msgstr "\t--verbose, -v\t\t\tVis mer informasjon."
 
 #: ../tools/snapper.cc:1005
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tバージョンを表示して終了する"
+msgstr "\t--version\t\t\tVis versjon og avslutt."
 
 #: ../tools/snapper.cc:945
 msgid "\tsnapper cleanup <cleanup-algorithm>"
-msgstr "\tsnapper cleanup <クリーンアップアルゴリズム>"
+msgstr "\tsnapper cleanup <oppryddingsalgoritme>"
 
 #: ../tools/snapper.cc:426
 msgid "\tsnapper create"
@@ -97,15 +98,15 @@ msgstr "\tsnapper create"
 
 #: ../tools/snapper.cc:219
 msgid "\tsnapper create-config <subvolume>"
-msgstr "\tsnapper create-config <サブボリューム>"
+msgstr "\tsnapper create-config <undervolum>"
 
 #: ../tools/snapper.cc:610
 msgid "\tsnapper delete <number>"
-msgstr "\tsnapper delete <番号>"
+msgstr "\tsnapper delete <nummer>"
 
 #: ../tools/snapper.cc:774
 msgid "\tsnapper diff <number1>..<number2> [files]"
-msgstr "\tsnapper diff <番号 1>..<番号 2> [ファイル]"
+msgstr "\tsnapper diff <nummer1>..<nummer2> [filer]"
 
 #: ../tools/snapper.cc:284
 msgid "\tsnapper list"
@@ -117,95 +118,95 @@ msgstr "\tsnapper list-configs"
 
 #: ../tools/snapper.cc:545
 msgid "\tsnapper modify <number>"
-msgstr "\tsnapper modify <番号>"
+msgstr "\tsnapper modify <nummer>"
 
 #: ../tools/snapper.cc:646
 msgid "\tsnapper mount <number>"
-msgstr "\tsnapper mount <番号>"
+msgstr "\tsnapper mount <nummer>"
 
 #: ../tools/snapper.cc:718
 msgid "\tsnapper status <number1>..<number2>"
-msgstr "\tsnapper status <番号 1>..<番号 2>"
+msgstr "\tsnapper status <nummer1>..<nummer2>"
 
 #: ../tools/snapper.cc:682
 msgid "\tsnapper umount <number>"
-msgstr "\tsnapper umount <番号>"
+msgstr "\tsnapper umount <nummer>"
 
 #: ../tools/snapper.cc:823
 msgid "\tsnapper undochange <number1>..<number2> [files]"
-msgstr "\tsnapper undochange <番号 1>..<番号 2> [ファイル]"
+msgstr "\tsnapper undochange <nummer1>..<nummer2> [filer]"
 
 #: ../tools/snapper.cc:999
 msgid "    Global options:"
-msgstr "    グローバルオプション:"
+msgstr "    Globale valg:"
 
 #: ../tools/snapper.cc:428
 msgid "    Options for 'create' command:"
-msgstr "    'create' コマンドに対するオプション:"
+msgstr "    Valg for 'create'-kommandoen:"
 
 #: ../tools/snapper.cc:221
 msgid "    Options for 'create-config' command:"
-msgstr "    'create-config' コマンドに対するオプション:"
+msgstr "    Valg for 'create config'-kommandoen:"
 
 #: ../tools/snapper.cc:286
 msgid "    Options for 'list' command:"
-msgstr "    'list' コマンドに対するオプション:"
+msgstr "    Valg for 'list'-kommandoen:"
 
 #: ../tools/snapper.cc:547
 msgid "    Options for 'modify' command:"
-msgstr "    'modify' コマンドに対するオプション:"
+msgstr "    Valg for 'modify'-kommandoen:"
 
 #: ../tools/snapper.cc:720
 msgid "    Options for 'status' command:"
-msgstr "    'status' コマンドに対するオプション:"
+msgstr "    Valg for 'status'-kommandoen:"
 
 #: ../tools/snapper.cc:825
 msgid "    Options for 'undochange' command:"
-msgstr "    'undochange' コマンドに対するオプション:"
+msgstr "    Valg for 'undochange'-kommandoen:"
 
 #: ../tools/snapper.cc:944
 msgid "  Cleanup snapshots:"
-msgstr "  スナップショットのクリーンアップ:"
+msgstr "  Rydde opp i øyeblikksbilder:"
 
 #: ../tools/snapper.cc:717 ../tools/snapper.cc:773
 msgid "  Comparing snapshots:"
-msgstr "  スナップショットの比較:"
+msgstr "  Sammenligne øyeblikksbilder:"
 
 #: ../tools/snapper.cc:218
 msgid "  Create config:"
-msgstr "  設定の作成:"
+msgstr "  Opprette oppsett:"
 
 #: ../tools/snapper.cc:425
 msgid "  Create snapshot:"
-msgstr "  スナップショットの作成:"
+msgstr "  Opprette øyeblikksbilde:"
 
 #: ../tools/snapper.cc:609
 msgid "  Delete snapshot:"
-msgstr "  スナップショットの削除:"
+msgstr "  Slette øyeblikksbilde:"
 
 #: ../tools/snapper.cc:171
 msgid "  List configs:"
-msgstr "  設定の一覧表示:"
+msgstr "  Vise oppsett:"
 
 #: ../tools/snapper.cc:283
 msgid "  List snapshots:"
-msgstr "  スナップショットの一覧表示:"
+msgstr "  Vise øyeblikksbilder:"
 
 #: ../tools/snapper.cc:544
 msgid "  Modify snapshot:"
-msgstr "  スナップショットの変更:"
+msgstr "  Endre øyeblikksbilde:"
 
 #: ../tools/snapper.cc:645
 msgid "  Mount snapshot:"
-msgstr "  スナップショットのマウント:"
+msgstr "  Montere øyeblikksbilde:"
 
 #: ../tools/snapper.cc:681
 msgid "  Umount snapshot:"
-msgstr "  スナップショットのマウント解除:"
+msgstr "  Avmontere øyeblikksbilde:"
 
 #: ../tools/snapper.cc:822
 msgid "  Undo changes:"
-msgstr "  変更の取り消し:"
+msgstr "  Angre endringer:"
 
 #: ../tools/snapper.cc:335 ../tools/snapper.cc:362
 msgid "#"
@@ -213,270 +214,303 @@ msgstr "#"
 
 #: ../tools/snapper.cc:338
 msgid "Cleanup"
-msgstr "クリーンアップ"
+msgstr "Rydde opp"
 
 #: ../tools/snapper.cc:960
 msgid "Command 'cleanup' needs one arguments."
-msgstr "'cleanup' コマンドには 1 つのパラメータが必要です。"
+msgstr "Kommandoen 'cleanup' trenger ett argument."
 
 #: ../tools/snapper.cc:455
 msgid "Command 'create' does not take arguments."
-msgstr "'create' コマンドにはパラメータはありません。"
+msgstr "Kommandoen 'create' tar ikke argumenter."
 
 #: ../tools/snapper.cc:240
 msgid "Command 'create-config' needs one argument."
-msgstr "'create-config' コマンドには 1 つのパラメータが必要です。"
+msgstr "Kommandoen 'create-config' trenger ett argument."
 
 #: ../tools/snapper.cc:621
 msgid "Command 'delete' needs at least one argument."
-msgstr "'delete' コマンドには少なくとも 1 つのパラメータが必要です。"
+msgstr "Kommandoen 'delete' trenger minst ett argument."
 
 #: ../tools/snapper.cc:992
 msgid "Command 'help' does not take arguments."
-msgstr "'help' コマンドにはパラメータはありません。"
+msgstr "Kommandoen 'help' tar ikke argumenter."
 
 #: ../tools/snapper.cc:303
 msgid "Command 'list' does not take arguments."
-msgstr "'list' コマンドにはパラメータはありません。"
+msgstr "Kommandoen 'list' tar ikke argumenter."
 
 #: ../tools/snapper.cc:183
 msgid "Command 'list-configs' does not take arguments."
-msgstr "'list-configs' コマンドにはパラメータはありません。"
+msgstr "Kommandoen 'list-configs' tar ikke argumenter."
 
 #: ../tools/snapper.cc:569
+#, fuzzy
 msgid "Command 'modify' needs at least one argument."
-msgstr "'modify' コマンドには少なくとも 1 つのパラメータが必要です。"
+msgstr "Kommandoen 'mount' trenger minst ett argument."
 
 #: ../tools/snapper.cc:657 ../tools/snapper.cc:693
 msgid "Command 'mount' needs at least one argument."
-msgstr "'mount' コマンドには少なくとも 1 つのパラメータが必要です。"
+msgstr "Kommandoen 'mount' trenger minst ett argument."
 
 #: ../tools/snapper.cc:737
 msgid "Command 'status' needs one argument."
-msgstr "'status' コマンドには 1 つのパラメータが必要です。"
+msgstr "Kommandoen 'status' trenger ett argument."
 
 #: ../tools/snapper.cc:842
 msgid "Command 'undochange' needs at least one argument."
-msgstr "'undochange' コマンドには少なくとも 1 つのパラメータが必要です。"
+msgstr "Kommandoen 'undochange' trenger minst ett argument."
 
 #: ../tools/snapper.cc:1182
 #, fuzzy, c-format
 msgid "Command failed (%s). See log for more information."
-msgstr "詳しくは 'snapper help' コマンドをご利用ください。"
+msgstr "Forsøk 'snapper help' for mer informasjon."
 
 #: ../tools/snapper.cc:190
 msgid "Config"
-msgstr "設定"
+msgstr "Oppsett"
 
 #: ../tools/snapper.cc:1165
 #, c-format
 msgid "Config '%s' is invalid."
-msgstr "設定 '%s' は正しくありません。"
+msgstr "Oppsettet '%s' er ugyldig."
 
 #: ../tools/snapper.cc:1160
 #, c-format
 msgid "Config '%s' not found."
-msgstr "設定 '%s' が見つかりません。"
+msgstr "Oppsettet '%s' ikke funnet."
 
 #: ../tools/snapper.cc:274
 #, c-format
 msgid "Creating config failed (%s)."
-msgstr "設定の作成に失敗しました (%s)。"
+msgstr "Oppsett kunne ikke opprettes (%s)."
 
 #: ../tools/snapper.cc:337 ../tools/snapper.cc:363
 msgid "Date"
-msgstr "日付"
+msgstr "Dato"
 
 #: ../tools/snapper.cc:339 ../tools/snapper.cc:364 ../tools/snapper.cc:391
 msgid "Description"
-msgstr "説明"
+msgstr "Beskrivelse"
 
 #: ../tools/snapper.cc:264
 msgid "Detecting filesystem type failed."
-msgstr "ファイルシステムの種類の検出に失敗しました。"
+msgstr "Registrering av filsystemtype mislyktes"
 
 #: ../tools/snapper.cc:897
 #, c-format
 msgid "File '%s' not found."
-msgstr "'%s' というファイルが見つかりません。"
+msgstr "Filen '%s' ikke funnet."
 
 #: ../tools/snapper.cc:103
 msgid "Identical snapshots."
-msgstr "同一のスナップショットです。"
+msgstr "Identiske øyeblikksbilder."
 
 #: ../tools/snapper.cc:73
 #, c-format
 msgid "Invalid snapshot '%s'."
-msgstr "スナップショットが正しくありません ('%s') 。"
+msgstr "Ugyldig øyeblikksbilde '%s'."
 
 #: ../tools/snapper.cc:595 ../tools/snapper.cc:636 ../tools/snapper.cc:672
 #: ../tools/snapper.cc:708
 msgid "Invalid snapshot."
-msgstr "スナップショットが正しくありません。"
+msgstr "Ugyldig øyeblikksbilde."
 
 #: ../tools/snapper.cc:94 ../tools/snapper.cc:864
 msgid "Invalid snapshots."
-msgstr "スナップショットが正しくありません。"
+msgstr "Ugyldige øyeblikksbilder."
 
 #: ../tools/snapper.cc:247
 msgid "Invalid subvolume."
-msgstr "サブボリュームが正しくありません。"
+msgstr "Ugyldig undervolum."
 
 #: ../tools/snapper.cc:1107
 #, c-format
 msgid "Invalid table style %d."
-msgstr "表のスタイルが正しくありません (%d) 。"
+msgstr "Ugyldig tabellstil %d."
 
 #: ../tools/snapper.cc:120 ../tools/snapper.cc:129 ../tools/snapper.cc:138
 #: ../tools/snapper.cc:535 ../tools/snapper.cc:600
+#, fuzzy
 msgid "Invalid userdata."
-msgstr "ユーザデータが正しくありません。"
+msgstr "Ugyldig øyeblikksbilde."
 
 #: ../tools/snapper.cc:207
 #, c-format
 msgid "Listing configs failed (%s)."
-msgstr "設定の一覧表示に失敗しました (%s)。"
+msgstr "Oppsett kunne ikke vises (%s)."
 
 #: ../tools/utils/GetOpts.cc:70
 #, c-format
 msgid "Missing argument for command option '%s'."
-msgstr "'%s' コマンドオプションに対するパラメータがありません。"
+msgstr "Manglende argument for kommandovalget '%s'."
 
 #: ../tools/utils/GetOpts.cc:68
 #, c-format
 msgid "Missing argument for global option '%s'."
-msgstr "'%s' グローバルオプションに対するパラメータがありません。"
+msgstr "Manglende argument for globalt valg '%s'."
 
 #: ../tools/snapper.cc:496
 msgid "Missing or invalid pre-number."
-msgstr "前番号が設定されていないが、正しくありません。"
+msgstr "Manglende eller ugyldig før-nummer."
 
 #: ../tools/snapper.cc:1134
 msgid "No command provided."
-msgstr "コマンドが指定されていません。"
+msgstr "Ingen kommando gitt"
 
 #: ../tools/snapper.cc:756 ../tools/snapper.cc:857
 #, c-format
 msgid "Opening file '%s' failed."
-msgstr "ファイル '%s' を開けませんでした。"
+msgstr "Filen '%s' kunne ikke åpnes."
 
 #: ../tools/snapper.cc:388
 msgid "Post #"
-msgstr "後 #"
+msgstr "Etter #"
 
 #: ../tools/snapper.cc:390
 msgid "Post Date"
-msgstr "後日付"
+msgstr "Etter dato"
 
 #: ../tools/snapper.cc:336 ../tools/snapper.cc:387
 msgid "Pre #"
-msgstr "前 #"
+msgstr "Før #"
 
 #: ../tools/snapper.cc:389
 msgid "Pre Date"
-msgstr "前日付"
+msgstr "Før dato"
 
 #: ../tools/snapper.cc:80
 #, c-format
 msgid "Snapshot '%u' not found."
-msgstr "スナップショット '%u' が見つかりません。"
+msgstr "Øyeblikksbildet '%u' ikke funnet."
 
 #: ../tools/snapper.cc:191
 msgid "Subvolume"
-msgstr "サブボリューム"
+msgstr "Undervolum"
 
 #: ../tools/snapper.cc:1135 ../tools/snapper.cc:1144
 #: ../tools/utils/GetOpts.cc:63 ../tools/utils/GetOpts.cc:71
 msgid "Try 'snapper help' for more information."
-msgstr "詳しくは 'snapper help' コマンドをご利用ください。"
+msgstr "Forsøk 'snapper help' for mer informasjon."
 
 #: ../tools/snapper.cc:334
 msgid "Type"
-msgstr "種類"
+msgstr "Type"
 
 #: ../tools/snapper.cc:980
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
-msgstr "不明なクリーンアップアルゴリズム '%s' です。"
+msgstr "Ukjent oppryddingsalgoritme '%s'."
 
 #: ../tools/snapper.cc:1143
 #, c-format
 msgid "Unknown command '%s'."
-msgstr "不明なコマンド '%s' です。"
+msgstr "Ukjent kommando '%s'."
 
 #: ../tools/utils/GetOpts.cc:60
 #, c-format
 msgid "Unknown global option '%s'."
-msgstr "不明なグローバルオプション '%s' です。"
+msgstr "Ukjent globalt valg '%s'."
 
 #: ../tools/utils/GetOpts.cc:62
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
-msgstr "不明なオプション '%s' です (コマンド '%s') 。"
+msgstr "Ukjent valg '%s' for kommandoen '%s'."
 
 #: ../tools/snapper.cc:474
 msgid "Unknown type of snapshot."
-msgstr "不明なスナップショットの種類です。"
+msgstr "Ukjent type for øyeblikksbilde."
 
 #: ../tools/snapper.cc:322
 msgid "Unknown type of snapshots."
-msgstr "不明なスナップショットの種類です。"
+msgstr "Ukjent type for øyeblikksbilder."
 
 #: ../tools/snapper.cc:1108
 #, c-format
 msgid "Use an integer number from %d to %d"
-msgstr "%d から %d までの整数を指定してください"
+msgstr "Bruk et heltall fra %d til %d"
 
 #: ../tools/snapper.cc:340 ../tools/snapper.cc:365 ../tools/snapper.cc:392
 msgid "Userdata"
-msgstr "ユーザデータ"
+msgstr ""
 
 #: ../tools/snapper.cc:1025
 msgid "comparing snapshots..."
-msgstr "スナップショットを比較しています..."
+msgstr "sammenligner øyeblikksbilder..."
 
 #: ../tools/snapper.cc:1038
 #, c-format
 msgid "creating %s"
-msgstr "%s を作成しています"
+msgstr "oppretter %s"
 
 #: ../tools/snapper.cc:1042
 #, c-format
 msgid "deleting %s"
-msgstr "%s を削除しています"
+msgstr "sletter %s"
 
 #: ../tools/snapper.cc:1026
 msgid "done"
-msgstr "完了"
+msgstr "fullført"
 
 #: ../tools/snapper.cc:1045
 #, c-format
 msgid "failed to create %s"
-msgstr "%s の作成に失敗しました"
+msgstr "kunne ikke opprette %s"
 
 #: ../tools/snapper.cc:1049
 #, c-format
 msgid "failed to delete %s"
-msgstr "%s の削除に失敗しました"
+msgstr "kunne ikke slette %s"
 
 #: ../tools/snapper.cc:1047
 #, c-format
 msgid "failed to modify %s"
-msgstr "%s の修正に失敗しました"
+msgstr "kunne ikke endre %s"
 
 #: ../tools/snapper.cc:1040
 #, c-format
 msgid "modifying %s"
-msgstr "%s を修正しています"
+msgstr "endrer %s"
 
 #: ../tools/snapper.cc:1035
 msgid "undoing change done"
-msgstr "変更の取り消しが完了しました"
+msgstr "endring er angret"
 
 #: ../tools/snapper.cc:1034
 msgid "undoing change..."
-msgstr "変更を取り消しています..."
+msgstr "angrer endring..."
 
 #: ../tools/snapper.cc:996
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "usage: snapper [グローバルオプション] <コマンド> [コマンドオプション] [コマンドパラメータ]"
+msgstr "bruk: snapper [--globale valg] <kommando> [--kommandovalg] [kommandoargumenter]"
+
+#~ msgid "Command 'modify' needs one argument."
+#~ msgstr "Kommandoen 'modify' trenger ett argument."
+
+#~| msgid "add needs one argument"
+#~ msgid "Command 'diff' needs one argument."
+#~ msgstr "add krever ett argument"
+
+#~| msgid "File '%s' not found on medium '%s'"
+#~ msgid "File '%s' not found in diff."
+#~ msgstr "Filen '%s' ikke funnet på medium '%s'"
+
+#~| msgid "Rollback Support: "
+#~ msgid "  Rollback snapshots:"
+#~ msgstr "Tilbakestillingsstøtte: "
+
+#~| msgid "diff needs two arguments"
+#~ msgid "Command 'diff' needs two arguments."
+#~ msgstr "diff krever to argumenter"
+
+#~| msgid "rename needs two arguments"
+#~ msgid "Command 'rollback' needs two arguments."
+#~ msgstr "rename krever to argumenter"
+
+#~| msgid "File '%s' not found on medium '%s'"
+#~ msgid "File '%s' not included in diff."
+#~ msgstr "Filen '%s' ikke funnet på medium '%s'"
+
+#~| msgid "Rollback"
+#~ msgid "rollback done"
+#~ msgstr "Gå tilbake"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-02 10:25+0200\n"
+"POT-Creation-Date: 2011-10-12 15:11+0200\n"
 "PO-Revision-Date: 2011-08-15 23:38+0300\n"
 "Last-Translator: Robert Krambovitis <rkrambovitis@gmail.com>\n"
 "Language-Team: Greek <opensuse-translation-el@opensuse.org>\n"
@@ -16,453 +16,479 @@ msgstr ""
 "X-Generator: KBabel 1.10\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../tools/snapper.cc:367
-msgid "\t--cleanup-algorithm, -c\t\tCleanup algorithm for snapshot."
+#: ../tools/snapper.cc:433 ../tools/snapper.cc:549
+#, fuzzy
+msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c\t\tΑλγόρυθμος εκκαθάρισης για στιγμιότυπα."
 
-#: ../tools/snapper.cc:884
+#: ../tools/snapper.cc:1003
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <όνομα>\t\tΟρίσετε το όνομα του αρχείου ρυθμίσεων που θα χρησιμοποιηθεί."
 
-#: ../tools/snapper.cc:365 ../tools/snapper.cc:462
+#: ../tools/snapper.cc:432 ../tools/snapper.cc:548
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <περιγραφή>\tΠεριγραφή για στιγμιότυπο."
 
-#: ../tools/snapper.cc:885
+#: ../tools/snapper.cc:1004
 msgid "\t--disable-filters\t\tDisable filters."
 msgstr "\t--disable-filters\t\tΑπενεργοποίηση φίλτρων."
 
-#: ../tools/snapper.cc:113
+#: ../tools/snapper.cc:222
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <fstype>\t\tΟρίσετε είδος συστήματος αρχείων με το χέρι."
 
-#: ../tools/snapper.cc:707
+#: ../tools/snapper.cc:826
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr "\t--input, -i <αρχείο>\t\tΑνάγνωση αρχείων που θα γίνει αναίρεση αλλαγών από αρχείο."
 
-#: ../tools/snapper.cc:602
+#: ../tools/snapper.cc:721
 #, fuzzy
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <αρχείο>\t\tΑποθήκευση diff σε αρχείο."
 
-#: ../tools/snapper.cc:364
+#: ../tools/snapper.cc:430
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <αριθμός>\t\tΑριθμός από αντίστοιχα προστιγμιότυπα."
 
-#: ../tools/snapper.cc:366
+#: ../tools/snapper.cc:431
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
 msgstr "\t--print-number, -p\t\tΕμφάνιση αριθμού των δημιουργημένων στιγμιοτύπων."
 
-#: ../tools/snapper.cc:881
+#: ../tools/snapper.cc:1000
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\tΑπόκρυψη κανονικής απόδοσης."
 
-#: ../tools/snapper.cc:883
+#: ../tools/snapper.cc:1002
 msgid "\t--table-style, -t <style>\tTable style (integer)."
 msgstr "\t--table-style, -t <στύλ>\tΣτύλ πίνακα (ολόκληρος αριθμός)."
 
-#: ../tools/snapper.cc:114
+#: ../tools/snapper.cc:223
 msgid "\t--template, -t <name>\t\tName of config template to use."
 msgstr "\t--template, -t <name>\t\tΌνομα προτύπου αρχείου ρυθμίσεων."
 
-#: ../tools/snapper.cc:363
+#: ../tools/snapper.cc:429
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <τύπος>\t\tΤύπος στιγμιοτύπου."
 
-#: ../tools/snapper.cc:227
+#: ../tools/snapper.cc:287
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
 msgstr "\t--type, -t <τύπος>\t\tΤύπος στιγμιοτύπου για εμφάνιση."
 
-#: ../tools/snapper.cc:882
+#: ../tools/snapper.cc:434 ../tools/snapper.cc:550
+#, fuzzy
+msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
+msgstr "\t--type, -t <τύπος>\t\tΤύπος στιγμιοτύπου."
+
+#: ../tools/snapper.cc:1001
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
 msgstr "\t--verbose, -v\t\t\tΑύξηση πολυλογίας απόδοσης."
 
-#: ../tools/snapper.cc:886
+#: ../tools/snapper.cc:1005
 msgid "\t--version\t\t\tPrint version and exit."
 msgstr "\t--version\t\t\tΕμφάνιση έκδοσης και έξοδος."
 
-#: ../tools/snapper.cc:826
+#: ../tools/snapper.cc:945
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <αλγόρυθμος-εκκαθάριθσης>"
 
-#: ../tools/snapper.cc:360
+#: ../tools/snapper.cc:426
 msgid "\tsnapper create"
 msgstr "\tsnapper create"
 
-#: ../tools/snapper.cc:110
+#: ../tools/snapper.cc:219
 msgid "\tsnapper create-config <subvolume>"
 msgstr "\tsnapper create-config <υποτόμος>"
 
-#: ../tools/snapper.cc:500
+#: ../tools/snapper.cc:610
 msgid "\tsnapper delete <number>"
 msgstr "\tsnapper delete <αριθμός>"
 
-#: ../tools/snapper.cc:655
+#: ../tools/snapper.cc:774
 #, fuzzy
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper contentdiff <αριθμός1>..<αριθμός2> [αρχεία]"
 
-#: ../tools/snapper.cc:224
+#: ../tools/snapper.cc:284
 msgid "\tsnapper list"
 msgstr "\tsnapper list"
 
-#: ../tools/snapper.cc:63
+#: ../tools/snapper.cc:172
 msgid "\tsnapper list-configs"
 msgstr "\tsnapper list-configs"
 
-#: ../tools/snapper.cc:459
+#: ../tools/snapper.cc:545
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <αριθμός>"
 
-#: ../tools/snapper.cc:533
+#: ../tools/snapper.cc:646
 msgid "\tsnapper mount <number>"
 msgstr "\tsnapper mount <αριθμός>"
 
-#: ../tools/snapper.cc:599
+#: ../tools/snapper.cc:718
 #, fuzzy
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tsnapper diff <αριθμός1>..<αριθμός2>"
 
-#: ../tools/snapper.cc:566
+#: ../tools/snapper.cc:682
 msgid "\tsnapper umount <number>"
 msgstr "\tsnapper umount <αριθμός>"
 
-#: ../tools/snapper.cc:704
+#: ../tools/snapper.cc:823
 msgid "\tsnapper undochange <number1>..<number2> [files]"
 msgstr "\tsnapper undochange <αριθμός1>..<αριθμός2> [αρχεία]"
 
-#: ../tools/snapper.cc:880
+#: ../tools/snapper.cc:999
 msgid "    Global options:"
 msgstr "    Γενικές Επιλογές:"
 
-#: ../tools/snapper.cc:362
+#: ../tools/snapper.cc:428
 msgid "    Options for 'create' command:"
 msgstr "    Επιλογές για την εντολή 'create' (δημιουργία):"
 
-#: ../tools/snapper.cc:112
+#: ../tools/snapper.cc:221
 msgid "    Options for 'create-config' command:"
 msgstr "    Επιλογές για την εντολή 'create-config' (δημιουργία ρυθμίσεων):"
 
-#: ../tools/snapper.cc:226
+#: ../tools/snapper.cc:286
 msgid "    Options for 'list' command:"
 msgstr "    Επιλογές για την εντολή 'list' (εμφάνιση):"
 
-#: ../tools/snapper.cc:461
+#: ../tools/snapper.cc:547
 msgid "    Options for 'modify' command:"
 msgstr "    Επιλογές για την εντολή 'modify' (τροποποίηση):"
 
-#: ../tools/snapper.cc:601
+#: ../tools/snapper.cc:720
 #, fuzzy
 msgid "    Options for 'status' command:"
 msgstr "    Επιλογές για την εντολή 'list' (εμφάνιση):"
 
-#: ../tools/snapper.cc:706
+#: ../tools/snapper.cc:825
 msgid "    Options for 'undochange' command:"
 msgstr "    Επιλογές για την εντολή 'undochange' (αναίρεση αλλαγών):"
 
-#: ../tools/snapper.cc:825
+#: ../tools/snapper.cc:944
 msgid "  Cleanup snapshots:"
 msgstr "  Εκκαθάριση στιγμιοτύπων:"
 
-#: ../tools/snapper.cc:598 ../tools/snapper.cc:654
+#: ../tools/snapper.cc:717 ../tools/snapper.cc:773
 msgid "  Comparing snapshots:"
 msgstr "  Σύγκριση στιγμιοτύπων:"
 
-#: ../tools/snapper.cc:109
+#: ../tools/snapper.cc:218
 msgid "  Create config:"
 msgstr "  Δημιουργία αρχείου ρυθμίσεων:"
 
-#: ../tools/snapper.cc:359
+#: ../tools/snapper.cc:425
 msgid "  Create snapshot:"
 msgstr "  Δημιουργία στιγμιοτύπου:"
 
-#: ../tools/snapper.cc:499
+#: ../tools/snapper.cc:609
 msgid "  Delete snapshot:"
 msgstr "  Διαγραφή στιγμιοτύπου:"
 
-#: ../tools/snapper.cc:62
+#: ../tools/snapper.cc:171
 msgid "  List configs:"
 msgstr "  Εμφάνιση ρυθμίσεων:"
 
-#: ../tools/snapper.cc:223
+#: ../tools/snapper.cc:283
 msgid "  List snapshots:"
 msgstr "  Εμφάνιση στιγμιοτύπων:"
 
-#: ../tools/snapper.cc:458
+#: ../tools/snapper.cc:544
 msgid "  Modify snapshot:"
 msgstr "  Τροποποίηση στιγμιοτύπων:"
 
-#: ../tools/snapper.cc:532
+#: ../tools/snapper.cc:645
 msgid "  Mount snapshot:"
 msgstr "  Φόρτωση στιγμιοτύπου:"
 
-#: ../tools/snapper.cc:565
+#: ../tools/snapper.cc:681
 msgid "  Umount snapshot:"
 msgstr "  Αποφόρτωση στιγμιοτύπου:"
 
-#: ../tools/snapper.cc:703
+#: ../tools/snapper.cc:822
 msgid "  Undo changes:"
 msgstr "  Αναίρεση αλλαγών:"
 
-#: ../tools/snapper.cc:275 ../tools/snapper.cc:300
+#: ../tools/snapper.cc:335 ../tools/snapper.cc:362
 msgid "#"
 msgstr "αρ."
 
-#: ../tools/snapper.cc:278
+#: ../tools/snapper.cc:338
 msgid "Cleanup"
 msgstr "Εκκαθάριση"
 
-#: ../tools/snapper.cc:841
+#: ../tools/snapper.cc:960
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Η εντολή 'cleanup' (εκκαθάριση) χρειάζεται μία παράμετρο."
 
-#: ../tools/snapper.cc:387
+#: ../tools/snapper.cc:455
 msgid "Command 'create' does not take arguments."
 msgstr "Η εντολή 'create' (δημιουργία) δεν παίρνει παραμέτρους."
 
-#: ../tools/snapper.cc:131
+#: ../tools/snapper.cc:240
 msgid "Command 'create-config' needs one argument."
 msgstr "Η εντολή 'create-config' (δημιουργία αρχείου ρυθμίσεων) χρειάζεται μία παράμετρο."
 
-#: ../tools/snapper.cc:511
+#: ../tools/snapper.cc:621
 msgid "Command 'delete' needs at least one argument."
 msgstr "Η εντολή 'delete' (διαγραφή) χρειάζεται τουλάχιστον μία παράμετρο."
 
-#: ../tools/snapper.cc:873
+#: ../tools/snapper.cc:992
 msgid "Command 'help' does not take arguments."
 msgstr "Η εντολή 'help' (βοήθεια) δεν παίρνει παραμέτρους."
 
-#: ../tools/snapper.cc:243
+#: ../tools/snapper.cc:303
 msgid "Command 'list' does not take arguments."
 msgstr "Η εντολή 'list' (εμφάνιση) δεν παίρνει παραμέτρους."
 
-#: ../tools/snapper.cc:74
+#: ../tools/snapper.cc:183
 msgid "Command 'list-configs' does not take arguments."
 msgstr "Η εντολή 'list-configs' (εμφάνιση αρχείων ρυθμίσεων) δεν παίρνει παραμέτρους."
 
-#: ../tools/snapper.cc:478
-msgid "Command 'modify' needs one argument."
-msgstr "Η εντολή 'modify' (τροποποίηση) χρειάζεται μία παράμετρο."
+#: ../tools/snapper.cc:569
+#, fuzzy
+msgid "Command 'modify' needs at least one argument."
+msgstr "Η εντολή 'mount' (φόρτωση) χρειάζεται τουλάχιστον μία παράμετρο."
 
-#: ../tools/snapper.cc:544 ../tools/snapper.cc:577
+#: ../tools/snapper.cc:657 ../tools/snapper.cc:693
 msgid "Command 'mount' needs at least one argument."
 msgstr "Η εντολή 'mount' (φόρτωση) χρειάζεται τουλάχιστον μία παράμετρο."
 
-#: ../tools/snapper.cc:618
+#: ../tools/snapper.cc:737
 #, fuzzy
 msgid "Command 'status' needs one argument."
 msgstr "Η εντολή 'cleanup' (εκκαθάριση) χρειάζεται μία παράμετρο."
 
-#: ../tools/snapper.cc:723
+#: ../tools/snapper.cc:842
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Η εντολή 'undochange' (αναίρεση αλλαγών) χρειάζεται τουλάχιστον μία παράμετρο."
 
-#: ../tools/snapper.cc:81
+#: ../tools/snapper.cc:1182
+#, fuzzy, c-format
+msgid "Command failed (%s). See log for more information."
+msgstr "Δοκιμάστε 'snapper help' για περισσότερες πληροφορίες."
+
+#: ../tools/snapper.cc:190
 msgid "Config"
 msgstr "Ρύθμιση"
 
-#: ../tools/snapper.cc:1037
+#: ../tools/snapper.cc:1165
 #, c-format
 msgid "Config '%s' is invalid."
 msgstr "Η ρύθμιση '%s' δεν είναι έγκυρη."
 
-#: ../tools/snapper.cc:1032
+#: ../tools/snapper.cc:1160
 #, c-format
 msgid "Config '%s' not found."
 msgstr "Η ρύθμιση '%s' δεν βρέθηκε."
 
-#: ../tools/snapper.cc:165
+#: ../tools/snapper.cc:274
 #, c-format
 msgid "Creating config failed (%s)."
 msgstr "Δημιουργία ρύθμισης απέτυχε (%s)."
 
-#: ../tools/snapper.cc:277 ../tools/snapper.cc:301
+#: ../tools/snapper.cc:337 ../tools/snapper.cc:363
 msgid "Date"
 msgstr "Ημερομηνία"
 
-#: ../tools/snapper.cc:279 ../tools/snapper.cc:302 ../tools/snapper.cc:327
+#: ../tools/snapper.cc:339 ../tools/snapper.cc:364 ../tools/snapper.cc:391
 msgid "Description"
 msgstr "Περιγραφή"
 
-#: ../tools/snapper.cc:155
+#: ../tools/snapper.cc:264
 msgid "Detecting filesystem type failed."
 msgstr "Εντοπισμός τύπου συστήματος αρχείων απέτυχε."
 
-#: ../tools/snapper.cc:778
+#: ../tools/snapper.cc:897
 #, fuzzy, c-format
 msgid "File '%s' not found."
 msgstr "Το αρχείο '%s' δεν βρέθηκε στις διαφορές (diff)."
 
-#: ../tools/snapper.cc:212
+#: ../tools/snapper.cc:103
 msgid "Identical snapshots."
 msgstr "Πανομοιότυπα στιγμιότυπα."
 
-#: ../tools/snapper.cc:182
+#: ../tools/snapper.cc:73
 #, c-format
 msgid "Invalid snapshot '%s'."
 msgstr "Μη έγκυρο στιγμιότυπο '%s'."
 
-#: ../tools/snapper.cc:485 ../tools/snapper.cc:520 ../tools/snapper.cc:553
-#: ../tools/snapper.cc:586
+#: ../tools/snapper.cc:595 ../tools/snapper.cc:636 ../tools/snapper.cc:672
+#: ../tools/snapper.cc:708
 msgid "Invalid snapshot."
 msgstr "Μη έγκυρο στιγμιότυπο."
 
-#: ../tools/snapper.cc:203 ../tools/snapper.cc:745
+#: ../tools/snapper.cc:94 ../tools/snapper.cc:864
 msgid "Invalid snapshots."
 msgstr "Μη έγκυρα στιγμιότυπα."
 
-#: ../tools/snapper.cc:138
+#: ../tools/snapper.cc:247
 msgid "Invalid subvolume."
 msgstr "Μη έγκυρος υποτόμος."
 
-#: ../tools/snapper.cc:985
+#: ../tools/snapper.cc:1107
 #, c-format
 msgid "Invalid table style %d."
 msgstr "Μη έγκυρος τύπος πίνακα %d."
 
-#: ../tools/snapper.cc:98
+#: ../tools/snapper.cc:120 ../tools/snapper.cc:129 ../tools/snapper.cc:138
+#: ../tools/snapper.cc:535 ../tools/snapper.cc:600
+#, fuzzy
+msgid "Invalid userdata."
+msgstr "Μη έγκυρο στιγμιότυπο."
+
+#: ../tools/snapper.cc:207
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Εμφάνιση αρχείων ρυθμίσεων απέτυχε (%s)."
 
-#: ../tools/utils/GetOpts.cc:68
+#: ../tools/utils/GetOpts.cc:70
 #, c-format
 msgid "Missing argument for command option '%s'."
 msgstr "Λείπει παράμετρος για την επιλογή εντολής '%s'."
 
-#: ../tools/utils/GetOpts.cc:66
+#: ../tools/utils/GetOpts.cc:68
 #, c-format
 msgid "Missing argument for global option '%s'."
 msgstr "Λείπει παράμετρος για γενική ρύθμιση '%s'."
 
-#: ../tools/snapper.cc:424
+#: ../tools/snapper.cc:496
 msgid "Missing or invalid pre-number."
 msgstr "Ελλειπής ή μη έγκυρος προ-αριθμός."
 
-#: ../tools/snapper.cc:1006
+#: ../tools/snapper.cc:1134
 msgid "No command provided."
 msgstr "Δεν δόθηκε εντολή."
 
-#: ../tools/snapper.cc:637 ../tools/snapper.cc:738
+#: ../tools/snapper.cc:756 ../tools/snapper.cc:857
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "Άνοιγμα αρχείου '%s' απέτυχε."
 
-#: ../tools/snapper.cc:324
+#: ../tools/snapper.cc:388
 msgid "Post #"
 msgstr "Μετά αρ."
 
-#: ../tools/snapper.cc:326
+#: ../tools/snapper.cc:390
 msgid "Post Date"
 msgstr "Ημερομηνία μετά-στιγμιοτύπου"
 
-#: ../tools/snapper.cc:276 ../tools/snapper.cc:323
+#: ../tools/snapper.cc:336 ../tools/snapper.cc:387
 msgid "Pre #"
 msgstr "Προ αρ."
 
-#: ../tools/snapper.cc:325
+#: ../tools/snapper.cc:389
 msgid "Pre Date"
 msgstr "Ημερομηνία προ-στιγμιοτύπου"
 
-#: ../tools/snapper.cc:189
+#: ../tools/snapper.cc:80
 #, c-format
 msgid "Snapshot '%u' not found."
 msgstr "Στιγμιότυπο '%u' δεν βρέθηκε."
 
-#: ../tools/snapper.cc:82
+#: ../tools/snapper.cc:191
 msgid "Subvolume"
 msgstr "Υποτόμος"
 
-#: ../tools/snapper.cc:1007 ../tools/snapper.cc:1016
+#: ../tools/snapper.cc:1135 ../tools/snapper.cc:1144
+#: ../tools/utils/GetOpts.cc:63 ../tools/utils/GetOpts.cc:71
 msgid "Try 'snapper help' for more information."
 msgstr "Δοκιμάστε 'snapper help' για περισσότερες πληροφορίες."
 
-#: ../tools/snapper.cc:274
+#: ../tools/snapper.cc:334
 msgid "Type"
 msgstr "Τύπος"
 
-#: ../tools/snapper.cc:861
+#: ../tools/snapper.cc:980
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
 msgstr "Άγνωστος αλγόρυθμος εκκαθάρισης '%s'."
 
-#: ../tools/snapper.cc:1015
+#: ../tools/snapper.cc:1143
 #, c-format
 msgid "Unknown command '%s'."
 msgstr "Άγνωστη εντολή '%s'."
 
-#: ../tools/utils/GetOpts.cc:59
+#: ../tools/utils/GetOpts.cc:60
 #, c-format
 msgid "Unknown global option '%s'."
 msgstr "Άγνωστη γενική επιλογή '%s'."
 
-#: ../tools/utils/GetOpts.cc:61
+#: ../tools/utils/GetOpts.cc:62
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Άγνωστη επιλογή '%s' για την εντολή '%s'."
 
-#: ../tools/snapper.cc:405
+#: ../tools/snapper.cc:474
 msgid "Unknown type of snapshot."
 msgstr "Άγνωστος τύπος στιγμιοτύπου."
 
-#: ../tools/snapper.cc:262
+#: ../tools/snapper.cc:322
 msgid "Unknown type of snapshots."
 msgstr "Άγνωστος τύπος στιγμιοτύπων."
 
-#: ../tools/snapper.cc:986
+#: ../tools/snapper.cc:1108
 #, c-format
 msgid "Use an integer number from %d to %d"
 msgstr "Χρησιμοποιηστε ολόκληρο αριθμό από %d έως %d"
 
-#: ../tools/snapper.cc:906
+#: ../tools/snapper.cc:340 ../tools/snapper.cc:365 ../tools/snapper.cc:392
+msgid "Userdata"
+msgstr ""
+
+#: ../tools/snapper.cc:1025
 msgid "comparing snapshots..."
 msgstr "Σύγκριση στιγμιοτύπων..."
 
-#: ../tools/snapper.cc:919
+#: ../tools/snapper.cc:1038
 #, c-format
 msgid "creating %s"
 msgstr "Δημιουργία %s"
 
-#: ../tools/snapper.cc:923
+#: ../tools/snapper.cc:1042
 #, c-format
 msgid "deleting %s"
 msgstr "Διαγραφή %s"
 
-#: ../tools/snapper.cc:907
+#: ../tools/snapper.cc:1026
 msgid "done"
 msgstr "Ολοκληρώθηκε"
 
-#: ../tools/snapper.cc:926
+#: ../tools/snapper.cc:1045
 #, c-format
 msgid "failed to create %s"
 msgstr "Αποτυχία δημιουργίας %s"
 
-#: ../tools/snapper.cc:930
+#: ../tools/snapper.cc:1049
 #, c-format
 msgid "failed to delete %s"
 msgstr "Αποτυχία διαγραφής %s"
 
-#: ../tools/snapper.cc:928
+#: ../tools/snapper.cc:1047
 #, c-format
 msgid "failed to modify %s"
 msgstr "ΑΠοτυχία τροποποίησης %s"
 
-#: ../tools/snapper.cc:921
+#: ../tools/snapper.cc:1040
 #, c-format
 msgid "modifying %s"
 msgstr "Τροποποίηση %s"
 
-#: ../tools/snapper.cc:916
+#: ../tools/snapper.cc:1035
 msgid "undoing change done"
 msgstr "Αναίρεση αλλαγών ολοκληρώθηκε"
 
-#: ../tools/snapper.cc:915
+#: ../tools/snapper.cc:1034
 msgid "undoing change..."
 msgstr "Αναίρεση αλλαγών..."
 
-#: ../tools/snapper.cc:877
+#: ../tools/snapper.cc:996
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "Χρήση: snapper [--global-options] <εντολή> [--επιλογές-εντολής] [παραμέτροι-εντολής]"
+
+#~ msgid "Command 'modify' needs one argument."
+#~ msgstr "Η εντολή 'modify' (τροποποίηση) χρειάζεται μία παράμετρο."
 
 #~ msgid "    Options for 'diff' command:"
 #~ msgstr "    Επιλογές για την εντολή 'diff' (διαφορές):"
