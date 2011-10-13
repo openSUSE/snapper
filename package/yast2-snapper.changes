@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Oct 13 10:40:50 CEST 2011 - jsuchome@suse.cz
+
+- colorize the diff output (bnc#723660)
+- 2.21.15 
+
+-------------------------------------------------------------------
 Wed Oct 12 16:40:44 CEST 2011 - jsuchome@suse.cz
 
 - more optimalization in C++ code

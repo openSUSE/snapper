@@ -375,9 +375,29 @@ any ShowDialog () {
 	if (haskey (modification, "diff"))
 	{
 	    string diff	= String::EscapeTags (modification["diff"]:"");
-	    diff	= mergestring (splitstring (diff, "\n"), "<br>");
-	    // show fixed font in diff
-	    diff	= "<tt>" + diff + "</tt>";
+	    list<string> l   = splitstring (diff, "\n");
+	    if (!textmode)
+	    {
+		// colorize diff output
+		l	= (list<string>) maplist (string line, l, {
+		    string first = substring (line, 0, 1);
+		    if (first == "+")
+		    {
+			line	= sformat ("<font color=blue>%1</font>", line);
+		    }
+		    else if (first == "-")
+		    {
+			line	= sformat ("<font color=red>%1</font>", line);
+		    }
+		    return line;
+		});
+	    }
+	    diff	= mergestring (l, "<br>");
+	    if (!textmode)
+	    {
+		// show fixed font in diff
+		diff	= "<tt>" + diff + "</tt>";
+	    }
 	    content	= add (content, `RichText (`id (`diff), diff));
 	}
 	else
