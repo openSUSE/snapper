@@ -396,7 +396,7 @@ any ShowDialog () {
 	    if (!textmode)
 	    {
 		// show fixed font in diff
-		diff	= "<tt>" + diff + "</tt>";
+		diff	= "<pre>" + diff + "</pre>";
 	    }
 	    content	= add (content, `RichText (`id (`diff), diff));
 	}
