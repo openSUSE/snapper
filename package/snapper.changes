@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Oct 21 11:34:27 CEST 2011 - aschnell@suse.de
+
+- create read-only btrfs snapshots
+
+-------------------------------------------------------------------
 Wed Oct 12 15:12:41 CEST 2011 - aschnell@suse.de
 
 - updated translations

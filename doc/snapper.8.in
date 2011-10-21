@@ -13,8 +13,10 @@ snapper \fBhelp\fR
 .SH "DESCRIPTION"
 .LP
 Snapper is a command\-line program for filesystem snapshot management. It can
-create, delete and compare snapshots and undo changes between
-snapshots. Supported filesystems are btrfs and ext4.
+create, delete and compare snapshots and undo changes done between snapshots.
+.LP
+Snapper never modifies the content of snapshots. Thus snapper creates
+read-only snapshots. Supported filesystems are btrfs and ext4.
 
 .SH CONCEPTS
 

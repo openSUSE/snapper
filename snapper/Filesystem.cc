@@ -87,7 +87,7 @@ namespace snapper
     void
     Btrfs::createSnapshot(unsigned int num) const
     {
-	SystemCmd cmd(BTRFSBIN " subvolume snapshot " + quote(subvolume) + " " +
+	SystemCmd cmd(BTRFSBIN " subvolume snapshot -r " + quote(subvolume) + " " +
 		      quote(snapshotDir(num)));
 	if (cmd.retcode() != 0)
 	    throw CreateSnapshotFailedException();
