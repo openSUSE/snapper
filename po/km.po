@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-12 15:11+0200\n"
+"POT-Creation-Date: 2011-10-21 11:59+0200\n"
 "PO-Revision-Date: 2006-02-18 09:47+0700\n"
 "Last-Translator: Keo Sophon <keosophon@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -45,7 +45,7 @@ msgstr "\t--output, -o <file>\t\tរក្សា​ទុក​ស្ថាន�
 
 #: ../tools/snapper.cc:430
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <number>\t\tចំនួន​រូបថត​មុន​ដែល​ត្រូវ​គ្នា​ ។"
+msgstr "\t--pre-number <number>\t\tចំនួន​រូបថតពី​មុន​ដែល​ត្រូវ​គ្នា​ ។"
 
 #: ../tools/snapper.cc:431
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
@@ -94,7 +94,7 @@ msgstr "\tការ​បង្កើត​កម្មវិធី​ថត"
 
 #: ../tools/snapper.cc:219
 msgid "\tsnapper create-config <subvolume>"
-msgstr "\tការ​កំណត់​រចនាសម្ព័ន្ធ​ការ​បង្កើត​កម្មវិធី​ថត <subvolume>"
+msgstr "\tការ​កំណត់​រចនាសម្ព័ន្ធ​នៃ​ការ​បង្កើត​កម្មវិធី​ថត <subvolume>"
 
 #: ../tools/snapper.cc:610
 msgid "\tsnapper delete <number>"
