@@ -15,6 +15,7 @@ BuildRequires:	gcc-c++ boost-devel libblocxx-devel libxml2-devel doxygen
 BuildRequires:	libzypp(plugin:commit)
 Requires:	libsnapper@LIBVERSION_MAJOR@ = %version
 Recommends:	cron logrotate snapper-zypp-plugin
+Supplements:	btrfsprogs
 Summary:	Tool for filesystem snapshot management
 Url:		http://en.opensuse.org/Portal:Snapper
 
@@ -63,7 +64,6 @@ Summary:	Library for filesystem snapshot management
 Group:		System/Libraries
 Requires:	diffutils util-linux
 PreReq:		%fillup_prereq
-Supplements:	btrfsprogs
 
 %description -n libsnapper@LIBVERSION_MAJOR@
 This package contains libsnapper, a library for filesystem snapshot management.

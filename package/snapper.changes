@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Nov 11 11:20:03 CET 2011 - aschnell@suse.de
+
+- moved supplements btrfsprogs from libsnapper to snapper
+
+-------------------------------------------------------------------
 Fri Oct 21 11:34:27 CEST 2011 - aschnell@suse.de
 
 - create read-only btrfs snapshots
