@@ -203,7 +203,7 @@ global list<string> ReadConfigs () {
     if (configs == nil)
     {
 	// error popup
-	Report::Error (_("File /etc/sysconfig/snapper is not available"));
+	Report::Error (_("File /etc/sysconfig/snapper is not available."));
 	configs	= [ "root" ];
     }
     return configs;

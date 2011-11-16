@@ -410,9 +410,9 @@ any ShowDialog () {
 	    `VSquash (`HBox (
 		`HStretch (),
 		// button label
-		type == `SINGLE ? `Empty () : `PushButton (`id (`restore_pre), _("R&estore From First")),
+		type == `SINGLE ? `Empty () : `PushButton (`id (`restore_pre), _("R&estore from First")),
 		// button label
-		`PushButton (`id (`restore), type == `SINGLE ? _("Restore") : _("Res&tore From Second"))
+		`PushButton (`id (`restore), type == `SINGLE ? _("Restore") : _("Res&tore from Second"))
 	    ))
 	    ), `HSpacing (0.5))
 	);
@@ -677,7 +677,7 @@ from snapshot '%2' to current system?", Snapper::GetFileFullPath (current_file),
 	    // popup headline
 	    if (Popup::AnyQuestionRichText (_("Restoring files"),
 		// popup message, %1 is snapshot number, %2 list of files
-		sformat (_("These files will be copied from snapshot '%1' to current system: <p>%2</p>Are you sure?"),
+		sformat (_("These files will be copied from snapshot '%1' to current system: <p>%2.</p>Are you sure?"),
 		    previous_num, mergestring (to_restore, "<br>")),
 		60, 20,  Label::YesButton (), Label::NoButton (), `focus_no))
 	    {

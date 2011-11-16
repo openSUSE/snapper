@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Nov 16 11:20:22 CET 2011 - jsuchome@suse.cz
+
+- merged texts from proofreading
+- 2.22.0 
+
+-------------------------------------------------------------------
 Fri Oct 14 10:15:38 CEST 2011 - jsuchome@suse.cz
 
 - use the <pre> tag for the diff, so spaces are not lost
