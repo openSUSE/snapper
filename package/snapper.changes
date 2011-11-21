@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Sat Nov 19 20:46:08 UTC 2011 - coolo@suse.com
+
+- add libtool as buildrequire to avoid implicit dependency
+
+-------------------------------------------------------------------
 Fri Nov 11 11:20:03 CET 2011 - aschnell@suse.de
 
 - moved supplements btrfsprogs from libsnapper to snapper

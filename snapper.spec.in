@@ -26,7 +26,7 @@ Group:		System/Packages
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 Source:		snapper-%{version}.tar.bz2
 Prefix:		/usr
-BuildRequires:	gcc-c++ boost-devel libblocxx-devel libxml2-devel doxygen
+BuildRequires:	boost-devel doxygen gcc-c++ libblocxx-devel libtool libxml2-devel
 BuildRequires:	libzypp(plugin:commit)
 Requires:	libsnapper@LIBVERSION_MAJOR@ = %version
 Recommends:	cron logrotate snapper-zypp-plugin
