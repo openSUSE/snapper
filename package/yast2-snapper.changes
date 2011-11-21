@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Nov 21 14:56:44 CET 2011 - jsuchome@suse.cz
+
+- there might be other configs than 'root' (bnc#731687)
+- 2.22.1 
+
+-------------------------------------------------------------------
 Wed Nov 16 11:20:22 CET 2011 - jsuchome@suse.cz
 
 - merged texts from proofreading

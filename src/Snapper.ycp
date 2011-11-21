@@ -206,6 +206,10 @@ global list<string> ReadConfigs () {
 	Report::Error (_("File /etc/sysconfig/snapper is not available."));
 	configs	= [ "root" ];
     }
+    if (!contains (configs, "root") && size (configs) > 0)
+    {
+	current_config	= configs[0]:"root";
+    }
     return configs;
 }
 

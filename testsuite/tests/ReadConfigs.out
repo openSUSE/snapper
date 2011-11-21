@@ -1,0 +1,12 @@
+Read	.snapper.configs []
+Return	[]
+Return	root
+Read	.snapper.configs nil
+Return	["root"]
+Return	root
+Read	.snapper.configs ["opt", "var", "root"]
+Return	["opt", "var", "root"]
+Return	root
+Read	.snapper.configs ["opt", "var"]
+Return	["opt", "var"]
+Return	opt
