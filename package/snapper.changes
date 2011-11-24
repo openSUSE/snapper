@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Nov 24 14:09:15 CET 2011 - aschnell@suse.de
+
+- package Python bindings
+- 0.0.8
+
+-------------------------------------------------------------------
 Sat Nov 19 20:46:08 UTC 2011 - coolo@suse.com
 
 - add libtool as buildrequire to avoid implicit dependency
