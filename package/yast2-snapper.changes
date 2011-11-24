@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Nov 24 11:49:50 CET 2011 - jsuchome@suse.cz
+
+- removed fixed sizes in UI, to prevent breaking Gtk (bnc#731363)
+- 2.22.2
+
+-------------------------------------------------------------------
 Mon Nov 21 14:56:44 CET 2011 - jsuchome@suse.cz
 
 - there might be other configs than 'root' (bnc#731687)

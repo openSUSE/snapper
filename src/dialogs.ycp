@@ -520,7 +520,7 @@ any ShowDialog () {
     }
 
     term contents = `HBox (
-	`HWeight (1, `HBox (`VSpacing (20), `VBox (`HSpacing(70),
+	`HWeight (1, `VBox (
 	    `HBox (
 		`HSpacing (),
 		`ReplacePoint (`id (`reptree), `VBox (
@@ -538,7 +538,7 @@ any ShowDialog () {
 		  `Empty (),
 		`HSpacing (1.5)
 	    )
-	))),
+	)),
 	`HWeight (2, `VBox (
 	    `Left (`Label (`id (`desc), description)),
 	    date_widget,
