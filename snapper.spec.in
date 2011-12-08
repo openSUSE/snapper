@@ -15,13 +15,11 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-# norootforbuild
-
 
 Name:		snapper
 Version:	@VERSION@
 Release:	0
-License:	GPL
+License:	GPL-2.0
 Group:		System/Packages
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 Source:		snapper-%{version}.tar.bz2
