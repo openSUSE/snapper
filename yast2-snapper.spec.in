@@ -3,7 +3,8 @@
 @HEADER@
 Requires:	yast2 >= 2.21.22
 License: GPL-2.0+
-BuildRequires:	update-desktop-files yast2 yast2-devtools yast2-testsuite libsnapper-devel doxygen yast2-core-devel gcc-c++ perl-XML-Writer
+BuildRequires:	update-desktop-files yast2 yast2-devtools yast2-testsuite libsnapper-devel
+BuildRequires:	libtool doxygen yast2-core-devel gcc-c++ perl-XML-Writer
 
 Summary:	YaST - file system snapshots review
 
