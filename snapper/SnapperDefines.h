@@ -42,6 +42,7 @@
 
 #define CPBIN "/bin/cp"
 #define TOUCHBIN "/usr/bin/touch"
+#define RMBIN "/bin/rm"
 #define DIFFBIN "/usr/bin/diff"
 #define CHATTRBIN "/usr/bin/chattr"
 

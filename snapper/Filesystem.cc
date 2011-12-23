@@ -61,11 +61,20 @@ namespace snapper
 
 
     void
-    Btrfs::addConfig() const
+    Btrfs::createConfig() const
     {
 	SystemCmd cmd2(BTRFSBIN " subvolume create " + quote(subvolume + "/.snapshots"));
 	if (cmd2.retcode() != 0)
-	    throw AddConfigFailedException("creating btrfs snapshot failed");
+	    throw CreateConfigFailedException("creating btrfs snapshot failed");
+    }
+
+
+    void
+    Btrfs::deleteConfig() const
+    {
+	SystemCmd cmd2(BTRFSBIN " subvolume delete " + quote(subvolume + "/.snapshots"));
+	if (cmd2.retcode() != 0)
+	    throw DeleteConfigFailedException("deleting btrfs snapshot failed");
     }
 
 
@@ -145,19 +154,19 @@ namespace snapper
 
 
     void
-    Ext4::addConfig() const
+    Ext4::createConfig() const
     {
 	int r1 = mkdir((subvolume + "/.snapshots").c_str(), 700);
 	if (r1 == 0)
 	{
 	    SystemCmd cmd1(CHATTRBIN " +x " + quote(subvolume + "/.snapshots"));
 	    if (cmd1.retcode() != 0)
-		throw AddConfigFailedException("chattr failed");
+		throw CreateConfigFailedException("chattr failed");
 	}
 	else if (errno != EEXIST)
 	{
 	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
-	    throw AddConfigFailedException("mkdir failed");
+	    throw CreateConfigFailedException("mkdir failed");
 	}
 
 	int r2 = mkdir((subvolume + "/.snapshots/.info").c_str(), 700);
@@ -165,12 +174,31 @@ namespace snapper
 	{
 	    SystemCmd cmd2(CHATTRBIN " -x " + quote(subvolume + "/.snapshots/.info"));
 	    if (cmd2.retcode() != 0)
-		throw AddConfigFailedException("chattr failed");
+		throw CreateConfigFailedException("chattr failed");
 	}
 	else if (errno != EEXIST)
 	{
 	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
-	    throw AddConfigFailedException("mkdir failed");
+	    throw CreateConfigFailedException("mkdir failed");
+	}
+    }
+
+
+    void
+    Ext4::deleteConfig() const
+    {
+	int r1 = rmdir((subvolume + "/.snapshots/.info").c_str());
+	if (r1 != 0)
+	{
+	    y2err("rmdir failed errno:" << errno << " (" << strerror(errno) << ")");
+	    throw DeleteConfigFailedException("rmdir failed");
+	}
+
+	int r2 = rmdir((subvolume + "/.snapshots").c_str());
+	if (r2 != 0)
+	{
+	    y2err("rmdir failed errno:" << errno << " (" << strerror(errno) << ")");
+	    throw DeleteConfigFailedException("rmdir failed");
 	}
     }
 

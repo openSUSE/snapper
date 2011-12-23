@@ -122,6 +122,12 @@ this option snapper detect the filesystem.
 Name of template for the new configuration file.
 
 .TP
+.B delete-config
+Delete a configuration for a filesystem or subvolume. For this command you
+will likely need to global option \fI--config\fR, see \fBGLOBAL OPTIONS\fR and
+\fBCONCEPTS\fR.
+
+.TP
 .B list [options]
 List snapshots.
 .TP

@@ -100,9 +100,16 @@ namespace snapper
 	const char* msg;
     };
 
-    struct AddConfigFailedException : public SnapperException
+    struct CreateConfigFailedException : public SnapperException
     {
-	explicit AddConfigFailedException(const char* msg) throw() : msg(msg) {}
+	explicit CreateConfigFailedException(const char* msg) throw() : msg(msg) {}
+	virtual const char* what() const throw() { return msg; }
+	const char* msg;
+    };
+
+    struct DeleteConfigFailedException : public SnapperException
+    {
+	explicit DeleteConfigFailedException(const char* msg) throw() : msg(msg) {}
 	virtual const char* what() const throw() { return msg; }
 	const char* msg;
     };
@@ -147,8 +154,9 @@ namespace snapper
 	const vector<string>& getIgnorePatterns() const { return ignore_patterns; }
 
 	static list<ConfigInfo> getConfigs();
-	static void addConfig(const string& config_name, const string& subvolume,
-			      const string& fstype, const string& template_name);
+	static void createConfig(const string& config_name, const string& subvolume,
+				 const string& fstype, const string& template_name);
+	static void deleteConfig(const string& config_name);
 
 	static bool detectFstype(const string& subvolume, string& fstype);
 

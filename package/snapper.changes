@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Dec 23 15:33:12 CET 2011 - aschnell@suse.de
+
+- allow to delete a configuration
+
+-------------------------------------------------------------------
 Thu Nov 24 14:09:15 CET 2011 - aschnell@suse.de
 
 - package Python bindings

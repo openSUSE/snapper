@@ -539,7 +539,7 @@ namespace snapper
 	}
 	catch (const FileNotFoundException& e)
 	{
-	    throw ListConfigsFailedException("sysconfig file not found");
+	    throw ListConfigsFailedException("sysconfig-file not found");
 	}
 
 	return config_infos;
@@ -547,22 +547,22 @@ namespace snapper
 
 
     void
-    Snapper::addConfig(const string& config_name, const string& subvolume,
-		       const string& fstype, const string& template_name)
+    Snapper::createConfig(const string& config_name, const string& subvolume,
+			  const string& fstype, const string& template_name)
     {
-	y2mil("Snapper add-config");
+	y2mil("Snapper create-config");
 	y2mil("libsnapper version " VERSION);
 	y2mil("config_name:" << config_name << " subvolume:" << subvolume <<
 	      " fstype:" << fstype << " template_name:" << template_name);
 
 	if (config_name.empty() || config_name.find_first_of(", \t") != string::npos)
 	{
-	    throw AddConfigFailedException("illegal config name");
+	    throw CreateConfigFailedException("illegal config name");
 	}
 
 	if (!boost::starts_with(subvolume, "/") || !checkDir(subvolume))
 	{
-	    throw AddConfigFailedException("illegal subvolume");
+	    throw CreateConfigFailedException("illegal subvolume");
 	}
 
 	list<ConfigInfo> configs = getConfigs();
@@ -570,13 +570,13 @@ namespace snapper
 	{
 	    if (it->subvolume == subvolume)
 	    {
-		throw AddConfigFailedException("subvolume already covered");
+		throw CreateConfigFailedException("subvolume already covered");
 	    }
 	}
 
 	if (access(string(CONFIGTEMPLATEDIR "/" + template_name).c_str(), R_OK) != 0)
 	{
-	    throw AddConfigFailedException("cannot access template config");
+	    throw CreateConfigFailedException("cannot access template config");
 	}
 
 	auto_ptr<Filesystem> filesystem;
@@ -586,11 +586,11 @@ namespace snapper
 	}
 	catch (const InvalidConfigException& e)
 	{
-	    throw AddConfigFailedException("invalid filesystem type");
+	    throw CreateConfigFailedException("invalid filesystem type");
 	}
 	catch (const ProgramNotInstalledException& e)
 	{
-	    throw AddConfigFailedException(e.what());
+	    throw CreateConfigFailedException(e.what());
 	}
 
 	try
@@ -600,7 +600,7 @@ namespace snapper
 	    sysconfig.getValue("SNAPPER_CONFIGS", config_names);
 	    if (find(config_names.begin(), config_names.end(), config_name) != config_names.end())
 	    {
-		throw AddConfigFailedException("config already exists");
+		throw CreateConfigFailedException("config already exists");
 	    }
 
 	    config_names.push_back(config_name);
@@ -608,14 +608,14 @@ namespace snapper
 	}
 	catch (const FileNotFoundException& e)
 	{
-	    throw AddConfigFailedException("sysconfig file not found");
+	    throw CreateConfigFailedException("sysconfig-file not found");
 	}
 
 	SystemCmd cmd1(CPBIN " " + quote(CONFIGTEMPLATEDIR "/" + template_name) + " " +
 		       quote(CONFIGSDIR "/" + config_name));
 	if (cmd1.retcode() != 0)
 	{
-	    throw AddConfigFailedException("copying config template failed");
+	    throw CreateConfigFailedException("copying config-file template failed");
 	}
 
 	try
@@ -626,10 +626,67 @@ namespace snapper
 	}
 	catch (const FileNotFoundException& e)
 	{
-	    throw AddConfigFailedException("modifying config failed");
+	    throw CreateConfigFailedException("modifying config failed");
 	}
 
-	filesystem->addConfig();
+	filesystem->createConfig();
+    }
+
+
+    void
+    Snapper::deleteConfig(const string& config_name)
+    {
+	y2mil("Snapper delete-config");
+	y2mil("libsnapper version " VERSION);
+
+	auto_ptr<Snapper> snapper(new Snapper(config_name));
+
+	Snapshots& snapshots = snapper->getSnapshots();
+	for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); )
+	{
+	    Snapshots::iterator tmp = it++;
+
+	    if (tmp->isCurrent())
+		continue;
+
+	    try
+	    {
+		snapper->deleteSnapshot(tmp);
+	    }
+	    catch (const DeleteSnapshotFailedException& e)
+	    {
+		// ignore, Filesystem->deleteConfig will fail anyway
+	    }
+	}
+
+	try
+	{
+	    snapper->getFilesystem()->deleteConfig();
+	}
+	catch (const DeleteConfigFailedException& e)
+	{
+	    throw DeleteConfigFailedException("deleting snapshot failed");
+	}
+
+	SystemCmd cmd1(RMBIN " " + quote(CONFIGSDIR "/" + config_name));
+	if (cmd1.retcode() != 0)
+	{
+	    throw DeleteConfigFailedException("deleting config-file failed");
+	}
+
+	try
+	{
+	    SysconfigFile sysconfig(SYSCONFIGFILE);
+	    vector<string> config_names;
+	    sysconfig.getValue("SNAPPER_CONFIGS", config_names);
+	    config_names.erase(remove(config_names.begin(), config_names.end(), config_name),
+			       config_names.end());
+	    sysconfig.setValue("SNAPPER_CONFIGS", config_names);
+	}
+	catch (const FileNotFoundException& e)
+	{
+	    throw DeleteConfigFailedException("sysconfig-file not found");
+	}
     }
 
 

@@ -267,11 +267,42 @@ command_create_config()
 
     try
     {
-	Snapper::addConfig(config_name, subvolume, fstype, template_name);
+	Snapper::createConfig(config_name, subvolume, fstype, template_name);
     }
-    catch (const AddConfigFailedException& e)
+    catch (const CreateConfigFailedException& e)
     {
 	cerr << sformat(_("Creating config failed (%s)."), e.what()) << endl;
+	exit(EXIT_FAILURE);
+    }
+}
+
+
+void
+help_delete_config()
+{
+    cout << _("  Delete config:") << endl
+	 << _("\tsnapper delete-config") << endl
+	 << endl;
+}
+
+
+void
+command_delete_config()
+{
+    getopts.parse("delete-config", GetOpts::no_options);
+    if (getopts.hasArgs())
+    {
+	cerr << _("Command 'delete-config' does not take arguments.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    try
+    {
+	Snapper::deleteConfig(config_name);
+    }
+    catch (const DeleteConfigFailedException& e)
+    {
+	cerr << sformat(_("Deleting config failed (%s)."), e.what()) << endl;
 	exit(EXIT_FAILURE);
     }
 }
@@ -1007,6 +1038,7 @@ command_help()
 
     help_list_configs();
     help_create_config();
+    help_delete_config();
     help_list();
     help_create();
     help_modify();
@@ -1063,6 +1095,7 @@ main(int argc, char** argv)
 
     cmds["list-configs"] = command_list_configs;
     cmds["create-config"] = command_create_config;
+    cmds["delete-config"] = command_delete_config;
     cmds["list"] = command_list;
     cmds["create"] = command_create;
     cmds["modify"] = command_modify;
@@ -1145,7 +1178,8 @@ main(int argc, char** argv)
 	exit(EXIT_FAILURE);
     }
 
-    if (cmd->first == "help" || cmd->first == "list-configs" || cmd->first == "create-config")
+    if (cmd->first == "help" || cmd->first == "list-configs" ||
+	cmd->first == "create-config" || cmd->first == "delete-config")
     {
 	(*cmd->second)();
     }

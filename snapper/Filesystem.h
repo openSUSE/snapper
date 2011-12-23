@@ -46,7 +46,8 @@ namespace snapper
 
 	virtual string name() const = 0;
 
-	virtual void addConfig() const = 0;
+	virtual void createConfig() const = 0;
+	virtual void deleteConfig() const = 0;
 
 	virtual string infosDir() const = 0;
 	virtual string snapshotDir(unsigned int num) const = 0;
@@ -75,7 +76,8 @@ namespace snapper
 
 	virtual string name() const { return "btrfs"; }
 
-	virtual void addConfig() const;
+	virtual void createConfig() const;
+	virtual void deleteConfig() const;
 
 	virtual string infosDir() const;
 	virtual string snapshotDir(unsigned int num) const;
@@ -100,7 +102,8 @@ namespace snapper
 
 	virtual string name() const { return "ext4"; }
 
-	virtual void addConfig() const;
+	virtual void createConfig() const;
+	virtual void deleteConfig() const;
 
 	virtual string infosDir() const;
 	virtual string snapshotDir(unsigned int num) const;
