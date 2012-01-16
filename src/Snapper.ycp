@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------------
- * Copyright (c) 2006 Novell, Inc. All Rights Reserved.
+ * Copyright (c) 2006-2012 Novell, Inc. All Rights Reserved.
  *
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -328,8 +328,10 @@ global boolean RestoreFiles (integer snapshot_num, list<string> files) {
 
 	if (!FileUtils::Exists (orig))
 	{
+	    SCR::Execute (.target.bash, sformat ("/bin/rm -rf -- '%1'", String::Quote (full_path)));
+	    y2milestone ("removing '%1' from system", full_path);
 	    // log entry (%1 is file name)
-	    UI::ChangeWidget (`id (`log), `LastLine, sformat (_("%1 does not exist in snapshot %2\n"), file, snapshot_num));
+	    UI::ChangeWidget (`id (`log), `LastLine, sformat (_("Deleted %1\n"), full_path));
 	}
 	else if (FileUtils::CheckAndCreatePath (dir))
 	{

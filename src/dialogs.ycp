@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------------
- * Copyright (c) 2006 Novell, Inc. All Rights Reserved.
+ * Copyright (c) 2006-2012 Novell, Inc. All Rights Reserved.
  *
  *
  * This program is free software; you can redistribute it and/or modify it under
@@ -405,30 +405,27 @@ any ShowDialog () {
 	    content = add (content, `VStretch ());
 	}
 
+	// button label
+        string restore_label            = _("R&estore From First");
+	// button label
+        string restore_label_single     = _("Restore");
+
+	if (file_was_created (file))
+	{
+            restore_label       = Label::RemoveButton ();
+            restore_label_single= Label::RemoveButton ();
+	}
+
 	UI::ReplaceWidget (`id (`diff_content), `HBox (`HSpacing (0.5), `VBox (
 	    content,
 	    `VSquash (`HBox (
 		`HStretch (),
-		// button label
-		type == `SINGLE ? `Empty () : `PushButton (`id (`restore_pre), _("R&estore from First")),
-		// button label
-		`PushButton (`id (`restore), type == `SINGLE ? _("Restore") : _("Res&tore from Second"))
+		type == `SINGLE ? `Empty () : `PushButton (`id (`restore_pre), restore_label),
+		`PushButton (`id (`restore), type == `SINGLE ? restore_label_single : _("Res&tore From Second"))
 	    ))
 	    ), `HSpacing (0.5))
 	);
-	if (file_was_created (file))
-	{
-	    // file created after taking first snapshot cannot be restored from that snapshot
-	    if (type == `SINGLE)
-	    {
-		UI::ChangeWidget (`id (`restore), `Enabled, false);
-	    }
-	    else
-	    {
-		UI::ChangeWidget (`id (`restore_pre), `Enabled, false);
-	    }
-	}
-	else if (type != `SINGLE && file_was_removed (file))
+	if (type != `SINGLE && file_was_removed (file))
 	{
 	    // file removed in 2nd snapshot cannot be restored from that snapshot
 	    UI::ChangeWidget (`id (`restore), `Enabled, false);
@@ -629,13 +626,27 @@ any ShowDialog () {
 	else if (ret == `abort || ret == `cancel || ret == `back) {
 	    break;
 	}
-	else if (ret == `restore_pre) {
+        else if ((ret == `restore_pre || (ret == `restore && type == `SINGLE))
+          && file_was_created (current_file))
+        {
 	    // yes/no question, %1 is file name, %2 is number
-	    if (Popup::YesNo (sformat ("Do you want to copy the file
+	    if (Popup::YesNo (sformat (_("Do you want to delete the file
 
 %1
 
-from snapshot '%2' to current system?", Snapper::GetFileFullPath (current_file), previous_num)))
+from current system?"), Snapper::GetFileFullPath (current_file))))
+	    {
+		Snapper::RestoreFiles (ret == `restore_pre ? previous_num : snapshot_num, [current_file]);
+	    }
+	    continue;
+        }
+	else if (ret == `restore_pre) {
+	    // yes/no question, %1 is file name, %2 is number
+	    if (Popup::YesNo (sformat (_("Do you want to copy the file
+
+%1
+
+from snapshot '%2' to current system?"), Snapper::GetFileFullPath (current_file), previous_num)))
 	    {
 		Snapper::RestoreFiles (previous_num, [current_file]);
 	    }
@@ -643,11 +654,11 @@ from snapshot '%2' to current system?", Snapper::GetFileFullPath (current_file),
 	}
 	else if (ret == `restore) {
 	    // yes/no question, %1 is file name, %2 is number
-	    if (Popup::YesNo (sformat ("Do you want to copy the file
+	    if (Popup::YesNo (sformat (_("Do you want to copy the file
 
 %1
 
-from snapshot '%2' to current system?", Snapper::GetFileFullPath (current_file), snapshot_num)))
+from snapshot '%2' to current system?"), Snapper::GetFileFullPath (current_file), snapshot_num)))
 	    {
 		Snapper::RestoreFiles (snapshot_num, [current_file]);
 	    }
@@ -677,7 +688,12 @@ from snapshot '%2' to current system?", Snapper::GetFileFullPath (current_file),
 	    // popup headline
 	    if (Popup::AnyQuestionRichText (_("Restoring files"),
 		// popup message, %1 is snapshot number, %2 list of files
-		sformat (_("These files will be copied from snapshot '%1' to current system: <p>%2.</p>Are you sure?"),
+		sformat (_("<p>These files will be restored from snapshot '%1':</p>
+<p>
+%2
+</p>
+<p>Files existing in original snapshot will be copied to current system.</p>
+<p>Files that did not exist in the snapshot will be deleted.</p>Are you sure?"),
 		    previous_num, mergestring (to_restore, "<br>")),
 		60, 20,  Label::YesButton (), Label::NoButton (), `focus_no))
 	    {

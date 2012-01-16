@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Mon Jan 16 15:06:11 CET 2012 - jsuchome@suse.cz
+
+- when reverting changes to selected snapshot, delete files as well
+  (bnc#741214)
+- confirmed license
+- 2.22.3
+
+-------------------------------------------------------------------
 Thu Nov 24 11:49:50 CET 2011 - jsuchome@suse.cz
 
 - removed fixed sizes in UI, to prevent breaking Gtk (bnc#731363)
