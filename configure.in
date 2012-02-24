@@ -25,6 +25,12 @@ AM_PATH_PYTHON
 
 AC_PREFIX_DEFAULT(/usr)
 
+dnl Check for blocxx
+AC_CHECK_LIB(blocxx, main,
+  AC_SUBST([LIBBLOCXX], ["-lblocxx"])
+    AC_DEFINE([HAVE_LIBBLOCXX], [1],
+      [Define if you have libblocxx]))
+
 dnl Automake 1.11 enables silent compilation
 dnl Disable it by "configure --disable-silent-rules" or "make V=1"
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])

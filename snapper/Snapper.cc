@@ -28,6 +28,7 @@
 #include <boost/algorithm/string.hpp>
 
 #include "config.h"
+
 #include "snapper/Snapper.h"
 #include "snapper/Comparison.h"
 #include "snapper/AppUtil.h"
