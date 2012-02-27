@@ -50,7 +50,7 @@ Authors:
 
 %prep
 %setup -n snapper-%{version}
-%if (0%{?suse_version} && 0%{?suse_version} < 1210) || (0%{?fedora} && 0%{?fedora} < 17)
+%if (0%{?suse_version} && 0%{?suse_version} < 1210) || (0%{?fedora} && 0%{?fedora} < 17) || (0%{?rhel_version} && 0%{?rhel_version} < 700) || (0%{?centos_version} && 0%{?centos_version} < 700) || (0%{?mdkversion} && 0%{?mdkversion} < 201200)
 %patch1
 %endif
 
@@ -193,6 +193,11 @@ Authors:
 
 %files -n snapper-zypp-plugin
 %defattr(-,root,root)
+%if 0%{?suse_version} < 1210
+%dir /usr/lib/zypp
+%dir /usr/lib/zypp/plugins
+%dir /usr/lib/zypp/plugins/commit
+%endif
 /usr/lib/zypp/plugins/commit/snapper.py
 
 %changelog
