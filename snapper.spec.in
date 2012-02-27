@@ -28,7 +28,9 @@ BuildRequires:	boost-devel doxygen gcc-c++ libtool libxml2-devel
 BuildRequires:	python-devel swig
 %if 0%{?suse_version}
 BuildRequires:	libblocxx-devel
+%if 0%{?suse_version} >= 1210
 BuildRequires:	libzypp(plugin:commit)
+%endif
 %endif
 Requires:	libsnapper@LIBVERSION_MAJOR@ = %version
 %if 0%{?suse_version}
@@ -63,6 +65,14 @@ make %{?jobs:-j%jobs}
 
 %install
 make install DESTDIR="$RPM_BUILD_ROOT"
+
+%if 0%{?suse_version}
+mkdir -p $RPM_BUILD_ROOT/var/adm/fillup-templates
+cp data/sysconfig.snapper $RPM_BUILD_ROOT/var/adm/fillup-templates
+%else
+mkdir -p $RPM_BUILD_ROOT/etc/sysconfig
+cp data/sysconfig.snapper $RPM_BUILD_ROOT/etc/sysconfig/snapper
+%endif
 
 %{find_lang} snapper
 
@@ -107,7 +117,11 @@ Authors:
 %doc %dir %{prefix}/share/doc/packages/snapper
 %doc %{prefix}/share/doc/packages/snapper/AUTHORS
 %doc %{prefix}/share/doc/packages/snapper/COPYING
+%if 0%{?suse_version}
 /var/adm/fillup-templates/sysconfig.snapper
+%else
+%config(noreplace) %{_sysconfdir}/sysconfig/snapper
+%endif
 %dir %{prefix}/lib/snapper
 %dir %{prefix}/lib/snapper/bin
 %{prefix}/lib/snapper/bin/compare-dirs

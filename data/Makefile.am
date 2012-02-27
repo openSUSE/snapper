@@ -2,9 +2,7 @@
 # Makefile.am for snapper/data
 #
 
-fillup_DATA = sysconfig.snapper
-
-EXTRA_DIST = $(fillup_DATA) base.txt x11.txt snapper.logrotate default-config
+EXTRA_DIST = sysconfig.snapper base.txt x11.txt snapper.logrotate default-config
 
 install-data-local:
 	install -D -m 644 snapper.logrotate $(DESTDIR)/etc/logrotate.d/snapper
