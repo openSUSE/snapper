@@ -1,7 +1,7 @@
 #
 # spec file for package snapper
 #
-# Copyright (c) 2011 SUSE LINUX Products GmbH, Nuernberg, Germany.
+# Copyright (c) 2012 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -24,12 +24,17 @@ Group:		System/Packages
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 Source:		snapper-%{version}.tar.bz2
 Prefix:		/usr
-BuildRequires:	boost-devel doxygen gcc-c++ libblocxx-devel libtool libxml2-devel
+BuildRequires:	boost-devel doxygen gcc-c++ libtool libxml2-devel
 BuildRequires:	python-devel swig
+%if 0%{?suse_version}
+BuildRequires:	libblocxx-devel
 BuildRequires:	libzypp(plugin:commit)
+%endif
 Requires:	libsnapper@LIBVERSION_MAJOR@ = %version
+%if 0%{?suse_version}
 Recommends:	cron logrotate snapper-zypp-plugin
 Supplements:	btrfsprogs
+%endif
 Summary:	Tool for filesystem snapshot management
 Url:		http://en.opensuse.org/Portal:Snapper
 
@@ -79,7 +84,9 @@ rm -rf "$RPM_BUILD_ROOT"
 Summary:	Library for filesystem snapshot management
 Group:		System/Libraries
 Requires:	diffutils util-linux
+%if 0%{?suse_version}
 PreReq:		%fillup_prereq
+%endif
 
 %description -n libsnapper@LIBVERSION_MAJOR@
 This package contains libsnapper, a library for filesystem snapshot management.
@@ -107,14 +114,19 @@ Authors:
 
 %post -n libsnapper@LIBVERSION_MAJOR@
 /sbin/ldconfig
+%if 0%{?suse_version}
 %{fillup_only -n snapper}
+%endif
 
 %postun -n libsnapper@LIBVERSION_MAJOR@
 /sbin/ldconfig
 
 %package -n libsnapper-devel
 Requires:	libsnapper@LIBVERSION_MAJOR@ = %version
-Requires:	gcc-c++ libstdc++-devel boost-devel blocxx-devel libxml2-devel
+Requires:	gcc-c++ libstdc++-devel boost-devel libxml2-devel
+%if 0%{?suse_version}
+Requires:	blocxx-devel
+%endif
 Summary:	Header files and documentation for libsnapper
 Group:		Development/Languages/C and C++
 

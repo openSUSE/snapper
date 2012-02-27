@@ -2,7 +2,7 @@
 # Makefile.am for snapper/snapper
 #
 
-AM_CXXFLAGS = -D_FILE_OFFSET_BITS=64
+AM_CXXFLAGS = -D_FILE_OFFSET_BITS=64 -I/usr/include/libxml2
 
 lib_LTLIBRARIES = libsnapper.la
 
@@ -27,7 +27,7 @@ libsnapper_la_SOURCES =					\
 	SnapperDefines.h
 
 libsnapper_la_LDFLAGS = -version-info @LIBVERSION_INFO@
-libsnapper_la_LIBADD = @LIBBLOCXX@ -lxml2
+libsnapper_la_LIBADD = @LIBBLOCXX@ -lxml2 -lz -lm
 
 pkgincludedir = $(includedir)/snapper
 
