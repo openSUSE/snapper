@@ -71,11 +71,9 @@ make %{?jobs:-j%jobs}
 make install DESTDIR="$RPM_BUILD_ROOT"
 
 %if 0%{?suse_version}
-mkdir -p $RPM_BUILD_ROOT/var/adm/fillup-templates
-cp data/sysconfig.snapper $RPM_BUILD_ROOT/var/adm/fillup-templates
+install -D data/sysconfig.snapper $RPM_BUILD_ROOT/var/adm/fillup-templates/sysconfig.snapper
 %else
-mkdir -p $RPM_BUILD_ROOT/etc/sysconfig
-cp data/sysconfig.snapper $RPM_BUILD_ROOT/etc/sysconfig/snapper
+install -D data/sysconfig.snapper $RPM_BUILD_ROOT/etc/sysconfig/snapper
 %endif
 
 %{find_lang} snapper
