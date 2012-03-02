@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Mar 02 16:25:26 CET 2012 - aschnell@suse.de
+
+- added option --command to snapper create
+- 0.0.9
+
+-------------------------------------------------------------------
 Fri Feb 24 19:21:15 CET 2012 - aschnell@suse.de
 
 - allow to compile without blocxx

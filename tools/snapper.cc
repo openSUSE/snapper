@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Novell, Inc.
+ * Copyright (c) 2011-2012 Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -463,6 +463,7 @@ help_create()
 	 << _("\t--description, -d <description>\tDescription for snapshot.") << endl
 	 << _("\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot.") << endl
 	 << _("\t--userdata, -u <userdata>\tUserdata for snapshot.") << endl
+	 << _("\t--command <command>\tRun command and create pre and post snapshots.") << endl
 	 << endl;
 }
 
@@ -477,6 +478,7 @@ command_create()
 	{ "description",	required_argument,	0,	'd' },
 	{ "cleanup-algorithm",	required_argument,	0,	'c' },
 	{ "userdata",		required_argument,	0,	'u' },
+	{ "command",		required_argument,	0,	0 },
 	{ 0, 0, 0, 0 }
     };
 
@@ -487,20 +489,31 @@ command_create()
 	exit(EXIT_FAILURE);
     }
 
+    enum CreateType { CT_SINGLE, CT_PRE, CT_POST, CT_PRE_POST };
+
     const Snapshots& snapshots = sh->getSnapshots();
 
-    SnapshotType type = SINGLE;
+    CreateType type = CT_SINGLE;
     Snapshots::const_iterator snap1 = snapshots.end();
     bool print_number = false;
     string description;
     string cleanup;
     map<string, string> userdata;
+    string command;
 
     GetOpts::parsed_opts::const_iterator opt;
 
     if ((opt = opts.find("type")) != opts.end())
     {
-	if (!toValue(opt->second, type, SINGLE))
+	if (opt->second == "single")
+	    type = CT_SINGLE;
+	else if (opt->second == "pre")
+	    type = CT_PRE;
+	else if (opt->second == "post")
+	    type = CT_POST;
+	else if (opt->second == "pre-post")
+	    type = CT_PRE_POST;
+	else
 	{
 	    cerr << _("Unknown type of snapshot.") << endl;
 	    exit(EXIT_FAILURE);
@@ -522,9 +535,21 @@ command_create()
     if ((opt = opts.find("userdata")) != opts.end())
 	userdata = read_userdata(opt->second);
 
-    if (type == POST && (snap1 == snapshots.end() || snap1->isCurrent()))
+    if ((opt = opts.find("command")) != opts.end())
+    {
+	command = opt->second;
+	type = CT_PRE_POST;
+    }
+
+    if (type == CT_POST && (snap1 == snapshots.end() || snap1->isCurrent()))
     {
 	cerr << _("Missing or invalid pre-number.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    if (type == CT_PRE_POST && command.empty())
+    {
+	cerr << _("Missing command argument.") << endl;
 	exit(EXIT_FAILURE);
     }
 
@@ -532,7 +557,7 @@ command_create()
     {
 	switch (type)
 	{
-	    case SINGLE: {
+	    case CT_SINGLE: {
 		Snapshots::iterator snap1 = sh->createSingleSnapshot(description);
 		snap1->setCleanup(cleanup);
 		snap1->setUserdata(userdata);
@@ -541,7 +566,7 @@ command_create()
 		    cout << snap1->getNum() << endl;
 	    } break;
 
-	    case PRE: {
+	    case CT_PRE: {
 		Snapshots::iterator snap1 = sh->createPreSnapshot(description);
 		snap1->setCleanup(cleanup);
 		snap1->setUserdata(userdata);
@@ -550,13 +575,30 @@ command_create()
 		    cout << snap1->getNum() << endl;
 	    } break;
 
-	    case POST: {
+	    case CT_POST: {
 		Snapshots::iterator snap2 = sh->createPostSnapshot(description, snap1);
 		snap2->setCleanup(cleanup);
 		snap2->setUserdata(userdata);
 		snap2->flushInfo();
 		if (print_number)
 		    cout << snap2->getNum() << endl;
+		sh->startBackgroundComparsion(snap1, snap2);
+	    } break;
+
+	    case CT_PRE_POST: {
+		Snapshots::iterator snap1 = sh->createPreSnapshot(description);
+		snap1->setCleanup(cleanup);
+		snap1->setUserdata(userdata);
+		snap1->flushInfo();
+
+		system(command.c_str());
+
+		Snapshots::iterator snap2 = sh->createPostSnapshot(description, snap1);
+		snap2->setCleanup(cleanup);
+		snap2->setUserdata(userdata);
+		snap2->flushInfo();
+		if (print_number)
+		    cout << snap1->getNum() << ".." << snap2->getNum() << endl;
 		sh->startBackgroundComparsion(snap1, snap2);
 	    } break;
 	}
