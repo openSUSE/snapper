@@ -593,7 +593,7 @@ command_create()
 
 		system(command.c_str());
 
-		Snapshots::iterator snap2 = sh->createPostSnapshot(description, snap1);
+		Snapshots::iterator snap2 = sh->createPostSnapshot("", snap1);
 		snap2->setCleanup(cleanup);
 		snap2->setUserdata(userdata);
 		snap2->flushInfo();
