@@ -158,7 +158,7 @@ Set userdata for the snapshot. The key-value pairs must be seperated by comma
 and the key and value must be seperated by an equal sign,
 e.g. requestid=42,user=arthur.
 .TP
-\fI\-\-pre\-number\fR <command>
+\fI\-\-command\fR <command>
 Create a pre and post snapshot and run command in between.
 
 .TP
