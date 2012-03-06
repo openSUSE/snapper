@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2011] Novell, Inc.
+ * Copyright (c) [2004-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -150,6 +150,25 @@ AsciiFile::save()
 
 
     void
+    SysconfigFile::setValue(const string& key, bool value)
+    {
+	setValue(key, value ? "yes" : "no");
+    }
+
+
+    bool
+    SysconfigFile::getValue(const string& key, bool& value) const
+    {
+	string tmp;
+	if (!getValue(key, tmp))
+	    return false;
+
+	value = tmp == "yes";
+	return true;
+    }
+
+
+    void
     SysconfigFile::setValue(const string& key, const string& value)
     {
 	string line = key + "=\"" + value + "\"";
@@ -190,8 +209,6 @@ AsciiFile::save()
     bool
     SysconfigFile::getValue(const string& key, vector<string>& values) const
     {
-	values.clear();
-
 	string tmp;
 	if (!getValue(key, tmp))
 	    return false;
@@ -200,6 +217,8 @@ AsciiFile::save()
 
 	if (!tmp.empty())
 	    boost::split(values, tmp, boost::is_any_of(" \t"), boost::token_compress_on);
+	else
+	    values.clear();
 
 	return true;
     }

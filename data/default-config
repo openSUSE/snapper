@@ -5,6 +5,10 @@ SUBVOLUME="/"
 # filesystem type
 FSTYPE="btrfs"
 
+# start comparing pre- and post-snapshot in background after creating
+# post-snapshot
+BACKGROUND_COMPARISON="yes"
+
 
 # run daily number cleanup
 NUMBER_CLEANUP="yes"

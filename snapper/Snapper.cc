@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Novell, Inc.
+ * Copyright (c) [2011-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -177,6 +177,11 @@ namespace snapper
 
 	if (snapshot2 == snapshots.end() || snapshot2->isCurrent())
 	    throw IllegalSnapshotException();
+
+	bool background_comparison = true;
+	config->getValue("BACKGROUND_COMPARISON", background_comparison);
+	if (!background_comparison)
+	    return;
 
 	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
 

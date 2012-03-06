@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Mar 06 11:37:34 CET 2012 - aschnell@suse.de
+
+- allow to disable background comparison (bnc#726122)
+- 0.0.10
+
+-------------------------------------------------------------------
 Fri Mar 02 16:25:26 CET 2012 - aschnell@suse.de
 
 - added option --command to snapper create
