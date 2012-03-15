@@ -21,8 +21,10 @@
 
 
 #include <pwd.h>
-#include <string>
+#include <unistd.h>
+#include <sys/types.h>
 #include <libxml/tree.h>
+#include <string>
 
 #include "config.h"
 

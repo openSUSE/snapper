@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Mar 15 10:56:40 CET 2012 - aschnell@suse.de
+
+- added missing includes for gcc 4.7
+
+-------------------------------------------------------------------
 Tue Mar 06 11:37:34 CET 2012 - aschnell@suse.de
 
 - allow to disable background comparison (bnc#726122)

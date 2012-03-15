@@ -24,6 +24,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <errno.h>
+#include <unistd.h>
 #include <mntent.h>
 
 #include "snapper/Log.h"
