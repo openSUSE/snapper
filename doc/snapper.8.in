@@ -1,4 +1,4 @@
-.TH "snapper" "8" @VERSION@ "snapper" "System Tools"
+.TH SNAPPER 8 "2012-03-20" "@VERSION@" "Filesystem Snapshot Management"
 .SH "NAME"
 .LP
 snapper - Command\-line program for filesystem snapshot management
