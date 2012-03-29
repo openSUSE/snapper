@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Mar 29 16:01:03 CEST 2012 - jsuchome@suse.cz
+
+- merge proofread texts 
+- 2.22.4 
+
+-------------------------------------------------------------------
 Mon Jan 16 15:06:11 CET 2012 - jsuchome@suse.cz
 
 - when reverting changes to selected snapshot, delete files as well
