@@ -111,7 +111,7 @@ List available configurations.
 .TP
 .B create-config [options] <subvolume>
 Create a new configuration for a filesystem or subvolume. For this command you
-will likely need to global option \fI--config\fR, see \fBGLOBAL OPTIONS\fR and
+will likely need the global option \fI--config\fR, see \fBGLOBAL OPTIONS\fR and
 \fBCONCEPTS\fR.
 .TP
 \fI\-f, \-\-fstype\fR <fstype>
