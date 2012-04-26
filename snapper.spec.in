@@ -27,6 +27,7 @@ Patch1:		no-readonly.diff
 Prefix:		/usr
 BuildRequires:	boost-devel doxygen gcc-c++ libtool libxml2-devel
 BuildRequires:	python-devel swig
+BuildRequires:  dbus-1-devel
 %if 0%{?suse_version}
 BuildRequires:	libblocxx-devel
 %if 0%{?suse_version} >= 1210
@@ -87,10 +88,13 @@ rm -rf "$RPM_BUILD_ROOT"
 %files -f snapper.lang
 %defattr(-,root,root)
 %{prefix}/bin/snapper
+%{prefix}/sbin/snapperd
 %doc %{_mandir}/*/*
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
 /etc/cron.hourly/suse.de-snapper
 /etc/cron.daily/suse.de-snapper
+%config /etc/dbus-1/system.d/org.opensuse.snapper.conf
+%{prefix}/share/dbus-1/system-services/org.opensuse.snapper.service
 
 %package -n libsnapper@LIBVERSION_MAJOR@
 Summary:	Library for filesystem snapshot management
