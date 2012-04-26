@@ -1,0 +1,51 @@
+
+method ListConfigs
+
+
+method CreateConfig config-name subvolume
+method DeleteConfig config-name
+
+signal ConfigCreated config-name
+signal ConfigDeleted config-name
+
+
+method LockConfig config-name
+method UnlockConfig config-name
+
+Locking disallows other clients to delete the config and delete snapshots for
+the config but not to create new snapshots for the config. Several clients can
+lock the some config.
+
+
+method ListSnapshots config-name
+
+method CreateSingleSnapshot config-name ... -> number
+method CreatePreSnapshot config-name ... -> number
+method CreatePostSnapshot config-name ... -> number
+method ModifySnapshot config-name number ...
+method DeleteSnapshot config-name number
+
+signal SnapshotCreated config-name number
+signal SnapshotModified config-name number
+signal SnapshotDeleted config-name number
+
+method MountSnapshot config-name number
+method UmountSnapshot config-name number
+
+
+
+
+method CreateComparison config-name number1 number2
+method DeleteComparison config-name number1 number2
+
+The following commands require a successful CreateComparison in advance.
+
+method GetFiles config-name number1 number2 -> list(filename status undo)
+method SetUndo config-name number1 number2 list(filename undo)
+
+method GetStatus config-name number1 number2 filename which -> string
+method GetDiff config-name number1 number2 filename which -> list(string)
+
+
+method Undo config-name number1 number2
+
