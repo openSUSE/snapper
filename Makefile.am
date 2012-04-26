@@ -2,7 +2,7 @@
 # Makefile.am for snapper
 #
 
-SUBDIRS = snapper examples tools scripts data doc po testsuite-real bindings
+SUBDIRS = snapper examples tools dbus server client scripts data doc po testsuite-real bindings
 
 AUTOMAKE_OPTIONS = foreign dist-bzip2 no-dist-gzip
 

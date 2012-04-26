@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Novell, Inc.
+ * Copyright (c) [2011-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -37,15 +37,18 @@ namespace snapper
     public:
 
 	Comparison(const Snapper* snapper, Snapshots::const_iterator snapshot1,
-		   Snapshots::const_iterator snapshot2);
+		   Snapshots::const_iterator snapshot2, bool delay = false);
 
 	const Snapper* getSnapper() const { return snapper; }
 
 	Snapshots::const_iterator getSnapshot1() const { return snapshot1; }
 	Snapshots::const_iterator getSnapshot2() const { return snapshot2; }
 
-	Files& getFiles() { return files; }
-	const Files& getFiles() const { return files; }
+	void initialize();
+	bool isInitialized() const { return initialized; }
+
+	Files& getFiles();
+	const Files& getFiles() const;
 
 	UndoStatistic getUndoStatistic() const;
 
@@ -57,6 +60,8 @@ namespace snapper
 
 	Snapshots::const_iterator snapshot1;
 	Snapshots::const_iterator snapshot2;
+
+	bool initialized;
 
 	Files files;
 

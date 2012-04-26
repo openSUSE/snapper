@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Novell, Inc.
+ * Copyright (c) [2011-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -25,6 +25,7 @@
 
 
 #include <vector>
+#include <boost/noncopyable.hpp>
 
 #include "snapper/Snapshot.h"
 
@@ -68,10 +69,12 @@ namespace snapper
 
     struct ConfigInfo
     {
-	ConfigInfo(const string& config_name, const string& subvolume)
-	    : config_name(config_name), subvolume(subvolume) {}
+	ConfigInfo(const string& config_name, const string& subvolume,
+		   const vector<string>& users)
+	    : config_name(config_name), subvolume(subvolume), users(users) {}
 	string config_name;
 	string subvolume;
+	vector<string> users;
     };
 
 
@@ -115,7 +118,7 @@ namespace snapper
     };
 
 
-    class Snapper
+    class Snapper : boost::noncopyable
     {
     public:
 

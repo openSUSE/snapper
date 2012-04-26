@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Novell, Inc.
+ * Copyright (c) [2011-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -31,23 +31,63 @@ namespace snapper
 {
 
     Comparison::Comparison(const Snapper* snapper, Snapshots::const_iterator snapshot1,
-			   Snapshots::const_iterator snapshot2)
-	: snapper(snapper), snapshot1(snapshot1), snapshot2(snapshot2), files(this)
+			   Snapshots::const_iterator snapshot2, bool delay)
+	: snapper(snapper), snapshot1(snapshot1), snapshot2(snapshot2), initialized(false),
+	  files(this)
     {
 	if (snapshot1 == snapper->getSnapshots().end() ||
 	    snapshot2 == snapper->getSnapshots().end() ||
 	    snapshot1 == snapshot2)
 	    throw IllegalSnapshotException();
 
-	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
+	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum() << " delay:" <<
+	      delay);
 
-	files.initialize();
+	if (!delay)
+	{
+	    files.initialize();
+	    initialized = true;
+	}
+    }
+
+
+    void
+    Comparison::initialize()
+    {
+	if (!initialized)
+	{
+	    files.initialize();
+	    initialized = true;
+	}
+    }
+
+
+    Files&
+    Comparison::getFiles()
+    {
+	if (!initialized)
+	    throw;
+
+	return files;
+    }
+
+
+    const Files&
+    Comparison::getFiles() const
+    {
+	if (!initialized)
+	    throw;
+
+	return files;
     }
 
 
     UndoStatistic
     Comparison::getUndoStatistic() const
     {
+	if (!initialized)
+	    throw;
+
 	return files.getUndoStatistic();
     }
 
@@ -55,6 +95,9 @@ namespace snapper
     bool
     Comparison::doUndo()
     {
+	if (!initialized)
+	    throw;
+
 	return files.doUndo();
     }
 

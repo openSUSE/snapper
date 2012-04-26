@@ -55,6 +55,9 @@ AC_OUTPUT(
 	bindings/python/Makefile
 	tools/Makefile
 	tools/utils/Makefile
+	dbus/Makefile
+	server/Makefile
+	client/Makefile
 	scripts/Makefile
 	data/Makefile
 	doc/Makefile

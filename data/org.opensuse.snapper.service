@@ -1,0 +1,5 @@
+# DBus service activation config
+[D-BUS Service]
+Name=org.opensuse.snapper
+Exec=/usr/sbin/snapperd
+User=root
