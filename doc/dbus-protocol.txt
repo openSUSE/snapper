@@ -2,7 +2,7 @@
 method ListConfigs
 
 
-method CreateConfig config-name subvolume
+method CreateConfig config-name subvolume fstype template_name
 method DeleteConfig config-name
 
 signal ConfigCreated config-name

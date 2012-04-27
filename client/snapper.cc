@@ -253,7 +253,7 @@ command_create_config(DBus::Connection& conn)
 
     try
     {
-	Snapper::createConfig(config_name, subvolume, fstype, template_name);
+	command_create_xconfig(conn, config_name, subvolume, fstype, template_name);
     }
     catch (const CreateConfigFailedException& e)
     {
@@ -284,7 +284,7 @@ command_delete_config(DBus::Connection& conn)
 
     try
     {
-	Snapper::deleteConfig(config_name);
+	command_delete_xconfig(conn, config_name);
     }
     catch (const DeleteConfigFailedException& e)
     {
@@ -838,7 +838,7 @@ command_diff(DBus::Connection& conn)
 	    vector<string> lines = command_get_xdiff(conn, config_name, nums.first, nums.second,
 						     it1->filename, "--unified --new-file");
 	    for (vector<string>::const_iterator it2 = lines.begin(); it2 != lines.end(); ++it2)
-	        cout << it2->c_str() << endl;
+		cout << it2->c_str() << endl;
 	}
     }
     else

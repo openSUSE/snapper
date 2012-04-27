@@ -57,7 +57,7 @@ public:
 
     Comparison* find_comparison(Snapper* snapper, Snapshots::const_iterator snapshot1,
 				Snapshots::const_iterator snapshot2);
-    
+
     void add_lock(const string& config_name);
     void remove_lock(const string& config_name);
     bool has_lock(const string& config_name) const;
@@ -80,7 +80,7 @@ public:
 
     iterator begin() { return entries.begin(); }
     const_iterator begin() const { return entries.begin(); }
-    
+
     iterator end() { return entries.end(); }
     const_iterator end() const { return entries.end(); }
 
@@ -96,6 +96,6 @@ private:
     list<Client> entries;
 
 };
-    
+
 
 #endif

@@ -40,6 +40,13 @@ using std::map;
 list<XConfigInfo>
 command_list_xconfigs(DBus::Connection& conn);
 
+void
+command_create_xconfig(DBus::Connection& conn, const string& config_name, const string& subvolume,
+		       const string& fstype, const string& template_name);
+
+void
+command_delete_xconfig(DBus::Connection& conn, const string& config_name);
+
 XSnapshots
 command_list_xsnapshots(DBus::Connection& conn, const string& config_name);
 

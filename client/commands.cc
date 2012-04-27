@@ -28,11 +28,15 @@
 #include "commands.h"
 
 
+#define SERVICE "org.opensuse.snapper"
+#define OBJECT "/org/opensuse/snapper"
+#define INTERFACE "org.opensuse.snapper"
+
+
 list<XConfigInfo>
 command_list_xconfigs(DBus::Connection& conn)
 {
-    DBus::MessageMethodCall call("org.opensuse.snapper", "/org/opensuse/snapper",
-				 "org.opensuse.snapper", "ListConfigs");
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "ListConfigs");
 
     DBus::Message reply = conn.send_and_reply_and_block(call);
 
@@ -45,11 +49,35 @@ command_list_xconfigs(DBus::Connection& conn)
 }
 
 
+void
+command_create_xconfig(DBus::Connection& conn, const string& config_name, const string& subvolume,
+		       const string& fstype, const string& template_name)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreateConfig");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << subvolume << fstype << template_name;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+}
+
+
+void
+command_delete_xconfig(DBus::Connection& conn, const string& config_name)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "DeleteConfig");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+}
+
+
 XSnapshots
 command_list_xsnapshots(DBus::Connection& conn, const string& config_name)
 {
-    DBus::MessageMethodCall call("org.opensuse.snapper", "/org/opensuse/snapper",
-				 "org.opensuse.snapper", "ListSnapshots");
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "ListSnapshots");
 
     DBus::Hoho hoho(call);
     hoho << config_name;
@@ -70,8 +98,7 @@ command_create_single_xsnapshot(DBus::Connection& conn, const string& config_nam
 				const string& description, const string& cleanup,
 				const map<string, string>& userdata)
 {
-    DBus::MessageMethodCall call("org.opensuse.snapper", "/org/opensuse/snapper",
-				 "org.opensuse.snapper", "CreateSingleSnapshot");
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreateSingleSnapshot");
 
     DBus::Hoho hoho(call);
     hoho << config_name << description << cleanup << userdata;
@@ -92,8 +119,7 @@ command_create_pre_xsnapshot(DBus::Connection& conn, const string& config_name,
 			     const string& description, const string& cleanup,
 			     const map<string, string>& userdata)
 {
-    DBus::MessageMethodCall call("org.opensuse.snapper", "/org/opensuse/snapper",
-				 "org.opensuse.snapper", "CreatePreSnapshot");
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreatePreSnapshot");
 
     DBus::Hoho hoho(call);
     hoho << config_name << description << cleanup << userdata;
@@ -114,8 +140,7 @@ command_create_post_xsnapshot(DBus::Connection& conn, const string& config_name,
 			      unsigned int prenum, const string& description,
 			      const string& cleanup, const map<string, string>& userdata)
 {
-    DBus::MessageMethodCall call("org.opensuse.snapper", "/org/opensuse/snapper",
-				 "org.opensuse.snapper", "CreatePostSnapshot");
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreatePostSnapshot");
 
     DBus::Hoho hoho(call);
     hoho << config_name << prenum << description << cleanup << userdata;
@@ -134,8 +159,7 @@ command_create_post_xsnapshot(DBus::Connection& conn, const string& config_name,
 void
 command_delete_xsnapshot(DBus::Connection& conn, const string& config_name, unsigned int num)
 {
-    DBus::MessageMethodCall call("org.opensuse.snapper", "/org/opensuse/snapper",
-				 "org.opensuse.snapper", "DeleteSnapshot");
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "DeleteSnapshot");
 
     DBus::Hoho hoho(call);
     hoho << config_name << num;
@@ -148,8 +172,7 @@ void
 command_create_xcomparison(DBus::Connection& conn, const string& config_name, unsigned int number1,
 			   unsigned int number2)
 {
-    DBus::MessageMethodCall call("org.opensuse.snapper", "/org/opensuse/snapper",
-                                 "org.opensuse.snapper", "CreateComparison");
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreateComparison");
 
     DBus::Hoho hoho(call);
     hoho << config_name << number1 << number2;
@@ -162,8 +185,7 @@ list<XFile>
 command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		   unsigned int number2)
 {
-    DBus::MessageMethodCall call("org.opensuse.snapper", "/org/opensuse/snapper",
-                                 "org.opensuse.snapper", "GetFiles");
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetFiles");
 
     DBus::Hoho hoho(call);
     hoho << config_name << number1 << number2;
@@ -182,8 +204,7 @@ vector<string>
 command_get_xdiff(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		  unsigned int number2, const string& filename, const string& options)
 {
-    DBus::MessageMethodCall call("org.opensuse.snapper", "/org/opensuse/snapper",
-                                 "org.opensuse.snapper", "GetDiff");
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetDiff");
 
     DBus::Hoho hoho(call);
     hoho << config_name << number1 << number2 << filename << options;

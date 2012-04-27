@@ -47,6 +47,11 @@ using namespace std;
 using namespace snapper;
 
 
+#define SERVICE "org.opensuse.snapper"
+#define PATH "/org/opensuse/snapper"
+#define INTERFACE "org.opensuse.snapper"
+
+
 Clients clients;
 
 Jobs jobs;
@@ -63,7 +68,7 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='xml_data' type='s' direction='out'/>\n"
 	"    </method>\n"
 	"  </interface>\n"
-	"  <interface name='org.opensuse.snapper'>\n"
+	"  <interface name='" INTERFACE "'>\n"
 
 	"    <method name='ListConfigs'>\n"
 	"      <arg name='configs' type='v' direction='out'/>\n"
@@ -72,6 +77,8 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 	"    <method name='CreateConfig'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='subvolume' type='s' direction='in'/>\n"
+	"      <arg name='fstype' type='s' direction='in'/>\n"
+	"      <arg name='template-name' type='s' direction='in'/>\n"
 	"    </method>\n"
 
 	"    <method name='DeleteConfig'>\n"
@@ -229,10 +236,21 @@ check_lock(DBus::Connection& conn, DBus::Message& msg, const string& config_name
 
 
 void
-send_signal_config_created(DBus::Connection& conn, const string& config_name,
-			   const string& subvolume)
+send_signal_config_created(DBus::Connection& conn, const string& config_name)
 {
-    DBus::MessageSignal msg("/org/opensuse/snapper", "org.opensuse.snapper", "ConfigCreated");
+    DBus::MessageSignal msg(PATH, INTERFACE, "ConfigCreated");
+
+    DBus::Hoho hoho(msg);
+    hoho << config_name;
+
+    conn.send(msg);
+}
+
+
+void
+send_signal_config_deleted(DBus::Connection& conn, const string& config_name)
+{
+    DBus::MessageSignal msg(PATH, INTERFACE, "ConfigDeleted");
 
     DBus::Hoho hoho(msg);
     hoho << config_name;
@@ -245,7 +263,7 @@ void
 send_signal_snapshot_created(DBus::Connection& conn, const string& config_name,
 			     unsigned int num)
 {
-    DBus::MessageSignal msg("/org/opensuse/snapper", "org.opensuse.snapper", "SnapshotCreated");
+    DBus::MessageSignal msg(PATH, INTERFACE, "SnapshotCreated");
 
     DBus::Hoho hoho(msg);
     hoho << config_name << num;
@@ -258,7 +276,7 @@ void
 send_signal_snapshot_deleted(DBus::Connection& conn, const string& config_name,
 			     unsigned int num)
 {
-    DBus::MessageSignal msg("/org/opensuse/snapper", "org.opensuse.snapper", "SnapshotDeleted");
+    DBus::MessageSignal msg(PATH, INTERFACE, "SnapshotDeleted");
 
     DBus::Hoho hoho(msg);
     hoho << config_name << num;
@@ -286,19 +304,47 @@ reply_to_command_create_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     string subvolume;
+    string fstype;
+    string template_name;
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> subvolume;
+    hihi >> config_name >> subvolume >> fstype >> template_name;
 
-    y2mil("ListSnapshots config_name:" << config_name << " subvolume:" << subvolume);
+    y2mil("CreateConfig config_name:" << config_name << " subvolume:" << subvolume <<
+	  " fstype:" << fstype << " template_name:" << template_name);
 
     check_permission(conn, msg);
+
+    Snapper::createConfig(config_name, subvolume, fstype, template_name);
 
     DBus::MessageMethodReturn reply(msg);
 
     conn.send(reply);
 
-    send_signal_config_created(conn, config_name, subvolume);
+    send_signal_config_created(conn, config_name);
+}
+
+
+void
+reply_to_command_delete_config(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    string subvolume;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> subvolume;
+
+    y2mil("DeleteConfig config_name:" << config_name);
+
+    check_permission(conn, msg);
+
+    Snapper::deleteConfig(config_name);
+
+    DBus::MessageMethodReturn reply(msg);
+
+    conn.send(reply);
+
+    send_signal_config_deleted(conn, config_name);
 }
 
 
@@ -750,33 +796,35 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
 {
     try
     {
-	if (msg.is_method_call("org.opensuse.snapper", "Debug"))
+	if (msg.is_method_call(INTERFACE, "Debug"))
 	    reply_to_command_debug(conn, msg);
-	else if (msg.is_method_call("org.opensuse.snapper", "ListConfigs"))
+	else if (msg.is_method_call(INTERFACE, "ListConfigs"))
 	    reply_to_command_list_configs(conn, msg);
-	else if (msg.is_method_call("org.opensuse.snapper", "CreateConfig"))
+	else if (msg.is_method_call(INTERFACE, "CreateConfig"))
 	    reply_to_command_create_config(conn, msg);
-	else if (msg.is_method_call("org.opensuse.snapper", "LockConfig"))
+	else if (msg.is_method_call(INTERFACE, "DeleteConfig"))
+	    reply_to_command_delete_config(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "LockConfig"))
 	    reply_to_command_lock_config(conn, msg);
-	else if (msg.is_method_call("org.opensuse.snapper", "UnlockConfig"))
+	else if (msg.is_method_call(INTERFACE, "UnlockConfig"))
 	    reply_to_command_unlock_config(conn, msg);
-	else if (msg.is_method_call("org.opensuse.snapper", "ListSnapshots"))
+	else if (msg.is_method_call(INTERFACE, "ListSnapshots"))
 	    reply_to_command_list_snapshots(conn, msg);
-	else if (msg.is_method_call("org.opensuse.snapper", "CreateSingleSnapshot"))
+	else if (msg.is_method_call(INTERFACE, "CreateSingleSnapshot"))
 	    reply_to_command_create_single_snapshot(conn, msg);
-	else if (msg.is_method_call("org.opensuse.snapper", "CreatePreSnapshot"))
+	else if (msg.is_method_call(INTERFACE, "CreatePreSnapshot"))
 	    reply_to_command_create_pre_snapshot(conn, msg);
-	else if (msg.is_method_call("org.opensuse.snapper", "CreatePostSnapshot"))
+	else if (msg.is_method_call(INTERFACE, "CreatePostSnapshot"))
 	    reply_to_command_create_post_snapshot(conn, msg);
-	else if (msg.is_method_call("org.opensuse.snapper", "DeleteSnapshot"))
+	else if (msg.is_method_call(INTERFACE, "DeleteSnapshot"))
 	    reply_to_command_delete_snapshot(conn, msg);
-	else if (msg.is_method_call("org.opensuse.snapper", "CreateComparison"))
+	else if (msg.is_method_call(INTERFACE, "CreateComparison"))
 	    reply_to_command_create_comparison(conn, msg);
-	else if (msg.is_method_call("org.opensuse.snapper", "GetFiles"))
+	else if (msg.is_method_call(INTERFACE, "GetFiles"))
 	    reply_to_command_get_files(conn, msg);
-	else if (msg.is_method_call("org.opensuse.snapper", "SetUndo"))
+	else if (msg.is_method_call(INTERFACE, "SetUndo"))
 	    reply_to_command_set_undo(conn, msg);
-	else if (msg.is_method_call("org.opensuse.snapper", "GetDiff"))
+	else if (msg.is_method_call(INTERFACE, "GetDiff"))
 	    reply_to_command_get_diff(conn, msg);
     }
     catch (const DBus::MarshallingException& e)
