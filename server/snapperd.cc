@@ -461,12 +461,6 @@ reply_to_command_create_post_snapshot(DBus::Connection& conn, DBus::Message& msg
     Snapshots& snapshots = snapper->getSnapshots();
 
     Snapshots::iterator snap1 = snapshots.find(pre_num);
-    if (snap1 == snapshots.end())
-    {
-	DBus::MessageError reply(msg, "error.invalid", DBUS_ERROR_FAILED);
-	conn.send(reply);
-	return;
-    }
 
     Snapshots::iterator snap2 = snapper->createPostSnapshot(description, snap1);
     snap2->setCleanup(cleanup);
@@ -480,7 +474,6 @@ reply_to_command_create_post_snapshot(DBus::Connection& conn, DBus::Message& msg
 
     send_signal_snapshot_created(conn, config_name, snap2->getNum());
 }
-
 
 
 void
@@ -497,11 +490,15 @@ reply_to_command_delete_snapshot(DBus::Connection& conn, DBus::Message& msg)
     check_permission(conn, msg, config_name);
     check_lock(conn, msg, config_name);
 
+    Snapper* snapper = getSnapper(config_name);
+
+    Snapshots& snapshots = snapper->getSnapshots();
+
+    Snapshots::iterator snap = snapshots.find(num);
+
+    snapper->deleteSnapshot(snap);
+
     DBus::MessageMethodReturn reply(msg);
-
-    // TODO
-
-    DBus::Hoho hoho(reply);
 
     conn.send(reply);
 
@@ -545,7 +542,6 @@ reply_to_command_create_comparison(DBus::Connection& conn, DBus::Message& msg)
     Snapshots::const_iterator snapshot2 = snapshots.find(num2);
 
     Comparison* comparison = new Comparison(snapper, snapshot1, snapshot2, true);
-    // TODO try, catch
 
     Clients::iterator it = clients.find(msg.get_sender());
     assert(it != clients.end());
@@ -603,7 +599,7 @@ reply_to_command_get_files(DBus::Connection& conn, DBus::Message& msg)
     assert(it != clients.end());
 
     Comparison* comparison = it->find_comparison(config_name, num1, num2);
-    
+
     const Files& files = comparison->getFiles();
 
     DBus::Hoho hoho(reply);
@@ -797,7 +793,7 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
     {
 	DBus::MessageError reply(msg, "error.config_locked", DBUS_ERROR_FAILED);
 	conn.send(reply);
-    } 
+    }
     catch (const NoComparison& e)
     {
 	DBus::MessageError reply(msg, "error.no_comparisons", DBUS_ERROR_FAILED);

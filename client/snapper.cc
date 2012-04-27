@@ -29,11 +29,11 @@
 
 #include "config.h"
 #include <snapper/Snapper.h>
-#include <snapper/AppUtil.h>
 #include <snapper/SnapperTmpl.h>
 #include <snapper/Enum.h>
 #include <snapper/AsciiFile.h>
 
+#include "utils/text.h"
 #include "utils/Table.h"
 #include "utils/GetOpts.h"
 
@@ -357,17 +357,17 @@ command_list(DBus::Connection& conn)
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
 
-	    list<XSnapshot> snapshots = command_list_xsnapshots(conn, config_name);
-	    for (list<XSnapshot>::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
+	    XSnapshots snapshots = command_list_xsnapshots(conn, config_name);
+	    for (XSnapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
 	    {
 		TableRow row;
-		row.add(/*toString(*/ decString((int)(it1->type)));
-		row.add(decString(it1->num));
-		row.add(it1->type == XPOST ? decString(it1->pre_num) : "");
-		row.add(it1->num == 0 ? "" : datetime(it1->date, false, false));
-		row.add(it1->cleanup);
-		row.add(it1->description);
-		row.add(show_userdata(it1->userdata));
+		row.add(/*toString(*/ decString((int)(it1->getType())));
+		row.add(decString(it1->getNum()));
+		row.add(it1->getType() == XPOST ? decString(it1->getPreNum()) : "");
+		row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), false, false));
+		row.add(it1->getCleanup());
+		row.add(it1->getDescription());
+		row.add(show_userdata(it1->getUserdata()));
 		table.add(row);
 	    }
 	}
@@ -382,17 +382,17 @@ command_list(DBus::Connection& conn)
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
 
-	    list<XSnapshot> snapshots = command_list_xsnapshots(conn, config_name);
-	    for (list<XSnapshot>::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
+	    XSnapshots snapshots = command_list_xsnapshots(conn, config_name);
+	    for (XSnapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
 	    {
-		if (it1->type != XSINGLE)
+		if (it1->getType() != XSINGLE)
 		    continue;
 
 		TableRow row;
-		row.add(decString(it1->num));
-		row.add(it1->num == 0 ? "" : datetime(it1->date, false, false));
-		row.add(it1->description);
-		row.add(show_userdata(it1->userdata));
+		row.add(decString(it1->getNum()));
+		row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), false, false));
+		row.add(it1->getDescription());
+		row.add(show_userdata(it1->getUserdata()));
 		table.add(row);
 	    }
 	}
@@ -409,26 +409,23 @@ command_list(DBus::Connection& conn)
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
 
-	    list<XSnapshot> snapshots = command_list_xsnapshots(conn, config_name);
-	    for (list<XSnapshot>::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
+	    XSnapshots snapshots = command_list_xsnapshots(conn, config_name);
+	    for (XSnapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
 	    {
-		if (it1->type != XPRE)
+		if (it1->getType() != XPRE)
 		    continue;
 
-		list<XSnapshot>::const_iterator it2;
-		/*
-		Snapshots::const_iterator it2 = snapshots.findPost(it1);
+		XSnapshots::const_iterator it2 = snapshots.findPost(it1);
 		if (it2 == snapshots.end())
 		    continue;
-		*/
 
 		TableRow row;
-		row.add(decString(it1->num));
-		row.add(decString(it2->num));
-		row.add(datetime(it1->date, false, false));
-		row.add(datetime(it2->date, false, false));
-		row.add(it1->description);
-		row.add(show_userdata(it1->userdata));
+		row.add(decString(it1->getNum()));
+		row.add(decString(it2->getNum()));
+		row.add(datetime(it1->getDate(), false, false));
+		row.add(datetime(it2->getDate(), false, false));
+		row.add(it1->getDescription());
+		row.add(show_userdata(it1->getUserdata()));
 		table.add(row);
 	    }
 	}
@@ -672,9 +669,9 @@ command_delete(DBus::Connection& conn)
     {
 	while (getopts.hasArgs())
 	{
-	    Snapshots::iterator snapshot; // = read_num(getopts.popArg());
+	    unsigned int num = read_num(getopts.popArg());
 
-	    // sh->deleteSnapshot(snapshot);
+	    command_delete_xsnapshot(conn, config_name, num);
 	}
     }
     catch (const IllegalSnapshotException& e)
@@ -786,11 +783,11 @@ command_status(DBus::Connection& conn)
 
     GetOpts::parsed_opts::const_iterator opt;
 
-    pair<unsigned int, unsigned int> snaps(read_nums(getopts.popArg()));
+    pair<unsigned int, unsigned int> nums(read_nums(getopts.popArg()));
 
-    command_create_xcomparison(conn, config_name, snaps.first, snaps.second);
+    command_create_xcomparison(conn, config_name, nums.first, nums.second);
 
-    list<XFile> files = command_get_xfiles(conn, config_name, snaps.first, snaps.second);
+    list<XFile> files = command_get_xfiles(conn, config_name, nums.first, nums.second);
 
     FILE* file = stdout;
 
@@ -828,17 +825,17 @@ command_diff(DBus::Connection& conn)
 
     GetOpts::parsed_opts::const_iterator opt;
 
-    pair<unsigned int, unsigned int> snaps(read_nums(getopts.popArg()));
+    pair<unsigned int, unsigned int> nums(read_nums(getopts.popArg()));
 
-    command_create_xcomparison(conn, config_name, snaps.first, snaps.second);
+    command_create_xcomparison(conn, config_name, nums.first, nums.second);
 
-    list<XFile> files = command_get_xfiles(conn, config_name, snaps.first, snaps.second);
+    list<XFile> files = command_get_xfiles(conn, config_name, nums.first, nums.second);
 
     if (getopts.numArgs() == 0)
     {
 	for (list<XFile>::const_iterator it1 = files.begin(); it1 != files.end(); ++it1)
 	{
-	    vector<string> lines = command_get_xdiff(conn, config_name, snaps.first, snaps.second,
+	    vector<string> lines = command_get_xdiff(conn, config_name, nums.first, nums.second,
 						     it1->filename, "--unified --new-file");
 	    for (vector<string>::const_iterator it2 = lines.begin(); it2 != lines.end(); ++it2)
 	        cout << it2->c_str() << endl;
@@ -891,7 +888,7 @@ command_undo(DBus::Connection& conn)
 	exit(EXIT_FAILURE);
     }
 
-    pair<unsigned int, unsigned int> snaps(read_nums(getopts.popArg()));
+    pair<unsigned int, unsigned int> nums(read_nums(getopts.popArg()));
 
     FILE* file = NULL;
 
@@ -907,15 +904,15 @@ command_undo(DBus::Connection& conn)
 	}
     }
 
-    if (snaps.first == 0)
+    if (nums.first == 0)
     {
 	cerr << _("Invalid snapshots.") << endl;
 	exit(EXIT_FAILURE);
     }
 
-    command_create_xcomparison(conn, config_name, snaps.first, snaps.second);
+    command_create_xcomparison(conn, config_name, nums.first, nums.second);
 
-    list<XFile> files = command_get_xfiles(conn, config_name, snaps.first, snaps.second);
+    list<XFile> files = command_get_xfiles(conn, config_name, nums.first, nums.second);
 
     if (file)
     {
@@ -1039,7 +1036,7 @@ command_cleanup(DBus::Connection& conn)
 
 
 void
-command_help()
+help()
 {
     getopts.parse("help", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -1181,7 +1178,7 @@ main(int argc, char** argv)
 
     if ((opt = opts.find("help")) != opts.end())
     {
-	command_help();
+	help();
 	exit(EXIT_SUCCESS);
     }
 
@@ -1193,6 +1190,13 @@ main(int argc, char** argv)
     }
 
     const char* command = getopts.popArg();
+
+    if (strcmp(command, "help") == 0)
+    {
+	help();
+	exit(EXIT_SUCCESS);
+    }
+
     map<string, cmd_fnc>::const_iterator cmd = cmds.find(command);
     if (cmd == cmds.end())
     {
@@ -1201,16 +1205,9 @@ main(int argc, char** argv)
 	exit(EXIT_FAILURE);
     }
 
-    if (cmd->first == "help")
-    {
-	command_help();
-    }
-    else
-    {
-	DBus::Connection conn(DBUS_BUS_SYSTEM);
+    DBus::Connection conn(DBUS_BUS_SYSTEM);
 
-	(*cmd->second)(conn);
-    }
+    (*cmd->second)(conn);
 
     exit(EXIT_SUCCESS);
 }

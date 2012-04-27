@@ -2,10 +2,10 @@
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 
-#include <snapper/Log.h>
 #include <snapper/AppUtil.h>
 
 #include "GetOpts.h"
+#include "text.h"
 
 using namespace std;
 using namespace snapper;
@@ -24,8 +24,6 @@ GetOpts::init(int new_argc, char** new_argv)
 {
     argc = new_argc;
     argv = new_argv;
-
-    y2mil("args: " << boost::join(list<string>(&argv[1], &argv[argc]), " "));
 }
 
 

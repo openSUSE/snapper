@@ -11,19 +11,19 @@ class MyPlugin(Plugin):
 
     exe = basename(readlink("/proc/%d/exe" % getppid()))
 
-    num1 = snapper.CreatePreSnapshot("root", "zypp(%s)" % exe, "number")
+    self.num1 = snapper.CreatePreSnapshot("root", "zypp(%s)" % exe, "number", {})
 
     self.ack()
 
   def PLUGINEND(self, headers, body):
 
-    num2 = snapper.CreatePostSnapshot("root", num1, "", "number")
+    self.num2 = snapper.CreatePostSnapshot("root", self.num1, "", "number", {})
 
     self.ack()
 
 bus = SystemBus()
 
-snapper = Interface(get_object('org.opensuse.snapper', '/org/opensuse/snapper'),
+snapper = Interface(bus.get_object('org.opensuse.snapper', '/org/opensuse/snapper'),
                     dbus_interface='org.opensuse.snapper')
 
 plugin = MyPlugin()

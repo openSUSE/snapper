@@ -5,6 +5,7 @@
                              |__/|_|  |_|
 \*---------------------------------------------------------------------------*/
 
+#include <libintl.h>
 #include <cwchar>
 #include <cstring>
 #include <ostream>
@@ -12,6 +13,17 @@
 #include "text.h"
 
 using namespace std;
+
+string _(const char* msgid)
+{
+    return dgettext("snapper", msgid);
+}
+
+string _(const char* msgid, const char* msgid_plural, unsigned long int n)
+{
+    return dngettext("snapper", msgid, msgid_plural, n);
+}
+
 
 // A non-ASCII string has 3 different lengths:
 // - bytes

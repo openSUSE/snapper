@@ -20,13 +20,23 @@
  */
 
 
-#include <unistd.h>
-#include <assert.h>
-#include <stdlib.h>
-#include <string.h>
-#include <dbus/dbus.h>
-
 #include "types.h"
+
+
+XSnapshots::const_iterator
+XSnapshots::findPost(const_iterator pre) const
+{
+    if (pre == entries.end() || pre->isCurrent() || pre->getType() != XPRE)
+	throw;
+
+    for (const_iterator it = begin(); it != end(); ++it)
+    {
+	if (it->getType() == XPOST && it->getPreNum() == pre->getNum())
+	    return it;
+    }
+
+    return end();
+}
 
 
 namespace DBus
@@ -35,8 +45,8 @@ namespace DBus
     const char* TypeInfo<XSnapshot>::signature = "(uquusa{ss})";
     const char* TypeInfo<XFile>::signature = "(ssb)";
     const char* TypeInfo<XUndo>::signature = "(sb)";
-    
-    
+
+
     Hihi&
     operator>>(Hihi& hihi, XConfigInfo& data)
     {
@@ -45,8 +55,8 @@ namespace DBus
 	hihi.close_recurse();
 	return hihi;
     }
-    
-    
+
+
     Hihi&
     operator>>(Hihi& hihi, XSnapshotType& data)
     {
@@ -55,8 +65,8 @@ namespace DBus
 	data = static_cast<XSnapshotType>(tmp);
 	return hihi;
     }
-    
-    
+
+
     Hihi&
     operator>>(Hihi& hihi, XSnapshot& data)
     {
@@ -66,8 +76,8 @@ namespace DBus
 	hihi.close_recurse();
 	return hihi;
     }
-    
-    
+
+
     Hihi&
     operator>>(Hihi& hihi, XFile& data)
     {
@@ -76,15 +86,15 @@ namespace DBus
 	hihi.close_recurse();
 	return hihi;
     }
-    
-    
+
+
     Hoho&
     operator<<(Hoho& hoho, XSnapshotType data)
     {
 	hoho << static_cast<dbus_uint16_t>(data);
 	return hoho;
     }
-    
+
 
     Hoho&
     operator<<(Hoho& hoho, const XUndo& data)
@@ -94,5 +104,5 @@ namespace DBus
 	hoho.close_struct();
 	return hoho;
     }
-    
+
 }

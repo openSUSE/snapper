@@ -23,7 +23,6 @@
 #ifndef SNAPPER_APP_UTIL_H
 #define SNAPPER_APP_UTIL_H
 
-#include <libintl.h>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sstream>
@@ -85,9 +84,6 @@ namespace snapper
 
 
     string sformat(const string& format, ...);
-
-    string _(const char* msgid);
-    string _(const char* msgid, const char* msgid_plural, unsigned long int n);
 
 }
 

@@ -21,7 +21,6 @@
 
 
 #include <unistd.h>
-#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 #include <dbus/dbus.h>
@@ -46,7 +45,7 @@ command_list_xconfigs(DBus::Connection& conn)
 }
 
 
-list<XSnapshot>
+XSnapshots
 command_list_xsnapshots(DBus::Connection& conn, const string& config_name)
 {
     DBus::MessageMethodCall call("org.opensuse.snapper", "/org/opensuse/snapper",
@@ -57,10 +56,10 @@ command_list_xsnapshots(DBus::Connection& conn, const string& config_name)
 
     DBus::Message reply = conn.send_and_reply_and_block(call);
 
-    list<XSnapshot> ret;
+    XSnapshots ret;
 
     DBus::Hihi hihi(reply);
-    hihi >> ret;
+    hihi >> ret.entries;
 
     return ret;
 }
@@ -129,6 +128,19 @@ command_create_post_xsnapshot(DBus::Connection& conn, const string& config_name,
     hihi >> number;
 
     return number;
+}
+
+
+void
+command_delete_xsnapshot(DBus::Connection& conn, const string& config_name, unsigned int num)
+{
+    DBus::MessageMethodCall call("org.opensuse.snapper", "/org/opensuse/snapper",
+				 "org.opensuse.snapper", "DeleteSnapshot");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << num;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
 }
 
 

@@ -20,12 +20,6 @@
  */
 
 
-#include <unistd.h>
-#include <assert.h>
-#include <stdlib.h>
-#include <string.h>
-#include <dbus/dbus.h>
-
 #include <string>
 #include <list>
 #include <map>
@@ -50,6 +44,21 @@ enum XSnapshotType { XSINGLE, XPRE, XPOST };
 
 struct XSnapshot
 {
+    XSnapshotType getType() const { return type; }
+
+    unsigned int getNum() const { return num; }
+    bool isCurrent() const { return num == 0; }
+
+    time_t getDate() const { return date; }
+
+    unsigned int getPreNum() const { return pre_num; }
+
+    string getDescription() const { return description; }
+
+    string getCleanup() const { return cleanup; }
+
+    map<string, string> getUserdata() const { return userdata; }
+
     XSnapshotType type;
     unsigned int num;
     time_t date;
@@ -57,6 +66,20 @@ struct XSnapshot
     string description;
     string cleanup;
     map<string, string> userdata;
+};
+
+
+struct XSnapshots
+{
+    typedef list<XSnapshot>::const_iterator const_iterator;
+
+    const_iterator begin() const { return entries.begin(); }
+
+    const_iterator end() const { return entries.end(); }
+
+    const_iterator findPost(const_iterator pre) const;
+
+    list<XSnapshot> entries;
 };
 
 
@@ -77,12 +100,12 @@ struct XUndo
 
 namespace DBus
 {
-    
+
     template <> struct TypeInfo<XSnapshot> { static const char* signature; };
     template <> struct TypeInfo<XConfigInfo> { static const char* signature; };
     template <> struct TypeInfo<XFile> { static const char* signature; };
     template <> struct TypeInfo<XUndo> { static const char* signature; };
-   
+
     Hihi& operator>>(Hihi& hihi, XConfigInfo& data);
     Hihi& operator>>(Hihi& hihi, XSnapshotType& data);
     Hihi& operator>>(Hihi& hihi, XSnapshot& data);

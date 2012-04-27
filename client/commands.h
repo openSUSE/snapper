@@ -21,10 +21,8 @@
 
 
 #include <unistd.h>
-#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
-#include <dbus/dbus.h>
 
 #include <string>
 #include <vector>
@@ -42,7 +40,7 @@ using std::map;
 list<XConfigInfo>
 command_list_xconfigs(DBus::Connection& conn);
 
-list<XSnapshot>
+XSnapshots
 command_list_xsnapshots(DBus::Connection& conn, const string& config_name);
 
 unsigned int
@@ -59,6 +57,9 @@ unsigned int
 command_create_post_xsnapshot(DBus::Connection& conn, const string& config_name,
 			      unsigned int prenum, const string& description,
 			      const string& cleanup, const map<string, string>& userdata);
+
+void
+command_delete_xsnapshot(DBus::Connection& conn, const string& config_name, unsigned int num);
 
 void
 command_create_xcomparison(DBus::Connection& conn, const string& config_name, unsigned int number1,
