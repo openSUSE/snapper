@@ -27,7 +27,6 @@
 #include <dbus/dbus.h>
 
 #include <string>
-#include <iostream>
 #include <boost/algorithm/string.hpp>
 
 #include <snapper/Snapper.h>
@@ -92,9 +91,24 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='snapshots' type='v' direction='out'/>\n"
 	"    </method>\n"
 
-	"    <method name='CreateSnapshot'>\n"
+	"    <method name='CreateSingleSnapshot'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
-	"      <arg name='type' type='q' direction='in'/>\n"
+	"      <arg name='description' type='s' direction='in'/>\n"
+	"      <arg name='cleanup' type='s' direction='in'/>\n"
+	"      <arg name='userdata' type='a{ss}' direction='in'/>\n"
+	"      <arg name='number' type='u' direction='out'/>\n"
+	"    </method>\n"
+
+	"    <method name='CreatePreSnapshot'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='description' type='s' direction='in'/>\n"
+	"      <arg name='cleanup' type='s' direction='in'/>\n"
+	"      <arg name='userdata' type='a{ss}' direction='in'/>\n"
+	"      <arg name='number' type='u' direction='out'/>\n"
+	"    </method>\n"
+
+	"    <method name='CreatePostSnapshot'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='pre-number' type='u' direction='in'/>\n"
 	"      <arg name='description' type='s' direction='in'/>\n"
 	"      <arg name='cleanup' type='s' direction='in'/>\n"
@@ -218,8 +232,6 @@ void
 send_signal_config_created(DBus::Connection& conn, const string& config_name,
 			   const string& subvolume)
 {
-    cout << "sending signal ConfigCreated" << endl;
-
     DBus::MessageSignal msg("/org/opensuse/snapper", "org.opensuse.snapper", "ConfigCreated");
 
     DBus::Hoho hoho(msg);
@@ -231,14 +243,12 @@ send_signal_config_created(DBus::Connection& conn, const string& config_name,
 
 void
 send_signal_snapshot_created(DBus::Connection& conn, const string& config_name,
-			     unsigned int number)
+			     unsigned int num)
 {
-    cout << "sending signal SnapshotCreated" << endl;
-
     DBus::MessageSignal msg("/org/opensuse/snapper", "org.opensuse.snapper", "SnapshotCreated");
 
     DBus::Hoho hoho(msg);
-    hoho << config_name << number;
+    hoho << config_name << num;
 
     conn.send(msg);
 }
@@ -246,14 +256,12 @@ send_signal_snapshot_created(DBus::Connection& conn, const string& config_name,
 
 void
 send_signal_snapshot_deleted(DBus::Connection& conn, const string& config_name,
-			     unsigned int number)
+			     unsigned int num)
 {
-    cout << "sending signal SnapshotDeleted" << endl;
-
     DBus::MessageSignal msg("/org/opensuse/snapper", "org.opensuse.snapper", "SnapshotDeleted");
 
     DBus::Hoho hoho(msg);
-    hoho << config_name << number;
+    hoho << config_name << num;
 
     conn.send(msg);
 }
@@ -262,8 +270,6 @@ send_signal_snapshot_deleted(DBus::Connection& conn, const string& config_name,
 void
 reply_to_command_list_configs(DBus::Connection& conn, DBus::Message& msg)
 {
-    cout << "command ListConfigs" << endl;
-
     list<ConfigInfo> config_infos = Snapper::getConfigs();
 
     DBus::MessageMethodReturn reply(msg);
@@ -278,15 +284,15 @@ reply_to_command_list_configs(DBus::Connection& conn, DBus::Message& msg)
 void
 reply_to_command_create_config(DBus::Connection& conn, DBus::Message& msg)
 {
-    cout << "command CreateConfigs" << endl;
-
-    check_permission(conn, msg);
-
     string config_name;
     string subvolume;
 
     DBus::Hihi hihi(msg);
     hihi >> config_name >> subvolume;
+
+    y2mil("ListSnapshots config_name:" << config_name << " subvolume:" << subvolume);
+
+    check_permission(conn, msg);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -299,14 +305,12 @@ reply_to_command_create_config(DBus::Connection& conn, DBus::Message& msg)
 void
 reply_to_command_lock_config(DBus::Connection& conn, DBus::Message& msg)
 {
-    cout << "command LockConfig" << endl;
-
     string config_name;
 
     DBus::Hihi hihi(msg);
     hihi >> config_name;
 
-    cout << "Method called with " << config_name << endl;
+    y2mil("LockConfig config_name:" << config_name);
 
     check_permission(conn, msg, config_name);
 
@@ -323,14 +327,12 @@ reply_to_command_lock_config(DBus::Connection& conn, DBus::Message& msg)
 void
 reply_to_command_unlock_config(DBus::Connection& conn, DBus::Message& msg)
 {
-    cout << "command UnlockConfig" << endl;
-
     string config_name;
 
     DBus::Hihi hihi(msg);
     hihi >> config_name;
 
-    cout << "Method called with " << config_name << endl;
+    y2mil("UnlockConfig config_name:" << config_name);
 
     check_permission(conn, msg, config_name);
 
@@ -347,14 +349,12 @@ reply_to_command_unlock_config(DBus::Connection& conn, DBus::Message& msg)
 void
 reply_to_command_list_snapshots(DBus::Connection& conn, DBus::Message& msg)
 {
-    cout << "command ListSnapshots" << endl;
-
     string config_name;
 
     DBus::Hihi hihi(msg);
     hihi >> config_name;
 
-    cout << "Method called with " << config_name << endl;
+    y2mil("ListSnapshots config_name:" << config_name);
 
     check_permission(conn, msg, config_name);
 
@@ -370,21 +370,18 @@ reply_to_command_list_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_create_snapshot(DBus::Connection& conn, DBus::Message& msg)
+reply_to_command_create_single_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
-    cout << "command CreateSnapshots" << endl;
-
     string config_name;
-    SnapshotType type;
-    unsigned int prenum;
     string description;
     string cleanup;
     map<string, string> userdata;
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> type >> prenum >> description >> cleanup >> userdata;
+    hihi >> config_name >> description >> cleanup >> userdata;
 
-    cout << "Method called with " << config_name << endl;
+    y2mil("CreateSingleSnapshot config_name:" << config_name << " description:" << description <<
+	  " cleanup:" << cleanup);
 
     check_permission(conn, msg, config_name);
 
@@ -392,7 +389,6 @@ reply_to_command_create_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     Snapper* snapper = getSnapper(config_name);
 
-    // TODO type
     Snapshots::iterator snap1 = snapper->createSingleSnapshot(description);
     snap1->setCleanup(cleanup);
     snap1->setUserdata(userdata);
@@ -408,17 +404,95 @@ reply_to_command_create_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_delete_snapshot(DBus::Connection& conn, DBus::Message& msg)
+reply_to_command_create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
-    cout << "command DeleteSnapshots" << endl;
-
     string config_name;
-    unsigned int number;
+    string description;
+    string cleanup;
+    map<string, string> userdata;
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> number;
+    hihi >> config_name >> description >> cleanup >> userdata;
 
-    cout << "Method called with " << config_name << endl;
+    y2mil("CreatePreSnapshot config_name:" << config_name << " description:" << description <<
+	  " cleanup:" << cleanup);
+
+    check_permission(conn, msg, config_name);
+
+    DBus::MessageMethodReturn reply(msg);
+
+    Snapper* snapper = getSnapper(config_name);
+
+    Snapshots::iterator snap1 = snapper->createPreSnapshot(description);
+    snap1->setCleanup(cleanup);
+    snap1->setUserdata(userdata);
+    snap1->flushInfo();
+
+    DBus::Hoho hoho(reply);
+    hoho << snap1->getNum();
+
+    conn.send(reply);
+
+    send_signal_snapshot_created(conn, config_name, snap1->getNum());
+}
+
+
+void
+reply_to_command_create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    unsigned int pre_num;
+    string description;
+    string cleanup;
+    map<string, string> userdata;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> pre_num >> description >> cleanup >> userdata;
+
+    y2mil("CreatePostSnapshot config_name:" << config_name << " pre_num:" << pre_num <<
+	  " description:" << description << " cleanup:" << cleanup);
+
+    check_permission(conn, msg, config_name);
+
+    DBus::MessageMethodReturn reply(msg);
+
+    Snapper* snapper = getSnapper(config_name);
+
+    Snapshots& snapshots = snapper->getSnapshots();
+
+    Snapshots::iterator snap1 = snapshots.find(pre_num);
+    if (snap1 == snapshots.end())
+    {
+	DBus::MessageError reply(msg, "error.invalid", DBUS_ERROR_FAILED);
+	conn.send(reply);
+	return;
+    }
+
+    Snapshots::iterator snap2 = snapper->createPostSnapshot(description, snap1);
+    snap2->setCleanup(cleanup);
+    snap2->setUserdata(userdata);
+    snap2->flushInfo();
+
+    DBus::Hoho hoho(reply);
+    hoho << snap2->getNum();
+
+    conn.send(reply);
+
+    send_signal_snapshot_created(conn, config_name, snap2->getNum());
+}
+
+
+
+void
+reply_to_command_delete_snapshot(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    unsigned int num;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> num;
+
+    y2mil("DeleteSnapshot config_name:" << config_name << " num:" << num);
 
     check_permission(conn, msg, config_name);
     check_lock(conn, msg, config_name);
@@ -431,7 +505,7 @@ reply_to_command_delete_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     conn.send(reply);
 
-    send_signal_snapshot_deleted(conn, config_name, number);
+    send_signal_snapshot_deleted(conn, config_name, num);
 }
 
 
@@ -454,22 +528,21 @@ protected:
 void
 reply_to_command_create_comparison(DBus::Connection& conn, DBus::Message& msg)
 {
-    cout << "command CreateComparison" << endl;
-
     string config_name;
-    dbus_uint32_t number1, number2;
+    dbus_uint32_t num1, num2;
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> number1 >> number2;
+    hihi >> config_name >> num1 >> num2;
 
-    cout << "Method called with " << config_name << " " << number1 << " " << number2 << endl;
+    y2mil("CreateComparison config_name:" << config_name << " num1:" << num1 <<
+	  " num2:" << num2);
 
     check_permission(conn, msg, config_name);
 
     Snapper* snapper = getSnapper(config_name);
     Snapshots& snapshots = snapper->getSnapshots();
-    Snapshots::const_iterator snapshot1 = snapshots.find(number1);
-    Snapshots::const_iterator snapshot2 = snapshots.find(number2);
+    Snapshots::const_iterator snapshot1 = snapshots.find(num1);
+    Snapshots::const_iterator snapshot2 = snapshots.find(num2);
 
     Comparison* comparison = new Comparison(snapper, snapshot1, snapshot2, true);
     // TODO try, catch
@@ -501,15 +574,7 @@ Comparing::operator()()
 void
 Comparing::done()
 {
-    const Files& files = comparison->getFiles();
-    cout << comparison->getFiles().size() << endl;
-
-    for (Files::const_iterator it = files.begin(); it != files.end(); ++it)
-	cout << statusToString(it->getPreToPostStatus()) << " "
-	     << it->getAbsolutePath(LOC_SYSTEM) << endl;
-
     DBus::Hoho hoho(*reply);
-    hoho << (dbus_uint32_t) comparison->getFiles().size();
     conn->send(*reply);
 
     delete reply;
@@ -519,15 +584,14 @@ Comparing::done()
 void
 reply_to_command_get_files(DBus::Connection& conn, DBus::Message& msg)
 {
-    cout << "command GetFiles" << endl;
-
     string config_name;
-    dbus_uint32_t number1, number2;
+    dbus_uint32_t num1, num2;
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> number1 >> number2;
+    hihi >> config_name >> num1 >> num2;
 
-    cout << "Method called with " << config_name << " " << number1 << " " << number2 << endl;
+    y2mil("GetFiles config_name:" << config_name << " num1:" << num1 << " num2:" <<
+	  num2);
 
     check_permission(conn, msg, config_name);
 
@@ -538,13 +602,8 @@ reply_to_command_get_files(DBus::Connection& conn, DBus::Message& msg)
     Clients::iterator it = clients.find(sender);
     assert(it != clients.end());
 
-    Comparison* comparison = it->find_comparison(config_name, number1, number2);
-
-    if (!comparison || !comparison->isInitialized())
-    {
-	// error
-    }
-
+    Comparison* comparison = it->find_comparison(config_name, num1, num2);
+    
     const Files& files = comparison->getFiles();
 
     DBus::Hoho hoho(reply);
@@ -557,18 +616,17 @@ reply_to_command_get_files(DBus::Connection& conn, DBus::Message& msg)
 void
 reply_to_command_set_undo(DBus::Connection& conn, DBus::Message& msg)
 {
-    cout << "command SetUndo" << endl;
-
     string config_name;
-    dbus_uint32_t number1, number2;
+    dbus_uint32_t num1, num2;
     list<Undo> u;
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> number1 >> number2 >> u;
+    hihi >> config_name >> num1 >> num2 >> u;
 
     check_permission(conn, msg, config_name);
 
-    cout << "Method called with " << config_name << " " << number1 << " " << number2 << endl;
+    y2mil("SetUndo config_name:" << config_name << " num1:" << num1 << " num2:" <<
+	  num2);
 
     string sender = msg.get_sender();
 
@@ -577,12 +635,7 @@ reply_to_command_set_undo(DBus::Connection& conn, DBus::Message& msg)
     Clients::iterator it = clients.find(sender);
     assert(it != clients.end());
 
-    Comparison* comparison = it->find_comparison(config_name, number1, number2);
-
-    if (!comparison || !comparison->isInitialized())
-    {
-	// error
-    }
+    Comparison* comparison = it->find_comparison(config_name, num1, num2);
 
     Files& files = comparison->getFiles();
 
@@ -600,17 +653,16 @@ reply_to_command_set_undo(DBus::Connection& conn, DBus::Message& msg)
 void
 reply_to_command_get_diff(DBus::Connection& conn, DBus::Message& msg)
 {
-    cout << "command GetDiff" << endl;
-
     string config_name;
-    dbus_uint32_t number1, number2;
+    dbus_uint32_t num1, num2;
     string filename;
     string options;
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> number1 >> number2 >> filename >> options;
+    hihi >> config_name >> num1 >> num2 >> filename >> options;
 
-    cout << "Method called with " << config_name << " " << number1 << " " << number2 << endl;
+    y2mil("GetDiff config_name:" << config_name << " num1:" << num1 << " num2:" <<
+	  num2 << " filename:" << filename << " options:" << options);
 
     check_permission(conn, msg, config_name);
 
@@ -619,12 +671,7 @@ reply_to_command_get_diff(DBus::Connection& conn, DBus::Message& msg)
     Clients::iterator it = clients.find(sender);
     assert(it != clients.end());
 
-    Comparison* comparison = it->find_comparison(config_name, number1, number2);
-
-    if (!comparison || !comparison->isInitialized())
-    {
-	// error
-    }
+    Comparison* comparison = it->find_comparison(config_name, num1, num2);
 
     Files& files = comparison->getFiles();
 
@@ -644,8 +691,6 @@ reply_to_command_get_diff(DBus::Connection& conn, DBus::Message& msg)
 void
 reply_to_command_debug(DBus::Connection& conn, DBus::Message& msg)
 {
-    cout << "command Debug" << endl;
-
     // check_permission(conn, msg);
 
     DBus::MessageMethodReturn reply(msg);
@@ -721,8 +766,12 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    reply_to_command_unlock_config(conn, msg);
 	else if (msg.is_method_call("org.opensuse.snapper", "ListSnapshots"))
 	    reply_to_command_list_snapshots(conn, msg);
-	else if (msg.is_method_call("org.opensuse.snapper", "CreateSnapshot"))
-	    reply_to_command_create_snapshot(conn, msg);
+	else if (msg.is_method_call("org.opensuse.snapper", "CreateSingleSnapshot"))
+	    reply_to_command_create_single_snapshot(conn, msg);
+	else if (msg.is_method_call("org.opensuse.snapper", "CreatePreSnapshot"))
+	    reply_to_command_create_pre_snapshot(conn, msg);
+	else if (msg.is_method_call("org.opensuse.snapper", "CreatePostSnapshot"))
+	    reply_to_command_create_post_snapshot(conn, msg);
 	else if (msg.is_method_call("org.opensuse.snapper", "DeleteSnapshot"))
 	    reply_to_command_delete_snapshot(conn, msg);
 	else if (msg.is_method_call("org.opensuse.snapper", "CreateComparison"))
@@ -734,19 +783,29 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
 	else if (msg.is_method_call("org.opensuse.snapper", "GetDiff"))
 	    reply_to_command_get_diff(conn, msg);
     }
-    catch (DBus::MarshallingException)
+    catch (const DBus::MarshallingException& e)
     {
 	DBus::MessageError reply(msg, "error.marshalling", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
-    catch (Permissions)
+    catch (const Permissions& e)
     {
-	DBus::MessageError reply(msg, "error.permissions", DBUS_ERROR_FAILED);
+	DBus::MessageError reply(msg, "error.no_permissions", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
-    catch (Lock)
+    catch (const Lock& e)
     {
-	DBus::MessageError reply(msg, "error.locked", DBUS_ERROR_FAILED);
+	DBus::MessageError reply(msg, "error.config_locked", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    } 
+    catch (const NoComparison& e)
+    {
+	DBus::MessageError reply(msg, "error.no_comparisons", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
+    catch (const IllegalSnapshotException& e)
+    {
+	DBus::MessageError reply(msg, "error.illegal_snapshot", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
 }

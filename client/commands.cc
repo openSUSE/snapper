@@ -67,22 +67,120 @@ command_list_xsnapshots(DBus::Connection& conn, const string& config_name)
 
 
 unsigned int
-command_create_xsnapshot(DBus::Connection& conn, const string& config_name, XSnapshotType type,
-			 unsigned int prenum, const string& description, const string& cleanup,
-			 const map<string, string>& userdata)
+command_create_single_xsnapshot(DBus::Connection& conn, const string& config_name,
+				const string& description, const string& cleanup,
+				const map<string, string>& userdata)
 {
     DBus::MessageMethodCall call("org.opensuse.snapper", "/org/opensuse/snapper",
-				 "org.opensuse.snapper", "CreateSnapshot");
+				 "org.opensuse.snapper", "CreateSingleSnapshot");
 
     DBus::Hoho hoho(call);
-    hoho << config_name << type << prenum << description << cleanup << userdata;
+    hoho << config_name << description << cleanup << userdata;
 
     DBus::Message reply = conn.send_and_reply_and_block(call);
 
     unsigned int number;
-    
+
     DBus::Hihi hihi(reply);
     hihi >> number;
 
     return number;
+}
+
+
+unsigned int
+command_create_pre_xsnapshot(DBus::Connection& conn, const string& config_name,
+			     const string& description, const string& cleanup,
+			     const map<string, string>& userdata)
+{
+    DBus::MessageMethodCall call("org.opensuse.snapper", "/org/opensuse/snapper",
+				 "org.opensuse.snapper", "CreatePreSnapshot");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << description << cleanup << userdata;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+
+    unsigned int number;
+
+    DBus::Hihi hihi(reply);
+    hihi >> number;
+
+    return number;
+}
+
+
+unsigned int
+command_create_post_xsnapshot(DBus::Connection& conn, const string& config_name,
+			      unsigned int prenum, const string& description,
+			      const string& cleanup, const map<string, string>& userdata)
+{
+    DBus::MessageMethodCall call("org.opensuse.snapper", "/org/opensuse/snapper",
+				 "org.opensuse.snapper", "CreatePostSnapshot");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << prenum << description << cleanup << userdata;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+
+    unsigned int number;
+
+    DBus::Hihi hihi(reply);
+    hihi >> number;
+
+    return number;
+}
+
+
+void
+command_create_xcomparison(DBus::Connection& conn, const string& config_name, unsigned int number1,
+			   unsigned int number2)
+{
+    DBus::MessageMethodCall call("org.opensuse.snapper", "/org/opensuse/snapper",
+                                 "org.opensuse.snapper", "CreateComparison");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << number1 << number2;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+}
+
+
+list<XFile>
+command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
+		   unsigned int number2)
+{
+    DBus::MessageMethodCall call("org.opensuse.snapper", "/org/opensuse/snapper",
+                                 "org.opensuse.snapper", "GetFiles");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << number1 << number2;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+
+    DBus::Hihi hihi(reply);
+    list<XFile> files;
+    hihi >> files;
+
+    return files;
+}
+
+
+vector<string>
+command_get_xdiff(DBus::Connection& conn, const string& config_name, unsigned int number1,
+		  unsigned int number2, const string& filename, const string& options)
+{
+    DBus::MessageMethodCall call("org.opensuse.snapper", "/org/opensuse/snapper",
+                                 "org.opensuse.snapper", "GetDiff");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << number1 << number2 << filename << options;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+
+    DBus::Hihi hihi(reply);
+    vector<string> files;
+    hihi >> files;
+
+    return files;
 }

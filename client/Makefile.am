@@ -2,6 +2,8 @@
 # Makefile.am for snapper/tools/client
 #
 
+SUBDIRS = utils
+
 INCLUDES = -I$(top_srcdir) -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include
 
 
@@ -12,5 +14,5 @@ snapper_SOURCES =			\
 	types.cc	types.h		\
 	commands.cc	commands.h
 
-snapper_LDADD = ../snapper/libsnapper.la ../tools/utils/libutils.la ../dbus/libdbus.la -ldbus-1
+snapper_LDADD = ../snapper/libsnapper.la utils/libutils.la ../dbus/libdbus.la -ldbus-1
 

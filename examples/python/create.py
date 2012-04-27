@@ -8,5 +8,5 @@ snapper = dbus.Interface(bus.get_object('org.opensuse.snapper', '/org/opensuse/s
                          dbus_interface='org.opensuse.snapper')
 
 
-print snapper.CreateSnapshot("root", 0, 0, "test", "", { "tid" : "456" })
+print snapper.CreateSingleSnapshot("root", "test", "", { "id" : "123" })
 

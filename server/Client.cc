@@ -57,7 +57,7 @@ Client::find_comparison(Snapper* snapper, Snapshots::const_iterator snapshot1,
 	    return *it;
     }
 
-    return NULL;
+    throw NoComparison();
 }
 
 

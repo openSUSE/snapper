@@ -32,7 +32,7 @@
 namespace DBus
 {
     const char* TypeInfo<XConfigInfo>::signature = "(ss)";
-    const char* TypeInfo<XSnapshot>::signature = "(uqusa{ss})";
+    const char* TypeInfo<XSnapshot>::signature = "(uquusa{ss})";
     const char* TypeInfo<XFile>::signature = "(ssb)";
     const char* TypeInfo<XUndo>::signature = "(sb)";
     
@@ -61,7 +61,8 @@ namespace DBus
     operator>>(Hihi& hihi, XSnapshot& data)
     {
 	hihi.open_recurse();
-	hihi >> data.num >> data.type >> data.date >> data.description >> data.userdata;
+	hihi >> data.num >> data.type >> data.pre_num >> data.date >> data.description
+	     >> data.userdata;
 	hihi.close_recurse();
 	return hihi;
     }
@@ -95,4 +96,3 @@ namespace DBus
     }
     
 }
-

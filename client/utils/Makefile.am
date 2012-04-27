@@ -1,5 +1,5 @@
 #
-# Makefile.am for snapper/tools/utils
+# Makefile.am for snapper/client/utils
 #
 
 INCLUDES = -I$(top_srcdir)

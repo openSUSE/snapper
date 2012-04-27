@@ -27,10 +27,12 @@
 #include <dbus/dbus.h>
 
 #include <string>
+#include <vector>
 #include <list>
 #include <map>
 
 using std::string;
+using std::vector;
 using std::list;
 using std::map;
 
@@ -44,7 +46,29 @@ list<XSnapshot>
 command_list_xsnapshots(DBus::Connection& conn, const string& config_name);
 
 unsigned int
-command_create_xsnapshot(DBus::Connection& conn, const string& config_name, XSnapshotType type,
-			 unsigned int prenum, const string& description, const string& cleanup,
-			 const map<string, string>& userdata);
+command_create_single_xsnapshot(DBus::Connection& conn, const string& config_name,
+				const string& description, const string& cleanup,
+				const map<string, string>& userdata);
+
+unsigned int
+command_create_pre_xsnapshot(DBus::Connection& conn, const string& config_name,
+			     const string& description, const string& cleanup,
+			     const map<string, string>& userdata);
+
+unsigned int
+command_create_post_xsnapshot(DBus::Connection& conn, const string& config_name,
+			      unsigned int prenum, const string& description,
+			      const string& cleanup, const map<string, string>& userdata);
+
+void
+command_create_xcomparison(DBus::Connection& conn, const string& config_name, unsigned int number1,
+			   unsigned int number2);
+
+list<XFile>
+command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
+		   unsigned int number2);
+
+vector<string>
+command_get_xdiff(DBus::Connection& conn, const string& config_name, unsigned int number1,
+		  unsigned int number2, const string& filename, const string& options);
 

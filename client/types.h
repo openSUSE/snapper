@@ -45,15 +45,17 @@ struct XConfigInfo
 };
 
 
-enum XSnapshotType { SINGLE, PRE, POST };
+enum XSnapshotType { XSINGLE, XPRE, XPOST };
 
 
 struct XSnapshot
 {
-    unsigned int num;
     XSnapshotType type;
-    unsigned int date;
+    unsigned int num;
+    time_t date;
+    unsigned int pre_num;
     string description;
+    string cleanup;
     map<string, string> userdata;
 };
 

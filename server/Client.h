@@ -38,6 +38,13 @@ using namespace std;
 using namespace snapper;
 
 
+struct NoComparison : public std::exception
+{
+    explicit NoComparison() throw() {}
+    virtual const char* what() const throw() { return "no comparison"; }
+};
+
+
 class Client
 {
 public:

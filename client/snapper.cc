@@ -28,19 +28,14 @@
 #include <boost/algorithm/string.hpp>
 
 #include "config.h"
-#include <snapper/Factory.h>
 #include <snapper/Snapper.h>
-#include <snapper/Snapshot.h>
-#include <snapper/Comparison.h>
-#include <snapper/File.h>
 #include <snapper/AppUtil.h>
 #include <snapper/SnapperTmpl.h>
-#include <snapper/Compare.h>
 #include <snapper/Enum.h>
 #include <snapper/AsciiFile.h>
 
-#include "tools/utils/Table.h"
-#include "tools/utils/GetOpts.h"
+#include "utils/Table.h"
+#include "utils/GetOpts.h"
 
 #include "commands.h"
 
@@ -58,14 +53,10 @@ bool verbose = false;
 string config_name = "root";
 bool disable_filters = false;
 
-Snapper* sh = NULL;
 
-
-Snapshots::iterator
+unsigned int
 read_num(const string& str)
 {
-    Snapshots& snapshots = sh->getSnapshots();
-
     istringstream s(str);
     unsigned int num = 0;
     s >> num;
@@ -76,18 +67,11 @@ read_num(const string& str)
 	exit(EXIT_FAILURE);
     }
 
-    Snapshots::iterator snap = snapshots.find(num);
-    if (snap == snapshots.end())
-    {
-	cerr << sformat(_("Snapshot '%u' not found."), num) << endl;
-	exit(EXIT_FAILURE);
-    }
-
-    return snap;
+    return num;
 }
 
 
-pair<Snapshots::iterator, Snapshots::iterator>
+pair<unsigned int, unsigned int>
 read_nums(const string& str)
 {
     string::size_type pos = str.find("..");
@@ -97,16 +81,16 @@ read_nums(const string& str)
 	exit(EXIT_FAILURE);
     }
 
-    Snapshots::iterator snap1 = read_num(str.substr(0, pos));
-    Snapshots::iterator snap2 = read_num(str.substr(pos + 2));
+    unsigned int num1 = read_num(str.substr(0, pos));
+    unsigned int num2 = read_num(str.substr(pos + 2));
 
-    if (snap1 == snap2)
+    if (num1 == num2)
     {
 	cerr << _("Identical snapshots.") << endl;
 	exit(EXIT_FAILURE);
     }
 
-    return pair<Snapshots::iterator, Snapshots::iterator>(snap1, snap2);
+    return pair<unsigned int, unsigned int>(num1, num2);
 }
 
 
@@ -228,7 +212,7 @@ help_create_config()
 
 
 void
-command_create_config()
+command_create_config(DBus::Connection& conn)
 {
     const struct option options[] = {
 	{ "fstype",		required_argument,	0,	'f' },
@@ -289,7 +273,7 @@ help_delete_config()
 
 
 void
-command_delete_config()
+command_delete_config(DBus::Connection& conn)
 {
     getopts.parse("delete-config", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -323,7 +307,7 @@ help_list()
 
 
 void
-command_list()
+command_list(DBus::Connection& conn)
 {
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
@@ -373,17 +357,17 @@ command_list()
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
 
-	    const Snapshots& snapshots = sh->getSnapshots();
-	    for (Snapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
+	    list<XSnapshot> snapshots = command_list_xsnapshots(conn, config_name);
+	    for (list<XSnapshot>::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
 	    {
 		TableRow row;
-		row.add(toString(it1->getType()));
-		row.add(decString(it1->getNum()));
-		// row.add(it1->getType() == POST ? decString(it1->getPreNum()) : "");
-		row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), false, false));
-		row.add(it1->getCleanup());
-		row.add(it1->getDescription());
-		row.add(show_userdata(it1->getUserdata()));
+		row.add(/*toString(*/ decString((int)(it1->type)));
+		row.add(decString(it1->num));
+		row.add(it1->type == XPOST ? decString(it1->pre_num) : "");
+		row.add(it1->num == 0 ? "" : datetime(it1->date, false, false));
+		row.add(it1->cleanup);
+		row.add(it1->description);
+		row.add(show_userdata(it1->userdata));
 		table.add(row);
 	    }
 	}
@@ -398,17 +382,17 @@ command_list()
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
 
-	    const Snapshots& snapshots = sh->getSnapshots();
-	    for (Snapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
+	    list<XSnapshot> snapshots = command_list_xsnapshots(conn, config_name);
+	    for (list<XSnapshot>::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
 	    {
-		// if (it1->getType() != SINGLE)
-		// continue;
+		if (it1->type != XSINGLE)
+		    continue;
 
 		TableRow row;
-		row.add(decString(it1->getNum()));
-		row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), false, false));
-		row.add(it1->getDescription());
-		row.add(show_userdata(it1->getUserdata()));
+		row.add(decString(it1->num));
+		row.add(it1->num == 0 ? "" : datetime(it1->date, false, false));
+		row.add(it1->description);
+		row.add(show_userdata(it1->userdata));
 		table.add(row);
 	    }
 	}
@@ -425,23 +409,26 @@ command_list()
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
 
-	    const Snapshots& snapshots = sh->getSnapshots();
-	    for (Snapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
+	    list<XSnapshot> snapshots = command_list_xsnapshots(conn, config_name);
+	    for (list<XSnapshot>::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
 	    {
-		// if (it1->getType() != PRE)
-		//     continue;
+		if (it1->type != XPRE)
+		    continue;
 
+		list<XSnapshot>::const_iterator it2;
+		/*
 		Snapshots::const_iterator it2 = snapshots.findPost(it1);
 		if (it2 == snapshots.end())
 		    continue;
+		*/
 
 		TableRow row;
-		row.add(decString(it1->getNum()));
-		row.add(decString(it2->getNum()));
-		row.add(datetime(it1->getDate(), false, false));
-		row.add(datetime(it2->getDate(), false, false));
-		row.add(it1->getDescription());
-		row.add(show_userdata(it1->getUserdata()));
+		row.add(decString(it1->num));
+		row.add(decString(it2->num));
+		row.add(datetime(it1->date, false, false));
+		row.add(datetime(it2->date, false, false));
+		row.add(it1->description);
+		row.add(show_userdata(it1->userdata));
 		table.add(row);
 	    }
 	}
@@ -471,7 +458,7 @@ help_create()
 
 
 void
-command_create()
+command_create(DBus::Connection& conn)
 {
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
@@ -493,10 +480,8 @@ command_create()
 
     enum CreateType { CT_SINGLE, CT_PRE, CT_POST, CT_PRE_POST };
 
-    const Snapshots& snapshots = sh->getSnapshots();
-
     CreateType type = CT_SINGLE;
-    Snapshots::const_iterator snap1 = snapshots.end();
+    unsigned int num1 = 0;
     bool print_number = false;
     string description;
     string cleanup;
@@ -523,7 +508,7 @@ command_create()
     }
 
     if ((opt = opts.find("pre-number")) != opts.end())
-	snap1 = read_num(opt->second);
+	num1 = read_num(opt->second);
 
     if ((opt = opts.find("print-number")) != opts.end())
 	print_number = true;
@@ -543,7 +528,7 @@ command_create()
 	type = CT_PRE_POST;
     }
 
-    if (type == CT_POST && (snap1 == snapshots.end() || snap1->isCurrent()))
+    if (type == CT_POST && (num1 == 0))
     {
 	cerr << _("Missing or invalid pre-number.") << endl;
 	exit(EXIT_FAILURE);
@@ -560,48 +545,34 @@ command_create()
 	switch (type)
 	{
 	    case CT_SINGLE: {
-		Snapshots::iterator snap1 = sh->createSingleSnapshot(description);
-		snap1->setCleanup(cleanup);
-		snap1->setUserdata(userdata);
-		snap1->flushInfo();
+		unsigned int num1 = command_create_single_xsnapshot(conn, config_name, description,
+								    cleanup, userdata);
 		if (print_number)
-		    cout << snap1->getNum() << endl;
+		    cout << num1 << endl;
 	    } break;
 
 	    case CT_PRE: {
-		Snapshots::iterator snap1 = sh->createPreSnapshot(description);
-		snap1->setCleanup(cleanup);
-		snap1->setUserdata(userdata);
-		snap1->flushInfo();
+		unsigned int num1 = command_create_pre_xsnapshot(conn, config_name, description,
+								 cleanup, userdata);
 		if (print_number)
-		    cout << snap1->getNum() << endl;
+		    cout << num1 << endl;
 	    } break;
 
 	    case CT_POST: {
-		Snapshots::iterator snap2 = sh->createPostSnapshot(description, snap1);
-		snap2->setCleanup(cleanup);
-		snap2->setUserdata(userdata);
-		snap2->flushInfo();
+		unsigned int num2 = command_create_post_xsnapshot(conn, config_name, num1, description,
+								  cleanup, userdata);
 		if (print_number)
-		    cout << snap2->getNum() << endl;
-		sh->startBackgroundComparsion(snap1, snap2);
+		    cout << num2 << endl;
 	    } break;
 
 	    case CT_PRE_POST: {
-		Snapshots::iterator snap1 = sh->createPreSnapshot(description);
-		snap1->setCleanup(cleanup);
-		snap1->setUserdata(userdata);
-		snap1->flushInfo();
-
+		unsigned int num1 = command_create_pre_xsnapshot(conn, config_name, description,
+								 cleanup, userdata);
 		system(command.c_str());
-
-		Snapshots::iterator snap2 = sh->createPostSnapshot("", snap1);
-		snap2->setCleanup(cleanup);
-		snap2->setUserdata(userdata);
-		snap2->flushInfo();
+		unsigned int num2 = command_create_post_xsnapshot(conn, config_name, num1, "",
+								  cleanup, userdata);
 		if (print_number)
-		    cout << snap1->getNum() << ".." << snap2->getNum() << endl;
-		sh->startBackgroundComparsion(snap1, snap2);
+		    cout << num1 << ".." << num2 << endl;
 	    } break;
 	}
     }
@@ -628,7 +599,7 @@ help_modify()
 
 
 void
-command_modify()
+command_modify(DBus::Connection& conn)
 {
     const struct option options[] = {
 	{ "description",	required_argument,	0,	'd' },
@@ -649,7 +620,7 @@ command_modify()
     {
 	while (getopts.hasArgs())
 	{
-	    Snapshots::iterator snapshot = read_num(getopts.popArg());
+	    Snapshots::iterator snapshot; // = read_num(getopts.popArg());
 
 	    GetOpts::parsed_opts::const_iterator opt;
 
@@ -688,7 +659,7 @@ help_delete()
 
 
 void
-command_delete()
+command_delete(DBus::Connection& conn)
 {
     getopts.parse("delete", GetOpts::no_options);
     if (!getopts.hasArgs())
@@ -701,9 +672,9 @@ command_delete()
     {
 	while (getopts.hasArgs())
 	{
-	    Snapshots::iterator snapshot = read_num(getopts.popArg());
+	    Snapshots::iterator snapshot; // = read_num(getopts.popArg());
 
-	    sh->deleteSnapshot(snapshot);
+	    // sh->deleteSnapshot(snapshot);
 	}
     }
     catch (const IllegalSnapshotException& e)
@@ -724,7 +695,7 @@ help_mount()
 
 
 void
-command_mount()
+command_mount(DBus::Connection& conn)
 {
     getopts.parse("mount", GetOpts::no_options);
     if (!getopts.hasArgs())
@@ -737,7 +708,7 @@ command_mount()
     {
 	while (getopts.hasArgs())
 	{
-	    Snapshots::iterator snapshot = read_num(getopts.popArg());
+	    Snapshots::iterator snapshot; // = read_num(getopts.popArg());
 
 	    snapshot->mountFilesystemSnapshot();
 	}
@@ -760,7 +731,7 @@ help_umount()
 
 
 void
-command_umount()
+command_umount(DBus::Connection& conn)
 {
     getopts.parse("mount", GetOpts::no_options);
     if (!getopts.hasArgs())
@@ -773,7 +744,7 @@ command_umount()
     {
 	while (getopts.hasArgs())
 	{
-	    Snapshots::iterator snapshot = read_num(getopts.popArg());
+	    Snapshots::iterator snapshot; // = read_num(getopts.popArg());
 
 	    snapshot->umountFilesystemSnapshot();
 	}
@@ -799,7 +770,7 @@ help_status()
 
 
 void
-command_status()
+command_status(DBus::Connection& conn)
 {
     const struct option options[] = {
 	{ "output",		required_argument,	0,	'o' },
@@ -815,11 +786,11 @@ command_status()
 
     GetOpts::parsed_opts::const_iterator opt;
 
-    pair<Snapshots::const_iterator, Snapshots::const_iterator> snaps(read_nums(getopts.popArg()));
+    pair<unsigned int, unsigned int> snaps(read_nums(getopts.popArg()));
 
-    Comparison comparison(sh, snaps.first, snaps.second);
+    command_create_xcomparison(conn, config_name, snaps.first, snaps.second);
 
-    const Files& files = comparison.getFiles();
+    list<XFile> files = command_get_xfiles(conn, config_name, snaps.first, snaps.second);
 
     FILE* file = stdout;
 
@@ -833,9 +804,8 @@ command_status()
 	}
     }
 
-    for (Files::const_iterator it = files.begin(); it != files.end(); ++it)
-	fprintf(file, "%s %s\n", statusToString(it->getPreToPostStatus()).c_str(),
-		it->getAbsolutePath(LOC_SYSTEM).c_str());
+    for (list<XFile>::const_iterator it = files.begin(); it != files.end(); ++it)
+	fprintf(file, "%s %s\n", it->status.c_str(), it->filename.c_str()); // TODO abs filename
 
     if (file != stdout)
 	fclose(file);
@@ -852,25 +822,26 @@ help_diff()
 
 
 void
-command_diff()
+command_diff(DBus::Connection& conn)
 {
     GetOpts::parsed_opts opts = getopts.parse("diff", GetOpts::no_options);
 
     GetOpts::parsed_opts::const_iterator opt;
 
-    pair<Snapshots::const_iterator, Snapshots::const_iterator> snaps(read_nums(getopts.popArg()));
+    pair<unsigned int, unsigned int> snaps(read_nums(getopts.popArg()));
 
-    Comparison comparison(sh, snaps.first, snaps.second);
+    command_create_xcomparison(conn, config_name, snaps.first, snaps.second);
 
-    const Files& files = comparison.getFiles();
+    list<XFile> files = command_get_xfiles(conn, config_name, snaps.first, snaps.second);
 
     if (getopts.numArgs() == 0)
     {
-	for (Files::const_iterator it1 = files.begin(); it1 != files.end(); ++it1)
+	for (list<XFile>::const_iterator it1 = files.begin(); it1 != files.end(); ++it1)
 	{
-	    vector<string> lines = it1->getDiff("--unified --new-file");
+	    vector<string> lines = command_get_xdiff(conn, config_name, snaps.first, snaps.second,
+						     it1->filename, "--unified --new-file");
 	    for (vector<string>::const_iterator it2 = lines.begin(); it2 != lines.end(); ++it2)
-		cout << it2->c_str() << endl;
+	        cout << it2->c_str() << endl;
 	}
     }
     else
@@ -879,6 +850,7 @@ command_diff()
 	{
 	    string name = getopts.popArg();
 
+	    /*
 	    Files::const_iterator tmp = files.findAbsolutePath(name);
 	    if (tmp == files.end())
 		continue;
@@ -886,6 +858,7 @@ command_diff()
 	    vector<string> lines = tmp->getDiff("--unified --new-file");
 	    for (vector<string>::const_iterator it2 = lines.begin(); it2 != lines.end(); ++it2)
 		cout << it2->c_str() << endl;
+	    */
 	}
     }
 }
@@ -904,7 +877,7 @@ help_undo()
 
 
 void
-command_undo()
+command_undo(DBus::Connection& conn)
 {
     const struct option options[] = {
 	{ "input",		required_argument,	0,	'i' },
@@ -918,7 +891,7 @@ command_undo()
 	exit(EXIT_FAILURE);
     }
 
-    pair<Snapshots::const_iterator, Snapshots::const_iterator> snaps(read_nums(getopts.popArg()));
+    pair<unsigned int, unsigned int> snaps(read_nums(getopts.popArg()));
 
     FILE* file = NULL;
 
@@ -934,15 +907,15 @@ command_undo()
 	}
     }
 
-    if (snaps.first->isCurrent())
+    if (snaps.first == 0)
     {
 	cerr << _("Invalid snapshots.") << endl;
 	exit(EXIT_FAILURE);
     }
 
-    Comparison comparison(sh, snaps.first, snaps.second);
+    command_create_xcomparison(conn, config_name, snaps.first, snaps.second);
 
-    Files& files = comparison.getFiles();
+    list<XFile> files = command_get_xfiles(conn, config_name, snaps.first, snaps.second);
 
     if (file)
     {
@@ -966,6 +939,7 @@ command_undo()
 		name.erase(0, pos + 1);
 	    }
 
+	    /*
 	    Files::iterator it = files.findAbsolutePath(name);
 	    if (it == files.end())
 	    {
@@ -974,14 +948,17 @@ command_undo()
 	    }
 
 	    it->setUndo(true);
+	    */
 	}
     }
     else
     {
 	if (getopts.numArgs() == 0)
 	{
+	    /*
 	    for (Files::iterator it = files.begin(); it != files.end(); ++it)
 		it->setUndo(true);
+	    */
 	}
 	else
 	{
@@ -989,15 +966,17 @@ command_undo()
 	    {
 		string name = getopts.popArg();
 
+		/*
 		Files::iterator tmp = files.findAbsolutePath(name);
 		if (tmp == files.end())
 		    continue;
 
 		tmp->setUndo(true);
+		*/
 	    }
 	}
     }
-
+    /*
     UndoStatistic rs = comparison.getUndoStatistic();
 
     if (rs.empty())
@@ -1010,6 +989,7 @@ command_undo()
 	 << endl;
 
     comparison.doUndo();
+    */
 }
 
 
@@ -1023,7 +1003,7 @@ help_cleanup()
 
 
 void
-command_cleanup()
+command_cleanup(DBus::Connection& conn)
 {
     const struct option options[] = {
 	{ 0, 0, 0, 0 }
@@ -1040,15 +1020,15 @@ command_cleanup()
 
     if (cleanup == "number")
     {
-	sh->doCleanupNumber();
+	// sh->doCleanupNumber();
     }
     else if (cleanup == "timeline")
     {
-	sh->doCleanupTimeline();
+	// sh->doCleanupTimeline();
     }
     else if (cleanup == "empty-pre-post")
     {
-	sh->doCleanupEmptyPrePost();
+	// sh->doCleanupEmptyPrePost();
     }
     else
     {
@@ -1138,19 +1118,18 @@ main(int argc, char** argv)
     initDefaultLogger();
 
     cmds["list-configs"] = command_list_configs;
-    // cmds["create-config"] = command_create_config;
-    // cmds["delete-config"] = command_delete_config;
-    // cmds["list"] = command_list;
-    // cmds["create"] = command_create;
-    // cmds["modify"] = command_modify;
-    // cmds["delete"] = command_delete;
-    // cmds["mount"] = command_mount;
-    // cmds["umount"] = command_umount;
-    // cmds["status"] = command_status;
-    // cmds["diff"] = command_diff;
-    // cmds["undochange"] = command_undo;
-    // cmds["cleanup"] = command_cleanup;
-    // cmds["help"] = command_help;
+    cmds["create-config"] = command_create_config;
+    cmds["delete-config"] = command_delete_config;
+    cmds["list"] = command_list;
+    cmds["create"] = command_create;
+    cmds["modify"] = command_modify;
+    cmds["delete"] = command_delete;
+    cmds["mount"] = command_mount;
+    cmds["umount"] = command_umount;
+    cmds["status"] = command_status;
+    cmds["diff"] = command_diff;
+    cmds["undochange"] = command_undo;
+    cmds["cleanup"] = command_cleanup;
 
     const struct option options[] = {
 	{ "quiet",		no_argument,		0,	'q' },
@@ -1222,49 +1201,15 @@ main(int argc, char** argv)
 	exit(EXIT_FAILURE);
     }
 
-    DBus::Connection conn(DBUS_BUS_SYSTEM);
-
-    if (cmd->first == "help" || cmd->first == "list-configs" ||
-	cmd->first == "create-config" || cmd->first == "delete-config")
+    if (cmd->first == "help")
     {
-	(*cmd->second)(conn);
+	command_help();
     }
     else
     {
-	try
-	{
-	    sh = createSnapper(config_name, disable_filters);
-	}
-	catch (const ConfigNotFoundException& e)
-	{
-	    cerr << sformat(_("Config '%s' not found."), config_name.c_str()) << endl;
-	    exit(EXIT_FAILURE);
-	}
-	catch (const InvalidConfigException& e)
-	{
-	    cerr << sformat(_("Config '%s' is invalid."), config_name.c_str()) << endl;
-	    exit(EXIT_FAILURE);
-	}
+	DBus::Connection conn(DBUS_BUS_SYSTEM);
 
-	if (!quiet)
-	{
-	    sh->setCompareCallback(&compare_callback_impl);
-	    sh->setUndoCallback(&undo_callback_impl);
-	}
-
-	try
-	{
-	    (*cmd->second)(conn);
-	}
-	catch (const SnapperException& e)
-	{
-	    y2err("caught final exception");
-	    cerr << sformat(_("Command failed (%s). See log for more information."),
-			    e.what()) << endl;
-	    exit(EXIT_FAILURE);
-	}
-
-	deleteSnapper(sh);
+	(*cmd->second)(conn);
     }
 
     exit(EXIT_SUCCESS);
