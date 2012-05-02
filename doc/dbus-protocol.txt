@@ -19,10 +19,10 @@ lock the some config.
 
 method ListSnapshots config-name
 
-method CreateSingleSnapshot config-name ... -> number
-method CreatePreSnapshot config-name ... -> number
-method CreatePostSnapshot config-name ... -> number
-method ModifySnapshot config-name number ...
+method CreateSingleSnapshot config-name description cleanup userdata -> number
+method CreatePreSnapshot config-name pre-number description cleanup userdata -> number
+method CreatePostSnapshot config-name description cleanup userdata -> number
+method ModifySnapshot config-name number description cleanup userdata
 method DeleteSnapshot config-name number
 
 signal SnapshotCreated config-name number
@@ -34,18 +34,21 @@ method UmountSnapshot config-name number
 
 
 
-
 method CreateComparison config-name number1 number2
 method DeleteComparison config-name number1 number2
 
 The following commands require a successful CreateComparison in advance.
 
 method GetFiles config-name number1 number2 -> list(filename status undo)
-method SetUndo config-name number1 number2 list(filename undo)
 
 method GetStatus config-name number1 number2 filename which -> string
 method GetDiff config-name number1 number2 filename which -> list(string)
 
+method SetUndo config-name number1 number2 list(filename undo)
+method SetUndoAll config-name number1 number2 bool
+method UndoChangeStatistic config-name number1 number2
+method UndoChange config-name number1 number2
 
-method Undo config-name number1 number2
+
+method Cleanup config-name algorithm
 

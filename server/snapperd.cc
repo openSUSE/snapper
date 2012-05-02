@@ -142,13 +142,6 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='files' type='v' direction='out'/>\n"
 	"    </method>\n"
 
-	"    <method name='SetUndo'>\n"
-	"      <arg name='config-name' type='s' direction='in'/>\n"
-	"      <arg name='number1' type='u' direction='in'/>\n"
-	"      <arg name='number2' type='u' direction='in'/>\n"
-	"      <arg name='files' type='a(sb)' direction='in'/>\n"
-	"    </method>\n"
-
 	"    <method name='GetDiff'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='number1' type='u' direction='in'/>\n"
@@ -156,6 +149,34 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='filename' type='s' direction='in'/>\n"
 	"      <arg name='options' type='s' direction='in'/>\n"
 	"      <arg name='diff' type='v' direction='out'/>\n"
+	"    </method>\n"
+
+	"    <method name='SetUndo'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='number1' type='u' direction='in'/>\n"
+	"      <arg name='number2' type='u' direction='in'/>\n"
+	"      <arg name='files' type='a(sb)' direction='in'/>\n"
+	"    </method>\n"
+
+	"    <method name='SetUndoAll'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='number1' type='u' direction='in'/>\n"
+	"      <arg name='number2' type='u' direction='in'/>\n"
+	"      <arg name='undo' type='b' direction='in'/>\n"
+	"    </method>\n"
+
+	"    <method name='GetUndoStatistic'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='number1' type='u' direction='in'/>\n"
+	"      <arg name='number2' type='u' direction='in'/>\n"
+	"      <arg name='number-create' type='u' direction='out'/>\n"
+	"      <arg name='number-modify' type='u' direction='out'/>\n"
+	"      <arg name='number-delete' type='u' direction='out'/>\n"
+	"    </method>\n"
+
+	"    <method name='Cleanup'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='algorithm' type='s' direction='in'/>\n"
 	"    </method>\n"
 
 	"  </interface>\n"
@@ -329,10 +350,9 @@ void
 reply_to_command_delete_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
-    string subvolume;
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> subvolume;
+    hihi >> config_name;
 
     y2mil("DeleteConfig config_name:" << config_name);
 
@@ -366,6 +386,7 @@ reply_to_command_lock_config(DBus::Connection& conn, DBus::Message& msg)
     it->add_lock(config_name);
 
     DBus::MessageMethodReturn reply(msg);
+
     conn.send(reply);
 }
 
@@ -388,6 +409,7 @@ reply_to_command_unlock_config(DBus::Connection& conn, DBus::Message& msg)
     it->remove_lock(config_name);
 
     DBus::MessageMethodReturn reply(msg);
+
     conn.send(reply);
 }
 
@@ -404,9 +426,9 @@ reply_to_command_list_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, config_name);
 
-    DBus::MessageMethodReturn reply(msg);
-
     Snapper* snapper = getSnapper(config_name);
+
+    DBus::MessageMethodReturn reply(msg);
 
     DBus::Hoho hoho(reply);
     hoho << snapper->getSnapshots();
@@ -431,14 +453,14 @@ reply_to_command_create_single_snapshot(DBus::Connection& conn, DBus::Message& m
 
     check_permission(conn, msg, config_name);
 
-    DBus::MessageMethodReturn reply(msg);
-
     Snapper* snapper = getSnapper(config_name);
 
     Snapshots::iterator snap1 = snapper->createSingleSnapshot(description);
     snap1->setCleanup(cleanup);
     snap1->setUserdata(userdata);
     snap1->flushInfo();
+
+    DBus::MessageMethodReturn reply(msg);
 
     DBus::Hoho hoho(reply);
     hoho << snap1->getNum();
@@ -465,14 +487,14 @@ reply_to_command_create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, config_name);
 
-    DBus::MessageMethodReturn reply(msg);
-
     Snapper* snapper = getSnapper(config_name);
 
     Snapshots::iterator snap1 = snapper->createPreSnapshot(description);
     snap1->setCleanup(cleanup);
     snap1->setUserdata(userdata);
     snap1->flushInfo();
+
+    DBus::MessageMethodReturn reply(msg);
 
     DBus::Hoho hoho(reply);
     hoho << snap1->getNum();
@@ -500,8 +522,6 @@ reply_to_command_create_post_snapshot(DBus::Connection& conn, DBus::Message& msg
 
     check_permission(conn, msg, config_name);
 
-    DBus::MessageMethodReturn reply(msg);
-
     Snapper* snapper = getSnapper(config_name);
 
     Snapshots& snapshots = snapper->getSnapshots();
@@ -512,6 +532,8 @@ reply_to_command_create_post_snapshot(DBus::Connection& conn, DBus::Message& msg
     snap2->setCleanup(cleanup);
     snap2->setUserdata(userdata);
     snap2->flushInfo();
+
+    DBus::MessageMethodReturn reply(msg);
 
     DBus::Hoho hoho(reply);
     hoho << snap2->getNum();
@@ -639,8 +661,6 @@ reply_to_command_get_files(DBus::Connection& conn, DBus::Message& msg)
 
     string sender = msg.get_sender();
 
-    DBus::MessageMethodReturn reply(msg);
-
     Clients::iterator it = clients.find(sender);
     assert(it != clients.end());
 
@@ -648,45 +668,10 @@ reply_to_command_get_files(DBus::Connection& conn, DBus::Message& msg)
 
     const Files& files = comparison->getFiles();
 
-    DBus::Hoho hoho(reply);
-    hoho << files;
-
-    conn.send(reply);
-}
-
-
-void
-reply_to_command_set_undo(DBus::Connection& conn, DBus::Message& msg)
-{
-    string config_name;
-    dbus_uint32_t num1, num2;
-    list<Undo> u;
-
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> num1 >> num2 >> u;
-
-    check_permission(conn, msg, config_name);
-
-    y2mil("SetUndo config_name:" << config_name << " num1:" << num1 << " num2:" <<
-	  num2);
-
-    string sender = msg.get_sender();
-
     DBus::MessageMethodReturn reply(msg);
 
-    Clients::iterator it = clients.find(sender);
-    assert(it != clients.end());
-
-    Comparison* comparison = it->find_comparison(config_name, num1, num2);
-
-    Files& files = comparison->getFiles();
-
-    for (list<Undo>::const_iterator it2 = u.begin(); it2 != u.end(); ++it2)
-    {
-	Files::iterator it3 = files.find(it2->filename);
-	if (it3 != files.end())
-	    it3->setUndo(it2->undo);
-    }
+    DBus::Hoho hoho(reply);
+    hoho << files;
 
     conn.send(reply);
 }
@@ -723,8 +708,149 @@ reply_to_command_get_diff(DBus::Connection& conn, DBus::Message& msg)
     vector<string> d = it3->getDiff(options);
 
     DBus::MessageMethodReturn reply(msg);
+
     DBus::Hoho hoho(reply);
     hoho << d;
+
+    conn.send(reply);
+}
+
+
+void
+reply_to_command_set_undo(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    dbus_uint32_t num1, num2;
+    list<Undo> undos;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> num1 >> num2 >> undos;
+
+    check_permission(conn, msg, config_name);
+
+    y2mil("SetUndo config_name:" << config_name << " num1:" << num1 << " num2:" <<
+	  num2);
+
+    string sender = msg.get_sender();
+
+    Clients::iterator it = clients.find(sender);
+    assert(it != clients.end());
+
+    Comparison* comparison = it->find_comparison(config_name, num1, num2);
+
+    Files& files = comparison->getFiles();
+
+    for (list<Undo>::const_iterator it2 = undos.begin(); it2 != undos.end(); ++it2)
+    {
+	Files::iterator it3 = files.find(it2->filename);
+	if (it3 != files.end())
+	    it3->setUndo(it2->undo);
+    }
+
+    DBus::MessageMethodReturn reply(msg);
+
+    conn.send(reply);
+}
+
+
+void
+reply_to_command_set_undo_all(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    dbus_uint32_t num1, num2;
+    bool undo;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> num1 >> num2 >> undo;
+
+    check_permission(conn, msg, config_name);
+
+    y2mil("SetUndoAll config_name:" << config_name << " num1:" << num1 << " num2:" <<
+	  num2);
+
+    string sender = msg.get_sender();
+
+    Clients::iterator it = clients.find(sender);
+    assert(it != clients.end());
+
+    Comparison* comparison = it->find_comparison(config_name, num1, num2);
+
+    Files& files = comparison->getFiles();
+
+    for (Files::iterator it2 = files.begin(); it2 != files.end(); ++it2)
+    {
+	it2->setUndo(undo);
+    }
+
+    DBus::MessageMethodReturn reply(msg);
+
+    conn.send(reply);
+}
+
+
+void
+reply_to_command_get_undo_statistics(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    dbus_uint32_t num1, num2;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> num1 >> num2;
+
+    check_permission(conn, msg, config_name);
+
+    y2mil("GetUndoStatistic config_name:" << config_name << " num1:" << num1 << " num2:" <<
+	  num2);
+
+    string sender = msg.get_sender();
+
+    Clients::iterator it = clients.find(sender);
+    assert(it != clients.end());
+
+    Comparison* comparison = it->find_comparison(config_name, num1, num2);
+
+    UndoStatistic statistic = comparison->getUndoStatistic();
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
+    hoho << statistic.numCreate << statistic.numModify << statistic.numDelete;
+
+    conn.send(reply);
+}
+
+
+void
+reply_to_command_cleanup(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    string algorithm;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> algorithm;
+
+    y2mil("GetDiff config_name:" << config_name << " algorithm:" << algorithm);
+
+    check_permission(conn, msg, config_name);
+
+    Snapper* snapper = getSnapper(config_name);
+
+    // TODO: at least the last algorithm must be in a seperate thread
+
+    if (algorithm == "number")
+    {
+	snapper->doCleanupNumber();
+    }
+    else if (algorithm == "timeline")
+    {
+	snapper->doCleanupTimeline();
+    }
+    else if (algorithm == "empty-pre-post")
+    {
+	snapper->doCleanupEmptyPrePost();
+    }
+
+    DBus::MessageMethodReturn reply(msg);
 
     conn.send(reply);
 }
@@ -796,9 +922,7 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
 {
     try
     {
-	if (msg.is_method_call(INTERFACE, "Debug"))
-	    reply_to_command_debug(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "ListConfigs"))
+	if (msg.is_method_call(INTERFACE, "ListConfigs"))
 	    reply_to_command_list_configs(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CreateConfig"))
 	    reply_to_command_create_config(conn, msg);
@@ -822,10 +946,23 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    reply_to_command_create_comparison(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetFiles"))
 	    reply_to_command_get_files(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "SetUndo"))
-	    reply_to_command_set_undo(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetDiff"))
 	    reply_to_command_get_diff(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "SetUndo"))
+	    reply_to_command_set_undo(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "SetUndoAll"))
+	    reply_to_command_set_undo_all(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "GetUndoStatistic"))
+	    reply_to_command_get_undo_statistics(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "Cleanup"))
+	    reply_to_command_cleanup(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "Debug"))
+	    reply_to_command_debug(conn, msg);
+	else
+	{
+	    DBus::MessageError reply(msg, "error.unknown", DBUS_ERROR_FAILED);
+	    conn.send(reply);
+	}
     }
     catch (const DBus::MarshallingException& e)
     {

@@ -98,6 +98,16 @@ struct XUndo
 };
 
 
+struct XUndoStatistic
+{
+    bool empty() const;
+
+    unsigned int numCreate;
+    unsigned int numModify;
+    unsigned int numDelete;
+};
+
+
 namespace DBus
 {
 

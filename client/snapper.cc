@@ -22,7 +22,6 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
 #include <sys/stat.h>
 #include <iostream>
 #include <boost/algorithm/string.hpp>
@@ -952,10 +951,7 @@ command_undo(DBus::Connection& conn)
     {
 	if (getopts.numArgs() == 0)
 	{
-	    /*
-	    for (Files::iterator it = files.begin(); it != files.end(); ++it)
-		it->setUndo(true);
-	    */
+	    command_set_xundo_all(conn, config_name, nums.first, nums.second, true);
 	}
 	else
 	{
@@ -973,18 +969,19 @@ command_undo(DBus::Connection& conn)
 	    }
 	}
     }
-    /*
-    UndoStatistic rs = comparison.getUndoStatistic();
 
-    if (rs.empty())
+    XUndoStatistic s = command_get_xundostatistic(conn, config_name, nums.first, nums.second);
+
+    if (s.empty())
     {
 	cout << "nothing to do" << endl;
 	return;
     }
 
-    cout << "create:" << rs.numCreate << " modify:" << rs.numModify << " delete:" << rs.numDelete
+    cout << "create:" << s.numCreate << " modify:" << s.numModify << " delete:" << s.numDelete
 	 << endl;
 
+    /*
     comparison.doUndo();
     */
 }
@@ -1015,17 +1012,9 @@ command_cleanup(DBus::Connection& conn)
 
     string cleanup = getopts.popArg();
 
-    if (cleanup == "number")
+    if (cleanup == "number" || cleanup == "timeline" || cleanup == "empty-pre-post")
     {
-	// sh->doCleanupNumber();
-    }
-    else if (cleanup == "timeline")
-    {
-	// sh->doCleanupTimeline();
-    }
-    else if (cleanup == "empty-pre-post")
-    {
-	// sh->doCleanupEmptyPrePost();
+	command_xcleanup(conn, config_name, cleanup);
     }
     else
     {
@@ -1111,8 +1100,6 @@ main(int argc, char** argv)
     umask(0027);
 
     setlocale(LC_ALL, "");
-
-    initDefaultLogger();
 
     cmds["list-configs"] = command_list_configs;
     cmds["create-config"] = command_create_config;

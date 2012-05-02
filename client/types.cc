@@ -39,6 +39,13 @@ XSnapshots::findPost(const_iterator pre) const
 }
 
 
+bool
+XUndoStatistic::empty() const
+{
+    return numCreate == 0 && numModify == 0 && numDelete == 0;
+}
+
+
 namespace DBus
 {
     const char* TypeInfo<XConfigInfo>::signature = "(ss)";

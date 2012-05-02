@@ -80,3 +80,17 @@ vector<string>
 command_get_xdiff(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		  unsigned int number2, const string& filename, const string& options);
 
+void
+command_set_xundo(DBus::Connection& conn, const string& config_name, unsigned int number1,
+		  unsigned int number2, const list<XUndo>& undos);
+
+void
+command_set_xundo_all(DBus::Connection& conn, const string& config_name, unsigned int number1,
+		      unsigned int number2, bool undo);
+
+XUndoStatistic
+command_get_xundostatistic(DBus::Connection& conn, const string& config_name, unsigned int number1,
+			   unsigned int number2);
+
+void
+command_xcleanup(DBus::Connection& conn, const string& config_name, const string& algorithm);

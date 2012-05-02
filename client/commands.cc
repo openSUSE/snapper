@@ -217,3 +217,62 @@ command_get_xdiff(DBus::Connection& conn, const string& config_name, unsigned in
 
     return files;
 }
+
+
+void
+command_set_xundo(DBus::Connection& conn, const string& config_name, unsigned int number1,
+		  unsigned int number2, const list<XUndo>& undos)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "SetUndo");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << number1 << number2 << undos;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+}
+
+
+void
+command_set_xundo_all(DBus::Connection& conn, const string& config_name, unsigned int number1,
+		      unsigned int number2, bool undo)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "SetUndoAll");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << number1 << number2 << undo;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+}
+
+
+XUndoStatistic
+command_get_xundostatistic(DBus::Connection& conn, const string& config_name, unsigned int number1,
+			   unsigned int number2)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetUndoStatistic");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << number1 << number2;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+
+    XUndoStatistic ret;
+
+    DBus::Hihi hihi(reply);
+    hihi >> ret.numCreate >> ret.numModify >> ret.numDelete;
+
+    return ret;
+}
+
+
+void
+command_xcleanup(DBus::Connection& conn, const string& config_name, const string& algorithm)
+
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "Cleanup");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << algorithm;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+}
