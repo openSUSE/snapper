@@ -37,6 +37,9 @@ using std::map;
 #include "types.h"
 
 
+XConfigInfo
+command_get_xconfig(DBus::Connection& conn, const string& config_name);
+
 list<XConfigInfo>
 command_list_xconfigs(DBus::Connection& conn);
 
@@ -78,7 +81,7 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
 
 vector<string>
 command_get_xdiff(DBus::Connection& conn, const string& config_name, unsigned int number1,
-		  unsigned int number2, const string& filename, const string& options);
+		  unsigned int number2, const string& name, const string& options);
 
 void
 command_set_xundo(DBus::Connection& conn, const string& config_name, unsigned int number1,

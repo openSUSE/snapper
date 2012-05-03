@@ -150,6 +150,26 @@ show_userdata(const map<string, string>& userdata)
 }
 
 
+string
+add_subvolume(const string& subvolume, const string& name)
+{
+    return subvolume == "/" ? name : subvolume + name;
+}
+
+
+string
+remove_subvolume(const string& subvolume, const string& name)
+{
+    if (!boost::starts_with(name, subvolume))
+	throw;
+
+    if (subvolume == "/")
+	return name;
+    else
+	return string(name, subvolume.size());
+}
+
+
 void
 help_list_configs()
 {
@@ -800,8 +820,10 @@ command_status(DBus::Connection& conn)
 	}
     }
 
+    XConfigInfo ci = command_get_xconfig(conn, config_name);
+
     for (list<XFile>::const_iterator it = files.begin(); it != files.end(); ++it)
-	fprintf(file, "%s %s\n", it->status.c_str(), it->filename.c_str()); // TODO abs filename
+	fprintf(file, "%s %s\n", it->status.c_str(), add_subvolume(ci.subvolume, it->name).c_str());
 
     if (file != stdout)
 	fclose(file);
@@ -828,33 +850,30 @@ command_diff(DBus::Connection& conn)
 
     command_create_xcomparison(conn, config_name, nums.first, nums.second);
 
-    list<XFile> files = command_get_xfiles(conn, config_name, nums.first, nums.second);
-
     if (getopts.numArgs() == 0)
     {
+	list<XFile> files = command_get_xfiles(conn, config_name, nums.first, nums.second);
+
 	for (list<XFile>::const_iterator it1 = files.begin(); it1 != files.end(); ++it1)
 	{
 	    vector<string> lines = command_get_xdiff(conn, config_name, nums.first, nums.second,
-						     it1->filename, "--unified --new-file");
+						     it1->name, "--unified --new-file");
 	    for (vector<string>::const_iterator it2 = lines.begin(); it2 != lines.end(); ++it2)
 		cout << it2->c_str() << endl;
 	}
     }
     else
     {
+	XConfigInfo ci = command_get_xconfig(conn, config_name);
+
 	while (getopts.numArgs() > 0)
 	{
-	    string name = getopts.popArg();
+	    string name = remove_subvolume(ci.subvolume, getopts.popArg());
 
-	    /*
-	    Files::const_iterator tmp = files.findAbsolutePath(name);
-	    if (tmp == files.end())
-		continue;
-
-	    vector<string> lines = tmp->getDiff("--unified --new-file");
+	    vector<string> lines = command_get_xdiff(conn, config_name, nums.first, nums.second,
+						     name, "--unified --new-file");
 	    for (vector<string>::const_iterator it2 = lines.begin(); it2 != lines.end(); ++it2)
 		cout << it2->c_str() << endl;
-	    */
 	}
     }
 }
@@ -915,6 +934,10 @@ command_undo(DBus::Connection& conn)
 
     if (file)
     {
+	XConfigInfo ci = command_get_xconfig(conn, config_name);
+
+	list<XUndo> undos;
+
 	AsciiFileReader asciifile(file);
 
 	string line;
@@ -935,17 +958,13 @@ command_undo(DBus::Connection& conn)
 		name.erase(0, pos + 1);
 	    }
 
-	    /*
-	    Files::iterator it = files.findAbsolutePath(name);
-	    if (it == files.end())
-	    {
-		cerr << sformat(_("File '%s' not found."), name.c_str()) << endl;
-		exit(EXIT_FAILURE);
-	    }
-
-	    it->setUndo(true);
-	    */
+	    XUndo undo;
+	    undo.undo = true;
+	    undo.name = remove_subvolume(ci.subvolume, name);
+	    undos.push_back(undo);
 	}
+
+	command_set_xundo(conn, config_name, nums.first, nums.second, undos);
     }
     else
     {
@@ -955,18 +974,19 @@ command_undo(DBus::Connection& conn)
 	}
 	else
 	{
+	    XConfigInfo ci = command_get_xconfig(conn, config_name);
+
+	    list<XUndo> undos;
+
 	    while (getopts.numArgs() > 0)
 	    {
-		string name = getopts.popArg();
-
-		/*
-		Files::iterator tmp = files.findAbsolutePath(name);
-		if (tmp == files.end())
-		    continue;
-
-		tmp->setUndo(true);
-		*/
+		XUndo undo;
+		undo.undo = true;
+		undo.name = remove_subvolume(ci.subvolume, getopts.popArg());
+		undos.push_back(undo);
 	    }
+
+	    command_set_xundo(conn, config_name, nums.first, nums.second, undos);
 	}
     }
 
@@ -974,12 +994,11 @@ command_undo(DBus::Connection& conn)
 
     if (s.empty())
     {
-	cout << "nothing to do" << endl;
+	cout << _("nothing to do") << endl;
 	return;
     }
 
-    cout << "create:" << s.numCreate << " modify:" << s.numModify << " delete:" << s.numDelete
-	 << endl;
+    cout << sformat(_("create:%d modify:%d delete:%d"), s.numCreate, s.numModify, s.numDelete) << endl;
 
     /*
     comparison.doUndo();

@@ -89,7 +89,7 @@ namespace DBus
     operator>>(Hihi& hihi, XFile& data)
     {
 	hihi.open_recurse();
-	hihi >> data.filename >> data.status >> data.undo;
+	hihi >> data.name >> data.status >> data.undo;
 	hihi.close_recurse();
 	return hihi;
     }
@@ -107,7 +107,7 @@ namespace DBus
     operator<<(Hoho& hoho, const XUndo& data)
     {
 	hoho.open_struct();
-	hoho << data.filename << data.undo;
+	hoho << data.name << data.undo;
 	hoho.close_struct();
 	return hoho;
     }

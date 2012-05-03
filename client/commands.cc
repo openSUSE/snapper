@@ -33,6 +33,28 @@
 #define INTERFACE "org.opensuse.snapper"
 
 
+XConfigInfo
+command_get_xconfig(DBus::Connection& conn, const string& config_name)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "ListConfigs");
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+
+    list<XConfigInfo> ret;
+
+    DBus::Hihi hihi(reply);
+    hihi >> ret;
+
+    for (list<XConfigInfo>::const_iterator it = ret.begin(); it != ret.end(); ++it)
+    {
+	if (it->config_name == config_name)
+	    return *it;
+    }
+
+    throw;
+}
+
+
 list<XConfigInfo>
 command_list_xconfigs(DBus::Connection& conn)
 {
@@ -202,12 +224,12 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
 
 vector<string>
 command_get_xdiff(DBus::Connection& conn, const string& config_name, unsigned int number1,
-		  unsigned int number2, const string& filename, const string& options)
+		  unsigned int number2, const string& name, const string& options)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetDiff");
 
     DBus::Hoho hoho(call);
-    hoho << config_name << number1 << number2 << filename << options;
+    hoho << config_name << number1 << number2 << name << options;
 
     DBus::Message reply = conn.send_and_reply_and_block(call);
 

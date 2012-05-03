@@ -743,8 +743,10 @@ reply_to_command_set_undo(DBus::Connection& conn, DBus::Message& msg)
     for (list<Undo>::const_iterator it2 = undos.begin(); it2 != undos.end(); ++it2)
     {
 	Files::iterator it3 = files.find(it2->filename);
-	if (it3 != files.end())
-	    it3->setUndo(it2->undo);
+	if (it3 == files.end())
+	    throw;
+
+	it3->setUndo(it2->undo);
     }
 
     DBus::MessageMethodReturn reply(msg);
@@ -987,6 +989,11 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
     catch (const IllegalSnapshotException& e)
     {
 	DBus::MessageError reply(msg, "error.illegal_snapshot", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
+    catch (...)
+    {
+	DBus::MessageError reply(msg, "error.something", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
 }

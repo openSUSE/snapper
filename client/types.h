@@ -86,14 +86,14 @@ struct XSnapshots
 struct XFile
 {
     string status;
-    string filename;
+    string name;
     bool undo;
 };
 
 
 struct XUndo
 {
-    string filename;
+    string name;
     bool undo;
 };
 
