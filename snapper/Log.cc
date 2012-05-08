@@ -60,46 +60,52 @@ namespace snapper
     {
 #ifdef HAVE_LIBBLOCXX
 
-	if (logpath != "NULL" && logfile != "NULL")
+	try
 	{
-	    String nm = name.c_str();
-	    LoggerConfigMap configItems;
-	    LogAppenderRef logApp;
-	    if (logpath != "STDERR" && logfile != "STDERR" &&
-		logpath != "SYSLOG" && logfile != "SYSLOG")
+	    if (logpath != "NULL" && logfile != "NULL")
 	    {
-		String StrKey;
-		String StrPath;
-		StrKey.format("log.%s.location", name.c_str());
-		StrPath = (logpath + "/" + logfile).c_str();
-		configItems[StrKey] = StrPath;
-		logApp =
-		    LogAppender::createLogAppender(nm, LogAppender::ALL_COMPONENTS,
-						   LogAppender::ALL_CATEGORIES,
-						   "%d %-5p %c(%P) %F(%M):%L - %m",
-						   LogAppender::TYPE_FILE,
-						   configItems);
-	    }
-	    else if (logpath == "STDERR" && logfile == "STDERR")
-	    {
-		logApp =
-		    LogAppender::createLogAppender(nm, LogAppender::ALL_COMPONENTS,
-						   LogAppender::ALL_CATEGORIES,
-						   "%d %-5p %c(%P) %F(%M):%L - %m",
-						   LogAppender::TYPE_STDERR,
-						   configItems);
-	    }
-	    else
-	    {
-		logApp =
-		    LogAppender::createLogAppender(nm, LogAppender::ALL_COMPONENTS,
-						   LogAppender::ALL_CATEGORIES,
-						   "%d %-5p %c(%P) %F(%M):%L - %m",
-						   LogAppender::TYPE_SYSLOG,
-						   configItems);
-	    }
+		String nm = name.c_str();
+		LoggerConfigMap configItems;
+		LogAppenderRef logApp;
+		if (logpath != "STDERR" && logfile != "STDERR" &&
+		    logpath != "SYSLOG" && logfile != "SYSLOG")
+		{
+		    String StrKey;
+		    String StrPath;
+		    StrKey.format("log.%s.location", name.c_str());
+		    StrPath = (logpath + "/" + logfile).c_str();
+		    configItems[StrKey] = StrPath;
+		    logApp =
+			LogAppender::createLogAppender(nm, LogAppender::ALL_COMPONENTS,
+						       LogAppender::ALL_CATEGORIES,
+						       "%d %-5p %c(%P) %F(%M):%L - %m",
+						       LogAppender::TYPE_FILE,
+						       configItems);
+		}
+		else if (logpath == "STDERR" && logfile == "STDERR")
+		{
+		    logApp =
+			LogAppender::createLogAppender(nm, LogAppender::ALL_COMPONENTS,
+						       LogAppender::ALL_CATEGORIES,
+						       "%d %-5p %c(%P) %F(%M):%L - %m",
+						       LogAppender::TYPE_STDERR,
+						       configItems);
+		}
+		else
+		{
+		    logApp =
+			LogAppender::createLogAppender(nm, LogAppender::ALL_COMPONENTS,
+						       LogAppender::ALL_CATEGORIES,
+						       "%d %-5p %c(%P) %F(%M):%L - %m",
+						       LogAppender::TYPE_SYSLOG,
+						       configItems);
+		}
 
-	    LogAppender::setDefaultLogAppender(logApp);
+		LogAppender::setDefaultLogAppender(logApp);
+	    }
+	}
+	catch (const LoggerException& e)
+	{
 	}
 
 #else
@@ -115,21 +121,29 @@ namespace snapper
     {
 #ifdef HAVE_LIBBLOCXX
 
-	ELogLevel curLevel = LogAppender::getCurrentLogAppender()->getLogLevel();
-
-	switch (level)
+	try
 	{
-	    case DEBUG:
-		return false; // curLevel >= E_DEBUG_LEVEL;
-	    case MILESTONE:
-		return curLevel >= E_INFO_LEVEL;
-	    case WARNING:
-		return curLevel >= E_WARNING_LEVEL;
-	    case ERROR:
-		return curLevel >= E_ERROR_LEVEL;
-	    default:
-		return curLevel >= E_FATAL_ERROR_LEVEL;
+	    ELogLevel curLevel = LogAppender::getCurrentLogAppender()->getLogLevel();
+
+	    switch (level)
+	    {
+		case DEBUG:
+		    return false; // curLevel >= E_DEBUG_LEVEL;
+		case MILESTONE:
+		    return curLevel >= E_INFO_LEVEL;
+		case WARNING:
+		    return curLevel >= E_WARNING_LEVEL;
+		case ERROR:
+		    return curLevel >= E_ERROR_LEVEL;
+		default:
+		    return curLevel >= E_FATAL_ERROR_LEVEL;
+	    }
 	}
+	catch (const LoggerException& e)
+	{
+	}
+
+	return false;
 
 #else
 
@@ -192,23 +206,29 @@ namespace snapper
 
 	if (!category.empty())
 	{
-	    string tmp = stream->str();
-
-	    string::size_type pos1 = 0;
-
-	    while (true)
+	    try
 	    {
-		string::size_type pos2 = tmp.find('\n', pos1);
+		string tmp = stream->str();
 
-		if (pos2 != string::npos || pos1 != tmp.length())
-		    LogAppender::getCurrentLogAppender()->logMessage(LogMessage(component, category,
-										String(tmp.substr(pos1, pos2 - pos1)),
-										file, line, func));
+		string::size_type pos1 = 0;
 
-		if (pos2 == string::npos)
-		    break;
+		while (true)
+		{
+		    string::size_type pos2 = tmp.find('\n', pos1);
 
-		pos1 = pos2 + 1;
+		    if (pos2 != string::npos || pos1 != tmp.length())
+			LogAppender::getCurrentLogAppender()->logMessage(LogMessage(component, category,
+										    String(tmp.substr(pos1, pos2 - pos1)),
+										    file, line, func));
+
+		    if (pos2 == string::npos)
+			break;
+
+		    pos1 = pos2 + 1;
+		}
+	    }
+	    catch (const LoggerException& e)
+	    {
 	    }
 	}
 
@@ -258,6 +278,7 @@ namespace snapper
     {
 	string path;
 	string file;
+
 	if (geteuid())
 	{
 	    struct passwd* pw = getpwuid(geteuid());
@@ -277,6 +298,7 @@ namespace snapper
 	    path = "/var/log";
 	    file = "snapper.log";
 	}
+
 	createLogger("default", path, file);
 
 	initGenericErrorDefaultFunc(&xml_error_func_ptr);
