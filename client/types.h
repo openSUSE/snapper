@@ -77,6 +77,7 @@ struct XSnapshots
 
     const_iterator end() const { return entries.end(); }
 
+    const_iterator findPre(const_iterator post) const;
     const_iterator findPost(const_iterator pre) const;
 
     list<XSnapshot> entries;

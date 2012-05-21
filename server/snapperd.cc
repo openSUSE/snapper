@@ -174,11 +174,6 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='number-delete' type='u' direction='out'/>\n"
 	"    </method>\n"
 
-	"    <method name='Cleanup'>\n"
-	"      <arg name='config-name' type='s' direction='in'/>\n"
-	"      <arg name='algorithm' type='s' direction='in'/>\n"
-	"    </method>\n"
-
 	"  </interface>\n"
 	"</node>\n";
 
@@ -823,42 +818,6 @@ reply_to_command_get_undo_statistics(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_cleanup(DBus::Connection& conn, DBus::Message& msg)
-{
-    string config_name;
-    string algorithm;
-
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> algorithm;
-
-    y2mil("GetDiff config_name:" << config_name << " algorithm:" << algorithm);
-
-    check_permission(conn, msg, config_name);
-
-    Snapper* snapper = getSnapper(config_name);
-
-    // TODO: at least the last algorithm must be in a seperate thread
-
-    if (algorithm == "number")
-    {
-	snapper->doCleanupNumber();
-    }
-    else if (algorithm == "timeline")
-    {
-	snapper->doCleanupTimeline();
-    }
-    else if (algorithm == "empty-pre-post")
-    {
-	snapper->doCleanupEmptyPrePost();
-    }
-
-    DBus::MessageMethodReturn reply(msg);
-
-    conn.send(reply);
-}
-
-
-void
 reply_to_command_debug(DBus::Connection& conn, DBus::Message& msg)
 {
     // check_permission(conn, msg);
@@ -956,8 +915,6 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    reply_to_command_set_undo_all(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetUndoStatistic"))
 	    reply_to_command_get_undo_statistics(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "Cleanup"))
-	    reply_to_command_cleanup(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "Debug"))
 	    reply_to_command_debug(conn, msg);
 	else

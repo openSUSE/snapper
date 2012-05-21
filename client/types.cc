@@ -24,6 +24,22 @@
 
 
 XSnapshots::const_iterator
+XSnapshots::findPre(const_iterator post) const
+{
+    if (post == entries.end() || post->isCurrent() || post->getType() != XPOST)
+	throw;
+
+    for (const_iterator it = begin(); it != end(); ++it)
+    {
+	if (it->getType() == XPRE && it->getNum() == post->getPreNum())
+	    return it;
+    }
+
+    return end();
+}
+
+
+XSnapshots::const_iterator
 XSnapshots::findPost(const_iterator pre) const
 {
     if (pre == entries.end() || pre->isCurrent() || pre->getType() != XPRE)
@@ -49,7 +65,7 @@ XUndoStatistic::empty() const
 namespace DBus
 {
     const char* TypeInfo<XConfigInfo>::signature = "(ss)";
-    const char* TypeInfo<XSnapshot>::signature = "(uquusa{ss})";
+    const char* TypeInfo<XSnapshot>::signature = "(uquussa{ss})";
     const char* TypeInfo<XFile>::signature = "(ssb)";
     const char* TypeInfo<XUndo>::signature = "(sb)";
 
@@ -79,7 +95,7 @@ namespace DBus
     {
 	hihi.open_recurse();
 	hihi >> data.num >> data.type >> data.pre_num >> data.date >> data.description
-	     >> data.userdata;
+	     >> data.cleanup >> data.userdata;
 	hihi.close_recurse();
 	return hihi;
     }

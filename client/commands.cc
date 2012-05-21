@@ -285,16 +285,3 @@ command_get_xundostatistic(DBus::Connection& conn, const string& config_name, un
 
     return ret;
 }
-
-
-void
-command_xcleanup(DBus::Connection& conn, const string& config_name, const string& algorithm)
-
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "Cleanup");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name << algorithm;
-
-    DBus::Message reply = conn.send_and_reply_and_block(call);
-}

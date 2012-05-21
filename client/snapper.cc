@@ -37,6 +37,7 @@
 #include "utils/GetOpts.h"
 
 #include "commands.h"
+#include "cleanup.h"
 
 using namespace snapper;
 using namespace std;
@@ -50,7 +51,6 @@ GetOpts getopts;
 bool quiet = false;
 bool verbose = false;
 string config_name = "root";
-bool disable_filters = false;
 
 
 unsigned int
@@ -1031,9 +1031,17 @@ command_cleanup(DBus::Connection& conn)
 
     string cleanup = getopts.popArg();
 
-    if (cleanup == "number" || cleanup == "timeline" || cleanup == "empty-pre-post")
+    if (cleanup == "number")
     {
-	command_xcleanup(conn, config_name, cleanup);
+	do_cleanup_number(conn, config_name);
+    }
+    else if (cleanup == "timeline")
+    {
+	do_cleanup_timeline(conn, config_name);
+    }
+    else if (cleanup == "empty-pre-post")
+    {
+	do_cleanup_empty_pre_post(conn, config_name);
     }
     else
     {
@@ -1061,7 +1069,6 @@ help()
 	 << _("\t--verbose, -v\t\t\tIncrease verbosity.") << endl
 	 << _("\t--table-style, -t <style>\tTable style (integer).") << endl
 	 << _("\t--config, -c <name>\t\tSet name of config to use.") << endl
-	 << _("\t--disable-filters\t\tDisable filters.") << endl
 	 << _("\t--version\t\t\tPrint version and exit.") << endl
 	 << endl;
 
@@ -1139,7 +1146,6 @@ main(int argc, char** argv)
 	{ "verbose",		no_argument,		0,	'v' },
 	{ "table-style",	required_argument,	0,	't' },
 	{ "config",		required_argument,	0,	'c' },
-	{ "disable-filters",	no_argument,		0,	0 },
 	{ "version",		no_argument,		0,	0 },
 	{ "help",		no_argument,		0,	0 },
 	{ 0, 0, 0, 0 }
@@ -1172,9 +1178,6 @@ main(int argc, char** argv)
 
     if ((opt = opts.find("config")) != opts.end())
 	config_name = opt->second;
-
-    if ((opt = opts.find("disable-filters")) != opts.end())
-	disable_filters = true;
 
     if ((opt = opts.find("version")) != opts.end())
     {

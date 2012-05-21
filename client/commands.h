@@ -94,6 +94,3 @@ command_set_xundo_all(DBus::Connection& conn, const string& config_name, unsigne
 XUndoStatistic
 command_get_xundostatistic(DBus::Connection& conn, const string& config_name, unsigned int number1,
 			   unsigned int number2);
-
-void
-command_xcleanup(DBus::Connection& conn, const string& config_name, const string& algorithm);

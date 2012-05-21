@@ -85,9 +85,6 @@ Specifies table style. Table style is identified by an integer number.
 Use specified configuration instead of the default configuration. The default
 configuration is named "root".
 .TP
-.I \-\-disable\-filters
-Disable filters.
-.TP
 .I \-\-version
 Print version and exit.
 
