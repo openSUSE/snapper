@@ -152,6 +152,7 @@ namespace DBus
 
     template <typename Type> struct TypeInfo {};
 
+    template <> struct TypeInfo<dbus_uint32_t> { static const char* signature; };
     template <> struct TypeInfo<string> { static const char* signature; };
 
 

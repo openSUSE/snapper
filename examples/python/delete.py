@@ -8,5 +8,5 @@ snapper = dbus.Interface(bus.get_object('org.opensuse.snapper', '/org/opensuse/s
                          dbus_interface='org.opensuse.snapper')
 
 
-snapper.DeleteSnapshot("root", 1450)
+snapper.DeleteSnapshots("root", [ 510 ])
 

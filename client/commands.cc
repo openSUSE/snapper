@@ -179,12 +179,13 @@ command_create_post_xsnapshot(DBus::Connection& conn, const string& config_name,
 
 
 void
-command_delete_xsnapshot(DBus::Connection& conn, const string& config_name, unsigned int num)
+command_delete_xsnapshots(DBus::Connection& conn, const string& config_name,
+			  list<unsigned int> nums)
 {
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "DeleteSnapshot");
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "DeleteSnapshots");
 
     DBus::Hoho hoho(call);
-    hoho << config_name << num;
+    hoho << config_name << nums;
 
     DBus::Message reply = conn.send_and_reply_and_block(call);
 }

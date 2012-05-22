@@ -69,7 +69,8 @@ command_create_post_xsnapshot(DBus::Connection& conn, const string& config_name,
 			      const string& cleanup, const map<string, string>& userdata);
 
 void
-command_delete_xsnapshot(DBus::Connection& conn, const string& config_name, unsigned int num);
+command_delete_xsnapshots(DBus::Connection& conn, const string& config_name,
+			  list<unsigned int> nums);
 
 void
 command_create_xcomparison(DBus::Connection& conn, const string& config_name, unsigned int number1,

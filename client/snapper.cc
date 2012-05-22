@@ -690,7 +690,7 @@ command_delete(DBus::Connection& conn)
 	{
 	    unsigned int num = read_num(getopts.popArg());
 
-	    command_delete_xsnapshot(conn, config_name, num);
+	    command_delete_xsnapshots(conn, config_name, { num });
 	}
     }
     catch (const IllegalSnapshotException& e)

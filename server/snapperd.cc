@@ -33,6 +33,7 @@
 #include <snapper/Snapshot.h>
 #include <snapper/Comparison.h>
 #include <snapper/Log.h>
+#include <snapper/SnapperTmpl.h>
 
 #include "dbus/DBusConnection.h"
 #include "dbus/DBusMessage.h"
@@ -123,9 +124,9 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='number' type='u' direction='out'/>\n"
 	"    </method>\n"
 
-	"    <method name='DeleteSnapshot'>\n"
+	"    <method name='DeleteSnapshots'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
-	"      <arg name='number' type='u' direction='in'/>\n"
+	"      <arg name='numbers' type='au' direction='in'/>\n"
 	"    </method>\n"
 
 	"    <method name='CreateComparison'>\n"
@@ -289,13 +290,13 @@ send_signal_snapshot_created(DBus::Connection& conn, const string& config_name,
 
 
 void
-send_signal_snapshot_deleted(DBus::Connection& conn, const string& config_name,
-			     unsigned int num)
+send_signal_snapshots_deleted(DBus::Connection& conn, const string& config_name,
+			      list<dbus_uint32_t> nums)
 {
-    DBus::MessageSignal msg(PATH, INTERFACE, "SnapshotDeleted");
+    DBus::MessageSignal msg(PATH, INTERFACE, "SnapshotsDeleted");
 
     DBus::Hoho hoho(msg);
-    hoho << config_name << num;
+    hoho << config_name << nums;
 
     conn.send(msg);
 }
@@ -540,15 +541,15 @@ reply_to_command_create_post_snapshot(DBus::Connection& conn, DBus::Message& msg
 
 
 void
-reply_to_command_delete_snapshot(DBus::Connection& conn, DBus::Message& msg)
+reply_to_command_delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
-    unsigned int num;
+    list<dbus_uint32_t> nums;
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> num;
+    hihi >> config_name >> nums;
 
-    y2mil("DeleteSnapshot config_name:" << config_name << " num:" << num);
+    y2mil("DeleteSnapshots config_name:" << config_name << " nums:" << nums);
 
     check_permission(conn, msg, config_name);
     check_lock(conn, msg, config_name);
@@ -557,15 +558,18 @@ reply_to_command_delete_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     Snapshots& snapshots = snapper->getSnapshots();
 
-    Snapshots::iterator snap = snapshots.find(num);
+    for (list<unsigned int>::const_iterator it = nums.begin(); it != nums.end(); ++it)
+    {
+	Snapshots::iterator snap = snapshots.find(*it);
 
-    snapper->deleteSnapshot(snap);
+	snapper->deleteSnapshot(snap);
+    }
 
     DBus::MessageMethodReturn reply(msg);
 
     conn.send(reply);
 
-    send_signal_snapshot_deleted(conn, config_name, num);
+    send_signal_snapshots_deleted(conn, config_name, nums);
 }
 
 
@@ -901,8 +905,8 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    reply_to_command_create_pre_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CreatePostSnapshot"))
 	    reply_to_command_create_post_snapshot(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "DeleteSnapshot"))
-	    reply_to_command_delete_snapshot(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "DeleteSnapshots"))
+	    reply_to_command_delete_snapshots(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CreateComparison"))
 	    reply_to_command_create_comparison(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetFiles"))

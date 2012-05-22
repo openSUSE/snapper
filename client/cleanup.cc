@@ -117,7 +117,7 @@ do_cleanup_number(DBus::Connection& conn, const string& config_name)
 	filter2(snapshots, tmp);
 
 	for (list<XSnapshots::const_iterator>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
-	    command_delete_xsnapshot(conn, config_name, (*it)->getNum());
+	    command_delete_xsnapshots(conn, config_name, { (*it)->getNum() });
     }
 
     return true;
@@ -286,7 +286,7 @@ do_cleanup_timeline(DBus::Connection& conn, const string& config_name)
     filter2(snapshots, tmp);
 
     for (list<XSnapshots::const_iterator>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
-	command_delete_xsnapshot(conn, config_name, (*it)->getNum());
+	command_delete_xsnapshots(conn, config_name, { (*it)->getNum() });
 
     return true;
 }
@@ -333,7 +333,7 @@ do_cleanup_empty_pre_post(DBus::Connection& conn, const string& config_name)
     filter2(snapshots, tmp);
 
     for (list<XSnapshots::const_iterator>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
-	command_delete_xsnapshot(conn, config_name, (*it)->getNum());
+	command_delete_xsnapshots(conn, config_name, { (*it)->getNum() });
 
     return true;
 }

@@ -62,6 +62,7 @@ namespace DBus
     }
 
 
+    const char* TypeInfo<dbus_uint32_t>::signature = "u";
     const char* TypeInfo<string>::signature = "s";
 
 
