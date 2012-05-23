@@ -100,6 +100,8 @@ namespace snapper
 	void setValue(const string& key, const vector<string>& values);
 	bool getValue(const string& key, vector<string>& values) const;
 
+	map<string, string> getAllValues() const;
+
     private:
 
 	bool modified;

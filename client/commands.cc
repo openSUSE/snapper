@@ -55,6 +55,25 @@ command_get_xconfig(DBus::Connection& conn, const string& config_name)
 }
 
 
+map<string, string>
+command_get_xxconfig(DBus::Connection& conn, const string& config_name)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetConfig");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+
+    map<string, string> ret;
+
+    DBus::Hihi hihi(reply);
+    hihi >> ret;
+
+    return ret;
+}
+
+
 list<XConfigInfo>
 command_list_xconfigs(DBus::Connection& conn)
 {

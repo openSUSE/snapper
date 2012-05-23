@@ -165,6 +165,8 @@ namespace snapper
 
 	const Filesystem* getFilesystem() const { return filesystem; }
 
+	const SysconfigFile* getSysconfigFile() const { return config; }
+
     private:
 
 	void filter1(list<Snapshots::iterator>& tmp, time_t min_age);

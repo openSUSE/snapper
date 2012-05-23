@@ -40,6 +40,9 @@ using std::map;
 XConfigInfo
 command_get_xconfig(DBus::Connection& conn, const string& config_name);
 
+map<string, string>
+command_get_xxconfig(DBus::Connection& conn, const string& config_name);
+
 list<XConfigInfo>
 command_list_xconfigs(DBus::Connection& conn);
 

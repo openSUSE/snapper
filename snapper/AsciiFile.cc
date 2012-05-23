@@ -223,4 +223,21 @@ AsciiFile::save()
 	return true;
     }
 
+
+    map<string, string>
+    SysconfigFile::getAllValues() const
+    {
+	map<string, string> ret;
+
+	Regex rx('^' + Regex::ws + "([0-9A-Z_]+)" + '=' + "(['\"]?)([^'\"]*)\\2" + Regex::ws + '$');
+
+	for (vector<string>::const_iterator it = Lines_C.begin(); it != Lines_C.end(); ++it)
+	{
+	    if (rx.match(*it))
+		ret[rx.cap(1)] = rx.cap(3);
+	}
+
+	return ret;
+    }
+
 }

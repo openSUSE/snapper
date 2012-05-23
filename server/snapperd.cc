@@ -34,6 +34,7 @@
 #include <snapper/Comparison.h>
 #include <snapper/Log.h>
 #include <snapper/SnapperTmpl.h>
+#include <snapper/AsciiFile.h>
 
 #include "dbus/DBusConnection.h"
 #include "dbus/DBusMessage.h"
@@ -80,6 +81,11 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='subvolume' type='s' direction='in'/>\n"
 	"      <arg name='fstype' type='s' direction='in'/>\n"
 	"      <arg name='template-name' type='s' direction='in'/>\n"
+	"    </method>\n"
+
+	"    <method name='GetConfig'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='data' type='a{ss}' direction='out'/>\n"
 	"    </method>\n"
 
 	"    <method name='DeleteConfig'>\n"
@@ -305,6 +311,8 @@ send_signal_snapshots_deleted(DBus::Connection& conn, const string& config_name,
 void
 reply_to_command_list_configs(DBus::Connection& conn, DBus::Message& msg)
 {
+    y2mil("ListConfigs");
+
     list<ConfigInfo> config_infos = Snapper::getConfigs();
 
     DBus::MessageMethodReturn reply(msg);
@@ -339,6 +347,31 @@ reply_to_command_create_config(DBus::Connection& conn, DBus::Message& msg)
     conn.send(reply);
 
     send_signal_config_created(conn, config_name);
+}
+
+
+void
+reply_to_command_get_config(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name;
+
+    y2mil("GetConfig config_name:" << config_name);
+
+    check_permission(conn, msg, config_name);
+
+    Snapper* snapper = getSnapper(config_name);
+
+    map<string, string> tmp = snapper->getSysconfigFile()->getAllValues();
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
+    hoho << tmp;
+
+    conn.send(reply);
 }
 
 
@@ -891,6 +924,8 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    reply_to_command_list_configs(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CreateConfig"))
 	    reply_to_command_create_config(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "GetConfig"))
+	    reply_to_command_get_config(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "DeleteConfig"))
 	    reply_to_command_delete_config(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "LockConfig"))

@@ -22,9 +22,12 @@
 
 #include <algorithm>
 
+#include <snapper/SnapperTmpl.h>
+
 #include "commands.h"
 
 
+using namespace snapper;
 using namespace std;
 
 
@@ -88,14 +91,12 @@ do_cleanup_number(DBus::Connection& conn, const string& config_name)
     time_t min_age = 1800;
     size_t limit = 50;
 
-    /*
-    TODO
-    string val;
-    if (config->getValue("NUMBER_MIN_AGE", val))
-	val >> min_age;
-    if (config->getValue("NUMBER_LIMIT", val))
-	val >> limit;
-    */
+    map<string, string> c = command_get_xxconfig(conn, config_name);
+    map<string, string>::const_iterator pos;
+    if ((pos = c.find("NUMBER_MIN_AGE")) != c.end())
+	pos->second >> min_age;
+    if ((pos = c.find("NUMBER_LIMIT")) != c.end())
+	pos->second >> limit;
 
     XSnapshots snapshots = command_list_xsnapshots(conn, config_name);
 
@@ -221,20 +222,18 @@ do_cleanup_timeline(DBus::Connection& conn, const string& config_name)
     size_t limit_monthly = 10;
     size_t limit_yearly = 10;
 
-    /*
-    TODO
-    string val;
-    if (config->getValue("TIMELINE_MIN_AGE", val))
-	val >> min_age;
-    if (config->getValue("TIMELINE_LIMIT_HOURLY", val))
-	val >> limit_hourly;
-    if (config->getValue("TIMELINE_LIMIT_DAILY", val))
-	val >> limit_daily;
-    if (config->getValue("TIMELINE_LIMIT_MONTHLY", val))
-	val >> limit_monthly;
-    if (config->getValue("TIMELINE_LIMIT_YEARLY", val))
-	val >> limit_yearly;
-    */
+    map<string, string> c = command_get_xxconfig(conn, config_name);
+    map<string, string>::const_iterator pos;
+    if ((pos = c.find("TIMELINE_MIN_AGE")) != c.end())
+	pos->second >> min_age;
+    if ((pos = c.find("TIMELINE_LIMIT_HOURLY")) != c.end())
+	pos->second >> limit_hourly;
+    if ((pos = c.find("TIMELINE_LIMIT_DAILY")) != c.end())
+	pos->second >> limit_daily;
+    if ((pos = c.find("TIMELINE_LIMIT_MONTHLY")) != c.end())
+	pos->second >> limit_monthly;
+    if ((pos = c.find("TIMELINE_LIMIT_YEARLY")) != c.end())
+	pos->second >> limit_yearly;
 
     size_t num_hourly = 0;
     size_t num_daily = 0;
@@ -297,12 +296,10 @@ do_cleanup_empty_pre_post(DBus::Connection& conn, const string& config_name)
 {
     time_t min_age = 1800;
 
-    /*
-    TODO
-    string val;
-    if (config->getValue("EMPTY_PRE_POST_MIN_AGE", val))
-	val >> min_age;
-    */
+    map<string, string> c = command_get_xxconfig(conn, config_name);
+    map<string, string>::const_iterator pos;
+    if ((pos = c.find("EMPTY_PRE_POST_MIN_AGE")) != c.end())
+	pos->second >> min_age;
 
     XSnapshots snapshots = command_list_xsnapshots(conn, config_name);
 
