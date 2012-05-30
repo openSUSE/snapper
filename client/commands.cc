@@ -305,3 +305,16 @@ command_get_xundostatistic(DBus::Connection& conn, const string& config_name, un
 
     return ret;
 }
+
+
+void
+command_xundo_changes(DBus::Connection& conn, const string& config_name, unsigned int number1,
+		      unsigned int number2)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "UndoChanges");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << number1 << number2;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+}

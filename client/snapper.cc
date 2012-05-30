@@ -1000,9 +1000,7 @@ command_undo(DBus::Connection& conn)
 
     cout << sformat(_("create:%d modify:%d delete:%d"), s.numCreate, s.numModify, s.numDelete) << endl;
 
-    /*
-    comparison.doUndo();
-    */
+    command_xundo_changes(conn, config_name, nums.first, nums.second);
 }
 
 

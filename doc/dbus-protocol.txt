@@ -46,11 +46,8 @@ method GetDiff config-name number1 number2 filename which -> list(string)
 
 method SetUndo config-name number1 number2 list(filename undo)
 method SetUndoAll config-name number1 number2 bool
-method UndoChangeStatistic config-name number1 number2
+method GetUndoStatistic config-name number1 number2
 method UndoChange config-name number1 number2
-
-
-method Cleanup config-name algorithm
 
 
 Filenames do not include the subvolume.

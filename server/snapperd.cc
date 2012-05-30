@@ -142,6 +142,12 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='num-files' type='u' direction='out'/>\n"
 	"    </method>\n"
 
+	"    <method name='DeleteComparison'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='number1' type='u' direction='in'/>\n"
+	"      <arg name='number2' type='u' direction='in'/>\n"
+	"    </method>\n"
+
 	"    <method name='GetFiles'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='number1' type='u' direction='in'/>\n"
@@ -179,6 +185,12 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='number-create' type='u' direction='out'/>\n"
 	"      <arg name='number-modify' type='u' direction='out'/>\n"
 	"      <arg name='number-delete' type='u' direction='out'/>\n"
+	"    </method>\n"
+
+	"    <method name='UndoChanges'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='number1' type='u' direction='in'/>\n"
+	"      <arg name='number2' type='u' direction='in'/>\n"
 	"    </method>\n"
 
 	"  </interface>\n"
@@ -758,10 +770,10 @@ reply_to_command_set_undo(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num1 >> num2 >> undos;
 
-    check_permission(conn, msg, config_name);
-
     y2mil("SetUndo config_name:" << config_name << " num1:" << num1 << " num2:" <<
 	  num2);
+
+    check_permission(conn, msg, config_name);
 
     string sender = msg.get_sender();
 
@@ -797,10 +809,10 @@ reply_to_command_set_undo_all(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num1 >> num2 >> undo;
 
-    check_permission(conn, msg, config_name);
-
     y2mil("SetUndoAll config_name:" << config_name << " num1:" << num1 << " num2:" <<
 	  num2);
+
+    check_permission(conn, msg, config_name);
 
     string sender = msg.get_sender();
 
@@ -831,10 +843,10 @@ reply_to_command_get_undo_statistics(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num1 >> num2;
 
-    check_permission(conn, msg, config_name);
-
     y2mil("GetUndoStatistic config_name:" << config_name << " num1:" << num1 << " num2:" <<
 	  num2);
+
+    check_permission(conn, msg, config_name);
 
     string sender = msg.get_sender();
 
@@ -851,6 +863,73 @@ reply_to_command_get_undo_statistics(DBus::Connection& conn, DBus::Message& msg)
     hoho << statistic.numCreate << statistic.numModify << statistic.numDelete;
 
     conn.send(reply);
+}
+
+
+struct Undoing : public Job
+{
+    DBus::Connection* conn;
+    DBus::MessageMethodReturn* reply;
+
+    Comparison* comparison;
+
+    void done();
+
+protected:
+
+    virtual void operator()();
+
+};
+
+
+void
+reply_to_command_undo_changes(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    dbus_uint32_t num1, num2;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> num1 >> num2;
+
+    y2mil("UndoChanges config_name:" << config_name << " num1:" << num1 << " num2:" <<
+	  num2);
+
+    check_permission(conn, msg, config_name);
+
+    string sender = msg.get_sender();
+
+    Clients::iterator it = clients.find(sender);
+    assert(it != clients.end());
+
+    Comparison* comparison = it->find_comparison(config_name, num1, num2);
+
+    Undoing* job = new Undoing;
+    job->conn = &conn;
+    job->reply = new DBus::MessageMethodReturn(msg);
+    job->comparison = comparison;
+
+    jobs.add(job);
+}
+
+
+void
+Undoing::operator()()
+{
+    boost::this_thread::sleep(seconds(2));
+
+    comparison->doUndo();
+
+    boost::this_thread::sleep(seconds(2));
+}
+
+
+void
+Undoing::done()
+{
+    DBus::Hoho hoho(*reply);
+    conn->send(*reply);
+
+    delete reply;
 }
 
 
@@ -954,6 +1033,8 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    reply_to_command_set_undo_all(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetUndoStatistic"))
 	    reply_to_command_get_undo_statistics(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "UndoChanges"))
+	    reply_to_command_undo_changes(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "Debug"))
 	    reply_to_command_debug(conn, msg);
 	else
