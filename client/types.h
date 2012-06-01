@@ -31,6 +31,10 @@ using std::map;
 #include "dbus/DBusConnection.h"
 #include "dbus/DBusMessage.h"
 
+#include "snapper/Snapshot.h"
+
+using namespace snapper;
+
 
 struct XConfigInfo
 {
@@ -39,12 +43,9 @@ struct XConfigInfo
 };
 
 
-enum XSnapshotType { XSINGLE, XPRE, XPOST };
-
-
 struct XSnapshot
 {
-    XSnapshotType getType() const { return type; }
+    SnapshotType getType() const { return type; }
 
     unsigned int getNum() const { return num; }
     bool isCurrent() const { return num == 0; }
@@ -59,7 +60,7 @@ struct XSnapshot
 
     map<string, string> getUserdata() const { return userdata; }
 
-    XSnapshotType type;
+    SnapshotType type;
     unsigned int num;
     time_t date;
     unsigned int pre_num;
@@ -118,11 +119,14 @@ namespace DBus
     template <> struct TypeInfo<XUndo> { static const char* signature; };
 
     Hihi& operator>>(Hihi& hihi, XConfigInfo& data);
-    Hihi& operator>>(Hihi& hihi, XSnapshotType& data);
+
+    Hihi& operator>>(Hihi& hihi, SnapshotType& data);
+    Hoho& operator<<(Hoho& hoho, SnapshotType data);
+
     Hihi& operator>>(Hihi& hihi, XSnapshot& data);
+
     Hihi& operator>>(Hihi& hihi, XFile& data);
 
-    Hoho& operator<<(Hoho& hoho, XSnapshotType data);
     Hoho& operator<<(Hoho& hoho, const XUndo& data);
 
 };

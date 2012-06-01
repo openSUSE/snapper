@@ -20,18 +20,23 @@
  */
 
 
+#include "snapper/SnapperTmpl.h"
+
 #include "types.h"
+
+
+using namespace snapper;
 
 
 XSnapshots::const_iterator
 XSnapshots::findPre(const_iterator post) const
 {
-    if (post == entries.end() || post->isCurrent() || post->getType() != XPOST)
+    if (post == entries.end() || post->isCurrent() || post->getType() != POST)
 	throw;
 
     for (const_iterator it = begin(); it != end(); ++it)
     {
-	if (it->getType() == XPRE && it->getNum() == post->getPreNum())
+	if (it->getType() == PRE && it->getNum() == post->getPreNum())
 	    return it;
     }
 
@@ -42,12 +47,12 @@ XSnapshots::findPre(const_iterator post) const
 XSnapshots::const_iterator
 XSnapshots::findPost(const_iterator pre) const
 {
-    if (pre == entries.end() || pre->isCurrent() || pre->getType() != XPRE)
+    if (pre == entries.end() || pre->isCurrent() || pre->getType() != PRE)
 	throw;
 
     for (const_iterator it = begin(); it != end(); ++it)
     {
-	if (it->getType() == XPOST && it->getPreNum() == pre->getNum())
+	if (it->getType() == POST && it->getPreNum() == pre->getNum())
 	    return it;
     }
 
@@ -81,11 +86,11 @@ namespace DBus
 
 
     Hihi&
-    operator>>(Hihi& hihi, XSnapshotType& data)
+    operator>>(Hihi& hihi, SnapshotType& data)
     {
 	dbus_uint16_t tmp;
 	hihi >> tmp;
-	data = static_cast<XSnapshotType>(tmp);
+	data = static_cast<SnapshotType>(tmp);
 	return hihi;
     }
 
@@ -112,7 +117,7 @@ namespace DBus
 
 
     Hoho&
-    operator<<(Hoho& hoho, XSnapshotType data)
+    operator<<(Hoho& hoho, SnapshotType data)
     {
 	hoho << static_cast<dbus_uint16_t>(data);
 	return hoho;

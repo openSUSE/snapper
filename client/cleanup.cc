@@ -58,7 +58,7 @@ filter2(const XSnapshots& snapshots, list<XSnapshots::const_iterator>& tmp)
 
     for (list<XSnapshots::const_iterator>::const_iterator it1 = tmp.begin(); it1 != tmp.end(); ++it1)
     {
-	if ((*it1)->getType() == XPRE)
+	if ((*it1)->getType() == PRE)
 	{
 	    XSnapshots::const_iterator it2 = snapshots.findPost(*it1);
 	    if (it2 != snapshots.end())
@@ -68,7 +68,7 @@ filter2(const XSnapshots& snapshots, list<XSnapshots::const_iterator>& tmp)
 	    }
 	}
 
-	if ((*it1)->getType() == XPOST)
+	if ((*it1)->getType() == POST)
 	{
 	    XSnapshots::const_iterator it2 = snapshots.findPre(*it1);
 	    if (it2 != snapshots.end())
@@ -307,7 +307,7 @@ do_cleanup_empty_pre_post(DBus::Connection& conn, const string& config_name)
 
     for (XSnapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
     {
-	if (it1->getType() == XPRE)
+	if (it1->getType() == PRE)
 	{
 	    XSnapshots::const_iterator it2 = snapshots.findPost(it1);
 

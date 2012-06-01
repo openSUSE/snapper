@@ -380,9 +380,9 @@ command_list(DBus::Connection& conn)
 	    for (XSnapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
 	    {
 		TableRow row;
-		row.add(/*toString(*/ decString((int)(it1->getType())));
+		row.add(toString(it1->getType()));
 		row.add(decString(it1->getNum()));
-		row.add(it1->getType() == XPOST ? decString(it1->getPreNum()) : "");
+		row.add(it1->getType() == POST ? decString(it1->getPreNum()) : "");
 		row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), false, false));
 		row.add(it1->getCleanup());
 		row.add(it1->getDescription());
@@ -404,7 +404,7 @@ command_list(DBus::Connection& conn)
 	    XSnapshots snapshots = command_list_xsnapshots(conn, config_name);
 	    for (XSnapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
 	    {
-		if (it1->getType() != XSINGLE)
+		if (it1->getType() != SINGLE)
 		    continue;
 
 		TableRow row;
@@ -431,7 +431,7 @@ command_list(DBus::Connection& conn)
 	    XSnapshots snapshots = command_list_xsnapshots(conn, config_name);
 	    for (XSnapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
 	    {
-		if (it1->getType() != XPRE)
+		if (it1->getType() != PRE)
 		    continue;
 
 		XSnapshots::const_iterator it2 = snapshots.findPost(it1);
