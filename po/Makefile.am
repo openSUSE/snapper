@@ -6,7 +6,7 @@ XGETTEXT = xgettext
 MSGFMT = msgfmt
 MSGMERGE = msgmerge
 
-SRCFILES = $(wildcard ../tools/*.cc ../tools/utils/*.cc)
+SRCFILES = $(wildcard ../client/*.cc ../client/utils/*.cc)
 
 POFILES = $(wildcard *.po)
 
