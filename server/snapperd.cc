@@ -1068,6 +1068,11 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
 	DBus::MessageError reply(msg, "error.illegal_snapshot", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
+    catch (const InvalidUserdataException& e)
+    {
+	DBus::MessageError reply(msg, "error.invalid_userdata", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
     catch (...)
     {
 	DBus::MessageError reply(msg, "error.something", DBUS_ERROR_FAILED);

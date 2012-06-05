@@ -1221,13 +1221,15 @@ main(int argc, char** argv)
     catch (const DBus::ErrorException& e)
     {
 	if (strcmp(e.name(), "error.no_permissions") == 0)
-	    cerr << "failed (no permissions)" << endl;
+	    cerr << _("No permissions.") << endl;
+	else if (strcmp(e.name(), "error.invalid_userdata") == 0)
+	    cerr << _("Invalid userdata.") << endl;
 	else
-	    cerr << "failed (" << e.what() << ")" << endl;
+	    cerr << _("Failure") << " (" << e.what() << ")." << endl;
     }
     catch (const DBus::FatalException& e)
     {
-	cerr << "failed (" << e.what() << ")" << endl;
+	cerr << _("Failure") << " (" << e.what() << ")." << endl;
     }
 
     exit(EXIT_SUCCESS);
