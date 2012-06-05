@@ -1212,9 +1212,23 @@ main(int argc, char** argv)
 	exit(EXIT_FAILURE);
     }
 
-    DBus::Connection conn(DBUS_BUS_SYSTEM);
+    try
+    {
+	DBus::Connection conn(DBUS_BUS_SYSTEM);
 
-    (*cmd->second)(conn);
+	(*cmd->second)(conn);
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	if (strcmp(e.name(), "error.no_permissions") == 0)
+	    cerr << "failed (no permissions)" << endl;
+	else
+	    cerr << "failed (" << e.what() << ")" << endl;
+    }
+    catch (const DBus::FatalException& e)
+    {
+	cerr << "failed (" << e.what() << ")" << endl;
+    }
 
     exit(EXIT_SUCCESS);
 }

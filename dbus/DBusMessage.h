@@ -47,6 +47,17 @@ namespace DBus
     };
 
 
+    struct ErrorException : public Exception
+    {
+	explicit ErrorException(const DBusError err) throw() : err(err) {}
+	~ErrorException() throw() { dbus_error_free(&err); }
+	virtual const char* what() const throw() { return "dbus error exception"; }
+	virtual const char* name() const throw() { return err.name; }
+	virtual const char* message() const throw() { return err.message; }
+	DBusError err;
+    };
+
+
     struct MarshallingException : public Exception
     {
 	explicit MarshallingException() throw() {}

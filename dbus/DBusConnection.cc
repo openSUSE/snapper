@@ -102,8 +102,7 @@ namespace DBus
 								     0x7fffffff, &err);
 	if (dbus_error_is_set(&err))
 	{
-	    dbus_error_free(&err);
-	    throw FatalException();
+	    throw ErrorException(err);
 	}
 
 	Message reply(tmp);
