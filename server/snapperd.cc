@@ -205,6 +205,13 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 }
 
 
+struct UnknownConfig : public std::exception
+{
+    explicit UnknownConfig() throw() {}
+    virtual const char* what() const throw() { return "unknown config"; }
+};
+
+
 struct Permissions : public std::exception
 {
     explicit Permissions() throw() {}
@@ -241,11 +248,11 @@ check_permission(DBus::Connection& conn, DBus::Message& msg, const string& confi
 	    if (find(it->users.begin(), it->users.end(), username) != it->users.end())
 		return;
 
-	    break;
+	    throw Permissions();
 	}
     }
 
-    throw Permissions();
+    throw UnknownConfig();
 }
 
 
@@ -1046,6 +1053,11 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
     catch (const DBus::MarshallingException& e)
     {
 	DBus::MessageError reply(msg, "error.marshalling", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
+    catch (const UnknownConfig& e)
+    {
+	DBus::MessageError reply(msg, "error.unknown_config", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const Permissions& e)

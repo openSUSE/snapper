@@ -1220,7 +1220,9 @@ main(int argc, char** argv)
     }
     catch (const DBus::ErrorException& e)
     {
-	if (strcmp(e.name(), "error.no_permissions") == 0)
+	if (strcmp(e.name(), "error.unknown_config") == 0)
+	    cerr << _("Unknown config.") << endl;
+	else if (strcmp(e.name(), "error.no_permissions") == 0)
 	    cerr << _("No permissions.") << endl;
 	else if (strcmp(e.name(), "error.invalid_userdata") == 0)
 	    cerr << _("Invalid userdata.") << endl;
