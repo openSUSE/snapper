@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Jun 12 10:07:08 CEST 2012 - aschnell@suse.de
+
+- removed blocxx (fate #313242)
+- 0.0.11
+
+-------------------------------------------------------------------
 Thu Mar 15 10:56:40 CET 2012 - aschnell@suse.de
 
 - added missing includes for gcc 4.7

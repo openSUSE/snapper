@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2011] Novell, Inc.
+ * Copyright (c) [2004-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -24,17 +24,14 @@
 #define SNAPPER_LOG_H
 
 #include <sstream>
-#include <string>
+
+#include "Logger.h"
 
 
 namespace snapper
 {
     using std::string;
 
-
-    enum LogLevel { DEBUG, MILESTONE, WARNING, ERROR };
-
-    void createLogger(const string& name, const string& logpath, const string& logfile);
 
     bool testLogLevel(LogLevel level);
 
@@ -44,8 +41,6 @@ namespace snapper
 
     void logStreamClose(LogLevel level, const char* file, unsigned line,
 			const char* func, std::ostringstream*);
-
-    void initDefaultLogger();
 
 #define y2deb(op) y2log_op(snapper::DEBUG, __FILE__, __LINE__, __FUNCTION__, op)
 #define y2mil(op) y2log_op(snapper::MILESTONE, __FILE__, __LINE__, __FUNCTION__, op)

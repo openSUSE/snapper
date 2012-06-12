@@ -17,6 +17,7 @@ libsnapper_la_SOURCES =					\
 	Enum.cc			Enum.h			\
 	AppUtil.cc		AppUtil.h		\
 	Log.cc			Log.h			\
+	Logger.cc		Logger.h		\
 	Compare.cc		Compare.h		\
 	SystemCmd.cc		SystemCmd.h		\
 	AsciiFile.cc		AsciiFile.h		\
@@ -27,7 +28,7 @@ libsnapper_la_SOURCES =					\
 	SnapperDefines.h
 
 libsnapper_la_LDFLAGS = -version-info @LIBVERSION_INFO@
-libsnapper_la_LIBADD = @LIBBLOCXX@ -lxml2 -lz -lm
+libsnapper_la_LIBADD = -lxml2 -lz -lm
 
 pkgincludedir = $(includedir)/snapper
 
@@ -37,5 +38,6 @@ pkginclude_HEADERS =					\
 	Snapshot.h					\
 	File.h						\
 	Comparison.h					\
-	Exception.h
+	Exception.h					\
+	Logger.h
 
