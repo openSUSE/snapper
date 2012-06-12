@@ -36,19 +36,19 @@ namespace snapper
     /*
      * Called function should be able to split content at newlines.
      */
-    typedef void (*LogDo)(LogLevel level, const char* component, const char* file, int line,
+    typedef void (*LogDo)(LogLevel level, const string& component, const char* file, int line,
 			  const char* func, const string& content);
 
-    typedef bool (*LogQuery)(LogLevel level, const char* component);
+    typedef bool (*LogQuery)(LogLevel level, const string& component);
 
     void setLogDo(LogDo log_do);
 
     void setLogQuery(LogQuery log_query);
 
-    void callLogDo(LogLevel level, const char* component, const char* file, int line,
+    void callLogDo(LogLevel level, const string& component, const char* file, int line,
 		   const char* func, const string& text);
 
-    bool callLogQuery(LogLevel level, const char* component);
+    bool callLogQuery(LogLevel level, const string& component);
 
     void initDefaultLogger();
 

@@ -29,10 +29,13 @@ namespace snapper
     using namespace std;
 
 
+    const string component = "libsnapper";
+
+
     bool
     testLogLevel(LogLevel level)
     {
-	return callLogQuery(level, "libsnapper");
+	return callLogQuery(level, component);
     }
 
 
@@ -58,7 +61,7 @@ namespace snapper
     logStreamClose(LogLevel level, const char* file, unsigned line, const char* func,
 		   ostringstream* stream)
     {
-	callLogDo(level, "libsnapper", file, line, func, stream->str());
+	callLogDo(level, component, file, line, func, stream->str());
 	delete stream;
     }
 

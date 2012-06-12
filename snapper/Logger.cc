@@ -58,7 +58,7 @@ namespace snapper
 
 
     static void
-    simple_log_do(LogLevel level, const char* component, const char* file, int line,
+    simple_log_do(LogLevel level, const string& component, const char* file, int line,
 		  const char* func, const string& text)
     {
 	static const char* ln[4] = { "DEB", "MIL", "WAR", "ERR" };
@@ -92,14 +92,14 @@ namespace snapper
 
 
     static bool
-    simple_log_query(LogLevel level, const char* component)
+    simple_log_query(LogLevel level, const string& component)
     {
 	return level != DEBUG;
     }
 
 
     void
-    callLogDo(LogLevel level, const char* component, const char* file, int line,
+    callLogDo(LogLevel level, const string& component, const char* file, int line,
 	      const char* func, const string& text)
     {
 	if (log_do)
@@ -110,7 +110,7 @@ namespace snapper
 
 
     bool
-    callLogQuery(LogLevel level, const char* component)
+    callLogQuery(LogLevel level, const string& component)
     {
 	if (log_query)
 	    return (log_query)(level, component);
