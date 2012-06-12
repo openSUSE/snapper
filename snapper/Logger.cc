@@ -40,7 +40,6 @@ namespace snapper
     string filename = "/var/log/snapper.log";
 
     LogDo log_do = NULL;
-
     LogQuery log_query = NULL;
 
 
@@ -141,6 +140,9 @@ namespace snapper
 		filename = string(pw->pw_dir) + "/.snapper.log";
 	    }
 	}
+
+	log_do = NULL;
+	log_query = NULL;
 
 	initGenericErrorDefaultFunc(&xml_error_func_ptr);
     }
