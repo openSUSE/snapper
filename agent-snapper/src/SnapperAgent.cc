@@ -61,7 +61,7 @@ YCPList SnapperAgent::getListValue (const YCPMap &map, const YCPString &key)
 
 
 void
-log_do(LogLevel level, const char* component, const char* file, const int line, const char* func,
+log_do(LogLevel level, const string& component, const char* file, const int line, const char* func,
        const string& text)
 {
     static const loglevel_t ln[4] = { LOG_DEBUG, LOG_MILESTONE, LOG_WARNING, LOG_ERROR };
@@ -71,7 +71,7 @@ log_do(LogLevel level, const char* component, const char* file, const int line, 
 
 
 bool
-log_query(LogLevel level, const char* component)
+log_query(LogLevel level, const string& component)
 {
     static const loglevel_t ln[4] = { LOG_DEBUG, LOG_MILESTONE, LOG_WARNING, LOG_ERROR };
 
