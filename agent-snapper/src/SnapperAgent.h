@@ -18,6 +18,7 @@
 #include <snapper/Snapshot.h>
 #include <snapper/Comparison.h>
 #include <snapper/File.h>
+#include <snapper/Logger.h>
 
 /**
  * @short An interface class between YaST2 and Snapper Agent

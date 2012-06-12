@@ -60,6 +60,16 @@ YCPList SnapperAgent::getListValue (const YCPMap &map, const YCPString &key)
 }
 
 
+void
+log_do(LogLevel level, const char* component, const char* file, const int line, const char* func,
+       const string& text)
+{
+    static const loglevel_t ln[4] = { LOG_DEBUG, LOG_MILESTONE, LOG_WARNING, LOG_ERROR };
+
+    y2_logger_function(ln[level], component, file, line, func, "%s", text.c_str());
+}
+
+
 /**
  * Constructor
  */
@@ -68,6 +78,8 @@ SnapperAgent::SnapperAgent() : SCRAgent()
     sh			= NULL;
     snapper_initialized	= false;
     snapper_error	= "";
+
+    snapper::setLogDo(&log_do);
 }
 
 /**

@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Jun 12 10:14:40 CEST 2012 - aschnell@suse.de
+
+- adapted to logging changes in libsnapper (fate #313242)
+- 2.22.5
+
+-------------------------------------------------------------------
 Thu Mar 29 16:01:03 CEST 2012 - jsuchome@suse.cz
 
 - merge proofread texts 
