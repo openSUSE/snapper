@@ -70,6 +70,15 @@ log_do(LogLevel level, const char* component, const char* file, const int line, 
 }
 
 
+bool
+log_query(LogLevel level, const char* component)
+{
+    static const loglevel_t ln[4] = { LOG_DEBUG, LOG_MILESTONE, LOG_WARNING, LOG_ERROR };
+
+    return should_be_logged(ln[level], component);
+}
+
+
 /**
  * Constructor
  */
@@ -80,6 +89,7 @@ SnapperAgent::SnapperAgent() : SCRAgent()
     snapper_error	= "";
 
     snapper::setLogDo(&log_do);
+    snapper::setLogQuery(&log_query);
 }
 
 /**
