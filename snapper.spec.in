@@ -28,11 +28,8 @@ Prefix:		/usr
 BuildRequires:	boost-devel doxygen gcc-c++ libtool libxml2-devel
 BuildRequires:	python-devel swig
 BuildRequires:  dbus-1-devel
-%if 0%{?suse_version}
-BuildRequires:	libblocxx-devel
-%if 0%{?suse_version} >= 1210
+%if (0%{?suse_version} && 0%{?suse_version} >= 1210)
 BuildRequires:	libzypp(plugin:commit)
-%endif
 %endif
 Requires:	libsnapper@LIBVERSION_MAJOR@ = %version
 %if 0%{?suse_version}
@@ -144,9 +141,6 @@ Authors:
 %package -n libsnapper-devel
 Requires:	libsnapper@LIBVERSION_MAJOR@ = %version
 Requires:	gcc-c++ libstdc++-devel boost-devel libxml2-devel
-%if 0%{?suse_version}
-Requires:	blocxx-devel
-%endif
 Summary:	Header files and documentation for libsnapper
 Group:		Development/Languages/C and C++
 
