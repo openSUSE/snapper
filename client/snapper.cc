@@ -1220,14 +1220,18 @@ main(int argc, char** argv)
     }
     catch (const DBus::ErrorException& e)
     {
-	if (strcmp(e.name(), "error.unknown_config") == 0)
+	string name = e.name();
+
+	if (name == "error.unknown_config")
 	    cerr << _("Unknown config.") << endl;
-	else if (strcmp(e.name(), "error.no_permissions") == 0)
+	else if (name == "error.no_permissions")
 	    cerr << _("No permissions.") << endl;
-	else if (strcmp(e.name(), "error.invalid_userdata") == 0)
+	else if (name == "error.invalid_userdata")
 	    cerr << _("Invalid userdata.") << endl;
+	else if (name == "error.illegal_snapshot")
+	    cerr << _("Illegal Snapshot.") << endl;
 	else
-	    cerr << _("Failure") << " (" << e.what() << ")." << endl;
+	    cerr << _("Failure") << " (" << name << ")." << endl;
     }
     catch (const DBus::FatalException& e)
     {
