@@ -135,6 +135,16 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='numbers' type='au' direction='in'/>\n"
 	"    </method>\n"
 
+	"    <method name='MountSnapshot'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='number' type='u' direction='in'/>\n"
+	"    </method>\n"
+
+	"    <method name='UmountSnapshot'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='number' type='u' direction='in'/>\n"
+	"    </method>\n"
+
 	"    <method name='CreateComparison'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='number1' type='u' direction='in'/>\n"
@@ -625,6 +635,60 @@ reply_to_command_delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
 }
 
 
+void
+reply_to_command_mount_snapshot(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    dbus_uint32_t num;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> num;
+
+    y2mil("MountSnapshot config_name:" << config_name << " num:" << num);
+
+    check_permission(conn, msg, config_name);
+
+    Snapper* snapper = getSnapper(config_name);
+
+    Snapshots& snapshots = snapper->getSnapshots();
+
+    Snapshots::iterator snap = snapshots.find(num);
+
+    snap->mountFilesystemSnapshot();
+
+    DBus::MessageMethodReturn reply(msg);
+
+    conn.send(reply);
+}
+
+
+void
+reply_to_command_umount_snapshot(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    dbus_uint32_t num;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> num;
+
+    y2mil("UmountSnapshot config_name:" << config_name << " num:" << num);
+
+    check_permission(conn, msg, config_name);
+
+    Snapper* snapper = getSnapper(config_name);
+
+    Snapshots& snapshots = snapper->getSnapshots();
+
+    Snapshots::iterator snap = snapshots.find(num);
+
+    snap->umountFilesystemSnapshot();
+
+    DBus::MessageMethodReturn reply(msg);
+
+    conn.send(reply);
+}
+
+
 struct Comparing : public Job
 {
     DBus::Connection* conn;
@@ -1028,6 +1092,10 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    reply_to_command_create_post_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "DeleteSnapshots"))
 	    reply_to_command_delete_snapshots(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "MountSnapshot"))
+	    reply_to_command_mount_snapshot(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "UmountSnapshot"))
+	    reply_to_command_umount_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CreateComparison"))
 	    reply_to_command_create_comparison(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetFiles"))
@@ -1046,7 +1114,7 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    reply_to_command_debug(conn, msg);
 	else
 	{
-	    DBus::MessageError reply(msg, "error.unknown", DBUS_ERROR_FAILED);
+	    DBus::MessageError reply(msg, "error.unknown_method", DBUS_ERROR_FAILED);
 	    conn.send(reply);
 	}
     }

@@ -636,10 +636,11 @@ command_modify(DBus::Connection& conn)
     {
 	while (getopts.hasArgs())
 	{
-	    Snapshots::iterator snapshot; // = read_num(getopts.popArg());
+	    unsigned int num = read_num(getopts.popArg());
 
 	    GetOpts::parsed_opts::const_iterator opt;
 
+	    /*
 	    if ((opt = opts.find("description")) != opts.end())
 		snapshot->setDescription(opt->second);
 
@@ -650,6 +651,7 @@ command_modify(DBus::Connection& conn)
 		snapshot->setUserdata(read_userdata(opt->second, snapshot->getUserdata()));
 
 	    snapshot->flushInfo();
+	    */
 	}
     }
     catch (const IllegalSnapshotException& e)
@@ -724,9 +726,9 @@ command_mount(DBus::Connection& conn)
     {
 	while (getopts.hasArgs())
 	{
-	    Snapshots::iterator snapshot; // = read_num(getopts.popArg());
+	    unsigned int num = read_num(getopts.popArg());
 
-	    snapshot->mountFilesystemSnapshot();
+	    command_mount_xsnapshots(conn, config_name, num);
 	}
     }
     catch (const IllegalSnapshotException& e)
@@ -760,9 +762,9 @@ command_umount(DBus::Connection& conn)
     {
 	while (getopts.hasArgs())
 	{
-	    Snapshots::iterator snapshot; // = read_num(getopts.popArg());
+	    unsigned int num = read_num(getopts.popArg());
 
-	    snapshot->umountFilesystemSnapshot();
+	    command_umount_xsnapshots(conn, config_name, num);
 	}
     }
     catch (const IllegalSnapshotException& e)

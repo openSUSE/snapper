@@ -211,6 +211,32 @@ command_delete_xsnapshots(DBus::Connection& conn, const string& config_name,
 
 
 void
+command_mount_xsnapshots(DBus::Connection& conn, const string& config_name,
+			 unsigned int num)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "MountSnapshot");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << num;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+}
+
+
+void
+command_umount_xsnapshots(DBus::Connection& conn, const string& config_name,
+			  unsigned int num)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "UmountSnapshot");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << num;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+}
+
+
+void
 command_create_xcomparison(DBus::Connection& conn, const string& config_name, unsigned int number1,
 			   unsigned int number2)
 {
@@ -234,8 +260,9 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
 
     DBus::Message reply = conn.send_and_reply_and_block(call);
 
-    DBus::Hihi hihi(reply);
     list<XFile> files;
+
+    DBus::Hihi hihi(reply);
     hihi >> files;
 
     return files;
@@ -253,8 +280,9 @@ command_get_xdiff(DBus::Connection& conn, const string& config_name, unsigned in
 
     DBus::Message reply = conn.send_and_reply_and_block(call);
 
-    DBus::Hihi hihi(reply);
     vector<string> files;
+
+    DBus::Hihi hihi(reply);
     hihi >> files;
 
     return files;
