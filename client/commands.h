@@ -56,6 +56,13 @@ command_delete_xconfig(DBus::Connection& conn, const string& config_name);
 XSnapshots
 command_list_xsnapshots(DBus::Connection& conn, const string& config_name);
 
+XSnapshot
+command_get_xsnapshot(DBus::Connection& conn, const string& config_name, unsigned int num);
+
+void
+command_set_xsnapshot(DBus::Connection& conn, const string& config_name, unsigned int num,
+		      const XSnapshot& data);
+
 unsigned int
 command_create_single_xsnapshot(DBus::Connection& conn, const string& config_name,
 				const string& description, const string& cleanup,

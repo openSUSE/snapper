@@ -105,6 +105,25 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='snapshots' type='v' direction='out'/>\n"
 	"    </method>\n"
 
+	"    <method name='GetSnapshot'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='number' type='u' direction='in'/>\n"
+	"      <arg name='type' type='q' direction='out'/>\n"
+	"      <arg name='date' type='u' direction='out'/>\n"
+	"      <arg name='pre-number' type='u' direction='out'/>\n"
+	"      <arg name='description' type='s' direction='out'/>\n"
+	"      <arg name='cleanup' type='s' direction='out'/>\n"
+	"      <arg name='userdata' type='a{ss}' direction='out'/>\n"
+	"    </method>\n"
+
+	"    <method name='SetSnapshot'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='number' type='u' direction='in'/>\n"
+	"      <arg name='description' type='s' direction='in'/>\n"
+	"      <arg name='cleanup' type='s' direction='in'/>\n"
+	"      <arg name='userdata' type='a{ss}' direction='in'/>\n"
+	"    </method>\n"
+
 	"    <method name='CreateSingleSnapshot'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='description' type='s' direction='in'/>\n"
@@ -490,6 +509,68 @@ reply_to_command_list_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::Hoho hoho(reply);
     hoho << snapper->getSnapshots();
+
+    conn.send(reply);
+}
+
+
+void
+reply_to_command_get_snapshot(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    dbus_uint32_t num;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> num;
+
+    y2mil("GetSnapshot config_name:" << config_name << " num:" << num);
+
+    check_permission(conn, msg, config_name);
+
+    Snapper* snapper = getSnapper(config_name);
+
+    Snapshots& snapshots = snapper->getSnapshots();
+
+    Snapshots::iterator snap = snapshots.find(num);
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
+    hoho << snap->getType() << snap->getDate() << snap->getPreNum() << snap->getDescription()
+	 << snap->getCleanup() << snap->getUserdata();
+
+    conn.send(reply);
+}
+
+
+void
+reply_to_command_set_snapshot(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    dbus_uint32_t num;
+    string description;
+    string cleanup;
+    map<string, string> userdata;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> num >> description >> cleanup >> userdata;
+
+    y2mil("SetSnapshot config_name:" << config_name << " num:" << num);
+
+    check_permission(conn, msg, config_name);
+
+    Snapper* snapper = getSnapper(config_name);
+
+    Snapshots& snapshots = snapper->getSnapshots();
+
+    Snapshots::iterator snap = snapshots.find(num);
+
+    snap->setDescription(description);
+    snap->setCleanup(cleanup);
+    snap->setUserdata(userdata);
+    snap->flushInfo();
+
+    DBus::MessageMethodReturn reply(msg);
 
     conn.send(reply);
 }
@@ -1084,6 +1165,10 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    reply_to_command_unlock_config(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "ListSnapshots"))
 	    reply_to_command_list_snapshots(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "GetSnapshot"))
+	    reply_to_command_get_snapshot(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "SetSnapshot"))
+	    reply_to_command_set_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CreateSingleSnapshot"))
 	    reply_to_command_create_single_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CreatePreSnapshot"))

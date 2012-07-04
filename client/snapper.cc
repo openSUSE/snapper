@@ -196,21 +196,13 @@ command_list_configs(DBus::Connection& conn)
     header.add(_("Subvolume"));
     table.setHeader(header);
 
-    try
+    list<XConfigInfo> config_infos = command_list_xconfigs(conn);
+    for (list<XConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
     {
-	list<XConfigInfo> config_infos = command_list_xconfigs(conn);
-	for (list<XConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
-	{
-	    TableRow row;
-	    row.add(it->config_name);
-	    row.add(it->subvolume);
-	    table.add(row);
-	}
-    }
-    catch (const ListConfigsFailedException& e)
-    {
-	cerr << sformat(_("Listing configs failed (%s)."), e.what()) << endl;
-	exit(EXIT_FAILURE);
+	TableRow row;
+	row.add(it->config_name);
+	row.add(it->subvolume);
+	table.add(row);
     }
 
     cout << table;
@@ -270,15 +262,7 @@ command_create_config(DBus::Connection& conn)
 	exit(EXIT_FAILURE);
     }
 
-    try
-    {
-	command_create_xconfig(conn, config_name, subvolume, fstype, template_name);
-    }
-    catch (const CreateConfigFailedException& e)
-    {
-	cerr << sformat(_("Creating config failed (%s)."), e.what()) << endl;
-	exit(EXIT_FAILURE);
-    }
+    command_create_xconfig(conn, config_name, subvolume, fstype, template_name);
 }
 
 
@@ -301,15 +285,7 @@ command_delete_config(DBus::Connection& conn)
 	exit(EXIT_FAILURE);
     }
 
-    try
-    {
-	command_delete_xconfig(conn, config_name);
-    }
-    catch (const DeleteConfigFailedException& e)
-    {
-	cerr << sformat(_("Deleting config failed (%s)."), e.what()) << endl;
-	exit(EXIT_FAILURE);
-    }
+    command_delete_xconfig(conn, config_name);
 }
 
 
@@ -556,46 +532,38 @@ command_create(DBus::Connection& conn)
 	exit(EXIT_FAILURE);
     }
 
-    try
+    switch (type)
     {
-	switch (type)
-	{
-	    case CT_SINGLE: {
-		unsigned int num1 = command_create_single_xsnapshot(conn, config_name, description,
-								    cleanup, userdata);
-		if (print_number)
-		    cout << num1 << endl;
-	    } break;
+	case CT_SINGLE: {
+	    unsigned int num1 = command_create_single_xsnapshot(conn, config_name, description,
+								cleanup, userdata);
+	    if (print_number)
+		cout << num1 << endl;
+	} break;
 
-	    case CT_PRE: {
-		unsigned int num1 = command_create_pre_xsnapshot(conn, config_name, description,
-								 cleanup, userdata);
-		if (print_number)
-		    cout << num1 << endl;
-	    } break;
+	case CT_PRE: {
+	    unsigned int num1 = command_create_pre_xsnapshot(conn, config_name, description,
+							     cleanup, userdata);
+	    if (print_number)
+		cout << num1 << endl;
+	} break;
 
-	    case CT_POST: {
-		unsigned int num2 = command_create_post_xsnapshot(conn, config_name, num1, description,
-								  cleanup, userdata);
-		if (print_number)
-		    cout << num2 << endl;
-	    } break;
+	case CT_POST: {
+	    unsigned int num2 = command_create_post_xsnapshot(conn, config_name, num1, description,
+							      cleanup, userdata);
+	    if (print_number)
+		cout << num2 << endl;
+	} break;
 
-	    case CT_PRE_POST: {
-		unsigned int num1 = command_create_pre_xsnapshot(conn, config_name, description,
-								 cleanup, userdata);
-		system(command.c_str());
-		unsigned int num2 = command_create_post_xsnapshot(conn, config_name, num1, "",
-								  cleanup, userdata);
-		if (print_number)
-		    cout << num1 << ".." << num2 << endl;
-	    } break;
-	}
-    }
-    catch (const InvalidUserdataException& e)
-    {
-	cerr << _("Invalid userdata.") << endl;
-	exit(EXIT_FAILURE);
+	case CT_PRE_POST: {
+	    unsigned int num1 = command_create_pre_xsnapshot(conn, config_name, description,
+							     cleanup, userdata);
+	    system(command.c_str());
+	    unsigned int num2 = command_create_post_xsnapshot(conn, config_name, num1, "",
+							      cleanup, userdata);
+	    if (print_number)
+		cout << num1 << ".." << num2 << endl;
+	} break;
     }
 }
 
@@ -632,37 +600,24 @@ command_modify(DBus::Connection& conn)
 	exit(EXIT_FAILURE);
     }
 
-    try
+    while (getopts.hasArgs())
     {
-	while (getopts.hasArgs())
-	{
-	    unsigned int num = read_num(getopts.popArg());
+	unsigned int num = read_num(getopts.popArg());
 
-	    GetOpts::parsed_opts::const_iterator opt;
+	XSnapshot data = command_get_xsnapshot(conn, config_name, num);
 
-	    /*
-	    if ((opt = opts.find("description")) != opts.end())
-		snapshot->setDescription(opt->second);
+	GetOpts::parsed_opts::const_iterator opt;
 
-	    if ((opt = opts.find("cleanup-algorithm")) != opts.end())
-		snapshot->setCleanup(opt->second);
+	if ((opt = opts.find("description")) != opts.end())
+	    data.description = opt->second;
 
-	    if ((opt = opts.find("userdata")) != opts.end())
-		snapshot->setUserdata(read_userdata(opt->second, snapshot->getUserdata()));
+	if ((opt = opts.find("cleanup-algorithm")) != opts.end())
+	    data.cleanup = opt->second;
 
-	    snapshot->flushInfo();
-	    */
-	}
-    }
-    catch (const IllegalSnapshotException& e)
-    {
-	cerr << _("Invalid snapshot.") << endl;
-	exit(EXIT_FAILURE);
-    }
-    catch (const InvalidUserdataException& e)
-    {
-	cerr << _("Invalid userdata.") << endl;
-	exit(EXIT_FAILURE);
+	if ((opt = opts.find("userdata")) != opts.end())
+	    data.userdata = read_userdata(opt->second, data.userdata);
+
+	command_set_xsnapshot(conn, config_name, num, data);
     }
 }
 
@@ -686,19 +641,11 @@ command_delete(DBus::Connection& conn)
 	exit(EXIT_FAILURE);
     }
 
-    try
+    while (getopts.hasArgs())
     {
-	while (getopts.hasArgs())
-	{
-	    unsigned int num = read_num(getopts.popArg());
+	unsigned int num = read_num(getopts.popArg());
 
-	    command_delete_xsnapshots(conn, config_name, { num });
-	}
-    }
-    catch (const IllegalSnapshotException& e)
-    {
-	cerr << _("Invalid snapshot.") << endl;
-	exit(EXIT_FAILURE);
+	command_delete_xsnapshots(conn, config_name, { num });
     }
 }
 
@@ -722,19 +669,11 @@ command_mount(DBus::Connection& conn)
 	exit(EXIT_FAILURE);
     }
 
-    try
+    while (getopts.hasArgs())
     {
-	while (getopts.hasArgs())
-	{
-	    unsigned int num = read_num(getopts.popArg());
+	unsigned int num = read_num(getopts.popArg());
 
-	    command_mount_xsnapshots(conn, config_name, num);
-	}
-    }
-    catch (const IllegalSnapshotException& e)
-    {
-	cerr << _("Invalid snapshot.") << endl;
-	exit(EXIT_FAILURE);
+	command_mount_xsnapshots(conn, config_name, num);
     }
 }
 
@@ -758,19 +697,11 @@ command_umount(DBus::Connection& conn)
 	exit(EXIT_FAILURE);
     }
 
-    try
+    while (getopts.hasArgs())
     {
-	while (getopts.hasArgs())
-	{
-	    unsigned int num = read_num(getopts.popArg());
+	unsigned int num = read_num(getopts.popArg());
 
-	    command_umount_xsnapshots(conn, config_name, num);
-	}
-    }
-    catch (const IllegalSnapshotException& e)
-    {
-	cerr << _("Invalid snapshot.") << endl;
-	exit(EXIT_FAILURE);
+	command_umount_xsnapshots(conn, config_name, num);
     }
 }
 

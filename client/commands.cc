@@ -134,6 +134,38 @@ command_list_xsnapshots(DBus::Connection& conn, const string& config_name)
 }
 
 
+XSnapshot
+command_get_xsnapshot(DBus::Connection& conn, const string& config_name, unsigned int num)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetSnapshot");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << num;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+
+    XSnapshot ret;
+
+    DBus::Hihi hihi(reply);
+    hihi >> ret.type >> ret.date >> ret.pre_num >> ret.description >> ret.cleanup >> ret.userdata;
+
+    return ret;
+}
+
+
+void
+command_set_xsnapshot(DBus::Connection& conn, const string& config_name, unsigned int num,
+		      const XSnapshot& data)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "SetSnapshot");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << num << data.description << data.cleanup << data.userdata;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+}
+
+
 unsigned int
 command_create_single_xsnapshot(DBus::Connection& conn, const string& config_name,
 				const string& description, const string& cleanup,
