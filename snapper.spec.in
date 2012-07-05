@@ -190,6 +190,6 @@ Authors:
 %dir /usr/lib/zypp/plugins
 %dir /usr/lib/zypp/plugins/commit
 %endif
-/usr/lib/zypp/plugins/commit/snapper.py
+/usr/lib/zypp/plugins/commit/snapper.py*
 
 %changelog
