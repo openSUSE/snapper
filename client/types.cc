@@ -20,12 +20,9 @@
  */
 
 
-#include "snapper/SnapperTmpl.h"
+#include <snapper/SnapperTmpl.h>
 
 #include "types.h"
-
-
-using namespace snapper;
 
 
 XSnapshots::const_iterator

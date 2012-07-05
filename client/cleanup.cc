@@ -26,8 +26,6 @@
 
 #include "commands.h"
 
-
-using namespace snapper;
 using namespace std;
 
 

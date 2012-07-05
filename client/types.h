@@ -30,7 +30,6 @@ using std::map;
 
 #include "dbus/DBusConnection.h"
 #include "dbus/DBusMessage.h"
-
 #include "snapper/Snapshot.h"
 
 using namespace snapper;
