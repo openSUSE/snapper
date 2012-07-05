@@ -1154,7 +1154,6 @@ main(int argc, char** argv)
     catch (const DBus::ErrorException& e)
     {
 	string name = e.name();
-
 	if (name == "error.unknown_config")
 	    cerr << _("Unknown config.") << endl;
 	else if (name == "error.no_permissions")
@@ -1165,10 +1164,12 @@ main(int argc, char** argv)
 	    cerr << _("Illegal Snapshot.") << endl;
 	else
 	    cerr << _("Failure") << " (" << name << ")." << endl;
+	exit(EXIT_FAILURE);
     }
     catch (const DBus::FatalException& e)
     {
 	cerr << _("Failure") << " (" << e.what() << ")." << endl;
+	exit(EXIT_FAILURE);
     }
 
     exit(EXIT_SUCCESS);
