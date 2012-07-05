@@ -25,7 +25,7 @@
 
 namespace DBus
 {
-    const char* TypeInfo<ConfigInfo>::signature = "(ss)";
+    const char* TypeInfo<ConfigInfo>::signature = "(ssa{ss})";
     const char* TypeInfo<Snapshot>::signature = "(uquussa{ss})";
     const char* TypeInfo<File>::signature = "(ssb)";
     const char* TypeInfo<Undo>::signature = "(sb)";
@@ -35,7 +35,7 @@ namespace DBus
     operator<<(Hoho& hoho, const ConfigInfo& data)
     {
 	hoho.open_struct();
-	hoho << data.config_name << data.subvolume;
+	hoho << data.config_name << data.subvolume << data.raw;
 	hoho.close_struct();
 	return hoho;
     }

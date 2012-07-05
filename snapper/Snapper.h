@@ -70,11 +70,13 @@ namespace snapper
     struct ConfigInfo
     {
 	ConfigInfo(const string& config_name, const string& subvolume,
-		   const vector<string>& users)
-	    : config_name(config_name), subvolume(subvolume), users(users) {}
+		   const map<string, string>& raw)
+	    : config_name(config_name), subvolume(subvolume), raw(raw) {}
+
 	string config_name;
 	string subvolume;
-	vector<string> users;
+
+	map<string, string> raw;
     };
 
 

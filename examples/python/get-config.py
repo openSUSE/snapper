@@ -10,6 +10,8 @@ snapper = dbus.Interface(bus.get_object('org.opensuse.snapper', '/org/opensuse/s
 
 config = snapper.GetConfig("root")
 
-for k, v in config.items():
+print config[0], config[1]
+
+for k, v in config[2].items():
     print "%s=%s" % (k, v)
 

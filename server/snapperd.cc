@@ -76,16 +76,16 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='configs' type='v' direction='out'/>\n"
 	"    </method>\n"
 
+	"    <method name='GetConfig'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='data' type='(ssa{ss})' direction='out'/>\n"
+	"    </method>\n"
+
 	"    <method name='CreateConfig'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='subvolume' type='s' direction='in'/>\n"
 	"      <arg name='fstype' type='s' direction='in'/>\n"
 	"      <arg name='template-name' type='s' direction='in'/>\n"
-	"    </method>\n"
-
-	"    <method name='GetConfig'>\n"
-	"      <arg name='config-name' type='s' direction='in'/>\n"
-	"      <arg name='data' type='a{ss}' direction='out'/>\n"
 	"    </method>\n"
 
 	"    <method name='DeleteConfig'>\n"
@@ -108,12 +108,7 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 	"    <method name='GetSnapshot'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='number' type='u' direction='in'/>\n"
-	"      <arg name='type' type='q' direction='out'/>\n"
-	"      <arg name='date' type='u' direction='out'/>\n"
-	"      <arg name='pre-number' type='u' direction='out'/>\n"
-	"      <arg name='description' type='s' direction='out'/>\n"
-	"      <arg name='cleanup' type='s' direction='out'/>\n"
-	"      <arg name='userdata' type='a{ss}' direction='out'/>\n"
+	"      <arg name='type' type='(uquussa{ss})' direction='out'/>\n"
 	"    </method>\n"
 
 	"    <method name='SetSnapshot'>\n"
@@ -262,6 +257,7 @@ check_permission(DBus::Connection& conn, DBus::Message& msg)
 void
 check_permission(DBus::Connection& conn, DBus::Message& msg, const string& config_name)
 {
+    // TODO, cache this
     list<ConfigInfo> config_infos = Snapper::getConfigs();
 
     for (list<ConfigInfo>::const_iterator it = config_infos.begin();
@@ -274,7 +270,19 @@ check_permission(DBus::Connection& conn, DBus::Message& msg, const string& confi
 		return;
 
 	    string username = conn.get_unix_username(msg);
-	    if (find(it->users.begin(), it->users.end(), username) != it->users.end())
+
+	    map<string, string>::const_iterator pos = it->raw.find("USERS");
+	    if (pos == it->raw.end())
+		throw Permissions();
+
+	    string tmp = pos->second;
+	    boost::trim(tmp, locale::classic());
+	    if (tmp.empty())
+		throw Permissions();
+
+	    vector<string> users;
+	    boost::split(users, tmp, boost::is_any_of(" \t"), boost::token_compress_on);
+	    if (find(users.begin(), users.end(), username) != users.end())
 		return;
 
 	    throw Permissions();
@@ -373,6 +381,32 @@ reply_to_command_list_configs(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
+reply_to_command_get_config(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name;
+
+    y2mil("GetConfig config_name:" << config_name);
+
+    check_permission(conn, msg, config_name);
+
+    Snapper* snapper = getSnapper(config_name);
+
+    // TODO, maybe have ConfigInfo in Snapper
+    ConfigInfo tmp(config_name, snapper->subvolumeDir(), snapper->getSysconfigFile()->getAllValues());
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
+    hoho << tmp;
+
+    conn.send(reply);
+}
+
+
+void
 reply_to_command_create_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
@@ -395,31 +429,6 @@ reply_to_command_create_config(DBus::Connection& conn, DBus::Message& msg)
     conn.send(reply);
 
     send_signal_config_created(conn, config_name);
-}
-
-
-void
-reply_to_command_get_config(DBus::Connection& conn, DBus::Message& msg)
-{
-    string config_name;
-
-    DBus::Hihi hihi(msg);
-    hihi >> config_name;
-
-    y2mil("GetConfig config_name:" << config_name);
-
-    check_permission(conn, msg, config_name);
-
-    Snapper* snapper = getSnapper(config_name);
-
-    map<string, string> tmp = snapper->getSysconfigFile()->getAllValues();
-
-    DBus::MessageMethodReturn reply(msg);
-
-    DBus::Hoho hoho(reply);
-    hoho << tmp;
-
-    conn.send(reply);
 }
 
 
@@ -536,8 +545,7 @@ reply_to_command_get_snapshot(DBus::Connection& conn, DBus::Message& msg)
     DBus::MessageMethodReturn reply(msg);
 
     DBus::Hoho hoho(reply);
-    hoho << snap->getType() << snap->getDate() << snap->getPreNum() << snap->getDescription()
-	 << snap->getCleanup() << snap->getUserdata();
+    hoho << *snap;
 
     conn.send(reply);
 }

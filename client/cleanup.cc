@@ -91,11 +91,11 @@ do_cleanup_number(DBus::Connection& conn, const string& config_name)
     time_t min_age = 1800;
     size_t limit = 50;
 
-    map<string, string> c = command_get_xxconfig(conn, config_name);
+    XConfigInfo ci = command_get_xconfig(conn, config_name);
     map<string, string>::const_iterator pos;
-    if ((pos = c.find("NUMBER_MIN_AGE")) != c.end())
+    if ((pos = ci.raw.find("NUMBER_MIN_AGE")) != ci.raw.end())
 	pos->second >> min_age;
-    if ((pos = c.find("NUMBER_LIMIT")) != c.end())
+    if ((pos = ci.raw.find("NUMBER_LIMIT")) != ci.raw.end())
 	pos->second >> limit;
 
     XSnapshots snapshots = command_list_xsnapshots(conn, config_name);
@@ -222,17 +222,17 @@ do_cleanup_timeline(DBus::Connection& conn, const string& config_name)
     size_t limit_monthly = 10;
     size_t limit_yearly = 10;
 
-    map<string, string> c = command_get_xxconfig(conn, config_name);
+    XConfigInfo ci = command_get_xconfig(conn, config_name);
     map<string, string>::const_iterator pos;
-    if ((pos = c.find("TIMELINE_MIN_AGE")) != c.end())
+    if ((pos = ci.raw.find("TIMELINE_MIN_AGE")) != ci.raw.end())
 	pos->second >> min_age;
-    if ((pos = c.find("TIMELINE_LIMIT_HOURLY")) != c.end())
+    if ((pos = ci.raw.find("TIMELINE_LIMIT_HOURLY")) != ci.raw.end())
 	pos->second >> limit_hourly;
-    if ((pos = c.find("TIMELINE_LIMIT_DAILY")) != c.end())
+    if ((pos = ci.raw.find("TIMELINE_LIMIT_DAILY")) != ci.raw.end())
 	pos->second >> limit_daily;
-    if ((pos = c.find("TIMELINE_LIMIT_MONTHLY")) != c.end())
+    if ((pos = ci.raw.find("TIMELINE_LIMIT_MONTHLY")) != ci.raw.end())
 	pos->second >> limit_monthly;
-    if ((pos = c.find("TIMELINE_LIMIT_YEARLY")) != c.end())
+    if ((pos = ci.raw.find("TIMELINE_LIMIT_YEARLY")) != ci.raw.end())
 	pos->second >> limit_yearly;
 
     size_t num_hourly = 0;
@@ -296,9 +296,9 @@ do_cleanup_empty_pre_post(DBus::Connection& conn, const string& config_name)
 {
     time_t min_age = 1800;
 
-    map<string, string> c = command_get_xxconfig(conn, config_name);
+    XConfigInfo ci = command_get_xconfig(conn, config_name);
     map<string, string>::const_iterator pos;
-    if ((pos = c.find("EMPTY_PRE_POST_MIN_AGE")) != c.end())
+    if ((pos = ci.raw.find("EMPTY_PRE_POST_MIN_AGE")) != ci.raw.end())
 	pos->second >> min_age;
 
     XSnapshots snapshots = command_list_xsnapshots(conn, config_name);

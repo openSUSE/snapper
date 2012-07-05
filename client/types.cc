@@ -69,7 +69,7 @@ XUndoStatistic::empty() const
 
 namespace DBus
 {
-    const char* TypeInfo<XConfigInfo>::signature = "(ss)";
+    const char* TypeInfo<XConfigInfo>::signature = "(ssa{ss})";
     const char* TypeInfo<XSnapshot>::signature = "(uquussa{ss})";
     const char* TypeInfo<XFile>::signature = "(ssb)";
     const char* TypeInfo<XUndo>::signature = "(sb)";
@@ -79,7 +79,7 @@ namespace DBus
     operator>>(Hihi& hihi, XConfigInfo& data)
     {
 	hihi.open_recurse();
-	hihi >> data.config_name >> data.subvolume;
+	hihi >> data.config_name >> data.subvolume >> data.raw;
 	hihi.close_recurse();
 	return hihi;
     }

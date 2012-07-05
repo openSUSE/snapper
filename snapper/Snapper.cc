@@ -536,10 +536,9 @@ namespace snapper
 		    string subvolume = "/";
 		    config.getValue("SUBVOLUME", subvolume);
 
-		    vector<string> users;
-		    config.getValue("USERS", users);
+		    map<string, string> raw = config.getAllValues();
 
-		    config_infos.push_back(ConfigInfo(*it, subvolume, users));
+		    config_infos.push_back(ConfigInfo(*it, subvolume, raw));
 		}
 		catch (const FileNotFoundException& e)
 		{

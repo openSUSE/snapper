@@ -33,47 +33,6 @@
 #define INTERFACE "org.opensuse.snapper"
 
 
-XConfigInfo
-command_get_xconfig(DBus::Connection& conn, const string& config_name)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "ListConfigs");
-
-    DBus::Message reply = conn.send_and_reply_and_block(call);
-
-    list<XConfigInfo> ret;
-
-    DBus::Hihi hihi(reply);
-    hihi >> ret;
-
-    for (list<XConfigInfo>::const_iterator it = ret.begin(); it != ret.end(); ++it)
-    {
-	if (it->config_name == config_name)
-	    return *it;
-    }
-
-    throw;
-}
-
-
-map<string, string>
-command_get_xxconfig(DBus::Connection& conn, const string& config_name)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetConfig");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name;
-
-    DBus::Message reply = conn.send_and_reply_and_block(call);
-
-    map<string, string> ret;
-
-    DBus::Hihi hihi(reply);
-    hihi >> ret;
-
-    return ret;
-}
-
-
 list<XConfigInfo>
 command_list_xconfigs(DBus::Connection& conn)
 {
@@ -82,6 +41,25 @@ command_list_xconfigs(DBus::Connection& conn)
     DBus::Message reply = conn.send_and_reply_and_block(call);
 
     list<XConfigInfo> ret;
+
+    DBus::Hihi hihi(reply);
+    hihi >> ret;
+
+    return ret;
+}
+
+
+XConfigInfo
+command_get_xconfig(DBus::Connection& conn, const string& config_name)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetConfig");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name;
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+
+    XConfigInfo ret;
 
     DBus::Hihi hihi(reply);
     hihi >> ret;
@@ -147,7 +125,7 @@ command_get_xsnapshot(DBus::Connection& conn, const string& config_name, unsigne
     XSnapshot ret;
 
     DBus::Hihi hihi(reply);
-    hihi >> ret.type >> ret.date >> ret.pre_num >> ret.description >> ret.cleanup >> ret.userdata;
+    hihi >> ret;
 
     return ret;
 }

@@ -40,6 +40,8 @@ struct XConfigInfo
 {
     string config_name;
     string subvolume;
+
+    map<string, string> raw;
 };
 
 
