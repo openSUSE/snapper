@@ -1,5 +1,6 @@
 
 method ListConfigs
+method GetConfig config-name
 
 
 method CreateConfig config-name subvolume fstype template_name
@@ -18,6 +19,7 @@ lock the some config.
 
 
 method ListSnapshots config-name
+method GetSnapshots config-name number
 
 method CreateSingleSnapshot config-name description cleanup userdata -> number
 method CreatePreSnapshot config-name pre-number description cleanup userdata -> number

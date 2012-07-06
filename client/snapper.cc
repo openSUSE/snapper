@@ -1148,7 +1148,6 @@ main(int argc, char** argv)
     try
     {
 	DBus::Connection conn(DBUS_BUS_SYSTEM);
-
 	(*cmd->second)(conn);
     }
     catch (const DBus::ErrorException& e)
