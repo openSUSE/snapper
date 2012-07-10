@@ -1262,9 +1262,11 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
 void
 listen(DBus::Connection& conn)
 {
-    y2mil("Listening for method calls and signals");
+    y2mil("Requesting DBus name");
 
     conn.request_name("org.opensuse.snapper", DBUS_NAME_FLAG_REPLACE_EXISTING);
+
+    y2mil("Listening for method calls and signals");
 
     conn.add_match("type='signal', interface='" DBUS_INTERFACE_DBUS "', member='NameOwnerChanged'");
 
@@ -1341,10 +1343,22 @@ listen(DBus::Connection& conn)
 }
 
 
+void
+log_do(LogLevel level, const string& component, const char* file, const int line, const char* func,
+       const string& text)
+{
+    cerr << text << endl;
+}
+
+
 int
 main(int argc, char** argv)
 {
+#if 0
     initDefaultLogger();
+#else
+    setLogDo(&log_do);
+#endif
 
     DBus::Connection conn(DBUS_BUS_SYSTEM);
 
