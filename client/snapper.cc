@@ -1019,38 +1019,6 @@ help()
 }
 
 
-struct CompareCallbackImpl : public CompareCallback
-{
-    void start() { cout << _("comparing snapshots...") << flush; }
-    void stop() { cout << " " << _("done") << endl; }
-};
-
-CompareCallbackImpl compare_callback_impl;
-
-
-struct UndoCallbackImpl : public UndoCallback
-{
-    void start() { cout << _("undoing change...") << endl; }
-    void stop() { cout << _("undoing change done") << endl; }
-
-    void createInfo(const string& name)
-	{ if (verbose) cout << sformat(_("creating %s"), name.c_str()) << endl; }
-    void modifyInfo(const string& name)
-	{ if (verbose) cout << sformat(_("modifying %s"), name.c_str()) << endl; }
-    void deleteInfo(const string& name)
-	{ if (verbose) cout << sformat(_("deleting %s"), name.c_str()) << endl; }
-
-    void createError(const string& name)
-	{ cerr << sformat(_("failed to create %s"), name.c_str()) << endl; }
-    void modifyError(const string& name)
-	{ cerr << sformat(_("failed to modify %s"), name.c_str()) << endl; }
-    void deleteError(const string& name)
-	{ cerr << sformat(_("failed to delete %s"), name.c_str()) << endl; }
-};
-
-UndoCallbackImpl undo_callback_impl;
-
-
 int
 main(int argc, char** argv)
 {

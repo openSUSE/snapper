@@ -118,7 +118,7 @@ namespace snapper
 	      comparison->getSnapshot2()->getNum());
 
 	if (getSnapper()->getCompareCallback())
-	    getSnapper()->getCompareCallback()->start();
+	    getSnapper()->getCompareCallback()->start(comparison);
 
 	if (!comparison->getSnapshot1()->isCurrent())
 	    comparison->getSnapshot1()->mountFilesystemSnapshot();
@@ -137,7 +137,7 @@ namespace snapper
 	sort(entries.begin(), entries.end());
 
 	if (getSnapper()->getCompareCallback())
-	    getSnapper()->getCompareCallback()->stop();
+	    getSnapper()->getCompareCallback()->stop(comparison);
 
 	y2mil("found " << entries.size() << " lines");
     }
@@ -686,9 +686,9 @@ namespace snapper
 	{
 	    switch (getAction())
 	    {
-		case CREATE: getSnapper()->getUndoCallback()->createInfo(name); break;
-		case MODIFY: getSnapper()->getUndoCallback()->modifyInfo(name); break;
-		case DELETE: getSnapper()->getUndoCallback()->deleteInfo(name); break;
+		case CREATE: getSnapper()->getUndoCallback()->createInfo(comparison, name); break;
+		case MODIFY: getSnapper()->getUndoCallback()->modifyInfo(comparison, name); break;
+		case DELETE: getSnapper()->getUndoCallback()->deleteInfo(comparison, name); break;
 	    }
 	}
 
@@ -716,9 +716,9 @@ namespace snapper
 	{
 	    switch (getAction())
 	    {
-		case CREATE: getSnapper()->getUndoCallback()->createError(name); break;
-		case MODIFY: getSnapper()->getUndoCallback()->modifyError(name); break;
-		case DELETE: getSnapper()->getUndoCallback()->deleteError(name); break;
+		case CREATE: getSnapper()->getUndoCallback()->createError(comparison, name); break;
+		case MODIFY: getSnapper()->getUndoCallback()->modifyError(comparison, name); break;
+		case DELETE: getSnapper()->getUndoCallback()->deleteError(comparison, name); break;
 	    }
 	}
 

@@ -37,6 +37,7 @@ namespace snapper
 
     class SysconfigFile;
     class Filesystem;
+    class Comparison;
 
 
     struct CompareCallback
@@ -44,8 +45,8 @@ namespace snapper
 	CompareCallback() {}
 	virtual ~CompareCallback() {}
 
-	virtual void start() = 0;
-	virtual void stop() = 0;
+	virtual void start(const Comparison* comparison) = 0;
+	virtual void stop(const Comparison* comparison) = 0;
     };
 
 
@@ -57,13 +58,13 @@ namespace snapper
 	virtual void start() = 0;
 	virtual void stop() = 0;
 
-	virtual void createInfo(const string& name) = 0;
-	virtual void modifyInfo(const string& name) = 0;
-	virtual void deleteInfo(const string& name) = 0;
+	virtual void createInfo(const Comparison* comparison, const string& name) = 0;
+	virtual void modifyInfo(const Comparison* comparison, const string& name) = 0;
+	virtual void deleteInfo(const Comparison* comparison, const string& name) = 0;
 
-	virtual void createError(const string& name) = 0;
-	virtual void modifyError(const string& name) = 0;
-	virtual void deleteError(const string& name) = 0;
+	virtual void createError(const Comparison* comparison, const string& name) = 0;
+	virtual void modifyError(const Comparison* comparison, const string& name) = 0;
+	virtual void deleteError(const Comparison* comparison, const string& name) = 0;
     };
 
 

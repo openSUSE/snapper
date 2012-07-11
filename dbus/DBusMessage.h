@@ -113,7 +113,7 @@ namespace DBus
     public:
 
 	MessageMethodCall(const char* service, const char* object, const char* interface,
-		      const char* method)
+			  const char* method)
 	    : Message(dbus_message_new_method_call(service, object, interface, method))
 	{
 	}

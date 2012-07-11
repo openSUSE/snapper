@@ -32,8 +32,8 @@ unsigned int numCreateErrors, numModifyErrors, numDeleteErrors;
 
 struct CompareCallbackImpl : public CompareCallback
 {
-    void start() { cout << "comparing snapshots..." << flush; }
-    void stop() { cout << " done" << endl; }
+    void start(const Comparison* comparison) { cout << "comparing snapshots..." << flush; }
+    void stop(const Comparison* comparison) { cout << " done" << endl; }
 };
 
 CompareCallbackImpl compare_callback_impl;
@@ -44,13 +44,19 @@ struct UndoCallbackImpl : public UndoCallback
     void start() { cout << "undoing..." << endl; }
     void stop() { cout << "undoing done" << endl; }
 
-    void createInfo(const string& name) { cout << "creating " << name << endl; }
-    void modifyInfo(const string& name) { cout << "modifying " << name << endl; }
-    void deleteInfo(const string& name) { cout << "deleting " << name << endl; }
+    void createInfo(const Comparison* comparison, const string& name)
+	{ cout << "creating " << name << endl; }
+    void modifyInfo(const Comparison* comparison, const string& name)
+	{ cout << "modifying " << name << endl; }
+    void deleteInfo(const Comparison* comparison, const string& name)
+	{ cout << "deleting " << name << endl; }
 
-    void createError(const string& name) { cout << "failed to create " << name << endl; numCreateErrors++; }
-    void modifyError(const string& name) { cout << "failed to modify " << name << endl; numModifyErrors++; }
-    void deleteError(const string& name) { cout << "failed to delete " << name << endl; numDeleteErrors++; }
+    void createError(const Comparison* comparison, const string& name)
+	{ cout << "failed to create " << name << endl; numCreateErrors++; }
+    void modifyError(const Comparison* comparison, const string& name)
+	{ cout << "failed to modify " << name << endl; numModifyErrors++; }
+    void deleteError(const Comparison* comparison, const string& name)
+	{ cout << "failed to delete " << name << endl; numDeleteErrors++; }
 };
 
 UndoCallbackImpl undo_callback_impl;
