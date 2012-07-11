@@ -41,8 +41,8 @@ CompareCallbackImpl compare_callback_impl;
 
 struct UndoCallbackImpl : public UndoCallback
 {
-    void start() { cout << "undoing..." << endl; }
-    void stop() { cout << "undoing done" << endl; }
+    void start(const Comparison* comparison) { cout << "undoing..." << endl; }
+    void stop(const Comparison* comparison) { cout << "undoing done" << endl; }
 
     void createInfo(const Comparison* comparison, const string& name)
 	{ cout << "creating " << name << endl; }

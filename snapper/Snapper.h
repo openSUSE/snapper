@@ -55,8 +55,8 @@ namespace snapper
 	UndoCallback() {}
 	virtual ~UndoCallback() {}
 
-	virtual void start() = 0;
-	virtual void stop() = 0;
+	virtual void start(const Comparison* comparison) = 0;
+	virtual void stop(const Comparison* comparison) = 0;
 
 	virtual void createInfo(const Comparison* comparison, const string& name) = 0;
 	virtual void modifyInfo(const Comparison* comparison, const string& name) = 0;

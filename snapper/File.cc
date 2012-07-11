@@ -771,7 +771,7 @@ namespace snapper
 	y2mil("begin doUndo");
 
 	if (getSnapper()->getUndoCallback())
-	    getSnapper()->getUndoCallback()->start();
+	    getSnapper()->getUndoCallback()->start(comparison);
 
 	for (vector<File>::reverse_iterator it = entries.rbegin(); it != entries.rend(); ++it)
 	{
@@ -796,7 +796,7 @@ namespace snapper
 	}
 
 	if (getSnapper()->getUndoCallback())
-	    getSnapper()->getUndoCallback()->stop();
+	    getSnapper()->getUndoCallback()->stop(comparison);
 
 	y2mil("end doUndo");
 
