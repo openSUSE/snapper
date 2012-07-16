@@ -52,6 +52,10 @@ namespace snapper
 
 	UndoStatistic getUndoStatistic() const;
 
+	vector<UndoStep> getUndoSteps() const;
+
+	bool doUndoStep(const UndoStep& undo_step);
+
 	bool doUndo();
 
     private:

@@ -57,6 +57,7 @@ namespace DBus
     template <> struct TypeInfo<Snapshot> { static const char* signature; };
     template <> struct TypeInfo<File> { static const char* signature; };
     template <> struct TypeInfo<Undo> { static const char* signature; };
+    template <> struct TypeInfo<UndoStep> { static const char* signature; };
 
     Hoho& operator<<(Hoho& hoho, const ConfigInfo& data);
 
@@ -73,5 +74,8 @@ namespace DBus
 
     Hihi& operator>>(Hihi& hihi, Undo& data);
     Hoho& operator<<(Hoho& hoho, const Undo& data);
+
+    Hihi& operator>>(Hihi& hihi, UndoStep& data);
+    Hoho& operator<<(Hoho& hoho, const UndoStep& data);
 
 };

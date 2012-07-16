@@ -923,17 +923,66 @@ command_undo(DBus::Connection& conn)
 	}
     }
 
-    XUndoStatistic s = command_get_xundostatistic(conn, config_name, nums.first, nums.second);
+    vector<XUndoStep> undo_steps = command_get_xundo_steps(conn, config_name, nums.first, nums.second);
 
-    if (s.empty())
+    int numCreate = 0;
+    int numModify = 0;
+    int numDelete = 0;
+
+    for (vector<XUndoStep>::const_iterator it = undo_steps.begin(); it != undo_steps.end(); ++it)
+    {
+	switch (it->action)
+	{
+	    case CREATE: numCreate++; break;
+	    case MODIFY: numModify++; break;
+	    case DELETE: numDelete++; break;
+	}
+    }
+
+    if (numCreate == 0 && numModify == 0 && numDelete == 0)
     {
 	cout << _("nothing to do") << endl;
 	return;
     }
 
-    cout << sformat(_("create:%d modify:%d delete:%d"), s.numCreate, s.numModify, s.numDelete) << endl;
+    cout << sformat(_("create:%d modify:%d delete:%d"), numCreate, numModify, numDelete) << endl;
 
-    command_xundo_changes(conn, config_name, nums.first, nums.second);
+    XConfigInfo ci = command_get_xconfig(conn, config_name);
+
+    for (vector<XUndoStep>::const_iterator it = undo_steps.begin(); it != undo_steps.end(); ++it)
+    {
+	if (verbose)
+	{
+	    switch (it->action)
+	    {
+		case CREATE:
+		    cout << sformat(_("creating %s"), add_subvolume(ci.subvolume, it->name).c_str()) << endl;
+		    break;
+		case MODIFY:
+		    cout << sformat(_("modifying %s"), add_subvolume(ci.subvolume, it->name).c_str()) << endl;
+		    break;
+		case DELETE:
+		    cout << sformat(_("deleting %s"), add_subvolume(ci.subvolume, it->name).c_str()) << endl;
+		    break;
+	    }
+	}
+
+	if (!command_do_xundo_step(conn, config_name, nums.first, nums.second, *it))
+	{
+	    switch (it->action)
+	    {
+		case CREATE:
+		    cout << sformat(_("failed to create %s"), add_subvolume(ci.subvolume, it->name).c_str()) << endl;
+		    break;
+		case MODIFY:
+		    cout << sformat(_("failed to modify %s"), add_subvolume(ci.subvolume, it->name).c_str()) << endl;
+		    break;
+		case DELETE:
+		    cout << sformat(_("failed to delete %s"), add_subvolume(ci.subvolume, it->name).c_str()) << endl;
+		    break;
+	    }
+	}
+    }
 }
 
 

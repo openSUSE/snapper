@@ -31,6 +31,7 @@ using std::map;
 #include "dbus/DBusConnection.h"
 #include "dbus/DBusMessage.h"
 #include "snapper/Snapshot.h"
+#include "snapper/File.h"
 
 using namespace snapper;
 
@@ -101,13 +102,10 @@ struct XUndo
 };
 
 
-struct XUndoStatistic
+struct XUndoStep
 {
-    bool empty() const;
-
-    unsigned int numCreate;
-    unsigned int numModify;
-    unsigned int numDelete;
+    string name;
+    Action action;
 };
 
 
@@ -118,6 +116,7 @@ namespace DBus
     template <> struct TypeInfo<XConfigInfo> { static const char* signature; };
     template <> struct TypeInfo<XFile> { static const char* signature; };
     template <> struct TypeInfo<XUndo> { static const char* signature; };
+    template <> struct TypeInfo<XUndoStep> { static const char* signature; };
 
     Hihi& operator>>(Hihi& hihi, XConfigInfo& data);
 
@@ -129,6 +128,9 @@ namespace DBus
     Hihi& operator>>(Hihi& hihi, XFile& data);
 
     Hoho& operator<<(Hoho& hoho, const XUndo& data);
+
+    Hihi& operator>>(Hihi& hihi, XUndoStep& data);
+    Hoho& operator<<(Hoho& hoho, const XUndoStep& data);
 
 };
 

@@ -103,10 +103,10 @@ void
 command_set_xundo_all(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		      unsigned int number2, bool undo);
 
-XUndoStatistic
-command_get_xundostatistic(DBus::Connection& conn, const string& config_name, unsigned int number1,
-			   unsigned int number2);
+vector<XUndoStep>
+command_get_xundo_steps(DBus::Connection& conn, const string& config_name, unsigned int number1,
+			unsigned int number2);
 
-void
-command_xundo_changes(DBus::Connection& conn, const string& config_name, unsigned int number1,
-		      unsigned int number2);
+bool
+command_do_xundo_step(DBus::Connection& conn, const string& config_name, unsigned int number1,
+		      unsigned int number2, const XUndoStep& undo_step);

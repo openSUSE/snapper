@@ -92,6 +92,26 @@ namespace snapper
     }
 
 
+    vector<UndoStep>
+    Comparison::getUndoSteps() const
+    {
+	if (!initialized)
+	    throw;
+
+	return files.getUndoSteps();
+    }
+
+
+    bool
+    Comparison::doUndoStep(const UndoStep& undo_step)
+    {
+	if (!initialized)
+	    throw;
+
+	return files.doUndoStep(undo_step);
+    }
+
+
     bool
     Comparison::doUndo()
     {

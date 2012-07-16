@@ -726,7 +726,7 @@ namespace snapper
     }
 
 
-    File::Action
+    Action
     File::getAction() const
     {
 	if (getPreToPostStatus() == CREATED)
@@ -751,14 +751,58 @@ namespace snapper
 	    {
 		switch (it->getAction())
 		{
-		    case File::CREATE: rs.numCreate++; break;
-		    case File::MODIFY: rs.numModify++; break;
-		    case File::DELETE: rs.numDelete++; break;
+		    case CREATE: rs.numCreate++; break;
+		    case MODIFY: rs.numModify++; break;
+		    case DELETE: rs.numDelete++; break;
 		}
 	    }
 	}
 
 	return rs;
+    }
+
+
+    vector<UndoStep>
+    Files::getUndoSteps() const
+    {
+	if (comparison->getSnapshot1()->isCurrent())
+	    throw IllegalSnapshotException();
+
+	vector<UndoStep> undo_steps;
+
+	for (vector<File>::const_reverse_iterator it = entries.rbegin(); it != entries.rend(); ++it)
+	{
+	    if (it->getUndo())
+	    {
+		if (it->getPreToPostStatus() == CREATED)
+		    undo_steps.push_back(UndoStep(it->getName(), it->getAction()));
+	    }
+	}
+
+	for (vector<File>::const_iterator it = entries.begin(); it != entries.end(); ++it)
+	{
+	    if (it->getUndo())
+	    {
+		if (it->getPreToPostStatus() != CREATED)
+		    undo_steps.push_back(UndoStep(it->getName(), it->getAction()));
+	    }
+	}
+
+	return undo_steps;
+    }
+
+
+    bool
+    Files::doUndoStep(const UndoStep& undo_step)
+    {
+	if (comparison->getSnapshot1()->isCurrent())
+	    throw IllegalSnapshotException();
+
+	vector<File>::iterator it = find(undo_step.name);
+	if (it == end())
+	    return false;
+
+	return it->doUndo();
     }
 
 
@@ -778,9 +822,7 @@ namespace snapper
 	    if (it->getUndo())
 	    {
 		if (it->getPreToPostStatus() == CREATED)
-		{
 		    it->doUndo();
-		}
 	    }
 	}
 
@@ -789,9 +831,7 @@ namespace snapper
 	    if (it->getUndo())
 	    {
 		if (it->getPreToPostStatus() != CREATED)
-		{
 		    it->doUndo();
-		}
 	    }
 	}
 

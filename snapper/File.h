@@ -56,6 +56,11 @@ namespace snapper
 	LOC_PRE, LOC_POST, LOC_SYSTEM
     };
 
+    enum Action
+    {
+	CREATE, MODIFY, DELETE
+    };
+
 
     struct UndoStatistic
     {
@@ -68,6 +73,16 @@ namespace snapper
 	unsigned int numDelete;
 
 	friend std::ostream& operator<<(std::ostream& s, const UndoStatistic& rs);
+    };
+
+
+    struct UndoStep
+    {
+	UndoStep(const string& name, Action action)
+	    : name(name), action(action) {}
+
+	string name;
+	Action action;
     };
 
 
@@ -96,8 +111,6 @@ namespace snapper
 	bool getUndo() const { return undo; }
 	void setUndo(bool value) { undo = value; }
 	bool doUndo();
-
-	enum Action { CREATE, MODIFY, DELETE };
 
 	Action getAction() const;
 
@@ -177,6 +190,10 @@ namespace snapper
 	void filter();
 
 	UndoStatistic getUndoStatistic() const;
+
+	vector<UndoStep> getUndoSteps() const;
+
+	bool doUndoStep(const UndoStep& undo_step);
 
 	bool doUndo();
 

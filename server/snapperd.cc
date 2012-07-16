@@ -202,19 +202,18 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='undo' type='b' direction='in'/>\n"
 	"    </method>\n"
 
-	"    <method name='GetUndoStatistic'>\n"
+	"    <method name='GetUndoSteps'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='number1' type='u' direction='in'/>\n"
 	"      <arg name='number2' type='u' direction='in'/>\n"
-	"      <arg name='number-create' type='u' direction='out'/>\n"
-	"      <arg name='number-modify' type='u' direction='out'/>\n"
-	"      <arg name='number-delete' type='u' direction='out'/>\n"
+	"      <arg name='undo-steps' type='a(sq)' direction='out'/>\n"
 	"    </method>\n"
 
-	"    <method name='UndoChanges'>\n"
+	"    <method name='DoUndoStep'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='number1' type='u' direction='in'/>\n"
 	"      <arg name='number2' type='u' direction='in'/>\n"
+	"      <arg name='undo-step' type='(sq)' direction='in'/>\n"
 	"    </method>\n"
 
 	"  </interface>\n"
@@ -780,6 +779,9 @@ reply_to_command_umount_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
 struct Comparing : public Job
 {
+    Comparing(Comparison* comparison)
+	: comparison(comparison) {}
+
     DBus::Connection* conn;
     DBus::MessageMethodReturn* reply;
 
@@ -819,10 +821,9 @@ reply_to_command_create_comparison(DBus::Connection& conn, DBus::Message& msg)
     assert(it != clients.end());
     it->comparisons.push_back(comparison);
 
-    Comparing* job = new Comparing;
+    Comparing* job = new Comparing(comparison);
     job->conn = &conn;
     job->reply = new DBus::MessageMethodReturn(msg);
-    job->comparison = comparison;
 
     jobs.add(job);
 }
@@ -842,7 +843,6 @@ Comparing::operator()()
 void
 Comparing::done()
 {
-    DBus::Hoho hoho(*reply);
     conn->send(*reply);
 
     delete reply;
@@ -995,7 +995,7 @@ reply_to_command_set_undo_all(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_get_undo_statistics(DBus::Connection& conn, DBus::Message& msg)
+reply_to_command_get_undo_steps(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num1, num2;
@@ -1003,7 +1003,7 @@ reply_to_command_get_undo_statistics(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num1 >> num2;
 
-    y2mil("GetUndoStatistic config_name:" << config_name << " num1:" << num1 << " num2:" <<
+    y2mil("GetUndoSteps config_name:" << config_name << " num1:" << num1 << " num2:" <<
 	  num2);
 
     check_permission(conn, msg, config_name);
@@ -1015,12 +1015,12 @@ reply_to_command_get_undo_statistics(DBus::Connection& conn, DBus::Message& msg)
 
     Comparison* comparison = it->find_comparison(config_name, num1, num2);
 
-    UndoStatistic statistic = comparison->getUndoStatistic();
+    vector<UndoStep> undo_steps = comparison->getUndoSteps();
 
     DBus::MessageMethodReturn reply(msg);
 
     DBus::Hoho hoho(reply);
-    hoho << statistic.numCreate << statistic.numModify << statistic.numDelete;
+    hoho << undo_steps;
 
     conn.send(reply);
 }
@@ -1028,10 +1028,14 @@ reply_to_command_get_undo_statistics(DBus::Connection& conn, DBus::Message& msg)
 
 struct Undoing : public Job
 {
+    Undoing(Comparison* comparison, const UndoStep& undo_step)
+	: comparison(comparison), undo_step(undo_step) {}
+
     DBus::Connection* conn;
     DBus::MessageMethodReturn* reply;
 
     Comparison* comparison;
+    UndoStep undo_step;
 
     void done();
 
@@ -1043,15 +1047,16 @@ protected:
 
 
 void
-reply_to_command_undo_changes(DBus::Connection& conn, DBus::Message& msg)
+reply_to_command_do_undo_step(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num1, num2;
+    UndoStep undo_step("", MODIFY);
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> num1 >> num2;
+    hihi >> config_name >> num1 >> num2 >> undo_step;
 
-    y2mil("UndoChanges config_name:" << config_name << " num1:" << num1 << " num2:" <<
+    y2mil("GetUndoSteps config_name:" << config_name << " num1:" << num1 << " num2:" <<
 	  num2);
 
     check_permission(conn, msg, config_name);
@@ -1063,10 +1068,9 @@ reply_to_command_undo_changes(DBus::Connection& conn, DBus::Message& msg)
 
     Comparison* comparison = it->find_comparison(config_name, num1, num2);
 
-    Undoing* job = new Undoing;
+    Undoing* job = new Undoing(comparison, undo_step);
     job->conn = &conn;
     job->reply = new DBus::MessageMethodReturn(msg);
-    job->comparison = comparison;
 
     jobs.add(job);
 }
@@ -1077,7 +1081,10 @@ Undoing::operator()()
 {
     boost::this_thread::sleep(seconds(2));
 
-    comparison->doUndo();
+    bool ret = comparison->doUndoStep(undo_step);
+
+    DBus::Hoho hoho(*reply);
+    hoho << ret;
 
     boost::this_thread::sleep(seconds(2));
 }
@@ -1086,7 +1093,6 @@ Undoing::operator()()
 void
 Undoing::done()
 {
-    DBus::Hoho hoho(*reply);
     conn->send(*reply);
 
     delete reply;
@@ -1199,10 +1205,10 @@ dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    reply_to_command_set_undo(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "SetUndoAll"))
 	    reply_to_command_set_undo_all(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "GetUndoStatistic"))
-	    reply_to_command_get_undo_statistics(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "UndoChanges"))
-	    reply_to_command_undo_changes(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "GetUndoSteps"))
+	    reply_to_command_get_undo_steps(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "DoUndoStep"))
+	    reply_to_command_do_undo_step(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "Debug"))
 	    reply_to_command_debug(conn, msg);
 	else

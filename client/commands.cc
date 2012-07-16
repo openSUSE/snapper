@@ -72,7 +72,7 @@ command_create_xconfig(DBus::Connection& conn, const string& config_name, const 
     DBus::Hoho hoho(call);
     hoho << config_name << subvolume << fstype << template_name;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    conn.send_and_reply_and_block(call);
 }
 
 
@@ -84,7 +84,7 @@ command_delete_xconfig(DBus::Connection& conn, const string& config_name)
     DBus::Hoho hoho(call);
     hoho << config_name;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    conn.send_and_reply_and_block(call);
 }
 
 
@@ -135,7 +135,7 @@ command_set_xsnapshot(DBus::Connection& conn, const string& config_name, unsigne
     DBus::Hoho hoho(call);
     hoho << config_name << num << data.description << data.cleanup << data.userdata;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    conn.send_and_reply_and_block(call);
 }
 
 
@@ -211,7 +211,7 @@ command_delete_xsnapshots(DBus::Connection& conn, const string& config_name,
     DBus::Hoho hoho(call);
     hoho << config_name << nums;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    conn.send_and_reply_and_block(call);
 }
 
 
@@ -224,7 +224,7 @@ command_mount_xsnapshots(DBus::Connection& conn, const string& config_name,
     DBus::Hoho hoho(call);
     hoho << config_name << num;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    conn.send_and_reply_and_block(call);
 }
 
 
@@ -237,7 +237,7 @@ command_umount_xsnapshots(DBus::Connection& conn, const string& config_name,
     DBus::Hoho hoho(call);
     hoho << config_name << num;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    conn.send_and_reply_and_block(call);
 }
 
 
@@ -250,7 +250,7 @@ command_create_xcomparison(DBus::Connection& conn, const string& config_name, un
     DBus::Hoho hoho(call);
     hoho << config_name << number1 << number2;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    conn.send_and_reply_and_block(call);
 }
 
 
@@ -303,7 +303,7 @@ command_set_xundo(DBus::Connection& conn, const string& config_name, unsigned in
     DBus::Hoho hoho(call);
     hoho << config_name << number1 << number2 << undos;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    conn.send_and_reply_and_block(call);
 }
 
 
@@ -316,38 +316,45 @@ command_set_xundo_all(DBus::Connection& conn, const string& config_name, unsigne
     DBus::Hoho hoho(call);
     hoho << config_name << number1 << number2 << undo;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    conn.send_and_reply_and_block(call);
 }
 
 
-XUndoStatistic
-command_get_xundostatistic(DBus::Connection& conn, const string& config_name, unsigned int number1,
-			   unsigned int number2)
+vector<XUndoStep>
+command_get_xundo_steps(DBus::Connection& conn, const string& config_name, unsigned int number1,
+			unsigned int number2)
 {
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetUndoStatistic");
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetUndoSteps");
 
     DBus::Hoho hoho(call);
     hoho << config_name << number1 << number2;
 
     DBus::Message reply = conn.send_and_reply_and_block(call);
 
-    XUndoStatistic ret;
+    vector<XUndoStep> undo_steps;
 
     DBus::Hihi hihi(reply);
-    hihi >> ret.numCreate >> ret.numModify >> ret.numDelete;
+    hihi >> undo_steps;
 
-    return ret;
+    return undo_steps;
 }
 
 
-void
-command_xundo_changes(DBus::Connection& conn, const string& config_name, unsigned int number1,
-		      unsigned int number2)
+bool
+command_do_xundo_step(DBus::Connection& conn, const string& config_name, unsigned int number1,
+		      unsigned int number2, const XUndoStep& undo_step)
 {
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "UndoChanges");
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "DoUndoStep");
 
     DBus::Hoho hoho(call);
-    hoho << config_name << number1 << number2;
+    hoho << config_name << number1 << number2 << undo_step;
 
     DBus::Message reply = conn.send_and_reply_and_block(call);
+
+    bool ret;
+
+    DBus::Hihi hihi(reply);
+    hihi >> ret;
+
+    return ret;
 }

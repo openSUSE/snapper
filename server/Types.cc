@@ -29,6 +29,7 @@ namespace DBus
     const char* TypeInfo<Snapshot>::signature = "(uquussa{ss})";
     const char* TypeInfo<File>::signature = "(ssb)";
     const char* TypeInfo<Undo>::signature = "(sb)";
+    const char* TypeInfo<UndoStep>::signature = "(sq)";
 
 
     Hoho&
@@ -117,6 +118,28 @@ namespace DBus
     {
 	hoho.open_struct();
 	hoho << data.filename << data.undo;
+	hoho.close_struct();
+	return hoho;
+    }
+
+
+    Hihi&
+    operator>>(Hihi& hihi, UndoStep& data)
+    {
+	hihi.open_recurse();
+	dbus_uint16_t tmp;
+	hihi >> data.name >> tmp;
+	data.action = static_cast<Action>(tmp);
+	hihi.close_recurse();
+	return hihi;
+    }
+
+
+    Hoho&
+    operator<<(Hoho& hoho, const UndoStep& data)
+    {
+	hoho.open_struct();
+	hoho << data.name << static_cast<dbus_uint16_t>(data.action);
 	hoho.close_struct();
 	return hoho;
     }

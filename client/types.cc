@@ -57,19 +57,13 @@ XSnapshots::findPost(const_iterator pre) const
 }
 
 
-bool
-XUndoStatistic::empty() const
-{
-    return numCreate == 0 && numModify == 0 && numDelete == 0;
-}
-
-
 namespace DBus
 {
     const char* TypeInfo<XConfigInfo>::signature = "(ssa{ss})";
     const char* TypeInfo<XSnapshot>::signature = "(uquussa{ss})";
     const char* TypeInfo<XFile>::signature = "(ssb)";
     const char* TypeInfo<XUndo>::signature = "(sb)";
+    const char* TypeInfo<XUndoStep>::signature = "(sq)";
 
 
     Hihi&
@@ -130,4 +124,25 @@ namespace DBus
 	return hoho;
     }
 
+
+    Hihi&
+    operator>>(Hihi& hihi, XUndoStep& data)
+    {
+	hihi.open_recurse();
+	dbus_uint16_t tmp;
+	hihi >> data.name >> tmp;
+	data.action = static_cast<Action>(tmp);
+	hihi.close_recurse();
+	return hihi;
+    }
+
+
+    Hoho&
+    operator<<(Hoho& hoho, const XUndoStep& data)
+    {
+	hoho.open_struct();
+	hoho << data.name << static_cast<dbus_uint16_t>(data.action);
+	hoho.close_struct();
+	return hoho;
+    }
 }
