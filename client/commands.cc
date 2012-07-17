@@ -358,3 +358,19 @@ command_do_xundo_step(DBus::Connection& conn, const string& config_name, unsigne
 
     return ret;
 }
+
+
+vector<string>
+command_xdebug(DBus::Connection& conn)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "Debug");
+
+    DBus::Message reply = conn.send_and_reply_and_block(call);
+
+    vector<string> lines;
+
+    DBus::Hihi hihi(reply);
+    hihi >> lines;
+
+    return lines;
+}

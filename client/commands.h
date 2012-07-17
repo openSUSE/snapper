@@ -110,3 +110,6 @@ command_get_xundo_steps(DBus::Connection& conn, const string& config_name, unsig
 bool
 command_do_xundo_step(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		      unsigned int number2, const XUndoStep& undo_step);
+
+vector<string>
+command_xdebug(DBus::Connection& conn);

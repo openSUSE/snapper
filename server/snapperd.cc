@@ -1102,7 +1102,7 @@ Undoing::done()
 void
 reply_to_command_debug(DBus::Connection& conn, DBus::Message& msg)
 {
-    // check_permission(conn, msg);
+    check_permission(conn, msg);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -1111,7 +1111,7 @@ reply_to_command_debug(DBus::Connection& conn, DBus::Message& msg)
     hoho.open_array("s");
 
     hoho << "clients:";
-    for (list<Client>::iterator it = clients.begin(); it != clients.end(); ++it)
+    for (list<Client>::const_iterator it = clients.begin(); it != clients.end(); ++it)
     {
 	std::ostringstream s;
 	s << "    name:'" << it->name << "'";
@@ -1126,7 +1126,7 @@ reply_to_command_debug(DBus::Connection& conn, DBus::Message& msg)
     }
 
     hoho << "snappers:";
-    for (list<Snapper*>::iterator it = snappers.begin(); it != snappers.end(); ++it)
+    for (list<Snapper*>::const_iterator it = snappers.begin(); it != snappers.end(); ++it)
     {
 	std::ostringstream s;
 	s << "    name:'" << (*it)->configName() << "'";

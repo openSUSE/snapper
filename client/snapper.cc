@@ -1032,6 +1032,22 @@ command_cleanup(DBus::Connection& conn)
 
 
 void
+command_debug(DBus::Connection& conn)
+{
+    getopts.parse("debug", GetOpts::no_options);
+    if (getopts.hasArgs())
+    {
+	cerr << _("Command 'debug' does not take arguments.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    vector<string> lines = command_xdebug(conn);
+    for (vector<string>::const_iterator it = lines.begin(); it != lines.end(); ++it)
+	cout << *it << endl;
+}
+
+
+void
 help()
 {
     getopts.parse("help", GetOpts::no_options);
@@ -1088,6 +1104,7 @@ main(int argc, char** argv)
     cmds["diff"] = command_diff;
     cmds["undochange"] = command_undo;
     cmds["cleanup"] = command_cleanup;
+    cmds["debug"] = command_debug;
 
     const struct option options[] = {
 	{ "quiet",		no_argument,		0,	'q' },
