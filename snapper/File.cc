@@ -722,7 +722,7 @@ namespace snapper
 	    }
 	}
 
-	return true;
+	return error;
     }
 
 
@@ -817,12 +817,15 @@ namespace snapper
 	if (getSnapper()->getUndoCallback())
 	    getSnapper()->getUndoCallback()->start(comparison);
 
+	bool error = false;
+
 	for (vector<File>::reverse_iterator it = entries.rbegin(); it != entries.rend(); ++it)
 	{
 	    if (it->getUndo())
 	    {
 		if (it->getPreToPostStatus() == CREATED)
-		    it->doUndo();
+		    if (!it->doUndo())
+			error = true;
 	    }
 	}
 
@@ -831,7 +834,8 @@ namespace snapper
 	    if (it->getUndo())
 	    {
 		if (it->getPreToPostStatus() != CREATED)
-		    it->doUndo();
+		    if (!it->doUndo())
+			error = true;
 	    }
 	}
 
@@ -840,7 +844,7 @@ namespace snapper
 
 	y2mil("end doUndo");
 
-	return true;
+	return error;
     }
 
 
