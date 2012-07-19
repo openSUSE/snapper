@@ -30,38 +30,6 @@ Snapshots::iterator second;
 unsigned int numCreateErrors, numModifyErrors, numDeleteErrors;
 
 
-struct CompareCallbackImpl : public CompareCallback
-{
-    void start(const Comparison* comparison) { cout << "comparing snapshots..." << flush; }
-    void stop(const Comparison* comparison) { cout << " done" << endl; }
-};
-
-CompareCallbackImpl compare_callback_impl;
-
-
-struct UndoCallbackImpl : public UndoCallback
-{
-    void start(const Comparison* comparison) { cout << "undoing..." << endl; }
-    void stop(const Comparison* comparison) { cout << "undoing done" << endl; }
-
-    void createInfo(const Comparison* comparison, const string& name)
-	{ cout << "creating " << name << endl; }
-    void modifyInfo(const Comparison* comparison, const string& name)
-	{ cout << "modifying " << name << endl; }
-    void deleteInfo(const Comparison* comparison, const string& name)
-	{ cout << "deleting " << name << endl; }
-
-    void createError(const Comparison* comparison, const string& name)
-	{ cout << "failed to create " << name << endl; numCreateErrors++; }
-    void modifyError(const Comparison* comparison, const string& name)
-	{ cout << "failed to modify " << name << endl; numModifyErrors++; }
-    void deleteError(const Comparison* comparison, const string& name)
-	{ cout << "failed to delete " << name << endl; numDeleteErrors++; }
-};
-
-UndoCallbackImpl undo_callback_impl;
-
-
 void
 setup()
 {
@@ -71,9 +39,6 @@ setup()
     initDefaultLogger();
 
     sh = createSnapper("testsuite");
-
-    sh->setCompareCallback(&compare_callback_impl);
-    sh->setUndoCallback(&undo_callback_impl);
 }
 
 
@@ -115,13 +80,40 @@ undo()
 {
     numCreateErrors = numModifyErrors = numDeleteErrors = 0;
 
+    cout << "comparing snapshots..." << flush;
+
     Comparison comparison(sh, first, second);
+
+    cout << " done" << endl;
 
     Files& files = comparison.getFiles();
     for (Files::iterator it = files.begin(); it != files.end(); ++it)
 	it->setUndo(true);
 
-    comparison.doUndo();
+    cout << "undoing..." << endl;
+
+    vector<UndoStep> undo_steps = comparison.getUndoSteps();
+    for (vector<UndoStep>::const_iterator it = undo_steps.begin(); it != undo_steps.end(); ++it)
+    {
+	switch (it->action)
+	{
+	    case CREATE: cout << "creating " << it->name << endl; break;
+	    case MODIFY: cout << "modifying " << it->name << endl; break;
+	    case DELETE: cout << "deleting " << it->name << endl; break;
+	}
+
+	if (!comparison.doUndoStep(*it))
+	{
+	    switch (it->action)
+	    {
+		case CREATE: cout << "failed to create " << it->name << endl; numCreateErrors++; break;
+		case MODIFY: cout << "failed to modify " << it->name << endl; numModifyErrors++; break;
+		case DELETE: cout << "failed to delete " << it->name << endl; numDeleteErrors++; break;
+	    }
+	}
+    }
+
+    cout << "undoing done" << endl;
 }
 
 
