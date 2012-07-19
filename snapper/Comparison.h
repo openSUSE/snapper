@@ -37,15 +37,12 @@ namespace snapper
     public:
 
 	Comparison(const Snapper* snapper, Snapshots::const_iterator snapshot1,
-		   Snapshots::const_iterator snapshot2, bool delay = false);
+		   Snapshots::const_iterator snapshot2);
 
 	const Snapper* getSnapper() const { return snapper; }
 
 	Snapshots::const_iterator getSnapshot1() const { return snapshot1; }
 	Snapshots::const_iterator getSnapshot2() const { return snapshot2; }
-
-	void initialize();
-	bool isInitialized() const { return initialized; }
 
 	Files& getFiles();
 	const Files& getFiles() const;
@@ -56,16 +53,12 @@ namespace snapper
 
 	bool doUndoStep(const UndoStep& undo_step);
 
-	bool doUndo();
-
     private:
 
 	const Snapper* snapper;
 
 	Snapshots::const_iterator snapshot1;
 	Snapshots::const_iterator snapshot2;
-
-	bool initialized;
 
 	Files files;
 

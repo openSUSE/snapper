@@ -26,13 +26,17 @@
 
 #include <string>
 #include <list>
+#include <queue>
 #include <set>
+#include <boost/thread.hpp>
 
 #include <snapper/Snapper.h>
 #include <snapper/Snapshot.h>
 #include <snapper/Factory.h>
 #include <snapper/Comparison.h>
 
+#include "dbus/DBusConnection.h"
+#include "dbus/DBusMessage.h"
 
 using namespace std;
 using namespace snapper;
@@ -45,7 +49,40 @@ struct NoComparison : public std::exception
 };
 
 
-class Client
+class Commands
+{
+public:
+
+    void list_configs(DBus::Connection& conn, DBus::Message& msg);
+    void get_config(DBus::Connection& conn, DBus::Message& msg);
+    void create_config(DBus::Connection& conn, DBus::Message& msg);
+    void delete_config(DBus::Connection& conn, DBus::Message& msg);
+    void lock_config(DBus::Connection& conn, DBus::Message& msg);
+    void unlock_config(DBus::Connection& conn, DBus::Message& msg);
+    void list_snapshots(DBus::Connection& conn, DBus::Message& msg);
+    void get_snapshot(DBus::Connection& conn, DBus::Message& msg);
+    void set_snapshot(DBus::Connection& conn, DBus::Message& msg);
+    void create_single_snapshot(DBus::Connection& conn, DBus::Message& msg);
+    void create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg);
+    void create_post_snapshot(DBus::Connection& conn, DBus::Message& msg);
+    void delete_snapshots(DBus::Connection& conn, DBus::Message& msg);
+    void mount_snapshot(DBus::Connection& conn, DBus::Message& msg);
+    void umount_snapshot(DBus::Connection& conn, DBus::Message& msg);
+    void create_comparison(DBus::Connection& conn, DBus::Message& msg);
+    void get_files(DBus::Connection& conn, DBus::Message& msg);
+    void get_diff(DBus::Connection& conn, DBus::Message& msg);
+    void set_undo(DBus::Connection& conn, DBus::Message& msg);
+    void set_undo_all(DBus::Connection& conn, DBus::Message& msg);
+    void get_undo_steps(DBus::Connection& conn, DBus::Message& msg);
+    void do_undo_step(DBus::Connection& conn, DBus::Message& msg);
+    void debug(DBus::Connection& conn, DBus::Message& msg);
+
+    void dispatch(DBus::Connection& conn, DBus::Message& msg);
+
+};
+
+
+class Client : public Commands
 {
 public:
 
@@ -68,6 +105,24 @@ public:
 
     set<string> locks;
 
+    struct Task
+    {
+	Task(DBus::Connection& conn, DBus::Message& msg) : conn(conn), msg(msg) {}
+
+	DBus::Connection& conn;
+	DBus::Message msg;
+    };
+
+    boost::condition_variable* c;
+    boost::mutex* m;
+    boost::thread* t;
+
+    queue<Task> tasks;
+
+    void add_task(DBus::Connection& conn, DBus::Message& msg);
+
+    void worker();
+
 };
 
 
@@ -88,7 +143,7 @@ public:
 
     iterator find(const string& name);
 
-    void add(const string& name);
+    iterator add(const string& name);
     void remove(const string& name);
 
 private:

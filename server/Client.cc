@@ -20,10 +20,6 @@
  */
 
 
-#include <algorithm>
-
-
-
 #include "Client.h"
 #include "MetaSnapper.h"
 
@@ -38,6 +34,9 @@ bool contains(const ListType& l, const Type& value)
 Client::Client(const string& name)
     : name(name)
 {
+    c = new boost::condition_variable;
+    m = new boost::mutex;
+    t = NULL;
 }
 
 
@@ -94,6 +93,48 @@ Client::has_lock(const string& config_name) const
 }
 
 
+void
+Client::add_task(DBus::Connection& conn, DBus::Message& msg)
+{
+#if 1
+
+    if (!t)
+	t = new boost::thread(boost::bind(&Client::worker, this));
+
+    boost::unique_lock<boost::mutex> l(*m);
+    tasks.push(Task(conn, msg));
+    l.unlock();
+
+    c->notify_one();
+
+#else
+
+    dispatch(conn, msg);
+
+#endif
+}
+
+
+void
+Client::worker()
+{
+    while (true)
+    {
+        boost::unique_lock<boost::mutex> l(*m);
+
+        while (tasks.empty())
+            c->wait(l);
+
+        Task task = tasks.front();
+        tasks.pop();
+
+        l.unlock();
+
+	dispatch(task.conn, task.msg);
+    }
+}
+
+
 Clients::iterator
 Clients::find(const string& name)
 {
@@ -105,10 +146,11 @@ Clients::find(const string& name)
 }
 
 
-void
+Clients::iterator
 Clients::add(const string& name)
 {
     entries.push_back(Client(name));
+    return --entries.end();
 }
 
 

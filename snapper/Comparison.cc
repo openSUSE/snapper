@@ -31,43 +31,23 @@ namespace snapper
 {
 
     Comparison::Comparison(const Snapper* snapper, Snapshots::const_iterator snapshot1,
-			   Snapshots::const_iterator snapshot2, bool delay)
-	: snapper(snapper), snapshot1(snapshot1), snapshot2(snapshot2), initialized(false),
-	  files(this)
+			   Snapshots::const_iterator snapshot2)
+	: snapper(snapper), snapshot1(snapshot1), snapshot2(snapshot2), files(this)
     {
 	if (snapshot1 == snapper->getSnapshots().end() ||
 	    snapshot2 == snapper->getSnapshots().end() ||
 	    snapshot1 == snapshot2)
 	    throw IllegalSnapshotException();
 
-	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum() << " delay:" <<
-	      delay);
+	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
 
-	if (!delay)
-	{
-	    files.initialize();
-	    initialized = true;
-	}
-    }
-
-
-    void
-    Comparison::initialize()
-    {
-	if (!initialized)
-	{
-	    files.initialize();
-	    initialized = true;
-	}
+	files.initialize();
     }
 
 
     Files&
     Comparison::getFiles()
     {
-	if (!initialized)
-	    throw;
-
 	return files;
     }
 
@@ -75,9 +55,6 @@ namespace snapper
     const Files&
     Comparison::getFiles() const
     {
-	if (!initialized)
-	    throw;
-
 	return files;
     }
 
@@ -85,9 +62,6 @@ namespace snapper
     UndoStatistic
     Comparison::getUndoStatistic() const
     {
-	if (!initialized)
-	    throw;
-
 	return files.getUndoStatistic();
     }
 
@@ -95,9 +69,6 @@ namespace snapper
     vector<UndoStep>
     Comparison::getUndoSteps() const
     {
-	if (!initialized)
-	    throw;
-
 	return files.getUndoSteps();
     }
 
@@ -105,20 +76,7 @@ namespace snapper
     bool
     Comparison::doUndoStep(const UndoStep& undo_step)
     {
-	if (!initialized)
-	    throw;
-
 	return files.doUndoStep(undo_step);
-    }
-
-
-    bool
-    Comparison::doUndo()
-    {
-	if (!initialized)
-	    throw;
-
-	return files.doUndo();
     }
 
 }

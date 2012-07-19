@@ -40,34 +40,6 @@ namespace snapper
     class Comparison;
 
 
-    struct CompareCallback
-    {
-	CompareCallback() {}
-	virtual ~CompareCallback() {}
-
-	virtual void start(const Comparison* comparison) = 0;
-	virtual void stop(const Comparison* comparison) = 0;
-    };
-
-
-    struct UndoCallback
-    {
-	UndoCallback() {}
-	virtual ~UndoCallback() {}
-
-	virtual void start(const Comparison* comparison) = 0;
-	virtual void stop(const Comparison* comparison) = 0;
-
-	virtual void createInfo(const Comparison* comparison, const string& name) = 0;
-	virtual void modifyInfo(const Comparison* comparison, const string& name) = 0;
-	virtual void deleteInfo(const Comparison* comparison, const string& name) = 0;
-
-	virtual void createError(const Comparison* comparison, const string& name) = 0;
-	virtual void modifyError(const Comparison* comparison, const string& name) = 0;
-	virtual void deleteError(const Comparison* comparison, const string& name) = 0;
-    };
-
-
     struct ConfigInfo
     {
 	ConfigInfo(const string& config_name, const string& subvolume,
@@ -151,12 +123,6 @@ namespace snapper
 	bool doCleanupTimeline();
 	bool doCleanupEmptyPrePost();
 
-	void setCompareCallback(CompareCallback* p) { compare_callback = p; }
-	CompareCallback* getCompareCallback() const { return compare_callback; }
-
-	void setUndoCallback(UndoCallback* p) { undo_callback = p; }
-	UndoCallback* getUndoCallback() const { return undo_callback; }
-
 	const vector<string>& getIgnorePatterns() const { return ignore_patterns; }
 
 	static list<ConfigInfo> getConfigs();
@@ -188,9 +154,6 @@ namespace snapper
 	vector<string> ignore_patterns;
 
 	Snapshots snapshots;
-
-	CompareCallback* compare_callback;
-	UndoCallback* undo_callback;
 
     };
 

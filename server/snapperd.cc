@@ -26,6 +26,7 @@
 #include <string.h>
 #include <dbus/dbus.h>
 
+#include <iostream>
 #include <string>
 #include <boost/algorithm/string.hpp>
 
@@ -41,7 +42,6 @@
 
 #include "MetaSnapper.h"
 #include "Client.h"
-#include "Job.h"
 #include "Types.h"
 
 
@@ -55,8 +55,6 @@ using namespace snapper;
 
 
 Clients clients;
-
-Jobs jobs;
 
 
 void
@@ -364,7 +362,7 @@ send_signal_snapshots_deleted(DBus::Connection& conn, const string& config_name,
 
 
 void
-reply_to_command_list_configs(DBus::Connection& conn, DBus::Message& msg)
+Commands::list_configs(DBus::Connection& conn, DBus::Message& msg)
 {
     y2mil("ListConfigs");
 
@@ -380,7 +378,7 @@ reply_to_command_list_configs(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_get_config(DBus::Connection& conn, DBus::Message& msg)
+Commands::get_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
@@ -406,7 +404,7 @@ reply_to_command_get_config(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_create_config(DBus::Connection& conn, DBus::Message& msg)
+Commands::create_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     string subvolume;
@@ -432,7 +430,7 @@ reply_to_command_create_config(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_delete_config(DBus::Connection& conn, DBus::Message& msg)
+Commands::delete_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
@@ -454,7 +452,7 @@ reply_to_command_delete_config(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_lock_config(DBus::Connection& conn, DBus::Message& msg)
+Commands::lock_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
@@ -477,7 +475,7 @@ reply_to_command_lock_config(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_unlock_config(DBus::Connection& conn, DBus::Message& msg)
+Commands::unlock_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
@@ -500,7 +498,7 @@ reply_to_command_unlock_config(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_list_snapshots(DBus::Connection& conn, DBus::Message& msg)
+Commands::list_snapshots(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
@@ -523,7 +521,7 @@ reply_to_command_list_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_get_snapshot(DBus::Connection& conn, DBus::Message& msg)
+Commands::get_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num;
@@ -551,7 +549,7 @@ reply_to_command_get_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_set_snapshot(DBus::Connection& conn, DBus::Message& msg)
+Commands::set_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num;
@@ -584,7 +582,7 @@ reply_to_command_set_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_create_single_snapshot(DBus::Connection& conn, DBus::Message& msg)
+Commands::create_single_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     string description;
@@ -618,7 +616,7 @@ reply_to_command_create_single_snapshot(DBus::Connection& conn, DBus::Message& m
 
 
 void
-reply_to_command_create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
+Commands::create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     string description;
@@ -652,7 +650,7 @@ reply_to_command_create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
+Commands::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     unsigned int pre_num;
@@ -691,7 +689,7 @@ reply_to_command_create_post_snapshot(DBus::Connection& conn, DBus::Message& msg
 
 
 void
-reply_to_command_delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
+Commands::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     list<dbus_uint32_t> nums;
@@ -724,7 +722,7 @@ reply_to_command_delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_mount_snapshot(DBus::Connection& conn, DBus::Message& msg)
+Commands::mount_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num;
@@ -751,7 +749,7 @@ reply_to_command_mount_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_umount_snapshot(DBus::Connection& conn, DBus::Message& msg)
+Commands::umount_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num;
@@ -777,27 +775,8 @@ reply_to_command_umount_snapshot(DBus::Connection& conn, DBus::Message& msg)
 }
 
 
-struct Comparing : public Job
-{
-    Comparing(Comparison* comparison)
-	: comparison(comparison) {}
-
-    DBus::Connection* conn;
-    DBus::MessageMethodReturn* reply;
-
-    Comparison* comparison;
-
-    void done();
-
-protected:
-
-    virtual void operator()();
-
-};
-
-
 void
-reply_to_command_create_comparison(DBus::Connection& conn, DBus::Message& msg)
+Commands::create_comparison(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num1, num2;
@@ -815,42 +794,20 @@ reply_to_command_create_comparison(DBus::Connection& conn, DBus::Message& msg)
     Snapshots::const_iterator snapshot1 = snapshots.find(num1);
     Snapshots::const_iterator snapshot2 = snapshots.find(num2);
 
-    Comparison* comparison = new Comparison(snapper, snapshot1, snapshot2, true);
+    Comparison* comparison = new Comparison(snapper, snapshot1, snapshot2);
 
     Clients::iterator it = clients.find(msg.get_sender());
     assert(it != clients.end());
     it->comparisons.push_back(comparison);
 
-    Comparing* job = new Comparing(comparison);
-    job->conn = &conn;
-    job->reply = new DBus::MessageMethodReturn(msg);
+    DBus::MessageMethodReturn reply(msg);
 
-    jobs.add(job);
+    conn.send(reply);
 }
 
 
 void
-Comparing::operator()()
-{
-    boost::this_thread::sleep(seconds(2));
-
-    comparison->initialize();
-
-    boost::this_thread::sleep(seconds(2));
-}
-
-
-void
-Comparing::done()
-{
-    conn->send(*reply);
-
-    delete reply;
-}
-
-
-void
-reply_to_command_get_files(DBus::Connection& conn, DBus::Message& msg)
+Commands::get_files(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num1, num2;
@@ -882,7 +839,7 @@ reply_to_command_get_files(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_get_diff(DBus::Connection& conn, DBus::Message& msg)
+Commands::get_diff(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num1, num2;
@@ -921,7 +878,7 @@ reply_to_command_get_diff(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_set_undo(DBus::Connection& conn, DBus::Message& msg)
+Commands::set_undo(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num1, num2;
@@ -960,7 +917,7 @@ reply_to_command_set_undo(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_set_undo_all(DBus::Connection& conn, DBus::Message& msg)
+Commands::set_undo_all(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num1, num2;
@@ -995,7 +952,7 @@ reply_to_command_set_undo_all(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-reply_to_command_get_undo_steps(DBus::Connection& conn, DBus::Message& msg)
+Commands::get_undo_steps(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num1, num2;
@@ -1026,28 +983,8 @@ reply_to_command_get_undo_steps(DBus::Connection& conn, DBus::Message& msg)
 }
 
 
-struct Undoing : public Job
-{
-    Undoing(Comparison* comparison, const UndoStep& undo_step)
-	: comparison(comparison), undo_step(undo_step) {}
-
-    DBus::Connection* conn;
-    DBus::MessageMethodReturn* reply;
-
-    Comparison* comparison;
-    UndoStep undo_step;
-
-    void done();
-
-protected:
-
-    virtual void operator()();
-
-};
-
-
 void
-reply_to_command_do_undo_step(DBus::Connection& conn, DBus::Message& msg)
+Commands::do_undo_step(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num1, num2;
@@ -1068,39 +1005,19 @@ reply_to_command_do_undo_step(DBus::Connection& conn, DBus::Message& msg)
 
     Comparison* comparison = it->find_comparison(config_name, num1, num2);
 
-    Undoing* job = new Undoing(comparison, undo_step);
-    job->conn = &conn;
-    job->reply = new DBus::MessageMethodReturn(msg);
-
-    jobs.add(job);
-}
-
-
-void
-Undoing::operator()()
-{
-    boost::this_thread::sleep(seconds(2));
-
     bool ret = comparison->doUndoStep(undo_step);
 
-    DBus::Hoho hoho(*reply);
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
     hoho << ret;
 
-    boost::this_thread::sleep(seconds(2));
+    conn.send(reply);
 }
 
 
 void
-Undoing::done()
-{
-    conn->send(*reply);
-
-    delete reply;
-}
-
-
-void
-reply_to_command_debug(DBus::Connection& conn, DBus::Message& msg)
+Commands::debug(DBus::Connection& conn, DBus::Message& msg)
 {
     check_permission(conn, msg);
 
@@ -1133,23 +1050,16 @@ reply_to_command_debug(DBus::Connection& conn, DBus::Message& msg)
 	hoho << s.str();
     }
 
-    if (!jobs.empty())
-    {
-	std::ostringstream s;
-	s << "running jobs:" << jobs.size();
-	hoho << s.str();
-    }
-
     hoho.close_array();
 
     conn.send(reply);
 }
 
 
-void
+Clients::iterator
 client_connected(const string& name)
 {
-    clients.add(name);
+    return clients.add(name);
 }
 
 
@@ -1161,56 +1071,56 @@ client_disconnected(const string& name)
 
 
 void
-dispatch(DBus::Connection& conn, DBus::Message& msg)
+Commands::dispatch(DBus::Connection& conn, DBus::Message& msg)
 {
     try
     {
 	if (msg.is_method_call(INTERFACE, "ListConfigs"))
-	    reply_to_command_list_configs(conn, msg);
+	    list_configs(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CreateConfig"))
-	    reply_to_command_create_config(conn, msg);
+	    create_config(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetConfig"))
-	    reply_to_command_get_config(conn, msg);
+	    get_config(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "DeleteConfig"))
-	    reply_to_command_delete_config(conn, msg);
+	    delete_config(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "LockConfig"))
-	    reply_to_command_lock_config(conn, msg);
+	    lock_config(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "UnlockConfig"))
-	    reply_to_command_unlock_config(conn, msg);
+	    unlock_config(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "ListSnapshots"))
-	    reply_to_command_list_snapshots(conn, msg);
+	    list_snapshots(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetSnapshot"))
-	    reply_to_command_get_snapshot(conn, msg);
+	    get_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "SetSnapshot"))
-	    reply_to_command_set_snapshot(conn, msg);
+	    set_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CreateSingleSnapshot"))
-	    reply_to_command_create_single_snapshot(conn, msg);
+	    create_single_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CreatePreSnapshot"))
-	    reply_to_command_create_pre_snapshot(conn, msg);
+	    create_pre_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CreatePostSnapshot"))
-	    reply_to_command_create_post_snapshot(conn, msg);
+	    create_post_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "DeleteSnapshots"))
-	    reply_to_command_delete_snapshots(conn, msg);
+	    delete_snapshots(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "MountSnapshot"))
-	    reply_to_command_mount_snapshot(conn, msg);
+	    mount_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "UmountSnapshot"))
-	    reply_to_command_umount_snapshot(conn, msg);
+	    umount_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CreateComparison"))
-	    reply_to_command_create_comparison(conn, msg);
+	    create_comparison(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetFiles"))
-	    reply_to_command_get_files(conn, msg);
+	    get_files(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetDiff"))
-	    reply_to_command_get_diff(conn, msg);
+	    get_diff(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "SetUndo"))
-	    reply_to_command_set_undo(conn, msg);
+	    set_undo(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "SetUndoAll"))
-	    reply_to_command_set_undo_all(conn, msg);
+	    set_undo_all(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetUndoSteps"))
-	    reply_to_command_get_undo_steps(conn, msg);
+	    get_undo_steps(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "DoUndoStep"))
-	    reply_to_command_do_undo_step(conn, msg);
+	    do_undo_step(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "Debug"))
-	    reply_to_command_debug(conn, msg);
+	    debug(conn, msg);
 	else
 	{
 	    DBus::MessageError reply(msg, "error.unknown_method", DBUS_ERROR_FAILED);
@@ -1277,11 +1187,9 @@ listen(DBus::Connection& conn)
     conn.add_match("type='signal', interface='" DBUS_INTERFACE_DBUS "', member='NameOwnerChanged'");
 
     int idle = 0;
-    while (++idle < 1000 || !clients.empty() || !jobs.empty())
+    while (++idle < 1000 || !clients.empty())
     {
 	conn.read_write(100);	// TODO
-
-	jobs.handle();
 
 	DBusMessage* tmp = dbus_connection_pop_message(conn.get_connection());
 	if (!tmp)
@@ -1303,13 +1211,15 @@ listen(DBus::Connection& conn)
 		    break;
 		}
 
-		if (clients.find(msg.get_sender()) == clients.end())
+		Clients::iterator client = clients.find(msg.get_sender());
+		if (client == clients.end())
 		{
 		    y2mil("client connected invisible '" << msg.get_sender() << "'");
-		    client_connected(msg.get_sender());
+		    client = client_connected(msg.get_sender());
 		}
 
-		dispatch(conn, msg);
+		client->add_task(conn, msg);
+		boost::this_thread::sleep(boost::posix_time::seconds(2)); // TODO
 	    }
 	    break;
 

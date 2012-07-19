@@ -10,7 +10,6 @@ sbin_PROGRAMS = snapperd
 snapperd_SOURCES =					\
 	snapperd.cc					\
 	Client.cc		Client.h		\
-	Job.cc			Job.h			\
 	MetaSnapper.cc		MetaSnapper.h		\
 	Types.cc		Types.h
 

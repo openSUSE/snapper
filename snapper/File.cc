@@ -117,9 +117,6 @@ namespace snapper
 	y2mil("num1:" << comparison->getSnapshot1()->getNum() << " num2:" <<
 	      comparison->getSnapshot2()->getNum());
 
-	if (getSnapper()->getCompareCallback())
-	    getSnapper()->getCompareCallback()->start(comparison);
-
 	if (!comparison->getSnapshot1()->isCurrent())
 	    comparison->getSnapshot1()->mountFilesystemSnapshot();
 	if (!comparison->getSnapshot2()->isCurrent())
@@ -135,9 +132,6 @@ namespace snapper
 	cmpDirs(comparison->getSnapshot1()->snapshotDir(), comparison->getSnapshot2()->snapshotDir(), cb);
 
 	sort(entries.begin(), entries.end());
-
-	if (getSnapper()->getCompareCallback())
-	    getSnapper()->getCompareCallback()->stop(comparison);
 
 	y2mil("found " << entries.size() << " lines");
     }
@@ -682,16 +676,6 @@ namespace snapper
 	if (comparison->getSnapshot1()->isCurrent())
 	    throw IllegalSnapshotException();
 
-	if (getSnapper()->getUndoCallback())
-	{
-	    switch (getAction())
-	    {
-		case CREATE: getSnapper()->getUndoCallback()->createInfo(comparison, name); break;
-		case MODIFY: getSnapper()->getUndoCallback()->modifyInfo(comparison, name); break;
-		case DELETE: getSnapper()->getUndoCallback()->deleteInfo(comparison, name); break;
-	    }
-	}
-
 	bool error = false;
 
 	if (getPreToPostStatus() & CREATED || getPreToPostStatus() & TYPE)
@@ -710,16 +694,6 @@ namespace snapper
 	{
 	    if (!modifyAllTypes())
 		error = true;
-	}
-
-	if (error && getSnapper()->getUndoCallback())
-	{
-	    switch (getAction())
-	    {
-		case CREATE: getSnapper()->getUndoCallback()->createError(comparison, name); break;
-		case MODIFY: getSnapper()->getUndoCallback()->modifyError(comparison, name); break;
-		case DELETE: getSnapper()->getUndoCallback()->deleteError(comparison, name); break;
-	    }
 	}
 
 	return error;
@@ -803,48 +777,6 @@ namespace snapper
 	    return false;
 
 	return it->doUndo();
-    }
-
-
-    bool
-    Files::doUndo()
-    {
-	if (comparison->getSnapshot1()->isCurrent())
-	    throw IllegalSnapshotException();
-
-	y2mil("begin doUndo");
-
-	if (getSnapper()->getUndoCallback())
-	    getSnapper()->getUndoCallback()->start(comparison);
-
-	bool error = false;
-
-	for (vector<File>::reverse_iterator it = entries.rbegin(); it != entries.rend(); ++it)
-	{
-	    if (it->getUndo())
-	    {
-		if (it->getPreToPostStatus() == CREATED)
-		    if (!it->doUndo())
-			error = true;
-	    }
-	}
-
-	for (vector<File>::iterator it = entries.begin(); it != entries.end(); ++it)
-	{
-	    if (it->getUndo())
-	    {
-		if (it->getPreToPostStatus() != CREATED)
-		    if (!it->doUndo())
-			error = true;
-	    }
-	}
-
-	if (getSnapper()->getUndoCallback())
-	    getSnapper()->getUndoCallback()->stop(comparison);
-
-	y2mil("end doUndo");
-
-	return error;
     }
 
 

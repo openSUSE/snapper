@@ -195,8 +195,6 @@ namespace snapper
 
 	bool doUndoStep(const UndoStep& undo_step);
 
-	bool doUndo();
-
 	const Comparison* comparison;
 
 	vector<File> entries;
