@@ -57,6 +57,9 @@ using namespace snapper;
 Clients clients;
 
 
+boost::mutex dbus_mutex;
+
+
 void
 reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 {
@@ -366,6 +369,8 @@ Commands::list_configs(DBus::Connection& conn, DBus::Message& msg)
 {
     y2mil("ListConfigs");
 
+    boost::unique_lock<boost::mutex> dbus_lock(dbus_mutex);
+
     list<ConfigInfo> config_infos = Snapper::getConfigs();
 
     DBus::MessageMethodReturn reply(msg);
@@ -386,6 +391,8 @@ Commands::get_config(DBus::Connection& conn, DBus::Message& msg)
     hihi >> config_name;
 
     y2mil("GetConfig config_name:" << config_name);
+
+    boost::unique_lock<boost::mutex> dbus_lock(dbus_mutex);
 
     check_permission(conn, msg, config_name);
 
@@ -507,6 +514,8 @@ Commands::list_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
     y2mil("ListSnapshots config_name:" << config_name);
 
+    boost::unique_lock<boost::mutex> dbus_lock(dbus_mutex);
+
     check_permission(conn, msg, config_name);
 
     Snapper* snapper = getSnapper(config_name);
@@ -530,6 +539,8 @@ Commands::get_snapshot(DBus::Connection& conn, DBus::Message& msg)
     hihi >> config_name >> num;
 
     y2mil("GetSnapshot config_name:" << config_name << " num:" << num);
+
+    boost::unique_lock<boost::mutex> dbus_lock(dbus_mutex);
 
     check_permission(conn, msg, config_name);
 
@@ -1034,7 +1045,6 @@ Commands::debug(DBus::Connection& conn, DBus::Message& msg)
 	s << "    name:'" << it->name << "'";
 	if (it->name == msg.get_sender())
 	    s << " myself";
-	s << " username:'" << conn.get_unix_username(msg) << "'";
 	if (!it->locks.empty())
 	    s << " locks:'" << boost::join(it->locks, ",") << "'";
 	if (!it->comparisons.empty())
@@ -1189,11 +1199,17 @@ listen(DBus::Connection& conn)
     int idle = 0;
     while (++idle < 1000 || !clients.empty())
     {
-	conn.read_write(100);	// TODO
+	boost::this_thread::sleep(boost::posix_time::milliseconds(100)); // TODO
+
+	boost::unique_lock<boost::mutex> dbus_lock(dbus_mutex);
+
+	conn.read_write(10);	// TODO
 
 	DBusMessage* tmp = dbus_connection_pop_message(conn.get_connection());
 	if (!tmp)
 	    continue;
+
+	dbus_lock.unlock();
 
 	DBus::Message msg(tmp);
 
@@ -1219,7 +1235,6 @@ listen(DBus::Connection& conn)
 		}
 
 		client->add_task(conn, msg);
-		boost::this_thread::sleep(boost::posix_time::seconds(2)); // TODO
 	    }
 	    break;
 
