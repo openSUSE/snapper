@@ -96,8 +96,6 @@ Client::has_lock(const string& config_name) const
 void
 Client::add_task(DBus::Connection& conn, DBus::Message& msg)
 {
-#if 1
-
     if (!t)
 	t = new boost::thread(boost::bind(&Client::worker, this));
 
@@ -106,12 +104,6 @@ Client::add_task(DBus::Connection& conn, DBus::Message& msg)
     l.unlock();
 
     c->notify_one();
-
-#else
-
-    dispatch(conn, msg);
-
-#endif
 }
 
 
@@ -149,6 +141,8 @@ Clients::find(const string& name)
 Clients::iterator
 Clients::add(const string& name)
 {
+    assert(find(name) == entries.end());
+
     entries.push_back(Client(name));
     return --entries.end();
 }

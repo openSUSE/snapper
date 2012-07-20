@@ -27,6 +27,7 @@
 #include <dbus/dbus.h>
 
 #include <boost/noncopyable.hpp>
+#include <boost/thread.hpp>
 
 #include "DBusMessage.h"
 
@@ -49,12 +50,14 @@ namespace DBus
 
 	void send(Message& m);
 
-	Message send_and_reply_and_block(Message& m);
+	Message send_with_reply_and_block(Message& m);
 
 	void add_match(const char* rule);
 
 	unsigned long get_unix_userid(const Message& m);
-	string get_unix_username(const Message& m);
+	static string get_unix_username(unsigned long userid); // TODO
+
+	boost::mutex mutex;
 
     private:
 

@@ -57,9 +57,6 @@ using namespace snapper;
 Clients clients;
 
 
-boost::mutex dbus_mutex;
-
-
 void
 reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 {
@@ -269,7 +266,7 @@ check_permission(DBus::Connection& conn, DBus::Message& msg, const string& confi
 	    if (uid == 0)
 		return;
 
-	    string username = conn.get_unix_username(msg);
+	    string username = DBus::Connection::get_unix_username(uid);
 
 	    map<string, string>::const_iterator pos = it->raw.find("USERS");
 	    if (pos == it->raw.end())
@@ -315,7 +312,7 @@ check_lock(DBus::Connection& conn, DBus::Message& msg, const string& config_name
 
 
 void
-send_signal_config_created(DBus::Connection& conn, const string& config_name)
+Commands::signal_config_created(DBus::Connection& conn, const string& config_name)
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "ConfigCreated");
 
@@ -327,7 +324,7 @@ send_signal_config_created(DBus::Connection& conn, const string& config_name)
 
 
 void
-send_signal_config_deleted(DBus::Connection& conn, const string& config_name)
+Commands::signal_config_deleted(DBus::Connection& conn, const string& config_name)
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "ConfigDeleted");
 
@@ -339,8 +336,8 @@ send_signal_config_deleted(DBus::Connection& conn, const string& config_name)
 
 
 void
-send_signal_snapshot_created(DBus::Connection& conn, const string& config_name,
-			     unsigned int num)
+Commands::signal_snapshot_created(DBus::Connection& conn, const string& config_name,
+				  unsigned int num)
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "SnapshotCreated");
 
@@ -352,8 +349,8 @@ send_signal_snapshot_created(DBus::Connection& conn, const string& config_name,
 
 
 void
-send_signal_snapshots_deleted(DBus::Connection& conn, const string& config_name,
-			      list<dbus_uint32_t> nums)
+Commands::signal_snapshots_deleted(DBus::Connection& conn, const string& config_name,
+				   list<dbus_uint32_t> nums)
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "SnapshotsDeleted");
 
@@ -368,8 +365,6 @@ void
 Commands::list_configs(DBus::Connection& conn, DBus::Message& msg)
 {
     y2mil("ListConfigs");
-
-    boost::unique_lock<boost::mutex> dbus_lock(dbus_mutex);
 
     list<ConfigInfo> config_infos = Snapper::getConfigs();
 
@@ -391,8 +386,6 @@ Commands::get_config(DBus::Connection& conn, DBus::Message& msg)
     hihi >> config_name;
 
     y2mil("GetConfig config_name:" << config_name);
-
-    boost::unique_lock<boost::mutex> dbus_lock(dbus_mutex);
 
     check_permission(conn, msg, config_name);
 
@@ -432,7 +425,7 @@ Commands::create_config(DBus::Connection& conn, DBus::Message& msg)
 
     conn.send(reply);
 
-    send_signal_config_created(conn, config_name);
+    signal_config_created(conn, config_name);
 }
 
 
@@ -454,7 +447,7 @@ Commands::delete_config(DBus::Connection& conn, DBus::Message& msg)
 
     conn.send(reply);
 
-    send_signal_config_deleted(conn, config_name);
+    signal_config_deleted(conn, config_name);
 }
 
 
@@ -514,8 +507,6 @@ Commands::list_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
     y2mil("ListSnapshots config_name:" << config_name);
 
-    boost::unique_lock<boost::mutex> dbus_lock(dbus_mutex);
-
     check_permission(conn, msg, config_name);
 
     Snapper* snapper = getSnapper(config_name);
@@ -539,8 +530,6 @@ Commands::get_snapshot(DBus::Connection& conn, DBus::Message& msg)
     hihi >> config_name >> num;
 
     y2mil("GetSnapshot config_name:" << config_name << " num:" << num);
-
-    boost::unique_lock<boost::mutex> dbus_lock(dbus_mutex);
 
     check_permission(conn, msg, config_name);
 
@@ -622,7 +611,7 @@ Commands::create_single_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     conn.send(reply);
 
-    send_signal_snapshot_created(conn, config_name, snap1->getNum());
+    signal_snapshot_created(conn, config_name, snap1->getNum());
 }
 
 
@@ -656,7 +645,7 @@ Commands::create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     conn.send(reply);
 
-    send_signal_snapshot_created(conn, config_name, snap1->getNum());
+    signal_snapshot_created(conn, config_name, snap1->getNum());
 }
 
 
@@ -695,7 +684,7 @@ Commands::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     conn.send(reply);
 
-    send_signal_snapshot_created(conn, config_name, snap2->getNum());
+    signal_snapshot_created(conn, config_name, snap2->getNum());
 }
 
 
@@ -728,7 +717,7 @@ Commands::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
     conn.send(reply);
 
-    send_signal_snapshots_deleted(conn, config_name, nums);
+    signal_snapshots_deleted(conn, config_name, nums);
 }
 
 
@@ -1201,7 +1190,7 @@ listen(DBus::Connection& conn)
     {
 	boost::this_thread::sleep(boost::posix_time::milliseconds(100)); // TODO
 
-	boost::unique_lock<boost::mutex> dbus_lock(dbus_mutex);
+	boost::unique_lock<boost::mutex> dbus_lock(conn.mutex);
 
 	conn.read_write(10);	// TODO
 

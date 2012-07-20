@@ -58,6 +58,8 @@ namespace DBus
     void
     Connection::request_name(const char* name, unsigned int flags)
     {
+	boost::lock_guard<boost::mutex> lock(mutex);
+
 	DBusError err;
 	dbus_error_init(&err);
 
@@ -78,6 +80,8 @@ namespace DBus
     void
     Connection::read_write(int timeout)
     {
+	// TODO
+
 	dbus_connection_read_write(conn, timeout);
     }
 
@@ -85,6 +89,8 @@ namespace DBus
     void
     Connection::send(Message& m)
     {
+	boost::lock_guard<boost::mutex> lock(mutex);
+
 	if (!dbus_connection_send(conn, m.get_message(), NULL))
 	{
 	    throw FatalException();
@@ -93,8 +99,10 @@ namespace DBus
 
 
     Message
-    Connection::send_and_reply_and_block(Message& m)
+    Connection::send_with_reply_and_block(Message& m)
     {
+	boost::lock_guard<boost::mutex> lock(mutex);
+
 	DBusError err;
 	dbus_error_init(&err);
 
@@ -113,6 +121,8 @@ namespace DBus
     void
     Connection::add_match(const char* rule)
     {
+	boost::lock_guard<boost::mutex> lock(mutex);
+
 	DBusError err;
 	dbus_error_init(&err);
 
@@ -128,6 +138,8 @@ namespace DBus
     unsigned long
     Connection::get_unix_userid(const Message& m)
     {
+	boost::lock_guard<boost::mutex> lock(mutex);
+
 	string sender = m.get_sender();
 	if (sender.empty())
 	{
@@ -149,10 +161,8 @@ namespace DBus
 
 
     string
-    Connection::get_unix_username(const Message& m)
+    Connection::get_unix_username(unsigned long userid)
     {
-	unsigned long userid = get_unix_userid(m);
-
 	long bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
 	char* buf = (char*) malloc(bufsize);
 	if (!buf)

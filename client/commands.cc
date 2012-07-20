@@ -33,7 +33,7 @@ command_list_xconfigs(DBus::Connection& conn)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "ListConfigs");
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    DBus::Message reply = conn.send_with_reply_and_block(call);
 
     list<XConfigInfo> ret;
 
@@ -52,7 +52,7 @@ command_get_xconfig(DBus::Connection& conn, const string& config_name)
     DBus::Hoho hoho(call);
     hoho << config_name;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    DBus::Message reply = conn.send_with_reply_and_block(call);
 
     XConfigInfo ret;
 
@@ -72,7 +72,7 @@ command_create_xconfig(DBus::Connection& conn, const string& config_name, const 
     DBus::Hoho hoho(call);
     hoho << config_name << subvolume << fstype << template_name;
 
-    conn.send_and_reply_and_block(call);
+    conn.send_with_reply_and_block(call);
 }
 
 
@@ -84,7 +84,7 @@ command_delete_xconfig(DBus::Connection& conn, const string& config_name)
     DBus::Hoho hoho(call);
     hoho << config_name;
 
-    conn.send_and_reply_and_block(call);
+    conn.send_with_reply_and_block(call);
 }
 
 
@@ -96,7 +96,7 @@ command_list_xsnapshots(DBus::Connection& conn, const string& config_name)
     DBus::Hoho hoho(call);
     hoho << config_name;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    DBus::Message reply = conn.send_with_reply_and_block(call);
 
     XSnapshots ret;
 
@@ -115,7 +115,7 @@ command_get_xsnapshot(DBus::Connection& conn, const string& config_name, unsigne
     DBus::Hoho hoho(call);
     hoho << config_name << num;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    DBus::Message reply = conn.send_with_reply_and_block(call);
 
     XSnapshot ret;
 
@@ -135,7 +135,7 @@ command_set_xsnapshot(DBus::Connection& conn, const string& config_name, unsigne
     DBus::Hoho hoho(call);
     hoho << config_name << num << data.description << data.cleanup << data.userdata;
 
-    conn.send_and_reply_and_block(call);
+    conn.send_with_reply_and_block(call);
 }
 
 
@@ -149,7 +149,7 @@ command_create_single_xsnapshot(DBus::Connection& conn, const string& config_nam
     DBus::Hoho hoho(call);
     hoho << config_name << description << cleanup << userdata;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    DBus::Message reply = conn.send_with_reply_and_block(call);
 
     unsigned int number;
 
@@ -170,7 +170,7 @@ command_create_pre_xsnapshot(DBus::Connection& conn, const string& config_name,
     DBus::Hoho hoho(call);
     hoho << config_name << description << cleanup << userdata;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    DBus::Message reply = conn.send_with_reply_and_block(call);
 
     unsigned int number;
 
@@ -191,7 +191,7 @@ command_create_post_xsnapshot(DBus::Connection& conn, const string& config_name,
     DBus::Hoho hoho(call);
     hoho << config_name << prenum << description << cleanup << userdata;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    DBus::Message reply = conn.send_with_reply_and_block(call);
 
     unsigned int number;
 
@@ -211,7 +211,7 @@ command_delete_xsnapshots(DBus::Connection& conn, const string& config_name,
     DBus::Hoho hoho(call);
     hoho << config_name << nums;
 
-    conn.send_and_reply_and_block(call);
+    conn.send_with_reply_and_block(call);
 }
 
 
@@ -224,7 +224,7 @@ command_mount_xsnapshots(DBus::Connection& conn, const string& config_name,
     DBus::Hoho hoho(call);
     hoho << config_name << num;
 
-    conn.send_and_reply_and_block(call);
+    conn.send_with_reply_and_block(call);
 }
 
 
@@ -237,7 +237,7 @@ command_umount_xsnapshots(DBus::Connection& conn, const string& config_name,
     DBus::Hoho hoho(call);
     hoho << config_name << num;
 
-    conn.send_and_reply_and_block(call);
+    conn.send_with_reply_and_block(call);
 }
 
 
@@ -250,7 +250,7 @@ command_create_xcomparison(DBus::Connection& conn, const string& config_name, un
     DBus::Hoho hoho(call);
     hoho << config_name << number1 << number2;
 
-    conn.send_and_reply_and_block(call);
+    conn.send_with_reply_and_block(call);
 }
 
 
@@ -263,7 +263,7 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
     DBus::Hoho hoho(call);
     hoho << config_name << number1 << number2;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    DBus::Message reply = conn.send_with_reply_and_block(call);
 
     list<XFile> files;
 
@@ -283,7 +283,7 @@ command_get_xdiff(DBus::Connection& conn, const string& config_name, unsigned in
     DBus::Hoho hoho(call);
     hoho << config_name << number1 << number2 << name << options;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    DBus::Message reply = conn.send_with_reply_and_block(call);
 
     vector<string> files;
 
@@ -303,7 +303,7 @@ command_set_xundo(DBus::Connection& conn, const string& config_name, unsigned in
     DBus::Hoho hoho(call);
     hoho << config_name << number1 << number2 << undos;
 
-    conn.send_and_reply_and_block(call);
+    conn.send_with_reply_and_block(call);
 }
 
 
@@ -316,7 +316,7 @@ command_set_xundo_all(DBus::Connection& conn, const string& config_name, unsigne
     DBus::Hoho hoho(call);
     hoho << config_name << number1 << number2 << undo;
 
-    conn.send_and_reply_and_block(call);
+    conn.send_with_reply_and_block(call);
 }
 
 
@@ -329,7 +329,7 @@ command_get_xundo_steps(DBus::Connection& conn, const string& config_name, unsig
     DBus::Hoho hoho(call);
     hoho << config_name << number1 << number2;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    DBus::Message reply = conn.send_with_reply_and_block(call);
 
     vector<XUndoStep> undo_steps;
 
@@ -349,7 +349,7 @@ command_do_xundo_step(DBus::Connection& conn, const string& config_name, unsigne
     DBus::Hoho hoho(call);
     hoho << config_name << number1 << number2 << undo_step;
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    DBus::Message reply = conn.send_with_reply_and_block(call);
 
     bool ret;
 
@@ -365,7 +365,7 @@ command_xdebug(DBus::Connection& conn)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "Debug");
 
-    DBus::Message reply = conn.send_and_reply_and_block(call);
+    DBus::Message reply = conn.send_with_reply_and_block(call);
 
     vector<string> lines;
 

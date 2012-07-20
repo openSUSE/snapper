@@ -53,6 +53,13 @@ class Commands
 {
 public:
 
+    void signal_config_created(DBus::Connection& conn, const string& config_name);
+    void signal_config_deleted(DBus::Connection& conn, const string& config_name);
+    void signal_snapshot_created(DBus::Connection& conn, const string& config_name,
+				 unsigned int num);
+    void signal_snapshots_deleted(DBus::Connection& conn, const string& config_name,
+				  list<dbus_uint32_t> nums);
+
     void list_configs(DBus::Connection& conn, DBus::Message& msg);
     void get_config(DBus::Connection& conn, DBus::Message& msg);
     void create_config(DBus::Connection& conn, DBus::Message& msg);
