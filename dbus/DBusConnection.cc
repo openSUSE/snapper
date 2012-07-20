@@ -130,6 +130,7 @@ namespace DBus
 
 	if (dbus_error_is_set(&err))
 	{
+	    dbus_error_free(&err);
 	    throw FatalException();
 	}
     }

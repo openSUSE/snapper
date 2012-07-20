@@ -1128,12 +1128,12 @@ Commands::dispatch(DBus::Connection& conn, DBus::Message& msg)
     }
     catch (const DBus::MarshallingException& e)
     {
-	DBus::MessageError reply(msg, "error.marshalling", DBUS_ERROR_FAILED);
+	DBus::MessageError reply(msg, "error.dbus.marshalling", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const DBus::FatalException& e)
     {
-	DBus::MessageError reply(msg, "error.dbus_fatal", DBUS_ERROR_FAILED);
+	DBus::MessageError reply(msg, "error.dbus.fatal", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const UnknownConfig& e)
