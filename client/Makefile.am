@@ -1,5 +1,5 @@
 #
-# Makefile.am for snapper/tools/client
+# Makefile.am for snapper/client
 #
 
 SUBDIRS = utils
@@ -15,5 +15,6 @@ snapper_SOURCES =			\
 	commands.cc	commands.h	\
 	cleanup.cc	cleanup.h
 
-snapper_LDADD = ../snapper/libsnapper.la utils/libutils.la ../dbus/libdbus.la -ldbus-1
+snapper_LDADD = ../snapper/libsnapper.la utils/libutils.la ../dbus/libdbus.la	\
+	-ldbus-1 -lboost_thread
 

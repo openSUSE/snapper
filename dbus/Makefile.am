@@ -1,5 +1,5 @@
 #
-# Makefile.am for snapper/tools/utils/dbus
+# Makefile.am for snapper/utils/dbus
 #
 
 INCLUDES = -I$(top_srcdir) -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include

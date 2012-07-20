@@ -645,7 +645,9 @@ command_delete(DBus::Connection& conn)
     {
 	unsigned int num = read_num(getopts.popArg());
 
-	command_delete_xsnapshots(conn, config_name, { num });
+	list<unsigned int> nums;
+	nums.push_back(num);
+	command_delete_xsnapshots(conn, config_name, nums);
     }
 }
 

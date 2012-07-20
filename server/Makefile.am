@@ -1,5 +1,5 @@
 #
-# Makefile.am for snapper/tools/server
+# Makefile.am for snapper/server
 #
 
 INCLUDES = -I$(top_srcdir) -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include
@@ -13,5 +13,6 @@ snapperd_SOURCES =					\
 	MetaSnapper.cc		MetaSnapper.h		\
 	Types.cc		Types.h
 
-snapperd_LDADD = ../snapper/libsnapper.la ../dbus/libdbus.la -ldbus-1 -lboost_thread
+snapperd_LDADD = ../snapper/libsnapper.la ../dbus/libdbus.la	\
+	-ldbus-1 -lboost_thread
 
