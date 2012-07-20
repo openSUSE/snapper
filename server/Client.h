@@ -120,10 +120,10 @@ public:
 	DBus::Message msg;
     };
 
-    boost::condition_variable* c;
-    boost::mutex m;
-    boost::thread* t;
-
+    boost::condition_variable condition;
+    boost::mutex mutex;
+    boost::thread thread;
+    bool stop;
     queue<Task> tasks;
 
     void add_task(DBus::Connection& conn, DBus::Message& msg);

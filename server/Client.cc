@@ -32,16 +32,20 @@ bool contains(const ListType& l, const Type& value)
 
 
 Client::Client(const string& name)
-    : name(name)
+    : name(name), stop(false)
 {
-    c = new boost::condition_variable;
-    t = NULL;
 }
 
 
 Client::~Client()
 {
-    // TODO
+    boost::unique_lock<boost::mutex> lock(mutex);
+    stop = true;
+    lock.unlock();
+
+    condition.notify_all();
+
+    thread.join();		// TODO this can block
 }
 
 
@@ -96,16 +100,15 @@ Client::has_lock(const string& config_name) const
 void
 Client::add_task(DBus::Connection& conn, DBus::Message& msg)
 {
-    if (!t)
-	t = new boost::thread(boost::bind(&Client::worker, this));
+    if (thread.get_id() == boost::thread::id())
+	thread = boost::thread(boost::bind(&Client::worker, this));
 
-    boost::unique_lock<boost::mutex> l(m);
+    boost::unique_lock<boost::mutex> lock(mutex);
     tasks.push(Task(conn, msg));
-    l.unlock();
+    lock.unlock();
 
-    c->notify_one();
+    condition.notify_one();
 }
-
 
 
 void
@@ -113,15 +116,18 @@ Client::worker()
 {
     while (true)
     {
-        boost::unique_lock<boost::mutex> l(m);
+	boost::unique_lock<boost::mutex> lock(mutex);
 
-        while (tasks.empty())
-            c->wait(l);
+	while (tasks.empty() && !stop)
+	    condition.wait(lock);
 
-        Task task = tasks.front();
-        tasks.pop();
+	if (stop)
+	    break;
 
-        l.unlock();
+	Task task = tasks.front();
+	tasks.pop();
+
+	lock.unlock();
 
 	dispatch(task.conn, task.msg);
     }
