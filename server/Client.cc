@@ -35,13 +35,13 @@ Client::Client(const string& name)
     : name(name)
 {
     c = new boost::condition_variable;
-    m = new boost::mutex;
     t = NULL;
 }
 
 
 Client::~Client()
 {
+    // TODO
 }
 
 
@@ -99,7 +99,7 @@ Client::add_task(DBus::Connection& conn, DBus::Message& msg)
     if (!t)
 	t = new boost::thread(boost::bind(&Client::worker, this));
 
-    boost::unique_lock<boost::mutex> l(*m);
+    boost::unique_lock<boost::mutex> l(m);
     tasks.push(Task(conn, msg));
     l.unlock();
 
@@ -107,12 +107,13 @@ Client::add_task(DBus::Connection& conn, DBus::Message& msg)
 }
 
 
+
 void
 Client::worker()
 {
     while (true)
     {
-        boost::unique_lock<boost::mutex> l(*m);
+        boost::unique_lock<boost::mutex> l(m);
 
         while (tasks.empty())
             c->wait(l);
@@ -143,7 +144,7 @@ Clients::add(const string& name)
 {
     assert(find(name) == entries.end());
 
-    entries.push_back(Client(name));
+    entries.emplace_back(name);
     return --entries.end();
 }
 

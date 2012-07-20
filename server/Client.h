@@ -89,7 +89,7 @@ public:
 };
 
 
-class Client : public Commands
+class Client : public Commands, boost::noncopyable
 {
 public:
 
@@ -121,7 +121,7 @@ public:
     };
 
     boost::condition_variable* c;
-    boost::mutex* m;
+    boost::mutex m;
     boost::thread* t;
 
     queue<Task> tasks;
