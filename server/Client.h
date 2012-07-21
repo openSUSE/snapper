@@ -123,7 +123,6 @@ public:
     boost::condition_variable condition;
     boost::mutex mutex;
     boost::thread thread;
-    bool stop;
     queue<Task> tasks;
 
     void add_task(DBus::Connection& conn, DBus::Message& msg);

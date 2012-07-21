@@ -32,18 +32,14 @@ bool contains(const ListType& l, const Type& value)
 
 
 Client::Client(const string& name)
-    : name(name), stop(false)
+    : name(name)
 {
 }
 
 
 Client::~Client()
 {
-    boost::unique_lock<boost::mutex> lock(mutex);
-    stop = true;
-    lock.unlock();
-
-    condition.notify_all();
+    thread.interrupt();
 
     thread.join();		// TODO this can block
 }
@@ -114,22 +110,25 @@ Client::add_task(DBus::Connection& conn, DBus::Message& msg)
 void
 Client::worker()
 {
-    while (true)
+    try
     {
-	boost::unique_lock<boost::mutex> lock(mutex);
+	while (true)
+	{
+	    boost::unique_lock<boost::mutex> lock(mutex);
 
-	while (tasks.empty() && !stop)
-	    condition.wait(lock);
+	    while (tasks.empty())
+		condition.wait(lock);
 
-	if (stop)
-	    break;
+	    Task task = tasks.front();
+	    tasks.pop();
 
-	Task task = tasks.front();
-	tasks.pop();
+	    lock.unlock();
 
-	lock.unlock();
-
-	dispatch(task.conn, task.msg);
+	    dispatch(task.conn, task.msg);
+	}
+    }
+    catch (boost::thread_interrupted)
+    {
     }
 }
 
