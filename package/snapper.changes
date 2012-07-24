@@ -2,6 +2,7 @@
 Tue Jul 24 14:35:44 CEST 2012 - aschnell@suse.de
 
 - added experimental support for LVM thin-provisioned snapshots
+- 0.0.12
 
 -------------------------------------------------------------------
 Tue Jun 12 10:07:08 CEST 2012 - aschnell@suse.de
