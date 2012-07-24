@@ -49,8 +49,8 @@ const QDBusArgument& operator>>(const QDBusArgument& argument, Snapshot& mystruc
 void
 command_list_snapshots()
 {
-    QDBusInterface dbus_iface("org.opensuse.snapper", "/org/opensuse/snapper",
-			      "org.opensuse.snapper", QDBusConnection::systemBus());
+    QDBusInterface dbus_iface("org.opensuse.Snapper", "/org/opensuse/Snapper",
+			      "org.opensuse.Snapper", QDBusConnection::systemBus());
 
     QDBusMessage reply = dbus_iface.call("ListSnapshots", "root");
     // qDebug() << reply;

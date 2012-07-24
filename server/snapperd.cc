@@ -49,9 +49,9 @@ using namespace std;
 using namespace snapper;
 
 
-#define SERVICE "org.opensuse.snapper"
-#define PATH "/org/opensuse/snapper"
-#define INTERFACE "org.opensuse.snapper"
+#define SERVICE "org.opensuse.Snapper"
+#define PATH "/org/opensuse/Snapper"
+#define INTERFACE "org.opensuse.Snapper"
 
 
 Clients clients;
@@ -62,7 +62,7 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 {
     const char* introspect =
 	DBUS_INTROSPECT_1_0_XML_DOCTYPE_DECL_NODE "\n"
-	"<node name='/org/opensuse/snapper'>\n"
+	"<node name='/org/opensuse/Snapper'>\n"
 	"  <interface name='" DBUS_INTERFACE_INTROSPECTABLE "'>\n"
 	"    <method name='Introspect'>\n"
 	"      <arg name='xml_data' type='s' direction='out'/>\n"
@@ -1179,7 +1179,7 @@ listen(DBus::Connection& conn)
 {
     y2mil("Requesting DBus name");
 
-    conn.request_name("org.opensuse.snapper", DBUS_NAME_FLAG_REPLACE_EXISTING);
+    conn.request_name("org.opensuse.Snapper", DBUS_NAME_FLAG_REPLACE_EXISTING);
 
     y2mil("Listening for method calls and signals");
 

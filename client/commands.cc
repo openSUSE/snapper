@@ -23,9 +23,9 @@
 #include "commands.h"
 
 
-#define SERVICE "org.opensuse.snapper"
-#define OBJECT "/org/opensuse/snapper"
-#define INTERFACE "org.opensuse.snapper"
+#define SERVICE "org.opensuse.Snapper"
+#define OBJECT "/org/opensuse/Snapper"
+#define INTERFACE "org.opensuse.Snapper"
 
 
 list<XConfigInfo>

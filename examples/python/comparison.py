@@ -4,8 +4,8 @@ import dbus
 
 bus = dbus.SystemBus()
 
-snapper = dbus.Interface(bus.get_object('org.opensuse.snapper', '/org/opensuse/snapper'),
-                         dbus_interface='org.opensuse.snapper')
+snapper = dbus.Interface(bus.get_object('org.opensuse.Snapper', '/org/opensuse/Snapper'),
+                         dbus_interface='org.opensuse.Snapper')
 
 
 config_name = "root"
@@ -21,18 +21,11 @@ for file in files:
     print file[0], file[1], file[2]
 
 
-undo = [ [ "/hello", False ], [ "/world", True ] ]
-
-snapper.SetUndo(config_name, num_pre, num_post, undo)
+snapper.SetUndoAll(config_name, num_pre, num_post, True)
 
 
-files = snapper.GetFiles("root", num_pre, num_post)
+undo_steps = snapper.GetUndoSteps("root", num_pre, num_post)
 
-for file in files:
-    print file[0], file[1], file[2]
-
-
-(num_create, num_modify, num_delete) = snapper.GetUndoStatistic(config_name, num_pre, num_post)
-
-print num_create, num_modify, num_delete
+for undo_step in undo_steps:
+    print undo_step[0], undo_step[1]
 

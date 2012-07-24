@@ -23,8 +23,8 @@ class MyPlugin(Plugin):
 
 bus = SystemBus()
 
-snapper = Interface(bus.get_object('org.opensuse.snapper', '/org/opensuse/snapper'),
-                    dbus_interface='org.opensuse.snapper')
+snapper = Interface(bus.get_object('org.opensuse.Snapper', '/org/opensuse/Snapper'),
+                    dbus_interface='org.opensuse.Snapper')
 
 plugin = MyPlugin()
 plugin.main()
