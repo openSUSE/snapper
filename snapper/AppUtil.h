@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2011] Novell, Inc.
+ * Copyright (c) [2004-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -43,6 +43,7 @@ namespace snapper
     void createPath(const string& Path_Cv);
     bool checkNormalFile(const string& Path_Cv);
     bool checkDir(const string& Path_Cv);
+    bool checkAnything(const string& Path_Cv);
 
     list<string> glob(const string& path, int flags);
 
@@ -55,6 +56,16 @@ namespace snapper
     int symlink(const string& oldpath, const string& newpath);
 
     string realpath(const string& path);
+
+    struct MtabData
+    {
+	string device;
+	string mount_point;
+	string type;
+    };
+
+    bool getMtabData(const string& mount_point, bool& found, MtabData& mtab_data);
+
 
     template<class StreamType>
     void classic(StreamType& stream)

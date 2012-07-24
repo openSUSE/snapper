@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2011] Novell, Inc.
+ * Copyright (c) [2004-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -48,6 +48,9 @@
 
 #define MOUNTBIN "/bin/mount"
 #define UMOUNTBIN "/bin/umount"
+
+#define LVCREATE "/sbin/lvcreate"
+#define LVREMOVE "/sbin/lvremove"
 
 
 #endif

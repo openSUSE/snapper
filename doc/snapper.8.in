@@ -1,4 +1,4 @@
-.TH "SNAPPER" "8" "2012-03-20" "@VERSION@" "Filesystem Snapshot Management"
+.TH "SNAPPER" "8" "2012-07-24" "@VERSION@" "Filesystem Snapshot Management"
 .SH "NAME"
 .LP
 snapper - Command\-line program for filesystem snapshot management
@@ -16,7 +16,8 @@ Snapper is a command\-line program for filesystem snapshot management. It can
 create, delete and compare snapshots and undo changes done between snapshots.
 .LP
 Snapper never modifies the content of snapshots. Thus snapper creates
-read-only snapshots. Supported filesystems are btrfs and ext4.
+read-only snapshots. Supported filesystems are btrfs and ext4 as well as
+snapshots of LVM logical volumes with thin-provisioning.
 
 .SH CONCEPTS
 
@@ -115,8 +116,12 @@ will likely need the global option \fI--config\fR, see \fBGLOBAL OPTIONS\fR and
 \fBCONCEPTS\fR.
 .TP
 \fI\-f, \-\-fstype\fR <fstype>
-Manually set filesystem type. Supported values are btrfs and ext4. Without
-this option snapper detect the filesystem.
+Manually set filesystem type. Supported values are btrfs, ext4 and lvm. For
+lvm snapper used LVM thin-provisioned snapshots. The filesystem type on top of
+LVM can be provided in parentheses, e.g. lvm(xfs). This is required for XFS.
+
+Without this option snapper tries to detect the filesystem.
+
 .TP
 \fI\-t, \-\-template\fR <name>
 Name of template for the new configuration file.
@@ -251,4 +256,4 @@ Arvin Schnell <aschnell@suse.de>
 
 .SH "SEE ALSO"
 .LP
-btrfs(8)
+btrfs(8), lvcreate(2)

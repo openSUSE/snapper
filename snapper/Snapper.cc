@@ -71,7 +71,7 @@ namespace snapper
 	config->getValue("FSTYPE", fstype);
 	filesystem = Filesystem::create(fstype, subvolume);
 
-	y2mil("subvolume:" << subvolume << " filesystem:" << filesystem->name());
+	y2mil("subvolume:" << subvolume << " filesystem:" << filesystem->fstype());
 
 	if (!disable_filters)
 	    loadIgnorePatterns();
@@ -628,7 +628,7 @@ namespace snapper
 	{
 	    SysconfigFile config(CONFIGSDIR "/" + config_name);
 	    config.setValue("SUBVOLUME", subvolume);
-	    config.setValue("FSTYPE", fstype);
+	    config.setValue("FSTYPE", filesystem->fstype());
 	}
 	catch (const FileNotFoundException& e)
 	{
