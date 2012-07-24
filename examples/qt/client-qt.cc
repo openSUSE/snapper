@@ -14,7 +14,9 @@ struct Snapshot
     unsigned int num;
     SnapshotType type;
     unsigned int date;
+    unsigned int pre_num;
     QString description;
+    QString cleanup;
     QMap<QString, QString> userdata;
 };
 
@@ -26,7 +28,8 @@ QDBusArgument& operator<<(QDBusArgument& argument, const Snapshot& mystruct)
 {
     argument.beginStructure();
     argument << mystruct.num << static_cast<unsigned short>(mystruct.type) << mystruct.date
-	     << mystruct.description << mystruct.userdata;
+	     << mystruct.pre_num << mystruct.description << mystruct.cleanup
+	     << mystruct.userdata;
     argument.endStructure();
     return argument;
 }
@@ -37,7 +40,8 @@ const QDBusArgument& operator>>(const QDBusArgument& argument, Snapshot& mystruc
     unsigned short tmp1;
 
     argument.beginStructure();
-    argument >> mystruct.num >> tmp1 >> mystruct.date >> mystruct.description >> mystruct.userdata;
+    argument >> mystruct.num >> tmp1 >> mystruct.date >> mystruct.pre_num >> mystruct.description
+	     >> mystruct.cleanup >> mystruct.userdata;
     argument.endStructure();
 
     mystruct.type = static_cast<SnapshotType>(tmp1);
