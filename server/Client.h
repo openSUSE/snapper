@@ -53,6 +53,8 @@ class Commands
 {
 public:
 
+    static void introspect(DBus::Connection& conn, DBus::Message& msg);
+
     void signal_config_created(DBus::Connection& conn, const string& config_name);
     void signal_config_deleted(DBus::Connection& conn, const string& config_name);
     void signal_snapshot_created(DBus::Connection& conn, const string& config_name,

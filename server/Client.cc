@@ -127,7 +127,7 @@ Client::worker()
 	    dispatch(task.conn, task.msg);
 	}
     }
-    catch (boost::thread_interrupted)
+    catch (const boost::thread_interrupted&)
     {
     }
 }

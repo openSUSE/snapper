@@ -58,7 +58,7 @@ Clients clients;
 
 
 void
-reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
+Commands::introspect(DBus::Connection& conn, DBus::Message& msg)
 {
     const char* introspect =
 	DBUS_INTROSPECT_1_0_XML_DOCTYPE_DECL_NODE "\n"
@@ -69,6 +69,24 @@ reply_to_introspect(DBus::Connection& conn, DBus::Message& msg)
 	"    </method>\n"
 	"  </interface>\n"
 	"  <interface name='" INTERFACE "'>\n"
+
+	"    <signal name='ConfigCreated'>\n"
+	"      <arg name='config-name' type='s'/>\n"
+	"    </signal>\n"
+
+	"    <signal name='ConfigDeleted'>\n"
+	"      <arg name='config-name' type='s'/>\n"
+	"    </signal>\n"
+
+	"    <signal name='SnapshotCreated'>\n"
+	"      <arg name='config-name' type='s'/>\n"
+	"      <arg name='number' type='u'/>\n"
+	"    </signal>\n"
+
+	"    <signal name='SnapshotDeleted'>\n"
+	"      <arg name='config-name' type='s'/>\n"
+	"      <arg name='number' type='u'/>\n"
+	"    </signal>\n"
 
 	"    <method name='ListConfigs'>\n"
 	"      <arg name='configs' type='v' direction='out'/>\n"
@@ -1212,7 +1230,7 @@ listen(DBus::Connection& conn)
 
 		if (msg.is_method_call(DBUS_INTERFACE_INTROSPECTABLE, "Introspect"))
 		{
-		    reply_to_introspect(conn, msg);
+		    Commands::introspect(conn, msg);
 		    break;
 		}
 
