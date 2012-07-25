@@ -41,12 +41,8 @@ namespace snapper
 
     bool
     mount(const string& device, const string& mount_point, const string& mount_type,
-	  const vector<string>& old_options, const vector<string>& new_options)
+	  const vector<string>& options)
     {
-	vector<string> options = old_options;
-	options.erase(remove(options.begin(), options.end(), "rw"), options.end());
-	options.insert(options.end(), new_options.begin(), new_options.end());
-
 	string cmd_line = MOUNTBIN " -t " + mount_type + " --read-only";
 
 	if (!options.empty())
@@ -220,6 +216,11 @@ namespace snapper
 	}
 
 	mount_options = mtab_data.options;
+	mount_options.erase(remove(mount_options.begin(), mount_options.end(), "rw"),
+			    mount_options.end());
+	mount_options.push_back("noatime");
+	mount_options.push_back("loop");
+	mount_options.push_back("noload");
     }
 
 
@@ -346,12 +347,7 @@ namespace snapper
 	    throw MountSnapshotFailedException();
 	}
 
-	vector<string> options;
-	options.push_back("noatime");
-	options.push_back("loop");
-	options.push_back("noload");
-
-	if (!mount(snapshotFile(num), snapshotDir(num), "ext4", mount_options, options))
+	if (!mount(snapshotFile(num), snapshotDir(num), "ext4", mount_options))
 	    throw MountSnapshotFailedException();
     }
 
@@ -418,6 +414,11 @@ namespace snapper
 	    throw InvalidConfigException();
 
 	mount_options = mtab_data.options;
+	mount_options.erase(remove(mount_options.begin(), mount_options.end(), "rw"),
+			    mount_options.end());
+	mount_options.push_back("noatime");
+	if (mount_type == "xfs")
+	    mount_options.push_back("nouuid");
     }
 
 
@@ -516,12 +517,7 @@ namespace snapper
 	if (isSnapshotMounted(num))
 	    return;
 
-	vector<string> options;
-	options.push_back("noatime");
-	if (mount_type == "xfs")
-	    options.push_back("nouuid");
-
-	if (!mount(getDevice(num), snapshotDir(num), mount_type, mount_options, options))
+	if (!mount(getDevice(num), snapshotDir(num), mount_type, mount_options))
 	    throw MountSnapshotFailedException();
     }
 
