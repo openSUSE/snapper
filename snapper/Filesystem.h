@@ -25,14 +25,17 @@
 
 
 #include <string>
+#include <vector>
 
 
 namespace snapper
 {
     using std::string;
+    using std::vector;
 
 
     class Snapper;
+    class MtabData;
 
 
     class Filesystem
@@ -122,6 +125,10 @@ namespace snapper
 
 	virtual bool checkSnapshot(unsigned int num) const;
 
+    private:
+
+	vector<string> mount_options;
+
     };
 
 
@@ -155,12 +162,14 @@ namespace snapper
 
 	const string mount_type;
 
-	bool detectLvmNames();
+	bool detectLvmNames(const MtabData& mtab_data);
 
 	string getDevice(unsigned int num) const;
 
 	string vg_name;
 	string lv_name;
+
+	vector<string> mount_options;
 
     };
 

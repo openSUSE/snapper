@@ -41,8 +41,12 @@ namespace snapper
 
     bool
     mount(const string& device, const string& mount_point, const string& mount_type,
-	  const vector<string>& options)
+	  const vector<string>& old_options, const vector<string>& new_options)
     {
+	vector<string> options = old_options;
+	options.erase(remove(options.begin(), options.end(), "rw"), options.end());
+	options.insert(options.end(), new_options.begin(), new_options.end());
+
 	string cmd_line = MOUNTBIN " -t " + mount_type + " --read-only";
 
 	if (!options.empty())
@@ -202,6 +206,20 @@ namespace snapper
 	{
 	    throw ProgramNotInstalledException(CHATTRBIN " not installed");
 	}
+
+	bool found = false;
+	MtabData mtab_data;
+
+	if (!getMtabData(subvolume, found, mtab_data))
+	    throw InvalidConfigException();
+
+	if (!found)
+	{
+	    y2err("filesystem not mounted");
+	    throw InvalidConfigException();
+	}
+
+	mount_options = mtab_data.options;
     }
 
 
@@ -333,7 +351,7 @@ namespace snapper
 	options.push_back("loop");
 	options.push_back("noload");
 
-	if (!mount(snapshotFile(num), snapshotDir(num), "ext4", options))
+	if (!mount(snapshotFile(num), snapshotDir(num), "ext4", mount_options, options))
 	    throw MountSnapshotFailedException();
     }
 
@@ -384,10 +402,22 @@ namespace snapper
 	    throw ProgramNotInstalledException(LVCREATE " not installed");
 	}
 
-	if (!detectLvmNames())
+	bool found = false;
+	MtabData mtab_data;
+
+	if (!getMtabData(subvolume, found, mtab_data))
+	    throw InvalidConfigException();
+
+	if (!found)
 	{
+	    y2err("filesystem not mounted");
 	    throw InvalidConfigException();
 	}
+
+	if (!detectLvmNames(mtab_data))
+	    throw InvalidConfigException();
+
+	mount_options = mtab_data.options;
     }
 
 
@@ -491,7 +521,7 @@ namespace snapper
 	if (mount_type == "xfs")
 	    options.push_back("nouuid");
 
-	if (!mount(getDevice(num), snapshotDir(num), mount_type, options))
+	if (!mount(getDevice(num), snapshotDir(num), mount_type, mount_options, options))
 	    throw MountSnapshotFailedException();
     }
 
@@ -515,20 +545,8 @@ namespace snapper
 
 
     bool
-    Lvm::detectLvmNames()
+    Lvm::detectLvmNames(const MtabData& mtab_data)
     {
-	bool found = false;
-	MtabData mtab_data;
-
-	if (!getMtabData(subvolume, found, mtab_data))
-	    return false;
-
-	if (!found)
-	{
-	    y2err("logical volume not mounted");
-	    return false;
-	}
-
 	Regex rx("^/dev/mapper/([^-]+)-([^-]+)$");
 	if (rx.match(mtab_data.device))
 	{

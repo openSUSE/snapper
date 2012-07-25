@@ -31,6 +31,7 @@
 #include <string>
 #include <list>
 #include <map>
+#include <vector>
 
 
 namespace snapper
@@ -38,6 +39,7 @@ namespace snapper
     using std::string;
     using std::list;
     using std::map;
+    using std::vector;
 
 
     void createPath(const string& Path_Cv);
@@ -60,8 +62,9 @@ namespace snapper
     struct MtabData
     {
 	string device;
-	string mount_point;
+	string dir;
 	string type;
+	vector<string> options;
     };
 
     bool getMtabData(const string& mount_point, bool& found, MtabData& mtab_data);

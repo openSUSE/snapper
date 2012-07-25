@@ -230,8 +230,10 @@ namespace snapper
 	    {
 		found = true;
 		mtab_data.device = m->mnt_fsname;
-		mtab_data.mount_point = m->mnt_dir;
+		mtab_data.dir = m->mnt_dir;
 		mtab_data.type = m->mnt_type;
+		boost::split(mtab_data.options, m->mnt_opts, boost::is_any_of(","),
+			     boost::token_compress_on);
 		break;
 	    }
 	}
