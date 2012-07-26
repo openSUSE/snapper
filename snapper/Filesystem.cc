@@ -543,7 +543,7 @@ namespace snapper
     bool
     Lvm::detectLvmNames(const MtabData& mtab_data)
     {
-	Regex rx("^/dev/mapper/([^-]+)-([^-]+)$");
+	Regex rx("^/dev/mapper/(.+[^-])-([^-].+)$");
 	if (rx.match(mtab_data.device))
 	{
 	    vg_name = boost::replace_all_copy(rx.cap(1), "--", "-");
