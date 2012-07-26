@@ -3,6 +3,7 @@ Wed Jul 25 10:44:38 CEST 2012 - aschnell@suse.de
 
 - take mount options from original filesystem when mounting
   snapshots
+- 0.0.13
 
 -------------------------------------------------------------------
 Tue Jul 24 14:35:44 CEST 2012 - aschnell@suse.de
