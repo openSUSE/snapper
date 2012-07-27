@@ -696,7 +696,7 @@ namespace snapper
 		error = true;
 	}
 
-	return error;
+	return !error;
     }
 
 
