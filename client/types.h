@@ -28,8 +28,8 @@ using std::string;
 using std::list;
 using std::map;
 
-#include "dbus/DBusConnection.h"
 #include "dbus/DBusMessage.h"
+#include "dbus/DBusConnection.h"
 #include "snapper/Snapshot.h"
 #include "snapper/File.h"
 

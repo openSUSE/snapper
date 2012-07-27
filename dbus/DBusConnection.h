@@ -20,14 +20,13 @@
  */
 
 
-#ifndef SNAPPER_DBUSCONN_H
-#define SNAPPER_DBUSCONN_H
+#ifndef SNAPPER_DBUSCONNECTION_H
+#define SNAPPER_DBUSCONNECTION_H
 
 
 #include <dbus/dbus.h>
 
 #include <boost/noncopyable.hpp>
-#include <boost/thread.hpp>
 
 #include "DBusMessage.h"
 
@@ -46,18 +45,17 @@ namespace DBus
 
 	void request_name(const char* name, unsigned int flags);
 
-	void read_write(int timeout);
-
 	void send(Message& m);
 
 	Message send_with_reply_and_block(Message& m);
 
 	void add_match(const char* rule);
 
+	void register_object_path(const char* path, const DBusObjectPathVTable* vtable,
+				  void* user_data);
+
 	unsigned long get_unix_userid(const Message& m);
 	static string get_unix_username(unsigned long userid); // TODO
-
-	boost::mutex mutex;
 
     private:
 

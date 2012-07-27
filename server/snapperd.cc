@@ -37,8 +37,9 @@
 #include <snapper/SnapperTmpl.h>
 #include <snapper/AsciiFile.h>
 
-#include "dbus/DBusConnection.h"
 #include "dbus/DBusMessage.h"
+#include "dbus/DBusConnection.h"
+#include "dbus/DBusServer.h"
 
 #include "MetaSnapper.h"
 #include "Client.h"
@@ -1193,99 +1194,108 @@ Commands::dispatch(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-listen(DBus::Connection& conn)
+unregister_func(DBusConnection* connection, void* data)
 {
-    y2mil("Requesting DBus name");
+}
 
-    conn.request_name("org.opensuse.Snapper", DBUS_NAME_FLAG_REPLACE_EXISTING);
 
-    y2mil("Listening for method calls and signals");
+DBusHandlerResult
+message_func1(DBusConnection* connection, DBusMessage* message, void* data)
+{
+    DBus::Server* s = static_cast<DBus::Server*>(data);
 
-    conn.add_match("type='signal', interface='" DBUS_INTERFACE_DBUS "', member='NameOwnerChanged'");
+    DBus::Message msg(message);
 
-    int idle = 0;
-    while (++idle < 1000 || !clients.empty())
+    if (msg.get_type() == DBUS_MESSAGE_TYPE_METHOD_CALL)
     {
-	boost::this_thread::sleep(boost::posix_time::milliseconds(100)); // TODO
+	y2mil("method call sender:'" << msg.get_sender() << "' path:'" <<
+	      msg.get_path() << "' interface:'" << msg.get_interface() <<
+	      "' member:'" << msg.get_member() << "'");
 
-	boost::unique_lock<boost::mutex> dbus_lock(conn.mutex);
+	s->reset_idle_count();
 
-	conn.read_write(10);	// TODO
-
-	DBusMessage* tmp = dbus_connection_pop_message(conn.get_connection());
-	if (!tmp)
-	    continue;
-
-	dbus_lock.unlock();
-
-	DBus::Message msg(tmp);
-
-	switch (msg.get_type())
+	if (msg.is_method_call(DBUS_INTERFACE_INTROSPECTABLE, "Introspect"))
 	{
-	    case DBUS_MESSAGE_TYPE_METHOD_CALL:
+	    Commands::introspect(*s, msg);
+	}
+	else
+	{
+	    Clients::iterator client = clients.find(msg.get_sender());
+	    if (client == clients.end())
 	    {
-		y2mil("method call sender:'" << msg.get_sender() << "' path:'" <<
-		      msg.get_path() << "' interface:'" << msg.get_interface() <<
-		      "' member:'" << msg.get_member() << "'");
-
-		if (msg.is_method_call(DBUS_INTERFACE_INTROSPECTABLE, "Introspect"))
-		{
-		    Commands::introspect(conn, msg);
-		    break;
-		}
-
-		Clients::iterator client = clients.find(msg.get_sender());
-		if (client == clients.end())
-		{
-		    y2mil("client connected invisible '" << msg.get_sender() << "'");
-		    client = client_connected(msg.get_sender());
-		}
-
-		client->add_task(conn, msg);
+		y2mil("client connected invisible '" << msg.get_sender() << "'");
+		client = client_connected(msg.get_sender());
+		s->set_idle_timeout(-1);
 	    }
-	    break;
 
-	    case DBUS_MESSAGE_TYPE_SIGNAL:
-	    {
-		y2mil("signal sender:'" << msg.get_sender() << "' path:'" <<
-		      msg.get_path() << "' interface:'" << msg.get_interface() <<
-		      "' member:'" << msg.get_member() << "'");
-
-		if (msg.is_signal(DBUS_INTERFACE_DBUS, "NameOwnerChanged"))
-		{
-		    string name, old_owner, new_owner;
-
-		    DBus::Hihi hihi(msg);
-		    hihi >> name >> old_owner >> new_owner;
-
-		    if (name == new_owner && old_owner.empty())
-		    {
-			y2mil("client connected '" << name << "'");
-			client_connected(name);
-		    }
-
-		    if (name == old_owner && new_owner.empty())
-		    {
-			y2mil("client disconnected '" << name << "'");
-			client_disconnected(name);
-		    }
-		}
-	    }
-	    break;
+	    client->add_task(*s, msg);
 	}
 
-	idle = 0;
+	return DBUS_HANDLER_RESULT_HANDLED;
     }
 
-    y2mil("Idle - exiting");
+    return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
 }
+
+
+DBusHandlerResult
+message_func2(DBusConnection* connection, DBusMessage* message, void* data)
+{
+    DBus::Server* s = static_cast<DBus::Server*>(data);
+
+    DBus::Message msg(message);
+
+    if (msg.get_type() == DBUS_MESSAGE_TYPE_SIGNAL)
+    {
+	y2mil("signal sender:'" << msg.get_sender() << "' path:'" <<
+	      msg.get_path() << "' interface:'" << msg.get_interface() <<
+	      "' member:'" << msg.get_member() << "'");
+
+	if (msg.is_signal(DBUS_INTERFACE_DBUS, "NameOwnerChanged"))
+	{
+	    string name, old_owner, new_owner;
+
+	    DBus::Hihi hihi(msg);
+	    hihi >> name >> old_owner >> new_owner;
+
+	    if (name == new_owner && old_owner.empty())
+	    {
+		y2mil("client connected '" << name << "'");
+		client_connected(name);
+		s->reset_idle_count();
+		s->set_idle_timeout(-1);
+	    }
+
+	    if (name == old_owner && new_owner.empty())
+	    {
+		y2mil("client disconnected '" << name << "'");
+		client_disconnected(name);
+		if (clients.empty())
+		    s->set_idle_timeout(30);
+	    }
+
+	    return DBUS_HANDLER_RESULT_HANDLED;
+	}
+    }
+
+    return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
+}
+
+
+DBusObjectPathVTable dbus_vtable1 = {
+    unregister_func, message_func1, NULL, NULL, NULL, NULL
+};
+
+DBusObjectPathVTable dbus_vtable2 = {
+    unregister_func, message_func2, NULL, NULL, NULL, NULL
+};
 
 
 void
 log_do(LogLevel level, const string& component, const char* file, const int line, const char* func,
        const string& text)
 {
-    cerr << text << endl;
+    cout << /* boost::this_thread::get_id() << " " << */ text << endl;
 }
 
 
@@ -1298,9 +1308,25 @@ main(int argc, char** argv)
     setLogDo(&log_do);
 #endif
 
-    DBus::Connection conn(DBUS_BUS_SYSTEM);
+    dbus_threads_init_default();
 
-    listen(conn);
+    DBus::Server server(DBUS_BUS_SYSTEM);
+
+    server.set_idle_timeout(30);
+
+    y2mil("Requesting DBus name");
+
+    server.request_name("org.opensuse.Snapper", DBUS_NAME_FLAG_REPLACE_EXISTING);
+
+    y2mil("Listening for method calls and signals");
+
+    server.register_object_path(PATH, &dbus_vtable1, &server);
+    server.register_object_path(DBUS_PATH_DBUS, &dbus_vtable2, &server);
+    server.add_match("type='signal', interface='" DBUS_INTERFACE_DBUS "', member='NameOwnerChanged'");
+
+    server.run();
+
+    y2mil("Exiting");
 
     return 0;
 }

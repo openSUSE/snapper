@@ -58,8 +58,6 @@ namespace DBus
     void
     Connection::request_name(const char* name, unsigned int flags)
     {
-	boost::lock_guard<boost::mutex> lock(mutex);
-
 	DBusError err;
 	dbus_error_init(&err);
 
@@ -78,19 +76,8 @@ namespace DBus
 
 
     void
-    Connection::read_write(int timeout)
-    {
-	// TODO
-
-	dbus_connection_read_write(conn, timeout);
-    }
-
-
-    void
     Connection::send(Message& m)
     {
-	boost::lock_guard<boost::mutex> lock(mutex);
-
 	if (!dbus_connection_send(conn, m.get_message(), NULL))
 	{
 	    throw FatalException();
@@ -101,8 +88,6 @@ namespace DBus
     Message
     Connection::send_with_reply_and_block(Message& m)
     {
-	boost::lock_guard<boost::mutex> lock(mutex);
-
 	DBusError err;
 	dbus_error_init(&err);
 
@@ -121,8 +106,6 @@ namespace DBus
     void
     Connection::add_match(const char* rule)
     {
-	boost::lock_guard<boost::mutex> lock(mutex);
-
 	DBusError err;
 	dbus_error_init(&err);
 
@@ -136,11 +119,18 @@ namespace DBus
     }
 
 
+    void
+    Connection::register_object_path(const char* path, const DBusObjectPathVTable* vtable,
+				     void* user_data)
+    {
+	if (!dbus_connection_register_object_path(conn, path, vtable, user_data))
+	    throw FatalException();
+    }
+
+
     unsigned long
     Connection::get_unix_userid(const Message& m)
     {
-	boost::lock_guard<boost::mutex> lock(mutex);
-
 	string sender = m.get_sender();
 	if (sender.empty())
 	{

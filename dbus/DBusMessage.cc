@@ -33,6 +33,7 @@ namespace DBus
 	: msg(m)
     {
 	assert(msg);
+	dbus_message_ref(msg);
     }
 
 

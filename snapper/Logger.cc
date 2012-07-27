@@ -25,6 +25,7 @@
 #include <sys/types.h>
 #include <libxml/tree.h>
 #include <string>
+#include <boost/thread.hpp>
 
 #include "config.h"
 
@@ -65,6 +66,10 @@ namespace snapper
 
 	string prefix = sformat("%s %s libsnapper(%d) %s(%s):%d", datetime(time(0), false, true).c_str(),
 				ln[level], getpid(), file, func, line);
+
+	static boost::mutex mutex;
+
+	boost::lock_guard<boost::mutex> lock(mutex);
 
 	FILE* f = fopen(filename.c_str(), "a");
 	if (f)

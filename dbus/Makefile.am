@@ -7,6 +7,6 @@ INCLUDES = -I$(top_srcdir) -I/usr/include/dbus-1.0 -I/usr/lib/dbus-1.0/include
 noinst_LTLIBRARIES = libdbus.la
 
 libdbus_la_SOURCES =					\
+	DBusMessage.cc		DBusMessage.h		\
 	DBusConnection.cc	DBusConnection.h	\
-	DBusMessage.cc		DBusMessage.h
-
+	DBusServer.cc		DBusServer.h
