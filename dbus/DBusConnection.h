@@ -55,7 +55,6 @@ namespace DBus
 				  void* user_data);
 
 	unsigned long get_unix_userid(const Message& m);
-	static string get_unix_username(unsigned long userid); // TODO
 
     private:
 

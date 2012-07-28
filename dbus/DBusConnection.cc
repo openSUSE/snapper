@@ -150,26 +150,4 @@ namespace DBus
 	return uid;
     }
 
-
-    string
-    Connection::get_unix_username(unsigned long userid)
-    {
-	long bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
-	char* buf = (char*) malloc(bufsize);
-	if (!buf)
-	    throw FatalException();
-
-	struct passwd pwd;
-	struct passwd *result;
-	getpwuid_r(userid, &pwd, buf, bufsize, &result);
-	if (!result)
-	    throw FatalException();
-
-	string username(pwd.pw_name);
-
-	free(buf);
-
-	return username;
-    }
-
 }
