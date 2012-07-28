@@ -61,10 +61,8 @@ Client::find_comparison(Snapper* snapper, Snapshots::const_iterator snapshot1,
 
 
 Comparison*
-Client::find_comparison(const string& config_name, unsigned int number1, unsigned int number2)
+Client::find_comparison(Snapper* snapper, unsigned int number1, unsigned int number2)
 {
-    MetaSnappers::iterator it = meta_snappers.find(config_name);
-    Snapper* snapper = it->getSnapper();
     Snapshots& snapshots = snapper->getSnapshots();
     Snapshots::const_iterator snapshot1 = snapshots.find(number1);
     Snapshots::const_iterator snapshot2 = snapshots.find(number2);

@@ -830,7 +830,7 @@ Client::get_files(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    Comparison* comparison = find_comparison(config_name, num1, num2);
+    Comparison* comparison = find_comparison(it->getSnapper(), num1, num2);
 
     const Files& files = comparison->getFiles();
 
@@ -861,7 +861,7 @@ Client::get_diff(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    Comparison* comparison = find_comparison(config_name, num1, num2);
+    Comparison* comparison = find_comparison(it->getSnapper(), num1, num2);
 
     Files& files = comparison->getFiles();
 
@@ -896,7 +896,7 @@ Client::set_undo(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    Comparison* comparison = find_comparison(config_name, num1, num2);
+    Comparison* comparison = find_comparison(it->getSnapper(), num1, num2);
 
     Files& files = comparison->getFiles();
 
@@ -932,7 +932,7 @@ Client::set_undo_all(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    Comparison* comparison = find_comparison(config_name, num1, num2);
+    Comparison* comparison = find_comparison(it->getSnapper(), num1, num2);
 
     Files& files = comparison->getFiles();
 
@@ -963,7 +963,7 @@ Client::get_undo_steps(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    Comparison* comparison = find_comparison(config_name, num1, num2);
+    Comparison* comparison = find_comparison(it->getSnapper(), num1, num2);
 
     vector<UndoStep> undo_steps = comparison->getUndoSteps();
 
@@ -992,7 +992,7 @@ Client::do_undo_step(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    Comparison* comparison = find_comparison(config_name, num1, num2);
+    Comparison* comparison = find_comparison(it->getSnapper(), num1, num2);
 
     bool ret = comparison->doUndoStep(undo_step);
 

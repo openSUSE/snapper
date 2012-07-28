@@ -91,8 +91,7 @@ public:
     Client(const string& name);
     ~Client();
 
-    Comparison* find_comparison(const string& config_name, unsigned int number1,
-				unsigned int number2);
+    Comparison* find_comparison(Snapper* snapper, unsigned int number1, unsigned int number2);
 
     Comparison* find_comparison(Snapper* snapper, Snapshots::const_iterator snapshot1,
 				Snapshots::const_iterator snapshot2);
