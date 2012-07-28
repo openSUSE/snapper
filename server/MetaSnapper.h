@@ -33,11 +33,57 @@ using namespace std;
 using namespace snapper;
 
 
-extern list<Snapper*> snappers;
+class MetaSnapper
+{
+public:
+
+    MetaSnapper(const ConfigInfo& config_info);
+    ~MetaSnapper();
+
+    const string& configName() const { return config_info.config_name; }
+
+    const ConfigInfo config_info;
+
+    vector<uid_t> uids;
+
+    Snapper* getSnapper();
+
+private:
+
+    Snapper* snapper;
+
+};
 
 
-Snapper*
-getSnapper(const string& config_name);
+class MetaSnappers
+{
+
+public:
+
+    MetaSnappers();
+    ~MetaSnappers();
+
+    typedef list<MetaSnapper>::iterator iterator;
+    typedef list<MetaSnapper>::const_iterator const_iterator;
+
+    iterator begin() { return entries.begin(); }
+    const_iterator begin() const { return entries.begin(); }
+
+    iterator end() { return entries.end(); }
+    const_iterator end() const { return entries.end(); }
+
+    bool empty() const { return entries.empty(); }
+
+    iterator find(const string& config_name);
+
+private:
+
+    list<MetaSnapper> entries;
+
+};
+
+
+extern MetaSnappers meta_snappers;
 
 
 #endif

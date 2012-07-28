@@ -59,7 +59,7 @@ Clients clients;
 
 
 void
-Commands::introspect(DBus::Connection& conn, DBus::Message& msg)
+Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 {
     const char* introspect =
 	DBUS_INTROSPECT_1_0_XML_DOCTYPE_DECL_NODE "\n"
@@ -271,41 +271,16 @@ check_permission(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-check_permission(DBus::Connection& conn, DBus::Message& msg, const string& config_name)
+check_permission(DBus::Connection& conn, DBus::Message& msg, const MetaSnapper& meta_snapper)
 {
-    // TODO, cache this
-    list<ConfigInfo> config_infos = Snapper::getConfigs();
+    unsigned long uid = conn.get_unix_userid(msg);
+    if (uid == 0)
+	return;
 
-    for (list<ConfigInfo>::const_iterator it = config_infos.begin();
-	 it != config_infos.end(); ++it)
-    {
-	if (it->config_name == config_name)
-	{
-	    unsigned long uid = conn.get_unix_userid(msg);
-	    if (uid == 0)
-		return;
+    if (find(meta_snapper.uids.begin(), meta_snapper.uids.end(), uid) != meta_snapper.uids.end())
+	return;
 
-	    string username = DBus::Connection::get_unix_username(uid);
-
-	    map<string, string>::const_iterator pos = it->raw.find("USERS");
-	    if (pos == it->raw.end())
-		throw Permissions();
-
-	    string tmp = pos->second;
-	    boost::trim(tmp, locale::classic());
-	    if (tmp.empty())
-		throw Permissions();
-
-	    vector<string> users;
-	    boost::split(users, tmp, boost::is_any_of(" \t"), boost::token_compress_on);
-	    if (find(users.begin(), users.end(), username) != users.end())
-		return;
-
-	    throw Permissions();
-	}
-    }
-
-    throw UnknownConfig();
+    throw Permissions();
 }
 
 
@@ -331,7 +306,7 @@ check_lock(DBus::Connection& conn, DBus::Message& msg, const string& config_name
 
 
 void
-Commands::signal_config_created(DBus::Connection& conn, const string& config_name)
+Client::signal_config_created(DBus::Connection& conn, const string& config_name)
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "ConfigCreated");
 
@@ -343,7 +318,7 @@ Commands::signal_config_created(DBus::Connection& conn, const string& config_nam
 
 
 void
-Commands::signal_config_deleted(DBus::Connection& conn, const string& config_name)
+Client::signal_config_deleted(DBus::Connection& conn, const string& config_name)
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "ConfigDeleted");
 
@@ -355,7 +330,7 @@ Commands::signal_config_deleted(DBus::Connection& conn, const string& config_nam
 
 
 void
-Commands::signal_snapshot_created(DBus::Connection& conn, const string& config_name,
+Client::signal_snapshot_created(DBus::Connection& conn, const string& config_name,
 				  unsigned int num)
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "SnapshotCreated");
@@ -368,7 +343,7 @@ Commands::signal_snapshot_created(DBus::Connection& conn, const string& config_n
 
 
 void
-Commands::signal_snapshots_deleted(DBus::Connection& conn, const string& config_name,
+Client::signal_snapshots_deleted(DBus::Connection& conn, const string& config_name,
 				   list<dbus_uint32_t> nums)
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "SnapshotsDeleted");
@@ -381,11 +356,11 @@ Commands::signal_snapshots_deleted(DBus::Connection& conn, const string& config_
 
 
 void
-Commands::list_configs(DBus::Connection& conn, DBus::Message& msg)
+Client::list_configs(DBus::Connection& conn, DBus::Message& msg)
 {
-    y2mil("ListConfigs");
+    y2deb("ListConfigs");
 
-    list<ConfigInfo> config_infos = Snapper::getConfigs();
+    list<ConfigInfo> config_infos = Snapper::getConfigs(); // TODO
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -397,33 +372,30 @@ Commands::list_configs(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::get_config(DBus::Connection& conn, DBus::Message& msg)
+Client::get_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
     DBus::Hihi hihi(msg);
     hihi >> config_name;
 
-    y2mil("GetConfig config_name:" << config_name);
+    y2deb("GetConfig config_name:" << config_name);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    Snapper* snapper = getSnapper(config_name);
-
-    // TODO, maybe have ConfigInfo in Snapper
-    ConfigInfo tmp(config_name, snapper->subvolumeDir(), snapper->getSysconfigFile()->getAllValues());
+    check_permission(conn, msg, *it);
 
     DBus::MessageMethodReturn reply(msg);
 
     DBus::Hoho hoho(reply);
-    hoho << tmp;
+    hoho << it->config_info;
 
     conn.send(reply);
 }
 
 
 void
-Commands::create_config(DBus::Connection& conn, DBus::Message& msg)
+Client::create_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     string subvolume;
@@ -433,7 +405,7 @@ Commands::create_config(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> subvolume >> fstype >> template_name;
 
-    y2mil("CreateConfig config_name:" << config_name << " subvolume:" << subvolume <<
+    y2deb("CreateConfig config_name:" << config_name << " subvolume:" << subvolume <<
 	  " fstype:" << fstype << " template_name:" << template_name);
 
     check_permission(conn, msg);
@@ -449,14 +421,14 @@ Commands::create_config(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::delete_config(DBus::Connection& conn, DBus::Message& msg)
+Client::delete_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
     DBus::Hihi hihi(msg);
     hihi >> config_name;
 
-    y2mil("DeleteConfig config_name:" << config_name);
+    y2deb("DeleteConfig config_name:" << config_name);
 
     check_permission(conn, msg);
 
@@ -471,21 +443,20 @@ Commands::delete_config(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::lock_config(DBus::Connection& conn, DBus::Message& msg)
+Client::lock_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
     DBus::Hihi hihi(msg);
     hihi >> config_name;
 
-    y2mil("LockConfig config_name:" << config_name);
+    y2deb("LockConfig config_name:" << config_name);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    string sender = msg.get_sender();
+    check_permission(conn, msg, *it);
 
-    Clients::iterator it = clients.find(sender);
-    it->add_lock(config_name);
+    add_lock(config_name);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -494,21 +465,20 @@ Commands::lock_config(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::unlock_config(DBus::Connection& conn, DBus::Message& msg)
+Client::unlock_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
     DBus::Hihi hihi(msg);
     hihi >> config_name;
 
-    y2mil("UnlockConfig config_name:" << config_name);
+    y2deb("UnlockConfig config_name:" << config_name);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    string sender = msg.get_sender();
+    check_permission(conn, msg, *it);
 
-    Clients::iterator it = clients.find(sender);
-    it->remove_lock(config_name);
+    remove_lock(config_name);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -517,18 +487,20 @@ Commands::unlock_config(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::list_snapshots(DBus::Connection& conn, DBus::Message& msg)
+Client::list_snapshots(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
     DBus::Hihi hihi(msg);
     hihi >> config_name;
 
-    y2mil("ListSnapshots config_name:" << config_name);
+    y2deb("ListSnapshots config_name:" << config_name);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    Snapper* snapper = getSnapper(config_name);
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -540,7 +512,7 @@ Commands::list_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::get_snapshot(DBus::Connection& conn, DBus::Message& msg)
+Client::get_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num;
@@ -548,11 +520,13 @@ Commands::get_snapshot(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num;
 
-    y2mil("GetSnapshot config_name:" << config_name << " num:" << num);
+    y2deb("GetSnapshot config_name:" << config_name << " num:" << num);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    Snapper* snapper = getSnapper(config_name);
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
 
     Snapshots& snapshots = snapper->getSnapshots();
 
@@ -568,7 +542,7 @@ Commands::get_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::set_snapshot(DBus::Connection& conn, DBus::Message& msg)
+Client::set_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num;
@@ -579,11 +553,13 @@ Commands::set_snapshot(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num >> description >> cleanup >> userdata;
 
-    y2mil("SetSnapshot config_name:" << config_name << " num:" << num);
+    y2deb("SetSnapshot config_name:" << config_name << " num:" << num);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    Snapper* snapper = getSnapper(config_name);
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
 
     Snapshots& snapshots = snapper->getSnapshots();
 
@@ -601,7 +577,7 @@ Commands::set_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::create_single_snapshot(DBus::Connection& conn, DBus::Message& msg)
+Client::create_single_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     string description;
@@ -611,12 +587,14 @@ Commands::create_single_snapshot(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> description >> cleanup >> userdata;
 
-    y2mil("CreateSingleSnapshot config_name:" << config_name << " description:" << description <<
+    y2deb("CreateSingleSnapshot config_name:" << config_name << " description:" << description <<
 	  " cleanup:" << cleanup);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    Snapper* snapper = getSnapper(config_name);
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
 
     Snapshots::iterator snap1 = snapper->createSingleSnapshot(description);
     snap1->setCleanup(cleanup);
@@ -635,7 +613,7 @@ Commands::create_single_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
+Client::create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     string description;
@@ -645,12 +623,14 @@ Commands::create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> description >> cleanup >> userdata;
 
-    y2mil("CreatePreSnapshot config_name:" << config_name << " description:" << description <<
+    y2deb("CreatePreSnapshot config_name:" << config_name << " description:" << description <<
 	  " cleanup:" << cleanup);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    Snapper* snapper = getSnapper(config_name);
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
 
     Snapshots::iterator snap1 = snapper->createPreSnapshot(description);
     snap1->setCleanup(cleanup);
@@ -669,7 +649,7 @@ Commands::create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
+Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     unsigned int pre_num;
@@ -680,12 +660,14 @@ Commands::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> pre_num >> description >> cleanup >> userdata;
 
-    y2mil("CreatePostSnapshot config_name:" << config_name << " pre_num:" << pre_num <<
+    y2deb("CreatePostSnapshot config_name:" << config_name << " pre_num:" << pre_num <<
 	  " description:" << description << " cleanup:" << cleanup);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    Snapper* snapper = getSnapper(config_name);
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
 
     Snapshots& snapshots = snapper->getSnapshots();
 
@@ -708,7 +690,7 @@ Commands::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
+Client::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     list<dbus_uint32_t> nums;
@@ -716,12 +698,15 @@ Commands::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> nums;
 
-    y2mil("DeleteSnapshots config_name:" << config_name << " nums:" << nums);
+    y2deb("DeleteSnapshots config_name:" << config_name << " nums:" << nums);
 
-    check_permission(conn, msg, config_name);
     check_lock(conn, msg, config_name);
 
-    Snapper* snapper = getSnapper(config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
 
     Snapshots& snapshots = snapper->getSnapshots();
 
@@ -741,7 +726,7 @@ Commands::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::mount_snapshot(DBus::Connection& conn, DBus::Message& msg)
+Client::mount_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num;
@@ -749,11 +734,13 @@ Commands::mount_snapshot(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num;
 
-    y2mil("MountSnapshot config_name:" << config_name << " num:" << num);
+    y2deb("MountSnapshot config_name:" << config_name << " num:" << num);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    Snapper* snapper = getSnapper(config_name);
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
 
     Snapshots& snapshots = snapper->getSnapshots();
 
@@ -768,7 +755,7 @@ Commands::mount_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::umount_snapshot(DBus::Connection& conn, DBus::Message& msg)
+Client::umount_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num;
@@ -776,11 +763,13 @@ Commands::umount_snapshot(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num;
 
-    y2mil("UmountSnapshot config_name:" << config_name << " num:" << num);
+    y2deb("UmountSnapshot config_name:" << config_name << " num:" << num);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    Snapper* snapper = getSnapper(config_name);
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
 
     Snapshots& snapshots = snapper->getSnapshots();
 
@@ -795,7 +784,7 @@ Commands::umount_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::create_comparison(DBus::Connection& conn, DBus::Message& msg)
+Client::create_comparison(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num1, num2;
@@ -803,21 +792,21 @@ Commands::create_comparison(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num1 >> num2;
 
-    y2mil("CreateComparison config_name:" << config_name << " num1:" << num1 <<
+    y2deb("CreateComparison config_name:" << config_name << " num1:" << num1 <<
 	  " num2:" << num2);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    Snapper* snapper = getSnapper(config_name);
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
     Snapshots& snapshots = snapper->getSnapshots();
     Snapshots::const_iterator snapshot1 = snapshots.find(num1);
     Snapshots::const_iterator snapshot2 = snapshots.find(num2);
 
     Comparison* comparison = new Comparison(snapper, snapshot1, snapshot2);
 
-    Clients::iterator it = clients.find(msg.get_sender());
-    assert(it != clients.end());
-    it->comparisons.push_back(comparison);
+    comparisons.push_back(comparison);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -826,7 +815,7 @@ Commands::create_comparison(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::get_files(DBus::Connection& conn, DBus::Message& msg)
+Client::get_files(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num1, num2;
@@ -834,17 +823,14 @@ Commands::get_files(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num1 >> num2;
 
-    y2mil("GetFiles config_name:" << config_name << " num1:" << num1 << " num2:" <<
+    y2deb("GetFiles config_name:" << config_name << " num1:" << num1 << " num2:" <<
 	  num2);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    string sender = msg.get_sender();
+    check_permission(conn, msg, *it);
 
-    Clients::iterator it = clients.find(sender);
-    assert(it != clients.end());
-
-    Comparison* comparison = it->find_comparison(config_name, num1, num2);
+    Comparison* comparison = find_comparison(config_name, num1, num2);
 
     const Files& files = comparison->getFiles();
 
@@ -858,7 +844,7 @@ Commands::get_files(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::get_diff(DBus::Connection& conn, DBus::Message& msg)
+Client::get_diff(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num1, num2;
@@ -868,17 +854,14 @@ Commands::get_diff(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num1 >> num2 >> filename >> options;
 
-    y2mil("GetDiff config_name:" << config_name << " num1:" << num1 << " num2:" <<
+    y2deb("GetDiff config_name:" << config_name << " num1:" << num1 << " num2:" <<
 	  num2 << " filename:" << filename << " options:" << options);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    string sender = msg.get_sender();
+    check_permission(conn, msg, *it);
 
-    Clients::iterator it = clients.find(sender);
-    assert(it != clients.end());
-
-    Comparison* comparison = it->find_comparison(config_name, num1, num2);
+    Comparison* comparison = find_comparison(config_name, num1, num2);
 
     Files& files = comparison->getFiles();
 
@@ -897,7 +880,7 @@ Commands::get_diff(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::set_undo(DBus::Connection& conn, DBus::Message& msg)
+Client::set_undo(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num1, num2;
@@ -906,17 +889,14 @@ Commands::set_undo(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num1 >> num2 >> undos;
 
-    y2mil("SetUndo config_name:" << config_name << " num1:" << num1 << " num2:" <<
+    y2deb("SetUndo config_name:" << config_name << " num1:" << num1 << " num2:" <<
 	  num2);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    string sender = msg.get_sender();
+    check_permission(conn, msg, *it);
 
-    Clients::iterator it = clients.find(sender);
-    assert(it != clients.end());
-
-    Comparison* comparison = it->find_comparison(config_name, num1, num2);
+    Comparison* comparison = find_comparison(config_name, num1, num2);
 
     Files& files = comparison->getFiles();
 
@@ -936,7 +916,7 @@ Commands::set_undo(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::set_undo_all(DBus::Connection& conn, DBus::Message& msg)
+Client::set_undo_all(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num1, num2;
@@ -945,17 +925,14 @@ Commands::set_undo_all(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num1 >> num2 >> undo;
 
-    y2mil("SetUndoAll config_name:" << config_name << " num1:" << num1 << " num2:" <<
+    y2deb("SetUndoAll config_name:" << config_name << " num1:" << num1 << " num2:" <<
 	  num2);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    string sender = msg.get_sender();
+    check_permission(conn, msg, *it);
 
-    Clients::iterator it = clients.find(sender);
-    assert(it != clients.end());
-
-    Comparison* comparison = it->find_comparison(config_name, num1, num2);
+    Comparison* comparison = find_comparison(config_name, num1, num2);
 
     Files& files = comparison->getFiles();
 
@@ -971,7 +948,7 @@ Commands::set_undo_all(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::get_undo_steps(DBus::Connection& conn, DBus::Message& msg)
+Client::get_undo_steps(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num1, num2;
@@ -979,17 +956,14 @@ Commands::get_undo_steps(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num1 >> num2;
 
-    y2mil("GetUndoSteps config_name:" << config_name << " num1:" << num1 << " num2:" <<
+    y2deb("GetUndoSteps config_name:" << config_name << " num1:" << num1 << " num2:" <<
 	  num2);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    string sender = msg.get_sender();
+    check_permission(conn, msg, *it);
 
-    Clients::iterator it = clients.find(sender);
-    assert(it != clients.end());
-
-    Comparison* comparison = it->find_comparison(config_name, num1, num2);
+    Comparison* comparison = find_comparison(config_name, num1, num2);
 
     vector<UndoStep> undo_steps = comparison->getUndoSteps();
 
@@ -1003,7 +977,7 @@ Commands::get_undo_steps(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::do_undo_step(DBus::Connection& conn, DBus::Message& msg)
+Client::do_undo_step(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num1, num2;
@@ -1012,17 +986,13 @@ Commands::do_undo_step(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num1 >> num2 >> undo_step;
 
-    y2mil("GetUndoSteps config_name:" << config_name << " num1:" << num1 << " num2:" <<
-	  num2);
+    y2deb("DoUndoStep config_name:" << config_name << " num1:" << num1 << " num2:" << num2);
 
-    check_permission(conn, msg, config_name);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    string sender = msg.get_sender();
+    check_permission(conn, msg, *it);
 
-    Clients::iterator it = clients.find(sender);
-    assert(it != clients.end());
-
-    Comparison* comparison = it->find_comparison(config_name, num1, num2);
+    Comparison* comparison = find_comparison(config_name, num1, num2);
 
     bool ret = comparison->doUndoStep(undo_step);
 
@@ -1036,7 +1006,7 @@ Commands::do_undo_step(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Commands::debug(DBus::Connection& conn, DBus::Message& msg)
+Client::debug(DBus::Connection& conn, DBus::Message& msg)
 {
     check_permission(conn, msg);
 
@@ -1051,7 +1021,7 @@ Commands::debug(DBus::Connection& conn, DBus::Message& msg)
     {
 	std::ostringstream s;
 	s << "    name:'" << it->name << "'";
-	if (it->name == msg.get_sender())
+	if (&*it == this)
 	    s << " myself";
 	if (!it->locks.empty())
 	    s << " locks:'" << boost::join(it->locks, ",") << "'";
@@ -1061,10 +1031,10 @@ Commands::debug(DBus::Connection& conn, DBus::Message& msg)
     }
 
     hoho << "snappers:";
-    for (list<Snapper*>::const_iterator it = snappers.begin(); it != snappers.end(); ++it)
+    for (list<MetaSnapper>::const_iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
     {
 	std::ostringstream s;
-	s << "    name:'" << (*it)->configName() << "'";
+	s << "    name:'" << it->configName() << "'";
 	hoho << s.str();
     }
 
@@ -1089,7 +1059,7 @@ client_disconnected(const string& name)
 
 
 void
-Commands::dispatch(DBus::Connection& conn, DBus::Message& msg)
+Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 {
     try
     {
@@ -1208,7 +1178,7 @@ message_func1(DBusConnection* connection, DBusMessage* message, void* data)
 
     if (msg.get_type() == DBUS_MESSAGE_TYPE_METHOD_CALL)
     {
-	y2mil("method call sender:'" << msg.get_sender() << "' path:'" <<
+	y2deb("method call sender:'" << msg.get_sender() << "' path:'" <<
 	      msg.get_path() << "' interface:'" << msg.get_interface() <<
 	      "' member:'" << msg.get_member() << "'");
 
@@ -1216,14 +1186,14 @@ message_func1(DBusConnection* connection, DBusMessage* message, void* data)
 
 	if (msg.is_method_call(DBUS_INTERFACE_INTROSPECTABLE, "Introspect"))
 	{
-	    Commands::introspect(*s, msg);
+	    Client::introspect(*s, msg);
 	}
 	else
 	{
 	    Clients::iterator client = clients.find(msg.get_sender());
 	    if (client == clients.end())
 	    {
-		y2mil("client connected invisible '" << msg.get_sender() << "'");
+		y2deb("client connected invisible '" << msg.get_sender() << "'");
 		client = client_connected(msg.get_sender());
 		s->set_idle_timeout(-1);
 	    }
@@ -1247,7 +1217,7 @@ message_func2(DBusConnection* connection, DBusMessage* message, void* data)
 
     if (msg.get_type() == DBUS_MESSAGE_TYPE_SIGNAL)
     {
-	y2mil("signal sender:'" << msg.get_sender() << "' path:'" <<
+	y2deb("signal sender:'" << msg.get_sender() << "' path:'" <<
 	      msg.get_path() << "' interface:'" << msg.get_interface() <<
 	      "' member:'" << msg.get_member() << "'");
 
@@ -1260,7 +1230,7 @@ message_func2(DBusConnection* connection, DBusMessage* message, void* data)
 
 	    if (name == new_owner && old_owner.empty())
 	    {
-		y2mil("client connected '" << name << "'");
+		y2deb("client connected '" << name << "'");
 		client_connected(name);
 		s->reset_idle_count();
 		s->set_idle_timeout(-1);
@@ -1268,8 +1238,9 @@ message_func2(DBusConnection* connection, DBusMessage* message, void* data)
 
 	    if (name == old_owner && new_owner.empty())
 	    {
-		y2mil("client disconnected '" << name << "'");
+		y2deb("client disconnected '" << name << "'");
 		client_disconnected(name);
+		s->reset_idle_count();
 		if (clients.empty())
 		    s->set_idle_timeout(30);
 	    }
@@ -1299,6 +1270,14 @@ log_do(LogLevel level, const string& component, const char* file, const int line
 }
 
 
+bool
+log_query(LogLevel level, const string& component)
+{
+    return true;
+    // return level != DEBUG;
+}
+
+
 int
 main(int argc, char** argv)
 {
@@ -1306,6 +1285,7 @@ main(int argc, char** argv)
     initDefaultLogger();
 #else
     setLogDo(&log_do);
+    setLogQuery(&log_query);
 #endif
 
     dbus_threads_init_default();

@@ -49,7 +49,7 @@ struct NoComparison : public std::exception
 };
 
 
-class Commands
+class Client : boost::noncopyable
 {
 public:
 
@@ -87,13 +87,6 @@ public:
     void debug(DBus::Connection& conn, DBus::Message& msg);
 
     void dispatch(DBus::Connection& conn, DBus::Message& msg);
-
-};
-
-
-class Client : public Commands, boost::noncopyable
-{
-public:
 
     Client(const string& name);
     ~Client();

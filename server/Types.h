@@ -21,7 +21,6 @@
 
 
 #include <unistd.h>
-#include <assert.h>
 #include <stdlib.h>
 #include <string.h>
 #include <dbus/dbus.h>
