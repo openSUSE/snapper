@@ -63,6 +63,8 @@ public:
     MetaSnappers();
     ~MetaSnappers();
 
+    void init();
+
     typedef list<MetaSnapper>::iterator iterator;
     typedef list<MetaSnapper>::const_iterator const_iterator;
 

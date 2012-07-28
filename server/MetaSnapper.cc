@@ -141,6 +141,17 @@ MetaSnapper::getSnapper()
 
 MetaSnappers::MetaSnappers()
 {
+}
+
+
+MetaSnappers::~MetaSnappers()
+{
+}
+
+
+void
+MetaSnappers::init()
+{
     list<ConfigInfo> config_infos = Snapper::getConfigs();
 
     for (list<ConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
@@ -148,11 +159,6 @@ MetaSnappers::MetaSnappers()
 	MetaSnapper meta_snapper(*it);
 	entries.push_back(meta_snapper);
     }
-}
-
-
-MetaSnappers::~MetaSnappers()
-{
 }
 
 

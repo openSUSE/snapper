@@ -412,6 +412,8 @@ Client::create_config(DBus::Connection& conn, DBus::Message& msg)
 
     Snapper::createConfig(config_name, subvolume, fstype, template_name);
 
+    // TODO update meta_snappers
+
     DBus::MessageMethodReturn reply(msg);
 
     conn.send(reply);
@@ -433,6 +435,8 @@ Client::delete_config(DBus::Connection& conn, DBus::Message& msg)
     check_permission(conn, msg);
 
     Snapper::deleteConfig(config_name);
+
+    // TODO update meta_snappers
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -1287,6 +1291,10 @@ main(int argc, char** argv)
     setLogDo(&log_do);
     setLogQuery(&log_query);
 #endif
+
+    y2mil("Loading snapper configs");
+
+    meta_snappers.init();
 
     dbus_threads_init_default();
 
