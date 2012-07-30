@@ -1178,7 +1178,7 @@ message_func1(DBusConnection* connection, DBusMessage* message, void* data)
 {
     DBus::Server* s = static_cast<DBus::Server*>(data);
 
-    DBus::Message msg(message);
+    DBus::Message msg(message, true);
 
     if (msg.get_type() == DBUS_MESSAGE_TYPE_METHOD_CALL)
     {
@@ -1217,7 +1217,7 @@ message_func2(DBusConnection* connection, DBusMessage* message, void* data)
 {
     DBus::Server* s = static_cast<DBus::Server*>(data);
 
-    DBus::Message msg(message);
+    DBus::Message msg(message, true);
 
     if (msg.get_type() == DBUS_MESSAGE_TYPE_SIGNAL)
     {

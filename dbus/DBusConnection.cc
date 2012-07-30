@@ -98,8 +98,7 @@ namespace DBus
 	    throw ErrorException(err);
 	}
 
-	Message reply(tmp);
-	return reply;
+	return Message(tmp, false);
     }
 
 

@@ -29,11 +29,12 @@
 namespace DBus
 {
 
-    Message::Message(DBusMessage* m)
+    Message::Message(DBusMessage* m, bool ref)
 	: msg(m)
     {
 	assert(msg);
-	dbus_message_ref(msg);
+	if (ref)
+	    dbus_message_ref(msg);
     }
 
 

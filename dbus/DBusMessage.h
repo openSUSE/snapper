@@ -76,7 +76,7 @@ namespace DBus
     {
     public:
 
-	Message(DBusMessage* m);
+	Message(DBusMessage* m, bool ref);
 	Message(const Message& m);
 	~Message();
 
@@ -114,7 +114,7 @@ namespace DBus
 
 	MessageMethodCall(const char* service, const char* object, const char* interface,
 			  const char* method)
-	    : Message(dbus_message_new_method_call(service, object, interface, method))
+	    : Message(dbus_message_new_method_call(service, object, interface, method), false)
 	{
 	}
 
@@ -126,7 +126,7 @@ namespace DBus
     public:
 
 	MessageMethodReturn(Message& m)
-	    : Message(dbus_message_new_method_return(m.get_message()))
+	    : Message(dbus_message_new_method_return(m.get_message()), false)
 	{
 	    if (m.get_type() != DBUS_MESSAGE_TYPE_METHOD_CALL)
 		throw FatalException();
@@ -140,7 +140,7 @@ namespace DBus
     public:
 
 	MessageError(Message& m, const char* error_msg, const char* error_code)
-	    : Message(dbus_message_new_error(m.get_message(), error_msg, error_code))
+	    : Message(dbus_message_new_error(m.get_message(), error_msg, error_code), false)
 	{
 	    if (m.get_type() != DBUS_MESSAGE_TYPE_METHOD_CALL)
 		throw FatalException();
@@ -154,7 +154,7 @@ namespace DBus
     public:
 
 	MessageSignal(const char* path, const char* interface, const char* name)
-	    : Message(dbus_message_new_signal(path, interface, name))
+	    : Message(dbus_message_new_signal(path, interface, name), false)
 	{
 	}
 

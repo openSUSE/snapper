@@ -42,6 +42,11 @@ Client::~Client()
     thread.interrupt();
 
     thread.join();		// TODO this can block
+
+    for (list<Comparison*>::iterator it = comparisons.begin(); it != comparisons.end(); ++it)
+    {
+	delete *it;
+    }
 }
 
 

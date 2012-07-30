@@ -20,6 +20,7 @@
  */
 
 
+#include <unistd.h>
 #include <poll.h>
 #include <time.h>
 
@@ -118,11 +119,16 @@ namespace DBus
 		    {
 			if (it2->fd == it->fd)
 			{
-			    if ((it2->revents & POLLIN) && (it->flags & DBUS_WATCH_READABLE))
-				dbus_watch_handle(it->dbus_watch, DBUS_WATCH_READABLE);
+			    unsigned int flags = 0;
 
-			    if ((it2->revents & POLLOUT) && (it->flags & DBUS_WATCH_WRITABLE))
-				dbus_watch_handle(it->dbus_watch, DBUS_WATCH_WRITABLE);
+			    if (it2->revents & POLLIN)
+				flags |= DBUS_WATCH_READABLE;
+
+			    if (it2->revents & POLLOUT)
+				flags |= DBUS_WATCH_WRITABLE;
+
+			    if (flags != 0)
+				dbus_watch_handle(it->dbus_watch, flags);
 			}
 		    }
 		}
