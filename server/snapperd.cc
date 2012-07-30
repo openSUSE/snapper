@@ -1034,11 +1034,13 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg)
 	hoho << s.str();
     }
 
-    hoho << "snappers:";
+    hoho << "meta-snappers:";
     for (list<MetaSnapper>::const_iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
     {
 	std::ostringstream s;
 	s << "    name:'" << it->configName() << "'";
+	if (it->snapper_loaded())
+	    s << " (loaded)";
 	hoho << s.str();
     }
 

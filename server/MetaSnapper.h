@@ -48,6 +48,8 @@ public:
 
     Snapper* getSnapper();
 
+    bool snapper_loaded() const { return snapper != NULL; }
+
 private:
 
     Snapper* snapper;
