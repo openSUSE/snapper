@@ -6,7 +6,7 @@ CXXFLAGS += -std=gnu++0x
 
 INCLUDES = -I$(top_srcdir)
 
-LDADD = ../snapper/libsnapper.la
+LDADD = ../snapper/libsnapper.la -lboost_thread
 
 noinst_SCRIPTS = run-all
 
