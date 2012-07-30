@@ -24,31 +24,31 @@
 #include <poll.h>
 #include <time.h>
 
-#include "DBusServer.h"
+#include "DBusMainLoop.h"
 
 
 namespace DBus
 {
 
-    Server::Server(DBusBusType type)
+    MainLoop::MainLoop(DBusBusType type)
 	: Connection(type), idle_timeout(-1)
     {
 	if (pipe(wakeup_pipe) != 0)
 	    throw FatalException();
 
-	if (!dbus_connection_set_watch_functions(get_connection(), add_watch, remove_watch,
-						 toggled_watch, this, NULL))
+	if (!dbus_connection_set_watch_functions(conn, add_watch, remove_watch, toggled_watch,
+						 this, NULL))
 	    throw FatalException();
 
-	if (!dbus_connection_set_timeout_functions(get_connection(), add_timeout, remove_timeout,
+	if (!dbus_connection_set_timeout_functions(conn, add_timeout, remove_timeout,
 						   toggled_timeout, this, NULL))
 	    throw FatalException();
 
-	dbus_connection_set_wakeup_main_function(get_connection(), wakeup_main, this, NULL);
+	dbus_connection_set_wakeup_main_function(conn, wakeup_main, this, NULL);
     }
 
 
-    Server::~Server()
+    MainLoop::~MainLoop()
     {
 	close(wakeup_pipe[0]);
 	close(wakeup_pipe[1]);
@@ -56,7 +56,7 @@ namespace DBus
 
 
     void
-    DBus::Server::run()
+    DBus::MainLoop::run()
     {
 	reset_idle_count();
 
@@ -128,15 +128,18 @@ namespace DBus
 				flags |= DBUS_WATCH_WRITABLE;
 
 			    if (flags != 0)
+			    {
+				boost::lock_guard<boost::mutex> lock(mutex);
 				dbus_watch_handle(it->dbus_watch, flags);
+			    }
 			}
 		    }
 		}
 	    }
 
-	    while (dbus_connection_get_dispatch_status(get_connection()) == DBUS_DISPATCH_DATA_REMAINS)
+	    while (get_dispatch_status() == DBUS_DISPATCH_DATA_REMAINS)
 	    {
-		dbus_connection_dispatch(get_connection());
+		dispatch();
 	    }
 
 	    if (idle_timeout >= 0)
@@ -153,14 +156,14 @@ namespace DBus
 
 
     void
-    Server::set_idle_timeout(int s)
+    MainLoop::set_idle_timeout(int s)
     {
 	idle_timeout = s;
     }
 
 
     void
-    Server::reset_idle_count()
+    MainLoop::reset_idle_count()
     {
 	struct timespec tmp;
 	clock_gettime(CLOCK_MONOTONIC, &tmp);
@@ -168,8 +171,8 @@ namespace DBus
     }
 
 
-    vector<Server::Watch>::iterator
-    Server::find_watch(DBusWatch* dbus_watch)
+    vector<MainLoop::Watch>::iterator
+    MainLoop::find_watch(DBusWatch* dbus_watch)
     {
 	for (vector<Watch>::iterator it = watches.begin(); it != watches.end(); ++it)
 	    if (it->dbus_watch == dbus_watch)
@@ -179,8 +182,8 @@ namespace DBus
     }
 
 
-    vector<Server::Timeout>::iterator
-    Server::find_timeout(DBusTimeout* dbus_timeout)
+    vector<MainLoop::Timeout>::iterator
+    MainLoop::find_timeout(DBusTimeout* dbus_timeout)
     {
 	for (vector<Timeout>::iterator it = timeouts.begin(); it != timeouts.end(); ++it)
 	    if (it->dbus_timeout == dbus_timeout)
@@ -191,10 +194,8 @@ namespace DBus
 
 
     dbus_bool_t
-    Server::add_watch(DBusWatch* dbus_watch, void* data)
+    MainLoop::add_watch(DBusWatch* dbus_watch, void* data)
     {
-	Server* s = static_cast<Server*>(data);
-
 	Watch tmp;
 	tmp.enabled = dbus_watch_get_enabled(dbus_watch);
 	tmp.fd = dbus_watch_get_unix_fd(dbus_watch);
@@ -207,6 +208,8 @@ namespace DBus
 	    tmp.events |= POLLOUT;
 
 	tmp.dbus_watch = dbus_watch;
+
+	MainLoop* s = static_cast<MainLoop*>(data);
 	s->watches.push_back(tmp);
 
 	return true;
@@ -214,34 +217,32 @@ namespace DBus
 
 
     void
-    Server::remove_watch(DBusWatch* dbus_watch, void* data)
+    MainLoop::remove_watch(DBusWatch* dbus_watch, void* data)
     {
-	Server* s = static_cast<Server*>(data);
-
+	MainLoop* s = static_cast<MainLoop*>(data);
 	vector<Watch>::iterator it = s->find_watch(dbus_watch);
 	s->watches.erase(it);
     }
 
 
     void
-    Server::toggled_watch(DBusWatch* dbus_watch, void* data)
+    MainLoop::toggled_watch(DBusWatch* dbus_watch, void* data)
     {
-	Server* s = static_cast<Server*>(data);
-
+	MainLoop* s = static_cast<MainLoop*>(data);
 	vector<Watch>::iterator it = s->find_watch(dbus_watch);
 	it->enabled = dbus_watch_get_enabled(dbus_watch);
     }
 
 
     dbus_bool_t
-    Server::add_timeout(DBusTimeout* dbus_timeout, void* data)
+    MainLoop::add_timeout(DBusTimeout* dbus_timeout, void* data)
     {
-	Server* s = static_cast<Server*>(data);
-
 	Timeout tmp;
 	tmp.enabled = dbus_timeout_get_enabled(dbus_timeout);
 	tmp.interval = dbus_timeout_get_interval(dbus_timeout);
 	tmp.dbus_timeout = dbus_timeout;
+
+	MainLoop* s = static_cast<MainLoop*>(data);
 	s->timeouts.push_back(tmp);
 
 	return true;
@@ -249,9 +250,9 @@ namespace DBus
 
 
     void
-    Server::remove_timeout(DBusTimeout* dbus_timeout, void* data)
+    MainLoop::remove_timeout(DBusTimeout* dbus_timeout, void* data)
     {
-	Server* s = static_cast<Server*>(data);
+	MainLoop* s = static_cast<MainLoop*>(data);
 
 	vector<Timeout>::iterator it = s->find_timeout(dbus_timeout);
 	s->timeouts.erase(it);
@@ -259,20 +260,18 @@ namespace DBus
 
 
     void
-    Server::toggled_timeout(DBusTimeout* dbus_timeout, void* data)
+    MainLoop::toggled_timeout(DBusTimeout* dbus_timeout, void* data)
     {
-	Server* s = static_cast<Server*>(data);
-
+	MainLoop* s = static_cast<MainLoop*>(data);
 	vector<Timeout>::iterator it = s->find_timeout(dbus_timeout);
 	it->enabled = dbus_timeout_get_enabled(dbus_timeout);
     }
 
 
     void
-    Server::wakeup_main(void* data)
+    MainLoop::wakeup_main(void* data)
     {
-	Server* s = static_cast<Server*>(data);
-
+	MainLoop* s = static_cast<MainLoop*>(data);
 	const char arbitrary = 42;
 	write(s->wakeup_pipe[1], &arbitrary, 1);
     }

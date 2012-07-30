@@ -26,6 +26,7 @@
 
 #include <dbus/dbus.h>
 
+#include <boost/thread.hpp>
 #include <boost/noncopyable.hpp>
 
 #include "DBusMessage.h"
@@ -49,6 +50,10 @@ namespace DBus
 
 	Message send_with_reply_and_block(Message& m);
 
+	DBusDispatchStatus get_dispatch_status();
+
+	DBusDispatchStatus dispatch();
+
 	void add_match(const char* rule);
 
 	void register_object_path(const char* path, const DBusObjectPathVTable* vtable,
@@ -56,7 +61,12 @@ namespace DBus
 
 	unsigned long get_unix_userid(const Message& m);
 
-    private:
+    protected:
+
+	// Without locking the connection manually the server sometimes does
+	// not reply to request.  Esp. the lock around dbus_watch_handle() is
+	// required.
+	boost::mutex mutex;
 
 	DBusConnection* conn;
 

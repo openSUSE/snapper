@@ -39,7 +39,7 @@
 
 #include "dbus/DBusMessage.h"
 #include "dbus/DBusConnection.h"
-#include "dbus/DBusServer.h"
+#include "dbus/DBusMainLoop.h"
 
 #include "MetaSnapper.h"
 #include "Client.h"
@@ -1176,7 +1176,7 @@ unregister_func(DBusConnection* connection, void* data)
 DBusHandlerResult
 message_func1(DBusConnection* connection, DBusMessage* message, void* data)
 {
-    DBus::Server* s = static_cast<DBus::Server*>(data);
+    DBus::MainLoop* s = static_cast<DBus::MainLoop*>(data);
 
     DBus::Message msg(message, true);
 
@@ -1215,7 +1215,7 @@ message_func1(DBusConnection* connection, DBusMessage* message, void* data)
 DBusHandlerResult
 message_func2(DBusConnection* connection, DBusMessage* message, void* data)
 {
-    DBus::Server* s = static_cast<DBus::Server*>(data);
+    DBus::MainLoop* s = static_cast<DBus::MainLoop*>(data);
 
     DBus::Message msg(message, true);
 
@@ -1298,21 +1298,21 @@ main(int argc, char** argv)
 
     dbus_threads_init_default();
 
-    DBus::Server server(DBUS_BUS_SYSTEM);
+    DBus::MainLoop mainloop(DBUS_BUS_SYSTEM);
 
-    server.set_idle_timeout(30);
+    mainloop.set_idle_timeout(30);
 
     y2mil("Requesting DBus name");
 
-    server.request_name("org.opensuse.Snapper", DBUS_NAME_FLAG_REPLACE_EXISTING);
+    mainloop.request_name("org.opensuse.Snapper", DBUS_NAME_FLAG_REPLACE_EXISTING);
 
     y2mil("Listening for method calls and signals");
 
-    server.register_object_path(PATH, &dbus_vtable1, &server);
-    server.register_object_path(DBUS_PATH_DBUS, &dbus_vtable2, &server);
-    server.add_match("type='signal', interface='" DBUS_INTERFACE_DBUS "', member='NameOwnerChanged'");
+    mainloop.register_object_path(PATH, &dbus_vtable1, &mainloop);
+    mainloop.register_object_path(DBUS_PATH_DBUS, &dbus_vtable2, &mainloop);
+    mainloop.add_match("type='signal', interface='" DBUS_INTERFACE_DBUS "', member='NameOwnerChanged'");
 
-    server.run();
+    mainloop.run();
 
     y2mil("Exiting");
 

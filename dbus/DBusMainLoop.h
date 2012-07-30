@@ -20,8 +20,8 @@
  */
 
 
-#ifndef SNAPPER_DBUSSERVER_H
-#define SNAPPER_DBUSSERVER_H
+#ifndef SNAPPER_DBUSMAINLOOP_H
+#define SNAPPER_DBUSMAINLOOP_H
 
 
 #include <dbus/dbus.h>
@@ -32,12 +32,12 @@
 namespace DBus
 {
 
-    class Server : public Connection
+    class MainLoop : public Connection
     {
     public:
 
-	Server(DBusBusType type);
-	~Server();
+	MainLoop(DBusBusType type);
+	~MainLoop();
 
 	void run();
 
