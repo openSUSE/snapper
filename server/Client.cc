@@ -41,7 +41,7 @@ Client::~Client()
 {
     thread.interrupt();
 
-    thread.join();		// TODO this can block
+    thread.join();		// TODO this can block and deadlock
 
     for (list<Comparison*>::iterator it = comparisons.begin(); it != comparisons.end(); ++it)
     {

@@ -58,6 +58,9 @@ using namespace snapper;
 Clients clients;
 
 
+boost::shared_mutex big_mutex;
+
+
 void
 Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 {
@@ -360,6 +363,8 @@ Client::list_configs(DBus::Connection& conn, DBus::Message& msg)
 {
     y2deb("ListConfigs");
 
+    boost::shared_lock<boost::shared_mutex> lock(big_mutex);
+
     list<ConfigInfo> config_infos = Snapper::getConfigs(); // TODO
 
     DBus::MessageMethodReturn reply(msg);
@@ -381,7 +386,9 @@ Client::get_config(DBus::Connection& conn, DBus::Message& msg)
 
     y2deb("GetConfig config_name:" << config_name);
 
-    MetaSnappers::iterator it = meta_snappers.find(config_name);
+    boost::shared_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::const_iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
 
@@ -408,6 +415,8 @@ Client::create_config(DBus::Connection& conn, DBus::Message& msg)
     y2deb("CreateConfig config_name:" << config_name << " subvolume:" << subvolume <<
 	  " fstype:" << fstype << " template_name:" << template_name);
 
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
     check_permission(conn, msg);
 
     Snapper::createConfig(config_name, subvolume, fstype, template_name);
@@ -431,6 +440,8 @@ Client::delete_config(DBus::Connection& conn, DBus::Message& msg)
     hihi >> config_name;
 
     y2deb("DeleteConfig config_name:" << config_name);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     check_permission(conn, msg);
 
@@ -456,6 +467,8 @@ Client::lock_config(DBus::Connection& conn, DBus::Message& msg)
 
     y2deb("LockConfig config_name:" << config_name);
 
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
@@ -478,6 +491,8 @@ Client::unlock_config(DBus::Connection& conn, DBus::Message& msg)
 
     y2deb("UnlockConfig config_name:" << config_name);
 
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
@@ -499,6 +514,8 @@ Client::list_snapshots(DBus::Connection& conn, DBus::Message& msg)
     hihi >> config_name;
 
     y2deb("ListSnapshots config_name:" << config_name);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
@@ -525,6 +542,8 @@ Client::get_snapshot(DBus::Connection& conn, DBus::Message& msg)
     hihi >> config_name >> num;
 
     y2deb("GetSnapshot config_name:" << config_name << " num:" << num);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
@@ -558,6 +577,8 @@ Client::set_snapshot(DBus::Connection& conn, DBus::Message& msg)
     hihi >> config_name >> num >> description >> cleanup >> userdata;
 
     y2deb("SetSnapshot config_name:" << config_name << " num:" << num);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
@@ -594,6 +615,8 @@ Client::create_single_snapshot(DBus::Connection& conn, DBus::Message& msg)
     y2deb("CreateSingleSnapshot config_name:" << config_name << " description:" << description <<
 	  " cleanup:" << cleanup);
 
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
@@ -629,6 +652,8 @@ Client::create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     y2deb("CreatePreSnapshot config_name:" << config_name << " description:" << description <<
 	  " cleanup:" << cleanup);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
@@ -667,6 +692,8 @@ Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
     y2deb("CreatePostSnapshot config_name:" << config_name << " pre_num:" << pre_num <<
 	  " description:" << description << " cleanup:" << cleanup);
 
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
@@ -704,6 +731,8 @@ Client::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
     y2deb("DeleteSnapshots config_name:" << config_name << " nums:" << nums);
 
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
     check_lock(conn, msg, config_name);
 
     MetaSnappers::iterator it = meta_snappers.find(config_name);
@@ -740,6 +769,8 @@ Client::mount_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     y2deb("MountSnapshot config_name:" << config_name << " num:" << num);
 
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
@@ -769,6 +800,8 @@ Client::umount_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     y2deb("UmountSnapshot config_name:" << config_name << " num:" << num);
 
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
@@ -796,8 +829,9 @@ Client::create_comparison(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num1 >> num2;
 
-    y2deb("CreateComparison config_name:" << config_name << " num1:" << num1 <<
-	  " num2:" << num2);
+    y2deb("CreateComparison config_name:" << config_name << " num1:" << num1 << " num2:" << num2);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
@@ -808,7 +842,11 @@ Client::create_comparison(DBus::Connection& conn, DBus::Message& msg)
     Snapshots::const_iterator snapshot1 = snapshots.find(num1);
     Snapshots::const_iterator snapshot2 = snapshots.find(num2);
 
+    lock.unlock();
+
     Comparison* comparison = new Comparison(snapper, snapshot1, snapshot2);
+
+    lock.lock();
 
     comparisons.push_back(comparison);
 
@@ -827,8 +865,9 @@ Client::get_files(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num1 >> num2;
 
-    y2deb("GetFiles config_name:" << config_name << " num1:" << num1 << " num2:" <<
-	  num2);
+    y2deb("GetFiles config_name:" << config_name << " num1:" << num1 << " num2:" << num2);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
@@ -858,8 +897,10 @@ Client::get_diff(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num1 >> num2 >> filename >> options;
 
-    y2deb("GetDiff config_name:" << config_name << " num1:" << num1 << " num2:" <<
-	  num2 << " filename:" << filename << " options:" << options);
+    y2deb("GetDiff config_name:" << config_name << " num1:" << num1 << " num2:" << num2 <<
+	  " filename:" << filename << " options:" << options);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
@@ -872,7 +913,11 @@ Client::get_diff(DBus::Connection& conn, DBus::Message& msg)
     Files::iterator it3 = files.find(filename);
     assert(it3 != files.end());
 
+    lock.unlock();
+
     vector<string> d = it3->getDiff(options);
+
+    lock.lock();
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -893,8 +938,9 @@ Client::set_undo(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num1 >> num2 >> undos;
 
-    y2deb("SetUndo config_name:" << config_name << " num1:" << num1 << " num2:" <<
-	  num2);
+    y2deb("SetUndo config_name:" << config_name << " num1:" << num1 << " num2:" << num2);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
@@ -929,8 +975,9 @@ Client::set_undo_all(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num1 >> num2 >> undo;
 
-    y2deb("SetUndoAll config_name:" << config_name << " num1:" << num1 << " num2:" <<
-	  num2);
+    y2deb("SetUndoAll config_name:" << config_name << " num1:" << num1 << " num2:" << num2);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
@@ -960,8 +1007,9 @@ Client::get_undo_steps(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> num1 >> num2;
 
-    y2deb("GetUndoSteps config_name:" << config_name << " num1:" << num1 << " num2:" <<
-	  num2);
+    y2deb("GetUndoSteps config_name:" << config_name << " num1:" << num1 << " num2:" << num2);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
@@ -992,13 +1040,19 @@ Client::do_undo_step(DBus::Connection& conn, DBus::Message& msg)
 
     y2deb("DoUndoStep config_name:" << config_name << " num1:" << num1 << " num2:" << num2);
 
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
 
     Comparison* comparison = find_comparison(it->getSnapper(), num1, num2);
 
+    lock.unlock();
+
     bool ret = comparison->doUndoStep(undo_step);
+
+    lock.lock();
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -1012,6 +1066,10 @@ Client::do_undo_step(DBus::Connection& conn, DBus::Message& msg)
 void
 Client::debug(DBus::Connection& conn, DBus::Message& msg)
 {
+    y2deb("Debug");
+
+    boost::shared_lock<boost::shared_mutex> lock(big_mutex);
+
     check_permission(conn, msg);
 
     DBus::MessageMethodReturn reply(msg);
