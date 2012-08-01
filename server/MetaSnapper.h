@@ -80,14 +80,15 @@ public:
 
     iterator find(const string& config_name);
 
+    void createConfig(const string& config_name, const string& subvolume, const string& fstype,
+		      const string& template_name);
+    void deleteConfig(const string& config_name);
+
 private:
 
     list<MetaSnapper> entries;
 
 };
-
-
-extern MetaSnappers meta_snappers;
 
 
 #endif

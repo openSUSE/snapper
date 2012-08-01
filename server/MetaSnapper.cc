@@ -173,5 +173,28 @@ MetaSnappers::find(const string& config_name)
 }
 
 
-MetaSnappers meta_snappers;
+void
+MetaSnappers::createConfig(const string& config_name, const string& subvolume,
+			   const string& fstype, const string& template_name)
+{
+    // TODO checks
 
+    Snapper::createConfig(config_name, subvolume, fstype, template_name);
+
+    ConfigInfo config_info = Snapper::getConfig(config_name);
+    MetaSnapper meta_snapper(config_info);
+    entries.push_back(meta_snapper);
+}
+
+
+void
+MetaSnappers::deleteConfig(const string& config_name)
+{
+    iterator it = find(config_name);
+    if (it == end())
+	throw;
+
+    Snapper::deleteConfig(config_name);
+
+    entries.erase(it);
+}

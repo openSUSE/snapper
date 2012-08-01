@@ -56,7 +56,7 @@ using namespace snapper;
 
 
 Clients clients;
-
+MetaSnappers meta_snappers;
 
 boost::shared_mutex big_mutex;
 
@@ -420,9 +420,7 @@ Client::create_config(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg);
 
-    Snapper::createConfig(config_name, subvolume, fstype, template_name);
-
-    // TODO update meta_snappers
+    meta_snappers.createConfig(config_name, subvolume, fstype, template_name);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -446,9 +444,7 @@ Client::delete_config(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg);
 
-    Snapper::deleteConfig(config_name);
-
-    // TODO update meta_snappers
+    meta_snappers.deleteConfig(config_name);
 
     DBus::MessageMethodReturn reply(msg);
 

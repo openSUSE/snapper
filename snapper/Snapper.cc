@@ -513,6 +513,20 @@ namespace snapper
     }
 
 
+    ConfigInfo
+    Snapper::getConfig(const string& config_name)
+    {
+	SysconfigFile config(CONFIGSDIR "/" + config_name);
+
+	string subvolume = "/";
+	config.getValue("SUBVOLUME", subvolume);
+
+	map<string, string> raw = config.getAllValues();
+
+	return ConfigInfo(config_name, subvolume, raw);
+    }
+
+
     list<ConfigInfo>
     Snapper::getConfigs()
     {
@@ -531,14 +545,7 @@ namespace snapper
 	    {
 		try
 		{
-		    SysconfigFile config(CONFIGSDIR "/" + *it);
-
-		    string subvolume = "/";
-		    config.getValue("SUBVOLUME", subvolume);
-
-		    map<string, string> raw = config.getAllValues();
-
-		    config_infos.push_back(ConfigInfo(*it, subvolume, raw));
+		    config_infos.push_back(getConfig(*it));
 		}
 		catch (const FileNotFoundException& e)
 		{
