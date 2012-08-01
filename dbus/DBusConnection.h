@@ -42,22 +42,13 @@ namespace DBus
 	Connection(DBusBusType type);
 	~Connection();
 
-	DBusConnection* get_connection() { return conn; }
-
 	void request_name(const char* name, unsigned int flags);
 
 	void send(Message& m);
 
 	Message send_with_reply_and_block(Message& m);
 
-	DBusDispatchStatus get_dispatch_status();
-
-	DBusDispatchStatus dispatch();
-
 	void add_match(const char* rule);
-
-	void register_object_path(const char* path, const DBusObjectPathVTable* vtable,
-				  void* user_data);
 
 	unsigned long get_unix_userid(const Message& m);
 
@@ -69,6 +60,8 @@ namespace DBus
 	boost::mutex mutex;
 
 	DBusConnection* conn;
+
+	DBusMessage* pop_message();
 
     };
 

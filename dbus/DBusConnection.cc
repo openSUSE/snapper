@@ -126,32 +126,11 @@ namespace DBus
     }
 
 
-    void
-    Connection::register_object_path(const char* path, const DBusObjectPathVTable* vtable,
-				     void* user_data)
+    DBusMessage*
+    Connection::pop_message()
     {
 	boost::lock_guard<boost::mutex> lock(mutex);
-
-	if (!dbus_connection_register_object_path(conn, path, vtable, user_data))
-	    throw FatalException();
-    }
-
-
-    DBusDispatchStatus
-    Connection::get_dispatch_status()
-    {
-	boost::lock_guard<boost::mutex> lock(mutex);
-
-	return dbus_connection_get_dispatch_status(conn);
-    }
-
-
-    DBusDispatchStatus
-    Connection::dispatch()
-    {
-	boost::lock_guard<boost::mutex> lock(mutex);
-
-	return dbus_connection_dispatch(conn);
+	return dbus_connection_pop_message(conn);
     }
 
 

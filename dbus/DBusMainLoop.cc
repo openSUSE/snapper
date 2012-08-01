@@ -45,6 +45,8 @@ namespace DBus
 	    throw FatalException();
 
 	dbus_connection_set_wakeup_main_function(conn, wakeup_main, this, NULL);
+
+	add_match("type='signal', interface='" DBUS_INTERFACE_DBUS "', member='NameOwnerChanged'");
     }
 
 
@@ -84,7 +86,7 @@ namespace DBus
 		}
 	    }
 
-	    int timeout = -1;
+	    int timeout = periodic_timeout();
 
 	    if (idle_timeout >= 0)
 	    {
@@ -99,6 +101,8 @@ namespace DBus
 	    int r = poll(&pollfds[0], pollfds.size(), timeout);
 	    if (r == -1)
 		throw FatalException();
+
+	    periodic();
 
 	    {
 		for (vector<struct pollfd>::const_iterator it2 = pollfds.begin(); it2 != pollfds.end(); ++it2)
@@ -137,9 +141,11 @@ namespace DBus
 		}
 	    }
 
-	    while (get_dispatch_status() == DBUS_DISPATCH_DATA_REMAINS)
+	    DBusMessage* tmp = pop_message();
+	    if (tmp)
 	    {
-		dispatch();
+		DBus::Message msg(tmp, false);
+		dispatch_incoming(msg);
 	    }
 
 	    if (idle_timeout >= 0)
@@ -274,6 +280,40 @@ namespace DBus
 	MainLoop* s = static_cast<MainLoop*>(data);
 	const char arbitrary = 42;
 	write(s->wakeup_pipe[1], &arbitrary, 1);
+    }
+
+
+    void
+    DBus::MainLoop::dispatch_incoming(Message& msg)
+    {
+	switch (msg.get_type())
+	{
+	    case DBUS_MESSAGE_TYPE_METHOD_CALL:
+	    {
+		method_call(msg);
+	    }
+	    break;
+
+	    case DBUS_MESSAGE_TYPE_SIGNAL:
+	    {
+		signal(msg);
+
+		if (msg.is_signal(DBUS_INTERFACE_DBUS, "NameOwnerChanged"))
+		{
+		    string name, old_owner, new_owner;
+
+		    DBus::Hihi hihi(msg);
+		    hihi >> name >> old_owner >> new_owner;
+
+		    if (name == new_owner && old_owner.empty())
+			client_connected(name);
+
+		    if (name == old_owner && new_owner.empty())
+			client_disconnected(name);
+		}
+	    }
+	    break;
+	}
     }
 
 }

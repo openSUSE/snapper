@@ -32,7 +32,7 @@ bool contains(const ListType& l, const Type& value)
 
 
 Client::Client(const string& name)
-    : name(name)
+    : name(name), zombie(false)
 {
 }
 
@@ -41,7 +41,7 @@ Client::~Client()
 {
     thread.interrupt();
 
-    thread.join();		// TODO this can block and deadlock
+    thread.join();
 
     for (list<Comparison*>::iterator it = comparisons.begin(); it != comparisons.end(); ++it)
     {
@@ -168,9 +168,24 @@ Clients::add(const string& name)
 
 
 void
-Clients::remove(const string& name)
+Clients::remove_zombies()
 {
-    iterator it = find(name);
-    if (it != entries.end())
-	entries.erase(it);
+    for (iterator it = begin(); it != end();)
+    {
+	if (it->zombie && it->thread.timed_join(boost::posix_time::seconds(0)))
+	    it = entries.erase(it);
+	else
+	    ++it;
+    }
+}
+
+
+bool
+Clients::has_zombies() const
+{
+    for (const_iterator it = begin(); it != end(); ++it)
+	if (it->zombie)
+	    return true;
+
+    return false;
 }

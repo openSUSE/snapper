@@ -37,12 +37,19 @@ namespace DBus
     public:
 
 	MainLoop(DBusBusType type);
-	~MainLoop();
+	virtual ~MainLoop();
 
 	void run();
 
 	void set_idle_timeout(int s);
 	void reset_idle_count();
+
+	virtual void method_call(Message& message) = 0;
+	virtual void signal(Message& message) = 0;
+	virtual void client_connected(const string& name) = 0;
+	virtual void client_disconnected(const string& name) = 0;
+	virtual int periodic_timeout() = 0;
+	virtual void periodic() = 0;
 
     protected:
 
@@ -78,6 +85,8 @@ namespace DBus
 	static void toggled_timeout(DBusTimeout* dbus_timeout, void* data);
 
 	static void wakeup_main(void* data);
+
+	void dispatch_incoming(Message& message);
 
 	int idle_timeout;
 	time_t last_action;

@@ -1085,6 +1085,8 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg)
 	s << "    name:'" << it->name << "'";
 	if (&*it == this)
 	    s << " myself";
+	if (it->zombie)
+	    s << " zombie";
 	if (!it->locks.empty())
 	    s << " locks:'" << boost::join(it->locks, ",") << "'";
 	if (!it->comparisons.empty())
@@ -1105,20 +1107,6 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg)
     hoho.close_array();
 
     conn.send(reply);
-}
-
-
-Clients::iterator
-client_connected(const string& name)
-{
-    return clients.add(name);
-}
-
-
-void
-client_disconnected(const string& name)
-{
-    clients.remove(name);
 }
 
 
@@ -1227,103 +1215,131 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 }
 
 
+class MyMainLoop : public DBus::MainLoop
+{
+public:
+
+    MyMainLoop(DBusBusType type);
+    ~MyMainLoop();
+
+    void method_call(DBus::Message& message);
+    void signal(DBus::Message& message);
+    void client_connected(const string& name);
+    void client_disconnected(const string& name);
+    void periodic();
+    int periodic_timeout();
+
+};
+
+
+MyMainLoop::MyMainLoop(DBusBusType type)
+    : MainLoop(type)
+{
+}
+
+
+MyMainLoop::~MyMainLoop()
+{
+}
+
+
 void
-unregister_func(DBusConnection* connection, void* data)
+MyMainLoop::method_call(DBus::Message& msg)
 {
-}
+    y2deb("method call sender:'" << msg.get_sender() << "' path:'" <<
+	  msg.get_path() << "' interface:'" << msg.get_interface() <<
+	  "' member:'" << msg.get_member() << "'");
 
+    reset_idle_count();
 
-DBusHandlerResult
-message_func1(DBusConnection* connection, DBusMessage* message, void* data)
-{
-    DBus::MainLoop* s = static_cast<DBus::MainLoop*>(data);
-
-    DBus::Message msg(message, true);
-
-    if (msg.get_type() == DBUS_MESSAGE_TYPE_METHOD_CALL)
+    if (msg.is_method_call(DBUS_INTERFACE_INTROSPECTABLE, "Introspect"))
     {
-	y2deb("method call sender:'" << msg.get_sender() << "' path:'" <<
-	      msg.get_path() << "' interface:'" << msg.get_interface() <<
-	      "' member:'" << msg.get_member() << "'");
-
-	s->reset_idle_count();
-
-	if (msg.is_method_call(DBUS_INTERFACE_INTROSPECTABLE, "Introspect"))
-	{
-	    Client::introspect(*s, msg);
-	}
-	else
-	{
-	    Clients::iterator client = clients.find(msg.get_sender());
-	    if (client == clients.end())
-	    {
-		y2deb("client connected invisible '" << msg.get_sender() << "'");
-		client = client_connected(msg.get_sender());
-		s->set_idle_timeout(-1);
-	    }
-
-	    client->add_task(*s, msg);
-	}
-
-	return DBUS_HANDLER_RESULT_HANDLED;
+	Client::introspect(*this, msg);
     }
-
-    return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
-}
-
-
-DBusHandlerResult
-message_func2(DBusConnection* connection, DBusMessage* message, void* data)
-{
-    DBus::MainLoop* s = static_cast<DBus::MainLoop*>(data);
-
-    DBus::Message msg(message, true);
-
-    if (msg.get_type() == DBUS_MESSAGE_TYPE_SIGNAL)
+    else
     {
-	y2deb("signal sender:'" << msg.get_sender() << "' path:'" <<
-	      msg.get_path() << "' interface:'" << msg.get_interface() <<
-	      "' member:'" << msg.get_member() << "'");
+	boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
-	if (msg.is_signal(DBUS_INTERFACE_DBUS, "NameOwnerChanged"))
+	Clients::iterator client = clients.find(msg.get_sender());
+	if (client == clients.end())
 	{
-	    string name, old_owner, new_owner;
-
-	    DBus::Hihi hihi(msg);
-	    hihi >> name >> old_owner >> new_owner;
-
-	    if (name == new_owner && old_owner.empty())
-	    {
-		y2deb("client connected '" << name << "'");
-		client_connected(name);
-		s->reset_idle_count();
-		s->set_idle_timeout(-1);
-	    }
-
-	    if (name == old_owner && new_owner.empty())
-	    {
-		y2deb("client disconnected '" << name << "'");
-		client_disconnected(name);
-		s->reset_idle_count();
-		if (clients.empty())
-		    s->set_idle_timeout(30);
-	    }
-
-	    return DBUS_HANDLER_RESULT_HANDLED;
+	    y2deb("client connected invisible '" << msg.get_sender() << "'");
+	    client = clients.add(msg.get_sender());
+	    set_idle_timeout(-1);
 	}
-    }
 
-    return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
+	client->add_task(*this, msg);
+    }
 }
 
 
-DBusObjectPathVTable dbus_vtable1 = {
-    unregister_func, message_func1, NULL, NULL, NULL, NULL
-};
+void
+MyMainLoop::signal(DBus::Message& msg)
+{
+    y2deb("signal sender:'" << msg.get_sender() << "' path:'" <<
+	  msg.get_path() << "' interface:'" << msg.get_interface() <<
+	  "' member:'" << msg.get_member() << "'");
+}
 
-DBusObjectPathVTable dbus_vtable2 = {
-    unregister_func, message_func2, NULL, NULL, NULL, NULL
-};
+
+void
+MyMainLoop::client_connected(const string& name)
+{
+    y2deb("client connected '" << name << "'");
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    clients.add(name);
+
+    reset_idle_count();
+    set_idle_timeout(-1);
+}
+
+
+void
+MyMainLoop::client_disconnected(const string& name)
+{
+    y2deb("client disconnected '" << name << "'");
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    Clients::iterator client = clients.find(name);
+    if (client != clients.end())
+    {
+	client->zombie = true;
+	client->thread.interrupt();
+    }
+    reset_idle_count();
+}
+
+
+void
+MyMainLoop::periodic()
+{
+    y2deb("periodic");
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    clients.remove_zombies();
+
+    if (clients.empty())
+    {
+	y2deb("no clients left");
+	set_idle_timeout(30);
+    }
+}
+
+
+int
+MyMainLoop::periodic_timeout()
+{
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    if (clients.has_zombies())
+	return 1000;
+
+    return -1;
+}
 
 
 void
@@ -1358,7 +1374,7 @@ main(int argc, char** argv)
 
     dbus_threads_init_default();
 
-    DBus::MainLoop mainloop(DBUS_BUS_SYSTEM);
+    MyMainLoop mainloop(DBUS_BUS_SYSTEM);
 
     mainloop.set_idle_timeout(30);
 
@@ -1367,10 +1383,6 @@ main(int argc, char** argv)
     mainloop.request_name("org.opensuse.Snapper", DBUS_NAME_FLAG_REPLACE_EXISTING);
 
     y2mil("Listening for method calls and signals");
-
-    mainloop.register_object_path(PATH, &dbus_vtable1, &mainloop);
-    mainloop.register_object_path(DBUS_PATH_DBUS, &dbus_vtable2, &mainloop);
-    mainloop.add_match("type='signal', interface='" DBUS_INTERFACE_DBUS "', member='NameOwnerChanged'");
 
     mainloop.run();
 

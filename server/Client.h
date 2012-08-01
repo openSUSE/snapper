@@ -119,6 +119,8 @@ public:
     boost::thread thread;
     queue<Task> tasks;
 
+    bool zombie;
+
     void add_task(DBus::Connection& conn, DBus::Message& msg);
 
     void worker();
@@ -144,7 +146,9 @@ public:
     iterator find(const string& name);
 
     iterator add(const string& name);
-    void remove(const string& name);
+    void remove_zombies();
+
+    bool has_zombies() const;
 
 private:
 
