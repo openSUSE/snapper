@@ -78,6 +78,7 @@ public:
     void mount_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void umount_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void create_comparison(DBus::Connection& conn, DBus::Message& msg);
+    void delete_comparison(DBus::Connection& conn, DBus::Message& msg);
     void get_files(DBus::Connection& conn, DBus::Message& msg);
     void get_diff(DBus::Connection& conn, DBus::Message& msg);
     void set_undo(DBus::Connection& conn, DBus::Message& msg);

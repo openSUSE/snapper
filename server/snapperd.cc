@@ -854,6 +854,31 @@ Client::create_comparison(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
+Client::delete_comparison(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    dbus_uint32_t num1, num2;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> num1 >> num2;
+
+    y2deb("DeleteComparison config_name:" << config_name << " num1:" << num1 << " num2:" << num2);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    // TODO
+
+    DBus::MessageMethodReturn reply(msg);
+
+    conn.send(reply);
+}
+
+
+void
 Client::get_files(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
@@ -1144,6 +1169,8 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    umount_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CreateComparison"))
 	    create_comparison(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "DeleteComparison"))
+	    delete_comparison(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetFiles"))
 	    get_files(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetDiff"))
