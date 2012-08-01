@@ -365,12 +365,13 @@ Client::list_configs(DBus::Connection& conn, DBus::Message& msg)
 
     boost::shared_lock<boost::shared_mutex> lock(big_mutex);
 
-    list<ConfigInfo> config_infos = Snapper::getConfigs(); // TODO
-
     DBus::MessageMethodReturn reply(msg);
 
     DBus::Hoho hoho(reply);
-    hoho << config_infos;
+    hoho.open_array(DBus::TypeInfo<ConfigInfo>::signature);
+    for (MetaSnappers::const_iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
+	hoho << it->config_info;
+    hoho.close_array();
 
     conn.send(reply);
 }
@@ -1079,7 +1080,7 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg)
     hoho.open_array("s");
 
     hoho << "clients:";
-    for (list<Client>::const_iterator it = clients.begin(); it != clients.end(); ++it)
+    for (Clients::const_iterator it = clients.begin(); it != clients.end(); ++it)
     {
 	std::ostringstream s;
 	s << "    name:'" << it->name << "'";
@@ -1095,7 +1096,7 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg)
     }
 
     hoho << "meta-snappers:";
-    for (list<MetaSnapper>::const_iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
+    for (MetaSnappers::const_iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
     {
 	std::ostringstream s;
 	s << "    name:'" << it->configName() << "'";
