@@ -253,7 +253,7 @@ struct Permissions : public std::exception
 
 
 void
-check_permission(DBus::Connection& conn, DBus::Message& msg)
+Client::check_permission(DBus::Connection& conn, DBus::Message& msg) const
 {
     unsigned long uid = conn.get_unix_userid(msg);
     if (uid == 0)
@@ -264,7 +264,8 @@ check_permission(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-check_permission(DBus::Connection& conn, DBus::Message& msg, const MetaSnapper& meta_snapper)
+Client::check_permission(DBus::Connection& conn, DBus::Message& msg,
+			 const MetaSnapper& meta_snapper) const
 {
     unsigned long uid = conn.get_unix_userid(msg);
     if (uid == 0)
@@ -285,11 +286,11 @@ struct Lock : public std::exception
 
 
 void
-check_lock(DBus::Connection& conn, DBus::Message& msg, const string& config_name)
+Client::check_lock(DBus::Connection& conn, DBus::Message& msg, const string& config_name) const
 {
     for (Clients::const_iterator it = clients.begin(); it != clients.end(); ++it)
     {
-	if (it->zombie || it->name == msg.get_sender())
+	if (it->zombie || &*it == this)
 	    continue;
 
 	if (it->has_lock(config_name))
@@ -306,7 +307,7 @@ struct InUse : public std::exception
 
 
 void
-check_in_use(const MetaSnapper& meta_snapper)
+Client::check_in_use(const MetaSnapper& meta_snapper) const
 {
     if (meta_snapper.use_count() != 0)
 	throw InUse();
@@ -361,6 +362,13 @@ Client::signal_snapshots_deleted(DBus::Connection& conn, const string& config_na
 
     conn.send(msg);
 }
+
+
+struct UnknownFile : public std::exception
+{
+    explicit UnknownFile() throw() {}
+    virtual const char* what() const throw() { return "unknown config"; }
+};
 
 
 void
@@ -946,7 +954,8 @@ Client::get_diff(DBus::Connection& conn, DBus::Message& msg)
     Files& files = comparison->getFiles();
 
     Files::iterator it3 = files.find(filename);
-    assert(it3 != files.end());
+    if (it3 == files.end())
+	throw UnknownFile();
 
     lock.unlock();
 
@@ -988,8 +997,10 @@ Client::set_undo(DBus::Connection& conn, DBus::Message& msg)
     for (list<Undo>::const_iterator it2 = undos.begin(); it2 != undos.end(); ++it2)
     {
 	Files::iterator it3 = files.find(it2->filename);
-	if (it3 != files.end())
-	    it3->setUndo(it2->undo);
+	if (it3 == files.end())
+	    throw UnknownFile();
+
+	it3->setUndo(it2->undo);
     }
 
     DBus::MessageMethodReturn reply(msg);
@@ -1246,6 +1257,11 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
     catch (const IllegalSnapshotException& e)
     {
 	DBus::MessageError reply(msg, "error.illegal_snapshot", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
+    catch (const UnknownFile& e)
+    {
+	DBus::MessageError reply(msg, "error.unknown_file", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const InvalidUserdataException& e)

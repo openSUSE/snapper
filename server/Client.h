@@ -42,6 +42,9 @@ using namespace std;
 using namespace snapper;
 
 
+class MetaSnapper;
+
+
 struct NoComparison : public std::exception
 {
     explicit NoComparison() throw() {}
@@ -54,6 +57,12 @@ class Client : boost::noncopyable
 public:
 
     static void introspect(DBus::Connection& conn, DBus::Message& msg);
+
+    void check_permission(DBus::Connection& conn, DBus::Message& msg) const;
+    void check_permission(DBus::Connection& conn, DBus::Message& msg,
+			  const MetaSnapper& meta_snapper) const;
+    void check_lock(DBus::Connection& conn, DBus::Message& msg, const string& config_name) const;
+    void check_in_use(const MetaSnapper& meta_snapper) const;
 
     void signal_config_created(DBus::Connection& conn, const string& config_name);
     void signal_config_deleted(DBus::Connection& conn, const string& config_name);

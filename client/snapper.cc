@@ -1201,6 +1201,8 @@ main(int argc, char** argv)
 	    cerr << _("Config is locked.") << endl;
 	else if (name == "error.config_in_use")
 	    cerr << _("Config is in use.") << endl;
+	else if (name == "error.unknown_file_use")
+	    cerr << _("Unknown file.") << endl;
 	else
 	    cerr << _("Failure") << " (" << name << ")." << endl;
 	exit(EXIT_FAILURE);
