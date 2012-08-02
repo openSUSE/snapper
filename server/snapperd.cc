@@ -193,10 +193,6 @@ main(int argc, char** argv)
     setLogQuery(&log_query);
 #endif
 
-    y2mil("Loading snapper configs");
-
-    meta_snappers.init();
-
     dbus_threads_init_default();
 
     MyMainLoop mainloop(DBUS_BUS_SYSTEM);
@@ -206,6 +202,10 @@ main(int argc, char** argv)
     y2mil("Requesting DBus name");
 
     mainloop.request_name(SERVICE, DBUS_NAME_FLAG_REPLACE_EXISTING);
+
+    y2mil("Loading snapper configs");
+
+    meta_snappers.init();
 
     y2mil("Listening for method calls and signals");
 

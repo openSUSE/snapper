@@ -51,7 +51,7 @@ namespace DBus
 	virtual int periodic_timeout() = 0;
 	virtual void periodic() = 0;
 
-    protected:
+    private:
 
 	struct Watch
 	{

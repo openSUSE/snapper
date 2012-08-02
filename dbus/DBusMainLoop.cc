@@ -104,14 +104,12 @@ namespace DBus
 
 	    periodic();
 
+	    for (vector<struct pollfd>::const_iterator it2 = pollfds.begin(); it2 != pollfds.end(); ++it2)
 	    {
-		for (vector<struct pollfd>::const_iterator it2 = pollfds.begin(); it2 != pollfds.end(); ++it2)
+		if (it2->fd == wakeup_pipe[0] && (it2->revents & POLLIN))
 		{
-		    if (it2->fd == wakeup_pipe[0] && (it2->revents & POLLIN))
-		    {
-			char arbitrary;
-			read(wakeup_pipe[0], &arbitrary, 1);
-		    }
+		    char arbitrary;
+		    read(wakeup_pipe[0], &arbitrary, 1);
 		}
 	    }
 
