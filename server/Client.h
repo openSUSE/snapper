@@ -34,12 +34,20 @@
 #include <snapper/Snapshot.h>
 #include <snapper/Factory.h>
 #include <snapper/Comparison.h>
+#include <dbus/DBusConnection.h>
+#include <dbus/DBusMessage.h>
 
-#include "dbus/DBusConnection.h"
-#include "dbus/DBusMessage.h"
 
 using namespace std;
 using namespace snapper;
+
+
+#define SERVICE "org.opensuse.Snapper"
+#define PATH "/org/opensuse/Snapper"
+#define INTERFACE "org.opensuse.Snapper"
+
+
+extern boost::shared_mutex big_mutex;
 
 
 class MetaSnapper;
@@ -94,7 +102,7 @@ public:
     void set_undo_all(DBus::Connection& conn, DBus::Message& msg);
     void get_undo_steps(DBus::Connection& conn, DBus::Message& msg);
     void do_undo_step(DBus::Connection& conn, DBus::Message& msg);
-    void debug(DBus::Connection& conn, DBus::Message& msg);
+    void debug(DBus::Connection& conn, DBus::Message& msg) const;
 
     void dispatch(DBus::Connection& conn, DBus::Message& msg);
 

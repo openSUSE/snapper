@@ -31,13 +31,13 @@
 #include <snapper/Snapper.h>
 #include <snapper/Snapshot.h>
 #include <snapper/File.h>
+#include <dbus/DBusMessage.h>
+
 
 using std::string;
 using std::list;
 
 using namespace snapper;
-
-#include "dbus/DBusMessage.h"
 
 
 struct Undo
