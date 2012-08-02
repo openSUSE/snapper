@@ -1197,6 +1197,10 @@ main(int argc, char** argv)
 	    cerr << _("Invalid userdata.") << endl;
 	else if (name == "error.illegal_snapshot")
 	    cerr << _("Illegal Snapshot.") << endl;
+	else if (name == "error.config_locked")
+	    cerr << _("Config is locked.") << endl;
+	else if (name == "error.config_in_use")
+	    cerr << _("Config is in use.") << endl;
 	else
 	    cerr << _("Failure") << " (" << name << ")." << endl;
 	exit(EXIT_FAILURE);

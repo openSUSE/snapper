@@ -30,6 +30,80 @@
 #include "MetaSnapper.h"
 
 
+MetaSnappers meta_snappers;
+
+
+RefCounter::RefCounter()
+    : counter(0)
+{
+    struct timespec tmp;
+    clock_gettime(CLOCK_MONOTONIC, &tmp);
+    last_used = tmp.tv_sec;
+}
+
+
+int
+RefCounter::inc_use_count()
+{
+    boost::lock_guard<boost::mutex> lock(mutex);
+
+    return ++counter;
+}
+
+
+int
+RefCounter::dec_use_count()
+{
+    boost::lock_guard<boost::mutex> lock(mutex);
+
+    assert(counter > 0);
+
+    if (--counter == 0)
+    {
+	struct timespec tmp;
+	clock_gettime(CLOCK_MONOTONIC, &tmp);
+	last_used = tmp.tv_sec;
+    }
+
+    return counter;
+}
+
+
+void
+RefCounter::update_use_time()
+{
+    boost::lock_guard<boost::mutex> lock(mutex);
+
+    struct timespec tmp;
+    clock_gettime(CLOCK_MONOTONIC, &tmp);
+    last_used = tmp.tv_sec;
+}
+
+
+int
+RefCounter::use_count() const
+{
+    boost::lock_guard<boost::mutex> lock(mutex);
+
+    return counter;
+}
+
+
+int
+RefCounter::unused_for() const
+{
+    boost::lock_guard<boost::mutex> lock(mutex);
+
+    if (counter != 0)
+	return 0;
+
+    struct timespec tmp;
+    clock_gettime(CLOCK_MONOTONIC, &tmp);
+
+    return tmp.tv_sec - last_used;
+}
+
+
 bool
 get_user_uid(const char* username, uid_t& uid)
 {
@@ -135,7 +209,17 @@ MetaSnapper::getSnapper()
     if (!snapper)
 	snapper = new Snapper(config_info.config_name);
 
+    update_use_time();
+
     return snapper;
+}
+
+
+void
+MetaSnapper::unload()
+{
+    delete snapper;
+    snapper = 0;
 }
 
 
@@ -156,8 +240,7 @@ MetaSnappers::init()
 
     for (list<ConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
     {
-	MetaSnapper meta_snapper(*it);
-	entries.push_back(meta_snapper);
+	entries.emplace_back(*it);
     }
 }
 
@@ -169,7 +252,7 @@ MetaSnappers::find(const string& config_name)
 	if (it->configName() == config_name)
 	    return it;
 
-    throw;
+    throw UnknownConfig();
 }
 
 
@@ -182,19 +265,14 @@ MetaSnappers::createConfig(const string& config_name, const string& subvolume,
     Snapper::createConfig(config_name, subvolume, fstype, template_name);
 
     ConfigInfo config_info = Snapper::getConfig(config_name);
-    MetaSnapper meta_snapper(config_info);
-    entries.push_back(meta_snapper);
+    entries.emplace_back(config_info);
 }
 
 
 void
-MetaSnappers::deleteConfig(const string& config_name)
+MetaSnappers::deleteConfig(iterator it)
 {
-    iterator it = find(config_name);
-    if (it == end())
-	throw;
-
-    Snapper::deleteConfig(config_name);
+    Snapper::deleteConfig(it->configName());
 
     entries.erase(it);
 }

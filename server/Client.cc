@@ -24,6 +24,9 @@
 #include "MetaSnapper.h"
 
 
+Clients clients;
+
+
 template <typename ListType, typename Type>
 bool contains(const ListType& l, const Type& value)
 {
@@ -40,11 +43,18 @@ Client::Client(const string& name)
 Client::~Client()
 {
     thread.interrupt();
-
     thread.join();
 
     for (list<Comparison*>::iterator it = comparisons.begin(); it != comparisons.end(); ++it)
     {
+	const Snapper* s = (*it)->getSnapper();
+
+	for (MetaSnappers::iterator it2 = meta_snappers.begin(); it2 != meta_snappers.end(); ++it2)
+	{
+	    if (it2->is_equal(s))
+		it2->dec_use_count();
+	}
+
 	delete *it;
     }
 }

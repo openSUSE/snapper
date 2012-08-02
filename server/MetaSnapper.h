@@ -24,6 +24,8 @@
 #define SNAPPER_META_SNAPPER_H
 
 
+#include <boost/thread.hpp>
+
 #include <snapper/Snapper.h>
 #include <snapper/Snapshot.h>
 #include <snapper/Comparison.h>
@@ -33,7 +35,54 @@ using namespace std;
 using namespace snapper;
 
 
-class MetaSnapper
+class RefCounter : boost::noncopyable
+{
+public:
+
+    RefCounter();
+
+    int inc_use_count();
+    int dec_use_count();
+    void update_use_time();
+
+    int use_count() const;
+    int unused_for() const;
+
+private:
+
+    mutable boost::mutex mutex;
+
+    int counter;
+
+    time_t last_used;
+
+};
+
+
+class RefHolder
+{
+public:
+
+    RefHolder(RefCounter& ref) : ref(ref)
+	{ ref.inc_use_count(); }
+    ~RefHolder()
+	{ ref.dec_use_count(); }
+
+private:
+
+    RefCounter& ref;
+
+};
+
+
+struct UnknownConfig : public std::exception
+{
+    explicit UnknownConfig() throw() {}
+    virtual const char* what() const throw() { return "unknown config"; }
+};
+
+
+class MetaSnapper : public RefCounter
 {
 public:
 
@@ -48,7 +97,9 @@ public:
 
     Snapper* getSnapper();
 
-    bool snapper_loaded() const { return snapper != NULL; }
+    bool is_equal(const Snapper* s) { return snapper && snapper == s; }
+    bool is_loaded() const { return snapper; }
+    void unload();
 
 private:
 
@@ -82,13 +133,16 @@ public:
 
     void createConfig(const string& config_name, const string& subvolume, const string& fstype,
 		      const string& template_name);
-    void deleteConfig(const string& config_name);
+    void deleteConfig(iterator);
 
 private:
 
     list<MetaSnapper> entries;
 
 };
+
+
+extern MetaSnappers meta_snappers;
 
 
 #endif

@@ -55,9 +55,6 @@ using namespace snapper;
 #define INTERFACE "org.opensuse.Snapper"
 
 
-Clients clients;
-MetaSnappers meta_snappers;
-
 boost::shared_mutex big_mutex;
 
 
@@ -248,13 +245,6 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 }
 
 
-struct UnknownConfig : public std::exception
-{
-    explicit UnknownConfig() throw() {}
-    virtual const char* what() const throw() { return "unknown config"; }
-};
-
-
 struct Permissions : public std::exception
 {
     explicit Permissions() throw() {}
@@ -299,12 +289,27 @@ check_lock(DBus::Connection& conn, DBus::Message& msg, const string& config_name
 {
     for (Clients::const_iterator it = clients.begin(); it != clients.end(); ++it)
     {
-	if (it->name == msg.get_sender())
+	if (it->zombie || it->name == msg.get_sender())
 	    continue;
 
 	if (it->has_lock(config_name))
 	    throw Lock();
     }
+}
+
+
+struct InUse : public std::exception
+{
+    explicit InUse() throw() {}
+    virtual const char* what() const throw() { return "in use"; }
+};
+
+
+void
+check_in_use(const MetaSnapper& meta_snapper)
+{
+    if (meta_snapper.use_count() != 0)
+	throw InUse();
 }
 
 
@@ -442,9 +447,13 @@ Client::delete_config(DBus::Connection& conn, DBus::Message& msg)
 
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
-    check_permission(conn, msg);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
 
-    meta_snappers.deleteConfig(config_name);
+    check_permission(conn, msg);
+    check_lock(conn, msg, config_name);
+    check_in_use(*it);
+
+    meta_snappers.deleteConfig(it);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -730,11 +739,11 @@ Client::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
-    check_lock(conn, msg, config_name);
-
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
+    check_lock(conn, msg, config_name);
+    check_in_use(*it);
 
     Snapper* snapper = it->getSnapper();
 
@@ -839,6 +848,8 @@ Client::create_comparison(DBus::Connection& conn, DBus::Message& msg)
     Snapshots::const_iterator snapshot1 = snapshots.find(num1);
     Snapshots::const_iterator snapshot2 = snapshots.find(num2);
 
+    RefHolder ref_holder(*it);
+
     lock.unlock();
 
     Comparison* comparison = new Comparison(snapper, snapshot1, snapshot2);
@@ -846,6 +857,8 @@ Client::create_comparison(DBus::Connection& conn, DBus::Message& msg)
     lock.lock();
 
     comparisons.push_back(comparison);
+
+    it->inc_use_count();
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -975,10 +988,8 @@ Client::set_undo(DBus::Connection& conn, DBus::Message& msg)
     for (list<Undo>::const_iterator it2 = undos.begin(); it2 != undos.end(); ++it2)
     {
 	Files::iterator it3 = files.find(it2->filename);
-	if (it3 == files.end())
-	    throw;
-
-	it3->setUndo(it2->undo);
+	if (it3 != files.end())
+	    it3->setUndo(it2->undo);
     }
 
     DBus::MessageMethodReturn reply(msg);
@@ -1106,13 +1117,13 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg)
 	std::ostringstream s;
 	s << "    name:'" << it->name << "'";
 	if (&*it == this)
-	    s << " myself";
+	    s << ", myself";
 	if (it->zombie)
-	    s << " zombie";
+	    s << ", zombie";
 	if (!it->locks.empty())
-	    s << " locks:'" << boost::join(it->locks, ",") << "'";
+	    s << ", locks '" << boost::join(it->locks, " ") << "'";
 	if (!it->comparisons.empty())
-	    s << " comparisons:" << it->comparisons.size();
+	    s << ", comparisons " << it->comparisons.size();
 	hoho << s.str();
     }
 
@@ -1121,8 +1132,14 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg)
     {
 	std::ostringstream s;
 	s << "    name:'" << it->configName() << "'";
-	if (it->snapper_loaded())
-	    s << " (loaded)";
+	if (it->is_loaded())
+	{
+	    s << ", loaded";
+	    if (it->use_count() == 0)
+		s << ", unused for " << it->unused_for() << "s";
+	    else
+		s << ", use count " << it->use_count();
+	}
 	hoho << s.str();
     }
 
@@ -1214,6 +1231,11 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
     catch (const Lock& e)
     {
 	DBus::MessageError reply(msg, "error.config_locked", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
+    catch (const InUse& e)
+    {
+	DBus::MessageError reply(msg, "error.config_in_use", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const NoComparison& e)
@@ -1340,16 +1362,17 @@ MyMainLoop::client_disconnected(const string& name)
 void
 MyMainLoop::periodic()
 {
-    y2deb("periodic");
-
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     clients.remove_zombies();
 
     if (clients.empty())
-    {
-	y2deb("no clients left");
 	set_idle_timeout(30);
+
+    for (MetaSnappers::iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
+    {
+	if (it->is_loaded() && it->unused_for() > 10)
+	    it->unload();
     }
 }
 
@@ -1361,6 +1384,10 @@ MyMainLoop::periodic_timeout()
 
     if (clients.has_zombies())
 	return 1000;
+
+    for (MetaSnappers::const_iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
+	if (it->is_loaded() && it->use_count() == 0)
+	    return 1000;
 
     return -1;
 }

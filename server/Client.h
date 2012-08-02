@@ -101,7 +101,7 @@ public:
     void remove_lock(const string& config_name);
     bool has_lock(const string& config_name) const;
 
-    string name;
+    const string name;
 
     list<Comparison*> comparisons;
 
@@ -123,6 +123,8 @@ public:
     bool zombie;
 
     void add_task(DBus::Connection& conn, DBus::Message& msg);
+
+private:
 
     void worker();
 
@@ -156,6 +158,9 @@ private:
     list<Client> entries;
 
 };
+
+
+extern Clients clients;
 
 
 #endif
