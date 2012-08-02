@@ -774,6 +774,8 @@ Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
     snap2->setUserdata(userdata);
     snap2->flushInfo();
 
+    snapper->startBackgroundComparsion(snap1, snap2); // TODO
+
     DBus::MessageMethodReturn reply(msg);
 
     DBus::Hoho hoho(reply);
