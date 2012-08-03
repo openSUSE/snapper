@@ -1089,8 +1089,6 @@ help()
 int
 main(int argc, char** argv)
 {
-    umask(0027);
-
     setlocale(LC_ALL, "");
 
     cmds["list-configs"] = command_list_configs;

@@ -21,6 +21,7 @@
 
 
 #include <stdlib.h>
+#include <getopt.h>
 #include <iostream>
 #include <string>
 
@@ -37,6 +38,8 @@ using namespace std;
 
 const int idle_time = 60;
 const int snapper_cleanup_time = 30;
+
+bool debug = false;
 
 
 class MyMainLoop : public DBus::MainLoop
@@ -175,27 +178,83 @@ void
 log_do(LogLevel level, const string& component, const char* file, const int line, const char* func,
        const string& text)
 {
-    cout << /* boost::this_thread::get_id() << " " << */ text << endl;
+    cout << text << endl;
 }
 
 
 bool
 log_query(LogLevel level, const string& component)
 {
-    return true;
-    // return level != DEBUG;
+    return debug || level != DEBUG;
+}
+
+
+void usage() __attribute__ ((__noreturn__));
+
+void
+usage()
+{
+    cerr << "Try 'snapperd --help' for more information." << endl;
+    exit(EXIT_FAILURE);
+}
+
+
+void help() __attribute__ ((__noreturn__));
+
+void
+help()
+{
+    cout << "usage: snapperd [--options]" << endl
+	 << endl;
+
+    cout << "    Options:" << endl
+	 << "\t--debug, -d\t\t\tTurn on debugging." << endl
+	 << endl;
+
+    exit (EXIT_SUCCESS);
 }
 
 
 int
 main(int argc, char** argv)
 {
-#if 0
+    const struct option options[] = {
+	{ "debug",		no_argument,		0,	'd' },
+	{ "help",		no_argument,		0,	'h' },
+	{ 0, 0, 0, 0 }
+    };
+
+    while (true)
+    {
+	int option_index = 0;
+	int c = getopt_long(argc, argv, "+dh", options, &option_index);
+	if (c == -1)
+	    break;
+
+	switch (c)
+	{
+	    case 'd':
+		debug = true;
+		break;
+
+	    case 'h':
+		help();
+
+	    default:
+                usage();
+	}
+    }
+
+    if (optind < argc)
+    {
+        cerr << "snapperd: unrecognized option '" << argv[optind] << "'" << endl;
+	usage();
+    }
+
+    umask(0027);
+
     initDefaultLogger();
-#else
-    setLogDo(&log_do);
     setLogQuery(&log_query);
-#endif
 
     dbus_threads_init_default();
 

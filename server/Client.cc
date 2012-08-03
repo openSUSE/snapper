@@ -1381,7 +1381,7 @@ Client::worker()
     }
     catch (const boost::thread_interrupted&)
     {
-	y2mil("worker interrupted");
+	y2deb("worker interrupted");
     }
 }
 
