@@ -29,6 +29,7 @@
 #include <errno.h>
 #include <vector>
 #include <algorithm>
+#include <boost/thread.hpp>
 
 #include "snapper/Log.h"
 #include "snapper/AppUtil.h"
@@ -398,6 +399,8 @@ namespace snapper
 
 	while (first1 != last1 || first2 != last2)
 	{
+	    boost::this_thread::interruption_point();
+
 	    if (first1 == last1)
 	    {
 		if (first2->stat.st_dev == cmp_data.dev2)

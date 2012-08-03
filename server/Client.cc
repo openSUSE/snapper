@@ -1272,6 +1272,10 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    conn.send(reply);
 	}
     }
+    catch (const boost::thread_interrupted&)
+    {
+	throw;
+    }
     catch (const DBus::MarshallingException& e)
     {
 	DBus::MessageError reply(msg, "error.dbus.marshalling", DBUS_ERROR_FAILED);
@@ -1324,6 +1328,7 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
     }
     catch (...)
     {
+	y2err("caught unknown exception");
 	DBus::MessageError reply(msg, "error.something", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
@@ -1366,6 +1371,7 @@ Client::worker()
     }
     catch (const boost::thread_interrupted&)
     {
+	y2mil("worker interrupted");
     }
 }
 
