@@ -109,10 +109,14 @@ public:
     Client(const string& name);
     ~Client();
 
-    Comparison* find_comparison(Snapper* snapper, unsigned int number1, unsigned int number2);
+    list<Comparison*>::iterator find_comparison(Snapper* snapper, unsigned int number1,
+						unsigned int number2);
 
-    Comparison* find_comparison(Snapper* snapper, Snapshots::const_iterator snapshot1,
-				Snapshots::const_iterator snapshot2);
+    list<Comparison*>::iterator find_comparison(Snapper* snapper,
+						Snapshots::const_iterator snapshot1,
+						Snapshots::const_iterator snapshot2);
+
+    void delete_comparison(list<Comparison*>::iterator);
 
     void add_lock(const string& config_name);
     void remove_lock(const string& config_name);

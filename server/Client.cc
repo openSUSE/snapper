@@ -49,20 +49,12 @@ Client::~Client()
 
     for (list<Comparison*>::iterator it = comparisons.begin(); it != comparisons.end(); ++it)
     {
-	const Snapper* s = (*it)->getSnapper();
-
-	for (MetaSnappers::iterator it2 = meta_snappers.begin(); it2 != meta_snappers.end(); ++it2)
-	{
-	    if (it2->is_equal(s))
-		it2->dec_use_count();
-	}
-
-	delete *it;
+	delete_comparison(it);
     }
 }
 
 
-Comparison*
+list<Comparison*>::iterator
 Client::find_comparison(Snapper* snapper, Snapshots::const_iterator snapshot1,
 			Snapshots::const_iterator snapshot2)
 {
@@ -70,14 +62,14 @@ Client::find_comparison(Snapper* snapper, Snapshots::const_iterator snapshot1,
     {
 	if ((*it)->getSnapper() == snapper && (*it)->getSnapshot1() == snapshot1 &&
 	    (*it)->getSnapshot2() == snapshot2)
-	    return *it;
+	    return it;
     }
 
     throw NoComparison();
 }
 
 
-Comparison*
+list<Comparison*>::iterator
 Client::find_comparison(Snapper* snapper, unsigned int number1, unsigned int number2)
 {
     Snapshots& snapshots = snapper->getSnapshots();
@@ -85,6 +77,21 @@ Client::find_comparison(Snapper* snapper, unsigned int number1, unsigned int num
     Snapshots::const_iterator snapshot2 = snapshots.find(number2);
 
     return find_comparison(snapper, snapshot1, snapshot2);
+}
+
+
+void
+Client::delete_comparison(list<Comparison*>::iterator it)
+{
+    const Snapper* s = (*it)->getSnapper();
+
+    for (MetaSnappers::iterator it2 = meta_snappers.begin(); it2 != meta_snappers.end(); ++it2)
+    {
+	if (it2->is_equal(s))
+	    it2->dec_use_count();
+    }
+
+    delete *it;
 }
 
 
@@ -944,7 +951,10 @@ Client::delete_comparison(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    // TODO
+    list<Comparison*>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
+
+    delete_comparison(it2);
+    comparisons.erase(it2);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -969,9 +979,9 @@ Client::get_files(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    Comparison* comparison = find_comparison(it->getSnapper(), num1, num2);
+    list<Comparison*>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
 
-    const Files& files = comparison->getFiles();
+    const Files& files = (*it2)->getFiles();
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -1002,9 +1012,9 @@ Client::get_diff(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    Comparison* comparison = find_comparison(it->getSnapper(), num1, num2);
+    list<Comparison*>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
 
-    Files& files = comparison->getFiles();
+    Files& files = (*it2)->getFiles();
 
     Files::iterator it3 = files.find(filename);
     if (it3 == files.end())
@@ -1043,9 +1053,9 @@ Client::set_undo(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    Comparison* comparison = find_comparison(it->getSnapper(), num1, num2);
+    list<Comparison*>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
 
-    Files& files = comparison->getFiles();
+    Files& files = (*it2)->getFiles();
 
     for (list<Undo>::const_iterator it2 = undos.begin(); it2 != undos.end(); ++it2)
     {
@@ -1080,9 +1090,9 @@ Client::set_undo_all(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    Comparison* comparison = find_comparison(it->getSnapper(), num1, num2);
+    list<Comparison*>::iterator it3 = find_comparison(it->getSnapper(), num1, num2);
 
-    Files& files = comparison->getFiles();
+    Files& files = (*it3)->getFiles();
 
     for (Files::iterator it2 = files.begin(); it2 != files.end(); ++it2)
     {
@@ -1112,9 +1122,9 @@ Client::get_undo_steps(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    Comparison* comparison = find_comparison(it->getSnapper(), num1, num2);
+    list<Comparison*>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
 
-    vector<UndoStep> undo_steps = comparison->getUndoSteps();
+    vector<UndoStep> undo_steps = (*it2)->getUndoSteps();
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -1143,11 +1153,11 @@ Client::do_undo_step(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    Comparison* comparison = find_comparison(it->getSnapper(), num1, num2);
+    list<Comparison*>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
 
     lock.unlock();
 
-    bool ret = comparison->doUndoStep(undo_step);
+    bool ret = (*it2)->doUndoStep(undo_step);
 
     lock.lock();
 
