@@ -5,6 +5,10 @@ SUBVOLUME="/"
 # filesystem type
 FSTYPE="btrfs"
 
+# users and groups allowed to work with config
+USERS=""
+GROUPS=""
+
 # start comparing pre- and post-snapshot in background after creating
 # post-snapshot
 BACKGROUND_COMPARISON="yes"
