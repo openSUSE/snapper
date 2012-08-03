@@ -35,6 +35,10 @@
 using namespace std;
 
 
+const int idle_time = 60;
+const int snapper_cleanup_time = 30;
+
+
 class MyMainLoop : public DBus::MainLoop
 {
 public:
@@ -141,11 +145,11 @@ MyMainLoop::periodic()
     clients.remove_zombies();
 
     if (clients.empty())
-	set_idle_timeout(30);
+	set_idle_timeout(idle_time);
 
     for (MetaSnappers::iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
     {
-	if (it->is_loaded() && it->unused_for() > 10)
+	if (it->is_loaded() && it->unused_for() > snapper_cleanup_time)
 	    it->unload();
     }
 }
@@ -197,7 +201,7 @@ main(int argc, char** argv)
 
     MyMainLoop mainloop(DBUS_BUS_SYSTEM);
 
-    mainloop.set_idle_timeout(30);
+    mainloop.set_idle_timeout(idle_time);
 
     y2mil("Requesting DBus name");
 

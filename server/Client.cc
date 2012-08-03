@@ -391,7 +391,7 @@ Client::signal_config_deleted(DBus::Connection& conn, const string& config_name)
 
 void
 Client::signal_snapshot_created(DBus::Connection& conn, const string& config_name,
-				  unsigned int num)
+				unsigned int num)
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "SnapshotCreated");
 
@@ -404,7 +404,7 @@ Client::signal_snapshot_created(DBus::Connection& conn, const string& config_nam
 
 void
 Client::signal_snapshots_deleted(DBus::Connection& conn, const string& config_name,
-				   list<dbus_uint32_t> nums)
+				 const list<dbus_uint32_t>& nums)
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "SnapshotsDeleted");
 
