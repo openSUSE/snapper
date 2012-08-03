@@ -19,7 +19,7 @@ lock the some config.
 
 
 method ListSnapshots config-name
-method GetSnapshots config-name number
+method GetSnapshot config-name number
 
 method CreateSingleSnapshot config-name description cleanup userdata -> number
 method CreatePreSnapshot config-name pre-number description cleanup userdata -> number
@@ -48,8 +48,8 @@ method GetDiff config-name number1 number2 filename which -> list(string)
 
 method SetUndo config-name number1 number2 list(filename undo)
 method SetUndoAll config-name number1 number2 bool
-method GetUndoStatistic config-name number1 number2
-method UndoChange config-name number1 number2
+method GetUndoSteps config-name number1 number2
+method DoUndoStep config-name number1 number2 undo_step
 
 
 Filenames do not include the subvolume.
