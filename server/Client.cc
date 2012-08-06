@@ -1339,6 +1339,16 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	DBus::MessageError reply(msg, "error.unknown_config", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
+    catch (const CreateConfigFailedException& e)
+    {
+	DBus::MessageError reply(msg, "error.create_config_failed", e.what());
+	conn.send(reply);
+    }
+    catch (const DeleteConfigFailedException& e)
+    {
+	DBus::MessageError reply(msg, "error.delete_config_failed", e.what());
+	conn.send(reply);
+    }
     catch (const Permissions& e)
     {
 	DBus::MessageError reply(msg, "error.no_permissions", DBUS_ERROR_FAILED);

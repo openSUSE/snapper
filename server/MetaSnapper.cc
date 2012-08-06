@@ -268,8 +268,6 @@ void
 MetaSnappers::createConfig(const string& config_name, const string& subvolume,
 			   const string& fstype, const string& template_name)
 {
-    // TODO checks
-
     Snapper::createConfig(config_name, subvolume, fstype, template_name);
 
     ConfigInfo config_info = Snapper::getConfig(config_name);

@@ -1201,6 +1201,10 @@ main(int argc, char** argv)
 	    cerr << _("Config is in use.") << endl;
 	else if (name == "error.unknown_file_use")
 	    cerr << _("Unknown file.") << endl;
+	else if (name == "error.create_config_failed")
+	    cerr << sformat(_("Creating config failed (%s)."), e.message()) << endl;
+	else if (name == "error.delete_config_failed")
+	    cerr << sformat(_("Deleting config failed (%s)."), e.message()) << endl;
 	else
 	    cerr << _("Failure") << " (" << name << ")." << endl;
 	exit(EXIT_FAILURE);
