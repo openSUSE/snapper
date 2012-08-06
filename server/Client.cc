@@ -234,6 +234,11 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='number' type='u' direction='in'/>\n"
 	"    </method>\n"
 
+	"    <method name='GetMountPoint'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='number' type='u' direction='in'/>\n"
+	"    </method>\n"
+
 	"    <method name='CreateComparison'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='number1' type='u' direction='in'/>\n"
@@ -622,7 +627,6 @@ Client::get_snapshot(DBus::Connection& conn, DBus::Message& msg)
     check_permission(conn, msg, *it);
 
     Snapper* snapper = it->getSnapper();
-
     Snapshots& snapshots = snapper->getSnapshots();
 
     Snapshots::iterator snap = snapshots.find(num);
@@ -657,7 +661,6 @@ Client::set_snapshot(DBus::Connection& conn, DBus::Message& msg)
     check_permission(conn, msg, *it);
 
     Snapper* snapper = it->getSnapper();
-
     Snapshots& snapshots = snapper->getSnapshots();
 
     Snapshots::iterator snap = snapshots.find(num);
@@ -771,7 +774,6 @@ Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
     check_permission(conn, msg, *it);
 
     Snapper* snapper = it->getSnapper();
-
     Snapshots& snapshots = snapper->getSnapshots();
 
     Snapshots::iterator snap1 = snapshots.find(pre_num);
@@ -814,7 +816,6 @@ Client::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
     check_in_use(*it);
 
     Snapper* snapper = it->getSnapper();
-
     Snapshots& snapshots = snapper->getSnapshots();
 
     for (list<unsigned int>::const_iterator it = nums.begin(); it != nums.end(); ++it)
@@ -850,14 +851,18 @@ Client::mount_snapshot(DBus::Connection& conn, DBus::Message& msg)
     check_permission(conn, msg, *it);
 
     Snapper* snapper = it->getSnapper();
-
     Snapshots& snapshots = snapper->getSnapshots();
 
     Snapshots::iterator snap = snapshots.find(num);
 
     snap->mountFilesystemSnapshot();
 
+    string mount_point = snap->snapshotDir();
+
     DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
+    hoho << mount_point;
 
     conn.send(reply);
 }
@@ -881,7 +886,6 @@ Client::umount_snapshot(DBus::Connection& conn, DBus::Message& msg)
     check_permission(conn, msg, *it);
 
     Snapper* snapper = it->getSnapper();
-
     Snapshots& snapshots = snapper->getSnapshots();
 
     Snapshots::iterator snap = snapshots.find(num);
@@ -889,6 +893,38 @@ Client::umount_snapshot(DBus::Connection& conn, DBus::Message& msg)
     snap->umountFilesystemSnapshot();
 
     DBus::MessageMethodReturn reply(msg);
+
+    conn.send(reply);
+}
+
+
+void
+Client::get_mount_point(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    dbus_uint32_t num;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> num;
+
+    y2deb("GetMountPoint config_name:" << config_name << " num:" << num);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
+    Snapshots& snapshots = snapper->getSnapshots();
+    Snapshots::iterator snap = snapshots.find(num);
+
+    string mount_point = snap->snapshotDir();
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
+    hoho << mount_point;
 
     conn.send(reply);
 }
@@ -1258,6 +1294,8 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    mount_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "UmountSnapshot"))
 	    umount_snapshot(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "GetMountPoint"))
+	    get_mount_point(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CreateComparison"))
 	    create_comparison(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "DeleteComparison"))

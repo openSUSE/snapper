@@ -75,13 +75,17 @@ void
 command_delete_xsnapshots(DBus::Connection& conn, const string& config_name,
 			  list<unsigned int> nums);
 
-void
+string
 command_mount_xsnapshots(DBus::Connection& conn, const string& config_name,
 			 unsigned int num);
 
 void
 command_umount_xsnapshots(DBus::Connection& conn, const string& config_name,
 			  unsigned int num);
+
+string
+command_get_xmount_point(DBus::Connection& conn, const string& config_name,
+			 unsigned int num);
 
 void
 command_create_xcomparison(DBus::Connection& conn, const string& config_name, unsigned int number1,

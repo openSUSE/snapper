@@ -215,7 +215,7 @@ command_delete_xsnapshots(DBus::Connection& conn, const string& config_name,
 }
 
 
-void
+string
 command_mount_xsnapshots(DBus::Connection& conn, const string& config_name,
 			 unsigned int num)
 {
@@ -224,7 +224,14 @@ command_mount_xsnapshots(DBus::Connection& conn, const string& config_name,
     DBus::Hoho hoho(call);
     hoho << config_name << num;
 
-    conn.send_with_reply_and_block(call);
+    DBus::Message reply = conn.send_with_reply_and_block(call);
+
+    string mount_point;
+
+    DBus::Hihi hihi(reply);
+    hihi >> mount_point;
+
+    return mount_point;
 }
 
 
@@ -238,6 +245,26 @@ command_umount_xsnapshots(DBus::Connection& conn, const string& config_name,
     hoho << config_name << num;
 
     conn.send_with_reply_and_block(call);
+}
+
+
+string
+command_get_xmount_point(DBus::Connection& conn, const string& config_name,
+			 unsigned int num)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetMountPoint");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << num;
+
+    DBus::Message reply = conn.send_with_reply_and_block(call);
+
+    string mount_point;
+
+    DBus::Hihi hihi(reply);
+    hihi >> mount_point;
+
+    return mount_point;
 }
 
 
