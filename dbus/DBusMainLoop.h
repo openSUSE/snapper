@@ -91,6 +91,8 @@ namespace DBus
 	int idle_timeout;
 	time_t last_action;
 
+	static time_t monotonic_clock();
+
     };
 
 }

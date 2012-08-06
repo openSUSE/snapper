@@ -90,9 +90,7 @@ namespace DBus
 
 	    if (idle_timeout >= 0)
 	    {
-		struct timespec tmp;
-		clock_gettime(CLOCK_MONOTONIC, &tmp);
-		int time_left = last_action - tmp.tv_sec + idle_timeout;
+		int time_left = last_action - monotonic_clock() + idle_timeout;
 
 		if (timeout > time_left * 1000 || timeout == -1)
 		    timeout = time_left * 1000;
@@ -148,9 +146,7 @@ namespace DBus
 
 	    if (idle_timeout >= 0)
 	    {
-		struct timespec tmp;
-		clock_gettime(CLOCK_MONOTONIC, &tmp);
-		int time_left = last_action - tmp.tv_sec + idle_timeout;
+		int time_left = last_action - monotonic_clock() + idle_timeout;
 
 		if (time_left <= 0)
 		    break;
@@ -169,9 +165,7 @@ namespace DBus
     void
     MainLoop::reset_idle_count()
     {
-	struct timespec tmp;
-	clock_gettime(CLOCK_MONOTONIC, &tmp);
-	last_action = tmp.tv_sec;
+	last_action = monotonic_clock();
     }
 
 
@@ -312,6 +306,15 @@ namespace DBus
 	    }
 	    break;
 	}
+    }
+
+
+    time_t
+    DBus::MainLoop::monotonic_clock()
+    {
+	struct timespec tmp;
+	clock_gettime(CLOCK_MONOTONIC, &tmp);
+	return tmp.tv_sec;
     }
 
 }

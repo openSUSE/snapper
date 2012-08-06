@@ -34,11 +34,8 @@ MetaSnappers meta_snappers;
 
 
 RefCounter::RefCounter()
-    : counter(0)
+    : counter(0), last_used(monotonic_time())
 {
-    struct timespec tmp;
-    clock_gettime(CLOCK_MONOTONIC, &tmp);
-    last_used = tmp.tv_sec;
 }
 
 
@@ -59,11 +56,7 @@ RefCounter::dec_use_count()
     assert(counter > 0);
 
     if (--counter == 0)
-    {
-	struct timespec tmp;
-	clock_gettime(CLOCK_MONOTONIC, &tmp);
-	last_used = tmp.tv_sec;
-    }
+	last_used = monotonic_time();
 
     return counter;
 }
@@ -74,9 +67,7 @@ RefCounter::update_use_time()
 {
     boost::lock_guard<boost::mutex> lock(mutex);
 
-    struct timespec tmp;
-    clock_gettime(CLOCK_MONOTONIC, &tmp);
-    last_used = tmp.tv_sec;
+    last_used = monotonic_time();
 }
 
 
@@ -101,6 +92,15 @@ RefCounter::unused_for() const
     clock_gettime(CLOCK_MONOTONIC, &tmp);
 
     return tmp.tv_sec - last_used;
+}
+
+
+time_t
+RefCounter::monotonic_time()
+{
+    struct timespec tmp;
+    clock_gettime(CLOCK_MONOTONIC, &tmp);
+    return tmp.tv_sec;
 }
 
 

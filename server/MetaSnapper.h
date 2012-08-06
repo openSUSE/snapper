@@ -50,6 +50,8 @@ public:
 
 private:
 
+    static time_t monotonic_time();
+
     mutable boost::mutex mutex;
 
     int counter;
