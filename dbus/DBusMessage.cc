@@ -270,6 +270,56 @@ namespace DBus
 	return hoho;
     }
 
+
+    string
+    Hihi::unescape(const string& in)
+    {
+	string out;
+
+	for (string::const_iterator it = in.begin(); it != in.end(); ++it)
+	{
+	    if (*it == '\\')
+	    {
+		if (++it == in.end())
+		    throw MarshallingException();
+
+		if (*it == '\\')
+		{
+		    out += '\\';
+		}
+		else if (*it == 'x')
+		{
+		    if (++it == in.end())
+			throw MarshallingException();
+
+		    string t1;
+
+		    if (!isxdigit(*it))
+			throw MarshallingException();
+		    t1 += *it;
+
+		    if ((it + 1) != in.end() && isxdigit(*(it + 1)))
+			t1 += *++it;
+
+		    unsigned int t2;
+		    sscanf(t1.c_str(), "%x", &t2);
+		    out.append(1, (unsigned char)(t2));
+		}
+		else
+		{
+		    throw MarshallingException();
+		}
+	    }
+	    else
+	    {
+		out += *it;
+	    }
+	}
+
+	return out;
+    }
+
+
     Hihi&
     operator>>(Hihi& hihi, string& data)
     {
@@ -279,16 +329,44 @@ namespace DBus
 	const char* p = NULL;
 	dbus_message_iter_get_basic(hihi.top(), &p);
 	dbus_message_iter_next(hihi.top());
-	data = p;
+	data = hihi.unescape(p);
 
 	return hihi;
+    }
+
+
+    string
+    Hoho::escape(const string& in)
+    {
+	string out;
+
+	for (string::const_iterator it = in.begin(); it != in.end(); ++it)
+	{
+	    if (*it == '\\')
+	    {
+		out += "\\\\";
+	    }
+	    else if ((unsigned char)(*it) > 127)
+	    {
+		char s[5];
+		snprintf(s, 5, "\\x%x", (unsigned char)(*it));
+		out += string(s);
+	    }
+	    else
+	    {
+		out += *it;
+	    }
+	}
+
+	return out;
     }
 
 
     Hoho&
     operator<<(Hoho& hoho, const string& data)
     {
-	const char* p = data.c_str();
+	string tmp = hoho.escape(data);
+	const char* p = tmp.c_str();
 	dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_STRING, &p);
 
 	return hoho;

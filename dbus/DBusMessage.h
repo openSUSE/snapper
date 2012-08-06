@@ -195,6 +195,8 @@ namespace DBus
 	void open_recurse();
 	void close_recurse();
 
+	static string unescape(const string&);
+
     };
 
 
@@ -214,6 +216,8 @@ namespace DBus
 
 	void open_dict_entry();
 	void close_dict_entry();
+
+	static string escape(const string&);
 
     };
 
