@@ -172,14 +172,14 @@ namespace DBus
 
     public:
 
-	DBusMessageIter* top() { return &iters.back(); }
+	DBusMessageIter* top() { return iters.back(); }
 
 	int get_type() { return dbus_message_iter_get_arg_type(top()); }
 	string get_signature() { return dbus_message_iter_get_signature(top()); }
 
     protected:
 
-	list<DBusMessageIter> iters;
+	list<DBusMessageIter*> iters;
 
     };
 

@@ -70,17 +70,16 @@ namespace DBus
 
     Hihi::Hihi(Message& msg)
     {
-	DBusMessageIter args;
-	if (!dbus_message_iter_init(msg.get_message(), &args))
-	{
+	DBusMessageIter* args = new DBusMessageIter();
+	if (!dbus_message_iter_init(msg.get_message(), args))
 	    throw FatalException();
-	}
 	iters.push_back(args);
     }
 
 
     Hihi::~Hihi()
     {
+	delete iters.back();
 	iters.pop_back();
 	assert(iters.empty());
     }
@@ -89,8 +88,8 @@ namespace DBus
     void
     Hihi::open_recurse()
     {
-	DBusMessageIter iter2;
-	dbus_message_iter_recurse(top(), &iter2);
+	DBusMessageIter* iter2 = new DBusMessageIter();
+	dbus_message_iter_recurse(top(), iter2);
 	iters.push_back(iter2);
     }
 
@@ -98,6 +97,7 @@ namespace DBus
     void
     Hihi::close_recurse()
     {
+	delete iters.back();
 	iters.pop_back();
 	dbus_message_iter_next(top());
     }
@@ -105,14 +105,15 @@ namespace DBus
 
     Hoho::Hoho(Message& msg)
     {
-	DBusMessageIter args;
-	dbus_message_iter_init_append(msg.get_message(), &args);
+	DBusMessageIter* args = new DBusMessageIter();
+	dbus_message_iter_init_append(msg.get_message(), args);
 	iters.push_back(args);
     }
 
 
     Hoho::~Hoho()
     {
+	delete iters.back();
 	iters.pop_back();
 	assert(iters.empty());
     }
@@ -120,8 +121,9 @@ namespace DBus
     void
     Hoho::open_struct()
     {
-	DBusMessageIter iter2;
-	dbus_message_iter_open_container(top(), DBUS_TYPE_STRUCT, NULL, &iter2);
+	DBusMessageIter* iter2 = new DBusMessageIter();
+	if (!dbus_message_iter_open_container(top(), DBUS_TYPE_STRUCT, NULL, iter2))
+	    throw FatalException();
 	iters.push_back(iter2);
     }
 
@@ -129,17 +131,19 @@ namespace DBus
     void
     Hoho::close_struct()
     {
-	DBusMessageIter iter2 = *top();
+	DBusMessageIter* iter2 = top();
 	iters.pop_back();
-	dbus_message_iter_close_container(top(), &iter2);
+	if (!dbus_message_iter_close_container(top(), iter2))
+	    throw FatalException();
     }
 
 
     void
     Hoho::open_array(const char* signature)
     {
-	DBusMessageIter iter2;
-	dbus_message_iter_open_container(top(), DBUS_TYPE_ARRAY, signature, &iter2);
+	DBusMessageIter* iter2 = new DBusMessageIter();
+	if (!dbus_message_iter_open_container(top(), DBUS_TYPE_ARRAY, signature, iter2))
+	    throw FatalException();
 	iters.push_back(iter2);
     }
 
@@ -147,17 +151,19 @@ namespace DBus
     void
     Hoho::close_array()
     {
-	DBusMessageIter iter2 = *top();
+	DBusMessageIter* iter2 = top();
 	iters.pop_back();
-	dbus_message_iter_close_container(top(), &iter2);
+	if (!dbus_message_iter_close_container(top(), iter2))
+	    throw FatalException();
     }
 
 
     void
     Hoho::open_dict_entry()
     {
-	DBusMessageIter iter2;
-	dbus_message_iter_open_container(top(), DBUS_TYPE_DICT_ENTRY, 0, &iter2);
+	DBusMessageIter* iter2 = new DBusMessageIter();
+	if (!dbus_message_iter_open_container(top(), DBUS_TYPE_DICT_ENTRY, 0, iter2))
+	    throw FatalException();
 	iters.push_back(iter2);
     }
 
@@ -165,9 +171,10 @@ namespace DBus
     void
     Hoho::close_dict_entry()
     {
-	DBusMessageIter iter2 = *top();
+	DBusMessageIter* iter2 = top();
 	iters.pop_back();
-	dbus_message_iter_close_container(top(), &iter2);
+	if (!dbus_message_iter_close_container(top(), iter2))
+	    throw FatalException();
     }
 
 
@@ -190,7 +197,8 @@ namespace DBus
     operator<<(Hoho& hoho, bool data)
     {
 	dbus_bool_t tmp = data;
-	dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_BOOLEAN, &tmp);
+	if (!dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_BOOLEAN, &tmp))
+	    throw FatalException();
 
 	return hoho;
     }
@@ -212,7 +220,8 @@ namespace DBus
     Hoho&
     operator<<(Hoho& hoho, dbus_uint16_t data)
     {
-	dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_UINT16, &data);
+	if (!dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_UINT16, &data))
+	    throw FatalException();
 
 	return hoho;
     }
@@ -234,7 +243,8 @@ namespace DBus
     Hoho&
     operator<<(Hoho& hoho, dbus_uint32_t data)
     {
-	dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_UINT32, &data);
+	if (!dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_UINT32, &data))
+	    throw FatalException();
 
 	return hoho;
     }
@@ -256,7 +266,8 @@ namespace DBus
     Hoho&
     operator<<(Hoho& hoho, time_t data)
     {
-	dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_UINT32, &data);
+	if (!dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_UINT32, &data))
+	    throw FatalException();
 
 	return hoho;
     }
@@ -265,7 +276,8 @@ namespace DBus
     Hoho&
     operator<<(Hoho& hoho, const char* data)
     {
-	dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_STRING, &data);
+	if (!dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_STRING, &data))
+	    throw FatalException();
 
 	return hoho;
     }
@@ -367,7 +379,8 @@ namespace DBus
     {
 	string tmp = hoho.escape(data);
 	const char* p = tmp.c_str();
-	dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_STRING, &p);
+	if (!dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_STRING, &p))
+	    throw FatalException();
 
 	return hoho;
     }
