@@ -363,6 +363,8 @@ namespace snapper
 	    throw IOErrorException();
 	}
 
+	chmod((snapper->infosDir() + "/" + decString(num)).c_str(), 0755);
+
 	return num;
     }
 
