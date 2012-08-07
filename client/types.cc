@@ -60,7 +60,7 @@ XSnapshots::findPost(const_iterator pre) const
 namespace DBus
 {
     const char* TypeInfo<XConfigInfo>::signature = "(ssa{ss})";
-    const char* TypeInfo<XSnapshot>::signature = "(uquussa{ss})";
+    const char* TypeInfo<XSnapshot>::signature = "(uqutssa{ss})";
     const char* TypeInfo<XFile>::signature = "(ssb)";
     const char* TypeInfo<XUndo>::signature = "(sb)";
     const char* TypeInfo<XUndoStep>::signature = "(sq)";

@@ -253,11 +253,13 @@ namespace DBus
     Hihi&
     operator>>(Hihi& hihi, time_t& data)
     {
-	if (hihi.get_type() != DBUS_TYPE_UINT32)
+	if (hihi.get_type() != DBUS_TYPE_UINT64)
 	    throw MarshallingException();
 
-	dbus_message_iter_get_basic(hihi.top(), &data);
+	dbus_uint64_t tmp;
+	dbus_message_iter_get_basic(hihi.top(), &tmp);
 	dbus_message_iter_next(hihi.top());
+	data = tmp;
 
 	return hihi;
     }
@@ -266,7 +268,8 @@ namespace DBus
     Hoho&
     operator<<(Hoho& hoho, time_t data)
     {
-	if (!dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_UINT32, &data))
+	dbus_uint64_t tmp = data;
+	if (!dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_UINT64, &tmp))
 	    throw FatalException();
 
 	return hoho;
