@@ -179,7 +179,7 @@ namespace DBus
 
     protected:
 
-	list<DBusMessageIter*> iters;
+	vector<DBusMessageIter*> iters;
 
     };
 

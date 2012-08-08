@@ -70,10 +70,9 @@ namespace DBus
 
     Hihi::Hihi(Message& msg)
     {
-	DBusMessageIter* args = new DBusMessageIter();
-	if (!dbus_message_iter_init(msg.get_message(), args))
+	iters.push_back(new DBusMessageIter());
+	if (!dbus_message_iter_init(msg.get_message(), top()))
 	    throw FatalException();
-	iters.push_back(args);
     }
 
 
@@ -105,9 +104,8 @@ namespace DBus
 
     Hoho::Hoho(Message& msg)
     {
-	DBusMessageIter* args = new DBusMessageIter();
-	dbus_message_iter_init_append(msg.get_message(), args);
-	iters.push_back(args);
+	iters.push_back(new DBusMessageIter());
+	dbus_message_iter_init_append(msg.get_message(), top());
     }
 
 
@@ -135,6 +133,7 @@ namespace DBus
 	iters.pop_back();
 	if (!dbus_message_iter_close_container(top(), iter2))
 	    throw FatalException();
+	delete iter2;
     }
 
 
@@ -155,6 +154,7 @@ namespace DBus
 	iters.pop_back();
 	if (!dbus_message_iter_close_container(top(), iter2))
 	    throw FatalException();
+	delete iter2;
     }
 
 
@@ -175,6 +175,7 @@ namespace DBus
 	iters.pop_back();
 	if (!dbus_message_iter_close_container(top(), iter2))
 	    throw FatalException();
+	delete iter2;
     }
 
 
