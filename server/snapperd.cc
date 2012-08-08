@@ -39,7 +39,8 @@ using namespace std;
 const int idle_time = 60;
 const int snapper_cleanup_time = 30;
 
-bool debug = false;
+bool log_stdout = false;
+bool log_debug = false;
 
 
 class MyMainLoop : public DBus::MainLoop
@@ -185,7 +186,7 @@ log_do(LogLevel level, const string& component, const char* file, const int line
 bool
 log_query(LogLevel level, const string& component)
 {
-    return debug || level != DEBUG;
+    return log_debug || level != DEBUG;
 }
 
 
@@ -208,6 +209,7 @@ help()
 	 << endl;
 
     cout << "    Options:" << endl
+	 << "\t--stdout, -s\t\t\tLog to stdout." << endl
 	 << "\t--debug, -d\t\t\tTurn on debugging." << endl
 	 << endl;
 
@@ -219,6 +221,7 @@ int
 main(int argc, char** argv)
 {
     const struct option options[] = {
+	{ "stdout",		no_argument,		0,	's' },
 	{ "debug",		no_argument,		0,	'd' },
 	{ "help",		no_argument,		0,	'h' },
 	{ 0, 0, 0, 0 }
@@ -227,14 +230,18 @@ main(int argc, char** argv)
     while (true)
     {
 	int option_index = 0;
-	int c = getopt_long(argc, argv, "+dh", options, &option_index);
+	int c = getopt_long(argc, argv, "+sdh", options, &option_index);
 	if (c == -1)
 	    break;
 
 	switch (c)
 	{
+	    case 's':
+		log_stdout = true;
+		break;
+
 	    case 'd':
-		debug = true;
+		log_debug = true;
 		break;
 
 	    case 'h':
@@ -253,8 +260,16 @@ main(int argc, char** argv)
 
     umask(0027);
 
-    initDefaultLogger();
-    setLogQuery(&log_query);
+    if (!log_stdout)
+    {
+	initDefaultLogger();
+	setLogQuery(&log_query);
+    }
+    else
+    {
+	setLogDo(&log_do);
+	setLogQuery(&log_query);
+    }
 
     dbus_threads_init_default();
 
