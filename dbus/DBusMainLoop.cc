@@ -46,7 +46,10 @@ namespace DBus
 
 	dbus_connection_set_wakeup_main_function(conn, wakeup_main, this, NULL);
 
-	add_match("type='signal', interface='" DBUS_INTERFACE_DBUS "', member='NameOwnerChanged'");
+	// Filtering for the sender doesn't work for me. So also check the
+	// sender later when handling the signal.
+	add_match("type='signal', sender='" DBUS_SERVICE_DBUS "', path='" DBUS_PATH_DBUS "', "
+		  "interface='" DBUS_INTERFACE_DBUS "', member='NameOwnerChanged'");
     }
 
 
@@ -290,7 +293,8 @@ namespace DBus
 	    {
 		signal(msg);
 
-		if (msg.is_signal(DBUS_INTERFACE_DBUS, "NameOwnerChanged"))
+		if (msg.get_sender() == DBUS_SERVICE_DBUS &&
+		    msg.is_signal(DBUS_INTERFACE_DBUS, "NameOwnerChanged"))
 		{
 		    string name, old_owner, new_owner;
 
