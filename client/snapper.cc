@@ -71,9 +71,9 @@ read_num(const string& str)
 
 
 pair<unsigned int, unsigned int>
-read_nums(const string& str)
+read_nums(const string& str, const string& delim = "..")
 {
-    string::size_type pos = str.find("..");
+    string::size_type pos = str.find(delim);
     if (pos == string::npos)
     {
 	cerr << _("Invalid snapshots.") << endl;
@@ -81,7 +81,7 @@ read_nums(const string& str)
     }
 
     unsigned int num1 = read_num(str.substr(0, pos));
-    unsigned int num2 = read_num(str.substr(pos + 2));
+    unsigned int num2 = read_num(str.substr(pos + delim.size()));
 
     if (num1 == num2)
     {
@@ -641,14 +641,38 @@ command_delete(DBus::Connection& conn)
 	exit(EXIT_FAILURE);
     }
 
+    XSnapshots snapshots = command_list_xsnapshots(conn, config_name);
+
+    list<unsigned int> nums;
+
     while (getopts.hasArgs())
     {
-	unsigned int num = read_num(getopts.popArg());
+	string arg = getopts.popArg();
 
-	list<unsigned int> nums;
-	nums.push_back(num);
-	command_delete_xsnapshots(conn, config_name, nums);
+	if (arg.find_first_of("-") == string::npos)
+	{
+	    unsigned int i = read_num(arg);
+	    nums.push_back(i);
+	}
+	else
+	{
+	    pair<unsigned int, unsigned int> r(read_nums(arg, "-"));
+
+	    if (r.first > r.second)
+		swap(r.first, r.second);
+
+	    for (unsigned int i = r.first; i <= r.second; ++i)
+	    {
+		if (snapshots.find(i) != snapshots.end() &&
+		    find(nums.begin(), nums.end(), i) == nums.end())
+		{
+		    nums.push_back(i);
+		}
+	    }
+	}
     }
+
+    command_delete_xsnapshots(conn, config_name, nums);
 }
 
 

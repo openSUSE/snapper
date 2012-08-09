@@ -77,8 +77,9 @@ struct XSnapshots
     typedef list<XSnapshot>::const_iterator const_iterator;
 
     const_iterator begin() const { return entries.begin(); }
-
     const_iterator end() const { return entries.end(); }
+
+    const_iterator find(unsigned int num) const;
 
     const_iterator findPre(const_iterator post) const;
     const_iterator findPost(const_iterator pre) const;

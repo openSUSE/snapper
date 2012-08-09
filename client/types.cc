@@ -26,6 +26,19 @@
 
 
 XSnapshots::const_iterator
+XSnapshots::find(unsigned int num) const
+{
+    for (const_iterator it = begin(); it != end(); ++it)
+    {
+	if (it->getNum() == num)
+	    return it;
+    }
+
+    return end();
+}
+
+
+XSnapshots::const_iterator
 XSnapshots::findPre(const_iterator post) const
 {
     if (post == entries.end() || post->isCurrent() || post->getType() != POST)
