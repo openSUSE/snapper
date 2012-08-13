@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Novell, Inc.
+ * Copyright (c) [2011-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -43,9 +43,151 @@ namespace snapper
     using namespace std;
 
 
+    SDir::SDir(const string& base_path)
+	: base_path(base_path), path()
+    {
+	dirfd = ::open(base_path.c_str(), O_RDONLY | O_NOATIME);
+	if (dirfd < 0)
+	{
+	    cerr << "open failed path:" << base_path << " error:" << strerror(errno) << endl;
+	    throw IOErrorException();
+	}
+    }
+
+
+    SDir::SDir(const SDir& dir, const string& name)
+	: base_path(dir.base_path), path(dir.path + "/" + name)
+    {
+	dirfd = ::openat(dir.dirfd, name.c_str(), O_RDONLY | O_NOFOLLOW | O_NOATIME);
+	if (dirfd < 0)
+	{
+	    cerr << "open failed path:" << dir.fullname(name) << " (" << strerror(errno) << ")" << endl;
+	    throw IOErrorException();
+	}
+    }
+
+
+    SDir::~SDir()
+    {
+	::close(dirfd);
+    }
+
+
+    string
+    SDir::fullname(bool with_base_path) const
+    {
+	return with_base_path ? base_path + path : path;
+    }
+
+
+    string
+    SDir::fullname(const string& name, bool with_base_path) const
+    {
+	return fullname(with_base_path) + "/" + name;
+    }
+
+
+    vector<string>
+    SDir::entries() const
+    {
+	int fd = dup(dirfd);
+	if (fd == -1)
+	{
+	    cerr << "dup failed" << " error:" << strerror(errno) << endl;
+	    throw IOErrorException();
+	}
+
+	DIR* dp = fdopendir(fd);
+	if (dp == NULL)
+	{
+	    cerr << "fdopendir failed path:" << base_path + path << " error:" << strerror(errno) << endl;
+	    ::close(fd);
+	    throw IOErrorException();
+	}
+
+	vector<string> ret;
+
+	size_t len = offsetof(struct dirent, d_name) + fpathconf(dirfd, _PC_NAME_MAX) + 1;
+	struct dirent* ep = (struct dirent*) malloc(len);
+	struct dirent* epp;
+
+	while (readdir_r(dp, ep, &epp) == 0 && epp != NULL)
+	{
+	    if (strcmp(ep->d_name, ".") != 0 && strcmp(ep->d_name, "..") != 0)
+		ret.push_back(ep->d_name);
+	}
+
+	free(ep);
+
+	closedir(dp);
+
+	sort(ret.begin(), ret.end());
+
+	return ret;
+    }
+
+
+    int
+    SDir::stat(const string& name, struct stat* buf, int flags) const
+    {
+	return ::fstatat(dirfd, name.c_str(), buf, flags);
+    }
+
+
+    int
+    SDir::open(const string& name, int flags) const
+    {
+	return ::openat(dirfd, name.c_str(), flags);
+    }
+
+
+    int
+    SDir::readlink(const string& name, string& buf) const
+    {
+	char tmp[1024];
+	int ret = ::readlinkat(dirfd, name.c_str(), tmp, sizeof(tmp));
+	if (ret >= 0)
+	    buf = string(tmp, ret);
+	return ret;
+    }
+
+
+    SFile::SFile(const SDir& dir, const string& name)
+	: dir(dir), name(name)
+    {
+    }
+
+
+    string
+    SFile::fullname(bool with_base_path) const
+    {
+	return dir.fullname(name, with_base_path);
+    }
+
+
+    int
+    SFile::stat(struct stat* buf, int flags) const
+    {
+	return dir.stat(name, buf, flags);
+    }
+
+
+    int
+    SFile::open(int flags) const
+    {
+	return dir.open(name, flags);
+    }
+
+
+    int
+    SFile::readlink(string& buf) const
+    {
+	return dir.readlink(name, buf);
+    }
+
+
     bool
-    cmpFilesContentReg(const string& fullname1, struct stat stat1, const string& fullname2,
-		       struct stat stat2)
+    cmpFilesContentReg(const SFile& file1, struct stat stat1, const SFile& file2, struct stat stat2)
     {
 	if (stat1.st_mtim.tv_sec == stat2.st_mtim.tv_sec && stat1.st_mtim.tv_nsec == stat2.st_mtim.tv_nsec)
 	    return true;
@@ -59,17 +201,17 @@ namespace snapper
 	if ((stat1.st_dev == stat2.st_dev) && (stat1.st_ino == stat2.st_ino))
 	    return true;
 
-	int fd1 = open(fullname1.c_str(), O_RDONLY | O_NOATIME);
+	int fd1 = file1.open(O_RDONLY | O_NOFOLLOW | O_NOATIME);
 	if (fd1 < 0)
 	{
-	    y2err("open failed path:" << fullname1 << " errno:" << errno);
+	    y2err("open failed path:" << file1.fullname() << " errno:" << errno);
 	    return false;
 	}
 
-	int fd2 = open(fullname2.c_str(), O_RDONLY | O_NOATIME);
+	int fd2 = file2.open(O_RDONLY | O_NOFOLLOW | O_NOATIME);
 	if (fd2 < 0)
 	{
-	    y2err("open failed path:" << fullname2 << " errno:" << errno);
+	    y2err("open failed path:" << file2.fullname() << " errno:" << errno);
 	    close(fd1);
 	    return false;
 	}
@@ -94,7 +236,7 @@ namespace snapper
 	    int r1 = read(fd1, block1, t);
 	    if (r1 != t)
 	    {
-		y2err("read failed path:" << fullname1 << " errno:" << errno);
+		y2err("read failed path:" << file1.fullname() << " errno:" << errno);
 		equal = false;
 		break;
 	    }
@@ -102,7 +244,7 @@ namespace snapper
 	    int r2 = read(fd2, block2, t);
 	    if (r2 != t)
 	    {
-		y2err("read failed path:" << fullname2 << " errno:" << errno);
+		y2err("read failed path:" << file2.fullname() << " errno:" << errno);
 		equal = false;
 		break;
 	    }
@@ -124,25 +266,24 @@ namespace snapper
 
 
     bool
-    cmpFilesContentLnk(const string& fullname1, struct stat stat1, const string& fullname2,
-		       struct stat stat2)
+    cmpFilesContentLnk(const SFile& file1, struct stat stat1, const SFile& file2, struct stat stat2)
     {
 	if (stat1.st_mtim.tv_sec == stat2.st_mtim.tv_sec && stat1.st_mtim.tv_nsec == stat2.st_mtim.tv_nsec)
 	    return true;
 
 	string tmp1;
-	bool r1 = readlink(fullname1, tmp1);
+	bool r1 = file1.readlink(tmp1);
 	if (!r1)
 	{
-	    y2err("readlink failed path:" << fullname1 << " errno:" << errno);
+	    y2err("readlink failed path:" << file1.fullname() << " errno:" << errno);
 	    return false;
 	}
 
 	string tmp2;
-	bool r2 = readlink(fullname2, tmp2);
+	bool r2 = file2.readlink(tmp2);
 	if (!r2)
 	{
-	    y2err("readlink failed path:" << fullname2 << " errno:" << errno);
+	    y2err("readlink failed path:" << file2.fullname() << " errno:" << errno);
 	    return false;
 	}
 
@@ -151,8 +292,7 @@ namespace snapper
 
 
     bool
-    cmpFilesContent(const string& fullname1, struct stat stat1, const string& fullname2,
-		    struct stat stat2)
+    cmpFilesContent(const SFile& file1, struct stat stat1, const SFile& file2, struct stat stat2)
     {
 	if ((stat1.st_mode & S_IFMT) != (stat2.st_mode & S_IFMT))
 	    throw LogicErrorException();
@@ -160,10 +300,10 @@ namespace snapper
 	switch (stat1.st_mode & S_IFMT)
 	{
 	    case S_IFREG:
-		return cmpFilesContentReg(fullname1, stat1, fullname2, stat2);
+		return cmpFilesContentReg(file1, stat1, file2, stat2);
 
 	    case S_IFLNK:
-		return cmpFilesContentLnk(fullname1, stat1, fullname2, stat2);
+		return cmpFilesContentLnk(file1, stat1, file2, stat2);
 
 	    default:
 		return true;
@@ -172,7 +312,7 @@ namespace snapper
 
 
     unsigned int
-    cmpFiles(const string& fullname1, struct stat stat1, const string& fullname2, struct stat stat2)
+    cmpFiles(const SFile& file1, struct stat stat1, const SFile& file2, struct stat stat2)
     {
 	unsigned int status = 0;
 
@@ -182,7 +322,7 @@ namespace snapper
 	}
 	else
 	{
-	    if (!cmpFilesContent(fullname1, stat1, fullname2, stat2))
+	    if (!cmpFilesContent(file1, stat1, file2, stat2))
 		status |= CONTENT;
 	}
 
@@ -207,13 +347,19 @@ namespace snapper
 
 
     unsigned int
-    cmpFiles(const string& fullname1, const string& fullname2)
+    cmpFiles(const string& base_path1, const string& base_path2, const string& name)
     {
+	SDir dir1(base_path1);
+	SDir dir2(base_path2);
+
+	SFile file1(dir1, name); // TODO not secure
+	SFile file2(dir2, name); // TODO not secure
+
 	struct stat stat1;
-	int r1 = lstat(fullname1.c_str(), &stat1);
+	int r1 = file1.stat(&stat1, AT_SYMLINK_NOFOLLOW);
 
 	struct stat stat2;
-	int r2 = lstat(fullname2.c_str(), &stat2);
+	int r2 = file2.stat(&stat2, AT_SYMLINK_NOFOLLOW);
 
 	if (r1 != 0 && r2 == 0)
 	    return CREATED;
@@ -223,17 +369,17 @@ namespace snapper
 
 	if (r1 != 0)
 	{
-	    y2err("lstats failed path:" << fullname1);
+	    y2err("stat failed path:" << file1.fullname());
 	    throw IOErrorException();
 	}
 
 	if (r2 != 0)
 	{
-	    y2err("lstats failed path:" << fullname2);
+	    y2err("lstat failed path:" << file2.fullname());
 	    throw IOErrorException();
 	}
 
-	return cmpFiles(fullname1, stat1, fullname2, stat2);
+	return cmpFiles(file1, stat1, file2, stat2);
     }
 
 
@@ -247,88 +393,25 @@ namespace snapper
     }
 
 
-    struct NameStat
+    void
+    listSubdirs(const SDir& dir, unsigned int status, cmpdirs_cb_t cb)
     {
-	NameStat(const string& name, const struct stat& stat)
-	    : name(name), stat(stat) {}
+	vector<string> entries = dir.entries();
 
-	string name;
-	struct stat stat;
-
-	friend bool operator<(const NameStat& lhs, const NameStat& rhs)
-	    { return lhs.name < rhs.name; }
-    };
-
-
-    vector<NameStat>
-    readDirectory(const string& base_path, const string& path)
-    {
-	vector<NameStat> ret;
-
-	int fd = open((base_path + path).c_str(), O_RDONLY | O_NOATIME);
-	if (fd < 0)
+	for (vector<string>::const_iterator it = entries.begin(); it != entries.end(); ++it)
 	{
-	    y2err("open failed path:" << base_path + path << " error:" << errno);
-	    return ret;
-	}
-
-	DIR* dp = fdopendir(fd);
-	if (dp == NULL)
-	{
-	    y2err("fdopendir failed path:" << base_path + path << " error:" << errno);
-	    close(fd);
-	    return ret;
-	}
-
-	struct dirent* ep;
-	while ((ep = readdir(dp)))
-	{
-	    if (strcmp(ep->d_name, ".") == 0 || strcmp(ep->d_name, "..") == 0)
-		continue;
-
-	    string fullname = path + "/" + ep->d_name;
-	    if (filter(fullname))
-		continue;
+	    cb(dir.fullname(*it, false), status);
 
 	    struct stat stat;
-	    int r = fstatat(fd, ep->d_name, &stat, AT_SYMLINK_NOFOLLOW);
-	    if (r != 0)
-	    {
-		y2err("fstatat failed path:" << ep->d_name << " errno:" << errno);
-		continue;
-	    }
-
-	    ret.push_back(NameStat(ep->d_name, stat));
-	}
-
-	closedir(dp);
-
-	sort(ret.begin(), ret.end());
-
-	return ret;
-    }
-
-
-    void
-    listSubdirs(const string& base_path, const string& path, unsigned int status, cmpdirs_cb_t cb)
-    {
-	vector<NameStat> tmp = readDirectory(base_path, path);
-
-	for (vector<NameStat>::const_iterator it1 = tmp.begin(); it1 != tmp.end(); ++it1)
-	{
-	    cb(path + "/" + it1->name, status);
-
-	    if (S_ISDIR(it1->stat.st_mode))
-		listSubdirs(base_path, path + "/" + it1->name, status, cb);
+	    dir.stat(*it, &stat, AT_SYMLINK_NOFOLLOW);
+	    if (S_ISDIR(stat.st_mode))
+		listSubdirs(SDir(dir, *it), status, cb);
 	}
     }
 
 
     struct CmpData
     {
-	string base_path1;
-	string base_path2;
-
 	dev_t dev1;
 	dev_t dev2;
 
@@ -337,104 +420,113 @@ namespace snapper
 
 
     void
-    cmpDirsWorker(const CmpData& cmp_data, const string& path);
+    cmpDirsWorker(const CmpData& cmp_data, const SDir& dir1, const SDir& dir2);
 
 
     void
-    lonesome(const string& base_path, const string& path, const string& name, const struct stat& stat,
-	     unsigned int status, cmpdirs_cb_t cb)
+    lonesome(const SDir& dir, const string& name, const struct stat& stat, unsigned int status,
+	     cmpdirs_cb_t cb)
     {
-	cb(path + "/" + name, status);
+	cb(dir.fullname(name, false), status);
 
 	if (S_ISDIR(stat.st_mode))
-	    listSubdirs(base_path, path + "/" + name, status, cb);
+	    listSubdirs(SDir(dir, name), status, cb);
     }
 
 
     void
-    twosome(const CmpData& cmp_data, const string& path, const string& name, const struct stat& stat1,
-	    const struct stat& stat2)
+    twosome(const CmpData& cmp_data, const SDir& dir1, const SDir& dir2, const string& name,
+	    const struct stat& stat1, const struct stat& stat2)
     {
-	string fullname1 = cmp_data.base_path1 + path + "/" + name;
-	string fullname2 = cmp_data.base_path2 + path + "/" + name;
-
 	unsigned int status = 0;
 	if (stat1.st_dev == cmp_data.dev1 && stat2.st_dev == cmp_data.dev2)
-	    status = cmpFiles(fullname1, stat1, fullname2, stat2);
+	    status = cmpFiles(SFile(dir1, name), stat1, SFile(dir2, name), stat2);
 
 	if (status != 0)
 	{
-	    cmp_data.cb(path + "/" + name, status);
+	    cmp_data.cb(dir1.fullname(name, false), status);
 	}
 
 	if (!(status & TYPE))
 	{
 	    if (S_ISDIR(stat1.st_mode))
 		if (stat1.st_dev == cmp_data.dev1 && stat2.st_dev == cmp_data.dev2)
-		    cmpDirsWorker(cmp_data, path + "/" + name);
+		    cmpDirsWorker(cmp_data, SDir(dir1, name), SDir(dir2, name));
 	}
 	else
 	{
 	    if (S_ISDIR(stat1.st_mode))
 		if (stat1.st_dev == cmp_data.dev1)
-		    listSubdirs(cmp_data.base_path1, path + "/" + name, DELETED, cmp_data.cb);
+		    listSubdirs(SDir(dir1, name), DELETED, cmp_data.cb);
 
 	    if (S_ISDIR(stat2.st_mode))
 		if (stat2.st_dev == cmp_data.dev2)
-		    listSubdirs(cmp_data.base_path2, path + "/" + name, CREATED, cmp_data.cb);
+		    listSubdirs(SDir(dir2, name), CREATED, cmp_data.cb);
 	}
     }
 
 
     void
-    cmpDirsWorker(const CmpData& cmp_data, const string& path)
+    cmpDirsWorker(const CmpData& cmp_data, const SDir& dir1, const SDir& dir2)
     {
-	const vector<NameStat> pre = readDirectory(cmp_data.base_path1, path);
-	vector<NameStat>::const_iterator first1 = pre.begin();
-	vector<NameStat>::const_iterator last1 = pre.end();
+	const vector<string> entries1 = dir1.entries();
+	vector<string>::const_iterator first1 = entries1.begin();
+	vector<string>::const_iterator last1 = entries1.end();
 
-	const vector<NameStat> post = readDirectory(cmp_data.base_path2, path);
-	vector<NameStat>::const_iterator first2 = post.begin();
-	vector<NameStat>::const_iterator last2 = post.end();
+	const vector<string> entries2 = dir2.entries();
+	vector<string>::const_iterator first2 = entries2.begin();
+	vector<string>::const_iterator last2 = entries2.end();
 
 	while (first1 != last1 || first2 != last2)
 	{
 	    boost::this_thread::interruption_point();
 
+	    while (first1 != last1 && filter(*first1))
+		++first1;
+
+	    while (first2 != last2 && filter(*first2))
+		++first2;
+
+	    struct stat stat1;
+	    int r1 = dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW); // TODO error check
+
+	    struct stat stat2;
+	    int r2 = dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW); // TODO error check
+
 	    if (first1 == last1)
 	    {
-		if (first2->stat.st_dev == cmp_data.dev2)
-		    lonesome(cmp_data.base_path2, path, first2->name, first2->stat, CREATED, cmp_data.cb);
+		if (stat1.st_dev == cmp_data.dev2)
+		    lonesome(dir2, *first2, stat2, CREATED, cmp_data.cb);
 
 		++first2;
 	    }
 	    else if (first2 == last2)
 	    {
-		if (first1->stat.st_dev == cmp_data.dev1)
-		    lonesome(cmp_data.base_path1, path, first1->name, first1->stat, DELETED, cmp_data.cb);
+		if (stat1.st_dev == cmp_data.dev1)
+		    lonesome(dir1, *first1, stat1, DELETED, cmp_data.cb);
 
 		++first1;
 	    }
-	    else if (first2->name < first1->name)
+	    else if (*first2 < *first1)
 	    {
-		if (first2->stat.st_dev == cmp_data.dev2)
-		    lonesome(cmp_data.base_path2, path, first2->name, first2->stat, CREATED, cmp_data.cb);
+		if (stat2.st_dev == cmp_data.dev2)
+		    lonesome(dir2, *first2, stat2, CREATED, cmp_data.cb);
 
 		++first2;
 	    }
-	    else if (first1->name < first2->name)
+	    else if (*first1 < *first2)
 	    {
-		if (first1->stat.st_dev == cmp_data.dev1)
-		    lonesome(cmp_data.base_path1, path, first1->name, first1->stat, DELETED, cmp_data.cb);
+		if (stat1.st_dev == cmp_data.dev1)
+		    lonesome(dir1, *first1, stat1, DELETED, cmp_data.cb);
 
 		++first1;
 	    }
 	    else
 	    {
-		if (first1->name != first2->name)
+		if (*first1 != *first2)
 		    throw LogicErrorException();
 
-		twosome(cmp_data, path, first1->name, first1->stat, first2->stat);
+		twosome(cmp_data, dir1, dir2, *first1, stat1, stat2);
 		++first1;
 		++first2;
 	    }
@@ -443,42 +535,35 @@ namespace snapper
 
 
     void
-    cmpDirs(const string& path1, const string& path2, cmpdirs_cb_t cb)
+    cmpDirs(const SDir& dir1, const SDir& dir2, cmpdirs_cb_t cb)
     {
-	y2mil("path1:" << path1 << " path2:" << path2);
-
-	CmpData cmp_data;
-
-	cmp_data.base_path1 = path1;
-	cmp_data.base_path2 = path2;
-
-	cmp_data.cb = cb;
+	y2mil("path1:" << dir1.fullname() << " path2:" << dir2.fullname());
 
 	struct stat stat1;
-	int r1 = lstat(path1.c_str(), &stat1);
-
-	struct stat stat2;
-	int r2 = lstat(path2.c_str(), &stat2);
-
+	int r1 = dir1.stat(".", &stat1, AT_SYMLINK_NOFOLLOW);
 	if (r1 != 0)
 	{
-	    y2err("lstats failed path:" << path1);
+	    y2err("stat failed path:" << dir1.fullname() << " errno:" << errno);
 	    throw IOErrorException();
 	}
 
+	struct stat stat2;
+	int r2 = dir2.stat(".", &stat2, AT_SYMLINK_NOFOLLOW);
 	if (r2 != 0)
 	{
-	    y2err("lstats failed path:" << path2);
+	    y2err("stat failed path:" << dir2.fullname() << " errno:" << errno);
 	    throw IOErrorException();
 	}
 
+	CmpData cmp_data;
+	cmp_data.cb = cb;
 	cmp_data.dev1 = stat1.st_dev;
 	cmp_data.dev2 = stat2.st_dev;
 
 	y2mil("dev1:" << cmp_data.dev1 << " dev2:" << cmp_data.dev2);
 
 	StopWatch stopwatch;
-	cmpDirsWorker(cmp_data, "");
+	cmpDirsWorker(cmp_data, dir1, dir2);
 	y2mil("stopwatch " << stopwatch << " for comparing directories");
     }
 

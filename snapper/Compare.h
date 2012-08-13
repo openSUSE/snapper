@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Novell, Inc.
+ * Copyright (c) [2011-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -25,22 +25,75 @@
 
 
 #include <string>
+#include <vector>
 #include <functional>
+#include <boost/noncopyable.hpp>
 
 
 namespace snapper
 {
     using std::string;
+    using std::vector;
+
+
+    class SDir : boost::noncopyable
+    {
+    public:
+
+	explicit SDir(const string& base_path);
+	explicit SDir(const SDir& dir, const string& name);
+	~SDir();
+
+	string fullname(bool with_base_path = true) const;
+	string fullname(const string& name, bool with_base_path = true) const;
+
+	vector<string> entries() const;
+
+	int stat(const string& name, struct stat* buf, int flags) const;
+	int open(const string& name, int flags) const;
+	int readlink(const string& name, string& buf) const;
+
+    private:
+
+	const string base_path;
+	const string path;
+
+	int dirfd;
+
+    };
+
+
+    class SFile : boost::noncopyable
+    {
+    public:
+
+	explicit SFile(const SDir& dir, const string& name);
+
+	string fullname(bool with_base_path = true) const;
+
+	int stat(struct stat* buf, int flags) const;
+	int open(int flags) const;
+	int readlink(string& buf) const;
+
+    private:
+
+	const SDir& dir;
+	const string name;
+
+    };
 
 
     typedef std::function<void(const string& name, unsigned int status)> cmpdirs_cb_t;
 
 
+    /* TODO */
     unsigned int
-    cmpFiles(const string& name1, const string& name2);
+    cmpFiles(const string& base_path, const string& base_path2, const string& name);
 
+    /* Compares the two directories. All file-operations use the openat
+       et.al. functions. */
     void
-    cmpDirs(const string& path1, const string& path2, cmpdirs_cb_t cb);
+    cmpDirs(const SDir& dir1, const SDir& dir2, cmpdirs_cb_t cb);
 
 }
 

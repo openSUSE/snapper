@@ -70,7 +70,7 @@ main(int argc, char** argv)
 
     file = mkstemp(tmp_name);
 
-    cmpDirs(path1, path2, write_line);
+    cmpDirs(SDir(path1), SDir(path2), write_line);
 
     fclose(file);
 

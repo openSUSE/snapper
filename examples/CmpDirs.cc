@@ -25,7 +25,7 @@ main(int argc, char** argv)
 	exit(EXIT_FAILURE);
     }
 
-    cmpDirs(argv[1], argv[2], log);
+    cmpDirs(SDir(argv[1]), SDir(argv[2]), log);
 
     exit(EXIT_SUCCESS);
 }

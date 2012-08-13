@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Novell, Inc.
+ * Copyright (c) [2011-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -129,7 +129,10 @@ namespace snapper
 	    entries.push_back(File(comparison, name, status));
 	};
 #endif
-	cmpDirs(comparison->getSnapshot1()->snapshotDir(), comparison->getSnapshot2()->snapshotDir(), cb);
+
+	SDir dir1(comparison->getSnapshot1()->snapshotDir());
+	SDir dir2(comparison->getSnapshot2()->snapshotDir());
+	cmpDirs(dir1, dir2, cb);
 
 	sort(entries.begin(), entries.end());
 
@@ -340,8 +343,8 @@ namespace snapper
     File::getPreToSystemStatus()
     {
 	if (pre_to_system_status == (unsigned int)(-1))
-	    pre_to_system_status = cmpFiles(getAbsolutePath(LOC_PRE),
-					    getAbsolutePath(LOC_SYSTEM));
+	    pre_to_system_status = cmpFiles(comparison->getSnapshot1()->snapshotDir(),
+					    getSnapper()->subvolumeDir(), name);
 	return pre_to_system_status;
     }
 
@@ -350,8 +353,8 @@ namespace snapper
     File::getPostToSystemStatus()
     {
 	if (post_to_system_status == (unsigned int)(-1))
-	    post_to_system_status = cmpFiles(getAbsolutePath(LOC_POST),
-					     getAbsolutePath(LOC_SYSTEM));
+	    post_to_system_status = cmpFiles(comparison->getSnapshot2()->snapshotDir(),
+					     getSnapper()->subvolumeDir(), name);
 	return post_to_system_status;
     }
 
