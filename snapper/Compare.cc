@@ -187,7 +187,8 @@ namespace snapper
 
 
     bool
-    cmpFilesContentReg(const SFile& file1, struct stat stat1, const SFile& file2, struct stat stat2)
+    cmpFilesContentReg(const SFile& file1, const struct stat& stat1, const SFile& file2,
+		       const struct stat& stat2)
     {
 	if (stat1.st_mtim.tv_sec == stat2.st_mtim.tv_sec && stat1.st_mtim.tv_nsec == stat2.st_mtim.tv_nsec)
 	    return true;
@@ -266,7 +267,8 @@ namespace snapper
 
 
     bool
-    cmpFilesContentLnk(const SFile& file1, struct stat stat1, const SFile& file2, struct stat stat2)
+    cmpFilesContentLnk(const SFile& file1, const struct stat& stat1, const SFile& file2,
+		       const struct stat& stat2)
     {
 	if (stat1.st_mtim.tv_sec == stat2.st_mtim.tv_sec && stat1.st_mtim.tv_nsec == stat2.st_mtim.tv_nsec)
 	    return true;
@@ -292,7 +294,8 @@ namespace snapper
 
 
     bool
-    cmpFilesContent(const SFile& file1, struct stat stat1, const SFile& file2, struct stat stat2)
+    cmpFilesContent(const SFile& file1, const struct stat& stat1, const SFile& file2,
+		    const struct stat& stat2)
     {
 	if ((stat1.st_mode & S_IFMT) != (stat2.st_mode & S_IFMT))
 	    throw LogicErrorException();
@@ -312,7 +315,8 @@ namespace snapper
 
 
     unsigned int
-    cmpFiles(const SFile& file1, struct stat stat1, const SFile& file2, struct stat stat2)
+    cmpFiles(const SFile& file1, const struct stat& stat1, const SFile& file2,
+	     const struct stat& stat2)
     {
 	unsigned int status = 0;
 
@@ -396,6 +400,8 @@ namespace snapper
     void
     listSubdirs(const SDir& dir, unsigned int status, cmpdirs_cb_t cb)
     {
+	boost::this_thread::interruption_point();
+
 	vector<string> entries = dir.entries();
 
 	for (vector<string>::const_iterator it = entries.begin(); it != entries.end(); ++it)
@@ -469,6 +475,8 @@ namespace snapper
     void
     cmpDirsWorker(const CmpData& cmp_data, const SDir& dir1, const SDir& dir2)
     {
+	boost::this_thread::interruption_point();
+
 	const vector<string> entries1 = dir1.entries();
 	vector<string>::const_iterator first1 = entries1.begin();
 	vector<string>::const_iterator last1 = entries1.end();
@@ -479,29 +487,29 @@ namespace snapper
 
 	while (first1 != last1 || first2 != last2)
 	{
-	    boost::this_thread::interruption_point();
-
-	    while (first1 != last1 && filter(*first1))
-		++first1;
-
-	    while (first2 != last2 && filter(*first2))
-		++first2;
-
-	    struct stat stat1;
-	    int r1 = dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW); // TODO error check
-
-	    struct stat stat2;
-	    int r2 = dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW); // TODO error check
-
-	    if (first1 == last1)
+	    if (first1 != last1 && filter(*first1))
 	    {
-		if (stat1.st_dev == cmp_data.dev2)
+		++first1;
+	    }
+	    else if (first2 != last2 && filter(*first2))
+	    {
+		++first2;
+	    }
+	    else if (first1 == last1)
+	    {
+		struct stat stat2;
+		dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW); // TODO error check
+
+		if (stat2.st_dev == cmp_data.dev2)
 		    lonesome(dir2, *first2, stat2, CREATED, cmp_data.cb);
 
 		++first2;
 	    }
 	    else if (first2 == last2)
 	    {
+		struct stat stat1;
+		dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW); // TODO error check
+
 		if (stat1.st_dev == cmp_data.dev1)
 		    lonesome(dir1, *first1, stat1, DELETED, cmp_data.cb);
 
@@ -509,6 +517,9 @@ namespace snapper
 	    }
 	    else if (*first2 < *first1)
 	    {
+		struct stat stat2;
+		dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW); // TODO error check
+
 		if (stat2.st_dev == cmp_data.dev2)
 		    lonesome(dir2, *first2, stat2, CREATED, cmp_data.cb);
 
@@ -516,6 +527,9 @@ namespace snapper
 	    }
 	    else if (*first1 < *first2)
 	    {
+		struct stat stat1;
+		dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW); // TODO error check
+
 		if (stat1.st_dev == cmp_data.dev1)
 		    lonesome(dir1, *first1, stat1, DELETED, cmp_data.cb);
 
@@ -525,6 +539,12 @@ namespace snapper
 	    {
 		if (*first1 != *first2)
 		    throw LogicErrorException();
+
+		struct stat stat1;
+		dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW); // TODO error check
+
+		struct stat stat2;
+		dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW); // TODO error check
 
 		twosome(cmp_data, dir1, dir2, *first1, stat1, stat2);
 		++first1;
