@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <iostream>
 
-#include <snapper/Factory.h>
 #include <snapper/Snapper.h>
 #include <snapper/Comparison.h>
 #include <snapper/File.h>

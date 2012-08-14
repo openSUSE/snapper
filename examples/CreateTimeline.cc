@@ -3,7 +3,6 @@
 #include <vector>
 #include <iostream>
 
-#include <snapper/Factory.h>
 #include <snapper/Snapper.h>
 
 using namespace snapper;
@@ -13,7 +12,7 @@ using namespace std;
 void
 deleteAll()
 {
-    Snapper* sh = createSnapper("testsuite");
+    Snapper* sh = new Snapper("testsuite");
 
     Snapshots snapshots = sh->getSnapshots();
 
@@ -25,7 +24,7 @@ deleteAll()
     for (vector<Snapshots::iterator>::iterator it = tmp.begin(); it != tmp.end(); ++it)
 	sh->deleteSnapshot(*it);
 
-    deleteSnapper(sh);
+    delete sh;
 }
 
 
@@ -34,7 +33,7 @@ main()
 {
     deleteAll();
 
-    Snapper* sh = createSnapper("testsuite");
+    Snapper* sh = new Snapper("testsuite");
 
     time_t t = time(NULL) - 100 * 24*60*60;
     while (t < time(NULL))
@@ -46,7 +45,7 @@ main()
 	t += 60*60;
     }
 
-    deleteSnapper(sh);
+    delete sh;
 
     exit(EXIT_SUCCESS);
 }
