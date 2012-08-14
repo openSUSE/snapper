@@ -99,7 +99,8 @@ SnapperAgent::~SnapperAgent()
 {
     if (sh)
     {
-	deleteSnapper(sh);
+	delete sh;
+	sh = 0;
     }
 }
 
@@ -344,11 +345,13 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
 	if (sh)
 	{
 	    y2milestone ("deleting existing snapper object");
-	    deleteSnapper(sh);
+	    delete sh;
+	    sh = 0;
 	}
 	string config_name = getValue (argmap, YCPString ("config"), "root");
-	try {
-	    sh = createSnapper (config_name);
+	try
+	{
+	    sh = new Snapper(config_name);
 	}
 	catch (const ConfigNotFoundException& e)
 	{
