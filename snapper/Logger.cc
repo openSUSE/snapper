@@ -37,7 +37,10 @@ namespace snapper
     using namespace std;
 
 
-    string filename = "/var/log/snapper.log";
+    // Use a pointer to avoid a global destructor. Otherwise the Snapper
+    // destructor in Factory.cc can be called after when logging does not work
+    // anymore. TODO: nicer solution.
+    string* filename = new string("/var/log/snapper.log");
 
     LogDo log_do = NULL;
     LogQuery log_query = NULL;
@@ -66,7 +69,7 @@ namespace snapper
 	string prefix = sformat("%s %s libsnapper(%d) %s(%s):%d", datetime(time(0), false, true).c_str(),
 				ln[level], getpid(), file, func, line);
 
-	FILE* f = fopen(filename.c_str(), "a");
+	FILE* f = fopen(filename->c_str(), "a");
 	if (f)
 	{
 	    string tmp = text;
@@ -130,14 +133,16 @@ namespace snapper
     void
     initDefaultLogger()
     {
-	filename = "/var/log/snapper.log";
+	delete filename;
+	filename = new string("/var/log/snapper.log");
 
 	if (geteuid())
 	{
 	    struct passwd* pw = getpwuid(geteuid());
 	    if (pw)
 	    {
-		filename = string(pw->pw_dir) + "/.snapper.log";
+		delete filename;
+		filename = new string(string(pw->pw_dir) + "/.snapper.log");
 	    }
 	}
 

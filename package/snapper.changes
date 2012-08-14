@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Aug 14 12:03:50 CEST 2012 - aschnell@suse.de
+
+- fixed logging during program termination
+
+-------------------------------------------------------------------
 Wed Jul 25 10:44:38 CEST 2012 - aschnell@suse.de
 
 - take mount options from original filesystem when mounting
