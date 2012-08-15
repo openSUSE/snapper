@@ -100,7 +100,7 @@ namespace snapper
 	DIR* dp = fdopendir(fd);
 	if (dp == NULL)
 	{
-	    cerr << "fdopendir failed path:" << base_path + path << " error:" << strerror(errno) << endl;
+	    cerr << "fdopendir failed path:" << fullname() << " error:" << strerror(errno) << endl;
 	    ::close(fd);
 	    throw IOErrorException();
 	}
