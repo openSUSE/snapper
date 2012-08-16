@@ -93,7 +93,7 @@ namespace snapper
     };
 
 
-    class Snapper : boost::noncopyable
+    class Snapper : private boost::noncopyable
     {
     public:
 

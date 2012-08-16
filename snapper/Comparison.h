@@ -44,8 +44,8 @@ namespace snapper
 	Snapshots::const_iterator getSnapshot1() const { return snapshot1; }
 	Snapshots::const_iterator getSnapshot2() const { return snapshot2; }
 
-	Files& getFiles();
-	const Files& getFiles() const;
+	Files& getFiles() { return files; }
+	const Files& getFiles() const { return files; }
 
 	UndoStatistic getUndoStatistic() const;
 
@@ -55,12 +55,22 @@ namespace snapper
 
     private:
 
+	void initialize();
+	void create();
+	bool load();
+	bool save();
+	void filter();
+
 	const Snapper* snapper;
 
 	Snapshots::const_iterator snapshot1;
 	Snapshots::const_iterator snapshot2;
 
+	FilePaths file_paths;
+
 	Files files;
+
+	struct AppendHelper;
 
     };
 

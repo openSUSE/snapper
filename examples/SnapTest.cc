@@ -121,9 +121,6 @@ main(int argc, char** argv)
 	    cout << f->getAbsolutePath(LOC_SYSTEM) << " "
 	         << f->getAbsolutePath(LOC_PRE) << " "
 	         << f->getAbsolutePath(LOC_POST) << endl;
-	    vector<string> const& sv = f->getDiff("-u");
-	    for( vector<string>::const_iterator s=sv.begin(); s!=sv.end(); ++s )
-		cout << *s << endl;
 	    }
 	}
 
@@ -132,6 +129,7 @@ main(int argc, char** argv)
 	Files& flist = cmp.getFiles();
 	Files::iterator fi=flist.begin();
 	if( fi!=flist.end() )
+	    {
 	    cout << boolalpha << fi->getUndo() << endl;
 	    fi->setUndo(true);
 	    cout << boolalpha << fi->getUndo() << endl;
@@ -139,6 +137,7 @@ main(int argc, char** argv)
 	    cout << boolalpha << fi->getUndo() << endl;
 	    fi->setUndo(true);
 	    cout << boolalpha << fi->getUndo() << endl;
+	    }
 
 	// testing doUndo
 	if( fi!=flist.end() )

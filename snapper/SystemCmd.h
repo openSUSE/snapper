@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2011] Novell, Inc.
+ * Copyright (c) [2004-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -38,7 +38,7 @@ namespace snapper
     using std::vector;
 
 
-class SystemCmd : boost::noncopyable
+    class SystemCmd : private boost::noncopyable
     {
     public:
 

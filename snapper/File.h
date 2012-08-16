@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Novell, Inc.
+ * Copyright (c) [2011-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -34,10 +34,6 @@ namespace snapper
 {
     using std::string;
     using std::vector;
-
-
-    class Snapper;
-    class Comparison;
 
 
     enum StatusFlags
@@ -86,13 +82,20 @@ namespace snapper
     };
 
 
+    struct FilePaths
+    {
+	string system_path;
+	string pre_path;
+	string post_path;
+    };
+
+
     class File
     {
     public:
 
-	File(const Comparison* comparison, const string& name,
-	     unsigned int pre_to_post_status)
-	    : comparison(comparison), name(name), pre_to_post_status(pre_to_post_status),
+	File(const FilePaths* file_paths, const string& name, unsigned int pre_to_post_status)
+	    : file_paths(file_paths), name(name), pre_to_post_status(pre_to_post_status),
 	      pre_to_system_status(-1), post_to_system_status(-1), undo(false)
 	{}
 
@@ -106,19 +109,15 @@ namespace snapper
 
 	string getAbsolutePath(Location loc) const;
 
-	vector<string> getDiff(const string& options) const;
-
 	bool getUndo() const { return undo; }
 	void setUndo(bool value) { undo = value; }
-	bool doUndo();
+	bool doUndo() const;
 
 	Action getAction() const;
 
 	friend std::ostream& operator<<(std::ostream& s, const File& file);
 
     private:
-
-	const Snapper* getSnapper() const;
 
 	bool createParentDirectories(const string& path) const;
 
@@ -131,7 +130,7 @@ namespace snapper
 
 	bool modifyAllTypes() const;
 
-	const Comparison* comparison;
+	const FilePaths* file_paths;
 
 	string name;
 
@@ -144,22 +143,14 @@ namespace snapper
     };
 
 
-    inline int operator<(const File& a, const File& b)
-    {
-	return a.getName() < b.getName();
-    }
-
-
     class Files
     {
     public:
 
 	friend class Comparison;
 
-	Files(const Comparison* comparison)
-	    : comparison(comparison) {}
-
-	const Snapper* getSnapper() const;
+	Files(const FilePaths* file_paths)
+	    : file_paths(file_paths) {}
 
 	typedef vector<File>::iterator iterator;
 	typedef vector<File>::const_iterator const_iterator;
@@ -180,22 +171,23 @@ namespace snapper
 	iterator findAbsolutePath(const string& name);
 	const_iterator findAbsolutePath(const string& name) const;
 
-    private:
-
-	void initialize();
-
-	void create();
-	bool load();
-	bool save();
-	void filter();
-
 	UndoStatistic getUndoStatistic() const;
 
 	vector<UndoStep> getUndoSteps() const;
 
-	bool doUndoStep(const UndoStep& undo_step);
+	bool doUndoStep(const UndoStep& undo_step) const;
 
-	const Comparison* comparison;
+    protected:
+
+	void clear() { entries.clear(); }
+	void push_back(File file) { entries.push_back(file); }
+
+	void filter(const vector<string>& ignore_patterns);
+	void sort();
+
+	const FilePaths* file_paths;
+
+    private:
 
 	vector<File> entries;
 

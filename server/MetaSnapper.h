@@ -35,7 +35,7 @@ using namespace std;
 using namespace snapper;
 
 
-class RefCounter : boost::noncopyable
+class RefCounter : private boost::noncopyable
 {
 public:
 

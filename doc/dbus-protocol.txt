@@ -39,17 +39,10 @@ method GetMountPoint config-name number
 method CreateComparison config-name number1 number2
 method DeleteComparison config-name number1 number2
 
-The following commands require a successful CreateComparison in advance.
+The following command require a successful CreateComparison in advance.
 
-method GetFiles config-name number1 number2 -> list(filename status undo)
+method GetFiles config-name number1 number2 -> list(filename status)
 
-method GetStatus config-name number1 number2 filename which -> string
-method GetDiff config-name number1 number2 filename which -> list(string)
-
-method SetUndo config-name number1 number2 list(filename undo)
-method SetUndoAll config-name number1 number2 bool
-method GetUndoSteps config-name number1 number2
-method DoUndoStep config-name number1 number2 undo_step
 
 
 Filenames do not include the subvolume.

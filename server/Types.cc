@@ -27,9 +27,7 @@ namespace DBus
 {
     const char* TypeInfo<ConfigInfo>::signature = "(ssa{ss})";
     const char* TypeInfo<Snapshot>::signature = "(uqutssa{ss})";
-    const char* TypeInfo<File>::signature = "(ssb)";
-    const char* TypeInfo<Undo>::signature = "(sb)";
-    const char* TypeInfo<UndoStep>::signature = "(sq)";
+    const char* TypeInfo<File>::signature = "(su)";
 
 
     Hoho&
@@ -86,7 +84,7 @@ namespace DBus
     operator<<(Hoho& hoho, const File& data)
     {
 	hoho.open_struct();
-	hoho << data.getName() << statusToString(data.getPreToPostStatus()) << data.getUndo();
+	hoho << data.getName() << data.getPreToPostStatus();
 	hoho.close_struct();
 	return hoho;
     }
@@ -102,47 +100,4 @@ namespace DBus
 	return hoho;
     }
 
-
-    Hihi&
-    operator>>(Hihi& hihi, Undo& data)
-    {
-	hihi.open_recurse();
-	hihi >> data.filename >> data.undo;
-	hihi.close_recurse();
-	return hihi;
-    }
-
-
-    Hoho&
-    operator<<(Hoho& hoho, const Undo& data)
-    {
-	hoho.open_struct();
-	hoho << data.filename << data.undo;
-	hoho.close_struct();
-	return hoho;
-    }
-
-
-    Hihi&
-    operator>>(Hihi& hihi, UndoStep& data)
-    {
-	hihi.open_recurse();
-	dbus_uint16_t tmp;
-	hihi >> data.name >> tmp;
-	data.action = static_cast<Action>(tmp);
-	hihi.close_recurse();
-	return hihi;
-    }
-
-
-    Hoho&
-    operator<<(Hoho& hoho, const UndoStep& data)
-    {
-	hoho.open_struct();
-	hoho << data.name << static_cast<dbus_uint16_t>(data.action);
-	hoho.close_struct();
-	return hoho;
-    }
-
 }
-

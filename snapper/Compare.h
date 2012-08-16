@@ -36,7 +36,7 @@ namespace snapper
     using std::vector;
 
 
-    class SDir : boost::noncopyable
+    class SDir : private boost::noncopyable
     {
     public:
 
@@ -63,7 +63,7 @@ namespace snapper
     };
 
 
-    class SFile : boost::noncopyable
+    class SFile : private boost::noncopyable
     {
     public:
 

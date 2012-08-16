@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2011] Novell, Inc.
+ * Copyright (c) [2004-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -34,7 +34,7 @@ namespace snapper
     using std::string;
 
 
-class Regex : boost::noncopyable
+class Regex : private boost::noncopyable
 {
 public:
 

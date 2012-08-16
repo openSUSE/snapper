@@ -35,7 +35,7 @@
 namespace DBus
 {
 
-    class Connection : boost::noncopyable
+    class Connection : private boost::noncopyable
     {
     public:
 

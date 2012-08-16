@@ -31,6 +31,8 @@
 #include <snapper/SnapperTmpl.h>
 #include <snapper/Enum.h>
 #include <snapper/AsciiFile.h>
+#include <snapper/SystemCmd.h>
+#include <snapper/SnapperDefines.h>
 
 #include "utils/text.h"
 #include "utils/Table.h"
@@ -150,24 +152,48 @@ show_userdata(const map<string, string>& userdata)
 }
 
 
-string
-add_subvolume(const string& subvolume, const string& name)
+struct MyFiles : public Files
 {
-    return subvolume == "/" ? name : subvolume + name;
-}
+    friend class MyComparison;
+
+    MyFiles(const FilePaths* file_paths)
+	: Files(file_paths) {}
+
+};
 
 
-string
-remove_subvolume(const string& subvolume, const string& name)
+struct MyComparison
 {
-    if (!boost::starts_with(name, subvolume))
-	throw;
+    MyComparison(DBus::Connection& conn, pair<unsigned int, unsigned int> nums, bool mount)
+	: files(&file_paths)
+    {
+	command_create_xcomparison(conn, config_name, nums.first, nums.second);
 
-    if (subvolume == "/")
-	return name;
-    else
-	return string(name, subvolume.size());
-}
+	file_paths.system_path = command_get_xmount_point(conn, config_name, 0);
+
+	if (mount)
+	{
+	    if (nums.first != 0)
+		file_paths.pre_path = command_mount_xsnapshots(conn, config_name, nums.first);
+	    else
+		file_paths.pre_path = file_paths.system_path;
+
+	    if (nums.second != 0)
+		file_paths.post_path = command_mount_xsnapshots(conn, config_name, nums.second);
+	    else
+		file_paths.post_path = file_paths.system_path;
+	}
+
+	list<XFile> tmp = command_get_xfiles(conn, config_name, nums.first, nums.second);
+	for (list<XFile>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
+	    files.push_back(File(&file_paths, it->name, it->status));
+    }
+
+    FilePaths file_paths;
+
+    MyFiles files;
+
+};
 
 
 void
@@ -763,9 +789,8 @@ command_status(DBus::Connection& conn)
 
     pair<unsigned int, unsigned int> nums(read_nums(getopts.popArg()));
 
-    command_create_xcomparison(conn, config_name, nums.first, nums.second);
-
-    list<XFile> files = command_get_xfiles(conn, config_name, nums.first, nums.second);
+    MyComparison comparison(conn, nums, false);
+    MyFiles& files = comparison.files;
 
     FILE* file = stdout;
 
@@ -779,10 +804,9 @@ command_status(DBus::Connection& conn)
 	}
     }
 
-    XConfigInfo ci = command_get_xconfig(conn, config_name);
-
-    for (list<XFile>::const_iterator it = files.begin(); it != files.end(); ++it)
-	fprintf(file, "%s %s\n", it->status.c_str(), add_subvolume(ci.subvolume, it->name).c_str());
+    for (Files::const_iterator it = files.begin(); it != files.end(); ++it)
+	fprintf(file, "%s %s\n", statusToString(it->getPreToPostStatus()).c_str(),
+		it->getAbsolutePath(LOC_SYSTEM).c_str());
 
     if (file != stdout)
 	fclose(file);
@@ -807,30 +831,35 @@ command_diff(DBus::Connection& conn)
 
     pair<unsigned int, unsigned int> nums(read_nums(getopts.popArg()));
 
-    command_create_xcomparison(conn, config_name, nums.first, nums.second);
+    MyComparison comparison(conn, nums, true);
+    MyFiles& files = comparison.files;
 
     if (getopts.numArgs() == 0)
     {
-	list<XFile> files = command_get_xfiles(conn, config_name, nums.first, nums.second);
-
-	for (list<XFile>::const_iterator it1 = files.begin(); it1 != files.end(); ++it1)
+	for (Files::const_iterator it1 = files.begin(); it1 != files.end(); ++it1)
 	{
-	    vector<string> lines = command_get_xdiff(conn, config_name, nums.first, nums.second,
-						     it1->name, "--unified --new-file");
+	    SystemCmd cmd(DIFFBIN " --unified --new-file " + quote(it1->getAbsolutePath(LOC_PRE)) +
+			  " " + quote(it1->getAbsolutePath(LOC_POST)), false);
+
+	    const vector<string> lines = cmd.stdout();
 	    for (vector<string>::const_iterator it2 = lines.begin(); it2 != lines.end(); ++it2)
 		cout << it2->c_str() << endl;
 	}
     }
     else
     {
-	XConfigInfo ci = command_get_xconfig(conn, config_name);
-
 	while (getopts.numArgs() > 0)
 	{
-	    string name = remove_subvolume(ci.subvolume, getopts.popArg());
+	    string name = getopts.popArg();
 
-	    vector<string> lines = command_get_xdiff(conn, config_name, nums.first, nums.second,
-						     name, "--unified --new-file");
+	    Files::const_iterator it1 = files.findAbsolutePath(name);
+            if (it1 == files.end())
+                continue;
+
+	    SystemCmd cmd(DIFFBIN " --unified --new-file " + quote(it1->getAbsolutePath(LOC_PRE)) +
+			  " " + quote(it1->getAbsolutePath(LOC_POST)), false);
+
+	    const vector<string> lines = cmd.stdout();
 	    for (vector<string>::const_iterator it2 = lines.begin(); it2 != lines.end(); ++it2)
 		cout << it2->c_str() << endl;
 	}
@@ -887,16 +916,11 @@ command_undo(DBus::Connection& conn)
 	exit(EXIT_FAILURE);
     }
 
-    command_create_xcomparison(conn, config_name, nums.first, nums.second);
-
-    list<XFile> files = command_get_xfiles(conn, config_name, nums.first, nums.second);
+    MyComparison comparison(conn, nums, true);
+    MyFiles& files = comparison.files;
 
     if (file)
     {
-	XConfigInfo ci = command_get_xconfig(conn, config_name);
-
-	list<XUndo> undos;
-
 	AsciiFileReader asciifile(file);
 
 	string line;
@@ -917,94 +941,92 @@ command_undo(DBus::Connection& conn)
 		name.erase(0, pos + 1);
 	    }
 
-	    XUndo undo;
-	    undo.undo = true;
-	    undo.name = remove_subvolume(ci.subvolume, name);
-	    undos.push_back(undo);
-	}
+	    Files::iterator it = files.findAbsolutePath(name);
+	    if (it == files.end())
+            {
+                cerr << sformat(_("File '%s' not found."), name.c_str()) << endl;
+                exit(EXIT_FAILURE);
+            }
 
-	command_set_xundo(conn, config_name, nums.first, nums.second, undos);
+	    it->setUndo(true);
+	}
     }
     else
     {
 	if (getopts.numArgs() == 0)
 	{
-	    command_set_xundo_all(conn, config_name, nums.first, nums.second, true);
+	    for (Files::iterator it = files.begin(); it != files.end(); ++it)
+		it->setUndo(true);
 	}
 	else
 	{
-	    XConfigInfo ci = command_get_xconfig(conn, config_name);
-
-	    list<XUndo> undos;
-
 	    while (getopts.numArgs() > 0)
 	    {
-		XUndo undo;
-		undo.undo = true;
-		undo.name = remove_subvolume(ci.subvolume, getopts.popArg());
-		undos.push_back(undo);
+		Files::iterator it = files.findAbsolutePath(getopts.popArg());
+		if (it == files.end())
+                    continue;
+
+		it->setUndo(true);
 	    }
-
-	    command_set_xundo(conn, config_name, nums.first, nums.second, undos);
 	}
     }
 
-    vector<XUndoStep> undo_steps = command_get_xundo_steps(conn, config_name, nums.first, nums.second);
+    UndoStatistic undo_statistic = files.getUndoStatistic();
 
-    int numCreate = 0;
-    int numModify = 0;
-    int numDelete = 0;
-
-    for (vector<XUndoStep>::const_iterator it = undo_steps.begin(); it != undo_steps.end(); ++it)
-    {
-	switch (it->action)
-	{
-	    case CREATE: numCreate++; break;
-	    case MODIFY: numModify++; break;
-	    case DELETE: numDelete++; break;
-	}
-    }
-
-    if (numCreate == 0 && numModify == 0 && numDelete == 0)
+    if (undo_statistic.empty())
     {
 	cout << _("nothing to do") << endl;
 	return;
     }
 
-    cout << sformat(_("create:%d modify:%d delete:%d"), numCreate, numModify, numDelete) << endl;
+    cout << sformat(_("create:%d modify:%d delete:%d"), undo_statistic.numCreate,
+		    undo_statistic.numModify, undo_statistic.numDelete) << endl;
 
-    XConfigInfo ci = command_get_xconfig(conn, config_name);
+    vector<UndoStep> undo_steps = files.getUndoSteps();
 
-    for (vector<XUndoStep>::const_iterator it = undo_steps.begin(); it != undo_steps.end(); ++it)
+    for (vector<UndoStep>::const_iterator it1 = undo_steps.begin(); it1 != undo_steps.end(); ++it1)
     {
+	vector<File>::const_iterator it2 = files.find(it1->name);
+	if (it2 == files.end())
+	{
+	    cerr << "internal error" << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	if (it1->action != it2->getAction())
+	{
+	    cerr << "internal error" << endl;
+	    exit(EXIT_FAILURE);
+	}
+
 	if (verbose)
 	{
-	    switch (it->action)
+	    switch (it1->action)
 	    {
 		case CREATE:
-		    cout << sformat(_("creating %s"), add_subvolume(ci.subvolume, it->name).c_str()) << endl;
+		    cout << sformat(_("creating %s"), it2->getAbsolutePath(LOC_SYSTEM).c_str()) << endl;
 		    break;
 		case MODIFY:
-		    cout << sformat(_("modifying %s"), add_subvolume(ci.subvolume, it->name).c_str()) << endl;
+		    cout << sformat(_("modifying %s"), it2->getAbsolutePath(LOC_SYSTEM).c_str()) << endl;
 		    break;
 		case DELETE:
-		    cout << sformat(_("deleting %s"), add_subvolume(ci.subvolume, it->name).c_str()) << endl;
+		    cout << sformat(_("deleting %s"), it2->getAbsolutePath(LOC_SYSTEM).c_str()) << endl;
 		    break;
 	    }
 	}
 
-	if (!command_do_xundo_step(conn, config_name, nums.first, nums.second, *it))
+	if (!it2->doUndo())
 	{
-	    switch (it->action)
+	    switch (it1->action)
 	    {
 		case CREATE:
-		    cout << sformat(_("failed to create %s"), add_subvolume(ci.subvolume, it->name).c_str()) << endl;
+		    cerr << sformat(_("failed to create %s"), it2->getAbsolutePath(LOC_SYSTEM).c_str()) << endl;
 		    break;
 		case MODIFY:
-		    cout << sformat(_("failed to modify %s"), add_subvolume(ci.subvolume, it->name).c_str()) << endl;
+		    cerr << sformat(_("failed to modify %s"), it2->getAbsolutePath(LOC_SYSTEM).c_str()) << endl;
 		    break;
 		case DELETE:
-		    cout << sformat(_("failed to delete %s"), add_subvolume(ci.subvolume, it->name).c_str()) << endl;
+		    cerr << sformat(_("failed to delete %s"), it2->getAbsolutePath(LOC_SYSTEM).c_str()) << endl;
 		    break;
 	    }
 	}

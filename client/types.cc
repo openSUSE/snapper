@@ -74,9 +74,7 @@ namespace DBus
 {
     const char* TypeInfo<XConfigInfo>::signature = "(ssa{ss})";
     const char* TypeInfo<XSnapshot>::signature = "(uqutssa{ss})";
-    const char* TypeInfo<XFile>::signature = "(ssb)";
-    const char* TypeInfo<XUndo>::signature = "(sb)";
-    const char* TypeInfo<XUndoStep>::signature = "(sq)";
+    const char* TypeInfo<XFile>::signature = "(su)";
 
 
     Hihi&
@@ -114,7 +112,7 @@ namespace DBus
     operator>>(Hihi& hihi, XFile& data)
     {
 	hihi.open_recurse();
-	hihi >> data.name >> data.status >> data.undo;
+	hihi >> data.name >> data.status;
 	hihi.close_recurse();
 	return hihi;
     }
@@ -127,35 +125,4 @@ namespace DBus
 	return hoho;
     }
 
-
-    Hoho&
-    operator<<(Hoho& hoho, const XUndo& data)
-    {
-	hoho.open_struct();
-	hoho << data.name << data.undo;
-	hoho.close_struct();
-	return hoho;
-    }
-
-
-    Hihi&
-    operator>>(Hihi& hihi, XUndoStep& data)
-    {
-	hihi.open_recurse();
-	dbus_uint16_t tmp;
-	hihi >> data.name >> tmp;
-	data.action = static_cast<Action>(tmp);
-	hihi.close_recurse();
-	return hihi;
-    }
-
-
-    Hoho&
-    operator<<(Hoho& hoho, const XUndoStep& data)
-    {
-	hoho.open_struct();
-	hoho << data.name << static_cast<dbus_uint16_t>(data.action);
-	hoho.close_struct();
-	return hoho;
-    }
 }

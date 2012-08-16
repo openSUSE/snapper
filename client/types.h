@@ -90,23 +90,8 @@ struct XSnapshots
 
 struct XFile
 {
-    string status;
     string name;
-    bool undo;
-};
-
-
-struct XUndo
-{
-    string name;
-    bool undo;
-};
-
-
-struct XUndoStep
-{
-    string name;
-    Action action;
+    unsigned int status;
 };
 
 
@@ -116,8 +101,6 @@ namespace DBus
     template <> struct TypeInfo<XSnapshot> { static const char* signature; };
     template <> struct TypeInfo<XConfigInfo> { static const char* signature; };
     template <> struct TypeInfo<XFile> { static const char* signature; };
-    template <> struct TypeInfo<XUndo> { static const char* signature; };
-    template <> struct TypeInfo<XUndoStep> { static const char* signature; };
 
     Hihi& operator>>(Hihi& hihi, XConfigInfo& data);
 
@@ -127,11 +110,6 @@ namespace DBus
     Hihi& operator>>(Hihi& hihi, XSnapshot& data);
 
     Hihi& operator>>(Hihi& hihi, XFile& data);
-
-    Hoho& operator<<(Hoho& hoho, const XUndo& data);
-
-    Hihi& operator>>(Hihi& hihi, XUndoStep& data);
-    Hoho& operator<<(Hoho& hoho, const XUndoStep& data);
 
 };
 

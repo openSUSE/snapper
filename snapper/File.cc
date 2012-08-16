@@ -31,14 +31,12 @@
 
 #include "snapper/File.h"
 #include "snapper/Snapper.h"
-#include "snapper/Comparison.h"
 #include "snapper/AppUtil.h"
 #include "snapper/Enum.h"
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/Compare.h"
-#include "snapper/AsciiFile.h"
 #include "snapper/Exception.h"
 
 
@@ -84,162 +82,6 @@ namespace snapper
     }
 
 
-    const Snapper*
-    File::getSnapper() const
-    {
-	return comparison->getSnapper();
-    }
-
-
-    const Snapper*
-    Files::getSnapper() const
-    {
-	return comparison->getSnapper();
-    }
-
-
-#if 1
-    struct AppendHelper
-    {
-	AppendHelper(const Comparison* comparison, vector<File>& entries)
-	    : comparison(comparison), entries(entries) {}
-	void operator()(const string& name, unsigned int status)
-	    { entries.push_back(File(comparison, name, status)); }
-	const Comparison* comparison;
-	vector<File>& entries;
-    };
-#endif
-
-
-    void
-    Files::create()
-    {
-	y2mil("num1:" << comparison->getSnapshot1()->getNum() << " num2:" <<
-	      comparison->getSnapshot2()->getNum());
-
-	if (!comparison->getSnapshot1()->isCurrent())
-	    comparison->getSnapshot1()->mountFilesystemSnapshot();
-	if (!comparison->getSnapshot2()->isCurrent())
-	    comparison->getSnapshot2()->mountFilesystemSnapshot();
-
-#if 1
-	cmpdirs_cb_t cb = AppendHelper(comparison, entries);
-#else
-	cmpdirs_cb_t cb = [&comparison, &entries](const string& name, unsigned int status) {
-	    entries.push_back(File(comparison, name, status));
-	};
-#endif
-
-	SDir dir1(comparison->getSnapshot1()->snapshotDir());
-	SDir dir2(comparison->getSnapshot2()->snapshotDir());
-	cmpDirs(dir1, dir2, cb);
-
-	sort(entries.begin(), entries.end());
-
-	y2mil("found " << entries.size() << " lines");
-    }
-
-
-    bool
-    Files::load()
-    {
-	y2mil("num1:" << comparison->getSnapshot1()->getNum() << " num2:" <<
-	      comparison->getSnapshot2()->getNum());
-
-	if (comparison->getSnapshot1()->isCurrent() || comparison->getSnapshot2()->isCurrent())
-	    throw IllegalSnapshotException();
-
-	unsigned int num1 = comparison->getSnapshot1()->getNum();
-	unsigned int num2 = comparison->getSnapshot2()->getNum();
-
-	bool invert = num1 > num2;
-
-	if (invert)
-	    swap(num1, num2);
-
-	string input = getSnapper()->infosDir() + "/" + decString(num2) + "/filelist-" +
-	    decString(num1) + ".txt";
-
-	try
-	{
-	    AsciiFileReader asciifile(input);
-
-	    string line;
-	    while (asciifile.getline(line))
-	    {
-		string::size_type pos = line.find(" ");
-		if (pos == string::npos)
-		    continue;
-
-		unsigned int status = stringToStatus(string(line, 0, pos));
-		string name = string(line, pos + 1);
-
-		if (invert)
-		    status = invertStatus(status);
-
-		File file(comparison, name, status);
-		entries.push_back(file);
-	    }
-	}
-	catch (const FileNotFoundException& e)
-	{
-	    return false;
-	}
-
-	sort(entries.begin(), entries.end());
-
-	y2mil("read " << entries.size() << " lines");
-
-	return true;
-    }
-
-
-    bool
-    Files::save()
-    {
-	y2mil("num1:" << comparison->getSnapshot1()->getNum() << " num2:" << comparison->getSnapshot2()->getNum());
-
-	if (comparison->getSnapshot1()->isCurrent() || comparison->getSnapshot2()->isCurrent())
-	    throw IllegalSnapshotException();
-
-	unsigned int num1 = comparison->getSnapshot1()->getNum();
-	unsigned int num2 = comparison->getSnapshot2()->getNum();
-
-	bool invert = num1 > num2;
-
-	if (invert)
-	    swap(num1, num2);
-
-	string output = getSnapper()->infosDir() + "/" + decString(num2) + "/filelist-" +
-	    decString(num1) + ".txt";
-
-	string tmp_name = output + ".tmp-XXXXXX";
-
-	FILE* file = mkstemp(tmp_name);
-	if (!file)
-	{
-	    y2err("mkstemp failed errno:" << errno << " (" << strerror(errno) << ")");
-	    throw IOErrorException();
-	}
-
-	for (const_iterator it = entries.begin(); it != entries.end(); ++it)
-	{
-	    unsigned int status = it->getPreToPostStatus();
-
-	    if (invert)
-		status = invertStatus(status);
-
-	    fprintf(file, "%s %s\n", statusToString(status).c_str(), it->getName().c_str());
-	}
-
-	fclose(file);
-
-	rename(tmp_name.c_str(), output.c_str());
-
-	return true;
-    }
-
-
     struct FilterHelper
     {
 	FilterHelper(const vector<string>& patterns)
@@ -256,37 +98,28 @@ namespace snapper
 
 
     void
-    Files::filter()
+    Files::filter(const vector<string>& ignore_patterns)
     {
-	const vector<string>& ignore_patterns = getSnapper()->getIgnorePatterns();
 	entries.erase(remove_if(entries.begin(), entries.end(), FilterHelper(ignore_patterns)),
 		      entries.end());
     }
 
 
-    void
-    Files::initialize()
+    int
+    operator<(const File& a, const File& b)
     {
-	entries.clear();
-
-	if (comparison->getSnapshot1()->isCurrent() || comparison->getSnapshot2()->isCurrent())
-	{
-	    create();
-	}
-	else
-	{
-	    if (!load())
-	    {
-		create();
-		save();
-	    }
-	}
-
-	filter();
+	return a.getName() < b.getName();
     }
 
 
-    inline bool
+    void
+    Files::sort()
+    {
+	std::sort(entries.begin(), entries.end());
+    }
+
+
+    bool
     file_name_less(const File& file, const string& name)
     {
 	return file.getName() < name;
@@ -312,7 +145,7 @@ namespace snapper
     Files::iterator
     Files::findAbsolutePath(const string& filename)
     {
-	string subvolume = getSnapper()->subvolumeDir();
+	string subvolume = file_paths->system_path;
 
 	if (!boost::starts_with(filename, subvolume))
 	    return end();
@@ -327,7 +160,7 @@ namespace snapper
     Files::const_iterator
     Files::findAbsolutePath(const string& filename) const
     {
-	string subvolume = getSnapper()->subvolumeDir();
+	string subvolume = file_paths->system_path;
 
 	if (!boost::starts_with(filename, subvolume))
 	    return end();
@@ -343,8 +176,7 @@ namespace snapper
     File::getPreToSystemStatus()
     {
 	if (pre_to_system_status == (unsigned int)(-1))
-	    pre_to_system_status = cmpFiles(comparison->getSnapshot1()->snapshotDir(),
-					    getSnapper()->subvolumeDir(), name);
+	    pre_to_system_status = cmpFiles(file_paths->pre_path, file_paths->system_path, name);
 	return pre_to_system_status;
     }
 
@@ -353,8 +185,7 @@ namespace snapper
     File::getPostToSystemStatus()
     {
 	if (post_to_system_status == (unsigned int)(-1))
-	    post_to_system_status = cmpFiles(comparison->getSnapshot2()->snapshotDir(),
-					     getSnapper()->subvolumeDir(), name);
+	    post_to_system_status = cmpFiles(file_paths->post_path, file_paths->system_path, name);
 	return post_to_system_status;
     }
 
@@ -386,28 +217,19 @@ namespace snapper
 	switch (loc)
 	{
 	    case LOC_PRE:
-		prefix = comparison->getSnapshot1()->snapshotDir();
+		prefix = file_paths->pre_path;
 		break;
 
 	    case LOC_POST:
-		prefix = comparison->getSnapshot2()->snapshotDir();
+		prefix = file_paths->post_path;
 		break;
 
 	    case LOC_SYSTEM:
-		prefix = getSnapper()->subvolumeDir();
+		prefix = file_paths->system_path;
 		break;
 	}
 
 	return prefix == "/" ? name : prefix + name;
-    }
-
-
-    vector<string>
-    File::getDiff(const string& options) const
-    {
-	SystemCmd cmd(DIFFBIN " " + options + " " + quote(getAbsolutePath(LOC_PRE)) + " " +
-		      quote(getAbsolutePath(LOC_POST)), false);
-	return cmd.stdout();
     }
 
 
@@ -674,11 +496,8 @@ namespace snapper
 
 
     bool
-    File::doUndo()
+    File::doUndo() const
     {
-	if (comparison->getSnapshot1()->isCurrent())
-	    throw IllegalSnapshotException();
-
 	bool error = false;
 
 	if (getPreToPostStatus() & CREATED || getPreToPostStatus() & TYPE)
@@ -717,9 +536,6 @@ namespace snapper
     UndoStatistic
     Files::getUndoStatistic() const
     {
-	if (comparison->getSnapshot1()->isCurrent())
-	    throw IllegalSnapshotException();
-
 	UndoStatistic rs;
 
 	for (vector<File>::const_iterator it = entries.begin(); it != entries.end(); ++it)
@@ -742,9 +558,6 @@ namespace snapper
     vector<UndoStep>
     Files::getUndoSteps() const
     {
-	if (comparison->getSnapshot1()->isCurrent())
-	    throw IllegalSnapshotException();
-
 	vector<UndoStep> undo_steps;
 
 	for (vector<File>::const_reverse_iterator it = entries.rbegin(); it != entries.rend(); ++it)
@@ -770,12 +583,9 @@ namespace snapper
 
 
     bool
-    Files::doUndoStep(const UndoStep& undo_step)
+    Files::doUndoStep(const UndoStep& undo_step) const
     {
-	if (comparison->getSnapshot1()->isCurrent())
-	    throw IllegalSnapshotException();
-
-	vector<File>::iterator it = find(undo_step.name);
+	vector<File>::const_iterator it = find(undo_step.name);
 	if (it == end())
 	    return false;
 

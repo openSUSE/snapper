@@ -40,23 +40,11 @@ using std::list;
 using namespace snapper;
 
 
-struct Undo
-{
-    Undo() {}
-    Undo(const string& filename, bool undo) : filename(filename), undo(undo) {}
-
-    string filename;
-    bool undo;
-};
-
-
 namespace DBus
 {
     template <> struct TypeInfo<ConfigInfo> { static const char* signature; };
     template <> struct TypeInfo<Snapshot> { static const char* signature; };
     template <> struct TypeInfo<File> { static const char* signature; };
-    template <> struct TypeInfo<Undo> { static const char* signature; };
-    template <> struct TypeInfo<UndoStep> { static const char* signature; };
 
     Hoho& operator<<(Hoho& hoho, const ConfigInfo& data);
 
@@ -70,11 +58,5 @@ namespace DBus
     Hoho& operator<<(Hoho& hoho, const File& data);
 
     Hoho& operator<<(Hoho& hoho, const Files& data);
-
-    Hihi& operator>>(Hihi& hihi, Undo& data);
-    Hoho& operator<<(Hoho& hoho, const Undo& data);
-
-    Hihi& operator>>(Hihi& hihi, UndoStep& data);
-    Hoho& operator<<(Hoho& hoho, const UndoStep& data);
 
 };

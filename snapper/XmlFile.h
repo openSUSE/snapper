@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2010-2011] Novell, Inc.
+ * Copyright (c) [2010-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -38,7 +38,7 @@ namespace snapper
     using namespace std;
 
 
-    class XmlFile : boost::noncopyable
+    class XmlFile : private boost::noncopyable
     {
 
     public:

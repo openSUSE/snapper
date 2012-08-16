@@ -60,7 +60,7 @@ struct NoComparison : public std::exception
 };
 
 
-class Client : boost::noncopyable
+class Client : private boost::noncopyable
 {
 public:
 
@@ -98,11 +98,6 @@ public:
     void create_comparison(DBus::Connection& conn, DBus::Message& msg);
     void delete_comparison(DBus::Connection& conn, DBus::Message& msg);
     void get_files(DBus::Connection& conn, DBus::Message& msg);
-    void get_diff(DBus::Connection& conn, DBus::Message& msg);
-    void set_undo(DBus::Connection& conn, DBus::Message& msg);
-    void set_undo_all(DBus::Connection& conn, DBus::Message& msg);
-    void get_undo_steps(DBus::Connection& conn, DBus::Message& msg);
-    void do_undo_step(DBus::Connection& conn, DBus::Message& msg);
     void debug(DBus::Connection& conn, DBus::Message& msg) const;
 
     void dispatch(DBus::Connection& conn, DBus::Message& msg);

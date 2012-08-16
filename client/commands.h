@@ -96,24 +96,4 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
 		   unsigned int number2);
 
 vector<string>
-command_get_xdiff(DBus::Connection& conn, const string& config_name, unsigned int number1,
-		  unsigned int number2, const string& name, const string& options);
-
-void
-command_set_xundo(DBus::Connection& conn, const string& config_name, unsigned int number1,
-		  unsigned int number2, const list<XUndo>& undos);
-
-void
-command_set_xundo_all(DBus::Connection& conn, const string& config_name, unsigned int number1,
-		      unsigned int number2, bool undo);
-
-vector<XUndoStep>
-command_get_xundo_steps(DBus::Connection& conn, const string& config_name, unsigned int number1,
-			unsigned int number2);
-
-bool
-command_do_xundo_step(DBus::Connection& conn, const string& config_name, unsigned int number1,
-		      unsigned int number2, const XUndoStep& undo_step);
-
-vector<string>
 command_xdebug(DBus::Connection& conn);
