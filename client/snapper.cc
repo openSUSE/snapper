@@ -986,7 +986,7 @@ command_undo(DBus::Connection& conn)
 
     for (vector<UndoStep>::const_iterator it1 = undo_steps.begin(); it1 != undo_steps.end(); ++it1)
     {
-	vector<File>::const_iterator it2 = files.find(it1->name);
+	vector<File>::iterator it2 = files.find(it1->name);
 	if (it2 == files.end())
 	{
 	    cerr << "internal error" << endl;

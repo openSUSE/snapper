@@ -53,19 +53,6 @@ namespace snapper
     }
 
 
-    UndoStatistic::UndoStatistic()
-	: numCreate(0), numModify(0), numDelete(0)
-    {
-    }
-
-
-    bool
-    UndoStatistic::empty() const
-    {
-	return numCreate == 0 && numModify == 0 && numDelete == 0;
-    }
-
-
     std::ostream& operator<<(std::ostream& s, const File& file)
     {
 	s << "name:\"" << file.name << "\"";
@@ -496,7 +483,7 @@ namespace snapper
 
 
     bool
-    File::doUndo() const
+    File::doUndo()
     {
 	bool error = false;
 
@@ -517,6 +504,9 @@ namespace snapper
 	    if (!modifyAllTypes())
 		error = true;
 	}
+
+	pre_to_system_status = (unsigned int) -1;
+	post_to_system_status = (unsigned int) -1;
 
 	return !error;
     }
@@ -583,9 +573,9 @@ namespace snapper
 
 
     bool
-    Files::doUndoStep(const UndoStep& undo_step) const
+    Files::doUndoStep(const UndoStep& undo_step)
     {
-	vector<File>::const_iterator it = find(undo_step.name);
+	vector<File>::iterator it = find(undo_step.name);
 	if (it == end())
 	    return false;
 

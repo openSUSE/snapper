@@ -60,9 +60,9 @@ namespace snapper
 
     struct UndoStatistic
     {
-	UndoStatistic();
+	UndoStatistic() : numCreate(0), numModify(0), numDelete(0) {}
 
-	bool empty() const;
+	bool empty() const { return numCreate == 0 && numModify == 0 && numDelete == 0; }
 
 	unsigned int numCreate;
 	unsigned int numModify;
@@ -111,7 +111,7 @@ namespace snapper
 
 	bool getUndo() const { return undo; }
 	void setUndo(bool value) { undo = value; }
-	bool doUndo() const;
+	bool doUndo();
 
 	Action getAction() const;
 
@@ -175,11 +175,10 @@ namespace snapper
 
 	vector<UndoStep> getUndoSteps() const;
 
-	bool doUndoStep(const UndoStep& undo_step) const;
+	bool doUndoStep(const UndoStep& undo_step);
 
     protected:
 
-	void clear() { entries.clear(); }
 	void push_back(File file) { entries.push_back(file); }
 
 	void filter(const vector<string>& ignore_patterns);
