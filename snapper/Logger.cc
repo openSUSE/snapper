@@ -139,10 +139,15 @@ namespace snapper
 
 	if (geteuid())
 	{
-	    struct passwd* pw = getpwuid(geteuid());
-	    if (pw)
+	    struct passwd pwd;
+	    struct passwd* result;
+
+	    long bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
+	    char buf[bufsize];
+
+	    if (getpwuid_r(geteuid(), &pwd, buf, bufsize, &result) == 0 && result == &pwd)
 	    {
-		filename = string(pw->pw_dir) + "/.snapper.log";
+		filename = string(pwd.pw_dir) + "/.snapper.log";
 	    }
 	}
 
