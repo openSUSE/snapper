@@ -1106,9 +1106,21 @@ log_do(LogLevel level, const string& component, const char* file, const int line
 bool
 log_query(LogLevel level, const string& component)
 {
-    return level != DEBUG;
+    return level == ERROR;
 }
 
+
+void usage() __attribute__ ((__noreturn__));
+
+void
+usage()
+{
+    cerr << "Try 'snapper --help' for more information." << endl;
+    exit(EXIT_FAILURE);
+}
+
+
+void help() __attribute__ ((__noreturn__));
 
 void
 help()
@@ -1144,6 +1156,8 @@ help()
     help_diff();
     help_undo();
     help_cleanup();
+
+    exit (EXIT_SUCCESS);
 }
 
 
@@ -1217,29 +1231,21 @@ main(int argc, char** argv)
     if ((opt = opts.find("help")) != opts.end())
     {
 	help();
-	exit(EXIT_SUCCESS);
     }
 
     if (!getopts.hasArgs())
     {
 	cerr << _("No command provided.") << endl
-	     << _("Try 'snapper help' for more information.") << endl;
+	     << _("Try 'snapper --help' for more information.") << endl;
 	exit(EXIT_FAILURE);
     }
 
     const char* command = getopts.popArg();
-
-    if (strcmp(command, "help") == 0)
-    {
-	help();
-	exit(EXIT_SUCCESS);
-    }
-
     map<string, cmd_fnc>::const_iterator cmd = cmds.find(command);
     if (cmd == cmds.end())
     {
 	cerr << sformat(_("Unknown command '%s'."), command) << endl
-	     << _("Try 'snapper help' for more information.") << endl;
+	     << _("Try 'snapper --help' for more information.") << endl;
 	exit(EXIT_FAILURE);
     }
 
