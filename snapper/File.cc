@@ -246,7 +246,8 @@ namespace snapper
 
 	if (mkdir(leading_path.c_str(), 0777) != 0)
 	{
-	    y2err("mkdir failed path:" << leading_path << " errno:" << errno);
+	    y2err("mkdir failed path:" << leading_path << " errno:" << errno << " (" <<
+		  stringerror(errno) << ")");
 	    return false;
 	}
 
@@ -260,7 +261,8 @@ namespace snapper
 	struct stat fs;
 	if (lstat(getAbsolutePath(LOC_PRE).c_str(), &fs) != 0)
 	{
-	    y2err("lstat failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+	    y2err("lstat failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno <<
+		  " (" << stringerror(errno) << ")");
 	    return false;
 	}
 	else if (!createParentDirectories(getAbsolutePath(LOC_SYSTEM)))
@@ -299,20 +301,23 @@ namespace snapper
 	{
 	    if (errno == EEXIST && !checkDir(getAbsolutePath(LOC_SYSTEM)))
 	    {
-		y2err("mkdir failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+		y2err("mkdir failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno <<
+		      " (" << stringerror(errno) << ")");
 		return false;
 	    }
 	}
 
 	if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), mode) != 0)
 	{
-	    y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+	    y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno <<
+		  " (" << stringerror(errno) << ")");
 	    return false;
 	}
 
 	if (chown(getAbsolutePath(LOC_SYSTEM).c_str(), owner, group) != 0)
 	{
-	    y2err("chown failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+	    y2err("chown failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno <<
+		  " (" << stringerror(errno) << ")");
 	    return false;
 	}
 
@@ -374,14 +379,15 @@ namespace snapper
 
 	if (symlink(tmp, getAbsolutePath(LOC_SYSTEM)) != 0)
 	{
-	    y2err("symlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-		  " errno:" << errno);
+	    y2err("symlink failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno <<
+		  " (" << stringerror(errno) << ")");
 	    return false;
 	}
 
 	if (lchown(getAbsolutePath(LOC_SYSTEM).c_str(), owner, group) != 0)
 	{
-	    y2err("lchown failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+	    y2err("lchown failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno <<
+		  " (" << stringerror(errno) << ")");
 	    return false;
 	}
 
@@ -393,7 +399,7 @@ namespace snapper
     File::deleteAllTypes() const
     {
 	struct stat fs;
-	if (lstat(getAbsolutePath(LOC_POST).c_str(), &fs) == 0)
+	if (lstat(getAbsolutePath(LOC_SYSTEM).c_str(), &fs) == 0)
 	{
 	    switch (fs.st_mode & S_IFMT)
 	    {
@@ -401,7 +407,7 @@ namespace snapper
 		    if (rmdir(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
 		    {
 			y2err("rmdir failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-			      " errno:" << errno);
+			      " errno:" << errno << " (" << stringerror(errno) << ")");
 			return false;
 		    }
 		} break;
@@ -411,11 +417,20 @@ namespace snapper
 		    if (unlink(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
 		    {
 			y2err("unlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-			      " errno:" << errno);
+			      " errno:" << errno << " (" << stringerror(errno) << ")");
 			return false;
 		    }
 		} break;
 	    }
+	}
+	else
+	{
+	    if (errno == ENOENT)
+		return true;
+
+	    y2err("lstat failed path:" << getAbsolutePath(LOC_SYSTEM) <<
+		  " errno:" << errno << " (" << stringerror(errno) << ")");
+	    return false;
 	}
 
 	return true;
@@ -428,7 +443,8 @@ namespace snapper
 	struct stat fs;
 	if (lstat(getAbsolutePath(LOC_PRE).c_str(), &fs) != 0)
 	{
-	    y2err("lstat failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno);
+	    y2err("lstat failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno <<
+		  " (" << stringerror(errno) << ")");
 	    return false;
 	}
 	else if (!createParentDirectories(getAbsolutePath(LOC_SYSTEM)))
@@ -461,8 +477,8 @@ namespace snapper
 	    {
 		if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode) != 0)
 		{
-		    y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-			  " errno:" << errno);
+		    y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" <<
+			  errno << " (" << stringerror(errno) << ")");
 		    return false;
 		}
 	    }
@@ -471,8 +487,8 @@ namespace snapper
 	    {
 		if (lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid) != 0)
 		{
-		    y2err("lchown failed path:" << getAbsolutePath(LOC_SYSTEM) <<
-			  " errno:" << errno);
+		    y2err("lchown failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" <<
+			  errno <<  " (" << stringerror(errno) << ")");
 		    return false;
 		}
 	    }

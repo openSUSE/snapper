@@ -1096,6 +1096,21 @@ command_debug(DBus::Connection& conn)
 
 
 void
+log_do(LogLevel level, const string& component, const char* file, const int line, const char* func,
+       const string& text)
+{
+    cerr << text << endl;
+}
+
+
+bool
+log_query(LogLevel level, const string& component)
+{
+    return level != DEBUG;
+}
+
+
+void
 help()
 {
     getopts.parse("help", GetOpts::no_options);
@@ -1136,6 +1151,9 @@ int
 main(int argc, char** argv)
 {
     setlocale(LC_ALL, "");
+
+    setLogDo(&log_do);
+    setLogQuery(&log_query);
 
     cmds["list-configs"] = command_list_configs;
     cmds["create-config"] = command_create_config;
