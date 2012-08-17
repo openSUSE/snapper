@@ -119,10 +119,6 @@ namespace snapper
 	void startBackgroundComparsion(Snapshots::const_iterator snapshot1,
 				       Snapshots::const_iterator snapshot2);
 
-	bool doCleanupNumber();
-	bool doCleanupTimeline();
-	bool doCleanupEmptyPrePost();
-
 	const vector<string>& getIgnorePatterns() const { return ignore_patterns; }
 
 	static ConfigInfo getConfig(const string& config_name);
