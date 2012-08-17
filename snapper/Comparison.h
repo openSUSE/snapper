@@ -47,6 +47,8 @@ namespace snapper
 	Files& getFiles() { return files; }
 	const Files& getFiles() const { return files; }
 
+	void mount();
+
 	UndoStatistic getUndoStatistic() const;
 
 	vector<UndoStep> getUndoSteps() const;
@@ -58,7 +60,7 @@ namespace snapper
 	void initialize();
 	void create();
 	bool load();
-	bool save();
+	void save();
 	void filter();
 
 	const Snapper* snapper;

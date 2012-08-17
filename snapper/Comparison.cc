@@ -86,14 +86,21 @@ namespace snapper
 
 
     void
-    Comparison::create()
+    Comparison::mount()
     {
-	y2mil("num1:" << getSnapshot1()->getNum() << " num2:" << getSnapshot2()->getNum());
-
 	if (!getSnapshot1()->isCurrent())
 	    getSnapshot1()->mountFilesystemSnapshot();
 	if (!getSnapshot2()->isCurrent())
 	    getSnapshot2()->mountFilesystemSnapshot();
+    }
+
+
+    void
+    Comparison::create()
+    {
+	y2mil("num1:" << getSnapshot1()->getNum() << " num2:" << getSnapshot2()->getNum());
+
+	mount();
 
 #if 1
 	cmpdirs_cb_t cb = AppendHelper(&file_paths, files);
@@ -166,7 +173,7 @@ namespace snapper
     }
 
 
-    bool
+    void
     Comparison::save()
     {
 	y2mil("num1:" << getSnapshot1()->getNum() << " num2:" << getSnapshot2()->getNum());
@@ -207,8 +214,6 @@ namespace snapper
 	fclose(file);
 
 	rename(tmp_name.c_str(), output.c_str());
-
-	return true;
     }
 
 
