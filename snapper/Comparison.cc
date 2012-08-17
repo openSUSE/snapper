@@ -190,7 +190,7 @@ namespace snapper
 	FILE* file = mkstemp(tmp_name);
 	if (!file)
 	{
-	    y2err("mkstemp failed errno:" << errno << " (" << strerror(errno) << ")");
+	    y2err("mkstemp failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    throw IOErrorException();
 	}
 

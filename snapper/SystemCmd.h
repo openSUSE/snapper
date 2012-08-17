@@ -85,9 +85,9 @@ namespace snapper
 	void closeOpenFds() const;
 	int doExecute(const string& Cmd_Cv);
 	bool doWait(bool Hang_bv, int& Ret_ir);
-        void checkOutput();
-	void getUntilEOF(FILE* File_Cr, std::vector<string>& Lines_Cr,
-			 bool& NewLineSeen_br, bool Stderr_bv);
+	void checkOutput();
+	void getUntilEOF(FILE* File_Cr, std::vector<string>& Lines_Cr, bool& NewLineSeen_br,
+			 bool Stderr_bv);
 	void extractNewline(const string& Buf_ti, int Cnt_ii, bool& NewLineSeen_br,
 			    string& Text_Cr, std::vector<string>& Lines_Cr);
 	void addLine(const string& Text_Cv, std::vector<string>& Lines_Cr);

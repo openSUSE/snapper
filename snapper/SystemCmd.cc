@@ -189,12 +189,12 @@ SystemCmd::doExecute( const string& Cmd )
     bool ok_bi = true;
     if( !testmode && pipe(sout)<0 )
 	{
-	y2err("pipe stdout creation failed errno:" << errno << " (" << strerror(errno) << ")");
+	y2err("pipe stdout creation failed errno:" << errno << " (" << stringerror(errno) << ")");
 	ok_bi = false;
 	}
     if( !testmode && !Combine_b && pipe(serr)<0 )
 	{
-	y2err("pipe stderr creation failed errno:" << errno << " (" << strerror(errno) << ")");
+	y2err("pipe stderr creation failed errno:" << errno << " (" << stringerror(errno) << ")");
 	ok_bi = false;
 	}
     if( !testmode && ok_bi )
@@ -202,14 +202,14 @@ SystemCmd::doExecute( const string& Cmd )
 	pfds[0].fd = sout[0];
 	if( fcntl( pfds[0].fd, F_SETFL, O_NONBLOCK )<0 )
 	    {
-	    y2err("fcntl O_NONBLOCK failed errno:" << errno << " (" << strerror(errno) << ")");
+	    y2err("fcntl O_NONBLOCK failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    }
 	if( !Combine_b )
 	    {
 	    pfds[1].fd = serr[0];
 	    if( fcntl( pfds[1].fd, F_SETFL, O_NONBLOCK )<0 )
 		{
-		y2err("fcntl O_NONBLOCK failed errno:" << errno << " (" << strerror(errno) << ")");
+		y2err("fcntl O_NONBLOCK failed errno:" << errno << " (" << stringerror(errno) << ")");
 		}
 	    }
 	y2deb("sout:" << pfds[0].fd << " serr:" << (Combine_b?-1:pfds[1].fd));
@@ -220,23 +220,23 @@ SystemCmd::doExecute( const string& Cmd )
 		setenv( "LANGUAGE", "C", 1 );
 		if( dup2( sout[1], STDOUT_FILENO )<0 )
 		    {
-		    y2err("dup2 stdout child failed errno:" << errno << " (" << strerror(errno) << ")");
+		    y2err("dup2 stdout child failed errno:" << errno << " (" << stringerror(errno) << ")");
 		    }
 		if( !Combine_b && dup2( serr[1], STDERR_FILENO )<0 )
 		    {
-		    y2err("dup2 stderr child failed errno:" << errno << " (" << strerror(errno) << ")");
+		    y2err("dup2 stderr child failed errno:" << errno << " (" << stringerror(errno) << ")");
 		    }
 		if( Combine_b && dup2( STDOUT_FILENO, STDERR_FILENO )<0 )
 		    {
-		    y2err("dup2 stderr child failed errno:" << errno << " (" << strerror(errno) << ")");
+		    y2err("dup2 stderr child failed errno:" << errno << " (" << stringerror(errno) << ")");
 		    }
 		if( close( sout[0] )<0 )
 		    {
-		    y2err("close child failed errno:" << errno << " (" << strerror(errno) << ")");
+		    y2err("close child failed errno:" << errno << " (" << stringerror(errno) << ")");
 		    }
 		if( !Combine_b && close( serr[0] )<0 )
 		    {
-		    y2err("close child failed errno:" << errno << " (" << strerror(errno) << ")");
+		    y2err("close child failed errno:" << errno << " (" << stringerror(errno) << ")");
 		    }
 		closeOpenFds();
 		Ret_i = execl( Shell_Ci.c_str(), Shell_Ci.c_str(), "-c",
@@ -249,24 +249,24 @@ SystemCmd::doExecute( const string& Cmd )
 	    default:
 		if( close( sout[1] )<0 )
 		    {
-		    y2err("close parent failed errno:" << errno << " (" << strerror(errno) << ")");
+		    y2err("close parent failed errno:" << errno << " (" << stringerror(errno) << ")");
 		    }
 		if( !Combine_b && close( serr[1] )<0 )
 		    {
-		    y2err("close parent failed errno:" << errno << " (" << strerror(errno) << ")");
+		    y2err("close parent failed errno:" << errno << " (" << stringerror(errno) << ")");
 		    }
 		Ret_i = 0;
 		File_aC[IDX_STDOUT] = fdopen( sout[0], "r" );
 		if( File_aC[IDX_STDOUT] == NULL )
 		    {
-		    y2err("fdopen stdout failed errno:" << errno << " (" << strerror(errno) << ")");
+		    y2err("fdopen stdout failed errno:" << errno << " (" << stringerror(errno) << ")");
 		    }
 		if( !Combine_b )
 		    {
 		    File_aC[IDX_STDERR] = fdopen( serr[0], "r" );
 		    if( File_aC[IDX_STDERR] == NULL )
 			{
-			y2err("fdopen stderr failed errno:" << errno << " (" << strerror(errno) << ")");
+			y2err("fdopen stderr failed errno:" << errno << " (" << stringerror(errno) << ")");
 			}
 		    }
 		if( !Background_b )
@@ -312,7 +312,7 @@ SystemCmd::doWait( bool Hang_bv, int& Ret_ir )
 	int sel = poll( pfds, Combine_b?1:2, 1000 );
 	if (sel < 0)
 	    {
-	    y2err("poll failed errno:" << errno << " (" << strerror(errno) << ")");
+	    y2err("poll failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    }
 	y2deb("poll ret:" << sel);
 	if( sel>0 )
@@ -482,8 +482,8 @@ SystemCmd::checkOutput()
 #define BUF_LEN 256
 
 void
-SystemCmd::getUntilEOF( FILE* File_Cr, vector<string>& Lines_Cr,
-                        bool& NewLine_br, bool Stderr_bv )
+SystemCmd::getUntilEOF(FILE* File_Cr, vector<string>& Lines_Cr, bool& NewLine_br,
+		       bool Stderr_bv)
     {
     size_t old_size = Lines_Cr.size();
     char Buf_ti[BUF_LEN];

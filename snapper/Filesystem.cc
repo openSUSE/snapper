@@ -166,7 +166,7 @@ namespace snapper
 	}
 	else if (errno != EEXIST)
 	{
-	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
+	    y2err("mkdir failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    throw CreateConfigFailedException("mkdir failed");
 	}
 
@@ -179,7 +179,7 @@ namespace snapper
 	}
 	else if (errno != EEXIST)
 	{
-	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
+	    y2err("mkdir failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    throw CreateConfigFailedException("mkdir failed");
 	}
     }
@@ -191,14 +191,14 @@ namespace snapper
 	int r1 = rmdir((subvolume + "/.snapshots/.info").c_str());
 	if (r1 != 0)
 	{
-	    y2err("rmdir failed errno:" << errno << " (" << strerror(errno) << ")");
+	    y2err("rmdir failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    throw DeleteConfigFailedException("rmdir failed");
 	}
 
 	int r2 = rmdir((subvolume + "/.snapshots").c_str());
 	if (r2 != 0)
 	{
-	    y2err("rmdir failed errno:" << errno << " (" << strerror(errno) << ")");
+	    y2err("rmdir failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    throw DeleteConfigFailedException("rmdir failed");
 	}
     }
@@ -291,7 +291,7 @@ namespace snapper
 	int r1 = mkdir(snapshotDir(num).c_str(), 0755);
 	if (r1 != 0 && errno != EEXIST)
 	{
-	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
+	    y2err("mkdir failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    throw MountSnapshotFailedException();
 	}
 

@@ -117,7 +117,7 @@ namespace snapper
 	int r1 = ioctl(dest_fd, BTRFS_IOC_CLONE, src_fd);
 	if (r1 != 0)
 	{
-	    y2err("ioctl failed errno:" << errno << " (" << strerror(errno) << ")");
+	    y2err("ioctl failed errno:" << errno << " (" << stringerror(errno) << ")");
 	}
 
 	return r1 == 0;
@@ -131,7 +131,7 @@ namespace snapper
 	int r1 = fstat(src_fd, &src_stat);
 	if (r1 != 0)
 	{
-	    y2err("fstat failed errno:" << errno << " (" << strerror(errno) << ")");
+	    y2err("fstat failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    return false;
 	}
 
@@ -151,14 +151,14 @@ namespace snapper
 	    int r2 = read(src_fd, block, t);
 	    if (r2 != t)
 	    {
-		y2err("read failed errno:" << errno << " (" << strerror(errno) << ")");
+		y2err("read failed errno:" << errno << " (" << stringerror(errno) << ")");
 		return false;
 	    }
 
 	    int r3 = write(dest_fd, block, t);
 	    if (r3 != t)
 	    {
-		y2err("write failed errno:" << errno << " (" << strerror(errno) << ")");
+		y2err("write failed errno:" << errno << " (" << stringerror(errno) << ")");
 		return false;
 	    }
 
@@ -196,6 +196,22 @@ namespace snapper
 	string s(buf);
 	free(buf);
 	return s;
+    }
+
+
+    string
+    stringerror(int errnum)
+    {
+#if (_POSIX_C_SOURCE >= 200112L || _XOPEN_SOURCE >= 600) && ! _GNU_SOURCE
+	char buf1[100];
+	if (strerror_r(errno, buf1, sizeof(buf1)-1) == 0)
+	    return string(buf1);
+	return string("strerror failed");
+#else
+	char buf1[100];
+	const char* buf2 = strerror_r(errno, buf1, sizeof(buf1)-1);
+	return string(buf2);
+#endif
     }
 
 

@@ -49,7 +49,7 @@ namespace snapper
 	dirfd = ::open(base_path.c_str(), O_RDONLY | O_NOATIME);
 	if (dirfd < 0)
 	{
-	    y2err("open failed path:" << base_path << " error:" << strerror(errno));
+	    y2err("open failed path:" << base_path << " error:" << stringerror(errno));
 	    throw IOErrorException();
 	}
     }
@@ -61,7 +61,7 @@ namespace snapper
 	dirfd = ::openat(dir.dirfd, name.c_str(), O_RDONLY | O_NOFOLLOW | O_NOATIME);
 	if (dirfd < 0)
 	{
-	    y2err("open failed path:" << dir.fullname(name) << " (" << strerror(errno) << ")");
+	    y2err("open failed path:" << dir.fullname(name) << " (" << stringerror(errno) << ")");
 	    throw IOErrorException();
 	}
     }
@@ -93,14 +93,14 @@ namespace snapper
 	int fd = dup(dirfd);
 	if (fd == -1)
 	{
-	    y2err("dup failed" << " error:" << strerror(errno));
+	    y2err("dup failed" << " error:" << stringerror(errno));
 	    throw IOErrorException();
 	}
 
 	DIR* dp = fdopendir(fd);
 	if (dp == NULL)
 	{
-	    y2err("fdopendir failed path:" << fullname() << " error:" << strerror(errno));
+	    y2err("fdopendir failed path:" << fullname() << " error:" << stringerror(errno));
 	    ::close(fd);
 	    throw IOErrorException();
 	}

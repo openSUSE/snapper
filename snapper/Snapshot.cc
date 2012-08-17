@@ -359,7 +359,7 @@ namespace snapper
 	    if (errno == EEXIST)
 		continue;
 
-	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
+	    y2err("mkdir failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    throw IOErrorException();
 	}
 
@@ -416,14 +416,14 @@ namespace snapper
 	catch (const IOErrorException& e)
 	{
 	    y2err("saving info.xml failed infoDir: " << infoDir() << " errno: << " << errno <<
-		  " (" << strerror(errno) << ")");
+		  " (" << stringerror(errno) << ")");
 	    throw;
 	}
 
 	if (rename(string(infoDir() + "/info.xml.tmp").c_str(), string(infoDir() + "/info.xml").c_str()) != 0)
 	{
 	    y2err("rename info.xml failed infoDir: " << infoDir() << " errno: << " << errno <<
-		  " (" << strerror(errno) << ")");
+		  " (" << stringerror(errno) << ")");
 	    throw IOErrorException();
 	}
     }

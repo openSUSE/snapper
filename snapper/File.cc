@@ -326,7 +326,7 @@ namespace snapper
 	int src_fd = open(getAbsolutePath(LOC_PRE).c_str(), O_RDONLY | O_LARGEFILE);
 	if (src_fd < 0)
 	{
-	    y2err("open failed errno:" << errno << " (" << strerror(errno) << ")");
+	    y2err("open failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    return false;
 	}
 
@@ -334,21 +334,21 @@ namespace snapper
 			   O_CREAT | O_TRUNC, mode);
 	if (dest_fd < 0)
 	{
-	    y2err("open failed errno:" << errno << " (" << strerror(errno) << ")");
+	    y2err("open failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    return false;
 	}
 
 	int r1 = fchmod(dest_fd, mode);
 	if (r1 != 0)
 	{
-	    y2err("fchmod failed errno:" << errno << " (" << strerror(errno) << ")");
+	    y2err("fchmod failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    return false;
 	}
 
 	int r2 = fchown(dest_fd, owner, group);
 	if (r2 != 0)
 	{
-	    y2err("fchown failed errno:" << errno << " (" << strerror(errno) << ")");
+	    y2err("fchown failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    return false;
 	}
 

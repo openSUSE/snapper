@@ -55,6 +55,8 @@ namespace snapper
 
     string realpath(const string& path);
 
+    string stringerror(int errnum);
+
     template<class StreamType>
     void classic(StreamType& stream)
     {
