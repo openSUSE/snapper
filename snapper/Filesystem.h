@@ -27,6 +27,7 @@
 #include <string>
 #include <vector>
 
+#include "config.h"
 
 namespace snapper
 {
@@ -70,7 +71,7 @@ namespace snapper
 
     };
 
-
+#ifdef ENABLE_BTRFS
     class Btrfs : public Filesystem
     {
     public:
@@ -97,8 +98,9 @@ namespace snapper
 	virtual bool checkSnapshot(unsigned int num) const;
 
     };
+#endif
 
-
+#ifdef ENABLE_EXT4
     class Ext4 : public Filesystem
     {
     public:
@@ -130,8 +132,9 @@ namespace snapper
 	vector<string> mount_options;
 
     };
+#endif
 
-
+#ifdef ENABLE_LVM
     class Lvm : public Filesystem
     {
     public:
@@ -172,6 +175,7 @@ namespace snapper
 	vector<string> mount_options;
 
     };
+#endif
 
 }
 

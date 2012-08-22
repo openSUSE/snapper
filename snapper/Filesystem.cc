@@ -34,6 +34,7 @@
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/Regex.h"
+#include "config.h"
 
 
 namespace snapper
@@ -68,7 +69,17 @@ namespace snapper
     {
 	typedef Filesystem* (*func_t)(const string& fstype, const string& subvolume);
 
-	static const func_t funcs[] = { &Btrfs::create, &Ext4::create, &Lvm::create, NULL };
+	static const func_t funcs[] = {
+#ifdef ENABLE_BTRFS
+		&Btrfs::create,
+#endif
+#ifdef ENABLE_EXT4
+		&Ext4::create,
+#endif
+#ifdef ENABLE_LVM
+		&Lvm::create,
+#endif
+	NULL };
 
 	for (const func_t* func = funcs; *func != NULL; ++func)
 	{
@@ -82,6 +93,7 @@ namespace snapper
     }
 
 
+#ifdef ENABLE_BTRFS
     Filesystem*
     Btrfs::create(const string& fstype, const string& subvolume)
     {
@@ -178,8 +190,10 @@ namespace snapper
     {
 	return checkDir(snapshotDir(num));
     }
+    // ENABLE_BTRFS
+#endif
 
-
+#ifdef ENABLE_EXT4
     Filesystem*
     Ext4::create(const string& fstype, const string& subvolume)
     {
@@ -374,8 +388,10 @@ namespace snapper
     {
 	return checkNormalFile(snapshotFile(num));
     }
+    // ENABLE_EXT4
+#endif
 
-
+#ifdef ENABLE_LVM
     Filesystem*
     Lvm::create(const string& fstype, const string& subvolume)
     {
@@ -562,5 +578,7 @@ namespace snapper
 	return "/dev/mapper/" + boost::replace_all_copy(vg_name, "-", "--") + "-" +
 	    boost::replace_all_copy(snapshotLvName(num), "-", "--");
     }
+    // ENABLE_LVM
+#endif
 
 }
