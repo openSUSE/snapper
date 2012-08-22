@@ -35,6 +35,31 @@ CXXFLAGS="${CXXFLAGS} -std=c++0x -DHAVE_CXX0X -Wall -Wextra -Wformat=2 -Wnon-vir
 docdir=\${prefix}/share/doc/packages/snapper
 fillupdir=/var/adm/fillup-templates
 
+AC_ARG_ENABLE([ext4], AC_HELP_STRING([--disable-ext4],[Disable ext4 snapshots support]),
+		[with_ext4=$enableval],[with_ext4=yes])
+
+if test "x$with_ext4" = "xyes"; then
+	AC_DEFINE(ENABLE_EXT4, 1, [Enable Ext4 snapshots support])
+fi
+
+AC_ARG_ENABLE([lvm], AC_HELP_STRING([--disable-lvm],[Disable LVM thinprovisioned snapshots support]),
+		[with_lvm=$enableval],[with_lvm=yes])
+
+if test "x$with_lvm" = "xyes"; then
+	AC_DEFINE(ENABLE_LVM, 1, [Enable LVM thinprovisioned snapshots support])
+fi
+
+AC_ARG_ENABLE([btrfs], AC_HELP_STRING([--disable-btrfs],[Disable Btrfs internal snapshots support]),
+		[with_btrfs=$enableval],[with_btrfs=yes])
+
+if test "x$with_btrfs" = "xyes"; then
+	AC_DEFINE(ENABLE_BTRFS, 1, [Enable Btrfs internal snapshots support])
+fi
+
+if test "x$with_lvm" != "xyes" -a "x$with_ext4" != "xyes" -a "x$with_btrfs" != "xyes"; then
+	AC_MSG_ERROR([You have to enable at least one snapshot type (remove some --disable-xxx parameter)])
+fi
+
 AC_SUBST(VERSION)
 AC_SUBST(LIBVERSION_MAJOR)
 AC_SUBST(LIBVERSION_INFO)
