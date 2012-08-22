@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Aug 22 18:43:47 CEST 2012 - aschnell@suse.de
+
+- fixed segmentation fault for unknown fstype
+- 0.0.14
+
+-------------------------------------------------------------------
 Tue Aug 14 12:03:50 CEST 2012 - aschnell@suse.de
 
 - fixed logging during program termination
