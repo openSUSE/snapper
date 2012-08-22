@@ -70,7 +70,7 @@ namespace snapper
 
 	static const func_t funcs[] = { &Btrfs::create, &Ext4::create, &Lvm::create, NULL };
 
-	for (const func_t* func = funcs; func != NULL; ++func)
+	for (const func_t* func = funcs; *func != NULL; ++func)
 	{
 	    Filesystem* fs = (*func)(fstype, subvolume);
 	    if (fs)
