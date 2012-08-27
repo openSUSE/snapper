@@ -27,60 +27,13 @@
 #include <string>
 #include <vector>
 #include <functional>
-#include <boost/noncopyable.hpp>
+
+#include "snapper/FileUtils.h"
 
 
 namespace snapper
 {
     using std::string;
-    using std::vector;
-
-
-    class SDir : private boost::noncopyable
-    {
-    public:
-
-	explicit SDir(const string& base_path);
-	explicit SDir(const SDir& dir, const string& name);
-	~SDir();
-
-	string fullname(bool with_base_path = true) const;
-	string fullname(const string& name, bool with_base_path = true) const;
-
-	vector<string> entries() const;
-
-	int stat(const string& name, struct stat* buf, int flags) const;
-	int open(const string& name, int flags) const;
-	int readlink(const string& name, string& buf) const;
-
-    private:
-
-	const string base_path;
-	const string path;
-
-	int dirfd;
-
-    };
-
-
-    class SFile : private boost::noncopyable
-    {
-    public:
-
-	explicit SFile(const SDir& dir, const string& name);
-
-	string fullname(bool with_base_path = true) const;
-
-	int stat(struct stat* buf, int flags) const;
-	int open(int flags) const;
-	int readlink(string& buf) const;
-
-    private:
-
-	const SDir& dir;
-	const string name;
-
-    };
 
 
     typedef std::function<void(const string& name, unsigned int status)> cmpdirs_cb_t;
