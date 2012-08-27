@@ -7,7 +7,7 @@ SUBDIRS = utils
 INCLUDES = -I$(top_srcdir)
 
 
-toolsbindir = /usr/lib/snapper/bin
+toolsbindir = $(libdir)/snapper/bin
 
 toolsbin_PROGRAMS = compare-dirs
 
