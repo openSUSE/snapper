@@ -38,6 +38,7 @@ namespace snapper
     {
     public:
 
+	AsciiFileReader(int fd);
 	AsciiFileReader(FILE* file);
 	AsciiFileReader(const string& filename);
 	~AsciiFileReader();

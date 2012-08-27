@@ -37,6 +37,14 @@ namespace snapper
     }
 
 
+    XmlFile::XmlFile(int fd, const string& url)
+	: doc(xmlReadFd(fd, url.c_str(), NULL, XML_PARSE_NOBLANKS | XML_PARSE_NONET))
+    {
+	if (!doc)
+	    throw IOErrorException();
+    }
+
+
     XmlFile::XmlFile(const string& filename)
 	: doc(xmlReadFile(filename.c_str(), NULL, XML_PARSE_NOBLANKS | XML_PARSE_NONET))
     {
@@ -48,6 +56,14 @@ namespace snapper
     XmlFile::~XmlFile()
     {
 	xmlFreeDoc(doc);
+    }
+
+
+    void
+    XmlFile::save(int fd)
+    {
+	if (xmlDocDump(fdopen(fd, "w"), doc) == -1)
+	    throw IOErrorException();
     }
 
 

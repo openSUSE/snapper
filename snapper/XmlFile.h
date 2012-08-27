@@ -44,10 +44,12 @@ namespace snapper
     public:
 
 	XmlFile();
+	XmlFile(int fd, const string& url);
 	XmlFile(const string& filename);
 
 	~XmlFile();
 
+	void save(int fd);
 	void save(const string& filename);
 
 	void setRootElement(xmlNode* node)
