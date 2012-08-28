@@ -49,6 +49,14 @@ namespace snapper
 	    y2err("open failed path:" << base_path << " error:" << stringerror(errno));
 	    throw IOErrorException();
 	}
+
+	struct stat stat;
+	fstat(dirfd, &stat);
+	if (!S_ISDIR(stat.st_mode))
+	{
+	    y2err("not a directory path:" << base_path);
+	    throw IOErrorException();
+	}
     }
 
 
@@ -59,6 +67,14 @@ namespace snapper
 	if (dirfd < 0)
 	{
 	    y2err("open failed path:" << dir.fullname(name) << " (" << stringerror(errno) << ")");
+	    throw IOErrorException();
+	}
+
+	struct stat stat;
+	fstat(dirfd, &stat);
+	if (!S_ISDIR(stat.st_mode))
+	{
+	    y2err("not a directory path:" << dir.fullname(name));
 	    throw IOErrorException();
 	}
     }
@@ -114,8 +130,22 @@ namespace snapper
     }
 
 
+    static bool
+    all_entries(unsigned char type, const char* name)
+    {
+	return true;
+    }
+
+
     vector<string>
     SDir::entries() const
+    {
+	return entries(all_entries);
+    }
+
+
+    vector<string>
+    SDir::entries(std::function<bool(unsigned char, const char* name)> pred) const
     {
 	int fd = dup(dirfd);
 	if (fd == -1)
@@ -140,7 +170,8 @@ namespace snapper
 
 	while (readdir_r(dp, ep, &epp) == 0 && epp != NULL)
 	{
-	    if (strcmp(ep->d_name, ".") != 0 && strcmp(ep->d_name, "..") != 0)
+	    if (strcmp(ep->d_name, ".") != 0 && strcmp(ep->d_name, "..") != 0 &&
+		pred(ep->d_type, ep->d_name))
 		ret.push_back(ep->d_name);
 	}
 
@@ -165,6 +196,13 @@ namespace snapper
     SDir::open(const string& name, int flags) const
     {
 	return ::openat(dirfd, name.c_str(), flags);
+    }
+
+
+    int
+    SDir::open(const string& name, int flags, mode_t mode) const
+    {
+	return ::openat(dirfd, name.c_str(), flags, mode);
     }
 
 
@@ -211,6 +249,42 @@ namespace snapper
     SDir::rename(const string& oldname, const string& newname) const
     {
 	return ::renameat(dirfd, oldname.c_str(), dirfd, newname.c_str());
+    }
+
+
+    int
+    SDir::mktemp(string& name) const
+    {
+	static const char letters[] = "abcdefghijklmnopqrstuvwxyz" "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	    "0123456789";
+
+	static uint64_t value;
+
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	value += ((uint64_t) tv.tv_usec << 16) ^ tv.tv_sec;
+
+	unsigned int attempts = 62 * 62 * 62;
+
+	string::size_type length = name.size();
+
+	for (unsigned int count = 0; count < attempts; value += 7777, ++count)
+	{
+	    uint64_t v = value;
+	    for (string::size_type i = length - 6; i < length; ++i)
+	    {
+		name[i] = letters[v % 62];
+		v /= 62;
+	    }
+
+	    int fd = open(name, O_RDWR | O_CREAT | O_EXCL);
+	    if (fd >= 0)
+		return fd;
+	    else if (errno != EEXIST)
+		return -1;
+	}
+
+	return -1;
     }
 
 

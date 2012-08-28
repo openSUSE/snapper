@@ -26,6 +26,7 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
 
 
 namespace snapper
@@ -49,15 +50,19 @@ namespace snapper
 	string fullname(const string& name, bool with_base_path = true) const;
 
 	vector<string> entries() const;
+	vector<string> entries(std::function<bool(unsigned char type, const char* name)> pred) const;
 
 	int stat(const string& name, struct stat* buf, int flags) const;
 	int open(const string& name, int flags) const;
+	int open(const string& name, int flags, mode_t mode) const;
 	int readlink(const string& name, string& buf) const;
 	int mkdir(const string& name, mode_t mode) const;
 	int unlink(const string& name, int flags) const;
 	int chmod(const string& name, mode_t mode, int flags) const;
 	int chown(const string& name, uid_t owner, gid_t group, int flags) const;
 	int rename(const string& oldname, const string& newname) const;
+
+	int mktemp(string& name) const;
 
     private:
 
