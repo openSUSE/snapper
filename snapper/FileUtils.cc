@@ -277,7 +277,7 @@ namespace snapper
 		v /= 62;
 	    }
 
-	    int fd = open(name, O_RDWR | O_CREAT | O_EXCL);
+	    int fd = open(name, O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
 	    if (fd >= 0)
 		return fd;
 	    else if (errno != EEXIST)

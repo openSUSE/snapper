@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Novell, Inc.
+ * Copyright (c) [2011-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -26,6 +26,8 @@
 
 #include <string>
 
+#include "snapper/FileUtils.h"
+
 
 namespace snapper
 {
@@ -51,6 +53,9 @@ namespace snapper
 
 	virtual string infosDir() const = 0;
 	virtual string snapshotDir(unsigned int num) const = 0;
+
+	virtual SDir openInfosDir() const = 0;
+	virtual SDir openSnapshotDir(unsigned int num) const = 0;
 
 	virtual void createSnapshot(unsigned int num) const = 0;
 	virtual void deleteSnapshot(unsigned int num) const = 0;
@@ -82,6 +87,10 @@ namespace snapper
 	virtual string infosDir() const;
 	virtual string snapshotDir(unsigned int num) const;
 
+	virtual SDir openInfosDir() const;
+	virtual SDir openInfoDir(unsigned int num) const;
+	virtual SDir openSnapshotDir(unsigned int num) const;
+
 	virtual void createSnapshot(unsigned int num) const;
 	virtual void deleteSnapshot(unsigned int num) const;
 
@@ -108,6 +117,9 @@ namespace snapper
 	virtual string infosDir() const;
 	virtual string snapshotDir(unsigned int num) const;
 	virtual string snapshotFile(unsigned int num) const;
+
+	virtual SDir openInfosDir() const;
+	virtual SDir openSnapshotDir(unsigned int num) const;
 
 	virtual void createSnapshot(unsigned int num) const;
 	virtual void deleteSnapshot(unsigned int num) const;

@@ -10,7 +10,7 @@ using namespace std;
 
 
 void
-log(const string& name, unsigned int status)
+log_it(const string& name, unsigned int status)
 {
     cout << statusToString(status) << " " << name << endl;
 }
@@ -25,7 +25,7 @@ main(int argc, char** argv)
 	exit(EXIT_FAILURE);
     }
 
-    cmpDirs(SDir(argv[1]), SDir(argv[2]), log);
+    cmpDirs(SDir(argv[1]), SDir(argv[2]), log_it);
 
     exit(EXIT_SUCCESS);
 }

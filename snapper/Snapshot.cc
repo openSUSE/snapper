@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Novell, Inc.
+ * Copyright (c) [2011-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -22,7 +22,9 @@
 
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <glob.h>
+#include <fcntl.h>
+#include <fnmatch.h>
+#include <dirent.h>
 #include <errno.h>
 #include <string.h>
 #include <boost/algorithm/string.hpp>
@@ -95,6 +97,27 @@ namespace snapper
     }
 
 
+    SDir
+    Snapshot::openInfoDir() const
+    {
+	if (isCurrent())
+	    throw IllegalSnapshotException();
+
+	SDir infos_dir = snapper->openInfosDir();
+	return SDir(infos_dir, decString(num));
+    }
+
+
+    SDir
+    Snapshot::openSnapshotDir() const
+    {
+	if (isCurrent())
+	    return snapper->openSubvolumeDir();
+
+	return snapper->getFilesystem()->openSnapshotDir(num);
+    }
+
+
     void
     Snapshot::setDescription(const string& val)
     {
@@ -140,12 +163,17 @@ namespace snapper
     void
     Snapshots::read()
     {
-	list<string> infos = glob(snapper->infosDir() + "/*/info.xml", GLOB_NOSORT);
-	for (list<string>::const_iterator it1 = infos.begin(); it1 != infos.end(); ++it1)
+	SDir infos_dir = snapper->openInfosDir();
+
+	vector<string> infos = infos_dir.entries();
+	for (vector<string>::const_iterator it1 = infos.begin(); it1 != infos.end(); ++it1)
 	{
 	    try
 	    {
-		XmlFile file(*it1);
+		SDir info_dir(infos_dir, *it1);
+		int fd = info_dir.open("info.xml", O_NOFOLLOW);
+		XmlFile file(fd, "");
+
 		const xmlNode* root = file.getRootElement();
 		const xmlNode* node = getChildNode(root, "snapshot");
 
@@ -174,7 +202,7 @@ namespace snapper
 
 		Snapshot snapshot(snapper, type, num, date);
 
-		it1->substr(snapper->infosDir().length() + 1) >> num;
+		*it1 >> num;
 		if (num != snapshot.num)
 		{
 		    y2err("num mismatch. not adding snapshot " << *it1);
@@ -283,7 +311,14 @@ namespace snapper
 	snapshot.description = "current";
 	entries.push_back(snapshot);
 
-	read();
+	try
+	{
+	    read();
+	}
+	catch (const IOErrorException& e)
+	{
+	    y2err("reading failed");
+	}
 
 	check();
     }
@@ -346,6 +381,8 @@ namespace snapper
     {
 	unsigned int num = entries.empty() ? 0 : entries.rbegin()->num;
 
+	SDir infos_dir = snapper->openInfosDir();
+
 	while (true)
 	{
 	    ++num;
@@ -353,7 +390,7 @@ namespace snapper
 	    if (snapper->getFilesystem()->checkSnapshot(num))
 		continue;
 
-	    if (mkdir((snapper->infosDir() + "/" + decString(num)).c_str(), 0777) == 0)
+	    if (infos_dir.mkdir(decString(num), 0777) == 0)
 		break;
 
 	    if (errno == EEXIST)
@@ -363,7 +400,7 @@ namespace snapper
 	    throw IOErrorException();
 	}
 
-	chmod((snapper->infosDir() + "/" + decString(num)).c_str(), 0755);
+	infos_dir.chmod(decString(num), 0755, 0);
 
 	return num;
     }
@@ -409,21 +446,17 @@ namespace snapper
 	    setChildValue(userdata_node, "value", it->second);
 	}
 
-	try
-	{
-	    xml.save(infoDir() + "/info.xml.tmp");
-	}
-	catch (const IOErrorException& e)
-	{
-	    y2err("saving info.xml failed infoDir: " << infoDir() << " errno: << " << errno <<
-		  " (" << stringerror(errno) << ")");
-	    throw;
-	}
+	string file_name = "info.xml";
+	string tmp_name = file_name + ".tmp-XXXXXX";
 
-	if (rename(string(infoDir() + "/info.xml.tmp").c_str(), string(infoDir() + "/info.xml").c_str()) != 0)
+	SDir info_dir = openInfoDir();
+
+	xml.save(info_dir.mktemp(tmp_name));
+
+	if (info_dir.rename(tmp_name, file_name) != 0)
 	{
-	    y2err("rename info.xml failed infoDir: " << infoDir() << " errno: << " << errno <<
-		  " (" << stringerror(errno) << ")");
+	    y2err("rename info.xml failed infoDir: " << info_dir.fullname() << " errno: " <<
+		  errno << " (" << stringerror(errno) << ")");
 	    throw IOErrorException();
 	}
     }
@@ -516,7 +549,8 @@ namespace snapper
 	}
 	catch (const CreateSnapshotFailedException& e)
 	{
-	    rmdir(snapshot.infoDir().c_str());
+	    SDir infos_dir = snapper->openInfosDir();
+	    infos_dir.unlink(decString(snapshot.getNum()), AT_REMOVEDIR);
 	    throw;
 	}
 
@@ -527,11 +561,19 @@ namespace snapper
 	catch (const IOErrorException& e)
 	{
 	    snapshot.deleteFilesystemSnapshot();
-	    rmdir(snapshot.infoDir().c_str());
+	    SDir infos_dir = snapper->openInfosDir();
+	    infos_dir.unlink(decString(snapshot.getNum()), AT_REMOVEDIR);
 	    throw;
 	}
 
 	return entries.insert(entries.end(), snapshot);
+    }
+
+
+    static bool
+    is_filelist_file(unsigned char type, const char* name)
+    {
+	return (type == DT_UNKNOWN || type == DT_REG) && (fnmatch("filelist-*.txt", name, 0) == 0);
     }
 
 
@@ -543,18 +585,27 @@ namespace snapper
 
 	snapshot->deleteFilesystemSnapshot();
 
-	unlink((snapshot->infoDir() + "/info.xml").c_str());
+	SDir info_dir = snapshot->openInfoDir();
 
-	list<string> tmp1 = glob(snapshot->infoDir() + "/filelist-*.txt", GLOB_NOSORT);
-	for (list<string>::const_iterator it = tmp1.begin(); it != tmp1.end(); ++it)
-	    unlink(it->c_str());
+	info_dir.unlink("info.xml", 0);
 
-	list<string> tmp2 = glob(snapper->infosDir() + "/*/filelist-" +
-				 decString(snapshot->getNum()) + ".txt", GLOB_NOSORT);
-	for (list<string>::const_iterator it = tmp2.begin(); it != tmp2.end(); ++it)
-	    unlink(it->c_str());
+	vector<string> tmp1 = info_dir.entries(is_filelist_file);
+	for (vector<string>::const_iterator it = tmp1.begin(); it != tmp1.end(); ++it)
+	{
+	    info_dir.unlink(*it, 0);
+	}
 
-	rmdir(snapshot->infoDir().c_str());
+	for (Snapshots::iterator it = begin(); it != end(); ++it)
+	{
+	    if (!it->isCurrent())
+	    {
+		SDir tmp2 = it->openInfoDir();
+		tmp2.unlink("filelist-" + decString(snapshot->getNum()) + ".txt", 0);
+	    }
+	}
+
+	SDir infos_dir = snapper->openInfosDir();
+	infos_dir.unlink(decString(snapshot->getNum()), AT_REMOVEDIR);
 
 	entries.erase(snapshot);
     }

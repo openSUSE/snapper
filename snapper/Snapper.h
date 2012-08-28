@@ -38,6 +38,7 @@ namespace snapper
     class SysconfigFile;
     class Filesystem;
     class Comparison;
+    class SDir;
 
 
     struct ConfigInfo
@@ -104,6 +105,11 @@ namespace snapper
 
 	string subvolumeDir() const;
 	string infosDir() const;
+
+#ifndef SWIG
+	SDir openSubvolumeDir() const;
+	SDir openInfosDir() const;
+#endif
 
 	Snapshots& getSnapshots() { return snapshots; }
 	const Snapshots& getSnapshots() const { return snapshots; }

@@ -40,6 +40,7 @@ namespace snapper
 
 
     class Snapper;
+    class SDir;
 
 
     enum SnapshotType { SINGLE, PRE, POST };
@@ -109,6 +110,11 @@ namespace snapper
 
 	string infoDir() const;
 	string snapshotDir() const;
+
+#ifndef SWIG
+	SDir openInfoDir() const;
+	SDir openSnapshotDir() const;
+#endif
 
 	void mountFilesystemSnapshot() const;
 	void umountFilesystemSnapshot() const;

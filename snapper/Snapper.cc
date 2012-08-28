@@ -133,6 +133,20 @@ namespace snapper
     }
 
 
+    SDir
+    Snapper::openSubvolumeDir() const
+    {
+	return SDir(subvolume);
+    }
+
+
+    SDir
+    Snapper::openInfosDir() const
+    {
+	return filesystem->openInfosDir();
+    }
+
+
     Snapshots::const_iterator
     Snapper::getSnapshotCurrent() const
     {

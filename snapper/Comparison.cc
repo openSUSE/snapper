@@ -20,6 +20,9 @@
  */
 
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <string.h>
 
 #include "snapper/Comparison.h"
@@ -110,8 +113,8 @@ namespace snapper
 	};
 #endif
 
-	SDir dir1(getSnapshot1()->snapshotDir());
-	SDir dir2(getSnapshot2()->snapshotDir());
+	SDir dir1 = getSnapshot1()->openSnapshotDir();
+	SDir dir2 = getSnapshot2()->openSnapshotDir();
 	cmpDirs(dir1, dir2, cb);
 
 	files.sort();
@@ -136,12 +139,17 @@ namespace snapper
 	if (invert)
 	    swap(num1, num2);
 
-	string input = getSnapper()->infosDir() + "/" + decString(num2) + "/filelist-" +
-	    decString(num1) + ".txt";
-
 	try
 	{
-	    AsciiFileReader asciifile(input);
+	    SDir infos_dir = getSnapper()->openInfosDir();
+	    SDir info_dir = SDir(infos_dir, decString(num2));
+
+	    int fd = info_dir.open("filelist-" + decString(num1) + ".txt", O_RDONLY | O_NOATIME |
+				   O_NOFOLLOW);
+	    if (fd == -1)
+		return false;
+
+	    AsciiFileReader asciifile(fd);
 
 	    string line;
 	    while (asciifile.getline(line))
@@ -189,12 +197,12 @@ namespace snapper
 	if (invert)
 	    swap(num1, num2);
 
-	string output = getSnapper()->infosDir() + "/" + decString(num2) + "/filelist-" +
-	    decString(num1) + ".txt";
+	string file_name = "filelist-" + decString(num1) + ".txt";
+	string tmp_name = file_name + ".tmp-XXXXXX";
 
-	string tmp_name = output + ".tmp-XXXXXX";
+	SDir info_dir = invert ? getSnapshot1()->openInfoDir() : getSnapshot2()->openInfoDir();
 
-	FILE* file = mkstemp(tmp_name);
+	FILE* file = fdopen(info_dir.mktemp(tmp_name), "w");
 	if (!file)
 	{
 	    y2err("mkstemp failed errno:" << errno << " (" << stringerror(errno) << ")");
@@ -213,7 +221,7 @@ namespace snapper
 
 	fclose(file);
 
-	rename(tmp_name.c_str(), output.c_str());
+	info_dir.rename(tmp_name, file_name);
     }
 
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Novell, Inc.
+ * Copyright (c) [2011-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -26,6 +26,7 @@
 #include <errno.h>
 #include <unistd.h>
 #include <mntent.h>
+#include <fcntl.h>
 
 #include "snapper/Log.h"
 #include "snapper/Filesystem.h"
@@ -94,6 +95,48 @@ namespace snapper
     }
 
 
+    SDir
+    Btrfs::openInfosDir() const
+    {
+	SDir subvolume_dir(subvolume);
+	SDir infos_dir(subvolume_dir, ".snapshots");
+
+	struct stat stat;
+	if (infos_dir.stat(".", &stat, AT_SYMLINK_NOFOLLOW) != 0)
+	{
+	    throw IOErrorException();
+	}
+
+	if (stat.st_uid != 0 || stat.st_gid != 0)
+	{
+	    y2err("owner of .snapshots wrong");
+	    throw IOErrorException();
+	}
+
+	return infos_dir;
+    }
+
+
+    SDir
+    Btrfs::openInfoDir(unsigned int num) const
+    {
+	SDir infos_dir = openInfosDir();
+	SDir info_dir(infos_dir, decString(num));
+
+	return info_dir;
+    }
+
+
+    SDir
+    Btrfs::openSnapshotDir(unsigned int num) const
+    {
+	SDir info_dir = openInfoDir(num);
+	SDir snapshot_dir(info_dir, "snapshot");
+
+	return snapshot_dir;
+    }
+
+
     void
     Btrfs::createSnapshot(unsigned int num) const
     {
@@ -135,7 +178,18 @@ namespace snapper
     bool
     Btrfs::checkSnapshot(unsigned int num) const
     {
-	return checkDir(snapshotDir(num));
+	try
+	{
+	    SDir info_dir = openInfoDir(num);
+
+	    struct stat stat;
+	    int r = info_dir.stat("snapshot", &stat, AT_SYMLINK_NOFOLLOW);
+	    return r == 0 && S_ISDIR(stat.st_mode);
+	}
+	catch (const IOErrorException& e)
+	{
+	    return false;
+	}
     }
 
 
@@ -222,6 +276,20 @@ namespace snapper
     Ext4::snapshotFile(unsigned int num) const
     {
 	return (subvolume == "/" ? "" : subvolume) + "/.snapshots/" + decString(num);
+    }
+
+
+    SDir
+    Ext4::openInfosDir() const
+    {
+	// TODO
+    }
+
+
+    SDir
+    Ext4::openSnapshotDir(unsigned int num) const
+    {
+	// TODO
     }
 
 
