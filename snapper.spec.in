@@ -61,7 +61,7 @@ autoheader
 automake --add-missing --copy
 autoconf
 
-./configure --libdir=%{_libdir} --prefix=%{prefix} --mandir=%{_mandir} --disable-silent-rules
+./configure --libdir=%{_libdir} --prefix=%{prefix} --mandir=%{_mandir} --docdir=%{prefix}/share/doc/packages/snapper --disable-silent-rules
 make %{?jobs:-j%jobs}
 
 %install
