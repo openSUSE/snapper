@@ -60,6 +60,73 @@ symbol ReadDialog() {
 }
 
 /**
+ * Ask for new snapshot data
+ * @return true if new snapshot was created
+ */
+boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
+
+    boolean created     = false;
+    list pre_items      = maplist (integer s, pre_snapshots, {
+        return `item (`id (s), tostring (s));
+    });
+
+    UI::OpenDialog (`opt (`decorated), `HBox (`HSpacing (1), `VBox(
+      `VSpacing (0.5),
+      `HSpacing (65),
+      // popup label
+      `Label (_("Create New Snapshot")),
+      // text entry label
+      `TextEntry (`id (`description), _("Description"), ""),
+      `RadioButtonGroup (`id(`rb_type), `Left (`HVSquash (`VBox (
+          `Left (`RadioButton (`id ("single"), `opt (`notify),
+	      // radio button label
+              _("Single snapshot"), true)),
+          `Left (`RadioButton (`id ("pre"), `opt (`notify),
+	      // radio button label
+              _("Pre"), false)),
+	  `VBox (
+	      `Left (`RadioButton (`id ("post"), `opt (`notify),
+	          // radio button label, snapshot selection will follow
+	          _("Post, paired with:"), false)
+	      ),
+              `HBox (
+	          `HSpacing (2),
+		  `Left (`ComboBox (`id (`pre_list), `opt (`notify), "", pre_items))
+	      )
+	  )
+      )))),
+      `VSpacing (0.5),
+      `ButtonBox (
+        `PushButton (`id(`ok), Label::OKButton()),
+        `PushButton (`id(`cancel), Label::CancelButton())
+      ),
+      `VSpacing (0.5)), `HSpacing (1))
+    );
+
+    any ret     = nil;
+    map args    = $[];
+    while (true)
+    {
+        ret     = UI::UserInput ();
+        args    = $[
+          "type"        : UI::QueryWidget (`id (`rb_type), `Value),
+          "description" : UI::QueryWidget (`id (`description), `Value),
+          "pre"         : UI::QueryWidget (`id (`pre_list), `Value),
+        ];
+        if (ret == `ok || ret == `cancel)
+        {
+            break;
+        }
+    }
+    UI::CloseDialog ();
+    if (ret == `ok)
+    {
+        created = Snapper::CreateSnapshot (args);
+    }
+    return created;
+}
+
+/**
  * Summary dialog
  * @return dialog result
  */
@@ -72,11 +139,14 @@ any SummaryDialog() {
     list<string> configs	= Snapper::configs;
 
     list snapshot_items	= [];
+    list<integer> pre_snapshots = [];
 
+    // generate list of snapshot table items
     list get_snapshot_items () {
 
       integer i	= -1;
       snapshot_items	= [];
+      pre_snapshots     = [];
       foreach (map s, snapshots, {
 	i	= i + 1;
 
@@ -106,11 +176,27 @@ any SummaryDialog() {
 	}
 	else
 	{
-	    y2milestone ("skipping pre snapshot: %1", num);
+            y2milestone ("skipping pre snapshot: %1", num);
+            pre_snapshots       = add (pre_snapshots, num);
 	}
       });
       return snapshot_items;
     }
+
+    // update list of snapshots
+    void update_snapshots () {
+
+	// busy popup message
+        Popup::ShowFeedback ("", _("Reading list of snapshots..."));
+
+        Snapper::InitializeSnapper (Snapper::current_config);
+	Snapper::ReadSnapshots ();
+	snapshots		= Snapper::snapshots;
+	Popup::ClearFeedback ();
+
+	UI::ChangeWidget (`id (`snapshots_table), `Items, get_snapshot_items ());
+    }
+
 
     term contents = `VBox (
 	`HBox (
@@ -127,7 +213,9 @@ any SummaryDialog() {
 		get_snapshot_items ()
 	),
 	`HBox (
+            // button label
 	    `PushButton (`id (`show_c), `opt (`default), _("Show Changes")),
+	    `PushButton (`id (`create), Label::CreateButton ()),
 	    `HStretch ()
 	)
     );
@@ -170,20 +258,18 @@ any SummaryDialog() {
 	    string config	= (string) UI::QueryWidget (`id (ret), `Value);
 	    if (config != Snapper::current_config)
 	    {
-		Snapper::current_config	= config;
-
-		// busy popup message
-		Popup::ShowFeedback ("", _("Reading list of snapshots..."));
-
-	        Snapper::InitializeSnapper (config);
-	        Snapper::ReadSnapshots ();
-		snapshots		= Snapper::snapshots;
-		Popup::ClearFeedback ();
-
-		UI::ChangeWidget (`id (`snapshots_table), `Items, get_snapshot_items ());
-		continue;
+                Snapper::current_config	= config;
+                update_snapshots ();
+                continue;
 	    }
 	}
+	else if (ret == `create) {
+            if (CreateSnapshotPopup (pre_snapshots))
+            {
+                update_snapshots ();
+                continue;
+            }
+        }
         else if (ret == `next) {
             break;
         }
