@@ -35,7 +35,7 @@
 
 #define CHSNAPBIN "/sbin/chsnap"
 
-#define COMPAREDIRSBIN "/usr/lib/snapper/bin/compare-dirs"
+#define COMPAREDIRSBIN LIBDIR "/snapper/bin/compare-dirs"
 
 #define NICEBIN "/usr/bin/nice"
 #define IONICEBIN "/usr/bin/ionice"
