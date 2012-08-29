@@ -136,7 +136,7 @@ namespace snapper
     SDir
     Snapper::openSubvolumeDir() const
     {
-	return SDir(subvolume);
+	return filesystem->openSubvolumeDir();
     }
 
 

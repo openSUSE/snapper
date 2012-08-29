@@ -54,7 +54,9 @@ namespace snapper
 	virtual string infosDir() const = 0;
 	virtual string snapshotDir(unsigned int num) const = 0;
 
+	virtual SDir openSubvolumeDir() const;
 	virtual SDir openInfosDir() const = 0;
+	virtual SDir openInfoDir(unsigned int num) const;
 	virtual SDir openSnapshotDir(unsigned int num) const = 0;
 
 	virtual void createSnapshot(unsigned int num) const = 0;
@@ -87,9 +89,7 @@ namespace snapper
 	virtual string infosDir() const;
 	virtual string snapshotDir(unsigned int num) const;
 
-	virtual SDir openSubvolumeDir() const;
 	virtual SDir openInfosDir() const;
-	virtual SDir openInfoDir(unsigned int num) const;
 	virtual SDir openSnapshotDir(unsigned int num) const;
 
 	virtual void createSnapshot(unsigned int num) const;

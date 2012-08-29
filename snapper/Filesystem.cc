@@ -79,6 +79,25 @@ namespace snapper
     }
 
 
+    SDir
+    Filesystem::openSubvolumeDir() const
+    {
+	SDir subvolume_dir(subvolume);
+
+	return subvolume_dir;
+    }
+
+
+    SDir
+    Filesystem::openInfoDir(unsigned int num) const
+    {
+	SDir infos_dir = openInfosDir();
+	SDir info_dir(infos_dir, decString(num));
+
+	return info_dir;
+    }
+
+
     Btrfs::Btrfs(const string& subvolume)
 	: Filesystem(subvolume)
     {
@@ -131,13 +150,6 @@ namespace snapper
 
 
     SDir
-    Btrfs::openSubvolumeDir() const
-    {
-	return SDir(subvolume);
-    }
-
-
-    SDir
     Btrfs::openInfosDir() const
     {
 	SDir subvolume_dir = openSubvolumeDir();
@@ -156,16 +168,6 @@ namespace snapper
 	}
 
 	return infos_dir;
-    }
-
-
-    SDir
-    Btrfs::openInfoDir(unsigned int num) const
-    {
-	SDir infos_dir = openInfosDir();
-	SDir info_dir(infos_dir, decString(num));
-
-	return info_dir;
     }
 
 
