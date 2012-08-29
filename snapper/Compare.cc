@@ -254,7 +254,7 @@ namespace snapper
 
 
     void
-    listSubdirs(const SDir& dir, unsigned int status, cmpdirs_cb_t cb)
+    listSubdirs(const SDir& dir, const string& path, unsigned int status, cmpdirs_cb_t cb)
     {
 	boost::this_thread::interruption_point();
 
@@ -262,12 +262,12 @@ namespace snapper
 
 	for (vector<string>::const_iterator it = entries.begin(); it != entries.end(); ++it)
 	{
-	    cb(dir.fullname(*it, false), status);
+	    cb(path + "/" + *it, status);
 
 	    struct stat stat;
 	    dir.stat(*it, &stat, AT_SYMLINK_NOFOLLOW);
 	    if (S_ISDIR(stat.st_mode))
-		listSubdirs(SDir(dir, *it), status, cb);
+		listSubdirs(SDir(dir, *it), path + "/" + *it, status, cb);
 	}
     }
 
@@ -282,23 +282,23 @@ namespace snapper
 
 
     void
-    cmpDirsWorker(const CmpData& cmp_data, const SDir& dir1, const SDir& dir2);
+    cmpDirsWorker(const CmpData& cmp_data, const SDir& dir1, const SDir& dir2, const string& path);
 
 
     void
-    lonesome(const SDir& dir, const string& name, const struct stat& stat, unsigned int status,
-	     cmpdirs_cb_t cb)
+    lonesome(const SDir& dir, const string& path, const string& name, const struct stat& stat,
+	     unsigned int status, cmpdirs_cb_t cb)
     {
-	cb(dir.fullname(name, false), status);
+	cb(path + "/" + name, status);
 
 	if (S_ISDIR(stat.st_mode))
-	    listSubdirs(SDir(dir, name), status, cb);
+	    listSubdirs(SDir(dir, name), path + "/" + name, status, cb);
     }
 
 
     void
-    twosome(const CmpData& cmp_data, const SDir& dir1, const SDir& dir2, const string& name,
-	    const struct stat& stat1, const struct stat& stat2)
+    twosome(const CmpData& cmp_data, const SDir& dir1, const SDir& dir2, const string& path,
+	    const string& name, const struct stat& stat1, const struct stat& stat2)
     {
 	unsigned int status = 0;
 	if (stat1.st_dev == cmp_data.dev1 && stat2.st_dev == cmp_data.dev2)
@@ -306,30 +306,30 @@ namespace snapper
 
 	if (status != 0)
 	{
-	    cmp_data.cb(dir1.fullname(name, false), status);
+	    cmp_data.cb(path + "/" + name, status);
 	}
 
 	if (!(status & TYPE))
 	{
 	    if (S_ISDIR(stat1.st_mode))
 		if (stat1.st_dev == cmp_data.dev1 && stat2.st_dev == cmp_data.dev2)
-		    cmpDirsWorker(cmp_data, SDir(dir1, name), SDir(dir2, name));
+		    cmpDirsWorker(cmp_data, SDir(dir1, name), SDir(dir2, name), path + "/" + name);
 	}
 	else
 	{
 	    if (S_ISDIR(stat1.st_mode))
 		if (stat1.st_dev == cmp_data.dev1)
-		    listSubdirs(SDir(dir1, name), DELETED, cmp_data.cb);
+		    listSubdirs(SDir(dir1, name), path + "/" + name, DELETED, cmp_data.cb);
 
 	    if (S_ISDIR(stat2.st_mode))
 		if (stat2.st_dev == cmp_data.dev2)
-		    listSubdirs(SDir(dir2, name), CREATED, cmp_data.cb);
+		    listSubdirs(SDir(dir2, name), path + "/" + name, CREATED, cmp_data.cb);
 	}
     }
 
 
     void
-    cmpDirsWorker(const CmpData& cmp_data, const SDir& dir1, const SDir& dir2)
+    cmpDirsWorker(const CmpData& cmp_data, const SDir& dir1, const SDir& dir2, const string& path)
     {
 	boost::this_thread::interruption_point();
 
@@ -357,7 +357,7 @@ namespace snapper
 		dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW); // TODO error check
 
 		if (stat2.st_dev == cmp_data.dev2)
-		    lonesome(dir2, *first2, stat2, CREATED, cmp_data.cb);
+		    lonesome(dir2, path, *first2, stat2, CREATED, cmp_data.cb);
 
 		++first2;
 	    }
@@ -367,7 +367,7 @@ namespace snapper
 		dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW); // TODO error check
 
 		if (stat1.st_dev == cmp_data.dev1)
-		    lonesome(dir1, *first1, stat1, DELETED, cmp_data.cb);
+		    lonesome(dir1, path, *first1, stat1, DELETED, cmp_data.cb);
 
 		++first1;
 	    }
@@ -377,7 +377,7 @@ namespace snapper
 		dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW); // TODO error check
 
 		if (stat2.st_dev == cmp_data.dev2)
-		    lonesome(dir2, *first2, stat2, CREATED, cmp_data.cb);
+		    lonesome(dir2, path, *first2, stat2, CREATED, cmp_data.cb);
 
 		++first2;
 	    }
@@ -387,7 +387,7 @@ namespace snapper
 		dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW); // TODO error check
 
 		if (stat1.st_dev == cmp_data.dev1)
-		    lonesome(dir1, *first1, stat1, DELETED, cmp_data.cb);
+		    lonesome(dir1, path, *first1, stat1, DELETED, cmp_data.cb);
 
 		++first1;
 	    }
@@ -402,7 +402,7 @@ namespace snapper
 		struct stat stat2;
 		dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW); // TODO error check
 
-		twosome(cmp_data, dir1, dir2, *first1, stat1, stat2);
+		twosome(cmp_data, dir1, dir2, path, *first1, stat1, stat2);
 		++first1;
 		++first2;
 	    }
@@ -439,7 +439,7 @@ namespace snapper
 	y2mil("dev1:" << cmp_data.dev1 << " dev2:" << cmp_data.dev2);
 
 	StopWatch stopwatch;
-	cmpDirsWorker(cmp_data, dir1, dir2);
+	cmpDirsWorker(cmp_data, dir1, dir2, "");
 	y2mil("stopwatch " << stopwatch << " for comparing directories");
     }
 
