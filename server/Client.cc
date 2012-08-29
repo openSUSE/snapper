@@ -746,7 +746,7 @@ Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
     snap2->setUserdata(userdata);
     snap2->flushInfo();
 
-    snapper->startBackgroundComparsion(snap1, snap2); // TODO
+    // snapper->startBackgroundComparsion(snap1, snap2); // TODO
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -1157,6 +1157,11 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
     catch (const InvalidUserdataException& e)
     {
 	DBus::MessageError reply(msg, "error.invalid_userdata", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
+    catch (const IOErrorException& e)
+    {
+	DBus::MessageError reply(msg, "error.io_error", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (...)
