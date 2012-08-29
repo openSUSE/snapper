@@ -254,26 +254,26 @@ global boolean CreateSnapshot (map args) {
     boolean success     = (boolean) SCR::Execute (.snapper.create, args);
     if (!success)
     {
-	map err_map	= LastSnapperErrorMap ();
-	string type	= err_map["type"]:"";
-	string details	= _("Reason not known.");
+        map err_map     = LastSnapperErrorMap ();
+        string type     = err_map["type"]:"";
+        string details  = _("Reason not known.");
 
-	if (type == "wrong_snapshot_type")
-	{
-	    details	= _("Wrong snapshot type given.");
-	}
-	else if (type == "pre_not_given")
-	{
-	    details	= _("'Pre' snapshot was not given.");
-	}
-	else if (type == "pre_not_found")
-	{
-	    details	= _("Given 'Pre' snapshot was not found.");
-	}
+        if (type == "wrong_snapshot_type")
+        {
+            details     = _("Wrong snapshot type given.");
+        }
+        else if (type == "pre_not_given")
+        {
+            details     = _("'Pre' snapshot was not given.");
+        }
+        else if (type == "pre_not_found")
+        {
+            details     = _("Given 'Pre' snapshot was not found.");
+        }
 
-	y2warning ("creating failed with '%1'", err_map);
-	// error popup
-	Report::Error (sformat (_("Failed to create new snapshot:
+        y2warning ("creating failed with '%1'", err_map);
+        // error popup
+        Report::Error (sformat (_("Failed to create new snapshot:
 %1"), details));
     }
     return success;
