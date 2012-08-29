@@ -603,7 +603,9 @@ namespace snapper
     void
     Lvm::createConfig() const
     {
-	int r1 = mkdir((subvolume + "/.snapshots").c_str(), 0700);
+	SDir subvolume_dir = openSubvolumeDir();
+
+	int r1 = subvolume_dir.mkdir(".snapshots", 0750);
 	if (r1 != 0 && errno != EEXIST)
 	{
 	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
@@ -615,7 +617,9 @@ namespace snapper
     void
     Lvm::deleteConfig() const
     {
-	int r1 = rmdir((subvolume + "/.snapshots").c_str());
+	SDir subvolume_dir = openSubvolumeDir();
+
+	int r1 = subvolume_dir.unlink(".snapshots", AT_REMOVEDIR);
 	if (r1 != 0)
 	{
 	    y2err("rmdir failed errno:" << errno << " (" << strerror(errno) << ")");
@@ -688,7 +692,8 @@ namespace snapper
 	if (cmd.retcode() != 0)
 	    throw CreateSnapshotFailedException();
 
-	int r1 = mkdir(snapshotDir(num).c_str(), 0700);
+	SDir info_dir = openInfoDir(num);
+	int r1 = info_dir.mkdir("snapshot", 0755);
 	if (r1 != 0 && errno != EEXIST)
 	{
 	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
@@ -704,7 +709,11 @@ namespace snapper
 	if (cmd.retcode() != 0)
 	    throw DeleteSnapshotFailedException();
 
-	rmdir(snapshotDir(num).c_str());
+	SDir info_dir = openInfoDir(num);
+	info_dir.unlink("snapshot", AT_REMOVEDIR);
+
+	SDir infos_dir = openInfosDir();
+	infos_dir.unlink(decString(num), AT_REMOVEDIR);
     }
 
 
