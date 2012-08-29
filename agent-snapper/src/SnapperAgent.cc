@@ -384,7 +384,7 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
             // FIXME set default cleanup
             // FIXME set userdata
 
-	    const Snapshots& snapshots          = sh->getSnapshots();
+            const Snapshots& snapshots          = sh->getSnapshots();
             Snapshots::iterator snap;
 
             if (type == "single") {
@@ -396,36 +396,36 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
             else if (type == "post") {
                 // check if pre was given!
                 int pre = getIntValue (argmap, YCPString ("pre"), -1);
-	        if (pre == -1)
+                if (pre == -1)
                 {
                     snapper_error       = "pre_not_given";
-	            return YCPBoolean (false);
+                    return YCPBoolean (false);
                 }
                 else
                 {
-	            Snapshots::const_iterator snap1 = snapshots.find (pre);
-	            if (snap1 == snapshots.end())
+                    Snapshots::const_iterator snap1 = snapshots.find (pre);
+                    if (snap1 == snapshots.end())
                     {
                         snapper_error   = "pre_not_found";
-	                return YCPBoolean (false);
+                        return YCPBoolean (false);
                     }
                     else
                     {
-                        snap        = sh->createPostSnapshot(description, snap1);
+                        snap    = sh->createPostSnapshot(description, snap1);
                     }
                 }
             }
             else {
                 snapper_error   = "wrong_snapshot_type";
-	        return YCPBoolean (false);
-	    }
+                return YCPBoolean (false);
+            }
 
             if (cleanup != "")
             {
                 snap->setCleanup(cleanup);
             }
             snap->flushInfo();
-	    return ret;
+            return ret;
         }
         else if (PC(0) == "modify") {
 
