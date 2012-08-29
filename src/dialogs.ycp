@@ -190,7 +190,7 @@ any SummaryDialog() {
         Popup::ShowFeedback ("", _("Reading list of snapshots..."));
 
         Snapper::InitializeSnapper (Snapper::current_config);
-	Snapper::ReadSnapshots ();
+        Snapper::ReadSnapshots ();
         snapshots       = Snapper::snapshots;
         Popup::ClearFeedback ();
 
@@ -199,25 +199,25 @@ any SummaryDialog() {
 
 
     term contents = `VBox (
-	`HBox (
-	    // combo box label
-	    `Label (_("Current Configuration")),
-	    `ComboBox (`id (`configs), `opt (`notify), "", maplist (string config, configs, {
-		return `item (`id (config), config, config == Snapper::current_config);
-	    })),
-	    `HStretch ()
-	),
-	`Table (`id (`snapshots_table), `opt(`notify, `keepSorting), `header (
-		// table header
-		_("ID"), _("Type"), _("Start Date"), _("End Date"), _("Description")),
-		get_snapshot_items ()
-	),
-	`HBox (
+        `HBox (
+            // combo box label
+            `Label (_("Current Configuration")),
+            `ComboBox (`id (`configs), `opt (`notify), "", maplist (string config, configs, {
+              return `item (`id (config), config, config == Snapper::current_config);
+            })),
+            `HStretch ()
+        ),
+        `Table (`id (`snapshots_table), `opt(`notify, `keepSorting), `header (
+            // table header
+            _("ID"), _("Type"), _("Start Date"), _("End Date"), _("Description")),
+            get_snapshot_items ()
+        ),
+        `HBox (
             // button label
-	    `PushButton (`id (`show_c), `opt (`default), _("Show Changes")),
-	    `PushButton (`id (`create), Label::CreateButton ()),
-	    `HStretch ()
-	)
+            `PushButton (`id (`show_c), `opt (`default), _("Show Changes")),
+            `PushButton (`id (`create), Label::CreateButton ()),
+            `HStretch ()
+        )
     );
 
     Wizard::SetContentsButtons(caption, contents, HELPS["summary"]:"",
