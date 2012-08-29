@@ -46,6 +46,8 @@ namespace snapper
 	SDir& operator=(const SDir&);
 	~SDir();
 
+	int fd() const { return dirfd; }
+
 	string fullname(bool with_base_path = true) const;
 	string fullname(const string& name, bool with_base_path = true) const;
 

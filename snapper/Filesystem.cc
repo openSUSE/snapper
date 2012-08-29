@@ -27,6 +27,8 @@
 #include <unistd.h>
 #include <mntent.h>
 #include <fcntl.h>
+#include <sys/ioctl.h>
+#include <asm/types.h>
 
 #include "snapper/Log.h"
 #include "snapper/Filesystem.h"
@@ -34,6 +36,31 @@
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
+
+
+#define BTRFS_IOCTL_MAGIC 0x94
+#define BTRFS_PATH_NAME_MAX 4087
+#define BTRFS_SUBVOL_NAME_MAX 4039
+#define BTRFS_SUBVOL_RDONLY (1ULL << 1)
+
+#define BTRFS_IOC_SUBVOL_CREATE _IOW(BTRFS_IOCTL_MAGIC, 14, struct btrfs_ioctl_vol_args)
+#define BTRFS_IOC_SNAP_DESTROY _IOW(BTRFS_IOCTL_MAGIC, 15, struct btrfs_ioctl_vol_args)
+#define BTRFS_IOC_SNAP_CREATE_V2 _IOW(BTRFS_IOCTL_MAGIC, 23, struct btrfs_ioctl_vol_args_v2)
+
+struct btrfs_ioctl_vol_args
+{
+    __s64 fd;
+    char name[BTRFS_PATH_NAME_MAX + 1];
+};
+
+struct btrfs_ioctl_vol_args_v2
+{
+    __s64 fd;
+    __u64 transid;
+    __u64 flags;
+    __u64 unused[4];
+    char name[BTRFS_SUBVOL_NAME_MAX + 1];
+};
 
 
 namespace snapper
@@ -65,18 +92,26 @@ namespace snapper
     void
     Btrfs::createConfig() const
     {
-	SystemCmd cmd2(BTRFSBIN " subvolume create " + quote(subvolume + "/.snapshots"));
-	if (cmd2.retcode() != 0)
+	SDir subvolume_dir = openSubvolumeDir();
+
+	if (!create_subvolume(subvolume_dir.fd(), ".snapshots"))
+	{
+	    y2err("create subvolume failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    throw CreateConfigFailedException("creating btrfs snapshot failed");
+	}
     }
 
 
     void
     Btrfs::deleteConfig() const
     {
-	SystemCmd cmd2(BTRFSBIN " subvolume delete " + quote(subvolume + "/.snapshots"));
-	if (cmd2.retcode() != 0)
+	SDir subvolume_dir = openSubvolumeDir();
+
+	if (!delete_subvolume(subvolume_dir.fd(), ".snapshots"))
+	{
+	    y2err("delete subvolume failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    throw DeleteConfigFailedException("deleting btrfs snapshot failed");
+	}
     }
 
 
@@ -96,9 +131,16 @@ namespace snapper
 
 
     SDir
+    Btrfs::openSubvolumeDir() const
+    {
+	return SDir(subvolume);
+    }
+
+
+    SDir
     Btrfs::openInfosDir() const
     {
-	SDir subvolume_dir(subvolume);
+	SDir subvolume_dir = openSubvolumeDir();
 	SDir infos_dir(subvolume_dir, ".snapshots");
 
 	struct stat stat;
@@ -140,19 +182,27 @@ namespace snapper
     void
     Btrfs::createSnapshot(unsigned int num) const
     {
-	SystemCmd cmd(BTRFSBIN " subvolume snapshot -r " + quote(subvolume) + " " +
-		      quote(snapshotDir(num)));
-	if (cmd.retcode() != 0)
+	SDir subvolume_dir = openSubvolumeDir();
+	SDir info_dir = openInfoDir(num);
+
+	if (!create_snapshot(subvolume_dir.fd(), info_dir.fd(), "snapshot"))
+	{
+	    y2err("create snapshot failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    throw CreateSnapshotFailedException();
+	}
     }
 
 
     void
     Btrfs::deleteSnapshot(unsigned int num) const
     {
-	SystemCmd cmd(BTRFSBIN " subvolume delete " + quote(snapshotDir(num)));
-	if (cmd.retcode() != 0)
+	SDir info_dir = openInfoDir(num);
+
+	if (!delete_subvolume(info_dir.fd(), "snapshot"))
+	{
+	    y2err("delete snapshot failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    throw DeleteSnapshotFailedException();
+	}
     }
 
 
@@ -184,12 +234,51 @@ namespace snapper
 
 	    struct stat stat;
 	    int r = info_dir.stat("snapshot", &stat, AT_SYMLINK_NOFOLLOW);
-	    return r == 0 && S_ISDIR(stat.st_mode);
+	    // check st_ino == 256 is copied from btrfsprogs
+	    return r == 0 && stat.st_ino == 256 && S_ISDIR(stat.st_mode);
 	}
 	catch (const IOErrorException& e)
 	{
 	    return false;
 	}
+    }
+
+
+    bool
+    Btrfs::create_subvolume(int fddst, const string& name) const
+    {
+	struct btrfs_ioctl_vol_args args;
+	memset(&args, 0, sizeof(args));
+
+	strncpy(args.name, name.c_str(), BTRFS_PATH_NAME_MAX);
+
+        return ioctl(fddst, BTRFS_IOC_SUBVOL_CREATE, &args) == 0;
+    }
+
+
+    bool
+    Btrfs::create_snapshot(int fd, int fddst, const string& name) const
+    {
+	struct btrfs_ioctl_vol_args_v2 args;
+	memset(&args, 0, sizeof(args));
+
+	args.fd = fd;
+	args.flags |= BTRFS_SUBVOL_RDONLY;
+	strncpy(args.name, name.c_str(), BTRFS_SUBVOL_NAME_MAX);
+
+	return ioctl(fddst, BTRFS_IOC_SNAP_CREATE_V2, &args) == 0;
+    }
+
+
+    bool
+    Btrfs::delete_subvolume(int fd, const string& name) const
+    {
+	struct btrfs_ioctl_vol_args args;
+	memset(&args, 0, sizeof(args));
+
+	strncpy(args.name, name.c_str(), BTRFS_PATH_NAME_MAX);
+
+	return ioctl(fd, BTRFS_IOC_SNAP_DESTROY, &args) == 0;
     }
 
 
