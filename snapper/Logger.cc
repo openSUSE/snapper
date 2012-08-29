@@ -38,7 +38,10 @@ namespace snapper
     using namespace std;
 
 
-    string filename = "/var/log/snapper.log";
+    // Use a pointer to avoid a global destructor. Otherwise the Snapper
+    // destructor in Factory.cc can be called after when logging does not work
+    // anymore. TODO: nicer solution.
+    string* filename = new string("/var/log/snapper.log");
 
     LogDo log_do = NULL;
     LogQuery log_query = NULL;
@@ -71,7 +74,7 @@ namespace snapper
 
 	boost::lock_guard<boost::mutex> lock(mutex);
 
-	FILE* f = fopen(filename.c_str(), "a");
+	FILE* f = fopen(filename->c_str(), "a");
 	if (f)
 	{
 	    string tmp = text;
@@ -135,7 +138,8 @@ namespace snapper
     void
     initDefaultLogger()
     {
-	filename = "/var/log/snapper.log";
+	delete filename;
+	filename = new string("/var/log/snapper.log");
 
 	if (geteuid())
 	{
@@ -147,7 +151,8 @@ namespace snapper
 
 	    if (getpwuid_r(geteuid(), &pwd, buf, bufsize, &result) == 0 && result == &pwd)
 	    {
-		filename = string(pwd.pw_dir) + "/.snapper.log";
+		delete filename;
+		filename = new string(string(pwd.pw_dir) + "/.snapper.log");
 	    }
 	}
 

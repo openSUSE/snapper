@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2011] Novell, Inc.
+ * Copyright (c) [2004-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -30,6 +30,7 @@
 #include <string>
 #include <list>
 #include <map>
+#include <vector>
 
 
 namespace snapper
@@ -37,11 +38,13 @@ namespace snapper
     using std::string;
     using std::list;
     using std::map;
+    using std::vector;
 
 
     void createPath(const string& Path_Cv);
     bool checkNormalFile(const string& Path_Cv);
     bool checkDir(const string& Path_Cv);
+    bool checkAnything(const string& Path_Cv);
 
     list<string> glob(const string& path, int flags);
 
@@ -56,6 +59,18 @@ namespace snapper
     string realpath(const string& path);
 
     string stringerror(int errnum);
+
+
+    struct MtabData
+    {
+	string device;
+	string dir;
+	string type;
+	vector<string> options;
+    };
+
+    bool getMtabData(const string& mount_point, bool& found, MtabData& mtab_data);
+
 
     template<class StreamType>
     void classic(StreamType& stream)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2011] Novell, Inc.
+ * Copyright (c) [2004-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -35,7 +35,7 @@
 
 #define CHSNAPBIN "/sbin/chsnap"
 
-#define COMPAREDIRSBIN "/usr/lib/snapper/bin/compare-dirs"
+#define COMPAREDIRSBIN LIBDIR "/snapper/bin/compare-dirs"
 
 #define NICEBIN "/usr/bin/nice"
 #define IONICEBIN "/usr/bin/ionice"
@@ -48,6 +48,9 @@
 
 #define MOUNTBIN "/bin/mount"
 #define UMOUNTBIN "/bin/umount"
+
+#define LVCREATE "/sbin/lvcreate"
+#define LVREMOVE "/sbin/lvremove"
 
 
 #endif

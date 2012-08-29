@@ -34,7 +34,6 @@
 #include "snapper/AppUtil.h"
 #include "snapper/Enum.h"
 #include "snapper/SnapperTmpl.h"
-#include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/Compare.h"
 #include "snapper/Exception.h"

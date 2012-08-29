@@ -36,7 +36,6 @@
 #include "snapper/Filesystem.h"
 #include "snapper/Enum.h"
 #include "snapper/SnapperTmpl.h"
-#include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/Exception.h"
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2011] Novell, Inc.
+ * Copyright (c) [2004-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -31,6 +31,7 @@
 #include <sys/utsname.h>
 #include <sys/ioctl.h>
 #include <dirent.h>
+#include <mntent.h>
 #include <string>
 #include <libxml/tree.h>
 #include <boost/algorithm/string.hpp>
@@ -70,6 +71,14 @@ namespace snapper
     {
 	struct stat Stat_ri;
 	return stat(Path_Cv.c_str(), &Stat_ri) >= 0 && S_ISREG(Stat_ri.st_mode);
+    }
+
+
+    bool
+    checkAnything(const string& Path_Cv)
+    {
+	struct stat Stat_ri;
+	return stat(Path_Cv.c_str(), &Stat_ri) >= 0;
     }
 
 
@@ -196,6 +205,42 @@ namespace snapper
 	string s(buf);
 	free(buf);
 	return s;
+    }
+
+
+    bool
+    getMtabData(const string& mount_point, bool& found, MtabData& mtab_data)
+    {
+	FILE* f = setmntent("/etc/mtab", "r");
+	if (!f)
+	{
+	    y2err("setmntent failed");
+	    return false;
+	}
+
+	found = false;
+
+	struct mntent* m;
+	while ((m = getmntent(f)))
+	{
+	    if (strcmp(m->mnt_type, "rootfs") == 0)
+		continue;
+
+	    if (m->mnt_dir == mount_point)
+	    {
+		found = true;
+		mtab_data.device = m->mnt_fsname;
+		mtab_data.dir = m->mnt_dir;
+		mtab_data.type = m->mnt_type;
+		boost::split(mtab_data.options, m->mnt_opts, boost::is_any_of(","),
+			     boost::token_compress_on);
+		break;
+	    }
+	}
+
+	endmntent(f);
+
+	return true;
     }
 
 

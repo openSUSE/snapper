@@ -62,7 +62,7 @@ autoheader
 automake --add-missing --copy
 autoconf
 
-./configure --libdir=%{_libdir} --prefix=%{prefix} --mandir=%{_mandir} --disable-silent-rules
+./configure --libdir=%{_libdir} --prefix=%{prefix} --mandir=%{_mandir} --docdir=%{prefix}/share/doc/packages/snapper --disable-ext4 --disable-silent-rules
 make %{?jobs:-j%jobs}
 
 %install
@@ -125,9 +125,9 @@ Authors:
 %else
 %config(noreplace) %{_sysconfdir}/sysconfig/snapper
 %endif
-%dir %{prefix}/lib/snapper
-%dir %{prefix}/lib/snapper/bin
-%{prefix}/lib/snapper/bin/compare-dirs
+%dir %{_libdir}/snapper
+%dir %{_libdir}/snapper/bin
+%{_libdir}/snapper/bin/compare-dirs
 
 %post -n libsnapper@LIBVERSION_MAJOR@
 /sbin/ldconfig
@@ -194,6 +194,6 @@ Authors:
 %dir /usr/lib/zypp/plugins
 %dir /usr/lib/zypp/plugins/commit
 %endif
-/usr/lib/zypp/plugins/commit/snapper.py
+/usr/lib/zypp/plugins/commit/snapper.py*
 
 %changelog

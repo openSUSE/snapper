@@ -29,6 +29,7 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <asm/types.h>
+#include <boost/algorithm/string.hpp>
 
 #include "snapper/Log.h"
 #include "snapper/Filesystem.h"
@@ -36,6 +37,8 @@
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
+#include "snapper/Regex.h"
+#include "config.h"
 
 
 #define BTRFS_IOCTL_MAGIC 0x94
@@ -66,15 +69,55 @@ struct btrfs_ioctl_vol_args_v2
 namespace snapper
 {
 
+    bool
+    mount(const string& device, const string& mount_point, const string& mount_type,
+	  const vector<string>& options)
+    {
+	string cmd_line = MOUNTBIN " -t " + mount_type + " --read-only";
+
+	if (!options.empty())
+	    cmd_line += " -o " + boost::join(options, ",");
+
+	cmd_line += " " + quote(device) + " " + quote(mount_point);
+
+	SystemCmd cmd(cmd_line);
+	return cmd.retcode() == 0;
+    }
+
+
+    bool
+    umount(const string& mount_point)
+    {
+	SystemCmd cmd(UMOUNTBIN " " + quote(mount_point));
+	return cmd.retcode() == 0;
+    }
+
+
     Filesystem*
     Filesystem::create(const string& fstype, const string& subvolume)
     {
-	if (fstype == "btrfs")
-	    return new Btrfs(subvolume);
+	typedef Filesystem* (*func_t)(const string& fstype, const string& subvolume);
 
-	if (fstype == "ext4")
-	    return new Ext4(subvolume);
+	static const func_t funcs[] = {
+#ifdef ENABLE_BTRFS
+		&Btrfs::create,
+#endif
+#ifdef ENABLE_EXT4
+		&Ext4::create,
+#endif
+#ifdef ENABLE_LVM
+		&Lvm::create,
+#endif
+	NULL };
 
+	for (const func_t* func = funcs; *func != NULL; ++func)
+	{
+	    Filesystem* fs = (*func)(fstype, subvolume);
+	    if (fs)
+		return fs;
+	}
+
+	y2err("do not know about fstype '" << fstype << "'");
 	throw InvalidConfigException();
     }
 
@@ -95,6 +138,17 @@ namespace snapper
 	SDir info_dir(infos_dir, decString(num));
 
 	return info_dir;
+    }
+
+
+#ifdef ENABLE_BTRFS
+    Filesystem*
+    Btrfs::create(const string& fstype, const string& subvolume)
+    {
+	if (fstype == "btrfs")
+	    return new Btrfs(subvolume);
+
+	return NULL;
     }
 
 
@@ -144,8 +198,8 @@ namespace snapper
     string
     Btrfs::snapshotDir(unsigned int num) const
     {
-	return (subvolume == "/" ? "" : subvolume) + "/.snapshots/" +
-	    decString(num) + "/snapshot";
+	return (subvolume == "/" ? "" : subvolume) + "/.snapshots/" + decString(num) +
+	    "/snapshot";
     }
 
 
@@ -282,6 +336,19 @@ namespace snapper
 
 	return ioctl(fd, BTRFS_IOC_SNAP_DESTROY, &args) == 0;
     }
+    // ENABLE_BTRFS
+#endif
+
+
+#ifdef ENABLE_EXT4
+    Filesystem*
+    Ext4::create(const string& fstype, const string& subvolume)
+    {
+	if (fstype == "ext4")
+	    return new Ext4(subvolume);
+
+	return NULL;
+    }
 
 
     Ext4::Ext4(const string& subvolume)
@@ -296,13 +363,32 @@ namespace snapper
 	{
 	    throw ProgramNotInstalledException(CHATTRBIN " not installed");
 	}
+
+	bool found = false;
+	MtabData mtab_data;
+
+	if (!getMtabData(subvolume, found, mtab_data))
+	    throw InvalidConfigException();
+
+	if (!found)
+	{
+	    y2err("filesystem not mounted");
+	    throw InvalidConfigException();
+	}
+
+	mount_options = mtab_data.options;
+	mount_options.erase(remove(mount_options.begin(), mount_options.end(), "rw"),
+			    mount_options.end());
+	mount_options.push_back("noatime");
+	mount_options.push_back("loop");
+	mount_options.push_back("noload");
     }
 
 
     void
     Ext4::createConfig() const
     {
-	int r1 = mkdir((subvolume + "/.snapshots").c_str(), 700);
+	int r1 = mkdir((subvolume + "/.snapshots").c_str(), 0700);
 	if (r1 == 0)
 	{
 	    SystemCmd cmd1(CHATTRBIN " +x " + quote(subvolume + "/.snapshots"));
@@ -315,7 +401,7 @@ namespace snapper
 	    throw CreateConfigFailedException("mkdir failed");
 	}
 
-	int r2 = mkdir((subvolume + "/.snapshots/.info").c_str(), 700);
+	int r2 = mkdir((subvolume + "/.snapshots/.info").c_str(), 0700);
 	if (r2 == 0)
 	{
 	    SystemCmd cmd2(CHATTRBIN " -x " + quote(subvolume + "/.snapshots/.info"));
@@ -409,29 +495,11 @@ namespace snapper
     bool
     Ext4::isSnapshotMounted(unsigned int num) const
     {
-	FILE* f = setmntent("/etc/mtab", "r");
-	if (!f)
-	{
-	    y2err("setmntent failed");
-	    throw IsSnapshotMountedFailedException();
-	}
-
 	bool mounted = false;
+	MtabData mtab_data;
 
-	struct mntent* m;
-	while ((m = getmntent(f)))
-	{
-	    if (strcmp(m->mnt_type, "rootfs") == 0)
-		continue;
-
-	    if (m->mnt_dir == snapshotDir(num))
-	    {
-		mounted = true;
-		break;
-	    }
-	}
-
-	endmntent(f);
+	if (!getMtabData(snapshotDir(num), mounted, mtab_data))
+	    throw IsSnapshotMountedFailedException();
 
 	return mounted;
     }
@@ -454,9 +522,7 @@ namespace snapper
 	    throw MountSnapshotFailedException();
 	}
 
-	SystemCmd cmd2(MOUNTBIN " -t ext4 -r -o loop,noload " + quote(snapshotFile(num)) +
-		       " " + quote(snapshotDir(num)));
-	if (cmd2.retcode() != 0)
+	if (!mount(snapshotFile(num), snapshotDir(num), "ext4", mount_options))
 	    throw MountSnapshotFailedException();
     }
 
@@ -467,12 +533,11 @@ namespace snapper
 	if (!isSnapshotMounted(num))
 	    return;
 
-	SystemCmd cmd1(UMOUNTBIN " " + quote(snapshotDir(num)));
-	if (cmd1.retcode() != 0)
+	if (!umount(snapshotDir(num)))
 	    throw UmountSnapshotFailedException();
 
-	SystemCmd cmd2(CHSNAPBIN " -n " + quote(snapshotFile(num)));
-	if (cmd2.retcode() != 0)
+	SystemCmd cmd1(CHSNAPBIN " -n " + quote(snapshotFile(num)));
+	if (cmd1.retcode() != 0)
 	    throw UmountSnapshotFailedException();
 
 	rmdir(snapshotDir(num).c_str());
@@ -484,5 +549,230 @@ namespace snapper
     {
 	return checkNormalFile(snapshotFile(num));
     }
+    // ENABLE_EXT4
+#endif
+
+
+#ifdef ENABLE_LVM
+    Filesystem*
+    Lvm::create(const string& fstype, const string& subvolume)
+    {
+	if (fstype == "lvm")
+	    return new Lvm(subvolume, "auto");
+
+	Regex rx("^lvm\\(([_a-z0-9]+)\\)$");
+	if (rx.match(fstype))
+	    return new Lvm(subvolume, rx.cap(1));
+
+	return NULL;
+    }
+
+
+    Lvm::Lvm(const string& subvolume, const string& mount_type)
+	: Filesystem(subvolume), mount_type(mount_type)
+    {
+	if (access(LVCREATE, X_OK) != 0)
+	{
+	    throw ProgramNotInstalledException(LVCREATE " not installed");
+	}
+
+	bool found = false;
+	MtabData mtab_data;
+
+	if (!getMtabData(subvolume, found, mtab_data))
+	    throw InvalidConfigException();
+
+	if (!found)
+	{
+	    y2err("filesystem not mounted");
+	    throw InvalidConfigException();
+	}
+
+	if (!detectLvmNames(mtab_data))
+	    throw InvalidConfigException();
+
+	mount_options = mtab_data.options;
+	mount_options.erase(remove(mount_options.begin(), mount_options.end(), "rw"),
+			    mount_options.end());
+	mount_options.push_back("noatime");
+	if (mount_type == "xfs")
+	    mount_options.push_back("nouuid");
+    }
+
+
+    void
+    Lvm::createConfig() const
+    {
+	int r1 = mkdir((subvolume + "/.snapshots").c_str(), 0700);
+	if (r1 != 0 && errno != EEXIST)
+	{
+	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
+	    throw CreateConfigFailedException("mkdir failed");
+	}
+    }
+
+
+    void
+    Lvm::deleteConfig() const
+    {
+	int r1 = rmdir((subvolume + "/.snapshots").c_str());
+	if (r1 != 0)
+	{
+	    y2err("rmdir failed errno:" << errno << " (" << strerror(errno) << ")");
+	    throw DeleteConfigFailedException("rmdir failed");
+	}
+    }
+
+
+    string
+    Lvm::infosDir() const
+    {
+	return (subvolume == "/" ? "" : subvolume) + "/.snapshots";
+    }
+
+
+    string
+    Lvm::snapshotDir(unsigned int num) const
+    {
+	return (subvolume == "/" ? "" : subvolume) + "/.snapshots/" + decString(num) +
+	    "/snapshot";
+    }
+
+
+    SDir
+    Lvm::openInfosDir() const
+    {
+	SDir subvolume_dir = openSubvolumeDir();
+	SDir infos_dir(subvolume_dir, ".snapshots");
+
+	struct stat stat;
+	if (infos_dir.stat(".", &stat, AT_SYMLINK_NOFOLLOW) != 0)
+	{
+	    throw IOErrorException();
+	}
+
+	if (stat.st_uid != 0 || stat.st_gid != 0)
+	{
+	    y2err("owner of .snapshots wrong");
+	    throw IOErrorException();
+	}
+
+	return infos_dir;
+    }
+
+
+    SDir
+    Lvm::openSnapshotDir(unsigned int num) const
+    {
+	SDir info_dir = openInfoDir(num);
+	SDir snapshot_dir(info_dir, "snapshot");
+
+	return snapshot_dir;
+    }
+
+
+    string
+    Lvm::snapshotLvName(unsigned int num) const
+    {
+	return lv_name + "-snapshot" + decString(num);
+    }
+
+
+    void
+    Lvm::createSnapshot(unsigned int num) const
+    {
+	sync();			// TODO looks like a bug that this is needed (with ext4)
+
+	SystemCmd cmd(LVCREATE " --snapshot --name " + quote(snapshotLvName(num)) + " " +
+		      quote(vg_name + "/" + lv_name));
+	if (cmd.retcode() != 0)
+	    throw CreateSnapshotFailedException();
+
+	int r1 = mkdir(snapshotDir(num).c_str(), 0700);
+	if (r1 != 0 && errno != EEXIST)
+	{
+	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
+	    throw CreateSnapshotFailedException();
+	}
+    }
+
+
+    void
+    Lvm::deleteSnapshot(unsigned int num) const
+    {
+	SystemCmd cmd(LVREMOVE " --force " + quote(vg_name + "/" + snapshotLvName(num)));
+	if (cmd.retcode() != 0)
+	    throw DeleteSnapshotFailedException();
+
+	rmdir(snapshotDir(num).c_str());
+    }
+
+
+    bool
+    Lvm::isSnapshotMounted(unsigned int num) const
+    {
+	bool mounted = false;
+	MtabData mtab_data;
+
+	if (!getMtabData(snapshotDir(num), mounted, mtab_data))
+	    throw IsSnapshotMountedFailedException();
+
+	return mounted;
+    }
+
+
+    void
+    Lvm::mountSnapshot(unsigned int num) const
+    {
+	if (isSnapshotMounted(num))
+	    return;
+
+	if (!mount(getDevice(num), snapshotDir(num), mount_type, mount_options))
+	    throw MountSnapshotFailedException();
+    }
+
+
+    void
+    Lvm::umountSnapshot(unsigned int num) const
+    {
+	if (!isSnapshotMounted(num))
+	    return;
+
+	if (!umount(snapshotDir(num)))
+	    throw UmountSnapshotFailedException();
+    }
+
+
+    bool
+    Lvm::checkSnapshot(unsigned int num) const
+    {
+	return checkAnything(getDevice(num));
+    }
+
+
+    bool
+    Lvm::detectLvmNames(const MtabData& mtab_data)
+    {
+	Regex rx("^/dev/mapper/(.+[^-])-([^-].+)$");
+	if (rx.match(mtab_data.device))
+	{
+	    vg_name = boost::replace_all_copy(rx.cap(1), "--", "-");
+	    lv_name = boost::replace_all_copy(rx.cap(2), "--", "-");
+	    return true;
+	}
+
+	y2err("could not detect lvm names from '" << mtab_data.device << "'");
+	return false;
+    }
+
+
+    string
+    Lvm::getDevice(unsigned int num) const
+    {
+	return "/dev/mapper/" + boost::replace_all_copy(vg_name, "-", "--") + "-" +
+	    boost::replace_all_copy(snapshotLvName(num), "-", "--");
+    }
+    // ENABLE_LVM
+#endif
 
 }

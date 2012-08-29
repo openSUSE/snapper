@@ -2,10 +2,9 @@
 # Makefile.am for snapper/snapper
 #
 
-AM_CXXFLAGS = -D_FILE_OFFSET_BITS=64
+AM_CXXFLAGS = -D_FILE_OFFSET_BITS=64 -DLIBDIR=\"$(libdir)\"
 
 INCLUDES = -I/usr/include/libxml2
-
 
 lib_LTLIBRARIES = libsnapper.la
 
