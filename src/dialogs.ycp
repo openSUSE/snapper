@@ -79,26 +79,26 @@ boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
       `TextEntry (`id (`description), _("Description"), ""),
       `RadioButtonGroup (`id(`rb_type), `Left (`HVSquash (`VBox (
           `Left (`RadioButton (`id ("single"), `opt (`notify),
-	      // radio button label
+              // radio button label
               _("Single snapshot"), true)),
           `Left (`RadioButton (`id ("pre"), `opt (`notify),
-	      // radio button label
+              // radio button label
               _("Pre"), false)),
-	  `VBox (
-	      `Left (`RadioButton (`id ("post"), `opt (`notify),
-	          // radio button label, snapshot selection will follow
-	          _("Post, paired with:"), false)
-	      ),
+          `VBox (
+              `Left (`RadioButton (`id ("post"), `opt (`notify),
+                  // radio button label, snapshot selection will follow
+                  _("Post, paired with:"), false)
+              ),
               `HBox (
-	          `HSpacing (2),
-		  `Left (`ComboBox (`id (`pre_list), `opt (`notify), "", pre_items))
-	      )
-	  )
+                  `HSpacing (2),
+                  `Left (`ComboBox (`id (`pre_list), `opt (`notify), "", pre_items))
+              )
+          )
       )))),
       `VSpacing (0.5),
       `ButtonBox (
-        `PushButton (`id(`ok), Label::OKButton()),
-        `PushButton (`id(`cancel), Label::CancelButton())
+          `PushButton (`id(`ok), Label::OKButton()),
+          `PushButton (`id(`cancel), Label::CancelButton())
       ),
       `VSpacing (0.5)), `HSpacing (1))
     );
@@ -186,15 +186,15 @@ any SummaryDialog() {
     // update list of snapshots
     void update_snapshots () {
 
-	// busy popup message
+        // busy popup message
         Popup::ShowFeedback ("", _("Reading list of snapshots..."));
 
         Snapper::InitializeSnapper (Snapper::current_config);
 	Snapper::ReadSnapshots ();
-	snapshots		= Snapper::snapshots;
-	Popup::ClearFeedback ();
+        snapshots       = Snapper::snapshots;
+        Popup::ClearFeedback ();
 
-	UI::ChangeWidget (`id (`snapshots_table), `Items, get_snapshot_items ());
+        UI::ChangeWidget (`id (`snapshots_table), `Items, get_snapshot_items ());
     }
 
 
@@ -263,7 +263,7 @@ any SummaryDialog() {
                 continue;
 	    }
 	}
-	else if (ret == `create) {
+        else if (ret == `create) {
             if (CreateSnapshotPopup (pre_snapshots))
             {
                 update_snapshots ();
