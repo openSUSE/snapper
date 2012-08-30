@@ -24,10 +24,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <stddef.h>
 #include <dirent.h>
 #include <unistd.h>
 #include <errno.h>
-#include <boost/thread.hpp>
 
 #include "snapper/FileUtils.h"
 #include "snapper/AppUtil.h"
