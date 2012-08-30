@@ -46,9 +46,6 @@
 #define DIFFBIN "/usr/bin/diff"
 #define CHATTRBIN "/usr/bin/chattr"
 
-#define MOUNTBIN "/bin/mount"
-#define UMOUNTBIN "/bin/umount"
-
 #define LVCREATE "/sbin/lvcreate"
 #define LVREMOVE "/sbin/lvremove"
 

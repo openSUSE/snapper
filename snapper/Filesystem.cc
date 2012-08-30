@@ -23,6 +23,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/mount.h>
 #include <errno.h>
 #include <unistd.h>
 #include <mntent.h>
@@ -69,27 +70,70 @@ struct btrfs_ioctl_vol_args_v2
 namespace snapper
 {
 
-    bool
-    mount(const string& device, const string& mount_point, const string& mount_type,
-	  const vector<string>& options)
+    vector<string>
+    filter_mount_options(vector<string>& options)
     {
-	string cmd_line = MOUNTBIN " -t " + mount_type + " --read-only";
+	static const char* ign_opt[] = { "ro", "rw", "suid", "nosuid", "exec", "noexec",
+					 "atime", "noatime", "diratime", "nodiratime",
+					 "relatime", "norelatime", "strictatime",
+					 "nostrictatime" };
 
-	if (!options.empty())
-	    cmd_line += " -o " + boost::join(options, ",");
+	vector<string> ret = options;
 
-	cmd_line += " " + quote(device) + " " + quote(mount_point);
+	for (size_t i = 0; i < lengthof(ign_opt); ++i)
+	    ret.erase(remove(ret.begin(), ret.end(), ign_opt[i]), ret.end());
 
-	SystemCmd cmd(cmd_line);
-	return cmd.retcode() == 0;
+	return ret;
     }
 
 
     bool
-    umount(const string& mount_point)
+    mount(const string& device, int fd, const string& mount_type, const vector<string>& options)
     {
-	SystemCmd cmd(UMOUNTBIN " " + quote(mount_point));
-	return cmd.retcode() == 0;
+	unsigned long mount_flags = MS_RDONLY | MS_NOATIME | MS_NODIRATIME | MS_NOEXEC | MS_NOSUID;
+
+	string mount_data = boost::join(options, ",");
+
+	int r1 = fchdir(fd);
+	if (r1 != 0)
+	{
+	    y2err("fchdir failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    return false;
+	}
+
+	int r2 = ::mount(device.c_str(), ".", mount_type.c_str(), mount_flags, mount_data.c_str());
+	if (r2 != 0)
+	{
+	    y2err("mount failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    chdir("/");
+	    return false;
+	}
+
+	chdir("/");
+	return true;
+    }
+
+
+    bool
+    umount(int fd, const string& mount_point)
+    {
+	int r1 = fchdir(fd);
+	if (r1 != 0)
+	{
+	    y2err("fchdir failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    return false;
+	}
+
+	int r2 = umount2(mount_point.c_str(), UMOUNT_NOFOLLOW);
+	if (r2 != 0)
+	{
+	    y2err("umount failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    chdir("/");
+	    return false;
+	}
+
+	chdir("/");
+	return true;
     }
 
 
@@ -376,10 +420,7 @@ namespace snapper
 	    throw InvalidConfigException();
 	}
 
-	mount_options = mtab_data.options;
-	mount_options.erase(remove(mount_options.begin(), mount_options.end(), "rw"),
-			    mount_options.end());
-	mount_options.push_back("noatime");
+	mount_options = filter_mount_options(mtab_data.options);
 	mount_options.push_back("loop");
 	mount_options.push_back("noload");
     }
@@ -522,8 +563,8 @@ namespace snapper
 	    throw MountSnapshotFailedException();
 	}
 
-	if (!mount(snapshotFile(num), snapshotDir(num), "ext4", mount_options))
-	    throw MountSnapshotFailedException();
+	// if (!mount(snapshotFile(num), snapshotDir(num), "ext4", mount_options))
+	// throw MountSnapshotFailedException();
     }
 
 
@@ -533,8 +574,8 @@ namespace snapper
 	if (!isSnapshotMounted(num))
 	    return;
 
-	if (!umount(snapshotDir(num)))
-	    throw UmountSnapshotFailedException();
+	// if (!umount(snapshotDir(num)))
+	// throw UmountSnapshotFailedException();
 
 	SystemCmd cmd1(CHSNAPBIN " -n " + quote(snapshotFile(num)));
 	if (cmd1.retcode() != 0)
@@ -557,9 +598,6 @@ namespace snapper
     Filesystem*
     Lvm::create(const string& fstype, const string& subvolume)
     {
-	if (fstype == "lvm")
-	    return new Lvm(subvolume, "auto");
-
 	Regex rx("^lvm\\(([_a-z0-9]+)\\)$");
 	if (rx.match(fstype))
 	    return new Lvm(subvolume, rx.cap(1));
@@ -591,10 +629,7 @@ namespace snapper
 	if (!detectLvmNames(mtab_data))
 	    throw InvalidConfigException();
 
-	mount_options = mtab_data.options;
-	mount_options.erase(remove(mount_options.begin(), mount_options.end(), "rw"),
-			    mount_options.end());
-	mount_options.push_back("noatime");
+	mount_options = filter_mount_options(mtab_data.options);
 	if (mount_type == "xfs")
 	    mount_options.push_back("nouuid");
     }
@@ -740,7 +775,9 @@ namespace snapper
 	if (isSnapshotMounted(num))
 	    return;
 
-	if (!mount(getDevice(num), snapshotDir(num), mount_type, mount_options))
+	SDir snapshot_dir = openSnapshotDir(num);
+
+	if (!mount(getDevice(num), snapshot_dir.fd(), mount_type, mount_options))
 	    throw MountSnapshotFailedException();
     }
 
@@ -751,7 +788,9 @@ namespace snapper
 	if (!isSnapshotMounted(num))
 	    return;
 
-	if (!umount(snapshotDir(num)))
+	SDir info_dir = openInfoDir(num);
+
+	if (!umount(info_dir.fd(), "snapshot"))
 	    throw UmountSnapshotFailedException();
     }
 

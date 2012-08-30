@@ -114,8 +114,8 @@ will likely need the global option \fI--config\fR, see \fBGLOBAL OPTIONS\fR and
 .TP
 \fI\-f, \-\-fstype\fR <fstype>
 Manually set filesystem type. Supported values are btrfs, ext4 and lvm. For
-lvm snapper used LVM thin-provisioned snapshots. The filesystem type on top of
-LVM can be provided in parentheses, e.g. lvm(xfs). This is required for XFS.
+lvm snapper uses LVM thin-provisioned snapshots. The filesystem type on top of
+LVM must be provided in parentheses, e.g. lvm(xfs).
 
 Without this option snapper tries to detect the filesystem.
 
