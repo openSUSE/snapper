@@ -95,6 +95,8 @@ boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
               )
           )
       )))),
+      // text entry label
+      `TextEntry (`id (`userdata), _("User data"), ""),
       `VSpacing (0.5),
       `ButtonBox (
           `PushButton (`id(`ok), Label::OKButton()),
@@ -108,10 +110,20 @@ boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
     while (true)
     {
         ret     = UI::UserInput ();
+        string user_s   = (string) UI::QueryWidget (`id (`userdata), `Value);
+        map userdata    = $[];
+        foreach (string line, splitstring (user_s, ","), {
+            list<string> split  = splitstring (line, ":");
+            if (size (split) > 1)
+            {
+                userdata[split[0]:""]   = split[1]:"";
+            }
+        });
         args    = $[
           "type"        : UI::QueryWidget (`id (`rb_type), `Value),
           "description" : UI::QueryWidget (`id (`description), `Value),
           "pre"         : UI::QueryWidget (`id (`pre_list), `Value),
+          "userdata"    : userdata
         ];
         if (ret == `ok || ret == `cancel)
         {
