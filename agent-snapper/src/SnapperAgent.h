@@ -14,7 +14,6 @@
 #include <scr/SCRAgent.h>
 
 #include <snapper/Snapper.h>
-#include <snapper/Factory.h>
 #include <snapper/Snapshot.h>
 #include <snapper/Comparison.h>
 #include <snapper/File.h>
