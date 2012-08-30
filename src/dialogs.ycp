@@ -194,7 +194,7 @@ any SummaryDialog() {
             {
                 y2milestone ("pre snappshot %1 does not have post", num);
                 snapshot_items	= add (snapshot_items,
-		    `item (`id (i), num, _("Pre"), date, "", s["description"]:""));
+                    `item (`id (i), num, _("Pre"), date, "", s["description"]:""));
             }
             else
             {
