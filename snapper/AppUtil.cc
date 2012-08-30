@@ -45,19 +45,6 @@ namespace snapper
     using namespace std;
 
 
-    void
-    createPath(const string& Path_Cv)
-    {
-	string::size_type Pos_ii = 0;
-	while ((Pos_ii = Path_Cv.find('/', Pos_ii + 1)) != string::npos)
-	{
-	    string Tmp_Ci = Path_Cv.substr(0, Pos_ii);
-	    mkdir(Tmp_Ci.c_str(), 0777);
-	}
-	mkdir(Path_Cv.c_str(), 0777);
-    }
-
-
     bool
     checkDir(const string& Path_Cv)
     {
