@@ -168,10 +168,17 @@ any SummaryDialog() {
 	if (num != 0)
 	    date = timestring ("%c", s["date"]:0, false);
 
+        string userdata = mergestring (
+          maplist (string key, string val, s["userdata"]:$[], {
+            return sformat ("%1=%2", key, val);
+          }),
+          ","
+        );
+
 	if (s["type"]:`none == `SINGLE)
 	{
 	    snapshot_items	= add (snapshot_items,
-		`item (`id (i), num, _("Single"), date, "", s["description"]:""));
+		`item (`id (i), num, _("Single"), date, "", s["description"]:"", userdata));
 	}
 	else if (s["type"]:`none == `POST)
 	{
@@ -185,7 +192,7 @@ any SummaryDialog() {
 	    string desc	= Snapper::snapshots[index,"description"]:"";
 	    string pre_date = timestring ("%c", Snapper::snapshots[index,"date"]:0, false);
 	    snapshot_items	= add (snapshot_items,
-		`item (`id (i), sformat ("%1 - %2", pre, num), _("Pre & Post"), pre_date, date, desc));
+		`item (`id (i), sformat ("%1 - %2", pre, num), _("Pre & Post"), pre_date, date, desc, userdata));
 	}
 	else
 	{
@@ -194,7 +201,7 @@ any SummaryDialog() {
             {
                 y2milestone ("pre snappshot %1 does not have post", num);
                 snapshot_items	= add (snapshot_items,
-                    `item (`id (i), num, _("Pre"), date, "", s["description"]:""));
+                    `item (`id (i), num, _("Pre"), date, "", s["description"]:"", userdata));
             }
             else
             {
@@ -232,7 +239,7 @@ any SummaryDialog() {
         ),
         `Table (`id (`snapshots_table), `opt(`notify, `keepSorting), `header (
             // table header
-            _("ID"), _("Type"), _("Start Date"), _("End Date"), _("Description")),
+            _("ID"), _("Type"), _("Start Date"), _("End Date"), _("Description"), _("User Data")),
             get_snapshot_items ()
         ),
         `HBox (
