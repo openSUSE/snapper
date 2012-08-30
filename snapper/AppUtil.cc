@@ -105,10 +105,8 @@ namespace snapper
     bool
     clonefile(int src_fd, int dest_fd)
     {
-#undef BTRFS_IOCTL_MAGIC
 #define BTRFS_IOCTL_MAGIC 0x94
-#undef BTRFS_IOC_CLONE
-#define BTRFS_IOC_CLONE _IOW (BTRFS_IOCTL_MAGIC, 9, int)
+#define BTRFS_IOC_CLONE _IOW(BTRFS_IOCTL_MAGIC, 9, int)
 
 	int r1 = ioctl(dest_fd, BTRFS_IOC_CLONE, src_fd);
 	if (r1 != 0)
@@ -317,7 +315,5 @@ namespace snapper
 
 	return s << fixed << double(tv.tv_sec) + (double)(tv.tv_usec) / 1000000.0 << "s";
     }
-
-    const string app_ws = " \t\n";
 
 }
