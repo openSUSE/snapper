@@ -23,7 +23,6 @@ License:	GPL-2.0
 Group:		System/Packages
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 Source:		snapper-%{version}.tar.bz2
-Patch1:		no-readonly.diff
 Prefix:		/usr
 BuildRequires:	boost-devel doxygen gcc-c++ libtool libxml2-devel
 BuildRequires:	python-devel swig
@@ -48,9 +47,6 @@ Authors:
 
 %prep
 %setup -n snapper-%{version}
-%if (0%{?suse_version} && 0%{?suse_version} < 1210) || (0%{?fedora} && 0%{?fedora} < 17) || (0%{?rhel_version} && 0%{?rhel_version} < 700) || (0%{?centos_version} && 0%{?centos_version} < 700) || (0%{?mdkversion} && 0%{?mdkversion} < 201200)
-%patch1
-%endif
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS -DNDEBUG"
