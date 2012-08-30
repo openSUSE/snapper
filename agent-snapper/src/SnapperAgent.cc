@@ -59,6 +59,40 @@ YCPList SnapperAgent::getListValue (const YCPMap &map, const YCPString &key)
 	return YCPList();
 }
 
+/**
+ * Search the map for value of given key;
+ * key is string and value is YCPMap
+ */
+YCPMap SnapperAgent::getMapValue (const YCPMap &map, const YCPString &key)
+{
+    YCPValue val = map->value(key);
+    if (!val.isNull() && val->isMap())
+        return val->asMap();
+    else
+        return YCPMap();
+}
+
+YCPMap map2ycpmap (const map<string, string>& userdata)
+{
+    YCPMap m;  
+    for (map<string, string>::const_iterator it = userdata.begin(); it != userdata.end(); ++it)
+    {
+        m->add (YCPString (it->first), YCPString (it->second));
+    }
+    return m;
+}
+
+map<string, string> ycpmap2stringmap (const YCPMap &ycp_map)
+{
+    map<string, string> m; 
+
+    for (YCPMapIterator i = ycp_map->begin(); i != ycp_map->end(); i++) {
+        string key = i->first->asString()->value();
+        m[key]  = i->second->asString()->value();
+    }
+    return m;
+}
+
 
 void
 log_do(LogLevel level, const string& component, const char* file, const int line, const char* func,
@@ -220,6 +254,7 @@ YCPValue SnapperAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPV
 		{
 		    s->add (YCPString ("pre_num"), YCPInteger (it->getPreNum()));
 		}
+                s->add (YCPString ("userdata"), YCPMap (map2ycpmap (it->getUserdata())));
 
 		y2debug ("snapshot %s", s.toString().c_str());
 		retlist->add (s);
@@ -384,8 +419,7 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
             string description  = getValue (argmap, YCPString ("description"), "");
             string cleanup      = getValue (argmap, YCPString ("cleanup"), "");
             string type         = getValue (argmap, YCPString ("type"), "single");
-            // FIXME set default cleanup
-            // FIXME set userdata
+            YCPMap userdata     = getMapValue (argmap, YCPString ("userdata"));
 
             const Snapshots& snapshots          = sh->getSnapshots();
             Snapshots::iterator snap;
@@ -423,10 +457,8 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
                 return YCPBoolean (false);
             }
 
-            if (cleanup != "")
-            {
-                snap->setCleanup(cleanup);
-            }
+            snap->setCleanup (cleanup);
+            snap->setUserdata (ycpmap2stringmap (userdata));
             snap->flushInfo();
             return ret;
         }
@@ -443,8 +475,6 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
                 return YCPBoolean (false);
             }
 
-            // TODO userdata
-
             if (argmap->hasKey(YCPString ("description")))
             {
                 snap->setDescription (getValue (argmap, YCPString ("description"), ""));
@@ -452,6 +482,10 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
             if (argmap->hasKey(YCPString ("cleanup")))
             {
                 snap->setCleanup (getValue (argmap, YCPString ("cleanup"), ""));
+            }
+            if (argmap->hasKey(YCPString ("userdata")))
+            {
+                snap->setUserdata (ycpmap2stringmap (getMapValue (argmap, YCPString ("userdata"))));
             }
             snap->flushInfo();
             return ret;

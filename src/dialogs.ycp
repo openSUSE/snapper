@@ -95,6 +95,8 @@ boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
               )
           )
       )))),
+      // text entry label
+      `TextEntry (`id (`userdata), _("User data"), ""),
       `VSpacing (0.5),
       `ButtonBox (
           `PushButton (`id(`ok), Label::OKButton()),
@@ -108,10 +110,20 @@ boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
     while (true)
     {
         ret     = UI::UserInput ();
+        string user_s   = (string) UI::QueryWidget (`id (`userdata), `Value);
+        map userdata    = $[];
+        foreach (string line, splitstring (user_s, ","), {
+            list<string> split  = splitstring (line, ":");
+            if (size (split) > 1)
+            {
+                userdata[split[0]:""]   = split[1]:"";
+            }
+        });
         args    = $[
           "type"        : UI::QueryWidget (`id (`rb_type), `Value),
           "description" : UI::QueryWidget (`id (`description), `Value),
           "pre"         : UI::QueryWidget (`id (`pre_list), `Value),
+          "userdata"    : userdata
         ];
         if (ret == `ok || ret == `cancel)
         {
@@ -147,6 +159,7 @@ any SummaryDialog() {
       integer i	= -1;
       snapshot_items	= [];
       pre_snapshots     = [];
+
       foreach (map s, snapshots, {
 	i	= i + 1;
 
@@ -176,7 +189,17 @@ any SummaryDialog() {
 	}
 	else
 	{
-            y2milestone ("skipping pre snapshot: %1", num);
+            integer post        = s["post_num"]:0; // 0 means there's no post
+            if (post == 0)
+            {
+                y2milestone ("pre snappshot %1 does not have post", num);
+                snapshot_items	= add (snapshot_items,
+                    `item (`id (i), num, _("Pre"), date, "", s["description"]:""));
+            }
+            else
+            {
+                y2milestone ("skipping pre snapshot: %1", num);
+            }
             pre_snapshots       = add (pre_snapshots, num);
 	}
       });
@@ -235,23 +258,30 @@ any SummaryDialog() {
     any ret = nil;
     while(true) {
 
-	ret = UI::UserInput();
+        ret = UI::UserInput();
 
-	integer selected = 0;
+        integer selected = 0;
 
-	if (ret == `show_c || ret == `snapshots_table) {
-	    selected = (integer) UI::QueryWidget (`id (`snapshots_table), `CurrentItem);
-	    ret = `show;
-	}
+        if (ret == `show_c || ret == `snapshots_table) {
+            selected = (integer) UI::QueryWidget (`id (`snapshots_table), `CurrentItem);
+            ret = `show;
+        }
 
-	if(ret == `abort || ret == `cancel || ret == `back) {
-	    if(ReallyAbort()) break;
-	    else continue;
-	}
+        if(ret == `abort || ret == `cancel || ret == `back) {
+            if(ReallyAbort()) break;
+            else continue;
+        }
         else if (ret == `show) {
-	    // `POST snapshot is selected from the couple
-	    Snapper::selected_snapshot	= snapshots[selected]:$[];
-	    Snapper::selected_snapshot_index	= selected;
+            if (snapshots[selected,"type"]:nil == `PRE)
+            {
+                // popup message
+                Popup::Message (_("This 'Pre' snapshot is not paired with any 'Post' one yet.
+Showing differences is not possible."));
+                continue;
+            }
+            // `POST snapshot is selected from the couple
+            Snapper::selected_snapshot          = snapshots[selected]:$[];
+            Snapper::selected_snapshot_index    = selected;
             break;
         }
 	else if (ret == `configs) {
