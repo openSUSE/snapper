@@ -59,20 +59,26 @@ YCPList SnapperAgent::getListValue (const YCPMap &map, const YCPString &key)
 	return YCPList();
 }
 
-string map2string (const map<string, string>& userdata)
+YCPMap map2ycpmap (const map<string, string>& userdata)
 {
-
-    string s;
+    YCPMap m;  
     for (map<string, string>::const_iterator it = userdata.begin(); it != userdata.end(); ++it)
     {
-        if (!s.empty()) {
-            s += ",";
-        }
-        s += it->first + "=" + it->second;
+        m->add (YCPString (it->first), YCPString (it->second));
     }
-    return s;
+    return m;
 }
 
+map<string, string> ycpmap2stringmap (const YCPMap &ycp_map)
+{
+    map<string, string> m; 
+
+    for (YCPMapIterator i = ycp_map->begin(); i != ycp_map->end(); i++) {
+        string key = i->first->asString()->value();
+        m[key]  = i->second->asString()->value();
+    }
+    return m;
+}
 
 
 void
@@ -235,7 +241,7 @@ YCPValue SnapperAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPV
 		{
 		    s->add (YCPString ("pre_num"), YCPInteger (it->getPreNum()));
 		}
-                s->add (YCPString ("userdata"), YCPString (map2string (it->getUserdata())));
+                s->add (YCPString ("userdata"), YCPMap (map2ycpmap (it->getUserdata())));
 
 		y2debug ("snapshot %s", s.toString().c_str());
 		retlist->add (s);
