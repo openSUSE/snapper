@@ -376,10 +376,87 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
 
     if (path->length() == 1) {
 
+	if (PC(0) == "create") {
+
+            string description  = getValue (argmap, YCPString ("description"), "");
+            string cleanup      = getValue (argmap, YCPString ("cleanup"), "");
+            string type         = getValue (argmap, YCPString ("type"), "single");
+            // FIXME set default cleanup
+            // FIXME set userdata
+
+            const Snapshots& snapshots          = sh->getSnapshots();
+            Snapshots::iterator snap;
+
+            if (type == "single") {
+                snap    = sh->createSingleSnapshot(description);
+            }
+            else if (type == "pre") {
+                snap    = sh->createPreSnapshot(description);
+            }
+            else if (type == "post") {
+                // check if pre was given!
+                int pre = getIntValue (argmap, YCPString ("pre"), -1);
+                if (pre == -1)
+                {
+                    snapper_error       = "pre_not_given";
+                    return YCPBoolean (false);
+                }
+                else
+                {
+                    Snapshots::const_iterator snap1 = snapshots.find (pre);
+                    if (snap1 == snapshots.end())
+                    {
+                        snapper_error   = "pre_not_found";
+                        return YCPBoolean (false);
+                    }
+                    else
+                    {
+                        snap    = sh->createPostSnapshot(description, snap1);
+                    }
+                }
+            }
+            else {
+                snapper_error   = "wrong_snapshot_type";
+                return YCPBoolean (false);
+            }
+
+            if (cleanup != "")
+            {
+                snap->setCleanup(cleanup);
+            }
+            snap->flushInfo();
+            return ret;
+        }
+        else if (PC(0) == "modify") {
+
+            int num     = getIntValue (argmap, YCPString ("num"), 0);
+
+            Snapshots& snapshots = sh->getSnapshots();
+            Snapshots::iterator snap = snapshots.find(num);
+            if (snap == snapshots.end())
+            {
+                y2error ("snapshot '%d' not found", num);
+                snapper_error   = "snapshot_not_found";
+                return YCPBoolean (false);
+            }
+
+            // TODO userdata
+
+            if (argmap->hasKey(YCPString ("description")))
+            {
+                snap->setDescription (getValue (argmap, YCPString ("description"), ""));
+            }
+            if (argmap->hasKey(YCPString ("cleanup")))
+            {
+                snap->setCleanup (getValue (argmap, YCPString ("cleanup"), ""));
+            }
+            snap->flushInfo();
+            return ret;
+        }
 	/**
 	 * Rollback the list of given files from snapshot num1 to num2 (system by default)
 	 */
-	if (PC(0) == "rollback") {
+        else if (PC(0) == "rollback") {
 
 	    unsigned int num1	= getIntValue (argmap, YCPString ("from"), 0);
 	    unsigned int num2	= getIntValue (argmap, YCPString ("to"), 0);
