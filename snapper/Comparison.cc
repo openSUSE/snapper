@@ -24,6 +24,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <string.h>
+#include <errno.h>
 
 #include "snapper/Comparison.h"
 #include "snapper/Snapper.h"

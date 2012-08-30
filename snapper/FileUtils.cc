@@ -28,6 +28,8 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <errno.h>
+#include <stdlib.h>
+#include <algorithm>
 
 #include "snapper/FileUtils.h"
 #include "snapper/AppUtil.h"
