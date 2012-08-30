@@ -161,12 +161,12 @@ any SummaryDialog() {
       pre_snapshots     = [];
 
       foreach (map s, snapshots, {
-	i	= i + 1;
+        i               = i + 1;
 
-	integer num	= s["num"]:0;
-	string date	= "";
-	if (num != 0)
-	    date = timestring ("%c", s["date"]:0, false);
+        integer num     = s["num"]:0;
+        string date     = "";
+        if (num != 0)
+          date = timestring ("%c", s["date"]:0, false);
 
         string userdata = mergestring (
           maplist (string key, string val, s["userdata"]:$[], {
@@ -175,40 +175,40 @@ any SummaryDialog() {
           ","
         );
 
-	if (s["type"]:`none == `SINGLE)
-	{
-	    snapshot_items	= add (snapshot_items,
-		`item (`id (i), num, _("Single"), date, "", s["description"]:"", userdata));
-	}
-	else if (s["type"]:`none == `POST)
-	{
-	    integer pre		= s["pre_num"]:0; // pre canot be 0
-	    integer index	= Snapper::id2index[pre]:-1;
-	    if (pre == 0 || index == -1)
-	    {
-		y2warning ("something wrong - pre:%1, index:%2", pre, index);
-		continue;
-	    }
-	    string desc	= Snapper::snapshots[index,"description"]:"";
-	    string pre_date = timestring ("%c", Snapper::snapshots[index,"date"]:0, false);
-	    snapshot_items	= add (snapshot_items,
-		`item (`id (i), sformat ("%1 - %2", pre, num), _("Pre & Post"), pre_date, date, desc, userdata));
-	}
-	else
-	{
-            integer post        = s["post_num"]:0; // 0 means there's no post
-            if (post == 0)
-            {
-                y2milestone ("pre snappshot %1 does not have post", num);
-                snapshot_items	= add (snapshot_items,
-                    `item (`id (i), num, _("Pre"), date, "", s["description"]:"", userdata));
-            }
-            else
-            {
-                y2milestone ("skipping pre snapshot: %1", num);
-            }
-            pre_snapshots       = add (pre_snapshots, num);
-	}
+        if (s["type"]:`none == `SINGLE)
+        {
+          snapshot_items        = add (snapshot_items,
+	    `item (`id (i), num, _("Single"), date, "", s["description"]:"", userdata));
+        }
+        else if (s["type"]:`none == `POST)
+        {
+          integer pre           = s["pre_num"]:0; // pre canot be 0
+          integer index	= Snapper::id2index[pre]:-1;
+          if (pre == 0 || index == -1)
+          {
+            y2warning ("something wrong - pre:%1, index:%2", pre, index);
+            continue;
+	  }
+          string desc           = Snapper::snapshots[index,"description"]:"";
+          string pre_date       = timestring ("%c", Snapper::snapshots[index,"date"]:0, false);
+          snapshot_items        = add (snapshot_items,
+            `item (`id (i), sformat ("%1 - %2", pre, num), _("Pre & Post"), pre_date, date, desc, userdata));
+        }
+        else
+        {
+          integer post          = s["post_num"]:0; // 0 means there's no post
+          if (post == 0)
+          {
+            y2milestone ("pre snappshot %1 does not have post", num);
+            snapshot_items      = add (snapshot_items,
+              `item (`id (i), num, _("Pre"), date, "", s["description"]:"", userdata));
+          }
+          else
+          {
+            y2milestone ("skipping pre snapshot: %1", num);
+          }
+          pre_snapshots         = add (pre_snapshots, num);
+        }
       });
       return snapshot_items;
     }
