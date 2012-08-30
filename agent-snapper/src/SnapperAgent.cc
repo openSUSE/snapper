@@ -67,9 +67,9 @@ YCPMap SnapperAgent::getMapValue (const YCPMap &map, const YCPString &key)
 {
     YCPValue val = map->value(key);
     if (!val.isNull() && val->isMap())
-	return val->asMap();
+        return val->asMap();
     else
-	return YCPMap();
+        return YCPMap();
 }
 
 YCPMap map2ycpmap (const map<string, string>& userdata)
