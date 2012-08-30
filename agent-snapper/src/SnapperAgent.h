@@ -53,6 +53,12 @@ private:
      */
     YCPList getListValue (const YCPMap &map, const YCPString &key);
 
+    /**
+     * Search the map for value of given key;
+     * key is string and value is YCPMap
+     */
+    YCPMap getMapValue (const YCPMap &map, const YCPString &key);
+
 public:
     /**
      * Default constructor.
