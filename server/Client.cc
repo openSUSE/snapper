@@ -593,6 +593,8 @@ Client::get_snapshot(DBus::Connection& conn, DBus::Message& msg)
     Snapshots& snapshots = snapper->getSnapshots();
 
     Snapshots::iterator snap = snapshots.find(num);
+    if (snap == snapshots.end())
+	throw IllegalSnapshotException();
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -627,6 +629,8 @@ Client::set_snapshot(DBus::Connection& conn, DBus::Message& msg)
     Snapshots& snapshots = snapper->getSnapshots();
 
     Snapshots::iterator snap = snapshots.find(num);
+    if (snap == snapshots.end())
+	throw IllegalSnapshotException();
 
     snap->setDescription(description);
     snap->setCleanup(cleanup);
@@ -817,6 +821,8 @@ Client::mount_snapshot(DBus::Connection& conn, DBus::Message& msg)
     Snapshots& snapshots = snapper->getSnapshots();
 
     Snapshots::iterator snap = snapshots.find(num);
+    if (snap == snapshots.end())
+	throw IllegalSnapshotException();
 
     snap->mountFilesystemSnapshot();
 
@@ -852,6 +858,8 @@ Client::umount_snapshot(DBus::Connection& conn, DBus::Message& msg)
     Snapshots& snapshots = snapper->getSnapshots();
 
     Snapshots::iterator snap = snapshots.find(num);
+    if (snap == snapshots.end())
+	throw IllegalSnapshotException();
 
     snap->umountFilesystemSnapshot();
 
@@ -881,6 +889,8 @@ Client::get_mount_point(DBus::Connection& conn, DBus::Message& msg)
     Snapper* snapper = it->getSnapper();
     Snapshots& snapshots = snapper->getSnapshots();
     Snapshots::iterator snap = snapshots.find(num);
+    if (snap == snapshots.end())
+	throw IllegalSnapshotException();
 
     string mount_point = snap->snapshotDir();
 
