@@ -60,7 +60,84 @@ symbol ReadDialog() {
 }
 
 /**
- * Ask for new snapshot data
+ * convert map of userdata to string
+ * $[ "a" : "b", "1" : "2" ] -> "a=b,1=2"
+ */
+string userdata2string (map<string,string> userdata) {
+
+  return mergestring (
+    maplist (string key, string val, userdata, {
+      return sformat ("%1=%2", key, val);
+    }),
+    ","
+  );
+}
+
+
+/**
+ * Popup for modification of existing snapshot
+ * @return true if new snapshot was created
+ */
+boolean ModifySnapshotPopup (map snapshot) {
+
+    boolean modified      = false;
+    integer num           = snapshot["num"]:0;
+
+// FIXME table (and popup) shows only post snapshot, but description belongs to pre...
+    UI::OpenDialog (`opt (`decorated), `HBox (`HSpacing (1), `VBox(
+      `VSpacing (0.5),
+      `HSpacing (65),
+      // popup label, %1 is number
+      `Label (sformat (_("Modify Snapshot '%1'"), num)),
+      // text entry label
+      `TextEntry (`id (`description), _("Description"),
+        snapshot["description"]:""),
+      // text entry label
+      `TextEntry (`id (`userdata), _("User data"),
+        userdata2string (snapshot["userdata"]:$[])),
+      `VSpacing (0.5),
+      `ButtonBox (
+          `PushButton (`id(`ok), Label::OKButton()),
+          `PushButton (`id(`cancel), Label::CancelButton())
+      ),
+      `VSpacing (0.5)), `HSpacing (1))
+    );
+
+    any ret     = nil;
+    map args    = $[];
+    while (true)
+    {
+        ret     = UI::UserInput ();
+        string user_s   = (string) UI::QueryWidget (`id (`userdata), `Value);
+        map userdata    = $[];
+        foreach (string line, splitstring (user_s, ","), {
+            list<string> split  = splitstring (line, "=");
+            if (size (split) > 1)
+            {
+                userdata[split[0]:""]   = split[1]:"";
+            }
+        });
+        args    = $[
+          "num"         : num,
+          "description" : UI::QueryWidget (`id (`description), `Value),
+          "userdata"    : userdata
+        ];
+        if (ret == `ok || ret == `cancel)
+        {
+            break;
+        }
+    }
+    UI::CloseDialog ();
+    if (ret == `ok)
+    {
+        modified        = Snapper::ModifySnapshot (args);
+    }
+
+    return modified;
+}
+
+/**
+ * Popup for creating new snapshot
  * @return true if new snapshot was created
  */
 boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
@@ -113,7 +190,7 @@ boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
         string user_s   = (string) UI::QueryWidget (`id (`userdata), `Value);
         map userdata    = $[];
         foreach (string line, splitstring (user_s, ","), {
-            list<string> split  = splitstring (line, ":");
+            list<string> split  = splitstring (line, "=");
             if (size (split) > 1)
             {
                 userdata[split[0]:""]   = split[1]:"";
@@ -168,12 +245,7 @@ any SummaryDialog() {
         if (num != 0)
           date = timestring ("%c", s["date"]:0, false);
 
-        string userdata = mergestring (
-          maplist (string key, string val, s["userdata"]:$[], {
-            return sformat ("%1=%2", key, val);
-          }),
-          ","
-        );
+        string userdata = userdata2string (s["userdata"]:$[]);
 
         if (s["type"]:`none == `SINGLE)
         {
@@ -246,6 +318,8 @@ any SummaryDialog() {
             // button label
             `PushButton (`id (`show_c), `opt (`default), _("Show Changes")),
             `PushButton (`id (`create), Label::CreateButton ()),
+            // button label
+            `PushButton (`id (`modify), _("Modify")),
             `HStretch ()
         )
     );
@@ -302,6 +376,14 @@ Showing differences is not possible."));
 	}
         else if (ret == `create) {
             if (CreateSnapshotPopup (pre_snapshots))
+            {
+                update_snapshots ();
+                continue;
+            }
+        }
+        else if (ret == `modify) {
+            selected = (integer) UI::QueryWidget (`id (`snapshots_table), `CurrentItem);
+            if (ModifySnapshotPopup (snapshots[selected]:$[]))
             {
                 update_snapshots ();
                 continue;

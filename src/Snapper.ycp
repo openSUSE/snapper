@@ -246,6 +246,27 @@ global boolean InitializeSnapper (string config) {
 }
 
 /**
+ * Modify existing snapshot
+ * Return true on success
+ */
+global boolean ModifySnapshot (map args) {
+
+    boolean success     = (boolean) SCR::Execute (.snapper.modify, args);
+    if (!success)
+    {
+        map err_map     = LastSnapperErrorMap ();
+        string type     = err_map["type"]:"";
+        string details  = _("Reason not known.");
+
+        y2warning ("modification failed with '%1'", err_map);
+        // error popup
+        Report::Error (sformat (_("Failed to modify snapshot:
+%1"), details));
+    }
+    return success;
+}
+
+/**
  * Create new snapshot
  * Return true on success
  */
