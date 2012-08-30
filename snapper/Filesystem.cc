@@ -685,7 +685,11 @@ namespace snapper
     void
     Lvm::createSnapshot(unsigned int num) const
     {
-	sync();			// TODO looks like a bug that this is needed (with ext4)
+	{
+	    // TODO looks like a bug that this is needed (with ext4)
+	    SDir subvolume_dir = openSubvolumeDir();
+	    syncfs(subvolume_dir.fd());
+	}
 
 	SystemCmd cmd(LVCREATE " --snapshot --name " + quote(snapshotLvName(num)) + " " +
 		      quote(vg_name + "/" + lv_name));

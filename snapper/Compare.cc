@@ -343,11 +343,11 @@ namespace snapper
 
 	while (first1 != last1 || first2 != last2)
 	{
-	    if (first1 != last1 && filter(*first1))
+	    if (first1 != last1 && filter(path + "/" + *first1))
 	    {
 		++first1;
 	    }
-	    else if (first2 != last2 && filter(*first2))
+	    else if (first2 != last2 && filter(path + "/" + *first2))
 	    {
 		++first2;
 	    }
