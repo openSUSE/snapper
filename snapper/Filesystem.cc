@@ -73,10 +73,12 @@ namespace snapper
     vector<string>
     filter_mount_options(vector<string>& options)
     {
-	static const char* ign_opt[] = { "ro", "rw", "suid", "nosuid", "exec", "noexec",
-					 "atime", "noatime", "diratime", "nodiratime",
-					 "relatime", "norelatime", "strictatime",
-					 "nostrictatime" };
+	static const char* ign_opt[] = {
+	    "ro", "rw",
+	    "exec", "noexec", "suid", "nosuid", "dev", "nodev",
+	    "atime", "noatime", "diratime", "nodiratime",
+	    "relatime", "norelatime", "strictatime", "nostrictatime"
+	};
 
 	vector<string> ret = options;
 
@@ -90,7 +92,8 @@ namespace snapper
     bool
     mount(const string& device, int fd, const string& mount_type, const vector<string>& options)
     {
-	unsigned long mount_flags = MS_RDONLY | MS_NOATIME | MS_NODIRATIME | MS_NOEXEC | MS_NOSUID;
+	unsigned long mount_flags = MS_RDONLY | MS_NOEXEC | MS_NOSUID | MS_NODEV |
+	    MS_NOATIME | MS_NODIRATIME;
 
 	string mount_data = boost::join(options, ",");
 
