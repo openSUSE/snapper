@@ -127,7 +127,11 @@ namespace snapper
 	    return false;
 	}
 
+#ifdef UMOUNT_NOFOLLOW
 	int r2 = umount2(mount_point.c_str(), UMOUNT_NOFOLLOW);
+#else
+	int r2 = umount2(mount_point.c_str(), 0);
+#endif
 	if (r2 != 0)
 	{
 	    y2err("umount failed errno:" << errno << " (" << stringerror(errno) << ")");
@@ -725,8 +729,12 @@ namespace snapper
     {
 	{
 	    // TODO looks like a bug that this is needed (with ext4)
+#if __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 14)
 	    SDir subvolume_dir = openSubvolumeDir();
 	    syncfs(subvolume_dir.fd());
+#else
+	    sync();
+#endif
 	}
 
 	SystemCmd cmd(LVCREATE " --snapshot --name " + quote(snapshotLvName(num)) + " " +
