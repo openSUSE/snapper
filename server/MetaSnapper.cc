@@ -240,15 +240,11 @@ MetaSnappers::init()
 
     for (list<ConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
     {
-#define GCC_VERSION (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__)
-
-#if GCC_VERSION > 40500
+#if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4)
 	entries.emplace_back(*it);
 #else
 	entries.push_back(*it);
 #endif
-
-#undef GCC_VERSION
     }
 }
 
@@ -272,15 +268,11 @@ MetaSnappers::createConfig(const string& config_name, const string& subvolume,
 
     ConfigInfo config_info = Snapper::getConfig(config_name);
 
-#define GCC_VERSION (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__)
-
-#if GCC_VERSION > 40500
+#if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4)
     entries.emplace_back(config_info);
 #else
     entries.push_back(config_info);
 #endif
-
-#undef GCC_VERSION
 }
 
 

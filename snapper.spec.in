@@ -26,7 +26,7 @@ Source:		snapper-%{version}.tar.bz2
 Prefix:		/usr
 BuildRequires:	boost-devel doxygen gcc-c++ libtool libxml2-devel
 BuildRequires:	python-devel swig
-BuildRequires:  dbus-1-devel
+BuildRequires:	dbus-1-devel
 %if (0%{?suse_version} && 0%{?suse_version} >= 1210)
 BuildRequires:	libzypp(plugin:commit)
 %endif

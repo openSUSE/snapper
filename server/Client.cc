@@ -1240,15 +1240,11 @@ Clients::add(const string& name)
 {
     assert(find(name) == entries.end());
 
-#define GCC_VERSION (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__)
-
-#if GCC_VERSION > 40500
+#if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4)
     entries.emplace_back(name);
 #else
     entries.push_back(name);
 #endif
-
-#undef GCC_VERSION
 
     return --entries.end();
 }
