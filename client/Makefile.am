@@ -16,5 +16,5 @@ snapper_SOURCES =			\
 	cleanup.cc	cleanup.h
 
 snapper_LDADD = ../snapper/libsnapper.la utils/libutils.la ../dbus/libdbus.la	\
-	-ldbus-1 -lboost_thread
+	-ldbus-1 -lboost_thread-mt
 

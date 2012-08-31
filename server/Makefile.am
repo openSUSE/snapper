@@ -14,5 +14,5 @@ snapperd_SOURCES =					\
 	Types.cc		Types.h
 
 snapperd_LDADD = ../snapper/libsnapper.la ../dbus/libdbus.la	\
-	-ldbus-1 -lboost_thread -lrt
+	-ldbus-1 -lboost_thread-mt -lrt
 
