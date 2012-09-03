@@ -47,6 +47,7 @@
 #define BTRFS_SUBVOL_NAME_MAX 4039
 #define BTRFS_SUBVOL_RDONLY (1ULL << 1)
 
+#define BTRFS_IOC_SNAP_CREATE _IOW(BTRFS_IOCTL_MAGIC, 1, struct btrfs_ioctl_vol_args)
 #define BTRFS_IOC_SUBVOL_CREATE _IOW(BTRFS_IOCTL_MAGIC, 14, struct btrfs_ioctl_vol_args)
 #define BTRFS_IOC_SNAP_DESTROY _IOW(BTRFS_IOCTL_MAGIC, 15, struct btrfs_ioctl_vol_args)
 #define BTRFS_IOC_SNAP_CREATE_V2 _IOW(BTRFS_IOCTL_MAGIC, 23, struct btrfs_ioctl_vol_args_v2)
@@ -357,23 +358,34 @@ namespace snapper
 	struct btrfs_ioctl_vol_args args;
 	memset(&args, 0, sizeof(args));
 
-	strncpy(args.name, name.c_str(), BTRFS_PATH_NAME_MAX);
+	strncpy(args.name, name.c_str(), sizeof(args.name) - 1);
 
-        return ioctl(fddst, BTRFS_IOC_SUBVOL_CREATE, &args) == 0;
+	return ioctl(fddst, BTRFS_IOC_SUBVOL_CREATE, &args) == 0;
     }
 
 
     bool
     Btrfs::create_snapshot(int fd, int fddst, const string& name) const
     {
-	struct btrfs_ioctl_vol_args_v2 args;
+	struct btrfs_ioctl_vol_args_v2 args_v2;
+	memset(&args_v2, 0, sizeof(args_v2));
+
+	args_v2.fd = fd;
+	args_v2.flags |= BTRFS_SUBVOL_RDONLY;
+	strncpy(args_v2.name, name.c_str(), sizeof(args_v2.name) - 1);
+
+	if (ioctl(fddst, BTRFS_IOC_SNAP_CREATE_V2, &args_v2) == 0)
+	    return true;
+	else if (errno != EINVAL)
+	    return false;
+
+	struct btrfs_ioctl_vol_args args;
 	memset(&args, 0, sizeof(args));
 
 	args.fd = fd;
-	args.flags |= BTRFS_SUBVOL_RDONLY;
-	strncpy(args.name, name.c_str(), BTRFS_SUBVOL_NAME_MAX);
+	strncpy(args.name, name.c_str(), sizeof(args.name) - 1);
 
-	return ioctl(fddst, BTRFS_IOC_SNAP_CREATE_V2, &args) == 0;
+	return ioctl(fddst, BTRFS_IOC_SNAP_CREATE, &args) == 0;
     }
 
 
@@ -383,7 +395,7 @@ namespace snapper
 	struct btrfs_ioctl_vol_args args;
 	memset(&args, 0, sizeof(args));
 
-	strncpy(args.name, name.c_str(), BTRFS_PATH_NAME_MAX);
+	strncpy(args.name, name.c_str(), sizeof(args.name) - 1);
 
 	return ioctl(fd, BTRFS_IOC_SNAP_DESTROY, &args) == 0;
     }
