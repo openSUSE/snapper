@@ -339,6 +339,7 @@ namespace snapper
 	if (dest_fd < 0)
 	{
 	    y2err("open failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    close(src_fd);
 	    return false;
 	}
 
@@ -346,6 +347,8 @@ namespace snapper
 	if (r1 != 0)
 	{
 	    y2err("fchmod failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    close(dest_fd);
+	    close(src_fd);
 	    return false;
 	}
 
@@ -353,6 +356,8 @@ namespace snapper
 	if (r2 != 0)
 	{
 	    y2err("fchown failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    close(dest_fd);
+	    close(src_fd);
 	    return false;
 	}
 
@@ -363,7 +368,6 @@ namespace snapper
 	}
 
 	close(dest_fd);
-
 	close(src_fd);
 
 	return ret;
