@@ -1,0 +1,24 @@
+.TH "SNAPPERD" "8" "2012-09-04" "@VERSION@" "Filesystem Snapshot Management"
+.SH "NAME"
+.LP
+snapperd - DBus daemon for snapper
+
+.SH "SYNTAX"
+.LP
+snapperd
+
+.SH "DESCRIPTION"
+.LP
+Snapperd is a DBus daemon for snapper and not for direct use by the user.
+
+.SH "HOMEPAGE"
+.LP
+http://en.opensuse.org/Portal:Snapper
+
+.SH "AUTHORS"
+.LP
+Arvin Schnell <aschnell@suse.de>
+
+.SH "SEE ALSO"
+.LP
+snapper(8)
