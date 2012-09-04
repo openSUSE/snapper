@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2010-2011] Novell, Inc.
+ * Copyright (c) [2010-2012] Novell, Inc.
  *
  * All Rights Reserved.
  *
