@@ -21,6 +21,7 @@
 
 
 #include <string.h>
+#include <unistd.h>
 
 #include "snapper/Exception.h"
 #include "snapper/XmlFile.h"
@@ -40,6 +41,8 @@ namespace snapper
     XmlFile::XmlFile(int fd, const string& url)
 	: doc(xmlReadFd(fd, url.c_str(), NULL, XML_PARSE_NOBLANKS | XML_PARSE_NONET))
     {
+	close(fd);
+
 	if (!doc)
 	    throw IOErrorException();
     }
@@ -62,8 +65,17 @@ namespace snapper
     void
     XmlFile::save(int fd)
     {
-	if (xmlDocDump(fdopen(fd, "w"), doc) == -1)
+	FILE* f = fdopen(fd, "w");
+	if (!f)
 	    throw IOErrorException();
+
+	if (xmlDocDump(f, doc) == -1)
+	{
+	    fclose(f);
+	    throw IOErrorException();
+	}
+
+	fclose(f);
     }
 
 
