@@ -376,7 +376,7 @@ namespace snapper
 
 	if (ioctl(fddst, BTRFS_IOC_SNAP_CREATE_V2, &args_v2) == 0)
 	    return true;
-	else if (errno != EINVAL)
+	else if (errno != ENOTTY && errno != EINVAL)
 	    return false;
 
 	struct btrfs_ioctl_vol_args args;
