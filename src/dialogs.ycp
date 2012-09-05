@@ -60,7 +60,144 @@ symbol ReadDialog() {
 }
 
 /**
- * Ask for new snapshot data
+ * convert map of userdata to string
+ * $[ "a" : "b", "1" : "2" ] -> "a=b,1=2"
+ */
+string userdata2string (map<string,string> userdata) {
+
+  return mergestring (
+    maplist (string key, string val, userdata, {
+      return sformat ("%1=%2", key, val);
+    }),
+    ","
+  );
+}
+
+// transform userdata from widget to map
+map get_userdata (symbol id) {
+
+    map u               = $[];
+    string user_s       = (string) UI::QueryWidget (`id (id), `Value);
+    foreach (string line, splitstring (user_s, ","), {
+      list<string> split  = splitstring (line, "=");
+      if (size (split) > 1)
+      {
+        u[split[0]:""]   = split[1]:"";
+      }
+    });
+    return u;
+}
+
+
+/**
+ * Popup for modification of existing snapshot
+ * @return true if new snapshot was created
+ */
+boolean ModifySnapshotPopup (map snapshot) {
+
+    boolean modified            = false;
+    integer num                 = snapshot["num"]:0;
+    integer previous_num        = snapshot["pre_num"]:num;
+    symbol type                 = snapshot["type"]:`none;
+
+    integer pre_index           = Snapper::id2index[previous_num]:0;
+    map pre_snapshot            = Snapper::snapshots[pre_index]:$[];
+
+    term cont   = `VBox (
+      // popup label, %1 is number
+      `Label (sformat (_("Modify Snapshot %1"), num)),
+      // text entry label
+      `TextEntry (`id (`description), _("Description"),
+        snapshot["description"]:""),
+      // text entry label
+      `TextEntry (`id (`userdata), _("User data"),
+        userdata2string (snapshot["userdata"]:$[]))
+    );
+
+    if (type != `SINGLE)
+    {
+      cont   = `VBox (
+        // popup label, %1, %2 are numbers (range)
+        `Label (sformat (_("Modify Snapshots %1 - %2"), previous_num, num)),
+        // label
+        `Left (`Label (sformat (_("Pre (%1)"), previous_num))),
+        `HBox (
+            `HSpacing (2),
+            // text entry label
+            `TextEntry (`id (`pre_description), _("Description"),
+              pre_snapshot["description"]:""),
+            // text entry label
+            `TextEntry (`id (`pre_userdata), _("User data"),
+              userdata2string (pre_snapshot["userdata"]:$[]))
+        ),
+        `VSpacing (),
+        // label
+        `Left (`Label (sformat (_("Post (%1)"), num))),
+        `HBox (
+            `HSpacing (2),
+            // text entry label
+            `TextEntry (`id (`description), _("Description"),
+              snapshot["description"]:""),
+            // text entry label
+            `TextEntry (`id (`userdata), _("User data"),
+              userdata2string (snapshot["userdata"]:$[]))
+        )
+      );
+    }
+
+    UI::OpenDialog (`opt (`decorated), `HBox (`HSpacing (1), `VBox(
+      `VSpacing (0.5),
+      `HSpacing (65),
+      cont,
+      `VSpacing (0.5),
+      `ButtonBox (
+          `PushButton (`id(`ok), Label::OKButton()),
+          `PushButton (`id(`cancel), Label::CancelButton())
+      ),
+      `VSpacing (0.5)), `HSpacing (1))
+    );
+
+    any ret     = nil;
+    map args    = $[];
+    map pre_args= $[];
+
+    while (true)
+    {
+        ret     = UI::UserInput ();
+        args    = $[
+          "num"         : num,
+          "description" : UI::QueryWidget (`id (`description), `Value),
+          "userdata"    : get_userdata (`userdata)
+        ];
+        if (type != `SINGLE)
+        {
+          pre_args    = $[
+            "num"         : previous_num,
+            "description" : UI::QueryWidget (`id (`pre_description), `Value),
+            "userdata"    : get_userdata (`pre_userdata)
+          ];
+        }
+        if (ret == `ok || ret == `cancel)
+        {
+            break;
+        }
+    }
+    UI::CloseDialog ();
+    if (ret == `ok)
+    {
+        // TODO check if snapshots were really modified
+        modified        = Snapper::ModifySnapshot (args);
+        if (modified && type != `SINGLE)
+        {
+          modified      = Snapper::ModifySnapshot (pre_args);
+        }
+    }
+
+    return modified;
+}
+
+/**
+ * Popup for creating new snapshot
  * @return true if new snapshot was created
  */
 boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
@@ -110,20 +247,11 @@ boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
     while (true)
     {
         ret     = UI::UserInput ();
-        string user_s   = (string) UI::QueryWidget (`id (`userdata), `Value);
-        map userdata    = $[];
-        foreach (string line, splitstring (user_s, ","), {
-            list<string> split  = splitstring (line, ":");
-            if (size (split) > 1)
-            {
-                userdata[split[0]:""]   = split[1]:"";
-            }
-        });
         args    = $[
           "type"        : UI::QueryWidget (`id (`rb_type), `Value),
           "description" : UI::QueryWidget (`id (`description), `Value),
           "pre"         : UI::QueryWidget (`id (`pre_list), `Value),
-          "userdata"    : userdata
+          "userdata"    : get_userdata (`userdata)
         ];
         if (ret == `ok || ret == `cancel)
         {
@@ -161,47 +289,49 @@ any SummaryDialog() {
       pre_snapshots     = [];
 
       foreach (map s, snapshots, {
-	i	= i + 1;
+        i               = i + 1;
 
-	integer num	= s["num"]:0;
-	string date	= "";
-	if (num != 0)
-	    date = timestring ("%c", s["date"]:0, false);
+        integer num     = s["num"]:0;
+        string date     = "";
+        if (num != 0)
+          date = timestring ("%c", s["date"]:0, false);
 
-	if (s["type"]:`none == `SINGLE)
-	{
-	    snapshot_items	= add (snapshot_items,
-		`item (`id (i), num, _("Single"), date, "", s["description"]:""));
-	}
-	else if (s["type"]:`none == `POST)
-	{
-	    integer pre		= s["pre_num"]:0; // pre canot be 0
-	    integer index	= Snapper::id2index[pre]:-1;
-	    if (pre == 0 || index == -1)
-	    {
-		y2warning ("something wrong - pre:%1, index:%2", pre, index);
-		continue;
-	    }
-	    string desc	= Snapper::snapshots[index,"description"]:"";
-	    string pre_date = timestring ("%c", Snapper::snapshots[index,"date"]:0, false);
-	    snapshot_items	= add (snapshot_items,
-		`item (`id (i), sformat ("%1 - %2", pre, num), _("Pre & Post"), pre_date, date, desc));
-	}
-	else
-	{
-            integer post        = s["post_num"]:0; // 0 means there's no post
-            if (post == 0)
-            {
-                y2milestone ("pre snappshot %1 does not have post", num);
-                snapshot_items	= add (snapshot_items,
-                    `item (`id (i), num, _("Pre"), date, "", s["description"]:""));
-            }
-            else
-            {
-                y2milestone ("skipping pre snapshot: %1", num);
-            }
-            pre_snapshots       = add (pre_snapshots, num);
-	}
+        string userdata = userdata2string (s["userdata"]:$[]);
+
+        if (s["type"]:`none == `SINGLE)
+        {
+          snapshot_items        = add (snapshot_items,
+	    `item (`id (i), num, _("Single"), date, "", s["description"]:"", userdata));
+        }
+        else if (s["type"]:`none == `POST)
+        {
+          integer pre           = s["pre_num"]:0; // pre canot be 0
+          integer index	= Snapper::id2index[pre]:-1;
+          if (pre == 0 || index == -1)
+          {
+            y2warning ("something wrong - pre:%1, index:%2", pre, index);
+            continue;
+	  }
+          string desc           = Snapper::snapshots[index,"description"]:"";
+          string pre_date       = timestring ("%c", Snapper::snapshots[index,"date"]:0, false);
+          snapshot_items        = add (snapshot_items,
+            `item (`id (i), sformat ("%1 - %2", pre, num), _("Pre & Post"), pre_date, date, desc, userdata));
+        }
+        else
+        {
+          integer post          = s["post_num"]:0; // 0 means there's no post
+          if (post == 0)
+          {
+            y2milestone ("pre snappshot %1 does not have post", num);
+            snapshot_items      = add (snapshot_items,
+              `item (`id (i), num, _("Pre"), date, "", s["description"]:"", userdata));
+          }
+          else
+          {
+            y2milestone ("skipping pre snapshot: %1", num);
+          }
+          pre_snapshots         = add (pre_snapshots, num);
+        }
       });
       return snapshot_items;
     }
@@ -232,13 +362,15 @@ any SummaryDialog() {
         ),
         `Table (`id (`snapshots_table), `opt(`notify, `keepSorting), `header (
             // table header
-            _("ID"), _("Type"), _("Start Date"), _("End Date"), _("Description")),
+            _("ID"), _("Type"), _("Start Date"), _("End Date"), _("Description"), _("User Data")),
             get_snapshot_items ()
         ),
         `HBox (
             // button label
             `PushButton (`id (`show_c), `opt (`default), _("Show Changes")),
             `PushButton (`id (`create), Label::CreateButton ()),
+            // button label
+            `PushButton (`id (`modify), _("Modify")),
             `HStretch ()
         )
     );
@@ -295,6 +427,14 @@ Showing differences is not possible."));
 	}
         else if (ret == `create) {
             if (CreateSnapshotPopup (pre_snapshots))
+            {
+                update_snapshots ();
+                continue;
+            }
+        }
+        else if (ret == `modify) {
+            selected = (integer) UI::QueryWidget (`id (`snapshots_table), `CurrentItem);
+            if (ModifySnapshotPopup (snapshots[selected]:$[]))
             {
                 update_snapshots ();
                 continue;
