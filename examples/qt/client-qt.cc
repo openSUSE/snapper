@@ -15,6 +15,7 @@ struct Snapshot
     SnapshotType type;
     unsigned int pre_num;
     QDateTime date;
+    uid_t uid;
     QString description;
     QString cleanup;
     QMap<QString, QString> userdata;
@@ -28,8 +29,8 @@ QDBusArgument& operator<<(QDBusArgument& argument, const Snapshot& mystruct)
 {
     argument.beginStructure();
     argument << mystruct.num << static_cast<unsigned short>(mystruct.type) << mystruct.pre_num
-	     << mystruct.date.toTime_t() << mystruct.description << mystruct.cleanup
-	     << mystruct.userdata;
+	     << mystruct.date.toTime_t() << mystruct.uid << mystruct.description
+	     << mystruct.cleanup << mystruct.userdata;
     argument.endStructure();
     return argument;
 }
@@ -41,8 +42,8 @@ const QDBusArgument& operator>>(const QDBusArgument& argument, Snapshot& mystruc
     unsigned long long tmp2;
 
     argument.beginStructure();
-    argument >> mystruct.num >> tmp1 >> mystruct.pre_num >> tmp2 >> mystruct.description
-	     >> mystruct.cleanup >> mystruct.userdata;
+    argument >> mystruct.num >> tmp1 >> mystruct.pre_num >> tmp2 >> mystruct.uid
+	     >> mystruct.description >> mystruct.cleanup >> mystruct.userdata;
     argument.endStructure();
 
     mystruct.type = static_cast<SnapshotType>(tmp1);
@@ -80,6 +81,7 @@ command_list_snapshots()
 	    printf(" %s", "now");
 	else
 	    printf(" %s", qPrintable(snapshot.date.toString()));
+	printf(" %d", snapshot.uid);
 	printf(" %s", qPrintable(snapshot.description));
 	QMapIterator<QString, QString> it2(snapshot.userdata);
 	while (it2.hasNext())

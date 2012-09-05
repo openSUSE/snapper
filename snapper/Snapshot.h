@@ -85,7 +85,7 @@ namespace snapper
 	friend class Snapshots;
 
 	Snapshot(const Snapper* snapper, SnapshotType type, unsigned int num, time_t date)
-	    : snapper(snapper), type(type), num(num), date(date), pre_num(0),
+	    : snapper(snapper), type(type), num(num), date(date), uid(0), pre_num(0),
 	      info_modified(false) {}
 
 	SnapshotType getType() const { return type; }
@@ -94,6 +94,9 @@ namespace snapper
 	bool isCurrent() const { return num == 0; }
 
 	time_t getDate() const { return date; }
+
+	void setUid(uid_t uid);
+	uid_t getUid() const { return uid; }
 
 	unsigned int getPreNum() const { return pre_num; }
 
@@ -130,6 +133,8 @@ namespace snapper
 	unsigned int num;
 
 	time_t date;
+
+	uid_t uid;
 
 	unsigned int pre_num;	// valid only for type=POST
 

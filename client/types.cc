@@ -73,7 +73,7 @@ XSnapshots::findPost(const_iterator pre) const
 namespace DBus
 {
     const char* TypeInfo<XConfigInfo>::signature = "(ssa{ss})";
-    const char* TypeInfo<XSnapshot>::signature = "(uqutssa{ss})";
+    const char* TypeInfo<XSnapshot>::signature = "(uqutussa{ss})";
     const char* TypeInfo<XFile>::signature = "(su)";
 
 
@@ -101,7 +101,7 @@ namespace DBus
     operator>>(Hihi& hihi, XSnapshot& data)
     {
 	hihi.open_recurse();
-	hihi >> data.num >> data.type >> data.pre_num >> data.date >> data.description
+	hihi >> data.num >> data.type >> data.pre_num >> data.date >> data.uid >> data.description
 	     >> data.cleanup >> data.userdata;
 	hihi.close_recurse();
 	return hihi;

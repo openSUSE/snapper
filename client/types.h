@@ -54,6 +54,8 @@ struct XSnapshot
 
     time_t getDate() const { return date; }
 
+    uid_t getUid() const { return uid; }
+
     unsigned int getPreNum() const { return pre_num; }
 
     string getDescription() const { return description; }
@@ -65,6 +67,7 @@ struct XSnapshot
     SnapshotType type;
     unsigned int num;
     time_t date;
+    uid_t uid;
     unsigned int pre_num;
     string description;
     string cleanup;

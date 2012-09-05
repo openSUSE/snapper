@@ -26,7 +26,7 @@
 namespace DBus
 {
     const char* TypeInfo<ConfigInfo>::signature = "(ssa{ss})";
-    const char* TypeInfo<Snapshot>::signature = "(uqutssa{ss})";
+    const char* TypeInfo<Snapshot>::signature = "(uqutussa{ss})";
     const char* TypeInfo<File>::signature = "(su)";
 
 
@@ -63,7 +63,8 @@ namespace DBus
     {
 	hoho.open_struct();
 	hoho << data.getNum() << data.getType() << data.getPreNum() << data.getDate()
-	     << data.getDescription() << data.getCleanup() << data.getUserdata();
+	     << data.getUid() << data.getDescription() << data.getCleanup()
+	     << data.getUserdata();
 	hoho.close_struct();
 	return hoho;
     }

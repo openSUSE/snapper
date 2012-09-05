@@ -54,6 +54,8 @@ namespace snapper
 
 	s << " date:\"" << datetime(snapshot.date, true, true) << "\"";
 
+	s << "uid:" << snapshot.uid;
+
 	if (!snapshot.description.empty())
 	    s << " description:\"" << snapshot.description << "\"";
 
@@ -114,6 +116,17 @@ namespace snapper
 	    return snapper->openSubvolumeDir();
 
 	return snapper->getFilesystem()->openSnapshotDir(num);
+    }
+
+
+    void
+    Snapshot::setUid(uid_t val)
+    {
+	if (isCurrent())
+	    throw IllegalSnapshotException();
+
+	uid = val;
+	info_modified = true;
     }
 
 
@@ -207,6 +220,8 @@ namespace snapper
 		    y2err("num mismatch. not adding snapshot " << *it1);
 		    continue;
 		}
+
+		getChildValue(node, "uid", snapshot.uid);
 
 		getChildValue(node, "pre_num", snapshot.pre_num);
 
@@ -428,6 +443,8 @@ namespace snapper
 	setChildValue(node, "num", num);
 
 	setChildValue(node, "date", datetime(date, true, true));
+
+	setChildValue(node, "uid", uid);
 
 	if (type == POST)
 	    setChildValue(node, "pre_num", pre_num);

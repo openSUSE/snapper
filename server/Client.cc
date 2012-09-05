@@ -183,7 +183,7 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"    <method name='GetSnapshot'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='number' type='u' direction='in'/>\n"
-	"      <arg name='type' type='(uqutssa{ss})' direction='out'/>\n"
+	"      <arg name='type' type='(uqutussa{ss})' direction='out'/>\n"
 	"    </method>\n"
 
 	"    <method name='SetSnapshot'>\n"
@@ -666,6 +666,7 @@ Client::create_single_snapshot(DBus::Connection& conn, DBus::Message& msg)
     Snapper* snapper = it->getSnapper();
 
     Snapshots::iterator snap1 = snapper->createSingleSnapshot(description);
+    snap1->setUid(conn.get_unix_userid(msg));
     snap1->setCleanup(cleanup);
     snap1->setUserdata(userdata);
     snap1->flushInfo();
@@ -704,6 +705,7 @@ Client::create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
     Snapper* snapper = it->getSnapper();
 
     Snapshots::iterator snap1 = snapper->createPreSnapshot(description);
+    snap1->setUid(conn.get_unix_userid(msg));
     snap1->setCleanup(cleanup);
     snap1->setUserdata(userdata);
     snap1->flushInfo();
@@ -746,6 +748,7 @@ Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
     Snapshots::iterator snap1 = snapshots.find(pre_num);
 
     Snapshots::iterator snap2 = snapper->createPostSnapshot(description, snap1);
+    snap1->setUid(conn.get_unix_userid(msg));
     snap2->setCleanup(cleanup);
     snap2->setUserdata(userdata);
     snap2->flushInfo();

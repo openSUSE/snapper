@@ -83,6 +83,8 @@ namespace snapper
     string datetime(time_t time, bool utc, bool classic);
     time_t scan_datetime(const string& str, bool utc);
 
+    string username(uid_t uid);
+
 
     class StopWatch
     {

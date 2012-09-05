@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+from time import gmtime, asctime
+from pwd import getpwuid
 import dbus
 
 bus = dbus.SystemBus()
@@ -11,8 +13,15 @@ snapper = dbus.Interface(bus.get_object('org.opensuse.Snapper', '/org/opensuse/S
 snapshots = snapper.ListSnapshots("root")
 
 for snapshot in snapshots:
-    print snapshot[0], snapshot[1], snapshot[2], snapshot[3], snapshot[4], snapshot[5],
-    for k, v in snapshot[6].items():
+    print snapshot[0], snapshot[1], snapshot[2],
+
+    if snapshot[3] != 0xFFFFFFFFFFFFFFFF:
+        print asctime(gmtime(snapshot[3])),
+    else:
+        print "now",
+
+    print getpwuid(snapshot[4])[0], snapshot[5], snapshot[6],
+    for k, v in snapshot[7].items():
         print "%s=%s" % (k, v),
     print
 

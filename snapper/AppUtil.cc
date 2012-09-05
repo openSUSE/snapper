@@ -30,6 +30,8 @@
 #include <sys/types.h>
 #include <sys/utsname.h>
 #include <sys/ioctl.h>
+#include <sys/types.h>
+#include <pwd.h>
 #include <dirent.h>
 #include <mntent.h>
 #include <string>
@@ -296,6 +298,22 @@ namespace snapper
 	if (!p || *p != '\0')
 	    return (time_t)(-1);
 	return utc ? timegm(&s) : timelocal(&s);
+    }
+
+
+    string
+    username(uid_t uid)
+    {
+	struct passwd pwd;
+	struct passwd* result;
+
+	long bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
+	char buf[bufsize];
+
+	if (getpwuid_r(uid, &pwd, buf, bufsize, &result) != 0 || result != &pwd)
+	    return "unknown";
+
+	return pwd.pw_name;
     }
 
 
