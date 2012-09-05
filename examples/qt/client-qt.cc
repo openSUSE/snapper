@@ -13,8 +13,8 @@ struct Snapshot
 {
     unsigned int num;
     SnapshotType type;
-    unsigned int date;
     unsigned int pre_num;
+    QDateTime date;
     QString description;
     QString cleanup;
     QMap<QString, QString> userdata;
@@ -27,8 +27,8 @@ Q_DECLARE_METATYPE(Snapshot)
 QDBusArgument& operator<<(QDBusArgument& argument, const Snapshot& mystruct)
 {
     argument.beginStructure();
-    argument << mystruct.num << static_cast<unsigned short>(mystruct.type) << mystruct.date
-	     << mystruct.pre_num << mystruct.description << mystruct.cleanup
+    argument << mystruct.num << static_cast<unsigned short>(mystruct.type) << mystruct.pre_num
+	     << mystruct.date.toTime_t() << mystruct.description << mystruct.cleanup
 	     << mystruct.userdata;
     argument.endStructure();
     return argument;
@@ -38,13 +38,15 @@ QDBusArgument& operator<<(QDBusArgument& argument, const Snapshot& mystruct)
 const QDBusArgument& operator>>(const QDBusArgument& argument, Snapshot& mystruct)
 {
     unsigned short tmp1;
+    unsigned long long tmp2;
 
     argument.beginStructure();
-    argument >> mystruct.num >> tmp1 >> mystruct.date >> mystruct.pre_num >> mystruct.description
+    argument >> mystruct.num >> tmp1 >> mystruct.pre_num >> tmp2 >> mystruct.description
 	     >> mystruct.cleanup >> mystruct.userdata;
     argument.endStructure();
 
     mystruct.type = static_cast<SnapshotType>(tmp1);
+    mystruct.date.setTime_t(tmp2);
 
     return argument;
 }
@@ -73,8 +75,12 @@ command_list_snapshots()
     while (it.hasNext())
     {
 	const Snapshot& snapshot = it.next();
-	printf("%d %d %d %s", snapshot.num, snapshot.type, snapshot.date,
-	       qPrintable(snapshot.description));
+	printf("%d %d %d", snapshot.num, snapshot.type, snapshot.pre_num);
+	if (snapshot.date.toTime_t() == (uint)(-1))
+	    printf(" %s", "now");
+	else
+	    printf(" %s", qPrintable(snapshot.date.toString()));
+	printf(" %s", qPrintable(snapshot.description));
 	QMapIterator<QString, QString> it2(snapshot.userdata);
 	while (it2.hasNext())
 	{
