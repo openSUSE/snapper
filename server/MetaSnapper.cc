@@ -156,7 +156,7 @@ get_group_uids(const char* groupname, vector<uid_t>& uids)
 MetaSnapper::MetaSnapper(const ConfigInfo& config_info)
     : config_info(config_info), snapper(NULL)
 {
-    map<string, string>::const_iterator pos1 = config_info.raw.find("USERS");
+    map<string, string>::const_iterator pos1 = config_info.raw.find("ALLOW_USERS");
     if (pos1 != config_info.raw.end())
     {
 	string tmp = pos1->second;
@@ -174,7 +174,7 @@ MetaSnapper::MetaSnapper(const ConfigInfo& config_info)
 	}
     }
 
-    map<string, string>::const_iterator pos2 = config_info.raw.find("GROUPS");
+    map<string, string>::const_iterator pos2 = config_info.raw.find("ALLOW_GROUPS");
     if (pos2 != config_info.raw.end())
     {
 	string tmp = pos2->second;

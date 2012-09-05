@@ -6,8 +6,8 @@ SUBVOLUME="/"
 FSTYPE="btrfs"
 
 # users and groups allowed to work with config
-USERS=""
-GROUPS=""
+ALLOW_USERS=""
+ALLOW_GROUPS=""
 
 # start comparing pre- and post-snapshot in background after creating
 # post-snapshot
