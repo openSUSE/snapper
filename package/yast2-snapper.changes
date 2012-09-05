@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Wed Sep  5 12:33:23 CEST 2012 - jsuchome@suse.cz
+
+- added support for creating and modifying snapshots (fate#313041)
+- show and enable editing of userdata
+- 2.22.6
+
+-------------------------------------------------------------------
 Tue Jun 12 10:14:40 CEST 2012 - aschnell@suse.de
 
 - adapted to logging changes in libsnapper (fate #313242)
