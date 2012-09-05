@@ -269,7 +269,13 @@ namespace snapper
 
 	if (stat.st_uid != 0 || stat.st_gid != 0)
 	{
-	    y2err("owner of .snapshots wrong");
+	    y2err("owner/group of .snapshots wrong");
+	    throw IOErrorException();
+	}
+
+	if (stat.st_mode & S_IWOTH)
+	{
+	    y2err("permissions of .snapshots wrong");
 	    throw IOErrorException();
 	}
 
@@ -711,7 +717,13 @@ namespace snapper
 
 	if (stat.st_uid != 0 || stat.st_gid != 0)
 	{
-	    y2err("owner of .snapshots wrong");
+	    y2err("owner/group of .snapshots wrong");
+	    throw IOErrorException();
+	}
+
+	if (stat.st_mode & S_IWOTH)
+	{
+	    y2err("permissions of .snapshots wrong");
 	    throw IOErrorException();
 	}
 
