@@ -69,7 +69,7 @@ namespace snapper
 	if (!f)
 	    throw IOErrorException();
 
-	if (xmlDocDump(f, doc) == -1)
+	if (xmlDocFormatDump(f, doc, 1) == -1)
 	{
 	    fclose(f);
 	    throw IOErrorException();
