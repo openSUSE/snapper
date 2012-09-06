@@ -530,7 +530,8 @@ namespace snapper
     Snapshots::iterator
     Snapshots::createPostSnapshot(string description, Snapshots::const_iterator pre)
     {
-	if (pre == entries.end() || pre->isCurrent() || pre->getType() != PRE)
+	if (pre == entries.end() || pre->isCurrent() || pre->getType() != PRE ||
+	    findPost(pre) != entries.end())
 	    throw IllegalSnapshotException();
 
 	Snapshot snapshot(snapper, POST, nextNumber(), time(NULL));
