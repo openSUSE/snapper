@@ -37,6 +37,8 @@
 #include <dbus/DBusConnection.h>
 #include <dbus/DBusMessage.h>
 
+#include "MetaSnapper.h"
+
 
 using namespace std;
 using namespace snapper;
@@ -48,9 +50,6 @@ using namespace snapper;
 
 
 extern boost::shared_mutex big_mutex;
-
-
-class MetaSnapper;
 
 
 struct NoComparison : public std::exception

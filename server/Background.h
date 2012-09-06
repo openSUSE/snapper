@@ -26,8 +26,6 @@
 
 #include <boost/thread.hpp>
 
-#include <snapper/Comparison.h>
-
 #include "MetaSnapper.h"
 
 

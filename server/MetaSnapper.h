@@ -27,8 +27,6 @@
 #include <boost/thread.hpp>
 
 #include <snapper/Snapper.h>
-#include <snapper/Snapshot.h>
-#include <snapper/Comparison.h>
 
 
 using namespace std;

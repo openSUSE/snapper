@@ -25,7 +25,9 @@
 #include <sys/resource.h>
 
 #include <snapper/Log.h>
+#include <snapper/Comparison.h>
 
+#include "MetaSnapper.h"
 #include "Background.h"
 
 
