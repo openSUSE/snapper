@@ -242,6 +242,9 @@ boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
       `VSpacing (0.5)), `HSpacing (1))
     );
 
+    UI::ChangeWidget (`id ("post"), `Enabled, size (pre_items) > 0);
+    UI::ChangeWidget (`id (`pre_list), `Enabled, size (pre_items) > 0);
+
     any ret     = nil;
     map args    = $[];
     while (true)
@@ -279,6 +282,7 @@ any SummaryDialog() {
     list<string> configs	= Snapper::configs;
 
     list snapshot_items	= [];
+    // lonely pre snapshots
     list<integer> pre_snapshots = [];
 
     // generate list of snapshot table items
@@ -325,12 +329,12 @@ any SummaryDialog() {
             y2milestone ("pre snappshot %1 does not have post", num);
             snapshot_items      = add (snapshot_items,
               `item (`id (i), num, _("Pre"), date, "", s["description"]:"", userdata));
+            pre_snapshots         = add (pre_snapshots, num);
           }
           else
           {
             y2milestone ("skipping pre snapshot: %1", num);
           }
-          pre_snapshots         = add (pre_snapshots, num);
         }
       });
       return snapshot_items;
