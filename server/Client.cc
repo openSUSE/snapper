@@ -29,6 +29,7 @@
 #include "Types.h"
 #include "Client.h"
 #include "MetaSnapper.h"
+#include "Background.h"
 
 
 boost::shared_mutex big_mutex;
@@ -753,7 +754,9 @@ Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
     snap2->setUserdata(userdata);
     snap2->flushInfo();
 
-    // snapper->startBackgroundComparsion(snap1, snap2); // TODO
+    map<string, string>::const_iterator pos = it->config_info.raw.find("BACKGROUND_COMPARISON");
+    if (pos == it->config_info.raw.end() || pos->second == "yes")
+	backgrounds.add_task(&(*it), snap1, snap2);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -1035,6 +1038,14 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg) const
 	hoho << s.str();
     }
 
+    hoho << "backgrounds:";
+    for (Backgrounds::const_iterator it = backgrounds.begin(); it != backgrounds.end(); ++it)
+    {
+	std::ostringstream s;
+	s << "    name:'" << it->meta_snapper->configName() << "'";
+	hoho << s.str();
+    }
+
     hoho << "meta-snappers:";
     for (MetaSnappers::const_iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
     {
@@ -1208,13 +1219,10 @@ Client::worker()
 	while (true)
 	{
 	    boost::unique_lock<boost::mutex> lock(mutex);
-
 	    while (tasks.empty())
 		condition.wait(lock);
-
 	    Task task = tasks.front();
 	    tasks.pop();
-
 	    lock.unlock();
 
 	    dispatch(task.conn, task.msg);

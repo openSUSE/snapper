@@ -69,20 +69,6 @@ namespace snapper
     }
 
 
-    // Directory where the info file is saved. Obviously not available for
-    // current.
-    // For btrfs e.g. "/.snapshots/1" or "/home/.snapshots/1".
-    // For ext4 e.g. "/.snapshots-info/1" or "/home/.snapshots-info/1".
-    string
-    Snapshot::infoDir() const
-    {
-	if (isCurrent())
-	    throw IllegalSnapshotException();
-
-	return snapper->infosDir() + "/" + decString(num);
-    }
-
-
     // Directory containing the actual content of the snapshot.
     // For btrfs e.g. "/" or "/home" for current and "/.snapshots/1/snapshot"
     // or "/home/.snapshots/1/snapshot" otherwise.

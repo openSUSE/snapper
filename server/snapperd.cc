@@ -30,6 +30,7 @@
 
 #include "MetaSnapper.h"
 #include "Client.h"
+#include "Background.h"
 #include "Types.h"
 
 
@@ -148,7 +149,7 @@ MyMainLoop::periodic()
 
     clients.remove_zombies();
 
-    if (clients.empty())
+    if (clients.empty() && backgrounds.empty())
 	set_idle_timeout(idle_time);
 
     for (MetaSnappers::iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
@@ -165,6 +166,9 @@ MyMainLoop::periodic_timeout()
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     if (clients.has_zombies())
+	return 1000;
+
+    if (!backgrounds.empty())
 	return 1000;
 
     for (MetaSnappers::const_iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)

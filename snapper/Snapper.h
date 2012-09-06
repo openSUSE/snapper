@@ -104,7 +104,6 @@ namespace snapper
 	string configName() const { return config_name; }
 
 	string subvolumeDir() const;
-	string infosDir() const;
 
 #ifndef SWIG
 	SDir openSubvolumeDir() const;
@@ -121,9 +120,6 @@ namespace snapper
 	Snapshots::iterator createPostSnapshot(string description, Snapshots::const_iterator pre);
 
 	void deleteSnapshot(Snapshots::iterator snapshot);
-
-	void startBackgroundComparsion(Snapshots::const_iterator snapshot1,
-				       Snapshots::const_iterator snapshot2);
 
 	const vector<string>& getIgnorePatterns() const { return ignore_patterns; }
 

@@ -35,11 +35,6 @@
 
 #define CHSNAPBIN "/sbin/chsnap"
 
-#define COMPAREDIRSBIN LIBDIR "/snapper/bin/compare-dirs"
-
-#define NICEBIN "/usr/bin/nice"
-#define IONICEBIN "/usr/bin/ionice"
-
 #define CPBIN "/bin/cp"
 #define TOUCHBIN "/usr/bin/touch"
 #define RMBIN "/bin/rm"

@@ -111,7 +111,6 @@ namespace snapper
 
 	void flushInfo();
 
-	string infoDir() const;
 	string snapshotDir() const;
 
 #ifndef SWIG

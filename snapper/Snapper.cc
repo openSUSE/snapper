@@ -123,16 +123,6 @@ namespace snapper
     }
 
 
-    // Directory that contains the per snapshot directory with info files.
-    // For btrfs e.g. "/.snapshots" or "/home/.snapshots".
-    // For ext4 e.g. "/.snapshots-info" or "/home/.snapshots-info".
-    string
-    Snapper::infosDir() const
-    {
-	return filesystem->infosDir();
-    }
-
-
     SDir
     Snapper::openSubvolumeDir() const
     {
@@ -179,44 +169,6 @@ namespace snapper
     Snapper::deleteSnapshot(Snapshots::iterator snapshot)
     {
 	snapshots.deleteSnapshot(snapshot);
-    }
-
-
-    void
-    Snapper::startBackgroundComparsion(Snapshots::const_iterator snapshot1,
-				       Snapshots::const_iterator snapshot2)
-    {
-	if (snapshot1 == snapshots.end() || snapshot1->isCurrent())
-	    throw IllegalSnapshotException();
-
-	if (snapshot2 == snapshots.end() || snapshot2->isCurrent())
-	    throw IllegalSnapshotException();
-
-	bool background_comparison = true;
-	config->getValue("BACKGROUND_COMPARISON", background_comparison);
-	if (!background_comparison)
-	    return;
-
-	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum());
-
-	if (!snapshot1->isCurrent())
-	    snapshot1->mountFilesystemSnapshot();
-	if (!snapshot2->isCurrent())
-	    snapshot2->mountFilesystemSnapshot();
-
-	bool invert = snapshot1->getNum() > snapshot2->getNum();
-
-	if (invert)
-	    swap(snapshot1, snapshot2);
-
-	string dir1 = snapshot1->snapshotDir();
-	string dir2 = snapshot2->snapshotDir();
-
-	string output = snapshot2->infoDir() + "/filelist-" + decString(snapshot1->getNum()) +
-	    ".txt";
-
-	SystemCmd(NICEBIN " -n 19 " IONICEBIN " -c 3 " COMPAREDIRSBIN " " + quote(dir1) + " " +
-		  quote(dir2) + " " + quote(output));
     }
 
 
