@@ -86,6 +86,9 @@ enum {
 void
 Backgrounds::worker()
 {
+    /* According to POSIX threads have the same nice value (see pthreads(7))
+       but with linux 3.4 and glibc 2.15 the value can be set per thread. */
+
     pid_t tid = syscall(SYS_gettid);
 
     int priority = 20;
