@@ -255,7 +255,7 @@ namespace snapper
 	SDir infos_dir(subvolume_dir, ".snapshots");
 
 	struct stat stat;
-	if (infos_dir.stat(".", &stat, AT_SYMLINK_NOFOLLOW) != 0)
+	if (infos_dir.stat(&stat) != 0)
 	{
 	    throw IOErrorException();
 	}
@@ -689,7 +689,7 @@ namespace snapper
 	SDir infos_dir(subvolume_dir, ".snapshots");
 
 	struct stat stat;
-	if (infos_dir.stat(".", &stat, AT_SYMLINK_NOFOLLOW) != 0)
+	if (infos_dir.stat(&stat) != 0)
 	{
 	    throw IOErrorException();
 	}

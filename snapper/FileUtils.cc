@@ -188,6 +188,13 @@ namespace snapper
 
 
     int
+    SDir::stat(struct stat* buf) const
+    {
+	return ::fstat(dirfd, buf);
+    }
+
+
+    int
     SDir::stat(const string& name, struct stat* buf, int flags) const
     {
 	return ::fstatat(dirfd, name.c_str(), buf, flags);

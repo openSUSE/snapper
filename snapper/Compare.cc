@@ -416,7 +416,7 @@ namespace snapper
 	y2mil("path1:" << dir1.fullname() << " path2:" << dir2.fullname());
 
 	struct stat stat1;
-	int r1 = dir1.stat(".", &stat1, AT_SYMLINK_NOFOLLOW);
+	int r1 = dir1.stat(&stat1);
 	if (r1 != 0)
 	{
 	    y2err("stat failed path:" << dir1.fullname() << " errno:" << errno);
@@ -424,7 +424,7 @@ namespace snapper
 	}
 
 	struct stat stat2;
-	int r2 = dir2.stat(".", &stat2, AT_SYMLINK_NOFOLLOW);
+	int r2 = dir2.stat(&stat2);
 	if (r2 != 0)
 	{
 	    y2err("stat failed path:" << dir2.fullname() << " errno:" << errno);

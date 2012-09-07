@@ -54,6 +54,8 @@ namespace snapper
 	vector<string> entries() const;
 	vector<string> entries(std::function<bool(unsigned char type, const char* name)> pred) const;
 
+	int stat(struct stat* buf) const;
+
 	int stat(const string& name, struct stat* buf, int flags) const;
 	int open(const string& name, int flags) const;
 	int open(const string& name, int flags, mode_t mode) const;
