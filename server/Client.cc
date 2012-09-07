@@ -1173,6 +1173,16 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	DBus::MessageError reply(msg, "error.illegal_snapshot", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
+    catch (const CreateSnapshotFailedException& e)
+    {
+	DBus::MessageError reply(msg, "error.create_snapshot_failed", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
+    catch (const DeleteSnapshotFailedException& e)
+    {
+	DBus::MessageError reply(msg, "error.delete_snapshot_failed", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
     catch (const UnknownFile& e)
     {
 	DBus::MessageError reply(msg, "error.unknown_file", DBUS_ERROR_FAILED);

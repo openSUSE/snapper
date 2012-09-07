@@ -1281,6 +1281,10 @@ main(int argc, char** argv)
 	    cerr << sformat(_("Creating config failed (%s)."), e.message()) << endl;
 	else if (name == "error.delete_config_failed")
 	    cerr << sformat(_("Deleting config failed (%s)."), e.message()) << endl;
+	else if (name == "error.create_snapshot_failed")
+	    cerr << _("Creating snapshot failed.") << endl;
+	else if (name == "error.delete_snapshot_failed")
+	    cerr << _("Deleting snapshot failed.") << endl;
 	else
 	    cerr << _("Failure") << " (" << name << ")." << endl;
 	exit(EXIT_FAILURE);
