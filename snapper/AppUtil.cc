@@ -26,7 +26,6 @@
 #include <fcntl.h>
 #include <glob.h>
 #include <sys/stat.h>
-#include <sys/statvfs.h>
 #include <sys/types.h>
 #include <sys/utsname.h>
 #include <sys/ioctl.h>
@@ -34,7 +33,6 @@
 #include <pwd.h>
 #include <dirent.h>
 #include <mntent.h>
-#include <string>
 #include <libxml/tree.h>
 #include <boost/algorithm/string.hpp>
 
