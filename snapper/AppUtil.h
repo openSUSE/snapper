@@ -47,8 +47,6 @@ namespace snapper
 
     list<string> glob(const string& path, int flags);
 
-    FILE* mkstemp(string& path);
-
     bool clonefile(int src_fd, int dest_fd);
     bool copyfile(int src_fd, int dest_fd);
 

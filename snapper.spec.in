@@ -121,9 +121,6 @@ Authors:
 %else
 %config(noreplace) %{_sysconfdir}/sysconfig/snapper
 %endif
-%dir %{_libdir}/snapper
-%dir %{_libdir}/snapper/bin
-%{_libdir}/snapper/bin/compare-dirs
 
 %post -n libsnapper@LIBVERSION_MAJOR@
 /sbin/ldconfig

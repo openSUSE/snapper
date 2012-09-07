@@ -71,7 +71,6 @@ AC_OUTPUT(
 	examples/Makefile
 	bindings/Makefile
 	bindings/python/Makefile
-	tools/Makefile
 	dbus/Makefile
 	server/Makefile
 	client/Makefile
