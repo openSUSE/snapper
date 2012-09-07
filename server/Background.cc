@@ -47,7 +47,7 @@ Backgrounds::~Backgrounds()
 
 
 void
-Backgrounds::add_task(MetaSnapper* meta_snapper, Snapshots::const_iterator snapshot1,
+Backgrounds::add_task(MetaSnappers::iterator meta_snapper, Snapshots::const_iterator snapshot1,
 		      Snapshots::const_iterator snapshot2)
 {
     if (thread.get_id() == boost::thread::id())

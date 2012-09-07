@@ -756,7 +756,7 @@ Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     map<string, string>::const_iterator pos = it->config_info.raw.find("BACKGROUND_COMPARISON");
     if (pos == it->config_info.raw.end() || pos->second == "yes")
-	backgrounds.add_task(&(*it), snap1, snap2);
+	backgrounds.add_task(it, snap1, snap2);
 
     DBus::MessageMethodReturn reply(msg);
 

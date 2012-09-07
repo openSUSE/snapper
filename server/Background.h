@@ -43,11 +43,11 @@ public:
 
     struct Task
     {
-	Task(MetaSnapper* meta_snapper, Snapshots::const_iterator snapshot1,
+	Task(MetaSnappers::iterator meta_snapper, Snapshots::const_iterator snapshot1,
 	     Snapshots::const_iterator snapshot2)
 	    : meta_snapper(meta_snapper), snapshot1(snapshot1), snapshot2(snapshot2) {}
 
-	MetaSnapper* meta_snapper;
+	MetaSnappers::iterator meta_snapper;
 	Snapshots::const_iterator snapshot1;
 	Snapshots::const_iterator snapshot2;
     };
@@ -60,7 +60,7 @@ public:
 
     bool empty() const { return tasks.empty(); }
 
-    void add_task(MetaSnapper* meta_snapper, Snapshots::const_iterator snapshot1,
+    void add_task(MetaSnappers::iterator meta_snapper, Snapshots::const_iterator snapshot1,
 		  Snapshots::const_iterator snapshot2);
 
 private:
