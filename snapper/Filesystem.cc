@@ -241,13 +241,6 @@ namespace snapper
 
 
     string
-    Btrfs::infosDir() const
-    {
-	return (subvolume == "/" ? "" : subvolume) + "/.snapshots";
-    }
-
-
-    string
     Btrfs::snapshotDir(unsigned int num) const
     {
 	return (subvolume == "/" ? "" : subvolume) + "/.snapshots/" + decString(num) +
@@ -502,13 +495,6 @@ namespace snapper
 
 
     string
-    Ext4::infosDir() const
-    {
-	return (subvolume == "/" ? "" : subvolume) + "/.snapshots/.info";
-    }
-
-
-    string
     Ext4::snapshotDir(unsigned int num) const
     {
 	return subvolume + "@" + decString(num);
@@ -685,13 +671,6 @@ namespace snapper
 	    y2err("rmdir failed errno:" << errno << " (" << strerror(errno) << ")");
 	    throw DeleteConfigFailedException("rmdir failed");
 	}
-    }
-
-
-    string
-    Lvm::infosDir() const
-    {
-	return (subvolume == "/" ? "" : subvolume) + "/.snapshots";
     }
 
 
