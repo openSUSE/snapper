@@ -74,7 +74,7 @@ string userdata2string (map<string,string> userdata) {
 }
 
 // transform userdata from widget to map
-map get_userdata (symbol id) {
+map get_userdata (string id) {
 
     map u               = $[];
     string user_s       = (string) UI::QueryWidget (`id (id), `Value);
@@ -120,54 +120,39 @@ boolean ModifySnapshotPopup (map snapshot) {
     integer pre_index           = Snapper::id2index[previous_num]:0;
     map pre_snapshot            = Snapper::snapshots[pre_index]:$[];
 
+    term snapshot_term (string prefix, map data) {
+      return `HBox (`HSpacing (), `Frame ("", `HBox (`HSpacing (0.4), `VBox (
+        // text entry label
+        `TextEntry (`id (prefix + "description"), _("Description"),
+          data["description"]:""),
+        // text entry label
+        `TextEntry (`id (prefix + "userdata"), _("User data"),
+          userdata2string (data["userdata"]:$[])),
+        `Left (`ComboBox (`id (prefix + "cleanup"), `opt (`editable, `hstretch),
+          // combo box label
+          _("Cleanup algorithm"), cleanup_items (data["cleanup"]:""))
+        )
+      ), `HSpacing (0.4))), `HSpacing ());
+    }
+
     term cont   = `VBox (
       // popup label, %1 is number
       `Label (sformat (_("Modify Snapshot %1"), num)),
-      // text entry label
-      `TextEntry (`id (`description), _("Description"),
-        snapshot["description"]:""),
-      // text entry label
-      `TextEntry (`id (`userdata), _("User data"),
-        userdata2string (snapshot["userdata"]:$[])),
-      // text entry label
-      `Left (`ComboBox (`id (`cleanup), `opt (`editable, `hstretch), _("Cleanup algorithm"),
-        cleanup_items (snapshot["cleanup"]:"")))
+      snapshot_term ("", snapshot)
     );
 
-    if (type != `SINGLE)
+    if (type == `POST)
     {
       cont   = `VBox (
         // popup label, %1, %2 are numbers (range)
         `Label (sformat (_("Modify Snapshots %1 - %2"), previous_num, num)),
         // label
         `Left (`Label (sformat (_("Pre (%1)"), previous_num))),
-        `HBox (
-            `HSpacing (2),
-            // text entry label
-            `TextEntry (`id (`pre_description), _("Description"),
-              pre_snapshot["description"]:""),
-            // text entry label
-            `TextEntry (`id (`pre_userdata), _("User data"),
-              userdata2string (pre_snapshot["userdata"]:$[])),
-            // text entry label
-            `ComboBox (`id (`pre_cleanup), `opt (`editable), _("Cleanup algorithm"),
-              cleanup_items (pre_snapshot["cleanup"]:""))
-        ),
+        snapshot_term ("pre_", pre_snapshot),
         `VSpacing (),
         // label
         `Left (`Label (sformat (_("Post (%1)"), num))),
-        `HBox (
-            `HSpacing (2),
-            // text entry label
-            `TextEntry (`id (`description), _("Description"),
-              snapshot["description"]:""),
-            // text entry label
-            `TextEntry (`id (`userdata), _("User data"),
-              userdata2string (snapshot["userdata"]:$[])),
-            // text entry label
-            `ComboBox (`id (`cleanup), `opt (`editable, `hstretch), _("Cleanup algorithm"),
-              cleanup_items (snapshot["cleanup"]:""))
-        )
+        snapshot_term ("", snapshot)
       );
     }
 
@@ -192,17 +177,17 @@ boolean ModifySnapshotPopup (map snapshot) {
         ret     = UI::UserInput ();
         args    = $[
           "num"         : num,
-          "description" : UI::QueryWidget (`id (`description), `Value),
-          "cleanup"     : UI::QueryWidget (`id (`cleanup), `Value),
-          "userdata"    : get_userdata (`userdata)
+          "description" : UI::QueryWidget (`id ("description"), `Value),
+          "cleanup"     : UI::QueryWidget (`id ("cleanup"), `Value),
+          "userdata"    : get_userdata ("userdata")
         ];
-        if (type != `SINGLE)
+        if (type == `POST)
         {
           pre_args    = $[
             "num"               : previous_num,
-            "description"       : UI::QueryWidget (`id (`pre_description), `Value),
-            "cleanup"           : UI::QueryWidget (`id (`pre_cleanup), `Value),
-            "userdata"          : get_userdata (`pre_userdata)
+            "description"       : UI::QueryWidget (`id ("pre_description"), `Value),
+            "cleanup"           : UI::QueryWidget (`id ("pre_cleanup"), `Value),
+            "userdata"          : get_userdata ("pre_userdata")
           ];
         }
         if (ret == `ok || ret == `cancel)
@@ -217,7 +202,7 @@ boolean ModifySnapshotPopup (map snapshot) {
         {
           modified      = Snapper::ModifySnapshot (args);
         }
-        if (type != `SINGLE && snapshot_modified (pre_snapshot, pre_args))
+        if (type == `POST && snapshot_modified (pre_snapshot, pre_args))
         {
           modified      = Snapper::ModifySnapshot (pre_args) || modified;
         }
@@ -243,7 +228,7 @@ boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
       // popup label
       `Label (_("Create New Snapshot")),
       // text entry label
-      `TextEntry (`id (`description), _("Description"), ""),
+      `TextEntry (`id ("description"), _("Description"), ""),
       `RadioButtonGroup (`id(`rb_type), `Left (`HVSquash (`VBox (
           `Left (`RadioButton (`id ("single"), `opt (`notify),
               // radio button label
@@ -263,9 +248,9 @@ boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
           )
       )))),
       // text entry label
-      `TextEntry (`id (`userdata), _("User data"), ""),
+      `TextEntry (`id ("userdata"), _("User data"), ""),
       // text entry label
-      `ComboBox (`id (`cleanup), `opt (`editable, `hstretch), _("Cleanup algorithm"),
+      `ComboBox (`id ("cleanup"), `opt (`editable, `hstretch), _("Cleanup algorithm"),
         cleanup_items ("")),
       `VSpacing (0.5),
       `ButtonBox (
@@ -285,10 +270,10 @@ boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
         ret     = UI::UserInput ();
         args    = $[
           "type"        : UI::QueryWidget (`id (`rb_type), `Value),
-          "description" : UI::QueryWidget (`id (`description), `Value),
+          "description" : UI::QueryWidget (`id ("description"), `Value),
           "pre"         : UI::QueryWidget (`id (`pre_list), `Value),
-          "cleanup"     : UI::QueryWidget (`id (`cleanup), `Value),
-          "userdata"    : get_userdata (`userdata)
+          "cleanup"     : UI::QueryWidget (`id ("cleanup"), `Value),
+          "userdata"    : get_userdata ("userdata")
         ];
         if (ret == `ok || ret == `cancel)
         {
