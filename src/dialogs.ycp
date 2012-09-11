@@ -700,7 +700,7 @@ any ShowDialog () {
 	}
 
 	// button label
-        string restore_label            = _("R&estore From First");
+        string restore_label            = _("R&estore from First");
 	// button label
         string restore_label_single     = _("Restore");
 
@@ -715,7 +715,7 @@ any ShowDialog () {
 	    `VSquash (`HBox (
 		`HStretch (),
 		type == `SINGLE ? `Empty () : `PushButton (`id (`restore_pre), restore_label),
-		`PushButton (`id (`restore), type == `SINGLE ? restore_label_single : _("Res&tore From Second"))
+		`PushButton (`id (`restore), type == `SINGLE ? restore_label_single : _("Res&tore from Second"))
 	    ))
 	    ), `HSpacing (0.5))
 	);
