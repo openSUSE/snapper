@@ -88,6 +88,12 @@ map get_userdata (symbol id) {
     return u;
 }
 
+list<term> cleanup_items (string current) {
+
+    foreach (string cleanup, [ "timeline", "number", "" ], {
+      return `item (`id (cleanup), cleanup, cleanup == current);
+    });
+}
 
 /**
  * Popup for modification of existing snapshot
@@ -111,7 +117,10 @@ boolean ModifySnapshotPopup (map snapshot) {
         snapshot["description"]:""),
       // text entry label
       `TextEntry (`id (`userdata), _("User data"),
-        userdata2string (snapshot["userdata"]:$[]))
+        userdata2string (snapshot["userdata"]:$[])),
+      // text entry label
+      `ComboBox (`id (`cleanup), `opt (`editable), _("Cleanup algorithm"),
+        cleanup_items (snapshot["cleanup"]:""))
     );
 
     if (type != `SINGLE)
@@ -128,7 +137,10 @@ boolean ModifySnapshotPopup (map snapshot) {
               pre_snapshot["description"]:""),
             // text entry label
             `TextEntry (`id (`pre_userdata), _("User data"),
-              userdata2string (pre_snapshot["userdata"]:$[]))
+              userdata2string (pre_snapshot["userdata"]:$[])),
+            // text entry label
+            `ComboBox (`id (`pre_cleanup), `opt (`editable), _("Cleanup algorithm"),
+              cleanup_items (pre_snapshot["cleanup"]:""))
         ),
         `VSpacing (),
         // label
@@ -140,7 +152,10 @@ boolean ModifySnapshotPopup (map snapshot) {
               snapshot["description"]:""),
             // text entry label
             `TextEntry (`id (`userdata), _("User data"),
-              userdata2string (snapshot["userdata"]:$[]))
+              userdata2string (snapshot["userdata"]:$[])),
+            // text entry label
+            `ComboBox (`id (`cleanup), `opt (`editable), _("Cleanup algorithm"),
+              cleanup_items (snapshot["cleanup"]:""))
         )
       );
     }
@@ -167,14 +182,16 @@ boolean ModifySnapshotPopup (map snapshot) {
         args    = $[
           "num"         : num,
           "description" : UI::QueryWidget (`id (`description), `Value),
+          "cleanup"     : UI::QueryWidget (`id (`cleanup), `Value),
           "userdata"    : get_userdata (`userdata)
         ];
         if (type != `SINGLE)
         {
           pre_args    = $[
-            "num"         : previous_num,
-            "description" : UI::QueryWidget (`id (`pre_description), `Value),
-            "userdata"    : get_userdata (`pre_userdata)
+            "num"               : previous_num,
+            "description"       : UI::QueryWidget (`id (`pre_description), `Value),
+            "cleanup"           : UI::QueryWidget (`id (`pre_cleanup), `Value),
+            "userdata"          : get_userdata (`pre_userdata)
           ];
         }
         if (ret == `ok || ret == `cancel)
@@ -234,6 +251,9 @@ boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
       )))),
       // text entry label
       `TextEntry (`id (`userdata), _("User data"), ""),
+      // text entry label
+      `ComboBox (`id (`cleanup), `opt (`editable), _("Cleanup algorithm"),
+        cleanup_items ("")),
       `VSpacing (0.5),
       `ButtonBox (
           `PushButton (`id(`ok), Label::OKButton()),
@@ -254,6 +274,7 @@ boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
           "type"        : UI::QueryWidget (`id (`rb_type), `Value),
           "description" : UI::QueryWidget (`id (`description), `Value),
           "pre"         : UI::QueryWidget (`id (`pre_list), `Value),
+          "cleanup"     : UI::QueryWidget (`id (`cleanup), `Value),
           "userdata"    : get_userdata (`userdata)
         ];
         if (ret == `ok || ret == `cancel)
@@ -666,7 +687,7 @@ any ShowDialog () {
 	}
 
 	// button label
-        string restore_label            = _("R&estore from First");
+        string restore_label            = _("R&estore From First");
 	// button label
         string restore_label_single     = _("Restore");
 
@@ -681,7 +702,7 @@ any ShowDialog () {
 	    `VSquash (`HBox (
 		`HStretch (),
 		type == `SINGLE ? `Empty () : `PushButton (`id (`restore_pre), restore_label),
-		`PushButton (`id (`restore), type == `SINGLE ? restore_label_single : _("Res&tore from Second"))
+		`PushButton (`id (`restore), type == `SINGLE ? restore_label_single : _("Res&tore From Second"))
 	    ))
 	    ), `HSpacing (0.5))
 	);

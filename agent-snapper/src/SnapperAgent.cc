@@ -254,6 +254,7 @@ YCPValue SnapperAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPV
 		    s->add (YCPString ("pre_num"), YCPInteger (it->getPreNum()));
 		}
                 s->add (YCPString ("userdata"), YCPMap (map2ycpmap (it->getUserdata())));
+                s->add (YCPString ("cleanup"), YCPString (it->getCleanup ()));
 
 		y2debug ("snapshot %s", s.toString().c_str());
 		retlist->add (s);
