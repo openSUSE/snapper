@@ -247,13 +247,18 @@ YCPValue SnapperAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPV
 
 		if (it->getType() == PRE)
 		{
-		    s->add (YCPString ("post_num"), YCPInteger (snapshots.findPost (it)->getNum ()));
+                    Snapshots::const_iterator it2 = snapshots.findPost(it);
+                    if (it2 != snapshots.end())
+                    {
+                      s->add (YCPString ("post_num"), YCPInteger (it2->getNum ()));
+                    }
 		}
 		else if (it->getType() == POST)
 		{
 		    s->add (YCPString ("pre_num"), YCPInteger (it->getPreNum()));
 		}
                 s->add (YCPString ("userdata"), YCPMap (map2ycpmap (it->getUserdata())));
+                s->add (YCPString ("cleanup"), YCPString (it->getCleanup ()));
 
 		y2debug ("snapshot %s", s.toString().c_str());
 		retlist->add (s);
