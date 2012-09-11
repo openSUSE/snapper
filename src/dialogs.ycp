@@ -294,13 +294,12 @@ boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
  */
 boolean DeleteSnapshotPopup (map snapshot) {
 
-    boolean deleted     = false;
     // yes/no popup question
-    if (Popup::YesNo (sformat (_("Really delete snapshot '%1'?"), snapshot["num"]:0)) == false)
+    if (Popup::YesNo (sformat (_("Really delete snapshot '%1'?"), snapshot["num"]:0)))
     {
-      return false;
+      return Snapper::DeleteSnapshot (snapshot);
     }
-    return Snapper::DeleteSnapshot (snapshot);
+    return false;
 }
 
 /**
