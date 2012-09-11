@@ -246,6 +246,31 @@ global boolean InitializeSnapper (string config) {
 }
 
 /**
+ * Delete existing snapshot
+ * Return true on success
+ */
+global boolean DeleteSnapshot (map args) {
+
+    boolean success     = (boolean) SCR::Execute (.snapper.delete, args);
+    if (!success)
+    {
+        map err_map     = LastSnapperErrorMap ();
+        string type     = err_map["type"]:"";
+        string details  = _("Reason not known.");
+
+        if (type == "not_found")
+        {
+            details     = _("Snapshot was not found.");
+        }
+
+        y2warning ("deleting failed with '%1'", err_map);
+        // error popup
+        Report::Error (sformat (_("Failed to delete snapshot:
+%1"), details));
+    }
+    return success;
+}
+/**
  * Modify existing snapshot
  * Return true on success
  */

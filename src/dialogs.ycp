@@ -289,6 +289,20 @@ boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
 }
 
 /**
+ * Popup for deleting existing snapshot
+ * @return true if snapshot was deleted
+ */
+boolean DeleteSnapshotPopup (map snapshot) {
+
+    // yes/no popup question
+    if (Popup::YesNo (sformat (_("Really delete snapshot '%1'?"), snapshot["num"]:0)))
+    {
+      return Snapper::DeleteSnapshot (snapshot);
+    }
+    return false;
+}
+
+/**
  * Summary dialog
  * @return dialog result
  */
@@ -390,10 +404,11 @@ any SummaryDialog() {
         ),
         `HBox (
             // button label
-            `PushButton (`id (`show_c), `opt (`default), _("Show Changes")),
+            `PushButton (`id (`show), `opt (`default), _("Show Changes")),
             `PushButton (`id (`create), Label::CreateButton ()),
             // button label
             `PushButton (`id (`modify), _("Modify")),
+            `PushButton (`id (`delete), Label::DeleteButton ()),
             `HStretch ()
         )
     );
@@ -415,12 +430,7 @@ any SummaryDialog() {
 
         ret = UI::UserInput();
 
-        integer selected = 0;
-
-        if (ret == `show_c || ret == `snapshots_table) {
-            selected = (integer) UI::QueryWidget (`id (`snapshots_table), `CurrentItem);
-            ret = `show;
-        }
+        integer selected = (integer) UI::QueryWidget (`id (`snapshots_table), `CurrentItem);
 
         if(ret == `abort || ret == `cancel || ret == `back) {
             if(ReallyAbort()) break;
@@ -456,8 +466,14 @@ Showing differences is not possible."));
             }
         }
         else if (ret == `modify) {
-            selected = (integer) UI::QueryWidget (`id (`snapshots_table), `CurrentItem);
             if (ModifySnapshotPopup (snapshots[selected]:$[]))
+            {
+                update_snapshots ();
+                continue;
+            }
+        }
+        else if (ret == `delete) {
+            if (DeleteSnapshotPopup (snapshots[selected]:$[]))
             {
                 update_snapshots ();
                 continue;

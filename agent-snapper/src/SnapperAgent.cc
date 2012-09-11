@@ -494,6 +494,23 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
             snap->flushInfo();
             return ret;
         }
+        else if (PC(0) == "delete") {
+
+            int num     = getIntValue (argmap, YCPString ("num"), 0);
+
+            Snapshots& snapshots = sh->getSnapshots();
+            Snapshots::iterator snap = snapshots.find(num);
+
+            if (snap == snapshots.end())
+            {
+                snapper_error   = "not_found";
+                return YCPBoolean (false);
+            }
+
+            sh->deleteSnapshot(snap);
+            return ret;
+        }
+
 	/**
 	 * Rollback the list of given files from snapshot num1 to num2 (system by default)
 	 */
