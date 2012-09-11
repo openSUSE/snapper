@@ -88,11 +88,22 @@ map get_userdata (symbol id) {
     return u;
 }
 
+// generate list of items for Cleanup combo box
 list<term> cleanup_items (string current) {
 
-    foreach (string cleanup, [ "timeline", "number", "" ], {
+    return maplist (string cleanup, [ "timeline", "number", "" ], {
       return `item (`id (cleanup), cleanup, cleanup == current);
     });
+}
+
+// compare editable parts of snapshot maps
+boolean snapshot_modified (map orig, map new) {
+
+  boolean ret   = false;
+  foreach (string key, any value, (map<string,any>) new, {
+    ret = ret || (orig[key]:nil != value);
+  });
+  return ret;
 }
 
 /**
@@ -119,8 +130,8 @@ boolean ModifySnapshotPopup (map snapshot) {
       `TextEntry (`id (`userdata), _("User data"),
         userdata2string (snapshot["userdata"]:$[])),
       // text entry label
-      `ComboBox (`id (`cleanup), `opt (`editable), _("Cleanup algorithm"),
-        cleanup_items (snapshot["cleanup"]:""))
+      `Left (`ComboBox (`id (`cleanup), `opt (`editable, `hstretch), _("Cleanup algorithm"),
+        cleanup_items (snapshot["cleanup"]:"")))
     );
 
     if (type != `SINGLE)
@@ -154,7 +165,7 @@ boolean ModifySnapshotPopup (map snapshot) {
             `TextEntry (`id (`userdata), _("User data"),
               userdata2string (snapshot["userdata"]:$[])),
             // text entry label
-            `ComboBox (`id (`cleanup), `opt (`editable), _("Cleanup algorithm"),
+            `ComboBox (`id (`cleanup), `opt (`editable, `hstretch), _("Cleanup algorithm"),
               cleanup_items (snapshot["cleanup"]:""))
         )
       );
@@ -202,11 +213,13 @@ boolean ModifySnapshotPopup (map snapshot) {
     UI::CloseDialog ();
     if (ret == `ok)
     {
-        // TODO check if snapshots were really modified
-        modified        = Snapper::ModifySnapshot (args);
-        if (modified && type != `SINGLE)
+        if (snapshot_modified (snapshot, args))
         {
-          modified      = Snapper::ModifySnapshot (pre_args);
+          modified      = Snapper::ModifySnapshot (args);
+        }
+        if (type != `SINGLE && snapshot_modified (pre_snapshot, pre_args))
+        {
+          modified      = Snapper::ModifySnapshot (pre_args) || modified;
         }
     }
 
@@ -252,7 +265,7 @@ boolean CreateSnapshotPopup (list<integer> pre_snapshots) {
       // text entry label
       `TextEntry (`id (`userdata), _("User data"), ""),
       // text entry label
-      `ComboBox (`id (`cleanup), `opt (`editable), _("Cleanup algorithm"),
+      `ComboBox (`id (`cleanup), `opt (`editable, `hstretch), _("Cleanup algorithm"),
         cleanup_items ("")),
       `VSpacing (0.5),
       `ButtonBox (
