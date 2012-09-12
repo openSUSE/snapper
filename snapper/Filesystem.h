@@ -37,7 +37,6 @@ namespace snapper
     using std::vector;
 
 
-    class Snapper;
     class MtabData;
 
 

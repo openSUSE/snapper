@@ -37,7 +37,6 @@ namespace snapper
 
     class SysconfigFile;
     class Filesystem;
-    class Comparison;
     class SDir;
 
 
