@@ -72,7 +72,7 @@ namespace snapper
 {
 
     vector<string>
-    filter_mount_options(vector<string>& options)
+    filter_mount_options(const vector<string>& options)
     {
 	static const char* ign_opt[] = {
 	    "ro", "rw",
@@ -129,9 +129,9 @@ namespace snapper
 	}
 
 #ifdef UMOUNT_NOFOLLOW
-	int r2 = umount2(mount_point.c_str(), UMOUNT_NOFOLLOW);
+	int r2 = ::umount2(mount_point.c_str(), UMOUNT_NOFOLLOW);
 #else
-	int r2 = umount2(mount_point.c_str(), 0);
+	int r2 = ::umount2(mount_point.c_str(), 0);
 #endif
 	if (r2 != 0)
 	{
@@ -249,6 +249,27 @@ namespace snapper
 
 
     SDir
+    Btrfs::openSubvolumeDir() const
+    {
+	SDir subvolume_dir = Filesystem::openSubvolumeDir();
+
+	struct stat stat;
+	if (subvolume_dir.stat(&stat) != 0)
+	{
+	    throw IOErrorException();
+	}
+
+	if (!is_subvolume(stat))
+	{
+	    y2err("subvolume is not a btrfs snapshot");
+	    throw IOErrorException();
+	}
+
+	return subvolume_dir;
+    }
+
+
+    SDir
     Btrfs::openInfosDir() const
     {
 	SDir subvolume_dir = openSubvolumeDir();
@@ -257,6 +278,12 @@ namespace snapper
 	struct stat stat;
 	if (infos_dir.stat(&stat) != 0)
 	{
+	    throw IOErrorException();
+	}
+
+	if (!is_subvolume(stat))
+	{
+	    y2err(".snapshots is not a btrfs snapshot");
 	    throw IOErrorException();
 	}
 
@@ -341,13 +368,20 @@ namespace snapper
 
 	    struct stat stat;
 	    int r = info_dir.stat("snapshot", &stat, AT_SYMLINK_NOFOLLOW);
-	    // check st_ino == 256 is copied from btrfsprogs
-	    return r == 0 && stat.st_ino == 256 && S_ISDIR(stat.st_mode);
+	    return r == 0 && is_subvolume(stat);
 	}
 	catch (const IOErrorException& e)
 	{
 	    return false;
 	}
+    }
+
+
+    bool
+    Btrfs::is_subvolume(const struct stat& stat) const
+    {
+	// see btrfsprogs source code
+	return stat.st_ino == 256 && S_ISDIR(stat.st_mode);
     }
 
 

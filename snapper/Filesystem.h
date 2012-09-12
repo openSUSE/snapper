@@ -94,6 +94,7 @@ namespace snapper
 
 	virtual string snapshotDir(unsigned int num) const;
 
+	virtual SDir openSubvolumeDir() const;
 	virtual SDir openInfosDir() const;
 	virtual SDir openSnapshotDir(unsigned int num) const;
 
@@ -107,6 +108,8 @@ namespace snapper
 	virtual bool checkSnapshot(unsigned int num) const;
 
     private:
+
+	bool is_subvolume(const struct stat& stat) const;
 
 	bool create_subvolume(int fddst, const string& name) const;
 	bool create_snapshot(int fd, int fddst, const string& name) const;
