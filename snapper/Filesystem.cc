@@ -633,7 +633,9 @@ namespace snapper
     bool
     Ext4::checkSnapshot(unsigned int num) const
     {
-	return checkNormalFile(snapshotFile(num));
+	struct stat stat;
+	int r1 = ::stat(snapshotFile(num).c_str(), &stat);
+	return r1 == 0 && S_ISREG(stat.st_mode);
     }
     // ENABLE_EXT4
 #endif
@@ -846,7 +848,9 @@ namespace snapper
     bool
     Lvm::checkSnapshot(unsigned int num) const
     {
-	return checkAnything(getDevice(num));
+	struct stat stat;
+	int r1 = ::stat(getDevice(num).c_str(), &stat);
+	return r1 == 0 && S_ISBLK(stat.st_mode);
     }
 
 

@@ -53,22 +53,6 @@ namespace snapper
     }
 
 
-    bool
-    checkNormalFile(const string& Path_Cv)
-    {
-	struct stat Stat_ri;
-	return stat(Path_Cv.c_str(), &Stat_ri) >= 0 && S_ISREG(Stat_ri.st_mode);
-    }
-
-
-    bool
-    checkAnything(const string& Path_Cv)
-    {
-	struct stat Stat_ri;
-	return stat(Path_Cv.c_str(), &Stat_ri) >= 0;
-    }
-
-
     list<string>
     glob(const string& path, int flags)
     {

@@ -41,9 +41,7 @@ namespace snapper
     using std::vector;
 
 
-    bool checkNormalFile(const string& Path_Cv);
     bool checkDir(const string& Path_Cv);
-    bool checkAnything(const string& Path_Cv);
 
     list<string> glob(const string& path, int flags);
 
