@@ -4,5 +4,7 @@
 
 man_MANS = snapper.8 snapperd.8
 
-EXTRA_DIST = $(man_MANS)
+TXTS = dbus-protocol.txt permissions.txt
+
+EXTRA_DIST = $(man_MANS) $(TXTS)
 
