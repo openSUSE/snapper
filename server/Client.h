@@ -98,7 +98,9 @@ public:
     void delete_comparison(DBus::Connection& conn, DBus::Message& msg);
     void get_files(DBus::Connection& conn, DBus::Message& msg);
     void debug(DBus::Connection& conn, DBus::Message& msg) const;
+    bool verify_client_name(DBus::Connection& conn, DBus::Message& msg);
 
+    void reply_with_invalid_name(DBus::Connection& conn, DBus::Message& msg);
     void dispatch(DBus::Connection& conn, DBus::Message& msg);
 
     Client(const string& name);
@@ -137,6 +139,7 @@ public:
     queue<Task> tasks;
 
     bool zombie;
+    bool invalid_name;
 
     void add_task(DBus::Connection& conn, DBus::Message& msg);
 
