@@ -93,7 +93,9 @@ MyMainLoop::method_call(DBus::Message& msg)
 	if (client == clients.end())
 	{
 	    y2deb("client connected invisible '" << msg.get_sender() << "'");
+	    DBus::Message name_msg = DBus::QuerryNameMethodCall();
 	    client = clients.add(msg.get_sender());
+	    client->add_task(*this, name_msg);
 	    set_idle_timeout(-1);
 	}
 
@@ -118,6 +120,11 @@ MyMainLoop::client_connected(const string& name)
 
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
+    Clients::iterator client = clients.find(name);
+    if (client != clients.end()) {
+	y2deb("client '" << name << "' already connected invisible: ignore");
+	return;
+    }
     clients.add(name);
 
     reset_idle_count();
