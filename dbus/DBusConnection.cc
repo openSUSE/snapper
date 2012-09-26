@@ -158,4 +158,12 @@ namespace DBus
 	return uid;
     }
 
+    string
+    Connection::get_name(void)
+    {
+        boost::lock_guard<boost::mutex> lock(mutex);
+
+	return string(dbus_bus_get_unique_name(conn));
+    }
+
 }

@@ -52,6 +52,8 @@ namespace DBus
 
 	unsigned long get_unix_userid(const Message& m);
 
+	string get_name(void);
+
     protected:
 
 	// Without locking the connection manually the server sometimes does
