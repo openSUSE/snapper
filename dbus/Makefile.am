@@ -9,4 +9,5 @@ noinst_LTLIBRARIES = libdbus.la
 libdbus_la_SOURCES =					\
 	DBusMessage.cc		DBusMessage.h		\
 	DBusConnection.cc	DBusConnection.h	\
-	DBusMainLoop.cc		DBusMainLoop.h
+	DBusMainLoop.cc		DBusMainLoop.h		\
+	DBusNameBuilder.cc	DBusNameBuilder.h
