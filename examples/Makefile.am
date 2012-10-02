@@ -2,6 +2,8 @@
 # Makefile.am for snapper/examples
 #
 
+SUBDIRS = C
+
 INCLUDES = -I$(top_srcdir)
 
 LDADD = ../snapper/libsnapper.la

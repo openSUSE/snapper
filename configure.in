@@ -69,6 +69,7 @@ AC_OUTPUT(
 	Makefile
 	snapper/Makefile
 	examples/Makefile
+	examples/C/Makefile
 	bindings/Makefile
 	bindings/python/Makefile
 	dbus/Makefile
