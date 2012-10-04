@@ -44,9 +44,11 @@ namespace DBus
 	void set_idle_timeout(int s);
 	void reset_idle_count();
 
+	void add_client_match(const string& name);
+	void remove_client_match(const string& name);
+
 	virtual void method_call(Message& message) = 0;
 	virtual void signal(Message& message) = 0;
-	virtual void client_connected(const string& name) = 0;
 	virtual void client_disconnected(const string& name) = 0;
 	virtual int periodic_timeout() = 0;
 	virtual void periodic() = 0;

@@ -45,11 +45,6 @@ namespace DBus
 	    throw FatalException();
 
 	dbus_connection_set_wakeup_main_function(conn, wakeup_main, this, NULL);
-
-	// Filtering for the sender doesn't work for me. So also check the
-	// sender later when handling the signal.
-	add_match("type='signal', sender='" DBUS_SERVICE_DBUS "', path='" DBUS_PATH_DBUS "', "
-		  "interface='" DBUS_INTERFACE_DBUS "', member='NameOwnerChanged'");
     }
 
 
@@ -279,6 +274,28 @@ namespace DBus
 
 
     void
+    DBus::MainLoop::add_client_match(const string& name)
+    {
+	// Filtering for the sender doesn't work for me. So also check the
+	// sender later when handling the signal.
+	add_match("type='signal', sender='" DBUS_SERVICE_DBUS "', path='" DBUS_PATH_DBUS "', "
+		  "interface='" DBUS_INTERFACE_DBUS "', member='NameOwnerChanged', "
+		  "arg0='" + name + "'");
+    }
+
+
+    void
+    DBus::MainLoop::remove_client_match(const string& name)
+    {
+	// Filtering for the sender doesn't work for me. So also check the
+	// sender later when handling the signal.
+	remove_match("type='signal', sender='" DBUS_SERVICE_DBUS "', path='" DBUS_PATH_DBUS "', "
+		     "interface='" DBUS_INTERFACE_DBUS "', member='NameOwnerChanged', "
+		     "arg0='" + name + "'");
+    }
+
+
+    void
     DBus::MainLoop::dispatch_incoming(Message& msg)
     {
 	switch (msg.get_type())
@@ -300,9 +317,6 @@ namespace DBus
 
 		    DBus::Hihi hihi(msg);
 		    hihi >> name >> old_owner >> new_owner;
-
-		    if (name == new_owner && old_owner.empty())
-			client_connected(name);
 
 		    if (name == old_owner && new_owner.empty())
 			client_disconnected(name);

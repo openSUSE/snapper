@@ -49,6 +49,10 @@ namespace DBus
 	Message send_with_reply_and_block(Message& m);
 
 	void add_match(const char* rule);
+	void remove_match(const char* rule);
+
+	void add_match(const string& rule) { add_match(rule.c_str()); }
+	void remove_match(const string& rule) { remove_match(rule.c_str()); }
 
 	unsigned long get_unix_userid(const Message& m);
 

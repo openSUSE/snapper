@@ -117,7 +117,23 @@ namespace DBus
 	dbus_error_init(&err);
 
 	dbus_bus_add_match(conn, rule, &err);
+	if (dbus_error_is_set(&err))
+	{
+	    dbus_error_free(&err);
+	    throw FatalException();
+	}
+    }
 
+
+    void
+    Connection::remove_match(const char* rule)
+    {
+	boost::lock_guard<boost::mutex> lock(mutex);
+
+	DBusError err;
+	dbus_error_init(&err);
+
+	dbus_bus_remove_match(conn, rule, &err);
 	if (dbus_error_is_set(&err))
 	{
 	    dbus_error_free(&err);

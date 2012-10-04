@@ -53,7 +53,6 @@ public:
 
     void method_call(DBus::Message& message);
     void signal(DBus::Message& message);
-    void client_connected(const string& name);
     void client_disconnected(const string& name);
     void periodic();
     int periodic_timeout();
@@ -75,9 +74,8 @@ MyMainLoop::~MyMainLoop()
 void
 MyMainLoop::method_call(DBus::Message& msg)
 {
-    y2deb("method call sender:'" << msg.get_sender() << "' path:'" <<
-	  msg.get_path() << "' interface:'" << msg.get_interface() <<
-	  "' member:'" << msg.get_member() << "'");
+    y2deb("method call sender:'" << msg.get_sender() << "' path:'" << msg.get_path() <<
+	  "' interface:'" << msg.get_interface() << "' member:'" << msg.get_member() << "'");
 
     reset_idle_count();
 
@@ -93,6 +91,7 @@ MyMainLoop::method_call(DBus::Message& msg)
 	if (client == clients.end())
 	{
 	    y2deb("client connected invisible '" << msg.get_sender() << "'");
+	    add_client_match(msg.get_sender());
 	    client = clients.add(msg.get_sender());
 	    set_idle_timeout(-1);
 	}
@@ -105,23 +104,8 @@ MyMainLoop::method_call(DBus::Message& msg)
 void
 MyMainLoop::signal(DBus::Message& msg)
 {
-    y2deb("signal sender:'" << msg.get_sender() << "' path:'" <<
-	  msg.get_path() << "' interface:'" << msg.get_interface() <<
-	  "' member:'" << msg.get_member() << "'");
-}
-
-
-void
-MyMainLoop::client_connected(const string& name)
-{
-    y2deb("client connected '" << name << "'");
-
-    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
-
-    clients.add(name);
-
-    reset_idle_count();
-    set_idle_timeout(-1);
+    y2deb("signal sender:'" << msg.get_sender() << "' path:'" << msg.get_path() <<
+	  "' interface:'" << msg.get_interface() << "' member:'" << msg.get_member() << "'");
 }
 
 
@@ -129,6 +113,8 @@ void
 MyMainLoop::client_disconnected(const string& name)
 {
     y2deb("client disconnected '" << name << "'");
+
+    remove_client_match(name);
 
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
