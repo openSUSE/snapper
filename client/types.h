@@ -30,6 +30,7 @@ using std::map;
 
 #include "dbus/DBusMessage.h"
 #include "dbus/DBusConnection.h"
+#include "dbus/DBusNameBuilder.h"
 #include "snapper/Snapshot.h"
 #include "snapper/File.h"
 

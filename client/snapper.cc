@@ -1256,6 +1256,8 @@ main(int argc, char** argv)
     try
     {
 	DBus::Connection conn(DBUS_BUS_SYSTEM);
+	string client_name = DBus::DBusNameBuilder::create_well_known_name(string(conn.get_name()));
+	conn.request_name(client_name.c_str(), DBUS_NAME_FLAG_DO_NOT_QUEUE);
 	(*cmd->second)(conn);
     }
     catch (const DBus::ErrorException& e)
@@ -1287,6 +1289,11 @@ main(int argc, char** argv)
 	    cerr << _("Deleting snapshot failed.") << endl;
 	else
 	    cerr << _("Failure") << " (" << name << ")." << endl;
+	exit(EXIT_FAILURE);
+    }
+    catch (const DBus::DBusNameBuilderException e)
+    {
+	cerr << _("Error during well known name cosntruction") << " (" << e.what() << ")." << endl;
 	exit(EXIT_FAILURE);
     }
     catch (const DBus::FatalException& e)

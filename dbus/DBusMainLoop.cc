@@ -49,7 +49,7 @@ namespace DBus
 	// Filtering for the sender doesn't work for me. So also check the
 	// sender later when handling the signal.
 	add_match("type='signal', sender='" DBUS_SERVICE_DBUS "', path='" DBUS_PATH_DBUS "', "
-		  "interface='" DBUS_INTERFACE_DBUS "', member='NameOwnerChanged'");
+		  "interface='" DBUS_INTERFACE_DBUS "', member='NameOwnerChanged', arg0namespace='org.opensuse.Snapper.Client'");
     }
 
 
@@ -301,11 +301,17 @@ namespace DBus
 		    DBus::Hihi hihi(msg);
 		    hihi >> name >> old_owner >> new_owner;
 
-		    if (name == new_owner && old_owner.empty())
-			client_connected(name);
+		    if (old_owner.empty())
+			client_connected(new_owner);
 
-		    if (name == old_owner && new_owner.empty())
-			client_disconnected(name);
+		    if (new_owner.empty())
+			client_disconnected(old_owner);
+
+		    if (!old_owner.empty() && !new_owner.empty()) {
+			// clients are not allowed to exchange their names!
+			client_disconnected(old_owner);
+			client_disconnected(new_owner);
+		    }
 		}
 	    }
 	    break;

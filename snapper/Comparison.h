@@ -24,7 +24,6 @@
 #define SNAPPER_COMPARISON_H
 
 
-#include "snapper/Comparison.h"
 #include "snapper/Snapshot.h"
 #include "snapper/File.h"
 

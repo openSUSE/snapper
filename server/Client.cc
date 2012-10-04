@@ -25,6 +25,7 @@
 #include <snapper/AsciiFile.h>
 #include <dbus/DBusMessage.h>
 #include <dbus/DBusConnection.h>
+#include <dbus/DBusNameBuilder.h>
 
 #include "Types.h"
 #include "Client.h"
@@ -38,7 +39,7 @@ Clients clients;
 
 
 Client::Client(const string& name)
-    : name(name), zombie(false)
+    : name(name), zombie(false), invalid_name(false)
 {
 }
 
@@ -1087,6 +1088,45 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg) const
     conn.send(reply);
 }
 
+bool
+Client::verify_client_name(DBus::Connection& conn, DBus::Message& msg)
+{
+    y2deb("Client name verification");
+
+    string well_known_name = DBus::DBusNameBuilder::create_well_known_name(name);
+
+    DBus::Hoho hoho(msg);
+    hoho << well_known_name;
+
+    try {
+
+	DBus::Message reply = conn.send_with_reply_and_block(msg);
+	DBus::Hihi hihi(reply);
+
+	string name_owner;
+	hihi >> name_owner;
+
+	return (name_owner == name);
+
+    } catch (const DBus::ErrorException& e) {
+	if (!strcmp(e.name(), "org.freedesktop.DBus.Error.NameHasNoOwner")) {
+	    y2deb("Name: '" << well_known_name << "' doesn't exist");
+	    return false;
+	} else {
+	    // send message has failed from some other reason
+	    invalid_name = true; //safe: accessed only from worker thread
+
+	    throw;
+	}
+    }
+}
+
+void
+Client::reply_with_invalid_name(DBus::Connection& conn, DBus::Message& msg)
+{
+    DBus::MessageError reply(msg, "error.invalid_client_name", DBUS_ERROR_FAILED);
+    conn.send(reply);
+}
 
 void
 Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
@@ -1133,6 +1173,9 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    get_files(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "Debug"))
 	    debug(conn, msg);
+	else if (msg.is_method_call("org.freedesktop.DBus", "GetNameOwner"))
+	    if (!verify_client_name(conn, msg))
+		invalid_name = true; //safe: accessed only from worker thread
 	else
 	{
 	    DBus::MessageError reply(msg, "error.unknown_method", DBUS_ERROR_FAILED);
@@ -1249,13 +1292,22 @@ Client::worker()
 	while (true)
 	{
 	    boost::unique_lock<boost::mutex> lock(mutex);
+	    if (zombie)
+		break;
 	    while (tasks.empty())
 		condition.wait(lock);
 	    Task task = tasks.front();
 	    tasks.pop();
 	    lock.unlock();
+	    if (invalid_name) {
+		reply_with_invalid_name(task.conn, task.msg);
 
-	    dispatch(task.conn, task.msg);
+		lock.lock();
+		zombie = true;
+		lock.unlock();
+	    }
+	    else
+		dispatch(task.conn, task.msg);
 	}
     }
     catch (const boost::thread_interrupted&)
@@ -1279,6 +1331,8 @@ Clients::find(const string& name)
 Clients::iterator
 Clients::add(const string& name)
 {
+    // this is sort of obsolete as we check that condition
+    // befor the method
     assert(find(name) == entries.end());
 
 #if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4)

@@ -160,6 +160,14 @@ namespace DBus
 
     };
 
+    class QuerryNameMethodCall : public MessageMethodCall
+    {
+    public:
+	QuerryNameMethodCall()
+	    : MessageMethodCall(DBUS_SERVICE_DBUS, DBUS_PATH_DBUS, DBUS_INTERFACE_DBUS, "GetNameOwner")
+	{
+	}
+    };
 
     template <typename Type> struct TypeInfo {};
 
