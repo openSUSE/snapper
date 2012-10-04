@@ -143,6 +143,11 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='number' type='u'/>\n"
 	"    </signal>\n"
 
+	"    <signal name='SnapshotModified'>\n"
+	"      <arg name='config-name' type='s'/>\n"
+	"      <arg name='number' type='u'/>\n"
+	"    </signal>\n"
+
 	"    <signal name='SnapshotDeleted'>\n"
 	"      <arg name='config-name' type='s'/>\n"
 	"      <arg name='number' type='u'/>\n"
@@ -370,6 +375,19 @@ Client::signal_snapshot_created(DBus::Connection& conn, const string& config_nam
 				unsigned int num)
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "SnapshotCreated");
+
+    DBus::Hoho hoho(msg);
+    hoho << config_name << num;
+
+    conn.send(msg);
+}
+
+
+void
+Client::signal_snapshot_modified(DBus::Connection& conn, const string& config_name,
+				 unsigned int num)
+{
+    DBus::MessageSignal msg(PATH, INTERFACE, "SnapshotModified");
 
     DBus::Hoho hoho(msg);
     hoho << config_name << num;
@@ -641,6 +659,8 @@ Client::set_snapshot(DBus::Connection& conn, DBus::Message& msg)
     DBus::MessageMethodReturn reply(msg);
 
     conn.send(reply);
+
+    signal_snapshot_modified(conn, config_name, snap->getNum());
 }
 
 

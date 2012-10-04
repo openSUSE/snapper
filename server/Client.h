@@ -75,6 +75,8 @@ public:
     void signal_config_deleted(DBus::Connection& conn, const string& config_name);
     void signal_snapshot_created(DBus::Connection& conn, const string& config_name,
 				 unsigned int num);
+    void signal_snapshot_modified(DBus::Connection& conn, const string& config_name,
+				  unsigned int num);
     void signal_snapshots_deleted(DBus::Connection& conn, const string& config_name,
 				  const list<dbus_uint32_t>& nums);
 
