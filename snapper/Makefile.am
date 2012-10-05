@@ -31,7 +31,7 @@ libsnapper_la_SOURCES =					\
 	SnapperDefines.h
 
 libsnapper_la_LDFLAGS = -version-info @LIBVERSION_INFO@
-libsnapper_la_LIBADD = -lxml2 -lz -lm
+libsnapper_la_LIBADD = -lboost_thread-mt -lxml2 -lz -lm
 
 pkgincludedir = $(includedir)/snapper
 

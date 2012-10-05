@@ -4,7 +4,7 @@
 
 INCLUDES = -I$(top_srcdir)
 
-LDADD = ../snapper/libsnapper.la -lboost_thread-mt
+LDADD = ../snapper/libsnapper.la
 
 noinst_PROGRAMS = List ListAll Create CmpDirs CreateTimeline SnapTest
 
