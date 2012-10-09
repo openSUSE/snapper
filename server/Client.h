@@ -87,6 +87,7 @@ public:
     void lock_config(DBus::Connection& conn, DBus::Message& msg);
     void unlock_config(DBus::Connection& conn, DBus::Message& msg);
     void list_snapshots(DBus::Connection& conn, DBus::Message& msg);
+    void list_snapshots_at_time(DBus::Connection& conn, DBus::Message& msg);
     void get_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void set_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void create_single_snapshot(DBus::Connection& conn, DBus::Message& msg);

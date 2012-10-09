@@ -186,6 +186,13 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='snapshots' type='v' direction='out'/>\n"
 	"    </method>\n"
 
+	"    <method name='ListSnapshotsAtTime'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='begin' type='t' direction='in'/>\n"
+	"      <arg name='end' type='t' direction='in'/>\n"
+	"      <arg name='snapshots' type='v' direction='out'/>\n"
+	"    </method>\n"
+
 	"    <method name='GetSnapshot'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='number' type='u' direction='in'/>\n"
@@ -581,11 +588,49 @@ Client::list_snapshots(DBus::Connection& conn, DBus::Message& msg)
     check_permission(conn, msg, *it);
 
     Snapper* snapper = it->getSnapper();
+    Snapshots& snapshots = snapper->getSnapshots();
 
     DBus::MessageMethodReturn reply(msg);
 
     DBus::Hoho hoho(reply);
-    hoho << snapper->getSnapshots();
+    hoho << snapshots;
+
+    conn.send(reply);
+}
+
+
+void
+Client::list_snapshots_at_time(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    time_t begin, end;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> begin >> end;
+
+    y2deb("ListSnapshotsAtTime config_name:" << config_name << " begin:" << begin <<
+	  " end:" << end);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
+    Snapshots& snapshots = snapper->getSnapshots();
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
+
+    hoho.open_array(DBus::TypeInfo<Snapshot>::signature);
+    for (Snapshots::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
+    {
+	if (it->getDate() >= begin && it->getDate() <= end)
+	    hoho << *it;
+    }
+    hoho.close_array();
 
     conn.send(reply);
 }
@@ -1107,6 +1152,8 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    unlock_config(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "ListSnapshots"))
 	    list_snapshots(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "ListSnapshotsAtTime"))
+	    list_snapshots_at_time(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetSnapshot"))
 	    get_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "SetSnapshot"))
