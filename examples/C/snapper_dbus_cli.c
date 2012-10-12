@@ -29,6 +29,8 @@
 
 #define CDBUS_SIG_LIST_SNAPS_RSP "a(uqutussa{ss})"
 #define CDBUS_SIG_LIST_CONFS_RSP "a(ssa{ss})"
+#define CDBUS_SIG_CREATE_SNAP_RSP "u"
+#define CDBUS_SIG_STRING_DICT "{ss}"
 
 struct dict {
 	char *key;
@@ -709,13 +711,194 @@ static int cdbus_list_confs_call(DBusConnection *conn)
 	return 0;
 }
 
+static int cdbus_create_snap_pack(char *snapper_conf,
+				  char *desc,
+				  uint32_t num_user_data,
+				  struct dict *user_data,
+				  DBusMessage **req_msg_out)
+{
+	DBusMessage *msg;
+	DBusMessageIter args;
+	DBusMessageIter array_iter;
+	DBusMessageIter struct_iter;
+	const char *empty = "";
+	uint32_t i;
+	bool ret;
+
+	msg = dbus_message_new_method_call("org.opensuse.Snapper", /* target for the method call */
+					   "/org/opensuse/Snapper", /* object to call on */
+					   "org.opensuse.Snapper", /* interface to call on */
+					   "CreateSingleSnapshot"); /* method name */
+	if (msg == NULL) {
+		fprintf(stderr, "failed to create req msg\n");
+		return -ENOMEM;
+	}
+
+	/* append arguments */
+	dbus_message_iter_init_append(msg, &args);
+	if (!dbus_message_iter_append_basic(&args, DBUS_TYPE_STRING,
+					    &snapper_conf)) {
+		fprintf(stderr, "Out Of Memory!\n");
+		return -ENOMEM;
+	}
+
+	if (!dbus_message_iter_append_basic(&args, DBUS_TYPE_STRING,
+					    &desc)) {
+		fprintf(stderr, "Out Of Memory!\n");
+		return -ENOMEM;
+	}
+
+	/* cleanup */
+	if (!dbus_message_iter_append_basic(&args, DBUS_TYPE_STRING,
+					    &empty)) {
+		fprintf(stderr, "Out Of Memory!\n");
+		return -ENOMEM;
+	}
+
+	ret = dbus_message_iter_open_container(&args, DBUS_TYPE_ARRAY,
+					       CDBUS_SIG_STRING_DICT,
+					       &array_iter);
+	if (!ret) {
+		fprintf(stderr, "failed to open array container\n");
+		return -ENOMEM;
+	}
+
+	for (i = 0; i < num_user_data; i++) {
+		ret = dbus_message_iter_open_container(&array_iter,
+						       DBUS_TYPE_DICT_ENTRY,
+						       NULL, &struct_iter);
+		if (!ret) {
+			fprintf(stderr, "failed to open struct container\n");
+			return -ENOMEM;
+		}
+
+		if (!dbus_message_iter_append_basic(&struct_iter,
+						    DBUS_TYPE_STRING,
+						    &user_data[i].key)) {
+			fprintf(stderr, "Out Of Memory!\n");
+			return -ENOMEM;
+		}
+		if (!dbus_message_iter_append_basic(&struct_iter,
+						    DBUS_TYPE_STRING,
+						    &user_data[i].val)) {
+			fprintf(stderr, "Out Of Memory!\n");
+			return -ENOMEM;
+		}
+
+		ret = dbus_message_iter_close_container(&array_iter,
+							&struct_iter);
+		if (!ret) {
+			fprintf(stderr, "failed to close struct container\n");
+			return -ENOMEM;
+		}
+	}
+
+	dbus_message_iter_close_container(&args, &array_iter);
+
+	*req_msg_out = msg;
+
+	return 0;
+}
+
+static int cdbus_create_snap_unpack(DBusConnection *conn,
+				    DBusMessage *rsp_msg,
+				    uint32_t *snap_id_out)
+{
+	DBusMessageIter iter;
+	int msg_type;
+	const char *sig;
+
+	msg_type = dbus_message_get_type(rsp_msg);
+	if (msg_type == DBUS_MESSAGE_TYPE_ERROR) {
+		fprintf(stderr, "create snap error response: %s\n",
+			dbus_message_get_error_name(rsp_msg));
+		return -EINVAL;
+	}
+
+	if (msg_type != DBUS_MESSAGE_TYPE_METHOD_RETURN) {
+		fprintf(stderr, "unexpected create snap ret type: %d\n",
+			msg_type);
+		return -EINVAL;
+	}
+
+	sig = dbus_message_get_signature(rsp_msg);
+	if ((sig == NULL)
+	 || (strcmp(sig, CDBUS_SIG_CREATE_SNAP_RSP) != 0)) {
+		fprintf(stderr, "bad create snap response sig: %s, "
+				"expected: %s\n",
+			(sig ? sig : "NULL"), CDBUS_SIG_CREATE_SNAP_RSP);
+		return -EINVAL;
+	}
+
+	/* read the parameters */
+	if (!dbus_message_iter_init(rsp_msg, &iter)) {
+		fprintf(stderr, "Message has no arguments!\n");
+		return -EINVAL;
+	}
+
+	if (cdbus_type_check_get(&iter, DBUS_TYPE_UINT32, snap_id_out)) {
+		return -EINVAL;
+	}
+
+	return 0;
+}
+
+
+static int cdbus_create_snap_call(DBusConnection *conn)
+{
+	int ret;
+	DBusMessage *req_msg;
+	DBusMessage *rsp_msg;
+	DBusPendingCall *pending;
+	uint32_t snap_id;
+	struct dict user_data[1];
+
+	user_data[0].key = "key data";
+	user_data[0].val = "val data";
+
+	ret = cdbus_create_snap_pack("root", "this is a desc", 1, user_data,
+				     &req_msg);
+	if (ret < 0) {
+		fprintf(stderr, "failed to pack create snap request\n");
+		return ret;
+	}
+
+	ret = cdbus_msg_send(conn, req_msg, &pending);
+	if (ret < 0) {
+		dbus_message_unref(req_msg);
+		return ret;
+	}
+
+	ret = cdbus_msg_recv(conn, pending, &rsp_msg);
+	if (ret < 0) {
+		dbus_message_unref(req_msg);
+		dbus_pending_call_unref(pending);
+		return ret;
+	}
+
+	ret = cdbus_create_snap_unpack(conn, rsp_msg, &snap_id);
+	if (ret < 0) {
+		fprintf(stderr, "failed to unpack create snap response\n");
+		dbus_message_unref(req_msg);
+		dbus_message_unref(rsp_msg);
+		return ret;
+	}
+
+	printf("created new snapshot %u\n", snap_id);
+
+	dbus_message_unref(req_msg);
+	dbus_message_unref(rsp_msg);
+
+	return 0;
+}
+
 int main(int argc, char **argv)
 {
 	DBusConnection *conn;
 	int ret = -EINVAL;
 
 	if (argc != 2) {
-		fprintf(stderr, "Syntax: %s <list_confs | list_snaps>\n",
+		fprintf(stderr, "Syntax: %s <list_confs | list_snaps | create_snap>\n",
 			argv[0]);
 		return -EINVAL;
 	}
@@ -730,8 +913,10 @@ int main(int argc, char **argv)
 		ret = cdbus_list_confs_call(conn);
 	} else if (!strcmp(argv[1], "list_snaps")) {
 		ret = cdbus_list_snaps_call(conn);
+	} else if (!strcmp(argv[1], "create_snap")) {
+		ret = cdbus_create_snap_call(conn);
 	} else {
-		fprintf(stderr, "Syntax: %s <list_confs | list_snaps>\n",
+		fprintf(stderr, "Syntax: %s <list_confs | list_snaps | create_snap>\n",
 			argv[0]);
 		ret = -EINVAL;
 		goto err_conn_close;
