@@ -30,6 +30,7 @@
 #define CDBUS_SIG_LIST_SNAPS_RSP "a(uqutussa{ss})"
 #define CDBUS_SIG_LIST_CONFS_RSP "a(ssa{ss})"
 #define CDBUS_SIG_CREATE_SNAP_RSP "u"
+#define CDBUS_SIG_DEL_SNAPS_RSP ""
 #define CDBUS_SIG_STRING_DICT "{ss}"
 
 struct dict {
@@ -892,13 +893,137 @@ static int cdbus_create_snap_call(DBusConnection *conn)
 	return 0;
 }
 
+static int cdbus_del_snap_pack(char *snapper_conf,
+			       uint32_t snap_id,
+			       DBusMessage **req_msg_out)
+{
+	DBusMessage *msg;
+	DBusMessageIter args;
+	DBusMessageIter array_iter;
+	bool ret;
+
+	msg = dbus_message_new_method_call("org.opensuse.Snapper",
+					   "/org/opensuse/Snapper",
+					   "org.opensuse.Snapper",
+					   "DeleteSnapshots");
+	if (msg == NULL) {
+		fprintf(stderr, "failed to create req msg\n");
+		return -ENOMEM;
+	}
+
+	/* append arguments */
+	dbus_message_iter_init_append(msg, &args);
+	if (!dbus_message_iter_append_basic(&args, DBUS_TYPE_STRING,
+					    &snapper_conf)) {
+		fprintf(stderr, "Out Of Memory!\n");
+		return -ENOMEM;
+	}
+
+	ret = dbus_message_iter_open_container(&args, DBUS_TYPE_ARRAY,
+					       DBUS_TYPE_UINT32_AS_STRING,
+					       &array_iter);
+	if (!ret) {
+		fprintf(stderr, "failed to open array container\n");
+		return -ENOMEM;
+	}
+
+	if (!dbus_message_iter_append_basic(&array_iter,
+					    DBUS_TYPE_UINT32,
+					    &snap_id)) {
+		fprintf(stderr, "Out Of Memory!\n");
+		return -ENOMEM;
+	}
+
+	dbus_message_iter_close_container(&args, &array_iter);
+
+	*req_msg_out = msg;
+
+	return 0;
+}
+
+static int cdbus_del_snap_unpack(DBusConnection *conn,
+				 DBusMessage *rsp_msg)
+{
+	DBusMessageIter iter;
+	int msg_type;
+	const char *sig;
+
+	msg_type = dbus_message_get_type(rsp_msg);
+	if (msg_type == DBUS_MESSAGE_TYPE_ERROR) {
+		fprintf(stderr, "del snap error response: %s\n",
+			dbus_message_get_error_name(rsp_msg));
+		return -EINVAL;
+	}
+
+	if (msg_type != DBUS_MESSAGE_TYPE_METHOD_RETURN) {
+		fprintf(stderr, "unexpected del snap ret type: %d\n",
+			msg_type);
+		return -EINVAL;
+	}
+
+	sig = dbus_message_get_signature(rsp_msg);
+	if ((sig == NULL)
+	 || (strcmp(sig, CDBUS_SIG_DEL_SNAPS_RSP) != 0)) {
+		fprintf(stderr, "bad del snap response sig: %s, "
+				"expected: %s\n",
+			(sig ? sig : "NULL"), CDBUS_SIG_DEL_SNAPS_RSP);
+		return -EINVAL;
+	}
+
+	/* no parameters in response */
+
+	return 0;
+}
+static int cdbus_del_snap_call(DBusConnection *conn,
+			       uint32_t snap_id)
+{
+	int ret;
+	DBusMessage *req_msg;
+	DBusMessage *rsp_msg;
+	DBusPendingCall *pending;
+
+	ret = cdbus_del_snap_pack("root", snap_id, &req_msg);
+	if (ret < 0) {
+		fprintf(stderr, "failed to pack del snap request\n");
+		return ret;
+	}
+
+	ret = cdbus_msg_send(conn, req_msg, &pending);
+	if (ret < 0) {
+		dbus_message_unref(req_msg);
+		return ret;
+	}
+
+	ret = cdbus_msg_recv(conn, pending, &rsp_msg);
+	if (ret < 0) {
+		dbus_message_unref(req_msg);
+		dbus_pending_call_unref(pending);
+		return ret;
+	}
+
+	ret = cdbus_del_snap_unpack(conn, rsp_msg);
+	if (ret < 0) {
+		fprintf(stderr, "failed to unpack del snap response\n");
+		dbus_message_unref(req_msg);
+		dbus_message_unref(rsp_msg);
+		return ret;
+	}
+
+	printf("deleted snapshot %u\n", snap_id);
+
+	dbus_message_unref(req_msg);
+	dbus_message_unref(rsp_msg);
+
+	return 0;
+}
+
 int main(int argc, char **argv)
 {
 	DBusConnection *conn;
 	int ret = -EINVAL;
 
-	if (argc != 2) {
-		fprintf(stderr, "Syntax: %s <list_confs | list_snaps | create_snap>\n",
+	if (argc < 2) {
+		fprintf(stderr, "Syntax: %s <list_confs | list_snaps | create_snap | del_snap> <arg>\n",
 			argv[0]);
 		return -EINVAL;
 	}
@@ -915,8 +1040,14 @@ int main(int argc, char **argv)
 		ret = cdbus_list_snaps_call(conn);
 	} else if (!strcmp(argv[1], "create_snap")) {
 		ret = cdbus_create_snap_call(conn);
+	} else if (!strcmp(argv[1], "del_snap")) {
+		if (argc < 3) {
+			fprintf(stderr, "del_snap requires a snapshot_id argument\n");
+			return -EINVAL;
+		}
+		ret = cdbus_del_snap_call(conn, atoi(argv[2]));
 	} else {
-		fprintf(stderr, "Syntax: %s <list_confs | list_snaps | create_snap>\n",
+		fprintf(stderr, "Syntax: %s <list_confs | list_snaps | create_snap> | del_snap> <arg>\n",
 			argv[0]);
 		ret = -EINVAL;
 		goto err_conn_close;
