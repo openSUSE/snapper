@@ -21,7 +21,6 @@ AC_DISABLE_STATIC
 AC_PROG_CXX
 AC_PROG_LIBTOOL
 AM_PROG_LIBTOOL
-AM_PATH_PYTHON
 
 AC_PREFIX_DEFAULT(/usr)
 
@@ -70,8 +69,6 @@ AC_OUTPUT(
 	snapper/Makefile
 	examples/Makefile
 	examples/C/Makefile
-	bindings/Makefile
-	bindings/python/Makefile
 	dbus/Makefile
 	server/Makefile
 	client/Makefile

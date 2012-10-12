@@ -25,7 +25,6 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 Source:		snapper-%{version}.tar.bz2
 Prefix:		/usr
 BuildRequires:	boost-devel doxygen gcc-c++ libtool libxml2-devel
-BuildRequires:	python-devel swig
 BuildRequires:	dbus-1-devel
 %if (0%{?suse_version} && 0%{?suse_version} >= 1210)
 BuildRequires:	libzypp(plugin:commit)
@@ -71,9 +70,6 @@ install -D data/sysconfig.snapper $RPM_BUILD_ROOT/etc/sysconfig/snapper
 %endif
 
 %{find_lang} snapper
-
-rm -f $RPM_BUILD_ROOT/%{python_sitearch}/_libsnapper.a
-rm -f $RPM_BUILD_ROOT/%{python_sitearch}/_libsnapper.la
 
 %clean
 rm -rf "$RPM_BUILD_ROOT"
@@ -150,22 +146,6 @@ Authors:
 %{_libdir}/libsnapper.la
 %{_libdir}/libsnapper.so
 %{prefix}/include/snapper
-
-%package -n libsnapper-python
-Summary:	Python bindings for libsnapper
-Group:		System/Libraries
-
-%description -n libsnapper-python
-This package contains Python bindings for libsnapper.
-
-Authors:
---------
-    Thomas Fehr <fehr@suse.de>
-
-%files -n libsnapper-python
-%defattr(-,root,root)
-%{python_sitelib}/libsnapper.py*
-%attr(755,root,root) %{python_sitearch}/_libsnapper.so
 
 %package -n snapper-zypp-plugin
 Requires:	snapper libzypp(plugin:commit) zypp-plugin-python
