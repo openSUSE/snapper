@@ -26,6 +26,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#define __STDC_FORMAT_MACROS
+#include <inttypes.h>
 
 #define CDBUS_SIG_LIST_SNAPS_RSP "a(uqutussa{ss})"
 #define CDBUS_SIG_LIST_CONFS_RSP "a(ssa{ss})"
@@ -337,7 +339,7 @@ static void snap_array_print(int32_t num_snaps,
 		printf("id: %u\n"
 		       "type: %u\n"
 		       "pre_id: %u\n"
-		       "time: %lu\n"
+		       "time: %" PRIu64 "\n"
 		       "creator_uid: %u\n"
 		       "desc: %s\n"
 		       "cleanup: %s\n",
@@ -944,7 +946,6 @@ static int cdbus_del_snap_pack(char *snapper_conf,
 static int cdbus_del_snap_unpack(DBusConnection *conn,
 				 DBusMessage *rsp_msg)
 {
-	DBusMessageIter iter;
 	int msg_type;
 	const char *sig;
 
