@@ -1,4 +1,4 @@
-.TH "SNAPPERD" "8" "2012-09-04" "@VERSION@" "Filesystem Snapshot Management"
+.TH "SNAPPERD" "8" "2012-10-15" "@VERSION@" "Filesystem Snapshot Management"
 .SH "NAME"
 .LP
 snapperd - DBus daemon for snapper
@@ -21,4 +21,4 @@ Arvin Schnell <aschnell@suse.de>
 
 .SH "SEE ALSO"
 .LP
-snapper(8)
+snapper(8), dbus-daemon(1)
