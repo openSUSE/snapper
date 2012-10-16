@@ -219,6 +219,14 @@ Read files for which to undo changes from file <file>.
 Run the cleanup algorithm <cleanup-algorithm>. Currently implemented cleanup
 algorithms are number, timeline and empty-pre-post.
 
+.SH "PERMISSIONS"
+.LP
+Non-root users can be allowed to use a configuration by setting ALLOW_USERS or
+ALLOW_GROUPS in the config file. For all operations to work the user must also
+be able to read and access the .snapshots directory inside the
+subvolume. The .snapshots directory must have owner and group root. The
+directory must not be writable by anybody else.
+
 .SH "FILES"
 .TP
 .B /etc/sysconfig/snapper
