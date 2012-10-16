@@ -25,7 +25,11 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 Source:		snapper-%{version}.tar.bz2
 Prefix:		/usr
 BuildRequires:	boost-devel doxygen gcc-c++ libtool libxml2-devel
+%if ! 0%{?mandriva_version}
 BuildRequires:	dbus-1-devel
+%else
+BuildRequires:	libdbus-1-devel
+%endif
 %if (0%{?suse_version} && 0%{?suse_version} >= 1210)
 BuildRequires:	libzypp(plugin:commit)
 %endif
