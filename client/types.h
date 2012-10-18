@@ -114,5 +114,5 @@ namespace DBus
 
     Hihi& operator>>(Hihi& hihi, XFile& data);
 
-};
+}
 

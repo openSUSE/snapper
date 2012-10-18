@@ -155,7 +155,7 @@ namespace snapper
 
     };
 
-};
+}
 
 
 #endif

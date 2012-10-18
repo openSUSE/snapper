@@ -59,4 +59,4 @@ namespace DBus
 
     Hoho& operator<<(Hoho& hoho, const Files& data);
 
-};
+}
