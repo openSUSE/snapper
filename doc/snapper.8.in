@@ -224,8 +224,8 @@ algorithms are number, timeline and empty-pre-post.
 Non-root users can be allowed to use a configuration by setting ALLOW_USERS or
 ALLOW_GROUPS in the config file. For all operations to work the user must also
 be able to read and access the .snapshots directory inside the
-subvolume. The .snapshots directory must have owner and group root. The
-directory must not be writable by anybody else.
+subvolume. The .snapshots directory must be owned by root and must not be
+writable by anybody else.
 
 .SH "FILES"
 .TP

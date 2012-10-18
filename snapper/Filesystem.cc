@@ -287,15 +287,21 @@ namespace snapper
 	    throw IOErrorException();
 	}
 
-	if (stat.st_uid != 0 || stat.st_gid != 0)
+	if (stat.st_uid != 0)
 	{
-	    y2err("owner/group of .snapshots wrong");
+	    y2err(".snapshots must have owner root");
+	    throw IOErrorException();
+	}
+
+	if (stat.st_gid != 0 && stat.st_mode & S_IWGRP)
+	{
+	    y2err(".snapshots must have group root or must not be group-writable");
 	    throw IOErrorException();
 	}
 
 	if (stat.st_mode & S_IWOTH)
 	{
-	    y2err("permissions of .snapshots wrong");
+	    y2err(".snapshots must not be world-writable");
 	    throw IOErrorException();
 	}
 
@@ -730,15 +736,21 @@ namespace snapper
 	    throw IOErrorException();
 	}
 
-	if (stat.st_uid != 0 || stat.st_gid != 0)
+	if (stat.st_uid != 0)
 	{
-	    y2err("owner/group of .snapshots wrong");
+	    y2err(".snapshots must have owner root");
+	    throw IOErrorException();
+	}
+
+	if (stat.st_gid != 0 && stat.st_mode & S_IWGRP)
+	{
+	    y2err(".snapshots must have group root or must not be group-writable");
 	    throw IOErrorException();
 	}
 
 	if (stat.st_mode & S_IWOTH)
 	{
-	    y2err("permissions of .snapshots wrong");
+	    y2err(".snapshots must not be world-writable");
 	    throw IOErrorException();
 	}
 
