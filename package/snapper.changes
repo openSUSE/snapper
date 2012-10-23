@@ -1,7 +1,8 @@
 -------------------------------------------------------------------
 Thu Oct 18 15:11:49 CEST 2012 - aschnell@suse.de
 
-- .snapshots must not have group root if it is not group-writable
+- .snapshots is not required to have group root if it is not
+  group-writable
 
 -------------------------------------------------------------------
 Mon Oct 15 10:40:07 CEST 2012 - aschnell@suse.de
