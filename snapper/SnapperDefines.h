@@ -43,6 +43,7 @@
 
 #define LVCREATE "/sbin/lvcreate"
 #define LVREMOVE "/sbin/lvremove"
+#define LVS	 "/sbin/lvs"
 
 
 #endif
