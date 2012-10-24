@@ -31,8 +31,6 @@
 
 #define FILTERSDIR "/etc/snapper/filters"
 
-#define BTRFSBIN "/sbin/btrfs"
-
 #define CHSNAPBIN "/sbin/chsnap"
 
 #define CPBIN "/bin/cp"

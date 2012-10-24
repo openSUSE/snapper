@@ -207,10 +207,6 @@ namespace snapper
     Btrfs::Btrfs(const string& subvolume)
 	: Filesystem(subvolume)
     {
-	if (access(BTRFSBIN, X_OK) != 0)
-	{
-	    throw ProgramNotInstalledException(BTRFSBIN " not installed");
-	}
     }
 
 
