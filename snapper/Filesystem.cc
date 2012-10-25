@@ -207,10 +207,6 @@ namespace snapper
     Btrfs::Btrfs(const string& subvolume)
 	: Filesystem(subvolume)
     {
-	if (access(BTRFSBIN, X_OK) != 0)
-	{
-	    throw ProgramNotInstalledException(BTRFSBIN " not installed");
-	}
     }
 
 
@@ -667,6 +663,11 @@ namespace snapper
 	    throw ProgramNotInstalledException(LVCREATE " not installed");
 	}
 
+	if (access(LVS, X_OK) != 0)
+	{
+	    throw ProgramNotInstalledException(LVS " not installed");
+	}
+
 	bool found = false;
 	MtabData mtab_data;
 
@@ -679,7 +680,7 @@ namespace snapper
 	    throw InvalidConfigException();
 	}
 
-	if (!detectLvmNames(mtab_data))
+	if (!detectThinVolumeNames(mtab_data))
 	    throw InvalidConfigException();
 
 	mount_options = filter_mount_options(mtab_data.options);
@@ -867,20 +868,35 @@ namespace snapper
 
 
     bool
-    Lvm::detectLvmNames(const MtabData& mtab_data)
+    Lvm::detectThinVolumeNames(const MtabData& mtab_data)
     {
 	Regex rx("^/dev/mapper/(.+[^-])-([^-].+)$");
-	if (rx.match(mtab_data.device))
+	if (!rx.match(mtab_data.device))
 	{
-	    vg_name = boost::replace_all_copy(rx.cap(1), "--", "-");
-	    lv_name = boost::replace_all_copy(rx.cap(2), "--", "-");
-	    return true;
+	    y2err("could not detect lvm names from '" << mtab_data.device << "'");
+	    return false;
 	}
 
-	y2err("could not detect lvm names from '" << mtab_data.device << "'");
-	return false;
-    }
+	vg_name = boost::replace_all_copy(rx.cap(1), "--", "-");
+	lv_name = boost::replace_all_copy(rx.cap(2), "--", "-");
 
+	SystemCmd cmd(LVS " -o segtype --noheadings " + quote(vg_name + "/" + lv_name));
+
+	if (cmd.retcode() != 0) {
+	    y2err("could not detect segment type infromation from: " << vg_name << "/" << lv_name);
+	    return false;
+	}
+
+	string str = cmd.getLine(0);
+	boost::trim(str);
+
+	if (str.compare("thin")) {
+	    y2err(vg_name << "/" << lv_name << " is not a LVM thin volume");
+	    return false;
+	}
+
+	return true;
+    }
 
     string
     Lvm::getDevice(unsigned int num) const

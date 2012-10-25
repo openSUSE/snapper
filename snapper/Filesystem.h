@@ -188,7 +188,7 @@ namespace snapper
 
 	const string mount_type;
 
-	bool detectLvmNames(const MtabData& mtab_data);
+	bool detectThinVolumeNames(const MtabData& mtab_data);
 
 	string getDevice(unsigned int num) const;
 
