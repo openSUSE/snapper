@@ -831,6 +831,11 @@ command_diff(DBus::Connection& conn)
 {
     GetOpts::parsed_opts opts = getopts.parse("diff", GetOpts::no_options);
 
+    if (getopts.numArgs() < 1) {
+	cerr << _("Command 'diff' needs at least one argument.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
     GetOpts::parsed_opts::const_iterator opt;
 
     pair<unsigned int, unsigned int> nums(read_nums(getopts.popArg()));
