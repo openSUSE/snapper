@@ -31,8 +31,6 @@
 
 #define FILTERSDIR "/etc/snapper/filters"
 
-#define BTRFSBIN "/sbin/btrfs"
-
 #define CHSNAPBIN "/sbin/chsnap"
 
 #define CPBIN "/bin/cp"
@@ -43,6 +41,7 @@
 
 #define LVCREATE "/sbin/lvcreate"
 #define LVREMOVE "/sbin/lvremove"
+#define LVS	 "/sbin/lvs"
 
 
 #endif
