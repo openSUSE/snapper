@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Nov 12 15:37:25 CET 2012 - aschnell@suse.de
+
+- reject create-config on non-thin LVM volumes
+- 0.1.1
+
+-------------------------------------------------------------------
 Thu Oct 18 15:11:49 CEST 2012 - aschnell@suse.de
 
 - .snapshots is not required to have group root if it is not
