@@ -4,7 +4,7 @@
 
 SUBDIRS = utils
 
-INCLUDES = -I$(top_srcdir) -I/usr/include/dbus-1.0 -I$(libdir)/dbus-1.0/include
+INCLUDES = -I$(top_srcdir) $(DBUS_CFLAGS)
 
 
 bin_PROGRAMS = snapper

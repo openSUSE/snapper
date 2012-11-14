@@ -2,7 +2,7 @@
 # Makefile.am for snapper/dbus
 #
 
-INCLUDES = -I$(top_srcdir) -I/usr/include/dbus-1.0 -I$(libdir)/dbus-1.0/include
+INCLUDES = -I$(top_srcdir) $(DBUS_CFLAGS)
 
 noinst_LTLIBRARIES = libdbus.la
 
@@ -11,5 +11,5 @@ libdbus_la_SOURCES =					\
 	DBusConnection.cc	DBusConnection.h	\
 	DBusMainLoop.cc		DBusMainLoop.h
 
-libdbus_la_LIBADD = -ldbus-1
+libdbus_la_LIBADD =  $(DBUS_LIBS)
 

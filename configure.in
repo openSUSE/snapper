@@ -58,6 +58,8 @@ if test "x$with_lvm" != "xyes" -a "x$with_ext4" != "xyes" -a "x$with_btrfs" != "
 	AC_MSG_ERROR([You have to enable at least one snapshot type (remove some --disable-xxx parameter)])
 fi
 
+PKG_CHECK_MODULES(DBUS, dbus-1)
+
 AC_SUBST(VERSION)
 AC_SUBST(LIBVERSION_MAJOR)
 AC_SUBST(LIBVERSION_INFO)
