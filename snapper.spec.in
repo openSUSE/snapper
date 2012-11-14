@@ -24,7 +24,7 @@ Group:		System/Packages
 BuildRoot:	%{_tmppath}/%{name}-%{version}-build
 Source:		snapper-%{version}.tar.bz2
 Prefix:		/usr
-BuildRequires:	boost-devel doxygen gcc-c++ libtool libxml2-devel
+BuildRequires:	boost-devel doxygen gcc-c++ libtool libxml2-devel pkg-config
 %if ! 0%{?mandriva_version}
 BuildRequires:	dbus-1-devel
 %else
