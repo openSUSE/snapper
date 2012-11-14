@@ -11,5 +11,5 @@ libdbus_la_SOURCES =					\
 	DBusConnection.cc	DBusConnection.h	\
 	DBusMainLoop.cc		DBusMainLoop.h
 
-libdbus_la_LIBADD =  $(DBUS_LIBS)
+libdbus_la_LIBADD = $(DBUS_LIBS)
 
