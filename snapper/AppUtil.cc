@@ -217,15 +217,17 @@ namespace snapper
     sformat(const string& format, ...)
     {
 	char* result;
+	string str;
 
 	va_list ap;
 	va_start(ap, format);
-	if (vasprintf(&result, format.c_str(), ap) == -1)
-	    return string();
+	if (vasprintf(&result, format.c_str(), ap) != -1)
+	{
+	    str = result;
+	    free(result);
+	}
 	va_end(ap);
 
-	string str(result);
-	free(result);
 	return str;
     }
 
