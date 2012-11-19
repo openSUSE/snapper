@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Nov 19 11:33:41 CET 2012 - aschnell@suse.de
+
+- added binding for Snapper::createConfig
+- 2.22.8
+
+-------------------------------------------------------------------
 Tue Sep 11 14:24:18 CEST 2012 - jsuchome@suse.cz
 
 - enable deleting snapshots
