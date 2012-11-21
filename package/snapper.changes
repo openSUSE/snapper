@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Nov 21 11:55:28 CET 2012 - aschnell@suse.de
+
+- handle userdata in zypp plugin (fate #312521)
+
+-------------------------------------------------------------------
 Mon Nov 12 15:37:25 CET 2012 - aschnell@suse.de
 
 - reject create-config on non-thin LVM volumes
