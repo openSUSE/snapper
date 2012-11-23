@@ -658,14 +658,14 @@ namespace snapper
     Lvm::Lvm(const string& subvolume, const string& mount_type)
 	: Filesystem(subvolume), mount_type(mount_type)
     {
-	if (access(LVCREATE, X_OK) != 0)
+	if (access(LVCREATEBIN, X_OK) != 0)
 	{
-	    throw ProgramNotInstalledException(LVCREATE " not installed");
+	    throw ProgramNotInstalledException(LVCREATEBIN " not installed");
 	}
 
-	if (access(LVS, X_OK) != 0)
+	if (access(LVSBIN, X_OK) != 0)
 	{
-	    throw ProgramNotInstalledException(LVS " not installed");
+	    throw ProgramNotInstalledException(LVSBIN " not installed");
 	}
 
 	bool found = false;
@@ -789,7 +789,7 @@ namespace snapper
 #endif
 	}
 
-	SystemCmd cmd(LVCREATE " --snapshot --name " + quote(snapshotLvName(num)) + " " +
+	SystemCmd cmd(LVCREATEBIN " --snapshot --name " + quote(snapshotLvName(num)) + " " +
 		      quote(vg_name + "/" + lv_name));
 	if (cmd.retcode() != 0)
 	    throw CreateSnapshotFailedException();
@@ -807,7 +807,7 @@ namespace snapper
     void
     Lvm::deleteSnapshot(unsigned int num) const
     {
-	SystemCmd cmd(LVREMOVE " --force " + quote(vg_name + "/" + snapshotLvName(num)));
+	SystemCmd cmd(LVREMOVEBIN " --force " + quote(vg_name + "/" + snapshotLvName(num)));
 	if (cmd.retcode() != 0)
 	    throw DeleteSnapshotFailedException();
 
@@ -880,17 +880,16 @@ namespace snapper
 	vg_name = boost::replace_all_copy(rx.cap(1), "--", "-");
 	lv_name = boost::replace_all_copy(rx.cap(2), "--", "-");
 
-	SystemCmd cmd(LVS " -o segtype --noheadings " + quote(vg_name + "/" + lv_name));
+	SystemCmd cmd(LVSBIN " -o segtype --noheadings " + quote(vg_name + "/" + lv_name));
 
 	if (cmd.retcode() != 0) {
 	    y2err("could not detect segment type infromation from: " << vg_name << "/" << lv_name);
 	    return false;
 	}
 
-	string str = cmd.getLine(0);
-	boost::trim(str);
+	string segtype = boost::trim_copy(cmd.getLine(0));
 
-	if (str.compare("thin")) {
+	if (segtype.compare("thin")) {
 	    y2err(vg_name << "/" << lv_name << " is not a LVM thin volume");
 	    return false;
 	}

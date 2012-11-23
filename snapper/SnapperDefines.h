@@ -39,9 +39,9 @@
 #define DIFFBIN "/usr/bin/diff"
 #define CHATTRBIN "/usr/bin/chattr"
 
-#define LVCREATE "/sbin/lvcreate"
-#define LVREMOVE "/sbin/lvremove"
-#define LVS	 "/sbin/lvs"
+#define LVCREATEBIN "/sbin/lvcreate"
+#define LVREMOVEBIN "/sbin/lvremove"
+#define LVSBIN "/sbin/lvs"
 
 
 #endif
