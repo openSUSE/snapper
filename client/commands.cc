@@ -217,12 +217,12 @@ command_delete_xsnapshots(DBus::Connection& conn, const string& config_name,
 
 string
 command_mount_xsnapshots(DBus::Connection& conn, const string& config_name,
-			 unsigned int num)
+			 unsigned int num, bool user_request)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "MountSnapshot");
 
     DBus::Hoho hoho(call);
-    hoho << config_name << num;
+    hoho << config_name << num << user_request;
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
@@ -237,12 +237,12 @@ command_mount_xsnapshots(DBus::Connection& conn, const string& config_name,
 
 void
 command_umount_xsnapshots(DBus::Connection& conn, const string& config_name,
-			  unsigned int num)
+			  unsigned int num, bool user_request)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "UmountSnapshot");
 
     DBus::Hoho hoho(call);
-    hoho << config_name << num;
+    hoho << config_name << num << user_request;
 
     conn.send_with_reply_and_block(call);
 }

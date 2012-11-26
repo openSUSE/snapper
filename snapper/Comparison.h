@@ -46,7 +46,8 @@ namespace snapper
 	Files& getFiles() { return files; }
 	const Files& getFiles() const { return files; }
 
-	void mount();
+	void mount() const;
+	void umount() const;
 
 	UndoStatistic getUndoStatistic() const;
 

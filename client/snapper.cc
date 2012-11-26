@@ -174,12 +174,12 @@ struct MyComparison
 	if (mount)
 	{
 	    if (nums.first != 0)
-		file_paths.pre_path = command_mount_xsnapshots(conn, config_name, nums.first);
+		file_paths.pre_path = command_mount_xsnapshots(conn, config_name, nums.first, false);
 	    else
 		file_paths.pre_path = file_paths.system_path;
 
 	    if (nums.second != 0)
-		file_paths.post_path = command_mount_xsnapshots(conn, config_name, nums.second);
+		file_paths.post_path = command_mount_xsnapshots(conn, config_name, nums.second, false);
 	    else
 		file_paths.post_path = file_paths.system_path;
 	}
@@ -729,7 +729,7 @@ command_mount(DBus::Connection& conn)
     {
 	unsigned int num = read_num(getopts.popArg());
 
-	command_mount_xsnapshots(conn, config_name, num);
+	command_mount_xsnapshots(conn, config_name, num, true);
     }
 }
 
@@ -757,7 +757,7 @@ command_umount(DBus::Connection& conn)
     {
 	unsigned int num = read_num(getopts.popArg());
 
-	command_umount_xsnapshots(conn, config_name, num);
+	command_umount_xsnapshots(conn, config_name, num, true);
     }
 }
 
@@ -1278,6 +1278,8 @@ main(int argc, char** argv)
 	    cerr << _("Config is locked.") << endl;
 	else if (name == "error.config_in_use")
 	    cerr << _("Config is in use.") << endl;
+	else if (name == "error.snapshot_in_use")
+	    cerr << _("Snapshot is in use.") << endl;
 	else if (name == "error.unknown_file_use")
 	    cerr << _("Unknown file.") << endl;
 	else if (name == "error.io_error")

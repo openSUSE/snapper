@@ -52,6 +52,26 @@ Client::~Client()
     {
 	delete_comparison(it);
     }
+
+    for (map<pair<string, unsigned int>, unsigned int>::iterator it1 = mounts.begin();
+	 it1 != mounts.end(); ++it1)
+    {
+	string config_name = it1->first.first;
+	unsigned int number = it1->first.second;
+	unsigned int use_count = it1->second;
+
+	MetaSnappers::iterator it2 = meta_snappers.find(config_name);
+
+	Snapper* snapper = it2->getSnapper();
+	Snapshots& snapshots = snapper->getSnapshots();
+
+	Snapshots::iterator snap = snapshots.find(number);
+	if (snap == snapshots.end())
+	    throw IllegalSnapshotException();
+
+	for (unsigned int i = 0; i < use_count; ++i)
+	    snap->umountFilesystemSnapshot(false);
+    }
 }
 
 
@@ -114,6 +134,28 @@ bool
 Client::has_lock(const string& config_name) const
 {
     return contains(locks, config_name);
+}
+
+
+void
+Client::add_mount(const string& config_name, unsigned int number)
+{
+    mounts[make_pair(config_name, number)]++;
+}
+
+
+void
+Client::remove_mount(const string& config_name, unsigned int number)
+{
+    map<pair<string, unsigned int>, unsigned int>::iterator it =
+	mounts.find(make_pair(config_name, number));
+    if (it != mounts.end())
+    {
+	if (it->second > 1)
+	    it->second--;
+	else
+	    mounts.erase(it);
+    }
 }
 
 
@@ -240,11 +282,13 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"    <method name='MountSnapshot'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='number' type='u' direction='in'/>\n"
+	"      <arg name='user-request' type='b' direction='in'/>\n"
 	"    </method>\n"
 
 	"    <method name='UmountSnapshot'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='number' type='u' direction='in'/>\n"
+	"      <arg name='user-request' type='b' direction='in'/>\n"
 	"    </method>\n"
 
 	"    <method name='GetMountPoint'>\n"
@@ -338,18 +382,39 @@ Client::check_lock(DBus::Connection& conn, DBus::Message& msg, const string& con
 }
 
 
-struct InUse : public std::exception
+struct ConfigInUse : public std::exception
 {
-    explicit InUse() throw() {}
-    virtual const char* what() const throw() { return "in use"; }
+    explicit ConfigInUse() throw() {}
+    virtual const char* what() const throw() { return "config in use"; }
+};
+
+
+struct SnapshotInUse : public std::exception
+{
+    explicit SnapshotInUse() throw() {}
+    virtual const char* what() const throw() { return "snapshot in use"; }
 };
 
 
 void
-Client::check_in_use(const MetaSnapper& meta_snapper) const
+Client::check_config_in_use(const MetaSnapper& meta_snapper) const
 {
     if (meta_snapper.use_count() != 0)
-	throw InUse();
+	throw ConfigInUse();
+}
+
+
+void
+Client::check_snapshot_in_use(const MetaSnapper& meta_snapper, unsigned int number) const
+{
+    for (Clients::const_iterator it1 = clients.begin(); it1 != clients.end(); ++it1)
+    {
+	map<pair<string, unsigned int>, unsigned int>::const_iterator it2 =
+	    it1->mounts.find(make_pair(meta_snapper.configName(), number));
+
+	if (it2 != it1->mounts.end())
+	    throw SnapshotInUse();
+    }
 }
 
 
@@ -511,7 +576,7 @@ Client::delete_config(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg);
     check_lock(conn, msg, config_name);
-    check_in_use(*it);
+    check_config_in_use(*it);
 
     meta_snappers.deleteConfig(it);
 
@@ -847,18 +912,20 @@ Client::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
-    MetaSnappers::iterator it = meta_snappers.find(config_name);
+    MetaSnappers::iterator it1 = meta_snappers.find(config_name);
 
-    check_permission(conn, msg, *it);
+    check_permission(conn, msg, *it1);
     check_lock(conn, msg, config_name);
-    check_in_use(*it);
+    check_config_in_use(*it1);
 
-    Snapper* snapper = it->getSnapper();
+    Snapper* snapper = it1->getSnapper();
     Snapshots& snapshots = snapper->getSnapshots();
 
-    for (list<unsigned int>::const_iterator it = nums.begin(); it != nums.end(); ++it)
+    for (list<unsigned int>::const_iterator it2 = nums.begin(); it2 != nums.end(); ++it2)
     {
-	Snapshots::iterator snap = snapshots.find(*it);
+	check_snapshot_in_use(*it1, *it2);
+
+	Snapshots::iterator snap = snapshots.find(*it2);
 
 	snapper->deleteSnapshot(snap);
     }
@@ -876,11 +943,13 @@ Client::mount_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num;
+    bool user_request;
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> num;
+    hihi >> config_name >> num >> user_request;
 
-    y2deb("MountSnapshot config_name:" << config_name << " num:" << num);
+    y2deb("MountSnapshot config_name:" << config_name << " num:" << num <<
+	  " user_request:" << user_request);
 
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
@@ -895,7 +964,10 @@ Client::mount_snapshot(DBus::Connection& conn, DBus::Message& msg)
     if (snap == snapshots.end())
 	throw IllegalSnapshotException();
 
-    snap->mountFilesystemSnapshot();
+    snap->mountFilesystemSnapshot(user_request);
+
+    if (!user_request)
+	add_mount(config_name, num);
 
     string mount_point = snap->snapshotDir();
 
@@ -913,11 +985,13 @@ Client::umount_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num;
+    bool user_request;
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> num;
+    hihi >> config_name >> num >> user_request;
 
-    y2deb("UmountSnapshot config_name:" << config_name << " num:" << num);
+    y2deb("UmountSnapshot config_name:" << config_name << " num:" << num <<
+	  " user_request:" << user_request);
 
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
@@ -932,7 +1006,10 @@ Client::umount_snapshot(DBus::Connection& conn, DBus::Message& msg)
     if (snap == snapshots.end())
 	throw IllegalSnapshotException();
 
-    snap->umountFilesystemSnapshot();
+    snap->umountFilesystemSnapshot(user_request);
+
+    if (!user_request)
+	remove_mount(config_name, num);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -1225,9 +1302,14 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	DBus::MessageError reply(msg, "error.config_locked", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
-    catch (const InUse& e)
+    catch (const ConfigInUse& e)
     {
 	DBus::MessageError reply(msg, "error.config_in_use", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
+    catch (const SnapshotInUse& e)
+    {
+	DBus::MessageError reply(msg, "error.snapshot_in_use", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const NoComparison& e)

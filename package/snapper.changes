@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Nov 26 12:40:54 CET 2012 - aschnell@suse.de
+
+- implemented use-counter for mounts of snapshots
+
+-------------------------------------------------------------------
 Wed Nov 21 11:55:28 CET 2012 - aschnell@suse.de
 
 - handle userdata in zypp plugin (fate #312521)

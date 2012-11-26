@@ -219,7 +219,7 @@ void
 MetaSnapper::unload()
 {
     delete snapper;
-    snapper = 0;
+    snapper = NULL;
 }
 
 

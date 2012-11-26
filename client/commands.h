@@ -77,11 +77,11 @@ command_delete_xsnapshots(DBus::Connection& conn, const string& config_name,
 
 string
 command_mount_xsnapshots(DBus::Connection& conn, const string& config_name,
-			 unsigned int num);
+			 unsigned int num, bool user_request);
 
 void
 command_umount_xsnapshots(DBus::Connection& conn, const string& config_name,
-			  unsigned int num);
+			  unsigned int num, bool user_request);
 
 string
 command_get_xmount_point(DBus::Connection& conn, const string& config_name,

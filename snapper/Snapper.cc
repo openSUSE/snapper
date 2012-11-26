@@ -85,7 +85,17 @@ namespace snapper
 	y2mil("Snapper destructor");
 
 	for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); ++it)
+	{
 	    it->flushInfo();
+
+	    try
+	    {
+		it->handleUmountFilesystemSnapshot();
+	    }
+	    catch (const UmountSnapshotFailedException& e)
+	    {
+	    }
+	}
 
 	delete filesystem;
 	delete config;

@@ -90,12 +90,22 @@ namespace snapper
 
 
     void
-    Comparison::mount()
+    Comparison::mount() const
     {
 	if (!getSnapshot1()->isCurrent())
-	    getSnapshot1()->mountFilesystemSnapshot();
+	    getSnapshot1()->mountFilesystemSnapshot(false);
 	if (!getSnapshot2()->isCurrent())
-	    getSnapshot2()->mountFilesystemSnapshot();
+	    getSnapshot2()->mountFilesystemSnapshot(false);
+    }
+
+
+    void
+    Comparison::umount() const
+    {
+	if (!getSnapshot1()->isCurrent())
+	    getSnapshot1()->umountFilesystemSnapshot(false);
+	if (!getSnapshot2()->isCurrent())
+	    getSnapshot2()->umountFilesystemSnapshot(false);
     }
 
 
@@ -103,8 +113,6 @@ namespace snapper
     Comparison::create()
     {
 	y2mil("num1:" << getSnapshot1()->getNum() << " num2:" << getSnapshot2()->getNum());
-
-	mount();
 
 #if 1
 	cmpdirs_cb_t cb = AppendHelper(&file_paths, files);
@@ -114,9 +122,15 @@ namespace snapper
 	};
 #endif
 
-	SDir dir1 = getSnapshot1()->openSnapshotDir();
-	SDir dir2 = getSnapshot2()->openSnapshotDir();
-	cmpDirs(dir1, dir2, cb);
+	mount();
+
+	{
+	    SDir dir1 = getSnapshot1()->openSnapshotDir();
+	    SDir dir2 = getSnapshot2()->openSnapshotDir();
+	    cmpDirs(dir1, dir2, cb);
+	}
+
+	umount();
 
 	files.sort();
 

@@ -84,9 +84,8 @@ namespace snapper
 
 	friend class Snapshots;
 
-	Snapshot(const Snapper* snapper, SnapshotType type, unsigned int num, time_t date)
-	    : snapper(snapper), type(type), num(num), date(date), uid(0), pre_num(0),
-	      info_modified(false) {}
+	Snapshot(const Snapper* snapper, SnapshotType type, unsigned int num, time_t date);
+	~Snapshot();
 
 	SnapshotType getType() const { return type; }
 
@@ -118,8 +117,9 @@ namespace snapper
 	SDir openSnapshotDir() const;
 #endif
 
-	void mountFilesystemSnapshot() const;
-	void umountFilesystemSnapshot() const;
+	void mountFilesystemSnapshot(bool user_request) const;
+	void umountFilesystemSnapshot(bool user_request) const;
+	void handleUmountFilesystemSnapshot() const;
 
 	friend std::ostream& operator<<(std::ostream& s, const Snapshot& snapshot);
 
@@ -144,6 +144,10 @@ namespace snapper
 	map<string, string> userdata;
 
 	bool info_modified;
+
+	mutable bool mount_checked;
+	mutable bool mount_user_request;
+	mutable unsigned int mount_use_count;
 
 	void writeInfo() const;
 

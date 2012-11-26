@@ -69,6 +69,19 @@ namespace snapper
     }
 
 
+    Snapshot::Snapshot(const Snapper* snapper, SnapshotType type, unsigned int num, time_t date)
+	: snapper(snapper), type(type), num(num), date(date), uid(0), pre_num(0),
+	  info_modified(false), mount_checked(false), mount_user_request(false),
+	  mount_use_count(0)
+    {
+    }
+
+
+    Snapshot::~Snapshot()
+    {
+    }
+
+
     // Directory containing the actual content of the snapshot.
     // For btrfs e.g. "/" or "/home" for current and "/.snapshots/1/snapshot"
     // or "/home/.snapshots/1/snapshot" otherwise.
@@ -465,22 +478,56 @@ namespace snapper
 
 
     void
-    Snapshot::mountFilesystemSnapshot() const
+    Snapshot::mountFilesystemSnapshot(bool user_request) const
     {
 	if (isCurrent())
 	    throw IllegalSnapshotException();
+
+	if (!mount_checked)
+	{
+	    mount_user_request = snapper->getFilesystem()->isSnapshotMounted(num);
+	    mount_checked = true;
+	}
+
+	if (user_request)
+	    mount_user_request = true;
+	else
+	    mount_use_count++;
 
 	snapper->getFilesystem()->mountSnapshot(num);
     }
 
 
     void
-    Snapshot::umountFilesystemSnapshot() const
+    Snapshot::umountFilesystemSnapshot(bool user_request) const
     {
 	if (isCurrent())
 	    throw IllegalSnapshotException();
 
-	snapper->getFilesystem()->umountSnapshot(num);
+	if (!mount_checked)
+	{
+	    mount_user_request = snapper->getFilesystem()->isSnapshotMounted(num);
+	    mount_checked = true;
+	}
+
+	if (user_request)
+	    mount_user_request = false;
+	else
+	    mount_use_count--;
+
+	if (user_request && mount_use_count == 0)
+	    snapper->getFilesystem()->umountSnapshot(num);
+    }
+
+
+    void
+    Snapshot::handleUmountFilesystemSnapshot() const
+    {
+	if (!mount_checked)
+	    return;
+
+	if (!mount_user_request && mount_use_count == 0)
+	    snapper->getFilesystem()->umountSnapshot(num);
     }
 
 

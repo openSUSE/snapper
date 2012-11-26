@@ -69,7 +69,8 @@ public:
     void check_permission(DBus::Connection& conn, DBus::Message& msg,
 			  const MetaSnapper& meta_snapper) const;
     void check_lock(DBus::Connection& conn, DBus::Message& msg, const string& config_name) const;
-    void check_in_use(const MetaSnapper& meta_snapper) const;
+    void check_config_in_use(const MetaSnapper& meta_snapper) const;
+    void check_snapshot_in_use(const MetaSnapper& meta_snapper, unsigned int number) const;
 
     void signal_config_created(DBus::Connection& conn, const string& config_name);
     void signal_config_deleted(DBus::Connection& conn, const string& config_name);
@@ -120,11 +121,16 @@ public:
     void remove_lock(const string& config_name);
     bool has_lock(const string& config_name) const;
 
+    void add_mount(const string& config_name, unsigned int number);
+    void remove_mount(const string& config_name, unsigned int number);
+
     const string name;
 
     list<Comparison*> comparisons;
 
     set<string> locks;
+
+    map<pair<string, unsigned int>, unsigned int> mounts;
 
     struct Task
     {
