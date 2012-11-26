@@ -195,7 +195,7 @@ YCPValue SnapperAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPV
 	    }
 	    catch (const ListConfigsFailedException& e)
 	    {
-		y2error ("sysconfig file not found.");
+		y2error("list-configs failed (%s).", e.what());
 		snapper_error	= "sysconfig_not_found";
 		return YCPVoid();
 	    }
@@ -410,7 +410,7 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
 	return ret;
     }
 
-    if (!snapper_initialized) {
+    if (!snapper_initialized && PC(0) != "create_config") {
 	y2error ("snapper not initialized: use Execute (.snapper) first!");
 	snapper_error = "not_initialized";
 	return YCPVoid();
@@ -418,7 +418,26 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
 
     if (path->length() == 1) {
 
-	if (PC(0) == "create") {
+	if (PC(0) == "create_config")
+	{
+	    string config_name = getValue(argmap, YCPString("config_name"), "root");
+	    string subvolume = getValue(argmap, YCPString("subvolume"), "");
+	    string fstype = getValue(argmap, YCPString("fstype"), "");
+	    string template_name = getValue(argmap, YCPString("template_name"), "default");
+
+	    try
+	    {
+		Snapper::createConfig(config_name, subvolume, fstype, template_name);
+	    }
+	    catch (const CreateConfigFailedException& e)
+	    {
+		y2error("create-config failed (%s).", e.what());
+		return YCPBoolean (false);
+	    }
+
+	    return ret;
+	}
+	else if (PC(0) == "create") {
 
             string description  = getValue (argmap, YCPString ("description"), "");
             string cleanup      = getValue (argmap, YCPString ("cleanup"), "");
