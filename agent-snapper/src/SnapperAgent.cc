@@ -195,7 +195,7 @@ YCPValue SnapperAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPV
 	    }
 	    catch (const ListConfigsFailedException& e)
 	    {
-		y2error ("sysconfig file not found.");
+		y2error("list-configs failed (%s).", e.what());
 		snapper_error	= "sysconfig_not_found";
 		return YCPVoid();
 	    }
@@ -431,7 +431,7 @@ YCPValue SnapperAgent::Execute(const YCPPath &path, const YCPValue& arg,
 	    }
 	    catch (const CreateConfigFailedException& e)
 	    {
-		y2error("create-config failed.");
+		y2error("create-config failed (%s).", e.what());
 		return YCPBoolean (false);
 	    }
 
