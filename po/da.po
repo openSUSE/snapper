@@ -1,10 +1,10 @@
-# Martin Schlander <mschlander@opensuse.org>, 2011.
+# Martin Schlander <mschlander@opensuse.org>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-12 15:11+0200\n"
-"PO-Revision-Date: 2011-09-13 23:00+0200\n"
+"POT-Creation-Date: 2012-10-17 12:33+0200\n"
+"PO-Revision-Date: 2012-04-17 17:46+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <opensuse-translation@opensuse.org>\n"
 "Language: \n"
@@ -14,472 +14,554 @@ msgstr ""
 "X-Generator: Lokalize 1.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../tools/snapper.cc:433 ../tools/snapper.cc:549
-#, fuzzy
+#: ../client/snapper.cc:475 ../client/snapper.cc:609
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c\t\tRyd algoritme op til øjebliksbillede."
+msgstr "\t--cleanup-algorithm, -c<algo>\tRyd algoritme op til øjebliksbillede."
 
-#: ../tools/snapper.cc:1003
+#: ../client/snapper.cc:477
+msgid "\t--command <command>\tRun command and create pre and post snapshots."
+msgstr "\t--command <kommando>\tKør kommando og opret præ- og post-øjebliksbilleder."
+
+#: ../client/snapper.cc:1146
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <name>\t\tAngiv navn på konfiguration der skal bruges."
 
-#: ../tools/snapper.cc:432 ../tools/snapper.cc:548
+#: ../client/snapper.cc:474 ../client/snapper.cc:608
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <description>\tBeskrivelse af øjebliksbillede."
 
-#: ../tools/snapper.cc:1004
-msgid "\t--disable-filters\t\tDisable filters."
-msgstr "\t--disable-filters\t\tDeaktivér filtre."
-
-#: ../tools/snapper.cc:222
+#: ../client/snapper.cc:245
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <fstype>\t\tAngiv type af filsystem manuelt."
 
-#: ../tools/snapper.cc:826
+#: ../client/snapper.cc:881
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr "\t--input, -i <file>\t\tLæs filer for hvilke ændringer fra fil skal fortrydes."
 
-#: ../tools/snapper.cc:721
+#: ../client/snapper.cc:772
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <file>\t\tGem status til fil."
 
-#: ../tools/snapper.cc:430
+#: ../client/snapper.cc:472
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <number>\t\tAntal tilsvarende præ-øjebliksbillede."
 
-#: ../tools/snapper.cc:431
+#: ../client/snapper.cc:473
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
 msgstr "\t--print-number, -p\t\tSkriv nummer for oprettet øjebliksbillede."
 
-#: ../tools/snapper.cc:1000
+#: ../client/snapper.cc:1143
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\tTilbagehold normalt output."
 
-#: ../tools/snapper.cc:1002
+#: ../client/snapper.cc:1145
 msgid "\t--table-style, -t <style>\tTable style (integer)."
 msgstr "\t--table-style, -t <style>\tTabelstil (heltal)."
 
-#: ../tools/snapper.cc:223
+#: ../client/snapper.cc:246
 msgid "\t--template, -t <name>\t\tName of config template to use."
 msgstr "\t--template, -t <name>\t\tNavn på konfigurationsskabelon der skal bruges."
 
-#: ../tools/snapper.cc:429
+#: ../client/snapper.cc:471
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <type>\t\tType af øjebliksbillede."
 
-#: ../tools/snapper.cc:287
+#: ../client/snapper.cc:325
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
 msgstr "\t--type, -t <type>\t\tType af øjebliksbilleder der skal oplistes."
 
-#: ../tools/snapper.cc:434 ../tools/snapper.cc:550
-#, fuzzy
+#: ../client/snapper.cc:476 ../client/snapper.cc:610
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--type, -t <type>\t\tType af øjebliksbillede."
+msgstr "\t--userdata, -u <userdata>\tBrugerdata for øjebliksbillede."
 
-#: ../tools/snapper.cc:1001
+#: ../client/snapper.cc:1144
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
 msgstr "\t--verbose, -v\t\t\tForøg verbositet."
 
-#: ../tools/snapper.cc:1005
+#: ../client/snapper.cc:1147
 msgid "\t--version\t\t\tPrint version and exit."
 msgstr "\t--version\t\t\tSkriv version og afslut."
 
-#: ../tools/snapper.cc:945
+#: ../client/snapper.cc:1045
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <oprydningsalgoritme>"
 
-#: ../tools/snapper.cc:426
+#: ../client/snapper.cc:468
 msgid "\tsnapper create"
 msgstr "\tsnapper create"
 
-#: ../tools/snapper.cc:219
+#: ../client/snapper.cc:242
 msgid "\tsnapper create-config <subvolume>"
 msgstr "\tsnapper create-config <underdiskområde>"
 
-#: ../tools/snapper.cc:610
+#: ../client/snapper.cc:659
 msgid "\tsnapper delete <number>"
 msgstr "\tsnapper delete <nummer>"
 
-#: ../tools/snapper.cc:774
+#: ../client/snapper.cc:299
+msgid "\tsnapper delete-config"
+msgstr "\tsnapper delete-config"
+
+#: ../client/snapper.cc:824
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <nummer1>..<nummer2> [filer]"
 
-#: ../tools/snapper.cc:284
+#: ../client/snapper.cc:322
 msgid "\tsnapper list"
 msgstr "\tsnapper list"
 
-#: ../tools/snapper.cc:172
+#: ../client/snapper.cc:203
 msgid "\tsnapper list-configs"
 msgstr "\tsnapper list-configs"
 
-#: ../tools/snapper.cc:545
+#: ../client/snapper.cc:605
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <nummer>"
 
-#: ../tools/snapper.cc:646
+#: ../client/snapper.cc:713
 msgid "\tsnapper mount <number>"
 msgstr "\tsnapper mount <nummer>"
 
-#: ../tools/snapper.cc:718
+#: ../client/snapper.cc:769
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tsnapper status <nummer1>..<nummer2>"
 
-#: ../tools/snapper.cc:682
+#: ../client/snapper.cc:741
 msgid "\tsnapper umount <number>"
 msgstr "\tsnapper umount <nummer>"
 
-#: ../tools/snapper.cc:823
+#: ../client/snapper.cc:878
 msgid "\tsnapper undochange <number1>..<number2> [files]"
 msgstr "\tsnapper undochange <nummer1>..<nummer2> [filer]"
 
-#: ../tools/snapper.cc:999
+#: ../client/snapper.cc:1142
 msgid "    Global options:"
 msgstr "    Globale tilvalg:"
 
-#: ../tools/snapper.cc:428
+#: ../client/snapper.cc:470
 msgid "    Options for 'create' command:"
 msgstr "    Tilvalg for kommandoen \"create\":"
 
-#: ../tools/snapper.cc:221
+#: ../client/snapper.cc:244
 msgid "    Options for 'create-config' command:"
 msgstr "    Tilvalg for kommandoen \"create-config\":"
 
-#: ../tools/snapper.cc:286
+#: ../client/snapper.cc:324
 msgid "    Options for 'list' command:"
 msgstr "    Tilvalg for kommandoen \"list\":"
 
-#: ../tools/snapper.cc:547
+#: ../client/snapper.cc:607
 msgid "    Options for 'modify' command:"
 msgstr "    Tilvalg for kommandoen \"modify\":"
 
-#: ../tools/snapper.cc:720
+#: ../client/snapper.cc:771
 msgid "    Options for 'status' command:"
 msgstr "    Tilvalg for kommandoen \"status\":"
 
-#: ../tools/snapper.cc:825
+#: ../client/snapper.cc:880
 msgid "    Options for 'undochange' command:"
 msgstr "    Tilvalg for kommandoen \"undochange\":"
 
-#: ../tools/snapper.cc:944
+#: ../client/snapper.cc:1044
 msgid "  Cleanup snapshots:"
 msgstr "  Ryd op i øjebliksbilleder:"
 
-#: ../tools/snapper.cc:717 ../tools/snapper.cc:773
+#: ../client/snapper.cc:768 ../client/snapper.cc:823
 msgid "  Comparing snapshots:"
 msgstr "  Sammenligning af øjebliksbilleder:"
 
-#: ../tools/snapper.cc:218
+#: ../client/snapper.cc:241
 msgid "  Create config:"
 msgstr "  Opret konfiguration:"
 
-#: ../tools/snapper.cc:425
+#: ../client/snapper.cc:467
 msgid "  Create snapshot:"
 msgstr "  Opret øjebliksbillede:"
 
-#: ../tools/snapper.cc:609
+#: ../client/snapper.cc:298
+msgid "  Delete config:"
+msgstr "  Slet konfiguration:"
+
+#: ../client/snapper.cc:658
 msgid "  Delete snapshot:"
 msgstr "  Slet øjebliksbillede:"
 
-#: ../tools/snapper.cc:171
+#: ../client/snapper.cc:202
 msgid "  List configs:"
 msgstr "  Oplist konfigurationer:"
 
-#: ../tools/snapper.cc:283
+#: ../client/snapper.cc:321
 msgid "  List snapshots:"
 msgstr "  Oplist øjebliksbilleder:"
 
-#: ../tools/snapper.cc:544
+#: ../client/snapper.cc:604
 msgid "  Modify snapshot:"
 msgstr "  Ændr øjebliksbillede:"
 
-#: ../tools/snapper.cc:645
+#: ../client/snapper.cc:712
 msgid "  Mount snapshot:"
 msgstr "  Montér øjebliksbillede:"
 
-#: ../tools/snapper.cc:681
+#: ../client/snapper.cc:740
 msgid "  Umount snapshot:"
 msgstr "  Afmontér øjebliksbillede:"
 
-#: ../tools/snapper.cc:822
+#: ../client/snapper.cc:877
 msgid "  Undo changes:"
 msgstr "  Fortryd ændringer:"
 
-#: ../tools/snapper.cc:335 ../tools/snapper.cc:362
+#: ../client/snapper.cc:373 ../client/snapper.cc:402
 msgid "#"
 msgstr "#"
 
-#: ../tools/snapper.cc:338
+#: ../client/snapper.cc:377
 msgid "Cleanup"
 msgstr "Oprydning"
 
-#: ../tools/snapper.cc:960
+#: ../client/snapper.cc:1060
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Kommandoen \"cleanup\" kræver et argument."
 
-#: ../tools/snapper.cc:455
+#: ../client/snapper.cc:499
 msgid "Command 'create' does not take arguments."
 msgstr "Kommandoen \"create\" tager ikke argumenter."
 
-#: ../tools/snapper.cc:240
+#: ../client/snapper.cc:263
 msgid "Command 'create-config' needs one argument."
 msgstr "Kommandoen \"create-config\" kræver et argument."
 
-#: ../tools/snapper.cc:621
+#: ../client/snapper.cc:1092
+#, fuzzy
+#| msgid "Command 'help' does not take arguments."
+msgid "Command 'debug' does not take arguments."
+msgstr "Kommandoen \"help\" tager ikke argumenter."
+
+#: ../client/snapper.cc:670
 msgid "Command 'delete' needs at least one argument."
 msgstr "Kommandoen \"delete\" kræver mindst ét argument."
 
-#: ../tools/snapper.cc:992
+#: ../client/snapper.cc:310
+msgid "Command 'delete-config' does not take arguments."
+msgstr "Kommandoen \"delete-config\" tager ikke argumenter."
+
+#: ../client/snapper.cc:1135
 msgid "Command 'help' does not take arguments."
 msgstr "Kommandoen \"help\" tager ikke argumenter."
 
-#: ../tools/snapper.cc:303
+#: ../client/snapper.cc:341
 msgid "Command 'list' does not take arguments."
 msgstr "Kommandoen \"list\" tager ikke argumenter."
 
-#: ../tools/snapper.cc:183
+#: ../client/snapper.cc:214
 msgid "Command 'list-configs' does not take arguments."
 msgstr "Kommandoen \"list-configs\" tager ikke argumenter."
 
-#: ../tools/snapper.cc:569
-#, fuzzy
+#: ../client/snapper.cc:629
 msgid "Command 'modify' needs at least one argument."
-msgstr "Kommandoen \"mount\" kræver mindst ét argument."
+msgstr "Kommandoen \"modify\" kræver mindst ét argument."
 
-#: ../tools/snapper.cc:657 ../tools/snapper.cc:693
+#: ../client/snapper.cc:724 ../client/snapper.cc:752
 msgid "Command 'mount' needs at least one argument."
 msgstr "Kommandoen \"mount\" kræver mindst ét argument."
 
-#: ../tools/snapper.cc:737
+#: ../client/snapper.cc:788
 msgid "Command 'status' needs one argument."
 msgstr "Kommandoen \"status\" kræver et argument."
 
-#: ../tools/snapper.cc:842
+#: ../client/snapper.cc:897
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Kommandoen \"undochange\" kræver mindst ét argument."
 
-#: ../tools/snapper.cc:1182
-#, fuzzy, c-format
-msgid "Command failed (%s). See log for more information."
-msgstr "Prøv \"snapper help\" for at få mere information."
-
-#: ../tools/snapper.cc:190
+#: ../client/snapper.cc:221
 msgid "Config"
 msgstr "Konfiguration"
 
-#: ../tools/snapper.cc:1165
-#, c-format
-msgid "Config '%s' is invalid."
-msgstr "Konfigurationen \"%s\" er ugyldig."
-
-#: ../tools/snapper.cc:1160
-#, c-format
-msgid "Config '%s' not found."
+#: ../client/snapper.cc:1275
+#, fuzzy
+#| msgid "Config '%s' not found."
+msgid "Config is in use."
 msgstr "Konfigurationen \"%s\" blev ikke fundet."
 
-#: ../tools/snapper.cc:274
+#: ../client/snapper.cc:1273
+#, fuzzy
+#| msgid "Config Dialog"
+msgid "Config is locked."
+msgstr "Konfigurationsdialog"
+
+#: ../client/snapper.cc:1281
 #, c-format
 msgid "Creating config failed (%s)."
 msgstr "Oprettelse af konfiguration mislykkedes (%s)."
 
-#: ../tools/snapper.cc:337 ../tools/snapper.cc:363
+#: ../client/snapper.cc:1285
+#, fuzzy
+#| msgid "Creating config failed (%s)."
+msgid "Creating snapshot failed."
+msgstr "Oprettelse af konfiguration mislykkedes (%s)."
+
+#: ../client/snapper.cc:375 ../client/snapper.cc:403
 msgid "Date"
 msgstr "Dato"
 
-#: ../tools/snapper.cc:339 ../tools/snapper.cc:364 ../tools/snapper.cc:391
+#: ../client/snapper.cc:1283
+#, c-format
+msgid "Deleting config failed (%s)."
+msgstr "Sletning af konfiguration mislykkedes (%s)."
+
+#: ../client/snapper.cc:1287
+#, fuzzy
+#| msgid "Deleting the CA failed: %1."
+msgid "Deleting snapshot failed."
+msgstr "Sletning af CA fejlede: %1."
+
+#: ../client/snapper.cc:378 ../client/snapper.cc:405 ../client/snapper.cc:433
 msgid "Description"
 msgstr "Beskrivelse"
 
-#: ../tools/snapper.cc:264
+#: ../client/snapper.cc:287
 msgid "Detecting filesystem type failed."
 msgstr "Detektion af filsystemtype mislykkedes."
 
-#: ../tools/snapper.cc:897
+#: ../client/snapper.cc:1289 ../client/snapper.cc:1294
+msgid "Failure"
+msgstr "Fejl"
+
+#: ../client/snapper.cc:951
 #, c-format
 msgid "File '%s' not found."
 msgstr "Filen \"%s\" blev ikke fundet."
 
-#: ../tools/snapper.cc:103
+# error box title
+#: ../client/snapper.cc:1279
+#, fuzzy
+#| msgid "I/O Error"
+msgid "IO Error."
+msgstr "I/O-fejl"
+
+#: ../client/snapper.cc:90
 msgid "Identical snapshots."
 msgstr "Identiske øjebliksbilleder."
 
-#: ../tools/snapper.cc:73
+#: ../client/snapper.cc:1271
+#, fuzzy
+#| msgid "Invalid snapshot."
+msgid "Illegal Snapshot."
+msgstr "Ugyldigt øjebliksbillede."
+
+#: ../client/snapper.cc:67
 #, c-format
 msgid "Invalid snapshot '%s'."
 msgstr "Ugyldigt øjebliksbillede \"%s\"."
 
-#: ../tools/snapper.cc:595 ../tools/snapper.cc:636 ../tools/snapper.cc:672
-#: ../tools/snapper.cc:708
-msgid "Invalid snapshot."
-msgstr "Ugyldigt øjebliksbillede."
-
-#: ../tools/snapper.cc:94 ../tools/snapper.cc:864
+#: ../client/snapper.cc:81 ../client/snapper.cc:919
 msgid "Invalid snapshots."
 msgstr "Ugyldige øjebliksbilleder."
 
-#: ../tools/snapper.cc:247
+#: ../client/snapper.cc:270
 msgid "Invalid subvolume."
 msgstr "Ugyldigt underdiskområde."
 
-#: ../tools/snapper.cc:1107
+#: ../client/snapper.cc:1219
 #, c-format
 msgid "Invalid table style %d."
 msgstr "Ugyldig tabelstil %d."
 
-#: ../tools/snapper.cc:120 ../tools/snapper.cc:129 ../tools/snapper.cc:138
-#: ../tools/snapper.cc:535 ../tools/snapper.cc:600
-#, fuzzy
+#: ../client/snapper.cc:107 ../client/snapper.cc:116 ../client/snapper.cc:125
+#: ../client/snapper.cc:1269
 msgid "Invalid userdata."
-msgstr "Ugyldigt øjebliksbillede."
+msgstr "Ugyldige brugerdata."
 
-# %s is either BOOTP or DHCP
-#: ../tools/snapper.cc:207
-#, c-format
-msgid "Listing configs failed (%s)."
-msgstr "Oplistning af konfigurationer mislykkedes (%s)."
-
-#: ../tools/utils/GetOpts.cc:70
+#: ../client/utils/GetOpts.cc:68
 #, c-format
 msgid "Missing argument for command option '%s'."
 msgstr "Manglende argument for kommandotilvalget \"%s\"."
 
-#: ../tools/utils/GetOpts.cc:68
+#: ../client/utils/GetOpts.cc:66
 #, c-format
 msgid "Missing argument for global option '%s'."
 msgstr "Manglende argument for det globale tilvalg \"%s\"."
 
-#: ../tools/snapper.cc:496
+#: ../client/snapper.cc:561
+msgid "Missing command argument."
+msgstr "Mangler kommandoargument."
+
+#: ../client/snapper.cc:555
 msgid "Missing or invalid pre-number."
 msgstr "Manglende eller ugyldigt præ-nummer."
 
-#: ../tools/snapper.cc:1134
+#: ../client/snapper.cc:1242
 msgid "No command provided."
 msgstr "Ingen kommando givet."
 
-#: ../tools/snapper.cc:756 ../tools/snapper.cc:857
+#: ../client/snapper.cc:1267
+#, fuzzy
+#| msgid "(owner permissions off)"
+msgid "No permissions."
+msgstr "(ejertilladelser fra)"
+
+#: ../client/snapper.cc:806 ../client/snapper.cc:912
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "Åbning af filen \"%s\" mislykkedes."
 
-#: ../tools/snapper.cc:388
+#: ../client/snapper.cc:430
 msgid "Post #"
 msgstr "Post #"
 
-#: ../tools/snapper.cc:390
+#: ../client/snapper.cc:432
 msgid "Post Date"
 msgstr "Post-dato"
 
-#: ../tools/snapper.cc:336 ../tools/snapper.cc:387
+#: ../client/snapper.cc:374 ../client/snapper.cc:429
 msgid "Pre #"
 msgstr "Præ #"
 
-#: ../tools/snapper.cc:389
+#: ../client/snapper.cc:431
 msgid "Pre Date"
 msgstr "Præ-dato"
 
-#: ../tools/snapper.cc:80
-#, c-format
-msgid "Snapshot '%u' not found."
-msgstr "Øjebliksbilledet \"%u\" blev ikke fundet."
-
-#: ../tools/snapper.cc:191
+#: ../client/snapper.cc:222
 msgid "Subvolume"
 msgstr "Underdiskområde"
 
-#: ../tools/snapper.cc:1135 ../tools/snapper.cc:1144
-#: ../tools/utils/GetOpts.cc:63 ../tools/utils/GetOpts.cc:71
-msgid "Try 'snapper help' for more information."
+#: ../client/snapper.cc:1243 ../client/snapper.cc:1252
+#: ../client/utils/GetOpts.cc:61 ../client/utils/GetOpts.cc:69
+#, fuzzy
+#| msgid "Try 'snapper help' for more information."
+msgid "Try 'snapper --help' for more information."
 msgstr "Prøv \"snapper help\" for at få mere information."
 
-#: ../tools/snapper.cc:334
+#: ../client/snapper.cc:372
 msgid "Type"
 msgstr "Type"
 
-#: ../tools/snapper.cc:980
+#: ../client/snapper.cc:1080
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
 msgstr "Ukendt oprydningsalgoritme \"%s\"."
 
-#: ../tools/snapper.cc:1143
+#: ../client/snapper.cc:1251
 #, c-format
 msgid "Unknown command '%s'."
 msgstr "Ukendt kommando \"%s\"."
 
-#: ../tools/utils/GetOpts.cc:60
+#: ../client/snapper.cc:1265
+#, fuzzy
+#| msgid "Unknown command"
+msgid "Unknown config."
+msgstr "Ukendt kommando"
+
+#: ../client/snapper.cc:1277
+#, fuzzy
+#| msgid "Unknown type."
+msgid "Unknown file."
+msgstr "Ukendt type."
+
+#: ../client/utils/GetOpts.cc:58
 #, c-format
 msgid "Unknown global option '%s'."
 msgstr "Ukendt globalt tilvalg \"%s\"."
 
-#: ../tools/utils/GetOpts.cc:62
+#: ../client/utils/GetOpts.cc:60
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Ukendt tilvalg \"%s\" for kommandoen \"%s\"."
 
-#: ../tools/snapper.cc:474
+#: ../client/snapper.cc:527
 msgid "Unknown type of snapshot."
 msgstr "Ukendt type af øjebliksbillede."
 
-#: ../tools/snapper.cc:322
+#: ../client/snapper.cc:360
 msgid "Unknown type of snapshots."
 msgstr "Ukendt type af øjebliksbilleder."
 
-#: ../tools/snapper.cc:1108
+#: ../client/snapper.cc:1220
 #, c-format
 msgid "Use an integer number from %d to %d"
 msgstr "Benyt et heltal fra %d til %d"
 
-#: ../tools/snapper.cc:340 ../tools/snapper.cc:365 ../tools/snapper.cc:392
+#: ../client/snapper.cc:376 ../client/snapper.cc:404
+#, fuzzy
+#| msgid "Userdata"
+msgid "User"
+msgstr "Brugerdata"
+
+#: ../client/snapper.cc:379 ../client/snapper.cc:406 ../client/snapper.cc:434
 msgid "Userdata"
+msgstr "Brugerdata"
+
+#: ../client/snapper.cc:986
+#, c-format
+msgid "create:%d modify:%d delete:%d"
 msgstr ""
 
-#: ../tools/snapper.cc:1025
-msgid "comparing snapshots..."
-msgstr "sammenligninger øjebliksbilleder..."
-
-#: ../tools/snapper.cc:1038
+#: ../client/snapper.cc:1011
 #, c-format
 msgid "creating %s"
 msgstr "opretter %s"
 
-#: ../tools/snapper.cc:1042
+#: ../client/snapper.cc:1017
 #, c-format
 msgid "deleting %s"
 msgstr "sletter %s"
 
-#: ../tools/snapper.cc:1026
-msgid "done"
-msgstr "udført"
-
-#: ../tools/snapper.cc:1045
+#: ../client/snapper.cc:1027
 #, c-format
 msgid "failed to create %s"
 msgstr "kunne ikke oprette %s"
 
-#: ../tools/snapper.cc:1049
+#: ../client/snapper.cc:1033
 #, c-format
 msgid "failed to delete %s"
 msgstr "kunne ikke slette %s"
 
-#: ../tools/snapper.cc:1047
+#: ../client/snapper.cc:1030
 #, c-format
 msgid "failed to modify %s"
 msgstr "kunne ikke ændre %s"
 
-#: ../tools/snapper.cc:1040
+#: ../client/snapper.cc:1014
 #, c-format
 msgid "modifying %s"
 msgstr "ændrer %s"
 
-#: ../tools/snapper.cc:1035
-msgid "undoing change done"
-msgstr "fortrydelse af ændring gennemført"
+#: ../client/snapper.cc:982
+#, fuzzy
+#| msgid "Nothing to do."
+msgid "nothing to do"
+msgstr "Intet at gøre."
 
-#: ../tools/snapper.cc:1034
-msgid "undoing change..."
-msgstr "fortryder ændring..."
-
-#: ../tools/snapper.cc:996
+#: ../client/snapper.cc:1139
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "brug: snapper [--globale-tilvalg] <kommando> [--kommando-tilvalg] [kommando-argumenter]"
+
+#~ msgid "\t--disable-filters\t\tDisable filters."
+#~ msgstr "\t--disable-filters\t\tDeaktivér filtre."
+
+#~ msgid "Command failed (%s). See log for more information."
+#~ msgstr "Kommandoen mislykkedes (%s). Se loggen for at få mere information."
+
+#~ msgid "Config '%s' is invalid."
+#~ msgstr "Konfigurationen \"%s\" er ugyldig."
+
+# %s is either BOOTP or DHCP
+#~ msgid "Listing configs failed (%s)."
+#~ msgstr "Oplistning af konfigurationer mislykkedes (%s)."
+
+#~ msgid "Snapshot '%u' not found."
+#~ msgstr "Øjebliksbilledet \"%u\" blev ikke fundet."
+
+#~ msgid "comparing snapshots..."
+#~ msgstr "sammenligninger øjebliksbilleder..."
+
+#~ msgid "done"
+#~ msgstr "udført"
+
+#~ msgid "undoing change done"
+#~ msgstr "fortrydelse af ændring gennemført"
+
+#~ msgid "undoing change..."
+#~ msgstr "fortryder ændring..."
 
 #~| msgid "add needs one argument"
 #~ msgid "Command 'modify' needs one argument."

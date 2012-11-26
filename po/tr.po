@@ -1,225 +1,227 @@
 # @TITLE@
 # Copyright (C) 2006, SUSE Linux GmbH, Nuremberg
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 # This file is distributed under the same license as @PACKAGE@ package. FIRST
 #
-# Luiz Fernando Ranghetti <elchevive@opensuse.org>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-17 12:33+0200\n"
-"PO-Revision-Date: 2012-10-18 22:21-0300\n"
-"Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
-"Language-Team: Brazilian Portuguese <opensuse-pt@opensuse.org>\n"
-"Language: pt_BR\n"
+"PO-Revision-Date: 2011-11-23 07:21+0200\n"
+"Last-Translator: Halil <halilpk@gmail.com>\n"
+"Language-Team: turkish <i18n@suse.de>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.4\n"
-"Plural-Forms: nplurals=2; plural=n>1;\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../client/snapper.cc:475 ../client/snapper.cc:609
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr ""
-"\t--cleanup-algorithm, -c <algoritmo>\tAlgoritmo de limpeza para o snapshot."
+msgstr "\t--temizleme-algoritması, -c <algo>\tAnlık görüntüler için temizleme algoritması."
 
 #: ../client/snapper.cc:477
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
-msgstr "\t--command <command>\tExecutar comando e criar pré e pós snapshots."
+msgstr ""
 
 #: ../client/snapper.cc:1146
 msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <nome>\t\tNome do conjunto de configurações a utilizar."
+msgstr "\t--yapılandırma, -c <name>\t\tKullanmak için yapılandırma ismini ayarla."
 
 #: ../client/snapper.cc:474 ../client/snapper.cc:608
 msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <descrição>\tDescrição do snapshot."
+msgstr "\t--tanım, -d <description>\tAnlık görüntü tanımı."
 
 #: ../client/snapper.cc:245
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr ""
-"\t--fstype, -f <tipo_de_sistema_de_arquivos>\t\tDefinir o tipo de sistema de "
-"arquivos manualmente."
+msgstr "\t--dstipi, -f <fstype>\t\tDosya sistemi tipini manuel olarak ayarla."
 
 #: ../client/snapper.cc:881
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr ""
-"\t--input, -i <arquivo>\t\tLer arquivos que serão revertidos a partir do "
-"arquivo."
+msgstr "\t--giriş, -i <file>\t\tDosyadan değişiklikleri geri almak için dosyaları oku."
 
 #: ../client/snapper.cc:772
 msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <arquivo>\t\tSalvar status em arquivo."
+msgstr "\t--çıkış, -o <file>\t\tStatüleri dosyaya kaydet."
 
 #: ../client/snapper.cc:472
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <número>\t\tNúmero do pré-snapshot correspondente."
+msgstr "\t--ön-numara <number>\t\tİlgili önceki anlık görüntü numarası."
 
 #: ../client/snapper.cc:473
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tNúmero de impressão do snapshot criado."
+msgstr "\t--numara-yazdır, -p\t\tOluşturulan anlık görüntünün numarasını yaz."
 
 #: ../client/snapper.cc:1143
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\tOcultar saída normal."
+msgstr "\t--sessiz, -q\t\t\tNormal çıkış bastırılması."
 
 #: ../client/snapper.cc:1145
 msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <estilo>\tEstilo da tabela (inteiro)."
+msgstr "\t--tablo-stili, -t <style>\tTablo stili (sayı)."
 
 #: ../client/snapper.cc:246
 msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr ""
-"\t--template, -t <nome>\t\tNome do template de configuração a utilizar."
+msgstr "\t--şablon, -t <name>\t\tKullanmak için yapılandırma şablonu ismi."
 
 #: ../client/snapper.cc:471
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <tipo>\t\tTipo do snapshot."
+msgstr "\t--tip, -t <type>\t\tAnlım görüntü tipi."
 
 #: ../client/snapper.cc:325
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <tipo>\t\tTipos de snapshot a listar."
+msgstr "\t--tip, -t <type>\t\tListelemek için anlım görüntü tipleri."
 
 #: ../client/snapper.cc:476 ../client/snapper.cc:610
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <dados_de_usuário>\tDados de usuário para o snapshot."
+msgstr "\t--kullanıcıverisi, -u <userdata>\tAnlık görüntü için kullanıcı verisi."
 
 #: ../client/snapper.cc:1144
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tAumentar detalhamento."
+msgstr "\t--ayrıntılı, -v\t\t\tAyrıntılılığı yükselt."
 
 #: ../client/snapper.cc:1147
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tImprimir versão e sair."
+msgstr "\t--versiyon\t\t\tVersiyonu yazdır ve çık."
 
 #: ../client/snapper.cc:1045
 msgid "\tsnapper cleanup <cleanup-algorithm>"
-msgstr "\tsnapper cleanup <algoritmo_de_limpeza>"
+msgstr "\tyakalayıcı temizle <cleanup-algorithm>"
 
 #: ../client/snapper.cc:468
 msgid "\tsnapper create"
-msgstr "\tsnapper create"
+msgstr "\tyakalayıcı oluştur"
 
 #: ../client/snapper.cc:242
 msgid "\tsnapper create-config <subvolume>"
-msgstr "\tsnapper create-config <subvolume>"
+msgstr "\tyakalayıcı yapılandırma-oluştur <subvolume>"
 
 #: ../client/snapper.cc:659
 msgid "\tsnapper delete <number>"
-msgstr "\tsnapper delete <número>"
+msgstr "\tyakalayıcı silme <number>"
 
 #: ../client/snapper.cc:299
+#, fuzzy
+#| msgid "\tsnapper list-configs"
 msgid "\tsnapper delete-config"
-msgstr "\tsnapper delete-config"
+msgstr "\tyakalayıcı yapılandırmayı listele"
 
 #: ../client/snapper.cc:824
 msgid "\tsnapper diff <number1>..<number2> [files]"
-msgstr "\tsnapper diff <número1>..<número2> [arquivos]"
+msgstr "\tyakalayıcı fark <number1>..<number2> [dosyalar]"
 
 #: ../client/snapper.cc:322
 msgid "\tsnapper list"
-msgstr "\tsnapper list"
+msgstr "\tyakalayıcı listele"
 
 #: ../client/snapper.cc:203
 msgid "\tsnapper list-configs"
-msgstr "\tsnapper list-configs"
+msgstr "\tyakalayıcı yapılandırmayı listele"
 
 #: ../client/snapper.cc:605
 msgid "\tsnapper modify <number>"
-msgstr "\tsnapper modify <número>"
+msgstr "\tyakalayıcı değiştirme <number>"
 
 #: ../client/snapper.cc:713
 msgid "\tsnapper mount <number>"
-msgstr "\tsnapper mount <número>"
+msgstr "\tyakalayıcı çerçevele <number>"
 
 #: ../client/snapper.cc:769
 msgid "\tsnapper status <number1>..<number2>"
-msgstr "\tsnapper status <número1>..<número2>"
+msgstr "\tyakalayıcı statü <number1>..<number2>"
 
 #: ../client/snapper.cc:741
 msgid "\tsnapper umount <number>"
-msgstr "\tsnapper umount <número>"
+msgstr "\tyakalayıcı çerçeveleme <number>"
 
 #: ../client/snapper.cc:878
 msgid "\tsnapper undochange <number1>..<number2> [files]"
-msgstr "\tsnapper undochange <número1>..<número2> [arquivos]"
+msgstr "\tyakalayıcı değişikleri geri al <number1>..<number2> [dosyalar]"
 
 #: ../client/snapper.cc:1142
 msgid "    Global options:"
-msgstr "    Opções globais:"
+msgstr "    Küresel seçenekler:"
 
 #: ../client/snapper.cc:470
 msgid "    Options for 'create' command:"
-msgstr "    Opções do comando 'create':"
+msgstr "    'oluştur' komutu için seçenekler:"
 
 #: ../client/snapper.cc:244
 msgid "    Options for 'create-config' command:"
-msgstr "    Opções do comando 'create-config':"
+msgstr "    'yapılandırma-oluştur' komutu için seçenekler:"
 
 #: ../client/snapper.cc:324
 msgid "    Options for 'list' command:"
-msgstr "    Opções do comando 'list':"
+msgstr "    'listele' komutu için seçenekler:"
 
 #: ../client/snapper.cc:607
 msgid "    Options for 'modify' command:"
-msgstr "    Opções do comando 'modify':"
+msgstr "    'değiştir' komutu için seçenekler:"
 
 #: ../client/snapper.cc:771
 msgid "    Options for 'status' command:"
-msgstr "    Opções do comando 'status':"
+msgstr "    'statü' komutu için seçenekler:"
 
 #: ../client/snapper.cc:880
 msgid "    Options for 'undochange' command:"
-msgstr "    Opções do comando 'undochange':"
+msgstr "    'değişiklikleri geri al' komutu için seçenekler:"
 
 #: ../client/snapper.cc:1044
 msgid "  Cleanup snapshots:"
-msgstr "  Limpar snapshots:"
+msgstr "Anlık görüntüleri temizle:"
 
 #: ../client/snapper.cc:768 ../client/snapper.cc:823
 msgid "  Comparing snapshots:"
-msgstr "  Comparando snapshots:"
+msgstr " Anlık görüntüleri karşılaştırma:"
 
+# clients/inst_custom_part.ycp:2940
 #: ../client/snapper.cc:241
 msgid "  Create config:"
-msgstr "  Criar configuração:"
+msgstr " Yapılandırma oluştur: "
 
+# clients/inst_custom_part.ycp:2940
 #: ../client/snapper.cc:467
 msgid "  Create snapshot:"
-msgstr "  Criar snapshot:"
+msgstr " Anlık görüntü oluştur:"
 
+# clients/inst_custom_part.ycp:2940
 #: ../client/snapper.cc:298
+#, fuzzy
+#| msgid "  Create config:"
 msgid "  Delete config:"
-msgstr "  Excluir configuração:"
+msgstr " Yapılandırma oluştur: "
 
 #: ../client/snapper.cc:658
 msgid "  Delete snapshot:"
-msgstr "  Remover snapshot:"
+msgstr " Anlık görüntüyü sil:"
 
 #: ../client/snapper.cc:202
 msgid "  List configs:"
-msgstr "  Listar configurações:"
+msgstr " Yapılandırmayı listele:"
 
 #: ../client/snapper.cc:321
 msgid "  List snapshots:"
-msgstr "  Listar snapshots:"
+msgstr "Anlık görüntüleri listele:"
 
 #: ../client/snapper.cc:604
 msgid "  Modify snapshot:"
-msgstr "  Alterar snapshot:"
+msgstr " Anlık görüntüyü değiştir:"
 
+# clients/inst_custom_part.ycp:2940
 #: ../client/snapper.cc:712
 msgid "  Mount snapshot:"
-msgstr "  Montar snapshot:"
+msgstr " Anlık görüntüyü çerçevele: "
 
+# clients/inst_custom_part.ycp:2940
 #: ../client/snapper.cc:740
 msgid "  Umount snapshot:"
-msgstr "  Desmontar snapshot:"
+msgstr " Anlık görüntüyü çerçeveleme: "
 
 #: ../client/snapper.cc:877
 msgid "  Undo changes:"
-msgstr "  Desfazer alterações:"
+msgstr " Değişikikleri geri al:"
 
 #: ../client/snapper.cc:373 ../client/snapper.cc:402
 msgid "#"
@@ -227,344 +229,349 @@ msgstr "#"
 
 #: ../client/snapper.cc:377
 msgid "Cleanup"
-msgstr "Limpeza"
+msgstr "Temizle"
 
 #: ../client/snapper.cc:1060
 msgid "Command 'cleanup' needs one arguments."
-msgstr "O comando 'cleanup' precisa de um argumento."
+msgstr "'temizle' komutu için bir argüman gereklidir."
 
 #: ../client/snapper.cc:499
 msgid "Command 'create' does not take arguments."
-msgstr "O comando 'create' não aceita argumentos."
+msgstr "'oluştur' komutu argüman almamaktadır."
 
 #: ../client/snapper.cc:263
 msgid "Command 'create-config' needs one argument."
-msgstr "O comando 'create-config' precisa de um argumento."
+msgstr "'yapılandırma-oluştur' komutu için bir argüman gereklidir."
 
 #: ../client/snapper.cc:1092
+#, fuzzy
 #| msgid "Command 'help' does not take arguments."
 msgid "Command 'debug' does not take arguments."
-msgstr "O comando 'debug' não aceita argumentos."
+msgstr "'yardım komutu' argüman almamaktadır."
 
 #: ../client/snapper.cc:670
 msgid "Command 'delete' needs at least one argument."
-msgstr "O comando 'delete' precisa de, no mínimo, um argumento."
+msgstr "'sil' komutu için en az bir argüman gereklidir."
 
 #: ../client/snapper.cc:310
+#, fuzzy
+#| msgid "Command 'list-configs' does not take arguments."
 msgid "Command 'delete-config' does not take arguments."
-msgstr "O comando 'delete-config' não aceita argumentos."
+msgstr "'yapılandırmayı-listele' komutu argüman almamaktadır."
 
 #: ../client/snapper.cc:1135
 msgid "Command 'help' does not take arguments."
-msgstr "O comando 'help' não aceita argumentos."
+msgstr "'yardım komutu' argüman almamaktadır."
 
 #: ../client/snapper.cc:341
 msgid "Command 'list' does not take arguments."
-msgstr "O comando 'list' não aceita argumentos."
+msgstr "'listele' komutu argüman almamaktadır."
 
 #: ../client/snapper.cc:214
 msgid "Command 'list-configs' does not take arguments."
-msgstr "O comando 'list-configs' não aceita argumentos."
+msgstr "'yapılandırmayı-listele' komutu argüman almamaktadır."
 
 #: ../client/snapper.cc:629
 msgid "Command 'modify' needs at least one argument."
-msgstr "O comando 'modify' precisa de, no mínimo, um argumento."
+msgstr "'değiştir' komutu için en az bir argüman gereklidir."
 
 #: ../client/snapper.cc:724 ../client/snapper.cc:752
 msgid "Command 'mount' needs at least one argument."
-msgstr "O comando 'mount' precisa de, no mínimo, um argumento."
+msgstr "'çerçevele' komutu için en az bir argüman gereklidir."
 
 #: ../client/snapper.cc:788
 msgid "Command 'status' needs one argument."
-msgstr "O comando 'status' precisa de um argumento."
+msgstr "'statü' komutu için bir argüman gereklidir."
 
 #: ../client/snapper.cc:897
 msgid "Command 'undochange' needs at least one argument."
-msgstr "O comando 'undochange' precisa de, no mínimo, um argumento."
+msgstr "'değişiklikleri geri al' komutu için en az bir argüman gereklidir."
 
 #: ../client/snapper.cc:221
 msgid "Config"
-msgstr "Configuração"
+msgstr "Yapılandırma"
 
 #: ../client/snapper.cc:1275
+#, fuzzy
 #| msgid "Config '%s' not found."
 msgid "Config is in use."
-msgstr "A configuração está em uso."
+msgstr "'%s' yapılandırması bulunamadı."
 
 #: ../client/snapper.cc:1273
-#| msgid "Config Dialog"
+#, fuzzy
+#| msgid "Config '%s' is invalid."
 msgid "Config is locked."
-msgstr "A configuração está bloqueada."
+msgstr "'%s' yapılandırması geçersiz."
 
 #: ../client/snapper.cc:1281
 #, c-format
 msgid "Creating config failed (%s)."
-msgstr "Falha ao criar a configuração (%s)."
+msgstr "Yapılandırma oluşturma başarısız oldu (%s)."
 
 #: ../client/snapper.cc:1285
+#, fuzzy
 #| msgid "Creating config failed (%s)."
 msgid "Creating snapshot failed."
-msgstr "Falha ao criar o snapshot."
+msgstr "Yapılandırma oluşturma başarısız oldu (%s)."
 
 #: ../client/snapper.cc:375 ../client/snapper.cc:403
 msgid "Date"
-msgstr "Data"
+msgstr "Tarih"
 
 #: ../client/snapper.cc:1283
-#, c-format
+#, fuzzy, c-format
+#| msgid "Creating config failed (%s)."
 msgid "Deleting config failed (%s)."
-msgstr "Falha ao excluir a configuração (%s)."
+msgstr "Yapılandırma oluşturma başarısız oldu (%s)."
 
 #: ../client/snapper.cc:1287
-#| msgid "Deleting the CA failed: %1."
+#, fuzzy
+#| msgid "Creating config failed (%s)."
 msgid "Deleting snapshot failed."
-msgstr "Falha ao remover o snapshot."
+msgstr "Yapılandırma oluşturma başarısız oldu (%s)."
 
 #: ../client/snapper.cc:378 ../client/snapper.cc:405 ../client/snapper.cc:433
 msgid "Description"
-msgstr "Descrição"
+msgstr "Tanım"
 
 #: ../client/snapper.cc:287
 msgid "Detecting filesystem type failed."
-msgstr "Falha ao detectar o tipo de sistema de arquivos."
+msgstr "Dosya sistemi formatını belirleme başarısız oldu."
 
 #: ../client/snapper.cc:1289 ../client/snapper.cc:1294
 msgid "Failure"
-msgstr "Falha"
+msgstr ""
 
 #: ../client/snapper.cc:951
 #, c-format
 msgid "File '%s' not found."
-msgstr "Arquivo '%s' não encontrado."
+msgstr "'%s' dosyası bulunamadı."
 
-# error box title
+# include/ui/common_messages.ycp:95
 #: ../client/snapper.cc:1279
+#, fuzzy
 #| msgid "I/O Error"
 msgid "IO Error."
-msgstr "Erro de E/S."
+msgstr "Giriş/Çıkış hatası"
 
 #: ../client/snapper.cc:90
 msgid "Identical snapshots."
-msgstr "Snapshots idênticos."
+msgstr "Özdeş anlık görüntüler."
 
 #: ../client/snapper.cc:1271
+#, fuzzy
 #| msgid "Invalid snapshot."
 msgid "Illegal Snapshot."
-msgstr "Snapshot ilegal."
+msgstr "Geçersiz anlık görüntü."
 
 #: ../client/snapper.cc:67
 #, c-format
 msgid "Invalid snapshot '%s'."
-msgstr "Snapshot inválido '%s'."
+msgstr "Geçersiz '%s' anlık görüntüsü."
 
 #: ../client/snapper.cc:81 ../client/snapper.cc:919
 msgid "Invalid snapshots."
-msgstr "Snapshots inválidos."
+msgstr "Geçersiz anlık görüntüler."
 
 #: ../client/snapper.cc:270
 msgid "Invalid subvolume."
-msgstr "Subvolume inválido."
+msgstr "Geçersiz arkases."
 
 #: ../client/snapper.cc:1219
 #, c-format
 msgid "Invalid table style %d."
-msgstr "Estilo de tabela inválido %d."
+msgstr "%d geçersiz tablo stili."
 
 #: ../client/snapper.cc:107 ../client/snapper.cc:116 ../client/snapper.cc:125
 #: ../client/snapper.cc:1269
 msgid "Invalid userdata."
-msgstr "Dados de usuário inválidos."
+msgstr "Geçersiz kullanıcı verisi."
 
 #: ../client/utils/GetOpts.cc:68
 #, c-format
 msgid "Missing argument for command option '%s'."
-msgstr "Argumento ausente para opção do comando '%s'."
+msgstr "'%s' komut seçeneği için eksik argüman."
 
 #: ../client/utils/GetOpts.cc:66
 #, c-format
 msgid "Missing argument for global option '%s'."
-msgstr "Argumento ausente para para a opção global '%s'."
+msgstr "'%s' küresel seçeneği için eksik argüman."
 
+# clients/lan_inetd_custom.ycp:758
 #: ../client/snapper.cc:561
+#, fuzzy
+#| msgid "Too many arguments."
 msgid "Missing command argument."
-msgstr "Argumento de comando faltante."
+msgstr "Çok fazla argüman."
 
 #: ../client/snapper.cc:555
 msgid "Missing or invalid pre-number."
-msgstr "Número anterior ausente ou inválido."
+msgstr "Eksik ya da geçersiz ön numara."
 
 #: ../client/snapper.cc:1242
 msgid "No command provided."
-msgstr "Nenhum comando fornecido."
+msgstr "Komut sağlanmıyor."
 
 #: ../client/snapper.cc:1267
-#| msgid "(owner permissions off)"
 msgid "No permissions."
-msgstr "Sem permissões."
+msgstr ""
 
 #: ../client/snapper.cc:806 ../client/snapper.cc:912
 #, c-format
 msgid "Opening file '%s' failed."
-msgstr "Falha ao abrir o arquivo '%s'."
+msgstr "'%s ' dosyasını açma başarısız oldu."
 
 #: ../client/snapper.cc:430
 msgid "Post #"
-msgstr "Post #"
+msgstr "Posta #"
 
 #: ../client/snapper.cc:432
 msgid "Post Date"
-msgstr "Data posterior"
+msgstr "Mesaj Tarihi"
 
 #: ../client/snapper.cc:374 ../client/snapper.cc:429
 msgid "Pre #"
-msgstr "Pre #"
+msgstr "Önce #"
 
 #: ../client/snapper.cc:431
 msgid "Pre Date"
-msgstr "Data anterior"
+msgstr "Düzenlenme Tarihi"
 
 #: ../client/snapper.cc:222
 msgid "Subvolume"
-msgstr "Subvolume"
+msgstr "Arkases"
 
 #: ../client/snapper.cc:1243 ../client/snapper.cc:1252
 #: ../client/utils/GetOpts.cc:61 ../client/utils/GetOpts.cc:69
+#, fuzzy
 #| msgid "Try 'snapper help' for more information."
 msgid "Try 'snapper --help' for more information."
-msgstr "Tente 'snapper --help' para obter mais informações."
+msgstr "Daha fazla bilgi için 'Yakalayıcı yardımı'nı okumayı deneyin."
 
 #: ../client/snapper.cc:372
 msgid "Type"
-msgstr "Tipo"
+msgstr "Tür"
 
 #: ../client/snapper.cc:1080
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
-msgstr "Algoritmo de limpeza desconhecido '%s'."
+msgstr "Bilinmeyen '%s' temizleme algoritması."
 
 #: ../client/snapper.cc:1251
 #, c-format
 msgid "Unknown command '%s'."
-msgstr "Comando desconhecido '%s'."
+msgstr "'Bilinmeyen komut '%s'."
 
 #: ../client/snapper.cc:1265
-#| msgid "Unknown command"
+#, fuzzy
+#| msgid "Unknown command '%s'."
 msgid "Unknown config."
-msgstr "Configuração desconhecida."
+msgstr "'Bilinmeyen komut '%s'."
 
 #: ../client/snapper.cc:1277
-#| msgid "Unknown type."
+#, fuzzy
+#| msgid "Unknown"
 msgid "Unknown file."
-msgstr "Arquivo desconhecido."
+msgstr "Bilinmeyen"
 
 #: ../client/utils/GetOpts.cc:58
 #, c-format
 msgid "Unknown global option '%s'."
-msgstr "Opção global desconhecida '%s'."
+msgstr "Bilinmeyen '%s' küresel seçeneği."
 
 #: ../client/utils/GetOpts.cc:60
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
-msgstr "Opção desconhecida '%s' para comando ' %s'."
+msgstr "Bilinmeyen '%s' seçeneği; '%s' komutu için."
 
 #: ../client/snapper.cc:527
 msgid "Unknown type of snapshot."
-msgstr "Tipo de snapshot desconhecido."
+msgstr "Bilinmeyen anlık görüntü formatı."
 
 #: ../client/snapper.cc:360
 msgid "Unknown type of snapshots."
-msgstr "Tipo de snapshots desconhecido."
+msgstr "Bilinmeyen anlık görüntü formatı."
 
 #: ../client/snapper.cc:1220
 #, c-format
 msgid "Use an integer number from %d to %d"
-msgstr "Use um número inteiro de %d a %d"
+msgstr "%d ile %d arasında bir sayı kullanınız"
 
 #: ../client/snapper.cc:376 ../client/snapper.cc:404
+#, fuzzy
 #| msgid "Userdata"
 msgid "User"
-msgstr "Usuário"
+msgstr "Kullanıcı verisi"
 
 #: ../client/snapper.cc:379 ../client/snapper.cc:406 ../client/snapper.cc:434
 msgid "Userdata"
-msgstr "Dados de usuário"
+msgstr "Kullanıcı verisi"
 
 #: ../client/snapper.cc:986
 #, c-format
 msgid "create:%d modify:%d delete:%d"
-msgstr "criar:%d modificar:%d remover:%d"
+msgstr ""
 
 #: ../client/snapper.cc:1011
 #, c-format
 msgid "creating %s"
-msgstr "criando %s"
+msgstr "%s oluşturuluyor"
 
 #: ../client/snapper.cc:1017
 #, c-format
 msgid "deleting %s"
-msgstr "removendo %s"
+msgstr "%s siliniyor"
 
 #: ../client/snapper.cc:1027
 #, c-format
 msgid "failed to create %s"
-msgstr "falha ao criar %s"
+msgstr "%s oluşturma başarısız oldu"
 
 #: ../client/snapper.cc:1033
 #, c-format
 msgid "failed to delete %s"
-msgstr "falha ao remover %s"
+msgstr "%s 'i silme başarısız oldu"
 
 #: ../client/snapper.cc:1030
 #, c-format
 msgid "failed to modify %s"
-msgstr "falha ao alterar %s"
+msgstr "%s 'i değiştirme başarısız oldu"
 
 #: ../client/snapper.cc:1014
 #, c-format
 msgid "modifying %s"
-msgstr "alterando %s"
+msgstr "%s değiştiriliyor"
 
 #: ../client/snapper.cc:982
-#| msgid "Nothing to do."
 msgid "nothing to do"
-msgstr "nada a fazer"
+msgstr ""
 
 #: ../client/snapper.cc:1139
-msgid ""
-"usage: snapper [--global-options] <command> [--command-options] "
-"[command-arguments]"
-msgstr ""
-"uso: snapper [--opções-globais] <comando> [--opções-do-comando] [argumentos]"
+msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr "kullanım: yakalayıcı  [--global-options] <command> [--command-options] [command-arguments]"
 
 #~ msgid "\t--disable-filters\t\tDisable filters."
-#~ msgstr "\t--disable-filters\t\tDesabilitar filtros."
+#~ msgstr "\t--filtreleri-gösterme\t\tFiltreleri gösterme."
 
+#, fuzzy
+#~| msgid "Try 'snapper help' for more information."
 #~ msgid "Command failed (%s). See log for more information."
-#~ msgstr "O comando falhou (%s). Veja o log para mais informações."
-
-#~ msgid "Config '%s' is invalid."
-#~ msgstr "A configuração '%s' é inválida."
+#~ msgstr "Daha fazla bilgi için 'Yakalayıcı yardımı'nı okumayı deneyin."
 
 #~ msgid "Listing configs failed (%s)."
-#~ msgstr "Falha ao listar arquivos de configuração (%s)."
+#~ msgstr "Yapılandırmayı listeleme başarısız oldu (%s)."
 
 #~ msgid "Snapshot '%u' not found."
-#~ msgstr "Snapshot '%u' não foi encontrado."
+#~ msgstr "'%u' anlık görüntüsü bulunamadı."
 
 #~ msgid "comparing snapshots..."
-#~ msgstr "comparando snapshots..."
+#~ msgstr "Anlık görüntüler karşılaştırılıyor..."
 
 #~ msgid "done"
-#~ msgstr "concluído"
+#~ msgstr "yapılmış"
 
 #~ msgid "undoing change done"
-#~ msgstr "reversão das alterações concluída"
+#~ msgstr "değişiklikler geri alındı"
 
 #~ msgid "undoing change..."
-#~ msgstr "revertendo alteração..."
-
-#~ msgid "Command 'modify' needs one argument."
-#~ msgstr "O comando 'modify' precisa de um argumento."
-
-#~ msgid "    Options for 'diff' command:"
-#~ msgstr "    Opções do comando 'diff':"
+#~ msgstr "değişiklikler geri alınıyor..."
