@@ -86,7 +86,7 @@ map<string, string> ycpmap2stringmap (const YCPMap &ycp_map)
 {
     map<string, string> m; 
 
-    for (YCPMapIterator i = ycp_map->begin(); i != ycp_map->end(); i++) {
+    for (YCPMap::const_iterator i = ycp_map->begin(); i != ycp_map->end(); i++) {
         string key = i->first->asString()->value();
         m[key]  = i->second->asString()->value();
     }
