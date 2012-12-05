@@ -79,7 +79,8 @@ namespace snapper
 	int r1 = ioctl(dest_fd, BTRFS_IOC_CLONE, src_fd);
 	if (r1 != 0)
 	{
-	    y2err("ioctl failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    // TODO: too much logging with LVM
+	    // y2err("ioctl failed errno:" << errno << " (" << stringerror(errno) << ")");
 	}
 
 	return r1 == 0;
