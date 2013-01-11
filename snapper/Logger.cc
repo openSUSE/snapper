@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2012] Novell, Inc.
+ * Copyright (c) [2004-2013] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -74,7 +74,7 @@ namespace snapper
 
 	boost::lock_guard<boost::mutex> lock(mutex);
 
-	FILE* f = fopen(filename->c_str(), "a");
+	FILE* f = fopen(filename->c_str(), "ae");
 	if (f)
 	{
 	    string tmp = text;

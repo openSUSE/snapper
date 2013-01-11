@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2012] Novell, Inc.
+ * Copyright (c) [2011-2013] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -160,7 +160,7 @@ namespace snapper
 	    SDir info_dir = SDir(infos_dir, decString(num2));
 
 	    int fd = info_dir.open("filelist-" + decString(num1) + ".txt", O_RDONLY | O_NOATIME |
-				   O_NOFOLLOW);
+				   O_NOFOLLOW | O_CLOEXEC);
 	    if (fd == -1)
 		return false;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2012] Novell, Inc.
+ * Copyright (c) [2011-2013] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -182,7 +182,7 @@ namespace snapper
 	    try
 	    {
 		SDir info_dir(infos_dir, *it1);
-		int fd = info_dir.open("info.xml", O_NOFOLLOW);
+		int fd = info_dir.open("info.xml", O_NOFOLLOW | O_CLOEXEC);
 		XmlFile file(fd, "");
 
 		const xmlNode* root = file.getRootElement();

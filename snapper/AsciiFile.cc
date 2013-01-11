@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2012] Novell, Inc.
+ * Copyright (c) [2004-2013] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -60,7 +60,7 @@ namespace snapper
     AsciiFileReader::AsciiFileReader(const string& filename)
 	: file(NULL), buffer(NULL), len(0)
     {
-	file = fopen(filename.c_str(), "r");
+	file = fopen(filename.c_str(), "re");
 	if (file == NULL)
 	{
 	    y2war("open for '" << filename << "' failed");

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2012] Novell, Inc.
+ * Copyright (c) [2011-2013] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -45,7 +45,7 @@ namespace snapper
     SDir::SDir(const string& base_path)
 	: base_path(base_path), path()
     {
-	dirfd = ::open(base_path.c_str(), O_RDONLY | O_NOATIME);
+	dirfd = ::open(base_path.c_str(), O_RDONLY | O_NOATIME | O_CLOEXEC);
 	if (dirfd < 0)
 	{
 	    y2err("open failed path:" << base_path << " error:" << stringerror(errno));
@@ -65,7 +65,7 @@ namespace snapper
     SDir::SDir(const SDir& dir, const string& name)
 	: base_path(dir.base_path), path(dir.path + "/" + name)
     {
-	dirfd = ::openat(dir.dirfd, name.c_str(), O_RDONLY | O_NOFOLLOW | O_NOATIME);
+	dirfd = ::openat(dir.dirfd, name.c_str(), O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
 	if (dirfd < 0)
 	{
 	    y2err("open failed path:" << dir.fullname(name) << " (" << stringerror(errno) << ")");
@@ -286,7 +286,7 @@ namespace snapper
 		v /= 62;
 	    }
 
-	    int fd = open(name, O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
+	    int fd = open(name, O_RDWR | O_CREAT | O_EXCL | O_CLOEXEC, S_IRUSR | S_IWUSR);
 	    if (fd >= 0)
 		return fd;
 	    else if (errno != EEXIST)

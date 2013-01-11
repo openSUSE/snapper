@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2012] Novell, Inc.
+ * Copyright (c) [2011-2013] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -327,7 +327,7 @@ namespace snapper
     bool
     File::createFile(mode_t mode, uid_t owner, gid_t group) const
     {
-	int src_fd = open(getAbsolutePath(LOC_PRE).c_str(), O_RDONLY | O_LARGEFILE);
+	int src_fd = open(getAbsolutePath(LOC_PRE).c_str(), O_RDONLY | O_LARGEFILE | O_CLOEXEC);
 	if (src_fd < 0)
 	{
 	    y2err("open failed errno:" << errno << " (" << stringerror(errno) << ")");
@@ -335,7 +335,7 @@ namespace snapper
 	}
 
 	int dest_fd = open(getAbsolutePath(LOC_SYSTEM).c_str(), O_WRONLY | O_LARGEFILE |
-			   O_CREAT | O_TRUNC, mode);
+			   O_CREAT | O_TRUNC | O_CLOEXEC, mode);
 	if (dest_fd < 0)
 	{
 	    y2err("open failed errno:" << errno << " (" << stringerror(errno) << ")");

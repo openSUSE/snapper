@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2012] Novell, Inc.
+ * Copyright (c) [2011-2013] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -58,14 +58,14 @@ namespace snapper
 	if ((stat1.st_dev == stat2.st_dev) && (stat1.st_ino == stat2.st_ino))
 	    return true;
 
-	int fd1 = file1.open(O_RDONLY | O_NOFOLLOW | O_NOATIME);
+	int fd1 = file1.open(O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
 	if (fd1 < 0)
 	{
 	    y2err("open failed path:" << file1.fullname() << " errno:" << errno);
 	    return false;
 	}
 
-	int fd2 = file2.open(O_RDONLY | O_NOFOLLOW | O_NOATIME);
+	int fd2 = file2.open(O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
 	if (fd2 < 0)
 	{
 	    y2err("open failed path:" << file2.fullname() << " errno:" << errno);
