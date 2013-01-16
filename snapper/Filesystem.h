@@ -29,7 +29,6 @@
 
 #include "snapper/FileUtils.h"
 #include "snapper/Compare.h"
-#include "config.h"
 
 
 namespace snapper

@@ -20,14 +20,14 @@
  */
 
 
+#include "config.h"
+
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <glob.h>
 #include <string.h>
 #include <mntent.h>
 #include <boost/algorithm/string.hpp>
-
-#include "config.h"
 
 #include "snapper/Snapper.h"
 #include "snapper/Comparison.h"

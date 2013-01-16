@@ -25,7 +25,6 @@
 
 
 #include "snapper/Filesystem.h"
-#include "config.h"
 
 
 namespace snapper

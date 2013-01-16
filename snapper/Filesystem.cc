@@ -20,6 +20,8 @@
  */
 
 
+#include "config.h"
+
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -46,7 +48,6 @@
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/Compare.h"
-#include "config.h"
 
 
 namespace snapper

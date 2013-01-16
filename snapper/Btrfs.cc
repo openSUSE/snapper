@@ -20,6 +20,8 @@
  */
 
 
+#include "config.h"
+
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -28,6 +30,9 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <asm/types.h>
+#ifdef HAVE_LIBBTRFS
+#include <btrfs/ioctl.h>
+#endif
 #include <boost/algorithm/string.hpp>
 
 #include "snapper/Log.h"
@@ -35,8 +40,9 @@
 #include "snapper/Snapper.h"
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"
-#include "config.h"
 
+
+#ifndef HAVE_LIBBTRFS
 
 #define BTRFS_IOCTL_MAGIC 0x94
 #define BTRFS_PATH_NAME_MAX 4087
@@ -62,6 +68,8 @@ struct btrfs_ioctl_vol_args_v2
     __u64 unused[4];
     char name[BTRFS_SUBVOL_NAME_MAX + 1];
 };
+
+#endif
 
 
 namespace snapper

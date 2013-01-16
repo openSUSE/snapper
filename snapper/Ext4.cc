@@ -37,7 +37,6 @@
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
-#include "config.h"
 
 
 namespace snapper

@@ -38,7 +38,6 @@
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/Regex.h"
-#include "config.h"
 
 
 namespace snapper

@@ -20,13 +20,14 @@
  */
 
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 
-#include "config.h"
 #include <snapper/Snapper.h>
 #include <snapper/SnapperTmpl.h>
 #include <snapper/Enum.h>

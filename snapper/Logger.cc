@@ -27,8 +27,6 @@
 #include <string>
 #include <boost/thread.hpp>
 
-#include "config.h"
-
 #include "snapper/Log.h"
 #include "snapper/AppUtil.h"
 
