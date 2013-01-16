@@ -33,7 +33,12 @@ namespace snapper
 {
     using std::string;
     using std::vector;
-
+    
+    enum XaAttrsStatus {
+	XA_UNKNOWN,
+	XA_UNSUPPORTED,
+	XA_SUPPORTED
+    };
 
     class SDir
     {
@@ -75,13 +80,16 @@ namespace snapper
 	int rename(const string& oldname, const string& newname) const;
 
 	int mktemp(string& name) const;
+	bool xaSupported() const;
 
     private:
+	void setXaStatus();
 
 	const string base_path;
 	const string path;
 
 	int dirfd;
+	int xastatus;
 
     };
 
@@ -97,7 +105,7 @@ namespace snapper
 	int stat(struct stat* buf, int flags) const;
 	int open(int flags) const;
 	int readlink(string& buf) const;
-
+	bool xaSupported() const;
     private:
 
 	const SDir& dir;

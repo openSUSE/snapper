@@ -35,6 +35,7 @@
 #include "snapper/File.h"
 #include "snapper/Compare.h"
 #include "snapper/Exception.h"
+#include "snapper/XAttributes.h"
 
 
 namespace snapper
@@ -174,7 +175,19 @@ namespace snapper
     cmpFiles(const SFile& file1, const struct stat& stat1, const SFile& file2,
 	     const struct stat& stat2)
     {
-	unsigned int status = 0;
+        unsigned int status = 0;
+
+        /*
+         * NOTE:
+         *
+         * if both ctimes are in match, files should be same
+         * ctime can be altered only by some debugfs tool and
+         * on umounted fs (ext2,3,4...). So this should be safe
+         * unless root or CAP_SYS_ADMIN played with low-level fs
+         * utilities
+         */
+	if ((stat1.st_ctime == stat2.st_ctime))
+	    return status;
 
 	if ((stat1.st_mode & S_IFMT) != (stat2.st_mode & S_IFMT))
 	{
@@ -202,7 +215,17 @@ namespace snapper
 	    status |= GROUP;
 	}
 
-	return status;
+	// TODO: decide what to do w/ i.e. file1.xaSupported()
+	// and !file2.xaSupported() at the same time
+        if (file1.xaSupported() && file2.xaSupported())
+        {
+            if (!cmpFilesXattrs(file1, file2))
+            {
+                status |= XATTRS;
+            }
+        }
+
+        return status;
     }
 
 
@@ -439,4 +462,26 @@ namespace snapper
 	y2mil("stopwatch " << stopwatch << " for comparing directories");
     }
 
+    bool
+    cmpFilesXattrs(const SFile& file1, const SFile& file2)
+    {
+        int fd1 = file1.open(O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
+        if (fd1 < 0)
+        {
+            y2err("open failed path:" << file1.fullname() << " errno:" << errno);
+            throw IOErrorException();
+        }
+
+        int fd2 = file2.open(O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
+        if (fd1 < 0)
+        {
+            y2err("open failed path:" << file2.fullname() << " errno:" << errno);
+            throw IOErrorException();
+        }
+
+        XAttributes xa(fd1), xb(fd2);
+        close(fd1);
+        close(fd2);
+        return (xa == xb);
+    }
 }

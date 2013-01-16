@@ -23,6 +23,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/xattr.h>
 #include <fcntl.h>
 #include <stddef.h>
 #include <dirent.h>
@@ -60,6 +61,8 @@ namespace snapper
 	    y2err("not a directory path:" << base_path);
 	    throw IOErrorException();
 	}
+
+	setXaStatus();
     }
 
 
@@ -84,11 +87,13 @@ namespace snapper
 	    close(dirfd);
 	    throw IOErrorException();
 	}
+
+	setXaStatus();
     }
 
 
     SDir::SDir(const SDir& dir)
-	: base_path(dir.base_path), path(dir.path)
+	: base_path(dir.base_path), path(dir.path), xastatus(dir.xastatus)
     {
 	dirfd = dup(dir.dirfd);
 	if (dirfd == -1)
@@ -104,6 +109,7 @@ namespace snapper
     {
 	if (this != &dir)
 	{
+	    xastatus = dir.xastatus;
 	    ::close(dirfd);
 	    dirfd = dup(dir.dirfd);
 	    if (dirfd == -1)
@@ -374,6 +380,35 @@ namespace snapper
 	return -1;
     }
 
+    bool
+    SDir::xaSupported(void) const
+    {
+	return (xastatus == XA_SUPPORTED);
+    }
+
+    void
+    SDir::setXaStatus(void)
+    {
+	xastatus = XA_UNKNOWN;
+
+	ssize_t ret = flistxattr(dirfd, NULL, 0);
+	if (ret < 0)
+	{
+	    if (errno == ENOTSUP)
+	    {
+		xastatus = XA_UNSUPPORTED;
+	    }
+	    else
+	    {
+                y2err("Couldn't get extended attributes status for " << base_path << "/" << path << stringerror(errno));
+                throw IOErrorException();
+	    }
+	}
+	else
+	{
+	    xastatus = XA_SUPPORTED;
+	}
+    }
 
     SFile::SFile(const SDir& dir, const string& name)
 	: dir(dir), name(name)
@@ -410,4 +445,9 @@ namespace snapper
 	return dir.readlink(name, buf);
     }
 
+    bool
+    SFile::xaSupported(void) const
+    {
+	return dir.xaSupported();
+    }
 }

@@ -25,6 +25,7 @@ libsnapper_la_SOURCES =					\
 	SystemCmd.cc		SystemCmd.h		\
 	AsciiFile.cc		AsciiFile.h		\
 	Regex.cc		Regex.h			\
+	XAttributes.cc		Xattributes.h		\
 	Exception.h					\
 	SnapperTmpl.h					\
 	SnapperTypes.h					\

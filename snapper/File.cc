@@ -646,6 +646,8 @@ namespace snapper
 	ret += status & USER ? "u" : ".";
 	ret += status & GROUP ? "g" : ".";
 
+        ret += status & XATTRS ? "x" : ".";
+
 	return ret;
     }
 
@@ -683,6 +685,12 @@ namespace snapper
 	    if (str[3] == 'g')
 		ret |= GROUP;
 	}
+
+	if (str.length() >= 5)
+        {
+            if (str[4] == 'x')
+                ret |= XATTRS;
+        }
 
 	return ret;
     }
