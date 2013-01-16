@@ -34,6 +34,7 @@
 #include "snapper/Compare.h"
 #include "snapper/SnapperTmpl.h"
 #include "snapper/AsciiFile.h"
+#include "snapper/Filesystem.h"
 
 
 namespace snapper
@@ -127,7 +128,7 @@ namespace snapper
 	{
 	    SDir dir1 = getSnapshot1()->openSnapshotDir();
 	    SDir dir2 = getSnapshot2()->openSnapshotDir();
-	    cmpDirs(dir1, dir2, cb);
+	    snapper->getFilesystem()->cmpDirs(dir1, dir2, cb);
 	}
 
 	umount();

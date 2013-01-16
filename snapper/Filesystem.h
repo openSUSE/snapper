@@ -28,6 +28,7 @@
 #include <vector>
 
 #include "snapper/FileUtils.h"
+#include "snapper/Compare.h"
 #include "config.h"
 
 
@@ -69,6 +70,8 @@ namespace snapper
 	virtual void umountSnapshot(unsigned int num) const = 0;
 
 	virtual bool checkSnapshot(unsigned int num) const = 0;
+
+	virtual void cmpDirs(const SDir& dir1, const SDir& dir2, cmpdirs_cb_t cb) const;
 
     protected:
 

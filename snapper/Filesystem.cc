@@ -45,6 +45,7 @@
 #include "snapper/Snapper.h"
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"
+#include "snapper/Compare.h"
 #include "config.h"
 
 
@@ -171,6 +172,13 @@ namespace snapper
 	SDir info_dir(infos_dir, decString(num));
 
 	return info_dir;
+    }
+
+
+    void
+    Filesystem::cmpDirs(const SDir& dir1, const SDir& dir2, cmpdirs_cb_t cb) const
+    {
+	snapper::cmpDirs(dir1, dir2, cb);
     }
 
 }
