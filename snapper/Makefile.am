@@ -30,6 +30,22 @@ libsnapper_la_SOURCES =					\
 	SnapperTypes.h					\
 	SnapperDefines.h
 
+if ENABLE_BTRFS
+libsnapper_la_SOURCES +=				\
+	Btrfs.cc		Btrfs.h
+endif
+
+if ENABLE_EXT4
+libsnapper_la_SOURCES +=				\
+	Ext4.cc			Ext4.h
+endif
+
+if ENABLE_LVM
+libsnapper_la_SOURCES +=				\
+	Lvm.cc			Lvm.h
+endif
+
+
 libsnapper_la_LDFLAGS = -version-info @LIBVERSION_INFO@
 libsnapper_la_LIBADD = -lboost_thread-mt -lxml2 -lz -lm
 
@@ -43,4 +59,3 @@ pkginclude_HEADERS =					\
 	Comparison.h					\
 	Exception.h					\
 	Logger.h
-

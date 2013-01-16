@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2012] Novell, Inc.
+ * Copyright (c) [2011-2013] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -74,131 +74,13 @@ namespace snapper
 
 	const string subvolume;
 
-    };
+	static vector<string> filter_mount_options(const vector<string>& options);
 
-
-#ifdef ENABLE_BTRFS
-    class Btrfs : public Filesystem
-    {
-    public:
-
-	static Filesystem* create(const string& fstype, const string& subvolume);
-
-	Btrfs(const string& subvolume);
-
-	virtual string fstype() const { return "btrfs"; }
-
-	virtual void createConfig() const;
-	virtual void deleteConfig() const;
-
-	virtual string snapshotDir(unsigned int num) const;
-
-	virtual SDir openSubvolumeDir() const;
-	virtual SDir openInfosDir() const;
-	virtual SDir openSnapshotDir(unsigned int num) const;
-
-	virtual void createSnapshot(unsigned int num) const;
-	virtual void deleteSnapshot(unsigned int num) const;
-
-	virtual bool isSnapshotMounted(unsigned int num) const;
-	virtual void mountSnapshot(unsigned int num) const;
-	virtual void umountSnapshot(unsigned int num) const;
-
-	virtual bool checkSnapshot(unsigned int num) const;
-
-    private:
-
-	bool is_subvolume(const struct stat& stat) const;
-
-	bool create_subvolume(int fddst, const string& name) const;
-	bool create_snapshot(int fd, int fddst, const string& name) const;
-	bool delete_subvolume(int fd, const string& name) const;
+	static bool mount(const string& device, int fd, const string& mount_type,
+			  const vector<string>& options);
+	static bool umount(int fd, const string& mount_point);
 
     };
-#endif
-
-
-#ifdef ENABLE_EXT4
-    class Ext4 : public Filesystem
-    {
-    public:
-
-	static Filesystem* create(const string& fstype, const string& subvolume);
-
-	Ext4(const string& subvolume);
-
-	virtual string fstype() const { return "ext4"; }
-
-	virtual void createConfig() const;
-	virtual void deleteConfig() const;
-
-	virtual string snapshotDir(unsigned int num) const;
-	virtual string snapshotFile(unsigned int num) const;
-
-	virtual SDir openInfosDir() const;
-	virtual SDir openSnapshotDir(unsigned int num) const;
-
-	virtual void createSnapshot(unsigned int num) const;
-	virtual void deleteSnapshot(unsigned int num) const;
-
-	virtual bool isSnapshotMounted(unsigned int num) const;
-	virtual void mountSnapshot(unsigned int num) const;
-	virtual void umountSnapshot(unsigned int num) const;
-
-	virtual bool checkSnapshot(unsigned int num) const;
-
-    private:
-
-	vector<string> mount_options;
-
-    };
-#endif
-
-
-#ifdef ENABLE_LVM
-    class Lvm : public Filesystem
-    {
-    public:
-
-	static Filesystem* create(const string& fstype, const string& subvolume);
-
-	Lvm(const string& subvolume, const string& mount_type);
-
-	virtual string fstype() const { return "lvm(" + mount_type + ")"; }
-
-	virtual void createConfig() const;
-	virtual void deleteConfig() const;
-
-	virtual string snapshotDir(unsigned int num) const;
-	virtual string snapshotLvName(unsigned int num) const;
-
-	virtual SDir openInfosDir() const;
-	virtual SDir openSnapshotDir(unsigned int num) const;
-
-	virtual void createSnapshot(unsigned int num) const;
-	virtual void deleteSnapshot(unsigned int num) const;
-
-	virtual bool isSnapshotMounted(unsigned int num) const;
-	virtual void mountSnapshot(unsigned int num) const;
-	virtual void umountSnapshot(unsigned int num) const;
-
-	virtual bool checkSnapshot(unsigned int num) const;
-
-    private:
-
-	const string mount_type;
-
-	bool detectThinVolumeNames(const MtabData& mtab_data);
-
-	string getDevice(unsigned int num) const;
-
-	string vg_name;
-	string lv_name;
-
-	vector<string> mount_options;
-
-    };
-#endif
 
 }
 
