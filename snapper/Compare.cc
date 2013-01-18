@@ -219,6 +219,8 @@ namespace snapper
 	// and !file2.xaSupported() at the same time
         if (file1.xaSupported() && file2.xaSupported())
         {
+            // TODO: think about how XATTRS are related to
+            // to other status changes...
             if (!cmpFilesXattrs(file1, file2))
             {
                 status |= XATTRS;
