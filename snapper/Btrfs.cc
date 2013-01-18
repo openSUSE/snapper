@@ -287,7 +287,7 @@ namespace snapper
 	memset(&args_v2, 0, sizeof(args_v2));
 
 	args_v2.fd = fd;
-	args_v2.flags |= BTRFS_SUBVOL_RDONLY;
+	args_v2.flags = BTRFS_SUBVOL_RDONLY;
 	strncpy(args_v2.name, name.c_str(), sizeof(args_v2.name) - 1);
 
 	if (ioctl(fddst, BTRFS_IOC_SNAP_CREATE_V2, &args_v2) == 0)
