@@ -39,24 +39,49 @@ namespace snapper
 	typedef vector<uint8_t> xa_value_t;
 	typedef map<string, xa_value_t> xa_map_t;
 	typedef pair<string, xa_value_t> xa_pair_t;
+        typedef pair<uint8_t, string> xa_cmp_pair_t;
+        typedef pair<bool, xa_value_t> xa_find_pair_t;
+        typedef map<uint8_t, string> xa_change_t;
+        // pair<name, mode>
+        //i.e:
+        // name=acl, mode="create,delete,replace"
+        // create - whole new XA
+        // delete - remove XA
+        // replace - change in xa_value
+        
 
 	typedef xa_map_t::iterator xa_map_iter;
 	typedef xa_map_t::const_iterator xa_map_citer;
+        typedef xa_change_t::const_iterator xa_change_citer;
+        
+        // this is ordered on purpose!
+        // we can possibly avoid allocating new fs block if xattrs fits
+        // into 100 bytes (ext2,3,4)
+        // so, first remove/change and create later
+        enum XaCompareFlags {
+            XA_DELETE = 0,
+            XA_REPLACE,
+            XA_CREATE
+        };
 
 	class XAttributes
 	{
 	private:
-		xa_map_t *xamap;
+            xa_map_t *xamap;
+            xa_change_t *xachmap;
 	public:
 		XAttributes();
 		XAttributes(int);
 		XAttributes(const XAttributes&);
 		~XAttributes();
 
-		XAttributes& operator=(const XAttributes&);
-		bool operator==(const XAttributes&);
+                xa_find_pair_t find(const string&) const;
+                void insert(const xa_pair_t&);
+                void generateXaComparison(const XAttributes&);
+                bool serializeTo(int);
 
-		void insert(const xa_pair_t&);
+		XAttributes& operator=(const XAttributes&);
+		bool operator==(const XAttributes&) const;
 
 		friend ostream& operator<<(ostream&, const XAttributes&);
 	};

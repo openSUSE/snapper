@@ -29,6 +29,8 @@
 #include <string>
 #include <vector>
 
+#include <snapper/XAttributes.h>
+
 
 namespace snapper
 {
@@ -129,6 +131,8 @@ namespace snapper
 	bool deleteAllTypes() const;
 
 	bool modifyAllTypes() const;
+
+        bool modifyXattributes() const;
 
 	const FilePaths* file_paths;
 

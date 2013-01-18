@@ -524,6 +524,42 @@ namespace snapper
 	return true;
     }
 
+    bool
+    File::modifyXattributes() const
+    {
+
+        int src_fd = open(getAbsolutePath(LOC_PRE).c_str(), O_RDONLY | O_CLOEXEC);
+        if (src_fd < 0)
+        {
+            y2err("open failed errno:" << errno << " (" << stringerror(errno) << ")");
+            return false;
+        }
+        
+        int dest_fd = open(getAbsolutePath(LOC_SYSTEM).c_str(), O_RDWR | O_CLOEXEC);
+        if (dest_fd < 0)
+        {
+            y2err("open failed errno:" << errno << " (" << stringerror(errno) << ")");
+            close(src_fd);
+            return false;
+        }
+
+        bool ret_val;
+
+        try {
+            XAttributes xa_src(src_fd), xa_dest(dest_fd);
+
+            xa_dest.generateXaComparison(xa_src);
+            ret_val = xa_dest.serializeTo(dest_fd);
+        }
+        catch (IOErrorException ioe) {
+            ret_val = false;
+        }
+
+        close(src_fd);
+        close(dest_fd);
+
+        return ret_val;
+    }
 
     bool
     File::doUndo()
@@ -547,6 +583,13 @@ namespace snapper
 	    if (!modifyAllTypes())
 		error = true;
 	}
+
+	// NOTE: XATTR flasg must not be set w/ CREATED or DELETED flag
+        if (getPreToPostStatus() & XATTRS)
+        {
+            if (!modifyXattributes())
+                error = true;
+        }
 
 	pre_to_system_status = (unsigned int) -1;
 	post_to_system_status = (unsigned int) -1;
