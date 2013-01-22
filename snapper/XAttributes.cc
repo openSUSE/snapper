@@ -80,7 +80,7 @@ namespace snapper
                 throw IOErrorException();
             }
             
-            y2deb("XAttribute value size for xattribute name: '" << name << "' is " << size);
+            y2deb("XAttribute value size for xattribute name: '" << name << "' is " << v_size);
 
             uint8_t *buffer = new uint8_t[v_size];
 
@@ -180,8 +180,9 @@ namespace snapper
             }
             else
             {
-                (*change_map)[XA_DELETE].push_back(src_cit->first);
-                it = this->xamap->erase(it);
+                (*change_map)[XA_DELETE].push_back(it->first);
+                xa_map_iter tmp = it++;
+                this->xamap->erase(tmp);
             }
         }
 
@@ -196,7 +197,8 @@ namespace snapper
         while (it != this->xamap->end())
         {
             (*change_map)[XA_DELETE].push_back(it->first);
-            it = this->xamap->erase(it);
+            xa_map_iter tmp = it++;
+            it = this->xamap->erase(tmp);
         }
 
         this->xachmap = change_map;
