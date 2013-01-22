@@ -143,6 +143,9 @@ namespace snapper
     XAttributes::generateXaComparison(const XAttributes &src_xa)
     {
         xa_change_t *change_map = new xa_change_t();
+        (*change_map)[XA_DELETE] = xa_name_vec_t();
+        (*change_map)[XA_REPLACE] = xa_name_vec_t();
+        (*change_map)[XA_CREATE] = xa_name_vec_t();
 
         delete this->xachmap;
 
@@ -162,7 +165,7 @@ namespace snapper
             {
                 if (src_cit->second != it->second)
                 {
-                    (*change_map)[XA_REPLACE] = src_cit->first;
+                    (*change_map)[XA_REPLACE].push_back(src_cit->first);
                     (*this->xamap)[src_cit->first] = src_cit->second;
                 }
                 src_cit++;
@@ -170,21 +173,21 @@ namespace snapper
             }
             else if (src_cit->first < it->first)
             {
-                (*change_map)[XA_CREATE] = src_cit->first;
+                (*change_map)[XA_CREATE].push_back(src_cit->first);
                 it = this->xamap->insert(xa_pair_t(src_cit->first, src_cit->second)).first;
 
                 src_cit++;
             }
             else
             {
-                (*change_map)[XA_DELETE] = src_cit->first;
+                (*change_map)[XA_DELETE].push_back(src_cit->first);
                 it = this->xamap->erase(it);
             }
         }
 
         while (src_cit != src_xa.xamap->end())
         {
-            (*change_map)[XA_CREATE] = src_cit->first;
+            (*change_map)[XA_CREATE].push_back(src_cit->first);
             it = this->xamap->insert(xa_pair_t(src_cit->first, src_cit->second)).first;
 
             src_cit++;
@@ -192,7 +195,7 @@ namespace snapper
 
         while (it != this->xamap->end())
         {
-            (*change_map)[XA_DELETE] = it->first;
+            (*change_map)[XA_DELETE].push_back(it->first);
             it = this->xamap->erase(it);
         }
 
@@ -207,55 +210,89 @@ namespace snapper
             y2war("Missing change map!");
             return false;
         }
-        
+
         xa_change_citer cit = this->xachmap->begin();
-        
+
         while(cit != this->xachmap->end())
         {
+            xa_name_vec_citer name_cit = cit->second.begin();
+
             switch (cit->first)
             {
                 case XA_DELETE:
-                    y2deb("delete xattribute: " << cit->second);
-                    if (fremovexattr(dest_fd, cit->second.c_str()))
+                    while (name_cit != cit->second.end())
                     {
-                        y2err("Couldn't remove xattribute '" << cit->second << "': " << stringerror(errno));
-                        return false;
+                        y2deb("delete xattribute: " << *name_cit);
+                        if (fremovexattr(dest_fd, (*name_cit).c_str()))
+                        {
+                            y2err("Couldn't remove xattribute '" << *name_cit << "': " << stringerror(errno));
+                            return false;
+                        }
+                        name_cit++;
                     }
                     break;
 
                 case XA_REPLACE:
+                    while (name_cit != cit->second.end())
                     {
-                        y2deb("replace xattribute: " << cit->second);
-                        xa_find_pair_t fnd = find(cit->second);
-                        if (!fnd.first || fnd.second.empty())
+                        y2deb("replace xattribute: " << *name_cit);
+                        xa_find_pair_t fnd = find(*name_cit);
+                        if (!fnd.first)
                         {
-                            y2war("Internal error: Couldn't find xattribute '" << cit->second << "'");
+                            y2err("Internal error: Couldn't find xattribute '" << *name_cit << "'");
                             return false;
                         }
-                        y2deb("new value: '" << fnd.second << "'");
-                        if (fsetxattr(dest_fd, cit->second.c_str(), &fnd.second.front(), fnd.second.size(), XATTR_REPLACE))
+                        if (fnd.second.empty())
                         {
-                            y2err("Couldn't replace xattribute '" << cit->second << "' by new value: " << stringerror(errno));
-                            return false;
+                            y2deb("new value for xattribute '" << *name_cit << "' is empty!");
+                            if (fsetxattr(dest_fd, (*name_cit).c_str(), NULL, 0, XATTR_REPLACE))
+                            {
+                                y2err("Couldn't replace xattribute '" << *name_cit << "' by new (empty) value: " << stringerror(errno));
+                                return false;
+                            }
                         }
+                        else
+                        {
+                            y2deb("new value: '" << fnd.second << "'");
+                            if (fsetxattr(dest_fd, (*name_cit).c_str(), &fnd.second.front(), fnd.second.size(), XATTR_REPLACE))
+                            {
+                                y2err("Couldn't replace xattribute by new value: " << stringerror(errno));
+                                return false;
+                            }
+                        }
+                        name_cit++;
                     }
                     break;
 
                 case XA_CREATE:
+                    while (name_cit != cit->second.end())
                     {
-                        y2deb("create xattribute: " << cit->second);
-                        xa_find_pair_t fnd = find(cit->second);
-                        if (!fnd.first || fnd.second.empty())
+                        y2deb("create xattribute: " << *name_cit);
+                        xa_find_pair_t fnd = find(*name_cit);
+                        if (!fnd.first)
                         {
-                            y2war("Internal error: Couldn't find xattribute '" << cit->second << "'");
+                            y2err("Internal error: Couldn't find xattribute '" << *name_cit << "'");
                             return false;
                         }
-                        y2deb("new value: '" << fnd.second << "'");
-                        if (fsetxattr(dest_fd, cit->second.c_str(), &fnd.second.front(), fnd.second.size(), XATTR_CREATE))
+                        if (fnd.second.empty())
                         {
-                            y2err("Couldn't create xattribute '" << cit->second << "': " << stringerror(errno));
-                            return false;
+                            y2deb("new value for xattribute '" << *name_cit << "' is empty!");
+                            if (fsetxattr(dest_fd, (*name_cit).c_str(), NULL, 0, XATTR_CREATE))
+                            {
+                                y2err("Couldn't create xattribute '" << *name_cit << "' by new (empty) value: " << stringerror(errno));
+                                return false;
+                            }
                         }
+                        else
+                        {
+                            y2deb("new value: '" << fnd.second << "'");
+                            if (fsetxattr(dest_fd, (*name_cit).c_str(), &fnd.second.front(), fnd.second.size(), XATTR_CREATE))
+                            {
+                                y2err("Couldn't create xattribute '" << *name_cit << "': " << stringerror(errno));
+                                return false;
+                            }
+                        }
+                        name_cit++;
                     }
                     break;
 
@@ -303,15 +340,17 @@ namespace snapper
         xa_map_citer it = xa.xamap->begin();
 
         if (it == xa.xamap->end())
-        {
             out << "(XA container is empty)";
-            return out;
-        }
 
         while (it != xa.xamap->end())
         {
             out << "xa_name: " << it->first << ", xa_value: " << it->second << std::endl;
             it++;
+        }
+
+        if (xa.xachmap)
+        {
+            out << "change content: " << std::endl << *xa.xachmap;
         }
 
         return out;
@@ -326,6 +365,37 @@ namespace snapper
         {
             sprintf(tmp, "%d", *cit);
             out << tmp << ":";
+        }
+
+        return out;
+    }
+
+    ostream&
+    operator<<(ostream &out, const xa_change_t &xa_change)
+    {
+        xa_change_citer cit = xa_change.begin();
+
+        while (cit != xa_change.end())
+        {
+            xa_name_vec_citer name_cit = cit->second.begin();
+            switch (cit->first)
+            {
+                case XA_DELETE:
+                    out << "XA_DELETE";
+                    break;
+                case XA_REPLACE:
+                    out << "XA_REPLACE";
+                    break;
+                case XA_CREATE:
+                    out << "XA_CREATE";
+                    break;
+                default:
+                    out << "unknown";
+            }
+            out << " mark:" << std::endl;
+            while (name_cit != cit->second.end())
+                out << *name_cit++ << std::endl;
+            cit++;
         }
 
         return out;

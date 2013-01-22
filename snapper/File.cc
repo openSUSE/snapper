@@ -543,13 +543,19 @@ namespace snapper
             return false;
         }
 
+        y2deb("source file is: " << getAbsolutePath(LOC_PRE));
+        y2deb("destination file is: " << getAbsolutePath(LOC_SYSTEM));
+
         bool ret_val;
 
         try {
             XAttributes xa_src(src_fd), xa_dest(dest_fd);
+            y2deb("xa_src object: " << xa_src << std::endl << "xa_dest object: " << xa_dest);
 
             xa_dest.generateXaComparison(xa_src);
+            y2deb("xa_dest object after generateXaComparison(): " << xa_dest);
             ret_val = xa_dest.serializeTo(dest_fd);
+            y2deb("xa_dest object after serializeTo(): " << xa_dest);
         }
         catch (IOErrorException ioe) {
             ret_val = false;

@@ -41,19 +41,8 @@ namespace snapper
 	typedef pair<string, xa_value_t> xa_pair_t;
         typedef pair<uint8_t, string> xa_cmp_pair_t;
         typedef pair<bool, xa_value_t> xa_find_pair_t;
-        typedef map<uint8_t, string> xa_change_t;
-        // pair<name, mode>
-        //i.e:
-        // name=acl, mode="create,delete,replace"
-        // create - whole new XA
-        // delete - remove XA
-        // replace - change in xa_value
-        
+        typedef vector<string> xa_name_vec_t;
 
-	typedef xa_map_t::iterator xa_map_iter;
-	typedef xa_map_t::const_iterator xa_map_citer;
-        typedef xa_change_t::const_iterator xa_change_citer;
-        
         // this is ordered on purpose!
         // we can possibly avoid allocating new fs block if xattrs fits
         // into 100 bytes (ext2,3,4)
@@ -63,6 +52,19 @@ namespace snapper
             XA_REPLACE,
             XA_CREATE
         };
+        // pair<mode, xa_name_vec_t>
+        //i.e:
+        // mode=create/delete/replace, names="acl, selinux"
+        // create - whole new XA
+        // delete - remove XA
+        // replace - change in xa_value
+        typedef map<uint8_t, xa_name_vec_t> xa_change_t;
+
+        // iterators
+	typedef xa_map_t::iterator xa_map_iter;
+	typedef xa_map_t::const_iterator xa_map_citer;
+        typedef xa_change_t::const_iterator xa_change_citer;
+        typedef xa_name_vec_t::const_iterator xa_name_vec_citer;
 
 	class XAttributes
 	{
@@ -86,7 +88,8 @@ namespace snapper
 		friend ostream& operator<<(ostream&, const XAttributes&);
 	};
 
-	ostream& operator<<(ostream&, const xa_value_t&);
+        ostream& operator<<(ostream&, const xa_value_t&);
+        ostream& operator<<(ostream&, const xa_change_t&);
 }
 
 #endif
