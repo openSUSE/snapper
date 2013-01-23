@@ -36,10 +36,12 @@ namespace snapper
 	using std::ostream;
 	using std::vector;
 
+        class XAModification;
+        class XAttributes;
+
 	typedef vector<uint8_t> xa_value_t;
 	typedef map<string, xa_value_t> xa_map_t;
 	typedef pair<string, xa_value_t> xa_pair_t;
-        typedef pair<uint8_t, string> xa_cmp_pair_t;
         typedef pair<bool, xa_value_t> xa_find_pair_t;
         typedef vector<string> xa_name_vec_t;
 
@@ -58,38 +60,53 @@ namespace snapper
         // create - whole new XA
         // delete - remove XA
         // replace - change in xa_value
-        typedef map<uint8_t, xa_name_vec_t> xa_change_t;
+        typedef map<uint8_t, xa_name_vec_t> xa_modification_t;
 
         // iterators
 	typedef xa_map_t::iterator xa_map_iter;
 	typedef xa_map_t::const_iterator xa_map_citer;
-        typedef xa_change_t::const_iterator xa_change_citer;
+        typedef xa_modification_t::const_iterator xa_mod_citer;
         typedef xa_name_vec_t::const_iterator xa_name_vec_citer;
 
 	class XAttributes
 	{
 	private:
-            xa_map_t *xamap;
-            xa_change_t *xachmap;
-	public:
-		XAttributes();
-		XAttributes(int);
-		XAttributes(const XAttributes&);
-		~XAttributes();
+            xa_map_t xamap;
+        public:
+            XAttributes(int);
+            XAttributes(const XAttributes&);
 
-                xa_find_pair_t find(const string&) const;
-                void insert(const xa_pair_t&);
-                void generateXaComparison(const XAttributes&);
-                bool serializeTo(int);
+            xa_map_citer cbegin() const { return xamap.begin(); }
+            xa_map_citer cend() const { return xamap.end(); }
+            xa_find_pair_t find(const string&) const;
+            // this method is not const! (it changes xamap to reflect new state)!
+            bool serializeModificationsTo(int, const XAModification&) const;
 
-		XAttributes& operator=(const XAttributes&);
-		bool operator==(const XAttributes&) const;
+            XAttributes& operator=(const XAttributes&);
+            bool operator==(const XAttributes&) const;
 
-		friend ostream& operator<<(ostream&, const XAttributes&);
+            // XAModification is able to atomically modify xamap atribute
+            friend class XAModification;
 	};
 
+        class XAModification
+        {
+        private:
+            xa_modification_t xamodmap;
+            const XAttributes *p_xa_dest;
+        public:
+            XAModification();
+            XAModification(const XAttributes&, XAttributes&);
+
+            xa_mod_citer cbegin() const { return xamodmap.begin(); };
+            xa_mod_citer cend() const { return xamodmap.end(); };
+            const XAttributes* getDestination() const { return p_xa_dest; }
+        };
+
+        ostream& operator<<(ostream&, const XAModification&);
+        ostream& operator<<(ostream&, const XAttributes&);
         ostream& operator<<(ostream&, const xa_value_t&);
-        ostream& operator<<(ostream&, const xa_change_t&);
+        ostream& operator<<(ostream&, const xa_modification_t&);
 }
 
 #endif
