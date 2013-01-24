@@ -230,15 +230,15 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 
 	"    <method name='ListSnapshotsAtTime'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
-	"      <arg name='begin' type='t' direction='in'/>\n"
-	"      <arg name='end' type='t' direction='in'/>\n"
+	"      <arg name='begin' type='x' direction='in'/>\n"
+	"      <arg name='end' type='x' direction='in'/>\n"
 	"      <arg name='snapshots' type='v' direction='out'/>\n"
 	"    </method>\n"
 
 	"    <method name='GetSnapshot'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='number' type='u' direction='in'/>\n"
-	"      <arg name='type' type='(uqutussa{ss})' direction='out'/>\n"
+	"      <arg name='type' type='(uquxussa{ss})' direction='out'/>\n"
 	"    </method>\n"
 
 	"    <method name='SetSnapshot'>\n"

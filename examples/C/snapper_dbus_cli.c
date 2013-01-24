@@ -29,7 +29,7 @@
 #define __STDC_FORMAT_MACROS
 #include <inttypes.h>
 
-#define CDBUS_SIG_LIST_SNAPS_RSP "a(uqutussa{ss})"
+#define CDBUS_SIG_LIST_SNAPS_RSP "a(uquxussa{ss})"
 #define CDBUS_SIG_LIST_CONFS_RSP "a(ssa{ss})"
 #define CDBUS_SIG_CREATE_SNAP_RSP "u"
 #define CDBUS_SIG_DEL_SNAPS_RSP ""
@@ -44,7 +44,7 @@ struct snap {
 	uint32_t id;
 	uint16_t type;
 	uint32_t pre_id;
-	uint64_t time;
+	int64_t time;
 	uint32_t creator_uid;
 	char *desc;
 	char *cleanup;
@@ -285,7 +285,7 @@ static int snap_struct_unpack(DBusMessageIter *iter,
 	}
 
 	dbus_message_iter_next(&st_iter);
-	ret = cdbus_type_check_get(&st_iter, DBUS_TYPE_UINT64,
+	ret = cdbus_type_check_get(&st_iter, DBUS_TYPE_INT64,
 				   &snap_out->time);
 	if (ret < 0) {
 		return ret;
@@ -339,7 +339,7 @@ static void snap_array_print(int32_t num_snaps,
 		printf("id: %u\n"
 		       "type: %u\n"
 		       "pre_id: %u\n"
-		       "time: %" PRIu64 "\n"
+		       "time: %" PRId64 "\n"
 		       "creator_uid: %u\n"
 		       "desc: %s\n"
 		       "cleanup: %s\n",

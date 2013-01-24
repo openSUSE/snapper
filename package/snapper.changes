@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Jan 24 14:32:02 CET 2013 - aschnell@suse.de
+
+- fixed type of time_t in DBus protocol
+
+-------------------------------------------------------------------
 Mon Nov 26 12:40:54 CET 2012 - aschnell@suse.de
 
 - implemented use-counter for mounts of snapshots

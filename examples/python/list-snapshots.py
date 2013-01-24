@@ -15,7 +15,7 @@ snapshots = snapper.ListSnapshots("root")
 for snapshot in snapshots:
     print snapshot[0], snapshot[1], snapshot[2],
 
-    if snapshot[3] != 0xFFFFFFFFFFFFFFFF:
+    if snapshot[3] != -1:
         print asctime(gmtime(snapshot[3])),
     else:
         print "now",

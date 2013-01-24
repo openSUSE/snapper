@@ -26,7 +26,7 @@
 namespace DBus
 {
     const char* TypeInfo<ConfigInfo>::signature = "(ssa{ss})";
-    const char* TypeInfo<Snapshot>::signature = "(uqutussa{ss})";
+    const char* TypeInfo<Snapshot>::signature = "(uquxussa{ss})";
     const char* TypeInfo<File>::signature = "(su)";
 
 
