@@ -23,8 +23,8 @@ method GetSnapshot config-name number
 method SetSnapshot config-name number description cleanup userdata
 
 method CreateSingleSnapshot config-name description cleanup userdata -> number
-method CreatePreSnapshot config-name pre-number description cleanup userdata -> number
-method CreatePostSnapshot config-name description cleanup userdata -> number
+method CreatePreSnapshot config-name description cleanup userdata -> number
+method CreatePostSnapshot config-name pre-number description cleanup userdata -> number
 method ModifySnapshot config-name number description cleanup userdata
 method DeleteSnapshots config-name list(numbers)
 
