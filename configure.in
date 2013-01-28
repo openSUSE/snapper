@@ -94,5 +94,6 @@ AC_OUTPUT(
 	doc/snapperd.8:doc/snapperd.8.in
 	po/Makefile
 	testsuite-real/Makefile
+	testsuite-cmp/Makefile
 	package/snapper.spec:snapper.spec.in
 )
