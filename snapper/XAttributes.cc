@@ -33,7 +33,6 @@
 #include "snapper/Log.h"
 
 #include <boost/scoped_array.hpp>
-#include <boost/scoped_ptr.hpp>
 
 namespace snapper
 {
@@ -44,7 +43,7 @@ namespace snapper
         if (size < 0)
         {
             y2err("Couldn't get xattributes names-list size: " << stringerror(errno));
-            throw IOErrorException();
+            throw XAttributesException();
         }
 
         // +1 to cover size == 0
@@ -52,14 +51,14 @@ namespace snapper
         names[size] = '\0';
 
         y2deb("XAttributes names-list size is: " << size);
-        
+
         size = flistxattr(fd, names.get(), size);
         if (size < 0)
         {
             y2err("Couldn't get xattributes names-list: " << stringerror(errno));
-            throw IOErrorException();
+            throw XAttributesException();
         }
-        
+
         int pos = 0;
 
         while (pos < size)
@@ -72,9 +71,9 @@ namespace snapper
             if (v_size < 0)
             {
                 y2err("Couldn't get a xattribute value size for the xattribute name '" << name << "': " << stringerror(errno));
-                throw IOErrorException();
+                throw XAttributesException();
             }
-            
+
             y2deb("XAttribute value size for xattribute name: '" << name << "' is " << v_size);
 
             boost::scoped_array<uint8_t> buffer(v_size ? new uint8_t[v_size] : NULL);
@@ -83,14 +82,13 @@ namespace snapper
             if (v_size < 0)
             {
                 y2err("Coudln't get xattrbitue value for the xattrbite name '" << name << "': ");
-                throw IOErrorException();
+                throw XAttributesException();
             }
 
             if (!xamap.insert(xa_pair_t(name, xa_value_t(buffer.get(), buffer.get() + v_size))).second)
             {
                 y2err("Duplicite extended attribute name in source file!");
-                // TODO: possible XAException candidate
-                throw IOErrorException();
+                throw XAttributesException();
             }
         }
     }
@@ -111,99 +109,6 @@ namespace snapper
         }
         
         return xa_find_pair_t(false, xa_value_t());
-    }
-
-    bool
-    XAttributes::serializeModificationsTo(int dest_fd, const XAModification &xa_mods) const
-    {
-        if (this != xa_mods.getDestination())
-        {
-            return false;
-            // TODO: throw exception: invalid request
-        }
-
-        for (xa_mod_citer cit = xa_mods.cbegin(); cit != xa_mods.cend(); cit++)
-        {
-            for (xa_name_vec_citer name_cit = cit->second.begin(); name_cit != cit->second.end(); name_cit++)
-            {
-                switch (cit->first)
-                {
-                    case XA_DELETE:
-                        y2deb("delete xattribute: " << *name_cit);
-                        if (fremovexattr(dest_fd, (*name_cit).c_str()))
-                        {
-                            y2err("Couldn't remove xattribute '" << *name_cit << "': " << stringerror(errno));
-                            return false;
-                        }
-                        break;
-
-                    case XA_REPLACE:
-                        y2deb("replace xattribute: " << *name_cit);
-                        {
-                            xa_find_pair_t fnd = find(*name_cit);
-                            if (!fnd.first)
-                            {
-                                y2err("Internal error: Couldn't find xattribute '" << *name_cit << "'");
-                                return false;
-                            }
-                            if (fnd.second.empty())
-                            {
-                                y2deb("new value for xattribute '" << *name_cit << "' is empty!");
-                                if (fsetxattr(dest_fd, (*name_cit).c_str(), NULL, 0, XATTR_REPLACE))
-                                {
-                                    y2err("Couldn't replace xattribute '" << *name_cit << "' by new (empty) value: " << stringerror(errno));
-                                    return false;
-                                }
-                            }
-                            else
-                            {
-                                y2deb("new value: '" << fnd.second << "'");
-                                if (fsetxattr(dest_fd, (*name_cit).c_str(), &fnd.second.front(), fnd.second.size(), XATTR_REPLACE))
-                                {
-                                    y2err("Couldn't replace xattribute by new value: " << stringerror(errno));
-                                    return false;
-                                }
-                            }
-                        }
-                        break;
-
-                    case XA_CREATE:
-                        y2deb("create xattribute: " << *name_cit);
-                        {
-                            xa_find_pair_t fnd = find(*name_cit);
-                            if (!fnd.first)
-                            {
-                                y2err("Internal error: Couldn't find xattribute '" << *name_cit << "'");
-                                return false;
-                            }
-                            if (fnd.second.empty())
-                            {
-                                y2deb("new value for xattribute '" << *name_cit << "' is empty!");
-                                if (fsetxattr(dest_fd, (*name_cit).c_str(), NULL, 0, XATTR_CREATE))
-                                {
-                                    y2err("Couldn't create xattribute '" << *name_cit << "' by new (empty) value: " << stringerror(errno));
-                                    return false;
-                                }
-                            }
-                            else
-                            {
-                                y2deb("new value: '" << fnd.second << "'");
-                                if (fsetxattr(dest_fd, (*name_cit).c_str(), &fnd.second.front(), fnd.second.size(), XATTR_CREATE))
-                                {
-                                    y2err("Couldn't create xattribute '" << *name_cit << "': " << stringerror(errno));
-                                    return false;
-                                }
-                            }
-                        }
-                        break;
-
-                    default:
-                        y2err("Internal Error in XAttributes()");
-                        return false;
-                }
-            }
-        }
-        return true;
     }
 
     XAttributes&
@@ -244,10 +149,16 @@ namespace snapper
     {
         char tmp[4];
 
-        for (xa_value_t::const_iterator cit = xavalue.begin(); cit != xavalue.end(); cit++)
+        xa_value_t::const_iterator cit = xavalue.begin();
+
+        while (cit != xavalue.end())
         {
             sprintf(tmp, "%d", *cit);
-            out << tmp << ":";
+            out << tmp;
+            if (++cit == xavalue.end())
+                out << "";
+            else
+                out << ":";
         }
 
         return out;
@@ -256,32 +167,24 @@ namespace snapper
     ostream&
     operator<<(ostream &out, const xa_modification_t &xa_change)
     {
-        if (xa_change.find(XA_DELETE)->second.empty() &&
-            xa_change.find(XA_REPLACE)->second.empty() &&
-            xa_change.find(XA_CREATE)->second.empty()
-           )
-            out << "(xa_modification_t is empty)";
-        else
+        for (xa_mod_citer cit = xa_change.begin(); cit != xa_change.end(); cit++)
         {
-            for (xa_mod_citer cit = xa_change.begin(); cit != xa_change.end(); cit++)
+            switch (cit->first)
             {
-                switch (cit->first)
-                {
-                    case XA_DELETE:
-                        out << "XA_DELETE:";
-                        break;
-                    case XA_REPLACE:
-                        out << "XA_REPLACE:";
-                        break;
-                    case XA_CREATE:
-                        out << "XA_CREATE:";
-                        break;
-                    default:
-                        out << "(!!!unknown!!!)";
-                }
-                for (xa_name_vec_citer name_cit = cit->second.begin(); name_cit != cit->second.end(); name_cit++)
-                    out << *name_cit << ',' << std::endl;
+                case XA_DELETE:
+                    out << "XA_DELETE:" << std::endl;
+                    break;
+                case XA_REPLACE:
+                    out << "XA_REPLACE:" << std::endl;
+                    break;
+                case XA_CREATE:
+                    out << "XA_CREATE:"  << std::endl;
+                    break;
+                default:
+                    out << "(!!!unknown!!!)";
             }
+            for (xa_mod_vec_citer mod_cit = cit->second.begin(); mod_cit != cit->second.end(); mod_cit++)
+                out << mod_cit->first << ":'" << mod_cit->second << "'" << std::endl;
         }
 
         return out;
@@ -289,94 +192,156 @@ namespace snapper
 
     XAModification::XAModification()
     {
-        xamodmap[XA_DELETE] = xa_name_vec_t();
-        xamodmap[XA_REPLACE] = xa_name_vec_t();
-        xamodmap[XA_CREATE] = xa_name_vec_t();
-
-        p_xa_dest = NULL;
+        xamodmap[XA_DELETE] = xa_mod_vec_t();
+        xamodmap[XA_REPLACE] = xa_mod_vec_t();
+        xamodmap[XA_CREATE] = xa_mod_vec_t();
     }
 
-    XAModification::XAModification(const XAttributes &src_xa, XAttributes &dest_xa)
+    XAModification::XAModification(const snapper::XAttributes& src_xa, const snapper::XAttributes& dest_xa)
     {
-        xamodmap[XA_DELETE] = xa_name_vec_t();
-        xamodmap[XA_REPLACE] = xa_name_vec_t();
-        xamodmap[XA_CREATE] = xa_name_vec_t();
+        xamodmap[XA_DELETE] = xa_mod_vec_t();
+        xamodmap[XA_REPLACE] = xa_mod_vec_t();
+        xamodmap[XA_CREATE] = xa_mod_vec_t();
 
-        xa_map_citer src_cit = src_xa.xamap.begin();
+        xa_map_citer src_cit = src_xa.cbegin();
+        xa_map_citer dest_cit = dest_xa.cbegin();
 
-        boost::scoped_ptr<xa_map_t> p_xamap(new xa_map_t(dest_xa.xamap));
-
-        xa_map_iter it = p_xamap->begin();
-
-        while (src_cit != src_xa.xamap.end() && it != p_xamap->end())
+        while (src_cit != src_xa.cend() && dest_cit != dest_xa.cend())
         {
             y2deb("this src_xa_name: " << src_cit->first);
-            y2deb("this dest_xa_name: " << it->first);
+            y2deb("this dest_xa_name: " << dest_cit->first);
 
-            if (src_cit->first == it->first)
+            if (src_cit->first == dest_cit->first)
             {
                 y2deb("names matched");
-                if (src_cit->second != it->second)
+                if (src_cit->second != dest_cit->second)
                 {
                     y2deb("create XA_REPLACE event");
-                    xamodmap[XA_REPLACE].push_back(src_cit->first);
-                    (*p_xamap)[it->first] = src_cit->second;
+                    xamodmap[XA_REPLACE].push_back(xa_pair_t(src_cit->first, src_cit->second));
                 }
+
                 src_cit++;
-                it++;
+                dest_cit++;
             }
-            else if (src_cit->first < it->first)
+            else if (src_cit->first < dest_cit->first)
             {
                 y2deb("src name < dest name");
-                xamodmap[XA_CREATE].push_back(src_cit->first);
-                it = p_xamap->insert(xa_pair_t(src_cit->first, src_cit->second)).first;
-                if (it != p_xamap->end())
-                    y2deb("next dest name is " << it->first);
+                xamodmap[XA_CREATE].push_back(xa_pair_t(src_cit->first, src_cit->second));
 
                 src_cit++;
             }
             else
             {
                 y2deb("src name > dest name");
-                xamodmap[XA_DELETE].push_back(it->first);
-                xa_map_iter tmp = it++;
-                p_xamap->erase(tmp);
-                if (it != p_xamap->end())
-                    y2deb("next dest name is " << it->first);
+                xamodmap[XA_DELETE].push_back(xa_pair_t(dest_cit->first, xa_value_t()));
+
+                dest_cit++;
             }
         }
 
-        if (it != p_xamap->end())
+        for (; dest_cit != dest_xa.cend(); dest_cit++)
+            xamodmap[XA_DELETE].push_back(xa_pair_t(dest_cit->first, xa_value_t()));
+
+        for (; src_cit != src_xa.cend(); src_cit++)
+            xamodmap[XA_CREATE].push_back(xa_pair_t(src_cit->first, src_cit->second));
+    }
+
+    const xa_mod_vec_t&
+    XAModification::operator[](const uint8_t action) const
+    {
+        return this->xamodmap.find(action)->second;
+    }
+
+    bool
+    XAModification::isEmpty() const
+    {
+        return (this->operator[](XA_DELETE).empty() && this->operator[](XA_REPLACE).empty() && this->operator[](XA_CREATE).empty());
+    }
+
+    bool
+    XAModification::serializeTo(int dest_fd) const
+    {
+        if (this->isEmpty())
+            return true;
+
+        for (xa_mod_citer cit = this->cbegin(); cit != this->cend(); cit++)
         {
-            xa_map_iter tmp = it;
-            while (tmp != p_xamap->end())
+            for (xa_mod_vec_citer mod_cit = cit->second.begin(); mod_cit != cit->second.end(); mod_cit++)
             {
-                xamodmap[XA_DELETE].push_back(tmp->first);
-                tmp++;
+                switch (cit->first)
+                {
+                    case XA_DELETE:
+                        y2deb("delete xattribute: " << mod_cit->first);
+                        if (fremovexattr(dest_fd, mod_cit->first.c_str()))
+                        {
+                            y2err("Couldn't remove xattribute '" << mod_cit->first << "': " << stringerror(errno));
+                            return false;
+                        }
+                        break;
+
+                    case XA_REPLACE:
+                        y2deb("replace xattribute: " << mod_cit->first);
+
+                        if (mod_cit->second.empty())
+                        {
+                            y2deb("new value for xattribute '" << mod_cit->first << "' is empty!");
+                            if (fsetxattr(dest_fd, mod_cit->first.c_str(), NULL, 0, XATTR_REPLACE))
+                            {
+                                y2err("Couldn't replace xattribute '" << mod_cit->first << "' by new (empty) value: " << stringerror(errno));
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            y2deb("new value for xattribute '" << mod_cit->first << "' is empty!");
+                            if (fsetxattr(dest_fd, mod_cit->first.c_str(), &mod_cit->second.front(), mod_cit->second.size(), XATTR_REPLACE))
+                            {
+                                y2err("Couldn't replace xattribute '" << mod_cit->first << "' by new (non-empty) value: " << stringerror(errno));
+                                y2deb("new XA value size: " << mod_cit->second.size() << ". The value: " << mod_cit->second);
+                                return false;
+                            }
+                        }
+                        break;
+
+                    case XA_CREATE:
+                        y2deb("create xattribute: " << mod_cit->first);
+                        if (mod_cit->second.empty())
+                        {
+                            y2deb("new value for xattribute '" << mod_cit->first << "' is empty!");
+                            if (fsetxattr(dest_fd, mod_cit->first.c_str(), NULL, 0, XATTR_CREATE))
+                            {
+                                y2err("Couldn't create xattribute '" << mod_cit->first << "' with new (empty) value: " << stringerror(errno));
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            if (fsetxattr(dest_fd, mod_cit->first.c_str(), &mod_cit->second.front(), mod_cit->second.size(), XATTR_CREATE))
+                            {
+                                y2err("Couldn't create xattribute '" << mod_cit->first << "' with new (non-empty) value: " << stringerror(errno));
+                                y2deb("new XA value size: " << mod_cit->second.size() << ". The value: " << mod_cit->second);
+                                return false;
+                            }
+                        }
+                        break;
+
+                    default:
+                        y2err("Internal Error in XAModification(): unknown action:" << cit->first);
+                        return false;
+                }
             }
-            p_xamap->erase(it, p_xamap->end());
         }
-
-        while (src_cit != src_xa.xamap.end())
-        {
-            xamodmap[XA_CREATE].push_back(src_cit->first);
-            if (!p_xamap->insert(xa_pair_t(src_cit->first, src_cit->second)).second)
-            {
-                // TODO: throw XA error
-                y2war("Internal error: XA w/ name: '" << src_cit->first << "' already exists");
-            }
-
-            src_cit++;
-        }
-
-        // TODO: how to do atomic change in a sane way?
-        dest_xa.xamap = *p_xamap;
-        this->p_xa_dest = &dest_xa;
+        return true;
     }
 
     ostream&
     operator<<(ostream &out, const XAModification &xa_mod)
     {
-        return out << xa_mod;
+        if (xa_mod.isEmpty())
+            out << "(empty)";
+        else
+            out << xa_mod.xamodmap;
+
+        return out;
     }
 }

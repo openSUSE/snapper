@@ -552,15 +552,12 @@ namespace snapper
             XAttributes xa_src(src_fd), xa_dest(dest_fd);
             y2deb("xa_src object: " << xa_src << std::endl << "xa_dest object: " << xa_dest);
 
-            // xa_dest gets modified in case xa_modmap
-            // construction is successfull
             XAModification xa_mod(xa_src, xa_dest);
-            y2deb("xa_dest object after XAModification(): " << xa_dest);
             y2deb("xa_modmap(xa_dest) object: " << xa_mod);
 
-            ret_val = xa_dest.serializeModificationsTo(dest_fd, xa_mod);
+            ret_val = xa_mod.serializeTo(dest_fd);
         }
-        catch (IOErrorException ioe) {
+        catch (XAttributesException xae) {
             ret_val = false;
         }
 

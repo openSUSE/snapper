@@ -43,7 +43,7 @@ namespace snapper
 	typedef map<string, xa_value_t> xa_map_t;
 	typedef pair<string, xa_value_t> xa_pair_t;
         typedef pair<bool, xa_value_t> xa_find_pair_t;
-        typedef vector<string> xa_name_vec_t;
+        typedef vector<xa_pair_t> xa_mod_vec_t;
 
         // this is ordered on purpose!
         // we can possibly avoid allocating new fs block if xattrs fits
@@ -60,13 +60,13 @@ namespace snapper
         // create - whole new XA
         // delete - remove XA
         // replace - change in xa_value
-        typedef map<uint8_t, xa_name_vec_t> xa_modification_t;
+        typedef map<uint8_t, xa_mod_vec_t> xa_modification_t;
 
         // iterators
 	typedef xa_map_t::iterator xa_map_iter;
 	typedef xa_map_t::const_iterator xa_map_citer;
         typedef xa_modification_t::const_iterator xa_mod_citer;
-        typedef xa_name_vec_t::const_iterator xa_name_vec_citer;
+        typedef xa_mod_vec_t::const_iterator xa_mod_vec_citer;
 
 	class XAttributes
 	{
@@ -79,34 +79,30 @@ namespace snapper
             xa_map_citer cbegin() const { return xamap.begin(); }
             xa_map_citer cend() const { return xamap.end(); }
             xa_find_pair_t find(const string&) const;
-            // this method is not const! (it changes xamap to reflect new state)!
-            bool serializeModificationsTo(int, const XAModification&) const;
 
             XAttributes& operator=(const XAttributes&);
             bool operator==(const XAttributes&) const;
-
-            // XAModification is able to atomically modify xamap atribute
-            friend class XAModification;
 	};
 
         class XAModification
         {
         private:
             xa_modification_t xamodmap;
-            const XAttributes *p_xa_dest;
+            const xa_mod_vec_t& operator[](const uint8_t) const;
         public:
             XAModification();
-            XAModification(const XAttributes&, XAttributes&);
+            XAModification(const XAttributes&, const XAttributes&);
 
+            bool isEmpty() const;
+            bool serializeTo(int) const;
             xa_mod_citer cbegin() const { return xamodmap.begin(); };
             xa_mod_citer cend() const { return xamodmap.end(); };
-            const XAttributes* getDestination() const { return p_xa_dest; }
+
+            friend ostream& operator<<(ostream&, const XAModification&);
         };
 
-        ostream& operator<<(ostream&, const XAModification&);
         ostream& operator<<(ostream&, const XAttributes&);
         ostream& operator<<(ostream&, const xa_value_t&);
         ostream& operator<<(ostream&, const xa_modification_t&);
 }
-
 #endif
