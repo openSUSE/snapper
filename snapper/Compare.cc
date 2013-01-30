@@ -475,15 +475,27 @@ namespace snapper
         }
 
         int fd2 = file2.open(O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
-        if (fd1 < 0)
+        if (fd2 < 0)
         {
             y2err("open failed path:" << file2.fullname() << " errno:" << errno);
+            close(fd1);
             throw IOErrorException();
         }
 
-        XAttributes xa(fd1), xb(fd2);
+        bool retval;
+
+        try
+        {
+            XAttributes xa(fd1), xb(fd2);
+            retval = (xa == xb);
+        }
+        catch (XAttributesException xae)
+        {
+            retval = false;
+        }
         close(fd1);
         close(fd2);
-        return (xa == xb);
+
+        return retval;
     }
 }
