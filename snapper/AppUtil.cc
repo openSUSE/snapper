@@ -292,15 +292,22 @@ namespace snapper
     }
 
 
-    std::ostream& operator<<(std::ostream& s, const StopWatch& sw)
+    double
+    StopWatch::read() const
     {
 	struct timeval stop_tv;
 	gettimeofday(&stop_tv, NULL);
 
 	struct timeval tv;
-	timersub(&stop_tv, &sw.start_tv, &tv);
+	timersub(&stop_tv, &start_tv, &tv);
 
-	return s << fixed << double(tv.tv_sec) + (double)(tv.tv_usec) / 1000000.0 << "s";
+	return double(tv.tv_sec) + (double)(tv.tv_usec) / 1000000.0;
+    }
+
+
+    std::ostream& operator<<(std::ostream& s, const StopWatch& sw)
+    {
+	return s << fixed << sw.read() << "s";
     }
 
 }

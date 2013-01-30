@@ -88,6 +88,8 @@ namespace snapper
 
 	StopWatch();
 
+	double read() const;
+
 	friend std::ostream& operator<<(std::ostream& s, const StopWatch& sw);
 
     protected:

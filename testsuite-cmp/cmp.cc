@@ -23,36 +23,42 @@ cmp(const string& fstype, const string& subvolume, unsigned int num1, unsigned i
     SDir dir2 = filesystem->openSnapshotDir(num2);
 
     vector<string> result1;
+    double t1;
 
     {
 	StopWatch sw1;
 
 	cmpdirs_cb_t cb1 = [&result1](const string& name, unsigned int status) {
-	    result1.push_back(statusToString(status) + " " + name);
+	    result1.push_back(name + " " + statusToString(status));
 	};
 
 	filesystem->cmpDirs(dir1, dir2, cb1);
 
+	t1 = sw1.read();
 	y2mil("stopwatch1 " << sw1);
 
 	sort(result1.begin(), result1.end());
     }
 
     vector<string> result2;
+    double t2;
 
     {
 	StopWatch sw2;
 
 	cmpdirs_cb_t cb2 = [&result2](const string& name, unsigned int status) {
-	    result2.push_back(statusToString(status) + " " + name);
+	    result2.push_back(name + " " + statusToString(status));
 	};
 
 	snapper::cmpDirs(dir1, dir2, cb2);
 
+	t2 = sw2.read();
 	y2mil("stopwatch2 " << sw2);
 
 	sort(result2.begin(), result2.end());
     }
+
+    y2mil("speedup " << fixed << 100.0 * t2 / t1 << "%");
 
     if (result1 == result2)
     {
