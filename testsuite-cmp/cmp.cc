@@ -78,11 +78,11 @@ cmp(const string& fstype, const string& subvolume, unsigned int num1, unsigned i
 
     y2mil("speedup " << fixed << 100.0 * (t2 - t1) / t1 << "% (" << t1 << "s vs. " << t2 << "s)");
 
-    std::ofstream fout1("/tmp/result1-" + decString(num1) + "-" + decString(num2));
+    std::ofstream fout1(("/tmp/result1-" + decString(num1) + "-" + decString(num2)).c_str());
     for (vector<string>::const_iterator it = result1.begin(); it != result1.end(); ++it)
 	fout1 << *it << endl;
 
-    std::ofstream fout2("/tmp/result2-" + decString(num1) + "-" + decString(num2));
+    std::ofstream fout2(("/tmp/result2-" + decString(num1) + "-" + decString(num2)).c_str());
     for (vector<string>::const_iterator it = result2.begin(); it != result2.end(); ++it)
 	fout2 << *it << endl;
 
