@@ -52,9 +52,9 @@ namespace snapper
 	    throw IOErrorException();
 	}
 
-	struct stat stat;
-	fstat(dirfd, &stat);
-	if (!S_ISDIR(stat.st_mode))
+	struct stat buf;
+	fstat(dirfd, &buf);
+	if (!S_ISDIR(buf.st_mode))
 	{
 	    y2err("not a directory path:" << base_path);
 	    throw IOErrorException();
@@ -72,9 +72,9 @@ namespace snapper
 	    throw IOErrorException();
 	}
 
-	struct stat stat;
-	fstat(dirfd, &stat);
-	if (!S_ISDIR(stat.st_mode))
+	struct stat buf;
+	fstat(dirfd, &buf);
+	if (!S_ISDIR(buf.st_mode))
 	{
 	    y2err("not a directory path:" << dir.fullname(name));
 	    throw IOErrorException();
@@ -147,7 +147,7 @@ namespace snapper
 
 
     vector<string>
-    SDir::entries(std::function<bool(unsigned char, const char* name)> pred) const
+    SDir::entries(entries_pred_t pred) const
     {
 	int fd = dup(dirfd);
 	if (fd == -1)
@@ -170,6 +170,7 @@ namespace snapper
 	struct dirent* ep = (struct dirent*) malloc(len);
 	struct dirent* epp;
 
+	rewinddir(dp);
 	while (readdir_r(dp, ep, &epp) == 0 && epp != NULL)
 	{
 	    if (strcmp(ep->d_name, ".") != 0 && strcmp(ep->d_name, "..") != 0 &&
@@ -181,7 +182,38 @@ namespace snapper
 
 	closedir(dp);
 
-	sort(ret.begin(), ret.end());
+	return ret;
+    }
+
+
+    vector<string>
+    SDir::entries_recursive() const
+    {
+	return entries_recursive(all_entries);
+    }
+
+
+    vector<string>
+    SDir::entries_recursive(entries_pred_t pred) const
+    {
+	vector<string> ret;
+
+	vector<string> a = entries(pred);
+	for (vector<string>::const_iterator it1 = a.begin(); it1 != a.end(); ++it1)
+	{
+	    ret.push_back(*it1);
+
+	    struct stat buf;
+	    stat(*it1, &buf, AT_SYMLINK_NOFOLLOW);
+	    if (S_ISDIR(buf.st_mode))
+	    {
+		vector<string> b = SDir(*this, *it1).entries_recursive();
+		for (vector<string>::const_iterator it2 = b.begin(); it2 != b.end(); ++it2)
+		{
+		    ret.push_back(*it1 + "/" + *it2);
+		}
+	    }
+	}
 
 	return ret;
     }

@@ -51,8 +51,14 @@ namespace snapper
 	string fullname(bool with_base_path = true) const;
 	string fullname(const string& name, bool with_base_path = true) const;
 
+	// Type is not supported by all file system types, see readdir(3).
+	typedef std::function<bool(unsigned char type, const char* name)> entries_pred_t;
+
+	// The order of the result of the entries functions is undefined.
 	vector<string> entries() const;
-	vector<string> entries(std::function<bool(unsigned char type, const char* name)> pred) const;
+	vector<string> entries(entries_pred_t pred) const;
+	vector<string> entries_recursive() const;
+	vector<string> entries_recursive(entries_pred_t pred) const;
 
 	int stat(struct stat* buf) const;
 

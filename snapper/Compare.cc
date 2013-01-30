@@ -333,11 +333,13 @@ namespace snapper
     {
 	boost::this_thread::interruption_point();
 
-	const vector<string> entries1 = dir1.entries();
+	vector<string> entries1 = dir1.entries();
+	sort(entries1.begin(), entries1.end());
 	vector<string>::const_iterator first1 = entries1.begin();
 	vector<string>::const_iterator last1 = entries1.end();
 
-	const vector<string> entries2 = dir2.entries();
+	vector<string> entries2 = dir2.entries();
+	sort(entries2.begin(), entries2.end());
 	vector<string>::const_iterator first2 = entries2.begin();
 	vector<string>::const_iterator last2 = entries2.end();
 
