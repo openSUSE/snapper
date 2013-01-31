@@ -98,18 +98,6 @@ namespace snapper
         y2deb("Starting copy constructor XAttribute(const XAttribute&)");
         xamap = xa.xamap;
     }
-    
-    xa_find_pair_t
-    XAttributes::find(const string &xa_name) const
-    {
-        xa_map_citer cit = xamap.find(xa_name);
-        if (cit != xamap.end())
-        {
-            return xa_find_pair_t(true, cit->second);
-        }
-        
-        return xa_find_pair_t(false, xa_value_t());
-    }
 
     XAttributes&
     XAttributes::operator=(const XAttributes &xa)

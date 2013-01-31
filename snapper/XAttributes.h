@@ -42,7 +42,6 @@ namespace snapper
 	typedef vector<uint8_t> xa_value_t;
 	typedef map<string, xa_value_t> xa_map_t;
 	typedef pair<string, xa_value_t> xa_pair_t;
-        typedef pair<bool, xa_value_t> xa_find_pair_t;
         typedef vector<xa_pair_t> xa_mod_vec_t;
 
         // this is ordered on purpose!
@@ -78,7 +77,6 @@ namespace snapper
 
             xa_map_citer cbegin() const { return xamap.begin(); }
             xa_map_citer cend() const { return xamap.end(); }
-            xa_find_pair_t find(const string&) const;
 
             XAttributes& operator=(const XAttributes&);
             bool operator==(const XAttributes&) const;
