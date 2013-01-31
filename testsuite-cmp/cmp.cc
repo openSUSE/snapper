@@ -20,7 +20,7 @@ struct helper
 	: result(result) {}
     void operator()(const string& name, unsigned int status)
 	{ result.push_back(name + " " + statusToString(status)); }
-    vector<string> result;
+    vector<string>& result;
 };
 
 
@@ -89,7 +89,7 @@ cmp(const string& fstype, const string& subvolume, unsigned int num1, unsigned i
     bool ok = result1 == result2;
 
     cout << fstype << " " << subvolume << " " << num1 << " " << num2
-	 << (ok ? " success" : " failure") << endl;
+	 << (ok ? " ok" : " failure") << endl;
 
     return ok;
 }
