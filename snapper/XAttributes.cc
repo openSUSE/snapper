@@ -281,7 +281,7 @@ namespace snapper
                         }
                         else
                         {
-                            y2deb("new value for xattribute '" << mod_cit->first << "' is empty!");
+                            y2deb("new value for xattribute '" << mod_cit->first << "': " << mod_cit->second);
                             if (fsetxattr(dest_fd, mod_cit->first.c_str(), &mod_cit->second.front(), mod_cit->second.size(), XATTR_REPLACE))
                             {
                                 y2err("Couldn't replace xattribute '" << mod_cit->first << "' by new (non-empty) value: " << stringerror(errno));
@@ -304,6 +304,7 @@ namespace snapper
                         }
                         else
                         {
+                            y2deb("new value for xattribute '" << mod_cit->first << "': " << mod_cit->second);
                             if (fsetxattr(dest_fd, mod_cit->first.c_str(), &mod_cit->second.front(), mod_cit->second.size(), XATTR_CREATE))
                             {
                                 y2err("Couldn't create xattribute '" << mod_cit->first << "' with new (non-empty) value: " << stringerror(errno));
