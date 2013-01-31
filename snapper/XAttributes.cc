@@ -136,17 +136,16 @@ namespace snapper
     operator<<(ostream &out, const xa_value_t &xavalue)
     {
         char tmp[4];
+        int pos = 0;
 
         xa_value_t::const_iterator cit = xavalue.begin();
 
         while (cit != xavalue.end())
         {
             sprintf(tmp, "%d", *cit);
-            out << tmp;
-            if (++cit == xavalue.end())
-                out << "";
-            else
-                out << ":";
+            out << '<' << pos++ << '>' << tmp;
+            if (++cit != xavalue.end())
+                out << ':';
         }
 
         return out;
