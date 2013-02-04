@@ -34,6 +34,7 @@ BuildRequires:	libdbus-1-devel
 BuildRequires:	libzypp(plugin:commit)
 %endif
 Requires:	libsnapper@LIBVERSION_MAJOR@ = %version
+Requires:	diffutils
 %if 0%{?suse_version}
 Recommends:	cron logrotate snapper-zypp-plugin
 Supplements:	btrfsprogs
@@ -92,7 +93,7 @@ rm -rf "$RPM_BUILD_ROOT"
 %package -n libsnapper@LIBVERSION_MAJOR@
 Summary:	Library for filesystem snapshot management
 Group:		System/Libraries
-Requires:	diffutils util-linux
+Requires:	util-linux
 %if 0%{?suse_version}
 PreReq:		%fillup_prereq
 %endif
