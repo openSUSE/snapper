@@ -42,6 +42,14 @@
 #include "commands.h"
 #include "cleanup.h"
 
+// TODO: ifdef
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+#include <snapper/XAttributes.h>
+// TODO: endif
+
 using namespace snapper;
 using namespace std;
 
@@ -826,6 +834,35 @@ help_diff()
 	 << endl;
 }
 
+// TODO: ifdef
+ostream&
+xa_diff(ostream &out, const string &loc_pre,  const string &loc_post)
+{
+    int src_fd = open(loc_pre.c_str(), O_RDONLY | O_NOATIME | O_NOFOLLOW);
+    if (src_fd < 0)
+    {
+        cerr << "Can't open " << loc_pre << stringerror(errno) << endl;
+        return out;
+    }
+
+    int dest_fd = open(loc_post.c_str(), O_RDONLY | O_NOATIME | O_NOFOLLOW);
+    if (dest_fd < 0)
+    {
+        close(src_fd);
+        cerr << "Can't open " << loc_post << stringerror(errno) << endl;
+        return out;
+    }
+
+    try {
+        XAModification xa_mod = XAModification(XAttributes(src_fd), XAttributes(dest_fd));
+        if (!xa_mod.isEmpty())
+            out << "xa_diff" << endl << "--- " << loc_pre << endl << "+++ " << loc_post << endl << xa_mod;
+    }
+    catch (XAttributesException xae) {}
+
+    return out;
+}
+// TODO: endif
 
 void
 command_diff(DBus::Connection& conn)
@@ -848,6 +885,11 @@ command_diff(DBus::Connection& conn)
     {
 	for (Files::const_iterator it1 = files.begin(); it1 != files.end(); ++it1)
 	{
+            // TODO: #ifdef
+            if (it1->getPreToPostStatus() & XATTRS)
+                cout << xa_diff(cout, it1->getAbsolutePath(LOC_PRE), it1->getAbsolutePath(LOC_POST));
+            // TODO: #endif
+
 	    SystemCmd cmd(DIFFBIN " --unified --new-file " + quote(it1->getAbsolutePath(LOC_PRE)) +
 			  " " + quote(it1->getAbsolutePath(LOC_POST)), false);
 
