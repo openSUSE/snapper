@@ -242,7 +242,11 @@ namespace snapper
     bool
     XAModification::isEmpty() const
     {
-        return (this->operator[](XA_DELETE).empty() && this->operator[](XA_REPLACE).empty() && this->operator[](XA_CREATE).empty());
+        for (xa_mod_citer cit = this->cbegin(); cit != this->cend(); cit++)
+            if (!cit->second.empty())
+                return false;
+
+        return true;
     }
 
     bool
@@ -325,10 +329,12 @@ namespace snapper
     ostream&
     operator<<(ostream &out, const XAModification &xa_mod)
     {
-        if (xa_mod.isEmpty())
-            out << "(empty)";
-        else
-            out << xa_mod.xamodmap;
+        for (xa_mod_vec_citer cit = xa_mod[XA_DELETE].begin(); cit != xa_mod[XA_DELETE].end(); cit++)
+            out << "D:" + cit->first << std::endl;
+        for (xa_mod_vec_citer cit = xa_mod[XA_REPLACE].begin(); cit != xa_mod[XA_REPLACE].end(); cit++)
+            out << "M:" + cit->first << std::endl;
+        for (xa_mod_vec_citer cit = xa_mod[XA_CREATE].begin(); cit != xa_mod[XA_CREATE].end(); cit++)
+            out << "C:" + cit->first << std::endl;
 
         return out;
     }
