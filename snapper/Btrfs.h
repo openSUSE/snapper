@@ -58,6 +58,8 @@ namespace snapper
 
 	virtual bool checkSnapshot(unsigned int num) const;
 
+	virtual void cmpDirs(const SDir& dir1, const SDir& dir2, cmpdirs_cb_t cb) const;
+
     private:
 
 	bool is_subvolume(const struct stat& stat) const;

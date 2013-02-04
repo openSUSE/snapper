@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Feb 04 14:00:45 CET 2013 - aschnell@suse.de
+
+- use btrfs send ioctl for snapshot comparison (fate #311399)
+- 0.1.2
+
+-------------------------------------------------------------------
 Thu Jan 24 14:32:02 CET 2013 - aschnell@suse.de
 
 - fixed type of time_t in DBus protocol

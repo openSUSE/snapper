@@ -1,0 +1,119 @@
+#!/bin/bash
+
+
+function make_snapshot()
+{
+    mkdir /testsuite/.snapshots/$1
+    btrfs subvolume snapshot -r /testsuite /testsuite/.snapshots/$1/snapshot
+}
+
+
+function test1()
+{
+    make_snapshot 1
+
+    mkdir foo
+    mkdir foo/bar
+    echo hello > foo/bar/world
+
+    make_snapshot 2
+
+    rm foo -rf
+}
+
+
+function test2()
+{
+    make_snapshot 3
+
+    mkdir a
+    mkdir b
+    echo hello > a/s
+    echo hello > b/s
+    echo world > a/n
+
+    make_snapshot 4
+
+    rm a b -rf
+}
+
+
+function test3()
+{
+    make_snapshot 5
+
+    touch foo
+    ln -s foo bar
+
+    make_snapshot 6
+
+    rm foo bar
+}
+
+
+function test4()
+{
+    touch foo bar
+    ln -s foo fubar
+
+    make_snapshot 7
+
+    ln -sf bar fubar
+
+    make_snapshot 8
+
+    rm foo bar fubar
+}
+
+
+function test5()
+{
+    mkdir a
+    mkdir b
+    echo hello > a/same
+    echo foo > a/diff
+    echo new > a/new
+    sleep 1
+    echo hello > b/same
+    echo bar > b/diff
+
+    make_snapshot 9
+
+    mv a c
+    mv b a
+    mv c b
+
+    make_snapshot 10
+
+    rm a b -rf
+}
+
+
+function test6()
+{
+    touch perm user group
+
+    make_snapshot 11
+
+    chmod a+rw perm
+    chown nobody user
+    chown :nobody group
+
+    make_snapshot 12
+
+    rm perm user group
+}
+
+
+btrfs subvolume create /testsuite
+btrfs subvolume create /testsuite/.snapshots
+
+cd /testsuite
+
+test1
+test2
+test3
+test4
+test5
+test6
+

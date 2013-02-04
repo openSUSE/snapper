@@ -1,0 +1,12 @@
+#!/bin/bash
+
+for f in /testsuite/.snapshots/*/snapshot ; do
+
+    btrfs subvolume delete $f
+
+done
+
+btrfs subvolume delete /testsuite/.snapshots
+
+btrfs subvolume delete /testsuite
+

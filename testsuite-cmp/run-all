@@ -1,0 +1,20 @@
+#!/bin/bash
+
+./cmp btrfs /testsuite 1 2
+./cmp btrfs /testsuite 2 1
+
+./cmp btrfs /testsuite 3 4
+./cmp btrfs /testsuite 4 3
+
+./cmp btrfs /testsuite 5 6
+./cmp btrfs /testsuite 6 5
+
+./cmp btrfs /testsuite 7 8
+./cmp btrfs /testsuite 8 7
+
+./cmp btrfs /testsuite 9 10
+./cmp btrfs /testsuite 10 9
+
+./cmp btrfs /testsuite 11 12
+./cmp btrfs /testsuite 12 11
+
