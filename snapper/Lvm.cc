@@ -188,8 +188,8 @@ namespace snapper
 #endif
 	}
 
-	SystemCmd cmd(LVCREATEBIN " --snapshot --name " + quote(snapshotLvName(num)) + " " +
-		      quote(vg_name + "/" + lv_name));
+	SystemCmd cmd(LVCREATEBIN " --permission r --snapshot --name " +
+		      quote(snapshotLvName(num)) + " " + quote(vg_name + "/" + lv_name));
 	if (cmd.retcode() != 0)
 	    throw CreateSnapshotFailedException();
 
