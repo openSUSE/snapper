@@ -15,11 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- * 
+ *
  */
 
-#include "XAttributes.h"
-
+#include "config.h"
 #include <cstdio>
 #include <attr/xattr.h>
 #include <sys/stat.h>
@@ -31,6 +30,7 @@
 #include "snapper/AppUtil.h"
 #include "snapper/Exception.h"
 #include "snapper/Log.h"
+#include "snapper/XAttributes.h"
 
 #include <boost/scoped_array.hpp>
 
