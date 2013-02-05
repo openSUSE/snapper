@@ -8,6 +8,10 @@ INCLUDES = -I/usr/include/libxml2
 
 lib_LTLIBRARIES = libsnapper.la
 
+if HAVE_XATTRS
+TMP_XA = XAttributes.cc	Xattributes.h
+endif HAVE_XATTRS
+
 libsnapper_la_SOURCES =					\
 	Factory.cc		Factory.h		\
 	Snapper.cc		Snapper.h		\
@@ -25,11 +29,13 @@ libsnapper_la_SOURCES =					\
 	SystemCmd.cc		SystemCmd.h		\
 	AsciiFile.cc		AsciiFile.h		\
 	Regex.cc		Regex.h			\
-	XAttributes.cc		Xattributes.h		\
 	Exception.h					\
 	SnapperTmpl.h					\
 	SnapperTypes.h					\
-	SnapperDefines.h
+	SnapperDefines.h				\
+	$(TMP_XA)
+
+
 
 if ENABLE_BTRFS
 libsnapper_la_SOURCES +=				\
