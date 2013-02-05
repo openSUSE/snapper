@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- * 
+ *
  */
 
 #ifndef SNAPPER_XATTRIBUTES_H
@@ -62,7 +62,6 @@ namespace snapper
         typedef map<uint8_t, xa_mod_vec_t> xa_modification_t;
 
         // iterators
-	typedef xa_map_t::iterator xa_map_iter;
 	typedef xa_map_t::const_iterator xa_map_citer;
         typedef xa_modification_t::const_iterator xa_mod_citer;
         typedef xa_mod_vec_t::const_iterator xa_mod_vec_citer;
