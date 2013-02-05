@@ -29,6 +29,7 @@
 #include <fcntl.h>
 #include <boost/algorithm/string.hpp>
 
+#include "config.h"
 #include "snapper/File.h"
 #include "snapper/Snapper.h"
 #include "snapper/AppUtil.h"
@@ -524,6 +525,7 @@ namespace snapper
 	return true;
     }
 
+#ifdef ENABLE_XATTRS
     bool
     File::modifyXattributes() const
     {
@@ -534,7 +536,7 @@ namespace snapper
             y2err("open failed errno:" << errno << " (" << stringerror(errno) << ")");
             return false;
         }
-        
+
         int dest_fd = open(getAbsolutePath(LOC_SYSTEM).c_str(), O_RDWR | O_CLOEXEC);
         if (dest_fd < 0)
         {
@@ -566,6 +568,7 @@ namespace snapper
 
         return ret_val;
     }
+#endif
 
     bool
     File::doUndo()
@@ -590,13 +593,14 @@ namespace snapper
 		error = true;
 	}
 
+#ifdef ENABLE_XATTRS
 	// NOTE: XATTR flasg must not be set w/ CREATED or DELETED flag
         if (getPreToPostStatus() & XATTRS)
         {
             if (!modifyXattributes())
                 error = true;
         }
-
+#endif
 	pre_to_system_status = (unsigned int) -1;
 	post_to_system_status = (unsigned int) -1;
 
@@ -695,8 +699,10 @@ namespace snapper
 	ret += status & USER ? "u" : ".";
 	ret += status & GROUP ? "g" : ".";
 
-        ret += status & XATTRS ? "x" : ".";
 
+#ifdef ENABLE_XATTRS
+        ret += status & XATTRS ? "x" : ".";
+#endif
 	return ret;
     }
 
@@ -735,12 +741,13 @@ namespace snapper
 		ret |= GROUP;
 	}
 
+#ifdef ENABLE_XATTRS
 	if (str.length() >= 5)
         {
             if (str[4] == 'x')
                 ret |= XATTRS;
         }
-
+#endif
 	return ret;
     }
 

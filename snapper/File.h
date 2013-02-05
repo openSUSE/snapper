@@ -29,8 +29,9 @@
 #include <string>
 #include <vector>
 
+#ifdef ENABLE_XATTRS
 #include <snapper/XAttributes.h>
-
+#endif
 
 namespace snapper
 {
@@ -41,7 +42,10 @@ namespace snapper
     enum StatusFlags
     {
 	CREATED = 1, DELETED = 2, TYPE = 4, CONTENT = 8, PERMISSIONS = 16, USER = 32,
-	GROUP = 64, XATTRS = 128
+	GROUP = 64
+#ifdef ENABLE_XATTRS
+        ,XATTRS = 128
+#endif
     };
 
     enum Cmp
@@ -131,9 +135,9 @@ namespace snapper
 	bool deleteAllTypes() const;
 
 	bool modifyAllTypes() const;
-
+#ifdef ENABLE_XATTRS
         bool modifyXattributes() const;
-
+#endif
 	const FilePaths* file_paths;
 
 	string name;

@@ -30,12 +30,17 @@
 #include <algorithm>
 #include <boost/thread.hpp>
 
+#include "config.h"
 #include "snapper/Log.h"
 #include "snapper/AppUtil.h"
 #include "snapper/File.h"
 #include "snapper/Compare.h"
 #include "snapper/Exception.h"
-#include "snapper/XAttributes.h"
+
+
+#ifdef ENABLE_XATTRS
+    #include "snapper/XAttributes.h"
+#endif
 
 
 namespace snapper
@@ -215,8 +220,7 @@ namespace snapper
 	    status |= GROUP;
 	}
 
-	// TODO: decide what to do w/ i.e. file1.xaSupported()
-	// and !file2.xaSupported() at the same time
+#ifdef ENABLE_XATTRS
         if (file1.xaSupported() && file2.xaSupported())
         {
             // TODO: think about how XATTRS are related to
@@ -226,6 +230,7 @@ namespace snapper
                 status |= XATTRS;
             }
         }
+#endif
 
         return status;
     }
@@ -464,6 +469,7 @@ namespace snapper
 	y2mil("stopwatch " << stopwatch << " for comparing directories");
     }
 
+#ifdef ENABLE_XATTRS
     bool
     cmpFilesXattrs(const SFile& file1, const SFile& file2)
     {
@@ -498,4 +504,5 @@ namespace snapper
 
         return retval;
     }
+#endif
 }

@@ -23,7 +23,6 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <sys/xattr.h>
 #include <fcntl.h>
 #include <stddef.h>
 #include <dirent.h>
@@ -33,6 +32,10 @@
 #include <assert.h>
 #include <algorithm>
 
+#include "config.h"
+#ifdef ENABLE_XATTRS
+    #include <sys/xattr.h>
+#endif
 #include "snapper/FileUtils.h"
 #include "snapper/AppUtil.h"
 #include "snapper/Log.h"
@@ -61,8 +64,9 @@ namespace snapper
 	    y2err("not a directory path:" << base_path);
 	    throw IOErrorException();
 	}
-
+#ifdef ENABLE_XATTRS
 	setXaStatus();
+#endif
     }
 
 
@@ -87,13 +91,14 @@ namespace snapper
 	    close(dirfd);
 	    throw IOErrorException();
 	}
-
+#ifdef ENABLE_XATTRS
 	setXaStatus();
+#endif
     }
 
 
     SDir::SDir(const SDir& dir)
-	: base_path(dir.base_path), path(dir.path), xastatus(dir.xastatus)
+	: base_path(dir.base_path), path(dir.path)
     {
 	dirfd = dup(dir.dirfd);
 	if (dirfd == -1)
@@ -101,6 +106,9 @@ namespace snapper
 	    y2err("dup failed" << " error:" << stringerror(errno));
 	    throw IOErrorException();
 	}
+#ifdef ENABLE_XATTRS
+	xastatus = dir.xastatus;
+#endif
     }
 
 
@@ -109,7 +117,9 @@ namespace snapper
     {
 	if (this != &dir)
 	{
+#ifdef ENABLE_XATTRS
 	    xastatus = dir.xastatus;
+#endif
 	    ::close(dirfd);
 	    dirfd = dup(dir.dirfd);
 	    if (dirfd == -1)
@@ -380,6 +390,7 @@ namespace snapper
 	return -1;
     }
 
+#ifdef ENABLE_XATTRS
     bool
     SDir::xaSupported(void) const
     {
@@ -409,6 +420,13 @@ namespace snapper
 	    xastatus = XA_SUPPORTED;
 	}
     }
+
+    bool
+    SFile::xaSupported(void) const
+    {
+        return dir.xaSupported();
+    }
+#endif
 
     SFile::SFile(const SDir& dir, const string& name)
 	: dir(dir), name(name)
@@ -445,9 +463,4 @@ namespace snapper
 	return dir.readlink(name, buf);
     }
 
-    bool
-    SFile::xaSupported(void) const
-    {
-	return dir.xaSupported();
-    }
 }
