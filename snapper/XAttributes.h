@@ -25,8 +25,10 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <functional>
 
 #include <stdint.h>
+#include <sys/types.h>
 
 namespace snapper
 {
@@ -66,16 +68,24 @@ namespace snapper
         typedef xa_modification_t::const_iterator xa_mod_citer;
         typedef xa_mod_vec_t::const_iterator xa_mod_vec_citer;
 
+        typedef std::function<int(const string&, const xa_value_t&, int)> xattr_set_cb_t;
+        typedef std::function<int(const string&)> xattr_rm_cb_t;
+
 	class XAttributes
 	{
 	private:
             xa_map_t xamap;
+            mode_t type;
         public:
+            /* constructor for all but link types */
             XAttributes(int);
+            /* constructor for links */
+            XAttributes(const string&);
             XAttributes(const XAttributes&);
 
             xa_map_citer cbegin() const { return xamap.begin(); }
             xa_map_citer cend() const { return xamap.end(); }
+            mode_t getType() const { return type; }
 
             XAttributes& operator=(const XAttributes&);
             bool operator==(const XAttributes&) const;
@@ -86,12 +96,20 @@ namespace snapper
         private:
             xa_modification_t xamodmap;
             const xa_mod_vec_t& operator[](const uint8_t) const;
+
+            struct LinkSetHelper;
+            struct LinkRmHelper;
+            struct FileSetHelper;
+            struct FileRmHelper;
+
+            bool serializeTo(xattr_set_cb_t, xattr_rm_cb_t) const;
         public:
             XAModification();
             XAModification(const XAttributes&, const XAttributes&);
 
             bool isEmpty() const;
-            bool serializeTo(int) const;
+            bool serializeToFd(int) const;
+            bool serializeToLink(const string&) const;
             xa_mod_citer cbegin() const { return xamodmap.begin(); };
             xa_mod_citer cend() const { return xamodmap.end(); };
 
