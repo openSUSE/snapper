@@ -957,16 +957,6 @@ namespace snapper
     {
 	y2mil("special btrfs cmpDirs");
 
-	{
-	    // TODO looks like a bug that this is needed
-#if __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 14)
-	    SDir subvolume_dir = openSubvolumeDir();
-	    syncfs(subvolume_dir.fd());
-#else
-	    sync();
-#endif
-	}
-
 	try
 	{
 	    StopWatch stopwatch;
