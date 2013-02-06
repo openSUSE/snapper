@@ -165,7 +165,7 @@ namespace snapper
     bool
     getMtabData(const string& mount_point, bool& found, MtabData& mtab_data)
     {
-	FILE* f = setmntent("/etc/mtab", "r");
+	FILE* f = setmntent("/proc/mounts", "r");
 	if (!f)
 	{
 	    y2err("setmntent failed");
