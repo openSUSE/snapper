@@ -11,7 +11,7 @@ LDADD = ../snapper/libsnapper.la
 noinst_SCRIPTS = run-all
 
 noinst_PROGRAMS = simple1 permissions1 permissions2 owner1 owner2 owner3	\
-	directory1 missing-directory1 error1 error2 error4
+	directory1 missing-directory1 error1 error2 error4 xattrs1
 
 simple1_SOURCES = simple1.cc common.h common.cc
 
@@ -29,6 +29,8 @@ missing_directory1_SOURCES = missing-directory1.cc common.h common.cc
 error1_SOURCES = error1.cc common.h common.cc
 error2_SOURCES = error2.cc common.h common.cc
 error4_SOURCES = error4.cc common.h common.cc
+
+xattrs1_SOURCES = xattrs1.cc xattrs_utils.cc xattrs_utils.h common.h common.cc
 
 EXTRA_DIST = $(noinst_SCRIPTS)
 
