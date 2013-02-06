@@ -178,16 +178,6 @@ namespace snapper
     void
     Lvm::createSnapshot(unsigned int num) const
     {
-	{
-	    // TODO looks like a bug that this is needed (with ext4)
-#if __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 14)
-	    SDir subvolume_dir = openSubvolumeDir();
-	    syncfs(subvolume_dir.fd());
-#else
-	    sync();
-#endif
-	}
-
 	SystemCmd cmd(LVCREATEBIN " --permission r --snapshot --name " +
 		      quote(snapshotLvName(num)) + " " + quote(vg_name + "/" + lv_name));
 	if (cmd.retcode() != 0)
