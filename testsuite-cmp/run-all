@@ -18,3 +18,6 @@
 ./cmp btrfs /testsuite 11 12
 ./cmp btrfs /testsuite 12 11
 
+./cmp btrfs /testsuite 13 14
+./cmp btrfs /testsuite 14 13
+

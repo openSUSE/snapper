@@ -70,18 +70,21 @@ function test5()
 {
     mkdir a
     mkdir b
+
     echo hello > a/same
     echo foo > a/diff
     echo new > a/new
+
     sleep 1
+
     echo hello > b/same
     echo bar > b/diff
 
     make_snapshot 9
 
-    mv a c
+    mv a t
     mv b a
-    mv c b
+    mv t b
 
     make_snapshot 10
 
@@ -91,15 +94,43 @@ function test5()
 
 function test6()
 {
-    touch perm user group
+    mkdir -p a1/a2/a3
+    mkdir -p b1/b2
+
+    echo hello > a1/a2/a3/same
+    echo foo > a1/a2/a3/diff
+    echo new > a1/a2/a3/new
+    mkdir a1/a2/a3/d
+    echo hello > a1/a2/a3/d/world
+
+    sleep 1
+
+    echo hello > b1/b2/same
+    echo bar > b1/b2/diff
 
     make_snapshot 11
+
+    mv a1/a2/a3 t
+    mv b1/b2 a1/a2/a3
+    mv t b1/b2
+
+    make_snapshot 12
+
+    rm a1 b1 -rf
+}
+
+
+function test7()
+{
+    touch perm user group
+
+    make_snapshot 13
 
     chmod a+rw perm
     chown nobody user
     chown :nobody group
 
-    make_snapshot 12
+    make_snapshot 14
 
     rm perm user group
 }
@@ -116,4 +147,5 @@ test3
 test4
 test5
 test6
+test7
 
