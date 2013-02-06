@@ -1348,6 +1348,21 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	DBus::MessageError reply(msg, "error.io_error", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
+    catch (const IsSnapshotMountedFailedException& e)
+    {
+	DBus::MessageError reply(msg, "error.is_snapshot_mounted", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
+    catch (const MountSnapshotFailedException& e)
+    {
+	DBus::MessageError reply(msg, "error.mount_snapshot", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
+    catch (const UmountSnapshotFailedException& e)
+    {
+	DBus::MessageError reply(msg, "error.umount_snapshot", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
     catch (...)
     {
 	y2err("caught unknown exception");
