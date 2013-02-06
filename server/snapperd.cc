@@ -203,7 +203,7 @@ help()
 	 << "\t--debug, -d\t\t\tTurn on debugging." << endl
 	 << endl;
 
-    exit (EXIT_SUCCESS);
+    exit(EXIT_SUCCESS);
 }
 
 
@@ -238,13 +238,13 @@ main(int argc, char** argv)
 		help();
 
 	    default:
-                usage();
+		usage();
 	}
     }
 
     if (optind < argc)
     {
-        cerr << "snapperd: unrecognized option '" << argv[optind] << "'" << endl;
+	cerr << "snapperd: unrecognized option '" << argv[optind] << "'" << endl;
 	usage();
     }
 

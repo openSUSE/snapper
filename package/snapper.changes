@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Feb 06 10:27:57 CET 2013 - aschnell@suse.de
+
+- fixed compatibility issue with boost 1.52
+
+-------------------------------------------------------------------
 Mon Feb 04 14:00:45 CET 2013 - aschnell@suse.de
 
 - use btrfs send ioctl for snapshot comparison (fate #311399)

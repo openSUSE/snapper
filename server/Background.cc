@@ -42,7 +42,8 @@ Backgrounds::Backgrounds()
 Backgrounds::~Backgrounds()
 {
     thread.interrupt();
-    thread.join();
+    if (thread.joinable())
+	thread.join();
 }
 
 

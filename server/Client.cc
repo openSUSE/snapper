@@ -46,7 +46,8 @@ Client::Client(const string& name)
 Client::~Client()
 {
     thread.interrupt();
-    thread.join();
+    if (thread.joinable())
+	thread.join();
 
     for (list<Comparison*>::iterator it = comparisons.begin(); it != comparisons.end(); ++it)
     {
