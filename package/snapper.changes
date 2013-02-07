@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Feb 07 18:13:26 CET 2013 - aschnell@suse.de
+
+- zypp-plugin requires dbus-1-python
+
+-------------------------------------------------------------------
 Wed Feb 06 10:27:57 CET 2013 - aschnell@suse.de
 
 - fixed compatibility issue with boost 1.52
