@@ -326,6 +326,164 @@ namespace snapper
 #ifdef HAVE_LIBBTRFS
 
 
+    class StreamProcessor;
+
+
+    class tree_node
+    {
+    public:
+
+	typedef map<string, tree_node>::iterator iterator;
+	typedef map<string, tree_node>::const_iterator const_iterator;
+
+	tree_node() : status(0) {}
+
+	int status;
+
+	map<string, tree_node> childs;
+
+	tree_node* find(const string& name);
+
+	tree_node* insert(const string& name);
+
+	bool erase(const string& name);
+
+	bool rename(const string& o, const string& n);
+
+	void dump(const string& prefix = "") const;
+
+	unsigned int check(StreamProcessor* processor, const string& name, unsigned int status) const;
+	void check(StreamProcessor* processor, const string& prefix = "");
+
+	void result(cmpdirs_cb_t cb, const string& prefix = "") const;
+
+    };
+
+
+    tree_node*
+    tree_node::find(const string& name)
+    {
+	string::size_type pos = name.find('/');
+	if (pos == string::npos)
+	{
+	    iterator it = childs.find(name);
+	    if (it == childs.end())
+		return NULL;
+
+	    return &it->second;
+	}
+	else
+	{
+	    string a = name.substr(0, pos);
+	    iterator it = childs.find(a);
+	    if (it == childs.end())
+		return NULL;
+
+	    string b = name.substr(pos + 1);
+	    return it->second.find(b);
+	}
+    }
+
+
+    tree_node*
+    tree_node::insert(const string& name)
+    {
+	string::size_type pos = name.find('/');
+	if (pos == string::npos)
+	{
+	    iterator it = childs.find(name);
+	    if (it == childs.end())
+		it = childs.insert(childs.end(), make_pair(name, tree_node()));
+
+	    return &it->second;
+	}
+	else
+	{
+	    string a = name.substr(0, pos);
+	    iterator it = childs.find(a);
+	    if (it == childs.end())
+		it = childs.insert(childs.end(), make_pair(a, tree_node()));
+
+	    string b = name.substr(pos + 1);
+	    return it->second.insert(b);
+	}
+    }
+
+
+    bool
+    tree_node::erase(const string& name)
+    {
+	string::size_type pos = name.find('/');
+	if (pos == string::npos)
+	{
+	    iterator it = childs.find(name);
+	    if (it == childs.end())
+		return false;
+
+	    if (it->second.childs.empty())
+		childs.erase(it);
+	    else
+		it->second.status = 0;
+
+	    return true;
+	}
+	else
+	{
+	    string a = name.substr(0, pos);
+	    iterator it = childs.find(a);
+	    if (it == childs.end())
+		return false;
+
+	    string b = name.substr(pos + 1);
+	    it->second.erase(b);
+
+	    if (it->second.status == 0 && it->second.childs.empty())
+		childs.erase(it);
+
+	    return true;
+	}
+    }
+
+
+    bool
+    tree_node::rename(const string& o, const string& n)
+    {
+	tree_node* oo = find(o);
+	if (!oo)
+	    return false;
+
+	tree_node* nn = find(n);
+	if (nn)
+	    return false;
+
+	nn = insert(n);
+	swap(nn->childs, oo->childs);
+	nn->status = oo->status;
+	erase(o);
+
+	return true;
+    }
+
+
+    void
+    tree_node::dump(const string& prefix) const
+    {
+	for (const_iterator it = childs.begin(); it != childs.end(); ++it)
+	{
+	    if (prefix.empty())
+	    {
+		y2deb(it->first << "  " << statusToString(it->second.status));
+		it->second.dump(it->first);
+	    }
+	    else
+	    {
+		y2deb(prefix + "/" + it->first << "  " << statusToString(it->second.status));
+		it->second.dump(prefix + "/" + it->first);
+	    }
+	}
+    }
+
+
     struct BtrfsSendReceiveException : public SnapperException
     {
 	explicit BtrfsSendReceiveException() throw() {}
@@ -345,9 +503,7 @@ namespace snapper
 
 	void process(cmpdirs_cb_t cb);
 
-	map<string, unsigned int> files;
-
-	void dump_files() const;
+	tree_node files;
 
 	void created(const string& name);
 	void deleted(const string& name);
@@ -367,6 +523,64 @@ namespace snapper
 	void do_send(u64 parent_root_id, const vector<u64>& clone_sources);
 
     };
+
+
+    unsigned int
+    tree_node::check(StreamProcessor* processor, const string& name, unsigned int status) const
+    {
+	if (status & CREATED) status = CREATED;
+	if (status & DELETED) status = DELETED;
+
+	if (status & (CONTENT | PERMISSIONS | USER | GROUP))
+	{
+	    status &= ~(CONTENT | PERMISSIONS | USER | GROUP);
+	    // TODO use of fullname might be insecure
+	    // TODO check for content sometimes not required
+	    status |= cmpFiles(processor->dir1.fullname(), processor->dir2.fullname(), name);
+	}
+
+	return status;
+    }
+
+
+    void
+    tree_node::check(StreamProcessor* processor, const string& prefix)
+    {
+	for (iterator it = childs.begin(); it != childs.end(); ++it)
+	{
+	    if (prefix.empty())
+	    {
+		it->second.status = check(processor, it->first, it->second.status);
+		it->second.check(processor, it->first);
+	    }
+	    else
+	    {
+		it->second.status = check(processor, prefix + "/" + it->first, it->second.status);
+		it->second.check(processor, prefix + "/" + it->first);
+	    }
+	}
+    }
+
+
+    void
+    tree_node::result(cmpdirs_cb_t cb, const string& prefix) const
+    {
+	for (const_iterator it = childs.begin(); it != childs.end(); ++it)
+	{
+	    if (prefix.empty())
+	    {
+		if (it->second.status != 0)
+		    (cb)("/" + it->first, it->second.status);
+		it->second.result(cb, it->first);
+	    }
+	    else
+	    {
+		if (it->second.status != 0)
+		    (cb)("/" + prefix + "/" + it->first, it->second.status);
+		it->second.result(cb, prefix + "/" + it->first);
+	    }
+	}
+    }
 
 
     StreamProcessor::StreamProcessor(const SDir& base, const SDir& dir1, const SDir& dir2)
@@ -398,15 +612,16 @@ namespace snapper
     void
     StreamProcessor::created(const string& name)
     {
-	map<string, unsigned int>::iterator it = files.find(name);
-	if (it == files.end())
+	tree_node* node = files.find(name);
+	if (!node)
 	{
-	    files[name] = CREATED;
+	    node = files.insert(name);
+	    node->status = CREATED;
 	}
 	else
 	{
-	    it->second &= ~(CREATED | DELETED);
-	    it->second |= CONTENT | PERMISSIONS | USER | GROUP;
+	    node->status &= ~(CREATED | DELETED);
+	    node->status |= CONTENT | PERMISSIONS | USER | GROUP;
 	}
     }
 
@@ -414,23 +629,16 @@ namespace snapper
     void
     StreamProcessor::deleted(const string& name)
     {
-	map<string, unsigned int>::iterator it = files.find(name);
-	if (it == files.end())
+	tree_node* node = files.find(name);
+	if (!node)
 	{
-	    files[name] = DELETED;
+	    node = files.insert(name);
+	    node->status = DELETED;
 	}
 	else
 	{
-	    files.erase(it);
+	    files.erase(name);
 	}
-    }
-
-
-    void
-    StreamProcessor::dump_files() const
-    {
-	for (map<string, unsigned int>::const_iterator it = files.begin(); it != files.end(); ++it)
-	    y2deb("dump " << it->first << " " << statusToString(it->second));
     }
 
 
@@ -527,6 +735,52 @@ namespace snapper
     }
 
 
+    void
+    merge(StreamProcessor* processor, tree_node* tmp, const string& from, const string& to,
+	  const string& prefix = "")
+    {
+	for (tree_node::iterator it = tmp->childs.begin(); it != tmp->childs.end(); ++it)
+	{
+	    if (prefix.empty())
+	    {
+		string x = to + "/" + it->first;
+
+		tree_node* node = processor->files.find(x);
+		if (!node)
+		{
+		    node = processor->files.insert(x);
+		    node->status = it->second.status;
+		}
+		else
+		{
+		    node->status &= ~(CREATED | DELETED);
+		    node->status |= CONTENT | PERMISSIONS | USER | GROUP;
+		}
+
+		merge(processor, &it->second, from, to, x);
+	    }
+	    else
+	    {
+		string x = to + "/" + prefix + "/" + it->first;
+
+		tree_node* node = processor->files.find(x);
+		if (!node)
+		{
+		    node = processor->files.insert(x);
+		    node->status = it->second.status;
+		}
+		else
+		{
+		    node->status &= ~(CREATED | DELETED);
+		    node->status |= CONTENT | PERMISSIONS | USER | GROUP;
+		}
+
+		merge(processor, &it->second, from, to, x);
+	    }
+	}
+    }
+
+
     int
     process_rename(const char* _from, const char* _to, void* user)
     {
@@ -539,9 +793,12 @@ namespace snapper
 	y2deb("rename from:'" << from << "' to:'" << to << "'");
 #endif
 
-	map<string, unsigned int>::iterator it1 = processor->files.find(from);
-	if (it1 == processor->files.end())
+	tree_node* it1 = processor->files.find(from);
+	if (!it1)
 	{
+	    processor->deleted(from);
+	    processor->created(to);
+
 	    // TODO use of fullname might be insecure
 	    if (checkDir(processor->dir1.fullname() + "/" + from))
 	    {
@@ -557,42 +814,22 @@ namespace snapper
 	}
 	else
 	{
-	    map<string, unsigned int> new_files;
-
-	    for (map<string, unsigned int>::iterator it1 = processor->files.begin();
-		 it1 != processor->files.end(); )
+	    tree_node* it2 = processor->files.find(to);
+	    if (!it2)
 	    {
-		if (boost::starts_with(it1->first, from + "/"))
-		{
-		    new_files.insert(new_files.end(),
-				     make_pair(to + string(it1->first, from.size()),
-					       it1->second));
-		    processor->files.erase(it1++);
-		}
-		else
-		{
-		    ++it1;
-		}
+		processor->files.rename(from, to);
 	    }
-
-	    for (map<string, unsigned int>::const_iterator it1 = new_files.begin();
-		 it1 != new_files.end(); ++it1)
+	    else
 	    {
-		map<string, unsigned int>::iterator it2 = processor->files.find(it1->first);
-		if (it2 == processor->files.end())
-		{
-		    processor->files[it1->first] = it1->second;
-		}
-		else
-		{
-		    it2->second &= ~(CREATED | DELETED);
-		    it2->second |= CONTENT | PERMISSIONS | USER | GROUP;
-		}
+		tree_node tmp;
+		swap(it1->childs, tmp.childs);
+
+		processor->deleted(from);
+		processor->created(to);
+
+		merge(processor, &tmp, from, to);
 	    }
 	}
-
-	processor->deleted(from);
-	processor->created(to);
 
 	return 0;
     }
@@ -652,7 +889,8 @@ namespace snapper
 	y2deb("write path:'" << path << "'");
 #endif
 
-	processor->files[path] |= CONTENT;
+	tree_node* node = processor->files.insert(path);
+	node->status |= CONTENT;
 
 	return 0;
     }
@@ -668,7 +906,8 @@ namespace snapper
 	y2deb("clone path:'" << path << "'");
 #endif
 
-	processor->files[path] |= CONTENT;
+	tree_node* node = processor->files.insert(path);
+	node->status |= CONTENT;
 
 	return 0;
     }
@@ -705,7 +944,8 @@ namespace snapper
 	y2deb("truncate path:'" << path << "' size:" << size);
 #endif
 
-	processor->files[path] |= CONTENT;
+	tree_node* node = processor->files.insert(path);
+	node->status |= CONTENT;
 
 	return 0;
     }
@@ -720,7 +960,8 @@ namespace snapper
 	y2deb("chmod path:'" << path << "'");
 #endif
 
-	processor->files[path] |= PERMISSIONS;
+	tree_node* node = processor->files.insert(path);
+	node->status |= PERMISSIONS;
 
 	return 0;
     }
@@ -735,7 +976,8 @@ namespace snapper
 	y2deb("chown path:'" << path << "'");
 #endif
 
-	processor->files[path] |= USER | GROUP;
+	tree_node* node = processor->files.insert(path);
+	node->status |= USER | GROUP;
 
 	return 0;
     }
@@ -758,7 +1000,8 @@ namespace snapper
 	y2deb("update_extent path:'" << path << "'");
 #endif
 
-	processor->files[path] |= CONTENT;
+	tree_node* node = processor->files.insert(path);
+	node->status |= CONTENT;
 
 	return 0;
     }
@@ -925,30 +1168,8 @@ namespace snapper
 
 	do_send(parent_root_id, clone_sources);
 
-	for (map<string, unsigned int>::iterator it = files.begin(); it != files.end(); ++it)
-	{
-	    string name = it->first;
-	    int status = it->second;
-
-	    if (status & CREATED) status = CREATED;
-	    if (status & DELETED) status = DELETED;
-
-	    if (status & (CONTENT | PERMISSIONS | USER | GROUP))
-	    {
-		status &= ~(CONTENT | PERMISSIONS | USER | GROUP);
-		// TODO use of fullname might be insecure
-		// TODO check for content sometimes not required
-		status |= cmpFiles(dir1.fullname(), dir2.fullname(), name);
-	    }
-
-	    it->second = status;
-	}
-
-	for (map<string, unsigned int>::const_iterator it = files.begin(); it != files.end(); ++it)
-	{
-	    if (it->second != 0)
-		(cb)("/" + it->first, it->second);
-	}
+	files.check(&*this);
+	files.result(cb);
     }
 
 
