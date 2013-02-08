@@ -533,10 +533,16 @@ namespace snapper
 
 	if (status & (CONTENT | PERMISSIONS | USER | GROUP))
 	{
-	    status &= ~(CONTENT | PERMISSIONS | USER | GROUP);
-	    // TODO use of fullname might be insecure
 	    // TODO check for content sometimes not required
-	    status |= cmpFiles(processor->dir1.fullname(), processor->dir2.fullname(), name);
+	    status &= ~(CONTENT | PERMISSIONS | USER | GROUP);
+
+	    string dirname = snapper::dirname(name);
+	    string basename = snapper::basename(name);
+
+	    SDir subdir1 = SDir::deepopen(processor->dir1, dirname);
+	    SDir subdir2 = SDir::deepopen(processor->dir2, dirname);
+
+	    status |= cmpFiles(SFile(subdir1, basename), SFile(subdir2, basename));
 	}
 
 	return status;
@@ -799,12 +805,16 @@ namespace snapper
 	    processor->deleted(from);
 	    processor->created(to);
 
-	    // TODO use of fullname might be insecure
-	    if (checkDir(processor->dir1.fullname() + "/" + from))
-	    {
-		SDir dir_from(processor->dir1.fullname() + "/" + from);
-		vector<string> entries = dir_from.entries_recursive();
+	    string dirname = snapper::dirname(from);
+	    string basename = snapper::basename(from);
 
+	    struct stat buf;
+	    SDir tmpdir1 = SDir::deepopen(processor->dir1, dirname);
+	    if (tmpdir1.stat(basename, &buf, AT_SYMLINK_NOFOLLOW) == 0 && S_ISDIR(buf.st_mode))
+	    {
+		SDir tmpdir2(tmpdir1, basename);
+
+		vector<string> entries = tmpdir2.entries_recursive();
 		for (vector<string>::const_iterator it = entries.begin(); it != entries.end(); ++it)
 		{
 		    processor->deleted(from + "/" + *it);

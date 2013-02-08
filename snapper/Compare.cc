@@ -207,14 +207,8 @@ namespace snapper
 
 
     unsigned int
-    cmpFiles(const string& base_path1, const string& base_path2, const string& name)
+    cmpFiles(const SFile& file1, const SFile& file2)
     {
-	SDir dir1(base_path1);
-	SDir dir2(base_path2);
-
-	SFile file1(dir1, name); // TODO not secure
-	SFile file2(dir2, name); // TODO not secure
-
 	struct stat stat1;
 	int r1 = file1.stat(&stat1, AT_SYMLINK_NOFOLLOW);
 

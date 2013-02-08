@@ -29,6 +29,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <stdlib.h>
+#include <assert.h>
 #include <algorithm>
 
 #include "snapper/FileUtils.h"
@@ -65,6 +66,9 @@ namespace snapper
     SDir::SDir(const SDir& dir, const string& name)
 	: base_path(dir.base_path), path(dir.path + "/" + name)
     {
+	assert(name.find('/') == string::npos);
+	assert(name != "..");
+
 	dirfd = ::openat(dir.dirfd, name.c_str(), O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
 	if (dirfd < 0)
 	{
@@ -77,6 +81,7 @@ namespace snapper
 	if (!S_ISDIR(buf.st_mode))
 	{
 	    y2err("not a directory path:" << dir.fullname(name));
+	    close(dirfd);
 	    throw IOErrorException();
 	}
     }
@@ -115,6 +120,17 @@ namespace snapper
     SDir::~SDir()
     {
 	::close(dirfd);
+    }
+
+
+    SDir
+    SDir::deepopen(const SDir& dir, const string& name)
+    {
+       string::size_type pos = name.find('/');
+       if (pos == string::npos)
+	   return SDir(dir, name);
+
+       return deepopen(SDir(dir, string(name, 0, pos)), string(name, pos + 1));
     }
 
 
@@ -229,6 +245,9 @@ namespace snapper
     int
     SDir::stat(const string& name, struct stat* buf, int flags) const
     {
+	assert(name.find('/') == string::npos);
+	assert(name != "..");
+
 	return ::fstatat(dirfd, name.c_str(), buf, flags);
     }
 
@@ -236,6 +255,9 @@ namespace snapper
     int
     SDir::open(const string& name, int flags) const
     {
+	assert(name.find('/') == string::npos);
+	assert(name != "..");
+
 	return ::openat(dirfd, name.c_str(), flags);
     }
 
@@ -243,6 +265,9 @@ namespace snapper
     int
     SDir::open(const string& name, int flags, mode_t mode) const
     {
+	assert(name.find('/') == string::npos);
+	assert(name != "..");
+
 	return ::openat(dirfd, name.c_str(), flags, mode);
     }
 
@@ -250,6 +275,9 @@ namespace snapper
     int
     SDir::readlink(const string& name, string& buf) const
     {
+	assert(name.find('/') == string::npos);
+	assert(name != "..");
+
 	char tmp[1024];
 	int ret = ::readlinkat(dirfd, name.c_str(), tmp, sizeof(tmp));
 	if (ret >= 0)
@@ -261,6 +289,9 @@ namespace snapper
     int
     SDir::mkdir(const string& name, mode_t mode) const
     {
+	assert(name.find('/') == string::npos);
+	assert(name != "..");
+
 	return ::mkdirat(dirfd, name.c_str(), mode);
     }
 
@@ -268,6 +299,9 @@ namespace snapper
     int
     SDir::unlink(const string& name, int flags) const
     {
+	assert(name.find('/') == string::npos);
+	assert(name != "..");
+
 	return ::unlinkat(dirfd, name.c_str(), flags);
     }
 
@@ -275,6 +309,9 @@ namespace snapper
     int
     SDir::chmod(const string& name, mode_t mode, int flags) const
     {
+	assert(name.find('/') == string::npos);
+	assert(name != "..");
+
 	return ::fchmodat(dirfd, name.c_str(), mode, flags);
     }
 
@@ -282,6 +319,9 @@ namespace snapper
     int
     SDir::chown(const string& name, uid_t owner, gid_t group, int flags) const
     {
+	assert(name.find('/') == string::npos);
+	assert(name != "..");
+
 	return ::fchownat(dirfd, name.c_str(), owner, group, flags);
     }
 
@@ -289,6 +329,12 @@ namespace snapper
     int
     SDir::rename(const string& oldname, const string& newname) const
     {
+	assert(oldname.find('/') == string::npos);
+	assert(oldname != "..");
+
+	assert(newname.find('/') == string::npos);
+	assert(newname != "..");
+
 	return ::renameat(dirfd, oldname.c_str(), dirfd, newname.c_str());
     }
 
@@ -332,6 +378,8 @@ namespace snapper
     SFile::SFile(const SDir& dir, const string& name)
 	: dir(dir), name(name)
     {
+	assert(name.find('/') == string::npos);
+	assert(name != "..");
     }
 
 

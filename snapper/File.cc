@@ -162,7 +162,19 @@ namespace snapper
     File::getPreToSystemStatus()
     {
 	if (pre_to_system_status == (unsigned int)(-1))
-	    pre_to_system_status = cmpFiles(file_paths->pre_path, file_paths->system_path, name);
+	{
+	    SDir dir1(file_paths->pre_path);
+	    SDir dir2(file_paths->system_path);
+
+	    string dirname = snapper::dirname(name);
+	    string basename = snapper::basename(name);
+
+	    SDir subdir1 = SDir::deepopen(dir1, dirname);
+	    SDir subdir2 = SDir::deepopen(dir2, dirname);
+
+	    pre_to_system_status = cmpFiles(SFile(subdir1, basename), SFile(subdir2, basename));
+	}
+
 	return pre_to_system_status;
     }
 
@@ -171,7 +183,19 @@ namespace snapper
     File::getPostToSystemStatus()
     {
 	if (post_to_system_status == (unsigned int)(-1))
-	    post_to_system_status = cmpFiles(file_paths->post_path, file_paths->system_path, name);
+	{
+	    SDir dir1(file_paths->post_path);
+	    SDir dir2(file_paths->system_path);
+
+	    string dirname = snapper::dirname(name);
+	    string basename = snapper::basename(name);
+
+	    SDir subdir1 = SDir::deepopen(dir1, dirname);
+	    SDir subdir2 = SDir::deepopen(dir2, dirname);
+
+	    post_to_system_status = cmpFiles(SFile(subdir1, basename), SFile(subdir2, basename));
+	}
+
 	return post_to_system_status;
     }
 

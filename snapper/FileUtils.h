@@ -46,6 +46,8 @@ namespace snapper
 	SDir& operator=(const SDir&);
 	~SDir();
 
+	static SDir deepopen(const SDir& dir, const string& name);
+
 	int fd() const { return dirfd; }
 
 	string fullname(bool with_base_path = true) const;

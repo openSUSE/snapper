@@ -162,6 +162,24 @@ namespace snapper
     }
 
 
+    string
+    dirname(const string& name)
+    {
+	string::size_type pos = name.find_last_of('/');
+	if (pos == string::npos)
+	    return string(".");
+	return string(name, 0, pos == 0 ? 1 : pos);
+    }
+
+
+    string
+    basename(const string& name)
+    {
+	string::size_type pos = name.find_last_of('/');
+	return string(name, pos + 1);
+    }
+
+
     bool
     getMtabData(const string& mount_point, bool& found, MtabData& mtab_data)
     {

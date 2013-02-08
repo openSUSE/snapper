@@ -55,6 +55,9 @@ namespace snapper
 
     string stringerror(int errnum);
 
+    string dirname(const string& name);
+    string basename(const string& name);
+
 
     struct MtabData
     {

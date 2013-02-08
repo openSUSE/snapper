@@ -39,9 +39,9 @@ namespace snapper
     typedef std::function<void(const string& name, unsigned int status)> cmpdirs_cb_t;
 
 
-    /* TODO */
+    /* Compares the two files. */
     unsigned int
-    cmpFiles(const string& base_path, const string& base_path2, const string& name);
+    cmpFiles(const SFile& file1, const SFile& file2);
 
     /* Compares the two directories. All file-operations use the openat
        et.al. functions. */
