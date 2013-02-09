@@ -1047,6 +1047,8 @@ namespace snapper
     {
 	while (true)
 	{
+	    boost::this_thread::interruption_point();
+
 	    int r = btrfs_read_and_process_send_stream(fd, &send_ops, &*this);
 
 	    if (r < 0)
