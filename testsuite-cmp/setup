@@ -136,6 +136,21 @@ function test7()
 }
 
 
+function test8()
+{
+    touch foo
+
+    make_snapshot 15
+
+    rm foo
+    mkdir foo
+
+    make_snapshot 16
+
+    rmdir foo
+}
+
+
 btrfs subvolume create /testsuite
 btrfs subvolume create /testsuite/.snapshots
 
@@ -148,4 +163,5 @@ test4
 test5
 test6
 test7
+test8
 
