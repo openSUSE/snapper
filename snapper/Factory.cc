@@ -20,7 +20,7 @@
  */
 
 
-#include "auto_ptr.h"
+#include <memory>
 
 #include "snapper/Factory.h"
 #include "snapper/Snapper.h"
