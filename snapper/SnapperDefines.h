@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2012] Novell, Inc.
+ * Copyright (c) [2004-2013] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -24,24 +24,12 @@
 #define SNAPPER_SNAPPER_DEFINES_H
 
 
-#define SYSCONFIGFILE "/etc/sysconfig/snapper"
+#define SYSCONFIGFILE CONFDIR"/snapper"
 
 #define CONFIGSDIR "/etc/snapper/configs"
 #define CONFIGTEMPLATEDIR "/etc/snapper/config-templates"
 
 #define FILTERSDIR "/etc/snapper/filters"
-
-#define CHSNAPBIN "/sbin/chsnap"
-
-#define CPBIN "/bin/cp"
-#define TOUCHBIN "/usr/bin/touch"
-#define RMBIN "/bin/rm"
-#define DIFFBIN "/usr/bin/diff"
-#define CHATTRBIN "/usr/bin/chattr"
-
-#define LVCREATEBIN "/sbin/lvcreate"
-#define LVREMOVEBIN "/sbin/lvremove"
-#define LVSBIN "/sbin/lvs"
 
 
 #endif

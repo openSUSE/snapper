@@ -2,6 +2,8 @@
 # Makefile.am for snapper
 #
 
+ACLOCAL_AMFLAGS = -I m4
+
 SUBDIRS = snapper examples dbus server client scripts data doc po testsuite-real testsuite-cmp
 
 AUTOMAKE_OPTIONS = foreign dist-bzip2 no-dist-gzip
