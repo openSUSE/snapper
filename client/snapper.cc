@@ -1125,19 +1125,8 @@ help_xa_diff()
 void
 print_xa_diff(const string loc_pre, const string loc_post)
 {
-    int src_fd = open(loc_pre.c_str(), O_RDONLY | O_NOATIME | O_NOFOLLOW);
-    if (src_fd < 0)
-        cerr << "Can't open " << loc_pre << stringerror(errno) << endl;
-
-    int dest_fd = open(loc_post.c_str(), O_RDONLY | O_NOATIME | O_NOFOLLOW);
-    if (dest_fd < 0)
-    {
-        close(src_fd);
-        cerr << "Can't open " << loc_post << stringerror(errno) << endl;
-    }
-
     try {
-        XAModification xa_mod = XAModification(XAttributes(src_fd), XAttributes(dest_fd));
+        XAModification xa_mod = XAModification(XAttributes(loc_pre), XAttributes(loc_post));
         if (xa_mod.isEmpty())
             y2deb("XA Modification object is empty!");
         cout << "extended attributes diff:" << endl << "--- " << loc_pre << endl << "+++ " << loc_post << endl << xa_mod;

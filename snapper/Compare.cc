@@ -202,6 +202,20 @@ namespace snapper
 	{
 	    if (!cmpFilesContent(file1, stat1, file2, stat2))
 		status |= CONTENT;
+
+#ifdef ENABLE_XATTRS
+            /* TODO: think about this. Do you want to report
+             * XA modification in case the compared files differ
+             * in their types file A: link, file B: directory
+             */
+            if (file1.xaSupported() && file2.xaSupported())
+            {
+                if (!cmpFilesXattrs(file1, stat1, file2, stat2))
+                {
+                    status |= XATTRS;
+                }
+            }
+#endif
 	}
 
 	if ((stat1.st_mode ^ stat2.st_mode) & (S_IRWXU | S_IRWXG | S_IRWXO | S_ISUID |
@@ -219,18 +233,6 @@ namespace snapper
 	{
 	    status |= GROUP;
 	}
-
-#ifdef ENABLE_XATTRS
-        if (file1.xaSupported() && file2.xaSupported())
-        {
-            // TODO: think about how XATTRS are related to
-            // to other status changes...
-            if (!cmpFilesXattrs(file1, file2))
-            {
-                status |= XATTRS;
-            }
-        }
-#endif
 
         return status;
     }
@@ -471,19 +473,41 @@ namespace snapper
 
 #ifdef ENABLE_XATTRS
     bool
-    cmpFilesXattrs(const SFile& file1, const SFile& file2)
+    cmpFilesXattrs(const SFile& file1, const struct stat& stat1, const SFile& file2, const struct stat& stat2)
     {
-        int fd1 = file1.open(O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
+        if ((stat1.st_mode & S_IFMT) != (stat2.st_mode & S_IFMT))
+            throw LogicErrorException();
+
+        bool retval;
+
+        try
+        {
+            XAttributes xa(file1.fullname(true)), xb(file2.fullname(true));
+            retval = (xa == xb);
+        }
+        catch (XAttributesException xae)
+        {
+            y2err("extended attributes compare failed");
+            retval = false;
+        }
+
+        return retval;
+    }
+
+/*
+    bool cmpFilesXattrsLnk(const SFile& file1, const SFile& file2)
+    {
+        int fd1 = file1.open(O_RDONLY | O_NOATIME | O_CLOEXEC);
         if (fd1 < 0)
         {
-            y2err("open failed path:" << file1.fullname() << " errno:" << errno);
+            y2err("Can't open link: " << file1.fullname() << " w/ error: " << stringerror(errno));
             throw IOErrorException();
         }
 
-        int fd2 = file2.open(O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
+        int fd2 = file2.open(O_RDONLY | O_NOATIME | O_CLOEXEC);
         if (fd2 < 0)
         {
-            y2err("open failed path:" << file2.fullname() << " errno:" << errno);
+            y2err("Can't open link:" << file2.fullname() << " w/ error: " << stringerror(errno));
             close(fd1);
             throw IOErrorException();
         }
@@ -497,6 +521,7 @@ namespace snapper
         }
         catch (XAttributesException xae)
         {
+            y2err("extended attributes compare failed");
             retval = false;
         }
         close(fd1);
@@ -504,5 +529,6 @@ namespace snapper
 
         return retval;
     }
+*/
 #endif
 }

@@ -46,7 +46,7 @@ namespace snapper
 
         // this is ordered on purpose!
         // we can possibly avoid allocating new fs block if xattrs fits
-        // into 100 bytes (ext2,3,4)
+        // into 100 bytes (ext4)
         // so, first remove/change and create later
         enum XaCompareFlags {
             XA_DELETE = 0,
@@ -72,6 +72,7 @@ namespace snapper
             xa_map_t xamap;
         public:
             XAttributes(int);
+            XAttributes(const string&);
             XAttributes(const XAttributes&);
 
             xa_map_citer cbegin() const { return xamap.begin(); }
@@ -91,7 +92,7 @@ namespace snapper
             XAModification(const XAttributes&, const XAttributes&);
 
             bool isEmpty() const;
-            bool serializeTo(int) const;
+            bool serializeTo(const string&) const;
             xa_mod_citer cbegin() const { return xamodmap.begin(); };
             xa_mod_citer cend() const { return xamodmap.end(); };
 

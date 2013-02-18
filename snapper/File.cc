@@ -526,18 +526,17 @@ namespace snapper
     }
 
 #ifdef ENABLE_XATTRS
-    bool
-    File::modifyXattributes() const
+/*  bool
+    File::modifyXattributesReg() const
     {
-
-        int src_fd = open(getAbsolutePath(LOC_PRE).c_str(), O_RDONLY | O_CLOEXEC);
+        int src_fd = open(getAbsolutePath(LOC_PRE).c_str(), O_RDONLY | O_NOFOLLOW | O_CLOEXEC);
         if (src_fd < 0)
         {
             y2err("open failed errno:" << errno << " (" << stringerror(errno) << ")");
             return false;
         }
 
-        int dest_fd = open(getAbsolutePath(LOC_SYSTEM).c_str(), O_RDWR | O_CLOEXEC);
+        int dest_fd = open(getAbsolutePath(LOC_SYSTEM).c_str(), O_RDWR | O_NOFOLLOW | O_CLOEXEC);
         if (dest_fd < 0)
         {
             y2err("open failed errno:" << errno << " (" << stringerror(errno) << ")");
@@ -557,7 +556,7 @@ namespace snapper
             XAModification xa_mod(xa_src, xa_dest);
             y2deb("xa_modmap(xa_dest) object: " << xa_mod);
 
-            ret_val = xa_mod.serializeTo(dest_fd);
+            ret_val = xa_mod.serializeToFd(dest_fd);
         }
         catch (XAttributesException xae) {
             ret_val = false;
@@ -568,6 +567,49 @@ namespace snapper
 
         return ret_val;
     }
+
+    bool
+    File::modifyXattributesLink() const
+    {
+        bool ret_val;
+
+        try {
+            XAttributes xa_src(getAbsolutePath(LOC_PRE)), xa_dest(getAbsolutePath(LOC_SYSTEM));
+            y2deb("xa_src object: " << xa_src << std::endl << "xa_dest object: " << xa_dest);
+
+            XAModification xa_mod(xa_src, xa_dest);
+            y2deb("xa_modmap(xa_dest) object: " << xa_mod);
+
+            ret_val = xa_mod.serializeToLink(getAbsolutePath(LOC_SYSTEM));
+        }
+        catch (XAttributesException xae) {
+            ret_val = false;
+        }
+
+        return ret_val;
+    }
+*/
+    bool
+    File::modifyXattributes() const
+    {
+        bool ret_val;
+
+        try {
+            XAttributes xa_src(getAbsolutePath(LOC_PRE)), xa_dest(getAbsolutePath(LOC_SYSTEM));
+            y2deb("xa_src object: " << xa_src << std::endl << "xa_dest object: " << xa_dest);
+
+            XAModification xa_mod(xa_src, xa_dest);
+            y2deb("xa_modmap(xa_dest) object: " << xa_mod);
+
+            ret_val = xa_mod.serializeTo(getAbsolutePath(LOC_SYSTEM));
+        }
+        catch (XAttributesException xae) {
+            ret_val = false;
+        }
+
+        return ret_val;
+    }
+
 #endif
 
     bool
@@ -594,8 +636,12 @@ namespace snapper
 	}
 
 #ifdef ENABLE_XATTRS
-	// NOTE: XATTR flasg must not be set w/ CREATED or DELETED flag
-        if (getPreToPostStatus() & XATTRS)
+        /*
+         * xattributes have to be transfered as well
+         * if we'are about to create new type during
+         * undo!
+         */
+        if (getPreToPostStatus() & (XATTRS | TYPE | DELETED))
         {
             if (!modifyXattributes())
                 error = true;

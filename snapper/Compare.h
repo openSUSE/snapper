@@ -50,7 +50,7 @@ namespace snapper
 
 #ifdef ENABLE_XATTRS
     bool
-    cmpFilesXattrs(const SFile&, const SFile&);
+    cmpFilesXattrs(const SFile&, const struct stat&, const SFile&, const struct stat&);
 #endif
 }
 
