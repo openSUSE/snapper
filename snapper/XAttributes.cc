@@ -36,55 +36,6 @@
 
 namespace snapper
 {
-    struct XAModification::LinkSetHelper {
-        const string *plink;
-        LinkSetHelper(const string &link) : plink(&link) {}
-
-        int operator()(const string&, const xa_value_t&, int);
-    };
-
-    int
-    XAModification::LinkSetHelper::operator()(const string &name, const xa_value_t &value, int flags)
-    {
-        // TODO: add logging
-        if (value.empty())
-            return lsetxattr(plink->c_str(), name.c_str(), NULL, 0, flags);
-        else
-            return lsetxattr(plink->c_str(), name.c_str(), (void *) &value.front(), value.size(), flags);
-    }
-
-    struct XAModification::LinkRmHelper {
-        const string *plink;
-        LinkRmHelper(const string &link) : plink(&link) {}
-
-        int operator()(const string &name) { return lremovexattr(plink->c_str(), name.c_str()); }
-    };
-
-    struct XAModification::FileSetHelper {
-        const int fd;
-        FileSetHelper(int fd) : fd(fd) {}
-
-        int operator()(const string&, const xa_value_t&, int);
-    };
-
-    int
-    XAModification::FileSetHelper::operator()(const string &name, const xa_value_t &value, int flags)
-    {
-        // TODO: add logging
-        if (value.empty())
-            return fsetxattr(fd, name.c_str(), NULL, 0, flags);
-        else
-            return fsetxattr(fd, name.c_str(), (void *) &value.front(), value.size(), flags);
-    }
-
-    struct XAModification::FileRmHelper {
-        const int fd;
-        FileRmHelper(int fd) : fd(fd) {}
-
-        int operator()(const string &name) { return fremovexattr(fd, name.c_str()); }
-    };
-
-
     XAttributes::XAttributes(int fd)
     {
         y2deb("entering Xattributes(int fd) constructor");
@@ -142,68 +93,10 @@ namespace snapper
         }
     }
 
-    XAttributes::XAttributes(const string &linkpath)
-    {
-        y2deb("entering Xattributes(string link) constructor");
-        ssize_t size = llistxattr(linkpath.c_str(), NULL, 0);
-        if (size < 0)
-        {
-            y2err("Couldn't get xattributes names-list size. link: " << linkpath << ", error: " << stringerror(errno));
-            throw XAttributesException();
-        }
-
-        // +1 to cover size == 0
-        boost::scoped_array<char> names(new char[size + 1]);
-        names[size] = '\0';
-
-        y2deb("XAttributes names-list size is: " << size);
-
-        size = llistxattr(linkpath.c_str(), names.get(), size);
-        if (size < 0)
-        {
-            y2err("Couldn't get xattributes names-list. link: " << linkpath << ", error: " << stringerror(errno));
-            throw XAttributesException();
-        }
-
-        int pos = 0;
-
-        while (pos < size)
-        {
-            string name = string(names.get() + pos);
-            // move beyond separating '\0' char
-            pos += name.length() + 1;
-
-            ssize_t v_size = lgetxattr(linkpath.c_str(), name.c_str(), NULL, 0);
-            if (v_size < 0)
-            {
-                y2err("Couldn't get a xattribute value size for the xattribute name '" << name << "': " << stringerror(errno));
-                throw XAttributesException();
-            }
-
-            y2deb("XAttribute value size for xattribute name: '" << name << "' is " << v_size);
-
-            boost::scoped_array<uint8_t> buffer(v_size ? new uint8_t[v_size] : NULL);
-
-            v_size = lgetxattr(linkpath.c_str(), name.c_str(), (void *)buffer.get(), v_size);
-            if (v_size < 0)
-            {
-                y2err("Coudln't get xattrbitue value for the xattrbite name '" << name << "': ");
-                throw XAttributesException();
-            }
-
-            if (!xamap.insert(xa_pair_t(name, xa_value_t(buffer.get(), buffer.get() + v_size))).second)
-            {
-                y2err("Duplicite extended attribute name in source file!");
-                throw XAttributesException();
-            }
-        }
-    }
-
     XAttributes::XAttributes(const XAttributes &xa)
     {
         y2deb("Starting copy constructor XAttribute(const XAttribute&)");
         xamap = xa.xamap;
-        type = xa.type;
     }
 
     XAttributes&
@@ -213,7 +106,6 @@ namespace snapper
         if (this != &xa)
         {
             this->xamap = xa.xamap;
-            type = xa.type;
         }
 
         return *this;
@@ -223,7 +115,6 @@ namespace snapper
     XAttributes::operator==(const XAttributes& xa) const
     {
         y2deb("Entering XAttribute::operator==()");
-        // TODO: what about file type?
         return (this == &xa) ? true : (this->xamap == xa.xamap);
     }
 
@@ -295,9 +186,6 @@ namespace snapper
 
     XAModification::XAModification(const snapper::XAttributes& src_xa, const snapper::XAttributes& dest_xa)
     {
-        if (src_xa.getType() != dest_xa.getType())
-            throw XAttributesException();
-
         xamodmap[XA_DELETE] = xa_mod_vec_t();
         xamodmap[XA_REPLACE] = xa_mod_vec_t();
         xamodmap[XA_CREATE] = xa_mod_vec_t();
@@ -362,8 +250,11 @@ namespace snapper
     }
 
     bool
-    XAModification::serializeTo(xattr_set_cb_t set_xattr, xattr_rm_cb_t rm_xattr) const
+    XAModification::serializeTo(int dest_fd) const
     {
+        if (this->isEmpty())
+            return true;
+
         for (xa_mod_citer cit = this->cbegin(); cit != this->cend(); cit++)
         {
             for (xa_mod_vec_citer mod_cit = cit->second.begin(); mod_cit != cit->second.end(); mod_cit++)
@@ -372,7 +263,7 @@ namespace snapper
                 {
                     case XA_DELETE:
                         y2deb("delete xattribute: " << mod_cit->first);
-                        if (rm_xattr(mod_cit->first))
+                        if (fremovexattr(dest_fd, mod_cit->first.c_str()))
                         {
                             y2err("Couldn't remove xattribute '" << mod_cit->first << "': " << stringerror(errno));
                             return false;
@@ -382,22 +273,47 @@ namespace snapper
                     case XA_REPLACE:
                         y2deb("replace xattribute: " << mod_cit->first);
 
-                        if (set_xattr(mod_cit->first, mod_cit->second, XATTR_REPLACE))
+                        if (mod_cit->second.empty())
                         {
-                            y2err("Couldn't replace xattribute '" << mod_cit->first << "'");
-                            y2deb("replace value was: " << mod_cit->second);
-                            return false;
+                            y2deb("new value for xattribute '" << mod_cit->first << "' is empty!");
+                            if (fsetxattr(dest_fd, mod_cit->first.c_str(), NULL, 0, XATTR_REPLACE))
+                            {
+                                y2err("Couldn't replace xattribute '" << mod_cit->first << "' by new (empty) value: " << stringerror(errno));
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            y2deb("new value for xattribute '" << mod_cit->first << "': " << mod_cit->second);
+                            if (fsetxattr(dest_fd, mod_cit->first.c_str(), &mod_cit->second.front(), mod_cit->second.size(), XATTR_REPLACE))
+                            {
+                                y2err("Couldn't replace xattribute '" << mod_cit->first << "' by new (non-empty) value: " << stringerror(errno));
+                                y2deb("new XA value size: " << mod_cit->second.size() << ". The value: " << mod_cit->second);
+                                return false;
+                            }
                         }
                         break;
 
                     case XA_CREATE:
                         y2deb("create xattribute: " << mod_cit->first);
-
-                        if (set_xattr(mod_cit->first, mod_cit->second, XATTR_CREATE))
+                        if (mod_cit->second.empty())
                         {
-                            y2err("Couldn't create xattribute '" << mod_cit->first << "'");
-                            y2deb("new value was: " << mod_cit->second);
-                            return false;
+                            y2deb("new value for xattribute '" << mod_cit->first << "' is empty!");
+                            if (fsetxattr(dest_fd, mod_cit->first.c_str(), NULL, 0, XATTR_CREATE))
+                            {
+                                y2err("Couldn't create xattribute '" << mod_cit->first << "' with new (empty) value: " << stringerror(errno));
+                                return false;
+                            }
+                        }
+                        else
+                        {
+                            y2deb("new value for xattribute '" << mod_cit->first << "': " << mod_cit->second);
+                            if (fsetxattr(dest_fd, mod_cit->first.c_str(), &mod_cit->second.front(), mod_cit->second.size(), XATTR_CREATE))
+                            {
+                                y2err("Couldn't create xattribute '" << mod_cit->first << "' with new (non-empty) value: " << stringerror(errno));
+                                y2deb("new XA value size: " << mod_cit->second.size() << ". The value: " << mod_cit->second);
+                                return false;
+                            }
                         }
                         break;
 
@@ -408,31 +324,6 @@ namespace snapper
             }
         }
         return true;
-    }
-
-    bool
-    XAModification::serializeToFd(int dest_fd) const
-    {
-        if (this->isEmpty())
-            return true;
-
-        xattr_rm_cb_t rm_cb = FileRmHelper(dest_fd);
-        xattr_set_cb_t set_cb = FileSetHelper(dest_fd);
-
-        return serializeTo(set_cb, rm_cb);
-    }
-
-
-    bool
-    XAModification::serializeToLink(const string &link) const
-    {
-        if (this->isEmpty())
-            return true;
-
-        xattr_rm_cb_t rm_cb = LinkRmHelper(link);
-        xattr_set_cb_t set_cb = LinkSetHelper(link);
-
-        return serializeTo(set_cb, rm_cb);
     }
 
     ostream&
