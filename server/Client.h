@@ -32,7 +32,6 @@
 
 #include <snapper/Snapper.h>
 #include <snapper/Snapshot.h>
-#include <snapper/Factory.h>
 #include <snapper/Comparison.h>
 #include <dbus/DBusConnection.h>
 #include <dbus/DBusMessage.h>
