@@ -38,7 +38,14 @@ setup()
 
     initDefaultLogger();
 
-    sh = createSnapper("testsuite");
+    sh = new Snapper("testsuite");
+}
+
+
+void
+cleanup()
+{
+    delete sh;
 }
 
 

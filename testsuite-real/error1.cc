@@ -26,5 +26,7 @@ main()
 
     check_undo_errors(0, 0, 1);
 
+    cleanup();
+
     exit(EXIT_SUCCESS);
 }

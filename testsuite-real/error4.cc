@@ -30,5 +30,7 @@ main()
 
     check_undo_errors(1, 0, 0);
 
+    cleanup();
+
     exit(EXIT_SUCCESS);
 }

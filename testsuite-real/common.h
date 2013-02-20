@@ -44,6 +44,8 @@ check_failure(const char* str, Type actual, Type expected, const char* file,
 
 
 void setup();
+void cleanup();
+
 void first_snapshot();
 void second_snapshot();
 void check_undo_statistics(unsigned int numCreate, unsigned int numModify,

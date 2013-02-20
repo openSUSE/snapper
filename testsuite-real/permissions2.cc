@@ -32,5 +32,7 @@ main()
 
     check_first();
 
+    cleanup();
+
     exit(EXIT_SUCCESS);
 }
