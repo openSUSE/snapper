@@ -1200,8 +1200,9 @@ namespace snapper
 
 	    y2mil("stopwatch " << stopwatch << " for comparing directories");
 	}
-	catch (const BtrfsSendReceiveException& e)
+	catch (const SnapperException& e)
 	{
+	    y2err("special btrfs cmpDirs failed, " << e.what());
 	    y2mil("cmpDirs fallback");
 
 	    snapper::cmpDirs(dir1, dir2, cb);
