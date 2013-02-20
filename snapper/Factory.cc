@@ -30,12 +30,13 @@
 namespace snapper
 {
 
-    std::auto_ptr<Snapper> the_one;
 
 
     Snapper*
     createSnapper(const string& config_name, bool disable_filters)
     {
+        static std::auto_ptr<Snapper> the_one;
+
 	if (the_one.get())
 	    throw LogicErrorException();
 
@@ -43,7 +44,7 @@ namespace snapper
 	return the_one.get();
     }
 
-
+/*
     void
     deleteSnapper(Snapper* s)
     {
@@ -52,5 +53,5 @@ namespace snapper
 
 	the_one.reset();
     }
-
+*/
 }

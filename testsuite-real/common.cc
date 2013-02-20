@@ -38,6 +38,8 @@ setup()
 
     initDefaultLogger();
 
+    y2mil("Hello, please init my static mutex");
+
     sh = createSnapper("testsuite");
 }
 
