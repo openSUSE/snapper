@@ -6,7 +6,6 @@
 
 #include "common.h"
 
-#include <snapper/Factory.h>
 #include <snapper/Snapper.h>
 #include <snapper/Snapshot.h>
 #include <snapper/Comparison.h>
