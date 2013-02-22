@@ -91,23 +91,19 @@ namespace snapper
     bool
     copyfile(int src_fd, int dest_fd)
     {
-	struct stat src_stat;
-	int r1 = fstat(src_fd, &src_stat);
-	if (r1 != 0)
+	while (true)
 	{
-	    y2err("fstat failed errno:" << errno << " (" << stringerror(errno) << ")");
-	    return false;
+	    // use small value for count to make function better interruptible
+	    ssize_t r1 = sendfile(dest_fd, src_fd, NULL, 0xffff);
+	    if (r1 == 0)
+		return true;
+
+	    if (r1 < 0)
+	    {
+		y2err("sendfile failed errno:" << errno << " (" << stringerror(errno) << ")");
+		return false;
+	    }
 	}
-
-	size_t count = src_stat.st_size;
-
-	ssize_t r2 = sendfile(dest_fd, src_fd, NULL, count);
-	if (r2 < 0)
-	{
-	    y2err("sendfile failed errno:" << errno << " (" << stringerror(errno) << ")");
-	}
-
-	return r2 >= 0;
     }
 
 
