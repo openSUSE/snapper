@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Feb 22 11:49:23 CET 2013 - aschnell@suse.de
+
+- use sendfile system-call instead of read/write loop
+
+-------------------------------------------------------------------
 Thu Feb 21 14:23:55 CET 2013 - aschnell@suse.de
 
 - removed obsolete calls to renice and ionice in cron scripts

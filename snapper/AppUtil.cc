@@ -30,6 +30,7 @@
 #include <sys/utsname.h>
 #include <sys/ioctl.h>
 #include <sys/types.h>
+#include <sys/sendfile.h>
 #include <pwd.h>
 #include <dirent.h>
 #include <mntent.h>
@@ -98,37 +99,15 @@ namespace snapper
 	    return false;
 	}
 
-	posix_fadvise(src_fd, 0, src_stat.st_size, POSIX_FADV_SEQUENTIAL);
+	size_t count = src_stat.st_size;
 
-	static_assert(sizeof(off_t) >= 8, "off_t is too small");
-
-	const off_t block_size = 4096;
-
-	char block[block_size];
-
-	off_t length = src_stat.st_size;
-	while (length > 0)
+	ssize_t r2 = sendfile(dest_fd, src_fd, NULL, count);
+	if (r2 < 0)
 	{
-	    off_t t = min(block_size, length);
-
-	    int r2 = read(src_fd, block, t);
-	    if (r2 != t)
-	    {
-		y2err("read failed errno:" << errno << " (" << stringerror(errno) << ")");
-		return false;
-	    }
-
-	    int r3 = write(dest_fd, block, t);
-	    if (r3 != t)
-	    {
-		y2err("write failed errno:" << errno << " (" << stringerror(errno) << ")");
-		return false;
-	    }
-
-	    length -= t;
+	    y2err("sendfile failed errno:" << errno << " (" << stringerror(errno) << ")");
 	}
 
-	return true;
+	return r2 >= 0;
     }
 
 
