@@ -384,6 +384,24 @@ namespace snapper
         return true;
     }
 
+    unsigned int
+    XAModification::getXaCreateNum() const
+    {
+        return this->operator[](XA_CREATE).size();
+    }
+
+    unsigned int
+    XAModification::getXaDeleteNum() const
+    {
+        return this->operator[](XA_DELETE).size();
+    }
+
+    unsigned int
+    XAModification::getXaReplaceNum() const
+    {
+        return this->operator[](XA_REPLACE).size();
+    }
+
     ostream&
     operator<<(ostream &out, const XAModification &xa_mod)
     {

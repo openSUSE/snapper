@@ -93,6 +93,11 @@ namespace snapper
 
             bool isEmpty() const;
             bool serializeTo(const string&) const;
+
+            unsigned int getXaCreateNum() const;
+            unsigned int getXaDeleteNum() const;
+            unsigned int getXaReplaceNum() const;
+
             xa_mod_citer cbegin() const { return xamodmap.begin(); };
             xa_mod_citer cend() const { return xamodmap.end(); };
 

@@ -590,7 +590,7 @@ namespace snapper
     }
 */
     bool
-    File::modifyXattributes() const
+    File::modifyXattributes()
     {
         bool ret_val;
 
@@ -601,6 +601,12 @@ namespace snapper
             XAModification xa_mod(xa_src, xa_dest);
             y2deb("xa_modmap(xa_dest) object: " << xa_mod);
 
+            xaCreated = xa_mod.getXaCreateNum();
+            xaDeleted = xa_mod.getXaDeleteNum();
+            xaReplaced = xa_mod.getXaReplaceNum();
+
+            y2deb("xaCreated:" << xaCreated << ",xaDeleted:" << xaDeleted << ",xaReplaced:" << xaReplaced);
+
             ret_val = xa_mod.serializeTo(getAbsolutePath(LOC_SYSTEM));
         }
         catch (XAttributesException xae) {
@@ -610,6 +616,42 @@ namespace snapper
         return ret_val;
     }
 
+    XAUndoStatistic& operator+=(XAUndoStatistic &out, const XAUndoStatistic &src)
+    {
+        out.numCreate += src.numCreate;
+        out.numDelete += src.numDelete;
+        out.numReplace += src.numReplace;
+
+        return out;
+    }
+
+    XAUndoStatistic
+    File::getXAUndoStatistic() const
+    {
+        XAUndoStatistic xs;
+
+        xs.numCreate = xaCreated;
+        xs.numDelete = xaDeleted;
+        xs.numReplace = xaReplaced;
+
+        return xs;
+    }
+
+    XAUndoStatistic
+    Files::getXAUndoStatistic() const
+    {
+        XAUndoStatistic xs;
+
+        for (vector<File>::const_iterator it = entries.begin(); it != entries.end(); ++it)
+        {
+            if (it->getUndo() && (it->getPreToPostStatus() & (DELETED | XATTRS | TYPE)))
+            {
+                xs += it->getXAUndoStatistic();
+            }
+        }
+
+        return xs;
+    }
 #endif
 
     bool
