@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper.km\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-17 12:33+0200\n"
+"POT-Creation-Date: 2013-02-25 10:44+0100\n"
 "PO-Revision-Date: 2011-10-24 10:40+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -16,360 +16,358 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "X-Language: km-KH\n"
 
-#: ../client/snapper.cc:475 ../client/snapper.cc:609
+#: ../client/snapper.cc:476 ../client/snapper.cc:610
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\tសម្អាត​អាល់កូរីត​សម្រាប់ snapshot ។"
 
-#: ../client/snapper.cc:477
+#: ../client/snapper.cc:478
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
 msgstr "\t--command <command>\tដំណើរការ​ពាក្យ​បញ្ជា និង​បង្កើត​រូបថត​មុន និង​ក្រោយ ។"
 
-#: ../client/snapper.cc:1146
+#: ../client/snapper.cc:1152
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <name>\t\tកំណត់​ឈ្មោះ​រចនាសម្ព័ន្ធ​ដែល​ត្រូវប្រើ ។"
 
-#: ../client/snapper.cc:474 ../client/snapper.cc:608
+#: ../client/snapper.cc:475 ../client/snapper.cc:609
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <description>\tសេចក្ដី​ពិពណ៌នា​អំពី​រូបថត ។"
 
-#: ../client/snapper.cc:245
+#: ../client/snapper.cc:246
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <fstype>\t\tកំណត់​ប្រភេទ​ប្រព័ន្ធ​ឯកសារ​ដោយ​ដៃ ។"
 
-#: ../client/snapper.cc:881
+#: ../client/snapper.cc:887
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr "\t--input, -i <file>\t\tអាន​ឯកសារ​ដែល​នឹង​មិន​ធ្វើ​ការ​ផ្លាស់ប្ដូរ​ឡើងវិញ​ពី​ឯកសារ ។"
 
-#: ../client/snapper.cc:772
+#: ../client/snapper.cc:773
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <file>\t\tរក្សា​ទុក​ស្ថានភាព​ទៅ​ក្នុង​ឯកសារ ។"
 
-#: ../client/snapper.cc:472
+#: ../client/snapper.cc:473
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <number>\t\tចំនួន​រូបថតពី​មុន​ដែល​ត្រូវ​គ្នា​ ។"
 
-#: ../client/snapper.cc:473
+#: ../client/snapper.cc:474
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
 msgstr "\t--print-number, -p\t\tបោះពុម្ព​ចំនួន​រូបថត​ដែល​បាន​បង្កើត​ ។"
 
-#: ../client/snapper.cc:1143
+#: ../client/snapper.cc:1149
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\tលុប​ទិន្នន័យ​ធម្មតា ។"
 
-#: ../client/snapper.cc:1145
+#: ../client/snapper.cc:1151
 msgid "\t--table-style, -t <style>\tTable style (integer)."
 msgstr "\t--table-style, -t <style>\tរចនាប័ទ្ម​តារាង​ (ចំនួន​គត់) ។"
 
-#: ../client/snapper.cc:246
+#: ../client/snapper.cc:247
 msgid "\t--template, -t <name>\t\tName of config template to use."
 msgstr "\t--template, -t <name>\t\tឈ្មោះ​ពុម្ព​នៃ​ការ​កំណត់​រចនាសម្ព័ន្ធ​ដែល​ត្រូវ​ប្រើ ។"
 
-#: ../client/snapper.cc:471
+#: ../client/snapper.cc:472
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <type>\t\tប្រភេទ​សម្រាប់​រូបថត ។"
 
-#: ../client/snapper.cc:325
+#: ../client/snapper.cc:326
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
 msgstr "\t--type, -t <type>\t\tប្រភេទ​រូបថត​ត្រូវ​រាយ ។"
 
-#: ../client/snapper.cc:476 ../client/snapper.cc:610
+#: ../client/snapper.cc:477 ../client/snapper.cc:611
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <userdata>\tទិន្នន័យ​​អ្នក​ប្រើ​សម្រាប់ snapshot ។"
 
-#: ../client/snapper.cc:1144
+#: ../client/snapper.cc:1150
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
 msgstr "\t--verbose, -v\t\t\tបង្កើន​ការ​បរិយាយ ។"
 
-#: ../client/snapper.cc:1147
+#: ../client/snapper.cc:1153
 msgid "\t--version\t\t\tPrint version and exit."
 msgstr "\t--version\t\t\tបោះ​ពុម្ព​កំណែ រួច​ចេញ ។"
 
-#: ../client/snapper.cc:1045
+#: ../client/snapper.cc:1051
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tសម្អាត​កម្មវិធី​ថត <cleanup-algorithm>"
 
-#: ../client/snapper.cc:468
+#: ../client/snapper.cc:469
 msgid "\tsnapper create"
 msgstr "\tការ​បង្កើត​កម្មវិធី​ថត"
 
-#: ../client/snapper.cc:242
+#: ../client/snapper.cc:243
 msgid "\tsnapper create-config <subvolume>"
 msgstr "\tការ​កំណត់​រចនាសម្ព័ន្ធ​នៃ​ការ​បង្កើត​កម្មវិធី​ថត <subvolume>"
 
-#: ../client/snapper.cc:659
+#: ../client/snapper.cc:660
 msgid "\tsnapper delete <number>"
 msgstr "\tលុប​កម្មវិធី​ថត <number>"
 
-#: ../client/snapper.cc:299
+#: ../client/snapper.cc:300
 msgid "\tsnapper delete-config"
 msgstr "\tsnapper delete-config"
 
-#: ../client/snapper.cc:824
+#: ../client/snapper.cc:825
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <number1>..<number2> [files]"
 
-#: ../client/snapper.cc:322
+#: ../client/snapper.cc:323
 msgid "\tsnapper list"
 msgstr "\tការ​រាយ​កម្មវិធី​ថត"
 
-#: ../client/snapper.cc:203
+#: ../client/snapper.cc:204
 msgid "\tsnapper list-configs"
 msgstr "\tការ​កំណត់​រចនាសម្ព័ន្ធ​នៃ​ការ​រាយ​កម្មវិធី​ថត"
 
-#: ../client/snapper.cc:605
+#: ../client/snapper.cc:606
 msgid "\tsnapper modify <number>"
 msgstr "\tការ​កែ​ប្រែ​កម្មវិធី​ថត <number>"
 
-#: ../client/snapper.cc:713
+#: ../client/snapper.cc:714
 msgid "\tsnapper mount <number>"
 msgstr "\tម៉ោន​កម្មវិធី​ថត <number>"
 
-#: ../client/snapper.cc:769
+#: ../client/snapper.cc:770
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tស្ថានភាព​កម្មវិធី​ថត <number1>..<number2>"
 
-#: ../client/snapper.cc:741
+#: ../client/snapper.cc:742
 msgid "\tsnapper umount <number>"
 msgstr "\tអាន់ម៉ោន​កម្មវិធី​ថត <number>"
 
-#: ../client/snapper.cc:878
+#: ../client/snapper.cc:884
 msgid "\tsnapper undochange <number1>..<number2> [files]"
 msgstr "\tមិន​ធ្វើ​ការ​ផ្លាស់ប្ដូរ​កម្មវិធី​ថត​ឡើង​វិញ <number1>..<number2> [files]"
 
-#: ../client/snapper.cc:1142
+#: ../client/snapper.cc:1148
 msgid "    Global options:"
 msgstr "    ជម្រើស​សកល ៖"
 
-#: ../client/snapper.cc:470
+#: ../client/snapper.cc:471
 msgid "    Options for 'create' command:"
 msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា​ 'create' ៖"
 
-#: ../client/snapper.cc:244
+#: ../client/snapper.cc:245
 msgid "    Options for 'create-config' command:"
 msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា 'create-config' ៖"
 
-#: ../client/snapper.cc:324
+#: ../client/snapper.cc:325
 msgid "    Options for 'list' command:"
 msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា 'list' ៖"
 
-#: ../client/snapper.cc:607
+#: ../client/snapper.cc:608
 msgid "    Options for 'modify' command:"
 msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា​ 'modify' ៖"
 
-#: ../client/snapper.cc:771
+#: ../client/snapper.cc:772
 msgid "    Options for 'status' command:"
 msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា 'status' ៖"
 
-#: ../client/snapper.cc:880
+#: ../client/snapper.cc:886
 msgid "    Options for 'undochange' command:"
 msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា 'undochange' ៖"
 
-#: ../client/snapper.cc:1044
+#: ../client/snapper.cc:1050
 msgid "  Cleanup snapshots:"
 msgstr "  សម្អាត​រូបថត ៖"
 
-#: ../client/snapper.cc:768 ../client/snapper.cc:823
+#: ../client/snapper.cc:769 ../client/snapper.cc:824
 msgid "  Comparing snapshots:"
 msgstr "  ការ​ប្រៀប​ធៀប​រូបថត ៖"
 
-#: ../client/snapper.cc:241
+#: ../client/snapper.cc:242
 msgid "  Create config:"
 msgstr "  បង្កើត​ការ​កំណត់​រចនាសម្ព័ន្ធ ៖"
 
-#: ../client/snapper.cc:467
+#: ../client/snapper.cc:468
 msgid "  Create snapshot:"
 msgstr "  បង្កើត​រូបថត ៖"
 
-#: ../client/snapper.cc:298
+#: ../client/snapper.cc:299
 msgid "  Delete config:"
 msgstr "  លុប​ការ​កំណត់​រចនាសម្ព័ន្ធ ៖"
 
-#: ../client/snapper.cc:658
+#: ../client/snapper.cc:659
 msgid "  Delete snapshot:"
 msgstr " លុប​រូបថត ៖"
 
-#: ../client/snapper.cc:202
+#: ../client/snapper.cc:203
 msgid "  List configs:"
 msgstr "  រាយ​ការ​កំណត់​រចនាសម្ព័ន្ធ​ ៖"
 
-#: ../client/snapper.cc:321
+#: ../client/snapper.cc:322
 msgid "  List snapshots:"
 msgstr "  រាយ​រូប​ថត ៖"
 
-#: ../client/snapper.cc:604
+#: ../client/snapper.cc:605
 msgid "  Modify snapshot:"
 msgstr "  កែប្រែ​រូប​ថត ៖"
 
-#: ../client/snapper.cc:712
+#: ../client/snapper.cc:713
 msgid "  Mount snapshot:"
 msgstr "  ម៉ោន​រូបថត ៖"
 
-#: ../client/snapper.cc:740
+#: ../client/snapper.cc:741
 msgid "  Umount snapshot:"
 msgstr "  អាន់ម៉ោន​រូបថត ៖"
 
-#: ../client/snapper.cc:877
+#: ../client/snapper.cc:883
 msgid "  Undo changes:"
 msgstr "  មិន​ធ្វើ​ការ​ផ្លាស់ប្ដូរ​ឡើង​វិញ ៖"
 
-#: ../client/snapper.cc:373 ../client/snapper.cc:402
+#: ../client/snapper.cc:374 ../client/snapper.cc:403
 msgid "#"
 msgstr "#"
 
-#: ../client/snapper.cc:377
+#: ../client/snapper.cc:378
 msgid "Cleanup"
 msgstr "Cleanup"
 
-#: ../client/snapper.cc:1060
+#: ../client/snapper.cc:1066
 msgid "Command 'cleanup' needs one arguments."
 msgstr "ពាក្យ​បញ្ជា 'cleanup' ត្រូវការ​អាគុយម៉ង់​មួយ។"
 
-#: ../client/snapper.cc:499
+#: ../client/snapper.cc:500
 msgid "Command 'create' does not take arguments."
 msgstr "ពាក្យ​បញ្ជា 'create' មិន​ត្រូវ​ការ​អាគុយម៉ង់ ។"
 
-#: ../client/snapper.cc:263
+#: ../client/snapper.cc:264
 msgid "Command 'create-config' needs one argument."
 msgstr "ពាក្យ​បញ្ជា​ 'create-config' ត្រូវ​ការ​អាគុយម៉ង់​មួយ ។"
 
-#: ../client/snapper.cc:1092
+#: ../client/snapper.cc:1098
 #, fuzzy
-#| msgid "Command 'help' does not take arguments."
 msgid "Command 'debug' does not take arguments."
 msgstr "ពាក្យ​បញ្ជា​ 'help' មិន​ត្រូវការ​អាគុយម៉ង់​ទេ ។"
 
-#: ../client/snapper.cc:670
+#: ../client/snapper.cc:671
 msgid "Command 'delete' needs at least one argument."
 msgstr "ពាក្យ​បញ្ជា​ 'delete' ត្រូវ​ការ​អាគុយម៉ង់​យ៉ាង​តិចមួយ ។"
 
-#: ../client/snapper.cc:310
+#: ../client/snapper.cc:311
 msgid "Command 'delete-config' does not take arguments."
 msgstr "ពាក្យ​បញ្ជា 'delete-config' មិន​ត្រូវការ​អាគុយម៉ង់​ទេ ។"
 
-#: ../client/snapper.cc:1135
+#: ../client/snapper.cc:836
+#, fuzzy
+msgid "Command 'diff' needs at least one argument."
+msgstr "ពាក្យ​បញ្ជា 'modify' ត្រូវការ​យ៉ាង​ហោចណាស់​អាគុយម៉ង់​មួយ ។"
+
+#: ../client/snapper.cc:1141
 msgid "Command 'help' does not take arguments."
 msgstr "ពាក្យ​បញ្ជា​ 'help' មិន​ត្រូវការ​អាគុយម៉ង់​ទេ ។"
 
-#: ../client/snapper.cc:341
+#: ../client/snapper.cc:342
 msgid "Command 'list' does not take arguments."
 msgstr "ពាក្យ​បញ្ជា​ 'list' មិន​ត្រូវការ​អាគុយម៉ង់​ទេ ។"
 
-#: ../client/snapper.cc:214
+#: ../client/snapper.cc:215
 msgid "Command 'list-configs' does not take arguments."
 msgstr "ពាក្យ​បញ្ជា​ 'list-configs' មិន​ត្រូវការ​អាគុយម៉ង់​ទេ ។"
 
-#: ../client/snapper.cc:629
+#: ../client/snapper.cc:630
 msgid "Command 'modify' needs at least one argument."
 msgstr "ពាក្យ​បញ្ជា 'modify' ត្រូវការ​យ៉ាង​ហោចណាស់​អាគុយម៉ង់​មួយ ។"
 
-#: ../client/snapper.cc:724 ../client/snapper.cc:752
+#: ../client/snapper.cc:725 ../client/snapper.cc:753
 msgid "Command 'mount' needs at least one argument."
 msgstr "ពាក្យ​បញ្ជា​ 'mount' ត្រូវការ​អាគុយម៉ង់​យ៉ាង​តិច​មួយ ។"
 
-#: ../client/snapper.cc:788
+#: ../client/snapper.cc:789
 msgid "Command 'status' needs one argument."
 msgstr "ពាក្យ​បញ្ជា​ 'status' ត្រូវ​ការ​អាគុយម៉ង់​មួយ ។"
 
-#: ../client/snapper.cc:897
+#: ../client/snapper.cc:903
 msgid "Command 'undochange' needs at least one argument."
 msgstr "ពាក្យ​បញ្ជា​ 'undochange' ត្រូវការ​អាគុយម៉ង់​យ៉ាងតិច​មួយ ។"
 
-#: ../client/snapper.cc:221
+#: ../client/snapper.cc:222
 msgid "Config"
 msgstr "កំណត់​រចនាសម្ព័ន្ធ"
 
-#: ../client/snapper.cc:1275
+#: ../client/snapper.cc:1281
 #, fuzzy
-#| msgid "Config '%s' not found."
 msgid "Config is in use."
 msgstr "រក​មិន​ឃើញ​ការ​កំណត់​រចនាសម្ព័ន្ធ '%s'  ។"
 
-#: ../client/snapper.cc:1273
+#: ../client/snapper.cc:1279
 #, fuzzy
-#| msgid "Config Dialog"
 msgid "Config is locked."
 msgstr "ប្រអប់​កំណត់​រចនា​សម្ព័ន្ធ"
 
-#: ../client/snapper.cc:1281
+#: ../client/snapper.cc:1289
 #, c-format
 msgid "Creating config failed (%s)."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
 
-#: ../client/snapper.cc:1285
+#: ../client/snapper.cc:1293
 #, fuzzy
-#| msgid "Creating config failed (%s)."
 msgid "Creating snapshot failed."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
 
-#: ../client/snapper.cc:375 ../client/snapper.cc:403
+#: ../client/snapper.cc:376 ../client/snapper.cc:404
 msgid "Date"
 msgstr "កាល​បរិច្ឆេទ"
 
-#: ../client/snapper.cc:1283
+#: ../client/snapper.cc:1291
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​លុប​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
 
-#: ../client/snapper.cc:1287
+#: ../client/snapper.cc:1295
 #, fuzzy
-#| msgid "Deleting the CA failed: %1."
 msgid "Deleting snapshot failed."
 msgstr "ការ​លុប CA បាន​បរាជ័យ ៖ %1 ។"
 
-#: ../client/snapper.cc:378 ../client/snapper.cc:405 ../client/snapper.cc:433
+#: ../client/snapper.cc:379 ../client/snapper.cc:406 ../client/snapper.cc:434
 msgid "Description"
 msgstr "សេចក្តី​ពិពណ៌នា"
 
-#: ../client/snapper.cc:287
+#: ../client/snapper.cc:288
 msgid "Detecting filesystem type failed."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​រក​ប្រភេទ​ប្រព័ន្ធ​ឯកសារ ។"
 
-#: ../client/snapper.cc:1289 ../client/snapper.cc:1294
+#: ../client/snapper.cc:1297 ../client/snapper.cc:1302
 msgid "Failure"
 msgstr "​បរាជ័យ"
 
-#: ../client/snapper.cc:951
+#: ../client/snapper.cc:957
 #, c-format
 msgid "File '%s' not found."
 msgstr "រក​មិន​ឃើញ​ឯកសារ '%s' ។"
 
 # error box title
-#: ../client/snapper.cc:1279
+#: ../client/snapper.cc:1287
 #, fuzzy
-#| msgid "I/O Error"
 msgid "IO Error."
 msgstr "កំហុស I/O"
 
-#: ../client/snapper.cc:90
+#: ../client/snapper.cc:91
 msgid "Identical snapshots."
 msgstr "រូបថត​ដូចគ្នា ។"
 
-#: ../client/snapper.cc:1271
+#: ../client/snapper.cc:1277
 #, fuzzy
-#| msgid "Invalid snapshot."
 msgid "Illegal Snapshot."
 msgstr "រូបថត​មិន​ត្រឹមត្រូវ ។"
 
-#: ../client/snapper.cc:67
+#: ../client/snapper.cc:68
 #, c-format
 msgid "Invalid snapshot '%s'."
 msgstr "រូបថត​មិន​ត្រឹមត្រូវ '%s' ។"
 
-#: ../client/snapper.cc:81 ../client/snapper.cc:919
+#: ../client/snapper.cc:82 ../client/snapper.cc:925
 msgid "Invalid snapshots."
 msgstr "រូបថត​មិន​ត្រឹមត្រូវ ។"
 
-#: ../client/snapper.cc:270
+#: ../client/snapper.cc:271
 msgid "Invalid subvolume."
 msgstr "ភាគ​រង​មិន​ត្រឹមត្រូវ ។"
 
-#: ../client/snapper.cc:1219
+#: ../client/snapper.cc:1225
 #, c-format
 msgid "Invalid table style %d."
 msgstr "រចនាប័ទ្ម​តារាង %d មិន​ត្រឹមត្រូវ ។"
 
-#: ../client/snapper.cc:107 ../client/snapper.cc:116 ../client/snapper.cc:125
-#: ../client/snapper.cc:1269
+#: ../client/snapper.cc:108 ../client/snapper.cc:117 ../client/snapper.cc:126
+#: ../client/snapper.cc:1275
 msgid "Invalid userdata."
 msgstr "ទិន្នន័យ​អ្នក​ប្រើ​មិន​ត្រឹមត្រូវ ។"
 
@@ -383,79 +381,80 @@ msgstr "បាត់​អាគុយម៉ង់​សម្រាប់​ជ
 msgid "Missing argument for global option '%s'."
 msgstr "បាត់​អាគុយម៉ង់​សម្រាប់​ជម្រើស​សកល '%s' ។"
 
-#: ../client/snapper.cc:561
+#: ../client/snapper.cc:562
 msgid "Missing command argument."
 msgstr "បាត់​អាគុយម៉ង់​ពាក្យ​បញ្ជា ។"
 
-#: ../client/snapper.cc:555
+#: ../client/snapper.cc:556
 msgid "Missing or invalid pre-number."
 msgstr "បាត់ ឬ​លេខ​មុន​មិន​ត្រឹមត្រូវ ។"
 
-#: ../client/snapper.cc:1242
+#: ../client/snapper.cc:1248
 msgid "No command provided."
 msgstr "មិន​បាន​ផ្ដល់​ពាក្យ​បញ្ជា ។"
 
-#: ../client/snapper.cc:1267
+#: ../client/snapper.cc:1273
 #, fuzzy
-#| msgid "(owner permissions off)"
 msgid "No permissions."
 msgstr "(បិទ​សិទ្ធិ​ជា​​ម្ចាស់)"
 
-#: ../client/snapper.cc:806 ../client/snapper.cc:912
+#: ../client/snapper.cc:807 ../client/snapper.cc:918
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បើក​ឯកសារ '%s' ។"
 
-#: ../client/snapper.cc:430
+#: ../client/snapper.cc:431
 msgid "Post #"
 msgstr "លេខ​ក្រោយ"
 
-#: ../client/snapper.cc:432
+#: ../client/snapper.cc:433
 msgid "Post Date"
 msgstr "កាល​បរិច្ឆេទ​ក្រោយ"
 
-#: ../client/snapper.cc:374 ../client/snapper.cc:429
+#: ../client/snapper.cc:375 ../client/snapper.cc:430
 msgid "Pre #"
 msgstr "លេខ​មុន"
 
-#: ../client/snapper.cc:431
+#: ../client/snapper.cc:432
 msgid "Pre Date"
 msgstr "កាលបរិច្ឆេទ​មុន"
 
-#: ../client/snapper.cc:222
+#: ../client/snapper.cc:1283
+#, fuzzy
+msgid "Snapshot is in use."
+msgstr "រក​មិន​ឃើញ​ការ​កំណត់​រចនាសម្ព័ន្ធ '%s'  ។"
+
+#: ../client/snapper.cc:223
 msgid "Subvolume"
 msgstr "ភាគ​រង"
 
-#: ../client/snapper.cc:1243 ../client/snapper.cc:1252
+#: ../client/snapper.cc:1249 ../client/snapper.cc:1258
 #: ../client/utils/GetOpts.cc:61 ../client/utils/GetOpts.cc:69
 #, fuzzy
-#| msgid "Try 'snapper help' for more information."
 msgid "Try 'snapper --help' for more information."
 msgstr "ចំពោះ​ព័ត៌មាន​បន្ថែម​ សូម​អាន 'ជំនួយ​របស់​កម្មវិធី​ថត' ។"
 
-#: ../client/snapper.cc:372
+#: ../client/snapper.cc:373
 msgid "Type"
 msgstr "ប្រភេទ"
 
-#: ../client/snapper.cc:1080
+#: ../client/snapper.cc:1086
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
 msgstr "មិន​ស្គាល់​ក្បួន​ដោះស្រាយ​ការ​សម្អាត '%s' ។"
 
-#: ../client/snapper.cc:1251
+#: ../client/snapper.cc:1257
 #, c-format
 msgid "Unknown command '%s'."
 msgstr "មិន​ស្គាល់​ពាក្យ​បញ្ជា '%s' ។"
 
-#: ../client/snapper.cc:1265
+#: ../client/snapper.cc:1271
 #, fuzzy
-#| msgid "Unknown command"
 msgid "Unknown config."
 msgstr "ពាក្យបញ្ជា​ដែល​មិនស្គាល់"
 
-#: ../client/snapper.cc:1277
+#: ../client/snapper.cc:1285
 #, fuzzy
-#| msgid "Unknown type."
 msgid "Unknown file."
 msgstr "មិន​ស្គាល់​ប្រភេទ ។"
 
@@ -469,71 +468,69 @@ msgstr "មិន​ស្គាល់​ជម្រើស​សកល '%s' ។
 msgid "Unknown option '%s' for command '%s'."
 msgstr "មិន​ស្គាល់​ជម្រើស​ '%s' សម្រាប់​ពាក្យ​បញ្ជា '%s' ។"
 
-#: ../client/snapper.cc:527
+#: ../client/snapper.cc:528
 msgid "Unknown type of snapshot."
 msgstr "មិន​ស្គាល់​ប្រភេទ​រូបថត ។"
 
-#: ../client/snapper.cc:360
+#: ../client/snapper.cc:361
 msgid "Unknown type of snapshots."
 msgstr "មិន​ស្គាល់​ប្រភេទ​រូបថត ​​។"
 
-#: ../client/snapper.cc:1220
+#: ../client/snapper.cc:1226
 #, c-format
 msgid "Use an integer number from %d to %d"
 msgstr "ប្រើ​លេខ​ចំនួន​គត់​ពី %d ដល់ %d"
 
-#: ../client/snapper.cc:376 ../client/snapper.cc:404
+#: ../client/snapper.cc:377 ../client/snapper.cc:405
 #, fuzzy
-#| msgid "Userdata"
 msgid "User"
 msgstr "ទិន្នន័យ​អ្នកប្រើ"
 
-#: ../client/snapper.cc:379 ../client/snapper.cc:406 ../client/snapper.cc:434
+#: ../client/snapper.cc:380 ../client/snapper.cc:407 ../client/snapper.cc:435
 msgid "Userdata"
 msgstr "ទិន្នន័យ​អ្នកប្រើ"
 
-#: ../client/snapper.cc:986
+#: ../client/snapper.cc:992
 #, c-format
 msgid "create:%d modify:%d delete:%d"
 msgstr ""
 
-#: ../client/snapper.cc:1011
+#: ../client/snapper.cc:1017
 #, c-format
 msgid "creating %s"
 msgstr "កំពុង​បង្កើត %s"
 
-#: ../client/snapper.cc:1017
+#: ../client/snapper.cc:1023
 #, c-format
 msgid "deleting %s"
 msgstr "កំពុង​លុប %s"
 
-#: ../client/snapper.cc:1027
+#: ../client/snapper.cc:1033
 #, c-format
 msgid "failed to create %s"
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត %s"
 
-#: ../client/snapper.cc:1033
+#: ../client/snapper.cc:1039
 #, c-format
 msgid "failed to delete %s"
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​លុប %s"
 
-#: ../client/snapper.cc:1030
+#: ../client/snapper.cc:1036
 #, c-format
 msgid "failed to modify %s"
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​កែប្រែ %s"
 
-#: ../client/snapper.cc:1014
+#: ../client/snapper.cc:1020
 #, c-format
 msgid "modifying %s"
 msgstr "កំពុង​កែប្រែ %s"
 
-#: ../client/snapper.cc:982
+#: ../client/snapper.cc:988
 #, fuzzy
-#| msgid "Nothing to do."
 msgid "nothing to do"
 msgstr "គ្មាន​អ្វី​ត្រូវ​ធ្វើ ។"
 
-#: ../client/snapper.cc:1139
+#: ../client/snapper.cc:1145
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "ការ​ប្រើប្រាស់ ៖ កម្មវិធី​ថតរូប [--global-options] <command> [--command-options] [command-arguments]"
 

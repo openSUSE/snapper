@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-25 10:44+0100\n"
-"PO-Revision-Date: 2013-02-21 14:40\n"
+"PO-Revision-Date: 2013-02-22 09:07\n"
 "Last-Translator: Novell Language <language@novell.com>\n"
 "Language-Team: Novell Language <language@novell.com>\n"
 "Language: \n"
@@ -16,75 +16,75 @@ msgstr ""
 
 #: ../client/snapper.cc:476 ../client/snapper.cc:610
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <алгоритм>\tАлгоритм очистки для снимка."
+msgstr "\t--cleanup-algorithm, -c <algo>\t스냅샷에 대한 정리 알고리즘."
 
 #: ../client/snapper.cc:478
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
-msgstr "\t--command <команда>\tЗапустить команду и создать пред- и постснимок."
+msgstr "\t--command <command>\t명령을 실행하고 사전 및 사후 스냅샷을 생성합니다."
 
 #: ../client/snapper.cc:1152
 msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <имя>\t\tУкажите имя используемой конфигурации."
+msgstr "\t--config, -c <name>\t\t사용할 구성의 이름을 설정합니다."
 
 #: ../client/snapper.cc:475 ../client/snapper.cc:609
 msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <описание>\tОписание снимка состояния."
+msgstr "\t--description, -d <description>\t스냅샷에 대한 설명입니다."
 
 #: ../client/snapper.cc:246
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--fstype, -f <тип файловой системы>\t\tЗадать тип файловой системы вручную."
+msgstr "\t--fstype, -f <fstype>\t\t파일 시스템 유형을 수동으로 설정합니다."
 
 #: ../client/snapper.cc:887
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <файл>\t\tПрочитать файлы для отмены изменений в них."
+msgstr "\t--input, -i <file>\t\t파일에서 변경을 취소할 파일을 읽습니다."
 
 #: ../client/snapper.cc:773
 msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <файл>\t\tСохранить состояние в файл."
+msgstr "\t--output, -o <file>\t\t상태를 파일에 저장합니다."
 
 #: ../client/snapper.cc:473
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <число>\t\tНомер соответствующего снимка предшествующего состояния."
+msgstr "\t--pre-number <number>\t\t해당되는 사전 스냅샷 수."
 
 #: ../client/snapper.cc:474
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tВывести номер созданного снимка состояния."
+msgstr "\t--print-number, -p\t\t생성된 스냅샷의 번호를 입쇄합니다."
 
 #: ../client/snapper.cc:1149
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\tПодавить нормальный вывод."
+msgstr "\t--quiet, -q\t\t\t정상적인 출력을 억제합니다."
 
 #: ../client/snapper.cc:1151
 msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <стиль>\tСтиль таблицы (целое число)."
+msgstr "\t--table-style, -t <style>\t테이블 스타일(정수)."
 
 #: ../client/snapper.cc:247
 msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <имя>\t\tИмя используемого шаблона конфигурации."
+msgstr "\t--template, -t <name>\t\t사용할 구성 템플릿의 이름."
 
 #: ../client/snapper.cc:472
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <тип>\t\tТип снимка состояния."
+msgstr "\t--type, -t <type>\t\t스냅샷 유형."
 
 #: ../client/snapper.cc:326
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <тип>\t\tТип снимков состояния, выводимых в списке."
+msgstr "\t--type, -t <type>\t\t나열할 스냅샷 유형."
 
 #: ../client/snapper.cc:477 ../client/snapper.cc:611
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <данные-пользователя>\tДанные пользователя для снимка."
+msgstr "\t--userdata, -u <userdata>\t스냅샷용 사용자 데이터."
 
 #: ../client/snapper.cc:1150
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tУвеличить уровень детализации."
+msgstr "\t--verbose, -v\t\t\t자세한 표시 수준을 증가시킵니다."
 
 #: ../client/snapper.cc:1153
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tВывести версию программы и выйти."
+msgstr "\t--version\t\t\t버전을 인쇄하고 종료합니다."
 
 #: ../client/snapper.cc:1051
 msgid "\tsnapper cleanup <cleanup-algorithm>"
-msgstr "\tsnapper cleanup <алгоритм очистки>"
+msgstr "\tsnapper cleanup <cleanup-algorithm>"
 
 #: ../client/snapper.cc:469
 msgid "\tsnapper create"
@@ -92,11 +92,11 @@ msgstr "\tsnapper create"
 
 #: ../client/snapper.cc:243
 msgid "\tsnapper create-config <subvolume>"
-msgstr "\tsnapper create-config <подтом>"
+msgstr "\tsnapper create-config <subvolume>"
 
 #: ../client/snapper.cc:660
 msgid "\tsnapper delete <number>"
-msgstr "\tsnapper delete <число>"
+msgstr "\tsnapper delete <number>"
 
 #: ../client/snapper.cc:300
 msgid "\tsnapper delete-config"
@@ -104,7 +104,7 @@ msgstr "\tsnapper delete-config"
 
 #: ../client/snapper.cc:825
 msgid "\tsnapper diff <number1>..<number2> [files]"
-msgstr "\tsnapper diff <число1>..<число2> [файлы]"
+msgstr "\tsnapper diff <number1>..<number2> [files]"
 
 #: ../client/snapper.cc:323
 msgid "\tsnapper list"
@@ -116,99 +116,99 @@ msgstr "\tsnapper list-configs"
 
 #: ../client/snapper.cc:606
 msgid "\tsnapper modify <number>"
-msgstr "\tsnapper modify <число>"
+msgstr "\tsnapper modify <number>"
 
 #: ../client/snapper.cc:714
 msgid "\tsnapper mount <number>"
-msgstr "\tsnapper mount <число>"
+msgstr "\tsnapper mount <number>"
 
 #: ../client/snapper.cc:770
 msgid "\tsnapper status <number1>..<number2>"
-msgstr "\tsnapper status <число1>..<число2>"
+msgstr "\tsnapper status <number1>..<number2>"
 
 #: ../client/snapper.cc:742
 msgid "\tsnapper umount <number>"
-msgstr "\tsnapper umount <число>"
+msgstr "\tsnapper umount <number>"
 
 #: ../client/snapper.cc:884
 msgid "\tsnapper undochange <number1>..<number2> [files]"
-msgstr "\tsnapper undochange <число1>...<число2> [файлы]"
+msgstr "\tsnapper undochange <number1>..<number2> [files]"
 
 #: ../client/snapper.cc:1148
 msgid "    Global options:"
-msgstr "    Общие параметры:"
+msgstr "    전역 옵션:"
 
 #: ../client/snapper.cc:471
 msgid "    Options for 'create' command:"
-msgstr "    Параметры команды \"create\":"
+msgstr "    'create' 명령에 대한 옵션:"
 
 #: ../client/snapper.cc:245
 msgid "    Options for 'create-config' command:"
-msgstr "    Параметры команды \"create-config\":"
+msgstr "    'create-config' 명령에 대한 옵션:"
 
 #: ../client/snapper.cc:325
 msgid "    Options for 'list' command:"
-msgstr "    Параметры команды \"list\":"
+msgstr "    'list' 명령에 대한 옵션:"
 
 #: ../client/snapper.cc:608
 msgid "    Options for 'modify' command:"
-msgstr "    Параметры команды \"modify\":"
+msgstr "    'modify' 명령에 대한 옵션:"
 
 #: ../client/snapper.cc:772
 msgid "    Options for 'status' command:"
-msgstr "    Параметры команды \"status\":"
+msgstr "    'status' 명령 옵션:"
 
 #: ../client/snapper.cc:886
 msgid "    Options for 'undochange' command:"
-msgstr "    Параметры команды \"undochange\":"
+msgstr "    'undochange' 명령에 대한 옵션:"
 
 #: ../client/snapper.cc:1050
 msgid "  Cleanup snapshots:"
-msgstr "  Очистка снимков состояния:"
+msgstr "  스냅샷 정리:"
 
 #: ../client/snapper.cc:769 ../client/snapper.cc:824
 msgid "  Comparing snapshots:"
-msgstr "  Очистка снимков состояния:"
+msgstr "  스냅샷 비교:"
 
 #: ../client/snapper.cc:242
 msgid "  Create config:"
-msgstr "  Создание конфигурации:"
+msgstr "  구성 생성:"
 
 #: ../client/snapper.cc:468
 msgid "  Create snapshot:"
-msgstr "  Создание снимка состояния:"
+msgstr "  스냅샷 생성:"
 
 #: ../client/snapper.cc:299
 msgid "  Delete config:"
-msgstr "  Удалить конфигурацию:"
+msgstr "  구성 삭제:"
 
 #: ../client/snapper.cc:659
 msgid "  Delete snapshot:"
-msgstr "  Удаление снимка состояния:"
+msgstr "  스냅샷 삭제:"
 
 #: ../client/snapper.cc:203
 msgid "  List configs:"
-msgstr "  Список конфигураций:"
+msgstr "  구성 나열:"
 
 #: ../client/snapper.cc:322
 msgid "  List snapshots:"
-msgstr "  Список снимков состояния:"
+msgstr "  스냅샷 나열:"
 
 #: ../client/snapper.cc:605
 msgid "  Modify snapshot:"
-msgstr "  Изменение снимка состояния:"
+msgstr "  스냅샷 수정:"
 
 #: ../client/snapper.cc:713
 msgid "  Mount snapshot:"
-msgstr "  Монтирование снимка состояния:"
+msgstr "  스냅샷 마운트:"
 
 #: ../client/snapper.cc:741
 msgid "  Umount snapshot:"
-msgstr "  Размонтирование снимка состояния:"
+msgstr "  스냅샷 마운트 해제:"
 
 #: ../client/snapper.cc:883
 msgid "  Undo changes:"
-msgstr "  Отмена изменений:"
+msgstr "  변경 취소:"
 
 #: ../client/snapper.cc:374 ../client/snapper.cc:403
 msgid "#"
@@ -216,302 +216,302 @@ msgstr "#"
 
 #: ../client/snapper.cc:378
 msgid "Cleanup"
-msgstr "Очистка"
+msgstr "정리"
 
 #: ../client/snapper.cc:1066
 msgid "Command 'cleanup' needs one arguments."
-msgstr "Команде \"cleanup\" нужен один аргумент."
+msgstr "'cleanup' 명령에 하나의 인수가 필요합니다."
 
 #: ../client/snapper.cc:500
 msgid "Command 'create' does not take arguments."
-msgstr "Команде \"create\" не нужны аргументы."
+msgstr "'create' 명령은 인수를 사용하지 않습니다."
 
 #: ../client/snapper.cc:264
 msgid "Command 'create-config' needs one argument."
-msgstr "Команде \"create-config\" нужен один аргумент."
+msgstr "'create-config' 명령에 하나의 인수가 필요합니다."
 
 #: ../client/snapper.cc:1098
 msgid "Command 'debug' does not take arguments."
-msgstr "Команде \"debug\" не нужны аргументы."
+msgstr "'debug' 명령은 인수를 사용하지 않습니다."
 
 #: ../client/snapper.cc:671
 msgid "Command 'delete' needs at least one argument."
-msgstr "Команде \"delete\" нужен хотя бы один аргумент."
+msgstr "'delete' 명령에 하나 이상의 인수가 필요합니다."
 
 #: ../client/snapper.cc:311
 msgid "Command 'delete-config' does not take arguments."
-msgstr "Команде \"delete-config\" не нужны аргументы."
+msgstr "'delete-config' 명령은 인수를 사용하지 않습니다."
 
 #: ../client/snapper.cc:836
 msgid "Command 'diff' needs at least one argument."
-msgstr "Команде \"diff\" нужен хотя бы один аргумент."
+msgstr "'diff' 명령에 하나 이상의 인수가 필요합니다."
 
 #: ../client/snapper.cc:1141
 msgid "Command 'help' does not take arguments."
-msgstr "Команде \"help\" не нужны аргументы."
+msgstr "'help' 명령은 인수를 사용하지 않습니다."
 
 #: ../client/snapper.cc:342
 msgid "Command 'list' does not take arguments."
-msgstr "Команде \"list\" не нужны аргументы."
+msgstr "'list' 명령은 인수를 사용하지 않습니다."
 
 #: ../client/snapper.cc:215
 msgid "Command 'list-configs' does not take arguments."
-msgstr "Команде \"list-configs\" не нужны аргументы."
+msgstr "'list-configs' 명령은 인수를 사용하지 않습니다."
 
 #: ../client/snapper.cc:630
 msgid "Command 'modify' needs at least one argument."
-msgstr "Команде \"modify\" нужен хотя бы один аргумент."
+msgstr "'modify' 명령에 하나 이상의 인수가 필요합니다."
 
 #: ../client/snapper.cc:725 ../client/snapper.cc:753
 msgid "Command 'mount' needs at least one argument."
-msgstr "Команде \"mount\" нужен хотя бы один аргумент."
+msgstr "'mount' 명령에 하나 이상의 인수가 필요합니다."
 
 #: ../client/snapper.cc:789
 msgid "Command 'status' needs one argument."
-msgstr "Команде \"status\" нужен один аргумент."
+msgstr "'status' 명령에 하나의 인수가 필요합니다."
 
 #: ../client/snapper.cc:903
 msgid "Command 'undochange' needs at least one argument."
-msgstr "Команде \"undochange\" нужен хотя бы один аргумент."
+msgstr "'undochange' 명령에 하나 이상의 인수가 필요합니다."
 
 #: ../client/snapper.cc:222
 msgid "Config"
-msgstr "Конфигурация"
+msgstr "구성"
 
 #: ../client/snapper.cc:1281
 msgid "Config is in use."
-msgstr "Конфигурация используется."
+msgstr "구성이 사용 중입니다."
 
 #: ../client/snapper.cc:1279
 msgid "Config is locked."
-msgstr "Конфигурация заблокирована."
+msgstr "구성이 잠겼습니다."
 
 #: ../client/snapper.cc:1289
 #, c-format
 msgid "Creating config failed (%s)."
-msgstr "Сбой при создании конфигурации (%s)."
+msgstr "구성 생성 실패(%s)."
 
 #: ../client/snapper.cc:1293
 msgid "Creating snapshot failed."
-msgstr "Не удалось сделать снимок."
+msgstr "스냅샷을 생성하지 못했습니다."
 
 #: ../client/snapper.cc:376 ../client/snapper.cc:404
 msgid "Date"
-msgstr "Дата"
+msgstr "날짜"
 
 #: ../client/snapper.cc:1291
 #, c-format
 msgid "Deleting config failed (%s)."
-msgstr "Сбой при удалении конфигурации (%s)."
+msgstr "구성을 삭제하지 못했습니다(%s)."
 
 #: ../client/snapper.cc:1295
 msgid "Deleting snapshot failed."
-msgstr "Не удалось удалить снимок."
+msgstr "스냅샷을 삭제하지 못했습니다."
 
 #: ../client/snapper.cc:379 ../client/snapper.cc:406 ../client/snapper.cc:434
 msgid "Description"
-msgstr "Описание"
+msgstr "설명"
 
 #: ../client/snapper.cc:288
 msgid "Detecting filesystem type failed."
-msgstr "Сбой при определении типа файловой системы."
+msgstr "파일 시스템 유형을 감지하지 못했습니다."
 
 #: ../client/snapper.cc:1297 ../client/snapper.cc:1302
 msgid "Failure"
-msgstr "Сбой"
+msgstr "실패"
 
 #: ../client/snapper.cc:957
 #, c-format
 msgid "File '%s' not found."
-msgstr "Файл \"%s\" не найден."
+msgstr "'%s' 파일을 찾을 수 없습니다."
 
 #: ../client/snapper.cc:1287
 msgid "IO Error."
-msgstr "Ошибка ввода/вывода."
+msgstr "IO 오류."
 
 #: ../client/snapper.cc:91
 msgid "Identical snapshots."
-msgstr "Снимки состояния идентичны."
+msgstr "동일한 스냅샷."
 
 #: ../client/snapper.cc:1277
 msgid "Illegal Snapshot."
-msgstr "Некорректный снимок."
+msgstr "잘못된 스냅샷입니다."
 
 #: ../client/snapper.cc:68
 #, c-format
 msgid "Invalid snapshot '%s'."
-msgstr "Недопустимый снимок состояния: \"%s\"."
+msgstr "'%s' 스냅샷이 잘못되었습니다."
 
 #: ../client/snapper.cc:82 ../client/snapper.cc:925
 msgid "Invalid snapshots."
-msgstr "Недопустимые снимки состояния."
+msgstr "스냅샷이 잘못되었습니다."
 
 #: ../client/snapper.cc:271
 msgid "Invalid subvolume."
-msgstr "Недопустимый подтом."
+msgstr "하위 볼륨이 잘못되었습니다."
 
 #: ../client/snapper.cc:1225
 #, c-format
 msgid "Invalid table style %d."
-msgstr "Недопустимый стиль таблицы %d."
+msgstr "테이블 스타일 %d이(가) 잘못되었습니다."
 
 #: ../client/snapper.cc:108 ../client/snapper.cc:117 ../client/snapper.cc:126
 #: ../client/snapper.cc:1275
 msgid "Invalid userdata."
-msgstr "Неверные данные пользователя."
+msgstr "잘못된 사용자 데이터입니다."
 
 #: ../client/utils/GetOpts.cc:68
 #, c-format
 msgid "Missing argument for command option '%s'."
-msgstr "Отсутствует аргумент для параметра команды \"%s\"."
+msgstr "명령 옵션 '%s'에 대한 인수가 누락되었습니다."
 
 #: ../client/utils/GetOpts.cc:66
 #, c-format
 msgid "Missing argument for global option '%s'."
-msgstr "Отсутствует аргумент для общего параметра \"%s\"."
+msgstr "전역 옵션 '%s'에 대한 인수가 누락되었습니다."
 
 #: ../client/snapper.cc:562
 msgid "Missing command argument."
-msgstr "Отсутствует аргумент команды."
+msgstr "명령 인수가 누락되었습니다."
 
 #: ../client/snapper.cc:556
 msgid "Missing or invalid pre-number."
-msgstr "Номер предварительного снимка отсутствует или недопустим."
+msgstr "사전 번호가 누락되었거나 잘못되었습니다."
 
 #: ../client/snapper.cc:1248
 msgid "No command provided."
-msgstr "Не указана команда."
+msgstr "제공된 명령이 없습니다."
 
 #: ../client/snapper.cc:1273
 msgid "No permissions."
-msgstr "Нет разрешений."
+msgstr "권한 없음."
 
 #: ../client/snapper.cc:807 ../client/snapper.cc:918
 #, c-format
 msgid "Opening file '%s' failed."
-msgstr "Сбой при открытии файла \"%s\"."
+msgstr "'%s' 파일을 열지 못했습니다."
 
 #: ../client/snapper.cc:431
 msgid "Post #"
-msgstr "№ последующего снимка"
+msgstr "사후 번호"
 
 #: ../client/snapper.cc:433
 msgid "Post Date"
-msgstr "Дата последующего снимка"
+msgstr "게시 날짜"
 
 #: ../client/snapper.cc:375 ../client/snapper.cc:430
 msgid "Pre #"
-msgstr "№ предварительного снимка"
+msgstr "사전 번호"
 
 #: ../client/snapper.cc:432
 msgid "Pre Date"
-msgstr "Дата предварительного снимка"
+msgstr "사전 날짜"
 
 #: ../client/snapper.cc:1283
 msgid "Snapshot is in use."
-msgstr "Снимок уже используется."
+msgstr "스냅샷이 사용 중입니다."
 
 #: ../client/snapper.cc:223
 msgid "Subvolume"
-msgstr "Подтом"
+msgstr "하위 볼륨"
 
 #: ../client/snapper.cc:1249 ../client/snapper.cc:1258
 #: ../client/utils/GetOpts.cc:61 ../client/utils/GetOpts.cc:69
 msgid "Try 'snapper --help' for more information."
-msgstr "Чтобы получить больше сведений, выполните команду \"snapper --help\"."
+msgstr "자세한 내용을 보려면 'snapper --help'를 실행하십시오."
 
 #: ../client/snapper.cc:373
 msgid "Type"
-msgstr "Тип"
+msgstr "유형"
 
 #: ../client/snapper.cc:1086
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
-msgstr "Неизвестный алгоритм очистки \"%s\"."
+msgstr "알 수 없는 정리 알고리즘 '%s'입니다."
 
 #: ../client/snapper.cc:1257
 #, c-format
 msgid "Unknown command '%s'."
-msgstr "Неизвестная команда \"%s\"."
+msgstr "알 수 없는 명령 '%s'."
 
 #: ../client/snapper.cc:1271
 msgid "Unknown config."
-msgstr "Неизвестная конфигурация."
+msgstr "알 수 없는 구성입니다."
 
 #: ../client/snapper.cc:1285
 msgid "Unknown file."
-msgstr "Неизвестный файл."
+msgstr "알 수 없는 파일입니다."
 
 #: ../client/utils/GetOpts.cc:58
 #, c-format
 msgid "Unknown global option '%s'."
-msgstr "Неизвестный общий параметр \"%s\"."
+msgstr "알 수 없는 전역 옵션 '%s'."
 
 #: ../client/utils/GetOpts.cc:60
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
-msgstr "Неизвестный параметр \"%s\" для команды \"%s\"."
+msgstr "알 수 없는 옵션 '%s' - '%s' 명령."
 
 #: ../client/snapper.cc:528
 msgid "Unknown type of snapshot."
-msgstr "Неизвестный тип снимка состояния."
+msgstr "알 수 없는 스냅샷 유형입니다."
 
 #: ../client/snapper.cc:361
 msgid "Unknown type of snapshots."
-msgstr "Неизвестный тип снимков состояния"
+msgstr "알 수 없는 스냅샷 유형입니다."
 
 #: ../client/snapper.cc:1226
 #, c-format
 msgid "Use an integer number from %d to %d"
-msgstr "Используйте целое число от %d до %d"
+msgstr "%d에서 %d까지 정수 사용"
 
 #: ../client/snapper.cc:377 ../client/snapper.cc:405
 msgid "User"
-msgstr "Пользователь"
+msgstr "사용자"
 
 #: ../client/snapper.cc:380 ../client/snapper.cc:407 ../client/snapper.cc:435
 msgid "Userdata"
-msgstr "Данные пользователя"
+msgstr "사용자 데이터"
 
 #: ../client/snapper.cc:992
 #, c-format
 msgid "create:%d modify:%d delete:%d"
-msgstr "создать:%d изменить:%d удалить:%d"
+msgstr "생성:%d 수정:%d 삭제:%d"
 
 #: ../client/snapper.cc:1017
 #, c-format
 msgid "creating %s"
-msgstr "создание %s"
+msgstr "%s 생성 중"
 
 #: ../client/snapper.cc:1023
 #, c-format
 msgid "deleting %s"
-msgstr "удаление %s"
+msgstr "%s 삭제 중"
 
 #: ../client/snapper.cc:1033
 #, c-format
 msgid "failed to create %s"
-msgstr "сбой при создании %s"
+msgstr "%s을(를) 생성하지 못했습니다."
 
 #: ../client/snapper.cc:1039
 #, c-format
 msgid "failed to delete %s"
-msgstr "сбой при удалении %s"
+msgstr "%s을(를) 삭제하지 못했습니다."
 
 #: ../client/snapper.cc:1036
 #, c-format
 msgid "failed to modify %s"
-msgstr "сбой при изменении %s"
+msgstr "%s을(를) 수정하지 못했습니다."
 
 #: ../client/snapper.cc:1020
 #, c-format
 msgid "modifying %s"
-msgstr "изменение %s"
+msgstr "%s 수정 중"
 
 #: ../client/snapper.cc:988
 msgid "nothing to do"
-msgstr "нечего выполнять"
+msgstr "수행할 작업 없음"
 
 #: ../client/snapper.cc:1145
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "использование: snapper [--общие-параметры] <команда> [--параметры-команды] [аргументы-команды]"
+msgstr "사용법: snapper [--global-options] <command> [--command-options] [command-arguments]"

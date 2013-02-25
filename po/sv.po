@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-25 10:44+0100\n"
-"PO-Revision-Date: 2013-02-21 14:40\n"
+"PO-Revision-Date: 2013-02-21 14:42\n"
 "Last-Translator: Novell Language <language@novell.com>\n"
 "Language-Team: Novell Language <language@novell.com>\n"
 "Language: \n"
@@ -16,75 +16,75 @@ msgstr ""
 
 #: ../client/snapper.cc:476 ../client/snapper.cc:610
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <алгоритм>\tАлгоритм очистки для снимка."
+msgstr "\t--cleanup-algorithm, -c <algoritm>\tUpprensningsalgoritm för ögonblicksbild."
 
 #: ../client/snapper.cc:478
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
-msgstr "\t--command <команда>\tЗапустить команду и создать пред- и постснимок."
+msgstr "\t--command <kommando>\tKör kommandot och skapa före- och efter-ögonblicksbilder."
 
 #: ../client/snapper.cc:1152
 msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <имя>\t\tУкажите имя используемой конфигурации."
+msgstr "\t--config, -c <namn>\t\tAnge namnet på den konfiguration som ska användas."
 
 #: ../client/snapper.cc:475 ../client/snapper.cc:609
 msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <описание>\tОписание снимка состояния."
+msgstr "\t--description, -d <beskrivning>\tBeskrivning av ögonblicksbild."
 
 #: ../client/snapper.cc:246
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--fstype, -f <тип файловой системы>\t\tЗадать тип файловой системы вручную."
+msgstr "\t--fstype, -f <fstyp>\t\tAnge filsystemtyp manuellt."
 
 #: ../client/snapper.cc:887
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <файл>\t\tПрочитать файлы для отмены изменений в них."
+msgstr "\t--input, -i <fil>\t\tLäs filer som ändringar ska ångras för från filen."
 
 #: ../client/snapper.cc:773
 msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <файл>\t\tСохранить состояние в файл."
+msgstr "\t--output, -o <fil>\t\tSpara status till fil."
 
 #: ../client/snapper.cc:473
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <число>\t\tНомер соответствующего снимка предшествующего состояния."
+msgstr "\t--pre-number <nummer>\t\tNummer för motsvarande för-ögonblicksbild."
 
 #: ../client/snapper.cc:474
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tВывести номер созданного снимка состояния."
+msgstr "\t--print-number, -p\t\tSkriv ut nummer på skapad ögonblicksbild."
 
 #: ../client/snapper.cc:1149
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\tПодавить нормальный вывод."
+msgstr "\t--quiet, -q\t\t\tUtelämna normal utmatning."
 
 #: ../client/snapper.cc:1151
 msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <стиль>\tСтиль таблицы (целое число)."
+msgstr "\t--table-style, -t <stil>\tTabellstil (heltal)."
 
 #: ../client/snapper.cc:247
 msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <имя>\t\tИмя используемого шаблона конфигурации."
+msgstr "\t--template, -t <namn>\t\tNamn på konfigurationsmall att använda."
 
 #: ../client/snapper.cc:472
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <тип>\t\tТип снимка состояния."
+msgstr "\t--type, -t <typ>\t\tTyp för ögonblicksbild."
 
 #: ../client/snapper.cc:326
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <тип>\t\tТип снимков состояния, выводимых в списке."
+msgstr "\t--type, -t <typ>\t\tTyper av ögonblicksbilder att lista."
 
 #: ../client/snapper.cc:477 ../client/snapper.cc:611
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <данные-пользователя>\tДанные пользователя для снимка."
+msgstr "\t--userdata, -u <användardata>\tAnvändardata för ögonblicksbilden."
 
 #: ../client/snapper.cc:1150
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tУвеличить уровень детализации."
+msgstr "\t--verbose, -v\t\t\tÖka utförligheten."
 
 #: ../client/snapper.cc:1153
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tВывести версию программы и выйти."
+msgstr "\t--version\t\t\tVisa version och avsluta."
 
 #: ../client/snapper.cc:1051
 msgid "\tsnapper cleanup <cleanup-algorithm>"
-msgstr "\tsnapper cleanup <алгоритм очистки>"
+msgstr "\tsnapper cleanup <upprensningsalgoritm>"
 
 #: ../client/snapper.cc:469
 msgid "\tsnapper create"
@@ -92,11 +92,11 @@ msgstr "\tsnapper create"
 
 #: ../client/snapper.cc:243
 msgid "\tsnapper create-config <subvolume>"
-msgstr "\tsnapper create-config <подтом>"
+msgstr "\tsnapper create-config <undervolym>"
 
 #: ../client/snapper.cc:660
 msgid "\tsnapper delete <number>"
-msgstr "\tsnapper delete <число>"
+msgstr "\tsnapper delete <nummer>"
 
 #: ../client/snapper.cc:300
 msgid "\tsnapper delete-config"
@@ -104,7 +104,7 @@ msgstr "\tsnapper delete-config"
 
 #: ../client/snapper.cc:825
 msgid "\tsnapper diff <number1>..<number2> [files]"
-msgstr "\tsnapper diff <число1>..<число2> [файлы]"
+msgstr "\tsnapper diff <nummer1>..<nummer2> [filer]"
 
 #: ../client/snapper.cc:323
 msgid "\tsnapper list"
@@ -116,99 +116,99 @@ msgstr "\tsnapper list-configs"
 
 #: ../client/snapper.cc:606
 msgid "\tsnapper modify <number>"
-msgstr "\tsnapper modify <число>"
+msgstr "\tsnapper modify <nummer>"
 
 #: ../client/snapper.cc:714
 msgid "\tsnapper mount <number>"
-msgstr "\tsnapper mount <число>"
+msgstr "\tsnapper mount <nummer>"
 
 #: ../client/snapper.cc:770
 msgid "\tsnapper status <number1>..<number2>"
-msgstr "\tsnapper status <число1>..<число2>"
+msgstr "\tsnapper status <nummer1>..<nummer2>"
 
 #: ../client/snapper.cc:742
 msgid "\tsnapper umount <number>"
-msgstr "\tsnapper umount <число>"
+msgstr "\tsnapper umount <nummer>"
 
 #: ../client/snapper.cc:884
 msgid "\tsnapper undochange <number1>..<number2> [files]"
-msgstr "\tsnapper undochange <число1>...<число2> [файлы]"
+msgstr "\tsnapper undochange <nummer1>..<nummer2> [filer]"
 
 #: ../client/snapper.cc:1148
 msgid "    Global options:"
-msgstr "    Общие параметры:"
+msgstr "    Globala alternativ:"
 
 #: ../client/snapper.cc:471
 msgid "    Options for 'create' command:"
-msgstr "    Параметры команды \"create\":"
+msgstr "    Alternativ för kommandot create:"
 
 #: ../client/snapper.cc:245
 msgid "    Options for 'create-config' command:"
-msgstr "    Параметры команды \"create-config\":"
+msgstr "    Alternativ för kommandot create-config:"
 
 #: ../client/snapper.cc:325
 msgid "    Options for 'list' command:"
-msgstr "    Параметры команды \"list\":"
+msgstr "    Alternativ för kommandot list:"
 
 #: ../client/snapper.cc:608
 msgid "    Options for 'modify' command:"
-msgstr "    Параметры команды \"modify\":"
+msgstr "    Alternativ för kommandot modify:"
 
 #: ../client/snapper.cc:772
 msgid "    Options for 'status' command:"
-msgstr "    Параметры команды \"status\":"
+msgstr "    Alternativ för kommandot status:"
 
 #: ../client/snapper.cc:886
 msgid "    Options for 'undochange' command:"
-msgstr "    Параметры команды \"undochange\":"
+msgstr "    Alternativ för kommandot undochange:"
 
 #: ../client/snapper.cc:1050
 msgid "  Cleanup snapshots:"
-msgstr "  Очистка снимков состояния:"
+msgstr "  Rensa upp ögonblicksbilder:"
 
 #: ../client/snapper.cc:769 ../client/snapper.cc:824
 msgid "  Comparing snapshots:"
-msgstr "  Очистка снимков состояния:"
+msgstr "  Jämför ögonblicksbilder:"
 
 #: ../client/snapper.cc:242
 msgid "  Create config:"
-msgstr "  Создание конфигурации:"
+msgstr "  Skapa konfiguration:"
 
 #: ../client/snapper.cc:468
 msgid "  Create snapshot:"
-msgstr "  Создание снимка состояния:"
+msgstr "  Skapa ögonblicksbild:"
 
 #: ../client/snapper.cc:299
 msgid "  Delete config:"
-msgstr "  Удалить конфигурацию:"
+msgstr "  Ta bort konfiguration:"
 
 #: ../client/snapper.cc:659
 msgid "  Delete snapshot:"
-msgstr "  Удаление снимка состояния:"
+msgstr "  Ta bort ögonblicksbilder:"
 
 #: ../client/snapper.cc:203
 msgid "  List configs:"
-msgstr "  Список конфигураций:"
+msgstr "  Lista konfigurationer:"
 
 #: ../client/snapper.cc:322
 msgid "  List snapshots:"
-msgstr "  Список снимков состояния:"
+msgstr "  Lista ögonblicksbilder:"
 
 #: ../client/snapper.cc:605
 msgid "  Modify snapshot:"
-msgstr "  Изменение снимка состояния:"
+msgstr "  Ändra ögonblicksbild:"
 
 #: ../client/snapper.cc:713
 msgid "  Mount snapshot:"
-msgstr "  Монтирование снимка состояния:"
+msgstr "  Montera ögonblicksbild:"
 
 #: ../client/snapper.cc:741
 msgid "  Umount snapshot:"
-msgstr "  Размонтирование снимка состояния:"
+msgstr "  Avmontera ögonblicksbild:"
 
 #: ../client/snapper.cc:883
 msgid "  Undo changes:"
-msgstr "  Отмена изменений:"
+msgstr "  Ångra ändringar:"
 
 #: ../client/snapper.cc:374 ../client/snapper.cc:403
 msgid "#"
@@ -216,302 +216,302 @@ msgstr "#"
 
 #: ../client/snapper.cc:378
 msgid "Cleanup"
-msgstr "Очистка"
+msgstr "Upprensning"
 
 #: ../client/snapper.cc:1066
 msgid "Command 'cleanup' needs one arguments."
-msgstr "Команде \"cleanup\" нужен один аргумент."
+msgstr "Kommandot cleanup måste ha ett argument."
 
 #: ../client/snapper.cc:500
 msgid "Command 'create' does not take arguments."
-msgstr "Команде \"create\" не нужны аргументы."
+msgstr "Kommandot create tar inga argument."
 
 #: ../client/snapper.cc:264
 msgid "Command 'create-config' needs one argument."
-msgstr "Команде \"create-config\" нужен один аргумент."
+msgstr "Kommandot create-config måste ha ett argument."
 
 #: ../client/snapper.cc:1098
 msgid "Command 'debug' does not take arguments."
-msgstr "Команде \"debug\" не нужны аргументы."
+msgstr "Kommandot debug tar inga argument."
 
 #: ../client/snapper.cc:671
 msgid "Command 'delete' needs at least one argument."
-msgstr "Команде \"delete\" нужен хотя бы один аргумент."
+msgstr "Kommandot delete måste ha minst ett argument."
 
 #: ../client/snapper.cc:311
 msgid "Command 'delete-config' does not take arguments."
-msgstr "Команде \"delete-config\" не нужны аргументы."
+msgstr "Kommandot delete-config tar inga argument."
 
 #: ../client/snapper.cc:836
 msgid "Command 'diff' needs at least one argument."
-msgstr "Команде \"diff\" нужен хотя бы один аргумент."
+msgstr "Kommandot diff måste ha minst ett argument."
 
 #: ../client/snapper.cc:1141
 msgid "Command 'help' does not take arguments."
-msgstr "Команде \"help\" не нужны аргументы."
+msgstr "Kommandot help tar inga argument."
 
 #: ../client/snapper.cc:342
 msgid "Command 'list' does not take arguments."
-msgstr "Команде \"list\" не нужны аргументы."
+msgstr "Kommandot list tar inga argument."
 
 #: ../client/snapper.cc:215
 msgid "Command 'list-configs' does not take arguments."
-msgstr "Команде \"list-configs\" не нужны аргументы."
+msgstr "Kommandot list-configs tar inga argument."
 
 #: ../client/snapper.cc:630
 msgid "Command 'modify' needs at least one argument."
-msgstr "Команде \"modify\" нужен хотя бы один аргумент."
+msgstr "Kommandot modify måste ha minst ett argument."
 
 #: ../client/snapper.cc:725 ../client/snapper.cc:753
 msgid "Command 'mount' needs at least one argument."
-msgstr "Команде \"mount\" нужен хотя бы один аргумент."
+msgstr "Kommandot mount måste ha minst ett argument."
 
 #: ../client/snapper.cc:789
 msgid "Command 'status' needs one argument."
-msgstr "Команде \"status\" нужен один аргумент."
+msgstr "Kommandot status måste ha ett argument."
 
 #: ../client/snapper.cc:903
 msgid "Command 'undochange' needs at least one argument."
-msgstr "Команде \"undochange\" нужен хотя бы один аргумент."
+msgstr "Kommandot undochange måste ha minst ett argument."
 
 #: ../client/snapper.cc:222
 msgid "Config"
-msgstr "Конфигурация"
+msgstr "Konfiguration"
 
 #: ../client/snapper.cc:1281
 msgid "Config is in use."
-msgstr "Конфигурация используется."
+msgstr "Config används."
 
 #: ../client/snapper.cc:1279
 msgid "Config is locked."
-msgstr "Конфигурация заблокирована."
+msgstr "Config är låst."
 
 #: ../client/snapper.cc:1289
 #, c-format
 msgid "Creating config failed (%s)."
-msgstr "Сбой при создании конфигурации (%s)."
+msgstr "Det gick inte att skapa konfiguration (%s)."
 
 #: ../client/snapper.cc:1293
 msgid "Creating snapshot failed."
-msgstr "Не удалось сделать снимок."
+msgstr "Det gick inte att skapa någon ögonblicksbild."
 
 #: ../client/snapper.cc:376 ../client/snapper.cc:404
 msgid "Date"
-msgstr "Дата"
+msgstr "Datum"
 
 #: ../client/snapper.cc:1291
 #, c-format
 msgid "Deleting config failed (%s)."
-msgstr "Сбой при удалении конфигурации (%s)."
+msgstr "Det gick inte att ta bort konfigurationen (%s)."
 
 #: ../client/snapper.cc:1295
 msgid "Deleting snapshot failed."
-msgstr "Не удалось удалить снимок."
+msgstr "Det gick inte att ta bort ögonblicksbilden."
 
 #: ../client/snapper.cc:379 ../client/snapper.cc:406 ../client/snapper.cc:434
 msgid "Description"
-msgstr "Описание"
+msgstr "Beskrivning"
 
 #: ../client/snapper.cc:288
 msgid "Detecting filesystem type failed."
-msgstr "Сбой при определении типа файловой системы."
+msgstr "Det gick inte att identifiera filsystemstypen."
 
 #: ../client/snapper.cc:1297 ../client/snapper.cc:1302
 msgid "Failure"
-msgstr "Сбой"
+msgstr "Misslyckades"
 
 #: ../client/snapper.cc:957
 #, c-format
 msgid "File '%s' not found."
-msgstr "Файл \"%s\" не найден."
+msgstr "Filen %s hittades inte."
 
 #: ../client/snapper.cc:1287
 msgid "IO Error."
-msgstr "Ошибка ввода/вывода."
+msgstr "I/O-fel."
 
 #: ../client/snapper.cc:91
 msgid "Identical snapshots."
-msgstr "Снимки состояния идентичны."
+msgstr "Identiska ögonblicksbilder."
 
 #: ../client/snapper.cc:1277
 msgid "Illegal Snapshot."
-msgstr "Некорректный снимок."
+msgstr "Otillåten ögonblicksbild."
 
 #: ../client/snapper.cc:68
 #, c-format
 msgid "Invalid snapshot '%s'."
-msgstr "Недопустимый снимок состояния: \"%s\"."
+msgstr "Ogiltig ögonblicksbild \"%s\"."
 
 #: ../client/snapper.cc:82 ../client/snapper.cc:925
 msgid "Invalid snapshots."
-msgstr "Недопустимые снимки состояния."
+msgstr "Ogiltiga ögonblicksbilder."
 
 #: ../client/snapper.cc:271
 msgid "Invalid subvolume."
-msgstr "Недопустимый подтом."
+msgstr "Ogiltig undervolym."
 
 #: ../client/snapper.cc:1225
 #, c-format
 msgid "Invalid table style %d."
-msgstr "Недопустимый стиль таблицы %d."
+msgstr "Ogiltig tabellstil %d."
 
 #: ../client/snapper.cc:108 ../client/snapper.cc:117 ../client/snapper.cc:126
 #: ../client/snapper.cc:1275
 msgid "Invalid userdata."
-msgstr "Неверные данные пользователя."
+msgstr "Ogiltiga användardata."
 
 #: ../client/utils/GetOpts.cc:68
 #, c-format
 msgid "Missing argument for command option '%s'."
-msgstr "Отсутствует аргумент для параметра команды \"%s\"."
+msgstr "Argument för kommandoalternativet %s saknas."
 
 #: ../client/utils/GetOpts.cc:66
 #, c-format
 msgid "Missing argument for global option '%s'."
-msgstr "Отсутствует аргумент для общего параметра \"%s\"."
+msgstr "Argument för det globala alternativet %s saknas."
 
 #: ../client/snapper.cc:562
 msgid "Missing command argument."
-msgstr "Отсутствует аргумент команды."
+msgstr "Det saknas kommandoargument."
 
 #: ../client/snapper.cc:556
 msgid "Missing or invalid pre-number."
-msgstr "Номер предварительного снимка отсутствует или недопустим."
+msgstr "Före-nummer saknas eller är ogiltigt."
 
 #: ../client/snapper.cc:1248
 msgid "No command provided."
-msgstr "Не указана команда."
+msgstr "Inget kommando angavs."
 
 #: ../client/snapper.cc:1273
 msgid "No permissions."
-msgstr "Нет разрешений."
+msgstr "Ingen behörighet."
 
 #: ../client/snapper.cc:807 ../client/snapper.cc:918
 #, c-format
 msgid "Opening file '%s' failed."
-msgstr "Сбой при открытии файла \"%s\"."
+msgstr "Det gick inte att öppna filen %s."
 
 #: ../client/snapper.cc:431
 msgid "Post #"
-msgstr "№ последующего снимка"
+msgstr "Efter #"
 
 #: ../client/snapper.cc:433
 msgid "Post Date"
-msgstr "Дата последующего снимка"
+msgstr "Efter datum"
 
 #: ../client/snapper.cc:375 ../client/snapper.cc:430
 msgid "Pre #"
-msgstr "№ предварительного снимка"
+msgstr "Före #"
 
 #: ../client/snapper.cc:432
 msgid "Pre Date"
-msgstr "Дата предварительного снимка"
+msgstr "Före datum"
 
 #: ../client/snapper.cc:1283
 msgid "Snapshot is in use."
-msgstr "Снимок уже используется."
+msgstr "Ögonblicksbilden används."
 
 #: ../client/snapper.cc:223
 msgid "Subvolume"
-msgstr "Подтом"
+msgstr "Undervolym"
 
 #: ../client/snapper.cc:1249 ../client/snapper.cc:1258
 #: ../client/utils/GetOpts.cc:61 ../client/utils/GetOpts.cc:69
 msgid "Try 'snapper --help' for more information."
-msgstr "Чтобы получить больше сведений, выполните команду \"snapper --help\"."
+msgstr "Försök med \"snapper --help\" för mer information."
 
 #: ../client/snapper.cc:373
 msgid "Type"
-msgstr "Тип"
+msgstr "Typ"
 
 #: ../client/snapper.cc:1086
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
-msgstr "Неизвестный алгоритм очистки \"%s\"."
+msgstr "Okänd upprensningsalgoritm \"%s\"."
 
 #: ../client/snapper.cc:1257
 #, c-format
 msgid "Unknown command '%s'."
-msgstr "Неизвестная команда \"%s\"."
+msgstr "Kommandot %s är okänt."
 
 #: ../client/snapper.cc:1271
 msgid "Unknown config."
-msgstr "Неизвестная конфигурация."
+msgstr "Okänd konfiguration."
 
 #: ../client/snapper.cc:1285
 msgid "Unknown file."
-msgstr "Неизвестный файл."
+msgstr "Okänd fil."
 
 #: ../client/utils/GetOpts.cc:58
 #, c-format
 msgid "Unknown global option '%s'."
-msgstr "Неизвестный общий параметр \"%s\"."
+msgstr "Okänt globalt alternativ %s."
 
 #: ../client/utils/GetOpts.cc:60
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
-msgstr "Неизвестный параметр \"%s\" для команды \"%s\"."
+msgstr "Alternativet %s för kommandot %s är okänt."
 
 #: ../client/snapper.cc:528
 msgid "Unknown type of snapshot."
-msgstr "Неизвестный тип снимка состояния."
+msgstr "Okänd typ av ögonblicksbild."
 
 #: ../client/snapper.cc:361
 msgid "Unknown type of snapshots."
-msgstr "Неизвестный тип снимков состояния"
+msgstr "Okända typer av ögonblicksbilder."
 
 #: ../client/snapper.cc:1226
 #, c-format
 msgid "Use an integer number from %d to %d"
-msgstr "Используйте целое число от %d до %d"
+msgstr "Använd ett heltal mellan %d och %d"
 
 #: ../client/snapper.cc:377 ../client/snapper.cc:405
 msgid "User"
-msgstr "Пользователь"
+msgstr "Användare"
 
 #: ../client/snapper.cc:380 ../client/snapper.cc:407 ../client/snapper.cc:435
 msgid "Userdata"
-msgstr "Данные пользователя"
+msgstr "Användardata"
 
 #: ../client/snapper.cc:992
 #, c-format
 msgid "create:%d modify:%d delete:%d"
-msgstr "создать:%d изменить:%d удалить:%d"
+msgstr "skapa:%d ändra:%d ta bort:%d"
 
 #: ../client/snapper.cc:1017
 #, c-format
 msgid "creating %s"
-msgstr "создание %s"
+msgstr "skapar %s"
 
 #: ../client/snapper.cc:1023
 #, c-format
 msgid "deleting %s"
-msgstr "удаление %s"
+msgstr "tar bort %s"
 
 #: ../client/snapper.cc:1033
 #, c-format
 msgid "failed to create %s"
-msgstr "сбой при создании %s"
+msgstr "det gick inte att skapa %s"
 
 #: ../client/snapper.cc:1039
 #, c-format
 msgid "failed to delete %s"
-msgstr "сбой при удалении %s"
+msgstr "det gick inte att ta bort %s"
 
 #: ../client/snapper.cc:1036
 #, c-format
 msgid "failed to modify %s"
-msgstr "сбой при изменении %s"
+msgstr "det gick inte att ändra %s"
 
 #: ../client/snapper.cc:1020
 #, c-format
 msgid "modifying %s"
-msgstr "изменение %s"
+msgstr "ändrar %s"
 
 #: ../client/snapper.cc:988
 msgid "nothing to do"
-msgstr "нечего выполнять"
+msgstr "ingenting att göra"
 
 #: ../client/snapper.cc:1145
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "использование: snapper [--общие-параметры] <команда> [--параметры-команды] [аргументы-команды]"
+msgstr "usage: snapper [--globala alternativ] <kommando> [--kommandoalternativ] [kommandoargument]"

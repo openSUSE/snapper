@@ -1,517 +1,550 @@
-# Copyright (C) 2006 SuSE Linux Products GmbH, Nuernberg
-# This file is distributed under the same license as the package.
+# Lithuanian message file for YaST2 (@memory@).
+# Copyright (C) 2005 SUSE Linux Products GmbH.
+# Copyright (C) 2002 SuSE Linux AG.
+# Copyright (C) 2000, 2001 SuSE GmbH.
 #
+# Jonas Gocentas <jonasgocentas@florida.usa.com>, 2001.
+# Linas Spraunius <lsprauni@radio.lt>, 2000.
+# Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>, 2009, 2010, 2011, 2013.
 msgid ""
 msgstr ""
-"Project-Id-Version: snapper\n"
+"Project-Id-Version: LCN (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-25 10:44+0100\n"
-"PO-Revision-Date: 2013-02-21 14:40\n"
-"Last-Translator: Novell Language <language@novell.com>\n"
-"Language-Team: Novell Language <language@novell.com>\n"
-"Language: \n"
+"PO-Revision-Date: 2013-02-05 08:39+0200\n"
+"Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
+"Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
+"Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 ? 0 : n%10==1 && n%100!=11 ? 1 : n%10>=2 && (n%100<10 || n%100>=20) ? 2 : 3);\n"
+"X-Generator: Lokalize 1.5\n"
 
 #: ../client/snapper.cc:476 ../client/snapper.cc:610
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <алгоритм>\tАлгоритм очистки для снимка."
+msgstr ""
 
 #: ../client/snapper.cc:478
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
-msgstr "\t--command <команда>\tЗапустить команду и создать пред- и постснимок."
+msgstr ""
 
 #: ../client/snapper.cc:1152
 msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <имя>\t\tУкажите имя используемой конфигурации."
+msgstr ""
 
 #: ../client/snapper.cc:475 ../client/snapper.cc:609
 msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <описание>\tОписание снимка состояния."
+msgstr ""
 
 #: ../client/snapper.cc:246
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--fstype, -f <тип файловой системы>\t\tЗадать тип файловой системы вручную."
+msgstr ""
 
 #: ../client/snapper.cc:887
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <файл>\t\tПрочитать файлы для отмены изменений в них."
+msgstr ""
 
 #: ../client/snapper.cc:773
 msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <файл>\t\tСохранить состояние в файл."
+msgstr ""
 
 #: ../client/snapper.cc:473
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <число>\t\tНомер соответствующего снимка предшествующего состояния."
+msgstr ""
 
 #: ../client/snapper.cc:474
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tВывести номер созданного снимка состояния."
+msgstr ""
 
 #: ../client/snapper.cc:1149
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\tПодавить нормальный вывод."
+msgstr ""
 
 #: ../client/snapper.cc:1151
 msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <стиль>\tСтиль таблицы (целое число)."
+msgstr ""
 
 #: ../client/snapper.cc:247
 msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <имя>\t\tИмя используемого шаблона конфигурации."
+msgstr ""
 
 #: ../client/snapper.cc:472
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <тип>\t\tТип снимка состояния."
+msgstr ""
 
 #: ../client/snapper.cc:326
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <тип>\t\tТип снимков состояния, выводимых в списке."
+msgstr ""
 
 #: ../client/snapper.cc:477 ../client/snapper.cc:611
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <данные-пользователя>\tДанные пользователя для снимка."
+msgstr ""
 
 #: ../client/snapper.cc:1150
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tУвеличить уровень детализации."
+msgstr ""
 
 #: ../client/snapper.cc:1153
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tВывести версию программы и выйти."
+msgstr ""
 
 #: ../client/snapper.cc:1051
 msgid "\tsnapper cleanup <cleanup-algorithm>"
-msgstr "\tsnapper cleanup <алгоритм очистки>"
+msgstr ""
 
 #: ../client/snapper.cc:469
 msgid "\tsnapper create"
-msgstr "\tsnapper create"
+msgstr ""
 
 #: ../client/snapper.cc:243
 msgid "\tsnapper create-config <subvolume>"
-msgstr "\tsnapper create-config <подтом>"
+msgstr ""
 
 #: ../client/snapper.cc:660
 msgid "\tsnapper delete <number>"
-msgstr "\tsnapper delete <число>"
+msgstr ""
 
 #: ../client/snapper.cc:300
 msgid "\tsnapper delete-config"
-msgstr "\tsnapper delete-config"
+msgstr ""
 
 #: ../client/snapper.cc:825
 msgid "\tsnapper diff <number1>..<number2> [files]"
-msgstr "\tsnapper diff <число1>..<число2> [файлы]"
+msgstr ""
 
 #: ../client/snapper.cc:323
 msgid "\tsnapper list"
-msgstr "\tsnapper list"
+msgstr ""
 
 #: ../client/snapper.cc:204
 msgid "\tsnapper list-configs"
-msgstr "\tsnapper list-configs"
+msgstr ""
 
 #: ../client/snapper.cc:606
 msgid "\tsnapper modify <number>"
-msgstr "\tsnapper modify <число>"
+msgstr ""
 
 #: ../client/snapper.cc:714
 msgid "\tsnapper mount <number>"
-msgstr "\tsnapper mount <число>"
+msgstr ""
 
 #: ../client/snapper.cc:770
 msgid "\tsnapper status <number1>..<number2>"
-msgstr "\tsnapper status <число1>..<число2>"
+msgstr ""
 
 #: ../client/snapper.cc:742
 msgid "\tsnapper umount <number>"
-msgstr "\tsnapper umount <число>"
+msgstr ""
 
 #: ../client/snapper.cc:884
 msgid "\tsnapper undochange <number1>..<number2> [files]"
-msgstr "\tsnapper undochange <число1>...<число2> [файлы]"
+msgstr ""
 
 #: ../client/snapper.cc:1148
 msgid "    Global options:"
-msgstr "    Общие параметры:"
+msgstr "    Visuotinės parinktys:"
 
 #: ../client/snapper.cc:471
 msgid "    Options for 'create' command:"
-msgstr "    Параметры команды \"create\":"
+msgstr ""
 
 #: ../client/snapper.cc:245
 msgid "    Options for 'create-config' command:"
-msgstr "    Параметры команды \"create-config\":"
+msgstr ""
 
 #: ../client/snapper.cc:325
 msgid "    Options for 'list' command:"
-msgstr "    Параметры команды \"list\":"
+msgstr ""
 
 #: ../client/snapper.cc:608
 msgid "    Options for 'modify' command:"
-msgstr "    Параметры команды \"modify\":"
+msgstr ""
 
 #: ../client/snapper.cc:772
 msgid "    Options for 'status' command:"
-msgstr "    Параметры команды \"status\":"
+msgstr ""
 
 #: ../client/snapper.cc:886
 msgid "    Options for 'undochange' command:"
-msgstr "    Параметры команды \"undochange\":"
+msgstr ""
 
 #: ../client/snapper.cc:1050
 msgid "  Cleanup snapshots:"
-msgstr "  Очистка снимков состояния:"
+msgstr "  Momentines kopijų išvalymas:"
 
 #: ../client/snapper.cc:769 ../client/snapper.cc:824
 msgid "  Comparing snapshots:"
-msgstr "  Очистка снимков состояния:"
+msgstr "  Momentinių kopijų palyginimas:"
 
 #: ../client/snapper.cc:242
 msgid "  Create config:"
-msgstr "  Создание конфигурации:"
+msgstr ""
 
 #: ../client/snapper.cc:468
 msgid "  Create snapshot:"
-msgstr "  Создание снимка состояния:"
+msgstr "  Momentinės kopijos sukūrimas:"
 
 #: ../client/snapper.cc:299
 msgid "  Delete config:"
-msgstr "  Удалить конфигурацию:"
+msgstr ""
 
 #: ../client/snapper.cc:659
 msgid "  Delete snapshot:"
-msgstr "  Удаление снимка состояния:"
+msgstr "  Momentinės kopijos šalinimas:"
 
 #: ../client/snapper.cc:203
 msgid "  List configs:"
-msgstr "  Список конфигураций:"
+msgstr ""
 
 #: ../client/snapper.cc:322
 msgid "  List snapshots:"
-msgstr "  Список снимков состояния:"
+msgstr "  Momentinių kopijų sąrašas:"
 
 #: ../client/snapper.cc:605
 msgid "  Modify snapshot:"
-msgstr "  Изменение снимка состояния:"
+msgstr "  Momentinės kopijos modifikavimas:"
 
 #: ../client/snapper.cc:713
 msgid "  Mount snapshot:"
-msgstr "  Монтирование снимка состояния:"
+msgstr "  Momentinės kopijos prijungimas:"
 
 #: ../client/snapper.cc:741
 msgid "  Umount snapshot:"
-msgstr "  Размонтирование снимка состояния:"
+msgstr "  Momentinės kopijos atjungimas:"
 
 #: ../client/snapper.cc:883
 msgid "  Undo changes:"
-msgstr "  Отмена изменений:"
+msgstr "  Atšaukti pakeitimus:"
 
 #: ../client/snapper.cc:374 ../client/snapper.cc:403
 msgid "#"
-msgstr "#"
+msgstr "Nr."
 
 #: ../client/snapper.cc:378
 msgid "Cleanup"
-msgstr "Очистка"
+msgstr "Išvalymas"
 
 #: ../client/snapper.cc:1066
 msgid "Command 'cleanup' needs one arguments."
-msgstr "Команде \"cleanup\" нужен один аргумент."
+msgstr "„cleanup“ komandai reikia vieno argumento."
 
 #: ../client/snapper.cc:500
 msgid "Command 'create' does not take arguments."
-msgstr "Команде \"create\" не нужны аргументы."
+msgstr ""
 
 #: ../client/snapper.cc:264
 msgid "Command 'create-config' needs one argument."
-msgstr "Команде \"create-config\" нужен один аргумент."
+msgstr "„create-config“ komandai reikia vieno argumento."
 
 #: ../client/snapper.cc:1098
 msgid "Command 'debug' does not take arguments."
-msgstr "Команде \"debug\" не нужны аргументы."
+msgstr ""
 
 #: ../client/snapper.cc:671
 msgid "Command 'delete' needs at least one argument."
-msgstr "Команде \"delete\" нужен хотя бы один аргумент."
+msgstr ""
 
 #: ../client/snapper.cc:311
 msgid "Command 'delete-config' does not take arguments."
-msgstr "Команде \"delete-config\" не нужны аргументы."
+msgstr ""
 
 #: ../client/snapper.cc:836
 msgid "Command 'diff' needs at least one argument."
-msgstr "Команде \"diff\" нужен хотя бы один аргумент."
+msgstr "„diff“ komandai reikia bent vieno argumento."
 
 #: ../client/snapper.cc:1141
 msgid "Command 'help' does not take arguments."
-msgstr "Команде \"help\" не нужны аргументы."
+msgstr ""
 
 #: ../client/snapper.cc:342
 msgid "Command 'list' does not take arguments."
-msgstr "Команде \"list\" не нужны аргументы."
+msgstr ""
 
 #: ../client/snapper.cc:215
 msgid "Command 'list-configs' does not take arguments."
-msgstr "Команде \"list-configs\" не нужны аргументы."
+msgstr ""
 
 #: ../client/snapper.cc:630
 msgid "Command 'modify' needs at least one argument."
-msgstr "Команде \"modify\" нужен хотя бы один аргумент."
+msgstr ""
 
 #: ../client/snapper.cc:725 ../client/snapper.cc:753
 msgid "Command 'mount' needs at least one argument."
-msgstr "Команде \"mount\" нужен хотя бы один аргумент."
+msgstr ""
 
 #: ../client/snapper.cc:789
 msgid "Command 'status' needs one argument."
-msgstr "Команде \"status\" нужен один аргумент."
+msgstr ""
 
 #: ../client/snapper.cc:903
 msgid "Command 'undochange' needs at least one argument."
-msgstr "Команде \"undochange\" нужен хотя бы один аргумент."
+msgstr ""
 
 #: ../client/snapper.cc:222
 msgid "Config"
-msgstr "Конфигурация"
+msgstr "Konfigūracija"
 
 #: ../client/snapper.cc:1281
 msgid "Config is in use."
-msgstr "Конфигурация используется."
+msgstr "Konfigūracija naudojama."
 
 #: ../client/snapper.cc:1279
 msgid "Config is locked."
-msgstr "Конфигурация заблокирована."
+msgstr "Konfigūracija užrakinta."
 
 #: ../client/snapper.cc:1289
 #, c-format
 msgid "Creating config failed (%s)."
-msgstr "Сбой при создании конфигурации (%s)."
+msgstr ""
 
 #: ../client/snapper.cc:1293
 msgid "Creating snapshot failed."
-msgstr "Не удалось сделать снимок."
+msgstr "Klaida kuriant momentinę kopiją."
 
 #: ../client/snapper.cc:376 ../client/snapper.cc:404
 msgid "Date"
-msgstr "Дата"
+msgstr "Data"
 
 #: ../client/snapper.cc:1291
 #, c-format
 msgid "Deleting config failed (%s)."
-msgstr "Сбой при удалении конфигурации (%s)."
+msgstr ""
 
 #: ../client/snapper.cc:1295
 msgid "Deleting snapshot failed."
-msgstr "Не удалось удалить снимок."
+msgstr "Klaida bandant pašalinti momentinę kopiją."
 
 #: ../client/snapper.cc:379 ../client/snapper.cc:406 ../client/snapper.cc:434
 msgid "Description"
-msgstr "Описание"
+msgstr "Aprašas"
 
 #: ../client/snapper.cc:288
 msgid "Detecting filesystem type failed."
-msgstr "Сбой при определении типа файловой системы."
+msgstr "Nepavyko nustatyti rinkmenų sistemos tipo."
 
 #: ../client/snapper.cc:1297 ../client/snapper.cc:1302
 msgid "Failure"
-msgstr "Сбой"
+msgstr "Nesėkmė"
 
 #: ../client/snapper.cc:957
 #, c-format
 msgid "File '%s' not found."
-msgstr "Файл \"%s\" не найден."
+msgstr "Rinkmena „%s“ nerasta."
 
 #: ../client/snapper.cc:1287
 msgid "IO Error."
-msgstr "Ошибка ввода/вывода."
+msgstr "Skaitymo/rašymo klaida."
 
 #: ../client/snapper.cc:91
 msgid "Identical snapshots."
-msgstr "Снимки состояния идентичны."
+msgstr "Momentinės kopijos vienodos."
 
 #: ../client/snapper.cc:1277
 msgid "Illegal Snapshot."
-msgstr "Некорректный снимок."
+msgstr "Netinkama momentinė kopija."
 
 #: ../client/snapper.cc:68
 #, c-format
 msgid "Invalid snapshot '%s'."
-msgstr "Недопустимый снимок состояния: \"%s\"."
+msgstr "Netinkama momentinė kopija „%s“."
 
 #: ../client/snapper.cc:82 ../client/snapper.cc:925
 msgid "Invalid snapshots."
-msgstr "Недопустимые снимки состояния."
+msgstr "Netinkamos momentinės kopijos."
 
 #: ../client/snapper.cc:271
 msgid "Invalid subvolume."
-msgstr "Недопустимый подтом."
+msgstr "Netinkamas potomis."
 
 #: ../client/snapper.cc:1225
 #, c-format
 msgid "Invalid table style %d."
-msgstr "Недопустимый стиль таблицы %d."
+msgstr "Netinkamas lentelės stilius %d."
 
 #: ../client/snapper.cc:108 ../client/snapper.cc:117 ../client/snapper.cc:126
 #: ../client/snapper.cc:1275
 msgid "Invalid userdata."
-msgstr "Неверные данные пользователя."
+msgstr "Netinkami naudotojo meta duomenys."
 
 #: ../client/utils/GetOpts.cc:68
 #, c-format
 msgid "Missing argument for command option '%s'."
-msgstr "Отсутствует аргумент для параметра команды \"%s\"."
+msgstr ""
 
 #: ../client/utils/GetOpts.cc:66
 #, c-format
 msgid "Missing argument for global option '%s'."
-msgstr "Отсутствует аргумент для общего параметра \"%s\"."
+msgstr ""
 
 #: ../client/snapper.cc:562
 msgid "Missing command argument."
-msgstr "Отсутствует аргумент команды."
+msgstr "Komandai trūksta argumentų."
 
 #: ../client/snapper.cc:556
 msgid "Missing or invalid pre-number."
-msgstr "Номер предварительного снимка отсутствует или недопустим."
+msgstr ""
 
 #: ../client/snapper.cc:1248
 msgid "No command provided."
-msgstr "Не указана команда."
+msgstr "Nepateikta jokia komanda"
 
 #: ../client/snapper.cc:1273
 msgid "No permissions."
-msgstr "Нет разрешений."
+msgstr "Nėra leidimų."
 
 #: ../client/snapper.cc:807 ../client/snapper.cc:918
 #, c-format
 msgid "Opening file '%s' failed."
-msgstr "Сбой при открытии файла \"%s\"."
+msgstr "Nepavyko atverti rinkmenos „%s“."
 
 #: ../client/snapper.cc:431
 msgid "Post #"
-msgstr "№ последующего снимка"
+msgstr "Po: Nr."
 
 #: ../client/snapper.cc:433
 msgid "Post Date"
-msgstr "Дата последующего снимка"
+msgstr "Po: data"
 
 #: ../client/snapper.cc:375 ../client/snapper.cc:430
 msgid "Pre #"
-msgstr "№ предварительного снимка"
+msgstr "Prieš: Nr."
 
 #: ../client/snapper.cc:432
 msgid "Pre Date"
-msgstr "Дата предварительного снимка"
+msgstr "Prieš: data"
 
 #: ../client/snapper.cc:1283
 msgid "Snapshot is in use."
-msgstr "Снимок уже используется."
+msgstr "Momentinė kopija naudojama."
 
 #: ../client/snapper.cc:223
 msgid "Subvolume"
-msgstr "Подтом"
+msgstr "Potomis"
 
 #: ../client/snapper.cc:1249 ../client/snapper.cc:1258
 #: ../client/utils/GetOpts.cc:61 ../client/utils/GetOpts.cc:69
 msgid "Try 'snapper --help' for more information."
-msgstr "Чтобы получить больше сведений, выполните команду \"snapper --help\"."
+msgstr "Daugiau informacijos gausite įvykdę „snapper --help“."
 
 #: ../client/snapper.cc:373
 msgid "Type"
-msgstr "Тип"
+msgstr "Tipas"
 
 #: ../client/snapper.cc:1086
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
-msgstr "Неизвестный алгоритм очистки \"%s\"."
+msgstr "Nežinomas išvalymo algoritmas „%s“."
 
 #: ../client/snapper.cc:1257
 #, c-format
 msgid "Unknown command '%s'."
-msgstr "Неизвестная команда \"%s\"."
+msgstr "Nežinoma komanda „%s“."
 
 #: ../client/snapper.cc:1271
 msgid "Unknown config."
-msgstr "Неизвестная конфигурация."
+msgstr "Nežinoma konfigūracija."
 
 #: ../client/snapper.cc:1285
 msgid "Unknown file."
-msgstr "Неизвестный файл."
+msgstr "Nežinoma rinkmena."
 
 #: ../client/utils/GetOpts.cc:58
 #, c-format
 msgid "Unknown global option '%s'."
-msgstr "Неизвестный общий параметр \"%s\"."
+msgstr "Nežinoma visuotinė parinktis „%s“."
 
 #: ../client/utils/GetOpts.cc:60
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
-msgstr "Неизвестный параметр \"%s\" для команды \"%s\"."
+msgstr "Nežinoma parinktis „%s“, kuri skirta komandai „%s“."
 
 #: ../client/snapper.cc:528
 msgid "Unknown type of snapshot."
-msgstr "Неизвестный тип снимка состояния."
+msgstr "Nežinomas momentinės kopijos tipas."
 
 #: ../client/snapper.cc:361
 msgid "Unknown type of snapshots."
-msgstr "Неизвестный тип снимков состояния"
+msgstr "Nežinomi momentinių kopijų tipai."
 
 #: ../client/snapper.cc:1226
 #, c-format
 msgid "Use an integer number from %d to %d"
-msgstr "Используйте целое число от %d до %d"
+msgstr "Naudokite sveikąjį skaičių iš intervalo nuo %d iki %d"
 
 #: ../client/snapper.cc:377 ../client/snapper.cc:405
 msgid "User"
-msgstr "Пользователь"
+msgstr "Naudotojas"
 
 #: ../client/snapper.cc:380 ../client/snapper.cc:407 ../client/snapper.cc:435
 msgid "Userdata"
-msgstr "Данные пользователя"
+msgstr "Naudotojo duomenys"
 
 #: ../client/snapper.cc:992
 #, c-format
 msgid "create:%d modify:%d delete:%d"
-msgstr "создать:%d изменить:%d удалить:%d"
+msgstr "sukurti:%d keisti:%d šalinti:%d"
 
 #: ../client/snapper.cc:1017
 #, c-format
 msgid "creating %s"
-msgstr "создание %s"
+msgstr "kuriama %s"
 
 #: ../client/snapper.cc:1023
 #, c-format
 msgid "deleting %s"
-msgstr "удаление %s"
+msgstr "šalinama %s"
 
 #: ../client/snapper.cc:1033
 #, c-format
 msgid "failed to create %s"
-msgstr "сбой при создании %s"
+msgstr "nepavyko sukurti %s"
 
 #: ../client/snapper.cc:1039
 #, c-format
 msgid "failed to delete %s"
-msgstr "сбой при удалении %s"
+msgstr "nepavyko pašalinti %s"
 
 #: ../client/snapper.cc:1036
 #, c-format
 msgid "failed to modify %s"
-msgstr "сбой при изменении %s"
+msgstr "nepavyko pakeisti %s"
 
 #: ../client/snapper.cc:1020
 #, c-format
 msgid "modifying %s"
-msgstr "изменение %s"
+msgstr "keičiama %s"
 
 #: ../client/snapper.cc:988
 msgid "nothing to do"
-msgstr "нечего выполнять"
+msgstr "nėra ką daryti"
 
 #: ../client/snapper.cc:1145
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "использование: snapper [--общие-параметры] <команда> [--параметры-команды] [аргументы-команды]"
+msgstr "naudojimas: snapper [--visuotinės-parinktys] <komanda> [--komandos-parinktys] [komandos-argumentai]"
+
+#, fuzzy
+#~| msgid "Try 'snapper help' for more information."
+#~ msgid "Command failed (%s). See log for more information."
+#~ msgstr "Daugiau informacijos gausite įvykdę „snapper help“."
+
+#~ msgid "comparing snapshots..."
+#~ msgstr "lyginamos momentinės kopijos..."
+
+#~ msgid "done"
+#~ msgstr "atlikta"
+
+#~ msgid "undoing change done"
+#~ msgstr "pakeitimas atšauktas"
+
+#~ msgid "undoing change..."
+#~ msgstr "atšaukiamas pakeitimas..."
+
+#~ msgid "  Rollback snapshots:"
+#~ msgstr "  Momentinės kopijos grąžinimas:"
+
+#~ msgid "rollback done"
+#~ msgstr "grąžinimas baigtas"
+
+#~ msgid "running rollback..."
+#~ msgstr "grąžinama atgal..."

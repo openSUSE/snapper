@@ -1,593 +1,517 @@
-# David Montero Isusi <dark.orion@gmail.com>, 2011, 2012.
+# Copyright (C) 2006 SuSE Linux Products GmbH, Nuernberg
+# This file is distributed under the same license as the package.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-17 12:33+0200\n"
-"PO-Revision-Date: 2012-10-20 12:35-0300\n"
-"Last-Translator: Gabriel <gabriel@opensuse.org>\n"
-"Language-Team: Spanish <opensuse-translation-es@opensuse.org>\n"
-"Language: es\n"
+"POT-Creation-Date: 2013-02-25 10:44+0100\n"
+"PO-Revision-Date: 2013-02-21 15:47\n"
+"Last-Translator: Novell Language <language@novell.com>\n"
+"Language-Team: Novell Language <language@novell.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.3\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../client/snapper.cc:476 ../client/snapper.cc:610
+msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
+msgstr "\t--cleanup-algorithm, -c <algoritmo>\tAlgoritmo de limpieza para la instantánea."
+
+#: ../client/snapper.cc:478
+msgid "\t--command <command>\tRun command and create pre and post snapshots."
+msgstr "\t--command <comando>\tEjecuta el comando y crea instantáneas previas y posteriores."
+
+#: ../client/snapper.cc:1152
+msgid "\t--config, -c <name>\t\tSet name of config to use."
+msgstr "\t--config, -c <nombre>\t\tEstablecer el nombre de la configuración que utilizar."
 
 #: ../client/snapper.cc:475 ../client/snapper.cc:609
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr ""
-"\t--cleanup-algorithm, -c <algo>\tAlgoritmo de limpieza para la instantánea."
-
-#: ../client/snapper.cc:477
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
-msgstr "\t--command <command>\tEjecuta el comando y crea imágenes pre y post."
-
-#: ../client/snapper.cc:1146
-msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr ""
-"\t--config, -c <name>\t\tEstablecer el nombre a usar por la configuración."
-
-#: ../client/snapper.cc:474 ../client/snapper.cc:608
 msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <description>\tDescripción de la imagen."
+msgstr "\t--description, -d <descripción>\tDescripción de la instantánea."
 
-#: ../client/snapper.cc:245
+#: ../client/snapper.cc:246
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr ""
-"\t--fstype, -f <fstype>\t\tConfigurar manualmente el sistema de ficheros."
+msgstr "\t--fstype, -f <tipo de sistema de archivos>\t\tEstablecer manualmente el tipo de sistema de archivos."
 
-#: ../client/snapper.cc:881
+#: ../client/snapper.cc:887
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr ""
-"\t--input, -i <file>\t\tLee archivos para los cuales se debe deshacer "
-"cambios desde el archivo."
+msgstr "\t--input, -i <archivo>\t\tLeer los archivos cuyos cambios se deben deshacer desde el archivo."
 
-#: ../client/snapper.cc:772
+#: ../client/snapper.cc:773
 msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <file>\t\tGuardar estado a archivo."
-
-#: ../client/snapper.cc:472
-msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <number>\t\tNúmero de pre imagen correspondiente."
+msgstr "\t--output, -o <archivo>\t\tGuarda el estado en un archivo."
 
 #: ../client/snapper.cc:473
-msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tImprimir el número de imágenes creadas."
+msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
+msgstr "\t--pre-number <número>\t\tNúmero de instantánea previa correspondiente."
 
-#: ../client/snapper.cc:1143
+#: ../client/snapper.cc:474
+msgid "\t--print-number, -p\t\tPrint number of created snapshot."
+msgstr "\t--print-number, -p\t\tImprimir el número de la instantánea creada."
+
+#: ../client/snapper.cc:1149
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\tEliminar la salida normal."
 
-#: ../client/snapper.cc:1145
+#: ../client/snapper.cc:1151
 msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <style>\tEstilo de tabla (entero)."
+msgstr "\t--table-style, -t <estilo>\tEstilo de tabla (entero)."
 
-#: ../client/snapper.cc:246
+#: ../client/snapper.cc:247
 msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr ""
-"\t--template, -t <name>\t\tNombre de la plantilla de configuración a usar."
+msgstr "\t--template, -t <nombre>\t\tNombre de la plantilla de configuración que utilizar."
 
-#: ../client/snapper.cc:471
+#: ../client/snapper.cc:472
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <type>\t\tTipo de imagen."
+msgstr "\t--type, -t <tipo>\t\tTipo de instantánea."
 
-#: ../client/snapper.cc:325
+#: ../client/snapper.cc:326
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <type>\t\tTipo de imágenes a listar."
+msgstr "\t--type, -t <tipo>\t\tTipo de instantáneas que listar."
 
-#: ../client/snapper.cc:476 ../client/snapper.cc:610
+#: ../client/snapper.cc:477 ../client/snapper.cc:611
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr ""
-"\t--userdata, -u <userdata>\tInformación del usuario para la instantánea."
+msgstr "\t--userdata, -u <información del usuario>\tInformación del usuario para la instantánea."
 
-#: ../client/snapper.cc:1144
+#: ../client/snapper.cc:1150
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tAumenta la verbosidad."
+msgstr "\t--verbose, -v\t\t\tAumenta el nivel de detalle."
 
-#: ../client/snapper.cc:1147
+#: ../client/snapper.cc:1153
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tMuestra la versión y sale"
+msgstr "\t--version\t\t\tImprimir versión y salir."
 
-#: ../client/snapper.cc:1045
+#: ../client/snapper.cc:1051
 msgid "\tsnapper cleanup <cleanup-algorithm>"
-msgstr "\tsnapper cleanup <cleanup-algorithm>"
+msgstr "\tsnapper cleanup <algoritmo de limpieza>"
 
-#: ../client/snapper.cc:468
+#: ../client/snapper.cc:469
 msgid "\tsnapper create"
 msgstr "\tsnapper create"
 
-#: ../client/snapper.cc:242
+#: ../client/snapper.cc:243
 msgid "\tsnapper create-config <subvolume>"
-msgstr "\tsnapper create-config <subvolume>"
+msgstr "\tsnapper create-config <subvolumen>"
 
-#: ../client/snapper.cc:659
+#: ../client/snapper.cc:660
 msgid "\tsnapper delete <number>"
-msgstr "\tsnapper delete <number>"
+msgstr "\tsnapper delete <número>"
 
-#: ../client/snapper.cc:299
+#: ../client/snapper.cc:300
 msgid "\tsnapper delete-config"
 msgstr "\tsnapper delete-config"
 
-#: ../client/snapper.cc:824
+#: ../client/snapper.cc:825
 msgid "\tsnapper diff <number1>..<number2> [files]"
-msgstr "\tsnapper diff <number1> <number2>"
+msgstr "\tsnapper diff <número1>..<número2> [archivos]"
 
-#: ../client/snapper.cc:322
+#: ../client/snapper.cc:323
 msgid "\tsnapper list"
 msgstr "\tsnapper list"
 
-#: ../client/snapper.cc:203
+#: ../client/snapper.cc:204
 msgid "\tsnapper list-configs"
 msgstr "\tsnapper list-configs"
 
-#: ../client/snapper.cc:605
+#: ../client/snapper.cc:606
 msgid "\tsnapper modify <number>"
-msgstr "\tsnapper modify <number>"
+msgstr "\tsnapper modify <número>"
 
-#: ../client/snapper.cc:713
+#: ../client/snapper.cc:714
 msgid "\tsnapper mount <number>"
-msgstr "\tsnapper modify <number>"
+msgstr "\tsnapper mount <número>"
 
-#: ../client/snapper.cc:769
+#: ../client/snapper.cc:770
 msgid "\tsnapper status <number1>..<number2>"
-msgstr "\tsnapper diff <number1> <number2>"
+msgstr "\tsnapper status <número1>..<número2>"
 
-#: ../client/snapper.cc:741
+#: ../client/snapper.cc:742
 msgid "\tsnapper umount <number>"
-msgstr "\tsnapper modify <number>"
+msgstr "\tsnapper umount <número>"
 
-#: ../client/snapper.cc:878
+#: ../client/snapper.cc:884
 msgid "\tsnapper undochange <number1>..<number2> [files]"
-msgstr "\tsnapper diff <number1> <number2>"
+msgstr "\tsnapper undochange <número1>..<número2> [archivos]"
 
-#: ../client/snapper.cc:1142
+#: ../client/snapper.cc:1148
 msgid "    Global options:"
 msgstr "    Opciones Globales:"
 
-#: ../client/snapper.cc:470
+#: ../client/snapper.cc:471
 msgid "    Options for 'create' command:"
-msgstr "    Opciones para el comando 'create'."
+msgstr "    Opciones para el comando create:"
 
-#: ../client/snapper.cc:244
+#: ../client/snapper.cc:245
 msgid "    Options for 'create-config' command:"
-msgstr "    Opciones para el comando 'create-config'."
+msgstr "    Opciones para el comando create-config:"
 
-#: ../client/snapper.cc:324
+#: ../client/snapper.cc:325
 msgid "    Options for 'list' command:"
-msgstr "    Opciones para el comando 'list'."
+msgstr "    Opciones para el comando list:"
 
-#: ../client/snapper.cc:607
+#: ../client/snapper.cc:608
 msgid "    Options for 'modify' command:"
-msgstr "    Opciones para el comando 'modify'."
+msgstr "    Opciones para el comando modify:"
 
-#: ../client/snapper.cc:771
+#: ../client/snapper.cc:772
 msgid "    Options for 'status' command:"
-msgstr "    Opciones para el comando 'status'."
+msgstr "    Opciones para el comando status:"
 
-#: ../client/snapper.cc:880
+#: ../client/snapper.cc:886
 msgid "    Options for 'undochange' command:"
-msgstr "    Opciones para el comando 'undochange'."
+msgstr "    Opciones para el comando undochange:"
 
-#: ../client/snapper.cc:1044
+#: ../client/snapper.cc:1050
 msgid "  Cleanup snapshots:"
-msgstr "  Limpieza de imágenes:"
+msgstr "  Limpieza de instantáneas:"
 
-#: ../client/snapper.cc:768 ../client/snapper.cc:823
+#: ../client/snapper.cc:769 ../client/snapper.cc:824
 msgid "  Comparing snapshots:"
-msgstr "  Comparación de capturas:"
+msgstr "  Comparación de instantáneas:"
 
-#: ../client/snapper.cc:241
+#: ../client/snapper.cc:242
 msgid "  Create config:"
-msgstr "  Crear Configuración:"
+msgstr "  Crear configuración:"
 
-#: ../client/snapper.cc:467
+#: ../client/snapper.cc:468
 msgid "  Create snapshot:"
-msgstr "  Crear imagen:"
+msgstr "  Crear instantánea:"
 
-#: ../client/snapper.cc:298
+#: ../client/snapper.cc:299
 msgid "  Delete config:"
 msgstr "  Borrar configuración:"
 
-#: ../client/snapper.cc:658
+#: ../client/snapper.cc:659
 msgid "  Delete snapshot:"
-msgstr "  Borrar imagen:"
+msgstr "  Suprimir instantánea:"
 
-#: ../client/snapper.cc:202
+#: ../client/snapper.cc:203
 msgid "  List configs:"
 msgstr "  Listar configuraciones:"
 
-#: ../client/snapper.cc:321
+#: ../client/snapper.cc:322
 msgid "  List snapshots:"
-msgstr "  Listar imágenes:"
+msgstr "  Listar instantáneas:"
 
-#: ../client/snapper.cc:604
+#: ../client/snapper.cc:605
 msgid "  Modify snapshot:"
-msgstr "  Modificar imagen:"
+msgstr "  Modificar instantánea:"
 
-#: ../client/snapper.cc:712
+#: ../client/snapper.cc:713
 msgid "  Mount snapshot:"
-msgstr "  Montar imagen:"
+msgstr "  Montar instantánea:"
 
-#: ../client/snapper.cc:740
+#: ../client/snapper.cc:741
 msgid "  Umount snapshot:"
-msgstr "  Desmontar imagen:"
+msgstr "  Desmontar instantánea:"
 
-#: ../client/snapper.cc:877
+#: ../client/snapper.cc:883
 msgid "  Undo changes:"
 msgstr "  Deshacer cambios:"
 
-#: ../client/snapper.cc:373 ../client/snapper.cc:402
+#: ../client/snapper.cc:374 ../client/snapper.cc:403
 msgid "#"
 msgstr "#"
 
-#: ../client/snapper.cc:377
+#: ../client/snapper.cc:378
 msgid "Cleanup"
-msgstr "Limpieza"
+msgstr "Limpiar"
 
-#: ../client/snapper.cc:1060
+#: ../client/snapper.cc:1066
 msgid "Command 'cleanup' needs one arguments."
-msgstr "El comando 'cleanup' necesita un argumento."
+msgstr "El comando cleanup necesita un argumento."
 
-#: ../client/snapper.cc:499
+#: ../client/snapper.cc:500
 msgid "Command 'create' does not take arguments."
-msgstr "El comando 'create' no tiene argumentos."
+msgstr "El comando create no acepta argumentos."
 
-#: ../client/snapper.cc:263
+#: ../client/snapper.cc:264
 msgid "Command 'create-config' needs one argument."
-msgstr "El comando 'create-config' necesita un argumento."
+msgstr "El comando create-config necesita un argumento."
 
-#: ../client/snapper.cc:1092
+#: ../client/snapper.cc:1098
 msgid "Command 'debug' does not take arguments."
-msgstr "El comando 'debug'  no tiene argumentos."
+msgstr "El comando debug no admite argumentos."
 
-#: ../client/snapper.cc:670
+#: ../client/snapper.cc:671
 msgid "Command 'delete' needs at least one argument."
-msgstr "El comando 'delete' necesita al menos un argumento."
+msgstr "El comando delete necesita al menos un argumento."
 
-#: ../client/snapper.cc:310
+#: ../client/snapper.cc:311
 msgid "Command 'delete-config' does not take arguments."
-msgstr "El comando 'delete-config' no tiene argumentos."
+msgstr "El comando delete-config no admite argumentos."
 
-#: ../client/snapper.cc:1135
+#: ../client/snapper.cc:836
+msgid "Command 'diff' needs at least one argument."
+msgstr "El comando diff requiere al menos un argumento."
+
+#: ../client/snapper.cc:1141
 msgid "Command 'help' does not take arguments."
-msgstr "El comando 'help'  no tiene argumentos."
+msgstr "El comando help no acepta argumentos."
 
-#: ../client/snapper.cc:341
+#: ../client/snapper.cc:342
 msgid "Command 'list' does not take arguments."
-msgstr "El comando 'list' no tiene argumentos."
+msgstr "El comando list no acepta argumentos."
 
-#: ../client/snapper.cc:214
+#: ../client/snapper.cc:215
 msgid "Command 'list-configs' does not take arguments."
-msgstr "El comando 'list-configs' no tiene argumentos."
+msgstr "El comando list-configs no acepta argumentos."
 
-#: ../client/snapper.cc:629
+#: ../client/snapper.cc:630
 msgid "Command 'modify' needs at least one argument."
-msgstr "El comando 'modifcar' requiere al menos un argumento."
+msgstr "El comando modify requiere al menos un argumento."
 
-#: ../client/snapper.cc:724 ../client/snapper.cc:752
+#: ../client/snapper.cc:725 ../client/snapper.cc:753
 msgid "Command 'mount' needs at least one argument."
-msgstr "El comando 'mount' necesita al menos un argumento."
+msgstr "El comando mount necesita al menos un argumento."
 
-#: ../client/snapper.cc:788
+#: ../client/snapper.cc:789
 msgid "Command 'status' needs one argument."
-msgstr "El comando 'status' necesita un argumento."
+msgstr "El comando status requiere un argumento."
 
-#: ../client/snapper.cc:897
+#: ../client/snapper.cc:903
 msgid "Command 'undochange' needs at least one argument."
-msgstr "El comando 'undochange' necesita al menos un argumento."
+msgstr "El comando undochange necesita al menos un argumento."
 
-#: ../client/snapper.cc:221
+#: ../client/snapper.cc:222
 msgid "Config"
 msgstr "Configurar"
 
-#: ../client/snapper.cc:1275
+#: ../client/snapper.cc:1281
 msgid "Config is in use."
 msgstr "Configuración en uso."
 
-#: ../client/snapper.cc:1273
+#: ../client/snapper.cc:1279
 msgid "Config is locked."
 msgstr "Configuración bloqueada."
 
-#: ../client/snapper.cc:1281
+#: ../client/snapper.cc:1289
 #, c-format
 msgid "Creating config failed (%s)."
-msgstr "Fallo al crear la configuración (%s)."
+msgstr "Se ha producido un error al crear la configuración (%s)."
 
-#: ../client/snapper.cc:1285
+#: ../client/snapper.cc:1293
 msgid "Creating snapshot failed."
-msgstr "Error al crear la imagen."
+msgstr "Error al crear la instantánea."
 
-#: ../client/snapper.cc:375 ../client/snapper.cc:403
+#: ../client/snapper.cc:376 ../client/snapper.cc:404
 msgid "Date"
 msgstr "Fecha"
 
-#: ../client/snapper.cc:1283
+#: ../client/snapper.cc:1291
 #, c-format
 msgid "Deleting config failed (%s)."
-msgstr "Fallo al borrar la configuración (%s)."
+msgstr "Error al suprimir la configuración (%s)."
 
-#: ../client/snapper.cc:1287
+#: ../client/snapper.cc:1295
 msgid "Deleting snapshot failed."
-msgstr "Error al eliminar la imagen."
+msgstr "Error al suprimir la instantánea."
 
-#: ../client/snapper.cc:378 ../client/snapper.cc:405 ../client/snapper.cc:433
+#: ../client/snapper.cc:379 ../client/snapper.cc:406 ../client/snapper.cc:434
 msgid "Description"
 msgstr "Descripción"
 
-#: ../client/snapper.cc:287
+#: ../client/snapper.cc:288
 msgid "Detecting filesystem type failed."
-msgstr "Falló la detección del sistema de ficheros."
+msgstr "Error al detectar el tipo de sistema de archivos."
 
-#: ../client/snapper.cc:1289 ../client/snapper.cc:1294
+#: ../client/snapper.cc:1297 ../client/snapper.cc:1302
 msgid "Failure"
-msgstr "Fallo"
+msgstr "Error"
 
-#: ../client/snapper.cc:951
+#: ../client/snapper.cc:957
 #, c-format
 msgid "File '%s' not found."
-msgstr "No se ha encontrado el archivo '%s'."
+msgstr "No se ha encontrado el archivo %s."
 
-# error box title
-#: ../client/snapper.cc:1279
+#: ../client/snapper.cc:1287
 msgid "IO Error."
 msgstr "Errores de E/S."
 
-#: ../client/snapper.cc:90
+#: ../client/snapper.cc:91
 msgid "Identical snapshots."
-msgstr "Imágenes idénticas."
+msgstr "Instantáneas idénticas."
 
-#: ../client/snapper.cc:1271
+#: ../client/snapper.cc:1277
 msgid "Illegal Snapshot."
-msgstr "Imagen no válida."
+msgstr "Instantánea no válida."
 
-#: ../client/snapper.cc:67
+#: ../client/snapper.cc:68
 #, c-format
 msgid "Invalid snapshot '%s'."
-msgstr "Imagen '%s' no válida."
+msgstr "Instantánea %s no válida."
 
-#: ../client/snapper.cc:81 ../client/snapper.cc:919
+#: ../client/snapper.cc:82 ../client/snapper.cc:925
 msgid "Invalid snapshots."
-msgstr "Imágenes inválidas."
+msgstr "Instantáneas no válidas."
 
-#: ../client/snapper.cc:270
+#: ../client/snapper.cc:271
 msgid "Invalid subvolume."
-msgstr "Subvolumen inválido."
+msgstr "Subvolumen no válido."
 
-#: ../client/snapper.cc:1219
+#: ../client/snapper.cc:1225
 #, c-format
 msgid "Invalid table style %d."
 msgstr "Estilo de tabla no válido %d."
 
-#: ../client/snapper.cc:107 ../client/snapper.cc:116 ../client/snapper.cc:125
-#: ../client/snapper.cc:1269
+#: ../client/snapper.cc:108 ../client/snapper.cc:117 ../client/snapper.cc:126
+#: ../client/snapper.cc:1275
 msgid "Invalid userdata."
 msgstr "Información de usuario no válida."
 
 #: ../client/utils/GetOpts.cc:68
 #, c-format
 msgid "Missing argument for command option '%s'."
-msgstr "Falta un argumento para el opción de comando '%s'."
+msgstr "Falta un argumento para la opción de comando %s."
 
 #: ../client/utils/GetOpts.cc:66
 #, c-format
 msgid "Missing argument for global option '%s'."
-msgstr "Falta un argumento para la opción global '%s'."
+msgstr "Falta un argumento para la opción global %s."
 
-#: ../client/snapper.cc:561
+#: ../client/snapper.cc:562
 msgid "Missing command argument."
-msgstr "Falta un argumento del comando. "
+msgstr "Falta un argumento del comando."
 
-#: ../client/snapper.cc:555
+#: ../client/snapper.cc:556
 msgid "Missing or invalid pre-number."
-msgstr "Número pre faltante o no válido."
+msgstr "Número previo ausente o no válido."
 
-#: ../client/snapper.cc:1242
+#: ../client/snapper.cc:1248
 msgid "No command provided."
-msgstr "Ningún comando especificado"
+msgstr "No se ha proporcionado ningún comando."
 
-#: ../client/snapper.cc:1267
+#: ../client/snapper.cc:1273
 msgid "No permissions."
 msgstr "Sin permisos."
 
-#: ../client/snapper.cc:806 ../client/snapper.cc:912
+#: ../client/snapper.cc:807 ../client/snapper.cc:918
 #, c-format
 msgid "Opening file '%s' failed."
-msgstr "Falló la apertura del archivo '%s'."
-
-#: ../client/snapper.cc:430
-msgid "Post #"
-msgstr "Post número"
-
-#: ../client/snapper.cc:432
-msgid "Post Date"
-msgstr "Fecha de envío"
-
-#: ../client/snapper.cc:374 ../client/snapper.cc:429
-msgid "Pre #"
-msgstr "Pre número"
+msgstr "Se ha producido un error al abrir el archivo %s."
 
 #: ../client/snapper.cc:431
+msgid "Post #"
+msgstr "Posterior número"
+
+#: ../client/snapper.cc:433
+msgid "Post Date"
+msgstr "Fecha de posterior"
+
+#: ../client/snapper.cc:375 ../client/snapper.cc:430
+msgid "Pre #"
+msgstr "Previa número"
+
+#: ../client/snapper.cc:432
 msgid "Pre Date"
 msgstr "Fecha previa"
 
-#: ../client/snapper.cc:222
+#: ../client/snapper.cc:1283
+msgid "Snapshot is in use."
+msgstr "La instantánea está en uso."
+
+#: ../client/snapper.cc:223
 msgid "Subvolume"
 msgstr "Subvolumen"
 
-#: ../client/snapper.cc:1243 ../client/snapper.cc:1252
+#: ../client/snapper.cc:1249 ../client/snapper.cc:1258
 #: ../client/utils/GetOpts.cc:61 ../client/utils/GetOpts.cc:69
 msgid "Try 'snapper --help' for more information."
-msgstr "Pruebe 'snapper --help' for more information."
+msgstr "Pruebe snapper --help para obtener más información."
 
-#: ../client/snapper.cc:372
+#: ../client/snapper.cc:373
 msgid "Type"
 msgstr "Tipo"
 
-#: ../client/snapper.cc:1080
+#: ../client/snapper.cc:1086
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
-msgstr "Algoritmo de limpieza '%s' desconocido."
+msgstr "Algoritmo de limpieza %s desconocido."
 
-#: ../client/snapper.cc:1251
+#: ../client/snapper.cc:1257
 #, c-format
 msgid "Unknown command '%s'."
-msgstr "Comando '%s' desconocido."
+msgstr "Comando %s desconocido."
 
-#: ../client/snapper.cc:1265
+#: ../client/snapper.cc:1271
 msgid "Unknown config."
 msgstr "Configuración desconocida."
 
-#: ../client/snapper.cc:1277
+#: ../client/snapper.cc:1285
 msgid "Unknown file."
 msgstr "Archivo desconocido."
 
 #: ../client/utils/GetOpts.cc:58
 #, c-format
 msgid "Unknown global option '%s'."
-msgstr "Opción global desconocida '%s'."
+msgstr "Opción global desconocida %s."
 
 #: ../client/utils/GetOpts.cc:60
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
-msgstr "Opción desconocida '%s' para el comando '%s'."
+msgstr "Opción desconocida %s para el comando %s."
 
-#: ../client/snapper.cc:527
+#: ../client/snapper.cc:528
 msgid "Unknown type of snapshot."
-msgstr "Tipo de imagen desconocido."
+msgstr "Tipo de instantánea desconocido."
 
-#: ../client/snapper.cc:360
+#: ../client/snapper.cc:361
 msgid "Unknown type of snapshots."
-msgstr "Tipo de imagen desconocido."
+msgstr "Tipo de instantáneas desconocido."
 
-#: ../client/snapper.cc:1220
+#: ../client/snapper.cc:1226
 #, c-format
 msgid "Use an integer number from %d to %d"
 msgstr "Utilice un número entero de %d a %d"
 
-#: ../client/snapper.cc:376 ../client/snapper.cc:404
+#: ../client/snapper.cc:377 ../client/snapper.cc:405
 msgid "User"
 msgstr "Usuario"
 
-#: ../client/snapper.cc:379 ../client/snapper.cc:406 ../client/snapper.cc:434
+#: ../client/snapper.cc:380 ../client/snapper.cc:407 ../client/snapper.cc:435
 msgid "Userdata"
 msgstr "Información del usuario"
 
-#: ../client/snapper.cc:986
+#: ../client/snapper.cc:992
 #, c-format
 msgid "create:%d modify:%d delete:%d"
 msgstr "crear:%d modificar:%d eliminar:%d"
 
-#: ../client/snapper.cc:1011
+#: ../client/snapper.cc:1017
 #, c-format
 msgid "creating %s"
 msgstr "creando %s"
 
-#: ../client/snapper.cc:1017
+#: ../client/snapper.cc:1023
 #, c-format
 msgid "deleting %s"
-msgstr "borrando %s"
-
-# clients/lan_nfs_write.ycp:78
-# clients/lan_nfs_write.ycp:78
-# include/nfs/nfs_write.ycp:54
-# modules/Nfs.ycp:163
-#: ../client/snapper.cc:1027
-#, c-format
-msgid "failed to create %s"
-msgstr "fallo al crear %s"
+msgstr "suprimiendo %s"
 
 #: ../client/snapper.cc:1033
 #, c-format
-msgid "failed to delete %s"
-msgstr "fallo al borrar %s"
+msgid "failed to create %s"
+msgstr "error al crear %s"
 
-#: ../client/snapper.cc:1030
+#: ../client/snapper.cc:1039
+#, c-format
+msgid "failed to delete %s"
+msgstr "error al suprimir %s"
+
+#: ../client/snapper.cc:1036
 #, c-format
 msgid "failed to modify %s"
-msgstr "fallo al modificar %s"
+msgstr "error al modificar %s"
 
-#: ../client/snapper.cc:1014
+#: ../client/snapper.cc:1020
 #, c-format
 msgid "modifying %s"
 msgstr "modificando %s"
 
-#: ../client/snapper.cc:982
+#: ../client/snapper.cc:988
 msgid "nothing to do"
 msgstr "no hay nada que hacer"
 
-#: ../client/snapper.cc:1139
-msgid ""
-"usage: snapper [--global-options] <command> [--command-options] [command-"
-"arguments]"
-msgstr ""
-"usage: snapper [--global-options] <command> [--command-options] [argumentos-"
-"comando]"
-
-#~ msgid "\t--disable-filters\t\tDisable filters."
-#~ msgstr "\t--disable-filters\t\tDeshabilitar filtros."
-
-#~ msgid "Command failed (%s). See log for more information."
-#~ msgstr "Comando fallido (%s). Vea el log para más información."
-
-#~ msgid "Config '%s' is invalid."
-#~ msgstr "La configuración '%s' es inválida."
-
-#~ msgid "Listing configs failed (%s)."
-#~ msgstr "Falló el listado de configuraciones (%s)."
-
-#~ msgid "Snapshot '%u' not found."
-#~ msgstr "Imagen '%u' no encontrada."
-
-#~ msgid "comparing snapshots..."
-#~ msgstr "comparando imágenes..."
-
-#~ msgid "done"
-#~ msgstr "hecho"
-
-#~ msgid "undoing change done"
-#~ msgstr "cambio deshecho"
-
-#~ msgid "undoing change..."
-#~ msgstr "deshaciendo cambio..."
-
-#~ msgid "Command 'modify' needs one argument."
-#~ msgstr "El comando 'modify' necesita un argumento."
-
-#~ msgid "    Options for 'diff' command:"
-#~ msgstr "    Opciones para el comando 'diff'."
-
-#~ msgid "Command 'diff' needs one argument."
-#~ msgstr "El comando 'modify' necesita un argumento."
-
-#~ msgid "File '%s' not found in diff."
-#~ msgstr "Archivo '%s' no encontrado en el diff."
-
-#~ msgid "\t--file, -f <file>\t\tRun diff for file."
-#~ msgstr "\t--file, -f <file>\t\tEjecutar diff para archivo."
-
-# i think that strings beginning with \tsnapper are intented to represent usage examples, as commands in console.
-#, fuzzy
-#~ msgid "\tsnapper rollback <number1> <number2>"
-#~ msgstr "\tsnapper rollback <number1> <number2>"
-
-#~ msgid "    Options for 'rollback' command:"
-#~ msgstr "    Opciones para el comando 'rollback'."
-
-#~ msgid "  Rollback snapshots:"
-#~ msgstr "  Imágenes de restauración:"
-
-#~ msgid "Command 'diff' needs two arguments."
-#~ msgstr "El comando 'diff' necesita dos argumentos."
-
-#~ msgid "Command 'rollback' needs two arguments."
-#~ msgstr "El comando 'rollback' necesita dos argumentos."
-
-#~ msgid "File '%s' not included in diff."
-#~ msgstr "Archivo '%s' no incluido en diff."
-
-#~ msgid "rollback done"
-#~ msgstr "restauración finalizada"
-
-#~ msgid "running rollback..."
-#~ msgstr "ejecutando restauración..."
+#: ../client/snapper.cc:1145
+msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr "uso: snapper [--opciones globales] <comando> [--opciones de comando] [argumentos de comando]"

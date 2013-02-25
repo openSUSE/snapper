@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Feb 25 10:54:32 CET 2013 - aschnell@suse.de
+
+- updated translations
+
+-------------------------------------------------------------------
 Fri Feb 22 11:49:23 CET 2013 - aschnell@suse.de
 
 - use sendfile system-call instead of read/write loop
