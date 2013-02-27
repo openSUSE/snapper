@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string.h>
 #include <sys/xattr.h>
 
@@ -7,15 +8,21 @@
 
 void xattr_create(const char *name, const char *value, const char *path)
 {
-    check_zero(setxattr(path, name, (void *) value, strlen(value), XATTR_CREATE));
+    std::cout << "xa create: file:" << path << "," << name << "=" << value << "... ";
+    check_zero(lsetxattr(path, name, (void *) value, strlen(value), XATTR_CREATE));
+    std::cout << "done" << std::endl;
 }
 
 void xattr_remove(const char *name, const char *path)
 {
-    check_zero(removexattr(path, name));
+    std::cout << "xa remove: file:" << path << "," << name << "... ";
+    check_zero(lremovexattr(path, name));
+    std::cout << "done" << std::endl;
 }
 
 void xattr_replace(const char *name, const char *value, const char *path)
 {
-    check_zero(setxattr(path, name, (void *) value, strlen(value), XATTR_REPLACE));
+    std::cout << "xa replace: file:" << path << "," << name << "=" << value << "... ";
+    check_zero(lsetxattr(path, name, (void *) value, strlen(value), XATTR_REPLACE));
+    std::cout << "done" << std::endl;
 }
