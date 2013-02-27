@@ -30,11 +30,17 @@
 #include <algorithm>
 #include <boost/thread.hpp>
 
+#include "config.h"
 #include "snapper/Log.h"
 #include "snapper/AppUtil.h"
 #include "snapper/File.h"
 #include "snapper/Compare.h"
 #include "snapper/Exception.h"
+
+
+#ifdef ENABLE_XATTRS
+    #include "snapper/XAttributes.h"
+#endif
 
 
 namespace snapper
@@ -172,9 +178,23 @@ namespace snapper
 
     unsigned int
     cmpFiles(const SFile& file1, const struct stat& stat1, const SFile& file2,
-	     const struct stat& stat2)
+	     const struct stat& stat2, bool xa_supported)
     {
-	unsigned int status = 0;
+        unsigned int status = 0;
+
+        /*
+         * NOTE: just for a consideration
+         *
+         * if both ctimes are in match, files should be same
+         * ctime can be altered only by some debugfs tool and
+         * on umounted fs (ext2,3,4, xfs). So this should be safe
+         * unless root or CAP_SYS_ADMIN played with low-level fs
+         * utilities, right?
+         *
+         * if ((stat1.st_ctime == stat2.st_ctime))
+         *      return status;
+         *
+         */
 
 	if ((stat1.st_mode & S_IFMT) != (stat2.st_mode & S_IFMT))
 	{
@@ -184,6 +204,20 @@ namespace snapper
 	{
 	    if (!cmpFilesContent(file1, stat1, file2, stat2))
 		status |= CONTENT;
+
+#ifdef ENABLE_XATTRS
+            /* NOTE: think about this. Do you want to report
+             * XA modification in case the compared files differ
+             * in their types?
+             */
+            if (xa_supported)
+            {
+                if (!cmpFilesXattrs(file1, stat1, file2, stat2))
+                {
+                    status |= XATTRS;
+                }
+            }
+#endif
 	}
 
 	if ((stat1.st_mode ^ stat2.st_mode) & (S_IRWXU | S_IRWXG | S_IRWXO | S_ISUID |
@@ -202,7 +236,7 @@ namespace snapper
 	    status |= GROUP;
 	}
 
-	return status;
+        return status;
     }
 
 
@@ -233,7 +267,7 @@ namespace snapper
 	    throw IOErrorException();
 	}
 
-	return cmpFiles(file1, stat1, file2, stat2);
+        return cmpFiles(file1, stat1, file2, stat2, dir1.xaSupported() && dir2.xaSupported());
     }
 
 
@@ -296,7 +330,7 @@ namespace snapper
     {
 	unsigned int status = 0;
 	if (stat1.st_dev == cmp_data.dev1 && stat2.st_dev == cmp_data.dev2)
-	    status = cmpFiles(SFile(dir1, name), stat1, SFile(dir2, name), stat2);
+	    status = cmpFiles(SFile(dir1, name), stat1, SFile(dir2, name), stat2, dir1.xaSupported() && dir2.xaSupported());
 
 	if (status != 0)
 	{
@@ -439,4 +473,27 @@ namespace snapper
 	y2mil("stopwatch " << stopwatch << " for comparing directories");
     }
 
+#ifdef ENABLE_XATTRS
+    bool
+    cmpFilesXattrs(const SFile& file1, const struct stat& stat1, const SFile& file2, const struct stat& stat2)
+    {
+        if ((stat1.st_mode & S_IFMT) != (stat2.st_mode & S_IFMT))
+            throw LogicErrorException();
+
+        bool retval;
+
+        try
+        {
+            XAttributes xa(file1.fullname(true)), xb(file2.fullname(true));
+            retval = (xa == xb);
+        }
+        catch (XAttributesException xae)
+        {
+            y2err("extended attributes compare failed");
+            retval = false;
+        }
+
+        return retval;
+    }
+#endif
 }

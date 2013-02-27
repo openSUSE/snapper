@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 
+#include "config.h"
 #include "common.h"
 
 #include <snapper/Snapper.h>
@@ -27,6 +28,9 @@ Snapshots::iterator first;
 Snapshots::iterator second;
 
 unsigned int numCreateErrors, numModifyErrors, numDeleteErrors;
+#ifdef ENABLE_XATTRS
+unsigned int xaCreate, xaReplace, xaDelete;
+#endif
 
 
 void
@@ -81,6 +85,16 @@ check_undo_statistics(unsigned int numCreate, unsigned int numModify, unsigned i
 }
 
 
+#ifdef ENABLE_XATTRS
+void
+check_xa_undo_statistics(unsigned int xaNumCreate, unsigned xaNumReplace, unsigned int xaNumDelete)
+{
+    check_equal(xaCreate, xaNumCreate);
+    check_equal(xaDelete, xaNumDelete);
+    check_equal(xaReplace, xaNumReplace);
+}
+#endif
+
 void
 undo()
 {
@@ -120,6 +134,14 @@ undo()
     }
 
     cout << "undoing done" << endl;
+
+#ifdef ENABLE_XATTRS
+    XAUndoStatistic xs = files.getXAUndoStatistic();
+    xaCreate = xs.numCreate;
+    xaReplace = xs.numReplace;
+    xaDelete = xs.numDelete;
+#endif
+
 }
 
 

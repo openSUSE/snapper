@@ -14,7 +14,7 @@ LIBVERSION_AGE=`expr $LIBVERSION_MINOR`
 LIBVERSION_INFO=$LIBVERSION_CURRENT:$LIBVERSION_REVISON:$LIBVERSION_AGE
 
 AM_INIT_AUTOMAKE(snapper, $VERSION)
-AM_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADERS(config.h)
 
 AC_DISABLE_STATIC
 
@@ -95,6 +95,15 @@ AC_ARG_ENABLE([zypp], AC_HELP_STRING([--disable-zypp],[Disable zypp plugin suppo
 AM_CONDITIONAL(HAVE_ZYPP, [test "$with_zypp" != "no"])
 
 AC_CHECK_LIB(btrfs, btrfs_read_and_process_send_stream)
+
+AC_ARG_ENABLE([xattrs], AC_HELP_STRING([--enable-xattrs],[Enable extended attributes support in diff, status and undochange commands]),
+		[with_xattrs=$enableval],[with_xattrs=no])
+
+AM_CONDITIONAL(HAVE_XATTRS, [test "x$with_xattrs" !=  "xno"])
+
+if test "x$with_xattrs" != "xno"; then
+	AC_DEFINE(ENABLE_XATTRS, 1, [Enable extended attributes support])
+fi
 
 PKG_CHECK_MODULES(DBUS, dbus-1)
 
