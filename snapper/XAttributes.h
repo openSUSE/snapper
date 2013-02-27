@@ -44,10 +44,6 @@ namespace snapper
 	typedef pair<string, xa_value_t> xa_pair_t;
         typedef vector<xa_pair_t> xa_mod_vec_t;
 
-        // this is ordered on purpose!
-        // we can possibly avoid allocating new fs block if xattrs fits
-        // into 100 bytes (ext4)
-        // so, first remove/change and create later
         enum XaCompareFlags {
             XA_DELETE = 0,
             XA_REPLACE,
@@ -71,7 +67,6 @@ namespace snapper
 	private:
             xa_map_t xamap;
         public:
-            XAttributes(int);
             XAttributes(const string&);
             XAttributes(const XAttributes&);
 

@@ -36,63 +36,6 @@
 
 namespace snapper
 {
-    /* TODO: candidate for removal */
-    XAttributes::XAttributes(int fd)
-    {
-        y2deb("entering Xattributes(int fd) constructor");
-        ssize_t size = flistxattr(fd, NULL, 0);
-        if (size < 0)
-        {
-            y2err("Couldn't get xattributes names-list size: " << stringerror(errno));
-            throw XAttributesException();
-        }
-
-        // +1 to cover size == 0
-        boost::scoped_array<char> names(new char[size + 1]);
-        names[size] = '\0';
-
-        y2deb("XAttributes names-list size is: " << size);
-
-        size = flistxattr(fd, names.get(), size);
-        if (size < 0)
-        {
-            y2err("Couldn't get xattributes names-list: " << stringerror(errno));
-            throw XAttributesException();
-        }
-
-        int pos = 0;
-
-        while (pos < size)
-        {
-            string name = string(names.get() + pos);
-            // move beyond separating '\0' char
-            pos += name.length() + 1;
-
-            ssize_t v_size = fgetxattr(fd, name.c_str(), NULL, 0);
-            if (v_size < 0)
-            {
-                y2err("Couldn't get a xattribute value size for the xattribute name '" << name << "': " << stringerror(errno));
-                throw XAttributesException();
-            }
-
-            y2deb("XAttribute value size for xattribute name: '" << name << "' is " << v_size);
-
-            boost::scoped_array<uint8_t> buffer(v_size ? new uint8_t[v_size] : NULL);
-
-            v_size = fgetxattr(fd, name.c_str(), (void *)buffer.get(), v_size);
-            if (v_size < 0)
-            {
-                y2err("Coudln't get xattrbitue value for the xattrbite name '" << name << "': ");
-                throw XAttributesException();
-            }
-
-            if (!xamap.insert(xa_pair_t(name, xa_value_t(buffer.get(), buffer.get() + v_size))).second)
-            {
-                y2err("Duplicite extended attribute name in source file!");
-                throw XAttributesException();
-            }
-        }
-    }
 
     XAttributes::XAttributes(const string &linkpath)
     {
@@ -153,7 +96,7 @@ namespace snapper
 
     XAttributes::XAttributes(const XAttributes &xa)
     {
-        y2deb("Starting copy constructor XAttribute(const XAttribute&)");
+        y2deb("Entering copy constructor XAttribute(const XAttribute&)");
         xamap = xa.xamap;
     }
 

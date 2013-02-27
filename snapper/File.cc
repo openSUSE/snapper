@@ -526,69 +526,6 @@ namespace snapper
     }
 
 #ifdef ENABLE_XATTRS
-/*  bool
-    File::modifyXattributesReg() const
-    {
-        int src_fd = open(getAbsolutePath(LOC_PRE).c_str(), O_RDONLY | O_NOFOLLOW | O_CLOEXEC);
-        if (src_fd < 0)
-        {
-            y2err("open failed errno:" << errno << " (" << stringerror(errno) << ")");
-            return false;
-        }
-
-        int dest_fd = open(getAbsolutePath(LOC_SYSTEM).c_str(), O_RDWR | O_NOFOLLOW | O_CLOEXEC);
-        if (dest_fd < 0)
-        {
-            y2err("open failed errno:" << errno << " (" << stringerror(errno) << ")");
-            close(src_fd);
-            return false;
-        }
-
-        y2deb("source file is: " << getAbsolutePath(LOC_PRE));
-        y2deb("destination file is: " << getAbsolutePath(LOC_SYSTEM));
-
-        bool ret_val;
-
-        try {
-            XAttributes xa_src(src_fd), xa_dest(dest_fd);
-            y2deb("xa_src object: " << xa_src << std::endl << "xa_dest object: " << xa_dest);
-
-            XAModification xa_mod(xa_src, xa_dest);
-            y2deb("xa_modmap(xa_dest) object: " << xa_mod);
-
-            ret_val = xa_mod.serializeToFd(dest_fd);
-        }
-        catch (XAttributesException xae) {
-            ret_val = false;
-        }
-
-        close(src_fd);
-        close(dest_fd);
-
-        return ret_val;
-    }
-
-    bool
-    File::modifyXattributesLink() const
-    {
-        bool ret_val;
-
-        try {
-            XAttributes xa_src(getAbsolutePath(LOC_PRE)), xa_dest(getAbsolutePath(LOC_SYSTEM));
-            y2deb("xa_src object: " << xa_src << std::endl << "xa_dest object: " << xa_dest);
-
-            XAModification xa_mod(xa_src, xa_dest);
-            y2deb("xa_modmap(xa_dest) object: " << xa_mod);
-
-            ret_val = xa_mod.serializeToLink(getAbsolutePath(LOC_SYSTEM));
-        }
-        catch (XAttributesException xae) {
-            ret_val = false;
-        }
-
-        return ret_val;
-    }
-*/
     bool
     File::modifyXattributes()
     {
@@ -679,6 +616,8 @@ namespace snapper
 
 #ifdef ENABLE_XATTRS
         /*
+         * NOTE: following statement is not valid for btrfs
+         *
          * xattributes have to be transfered as well
          * if we'are about to create new type during
          * undo!
