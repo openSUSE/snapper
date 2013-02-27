@@ -92,7 +92,7 @@ namespace snapper
 	    throw IOErrorException();
 	}
 #ifdef ENABLE_XATTRS
-	setXaStatus();
+	xastatus = dir.xastatus;
 #endif
     }
 
