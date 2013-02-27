@@ -390,13 +390,19 @@ namespace snapper
 	return -1;
     }
 
-#ifdef ENABLE_XATTRS
+
     bool
     SDir::xaSupported(void) const
     {
+#ifdef ENABLE_XATTRS
 	return (xastatus == XA_SUPPORTED);
+#else
+        return false;
+#endif
     }
 
+
+#ifdef ENABLE_XATTRS
     void
     SDir::setXaStatus(void)
     {
@@ -420,13 +426,8 @@ namespace snapper
 	    xastatus = XA_SUPPORTED;
 	}
     }
-
-    bool
-    SFile::xaSupported(void) const
-    {
-        return dir.xaSupported();
-    }
 #endif
+
 
     SFile::SFile(const SDir& dir, const string& name)
 	: dir(dir), name(name)

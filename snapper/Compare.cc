@@ -178,7 +178,7 @@ namespace snapper
 
     unsigned int
     cmpFiles(const SFile& file1, const struct stat& stat1, const SFile& file2,
-	     const struct stat& stat2)
+	     const struct stat& stat2, bool xa_supported)
     {
         unsigned int status = 0;
 
@@ -206,11 +206,11 @@ namespace snapper
 		status |= CONTENT;
 
 #ifdef ENABLE_XATTRS
-            /* TODO: think about this. Do you want to report
+            /* NOTE: think about this. Do you want to report
              * XA modification in case the compared files differ
-             * in their types file A: link, file B: directory
+             * in their types?
              */
-            if (file1.xaSupported() && file2.xaSupported())
+            if (xa_supported)
             {
                 if (!cmpFilesXattrs(file1, stat1, file2, stat2))
                 {
@@ -267,7 +267,7 @@ namespace snapper
 	    throw IOErrorException();
 	}
 
-	return cmpFiles(file1, stat1, file2, stat2);
+        return cmpFiles(file1, stat1, file2, stat2, dir1.xaSupported() && dir2.xaSupported());
     }
 
 
@@ -330,7 +330,7 @@ namespace snapper
     {
 	unsigned int status = 0;
 	if (stat1.st_dev == cmp_data.dev1 && stat2.st_dev == cmp_data.dev2)
-	    status = cmpFiles(SFile(dir1, name), stat1, SFile(dir2, name), stat2);
+	    status = cmpFiles(SFile(dir1, name), stat1, SFile(dir2, name), stat2, dir1.xaSupported() && dir2.xaSupported());
 
 	if (status != 0)
 	{
@@ -495,42 +495,5 @@ namespace snapper
 
         return retval;
     }
-
-/*
-    bool cmpFilesXattrsLnk(const SFile& file1, const SFile& file2)
-    {
-        int fd1 = file1.open(O_RDONLY | O_NOATIME | O_CLOEXEC);
-        if (fd1 < 0)
-        {
-            y2err("Can't open link: " << file1.fullname() << " w/ error: " << stringerror(errno));
-            throw IOErrorException();
-        }
-
-        int fd2 = file2.open(O_RDONLY | O_NOATIME | O_CLOEXEC);
-        if (fd2 < 0)
-        {
-            y2err("Can't open link:" << file2.fullname() << " w/ error: " << stringerror(errno));
-            close(fd1);
-            throw IOErrorException();
-        }
-
-        bool retval;
-
-        try
-        {
-            XAttributes xa(fd1), xb(fd2);
-            retval = (xa == xb);
-        }
-        catch (XAttributesException xae)
-        {
-            y2err("extended attributes compare failed");
-            retval = false;
-        }
-        close(fd1);
-        close(fd2);
-
-        return retval;
-    }
-*/
 #endif
 }

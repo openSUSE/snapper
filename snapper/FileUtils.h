@@ -23,6 +23,7 @@
 #ifndef SNAPPER_FILE_UTILS_H
 #define SNAPPER_FILE_UTILS_H
 
+#include "config.h"
 
 #include <string>
 #include <vector>
@@ -82,10 +83,7 @@ namespace snapper
 	int rename(const string& oldname, const string& newname) const;
 
 	int mktemp(string& name) const;
-#ifdef ENABLE_XATTRS
 	bool xaSupported() const;
-#endif
-
     private:
 #ifdef ENABLE_XATTRS
         int xastatus;
@@ -110,9 +108,6 @@ namespace snapper
 	int stat(struct stat* buf, int flags) const;
 	int open(int flags) const;
 	int readlink(string& buf) const;
-#ifdef ENABLE_XATTRS
-	bool xaSupported() const;
-#endif
     private:
 
 	const SDir& dir;
