@@ -8,10 +8,15 @@ INCLUDES = -I$(top_srcdir)
 
 LDADD = ../snapper/libsnapper.la
 
+if HAVE_XATTRS
+TMP_XATST = xattrs1 xattrs2
+endif
+
 noinst_SCRIPTS = run-all
 
 noinst_PROGRAMS = simple1 permissions1 permissions2 owner1 owner2 owner3	\
-	directory1 missing-directory1 error1 error2 error4 xattrs1 xattrs2
+	directory1 missing-directory1 error1 error2 error4 \
+	$(TMP_XATST)
 
 simple1_SOURCES = simple1.cc common.h common.cc
 
