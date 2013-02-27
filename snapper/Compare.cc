@@ -183,16 +183,18 @@ namespace snapper
         unsigned int status = 0;
 
         /*
-         * NOTE:
+         * NOTE: just for a consideration
          *
          * if both ctimes are in match, files should be same
          * ctime can be altered only by some debugfs tool and
-         * on umounted fs (ext2,3,4...). So this should be safe
+         * on umounted fs (ext2,3,4, xfs). So this should be safe
          * unless root or CAP_SYS_ADMIN played with low-level fs
-         * utilities
+         * utilities, right?
+         *
+         * if ((stat1.st_ctime == stat2.st_ctime))
+         *      return status;
+         *
          */
-	if ((stat1.st_ctime == stat2.st_ctime))
-	    return status;
 
 	if ((stat1.st_mode & S_IFMT) != (stat2.st_mode & S_IFMT))
 	{
