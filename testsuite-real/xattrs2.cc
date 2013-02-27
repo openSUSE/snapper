@@ -14,7 +14,7 @@ main()
     run_command("touch second");
     run_command("touch delete-me");
 
-    run_command("ln -s first first-link");   
+    run_command("ln -s first first-link");
 
     // TODO: test on btrfs!
     // security namespace is curently supported for dirs and links on ext4
