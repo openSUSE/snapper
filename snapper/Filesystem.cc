@@ -33,7 +33,6 @@
 #include <asm/types.h>
 #include <boost/algorithm/string.hpp>
 
-#include "config.h"
 #include "snapper/Log.h"
 #include "snapper/Filesystem.h"
 #ifdef ENABLE_BTRFS
