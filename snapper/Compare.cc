@@ -180,7 +180,7 @@ namespace snapper
     cmpFiles(const SFile& file1, const struct stat& stat1, const SFile& file2,
 	     const struct stat& stat2)
     {
-        unsigned int status = 0;
+	unsigned int status = 0;
 
         /*
          * NOTE: just for a consideration
@@ -236,7 +236,7 @@ namespace snapper
 	    status |= GROUP;
 	}
 
-        return status;
+	return status;
     }
 
 
@@ -267,7 +267,7 @@ namespace snapper
 	    throw IOErrorException();
 	}
 
-        return cmpFiles(file1, stat1, file2, stat2);
+	return cmpFiles(file1, stat1, file2, stat2);
     }
 
 
