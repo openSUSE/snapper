@@ -9,7 +9,7 @@ INCLUDES = -I/usr/include/libxml2
 lib_LTLIBRARIES = libsnapper.la
 
 if HAVE_XATTRS
-TMP_XA = XAttributes.cc	Xattributes.h
+TMP_XA = XAttributes.cc	XAttributes.h
 endif HAVE_XATTRS
 
 libsnapper_la_SOURCES =					\
