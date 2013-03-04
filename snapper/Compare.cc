@@ -178,7 +178,7 @@ namespace snapper
 
     unsigned int
     cmpFiles(const SFile& file1, const struct stat& stat1, const SFile& file2,
-	     const struct stat& stat2, bool xa_supported)
+	     const struct stat& stat2)
     {
         unsigned int status = 0;
 
@@ -210,7 +210,7 @@ namespace snapper
              * XA modification in case the compared files differ
              * in their types?
              */
-            if (xa_supported)
+            if (file1.xaSupported() && file2.xaSupported())
             {
                 if (!cmpFilesXattrs(file1, stat1, file2, stat2))
                 {
@@ -267,7 +267,7 @@ namespace snapper
 	    throw IOErrorException();
 	}
 
-        return cmpFiles(file1, stat1, file2, stat2, dir1.xaSupported() && dir2.xaSupported());
+        return cmpFiles(file1, stat1, file2, stat2);
     }
 
 
@@ -330,7 +330,7 @@ namespace snapper
     {
 	unsigned int status = 0;
 	if (stat1.st_dev == cmp_data.dev1 && stat2.st_dev == cmp_data.dev2)
-	    status = cmpFiles(SFile(dir1, name), stat1, SFile(dir2, name), stat2, dir1.xaSupported() && dir2.xaSupported());
+	    status = cmpFiles(SFile(dir1, name), stat1, SFile(dir2, name), stat2);
 
 	if (status != 0)
 	{

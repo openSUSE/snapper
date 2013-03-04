@@ -108,6 +108,7 @@ namespace snapper
 	int stat(struct stat* buf, int flags) const;
 	int open(int flags) const;
 	int readlink(string& buf) const;
+        bool xaSupported() const;
     private:
 
 	const SDir& dir;

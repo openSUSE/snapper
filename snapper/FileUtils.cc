@@ -402,6 +402,13 @@ namespace snapper
     }
 
 
+    bool
+    SFile::xaSupported(void) const
+    {
+        return dir.xaSupported();
+    }
+
+
 #ifdef ENABLE_XATTRS
     void
     SDir::setXaStatus(void)
