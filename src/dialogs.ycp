@@ -619,27 +619,27 @@ any ShowDialog () {
 	if (contains (status, "created"))
 	{
 	    // label
-	    content	= add (content, `Left (`Label ("New file was created.")));
+	    content	= add (content, `Left (`Label (_("New file was created."))));
 	}
 	else if (contains (status, "removed"))
 	{
 	    // label
-	    content	= add (content, `Left (`Label ("File was removed.")));
+	    content	= add (content, `Left (`Label (_("File was removed."))));
 	}
 	else if (contains (status, "no_change"))
 	{
 	    // label
-	    content = add (content, `Left (`Label ("File content was not changed.")));
+	    content = add (content, `Left (`Label (_("File content was not changed."))));
 	}
 	else if (contains (status, "none"))
 	{
 	    // label
-	    content	= add (content, `Left (`Label ("File does not exist in either snapshot.")));
+	    content	= add (content, `Left (`Label (_("File does not exist in either snapshot."))));
 	}
 	else if (contains (status, "diff"))
 	{
 	    // label
-	    content	= add (content, `Left (`Label ("File content was modified.")));
+	    content	= add (content, `Left (`Label (_("File content was modified."))));
 	}
 	if (contains (status, "mode"))
 	{
