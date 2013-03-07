@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Mar  7 11:43:27 CET 2013 - jsuchome@suse.cz
+
+- mark visible strings for translations (bnc#807719)
+- 2.23.1
+
+-------------------------------------------------------------------
 Mon Nov 19 11:33:41 CET 2012 - aschnell@suse.de
 
 - added binding for Snapper::createConfig
