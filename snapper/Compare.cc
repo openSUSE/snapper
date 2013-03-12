@@ -225,7 +225,7 @@ namespace snapper
 #ifdef ENABLE_XATTRS
             if (file1.xaSupported() && file2.xaSupported())
             {
-                if (!cmpFilesXattrs(file1, stat1, file2, stat2))
+                if (!cmpFilesXattrs(file1, file2))
                 {
                     status |= XATTRS;
                 }
@@ -471,7 +471,7 @@ namespace snapper
 
 #ifdef ENABLE_XATTRS
     bool
-    cmpFilesXattrs(const SFile& file1, const struct stat& stat1, const SFile& file2, const struct stat& stat2)
+    cmpFilesXattrs(const SFile& file1, const SFile& file2)
     {
         bool retval;
 
