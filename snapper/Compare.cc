@@ -204,20 +204,6 @@ namespace snapper
 	{
 	    if (!cmpFilesContent(file1, stat1, file2, stat2))
 		status |= CONTENT;
-
-#ifdef ENABLE_XATTRS
-            /* NOTE: think about this. Do you want to report
-             * XA modification in case the compared files differ
-             * in their types?
-             */
-            if (file1.xaSupported() && file2.xaSupported())
-            {
-                if (!cmpFilesXattrs(file1, stat1, file2, stat2))
-                {
-                    status |= XATTRS;
-                }
-            }
-#endif
 	}
 
 	if ((stat1.st_mode ^ stat2.st_mode) & (S_IRWXU | S_IRWXG | S_IRWXO | S_ISUID |
@@ -235,6 +221,16 @@ namespace snapper
 	{
 	    status |= GROUP;
 	}
+
+#ifdef ENABLE_XATTRS
+            if (file1.xaSupported() && file2.xaSupported())
+            {
+                if (!cmpFilesXattrs(file1, stat1, file2, stat2))
+                {
+                    status |= XATTRS;
+                }
+            }
+#endif
 
 	return status;
     }
