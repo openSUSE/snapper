@@ -39,6 +39,9 @@
 #include "snapper/Compare.h"
 #include "snapper/Exception.h"
 
+#ifdef ENABLE_XATTRS
+#include <snapper/XAttributes.h>
+#endif
 
 namespace snapper
 {
@@ -616,11 +619,14 @@ namespace snapper
 
 #ifdef ENABLE_XATTRS
         /*
-         * NOTE: following statement is not valid for btrfs
-         *
          * xattributes have to be transfered as well
          * if we'are about to create new type during
          * undo!
+	 *
+	 * TODO: for btrfs only:
+	 *
+	 * if we use clone() ioctl for btrfs, we don't need to
+	 * recreate xattributes
          */
         if (getPreToPostStatus() & (XATTRS | TYPE | DELETED))
         {
@@ -725,11 +731,8 @@ namespace snapper
 	ret += status & PERMISSIONS ? "p" : ".";
 	ret += status & USER ? "u" : ".";
 	ret += status & GROUP ? "g" : ".";
-
-
-#ifdef ENABLE_XATTRS
         ret += status & XATTRS ? "x" : ".";
-#endif
+
 	return ret;
     }
 
@@ -768,13 +771,12 @@ namespace snapper
 		ret |= GROUP;
 	}
 
-#ifdef ENABLE_XATTRS
 	if (str.length() >= 5)
         {
             if (str[4] == 'x')
                 ret |= XATTRS;
         }
-#endif
+
 	return ret;
     }
 
