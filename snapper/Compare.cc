@@ -473,9 +473,6 @@ namespace snapper
     bool
     cmpFilesXattrs(const SFile& file1, const struct stat& stat1, const SFile& file2, const struct stat& stat2)
     {
-        if ((stat1.st_mode & S_IFMT) != (stat2.st_mode & S_IFMT))
-            throw LogicErrorException();
-
         bool retval;
 
         try
