@@ -142,7 +142,7 @@ namespace snapper
 
         while (cit != xavalue.end())
         {
-            out << '<' << pos++ << '>' << *cit;
+            out << '<' << pos++ << '>' << static_cast<int>(*cit);
             if (++cit != xavalue.end())
                 out << ':';
         }
