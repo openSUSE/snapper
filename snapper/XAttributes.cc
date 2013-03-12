@@ -150,44 +150,18 @@ namespace snapper
         return out;
     }
 
-    ostream&
-    operator<<(ostream &out, const xa_modification_t &xa_change)
-    {
-        for (xa_mod_citer cit = xa_change.begin(); cit != xa_change.end(); cit++)
-        {
-            switch (cit->first)
-            {
-                case XA_DELETE:
-                    out << "XA_DELETE:" << std::endl;
-                    break;
-                case XA_REPLACE:
-                    out << "XA_REPLACE:" << std::endl;
-                    break;
-                case XA_CREATE:
-                    out << "XA_CREATE:"  << std::endl;
-                    break;
-                default:
-                    out << "(!!!unknown!!!)";
-            }
-            for (xa_mod_vec_citer mod_cit = cit->second.begin(); mod_cit != cit->second.end(); mod_cit++)
-                out << mod_cit->first << ":'" << mod_cit->second << "'" << std::endl;
-        }
-
-        return out;
-    }
-
     XAModification::XAModification()
     {
-        xamodmap[XA_DELETE] = xa_mod_vec_t();
-        xamodmap[XA_REPLACE] = xa_mod_vec_t();
-        xamodmap[XA_CREATE] = xa_mod_vec_t();
+	create_vec = xa_mod_vec_t();
+	delete_vec = xa_del_vec_t();
+	replace_vec = xa_mod_vec_t();
     }
 
     XAModification::XAModification(const snapper::XAttributes& src_xa, const snapper::XAttributes& dest_xa)
     {
-        xamodmap[XA_DELETE] = xa_mod_vec_t();
-        xamodmap[XA_REPLACE] = xa_mod_vec_t();
-        xamodmap[XA_CREATE] = xa_mod_vec_t();
+	create_vec = xa_mod_vec_t();
+	delete_vec = xa_del_vec_t();
+	replace_vec = xa_mod_vec_t();
 
         xa_map_citer src_cit = src_xa.cbegin();
         xa_map_citer dest_cit = dest_xa.cbegin();
@@ -203,7 +177,7 @@ namespace snapper
                 if (src_cit->second != dest_cit->second)
                 {
                     y2deb("create XA_REPLACE event");
-                    xamodmap[XA_REPLACE].push_back(xa_pair_t(src_cit->first, src_cit->second));
+                    replace_vec.push_back(xa_pair_t(src_cit->first, src_cit->second));
                 }
 
                 src_cit++;
@@ -212,40 +186,30 @@ namespace snapper
             else if (src_cit->first < dest_cit->first)
             {
                 y2deb("src name < dest name");
-                xamodmap[XA_CREATE].push_back(xa_pair_t(src_cit->first, src_cit->second));
+                create_vec.push_back(xa_pair_t(src_cit->first, src_cit->second));
 
                 src_cit++;
             }
             else
             {
                 y2deb("src name > dest name");
-                xamodmap[XA_DELETE].push_back(xa_pair_t(dest_cit->first, xa_value_t()));
+		delete_vec.push_back(dest_cit->first);
 
                 dest_cit++;
             }
         }
 
         for (; dest_cit != dest_xa.cend(); dest_cit++)
-            xamodmap[XA_DELETE].push_back(xa_pair_t(dest_cit->first, xa_value_t()));
+	    delete_vec.push_back(dest_cit->first);
 
         for (; src_cit != src_xa.cend(); src_cit++)
-            xamodmap[XA_CREATE].push_back(xa_pair_t(src_cit->first, src_cit->second));
-    }
-
-    const xa_mod_vec_t&
-    XAModification::operator[](const uint8_t action) const
-    {
-        return this->xamodmap.find(action)->second;
+            create_vec.push_back(xa_pair_t(src_cit->first, src_cit->second));
     }
 
     bool
     XAModification::isEmpty() const
     {
-        for (xa_mod_citer cit = this->cbegin(); cit != this->cend(); cit++)
-            if (!cit->second.empty())
-                return false;
-
-        return true;
+	return create_vec.empty() && delete_vec.empty() && replace_vec.empty();
     }
 
     bool
@@ -254,103 +218,92 @@ namespace snapper
         if (this->isEmpty())
             return true;
 
-        for (xa_mod_citer cit = this->cbegin(); cit != this->cend(); cit++)
-        {
-            for (xa_mod_vec_citer mod_cit = cit->second.begin(); mod_cit != cit->second.end(); mod_cit++)
-            {
-                switch (cit->first)
-                {
-                    case XA_DELETE:
-                        y2deb("delete xattribute: " << mod_cit->first);
-                        if (lremovexattr(dest.c_str(), mod_cit->first.c_str()))
-                        {
-                            y2err("Couldn't remove xattribute '" << mod_cit->first << "': " << stringerror(errno));
-                            return false;
-                        }
-                        break;
+	for (xa_mod_vec_citer cit = create_vec.begin(); cit != create_vec.end(); cit++)
+	{
+	    y2deb("Create xattribute: " << cit->first);
+	    if (cit->second.empty())
+	    {
+		y2deb("New value for xattribute is empty!");
+		if (lsetxattr(dest.c_str(), cit->first.c_str(), NULL, 0, XATTR_CREATE))
+		{
+		    y2err("Create xattribute with empty value failed: " << stringerror(errno));
+		    return false;
+		}
+	    }
+	    else
+	    {
+		y2deb("New value for xattribute: " << cit->second);
+		if (lsetxattr(dest.c_str(), cit->first.c_str(), &cit->second.front(), cit->second.size(), XATTR_CREATE))
+		{
+		    y2err("Create xattribute '" << cit->first << "' failed: " << stringerror(errno));
+		    return false;
+		}
+	    }
+	}
 
-                    case XA_REPLACE:
-                        y2deb("replace xattribute: " << mod_cit->first);
+	for (xa_del_vec_citer dcit = delete_vec.begin(); dcit != delete_vec.end(); dcit++)
+	{
+	    y2deb("Remove xattribute: " << *dcit);
+	    if (lremovexattr(dest.c_str(), dcit->c_str()))
+	    {
+		y2err("Remove xattribute '" << *dcit << "' failed: " << stringerror(errno));
+		return false;
+	    }
+	}
 
-                        if (mod_cit->second.empty())
-                        {
-                            y2deb("new value for xattribute '" << mod_cit->first << "' is empty!");
-                            if (lsetxattr(dest.c_str(), mod_cit->first.c_str(), NULL, 0, XATTR_REPLACE))
-                            {
-                                y2err("Couldn't replace xattribute '" << mod_cit->first << "' by new (empty) value: " << stringerror(errno));
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            y2deb("new value for xattribute '" << mod_cit->first << "': " << mod_cit->second);
-                            if (lsetxattr(dest.c_str(), mod_cit->first.c_str(), &mod_cit->second.front(), mod_cit->second.size(), XATTR_REPLACE))
-                            {
-                                y2err("Couldn't replace xattribute '" << mod_cit->first << "' by new (non-empty) value: " << stringerror(errno));
-                                y2deb("new XA value size: " << mod_cit->second.size() << ". The value: " << mod_cit->second);
-                                return false;
-                            }
-                        }
-                        break;
+	for (xa_mod_vec_citer rcit = replace_vec.begin(); rcit != replace_vec.end(); rcit++)
+	{
+	    y2deb("Replace xattribute: " << rcit->first);
 
-                    case XA_CREATE:
-                        y2deb("create xattribute: " << mod_cit->first);
-                        if (mod_cit->second.empty())
-                        {
-                            y2deb("new value for xattribute '" << mod_cit->first << "' is empty!");
-                            if (lsetxattr(dest.c_str(), mod_cit->first.c_str(), NULL, 0, XATTR_CREATE))
-                            {
-                                y2err("Couldn't create xattribute '" << mod_cit->first << "' with new (empty) value: " << stringerror(errno));
-                                return false;
-                            }
-                        }
-                        else
-                        {
-                            y2deb("new value for xattribute '" << mod_cit->first << "': " << mod_cit->second);
-                            if (lsetxattr(dest.c_str(), mod_cit->first.c_str(), &mod_cit->second.front(), mod_cit->second.size(), XATTR_CREATE))
-                            {
-                                y2err("Couldn't create xattribute '" << mod_cit->first << "' with new (non-empty) value: " << stringerror(errno));
-                                y2deb("new XA value size: " << mod_cit->second.size() << ". The value: " << mod_cit->second);
-                                return false;
-                            }
-                        }
-                        break;
+	    if (rcit->second.empty())
+	    {
+		y2deb("new value for xattribute is empty!");
+		if (lsetxattr(dest.c_str(), rcit->first.c_str(), NULL, 0, XATTR_REPLACE))
+		{
+		    y2err("Replace xattribute '" << rcit->first << "' by new (empty) value failed: " << stringerror(errno));
+		    return false;
+		}
+	    }
+	    else
+	    {
+		y2deb("new value for xattribute: " << rcit->second);
+		if (lsetxattr(dest.c_str(), rcit->first.c_str(), &rcit->second.front(), rcit->second.size(), XATTR_REPLACE))
+		{
+		    y2err("Replace xattribute '" << rcit->first << "' by new value failed: " << stringerror(errno));
+		    return false;
+		}
+	    }
+	}
 
-                    default:
-                        y2err("Internal Error in XAModification(): unknown action:" << cit->first);
-                        return false;
-                }
-            }
-        }
-        return true;
+	return true;
     }
 
     unsigned int
     XAModification::getXaCreateNum() const
     {
-        return this->operator[](XA_CREATE).size();
+        return create_vec.size();
     }
 
     unsigned int
     XAModification::getXaDeleteNum() const
     {
-        return this->operator[](XA_DELETE).size();
+        return delete_vec.size();
     }
 
     unsigned int
     XAModification::getXaReplaceNum() const
     {
-        return this->operator[](XA_REPLACE).size();
+        return replace_vec.size();
     }
 
     ostream&
     operator<<(ostream &out, const XAModification &xa_mod)
     {
-        for (xa_mod_vec_citer cit = xa_mod[XA_DELETE].begin(); cit != xa_mod[XA_DELETE].end(); cit++)
-            out << "D:" + cit->first << std::endl;
-        for (xa_mod_vec_citer cit = xa_mod[XA_REPLACE].begin(); cit != xa_mod[XA_REPLACE].end(); cit++)
+        for (xa_del_vec_citer dcit = xa_mod.delete_vec.begin(); dcit != xa_mod.delete_vec.end(); dcit++)
+            out << "D:" + *dcit << std::endl;
+        for (xa_mod_vec_citer cit = xa_mod.replace_vec.begin(); cit != xa_mod.replace_vec.end(); cit++)
             out << "M:" + cit->first << std::endl;
-        for (xa_mod_vec_citer cit = xa_mod[XA_CREATE].begin(); cit != xa_mod[XA_CREATE].end(); cit++)
+        for (xa_mod_vec_citer cit = xa_mod.create_vec.begin(); cit != xa_mod.create_vec.end(); cit++)
             out << "C:" + cit->first << std::endl;
 
         return out;

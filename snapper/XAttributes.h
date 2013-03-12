@@ -43,24 +43,12 @@ namespace snapper
 	typedef map<string, xa_value_t> xa_map_t;
 	typedef pair<string, xa_value_t> xa_pair_t;
         typedef vector<xa_pair_t> xa_mod_vec_t;
-
-        enum XaCompareFlags {
-            XA_DELETE = 0,
-            XA_REPLACE,
-            XA_CREATE
-        };
-        // pair<mode, xa_name_vec_t>
-        //i.e:
-        // mode=create/delete/replace, names="acl, selinux"
-        // create - whole new XA
-        // delete - remove XA
-        // replace - change in xa_value
-        typedef map<uint8_t, xa_mod_vec_t> xa_modification_t;
+	typedef vector<string> xa_del_vec_t;
 
         // iterators
 	typedef xa_map_t::const_iterator xa_map_citer;
-        typedef xa_modification_t::const_iterator xa_mod_citer;
         typedef xa_mod_vec_t::const_iterator xa_mod_vec_citer;
+	typedef xa_del_vec_t::const_iterator xa_del_vec_citer;
 
 	class XAttributes
 	{
@@ -80,8 +68,9 @@ namespace snapper
         class XAModification
         {
         private:
-            xa_modification_t xamodmap;
-            const xa_mod_vec_t& operator[](const uint8_t) const;
+	    xa_mod_vec_t create_vec;
+	    xa_del_vec_t delete_vec;
+	    xa_mod_vec_t replace_vec;
         public:
             XAModification();
             XAModification(const XAttributes&, const XAttributes&);
@@ -93,14 +82,10 @@ namespace snapper
             unsigned int getXaDeleteNum() const;
             unsigned int getXaReplaceNum() const;
 
-            xa_mod_citer cbegin() const { return xamodmap.begin(); };
-            xa_mod_citer cend() const { return xamodmap.end(); };
-
             friend ostream& operator<<(ostream&, const XAModification&);
         };
 
         ostream& operator<<(ostream&, const XAttributes&);
         ostream& operator<<(ostream&, const xa_value_t&);
-        ostream& operator<<(ostream&, const xa_modification_t&);
 }
 #endif
