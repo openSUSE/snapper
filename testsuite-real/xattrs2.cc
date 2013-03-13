@@ -16,7 +16,6 @@ main()
 
     run_command("ln -s first first-link");
 
-    // TODO: test on btrfs!
     // security namespace is curently supported for dirs and links on ext4
     xattr_create("security.aaa", "aaa-value", "/testsuite/first");
     xattr_create("security.bbb", "aaa-value", "/testsuite/second");
@@ -41,9 +40,6 @@ main()
     undo();
 
     check_undo_statistics(1, 2, 0);
-
-    // NOTE: this test is about to fail on btrfs since the undochange cmd is implemented
-    // differently on it
 
     // the both XAs, related to 'first' and 'second' have to be recreated on undochange cmd
     // the deleted file needs to have it's XA recreated as well on undochange

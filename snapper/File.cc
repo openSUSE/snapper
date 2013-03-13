@@ -622,11 +622,6 @@ namespace snapper
          * xattributes have to be transfered as well
          * if we'are about to create new type during
          * undo!
-	 *
-	 * TODO: for btrfs only:
-	 *
-	 * if we use clone() ioctl for btrfs, we don't need to
-	 * recreate xattributes
          */
         if (getPreToPostStatus() & (XATTRS | TYPE | DELETED))
         {
