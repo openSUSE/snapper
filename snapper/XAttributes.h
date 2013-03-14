@@ -71,6 +71,8 @@ namespace snapper
 	    xa_mod_vec_t create_vec;
 	    xa_del_vec_t delete_vec;
 	    xa_mod_vec_t replace_vec;
+
+	    void printTo(ostream&, bool) const;
         public:
             XAModification();
             XAModification(const XAttributes&, const XAttributes&);
@@ -82,6 +84,10 @@ namespace snapper
             unsigned int getXaDeleteNum() const;
             unsigned int getXaReplaceNum() const;
 
+	    // this will generate diff report
+	    void dumpDiffReport(ostream&) const;
+
+	    // this will print out the class content
             friend ostream& operator<<(ostream&, const XAModification&);
         };
 

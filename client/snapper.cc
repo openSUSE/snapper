@@ -1127,25 +1127,25 @@ print_xa_diff(const string loc_pre, const string loc_post)
 {
     try {
         XAModification xa_mod = XAModification(XAttributes(loc_pre), XAttributes(loc_post));
-        if (xa_mod.isEmpty())
-            y2deb("XA Modification object is empty!");
-        cout << "extended attributes diff:" << endl << "--- " << loc_pre << endl << "+++ " << loc_post << endl << xa_mod;
+
+        if (!xa_mod.isEmpty())
+	{
+	    cout << "--- " << loc_pre << endl << "+++ " << loc_post << endl;
+	    xa_mod.dumpDiffReport(cout);
+	}
     }
     catch (XAttributesException xae) {}
 }
 
-
 void
 command_xa_diff(DBus::Connection& conn)
 {
-    GetOpts::parsed_opts opts = getopts.parse("diff", GetOpts::no_options);
+    GetOpts::parsed_opts opts = getopts.parse("xadiff", GetOpts::no_options);
 
     if (getopts.numArgs() < 1) {
         cerr << _("Command 'xadiff' needs at least one argument.") << endl;
         exit(EXIT_FAILURE);
     }
-
-    GetOpts::parsed_opts::const_iterator opt;
 
     pair<unsigned int, unsigned int> nums(read_nums(getopts.popArg()));
 

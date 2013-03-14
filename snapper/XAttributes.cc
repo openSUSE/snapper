@@ -37,13 +37,13 @@
 namespace snapper
 {
 
-    XAttributes::XAttributes(const string &linkpath)
+    XAttributes::XAttributes(const string &path)
     {
-        y2deb("entering Xattributes(string link) constructor");
-        ssize_t size = llistxattr(linkpath.c_str(), NULL, 0);
+        y2deb("entering Xattributes(path=" << path << ") constructor");
+        ssize_t size = llistxattr(path.c_str(), NULL, 0);
         if (size < 0)
         {
-            y2err("Couldn't get xattributes names-list size. link: " << linkpath << ", error: " << stringerror(errno));
+            y2err("Couldn't get xattributes names-list size. link: " << path << ", error: " << stringerror(errno));
             throw XAttributesException();
         }
 
@@ -53,10 +53,10 @@ namespace snapper
 
         y2deb("XAttributes names-list size is: " << size);
 
-        size = llistxattr(linkpath.c_str(), names.get(), size);
+        size = llistxattr(path.c_str(), names.get(), size);
         if (size < 0)
         {
-            y2err("Couldn't get xattributes names-list. link: " << linkpath << ", error: " << stringerror(errno));
+            y2err("Couldn't get xattributes names-list. link: " << path << ", error: " << stringerror(errno));
             throw XAttributesException();
         }
 
@@ -68,7 +68,7 @@ namespace snapper
             // move beyond separating '\0' char
             pos += name.length() + 1;
 
-            ssize_t v_size = lgetxattr(linkpath.c_str(), name.c_str(), NULL, 0);
+            ssize_t v_size = lgetxattr(path.c_str(), name.c_str(), NULL, 0);
             if (v_size < 0)
             {
                 y2err("Couldn't get a xattribute value size for the xattribute name '" << name << "': " << stringerror(errno));
@@ -79,7 +79,7 @@ namespace snapper
 
             boost::scoped_array<uint8_t> buffer(v_size ? new uint8_t[v_size] : NULL);
 
-            v_size = lgetxattr(linkpath.c_str(), name.c_str(), (void *)buffer.get(), v_size);
+            v_size = lgetxattr(path.c_str(), name.c_str(), (void *)buffer.get(), v_size);
             if (v_size < 0)
             {
                 y2err("Coudln't get xattrbitue value for the xattrbite name '" << name << "': ");
@@ -157,7 +157,7 @@ namespace snapper
 	replace_vec = xa_mod_vec_t();
     }
 
-    XAModification::XAModification(const snapper::XAttributes& src_xa, const snapper::XAttributes& dest_xa)
+    XAModification::XAModification(const XAttributes& src_xa, const XAttributes& dest_xa)
     {
 	create_vec = xa_mod_vec_t();
 	delete_vec = xa_del_vec_t();
@@ -168,15 +168,14 @@ namespace snapper
 
         while (src_cit != src_xa.cend() && dest_cit != dest_xa.cend())
         {
-            y2deb("this src_xa_name: " << src_cit->first);
-            y2deb("this dest_xa_name: " << dest_cit->first);
+            y2deb("src_xa_name: " << src_cit->first);
+            y2deb("dest_xa_name: " << dest_cit->first);
 
             if (src_cit->first == dest_cit->first)
             {
-                y2deb("names matched");
                 if (src_cit->second != dest_cit->second)
                 {
-                    y2deb("create XA_REPLACE event");
+                    y2deb("adding replace operation for " << src_cit->first);
                     replace_vec.push_back(xa_pair_t(src_cit->first, src_cit->second));
                 }
 
@@ -186,6 +185,7 @@ namespace snapper
             else if (src_cit->first < dest_cit->first)
             {
                 y2deb("src name < dest name");
+		y2deb("adding create operation for " << src_cit->first);
                 create_vec.push_back(xa_pair_t(src_cit->first, src_cit->second));
 
                 src_cit++;
@@ -193,6 +193,7 @@ namespace snapper
             else
             {
                 y2deb("src name > dest name");
+		y2deb("adding delete operation for " << dest_cit->first);
 		delete_vec.push_back(dest_cit->first);
 
                 dest_cit++;
@@ -200,10 +201,16 @@ namespace snapper
         }
 
         for (; dest_cit != dest_xa.cend(); dest_cit++)
+	{
+	    y2deb("adding delete operation for " << dest_cit->first);
 	    delete_vec.push_back(dest_cit->first);
+	}
 
         for (; src_cit != src_xa.cend(); src_cit++)
+	{
+	    y2deb("adding create operation for " << src_cit->first);
             create_vec.push_back(xa_pair_t(src_cit->first, src_cit->second));
+	}
     }
 
     bool
@@ -296,16 +303,46 @@ namespace snapper
         return replace_vec.size();
     }
 
+    void
+    XAModification::printTo(ostream& out, bool diff) const
+    {
+	char create_lbl = '+', delete_lbl = '-';
+
+	if (diff)
+	{
+	    create_lbl = delete_lbl;
+	    delete_lbl = '+';
+	}
+
+	for (xa_del_vec_citer dcit = delete_vec.begin(); dcit != delete_vec.end(); dcit++)
+	{
+	    out.width(3);
+	    out << std::right << delete_lbl << ':' << *dcit << std::endl;
+	}
+
+        for (xa_mod_vec_citer cit = replace_vec.begin(); cit != replace_vec.end(); cit++)
+	{
+	    out.width(3);
+	    out <<  std::right << "-+" << ':' << cit->first << std::endl;
+	}
+
+        for (xa_mod_vec_citer cit = create_vec.begin(); cit != create_vec.end(); cit++)
+	{
+	    out.width(3);
+	    out << std::right << create_lbl << ':' << cit->first << std::endl;
+	}
+    }
+
+    void
+    XAModification::dumpDiffReport(ostream& out) const
+    {
+	printTo(out, true);
+    }
+
     ostream&
     operator<<(ostream &out, const XAModification &xa_mod)
     {
-        for (xa_del_vec_citer dcit = xa_mod.delete_vec.begin(); dcit != xa_mod.delete_vec.end(); dcit++)
-            out << "D:" + *dcit << std::endl;
-        for (xa_mod_vec_citer cit = xa_mod.replace_vec.begin(); cit != xa_mod.replace_vec.end(); cit++)
-            out << "M:" + cit->first << std::endl;
-        for (xa_mod_vec_citer cit = xa_mod.create_vec.begin(); cit != xa_mod.create_vec.end(); cit++)
-            out << "C:" + cit->first << std::endl;
-
+	xa_mod.printTo(out, false);
         return out;
     }
 }
