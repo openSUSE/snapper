@@ -2,7 +2,6 @@
 #include <string.h>
 #include <sys/xattr.h>
 
-#include <snapper/XAttributes.h>
 #include "xattrs_utils.h"
 #include "common.h"
 
