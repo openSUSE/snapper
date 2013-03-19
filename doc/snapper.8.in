@@ -223,7 +223,7 @@ algorithms are number, timeline and empty-pre-post.
 .B xadiff <number1>..<number2> [files]
 Compare the extended attributes. This command will genereate a report
 describing the modifications that have taken place in time between the
-snapshots number1 and number2 has been made. See example below:
+snapshots number1 and number2 have been made. See example below:
 .IP
 .B \ +:user.foo
 for created attributes
