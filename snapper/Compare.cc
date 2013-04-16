@@ -30,11 +30,17 @@
 #include <algorithm>
 #include <boost/thread.hpp>
 
+#include "config.h"
 #include "snapper/Log.h"
 #include "snapper/AppUtil.h"
 #include "snapper/File.h"
 #include "snapper/Compare.h"
 #include "snapper/Exception.h"
+
+
+#ifdef ENABLE_XATTRS
+    #include "snapper/XAttributes.h"
+#endif
 
 
 namespace snapper
@@ -176,6 +182,20 @@ namespace snapper
     {
 	unsigned int status = 0;
 
+        /*
+         * NOTE: just for a consideration
+         *
+         * if both ctimes are in match, files should be same
+         * ctime can be altered only by some debugfs tool and
+         * on umounted fs (ext2,3,4, xfs). So this should be safe
+         * unless root or CAP_SYS_ADMIN played with low-level fs
+         * utilities, right?
+         *
+         * if ((stat1.st_ctime == stat2.st_ctime))
+         *      return status;
+         *
+         */
+
 	if ((stat1.st_mode & S_IFMT) != (stat2.st_mode & S_IFMT))
 	{
 	    status |= TYPE;
@@ -201,6 +221,16 @@ namespace snapper
 	{
 	    status |= GROUP;
 	}
+
+#ifdef ENABLE_XATTRS
+            if (file1.xaSupported() && file2.xaSupported())
+            {
+                if (!cmpFilesXattrs(file1, file2))
+                {
+                    status |= XATTRS;
+                }
+            }
+#endif
 
 	return status;
     }
@@ -439,4 +469,24 @@ namespace snapper
 	y2mil("stopwatch " << stopwatch << " for comparing directories");
     }
 
+#ifdef ENABLE_XATTRS
+    bool
+    cmpFilesXattrs(const SFile& file1, const SFile& file2)
+    {
+        bool retval;
+
+        try
+        {
+            XAttributes xa(file1.fullname(true)), xb(file2.fullname(true));
+            retval = (xa == xb);
+        }
+        catch (XAttributesException xae)
+        {
+            y2err("extended attributes compare failed");
+            retval = false;
+        }
+
+        return retval;
+    }
+#endif
 }

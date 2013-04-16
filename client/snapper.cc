@@ -42,6 +42,14 @@
 #include "commands.h"
 #include "cleanup.h"
 
+#ifdef ENABLE_XATTRS
+    #include <sys/types.h>
+    #include <sys/stat.h>
+    #include <fcntl.h>
+
+    #include <snapper/XAttributes.h>
+#endif
+
 using namespace snapper;
 using namespace std;
 
@@ -1105,6 +1113,67 @@ command_debug(DBus::Connection& conn)
 }
 
 
+#ifdef ENABLE_XATTRS
+void
+help_xa_diff()
+{
+    cout << _("  Comparing snapshots extended attributes:") << endl
+         << _("\tsnapper xadiff <number1>..<number2> [files]") << endl
+         << endl;
+}
+
+void
+print_xa_diff(const string loc_pre, const string loc_post)
+{
+    try {
+        XAModification xa_mod = XAModification(XAttributes(loc_pre), XAttributes(loc_post));
+
+        if (!xa_mod.isEmpty())
+	{
+	    cout << "--- " << loc_pre << endl << "+++ " << loc_post << endl;
+	    xa_mod.dumpDiffReport(cout);
+	}
+    }
+    catch (XAttributesException xae) {}
+}
+
+void
+command_xa_diff(DBus::Connection& conn)
+{
+    GetOpts::parsed_opts opts = getopts.parse("xadiff", GetOpts::no_options);
+
+    if (getopts.numArgs() < 1) {
+        cerr << _("Command 'xadiff' needs at least one argument.") << endl;
+        exit(EXIT_FAILURE);
+    }
+
+    pair<unsigned int, unsigned int> nums(read_nums(getopts.popArg()));
+
+    MyComparison comparison(conn, nums, true);
+    MyFiles& files = comparison.files;
+
+    if (getopts.numArgs() == 0)
+        for (Files::const_iterator it1 = files.begin(); it1 != files.end(); ++it1)
+            if (it1->getPreToPostStatus() & XATTRS)
+                print_xa_diff(it1->getAbsolutePath(LOC_PRE), it1->getAbsolutePath(LOC_POST));
+    else
+    {
+        while (getopts.numArgs() > 0)
+        {
+            string name = getopts.popArg();
+
+            Files::const_iterator it1 = files.findAbsolutePath(name);
+            if (it1 == files.end())
+                continue;
+
+            if (it1->getPreToPostStatus() & XATTRS)
+                print_xa_diff(it1->getAbsolutePath(LOC_PRE), it1->getAbsolutePath(LOC_POST));
+        }
+    }
+}
+#endif
+
+
 void
 log_do(LogLevel level, const string& component, const char* file, const int line, const char* func,
        const string& text)
@@ -1164,6 +1233,9 @@ help()
     help_umount();
     help_status();
     help_diff();
+#ifdef ENABLE_XATTRS
+    help_xa_diff();
+#endif
     help_undo();
     help_cleanup();
 
@@ -1193,6 +1265,9 @@ main(int argc, char** argv)
     cmds["undochange"] = command_undo;
     cmds["cleanup"] = command_cleanup;
     cmds["debug"] = command_debug;
+#ifdef ENABLE_XATTRS
+    cmds["xadiff"] = command_xa_diff;
+#endif
 
     const struct option options[] = {
 	{ "quiet",		no_argument,		0,	'q' },

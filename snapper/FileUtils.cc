@@ -32,6 +32,10 @@
 #include <assert.h>
 #include <algorithm>
 
+#include "config.h"
+#ifdef ENABLE_XATTRS
+    #include <sys/xattr.h>
+#endif
 #include "snapper/FileUtils.h"
 #include "snapper/AppUtil.h"
 #include "snapper/Log.h"
@@ -60,6 +64,9 @@ namespace snapper
 	    y2err("not a directory path:" << base_path);
 	    throw IOErrorException();
 	}
+#ifdef ENABLE_XATTRS
+	setXaStatus();
+#endif
     }
 
 
@@ -84,6 +91,9 @@ namespace snapper
 	    close(dirfd);
 	    throw IOErrorException();
 	}
+#ifdef ENABLE_XATTRS
+	xastatus = dir.xastatus;
+#endif
     }
 
 
@@ -96,6 +106,9 @@ namespace snapper
 	    y2err("dup failed" << " error:" << stringerror(errno));
 	    throw IOErrorException();
 	}
+#ifdef ENABLE_XATTRS
+	xastatus = dir.xastatus;
+#endif
     }
 
 
@@ -104,6 +117,9 @@ namespace snapper
     {
 	if (this != &dir)
 	{
+#ifdef ENABLE_XATTRS
+	    xastatus = dir.xastatus;
+#endif
 	    ::close(dirfd);
 	    dirfd = dup(dir.dirfd);
 	    if (dirfd == -1)
@@ -373,6 +389,51 @@ namespace snapper
 
 	return -1;
     }
+
+
+    bool
+    SDir::xaSupported(void) const
+    {
+#ifdef ENABLE_XATTRS
+	return (xastatus == XA_SUPPORTED);
+#else
+        return false;
+#endif
+    }
+
+
+    bool
+    SFile::xaSupported(void) const
+    {
+        return dir.xaSupported();
+    }
+
+
+#ifdef ENABLE_XATTRS
+    void
+    SDir::setXaStatus(void)
+    {
+	xastatus = XA_UNKNOWN;
+
+	ssize_t ret = flistxattr(dirfd, NULL, 0);
+	if (ret < 0)
+	{
+	    if (errno == ENOTSUP)
+	    {
+		xastatus = XA_UNSUPPORTED;
+	    }
+	    else
+	    {
+                y2err("Couldn't get extended attributes status for " << base_path << "/" << path << stringerror(errno));
+                throw IOErrorException();
+	    }
+	}
+	else
+	{
+	    xastatus = XA_SUPPORTED;
+	}
+    }
+#endif
 
 
     SFile::SFile(const SDir& dir, const string& name)

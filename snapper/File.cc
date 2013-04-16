@@ -29,6 +29,7 @@
 #include <fcntl.h>
 #include <boost/algorithm/string.hpp>
 
+#include "config.h"
 #include "snapper/File.h"
 #include "snapper/Snapper.h"
 #include "snapper/AppUtil.h"
@@ -38,6 +39,9 @@
 #include "snapper/Compare.h"
 #include "snapper/Exception.h"
 
+#ifdef ENABLE_XATTRS
+#include <snapper/XAttributes.h>
+#endif
 
 namespace snapper
 {
@@ -524,6 +528,71 @@ namespace snapper
 	return true;
     }
 
+#ifdef ENABLE_XATTRS
+    bool
+    File::modifyXattributes()
+    {
+        bool ret_val;
+
+        try {
+            XAttributes xa_src(getAbsolutePath(LOC_PRE)), xa_dest(getAbsolutePath(LOC_SYSTEM));
+            y2deb("xa_src object: " << xa_src << std::endl << "xa_dest object: " << xa_dest);
+
+            XAModification xa_mod(xa_src, xa_dest);
+            y2deb("xa_modmap(xa_dest) object: " << xa_mod);
+
+            xaCreated = xa_mod.getXaCreateNum();
+            xaDeleted = xa_mod.getXaDeleteNum();
+            xaReplaced = xa_mod.getXaReplaceNum();
+
+            y2deb("xaCreated:" << xaCreated << ",xaDeleted:" << xaDeleted << ",xaReplaced:" << xaReplaced);
+
+            ret_val = xa_mod.serializeTo(getAbsolutePath(LOC_SYSTEM));
+        }
+        catch (XAttributesException xae) {
+            ret_val = false;
+        }
+
+        return ret_val;
+    }
+
+    XAUndoStatistic& operator+=(XAUndoStatistic &out, const XAUndoStatistic &src)
+    {
+        out.numCreate += src.numCreate;
+        out.numDelete += src.numDelete;
+        out.numReplace += src.numReplace;
+
+        return out;
+    }
+
+    XAUndoStatistic
+    File::getXAUndoStatistic() const
+    {
+        XAUndoStatistic xs;
+
+        xs.numCreate = xaCreated;
+        xs.numDelete = xaDeleted;
+        xs.numReplace = xaReplaced;
+
+        return xs;
+    }
+
+    XAUndoStatistic
+    Files::getXAUndoStatistic() const
+    {
+        XAUndoStatistic xs;
+
+        for (vector<File>::const_iterator it = entries.begin(); it != entries.end(); ++it)
+        {
+            if (it->getUndo() && (it->getPreToPostStatus() & (DELETED | XATTRS | TYPE)))
+            {
+                xs += it->getXAUndoStatistic();
+            }
+        }
+
+        return xs;
+    }
+#endif
 
     bool
     File::doUndo()
@@ -548,6 +617,18 @@ namespace snapper
 		error = true;
 	}
 
+#ifdef ENABLE_XATTRS
+        /*
+         * xattributes have to be transfered as well
+         * if we'are about to create new type during
+         * undo!
+         */
+        if (getPreToPostStatus() & (XATTRS | TYPE | DELETED))
+        {
+            if (!modifyXattributes())
+                error = true;
+        }
+#endif
 	pre_to_system_status = (unsigned int) -1;
 	post_to_system_status = (unsigned int) -1;
 
@@ -645,6 +726,7 @@ namespace snapper
 	ret += status & PERMISSIONS ? "p" : ".";
 	ret += status & USER ? "u" : ".";
 	ret += status & GROUP ? "g" : ".";
+        ret += status & XATTRS ? "x" : ".";
 
 	return ret;
     }
@@ -683,6 +765,12 @@ namespace snapper
 	    if (str[3] == 'g')
 		ret |= GROUP;
 	}
+
+	if (str.length() >= 5)
+        {
+            if (str[4] == 'x')
+                ret |= XATTRS;
+        }
 
 	return ret;
     }

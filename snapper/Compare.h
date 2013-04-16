@@ -48,6 +48,10 @@ namespace snapper
     void
     cmpDirs(const SDir& dir1, const SDir& dir2, cmpdirs_cb_t cb);
 
+#ifdef ENABLE_XATTRS
+    bool
+    cmpFilesXattrs(const SFile&, const SFile&);
+#endif
 }
 
 

@@ -26,6 +26,7 @@
 #include <string.h>
 #include <errno.h>
 
+#include "config.h"
 #include "snapper/Comparison.h"
 #include "snapper/Snapper.h"
 #include "snapper/Log.h"
@@ -257,6 +258,17 @@ namespace snapper
 
 	return files.getUndoStatistic();
     }
+
+#ifdef ENABLE_XATTRS
+    XAUndoStatistic
+    Comparison::getXAUndoStatistic() const
+    {
+        if (getSnapshot1()->isCurrent())
+            throw IllegalSnapshotException();
+
+        return files.getXAUndoStatistic();
+    }
+#endif
 
 
     vector<UndoStep>

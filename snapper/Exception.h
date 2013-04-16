@@ -75,6 +75,13 @@ namespace snapper
 	const char* msg;
     };
 
+#ifdef ENABLE_XATTRS
+    struct XAttributesException : public SnapperException
+    {
+        explicit XAttributesException() throw() {}
+        virtual const char* what() const throw() { return "XAttributes error"; }
+    };
+#endif
 }
 
 
