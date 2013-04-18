@@ -38,9 +38,6 @@ namespace snapper
 	using std::ostream;
 	using std::vector;
 
-        class XAModification;
-        class XAttributes;
-
 	typedef vector<uint8_t> xa_value_t;
 	typedef map<string, xa_value_t> xa_map_t;
 	typedef pair<string, xa_value_t> xa_pair_t;
@@ -76,7 +73,7 @@ namespace snapper
 
 	    void printTo(ostream&, bool) const;
         public:
-            XAModification();
+
             XAModification(const XAttributes&, const XAttributes&);
 
             bool isEmpty() const;

@@ -152,19 +152,9 @@ namespace snapper
         return out;
     }
 
-    XAModification::XAModification()
-    {
-	create_vec = xa_mod_vec_t();
-	delete_vec = xa_del_vec_t();
-	replace_vec = xa_mod_vec_t();
-    }
 
     XAModification::XAModification(const XAttributes& src_xa, const XAttributes& dest_xa)
     {
-	create_vec = xa_mod_vec_t();
-	delete_vec = xa_del_vec_t();
-	replace_vec = xa_mod_vec_t();
-
         xa_map_citer src_cit = src_xa.cbegin();
         xa_map_citer dest_cit = dest_xa.cbegin();
 
