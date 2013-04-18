@@ -19,11 +19,9 @@
  */
 
 #include "config.h"
-#include <cstdio>
-#include <attr/xattr.h>
+#include <sys/xattr.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <attr/xattr.h>
 #include <fcntl.h>
 #include <unistd.h>
 
