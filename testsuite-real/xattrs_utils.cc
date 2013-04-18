@@ -1,6 +1,9 @@
-#include <iostream>
+
+#include <stdlib.h>
 #include <string.h>
 #include <sys/xattr.h>
+
+#include <iostream>
 
 #include "xattrs_utils.h"
 #include "common.h"

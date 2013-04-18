@@ -21,12 +21,14 @@
 #ifndef SNAPPER_XATTRIBUTES_H
 #define SNAPPER_XATTRIBUTES_H
 
+
+#include <stdint.h>
+
 #include <map>
 #include <vector>
 #include <string>
-#include <iostream>
+#include <ostream>
 
-#include <stdint.h>
 
 namespace snapper
 {

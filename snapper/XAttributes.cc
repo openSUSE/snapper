@@ -18,12 +18,15 @@
  *
  */
 
+
 #include "config.h"
+
 #include <sys/xattr.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <errno.h>
 
 #include "snapper/AppUtil.h"
 #include "snapper/Exception.h"
@@ -31,6 +34,7 @@
 #include "snapper/XAttributes.h"
 
 #include <boost/scoped_array.hpp>
+
 
 namespace snapper
 {
