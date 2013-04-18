@@ -1134,7 +1134,7 @@ print_xa_diff(const string loc_pre, const string loc_post)
 	    xa_mod.dumpDiffReport(cout);
 	}
     }
-    catch (XAttributesException xae) {}
+    catch (const XAttributesException& e) {}
 }
 
 void
