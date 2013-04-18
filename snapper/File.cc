@@ -549,7 +549,8 @@ namespace snapper
 
             ret_val = xa_mod.serializeTo(getAbsolutePath(LOC_SYSTEM));
         }
-        catch (XAttributesException xae) {
+	catch (const XAttributesException& e)
+	{
             ret_val = false;
         }
 

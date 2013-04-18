@@ -480,7 +480,7 @@ namespace snapper
             XAttributes xa(file1.fullname(true)), xb(file2.fullname(true));
             retval = (xa == xb);
         }
-        catch (XAttributesException xae)
+	catch (const XAttributesException& e)
         {
             y2err("extended attributes compare failed");
             retval = false;
