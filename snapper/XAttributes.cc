@@ -28,6 +28,8 @@
 #include <unistd.h>
 #include <errno.h>
 
+#include <iomanip>
+
 #include "snapper/AppUtil.h"
 #include "snapper/Exception.h"
 #include "snapper/Log.h"
@@ -308,20 +310,17 @@ namespace snapper
 
 	for (xa_del_vec_citer dcit = delete_vec.begin(); dcit != delete_vec.end(); dcit++)
 	{
-	    out.width(3);
-	    out << std::right << delete_lbl << ':' << *dcit << std::endl;
+	    out << std::setw(3) << std::right << delete_lbl << ':' << *dcit << std::endl;
 	}
 
         for (xa_mod_vec_citer cit = replace_vec.begin(); cit != replace_vec.end(); cit++)
 	{
-	    out.width(3);
-	    out <<  std::right << "-+" << ':' << cit->first << std::endl;
+	    out << std::setw(3) << std::right << "-+" << ':' << cit->first << std::endl;
 	}
 
         for (xa_mod_vec_citer cit = create_vec.begin(); cit != create_vec.end(); cit++)
 	{
-	    out.width(3);
-	    out << std::right << create_lbl << ':' << cit->first << std::endl;
+	    out << std::setw(3) << std::right << create_lbl << ':' << cit->first << std::endl;
 	}
     }
 
