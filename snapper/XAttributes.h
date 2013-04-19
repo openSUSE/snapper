@@ -55,12 +55,10 @@ namespace snapper
             xa_map_t xamap;
         public:
             XAttributes(const string&);
-            XAttributes(const XAttributes&);
 
             xa_map_citer cbegin() const { return xamap.begin(); }
             xa_map_citer cend() const { return xamap.end(); }
 
-            XAttributes& operator=(const XAttributes&);
             bool operator==(const XAttributes&) const;
 	};
 
