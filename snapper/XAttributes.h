@@ -74,7 +74,7 @@ namespace snapper
 
             XAModification(const XAttributes&, const XAttributes&);
 
-            bool isEmpty() const;
+            bool empty() const;
             bool serializeTo(const string&) const;
 
             unsigned int getXaCreateNum() const;

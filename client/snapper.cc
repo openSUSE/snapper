@@ -1128,7 +1128,7 @@ print_xa_diff(const string loc_pre, const string loc_post)
     try {
         XAModification xa_mod = XAModification(XAttributes(loc_pre), XAttributes(loc_post));
 
-        if (!xa_mod.isEmpty())
+        if (!xa_mod.empty())
 	{
 	    cout << "--- " << loc_pre << endl << "+++ " << loc_post << endl;
 	    xa_mod.dumpDiffReport(cout);

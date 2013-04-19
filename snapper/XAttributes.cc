@@ -191,7 +191,7 @@ namespace snapper
     }
 
     bool
-    XAModification::isEmpty() const
+    XAModification::empty() const
     {
 	return create_vec.empty() && delete_vec.empty() && replace_vec.empty();
     }
@@ -199,7 +199,7 @@ namespace snapper
     bool
     XAModification::serializeTo(const string &dest) const
     {
-        if (this->isEmpty())
+        if (empty())
             return true;
 
 	for (xa_mod_vec_citer cit = create_vec.begin(); cit != create_vec.end(); cit++)
