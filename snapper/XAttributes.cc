@@ -98,23 +98,6 @@ namespace snapper
         }
     }
 
-    XAttributes::XAttributes(const XAttributes &xa)
-    {
-        y2deb("Entering copy constructor XAttribute(const XAttribute&)");
-        xamap = xa.xamap;
-    }
-
-    XAttributes&
-    XAttributes::operator=(const XAttributes &xa)
-    {
-        y2deb("Entering XAttribute::operator=()");
-        if (this != &xa)
-        {
-            this->xamap = xa.xamap;
-        }
-
-        return *this;
-    }
 
     bool
     XAttributes::operator==(const XAttributes& xa) const
