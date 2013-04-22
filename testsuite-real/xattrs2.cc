@@ -18,7 +18,8 @@ main()
 
     run_command("ln -s first first-link");
 
-    // security namespace is curently supported for dirs and links on ext4
+    // user.* namespace is allowed only for regular files and directories (restricted by VFS)
+    // security namespace is verified to work with symlinks on ext4 and btrfs
     xattr_create("security.aaa", "aaa-value", "/testsuite/first");
     xattr_create("security.bbb", "aaa-value", "/testsuite/second");
     xattr_create("security.ccc", "ccc-value", "/testsuite/first-link");
