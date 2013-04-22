@@ -73,58 +73,20 @@ namespace snapper
 
 
     bool
-    Filesystem::mount(const string& device, int fd, const string& mount_type,
+    Filesystem::mount(const string& device, const SDir& dir, const string& mount_type,
 		      const vector<string>& options)
     {
 	unsigned long mount_flags = MS_RDONLY | MS_NOEXEC | MS_NOSUID | MS_NODEV |
 	    MS_NOATIME | MS_NODIRATIME;
 
-	string mount_data = boost::join(options, ",");
-
-	int r1 = fchdir(fd);
-	if (r1 != 0)
-	{
-	    y2err("fchdir failed errno:" << errno << " (" << stringerror(errno) << ")");
-	    return false;
-	}
-
-	int r2 = ::mount(device.c_str(), ".", mount_type.c_str(), mount_flags, mount_data.c_str());
-	if (r2 != 0)
-	{
-	    y2err("mount failed errno:" << errno << " (" << stringerror(errno) << ")");
-	    chdir("/");
-	    return false;
-	}
-
-	chdir("/");
-	return true;
+	return dir.mount(device, mount_type, mount_flags, boost::join(options, ","));
     }
 
 
     bool
-    Filesystem::umount(int fd, const string& mount_point)
+    Filesystem::umount(const SDir& dir, const string& mount_point)
     {
-	int r1 = fchdir(fd);
-	if (r1 != 0)
-	{
-	    y2err("fchdir failed errno:" << errno << " (" << stringerror(errno) << ")");
-	    return false;
-	}
-
-#ifdef UMOUNT_NOFOLLOW
-	int r2 = ::umount2(mount_point.c_str(), UMOUNT_NOFOLLOW);
-#else
-	int r2 = ::umount2(mount_point.c_str(), 0);
-#endif
-	if (r2 != 0)
-	{
-	    y2err("umount failed errno:" << errno << " (" << stringerror(errno) << ")");
-	    chdir("/");
-	    return false;
-	}
-
-	chdir("/");
-	return true;
+	return dir.umount(mount_point);
     }
 
 

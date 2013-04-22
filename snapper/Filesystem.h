@@ -78,9 +78,9 @@ namespace snapper
 
 	static vector<string> filter_mount_options(const vector<string>& options);
 
-	static bool mount(const string& device, int fd, const string& mount_type,
+	static bool mount(const string& device, const SDir& dir, const string& mount_type,
 			  const vector<string>& options);
-	static bool umount(int fd, const string& mount_point);
+	static bool umount(const SDir& dir, const string& mount_point);
 
     };
 

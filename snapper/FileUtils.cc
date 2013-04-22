@@ -23,6 +23,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/mount.h>
 #include <fcntl.h>
 #include <stddef.h>
 #include <dirent.h>
@@ -434,6 +435,57 @@ namespace snapper
 	}
     }
 #endif
+
+
+    bool
+    SDir::mount(const string& device, const string& mount_type, unsigned long mount_flags,
+		const string& mount_data) const
+    {
+	int r1 = fchdir(dirfd);
+	if (r1 != 0)
+	{
+	    y2err("fchdir failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    return false;
+	}
+
+	int r2 = ::mount(device.c_str(), ".", mount_type.c_str(), mount_flags, mount_data.c_str());
+	if (r2 != 0)
+	{
+	    y2err("mount failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    chdir("/");
+	    return false;
+	}
+
+	chdir("/");
+	return true;
+    }
+
+
+    bool
+    SDir::umount(const string& mount_point) const
+    {
+	int r1 = fchdir(dirfd);
+	if (r1 != 0)
+	{
+	    y2err("fchdir failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    return false;
+	}
+
+#ifdef UMOUNT_NOFOLLOW
+	int r2 = ::umount2(mount_point.c_str(), UMOUNT_NOFOLLOW);
+#else
+	int r2 = ::umount2(mount_point.c_str(), 0);
+#endif
+	if (r2 != 0)
+	{
+	    y2err("umount failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    chdir("/");
+	    return false;
+	}
+
+	chdir("/");
+	return true;
+    }
 
 
     SFile::SFile(const SDir& dir, const string& name)

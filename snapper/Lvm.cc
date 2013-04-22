@@ -231,7 +231,7 @@ namespace snapper
 
 	SDir snapshot_dir = openSnapshotDir(num);
 
-	if (!mount(getDevice(num), snapshot_dir.fd(), mount_type, mount_options))
+	if (!mount(getDevice(num), snapshot_dir, mount_type, mount_options))
 	    throw MountSnapshotFailedException();
     }
 
@@ -244,7 +244,7 @@ namespace snapper
 
 	SDir info_dir = openInfoDir(num);
 
-	if (!umount(info_dir.fd(), "snapshot"))
+	if (!umount(info_dir, "snapshot"))
 	    throw UmountSnapshotFailedException();
     }
 

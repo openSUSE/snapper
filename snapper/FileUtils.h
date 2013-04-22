@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2012] Novell, Inc.
+ * Copyright (c) [2011-2013] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -84,6 +84,11 @@ namespace snapper
 
 	int mktemp(string& name) const;
 	bool xaSupported() const;
+
+	bool mount(const string& device, const string& mount_type, unsigned long mount_flags,
+		   const string& mount_data) const;
+	bool umount(const string& mount_point) const;
+
     private:
 #ifdef ENABLE_XATTRS
         int xastatus;
