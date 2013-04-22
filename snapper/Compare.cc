@@ -469,24 +469,25 @@ namespace snapper
 	y2mil("stopwatch " << stopwatch << " for comparing directories");
     }
 
+
 #ifdef ENABLE_XATTRS
+
     bool
     cmpFilesXattrs(const SFile& file1, const SFile& file2)
     {
-        bool retval;
-
         try
         {
-            XAttributes xa(file1.fullname(true)), xb(file2.fullname(true));
-            retval = (xa == xb);
+	    XAttributes xa(file1);
+	    XAttributes xb(file2);
+	    return xa == xb;
         }
 	catch (const XAttributesException& e)
         {
             y2err("extended attributes compare failed");
-            retval = false;
-        }
-
-        return retval;
+	    return false;
+	}
     }
+
 #endif
+
 }

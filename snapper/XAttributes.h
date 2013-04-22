@@ -29,6 +29,8 @@
 #include <string>
 #include <ostream>
 
+#include "snapper/FileUtils.h"
+
 
 namespace snapper
 {
@@ -55,6 +57,7 @@ namespace snapper
             xa_map_t xamap;
         public:
             XAttributes(const string&);
+	    XAttributes(const SFile& dir);
 
             xa_map_citer cbegin() const { return xamap.begin(); }
             xa_map_citer cend() const { return xamap.end(); }
@@ -91,4 +94,6 @@ namespace snapper
         ostream& operator<<(ostream&, const XAttributes&);
         ostream& operator<<(ostream&, const xa_value_t&);
 }
+
+
 #endif

@@ -28,6 +28,7 @@
 #include <string>
 #include <vector>
 #include <functional>
+#include <boost/thread.hpp>
 
 
 namespace snapper
@@ -42,6 +43,14 @@ namespace snapper
 	XA_SUPPORTED
     };
 #endif
+
+
+    /*
+     * The member functions of SDir and SFile are secure (avoid race
+     * conditions, see openat(2)) by using either openat and alike functions
+     * or by modifying the current working directory (e.g. mount, umount,
+     * listxattr and getxattr).
+     */
 
     class SDir
     {
@@ -83,7 +92,13 @@ namespace snapper
 	int rename(const string& oldname, const string& newname) const;
 
 	int mktemp(string& name) const;
+
+#ifdef ENABLE_XATTRS
 	bool xaSupported() const;
+
+	ssize_t listxattr(const string& path, char* list, size_t size) const;
+	ssize_t getxattr(const string& path, const char* name, void* value, size_t size) const;
+#endif
 
 	bool mount(const string& device, const string& mount_type, unsigned long mount_flags,
 		   const string& mount_data) const;
@@ -99,6 +114,8 @@ namespace snapper
 
 	int dirfd;
 
+	static boost::mutex cwd_mutex;
+
     };
 
 
@@ -113,7 +130,14 @@ namespace snapper
 	int stat(struct stat* buf, int flags) const;
 	int open(int flags) const;
 	int readlink(string& buf) const;
-        bool xaSupported() const;
+
+#ifdef ENABLE_XATTRS
+	bool xaSupported() const;
+
+	ssize_t listxattr(char* list, size_t size) const;
+	ssize_t getxattr(const char* name, void* value, size_t size) const;
+#endif
+
     private:
 
 	const SDir& dir;

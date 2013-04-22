@@ -48,6 +48,9 @@ namespace snapper
     using namespace std;
 
 
+    boost::mutex SDir::cwd_mutex;
+
+
     SDir::SDir(const string& base_path)
 	: base_path(base_path), path()
     {
@@ -392,25 +395,85 @@ namespace snapper
     }
 
 
-    bool
-    SDir::xaSupported(void) const
-    {
 #ifdef ENABLE_XATTRS
-	return (xastatus == XA_SUPPORTED);
-#else
-        return false;
-#endif
+
+    bool
+    SDir::xaSupported() const
+    {
+	return xastatus == XA_SUPPORTED;
     }
 
 
-    bool
-    SFile::xaSupported(void) const
+    ssize_t
+    SDir::listxattr(const string& path, char* list, size_t size) const
     {
-        return dir.xaSupported();
+	assert(path.find('/') == string::npos);
+	assert(path != "..");
+
+	int fd = ::openat(dirfd, path.c_str(), O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
+	if (fd >= 0)
+	{
+	    ssize_t r1 = ::flistxattr(fd, list, size);
+	    close(fd);
+	    return r1;
+	}
+	else if (errno != ELOOP)
+	{
+	    return -1;
+	}
+	else
+	{
+	    boost::lock_guard<boost::mutex> lock(cwd_mutex);
+
+	    int r1 = fchdir(dirfd);
+	    if (r1 != 0)
+	    {
+		y2err("fchdir failed errno:" << errno << " (" << stringerror(errno) << ")");
+		return -1;
+	    }
+
+	    ssize_t r2 = ::llistxattr(path.c_str(), list, size);
+	    chdir("/");
+	    return r2;
+	}
     }
 
 
-#ifdef ENABLE_XATTRS
+    ssize_t
+    SDir::getxattr(const string& path, const char* name, void* value, size_t size) const
+    {
+	assert(path.find('/') == string::npos);
+	assert(path != "..");
+
+	int fd = ::openat(dirfd, path.c_str(), O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
+	if (fd >= 0)
+	{
+	    ssize_t r1 = ::fgetxattr(fd, name, value, size);
+	    close(fd);
+	    return r1;
+	}
+	else if (errno != ELOOP)
+	{
+	    return -1;
+	}
+	else
+	{
+	    boost::lock_guard<boost::mutex> lock(cwd_mutex);
+
+	    int r1 = fchdir(dirfd);
+	    if (r1 != 0)
+	    {
+		y2err("fchdir failed errno:" << errno << " (" << stringerror(errno) << ")");
+		return -1;
+	    }
+
+	    ssize_t r2 = ::lgetxattr(path.c_str(), name, value, size);
+	    chdir("/");
+	    return r2;
+	}
+    }
+
+
     void
     SDir::setXaStatus(void)
     {
@@ -434,6 +497,7 @@ namespace snapper
 	    xastatus = XA_SUPPORTED;
 	}
     }
+
 #endif
 
 
@@ -441,6 +505,8 @@ namespace snapper
     SDir::mount(const string& device, const string& mount_type, unsigned long mount_flags,
 		const string& mount_data) const
     {
+	boost::lock_guard<boost::mutex> lock(cwd_mutex);
+
 	int r1 = fchdir(dirfd);
 	if (r1 != 0)
 	{
@@ -464,6 +530,8 @@ namespace snapper
     bool
     SDir::umount(const string& mount_point) const
     {
+	boost::lock_guard<boost::mutex> lock(cwd_mutex);
+
 	int r1 = fchdir(dirfd);
 	if (r1 != 0)
 	{
@@ -522,5 +590,30 @@ namespace snapper
     {
 	return dir.readlink(name, buf);
     }
+
+
+#ifdef ENABLE_XATTRS
+
+    bool
+    SFile::xaSupported() const
+    {
+	return dir.xaSupported();
+    }
+
+
+    ssize_t
+    SFile::listxattr(char* list, size_t size) const
+    {
+	return dir.listxattr(name, list, size);
+    }
+
+
+    ssize_t
+    SFile::getxattr(const char* name, void* value, size_t size) const
+    {
+	return dir.getxattr(SFile::name, name, value, size);
+    }
+
+#endif
 
 }
