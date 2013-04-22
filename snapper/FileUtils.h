@@ -105,10 +105,12 @@ namespace snapper
 	bool umount(const string& mount_point) const;
 
     private:
+
 #ifdef ENABLE_XATTRS
-        int xastatus;
+	XaAttrsStatus xastatus;
 	void setXaStatus();
 #endif
+
 	const string base_path;
 	const string path;
 
