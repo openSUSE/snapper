@@ -1,6 +1,11 @@
 
 #include <string>
 
+
+#define SUBVOLUME "/testsuite"
+#define CONFIG "testsuite"
+
+
 using namespace std;
 
 

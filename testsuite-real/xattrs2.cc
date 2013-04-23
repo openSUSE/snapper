@@ -20,17 +20,17 @@ main()
 
     // user.* namespace is allowed only for regular files and directories (restricted by VFS)
     // security namespace is verified to work with symlinks on ext4 and btrfs
-    xattr_create("security.aaa", "aaa-value", "/testsuite/first");
-    xattr_create("security.bbb", "aaa-value", "/testsuite/second");
-    xattr_create("security.ccc", "ccc-value", "/testsuite/first-link");
-    xattr_create("user.aaa", "aaa-value", "/testsuite/delete-me");
+    xattr_create("security.aaa", "aaa-value", SUBVOLUME "/first");
+    xattr_create("security.bbb", "aaa-value", SUBVOLUME "/second");
+    xattr_create("security.ccc", "ccc-value", SUBVOLUME "/first-link");
+    xattr_create("user.aaa", "aaa-value", SUBVOLUME "/delete-me");
 
     first_snapshot();
 
     // change type of 'first', preserve security.aaa xa
     run_command("rmdir first");
     run_command("touch first");
-    xattr_create("security.aaa", "aaa-value", "/testsuite/first");
+    xattr_create("security.aaa", "aaa-value", SUBVOLUME "/first");
 
     // change type of 'second', remove security.bbb xa
     run_command("rm second");

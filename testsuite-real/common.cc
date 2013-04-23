@@ -20,8 +20,6 @@ extern char* program_invocation_short_name;
 
 using namespace snapper;
 
-#define SUBVOLUME "/testsuite"
-
 Snapper* sh = NULL;
 
 Snapshots::iterator first;
@@ -41,7 +39,7 @@ setup()
 
     initDefaultLogger();
 
-    sh = new Snapper("testsuite");
+    sh = new Snapper(CONFIG);
 }
 
 
@@ -55,7 +53,7 @@ cleanup()
 void
 first_snapshot()
 {
-    first = sh->createPreSnapshot("testsuite");
+    first = sh->createPreSnapshot(CONFIG);
     first->setCleanup("number");
 }
 
@@ -63,7 +61,7 @@ first_snapshot()
 void
 second_snapshot()
 {
-    second = sh->createPostSnapshot("testsuite", first);
+    second = sh->createPostSnapshot(CONFIG, first);
     second->setCleanup("number");
 }
 
