@@ -2,8 +2,8 @@
 #include <string>
 
 
-#define SUBVOLUME "/testsuite"
 #define CONFIG "testsuite"
+#define SUBVOLUME "/" CONFIG
 
 
 using namespace std;
