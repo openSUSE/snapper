@@ -44,28 +44,31 @@ namespace snapper
     XAttributes::XAttributes(const string &path)
     {
         y2deb("entering Xattributes(path=" << path << ") constructor");
+
         ssize_t size = llistxattr(path.c_str(), NULL, 0);
         if (size < 0)
         {
-            y2err("Couldn't get xattributes names-list size. link: " << path << ", error: " << stringerror(errno));
+            y2err("Couldn't get xattributes names-list size. link: " << path
+		  << ", error: " << stringerror(errno));
             throw XAttributesException();
         }
 
-        // +1 to cover size == 0
-        boost::scoped_array<char> names(new char[size + 1]);
-        names[size] = '\0';
-
         y2deb("XAttributes names-list size is: " << size);
+
+	if (size == 0)
+	    return;
+
+	boost::scoped_array<char> names(new char[size]);
 
         size = llistxattr(path.c_str(), names.get(), size);
         if (size < 0)
         {
-            y2err("Couldn't get xattributes names-list. link: " << path << ", error: " << stringerror(errno));
+            y2err("Couldn't get xattributes names-list. link: " << path <<
+		  ", error: " << stringerror(errno));
             throw XAttributesException();
         }
 
-        int pos = 0;
-
+	ssize_t pos = 0;
         while (pos < size)
         {
             string name = string(names.get() + pos);
@@ -75,33 +78,40 @@ namespace snapper
             ssize_t v_size = lgetxattr(path.c_str(), name.c_str(), NULL, 0);
             if (v_size < 0)
             {
-                y2err("Couldn't get a xattribute value size for the xattribute name '" << name << "': " << stringerror(errno));
+                y2err("Couldn't get a xattribute value size for the xattribute name '" << name
+		      << "': " << stringerror(errno));
                 throw XAttributesException();
             }
 
             y2deb("XAttribute value size for xattribute name: '" << name << "' is " << v_size);
 
-            boost::scoped_array<uint8_t> buffer(v_size ? new uint8_t[v_size] : NULL);
+	    boost::scoped_array<uint8_t> buffer(new uint8_t[v_size]);
 
-            v_size = lgetxattr(path.c_str(), name.c_str(), (void *)buffer.get(), v_size);
-            if (v_size < 0)
-            {
-                y2err("Coudln't get xattrbitue value for the xattrbite name '" << name << "': ");
-                throw XAttributesException();
-            }
+	    if (v_size > 0)
+	    {
+		v_size = lgetxattr(path.c_str(), name.c_str(), buffer.get(), v_size);
+		if (v_size < 0)
+		{
+		    y2err("Coudln't get xattrbitue value for the xattrbite name '" << name << "': ");
+		    throw XAttributesException();
+		}
+	    }
 
-            if (!xamap.insert(xa_pair_t(name, xa_value_t(buffer.get(), buffer.get() + v_size))).second)
-            {
-                y2err("Duplicite extended attribute name in source file!");
-                throw XAttributesException();
-            }
-        }
+	    if (!xamap.insert(make_pair(name, xa_value_t(buffer.get(), buffer.get() + v_size))).second)
+	    {
+		y2err("Duplicite extended attribute name in source file!");
+		throw XAttributesException();
+	    }
+	}
+
+	assert(pos == size);
     }
 
 
     XAttributes::XAttributes(const SFile& file)
     {
 	y2deb("entering Xattributes(path=" << file.fullname(true) << ") constructor");
+
 	ssize_t size = file.listxattr(NULL, 0);
 	if (size < 0)
 	{
@@ -110,11 +120,12 @@ namespace snapper
 	    throw XAttributesException();
 	}
 
-	// +1 to cover size == 0
-	boost::scoped_array<char> names(new char[size + 1]);
-	names[size] = '\0';
-
 	y2deb("XAttributes names-list size is: " << size);
+
+	if (size == 0)
+	    return;
+
+	boost::scoped_array<char> names(new char[size]);
 
 	size = file.listxattr(names.get(), size);
 	if (size < 0)
@@ -124,7 +135,7 @@ namespace snapper
 	    throw XAttributesException();
 	}
 
-	int pos = 0;
+	ssize_t pos = 0;
 	while (pos < size)
 	{
 	    string name = string(names.get() + pos);
@@ -141,21 +152,26 @@ namespace snapper
 
 	    y2deb("XAttribute value size for xattribute name: '" << name << "' is " << v_size);
 
-	    boost::scoped_array<uint8_t> buffer(v_size ? new uint8_t[v_size] : NULL);
+	    boost::scoped_array<uint8_t> buffer(new uint8_t[v_size]);
 
-	    v_size = file.getxattr(name.c_str(), (void*) buffer.get(), v_size);
-	    if (v_size < 0)
+	    if (v_size > 0)
 	    {
-		y2err("Coudln't get xattrbitue value for the xattrbite name '" << name << "': ");
-		throw XAttributesException();
+		v_size = file.getxattr(name.c_str(), buffer.get(), v_size);
+		if (v_size < 0)
+		{
+		    y2err("Coudln't get xattrbitue value for the xattrbite name '" << name << "': ");
+		    throw XAttributesException();
+		}
 	    }
 
-	    if (!xamap.insert(xa_pair_t(name, xa_value_t(buffer.get(), buffer.get() + v_size))).second)
+	    if (!xamap.insert(make_pair(name, xa_value_t(buffer.get(), buffer.get() + v_size))).second)
 	    {
 		y2err("Duplicite extended attribute name in source file!");
 		throw XAttributesException();
 	    }
 	}
+
+	assert(pos == size);
     }
 
 
