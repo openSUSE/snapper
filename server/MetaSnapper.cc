@@ -20,6 +20,7 @@
  */
 
 
+#include <string.h>
 #include <sys/types.h>
 #include <pwd.h>
 #include <grp.h>
@@ -118,6 +119,8 @@ get_user_uid(const char* username, uid_t& uid)
 	y2war("couldn't find username '" << username << "'");
 	return false;
     }
+
+    memset(pwd.pw_passwd, 0, strlen(pwd.pw_passwd));
 
     uid = pwd.pw_uid;
 

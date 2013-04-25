@@ -22,6 +22,7 @@
 
 #include <pwd.h>
 #include <unistd.h>
+#include <string.h>
 #include <sys/types.h>
 #include <libxml/tree.h>
 #include <string>
@@ -149,6 +150,8 @@ namespace snapper
 
 	    if (getpwuid_r(geteuid(), &pwd, buf, bufsize, &result) == 0 && result == &pwd)
 	    {
+		memset(pwd.pw_passwd, 0, strlen(pwd.pw_passwd));
+
 		delete filename;
 		filename = new string(string(pwd.pw_dir) + "/.snapper.log");
 	    }
