@@ -1,4 +1,4 @@
-.TH "SNAPPER" "8" "2012-10-15" "@VERSION@" "Filesystem Snapshot Management"
+.TH "SNAPPER" "8" "2013-04-26" "@VERSION@" "Filesystem Snapshot Management"
 .SH "NAME"
 .LP
 snapper - Command\-line program for filesystem snapshot management
@@ -267,6 +267,8 @@ running.
 .LP
 Consistency after undochange is not guaranteed. E.g. when the creation of a
 user is undone there might still exist files from that user.
+.LP
+Support for extended attributes is a compile-time option.
 
 .SH "HOMEPAGE"
 .LP
@@ -278,4 +280,4 @@ Arvin Schnell <aschnell@suse.de>
 
 .SH "SEE ALSO"
 .LP
-btrfs(8), lvm(8)
+btrfs(8), lvm(8), attr(5)
