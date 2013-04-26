@@ -1,7 +1,7 @@
 #
 # spec file for package snapper
 #
-# Copyright (c) 2012 SUSE LINUX Products GmbH, Nuernberg, Germany.
+# Copyright (c) 2013 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -69,9 +69,9 @@ make %{?jobs:-j%jobs}
 make install DESTDIR="$RPM_BUILD_ROOT"
 
 %if 0%{?suse_version}
-install -D data/sysconfig.snapper $RPM_BUILD_ROOT/var/adm/fillup-templates/sysconfig.snapper
+install -D -m 644 data/sysconfig.snapper $RPM_BUILD_ROOT/var/adm/fillup-templates/sysconfig.snapper
 %else
-install -D data/sysconfig.snapper $RPM_BUILD_ROOT/etc/sysconfig/snapper
+install -D -m 644 data/sysconfig.snapper $RPM_BUILD_ROOT/etc/sysconfig/snapper
 %endif
 
 %{find_lang} snapper
