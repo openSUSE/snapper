@@ -92,7 +92,7 @@ namespace snapper
 		v_size = lgetxattr(path.c_str(), name.c_str(), buffer.get(), v_size);
 		if (v_size < 0)
 		{
-		    y2err("Coudln't get xattribute value for the xattribute name '" << name << "': ");
+		    y2err("Couldn't get xattribute value for the xattribute name '" << name << "': ");
 		    throw XAttributesException();
 		}
 	    }
@@ -159,7 +159,7 @@ namespace snapper
 		v_size = file.getxattr(name.c_str(), buffer.get(), v_size);
 		if (v_size < 0)
 		{
-		    y2err("Coudln't get xattrbitue value for the xattrbite name '" << name << "': ");
+		    y2err("Couldn't get xattribute value for the xattribute name '" << name << "': ");
 		    throw XAttributesException();
 		}
 	    }
