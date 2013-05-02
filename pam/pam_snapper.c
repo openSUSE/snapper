@@ -524,32 +524,31 @@ static void cdbus_pam_options_setdefault( pam_options_t * options )
  * @return PAM status
  *
 */
-static int cdbus_strtokcmp( pam_handle_t * pamh, const char *needle, char *haystack, const char *delimiters, bool debug )
+static int csv_contains( pam_handle_t * pamh, const char *haystack, const char *needle, bool debug )
 {
-	char *token;
-	if ( needle && haystack ) {
-		if ( debug ) {
-			pam_syslog( pamh, LOG_DEBUG, "cdbus_strtokcmp needle: '%s' haystack: '%s'", needle, haystack );
-		}
-		while ( ( token = strsep( &haystack, delimiters ) ) ) {
-			if ( !strcmp( token, needle ) ) {
-				if ( debug ) {
-					pam_syslog( pamh, LOG_DEBUG, "cdbus_strtokcmp: match %s=%s", needle, haystack );
-				}
-				return 0;
-			}
-		}
-		if ( debug ) {
-			pam_syslog( pamh, LOG_DEBUG, "cdbus_strtokcmp: NO match needle '%s'", needle );
-		}
+	if ( debug ) {
+		pam_syslog( pamh, LOG_DEBUG, "csv_contains haystack: '%s' needle: '%s'", haystack, needle );
 	}
-	return -1;
+
+	const size_t l = strlen( needle );
+
+	const char *s = haystack;
+	const char *e;
+
+	while ( ( e = strchr( s, ',' ) ) ) {
+		if ( e - s == l && strncmp( s, needle, l ) == 0 )
+			return 1;
+
+		s = e + 1;
+	}
+
+	return strcmp( s, needle ) == 0;
 }
 
 /**
  * ??
  *
- * @param pamh PAM handle (for pam_syslog)
+ * @param pamh PAM handle
  * @param
  * @param
  * @param
@@ -559,7 +558,6 @@ static int cdbus_strtokcmp( pam_handle_t * pamh, const char *needle, char *hayst
 */
 static int cdbus_pam_options_parser( pam_handle_t * pamh, pam_options_t * options, int argc, const char **argv )
 {
-	const char delimiters[] = ",";
 	char *pamuser = NULL, *pamservice = NULL;
 	pam_get_item( pamh, PAM_USER, ( const void ** )&pamuser );
 	pam_get_item( pamh, PAM_SERVICE, ( const void ** )&pamservice );
@@ -579,7 +577,7 @@ static int cdbus_pam_options_parser( pam_handle_t * pamh, pam_options_t * option
 		} else if ( !strncmp( *argv, "ignoreservices=", 15 ) ) {
 			options->ignoreservices = 15 + *argv;
 			if ( *( options->ignoreservices ) != '\0' ) {
-				if ( !cdbus_strtokcmp( pamh, pamservice, strdup( options->ignoreservices ), delimiters, options->debug ) ) {
+				if ( csv_contains( pamh, options->ignoreservices, pamservice, options->debug ) ) {
 					return PAM_IGNORE;
 				}
 			} else {
@@ -590,7 +588,7 @@ static int cdbus_pam_options_parser( pam_handle_t * pamh, pam_options_t * option
 		} else if ( !strncmp( *argv, "ignoreusers=", 12 ) ) {
 			options->ignoreusers = 12 + *argv;
 			if ( *( options->ignoreusers ) != '\0' ) {
-				if ( !cdbus_strtokcmp( pamh, pamuser, strdup( options->ignoreusers ), delimiters, options->debug ) ) {
+				if ( csv_contains( pamh, options->ignoreusers, pamuser, options->debug ) ) {
 					return PAM_IGNORE;
 				}
 			} else {
@@ -617,12 +615,12 @@ static int cdbus_pam_options_parser( pam_handle_t * pamh, pam_options_t * option
 		}
 	}
 	if ( options->ignoreservices ) {
-		if ( !cdbus_strtokcmp( pamh, pamservice, strdup( options->ignoreservices ), delimiters, options->debug ) ) {
+		if ( csv_contains( pamh, options->ignoreservices, pamservice, options->debug ) ) {
 			return PAM_IGNORE;
 		}
 	}
 	if ( options->ignoreusers ) {
-		if ( !cdbus_strtokcmp( pamh, pamuser, strdup( options->ignoreusers ), delimiters, options->debug ) ) {
+		if ( csv_contains( pamh, options->ignoreusers, pamuser, options->debug ) ) {
 			return PAM_IGNORE;
 		}
 	}
