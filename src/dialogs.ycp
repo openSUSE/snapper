@@ -385,6 +385,7 @@ any SummaryDialog() {
         Popup::ClearFeedback ();
 
         UI::ChangeWidget (`id (`snapshots_table), `Items, get_snapshot_items ());
+        UI::ChangeWidget (`id (`show), `Enabled, size (snapshot_items) > 0);
     }
 
 
@@ -421,7 +422,7 @@ any SummaryDialog() {
     UI::SetFocus (`id (`snapshots_table));
     if (snapshot_items == [])
     {
-	UI::ChangeWidget (`id (`show_c), `Enabled, false);
+	UI::ChangeWidget (`id (`show), `Enabled, false);
     }
     UI::ChangeWidget (`id (`configs), `Enabled, size (configs) > 1);
 
@@ -833,8 +834,8 @@ any ShowDialog () {
 	)),
 	`HWeight (2, `VBox (
 	    `Left (`Label (`id (`desc), description)),
-	    date_widget,
-	    `Frame ("", `HBox (
+	  `VSquash(`VWeight (1, `VSquash( date_widget))),
+	  `VWeight (2,  `Frame ("", `HBox (
 		`HSpacing (0.5), `VBox (
 		    `VSpacing (0.5),
 		    `VWeight (1, `ReplacePoint (`id (`diff_chooser), `VBox (`VStretch ()))),
@@ -842,7 +843,7 @@ any ShowDialog () {
 		    `VSpacing (0.5)
 		),
 		`HSpacing (0.5)
-	    ))
+	    )))
 	))
     );
 
