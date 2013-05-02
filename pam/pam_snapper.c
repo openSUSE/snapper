@@ -1,8 +1,6 @@
 /**
- *
  * @file
  * @author  Matthias G. Eckermann <mge@suse.com>
- * @version PAM_SNAPPER_VERSION
  *
  * @section License
  *
@@ -292,7 +290,7 @@ static int cdbus_create_snap_pack( pam_handle_t * pamh, const char *snapper_conf
 	DBusMessageIter args;
 	DBusMessageIter array_iter;
 	DBusMessageIter struct_iter;
-	const char *desc = "pam_snapper";
+	const char *desc = MODULE_NAME;
 	uint32_t i;
 	uint32_t *snap_id = NULL;
 	bool ret;
@@ -752,7 +750,7 @@ static int cdbus_pam_session( pam_handle_t * pamh, openclose_t openclose, const 
 		strcat( real_user_config, real_user );
 	}
 	if ( options.debug ) {
-		pam_syslog( pamh, LOG_DEBUG, "pam_snapper version: %s", VERSION );
+		pam_syslog( pamh, LOG_DEBUG, MODULE_NAME " version " VERSION );
 		pam_syslog( pamh, LOG_DEBUG, "real_user_config='%s'", real_user_config );
 	}
 	if ( ( openclose == open_session ) && options.do_open ) {
@@ -861,7 +859,7 @@ PAM_EXTERN int pam_sm_close_session( pam_handle_t * pamh, int flags, int argc, c
 #ifdef PAM_STATIC
 
 struct pam_module _pam_panic_modstruct = {
-	"pam_snapper",
+	MODULE_NAME,
 	NULL,
 	NULL,
 	NULL,
