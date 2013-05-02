@@ -144,6 +144,7 @@ typedef struct {
 	bool ignoreroot;
 	bool do_open;
 	bool do_close;
+	const char *cleanup;
 	bool debug;
 } pam_options_t;
 
@@ -285,14 +286,13 @@ static int cdbus_type_check_get( pam_handle_t * pamh, DBusMessageIter * iter, in
  * @return -ENOMEM or OK
  *
 */
-static int cdbus_create_snap_pack( pam_handle_t * pamh, char *snapper_conf, createmode_t create_mode, uint32_t num_user_data,
-				   struct dict *user_data, DBusMessage ** req_msg_out )
+static int cdbus_create_snap_pack( pam_handle_t * pamh, const char *snapper_conf, createmode_t create_mode, const char *cleanup,
+				   uint32_t num_user_data, struct dict *user_data, DBusMessage ** req_msg_out )
 {
 	DBusMessage *msg;
 	DBusMessageIter args;
 	DBusMessageIter array_iter;
 	DBusMessageIter struct_iter;
-	const char *empty = "";
 	const char *desc = "pam_snapper";
 	uint32_t i;
 	uint32_t *snap_id = NULL;
@@ -324,7 +324,7 @@ static int cdbus_create_snap_pack( pam_handle_t * pamh, char *snapper_conf, crea
 		return -ENOMEM;
 	}
 	/* cleanup */
-	if ( !dbus_message_iter_append_basic( &args, DBUS_TYPE_STRING, &empty ) ) {
+	if ( !dbus_message_iter_append_basic( &args, DBUS_TYPE_STRING, &cleanup ) ) {
 		pam_syslog( pamh, LOG_ERR, "Out Of Memory!" );
 		return -ENOMEM;
 	}
@@ -445,7 +445,8 @@ static void cleanup_snapshot_num( pam_handle_t * pamh, void *data, int error_sta
  * @return -EINVAL or OK
  *
 */
-static int cdbus_create_snap_call( pam_handle_t * pamh, char *snapper_conf, createmode_t create_mode, DBusConnection * conn )
+static int cdbus_create_snap_call( pam_handle_t * pamh, const char *snapper_conf, createmode_t create_mode, const char *cleanup,
+				   DBusConnection * conn )
 {
 	int ret;
 	DBusMessage *req_msg;
@@ -459,7 +460,7 @@ static int cdbus_create_snap_call( pam_handle_t * pamh, char *snapper_conf, crea
 	enum { user_data_max = 6 };
 	struct dict user_data[user_data_max];
 	cdbus_fill_user_data( pamh, &user_data, &user_data_num, user_data_max );
-	ret = cdbus_create_snap_pack( pamh, snapper_conf, create_mode, user_data_num, user_data, &req_msg );
+	ret = cdbus_create_snap_pack( pamh, snapper_conf, create_mode, cleanup, user_data_num, user_data, &req_msg );
 	if ( ret < 0 ) {
 		pam_syslog( pamh, LOG_ERR, "failed to pack create snap request" );
 		return ret;
@@ -513,6 +514,7 @@ static void cdbus_pam_options_setdefault( pam_options_t * options )
 	options->ignoreroot = false;
 	options->do_open = true;
 	options->do_close = true;
+	options->cleanup = "";
 	options->debug = false;
 }
 
@@ -596,6 +598,8 @@ static int cdbus_pam_options_parser( pam_handle_t * pamh, pam_options_t * option
 					pam_syslog( pamh, LOG_ERR, "ignoreusers - specification missing argument - ignored" );
 				}
 			}
+		} else if ( !strncmp( *argv, "cleanup=", 8 ) ) {
+			options->cleanup = 8 + *argv;
 		} else if ( !strcmp( *argv, "debug" ) ) {
 			options->debug = true;
 		} else if ( !strcmp( *argv, "rootasroot" ) ) {
@@ -646,7 +650,7 @@ static int cdbus_pam_options_parser( pam_handle_t * pamh, pam_options_t * option
  *
  *
 */
-static int cdbus_pam_switch_to_user( pam_handle_t * pamh, struct passwd **user_entry, char *real_user )
+static int cdbus_pam_switch_to_user( pam_handle_t * pamh, struct passwd **user_entry, const char *real_user )
 {
 	int ret = -EINVAL;
 	/* save current user */
@@ -721,7 +725,7 @@ static int cdbus_pam_switch_from_user( pam_handle_t * pamh )
  * @return -EINVAL or OK
  *
 */
-static int cdbus_pam_session( pam_handle_t * pamh, openclose_t openclose, char *real_user, int flags, int argc, const char **argv )
+static int cdbus_pam_session( pam_handle_t * pamh, openclose_t openclose, const char *real_user, int flags, int argc, const char **argv )
 {
 	DBusConnection *conn;
 	int ret = -EINVAL;
@@ -753,9 +757,13 @@ static int cdbus_pam_session( pam_handle_t * pamh, openclose_t openclose, char *
 		pam_syslog( pamh, LOG_DEBUG, "real_user_config='%s'", real_user_config );
 	}
 	if ( ( openclose == open_session ) && options.do_open ) {
-		ret = cdbus_create_snap_call( pamh, real_user_config, options.do_close ? createmode_pre : createmode_single, conn );
+		ret =
+		    cdbus_create_snap_call( pamh, real_user_config, options.do_close ? createmode_pre : createmode_single, options.cleanup,
+					    conn );
 	} else if ( ( openclose == close_session ) && options.do_close ) {
-		ret = cdbus_create_snap_call( pamh, real_user_config, options.do_open ? createmode_post : createmode_single, conn );
+		ret =
+		    cdbus_create_snap_call( pamh, real_user_config, options.do_open ? createmode_post : createmode_single, options.cleanup,
+					    conn );
 	}
 	if ( ret < 0 ) {
 		pam_syslog( pamh, LOG_ERR, "snapshot create call failed: %s", strerror( -ret ) );

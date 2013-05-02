@@ -175,6 +175,11 @@ Default: create pre\- and post-snapshots
 Only create a single snapshot when closing the \s-1PAM\s0 session.
 .Sp
 Default: create pre\- and post-snapshots
+.IP "cleanup" 4
+.IX Item "cleanup"
+Set snapper cleanup algorithm.
+.Sp
+Default: (none)
 .SH "MODULE TYPES PROVIDED"
 .IX Header "MODULE TYPES PROVIDED"
 Only the module type \*(L"session\*(R" is provided.
