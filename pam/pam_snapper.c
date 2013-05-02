@@ -499,7 +499,7 @@ static int cdbus_create_snap_call( pam_handle_t * pamh, char *snapper_conf, crea
  * @return PAM_SUCCESS
  *
 */
-static int cdbus_pam_options_setdefault( pam_options_t * options )
+static void cdbus_pam_options_setdefault( pam_options_t * options )
 {
 	options->homeprefix = "home_";
 	options->ignoreservices = "crond";
@@ -509,7 +509,6 @@ static int cdbus_pam_options_setdefault( pam_options_t * options )
 	options->do_open = true;
 	options->do_close = true;
 	options->debug = false;
-	return PAM_SUCCESS;
 }
 
 /**
@@ -719,9 +718,9 @@ static int cdbus_pam_session( pam_handle_t * pamh, openclose_t openclose, char *
 	DBusConnection *conn;
 	int ret = -EINVAL;
 	char *real_user_config = NULL;
-	pam_options_t *options = malloc( sizeof( pam_options_t ) );
-	ret = cdbus_pam_options_setdefault( options );
-	ret = cdbus_pam_options_parser( pamh, options, argc, argv );
+	pam_options_t options;
+	cdbus_pam_options_setdefault( &options );
+	ret = cdbus_pam_options_parser( pamh, &options, argc, argv );
 	if ( ret == PAM_IGNORE ) {
 		goto pam_snapper_ignore;
 	}
@@ -731,26 +730,26 @@ static int cdbus_pam_session( pam_handle_t * pamh, openclose_t openclose, char *
 		pam_syslog( pamh, LOG_ERR, "connect to D-Bus failed" );
 		goto pam_snapper_ignore;
 	}
-	if ( !strcmp( real_user, "root" ) && options->rootasroot ) {
+	if ( !strcmp( real_user, "root" ) && options.rootasroot ) {
 		real_user_config = strdup( "root" );
-	} else if ( !strcmp( real_user, "root" ) && options->ignoreroot ) {
+	} else if ( !strcmp( real_user, "root" ) && options.ignoreroot ) {
 		goto pam_sm_open_session_err;
 	} else {
-		real_user_config = malloc( strlen( options->homeprefix ) + strlen( real_user ) + 1 );
+		real_user_config = malloc( strlen( options.homeprefix ) + strlen( real_user ) + 1 );
 		if ( !real_user_config ) {
 			goto pam_sm_open_session_err;
 		}
-		strcpy( real_user_config, options->homeprefix );
+		strcpy( real_user_config, options.homeprefix );
 		strcat( real_user_config, real_user );
 	}
-	if ( options->debug ) {
+	if ( options.debug ) {
 		pam_syslog( pamh, LOG_DEBUG, "pam_snapper version: %s", VERSION );
 		pam_syslog( pamh, LOG_DEBUG, "real_user_config='%s'", real_user_config );
 	}
-	if ( ( openclose == open_session ) && options->do_open ) {
-		ret = cdbus_create_snap_call( pamh, real_user_config, options->do_close ? createmode_pre : createmode_single, conn );
-	} else if ( ( openclose == close_session ) && options->do_close ) {
-		ret = cdbus_create_snap_call( pamh, real_user_config, options->do_open ? createmode_post : createmode_single, conn );
+	if ( ( openclose == open_session ) && options.do_open ) {
+		ret = cdbus_create_snap_call( pamh, real_user_config, options.do_close ? createmode_pre : createmode_single, conn );
+	} else if ( ( openclose == close_session ) && options.do_close ) {
+		ret = cdbus_create_snap_call( pamh, real_user_config, options.do_open ? createmode_post : createmode_single, conn );
 	}
 	if ( ret < 0 ) {
 		pam_syslog( pamh, LOG_ERR, "snapshot create call failed: %s", strerror( -ret ) );
@@ -761,9 +760,6 @@ static int cdbus_pam_session( pam_handle_t * pamh, openclose_t openclose, char *
 	}
 	dbus_connection_unref( conn );
  pam_snapper_ignore:
-	if ( options ) {
-		free( options );
-	}
 	return PAM_SUCCESS;
 }
 
