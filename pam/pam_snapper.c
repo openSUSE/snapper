@@ -416,7 +416,7 @@ static void cdbus_fill_user_data( pam_handle_t * pamh, struct dict ( *user_data 
 	for ( i = 0; i < 4; ++i ) {
 		const char *readval = NULL;
 		int ret = pam_get_item( pamh, fields[i], ( const void ** )&readval );
-		if ( !ret && readval ) {
+		if ( ret == PAM_SUCCESS && readval ) {
 			( *user_data )[*user_data_num].key = names[i];
 			( *user_data )[*user_data_num].val = readval;
 			if ( ( *user_data_num ) < user_data_max ) {
@@ -552,49 +552,16 @@ static int csv_contains( pam_handle_t * pamh, const char *haystack, const char *
  * @param
  * @param
  *
- * @return -EINVAL or OK
- *
 */
-static int cdbus_pam_options_parser( pam_handle_t * pamh, pam_options_t * options, int argc, const char **argv )
+static void cdbus_pam_options_parser( pam_handle_t * pamh, pam_options_t * options, int argc, const char **argv )
 {
-	const char *pamuser = NULL, *pamservice = NULL;
-	pam_get_item( pamh, PAM_USER, ( const void ** )&pamuser );
-	pam_get_item( pamh, PAM_SERVICE, ( const void ** )&pamservice );
 	for ( ; argc-- > 0; ++argv ) {
 		if ( !strncmp( *argv, "homeprefix=", 11 ) ) {
 			options->homeprefix = 11 + *argv;
-			if ( *( options->homeprefix ) != '\0' ) {
-				if ( options->debug ) {
-					pam_syslog( pamh, LOG_DEBUG, "set homeprefix: %s", options->homeprefix );
-				}
-			} else {
-				options->homeprefix = NULL;
-				if ( options->debug ) {
-					pam_syslog( pamh, LOG_ERR, "homeprefix= specification missing argument - ignored" );
-				}
-			}
 		} else if ( !strncmp( *argv, "ignoreservices=", 15 ) ) {
 			options->ignoreservices = 15 + *argv;
-			if ( *( options->ignoreservices ) != '\0' ) {
-				if ( csv_contains( pamh, options->ignoreservices, pamservice, options->debug ) ) {
-					return PAM_IGNORE;
-				}
-			} else {
-				if ( options->debug ) {
-					pam_syslog( pamh, LOG_ERR, "ignoreservices - specification missing argument - ignored" );
-				}
-			}
 		} else if ( !strncmp( *argv, "ignoreusers=", 12 ) ) {
 			options->ignoreusers = 12 + *argv;
-			if ( *( options->ignoreusers ) != '\0' ) {
-				if ( csv_contains( pamh, options->ignoreusers, pamuser, options->debug ) ) {
-					return PAM_IGNORE;
-				}
-			} else {
-				if ( options->debug ) {
-					pam_syslog( pamh, LOG_ERR, "ignoreusers - specification missing argument - ignored" );
-				}
-			}
 		} else if ( !strncmp( *argv, "cleanup=", 8 ) ) {
 			options->cleanup = 8 + *argv;
 		} else if ( !strcmp( *argv, "debug" ) ) {
@@ -611,34 +578,79 @@ static int cdbus_pam_options_parser( pam_handle_t * pamh, pam_options_t * option
 			options->do_close = true;
 		} else {
 			pam_syslog( pamh, LOG_ERR, "unknown option: %s", *argv );
-			pam_syslog( pamh, LOG_ERR,
-				    "valid options: debug homeprefix=<> ignoreservices=<> ignoreusers=<> rootasroot ignoreroot openonly closeonly" );
+			pam_syslog( pamh, LOG_ERR, "valid options: debug homeprefix=<> ignoreservices=<> ignoreusers=<> "
+				    "rootasroot ignoreroot openonly closeonly cleanup=" );
 		}
 	}
-	if ( options->ignoreservices ) {
-		if ( csv_contains( pamh, options->ignoreservices, pamservice, options->debug ) ) {
-			return PAM_IGNORE;
-		}
-	}
-	if ( options->ignoreusers ) {
-		if ( csv_contains( pamh, options->ignoreusers, pamuser, options->debug ) ) {
-			return PAM_IGNORE;
-		}
-	}
-	if ( options->ignoreroot ) {
-		if ( strcmp( pamuser, "root" ) == 0 ) {
-			return PAM_IGNORE;
-		}
+	if ( options->rootasroot && options->ignoreroot ) {
+		options->rootasroot = false;
+		pam_syslog( pamh, LOG_WARNING, "'ignoreroot' options shadows 'rootasroot'. 'rootasroot' will be ignored." );
 	}
 	if ( options->debug ) {
 		pam_syslog( pamh, LOG_ERR,
 			    "current settings: homeprefix=%s ignoreservices=%s ignoreusers=%s",
 			    options->homeprefix, options->ignoreservices, options->ignoreusers );
 	}
-	if ( options->rootasroot && options->ignoreroot ) {
-		options->rootasroot = false;
-		pam_syslog( pamh, LOG_WARNING, "'ignoreroot' options shadows 'rootasroot'. 'rootasroot' will be ignored." );
+}
+
+/**
+ * ??
+ *
+ * @param pamh PAM handle
+ * @param
+ * @param
+ * @param
+ *
+ * @return PAM_SUCCESS or PAM_IGNORE
+ *
+*/
+static int cdbus_pam_check_ignore( pam_handle_t * pamh, const pam_options_t * options )
+{
+	if ( options->ignoreservices ) {
+
+		const char *pam_service = NULL;
+		int ret = pam_get_item( pamh, PAM_SERVICE, ( const void ** )&pam_service );
+		if ( ret != PAM_SUCCESS ) {
+			pam_syslog( pamh, LOG_ERR, "cannot get PAM_SERVICE: %s", strerror( -ret ) );
+			return PAM_IGNORE;
+		}
+		if ( !pam_service ) {
+			pam_syslog( pamh, LOG_ERR, "PAM_SERVICE is null" );
+			return PAM_IGNORE;
+		}
+
+		if ( options->ignoreservices ) {
+			if ( csv_contains( pamh, options->ignoreservices, pam_service, options->debug ) ) {
+				return PAM_IGNORE;
+			}
+		}
 	}
+
+	if ( options->ignoreusers || options->ignoreroot ) {
+
+		const char *pam_user = NULL;
+		int ret = pam_get_item( pamh, PAM_USER, ( const void ** )&pam_user );
+		if ( ret != PAM_SUCCESS ) {
+			pam_syslog( pamh, LOG_ERR, "cannot get PAM_USER: %s", strerror( -ret ) );
+			return PAM_IGNORE;
+		}
+		if ( !pam_user ) {
+			pam_syslog( pamh, LOG_ERR, "PAM_USER is null" );
+			return PAM_IGNORE;
+		}
+
+		if ( options->ignoreusers ) {
+			if ( csv_contains( pamh, options->ignoreusers, pam_user, options->debug ) ) {
+				return PAM_IGNORE;
+			}
+		}
+		if ( options->ignoreroot ) {
+			if ( strcmp( pam_user, "root" ) == 0 ) {
+				return PAM_IGNORE;
+			}
+		}
+	}
+
 	return PAM_SUCCESS;
 }
 
@@ -729,7 +741,8 @@ static int cdbus_pam_session( pam_handle_t * pamh, openclose_t openclose, const 
 	char *real_user_config = NULL;
 	pam_options_t options;
 	cdbus_pam_options_setdefault( &options );
-	ret = cdbus_pam_options_parser( pamh, &options, argc, argv );
+	cdbus_pam_options_parser( pamh, &options, argc, argv );
+	ret = cdbus_pam_check_ignore( pamh, &options );
 	if ( ret == PAM_IGNORE ) {
 		goto pam_snapper_ignore;
 	}
