@@ -69,7 +69,6 @@
 #include <pwd.h>
 #include <security/pam_modules.h>
 #include <security/pam_modutil.h>
-#include <security/_pam_macros.h>
 #include <security/pam_ext.h>
 
 /*
@@ -155,7 +154,7 @@ typedef struct {
 /**
  * init the connection to the DBUS
  *
- * @param pamh the PAM handle (for pam_syslog)
+ * @param pamh the PAM handle
  *
  * @return DBusConnection *
  *
@@ -180,7 +179,7 @@ static DBusConnection *cdbus_conn( pam_handle_t * pamh )
 /**
  * send a message to the DBUS
  *
- * @param pamh PAM handle (for pam_syslog)
+ * @param pamh PAM handle
  * @param conn current DBus connection
  * @param msg message to send
  * @param pend_out handle for a reply
@@ -207,7 +206,7 @@ static int cdbus_msg_send( pam_handle_t * pamh, DBusConnection * conn, DBusMessa
 /**
  * receive a message from the DBUS
  *
- * @param pamh PAM handle (for pam_syslog)
+ * @param pamh PAM handle
  * @param conn current DBus connection
  * @param pending pointer for the pending call
  * @param msg_out handle for the result data set
@@ -235,7 +234,7 @@ static int cdbus_msg_recv( pam_handle_t * pamh, DBusConnection * conn, DBusPendi
 /**
  * ??
  *
- * @param pamh PAM handle (for pam_syslog)
+ * @param pamh PAM handle
  * @param
  * @param
  *
@@ -255,7 +254,7 @@ static int cdbus_type_check( pam_handle_t * pamh, DBusMessageIter * iter, int ex
 /**
  * ??
  *
- * @param pamh PAM handle (for pam_syslog)
+ * @param pamh PAM handle
  * @param
  * @param
  *
@@ -276,7 +275,7 @@ static int cdbus_type_check_get( pam_handle_t * pamh, DBusMessageIter * iter, in
 /**
  * ??
  *
- * @param pamh PAM handle (for pam_syslog)
+ * @param pamh PAM handle
  * @param
  * @param
  * @param
@@ -361,7 +360,7 @@ static int cdbus_create_snap_pack( pam_handle_t * pamh, const char *snapper_conf
 /**
  * ??
  *
- * @param pamh PAM handle (for pam_syslog)
+ * @param pamh PAM handle
  * @param
  * @param
  *
@@ -403,7 +402,7 @@ static int cdbus_create_snap_unpack( pam_handle_t * pamh, DBusConnection * conn,
 /**
  * ??
  *
- * @param pamh PAM handle (for pam_syslog)
+ * @param pamh PAM handle
  * @param
  * @param
  * @param
@@ -437,7 +436,7 @@ static void cleanup_snapshot_num( pam_handle_t * pamh, void *data, int error_sta
 /**
  * ??
  *
- * @param pamh PAM handle (for pam_syslog)
+ * @param pamh PAM handle
  * @param
  * @param
  * @param
@@ -716,7 +715,7 @@ static int cdbus_pam_switch_from_user( pam_handle_t * pamh )
 /**
  * ??
  *
- * @param pamh PAM handle (for pam_syslog)
+ * @param pamh PAM handle
  * @param
  * @param
  * @param
@@ -784,55 +783,7 @@ static int cdbus_pam_session( pam_handle_t * pamh, openclose_t openclose, const 
 /**
  * ??
  *
- * @param pamh PAM handle (for pam_syslog)
- * @param flags
- * @param argc
- * @param argv
- *
- * @return PAM_IGNORE
- *
-*/
-PAM_EXTERN int pam_sm_authenticate( pam_handle_t * pamh, int flags, int argc, const char **argv )
-{
-	return PAM_IGNORE;
-}
-
-/**
- * ??
- *
- * @param pamh PAM handle (for pam_syslog)
- * @param flags
- * @param argc
- * @param argv
- *
- * @return PAM_IGNORE
- *
-*/
-PAM_EXTERN int pam_sm_setcred( pam_handle_t * pamh, int flags, int argc, const char **argv )
-{
-	return PAM_IGNORE;
-}
-
-/**
- * ??
- *
- * @param pamh PAM handle (for pam_syslog)
- * @param
- * @param
- * @param
- *
- * @return PAM_IGNORE
- *
-*/
-PAM_EXTERN int pam_sm_acct_mgmt( pam_handle_t * pamh, int flags, int argc, const char **argv )
-{
-	return PAM_IGNORE;
-}
-
-/**
- * ??
- *
- * @param pamh PAM handle (for pam_syslog)
+ * @param pamh PAM handle
  * @param
  * @param
  * @param
@@ -871,7 +822,7 @@ PAM_EXTERN int pam_sm_open_session( pam_handle_t * pamh, int flags, int argc, co
 /**
  * ??
  *
- * @param pamh PAM handle (for pam_syslog)
+ * @param pamh PAM handle
  * @param
  * @param
  * @param
@@ -905,22 +856,6 @@ PAM_EXTERN int pam_sm_close_session( pam_handle_t * pamh, int flags, int argc, c
 	cdbus_pam_switch_from_user( pamh );
  pam_snapper_skip:
 	return PAM_SUCCESS;
-}
-
-/**
- * ??
- *
- * @param pamh PAM handle (for pam_syslog)
- * @param
- * @param
- * @param
- *
- * @return PAM_IGNORE
- *
-*/
-PAM_EXTERN int pam_sm_chauthtok( pam_handle_t * pamh, int flags, int argc, const char **argv )
-{
-	return PAM_IGNORE;
 }
 
 #ifdef PAM_STATIC
