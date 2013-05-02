@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Wed Apr 24 14:11:46 CEST 2013 - jsuchome@suse.cz
+
+- disable Show Changes when there's no snapshot (bnc#815177)
+  adapt the layout so it does not break with lower resolution
+  (bnc#814542)
+- 2.24.0
+
+-------------------------------------------------------------------
 Thu Mar  7 11:43:27 CET 2013 - jsuchome@suse.cz
 
 - mark visible strings for translations (bnc#807719)
