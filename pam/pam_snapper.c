@@ -736,12 +736,12 @@ static int cdbus_pam_session( pam_handle_t * pamh, openclose_t openclose, char *
 	} else if ( !strcmp( real_user, "root" ) && options->ignoreroot ) {
 		goto pam_sm_open_session_err;
 	} else {
-		real_user_config = calloc( strlen( options->homeprefix ) + strlen( real_user ) + 1, 1 );
+		real_user_config = malloc( strlen( options->homeprefix ) + strlen( real_user ) + 1 );
 		if ( !real_user_config ) {
 			goto pam_sm_open_session_err;
 		}
-		real_user_config = strncpy( real_user_config, options->homeprefix, strlen( options->homeprefix ) );
-		real_user_config = strncat( real_user_config, real_user, strlen( real_user ) );
+		strcpy( real_user_config, options->homeprefix );
+		strcat( real_user_config, real_user );
 	}
 	if ( options->debug ) {
 		pam_syslog( pamh, LOG_DEBUG, "pam_snapper version: %s", VERSION );
