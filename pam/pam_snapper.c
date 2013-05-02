@@ -661,20 +661,21 @@ static int cdbus_pam_check_ignore( pam_handle_t * pamh, const pam_options_t * op
 */
 static int cdbus_pam_switch_to_user( pam_handle_t * pamh, struct passwd **user_entry, const char *real_user )
 {
-	int ret = -EINVAL;
 	/* save current user */
 	if ( ( ( *user_entry ) = getpwnam( real_user ) ) == NULL ) {
-		ret = errno;
+		int ret = errno;
 		pam_syslog( pamh, LOG_ERR, "getpwnam( %s ) failed: %s", real_user, strerror( ret ) );
 		return PAM_IGNORE;
 	}
-	if ( setegid( ( unsigned long )( *user_entry )->pw_gid ) == -1 ) {
-		ret = errno;
+	memset( ( *user_entry )->pw_passwd, 0, strlen( ( *user_entry )->pw_passwd ) );
+
+	if ( setegid( ( *user_entry )->pw_gid ) == -1 ) {
+		int ret = errno;
 		pam_syslog( pamh, LOG_ERR, "setgid(%lu) failed: %s", ( unsigned long )( *user_entry )->pw_gid, strerror( ret ) );
 		return PAM_IGNORE;
 	}
-	if ( seteuid( ( unsigned long )( *user_entry )->pw_uid ) == -1 ) {
-		ret = errno;
+	if ( seteuid( ( *user_entry )->pw_uid ) == -1 ) {
+		int ret = errno;
 		pam_syslog( pamh, LOG_ERR, "setuid(%lu) failed: %s", ( unsigned long )( *user_entry )->pw_uid, strerror( ret ) );
 		return PAM_IGNORE;
 	}
@@ -688,10 +689,9 @@ static int cdbus_pam_switch_to_user( pam_handle_t * pamh, struct passwd **user_e
 */
 static int cdbus_pam_drop_privileges( pam_handle_t * pamh, struct passwd **user_entry )
 {
-	int ret = -EINVAL;
 	PAM_MODUTIL_DEF_PRIVS( privs );
 	if ( pam_modutil_drop_priv( pamh, &privs, ( *user_entry ) ) ) {
-		ret = errno;
+		int ret = errno;
 		pam_syslog( pamh, LOG_ERR, "pam_modutil_drop_priv (%lu) failed: %s", ( unsigned long )( *user_entry )->pw_uid,
 			    strerror( ret ) );
 		return PAM_IGNORE;
@@ -706,17 +706,16 @@ static int cdbus_pam_drop_privileges( pam_handle_t * pamh, struct passwd **user_
 */
 static int cdbus_pam_switch_from_user( pam_handle_t * pamh )
 {
-	int ret = -EINVAL;
 	uid_t ruid, euid, suid;
 	gid_t rgid, egid, sgid;
 	getresuid( &ruid, &euid, &suid );
 	getresgid( &rgid, &egid, &sgid );
 	if ( setegid( sgid ) == -1 ) {
-		ret = errno;
+		int ret = errno;
 		pam_syslog( pamh, LOG_ERR, "setgid(%lu) failed: %s", ( unsigned long )sgid, strerror( ret ) );
 	}
 	if ( seteuid( suid ) == -1 ) {
-		ret = errno;
+		int ret = errno;
 		pam_syslog( pamh, LOG_ERR, "setuid(%lu) failed: %s", ( unsigned long )suid, strerror( ret ) );
 	}
 	return PAM_SUCCESS;
