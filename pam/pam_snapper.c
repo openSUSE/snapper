@@ -125,9 +125,9 @@ typedef enum openclose_e {
  *
 */
 typedef enum createmode_e {
+	createmode_single,
 	createmode_pre,
-	createmode_post,
-	createmode_single
+	createmode_post
 } createmode_t;
 
 /**
@@ -297,10 +297,7 @@ static int cdbus_create_snap_pack( pam_handle_t * pamh, char *snapper_conf, crea
 	uint32_t i;
 	uint32_t *snap_id = calloc( sizeof( uint32_t ), 1 );
 	bool ret;
-	char *modestrings[3];
-	modestrings[createmode_single] = "CreateSingleSnapshot";
-	modestrings[createmode_pre] = "CreatePreSnapshot";
-	modestrings[createmode_post] = "CreatePostSnapshot";
+	const char *modestrings[3] = { "CreateSingleSnapshot", "CreatePreSnapshot", "CreatePostSnapshot" };
 	msg = dbus_message_new_method_call( "org.opensuse.Snapper",	/* target for the method call */
 					    "/org/opensuse/Snapper",	/* object to call on */
 					    "org.opensuse.Snapper",	/* interface to call on */
