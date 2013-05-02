@@ -295,7 +295,7 @@ static int cdbus_create_snap_pack( pam_handle_t * pamh, char *snapper_conf, crea
 	const char *empty = "";
 	const char *desc = "pam_snapper";
 	uint32_t i;
-	uint32_t *snap_id = calloc( sizeof( uint32_t ), 1 );
+	uint32_t *snap_id = NULL;
 	bool ret;
 	const char *modestrings[3] = { "CreateSingleSnapshot", "CreatePreSnapshot", "CreatePostSnapshot" };
 	msg = dbus_message_new_method_call( "org.opensuse.Snapper",	/* target for the method call */
@@ -313,7 +313,7 @@ static int cdbus_create_snap_pack( pam_handle_t * pamh, char *snapper_conf, crea
 		return -ENOMEM;
 	}
 	if ( create_mode == createmode_post ) {
-		pam_get_data( pamh, "pam_snapper_snap_id", ( const void ** )&snap_id );
+		pam_get_data( pamh, "pam_snapper_snapshot_num", ( const void ** )&snap_id );
 		if ( !dbus_message_iter_append_basic( &args, DBUS_TYPE_UINT32, snap_id ) ) {
 			pam_syslog( pamh, LOG_ERR, "Out Of Memory!" );
 			return -ENOMEM;
@@ -429,6 +429,11 @@ static void cdbus_fill_user_data( pam_handle_t * pamh, struct dict ( *user_data 
 	}
 }
 
+static void cleanup_snapshot_num( pam_handle_t * pamh, void *data, int error_status )
+{
+	free( data );
+}
+
 /**
  * ??
  *
@@ -446,9 +451,9 @@ static int cdbus_create_snap_call( pam_handle_t * pamh, char *snapper_conf, crea
 	DBusMessage *req_msg;
 	DBusMessage *rsp_msg;
 	DBusPendingCall *pending;
-	uint32_t *snap_id = calloc( sizeof( uint32_t ), 1 );
+	uint32_t *snap_id = malloc( sizeof( uint32_t ) );
 #ifdef PAM_SNAPPER_DEBUG
-	uint32_t *snap_id_check = calloc( sizeof( uint32_t ), 1 );
+	uint32_t *snap_id_check = NULL;
 #endif
 	int user_data_num = 0;
 	enum { user_data_max = 6 };
@@ -477,13 +482,13 @@ static int cdbus_create_snap_call( pam_handle_t * pamh, char *snapper_conf, crea
 		dbus_message_unref( rsp_msg );
 		return ret;
 	}
-	ret = pam_set_data( pamh, "pam_snapper_snap_id", snap_id, NULL );
+	ret = pam_set_data( pamh, "pam_snapper_snapshot_num", snap_id, cleanup_snapshot_num );
 	if ( ret != PAM_SUCCESS ) {
 		pam_syslog( pamh, LOG_ERR, "pam_set_data failed." );
 	}
 #ifdef PAM_SNAPPER_DEBUG
 	pam_syslog( pamh, LOG_DEBUG, "created new snapshot %u", *snap_id );
-	pam_get_data( pamh, "pam_snapper_snap_id", ( const void ** )&snap_id_check );
+	pam_get_data( pamh, "pam_snapper_snapshot_num", ( const void ** )&snap_id_check );
 	pam_syslog( pamh, LOG_DEBUG, "Check new snapshot: '%u'", *snap_id_check );
 #endif
 	dbus_message_unref( req_msg );
