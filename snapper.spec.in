@@ -33,6 +33,7 @@ BuildRequires:	libdbus-1-devel
 %if (0%{?suse_version} && 0%{?suse_version} >= 1210)
 BuildRequires:	libzypp(plugin:commit)
 %endif
+BuildRequires:	pam-devel
 Requires:	libsnapper@LIBVERSION_MAJOR@ = %version
 Requires:	diffutils
 %if 0%{?suse_version}
@@ -69,6 +70,7 @@ make %{?jobs:-j%jobs}
 
 %install
 make install DESTDIR="$RPM_BUILD_ROOT"
+rm $RPM_BUILD_ROOT/%{_lib}/security/pam_snapper.la
 
 %if 0%{?suse_version}
 install -D -m 644 data/sysconfig.snapper $RPM_BUILD_ROOT/var/adm/fillup-templates/sysconfig.snapper
@@ -85,7 +87,7 @@ rm -rf "$RPM_BUILD_ROOT"
 %defattr(-,root,root)
 %{prefix}/bin/snapper
 %{prefix}/sbin/snapperd
-%doc %{_mandir}/*/*
+%doc %{_mandir}/*/snapper*.*
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
 /etc/cron.hourly/suse.de-snapper
 /etc/cron.daily/suse.de-snapper
@@ -155,7 +157,8 @@ Authors:
 %{prefix}/include/snapper
 
 %package -n snapper-zypp-plugin
-Requires:	snapper libzypp(plugin:commit) zypp-plugin-python dbus-1-python
+Requires:	snapper = %version
+Requires:	libzypp(plugin:commit) zypp-plugin-python dbus-1-python
 Summary:	A zypp commit plugin for calling snapper
 Group:		System/Packages
 
@@ -175,5 +178,25 @@ Authors:
 %dir /usr/lib/zypp/plugins/commit
 %endif
 /usr/lib/zypp/plugins/commit/snapper.py*
+
+%package -n pam_snapper
+Requires:	snapper = %version
+Requires:	pam
+Summary:	PAM module for calling snapper
+Group:		System/Packages
+
+%description -n pam_snapper
+A PAM module for calling snapper during user login and logout.
+
+Authors:
+--------
+    Matthias G. Eckermann <mge@suse.com>
+
+%files -n pam_snapper
+%defattr(-,root,root)
+/%{_lib}/security/pam_snapper.so
+%dir /usr/lib/pam_snapper
+/usr/lib/pam_snapper/*.sh
+%doc %{_mandir}/*/pam_snapper*.*
 
 %changelog

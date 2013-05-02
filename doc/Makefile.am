@@ -2,7 +2,7 @@
 # Makefile.am for snapper/doc
 #
 
-man_MANS = snapper.8 snapperd.8
+man_MANS = snapper.8 snapperd.8 pam_snapper.8
 
 TXTS = dbus-protocol.txt
 

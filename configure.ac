@@ -96,10 +96,10 @@ AM_CONDITIONAL(HAVE_ZYPP, [test "$with_zypp" != "no"])
 
 AC_CHECK_LIB(btrfs, btrfs_read_and_process_send_stream)
 
-AC_ARG_ENABLE([xattrs], AC_HELP_STRING([--enable-xattrs],[Enable extended attributes support in diff, status and undochange commands]),
+AC_ARG_ENABLE([xattrs], AC_HELP_STRING([--enable-xattrs],[Enable extended attributes support]),
 		[with_xattrs=$enableval],[with_xattrs=no])
 
-AM_CONDITIONAL(HAVE_XATTRS, [test "x$with_xattrs" !=  "xno"])
+AM_CONDITIONAL(HAVE_XATTRS, [test "x$with_xattrs" != "xno"])
 
 if test "x$with_xattrs" != "xno"; then
 	AC_DEFINE(ENABLE_XATTRS, 1, [Enable extended attributes support])
@@ -123,10 +123,12 @@ AC_OUTPUT(
 	client/Makefile
 	client/utils/Makefile
 	scripts/Makefile
+	pam/Makefile
 	data/Makefile
 	doc/Makefile
 	doc/snapper.8:doc/snapper.8.in
 	doc/snapperd.8:doc/snapperd.8.in
+	doc/pam_snapper.8:doc/pam_snapper.8.in
 	po/Makefile
 	testsuite-real/Makefile
 	testsuite-cmp/Makefile

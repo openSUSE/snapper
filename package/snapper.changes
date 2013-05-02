@@ -1,8 +1,14 @@
 -------------------------------------------------------------------
+Thu May 02 15:11:17 CEST 2013 - aschnell@suse.de
+
+- added PAM module from mge
+- version 0.1.4
+
+-------------------------------------------------------------------
 Tue Apr 16 16:52:29 CEST 2013 - aschnell@suse.de
 
 - merged xattr support from oniko
-- 0.1.3
+- version 0.1.3
 
 -------------------------------------------------------------------
 Thu Feb 28 18:39:19 CET 2013 - aschnell@suse.de
@@ -39,7 +45,7 @@ Wed Feb 06 10:27:57 CET 2013 - aschnell@suse.de
 Mon Feb 04 14:00:45 CET 2013 - aschnell@suse.de
 
 - use btrfs send ioctl for snapshot comparison (fate #311399)
-- 0.1.2
+- version 0.1.2
 
 -------------------------------------------------------------------
 Thu Jan 24 14:32:02 CET 2013 - aschnell@suse.de
@@ -61,7 +67,7 @@ Wed Nov 21 11:55:28 CET 2012 - aschnell@suse.de
 Mon Nov 12 15:37:25 CET 2012 - aschnell@suse.de
 
 - reject create-config on non-thin LVM volumes
-- 0.1.1
+- version 0.1.1
 
 -------------------------------------------------------------------
 Thu Oct 18 15:11:49 CEST 2012 - aschnell@suse.de
@@ -79,13 +85,13 @@ Mon Oct 15 10:40:07 CEST 2012 - aschnell@suse.de
   - use ioctl instead of btrfs program
   - disable ext4 support
   - removed Python bindings
-- 0.1.0
+- version 0.1.0
 
 -------------------------------------------------------------------
 Wed Aug 22 18:43:47 CEST 2012 - aschnell@suse.de
 
 - fixed segmentation fault for unknown fstype
-- 0.0.14
+- version 0.0.14
 
 -------------------------------------------------------------------
 Tue Aug 14 12:03:50 CEST 2012 - aschnell@suse.de
@@ -97,19 +103,19 @@ Wed Jul 25 10:44:38 CEST 2012 - aschnell@suse.de
 
 - take mount options from original filesystem when mounting
   snapshots
-- 0.0.13
+- version 0.0.13
 
 -------------------------------------------------------------------
 Tue Jul 24 14:35:44 CEST 2012 - aschnell@suse.de
 
 - added experimental support for LVM thin-provisioned snapshots
-- 0.0.12
+- version 0.0.12
 
 -------------------------------------------------------------------
 Tue Jun 12 10:07:08 CEST 2012 - aschnell@suse.de
 
 - removed blocxx (fate #313242)
-- 0.0.11
+- version 0.0.11
 
 -------------------------------------------------------------------
 Thu Mar 15 10:56:40 CET 2012 - aschnell@suse.de
@@ -120,13 +126,13 @@ Thu Mar 15 10:56:40 CET 2012 - aschnell@suse.de
 Tue Mar 06 11:37:34 CET 2012 - aschnell@suse.de
 
 - allow to disable background comparison (bnc#726122)
-- 0.0.10
+- version 0.0.10
 
 -------------------------------------------------------------------
 Fri Mar 02 16:25:26 CET 2012 - aschnell@suse.de
 
 - added option --command to snapper create
-- 0.0.9
+- version 0.0.9
 
 -------------------------------------------------------------------
 Fri Feb 24 19:21:15 CET 2012 - aschnell@suse.de
@@ -142,7 +148,7 @@ Fri Dec 23 15:33:12 CET 2011 - aschnell@suse.de
 Thu Nov 24 14:09:15 CET 2011 - aschnell@suse.de
 
 - package Python bindings
-- 0.0.8
+- version 0.0.8
 
 -------------------------------------------------------------------
 Sat Nov 19 20:46:08 UTC 2011 - coolo@suse.com
@@ -263,4 +269,3 @@ Mon Jan 10 14:55:25 CET 2011 - aschnell@suse.de
 
 - started development (fate #303699)
 - version 0.0.1
-
