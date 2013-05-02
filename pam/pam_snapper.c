@@ -731,7 +731,7 @@ static int cdbus_pam_switch_from_user( pam_handle_t * pamh )
  * @return -EINVAL or OK
  *
 */
-static int cdbus_pam_session( pam_handle_t * pamh, openclose_t openclose, const char *real_user, int flags, int argc, const char **argv )
+static int cdbus_pam_session( pam_handle_t * pamh, openclose_t openclose, const char *real_user, int argc, const char **argv )
 {
 	DBusConnection *conn;
 	int ret = -EINVAL;
@@ -820,7 +820,7 @@ PAM_EXTERN int pam_sm_open_session( pam_handle_t * pamh, int flags, int argc, co
 		goto pam_snapper_skip;
 	}
 	/* do the real stuff */
-	cdbus_pam_session( pamh, open_session, real_user, flags, argc, argv );
+	cdbus_pam_session( pamh, open_session, real_user, argc, argv );
 	/* go back to original user */
 	cdbus_pam_switch_from_user( pamh );
  pam_snapper_skip:
@@ -859,7 +859,7 @@ PAM_EXTERN int pam_sm_close_session( pam_handle_t * pamh, int flags, int argc, c
 		goto pam_snapper_skip;
 	}
 	/* do the real stuff */
-	cdbus_pam_session( pamh, close_session, real_user, flags, argc, argv );
+	cdbus_pam_session( pamh, close_session, real_user, argc, argv );
 	/* go back to original user */
 	cdbus_pam_switch_from_user( pamh );
  pam_snapper_skip:
