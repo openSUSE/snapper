@@ -624,6 +624,11 @@ static int cdbus_pam_options_parser( pam_handle_t * pamh, pam_options_t * option
 			return PAM_IGNORE;
 		}
 	}
+	if ( options->ignoreroot ) {
+		if ( strcmp( pamuser, "root" ) == 0 ) {
+			return PAM_IGNORE;
+		}
+	}
 	if ( options->debug ) {
 		pam_syslog( pamh, LOG_ERR,
 			    "current settings: homeprefix=%s ignoreservices=%s ignoreusers=%s",
@@ -735,8 +740,6 @@ static int cdbus_pam_session( pam_handle_t * pamh, openclose_t openclose, char *
 	}
 	if ( !strcmp( real_user, "root" ) && options.rootasroot ) {
 		real_user_config = strdup( "root" );
-	} else if ( !strcmp( real_user, "root" ) && options.ignoreroot ) {
-		goto pam_sm_open_session_err;
 	} else {
 		real_user_config = malloc( strlen( options.homeprefix ) + strlen( real_user ) + 1 );
 		if ( !real_user_config ) {
