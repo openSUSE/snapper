@@ -103,8 +103,8 @@
  *
 */
 struct dict {
-	char *key;
-	char *val;
+	const char *key;
+	const char *val;
 };
 
 /**
@@ -413,10 +413,10 @@ static int cdbus_create_snap_unpack( pam_handle_t * pamh, DBusConnection * conn,
 static void cdbus_fill_user_data( pam_handle_t * pamh, struct dict ( *user_data )[], int *user_data_num, int user_data_max )
 {
 	int fields[4] = { PAM_RUSER, PAM_RHOST, PAM_TTY, PAM_SERVICE };
-	char *names[4] = { "ruser", "rhost", "tty", "service" };
+	const char *names[4] = { "ruser", "rhost", "tty", "service" };
 	int i;
 	for ( i = 0; i < 4; ++i ) {
-		char *readval = NULL;
+		const char *readval = NULL;
 		int ret = pam_get_item( pamh, fields[i], ( const void ** )&readval );
 		if ( !ret && readval ) {
 			( *user_data )[*user_data_num].key = names[i];
@@ -559,7 +559,7 @@ static int csv_contains( pam_handle_t * pamh, const char *haystack, const char *
 */
 static int cdbus_pam_options_parser( pam_handle_t * pamh, pam_options_t * options, int argc, const char **argv )
 {
-	char *pamuser = NULL, *pamservice = NULL;
+	const char *pamuser = NULL, *pamservice = NULL;
 	pam_get_item( pamh, PAM_USER, ( const void ** )&pamuser );
 	pam_get_item( pamh, PAM_SERVICE, ( const void ** )&pamservice );
 	for ( ; argc-- > 0; ++argv ) {
@@ -794,7 +794,7 @@ static int cdbus_pam_session( pam_handle_t * pamh, openclose_t openclose, const 
 PAM_EXTERN int pam_sm_open_session( pam_handle_t * pamh, int flags, int argc, const char **argv )
 {
 	int ret = -EINVAL;
-	char *real_user = NULL;
+	const char *real_user = NULL;
 	struct passwd *user_entry;
 	ret = pam_get_item( pamh, PAM_USER, ( const void ** )&real_user );
 	if ( ret != PAM_SUCCESS ) {
@@ -833,7 +833,7 @@ PAM_EXTERN int pam_sm_open_session( pam_handle_t * pamh, int flags, int argc, co
 PAM_EXTERN int pam_sm_close_session( pam_handle_t * pamh, int flags, int argc, const char **argv )
 {
 	int ret = -EINVAL;
-	char *real_user = NULL;
+	const char *real_user = NULL;
 	struct passwd *user_entry;
 	ret = pam_get_item( pamh, PAM_USER, ( const void ** )&real_user );
 	if ( ret != PAM_SUCCESS ) {
