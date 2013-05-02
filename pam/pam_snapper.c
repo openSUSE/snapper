@@ -57,14 +57,26 @@
 #include "../config.h"
 
 /*
+ * Includes
+*/
+
+#include <unistd.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <syslog.h>
+#include <sys/types.h>
+#include <pwd.h>
+
+/*
  * PAM Preamble
 */
 
 #define MODULE_NAME "pam_snapper"
 #define PAM_SM_SESSION
 
-#include <sys/types.h>
-#include <pwd.h>
 #include <security/pam_modules.h>
 #include <security/pam_modutil.h>
 #include <security/pam_ext.h>
@@ -74,20 +86,6 @@
 */
 
 #include <dbus/dbus.h>
-
-/*
- * Includes
-*/
-
-#define __USE_GNU
-#include <unistd.h>
-#undef __USE_GNU
-#include <stdbool.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <syslog.h>
 
 /*
  * DBUS handling

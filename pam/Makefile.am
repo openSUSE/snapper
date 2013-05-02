@@ -2,6 +2,8 @@
 # Makefile.am for snapper/pam
 #
 
+AM_CFLAGS = -D_GNU_SOURCE
+
 INCLUDES = -I$(top_srcdir) $(DBUS_CFLAGS)
 
 securelibdir = $(shell echo /`basename $(libdir)`/security)
