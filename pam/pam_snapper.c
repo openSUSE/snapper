@@ -596,16 +596,16 @@ static int cdbus_pam_options_parser( pam_handle_t * pamh, pam_options_t * option
 					pam_syslog( pamh, LOG_ERR, "ignoreusers - specification missing argument - ignored" );
 				}
 			}
-		} else if ( !strncmp( *argv, "debug", 5 ) ) {
+		} else if ( !strcmp( *argv, "debug" ) ) {
 			options->debug = true;
-		} else if ( !strncmp( *argv, "rootasroot", 10 ) ) {
+		} else if ( !strcmp( *argv, "rootasroot" ) ) {
 			options->rootasroot = true;
-		} else if ( !strncmp( *argv, "ignoreroot", 10 ) ) {
+		} else if ( !strcmp( *argv, "ignoreroot" ) ) {
 			options->ignoreroot = true;
-		} else if ( !strncmp( *argv, "openonly", 8 ) ) {
+		} else if ( !strcmp( *argv, "openonly" ) ) {
 			options->do_close = false;
 			options->do_open = true;
-		} else if ( !strncmp( *argv, "closeonly", 9 ) ) {
+		} else if ( !strcmp( *argv, "closeonly" ) ) {
 			options->do_open = false;
 			options->do_close = true;
 		} else {
