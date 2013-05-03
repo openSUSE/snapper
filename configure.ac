@@ -48,7 +48,7 @@ dnl Automake 1.11 enables silent compilation
 dnl Disable it by "configure --disable-silent-rules" or "make V=1"
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
-CFLAGS="${CFLAGS} -Wall -Wformat=2 -Wmissing-prototypes"
+CFLAGS="${CFLAGS} -std=c99 -Wall -Wextra -Wformat=2 -Wmissing-prototypes -Wno-unused-parameter"
 CXXFLAGS="${CXXFLAGS} -std=c++0x -Wall -Wextra -Wformat=2 -Wnon-virtual-dtor -Wno-unused-parameter"
 
 fillupdir=/var/adm/fillup-templates
@@ -104,6 +104,10 @@ AM_CONDITIONAL(HAVE_XATTRS, [test "x$with_xattrs" != "xno"])
 if test "x$with_xattrs" != "xno"; then
 	AC_DEFINE(ENABLE_XATTRS, 1, [Enable extended attributes support])
 fi
+
+AC_ARG_ENABLE([pam], AC_HELP_STRING([--disable-pam],[Disable pam plugin support]),
+                [with_pam=$enableval],[with_pam=yes])
+AM_CONDITIONAL(HAVE_PAM, [test "$with_pam" != "no"])
 
 PKG_CHECK_MODULES(DBUS, dbus-1)
 

@@ -10,7 +10,7 @@ lib_LTLIBRARIES = libsnapper.la
 
 if HAVE_XATTRS
 TMP_XA = XAttributes.cc	XAttributes.h
-endif HAVE_XATTRS
+endif
 
 libsnapper_la_SOURCES =					\
 	Factory.cc		Factory.h		\
@@ -34,7 +34,6 @@ libsnapper_la_SOURCES =					\
 	SnapperTypes.h					\
 	SnapperDefines.h				\
 	$(TMP_XA)
-
 
 
 if ENABLE_BTRFS

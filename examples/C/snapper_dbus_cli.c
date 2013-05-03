@@ -18,6 +18,8 @@
  * To contact Novell about this file by physical or electronic mail, you may
  * find current contact information at www.novell.com.
  */
+
+
 #include <dbus/dbus.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -206,7 +208,7 @@ static int dict_unpack(DBusMessageIter *iter,
 static void dict_array_print(uint32_t num_dicts,
 			     struct dict *dicts)
 {
-	int i;
+	uint32_t i;
 
 	for (i = 0; i < num_dicts; i++) {
 		printf("dict (\n"

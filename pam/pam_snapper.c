@@ -289,7 +289,6 @@ static int cdbus_create_snap_pack( pam_handle_t * pamh, const char *snapper_conf
 	DBusMessageIter array_iter;
 	DBusMessageIter struct_iter;
 	const char *desc = MODULE_NAME;
-	uint32_t i;
 	uint32_t *snap_id = NULL;
 	bool ret;
 	const char *modestrings[3] = { "CreateSingleSnapshot", "CreatePreSnapshot", "CreatePostSnapshot" };
@@ -328,7 +327,7 @@ static int cdbus_create_snap_pack( pam_handle_t * pamh, const char *snapper_conf
 		pam_syslog( pamh, LOG_ERR, "failed to open array container" );
 		return -ENOMEM;
 	}
-	for ( i = 0; i < num_user_data; i++ ) {
+	for ( uint32_t i = 0; i < num_user_data; ++i ) {
 		ret = dbus_message_iter_open_container( &array_iter, DBUS_TYPE_DICT_ENTRY, NULL, &struct_iter );
 		if ( !ret ) {
 			pam_syslog( pamh, LOG_ERR, "failed to open struct container" );
@@ -410,8 +409,7 @@ static void cdbus_fill_user_data( pam_handle_t * pamh, struct dict ( *user_data 
 {
 	int fields[4] = { PAM_RUSER, PAM_RHOST, PAM_TTY, PAM_SERVICE };
 	const char *names[4] = { "ruser", "rhost", "tty", "service" };
-	int i;
-	for ( i = 0; i < 4; ++i ) {
+	for ( int i = 0; i < 4; ++i ) {
 		const char *readval = NULL;
 		int ret = pam_get_item( pamh, fields[i], ( const void ** )&readval );
 		if ( ret == PAM_SUCCESS && readval ) {
@@ -533,7 +531,7 @@ static int csv_contains( pam_handle_t * pamh, const char *haystack, const char *
 	const char *e;
 
 	while ( ( e = strchr( s, ',' ) ) ) {
-		if ( e - s == l && strncmp( s, needle, l ) == 0 )
+		if ( e == s + l && strncmp( s, needle, l ) == 0 )
 			return 1;
 
 		s = e + 1;
