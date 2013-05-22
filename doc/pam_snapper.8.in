@@ -133,7 +133,7 @@
 pam_snapper \- PAM module which creates filesystem snapshots via "Snapper"
 .SH "SYNOPSIS"
 .IX Header "SYNOPSIS"
-pam_snapper.so debug [homeprefix=<>] [ignoreservices=<>] [ignoreusers=<>] [rootasroot] [ignoreroot] [openonly] [closeonly]
+pam_snapper.so debug [homeprefix=<>] [ignoreservices=<>] [ignoreusers=<>] [rootasroot] [ignoreroot] [openonly] [closeonly] [cleanup=<>]
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
 Create a snapshot at every login of a User, thus he or she always have a save starting point.
