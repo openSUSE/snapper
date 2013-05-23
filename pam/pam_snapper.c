@@ -1,5 +1,4 @@
 /**
- * @file
  * @author  Matthias G. Eckermann <mge@suse.com>
  *
  * @section License
@@ -25,14 +24,10 @@
  *
  * @section Usage
  *
- * 1. Create a btrfs subvolume for the new user,
- *    and a snapper configuration, e.g. using
- *      "pam_snapper_useradd.sh".
+ * Add the following line to /etc/pam.d/common-session:
+ *      "session optional pam_snapper.so"
  *
- * 2. Add the following line to /etc/pam.d/common-session:
- *      "session optional pam_snapper.so homeprefix=home_"
- *
- * See "man snapper" for more information.
+ * See "man pam_snapper" and "map snapper" for more information.
  *
  * @section Related Projects
  *
@@ -48,11 +43,9 @@
  *
  * @section Coding Style
  *
- * indent -linux -i8 -ts8 -l140 -cbi8 -cli8 -prs -nbap -nbbb -nbad -sob *.c
+ * indent -linux -i8 -ts8 -l100 -cbi8 -cli8 -prs -nbap -nbbb -nbad -sob *.c
  *
 */
-
-/* #define PAM_SNAPPER_DEBUG */
 
 #include "../config.h"
 
@@ -68,6 +61,7 @@
 #include <errno.h>
 #include <syslog.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <pwd.h>
 
 /*
@@ -147,51 +141,14 @@ typedef struct {
  * Functions for DBUS handling
 */
 
-/**
- * init the connection to the DBUS
- *
- * @param pamh the PAM handle
- *
- * @return DBusConnection *
- *
-*/
-static DBusConnection *cdbus_conn( pam_handle_t * pamh )
-{
-	DBusError err;
-	DBusConnection *conn;
-	dbus_error_init( &err );
-	/* bus connection */
-	conn = dbus_bus_get( DBUS_BUS_SYSTEM, &err );
-	if ( dbus_error_is_set( &err ) ) {
-		pam_syslog( pamh, LOG_ERR, "connection error: %s", strerror( errno ) );
-		dbus_error_free( &err );
-	}
-	if ( NULL == conn ) {
-		return NULL;
-	}
-	return conn;
-}
-
-/**
- * send a message to the DBUS
- *
- * @param pamh PAM handle
- * @param conn current DBus connection
- * @param msg message to send
- * @param pend_out handle for a reply
- *
- * @return error condition
- *
-*/
-static int cdbus_msg_send( pam_handle_t * pamh, DBusConnection * conn, DBusMessage * msg, DBusPendingCall ** pend_out )
+static int cdbus_msg_send( DBusConnection * conn, DBusMessage * msg, DBusPendingCall ** pend_out )
 {
 	DBusPendingCall *pending;
 	/* send message and get a handle for a reply */
-	if ( !dbus_connection_send_with_reply( conn, msg, &pending, -1 ) ) {
+	if ( !dbus_connection_send_with_reply( conn, msg, &pending, 0x7fffffff ) ) {
 		return -ENOMEM;
 	}
 	if ( NULL == pending ) {
-		pam_syslog( pamh, LOG_ERR, "Pending Call Null" );
 		return -EINVAL;
 	}
 	dbus_connection_flush( conn );
@@ -199,18 +156,8 @@ static int cdbus_msg_send( pam_handle_t * pamh, DBusConnection * conn, DBusMessa
 	return 0;
 }
 
-/**
- * receive a message from the DBUS
- *
- * @param pamh PAM handle
- * @param conn current DBus connection
- * @param pending pointer for the pending call
- * @param msg_out handle for the result data set
- *
- * @return error condition
- *
-*/
-static int cdbus_msg_recv( pam_handle_t * pamh, DBusConnection * conn, DBusPendingCall * pending, DBusMessage ** msg_out )
+static int cdbus_msg_recv( DBusConnection * conn, DBusPendingCall * pending,
+			   DBusMessage ** msg_out )
 {
 	DBusMessage *msg;
 	/* block until we receive a reply */
@@ -218,7 +165,6 @@ static int cdbus_msg_recv( pam_handle_t * pamh, DBusConnection * conn, DBusPendi
 	/* get the reply message */
 	msg = dbus_pending_call_steal_reply( pending );
 	if ( msg == NULL ) {
-		pam_syslog( pamh, LOG_ERR, "Reply Null" );
 		return -ENOMEM;
 	}
 	/* free the pending message handle */
@@ -227,40 +173,19 @@ static int cdbus_msg_recv( pam_handle_t * pamh, DBusConnection * conn, DBusPendi
 	return 0;
 }
 
-/**
- * ??
- *
- * @param pamh PAM handle
- * @param
- * @param
- *
- * @return error condition or OK
- *
-*/
-static int cdbus_type_check( pam_handle_t * pamh, DBusMessageIter * iter, int expected_type )
+static int cdbus_type_check( DBusMessageIter * iter, int expected_type )
 {
 	int type = dbus_message_iter_get_arg_type( iter );
 	if ( type != expected_type ) {
-		pam_syslog( pamh, LOG_ERR, "got type %d, expecting %d", type, expected_type );
 		return -EINVAL;
 	}
 	return 0;
 }
 
-/**
- * ??
- *
- * @param pamh PAM handle
- * @param
- * @param
- *
- * @return error condition or OK
- *
-*/
-static int cdbus_type_check_get( pam_handle_t * pamh, DBusMessageIter * iter, int expected_type, void *val )
+static int cdbus_type_check_get( DBusMessageIter * iter, int expected_type, void *val )
 {
 	int ret;
-	ret = cdbus_type_check( pamh, iter, expected_type );
+	ret = cdbus_type_check( iter, expected_type );
 	if ( ret < 0 ) {
 		return ret;
 	}
@@ -268,82 +193,68 @@ static int cdbus_type_check_get( pam_handle_t * pamh, DBusMessageIter * iter, in
 	return 0;
 }
 
-/**
- * ??
- *
- * @param pamh PAM handle
- * @param
- * @param
- * @param
- * @param
- * @param
- *
- * @return -ENOMEM or OK
- *
-*/
-static int cdbus_create_snap_pack( pam_handle_t * pamh, const char *snapper_conf, createmode_t create_mode, const char *cleanup,
-				   uint32_t num_user_data, struct dict *user_data, DBusMessage ** req_msg_out )
+static int cdbus_create_snap_pack( const char *snapper_conf, createmode_t createmode,
+				   const char *cleanup, uint32_t num_user_data,
+				   const struct dict *user_data, const uint32_t * snapshot_num_in,
+				   DBusMessage ** req_msg_out )
 {
 	DBusMessage *msg;
 	DBusMessageIter args;
 	DBusMessageIter array_iter;
 	DBusMessageIter struct_iter;
-	const char *desc = MODULE_NAME;
-	uint32_t *snap_id = NULL;
-	bool ret;
-	const char *modestrings[3] = { "CreateSingleSnapshot", "CreatePreSnapshot", "CreatePostSnapshot" };
+	const char *modestrings[3] =
+	    { "CreateSingleSnapshot", "CreatePreSnapshot", "CreatePostSnapshot" };
 	msg = dbus_message_new_method_call( "org.opensuse.Snapper",	/* target for the method call */
 					    "/org/opensuse/Snapper",	/* object to call on */
 					    "org.opensuse.Snapper",	/* interface to call on */
-					    modestrings[create_mode] );	/* method name */
+					    modestrings[createmode] );	/* method name */
 	if ( msg == NULL ) {
-		pam_syslog( pamh, LOG_ERR, "failed to create req msg" );
 		return -ENOMEM;
 	}
-	/* append arguments */
+
 	dbus_message_iter_init_append( msg, &args );
 	if ( !dbus_message_iter_append_basic( &args, DBUS_TYPE_STRING, &snapper_conf ) ) {
-		pam_syslog( pamh, LOG_ERR, "Out Of Memory!" );
 		return -ENOMEM;
 	}
-	if ( create_mode == createmode_post ) {
-		pam_get_data( pamh, "pam_snapper_snapshot_num", ( const void ** )&snap_id );
-		if ( !dbus_message_iter_append_basic( &args, DBUS_TYPE_UINT32, snap_id ) ) {
-			pam_syslog( pamh, LOG_ERR, "Out Of Memory!" );
+	if ( createmode == createmode_post ) {
+		if ( !dbus_message_iter_append_basic( &args, DBUS_TYPE_UINT32, snapshot_num_in ) ) {
 			return -ENOMEM;
 		}
 	}
+
+	const char *desc = MODULE_NAME;
 	if ( !dbus_message_iter_append_basic( &args, DBUS_TYPE_STRING, &desc ) ) {
-		pam_syslog( pamh, LOG_ERR, "Out Of Memory!" );
 		return -ENOMEM;
 	}
-	/* cleanup */
+
 	if ( !dbus_message_iter_append_basic( &args, DBUS_TYPE_STRING, &cleanup ) ) {
-		pam_syslog( pamh, LOG_ERR, "Out Of Memory!" );
 		return -ENOMEM;
 	}
-	ret = dbus_message_iter_open_container( &args, DBUS_TYPE_ARRAY, CDBUS_SIG_STRING_DICT, &array_iter );
+
+	dbus_bool_t ret =
+	    dbus_message_iter_open_container( &args, DBUS_TYPE_ARRAY, CDBUS_SIG_STRING_DICT,
+					      &array_iter );
 	if ( !ret ) {
-		pam_syslog( pamh, LOG_ERR, "failed to open array container" );
 		return -ENOMEM;
 	}
+
 	for ( uint32_t i = 0; i < num_user_data; ++i ) {
-		ret = dbus_message_iter_open_container( &array_iter, DBUS_TYPE_DICT_ENTRY, NULL, &struct_iter );
+		ret =
+		    dbus_message_iter_open_container( &array_iter, DBUS_TYPE_DICT_ENTRY, NULL,
+						      &struct_iter );
 		if ( !ret ) {
-			pam_syslog( pamh, LOG_ERR, "failed to open struct container" );
 			return -ENOMEM;
 		}
-		if ( !dbus_message_iter_append_basic( &struct_iter, DBUS_TYPE_STRING, &user_data[i].key ) ) {
-			pam_syslog( pamh, LOG_ERR, "Out Of Memory!" );
+		if ( !dbus_message_iter_append_basic
+		     ( &struct_iter, DBUS_TYPE_STRING, &user_data[i].key ) ) {
 			return -ENOMEM;
 		}
-		if ( !dbus_message_iter_append_basic( &struct_iter, DBUS_TYPE_STRING, &user_data[i].val ) ) {
-			pam_syslog( pamh, LOG_ERR, "Out Of Memory!" );
+		if ( !dbus_message_iter_append_basic
+		     ( &struct_iter, DBUS_TYPE_STRING, &user_data[i].val ) ) {
 			return -ENOMEM;
 		}
 		ret = dbus_message_iter_close_container( &array_iter, &struct_iter );
 		if ( !ret ) {
-			pam_syslog( pamh, LOG_ERR, "failed to close struct container" );
 			return -ENOMEM;
 		}
 	}
@@ -352,60 +263,178 @@ static int cdbus_create_snap_pack( pam_handle_t * pamh, const char *snapper_conf
 	return 0;
 }
 
-/**
- * ??
- *
- * @param pamh PAM handle
- * @param
- * @param
- *
- * @return -EINVAL or OK
- *
-*/
-static int cdbus_create_snap_unpack( pam_handle_t * pamh, DBusConnection * conn, DBusMessage * rsp_msg, uint32_t * snap_id_out )
+static int cdbus_create_snap_unpack( DBusConnection * conn, DBusMessage * rsp_msg,
+				     uint32_t * snapshot_num )
 {
 	DBusMessageIter iter;
 	int msg_type;
 	const char *sig;
 	msg_type = dbus_message_get_type( rsp_msg );
 	if ( msg_type == DBUS_MESSAGE_TYPE_ERROR ) {
-		pam_syslog( pamh, LOG_ERR, "create snap error response: %s", dbus_message_get_error_name( rsp_msg ) );
 		return -EINVAL;
 	}
 	if ( msg_type != DBUS_MESSAGE_TYPE_METHOD_RETURN ) {
-		pam_syslog( pamh, LOG_ERR, "unexpected create snap ret type: %d", msg_type );
 		return -EINVAL;
 	}
 	sig = dbus_message_get_signature( rsp_msg );
-	if ( ( sig == NULL )
-	     || ( strcmp( sig, CDBUS_SIG_CREATE_SNAP_RSP ) != 0 ) ) {
-		pam_syslog( pamh, LOG_ERR, "bad create snap response sig: %s, "
-			    "expected: %s", ( sig ? sig : "NULL" ), CDBUS_SIG_CREATE_SNAP_RSP );
+	if ( ( sig == NULL ) || ( strcmp( sig, CDBUS_SIG_CREATE_SNAP_RSP ) != 0 ) ) {
 		return -EINVAL;
 	}
 	/* read the parameters */
 	if ( !dbus_message_iter_init( rsp_msg, &iter ) ) {
-		pam_syslog( pamh, LOG_ERR, "Message has no arguments!" );
 		return -EINVAL;
 	}
-	if ( cdbus_type_check_get( pamh, &iter, DBUS_TYPE_UINT32, snap_id_out ) ) {
+	if ( cdbus_type_check_get( &iter, DBUS_TYPE_UINT32, snapshot_num ) ) {
 		return -EINVAL;
 	}
 	return 0;
 }
 
+static int cdbus_create_snapshot( const char *snapper_conf, createmode_t createmode,
+				  const char *cleanup, uint32_t num_user_data,
+				  const struct dict *user_data, const uint32_t * snapshot_num_in,
+				  uint32_t * snapshot_num_out )
+{
+	DBusError err;
+	dbus_error_init( &err );
+
+	/* without a private connection setting uid/gui can be in vain, e.g. with gdm */
+
+	DBusConnection *conn = dbus_bus_get_private( DBUS_BUS_SYSTEM, &err );
+	if ( dbus_error_is_set( &err ) ) {
+		dbus_error_free( &err );
+	}
+
+	DBusMessage *req_msg;
+	int ret = cdbus_create_snap_pack( snapper_conf, createmode, cleanup, num_user_data,
+					  user_data, snapshot_num_in, &req_msg );
+	if ( ret < 0 ) {
+		dbus_connection_close( conn );
+		dbus_connection_unref( conn );
+		return ret;
+	}
+
+	DBusPendingCall *pending;
+	ret = cdbus_msg_send( conn, req_msg, &pending );
+	if ( ret < 0 ) {
+		dbus_message_unref( req_msg );
+		dbus_connection_close( conn );
+		dbus_connection_unref( conn );
+		return ret;
+	}
+
+	DBusMessage *rsp_msg;
+	ret = cdbus_msg_recv( conn, pending, &rsp_msg );
+	if ( ret < 0 ) {
+		dbus_message_unref( req_msg );
+		dbus_pending_call_unref( pending );
+		dbus_connection_close( conn );
+		dbus_connection_unref( conn );
+		return ret;
+	}
+
+	ret = cdbus_create_snap_unpack( conn, rsp_msg, snapshot_num_out );
+	if ( ret < 0 ) {
+		dbus_message_unref( req_msg );
+		dbus_message_unref( rsp_msg );
+		dbus_connection_close( conn );
+		dbus_connection_unref( conn );
+		return ret;
+	}
+
+	dbus_message_unref( req_msg );
+	dbus_message_unref( rsp_msg );
+	dbus_connection_close( conn );
+	dbus_connection_unref( conn );
+	return 0;
+}
+
 /**
- * ??
- *
- * @param pamh PAM handle
- * @param
- * @param
- * @param
- *
- * @return -EINVAL or OK
- *
-*/
-static void cdbus_fill_user_data( pam_handle_t * pamh, struct dict ( *user_data )[], int *user_data_num, int user_data_max )
+ * Special functions for pam_snapper
+ */
+
+static int forker( pam_handle_t * pamh, uid_t uid, gid_t gid, const char *snapper_conf,
+		   createmode_t createmode, const char *cleanup, uint32_t num_user_data,
+		   const struct dict *user_data, const uint32_t * snapshot_num_in,
+		   uint32_t * snapshot_num_out )
+{
+	int fds[2];
+	if ( pipe( fds ) != 0 ) {
+		pam_syslog( pamh, LOG_ERR, "pipe failed" );
+		return -1;
+	}
+
+	int child = fork(  );
+	if ( child == 0 ) {
+
+		/* setting uid/gui affects other threads so it has to be done in a separate process */
+
+		if ( setegid( gid ) != 0 || seteuid( uid ) != 0 ) {
+			exit( EXIT_FAILURE );
+		}
+
+		close( fds[0] );
+
+		if ( cdbus_create_snapshot( snapper_conf, createmode, cleanup, num_user_data,
+					    user_data, snapshot_num_in, snapshot_num_out ) != 0 )
+			exit( EXIT_FAILURE );
+
+		if ( pam_modutil_write
+		     ( fds[1], ( char * )snapshot_num_out,
+		       sizeof( *snapshot_num_out ) ) != sizeof( *snapshot_num_out ) )
+			exit( EXIT_FAILURE );
+
+		close( fds[1] );
+
+		exit( EXIT_SUCCESS );
+
+	} else if ( child > 0 ) {
+
+		close( fds[1] );
+
+		int status;
+		int ret = waitpid( child, &status, 0 );
+
+		if ( ret == -1 ) {
+			pam_syslog( pamh, LOG_ERR, "waitpid failed" );
+			close( fds[0] );
+			return -1;
+		}
+
+		if ( !WIFEXITED( status ) ) {
+			pam_syslog( pamh, LOG_ERR, "child exited abnormal" );
+			close( fds[0] );
+			return -1;
+		}
+
+		if ( WEXITSTATUS( status ) != EXIT_SUCCESS ) {
+			pam_syslog( pamh, LOG_ERR, "child exited normal but with failure" );
+			close( fds[0] );
+			return -1;
+		}
+
+		if ( pam_modutil_read
+		     ( fds[0], ( char * )snapshot_num_out,
+		       sizeof( *snapshot_num_out ) ) != sizeof( *snapshot_num_out ) ) {
+			pam_syslog( pamh, LOG_ERR, "reading snapshot_num_out failed" );
+			close( fds[0] );
+			return -1;
+		}
+
+		close( fds[0] );
+
+		return 0;
+
+	} else {
+
+		pam_syslog( pamh, LOG_ERR, "fork failed" );
+		return -1;
+
+	}
+}
+
+static void fill_user_data( pam_handle_t * pamh, struct dict ( *user_data )[], int *num_user_data,
+			    int max_user_data )
 {
 	int fields[4] = { PAM_RUSER, PAM_RHOST, PAM_TTY, PAM_SERVICE };
 	const char *names[4] = { "ruser", "rhost", "tty", "service" };
@@ -413,10 +442,10 @@ static void cdbus_fill_user_data( pam_handle_t * pamh, struct dict ( *user_data 
 		const char *readval = NULL;
 		int ret = pam_get_item( pamh, fields[i], ( const void ** )&readval );
 		if ( ret == PAM_SUCCESS && readval ) {
-			( *user_data )[*user_data_num].key = names[i];
-			( *user_data )[*user_data_num].val = readval;
-			if ( ( *user_data_num ) < user_data_max ) {
-				( *user_data_num )++;
+			( *user_data )[*num_user_data].key = names[i];
+			( *user_data )[*num_user_data].val = readval;
+			if ( ( *num_user_data ) < max_user_data ) {
+				( *num_user_data )++;
 			}
 		}
 	}
@@ -427,82 +456,70 @@ static void cleanup_snapshot_num( pam_handle_t * pamh, void *data, int error_sta
 	free( data );
 }
 
-/**
- * ??
- *
- * @param pamh PAM handle
- * @param
- * @param
- * @param
- *
- * @return -EINVAL or OK
- *
-*/
-static int cdbus_create_snap_call( pam_handle_t * pamh, const char *snapper_conf, createmode_t create_mode, const char *cleanup,
-				   DBusConnection * conn )
+static int get_ugid( pam_handle_t * pamh, const char *pam_user, uid_t * uid, gid_t * gid )
 {
-	int ret;
-	DBusMessage *req_msg;
-	DBusMessage *rsp_msg;
-	DBusPendingCall *pending;
-	uint32_t *snap_id = malloc( sizeof( uint32_t ) );
-#ifdef PAM_SNAPPER_DEBUG
-	uint32_t *snap_id_check = NULL;
-#endif
-	int user_data_num = 0;
-	enum { user_data_max = 6 };
-	struct dict user_data[user_data_max];
-	cdbus_fill_user_data( pamh, &user_data, &user_data_num, user_data_max );
-	ret = cdbus_create_snap_pack( pamh, snapper_conf, create_mode, cleanup, user_data_num, user_data, &req_msg );
-	if ( ret < 0 ) {
-		pam_syslog( pamh, LOG_ERR, "failed to pack create snap request" );
-		return ret;
+	struct passwd pwd;
+	struct passwd *result;
+
+	long bufsize = sysconf( _SC_GETPW_R_SIZE_MAX );
+	char buf[bufsize];
+
+	if ( getpwnam_r( pam_user, &pwd, buf, bufsize, &result ) != 0 || result != &pwd ) {
+		pam_syslog( pamh, LOG_ERR, "getpwnam failed" );
+		return -1;
 	}
-	ret = cdbus_msg_send( pamh, conn, req_msg, &pending );
-	if ( ret < 0 ) {
-		dbus_message_unref( req_msg );
-		return ret;
-	}
-	ret = cdbus_msg_recv( pamh, conn, pending, &rsp_msg );
-	if ( ret < 0 ) {
-		dbus_message_unref( req_msg );
-		dbus_pending_call_unref( pending );
-		return ret;
-	}
-	ret = cdbus_create_snap_unpack( pamh, conn, rsp_msg, snap_id );
-	if ( ret < 0 ) {
-		pam_syslog( pamh, LOG_ERR, "failed to unpack create snap response: %s", strerror( -ret ) );
-		dbus_message_unref( req_msg );
-		dbus_message_unref( rsp_msg );
-		return ret;
-	}
-	ret = pam_set_data( pamh, "pam_snapper_snapshot_num", snap_id, cleanup_snapshot_num );
-	if ( ret != PAM_SUCCESS ) {
-		pam_syslog( pamh, LOG_ERR, "pam_set_data failed." );
-	}
-#ifdef PAM_SNAPPER_DEBUG
-	pam_syslog( pamh, LOG_DEBUG, "created new snapshot %u", *snap_id );
-	pam_get_data( pamh, "pam_snapper_snapshot_num", ( const void ** )&snap_id_check );
-	pam_syslog( pamh, LOG_DEBUG, "Check new snapshot: '%u'", *snap_id_check );
-#endif
-	dbus_message_unref( req_msg );
-	dbus_message_unref( rsp_msg );
+
+	memset( pwd.pw_passwd, 0, strlen( pwd.pw_passwd ) );
+
+	*uid = pwd.pw_uid;
+	*gid = pwd.pw_gid;
+
 	return 0;
 }
 
-/**
- * ??
- *
- * @param
- *
- * @return PAM_SUCCESS
- *
-*/
-static void cdbus_pam_options_setdefault( pam_options_t * options )
+static int worker( pam_handle_t * pamh, const char *pam_user, const char *snapper_conf,
+		   createmode_t createmode, const char *cleanup )
+{
+	const int max_user_data = 5;
+	struct dict user_data[max_user_data];
+	int num_user_data = 0;
+	fill_user_data( pamh, &user_data, &num_user_data, max_user_data );
+
+	uid_t uid;
+	gid_t gid;
+	if ( get_ugid( pamh, pam_user, &uid, &gid ) != 0 )
+		return -1;
+
+	uint32_t *snapshot_num_in = NULL;
+	uint32_t *snapshot_num_out = malloc( sizeof( *snapshot_num_out ) );
+
+	if ( createmode == createmode_post ) {
+		if ( pam_get_data
+		     ( pamh, "pam_snapper_snapshot_num",
+		       ( const void ** )&snapshot_num_in ) != PAM_SUCCESS ) {
+			pam_syslog( pamh, LOG_ERR, "getting previous snapshot_num failed" );
+			return -1;
+		}
+	}
+
+	if ( forker( pamh, uid, gid, snapper_conf, createmode, cleanup, num_user_data, user_data,
+		     snapshot_num_in, snapshot_num_out ) != 0 )
+		return -1;
+
+	if ( pam_set_data
+	     ( pamh, "pam_snapper_snapshot_num", snapshot_num_out,
+	       cleanup_snapshot_num ) != PAM_SUCCESS ) {
+		pam_syslog( pamh, LOG_ERR, "pam_set_data failed" );
+	}
+
+	return 0;
+}
+
+static void set_default_options( pam_options_t * options )
 {
 	options->homeprefix = "home_";
 	options->ignoreservices = "crond";
-	options->ignoreusers = NULL;
+	options->ignoreusers = "";
 	options->rootasroot = false;
 	options->ignoreroot = false;
 	options->do_open = true;
@@ -511,18 +528,11 @@ static void cdbus_pam_options_setdefault( pam_options_t * options )
 	options->debug = false;
 }
 
-/**
- * ??
- *
- * @param
- *
- * @return PAM status
- *
-*/
 static int csv_contains( pam_handle_t * pamh, const char *haystack, const char *needle, bool debug )
 {
 	if ( debug ) {
-		pam_syslog( pamh, LOG_DEBUG, "csv_contains haystack: '%s' needle: '%s'", haystack, needle );
+		pam_syslog( pamh, LOG_DEBUG, "csv_contains haystack: '%s' needle: '%s'", haystack,
+			    needle );
 	}
 
 	const size_t l = strlen( needle );
@@ -540,16 +550,8 @@ static int csv_contains( pam_handle_t * pamh, const char *haystack, const char *
 	return strcmp( s, needle ) == 0;
 }
 
-/**
- * ??
- *
- * @param pamh PAM handle
- * @param
- * @param
- * @param
- *
-*/
-static void cdbus_pam_options_parser( pam_handle_t * pamh, pam_options_t * options, int argc, const char **argv )
+static void options_parser( pam_handle_t * pamh, pam_options_t * options, int argc,
+			    const char **argv )
 {
 	for ( ; argc-- > 0; ++argv ) {
 		if ( !strncmp( *argv, "homeprefix=", 11 ) ) {
@@ -574,40 +576,33 @@ static void cdbus_pam_options_parser( pam_handle_t * pamh, pam_options_t * optio
 			options->do_close = true;
 		} else {
 			pam_syslog( pamh, LOG_ERR, "unknown option: %s", *argv );
-			pam_syslog( pamh, LOG_ERR, "valid options: debug homeprefix=<> ignoreservices=<> ignoreusers=<> "
-				    "rootasroot ignoreroot openonly closeonly cleanup=" );
+			pam_syslog( pamh, LOG_ERR, "valid options: debug homeprefix=<> "
+				    "ignoreservices=<> ignoreusers=<> rootasroot ignoreroot "
+				    "openonly closeonly cleanup=<>" );
 		}
 	}
+
 	if ( options->rootasroot && options->ignoreroot ) {
 		options->rootasroot = false;
-		pam_syslog( pamh, LOG_WARNING, "'ignoreroot' options shadows 'rootasroot'. 'rootasroot' will be ignored." );
+		pam_syslog( pamh, LOG_WARNING, "'ignoreroot' options shadows 'rootasroot'. "
+			    "'rootasroot' will be ignored." );
 	}
+
 	if ( options->debug ) {
-		pam_syslog( pamh, LOG_ERR,
-			    "current settings: homeprefix=%s ignoreservices=%s ignoreusers=%s",
-			    options->homeprefix, options->ignoreservices, options->ignoreusers );
+		pam_syslog( pamh, LOG_ERR, "current settings: homeprefix='%s' ignoreservices='%s' "
+			    "ignoreusers='%s' cleanup='%s'", options->homeprefix,
+			    options->ignoreservices, options->ignoreusers, options->cleanup );
 	}
 }
 
-/**
- * ??
- *
- * @param pamh PAM handle
- * @param
- * @param
- * @param
- *
- * @return PAM_SUCCESS or PAM_IGNORE
- *
-*/
-static int cdbus_pam_check_ignore( pam_handle_t * pamh, const pam_options_t * options )
+static int check_ignore( pam_handle_t * pamh, const pam_options_t * options )
 {
 	if ( options->ignoreservices ) {
 
 		const char *pam_service = NULL;
 		int ret = pam_get_item( pamh, PAM_SERVICE, ( const void ** )&pam_service );
 		if ( ret != PAM_SUCCESS ) {
-			pam_syslog( pamh, LOG_ERR, "cannot get PAM_SERVICE: %s", strerror( -ret ) );
+			pam_syslog( pamh, LOG_ERR, "cannot get PAM_SERVICE" );
 			return PAM_IGNORE;
 		}
 		if ( !pam_service ) {
@@ -615,8 +610,13 @@ static int cdbus_pam_check_ignore( pam_handle_t * pamh, const pam_options_t * op
 			return PAM_IGNORE;
 		}
 
+		if ( options->debug ) {
+			pam_syslog( pamh, LOG_DEBUG, "PAM_SERVICE is '%s'", pam_service );
+		}
+
 		if ( options->ignoreservices ) {
-			if ( csv_contains( pamh, options->ignoreservices, pam_service, options->debug ) ) {
+			if ( csv_contains
+			     ( pamh, options->ignoreservices, pam_service, options->debug ) ) {
 				return PAM_IGNORE;
 			}
 		}
@@ -627,12 +627,16 @@ static int cdbus_pam_check_ignore( pam_handle_t * pamh, const pam_options_t * op
 		const char *pam_user = NULL;
 		int ret = pam_get_item( pamh, PAM_USER, ( const void ** )&pam_user );
 		if ( ret != PAM_SUCCESS ) {
-			pam_syslog( pamh, LOG_ERR, "cannot get PAM_USER: %s", strerror( -ret ) );
+			pam_syslog( pamh, LOG_ERR, "cannot get PAM_USER" );
 			return PAM_IGNORE;
 		}
 		if ( !pam_user ) {
 			pam_syslog( pamh, LOG_ERR, "PAM_USER is null" );
 			return PAM_IGNORE;
+		}
+
+		if ( options->debug ) {
+			pam_syslog( pamh, LOG_DEBUG, "PAM_USER is '%s'", pam_user );
 		}
 
 		if ( options->ignoreusers ) {
@@ -650,217 +654,77 @@ static int cdbus_pam_check_ignore( pam_handle_t * pamh, const pam_options_t * op
 	return PAM_SUCCESS;
 }
 
-/**
- *
- *
- *
-*/
-static int cdbus_pam_switch_to_user( pam_handle_t * pamh, struct passwd **user_entry, const char *real_user )
+static char *get_snapper_conf( const char *pam_user, const pam_options_t * options )
 {
-	/* save current user */
-	if ( ( ( *user_entry ) = getpwnam( real_user ) ) == NULL ) {
-		int ret = errno;
-		pam_syslog( pamh, LOG_ERR, "getpwnam( %s ) failed: %s", real_user, strerror( ret ) );
-		return PAM_IGNORE;
-	}
-	memset( ( *user_entry )->pw_passwd, 0, strlen( ( *user_entry )->pw_passwd ) );
-
-	if ( setegid( ( *user_entry )->pw_gid ) == -1 ) {
-		int ret = errno;
-		pam_syslog( pamh, LOG_ERR, "setgid(%lu) failed: %s", ( unsigned long )( *user_entry )->pw_gid, strerror( ret ) );
-		return PAM_IGNORE;
-	}
-	if ( seteuid( ( *user_entry )->pw_uid ) == -1 ) {
-		int ret = errno;
-		pam_syslog( pamh, LOG_ERR, "setuid(%lu) failed: %s", ( unsigned long )( *user_entry )->pw_uid, strerror( ret ) );
-		return PAM_IGNORE;
-	}
-	return PAM_SUCCESS;
-}
-
-/**
- *
- *
- *
-*/
-static int cdbus_pam_drop_privileges( pam_handle_t * pamh, struct passwd **user_entry )
-{
-	PAM_MODUTIL_DEF_PRIVS( privs );
-	if ( pam_modutil_drop_priv( pamh, &privs, ( *user_entry ) ) ) {
-		int ret = errno;
-		pam_syslog( pamh, LOG_ERR, "pam_modutil_drop_priv (%lu) failed: %s", ( unsigned long )( *user_entry )->pw_uid,
-			    strerror( ret ) );
-		return PAM_IGNORE;
-	}
-	return PAM_SUCCESS;
-}
-
-/**
- *
- *
- *
-*/
-static int cdbus_pam_switch_from_user( pam_handle_t * pamh )
-{
-	uid_t ruid, euid, suid;
-	gid_t rgid, egid, sgid;
-	getresuid( &ruid, &euid, &suid );
-	getresgid( &rgid, &egid, &sgid );
-	if ( setegid( sgid ) == -1 ) {
-		int ret = errno;
-		pam_syslog( pamh, LOG_ERR, "setgid(%lu) failed: %s", ( unsigned long )sgid, strerror( ret ) );
-	}
-	if ( seteuid( suid ) == -1 ) {
-		int ret = errno;
-		pam_syslog( pamh, LOG_ERR, "setuid(%lu) failed: %s", ( unsigned long )suid, strerror( ret ) );
-	}
-	return PAM_SUCCESS;
-}
-
-/**
- * ??
- *
- * @param pamh PAM handle
- * @param
- * @param
- * @param
- * @param
- *
- * @return -EINVAL or OK
- *
-*/
-static int cdbus_pam_session( pam_handle_t * pamh, openclose_t openclose, const char *real_user, int argc, const char **argv )
-{
-	DBusConnection *conn;
-	int ret = -EINVAL;
-	char *real_user_config = NULL;
-	pam_options_t options;
-	cdbus_pam_options_setdefault( &options );
-	cdbus_pam_options_parser( pamh, &options, argc, argv );
-	ret = cdbus_pam_check_ignore( pamh, &options );
-	if ( ret == PAM_IGNORE ) {
-		goto pam_snapper_ignore;
-	}
-	/* open the connection to the D-Bus */
-	conn = cdbus_conn( pamh );
-	if ( conn == NULL ) {
-		pam_syslog( pamh, LOG_ERR, "connect to D-Bus failed" );
-		goto pam_snapper_ignore;
-	}
-	if ( !strcmp( real_user, "root" ) && options.rootasroot ) {
-		real_user_config = strdup( "root" );
+	char *snapper_conf = NULL;
+	if ( options->rootasroot && strcmp( pam_user, "root" ) == 0 ) {
+		snapper_conf = strdup( "root" );
 	} else {
-		real_user_config = malloc( strlen( options.homeprefix ) + strlen( real_user ) + 1 );
-		if ( !real_user_config ) {
-			goto pam_sm_open_session_err;
-		}
-		strcpy( real_user_config, options.homeprefix );
-		strcat( real_user_config, real_user );
+		snapper_conf = malloc( strlen( options->homeprefix ) + strlen( pam_user ) + 1 );
+		strcpy( snapper_conf, options->homeprefix );
+		strcat( snapper_conf, pam_user );
 	}
+	return snapper_conf;
+}
+
+static void pam_session( pam_handle_t * pamh, openclose_t openclose, int argc, const char **argv )
+{
+	pam_options_t options;
+	set_default_options( &options );
+	options_parser( pamh, &options, argc, argv );
+
+	if ( check_ignore( pamh, &options ) == PAM_IGNORE ) {
+		return;
+	}
+
+	const char *pam_user = NULL;
+	int ret = pam_get_item( pamh, PAM_USER, ( const void ** )&pam_user );
+	if ( ret != PAM_SUCCESS ) {
+		pam_syslog( pamh, LOG_ERR, "cannot get PAM_USER" );
+		return;
+	}
+	if ( !pam_user ) {
+		pam_syslog( pamh, LOG_ERR, "PAM_USER is null" );
+		return;
+	}
+
+	char *snapper_conf = get_snapper_conf( pam_user, &options );
+	if ( !snapper_conf ) {
+		return;
+	}
+
 	if ( options.debug ) {
 		pam_syslog( pamh, LOG_DEBUG, MODULE_NAME " version " VERSION );
-		pam_syslog( pamh, LOG_DEBUG, "real_user_config='%s'", real_user_config );
+		pam_syslog( pamh, LOG_DEBUG, "pam_user='%s', snapper_conf='%s'", pam_user,
+			    snapper_conf );
 	}
+
 	if ( ( openclose == open_session ) && options.do_open ) {
-		ret =
-		    cdbus_create_snap_call( pamh, real_user_config, options.do_close ? createmode_pre : createmode_single, options.cleanup,
-					    conn );
+		ret = worker( pamh, pam_user, snapper_conf, options.do_close ? createmode_pre :
+			      createmode_single, options.cleanup );
 	} else if ( ( openclose == close_session ) && options.do_close ) {
-		ret =
-		    cdbus_create_snap_call( pamh, real_user_config, options.do_open ? createmode_post : createmode_single, options.cleanup,
-					    conn );
+		ret = worker( pamh, pam_user, snapper_conf, options.do_open ? createmode_post :
+			      createmode_single, options.cleanup );
 	}
-	if ( ret < 0 ) {
-		pam_syslog( pamh, LOG_ERR, "snapshot create call failed: %s", strerror( -ret ) );
-	}
- pam_sm_open_session_err:
-	if ( real_user_config ) {
-		free( real_user_config );
-	}
-	dbus_connection_unref( conn );
- pam_snapper_ignore:
-	return PAM_SUCCESS;
+
+	free( snapper_conf );
 }
 
 /*
- * HERE the PAM stuff starts
+ * PAM stuff starts here
 */
 
-/**
- * ??
- *
- * @param pamh PAM handle
- * @param
- * @param
- * @param
- *
- * @return PAM_SUCCESS (always)
- *
-*/
 PAM_EXTERN int pam_sm_open_session( pam_handle_t * pamh, int flags, int argc, const char **argv )
 {
-	int ret = -EINVAL;
-	const char *real_user = NULL;
-	struct passwd *user_entry;
-	ret = pam_get_item( pamh, PAM_USER, ( const void ** )&real_user );
-	if ( ret != PAM_SUCCESS ) {
-		pam_syslog( pamh, LOG_ERR, "cannot get PAM_USER: %s", strerror( -ret ) );
-		goto pam_snapper_skip;
-	}
-	if ( !real_user ) {
-		goto pam_snapper_skip;
-	}
-	/* no need to proceed as root */
-	if ( cdbus_pam_switch_to_user( pamh, &user_entry, real_user ) == PAM_IGNORE ) {
-		goto pam_snapper_skip;
-	}
-	if ( cdbus_pam_drop_privileges( pamh, &user_entry ) == PAM_IGNORE ) {
-		goto pam_snapper_skip;
-	}
-	/* do the real stuff */
-	cdbus_pam_session( pamh, open_session, real_user, argc, argv );
-	/* go back to original user */
-	cdbus_pam_switch_from_user( pamh );
- pam_snapper_skip:
+	pam_session( pamh, open_session, argc, argv );
+
 	return PAM_SUCCESS;
 }
 
-/**
- * ??
- *
- * @param pamh PAM handle
- * @param
- * @param
- * @param
- *
- * @return PAM_SUCCESS (always)
- *
-*/
 PAM_EXTERN int pam_sm_close_session( pam_handle_t * pamh, int flags, int argc, const char **argv )
 {
-	int ret = -EINVAL;
-	const char *real_user = NULL;
-	struct passwd *user_entry;
-	ret = pam_get_item( pamh, PAM_USER, ( const void ** )&real_user );
-	if ( ret != PAM_SUCCESS ) {
-		pam_syslog( pamh, LOG_ERR, "cannot get PAM_USER: %s", strerror( -ret ) );
-		goto pam_snapper_skip;
-	}
-	if ( !real_user ) {
-		goto pam_snapper_skip;
-	}
-	/* no need to proceed as root */
-	if ( cdbus_pam_switch_to_user( pamh, &user_entry, real_user ) == PAM_IGNORE ) {
-		goto pam_snapper_skip;
-	}
-	if ( cdbus_pam_drop_privileges( pamh, &user_entry ) == PAM_IGNORE ) {
-		goto pam_snapper_skip;
-	}
-	/* do the real stuff */
-	cdbus_pam_session( pamh, close_session, real_user, argc, argv );
-	/* go back to original user */
-	cdbus_pam_switch_from_user( pamh );
- pam_snapper_skip:
+	pam_session( pamh, close_session, argc, argv );
+
 	return PAM_SUCCESS;
 }
 
