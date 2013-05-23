@@ -124,7 +124,7 @@
 .\" ========================================================================
 .\"
 .IX Title "PAM_SNAPPER 8"
-.TH PAM_SNAPPER 8 "2013-05-02" "@VERSION@" " "
+.TH "PAM_SNAPPER" "8" "2013-05-23" "@VERSION@" "Filesystem Snapshot Management"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -133,7 +133,7 @@
 pam_snapper \- PAM module which creates filesystem snapshots via "Snapper"
 .SH "SYNOPSIS"
 .IX Header "SYNOPSIS"
-pam_snapper.so debug [homeprefix=<>] [ignoreservices=<>] [ignoreusers=<>] [rootasroot] [ignoreroot] [openonly] [closeonly] [cleanup=<>]
+pam_snapper.so [debug] [homeprefix=<>] [ignoreservices=<>] [ignoreusers=<>] [rootasroot] [ignoreroot] [openonly] [closeonly] [cleanup=<>]
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
 Create a snapshot at every login of a User, thus he or she always have a save starting point.
@@ -199,7 +199,7 @@ pam_snapper will always return \s-1PAM_SUCCESS\s0, to not prevent users from log
 \&\*(L"session optional pam_snapper.so\*(R"
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
-\&\fIpam.conf\fR\|(5), \fIpam.d\fR\|(5) \fIpam\fR\|(8), pam_snapper_homeconvert, pam_snapper_pamconfig, pam_snapper_useradd, pam_snapper_userdel
+snapper(8), pam.conf(5), pam(8), pam_snapper_homeconvert, pam_snapper_pamconfig, pam_snapper_useradd, pam_snapper_userdel
 .SH "AUTHORS and CONTRIBUTORS"
 .IX Header "AUTHORS and CONTRIBUTORS"
 pam-snapper was written by Matthias G. Eckermann <mge@suse.com>
@@ -227,7 +227,7 @@ This program is distributed in the hope that it will be useful, but
 General Public License for more details.
 .PP
 You should have received a copy of the \s-1GNU\s0 General Public License
-along with this program; if not, contact \s-1SUSE\s0
+along with this program; if not, contact \s-1SUSE\s0.
 .PP
 To contact \s-1SUSE\s0 about this file by physical or electronic mail, you
-may find current contact information at www.suse.com
+may find current contact information at www.suse.com.
