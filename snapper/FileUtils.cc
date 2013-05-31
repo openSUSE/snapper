@@ -150,11 +150,11 @@ namespace snapper
     SDir
     SDir::deepopen(const SDir& dir, const string& name)
     {
-       string::size_type pos = name.find('/');
-       if (pos == string::npos)
-	   return SDir(dir, name);
+	string::size_type pos = name.find('/');
+	if (pos == string::npos)
+	    return SDir(dir, name);
 
-       return deepopen(SDir(dir, string(name, 0, pos)), string(name, pos + 1));
+	return deepopen(SDir(dir, string(name, 0, pos)), string(name, pos + 1));
     }
 
 
@@ -492,7 +492,8 @@ namespace snapper
 	    }
 	    else
 	    {
-                y2err("Couldn't get extended attributes status for " << base_path << "/" << path << stringerror(errno));
+                y2err("Couldn't get extended attributes status for " << base_path << "/" <<
+		      path << stringerror(errno));
                 throw IOErrorException();
 	    }
 	}
