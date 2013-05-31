@@ -414,18 +414,15 @@ namespace snapper
 	assert(path.find('/') == string::npos);
 	assert(path != "..");
 
-	int fd = ::openat(dirfd, path.c_str(), O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
+	int fd = ::openat(dirfd, path.c_str(), O_RDONLY | O_NOFOLLOW | O_NONBLOCK | O_NOATIME |
+			  O_CLOEXEC);
 	if (fd >= 0)
 	{
 	    ssize_t r1 = ::flistxattr(fd, list, size);
-	    close(fd);
+	    ::close(fd);
 	    return r1;
 	}
-	else if (errno != ELOOP)
-	{
-	    return -1;
-	}
-	else
+	else if (errno == ELOOP || errno == ENXIO || errno == EWOULDBLOCK)
 	{
 	    boost::lock_guard<boost::mutex> lock(cwd_mutex);
 
@@ -440,6 +437,10 @@ namespace snapper
 	    chdir("/");
 	    return r2;
 	}
+	else
+	{
+	    return -1;
+	}
     }
 
 
@@ -449,18 +450,15 @@ namespace snapper
 	assert(path.find('/') == string::npos);
 	assert(path != "..");
 
-	int fd = ::openat(dirfd, path.c_str(), O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
+	int fd = ::openat(dirfd, path.c_str(), O_RDONLY | O_NOFOLLOW | O_NONBLOCK | O_NOATIME |
+			  O_CLOEXEC);
 	if (fd >= 0)
 	{
 	    ssize_t r1 = ::fgetxattr(fd, name, value, size);
-	    close(fd);
+	    ::close(fd);
 	    return r1;
 	}
-	else if (errno != ELOOP)
-	{
-	    return -1;
-	}
-	else
+	else if (errno == ELOOP || errno == ENXIO || errno == EWOULDBLOCK)
 	{
 	    boost::lock_guard<boost::mutex> lock(cwd_mutex);
 
@@ -474,6 +472,10 @@ namespace snapper
 	    ssize_t r2 = ::lgetxattr(path.c_str(), name, value, size);
 	    chdir("/");
 	    return r2;
+	}
+	else
+	{
+	    return -1;
 	}
     }
 

@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri May 31 17:35:33 CEST 2013 - aschnell@suse.de
+
+- fixed xattrs reading for certain block/character devices
+
+-------------------------------------------------------------------
 Thu May 02 15:11:17 CEST 2013 - aschnell@suse.de
 
 - added PAM module from mge
