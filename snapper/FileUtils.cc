@@ -68,6 +68,7 @@ namespace snapper
 	    y2err("not a directory path:" << base_path);
 	    throw IOErrorException();
 	}
+
 #ifdef ENABLE_XATTRS
 	setXaStatus();
 #endif
@@ -95,6 +96,7 @@ namespace snapper
 	    close(dirfd);
 	    throw IOErrorException();
 	}
+
 #ifdef ENABLE_XATTRS
 	xastatus = dir.xastatus;
 #endif
@@ -104,12 +106,13 @@ namespace snapper
     SDir::SDir(const SDir& dir)
 	: base_path(dir.base_path), path(dir.path)
     {
-	dirfd = dup(dir.dirfd);
+	dirfd = fcntl(dir.dirfd, F_DUPFD_CLOEXEC, 0);
 	if (dirfd == -1)
 	{
-	    y2err("dup failed" << " error:" << stringerror(errno));
+	    y2err("fcntl(F_DUPFD_CLOEXEC) failed error:" << stringerror(errno));
 	    throw IOErrorException();
 	}
+
 #ifdef ENABLE_XATTRS
 	xastatus = dir.xastatus;
 #endif
@@ -121,16 +124,17 @@ namespace snapper
     {
 	if (this != &dir)
 	{
+	    ::close(dirfd);
+	    dirfd = fcntl(dir.dirfd, F_DUPFD_CLOEXEC, 0);
+	    if (dirfd == -1)
+	    {
+		y2err("fcntl(F_DUPFD_CLOEXEC) failed error:" << stringerror(errno));
+		throw IOErrorException();
+	    }
+
 #ifdef ENABLE_XATTRS
 	    xastatus = dir.xastatus;
 #endif
-	    ::close(dirfd);
-	    dirfd = dup(dir.dirfd);
-	    if (dirfd == -1)
-	    {
-		y2err("dup failed" << " error:" << stringerror(errno));
-		throw IOErrorException();
-	    }
 	}
 
 	return *this;
@@ -185,10 +189,10 @@ namespace snapper
     vector<string>
     SDir::entries(entries_pred_t pred) const
     {
-	int fd = dup(dirfd);
+	int fd = fcntl(dirfd, F_DUPFD_CLOEXEC, 0);
 	if (fd == -1)
 	{
-	    y2err("dup failed" << " error:" << stringerror(errno));
+	    y2err("fcntl(F_DUPFD_CLOEXEC) failed error:" << stringerror(errno));
 	    throw IOErrorException();
 	}
 
