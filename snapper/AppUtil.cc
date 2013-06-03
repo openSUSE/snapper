@@ -35,7 +35,6 @@
 #include <pwd.h>
 #include <dirent.h>
 #include <mntent.h>
-#include <libxml/tree.h>
 #include <boost/algorithm/string.hpp>
 
 #include "snapper/Log.h"
