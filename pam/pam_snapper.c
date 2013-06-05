@@ -492,6 +492,10 @@ static int worker( pam_handle_t * pamh, const char *pam_user, const char *snappe
 
 	uint32_t *snapshot_num_in = NULL;
 	uint32_t *snapshot_num_out = malloc( sizeof( *snapshot_num_out ) );
+	if ( !snapshot_num_out ) {
+		pam_syslog( pamh, LOG_ERR, "out of memory" );
+		return -1;
+	}
 
 	if ( createmode == createmode_post ) {
 		if ( pam_get_data
@@ -661,8 +665,10 @@ static char *get_snapper_conf( const char *pam_user, const pam_options_t * optio
 		snapper_conf = strdup( "root" );
 	} else {
 		snapper_conf = malloc( strlen( options->homeprefix ) + strlen( pam_user ) + 1 );
-		strcpy( snapper_conf, options->homeprefix );
-		strcat( snapper_conf, pam_user );
+		if ( snapper_conf ) {
+			strcpy( snapper_conf, options->homeprefix );
+			strcat( snapper_conf, pam_user );
+		}
 	}
 	return snapper_conf;
 }
@@ -690,6 +696,7 @@ static void pam_session( pam_handle_t * pamh, openclose_t openclose, int argc, c
 
 	char *snapper_conf = get_snapper_conf( pam_user, &options );
 	if ( !snapper_conf ) {
+		pam_syslog( pamh, LOG_ERR, "out of memory" );
 		return;
 	}
 
