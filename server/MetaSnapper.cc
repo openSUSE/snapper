@@ -143,6 +143,8 @@ get_group_uids(const char* groupname, vector<uid_t>& uids)
 	return false;
     }
 
+    memset(grp.gr_passwd, 0, strlen(grp.gr_passwd));
+
     uids.clear();
 
     for (char** p = grp.gr_mem; *p != NULL; ++p)
