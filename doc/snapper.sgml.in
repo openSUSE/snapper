@@ -2,7 +2,10 @@
 
 <refentry id='snapper8'>
 
-  <refentryinfo><date>2013-04-26</date></refentryinfo>
+  <refentryinfo>
+    <date>2013-04-26</date>
+  </refentryinfo>
+
   <refmeta>
     <refentrytitle>snapper</refentrytitle>
     <manvolnum>8</manvolnum>
@@ -10,16 +13,25 @@
     <refmiscinfo class='source'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
+
   <refnamediv>
     <refname>snapper</refname>
     <refpurpose>Command-line program for filesystem snapshot management</refpurpose>
   </refnamediv>
 
-  <refsect1 id='syntax'>
-    <title>SYNTAX</title>
-    <para>snapper [<option>--global-opts</option>] &lt;<emphasis remap='B'>command</emphasis>&gt; [<option>--command-opts</option>] [<emphasis remap='B'>command-arguments</emphasis>]</para>
-    <para>snapper --help</para>
-  </refsect1>
+  <refsynopsisdiv id='synopsis'>
+    <cmdsynopsis>
+      <command>snapper</command>
+      <arg choice='opt'><replaceable>--global-opts</replaceable></arg>
+      <arg choice='plain'><replaceable>command</replaceable></arg>
+      <arg choice='opt'><replaceable>--command-opts</replaceable></arg>
+      <arg choice='opt'><replaceable>command-arguments</replaceable></arg>
+    </cmdsynopsis>
+    <cmdsynopsis>
+      <command>snapper</command>
+      <arg choice='req'>--help</arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
 
   <refsect1 id='description'>
     <title>DESCRIPTION</title>
@@ -394,7 +406,6 @@
 	<term><filename>/var/log/snapper.log</filename></term>
 	<listitem>
 	  <para>Logfile. Please include this file in bug reports.</para>
-
 	</listitem>
       </varlistentry>
     </variablelist>

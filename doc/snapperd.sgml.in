@@ -2,7 +2,10 @@
 
 <refentry id='snapperd8'>
 
-  <refentryinfo><date>2012-10-15</date></refentryinfo>
+  <refentryinfo>
+    <date>2012-10-15</date>
+  </refentryinfo>
+
   <refmeta>
     <refentrytitle>snapperd</refentrytitle>
     <manvolnum>8</manvolnum>
@@ -10,15 +13,17 @@
     <refmiscinfo class='source'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
+
   <refnamediv>
     <refname>snapperd</refname>
     <refpurpose>DBus daemon for snapper</refpurpose>
   </refnamediv>
 
-  <refsect1 id='syntax'>
-    <title>SYNTAX</title>
-    <para>snapperd</para>
-  </refsect1>
+  <refsynopsisdiv id='synopsis'>
+    <cmdsynopsis>
+      <command>snapperd</command>
+    </cmdsynopsis>
+  </refsynopsisdiv>
 
   <refsect1 id='description'>
     <title>DESCRIPTION</title>
