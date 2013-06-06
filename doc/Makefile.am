@@ -9,7 +9,7 @@ man_MANS += pam_snapper.8
 endif
 
 .xml.8: .xml
-	xsltproc -nonet http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl $<
+	$(XSLTPROC) -nonet http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl $<
 
 TXTS = dbus-protocol.txt
 
