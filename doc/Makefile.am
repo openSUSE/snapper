@@ -8,8 +8,8 @@ if HAVE_PAM
 man_MANS += pam_snapper.8
 endif
 
-.sgml.8: .sgml
-	docbook2man $<
+.xml.8: .xml
+	xsltproc -nonet http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl $<
 
 TXTS = dbus-protocol.txt
 

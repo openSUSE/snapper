@@ -34,11 +34,7 @@ BuildRequires:	libdbus-1-devel
 BuildRequires:	libzypp(plugin:commit)
 %endif
 BuildRequires:	pam-devel
-%if (0%{?suse_version} && 0%{?suse_version} >= 1220)
-BuildRequires:	docbook-utils-minimal
-%else
-BuildRequires:	docbook-utils
-%endif
+BuildRequires:	docbook-xsl-stylesheets libxslt
 Requires:	libsnapper@LIBVERSION_MAJOR@ = %version
 Requires:	diffutils
 %if 0%{?suse_version}
