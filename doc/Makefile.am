@@ -15,3 +15,6 @@ TXTS = dbus-protocol.txt
 
 EXTRA_DIST = $(TXTS)
 
+clean-local:
+	rm -f *.8 manpage.*
+
