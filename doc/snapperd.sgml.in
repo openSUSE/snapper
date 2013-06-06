@@ -1,0 +1,46 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+
+<refentry id='snapperd8'>
+
+  <refentryinfo><date>2012-10-15</date></refentryinfo>
+  <refmeta>
+    <refentrytitle>snapperd</refentrytitle>
+    <manvolnum>8</manvolnum>
+    <refmiscinfo class='date'>2012-10-15</refmiscinfo>
+    <refmiscinfo class='source'>@VERSION@</refmiscinfo>
+    <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
+  </refmeta>
+  <refnamediv>
+    <refname>snapperd</refname>
+    <refpurpose>DBus daemon for snapper</refpurpose>
+  </refnamediv>
+
+  <refsect1 id='syntax'>
+    <title>SYNTAX</title>
+    <para>snapperd</para>
+  </refsect1>
+
+  <refsect1 id='description'>
+    <title>DESCRIPTION</title>
+    <para>Snapperd is a DBus daemon for snapper and not for direct use by the user.</para>
+  </refsect1>
+
+  <refsect1 id='homepage'>
+    <title>HOMEPAGE</title>
+    <para><ulink url='http://en.opensuse.org/Portal:Snapper'>http://en.opensuse.org/Portal:Snapper</ulink></para>
+  </refsect1>
+
+  <refsect1 id='authors'>
+    <title>AUTHORS</title>
+    <para>Arvin Schnell <email>aschnell@suse.de</email></para>
+  </refsect1>
+
+  <refsect1 id='see_also'>
+    <title>SEE ALSO</title>
+    <para>
+      <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>dbus-daemon</refentrytitle><manvolnum>1</manvolnum></citerefentry>
+    </para>
+  </refsect1>
+
+</refentry>

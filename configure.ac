@@ -130,9 +130,9 @@ AC_OUTPUT(
 	pam/Makefile
 	data/Makefile
 	doc/Makefile
-	doc/snapper.8:doc/snapper.8.in
-	doc/snapperd.8:doc/snapperd.8.in
-	doc/pam_snapper.8:doc/pam_snapper.8.in
+	doc/snapper.sgml:doc/snapper.sgml.in
+	doc/snapperd.sgml:doc/snapperd.sgml.in
+	doc/pam_snapper.sgml:doc/pam_snapper.sgml.in
 	po/Makefile
 	testsuite-real/Makefile
 	testsuite-cmp/Makefile

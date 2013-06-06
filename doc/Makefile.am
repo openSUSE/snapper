@@ -8,7 +8,10 @@ if HAVE_PAM
 man_MANS += pam_snapper.8
 endif
 
+.sgml.8: .sgml
+	docbook2man $<
+
 TXTS = dbus-protocol.txt
 
-EXTRA_DIST = $(man_MANS) $(TXTS)
+EXTRA_DIST = $(TXTS)
 

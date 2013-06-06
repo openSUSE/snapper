@@ -1,0 +1,192 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.1//EN">
+
+<refentry id='pam_snapper8'>
+
+  <refentryinfo><date>2013-05-23</date></refentryinfo>
+  <refmeta>
+    <refentrytitle>pam_snapper</refentrytitle>
+    <manvolnum>8</manvolnum>
+    <refmiscinfo class='date'>2013-05-23</refmiscinfo>
+    <refmiscinfo class='source'>@VERSION@</refmiscinfo>
+    <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
+  </refmeta>
+  <refnamediv>
+    <refname>pam_snapper</refname>
+    <refpurpose>PAM module which creates filesystem snapshots via "Snapper"</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv id='synopsis'>
+    <cmdsynopsis>
+      <command>pam_snapper.so</command>    <arg choice='opt'><replaceable>debug</replaceable></arg>
+      <arg choice='opt'><replaceable>homeprefix=&lt;&gt;</replaceable></arg>
+      <arg choice='opt'><replaceable>ignoreservices=&lt;&gt;</replaceable></arg>
+      <arg choice='opt'><replaceable>ignoreusers=&lt;&gt;</replaceable></arg>
+      <arg choice='opt'><replaceable>rootasroot</replaceable></arg>
+      <arg choice='opt'><replaceable>ignoreroot</replaceable></arg>
+      <arg choice='opt'><replaceable>openonly</replaceable></arg>
+      <arg choice='opt'><replaceable>closeonly</replaceable></arg>
+      <arg choice='opt'><replaceable>cleanup=&lt;&gt;</replaceable></arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 id='description'>
+    <title>DESCRIPTION</title>
+
+    <para>Create a snapshot at every login of a User, thus he or she always have a save
+    starting point.</para>
+
+    <para>As many users do not logout for some time, it is a good idea, to
+    enable Snapper's time based snapshots in addition.</para>
+  </refsect1>
+
+  <refsect1 id='options'>
+    <title>OPTIONS</title>
+    <variablelist remap='IP'>
+      <varlistentry>
+	<term>debug</term>
+	<listitem>
+	  <para>Switch on debugging in the module.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>homeprefix=&lt;prefix&gt;</term>
+	<listitem>
+	  <para>Prefix for the name of the snapper configuration. The username will be appended to this prefix.</para>
+
+	  <para>Default: "home_"</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>ignoreservices=&lt;comma separated list of services&gt;</term>
+	<listitem>
+	  <para>Default: "crond"</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>ignoreusers=&lt;comma separated list of users&gt;</term>
+	<listitem>
+	  <para>Default: (none)</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>rootasroot</term>
+	<listitem>
+	  <para>Perform a snapshot using the snapper configuration "root", if the user "root" logs in. In other words: the homeprefix is not used in this case. As the snapper configuration "root" is used for the system (the root filesystem), this means that with every login of the user "root" the complete "/" filesystem will be snapshotted. This can be useful to help administrators rolling back in case their activity / configuration changes have been accidentially wrong.</para>
+
+	  <para>"rootasroot" and "ignoreroot" are mutual exclusive.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>ignoreroot</term>
+	<listitem>
+	  <para>No snapshot is taken, if the user "root" opens/closes a session.</para>
+
+	  <para>"rootasroot" and "ignoreroot" are mutual exclusive.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>openonly</term>
+	<listitem>
+	  <para>Only create a single snapshot when opening the PAM session.</para>
+
+	  <para>Default: create pre- and post-snapshots</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>closeonly</term>
+	<listitem>
+	  <para>Only create a single snapshot when closing the PAM session.</para>
+
+	  <para>Default: create pre- and post-snapshots</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term>cleanup</term>
+	<listitem>
+	  <para>Set snapper cleanup algorithm.</para>
+
+	  <para>Default: (none)</para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='module_types_provided'>
+    <title>MODULE TYPES PROVIDED</title>
+    <para>Only the module type "session" is provided.</para>
+  </refsect1>
+
+  <refsect1 id='return_values'>
+    <title>RETURN VALUES</title>
+    <variablelist remap='IP'>
+      <varlistentry>
+	<term>PAM_SUCCESS</term>
+	<listitem>
+	  <para>pam_snapper will always return PAM_SUCCESS, to not prevent users from login, in case a
+	  snapshot fails. This may change in the future</para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='examples'>
+    <title>EXAMPLES</title>
+
+    <refsect2 id='basic_usage'><title>Basic usage</title>
+    <para>1. Create a btrfs subvolume for the new user, and a snapper configuration, e.g. using the tool "/usr/lib/pam_snapper/pam_snapper_useradd.sh"</para>
+
+    <para>2. Add the following line to /etc/pam.d/common-session:</para>
+
+    <para>"session optional pam_snapper.so"</para>
+    </refsect2>
+  </refsect1>
+
+  <refsect1 id='see_also'>
+    <title>SEE ALSO</title>
+    <para>
+      <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+      pam_snapper_homeconvert,
+      pam_snapper_pamconfig,
+      pam_snapper_useradd,
+      pam_snapper_userdel
+    </para>
+  </refsect1>
+
+  <refsect1 id='authors_and_contributors'>
+    <title>AUTHORS and CONTRIBUTORS</title>
+    <para>pam-snapper was written by Matthias G. Eckermann <email>mge@suse.com</email>
+    as part of SUSE Hackweek#9 in April 2013.</para>
+
+    <para>This module would not have been possible without the work of Arvin
+    Schnell on the snapper project. pam-snapper inherits DBUS handling from
+    "snapper_dbus_cli.c" by David Disseldorp.</para>
+
+    <para>The module builds on the Linux PAM stack and its documentation,
+    written by Thorsten Kukuk.</para>
+  </refsect1>
+
+  <refsect1 id='license'>
+    <title>LICENSE</title>
+    <para>Copyright (c) 2013 SUSE</para>
+
+    <para>All Rights Reserved.</para>
+
+    <para>This program is free software; you can redistribute it and/or modify
+    it under the terms of version 2 of the GNU General Public License as published
+    by the Free Software Foundation.</para>
+
+    <para>This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY without even the implied warranty of MERCHANTABILITY or
+    FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+    details.</para>
+
+    <para>You should have received a copy of the GNU General Public License
+    along with this program; if not, contact SUSE.</para>
+
+    <para>To contact SUSE about this file by physical or electronic mail, you
+    may find current contact information at www.suse.com.</para>
+  </refsect1>
+
+</refentry>
