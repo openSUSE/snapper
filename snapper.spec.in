@@ -27,14 +27,15 @@ Prefix:		/usr
 BuildRequires:	boost-devel doxygen gcc-c++ libtool libxml2-devel pkg-config
 %if ! 0%{?mandriva_version}
 BuildRequires:	dbus-1-devel
+BuildRequires:	libxslt docbook-xsl-stylesheets
 %else
 BuildRequires:	libdbus-1-devel
+BuildRequires:	xsltproc xsltproc docbook-dtd45-xml docbook-xsl
 %endif
 %if (0%{?suse_version} && 0%{?suse_version} >= 1210)
 BuildRequires:	libzypp(plugin:commit)
 %endif
 BuildRequires:	pam-devel
-BuildRequires:	docbook-xsl-stylesheets libxslt
 Requires:	libsnapper@LIBVERSION_MAJOR@ = %version
 Requires:	diffutils
 %if 0%{?suse_version}
