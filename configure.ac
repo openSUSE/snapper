@@ -24,7 +24,7 @@ AM_PROG_LIBTOOL
 
 AC_PREFIX_DEFAULT(/usr)
 
-AC_PATH_PROG([XSLTPROC], [xsltproc])
+AC_PATH_PROG([XSLTPROC], [xsltproc], [/usr/bin/xsltproc])
 
 AC_PATH_PROG([CHSNAPBIN], [chsnap], [/sbin/chsnap])
 AC_PATH_PROG([CPBIN], [cp], [/bin/cp])
