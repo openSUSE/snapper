@@ -30,7 +30,7 @@ BuildRequires:	dbus-1-devel
 BuildRequires:	libxslt docbook-xsl-stylesheets
 %else
 BuildRequires:	libdbus-1-devel
-BuildRequires:	xsltproc xsltproc docbook-dtd45-xml docbook-xsl
+BuildRequires:	xsltproc docbook-dtd45-xml docbook-xsl
 %endif
 %if (0%{?suse_version} && 0%{?suse_version} >= 1210)
 BuildRequires:	libzypp(plugin:commit)
