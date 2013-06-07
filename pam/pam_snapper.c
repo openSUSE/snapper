@@ -73,7 +73,6 @@
 #define PAM_SM_SESSION
 
 #include <security/pam_modules.h>
-#include <security/pam_modutil.h>
 #include <security/pam_ext.h>
 
 /*
