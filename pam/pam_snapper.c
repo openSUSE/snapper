@@ -62,6 +62,7 @@
 #include <syslog.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/mman.h>
 #include <pwd.h>
 
 /*
@@ -358,9 +359,10 @@ static int forker( pam_handle_t * pamh, uid_t uid, gid_t gid, const char *snappe
 		   const struct dict *user_data, const uint32_t * snapshot_num_in,
 		   uint32_t * snapshot_num_out )
 {
-	int fds[2];
-	if ( pipe( fds ) != 0 ) {
-		pam_syslog( pamh, LOG_ERR, "pipe failed" );
+	void *p = mmap( NULL, sizeof( *snapshot_num_out ), PROT_READ | PROT_WRITE,
+			MAP_SHARED | MAP_ANONYMOUS, -1, 0 );
+	if ( p == MAP_FAILED ) {
+		pam_syslog( pamh, LOG_ERR, "mmap failed" );
 		return -1;
 	}
 
@@ -370,58 +372,48 @@ static int forker( pam_handle_t * pamh, uid_t uid, gid_t gid, const char *snappe
 		/* setting uid/gui affects other threads so it has to be done in a separate process */
 
 		if ( setegid( gid ) != 0 || seteuid( uid ) != 0 ) {
+			munmap( p, sizeof( *snapshot_num_out ) );
 			exit( EXIT_FAILURE );
 		}
 
-		close( fds[0] );
-
 		if ( cdbus_create_snapshot( snapper_conf, createmode, cleanup, num_user_data,
-					    user_data, snapshot_num_in, snapshot_num_out ) != 0 )
+					    user_data, snapshot_num_in, snapshot_num_out ) != 0 ) {
+			munmap( p, sizeof( *snapshot_num_out ) );
 			exit( EXIT_FAILURE );
+		}
 
-		if ( pam_modutil_write
-		     ( fds[1], ( char * )snapshot_num_out,
-		       sizeof( *snapshot_num_out ) ) != sizeof( *snapshot_num_out ) )
-			exit( EXIT_FAILURE );
+		memcpy( p, snapshot_num_out, sizeof( *snapshot_num_out ) );
 
-		close( fds[1] );
+		munmap( p, sizeof( *snapshot_num_out ) );
 
 		exit( EXIT_SUCCESS );
 
 	} else if ( child > 0 ) {
-
-		close( fds[1] );
 
 		int status;
 		int ret = waitpid( child, &status, 0 );
 
 		if ( ret == -1 ) {
 			pam_syslog( pamh, LOG_ERR, "waitpid failed" );
-			close( fds[0] );
+			munmap( p, sizeof( *snapshot_num_out ) );
 			return -1;
 		}
 
 		if ( !WIFEXITED( status ) ) {
 			pam_syslog( pamh, LOG_ERR, "child exited abnormal" );
-			close( fds[0] );
+			munmap( p, sizeof( *snapshot_num_out ) );
 			return -1;
 		}
 
 		if ( WEXITSTATUS( status ) != EXIT_SUCCESS ) {
 			pam_syslog( pamh, LOG_ERR, "child exited normal but with failure" );
-			close( fds[0] );
+			munmap( p, sizeof( *snapshot_num_out ) );
 			return -1;
 		}
 
-		if ( pam_modutil_read
-		     ( fds[0], ( char * )snapshot_num_out,
-		       sizeof( *snapshot_num_out ) ) != sizeof( *snapshot_num_out ) ) {
-			pam_syslog( pamh, LOG_ERR, "reading snapshot_num_out failed" );
-			close( fds[0] );
-			return -1;
-		}
+		memcpy( snapshot_num_out, p, sizeof( *snapshot_num_out ) );
 
-		close( fds[0] );
+		munmap( p, sizeof( *snapshot_num_out ) );
 
 		return 0;
 
