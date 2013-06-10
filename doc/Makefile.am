@@ -15,6 +15,11 @@ TXTS = dbus-protocol.txt
 
 EXTRA_DIST = $(TXTS)
 
+html: $(man_MANS:%.8=%.html)
+
+.xml.html: .xml
+	$(XSLTPROC) -nonet http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl $< > $@
+
 clean-local:
 	rm -f *.8 manpage.*
 
