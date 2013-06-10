@@ -21,5 +21,5 @@ html: $(man_MANS:%.8=%.html)
 	$(XSLTPROC) -nonet http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl $< > $@
 
 clean-local:
-	rm -f *.8 manpage.*
+	rm -f *.8 manpage.* *.html
 
