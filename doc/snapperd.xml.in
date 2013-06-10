@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <refentry id='snapperd8'>
 
   <refentryinfo>
@@ -8,7 +9,7 @@
     <refentrytitle>snapperd</refentrytitle>
     <manvolnum>8</manvolnum>
     <refmiscinfo class='date'>2012-10-15</refmiscinfo>
-    <refmiscinfo class='source'>@VERSION@</refmiscinfo>
+    <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
 

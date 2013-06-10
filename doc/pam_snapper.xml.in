@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <refentry id='pam_snapper8'>
 
   <refentryinfo>
@@ -8,13 +9,13 @@
     <refentrytitle>pam_snapper</refentrytitle>
     <manvolnum>8</manvolnum>
     <refmiscinfo class='date'>2013-05-23</refmiscinfo>
-    <refmiscinfo class='source'>@VERSION@</refmiscinfo>
+    <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
 
   <refnamediv>
     <refname>pam_snapper</refname>
-    <refpurpose>PAM module which creates filesystem snapshots via "Snapper"</refpurpose>
+    <refpurpose>PAM module which creates filesystem snapshots via "snapper"</refpurpose>
   </refnamediv>
 
   <refsynopsisdiv id='synopsis'>
@@ -39,67 +40,78 @@
     starting point.</para>
 
     <para>As many users do not logout for some time, it is a good idea, to
-    enable Snapper's time based snapshots in addition.</para>
+    enable snapper's time based snapshots in addition.</para>
   </refsect1>
 
   <refsect1 id='options'>
     <title>OPTIONS</title>
-    <variablelist remap='IP'>
+    <variablelist>
       <varlistentry>
-	<term>debug</term>
+	<term><option>debug</option></term>
 	<listitem>
 	  <para>Switch on debugging in the module.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term>homeprefix=&lt;prefix&gt;</term>
+	<term><option>homeprefix=<replaceable>prefix</replaceable></option></term>
 	<listitem>
-	  <para>Prefix for the name of the snapper configuration. The username will be appended to this prefix.</para>
+	  <para>Prefix for the name of the snapper configuration. The username
+	  will be appended to this prefix.</para>
 	  <para>Default: "home_"</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term>ignoreservices=&lt;comma separated list of services&gt;</term>
+	<term><option>ignoreservices=<replaceable>comma separated list of services</replaceable></option></term>
 	<listitem>
 	  <para>Default: "crond"</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term>ignoreusers=&lt;comma separated list of users&gt;</term>
+	<term><option>ignoreusers=<replaceable>comma separated list of users</replaceable></option></term>
 	<listitem>
 	  <para>Default: (none)</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term>rootasroot</term>
+	<term><option>rootasroot</option></term>
 	<listitem>
-	  <para>Perform a snapshot using the snapper configuration "root", if the user "root" logs in. In other words: the homeprefix is not used in this case. As the snapper configuration "root" is used for the system (the root filesystem), this means that with every login of the user "root" the complete "/" filesystem will be snapshotted. This can be useful to help administrators rolling back in case their activity / configuration changes have been accidentially wrong.</para>
+	  <para>Perform a snapshot using the snapper configuration "root", if
+	  the user "root" logs in. In other words: the homeprefix is not used
+	  in this case. As the snapper configuration "root" is used for the
+	  system (the root filesystem), this means that with every login of
+	  the user "root" the complete "/" filesystem will be
+	  snapshotted. This can be useful to help administrators rolling back
+	  in case their activity / configuration changes have been
+	  accidentally wrong.</para>
 	  <para>"rootasroot" and "ignoreroot" are mutual exclusive.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term>ignoreroot</term>
+	<term><option>ignoreroot</option></term>
 	<listitem>
-	  <para>No snapshot is taken, if the user "root" opens/closes a session.</para>
+	  <para>No snapshot is taken, if the user "root" opens/closes a
+	  session.</para>
 	  <para>"rootasroot" and "ignoreroot" are mutual exclusive.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term>openonly</term>
+	<term><option>openonly</option></term>
 	<listitem>
-	  <para>Only create a single snapshot when opening the PAM session.</para>
+	  <para>Only create a single snapshot when opening the PAM
+	  session.</para>
 	  <para>Default: create pre- and post-snapshots</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term>closeonly</term>
+	<term><option>closeonly</option></term>
 	<listitem>
-	  <para>Only create a single snapshot when closing the PAM session.</para>
+	  <para>Only create a single snapshot when closing the PAM
+	  session.</para>
 	  <para>Default: create pre- and post-snapshots</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term>cleanup</term>
+	<term><option>cleanup=<replaceable>cleanup-algorithm</replaceable></option></term>
 	<listitem>
 	  <para>Set snapper cleanup algorithm.</para>
 	  <para>Default: (none)</para>
@@ -115,12 +127,13 @@
 
   <refsect1 id='return_values'>
     <title>RETURN VALUES</title>
-    <variablelist remap='IP'>
+    <variablelist>
       <varlistentry>
 	<term>PAM_SUCCESS</term>
 	<listitem>
-	  <para>pam_snapper will always return PAM_SUCCESS, to not prevent users from login, in case a
-	  snapshot fails. This may change in the future</para>
+	  <para>pam_snapper will always return PAM_SUCCESS, to not prevent
+	  users from login, in case a snapshot fails. This may change in the
+	  future.</para>
 	</listitem>
       </varlistentry>
     </variablelist>
@@ -129,12 +142,20 @@
   <refsect1 id='examples'>
     <title>EXAMPLES</title>
 
-    <refsect2 id='basic_usage'><title>Basic usage</title>
-    <para>1. Create a btrfs subvolume for the new user, and a snapper configuration, e.g. using the tool "/usr/lib/pam_snapper/pam_snapper_useradd.sh"</para>
+    <refsect2 id='basic_usage'>
+      <title>Basic usage</title>
 
-    <para>2. Add the following line to /etc/pam.d/common-session:</para>
-
-    <para>"session optional pam_snapper.so"</para>
+      <orderedlist>
+	<listitem>
+	  <para>Create a btrfs subvolume for the new user, and a snapper
+	  configuration, e.g. using the tool
+	  <command>/usr/lib/pam_snapper/pam_snapper_useradd.sh</command>.</para>
+	</listitem>
+	<listitem>
+	  <para>Add the following line to <filename>/etc/pam.d/common-session</filename>:</para>
+	  <para>"session optional pam_snapper.so"</para>
+	</listitem>
+      </orderedlist>
     </refsect2>
   </refsect1>
 
@@ -151,8 +172,8 @@
     </para>
   </refsect1>
 
-  <refsect1 id='authors_and_contributors'>
-    <title>AUTHORS and CONTRIBUTORS</title>
+  <refsect1 id='authors'>
+    <title>AUTHORS</title>
     <para>pam-snapper was written by Matthias G. Eckermann <email>mge@suse.com</email>
     as part of SUSE Hackweek#9 in April 2013.</para>
 
