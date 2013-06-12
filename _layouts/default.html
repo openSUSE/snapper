@@ -1,0 +1,67 @@
+---
+navigation:
+- text: Home
+  url: /index.html
+- text: Documentation
+  url: /documentation.html
+- text: Videos
+  url: /videos.html
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Snapper, The ultimate Snapshot Tool for Linux</title>
+
+    <!-- Le styles -->
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+{% if page.social %}{% include social.html %}{% endif %}
+{% if page.piwik %}{% include piwik.html %}{% endif %}
+
+  </head>
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <div class="nav-collapse">
+            <ul class="nav">
+	      {% for link in page.navigation %}
+	      <li {% if page.url == link.url %}class="active"{% endif %}>
+		<a href="{{ link.url }}">{{link.text}}</a></li>
+	      {% endfor %}
+	      <li><a href="http://en.opensuse.org/openSUSE:Snapper_Tutorial">Tutorial</a></li>
+	      <li><a href="http://en.opensuse.org/openSUSE:Snapper_FAQ">FAQ</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      {{ content }}
+
+      <hr>
+
+      <footer>
+	<p>&copy; 2013 <a href="http://www.suse.com/">SUSE</a></p>
+      </footer>
+
+    </div>
+
+  </body>
+</html>
