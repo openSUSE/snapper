@@ -36,16 +36,14 @@ navigation:
 
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container">
-          <div class="nav-collapse">
-            <ul class="nav">
-	      {% for link in page.navigation %}
-	      <li {% if link.urls contains page.url %}class="active"{% endif %}>
-		<a href="{{ link.urls[0] }}">{{ link.text }}</a></li>
-	      {% endfor %}
-            </ul>
-          </div>
-        </div>
+	<div class="container">
+	  <ul class="nav">
+	    {% for link in page.navigation %}
+	    <li {% if link.urls contains page.url %}class="active"{% endif %}>
+	      <a href="{{ link.urls[0] }}">{{ link.text }}</a></li>
+	    {% endfor %}
+	  </ul>
+	</div>
       </div>
     </div>
 
