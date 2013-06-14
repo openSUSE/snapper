@@ -172,6 +172,11 @@
     </para>
   </refsect1>
 
+  <refsect1 id='homepage'>
+    <title>HOMEPAGE</title>
+    <para><ulink url='http://snapper.io/'>http://snapper.io/</ulink></para>
+  </refsect1>
+
   <refsect1 id='authors'>
     <title>AUTHORS</title>
     <para>pam-snapper was written by Matthias G. Eckermann <email>mge@suse.com</email>
