@@ -1,11 +1,11 @@
 ---
 navigation:
 - text: Home
-  urls: [ /, /index.html ]
+  url: /index.html
 - text: Documentation
-  urls: [ /documentation.html ]
+  url: /documentation.html
 - text: Videos
-  urls: [ /videos.html ]
+  url: /videos.html
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -39,8 +39,8 @@ navigation:
 	<div class="container">
 	  <ul class="nav">
 	    {% for link in page.navigation %}
-	    <li {% if link.urls contains page.url %}class="active"{% endif %}>
-	      <a href="{{ link.urls[0] }}">{{ link.text }}</a></li>
+	    <li {% if link.url == page.url %}class="active"{% endif %}>
+	      <a href="{{ link.url | remove: 'index.html' }}">{{ link.text }}</a></li>
 	    {% endfor %}
 	  </ul>
 	</div>
