@@ -1,0 +1,113 @@
+---
+layout: default
+piwik: true
+---
+<div>
+
+  <h2>FAQ</h2>
+
+  <ol>
+
+    <li>
+      <h3>How do I enable snapshots for my /home file system?</h3>
+
+      <p>You will have to create a snapper config for /home by calling:</p>
+
+      <pre><code>snapper -c home create-config /home</code></pre>
+    </li>
+
+    <li>
+      <h3>Why does snapper never show changes in /var/log?</h3>
+
+      <p>For some directories openSUSE decided to disable snapshotting,
+      e.g. &quot;/var/log&quot; since reverting logs makes searching for
+      problems difficult. To exclude a path from snapshotting openSUSE creates
+      a subvolume for that path. You can see all subvolumes of &quot;/&quot;
+      by calling &quot;btrfs subvolume list /&quot;.</p>
+    </li>
+
+    <li>
+      <h3>Does snapper support ext4?</h3>
+
+      <p>Yes, but only experimental and you need a special kernel and
+      e2fsprogs. For more information see the next4 project.</p>
+    </li>
+
+    <li>
+      <h3>Does snapper support LVM?</h3>
+
+      <p>Since version 0.0.12 snapper can handle LVM snapshots with
+      thin-provisioning.</p>
+    </li>
+
+    <li>
+      <h3>My system has high I/O load after running YaST or zypper. What can I
+      do?</h3>
+
+      <p>When running YaST or zypper snapper creates two snapshots and
+      compares them. This comparison can cause high I/O load.</p>
+
+      <p>Since snapper version 0.0.10 you can disable the background
+      comparisons in the config file /etc/snapper/configs/root by setting:</p>
+
+      <pre><code>BACKGROUND_COMPARISON=&quot;no&quot;</code></pre>
+
+      <p>Now you might also want to disable cleanup of empty pre-post snapshot
+      pairs since otherwise the daily cleanup can cause high I/O.</p>
+
+      <pre><code>EMPTY_PRE_POST_CLEANUP=&quot;no&quot;</code></pre>
+    </li>
+
+    <li>
+      <h3>I'm not using openSUSE. Can I still use snapper?</h3>
+
+      <p>We provide snapper packages for various distributions in the openSUSE
+      buildservice,
+      see <a href='https://build.opensuse.org/project/show?project=filesystems:snapper'>project</a>
+      and <a href='http://download.opensuse.org/repositories/filesystems:/snapper/'>download</a>. Of
+      course you can also compile snapper from source,
+      see <a href='/development.html'>development</a>.</p>
+    </li>
+
+    <li>
+      <h3>I didn't install my system with YaST. How do I get started?</h3>
+
+      <p>After you have installed snapper packages you will have to create a
+      config for your root filesystem by calling:</p>
+
+      <pre><code>snapper create-config /</code></pre>
+
+      <p>Then continue with the <a href='/tutorial.html'>tutorial</a>.</p>
+    </li>
+
+    <li>
+      <h3>How do I add pre and post hooks (like YaST)?</h3>
+
+      <p>You will have to insert two calls to snapper in your program or
+      script. In the first call use the option --print-number, remember the
+      value and pass it on to the second call. Have a look at /sbin/yast2 to
+      see how this can be done in bash or at
+      /usr/lib/zypp/plugins/commit/snapper.py for python.</p>
+
+      <p>Since snapper version 0.0.9 you can also provide a command to snapper
+      and snapper will create pre and post snapshots running the command in
+      between, e.g.:</p>
+
+      <pre><code>snapper create --command &quot;make install&quot; --description &quot;install mplayer&quot;</code></pre>
+    </li>
+
+    <li>
+      <h3>Does snapper really revert everything?</h3>
+
+      <p>Snapper will revert all files (text and binary) including
+      permissions, ownership and extended attributes, also remove and recreate
+      files and directories. File timestamps are not reverted. Some files are
+      excluded, e.g. /etc/mtab.</p>
+
+      <p>It's recommended to always use the status command to see in
+      advance what files snapper will process.</p>
+    </li>
+
+  </ol>
+
+</div>

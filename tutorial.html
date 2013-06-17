@@ -1,0 +1,115 @@
+---
+layout: default
+piwik: true
+---
+<div>
+
+  <h2>Tutorial</h2>
+
+  <p>We assume you have installed openSUSE 12.1 using YaST and selected btrfs
+  for your root and home file system.</p>
+
+  <p>First let us check how YaST has configured snapper:</p>
+
+  <pre><code># snapper list-configs
+Config | Subvolume
+-------+----------
+root   | /</code></pre>
+
+  <p>As you can see YaST has created a snapper config called &quot;root&quot;
+  for your root file system. You can see what snapshots exist:</p>
+
+  <pre><code># snapper list
+Type   | # | Pre # | Date                         | Cleanup  | Description |  Userdata
+-------+---+-------+------------------------------+----------+-------------+---------
+single | 0 |       |                              |          | current     |
+single | 1 |       | Tue 22 Nov 2011 10:30:02 CET | timeline | timeline    |</code></pre>
+
+  <p>Snapshot #0 always refers to the current system. There might already be
+  several other snapshots depending on the uptime of your system and on
+  whether you already used YaST or zypper.</p>
+
+  <p>Now we want to try snapper as a undo tool for YaST. First we run YaST:</p>
+
+  <pre><code># yast2 system_settings</code></pre>
+
+  <p>Within YaST enable the SysReq. After you have finished YaST you see two
+  new snapshots:</p>
+
+  <pre><code># snapper list
+Type   | # | Pre # | Date                         | Cleanup  | Description          | Userdata
+-------+---+-------+------------------------------+----------+----------------------+---------
+single | 0 |       |                              |          | current              |
+single | 1 |       | Tue 22 Nov 2011 10:30:02 CET | timeline | timeline             |
+pre    | 2 |       | Tue 22 Nov 2011 10:41:28 CET | number   | yast system_settings |
+post   | 3 | 2     | Tue 22 Nov 2011 10:41:49 CET | number   |                      |</code></pre>
+
+  <p>It's time to explain the type of snapshots. Snapper creates a snapshot
+  before and after YaST runs, these snapshots are called pre and post
+  respectively. The post snapshots knows which pre snapshots belongs to it. By
+  having a pre and post snapshot we can see what changes happened to the file
+  system while YaST was running. Single snapshots have no special relationship
+  to other snapshots.</p>
+
+  <p>Using snapper it is easy to see what has changed while YaST was
+  running. To do so you have to pass the number of the pre and post
+  snapshot:</p>
+
+  <pre><code># snapper status 2..3
+c... /etc/sysctl.conf</code></pre>
+
+  <p>The 'c' means that the content of the file has changed.</p>
+
+  <p>We can also see the diff of the file:</p>
+
+  <pre><code># snapper diff 2..3
+--- /.snapshots/2/snapshot/etc/sysctl.conf      2011-11-22 10:35:43.355493753 +0100
++++ /.snapshots/3/snapshot/etc/sysctl.conf      2011-11-22 10:41:47.019512185 +0100
+@@ -17,7 +17,7 @@
+ # See sysctl.conf(5) and sysctl(8) for more information
+ #
+ ####
+-kernel.sysrq = 0
++kernel.sysrq = 1
+ net.ipv4.ip_forward = 0
+ net.ipv4.tcp_syncookies = 1
+ net.ipv6.conf.all.forwarding = 0</code></pre>
+
+  <p>So, if you don't like the change done by YaST and want to revert it
+  call:</p>
+
+  <pre><code># snapper undochange 2..3
+create:0 modify:1 delete:0
+undoing change...
+undoing change done</code></pre>
+
+  <p>But note that snapper does not tell the kernel about the change like YaST
+  did so you must either do so yourself or reboot.</p>
+
+  <p>During installation YaST does not setup a snapper config for /home. We
+  can do so manually:</p>
+
+  <pre><code># snapper -c home create-config /home</code></pre>
+
+  <p>Whenever you want to use snapper for /home you must provide the option -c
+  home.</p>
+
+  <p>Now you can see what files have changed since the last hourly snapshot:</p>
+
+  <pre><code># snapper -c home list
+Type   | # | Pre # | Date                         | Cleanup  | Description | Userdata
+-------+---+-------+------------------------------+----------+-------------+---------
+single | 0 |       |                              |          | current     |
+single | 1 |       | Tue 22 Nov 2011 11:30:01 CET | timeline | timeline    |
+
+# snapper -c home status 1..0
+comparing snapshots... done
++... /home/tux/just-married.jpg</code></pre>
+
+  <p>The '+' sign means that the file is new.</p>
+
+  <p>If you manually want to create a snapshot use:</p>
+
+  <pre><code># snapper -c home create --description &quot;before the big cleanup&quot;</code></pre>
+
+</div>
