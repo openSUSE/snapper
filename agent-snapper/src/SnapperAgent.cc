@@ -190,7 +190,7 @@ YCPValue SnapperAgent::Read(const YCPPath &path, const YCPValue& arg, const YCPV
 		list<ConfigInfo> configs = Snapper::getConfigs();
 		for (list<ConfigInfo>::const_iterator it = configs.begin(); it != configs.end(); ++it)
 		{
-		    retlist->add (YCPString (it->config_name));
+		    retlist->add (YCPString (it->getConfigName()));
 		}
 	    }
 	    catch (const ListConfigsFailedException& e)
