@@ -26,12 +26,14 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 
 namespace snapper
 {
     using std::string;
     using std::vector;
+    using std::map;
 
 
     class AsciiFileReader
