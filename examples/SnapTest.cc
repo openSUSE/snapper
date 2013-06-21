@@ -41,10 +41,10 @@ main(int argc, char** argv)
     list<ConfigInfo> c = Snapper::getConfigs();
     cout << c.size() << endl;
     for (list<ConfigInfo>::const_iterator it = c.begin(); it != c.end(); ++it)
-	cout << it->config_name << " " << it->subvolume << endl;
+	cout << it->getConfigName() << " " << it->getSubvolume() << endl;
 
     if( c.begin()!=c.end() )
-	sh = new Snapper(c.front().config_name);
+	sh = new Snapper(c.front().getConfigName());
 
     if( sh )
 	{

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2012] Novell, Inc.
+ * Copyright (c) [2011-2013] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -45,6 +45,13 @@
 namespace snapper
 {
     using namespace std;
+
+
+    ConfigInfo::ConfigInfo(const string& config_name)
+	: SysconfigFile(CONFIGSDIR "/" + config_name), config_name(config_name), subvolume("/")
+    {
+	getValue("SUBVOLUME", subvolume);
+    }
 
 
     Snapper::Snapper(const string& config_name, bool disable_filters)
@@ -185,14 +192,7 @@ namespace snapper
     ConfigInfo
     Snapper::getConfig(const string& config_name)
     {
-	SysconfigFile config(CONFIGSDIR "/" + config_name);
-
-	string subvolume = "/";
-	config.getValue("SUBVOLUME", subvolume);
-
-	map<string, string> raw = config.getAllValues();
-
-	return ConfigInfo(config_name, subvolume, raw);
+	return ConfigInfo(config_name);
     }
 
 
@@ -253,7 +253,7 @@ namespace snapper
 	list<ConfigInfo> configs = getConfigs();
 	for (list<ConfigInfo>::const_iterator it = configs.begin(); it != configs.end(); ++it)
 	{
-	    if (it->subvolume == subvolume)
+	    if (it->getSubvolume() == subvolume)
 	    {
 		throw CreateConfigFailedException("subvolume already covered");
 	    }

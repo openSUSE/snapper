@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Novell, Inc.
+ * Copyright (c) [2012-2013] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -89,7 +89,7 @@ public:
     MetaSnapper(const ConfigInfo& config_info);
     ~MetaSnapper();
 
-    const string& configName() const { return config_info.config_name; }
+    const string& configName() const { return config_info.getConfigName(); }
 
     const ConfigInfo config_info;
 

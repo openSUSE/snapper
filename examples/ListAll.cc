@@ -15,7 +15,7 @@ main(int argc, char** argv)
     list<Snapper*> sh;
 
     for (list<ConfigInfo>::const_iterator it = c.begin(); it != c.end(); ++it)
-	sh.push_back(new Snapper(it->config_name));
+	sh.push_back(new Snapper(it->getConfigName()));
 
     for (list<Snapper*>::const_iterator it = sh.begin(); it != sh.end(); ++it)
 	cout << (*it)->configName() << " " << (*it)->subvolumeDir() << " "

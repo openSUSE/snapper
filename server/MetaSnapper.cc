@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Novell, Inc.
+ * Copyright (c) [2012-2013] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -161,39 +161,25 @@ get_group_uids(const char* groupname, vector<uid_t>& uids)
 MetaSnapper::MetaSnapper(const ConfigInfo& config_info)
     : config_info(config_info), snapper(NULL)
 {
-    map<string, string>::const_iterator pos1 = config_info.raw.find("ALLOW_USERS");
-    if (pos1 != config_info.raw.end())
+    vector<string> users;
+    if (config_info.getValue("ALLOW_USERS", users))
     {
-	string tmp = pos1->second;
-	boost::trim(tmp, locale::classic());
-	if (!tmp.empty())
+	for (vector<string>::const_iterator it = users.begin(); it != users.end(); ++it)
 	{
-	    vector<string> users;
-	    boost::split(users, tmp, boost::is_any_of(" \t"), boost::token_compress_on);
-	    for (vector<string>::const_iterator it = users.begin(); it != users.end(); ++it)
-	    {
-		uid_t tmp;
-		if (get_user_uid(it->c_str(), tmp))
-		    uids.push_back(tmp);
-	    }
+	    uid_t tmp;
+	    if (get_user_uid(it->c_str(), tmp))
+		uids.push_back(tmp);
 	}
     }
 
-    map<string, string>::const_iterator pos2 = config_info.raw.find("ALLOW_GROUPS");
-    if (pos2 != config_info.raw.end())
+    vector<string> groups;
+    if (config_info.getValue("ALLOW_GROUPS", groups))
     {
-	string tmp = pos2->second;
-	boost::trim(tmp, locale::classic());
-	if (!tmp.empty())
+	for (vector<string>::const_iterator it = groups.begin(); it != groups.end(); ++it)
 	{
-	    vector<string> groups;
-	    boost::split(groups, tmp, boost::is_any_of(" \t"), boost::token_compress_on);
-	    for (vector<string>::const_iterator it = groups.begin(); it != groups.end(); ++it)
-	    {
-		vector<uid_t> tmp;
-		if (get_group_uids(it->c_str(), tmp))
-		    uids.insert(uids.end(), tmp.begin(), tmp.end());
-	    }
+	    vector<uid_t> tmp;
+	    if (get_group_uids(it->c_str(), tmp))
+		uids.insert(uids.end(), tmp.begin(), tmp.end());
 	}
     }
 
@@ -212,7 +198,7 @@ Snapper*
 MetaSnapper::getSnapper()
 {
     if (!snapper)
-	snapper = new Snapper(config_info.config_name);
+	snapper = new Snapper(config_info.getConfigName());
 
     update_use_time();
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2012] Novell, Inc.
+ * Copyright (c) [2011-2013] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -28,6 +28,7 @@
 #include <boost/noncopyable.hpp>
 
 #include "snapper/Snapshot.h"
+#include "snapper/AsciiFile.h"
 
 
 namespace snapper
@@ -35,21 +36,23 @@ namespace snapper
     using std::vector;
 
 
-    class SysconfigFile;
     class Filesystem;
     class SDir;
 
 
-    struct ConfigInfo
+    struct ConfigInfo : public SysconfigFile
     {
-	ConfigInfo(const string& config_name, const string& subvolume,
-		   const map<string, string>& raw)
-	    : config_name(config_name), subvolume(subvolume), raw(raw) {}
+	explicit ConfigInfo(const string& config_name);
 
-	string config_name;
+	const string& getConfigName() const { return config_name; }
+	const string& getSubvolume() const { return subvolume; }
+
+    private:
+
+	const string config_name;
+
 	string subvolume;
 
-	map<string, string> raw;
     };
 
 

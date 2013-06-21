@@ -63,5 +63,6 @@ pkginclude_HEADERS =					\
 	Snapshot.h					\
 	File.h						\
 	Comparison.h					\
+	AsciiFile.h					\
 	Exception.h					\
 	Logger.h

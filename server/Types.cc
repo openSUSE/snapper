@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Novell, Inc.
+ * Copyright (c) [2012-2013] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -34,7 +34,7 @@ namespace DBus
     operator<<(Hoho& hoho, const ConfigInfo& data)
     {
 	hoho.open_struct();
-	hoho << data.config_name << data.subvolume << data.raw;
+	hoho << data.getConfigName() << data.getSubvolume() << data.getAllValues();
 	hoho.close_struct();
 	return hoho;
     }
