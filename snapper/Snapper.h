@@ -104,10 +104,8 @@ namespace snapper
 
 	string subvolumeDir() const;
 
-#ifndef SWIG
 	SDir openSubvolumeDir() const;
 	SDir openInfosDir() const;
-#endif
 
 	Snapshots& getSnapshots() { return snapshots; }
 	const Snapshots& getSnapshots() const { return snapshots; }

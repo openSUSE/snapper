@@ -112,10 +112,8 @@ namespace snapper
 
 	string snapshotDir() const;
 
-#ifndef SWIG
 	SDir openInfoDir() const;
 	SDir openSnapshotDir() const;
-#endif
 
 	void mountFilesystemSnapshot(bool user_request) const;
 	void umountFilesystemSnapshot(bool user_request) const;
