@@ -1,0 +1,12 @@
+
+S1="hello"
+
+B1="yes"
+B2="no"
+
+V1="one\ word"
+V2="two words"
+V3=" now  three  words "
+V4="c:\\io.sys"
+V5="error\"
+

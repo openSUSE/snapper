@@ -213,7 +213,14 @@ AsciiFile::save()
     void
     SysconfigFile::setValue(const string& key, const vector<string>& values)
     {
-	setValue(key, boost::join(values, " "));
+	string tmp;
+	for (vector<string>::const_iterator it = values.begin(); it != values.end(); ++it)
+	{
+	    if (it != values.begin())
+		tmp.append(" ");
+	    tmp.append(boost::replace_all_copy(*it, " ", "\\ "));
+	}
+	setValue(key, tmp);
     }
 
 
@@ -224,12 +231,33 @@ AsciiFile::save()
 	if (!getValue(key, tmp))
 	    return false;
 
-	boost::trim(tmp, locale::classic());
+	values.clear();
 
-	if (!tmp.empty())
-	    boost::split(values, tmp, boost::is_any_of(" \t"), boost::token_compress_on);
-	else
-	    values.clear();
+	string buffer;
+
+	for (string::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
+	{
+	    switch (*it)
+	    {
+		case ' ':
+		    if (!buffer.empty())
+			values.push_back(buffer);
+		    buffer.clear();
+		    continue;
+
+		case '\\':
+		    if (++it == tmp.end())
+			return false;
+		    if (*it != '\\' && *it != ' ')
+			return false;
+		    break;
+	    }
+
+	    buffer.push_back(*it);
+	}
+
+	if (!buffer.empty())
+	    values.push_back(buffer);
 
 	return true;
     }

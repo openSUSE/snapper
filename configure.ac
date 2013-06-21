@@ -136,6 +136,7 @@ AC_OUTPUT(
 	doc/snapperd.xml:doc/snapperd.xml.in
 	doc/pam_snapper.xml:doc/pam_snapper.xml.in
 	po/Makefile
+	testsuite/Makefile
 	testsuite-real/Makefile
 	testsuite-cmp/Makefile
 	package/snapper.spec:snapper.spec.in

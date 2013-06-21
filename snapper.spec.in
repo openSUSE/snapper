@@ -82,6 +82,9 @@ install -D -m 644 data/sysconfig.snapper $RPM_BUILD_ROOT/etc/sysconfig/snapper
 
 %{find_lang} snapper
 
+%check
+make check
+
 %clean
 rm -rf "$RPM_BUILD_ROOT"
 

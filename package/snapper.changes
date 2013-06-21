@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Jun 21 15:50:22 CEST 2013 - aschnell@suse.de
+
+- allow whitespace in ALLOW_USERS and ALLOW_GROUPS
+
+-------------------------------------------------------------------
 Fri May 31 17:35:33 CEST 2013 - aschnell@suse.de
 
 - fixed xattrs reading for certain block/character devices
