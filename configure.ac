@@ -123,7 +123,8 @@ AC_OUTPUT(
 	Makefile
 	snapper/Makefile
 	examples/Makefile
-	examples/C/Makefile
+	examples/c/Makefile
+	examples/c++-lib/Makefile
 	dbus/Makefile
 	server/Makefile
 	client/Makefile

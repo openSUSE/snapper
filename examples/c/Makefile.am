@@ -1,5 +1,5 @@
 #
-# Makefile.am for snapper/examples/C
+# Makefile.am for snapper/examples/c
 #
 
 INCLUDES = -I$(top_srcdir) $(DBUS_CFLAGS)
