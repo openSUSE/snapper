@@ -1,5 +1,7 @@
 
-#include <string>
+#include <stdlib.h>
+
+#include <iostream>
 
 
 #define CONFIG "testsuite"

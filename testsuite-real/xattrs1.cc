@@ -1,7 +1,4 @@
 
-#include <stdlib.h>
-#include <iostream>
-
 #include "common.h"
 #include "xattrs_utils.h"
 

@@ -1,9 +1,4 @@
 
-#include <stdlib.h>
-#include <glob.h>
-#include <iostream>
-#include <fstream>
-
 #include "config.h"
 #include "common.h"
 
