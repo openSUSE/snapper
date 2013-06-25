@@ -18,5 +18,8 @@ function run()
 }
 
 
+run dirname1
+run basename1
+
 run sysconfig-get1
 

@@ -1,6 +1,4 @@
 
-#include <stdlib.h>
-#include <iostream>
 #include <boost/algorithm/string.hpp>
 
 #include "common.h"

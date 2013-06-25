@@ -1,2 +1,4 @@
 *.o
+dirname1
+basename1
 sysconfig-get1
