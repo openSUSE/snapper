@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Jun 25 09:09:20 CEST 2013 - aschnell@suse.de
+
+- also call initgroups in pam_snapper (bnc#815383)
+
+-------------------------------------------------------------------
 Fri Jun 21 15:50:22 CEST 2013 - aschnell@suse.de
 
 - allow whitespace in ALLOW_USERS and ALLOW_GROUPS

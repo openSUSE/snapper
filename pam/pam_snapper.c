@@ -64,6 +64,7 @@
 #include <sys/wait.h>
 #include <sys/mman.h>
 #include <pwd.h>
+#include <grp.h>
 
 /*
  * PAM Preamble
@@ -353,10 +354,10 @@ static int cdbus_create_snapshot( const char *snapper_conf, createmode_t createm
  * Special functions for pam_snapper
  */
 
-static int forker( pam_handle_t * pamh, uid_t uid, gid_t gid, const char *snapper_conf,
-		   createmode_t createmode, const char *cleanup, uint32_t num_user_data,
-		   const struct dict *user_data, const uint32_t * snapshot_num_in,
-		   uint32_t * snapshot_num_out )
+static int forker( pam_handle_t * pamh, const char *pam_user, uid_t uid, gid_t gid,
+		   const char *snapper_conf, createmode_t createmode, const char *cleanup,
+		   uint32_t num_user_data, const struct dict *user_data,
+		   const uint32_t * snapshot_num_in, uint32_t * snapshot_num_out )
 {
 	void *p = mmap( NULL, sizeof( *snapshot_num_out ), PROT_READ | PROT_WRITE,
 			MAP_SHARED | MAP_ANONYMOUS, -1, 0 );
@@ -370,7 +371,7 @@ static int forker( pam_handle_t * pamh, uid_t uid, gid_t gid, const char *snappe
 
 		/* setting uid/gui affects other threads so it has to be done in a separate process */
 
-		if ( setegid( gid ) != 0 || seteuid( uid ) != 0 ) {
+		if ( setgid( gid ) != 0 || initgroups( pam_user, gid ) != 0 || setuid( uid ) != 0 ) {
 			munmap( p, sizeof( *snapshot_num_out ) );
 			exit( EXIT_FAILURE );
 		}
@@ -497,8 +498,8 @@ static int worker( pam_handle_t * pamh, const char *pam_user, const char *snappe
 		}
 	}
 
-	if ( forker( pamh, uid, gid, snapper_conf, createmode, cleanup, num_user_data, user_data,
-		     snapshot_num_in, snapshot_num_out ) != 0 )
+	if ( forker( pamh, pam_user, uid, gid, snapper_conf, createmode, cleanup, num_user_data,
+		     user_data, snapshot_num_in, snapshot_num_out ) != 0 )
 		return -1;
 
 	if ( pam_set_data
