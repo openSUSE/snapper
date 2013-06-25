@@ -63,6 +63,13 @@ command_list_snapshots()
     // qDebug() << reply;
     // qDebug() << (reply.type() == QDBusMessage::ReplyMessage);
 
+    if (reply.type() == QDBusMessage::ErrorMessage)
+    {
+	fprintf(stderr, "error: %s, %s\n", qPrintable(reply.errorMessage()),
+		qPrintable(reply.errorName()));
+	return;
+    }
+
     QList<QVariant> args = reply.arguments();
     // qDebug() << args.size();
 
