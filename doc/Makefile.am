@@ -9,16 +9,14 @@ man_MANS += pam_snapper.8
 endif
 
 .xml.8: .xml
-	$(XSLTPROC) --nonet http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl $<
-
-TXTS = dbus-protocol.txt
-
-EXTRA_DIST = $(TXTS)
+	$(XSLTPROC) --nonet manpages.xsl $<
 
 html: $(man_MANS:%.8=%.html)
 
 .xml.html: .xml
-	$(XSLTPROC) --nonet http://docbook.sourceforge.net/release/xsl/current/html/docbook.xsl $< > $@
+	$(XSLTPROC) --nonet html.xsl $< > $@
+
+EXTRA_DIST = dbus-protocol.txt manpages.xsl html.xsl
 
 clean-local:
 	rm -f *.8 *.html
