@@ -16,7 +16,7 @@ Config | Subvolume
 -------+----------
 root   | /</code></pre>
 
-  <p>As you can see YaST has created a snapper config called &quot;root&quot;
+  <p>As you can see, YaST has created a snapper config called &quot;root&quot;
   for your root file system. You can see what snapshots exist:</p>
 
   <pre><code># snapper list
@@ -47,12 +47,12 @@ post   | 3 | 2     | Tue 22 Nov 2011 10:41:49 CET | number   |                  
   <p>It's time to explain the type of snapshots. Snapper creates a snapshot
   before and after YaST runs, these snapshots are called pre and post
   respectively. The post snapshots knows which pre snapshots belongs to it. By
-  having a pre and post snapshot we can see what changes happened to the file
+  having a pre and post snapshot, we can see what changes happened to the file
   system while YaST was running. Single snapshots have no special relationship
   to other snapshots.</p>
 
-  <p>Using snapper it is easy to see what has changed while YaST was
-  running. To do so you have to pass the number of the pre and post
+  <p>By using snapper, it is easy to see what has changed while YaST was
+  running. To do so, you have to pass the number of the pre and post
   snapshot:</p>
 
   <pre><code># snapper status 2..3
@@ -75,7 +75,7 @@ c... /etc/sysctl.conf</code></pre>
  net.ipv4.tcp_syncookies = 1
  net.ipv6.conf.all.forwarding = 0</code></pre>
 
-  <p>So, if you don't like the change done by YaST and want to revert it
+  <p>So, if you don't like the change done by YaST and want to revert it,
   call:</p>
 
   <pre><code># snapper undochange 2..3
@@ -84,7 +84,7 @@ undoing change...
 undoing change done</code></pre>
 
   <p>But note that snapper does not tell the kernel about the change like YaST
-  did so you must either do so yourself or reboot.</p>
+  does, so you must either do so yourself or reboot.</p>
 
   <p>During installation YaST does not setup a snapper config for /home. We
   can do so manually:</p>

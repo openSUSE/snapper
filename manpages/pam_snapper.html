@@ -24,9 +24,9 @@
       <div class="refsect1">
         <a id="description"></a>
         <h2>DESCRIPTION</h2>
-        <p>Create a snapshot at every login of a User, thus he or she always have a save
+        <p>Create a snapshot at every login of a user, thus he or she always has a save
     starting point.</p>
-        <p>As many users do not logout for some time, it is a good idea, to
+        <p>As many users do not logout for some time, it is a good idea to
     enable snapper's time based snapshots in addition.</p>
       </div>
       <div class="refsect1">
@@ -74,7 +74,7 @@
               </span>
             </dt>
             <dd>
-              <p>Perform a snapshot using the snapper configuration "root", if
+              <p>Perform a snapshot using the snapper configuration "root" if
 	  the user "root" logs in. In other words: the homeprefix is not used
 	  in this case. As the snapper configuration "root" is used for the
 	  system (the root filesystem), this means that with every login of
@@ -82,7 +82,7 @@
 	  snapshotted. This can be useful to help administrators rolling back
 	  in case their activity / configuration changes have been
 	  accidentally wrong.</p>
-              <p>"rootasroot" and "ignoreroot" are mutual exclusive.</p>
+              <p>"rootasroot" and "ignoreroot" are mutually exclusive.</p>
             </dd>
             <dt>
               <span class="term">
@@ -92,7 +92,7 @@
             <dd>
               <p>No snapshot is taken, if the user "root" opens/closes a
 	  session.</p>
-              <p>"rootasroot" and "ignoreroot" are mutual exclusive.</p>
+              <p>"rootasroot" and "ignoreroot" are mutually exclusive.</p>
             </dd>
             <dt>
               <span class="term">
@@ -156,7 +156,7 @@
           <div class="orderedlist">
             <ol class="orderedlist" type="1">
               <li class="listitem">
-                <p>Create a btrfs subvolume for the new user, and a snapper
+                <p>Create a btrfs subvolume for the new user and a snapper
 	  configuration, e.g. using the tool
 	  <span class="command"><strong>/usr/lib/pam_snapper/pam_snapper_useradd.sh</strong></span>.</p>
               </li>

@@ -19,9 +19,9 @@ piwik: true
     <li>
       <h3>Why does snapper never show changes in /var/log?</h3>
 
-      <p>For some directories openSUSE decided to disable snapshotting,
+      <p>For some directories, openSUSE decided to disable snapshotting,
       e.g. &quot;/var/log&quot; since reverting logs makes searching for
-      problems difficult. To exclude a path from snapshotting openSUSE creates
+      problems difficult. To exclude a path from snapshotting, openSUSE creates
       a subvolume for that path. You can see all subvolumes of &quot;/&quot;
       by calling &quot;btrfs subvolume list /&quot;.</p>
     </li>
@@ -29,7 +29,7 @@ piwik: true
     <li>
       <h3>Does snapper support ext4?</h3>
 
-      <p>Yes, but only experimental and you need a special kernel and
+      <p>Yes, but only experimentally and you need a special kernel and
       e2fsprogs. For more information see the next4 project.</p>
     </li>
 
@@ -46,7 +46,7 @@ piwik: true
       <h3>My system has high I/O load after running YaST or zypper. What can I
       do?</h3>
 
-      <p>When running YaST or zypper snapper creates two snapshots and
+      <p>When running YaST or zypper, snapper creates two snapshots and
       compares them. This comparison can cause high I/O load.</p>
 
       <p>Since snapper version 0.0.10 you can disable the background
@@ -102,7 +102,7 @@ piwik: true
       <h3>Does snapper really revert everything?</h3>
 
       <p>Snapper will revert all files (text and binary) including
-      permissions, ownership and extended attributes, also remove and recreate
+      permissions, ownership and extended attributes and also remove and recreate
       files and directories. File timestamps are not reverted. Some files are
       excluded, e.g. /etc/mtab.</p>
 
