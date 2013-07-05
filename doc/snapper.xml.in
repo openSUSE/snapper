@@ -49,7 +49,7 @@
 
     <refsect2 id='configurations'>
       <title>Configurations</title>
-      <para>For each filesystem or subvolume that should be snapshotted by snapper a
+      <para>For each filesystem or subvolume that should be snapshotted by snapper, a
       configuration file is required. The complete setup can be done with the
       create-config command.</para>
     </refsect2>
@@ -107,7 +107,7 @@
     <refsect2 id='cleanup_algorithms'>
       <title>Cleanup Algorithms</title>
 
-      <para>Snapper provides several algorithms to cleanup old snapshots. The
+      <para>Snapper provides several algorithms to clean up old snapshots. The
       algorithms are executed in a daily cron-job. This can be configured in the
       corresponding configurations files along with parameters for every
       algorithm.</para>
@@ -178,7 +178,7 @@
   <refsect1 id='commands'>
     <title>COMMANDS</title>
 
-    <para>snapper provides a number of <emphasis>commands</emphasis>. Each
+    <para>Snapper provides a number of <emphasis>commands</emphasis>. Each
     command accepts the options listed in the <link
     linkend='global_options'>GLOBAL OPTIONS</link> section. These options must
     be specified <emphasis>before</emphasis> the command name. In addition,
@@ -441,7 +441,7 @@
   <refsect1 id='permissions'>
     <title>PERMISSIONS</title>
     <para>Non-root users can be allowed to use a configuration by setting
-    ALLOW_USERS or ALLOW_GROUPS in the config file. For all operations to work the
+    ALLOW_USERS or ALLOW_GROUPS in the config file. For all operations to work, the
     user must also be able to read and access the <filename>.snapshots</filename>
     directory inside the subvolume. The <filename>.snapshots</filename> directory
     must be owned by root and must not be writable by anybody else.</para>

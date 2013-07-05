@@ -36,10 +36,10 @@
   <refsect1 id='description'>
     <title>DESCRIPTION</title>
 
-    <para>Create a snapshot at every login of a User, thus he or she always have a save
+    <para>Create a snapshot at every login of a user, thus he or she always has a save
     starting point.</para>
 
-    <para>As many users do not logout for some time, it is a good idea, to
+    <para>As many users do not logout for some time, it is a good idea to
     enable snapper's time based snapshots in addition.</para>
   </refsect1>
 
@@ -75,7 +75,7 @@
       <varlistentry>
 	<term><option>rootasroot</option></term>
 	<listitem>
-	  <para>Perform a snapshot using the snapper configuration "root", if
+	  <para>Perform a snapshot using the snapper configuration "root" if
 	  the user "root" logs in. In other words: the homeprefix is not used
 	  in this case. As the snapper configuration "root" is used for the
 	  system (the root filesystem), this means that with every login of
@@ -83,7 +83,7 @@
 	  snapshotted. This can be useful to help administrators rolling back
 	  in case their activity / configuration changes have been
 	  accidentally wrong.</para>
-	  <para>"rootasroot" and "ignoreroot" are mutual exclusive.</para>
+	  <para>"rootasroot" and "ignoreroot" are mutually exclusive.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
@@ -91,7 +91,7 @@
 	<listitem>
 	  <para>No snapshot is taken, if the user "root" opens/closes a
 	  session.</para>
-	  <para>"rootasroot" and "ignoreroot" are mutual exclusive.</para>
+	  <para>"rootasroot" and "ignoreroot" are mutually exclusive.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
@@ -147,7 +147,7 @@
 
       <orderedlist>
 	<listitem>
-	  <para>Create a btrfs subvolume for the new user, and a snapper
+	  <para>Create a btrfs subvolume for the new user and a snapper
 	  configuration, e.g. using the tool
 	  <command>/usr/lib/pam_snapper/pam_snapper_useradd.sh</command>.</para>
 	</listitem>
