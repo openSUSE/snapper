@@ -79,7 +79,7 @@
         <div class="refsect2">
           <a id="automatic_snapshot_creation"></a>
           <h3>Automatic Snapshot Creation</h3>
-          <p>Next to manual snapshot creation snapshots are also created automatically.</p>
+          <p>Next to manual snapshot creation, snapshots are also created automatically.</p>
           <div class="itemizedlist">
             <ul class="itemizedlist" style="list-style-type: disc; ">
               <li class="listitem">
@@ -212,7 +212,7 @@
                   </dt>
                   <dd>
                     <p>Manually set filesystem type. Supported values are btrfs, ext4 and lvm. For
-		lvm snapper uses LVM thin-provisioned snapshots. The filesystem type on top of
+		lvm, snapper uses LVM thin-provisioned snapshots. The filesystem type on top of
 		LVM must be provided in parentheses, e.g. lvm(xfs).</p>
                     <p>Without this option snapper tries to detect the filesystem.</p>
                   </dd>
@@ -296,7 +296,7 @@
                     <span class="term"><code class="option">-c, --cleanup-algorithm</code> <em class="replaceable"><code>cleanup-algorithm</code></em></span>
                   </dt>
                   <dd>
-                    <p>Set the cleanup-algorithm for the snapshot.</p>
+                    <p>Set the cleanup algorithm for the snapshot.</p>
                   </dd>
                   <dt>
                     <span class="term"><code class="option">-u, --userdata</code> <em class="replaceable"><code>userdata</code></em></span>
@@ -334,7 +334,7 @@
                     <span class="term"><code class="option">-c, --cleanup-algorithm</code> <em class="replaceable"><code>cleanup-algorithm</code></em></span>
                   </dt>
                   <dd>
-                    <p>Set the cleanup-algorithm for the snapshot.</p>
+                    <p>Set the cleanup algorithm for the snapshot.</p>
                   </dd>
                   <dt>
                     <span class="term"><code class="option">-u, --userdata</code> <em class="replaceable"><code>userdata</code></em></span>
@@ -518,10 +518,10 @@
         <a id="notes"></a>
         <h2>NOTES</h2>
         <p>There is no mechanism to ensure consistency of the files while a
-    snapshot it made. E.g. the files of a database can be inconsistence while
+    snapshot it made. E.g. the files of a database can be inconsistent while
     the database is running.</p>
         <p>Consistency after undochange is not guaranteed. E.g. when the
-    creation of a user is undone there might still exist files from that
+    creation of a user is undone, there might still exist files from that
     user.</p>
         <p>Support for extended attributes is a compile-time option.</p>
       </div>

@@ -49,7 +49,7 @@ piwik: true
       <p>When running YaST or zypper, snapper creates two snapshots and
       compares them. This comparison can cause high I/O load.</p>
 
-      <p>Since snapper version 0.0.10 you can disable the background
+      <p>Since snapper version 0.0.10, you can disable the background
       comparisons in the config file /etc/snapper/configs/root by setting:</p>
 
       <pre><code>BACKGROUND_COMPARISON=&quot;no&quot;</code></pre>
@@ -74,7 +74,7 @@ piwik: true
     <li>
       <h3>I didn't install my system with YaST. How do I get started?</h3>
 
-      <p>After you have installed snapper packages you will have to create a
+      <p>After you have installed snapper packages, you will have to create a
       config for your root filesystem by calling:</p>
 
       <pre><code>snapper create-config /</code></pre>
@@ -91,9 +91,9 @@ piwik: true
       see how this can be done in bash or at
       /usr/lib/zypp/plugins/commit/snapper.py for python.</p>
 
-      <p>Since snapper version 0.0.9 you can also provide a command to snapper
-      and snapper will create pre and post snapshots running the command in
-      between, e.g.:</p>
+      <p>Since snapper version 0.0.9, you can also provide a command to
+      snapper and snapper will create pre and post snapshots running the
+      command in between, e.g.:</p>
 
       <pre><code>snapper create --command &quot;make install&quot; --description &quot;install mplayer&quot;</code></pre>
     </li>
