@@ -92,7 +92,7 @@
 
     <refsect2 id='automatic_snapshot_creation'>
       <title>Automatic Snapshot Creation</title>
-      <para>Next to manual snapshot creation snapshots are also created automatically.</para>
+      <para>Next to manual snapshot creation, snapshots are also created automatically.</para>
       <itemizedlist>
 	<listitem>
 	  <para>A cron-job creates hourly snapshots.</para>
@@ -216,7 +216,7 @@
 	      <term><option>-f, --fstype</option> <replaceable>fstype</replaceable></term>
 	      <listitem>
 		<para>Manually set filesystem type. Supported values are btrfs, ext4 and lvm. For
-		lvm snapper uses LVM thin-provisioned snapshots. The filesystem type on top of
+		lvm, snapper uses LVM thin-provisioned snapshots. The filesystem type on top of
 		LVM must be provided in parentheses, e.g. lvm(xfs).</para>
 		<para>Without this option snapper tries to detect the filesystem.</para>
 	      </listitem>
@@ -291,7 +291,7 @@
 	    <varlistentry>
 	      <term><option>-c, --cleanup-algorithm</option> <replaceable>cleanup-algorithm</replaceable></term>
 	      <listitem>
-		<para>Set the cleanup-algorithm for the snapshot.</para>
+		<para>Set the cleanup algorithm for the snapshot.</para>
 	      </listitem>
 	    </varlistentry>
 	    <varlistentry>
@@ -326,7 +326,7 @@
 	    <varlistentry>
 	      <term><option>-c, --cleanup-algorithm</option> <replaceable>cleanup-algorithm</replaceable></term>
 	      <listitem>
-		<para>Set the cleanup-algorithm for the snapshot.</para>
+		<para>Set the cleanup algorithm for the snapshot.</para>
 	      </listitem>
 	    </varlistentry>
 	    <varlistentry>
@@ -486,11 +486,11 @@
   <refsect1 id='notes'>
     <title>NOTES</title>
     <para>There is no mechanism to ensure consistency of the files while a
-    snapshot it made. E.g. the files of a database can be inconsistence while
+    snapshot it made. E.g. the files of a database can be inconsistent while
     the database is running.</para>
 
     <para>Consistency after undochange is not guaranteed. E.g. when the
-    creation of a user is undone there might still exist files from that
+    creation of a user is undone, there might still exist files from that
     user.</para>
 
     <para>Support for extended attributes is a compile-time option.</para>
