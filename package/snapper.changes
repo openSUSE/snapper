@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Jul 08 16:18:10 CEST 2013 - aschnell@suse.de
+
+- document filters and use fnmatch with FNM_LEADING_DIR
+
+-------------------------------------------------------------------
 Tue Jun 25 09:09:20 CEST 2013 - aschnell@suse.de
 
 - also call initgroups in pam_snapper (bnc#815383)

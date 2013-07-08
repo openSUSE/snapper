@@ -121,7 +121,8 @@ namespace snapper
 
 		string line;
 		while (asciifile.getline(line))
-		    ignore_patterns.push_back(line);
+		    if (!line.empty())
+			ignore_patterns.push_back(line);
 	    }
 	    catch (const FileNotFoundException& e)
 	    {

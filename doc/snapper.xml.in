@@ -135,6 +135,25 @@
       </glosslist>
     </refsect2>
 
+    <refsect2 id='filters'>
+      <title>Filters</title>
+
+      <para>Some files keep state information of the system,
+      e.g. <filename>/etc/mtab</filename>. Such files should never be
+      reverted. To help users, snapper allows to ignore these files.</para>
+
+      <para>Each line in all
+      files <filename>/etc/snapper/filters/*.txt</filename> specifies a
+      pattern. When snapper computes the difference between two snapshots it
+      ignores all files and directories matching any of those patterns by
+      using
+      <citerefentry><refentrytitle>fnmatch</refentrytitle><manvolnum>3</manvolnum></citerefentry>
+      with the flag FNM_LEADING_DIR.</para>
+
+      <para>Note that filters do not exclude files or directories from being
+      snapshotted. For that, use subvolumes or mount points.</para>
+    </refsect2>
+
   </refsect1>
 
   <refsect1 id='global_options'>
@@ -469,9 +488,9 @@
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><filename>/etc/snapper/filters</filename></term>
+	<term><filename>/etc/snapper/filters/*.txt</filename></term>
 	<listitem>
-	  <para>Directory containing filter files.</para>
+	  <para>Filter files.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>

@@ -79,7 +79,7 @@ namespace snapper
 	bool operator()(const File& file)
 	    {
 		for (vector<string>::const_iterator it = patterns.begin(); it != patterns.end(); ++it)
-		    if (fnmatch(it->c_str(), file.getName().c_str(), 0) == 0)
+		    if (fnmatch(it->c_str(), file.getName().c_str(), FNM_LEADING_DIR) == 0)
 			return true;
 		return false;
 	    }
