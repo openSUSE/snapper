@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>snapper-configs</title>
+    <meta name="generator" content="DocBook XSL Stylesheets V1.78.0" />
+  </head>
+  <body>
+    <div class="refentry">
+      <a id="snapper-configs5"></a>
+      <div class="titlepage"></div>
+      <div class="refnamediv">
+        <h2>Name</h2>
+        <p>snapper-configs — Configuration files for snapper configs</p>
+      </div>
+      <div class="refsect1">
+        <a id="description"></a>
+        <h2>DESCRIPTION</h2>
+        <p>Each file <code class="filename">/etc/snapper/configs/*</code> describes a
+    snapper config.</p>
+      </div>
+      <div class="refsect1">
+        <a id="variables"></a>
+        <h2>VARIABLES</h2>
+        <p>The following is a list of variables that can be present in the
+    configuration file. Boolean values must be "yes" or
+    "no".</p>
+        <div class="variablelist">
+          <dl class="variablelist">
+            <dt>
+              <span class="term">
+                <code class="option">SUBVOLUME=<em class="replaceable"><code>path</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Path of the subvolume or mount point.</p>
+              <p>There is no default value. The value must always be
+	  specified.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">FSTYPE=<em class="replaceable"><code>value</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Filesystem type for the subvolume.</p>
+              <p>Default value is "btrfs" but it's recommended to
+	  always specify the filesystem type.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">ALLOW_USERS=<em class="replaceable"><code>users</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>List of users allowed to operate with the config. The user-names
+	  must be separated by spaces. Spaces in usernames can be escaped with a
+	  "\".</p>
+              <p>Default value is "" but "root" is always
+	  implicitly included.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">ALLOW_GROUPS=<em class="replaceable"><code>groups</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>List of groups allowed to operate with the config. The group-names
+	  must be separated by spaces. Spaces in group-names can be escaped with a
+	  "\".</p>
+              <p>Default value is "".</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">BACKGROUND_COMPARISON=<em class="replaceable"><code>boolean</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Defines whether pre and post snapshots should be compared in
+	  the background after creation.</p>
+              <p>Default value is "no".</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">NUMBER_CLEANUP=<em class="replaceable"><code>boolean</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Defines whether the number cleanup algorithm should be run for
+	  the config.</p>
+              <p>Default value is "no".</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">NUMBER_MIN_AGE=<em class="replaceable"><code>seconds</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Minimal age for snapshots to be deleted by the number cleanup
+	  algorithm.</p>
+              <p>Default value is "1800".</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">NUMBER_LIMIT=<em class="replaceable"><code>number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Defines how many snapshots the number cleanup algorithm should
+	  keep. The youngest snapshots will be kept.</p>
+              <p>Default value is "100".</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">TIMELINE_CREATE=<em class="replaceable"><code>boolean</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Defines whether hourly snapshots should be created.</p>
+              <p>Together with the timeline cleanup algorithm this will create
+	  a collection of snapshots with more snapshots is the near past and
+	  less snapshots in the far past.</p>
+              <p>Default value is "no".</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">TIMELINE_CLEANUP=<em class="replaceable"><code>boolean</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Defines whether the timeline cleanup algorithm should be run for
+	  the config.</p>
+              <p>Default value is "no".</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">TIMELINE_MIN_AGE=<em class="replaceable"><code>seconds</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Minimal age for snapshots to be deleted by the timeline
+	  cleanup algorithm.</p>
+              <p>Default value is "1800".</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">TIMELINE_LIMIT_HOURLY=<em class="replaceable"><code>number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Defines how many hourly snapshots the timeline cleanup
+	  algorithm should keep. An hourly snapshots is the first snapshot in an
+	  hour. The youngest hourly snapshots will be kept.</p>
+              <p>Default value is "10".</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">TIMELINE_LIMIT_DAILY=<em class="replaceable"><code>number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Defines how many daily snapshots the timeline cleanup
+	  algorithm should keep. A daily snapshots is the first snapshot in a day. The
+	  youngest daily snapshots will be kept.</p>
+              <p>Default value is "10".</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">TIMELINE_LIMIT_MONTHLY=<em class="replaceable"><code>number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Defines how many daily snapshots the timeline cleanup
+	  algorithm should keep. A daily snapshots is the first snapshot in a day. The
+	  youngest daily snapshots will be kept.</p>
+              <p>Default value is "10".</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">TIMELINE_LIMIT_YEARLY=<em class="replaceable"><code>number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Defines how many daily snapshots the timeline cleanup
+	  algorithm should keep. A daily snapshots is the first snapshot in a day. The
+	  youngest daily snapshots will be kept.</p>
+              <p>Default value is "10".</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">EMPTY_PRE_POST_CLEANUP=<em class="replaceable"><code>boolean</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Defines whether the empty-pre-post cleanup algorithm should be
+	  run for the config.</p>
+              <p>Default value is "no".</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">EMPTY_PRE_POST_MIN_AGE=<em class="replaceable"><code>seconds</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Minimal age for snapshots to be deleted by the empty-pre-post
+	  cleanup algorithm.</p>
+              <p>Default value is "1800".</p>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="refsect1">
+        <a id="homepage"></a>
+        <h2>HOMEPAGE</h2>
+        <p>
+          <a class="ulink" href="http://snapper.io/" target="_top">http://snapper.io/</a>
+        </p>
+      </div>
+      <div class="refsect1">
+        <a id="authors"></a>
+        <h2>AUTHORS</h2>
+        <p>Arvin Schnell <code class="email">&lt;<a class="email" href="mailto:aschnell@suse.de">aschnell@suse.de</a>&gt;</code></p>
+      </div>
+      <div class="refsect1">
+        <a id="see_also"></a>
+        <h2>SEE ALSO</h2>
+        <p>
+      <span class="citerefentry"><span class="refentrytitle">snapper</span>(8)</span>,
+      <span class="citerefentry"><span class="refentrytitle">snapperd</span>(8)</span>
+    </p>
+      </div>
+    </div>
+  </body>
+</html>

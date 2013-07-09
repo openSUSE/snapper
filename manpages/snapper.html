@@ -41,9 +41,10 @@
         <div class="refsect2">
           <a id="configurations"></a>
           <h3>Configurations</h3>
-          <p>For each filesystem or subvolume that should be snapshotted by snapper, a
-      configuration file is required. The complete setup can be done with the
-      create-config command.</p>
+          <p>For each filesystem or subvolume that should be snapshotted by
+      snapper, a configuration file is required, see
+      <span class="citerefentry"><span class="refentrytitle">snapper-configs</span>(5)</span>. The
+      setup can be done with the create-config command.</p>
         </div>
         <div class="refsect2">
           <a id="snapshots"></a>
@@ -116,6 +117,22 @@
               </dd>
             </dl>
           </div>
+        </div>
+        <div class="refsect2">
+          <a id="filters"></a>
+          <h3>Filters</h3>
+          <p>Some files keep state information of the system,
+      e.g. <code class="filename">/etc/mtab</code>. Such files should never be
+      reverted. To help users, snapper allows to ignore these files.</p>
+          <p>Each line in all
+      files <code class="filename">/etc/snapper/filters/*.txt</code> specifies a
+      pattern. When snapper computes the difference between two snapshots it
+      ignores all files and directories matching any of those patterns by
+      using
+      <span class="citerefentry"><span class="refentrytitle">fnmatch</span>(3)</span>
+      with the flag FNM_LEADING_DIR.</p>
+          <p>Note that filters do not exclude files or directories from being
+      snapshotted. For that, use subvolumes or mount points.</p>
         </div>
       </div>
       <div class="refsect1">
@@ -497,11 +514,11 @@
             </dd>
             <dt>
               <span class="term">
-                <code class="filename">/etc/snapper/filters</code>
+                <code class="filename">/etc/snapper/filters/*.txt</code>
               </span>
             </dt>
             <dd>
-              <p>Directory containing filter files.</p>
+              <p>Filter files.</p>
             </dd>
             <dt>
               <span class="term">
@@ -541,6 +558,7 @@
         <a id="see_also"></a>
         <h2>SEE ALSO</h2>
         <p>
+      <span class="citerefentry"><span class="refentrytitle">snapper-configs</span>(5)</span>,
       <span class="citerefentry"><span class="refentrytitle">btrfs</span>(8)</span>,
       <span class="citerefentry"><span class="refentrytitle">lvm</span>(8)</span>,
       <span class="citerefentry"><span class="refentrytitle">attr</span>(5)</span>
