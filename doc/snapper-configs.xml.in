@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<refentry id='snapper-configs5'>
+
+  <refentryinfo>
+    <date>2013-07-09</date>
+  </refentryinfo>
+
+  <refmeta>
+    <refentrytitle>snapper-configs</refentrytitle>
+    <manvolnum>5</manvolnum>
+    <refmiscinfo class='date'>2013-07-09</refmiscinfo>
+    <refmiscinfo class='version'>@VERSION@</refmiscinfo>
+    <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
+  </refmeta>
+
+  <refnamediv>
+    <refname>snapper-configs</refname>
+    <refpurpose>Configuration files for snapper configs</refpurpose>
+  </refnamediv>
+
+  <refsect1 id='description'>
+    <title>DESCRIPTION</title>
+    <para>Each file <filename>/etc/snapper/configs/*</filename> describes a
+    snapper config.</para>
+  </refsect1>
+
+  <refsect1 id='variables'>
+    <title>VARIABLES</title>
+
+    <para>The following is a list of variables that can be present in the
+    configuration file. Boolean values must be &quot;yes&quot; or
+    &quot;no&quot;.</para>
+
+    <variablelist>
+      <varlistentry>
+
+	<term><option>SUBVOLUME=<replaceable>path</replaceable></option></term>
+	<listitem>
+	  <para>Path of the subvolume or mount point.</para>
+	  <para>There is no default value. The value must always be
+	  specified.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>FSTYPE=<replaceable>value</replaceable></option></term>
+	<listitem>
+	  <para>Filesystem type for the subvolume.</para>
+	  <para>Default value is &quot;btrfs&quot; but it's recommended to
+	  always specify the filesystem type.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>ALLOW_USERS=<replaceable>users</replaceable></option></term>
+	<listitem>
+	  <para>List of users allowed to operate with the config. The user-names
+	  must be separated by spaces. Spaces in usernames can be escaped with a
+	  &quot;\&quot;.</para>
+	  <para>Default value is &quot;&quot; but &quot;root&quot; is always
+	  implicitly included.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>ALLOW_GROUPS=<replaceable>groups</replaceable></option></term>
+	<listitem>
+	  <para>List of groups allowed to operate with the config. The group-names
+	  must be separated by spaces. Spaces in group-names can be escaped with a
+	  &quot;\&quot;.</para>
+	  <para>Default value is &quot;&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>BACKGROUND_COMPARISON=<replaceable>boolean</replaceable></option></term>
+	<listitem>
+	  <para>Defines whether pre and post snapshots should be compared in
+	  the background after creation.</para>
+	  <para>Default value is &quot;no&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>NUMBER_CLEANUP=<replaceable>boolean</replaceable></option></term>
+	<listitem>
+	  <para>Defines whether the number cleanup algorithm should be run for
+	  the config.</para>
+	  <para>Default value is &quot;no&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>NUMBER_MIN_AGE=<replaceable>seconds</replaceable></option></term>
+	<listitem>
+	  <para>Minimal age for snapshots to be deleted by the number cleanup
+	  algorithm.</para>
+	  <para>Default value is &quot;1800&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>NUMBER_LIMIT=<replaceable>number</replaceable></option></term>
+	<listitem>
+	  <para>Defines how many snapshots the number cleanup algorithm should
+	  keep. The youngest snapshots will be kept.</para>
+	  <para>Default value is &quot;100&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>TIMELINE_CREATE=<replaceable>boolean</replaceable></option></term>
+	<listitem>
+	  <para>Defines whether hourly snapshots should be created.</para>
+	  <para>Together with the timeline cleanup algorithm this will create
+	  a collection of snapshots with more snapshots is the near past and
+	  less snapshots in the far past.</para>
+	  <para>Default value is &quot;no&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>TIMELINE_CLEANUP=<replaceable>boolean</replaceable></option></term>
+	<listitem>
+	  <para>Defines whether the timeline cleanup algorithm should be run for
+	  the config.</para>
+	  <para>Default value is &quot;no&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>TIMELINE_MIN_AGE=<replaceable>seconds</replaceable></option></term>
+	<listitem>
+	  <para>Minimal age for snapshots to be deleted by the timeline
+	  cleanup algorithm.</para>
+	  <para>Default value is &quot;1800&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>TIMELINE_LIMIT_HOURLY=<replaceable>number</replaceable></option></term>
+	<listitem>
+	  <para>Defines how many hourly snapshots the timeline cleanup
+	  algorithm should keep. An hourly snapshots is the first snapshot in an
+	  hour. The youngest hourly snapshots will be kept.</para>
+	  <para>Default value is &quot;10&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>TIMELINE_LIMIT_DAILY=<replaceable>number</replaceable></option></term>
+	<listitem>
+	  <para>Defines how many daily snapshots the timeline cleanup
+	  algorithm should keep. A daily snapshots is the first snapshot in a day. The
+	  youngest daily snapshots will be kept.</para>
+	  <para>Default value is &quot;10&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>TIMELINE_LIMIT_MONTHLY=<replaceable>number</replaceable></option></term>
+	<listitem>
+	  <para>Defines how many daily snapshots the timeline cleanup
+	  algorithm should keep. A daily snapshots is the first snapshot in a day. The
+	  youngest daily snapshots will be kept.</para>
+	  <para>Default value is &quot;10&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>TIMELINE_LIMIT_YEARLY=<replaceable>number</replaceable></option></term>
+	<listitem>
+	  <para>Defines how many daily snapshots the timeline cleanup
+	  algorithm should keep. A daily snapshots is the first snapshot in a day. The
+	  youngest daily snapshots will be kept.</para>
+	  <para>Default value is &quot;10&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>EMPTY_PRE_POST_CLEANUP=<replaceable>boolean</replaceable></option></term>
+	<listitem>
+	  <para>Defines whether the empty-pre-post cleanup algorithm should be
+	  run for the config.</para>
+	  <para>Default value is &quot;no&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>EMPTY_PRE_POST_MIN_AGE=<replaceable>seconds</replaceable></option></term>
+	<listitem>
+	  <para>Minimal age for snapshots to be deleted by the empty-pre-post
+	  cleanup algorithm.</para>
+	  <para>Default value is &quot;1800&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='homepage'>
+    <title>HOMEPAGE</title>
+    <para><ulink url='http://snapper.io/'>http://snapper.io/</ulink></para>
+  </refsect1>
+
+  <refsect1 id='authors'>
+    <title>AUTHORS</title>
+    <para>Arvin Schnell <email>aschnell@suse.de</email></para>
+  </refsect1>
+
+  <refsect1 id='see_also'>
+    <title>SEE ALSO</title>
+    <para>
+      <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>snapperd</refentrytitle><manvolnum>8</manvolnum></citerefentry>
+    </para>
+  </refsect1>
+
+</refentry>

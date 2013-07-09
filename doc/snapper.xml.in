@@ -49,9 +49,10 @@
 
     <refsect2 id='configurations'>
       <title>Configurations</title>
-      <para>For each filesystem or subvolume that should be snapshotted by snapper, a
-      configuration file is required. The complete setup can be done with the
-      create-config command.</para>
+      <para>For each filesystem or subvolume that should be snapshotted by
+      snapper, a configuration file is required, see
+      <citerefentry><refentrytitle>snapper-configs</refentrytitle><manvolnum>5</manvolnum></citerefentry>. The
+      setup can be done with the create-config command.</para>
     </refsect2>
 
     <refsect2 id='snapshots'>
@@ -528,6 +529,7 @@
   <refsect1 id='see_also'>
     <title>SEE ALSO</title>
     <para>
+      <citerefentry><refentrytitle>snapper-configs</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
       <citerefentry><refentrytitle>btrfs</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
       <citerefentry><refentrytitle>lvm</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
       <citerefentry><refentrytitle>attr</refentrytitle><manvolnum>5</manvolnum></citerefentry>
