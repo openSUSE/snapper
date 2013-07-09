@@ -255,24 +255,31 @@ do_cleanup_timeline(DBus::Connection& conn, const string& config_name)
     list<XSnapshots::const_iterator>::iterator it = tmp.begin();
     while (it != tmp.end())
     {
+	bool keep = false;
+
 	if (num_hourly < limit_hourly && is_first_hourly(it, tmp.end(), *it))
 	{
 	    ++num_hourly;
-	    it = tmp.erase(it);
+	    keep = true;
 	}
-	else if (num_daily < limit_daily && is_first_daily(it, tmp.end(), *it))
+	if (num_daily < limit_daily && is_first_daily(it, tmp.end(), *it))
 	{
 	    ++num_daily;
-	    it = tmp.erase(it);
+	    keep = true;
 	}
-	else if (num_monthly < limit_monthly && is_first_monthly(it, tmp.end(), *it))
+	if (num_monthly < limit_monthly && is_first_monthly(it, tmp.end(), *it))
 	{
 	    ++num_monthly;
-	    it = tmp.erase(it);
+	    keep = true;
 	}
-	else if (num_yearly < limit_yearly && is_first_yearly(it, tmp.end(), *it))
+	if (num_yearly < limit_yearly && is_first_yearly(it, tmp.end(), *it))
 	{
 	    ++num_yearly;
+	    keep = true;
+	}
+
+	if (keep)
+	{
 	    it = tmp.erase(it);
 	}
 	else

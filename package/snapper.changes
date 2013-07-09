@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Jul 09 14:00:16 CEST 2013 - aschnell@suse.de
+
+- optimize timeline cleanup algorithm for only sporadic running
+  systems
+
+-------------------------------------------------------------------
 Mon Jul 08 16:18:10 CEST 2013 - aschnell@suse.de
 
 - document filters and use fnmatch with FNM_LEADING_DIR
