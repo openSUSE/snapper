@@ -149,11 +149,15 @@
 	<listitem>
 	  <para>Create a btrfs subvolume for the new user and a snapper
 	  configuration, e.g. using the tool
-	  <command>/usr/lib/pam_snapper/pam_snapper_useradd.sh</command>.</para>
+	  <filename>/usr/lib/pam_snapper/pam_snapper_useradd.sh</filename>.</para>
 	</listitem>
 	<listitem>
-	  <para>Add the following line to <filename>/etc/pam.d/common-session</filename>:</para>
-	  <para>"session optional pam_snapper.so"</para>
+	  <para>Add the following line to
+	  <filename>/etc/pam.d/common-session</filename>:
+	  <programlisting>
+session    optional    pam_snapper.so
+	  </programlisting>
+	  </para>
 	</listitem>
       </orderedlist>
     </refsect2>
