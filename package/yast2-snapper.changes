@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Jul 12 11:05:16 CEST 2013 - aschnell@suse.de
+
+- adapted to libsnapper change
+- 2.24.1
+
+-------------------------------------------------------------------
 Wed Apr 24 14:11:46 CEST 2013 - jsuchome@suse.cz
 
 - disable Show Changes when there's no snapshot (bnc#815177)
