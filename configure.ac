@@ -115,6 +115,8 @@ PKG_CHECK_MODULES(DBUS, dbus-1)
 
 AC_SUBST(VERSION)
 AC_SUBST(LIBVERSION_MAJOR)
+AC_SUBST(LIBVERSION_MINOR)
+AC_SUBST(LIBVERSION_PATCHLEVEL)
 AC_SUBST(LIBVERSION_INFO)
 AC_SUBST(docdir)
 AC_SUBST(fillupdir)
@@ -122,6 +124,7 @@ AC_SUBST(fillupdir)
 AC_OUTPUT(
 	Makefile
 	snapper/Makefile
+	snapper/Version.h:snapper/Version.h.in
 	examples/Makefile
 	examples/c/Makefile
 	examples/c++-lib/Makefile

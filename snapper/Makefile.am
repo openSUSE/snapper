@@ -33,6 +33,7 @@ libsnapper_la_SOURCES =					\
 	SnapperTmpl.h					\
 	SnapperTypes.h					\
 	SnapperDefines.h				\
+	Version.h					\
 	$(TMP_XA)
 
 
@@ -58,6 +59,7 @@ libsnapper_la_LIBADD = -lboost_thread-mt -lboost_system-mt -lxml2 -lz -lm
 pkgincludedir = $(includedir)/snapper
 
 pkginclude_HEADERS =					\
+	Version.h					\
 	Factory.h					\
 	Snapper.h					\
 	Snapshot.h					\
