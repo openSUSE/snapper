@@ -20,13 +20,14 @@
  */
 
 
+#include "config.h"
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <string.h>
 #include <errno.h>
 
-#include "config.h"
 #include "snapper/Comparison.h"
 #include "snapper/Snapper.h"
 #include "snapper/Log.h"
@@ -259,7 +260,7 @@ namespace snapper
 	return files.getUndoStatistic();
     }
 
-#ifdef ENABLE_XATTRS
+
     XAUndoStatistic
     Comparison::getXAUndoStatistic() const
     {
@@ -268,7 +269,6 @@ namespace snapper
 
         return files.getXAUndoStatistic();
     }
-#endif
 
 
     vector<UndoStep>

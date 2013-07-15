@@ -8,10 +8,6 @@ INCLUDES = -I/usr/include/libxml2
 
 lib_LTLIBRARIES = libsnapper.la
 
-if HAVE_XATTRS
-TMP_XA = XAttributes.cc	XAttributes.h
-endif
-
 libsnapper_la_SOURCES =					\
 	Factory.cc		Factory.h		\
 	Snapper.cc		Snapper.h		\
@@ -23,6 +19,7 @@ libsnapper_la_SOURCES =					\
 	Enum.cc			Enum.h			\
 	AppUtil.cc		AppUtil.h		\
 	FileUtils.cc		FileUtils.h		\
+	XAttributes.cc		XAttributes.h		\
 	Log.cc			Log.h			\
 	Logger.cc		Logger.h		\
 	Compare.cc		Compare.h		\

@@ -23,7 +23,7 @@
 #ifndef SNAPPER_FILE_H
 #define SNAPPER_FILE_H
 
-#include "config.h"
+
 #include <sys/stat.h>
 
 #include <string>
@@ -71,7 +71,7 @@ namespace snapper
 	friend std::ostream& operator<<(std::ostream& s, const UndoStatistic& rs);
     };
 
-#ifdef ENABLE_XATTRS
+
     struct XAUndoStatistic
     {
         XAUndoStatistic(): numCreate(0), numReplace(0), numDelete(0) {}
@@ -82,7 +82,6 @@ namespace snapper
 
         friend XAUndoStatistic& operator+=(XAUndoStatistic&, const XAUndoStatistic&);
     };
-#endif
 
 
     struct UndoStep
@@ -109,10 +108,8 @@ namespace snapper
 
 	File(const FilePaths* file_paths, const string& name, unsigned int pre_to_post_status)
 	    : file_paths(file_paths), name(name), pre_to_post_status(pre_to_post_status),
-	      pre_to_system_status(-1), post_to_system_status(-1), undo(false)
-#ifdef ENABLE_XATTRS
-              ,xaCreated(0), xaDeleted(0), xaReplaced(0)
-#endif
+	      pre_to_system_status(-1), post_to_system_status(-1), undo(false),
+	      xaCreated(0), xaDeleted(0), xaReplaced(0)
 	{}
 
 	const string& getName() const { return name; }
@@ -133,9 +130,8 @@ namespace snapper
 
 	friend std::ostream& operator<<(std::ostream& s, const File& file);
 
-#ifdef ENABLE_XATTRS
-            XAUndoStatistic getXAUndoStatistic() const;
-#endif
+	XAUndoStatistic getXAUndoStatistic() const;
+
     private:
 
 	bool createParentDirectories(const string& path) const;
@@ -159,13 +155,12 @@ namespace snapper
 
 	bool undo;
 
-#ifdef ENABLE_XATTRS
-            bool modifyXattributes();
+	bool modifyXattributes();
 
-            unsigned int xaCreated;
-            unsigned int xaDeleted;
-            unsigned int xaReplaced;
-#endif
+	unsigned int xaCreated;
+	unsigned int xaDeleted;
+	unsigned int xaReplaced;
+
     };
 
 
@@ -202,9 +197,9 @@ namespace snapper
 	vector<UndoStep> getUndoSteps() const;
 
 	bool doUndoStep(const UndoStep& undo_step);
-#ifdef ENABLE_XATTRS
+
         XAUndoStatistic getXAUndoStatistic() const;
-#endif
+
     protected:
 
 	void push_back(File file) { entries.push_back(file); }

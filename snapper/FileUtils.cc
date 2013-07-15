@@ -20,10 +20,13 @@
  */
 
 
+#include "config.h"
+
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/mount.h>
+#include <sys/xattr.h>
 #include <fcntl.h>
 #include <stddef.h>
 #include <dirent.h>
@@ -33,10 +36,6 @@
 #include <assert.h>
 #include <algorithm>
 
-#include "config.h"
-#ifdef ENABLE_XATTRS
-    #include <sys/xattr.h>
-#endif
 #include "snapper/FileUtils.h"
 #include "snapper/AppUtil.h"
 #include "snapper/Log.h"
@@ -69,9 +68,7 @@ namespace snapper
 	    throw IOErrorException();
 	}
 
-#ifdef ENABLE_XATTRS
 	setXaStatus();
-#endif
     }
 
 
@@ -97,9 +94,7 @@ namespace snapper
 	    throw IOErrorException();
 	}
 
-#ifdef ENABLE_XATTRS
 	xastatus = dir.xastatus;
-#endif
     }
 
 
@@ -113,9 +108,7 @@ namespace snapper
 	    throw IOErrorException();
 	}
 
-#ifdef ENABLE_XATTRS
 	xastatus = dir.xastatus;
-#endif
     }
 
 
@@ -132,9 +125,7 @@ namespace snapper
 		throw IOErrorException();
 	    }
 
-#ifdef ENABLE_XATTRS
 	    xastatus = dir.xastatus;
-#endif
 	}
 
 	return *this;
@@ -399,8 +390,6 @@ namespace snapper
     }
 
 
-#ifdef ENABLE_XATTRS
-
     bool
     SDir::xaSupported() const
     {
@@ -485,6 +474,7 @@ namespace snapper
     {
 	xastatus = XA_UNKNOWN;
 
+#ifdef ENABLE_XATTRS
 	ssize_t ret = flistxattr(dirfd, NULL, 0);
 	if (ret < 0)
 	{
@@ -503,9 +493,8 @@ namespace snapper
 	{
 	    xastatus = XA_SUPPORTED;
 	}
-    }
-
 #endif
+    }
 
 
     bool
@@ -599,8 +588,6 @@ namespace snapper
     }
 
 
-#ifdef ENABLE_XATTRS
-
     bool
     SFile::xaSupported() const
     {
@@ -620,7 +607,5 @@ namespace snapper
     {
 	return dir.getxattr(SFile::name, name, value, size);
     }
-
-#endif
 
 }

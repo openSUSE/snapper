@@ -20,6 +20,8 @@
  */
 
 
+#include "config.h"
+
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <string.h>
@@ -29,7 +31,6 @@
 #include <fcntl.h>
 #include <boost/algorithm/string.hpp>
 
-#include "config.h"
 #include "snapper/File.h"
 #include "snapper/Snapper.h"
 #include "snapper/AppUtil.h"
@@ -38,10 +39,8 @@
 #include "snapper/SnapperDefines.h"
 #include "snapper/Compare.h"
 #include "snapper/Exception.h"
+#include "snapper/XAttributes.h"
 
-#ifdef ENABLE_XATTRS
-#include <snapper/XAttributes.h>
-#endif
 
 namespace snapper
 {
@@ -528,7 +527,7 @@ namespace snapper
 	return true;
     }
 
-#ifdef ENABLE_XATTRS
+
     bool
     File::modifyXattributes()
     {
@@ -593,7 +592,7 @@ namespace snapper
 
         return xs;
     }
-#endif
+
 
     bool
     File::doUndo()
@@ -630,6 +629,7 @@ namespace snapper
                 error = true;
         }
 #endif
+
 	pre_to_system_status = (unsigned int) -1;
 	post_to_system_status = (unsigned int) -1;
 

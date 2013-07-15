@@ -20,6 +20,8 @@
  */
 
 
+#include "config.h"
+
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -30,17 +32,12 @@
 #include <algorithm>
 #include <boost/thread.hpp>
 
-#include "config.h"
 #include "snapper/Log.h"
 #include "snapper/AppUtil.h"
 #include "snapper/File.h"
 #include "snapper/Compare.h"
 #include "snapper/Exception.h"
-
-
-#ifdef ENABLE_XATTRS
-    #include "snapper/XAttributes.h"
-#endif
+#include "snapper/XAttributes.h"
 
 
 namespace snapper
@@ -223,13 +220,13 @@ namespace snapper
 	}
 
 #ifdef ENABLE_XATTRS
-            if (file1.xaSupported() && file2.xaSupported())
-            {
-                if (!cmpFilesXattrs(file1, file2))
-                {
-                    status |= XATTRS;
-                }
-            }
+	if (file1.xaSupported() && file2.xaSupported())
+	{
+	    if (!cmpFilesXattrs(file1, file2))
+	    {
+		status |= XATTRS;
+	    }
+	}
 #endif
 
 	return status;
@@ -470,8 +467,6 @@ namespace snapper
     }
 
 
-#ifdef ENABLE_XATTRS
-
     bool
     cmpFilesXattrs(const SFile& file1, const SFile& file2)
     {
@@ -487,7 +482,5 @@ namespace snapper
 	    return false;
 	}
     }
-
-#endif
 
 }

@@ -50,9 +50,7 @@ namespace snapper
 	void umount() const;
 
 	UndoStatistic getUndoStatistic() const;
-#ifdef ENABLE_XATTRS
         XAUndoStatistic getXAUndoStatistic() const;
-#endif
 
 	vector<UndoStep> getUndoSteps() const;
 

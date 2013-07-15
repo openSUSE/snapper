@@ -27,15 +27,13 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
-
 #include <iomanip>
+#include <boost/scoped_array.hpp>
 
 #include "snapper/AppUtil.h"
 #include "snapper/Exception.h"
 #include "snapper/Log.h"
 #include "snapper/XAttributes.h"
-
-#include <boost/scoped_array.hpp>
 
 
 namespace snapper

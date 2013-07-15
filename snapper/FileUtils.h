@@ -23,7 +23,6 @@
 #ifndef SNAPPER_FILE_UTILS_H
 #define SNAPPER_FILE_UTILS_H
 
-#include "config.h"
 
 #include <string>
 #include <vector>
@@ -36,13 +35,12 @@ namespace snapper
     using std::string;
     using std::vector;
 
-#ifdef ENABLE_XATTRS
+
     enum XaAttrsStatus {
 	XA_UNKNOWN,
 	XA_UNSUPPORTED,
 	XA_SUPPORTED
     };
-#endif
 
 
     /*
@@ -93,12 +91,10 @@ namespace snapper
 
 	int mktemp(string& name) const;
 
-#ifdef ENABLE_XATTRS
 	bool xaSupported() const;
 
 	ssize_t listxattr(const string& path, char* list, size_t size) const;
 	ssize_t getxattr(const string& path, const char* name, void* value, size_t size) const;
-#endif
 
 	bool mount(const string& device, const string& mount_type, unsigned long mount_flags,
 		   const string& mount_data) const;
@@ -106,10 +102,8 @@ namespace snapper
 
     private:
 
-#ifdef ENABLE_XATTRS
 	XaAttrsStatus xastatus;
 	void setXaStatus();
-#endif
 
 	const string base_path;
 	const string path;
@@ -133,12 +127,10 @@ namespace snapper
 	int open(int flags) const;
 	int readlink(string& buf) const;
 
-#ifdef ENABLE_XATTRS
 	bool xaSupported() const;
 
 	ssize_t listxattr(char* list, size_t size) const;
 	ssize_t getxattr(const char* name, void* value, size_t size) const;
-#endif
 
     private:
 
