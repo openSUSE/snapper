@@ -94,22 +94,21 @@ fi
 
 AC_ARG_ENABLE([zypp], AC_HELP_STRING([--disable-zypp],[Disable zypp plugin support]),
 		[with_zypp=$enableval],[with_zypp=yes])
-AM_CONDITIONAL(HAVE_ZYPP, [test "$with_zypp" != "no"])
+AM_CONDITIONAL(HAVE_ZYPP, [test "x$with_zypp" = "xyes"])
 
 AC_CHECK_LIB(btrfs, btrfs_read_and_process_send_stream)
 
-AC_ARG_ENABLE([xattrs], AC_HELP_STRING([--enable-xattrs],[Enable extended attributes support]),
-		[with_xattrs=$enableval],[with_xattrs=no])
+AC_ARG_ENABLE([xattrs], AC_HELP_STRING([--disable-xattrs],[Disable extended attributes support]),
+		[with_xattrs=$enableval],[with_xattrs=yes])
+AM_CONDITIONAL(HAVE_XATTRS, [test "x$with_xattrs" = "xyes"])
 
-AM_CONDITIONAL(HAVE_XATTRS, [test "x$with_xattrs" != "xno"])
-
-if test "x$with_xattrs" != "xno"; then
+if test "x$with_xattrs" = "xyes"; then
 	AC_DEFINE(ENABLE_XATTRS, 1, [Enable extended attributes support])
 fi
 
 AC_ARG_ENABLE([pam], AC_HELP_STRING([--disable-pam],[Disable pam plugin support]),
                 [with_pam=$enableval],[with_pam=yes])
-AM_CONDITIONAL(HAVE_PAM, [test "$with_pam" != "no"])
+AM_CONDITIONAL(HAVE_PAM, [test "x$with_pam" = "xyes"])
 
 PKG_CHECK_MODULES(DBUS, dbus-1)
 
