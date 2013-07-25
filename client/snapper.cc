@@ -25,6 +25,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 
@@ -34,6 +36,7 @@
 #include <snapper/AsciiFile.h>
 #include <snapper/SystemCmd.h>
 #include <snapper/SnapperDefines.h>
+#include <snapper/XAttributes.h>
 
 #include "utils/text.h"
 #include "utils/Table.h"
@@ -42,13 +45,6 @@
 #include "commands.h"
 #include "cleanup.h"
 
-#ifdef ENABLE_XATTRS
-    #include <sys/types.h>
-    #include <sys/stat.h>
-    #include <fcntl.h>
-
-    #include <snapper/XAttributes.h>
-#endif
 
 using namespace snapper;
 using namespace std;
@@ -321,6 +317,94 @@ command_delete_config(DBus::Connection& conn)
     }
 
     command_delete_xconfig(conn, config_name);
+}
+
+
+void
+help_get_config()
+{
+    cout << _("  Get config:") << endl
+	 << _("\tsnapper get-config") << endl
+	 << endl;
+}
+
+
+void
+command_get_config(DBus::Connection& conn)
+{
+    getopts.parse("get-config", GetOpts::no_options);
+    if (getopts.hasArgs())
+    {
+	cerr << _("Command 'get-config' does not take arguments.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    Table table;
+
+    TableHeader header;
+    header.add(_("Key"));
+    header.add(_("Value"));
+    table.setHeader(header);
+
+    XConfigInfo ci = command_get_xconfig(conn, config_name);
+
+    for (map<string, string>::const_iterator it = ci.raw.begin(); it != ci.raw.end(); ++it)
+    {
+	TableRow row;
+	row.add(it->first);
+	row.add(it->second);
+	table.add(row);
+    }
+
+    cout << table;
+}
+
+
+void
+help_set_config()
+{
+    cout << _("  Set config:") << endl
+	 << _("\tsnapper set-config <configdata>") << endl
+	 << endl;
+}
+
+
+void
+command_set_config(DBus::Connection& conn)
+{
+    getopts.parse("set-config", GetOpts::no_options);
+    if (!getopts.hasArgs())
+    {
+	cerr << _("Command 'set-config' needs at least one argument.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    map<string, string> raw;
+
+    while (getopts.hasArgs())
+    {
+	string arg = getopts.popArg();
+
+	string::size_type pos = arg.find("=");
+	if (pos == string::npos)
+	{
+	    cerr << _("Invalid configdata.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	string key = boost::trim_copy(arg.substr(0, pos));
+	string value = boost::trim_copy(arg.substr(pos + 1));
+
+	if (key.empty())
+	{
+	    cerr << _("Invalid configdata.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	raw[key] = value;
+    }
+
+    command_set_xconfig(conn, config_name, raw);
 }
 
 
@@ -1114,6 +1198,7 @@ command_debug(DBus::Connection& conn)
 
 
 #ifdef ENABLE_XATTRS
+
 void
 help_xa_diff()
 {
@@ -1171,6 +1256,7 @@ command_xa_diff(DBus::Connection& conn)
         }
     }
 }
+
 #endif
 
 
@@ -1225,6 +1311,8 @@ help()
     help_list_configs();
     help_create_config();
     help_delete_config();
+    help_get_config();
+    help_set_config();
     help_list();
     help_create();
     help_modify();
@@ -1254,6 +1342,8 @@ main(int argc, char** argv)
     cmds["list-configs"] = command_list_configs;
     cmds["create-config"] = command_create_config;
     cmds["delete-config"] = command_delete_config;
+    cmds["get-config"] = command_get_config;
+    cmds["set-config"] = command_set_config;
     cmds["list"] = command_list;
     cmds["create"] = command_create;
     cmds["modify"] = command_modify;

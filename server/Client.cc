@@ -177,6 +177,10 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='config-name' type='s'/>\n"
 	"    </signal>\n"
 
+	"    <signal name='ConfigModified'>\n"
+	"      <arg name='config-name' type='s'/>\n"
+	"    </signal>\n"
+
 	"    <signal name='ConfigDeleted'>\n"
 	"      <arg name='config-name' type='s'/>\n"
 	"    </signal>\n"
@@ -203,6 +207,11 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"    <method name='GetConfig'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='data' type='(ssa{ss})' direction='out'/>\n"
+	"    </method>\n"
+
+	"    <method name='SetConfig'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='data' type='(a{ss})' direction='in'/>\n"
 	"    </method>\n"
 
 	"    <method name='CreateConfig'>\n"
@@ -432,6 +441,18 @@ Client::signal_config_created(DBus::Connection& conn, const string& config_name)
 
 
 void
+Client::signal_config_modified(DBus::Connection& conn, const string& config_name)
+{
+    DBus::MessageSignal msg(PATH, INTERFACE, "ConfigModified");
+
+    DBus::Hoho hoho(msg);
+    hoho << config_name;
+
+    conn.send(msg);
+}
+
+
+void
 Client::signal_config_deleted(DBus::Connection& conn, const string& config_name)
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "ConfigDeleted");
@@ -501,7 +522,7 @@ Client::list_configs(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hoho hoho(reply);
     hoho.open_array(DBus::TypeInfo<ConfigInfo>::signature);
     for (MetaSnappers::const_iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
-	hoho << it->config_info;
+	hoho << it->getConfigInfo();
     hoho.close_array();
 
     conn.send(reply);
@@ -527,9 +548,36 @@ Client::get_config(DBus::Connection& conn, DBus::Message& msg)
     DBus::MessageMethodReturn reply(msg);
 
     DBus::Hoho hoho(reply);
-    hoho << it->config_info;
+    hoho << it->getConfigInfo();
 
     conn.send(reply);
+}
+
+
+void
+Client::set_config(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+
+    DBus::Hihi hihi(msg);
+    map<string, string> raw;
+    hihi >> config_name >> raw;
+
+    y2deb("SetConfig config_name:" << config_name << " raw:" << raw);
+
+    boost::shared_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg);
+
+    it->setConfigInfo(raw);
+
+    DBus::MessageMethodReturn reply(msg);
+
+    conn.send(reply);
+
+    signal_config_modified(conn, config_name);
 }
 
 
@@ -886,7 +934,7 @@ Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
     snap2->flushInfo();
 
     bool tmp;
-    if (it->config_info.getValue("BACKGROUND_COMPARISON", tmp) && tmp)
+    if (it->getConfigInfo().getValue("BACKGROUND_COMPARISON", tmp) && tmp)
 	backgrounds.add_task(it, snap1, snap2);
 
     DBus::MessageMethodReturn reply(msg);
@@ -1222,6 +1270,8 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    create_config(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetConfig"))
 	    get_config(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "SetConfig"))
+	    set_config(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "DeleteConfig"))
 	    delete_config(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "LockConfig"))
@@ -1336,6 +1386,11 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
     catch (const UnknownFile& e)
     {
 	DBus::MessageError reply(msg, "error.unknown_file", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
+    catch (const InvalidConfigdataException& e)
+    {
+	DBus::MessageError reply(msg, "error.invalid_configdata", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const InvalidUserdataException& e)

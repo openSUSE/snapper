@@ -158,9 +158,40 @@ get_group_uids(const char* groupname, vector<uid_t>& uids)
 }
 
 
-MetaSnapper::MetaSnapper(const ConfigInfo& config_info)
+MetaSnapper::MetaSnapper(ConfigInfo& config_info)
     : config_info(config_info), snapper(NULL)
 {
+    set_permissions();
+}
+
+
+MetaSnapper::~MetaSnapper()
+{
+    delete snapper;
+}
+
+
+void
+MetaSnapper::setConfigInfo(const map<string, string>& raw)
+{
+    if (raw.find("SUBVOLUME") != raw.end() || raw.find("FSTYPE") != raw.end())
+	throw InvalidConfigdataException();
+
+    for (map<string, string>::const_iterator it = raw.begin(); it != raw.end(); ++it)
+	config_info.setValue(it->first, it->second);
+
+    config_info.save();
+
+    if (raw.find("ALLOW_USERS") != raw.end() || raw.find("ALLOW_GROUPS") != raw.end())
+	set_permissions();
+}
+
+
+void
+MetaSnapper::set_permissions()
+{
+    uids.clear();
+
     vector<string> users;
     if (config_info.getValue("ALLOW_USERS", users))
     {
@@ -185,12 +216,6 @@ MetaSnapper::MetaSnapper(const ConfigInfo& config_info)
 
     sort(uids.begin(), uids.end());
     uids.erase(unique(uids.begin(), uids.end()), uids.end());
-}
-
-
-MetaSnapper::~MetaSnapper()
-{
-    delete snapper;
 }
 
 
@@ -229,7 +254,7 @@ MetaSnappers::init()
 {
     list<ConfigInfo> config_infos = Snapper::getConfigs();
 
-    for (list<ConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
+    for (list<ConfigInfo>::iterator it = config_infos.begin(); it != config_infos.end(); ++it)
     {
 #if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4)
 	entries.emplace_back(*it);

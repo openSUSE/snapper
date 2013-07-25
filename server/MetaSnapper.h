@@ -86,12 +86,13 @@ class MetaSnapper : public RefCounter
 {
 public:
 
-    MetaSnapper(const ConfigInfo& config_info);
+    MetaSnapper(ConfigInfo& config_info);
     ~MetaSnapper();
 
     const string& configName() const { return config_info.getConfigName(); }
 
-    const ConfigInfo config_info;
+    const ConfigInfo& getConfigInfo() const { return config_info; }
+    void setConfigInfo(const map<string, string>& raw);
 
     vector<uid_t> uids;
 
@@ -102,6 +103,10 @@ public:
     void unload();
 
 private:
+
+    void set_permissions();
+
+    ConfigInfo config_info;
 
     Snapper* snapper;
 

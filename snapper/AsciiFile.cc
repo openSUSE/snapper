@@ -161,6 +161,14 @@ AsciiFile::save()
 
 
     void
+    SysconfigFile::save()
+    {
+	if (modified && AsciiFile::save())
+	    modified = false;
+    }
+
+
+    void
     SysconfigFile::setValue(const string& key, bool value)
     {
 	setValue(key, value ? "yes" : "no");

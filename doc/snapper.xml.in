@@ -262,6 +262,24 @@
       </varlistentry>
 
       <varlistentry>
+	<term><option>get-config</option></term>
+	<listitem>
+	  <para>Displays the settings of the configuration.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>set-config</option> <replaceable>configdata</replaceable></term>
+	<listitem>
+	  <para>Changes the settings of the configuration. The settings
+	  <replaceable>configdata</replaceable> are a list of key-value-pairs separated
+	  by spaces and the key and value must be separated by an equal sign,
+	  e.g. "NUMBER_CLEANUP=yes NUMBER_LIMIT=10". The value of SUBVOLUME and FSTYPE
+	  cannot be changed.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
 	<term><option>list [options]</option></term>
 	<listitem>
 	  <para>List snapshots.</para>

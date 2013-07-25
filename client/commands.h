@@ -40,6 +40,10 @@ XConfigInfo
 command_get_xconfig(DBus::Connection& conn, const string& config_name);
 
 void
+command_set_xconfig(DBus::Connection& conn, const string& config_name,
+		    const map<string, string>& raw);
+
+void
 command_create_xconfig(DBus::Connection& conn, const string& config_name, const string& subvolume,
 		       const string& fstype, const string& template_name);
 

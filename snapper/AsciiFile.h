@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2012] Novell, Inc.
+ * Copyright (c) [2004-2013] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -93,6 +93,8 @@ namespace snapper
 	SysconfigFile(const char* name) : AsciiFile(name), modified(false) {}
 	SysconfigFile(const string& name) : AsciiFile(name), modified(false) {}
 	~SysconfigFile() { if (modified) save(); }
+
+	void save();
 
 	void setValue(const string& key, bool value);
 	bool getValue(const string& key, bool& value) const;

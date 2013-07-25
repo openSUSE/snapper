@@ -1,6 +1,7 @@
 
 method ListConfigs
 method GetConfig config-name
+method SetConfig config-name configdata
 
 
 method CreateConfig config-name subvolume fstype template-name
