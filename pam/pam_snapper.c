@@ -27,7 +27,7 @@
  * Add the following line to /etc/pam.d/common-session:
  *      "session optional pam_snapper.so"
  *
- * See "man pam_snapper" and "map snapper" for more information.
+ * See "man pam_snapper" and "man snapper" for more information.
  *
  * @section Related Projects
  *
