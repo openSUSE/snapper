@@ -8,6 +8,8 @@ BuildRequires:	libsnapper-devel >= 0.0.11
 BuildRequires:	yast2-core-devel >= 2.23.1
 BuildRequires:	libtool doxygen gcc-c++ perl-XML-Writer
 
+Requires:       yast2-ruby-bindings >= 1.0.0
+
 Summary:	YaST - file system snapshots review
 
 %description
@@ -25,7 +27,7 @@ YaST module for accessing and managing btrfs system snapshots
 %defattr(-,root,root)
 %dir @yncludedir@/snapper
 @yncludedir@/snapper/*
-@clientdir@/snapper.ycp
+@clientdir@/snapper.rb
 @moduledir@/Snapper.*
 @desktopdir@/snapper.desktop
 @scrconfdir@/*.scr
