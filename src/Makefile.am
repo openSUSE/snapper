@@ -1,26 +1,23 @@
-# Makefile.am for snapper/src
+# Sources for snapper
+
+module_DATA = \
+  modules/Snapper.rb
+
+client_DATA = \
+  clients/snapper.rb
 
 yncludedir = @yncludedir@/snapper
+ynclude_DATA = \
+  include/snapper/wizards.rb \
+  include/snapper/dialogs.rb \
+  include/snapper/helps.rb
 
-client_DATA =			\
-	snapper.ycp
+scrconf_DATA = \
+  scrconf/snapper.scr
 
-ynclude_DATA =			\
-	helps.ycp		\
-	wizards.ycp		\
-	dialogs.ycp
+desktop_DATA = \
+  desktop/snapper.desktop
 
-desktop_DATA =			\
-	snapper.desktop
-
-module_DATA =			\
-	Snapper.ycp
-
-# create a symlink for local build, #145327
-snapper:
-	ln -sf . $@
-ycpchook = snapper
-
-EXTRA_DIST = $(client_DATA) $(ynclude_DATA) $(module_DATA) $(desktop_DATA)
+EXTRA_DIST = $(module_DATA) $(client_DATA) $(ynclude_DATA) $(scrconf_DATA) $(desktop_DATA)
 
 include $(top_srcdir)/Makefile.am.common
