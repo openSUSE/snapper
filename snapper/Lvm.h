@@ -23,12 +23,31 @@
 #ifndef SNAPPER_LVM_H
 #define SNAPPER_LVM_H
 
+/*
+ * tools/errors.h from lvm2 source
+ *
+ * consider adding lvm2-devel dep for lvm2 enabled snapper
+ */
+#define EINVALID_CMD_LINE 3
 
 #include "snapper/Filesystem.h"
 
 
 namespace snapper
 {
+    struct LvmActivationException : public std::exception
+    {
+	explicit LvmActivationException() throw() {}
+	virtual const char* what() const throw() { return "lvm snapshot activation exception"; }
+    };
+
+
+    struct LvmDeactivatationException : public std::exception
+    {
+	explicit LvmDeactivatationException() throw() {}
+	virtual const char* what() const throw() { return "lvm snapshot deactivation exception"; }
+    };
+
 
     class Lvm : public Filesystem
     {
@@ -63,6 +82,10 @@ namespace snapper
 	const string mount_type;
 
 	bool detectThinVolumeNames(const MtabData& mtab_data);
+
+	void activateSnapshot(const string& vg_name, const string& lv_name) const;
+	void deactivateSnapshot(const string& vg_name, const string& lv_name) const;
+	bool detectInactiveSnapshot(const string& vg_name, const string& lv_name) const;
 
 	string getDevice(unsigned int num) const;
 

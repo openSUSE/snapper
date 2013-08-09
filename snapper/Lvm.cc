@@ -229,6 +229,16 @@ namespace snapper
 	if (isSnapshotMounted(num))
 	    return;
 
+	try
+	{
+	    activateSnapshot(vg_name, snapshotLvName(num));
+	}
+	catch (const LvmActivationException& e)
+	{
+	    y2err("Couldn't mount snapshot " << num);
+	    throw MountSnapshotFailedException();
+	}
+
 	SDir snapshot_dir = openSnapshotDir(num);
 
 	if (!mount(getDevice(num), snapshot_dir, mount_type, mount_options))
@@ -246,6 +256,15 @@ namespace snapper
 
 	if (!umount(info_dir, "snapshot"))
 	    throw UmountSnapshotFailedException();
+
+	try
+	{
+	    deactivateSnapshot(vg_name, snapshotLvName(num));
+	}
+	catch (const LvmDeactivatationException& e)
+	{
+	    y2war("Snapshot #" << num << "deactivation failed");
+	}
     }
 
 
@@ -254,7 +273,8 @@ namespace snapper
     {
 	struct stat stat;
 	int r1 = ::stat(getDevice(num).c_str(), &stat);
-	return r1 == 0 && S_ISBLK(stat.st_mode);
+
+	return (r1 == 0 && S_ISBLK(stat.st_mode)) || detectInactiveSnapshot(vg_name, snapshotLvName(num));
     }
 
 
@@ -293,6 +313,44 @@ namespace snapper
     {
 	return "/dev/mapper/" + boost::replace_all_copy(vg_name, "-", "--") + "-" +
 	    boost::replace_all_copy(snapshotLvName(num), "-", "--");
+    }
+
+
+    void
+    Lvm::activateSnapshot(const string& vg_name, const string& lv_name) const
+    {
+	SystemCmd cmd(LVCHANGEBIN " -ay -K " + quote(vg_name + "/" + lv_name));
+	switch (cmd.retcode())
+	{
+	    case 0:
+		break;
+	    case EINVALID_CMD_LINE:
+	    {
+		SystemCmd retry_cmd(LVCHANGEBIN " -ay " + quote(vg_name + "/" + lv_name));
+		if (retry_cmd.retcode() == 0)
+		    break;
+	    }
+	    default:
+		y2err("Couldn't activate snapshot " << vg_name << "/" << lv_name);
+		throw LvmActivationException();
+	}
+    }
+
+
+    void
+    Lvm::deactivateSnapshot(const string& vg_name, const string& lv_name) const
+    {
+	SystemCmd cmd(LVCHANGEBIN " -an " + quote(vg_name + "/" + lv_name));
+	if (cmd.retcode())
+	    throw LvmDeactivatationException();
+    }
+
+
+    bool
+    Lvm::detectInactiveSnapshot(const string& vg_name, const string& lv_name) const
+    {
+	SystemCmd cmd(LVSBIN " " + quote(vg_name + "/" + lv_name));
+	return cmd.retcode() == 0;
     }
 
 }
