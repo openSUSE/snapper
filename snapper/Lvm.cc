@@ -57,7 +57,8 @@ namespace snapper
 
 
     Lvm::Lvm(const string& subvolume, const string& mount_type)
-	: Filesystem(subvolume), mount_type(mount_type)
+	: Filesystem(subvolume), mount_type(mount_type),
+	version(getLvmVersion())
     {
 	if (access(LVCREATEBIN, X_OK) != 0)
 	{
@@ -68,6 +69,17 @@ namespace snapper
 	{
 	    throw ProgramNotInstalledException(LVSBIN " not installed");
 	}
+
+	if (access(LVCHANGEBIN, X_OK) != 0)
+	{
+	    throw ProgramNotInstalledException(LVCHANGEBIN " not installed");
+	}
+
+	if (!version.valid())
+	    y2war("Couldn't get proper LVM version");
+
+	if (version >= lvm_version(2, 2, 99))
+	    ignoreactivationskip = " -K";
 
 	bool found = false;
 	MtabData mtab_data;
@@ -319,20 +331,11 @@ namespace snapper
     void
     Lvm::activateSnapshot(const string& vg_name, const string& lv_name) const
     {
-	SystemCmd cmd(LVCHANGEBIN " -ay -K " + quote(vg_name + "/" + lv_name));
-	switch (cmd.retcode())
+	SystemCmd cmd(LVCHANGEBIN + ignoreactivationskip + " -ay " + quote(vg_name + "/" + lv_name));
+	if (cmd.retcode() != 0)
 	{
-	    case 0:
-		break;
-	    case EINVALID_CMD_LINE:
-	    {
-		SystemCmd retry_cmd(LVCHANGEBIN " -ay " + quote(vg_name + "/" + lv_name));
-		if (retry_cmd.retcode() == 0)
-		    break;
-	    }
-	    default:
-		y2err("Couldn't activate snapshot " << vg_name << "/" << lv_name);
-		throw LvmActivationException();
+	    y2err("Couldn't activate snapshot " << vg_name << "/" << lv_name);
+	    throw LvmActivationException();
 	}
     }
 
@@ -351,6 +354,42 @@ namespace snapper
     {
 	SystemCmd cmd(LVSBIN " " + quote(vg_name + "/" + lv_name));
 	return cmd.retcode() == 0;
+    }
+
+
+    lvm_version
+    Lvm::getLvmVersion()
+    {
+	uint16_t maj, min, rev;
+
+	SystemCmd cmd(string(LVSBIN " --version"));
+
+	if (cmd.retcode() != 0)
+	{
+	    return lvm_version::invalid_version();
+	}
+	else
+	{
+	    Regex rx(".*LVM[[:space:]]+version:[[:space:]]+([0-9]+)\\.([0-9]+)\\.([0-9]+).*$");
+
+	    if (!rx.match(cmd.getLine(0)))
+		return lvm_version::invalid_version();
+	    else
+	    {
+		rx.cap(1) >> maj;
+		rx.cap(2) >> min;
+		rx.cap(3) >> rev;
+	    }
+	}
+
+	return lvm_version(maj, min, rev);
+    }
+
+
+    bool
+    operator>=(const lvm_version& a, const lvm_version& b)
+    {
+	return a.version >= b.version;
     }
 
 }

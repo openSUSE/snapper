@@ -23,12 +23,6 @@
 #ifndef SNAPPER_LVM_H
 #define SNAPPER_LVM_H
 
-/*
- * tools/errors.h from lvm2 source
- *
- * consider adding lvm2-devel dep for lvm2 enabled snapper
- */
-#define EINVALID_CMD_LINE 3
 
 #include "snapper/Filesystem.h"
 
@@ -46,6 +40,22 @@ namespace snapper
     {
 	explicit LvmDeactivatationException() throw() {}
 	virtual const char* what() const throw() { return "lvm snapshot deactivation exception"; }
+    };
+
+
+    class lvm_version
+    {
+    public:
+	static lvm_version invalid_version() { return lvm_version(0, 0, 0); }
+
+	lvm_version(uint16_t maj, uint16_t min, uint16_t rev)
+	    : version(rev | ((uint32_t) min << 16) | ((uint64_t) maj << 32)) {}
+
+	bool valid() const { return version != 0; }
+
+	friend bool operator>=(const lvm_version& a, const lvm_version& b);
+    private:
+	const uint64_t version;
     };
 
 
@@ -79,10 +89,12 @@ namespace snapper
 
     private:
 
+	static lvm_version getLvmVersion();
+
 	const string mount_type;
+	const lvm_version version;
 
 	bool detectThinVolumeNames(const MtabData& mtab_data);
-
 	void activateSnapshot(const string& vg_name, const string& lv_name) const;
 	void deactivateSnapshot(const string& vg_name, const string& lv_name) const;
 	bool detectInactiveSnapshot(const string& vg_name, const string& lv_name) const;
@@ -94,6 +106,7 @@ namespace snapper
 
 	vector<string> mount_options;
 
+	string ignoreactivationskip;
     };
 
 }
