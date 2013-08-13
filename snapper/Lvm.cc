@@ -58,7 +58,7 @@ namespace snapper
 
     Lvm::Lvm(const string& subvolume, const string& mount_type)
 	: Filesystem(subvolume), mount_type(mount_type),
-	version(getLvmVersion())
+	caps(LvmCapabilities::get_lvm_capabilities())
     {
 	if (access(LVCREATEBIN, X_OK) != 0)
 	{
@@ -74,12 +74,6 @@ namespace snapper
 	{
 	    throw ProgramNotInstalledException(LVCHANGEBIN " not installed");
 	}
-
-	if (!version.valid())
-	    y2war("Couldn't get proper LVM version");
-
-	if (version >= lvm_version(2, 2, 99))
-	    ignoreactivationskip = " -K";
 
 	bool found = false;
 	MtabData mtab_data;
@@ -331,7 +325,7 @@ namespace snapper
     void
     Lvm::activateSnapshot(const string& vg_name, const string& lv_name) const
     {
-	SystemCmd cmd(LVCHANGEBIN + ignoreactivationskip + " -ay " + quote(vg_name + "/" + lv_name));
+	SystemCmd cmd(LVCHANGEBIN + caps->get_ignoreactivationskip() + " -ay " + quote(vg_name + "/" + lv_name));
 	if (cmd.retcode() != 0)
 	{
 	    y2err("Couldn't activate snapshot " << vg_name << "/" << lv_name);
@@ -357,32 +351,41 @@ namespace snapper
     }
 
 
-    lvm_version
-    Lvm::getLvmVersion()
+    LvmCapabilities::LvmCapabilities()
+	: ignoreactivationskip(), time_support(false)
     {
-	uint16_t maj, min, rev;
-
 	SystemCmd cmd(string(LVSBIN " --version"));
 
 	if (cmd.retcode() != 0)
 	{
-	    return lvm_version::invalid_version();
+	    y2war("Couldn't get LVM version info");
 	}
 	else
 	{
 	    Regex rx(".*LVM[[:space:]]+version:[[:space:]]+([0-9]+)\\.([0-9]+)\\.([0-9]+).*$");
 
 	    if (!rx.match(cmd.getLine(0)))
-		return lvm_version::invalid_version();
+	    {
+		y2war("LVM version format didn't match");
+	    }
 	    else
 	    {
+		uint16_t maj, min, rev;
+
 		rx.cap(1) >> maj;
 		rx.cap(2) >> min;
 		rx.cap(3) >> rev;
+
+		lvm_version version(maj, min, rev);
+
+		if (version >= lvm_version(2,2,99))
+		{
+		    ignoreactivationskip = " -K";
+		}
+
+		time_support = (version >= lvm_version(2,2,88));
 	    }
 	}
-
-	return lvm_version(maj, min, rev);
     }
 
 
@@ -390,6 +393,33 @@ namespace snapper
     operator>=(const lvm_version& a, const lvm_version& b)
     {
 	return a.version >= b.version;
+    }
+
+
+    LvmCapabilities*
+    LvmCapabilities::get_lvm_capabilities()
+    {
+	/*
+	 * NOTE: verify only one thread can access
+	 * 	 this section at the same time!
+	 */
+	static LvmCapabilities caps;
+
+	return &caps;
+    }
+
+
+    string
+    LvmCapabilities::get_ignoreactivationskip() const
+    {
+	return ignoreactivationskip;
+    }
+
+
+    bool
+    LvmCapabilities::get_time_support() const
+    {
+	return time_support;
     }
 
 }

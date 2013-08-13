@@ -23,6 +23,7 @@
 #ifndef SNAPPER_LVM_H
 #define SNAPPER_LVM_H
 
+#include <boost/noncopyable.hpp>
 
 #include "snapper/Filesystem.h"
 
@@ -43,19 +44,31 @@ namespace snapper
     };
 
 
-    class lvm_version
+    struct lvm_version
+    {
+	lvm_version(uint16_t maj, uint16_t min, uint16_t rev)
+	    : version(rev | ((uint32_t)min << 16)  | ((uint64_t)maj << 32)) {}
+
+	const uint64_t version;
+    };
+
+    bool operator>=(const lvm_version& a, const lvm_version& b);
+
+    class LvmCapabilities : public boost::noncopyable
     {
     public:
-	static lvm_version invalid_version() { return lvm_version(0, 0, 0); }
+	static LvmCapabilities* get_lvm_capabilities();
 
-	lvm_version(uint16_t maj, uint16_t min, uint16_t rev)
-	    : version(rev | ((uint32_t) min << 16) | ((uint64_t) maj << 32)) {}
+	bool get_time_support() const;
+	string get_ignoreactivationskip() const;
 
-	bool valid() const { return version != 0; }
-
-	friend bool operator>=(const lvm_version& a, const lvm_version& b);
     private:
-	const uint64_t version;
+	LvmCapabilities();
+
+	// empty or " -K" if lvm supports ignore activation skip flag
+	string ignoreactivationskip;
+	// true if lvm2 supports time info stored in metadata
+	bool time_support;
     };
 
 
@@ -89,10 +102,8 @@ namespace snapper
 
     private:
 
-	static lvm_version getLvmVersion();
-
 	const string mount_type;
-	const lvm_version version;
+	const LvmCapabilities* caps;
 
 	bool detectThinVolumeNames(const MtabData& mtab_data);
 	void activateSnapshot(const string& vg_name, const string& lv_name) const;
@@ -106,7 +117,6 @@ namespace snapper
 
 	vector<string> mount_options;
 
-	string ignoreactivationskip;
     };
 
 }
