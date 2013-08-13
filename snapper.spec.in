@@ -43,7 +43,7 @@ Recommends:	cron logrotate snapper-zypp-plugin
 Supplements:	btrfsprogs
 %endif
 Summary:	Tool for filesystem snapshot management
-Url:		http://en.opensuse.org/Portal:Snapper
+Url:		http://snapper.io/
 
 %description
 This package contains snapper, a tool for filesystem snapshot management.
