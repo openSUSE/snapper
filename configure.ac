@@ -36,6 +36,7 @@ AC_PATH_PROG([LVCREATEBIN], [lvcreate], [/sbin/lvcreate])
 AC_PATH_PROG([LVREMOVEBIN], [lvremove], [/sbin/lvremove])
 AC_PATH_PROG([LVSBIN], [lvs], [/sbin/lvs])
 AC_PATH_PROG([LVCHANGEBIN], [lvchange], [/sbin/lvchange])
+AC_PATH_PROG([LVMBIN], [lvm], [/sbin/lvm])
 
 AC_DEFINE_UNQUOTED([CHSNAPBIN], ["$CHSNAPBIN"], [Path of chsnap program.])
 AC_DEFINE_UNQUOTED([CPBIN], ["$CPBIN"], [Path of cp program.])
@@ -47,6 +48,7 @@ AC_DEFINE_UNQUOTED([LVCREATEBIN], ["$LVCREATEBIN"], [Path of lvcreate program.])
 AC_DEFINE_UNQUOTED([LVREMOVEBIN], ["$LVREMOVEBIN"], [Path of lvremove program.])
 AC_DEFINE_UNQUOTED([LVSBIN], ["$LVSBIN"], [Path of lvs program.])
 AC_DEFINE_UNQUOTED([LVCHANGEBIN], ["$LVCHANGEBIN"], [Path of lvchange program.])
+AC_DEFINE_UNQUOTED([LVMBIN], ["$LVMBIN"], [Path of lvm program.])
 
 dnl Automake 1.11 enables silent compilation
 dnl Disable it by "configure --disable-silent-rules" or "make V=1"

@@ -354,7 +354,7 @@ namespace snapper
     LvmCapabilities::LvmCapabilities()
 	: ignoreactivationskip(), time_support(false)
     {
-	SystemCmd cmd(string(LVSBIN " --version"));
+	SystemCmd cmd(string(LVMBIN " version"));
 
 	if (cmd.retcode() != 0)
 	{
