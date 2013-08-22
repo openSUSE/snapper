@@ -11,8 +11,8 @@ dbus_object = service.object("/org/opensuse/Snapper")
 dbus_object.introspect
 dbus_object.default_iface = "org.opensuse.Snapper"
 
-snapshots = dbus_object.send("ListSnapshots", "root")[0]
+configs = dbus_object.send("ListConfigs")[0]
 
-snapshots.each do |snapshot|
-  print snapshot, "\n"
+configs.each do |config|
+  print config[0], " ", config[1], "\n"
 end

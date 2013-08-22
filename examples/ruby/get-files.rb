@@ -11,8 +11,10 @@ dbus_object = service.object("/org/opensuse/Snapper")
 dbus_object.introspect
 dbus_object.default_iface = "org.opensuse.Snapper"
 
-snapshots = dbus_object.send("ListSnapshots", "root")[0]
+dbus_object.send("CreateComparison", "root", 1, 2)
 
-snapshots.each do |snapshot|
-  print snapshot, "\n"
+files = dbus_object.send("GetFilesAsList", "root", 1, 2)[0]
+
+files.each do |file|
+  print file[0], " ", file[1], "\n"
 end
