@@ -13,7 +13,7 @@ dbus_object.default_iface = "org.opensuse.Snapper"
 
 dbus_object.send("CreateComparison", "root", 1, 2)
 
-files = dbus_object.send("GetFilesAsList", "root", 1, 2)[0]
+files = dbus_object.send("GetFiles", "root", 1, 2)[0]
 
 files.each do |file|
   print file[0], " ", file[1], "\n"
