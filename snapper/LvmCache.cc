@@ -194,6 +194,13 @@ namespace snapper
     }
 
 
+    VolumeGroup::~VolumeGroup()
+    {
+	for (const_iterator cit = lv_info_map.begin(); cit != lv_info_map.end(); cit++)
+	    delete cit->second;
+    }
+
+
     void
     VolumeGroup::activate(const string& lv_name)
     {

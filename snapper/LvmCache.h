@@ -103,6 +103,7 @@ namespace snapper
 	typedef vg_content_t::const_iterator const_iterator;
 
 	VolumeGroup(vg_content_raw& input, const string& vg_name, const string& add_lv_name);
+	~VolumeGroup();
 
 	string get_vg_name() const { return vg_name; }
 
