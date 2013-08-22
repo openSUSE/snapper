@@ -40,6 +40,7 @@
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/Regex.h"
+#include "snapper/LvmCache.h"
 
 
 namespace snapper
@@ -58,7 +59,8 @@ namespace snapper
 
     Lvm::Lvm(const string& subvolume, const string& mount_type)
 	: Filesystem(subvolume), mount_type(mount_type),
-	caps(LvmCapabilities::get_lvm_capabilities())
+	caps(LvmCapabilities::get_lvm_capabilities()),
+	cache(LvmCache::get_lvm_cache())
     {
 	if (access(LVCREATEBIN, X_OK) != 0)
 	{
@@ -198,6 +200,15 @@ namespace snapper
 	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
 	    throw CreateSnapshotFailedException();
 	}
+
+	try
+	{
+	    cache->add(vg_name, snapshotLvName(num));
+	}
+	catch (const LvmCacheException& e)
+	{
+	    y2war("lvm cache failed");
+	}
     }
 
 
@@ -207,6 +218,15 @@ namespace snapper
 	SystemCmd cmd(LVREMOVEBIN " --force " + quote(vg_name + "/" + snapshotLvName(num)));
 	if (cmd.retcode() != 0)
 	    throw DeleteSnapshotFailedException();
+
+	try
+	{
+	    cache->remove(vg_name, snapshotLvName(num));
+	}
+	catch (const LvmCacheException& e)
+	{
+	    y2war("lvm cache failed");
+	}
 
 	SDir info_dir = openInfoDir(num);
 	info_dir.unlink("snapshot", AT_REMOVEDIR);
@@ -237,11 +257,10 @@ namespace snapper
 
 	try
 	{
-	    activateSnapshot(vg_name, snapshotLvName(num));
+	    activateSnapshot(vg_name, snapshotLvName(num), true);
 	}
 	catch (const LvmActivationException& e)
 	{
-	    y2err("Couldn't mount snapshot " << num);
 	    throw MountSnapshotFailedException();
 	}
 
@@ -255,21 +274,22 @@ namespace snapper
     void
     Lvm::umountSnapshot(unsigned int num) const
     {
-	if (!isSnapshotMounted(num))
-	    return;
+	if (isSnapshotMounted(num))
+	{
+	    SDir info_dir = openInfoDir(num);
 
-	SDir info_dir = openInfoDir(num);
+	    if (!umount(info_dir, "snapshot"))
+		throw UmountSnapshotFailedException();
 
-	if (!umount(info_dir, "snapshot"))
-	    throw UmountSnapshotFailedException();
+	}
 
 	try
 	{
-	    deactivateSnapshot(vg_name, snapshotLvName(num));
+	    deactivateSnapshot(vg_name, snapshotLvName(num), true);
 	}
 	catch (const LvmDeactivatationException& e)
 	{
-	    y2war("Snapshot #" << num << "deactivation failed");
+	    y2war("Couldn't deactivate: " << vg_name << "/" << lv_name);
 	}
     }
 
@@ -277,10 +297,7 @@ namespace snapper
     bool
     Lvm::checkSnapshot(unsigned int num) const
     {
-	struct stat stat;
-	int r1 = ::stat(getDevice(num).c_str(), &stat);
-
-	return (r1 == 0 && S_ISBLK(stat.st_mode)) || detectInactiveSnapshot(vg_name, snapshotLvName(num));
+	return detectInactiveSnapshot(vg_name, snapshotLvName(num), true);
     }
 
 
@@ -297,21 +314,17 @@ namespace snapper
 	vg_name = boost::replace_all_copy(rx.cap(1), "--", "-");
 	lv_name = boost::replace_all_copy(rx.cap(2), "--", "-");
 
-	SystemCmd cmd(LVSBIN " -o segtype --noheadings " + quote(vg_name + "/" + lv_name));
-
-	if (cmd.retcode() != 0) {
-	    y2err("could not detect segment type infromation from: " << vg_name << "/" << lv_name);
+	try
+	{
+	    cache->add_or_update(vg_name, lv_name);
+	}
+	catch(const LvmCacheException& e)
+	{
+	    y2err("Lvm cache failure");
 	    return false;
 	}
 
-	string segtype = boost::trim_copy(cmd.getLine(0));
-
-	if (segtype.compare("thin")) {
-	    y2err(vg_name << "/" << lv_name << " is not a LVM thin volume");
-	    return false;
-	}
-
-	return true;
+	return cache->contains_thin(vg_name, lv_name);
     }
 
     string
@@ -323,31 +336,68 @@ namespace snapper
 
 
     void
-    Lvm::activateSnapshot(const string& vg_name, const string& lv_name) const
+    Lvm::activateSnapshot(const string& vg_name, const string& lv_name, bool use_cache) const
     {
-	SystemCmd cmd(LVCHANGEBIN + caps->get_ignoreactivationskip() + " -ay " + quote(vg_name + "/" + lv_name));
-	if (cmd.retcode() != 0)
+	if (use_cache)
 	{
-	    y2err("Couldn't activate snapshot " << vg_name << "/" << lv_name);
-	    throw LvmActivationException();
+	    try
+	    {
+		cache->activate(vg_name, lv_name);
+	    }
+	    catch(const LvmCacheException& e)
+	    {
+		y2err("Couldn't activate snapshot " << vg_name << "/" << lv_name);
+		throw LvmActivationException();
+	    }
+	}
+	else
+	{
+	    SystemCmd cmd(LVCHANGEBIN + caps->get_ignoreactivationskip() + " -ay " + quote(vg_name + "/" + lv_name));
+	    if (cmd.retcode() != 0)
+	    {
+		y2err("Couldn't activate snapshot " << vg_name << "/" << lv_name);
+		throw LvmActivationException();
+	    }
 	}
     }
 
 
     void
-    Lvm::deactivateSnapshot(const string& vg_name, const string& lv_name) const
+    Lvm::deactivateSnapshot(const string& vg_name, const string& lv_name, bool use_cache) const
     {
-	SystemCmd cmd(LVCHANGEBIN " -an " + quote(vg_name + "/" + lv_name));
-	if (cmd.retcode())
-	    throw LvmDeactivatationException();
+	if (use_cache)
+	{
+	    try
+	    {
+		cache->deactivate(vg_name, lv_name);
+	    }
+	    catch(const LvmCacheException& e)
+	    {
+		y2war("lvm cache failure");
+		throw LvmDeactivatationException();
+	    }
+	}
+	else
+	{
+	    SystemCmd cmd(LVCHANGEBIN " -an " + quote(vg_name + "/" + lv_name));
+	    if (cmd.retcode())
+		throw LvmDeactivatationException();
+	}
     }
 
 
     bool
-    Lvm::detectInactiveSnapshot(const string& vg_name, const string& lv_name) const
+    Lvm::detectInactiveSnapshot(const string& vg_name, const string& lv_name, bool use_cache) const
     {
-	SystemCmd cmd(LVSBIN " " + quote(vg_name + "/" + lv_name));
-	return cmd.retcode() == 0;
+	if (use_cache)
+	{
+	    return cache->contains(vg_name, lv_name);
+	}
+	else
+	{
+	    SystemCmd cmd(LVSBIN " " + quote(vg_name + "/" + lv_name));
+	    return cmd.retcode() == 0;
+	}
     }
 
 

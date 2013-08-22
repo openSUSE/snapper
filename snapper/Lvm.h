@@ -54,6 +54,8 @@ namespace snapper
 
     bool operator>=(const lvm_version& a, const lvm_version& b);
 
+    class LvmCache;
+
     class LvmCapabilities : public boost::noncopyable
     {
     public:
@@ -104,11 +106,12 @@ namespace snapper
 
 	const string mount_type;
 	const LvmCapabilities* caps;
+	LvmCache* cache;
 
 	bool detectThinVolumeNames(const MtabData& mtab_data);
-	void activateSnapshot(const string& vg_name, const string& lv_name) const;
-	void deactivateSnapshot(const string& vg_name, const string& lv_name) const;
-	bool detectInactiveSnapshot(const string& vg_name, const string& lv_name) const;
+	void activateSnapshot(const string& vg_name, const string& lv_name, bool use_cache) const;
+	void deactivateSnapshot(const string& vg_name, const string& lv_name, bool use_cache) const;
+	bool detectInactiveSnapshot(const string& vg_name, const string& lv_name, bool use_cache) const;
 
 	string getDevice(unsigned int num) const;
 
