@@ -185,6 +185,13 @@ namespace snapper
     }
 
 
+    void
+    LogicalVolume::debug(std::ostream& out) const
+    {
+	out << attrs;
+    }
+
+
     VolumeGroup::VolumeGroup(vg_content_raw& input, const string& vg_name, const string& add_lv_name)
 	: vg_name(vg_name)
     {
@@ -345,6 +352,17 @@ namespace snapper
     }
 
 
+    void
+    VolumeGroup::debug(std::ostream& out) const
+    {
+	// do not allow any modifications in a whole VG
+	boost::unique_lock<boost::upgrade_mutex> unique_lock(vg_mutex);
+
+	for (const_iterator cit = lv_info_map.begin(); cit != lv_info_map.end(); cit++)
+	    out << "\tLV:'" << cit->first << "':" << std::endl << "\t\t" << cit->second;
+    }
+
+
     LvmCache*
     LvmCache::get_lvm_cache()
     {
@@ -422,10 +440,14 @@ namespace snapper
     {
 	const_iterator cit = vgroups.find(vg_name);
 	if (cit == vgroups.end())
+	{
 	    add_vg(vg_name, lv_name);
+	    y2deb("lvm cache: added new vg: " << vg_name << ", including lv: " << lv_name);
+	}
 	else
 	{
 	    cit->second->add_or_update(lv_name);
+	    y2deb("lvm cache: updated lv details for " << lv_name);
 	}
     }
 
@@ -449,6 +471,8 @@ namespace snapper
 	    y2err(vg_name << "/" << lv_name << " already in cache!");
 	    throw;
 	}
+
+	y2deb("lvm cache: added new lv: " << lv_name << " in vg: " << vg_name);
     }
 
 
@@ -489,6 +513,8 @@ namespace snapper
 
 	if (cit != vgroups.end())
 	    cit->second->remove(lv_name);
+
+	y2deb("lvm cache: removed lv " << lv_name << " from vg " << vg_name);
     }
 
 
@@ -512,5 +538,48 @@ namespace snapper
 	    y2err("lvm cache failed to rename " << vg_name << "/" << old_name << " ->  " << vg_name << "/" << new_name);
 	    throw;
 	}
+
+	y2deb("lvm cache: in vg " << vg_name << " " << old_name << " was renamed to " << new_name);
+    }
+
+
+    std::ostream&
+    operator<<(std::ostream& out, const LvmCache* cache)
+    {
+	out << "LvmCache:" << std::endl;
+	for (LvmCache::const_iterator cit = cache->vgroups.begin(); cit != cache->vgroups.end(); cit++)
+	    out << "Volume Group:'" << cit->first << "':" << std::endl << cit->second;
+
+	return out;
+    }
+
+
+    std::ostream&
+    operator<<(std::ostream& out, const VolumeGroup* vg)
+    {
+	vg->debug(out);
+
+	return out;
+    }
+
+
+    std::ostream&
+    operator<<(std::ostream& out, const LogicalVolume* lv)
+    {
+	lv->debug(out);
+
+	return out;
+    }
+
+
+    std::ostream&
+    operator<<(std::ostream& out, const LvAttrs& a)
+    {
+	out << "active='" << (a.active ? "true" : "false") << "',readonly='"
+	    << (a.readonly ? "true" : "false") << "',thin='"
+	    << (a.thin ? "true" : "false") << ",pool='" << a.pool << "'"
+	    << std::endl;
+
+	return out;
     }
 }

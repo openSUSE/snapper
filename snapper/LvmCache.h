@@ -82,7 +82,11 @@ namespace snapper
 	bool readonly(); // shared
 	bool thin(); // shared
 
+	friend std::ostream& operator<<(std::ostream& out, const LogicalVolume* cache);
+
     private:
+	void debug(std::ostream& out) const;
+
 	const VolumeGroup* vg;
 	const string lv_name;
 	const LvmCapabilities* caps;
@@ -121,7 +125,11 @@ namespace snapper
 	void remove(const string& lv_name); // excl lock
 	void rename(const string& old_name, const string& new_name); // upg lock -> excl
 
+	friend std::ostream& operator<<(std::ostream& out, const VolumeGroup* vg);
+
     private:
+	void debug(std::ostream& out) const;
+
 	const string vg_name;
 
 	mutable boost::upgrade_mutex vg_mutex;
@@ -159,6 +167,7 @@ namespace snapper
 	// rename snapshots (used during import)
 	void rename(const string& vg_name, const string& old_name, const string& new_name) const;
 
+	friend std::ostream& operator<<(std::ostream& out, const LvmCache* cache);
     private:
 	LvmCache() {}
 
@@ -167,5 +176,7 @@ namespace snapper
 
 	map<string, VolumeGroup*> vgroups;
     };
+
+    std::ostream& operator<<(std::ostream& out, const LvAttrs& a);
 }
 #endif // SNAPPER_LVM_CACHE_H
