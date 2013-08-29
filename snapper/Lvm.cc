@@ -188,11 +188,6 @@ namespace snapper
     void
     Lvm::createSnapshot(unsigned int num) const
     {
-	SystemCmd cmd(LVCREATEBIN " --permission r --snapshot --name " +
-		      quote(snapshotLvName(num)) + " " + quote(vg_name + "/" + lv_name));
-	if (cmd.retcode() != 0)
-	    throw CreateSnapshotFailedException();
-
 	SDir info_dir = openInfoDir(num);
 	int r1 = info_dir.mkdir("snapshot", 0755);
 	if (r1 != 0 && errno != EEXIST)
@@ -203,12 +198,12 @@ namespace snapper
 
 	try
 	{
-	    cache->add(vg_name, snapshotLvName(num));
+	    cache->create_snapshot(vg_name, lv_name, snapshotLvName(num));
 	}
 	catch (const LvmCacheException& e)
 	{
-	    y2war("lvm cache failed");
 	    y2deb(cache);
+	    throw CreateSnapshotFailedException();
 	}
     }
 
@@ -216,18 +211,14 @@ namespace snapper
     void
     Lvm::deleteSnapshot(unsigned int num) const
     {
-	SystemCmd cmd(LVREMOVEBIN " --force " + quote(vg_name + "/" + snapshotLvName(num)));
-	if (cmd.retcode() != 0)
-	    throw DeleteSnapshotFailedException();
-
 	try
 	{
-	    cache->remove(vg_name, snapshotLvName(num));
+	    cache->delete_snapshot(vg_name, snapshotLvName(num));
 	}
 	catch (const LvmCacheException& e)
 	{
-	    y2war("lvm cache failed");
 	    y2deb(cache);
+	    throw DeleteSnapshotFailedException();
 	}
 
 	SDir info_dir = openInfoDir(num);

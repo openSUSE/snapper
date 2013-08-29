@@ -94,16 +94,20 @@ namespace snapper
 
 	if (!attrs.active)
 	{
-	    boost::upgrade_to_unique_lock<boost::upgrade_mutex> unique_lock(upg_lock);
-
-	    SystemCmd cmd(LVCHANGEBIN + caps->get_ignoreactivationskip() + " -ay " + quote(vg->get_vg_name() + "/" + lv_name));
-	    if (cmd.retcode() != 0)
 	    {
-		y2err("Couldn't activate snapshot " << vg->get_vg_name() << "/" << lv_name);
-		throw LvmActivationException();
+		boost::upgrade_to_unique_lock<boost::upgrade_mutex> unique_lock(upg_lock);
+
+		SystemCmd cmd(LVCHANGEBIN + caps->get_ignoreactivationskip() + " -ay " + quote(vg->get_vg_name() + "/" + lv_name));
+		if (cmd.retcode() != 0)
+		{
+		    y2err("lvm cache: " << vg->get_vg_name() << "/" << lv_name << " activation failed!");
+		    throw LvmCacheException();
+		}
+
+		attrs.active = true;
 	    }
 
-	    attrs.active = true;
+	    y2deb("lvm cache: " << vg->get_vg_name() << "/" << lv_name << " activated");
 	}
     }
 
@@ -125,16 +129,20 @@ namespace snapper
 
 	if (attrs.active)
 	{
-	    boost::upgrade_to_unique_lock<boost::upgrade_mutex> unique_lock(upg_lock);
-
-	    SystemCmd cmd(LVCHANGEBIN " -an " + quote(vg->get_vg_name() + "/" + lv_name));
-	    if (cmd.retcode() != 0)
 	    {
-		y2err("Couldn't activate snapshot " << vg->get_vg_name() << "/" << lv_name);
-		throw LvmDeactivatationException();
+		boost::upgrade_to_unique_lock<boost::upgrade_mutex> unique_lock(upg_lock);
+
+		SystemCmd cmd(LVCHANGEBIN " -an " + quote(vg->get_vg_name() + "/" + lv_name));
+		if (cmd.retcode() != 0)
+		{
+		    y2err("lvm cache: " << vg->get_vg_name() << "/" << lv_name << " deactivation failed!");
+		    throw LvmCacheException();
+		}
+
+		attrs.active = false;
 	    }
 
-	    attrs.active = false;
+	    y2deb("lvm cache: " << vg->get_vg_name() << "/" << lv_name << " deactivated");
 	}
     }
 
@@ -148,7 +156,7 @@ namespace snapper
 
 	if (cmd.retcode() != 0 || cmd.numLines() < 1)
 	{
-	    y2err("lvm cache failed to get info about " << vg->get_vg_name() << "/" << lv_name);
+	    y2err("lvm cache: failed to get info about " << vg->get_vg_name() << "/" << lv_name);
 	    throw LvmCacheException();
 	}
 
@@ -216,7 +224,7 @@ namespace snapper
 	iterator it = lv_info_map.find(lv_name);
 	if (it == lv_info_map.end())
 	{
-	    y2err(vg_name << "/" << lv_name << " is not in cache!");
+	    y2err("lvm cache: " << vg_name << "/" << lv_name << " is not in cache!");
 	    throw LvmCacheException();
 	}
 
@@ -232,7 +240,7 @@ namespace snapper
 	iterator it = lv_info_map.find(lv_name);
 	if (it == lv_info_map.end())
 	{
-	    y2err(vg_name << "/" << lv_name << " is not in cache!");
+	    y2err("lvm cache: " << vg_name << "/" << lv_name << " is not in cache!");
 	    throw LvmCacheException();
 	}
 
@@ -272,12 +280,25 @@ namespace snapper
 
 
     void
-    VolumeGroup::add(const string& lv_name)
+    VolumeGroup::create_snapshot(const string& lv_origin_name, const string& lv_snapshot_name)
     {
-	boost::unique_lock<boost::upgrade_mutex> lock(vg_mutex);
+	boost::upgrade_lock<boost::upgrade_mutex> upg_lock(vg_mutex);
 
-	if (!lv_info_map.insert(make_pair(lv_name, new LogicalVolume(this, lv_name))).second)
+	if (lv_info_map.find(lv_snapshot_name) != lv_info_map.end())
+	{
+	    y2err("lvm cache: " << vg_name << "/" << lv_snapshot_name << " already in cache!");
 	    throw LvmCacheException();
+	}
+
+	boost::upgrade_to_unique_lock<boost::upgrade_mutex> unique_lock(upg_lock);
+
+	SystemCmd cmd(LVCREATEBIN " --permission r --snapshot --name " +
+		      quote(lv_snapshot_name) + " " + quote(vg_name + "/" + lv_origin_name));
+
+	if (cmd.retcode() != 0)
+	    throw LvmCacheException();
+
+	lv_info_map.insert(make_pair(lv_snapshot_name, new LogicalVolume(this, lv_snapshot_name)));
     }
 
 
@@ -300,7 +321,7 @@ namespace snapper
 	    SystemCmd cmd(LVSBIN " --noheadings -o lv_attr,segtype,pool_lv " + quote(vg_name + "/" + lv_name));
 	    if (cmd.retcode() != 0 || cmd.numLines() < 1)
 	    {
-		y2err("lvm cache failed to get info about " << vg_name << "/" << lv_name);
+		y2err("lvm cache: failed to get info about " << vg_name << "/" << lv_name);
 		throw LvmCacheException();
 	    }
 
@@ -319,13 +340,23 @@ namespace snapper
 
 
     void
-    VolumeGroup::remove(const string& lv_name)
+    VolumeGroup::remove_lv(const string& lv_name)
     {
-	boost::unique_lock<boost::upgrade_mutex> unique_lock(vg_mutex);
+	boost::upgrade_lock<boost::upgrade_mutex> upg_lock(vg_mutex);
 
 	const_iterator cit = lv_info_map.find(lv_name);
 
 	if (cit == lv_info_map.end())
+	{
+	    y2err("lvm cache: " << vg_name << "/" << lv_name << " is not in cache!");
+	    throw LvmCacheException();
+	}
+
+	// wait for all invidual lv cache operations under shared vg lock to finish
+	boost::upgrade_to_unique_lock<boost::upgrade_mutex> unique_lock(upg_lock);
+
+	SystemCmd cmd(LVREMOVEBIN " --force " + quote(vg_name + "/" + lv_name));
+	if (cmd.retcode() != 0)
 	    throw LvmCacheException();
 
 	delete cit->second;
@@ -341,9 +372,25 @@ namespace snapper
 	const_iterator cit = lv_info_map.find(old_name);
 
 	if (cit == lv_info_map.end() || lv_info_map.find(new_name) != lv_info_map.end())
+	{
+	    y2err("lvm cache: " << vg_name << "/" << old_name <<
+		  " is missing or " << vg_name << "/" << new_name <<
+		  " already in cache!");
 	    throw LvmCacheException();
+	}
 
+	// wait for all invidual lv cache operations under shared vg lock to finish
 	boost::upgrade_to_unique_lock<boost::upgrade_mutex> unique_lock(upg_lock);
+
+	SystemCmd cmd(LVRENAMEBIN " " + quote(vg_name) + " " + quote(old_name) +
+		      " " + quote(new_name));
+
+	if (cmd.retcode() != 0)
+	{
+	    y2err("lvm cache: " << vg_name <<  "/" << old_name << " -> " <<
+		  vg_name << "/" << new_name << " rename command failed!");
+	    throw LvmCacheException();
+	}
 
 	lv_info_map.insert(make_pair(new_name, new LogicalVolume(this, new_name, cit->second->attrs)));
 
@@ -385,7 +432,7 @@ namespace snapper
 
 	if (cit == vgroups.end())
 	{
-	    y2err("VG " << vg_name << " is not in cache!");
+	    y2err("lvm cache: VG " << vg_name << " is not in cache!");
 	    throw LvmCacheException();
 	}
 
@@ -400,7 +447,7 @@ namespace snapper
 
 	if (cit == vgroups.end())
 	{
-	    y2err("VG " << vg_name << " is not in cache!");
+	    y2err("lvm cache: VG " << vg_name << " is not in cache!");
 	    throw LvmCacheException();
 	}
 
@@ -453,7 +500,7 @@ namespace snapper
 
 
     void
-    LvmCache::add(const string& vg_name, const string& lv_name) const
+    LvmCache::create_snapshot(const string& vg_name, const string& lv_origin_name, const string& lv_snapshot_name)
     {
 	const_iterator cit = vgroups.find(vg_name);
 	if (cit == vgroups.end())
@@ -462,17 +509,9 @@ namespace snapper
 	    throw LvmCacheException();
 	}
 
-	try
-	{
-	    cit->second->add(lv_name);
-	}
-	catch(const LvmCacheException& e)
-	{
-	    y2err(vg_name << "/" << lv_name << " already in cache!");
-	    throw;
-	}
+	cit->second->create_snapshot(lv_origin_name, lv_snapshot_name);
 
-	y2deb("lvm cache: added new lv: " << lv_name << " in vg: " << vg_name);
+	y2deb("lvm cache: created new snapshot: " << lv_snapshot_name << " in vg: " << vg_name);
     }
 
 
@@ -482,7 +521,7 @@ namespace snapper
 	SystemCmd cmd(LVSBIN " --noheadings -o lv_name,lv_attr,segtype,pool_lv " + quote(vg_name));
 	if (cmd.retcode() != 0)
 	{
-	    y2err("lvm cache failed to get info about VG: " << vg_name);
+	    y2err("lvm cache: failed to get info about VG " << vg_name);
 	    throw LvmCacheException();
 	}
 
@@ -507,14 +546,19 @@ namespace snapper
 
 
     void
-    LvmCache::remove(const string& vg_name, const string& lv_name) const
+    LvmCache::delete_snapshot(const string& vg_name, const string& lv_name) const
     {
 	const_iterator cit = vgroups.find(vg_name);
 
-	if (cit != vgroups.end())
-	    cit->second->remove(lv_name);
+	if (cit == vgroups.end())
+	{
+	    y2err("lvm cache: VG " << vg_name << " not in cache!");
+	    throw LvmCacheException();
+	}
 
-	y2deb("lvm cache: removed lv " << lv_name << " from vg " << vg_name);
+	cit->second->remove_lv(lv_name);
+
+	y2deb("lvm cache: removed " << vg_name << "/" << lv_name);
     }
 
 
@@ -525,21 +569,13 @@ namespace snapper
 
 	if (cit == vgroups.end())
 	{
-	    y2err("VG " << vg_name << " is not in cache!");
+	    y2err("lvm cache: VG " << vg_name << " is not in cache!");
 	    throw LvmCacheException();
 	}
 
-	try
-	{
-	    cit->second->rename(old_name, new_name);
-	}
-	catch (const LvmCacheException& e)
-	{
-	    y2err("lvm cache failed to rename " << vg_name << "/" << old_name << " ->  " << vg_name << "/" << new_name);
-	    throw;
-	}
+	cit->second->rename(old_name, new_name);
 
-	y2deb("lvm cache: in vg " << vg_name << " " << old_name << " was renamed to " << new_name);
+	y2deb("lvm cache: " << vg_name << "/" << old_name << " renamed to " << vg_name << "/" << new_name);
     }
 
 

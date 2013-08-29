@@ -119,10 +119,10 @@ namespace snapper
 
 	bool read_only(const string& lv_name) const; // shared lock
 
-	void add(const string& lv_name); // excl lock
+	void create_snapshot(const string& lv_origin_name, const string& lv_snapshot_name); // upg lock -> excl
 	void add_or_update(const string& lv_name); // upg lock -> excl
 
-	void remove(const string& lv_name); // excl lock
+	void remove_lv(const string& lv_name); // upg lock -> excl
 	void rename(const string& old_name, const string& new_name); // upg lock -> excl
 
 	friend std::ostream& operator<<(std::ostream& out, const VolumeGroup* vg);
@@ -156,13 +156,13 @@ namespace snapper
 	bool contains_thin(const string& vg_name, const string& lv_name) const;
 	bool read_only(const string& vg_name, const string& lv_name) const;
 
-	// add snapshot owned by snapper
-	void add(const string& vg_name, const string& lv_name) const;
+	// create snapper owned snapshot
+	void create_snapshot(const string& vg_name, const string&lv_origin_name, const string& lv_snapshot_name);
 	// used to actualise info about origin volume
 	void add_or_update(const string& vg_name, const string& lv_name);
 
 	// remove snapshot owned by snapper
-	void remove(const string& vg_name, const string& lv_name) const;
+	void delete_snapshot(const string& vg_name, const string& lv_name) const;
 
 	// rename snapshots (used during import)
 	void rename(const string& vg_name, const string& old_name, const string& new_name) const;
