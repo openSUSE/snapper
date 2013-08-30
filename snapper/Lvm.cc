@@ -313,7 +313,6 @@ namespace snapper
 	}
 	catch(const LvmCacheException& e)
 	{
-	    y2err("Lvm cache failure");
 	    y2deb(cache);
 	    return false;
 	}
@@ -340,7 +339,6 @@ namespace snapper
 	    }
 	    catch(const LvmCacheException& e)
 	    {
-		y2err("Couldn't activate snapshot " << vg_name << "/" << lv_name);
 		y2deb(cache);
 		throw LvmActivationException();
 	    }
@@ -368,7 +366,6 @@ namespace snapper
 	    }
 	    catch(const LvmCacheException& e)
 	    {
-		y2war("lvm cache failure");
 		y2deb(cache);
 		throw LvmDeactivatationException();
 	    }
