@@ -211,7 +211,7 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 
 	"    <method name='SetConfig'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
-	"      <arg name='data' type='(a{ss})' direction='in'/>\n"
+	"      <arg name='data' type='a{ss}' direction='in'/>\n"
 	"    </method>\n"
 
 	"    <method name='CreateConfig'>\n"
