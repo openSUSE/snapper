@@ -23,7 +23,7 @@ class MessageListener:
             "ConfigDeleted" : self.config_deleted,
             "SnapshotCreated" : self.snapshot_created,
             "SnapshotModified" : self.snapshot_modified,
-            "SnapshotsDeleted" : self.snapshot_deleted,
+            "SnapshotsDeleted" : self.snapshots_deleted,
         }
 
         for signal, handler in signals.items():
@@ -45,7 +45,7 @@ class MessageListener:
     def snapshot_modified(self, config, number):
         print "SnapshotModified", config, number
 
-    def snapshot_deleted(self, config, numbers):
+    def snapshots_deleted(self, config, numbers):
         print "SnapshotsDeleted", config,
         for number in numbers:
             print number,
