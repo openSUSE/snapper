@@ -8,6 +8,7 @@ method CreateConfig config-name subvolume fstype template-name
 method DeleteConfig config-name
 
 signal ConfigCreated config-name
+signal ConfigModified config-name
 signal ConfigDeleted config-name
 
 

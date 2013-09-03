@@ -195,7 +195,7 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='number' type='u'/>\n"
 	"    </signal>\n"
 
-	"    <signal name='SnapshotDeleted'>\n"
+	"    <signal name='SnapshotsDeleted'>\n"
 	"      <arg name='config-name' type='s'/>\n"
 	"      <arg name='number' type='u'/>\n"
 	"    </signal>\n"
