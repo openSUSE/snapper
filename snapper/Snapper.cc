@@ -54,6 +54,16 @@ namespace snapper
     }
 
 
+    void
+    ConfigInfo::setValue(const string& key, const string& value)
+    {
+	if (key == "SUBVOLUME" || key == "FSTYPE")
+	    throw InvalidConfigdataException();
+
+	SysconfigFile::setValue(key, value);
+    }
+
+
     Snapper::Snapper(const string& config_name, bool disable_filters)
 	: config_name(config_name), config(NULL), subvolume("/"), filesystem(NULL),
 	  snapshots(this)

@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Sep 06 16:02:47 CEST 2013 - aschnell@suse.de
+
+- added option --no-dbus to snapper tool
+
+-------------------------------------------------------------------
 Thu Jul 25 14:40:31 CEST 2013 - aschnell@suse.de
 
 - allow to change config via DBus and with command line tool

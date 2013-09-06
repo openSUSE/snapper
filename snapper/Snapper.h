@@ -40,12 +40,16 @@ namespace snapper
     class SDir;
 
 
-    struct ConfigInfo : public SysconfigFile
+    class ConfigInfo : public SysconfigFile
     {
+    public:
+
 	explicit ConfigInfo(const string& config_name);
 
 	const string& getConfigName() const { return config_name; }
 	const string& getSubvolume() const { return subvolume; }
+
+	virtual void setValue(const string& key, const string& value);
 
     private:
 

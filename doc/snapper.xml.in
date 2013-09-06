@@ -186,10 +186,17 @@
 	</listitem>
       </varlistentry>
       <varlistentry>
+	<term><option>--no-dbus</option></term>
+	<listitem>
+	  <para>Operate without a DBus connection. Only works for some commands.</para>
+	  <para>Use with caution since a running snapperd will not know about
+	  modifications made to the system.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
 	<term><option>--version</option></term>
 	<listitem>
 	  <para>Print version and exit.</para>
-
 	</listitem>
       </varlistentry>
     </variablelist>

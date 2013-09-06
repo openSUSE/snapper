@@ -92,17 +92,17 @@ namespace snapper
 
 	SysconfigFile(const char* name) : AsciiFile(name), modified(false) {}
 	SysconfigFile(const string& name) : AsciiFile(name), modified(false) {}
-	~SysconfigFile() { if (modified) save(); }
+	virtual ~SysconfigFile() { if (modified) save(); }
 
 	void save();
 
-	void setValue(const string& key, bool value);
+	virtual void setValue(const string& key, bool value);
 	bool getValue(const string& key, bool& value) const;
 
-	void setValue(const string& key, const string& value);
+	virtual void setValue(const string& key, const string& value);
 	bool getValue(const string& key, string& value) const;
 
-	void setValue(const string& key, const vector<string>& values);
+	virtual void setValue(const string& key, const vector<string>& values);
 	bool getValue(const string& key, vector<string>& values) const;
 
 	map<string, string> getAllValues() const;

@@ -174,9 +174,6 @@ MetaSnapper::~MetaSnapper()
 void
 MetaSnapper::setConfigInfo(const map<string, string>& raw)
 {
-    if (raw.find("SUBVOLUME") != raw.end() || raw.find("FSTYPE") != raw.end())
-	throw InvalidConfigdataException();
-
     for (map<string, string>::const_iterator it = raw.begin(); it != raw.end(); ++it)
 	config_info.setValue(it->first, it->second);
 
