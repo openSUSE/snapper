@@ -28,6 +28,8 @@
 #include <vector>
 #include <map>
 
+#include "snapper/Exception.h"
+
 
 namespace snapper
 {
@@ -86,15 +88,24 @@ namespace snapper
     };
 
 
+
     class SysconfigFile : protected AsciiFile
     {
     public:
+
+	struct InvalidKeyException : public SnapperException
+	{
+	    explicit InvalidKeyException() throw() {}
+	    virtual const char* what() const throw() { return "invalid key"; }
+	};
 
 	SysconfigFile(const char* name) : AsciiFile(name), modified(false) {}
 	SysconfigFile(const string& name) : AsciiFile(name), modified(false) {}
 	virtual ~SysconfigFile() { if (modified) save(); }
 
 	void save();
+
+	virtual void checkKey(const string& key) const;
 
 	virtual void setValue(const string& key, bool value);
 	bool getValue(const string& key, bool& value) const;

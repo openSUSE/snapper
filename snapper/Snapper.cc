@@ -55,12 +55,19 @@ namespace snapper
 
 
     void
-    ConfigInfo::setValue(const string& key, const string& value)
+    ConfigInfo::checkKey(const string& key) const
     {
 	if (key == "SUBVOLUME" || key == "FSTYPE")
 	    throw InvalidConfigdataException();
 
-	SysconfigFile::setValue(key, value);
+	try
+	{
+	    SysconfigFile::checkKey(key);
+	}
+	catch (const InvalidKeyException& e)
+	{
+	    throw InvalidConfigdataException();
+	}
     }
 
 

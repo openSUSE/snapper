@@ -483,12 +483,6 @@ command_set_config(DBus::Connection* conn, Snapper* snapper)
 	string key = boost::trim_copy(arg.substr(0, pos));
 	string value = boost::trim_copy(arg.substr(pos + 1));
 
-	if (key.empty())
-	{
-	    cerr << _("Invalid configdata.") << endl;
-	    exit(EXIT_FAILURE);
-	}
-
 	raw[key] = value;
     }
 
@@ -1666,6 +1660,8 @@ main(int argc, char** argv)
 		cerr << _("No permissions.") << endl;
 	    else if (name == "error.invalid_userdata")
 		cerr << _("Invalid userdata.") << endl;
+	    else if (name == "error.invalid_configdata")
+		cerr << _("Invalid configdata.") << endl;
 	    else if (name == "error.illegal_snapshot")
 		cerr << _("Illegal Snapshot.") << endl;
 	    else if (name == "error.config_locked")

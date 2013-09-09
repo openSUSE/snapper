@@ -49,7 +49,7 @@ namespace snapper
 	const string& getConfigName() const { return config_name; }
 	const string& getSubvolume() const { return subvolume; }
 
-	virtual void setValue(const string& key, const string& value);
+	virtual void checkKey(const string& key) const;
 
     private:
 

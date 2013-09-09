@@ -169,6 +169,16 @@ AsciiFile::save()
 
 
     void
+    SysconfigFile::checkKey(const string& key) const
+    {
+	Regex rx("^" "([0-9A-Z_]+)" "$");
+
+	if (!rx.match(key))
+	    throw InvalidKeyException();
+    }
+
+
+    void
     SysconfigFile::setValue(const string& key, bool value)
     {
 	setValue(key, value ? "yes" : "no");
@@ -190,6 +200,8 @@ AsciiFile::save()
     void
     SysconfigFile::setValue(const string& key, const string& value)
     {
+	checkKey(key);
+
 	string line = key + "=\"" + value + "\"";
 
 	Regex rx('^' + Regex::ws + key + '=' + "(['\"]?)([^'\"]*)\\1" + Regex::ws + '$');
