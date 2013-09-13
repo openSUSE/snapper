@@ -1357,6 +1357,12 @@ command_cleanup(DBus::Connection* conn, Snapper* snapper)
 
 
 void
+help_debug()
+{
+}
+
+
+void
 command_debug(DBus::Connection* conn, Snapper* snapper)
 {
     getopts.parse("debug", GetOpts::no_options);
@@ -1485,10 +1491,7 @@ help()
 	 << endl;
 
     for (list<Cmd>::const_iterator cmd = cmds.begin(); cmd != cmds.end(); ++cmd)
-    {
-	if (cmd->help_func)
-	    (*cmd->help_func)();
-    }
+	(*cmd->help_func)();
 
     exit (EXIT_SUCCESS);
 }
@@ -1520,7 +1523,7 @@ main(int argc, char** argv)
 #endif
     cmds.push_back(Cmd("undochange", command_undo, help_undo, false, true));
     cmds.push_back(Cmd("cleanup", command_cleanup, help_cleanup, false, true));
-    cmds.push_back(Cmd("debug", command_debug, NULL, false, false));
+    cmds.push_back(Cmd("debug", command_debug, help_debug, false, false));
 
     const struct option options[] = {
 	{ "quiet",		no_argument,		0,	'q' },
