@@ -175,6 +175,16 @@
             </dd>
             <dt>
               <span class="term">
+                <code class="option">--no-dbus</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Operate without a DBus connection. Only works for some commands.</p>
+              <p>Use with caution since a running snapperd will not know about
+	  modifications made to the system.</p>
+            </dd>
+            <dt>
+              <span class="term">
                 <code class="option">--version</code>
               </span>
             </dt>
@@ -252,6 +262,24 @@
 	  command you will likely need to global option
 	  <code class="option">--config</code>, see <a class="link" href="#global_options" title="GLOBAL OPTIONS">GLOBAL
 	  OPTIONS</a> and <a class="link" href="#concepts" title="CONCEPTS">CONCEPTS.</a></p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">get-config</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Displays the settings of the configuration.</p>
+            </dd>
+            <dt>
+              <span class="term"><code class="option">set-config</code> <em class="replaceable"><code>configdata</code></em></span>
+            </dt>
+            <dd>
+              <p>Changes the settings of the configuration. The settings
+	  <em class="replaceable"><code>configdata</code></em> are a list of key-value-pairs separated
+	  by spaces and the key and value must be separated by an equal sign,
+	  e.g. "NUMBER_CLEANUP=yes NUMBER_LIMIT=10". The value of SUBVOLUME and FSTYPE
+	  cannot be changed.</p>
             </dd>
             <dt>
               <span class="term">
