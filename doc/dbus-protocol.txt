@@ -17,7 +17,7 @@ method UnlockConfig config-name
 
 Locking disallows other clients to delete the config and delete snapshots for
 the config but not to create new snapshots for the config. Several clients can
-lock the some config.
+lock the same config.
 
 
 method ListSnapshots config-name
