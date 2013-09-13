@@ -104,7 +104,7 @@
 	<listitem>
 	  <para>Defines how many snapshots the number cleanup algorithm should
 	  keep. The youngest snapshots will be kept.</para>
-	  <para>Default value is &quot;100&quot;.</para>
+	  <para>Default value is &quot;50&quot;.</para>
 	</listitem>
       </varlistentry>
 
