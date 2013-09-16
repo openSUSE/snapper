@@ -27,7 +27,7 @@
 #include <vector>
 
 #include <boost/noncopyable.hpp>
-#include <boost/thread.hpp>
+#include <boost/thread/shared_mutex.hpp>
 
 
 
@@ -93,7 +93,7 @@ namespace snapper
 
 	LvAttrs attrs;
 
-	mutable boost::upgrade_mutex lv_mutex;
+	mutable boost::shared_mutex lv_mutex;
     };
 
 
@@ -117,7 +117,7 @@ namespace snapper
 	bool contains(const string& lv_name) const; // shared lock
 	bool contains_thin(const string& lv_name) const; // shared lock
 
-	bool read_only(const string& lv_name) const; // shared lock
+	bool constains_read_only(const string& lv_name) const; // shared lock
 
 	void create_snapshot(const string& lv_origin_name, const string& lv_snapshot_name); // upg lock -> excl
 	void add_or_update(const string& lv_name); // upg lock -> excl
@@ -132,7 +132,7 @@ namespace snapper
 
 	const string vg_name;
 
-	mutable boost::upgrade_mutex vg_mutex;
+	mutable boost::shared_mutex vg_mutex;
 
 	vg_content_t lv_info_map;
     };
@@ -154,7 +154,7 @@ namespace snapper
 
 	bool contains(const string& vg_name, const string& lv_name) const;
 	bool contains_thin(const string& vg_name, const string& lv_name) const;
-	bool read_only(const string& vg_name, const string& lv_name) const;
+	bool contains_read_only(const string& vg_name, const string& lv_name) const;
 
 	// create snapper owned snapshot
 	void create_snapshot(const string& vg_name, const string&lv_origin_name, const string& lv_snapshot_name);

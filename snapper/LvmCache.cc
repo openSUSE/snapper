@@ -23,8 +23,6 @@
 #include <vector>
 
 #include <boost/algorithm/string.hpp>
-#include <boost/thread/lock_options.hpp>
-#include <boost/thread/shared_lock_guard.hpp>
 
 #include "snapper/Log.h"
 #include "snapper/LvmCache.h"
@@ -90,12 +88,12 @@ namespace snapper
 	 *	 in scope of logical volume.
 	 */
 
-	boost::upgrade_lock<boost::upgrade_mutex> upg_lock(lv_mutex);
+	boost::upgrade_lock<boost::shared_mutex> upg_lock(lv_mutex);
 
 	if (!attrs.active)
 	{
 	    {
-		boost::upgrade_to_unique_lock<boost::upgrade_mutex> unique_lock(upg_lock);
+		boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(upg_lock);
 
 		SystemCmd cmd(LVCHANGEBIN + caps->get_ignoreactivationskip() + " -ay " + quote(vg->get_vg_name() + "/" + lv_name));
 		if (cmd.retcode() != 0)
@@ -125,12 +123,12 @@ namespace snapper
 	 *	 in scope of logical volume.
 	 */
 
-	boost::upgrade_lock<boost::upgrade_mutex> upg_lock(lv_mutex);
+	boost::upgrade_lock<boost::shared_mutex> upg_lock(lv_mutex);
 
 	if (attrs.active)
 	{
 	    {
-		boost::upgrade_to_unique_lock<boost::upgrade_mutex> unique_lock(upg_lock);
+		boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(upg_lock);
 
 		SystemCmd cmd(LVCHANGEBIN " -an " + quote(vg->get_vg_name() + "/" + lv_name));
 		if (cmd.retcode() != 0)
@@ -146,20 +144,19 @@ namespace snapper
 	}
     }
 
-    // vg shared lock
+
     void
     LogicalVolume::update()
     {
-	boost::shared_lock<boost::upgrade_mutex> shared_lock(lv_mutex);
+	boost::unique_lock<boost::shared_mutex> unique_lock(lv_mutex);
+
 	SystemCmd cmd(LVSBIN " --noheadings -o lv_attr,segtype,pool_lv " + quote(vg->get_vg_name() + "/" + lv_name));
-	shared_lock.unlock();
 
 	if (cmd.retcode() != 0 || cmd.numLines() < 1)
 	{
 	    y2err("lvm cache: failed to get info about " << vg->get_vg_name() << "/" << lv_name);
 	    throw LvmCacheException();
 	}
-
 
 	vector<string> args;
 	const string tmp = boost::trim_copy(cmd.getLine(0));
@@ -169,8 +166,6 @@ namespace snapper
 
 	LvAttrs new_attrs(args);
 
-	boost::unique_lock<boost::upgrade_mutex> unique_lock(lv_mutex);
-
 	attrs = new_attrs;
     }
 
@@ -178,7 +173,7 @@ namespace snapper
     bool
     LogicalVolume::readonly()
     {
-	boost::shared_lock<boost::upgrade_mutex> shared_lock(lv_mutex);
+	boost::shared_lock<boost::shared_mutex> shared_lock(lv_mutex);
 
 	return attrs.readonly;
     }
@@ -187,7 +182,7 @@ namespace snapper
     bool
     LogicalVolume::thin()
     {
-	boost::shared_lock<boost::upgrade_mutex> shared_lock(lv_mutex);
+	boost::shared_lock<boost::shared_mutex> shared_lock(lv_mutex);
 
 	return attrs.thin;
     }
@@ -219,7 +214,7 @@ namespace snapper
     void
     VolumeGroup::activate(const string& lv_name)
     {
-	boost::shared_lock<boost::upgrade_mutex> shared_lock(vg_mutex);
+	boost::shared_lock<boost::shared_mutex> shared_lock(vg_mutex);
 
 	iterator it = lv_info_map.find(lv_name);
 	if (it == lv_info_map.end())
@@ -235,7 +230,7 @@ namespace snapper
     void
     VolumeGroup::deactivate(const string& lv_name)
     {
-	boost::shared_lock<boost::upgrade_mutex> shared_lock(vg_mutex);
+	boost::shared_lock<boost::shared_mutex> shared_lock(vg_mutex);
 
 	iterator it = lv_info_map.find(lv_name);
 	if (it == lv_info_map.end())
@@ -251,7 +246,7 @@ namespace snapper
     bool
     VolumeGroup::contains(const std::string& lv_name) const
     {
-	boost::shared_lock<boost::upgrade_mutex> shared_lock(vg_mutex);
+	boost::shared_lock<boost::shared_mutex> shared_lock(vg_mutex);
 
 	return lv_info_map.find(lv_name) != lv_info_map.end();
     }
@@ -260,7 +255,7 @@ namespace snapper
     bool
     VolumeGroup::contains_thin(const string& lv_name) const
     {
-	boost::shared_lock<boost::upgrade_mutex> shared_lock(vg_mutex);
+	boost::shared_lock<boost::shared_mutex> shared_lock(vg_mutex);
 
 	const_iterator cit = lv_info_map.find(lv_name);
 
@@ -269,9 +264,9 @@ namespace snapper
 
 
     bool
-    VolumeGroup::read_only(const string& lv_name) const
+    VolumeGroup::constains_read_only(const string& lv_name) const
     {
-	boost::shared_lock<boost::upgrade_mutex> shared_lock(vg_mutex);
+	boost::shared_lock<boost::shared_mutex> shared_lock(vg_mutex);
 
 	const_iterator cit = lv_info_map.find(lv_name);
 
@@ -282,7 +277,7 @@ namespace snapper
     void
     VolumeGroup::create_snapshot(const string& lv_origin_name, const string& lv_snapshot_name)
     {
-	boost::upgrade_lock<boost::upgrade_mutex> upg_lock(vg_mutex);
+	boost::upgrade_lock<boost::shared_mutex> upg_lock(vg_mutex);
 
 	if (lv_info_map.find(lv_snapshot_name) != lv_info_map.end())
 	{
@@ -290,7 +285,7 @@ namespace snapper
 	    throw LvmCacheException();
 	}
 
-	boost::upgrade_to_unique_lock<boost::upgrade_mutex> unique_lock(upg_lock);
+	boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(upg_lock);
 
 	SystemCmd cmd(LVCREATEBIN " --permission r --snapshot --name " +
 		      quote(lv_snapshot_name) + " " + quote(vg_name + "/" + lv_origin_name));
@@ -305,15 +300,12 @@ namespace snapper
     void
     VolumeGroup::add_or_update(const string& lv_name)
     {
-	boost::upgrade_lock<boost::upgrade_mutex> upg_lock(vg_mutex);
+	boost::upgrade_lock<boost::shared_mutex> upg_lock(vg_mutex);
 
 	iterator it = lv_info_map.find(lv_name);
 	if (it != lv_info_map.end())
 	{
-	    // FIXME: Is there a better way to downgrade upgrade lock?
-	    upg_lock.release()->unlock_upgrade_and_lock_shared();
-	    boost::shared_lock_guard<boost::upgrade_mutex> shared_guard(vg_mutex, boost::adopt_lock_t());
-
+	    // FIXME: upgrade lock is too strict here. Should be shared_lock only
 	    it->second->update();
 	}
 	else
@@ -333,7 +325,7 @@ namespace snapper
 
 	    LogicalVolume* p_lv = new LogicalVolume(this, lv_name, LvAttrs(args));
 
-	    boost::upgrade_to_unique_lock<boost::upgrade_mutex> unique_lock(upg_lock);
+	    boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(upg_lock);
 	    lv_info_map.insert(make_pair(lv_name, p_lv));
 	}
     }
@@ -342,7 +334,7 @@ namespace snapper
     void
     VolumeGroup::remove_lv(const string& lv_name)
     {
-	boost::upgrade_lock<boost::upgrade_mutex> upg_lock(vg_mutex);
+	boost::upgrade_lock<boost::shared_mutex> upg_lock(vg_mutex);
 
 	const_iterator cit = lv_info_map.find(lv_name);
 
@@ -353,7 +345,7 @@ namespace snapper
 	}
 
 	// wait for all invidual lv cache operations under shared vg lock to finish
-	boost::upgrade_to_unique_lock<boost::upgrade_mutex> unique_lock(upg_lock);
+	boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(upg_lock);
 
 	SystemCmd cmd(LVREMOVEBIN " --force " + quote(vg_name + "/" + lv_name));
 	if (cmd.retcode() != 0)
@@ -367,7 +359,7 @@ namespace snapper
     void
     VolumeGroup::rename(const string& old_name, const string& new_name)
     {
-	boost::upgrade_lock<boost::upgrade_mutex> upg_lock(vg_mutex);
+	boost::upgrade_lock<boost::shared_mutex> upg_lock(vg_mutex);
 
 	const_iterator cit = lv_info_map.find(old_name);
 
@@ -380,7 +372,7 @@ namespace snapper
 	}
 
 	// wait for all invidual lv cache operations under shared vg lock to finish
-	boost::upgrade_to_unique_lock<boost::upgrade_mutex> unique_lock(upg_lock);
+	boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(upg_lock);
 
 	SystemCmd cmd(LVRENAMEBIN " " + quote(vg_name) + " " + quote(old_name) +
 		      " " + quote(new_name));
@@ -403,7 +395,7 @@ namespace snapper
     VolumeGroup::debug(std::ostream& out) const
     {
 	// do not allow any modifications in a whole VG
-	boost::unique_lock<boost::upgrade_mutex> unique_lock(vg_mutex);
+	boost::unique_lock<boost::shared_mutex> unique_lock(vg_mutex);
 
 	for (const_iterator cit = lv_info_map.begin(); cit != lv_info_map.end(); cit++)
 	    out << "\tLV:'" << cit->first << "':" << std::endl << "\t\t" << cit->second;
@@ -456,11 +448,11 @@ namespace snapper
 
 
     bool
-    LvmCache::read_only(const string& vg_name, const string& lv_name) const
+    LvmCache::contains_read_only(const string& vg_name, const string& lv_name) const
     {
 	const_iterator cit = vgroups.find(vg_name);
 
-	return cit != vgroups.end() && cit->second->read_only(lv_name);
+	return cit != vgroups.end() && cit->second->constains_read_only(lv_name);
     }
 
 
