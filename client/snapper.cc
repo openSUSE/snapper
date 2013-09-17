@@ -576,6 +576,7 @@ command_list(DBus::Connection* conn, Snapper* snapper)
 		    row.add(decString(it1->getNum()));
 		    row.add(it1->getType() == POST ? decString(it1->getPreNum()) : "");
 		    row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), false, false));
+		    row.add(username(it1->getUid()));
 		    row.add(it1->getCleanup());
 		    row.add(it1->getDescription());
 		    row.add(show_userdata(it1->getUserdata()));
@@ -623,6 +624,7 @@ command_list(DBus::Connection* conn, Snapper* snapper)
 		    TableRow row;
 		    row.add(decString(it1->getNum()));
 		    row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), false, false));
+		    row.add(username(it1->getUid()));
 		    row.add(it1->getDescription());
 		    row.add(show_userdata(it1->getUserdata()));
 		    table.add(row);
