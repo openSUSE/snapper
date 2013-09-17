@@ -1,5 +1,5 @@
 #
-# Makefile.repo for libsnapper
+# Makefile.repo for snapper
 #
 
 configure: all
