@@ -40,6 +40,7 @@
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/Regex.h"
+#include "snapper/LvmCache.h"
 
 
 namespace snapper
@@ -57,7 +58,9 @@ namespace snapper
 
 
     Lvm::Lvm(const string& subvolume, const string& mount_type)
-	: Filesystem(subvolume), mount_type(mount_type)
+	: Filesystem(subvolume), mount_type(mount_type),
+	caps(LvmCapabilities::get_lvm_capabilities()),
+	cache(LvmCache::get_lvm_cache())
     {
 	if (access(LVCREATEBIN, X_OK) != 0)
 	{
@@ -67,6 +70,11 @@ namespace snapper
 	if (access(LVSBIN, X_OK) != 0)
 	{
 	    throw ProgramNotInstalledException(LVSBIN " not installed");
+	}
+
+	if (access(LVCHANGEBIN, X_OK) != 0)
+	{
+	    throw ProgramNotInstalledException(LVCHANGEBIN " not installed");
 	}
 
 	bool found = false;
@@ -180,16 +188,21 @@ namespace snapper
     void
     Lvm::createSnapshot(unsigned int num) const
     {
-	SystemCmd cmd(LVCREATEBIN " --permission r --snapshot --name " +
-		      quote(snapshotLvName(num)) + " " + quote(vg_name + "/" + lv_name));
-	if (cmd.retcode() != 0)
-	    throw CreateSnapshotFailedException();
-
 	SDir info_dir = openInfoDir(num);
 	int r1 = info_dir.mkdir("snapshot", 0755);
 	if (r1 != 0 && errno != EEXIST)
 	{
 	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
+	    throw CreateSnapshotFailedException();
+	}
+
+	try
+	{
+	    cache->create_snapshot(vg_name, lv_name, snapshotLvName(num));
+	}
+	catch (const LvmCacheException& e)
+	{
+	    y2deb(cache);
 	    throw CreateSnapshotFailedException();
 	}
     }
@@ -198,9 +211,15 @@ namespace snapper
     void
     Lvm::deleteSnapshot(unsigned int num) const
     {
-	SystemCmd cmd(LVREMOVEBIN " --force " + quote(vg_name + "/" + snapshotLvName(num)));
-	if (cmd.retcode() != 0)
+	try
+	{
+	    cache->delete_snapshot(vg_name, snapshotLvName(num));
+	}
+	catch (const LvmCacheException& e)
+	{
+	    y2deb(cache);
 	    throw DeleteSnapshotFailedException();
+	}
 
 	SDir info_dir = openInfoDir(num);
 	info_dir.unlink("snapshot", AT_REMOVEDIR);
@@ -229,6 +248,15 @@ namespace snapper
 	if (isSnapshotMounted(num))
 	    return;
 
+	try
+	{
+	    activateSnapshot(vg_name, snapshotLvName(num));
+	}
+	catch (const LvmActivationException& e)
+	{
+	    throw MountSnapshotFailedException();
+	}
+
 	SDir snapshot_dir = openSnapshotDir(num);
 
 	if (!mount(getDevice(num), snapshot_dir, mount_type, mount_options))
@@ -239,22 +267,30 @@ namespace snapper
     void
     Lvm::umountSnapshot(unsigned int num) const
     {
-	if (!isSnapshotMounted(num))
-	    return;
+	if (isSnapshotMounted(num))
+	{
+	    SDir info_dir = openInfoDir(num);
 
-	SDir info_dir = openInfoDir(num);
+	    if (!umount(info_dir, "snapshot"))
+		throw UmountSnapshotFailedException();
 
-	if (!umount(info_dir, "snapshot"))
-	    throw UmountSnapshotFailedException();
+	}
+
+	try
+	{
+	    deactivateSnapshot(vg_name, snapshotLvName(num));
+	}
+	catch (const LvmDeactivatationException& e)
+	{
+	    y2war("Couldn't deactivate: " << vg_name << "/" << lv_name);
+	}
     }
 
 
     bool
     Lvm::checkSnapshot(unsigned int num) const
     {
-	struct stat stat;
-	int r1 = ::stat(getDevice(num).c_str(), &stat);
-	return r1 == 0 && S_ISBLK(stat.st_mode);
+	return detectInactiveSnapshot(vg_name, snapshotLvName(num));
     }
 
 
@@ -271,21 +307,17 @@ namespace snapper
 	vg_name = boost::replace_all_copy(rx.cap(1), "--", "-");
 	lv_name = boost::replace_all_copy(rx.cap(2), "--", "-");
 
-	SystemCmd cmd(LVSBIN " -o segtype --noheadings " + quote(vg_name + "/" + lv_name));
-
-	if (cmd.retcode() != 0) {
-	    y2err("could not detect segment type infromation from: " << vg_name << "/" << lv_name);
+	try
+	{
+	    cache->add_or_update(vg_name, lv_name);
+	}
+	catch(const LvmCacheException& e)
+	{
+	    y2deb(cache);
 	    return false;
 	}
 
-	string segtype = boost::trim_copy(cmd.getLine(0));
-
-	if (segtype.compare("thin")) {
-	    y2err(vg_name << "/" << lv_name << " is not a LVM thin volume");
-	    return false;
-	}
-
-	return true;
+	return cache->contains_thin(vg_name, lv_name);
     }
 
     string
@@ -293,6 +325,115 @@ namespace snapper
     {
 	return "/dev/mapper/" + boost::replace_all_copy(vg_name, "-", "--") + "-" +
 	    boost::replace_all_copy(snapshotLvName(num), "-", "--");
+    }
+
+
+    void
+    Lvm::activateSnapshot(const string& vg_name, const string& lv_name) const
+    {
+	try
+	{
+	    cache->activate(vg_name, lv_name);
+	}
+	catch(const LvmCacheException& e)
+	{
+	    y2deb(cache);
+	    throw LvmActivationException();
+	}
+    }
+
+
+    void
+    Lvm::deactivateSnapshot(const string& vg_name, const string& lv_name) const
+    {
+	try
+	{
+	    cache->deactivate(vg_name, lv_name);
+	}
+	catch(const LvmCacheException& e)
+	{
+	    y2deb(cache);
+	    throw LvmDeactivatationException();
+	}
+    }
+
+
+    bool
+    Lvm::detectInactiveSnapshot(const string& vg_name, const string& lv_name) const
+    {
+	return cache->contains(vg_name, lv_name);
+    }
+
+
+    LvmCapabilities::LvmCapabilities()
+	: ignoreactivationskip(), time_support(false)
+    {
+	SystemCmd cmd(string(LVMBIN " version"));
+
+	if (cmd.retcode() != 0)
+	{
+	    y2war("Couldn't get LVM version info");
+	}
+	else
+	{
+	    Regex rx(".*LVM[[:space:]]+version:[[:space:]]+([0-9]+)\\.([0-9]+)\\.([0-9]+).*$");
+
+	    if (!rx.match(cmd.getLine(0)))
+	    {
+		y2war("LVM version format didn't match");
+	    }
+	    else
+	    {
+		uint16_t maj, min, rev;
+
+		rx.cap(1) >> maj;
+		rx.cap(2) >> min;
+		rx.cap(3) >> rev;
+
+		lvm_version version(maj, min, rev);
+
+		if (version >= lvm_version(2,2,99))
+		{
+		    ignoreactivationskip = " -K";
+		}
+
+		time_support = (version >= lvm_version(2,2,88));
+	    }
+	}
+    }
+
+
+    bool
+    operator>=(const lvm_version& a, const lvm_version& b)
+    {
+	return a.version >= b.version;
+    }
+
+
+    LvmCapabilities*
+    LvmCapabilities::get_lvm_capabilities()
+    {
+	/*
+	 * NOTE: verify only one thread can access
+	 * 	 this section at the same time!
+	 */
+	static LvmCapabilities caps;
+
+	return &caps;
+    }
+
+
+    string
+    LvmCapabilities::get_ignoreactivationskip() const
+    {
+	return ignoreactivationskip;
+    }
+
+
+    bool
+    LvmCapabilities::get_time_support() const
+    {
+	return time_support;
     }
 
 }
