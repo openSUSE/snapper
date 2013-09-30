@@ -55,13 +55,10 @@ namespace snapper
 	static bool extract_readonly(const string& raw);
 
 	LvAttrs(const vector<string>& raw);
-	LvAttrs(bool active, bool readonly, bool thin, string pool);
-	//LvAttrs() : active(false), readonly(false), thin(false), pool() {}
+	LvAttrs(bool active, bool thin);
 
 	bool active;
-	bool readonly;
 	bool thin;
-	string pool;
     };
 
 
@@ -79,7 +76,6 @@ namespace snapper
 
 	void update(); // shared, unique_lock
 
-	bool readonly(); // shared
 	bool thin(); // shared
 
 	friend std::ostream& operator<<(std::ostream& out, const LogicalVolume* cache);
@@ -117,13 +113,10 @@ namespace snapper
 	bool contains(const string& lv_name) const; // shared lock
 	bool contains_thin(const string& lv_name) const; // shared lock
 
-	bool constains_read_only(const string& lv_name) const; // shared lock
-
 	void create_snapshot(const string& lv_origin_name, const string& lv_snapshot_name); // upg lock -> excl
 	void add_or_update(const string& lv_name); // upg lock -> excl
 
 	void remove_lv(const string& lv_name); // upg lock -> excl
-	void rename(const string& old_name, const string& new_name); // upg lock -> excl
 
 	friend std::ostream& operator<<(std::ostream& out, const VolumeGroup* vg);
 
@@ -154,7 +147,6 @@ namespace snapper
 
 	bool contains(const string& vg_name, const string& lv_name) const;
 	bool contains_thin(const string& vg_name, const string& lv_name) const;
-	bool contains_read_only(const string& vg_name, const string& lv_name) const;
 
 	// create snapper owned snapshot
 	void create_snapshot(const string& vg_name, const string&lv_origin_name, const string& lv_snapshot_name);
@@ -163,9 +155,6 @@ namespace snapper
 
 	// remove snapshot owned by snapper
 	void delete_snapshot(const string& vg_name, const string& lv_name) const;
-
-	// rename snapshots (used during import)
-	void rename(const string& vg_name, const string& old_name, const string& new_name) const;
 
 	friend std::ostream& operator<<(std::ostream& out, const LvmCache* cache);
     private:

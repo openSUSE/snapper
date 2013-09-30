@@ -109,9 +109,9 @@ namespace snapper
 	LvmCache* cache;
 
 	bool detectThinVolumeNames(const MtabData& mtab_data);
-	void activateSnapshot(const string& vg_name, const string& lv_name, bool use_cache) const;
-	void deactivateSnapshot(const string& vg_name, const string& lv_name, bool use_cache) const;
-	bool detectInactiveSnapshot(const string& vg_name, const string& lv_name, bool use_cache) const;
+	void activateSnapshot(const string& vg_name, const string& lv_name) const;
+	void deactivateSnapshot(const string& vg_name, const string& lv_name) const;
+	bool detectInactiveSnapshot(const string& vg_name, const string& lv_name) const;
 
 	string getDevice(unsigned int num) const;
 

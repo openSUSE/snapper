@@ -250,7 +250,7 @@ namespace snapper
 
 	try
 	{
-	    activateSnapshot(vg_name, snapshotLvName(num), true);
+	    activateSnapshot(vg_name, snapshotLvName(num));
 	}
 	catch (const LvmActivationException& e)
 	{
@@ -278,7 +278,7 @@ namespace snapper
 
 	try
 	{
-	    deactivateSnapshot(vg_name, snapshotLvName(num), true);
+	    deactivateSnapshot(vg_name, snapshotLvName(num));
 	}
 	catch (const LvmDeactivatationException& e)
 	{
@@ -290,7 +290,7 @@ namespace snapper
     bool
     Lvm::checkSnapshot(unsigned int num) const
     {
-	return detectInactiveSnapshot(vg_name, snapshotLvName(num), true);
+	return detectInactiveSnapshot(vg_name, snapshotLvName(num));
     }
 
 
@@ -329,68 +329,39 @@ namespace snapper
 
 
     void
-    Lvm::activateSnapshot(const string& vg_name, const string& lv_name, bool use_cache) const
+    Lvm::activateSnapshot(const string& vg_name, const string& lv_name) const
     {
-	if (use_cache)
+	try
 	{
-	    try
-	    {
-		cache->activate(vg_name, lv_name);
-	    }
-	    catch(const LvmCacheException& e)
-	    {
-		y2deb(cache);
-		throw LvmActivationException();
-	    }
+	    cache->activate(vg_name, lv_name);
 	}
-	else
+	catch(const LvmCacheException& e)
 	{
-	    SystemCmd cmd(LVCHANGEBIN + caps->get_ignoreactivationskip() + " -ay " + quote(vg_name + "/" + lv_name));
-	    if (cmd.retcode() != 0)
-	    {
-		y2err("Couldn't activate snapshot " << vg_name << "/" << lv_name);
-		throw LvmActivationException();
-	    }
+	    y2deb(cache);
+	    throw LvmActivationException();
 	}
     }
 
 
     void
-    Lvm::deactivateSnapshot(const string& vg_name, const string& lv_name, bool use_cache) const
+    Lvm::deactivateSnapshot(const string& vg_name, const string& lv_name) const
     {
-	if (use_cache)
+	try
 	{
-	    try
-	    {
-		cache->deactivate(vg_name, lv_name);
-	    }
-	    catch(const LvmCacheException& e)
-	    {
-		y2deb(cache);
-		throw LvmDeactivatationException();
-	    }
+	    cache->deactivate(vg_name, lv_name);
 	}
-	else
+	catch(const LvmCacheException& e)
 	{
-	    SystemCmd cmd(LVCHANGEBIN " -an " + quote(vg_name + "/" + lv_name));
-	    if (cmd.retcode())
-		throw LvmDeactivatationException();
+	    y2deb(cache);
+	    throw LvmDeactivatationException();
 	}
     }
 
 
     bool
-    Lvm::detectInactiveSnapshot(const string& vg_name, const string& lv_name, bool use_cache) const
+    Lvm::detectInactiveSnapshot(const string& vg_name, const string& lv_name) const
     {
-	if (use_cache)
-	{
-	    return cache->contains(vg_name, lv_name);
-	}
-	else
-	{
-	    SystemCmd cmd(LVSBIN " " + quote(vg_name + "/" + lv_name));
-	    return cmd.retcode() == 0;
-	}
+	return cache->contains(vg_name, lv_name);
     }
 
 
