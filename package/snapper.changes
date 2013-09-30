@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Sep 30 14:20:22 CEST 2013 - aschnell@suse.de
+
+- merged support for handling inactive LVM LVs from oniko
+
+-------------------------------------------------------------------
 Fri Sep 06 16:02:47 CEST 2013 - aschnell@suse.de
 
 - added option --no-dbus to snapper tool
