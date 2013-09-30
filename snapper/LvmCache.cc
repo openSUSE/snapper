@@ -307,8 +307,7 @@ namespace snapper
     {
 	boost::upgrade_lock<boost::shared_mutex> upg_lock(vg_mutex);
 
-	const_iterator cit = lv_info_map.find(lv_name);
-
+	iterator cit = lv_info_map.find(lv_name);
 	if (cit == lv_info_map.end())
 	{
 	    y2err("lvm cache: " << vg_name << "/" << lv_name << " is not in cache!");
