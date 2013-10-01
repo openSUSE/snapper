@@ -107,6 +107,11 @@ namespace snapper
 	    y2err("create subvolume failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    throw CreateConfigFailedException("creating btrfs snapshot failed");
 	}
+
+	SFile x(subvolume_dir, ".snapshots");
+	struct stat stat;
+	if (x.stat(&stat, 0) == 0)
+	    x.chmod(stat.st_mode & ~0027, 0);
     }
 
 

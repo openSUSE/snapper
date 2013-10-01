@@ -126,6 +126,7 @@ namespace snapper
 	int stat(struct stat* buf, int flags) const;
 	int open(int flags) const;
 	int readlink(string& buf) const;
+	int chmod(mode_t mode, int flags) const;
 
 	bool xaSupported() const;
 

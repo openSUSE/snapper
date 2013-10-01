@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Oct 01 15:46:19 CEST 2013 - aschnell@suse.de
+
+- restrict permissions on .snapshots subvolume (bnc#843219)
+
+-------------------------------------------------------------------
 Mon Sep 30 14:20:22 CEST 2013 - aschnell@suse.de
 
 - merged support for handling inactive LVM LVs from oniko

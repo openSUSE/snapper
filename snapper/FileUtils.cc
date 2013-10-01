@@ -588,6 +588,13 @@ namespace snapper
     }
 
 
+    int
+    SFile::chmod(mode_t mode, int flags) const
+    {
+	return dir.chmod(name, mode, flags);
+    }
+
+
     bool
     SFile::xaSupported() const
     {
