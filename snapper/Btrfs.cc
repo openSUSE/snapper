@@ -42,40 +42,11 @@
 
 #include "snapper/Log.h"
 #include "snapper/Btrfs.h"
+#include "snapper/BtrfsUtils.h"
 #include "snapper/File.h"
 #include "snapper/Snapper.h"
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"
-
-
-#ifndef HAVE_LIBBTRFS
-
-#define BTRFS_IOCTL_MAGIC 0x94
-#define BTRFS_PATH_NAME_MAX 4087
-#define BTRFS_SUBVOL_NAME_MAX 4039
-#define BTRFS_SUBVOL_RDONLY (1ULL << 1)
-
-#define BTRFS_IOC_SNAP_CREATE _IOW(BTRFS_IOCTL_MAGIC, 1, struct btrfs_ioctl_vol_args)
-#define BTRFS_IOC_SUBVOL_CREATE _IOW(BTRFS_IOCTL_MAGIC, 14, struct btrfs_ioctl_vol_args)
-#define BTRFS_IOC_SNAP_DESTROY _IOW(BTRFS_IOCTL_MAGIC, 15, struct btrfs_ioctl_vol_args)
-#define BTRFS_IOC_SNAP_CREATE_V2 _IOW(BTRFS_IOCTL_MAGIC, 23, struct btrfs_ioctl_vol_args_v2)
-
-struct btrfs_ioctl_vol_args
-{
-    __s64 fd;
-    char name[BTRFS_PATH_NAME_MAX + 1];
-};
-
-struct btrfs_ioctl_vol_args_v2
-{
-    __s64 fd;
-    __u64 transid;
-    __u64 flags;
-    __u64 unused[4];
-    char name[BTRFS_SUBVOL_NAME_MAX + 1];
-};
-
-#endif
 
 
 namespace snapper
@@ -268,63 +239,6 @@ namespace snapper
 	{
 	    return false;
 	}
-    }
-
-
-    bool
-    Btrfs::is_subvolume(const struct stat& stat) const
-    {
-	// see btrfsprogs source code
-	return stat.st_ino == 256 && S_ISDIR(stat.st_mode);
-    }
-
-
-    bool
-    Btrfs::create_subvolume(int fddst, const string& name) const
-    {
-	struct btrfs_ioctl_vol_args args;
-	memset(&args, 0, sizeof(args));
-
-	strncpy(args.name, name.c_str(), sizeof(args.name) - 1);
-
-	return ioctl(fddst, BTRFS_IOC_SUBVOL_CREATE, &args) == 0;
-    }
-
-
-    bool
-    Btrfs::create_snapshot(int fd, int fddst, const string& name) const
-    {
-	struct btrfs_ioctl_vol_args_v2 args_v2;
-	memset(&args_v2, 0, sizeof(args_v2));
-
-	args_v2.fd = fd;
-	args_v2.flags = BTRFS_SUBVOL_RDONLY;
-	strncpy(args_v2.name, name.c_str(), sizeof(args_v2.name) - 1);
-
-	if (ioctl(fddst, BTRFS_IOC_SNAP_CREATE_V2, &args_v2) == 0)
-	    return true;
-	else if (errno != ENOTTY && errno != EINVAL)
-	    return false;
-
-	struct btrfs_ioctl_vol_args args;
-	memset(&args, 0, sizeof(args));
-
-	args.fd = fd;
-	strncpy(args.name, name.c_str(), sizeof(args.name) - 1);
-
-	return ioctl(fddst, BTRFS_IOC_SNAP_CREATE, &args) == 0;
-    }
-
-
-    bool
-    Btrfs::delete_subvolume(int fd, const string& name) const
-    {
-	struct btrfs_ioctl_vol_args args;
-	memset(&args, 0, sizeof(args));
-
-	strncpy(args.name, name.c_str(), sizeof(args.name) - 1);
-
-	return ioctl(fd, BTRFS_IOC_SNAP_DESTROY, &args) == 0;
     }
 
 

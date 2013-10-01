@@ -60,14 +60,6 @@ namespace snapper
 
 	virtual void cmpDirs(const SDir& dir1, const SDir& dir2, cmpdirs_cb_t cb) const;
 
-    private:
-
-	bool is_subvolume(const struct stat& stat) const;
-
-	bool create_subvolume(int fddst, const string& name) const;
-	bool create_snapshot(int fd, int fddst, const string& name) const;
-	bool delete_subvolume(int fd, const string& name) const;
-
     };
 
 }
