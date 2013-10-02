@@ -113,7 +113,7 @@ namespace snapper
 	Snapper(const string& config_name = "root", bool disable_filters = false);
 	~Snapper();
 
-	string configName() const { return config_name; }
+	string configName() const { return config_info->getConfigName(); }
 
 	string subvolumeDir() const;
 
@@ -143,8 +143,6 @@ namespace snapper
 
 	const Filesystem* getFilesystem() const { return filesystem; }
 
-	const SysconfigFile* getSysconfigFile() const { return config; }
-
     private:
 
 	void filter1(list<Snapshots::iterator>& tmp, time_t min_age);
@@ -152,11 +150,7 @@ namespace snapper
 
 	void loadIgnorePatterns();
 
-	const string config_name;
-
-	SysconfigFile* config;
-
-	string subvolume;
+	ConfigInfo* config_info;
 
 	Filesystem* filesystem;
 

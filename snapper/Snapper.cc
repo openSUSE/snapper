@@ -50,7 +50,8 @@ namespace snapper
     ConfigInfo::ConfigInfo(const string& config_name)
 	: SysconfigFile(CONFIGSDIR "/" + config_name), config_name(config_name), subvolume("/")
     {
-	getValue("SUBVOLUME", subvolume);
+	if (!getValue("SUBVOLUME", subvolume))
+	    throw InvalidConfigException();
     }
 
 
@@ -72,8 +73,7 @@ namespace snapper
 
 
     Snapper::Snapper(const string& config_name, bool disable_filters)
-	: config_name(config_name), config(NULL), subvolume("/"), filesystem(NULL),
-	  snapshots(this)
+	: config_info(NULL), filesystem(NULL), snapshots(this)
     {
 	y2mil("Snapper constructor");
 	y2mil("libsnapper version " VERSION);
@@ -81,21 +81,19 @@ namespace snapper
 
 	try
 	{
-	    config = new SysconfigFile(CONFIGSDIR "/" + config_name);
+	    config_info = new ConfigInfo(config_name);
 	}
 	catch (const FileNotFoundException& e)
 	{
 	    throw ConfigNotFoundException();
 	}
 
-	if (!config->getValue("SUBVOLUME", subvolume))
-	    throw InvalidConfigException();
-
 	string fstype = "btrfs";
-	config->getValue("FSTYPE", fstype);
-	filesystem = Filesystem::create(fstype, subvolume);
+	config_info->getValue("FSTYPE", fstype);
+	filesystem = Filesystem::create(fstype, config_info->getSubvolume());
 
-	y2mil("subvolume:" << subvolume << " filesystem:" << filesystem->fstype());
+	y2mil("subvolume:" << config_info->getSubvolume() << " filesystem:" <<
+	      filesystem->fstype());
 
 	if (!disable_filters)
 	    loadIgnorePatterns();
@@ -122,7 +120,7 @@ namespace snapper
 	}
 
 	delete filesystem;
-	delete config;
+	delete config_info;
     }
 
 
@@ -154,7 +152,7 @@ namespace snapper
     string
     Snapper::subvolumeDir() const
     {
-	return subvolume;
+	return config_info->getSubvolume();
     }
 
 
@@ -237,6 +235,10 @@ namespace snapper
 		catch (const FileNotFoundException& e)
 		{
 		    y2err("config '" << *it << "' not found");
+		}
+		catch (const InvalidConfigException& e)
+		{
+		    y2err("config '" << *it << "' is invalid");
 		}
 	    }
 	}
