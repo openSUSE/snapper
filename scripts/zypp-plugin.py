@@ -6,7 +6,9 @@ from sys import stderr
 from dbus import SystemBus, Interface
 from zypp_plugin import Plugin
 
+
 class MyPlugin(Plugin):
+
 
   def parse_userdata(self, s):
     ud = {}
@@ -17,6 +19,7 @@ class MyPlugin(Plugin):
         raise ValueError
       ud[k] = v.strip()
     return ud
+
 
   def PLUGINBEGIN(self, headers, body):
 
@@ -35,11 +38,13 @@ class MyPlugin(Plugin):
 
     self.ack()
 
+
   def PLUGINEND(self, headers, body):
 
-    self.num2 = snapper.CreatePostSnapshot("root", self.num1, "", "number", {})
+    self.num2 = snapper.CreatePostSnapshot("root", self.num1, "", "number", userdata)
 
     self.ack()
+
 
 bus = SystemBus()
 
