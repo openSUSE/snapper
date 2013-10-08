@@ -25,23 +25,23 @@ class MyPlugin(Plugin):
 
     exe = basename(readlink("/proc/%d/exe" % getppid()))
 
-    userdata = {}
+    self.userdata = {}
 
     try:
-      userdata = self.parse_userdata(headers['userdata'])
+      self.userdata = self.parse_userdata(headers['userdata'])
     except KeyError:
       pass
     except ValueError:
       stderr.write("invalid userdata")
 
-    self.num1 = snapper.CreatePreSnapshot("root", "zypp(%s)" % exe, "number", userdata)
+    self.num1 = snapper.CreatePreSnapshot("root", "zypp(%s)" % exe, "number", self.userdata)
 
     self.ack()
 
 
   def PLUGINEND(self, headers, body):
 
-    self.num2 = snapper.CreatePostSnapshot("root", self.num1, "", "number", userdata)
+    self.num2 = snapper.CreatePostSnapshot("root", self.num1, "", "number", self.userdata)
 
     self.ack()
 
