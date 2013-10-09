@@ -180,21 +180,54 @@ namespace snapper
     Snapshots::iterator
     Snapper::createSingleSnapshot(string description)
     {
-	return snapshots.createSingleSnapshot(description);
+	return snapshots.createSingleSnapshot(0, description, "", map<string, string>());
     }
 
 
     Snapshots::iterator
     Snapper::createPreSnapshot(string description)
     {
-	return snapshots.createPreSnapshot(description);
+	return snapshots.createPreSnapshot(0, description, "", map<string, string>());
     }
 
 
     Snapshots::iterator
     Snapper::createPostSnapshot(string description, Snapshots::const_iterator pre)
     {
-	return snapshots.createPostSnapshot(description, pre);
+	return snapshots.createPostSnapshot(pre, 0, description, "", map<string, string>());
+    }
+
+
+    Snapshots::iterator
+    Snapper::createSingleSnapshot(uid_t uid, const string& description, const string& cleanup,
+				  const map<string, string>& userdata)
+    {
+	return snapshots.createSingleSnapshot(uid, description, cleanup, userdata);
+    }
+
+
+
+    Snapshots::iterator
+    Snapper::createPreSnapshot(uid_t uid, const string& description, const string& cleanup,
+			       const map<string, string>& userdata)
+    {
+	return snapshots.createPreSnapshot(uid, description, cleanup, userdata);
+    }
+
+
+    Snapshots::iterator
+    Snapper::createPostSnapshot(Snapshots::const_iterator pre, uid_t uid, const string& description,
+				const string& cleanup, const map<string, string>& userdata)
+    {
+	return snapshots.createPostSnapshot(pre, uid, description, cleanup, userdata);
+    }
+
+
+    void
+    Snapper::modifySnapshot(Snapshots::iterator snapshot, const string& description,
+			    const string& cleanup, const map<string, string>& userdata)
+    {
+	snapshots.modifySnapshot(snapshot, description, cleanup, userdata);
     }
 
 

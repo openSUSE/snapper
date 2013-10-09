@@ -810,10 +810,7 @@ Client::set_snapshot(DBus::Connection& conn, DBus::Message& msg)
     if (snap == snapshots.end())
 	throw IllegalSnapshotException();
 
-    snap->setDescription(description);
-    snap->setCleanup(cleanup);
-    snap->setUserdata(userdata);
-    snap->flushInfo();
+    snapper->modifySnapshot(snap, description, cleanup, userdata);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -845,11 +842,8 @@ Client::create_single_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     Snapper* snapper = it->getSnapper();
 
-    Snapshots::iterator snap1 = snapper->createSingleSnapshot(description);
-    snap1->setUid(conn.get_unix_userid(msg));
-    snap1->setCleanup(cleanup);
-    snap1->setUserdata(userdata);
-    snap1->flushInfo();
+    Snapshots::iterator snap1 = snapper->createSingleSnapshot(conn.get_unix_userid(msg),
+							      description, cleanup, userdata);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -884,11 +878,8 @@ Client::create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     Snapper* snapper = it->getSnapper();
 
-    Snapshots::iterator snap1 = snapper->createPreSnapshot(description);
-    snap1->setUid(conn.get_unix_userid(msg));
-    snap1->setCleanup(cleanup);
-    snap1->setUserdata(userdata);
-    snap1->flushInfo();
+    Snapshots::iterator snap1 = snapper->createPreSnapshot(conn.get_unix_userid(msg), description,
+							   cleanup, userdata);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -927,11 +918,8 @@ Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     Snapshots::iterator snap1 = snapshots.find(pre_num);
 
-    Snapshots::iterator snap2 = snapper->createPostSnapshot(description, snap1);
-    snap2->setUid(conn.get_unix_userid(msg));
-    snap2->setCleanup(cleanup);
-    snap2->setUserdata(userdata);
-    snap2->flushInfo();
+    Snapshots::iterator snap2 = snapper->createPostSnapshot(snap1, conn.get_unix_userid(msg),
+							    description, cleanup, userdata);
 
     bool tmp;
     if (it->getConfigInfo().getValue("BACKGROUND_COMPARISON", tmp) && tmp)

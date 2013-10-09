@@ -316,6 +316,20 @@ namespace snapper
 
 
     void
+    Snapshots::checkUserdata(const map<string, string>& userdata) const
+    {
+	for (map<string, string>::const_iterator it = userdata.begin(); it != userdata.end(); ++it)
+	{
+	    if (it->first.empty() || it->first.find_first_of(",=") != string::npos)
+		throw InvalidUserdataException();
+
+	    if (it->second.find_first_of(",=") != string::npos)
+		throw InvalidUserdataException();
+	}
+    }
+
+
+    void
     Snapshots::initialize()
     {
 	entries.clear();
@@ -555,36 +569,72 @@ namespace snapper
     Snapshots::iterator
     Snapshots::createSingleSnapshot(string description)
     {
-	Snapshot snapshot(snapper, SINGLE, nextNumber(), time(NULL));
-	snapshot.description = description;
-	snapshot.info_modified = true;
-
-	return createHelper(snapshot);
+	return createSingleSnapshot(0, description, "", map<string, string>());
     }
 
 
     Snapshots::iterator
     Snapshots::createPreSnapshot(string description)
     {
-	Snapshot snapshot(snapper, PRE, nextNumber(), time(NULL));
-	snapshot.description = description;
-	snapshot.info_modified = true;
-
-	return createHelper(snapshot);
+	return createPreSnapshot(0, description, "", map<string, string>());
     }
 
 
     Snapshots::iterator
     Snapshots::createPostSnapshot(string description, Snapshots::const_iterator pre)
     {
+	return createPostSnapshot(pre, 0, description, "", map<string, string>());
+    }
+
+
+    Snapshots::iterator
+    Snapshots::createSingleSnapshot(uid_t uid, const string& description, const string& cleanup,
+				    const map<string, string>& userdata)
+    {
+	checkUserdata(userdata);
+
+	Snapshot snapshot(snapper, SINGLE, nextNumber(), time(NULL));
+	snapshot.uid = uid;
+	snapshot.description = description;
+	snapshot.cleanup = cleanup;
+	snapshot.userdata = userdata;
+
+	return createHelper(snapshot);
+    }
+
+
+    Snapshots::iterator
+    Snapshots::createPreSnapshot(uid_t uid, const string& description, const string& cleanup,
+				 const map<string, string>& userdata)
+    {
+	checkUserdata(userdata);
+
+	Snapshot snapshot(snapper, PRE, nextNumber(), time(NULL));
+	snapshot.uid = uid;
+	snapshot.description = description;
+	snapshot.cleanup = cleanup;
+	snapshot.userdata = userdata;
+
+	return createHelper(snapshot);
+    }
+
+
+    Snapshots::iterator
+    Snapshots::createPostSnapshot(Snapshots::const_iterator pre, uid_t uid, const string& description,
+				  const string& cleanup, const map<string, string>& userdata)
+    {
 	if (pre == entries.end() || pre->isCurrent() || pre->getType() != PRE ||
 	    findPost(pre) != entries.end())
 	    throw IllegalSnapshotException();
 
+	checkUserdata(userdata);
+
 	Snapshot snapshot(snapper, POST, nextNumber(), time(NULL));
-	snapshot.description = description;
 	snapshot.pre_num = pre->getNum();
-	snapshot.info_modified = true;
+	snapshot.uid = uid;
+	snapshot.description = description;
+	snapshot.cleanup = cleanup;
+	snapshot.userdata = userdata;
 
 	return createHelper(snapshot);
     }
@@ -606,7 +656,7 @@ namespace snapper
 
 	try
 	{
-	    snapshot.flushInfo();
+	    snapshot.writeInfo();
 	}
 	catch (const IOErrorException& e)
 	{
@@ -624,6 +674,23 @@ namespace snapper
     is_filelist_file(unsigned char type, const char* name)
     {
 	return (type == DT_UNKNOWN || type == DT_REG) && (fnmatch("filelist-*.txt", name, 0) == 0);
+    }
+
+
+    void
+    Snapshots::modifySnapshot(iterator snapshot, const string& description, const string& cleanup,
+			      const map<string, string>& userdata)
+    {
+	if (snapshot == entries.end() || snapshot->isCurrent())
+	    throw IllegalSnapshotException();
+
+	checkUserdata(userdata);
+
+	snapshot->description = description;
+	snapshot->cleanup = cleanup;
+	snapshot->userdata = userdata;
+
+	snapshot->writeInfo();
     }
 
 

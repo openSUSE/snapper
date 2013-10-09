@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Novell, Inc.
+ * Copyright (c) [2011-2013] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -94,21 +94,21 @@ namespace snapper
 
 	time_t getDate() const { return date; }
 
-	void setUid(uid_t uid);
+	void setUid(uid_t uid) __attribute__ ((deprecated));
 	uid_t getUid() const { return uid; }
 
 	unsigned int getPreNum() const { return pre_num; }
 
-	void setDescription(const string& description);
+	void setDescription(const string& description) __attribute__ ((deprecated));
 	string getDescription() const { return description; }
 
-	void setCleanup(const string& cleanup);
+	void setCleanup(const string& cleanup) __attribute__ ((deprecated));
 	string getCleanup() const { return cleanup; }
 
-	void setUserdata(const map<string, string>& userdata);
+	void setUserdata(const map<string, string>& userdata) __attribute__ ((deprecated));
 	map<string, string> getUserdata() const { return userdata; }
 
-	void flushInfo();
+	void flushInfo() __attribute__ ((deprecated));
 
 	string snapshotDir() const;
 
@@ -200,11 +200,23 @@ namespace snapper
 
 	void check() const;
 
-	iterator createSingleSnapshot(string description);
-	iterator createPreSnapshot(string description);
-	iterator createPostSnapshot(string description, const_iterator pre);
+	void checkUserdata(const map<string, string>& userdata) const;
+
+	iterator createSingleSnapshot(string description) __attribute__ ((deprecated));
+	iterator createPreSnapshot(string description) __attribute__ ((deprecated));
+	iterator createPostSnapshot(string description, const_iterator pre) __attribute__ ((deprecated));
+
+	iterator createSingleSnapshot(uid_t uid, const string& description, const string& cleanup,
+				      const map<string, string>& userdata);
+	iterator createPreSnapshot(uid_t uid, const string& description, const string& cleanup,
+				   const map<string, string>& userdata);
+	iterator createPostSnapshot(const_iterator pre, uid_t uid, const string& description,
+				    const string& cleanup, const map<string, string>& userdata);
 
 	iterator createHelper(Snapshot& snapshot);
+
+	void modifySnapshot(iterator snapshot, const string& description, const string& cleanup,
+			    const map<string, string>& userdata);
 
 	void deleteSnapshot(iterator snapshot);
 

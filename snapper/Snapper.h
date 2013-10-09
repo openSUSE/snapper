@@ -125,9 +125,22 @@ namespace snapper
 
 	Snapshots::const_iterator getSnapshotCurrent() const;
 
-	Snapshots::iterator createSingleSnapshot(string description);
-	Snapshots::iterator createPreSnapshot(string description);
-	Snapshots::iterator createPostSnapshot(string description, Snapshots::const_iterator pre);
+	Snapshots::iterator createSingleSnapshot(string description) __attribute__ ((deprecated));
+	Snapshots::iterator createPreSnapshot(string description) __attribute__ ((deprecated));
+	Snapshots::iterator createPostSnapshot(string description, Snapshots::const_iterator pre) __attribute__ ((deprecated));
+
+	Snapshots::iterator createSingleSnapshot(uid_t uid, const string& description,
+						 const string& cleanup,
+						 const map<string, string>& userdata);
+	Snapshots::iterator createPreSnapshot(uid_t uid, const string& description,
+					      const string& cleanup,
+					      const map<string, string>& userdata);
+	Snapshots::iterator createPostSnapshot(Snapshots::const_iterator pre, uid_t uid,
+					       const string& description, const string& cleanup,
+					       const map<string, string>& userdata);
+
+	void modifySnapshot(Snapshots::iterator snapshot, const string& description,
+			    const string& cleanup, const map<string, string>& userdata);
 
 	void deleteSnapshot(Snapshots::iterator snapshot);
 
