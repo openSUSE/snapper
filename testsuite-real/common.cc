@@ -48,16 +48,14 @@ cleanup()
 void
 first_snapshot()
 {
-    first = sh->createPreSnapshot(CONFIG);
-    first->setCleanup("number");
+    first = sh->createPreSnapshot(0, CONFIG, "number", map<string, string>());
 }
 
 
 void
 second_snapshot()
 {
-    second = sh->createPostSnapshot(CONFIG, first);
-    second->setCleanup("number");
+    second = sh->createPostSnapshot(first, 0, CONFIG, "number", map<string, string>());
 }
 
 
