@@ -196,6 +196,27 @@ Authors:
 %endif
 /usr/lib/zypp/plugins/commit/snapper.py*
 
+%package -n grub-snapper-plugin
+Requires:       python
+Requires:       python-xattr
+Requires:       snapper = %version
+Summary:        A snapper plugin for adding snapshot metadata for grub
+Group:          System/Packages
+
+%description -n grub-snapper-plugin
+This package contains a plugin for snapper that adds metadata to snapshots
+used by grub.
+
+Authors:
+--------
+    Arvin Schnell <aschnell@suse.de>
+
+%files -n grub-snapper-plugin
+%defattr(-,root,root)
+%dir /usr/lib/snapper
+%dir /usr/lib/snapper/plugins
+/usr/lib/snapper/plugins/grub.py*
+
 %package -n pam_snapper
 Requires:       pam
 Requires:       snapper = %version

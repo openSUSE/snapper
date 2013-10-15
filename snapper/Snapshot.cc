@@ -38,6 +38,7 @@
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/Exception.h"
+#include "snapper/SystemCmd.h"
 
 
 namespace snapper
@@ -665,6 +666,19 @@ namespace snapper
 	    infos_dir.unlink(decString(snapshot.getNum()), AT_REMOVEDIR);
 	    throw;
 	}
+
+#if 1
+	if (snapper->subvolumeDir() == "/" && snapper->getFilesystem()->fstype() == "btrfs" &&
+	    snapshot.getType() == PRE && access("/usr/lib/snapper/plugins/grub.py", X_OK) == 0)
+	{
+	    map<string, string> userdata = snapshot.getUserdata();
+	    map<string, string>::const_iterator it = userdata.find("important");
+	    bool important = it != userdata.end() && it->second == "yes";
+
+	    SystemCmd cmd(sformat("/usr/lib/snapper/plugins/grub.py %d %s", snapshot.getNum(),
+				  important ? "yes" : "no"));
+	}
+#endif
 
 	return entries.insert(entries.end(), snapshot);
     }
