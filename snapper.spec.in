@@ -201,12 +201,12 @@ Requires:       python
 Requires:       python-xattr
 Requires:       snapper = %version
 Supplements:    packageand(snapper-zypp-plugin:grub2)
-Summary:        A snapper plugin for adding snapshot metadata for grub
+Summary:        A snapper plugin for adding snapshot metadata for grub2
 Group:          System/Packages
 
 %description -n grub-snapper-plugin
 This package contains a plugin for snapper that adds metadata to snapshots
-used by grub.
+used by grub2.
 
 Authors:
 --------
