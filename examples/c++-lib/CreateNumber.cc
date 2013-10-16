@@ -37,14 +37,13 @@ main()
 
     Snapper* sh = new Snapper("testsuite");
 
-    time_t t = time(NULL) - 100 * 24*60*60;
-    while (t < time(NULL))
+    for (size_t i = 0; i < 100; ++i)
     {
-	Snapshots::iterator snap = sh->createSingleSnapshot(getuid(), "testsuite", "timeline",
-							    map<string, string>());
-	// snap->setDate(t);
+	map<string, string> userdata;
+	if (i % 5 == 0)
+	    userdata["important"] = "yes";
 
-	t += 60*60;
+	sh->createSingleSnapshot(getuid(), "testsuite", "number", userdata);
     }
 
     delete sh;

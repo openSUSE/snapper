@@ -6,6 +6,8 @@ Create.o
 Create
 CmpDirs.o
 CmpDirs
+CreateNumber.o
+CreateNumber
 CreateTimeline.o
 CreateTimeline
 SnapTest.o
