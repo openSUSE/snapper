@@ -58,11 +58,11 @@ struct XSnapshot
 
     unsigned int getPreNum() const { return pre_num; }
 
-    string getDescription() const { return description; }
+    const string& getDescription() const { return description; }
 
-    string getCleanup() const { return cleanup; }
+    const string& getCleanup() const { return cleanup; }
 
-    map<string, string> getUserdata() const { return userdata; }
+    const map<string, string>& getUserdata() const { return userdata; }
 
     SnapshotType type;
     unsigned int num;
@@ -115,4 +115,3 @@ namespace DBus
     Hihi& operator>>(Hihi& hihi, XFile& data);
 
 }
-
