@@ -20,6 +20,7 @@ NUMBER_CLEANUP="yes"
 # limit for number cleanup
 NUMBER_MIN_AGE="1800"
 NUMBER_LIMIT="50"
+NUMBER_LIMIT_IMPORTANT="10"
 
 
 # create hourly snapshots

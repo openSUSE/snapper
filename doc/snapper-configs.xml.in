@@ -109,6 +109,17 @@
       </varlistentry>
 
       <varlistentry>
+	<term><option>NUMBER_LIMIT_IMPORTANT=<replaceable>number</replaceable></option></term>
+	<listitem>
+	  <para>Defines how many important snapshots the number cleanup
+	  algorithm should keep. Important snapshots have important=yes in the
+	  userdata. The youngest important snapshots will be kept.</para>
+	  <para>Default value is &quot;10&quot;.</para>
+	  <para>New in version 0.1.8.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
 	<term><option>TIMELINE_CREATE=<replaceable>boolean</replaceable></option></term>
 	<listitem>
 	  <para>Defines whether hourly snapshots should be created.</para>

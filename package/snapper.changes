@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Oct 17 10:17:59 CEST 2013 - aschnell@suse.de
+
+- extended number cleanup algorithm to privilege important
+  snapshots (fate#316233)
+
+-------------------------------------------------------------------
 Tue Oct 15 16:28:15 CEST 2013 - aschnell@suse.de
 
 - added grub-snapper-plugin subpackage for writing extra snapshot
