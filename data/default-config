@@ -11,7 +11,7 @@ ALLOW_GROUPS=""
 
 # start comparing pre- and post-snapshot in background after creating
 # post-snapshot
-BACKGROUND_COMPARISON="yes"
+BACKGROUND_COMPARISON="no"
 
 
 # run daily number cleanup
