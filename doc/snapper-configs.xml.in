@@ -77,7 +77,7 @@
 	<listitem>
 	  <para>Defines whether pre and post snapshots should be compared in
 	  the background after creation.</para>
-	  <para>Default value is &quot;no&quot;.</para>
+	  <para>Default value is &quot;yes&quot;.</para>
 	</listitem>
       </varlistentry>
 

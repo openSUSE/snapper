@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Oct 21 10:24:43 CEST 2013 - aschnell@suse.de
+
+- fixed inconsistency with default value for BACKGROUND_COMPARISON
+
+-------------------------------------------------------------------
 Thu Oct 17 10:17:59 CEST 2013 - aschnell@suse.de
 
 - extended number cleanup algorithm to privilege important
