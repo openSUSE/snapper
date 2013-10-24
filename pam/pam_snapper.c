@@ -359,6 +359,8 @@ static int forker( pam_handle_t * pamh, const char *pam_user, uid_t uid, gid_t g
 		   uint32_t num_user_data, const struct dict *user_data,
 		   const uint32_t * snapshot_num_in, uint32_t * snapshot_num_out )
 {
+	int ret;
+
 	void *p = mmap( NULL, sizeof( *snapshot_num_out ), PROT_READ | PROT_WRITE,
 			MAP_SHARED | MAP_ANONYMOUS, -1, 0 );
 	if ( p == MAP_FAILED ) {
@@ -369,29 +371,35 @@ static int forker( pam_handle_t * pamh, const char *pam_user, uid_t uid, gid_t g
 	int child = fork(  );
 	if ( child == 0 ) {
 
+		ret = EXIT_FAILURE;
+
 		/* setting uid/gui affects other threads so it has to be done in a separate process */
 
-		if ( setgid( gid ) != 0 || initgroups( pam_user, gid ) != 0 || setuid( uid ) != 0 ) {
-			munmap( p, sizeof( *snapshot_num_out ) );
-			exit( EXIT_FAILURE );
-		}
+		if ( setgid( gid ) != 0 || initgroups( pam_user, gid ) != 0 || setuid( uid ) != 0 )
+			goto child_out;
 
 		if ( cdbus_create_snapshot( snapper_conf, createmode, cleanup, num_user_data,
-					    user_data, snapshot_num_in, snapshot_num_out ) != 0 ) {
-			munmap( p, sizeof( *snapshot_num_out ) );
-			exit( EXIT_FAILURE );
-		}
+					    user_data, snapshot_num_in, snapshot_num_out ) != 0 )
+			goto child_out;
 
 		memcpy( p, snapshot_num_out, sizeof( *snapshot_num_out ) );
 
+		ret = EXIT_SUCCESS;
+
+child_out:
+
 		munmap( p, sizeof( *snapshot_num_out ) );
 
-		exit( EXIT_SUCCESS );
+		free( snapshot_num_out );
+
+		free( (void *)snapper_conf );
+
+		exit( ret );
 
 	} else if ( child > 0 ) {
 
 		int status;
-		int ret = waitpid( child, &status, 0 );
+		ret = waitpid( child, &status, 0 );
 
 		if ( ret == -1 ) {
 			pam_syslog( pamh, LOG_ERR, "waitpid failed" );
@@ -494,17 +502,21 @@ static int worker( pam_handle_t * pamh, const char *pam_user, const char *snappe
 		     ( pamh, "pam_snapper_snapshot_num",
 		       ( const void ** )&snapshot_num_in ) != PAM_SUCCESS ) {
 			pam_syslog( pamh, LOG_ERR, "getting previous snapshot_num failed" );
+			free( snapshot_num_out );
 			return -1;
 		}
 	}
 
 	if ( forker( pamh, pam_user, uid, gid, snapper_conf, createmode, cleanup, num_user_data,
-		     user_data, snapshot_num_in, snapshot_num_out ) != 0 )
+		     user_data, snapshot_num_in, snapshot_num_out ) != 0 ) {
+		free( snapshot_num_out );
 		return -1;
+	}
 
 	if ( pam_set_data
 	     ( pamh, "pam_snapper_snapshot_num", snapshot_num_out,
 	       cleanup_snapshot_num ) != PAM_SUCCESS ) {
+		free( snapshot_num_out );
 		pam_syslog( pamh, LOG_ERR, "pam_set_data failed" );
 	}
 
