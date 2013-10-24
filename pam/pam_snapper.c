@@ -494,17 +494,22 @@ static int worker( pam_handle_t * pamh, const char *pam_user, const char *snappe
 		     ( pamh, "pam_snapper_snapshot_num",
 		       ( const void ** )&snapshot_num_in ) != PAM_SUCCESS ) {
 			pam_syslog( pamh, LOG_ERR, "getting previous snapshot_num failed" );
+			free( snapshot_num_out );
 			return -1;
 		}
 	}
 
 	if ( forker( pamh, pam_user, uid, gid, snapper_conf, createmode, cleanup, num_user_data,
 		     user_data, snapshot_num_in, snapshot_num_out ) != 0 )
+	{
+		free( snapshot_num_out );
 		return -1;
+	}
 
 	if ( pam_set_data
 	     ( pamh, "pam_snapper_snapshot_num", snapshot_num_out,
 	       cleanup_snapshot_num ) != PAM_SUCCESS ) {
+		free( snapshot_num_out );
 		pam_syslog( pamh, LOG_ERR, "pam_set_data failed" );
 	}
 
