@@ -373,20 +373,20 @@ static int forker( pam_handle_t * pamh, const char *pam_user, uid_t uid, gid_t g
 
 		if ( setgid( gid ) != 0 || initgroups( pam_user, gid ) != 0 || setuid( uid ) != 0 ) {
 			munmap( p, sizeof( *snapshot_num_out ) );
-			exit( EXIT_FAILURE );
+			_exit( EXIT_FAILURE );
 		}
 
 		if ( cdbus_create_snapshot( snapper_conf, createmode, cleanup, num_user_data,
 					    user_data, snapshot_num_in, snapshot_num_out ) != 0 ) {
 			munmap( p, sizeof( *snapshot_num_out ) );
-			exit( EXIT_FAILURE );
+			_exit( EXIT_FAILURE );
 		}
 
 		memcpy( p, snapshot_num_out, sizeof( *snapshot_num_out ) );
 
 		munmap( p, sizeof( *snapshot_num_out ) );
 
-		exit( EXIT_SUCCESS );
+		_exit( EXIT_SUCCESS );
 
 	} else if ( child > 0 ) {
 
