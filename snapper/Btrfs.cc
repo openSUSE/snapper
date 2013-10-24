@@ -982,7 +982,8 @@ namespace snapper
 	{
 	    boost::this_thread::interruption_point();
 
-	    int r = btrfs_read_and_process_send_stream(fd, &send_ops, &*this);
+	     // remove the fourth parameter for older versions of libbtrfs
+	    int r = btrfs_read_and_process_send_stream(fd, &send_ops, &*this, 0);
 
 	    if (r < 0)
 	    {
