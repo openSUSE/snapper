@@ -1,4 +1,6 @@
 
+#include <unistd.h>
+#include <sys/types.h>
 #include <stdlib.h>
 #include <iostream>
 
@@ -12,7 +14,7 @@ main(int argc, char** argv)
 {
     Snapper* sh = new Snapper();
 
-    sh->createSingleSnapshot("test");
+    sh->createSingleSnapshot(getuid(), "test", "number", map<string, string>());
 
     delete sh;
 
