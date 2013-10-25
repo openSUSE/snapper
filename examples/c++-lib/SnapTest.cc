@@ -84,11 +84,11 @@ main(int argc, char** argv)
 	print_snap_info( j, snap.end() );
 	string desc = j->getDescription();
 	desc += " 1";
-	j->setDescription(desc);
+	sh->modifySnapshot(j, desc, j->getCleanup(), j->getUserdata());
 	j = snap.findPost(s);
 	print_snap_info( j, snap.end() );
 	desc.erase( desc.size()-2 );
-	j->setDescription(desc);
+	sh->modifySnapshot(j, desc, j->getCleanup(), j->getUserdata());
 
 	// testing handling userdata
 	j = snap.findPost(s);
@@ -98,11 +98,11 @@ main(int argc, char** argv)
 	sm["key1"] = "value1";
 	sm["key2"] = "value2";
 	sm["key3"] = "value3";
-	j->setUserdata( sm );
+	sh->modifySnapshot(j, j->getDescription(), j->getCleanup(), sm);
 	map<string,string> sn=j->getUserdata();
 	print_smap_info( sn );
 	sn.clear();
-	j->setUserdata( sn );
+	sh->modifySnapshot(j, j->getDescription(), j->getCleanup(), sn);
 	print_smap_info( j->getUserdata() );
 
 	// testing compare functionality
