@@ -555,6 +555,7 @@
     <title>SEE ALSO</title>
     <para>
       <citerefentry><refentrytitle>snapper-configs</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>pam_snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
       <citerefentry><refentrytitle>btrfs</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
       <citerefentry><refentrytitle>lvm</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
       <citerefentry><refentrytitle>attr</refentrytitle><manvolnum>5</manvolnum></citerefentry>
