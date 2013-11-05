@@ -79,7 +79,7 @@
             <dd>
               <p>Defines whether pre and post snapshots should be compared in
 	  the background after creation.</p>
-              <p>Default value is "no".</p>
+              <p>Default value is "yes".</p>
             </dd>
             <dt>
               <span class="term">
@@ -109,7 +109,19 @@
             <dd>
               <p>Defines how many snapshots the number cleanup algorithm should
 	  keep. The youngest snapshots will be kept.</p>
-              <p>Default value is "100".</p>
+              <p>Default value is "50".</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">NUMBER_LIMIT_IMPORTANT=<em class="replaceable"><code>number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Defines how many important snapshots the number cleanup
+	  algorithm should keep. Important snapshots have important=yes in the
+	  userdata. The youngest important snapshots will be kept.</p>
+              <p>Default value is "10".</p>
+              <p>New in version 0.1.8.</p>
             </dd>
             <dt>
               <span class="term">
