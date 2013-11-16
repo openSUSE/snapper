@@ -1,0 +1,5 @@
+
+The language bindings here should not be used anymore. The now preferred
+method to use snapper is via DBus. You can find examples for various languages
+in the examples directory.
+
