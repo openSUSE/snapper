@@ -1,0 +1,8 @@
+
+Snapper is a tool for Linux filesystem snapshot management. Apart from the
+obvious creation and deletion of snapshots, it can compare snapshots and
+revert differences between snapshots. In simple terms, this allows root and
+non-root users to view older versions of files and revert changes.
+
+For more information visit http://snapper.io/.
+
