@@ -3,7 +3,6 @@
 from subprocess import check_output
 from datetime import datetime
 from xattr import xattr
-from array import array
 from fcntl import ioctl
 from os import open, close, O_RDONLY
 from ctypes import c_ulonglong
