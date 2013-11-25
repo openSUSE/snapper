@@ -30,7 +30,7 @@
       <varlistentry>
 	<term><filename>/etc/snapper/zypp-plugin.conf</filename></term>
 	<listitem>
-	  <para>Configuration file.</para>
+	  <para>Configuration file. New in version 0.1.8.</para>
 	</listitem>
       </varlistentry>
     </variablelist>
