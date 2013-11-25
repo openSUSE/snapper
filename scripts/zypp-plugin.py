@@ -25,7 +25,8 @@
 
 from os import readlink, getppid
 from os.path import basename
-from fnmatch import fnmatch
+import fnmatch
+import re
 import logging
 from dbus import SystemBus, Interface
 import xml.dom.minidom as minidom
@@ -37,15 +38,15 @@ from zypp_plugin import Plugin
 
 class Solvable:
 
-    def __init__(self, name, important):
-        self.name = name
+    def __init__(self, pattern, important):
+        self.pattern = re.compile(pattern)
         self.important = important
 
     def __repr__(self):
-        return "name:%s important:%s" % (self.name, self.important)
+        return "pattern:%s important:%s" % (self.pattern, self.important)
 
     def match(self, name):
-        return fnmatch(name, self.name)
+        return self.pattern.match(name)
 
 
 
@@ -71,8 +72,20 @@ class Config:
         try:
             for tmp1 in dom.getElementsByTagName("solvables"):
                 for tmp2 in tmp1.getElementsByTagName("solvable"):
-                    self.solvables.append(Solvable(tmp2.childNodes[0].data,
-                                                   tmp2.getAttribute("important") == "true"))
+
+                    pattern = tmp2.childNodes[0].data
+                    match = tmp2.getAttribute("match")
+                    important = tmp2.getAttribute("important") == "true"
+
+                    if not match in [ "w", "re" ]:
+                        logging.error("unknown match attribute %s" % match)
+                        continue
+
+                    if match == "w":
+                        pattern = fnmatch.translate(pattern)
+
+                    self.solvables.append(Solvable(pattern, important))
+
         except:
             pass
 
