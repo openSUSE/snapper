@@ -175,7 +175,7 @@ Authors:
 
 %package -n snapper-zypp-plugin
 Requires:       dbus-1-python
-Requires:       libzypp(plugin:commit)
+Requires:       libzypp(plugin:commit) = 1
 Requires:	python-xml
 Requires:       snapper = %version
 Requires:       zypp-plugin-python
