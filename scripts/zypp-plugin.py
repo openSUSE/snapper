@@ -30,7 +30,6 @@ class Config:
 
     def __init__(self):
         self.solvables = []
-        self.loglevel = None
         self.load_file("/etc/snapper/zypp-plugin.conf")
 
 
