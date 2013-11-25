@@ -3,7 +3,8 @@
 #
 
 EXTRA_DIST = sysconfig.snapper base.txt lvm.txt x11.txt snapper.logrotate	\
-	default-config org.opensuse.Snapper.conf org.opensuse.Snapper.service
+	default-config org.opensuse.Snapper.conf org.opensuse.Snapper.service	\
+	zypp-plugin.conf
 
 install-data-local:
 	install -D -m 644 snapper.logrotate $(DESTDIR)/etc/logrotate.d/snapper
@@ -15,3 +16,4 @@ install-data-local:
 	install -D -m 644 x11.txt $(DESTDIR)/etc/snapper/filters/x11.txt
 	install -D -m 644 org.opensuse.Snapper.conf $(DESTDIR)/etc/dbus-1/system.d/org.opensuse.Snapper.conf
 	install -D -m 644 org.opensuse.Snapper.service $(DESTDIR)/usr/share/dbus-1/system-services/org.opensuse.Snapper.service
+	install -D -m 644 zypp-plugin.conf $(DESTDIR)/etc/snapper/zypp-plugin.conf

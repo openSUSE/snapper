@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<refentry id='snapper-zypp-plugin8'>
+
+  <refentryinfo>
+    <date>2013-11-22</date>
+  </refentryinfo>
+
+  <refmeta>
+    <refentrytitle>snapper-zypp-plugin</refentrytitle>
+    <manvolnum>8</manvolnum>
+    <refmiscinfo class='date'>2013-11-22</refmiscinfo>
+    <refmiscinfo class='version'>@VERSION@</refmiscinfo>
+    <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
+  </refmeta>
+
+  <refnamediv>
+    <refname>snapper-zypp-plugin</refname>
+    <refpurpose>Snapper plugin for libzypp</refpurpose>
+  </refnamediv>
+
+  <refsect1 id='description'>
+    <title>DESCRIPTION</title>
+    <para>With the snapper-zypp-plugin, snapper can create snapshots whenever
+    libzypp, and thus e.g. zypper, installs, updates or removes packages.</para>
+  </refsect1>
+
+  <refsect1 id='files'>
+    <title>FILES</title>
+    <variablelist>
+      <varlistentry>
+	<term><filename>/etc/snapper/zypp-plugin.conf</filename></term>
+	<listitem>
+	  <para>Configuration file.</para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='homepage'>
+    <title>HOMEPAGE</title>
+    <para><ulink url='http://snapper.io/'>http://snapper.io/</ulink></para>
+  </refsect1>
+
+  <refsect1 id='authors'>
+    <title>AUTHORS</title>
+    <para>Arvin Schnell <email>aschnell@suse.de</email></para>
+  </refsect1>
+
+  <refsect1 id='see_also'>
+    <title>SEE ALSO</title>
+    <para>
+      <citerefentry><refentrytitle>snapper-zypp-plugin.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>zypper</refentrytitle><manvolnum>8</manvolnum></citerefentry>
+    </para>
+  </refsect1>
+
+</refentry>

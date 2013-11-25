@@ -2,7 +2,8 @@
 # Makefile.am for snapper/doc
 #
 
-man_MANS = snapper.8 snapperd.8 snapper-configs.5
+man_MANS = snapper.8 snapperd.8 snapper-configs.5 snapper-zypp-plugin.8	\
+	snapper-zypp-plugin.conf.5
 
 if HAVE_PAM
 man_MANS += pam_snapper.8

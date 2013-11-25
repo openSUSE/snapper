@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Nov 25 11:38:43 CET 2013 - aschnell@suse.de
+
+- allow to configure snapshotting from zypp-plugin depending on
+  package list (fate#316203)
+
+-------------------------------------------------------------------
 Mon Oct 21 10:24:43 CEST 2013 - aschnell@suse.de
 
 - fixed inconsistency with default value for BACKGROUND_COMPARISON

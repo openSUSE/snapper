@@ -99,7 +99,9 @@ rm -rf "$RPM_BUILD_ROOT"
 %defattr(-,root,root)
 %{prefix}/bin/snapper
 %{prefix}/sbin/snapperd
-%doc %{_mandir}/*/snapper*.*
+%doc %{_mandir}/*/snapper.8*
+%doc %{_mandir}/*/snapperd.8*
+%doc %{_mandir}/*/snapper-configs.5*
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
 /etc/cron.hourly/suse.de-snapper
 /etc/cron.daily/suse.de-snapper
@@ -173,9 +175,10 @@ Authors:
 
 %package -n snapper-zypp-plugin
 Requires:       dbus-1-python
+Requires:       libzypp(plugin:commit)
+Requires:	python-xml
 Requires:       snapper = %version
 Requires:       zypp-plugin-python
-Requires:       libzypp(plugin:commit)
 Summary:        A zypp commit plugin for calling snapper
 Group:          System/Packages
 
@@ -189,12 +192,15 @@ Authors:
 
 %files -n snapper-zypp-plugin
 %defattr(-,root,root)
+%config(noreplace) %{_sysconfdir}/snapper/zypp-plugin.conf
 %if 0%{?suse_version} < 1210
 %dir /usr/lib/zypp
 %dir /usr/lib/zypp/plugins
 %dir /usr/lib/zypp/plugins/commit
 %endif
 /usr/lib/zypp/plugins/commit/snapper.py*
+%doc %{_mandir}/*/snapper-zypp-plugin.8*
+%doc %{_mandir}/*/snapper-zypp-plugin.conf.5*
 
 %package -n grub-snapper-plugin
 Requires:       python
@@ -236,6 +242,6 @@ Authors:
 /%{_lib}/security/pam_snapper.so
 %dir /usr/lib/pam_snapper
 /usr/lib/pam_snapper/*.sh
-%doc %{_mandir}/*/pam_snapper*.*
+%doc %{_mandir}/*/pam_snapper.8*
 
 %changelog
