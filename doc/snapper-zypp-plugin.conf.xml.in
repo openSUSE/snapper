@@ -23,8 +23,8 @@
     <para>The file <filename>/etc/snapper/zypp-plugin.conf</filename> contains
     the configuation for snapper-zypp-plugin.</para>
 
-    <para>The file uses XML syntax. For the structure look at the provided
-    default config.</para>
+    <para>The file uses XML syntax. For the XML structure have a look at the
+    provided default config.</para>
   </refsect1>
 
   <refsect1 id='homepage'>

@@ -21,7 +21,8 @@
   <refsect1 id='description'>
     <title>DESCRIPTION</title>
     <para>With the snapper-zypp-plugin, snapper can create snapshots whenever
-    libzypp, and thus e.g. zypper, installs, updates or removes packages.</para>
+    libzypp, and thus e.g. zypper and YaST, installs, updates or removes
+    packages. </para>
   </refsect1>
 
   <refsect1 id='files'>
@@ -51,7 +52,8 @@
     <para>
       <citerefentry><refentrytitle>snapper-zypp-plugin.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
       <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
-      <citerefentry><refentrytitle>zypper</refentrytitle><manvolnum>8</manvolnum></citerefentry>
+      <citerefentry><refentrytitle>zypper</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>YaST</refentrytitle><manvolnum>8</manvolnum></citerefentry>
     </para>
   </refsect1>
 
