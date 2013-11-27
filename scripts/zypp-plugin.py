@@ -122,12 +122,14 @@ class MyPlugin(Plugin):
         return {}
 
 
-    def get_solvables(self, body):
+    def get_solvables(self, body, todo):
         tmp = json.loads(body)
         tsl = tmp["TransactionStepList"]
         solvables = set()
         for ts in tsl:
-            solvables.add(ts["solvable"]["n"])
+            if "type" in ts:
+                if todo or "stage" in ts:
+                    solvables.add(ts["solvable"]["n"])
         return solvables
 
 
@@ -159,7 +161,7 @@ class MyPlugin(Plugin):
 
         logging.info("COMMITBEGIN")
 
-        solvables = self.get_solvables(body)
+        solvables = self.get_solvables(body, True)
         logging.debug("solvables: %s" % solvables)
 
         found, important = self.match_solvables(solvables)
@@ -172,6 +174,7 @@ class MyPlugin(Plugin):
             logging.info("creating pre snapshot")
             self.num1 = snapper.CreatePreSnapshot("root", self.description, self.cleanup,
                                                   self.userdata)
+            logging.debug("created pre snapshot %d" % self.num1)
 
         self.ack()
 
@@ -182,9 +185,29 @@ class MyPlugin(Plugin):
 
         if self.num1:
 
-            logging.info("creating post snapshot")
-            self.num2 = snapper.CreatePostSnapshot("root", self.num1, "", self.cleanup,
-                                                   self.userdata)
+            solvables = self.get_solvables(body, False)
+            logging.debug("solvables: %s" % solvables)
+
+            found, important = self.match_solvables(solvables)
+            logging.info("found: %s, important: %s" % (found, important))
+
+            if found or important:
+
+                self.userdata["important"] = "yes" if important else "no"
+
+                snapper.SetSnapshot("root", self.num1, self.description, self.cleanup,
+                                    self.userdata)
+
+                logging.info("creating post snapshot")
+                self.num2 = snapper.CreatePostSnapshot("root", self.num1, "", self.cleanup,
+                                                       self.userdata)
+                logging.debug("created post snapshot %d" % self.num2)
+
+            else:
+
+                logging.info("deleting pre snapshot")
+                snapper.DeleteSnapshots("root", [ self.num1 ])
+                logging.debug("deleted pre snapshot %d" % self.num1)
 
         self.ack()
 
