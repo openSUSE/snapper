@@ -3,28 +3,39 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>snapperd</title>
+    <title>snapper-zypp-plugin</title>
     <meta name="generator" content="DocBook XSL Stylesheets V1.78.1" />
   </head>
   <body>
     <div class="refentry">
-      <a id="snapperd8"></a>
+      <a id="snapper-zypp-plugin8"></a>
       <div class="titlepage"></div>
       <div class="refnamediv">
         <h2>Name</h2>
-        <p>snapperd — DBus daemon for snapper</p>
-      </div>
-      <div class="refsynopsisdiv">
-        <a id="synopsis"></a>
-        <h2>Synopsis</h2>
-        <div class="cmdsynopsis">
-          <p><code class="command">snapperd</code> </p>
-        </div>
+        <p>snapper-zypp-plugin — Snapper plugin for libzypp</p>
       </div>
       <div class="refsect1">
         <a id="description"></a>
         <h2>DESCRIPTION</h2>
-        <p>Snapperd is a DBus daemon for snapper and not for direct use by the user.</p>
+        <p>With the snapper-zypp-plugin, snapper can create snapshots whenever
+    libzypp, and thus e.g. zypper and YaST, installs, updates or removes
+    packages. </p>
+      </div>
+      <div class="refsect1">
+        <a id="files"></a>
+        <h2>FILES</h2>
+        <div class="variablelist">
+          <dl class="variablelist">
+            <dt>
+              <span class="term">
+                <code class="filename">/etc/snapper/zypp-plugin.conf</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Configuration file. New in version 0.1.8.</p>
+            </dd>
+          </dl>
+        </div>
       </div>
       <div class="refsect1">
         <a id="homepage"></a>
@@ -42,8 +53,10 @@
         <a id="see_also"></a>
         <h2>SEE ALSO</h2>
         <p>
+      <span class="citerefentry"><span class="refentrytitle">snapper-zypp-plugin.conf</span>(5)</span>,
       <span class="citerefentry"><span class="refentrytitle">snapper</span>(8)</span>,
-      <span class="citerefentry"><span class="refentrytitle">dbus-daemon</span>(1)</span>
+      <span class="citerefentry"><span class="refentrytitle">zypper</span>(8)</span>,
+      <span class="citerefentry"><span class="refentrytitle">YaST</span>(8)</span>
     </p>
       </div>
     </div>

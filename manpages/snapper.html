@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>snapper</title>
-    <meta name="generator" content="DocBook XSL Stylesheets V1.78.0" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.78.1" />
   </head>
   <body>
     <div class="refentry">
@@ -52,18 +52,24 @@
           <p>Snapper distinguishes three types of snapshots.</p>
           <div class="glosslist">
             <dl>
-              <dt>pre</dt>
-              <dd>
+              <dt>
+                <span class="glossterm">pre</span>
+              </dt>
+              <dd class="glossdef">
                 <p>Pre snapshots should always have a corresponding post
 	    snapshot. The intention of pre/post snapshot pairs is to snapshot the
 	    filesystem before and after a modification.</p>
               </dd>
-              <dt>post</dt>
-              <dd>
+              <dt>
+                <span class="glossterm">post</span>
+              </dt>
+              <dd class="glossdef">
                 <p>See pre type.</p>
               </dd>
-              <dt>single</dt>
-              <dd>
+              <dt>
+                <span class="glossterm">single</span>
+              </dt>
+              <dd class="glossdef">
                 <p>These snapshots have no special relationship to other snapshots.</p>
               </dd>
             </dl>
@@ -102,17 +108,23 @@
       algorithm.</p>
           <div class="glosslist">
             <dl>
-              <dt>number</dt>
-              <dd>
+              <dt>
+                <span class="glossterm">number</span>
+              </dt>
+              <dd class="glossdef">
                 <p>Deletes old snapshots when a certain number of snapshots is reached.</p>
               </dd>
-              <dt>timeline</dt>
-              <dd>
+              <dt>
+                <span class="glossterm">timeline</span>
+              </dt>
+              <dd class="glossdef">
                 <p>Deletes old snapshots but keeps a number of hourly, daily,
 	    monthly and yearly snapshots.</p>
               </dd>
-              <dt>empty-pre-post</dt>
-              <dd>
+              <dt>
+                <span class="glossterm">empty-pre-post</span>
+              </dt>
+              <dd class="glossdef">
                 <p>Deletes pre/post snapshot pairs with empty diffs.</p>
               </dd>
             </dl>
