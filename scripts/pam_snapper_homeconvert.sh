@@ -17,7 +17,7 @@ CMD_SED="sed"
 CMD_USERADD="useradd -m"
 CMD_USERDEL="userdel -r"
 CMD_CHOWN="chown"
-CMD_CHOWN="chmod"
+CMD_CHMOD="chmod"
 #
 SNAPPERCFGDIR="/etc/snapper/configs"
 HOMEHOME=/home
