@@ -2,8 +2,16 @@
 # Makefile.repo for snapper
 #
 
+# somehow detect if this is a lib or lib64 system
+LIB = $(shell gcc -v 2>&1 | sed -n 's,.*--libdir=/usr/\([^ ]*\).*,\1,p')
+ifeq ($(LIB),)
+LIB = lib
+endif
+
+PREFIX = /usr
+
 configure: all
-	./configure
+	./configure --prefix=$(PREFIX) --libdir=$(PREFIX)/$(LIB)
 
 all:
 	aclocal
