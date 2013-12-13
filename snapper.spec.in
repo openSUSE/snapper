@@ -174,6 +174,7 @@ Authors:
 %{prefix}/include/snapper
 
 %package -n snapper-zypp-plugin
+BuildArch:	noarch
 Requires:       dbus-1-python
 Requires:       libzypp(plugin:commit) = 1
 Requires:	python-xml
@@ -203,6 +204,7 @@ Authors:
 %doc %{_mandir}/*/snapper-zypp-plugin.conf.5*
 
 %package -n grub-snapper-plugin
+BuildArch:	noarch
 Requires:       python
 Requires:       python-xattr
 Requires:       snapper = %version

@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Dec 13 16:10:42 CET 2013 - aschnell@suse.de
+
+- tag subpackages containing only Python plugins as noarch
+
+-------------------------------------------------------------------
 Mon Nov 25 11:38:43 CET 2013 - aschnell@suse.de
 
 - allow to configure snapshotting from zypp-plugin depending on
