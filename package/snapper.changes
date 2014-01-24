@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Jan 24 10:01:35 CET 2014 - aschnell@suse.de
+
+- removed grub-snapper-plugin subpackage (fate#316232)
+
+-------------------------------------------------------------------
 Fri Dec 13 16:10:42 CET 2013 - aschnell@suse.de
 
 - tag subpackages containing only Python plugins as noarch

@@ -368,6 +368,14 @@ namespace snapper
 	}
 
 	filesystem->createConfig();
+
+#if 1
+	if (subvolume == "/" && filesystem->fstype() == "btrfs" &&
+	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
+	{
+	    SystemCmd cmd("/usr/lib/snapper/plugins/grub --enable");
+	}
+#endif
     }
 
 
@@ -378,6 +386,14 @@ namespace snapper
 	y2mil("libsnapper version " VERSION);
 
 	auto_ptr<Snapper> snapper(new Snapper(config_name));
+
+#if 1
+	if (snapper->subvolumeDir() == "/" && snapper->getFilesystem()->fstype() == "btrfs" &&
+	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
+	{
+	    SystemCmd cmd("/usr/lib/snapper/plugins/grub --disable");
+	}
+#endif
 
 	Snapshots& snapshots = snapper->getSnapshots();
 	for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); )

@@ -203,31 +203,6 @@ Authors:
 %doc %{_mandir}/*/snapper-zypp-plugin.8*
 %doc %{_mandir}/*/snapper-zypp-plugin.conf.5*
 
-%package -n grub-snapper-plugin
-BuildArch:	noarch
-Requires:       python
-Requires:       python-xattr
-Requires:       snapper = %version
-%if 0%{?suse_version}
-Supplements:    packageand(snapper-zypp-plugin:grub2)
-%endif
-Summary:        A snapper plugin for adding snapshot metadata for grub2
-Group:          System/Packages
-
-%description -n grub-snapper-plugin
-This package contains a plugin for snapper that adds metadata to snapshots
-used by grub2.
-
-Authors:
---------
-    Arvin Schnell <aschnell@suse.de>
-
-%files -n grub-snapper-plugin
-%defattr(-,root,root)
-%dir /usr/lib/snapper
-%dir /usr/lib/snapper/plugins
-/usr/lib/snapper/plugins/grub.py*
-
 %package -n pam_snapper
 Requires:       pam
 Requires:       snapper = %version
