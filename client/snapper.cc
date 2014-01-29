@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2013] Novell, Inc.
+ * Copyright (c) [2011-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -488,12 +488,7 @@ command_set_config(DBus::Connection* conn, Snapper* snapper)
 
     if (no_dbus)
     {
-	ConfigInfo config_info = Snapper::getConfig(config_name);
-
-	for (map<string, string>::const_iterator it = raw.begin(); it != raw.end(); ++it)
-	    config_info.setValue(it->first, it->second);
-
-	config_info.save();
+	snapper->setConfigInfo(raw);
     }
     else
     {
@@ -1511,7 +1506,7 @@ main(int argc, char** argv)
     cmds.push_back(Cmd("create-config", command_create_config, help_create_config, true, false));
     cmds.push_back(Cmd("delete-config", command_delete_config, help_delete_config, true, false));
     cmds.push_back(Cmd("get-config", command_get_config, help_get_config, true, false));
-    cmds.push_back(Cmd("set-config", command_set_config, help_set_config, true, false));
+    cmds.push_back(Cmd("set-config", command_set_config, help_set_config, true, true));
     cmds.push_back(Cmd("list", command_list, help_list, true, true));
     cmds.push_back(Cmd("create", command_create, help_create, false, true));
     cmds.push_back(Cmd("modify", command_modify, help_modify, false, true));
@@ -1647,6 +1642,21 @@ main(int argc, char** argv)
 	    cerr << _("Invalid configdata.") << endl;
 	    exit(EXIT_FAILURE);
 	}
+	catch (const AclException& e)
+	{
+	    cerr << _("ACL error.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const InvalidUserException& e)
+	{
+	    cerr << _("Invalid user.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const InvalidGroupException& e)
+	{
+	    cerr << _("Invalid group.") << endl;
+	    exit(EXIT_FAILURE);
+	}
     }
     else
     {
@@ -1687,6 +1697,12 @@ main(int argc, char** argv)
 		cerr << _("Creating snapshot failed.") << endl;
 	    else if (name == "error.delete_snapshot_failed")
 		cerr << _("Deleting snapshot failed.") << endl;
+	    else if (name == "error.invalid_user")
+		cerr << _("Invalid user.") << endl;
+	    else if (name == "error.invalid_group")
+		cerr << _("Invalid group.") << endl;
+	    else if (name == "error.acl_error")
+		cerr << _("ACL error.") << endl;
 	    else
 		cerr << _("Failure") << " (" << name << ")." << endl;
 	    exit(EXIT_FAILURE);

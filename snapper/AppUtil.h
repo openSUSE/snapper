@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2012] Novell, Inc.
+ * Copyright (c) [2004-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -25,6 +25,8 @@
 
 #include <sys/time.h>
 #include <sys/types.h>
+#include <pwd.h>
+#include <grp.h>
 #include <sstream>
 #include <locale>
 #include <string>
@@ -83,6 +85,10 @@ namespace snapper
     time_t scan_datetime(const string& str, bool utc);
 
     string username(uid_t uid);
+
+    bool get_user_uid(const char* username, uid_t& uid);
+    bool get_group_gid(const char* groupname, gid_t& gid);
+    bool get_group_uids(const char* groupname, vector<uid_t>& uids);
 
 
     class StopWatch

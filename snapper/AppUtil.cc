@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2012] Novell, Inc.
+ * Copyright (c) [2004-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -32,7 +32,6 @@
 #include <sys/ioctl.h>
 #include <sys/types.h>
 #include <sys/sendfile.h>
-#include <pwd.h>
 #include <dirent.h>
 #include <mntent.h>
 #include <boost/algorithm/string.hpp>
@@ -278,6 +277,82 @@ namespace snapper
 	memset(pwd.pw_passwd, 0, strlen(pwd.pw_passwd));
 
 	return pwd.pw_name;
+    }
+
+
+    bool
+    get_user_uid(const char* username, uid_t& uid)
+    {
+	struct passwd pwd;
+	struct passwd* result;
+
+	long bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
+	char buf[bufsize];
+
+	if (getpwnam_r(username, &pwd, buf, bufsize, &result) != 0 || result != &pwd)
+	{
+	    y2war("couldn't find username '" << username << "'");
+	    return false;
+	}
+
+	memset(pwd.pw_passwd, 0, strlen(pwd.pw_passwd));
+
+	uid = pwd.pw_uid;
+
+	return true;
+    }
+
+
+    bool
+    get_group_uids(const char* groupname, vector<uid_t>& uids)
+    {
+	struct group grp;
+	struct group* result;
+
+	long bufsize = sysconf(_SC_GETGR_R_SIZE_MAX);
+	char buf[bufsize];
+
+	if (getgrnam_r(groupname, &grp, buf, bufsize, &result) != 0 || result != &grp)
+	{
+	    y2war("couldn't find groupname '" << groupname << "'");
+	    return false;
+	}
+
+	memset(grp.gr_passwd, 0, strlen(grp.gr_passwd));
+
+	uids.clear();
+
+	for (char** p = grp.gr_mem; *p != NULL; ++p)
+	{
+	    uid_t uid;
+	    if (get_user_uid(*p, uid))
+		uids.push_back(uid);
+	}
+
+	return true;
+    }
+
+
+    bool
+    get_group_gid(const char* groupname, gid_t& gid)
+    {
+	struct group grp;
+	struct group* result;
+
+	long bufsize = sysconf(_SC_GETGR_R_SIZE_MAX);
+	char buf[bufsize];
+
+	if (getgrnam_r(groupname, &grp, buf, bufsize, &result) != 0 || result != &grp)
+	{
+	    y2war("couldn't find groupname '" << groupname << "'");
+	    return false;
+	}
+
+	memset(grp.gr_passwd, 0, strlen(grp.gr_passwd));
+
+	gid = grp.gr_gid;
+
+	return true;
     }
 
 

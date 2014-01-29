@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2013] Novell, Inc.
+ * Copyright (c) [2004-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -24,12 +24,24 @@
 #define SNAPPER_SNAPPER_DEFINES_H
 
 
+// path definitions
+
 #define SYSCONFIGFILE CONFDIR "/snapper"
 
 #define CONFIGSDIR "/etc/snapper/configs"
 #define CONFIGTEMPLATEDIR "/etc/snapper/config-templates"
 
 #define FILTERSDIR "/etc/snapper/filters"
+
+
+// keys from the config files
+
+#define KEY_SUBVOLUME "SUBVOLUME"
+#define KEY_FSTYPE "FSTYPE"
+
+#define KEY_ALLOW_USERS "ALLOW_USERS"
+#define KEY_ALLOW_GROUPS "ALLOW_GROUPS"
+#define KEY_SYNC_ACLS "SYNC_ACLS"
 
 
 #endif

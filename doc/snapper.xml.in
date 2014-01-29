@@ -2,7 +2,7 @@
 <refentry id='snapper8'>
 
   <refentryinfo>
-    <date>2013-04-26</date>
+    <date>2014-01-29</date>
   </refentryinfo>
 
   <refmeta>
@@ -490,6 +490,23 @@
     user must also be able to read and access the <filename>.snapshots</filename>
     directory inside the subvolume. The <filename>.snapshots</filename> directory
     must be owned by root and must not be writable by anybody else.</para>
+    <para>Here are some methods how to achieve that:</para>
+    <itemizedlist>
+      <listitem>
+	<para>Make the directory accessible for everyone:</para>
+	<para><command>chmod a+rx .snapshots</command></para>
+      </listitem>
+      <listitem>
+	<para>Make the directory accessible for a group the user belongs to, e.g.:</para>
+	<para><command>chown :users .snapshots</command></para>
+      </listitem>
+      <listitem>
+	<para>Make the directory accessible for the user using ACLs, e.g.:</para>
+	<para><command>setfacl -m u:tux:rx .snapshots</command></para>
+      </listitem>
+    </itemizedlist>
+    <para>The last method can be performed by snapper, see the SYNC_ACLS setting in
+    <citerefentry><refentrytitle>snapper-configs</refentrytitle><manvolnum>5</manvolnum></citerefentry>.</para>
   </refsect1>
 
   <refsect1 id='files'>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2012-2013] Novell, Inc.
+ * Copyright (c) [2012-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -22,11 +22,11 @@
 
 #include <string.h>
 #include <sys/types.h>
-#include <pwd.h>
-#include <grp.h>
 #include <boost/algorithm/string.hpp>
 
 #include <snapper/Log.h>
+#include <snapper/AppUtil.h>
+#include <snapper/SnapperDefines.h>
 
 #include "MetaSnapper.h"
 
@@ -105,59 +105,6 @@ RefCounter::monotonic_time()
 }
 
 
-bool
-get_user_uid(const char* username, uid_t& uid)
-{
-    struct passwd pwd;
-    struct passwd* result;
-
-    long bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
-    char buf[bufsize];
-
-    if (getpwnam_r(username, &pwd, buf, bufsize, &result) != 0 || result != &pwd)
-    {
-	y2war("couldn't find username '" << username << "'");
-	return false;
-    }
-
-    memset(pwd.pw_passwd, 0, strlen(pwd.pw_passwd));
-
-    uid = pwd.pw_uid;
-
-    return true;
-}
-
-
-bool
-get_group_uids(const char* groupname, vector<uid_t>& uids)
-{
-    struct group grp;
-    struct group* result;
-
-    long bufsize = sysconf(_SC_GETGR_R_SIZE_MAX);
-    char buf[bufsize];
-
-    if (getgrnam_r(groupname, &grp, buf, bufsize, &result) != 0 || result != &grp)
-    {
-	y2war("couldn't find groupname '" << groupname << "'");
-	return false;
-    }
-
-    memset(grp.gr_passwd, 0, strlen(grp.gr_passwd));
-
-    uids.clear();
-
-    for (char** p = grp.gr_mem; *p != NULL; ++p)
-    {
-	uid_t uid;
-	if (get_user_uid(*p, uid))
-	    uids.push_back(uid);
-    }
-
-    return true;
-}
-
-
 MetaSnapper::MetaSnapper(ConfigInfo& config_info)
     : config_info(config_info), snapper(NULL)
 {
@@ -177,9 +124,9 @@ MetaSnapper::setConfigInfo(const map<string, string>& raw)
     for (map<string, string>::const_iterator it = raw.begin(); it != raw.end(); ++it)
 	config_info.setValue(it->first, it->second);
 
-    config_info.save();
+    getSnapper()->setConfigInfo(raw);
 
-    if (raw.find("ALLOW_USERS") != raw.end() || raw.find("ALLOW_GROUPS") != raw.end())
+    if (raw.find(KEY_ALLOW_USERS) != raw.end() || raw.find(KEY_ALLOW_GROUPS) != raw.end())
 	set_permissions();
 }
 
@@ -190,7 +137,7 @@ MetaSnapper::set_permissions()
     uids.clear();
 
     vector<string> users;
-    if (config_info.getValue("ALLOW_USERS", users))
+    if (config_info.getValue(KEY_ALLOW_USERS, users))
     {
 	for (vector<string>::const_iterator it = users.begin(); it != users.end(); ++it)
 	{
@@ -201,7 +148,7 @@ MetaSnapper::set_permissions()
     }
 
     vector<string> groups;
-    if (config_info.getValue("ALLOW_GROUPS", groups))
+    if (config_info.getValue(KEY_ALLOW_GROUPS, groups))
     {
 	for (vector<string>::const_iterator it = groups.begin(); it != groups.end(); ++it)
 	{

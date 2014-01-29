@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Novell, Inc.
+ * Copyright (c) [2011-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -68,6 +68,12 @@ namespace snapper
 	virtual const char* what() const throw() { return "IO error"; }
     };
 
+    struct AclException : public IOErrorException
+    {
+	explicit AclException() throw() {}
+	virtual const char* what() const throw() { return "ACL error"; }
+    };
+
     struct ProgramNotInstalledException : public SnapperException
     {
 	explicit ProgramNotInstalledException(const char* msg) throw() : msg(msg) {}
@@ -79,6 +85,18 @@ namespace snapper
     {
 	explicit XAttributesException() throw() {}
 	virtual const char* what() const throw() { return "XAttributes error"; }
+    };
+
+    struct InvalidUserException : public SnapperException
+    {
+	explicit InvalidUserException() throw() {}
+	virtual const char* what() const throw() { return "invalid user"; }
+    };
+
+    struct InvalidGroupException : public SnapperException
+    {
+	explicit InvalidGroupException() throw() {}
+	virtual const char* what() const throw() { return "invalid group"; }
     };
 
 }

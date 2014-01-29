@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2012-2013] Novell, Inc.
+ * Copyright (c) [2012-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -1387,6 +1387,11 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	DBus::MessageError reply(msg, "error.invalid_userdata", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
+    catch (const AclException& e)
+    {
+	DBus::MessageError reply(msg, "error.acl_error", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
     catch (const IOErrorException& e)
     {
 	DBus::MessageError reply(msg, "error.io_error", DBUS_ERROR_FAILED);
@@ -1405,6 +1410,16 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
     catch (const UmountSnapshotFailedException& e)
     {
 	DBus::MessageError reply(msg, "error.umount_snapshot", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
+    catch (const InvalidUserException& e)
+    {
+	DBus::MessageError reply(msg, "error.invalid_user", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
+    catch (const InvalidGroupException& e)
+    {
+	DBus::MessageError reply(msg, "error.invalid_group", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (...)
