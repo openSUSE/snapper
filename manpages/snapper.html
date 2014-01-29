@@ -522,6 +522,37 @@
     user must also be able to read and access the <code class="filename">.snapshots</code>
     directory inside the subvolume. The <code class="filename">.snapshots</code> directory
     must be owned by root and must not be writable by anybody else.</p>
+        <p>Here are some methods how to achieve that:</p>
+        <div class="itemizedlist">
+          <ul class="itemizedlist" style="list-style-type: disc; ">
+            <li class="listitem">
+              <p>Make the directory accessible for everyone:</p>
+              <p>
+                <span class="command">
+                  <strong>chmod a+rx .snapshots</strong>
+                </span>
+              </p>
+            </li>
+            <li class="listitem">
+              <p>Make the directory accessible for a group the user belongs to, e.g.:</p>
+              <p>
+                <span class="command">
+                  <strong>chown :users .snapshots</strong>
+                </span>
+              </p>
+            </li>
+            <li class="listitem">
+              <p>Make the directory accessible for the user using ACLs, e.g.:</p>
+              <p>
+                <span class="command">
+                  <strong>setfacl -m u:tux:rx .snapshots</strong>
+                </span>
+              </p>
+            </li>
+          </ul>
+        </div>
+        <p>The last method can be performed by snapper, see the SYNC_ACL setting in
+    <span class="citerefentry"><span class="refentrytitle">snapper-configs</span>(5)</span>.</p>
       </div>
       <div class="refsect1">
         <a id="files"></a>
@@ -602,7 +633,8 @@
       <span class="citerefentry"><span class="refentrytitle">pam_snapper</span>(8)</span>,
       <span class="citerefentry"><span class="refentrytitle">btrfs</span>(8)</span>,
       <span class="citerefentry"><span class="refentrytitle">lvm</span>(8)</span>,
-      <span class="citerefentry"><span class="refentrytitle">attr</span>(5)</span>
+      <span class="citerefentry"><span class="refentrytitle">attr</span>(5)</span>,
+      <span class="citerefentry"><span class="refentrytitle">acl</span>(5)</span>
     </p>
       </div>
     </div>
