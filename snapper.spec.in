@@ -1,7 +1,7 @@
 #
 # spec file for package snapper
 #
-# Copyright (c) 2013 SUSE LINUX Products GmbH, Nuernberg, Germany.
+# Copyright (c) 2014 SUSE LINUX Products GmbH, Nuernberg, Germany.
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -24,6 +24,7 @@ Source:         snapper-%{version}.tar.bz2
 Prefix:         /usr
 BuildRequires:  boost-devel
 BuildRequires:  gcc-c++
+BuildRequires:  libacl-devel
 BuildRequires:  libtool
 BuildRequires:  libxml2-devel
 BuildRequires:  pkg-config

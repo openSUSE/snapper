@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Wed Jan 29 11:09:45 CET 2014 - aschnell@suse.de
+
+- allow to sync ALLOW_USERS and ALLOW_GROUPS to ACL of .snapshots
+  directory (see bnc#860116)
+- 0.2.0
+
+-------------------------------------------------------------------
 Fri Jan 24 10:01:35 CET 2014 - aschnell@suse.de
 
 - removed grub-snapper-plugin subpackage (fate#316232)

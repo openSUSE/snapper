@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2013] Novell, Inc.
+ * Copyright (c) [2011-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -156,12 +156,18 @@ namespace snapper
 
 	const Filesystem* getFilesystem() const { return filesystem; }
 
+	void setConfigInfo(const map<string, string>& raw);
+
+	void syncAcl() const;
+
     private:
 
 	void filter1(list<Snapshots::iterator>& tmp, time_t min_age);
 	void filter2(list<Snapshots::iterator>& tmp);
 
 	void loadIgnorePatterns();
+
+	void syncAcl(const vector<uid_t>& uids, const vector<gid_t>& gids) const;
 
 	ConfigInfo* config_info;
 
