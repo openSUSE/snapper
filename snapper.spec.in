@@ -154,6 +154,7 @@ Authors:
 %package -n libsnapper-devel
 Requires:       boost-devel
 Requires:       gcc-c++
+Requires:	libacl-devel
 Requires:       libsnapper@LIBVERSION_MAJOR@ = %version
 Requires:       libstdc++-devel
 Requires:       libxml2-devel
