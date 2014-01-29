@@ -158,7 +158,7 @@ namespace snapper
 
 	void setConfigInfo(const map<string, string>& raw);
 
-	void syncAcls() const;
+	void syncAcl() const;
 
     private:
 
@@ -167,7 +167,7 @@ namespace snapper
 
 	void loadIgnorePatterns();
 
-	void syncAcls(const vector<uid_t>& uids, const vector<gid_t>& gids) const;
+	void syncAcl(const vector<uid_t>& uids, const vector<gid_t>& gids) const;
 
 	ConfigInfo* config_info;
 

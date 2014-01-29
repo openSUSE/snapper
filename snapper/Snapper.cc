@@ -456,17 +456,17 @@ namespace snapper
 	config_info->save();
 
 	if (raw.find(KEY_ALLOW_USERS) != raw.end() || raw.find(KEY_ALLOW_GROUPS) != raw.end() ||
-	    raw.find(KEY_SYNC_ACLS) != raw.end())
+	    raw.find(KEY_SYNC_ACL) != raw.end())
 	{
 	    bool sync_acl;
-	    if (config_info->getValue(KEY_SYNC_ACLS, sync_acl) && sync_acl == true)
-		syncAcls();
+	    if (config_info->getValue(KEY_SYNC_ACL, sync_acl) && sync_acl == true)
+		syncAcl();
 	}
     }
 
 
     void
-    Snapper::syncAcls() const
+    Snapper::syncAcl() const
     {
 	vector<uid_t> uids;
 	vector<string> users;
@@ -494,7 +494,7 @@ namespace snapper
 	    }
 	}
 
-	syncAcls(uids, gids);
+	syncAcl(uids, gids);
     }
 
 
@@ -529,7 +529,7 @@ namespace snapper
 
 
     void
-    Snapper::syncAcls(const vector<uid_t>& uids, const vector<gid_t>& gids) const
+    Snapper::syncAcl(const vector<uid_t>& uids, const vector<gid_t>& gids) const
     {
 	SDir infos_dir = openInfosDir();
 

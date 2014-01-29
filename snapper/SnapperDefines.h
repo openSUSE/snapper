@@ -41,7 +41,7 @@
 
 #define KEY_ALLOW_USERS "ALLOW_USERS"
 #define KEY_ALLOW_GROUPS "ALLOW_GROUPS"
-#define KEY_SYNC_ACLS "SYNC_ACLS"
+#define KEY_SYNC_ACL "SYNC_ACL"
 
 
 #endif

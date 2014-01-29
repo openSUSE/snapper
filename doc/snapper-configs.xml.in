@@ -77,10 +77,10 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>SYNC_ACLS=<replaceable>boolean</replaceable></option></term>
+	<term><option>SYNC_ACL=<replaceable>boolean</replaceable></option></term>
 	<listitem>
 	  <para>Defines whether snapper will sync the users and groups from
-	  ALLOW_USERS and ALLOW_GROUPS to the <filename>.snapshots</filename>
+	  ALLOW_USERS and ALLOW_GROUPS to the ACL of the <filename>.snapshots</filename>
 	  directory.</para>
 	  <para>Also see the PERMISSONS section in
 	  <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>.</para>
