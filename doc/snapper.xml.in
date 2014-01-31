@@ -148,7 +148,7 @@
       pattern. When snapper computes the difference between two snapshots it
       ignores all files and directories matching any of those patterns by
       using
-      <citerefentry><refentrytitle>fnmatch</refentrytitle><manvolnum>3</manvolnum></citerefentry>
+      <citerefentry role="nolink"><refentrytitle>fnmatch</refentrytitle><manvolnum>3</manvolnum></citerefentry>
       with the flag FNM_LEADING_DIR.</para>
 
       <para>Note that filters do not exclude files or directories from being
@@ -572,11 +572,12 @@
     <title>SEE ALSO</title>
     <para>
       <citerefentry><refentrytitle>snapper-configs</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>snapper-zypp-plugin</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
       <citerefentry><refentrytitle>pam_snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
-      <citerefentry><refentrytitle>btrfs</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
-      <citerefentry><refentrytitle>lvm</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
-      <citerefentry><refentrytitle>attr</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
-      <citerefentry><refentrytitle>acl</refentrytitle><manvolnum>5</manvolnum></citerefentry>
+      <citerefentry role="nolink"><refentrytitle>btrfs</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+      <citerefentry role="nolink"><refentrytitle>lvm</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+      <citerefentry role="nolink"><refentrytitle>attr</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+      <citerefentry role="nolink"><refentrytitle>acl</refentrytitle><manvolnum>5</manvolnum></citerefentry>
     </para>
   </refsect1>
 

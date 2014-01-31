@@ -167,8 +167,8 @@ session    optional    pam_snapper.so
     <title>SEE ALSO</title>
     <para>
       <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
-      <citerefentry><refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
-      <citerefentry><refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+      <citerefentry role="nolink"><refentrytitle>pam.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+      <citerefentry role="nolink"><refentrytitle>pam</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
       pam_snapper_homeconvert,
       pam_snapper_pamconfig,
       pam_snapper_useradd,
