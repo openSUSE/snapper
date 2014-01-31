@@ -1103,7 +1103,7 @@ namespace snapper
 
 	u64 parent_root_id = 0;
 	string name1 = string(dir1.fullname(), base.fullname().size() + 1);
-	if (get_root_id(name1, &parent_root_id) < 0)
+	if (!get_root_id(name1, &parent_root_id))
 	{
 	    y2err("could not resolve root_id for " << name1);
 	    throw BtrfsSendReceiveException();
