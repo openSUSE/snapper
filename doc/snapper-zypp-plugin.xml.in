@@ -52,8 +52,8 @@
     <para>
       <citerefentry><refentrytitle>snapper-zypp-plugin.conf</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
       <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
-      <citerefentry><refentrytitle>zypper</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
-      <citerefentry><refentrytitle>YaST</refentrytitle><manvolnum>8</manvolnum></citerefentry>
+      <citerefentry role="nolink"><refentrytitle>zypper</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+      <citerefentry role="nolink"><refentrytitle>YaST</refentrytitle><manvolnum>8</manvolnum></citerefentry>
     </para>
   </refsect1>
 

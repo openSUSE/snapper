@@ -43,7 +43,7 @@
     <title>SEE ALSO</title>
     <para>
       <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
-      <citerefentry><refentrytitle>dbus-daemon</refentrytitle><manvolnum>1</manvolnum></citerefentry>
+      <citerefentry role="nolink"><refentrytitle>dbus-daemon</refentrytitle><manvolnum>1</manvolnum></citerefentry>
     </para>
   </refsect1>
 
