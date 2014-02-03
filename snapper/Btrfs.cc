@@ -1128,7 +1128,9 @@ namespace snapper
 	{
 	    StopWatch stopwatch;
 
-	    StreamProcessor processor(openSubvolumeDir(), dir1, dir2);
+	    const SDir subvolume(openSubvolumeDir());
+
+	    StreamProcessor processor(subvolume, dir1, dir2);
 
 	    processor.process(cb);
 
