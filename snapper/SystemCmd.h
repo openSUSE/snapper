@@ -45,7 +45,6 @@ namespace snapper
 	enum OutputStream { IDX_STDOUT, IDX_STDERR };
 
 	SystemCmd(const string& Command_Cv, bool log_output = true);
-	SystemCmd(bool log_output = true);
 
 	virtual ~SystemCmd();
 

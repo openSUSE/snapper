@@ -49,14 +49,6 @@ namespace snapper
 }
 
 
-    SystemCmd::SystemCmd(bool log_output)
-	: Combine_b(false), log_output(log_output)
-{
-    y2mil("constructor SystemCmd");
-    init();
-}
-
-
 void SystemCmd::init()
     {
     File_aC[0] = File_aC[1] = NULL;
