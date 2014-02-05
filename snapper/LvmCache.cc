@@ -142,15 +142,14 @@ namespace snapper
 	boost::unique_lock<boost::shared_mutex> unique_lock(lv_mutex);
 
 	SystemCmd cmd(LVSBIN " --noheadings -o lv_attr,segtype " + quote(vg->get_vg_name() + "/" + lv_name));
-
-	if (cmd.retcode() != 0 || cmd.numLines() < 1)
+	if (cmd.retcode() != 0 || cmd.stdout().empty())
 	{
 	    y2err("lvm cache: failed to get info about " << vg->get_vg_name() << "/" << lv_name);
 	    throw LvmCacheException();
 	}
 
 	vector<string> args;
-	const string tmp = boost::trim_copy(cmd.getLine(0));
+	const string tmp = boost::trim_copy(cmd.stdout().front());
 	boost::split(args, tmp, boost::is_any_of(" \t\n"), boost::token_compress_on);
 	if (args.size() < 1)
 	    throw LvmCacheException();
@@ -282,14 +281,14 @@ namespace snapper
 	else
 	{
 	    SystemCmd cmd(LVSBIN " --noheadings -o lv_attr,segtype " + quote(vg_name + "/" + lv_name));
-	    if (cmd.retcode() != 0 || cmd.numLines() < 1)
+	    if (cmd.retcode() != 0 || cmd.stdout().empty())
 	    {
 		y2err("lvm cache: failed to get info about " << vg_name << "/" << lv_name);
 		throw LvmCacheException();
 	    }
 
 	    vector<string> args;
-	    const string tmp = boost::trim_copy(cmd.getLine(0));
+	    const string tmp = boost::trim_copy(cmd.stdout().front());
 	    boost::split(args, tmp, boost::is_any_of(" \t\n"), boost::token_compress_on);
 	    if (args.size() < 1)
 		throw LvmCacheException();

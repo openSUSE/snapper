@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2012] Novell, Inc.
+ * Copyright (c) [2004-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -48,11 +48,15 @@ namespace snapper
 
 	virtual ~SystemCmd();
 
+    protected:
+
 	int execute(const string& Command_Cv);
 	int executeBackground(const string& Command_Cv);
 	int executeRestricted(const string& Command_Cv,
 			      unsigned long MaxTimeSec, unsigned long MaxLineOut,
 			      bool& ExceedTime, bool& ExceedLines);
+
+    public:
 
 	const vector<string>& stdout() const { return Lines_aC[IDX_STDOUT]; }
 	const vector<string>& stderr() const { return Lines_aC[IDX_STDERR]; }
@@ -60,13 +64,16 @@ namespace snapper
 	string cmd() const { return lastCmd; }
 	int retcode() const { return Ret_i; }
 
-	int select(const string& Reg_Cv, OutputStream Idx_ii = IDX_STDOUT);
+    protected:
+
 	unsigned numLines(bool Selected_bv = false, OutputStream Idx_ii = IDX_STDOUT) const;
 	string getLine(unsigned Num_iv, bool Selected_bv = false, OutputStream Idx_ii = IDX_STDOUT) const;
 
 	void setCombine(bool combine = true);
 
 	static void setTestmode(bool testmode = true);
+
+    public:
 
 	/**
 	 * Quotes and protects a single string for shell execution.
