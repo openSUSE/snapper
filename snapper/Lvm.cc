@@ -370,7 +370,7 @@ namespace snapper
     {
 	SystemCmd cmd(string(LVMBIN " version"));
 
-	if (cmd.retcode() != 0)
+	if (cmd.retcode() != 0 || cmd.stdout().empty())
 	{
 	    y2war("Couldn't get LVM version info");
 	}
@@ -378,7 +378,7 @@ namespace snapper
 	{
 	    Regex rx(".*LVM[[:space:]]+version:[[:space:]]+([0-9]+)\\.([0-9]+)\\.([0-9]+).*$");
 
-	    if (!rx.match(cmd.getLine(0)))
+	    if (!rx.match(cmd.stdout().front()))
 	    {
 		y2war("LVM version format didn't match");
 	    }
