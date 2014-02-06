@@ -116,6 +116,8 @@ Requires:       util-linux
 %if 0%{?suse_version}
 PreReq:         %fillup_prereq
 %endif
+# expands to Obsoletes: libsnapper1 libsnapper2 libsnapper3...
+Obsoletes:      %(echo `seq -s " " -f "libsnapper%.f" $((@LIBVERSION_MAJOR@ - 1))`)
 
 %description -n libsnapper@LIBVERSION_MAJOR@
 This package contains libsnapper, a library for filesystem snapshot management.
