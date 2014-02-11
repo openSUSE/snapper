@@ -95,6 +95,10 @@ namespace snapper
 	config_info->getValue(KEY_FSTYPE, fstype);
 	filesystem = Filesystem::create(fstype, config_info->getSubvolume());
 
+	bool sync_acl;
+	if (config_info->getValue(KEY_SYNC_ACL, sync_acl) && sync_acl == true)
+	    syncAcl();
+
 	y2mil("subvolume:" << config_info->getSubvolume() << " filesystem:" <<
 	      filesystem->fstype());
 
@@ -533,7 +537,11 @@ namespace snapper
     {
 	SDir infos_dir = openInfosDir();
 
-	acl_t acl = acl_get_fd(infos_dir.fd());
+	acl_t orig_acl = acl_get_fd(infos_dir.fd());
+	if (!orig_acl)
+	    throw AclException();
+
+	acl_t acl = acl_dup(orig_acl);
 	if (!acl)
 	    throw AclException();
 
@@ -609,8 +617,9 @@ namespace snapper
 	if (acl_calc_mask(&acl) != 0)
 	    throw AclException();
 
-	if (acl_set_fd(infos_dir.fd(), acl) != 0)
-	    throw AclException();
+	if (acl_cmp(orig_acl, acl) == 1)
+	    if (acl_set_fd(infos_dir.fd(), acl) != 0)
+		throw AclException();
 
 	if (acl_free(acl) != 0)
 	    throw AclException();
