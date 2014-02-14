@@ -1685,7 +1685,7 @@ main(int argc, char** argv)
 		cerr << _("Config is in use.") << endl;
 	    else if (name == "error.snapshot_in_use")
 		cerr << _("Snapshot is in use.") << endl;
-	    else if (name == "error.unknown_file_use")
+	    else if (name == "error.unknown_file")
 		cerr << _("Unknown file.") << endl;
 	    else if (name == "error.io_error")
 		cerr << _("IO Error.") << endl;
