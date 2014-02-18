@@ -94,7 +94,10 @@ namespace snapper
 
 	mount_options = filter_mount_options(mtab_data.options);
 	if (mount_type == "xfs")
+	{
 	    mount_options.push_back("nouuid");
+	    mount_options.push_back("norecovery");
+	}
     }
 
 
