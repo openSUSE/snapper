@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Feb 20 15:04:30 CET 2014 - aschnell@suse.de
+
+- fixed segmentation fault with DBus (bnc#860119)
+
+-------------------------------------------------------------------
 Thu Feb 20 14:18:01 CET 2014 - aschnell@suse.de
 
 - updated zypp-plugin.conf (bnc#864841)
