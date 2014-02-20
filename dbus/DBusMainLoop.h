@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Novell, Inc.
+ * Copyright (c) [2012-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -57,18 +57,21 @@ namespace DBus
 
 	struct Watch
 	{
+	    Watch(DBusWatch* dbus_watch);
+
+	    DBusWatch* dbus_watch;
 	    bool enabled;
 	    int fd;
-	    unsigned int flags;
 	    int events;
-	    DBusWatch* dbus_watch;
 	};
 
 	struct Timeout
 	{
+	    Timeout(DBusTimeout* dbus_timeout);
+
+	    DBusTimeout* dbus_timeout;
 	    bool enabled;
 	    int interval;
-	    DBusTimeout* dbus_timeout;
 	};
 
 	vector<Watch> watches;
@@ -76,6 +79,7 @@ namespace DBus
 	int wakeup_pipe[2];
 
 	vector<Watch>::iterator find_watch(DBusWatch* dbus_watch);
+	vector<Watch>::iterator find_enabled_watch(int fd, int events);
 	vector<Timeout>::iterator find_timeout(DBusTimeout* dbus_timeout);
 
 	static dbus_bool_t add_watch(DBusWatch* dbus_watch, void* data);
