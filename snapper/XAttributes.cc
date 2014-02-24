@@ -36,6 +36,7 @@
 #include "snapper/Log.h"
 #include "snapper/XAttributes.h"
 #include "snapper/Acls.h"
+#include "snapper/SnapperTmpl.h"
 
 
 namespace snapper
@@ -47,18 +48,12 @@ namespace snapper
 
 	bool operator()(const xa_pair_t& pair)
 	{
-	    for (vector<string>::const_iterator cit = acl_sigs.begin(); cit != acl_sigs.end(); cit++)
-		if (pair.first == *cit)
-		    return true;
-	    return false;
+	    return contains(acl_sigs, pair.first);
 	}
 
 	bool operator()(const string& name)
 	{
-	    for (vector<string>::const_iterator cit = acl_sigs.begin(); cit != acl_sigs.end(); cit++)
-		if (name == *cit)
-		    return true;
-	    return false;
+	    return contains(acl_sigs, name);
 	}
 
 	const vector<string>& acl_sigs;
@@ -71,14 +66,8 @@ namespace snapper
 	: map(xamap), acl_sigs(acl_sigs) {}
 	void operator()(const xa_pair_t& xapair)
 	{
-	    for (vector<string>::const_iterator cit = acl_sigs.begin(); cit != acl_sigs.end(); cit++)
-	    {
-		if (*cit == xapair.first)
-		{
-		    map.insert(xapair);
-		    break;
-		}
-	    }
+	    if (contains(acl_sigs, xapair.first))
+		map.insert(xapair);
 	}
 
 	xa_map_t& map;

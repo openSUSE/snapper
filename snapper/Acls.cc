@@ -26,18 +26,14 @@
 #include "snapper/AppUtil.h"
 #include "snapper/Exception.h"
 #include "snapper/Log.h"
+#include "snapper/SnapperTmpl.h"
 
 namespace snapper
 {
     bool
     is_acl_signature(const std::string& name)
     {
-	for (std::vector<string>::const_iterator cit = _acl_signatures.begin(); cit != _acl_signatures.end(); cit++)
-	{
-	    if (name == *cit)
-		return true;
-	}
-	return false;
+	return contains(_acl_signatures, name);
     }
 
     Acls::Acls(const string& path)

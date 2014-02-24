@@ -572,7 +572,7 @@ namespace snapper
 
 	    ret_val = true;
 	}
-	catch (const SnapperException& e)
+	catch (const AclException& e)
 	{
 	    ret_val = false;
 	}
