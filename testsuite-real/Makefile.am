@@ -9,7 +9,7 @@ INCLUDES = -I$(top_srcdir)
 LDADD = ../snapper/libsnapper.la
 
 if HAVE_XATTRS
-TMP_XATST = xattrs1 xattrs2 xattrs3
+TMP_XATST = xattrs1 xattrs2 xattrs3 xattrs4
 endif
 
 noinst_SCRIPTS = run-all
@@ -38,6 +38,7 @@ error4_SOURCES = error4.cc common.h common.cc
 xattrs1_SOURCES = xattrs1.cc xattrs_utils.cc xattrs_utils.h common.h common.cc
 xattrs2_SOURCES = xattrs2.cc xattrs_utils.cc xattrs_utils.h common.h common.cc
 xattrs3_SOURCES = xattrs3.cc xattrs_utils.cc xattrs_utils.h common.h common.cc
+xattrs4_SOURCES = xattrs4.cc xattrs_utils.cc xattrs_utils.h common.h common.cc
 
 EXTRA_DIST = $(noinst_SCRIPTS)
 

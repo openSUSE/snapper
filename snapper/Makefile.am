@@ -26,12 +26,12 @@ libsnapper_la_SOURCES =					\
 	SystemCmd.cc		SystemCmd.h		\
 	AsciiFile.cc		AsciiFile.h		\
 	Regex.cc		Regex.h			\
+	Acls.cc			Acls.h			\
 	Exception.h					\
 	SnapperTmpl.h					\
 	SnapperTypes.h					\
 	SnapperDefines.h				\
-	Version.h					\
-	$(TMP_XA)
+	Version.h
 
 
 if ENABLE_BTRFS

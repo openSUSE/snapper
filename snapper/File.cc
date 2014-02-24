@@ -40,6 +40,7 @@
 #include "snapper/Compare.h"
 #include "snapper/Exception.h"
 #include "snapper/XAttributes.h"
+#include "snapper/Acls.h"
 
 
 namespace snapper
@@ -540,6 +541,8 @@ namespace snapper
             XAModification xa_mod(xa_src, xa_dest);
             y2deb("xa_modmap(xa_dest) object: " << xa_mod);
 
+	    xa_mod.filterOutAcls();
+
             xaCreated = xa_mod.getXaCreateNum();
             xaDeleted = xa_mod.getXaDeleteNum();
             xaReplaced = xa_mod.getXaReplaceNum();
@@ -555,6 +558,28 @@ namespace snapper
 
         return ret_val;
     }
+
+
+    bool
+    File::modifyAcls()
+    {
+	bool ret_val;
+
+	try
+	{
+	    Acls acl(getAbsolutePath(LOC_PRE));
+	    acl.serializeTo(getAbsolutePath(LOC_SYSTEM));
+
+	    ret_val = true;
+	}
+	catch (const SnapperException& e)
+	{
+	    ret_val = false;
+	}
+
+	return ret_val;
+    }
+
 
     XAUndoStatistic& operator+=(XAUndoStatistic &out, const XAUndoStatistic &src)
     {
@@ -628,6 +653,12 @@ namespace snapper
             if (!modifyXattributes())
                 error = true;
         }
+
+        if (getPreToPostStatus() & (ACL | TYPE | DELETED))
+	{
+	    if (!modifyAcls())
+		error = true;
+	}
 #endif
 
 	pre_to_system_status = (unsigned int) -1;
@@ -727,7 +758,8 @@ namespace snapper
 	ret += status & PERMISSIONS ? "p" : ".";
 	ret += status & USER ? "u" : ".";
 	ret += status & GROUP ? "g" : ".";
-        ret += status & XATTRS ? "x" : ".";
+	ret += status & XATTRS ? "x" : ".";
+	ret += status & ACL ? "a" : ".";
 
 	return ret;
     }
@@ -768,10 +800,16 @@ namespace snapper
 	}
 
 	if (str.length() >= 5)
-        {
-            if (str[4] == 'x')
-                ret |= XATTRS;
-        }
+	{
+	    if (str[4] == 'x')
+		ret |= XATTRS;
+	}
+
+	if (str.length() >= 6)
+	{
+	    if (str[5] == 'a')
+		ret |= ACL;
+	}
 
 	return ret;
     }

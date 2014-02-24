@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2013] Red Hat, Inc.
+ * Copyright (c) [2013-2014] Red Hat, Inc.
  *
  * All Rights Reserved.
  *
@@ -77,6 +77,7 @@ namespace snapper
             XAModification(const XAttributes&, const XAttributes&);
 
             bool empty() const;
+	    void filterOutAcls();
             bool serializeTo(const string&) const;
 
             unsigned int getXaCreateNum() const;
@@ -92,6 +93,16 @@ namespace snapper
 
         ostream& operator<<(ostream&, const XAttributes&);
         ostream& operator<<(ostream&, const xa_value_t&);
+
+	class CompareAcls
+	{
+	private:
+	    xa_map_t xamap;
+	public:
+	    CompareAcls(const XAttributes& xa);
+
+	    bool operator==(const CompareAcls&) const;
+	};
 }
 
 

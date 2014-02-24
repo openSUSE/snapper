@@ -48,7 +48,9 @@ namespace snapper
     void
     cmpDirs(const SDir& dir1, const SDir& dir2, cmpdirs_cb_t cb);
 
-    bool
+    /* Compares the two files extended attributes and ACLs.
+       Returns 0 or XATTRS or (XATTRS | ACL) */
+    unsigned int
     cmpFilesXattrs(const SFile&, const SFile&);
 
 }
