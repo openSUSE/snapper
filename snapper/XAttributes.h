@@ -33,76 +33,76 @@
 
 namespace snapper
 {
-	using std::map;
-	using std::string;
-	using std::pair;
-	using std::ostream;
-	using std::vector;
+    using std::map;
+    using std::string;
+    using std::pair;
+    using std::ostream;
+    using std::vector;
 
-	typedef vector<uint8_t> xa_value_t;
-	typedef map<string, xa_value_t> xa_map_t;
-	typedef pair<string, xa_value_t> xa_pair_t;
-        typedef vector<xa_pair_t> xa_mod_vec_t;
-	typedef vector<string> xa_del_vec_t;
+    typedef vector<uint8_t> xa_value_t;
+    typedef map<string, xa_value_t> xa_map_t;
+    typedef pair<string, xa_value_t> xa_pair_t;
+    typedef vector<xa_pair_t> xa_mod_vec_t;
+    typedef vector<string> xa_del_vec_t;
 
-        // iterators
-	typedef xa_map_t::const_iterator xa_map_citer;
-        typedef xa_mod_vec_t::const_iterator xa_mod_vec_citer;
-	typedef xa_del_vec_t::const_iterator xa_del_vec_citer;
+    // iterators
+    typedef xa_map_t::const_iterator xa_map_citer;
+    typedef xa_mod_vec_t::const_iterator xa_mod_vec_citer;
+    typedef xa_del_vec_t::const_iterator xa_del_vec_citer;
 
-	class XAttributes
-	{
-	private:
-            xa_map_t xamap;
-        public:
-            XAttributes(const string&);
-	    XAttributes(const SFile& dir);
+    class XAttributes
+    {
+    private:
+	xa_map_t xamap;
+    public:
+	XAttributes(const string&);
+	XAttributes(const SFile& dir);
 
-            xa_map_citer cbegin() const { return xamap.begin(); }
-            xa_map_citer cend() const { return xamap.end(); }
+	xa_map_citer cbegin() const { return xamap.begin(); }
+	xa_map_citer cend() const { return xamap.end(); }
 
-            bool operator==(const XAttributes&) const;
-	};
+	bool operator==(const XAttributes&) const;
+    };
 
-        class XAModification
-        {
-        private:
-	    xa_mod_vec_t create_vec;
-	    xa_del_vec_t delete_vec;
-	    xa_mod_vec_t replace_vec;
+    class XAModification
+    {
+    private:
+	xa_mod_vec_t create_vec;
+	xa_del_vec_t delete_vec;
+	xa_mod_vec_t replace_vec;
 
-	    void printTo(ostream&, bool) const;
-        public:
+	void printTo(ostream&, bool) const;
+    public:
 
-            XAModification(const XAttributes&, const XAttributes&);
+	XAModification(const XAttributes&, const XAttributes&);
 
-            bool empty() const;
-	    void filterOutAcls();
-            bool serializeTo(const string&) const;
+	bool empty() const;
+	void filterOutAcls();
+	bool serializeTo(const string&) const;
 
-            unsigned int getXaCreateNum() const;
-            unsigned int getXaDeleteNum() const;
-            unsigned int getXaReplaceNum() const;
+	unsigned int getXaCreateNum() const;
+	unsigned int getXaDeleteNum() const;
+	unsigned int getXaReplaceNum() const;
 
-	    // this will generate diff report
-	    void dumpDiffReport(ostream&) const;
+	// this will generate diff report
+	void dumpDiffReport(ostream&) const;
 
-	    // this will print out the class content
-            friend ostream& operator<<(ostream&, const XAModification&);
-        };
+	// this will print out the class content
+	friend ostream& operator<<(ostream&, const XAModification&);
+    };
 
-        ostream& operator<<(ostream&, const XAttributes&);
-        ostream& operator<<(ostream&, const xa_value_t&);
+    ostream& operator<<(ostream&, const XAttributes&);
+    ostream& operator<<(ostream&, const xa_value_t&);
 
-	class CompareAcls
-	{
-	private:
-	    xa_map_t xamap;
-	public:
-	    CompareAcls(const XAttributes& xa);
+    class CompareAcls
+    {
+    private:
+	xa_map_t xamap;
+    public:
+	CompareAcls(const XAttributes& xa);
 
-	    bool operator==(const CompareAcls&) const;
-	};
+	bool operator==(const CompareAcls&) const;
+    };
 }
 
 
