@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2013] Red Hat, Inc.
+ * Copyright (c) [2013-2014] Red Hat, Inc.
  *
  * All Rights Reserved.
  *
@@ -29,15 +29,51 @@
 #include <errno.h>
 #include <iomanip>
 #include <boost/scoped_array.hpp>
+#include <algorithm>
 
 #include "snapper/AppUtil.h"
 #include "snapper/Exception.h"
 #include "snapper/Log.h"
 #include "snapper/XAttributes.h"
+#include "snapper/Acls.h"
+#include "snapper/SnapperTmpl.h"
 
 
 namespace snapper
 {
+    struct FilterAclsHelper
+    {
+	FilterAclsHelper(const vector<string>& acl_sigs)
+	    : acl_sigs(acl_sigs) {}
+
+	bool operator()(const xa_pair_t& pair)
+	{
+	    return contains(acl_sigs, pair.first);
+	}
+
+	bool operator()(const string& name)
+	{
+	    return contains(acl_sigs, name);
+	}
+
+	const vector<string>& acl_sigs;
+    };
+
+
+    struct InsertAclsHelper
+    {
+	InsertAclsHelper(xa_map_t& xamap, const vector<string>& acl_sigs)
+	: map(xamap), acl_sigs(acl_sigs) {}
+	void operator()(const xa_pair_t& xapair)
+	{
+	    if (contains(acl_sigs, xapair.first))
+		map.insert(xapair);
+	}
+
+	xa_map_t& map;
+	const vector<string>& acl_sigs;
+    };
+
 
     XAttributes::XAttributes(const string &path)
     {
@@ -72,6 +108,7 @@ namespace snapper
             string name = string(names.get() + pos);
             // move beyond separating '\0' char
             pos += name.length() + 1;
+
 
             ssize_t v_size = lgetxattr(path.c_str(), name.c_str(), NULL, 0);
             if (v_size < 0)
@@ -180,6 +217,7 @@ namespace snapper
         return (this == &xa) ? true : (this->xamap == xa.xamap);
     }
 
+
     ostream&
     operator<<(ostream &out, const XAttributes &xa)
     {
@@ -193,6 +231,7 @@ namespace snapper
 
         return out;
     }
+
 
     ostream&
     operator<<(ostream &out, const xa_value_t &xavalue)
@@ -262,13 +301,16 @@ namespace snapper
 	    y2deb("adding create operation for " << src_cit->first);
             create_vec.push_back(xa_pair_t(src_cit->first, src_cit->second));
 	}
+
     }
+
 
     bool
     XAModification::empty() const
     {
 	return create_vec.empty() && delete_vec.empty() && replace_vec.empty();
     }
+
 
     bool
     XAModification::serializeTo(const string &dest) const
@@ -336,11 +378,13 @@ namespace snapper
 	return true;
     }
 
+
     unsigned int
     XAModification::getXaCreateNum() const
     {
         return create_vec.size();
     }
+
 
     unsigned int
     XAModification::getXaDeleteNum() const
@@ -348,11 +392,13 @@ namespace snapper
         return delete_vec.size();
     }
 
+
     unsigned int
     XAModification::getXaReplaceNum() const
     {
         return replace_vec.size();
     }
+
 
     void
     XAModification::printTo(ostream& out, bool diff) const
@@ -381,11 +427,13 @@ namespace snapper
 	}
     }
 
+
     void
     XAModification::dumpDiffReport(ostream& out) const
     {
 	printTo(out, true);
     }
+
 
     ostream&
     operator<<(ostream &out, const XAModification &xa_mod)
@@ -393,4 +441,32 @@ namespace snapper
 	xa_mod.printTo(out, false);
         return out;
     }
+
+
+    CompareAcls::CompareAcls(const XAttributes& xa)
+    {
+	std::for_each(xa.cbegin(), xa.cend(), InsertAclsHelper(xamap, _acl_signatures));
+    }
+
+
+    bool
+    CompareAcls::operator==(const CompareAcls& acls) const
+    {
+	return (this == &acls) ? true : (this->xamap == acls.xamap);
+    }
+
+
+    void
+    XAModification::filterOutAcls()
+    {
+	FilterAclsHelper fhelper(_acl_signatures);
+
+	create_vec.erase(std::remove_if(create_vec.begin(), create_vec.end(), fhelper),
+			 create_vec.end());
+	delete_vec.erase(std::remove_if(delete_vec.begin(), delete_vec.end(), fhelper),
+			 delete_vec.end());
+	replace_vec.erase(std::remove_if(replace_vec.begin(), replace_vec.end(), fhelper),
+			  replace_vec.end());
+    }
+
 }

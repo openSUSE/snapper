@@ -38,3 +38,4 @@ run error4
 test -x xattrs1 && run xattrs1
 test -x xattrs2 && run xattrs2
 test -x xattrs3 && run xattrs3
+test -x xattrs4 && run xattrs4

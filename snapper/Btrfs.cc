@@ -47,6 +47,7 @@
 #include "snapper/Snapper.h"
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"
+#include "snapper/Acls.h"
 
 
 namespace snapper
@@ -450,10 +451,10 @@ namespace snapper
 	if (status & CREATED) status = CREATED;
 	if (status & DELETED) status = DELETED;
 
-	if (status & (CONTENT | PERMISSIONS | USER | GROUP | XATTRS))
+	if (status & (CONTENT | PERMISSIONS | USER | GROUP | XATTRS | ACL))
 	{
 	    // TODO check for content sometimes not required
-	    status &= ~(CONTENT | PERMISSIONS | USER | GROUP | XATTRS);
+	    status &= ~(CONTENT | PERMISSIONS | USER | GROUP | XATTRS | ACL);
 
 	    string dirname = snapper::dirname(name);
 	    string basename = snapper::basename(name);
@@ -546,7 +547,7 @@ namespace snapper
 	else
 	{
 	    node->status &= ~(CREATED | DELETED);
-	    node->status |= CONTENT | PERMISSIONS | USER | GROUP | XATTRS;
+	    node->status |= CONTENT | PERMISSIONS | USER | GROUP | XATTRS | ACL;
 	}
     }
 
@@ -679,7 +680,7 @@ namespace snapper
 		else
 		{
 		    node->status &= ~(CREATED | DELETED);
-		    node->status |= CONTENT | PERMISSIONS | USER | GROUP | XATTRS;
+		    node->status |= CONTENT | PERMISSIONS | USER | GROUP | XATTRS | ACL;
 		}
 
 		merge(processor, &it->second, from, to, x);
@@ -697,7 +698,7 @@ namespace snapper
 		else
 		{
 		    node->status &= ~(CREATED | DELETED);
-		    node->status |= CONTENT | PERMISSIONS | USER | GROUP | XATTRS;
+		    node->status |= CONTENT | PERMISSIONS | USER | GROUP | XATTRS | ACL;
 		}
 
 		merge(processor, &it->second, from, to, x);
@@ -854,6 +855,14 @@ namespace snapper
 
 	tree_node* node = processor->files.insert(path);
 	node->status |= XATTRS;
+
+	if (is_acl_signature(name))
+	{
+	    #ifdef DEBUG_PROCESS
+		y2deb("adding acl flag, signature:'" << name << "'");
+	    #endif
+	    node->status |= ACL;
+	}
 #endif
 
 	return 0;
@@ -872,6 +881,14 @@ namespace snapper
 
 	tree_node* node = processor->files.insert(path);
 	node->status |= XATTRS;
+
+	if (is_acl_signature(name))
+	{
+	    #ifdef DEBUG_PROCESS
+		y2deb("adding acl flag, signature:'" << name << "'");
+	    #endif
+	    node->status |= ACL;
+	}
 #endif
 
 	return 0;

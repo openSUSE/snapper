@@ -38,6 +38,7 @@
 #include "snapper/Compare.h"
 #include "snapper/Exception.h"
 #include "snapper/XAttributes.h"
+#include "snapper/Acls.h"
 
 
 namespace snapper
@@ -222,10 +223,7 @@ namespace snapper
 #ifdef ENABLE_XATTRS
 	if (file1.xaSupported() && file2.xaSupported())
 	{
-	    if (!cmpFilesXattrs(file1, file2))
-	    {
-		status |= XATTRS;
-	    }
+	    status |= cmpFilesXattrs(file1, file2);
 	}
 #endif
 
@@ -467,19 +465,34 @@ namespace snapper
     }
 
 
-    bool
+    unsigned int
     cmpFilesXattrs(const SFile& file1, const SFile& file2)
     {
         try
         {
 	    XAttributes xa(file1);
 	    XAttributes xb(file2);
-	    return xa == xb;
+
+	    if (xa == xb)
+	    {
+		return 0;
+	    }
+	    else
+	    {
+		unsigned int status = XATTRS;
+
+		CompareAcls acl_a(xa);
+		CompareAcls acl_b(xb);
+
+		status |= (acl_a == acl_b) ? 0 : ACL;
+
+		return status;
+	    }
         }
 	catch (const XAttributesException& e)
         {
-            y2err("extended attributes compare failed");
-	    return false;
+	    y2err("extended attributes or ACL compare failed");
+	    return (XATTRS | ACL);
 	}
     }
 

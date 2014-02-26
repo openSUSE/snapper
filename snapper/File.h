@@ -39,7 +39,7 @@ namespace snapper
     enum StatusFlags
     {
 	CREATED = 1, DELETED = 2, TYPE = 4, CONTENT = 8, PERMISSIONS = 16, USER = 32,
-	GROUP = 64, XATTRS = 128
+	GROUP = 64, XATTRS = 128, ACL = 256
     };
 
     enum Cmp
@@ -156,6 +156,7 @@ namespace snapper
 	bool undo;
 
 	bool modifyXattributes();
+	bool modifyAcls();
 
 	unsigned int xaCreated;
 	unsigned int xaDeleted;
