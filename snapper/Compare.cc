@@ -212,7 +212,7 @@ namespace snapper
 
 	if (stat1.st_uid != stat2.st_uid)
 	{
-	    status |= USER;
+	    status |= OWNER;
 	}
 
 	if (stat1.st_gid != stat2.st_gid)

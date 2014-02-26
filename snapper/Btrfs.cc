@@ -451,10 +451,10 @@ namespace snapper
 	if (status & CREATED) status = CREATED;
 	if (status & DELETED) status = DELETED;
 
-	if (status & (CONTENT | PERMISSIONS | USER | GROUP | XATTRS | ACL))
+	if (status & (CONTENT | PERMISSIONS | OWNER | GROUP | XATTRS | ACL))
 	{
 	    // TODO check for content sometimes not required
-	    status &= ~(CONTENT | PERMISSIONS | USER | GROUP | XATTRS | ACL);
+	    status &= ~(CONTENT | PERMISSIONS | OWNER | GROUP | XATTRS | ACL);
 
 	    string dirname = snapper::dirname(name);
 	    string basename = snapper::basename(name);
@@ -547,7 +547,7 @@ namespace snapper
 	else
 	{
 	    node->status &= ~(CREATED | DELETED);
-	    node->status |= CONTENT | PERMISSIONS | USER | GROUP | XATTRS | ACL;
+	    node->status |= CONTENT | PERMISSIONS | OWNER | GROUP | XATTRS | ACL;
 	}
     }
 
@@ -680,7 +680,7 @@ namespace snapper
 		else
 		{
 		    node->status &= ~(CREATED | DELETED);
-		    node->status |= CONTENT | PERMISSIONS | USER | GROUP | XATTRS | ACL;
+		    node->status |= CONTENT | PERMISSIONS | OWNER | GROUP | XATTRS | ACL;
 		}
 
 		merge(processor, &it->second, from, to, x);
@@ -698,7 +698,7 @@ namespace snapper
 		else
 		{
 		    node->status &= ~(CREATED | DELETED);
-		    node->status |= CONTENT | PERMISSIONS | USER | GROUP | XATTRS | ACL;
+		    node->status |= CONTENT | PERMISSIONS | OWNER | GROUP | XATTRS | ACL;
 		}
 
 		merge(processor, &it->second, from, to, x);
@@ -937,7 +937,7 @@ namespace snapper
 #endif
 
 	tree_node* node = processor->files.insert(path);
-	node->status |= USER | GROUP;
+	node->status |= OWNER | GROUP;
 
 	return 0;
     }

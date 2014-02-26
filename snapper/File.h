@@ -38,7 +38,7 @@ namespace snapper
 
     enum StatusFlags
     {
-	CREATED = 1, DELETED = 2, TYPE = 4, CONTENT = 8, PERMISSIONS = 16, USER = 32,
+	CREATED = 1, DELETED = 2, TYPE = 4, CONTENT = 8, PERMISSIONS = 16, OWNER = 32, USER = 32,
 	GROUP = 64, XATTRS = 128, ACL = 256
     };
 

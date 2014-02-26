@@ -514,7 +514,7 @@ namespace snapper
 		}
 	    }
 
-	    if (getPreToPostStatus() & (USER | GROUP))
+	    if (getPreToPostStatus() & (OWNER | GROUP))
 	    {
 		if (lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid) != 0)
 		{
@@ -636,7 +636,7 @@ namespace snapper
 		error = true;
 	}
 
-	if (getPreToPostStatus() & (CONTENT | PERMISSIONS | USER | GROUP))
+	if (getPreToPostStatus() & (CONTENT | PERMISSIONS | OWNER | GROUP))
 	{
 	    if (!modifyAllTypes())
 		error = true;
@@ -756,7 +756,7 @@ namespace snapper
 	    ret += ".";
 
 	ret += status & PERMISSIONS ? "p" : ".";
-	ret += status & USER ? "u" : ".";
+	ret += status & OWNER ? "u" : ".";
 	ret += status & GROUP ? "g" : ".";
 	ret += status & XATTRS ? "x" : ".";
 	ret += status & ACL ? "a" : ".";
@@ -789,8 +789,8 @@ namespace snapper
 
 	if (str.length() >= 3)
 	{
-	    if (str[2] == 'u')
-		ret |= USER;
+	    if (str[2] == 'u' || str[2] == 'o')
+		ret |= OWNER;
 	}
 
 	if (str.length() >= 4)
