@@ -742,6 +742,9 @@ namespace snapper
     string
     statusToString(unsigned int status)
     {
+	// If possible keep the characters in sync with e.g. rpm or
+	// rsync. Unfortunately rpm and rsync are not consistent.
+
 	string ret;
 
 	if (status & CREATED)
@@ -789,7 +792,7 @@ namespace snapper
 
 	if (str.length() >= 3)
 	{
-	    if (str[2] == 'u' || str[2] == 'o')
+	    if (str[2] == 'u')
 		ret |= OWNER;
 	}
 

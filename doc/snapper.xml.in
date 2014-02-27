@@ -422,6 +422,38 @@
 	      </listitem>
 	    </varlistentry>
 	  </variablelist>
+	  <para>The output consists of a string encoding the status followed by
+	  the filename. The characters of the status string are:</para>
+	  <orderedlist>
+	    <listitem>
+	      <para>A "<computeroutput>+</computeroutput>" means the file was
+	      created, a "<computeroutput>-</computeroutput>" means the file was deleted. A
+	      "<computeroutput>c</computeroutput>" means the content of the file has changed
+	      and a "<computeroutput>t</computeroutput>" means the type of the file has
+	      changed (e.g. from regular file to directory).</para>
+	    </listitem>
+	    <listitem>
+	      <para>A "<computeroutput>p</computeroutput>" means the permissions
+	      are have changed.</para>
+	    </listitem>
+	    <listitem>
+	      <para>An "<computeroutput>u</computeroutput>" means the user
+	      ownership has changed.</para>
+	    </listitem>
+	    <listitem>
+	      <para>A "<computeroutput>g</computeroutput>" means the group
+	      ownership has changed.</para>
+	    </listitem>
+	    <listitem>
+	      <para>A "<computeroutput>x</computeroutput>" means the extended
+	      attribute information has changed.</para>
+	    </listitem>
+	    <listitem>
+	      <para>An "<computeroutput>a</computeroutput>" means the ACL
+	      information has changed.</para>
+	    </listitem>
+	  </orderedlist>
+	  <para>If there is no change a "." is outputted.</para>
 	</listitem>
       </varlistentry>
 
@@ -462,11 +494,9 @@
       <varlistentry>
 	<term><option>xadiff <replaceable>number1</replaceable>..<replaceable>number2</replaceable> [files]</option></term>
 	<listitem>
-
 	  <para>Compare the extended attributes between snapshot
 	  <replaceable>number1</replaceable> and
 	  <replaceable>number2</replaceable>. See examples below:</para>
-
 	  <itemizedlist>
 	    <listitem>
 	      <para><computeroutput> +:user.foo</computeroutput> for created attributes</para>
