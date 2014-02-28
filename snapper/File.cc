@@ -514,13 +514,16 @@ namespace snapper
 		}
 	    }
 
-	    if (getPreToPostStatus() & PERMISSIONS)
+	    if (getPreToPostStatus() & (OWNER | GROUP | PERMISSIONS))
 	    {
-		if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode) != 0)
+		if (!S_ISLNK(fs.st_mode))
 		{
-		    y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" <<
-			  errno << " (" << stringerror(errno) << ")");
-		    return false;
+		    if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode) != 0)
+		    {
+			y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" <<
+			      errno << " (" << stringerror(errno) << ")");
+			return false;
+		    }
 		}
 	    }
 	}

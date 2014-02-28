@@ -9,16 +9,22 @@ main()
 {
     setup();
 
-    run_command("echo hello > setuid");
-    run_command("chmod u+s setuid");
+    run_command("echo hello > setuid1");
+    run_command("chmod u+s,a+x setuid1");
+
+    run_command("touch setuid2");
+    run_command("chmod u+s,a+x setuid2");
 
     first_snapshot();
 
-    run_command("echo world >> setuid");
+    run_command("echo world >> setuid1");
+
+    run_command("chown :nobody setuid2");
+    run_command("chmod u+s setuid2");
 
     second_snapshot();
 
-    check_undo_statistics(0, 1, 0);
+    check_undo_statistics(0, 2, 0);
 
     undo();
 
