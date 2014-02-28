@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Feb 28 11:47:22 CET 2014 - aschnell@suse.de
+
+- fixed setting setuid bit during undochange (bnc#862964)
+
+-------------------------------------------------------------------
 Thu Feb 20 15:04:30 CET 2014 - aschnell@suse.de
 
 - fixed segmentation fault with DBus (bnc#860119)

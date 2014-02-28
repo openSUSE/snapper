@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2013] Novell, Inc.
+ * Copyright (c) [2011-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -334,16 +334,16 @@ namespace snapper
 	    }
 	}
 
-	if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), mode) != 0)
+	if (chown(getAbsolutePath(LOC_SYSTEM).c_str(), owner, group) != 0)
 	{
-	    y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno <<
+	    y2err("chown failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno <<
 		  " (" << stringerror(errno) << ")");
 	    return false;
 	}
 
-	if (chown(getAbsolutePath(LOC_SYSTEM).c_str(), owner, group) != 0)
+	if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), mode) != 0)
 	{
-	    y2err("chown failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno <<
+	    y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno <<
 		  " (" << stringerror(errno) << ")");
 	    return false;
 	}
@@ -371,19 +371,19 @@ namespace snapper
 	    return false;
 	}
 
-	int r1 = fchmod(dest_fd, mode);
+	int r1 = fchown(dest_fd, owner, group);
 	if (r1 != 0)
 	{
-	    y2err("fchmod failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    y2err("fchown failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    close(dest_fd);
 	    close(src_fd);
 	    return false;
 	}
 
-	int r2 = fchown(dest_fd, owner, group);
+	int r2 = fchmod(dest_fd, mode);
 	if (r2 != 0)
 	{
-	    y2err("fchown failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    y2err("fchmod failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    close(dest_fd);
 	    close(src_fd);
 	    return false;
@@ -504,16 +504,6 @@ namespace snapper
 		}
 	    }
 
-	    if (getPreToPostStatus() & PERMISSIONS)
-	    {
-		if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode) != 0)
-		{
-		    y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" <<
-			  errno << " (" << stringerror(errno) << ")");
-		    return false;
-		}
-	    }
-
 	    if (getPreToPostStatus() & (OWNER | GROUP))
 	    {
 		if (lchown(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_uid, fs.st_gid) != 0)
@@ -521,6 +511,19 @@ namespace snapper
 		    y2err("lchown failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" <<
 			  errno <<  " (" << stringerror(errno) << ")");
 		    return false;
+		}
+	    }
+
+	    if (getPreToPostStatus() & (OWNER | GROUP | PERMISSIONS))
+	    {
+		if (!S_ISLNK(fs.st_mode))
+		{
+		    if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), fs.st_mode) != 0)
+		    {
+			y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" <<
+			      errno << " (" << stringerror(errno) << ")");
+			return false;
+		    }
 		}
 	    }
 	}

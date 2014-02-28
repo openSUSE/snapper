@@ -22,6 +22,7 @@ run simple1
 
 run permissions1
 run permissions2
+run permissions3
 
 run owner1
 run owner2
