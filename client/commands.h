@@ -95,6 +95,10 @@ void
 command_create_xcomparison(DBus::Connection& conn, const string& config_name, unsigned int number1,
 			   unsigned int number2);
 
+void
+command_delete_xcomparison(DBus::Connection& conn, const string& config_name, unsigned int number1,
+			   unsigned int number2);
+
 list<XFile>
 command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		   unsigned int number2);

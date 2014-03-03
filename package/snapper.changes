@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Mar 03 17:20:41 CET 2014 - aschnell@suse.de
+
+- fixed empty-pre-post cleanup algorithm
+
+-------------------------------------------------------------------
 Fri Feb 28 11:47:22 CET 2014 - aschnell@suse.de
 
 - fixed setting setuid bit during undochange (bnc#862964)
