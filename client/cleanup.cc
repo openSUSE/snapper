@@ -362,6 +362,8 @@ do_cleanup_empty_pre_post(DBus::Connection& conn, const string& config_name)
 		    tmp.push_back(it1);
 		    tmp.push_back(it2);
 		}
+
+		command_delete_xcomparison(conn, config_name, it1->getNum(), it2->getNum());
 	    }
 	}
     }

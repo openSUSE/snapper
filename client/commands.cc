@@ -294,6 +294,19 @@ command_create_xcomparison(DBus::Connection& conn, const string& config_name, un
 }
 
 
+void
+command_delete_xcomparison(DBus::Connection& conn, const string& config_name, unsigned int number1,
+			   unsigned int number2)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "DeleteComparison");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << number1 << number2;
+
+    conn.send_with_reply_and_block(call);
+}
+
+
 list<XFile>
 command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		   unsigned int number2)
