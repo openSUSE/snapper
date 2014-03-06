@@ -1,0 +1,12 @@
+
+[Unit]
+Description=Daily Cleanup of Snapper Snapshots
+Documentation=man:snapper(8) man:snapper-configs(5)
+
+[Timer]
+OnBootSec=10m
+OnUnitActiveSec=1d
+
+[Install]
+WantedBy=basic.target
+
