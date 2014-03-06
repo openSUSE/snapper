@@ -44,6 +44,7 @@
 
 #include "commands.h"
 #include "cleanup.h"
+#include "errors.h"
 
 
 using namespace snapper;
@@ -1668,43 +1669,7 @@ main(int argc, char** argv)
 	}
 	catch (const DBus::ErrorException& e)
 	{
-	    string name = e.name();
-	    if (name == "error.unknown_config")
-		cerr << _("Unknown config.") << endl;
-	    else if (name == "error.no_permissions")
-		cerr << _("No permissions.") << endl;
-	    else if (name == "error.invalid_userdata")
-		cerr << _("Invalid userdata.") << endl;
-	    else if (name == "error.invalid_configdata")
-		cerr << _("Invalid configdata.") << endl;
-	    else if (name == "error.illegal_snapshot")
-		cerr << _("Illegal Snapshot.") << endl;
-	    else if (name == "error.config_locked")
-		cerr << _("Config is locked.") << endl;
-	    else if (name == "error.config_in_use")
-		cerr << _("Config is in use.") << endl;
-	    else if (name == "error.snapshot_in_use")
-		cerr << _("Snapshot is in use.") << endl;
-	    else if (name == "error.unknown_file")
-		cerr << _("Unknown file.") << endl;
-	    else if (name == "error.io_error")
-		cerr << _("IO Error.") << endl;
-	    else if (name == "error.create_config_failed")
-		cerr << sformat(_("Creating config failed (%s)."), e.message()) << endl;
-	    else if (name == "error.delete_config_failed")
-		cerr << sformat(_("Deleting config failed (%s)."), e.message()) << endl;
-	    else if (name == "error.create_snapshot_failed")
-		cerr << _("Creating snapshot failed.") << endl;
-	    else if (name == "error.delete_snapshot_failed")
-		cerr << _("Deleting snapshot failed.") << endl;
-	    else if (name == "error.invalid_user")
-		cerr << _("Invalid user.") << endl;
-	    else if (name == "error.invalid_group")
-		cerr << _("Invalid group.") << endl;
-	    else if (name == "error.acl_error")
-		cerr << _("ACL error.") << endl;
-	    else
-		cerr << _("Failure") << " (" << name << ")." << endl;
+	    cerr << error_description(e) << endl;
 	    exit(EXIT_FAILURE);
 	}
 	catch (const DBus::FatalException& e)
