@@ -101,12 +101,10 @@ main(int argc, char** argv)
 
     GetOpts::parsed_opts opts = getopts.parse(options);
 
-    GetOpts::parsed_opts::const_iterator opt;
-
-    if ((opt = opts.find("timeline")) != opts.end())
+    if (opts.find("timeline") != opts.end())
 	do_timeline = true;
 
-    if ((opt = opts.find("cleanup")) != opts.end())
+    if (opts.find("cleanup") != opts.end())
 	do_cleanup = true;
 
     try
