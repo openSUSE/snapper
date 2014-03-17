@@ -14,6 +14,18 @@ piwik: true
       <p>You will have to create a snapper config for /home by calling:</p>
 
       <pre><code>snapper -c home create-config /home</code></pre>
+
+      <p>You can also have a subvolume for every single home directory. Then
+      create a snapper config for e.g. the user &quot;tux&quot; by
+      calling:</p>
+
+      <pre><code>snapper -c home_tux create-config /home/tux</code></pre>
+
+      <p>In that case you can allow user &quot;tux&quot; to work with the
+      config by calling:</p>
+
+      <pre><code>snapper -c home_tux set-config SYNC_ACL=yes ALLOW_USERS=tux</code></pre>
+
     </li>
 
     <li>
@@ -108,6 +120,22 @@ piwik: true
 
       <p>It's recommended to always use the status command to see in
       advance what files snapper will process.</p>
+    </li>
+
+    <li>
+      <h3>How should I name my snapper configs?</h3>
+
+      <p>Snapper does not require you to use special names for your configs.
+      But here are some recommendations:</p>
+
+      <ul>
+	<li>The config for / should be called &quot;root&quot;.</li>
+	<li>Configs for home directories should be named
+	&quot;home_&lt;username&gt;&quot;.</li>
+      </ul>
+
+      <p>That way you can use <a href="/manpages/pam_snapper.html">pam_snapper</a> with
+      the default configuration.</p>
     </li>
 
   </ol>
