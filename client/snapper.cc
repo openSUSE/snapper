@@ -318,6 +318,9 @@ command_create_config(DBus::Connection* conn, Snapper* snapper)
     const struct option options[] = {
 	{ "fstype",		required_argument,	0,	'f' },
 	{ "template",		required_argument,	0,	't' },
+#ifdef ENABLE_ROLLBACK
+	{ "add-fstab",		no_argument,		0,	0 },
+#endif
 	{ 0, 0, 0, 0 }
     };
 
@@ -337,6 +340,7 @@ command_create_config(DBus::Connection* conn, Snapper* snapper)
 
     string fstype = "";
     string template_name = "default";
+    bool add_fstab = false;
 
     GetOpts::parsed_opts::const_iterator opt;
 
@@ -346,6 +350,9 @@ command_create_config(DBus::Connection* conn, Snapper* snapper)
     if ((opt = opts.find("template")) != opts.end())
 	template_name = opt->second;
 
+    if ((opt = opts.find("add-fstab")) != opts.end())
+	add_fstab = true;
+
     if (fstype.empty() && !Snapper::detectFstype(subvolume, fstype))
     {
 	cerr << _("Detecting filesystem type failed.") << endl;
@@ -354,7 +361,7 @@ command_create_config(DBus::Connection* conn, Snapper* snapper)
 
     if (no_dbus)
     {
-	Snapper::createConfig(config_name, subvolume, fstype, template_name);
+	Snapper::createConfig(config_name, subvolume, fstype, template_name, add_fstab);
     }
     else
     {

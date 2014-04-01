@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2013] Novell, Inc.
+ * Copyright (c) [2011-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -30,6 +30,9 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <asm/types.h>
+#ifdef ENABLE_ROLLBACK
+#include <libmount/libmount.h>
+#endif
 #ifdef HAVE_LIBBTRFS
 #include <btrfs/ioctl.h>
 #include <btrfs/send.h>
@@ -70,7 +73,7 @@ namespace snapper
 
 
     void
-    Btrfs::createConfig() const
+    Btrfs::createConfig(bool add_fstab) const
     {
 	SDir subvolume_dir = openSubvolumeDir();
 
@@ -84,6 +87,20 @@ namespace snapper
 	struct stat stat;
 	if (x.stat(&stat, 0) == 0)
 	    x.chmod(stat.st_mode & ~0027, 0);
+
+#ifdef ENABLE_ROLLBACK
+	if (subvolume == "/" && add_fstab)
+	{
+	    try
+	    {
+		addToFstab();
+	    }
+	    catch (const runtime_error& e)
+	    {
+		y2err("adding to fstab failed, " << e.what());
+	    }
+	}
+#endif
     }
 
 
@@ -91,6 +108,22 @@ namespace snapper
     Btrfs::deleteConfig() const
     {
 	SDir subvolume_dir = openSubvolumeDir();
+
+#ifdef ENABLE_ROLLBACK
+	if (subvolume == "/")
+	{
+	    subvolume_dir.umount(".snapshots");
+
+	    try
+	    {
+		removeFromFstab();
+	    }
+	    catch (const runtime_error& e)
+	    {
+		y2err("removing from fstab failed, " << e.what());
+	    }
+	}
+#endif
 
 	if (!delete_subvolume(subvolume_dir.fd(), ".snapshots"))
 	{
@@ -1176,4 +1209,86 @@ namespace snapper
 #endif
 
 
+#ifdef ENABLE_ROLLBACK
+
+    void
+    Btrfs::addToFstab() const
+    {
+	SDir infos_dir = openInfosDir();
+	unsigned long long id = get_id(infos_dir.fd());
+	string subvol_option = get_subvolume(infos_dir.fd(), id);
+
+	libmnt_table* table = mnt_new_table();
+	if (!table)
+	    throw runtime_error("out of memory");
+
+	mnt_table_enable_comments(table, 1);
+
+	if (mnt_table_parse_fstab(table, "/etc/fstab") != 0)
+	    throw runtime_error("mnt_table_parse_fstab failed");
+
+	libmnt_fs* root = mnt_table_find_target(table, subvolume.c_str(), MNT_ITER_FORWARD);
+	if (!root)
+	{
+	    mnt_reset_table(table);
+	    throw runtime_error("root entry not found");
+	}
+
+	libmnt_fs* snapshots = mnt_copy_fs(NULL, root);
+	if (!snapshots)
+	{
+	    mnt_reset_table(table);
+	    throw runtime_error("mnt_copy_fs failed");
+	}
+
+	string mountpoint = (subvolume == "/" ? "" : subvolume) +  "/.snapshots";
+	mnt_fs_set_target(snapshots, mountpoint.c_str());
+
+	char* options = mnt_fs_strdup_options(snapshots);
+	mnt_optstr_remove_option(&options, "defaults");
+	mnt_optstr_set_option(&options, "subvol", subvol_option.c_str());
+	mnt_fs_set_options(snapshots, options);
+	free(options);
+
+	mnt_table_add_fs(table, snapshots);
+
+	if (mnt_table_replace_file(table, "/etc/fstab") != 0)
+	{
+	    mnt_reset_table(table);
+	    throw runtime_error("mnt_table_replace_file failed");
+	}
+
+	mnt_reset_table(table);
+    }
+
+
+    void
+    Btrfs::removeFromFstab() const
+    {
+	libmnt_table* table = mnt_new_table();
+	if (!table)
+	    throw runtime_error("out of memory");
+
+	mnt_table_enable_comments(table, 1);
+
+	if (mnt_table_parse_fstab(table, "/etc/fstab") != 0)
+	    throw runtime_error("mnt_table_parse_fstab failed");
+
+	string mountpoint = (subvolume == "/" ? "" : subvolume) +  "/.snapshots";
+	libmnt_fs* snapshots = mnt_table_find_target(table, mountpoint.c_str(), MNT_ITER_FORWARD);
+	if (snapshots)
+	{
+	    mnt_table_remove_fs(table, snapshots);
+
+	    if (mnt_table_replace_file(table, "/etc/fstab") != 0)
+	    {
+		mnt_reset_table(table);
+		throw runtime_error("mnt_table_replace_file failed");
+	    }
+	}
+
+	mnt_reset_table(table);
+    }
+
+#endif
 }

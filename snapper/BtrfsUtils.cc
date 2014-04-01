@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2013] Novell, Inc.
+ * Copyright (c) [2011-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -32,7 +32,9 @@
 #include <unistd.h>
 #ifdef HAVE_LIBBTRFS
 #include <btrfs/ioctl.h>
+#include <btrfs/send-utils.h>
 #endif
+#include <stdexcept>
 
 #include "snapper/Log.h"
 #include "snapper/BtrfsUtils.h"
@@ -71,10 +73,12 @@ struct btrfs_ioctl_vol_args_v2
 namespace snapper
 {
 
+    // See btrfsprogs source code for references.
+
+
     bool
     is_subvolume(const struct stat& stat)
     {
-	// see btrfsprogs source code
 	return stat.st_ino == 256 && S_ISDIR(stat.st_mode);
     }
 
@@ -126,5 +130,37 @@ namespace snapper
 
 	return ioctl(fd, BTRFS_IOC_SNAP_DESTROY, &args) == 0;
     }
+
+
+#ifdef ENABLE_ROLLBACK
+
+    string
+    get_subvolume(int fd, unsigned long long id)
+    {
+	char path[BTRFS_PATH_NAME_MAX + 1];
+
+	if (btrfs_subvolid_resolve(fd, path, sizeof(path), id) != 0)
+	    throw std::runtime_error("btrfs_subvolid_resolve failed");
+
+	path[BTRFS_PATH_NAME_MAX] = '\0';
+	return path;
+    }
+
+
+    unsigned long long
+    get_id(int fd)
+    {
+	struct btrfs_ioctl_ino_lookup_args args;
+	memset(&args, 0, sizeof(args));
+	args.treeid = 0;
+	args.objectid = BTRFS_FIRST_FREE_OBJECTID;
+
+	if (ioctl(fd, BTRFS_IOC_INO_LOOKUP, &args) != 0)
+	    throw std::runtime_error("ioctl(BTRFS_IOC_INO_LOOKUP) failed");
+
+	return args.treeid;
+    }
+
+#endif
 
 }

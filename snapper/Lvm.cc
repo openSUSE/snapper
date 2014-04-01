@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2013] Novell, Inc.
+ * Copyright (c) [2011-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -102,7 +102,7 @@ namespace snapper
 
 
     void
-    Lvm::createConfig() const
+    Lvm::createConfig(bool add_fstab) const
     {
 	SDir subvolume_dir = openSubvolumeDir();
 

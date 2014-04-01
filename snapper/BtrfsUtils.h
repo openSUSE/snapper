@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2013] Novell, Inc.
+ * Copyright (c) [2011-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -24,14 +24,22 @@
 #define SNAPPER_BTRFS_UTILS_H
 
 
+#include <string>
+
+
 namespace snapper
 {
+    using std::string;
+
 
     bool is_subvolume(const struct stat& stat);
 
     bool create_subvolume(int fddst, const string& name);
     bool create_snapshot(int fd, int fddst, const string& name);
     bool delete_subvolume(int fd, const string& name);
+
+    string get_subvolume(int fd, unsigned long long id);
+    unsigned long long get_id(int fd);
 
 }
 

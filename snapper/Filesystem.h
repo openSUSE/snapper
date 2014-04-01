@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2013] Novell, Inc.
+ * Copyright (c) [2011-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -51,7 +51,7 @@ namespace snapper
 
 	virtual string fstype() const = 0;
 
-	virtual void createConfig() const = 0;
+	virtual void createConfig(bool add_fstab) const = 0;
 	virtual void deleteConfig() const = 0;
 
 	virtual string snapshotDir(unsigned int num) const = 0;

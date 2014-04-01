@@ -86,7 +86,7 @@ namespace snapper
 
 
     void
-    Ext4::createConfig() const
+    Ext4::createConfig(bool add_fstab) const
     {
 	int r1 = mkdir((subvolume + "/.snapshots").c_str(), 0700);
 	if (r1 == 0)
