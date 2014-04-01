@@ -376,7 +376,7 @@ namespace snapper
 
 	filesystem->createConfig();
 
-#if 1
+#ifdef ENABLE_ROLLBACK
 	if (subvolume == "/" && filesystem->fstype() == "btrfs" &&
 	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
 	{
@@ -394,7 +394,7 @@ namespace snapper
 
 	auto_ptr<Snapper> snapper(new Snapper(config_name));
 
-#if 1
+#ifdef ENABLE_ROLLBACK
 	if (snapper->subvolumeDir() == "/" && snapper->getFilesystem()->fstype() == "btrfs" &&
 	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
 	{
