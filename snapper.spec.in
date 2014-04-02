@@ -28,7 +28,7 @@ BuildRequires:  libacl-devel
 BuildRequires:  libtool
 BuildRequires:  libxml2-devel
 BuildRequires:  libbtrfs-devel
-BuildRequires:  libmount-devel
+BuildRequires:  libmount-devel >= 2.24
 BuildRequires:  pkg-config
 %if ! 0%{?mandriva_version}
 BuildRequires:  dbus-1-devel
@@ -163,7 +163,7 @@ Requires:       libsnapper@LIBVERSION_MAJOR@ = %version
 Requires:       libstdc++-devel
 Requires:       libxml2-devel
 Requires:       libbtrfs-devel
-Requires:       libmount-devel
+Requires:       libmount-devel >= 2.24
 Summary:        Header files and documentation for libsnapper
 Group:          Development/Languages/C and C++
 
