@@ -72,6 +72,9 @@ namespace snapper
 
 	virtual void cmpDirs(const SDir& dir1, const SDir& dir2, cmpdirs_cb_t cb) const;
 
+	virtual unsigned int getDefault() const;
+	virtual void setDefault(unsigned int num) const;
+
     protected:
 
 	const string subvolume;

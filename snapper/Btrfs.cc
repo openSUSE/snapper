@@ -51,6 +51,7 @@
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/Acls.h"
+#include "snapper/Regex.h"
 
 
 namespace snapper
@@ -1221,6 +1222,79 @@ namespace snapper
 	snapper::cmpDirs(dir1, dir2, cb);
     }
 
+
+#endif
+
+
+#ifdef ENABLE_ROLLBACK
+
+    unsigned int
+    Btrfs::getDefault() const
+    {
+	try
+	{
+	    SDir subvolume_dir = openSubvolumeDir();
+	    unsigned long long id = get_default_id(subvolume_dir.fd());
+	    string name = get_subvolume(subvolume_dir.fd(), id);
+
+	    if (name.empty())
+		return 0;
+
+	    Regex rx("^.snapshots/([0-9]*)/snapshot");
+	    if (!rx.match(name))
+		throw IOErrorException();
+
+	    int num = 0;
+	    rx.cap(1) >> num;
+	    return num;
+	}
+	catch (const runtime_error& e)
+	{
+	    throw IOErrorException();
+	}
+    }
+
+
+    void
+    Btrfs::setDefault(unsigned int num) const
+    {
+	try
+	{
+	    if (num == 0)
+	    {
+		SDir subvolume_dir = openSubvolumeDir();
+		unsigned long long id = get_id(subvolume_dir.fd());
+		set_default_id(subvolume_dir.fd(), id);
+	    }
+	    else
+	    {
+		SDir snapshot_dir = openSnapshotDir(num);
+		unsigned long long id = get_id(snapshot_dir.fd());
+
+		SDir subvolume_dir = openSubvolumeDir();
+		set_default_id(subvolume_dir.fd(), id);
+	    }
+	}
+	catch (const runtime_error& e)
+	{
+	    throw IOErrorException();
+	}
+    }
+
+#else
+
+    unsigned int
+    Btrfs::getDefault() const
+    {
+	throw std::logic_error("not implemented");
+    }
+
+
+    void
+    Btrfs::setDefault(unsigned int num) const
+    {
+	throw std::logic_error("not implemented");
+    }
 
 #endif
 

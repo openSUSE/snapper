@@ -69,9 +69,14 @@ struct btrfs_ioctl_vol_args_v2
 
 #endif
 
+#ifndef BTRFS_IOC_SUBVOL_GETFLAGS
+#define BTRFS_IOC_SUBVOL_GETFLAGS _IOR(BTRFS_IOCTL_MAGIC, 25, __u64)
+#endif
+
 
 namespace snapper
 {
+
 
     // See btrfsprogs source code for references.
 
@@ -84,6 +89,17 @@ namespace snapper
 
 
     bool
+    is_subvolume_read_only(int fd, bool& read_only)
+    {
+	__u64 flags;
+	if (ioctl(fd, BTRFS_IOC_SUBVOL_GETFLAGS, &flags) != 0)
+	    throw runtime_error_with_errno("ioctl(BTRFS_IOC_SUBVOL_GETFLAGS) failed", errno);
+
+	return flags & BTRFS_SUBVOL_RDONLY;
+    }
+
+
+    void
     create_subvolume(int fddst, const string& name)
     {
 	struct btrfs_ioctl_vol_args args;
@@ -136,6 +152,50 @@ namespace snapper
 
 
 #ifdef ENABLE_ROLLBACK
+
+    void
+    set_default_id(int fd, unsigned long long id)
+    {
+	if (ioctl(fd, BTRFS_IOC_DEFAULT_SUBVOL, &id) != 0)
+	    throw runtime_error_with_errno("ioctl(BTRFS_IOC_DEFAULT_SUBVOL) failed", errno);
+    }
+
+
+    unsigned long long
+    get_default_id(int fd)
+    {
+	struct btrfs_ioctl_search_args args;
+	memset(&args, 0, sizeof(args));
+
+	struct btrfs_ioctl_search_key* sk = &args.key;
+	sk->tree_id = BTRFS_ROOT_TREE_OBJECTID;
+	sk->nr_items = 1;
+	sk->max_objectid = BTRFS_ROOT_TREE_DIR_OBJECTID;
+	sk->min_objectid = BTRFS_ROOT_TREE_DIR_OBJECTID;
+	sk->max_type = BTRFS_DIR_ITEM_KEY;
+	sk->min_type = BTRFS_DIR_ITEM_KEY;
+	sk->max_offset = (__u64) -1;
+	sk->max_transid = (__u64) -1;
+
+	if (ioctl(fd, BTRFS_IOC_TREE_SEARCH, &args) != 0)
+	    throw runtime_error_with_errno("ioctl(BTRFS_IOC_TREE_SEARCH) failed", errno);
+
+	if (sk->nr_items == 0)
+	    throw std::runtime_error("sk->nr_items == 0");
+
+	struct btrfs_ioctl_search_header* sh = (struct btrfs_ioctl_search_header*) args.buf;
+	if (sh->type != BTRFS_DIR_ITEM_KEY)
+	    throw std::runtime_error("sh->type != BTRFS_DIR_ITEM_KEY");
+
+	struct btrfs_dir_item* di = (struct btrfs_dir_item*)(sh + 1);
+	int name_len = btrfs_stack_dir_name_len(di);
+	const char* name = (const char*)(di + 1);
+	if (strncmp("default", name, name_len) != 0)
+	    throw std::runtime_error("name != default");
+
+	return btrfs_disk_key_objectid(&di->location);
+    }
+
 
     string
     get_subvolume(int fd, unsigned long long id)
