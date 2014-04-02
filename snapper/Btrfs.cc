@@ -1242,7 +1242,10 @@ namespace snapper
 
 	    Regex rx("^.snapshots/([0-9]*)/snapshot");
 	    if (!rx.match(name))
+	    {
+		y2err("get default failed, strange name");
 		throw IOErrorException();
+	    }
 
 	    int num = 0;
 	    rx.cap(1) >> num;
@@ -1250,6 +1253,7 @@ namespace snapper
 	}
 	catch (const runtime_error& e)
 	{
+	    y2err("get default failed, " << e.what());
 	    throw IOErrorException();
 	}
     }
@@ -1277,6 +1281,7 @@ namespace snapper
 	}
 	catch (const runtime_error& e)
 	{
+	    y2err("set default failed, " << e.what());
 	    throw IOErrorException();
 	}
     }
