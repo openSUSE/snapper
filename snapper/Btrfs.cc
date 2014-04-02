@@ -1325,13 +1325,13 @@ namespace snapper
 	    mnt_reset_table(table);
 	}
 
-	void load()
+	void parse_fstab()
 	{
 	    if (mnt_table_parse_fstab(table, "/etc/fstab") != 0)
 		throw runtime_error("mnt_table_parse_fstab failed");
 	}
 
-	void save()
+	void replace_file()
 	{
 	    if (mnt_table_replace_file(table, "/etc/fstab") != 0)
 		throw runtime_error("mnt_table_replace_file failed");
@@ -1369,7 +1369,7 @@ namespace snapper
 	string subvol_option = get_subvolume(infos_dir.fd(), id);
 
 	MntTable mnt_table;
-	mnt_table.load();
+	mnt_table.parse_fstab();
 
 	libmnt_fs* root = mnt_table.find_target(subvolume, MNT_ITER_FORWARD);
 	if (!root)
@@ -1389,7 +1389,7 @@ namespace snapper
 	free(options);
 
 	mnt_table.add_fs(snapshots);
-	mnt_table.save();
+	mnt_table.replace_file();
     }
 
 
@@ -1397,7 +1397,7 @@ namespace snapper
     Btrfs::removeFromFstab() const
     {
 	MntTable mnt_table;
-	mnt_table.load();
+	mnt_table.parse_fstab();
 
 	string mountpoint = (subvolume == "/" ? "" : subvolume) +  "/.snapshots";
 	libmnt_fs* snapshots = mnt_table.find_target(mountpoint, MNT_ITER_FORWARD);
@@ -1405,7 +1405,7 @@ namespace snapper
 	    return;
 
 	mnt_table.remove_fs(snapshots);
-	mnt_table.save();
+	mnt_table.replace_file();
     }
 
 #endif
