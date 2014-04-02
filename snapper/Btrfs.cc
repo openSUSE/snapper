@@ -77,9 +77,13 @@ namespace snapper
     {
 	SDir subvolume_dir = openSubvolumeDir();
 
-	if (!create_subvolume(subvolume_dir.fd(), ".snapshots"))
+	try
 	{
-	    y2err("create subvolume failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    create_subvolume(subvolume_dir.fd(), ".snapshots");
+	}
+	catch (const runtime_error& e)
+	{
+	    y2err("create subvolume failed, " << e.what());
 	    throw CreateConfigFailedException("creating btrfs snapshot failed");
 	}
 
@@ -125,9 +129,13 @@ namespace snapper
 	}
 #endif
 
-	if (!delete_subvolume(subvolume_dir.fd(), ".snapshots"))
+	try
 	{
-	    y2err("delete subvolume failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    delete_subvolume(subvolume_dir.fd(), ".snapshots");
+	}
+	catch (const runtime_error& e)
+	{
+	    y2err("delete subvolume failed, " << e.what());
 	    throw DeleteConfigFailedException("deleting btrfs snapshot failed");
 	}
     }
@@ -218,9 +226,13 @@ namespace snapper
 	SDir subvolume_dir = openSubvolumeDir();
 	SDir info_dir = openInfoDir(num);
 
-	if (!create_snapshot(subvolume_dir.fd(), info_dir.fd(), "snapshot"))
+	try
 	{
-	    y2err("create snapshot failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    create_snapshot(subvolume_dir.fd(), info_dir.fd(), "snapshot", true);
+	}
+	catch (const runtime_error& e)
+	{
+	    y2err("create snapshot failed, " << e.what());
 	    throw CreateSnapshotFailedException();
 	}
     }
@@ -231,9 +243,13 @@ namespace snapper
     {
 	SDir info_dir = openInfoDir(num);
 
-	if (!delete_subvolume(info_dir.fd(), "snapshot"))
+	try
 	{
-	    y2err("delete snapshot failed errno:" << errno << " (" << stringerror(errno) << ")");
+	    delete_subvolume(info_dir.fd(), "snapshot");
+	}
+	catch (const runtime_error& e)
+	{
+	    y2err("delete snapshot failed, " << e.what());
 	    throw DeleteSnapshotFailedException();
 	}
     }

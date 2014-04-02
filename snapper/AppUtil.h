@@ -33,6 +33,7 @@
 #include <list>
 #include <map>
 #include <vector>
+#include <stdexcept>
 
 
 namespace snapper
@@ -109,6 +110,15 @@ namespace snapper
 
 
     string sformat(const string& format, ...);
+
+
+    struct runtime_error_with_errno : public std::runtime_error
+    {
+	explicit runtime_error_with_errno(const char* what_arg, int errnum)
+	    : runtime_error(sformat("%s, errno:%d (%s)", what_arg, errnum,
+				    stringerror(errnum).c_str()))
+	{}
+    };
 
 }
 

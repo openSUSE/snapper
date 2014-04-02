@@ -34,9 +34,9 @@
 #include <btrfs/ioctl.h>
 #include <btrfs/send-utils.h>
 #endif
-#include <stdexcept>
 
 #include "snapper/Log.h"
+#include "snapper/AppUtil.h"
 #include "snapper/BtrfsUtils.h"
 
 
@@ -91,24 +91,25 @@ namespace snapper
 
 	strncpy(args.name, name.c_str(), sizeof(args.name) - 1);
 
-	return ioctl(fddst, BTRFS_IOC_SUBVOL_CREATE, &args) == 0;
+	if (ioctl(fddst, BTRFS_IOC_SUBVOL_CREATE, &args) != 0)
+	    throw runtime_error_with_errno("ioctl(BTRFS_IOC_SUBVOL_CREATE) failed", errno);
     }
 
 
-    bool
-    create_snapshot(int fd, int fddst, const string& name)
+    void
+    create_snapshot(int fd, int fddst, const string& name, bool read_only)
     {
 	struct btrfs_ioctl_vol_args_v2 args_v2;
 	memset(&args_v2, 0, sizeof(args_v2));
 
 	args_v2.fd = fd;
-	args_v2.flags = BTRFS_SUBVOL_RDONLY;
+	args_v2.flags = read_only ? BTRFS_SUBVOL_RDONLY : 0;
 	strncpy(args_v2.name, name.c_str(), sizeof(args_v2.name) - 1);
 
 	if (ioctl(fddst, BTRFS_IOC_SNAP_CREATE_V2, &args_v2) == 0)
-	    return true;
+	    return;
 	else if (errno != ENOTTY && errno != EINVAL)
-	    return false;
+	    throw runtime_error_with_errno("ioctl(BTRFS_IOC_SNAP_CREATE_V2) failed", errno);
 
 	struct btrfs_ioctl_vol_args args;
 	memset(&args, 0, sizeof(args));
@@ -116,11 +117,12 @@ namespace snapper
 	args.fd = fd;
 	strncpy(args.name, name.c_str(), sizeof(args.name) - 1);
 
-	return ioctl(fddst, BTRFS_IOC_SNAP_CREATE, &args) == 0;
+	if (ioctl(fddst, BTRFS_IOC_SNAP_CREATE, &args) != 0)
+	    throw runtime_error_with_errno("ioctl(BTRFS_IOC_SNAP_CREATE) failed", errno);
     }
 
 
-    bool
+    void
     delete_subvolume(int fd, const string& name)
     {
 	struct btrfs_ioctl_vol_args args;
@@ -128,7 +130,8 @@ namespace snapper
 
 	strncpy(args.name, name.c_str(), sizeof(args.name) - 1);
 
-	return ioctl(fd, BTRFS_IOC_SNAP_DESTROY, &args) == 0;
+	if (ioctl(fd, BTRFS_IOC_SNAP_DESTROY, &args) != 0)
+	    throw runtime_error_with_errno("ioctl(BTRFS_IOC_SNAP_DESTROY) failed", errno);
     }
 
 
@@ -156,7 +159,7 @@ namespace snapper
 	args.objectid = BTRFS_FIRST_FREE_OBJECTID;
 
 	if (ioctl(fd, BTRFS_IOC_INO_LOOKUP, &args) != 0)
-	    throw std::runtime_error("ioctl(BTRFS_IOC_INO_LOOKUP) failed");
+	    throw runtime_error_with_errno("ioctl(BTRFS_IOC_INO_LOOKUP) failed", errno);
 
 	return args.treeid;
     }
