@@ -111,6 +111,14 @@ if test "x$with_xattrs" = "xyes"; then
 	AC_DEFINE(ENABLE_XATTRS, 1, [Enable extended attributes support])
 fi
 
+AC_ARG_ENABLE([rollback], AC_HELP_STRING([--disable-rollback],[Disable rollback support]),
+		[enable_rollback=$enableval],[enable_rollback=yes])
+AM_CONDITIONAL(ENABLE_ROLLBACK, [test "x$enable_rollback" = "xyes"])
+
+if test "x$enable_rollback" = "xyes"; then
+	AC_DEFINE(ENABLE_ROLLBACK, 1, [Enable rollback support])
+fi
+
 AC_ARG_ENABLE([pam], AC_HELP_STRING([--disable-pam],[Disable pam plugin support]),
                 [with_pam=$enableval],[with_pam=yes])
 AM_CONDITIONAL(HAVE_PAM, [test "x$with_pam" = "xyes"])

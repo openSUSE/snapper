@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Apr 01 20:04:33 CEST 2014 - aschnell@suse.de
+
+- allow to add snapshots subvolume to fstab (for fate#317062)
+
+-------------------------------------------------------------------
 Mon Mar 03 17:20:41 CET 2014 - aschnell@suse.de
 
 - fixed empty-pre-post cleanup algorithm

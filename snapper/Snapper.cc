@@ -295,6 +295,15 @@ namespace snapper
     Snapper::createConfig(const string& config_name, const string& subvolume,
 			  const string& fstype, const string& template_name)
     {
+	createConfig(config_name, subvolume, fstype, template_name, false);
+    }
+
+
+    void
+    Snapper::createConfig(const string& config_name, const string& subvolume,
+			  const string& fstype, const string& template_name,
+			  bool add_fstab)
+    {
 	y2mil("Snapper create-config");
 	y2mil("libsnapper version " VERSION);
 	y2mil("config_name:" << config_name << " subvolume:" << subvolume <<
@@ -374,9 +383,9 @@ namespace snapper
 	    throw CreateConfigFailedException("modifying config failed");
 	}
 
-	filesystem->createConfig();
+	filesystem->createConfig(add_fstab);
 
-#if 1
+#ifdef ENABLE_ROLLBACK
 	if (subvolume == "/" && filesystem->fstype() == "btrfs" &&
 	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
 	{
@@ -394,7 +403,7 @@ namespace snapper
 
 	auto_ptr<Snapper> snapper(new Snapper(config_name));
 
-#if 1
+#ifdef ENABLE_ROLLBACK
 	if (snapper->subvolumeDir() == "/" && snapper->getFilesystem()->fstype() == "btrfs" &&
 	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
 	{

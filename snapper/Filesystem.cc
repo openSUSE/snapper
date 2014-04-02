@@ -144,4 +144,18 @@ namespace snapper
 	snapper::cmpDirs(dir1, dir2, cb);
     }
 
+
+    unsigned int
+    Filesystem::getDefault() const
+    {
+	throw std::logic_error("not implemented");
+    }
+
+
+    void
+    Filesystem::setDefault(unsigned int num) const
+    {
+	throw std::logic_error("not implemented");
+    }
+
 }

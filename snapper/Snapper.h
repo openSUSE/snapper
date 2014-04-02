@@ -150,6 +150,9 @@ namespace snapper
 	static list<ConfigInfo> getConfigs();
 	static void createConfig(const string& config_name, const string& subvolume,
 				 const string& fstype, const string& template_name);
+	static void createConfig(const string& config_name, const string& subvolume,
+				 const string& fstype, const string& template_name,
+				 bool add_fstab);
 	static void deleteConfig(const string& config_name);
 
 	static bool detectFstype(const string& subvolume, string& fstype);

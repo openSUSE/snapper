@@ -667,7 +667,7 @@ namespace snapper
 	    throw;
 	}
 
-#if 1
+#ifdef ENABLE_ROLLBACK
 	if (snapper->subvolumeDir() == "/" && snapper->getFilesystem()->fstype() == "btrfs" &&
 	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
 	{
@@ -701,7 +701,7 @@ namespace snapper
 
 	snapshot->writeInfo();
 
-#if 1
+#ifdef ENABLE_ROLLBACK
 	if (snapper->subvolumeDir() == "/" && snapper->getFilesystem()->fstype() == "btrfs" &&
 	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
 	{
@@ -743,7 +743,7 @@ namespace snapper
 
 	entries.erase(snapshot);
 
-#if 1
+#ifdef ENABLE_ROLLBACK
 	if (snapper->subvolumeDir() == "/" && snapper->getFilesystem()->fstype() == "btrfs" &&
 	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
 	{

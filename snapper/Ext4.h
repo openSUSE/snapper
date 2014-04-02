@@ -40,7 +40,7 @@ namespace snapper
 
 	virtual string fstype() const { return "ext4"; }
 
-	virtual void createConfig() const;
+	virtual void createConfig(bool add_fstab) const;
 	virtual void deleteConfig() const;
 
 	virtual string snapshotDir(unsigned int num) const;
