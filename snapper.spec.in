@@ -28,7 +28,9 @@ BuildRequires:  libacl-devel
 BuildRequires:  libtool
 BuildRequires:  libxml2-devel
 BuildRequires:  libbtrfs-devel
+%if 0%{?suse_version} > 1310
 BuildRequires:  libmount-devel >= 2.24
+%endif
 BuildRequires:  pkg-config
 %if ! 0%{?mandriva_version}
 BuildRequires:  dbus-1-devel
@@ -77,6 +79,9 @@ autoconf
 
 ./configure --libdir=%{_libdir} --prefix=%{prefix} --mandir=%{_mandir}		\
 	--docdir=%{prefix}/share/doc/packages/snapper				\
+%if 0%{?suse_version} <= 1310
+	--disable-rollback							\
+%endif
 	--disable-silent-rules --disable-ext4
 make %{?jobs:-j%jobs}
 
@@ -163,7 +168,9 @@ Requires:       libsnapper@LIBVERSION_MAJOR@ = %version
 Requires:       libstdc++-devel
 Requires:       libxml2-devel
 Requires:       libbtrfs-devel
+%if 0%{?suse_version} > 1310
 Requires:       libmount-devel >= 2.24
+%endif
 Summary:        Header files and documentation for libsnapper
 Group:          Development/Languages/C and C++
 
