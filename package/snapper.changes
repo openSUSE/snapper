@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Apr 03 17:49:12 CEST 2014 - aschnell@suse.de
+
+- fixed execution of grub plugin (bnc#871880)
+
+-------------------------------------------------------------------
 Tue Apr 01 20:04:33 CEST 2014 - aschnell@suse.de
 
 - allow to add snapshots subvolume to fstab (for fate#317062)
