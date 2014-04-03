@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright (c) [2011-2013] Novell, Inc.
+# Copyright (c) [2011-2014] Novell, Inc.
 #
 # All Rights Reserved.
 #
@@ -25,10 +25,11 @@
 
 from os import readlink, getppid
 from os.path import basename
+import sys
 import fnmatch
 import re
 import logging
-from dbus import SystemBus, Interface
+from dbus import SystemBus, Interface, DBusException
 import xml.dom.minidom as minidom
 import xml.parsers.expat as expat
 import json
@@ -171,10 +172,14 @@ class MyPlugin(Plugin):
 
             self.userdata["important"] = "yes" if important else "no"
 
-            logging.info("creating pre snapshot")
-            self.num1 = snapper.CreatePreSnapshot("root", self.description, self.cleanup,
-                                                  self.userdata)
-            logging.debug("created pre snapshot %d" % self.num1)
+            try:
+                logging.info("creating pre snapshot")
+                self.num1 = snapper.CreatePreSnapshot("root", self.description, self.cleanup,
+                                                      self.userdata)
+                logging.debug("created pre snapshot %d" % self.num1)
+            except DBusException as e:
+                logging.error("creating snapshot failed:")
+                logging.error("  %s", e)
 
         self.ack()
 
@@ -195,19 +200,31 @@ class MyPlugin(Plugin):
 
                 self.userdata["important"] = "yes" if important else "no"
 
-                snapper.SetSnapshot("root", self.num1, self.description, self.cleanup,
-                                    self.userdata)
+                try:
+                    snapper.SetSnapshot("root", self.num1, self.description, self.cleanup,
+                                        self.userdata)
+                except DBusException as e:
+                    logging.error("setting snapshot data failed:")
+                    logging.error("  %s", e)
 
-                logging.info("creating post snapshot")
-                self.num2 = snapper.CreatePostSnapshot("root", self.num1, "", self.cleanup,
-                                                       self.userdata)
-                logging.debug("created post snapshot %d" % self.num2)
+                try:
+                    logging.info("creating post snapshot")
+                    self.num2 = snapper.CreatePostSnapshot("root", self.num1, "", self.cleanup,
+                                                           self.userdata)
+                    logging.debug("created post snapshot %d" % self.num2)
+                except DBusException as e:
+                    logging.error("creating snapshot failed:")
+                    logging.error("  %s", e)
 
             else:
 
-                logging.info("deleting pre snapshot")
-                snapper.DeleteSnapshots("root", [ self.num1 ])
-                logging.debug("deleted pre snapshot %d" % self.num1)
+                try:
+                    logging.info("deleting pre snapshot")
+                    snapper.DeleteSnapshots("root", [ self.num1 ])
+                    logging.debug("deleted pre snapshot %d" % self.num1)
+                except DBusException as e:
+                    logging.error("deleting snapshot failed:")
+                    logging.error("  %s", e)
 
         self.ack()
 
@@ -222,10 +239,14 @@ class MyPlugin(Plugin):
 
 config = Config()
 
-bus = SystemBus()
-
-snapper = Interface(bus.get_object('org.opensuse.Snapper', '/org/opensuse/Snapper'),
-                    dbus_interface='org.opensuse.Snapper')
+try:
+    bus = SystemBus()
+    snapper = Interface(bus.get_object('org.opensuse.Snapper', '/org/opensuse/Snapper'),
+                        dbus_interface='org.opensuse.Snapper')
+except DBusException as e:
+    logging.error("connect to snapperd failed:")
+    logging.error("  %s", e)
+    sys.exit(1)
 
 plugin = MyPlugin()
 plugin.main()
