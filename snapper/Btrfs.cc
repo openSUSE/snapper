@@ -1306,6 +1306,61 @@ namespace snapper
 
 #ifdef ENABLE_ROLLBACK
 
+    class MntTable
+    {
+
+    public:
+
+	MntTable()
+	    : table(mnt_new_table())
+	{
+	    if (!table)
+		throw runtime_error("mnt_new_table failed");
+
+	    mnt_table_enable_comments(table, 1);
+	}
+
+	~MntTable()
+	{
+	    mnt_reset_table(table);
+	}
+
+	void parse_fstab()
+	{
+	    if (mnt_table_parse_fstab(table, "/etc/fstab") != 0)
+		throw runtime_error("mnt_table_parse_fstab failed");
+	}
+
+	void replace_file()
+	{
+	    if (mnt_table_replace_file(table, "/etc/fstab") != 0)
+		throw runtime_error("mnt_table_replace_file failed");
+	}
+
+	struct libmnt_fs* find_target(const string& path, int directon)
+	{
+	    return mnt_table_find_target(table, path.c_str(), directon);
+	}
+
+	void add_fs(struct libmnt_fs* fs)
+	{
+	    if (mnt_table_add_fs(table, fs) != 0)
+		throw runtime_error("mnt_table_add_fs failed");
+	}
+
+	void remove_fs(struct libmnt_fs* fs)
+	{
+	    if (mnt_table_remove_fs(table, fs) != 0)
+		throw runtime_error("mnt_table_remove_fs failed");
+	}
+
+    private:
+
+	struct libmnt_table* table;
+
+    };
+
+
     void
     Btrfs::addToFstab() const
     {
@@ -1313,28 +1368,16 @@ namespace snapper
 	unsigned long long id = get_id(infos_dir.fd());
 	string subvol_option = get_subvolume(infos_dir.fd(), id);
 
-	libmnt_table* table = mnt_new_table();
-	if (!table)
-	    throw runtime_error("out of memory");
+	MntTable mnt_table;
+	mnt_table.parse_fstab();
 
-	mnt_table_enable_comments(table, 1);
-
-	if (mnt_table_parse_fstab(table, "/etc/fstab") != 0)
-	    throw runtime_error("mnt_table_parse_fstab failed");
-
-	libmnt_fs* root = mnt_table_find_target(table, subvolume.c_str(), MNT_ITER_FORWARD);
+	libmnt_fs* root = mnt_table.find_target(subvolume, MNT_ITER_FORWARD);
 	if (!root)
-	{
-	    mnt_reset_table(table);
 	    throw runtime_error("root entry not found");
-	}
 
 	libmnt_fs* snapshots = mnt_copy_fs(NULL, root);
 	if (!snapshots)
-	{
-	    mnt_reset_table(table);
 	    throw runtime_error("mnt_copy_fs failed");
-	}
 
 	string mountpoint = (subvolume == "/" ? "" : subvolume) +  "/.snapshots";
 	mnt_fs_set_target(snapshots, mountpoint.c_str());
@@ -1345,44 +1388,24 @@ namespace snapper
 	mnt_fs_set_options(snapshots, options);
 	free(options);
 
-	mnt_table_add_fs(table, snapshots);
-
-	if (mnt_table_replace_file(table, "/etc/fstab") != 0)
-	{
-	    mnt_reset_table(table);
-	    throw runtime_error("mnt_table_replace_file failed");
-	}
-
-	mnt_reset_table(table);
+	mnt_table.add_fs(snapshots);
+	mnt_table.replace_file();
     }
 
 
     void
     Btrfs::removeFromFstab() const
     {
-	libmnt_table* table = mnt_new_table();
-	if (!table)
-	    throw runtime_error("out of memory");
-
-	mnt_table_enable_comments(table, 1);
-
-	if (mnt_table_parse_fstab(table, "/etc/fstab") != 0)
-	    throw runtime_error("mnt_table_parse_fstab failed");
+	MntTable mnt_table;
+	mnt_table.parse_fstab();
 
 	string mountpoint = (subvolume == "/" ? "" : subvolume) +  "/.snapshots";
-	libmnt_fs* snapshots = mnt_table_find_target(table, mountpoint.c_str(), MNT_ITER_FORWARD);
-	if (snapshots)
-	{
-	    mnt_table_remove_fs(table, snapshots);
+	libmnt_fs* snapshots = mnt_table.find_target(mountpoint, MNT_ITER_FORWARD);
+	if (!snapshots)
+	    return;
 
-	    if (mnt_table_replace_file(table, "/etc/fstab") != 0)
-	    {
-		mnt_reset_table(table);
-		throw runtime_error("mnt_table_replace_file failed");
-	    }
-	}
-
-	mnt_reset_table(table);
+	mnt_table.remove_fs(snapshots);
+	mnt_table.replace_file();
     }
 
 #endif
