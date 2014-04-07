@@ -77,7 +77,6 @@ struct btrfs_ioctl_vol_args_v2
 namespace snapper
 {
 
-
     // See btrfsprogs source code for references.
 
 
@@ -89,7 +88,7 @@ namespace snapper
 
 
     bool
-    is_subvolume_read_only(int fd, bool& read_only)
+    is_subvolume_read_only(int fd)
     {
 	__u64 flags;
 	if (ioctl(fd, BTRFS_IOC_SUBVOL_GETFLAGS, &flags) != 0)
