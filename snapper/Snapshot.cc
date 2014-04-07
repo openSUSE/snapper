@@ -182,6 +182,9 @@ namespace snapper
 	vector<string> infos = infos_dir.entries();
 	for (vector<string>::const_iterator it1 = infos.begin(); it1 != infos.end(); ++it1)
 	{
+	    if (*it1 == "snapshot_submenu.cfg")
+		continue;
+
 	    try
 	    {
 		SDir info_dir(infos_dir, *it1);
