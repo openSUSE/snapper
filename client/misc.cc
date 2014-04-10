@@ -102,22 +102,28 @@ read_nums(const string& str, const string& delim)
 map<string, string>
 read_userdata(const string& s, const map<string, string>& old)
 {
-    map<string, string> userdata = old;
+    if (s.empty())
+    {
+	cerr << _("Empty userdata.") << endl;
+	exit(EXIT_FAILURE);
+    }
 
     list<string> tmp;
     boost::split(tmp, s, boost::is_any_of(","), boost::token_compress_on);
     if (tmp.empty())
     {
-	cerr << _("Invalid userdata.") << endl;
+	cerr << _("Empty userdata.") << endl;
 	exit(EXIT_FAILURE);
     }
+
+    map<string, string> userdata = old;
 
     for (list<string>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
     {
 	string::size_type pos = it->find("=");
 	if (pos == string::npos)
 	{
-	    cerr << _("Invalid userdata.") << endl;
+	    cerr << sformat(_("Userdata '%s' does not include '=' sign."), it->c_str()) << endl;
 	    exit(EXIT_FAILURE);
 	}
 
@@ -126,7 +132,7 @@ read_userdata(const string& s, const map<string, string>& old)
 
 	if (key.empty())
 	{
-	    cerr << _("Invalid userdata.") << endl;
+	    cerr << sformat(_("Userdata '%s' has empty key."), it->c_str()) << endl;
 	    exit(EXIT_FAILURE);
 	}
 
