@@ -354,24 +354,7 @@ command_set_config(DBus::Connection* conn, Snapper* snapper)
 	exit(EXIT_FAILURE);
     }
 
-    map<string, string> raw;
-
-    while (getopts.hasArgs())
-    {
-	string arg = getopts.popArg();
-
-	string::size_type pos = arg.find("=");
-	if (pos == string::npos)
-	{
-	    cerr << _("Invalid configdata.") << endl;
-	    exit(EXIT_FAILURE);
-	}
-
-	string key = boost::trim_copy(arg.substr(0, pos));
-	string value = boost::trim_copy(arg.substr(pos + 1));
-
-	raw[key] = value;
-    }
+    map<string, string> raw = read_configdata(getopts.getArgs());
 
     if (no_dbus)
     {
@@ -1280,26 +1263,22 @@ command_rollback(DBus::Connection* conn, Snapper* snapper)
 	exit(EXIT_FAILURE);
     }
 
-    unsigned int num2;
+    unsigned int tmp;
 
     if (getopts.numArgs() == 0)
     {
-	unsigned int tmp = command_create_single_xsnapshot_of_default(*conn, config_name, true,
-								      description, cleanup,
-								      userdata);
-
-	num2 = command_create_single_xsnapshot_v2(*conn, config_name, tmp, false,
-						  description, cleanup, userdata);
+	tmp = command_create_single_xsnapshot_of_default(*conn, config_name, true, description,
+							 cleanup, userdata);
     }
     else
     {
-	unsigned int tmp = read_num(getopts.popArg());
+	tmp = read_num(getopts.popArg());
 
 	command_create_single_xsnapshot(*conn, config_name, description, cleanup, userdata);
-
-	num2 = command_create_single_xsnapshot_v2(*conn, config_name, tmp, false, description,
-						  cleanup, userdata);
     }
+
+    unsigned int num2 = command_create_single_xsnapshot_v2(*conn, config_name, tmp, false,
+							   description, cleanup, userdata);
 
     filesystem->setDefault(num2);
 
@@ -1550,10 +1529,10 @@ main(int argc, char** argv)
     {
 	unsigned int s;
 	opt->second >> s;
-	if (s >= _End)
+	if (s >= Table::numStyles)
 	{
 	    cerr << sformat(_("Invalid table style %d."), s) << " "
-		 << sformat(_("Use an integer number from %d to %d"), 0, _End - 1) << endl;
+		 << sformat(_("Use an integer number from %d to %d."), 0, Table::numStyles - 1) << endl;
 	    exit(EXIT_FAILURE);
 	}
 	Table::defaultStyle = (TableLineStyle) s;

@@ -2,6 +2,7 @@
 #include <getopt.h>
 #include <string>
 #include <map>
+#include <list>
 
 
 class GetOpts
@@ -23,6 +24,10 @@ public:
     int numArgs() const { return argc - optind; }
 
     const char* popArg() { return argv[optind++]; }
+
+    std::list<std::string> getArgs() const {
+	return std::list<std::string>(&argv[optind], &argv[argc]);
+    }
 
 private:
 

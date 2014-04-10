@@ -160,3 +160,39 @@ show_userdata(const map<string, string>& userdata)
 
     return s;
 }
+
+
+map<string, string>
+read_configdata(const list<string>& l, const map<string, string>& old)
+{
+    if (l.empty())
+    {
+	cerr << _("Empty configdata.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    map<string, string> configdata = old;
+
+    for (list<string>::const_iterator it = l.begin(); it != l.end(); ++it)
+    {
+	string::size_type pos = it->find("=");
+	if (pos == string::npos)
+	{
+	    cerr << sformat(_("Configdata '%s' does not include '=' sign."), it->c_str()) << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	string key = boost::trim_copy(it->substr(0, pos));
+	string value = boost::trim_copy(it->substr(pos + 1));
+
+	if (key.empty())
+	{
+	    cerr << sformat(_("Configdata '%s' has empty key."), it->c_str()) << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	configdata[key] = value;
+    }
+
+    return configdata;
+}
