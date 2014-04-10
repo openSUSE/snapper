@@ -37,6 +37,9 @@
 #include <snapper/SystemCmd.h>
 #include <snapper/SnapperDefines.h>
 #include <snapper/XAttributes.h>
+#ifdef ENABLE_ROLLBACK
+#include <snapper/Filesystem.h>
+#endif
 
 #include "utils/text.h"
 #include "utils/Table.h"
@@ -1316,6 +1319,121 @@ command_undo(DBus::Connection* conn, Snapper* snapper)
 }
 
 
+#ifdef ENABLE_ROLLBACK
+
+const Filesystem*
+getFilesystem(DBus::Connection* conn, Snapper* snapper)
+{
+    XConfigInfo ci = command_get_xconfig(*conn, config_name);
+
+    map<string, string>::const_iterator it = ci.raw.find(KEY_FSTYPE);
+    if (it == ci.raw.end())
+    {
+	cerr << _("Failed to initialize filesystem handler.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    try
+    {
+	return Filesystem::create(it->second, ci.subvolume);
+    }
+    catch (const InvalidConfigException& e)
+    {
+	cerr << _("Failed to initialize filesystem handler.") << endl;
+	exit(EXIT_FAILURE);
+    }
+}
+
+
+void
+help_rollback()
+{
+    cout << _("  Rollback:") << endl
+	 << _("\tsnapper rollback [number]") << endl
+	 << endl
+	 << _("    Options for 'rollback' command:") << endl
+	 << _("\t--print-number, -p\t\tPrint number of second created snapshot.") << endl
+	 << _("\t--description, -d <description>\tDescription for snapshots.") << endl
+	 << _("\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots.") << endl
+	 << _("\t--userdata, -u <userdata>\tUserdata for snapshots.") << endl
+	 << endl;
+}
+
+
+void
+command_rollback(DBus::Connection* conn, Snapper* snapper)
+{
+    const struct option options[] = {
+	{ "print-number",       no_argument,            0,      'p' },
+	{ "description",        required_argument,      0,      'd' },
+	{ "cleanup-algorithm",  required_argument,      0,      'c' },
+	{ "userdata",           required_argument,      0,      'u' },
+	{ 0, 0, 0, 0 }
+    };
+
+    GetOpts::parsed_opts opts = getopts.parse("rollback", options);
+    if (getopts.hasArgs() && getopts.numArgs() != 1)
+    {
+	cerr << _("Command 'rollback' takes either one or no argument.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    bool print_number = false;
+    string description;
+    string cleanup;
+    map<string, string> userdata;
+
+    GetOpts::parsed_opts::const_iterator opt;
+
+    if ((opt = opts.find("print-number")) != opts.end())
+	print_number = true;
+
+    if ((opt = opts.find("description")) != opts.end())
+	description = opt->second;
+
+    if ((opt = opts.find("cleanup-algorithm")) != opts.end())
+	cleanup = opt->second;
+
+    if ((opt = opts.find("userdata")) != opts.end())
+	userdata = read_userdata(opt->second);
+
+    const Filesystem* filesystem = getFilesystem(conn, snapper);
+    if (filesystem->fstype() != "btrfs")
+    {
+	cerr << _("Command 'rollback' only available for btrfs.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    unsigned int num2;
+
+    if (getopts.numArgs() == 0)
+    {
+	unsigned int tmp = command_create_single_xsnapshot_of_default(*conn, config_name, true,
+								      description, cleanup,
+								      userdata);
+
+	num2 = command_create_single_xsnapshot_v2(*conn, config_name, tmp, false,
+						  description, cleanup, userdata);
+    }
+    else
+    {
+	unsigned int tmp = read_num(getopts.popArg());
+
+	command_create_single_xsnapshot(*conn, config_name, description, cleanup, userdata);
+
+	num2 = command_create_single_xsnapshot_v2(*conn, config_name, tmp, false, description,
+						  cleanup, userdata);
+    }
+
+    filesystem->setDefault(num2);
+
+    if (print_number)
+	cout << num2 << endl;
+}
+
+#endif
+
+
 void
 help_cleanup()
 {
@@ -1527,6 +1645,9 @@ main(int argc, char** argv)
     cmds.push_back(Cmd("xadiff", command_xa_diff, help_xa_diff, false, true));
 #endif
     cmds.push_back(Cmd("undochange", command_undo, help_undo, false, true));
+#ifdef ENABLE_ROLLBACK
+    cmds.push_back(Cmd("rollback", command_rollback, help_rollback, false, true));
+#endif
     cmds.push_back(Cmd("cleanup", command_cleanup, help_cleanup, false, true));
     cmds.push_back(Cmd("debug", command_debug, help_debug, false, false));
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2013] Novell, Inc.
+ * Copyright (c) [2011-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -90,6 +90,7 @@ namespace snapper
 	int rename(const string& oldname, const string& newname) const;
 
 	int mktemp(string& name) const;
+	bool mkdtemp(string& name) const;
 
 	bool xaSupported() const;
 
@@ -137,6 +138,36 @@ namespace snapper
 
 	const SDir& dir;
 	const string name;
+
+    };
+
+
+    class TmpDir
+    {
+
+    public:
+
+	TmpDir(SDir& base_dir, const string& name_template);
+	~TmpDir();
+
+	const string& getName() const { return name; }
+
+    protected:
+
+	SDir& base_dir;
+	string name;
+
+    };
+
+
+    class TmpMount : public TmpDir
+    {
+
+    public:
+
+	TmpMount(SDir& base_dir, const string& device, const string& name_template,
+		 const string& mount_type, unsigned long mount_flags, const string& mount_data);
+	~TmpMount();
 
     };
 

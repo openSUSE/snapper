@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2013] Novell, Inc.
+ * Copyright (c) [2011-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -391,6 +391,25 @@ namespace snapper
 
 
     bool
+    SDir::mkdtemp(string& name) const
+    {
+	char* t = strdup((fullname() + "/" + name).c_str());
+	if (t == NULL)
+	    return false;
+
+	if (::mkdtemp(t) == NULL)
+	{
+	    free(t);
+	    return false;
+	}
+
+	name = string(&t[strlen(t) - name.size()]);
+
+	return true;
+    }
+
+
+    bool
     SDir::xaSupported() const
     {
 	return xastatus == XA_SUPPORTED;
@@ -613,6 +632,39 @@ namespace snapper
     SFile::getxattr(const char* name, void* value, size_t size) const
     {
 	return dir.getxattr(SFile::name, name, value, size);
+    }
+
+
+    TmpDir::TmpDir(SDir& base_dir, const string& name_template)
+	: base_dir(base_dir), name(name_template)
+    {
+	if (!base_dir.mkdtemp(name))
+	    throw runtime_error_with_errno("mkdtemp failed", errno);
+    }
+
+
+    TmpDir::~TmpDir()
+    {
+	if (base_dir.unlink(name, AT_REMOVEDIR) != 0)
+	    y2err("unlink failed, errno:" << errno);
+    }
+
+
+    TmpMount::TmpMount(SDir& base_dir, const string& device, const string& name_template,
+		       const string& mount_type, unsigned long mount_flags,
+		       const string& mount_data)
+	: TmpDir(base_dir, name_template)
+    {
+	SDir subdir(base_dir, name);
+	if (!subdir.mount(device, mount_type, mount_flags, mount_data))
+	    throw runtime_error_with_errno("mount failed", errno);
+    }
+
+
+    TmpMount::~TmpMount()
+    {
+	if (!base_dir.umount(name))
+	    y2err("umount failed, errno:" << errno);
     }
 
 }

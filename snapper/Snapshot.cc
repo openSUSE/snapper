@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2013] Novell, Inc.
+ * Copyright (c) [2011-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -121,6 +121,16 @@ namespace snapper
     }
 
 
+    bool
+    Snapshot::isReadOnly() const
+    {
+	if (isCurrent())
+	    return false;
+
+	return snapper->getFilesystem()->isSnapshotReadOnly(num);
+    }
+
+
     void
     Snapshot::setUid(uid_t val)
     {
@@ -183,6 +193,9 @@ namespace snapper
 	for (vector<string>::const_iterator it1 = infos.begin(); it1 != infos.end(); ++it1)
 	{
 	    if (*it1 == "snapshot_submenu.cfg")
+		continue;
+
+	    if (boost::starts_with(*it1, "tmp-mnt"))
 		continue;
 
 	    try
@@ -552,12 +565,22 @@ namespace snapper
 
 
     void
-    Snapshot::createFilesystemSnapshot() const
+    Snapshot::createFilesystemSnapshot(unsigned int num_parent, bool read_only) const
     {
 	if (isCurrent())
 	    throw IllegalSnapshotException();
 
-	snapper->getFilesystem()->createSnapshot(num);
+	snapper->getFilesystem()->createSnapshot(num, num_parent, read_only);
+    }
+
+
+    void
+    Snapshot::createFilesystemSnapshotOfDefault(bool read_only) const
+    {
+	if (isCurrent())
+	    throw IllegalSnapshotException();
+
+	snapper->getFilesystem()->createSnapshotOfDefault(num, read_only);
     }
 
 
@@ -605,7 +628,41 @@ namespace snapper
 	snapshot.cleanup = cleanup;
 	snapshot.userdata = userdata;
 
-	return createHelper(snapshot);
+	return createHelper(snapshot, getSnapshotCurrent(), true);
+    }
+
+
+    Snapshots::iterator
+    Snapshots::createSingleSnapshot(const_iterator parent, bool read_only, uid_t uid,
+				    const string& description, const string& cleanup,
+				    const map<string, string>& userdata)
+    {
+	checkUserdata(userdata);
+
+	Snapshot snapshot(snapper, SINGLE, nextNumber(), time(NULL));
+	snapshot.uid = uid;
+	snapshot.description = description;
+	snapshot.cleanup = cleanup;
+	snapshot.userdata = userdata;
+
+	return createHelper(snapshot, parent, read_only);
+    }
+
+
+    Snapshots::iterator
+    Snapshots::createSingleSnapshotOfDefault(bool read_only, uid_t uid,
+					     const string& description, const string& cleanup,
+					     const map<string, string>& userdata)
+    {
+	checkUserdata(userdata);
+
+	Snapshot snapshot(snapper, SINGLE, nextNumber(), time(NULL));
+	snapshot.uid = uid;
+	snapshot.description = description;
+	snapshot.cleanup = cleanup;
+	snapshot.userdata = userdata;
+
+	return createHelper(snapshot, end(), read_only);
     }
 
 
@@ -621,7 +678,7 @@ namespace snapper
 	snapshot.cleanup = cleanup;
 	snapshot.userdata = userdata;
 
-	return createHelper(snapshot);
+	return createHelper(snapshot, getSnapshotCurrent(), true);
     }
 
 
@@ -642,16 +699,22 @@ namespace snapper
 	snapshot.cleanup = cleanup;
 	snapshot.userdata = userdata;
 
-	return createHelper(snapshot);
+	return createHelper(snapshot, getSnapshotCurrent(), true);
     }
 
 
     Snapshots::iterator
-    Snapshots::createHelper(Snapshot& snapshot)
+    Snapshots::createHelper(Snapshot& snapshot, const_iterator parent, bool read_only)
     {
+	// parent == end indicates the btrfs default subvolume. Unclean, but
+	// adding a special snapshot like current needs too many API changes.
+
 	try
 	{
-	    snapshot.createFilesystemSnapshot();
+	    if (parent != end())
+		snapshot.createFilesystemSnapshot(parent->getNum(), read_only);
+	    else
+		snapshot.createFilesystemSnapshotOfDefault(read_only);
 	}
 	catch (const CreateSnapshotFailedException& e)
 	{

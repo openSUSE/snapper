@@ -267,6 +267,25 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='number' type='u' direction='out'/>\n"
 	"    </method>\n"
 
+	"    <method name='CreateSingleSnapshotV2'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='parent-number' type='u' direction='in'/>\n"
+	"      <arg name='read-only' type 'b' direction='in'/>\n"
+	"      <arg name='description' type='s' direction='in'/>\n"
+	"      <arg name='cleanup' type='s' direction='in'/>\n"
+	"      <arg name='userdata' type='a{ss}' direction='in'/>\n"
+	"      <arg name='number' type='u' direction='out'/>\n"
+	"    </method>\n"
+
+	"    <method name='CreateSingleSnapshotOfDefault'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='read-only' type 'b' direction='in'/>\n"
+	"      <arg name='description' type='s' direction='in'/>\n"
+	"      <arg name='cleanup' type='s' direction='in'/>\n"
+	"      <arg name='userdata' type='a{ss}' direction='in'/>\n"
+	"      <arg name='number' type='u' direction='out'/>\n"
+	"    </method>\n"
+
 	"    <method name='CreatePreSnapshot'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='description' type='s' direction='in'/>\n"
@@ -857,6 +876,88 @@ Client::create_single_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
+Client::create_single_snapshot_v2(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    unsigned int parent_num;
+    bool read_only;
+    string description;
+    string cleanup;
+    map<string, string> userdata;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> parent_num >> read_only >> description >> cleanup >> userdata;
+
+    y2deb("CreateSingleSnapshotV2 config_name:" << config_name << " parent_num:" << parent_num <<
+	  " read_only:" << read_only << " description:" << description << " cleanup:" << cleanup);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
+
+    Snapshots& snapshots = snapper->getSnapshots();
+
+    Snapshots::iterator parent = snapshots.find(parent_num);
+
+    Snapshots::iterator snap2 = snapper->createSingleSnapshot(parent, read_only,
+							      conn.get_unix_userid(msg),
+							      description, cleanup, userdata);
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
+    hoho << snap2->getNum();
+
+    conn.send(reply);
+
+    signal_snapshot_created(conn, config_name, snap2->getNum());
+}
+
+
+void
+Client::create_single_snapshot_of_default(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    bool read_only;
+    string description;
+    string cleanup;
+    map<string, string> userdata;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> read_only >> description >> cleanup >> userdata;
+
+    y2deb("CreateSingleSnapshotOfDefault config_name:" << config_name << " read_only:" <<
+	  read_only << " description:" << description << " cleanup:" << cleanup);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
+
+    Snapshots::iterator snap = snapper->createSingleSnapshotOfDefault(read_only,
+								      conn.get_unix_userid(msg),
+								      description, cleanup,
+								      userdata);
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
+    hoho << snap->getNum();
+
+    conn.send(reply);
+
+    signal_snapshot_created(conn, config_name, snap->getNum());
+}
+
+
+void
 Client::create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
@@ -1277,6 +1378,10 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    set_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CreateSingleSnapshot"))
 	    create_single_snapshot(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "CreateSingleSnapshotV2"))
+	    create_single_snapshot_v2(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "CreateSingleSnapshotOfDefault"))
+	    create_single_snapshot_of_default(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CreatePreSnapshot"))
 	    create_pre_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CreatePostSnapshot"))

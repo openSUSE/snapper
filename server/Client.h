@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Novell, Inc.
+ * Copyright (c) [2012-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -93,6 +93,8 @@ public:
     void get_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void set_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void create_single_snapshot(DBus::Connection& conn, DBus::Message& msg);
+    void create_single_snapshot_v2(DBus::Connection& conn, DBus::Message& msg);
+    void create_single_snapshot_of_default(DBus::Connection& conn, DBus::Message& msg);
     void create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void create_post_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void delete_snapshots(DBus::Connection& conn, DBus::Message& msg);

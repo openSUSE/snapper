@@ -51,7 +51,6 @@
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/Acls.h"
-#include "snapper/Regex.h"
 
 
 namespace snapper
@@ -222,14 +221,68 @@ namespace snapper
 
 
     void
-    Btrfs::createSnapshot(unsigned int num) const
+    Btrfs::createSnapshot(unsigned int num, unsigned int num_parent, bool read_only) const
+    {
+	if (num_parent == 0)
+	{
+	    SDir subvolume_dir = openSubvolumeDir();
+	    SDir info_dir = openInfoDir(num);
+
+	    try
+	    {
+		create_snapshot(subvolume_dir.fd(), info_dir.fd(), "snapshot", read_only);
+	    }
+	    catch (const runtime_error& e)
+	    {
+		y2err("create snapshot failed, " << e.what());
+		throw CreateSnapshotFailedException();
+	    }
+	}
+	else
+	{
+	    SDir snapshot_dir = openSnapshotDir(num_parent);
+	    SDir info_dir = openInfoDir(num);
+
+	    try
+	    {
+		create_snapshot(snapshot_dir.fd(), info_dir.fd(), "snapshot", read_only);
+	    }
+	    catch (const runtime_error& e)
+	    {
+		y2err("create snapshot failed, " << e.what());
+		throw CreateSnapshotFailedException();
+	    }
+	}
+    }
+
+
+#ifdef ENABLE_ROLLBACK
+
+    void
+    Btrfs::createSnapshotOfDefault(unsigned int num, bool read_only) const
     {
 	SDir subvolume_dir = openSubvolumeDir();
+	unsigned long long id = get_default_id(subvolume_dir.fd());
+	string name = get_subvolume(subvolume_dir.fd(), id);
+
+	bool found = false;
+	MtabData mtab_data;
+	if (!getMtabData(subvolume, found, mtab_data))
+	{
+	    y2err("failed to find device");
+	    throw CreateSnapshotFailedException();
+	}
+
+	SDir infos_dir = openInfosDir();
+	TmpMount tmp_mount(infos_dir, mtab_data.device, "tmp-mnt-XXXXXX", "btrfs", 0,
+			   "subvol=" + name);
+
+	SDir tmp_mount_dir(infos_dir, tmp_mount.getName());
 	SDir info_dir = openInfoDir(num);
 
 	try
 	{
-	    create_snapshot(subvolume_dir.fd(), info_dir.fd(), "snapshot", true);
+	    create_snapshot(tmp_mount_dir.fd(), info_dir.fd(), "snapshot", read_only);
 	}
 	catch (const runtime_error& e)
 	{
@@ -237,6 +290,16 @@ namespace snapper
 	    throw CreateSnapshotFailedException();
 	}
     }
+
+#else
+
+    void
+    Btrfs::createSnapshotOfDefault(unsigned int num, bool read_only) const
+    {
+	throw std::logic_error("not implemented");
+    }
+
+#endif
 
 
     void
@@ -272,6 +335,14 @@ namespace snapper
     void
     Btrfs::umountSnapshot(unsigned int num) const
     {
+    }
+
+
+    bool
+    Btrfs::isSnapshotReadOnly(unsigned int num) const
+    {
+	SDir snapshot_dir = openSnapshotDir(num);
+	return is_subvolume_read_only(snapshot_dir.fd());
     }
 
 
@@ -1226,38 +1297,8 @@ namespace snapper
 #endif
 
 
+
 #ifdef ENABLE_ROLLBACK
-
-    unsigned int
-    Btrfs::getDefault() const
-    {
-	try
-	{
-	    SDir subvolume_dir = openSubvolumeDir();
-	    unsigned long long id = get_default_id(subvolume_dir.fd());
-	    string name = get_subvolume(subvolume_dir.fd(), id);
-
-	    if (name.empty())
-		return 0;
-
-	    Regex rx("^.snapshots/([0-9]*)/snapshot");
-	    if (!rx.match(name))
-	    {
-		y2err("get default failed, strange name");
-		throw IOErrorException();
-	    }
-
-	    int num = 0;
-	    rx.cap(1) >> num;
-	    return num;
-	}
-	catch (const runtime_error& e)
-	{
-	    y2err("get default failed, " << e.what());
-	    throw IOErrorException();
-	}
-    }
-
 
     void
     Btrfs::setDefault(unsigned int num) const
@@ -1287,13 +1328,6 @@ namespace snapper
     }
 
 #else
-
-    unsigned int
-    Btrfs::getDefault() const
-    {
-	throw std::logic_error("not implemented");
-    }
-
 
     void
     Btrfs::setDefault(unsigned int num) const

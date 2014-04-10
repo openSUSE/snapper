@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Novell, Inc.
+ * Copyright (c) [2012-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -64,6 +64,18 @@ unsigned int
 command_create_single_xsnapshot(DBus::Connection& conn, const string& config_name,
 				const string& description, const string& cleanup,
 				const map<string, string>& userdata);
+
+unsigned int
+command_create_single_xsnapshot_v2(DBus::Connection& conn, const string& config_name,
+				   unsigned int parent_num, bool read_only,
+				   const string& description, const string& cleanup,
+				   const map<string, string>& userdata);
+
+unsigned int
+command_create_single_xsnapshot_of_default(DBus::Connection& conn, const string& config_name,
+					   bool read_only, const string& description,
+					   const string& cleanup,
+					   const map<string, string>& userdata);
 
 unsigned int
 command_create_pre_xsnapshot(DBus::Connection& conn, const string& config_name,

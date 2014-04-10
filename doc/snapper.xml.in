@@ -2,13 +2,13 @@
 <refentry id='snapper8'>
 
   <refentryinfo>
-    <date>2014-01-29</date>
+    <date>2014-04-07</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2013-04-26</refmiscinfo>
+    <refmiscinfo class='date'>2014-04-07</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -483,6 +483,58 @@
       </varlistentry>
 
       <varlistentry>
+	<term><option>rollback [options] [<replaceable>number</replaceable>]</option></term>
+	<listitem>
+	  <para>Creates two new snapshots and sets the default subvolume. Per
+	  default the system boots from the default subvolume of the root filesystem.
+	  The exact actions depend on whether a number is provided or not:</para>
+	  <itemizedlist>
+	    <listitem>
+	      <para>Without a number, a first read-only snapshot of the
+	      default subvolume is created. A second read-write snapshot is created of the
+	      first snapshot. The system is set to boot from the second snapshot.</para>
+	    </listitem>
+	    <listitem>
+	      <para>With a number, a first read-only snapshot of the current
+	      system in created. A second read-write snapshot is created of
+	      <replaceable>number</replaceable>. The system is set to boot from the second
+	      snapshot.</para>
+	    </listitem>
+	  </itemizedlist>
+	  <para>Rollback is only supported with btrfs and requires a properly
+	  configured system.</para>
+	  <variablelist>
+	    <varlistentry>
+	      <term><option>-p, --print-number</option></term>
+	      <listitem>
+		<para>Print number of the second created snapshot.</para>
+	      </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><option>-d, --description</option> <replaceable>description</replaceable></term>
+	      <listitem>
+		<para>Description for the snapshot.</para>
+	      </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><option>-c, --cleanup-algorithm</option> <replaceable>cleanup-algorithm</replaceable></term>
+	      <listitem>
+		<para>Set the cleanup algorithm for the snapshot.</para>
+	      </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><option>-u, --userdata</option> <replaceable>userdata</replaceable></term>
+	      <listitem>
+		<para>Set userdata for the snapshot. The key-value pairs must
+		be separated by comma and the key and value must be separated
+		by an equal sign, e.g. requestid=42,user=arthur.</para>
+	      </listitem>
+	    </varlistentry>
+	  </variablelist>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
 	<term><option>cleanup <replaceable>cleanup-algorithm</replaceable></option></term>
 	<listitem>
 	  <para>Run the cleanup algorithm
@@ -585,7 +637,8 @@
     creation of a user is undone, there might still exist files from that
     user.</para>
 
-    <para>Support for extended attributes is a compile-time option.</para>
+    <para>Support for individual filesystems, rollback and extended attributes
+    are compile-time options and may not be available.</para>
   </refsect1>
 
   <refsect1 id='homepage'>

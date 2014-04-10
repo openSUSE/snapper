@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2013] Novell, Inc.
+ * Copyright (c) [2011-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -64,7 +64,24 @@ namespace snapper
     void
     Comparison::initialize()
     {
-	if (getSnapshot1()->isCurrent() || getSnapshot2()->isCurrent())
+	// When booting a snapshot the current snapshot could be read-only.
+	// But which snapshot is booted as current snapshot might not be constant.
+
+	bool fixed = !getSnapshot1()->isCurrent() && !getSnapshot2()->isCurrent();
+
+	if (fixed)
+	{
+	    try
+	    {
+		fixed = getSnapshot1()->isReadOnly() && getSnapshot2()->isReadOnly();
+	    }
+	    catch (const runtime_error& e)
+	    {
+		fixed = false;
+	    }
+	}
+
+	if (!fixed)
 	{
 	    create();
 	}
