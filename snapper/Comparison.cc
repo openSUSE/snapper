@@ -77,6 +77,7 @@ namespace snapper
 	    }
 	    catch (const runtime_error& e)
 	    {
+		y2err("failed to query read-only status, " << e.what());
 		fixed = false;
 	    }
 	}
