@@ -44,3 +44,6 @@ read_userdata(const string& s, const map<string, string>& old = map<string, stri
 string
 show_userdata(const map<string, string>& userdata);
 
+map<string, string>
+read_configdata(const list<string>& l, const map<string, string>& old = map<string, string>());
+

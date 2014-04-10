@@ -354,24 +354,7 @@ command_set_config(DBus::Connection* conn, Snapper* snapper)
 	exit(EXIT_FAILURE);
     }
 
-    map<string, string> raw;
-
-    while (getopts.hasArgs())
-    {
-	string arg = getopts.popArg();
-
-	string::size_type pos = arg.find("=");
-	if (pos == string::npos)
-	{
-	    cerr << _("Invalid configdata.") << endl;
-	    exit(EXIT_FAILURE);
-	}
-
-	string key = boost::trim_copy(arg.substr(0, pos));
-	string value = boost::trim_copy(arg.substr(pos + 1));
-
-	raw[key] = value;
-    }
+    map<string, string> raw = read_configdata(getopts.getArgs());
 
     if (no_dbus)
     {
