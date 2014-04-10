@@ -326,7 +326,7 @@ namespace snapper
 	{
 	    cache->add_or_update(vg_name, lv_name);
 	}
-	catch(const LvmCacheException& e)
+	catch (const LvmCacheException& e)
 	{
 	    y2deb(cache);
 	    return false;
@@ -334,6 +334,7 @@ namespace snapper
 
 	return cache->contains_thin(vg_name, lv_name);
     }
+
 
     string
     Lvm::getDevice(unsigned int num) const
@@ -350,7 +351,7 @@ namespace snapper
 	{
 	    cache->activate(vg_name, lv_name);
 	}
-	catch(const LvmCacheException& e)
+	catch (const LvmCacheException& e)
 	{
 	    y2deb(cache);
 	    throw LvmActivationException();
@@ -365,7 +366,7 @@ namespace snapper
 	{
 	    cache->deactivate(vg_name, lv_name);
 	}
-	catch(const LvmCacheException& e)
+	catch (const LvmCacheException& e)
 	{
 	    y2deb(cache);
 	    throw LvmDeactivatationException();

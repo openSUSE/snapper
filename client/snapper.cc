@@ -89,7 +89,6 @@ struct MyFiles : public Files
 
     MyFiles(const FilePaths* file_paths)
 	: Files(file_paths) {}
-
 };
 
 
@@ -123,7 +122,6 @@ struct MyComparison
     FilePaths file_paths;
 
     MyFiles files;
-
 };
 
 
