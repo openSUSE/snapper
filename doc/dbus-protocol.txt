@@ -25,6 +25,8 @@ method GetSnapshot config-name number
 method SetSnapshot config-name number description cleanup userdata
 
 method CreateSingleSnapshot config-name description cleanup userdata -> number
+method CreateSingleSnapshotV2 config-name parent-number read-only description cleanup userdata -> number
+method CreateSingleSnapshotOfDefault config-name read-only description cleanup userdata -> number
 method CreatePreSnapshot config-name description cleanup userdata -> number
 method CreatePostSnapshot config-name pre-number description cleanup userdata -> number
 method DeleteSnapshots config-name list(numbers)

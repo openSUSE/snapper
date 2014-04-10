@@ -164,8 +164,11 @@ namespace snapper
 
 
     void
-    Ext4::createSnapshot(unsigned int num) const
+    Ext4::createSnapshot(unsigned int num, unsigned int num_parent, bool read_only) const
     {
+	if (num_parent != 0 || !read_only)
+	    throw std::logic_error("not implemented");
+
 	SystemCmd cmd1(TOUCHBIN " " + quote(snapshotFile(num)));
 	if (cmd1.retcode() != 0)
 	    throw CreateSnapshotFailedException();
@@ -234,6 +237,15 @@ namespace snapper
 	    throw UmountSnapshotFailedException();
 
 	rmdir(snapshotDir(num).c_str());
+    }
+
+
+    bool
+    Ext4::isSnapshotReadOnly(unsigned int num) const
+    {
+	// TODO
+
+	return true;
     }
 
 

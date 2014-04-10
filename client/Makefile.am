@@ -13,6 +13,7 @@ snapper_SOURCES =			\
 	types.cc	types.h		\
 	commands.cc	commands.h	\
 	cleanup.cc	cleanup.h	\
+	misc.cc		misc.h		\
 	errors.cc	errors.h
 
 snapper_LDADD = ../snapper/libsnapper.la utils/libutils.la ../dbus/libdbus.la

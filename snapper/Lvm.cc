@@ -189,8 +189,11 @@ namespace snapper
 
 
     void
-    Lvm::createSnapshot(unsigned int num) const
+    Lvm::createSnapshot(unsigned int num, unsigned int num_parent, bool read_only) const
     {
+	if (num_parent != 0 || !read_only)
+	    throw std::logic_error("not implemented");
+
 	SDir info_dir = openInfoDir(num);
 	int r1 = info_dir.mkdir("snapshot", 0755);
 	if (r1 != 0 && errno != EEXIST)
@@ -291,6 +294,15 @@ namespace snapper
 
 
     bool
+    Lvm::isSnapshotReadOnly(unsigned int num) const
+    {
+	// TODO
+
+	return true;
+    }
+
+
+    bool
     Lvm::checkSnapshot(unsigned int num) const
     {
 	return detectInactiveSnapshot(vg_name, snapshotLvName(num));
@@ -314,7 +326,7 @@ namespace snapper
 	{
 	    cache->add_or_update(vg_name, lv_name);
 	}
-	catch(const LvmCacheException& e)
+	catch (const LvmCacheException& e)
 	{
 	    y2deb(cache);
 	    return false;
@@ -322,6 +334,7 @@ namespace snapper
 
 	return cache->contains_thin(vg_name, lv_name);
     }
+
 
     string
     Lvm::getDevice(unsigned int num) const
@@ -338,7 +351,7 @@ namespace snapper
 	{
 	    cache->activate(vg_name, lv_name);
 	}
-	catch(const LvmCacheException& e)
+	catch (const LvmCacheException& e)
 	{
 	    y2deb(cache);
 	    throw LvmActivationException();
@@ -353,7 +366,7 @@ namespace snapper
 	{
 	    cache->deactivate(vg_name, lv_name);
 	}
-	catch(const LvmCacheException& e)
+	catch (const LvmCacheException& e)
 	{
 	    y2deb(cache);
 	    throw LvmDeactivatationException();

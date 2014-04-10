@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2013] Novell, Inc.
+ * Copyright (c) [2011-2014] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -115,6 +115,8 @@ namespace snapper
 	SDir openInfoDir() const;
 	SDir openSnapshotDir() const;
 
+	bool isReadOnly() const;
+
 	void mountFilesystemSnapshot(bool user_request) const;
 	void umountFilesystemSnapshot(bool user_request) const;
 	void handleUmountFilesystemSnapshot() const;
@@ -149,7 +151,8 @@ namespace snapper
 
 	void writeInfo() const;
 
-	void createFilesystemSnapshot() const;
+	void createFilesystemSnapshot(unsigned int num_parent, bool read_only) const;
+	void createFilesystemSnapshotOfDefault(bool read_only) const;
 	void deleteFilesystemSnapshot() const;
 
     };
@@ -208,12 +211,18 @@ namespace snapper
 
 	iterator createSingleSnapshot(uid_t uid, const string& description, const string& cleanup,
 				      const map<string, string>& userdata);
+	iterator createSingleSnapshot(const_iterator parent, bool read_only, uid_t uid,
+				      const string& description, const string& cleanup,
+				      const map<string, string>& userdata);
+	iterator createSingleSnapshotOfDefault(bool read_only, uid_t uid, const string& description,
+					       const string& cleanup,
+					       const map<string, string>& userdata);
 	iterator createPreSnapshot(uid_t uid, const string& description, const string& cleanup,
 				   const map<string, string>& userdata);
 	iterator createPostSnapshot(const_iterator pre, uid_t uid, const string& description,
 				    const string& cleanup, const map<string, string>& userdata);
 
-	iterator createHelper(Snapshot& snapshot);
+	iterator createHelper(Snapshot& snapshot, const_iterator parent, bool read_only);
 
 	void modifySnapshot(iterator snapshot, const string& description, const string& cleanup,
 			    const map<string, string>& userdata);

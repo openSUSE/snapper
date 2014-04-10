@@ -29,6 +29,7 @@
 #include "snapper/Lvm.h"
 #include "snapper/SystemCmd.h"
 
+
 namespace snapper
 {
     using std::make_pair;
@@ -86,7 +87,8 @@ namespace snapper
 	    {
 		boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(upg_lock);
 
-		SystemCmd cmd(LVCHANGEBIN + caps->get_ignoreactivationskip() + " -ay " + quote(vg->get_vg_name() + "/" + lv_name));
+		SystemCmd cmd(LVCHANGEBIN + caps->get_ignoreactivationskip() + " -ay " +
+			      quote(vg->get_vg_name() + "/" + lv_name));
 		if (cmd.retcode() != 0)
 		{
 		    y2err("lvm cache: " << vg->get_vg_name() << "/" << lv_name << " activation failed!");

@@ -49,18 +49,21 @@ namespace snapper
 	virtual SDir openInfosDir() const;
 	virtual SDir openSnapshotDir(unsigned int num) const;
 
-	virtual void createSnapshot(unsigned int num) const;
+	virtual void createSnapshot(unsigned int num, unsigned int num_parent,
+				    bool read_only) const;
+	virtual void createSnapshotOfDefault(unsigned int num, bool read_only) const;
 	virtual void deleteSnapshot(unsigned int num) const;
 
 	virtual bool isSnapshotMounted(unsigned int num) const;
 	virtual void mountSnapshot(unsigned int num) const;
 	virtual void umountSnapshot(unsigned int num) const;
 
+	virtual bool isSnapshotReadOnly(unsigned int num) const;
+
 	virtual bool checkSnapshot(unsigned int num) const;
 
 	virtual void cmpDirs(const SDir& dir1, const SDir& dir2, cmpdirs_cb_t cb) const;
 
-	virtual unsigned int getDefault() const;
 	virtual void setDefault(unsigned int num) const;
 
     private:

@@ -213,6 +213,28 @@ namespace snapper
     }
 
 
+    Snapshots::iterator
+    Snapper::createSingleSnapshot(Snapshots::const_iterator parent, bool read_only, uid_t uid,
+				  const string& description, const string& cleanup,
+				  const map<string, string>& userdata)
+    {
+	if (parent == snapshots.end())
+	    throw IllegalSnapshotException();
+
+	return snapshots.createSingleSnapshot(parent, read_only, uid, description, cleanup,
+					      userdata);
+    }
+
+
+    Snapshots::iterator
+    Snapper::createSingleSnapshotOfDefault(bool read_only, uid_t uid, const string& description,
+					   const string& cleanup,
+					   const map<string, string>& userdata)
+    {
+	return snapshots.createSingleSnapshotOfDefault(read_only, uid, description, cleanup,
+						       userdata);
+    }
+
 
     Snapshots::iterator
     Snapper::createPreSnapshot(uid_t uid, const string& description, const string& cleanup,

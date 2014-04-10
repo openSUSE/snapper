@@ -132,6 +132,13 @@ namespace snapper
 	Snapshots::iterator createSingleSnapshot(uid_t uid, const string& description,
 						 const string& cleanup,
 						 const map<string, string>& userdata);
+	Snapshots::iterator createSingleSnapshot(Snapshots::const_iterator parent, bool read_only,
+						 uid_t uid, const string& description,
+						 const string& cleanup,
+						 const map<string, string>& userdata);
+	Snapshots::iterator createSingleSnapshotOfDefault(bool read_only, uid_t uid, const string& description,
+							  const string& cleanup,
+							  const map<string, string>& userdata);
 	Snapshots::iterator createPreSnapshot(uid_t uid, const string& description,
 					      const string& cleanup,
 					      const map<string, string>& userdata);

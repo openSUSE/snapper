@@ -145,8 +145,8 @@ namespace snapper
     }
 
 
-    unsigned int
-    Filesystem::getDefault() const
+    void
+    Filesystem::createSnapshotOfDefault(unsigned int num, bool read_only) const
     {
 	throw std::logic_error("not implemented");
     }
