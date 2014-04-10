@@ -41,6 +41,8 @@
 
 namespace snapper
 {
+    using namespace std;
+
 
     Comparison::Comparison(const Snapper* snapper, Snapshots::const_iterator snapshot1,
 			   Snapshots::const_iterator snapshot2)

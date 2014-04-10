@@ -55,6 +55,8 @@
 
 namespace snapper
 {
+    using namespace std;
+
 
     Filesystem*
     Btrfs::create(const string& fstype, const string& subvolume)

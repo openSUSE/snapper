@@ -34,7 +34,7 @@
 
 namespace snapper
 {
-    using namespace std;
+    using std::string;
 
 
     template<class Num> string decString(Num number)

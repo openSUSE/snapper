@@ -35,7 +35,7 @@
 
 namespace snapper
 {
-    using namespace std;
+    using std::string;
 
 
     class XmlFile : private boost::noncopyable
