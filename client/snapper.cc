@@ -1322,11 +1322,7 @@ help_cleanup()
 void
 command_cleanup(DBus::Connection* conn, Snapper* snapper)
 {
-    const struct option options[] = {
-	{ 0, 0, 0, 0 }
-    };
-
-    GetOpts::parsed_opts opts = getopts.parse("cleanup", options);
+    GetOpts::parsed_opts opts = getopts.parse("cleanup", GetOpts::no_options);
     if (getopts.numArgs() != 1)
     {
 	cerr << _("Command 'cleanup' needs one arguments.") << endl;
