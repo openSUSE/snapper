@@ -14,6 +14,7 @@
 #include <iosfwd>
 #include <list>
 #include <vector>
+
 using std::string;
 using std::ostream;
 using std::list;
@@ -90,6 +91,8 @@ public:
   typedef list<TableRow> container;
 
   static TableLineStyle defaultStyle;
+
+  static const unsigned int numStyles = _End;
 
   void add (const TableRow& tr);
   void setHeader (const TableHeader& tr);

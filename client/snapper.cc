@@ -1529,10 +1529,10 @@ main(int argc, char** argv)
     {
 	unsigned int s;
 	opt->second >> s;
-	if (s >= _End)
+	if (s >= Table::numStyles)
 	{
 	    cerr << sformat(_("Invalid table style %d."), s) << " "
-		 << sformat(_("Use an integer number from %d to %d"), 0, _End - 1) << endl;
+		 << sformat(_("Use an integer number from %d to %d."), 0, Table::numStyles - 1) << endl;
 	    exit(EXIT_FAILURE);
 	}
 	Table::defaultStyle = (TableLineStyle) s;
