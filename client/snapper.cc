@@ -1263,26 +1263,22 @@ command_rollback(DBus::Connection* conn, Snapper* snapper)
 	exit(EXIT_FAILURE);
     }
 
-    unsigned int num2;
+    unsigned int tmp;
 
     if (getopts.numArgs() == 0)
     {
-	unsigned int tmp = command_create_single_xsnapshot_of_default(*conn, config_name, true,
-								      description, cleanup,
-								      userdata);
-
-	num2 = command_create_single_xsnapshot_v2(*conn, config_name, tmp, false,
-						  description, cleanup, userdata);
+	tmp = command_create_single_xsnapshot_of_default(*conn, config_name, true, description,
+							 cleanup, userdata);
     }
     else
     {
-	unsigned int tmp = read_num(getopts.popArg());
+	tmp = read_num(getopts.popArg());
 
 	command_create_single_xsnapshot(*conn, config_name, description, cleanup, userdata);
-
-	num2 = command_create_single_xsnapshot_v2(*conn, config_name, tmp, false, description,
-						  cleanup, userdata);
     }
+
+    unsigned int num2 = command_create_single_xsnapshot_v2(*conn, config_name, tmp, false,
+							   description, cleanup, userdata);
 
     filesystem->setDefault(num2);
 
