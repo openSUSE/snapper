@@ -31,19 +31,21 @@
 
 namespace snapper
 {
+
     bool
     is_acl_signature(const std::string& name)
     {
 	return contains(_acl_signatures, name);
     }
 
+
     Acls::Acls(const string& path)
-    : allowed_types(0x0), acl_access(NULL), acl_default(NULL)
+	: allowed_types(0x0), acl_access(NULL), acl_default(NULL)
     {
 	struct stat buf;
 
 	int fd = ::open(path.c_str(), O_RDONLY | O_NOFOLLOW | O_NONBLOCK | O_NOATIME |
-			  O_CLOEXEC);
+			O_CLOEXEC);
 	if (fd < 0)
 	{
 	    if (errno == ELOOP)
