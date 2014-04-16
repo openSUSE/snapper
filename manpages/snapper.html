@@ -448,6 +448,40 @@
                   </dd>
                 </dl>
               </div>
+              <p>The output consists of a string encoding the status followed by
+	  the filename. The characters of the status string are:</p>
+              <div class="orderedlist">
+                <ol class="orderedlist" type="1">
+                  <li class="listitem">
+                    <p>A "<code class="computeroutput">+</code>" means the file was
+	      created, a "<code class="computeroutput">-</code>" means the file was deleted. A
+	      "<code class="computeroutput">c</code>" means the content of the file has changed
+	      and a "<code class="computeroutput">t</code>" means the type of the file has
+	      changed (e.g. from regular file to directory).</p>
+                  </li>
+                  <li class="listitem">
+                    <p>A "<code class="computeroutput">p</code>" means the permissions
+	      are have changed.</p>
+                  </li>
+                  <li class="listitem">
+                    <p>An "<code class="computeroutput">u</code>" means the user
+	      ownership has changed.</p>
+                  </li>
+                  <li class="listitem">
+                    <p>A "<code class="computeroutput">g</code>" means the group
+	      ownership has changed.</p>
+                  </li>
+                  <li class="listitem">
+                    <p>A "<code class="computeroutput">x</code>" means the extended
+	      attribute information has changed.</p>
+                  </li>
+                  <li class="listitem">
+                    <p>An "<code class="computeroutput">a</code>" means the ACL
+	      information has changed.</p>
+                  </li>
+                </ol>
+              </div>
+              <p>If there is no change a "." is outputted.</p>
             </dd>
             <dt>
               <span class="term">
@@ -474,6 +508,65 @@
                   </dt>
                   <dd>
                     <p>Read files for which to undo changes from file <em class="replaceable"><code>file</code></em>.</p>
+                  </dd>
+                </dl>
+              </div>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">rollback [options] [<em class="replaceable"><code>number</code></em>]</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Creates two new snapshots and sets the default subvolume. Per
+	  default the system boots from the default subvolume of the root filesystem.
+	  The exact actions depend on whether a number is provided or not:</p>
+              <div class="itemizedlist">
+                <ul class="itemizedlist" style="list-style-type: disc; ">
+                  <li class="listitem">
+                    <p>Without a number, a first read-only snapshot of the
+	      default subvolume is created. A second read-write snapshot is created of the
+	      first snapshot. The system is set to boot from the second snapshot.</p>
+                  </li>
+                  <li class="listitem">
+                    <p>With a number, a first read-only snapshot of the current
+	      system in created. A second read-write snapshot is created of
+	      <em class="replaceable"><code>number</code></em>. The system is set to boot from the second
+	      snapshot.</p>
+                  </li>
+                </ul>
+              </div>
+              <p>Rollback is only supported with btrfs and requires a properly
+	  configured system.</p>
+              <div class="variablelist">
+                <dl class="variablelist">
+                  <dt>
+                    <span class="term">
+                      <code class="option">-p, --print-number</code>
+                    </span>
+                  </dt>
+                  <dd>
+                    <p>Print number of the second created snapshot.</p>
+                  </dd>
+                  <dt>
+                    <span class="term"><code class="option">-d, --description</code> <em class="replaceable"><code>description</code></em></span>
+                  </dt>
+                  <dd>
+                    <p>Description for the snapshot.</p>
+                  </dd>
+                  <dt>
+                    <span class="term"><code class="option">-c, --cleanup-algorithm</code> <em class="replaceable"><code>cleanup-algorithm</code></em></span>
+                  </dt>
+                  <dd>
+                    <p>Set the cleanup algorithm for the snapshot.</p>
+                  </dd>
+                  <dt>
+                    <span class="term"><code class="option">-u, --userdata</code> <em class="replaceable"><code>userdata</code></em></span>
+                  </dt>
+                  <dd>
+                    <p>Set userdata for the snapshot. The key-value pairs must
+		be separated by comma and the key and value must be separated
+		by an equal sign, e.g. requestid=42,user=arthur.</p>
                   </dd>
                 </dl>
               </div>
@@ -611,7 +704,8 @@
         <p>Consistency after undochange is not guaranteed. E.g. when the
     creation of a user is undone, there might still exist files from that
     user.</p>
-        <p>Support for extended attributes is a compile-time option.</p>
+        <p>Support for individual filesystems, rollback and extended attributes
+    are compile-time options and may not be available.</p>
       </div>
       <div class="refsect1">
         <a id="homepage"></a>
