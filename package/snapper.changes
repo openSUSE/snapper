@@ -2,6 +2,7 @@
 Thu Apr 10 10:17:49 CEST 2014 - aschnell@suse.de
 
 - added rollback support (fate#317062)
+- version 0.2.2
 
 -------------------------------------------------------------------
 Thu Apr 03 17:49:12 CEST 2014 - aschnell@suse.de
