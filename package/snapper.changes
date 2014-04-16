@@ -43,14 +43,14 @@ Tue Feb 11 14:08:06 CET 2014 - aschnell@suse.de
 Wed Feb 05 10:50:25 CET 2014 - aschnell@suse.de
 
 - fixed execution of grub scripts
-- 0.2.1
+- version 0.2.1
 
 -------------------------------------------------------------------
 Wed Jan 29 11:09:45 CET 2014 - aschnell@suse.de
 
 - allow to sync ALLOW_USERS and ALLOW_GROUPS to ACL of .snapshots
   directory (see bnc#860116)
-- 0.2.0
+- version 0.2.0
 
 -------------------------------------------------------------------
 Fri Jan 24 10:01:35 CET 2014 - aschnell@suse.de
@@ -67,7 +67,7 @@ Mon Nov 25 11:38:43 CET 2013 - aschnell@suse.de
 
 - allow to configure snapshotting from zypp-plugin depending on
   package list (fate#316203)
-- 0.1.8
+- version 0.1.8
 
 -------------------------------------------------------------------
 Mon Oct 21 10:24:43 CEST 2013 - aschnell@suse.de
@@ -90,7 +90,7 @@ Tue Oct 15 16:28:15 CEST 2013 - aschnell@suse.de
 Tue Oct 01 15:46:19 CEST 2013 - aschnell@suse.de
 
 - restrict permissions on .snapshots subvolume (bnc#843219)
-- 0.1.7
+- version 0.1.7
 
 -------------------------------------------------------------------
 Mon Sep 30 14:20:22 CEST 2013 - aschnell@suse.de
@@ -101,7 +101,7 @@ Mon Sep 30 14:20:22 CEST 2013 - aschnell@suse.de
 Fri Sep 06 16:02:47 CEST 2013 - aschnell@suse.de
 
 - added option --no-dbus to snapper tool
-- 0.1.6
+- version 0.1.6
 
 -------------------------------------------------------------------
 Thu Jul 25 14:40:31 CEST 2013 - aschnell@suse.de
@@ -114,7 +114,7 @@ Tue Jul 09 14:00:16 CEST 2013 - aschnell@suse.de
 - added manpage describing snapper configs
 - optimize timeline cleanup algorithm for only sporadic running
   systems
-- 0.1.5
+- version 0.1.5
 
 -------------------------------------------------------------------
 Mon Jul 08 16:18:10 CEST 2013 - aschnell@suse.de
