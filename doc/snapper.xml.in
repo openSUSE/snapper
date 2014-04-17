@@ -491,8 +491,8 @@
 	  <itemizedlist>
 	    <listitem>
 	      <para>Without a number, a first read-only snapshot of the
-	      default subvolume is created. A second read-write snapshot is created of the
-	      first snapshot. The system is set to boot from the second snapshot.</para>
+	      default subvolume is created. A second read-write snapshot of the current
+	      system is created. The system is set to boot from the second snapshot.</para>
 	    </listitem>
 	    <listitem>
 	      <para>With a number, a first read-only snapshot of the current
