@@ -169,7 +169,7 @@
 	<term><option>TIMELINE_LIMIT_HOURLY=<replaceable>number</replaceable></option></term>
 	<listitem>
 	  <para>Defines how many hourly snapshots the timeline cleanup
-	  algorithm should keep. An hourly snapshots is the first snapshot in an
+	  algorithm should keep. An hourly snapshot is the first snapshot in an
 	  hour. The youngest hourly snapshots will be kept.</para>
 	  <para>Default value is &quot;10&quot;.</para>
 	</listitem>
@@ -179,7 +179,7 @@
 	<term><option>TIMELINE_LIMIT_DAILY=<replaceable>number</replaceable></option></term>
 	<listitem>
 	  <para>Defines how many daily snapshots the timeline cleanup
-	  algorithm should keep. A daily snapshots is the first snapshot in a day. The
+	  algorithm should keep. A daily snapshot is the first snapshot in a day. The
 	  youngest daily snapshots will be kept.</para>
 	  <para>Default value is &quot;10&quot;.</para>
 	</listitem>
@@ -188,9 +188,9 @@
       <varlistentry>
 	<term><option>TIMELINE_LIMIT_MONTHLY=<replaceable>number</replaceable></option></term>
 	<listitem>
-	  <para>Defines how many daily snapshots the timeline cleanup
-	  algorithm should keep. A daily snapshots is the first snapshot in a day. The
-	  youngest daily snapshots will be kept.</para>
+	  <para>Defines how many monthly snapshots the timeline cleanup
+	  algorithm should keep. A monthly snapshot is the first snapshot in a month. The
+	  youngest monthly snapshots will be kept.</para>
 	  <para>Default value is &quot;10&quot;.</para>
 	</listitem>
       </varlistentry>
@@ -198,9 +198,9 @@
       <varlistentry>
 	<term><option>TIMELINE_LIMIT_YEARLY=<replaceable>number</replaceable></option></term>
 	<listitem>
-	  <para>Defines how many daily snapshots the timeline cleanup
-	  algorithm should keep. A daily snapshots is the first snapshot in a day. The
-	  youngest daily snapshots will be kept.</para>
+	  <para>Defines how many yearly snapshots the timeline cleanup
+	  algorithm should keep. A yearly snapshot is the first snapshot in a year. The
+	  youngest yearly snapshots will be kept.</para>
 	  <para>Default value is &quot;10&quot;.</para>
 	</listitem>
       </varlistentry>
