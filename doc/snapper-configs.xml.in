@@ -2,7 +2,7 @@
 <refentry id='snapper-configs5'>
 
   <refentryinfo>
-    <date>2014-01-29</date>
+    <date>2014-05-20</date>
   </refentryinfo>
 
   <refmeta>
@@ -131,6 +131,8 @@
 	  <para>Defines how many important snapshots the number cleanup
 	  algorithm should keep. Important snapshots have important=yes in the
 	  userdata. The youngest important snapshots will be kept.</para>
+	  <para>The number of normal and important snapshots are counted
+	  independently.</para>
 	  <para>Default value is &quot;10&quot;.</para>
 	  <para>New in version 0.1.8.</para>
 	</listitem>
