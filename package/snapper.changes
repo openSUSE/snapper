@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue May 20 16:24:10 CEST 2014 - aschnell@suse.de
+
+- extended documentation about "number" cleanup algorithm
+  (bnc#878009)
+
+-------------------------------------------------------------------
 Mon May 05 12:27:17 CEST 2014 - aschnell@suse.de
 
 - updated translations
