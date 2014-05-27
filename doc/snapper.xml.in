@@ -173,6 +173,18 @@
 	</listitem>
       </varlistentry>
       <varlistentry>
+	<term><option>--utc</option></term>
+	<listitem>
+	  <para>Display dates and times in UTC.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--iso</option></term>
+	<listitem>
+	  <para>Display dates and times in ISO format.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
 	<term><option>-t, --table-style</option></term>
 	<listitem>
 	  <para>Specifies table style. Table style is identified by an integer number.</para>
