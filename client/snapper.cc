@@ -79,6 +79,8 @@ GetOpts getopts;
 
 bool quiet = false;
 bool verbose = false;
+bool utc = false;
+bool iso = false;
 string config_name = "root";
 bool no_dbus = false;
 
@@ -440,7 +442,7 @@ command_list(DBus::Connection* conn, Snapper* snapper)
 		    row.add(toString(it1->getType()));
 		    row.add(decString(it1->getNum()));
 		    row.add(it1->getType() == POST ? decString(it1->getPreNum()) : "");
-		    row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), false, false));
+		    row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), utc, iso));
 		    row.add(username(it1->getUid()));
 		    row.add(it1->getCleanup());
 		    row.add(it1->getDescription());
@@ -457,7 +459,7 @@ command_list(DBus::Connection* conn, Snapper* snapper)
 		    row.add(toString(it1->getType()));
 		    row.add(decString(it1->getNum()));
 		    row.add(it1->getType() == POST ? decString(it1->getPreNum()) : "");
-		    row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), false, false));
+		    row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), utc, iso));
 		    row.add(username(it1->getUid()));
 		    row.add(it1->getCleanup());
 		    row.add(it1->getDescription());
@@ -488,7 +490,7 @@ command_list(DBus::Connection* conn, Snapper* snapper)
 
 		    TableRow row;
 		    row.add(decString(it1->getNum()));
-		    row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), false, false));
+		    row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), utc, iso));
 		    row.add(username(it1->getUid()));
 		    row.add(it1->getDescription());
 		    row.add(show_userdata(it1->getUserdata()));
@@ -505,7 +507,7 @@ command_list(DBus::Connection* conn, Snapper* snapper)
 
 		    TableRow row;
 		    row.add(decString(it1->getNum()));
-		    row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), false, false));
+		    row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), utc, iso));
 		    row.add(username(it1->getUid()));
 		    row.add(it1->getDescription());
 		    row.add(show_userdata(it1->getUserdata()));
@@ -541,8 +543,8 @@ command_list(DBus::Connection* conn, Snapper* snapper)
 		    TableRow row;
 		    row.add(decString(it1->getNum()));
 		    row.add(decString(it2->getNum()));
-		    row.add(datetime(it1->getDate(), false, false));
-		    row.add(datetime(it2->getDate(), false, false));
+		    row.add(datetime(it1->getDate(), utc, iso));
+		    row.add(datetime(it2->getDate(), utc, iso));
 		    row.add(it1->getDescription());
 		    row.add(show_userdata(it1->getUserdata()));
 		    table.add(row);
@@ -563,8 +565,8 @@ command_list(DBus::Connection* conn, Snapper* snapper)
 		    TableRow row;
 		    row.add(decString(it1->getNum()));
 		    row.add(decString(it2->getNum()));
-		    row.add(datetime(it1->getDate(), false, false));
-		    row.add(datetime(it2->getDate(), false, false));
+		    row.add(datetime(it1->getDate(), utc, iso));
+		    row.add(datetime(it2->getDate(), utc, iso));
 		    row.add(it1->getDescription());
 		    row.add(show_userdata(it1->getUserdata()));
 		    table.add(row);
@@ -1461,6 +1463,8 @@ help()
     cout << _("    Global options:") << endl
 	 << _("\t--quiet, -q\t\t\tSuppress normal output.") << endl
 	 << _("\t--verbose, -v\t\t\tIncrease verbosity.") << endl
+	 << _("\t--utc\t\t\t\tDisplay dates and times in UTC.") << endl
+	 << _("\t--iso\t\t\t\tDisplay dates and times in ISO format.") << endl
 	 << _("\t--table-style, -t <style>\tTable style (integer).") << endl
 	 << _("\t--config, -c <name>\t\tSet name of config to use.") << endl
 	 << _("\t--no-dbus\t\t\tOperate without DBus.") << endl
@@ -1508,6 +1512,8 @@ main(int argc, char** argv)
     const struct option options[] = {
 	{ "quiet",		no_argument,		0,	'q' },
 	{ "verbose",		no_argument,		0,	'v' },
+	{ "utc",		no_argument,		0,	0 },
+	{ "iso",		no_argument,		0,	0 },
 	{ "table-style",	required_argument,	0,	't' },
 	{ "config",		required_argument,	0,	'c' },
 	{ "no-dbus",		no_argument,		0,	0 },
@@ -1527,6 +1533,12 @@ main(int argc, char** argv)
 
     if ((opt = opts.find("verbose")) != opts.end())
 	verbose = true;
+
+    if ((opt = opts.find("utc")) != opts.end())
+	utc = true;
+
+    if ((opt = opts.find("iso")) != opts.end())
+	iso = true;
 
     if ((opt = opts.find("table-style")) != opts.end())
     {

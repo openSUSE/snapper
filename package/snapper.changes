@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue May 27 11:36:21 CEST 2014 - aschnell@suse.de
+
+- allow to display dates and times in UTC and ISO format
+
+-------------------------------------------------------------------
 Tue May 20 16:24:10 CEST 2014 - aschnell@suse.de
 
 - extended documentation about "number" cleanup algorithm
