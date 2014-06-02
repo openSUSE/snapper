@@ -66,7 +66,14 @@ struct Cmd
 	  works_without_dbus(works_without_dbus), needs_snapper(needs_snapper)
     {}
 
+    Cmd(const string& name, const vector<string>& aliases, cmd_func_t cmd_func,
+	help_func_t help_func, bool works_without_dbus, bool needs_snapper)
+	: name(name), aliases(aliases), cmd_func(cmd_func), help_func(help_func),
+	  works_without_dbus(works_without_dbus), needs_snapper(needs_snapper)
+    {}
+
     const string name;
+    const vector<string> aliases;
     const cmd_func_t cmd_func;
     const help_func_t help_func;
     const bool works_without_dbus;
@@ -1491,10 +1498,10 @@ main(int argc, char** argv)
     cmds.push_back(Cmd("delete-config", command_delete_config, help_delete_config, true, false));
     cmds.push_back(Cmd("get-config", command_get_config, help_get_config, true, false));
     cmds.push_back(Cmd("set-config", command_set_config, help_set_config, true, true));
-    cmds.push_back(Cmd("list", command_list, help_list, true, true));
+    cmds.push_back(Cmd("list", { "ls" }, command_list, help_list, true, true));
     cmds.push_back(Cmd("create", command_create, help_create, false, true));
     cmds.push_back(Cmd("modify", command_modify, help_modify, false, true));
-    cmds.push_back(Cmd("delete", command_delete, help_delete, false, true));
+    cmds.push_back(Cmd("delete", { "remove", "rm" }, command_delete, help_delete, false, true));
     cmds.push_back(Cmd("mount", command_mount, help_mount, true, true));
     cmds.push_back(Cmd("umount", command_umount, help_umount, true, true));
     cmds.push_back(Cmd("status", command_status, help_status, false, true));
@@ -1580,7 +1587,7 @@ main(int argc, char** argv)
     const char* command = getopts.popArg();
 
     list<Cmd>::const_iterator cmd = cmds.begin();
-    while (cmd != cmds.end() && cmd->name != command)
+    while (cmd != cmds.end() && (cmd->name != command && !contains(cmd->aliases, command)))
 	++cmd;
 
     if (cmd == cmds.end())
