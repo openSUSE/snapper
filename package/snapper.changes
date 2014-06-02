@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Jun 02 14:54:29 CEST 2014 - aschnell@suse.de
+
+- added aliases for some snapper commands
+
+-------------------------------------------------------------------
 Tue May 27 11:36:21 CEST 2014 - aschnell@suse.de
 
 - allow to display dates and times in UTC and ISO format

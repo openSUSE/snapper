@@ -299,7 +299,7 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>list [options]</option></term>
+	<term><option>list (ls) [options]</option></term>
 	<listitem>
 	  <para>List snapshots.</para>
 	  <variablelist>
@@ -399,7 +399,8 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>delete <replaceable>number</replaceable> | <replaceable>number1-number2</replaceable></option></term>
+	<term><option>delete (remove|rm) <replaceable>number</replaceable> |
+	<replaceable>number1-number2</replaceable></option></term>
 	<listitem>
 	  <para>Delete a snapshot or a range of snapshots.</para>
 	</listitem>
