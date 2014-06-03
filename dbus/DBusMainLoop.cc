@@ -202,7 +202,7 @@ namespace DBus
 
 
     vector<MainLoop::Watch>::iterator
-    MainLoop::find_enabled_watch(int fd, int events)
+    MainLoop::find_enabled_watch(int fd, short events)
     {
 	for (vector<Watch>::iterator it = watches.begin(); it != watches.end(); ++it)
 	    if (it->enabled && it->fd == fd && it->events == events)
