@@ -62,7 +62,7 @@ namespace DBus
 	    DBusWatch* dbus_watch;
 	    bool enabled;
 	    int fd;
-	    int events;
+	    short events;
 	};
 
 	struct Timeout
@@ -79,7 +79,7 @@ namespace DBus
 	int wakeup_pipe[2];
 
 	vector<Watch>::iterator find_watch(DBusWatch* dbus_watch);
-	vector<Watch>::iterator find_enabled_watch(int fd, int events);
+	vector<Watch>::iterator find_enabled_watch(int fd, short events);
 	vector<Timeout>::iterator find_timeout(DBusTimeout* dbus_timeout);
 
 	static dbus_bool_t add_watch(DBusWatch* dbus_watch, void* data);
