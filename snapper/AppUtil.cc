@@ -106,11 +106,11 @@ namespace snapper
     }
 
 
-    int
+    ssize_t
     readlink(const string& path, string& buf)
     {
 	char tmp[1024];
-	int ret = ::readlink(path.c_str(), tmp, sizeof(tmp));
+	ssize_t ret = ::readlink(path.c_str(), tmp, sizeof(tmp));
 	if (ret >= 0)
 	    buf = string(tmp, ret);
 	return ret;

@@ -150,7 +150,7 @@ namespace DBus
     }
 
 
-    unsigned long
+    uid_t
     Connection::get_unix_userid(const Message& m)
     {
 	boost::lock_guard<boost::mutex> lock(mutex);

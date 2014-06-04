@@ -287,14 +287,14 @@ namespace snapper
     }
 
 
-    int
+    ssize_t
     SDir::readlink(const string& name, string& buf) const
     {
 	assert(name.find('/') == string::npos);
 	assert(name != "..");
 
 	char tmp[1024];
-	int ret = ::readlinkat(dirfd, name.c_str(), tmp, sizeof(tmp));
+	ssize_t ret = ::readlinkat(dirfd, name.c_str(), tmp, sizeof(tmp));
 	if (ret >= 0)
 	    buf = string(tmp, ret);
 	return ret;
@@ -600,7 +600,7 @@ namespace snapper
     }
 
 
-    int
+    ssize_t
     SFile::readlink(string& buf) const
     {
 	return dir.readlink(name, buf);

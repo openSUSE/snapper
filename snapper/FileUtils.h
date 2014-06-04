@@ -82,7 +82,7 @@ namespace snapper
 	int stat(const string& name, struct stat* buf, int flags) const;
 	int open(const string& name, int flags) const;
 	int open(const string& name, int flags, mode_t mode) const;
-	int readlink(const string& name, string& buf) const;
+	ssize_t readlink(const string& name, string& buf) const;
 	int mkdir(const string& name, mode_t mode) const;
 	int unlink(const string& name, int flags) const;
 	int chmod(const string& name, mode_t mode, int flags) const;
@@ -126,7 +126,7 @@ namespace snapper
 
 	int stat(struct stat* buf, int flags) const;
 	int open(int flags) const;
-	int readlink(string& buf) const;
+	ssize_t readlink(string& buf) const;
 	int chmod(mode_t mode, int flags) const;
 
 	bool xaSupported() const;

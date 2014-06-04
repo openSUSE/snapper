@@ -54,7 +54,7 @@ namespace DBus
 	void add_match(const string& rule) { add_match(rule.c_str()); }
 	void remove_match(const string& rule) { remove_match(rule.c_str()); }
 
-	unsigned long get_unix_userid(const Message& m);
+	uid_t get_unix_userid(const Message& m);
 
     protected:
 
