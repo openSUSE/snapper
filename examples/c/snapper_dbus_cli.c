@@ -321,10 +321,10 @@ static int snap_struct_unpack(DBusMessageIter *iter,
 	return ret;
 }
 
-static void snap_array_free(int32_t num_snaps,
+static void snap_array_free(uint32_t num_snaps,
 			    struct snap *snaps)
 {
-	int i;
+	uint32_t i;
 
 	for (i = 0; i < num_snaps; i++) {
 		free(snaps[i].user_data);
@@ -332,10 +332,10 @@ static void snap_array_free(int32_t num_snaps,
 	free(snaps);
 }
 
-static void snap_array_print(int32_t num_snaps,
+static void snap_array_print(uint32_t num_snaps,
 			     struct snap *snaps)
 {
-	int i;
+	uint32_t i;
 
 	for (i = 0; i < num_snaps; i++) {
 		printf("id: %u\n"
@@ -543,10 +543,10 @@ static int conf_struct_unpack(DBusMessageIter *iter,
 	return ret;
 }
 
-static void conf_array_free(int32_t num_confs,
+static void conf_array_free(uint32_t num_confs,
 			    struct config *confs)
 {
-	int i;
+	uint32_t i;
 
 	for (i = 0; i < num_confs; i++) {
 		free(confs[i].attrs);
@@ -554,10 +554,10 @@ static void conf_array_free(int32_t num_confs,
 	free(confs);
 }
 
-static void conf_array_print(int32_t num_confs,
+static void conf_array_print(uint32_t num_confs,
 			     struct config *confs)
 {
-	int i;
+	uint32_t i;
 
 	for (i = 0; i < num_confs; i++) {
 		printf("name: %s\n"

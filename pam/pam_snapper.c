@@ -425,8 +425,8 @@ static int forker( pam_handle_t * pamh, const char *pam_user, uid_t uid, gid_t g
 	}
 }
 
-static void fill_user_data( pam_handle_t * pamh, struct dict ( *user_data )[], int *num_user_data,
-			    int max_user_data )
+static void fill_user_data( pam_handle_t * pamh, struct dict ( *user_data )[],
+			    uint32_t * num_user_data, uint32_t max_user_data )
 {
 	int fields[4] = { PAM_RUSER, PAM_RHOST, PAM_TTY, PAM_SERVICE };
 	const char *names[4] = { "ruser", "rhost", "tty", "service" };
@@ -472,9 +472,9 @@ static int get_ugid( pam_handle_t * pamh, const char *pam_user, uid_t * uid, gid
 static int worker( pam_handle_t * pamh, const char *pam_user, const char *snapper_conf,
 		   createmode_t createmode, const char *cleanup )
 {
-	const int max_user_data = 5;
+	const uint32_t max_user_data = 5;
 	struct dict user_data[max_user_data];
-	int num_user_data = 0;
+	uint32_t num_user_data = 0;
 	fill_user_data( pamh, &user_data, &num_user_data, max_user_data );
 
 	uid_t uid;
@@ -500,8 +500,7 @@ static int worker( pam_handle_t * pamh, const char *pam_user, const char *snappe
 	}
 
 	if ( forker( pamh, pam_user, uid, gid, snapper_conf, createmode, cleanup, num_user_data,
-		     user_data, snapshot_num_in, snapshot_num_out ) != 0 )
-	{
+		     user_data, snapshot_num_in, snapshot_num_out ) != 0 ) {
 		free( snapshot_num_out );
 		return -1;
 	}

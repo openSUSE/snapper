@@ -94,7 +94,7 @@ namespace snapper
 	{
 	    off_t t = min(block_size, length);
 
-	    int r1 = read(fd1, block1, t);
+	    ssize_t r1 = read(fd1, block1, t);
 	    if (r1 != t)
 	    {
 		y2err("read failed path:" << file1.fullname() << " errno:" << errno);
@@ -102,7 +102,7 @@ namespace snapper
 		break;
 	    }
 
-	    int r2 = read(fd2, block2, t);
+	    ssize_t r2 = read(fd2, block2, t);
 	    if (r2 != t)
 	    {
 		y2err("read failed path:" << file2.fullname() << " errno:" << errno);

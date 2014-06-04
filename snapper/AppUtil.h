@@ -51,7 +51,7 @@ namespace snapper
     bool clonefile(int src_fd, int dest_fd);
     bool copyfile(int src_fd, int dest_fd);
 
-    int readlink(const string& path, string& buf);
+    ssize_t readlink(const string& path, string& buf);
     int symlink(const string& oldpath, const string& newpath);
 
     string realpath(const string& path);
