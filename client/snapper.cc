@@ -80,8 +80,6 @@ struct Cmd
     const bool needs_snapper;
 };
 
-list<Cmd> cmds;
-
 GetOpts getopts;
 
 bool quiet = false;
@@ -1455,7 +1453,7 @@ usage()
 void help() __attribute__ ((__noreturn__));
 
 void
-help()
+help(const list<Cmd>& cmds)
 {
     getopts.parse("help", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -1493,28 +1491,30 @@ main(int argc, char** argv)
     setLogDo(&log_do);
     setLogQuery(&log_query);
 
-    cmds.push_back(Cmd("list-configs", command_list_configs, help_list_configs, true, false));
-    cmds.push_back(Cmd("create-config", command_create_config, help_create_config, true, false));
-    cmds.push_back(Cmd("delete-config", command_delete_config, help_delete_config, true, false));
-    cmds.push_back(Cmd("get-config", command_get_config, help_get_config, true, false));
-    cmds.push_back(Cmd("set-config", command_set_config, help_set_config, true, true));
-    cmds.push_back(Cmd("list", { "ls" }, command_list, help_list, true, true));
-    cmds.push_back(Cmd("create", command_create, help_create, false, true));
-    cmds.push_back(Cmd("modify", command_modify, help_modify, false, true));
-    cmds.push_back(Cmd("delete", { "remove", "rm" }, command_delete, help_delete, false, true));
-    cmds.push_back(Cmd("mount", command_mount, help_mount, true, true));
-    cmds.push_back(Cmd("umount", command_umount, help_umount, true, true));
-    cmds.push_back(Cmd("status", command_status, help_status, false, true));
-    cmds.push_back(Cmd("diff", command_diff, help_diff, false, true));
+    const list<Cmd> cmds = {
+	Cmd("list-configs", command_list_configs, help_list_configs, true, false),
+	Cmd("create-config", command_create_config, help_create_config, true, false),
+	Cmd("delete-config", command_delete_config, help_delete_config, true, false),
+	Cmd("get-config", command_get_config, help_get_config, true, false),
+	Cmd("set-config", command_set_config, help_set_config, true, true),
+	Cmd("list", { "ls" }, command_list, help_list, true, true),
+	Cmd("create", command_create, help_create, false, true),
+	Cmd("modify", command_modify, help_modify, false, true),
+	Cmd("delete", { "remove", "rm" }, command_delete, help_delete, false, true),
+	Cmd("mount", command_mount, help_mount, true, true),
+	Cmd("umount", command_umount, help_umount, true, true),
+	Cmd("status", command_status, help_status, false, true),
+	Cmd("diff", command_diff, help_diff, false, true),
 #ifdef ENABLE_XATTRS
-    cmds.push_back(Cmd("xadiff", command_xa_diff, help_xa_diff, false, true));
+	Cmd("xadiff", command_xa_diff, help_xa_diff, false, true),
 #endif
-    cmds.push_back(Cmd("undochange", command_undo, help_undo, false, true));
+	Cmd("undochange", command_undo, help_undo, false, true),
 #ifdef ENABLE_ROLLBACK
-    cmds.push_back(Cmd("rollback", command_rollback, help_rollback, false, true));
+	Cmd("rollback", command_rollback, help_rollback, false, true),
 #endif
-    cmds.push_back(Cmd("cleanup", command_cleanup, help_cleanup, false, true));
-    cmds.push_back(Cmd("debug", command_debug, help_debug, false, false));
+	Cmd("cleanup", command_cleanup, help_cleanup, false, true),
+	Cmd("debug", command_debug, help_debug, false, false)
+    };
 
     const struct option options[] = {
 	{ "quiet",		no_argument,		0,	'q' },
@@ -1574,7 +1574,7 @@ main(int argc, char** argv)
 
     if ((opt = opts.find("help")) != opts.end())
     {
-	help();
+	help(cmds);
     }
 
     if (!getopts.hasArgs())
