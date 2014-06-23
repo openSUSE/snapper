@@ -272,7 +272,7 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"    <method name='CreateSingleSnapshotV2'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='parent-number' type='u' direction='in'/>\n"
-	"      <arg name='read-only' type 'b' direction='in'/>\n"
+	"      <arg name='read-only' type='b' direction='in'/>\n"
 	"      <arg name='description' type='s' direction='in'/>\n"
 	"      <arg name='cleanup' type='s' direction='in'/>\n"
 	"      <arg name='userdata' type='a{ss}' direction='in'/>\n"
@@ -281,7 +281,7 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 
 	"    <method name='CreateSingleSnapshotOfDefault'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
-	"      <arg name='read-only' type 'b' direction='in'/>\n"
+	"      <arg name='read-only' type='b' direction='in'/>\n"
 	"      <arg name='description' type='s' direction='in'/>\n"
 	"      <arg name='cleanup' type='s' direction='in'/>\n"
 	"      <arg name='userdata' type='a{ss}' direction='in'/>\n"
