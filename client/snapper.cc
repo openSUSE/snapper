@@ -1301,7 +1301,7 @@ command_rollback(DBus::Connection* conn, Snapper* snapper)
 	    cout << " " << sformat(_("(Snapshot %d.)"), num1) << endl;
 
 	if (!quiet)
-	    cout << sformat(_("Creating read-write snapshot of %d."), tmp) << flush;
+	    cout << sformat(_("Creating read-write snapshot of snapshot %d."), tmp) << flush;
 	num2 = command_create_single_xsnapshot_v2(*conn, config_name, tmp, false,
 						  description, cleanup, userdata);
 	if (!quiet)
