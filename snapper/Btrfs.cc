@@ -69,8 +69,27 @@ namespace snapper
 
 
     Btrfs::Btrfs(const string& subvolume)
-	: Filesystem(subvolume)
+	: Filesystem(subvolume), qgroup(no_qgroup)
     {
+    }
+
+
+    void
+    Btrfs::evalConfigInfo(const ConfigInfo& config_info)
+    {
+	string qgroup_str;
+	if (config_info.getValue("QGROUP", qgroup_str) && !qgroup_str.empty())
+	{
+	    try
+	    {
+		qgroup = make_qgroup(qgroup_str);
+	    }
+	    catch (const runtime_error& e)
+	    {
+		y2err("failed to parse qgroup '" << qgroup_str << "'");
+		throw InvalidConfigException();
+	    }
+	}
     }
 
 
@@ -232,7 +251,7 @@ namespace snapper
 
 	    try
 	    {
-		create_snapshot(subvolume_dir.fd(), info_dir.fd(), "snapshot", read_only);
+		create_snapshot(subvolume_dir.fd(), info_dir.fd(), "snapshot", read_only, qgroup);
 	    }
 	    catch (const runtime_error& e)
 	    {
@@ -247,7 +266,7 @@ namespace snapper
 
 	    try
 	    {
-		create_snapshot(snapshot_dir.fd(), info_dir.fd(), "snapshot", read_only);
+		create_snapshot(snapshot_dir.fd(), info_dir.fd(), "snapshot", read_only, qgroup);
 	    }
 	    catch (const runtime_error& e)
 	    {
@@ -284,7 +303,7 @@ namespace snapper
 
 	try
 	{
-	    create_snapshot(tmp_mount_dir.fd(), info_dir.fd(), "snapshot", read_only);
+	    create_snapshot(tmp_mount_dir.fd(), info_dir.fd(), "snapshot", read_only, qgroup);
 	}
 	catch (const runtime_error& e)
 	{

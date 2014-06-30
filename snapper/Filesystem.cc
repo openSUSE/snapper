@@ -105,7 +105,8 @@ namespace snapper
 #ifdef ENABLE_LVM
 		&Lvm::create,
 #endif
-	NULL };
+		NULL
+	};
 
 	for (const func_t* func = funcs; *func != NULL; ++func)
 	{
@@ -116,6 +117,20 @@ namespace snapper
 
 	y2err("do not know about fstype '" << fstype << "'");
 	throw InvalidConfigException();
+    }
+
+
+    Filesystem*
+    Filesystem::create(const ConfigInfo& config_info)
+    {
+	string fstype = "btrfs";
+	config_info.getValue(KEY_FSTYPE, fstype);
+
+	Filesystem* fs = create(fstype, config_info.getSubvolume());
+
+	fs->evalConfigInfo(config_info);
+
+	return fs;
     }
 
 

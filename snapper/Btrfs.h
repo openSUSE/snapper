@@ -25,6 +25,7 @@
 
 
 #include "snapper/Filesystem.h"
+#include "snapper/BtrfsUtils.h"
 
 
 namespace snapper
@@ -37,6 +38,8 @@ namespace snapper
 	static Filesystem* create(const string& fstype, const string& subvolume);
 
 	Btrfs(const string& subvolume);
+
+	virtual void evalConfigInfo(const ConfigInfo& config_info);
 
 	virtual string fstype() const { return "btrfs"; }
 
@@ -67,6 +70,8 @@ namespace snapper
 	virtual void setDefault(unsigned int num) const;
 
     private:
+
+	qgroup_t qgroup;
 
 	void addToFstab() const;
 	void removeFromFstab() const;

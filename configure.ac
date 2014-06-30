@@ -119,6 +119,14 @@ if test "x$enable_rollback" = "xyes"; then
 	AC_DEFINE(ENABLE_ROLLBACK, 1, [Enable rollback support])
 fi
 
+AC_ARG_ENABLE([btrfs-quota], AC_HELP_STRING([--disable-btrfs-quota],[Disable btrfs quota support]),
+		[enable_btrfs_quota=$enableval],[enable_btrfs_quota=yes])
+AM_CONDITIONAL(ENABLE_BTRFS_QUOTA, [test "x$enable_btrfs_quota" = "xyes"])
+
+if test "x$enable_btrfs_quota" = "xyes"; then
+	AC_DEFINE(ENABLE_BTRFS_QUOTA, 1, [Enable btrfs quota support])
+fi
+
 AC_ARG_ENABLE([pam], AC_HELP_STRING([--disable-pam],[Disable pam plugin support]),
                 [with_pam=$enableval],[with_pam=yes])
 AM_CONDITIONAL(HAVE_PAM, [test "x$with_pam" = "xyes"])

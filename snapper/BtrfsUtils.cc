@@ -112,7 +112,7 @@ namespace snapper
 
 
     void
-    create_snapshot(int fd, int fddst, const string& name, bool read_only)
+    create_snapshot(int fd, int fddst, const string& name, bool read_only, qgroup_t qgroup)
     {
 	struct btrfs_ioctl_vol_args_v2 args_v2;
 	memset(&args_v2, 0, sizeof(args_v2));
@@ -120,6 +120,24 @@ namespace snapper
 	args_v2.fd = fd;
 	args_v2.flags = read_only ? BTRFS_SUBVOL_RDONLY : 0;
 	strncpy(args_v2.name, name.c_str(), sizeof(args_v2.name) - 1);
+
+#ifdef ENABLE_BTRFS_QUOTA
+	if (qgroup != no_qgroup)
+	{
+	    size_t size = sizeof(btrfs_qgroup_inherit) + sizeof(((btrfs_qgroup_inherit*) 0)->qgroups[0]);
+	    vector<char> buffer(size, 0);
+	    struct btrfs_qgroup_inherit* inherit = (btrfs_qgroup_inherit*) &buffer[0];
+
+	    inherit->num_qgroups = 1;
+	    inherit->num_ref_copies = 0;
+	    inherit->num_excl_copies = 0;
+	    inherit->qgroups[0] = qgroup;
+
+	    args_v2.flags |= BTRFS_SUBVOL_QGROUP_INHERIT;
+	    args_v2.size = size;
+	    args_v2.qgroup_inherit = inherit;
+	}
+#endif
 
 	if (ioctl(fddst, BTRFS_IOC_SNAP_CREATE_V2, &args_v2) == 0)
 	    return;
@@ -224,5 +242,35 @@ namespace snapper
     }
 
 #endif
+
+
+    qgroup_t
+    make_qgroup(uint64_t level, uint64_t id)
+    {
+	return (level << 48) | id;
+    }
+
+
+    qgroup_t
+    make_qgroup(const string& str)
+    {
+	string::size_type pos = str.find('/');
+	if (pos == string::npos)
+	    throw std::runtime_error("parsing qgroup failed");
+
+	std::istringstream a(str.substr(0, pos));
+	uint64_t level = 0;
+	a >> level;
+	if (a.fail() || !a.eof())
+	    throw std::runtime_error("parsing qgroup failed");
+
+	std::istringstream b(str.substr(pos + 1));
+	uint64_t id = 0;
+	b >> id;
+	if (b.fail() || !b.eof())
+	    throw std::runtime_error("parsing qgroup failed");
+
+	return make_qgroup(level, id);
+    }
 
 }
