@@ -91,9 +91,7 @@ namespace snapper
 	    throw ConfigNotFoundException();
 	}
 
-	string fstype = "btrfs";
-	config_info->getValue(KEY_FSTYPE, fstype);
-	filesystem = Filesystem::create(fstype, config_info->getSubvolume());
+	filesystem = Filesystem::create(*config_info);
 
 	bool sync_acl;
 	if (config_info->getValue(KEY_SYNC_ACL, sync_acl) && sync_acl == true)

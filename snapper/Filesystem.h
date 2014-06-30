@@ -38,6 +38,7 @@ namespace snapper
 
 
     class MtabData;
+    class ConfigInfo;
 
 
     class Filesystem
@@ -48,6 +49,9 @@ namespace snapper
 	virtual ~Filesystem() {}
 
 	static Filesystem* create(const string& fstype, const string& subvolume);
+	static Filesystem* create(const ConfigInfo& config_info);
+
+	virtual void evalConfigInfo(const ConfigInfo& config_info) {}
 
 	virtual string fstype() const = 0;
 

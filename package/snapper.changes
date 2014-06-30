@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Jun 30 14:44:25 CEST 2014 - aschnell@suse.de
+
+- allow to add snapshots to qgroup (prototype for fate#312751)
+
+-------------------------------------------------------------------
 Mon Jun 23 09:19:03 CEST 2014 - aschnell@suse.de
 
 - fixed DBus introspection data
