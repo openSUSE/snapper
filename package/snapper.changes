@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Jun 30 15:43:56 CEST 2014 - aschnell@suse.de
+
+- make rollback command print verbose messages
+
+-------------------------------------------------------------------
 Mon Jun 30 14:44:25 CEST 2014 - aschnell@suse.de
 
 - allow to add snapshots to qgroup (prototype for fate#312751)
