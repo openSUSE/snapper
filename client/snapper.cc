@@ -1274,22 +1274,42 @@ command_rollback(DBus::Connection* conn, Snapper* snapper)
 
     if (getopts.numArgs() == 0)
     {
-	command_create_single_xsnapshot_of_default(*conn, config_name, true, description, cleanup,
-						   userdata);
+	if (!quiet)
+	    cout << _("Creating read-only snapshot of default subvolume.") << flush;
+	unsigned int num1 = command_create_single_xsnapshot_of_default(*conn, config_name, true,
+								       description, cleanup,
+								       userdata);
+	if (!quiet)
+	    cout << " " << sformat(_("(Snapshot %d.)"), num1) << endl;
 
+	if (!quiet)
+	    cout << _("Creating read-write snapshot of current subvolume.") <<flush;
 	num2 = command_create_single_xsnapshot_v2(*conn, config_name, 0, false, description,
 						  cleanup, userdata);
+	if (!quiet)
+	    cout << " " << sformat(_("(Snapshot %d.)"), num2) << endl;
     }
     else
     {
 	unsigned int tmp = read_num(getopts.popArg());
 
-	command_create_single_xsnapshot(*conn, config_name, description, cleanup, userdata);
+	if (!quiet)
+	    cout << _("Creating read-only snapshot of current system.") << flush;
+	unsigned int num1 = command_create_single_xsnapshot(*conn, config_name, description,
+							    cleanup, userdata);
+	if (!quiet)
+	    cout << " " << sformat(_("(Snapshot %d.)"), num1) << endl;
 
+	if (!quiet)
+	    cout << sformat(_("Creating read-write snapshot of snapshot %d."), tmp) << flush;
 	num2 = command_create_single_xsnapshot_v2(*conn, config_name, tmp, false,
 						  description, cleanup, userdata);
+	if (!quiet)
+	    cout << " " << sformat(_("(Snapshot %d.)"), num2) << endl;
     }
 
+    if (!quiet)
+	cout << sformat(_("Setting default subvolume to snapshot %d."), num2) << endl;
     filesystem->setDefault(num2);
 
     if (print_number)
