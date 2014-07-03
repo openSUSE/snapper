@@ -12,7 +12,7 @@
 CMD_BTRFS="/sbin/btrfs"
 CMD_SNAPPER="/usr/bin/snapper"
 CMD_EGREP="grep -E"
-CMD_PAM_CONFIG="pamconfig"
+CMD_PAM_CONFIG="/usr/sbin/pam-config"
 CMD_SED="sed"
 CMD_USERADD="useradd -m"
 CMD_USERDEL="userdel -r"
@@ -51,5 +51,3 @@ else
 	echo -e "#"
 	echo "DRYRUN - no changes submitted"
 fi
-
-

@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Jul 03 10:45:35 CEST 2014 - aschnell@suse.de
+
+- fixed pam_snapper_pamconfig.sh script (bnc#885604)
+
+-------------------------------------------------------------------
 Mon Jun 30 15:43:56 CEST 2014 - aschnell@suse.de
 
 - make rollback command print verbose messages

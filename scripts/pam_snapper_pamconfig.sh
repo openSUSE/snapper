@@ -12,7 +12,7 @@
 CMD_BTRFS="/sbin/btrfs"
 CMD_SNAPPER="/usr/bin/snapper"
 CMD_EGREP="grep -E"
-CMD_PAM_CONFIG="pamconfig"
+CMD_PAM_CONFIG="/usr/sbin/pam-config"
 CMD_SED="sed"
 CMD_USERADD="useradd -m"
 CMD_USERDEL="userdel -r"
@@ -25,7 +25,7 @@ MODIFYPAMCONFIG=1
 # Usage
 
 function check_pamconfig () {
-	if [ -x /usr/bin/pam_snapper.sh ]; then
+	if [ -x /lib/security/pam_snapper.so -o -x /lib64/security/pam_snapper.so ]; then
 		${CMD_EGREP} pam_snapper.so /etc/pam.d/common-session 2>&1 > /dev/null
 		RETVAL=$?
 		if [ ${RETVAL} != 0 ]; then
@@ -34,7 +34,7 @@ function check_pamconfig () {
 			MODIFYPAMCONFIG=0
 		fi
 	else
-		# echo "Please make sure to have /usr/bin/pam_snapper.sh installed with executable rights"
+		# echo "Please make sure to have pam_snapper.so installed with executable rights"
 		MODIFYPAMCONFIG=0
 	fi
 }
@@ -42,10 +42,7 @@ function check_pamconfig () {
 function modifypamconfig () {
 	if [ ${MODIFYPAMCONFIG} != 0 ]; then
 		echo "Modifying PAM configuration for pam_snapper"
-		echo -e -n "session optional pam_snapper.so" >> /etc/pam.d/common-session
-		# echo -e -n "session optional\tpam_exec.so\t/usr/bin/pam_snapper.sh\n" >> /etc/pam.d/common-session
-		# requires a patch to pam-config
-		${CMD_PAM_CONFIG} -a --exec-option="/usr/bin/pam_snapper.sh"
+		echo -e "session optional\tpam_snapper.so" >> /etc/pam.d/common-session
 	fi
 }
 
@@ -64,4 +61,3 @@ else
 	echo -e "#"
 	echo "DRYRUN - no changes submitted"
 fi
-
