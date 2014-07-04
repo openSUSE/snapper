@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Jul 04 11:02:06 CEST 2014 - aschnell@suse.de
+
+- updated translations
+
+-------------------------------------------------------------------
 Thu Jul 03 10:45:35 CEST 2014 - aschnell@suse.de
 
 - fixed pam_snapper_pamconfig.sh script (bnc#885604)

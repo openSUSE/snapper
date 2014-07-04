@@ -5,380 +5,387 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-05 12:24+0200\n"
-"PO-Revision-Date: 2014-04-30 09:37\n"
-"Last-Translator: Novell Language <language@novell.com>\n"
-"Language-Team: Novell Language <language@novell.com>\n"
+"POT-Creation-Date: 2014-07-04 10:40+0200\n"
+"PO-Revision-Date: 2014-06-26 12:20\n"
+"Last-Translator: Novell language <language@novell.com>\n"
+"Language-Team: Novell language <language@novell.com>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../client/snapper.cc:592 ../client/snapper.cc:726
+#: ../client/snapper.cc:599 ../client/snapper.cc:733
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <アルゴリズム>\t\tスナップショットに対するクリーンアップアルゴリズムの指定"
 
-#: ../client/snapper.cc:1216
-#, fuzzy
+#: ../client/snapper.cc:1223
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <アルゴリズム>\t\tスナップショットに対するクリーンアップアルゴリズムの指定"
+msgstr "\t--cleanup-algorithm, -c <アルゴリズム>\tスナップショットに対するクリーンアップアルゴリズムの指定。"
 
-#: ../client/snapper.cc:594
+#: ../client/snapper.cc:601
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
 msgstr "\t--command <command>\tコマンドを実行し、その前後にスナップショットを採取する"
 
-#: ../client/snapper.cc:1465
+#: ../client/snapper.cc:1494
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <名前>\t\t使用する設定ファイル名を指定する。"
 
-#: ../client/snapper.cc:591 ../client/snapper.cc:725
+#: ../client/snapper.cc:598 ../client/snapper.cc:732
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <説明>\tスナップショットの説明。"
 
-#: ../client/snapper.cc:1215
-#, fuzzy
+#: ../client/snapper.cc:1222
 msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr "\t--description, -d <説明>\tスナップショットの説明。"
 
-#: ../client/snapper.cc:188
+#: ../client/snapper.cc:195
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <種類>\t\t手動でファイルシステムの種類を指定する。"
 
-#: ../client/snapper.cc:1021
+#: ../client/snapper.cc:1028
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr "\t--input, -i <ファイル>\t\tファイルから変更内容を取り消すファイルを読み込む。"
 
-#: ../client/snapper.cc:1466
-msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr "\t--no-dbus\t\t\tDBus 無しで処理を行なう"
+#: ../client/snapper.cc:1492
+msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
+msgstr ""
 
-#: ../client/snapper.cc:907
+#: ../client/snapper.cc:1495
+msgid "\t--no-dbus\t\t\tOperate without DBus."
+msgstr "\t--no-dbus\t\t\tDBusなしで処理を行います。"
+
+#: ../client/snapper.cc:914
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <ファイル>\t\t状態をファイルに保存する"
 
-#: ../client/snapper.cc:589
+#: ../client/snapper.cc:596
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <番号>\t\tプリスナップショットの番号を指定。"
 
-#: ../client/snapper.cc:590
+#: ../client/snapper.cc:597
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
 msgstr "\t--print-number, -p\t\t作成したスナップショットの印刷枚数を表示。"
 
-#: ../client/snapper.cc:1214
-#, fuzzy
+#: ../client/snapper.cc:1221
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr "\t--print-number, -p\t\t作成したスナップショットの印刷枚数を表示。"
+msgstr "\t--print-number, -p\t\t2番目に作成したスナップショットの印刷枚数を表示。"
 
-#: ../client/snapper.cc:1462
+#: ../client/snapper.cc:1489
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\t通常出力される項目の省略。"
 
-#: ../client/snapper.cc:1464
+#: ../client/snapper.cc:1493
 msgid "\t--table-style, -t <style>\tTable style (integer)."
 msgstr "\t--table-style, -t <スタイル>\t表のスタイル(整数)。"
 
-#: ../client/snapper.cc:189
+#: ../client/snapper.cc:196
 msgid "\t--template, -t <name>\t\tName of config template to use."
 msgstr "\t--template, -t <名前>\t\t使用する設定テンプレートの指定。"
 
-#: ../client/snapper.cc:588
+#: ../client/snapper.cc:595
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <種類>\t\tスナップショットの種類。"
 
-#: ../client/snapper.cc:377
+#: ../client/snapper.cc:384
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
 msgstr "\t--type, -t <種類>\t\t一覧表示するスナップショットの種類。"
 
-#: ../client/snapper.cc:593 ../client/snapper.cc:727
+#: ../client/snapper.cc:600 ../client/snapper.cc:734
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <データ>\tスナップショットに対するユーザデータの指定"
 
-#: ../client/snapper.cc:1217
-#, fuzzy
+#: ../client/snapper.cc:1224
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata, -u <データ>\tスナップショットに対するユーザデータの指定"
+msgstr "\t--userdata, -u <データ>\tスナップショットに対するユーザデータの指定。"
 
-#: ../client/snapper.cc:1463
+#: ../client/snapper.cc:1491
+msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
+msgstr ""
+
+#: ../client/snapper.cc:1490
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
 msgstr "\t--verbose, -v\t\t\tより詳しい出力を行う。"
 
-#: ../client/snapper.cc:1467
+#: ../client/snapper.cc:1496
 msgid "\t--version\t\t\tPrint version and exit."
 msgstr "\t--version\t\t\tバージョンを印刷して終了する。"
 
-#: ../client/snapper.cc:1299
+#: ../client/snapper.cc:1326
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <クリーンアップアルゴリズム>"
 
-#: ../client/snapper.cc:585
+#: ../client/snapper.cc:592
 msgid "\tsnapper create"
 msgstr "\tsnapper create"
 
-#: ../client/snapper.cc:185
+#: ../client/snapper.cc:192
 msgid "\tsnapper create-config <subvolume>"
 msgstr "\tsnapper create-config <サブボリューム>"
 
-#: ../client/snapper.cc:776
+#: ../client/snapper.cc:783
 msgid "\tsnapper delete <number>"
 msgstr "\tsnapper delete <番号>"
 
-#: ../client/snapper.cc:256
+#: ../client/snapper.cc:263
 msgid "\tsnapper delete-config"
 msgstr "\tsnapper delete-config"
 
-#: ../client/snapper.cc:959
+#: ../client/snapper.cc:966
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <番号 1>..<番号 2> [ファイル]"
 
-#: ../client/snapper.cc:286
+#: ../client/snapper.cc:293
 msgid "\tsnapper get-config"
 msgstr "\tsnapper get-config"
 
-#: ../client/snapper.cc:374
+#: ../client/snapper.cc:381
 msgid "\tsnapper list"
 msgstr "\tsnapper list"
 
-#: ../client/snapper.cc:132
+#: ../client/snapper.cc:139
 msgid "\tsnapper list-configs"
 msgstr "\tsnapper list-configs"
 
-#: ../client/snapper.cc:722
+#: ../client/snapper.cc:729
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <番号>"
 
-#: ../client/snapper.cc:830
+#: ../client/snapper.cc:837
 msgid "\tsnapper mount <number>"
 msgstr "\tsnapper mount <番号>"
 
-#: ../client/snapper.cc:1211
-#, fuzzy
+#: ../client/snapper.cc:1218
 msgid "\tsnapper rollback [number]"
-msgstr "\tsnapper mount <番号>"
+msgstr "\tsnapper rollback [番号]"
 
-#: ../client/snapper.cc:342
+#: ../client/snapper.cc:349
 msgid "\tsnapper set-config <configdata>"
-msgstr "\tsnapper set-config <設定データ>"
+msgstr "\tsnapper set-config <configdata>"
 
-#: ../client/snapper.cc:904
+#: ../client/snapper.cc:911
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tsnapper status <番号 1>..<番号 2>"
 
-#: ../client/snapper.cc:867
+#: ../client/snapper.cc:874
 msgid "\tsnapper umount <number>"
 msgstr "\tsnapper umount <番号>"
 
-#: ../client/snapper.cc:1018
+#: ../client/snapper.cc:1025
 msgid "\tsnapper undochange <number1>..<number2> [files]"
 msgstr "\tsnapper undochange <番号 1>..<番号 2> [ファイル]"
 
-#: ../client/snapper.cc:1364
+#: ../client/snapper.cc:1391
 msgid "\tsnapper xadiff <number1>..<number2> [files]"
-msgstr "\tsnapper xadiff <番号 1>..<番号 2> [ファイル]"
+msgstr "\tsnapper xadiff <number1>..<number2> [files]"
 
-#: ../client/snapper.cc:1461
+#: ../client/snapper.cc:1488
 msgid "    Global options:"
 msgstr "    グローバルオプション:"
 
-#: ../client/snapper.cc:587
+#: ../client/snapper.cc:594
 msgid "    Options for 'create' command:"
 msgstr "    「create」コマンドに対するオプション:"
 
-#: ../client/snapper.cc:187
+#: ../client/snapper.cc:194
 msgid "    Options for 'create-config' command:"
 msgstr "    「create-config」コマンドに対するオプション:"
 
-#: ../client/snapper.cc:376
+#: ../client/snapper.cc:383
 msgid "    Options for 'list' command:"
 msgstr "    「list」コマンドに対するオプション:"
 
-#: ../client/snapper.cc:724
+#: ../client/snapper.cc:731
 msgid "    Options for 'modify' command:"
 msgstr "    「modify」コマンドに対するオプション:"
 
-#: ../client/snapper.cc:1213
-#, fuzzy
+#: ../client/snapper.cc:1220
 msgid "    Options for 'rollback' command:"
-msgstr "    「create」コマンドに対するオプション:"
+msgstr "    「rollback」コマンドに対するオプション:"
 
-#: ../client/snapper.cc:906
+#: ../client/snapper.cc:913
 msgid "    Options for 'status' command:"
 msgstr "    'status' コマンドに対するオプション:"
 
-#: ../client/snapper.cc:1020
+#: ../client/snapper.cc:1027
 msgid "    Options for 'undochange' command:"
 msgstr "    「undochange」コマンドに対するオプション:"
 
-#: ../client/snapper.cc:1298
+#: ../client/snapper.cc:1325
 msgid "  Cleanup snapshots:"
 msgstr "  スナップショットのクリーンアップ:"
 
-#: ../client/snapper.cc:1363
+#: ../client/snapper.cc:1390
 msgid "  Comparing snapshots extended attributes:"
 msgstr "  スナップショットの拡張属性の比較:"
 
-#: ../client/snapper.cc:903 ../client/snapper.cc:958
+#: ../client/snapper.cc:910 ../client/snapper.cc:965
 msgid "  Comparing snapshots:"
 msgstr "  スナップショットの比較:"
 
-#: ../client/snapper.cc:184
+#: ../client/snapper.cc:191
 msgid "  Create config:"
 msgstr "  環境設定の作成:"
 
-#: ../client/snapper.cc:584
+#: ../client/snapper.cc:591
 msgid "  Create snapshot:"
 msgstr "  スナップショットの作成:"
 
-#: ../client/snapper.cc:255
+#: ../client/snapper.cc:262
 msgid "  Delete config:"
 msgstr "  設定の削除:"
 
-#: ../client/snapper.cc:775
+#: ../client/snapper.cc:782
 msgid "  Delete snapshot:"
 msgstr "  スナップショットの削除:"
 
-#: ../client/snapper.cc:285
+#: ../client/snapper.cc:292
 msgid "  Get config:"
 msgstr "  設定の取得:"
 
-#: ../client/snapper.cc:131
+#: ../client/snapper.cc:138
 msgid "  List configs:"
 msgstr "  環境設定の一覧表示:"
 
-#: ../client/snapper.cc:373
+#: ../client/snapper.cc:380
 msgid "  List snapshots:"
 msgstr "  スナップショットの一覧表示:"
 
-#: ../client/snapper.cc:721
+#: ../client/snapper.cc:728
 msgid "  Modify snapshot:"
 msgstr "  スナップショットの変更:"
 
-#: ../client/snapper.cc:829
+#: ../client/snapper.cc:836
 msgid "  Mount snapshot:"
 msgstr "  スナップショットのマウント:"
 
-#: ../client/snapper.cc:1210
+#: ../client/snapper.cc:1217
 msgid "  Rollback:"
-msgstr ""
+msgstr "  ロールバック:"
 
-#: ../client/snapper.cc:341
+#: ../client/snapper.cc:348
 msgid "  Set config:"
-msgstr "  設定の適用:"
+msgstr "  設定:"
 
-#: ../client/snapper.cc:866
+#: ../client/snapper.cc:873
 msgid "  Umount snapshot:"
 msgstr "  スナップショットのマウント解除:"
 
-#: ../client/snapper.cc:1017
+#: ../client/snapper.cc:1024
 msgid "  Undo changes:"
 msgstr "  変更の取り消し:"
 
-#: ../client/snapper.cc:425 ../client/snapper.cc:474
+#: ../client/snapper.cc:432 ../client/snapper.cc:481
 msgid "#"
 msgstr "#"
 
-#: ../client/snapper.cc:1630 ../client/errors.cc:88
+#: ../client/snapper.cc:1283 ../client/snapper.cc:1290
+#: ../client/snapper.cc:1301 ../client/snapper.cc:1308
+#, fuzzy, c-format
+msgid "(Snapshot %d.)"
+msgstr "スナップショット「%u」が見つかりません。"
+
+#: ../client/snapper.cc:1669 ../client/errors.cc:88
 msgid "ACL error."
 msgstr "ACLエラーです。"
 
-#: ../client/snapper.cc:429
+#: ../client/snapper.cc:436
 msgid "Cleanup"
 msgstr "整理"
 
-#: ../client/snapper.cc:1585
+#: ../client/snapper.cc:1624
 #, c-format
 msgid "Command '%s' does not work without DBus."
-msgstr "'%s' コマンドは DBus 無しでは動作しません。"
+msgstr "コマンド「%s」はDBusなしでは動作しません。"
 
-#: ../client/snapper.cc:1310
+#: ../client/snapper.cc:1337
 msgid "Command 'cleanup' needs one arguments."
 msgstr "「cleanup」コマンドには1つの引数が必要です。"
 
-#: ../client/snapper.cc:616
+#: ../client/snapper.cc:623
 msgid "Command 'create' does not take arguments."
 msgstr "「create」コマンドには引数はありません。"
 
-#: ../client/snapper.cc:209
+#: ../client/snapper.cc:216
 msgid "Command 'create-config' needs one argument."
 msgstr "「create-config」コマンドには1つの引数が必要です。"
 
-#: ../client/snapper.cc:1348
+#: ../client/snapper.cc:1375
 msgid "Command 'debug' does not take arguments."
 msgstr "'debug' コマンドにはパラメータはありません。"
 
-#: ../client/snapper.cc:787
+#: ../client/snapper.cc:794
 msgid "Command 'delete' needs at least one argument."
 msgstr "「delete」コマンドには少なくとも1つの引数が必要です。"
 
-#: ../client/snapper.cc:267
+#: ../client/snapper.cc:274
 msgid "Command 'delete-config' does not take arguments."
 msgstr "'delete-config' コマンドにはパラメータはありません。"
 
-#: ../client/snapper.cc:970
+#: ../client/snapper.cc:977
 msgid "Command 'diff' needs at least one argument."
 msgstr "'diff' コマンドには少なくとも 1 つのパラメータが必要です。"
 
-#: ../client/snapper.cc:297
+#: ../client/snapper.cc:304
 msgid "Command 'get-config' does not take arguments."
-msgstr "'get-config' コマンドにはパラメータはありません。"
+msgstr "コマンド「get-config」は引数を取りません。"
 
-#: ../client/snapper.cc:1454
+#: ../client/snapper.cc:1481
 msgid "Command 'help' does not take arguments."
 msgstr "「help」コマンドには引数はありません。"
 
-#: ../client/snapper.cc:393
+#: ../client/snapper.cc:400
 msgid "Command 'list' does not take arguments."
 msgstr "「list」コマンドには引数はありません。"
 
-#: ../client/snapper.cc:143
+#: ../client/snapper.cc:150
 msgid "Command 'list-configs' does not take arguments."
 msgstr "「list-configs」コマンドには引数はありません。"
 
-#: ../client/snapper.cc:746
+#: ../client/snapper.cc:753
 msgid "Command 'modify' needs at least one argument."
 msgstr "'modify' コマンドには少なくとも 1 つのパラメータが必要です。"
 
-#: ../client/snapper.cc:841 ../client/snapper.cc:878
+#: ../client/snapper.cc:848 ../client/snapper.cc:885
 msgid "Command 'mount' needs at least one argument."
 msgstr "「mount」コマンドには少なくとも1つの引数が必要です。"
 
-#: ../client/snapper.cc:1262
+#: ../client/snapper.cc:1269
 msgid "Command 'rollback' only available for btrfs."
-msgstr ""
+msgstr "「rollback」コマンドはbtrfsでのみ利用できます。"
 
-#: ../client/snapper.cc:1236
-#, fuzzy
+#: ../client/snapper.cc:1243
 msgid "Command 'rollback' takes either one or no argument."
-msgstr "'status' コマンドには 1 つのパラメータが必要です。"
+msgstr "「rollback」コマンドには1つの引数があるか、引数がありません。"
 
-#: ../client/snapper.cc:353
+#: ../client/snapper.cc:360
 msgid "Command 'set-config' needs at least one argument."
-msgstr "'set-config' コマンドには少なくとも 1 つのパラメータが必要です。"
+msgstr "コマンド「set-config」には少なくとも1つの引数が必要です。"
 
-#: ../client/snapper.cc:923
+#: ../client/snapper.cc:930
 msgid "Command 'status' needs one argument."
 msgstr "'status' コマンドには 1 つのパラメータが必要です。"
 
-#: ../client/snapper.cc:1037
+#: ../client/snapper.cc:1044
 msgid "Command 'undochange' needs at least one argument."
 msgstr "「undochange」コマンドには少なくとも1つの引数が必要です。"
 
-#: ../client/snapper.cc:1389
+#: ../client/snapper.cc:1416
 msgid "Command 'xadiff' needs at least one argument."
-msgstr "'xadiff' コマンドには少なくとも 1 つのパラメータが必要です。"
+msgstr "コマンド「xadiff」には少なくとも1つの引数が必要です。"
 
-#: ../client/snapper.cc:150
+#: ../client/snapper.cc:157
 msgid "Config"
 msgstr "環境設定"
 
-#: ../client/snapper.cc:1605
+#: ../client/snapper.cc:1644
 #, c-format
 msgid "Config '%s' is invalid."
-msgstr "設定 '%s' が正しくありません。"
+msgstr "設定「%s」は無効です。"
 
-#: ../client/snapper.cc:1600
+#: ../client/snapper.cc:1639
 #, c-format
 msgid "Config '%s' not found."
-msgstr "設定 '%s' が見つかりません"
+msgstr "設定「%s」が見つかりません。"
 
 #: ../client/errors.cc:58
 msgid "Config is in use."
@@ -391,27 +398,45 @@ msgstr "設定は施錠 (ロック) されています。"
 #: ../client/misc.cc:181
 #, c-format
 msgid "Configdata '%s' does not include '=' sign."
-msgstr ""
+msgstr "設定データ「%s」に「=」記号が含まれていません。"
 
 #: ../client/misc.cc:190
 #, c-format
 msgid "Configdata '%s' has empty key."
-msgstr ""
+msgstr "設定データ「%s」の鍵が空です。"
 
-#: ../client/snapper.cc:1615 ../client/errors.cc:70
+#: ../client/snapper.cc:1654 ../client/errors.cc:70
 #, c-format
 msgid "Creating config failed (%s)."
 msgstr "環境設定の作成に失敗しました(%s)。"
+
+#: ../client/snapper.cc:1297
+msgid "Creating read-only snapshot of current system."
+msgstr ""
+
+#: ../client/snapper.cc:1278
+#, fuzzy
+msgid "Creating read-only snapshot of default subvolume."
+msgstr "スナップショットの作成に失敗しました。"
+
+#: ../client/snapper.cc:1286
+msgid "Creating read-write snapshot of current subvolume."
+msgstr ""
+
+#: ../client/snapper.cc:1304
+#, fuzzy, c-format
+msgid "Creating read-write snapshot of snapshot %d."
+msgstr "スナップショットの作成に失敗しました。"
 
 #: ../client/errors.cc:76
 msgid "Creating snapshot failed."
 msgstr "スナップショットの作成に失敗しました。"
 
-#: ../client/snapper.cc:427 ../client/snapper.cc:475
+#: ../client/snapper.cc:434 ../client/snapper.cc:482
 msgid "Date"
 msgstr "日付"
 
-#: ../client/snapper.cc:1620 ../client/errors.cc:73
+#: ../client/snapper.cc:1659 ../client/errors.cc:73
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "設定の削除に失敗しました (%s)。"
@@ -420,29 +445,27 @@ msgstr "設定の削除に失敗しました (%s)。"
 msgid "Deleting snapshot failed."
 msgstr "スナップショットの削除に失敗しました。"
 
-#: ../client/snapper.cc:430 ../client/snapper.cc:477 ../client/snapper.cc:525
+#: ../client/snapper.cc:437 ../client/snapper.cc:484 ../client/snapper.cc:532
 msgid "Description"
 msgstr "説明"
 
-#: ../client/snapper.cc:237
+#: ../client/snapper.cc:244
 msgid "Detecting filesystem type failed."
 msgstr "ファイルシステムの種類の検出に失敗しました。"
 
 #: ../client/misc.cc:170
-#, fuzzy
 msgid "Empty configdata."
-msgstr "設定データが正しくありません。"
+msgstr "空の設定データ。"
 
 #: ../client/misc.cc:107 ../client/misc.cc:115
-#, fuzzy
 msgid "Empty userdata."
-msgstr "ユーザデータが正しくありません。"
+msgstr "空のユーザデータ。"
 
-#: ../client/snapper.cc:1191 ../client/snapper.cc:1201
+#: ../client/snapper.cc:1198 ../client/snapper.cc:1208
 msgid "Failed to initialize filesystem handler."
-msgstr ""
+msgstr "ファイルシステム処理の初期化に失敗しました。"
 
-#: ../client/systemd-helper.cc:127 ../client/snapper.cc:1659
+#: ../client/systemd-helper.cc:127 ../client/snapper.cc:1698
 msgid "Failure"
 msgstr "失敗"
 
@@ -451,7 +474,7 @@ msgstr "失敗"
 msgid "Failure (%s)."
 msgstr "障害(%s)が発生しました。"
 
-#: ../client/snapper.cc:1091
+#: ../client/snapper.cc:1098
 #, c-format
 msgid "File '%s' not found."
 msgstr "'%s' というファイルが見つかりません。"
@@ -468,11 +491,11 @@ msgstr "同一のスナップショットです。"
 msgid "Illegal Snapshot."
 msgstr "スナップショットが正しくありません。"
 
-#: ../client/snapper.cc:1625 ../client/errors.cc:49
+#: ../client/snapper.cc:1664 ../client/errors.cc:49
 msgid "Invalid configdata."
-msgstr "設定データが正しくありません。"
+msgstr "無効な設定データ。"
 
-#: ../client/snapper.cc:1640 ../client/errors.cc:85
+#: ../client/snapper.cc:1679 ../client/errors.cc:85
 msgid "Invalid group."
 msgstr "無効なグループです。"
 
@@ -481,20 +504,20 @@ msgstr "無効なグループです。"
 msgid "Invalid snapshot '%s'."
 msgstr "無効なスナップショット「%s」です。"
 
-#: ../client/misc.cc:85 ../client/snapper.cc:1059
+#: ../client/misc.cc:85 ../client/snapper.cc:1066
 msgid "Invalid snapshots."
 msgstr "無効なスナップショットです。"
 
-#: ../client/snapper.cc:216
+#: ../client/snapper.cc:223
 msgid "Invalid subvolume."
 msgstr "無効なサブボリュームです。"
 
-#: ../client/snapper.cc:1537
+#: ../client/snapper.cc:1576
 #, c-format
 msgid "Invalid table style %d."
 msgstr "無効な表形式 %d です。"
 
-#: ../client/snapper.cc:1635 ../client/errors.cc:82
+#: ../client/snapper.cc:1674 ../client/errors.cc:82
 msgid "Invalid user."
 msgstr "無効なユーザです。"
 
@@ -502,14 +525,14 @@ msgstr "無効なユーザです。"
 msgid "Invalid userdata."
 msgstr "ユーザデータが正しくありません。"
 
-#: ../client/snapper.cc:304
+#: ../client/snapper.cc:311
 msgid "Key"
 msgstr "キー"
 
-#: ../client/snapper.cc:1610
+#: ../client/snapper.cc:1649
 #, c-format
 msgid "Listing configs failed (%s)."
-msgstr "設定の一覧表示に失敗しました (%s)。"
+msgstr "設定の表示に失敗しました(%s)。"
 
 #: ../client/utils/GetOpts.cc:68
 #, c-format
@@ -521,15 +544,15 @@ msgstr "コマンドオプション「%s」に対する引数がありません�
 msgid "Missing argument for global option '%s'."
 msgstr "グローバルオプション「%s」に対する引数がありません。"
 
-#: ../client/snapper.cc:678
+#: ../client/snapper.cc:685
 msgid "Missing command argument."
 msgstr "引数がありません。"
 
-#: ../client/snapper.cc:672
+#: ../client/snapper.cc:679
 msgid "Missing or invalid pre-number."
 msgstr "前番号が設定されていないか、無効です。"
 
-#: ../client/snapper.cc:1563
+#: ../client/snapper.cc:1602
 msgid "No command provided."
 msgstr "コマンドが指定されていません。"
 
@@ -537,55 +560,60 @@ msgstr "コマンドが指定されていません。"
 msgid "No permissions."
 msgstr "許可がありません。"
 
-#: ../client/snapper.cc:941 ../client/snapper.cc:1052
+#: ../client/snapper.cc:948 ../client/snapper.cc:1059
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "ファイル「%s」を開けませんでした。"
 
-#: ../client/snapper.cc:522
+#: ../client/snapper.cc:529
 msgid "Post #"
 msgstr "後 #"
 
-#: ../client/snapper.cc:524
+#: ../client/snapper.cc:531
 msgid "Post Date"
 msgstr "後日付"
 
-#: ../client/snapper.cc:426 ../client/snapper.cc:521
+#: ../client/snapper.cc:433 ../client/snapper.cc:528
 msgid "Pre #"
 msgstr "前 #"
 
-#: ../client/snapper.cc:523
+#: ../client/snapper.cc:530
 msgid "Pre Date"
 msgstr "前日付"
+
+#: ../client/snapper.cc:1312
+#, c-format
+msgid "Setting default subvolume to snapshot %d."
+msgstr ""
 
 #: ../client/misc.cc:54
 #, c-format
 msgid "Snapshot '%u' not found."
-msgstr "スナップショット '%u' が見つかりません。"
+msgstr "スナップショット「%u」が見つかりません。"
 
 #: ../client/errors.cc:61
 msgid "Snapshot is in use."
 msgstr "スナップショットは使用中です。"
 
-#: ../client/snapper.cc:151
+#: ../client/snapper.cc:158
 msgid "Subvolume"
 msgstr "サブボリューム"
 
-#: ../client/snapper.cc:1564 ../client/snapper.cc:1577
+#: ../client/snapper.cc:1603 ../client/snapper.cc:1616
 #: ../client/utils/GetOpts.cc:61 ../client/utils/GetOpts.cc:69
 msgid "Try 'snapper --help' for more information."
 msgstr "詳しくは 'snapper --help' コマンドをご利用ください。"
 
-#: ../client/snapper.cc:424
+#: ../client/snapper.cc:431
 msgid "Type"
 msgstr "種類"
 
-#: ../client/snapper.cc:1330
+#: ../client/snapper.cc:1357
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
 msgstr "不明なクリーンアップアルゴリズム「%s」です。"
 
-#: ../client/snapper.cc:1576
+#: ../client/snapper.cc:1615
 #, c-format
 msgid "Unknown command '%s'."
 msgstr "不明なコマンド「%s」です。"
@@ -608,80 +636,80 @@ msgstr "不明なグローバルオプション「%s」です。"
 msgid "Unknown option '%s' for command '%s'."
 msgstr "不明なオプション「%s」です(コマンド「%s」)。"
 
-#: ../client/snapper.cc:644
+#: ../client/snapper.cc:651
 msgid "Unknown type of snapshot."
 msgstr "不明なスナップショットの種類です。"
 
-#: ../client/snapper.cc:412
+#: ../client/snapper.cc:419
 msgid "Unknown type of snapshots."
 msgstr "不明なスナップショットの種類です。"
 
-#: ../client/snapper.cc:1538
-#, fuzzy, c-format
+#: ../client/snapper.cc:1577
+#, c-format
 msgid "Use an integer number from %d to %d."
-msgstr "%d から %d までの整数を使用してください"
+msgstr "%d から %d までの整数を使用してください。"
 
-#: ../client/snapper.cc:428 ../client/snapper.cc:476
+#: ../client/snapper.cc:435 ../client/snapper.cc:483
 msgid "User"
 msgstr "ユーザ"
 
-#: ../client/snapper.cc:431 ../client/snapper.cc:478 ../client/snapper.cc:526
+#: ../client/snapper.cc:438 ../client/snapper.cc:485 ../client/snapper.cc:533
 msgid "Userdata"
 msgstr "ユーザデータ"
 
 #: ../client/misc.cc:126
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
-msgstr ""
+msgstr "ユーザデータ「%s」に「=」記号が含まれていません。"
 
 #: ../client/misc.cc:135
 #, c-format
 msgid "Userdata '%s' has empty key."
-msgstr ""
+msgstr "ユーザデータ「%s」の鍵が空です。"
 
-#: ../client/snapper.cc:305
+#: ../client/snapper.cc:312
 msgid "Value"
 msgstr "値"
 
-#: ../client/snapper.cc:1126
+#: ../client/snapper.cc:1133
 #, c-format
 msgid "create:%d modify:%d delete:%d"
 msgstr "作成:%d 修正:%d 削除:%d"
 
-#: ../client/snapper.cc:1151
+#: ../client/snapper.cc:1158
 #, c-format
 msgid "creating %s"
 msgstr "%s を作成しています"
 
-#: ../client/snapper.cc:1157
+#: ../client/snapper.cc:1164
 #, c-format
 msgid "deleting %s"
 msgstr "%s を削除しています"
 
-#: ../client/snapper.cc:1167
+#: ../client/snapper.cc:1174
 #, c-format
 msgid "failed to create %s"
 msgstr "%s の作成に失敗しました"
 
-#: ../client/snapper.cc:1173
+#: ../client/snapper.cc:1180
 #, c-format
 msgid "failed to delete %s"
 msgstr "%s の削除に失敗しました"
 
-#: ../client/snapper.cc:1170
+#: ../client/snapper.cc:1177
 #, c-format
 msgid "failed to modify %s"
 msgstr "%s の修正に失敗しました"
 
-#: ../client/snapper.cc:1154
+#: ../client/snapper.cc:1161
 #, c-format
 msgid "modifying %s"
 msgstr "%s を修正しています"
 
-#: ../client/snapper.cc:1122
+#: ../client/snapper.cc:1129
 msgid "nothing to do"
 msgstr "何もすることがありません"
 
-#: ../client/snapper.cc:1458
+#: ../client/snapper.cc:1485
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "usage: snapper [グローバルオプション] <コマンド> [コマンドオプション] [コマンド引数]"
