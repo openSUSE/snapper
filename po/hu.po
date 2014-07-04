@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-30 15:54+0200\n"
-"PO-Revision-Date: 2014-05-01 10:51\n"
+"POT-Creation-Date: 2014-07-04 10:40+0200\n"
+"PO-Revision-Date: 2014-06-06 15:39\n"
 "Last-Translator: Novell Language <language@novell.com>\n"
 "Language-Team: Novell Language <language@novell.com>\n"
 "Language: \n"
@@ -14,361 +14,375 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../client/snapper.cc:592 ../client/snapper.cc:726
+#: ../client/snapper.cc:599 ../client/snapper.cc:733
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algoritmus>\tPillanatkép tisztítási algoritmus."
 
-#: ../client/snapper.cc:1216
+#: ../client/snapper.cc:1223
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
-msgstr ""
+msgstr "\t--cleanup-algorithm, -c <algoritmus>\tKarbantartási algoritmus a pillanatfelvételekhez."
 
-#: ../client/snapper.cc:594
+#: ../client/snapper.cc:601
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
 msgstr "\t--command <parancs>\tFuttassa a parancsot és készítsen pillanatképet előtte, majd utána."
 
-#: ../client/snapper.cc:1465
+#: ../client/snapper.cc:1494
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <név>\t\tFelhasznált beállítás nevének megadása."
 
-#: ../client/snapper.cc:591 ../client/snapper.cc:725
+#: ../client/snapper.cc:598 ../client/snapper.cc:732
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <leírás>\tPillanatkép leírása."
 
-#: ../client/snapper.cc:1215
+#: ../client/snapper.cc:1222
 msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr ""
+msgstr "\t--description, -d <leírás>\tPillanatfelvételekhez tartozó leírás."
 
-#: ../client/snapper.cc:188
+#: ../client/snapper.cc:195
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <fstype>\t\tFájlrendszer típusának beállítása kézzel."
 
-#: ../client/snapper.cc:1021
+#: ../client/snapper.cc:1028
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr "\t--input, -i <fájl>\t\tFájlok betöltése a fájlból való visszaállításhoz."
 
-#: ../client/snapper.cc:1466
+#: ../client/snapper.cc:1492
+msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
+msgstr ""
+
+#: ../client/snapper.cc:1495
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tDBus nélküli működés."
 
-#: ../client/snapper.cc:907
+#: ../client/snapper.cc:914
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <fájl>\t\tÁllapot mentése fájlba."
 
-#: ../client/snapper.cc:589
+#: ../client/snapper.cc:596
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <szám>\t\tA megfelelő megelőző pillanatfelvétel száma."
 
-#: ../client/snapper.cc:590
+#: ../client/snapper.cc:597
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
 msgstr "\t--print-number, -p\t\tA létrehozott pillanatfelvétel számának kiírása."
 
-#: ../client/snapper.cc:1214
+#: ../client/snapper.cc:1221
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr ""
+msgstr "\t--print-number, -p\t\tA másodiknak létrehozott pillanatfelvétel megjelenítési száma."
 
-#: ../client/snapper.cc:1462
+#: ../client/snapper.cc:1489
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\tNormál kimenet elhagyása."
 
-#: ../client/snapper.cc:1464
+#: ../client/snapper.cc:1493
 msgid "\t--table-style, -t <style>\tTable style (integer)."
 msgstr "\t--table-style, -t <stílus>\tTáblastílus (integer)."
 
-#: ../client/snapper.cc:189
+#: ../client/snapper.cc:196
 msgid "\t--template, -t <name>\t\tName of config template to use."
 msgstr "\t--template, -t <név>\t\tFelhasznált beállítássablon neve."
 
-#: ../client/snapper.cc:588
+#: ../client/snapper.cc:595
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <típus>\t\tPillanatkép típusa."
 
-#: ../client/snapper.cc:377
+#: ../client/snapper.cc:384
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
 msgstr "\t--type, -t <típus>\t\tPillanatképtípusok listázása."
 
-#: ../client/snapper.cc:593 ../client/snapper.cc:727
+#: ../client/snapper.cc:600 ../client/snapper.cc:734
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <userdata>\tPillanatkép userdata."
 
-#: ../client/snapper.cc:1217
+#: ../client/snapper.cc:1224
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
+msgstr "\t--userdata, -u <felhasználói adat>\tPillanatfelvételek felhasználói adata."
+
+#: ../client/snapper.cc:1491
+msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
 msgstr ""
 
-#: ../client/snapper.cc:1463
+#: ../client/snapper.cc:1490
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
 msgstr "\t--verbose, -v\t\t\tRészletesség fokozása."
 
-#: ../client/snapper.cc:1467
+#: ../client/snapper.cc:1496
 msgid "\t--version\t\t\tPrint version and exit."
 msgstr "\t--version\t\t\tVerzió kiírása és kilépés."
 
-#: ../client/snapper.cc:1299
+#: ../client/snapper.cc:1326
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <tisztítás-algoritmus>"
 
-#: ../client/snapper.cc:585
+#: ../client/snapper.cc:592
 msgid "\tsnapper create"
 msgstr "\tsnapper create"
 
-#: ../client/snapper.cc:185
+#: ../client/snapper.cc:192
 msgid "\tsnapper create-config <subvolume>"
 msgstr "\tsnapper create-config <alkötet>"
 
-#: ../client/snapper.cc:776
+#: ../client/snapper.cc:783
 msgid "\tsnapper delete <number>"
 msgstr "\tsnapper delete <szám>"
 
-#: ../client/snapper.cc:256
+#: ../client/snapper.cc:263
 msgid "\tsnapper delete-config"
 msgstr "\tsnapper delete-config"
 
-#: ../client/snapper.cc:959
+#: ../client/snapper.cc:966
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <szám1>..<szám2> [fájlok]"
 
-#: ../client/snapper.cc:286
+#: ../client/snapper.cc:293
 msgid "\tsnapper get-config"
 msgstr "\tsnapper get-config"
 
-#: ../client/snapper.cc:374
+#: ../client/snapper.cc:381
 msgid "\tsnapper list"
 msgstr "\tsnapper list"
 
-#: ../client/snapper.cc:132
+#: ../client/snapper.cc:139
 msgid "\tsnapper list-configs"
 msgstr "\tsnapper list-configs"
 
-#: ../client/snapper.cc:722
+#: ../client/snapper.cc:729
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <szám>"
 
-#: ../client/snapper.cc:830
+#: ../client/snapper.cc:837
 msgid "\tsnapper mount <number>"
 msgstr "\tsnapper mount <szám>"
 
-#: ../client/snapper.cc:1211
+#: ../client/snapper.cc:1218
 msgid "\tsnapper rollback [number]"
-msgstr ""
+msgstr "\tsnapper rollback [szám]"
 
-#: ../client/snapper.cc:342
+#: ../client/snapper.cc:349
 msgid "\tsnapper set-config <configdata>"
 msgstr "\tsnapper set-config <konfigurálási_adatok>"
 
-#: ../client/snapper.cc:904
+#: ../client/snapper.cc:911
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tsnapper status <szám1>..<szám2>"
 
-#: ../client/snapper.cc:867
+#: ../client/snapper.cc:874
 msgid "\tsnapper umount <number>"
 msgstr "\tsnapper unmount <szám>"
 
-#: ../client/snapper.cc:1018
+#: ../client/snapper.cc:1025
 msgid "\tsnapper undochange <number1>..<number2> [files]"
 msgstr "\tsnapper undochange <szám1>..<szám2> [fájlok]"
 
-#: ../client/snapper.cc:1364
+#: ../client/snapper.cc:1391
 msgid "\tsnapper xadiff <number1>..<number2> [files]"
 msgstr "\tsnapper xadiff <szám1>..<szám2> [fájlok]"
 
-#: ../client/snapper.cc:1461
+#: ../client/snapper.cc:1488
 msgid "    Global options:"
 msgstr "    Globális kapcsolói:"
 
-#: ../client/snapper.cc:587
+#: ../client/snapper.cc:594
 msgid "    Options for 'create' command:"
 msgstr "    'create' parancs kapcsolói:"
 
-#: ../client/snapper.cc:187
+#: ../client/snapper.cc:194
 msgid "    Options for 'create-config' command:"
 msgstr "    'create-config' parancs kapcsolói:"
 
-#: ../client/snapper.cc:376
+#: ../client/snapper.cc:383
 msgid "    Options for 'list' command:"
 msgstr "    'list' parancs kapcsolói:"
 
-#: ../client/snapper.cc:724
+#: ../client/snapper.cc:731
 msgid "    Options for 'modify' command:"
 msgstr "    'modify' parancs kapcsolói:"
 
-#: ../client/snapper.cc:1213
+#: ../client/snapper.cc:1220
 msgid "    Options for 'rollback' command:"
-msgstr ""
+msgstr "    A 'rollback' parancs kapcsolói:"
 
-#: ../client/snapper.cc:906
+#: ../client/snapper.cc:913
 msgid "    Options for 'status' command:"
 msgstr "    'status' parancs kapcsolói:"
 
-#: ../client/snapper.cc:1020
+#: ../client/snapper.cc:1027
 msgid "    Options for 'undochange' command:"
 msgstr "    'undochange parancs kapcsolói:"
 
-#: ../client/snapper.cc:1298
+#: ../client/snapper.cc:1325
 msgid "  Cleanup snapshots:"
 msgstr "  Pillanatképek tisztítása:"
 
-#: ../client/snapper.cc:1363
+#: ../client/snapper.cc:1390
 msgid "  Comparing snapshots extended attributes:"
 msgstr "  Pillanatképek kiterjesztett attribútumainak összevetése:"
 
-#: ../client/snapper.cc:903 ../client/snapper.cc:958
+#: ../client/snapper.cc:910 ../client/snapper.cc:965
 msgid "  Comparing snapshots:"
 msgstr "  Pillanatképek összehasonlítása:"
 
-#: ../client/snapper.cc:184
+#: ../client/snapper.cc:191
 msgid "  Create config:"
 msgstr "  Beállítás létrehozása:"
 
-#: ../client/snapper.cc:584
+#: ../client/snapper.cc:591
 msgid "  Create snapshot:"
 msgstr "  Pillanatkép létrehozása:"
 
-#: ../client/snapper.cc:255
+#: ../client/snapper.cc:262
 msgid "  Delete config:"
 msgstr "  Beállítás törlése:"
 
-#: ../client/snapper.cc:775
+#: ../client/snapper.cc:782
 msgid "  Delete snapshot:"
 msgstr "  Pillanatkép törlése:"
 
-#: ../client/snapper.cc:285
+#: ../client/snapper.cc:292
 msgid "  Get config:"
 msgstr "  Beállítások beolvasása:"
 
-#: ../client/snapper.cc:131
+#: ../client/snapper.cc:138
 msgid "  List configs:"
 msgstr "  Beállítások listázása:"
 
-#: ../client/snapper.cc:373
+#: ../client/snapper.cc:380
 msgid "  List snapshots:"
 msgstr "  Pillanatképek listázása:"
 
-#: ../client/snapper.cc:721
+#: ../client/snapper.cc:728
 msgid "  Modify snapshot:"
 msgstr "  Pillanatkép módosítása:"
 
-#: ../client/snapper.cc:829
+#: ../client/snapper.cc:836
 msgid "  Mount snapshot:"
 msgstr "  Pillanatkép felcsatolása:"
 
-#: ../client/snapper.cc:1210
+#: ../client/snapper.cc:1217
 msgid "  Rollback:"
-msgstr ""
+msgstr "  Visszagörgetés:"
 
-#: ../client/snapper.cc:341
+#: ../client/snapper.cc:348
 msgid "  Set config:"
 msgstr "  Beállítások megadása:"
 
-#: ../client/snapper.cc:866
+#: ../client/snapper.cc:873
 msgid "  Umount snapshot:"
 msgstr "  Pillanatkép leválasztása:"
 
-#: ../client/snapper.cc:1017
+#: ../client/snapper.cc:1024
 msgid "  Undo changes:"
 msgstr "  Változások visszavonása:"
 
-#: ../client/snapper.cc:425 ../client/snapper.cc:474
+#: ../client/snapper.cc:432 ../client/snapper.cc:481
 msgid "#"
 msgstr "#"
 
-#: ../client/snapper.cc:1630 ../client/errors.cc:88
+#: ../client/snapper.cc:1283 ../client/snapper.cc:1290
+#: ../client/snapper.cc:1301 ../client/snapper.cc:1308
+#, fuzzy, c-format
+msgid "(Snapshot %d.)"
+msgstr "A(z) '%u' pillanatkép nem található."
+
+#: ../client/snapper.cc:1669 ../client/errors.cc:88
 msgid "ACL error."
 msgstr "ACL-hiba."
 
-#: ../client/snapper.cc:429
+#: ../client/snapper.cc:436
 msgid "Cleanup"
 msgstr "Tisztítás"
 
-#: ../client/snapper.cc:1585
+#: ../client/snapper.cc:1624
 #, c-format
 msgid "Command '%s' does not work without DBus."
 msgstr "A(z) „%s” parancs a DBus nélkül nem működik."
 
-#: ../client/snapper.cc:1310
+#: ../client/snapper.cc:1337
 msgid "Command 'cleanup' needs one arguments."
 msgstr "A 'cleanup' parancshoz meg kell adni egy paramétert."
 
-#: ../client/snapper.cc:616
+#: ../client/snapper.cc:623
 msgid "Command 'create' does not take arguments."
 msgstr "A 'create' parancs nem értelmezi a paramétereket."
 
-#: ../client/snapper.cc:209
+#: ../client/snapper.cc:216
 msgid "Command 'create-config' needs one argument."
 msgstr "A 'create-config' parancshoz meg kell adni egy paraméter."
 
-#: ../client/snapper.cc:1348
+#: ../client/snapper.cc:1375
 msgid "Command 'debug' does not take arguments."
 msgstr "A 'debug' parancs nem értelmezi a paramétereket."
 
-#: ../client/snapper.cc:787
+#: ../client/snapper.cc:794
 msgid "Command 'delete' needs at least one argument."
 msgstr "A 'delete' parancshoz meg kell adni legalább egy paraméter."
 
-#: ../client/snapper.cc:267
+#: ../client/snapper.cc:274
 msgid "Command 'delete-config' does not take arguments."
 msgstr "A 'delete-configs' parancs nem értelmezi a paramétereket."
 
-#: ../client/snapper.cc:970
+#: ../client/snapper.cc:977
 msgid "Command 'diff' needs at least one argument."
 msgstr "A 'diff' parancshoz meg kell adni legalább egy paraméter."
 
-#: ../client/snapper.cc:297
+#: ../client/snapper.cc:304
 msgid "Command 'get-config' does not take arguments."
 msgstr "A „get-config” parancshoz nem lehet megadni argumentumot."
 
-#: ../client/snapper.cc:1454
+#: ../client/snapper.cc:1481
 msgid "Command 'help' does not take arguments."
 msgstr "A 'help' parancs nem értelmezi a paramétereket."
 
-#: ../client/snapper.cc:393
+#: ../client/snapper.cc:400
 msgid "Command 'list' does not take arguments."
 msgstr "A 'list' parancs nem értelmezi a paramétereket."
 
-#: ../client/snapper.cc:143
+#: ../client/snapper.cc:150
 msgid "Command 'list-configs' does not take arguments."
 msgstr "A 'list-configs' parancs nem értelmezi a paramétereket."
 
-#: ../client/snapper.cc:746
+#: ../client/snapper.cc:753
 msgid "Command 'modify' needs at least one argument."
 msgstr "A 'modify' parancshoz meg kell adni legalább paramétert."
 
-#: ../client/snapper.cc:841 ../client/snapper.cc:878
+#: ../client/snapper.cc:848 ../client/snapper.cc:885
 msgid "Command 'mount' needs at least one argument."
 msgstr "A 'mount' parancshoz legalább egy paramétert meg kell adni."
 
-#: ../client/snapper.cc:1262
+#: ../client/snapper.cc:1269
 msgid "Command 'rollback' only available for btrfs."
-msgstr ""
+msgstr "A 'rollback' parancs csak btrfs fájlrendszer esetén használható."
 
-#: ../client/snapper.cc:1236
+#: ../client/snapper.cc:1243
 msgid "Command 'rollback' takes either one or no argument."
-msgstr ""
+msgstr "A 'rollback' parancs egy argumentumot fogad el, illetve argumentum nélkül használható."
 
-#: ../client/snapper.cc:353
+#: ../client/snapper.cc:360
 msgid "Command 'set-config' needs at least one argument."
 msgstr "A 'set-config' parancshoz legalább egy argumentumot meg kell adni."
 
-#: ../client/snapper.cc:923
+#: ../client/snapper.cc:930
 msgid "Command 'status' needs one argument."
 msgstr "A 'status' parancshoz meg kell adni egy paraméter."
 
-#: ../client/snapper.cc:1037
+#: ../client/snapper.cc:1044
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Az 'undochange' parancshoz legalább egy paramétert meg kell adni."
 
-#: ../client/snapper.cc:1389
+#: ../client/snapper.cc:1416
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "A 'xadiff' parancshoz legalább egy argumentumot meg kell adni."
 
-#: ../client/snapper.cc:150
+#: ../client/snapper.cc:157
 msgid "Config"
 msgstr "Beállítás"
 
-#: ../client/snapper.cc:1605
+#: ../client/snapper.cc:1644
 #, c-format
 msgid "Config '%s' is invalid."
 msgstr "A(z) '%s' beállítás nem érvényes."
 
-#: ../client/snapper.cc:1600
+#: ../client/snapper.cc:1639
 #, c-format
 msgid "Config '%s' not found."
 msgstr "A(z) '%s' beállítás nem található."
@@ -384,27 +398,45 @@ msgstr "A beállítás zárolva van."
 #: ../client/misc.cc:181
 #, c-format
 msgid "Configdata '%s' does not include '=' sign."
-msgstr ""
+msgstr "A(z) '%s' konfigurációadatok között nem található meg a '=' jel."
 
 #: ../client/misc.cc:190
 #, c-format
 msgid "Configdata '%s' has empty key."
-msgstr ""
+msgstr "A(z) '%s' konfigurációadathoz üres kulcs tartozik."
 
-#: ../client/snapper.cc:1615 ../client/errors.cc:70
+#: ../client/snapper.cc:1654 ../client/errors.cc:70
 #, c-format
 msgid "Creating config failed (%s)."
 msgstr "A beállítás létrehozása sikertelen (%s)."
+
+#: ../client/snapper.cc:1297
+msgid "Creating read-only snapshot of current system."
+msgstr ""
+
+#: ../client/snapper.cc:1278
+#, fuzzy
+msgid "Creating read-only snapshot of default subvolume."
+msgstr "A pillanatkép létrehozása sikertelen."
+
+#: ../client/snapper.cc:1286
+msgid "Creating read-write snapshot of current subvolume."
+msgstr ""
+
+#: ../client/snapper.cc:1304
+#, fuzzy, c-format
+msgid "Creating read-write snapshot of snapshot %d."
+msgstr "A pillanatkép létrehozása sikertelen."
 
 #: ../client/errors.cc:76
 msgid "Creating snapshot failed."
 msgstr "A pillanatkép létrehozása sikertelen."
 
-#: ../client/snapper.cc:427 ../client/snapper.cc:475
+#: ../client/snapper.cc:434 ../client/snapper.cc:482
 msgid "Date"
 msgstr "Dátum"
 
-#: ../client/snapper.cc:1620 ../client/errors.cc:73
+#: ../client/snapper.cc:1659 ../client/errors.cc:73
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "A beállítás törlése sikertelen (%s)."
@@ -413,27 +445,27 @@ msgstr "A beállítás törlése sikertelen (%s)."
 msgid "Deleting snapshot failed."
 msgstr "A pillanatkép törlése sikertelen."
 
-#: ../client/snapper.cc:430 ../client/snapper.cc:477 ../client/snapper.cc:525
+#: ../client/snapper.cc:437 ../client/snapper.cc:484 ../client/snapper.cc:532
 msgid "Description"
 msgstr "Leírás"
 
-#: ../client/snapper.cc:237
+#: ../client/snapper.cc:244
 msgid "Detecting filesystem type failed."
 msgstr "A fájlrendszer típusának felismerése sikertelen."
 
 #: ../client/misc.cc:170
 msgid "Empty configdata."
-msgstr ""
+msgstr "Üres konfigurációadat."
 
 #: ../client/misc.cc:107 ../client/misc.cc:115
 msgid "Empty userdata."
-msgstr ""
+msgstr "Üres felhasználói adat."
 
-#: ../client/snapper.cc:1191 ../client/snapper.cc:1201
+#: ../client/snapper.cc:1198 ../client/snapper.cc:1208
 msgid "Failed to initialize filesystem handler."
-msgstr ""
+msgstr "Nem sikerült inicializálni a fájlrendszer kezelőjét."
 
-#: ../client/systemd-helper.cc:127 ../client/snapper.cc:1659
+#: ../client/systemd-helper.cc:127 ../client/snapper.cc:1698
 msgid "Failure"
 msgstr "Hiba"
 
@@ -442,7 +474,7 @@ msgstr "Hiba"
 msgid "Failure (%s)."
 msgstr "Hiba (%s)."
 
-#: ../client/snapper.cc:1091
+#: ../client/snapper.cc:1098
 #, c-format
 msgid "File '%s' not found."
 msgstr "A(z) '%s' fájl nem található."
@@ -459,11 +491,11 @@ msgstr "Azonos pillanatképek."
 msgid "Illegal Snapshot."
 msgstr "Érvénytelen pillanatkép."
 
-#: ../client/snapper.cc:1625 ../client/errors.cc:49
+#: ../client/snapper.cc:1664 ../client/errors.cc:49
 msgid "Invalid configdata."
 msgstr "Érvénytelen beállításadatok."
 
-#: ../client/snapper.cc:1640 ../client/errors.cc:85
+#: ../client/snapper.cc:1679 ../client/errors.cc:85
 msgid "Invalid group."
 msgstr "Érvénytelen csoport."
 
@@ -472,20 +504,20 @@ msgstr "Érvénytelen csoport."
 msgid "Invalid snapshot '%s'."
 msgstr "Érvénytelen pillanatkép: %s."
 
-#: ../client/misc.cc:85 ../client/snapper.cc:1059
+#: ../client/misc.cc:85 ../client/snapper.cc:1066
 msgid "Invalid snapshots."
 msgstr "Érvénytelen pillanatképek."
 
-#: ../client/snapper.cc:216
+#: ../client/snapper.cc:223
 msgid "Invalid subvolume."
 msgstr "Érvénytelen alkötet."
 
-#: ../client/snapper.cc:1537
+#: ../client/snapper.cc:1576
 #, c-format
 msgid "Invalid table style %d."
 msgstr "Érvénytelen táblázatstílus: %d."
 
-#: ../client/snapper.cc:1635 ../client/errors.cc:82
+#: ../client/snapper.cc:1674 ../client/errors.cc:82
 msgid "Invalid user."
 msgstr "Érvénytelen felhasználó."
 
@@ -493,14 +525,14 @@ msgstr "Érvénytelen felhasználó."
 msgid "Invalid userdata."
 msgstr "Érvénytelen userdata."
 
-#: ../client/snapper.cc:304
+#: ../client/snapper.cc:311
 msgid "Key"
 msgstr "Kulcs"
 
-#: ../client/snapper.cc:1610
+#: ../client/snapper.cc:1649
 #, c-format
 msgid "Listing configs failed (%s)."
-msgstr "Beállítások listázása sikertelen (%s)."
+msgstr "A beállítások listázása sikertelen (%s)."
 
 #: ../client/utils/GetOpts.cc:68
 #, c-format
@@ -512,15 +544,15 @@ msgstr "Hiányzik a(z) '%s' parancskapcsoló paramétere."
 msgid "Missing argument for global option '%s'."
 msgstr "Hiányzik a(z) '%s' globális kapcsoló paramétere."
 
-#: ../client/snapper.cc:678
+#: ../client/snapper.cc:685
 msgid "Missing command argument."
 msgstr "Hiányzó parancsparaméter."
 
-#: ../client/snapper.cc:672
+#: ../client/snapper.cc:679
 msgid "Missing or invalid pre-number."
 msgstr "Hiányzó vagy érvénytelen előzetes szám."
 
-#: ../client/snapper.cc:1563
+#: ../client/snapper.cc:1602
 msgid "No command provided."
 msgstr "Nincs kiadva parancs."
 
@@ -528,26 +560,31 @@ msgstr "Nincs kiadva parancs."
 msgid "No permissions."
 msgstr "Nincs hozzáférés."
 
-#: ../client/snapper.cc:941 ../client/snapper.cc:1052
+#: ../client/snapper.cc:948 ../client/snapper.cc:1059
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "A(z) '%s' fájl megnyitása sikertelen."
 
-#: ../client/snapper.cc:522
+#: ../client/snapper.cc:529
 msgid "Post #"
 msgstr "Utáni #"
 
-#: ../client/snapper.cc:524
+#: ../client/snapper.cc:531
 msgid "Post Date"
 msgstr "Utólagos dátum"
 
-#: ../client/snapper.cc:426 ../client/snapper.cc:521
+#: ../client/snapper.cc:433 ../client/snapper.cc:528
 msgid "Pre #"
 msgstr "Előtti #"
 
-#: ../client/snapper.cc:523
+#: ../client/snapper.cc:530
 msgid "Pre Date"
 msgstr "Előzetes dátum"
+
+#: ../client/snapper.cc:1312
+#, c-format
+msgid "Setting default subvolume to snapshot %d."
+msgstr ""
 
 #: ../client/misc.cc:54
 #, c-format
@@ -558,25 +595,25 @@ msgstr "A(z) '%u' pillanatkép nem található."
 msgid "Snapshot is in use."
 msgstr "A pillanatkép használatban van."
 
-#: ../client/snapper.cc:151
+#: ../client/snapper.cc:158
 msgid "Subvolume"
 msgstr "Alkötet"
 
-#: ../client/snapper.cc:1564 ../client/snapper.cc:1577
+#: ../client/snapper.cc:1603 ../client/snapper.cc:1616
 #: ../client/utils/GetOpts.cc:61 ../client/utils/GetOpts.cc:69
 msgid "Try 'snapper --help' for more information."
 msgstr "További információ a 'snapper --help' parancs segítségével érhető el."
 
-#: ../client/snapper.cc:424
+#: ../client/snapper.cc:431
 msgid "Type"
 msgstr "Típus"
 
-#: ../client/snapper.cc:1330
+#: ../client/snapper.cc:1357
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
 msgstr "Ismeretlen tisztító algoritmus: '%s'."
 
-#: ../client/snapper.cc:1576
+#: ../client/snapper.cc:1615
 #, c-format
 msgid "Unknown command '%s'."
 msgstr "Ismeretlen parancs: '%s'."
@@ -599,80 +636,80 @@ msgstr "Ismeretlen globális kapcsoló: '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Ismeretlen '%s' kapcsoló a(z) '%s' parancshoz."
 
-#: ../client/snapper.cc:644
+#: ../client/snapper.cc:651
 msgid "Unknown type of snapshot."
 msgstr "Ismeretlen típusú pillanatkép."
 
-#: ../client/snapper.cc:412
+#: ../client/snapper.cc:419
 msgid "Unknown type of snapshots."
 msgstr "Ismeretlen típusú pillanatképek."
 
-#: ../client/snapper.cc:1538
+#: ../client/snapper.cc:1577
 #, c-format
 msgid "Use an integer number from %d to %d."
-msgstr ""
+msgstr "Használjon %d és %d közötti egész számot."
 
-#: ../client/snapper.cc:428 ../client/snapper.cc:476
+#: ../client/snapper.cc:435 ../client/snapper.cc:483
 msgid "User"
 msgstr "Felhasználó"
 
-#: ../client/snapper.cc:431 ../client/snapper.cc:478 ../client/snapper.cc:526
+#: ../client/snapper.cc:438 ../client/snapper.cc:485 ../client/snapper.cc:533
 msgid "Userdata"
 msgstr "Userdata"
 
 #: ../client/misc.cc:126
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
-msgstr ""
+msgstr "A(z) '%s' felhasználói adatai között nem található meg a '=' jel."
 
 #: ../client/misc.cc:135
 #, c-format
 msgid "Userdata '%s' has empty key."
-msgstr ""
+msgstr "A(z) '%s' felhasználói adatokhoz üres kulcs tartozik."
 
-#: ../client/snapper.cc:305
+#: ../client/snapper.cc:312
 msgid "Value"
 msgstr "Érték"
 
-#: ../client/snapper.cc:1126
+#: ../client/snapper.cc:1133
 #, c-format
 msgid "create:%d modify:%d delete:%d"
 msgstr "létrehozás:%d módosítás:%d törlés:%d"
 
-#: ../client/snapper.cc:1151
+#: ../client/snapper.cc:1158
 #, c-format
 msgid "creating %s"
 msgstr "%s létrehozása"
 
-#: ../client/snapper.cc:1157
+#: ../client/snapper.cc:1164
 #, c-format
 msgid "deleting %s"
 msgstr "%s törlése"
 
-#: ../client/snapper.cc:1167
+#: ../client/snapper.cc:1174
 #, c-format
 msgid "failed to create %s"
 msgstr "a(z) %s létrehozása sikertelen"
 
-#: ../client/snapper.cc:1173
+#: ../client/snapper.cc:1180
 #, c-format
 msgid "failed to delete %s"
 msgstr "a(z) %s törlése sikertelen"
 
-#: ../client/snapper.cc:1170
+#: ../client/snapper.cc:1177
 #, c-format
 msgid "failed to modify %s"
 msgstr "a(z) %s módosítása sikertelen"
 
-#: ../client/snapper.cc:1154
+#: ../client/snapper.cc:1161
 #, c-format
 msgid "modifying %s"
 msgstr "%s módosítása"
 
-#: ../client/snapper.cc:1122
+#: ../client/snapper.cc:1129
 msgid "nothing to do"
 msgstr "nincs teendő"
 
-#: ../client/snapper.cc:1458
+#: ../client/snapper.cc:1485
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "használat: snapper [--globális-kapcsolók] <parancs> [--parancs-kapcsolói] [parancs-paraméterei]"

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-05 12:24+0200\n"
+"POT-Creation-Date: 2014-07-04 10:40+0200\n"
 "PO-Revision-Date: 2013-02-03 11:04+0200\n"
 "Last-Translator: Jyri Palokangas <jyri.palokangas@opensuse.org>\n"
 "Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
@@ -16,381 +16,395 @@ msgstr ""
 "X-Generator: Lokalize 1.5\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: ../client/snapper.cc:592 ../client/snapper.cc:726
+#: ../client/snapper.cc:599 ../client/snapper.cc:733
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\tTilannevedoksen puhdistusalgoritmi."
 
-#: ../client/snapper.cc:1216
+#: ../client/snapper.cc:1223
 #, fuzzy
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tTilannevedoksen puhdistusalgoritmi."
 
-#: ../client/snapper.cc:594
+#: ../client/snapper.cc:601
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
 msgstr "\t--command <komento>\tSuorita komento ja luo ennen ja jälkeen tilannevedokset."
 
-#: ../client/snapper.cc:1465
+#: ../client/snapper.cc:1494
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <nimi>\t\tAseta käytettävän määrityksen nimi."
 
-#: ../client/snapper.cc:591 ../client/snapper.cc:725
+#: ../client/snapper.cc:598 ../client/snapper.cc:732
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <kuvaus>\tTilannevedoksen kuvaus."
 
-#: ../client/snapper.cc:1215
+#: ../client/snapper.cc:1222
 #, fuzzy
 msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr "\t--description, -d <kuvaus>\tTilannevedoksen kuvaus."
 
-#: ../client/snapper.cc:188
+#: ../client/snapper.cc:195
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <tiedostojärjestelmä>\t\tAseta tiedostojärjestelmä käsin."
 
-#: ../client/snapper.cc:1021
+#: ../client/snapper.cc:1028
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr "\t--input, -i <tiedosto>\t\tLue tiedostot, joista tehdään peruutusmuutokset tiedostoon."
 
-#: ../client/snapper.cc:1466
+#: ../client/snapper.cc:1492
+msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
+msgstr ""
+
+#: ../client/snapper.cc:1495
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr ""
 
-#: ../client/snapper.cc:907
+#: ../client/snapper.cc:914
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <tiedosto>\t\tTallenna tila tiedostoon."
 
-#: ../client/snapper.cc:589
+#: ../client/snapper.cc:596
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <numero>\t\tVastaavan ennen tilannevedoksen numero."
 
-#: ../client/snapper.cc:590
+#: ../client/snapper.cc:597
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
 msgstr "\t--print-number, -p\t\tTulosta luodun tilannevedoksen numero."
 
-#: ../client/snapper.cc:1214
+#: ../client/snapper.cc:1221
 #, fuzzy
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
 msgstr "\t--print-number, -p\t\tTulosta luodun tilannevedoksen numero."
 
-#: ../client/snapper.cc:1462
+#: ../client/snapper.cc:1489
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\tVähentää näytettävän tiedon määrää."
 
-#: ../client/snapper.cc:1464
+#: ../client/snapper.cc:1493
 msgid "\t--table-style, -t <style>\tTable style (integer)."
 msgstr "\t--table-style, -t <tyyli>\tTaulukon tyyli (kokonaisluku)."
 
-#: ../client/snapper.cc:189
+#: ../client/snapper.cc:196
 msgid "\t--template, -t <name>\t\tName of config template to use."
 msgstr "\t--template, -t <nimi>\t\tKäytettävän määritysmallin nimi."
 
-#: ../client/snapper.cc:588
+#: ../client/snapper.cc:595
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <tyyppi>\t\tTilannevedoksen tyyppi."
 
-#: ../client/snapper.cc:377
+#: ../client/snapper.cc:384
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
 msgstr "\t--type, -t <tyyppi>\t\tListattavien tilannevedosten tyyppi."
 
-#: ../client/snapper.cc:593 ../client/snapper.cc:727
+#: ../client/snapper.cc:600 ../client/snapper.cc:734
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <avain=arvo>\tTilannevedoksen lisäinfo."
 
-#: ../client/snapper.cc:1217
+#: ../client/snapper.cc:1224
 #, fuzzy
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
 msgstr "\t--userdata, -u <avain=arvo>\tTilannevedoksen lisäinfo."
 
-#: ../client/snapper.cc:1463
+#: ../client/snapper.cc:1491
+msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
+msgstr ""
+
+#: ../client/snapper.cc:1490
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
 msgstr "\t--verbose, -v\t\t\tKasvattaa näytettävän tiedon määrää."
 
-#: ../client/snapper.cc:1467
+#: ../client/snapper.cc:1496
 msgid "\t--version\t\t\tPrint version and exit."
 msgstr "\t--version\t\t\tTulosta versio ja poistu."
 
-#: ../client/snapper.cc:1299
+#: ../client/snapper.cc:1326
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper puhdistus <puhdistus-algoritmi>"
 
-#: ../client/snapper.cc:585
+#: ../client/snapper.cc:592
 msgid "\tsnapper create"
 msgstr "\tsnapper create"
 
-#: ../client/snapper.cc:185
+#: ../client/snapper.cc:192
 msgid "\tsnapper create-config <subvolume>"
 msgstr "\tsnapper create-config <alitaltio>"
 
-#: ../client/snapper.cc:776
+#: ../client/snapper.cc:783
 msgid "\tsnapper delete <number>"
 msgstr "\tsnapper delete <numero>"
 
-#: ../client/snapper.cc:256
+#: ../client/snapper.cc:263
 msgid "\tsnapper delete-config"
 msgstr "\tsnapper delete-config"
 
-#: ../client/snapper.cc:959
+#: ../client/snapper.cc:966
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <numero1>..<numero2> [tiedostot]"
 
-#: ../client/snapper.cc:286
+#: ../client/snapper.cc:293
 #, fuzzy
 msgid "\tsnapper get-config"
 msgstr "\tsnapper delete-config"
 
-#: ../client/snapper.cc:374
+#: ../client/snapper.cc:381
 msgid "\tsnapper list"
 msgstr "\tsnapper list"
 
-#: ../client/snapper.cc:132
+#: ../client/snapper.cc:139
 msgid "\tsnapper list-configs"
 msgstr "\tsnapper list-configs"
 
-#: ../client/snapper.cc:722
+#: ../client/snapper.cc:729
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <numero>"
 
-#: ../client/snapper.cc:830
+#: ../client/snapper.cc:837
 msgid "\tsnapper mount <number>"
 msgstr "\tsnapper mount <numero>"
 
-#: ../client/snapper.cc:1211
+#: ../client/snapper.cc:1218
 #, fuzzy
 msgid "\tsnapper rollback [number]"
 msgstr "\tsnapper mount <numero>"
 
-#: ../client/snapper.cc:342
+#: ../client/snapper.cc:349
 #, fuzzy
 msgid "\tsnapper set-config <configdata>"
 msgstr "\tsnapper list-configs"
 
-#: ../client/snapper.cc:904
+#: ../client/snapper.cc:911
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tsnapper status <numero1>..<numero2>"
 
-#: ../client/snapper.cc:867
+#: ../client/snapper.cc:874
 msgid "\tsnapper umount <number>"
 msgstr "\tsnapper umount <numero>"
 
-#: ../client/snapper.cc:1018
+#: ../client/snapper.cc:1025
 msgid "\tsnapper undochange <number1>..<number2> [files]"
 msgstr "\tsnapper undochange <numero1>..<numero2> [tiedostot]"
 
-#: ../client/snapper.cc:1364
+#: ../client/snapper.cc:1391
 #, fuzzy
 msgid "\tsnapper xadiff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <numero1>..<numero2> [tiedostot]"
 
-#: ../client/snapper.cc:1461
+#: ../client/snapper.cc:1488
 msgid "    Global options:"
 msgstr "    Yleiset valinnat:"
 
-#: ../client/snapper.cc:587
+#: ../client/snapper.cc:594
 msgid "    Options for 'create' command:"
 msgstr "    \"create\" komennon valinnat:"
 
-#: ../client/snapper.cc:187
+#: ../client/snapper.cc:194
 msgid "    Options for 'create-config' command:"
 msgstr "    \"create-config\" komennon valinnat:"
 
-#: ../client/snapper.cc:376
+#: ../client/snapper.cc:383
 msgid "    Options for 'list' command:"
 msgstr "    \"list\" komennon valinnat:"
 
-#: ../client/snapper.cc:724
+#: ../client/snapper.cc:731
 msgid "    Options for 'modify' command:"
 msgstr "    \"modify\" komennon valinnat:"
 
-#: ../client/snapper.cc:1213
+#: ../client/snapper.cc:1220
 #, fuzzy
 msgid "    Options for 'rollback' command:"
 msgstr "    \"create\" komennon valinnat:"
 
-#: ../client/snapper.cc:906
+#: ../client/snapper.cc:913
 msgid "    Options for 'status' command:"
 msgstr "    \"status\" komennon valinnat:"
 
-#: ../client/snapper.cc:1020
+#: ../client/snapper.cc:1027
 msgid "    Options for 'undochange' command:"
 msgstr "    \"undochange\" komennon valinnat:"
 
-#: ../client/snapper.cc:1298
+#: ../client/snapper.cc:1325
 msgid "  Cleanup snapshots:"
 msgstr "  Puhdista tilannevedokset:"
 
-#: ../client/snapper.cc:1363
+#: ../client/snapper.cc:1390
 #, fuzzy
 msgid "  Comparing snapshots extended attributes:"
 msgstr "  Vertaa tilannevedoksia:"
 
-#: ../client/snapper.cc:903 ../client/snapper.cc:958
+#: ../client/snapper.cc:910 ../client/snapper.cc:965
 msgid "  Comparing snapshots:"
 msgstr "  Vertaa tilannevedoksia:"
 
-#: ../client/snapper.cc:184
+#: ../client/snapper.cc:191
 msgid "  Create config:"
 msgstr "  Luo määritys:"
 
-#: ../client/snapper.cc:584
+#: ../client/snapper.cc:591
 msgid "  Create snapshot:"
 msgstr "  Luo tilannevedos:"
 
-#: ../client/snapper.cc:255
+#: ../client/snapper.cc:262
 msgid "  Delete config:"
 msgstr "  Poista määritys:"
 
-#: ../client/snapper.cc:775
+#: ../client/snapper.cc:782
 msgid "  Delete snapshot:"
 msgstr "  Poista tilannevedos:"
 
-#: ../client/snapper.cc:285
+#: ../client/snapper.cc:292
 #, fuzzy
 msgid "  Get config:"
 msgstr "  Luo määritys:"
 
-#: ../client/snapper.cc:131
+#: ../client/snapper.cc:138
 msgid "  List configs:"
 msgstr "  Listaa määritykset:"
 
-#: ../client/snapper.cc:373
+#: ../client/snapper.cc:380
 msgid "  List snapshots:"
 msgstr "  Listaa tilannevedokset:"
 
-#: ../client/snapper.cc:721
+#: ../client/snapper.cc:728
 msgid "  Modify snapshot:"
 msgstr "  Muokkaa tilannevedosta:"
 
-#: ../client/snapper.cc:829
+#: ../client/snapper.cc:836
 msgid "  Mount snapshot:"
 msgstr "  Liitä tilannevedos:"
 
-#: ../client/snapper.cc:1210
+#: ../client/snapper.cc:1217
 #, fuzzy
 msgid "  Rollback:"
 msgstr "Palautustuki: "
 
-#: ../client/snapper.cc:341
+#: ../client/snapper.cc:348
 #, fuzzy
 msgid "  Set config:"
 msgstr "  Luo määritys:"
 
-#: ../client/snapper.cc:866
+#: ../client/snapper.cc:873
 msgid "  Umount snapshot:"
 msgstr "  Irrota tilannevedos:"
 
-#: ../client/snapper.cc:1017
+#: ../client/snapper.cc:1024
 msgid "  Undo changes:"
 msgstr "  Peruuta muutokset:"
 
-#: ../client/snapper.cc:425 ../client/snapper.cc:474
+#: ../client/snapper.cc:432 ../client/snapper.cc:481
 msgid "#"
 msgstr "#"
 
+#: ../client/snapper.cc:1283 ../client/snapper.cc:1290
+#: ../client/snapper.cc:1301 ../client/snapper.cc:1308
+#, fuzzy, c-format
+msgid "(Snapshot %d.)"
+msgstr "Tilannevedosta \"%u\" ei löytynyt."
+
 # error box title
-#: ../client/snapper.cc:1630 ../client/errors.cc:88
+#: ../client/snapper.cc:1669 ../client/errors.cc:88
 #, fuzzy
 msgid "ACL error."
 msgstr "I/O-virhe"
 
-#: ../client/snapper.cc:429
+#: ../client/snapper.cc:436
 msgid "Cleanup"
 msgstr "Puhdistus"
 
-#: ../client/snapper.cc:1585
+#: ../client/snapper.cc:1624
 #, fuzzy, c-format
 msgid "Command '%s' does not work without DBus."
 msgstr "Komento \"list\" ei ota vastaan argumentteja."
 
-#: ../client/snapper.cc:1310
+#: ../client/snapper.cc:1337
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Komento \"cleanup\" tarvitsee yhden argumentin."
 
-#: ../client/snapper.cc:616
+#: ../client/snapper.cc:623
 msgid "Command 'create' does not take arguments."
 msgstr "Komento \"create\" ei ota vastaan argumentteja."
 
-#: ../client/snapper.cc:209
+#: ../client/snapper.cc:216
 msgid "Command 'create-config' needs one argument."
 msgstr "Komento \"create-config\" tarvitsee yhden argumentin."
 
-#: ../client/snapper.cc:1348
+#: ../client/snapper.cc:1375
 msgid "Command 'debug' does not take arguments."
 msgstr "Komento \"debug\" ei ota vastaan argumentteja."
 
-#: ../client/snapper.cc:787
+#: ../client/snapper.cc:794
 msgid "Command 'delete' needs at least one argument."
 msgstr "Komento \"delete\" tarvitsee ainakin yhden argumentin."
 
-#: ../client/snapper.cc:267
+#: ../client/snapper.cc:274
 msgid "Command 'delete-config' does not take arguments."
 msgstr "Komento \"delete-config\" ei ota vastaan argumentteja."
 
-#: ../client/snapper.cc:970
+#: ../client/snapper.cc:977
 msgid "Command 'diff' needs at least one argument."
 msgstr "Komento \"diff\" tarvitsee ainakin yhden argumentin."
 
-#: ../client/snapper.cc:297
+#: ../client/snapper.cc:304
 #, fuzzy
 msgid "Command 'get-config' does not take arguments."
 msgstr "Komento \"delete-config\" ei ota vastaan argumentteja."
 
-#: ../client/snapper.cc:1454
+#: ../client/snapper.cc:1481
 msgid "Command 'help' does not take arguments."
 msgstr "Komento \"help\" ei ota vastaan argumentteja."
 
-#: ../client/snapper.cc:393
+#: ../client/snapper.cc:400
 msgid "Command 'list' does not take arguments."
 msgstr "Komento \"list\" ei ota vastaan argumentteja."
 
-#: ../client/snapper.cc:143
+#: ../client/snapper.cc:150
 msgid "Command 'list-configs' does not take arguments."
 msgstr "Komento \"list-configs\" ei ota vastaan argumentteja."
 
-#: ../client/snapper.cc:746
+#: ../client/snapper.cc:753
 msgid "Command 'modify' needs at least one argument."
 msgstr "Komento \"modify\" tarvitsee ainakin yhden argumentin."
 
-#: ../client/snapper.cc:841 ../client/snapper.cc:878
+#: ../client/snapper.cc:848 ../client/snapper.cc:885
 msgid "Command 'mount' needs at least one argument."
 msgstr "Komento \"mount\" tarvitsee ainakin yhden argumentin."
 
-#: ../client/snapper.cc:1262
+#: ../client/snapper.cc:1269
 #, fuzzy
 msgid "Command 'rollback' only available for btrfs."
 msgstr "rename vaatii kaksi argumenttia"
 
-#: ../client/snapper.cc:1236
+#: ../client/snapper.cc:1243
 #, fuzzy
 msgid "Command 'rollback' takes either one or no argument."
 msgstr "rename vaatii kaksi argumenttia"
 
-#: ../client/snapper.cc:353
+#: ../client/snapper.cc:360
 #, fuzzy
 msgid "Command 'set-config' needs at least one argument."
 msgstr "Komento \"mount\" tarvitsee ainakin yhden argumentin."
 
-#: ../client/snapper.cc:923
+#: ../client/snapper.cc:930
 msgid "Command 'status' needs one argument."
 msgstr "Komento \"status\" tarvitsee yhden argumentin."
 
-#: ../client/snapper.cc:1037
+#: ../client/snapper.cc:1044
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Komento \"undochange\" tarvitsee ainakin yhden argumentin."
 
-#: ../client/snapper.cc:1389
+#: ../client/snapper.cc:1416
 #, fuzzy
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Komento \"diff\" tarvitsee ainakin yhden argumentin."
 
-#: ../client/snapper.cc:150
+#: ../client/snapper.cc:157
 msgid "Config"
 msgstr " Määritys"
 
-#: ../client/snapper.cc:1605
+#: ../client/snapper.cc:1644
 #, c-format
 msgid "Config '%s' is invalid."
 msgstr "Määritys \"%s\" ei kelpaa."
 
-#: ../client/snapper.cc:1600
+#: ../client/snapper.cc:1639
 #, fuzzy, c-format
 msgid "Config '%s' not found."
 msgstr "Tiedostoa \"%s\" ei löytynyt."
@@ -413,20 +427,38 @@ msgstr "Tiedostoa '%s' ei löydy tietovälineeltä '%s'"
 msgid "Configdata '%s' has empty key."
 msgstr ""
 
-#: ../client/snapper.cc:1615 ../client/errors.cc:70
+#: ../client/snapper.cc:1654 ../client/errors.cc:70
 #, c-format
 msgid "Creating config failed (%s)."
 msgstr "Määrityksen luominen epäonnistui (%s)."
+
+#: ../client/snapper.cc:1297
+msgid "Creating read-only snapshot of current system."
+msgstr ""
+
+#: ../client/snapper.cc:1278
+#, fuzzy
+msgid "Creating read-only snapshot of default subvolume."
+msgstr "Tilannevedoksen luominen epäonnistui."
+
+#: ../client/snapper.cc:1286
+msgid "Creating read-write snapshot of current subvolume."
+msgstr ""
+
+#: ../client/snapper.cc:1304
+#, fuzzy, c-format
+msgid "Creating read-write snapshot of snapshot %d."
+msgstr "Tilannevedoksen luominen epäonnistui."
 
 #: ../client/errors.cc:76
 msgid "Creating snapshot failed."
 msgstr "Tilannevedoksen luominen epäonnistui."
 
-#: ../client/snapper.cc:427 ../client/snapper.cc:475
+#: ../client/snapper.cc:434 ../client/snapper.cc:482
 msgid "Date"
 msgstr "Päiväys"
 
-#: ../client/snapper.cc:1620 ../client/errors.cc:73
+#: ../client/snapper.cc:1659 ../client/errors.cc:73
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Määrityksen poistaminen epäonnistui (%s)."
@@ -435,11 +467,11 @@ msgstr "Määrityksen poistaminen epäonnistui (%s)."
 msgid "Deleting snapshot failed."
 msgstr "Tilannevedoksen poisto epäonnistui."
 
-#: ../client/snapper.cc:430 ../client/snapper.cc:477 ../client/snapper.cc:525
+#: ../client/snapper.cc:437 ../client/snapper.cc:484 ../client/snapper.cc:532
 msgid "Description"
 msgstr "Kuvaus"
 
-#: ../client/snapper.cc:237
+#: ../client/snapper.cc:244
 msgid "Detecting filesystem type failed."
 msgstr "Tiedostojärjestelmän tyypin tunnistaminen epäonnistui."
 
@@ -452,11 +484,11 @@ msgstr ""
 msgid "Empty userdata."
 msgstr "Virheellinen lisäinfo."
 
-#: ../client/snapper.cc:1191 ../client/snapper.cc:1201
+#: ../client/snapper.cc:1198 ../client/snapper.cc:1208
 msgid "Failed to initialize filesystem handler."
 msgstr ""
 
-#: ../client/systemd-helper.cc:127 ../client/snapper.cc:1659
+#: ../client/systemd-helper.cc:127 ../client/snapper.cc:1698
 msgid "Failure"
 msgstr "Epäonnistunut"
 
@@ -465,7 +497,7 @@ msgstr "Epäonnistunut"
 msgid "Failure (%s)."
 msgstr "Epäonnistunut"
 
-#: ../client/snapper.cc:1091
+#: ../client/snapper.cc:1098
 #, c-format
 msgid "File '%s' not found."
 msgstr "Tiedostoa \"%s\" ei löytynyt."
@@ -483,12 +515,12 @@ msgstr "Identtinen tilannevedos."
 msgid "Illegal Snapshot."
 msgstr "Virheellinen tilannevedos."
 
-#: ../client/snapper.cc:1625 ../client/errors.cc:49
+#: ../client/snapper.cc:1664 ../client/errors.cc:49
 #, fuzzy
 msgid "Invalid configdata."
 msgstr "Virheellinen lisäinfo."
 
-#: ../client/snapper.cc:1640 ../client/errors.cc:85
+#: ../client/snapper.cc:1679 ../client/errors.cc:85
 #, fuzzy
 msgid "Invalid group."
 msgstr "Virheellinen alitaltio."
@@ -498,20 +530,20 @@ msgstr "Virheellinen alitaltio."
 msgid "Invalid snapshot '%s'."
 msgstr "Virheellinen tilannevedos \"%s\"."
 
-#: ../client/misc.cc:85 ../client/snapper.cc:1059
+#: ../client/misc.cc:85 ../client/snapper.cc:1066
 msgid "Invalid snapshots."
 msgstr "Virheelliset tilannevedokset."
 
-#: ../client/snapper.cc:216
+#: ../client/snapper.cc:223
 msgid "Invalid subvolume."
 msgstr "Virheellinen alitaltio."
 
-#: ../client/snapper.cc:1537
+#: ../client/snapper.cc:1576
 #, c-format
 msgid "Invalid table style %d."
 msgstr "Virheellinen taulukon tyyli %d."
 
-#: ../client/snapper.cc:1635 ../client/errors.cc:82
+#: ../client/snapper.cc:1674 ../client/errors.cc:82
 #, fuzzy
 msgid "Invalid user."
 msgstr "Virheellinen lisäinfo."
@@ -520,11 +552,11 @@ msgstr "Virheellinen lisäinfo."
 msgid "Invalid userdata."
 msgstr "Virheellinen lisäinfo."
 
-#: ../client/snapper.cc:304
+#: ../client/snapper.cc:311
 msgid "Key"
 msgstr ""
 
-#: ../client/snapper.cc:1610
+#: ../client/snapper.cc:1649
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Määritysten listaaminen epäonnistui (%s)."
@@ -539,15 +571,15 @@ msgstr "Puuttuva argumentti komennon valinnoissa \"%s\"."
 msgid "Missing argument for global option '%s'."
 msgstr "Puuttuva argumentti yleisissä valinnoissa \"%s\"."
 
-#: ../client/snapper.cc:678
+#: ../client/snapper.cc:685
 msgid "Missing command argument."
 msgstr "Komennon valinta puuttuu."
 
-#: ../client/snapper.cc:672
+#: ../client/snapper.cc:679
 msgid "Missing or invalid pre-number."
 msgstr "Puuttuva tai virheellinen ennen numero."
 
-#: ../client/snapper.cc:1563
+#: ../client/snapper.cc:1602
 msgid "No command provided."
 msgstr "Komentoa ei annettu"
 
@@ -555,26 +587,31 @@ msgstr "Komentoa ei annettu"
 msgid "No permissions."
 msgstr "Ei käyttöoikeutta."
 
-#: ../client/snapper.cc:941 ../client/snapper.cc:1052
+#: ../client/snapper.cc:948 ../client/snapper.cc:1059
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "Tiedoston \"%s\" avaaminen epäonnistui."
 
-#: ../client/snapper.cc:522
+#: ../client/snapper.cc:529
 msgid "Post #"
 msgstr "Jälkeen #"
 
-#: ../client/snapper.cc:524
+#: ../client/snapper.cc:531
 msgid "Post Date"
 msgstr "Jälkeen-päiväys"
 
-#: ../client/snapper.cc:426 ../client/snapper.cc:521
+#: ../client/snapper.cc:433 ../client/snapper.cc:528
 msgid "Pre #"
 msgstr "Ennen #"
 
-#: ../client/snapper.cc:523
+#: ../client/snapper.cc:530
 msgid "Pre Date"
 msgstr "Ennen-päiväys"
+
+#: ../client/snapper.cc:1312
+#, c-format
+msgid "Setting default subvolume to snapshot %d."
+msgstr ""
 
 #: ../client/misc.cc:54
 #, c-format
@@ -585,25 +622,25 @@ msgstr "Tilannevedosta \"%u\" ei löytynyt."
 msgid "Snapshot is in use."
 msgstr "Tilannevedos on käytössä."
 
-#: ../client/snapper.cc:151
+#: ../client/snapper.cc:158
 msgid "Subvolume"
 msgstr "Alitaltio"
 
-#: ../client/snapper.cc:1564 ../client/snapper.cc:1577
+#: ../client/snapper.cc:1603 ../client/snapper.cc:1616
 #: ../client/utils/GetOpts.cc:61 ../client/utils/GetOpts.cc:69
 msgid "Try 'snapper --help' for more information."
 msgstr "Kokeile \"snapper --help\" saadaksesi lisätietoa."
 
-#: ../client/snapper.cc:424
+#: ../client/snapper.cc:431
 msgid "Type"
 msgstr "Tyyppi"
 
-#: ../client/snapper.cc:1330
+#: ../client/snapper.cc:1357
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
 msgstr "Tuntematon puhdistusalgoritmi \"%s\"."
 
-#: ../client/snapper.cc:1576
+#: ../client/snapper.cc:1615
 #, c-format
 msgid "Unknown command '%s'."
 msgstr "Tuntematon komento \"%s\"."
@@ -626,24 +663,24 @@ msgstr "Tuntematon yleinen valinta \"%s\"."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Tuntematon valinta \"%s\" komennolle \"%s\"."
 
-#: ../client/snapper.cc:644
+#: ../client/snapper.cc:651
 msgid "Unknown type of snapshot."
 msgstr "Tuntematon tilannevedoksen tyyppi."
 
-#: ../client/snapper.cc:412
+#: ../client/snapper.cc:419
 msgid "Unknown type of snapshots."
 msgstr "Tuntemattomat tilannevedosten tyypit."
 
-#: ../client/snapper.cc:1538
+#: ../client/snapper.cc:1577
 #, fuzzy, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "Kokonaisluvun tulee olla väliltä %d ja %d"
 
-#: ../client/snapper.cc:428 ../client/snapper.cc:476
+#: ../client/snapper.cc:435 ../client/snapper.cc:483
 msgid "User"
 msgstr "Käyttäjä"
 
-#: ../client/snapper.cc:431 ../client/snapper.cc:478 ../client/snapper.cc:526
+#: ../client/snapper.cc:438 ../client/snapper.cc:485 ../client/snapper.cc:533
 msgid "Userdata"
 msgstr "Lisäinfo"
 
@@ -657,50 +694,50 @@ msgstr "Tiedostoa '%s' ei löydy tietovälineeltä '%s'"
 msgid "Userdata '%s' has empty key."
 msgstr ""
 
-#: ../client/snapper.cc:305
+#: ../client/snapper.cc:312
 msgid "Value"
 msgstr ""
 
-#: ../client/snapper.cc:1126
+#: ../client/snapper.cc:1133
 #, c-format
 msgid "create:%d modify:%d delete:%d"
 msgstr "luo:%d muokkaa:%d poista:%d"
 
-#: ../client/snapper.cc:1151
+#: ../client/snapper.cc:1158
 #, c-format
 msgid "creating %s"
 msgstr "luodaan %s"
 
-#: ../client/snapper.cc:1157
+#: ../client/snapper.cc:1164
 #, c-format
 msgid "deleting %s"
 msgstr "poistetaan %s"
 
-#: ../client/snapper.cc:1167
+#: ../client/snapper.cc:1174
 #, c-format
 msgid "failed to create %s"
 msgstr "%s luominen epäonnistui"
 
-#: ../client/snapper.cc:1173
+#: ../client/snapper.cc:1180
 #, c-format
 msgid "failed to delete %s"
 msgstr "%s poistaminen epäonnistui"
 
-#: ../client/snapper.cc:1170
+#: ../client/snapper.cc:1177
 #, c-format
 msgid "failed to modify %s"
 msgstr "%s muokkaaminen epäonnistui"
 
-#: ../client/snapper.cc:1154
+#: ../client/snapper.cc:1161
 #, c-format
 msgid "modifying %s"
 msgstr "muokataan %s"
 
-#: ../client/snapper.cc:1122
+#: ../client/snapper.cc:1129
 msgid "nothing to do"
 msgstr "Ei mitään tehtävää."
 
-#: ../client/snapper.cc:1458
+#: ../client/snapper.cc:1485
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "käyttö: snapper [--yleiset-valinnat] <komento> [--komennon-valinnat] [komennon-argumentit]"
 
