@@ -82,9 +82,9 @@ autoconf
 ./configure --libdir=%{_libdir} --prefix=%{prefix} --mandir=%{_mandir}		\
 	--docdir=%{prefix}/share/doc/packages/snapper				\
 %if 0%{?suse_version} <= 1310
-	--disable-rollback --disable-btrfs-quota				\
+	--disable-rollback							\
 %endif
-	--disable-silent-rules --disable-ext4
+	--disable-silent-rules --disable-ext4 --disable-btrfs-quota
 make %{?jobs:-j%jobs}
 
 %install
