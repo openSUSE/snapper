@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Jul 22 10:26:09 CEST 2014 - aschnell@suse.de
+
+- disable support for qgroup (see bug#887046)
+
+-------------------------------------------------------------------
 Fri Jul 04 11:02:06 CEST 2014 - aschnell@suse.de
 
 - updated translations
