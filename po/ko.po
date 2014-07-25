@@ -5,10 +5,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-04 10:40+0200\n"
-"PO-Revision-Date: 2014-06-06 15:50\n"
-"Last-Translator: Novell Language <language@novell.com>\n"
-"Language-Team: Novell Language <language@novell.com>\n"
+"POT-Creation-Date: 2014-07-01 11:36+0200\n"
+"PO-Revision-Date: 2014-07-15 11:32\n"
+"Last-Translator: Novell language <language@novell.com>\n"
+"Language-Team: Novell language <language@novell.com>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,7 +48,7 @@ msgstr "\t--input, -i <file>\t\t파일에서 변경을 취소할 파일을 읽�
 
 #: ../client/snapper.cc:1492
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr ""
+msgstr "\t--iso\t\t\t\t날짜와 시간을 ISO 형식으로 표시합니다."
 
 #: ../client/snapper.cc:1495
 msgid "\t--no-dbus\t\t\tOperate without DBus."
@@ -100,7 +100,7 @@ msgstr "\t--userdata, -u <userdata>\t스냅샷용 사용자 데이터입니다."
 
 #: ../client/snapper.cc:1491
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr ""
+msgstr "\t--utc\t\t\t\t날짜와 시간을 UTC로 표시합니다."
 
 #: ../client/snapper.cc:1490
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
@@ -280,9 +280,9 @@ msgstr "#"
 
 #: ../client/snapper.cc:1283 ../client/snapper.cc:1290
 #: ../client/snapper.cc:1301 ../client/snapper.cc:1308
-#, fuzzy, c-format
+#, c-format
 msgid "(Snapshot %d.)"
-msgstr "'%u' 스냅샷을 찾을 수 없습니다."
+msgstr "(스냅샷 %d)"
 
 #: ../client/snapper.cc:1669 ../client/errors.cc:88
 msgid "ACL error."
@@ -412,21 +412,20 @@ msgstr "구성 생성 실패(%s)."
 
 #: ../client/snapper.cc:1297
 msgid "Creating read-only snapshot of current system."
-msgstr ""
+msgstr "현재 시스템의 읽기 전용 스냅샷을 생성합니다."
 
 #: ../client/snapper.cc:1278
-#, fuzzy
 msgid "Creating read-only snapshot of default subvolume."
-msgstr "스냅샷을 생성하지 못했습니다."
+msgstr "기본 하위 볼륨의 읽기 전용 스냅샷을 생성합니다."
 
 #: ../client/snapper.cc:1286
 msgid "Creating read-write snapshot of current subvolume."
-msgstr ""
+msgstr "현재 하위 볼륨의 읽기 쓰기 스냅샷을 생성합니다."
 
 #: ../client/snapper.cc:1304
-#, fuzzy, c-format
+#, c-format
 msgid "Creating read-write snapshot of snapshot %d."
-msgstr "스냅샷을 생성하지 못했습니다."
+msgstr "스냅샷 %d의 읽기 쓰기 스냅샷을 생성합니다."
 
 #: ../client/errors.cc:76
 msgid "Creating snapshot failed."
@@ -584,7 +583,7 @@ msgstr "사전 날짜"
 #: ../client/snapper.cc:1312
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
-msgstr ""
+msgstr "기본 하위 볼륨을 스냅샷 %d(으)로 설정합니다."
 
 #: ../client/misc.cc:54
 #, c-format
