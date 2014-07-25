@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-04 10:40+0200\n"
-"PO-Revision-Date: 2014-06-06 14:28\n"
+"POT-Creation-Date: 2014-07-01 11:36+0200\n"
+"PO-Revision-Date: 2014-07-23 15:35\n"
 "Last-Translator: Novell language <language@novell.com>\n"
 "Language-Team: Novell language <language@novell.com>\n"
 "Language: \n"
@@ -48,7 +48,7 @@ msgstr "\t--input, -i <file>\t\tLit les fichiers sur lesquels les modifications 
 
 #: ../client/snapper.cc:1492
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr ""
+msgstr "\t--iso\t\t\t\tAfficher la date et l'heure au format ISO."
 
 #: ../client/snapper.cc:1495
 msgid "\t--no-dbus\t\t\tOperate without DBus."
@@ -100,7 +100,7 @@ msgstr "\t--userdata, -u <userdata>\tDonnées utilisateur pour les instantanés.
 
 #: ../client/snapper.cc:1491
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr ""
+msgstr "\t--utc\t\t\t\tAfficher la date et l'heure au format UTC."
 
 #: ../client/snapper.cc:1490
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
@@ -280,9 +280,9 @@ msgstr "#"
 
 #: ../client/snapper.cc:1283 ../client/snapper.cc:1290
 #: ../client/snapper.cc:1301 ../client/snapper.cc:1308
-#, fuzzy, c-format
+#, c-format
 msgid "(Snapshot %d.)"
-msgstr "Instantané '%u' non trouvé."
+msgstr "(Instantané %d.)"
 
 #: ../client/snapper.cc:1669 ../client/errors.cc:88
 msgid "ACL error."
@@ -412,21 +412,20 @@ msgstr "Échec de la création de la configuration (%s)."
 
 #: ../client/snapper.cc:1297
 msgid "Creating read-only snapshot of current system."
-msgstr ""
+msgstr "Création d'un instantané en lecture seule du système actuel."
 
 #: ../client/snapper.cc:1278
-#, fuzzy
 msgid "Creating read-only snapshot of default subvolume."
-msgstr "Échec de la création de l'instantané."
+msgstr "Création d'un instantané en lecture seule du sous-volume par défaut."
 
 #: ../client/snapper.cc:1286
 msgid "Creating read-write snapshot of current subvolume."
-msgstr ""
+msgstr "Création d'un instantané en lecture-écriture du sous-volume actuel."
 
 #: ../client/snapper.cc:1304
-#, fuzzy, c-format
+#, c-format
 msgid "Creating read-write snapshot of snapshot %d."
-msgstr "Échec de la création de l'instantané."
+msgstr "Création d'un instantané en lecture-écriture de l'instantané %d."
 
 #: ../client/errors.cc:76
 msgid "Creating snapshot failed."
@@ -584,7 +583,7 @@ msgstr "Date antérieure"
 #: ../client/snapper.cc:1312
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
-msgstr ""
+msgstr "Définition du sous-volume par défaut sur l'instantané %d."
 
 #: ../client/misc.cc:54
 #, c-format
@@ -713,3 +712,4 @@ msgstr "rien à faire"
 #: ../client/snapper.cc:1485
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "utilisation : snapper [--global-options] <command> [--command-options] [command-arguments]"
+

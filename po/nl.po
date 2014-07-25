@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-04 10:40+0200\n"
-"PO-Revision-Date: 2014-06-27 08:30\n"
+"POT-Creation-Date: 2014-07-01 11:36+0200\n"
+"PO-Revision-Date: 2014-07-15 11:30\n"
 "Last-Translator: Novell language <language@novell.com>\n"
 "Language-Team: Novell language <language@novell.com>\n"
 "Language: \n"
@@ -48,7 +48,7 @@ msgstr "\t--input, -i <file>\t\tLees bestanden waarvoor wijzigingen ongedaan moe
 
 #: ../client/snapper.cc:1492
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr ""
+msgstr "\t--iso\t\t\t\tDatums en tijden weergeven in ISO-indeling."
 
 #: ../client/snapper.cc:1495
 msgid "\t--no-dbus\t\t\tOperate without DBus."
@@ -100,7 +100,7 @@ msgstr "\t--gebruikersgegevens, -u <gebruikersgegevens>\tGebruikersgegevens voor
 
 #: ../client/snapper.cc:1491
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr ""
+msgstr "\t--utc\t\t\t\tDatums en tijden weergeven in UTC."
 
 #: ../client/snapper.cc:1490
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
@@ -280,9 +280,9 @@ msgstr "#"
 
 #: ../client/snapper.cc:1283 ../client/snapper.cc:1290
 #: ../client/snapper.cc:1301 ../client/snapper.cc:1308
-#, fuzzy, c-format
+#, c-format
 msgid "(Snapshot %d.)"
-msgstr "Momentopname '%u' niet gevonden."
+msgstr "(Momentopname %d.)"
 
 #: ../client/snapper.cc:1669 ../client/errors.cc:88
 msgid "ACL error."
@@ -412,21 +412,20 @@ msgstr "Configuratie maken is mislukt (%s)."
 
 #: ../client/snapper.cc:1297
 msgid "Creating read-only snapshot of current system."
-msgstr ""
+msgstr "Alleen-lezenmomentopname maken van het huidige systeem."
 
 #: ../client/snapper.cc:1278
-#, fuzzy
 msgid "Creating read-only snapshot of default subvolume."
-msgstr "Maken van momentopname is mislukt."
+msgstr "Alleen-lezenmomentopname maken van standaardsubvolume."
 
 #: ../client/snapper.cc:1286
 msgid "Creating read-write snapshot of current subvolume."
-msgstr ""
+msgstr "Alleen-lezenmomentopname maken van het huidige subvolume."
 
 #: ../client/snapper.cc:1304
-#, fuzzy, c-format
+#, c-format
 msgid "Creating read-write snapshot of snapshot %d."
-msgstr "Maken van momentopname is mislukt."
+msgstr "Alleen-lezenmomentopname maken van momentopname %d."
 
 #: ../client/errors.cc:76
 msgid "Creating snapshot failed."
@@ -584,7 +583,7 @@ msgstr "Pre-datum"
 #: ../client/snapper.cc:1312
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
-msgstr ""
+msgstr "Standaardsubvolume instellen op momentopname %d."
 
 #: ../client/misc.cc:54
 #, c-format

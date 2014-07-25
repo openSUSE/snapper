@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-04 10:40+0200\n"
-"PO-Revision-Date: 2014-06-26 12:20\n"
+"POT-Creation-Date: 2014-07-01 11:36+0200\n"
+"PO-Revision-Date: 2014-07-15 11:28\n"
 "Last-Translator: Novell language <language@novell.com>\n"
 "Language-Team: Novell language <language@novell.com>\n"
 "Language: \n"
@@ -48,7 +48,7 @@ msgstr "\t--input, -i <文件>\t\t读取要撤销文件更改的文件。"
 
 #: ../client/snapper.cc:1492
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr ""
+msgstr "\t--iso\t\t\t\t以 ISO 格式显示日期和时间。"
 
 #: ../client/snapper.cc:1495
 msgid "\t--no-dbus\t\t\tOperate without DBus."
@@ -100,7 +100,7 @@ msgstr "\t--userdata、-u <用户数据>\t快照的用户数据。"
 
 #: ../client/snapper.cc:1491
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr ""
+msgstr "\t--utc\t\t\t\t以 UTC 格式显示日期和时间。"
 
 #: ../client/snapper.cc:1490
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
@@ -280,9 +280,9 @@ msgstr "#"
 
 #: ../client/snapper.cc:1283 ../client/snapper.cc:1290
 #: ../client/snapper.cc:1301 ../client/snapper.cc:1308
-#, fuzzy, c-format
+#, c-format
 msgid "(Snapshot %d.)"
-msgstr "未找到快照“%u”。"
+msgstr "（快照 %d。）"
 
 #: ../client/snapper.cc:1669 ../client/errors.cc:88
 msgid "ACL error."
@@ -412,21 +412,20 @@ msgstr "创建配置失败 (%s)。"
 
 #: ../client/snapper.cc:1297
 msgid "Creating read-only snapshot of current system."
-msgstr ""
+msgstr "正在创建当前系统的只读快照。"
 
 #: ../client/snapper.cc:1278
-#, fuzzy
 msgid "Creating read-only snapshot of default subvolume."
-msgstr "创建快照失败。"
+msgstr "正在创建默认子卷的只读快照。"
 
 #: ../client/snapper.cc:1286
 msgid "Creating read-write snapshot of current subvolume."
-msgstr ""
+msgstr "正在创建当前子卷的读写快照。"
 
 #: ../client/snapper.cc:1304
-#, fuzzy, c-format
+#, c-format
 msgid "Creating read-write snapshot of snapshot %d."
-msgstr "创建快照失败。"
+msgstr "正在创建快照 %d 的读写快照。"
 
 #: ../client/errors.cc:76
 msgid "Creating snapshot failed."
@@ -584,7 +583,7 @@ msgstr "前快照日期"
 #: ../client/snapper.cc:1312
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
-msgstr ""
+msgstr "正在设置快照 %d 的默认子卷。"
 
 #: ../client/misc.cc:54
 #, c-format
