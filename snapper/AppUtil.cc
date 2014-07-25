@@ -308,6 +308,8 @@ namespace snapper
     {
 	struct group grp;
 	struct group* result;
+	struct passwd pwbuf;
+	struct passwd* pwd;
 
 	long bufsize = sysconf(_SC_GETGR_R_SIZE_MAX);
 	char buf[bufsize];
@@ -328,6 +330,15 @@ namespace snapper
 	    if (get_user_uid(*p, uid))
 		uids.push_back(uid);
 	}
+
+
+	setpwent();
+	while (getpwent_r(&pwbuf, buf, sizeof(buf), &pwd) == 0)
+	{
+	    if (pwd->pw_gid == grp.gr_gid)
+		uids.push_back(pwd->pw_uid);
+	}
+	endpwent();
 
 	return true;
     }
