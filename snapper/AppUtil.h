@@ -86,10 +86,10 @@ namespace snapper
     time_t scan_datetime(const string& str, bool utc);
 
     string username(uid_t uid);
-
+    bool get_uid_username_gid(uid_t uid, string& username, gid_t& gid);
     bool get_user_uid(const char* username, uid_t& uid);
     bool get_group_gid(const char* groupname, gid_t& gid);
-    bool get_group_uids(const char* groupname, vector<uid_t>& uids);
+    vector<gid_t> getgrouplist(const char* username, gid_t gid);
 
 
     class StopWatch

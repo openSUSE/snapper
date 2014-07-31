@@ -281,6 +281,27 @@ namespace snapper
 
 
     bool
+    get_uid_username_gid(uid_t uid, string& username, gid_t& gid)
+    {
+	struct passwd pwd;
+	struct passwd* result;
+
+	long bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
+	char buf[bufsize];
+
+	if (getpwuid_r(uid, &pwd, buf, bufsize, &result) != 0 || result != &pwd)
+	    return false;
+
+	memset(pwd.pw_passwd, 0, strlen(pwd.pw_passwd));
+
+	username = pwd.pw_name;
+	gid = pwd.pw_gid;
+
+	return true;
+    }
+
+
+    bool
     get_user_uid(const char* username, uid_t& uid)
     {
 	struct passwd pwd;
@@ -298,36 +319,6 @@ namespace snapper
 	memset(pwd.pw_passwd, 0, strlen(pwd.pw_passwd));
 
 	uid = pwd.pw_uid;
-
-	return true;
-    }
-
-
-    bool
-    get_group_uids(const char* groupname, vector<uid_t>& uids)
-    {
-	struct group grp;
-	struct group* result;
-
-	long bufsize = sysconf(_SC_GETGR_R_SIZE_MAX);
-	char buf[bufsize];
-
-	if (getgrnam_r(groupname, &grp, buf, bufsize, &result) != 0 || result != &grp)
-	{
-	    y2war("couldn't find groupname '" << groupname << "'");
-	    return false;
-	}
-
-	memset(grp.gr_passwd, 0, strlen(grp.gr_passwd));
-
-	uids.clear();
-
-	for (char** p = grp.gr_mem; *p != NULL; ++p)
-	{
-	    uid_t uid;
-	    if (get_user_uid(*p, uid))
-		uids.push_back(uid);
-	}
 
 	return true;
     }
@@ -353,6 +344,27 @@ namespace snapper
 	gid = grp.gr_gid;
 
 	return true;
+    }
+
+
+    vector<gid_t>
+    getgrouplist(const char* username, gid_t gid)
+    {
+	int n = 16;
+	gid_t* buf = (gid_t*) malloc(sizeof(gid_t) * n);
+
+	if (::getgrouplist(username, gid, buf, &n) == -1)
+	{
+	    buf = (gid_t*) realloc(buf, sizeof(gid_t) * n);
+	    ::getgrouplist(username, gid, buf, &n);
+	}
+
+	vector<gid_t> gids(&buf[0], &buf[n]);
+	sort(gids.begin(), gids.end());
+
+	free(buf);
+
+	return gids;
     }
 
 

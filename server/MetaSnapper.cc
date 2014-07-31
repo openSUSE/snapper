@@ -147,19 +147,24 @@ MetaSnapper::set_permissions()
 	}
     }
 
+    sort(uids.begin(), uids.end());
+    uids.erase(unique(uids.begin(), uids.end()), uids.end());
+
+    gids.clear();
+
     vector<string> groups;
     if (config_info.getValue(KEY_ALLOW_GROUPS, groups))
     {
 	for (vector<string>::const_iterator it = groups.begin(); it != groups.end(); ++it)
 	{
-	    vector<uid_t> tmp;
-	    if (get_group_uids(it->c_str(), tmp))
-		uids.insert(uids.end(), tmp.begin(), tmp.end());
+	    gid_t tmp;
+	    if (get_group_gid(it->c_str(), tmp))
+		gids.push_back(tmp);
 	}
     }
 
-    sort(uids.begin(), uids.end());
-    uids.erase(unique(uids.begin(), uids.end()), uids.end());
+    sort(gids.begin(), gids.end());
+    gids.erase(unique(gids.begin(), gids.end()), gids.end());
 }
 
 

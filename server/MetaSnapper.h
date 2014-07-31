@@ -95,6 +95,7 @@ public:
     void setConfigInfo(const map<string, string>& raw);
 
     vector<uid_t> uids;
+    vector<gid_t> gids;
 
     Snapper* getSnapper();
 
