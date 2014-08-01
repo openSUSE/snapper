@@ -47,3 +47,5 @@ show_userdata(const map<string, string>& userdata);
 map<string, string>
 read_configdata(const list<string>& l, const map<string, string>& old = map<string, string>());
 
+string
+username(uid_t uid);

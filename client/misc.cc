@@ -196,3 +196,16 @@ read_configdata(const list<string>& l, const map<string, string>& old)
 
     return configdata;
 }
+
+
+string
+username(uid_t uid)
+{
+    string username;
+    gid_t gid;
+
+    if (!get_uid_username_gid(uid, username, gid))
+	return sformat("unknown (%d)", uid);
+
+    return username;
+}
