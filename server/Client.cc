@@ -382,11 +382,32 @@ Client::check_permission(DBus::Connection& conn, DBus::Message& msg,
 			 const MetaSnapper& meta_snapper) const
 {
     unsigned long uid = conn.get_unix_userid(msg);
+
+    // Check if the uid of the dbus-user is root.
     if (uid == 0)
 	return;
 
-    if (find(meta_snapper.uids.begin(), meta_snapper.uids.end(), uid) != meta_snapper.uids.end())
+    // Check if the uid of the dbus-user is included in the allowed uids.
+    if (contains(meta_snapper.uids, uid))
 	return;
+
+    string username;
+    gid_t gid;
+
+    if (get_uid_username_gid(uid, username, gid))
+    {
+	// Check if the primary gid of the dbus-user is included in the allowed gids.
+	if (contains(meta_snapper.gids, gid))
+	    return;
+
+	vector<gid_t> gids = getgrouplist(username.c_str(), gid);
+
+	// Check if any (primary or secondary) gid of the dbus-user is included in the allowed
+	// gids.
+	for (vector<gid_t>::const_iterator it = gids.begin(); it != gids.end(); ++it)
+	    if (contains(meta_snapper.gids, *it))
+		return;
+    }
 
     throw Permissions();
 }
