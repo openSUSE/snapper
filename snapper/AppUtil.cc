@@ -262,24 +262,6 @@ namespace snapper
     }
 
 
-    string
-    username(uid_t uid)
-    {
-	struct passwd pwd;
-	struct passwd* result;
-
-	long bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
-	char buf[bufsize];
-
-	if (getpwuid_r(uid, &pwd, buf, bufsize, &result) != 0 || result != &pwd)
-	    return "unknown";
-
-	memset(pwd.pw_passwd, 0, strlen(pwd.pw_passwd));
-
-	return pwd.pw_name;
-    }
-
-
     bool
     get_uid_username_gid(uid_t uid, string& username, gid_t& gid)
     {
