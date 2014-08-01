@@ -3,7 +3,7 @@ Thu Jul 31 15:38:16 CEST 2014 - aschnell@suse.de
 
 - also handle primary group of user when checking permissions
   (see gh#openSUSE/snapper#100)
-- show id of user if namename cannot be detected
+- show id of user if username cannot be detected
 
 -------------------------------------------------------------------
 Fri Jul 25 12:38:33 CEST 2014 - aschnell@suse.de
