@@ -403,7 +403,23 @@ namespace snapper
 	    throw CreateConfigFailedException("modifying config failed");
 	}
 
-	filesystem->createConfig(add_fstab);
+	try
+	{
+	    filesystem->createConfig(add_fstab);
+	}
+	catch (...)
+	{
+	    SysconfigFile sysconfig(SYSCONFIGFILE);
+	    vector<string> config_names;
+	    sysconfig.getValue("SNAPPER_CONFIGS", config_names);
+	    config_names.erase(remove(config_names.begin(), config_names.end(), config_name),
+			       config_names.end());
+	    sysconfig.setValue("SNAPPER_CONFIGS", config_names);
+
+	    unlink((CONFIGSDIR "/" + config_name).c_str());
+
+	    throw;
+	}
 
 #ifdef ENABLE_ROLLBACK
 	if (subvolume == "/" && filesystem->fstype() == "btrfs" &&
