@@ -416,7 +416,7 @@ namespace snapper
 			       config_names.end());
 	    sysconfig.setValue("SNAPPER_CONFIGS", config_names);
 
-	    unlink((CONFIGSDIR "/" + config_name).c_str());
+	    SystemCmd cmd(RMBIN " " + quote(CONFIGSDIR "/" + config_name));
 
 	    throw;
 	}
