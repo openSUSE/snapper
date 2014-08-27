@@ -34,6 +34,11 @@
 #include <libmount/libmount.h>
 #endif
 #ifdef HAVE_LIBBTRFS
+#ifdef HAVE_BTRFS_VERSION_H
+#include <btrfs/version.h>
+#else
+#define BTRFS_LIB_VERSION (100)
+#endif
 #include <btrfs/ioctl.h>
 #include <btrfs/send.h>
 #include <btrfs/send-stream.h>
@@ -1142,7 +1147,13 @@ namespace snapper
 	    boost::this_thread::interruption_point();
 
 	     // remove the fourth parameter for older versions of libbtrfs
-	    int r = btrfs_read_and_process_send_stream(fd, &send_ops, &*this, 0);
+	    int r;
+
+#if BTRFS_LIB_VERSION < 101
+	    r = btrfs_read_and_process_send_stream(fd, &send_ops, &*this, 0);
+#else
+	    r = btrfs_read_and_process_send_stream(fd, &send_ops, &*this, 0, 1);
+#endif
 
 	    if (r < 0)
 	    {
