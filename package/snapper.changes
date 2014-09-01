@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Aug 27 17:55:32 CEST 2014 - dsterba@suse.cz
+
+- conditional check for libbtrfs API version
+
+-------------------------------------------------------------------
 Thu Aug 14 14:15:21 CEST 2014 - aschnell@suse.de
 
 - cleanup after failed create-config (bnc#863578)
