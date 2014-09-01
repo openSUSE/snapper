@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Aug 14 14:15:21 CEST 2014 - aschnell@suse.de
+
+- cleanup after failed create-config (bnc#863578)
+
+-------------------------------------------------------------------
 Thu Jul 31 15:38:16 CEST 2014 - aschnell@suse.de
 
 - also handle primary group of user when checking permissions
