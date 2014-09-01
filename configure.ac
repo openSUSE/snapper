@@ -102,6 +102,7 @@ AC_ARG_ENABLE([zypp], AC_HELP_STRING([--disable-zypp],[Disable zypp plugin suppo
 AM_CONDITIONAL(HAVE_ZYPP, [test "x$with_zypp" = "xyes"])
 
 AC_CHECK_LIB(btrfs, btrfs_read_and_process_send_stream)
+AC_CHECK_HEADERS([btrfs/version.h])
 
 AC_ARG_ENABLE([xattrs], AC_HELP_STRING([--disable-xattrs],[Disable extended attributes support]),
 		[with_xattrs=$enableval],[with_xattrs=yes])
