@@ -1588,7 +1588,40 @@ main(int argc, char** argv)
 
     if ((opt = opts.find("version")) != opts.end())
     {
-	cout << "snapper " << VERSION << endl;
+	cout << "snapper " << VERSION << " (";
+#ifndef ENABLE_BTRFS
+	cout << "no-";
+#endif
+	cout << "btrfs,";
+#ifndef ENABLE_EXT4
+	cout << "no-";
+#endif
+	cout << "ext4,";
+#ifndef ENABLE_LVM
+	cout << "no-";
+#endif
+	cout << "lvm,";
+#ifndef HAVE_ZYPP
+	cout << "no-";
+#endif
+	cout << "zypp,";
+#ifndef ENABLE_XATTR
+	cout << "no-";
+#endif
+	cout << "xattr,";
+#ifndef ENABLE_ROLLBACK
+	cout << "no-";
+#endif
+	cout << "rollback,";
+#ifndef ENABLE_BTRFS_QUOTA
+	cout << "no-";
+#endif
+	cout << "btrfs-quota,";
+#ifndef ENABLE_PAM
+	cout << "no-";
+#endif
+	cout << "pam";
+	cout << ")" << endl;
 	exit(EXIT_SUCCESS);
     }
 
