@@ -728,4 +728,50 @@ namespace snapper
 	return !best_match.empty();
     }
 
+
+    const char*
+    Snapper::compileVersion()
+    {
+	return VERSION;
+    }
+
+
+    const char*
+    Snapper::compileFlags()
+    {
+	return
+
+#ifndef ENABLE_BTRFS
+	    "no-"
+#endif
+	    "btrfs,"
+
+#ifndef ENABLE_LVM
+	    "no-"
+#endif
+	    "lvm,"
+
+#ifndef ENABLE_EXT4
+	    "no-"
+#endif
+	    "ext4,"
+
+#ifndef ENABLE_XATTRS
+	    "no-"
+#endif
+	    "xattrs,"
+
+#ifndef ENABLE_ROLLBACK
+	    "no-"
+#endif
+	    "rollback,"
+
+#ifndef ENABLE_BTRFS_QUOTA
+	    "no-"
+#endif
+	    "btrfs-quota"
+
+	    ;
+    }
+
 }

@@ -170,6 +170,9 @@ namespace snapper
 
 	void syncAcl() const;
 
+	static const char* compileVersion();
+	static const char* compileFlags();
+
     private:
 
 	void filter1(list<Snapshots::iterator>& tmp, time_t min_age);
