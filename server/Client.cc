@@ -1367,25 +1367,8 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg) const
     }
 
     hoho << "compile options:";
-    hoho << "  VERSION " VERSION;
-#ifdef ENABLE_BTRFS
-    hoho << "  ENABLE_BTRFS";
-#endif
-#ifdef ENABLE_LVM
-    hoho << "  ENABLE_LVM";
-#endif
-#ifdef ENABLE_EXT4
-    hoho << "  ENABLE_EXT4";
-#endif
-#ifdef ENABLE_XATTRS
-    hoho << "  ENABLE_XATTRS";
-#endif
-#ifdef ENABLE_ROLLBACK
-    hoho << "  ENABLE_ROLLBACK";
-#endif
-#ifdef HAVE_LIBBTRFS
-    hoho << "  HAVE_LIBBTRFS";
-#endif
+    hoho << "    version " + string(Snapper::compileVersion());
+    hoho << "    flags " + string(Snapper::compileFlags());
 
     hoho.close_array();
 

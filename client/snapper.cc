@@ -1588,7 +1588,8 @@ main(int argc, char** argv)
 
     if ((opt = opts.find("version")) != opts.end())
     {
-	cout << "snapper " << VERSION << endl;
+	cout << "snapper " << Snapper::compileVersion() << endl;
+	cout << "flags " << Snapper::compileFlags() << endl;
 	exit(EXIT_SUCCESS);
     }
 
