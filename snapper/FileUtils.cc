@@ -405,6 +405,7 @@ namespace snapper
 
 	name = string(&t[strlen(t) - name.size()]);
 
+	free(t);
 	return true;
     }
 
