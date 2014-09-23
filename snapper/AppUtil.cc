@@ -35,6 +35,7 @@
 #include <dirent.h>
 #include <mntent.h>
 #include <boost/algorithm/string.hpp>
+#include <boost/io/ios_state.hpp>
 
 #include "snapper/Log.h"
 #include "snapper/AppUtil.h"
@@ -93,7 +94,7 @@ namespace snapper
 	while (true)
 	{
 	    // use small value for count to make function better interruptible
-	    ssize_t r1 = sendfile(dest_fd, src_fd, NULL, 0xffff);
+	    ssize_t r1 = sendfile(dest_fd, src_fd, NULL, 0x10000);
 	    if (r1 == 0)
 		return true;
 
@@ -371,6 +372,7 @@ namespace snapper
 
     std::ostream& operator<<(std::ostream& s, const StopWatch& sw)
     {
+	boost::io::ios_all_saver ias(s);
 	return s << fixed << sw.read() << "s";
     }
 
