@@ -93,7 +93,7 @@ namespace snapper
 	while (true)
 	{
 	    // use small value for count to make function better interruptible
-	    ssize_t r1 = sendfile(dest_fd, src_fd, NULL, 0xffff);
+	    ssize_t r1 = sendfile(dest_fd, src_fd, NULL, 0x10000);
 	    if (r1 == 0)
 		return true;
 
