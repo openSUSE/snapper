@@ -61,7 +61,12 @@ namespace snapper
 	}
 
 	struct stat buf;
-	fstat(dirfd, &buf);
+	if (fstat(dirfd, &buf) != 0)
+	{
+	    y2err("fstat failed path:" << base_path << " error:" << stringerror(errno));
+	    throw IOErrorException();
+	}
+
 	if (!S_ISDIR(buf.st_mode))
 	{
 	    y2err("not a directory path:" << base_path);
@@ -86,7 +91,12 @@ namespace snapper
 	}
 
 	struct stat buf;
-	fstat(dirfd, &buf);
+	if (fstat(dirfd, &buf) != 0)
+	{
+	    y2err("fstat failed path:" << base_path << " error:" << stringerror(errno));
+	    throw IOErrorException();
+	}
+
 	if (!S_ISDIR(buf.st_mode))
 	{
 	    y2err("not a directory path:" << dir.fullname(name));

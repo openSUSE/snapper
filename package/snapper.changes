@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Sep 24 15:29:51 CEST 2014 - aschnell@suse.de
+
+- resolved some code issues found by code analysis
+
+-------------------------------------------------------------------
 Wed Aug 27 17:55:32 CEST 2014 - dsterba@suse.cz
 
 - conditional check for libbtrfs API version
