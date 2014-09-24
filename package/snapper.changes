@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Oct 3 01:05:01 CEST 2014 - dsterba@suse.cz
+
+- add option --all-configs to snapper client, list snapshots from
+  all accessible configs
+
+-------------------------------------------------------------------
 Mon Sep 29 11:55:37 CEST 2014 - aschnell@suse.de
 
 - updated translations
