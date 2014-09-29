@@ -1,214 +1,217 @@
-# Copyright (C) 2006 SuSE Linux Products GmbH, Nuernberg
-# This file is distributed under the same license as the package.
-#
+# mohammad <malham1@gmail.com>, 2012.
+# Mohammad Alhargan <malham1@hotmail.com>, 2012.
+# محمد الحرقان <malham1@gmail.com>, 2012, 2013.
+# malhargan <malham1@gmail.com>, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: snapper\n"
+"Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-01 11:36+0200\n"
-"PO-Revision-Date: 2014-07-15 11:31\n"
-"Last-Translator: Novell language <language@novell.com>\n"
-"Language-Team: Novell language <language@novell.com>\n"
-"Language: \n"
+"POT-Creation-Date: 2014-09-29 11:55+0200\n"
+"PO-Revision-Date: 2014-09-04 09:00+0300\n"
+"Last-Translator: malhargan <malham1@gmail.com>\n"
+"Language-Team: openSUSE\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Virtaal 0.7.1\n"
 
 #: ../client/snapper.cc:599 ../client/snapper.cc:733
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <algo>\tتنظيف الخوارزمية للّقطة."
+msgstr "\t--cleanup-algorithm, -c <algo>\tتنظيف خوارزمية اللقطة."
 
 #: ../client/snapper.cc:1223
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <algo>\tخوارزمية تنظيف اللقطات."
+msgstr "\t--cleanup-algorithm, -c <algo>\tتنظيف خوارزمية اللقطة."
 
 #: ../client/snapper.cc:601
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
-msgstr "\t--command <command>\tتشغيل الأمر وإنشاء لقطات قبل وبعد."
+msgstr "\t--command <command>\tقم بتشغيل الأمر وإنشاء ما قبل وبعد لقطات."
 
 #: ../client/snapper.cc:1494
 msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <اسم>\t\tتعيين اسم التكوين لاستخدامه."
+msgstr "\t--config, -c <name>\t\tعين اسم لتستخدمه للإعدادات."
 
 #: ../client/snapper.cc:598 ../client/snapper.cc:732
 msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <وصف>\tوصف اللقطة."
+msgstr "\t--description, -d <description>\tوصف اللقطة."
 
 #: ../client/snapper.cc:1222
 msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr "\t--description, -d <description>\tوصف اللقطات."
+msgstr "\t--description, -d <description>\tوصف اللقطة."
 
 #: ../client/snapper.cc:195
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--fstype, -f <fstype>\t\tتعيين نوع نظام الملفات يدويًا."
+msgstr "\t--fstype, -f <fstype>\t\tتعيين اسم الملف يدوياً."
 
 #: ../client/snapper.cc:1028
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <ملف>\t\tقراءة الملفات للتراجع عن التغييرات من الملف."
+msgstr "\t--input, -i <file>\t\tقراءة الملفات التي ترغب في التراجع عن تغييراتها."
 
 #: ../client/snapper.cc:1492
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr "\t--iso\t\t\t\tعرض التواريخ والأوقات بتنسيق ISO."
+msgstr "\t--iso\t\t\t\tعرض التاريخ والوقت بصيغة ISO."
 
 #: ../client/snapper.cc:1495
 msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr "\t--no-dbus\t\t\tتشغيل بدون DBus."
+msgstr "\t--no-dbus\t\t\tلا تعمل بدون تثبيت DBus."
 
 #: ../client/snapper.cc:914
 msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <file>\t\tحفظ الحالة إلى الملف."
+msgstr "\t--output, -o <file>\t\tحفظ الحالة إلى ملف."
 
 #: ../client/snapper.cc:596
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <عدد>\t\tعدد اللقطات السابقة المطابقة."
+msgstr "\t--pre-number <number>\t\tعدد اللقطات المتطابقة لكل لقطة."
 
 #: ../client/snapper.cc:597
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tطباعة رقم اللقطة التي تم إنشاؤها."
+msgstr "\t--print-number, -p\t\tطباعة رقم عدد اللقطات."
 
 #: ../client/snapper.cc:1221
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr "\t--print-number, -p\t\tرقم طباعة ثاني لقطة يتم إنشاؤها."
+msgstr "\t--print-number، -p\t\tطباعة رقم اللقطة عند إنشاء لقطة ثانية."
 
 #: ../client/snapper.cc:1489
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\tمنع المخرجات العادية."
+msgstr "\t--quiet, -q\t\t\tوقف الانتاج الطبيعي."
 
 #: ../client/snapper.cc:1493
 msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <نمط>\tنمط الجدول (عدد صحيح)."
+msgstr "\t--table-style، -t <style>\tنمط الجدول (عدد صحيح)."
 
 #: ../client/snapper.cc:196
 msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <اسم>\t\tاسم قالب التكوين المطلوب استخدامه."
+msgstr "\t--template, -t <name>\t\tاسم قالب الإعداد للاستخدام."
 
 #: ../client/snapper.cc:595
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <نوع>\t\tنوع لقطة."
+msgstr "\t--type, -t <type>\t\tنوع اللقطة."
 
 #: ../client/snapper.cc:384
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <نوع>\t\tنوع اللقطات المطلوب سردها."
+msgstr "\t--type, -t <type>\t\tنوع اللقطة للقائمة."
 
 #: ../client/snapper.cc:600 ../client/snapper.cc:734
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <userdata>\tبيانات المستخدم للّقطة."
+msgstr "\t--userdata, -u <userdata>\tمعلومات المستخدم للقطة."
 
 #: ../client/snapper.cc:1224
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata, -u <userdata>\tبيانات مستخدم اللقطات."
+msgstr "\t--userdata، -u <userdata>\tمعلومات مستخدم اللقطة."
 
 #: ../client/snapper.cc:1491
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr "\t--utc\t\t\t\tعرض التواريخ والأوقات بتوقيت UTC."
+msgstr "\t--utc\t\t\t\tعرض التاريخ والوقت بصيغة UTC."
 
 #: ../client/snapper.cc:1490
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tزيادة الإسهاب."
+msgstr "\t--verbose, -v\t\t\tزيادة محتوى."
 
 #: ../client/snapper.cc:1496
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tطباعة الإصدار والإنهاء."
+msgstr "\t--version\t\t\tطباعة إصدار النسخة والخروج."
 
 #: ../client/snapper.cc:1326
 msgid "\tsnapper cleanup <cleanup-algorithm>"
-msgstr "\tsnapper cleanup <تنظيف-خوارزمية>"
+msgstr "\tنضف اللملتقط <cleanup-algorithm>"
 
 #: ../client/snapper.cc:592
 msgid "\tsnapper create"
-msgstr "\tsnapper create"
+msgstr "\tإنشاء ملتقط"
 
 #: ../client/snapper.cc:192
 msgid "\tsnapper create-config <subvolume>"
-msgstr "\tsnapper create-config <وحدة تخزين فرعية>"
+msgstr "\tتهيئة إنشاء ملتقط<subvolume>"
 
 #: ../client/snapper.cc:783
 msgid "\tsnapper delete <number>"
-msgstr "\tsnapper delete <رقم>"
+msgstr "\tحذف ملتقط<number>"
 
 #: ../client/snapper.cc:263
 msgid "\tsnapper delete-config"
-msgstr "\tsnapper delete-config"
+msgstr "\tالملتقط إعداد-الحذف"
 
 #: ../client/snapper.cc:966
 msgid "\tsnapper diff <number1>..<number2> [files]"
-msgstr "\tsnapper diff <number1>..<number2> [files]"
+msgstr "\tإختلافات الملتقط <number1>..<number2> [ملف]"
 
 #: ../client/snapper.cc:293
 msgid "\tsnapper get-config"
-msgstr "\tsnapper get-config"
+msgstr "\tضبط تهيئة الملتقط"
 
 #: ../client/snapper.cc:381
 msgid "\tsnapper list"
-msgstr "\tsnapper list"
+msgstr "\tقائمة الملتقط"
 
 #: ../client/snapper.cc:139
 msgid "\tsnapper list-configs"
-msgstr "\tsnapper list-configs"
+msgstr "\tقائمة الملتقط-إعداد"
 
 #: ../client/snapper.cc:729
 msgid "\tsnapper modify <number>"
-msgstr "\tsnapper modify <رقم>"
+msgstr "\tتعديل ملتقط<number>"
 
 #: ../client/snapper.cc:837
 msgid "\tsnapper mount <number>"
-msgstr "\tsnapper mount <رقم>"
+msgstr "\tتحميل ملتقط<number>"
 
 #: ../client/snapper.cc:1218
 msgid "\tsnapper rollback [number]"
-msgstr "\tsnapper تراجع [number]"
+msgstr "\tالتراجع عن اللقطة [number]"
 
 #: ../client/snapper.cc:349
 msgid "\tsnapper set-config <configdata>"
-msgstr "\tsnapper set-config <configdata>"
+msgstr "\tإعداد snapper <configdata>"
 
 #: ../client/snapper.cc:911
 msgid "\tsnapper status <number1>..<number2>"
-msgstr "\tsnapper status <number1>..<number2>"
+msgstr "\tحالة الملتقط <number1>..<number2>"
 
 #: ../client/snapper.cc:874
 msgid "\tsnapper umount <number>"
-msgstr "\tsnapper umount <رقم>"
+msgstr "\tغصل ملتقط<number>"
 
 #: ../client/snapper.cc:1025
 msgid "\tsnapper undochange <number1>..<number2> [files]"
-msgstr "\tsnapper undochange <رقم1>..<رقم2> [ملفات]"
+msgstr "\tتراجع عن تعديل الملتقط <number1>..<number2> [ملف]"
 
 #: ../client/snapper.cc:1391
 msgid "\tsnapper xadiff <number1>..<number2> [files]"
-msgstr "\tsnapper xadiff <number1>..<number2> [ملفات]"
+msgstr "\tإختلافات الملتقط <number1>..<number2> [ملف]"
 
 #: ../client/snapper.cc:1488
 msgid "    Global options:"
-msgstr "    الخيارات العمومية:"
+msgstr "    خيارات عالمية:"
 
 #: ../client/snapper.cc:594
 msgid "    Options for 'create' command:"
-msgstr "    خيارات أمر 'create':"
+msgstr "    الأمر 'تعديل' خيارات:"
 
 #: ../client/snapper.cc:194
 msgid "    Options for 'create-config' command:"
-msgstr "    خيارات أمر 'create-config':"
+msgstr "    الأمر 'إنشاء تعديل' خيارات:"
 
 #: ../client/snapper.cc:383
 msgid "    Options for 'list' command:"
-msgstr "    خيارات أمر 'list':"
+msgstr "    أمر 'قائمة' خيارات:"
 
 #: ../client/snapper.cc:731
 msgid "    Options for 'modify' command:"
-msgstr "    خيارات أمر 'modify':"
+msgstr "    أمر 'تعديل' خيارات:"
 
 #: ../client/snapper.cc:1220
 msgid "    Options for 'rollback' command:"
-msgstr "    خيارات الأمر 'rollback':"
+msgstr "    خيارات أمر 'التراجع' عن اللقطة:"
 
 #: ../client/snapper.cc:913
 msgid "    Options for 'status' command:"
-msgstr "    خيارات الأمر 'status'‏:"
+msgstr "    أمر 'حالة' خيارات:"
 
 #: ../client/snapper.cc:1027
 msgid "    Options for 'undochange' command:"
-msgstr "    خيارات أمر 'undochange':"
+msgstr "    أمر 'تراجع عن التغيير' خيارات:"
 
 #: ../client/snapper.cc:1325
 msgid "  Cleanup snapshots:"
@@ -216,47 +219,47 @@ msgstr "  تنظيف اللقطات:"
 
 #: ../client/snapper.cc:1390
 msgid "  Comparing snapshots extended attributes:"
-msgstr "  مقارنة السمات الموسعة للقطات:"
+msgstr "  مقارنة لقطات السمات الموسعة:"
 
 #: ../client/snapper.cc:910 ../client/snapper.cc:965
 msgid "  Comparing snapshots:"
-msgstr "  مقارنة اللقطات:"
+msgstr "  مقارنة لقطات:"
 
 #: ../client/snapper.cc:191
 msgid "  Create config:"
-msgstr "  إنشاء تكوين:"
+msgstr "  إنشاء التهيئة:"
 
 #: ../client/snapper.cc:591
 msgid "  Create snapshot:"
-msgstr "  إنشاء لقطة:"
+msgstr "  إنشاء لقطات:"
 
 #: ../client/snapper.cc:262
 msgid "  Delete config:"
-msgstr "  حذف التكوين:"
+msgstr "  إعداد الحذف:"
 
 #: ../client/snapper.cc:782
 msgid "  Delete snapshot:"
-msgstr "  حذف لقطة:"
+msgstr "  حذف اللقطات:"
 
 #: ../client/snapper.cc:292
 msgid "  Get config:"
-msgstr "  الحصول على تهيئة:"
+msgstr "  إنشاء تهيئة:"
 
 #: ../client/snapper.cc:138
 msgid "  List configs:"
-msgstr "  سرد التكوينات:"
+msgstr "  قائمة إعدادات:"
 
 #: ../client/snapper.cc:380
 msgid "  List snapshots:"
-msgstr "  سرد اللقطات:"
+msgstr "  قائمة اللقطات:"
 
 #: ../client/snapper.cc:728
 msgid "  Modify snapshot:"
-msgstr "  تعديل اللقطة:"
+msgstr "  تعديل لقطة:"
 
 #: ../client/snapper.cc:836
 msgid "  Mount snapshot:"
-msgstr "  توصيل اللقطة:"
+msgstr "  تحميل لقطة:"
 
 #: ../client/snapper.cc:1217
 msgid "  Rollback:"
@@ -264,15 +267,15 @@ msgstr "  تراجع:"
 
 #: ../client/snapper.cc:348
 msgid "  Set config:"
-msgstr "  تعيين التهيئة:"
+msgstr "  ضبط التهيئة:"
 
 #: ../client/snapper.cc:873
 msgid "  Umount snapshot:"
-msgstr "  إلغاء توصيل اللقطة:"
+msgstr "  الغ تحميل لقطة:"
 
 #: ../client/snapper.cc:1024
 msgid "  Undo changes:"
-msgstr "  التراجع عن إجراء التغييرات:"
+msgstr "  التراجع عن التغييرات:"
 
 #: ../client/snapper.cc:432 ../client/snapper.cc:481
 msgid "#"
@@ -282,150 +285,150 @@ msgstr "#"
 #: ../client/snapper.cc:1301 ../client/snapper.cc:1308
 #, c-format
 msgid "(Snapshot %d.)"
-msgstr "(اللقطة %d.)"
+msgstr "(لقطة %d.)"
 
-#: ../client/snapper.cc:1669 ../client/errors.cc:88
+#: ../client/snapper.cc:1670 ../client/errors.cc:88
 msgid "ACL error."
-msgstr "خطأ في ACL‏."
+msgstr "خطأ ACL."
 
 #: ../client/snapper.cc:436
 msgid "Cleanup"
 msgstr "تنظيف"
 
-#: ../client/snapper.cc:1624
+#: ../client/snapper.cc:1625
 #, c-format
 msgid "Command '%s' does not work without DBus."
 msgstr "لا يعمل الأمر '%s' دون DBus."
 
 #: ../client/snapper.cc:1337
 msgid "Command 'cleanup' needs one arguments."
-msgstr "يحتاج أمر 'cleanup' إلى وسيطة واحدة."
+msgstr "يحتاج الأمر 'تنظيف' لأحد الوسائط."
 
 #: ../client/snapper.cc:623
 msgid "Command 'create' does not take arguments."
-msgstr "لا يحتاج أمر 'create' إلى وسيطات."
+msgstr "لا يأخذ الأمر 'إنشاء' الوسائط."
 
 #: ../client/snapper.cc:216
 msgid "Command 'create-config' needs one argument."
-msgstr "يحتاج أمر 'create-config' إلى وسيطة واحدة."
+msgstr "يحتاج الأمر 'إنشاء إعداد' لأحدى الوسائط."
 
 #: ../client/snapper.cc:1375
 msgid "Command 'debug' does not take arguments."
-msgstr "لا يأخذ الأمر 'debug' وسيطات"
+msgstr "لا يأخذ الأمر 'تصحيح' الوسائط."
 
 #: ../client/snapper.cc:794
 msgid "Command 'delete' needs at least one argument."
-msgstr "يحتاج الأمر 'delete' إلى وسيطة واحدة على الأقل."
+msgstr "يحتاج الأمر 'حذف' وسيطة واحدة على الأقل."
 
 #: ../client/snapper.cc:274
 msgid "Command 'delete-config' does not take arguments."
-msgstr "لا يأخذ الأمر 'delete-config' وسيطات."
+msgstr "لا يأخذ الأمر 'حذف إعداد' الوسائط."
 
 #: ../client/snapper.cc:977
 msgid "Command 'diff' needs at least one argument."
-msgstr "يحتاج الأمر 'diff' إلى وسيطة واحدة على الأقل."
+msgstr "يحتاج الأمر 'اختلاف' وسيطة واحدة على الأقل."
 
 #: ../client/snapper.cc:304
 msgid "Command 'get-config' does not take arguments."
-msgstr "لا يقبل الأمر 'get-config' الوسائط."
+msgstr "لا يأخذ الأمر 'ضبط التهيئة' الوسائط."
 
 #: ../client/snapper.cc:1481
 msgid "Command 'help' does not take arguments."
-msgstr "لا يحتاج أمر 'help' إلى وسيطات."
+msgstr "لا يأخذ الأمر 'تعليمات' الوسائط."
 
 #: ../client/snapper.cc:400
 msgid "Command 'list' does not take arguments."
-msgstr "لا يحتاج أمر 'list' إلى وسيطات."
+msgstr "لا يأخذ الأمر 'قائمة' الوسائط."
 
 #: ../client/snapper.cc:150
 msgid "Command 'list-configs' does not take arguments."
-msgstr "لا يحتاج أمر 'list-configs' إلى وسيطات."
+msgstr "لا يأخذ الأمر 'إعداد القائمة' الوسائط."
 
 #: ../client/snapper.cc:753
 msgid "Command 'modify' needs at least one argument."
-msgstr "يحتاج الأمر 'modify' إلى وسيطة واحدة على الأقل."
+msgstr "يحتاج الأمر 'تعديل' وسيطة واحدة على الأقل."
 
 #: ../client/snapper.cc:848 ../client/snapper.cc:885
 msgid "Command 'mount' needs at least one argument."
-msgstr "يحتاج الأمر 'mount' إلى وسيطة واحدة على الأقل."
+msgstr "يحتاج الأمر 'تحميل' وسيطة واحدة على الأقل."
 
 #: ../client/snapper.cc:1269
 msgid "Command 'rollback' only available for btrfs."
-msgstr "يتوفر الأمر 'rollback' لـ btrfs فقط."
+msgstr "الأمر 'تراجع' متاح فقط لbtrfs."
 
 #: ../client/snapper.cc:1243
 msgid "Command 'rollback' takes either one or no argument."
-msgstr "يحتاج الأمر 'rollback' إلى وسيطة واحدة أو لا يحتاج إلى أي وسيطات."
+msgstr "الأمر 'تراجع' يأخذ وسيط واحد أو لا يأخذ."
 
 #: ../client/snapper.cc:360
 msgid "Command 'set-config' needs at least one argument."
-msgstr "يحتاج الأمر 'set-config' إلى وسيطة واحدة على الأقل."
+msgstr "يحتاج الأمر 'ضبط التهيئة' وسيطة واحدة على الأقل."
 
 #: ../client/snapper.cc:930
 msgid "Command 'status' needs one argument."
-msgstr "يحتاج الأمر 'status' إلى وسيطة واحدة."
+msgstr "يحتاج الأمر 'الحالة' لأحد الوسائط."
 
 #: ../client/snapper.cc:1044
 msgid "Command 'undochange' needs at least one argument."
-msgstr "يحتاج الأمر 'undochange' إلى وسيطة واحدة على الأقل."
+msgstr "يحتاج الأمر 'تراجع عن التغييرات' وسيطة واحدة على الأقل."
 
 #: ../client/snapper.cc:1416
 msgid "Command 'xadiff' needs at least one argument."
-msgstr "يحتاج الأمر 'xadiff' إلى وسيطة واحدة على الأقل."
+msgstr "يحتاج الأمر 'xadiff' وسيطة واحدة على الأقل."
 
 #: ../client/snapper.cc:157
 msgid "Config"
-msgstr "تكوين"
+msgstr "إعداد"
 
-#: ../client/snapper.cc:1644
+#: ../client/snapper.cc:1645
 #, c-format
 msgid "Config '%s' is invalid."
-msgstr "التكوين '%s' غير صالح."
+msgstr "الإعداد '%s' غير صحيح."
 
-#: ../client/snapper.cc:1639
+#: ../client/snapper.cc:1640
 #, c-format
 msgid "Config '%s' not found."
-msgstr "لم يتم العثور على التكوين '%s'."
+msgstr "الإعداد '%s' غير موجود."
 
 #: ../client/errors.cc:58
 msgid "Config is in use."
-msgstr "التكوين قيد الاستخدام."
+msgstr "الإعداد قيد الاستخدام."
 
 #: ../client/errors.cc:55
 msgid "Config is locked."
-msgstr "التكوين مغلق."
+msgstr "تم قفل الملف Config."
 
 #: ../client/misc.cc:181
 #, c-format
 msgid "Configdata '%s' does not include '=' sign."
-msgstr "لا تتضمن بيانات التكوين '%s' العلامة '='."
+msgstr "معلومات الإعداد '%s' لا تتضمن علامة '=' فيها."
 
 #: ../client/misc.cc:190
 #, c-format
 msgid "Configdata '%s' has empty key."
-msgstr "تشتمل بيانات التكوين '%s' على مفتاح فارغ."
+msgstr "معلوات الإعداد '%s' تحتوي مفاتيح خالية."
 
-#: ../client/snapper.cc:1654 ../client/errors.cc:70
+#: ../client/snapper.cc:1655 ../client/errors.cc:70
 #, c-format
 msgid "Creating config failed (%s)."
-msgstr "فشل إنشاء التكوين (%s)."
+msgstr "فشل إنشاء إعداد (%s)."
 
 #: ../client/snapper.cc:1297
 msgid "Creating read-only snapshot of current system."
-msgstr "إنشاء لقطة للقراءة فقط للنظام الحالي."
+msgstr "إنشاء لقطة للقراءة فقط من النظام الحالي."
 
 #: ../client/snapper.cc:1278
 msgid "Creating read-only snapshot of default subvolume."
-msgstr "إنشاء لقطة للقراءة فقط لوحدة التخزين الفرعية الافتراضية."
+msgstr "إنشاء لقطة للقراءة فقط من الحجم الفرعي الافتراضية."
 
 #: ../client/snapper.cc:1286
 msgid "Creating read-write snapshot of current subvolume."
-msgstr "إنشاء لقطة قراءة-كتابة لوحدة التخزين الحالية."
+msgstr "إنشاء لقطة للقراءة والكتابة من الحجم الفرعي الافتراضية."
 
 #: ../client/snapper.cc:1304
 #, c-format
 msgid "Creating read-write snapshot of snapshot %d."
-msgstr "إنشاء لقطة قراءة-كتابة للقطة %d."
+msgstr "إنشاء لقطة للقراءة والكتابة من اللقطة %d."
 
 #: ../client/errors.cc:76
 msgid "Creating snapshot failed."
@@ -435,10 +438,10 @@ msgstr "فشل إنشاء اللقطة."
 msgid "Date"
 msgstr "التاريخ"
 
-#: ../client/snapper.cc:1659 ../client/errors.cc:73
+#: ../client/snapper.cc:1660 ../client/errors.cc:73
 #, c-format
 msgid "Deleting config failed (%s)."
-msgstr "فشل إنشاء التكوين (%s)‏."
+msgstr "فشل حذف الإعداد (%s)."
 
 #: ../client/errors.cc:79
 msgid "Deleting snapshot failed."
@@ -450,21 +453,21 @@ msgstr "الوصف"
 
 #: ../client/snapper.cc:244
 msgid "Detecting filesystem type failed."
-msgstr "فشل اكتشاف نوع نظام الملفات."
+msgstr "فشل الكشف عن نوع نظام الملفات."
 
 #: ../client/misc.cc:170
 msgid "Empty configdata."
-msgstr "بيانات التكوين فارغة."
+msgstr "معلومات الإعداد خالية."
 
 #: ../client/misc.cc:107 ../client/misc.cc:115
 msgid "Empty userdata."
-msgstr "بيانات المستخدم فارغة."
+msgstr "معلومات المستخدم خالية."
 
 #: ../client/snapper.cc:1198 ../client/snapper.cc:1208
 msgid "Failed to initialize filesystem handler."
-msgstr "فشلت تهيئة معالج نظام الملفات."
+msgstr "فشل في تهيئة نظام معالجة الملفات."
 
-#: ../client/systemd-helper.cc:127 ../client/snapper.cc:1698
+#: ../client/systemd-helper.cc:127 ../client/snapper.cc:1699
 msgid "Failure"
 msgstr "فشل"
 
@@ -476,11 +479,11 @@ msgstr "فشل (%s)."
 #: ../client/snapper.cc:1098
 #, c-format
 msgid "File '%s' not found."
-msgstr "لم يتم العثور على الملف '%s'‏."
+msgstr "الملف '%s' غير موجود."
 
 #: ../client/errors.cc:67
 msgid "IO Error."
-msgstr "خطأ في المدخلات/المخرجات."
+msgstr "خطأ دخْل/خرْج."
 
 #: ../client/misc.cc:94
 msgid "Identical snapshots."
@@ -488,13 +491,13 @@ msgstr "لقطات متطابقة."
 
 #: ../client/errors.cc:52
 msgid "Illegal Snapshot."
-msgstr "لقطة غير شرعية."
+msgstr "اللقطة غير شرعية."
 
-#: ../client/snapper.cc:1664 ../client/errors.cc:49
+#: ../client/snapper.cc:1665 ../client/errors.cc:49
 msgid "Invalid configdata."
-msgstr "بيانات تكوين غير صالحة."
+msgstr "بيانات إعداد غير صالحة."
 
-#: ../client/snapper.cc:1679 ../client/errors.cc:85
+#: ../client/snapper.cc:1680 ../client/errors.cc:85
 msgid "Invalid group."
 msgstr "مجموعة غير صالحة."
 
@@ -505,20 +508,20 @@ msgstr "لقطة غير صالحة '%s'."
 
 #: ../client/misc.cc:85 ../client/snapper.cc:1066
 msgid "Invalid snapshots."
-msgstr "لقطات غير صالحة."
+msgstr "لقطات غير صالح."
 
 #: ../client/snapper.cc:223
 msgid "Invalid subvolume."
-msgstr "وحدة تخزين فرعية غير صالحة."
+msgstr "الحجم الفرعي غير صالح."
 
 #: ../client/snapper.cc:1576
 #, c-format
 msgid "Invalid table style %d."
-msgstr "نمط جدول غير صالح %d."
+msgstr "نمط الجدول غير صالح %d."
 
-#: ../client/snapper.cc:1674 ../client/errors.cc:82
+#: ../client/snapper.cc:1675 ../client/errors.cc:82
 msgid "Invalid user."
-msgstr "مستخدم غير صالح."
+msgstr "المستخدم غير صالح."
 
 #: ../client/errors.cc:46
 msgid "Invalid userdata."
@@ -526,34 +529,34 @@ msgstr "بيانات المستخدم غير صالحة."
 
 #: ../client/snapper.cc:311
 msgid "Key"
-msgstr "المفتاح"
+msgstr "مفتاح"
 
-#: ../client/snapper.cc:1649
+#: ../client/snapper.cc:1650
 #, c-format
 msgid "Listing configs failed (%s)."
-msgstr "فشل سرد التكوينات (%s)."
+msgstr "فشل سرد إعداد (%s)."
 
 #: ../client/utils/GetOpts.cc:68
 #, c-format
 msgid "Missing argument for command option '%s'."
-msgstr "وسيطة مفقودة لخيارات أمر '%s'."
+msgstr "وسيط مفقودة لخيار الأمر '%s'."
 
 #: ../client/utils/GetOpts.cc:66
 #, c-format
 msgid "Missing argument for global option '%s'."
-msgstr "وسيطة مفقودة لخيار عمومي '%s'."
+msgstr "وسيط مفقودة لخيار العالمي '%s'."
 
 #: ../client/snapper.cc:685
 msgid "Missing command argument."
-msgstr "وسيطة الأمر مفقودة."
+msgstr "أمر الوسائط مفقود."
 
 #: ../client/snapper.cc:679
 msgid "Missing or invalid pre-number."
-msgstr "رقم سابق غير صالح أو مفقود."
+msgstr "قبل-العدد مفقود أو غير صالح."
 
-#: ../client/snapper.cc:1602
+#: ../client/snapper.cc:1603
 msgid "No command provided."
-msgstr "لم يتم توفير أي أوامر."
+msgstr "لم يُقَدم أمر."
 
 #: ../client/errors.cc:43
 msgid "No permissions."
@@ -562,33 +565,33 @@ msgstr "لا توجد أذونات."
 #: ../client/snapper.cc:948 ../client/snapper.cc:1059
 #, c-format
 msgid "Opening file '%s' failed."
-msgstr "فشل فتح الملف '%s'."
+msgstr "فتح الملف '%s' فشل."
 
 #: ../client/snapper.cc:529
 msgid "Post #"
-msgstr "بعد #"
+msgstr "قياس ورق #"
 
 #: ../client/snapper.cc:531
 msgid "Post Date"
-msgstr "تاريخ التوزيع"
+msgstr "تاريخ المشاركة"
 
 #: ../client/snapper.cc:433 ../client/snapper.cc:528
 msgid "Pre #"
-msgstr "قبل #"
+msgstr "ما قبل #"
 
 #: ../client/snapper.cc:530
 msgid "Pre Date"
-msgstr "تاريخ مسبق"
+msgstr "ما قبل التاريخ"
 
 #: ../client/snapper.cc:1312
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
-msgstr "إعداد وحدة التخزين الفرعية الافتراضية للقطة %d."
+msgstr "الإعداد الافتراضي للحجم الفرعي للقطة %d."
 
 #: ../client/misc.cc:54
 #, c-format
 msgid "Snapshot '%u' not found."
-msgstr "لم يتم العثور على اللقطة '%u'."
+msgstr "اللقطة '%u' لم يتم العثور على."
 
 #: ../client/errors.cc:61
 msgid "Snapshot is in use."
@@ -596,12 +599,12 @@ msgstr "اللقطة قيد الاستخدام."
 
 #: ../client/snapper.cc:158
 msgid "Subvolume"
-msgstr "وحدة تخزين فرعية"
+msgstr "الحجم الفرعي"
 
-#: ../client/snapper.cc:1603 ../client/snapper.cc:1616
+#: ../client/snapper.cc:1604 ../client/snapper.cc:1617
 #: ../client/utils/GetOpts.cc:61 ../client/utils/GetOpts.cc:69
 msgid "Try 'snapper --help' for more information."
-msgstr "لمزيد من المعلومات، جرب 'تعليمات snapper‏'‏."
+msgstr "جرب 'التقاط --help' لمزيد من المعلومات."
 
 #: ../client/snapper.cc:431
 msgid "Type"
@@ -610,47 +613,47 @@ msgstr "النوع"
 #: ../client/snapper.cc:1357
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
-msgstr "خوارزمية تنظيف غير معروفة '%s'."
+msgstr "خوارزمية تنظيف غير معروف '%s'."
 
-#: ../client/snapper.cc:1615
+#: ../client/snapper.cc:1616
 #, c-format
 msgid "Unknown command '%s'."
 msgstr "أمر غير معروف '%s'."
 
 #: ../client/errors.cc:40
 msgid "Unknown config."
-msgstr "تكوين غير معروف."
+msgstr "إعداد غير معروف."
 
 #: ../client/errors.cc:64
 msgid "Unknown file."
-msgstr "ملف غير معروف."
+msgstr "الملف غير معروف."
 
 #: ../client/utils/GetOpts.cc:58
 #, c-format
 msgid "Unknown global option '%s'."
-msgstr "خيار عمومي غير معروف '%s'."
+msgstr "الخيار العالمي غير معروف '%s'."
 
 #: ../client/utils/GetOpts.cc:60
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
-msgstr "خيار غير معروف '%s' للأمر '%s'"
+msgstr "خيار غير معروف '%s' للأمر '%s'."
 
 #: ../client/snapper.cc:651
 msgid "Unknown type of snapshot."
-msgstr "نوع لقطة غير معروف."
+msgstr "نوع اللقطة غير معروف."
 
 #: ../client/snapper.cc:419
 msgid "Unknown type of snapshots."
-msgstr "نوع غير معروف من اللقطات."
+msgstr "نوع اللقطات غير معروف."
 
 #: ../client/snapper.cc:1577
 #, c-format
 msgid "Use an integer number from %d to %d."
-msgstr "استخدم رقماً صحيحاً من %d إلى %d."
+msgstr "استخدم رقم صحيح من %d إلى %d."
 
 #: ../client/snapper.cc:435 ../client/snapper.cc:483
 msgid "User"
-msgstr "المستخدم"
+msgstr "مستخدم"
 
 #: ../client/snapper.cc:438 ../client/snapper.cc:485 ../client/snapper.cc:533
 msgid "Userdata"
@@ -659,12 +662,12 @@ msgstr "بيانات المستخدم"
 #: ../client/misc.cc:126
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
-msgstr "لا تتضمن بيانات المستخدم '%s' العلامة '='."
+msgstr "معلومات المستخدم '%s' لا تتضمن علامة '=' فيها."
 
 #: ../client/misc.cc:135
 #, c-format
 msgid "Userdata '%s' has empty key."
-msgstr "تشتمل بيانات المستخدم '%s' على مفتاح فارغ."
+msgstr "معلوات المستخدم '%s' تحتوي مفاتيح خالية."
 
 #: ../client/snapper.cc:312
 msgid "Value"
@@ -688,17 +691,17 @@ msgstr "حذف %s"
 #: ../client/snapper.cc:1174
 #, c-format
 msgid "failed to create %s"
-msgstr "فشل إنشاء %s"
+msgstr "فشل في إنشاء %s"
 
 #: ../client/snapper.cc:1180
 #, c-format
 msgid "failed to delete %s"
-msgstr "فشل حذف %s"
+msgstr "فشل في حذف %s"
 
 #: ../client/snapper.cc:1177
 #, c-format
 msgid "failed to modify %s"
-msgstr "فشل تعديل %s"
+msgstr "فشل في تعديل %s"
 
 #: ../client/snapper.cc:1161
 #, c-format
@@ -707,8 +710,251 @@ msgstr "تعديل %s"
 
 #: ../client/snapper.cc:1129
 msgid "nothing to do"
-msgstr "لا إجراء لاتخاذه"
+msgstr "لا يوجد ما يمكن فعله"
 
 #: ../client/snapper.cc:1485
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "الاستخدام: snapper [--global-options]‎ <أمر> [command-options--] [أمر-وسيطات]"
+msgstr "استخدام: اللقطة [--global-options] <command> [--command-options] [أمر-وسائط]"
+
+#~ msgid "Use an integer number from %d to %d"
+#~ msgstr "استخدام رقم صحيح من %d إلى %d"
+
+#~ msgid "\t--disable-filters\t\tDisable filters."
+#~ msgstr "\t--disable-filters\t\tإيقاف المرشحات."
+
+#~ msgid "Command failed (%s). See log for more information."
+#~ msgstr "فشل أمر (%s). انظر السجل للحصول على مزيد من المعلومات."
+
+#, fuzzy
+#~| msgid "  Comparing snapshots:"
+#~ msgid "comparing snapshots..."
+#~ msgstr "  مقارنة لقطات:"
+
+#~ msgid "done"
+#~ msgstr "تم"
+
+#~ msgid "undoing change done"
+#~ msgstr "تم التراجع عن التغييرات"
+
+#, fuzzy
+#~| msgid "undoing change done"
+#~ msgid "undoing change..."
+#~ msgstr "تم التراجع عن التغييرات"
+
+#~ msgid "File /etc/sysconfig/snapper is not available."
+#~ msgstr "الملف /etc/sysconfig/snapper غير متوفر."
+
+#~ msgid "Reason not known."
+#~ msgstr "السبب غير معروف."
+
+#~ msgid "Configuration not found."
+#~ msgstr "الإعداد غير موجود."
+
+#~ msgid ""
+#~ "Failed to initialize snapper library:\n"
+#~ "%1"
+#~ msgstr ""
+#~ "فشل تهيئة مكتبة الملتقط:\n"
+#~ "%1"
+
+#~ msgid "Initializing Snapper"
+#~ msgstr "تهيئة الملتقط"
+
+#~ msgid "Read the list of snapshots"
+#~ msgstr "قراءة قائمة اللقطات"
+
+#~ msgid "Reading the database..."
+#~ msgstr "تتم الآن قراءة قاعدة البيانات..."
+
+#~ msgid "Finished"
+#~ msgstr "انتهى"
+
+#~ msgid "Restoring Files..."
+#~ msgstr "تتم الآن استعادة الملفات..."
+
+#~ msgid "Deleted %1\n"
+#~ msgstr "حذف %1\n"
+
+#~ msgid "%1 skipped\n"
+#~ msgstr "%1 تخطي\n"
+
+#~ msgid "Snapshots"
+#~ msgstr "اللقطات"
+
+#~ msgid "Single"
+#~ msgstr "مفرد"
+
+#~ msgid "Pre & Post"
+#~ msgstr "قبل وبعد"
+
+#~ msgid "Current Configuration"
+#~ msgstr "الإعدادات الحالية"
+
+#~ msgid "ID"
+#~ msgstr "المعرف"
+
+#~ msgid "Start Date"
+#~ msgstr "تاريخ البدء"
+
+#~ msgid "Reading list of snapshots..."
+#~ msgstr "تتم الآن قراءة قائمة اللقطات..."
+
+#~ msgid "Selected Snapshot Overview"
+#~ msgstr "نظرة عامة حول اللقطة مختارة"
+
+#~ msgid "%1: %2"
+#~ msgstr "%1: %2"
+
+#~ msgid "Calculating changed files..."
+#~ msgstr "يتم الآن حساب الملفات التي تم تغييرها..."
+
+#~ msgid "Calculating file modifications..."
+#~ msgstr "يتم الآن حساب التعديلات على الملف..."
+
+#~ msgid "File mode was changed from '%1' to '%2'."
+#~ msgstr "تم تغيير وضع الملف من '%1' إلى '%2'."
+
+#~ msgid "File user ownership was changed from '%1' to '%2'."
+#~ msgstr "تم تغيير ملكية ملفات المستخدم من '%1' إلى '%2'."
+
+#~ msgid "File group ownership was changed from '%1' to '%2'."
+#~ msgstr "تم تغيير ملكية ملفات المجموعة من '%1' إلى '%2'."
+
+#~ msgid "R&estore from First"
+#~ msgstr "استعادة من الأول"
+
+#~ msgid "Restore"
+#~ msgstr "استعادة"
+
+#~ msgid "Res&tore from Second"
+#~ msgstr "استعادة من الثاني"
+
+#~ msgid "Show the difference between snapshot and current system"
+#~ msgstr "إظهار الفرق بين اللقطة والنظام الحالي"
+
+#~ msgid "Show the difference between current and selected snapshot:"
+#~ msgstr "إظهار الفرق بين لقطة الحالية ومختارة:"
+
+#~ msgid "Show the difference between first and second snapshot"
+#~ msgstr "إظهار الفرق بين اللقطة الأولى والثانية"
+
+#~ msgid "Show the difference between first snapshot and current system"
+#~ msgstr "إظهار الفرق بين اللقطة الأولى والنظام الحالي"
+
+#~ msgid "Show the difference between second snapshot and current system"
+#~ msgstr "إظهار الفرق بين اللقطة الثانية والنظام الحالي"
+
+#~ msgid "Time of taking the first snapshot:"
+#~ msgstr "وقت أخذ اللقطة الأولى:"
+
+#~ msgid "Time of taking the second snapshot:"
+#~ msgstr "وقت أخذ اللقطة الثانية:"
+
+#~ msgid "Time of taking the snapshot:"
+#~ msgstr "وقت أخذ اللقطة:"
+
+#~ msgid "Restore Selected"
+#~ msgstr "استعادة المحدّدة"
+
+#~ msgid ""
+#~ "Do you want to delete the file\n"
+#~ "\n"
+#~ "%1\n"
+#~ "\n"
+#~ "from current system?"
+#~ msgstr ""
+#~ "هل تريد حذف الملف\n"
+#~ "\n"
+#~ "%1\n"
+#~ "\n"
+#~ "من النظام الحالي؟"
+
+#~ msgid ""
+#~ "Do you want to copy the file\n"
+#~ "\n"
+#~ "%1\n"
+#~ "\n"
+#~ "from snapshot '%2' to current system?"
+#~ msgstr ""
+#~ "هل تريد نسخ الملف\n"
+#~ "\n"
+#~ "%1\n"
+#~ "\n"
+#~ "من اللقطات '%2' إلى النظام الحالي؟"
+
+#~ msgid "No file was selected for restoring"
+#~ msgstr "لم يتم تحديد ملف للإستعادة"
+
+#~ msgid "Restoring files"
+#~ msgstr "استعادة الملفات"
+
+#~ msgid ""
+#~ "<p>These files will be restored from snapshot '%1':</p>\n"
+#~ "<p>\n"
+#~ "%2\n"
+#~ "</p>\n"
+#~ "<p>Files existing in original snapshot will be copied to current system.</p>\n"
+#~ "<p>Files that did not exist in the snapshot will be deleted.</p>Are you sure?"
+#~ msgstr ""
+#~ "<p>ستتم استعادة هذه الملفات من اللقطات '%1':</p>\n"
+#~ "<p>\n"
+#~ "%2\n"
+#~ "</p>\n"
+#~ "<p>سيتم نسخ الملفات الموجودة في اللقطة الأصلية للنظام الحالي.</p>\n"
+#~ "<p>سيتم حذف الملفات التي لم تكن موجودة في اللقطة.</p>هل أنت متأكد؟"
+
+#~ msgid ""
+#~ "<p><b><big>Reading the list of snapshots</big></b><br>\n"
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p><b><big>قراءة قائمة اللقطات</big></b><br>\n"
+#~ "</p>\n"
+
+#~ msgid ""
+#~ "<p><b><big>Snapshots Configuration</big></b><p>\n"
+#~ "<p>The table shows a list of root filesystem snapshots. There are three types\n"
+#~ "of snapshots, <b>single</b>, <b>pre</b> and <b>post</b>. Single snapshots are\n"
+#~ "used for storing the file system state in a certain time, while Pre and Post are used to define the changes done by special operation performed between taking those two snapshots. Pre and Post snapshots are coupled together in the table.</p>\n"
+#~ "<p>Select a snapshot or snapshot couple and click <b>Show Changes</b> to see the\n"
+#~ "new file system changes in the specified snapshot.</p>\n"
+#~ msgstr ""
+#~ "<p><b><big>إعداد اللقطات</big></b><p>\n"
+#~ "<p>ويبين الجدول قائمة لقطات جذر نظام الملفات. وهناك ثلاثة أنواع من اللقطات <b>واحده</b>و <b>قبل</b> و <b>بعد</b>. لقطة واحدة تستخدم لتخزين حالة النظام في وقت معين، في حين تستخدم قبل وبعد لتعريف تغييرات النظام قبل القيام بالعملية الخاصة التي أنجزت قبل أخذ تلك اللقطات وبعدها. اللقطات قبل وبعد تقترن معا في الجدول.</p> \n"
+#~ "<p> لقطة أو زوج لقطات وانقر فوق <b>عرض التغييرات</b> لمشاهدة التغييرات نظام الملف الجديد في اللقطة المحددة.</p>\n"
+
+#~ msgid ""
+#~ "<p><b><big>Snapshot Overview</big></b><p>\n"
+#~ "<p>\n"
+#~ "The tree shows all the files that were modified between creating the first ('pre') and second ('post') snapshot. On the right side, you see the description generated when the first snapshot was created and the time of creation for both snapshots.\n"
+#~ "</p>\n"
+#~ "<p>\n"
+#~ "When a file is selected in the tree, you see the changes done to it. By default, changes between selected coupled snapshots are shown, but it is possible to compare the file with different versions.\n"
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p><b><big>نظرة عامة على اللقطة</big></b><p>\n"
+#~ "<p>\n"
+#~ "الشجرة تظهر كافة الملفات التي تم تعديلها بين إنشاء الأولى ('قبل') واللقطة الثانية لقطة ('بعد') . على الجانب الأيسر يمكنك مشاهدة الوصف عند إنشاء اللقطة الأولى ووقت الإنشاء لكل اللقطات.\n"
+#~ "</p>\n"
+#~ "<p>\n"
+#~ "عند تحديد ملف في الشجرة، فإنك تشاهد التغييرات التي لحقت بها. بشكل افتراضي يتم إظهار التغييرات بين اللقطات المقرونة مختارة, ولكن من الممكن لمقارنة الملف مع الإصدارات المختلفة.\n"
+#~ "</p>\n"
+
+#~ msgid ""
+#~ "<p><b><big>Snapshot Overview</big></b><p>\n"
+#~ "<p>\n"
+#~ "The tree shows all the files that differ in a selected snapshot and the current system. On the right side, you see the snapshot description and time of its creation.\n"
+#~ "</p>\n"
+#~ "<p>\n"
+#~ "When a file is selected in the tree, you can see the its difference between snapshot version and current system.\n"
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p><b><big>نظرة عامة على اللقطة</big></b><p>\n"
+#~ "<p>\n"
+#~ "الشجرة تظهر كافة الملفات المختلفة بين اللقطة المختارة والنظام الحالي. على \n"
+#~ "الجانب الأيسر، يمكنك مشاهدة وصف اللقطة ووقت إنشائها.\n"
+#~ "</p>\n"
+#~ "<p>عند تحديد ملف في الشجرة، يمكنك أن ترى الفرق بين نسخة لقطة والنظام الحالي.\n"
+#~ "</p>\n"
+
+#~ msgid "Configuration of system snapshots"
+#~ msgstr "تكوين نظام اللقطات"
