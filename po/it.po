@@ -1,18 +1,18 @@
-# Copyright (C) 2006 SuSE Linux Products GmbH, Nuernberg
-# This file is distributed under the same license as the package.
-#
+# Andrea Turrini <andrea.turrini@gmail.com>, 2013, 2014.
 msgid ""
 msgstr ""
-"Project-Id-Version: snapper\n"
+"Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-01 11:36+0200\n"
-"PO-Revision-Date: 2014-07-15 11:27\n"
-"Last-Translator: Novell language <language@novell.com>\n"
-"Language-Team: Novell language <language@novell.com>\n"
-"Language: \n"
+"POT-Creation-Date: 2014-09-29 11:55+0200\n"
+"PO-Revision-Date: 2014-07-03 12:52+0800\n"
+"Last-Translator: Andrea Turrini <andrea.turrini@gmail.com>\n"
+"Language-Team: Italian <opensuse-translation@opensuse.org>\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../client/snapper.cc:599 ../client/snapper.cc:733
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
@@ -20,7 +20,7 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritmo di pulitura per l'istantanea
 
 #: ../client/snapper.cc:1223
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritmo di pulizia per gli snapshot."
+msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritmo di pulitura per le istantanee."
 
 #: ../client/snapper.cc:601
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
@@ -28,27 +28,27 @@ msgstr "\t--command <comando>\tLancia il comando e crea istantanee pre e post."
 
 #: ../client/snapper.cc:1494
 msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <nome>\t\tImposta il nome della configurazione da usare."
+msgstr "\t--config, -c <nome>\t\tImposta il node della configurazione da usare."
 
 #: ../client/snapper.cc:598 ../client/snapper.cc:732
 msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <descrizione>\tDescrizione dello snapshot."
+msgstr "\t--description, -d <descrizione>\tDescrizione dell'istantanea."
 
 #: ../client/snapper.cc:1222
 msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr "\t--description, -d <description>\tDescrizione degli snapshot."
+msgstr "\t--description, -d <descrizione>\tDescrizione delle istantanee."
 
 #: ../client/snapper.cc:195
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--fstype, -f <tipofs>\t\tImposta manualmente il tipo di file system."
+msgstr "\t--fstype, -f <fstype>\t\tImposta manualmente il tipo di file system."
 
 #: ../client/snapper.cc:1028
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <file>\t\tLeggi i file per cui annullare le modifiche dal file."
+msgstr "\t--file, -f <file>\t\tLegge i file per cui ripristinare le modifiche dal file."
 
 #: ../client/snapper.cc:1492
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr "\t--iso\t\t\t\tVisualizza date e orari in formato ISO."
+msgstr "\t--iso\t\t\t\tMostra le date e gli orari in formato ISO."
 
 #: ../client/snapper.cc:1495
 msgid "\t--no-dbus\t\t\tOperate without DBus."
@@ -60,19 +60,19 @@ msgstr "\t--output, -o <file>\t\tSalva lo stato sul file."
 
 #: ../client/snapper.cc:596
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <numero>\t\tNumero del pre-snapshot corrispondente."
+msgstr "\t--pre-number <numero>\t\tNumero della pre-istantanea corrispondente."
 
 #: ../client/snapper.cc:597
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tStampa il numero dello snapshot creato."
+msgstr "\t--print-number, -p\t\tStampa il numero dell'istantanea creata."
 
 #: ../client/snapper.cc:1221
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr "\t--print-number, -p\t\tStampa il numero del secondo snapshot creato."
+msgstr "\t--print-number, -p\t\tStampa il numero della seconda istantanea creata."
 
 #: ../client/snapper.cc:1489
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\tSopprimi l'output normale."
+msgstr "\t--quiet, -q\t\t\tSopprime l'output normale."
 
 #: ../client/snapper.cc:1493
 msgid "\t--table-style, -t <style>\tTable style (integer)."
@@ -84,11 +84,11 @@ msgstr "\t--template, -t <nome>\t\tNome del modello di configurazione da usare."
 
 #: ../client/snapper.cc:595
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <tipo>\t\tTipo per snapshot."
+msgstr "\t--type, -t <tipo>\t\tTipo per l'istantanea."
 
 #: ../client/snapper.cc:384
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <tipo>\t\tTipo di snapshot da elencare."
+msgstr "\t--type, -t <tipo>\t\tTipo di istantanee da elencare."
 
 #: ../client/snapper.cc:600 ../client/snapper.cc:734
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
@@ -96,11 +96,11 @@ msgstr "\t--userdata, -u <datiutente>\tDati utente per l'istantanea."
 
 #: ../client/snapper.cc:1224
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata, -u <userdata>\tDati utente per gli snapshot."
+msgstr "\t--userdata, -u <datiutente>\tDati utente per le istantanee."
 
 #: ../client/snapper.cc:1491
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr "\t--utc\t\t\t\tVisualizza date e ore in UTC."
+msgstr "\t--utc\t\t\t\tMostra le date e gli orari in UTC."
 
 #: ../client/snapper.cc:1490
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
@@ -108,11 +108,11 @@ msgstr "\t--verbose, -v\t\t\tIncrementa la verbosità."
 
 #: ../client/snapper.cc:1496
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tStampa la versione ed esci."
+msgstr "\t--version\t\t\tStampa la versione ed esce."
 
 #: ../client/snapper.cc:1326
 msgid "\tsnapper cleanup <cleanup-algorithm>"
-msgstr "\tsnapper cleanup <algoritmo-di-pulizia>"
+msgstr "\tsnapper cleanup <algoritmo-di-pulitura>"
 
 #: ../client/snapper.cc:592
 msgid "\tsnapper create"
@@ -120,7 +120,7 @@ msgstr "\tsnapper create"
 
 #: ../client/snapper.cc:192
 msgid "\tsnapper create-config <subvolume>"
-msgstr "\tsnapper create-config <sottovolume>"
+msgstr "\tsnapper create-config <sotto-volume>"
 
 #: ../client/snapper.cc:783
 msgid "\tsnapper delete <number>"
@@ -212,15 +212,15 @@ msgstr "    Opzioni per il comando 'undochange':"
 
 #: ../client/snapper.cc:1325
 msgid "  Cleanup snapshots:"
-msgstr "  Pulizia snapshot:"
+msgstr "  Pulitura istantanee:"
 
 #: ../client/snapper.cc:1390
 msgid "  Comparing snapshots extended attributes:"
-msgstr "  Confronto attributi estesi delle snapshot:"
+msgstr "  Confronto attributi estesi delle istantanee:"
 
 #: ../client/snapper.cc:910 ../client/snapper.cc:965
 msgid "  Comparing snapshots:"
-msgstr "  Confronto snapshot:"
+msgstr "  Confronto istantanee:"
 
 #: ../client/snapper.cc:191
 msgid "  Create config:"
@@ -228,7 +228,7 @@ msgstr "  Creazione configurazione:"
 
 #: ../client/snapper.cc:591
 msgid "  Create snapshot:"
-msgstr "  Creazione snapshot:"
+msgstr "  Creazione istantanea:"
 
 #: ../client/snapper.cc:262
 msgid "  Delete config:"
@@ -236,7 +236,7 @@ msgstr "  Eliminazione configurazione:"
 
 #: ../client/snapper.cc:782
 msgid "  Delete snapshot:"
-msgstr "  Elimina snapshot:"
+msgstr "  Eliminazione istantanee:"
 
 #: ../client/snapper.cc:292
 msgid "  Get config:"
@@ -248,19 +248,19 @@ msgstr "  Elenco configurazioni:"
 
 #: ../client/snapper.cc:380
 msgid "  List snapshots:"
-msgstr "  Elenco snapshot:"
+msgstr "  Elenco istantanee:"
 
 #: ../client/snapper.cc:728
 msgid "  Modify snapshot:"
-msgstr "  Modifica snapshot:"
+msgstr "  Modifica istantanee:"
 
 #: ../client/snapper.cc:836
 msgid "  Mount snapshot:"
-msgstr "  Montaggio snapshot:"
+msgstr "  Montaggio istantanea:"
 
 #: ../client/snapper.cc:1217
 msgid "  Rollback:"
-msgstr "  Rollback:"
+msgstr "  Ripristina:"
 
 #: ../client/snapper.cc:348
 msgid "  Set config:"
@@ -268,11 +268,11 @@ msgstr "  Impostazione configurazione:"
 
 #: ../client/snapper.cc:873
 msgid "  Umount snapshot:"
-msgstr "  Smontaggio snapshot:"
+msgstr "  Smontaggio istantanea:"
 
 #: ../client/snapper.cc:1024
 msgid "  Undo changes:"
-msgstr "  Annullamento modifiche:"
+msgstr "  Ripristina le modifiche:"
 
 #: ../client/snapper.cc:432 ../client/snapper.cc:481
 msgid "#"
@@ -282,17 +282,18 @@ msgstr "#"
 #: ../client/snapper.cc:1301 ../client/snapper.cc:1308
 #, c-format
 msgid "(Snapshot %d.)"
-msgstr "(Snapshot %d.)"
+msgstr "(Istantanea %d.)"
 
-#: ../client/snapper.cc:1669 ../client/errors.cc:88
+# error box title
+#: ../client/snapper.cc:1670 ../client/errors.cc:88
 msgid "ACL error."
 msgstr "Errore ACL."
 
 #: ../client/snapper.cc:436
 msgid "Cleanup"
-msgstr "Pulizia"
+msgstr "Pulitura"
 
-#: ../client/snapper.cc:1624
+#: ../client/snapper.cc:1625
 #, c-format
 msgid "Command '%s' does not work without DBus."
 msgstr "Il comando '%s' non funziona senza DBus."
@@ -351,11 +352,11 @@ msgstr "Il comando 'mount' richiede almeno un argomento."
 
 #: ../client/snapper.cc:1269
 msgid "Command 'rollback' only available for btrfs."
-msgstr "Comando 'rollback' disponibile solo per btrfs."
+msgstr "Il comando 'rollback' è disponibile solo per btrfs."
 
 #: ../client/snapper.cc:1243
 msgid "Command 'rollback' takes either one or no argument."
-msgstr "Il comando 'rollback' non può includere più di un argomento."
+msgstr "Il comando 'rollback' richiede zero oppure un argomento."
 
 #: ../client/snapper.cc:360
 msgid "Command 'set-config' needs at least one argument."
@@ -377,12 +378,12 @@ msgstr "Il comando 'xadiff' richiede almeno un argomento."
 msgid "Config"
 msgstr "Configurazione"
 
-#: ../client/snapper.cc:1644
+#: ../client/snapper.cc:1645
 #, c-format
 msgid "Config '%s' is invalid."
 msgstr "Configurazione '%s' non valida."
 
-#: ../client/snapper.cc:1639
+#: ../client/snapper.cc:1640
 #, c-format
 msgid "Config '%s' not found."
 msgstr "Configurazione '%s' non trovata."
@@ -398,34 +399,34 @@ msgstr "La configurazione è bloccata."
 #: ../client/misc.cc:181
 #, c-format
 msgid "Configdata '%s' does not include '=' sign."
-msgstr "I dati di configurazione '%s' non includono il segno '='."
+msgstr "Il dato di configurazione '%s' non contiene il simbolo '='."
 
 #: ../client/misc.cc:190
 #, c-format
 msgid "Configdata '%s' has empty key."
-msgstr "I dati di configurazione '%s' includono una chiave vuota."
+msgstr "Il dato di configurazione '%s' ha la chiave vuota."
 
-#: ../client/snapper.cc:1654 ../client/errors.cc:70
+#: ../client/snapper.cc:1655 ../client/errors.cc:70
 #, c-format
 msgid "Creating config failed (%s)."
-msgstr "Creazione della configurazione non riuscita (%s)."
+msgstr "Creazione della configurazione fallita (%s)."
 
 #: ../client/snapper.cc:1297
 msgid "Creating read-only snapshot of current system."
-msgstr "Creazione snapshot di sola lettura del sistema corrente."
+msgstr "Creazione di un'istantanea in sola lettura del sistema corrente."
 
 #: ../client/snapper.cc:1278
 msgid "Creating read-only snapshot of default subvolume."
-msgstr "Creazione snapshot di sola lettura del volume secondario di default."
+msgstr "Creazione di un'istantanea in sola lettura del sotto-volume predefinito."
 
 #: ../client/snapper.cc:1286
 msgid "Creating read-write snapshot of current subvolume."
-msgstr "Creazione snapshot di lettura/scrittura del volume secondario corrente."
+msgstr "Creazione di un'istantanea in lettura/scrittura del sotto-volume corrente."
 
 #: ../client/snapper.cc:1304
 #, c-format
 msgid "Creating read-write snapshot of snapshot %d."
-msgstr "Creazione snapshot di lettura/scrittura dello snapshot %d."
+msgstr "Creazione di un'istantanea in lettura/scrittura dell'istantanea %d."
 
 #: ../client/errors.cc:76
 msgid "Creating snapshot failed."
@@ -435,7 +436,7 @@ msgstr "Creazione dell'istantanea fallita."
 msgid "Date"
 msgstr "Data"
 
-#: ../client/snapper.cc:1659 ../client/errors.cc:73
+#: ../client/snapper.cc:1660 ../client/errors.cc:73
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Eliminazione della configurazione fallita (%s)."
@@ -450,7 +451,7 @@ msgstr "Descrizione"
 
 #: ../client/snapper.cc:244
 msgid "Detecting filesystem type failed."
-msgstr "Rilevamento del tipo di file system non riuscito."
+msgstr "Rilevamento del tipo di file system fallito."
 
 #: ../client/misc.cc:170
 msgid "Empty configdata."
@@ -462,61 +463,62 @@ msgstr "Dati utente vuoti."
 
 #: ../client/snapper.cc:1198 ../client/snapper.cc:1208
 msgid "Failed to initialize filesystem handler."
-msgstr "Impossibile inizializzare il gestore file system."
+msgstr "Errore nell'inizializzazione del gestore del file system."
 
-#: ../client/systemd-helper.cc:127 ../client/snapper.cc:1698
+#: ../client/systemd-helper.cc:127 ../client/snapper.cc:1699
 msgid "Failure"
-msgstr "Errore"
+msgstr "Operazione non riuscita"
 
 #: ../client/errors.cc:90
 #, c-format
 msgid "Failure (%s)."
-msgstr "Errore (%s)."
+msgstr "Operazione non riuscita (%s)."
 
 #: ../client/snapper.cc:1098
 #, c-format
 msgid "File '%s' not found."
 msgstr "File '%s' non trovato."
 
+# error box title
 #: ../client/errors.cc:67
 msgid "IO Error."
 msgstr "Errore di I/O."
 
 #: ../client/misc.cc:94
 msgid "Identical snapshots."
-msgstr "Snapshot identici."
+msgstr "Istantanee identiche."
 
 #: ../client/errors.cc:52
 msgid "Illegal Snapshot."
 msgstr "Istantanea illegale."
 
-#: ../client/snapper.cc:1664 ../client/errors.cc:49
+#: ../client/snapper.cc:1665 ../client/errors.cc:49
 msgid "Invalid configdata."
 msgstr "Dati di configurazione non validi."
 
-#: ../client/snapper.cc:1679 ../client/errors.cc:85
+#: ../client/snapper.cc:1680 ../client/errors.cc:85
 msgid "Invalid group."
 msgstr "Gruppo non valido."
 
 #: ../client/misc.cc:47 ../client/misc.cc:71
 #, c-format
 msgid "Invalid snapshot '%s'."
-msgstr "Snapshot '%s' non valido."
+msgstr "Istantanea '%s' non valida."
 
 #: ../client/misc.cc:85 ../client/snapper.cc:1066
 msgid "Invalid snapshots."
-msgstr "Snapshot non validi."
+msgstr "Istantanee non valide."
 
 #: ../client/snapper.cc:223
 msgid "Invalid subvolume."
-msgstr "Sottovolume non valido."
+msgstr "Sotto-volume non valido."
 
 #: ../client/snapper.cc:1576
 #, c-format
 msgid "Invalid table style %d."
 msgstr "Stile tabella %d non valido."
 
-#: ../client/snapper.cc:1674 ../client/errors.cc:82
+#: ../client/snapper.cc:1675 ../client/errors.cc:82
 msgid "Invalid user."
 msgstr "Utente non valido."
 
@@ -528,10 +530,10 @@ msgstr "Dati utente non validi."
 msgid "Key"
 msgstr "Chiave"
 
-#: ../client/snapper.cc:1649
+#: ../client/snapper.cc:1650
 #, c-format
 msgid "Listing configs failed (%s)."
-msgstr "Elenco dei file di configurazione non riuscito (%s)."
+msgstr "Elenco dei file di configurazione fallito (%s)."
 
 #: ../client/utils/GetOpts.cc:68
 #, c-format
@@ -551,7 +553,7 @@ msgstr "Argomento del comando mancante."
 msgid "Missing or invalid pre-number."
 msgstr "Pre-numero mancante o non valido."
 
-#: ../client/snapper.cc:1602
+#: ../client/snapper.cc:1603
 msgid "No command provided."
 msgstr "Nessun comando fornito."
 
@@ -562,7 +564,7 @@ msgstr "Permessi mancanti."
 #: ../client/snapper.cc:948 ../client/snapper.cc:1059
 #, c-format
 msgid "Opening file '%s' failed."
-msgstr "Apertura del file '%s' non riuscita."
+msgstr "Apertura del file '%s' fallita."
 
 #: ../client/snapper.cc:529
 msgid "Post #"
@@ -583,12 +585,12 @@ msgstr "Pre data"
 #: ../client/snapper.cc:1312
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
-msgstr "Impostazione volume secondario di default sullo snapshot %d."
+msgstr "Impostazione del sotto-volume predefinito all'istantanea %d."
 
 #: ../client/misc.cc:54
 #, c-format
 msgid "Snapshot '%u' not found."
-msgstr "Snapshot '%u' non trovata."
+msgstr "Istantanea '%u' non trovata."
 
 #: ../client/errors.cc:61
 msgid "Snapshot is in use."
@@ -596,9 +598,9 @@ msgstr "L'istantanea è in uso."
 
 #: ../client/snapper.cc:158
 msgid "Subvolume"
-msgstr "Sottovolume"
+msgstr "Sotto-volume"
 
-#: ../client/snapper.cc:1603 ../client/snapper.cc:1616
+#: ../client/snapper.cc:1604 ../client/snapper.cc:1617
 #: ../client/utils/GetOpts.cc:61 ../client/utils/GetOpts.cc:69
 msgid "Try 'snapper --help' for more information."
 msgstr "Per ulteriori informazioni, usare 'snapper --help'."
@@ -612,7 +614,7 @@ msgstr "Tipo"
 msgid "Unknown cleanup algorithm '%s'."
 msgstr "Algoritmo di pulizia '%s' sconosciuto."
 
-#: ../client/snapper.cc:1615
+#: ../client/snapper.cc:1616
 #, c-format
 msgid "Unknown command '%s'."
 msgstr "Comando '%s' sconosciuto."
@@ -637,16 +639,16 @@ msgstr "Opzione '%s' sconosciuta per il comando '%s'."
 
 #: ../client/snapper.cc:651
 msgid "Unknown type of snapshot."
-msgstr "Tipo di snapshot sconosciuto."
+msgstr "Tipo sconosciuto di istantanea."
 
 #: ../client/snapper.cc:419
 msgid "Unknown type of snapshots."
-msgstr "Tipi di snapshot sconosciuti."
+msgstr "Tipo sconosciuto di istantanee."
 
 #: ../client/snapper.cc:1577
 #, c-format
 msgid "Use an integer number from %d to %d."
-msgstr "Usa un numero intero compreso tra %d e %d."
+msgstr "Usare un numero intero da %d a %d."
 
 #: ../client/snapper.cc:435 ../client/snapper.cc:483
 msgid "User"
@@ -659,12 +661,12 @@ msgstr "Dati utente"
 #: ../client/misc.cc:126
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
-msgstr "I dati utente '%s' non includono il segno '='."
+msgstr "Il dato utente '%s' non contiene il simbolo '='."
 
 #: ../client/misc.cc:135
 #, c-format
 msgid "Userdata '%s' has empty key."
-msgstr "I dati utente '%s' includono una chiave vuota."
+msgstr "Il dato utente '%s' ha la chiave vuota."
 
 #: ../client/snapper.cc:312
 msgid "Value"
@@ -688,17 +690,17 @@ msgstr "eliminazione di %s"
 #: ../client/snapper.cc:1174
 #, c-format
 msgid "failed to create %s"
-msgstr "creazione di %s non riuscita"
+msgstr "creazione di %s fallita"
 
 #: ../client/snapper.cc:1180
 #, c-format
 msgid "failed to delete %s"
-msgstr "eliminazione di %s non riuscita"
+msgstr "eliminazione di %s fallita"
 
 #: ../client/snapper.cc:1177
 #, c-format
 msgid "failed to modify %s"
-msgstr "modifica di %s non riuscita"
+msgstr "modifica di %s fallita"
 
 #: ../client/snapper.cc:1161
 #, c-format
@@ -707,8 +709,49 @@ msgstr "modifica di %s"
 
 #: ../client/snapper.cc:1129
 msgid "nothing to do"
-msgstr "niente da eseguire"
+msgstr "niente da eseguire."
 
 #: ../client/snapper.cc:1485
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "uso: snapper [--opzioni-globali] <comando> [--opzioni-del-comando] [argomenti-del-comando]"
+msgstr ""
+"Uso:\n"
+"\tsnapper [--opzioni-globali] <comando> [--opzioni-del-comando] [argomenti-del-comando]"
+
+#~ msgid "\t--disable-filters\t\tDisable filters."
+#~ msgstr "\t--disable-filters\t\tDisabilita i filtri."
+
+#~ msgid "Command failed (%s). See log for more information."
+#~ msgstr "Comando fallito (%s). Si veda il log per ulteriori informazioni."
+
+#~ msgid "comparing snapshots..."
+#~ msgstr "confronto delle istantanee in corso..."
+
+#~ msgid "done"
+#~ msgstr "fatto"
+
+#~ msgid "undoing change done"
+#~ msgstr "ripristino della modifica fatto"
+
+#~ msgid "undoing change..."
+#~ msgstr "ripristino della modifica..."
+
+#~ msgid "Command 'modify' needs one argument."
+#~ msgstr "Il comando 'modify' richiede un argomento."
+
+#~ msgid "    Options for 'diff' command:"
+#~ msgstr "    Opzioni per il comando 'diff':"
+
+#~ msgid "Command 'diff' needs one argument."
+#~ msgstr "Il comando 'diff' richiede un argomento."
+
+#~ msgid "\t--file, -f <file>\t\tRun diff for file."
+#~ msgstr "\t--file, -f <file>\t\tEsegue diff per il file."
+
+#~ msgid "Command 'diff' needs two arguments."
+#~ msgstr "Il comando 'diff' richiede due argomenti."
+
+#~ msgid "rollback done"
+#~ msgstr "ripristino eseguito"
+
+#~ msgid "running rollback..."
+#~ msgstr "esecuzione del ripristino in corso..."

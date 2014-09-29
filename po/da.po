@@ -3,15 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-04 10:40+0200\n"
-"PO-Revision-Date: 2013-01-27 13:10+0100\n"
+"POT-Creation-Date: 2014-09-29 11:55+0200\n"
+"PO-Revision-Date: 2013-09-30 21:31+0200\n"
 "Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
 "Language-Team: Danish <opensuse-translation@opensuse.org>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.4\n"
+"X-Generator: Lokalize 1.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../client/snapper.cc:599 ../client/snapper.cc:733
@@ -54,7 +54,7 @@ msgstr ""
 
 #: ../client/snapper.cc:1495
 msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr ""
+msgstr "\t--no-dbus\t\t\tArbejd uden DBus."
 
 #: ../client/snapper.cc:914
 msgid "\t--output, -o <file>\t\tSave status to file."
@@ -139,9 +139,8 @@ msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <nummer1>..<nummer2> [filer]"
 
 #: ../client/snapper.cc:293
-#, fuzzy
 msgid "\tsnapper get-config"
-msgstr "\tsnapper delete-config"
+msgstr "\tsnapper get-config"
 
 #: ../client/snapper.cc:381
 msgid "\tsnapper list"
@@ -165,9 +164,8 @@ msgid "\tsnapper rollback [number]"
 msgstr "\tsnapper mount <nummer>"
 
 #: ../client/snapper.cc:349
-#, fuzzy
 msgid "\tsnapper set-config <configdata>"
-msgstr "\tsnapper list-configs"
+msgstr "\tsnapper set-config <konfigurationsdata>"
 
 #: ../client/snapper.cc:911
 msgid "\tsnapper status <number1>..<number2>"
@@ -182,9 +180,8 @@ msgid "\tsnapper undochange <number1>..<number2> [files]"
 msgstr "\tsnapper undochange <nummer1>..<nummer2> [filer]"
 
 #: ../client/snapper.cc:1391
-#, fuzzy
 msgid "\tsnapper xadiff <number1>..<number2> [files]"
-msgstr "\tsnapper diff <nummer1>..<nummer2> [filer]"
+msgstr "\tsnapper xadiff <nummer1>..<nummer2> [filer]"
 
 #: ../client/snapper.cc:1488
 msgid "    Global options:"
@@ -224,9 +221,8 @@ msgid "  Cleanup snapshots:"
 msgstr "  Ryd op i øjebliksbilleder:"
 
 #: ../client/snapper.cc:1390
-#, fuzzy
 msgid "  Comparing snapshots extended attributes:"
-msgstr "  Sammenligning af øjebliksbilleder:"
+msgstr "  Sammenligning af øjebliksbilleders udvidede attributter:"
 
 #: ../client/snapper.cc:910 ../client/snapper.cc:965
 msgid "  Comparing snapshots:"
@@ -249,9 +245,8 @@ msgid "  Delete snapshot:"
 msgstr "  Slet øjebliksbillede:"
 
 #: ../client/snapper.cc:292
-#, fuzzy
 msgid "  Get config:"
-msgstr "  Opret konfiguration:"
+msgstr " Hent konfiguration:"
 
 #: ../client/snapper.cc:138
 msgid "  List configs:"
@@ -272,12 +267,11 @@ msgstr "  Montér øjebliksbillede:"
 #: ../client/snapper.cc:1217
 #, fuzzy
 msgid "  Rollback:"
-msgstr "Tilbagerulningsunderstøttelse: "
+msgstr "Rollback"
 
 #: ../client/snapper.cc:348
-#, fuzzy
 msgid "  Set config:"
-msgstr "  Opret konfiguration:"
+msgstr "  Sæt konfiguration:"
 
 #: ../client/snapper.cc:873
 msgid "  Umount snapshot:"
@@ -297,20 +291,19 @@ msgstr "#"
 msgid "(Snapshot %d.)"
 msgstr "Øjebliksbilledet \"%u\" blev ikke fundet."
 
-# error box title
-#: ../client/snapper.cc:1669 ../client/errors.cc:88
+#: ../client/snapper.cc:1670 ../client/errors.cc:88
 #, fuzzy
 msgid "ACL error."
-msgstr "I/O-fejl."
+msgstr "fejl"
 
 #: ../client/snapper.cc:436
 msgid "Cleanup"
 msgstr "Oprydning"
 
-#: ../client/snapper.cc:1624
-#, fuzzy, c-format
+#: ../client/snapper.cc:1625
+#, c-format
 msgid "Command '%s' does not work without DBus."
-msgstr "Kommandoen \"list\" tager ikke argumenter."
+msgstr "Kommandoen \"%s\" virker ikke uden DBus."
 
 #: ../client/snapper.cc:1337
 msgid "Command 'cleanup' needs one arguments."
@@ -337,14 +330,12 @@ msgid "Command 'delete-config' does not take arguments."
 msgstr "Kommandoen \"delete-config\" tager ikke argumenter."
 
 #: ../client/snapper.cc:977
-#, fuzzy
 msgid "Command 'diff' needs at least one argument."
-msgstr "Kommandoen \"modify\" kræver mindst ét argument."
+msgstr "Kommandoen \"diff\" kræver mindst ét argument."
 
 #: ../client/snapper.cc:304
-#, fuzzy
 msgid "Command 'get-config' does not take arguments."
-msgstr "Kommandoen \"delete-config\" tager ikke argumenter."
+msgstr "Kommandoen \"get-config\" tager ikke argumenter."
 
 #: ../client/snapper.cc:1481
 msgid "Command 'help' does not take arguments."
@@ -377,9 +368,8 @@ msgid "Command 'rollback' takes either one or no argument."
 msgstr "rename kræver to argumenter"
 
 #: ../client/snapper.cc:360
-#, fuzzy
 msgid "Command 'set-config' needs at least one argument."
-msgstr "Kommandoen \"mount\" kræver mindst ét argument."
+msgstr "Kommandoen \"set-config\" kræver mindst ét argument."
 
 #: ../client/snapper.cc:930
 msgid "Command 'status' needs one argument."
@@ -390,23 +380,22 @@ msgid "Command 'undochange' needs at least one argument."
 msgstr "Kommandoen \"undochange\" kræver mindst ét argument."
 
 #: ../client/snapper.cc:1416
-#, fuzzy
 msgid "Command 'xadiff' needs at least one argument."
-msgstr "Kommandoen \"modify\" kræver mindst ét argument."
+msgstr "Kommandoen \"xadiff\" kræver mindst ét argument."
 
 #: ../client/snapper.cc:157
 msgid "Config"
 msgstr "Konfiguration"
 
-#: ../client/snapper.cc:1644
+#: ../client/snapper.cc:1645
 #, c-format
 msgid "Config '%s' is invalid."
 msgstr "Konfigurationen \"%s\" er ugyldig."
 
-#: ../client/snapper.cc:1639
-#, fuzzy, c-format
+#: ../client/snapper.cc:1640
+#, c-format
 msgid "Config '%s' not found."
-msgstr "Filen \"%s\" blev ikke fundet."
+msgstr "Konfigurationen \"%s\" blev ikke fundet."
 
 #: ../client/errors.cc:58
 msgid "Config is in use."
@@ -426,14 +415,15 @@ msgstr "Filen %s blev ikke fundet på mediet '%s'"
 msgid "Configdata '%s' has empty key."
 msgstr ""
 
-#: ../client/snapper.cc:1654 ../client/errors.cc:70
+#: ../client/snapper.cc:1655 ../client/errors.cc:70
 #, c-format
 msgid "Creating config failed (%s)."
 msgstr "Oprettelse af konfiguration mislykkedes (%s)."
 
 #: ../client/snapper.cc:1297
+#, fuzzy
 msgid "Creating read-only snapshot of current system."
-msgstr ""
+msgstr "Reglen %s: Ikke understøttet på det aktuelle system.\n"
 
 #: ../client/snapper.cc:1278
 #, fuzzy
@@ -457,7 +447,7 @@ msgstr "Oprettelse af øjebliksbillede mislykkedes."
 msgid "Date"
 msgstr "Dato"
 
-#: ../client/snapper.cc:1659 ../client/errors.cc:73
+#: ../client/snapper.cc:1660 ../client/errors.cc:73
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Sletning af konfiguration mislykkedes (%s)."
@@ -475,8 +465,9 @@ msgid "Detecting filesystem type failed."
 msgstr "Detektion af filsystemtype mislykkedes."
 
 #: ../client/misc.cc:170
+#, fuzzy
 msgid "Empty configdata."
-msgstr ""
+msgstr "Ugyldige konfigurationsdata."
 
 #: ../client/misc.cc:107 ../client/misc.cc:115
 #, fuzzy
@@ -484,10 +475,11 @@ msgid "Empty userdata."
 msgstr "Ugyldige brugerdata."
 
 #: ../client/snapper.cc:1198 ../client/snapper.cc:1208
+#, fuzzy
 msgid "Failed to initialize filesystem handler."
-msgstr ""
+msgstr "Installation af filhåndtering fejlede"
 
-#: ../client/systemd-helper.cc:127 ../client/snapper.cc:1698
+#: ../client/systemd-helper.cc:127 ../client/snapper.cc:1699
 msgid "Failure"
 msgstr "Fejl"
 
@@ -514,12 +506,11 @@ msgstr "Identiske øjebliksbilleder."
 msgid "Illegal Snapshot."
 msgstr "Ulovligt øjebliksbillede."
 
-#: ../client/snapper.cc:1664 ../client/errors.cc:49
-#, fuzzy
+#: ../client/snapper.cc:1665 ../client/errors.cc:49
 msgid "Invalid configdata."
-msgstr "Ugyldige brugerdata."
+msgstr "Ugyldige konfigurationsdata."
 
-#: ../client/snapper.cc:1679 ../client/errors.cc:85
+#: ../client/snapper.cc:1680 ../client/errors.cc:85
 #, fuzzy
 msgid "Invalid group."
 msgstr "Ugyldigt underdiskområde."
@@ -542,7 +533,7 @@ msgstr "Ugyldigt underdiskområde."
 msgid "Invalid table style %d."
 msgstr "Ugyldig tabelstil %d."
 
-#: ../client/snapper.cc:1674 ../client/errors.cc:82
+#: ../client/snapper.cc:1675 ../client/errors.cc:82
 #, fuzzy
 msgid "Invalid user."
 msgstr "Ugyldige brugerdata."
@@ -553,10 +544,10 @@ msgstr "Ugyldige brugerdata."
 
 #: ../client/snapper.cc:311
 msgid "Key"
-msgstr ""
+msgstr "Nøgle"
 
 # %s is either BOOTP or DHCP
-#: ../client/snapper.cc:1649
+#: ../client/snapper.cc:1650
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Oplistning af konfigurationer mislykkedes (%s)."
@@ -579,7 +570,7 @@ msgstr "Mangler kommandoargument."
 msgid "Missing or invalid pre-number."
 msgstr "Manglende eller ugyldigt præ-nummer."
 
-#: ../client/snapper.cc:1602
+#: ../client/snapper.cc:1603
 msgid "No command provided."
 msgstr "Ingen kommando givet."
 
@@ -619,15 +610,14 @@ msgid "Snapshot '%u' not found."
 msgstr "Øjebliksbilledet \"%u\" blev ikke fundet."
 
 #: ../client/errors.cc:61
-#, fuzzy
 msgid "Snapshot is in use."
-msgstr "Konfigurationen er i brug."
+msgstr "Øjebliksbilledet er i brug."
 
 #: ../client/snapper.cc:158
 msgid "Subvolume"
 msgstr "Underdiskområde"
 
-#: ../client/snapper.cc:1603 ../client/snapper.cc:1616
+#: ../client/snapper.cc:1604 ../client/snapper.cc:1617
 #: ../client/utils/GetOpts.cc:61 ../client/utils/GetOpts.cc:69
 msgid "Try 'snapper --help' for more information."
 msgstr "Prøv \"snapper --help\" for at få mere information."
@@ -641,7 +631,7 @@ msgstr "Type"
 msgid "Unknown cleanup algorithm '%s'."
 msgstr "Ukendt oprydningsalgoritme \"%s\"."
 
-#: ../client/snapper.cc:1615
+#: ../client/snapper.cc:1616
 #, c-format
 msgid "Unknown command '%s'."
 msgstr "Ukendt kommando \"%s\"."
@@ -697,7 +687,7 @@ msgstr ""
 
 #: ../client/snapper.cc:312
 msgid "Value"
-msgstr ""
+msgstr "Værdi"
 
 #: ../client/snapper.cc:1133
 #, c-format
@@ -742,6 +732,10 @@ msgstr "intet at gøre"
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "brug: snapper [--globale-tilvalg] <kommando> [--kommando-tilvalg] [kommando-argumenter]"
 
+# SLE12
+#~ msgid "Use an integer number from %d to %d"
+#~ msgstr "Benyt et heltal fra %d til %d"
+
 #~ msgid "\t--disable-filters\t\tDisable filters."
 #~ msgstr "\t--disable-filters\t\tDeaktivér filtre."
 
@@ -773,6 +767,11 @@ msgstr "brug: snapper [--globale-tilvalg] <kommando> [--kommando-tilvalg] [komma
 #~| msgid "File '%s' not found on medium '%s'"
 #~ msgid "File '%s' not found in diff."
 #~ msgstr "Filen %s blev ikke fundet på mediet '%s'"
+
+#, fuzzy
+#~| msgid "Rollback Support: "
+#~ msgid "  Rollback snapshots:"
+#~ msgstr "Tilbagerulningsunderstøttelse: "
 
 #, fuzzy
 #~| msgid "diff needs two arguments"

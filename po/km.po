@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper.km\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-04 10:40+0200\n"
+"POT-Creation-Date: 2014-09-29 11:55+0200\n"
 "PO-Revision-Date: 2011-10-24 10:40+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -272,8 +272,9 @@ msgid "  Mount snapshot:"
 msgstr "  ម៉ោន​រូបថត ៖"
 
 #: ../client/snapper.cc:1217
+#, fuzzy
 msgid "  Rollback:"
-msgstr ""
+msgstr "ថយក្រោយ"
 
 #: ../client/snapper.cc:348
 #, fuzzy
@@ -298,17 +299,16 @@ msgstr "#"
 msgid "(Snapshot %d.)"
 msgstr "រក​មិន​ឃើញ​រូបថត '%u' ។"
 
-# error box title
-#: ../client/snapper.cc:1669 ../client/errors.cc:88
+#: ../client/snapper.cc:1670 ../client/errors.cc:88
 #, fuzzy
 msgid "ACL error."
-msgstr "កំហុស I/O"
+msgstr "បង្កើត​កំហុស"
 
 #: ../client/snapper.cc:436
 msgid "Cleanup"
 msgstr "Cleanup"
 
-#: ../client/snapper.cc:1624
+#: ../client/snapper.cc:1625
 #, fuzzy, c-format
 msgid "Command '%s' does not work without DBus."
 msgstr "ពាក្យ​បញ្ជា​ 'list' មិន​ត្រូវការ​អាគុយម៉ង់​ទេ ។"
@@ -399,15 +399,15 @@ msgstr "ពាក្យ​បញ្ជា 'modify' ត្រូវការ​�
 msgid "Config"
 msgstr "កំណត់​រចនាសម្ព័ន្ធ"
 
-#: ../client/snapper.cc:1644
+#: ../client/snapper.cc:1645
 #, c-format
 msgid "Config '%s' is invalid."
 msgstr "ការ​កំណត់​រចនាសម្ព័ន្ធ​ '%s' មិន​ត្រឹមត្រូវ ។"
 
-#: ../client/snapper.cc:1639
+#: ../client/snapper.cc:1640
 #, fuzzy, c-format
 msgid "Config '%s' not found."
-msgstr "រក​មិន​ឃើញ​ឯកសារ '%s' ។"
+msgstr "រក​មិនឃើញ '%s' ។"
 
 #: ../client/errors.cc:58
 #, fuzzy
@@ -429,14 +429,15 @@ msgstr ""
 msgid "Configdata '%s' has empty key."
 msgstr ""
 
-#: ../client/snapper.cc:1654 ../client/errors.cc:70
+#: ../client/snapper.cc:1655 ../client/errors.cc:70
 #, c-format
 msgid "Creating config failed (%s)."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
 
 #: ../client/snapper.cc:1297
+#, fuzzy
 msgid "Creating read-only snapshot of current system."
-msgstr ""
+msgstr "%s ច្បាប់ ៖ មិនបានគាំទ្រ​នៅ​លើ​ប្រព័ន្ធ​បច្ចុប្បន្ន​ទេ ។\n"
 
 #: ../client/snapper.cc:1278
 #, fuzzy
@@ -461,7 +462,7 @@ msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្
 msgid "Date"
 msgstr "កាល​បរិច្ឆេទ"
 
-#: ../client/snapper.cc:1659 ../client/errors.cc:73
+#: ../client/snapper.cc:1660 ../client/errors.cc:73
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​លុប​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
@@ -480,8 +481,9 @@ msgid "Detecting filesystem type failed."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​រក​ប្រភេទ​ប្រព័ន្ធ​ឯកសារ ។"
 
 #: ../client/misc.cc:170
+#, fuzzy
 msgid "Empty configdata."
-msgstr ""
+msgstr "ទិន្នន័យ​ផ្សាយ​មិន​ត្រឹមត្រូវ ។"
 
 #: ../client/misc.cc:107 ../client/misc.cc:115
 #, fuzzy
@@ -489,10 +491,11 @@ msgid "Empty userdata."
 msgstr "ទិន្នន័យ​អ្នក​ប្រើ​មិន​ត្រឹមត្រូវ ។"
 
 #: ../client/snapper.cc:1198 ../client/snapper.cc:1208
+#, fuzzy
 msgid "Failed to initialize filesystem handler."
-msgstr ""
+msgstr "បាន​បរាជ័យ​ក្នុងកា​រដំឡើង​កម្មវិធី​គ្រប់គ្រង​ឯកសារ"
 
-#: ../client/systemd-helper.cc:127 ../client/snapper.cc:1698
+#: ../client/systemd-helper.cc:127 ../client/snapper.cc:1699
 msgid "Failure"
 msgstr "​បរាជ័យ"
 
@@ -521,12 +524,12 @@ msgstr "រូបថត​ដូចគ្នា ។"
 msgid "Illegal Snapshot."
 msgstr "រូបថត​មិន​ត្រឹមត្រូវ ។"
 
-#: ../client/snapper.cc:1664 ../client/errors.cc:49
+#: ../client/snapper.cc:1665 ../client/errors.cc:49
 #, fuzzy
 msgid "Invalid configdata."
-msgstr "ទិន្នន័យ​អ្នក​ប្រើ​មិន​ត្រឹមត្រូវ ។"
+msgstr "ទិន្នន័យ​ផ្សាយ​មិន​ត្រឹមត្រូវ ។"
 
-#: ../client/snapper.cc:1679 ../client/errors.cc:85
+#: ../client/snapper.cc:1680 ../client/errors.cc:85
 #, fuzzy
 msgid "Invalid group."
 msgstr "ភាគ​រង​មិន​ត្រឹមត្រូវ ។"
@@ -549,7 +552,7 @@ msgstr "ភាគ​រង​មិន​ត្រឹមត្រូវ ។"
 msgid "Invalid table style %d."
 msgstr "រចនាប័ទ្ម​តារាង %d មិន​ត្រឹមត្រូវ ។"
 
-#: ../client/snapper.cc:1674 ../client/errors.cc:82
+#: ../client/snapper.cc:1675 ../client/errors.cc:82
 #, fuzzy
 msgid "Invalid user."
 msgstr "ទិន្នន័យ​អ្នក​ប្រើ​មិន​ត្រឹមត្រូវ ។"
@@ -559,10 +562,11 @@ msgid "Invalid userdata."
 msgstr "ទិន្នន័យ​អ្នក​ប្រើ​មិន​ត្រឹមត្រូវ ។"
 
 #: ../client/snapper.cc:311
+#, fuzzy
 msgid "Key"
-msgstr ""
+msgstr "សោ ៖"
 
-#: ../client/snapper.cc:1649
+#: ../client/snapper.cc:1650
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​រាយ​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
@@ -585,7 +589,7 @@ msgstr "បាត់​អាគុយម៉ង់​ពាក្យ​បញ្
 msgid "Missing or invalid pre-number."
 msgstr "បាត់ ឬ​លេខ​មុន​មិន​ត្រឹមត្រូវ ។"
 
-#: ../client/snapper.cc:1602
+#: ../client/snapper.cc:1603
 msgid "No command provided."
 msgstr "មិន​បាន​ផ្ដល់​ពាក្យ​បញ្ជា ។"
 
@@ -634,7 +638,7 @@ msgstr "រក​មិន​ឃើញ​ការ​កំណត់​រចន
 msgid "Subvolume"
 msgstr "ភាគ​រង"
 
-#: ../client/snapper.cc:1603 ../client/snapper.cc:1616
+#: ../client/snapper.cc:1604 ../client/snapper.cc:1617
 #: ../client/utils/GetOpts.cc:61 ../client/utils/GetOpts.cc:69
 #, fuzzy
 msgid "Try 'snapper --help' for more information."
@@ -649,7 +653,7 @@ msgstr "ប្រភេទ"
 msgid "Unknown cleanup algorithm '%s'."
 msgstr "មិន​ស្គាល់​ក្បួន​ដោះស្រាយ​ការ​សម្អាត '%s' ។"
 
-#: ../client/snapper.cc:1615
+#: ../client/snapper.cc:1616
 #, c-format
 msgid "Unknown command '%s'."
 msgstr "មិន​ស្គាល់​ពាក្យ​បញ្ជា '%s' ។"
@@ -708,7 +712,7 @@ msgstr ""
 
 #: ../client/snapper.cc:312
 msgid "Value"
-msgstr ""
+msgstr "តម្លៃ"
 
 #: ../client/snapper.cc:1133
 #, c-format
