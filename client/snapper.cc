@@ -382,15 +382,41 @@ help_list()
 	 << endl
 	 << _("    Options for 'list' command:") << endl
 	 << _("\t--type, -t <type>\t\tType of snapshots to list.") << endl
+	 << _("\t--all-configs, -a\t\tList all available configs.") << endl
 	 << endl;
 }
 
+void
+enum_configs(DBus::Connection* conn, list<pair<string, string> > &configs)
+{
+    if (no_dbus)
+    {
+	list<ConfigInfo> config_infos = Snapper::getConfigs();
+	for (list<ConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
+	{
+	    configs.push_back(make_pair(it->getConfigName(), it->getSubvolume()));
+	}
+    }
+    else
+    {
+	list<XConfigInfo> config_infos = command_list_xconfigs(*conn);
+	for (list<XConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
+	{
+	    configs.push_back(make_pair(it->config_name, it->subvolume));
+	}
+    }
+}
+
+enum ListMode { LM_ALL, LM_SINGLE, LM_PRE_POST };
+
+void list_from_one_config(DBus::Connection* conn, Snapper* snapper, string config_name, ListMode list_mode);
 
 void
 command_list(DBus::Connection* conn, Snapper* snapper)
 {
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
+	{ "all-configs",	no_argument,		0,	'a' },
 	{ 0, 0, 0, 0 }
     };
 
@@ -401,7 +427,6 @@ command_list(DBus::Connection* conn, Snapper* snapper)
 	exit(EXIT_FAILURE);
     }
 
-    enum ListMode { LM_ALL, LM_SINGLE, LM_PRE_POST };
     ListMode list_mode = LM_ALL;
 
     GetOpts::parsed_opts::const_iterator opt;
@@ -421,6 +446,31 @@ command_list(DBus::Connection* conn, Snapper* snapper)
 	}
     }
 
+    list<pair<string, string> > configs;
+    if ((opt = opts.find("all-configs")) != opts.end())
+    {
+	enum_configs(conn, configs);
+    }
+    else
+    {
+	configs.push_back(make_pair(config_name, ""));
+    }
+
+    bool first = true;
+    for (list<pair<string,string> >::iterator it = configs.begin(); it != configs.end(); ++it)
+    {
+	if (first)
+	    first = false;
+	else
+	    cout << endl;
+
+	cout << "Config: " << it->first << ", subvolume: " << it->second << endl;
+	list_from_one_config(conn, snapper, it->first, list_mode);
+    }
+}
+
+void list_from_one_config(DBus::Connection* conn, Snapper* snapper, string config_name, ListMode list_mode)
+{
     Table table;
 
     switch (list_mode)
