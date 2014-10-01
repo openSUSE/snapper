@@ -1555,15 +1555,15 @@ main(int argc, char** argv)
     setLogQuery(&log_query);
 
     const list<Cmd> cmds = {
-	Cmd("list-configs", command_list_configs, help_list_configs, true, false),
+	Cmd("list-configs", { "lc" }, command_list_configs, help_list_configs, true, false),
 	Cmd("create-config", command_create_config, help_create_config, true, false),
 	Cmd("delete-config", command_delete_config, help_delete_config, true, false),
-	Cmd("get-config", command_get_config, help_get_config, true, false),
-	Cmd("set-config", command_set_config, help_set_config, true, true),
+	Cmd("get-config", { "get" }, command_get_config, help_get_config, true, false),
+	Cmd("set-config", { "set" }, command_set_config, help_set_config, true, true),
 	Cmd("list", { "ls" }, command_list, help_list, true, true),
 	Cmd("create", command_create, help_create, false, true),
 	Cmd("modify", command_modify, help_modify, false, true),
-	Cmd("delete", { "remove", "rm" }, command_delete, help_delete, false, true),
+	Cmd("delete", { "remove", "rm", "del" }, command_delete, help_delete, false, true),
 	Cmd("mount", command_mount, help_mount, true, true),
 	Cmd("umount", command_umount, help_umount, true, true),
 	Cmd("status", command_status, help_status, false, true),
