@@ -964,6 +964,10 @@ help_diff()
 {
     cout << _("  Comparing snapshots:") << endl
 	 << _("\tsnapper diff <number1>..<number2> [files]") << endl
+	 << endl
+	 << _("    Options for 'diff' command:") << endl
+	 << _("\t--diff-cmd <command>\t\tCommand used for comparing files.") << endl
+	 << _("\t--extensions, -x <options>\tExtra options passed to the diff command.") << endl
 	 << endl;
 }
 
@@ -971,14 +975,28 @@ help_diff()
 void
 command_diff(DBus::Connection* conn, Snapper* snapper)
 {
-    GetOpts::parsed_opts opts = getopts.parse("diff", GetOpts::no_options);
+    const struct option options[] = {
+	{ "diff-cmd",		required_argument,	0,	0 },
+	{ "extensions",		required_argument,	0,	'x' },
+	{ 0, 0, 0, 0 }
+    };
+
+    GetOpts::parsed_opts opts = getopts.parse("diff", options);
 
     if (getopts.numArgs() < 1) {
 	cerr << _("Command 'diff' needs at least one argument.") << endl;
 	exit(EXIT_FAILURE);
     }
 
+    Differ differ;
+
     GetOpts::parsed_opts::const_iterator opt;
+
+    if ((opt = opts.find("diff-cmd")) != opts.end())
+	differ.command = opt->second;
+
+    if ((opt = opts.find("extensions")) != opts.end())
+	differ.extensions = opt->second;
 
     pair<unsigned int, unsigned int> nums(read_nums(getopts.popArg()));
 
@@ -988,14 +1006,7 @@ command_diff(DBus::Connection* conn, Snapper* snapper)
     if (getopts.numArgs() == 0)
     {
 	for (Files::const_iterator it1 = files.begin(); it1 != files.end(); ++it1)
-	{
-	    SystemCmd cmd(DIFFBIN " --unified --new-file " + quote(it1->getAbsolutePath(LOC_PRE)) +
-			  " " + quote(it1->getAbsolutePath(LOC_POST)), false);
-
-	    const vector<string> lines = cmd.stdout();
-	    for (vector<string>::const_iterator it2 = lines.begin(); it2 != lines.end(); ++it2)
-		cout << it2->c_str() << endl;
-	}
+	    differ.run(it1->getAbsolutePath(LOC_PRE), it1->getAbsolutePath(LOC_POST));
     }
     else
     {
@@ -1004,15 +1015,8 @@ command_diff(DBus::Connection* conn, Snapper* snapper)
 	    string name = getopts.popArg();
 
 	    Files::const_iterator it1 = files.findAbsolutePath(name);
-            if (it1 == files.end())
-                continue;
-
-	    SystemCmd cmd(DIFFBIN " --unified --new-file " + quote(it1->getAbsolutePath(LOC_PRE)) +
-			  " " + quote(it1->getAbsolutePath(LOC_POST)), false);
-
-	    const vector<string> lines = cmd.stdout();
-	    for (vector<string>::const_iterator it2 = lines.begin(); it2 != lines.end(); ++it2)
-		cout << it2->c_str() << endl;
+	    if (it1 != files.end())
+		differ.run(it1->getAbsolutePath(LOC_PRE), it1->getAbsolutePath(LOC_POST));
 	}
     }
 }

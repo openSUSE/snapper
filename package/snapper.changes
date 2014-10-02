@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Oct 02 14:46:37 CEST 2014 - aschnell@suse.de
+
+- allow to specify command for comparing file
+
+-------------------------------------------------------------------
 Mon Sep 29 11:55:37 CEST 2014 - aschnell@suse.de
 
 - updated translations
