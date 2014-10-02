@@ -184,27 +184,14 @@ command_list_configs(DBus::Connection* conn, Snapper* snapper)
     header.add(_("Subvolume"));
     table.setHeader(header);
 
-    if (no_dbus)
+    list<pair<string, string> > configs = enum_configs(conn);
+
+    for (list<pair<string,string> >::iterator it = configs.begin(); it != configs.end(); ++it)
     {
-	list<ConfigInfo> config_infos = Snapper::getConfigs();
-	for (list<ConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
-	{
-	    TableRow row;
-	    row.add(it->getConfigName());
-	    row.add(it->getSubvolume());
-	    table.add(row);
-	}
-    }
-    else
-    {
-	list<XConfigInfo> config_infos = command_list_xconfigs(*conn);
-	for (list<XConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
-	{
-	    TableRow row;
-	    row.add(it->config_name);
-	    row.add(it->subvolume);
-	    table.add(row);
-	}
+	TableRow row;
+	row.add(it->first);
+	row.add(it->second);
+	table.add(row);
     }
 
     cout << table;
