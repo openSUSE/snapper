@@ -310,6 +310,12 @@
 		all, single and pre-post.</para>
 	      </listitem>
 	    </varlistentry>
+	    <varlistentry>
+	      <term><option>-a, --all-configs</option></term>
+	      <listitem>
+		<para>List snapshots from all configs accessible by the user.</para>
+	      </listitem>
+	    </varlistentry>
 	  </variablelist>
 	</listitem>
       </varlistentry>
