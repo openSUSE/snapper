@@ -34,7 +34,6 @@
 #include <snapper/SnapperTmpl.h>
 #include <snapper/Enum.h>
 #include <snapper/AsciiFile.h>
-#include <snapper/SystemCmd.h>
 #include <snapper/SnapperDefines.h>
 #include <snapper/XAttributes.h>
 #ifdef ENABLE_ROLLBACK
