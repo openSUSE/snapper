@@ -27,6 +27,7 @@
 #include <boost/algorithm/string.hpp>
 
 #include <snapper/AppUtil.h>
+#include <snapper/SystemCmd.h>
 
 #include "utils/text.h"
 
@@ -208,4 +209,28 @@ username(uid_t uid)
 	return sformat("unknown (%d)", uid);
 
     return username;
+}
+
+
+Differ::Differ()
+    : command(DIFFBIN " --new-file --unified"), extensions()
+{
+}
+
+
+void
+Differ::run(const string& f1, const string& f2) const
+{
+    string tmp = command;
+    if (!extensions.empty())
+	tmp += " " + extensions;
+    tmp += " " + quote(f1) + " " + quote(f2);
+
+    SystemCmd cmd(tmp);
+
+    for (const string& line : cmd.stdout())
+	cout << line << endl;
+
+    for (const string& line : cmd.stderr())
+	cerr << line << endl;
 }

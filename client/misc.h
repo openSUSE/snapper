@@ -49,3 +49,14 @@ read_configdata(const list<string>& l, const map<string, string>& old = map<stri
 
 string
 username(uid_t uid);
+
+
+struct Differ
+{
+    Differ();
+
+    void run(const string& f1, const string& f2) const;
+
+    string command;
+    string extensions;
+};
