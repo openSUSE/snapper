@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Oct 3 01:05:01 CEST 2014 - dsterba@suse.cz
+
+- add option --all-configs to snapper client, list snapshots from
+  all accessible configs
+
+-------------------------------------------------------------------
 Thu Oct 02 14:46:37 CEST 2014 - aschnell@suse.de
 
 - allow to specify command for comparing file
