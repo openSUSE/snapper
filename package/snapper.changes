@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Oct 10 12:15:36 CEST 2014 - aschnell@suse.de
+
+- improved fadvise usage
+
+-------------------------------------------------------------------
 Fri Oct 3 01:05:01 CEST 2014 - dsterba@suse.cz
 
 - add option --all-configs to snapper client, list snapshots from
