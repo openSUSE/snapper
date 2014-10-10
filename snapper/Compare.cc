@@ -77,8 +77,8 @@ namespace snapper
 	    return false;
 	}
 
-	posix_fadvise(fd1, 0, stat1.st_size, POSIX_FADV_SEQUENTIAL);
-	posix_fadvise(fd2, 0, stat2.st_size, POSIX_FADV_SEQUENTIAL);
+	posix_fadvise(fd1, 0, 0, POSIX_FADV_SEQUENTIAL);
+	posix_fadvise(fd2, 0, 0, POSIX_FADV_SEQUENTIAL);
 
 	static_assert(sizeof(off_t) >= 8, "off_t is too small");
 

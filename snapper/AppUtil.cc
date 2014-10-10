@@ -91,6 +91,11 @@ namespace snapper
     bool
     copyfile(int src_fd, int dest_fd)
     {
+	posix_fadvise(src_fd, 0, 0, POSIX_FADV_SEQUENTIAL);
+
+	// TODO: maybe use POSIX_FADV_DONTNEED on dest_fd, but this could
+	// trigger a kernel bug (see bsc #888259)
+
 	while (true)
 	{
 	    // use small value for count to make function better interruptible
