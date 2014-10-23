@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Oct 23 12:05:12 CEST 2014 - aschnell@suse.de
+
+- use boost unit test framework and automake check feature
+
+-------------------------------------------------------------------
 Fri Oct 10 12:15:36 CEST 2014 - aschnell@suse.de
 
 - improved fadvise usage
