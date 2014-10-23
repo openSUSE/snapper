@@ -1,21 +1,23 @@
 
-#include "common.h"
+#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MODULE basename1
+
+#include <boost/test/unit_test.hpp>
 
 #include <snapper/AppUtil.h>
 
 using namespace snapper;
 
 
-int
-main()
+BOOST_AUTO_TEST_CASE(basename1)
 {
-    check_equal(basename("/hello/world"), string("world"));
-    check_equal(basename("hello/world"), string("world"));
-    check_equal(basename("/hello"), string("hello"));
-    check_equal(basename("hello"), string("hello"));
-    check_equal(basename("/"), string(""));
-    check_equal(basename(""), string(""));
-    check_equal(basename("."), string("."));
-    check_equal(basename(".."), string(".."));
-    check_equal(basename("../.."), string(".."));
+    BOOST_CHECK_EQUAL(basename("/hello/world"), "world");
+    BOOST_CHECK_EQUAL(basename("hello/world"), "world");
+    BOOST_CHECK_EQUAL(basename("/hello"), "hello");
+    BOOST_CHECK_EQUAL(basename("hello"), "hello");
+    BOOST_CHECK_EQUAL(basename("/"), "");
+    BOOST_CHECK_EQUAL(basename(""), "");
+    BOOST_CHECK_EQUAL(basename("."), ".");
+    BOOST_CHECK_EQUAL(basename(".."), "..");
+    BOOST_CHECK_EQUAL(basename("../.."), "..");
 }

@@ -1,46 +1,45 @@
 
-#include <boost/algorithm/string.hpp>
+#define BOOST_TEST_DYN_LINK
+#define BOOST_TEST_MODULE sysconfig_get1
 
-#include "common.h"
+#include <boost/test/unit_test.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include <snapper/AsciiFile.h>
 
 using namespace snapper;
 
 
-int
-main()
+BOOST_AUTO_TEST_CASE(sysconfig_get1)
 {
     SysconfigFile s("sysconfig-get1.txt");
 
     string tmp_string;
 
-    check_true(s.getValue("S1", tmp_string));
-    check_equal(tmp_string, string("hello"));
+    BOOST_CHECK(s.getValue("S1", tmp_string));
+    BOOST_CHECK_EQUAL(tmp_string, "hello");
 
     bool tmp_bool;
 
-    check_true(s.getValue("B1", tmp_bool));
-    check_equal(tmp_bool, true);
+    BOOST_CHECK(s.getValue("B1", tmp_bool));
+    BOOST_CHECK_EQUAL(tmp_bool, true);
 
-    check_true(s.getValue("B2", tmp_bool));
-    check_equal(tmp_bool, false);
+    BOOST_CHECK(s.getValue("B2", tmp_bool));
+    BOOST_CHECK_EQUAL(tmp_bool, false);
 
     vector<string> tmp_vector;
 
-    check_true(s.getValue("V1", tmp_vector));
-    check_equal(boost::join(tmp_vector, "-"), string("one word"));
+    BOOST_CHECK(s.getValue("V1", tmp_vector));
+    BOOST_CHECK_EQUAL(boost::join(tmp_vector, "-"), "one word");
 
-    check_true(s.getValue("V2", tmp_vector));
-    check_equal(boost::join(tmp_vector, "-"), string("two-words"));
+    BOOST_CHECK(s.getValue("V2", tmp_vector));
+    BOOST_CHECK_EQUAL(boost::join(tmp_vector, "-"), "two-words");
 
-    check_true(s.getValue("V3", tmp_vector));
-    check_equal(boost::join(tmp_vector, "-"), string("now-three-words"));
+    BOOST_CHECK(s.getValue("V3", tmp_vector));
+    BOOST_CHECK_EQUAL(boost::join(tmp_vector, "-"), "now-three-words");
 
-    check_true(s.getValue("V4", tmp_vector));
-    check_equal(boost::join(tmp_vector, "-"), string("c:\\io.sys"));
+    BOOST_CHECK(s.getValue("V4", tmp_vector));
+    BOOST_CHECK_EQUAL(boost::join(tmp_vector, "-"), "c:\\io.sys");
 
-    check_true(!s.getValue("V5", tmp_vector));
-
-    exit(EXIT_SUCCESS);
+    BOOST_CHECK(!s.getValue("V5", tmp_vector));
 }
