@@ -4,7 +4,7 @@
 
 AM_CXXFLAGS = -D_FILE_OFFSET_BITS=64
 
-INCLUDES = -I/usr/include/libxml2
+AM_CPPFLAGS = -I/usr/include/libxml2
 
 lib_LTLIBRARIES = libsnapper.la
 

@@ -2,8 +2,7 @@
 # Makefile.am for snapper/server
 #
 
-INCLUDES = -I$(top_srcdir) $(DBUS_CFLAGS)
-
+AM_CPPFLAGS = -I$(top_srcdir) $(DBUS_CFLAGS)
 
 sbin_PROGRAMS = snapperd
 

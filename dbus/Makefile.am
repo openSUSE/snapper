@@ -2,7 +2,7 @@
 # Makefile.am for snapper/dbus
 #
 
-INCLUDES = -I$(top_srcdir) $(DBUS_CFLAGS)
+AM_CPPFLAGS = -I$(top_srcdir) $(DBUS_CFLAGS)
 
 noinst_LTLIBRARIES = libdbus.la
 

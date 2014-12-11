@@ -2,7 +2,7 @@
 # Makefile.am for snapper/examples/c
 #
 
-INCLUDES = -I$(top_srcdir) $(DBUS_CFLAGS)
+AM_CPPFLAGS = -I$(top_srcdir) $(DBUS_CFLAGS)
 
 noinst_PROGRAMS = csnap
 

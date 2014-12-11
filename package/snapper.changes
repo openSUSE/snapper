@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Dec 11 17:58:14 CET 2014 - aschnell@suse.de
+
+- support weekly snapshots in cleanup algorithm (see
+  gh#openSUSE/snapper#135)
+
+-------------------------------------------------------------------
 Thu Oct 23 12:05:12 CEST 2014 - aschnell@suse.de
 
 - use boost unit test framework and automake check feature
