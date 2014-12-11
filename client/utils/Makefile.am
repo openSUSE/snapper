@@ -2,7 +2,7 @@
 # Makefile.am for snapper/client/utils
 #
 
-INCLUDES = -I$(top_srcdir)
+AM_CPPFLAGS = -I$(top_srcdir)
 
 noinst_LTLIBRARIES = libutils.la
 

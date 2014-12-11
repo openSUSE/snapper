@@ -6,7 +6,7 @@ if HAVE_PAM
 
 AM_CFLAGS = -D_GNU_SOURCE -Wwrite-strings
 
-INCLUDES = -I$(top_srcdir) $(DBUS_CFLAGS)
+AM_CPPFLAGS = -I$(top_srcdir) $(DBUS_CFLAGS)
 
 securelibdir = $(shell echo /`basename $(libdir)`/security)
 

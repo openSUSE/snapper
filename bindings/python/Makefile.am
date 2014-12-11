@@ -8,7 +8,7 @@ AM_CXXFLAGS = -fPIC -DPIC
 
 PYLIBVER ?= python$(PYTHON_VERSION)
 
-INCLUDES = -I. -I${top_srcdir} -I/usr/include/$(PYLIBVER)
+AM_CPPFLAGS = -I. -I${top_srcdir} -I/usr/include/$(PYLIBVER)
 
 DEPENDENCIES =						\
 	${top_srcdir}/snapper/Factory.h			\
@@ -34,6 +34,6 @@ _libsnapper_la_DEPENDENCIES =				\
 nodist__libsnapper_la_SOURCES = libsnapper_wrap.cxx
 
 libsnapper.py libsnapper_wrap.cxx: libsnapper.i $(DEPENDENCIES)
-	swig -o libsnapper_wrap.cxx -c++ -python ${INCLUDES} libsnapper.i
+	swig -o libsnapper_wrap.cxx -c++ -python ${AM_CPPFLAGS} libsnapper.i
 
 CLEANFILES = libsnapper.py libsnapper_wrap.cxx
