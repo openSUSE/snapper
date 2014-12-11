@@ -188,6 +188,16 @@
       </varlistentry>
 
       <varlistentry>
+	<term><option>TIMELINE_LIMIT_WEEKLY=<replaceable>number</replaceable></option></term>
+	<listitem>
+	  <para>Defines how many weekly snapshots the timeline cleanup
+	  algorithm should keep. A weekly snapshot is the first snapshot in a week. The
+	  youngest weekly snapshots will be kept.</para>
+	  <para>Default value is &quot;0&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
 	<term><option>TIMELINE_LIMIT_MONTHLY=<replaceable>number</replaceable></option></term>
 	<listitem>
 	  <para>Defines how many monthly snapshots the timeline cleanup

@@ -1,7 +1,5 @@
 *.log
 *.o
+*.test
 *.trs
-basename1
-dirname1
-sysconfig-get1
 test-suite.log
