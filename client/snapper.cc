@@ -140,10 +140,10 @@ help_list_configs()
 }
 
 
-list<pair<string, string> >
+list<pair<string, string>>
 enum_configs(DBus::Connection* conn)
 {
-    list<pair<string, string> > configs;
+    list<pair<string, string>> configs;
 
     if (no_dbus)
     {
@@ -967,6 +967,13 @@ command_status(DBus::Connection* conn, Snapper* snapper)
     if (getopts.numArgs() != 1)
     {
 	cerr << _("Command 'status' needs one argument.") << endl;
+
+	if (getopts.numArgs() == 2)
+	{
+	    cerr << _("Maybe you forgot the delimiter '..' between the snapshot numbers.") << endl
+		 << _("See 'man snapper' for further instructions.") << endl;
+	}
+
 	exit(EXIT_FAILURE);
     }
 
@@ -1022,7 +1029,8 @@ command_diff(DBus::Connection* conn, Snapper* snapper)
 
     GetOpts::parsed_opts opts = getopts.parse("diff", options);
 
-    if (getopts.numArgs() < 1) {
+    if (getopts.numArgs() < 1)
+    {
 	cerr << _("Command 'diff' needs at least one argument.") << endl;
 	exit(EXIT_FAILURE);
     }
@@ -1455,7 +1463,8 @@ command_xa_diff(DBus::Connection* conn, Snapper* snapper)
 {
     GetOpts::parsed_opts opts = getopts.parse("xadiff", GetOpts::no_options);
 
-    if (getopts.numArgs() < 1) {
+    if (getopts.numArgs() < 1)
+    {
         cerr << _("Command 'xadiff' needs at least one argument.") << endl;
         exit(EXIT_FAILURE);
     }
@@ -1466,9 +1475,11 @@ command_xa_diff(DBus::Connection* conn, Snapper* snapper)
     MyFiles& files = comparison.files;
 
     if (getopts.numArgs() == 0)
-        for (Files::const_iterator it1 = files.begin(); it1 != files.end(); ++it1)
+    {
+	for (Files::const_iterator it1 = files.begin(); it1 != files.end(); ++it1)
             if (it1->getPreToPostStatus() & XATTRS)
                 print_xa_diff(it1->getAbsolutePath(LOC_PRE), it1->getAbsolutePath(LOC_POST));
+    }
     else
     {
         while (getopts.numArgs() > 0)
@@ -1734,6 +1745,13 @@ main(int argc, char** argv)
 	}
 	catch (const DBus::ErrorException& e)
 	{
+	    if (strcmp(e.name(), "error.unknown_config") == 0 && config_name == "root")
+	    {
+		cerr << _("The config 'root' does not exist. Likely snapper is not configured.") << endl
+		     << _("See 'man snapper' for further instructions.") << endl;
+		exit(EXIT_FAILURE);
+	    }
+
 	    cerr << error_description(e) << endl;
 	    exit(EXIT_FAILURE);
 	}

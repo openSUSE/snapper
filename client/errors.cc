@@ -60,9 +60,6 @@ error_description(const DBus::ErrorException& e)
     if (name == "error.snapshot_in_use")
 	return _("Snapshot is in use.");
 
-    if (name == "error.unknown_file")
-	return _("Unknown file.");
-
     if (name == "error.io_error")
 	return _("IO Error.");
 
