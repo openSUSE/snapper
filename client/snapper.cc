@@ -967,6 +967,13 @@ command_status(DBus::Connection* conn, Snapper* snapper)
     if (getopts.numArgs() != 1)
     {
 	cerr << _("Command 'status' needs one argument.") << endl;
+
+	if (getopts.numArgs() == 2)
+	{
+	    cerr << _("Maybe you forgot the delimiter '..' between the snapshot numbers.") << endl
+		 << _("See 'man snapper' for further instructions.") << endl;
+	}
+
 	exit(EXIT_FAILURE);
     }
 
@@ -1738,6 +1745,13 @@ main(int argc, char** argv)
 	}
 	catch (const DBus::ErrorException& e)
 	{
+	    if (strcmp(e.name(), "error.unknown_config") == 0 && config_name == "root")
+	    {
+		cerr << _("The config 'root' does not exist. Likely snapper is not configured.") << endl
+		     << _("See 'man snapper' for further instructions.") << endl;
+		exit(EXIT_FAILURE);
+	    }
+
 	    cerr << error_description(e) << endl;
 	    exit(EXIT_FAILURE);
 	}

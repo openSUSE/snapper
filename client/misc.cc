@@ -83,6 +83,13 @@ read_nums(const string& str, const string& delim)
     string::size_type pos = str.find(delim);
     if (pos == string::npos)
     {
+	if (delim == "..")
+	{
+	    cerr << _("Did not find delimiter '..' between snapshot numbers.") << endl
+		 << _("See 'man snapper' for further instructions.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+
 	cerr << _("Invalid snapshots.") << endl;
 	exit(EXIT_FAILURE);
     }

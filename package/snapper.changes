@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Dec 12 10:34:37 CET 2014 - aschnell@suse.de
+
+- improved error messages (bsc#889928 and bsc#903834)
+
+-------------------------------------------------------------------
 Thu Dec 11 17:58:14 CET 2014 - aschnell@suse.de
 
 - support weekly snapshots in cleanup algorithm (see
