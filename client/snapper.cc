@@ -1022,7 +1022,8 @@ command_diff(DBus::Connection* conn, Snapper* snapper)
 
     GetOpts::parsed_opts opts = getopts.parse("diff", options);
 
-    if (getopts.numArgs() < 1) {
+    if (getopts.numArgs() < 1)
+    {
 	cerr << _("Command 'diff' needs at least one argument.") << endl;
 	exit(EXIT_FAILURE);
     }
@@ -1455,7 +1456,8 @@ command_xa_diff(DBus::Connection* conn, Snapper* snapper)
 {
     GetOpts::parsed_opts opts = getopts.parse("xadiff", GetOpts::no_options);
 
-    if (getopts.numArgs() < 1) {
+    if (getopts.numArgs() < 1)
+    {
         cerr << _("Command 'xadiff' needs at least one argument.") << endl;
         exit(EXIT_FAILURE);
     }
@@ -1466,9 +1468,11 @@ command_xa_diff(DBus::Connection* conn, Snapper* snapper)
     MyFiles& files = comparison.files;
 
     if (getopts.numArgs() == 0)
-        for (Files::const_iterator it1 = files.begin(); it1 != files.end(); ++it1)
+    {
+	for (Files::const_iterator it1 = files.begin(); it1 != files.end(); ++it1)
             if (it1->getPreToPostStatus() & XATTRS)
                 print_xa_diff(it1->getAbsolutePath(LOC_PRE), it1->getAbsolutePath(LOC_POST));
+    }
     else
     {
         while (getopts.numArgs() > 0)
