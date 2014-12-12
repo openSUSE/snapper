@@ -545,13 +545,6 @@ Client::signal_snapshots_deleted(DBus::Connection& conn, const string& config_na
 }
 
 
-struct UnknownFile : public std::exception
-{
-    explicit UnknownFile() throw() {}
-    virtual const char* what() const throw() { return "unknown config"; }
-};
-
-
 void
 Client::list_configs(DBus::Connection& conn, DBus::Message& msg)
 {
@@ -1502,11 +1495,6 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
     catch (const DeleteSnapshotFailedException& e)
     {
 	DBus::MessageError reply(msg, "error.delete_snapshot_failed", DBUS_ERROR_FAILED);
-	conn.send(reply);
-    }
-    catch (const UnknownFile& e)
-    {
-	DBus::MessageError reply(msg, "error.unknown_file", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const InvalidConfigdataException& e)
