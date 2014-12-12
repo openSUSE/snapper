@@ -85,7 +85,7 @@ read_nums(const string& str, const string& delim)
     {
 	if (delim == "..")
 	{
-	    cerr << _("Did not find delimiter '..' between snapshot numbers.") << endl
+	    cerr << _("Missing delimiter '..' between snapshot numbers.") << endl
 		 << _("See 'man snapper' for further instructions.") << endl;
 	    exit(EXIT_FAILURE);
 	}
