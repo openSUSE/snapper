@@ -140,10 +140,10 @@ help_list_configs()
 }
 
 
-list<pair<string, string> >
+list<pair<string, string>>
 enum_configs(DBus::Connection* conn)
 {
-    list<pair<string, string> > configs;
+    list<pair<string, string>> configs;
 
     if (no_dbus)
     {
