@@ -192,7 +192,8 @@
 	<listitem>
 	  <para>Defines how many weekly snapshots the timeline cleanup
 	  algorithm should keep. A weekly snapshot is the first snapshot in a week. The
-	  youngest weekly snapshots will be kept.</para>
+	  youngest weekly snapshots will be kept. In compliance with ISO 8601
+	  weeks start on Monday.</para>
 	  <para>Default value is &quot;0&quot;.</para>
 	</listitem>
       </varlistentry>
