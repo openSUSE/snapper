@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Dec 15 15:14:39 CET 2014 - aschnell@suse.de
+
+- ignore everything in .snapshots not matching a number
+
+-------------------------------------------------------------------
 Fri Dec 12 10:34:37 CET 2014 - aschnell@suse.de
 
 - improved error messages (bsc#889928 and bsc#903834)

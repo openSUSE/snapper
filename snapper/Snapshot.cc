@@ -41,6 +41,7 @@
 #include "snapper/SnapperDefines.h"
 #include "snapper/Exception.h"
 #include "snapper/SystemCmd.h"
+#include "snapper/Regex.h"
 
 
 namespace snapper
@@ -187,15 +188,14 @@ namespace snapper
     void
     Snapshots::read()
     {
+	Regex rx("^[0-9]+$");
+
 	SDir infos_dir = snapper->openInfosDir();
 
 	vector<string> infos = infos_dir.entries();
 	for (vector<string>::const_iterator it1 = infos.begin(); it1 != infos.end(); ++it1)
 	{
-	    if (*it1 == "snapshot_submenu.cfg")
-		continue;
-
-	    if (boost::starts_with(*it1, "tmp-mnt"))
+	    if (!rx.match(*it1))
 		continue;
 
 	    try
