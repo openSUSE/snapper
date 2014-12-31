@@ -4,7 +4,7 @@
 
 EXTRA_DIST = sysconfig.snapper base.txt lvm.txt x11.txt snapper.logrotate	\
 	default-config org.opensuse.Snapper.conf org.opensuse.Snapper.service	\
-	zypp-plugin.conf
+	zypp-plugin.conf cleanup.service cleanup.timer timeline.service timeline.timer
 
 install-data-local:
 	install -D -m 644 snapper.logrotate $(DESTDIR)/etc/logrotate.d/snapper
