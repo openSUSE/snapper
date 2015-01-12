@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Jan 12 12:19:30 CET 2015 - aschnell@suse.de
+
+- fixed compilation with clang
+
+-------------------------------------------------------------------
 Mon Dec 15 15:14:39 CET 2014 - aschnell@suse.de
 
 - ignore everything in .snapshots not matching a number

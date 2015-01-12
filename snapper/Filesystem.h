@@ -37,7 +37,7 @@ namespace snapper
     using std::vector;
 
 
-    class MtabData;
+    struct MtabData;
     class ConfigInfo;
 
 

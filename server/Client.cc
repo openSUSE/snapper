@@ -1605,11 +1605,7 @@ Clients::add(const string& name)
 {
     assert(find(name) == entries.end());
 
-#if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4)
     entries.emplace_back(name);
-#else
-    entries.push_back(name);
-#endif
 
     return --entries.end();
 }
