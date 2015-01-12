@@ -205,11 +205,7 @@ MetaSnappers::init()
 
     for (list<ConfigInfo>::iterator it = config_infos.begin(); it != config_infos.end(); ++it)
     {
-#if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4)
 	entries.emplace_back(*it);
-#else
-	entries.push_back(*it);
-#endif
     }
 }
 
@@ -233,11 +229,7 @@ MetaSnappers::createConfig(const string& config_name, const string& subvolume,
 
     ConfigInfo config_info = Snapper::getConfig(config_name);
 
-#if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4)
     entries.emplace_back(config_info);
-#else
-    entries.push_back(config_info);
-#endif
 }
 
 
