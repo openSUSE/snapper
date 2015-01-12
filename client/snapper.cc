@@ -91,7 +91,7 @@ bool no_dbus = false;
 
 struct MyFiles : public Files
 {
-    friend class MyComparison;
+    friend struct MyComparison;
 
     MyFiles(const FilePaths* file_paths)
 	: Files(file_paths) {}
