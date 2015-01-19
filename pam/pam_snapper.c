@@ -3,7 +3,7 @@
  *
  * @section License
  *
- * Copyright (c) 2013 SUSE
+ * Copyright (c) [2013-2015] SUSE
  *
  * All Rights Reserved.
  *
@@ -53,6 +53,7 @@
  * Includes
 */
 
+#include <stdio.h>
 #include <unistd.h>
 #include <stdbool.h>
 #include <stdint.h>
@@ -95,7 +96,7 @@
 */
 struct dict {
 	const char *key;
-	const char *val;
+	const char *value;
 };
 
 /**
@@ -142,6 +143,33 @@ typedef struct {
  * Functions for DBUS handling
 */
 
+static char *cdbus_escape( const char *in )
+{
+	char *out = malloc( strlen( in ) * 4 + 1 );
+	if ( !out )
+		return NULL;
+
+	char *out_p = out;
+
+	for ( const char *in_p = in; *in_p != '\0'; ++in_p ) {
+		if ( *in_p == '\\' ) {
+			memcpy( out_p, "\\\\", 2 );
+			out_p += 2;
+		} else if ( ( unsigned char )( *in_p ) > 127 ) {
+			char s[5];
+			snprintf( s, 5, "\\x%02x", ( unsigned char )( *in_p ) );
+			memcpy( out_p, s, 4 );
+			out_p += 4;
+		} else {
+			*out_p++ = *in_p;
+		}
+	}
+
+	*out_p = '\0';
+
+	return out;
+}
+
 static int cdbus_msg_send( DBusConnection * conn, DBusMessage * msg, DBusPendingCall ** pend_out )
 {
 	DBusPendingCall *pending;
@@ -183,14 +211,14 @@ static int cdbus_type_check( DBusMessageIter * iter, int expected_type )
 	return 0;
 }
 
-static int cdbus_type_check_get( DBusMessageIter * iter, int expected_type, void *val )
+static int cdbus_type_check_get( DBusMessageIter * iter, int expected_type, void *value )
 {
 	int ret;
 	ret = cdbus_type_check( iter, expected_type );
 	if ( ret < 0 ) {
 		return ret;
 	}
-	dbus_message_iter_get_basic( iter, val );
+	dbus_message_iter_get_basic( iter, value );
 	return 0;
 }
 
@@ -213,10 +241,19 @@ static int cdbus_create_snap_pack( const char *snapper_conf, createmode_t create
 		return -ENOMEM;
 	}
 
-	dbus_message_iter_init_append( msg, &args );
-	if ( !dbus_message_iter_append_basic( &args, DBUS_TYPE_STRING, &snapper_conf ) ) {
+	char *snapper_conf_escaped = cdbus_escape( snapper_conf );
+	if ( !snapper_conf_escaped ) {
 		return -ENOMEM;
 	}
+
+	dbus_message_iter_init_append( msg, &args );
+	if ( !dbus_message_iter_append_basic( &args, DBUS_TYPE_STRING, &snapper_conf_escaped ) ) {
+		free( snapper_conf_escaped );
+		return -ENOMEM;
+	}
+
+	free( snapper_conf_escaped );
+
 	if ( createmode == createmode_post ) {
 		if ( !dbus_message_iter_append_basic( &args, DBUS_TYPE_UINT32, snapshot_num_in ) ) {
 			return -ENOMEM;
@@ -228,9 +265,17 @@ static int cdbus_create_snap_pack( const char *snapper_conf, createmode_t create
 		return -ENOMEM;
 	}
 
-	if ( !dbus_message_iter_append_basic( &args, DBUS_TYPE_STRING, &cleanup ) ) {
-		return -ENOMEM;
+	char *cleanup_escaped = cdbus_escape( cleanup );
+	if ( !cleanup_escaped ) {
+	    return -ENOMEM;
 	}
+
+	if ( !dbus_message_iter_append_basic( &args, DBUS_TYPE_STRING, &cleanup_escaped ) ) {
+	    free( cleanup_escaped );
+	    return -ENOMEM;
+	}
+
+	free( cleanup_escaped );
 
 	dbus_bool_t ret =
 	    dbus_message_iter_open_container( &args, DBUS_TYPE_ARRAY, CDBUS_SIG_STRING_DICT,
@@ -246,14 +291,33 @@ static int cdbus_create_snap_pack( const char *snapper_conf, createmode_t create
 		if ( !ret ) {
 			return -ENOMEM;
 		}
-		if ( !dbus_message_iter_append_basic
-		     ( &struct_iter, DBUS_TYPE_STRING, &user_data[i].key ) ) {
+
+		char *key_escaped = cdbus_escape( user_data[i].key );
+		if ( !key_escaped ) {
 			return -ENOMEM;
 		}
+
 		if ( !dbus_message_iter_append_basic
-		     ( &struct_iter, DBUS_TYPE_STRING, &user_data[i].val ) ) {
+		     ( &struct_iter, DBUS_TYPE_STRING, &key_escaped ) ) {
+		    free( key_escaped );
 			return -ENOMEM;
 		}
+
+		free( key_escaped );
+
+		char *value_escaped = cdbus_escape( user_data[i].value );
+		if ( !value_escaped ) {
+			return -ENOMEM;
+		}
+
+		if ( !dbus_message_iter_append_basic
+		     ( &struct_iter, DBUS_TYPE_STRING, &value_escaped ) ) {
+			free( value_escaped );
+			return -ENOMEM;
+		}
+
+		free( value_escaped );
+
 		ret = dbus_message_iter_close_container( &array_iter, &struct_iter );
 		if ( !ret ) {
 			return -ENOMEM;
@@ -435,7 +499,7 @@ static void fill_user_data( pam_handle_t * pamh, struct dict ( *user_data )[],
 		int ret = pam_get_item( pamh, fields[i], ( const void ** )&readval );
 		if ( ret == PAM_SUCCESS && readval ) {
 			( *user_data )[*num_user_data].key = names[i];
-			( *user_data )[*num_user_data].val = readval;
+			( *user_data )[*num_user_data].value = readval;
 			if ( ( *num_user_data ) < max_user_data ) {
 				( *num_user_data )++;
 			}

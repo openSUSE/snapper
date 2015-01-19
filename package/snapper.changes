@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Jan 19 12:42:13 CET 2015 - aschnell@suse.de
+
+- stricter dbus string escaping (see bsc#913238)
+- implemented dbus string escaping in pam_snapper
+- version 0.2.5
+
+-------------------------------------------------------------------
 Mon Jan 12 12:19:30 CET 2015 - aschnell@suse.de
 
 - fixed compilation with clang

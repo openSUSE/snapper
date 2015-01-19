@@ -2,11 +2,12 @@
 # Makefile.am for snapper/testsuite
 #
 
-AM_CPPFLAGS = -I$(top_srcdir)
+AM_CPPFLAGS = -I$(top_srcdir) $(DBUS_CFLAGS)
 
-LDADD = ../snapper/libsnapper.la -lboost_unit_test_framework
+LDADD = ../snapper/libsnapper.la ../dbus/libdbus.la -lboost_unit_test_framework
 
-check_PROGRAMS = sysconfig-get1.test dirname1.test basename1.test equal-date.test
+check_PROGRAMS = sysconfig-get1.test dirname1.test basename1.test		\
+	equal-date.test dbus-escape.test
 
 TESTS = $(check_PROGRAMS)
 
