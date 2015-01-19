@@ -55,7 +55,7 @@ method GetFiles config-name number1 number2 -> list(filename status)
 Filenames do not include the subvolume.
 
 Strings are UTF-8. Other characters (e.g. in filenames) must be encoded
-hexadecimal as "\x?" or "\x??". As a consequence "\" must be encoded as "\\".
+hexadecimal as "\x??". As a consequence "\" must be encoded as "\\".
 
 Due to security concerns there are no methods to get, compare or revert
 files. This can be done in the client.
