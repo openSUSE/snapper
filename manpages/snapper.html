@@ -119,7 +119,7 @@
               </dt>
               <dd class="glossdef">
                 <p>Deletes old snapshots but keeps a number of hourly, daily,
-	    monthly and yearly snapshots.</p>
+	    weekly, monthly and yearly snapshots.</p>
               </dd>
               <dt>
                 <span class="glossterm">empty-pre-post</span>
@@ -325,6 +325,14 @@
                     <p>Selects type of snapshots to list. Possible values are
 		all, single and pre-post.</p>
                   </dd>
+                  <dt>
+                    <span class="term">
+                      <code class="option">-a, --all-configs</code>
+                    </span>
+                  </dt>
+                  <dd>
+                    <p>List snapshots from all configs accessible by the user.</p>
+                  </dd>
                 </dl>
               </div>
             </dd>
@@ -510,6 +518,24 @@
 	  <em class="replaceable"><code>number2</code></em>. This will show a diff of the
 	  content of files and directories that have been created, modified or
 	  deleted in the time between the two snapshots have been made.</p>
+              <div class="variablelist">
+                <dl class="variablelist">
+                  <dt>
+                    <span class="term"><code class="option">--diff-cmd</code> <em class="replaceable"><code>command</code></em></span>
+                  </dt>
+                  <dd>
+                    <p>Command used for comparing files. The default is
+		<code class="filename">/usr/bin/diff --new-file --unified</code>. The two files to
+		compare are passed as parameters to the command.</p>
+                  </dd>
+                  <dt>
+                    <span class="term"><code class="option">-x, --extensions</code> <em class="replaceable"><code>options</code></em></span>
+                  </dt>
+                  <dd>
+                    <p>Extra options passed to the diff command.</p>
+                  </dd>
+                </dl>
+              </div>
             </dd>
             <dt>
               <span class="term">

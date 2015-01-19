@@ -199,6 +199,18 @@
             </dd>
             <dt>
               <span class="term">
+                <code class="option">TIMELINE_LIMIT_WEEKLY=<em class="replaceable"><code>number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Defines how many weekly snapshots the timeline cleanup
+	  algorithm should keep. A weekly snapshot is the first snapshot in a week. The
+	  youngest weekly snapshots will be kept. In compliance with ISO 8601
+	  weeks start on Monday.</p>
+              <p>Default value is "0".</p>
+            </dd>
+            <dt>
+              <span class="term">
                 <code class="option">TIMELINE_LIMIT_MONTHLY=<em class="replaceable"><code>number</code></em></code>
               </span>
             </dt>
