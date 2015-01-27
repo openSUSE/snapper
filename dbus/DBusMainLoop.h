@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2012-2014] Novell, Inc.
+ * Copyright (c) [2012-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -25,12 +25,16 @@
 
 
 #include <dbus/dbus.h>
+#include <chrono>
 
 #include "DBusConnection.h"
 
 
 namespace DBus
 {
+
+    using namespace std::chrono;
+
 
     class MainLoop : public Connection
     {
@@ -41,7 +45,7 @@ namespace DBus
 
 	void run();
 
-	void set_idle_timeout(int s);
+	void set_idle_timeout(milliseconds idle_timeout);
 	void reset_idle_count();
 
 	void add_client_match(const string& name);
@@ -50,7 +54,7 @@ namespace DBus
 	virtual void method_call(Message& message) = 0;
 	virtual void signal(Message& message) = 0;
 	virtual void client_disconnected(const string& name) = 0;
-	virtual int periodic_timeout() = 0;
+	virtual milliseconds periodic_timeout() = 0;
 	virtual void periodic() = 0;
 
     private:
@@ -94,10 +98,10 @@ namespace DBus
 
 	void dispatch_incoming(Message& message);
 
-	int idle_timeout;
-	time_t last_action;
+	milliseconds idle_for() const;
 
-	static time_t monotonic_clock();
+	milliseconds idle_timeout;
+	steady_clock::time_point last_action;
 
     };
 

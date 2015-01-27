@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2012-2014] Novell, Inc.
+ * Copyright (c) [2012-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -22,7 +22,6 @@
 
 #include <unistd.h>
 #include <poll.h>
-#include <time.h>
 
 #include "DBusMainLoop.h"
 
@@ -106,17 +105,16 @@ namespace DBus
 		}
 	    }
 
-	    int timeout = periodic_timeout();
+	    milliseconds timeout = periodic_timeout();
 
-	    if (idle_timeout >= 0)
+	    if (idle_timeout.count() >= 0)
 	    {
-		int time_left = last_action - monotonic_clock() + idle_timeout;
-
-		if (timeout > time_left * 1000 || timeout == -1)
-		    timeout = time_left * 1000;
+		steady_clock::duration time_left = idle_for() + idle_timeout;
+		if (timeout > time_left || timeout.count() < 0)
+		    timeout = duration_cast<milliseconds>(time_left);
 	    }
 
-	    int r = poll(&pollfds[0], pollfds.size(), timeout);
+	    int r = poll(&pollfds[0], pollfds.size(), timeout.count());
 	    if (r == -1)
 		throw FatalException();
 
@@ -165,11 +163,10 @@ namespace DBus
 		dispatch_incoming(msg);
 	    }
 
-	    if (idle_timeout >= 0)
+	    if (idle_timeout.count() >= 0)
 	    {
-		int time_left = last_action - monotonic_clock() + idle_timeout;
-
-		if (time_left <= 0)
+		steady_clock::duration time_left = idle_for() + idle_timeout;
+		if (time_left.count() <= 0)
 		    break;
 	    }
 	}
@@ -177,16 +174,23 @@ namespace DBus
 
 
     void
-    MainLoop::set_idle_timeout(int s)
+    MainLoop::set_idle_timeout(milliseconds idle_timeout)
     {
-	idle_timeout = s;
+	MainLoop::idle_timeout = idle_timeout;
     }
 
 
     void
     MainLoop::reset_idle_count()
     {
-	last_action = monotonic_clock();
+	last_action = steady_clock::now();
+    }
+
+
+    milliseconds
+    MainLoop::idle_for() const
+    {
+	return duration_cast<milliseconds>(last_action - steady_clock::now());
     }
 
 
@@ -339,15 +343,6 @@ namespace DBus
 	    }
 	    break;
 	}
-    }
-
-
-    time_t
-    DBus::MainLoop::monotonic_clock()
-    {
-	struct timespec tmp;
-	clock_gettime(CLOCK_MONOTONIC, &tmp);
-	return tmp.tv_sec;
     }
 
 }

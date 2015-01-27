@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2014] Novell, Inc.
+ * Copyright (c) [2004-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -357,25 +357,22 @@ namespace snapper
 
 
     StopWatch::StopWatch()
+	: start_time(chrono::steady_clock::now())
     {
-	gettimeofday(&start_tv, NULL);
     }
 
 
     double
     StopWatch::read() const
     {
-	struct timeval stop_tv;
-	gettimeofday(&stop_tv, NULL);
-
-	struct timeval tv;
-	timersub(&stop_tv, &start_tv, &tv);
-
-	return double(tv.tv_sec) + (double)(tv.tv_usec) / 1000000.0;
+	chrono::steady_clock::time_point stop_time = chrono::steady_clock::now();
+	chrono::steady_clock::duration duration = stop_time - start_time;
+	return chrono::duration<double>(duration).count();
     }
 
 
-    std::ostream& operator<<(std::ostream& s, const StopWatch& sw)
+    std::ostream&
+    operator<<(std::ostream& s, const StopWatch& sw)
     {
 	boost::io::ios_all_saver ias(s);
 	return s << fixed << sw.read() << "s";

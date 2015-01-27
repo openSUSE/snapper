@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Jan 27 12:31:45 CET 2015 - aschnell@suse.de
+
+- use C++11 chrono::steady_clock
+
+-------------------------------------------------------------------
 Mon Jan 19 12:42:13 CET 2015 - aschnell@suse.de
 
 - stricter dbus string escaping (see bsc#913238)

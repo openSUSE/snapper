@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2014] Novell, Inc.
+ * Copyright (c) [2004-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -34,6 +34,7 @@
 #include <map>
 #include <vector>
 #include <stdexcept>
+#include <chrono>
 
 
 namespace snapper
@@ -103,7 +104,7 @@ namespace snapper
 
     protected:
 
-	struct timeval start_tv;
+	std::chrono::steady_clock::time_point start_time;
 
     };
 
