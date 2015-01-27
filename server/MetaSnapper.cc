@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2012-2014] Novell, Inc.
+ * Copyright (c) [2012-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -35,7 +35,7 @@ MetaSnappers meta_snappers;
 
 
 RefCounter::RefCounter()
-    : counter(0), last_used(monotonic_time())
+    : counter(0), last_used(steady_clock::now())
 {
 }
 
@@ -57,7 +57,7 @@ RefCounter::dec_use_count()
     assert(counter > 0);
 
     if (--counter == 0)
-	last_used = monotonic_time();
+	last_used = steady_clock::now();
 
     return counter;
 }
@@ -68,7 +68,7 @@ RefCounter::update_use_time()
 {
     boost::lock_guard<boost::mutex> lock(mutex);
 
-    last_used = monotonic_time();
+    last_used = steady_clock::now();
 }
 
 
@@ -81,27 +81,15 @@ RefCounter::use_count() const
 }
 
 
-int
+milliseconds
 RefCounter::unused_for() const
 {
     boost::lock_guard<boost::mutex> lock(mutex);
 
     if (counter != 0)
-	return 0;
+	return milliseconds(0);
 
-    struct timespec tmp;
-    clock_gettime(CLOCK_MONOTONIC, &tmp);
-
-    return tmp.tv_sec - last_used;
-}
-
-
-time_t
-RefCounter::monotonic_time()
-{
-    struct timespec tmp;
-    clock_gettime(CLOCK_MONOTONIC, &tmp);
-    return tmp.tv_sec;
+    return duration_cast<milliseconds>(steady_clock::now() - last_used);
 }
 
 

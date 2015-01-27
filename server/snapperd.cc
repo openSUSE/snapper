@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Novell, Inc.
+ * Copyright (c) [2012-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -37,8 +37,8 @@
 using namespace std;
 
 
-const int idle_time = 60;
-const int snapper_cleanup_time = 30;
+const seconds idle_time(60);
+const seconds snapper_cleanup_time(30);
 
 bool log_stdout = false;
 bool log_debug = false;
@@ -55,7 +55,7 @@ public:
     void signal(DBus::Message& message);
     void client_disconnected(const string& name);
     void periodic();
-    int periodic_timeout();
+    milliseconds periodic_timeout();
 
 };
 
@@ -93,7 +93,7 @@ MyMainLoop::method_call(DBus::Message& msg)
 	    y2deb("client connected invisible '" << msg.get_sender() << "'");
 	    add_client_match(msg.get_sender());
 	    client = clients.add(msg.get_sender());
-	    set_idle_timeout(-1);
+	    set_idle_timeout(seconds(-1));
 	}
 
 	client->add_task(*this, msg);
@@ -146,22 +146,22 @@ MyMainLoop::periodic()
 }
 
 
-int
+milliseconds
 MyMainLoop::periodic_timeout()
 {
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     if (clients.has_zombies())
-	return 1000;
+	return seconds(1);
 
     if (!backgrounds.empty())
-	return 1000;
+	return seconds(1);
 
     for (MetaSnappers::const_iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
 	if (it->is_loaded() && it->use_count() == 0)
-	    return 1000;
+	    return seconds(1);
 
-    return -1;
+    return seconds(-1);
 }
 
 

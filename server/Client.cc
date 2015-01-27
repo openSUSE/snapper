@@ -1352,7 +1352,7 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg) const
 	{
 	    s << ", loaded";
 	    if (it->use_count() == 0)
-		s << ", unused for " << it->unused_for() << "s";
+		s << ", unused for " << duration_cast<milliseconds>(it->unused_for()).count() << "ms";
 	    else
 		s << ", use count " << it->use_count();
 	}

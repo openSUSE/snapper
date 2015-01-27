@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2012-2013] Novell, Inc.
+ * Copyright (c) [2012-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -24,12 +24,14 @@
 #define SNAPPER_META_SNAPPER_H
 
 
+#include <chrono>
 #include <boost/thread.hpp>
 
 #include <snapper/Snapper.h>
 
 
 using namespace std;
+using namespace std::chrono;
 using namespace snapper;
 
 
@@ -44,17 +46,15 @@ public:
     void update_use_time();
 
     int use_count() const;
-    int unused_for() const;
+    milliseconds unused_for() const;
 
 private:
-
-    static time_t monotonic_time();
 
     mutable boost::mutex mutex;
 
     int counter;
 
-    time_t last_used;
+    steady_clock::time_point last_used;
 
 };
 
