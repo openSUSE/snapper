@@ -152,6 +152,8 @@ namespace snapper
 
 	const string& getName() const { return name; }
 
+	string getFullname() const;
+
     protected:
 
 	SDir& base_dir;
