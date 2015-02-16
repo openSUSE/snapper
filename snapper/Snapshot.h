@@ -98,12 +98,9 @@ namespace snapper
 
 	unsigned int getPreNum() const { return pre_num; }
 
-	string getDescription() const { return description; }
-
-	string getCleanup() const { return cleanup; }
-
-	map<string, string> getUserdata() const { return userdata; }
-
+	const string& getDescription() const { return description; }
+	const string& getCleanup() const { return cleanup; }
+	const map<string, string>& getUserdata() const { return userdata; }
 
 	string snapshotDir() const;
 
