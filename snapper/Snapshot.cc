@@ -58,7 +58,8 @@ namespace snapper
 
 	s << " date:\"" << datetime(snapshot.date, true, true) << "\"";
 
-	s << "uid:" << snapshot.uid;
+	if (snapshot.uid != 0)
+	    s << "uid:" << snapshot.uid;
 
 	if (!snapshot.description.empty())
 	    s << " description:\"" << snapshot.description << "\"";
@@ -411,7 +412,8 @@ namespace snapper
 
 	setChildValue(node, "date", datetime(date, true, true));
 
-	setChildValue(node, "uid", uid);
+	if (uid != 0)
+	    setChildValue(node, "uid", uid);
 
 	if (type == POST)
 	    setChildValue(node, "pre_num", pre_num);
