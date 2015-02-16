@@ -44,7 +44,7 @@ using namespace std;
 
 
 void
-step1(const string& device)
+step1(const string& device, const string& description)
 {
     // step runs in inst-sys
 
@@ -88,6 +88,7 @@ step1(const string& device)
 
     SCD scd;
     scd.read_only = false;
+    scd.description = description;
 
     Snapshots::iterator snapshot = snapper.createSingleSnapshot(scd);
 
@@ -181,6 +182,7 @@ main(int argc, char** argv)
 	{ "device",			required_argument,	0,	0 },
 	{ "root-prefix",		required_argument,	0,	0 },
 	{ "default-subvolume-name",	required_argument,	0,	0 },
+	{ "description",		required_argument,	0,	0 },
 	{ 0, 0, 0, 0 }
     };
 
@@ -188,6 +190,7 @@ main(int argc, char** argv)
     string device;
     string root_prefix = "/";
     string default_subvolume_name;
+    string description;
 
     GetOpts getopts;
 
@@ -209,8 +212,11 @@ main(int argc, char** argv)
     if ((opt = opts.find("default-subvolume-name")) != opts.end())
 	default_subvolume_name = opt->second;
 
+    if ((opt = opts.find("description")) != opts.end())
+	description = opt->second;
+
     if (step == "1")
-	step1(device);
+	step1(device, description);
     else if (step == "2")
 	step2(device, root_prefix, default_subvolume_name);
     else if (step == "3")
