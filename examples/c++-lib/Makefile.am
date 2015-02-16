@@ -6,7 +6,7 @@ AM_CPPFLAGS = -I$(top_srcdir)
 
 LDADD = ../../snapper/libsnapper.la
 
-noinst_PROGRAMS = List ListAll Create CmpDirs CreateNumber CreateTimeline SnapTest
+noinst_PROGRAMS = List ListAll Create CmpDirs CreateNumber CreateTimeline
 
 List_SOURCES = List.cc
 
@@ -19,6 +19,4 @@ CmpDirs_SOURCES = CmpDirs.cc
 CreateNumber_SOURCES = CreateNumber.cc
 
 CreateTimeline_SOURCES = CreateTimeline.cc
-
-SnapTest_SOURCES = SnapTest.cc
 
