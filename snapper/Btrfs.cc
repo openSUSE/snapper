@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) [2011-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -64,17 +64,17 @@ namespace snapper
 
 
     Filesystem*
-    Btrfs::create(const string& fstype, const string& subvolume)
+    Btrfs::create(const string& fstype, const string& subvolume, const string& root_prefix)
     {
 	if (fstype == "btrfs")
-	    return new Btrfs(subvolume);
+	    return new Btrfs(subvolume, root_prefix);
 
 	return NULL;
     }
 
 
-    Btrfs::Btrfs(const string& subvolume)
-	: Filesystem(subvolume), qgroup(no_qgroup)
+    Btrfs::Btrfs(const string& subvolume, const string& root_prefix)
+	: Filesystem(subvolume, root_prefix), qgroup(no_qgroup)
     {
     }
 
@@ -99,7 +99,7 @@ namespace snapper
 
 
     void
-    Btrfs::createConfig(bool add_fstab) const
+    Btrfs::createConfig() const
     {
 	SDir subvolume_dir = openSubvolumeDir();
 
@@ -117,20 +117,6 @@ namespace snapper
 	struct stat stat;
 	if (x.stat(&stat, 0) == 0)
 	    x.chmod(stat.st_mode & ~0027, 0);
-
-#ifdef ENABLE_ROLLBACK
-	if (subvolume == "/" && add_fstab)
-	{
-	    try
-	    {
-		addToFstab();
-	    }
-	    catch (const runtime_error& e)
-	    {
-		y2err("adding to fstab failed, " << e.what());
-	    }
-	}
-#endif
     }
 
 
@@ -144,14 +130,7 @@ namespace snapper
 	{
 	    subvolume_dir.umount(".snapshots");
 
-	    try
-	    {
-		removeFromFstab();
-	    }
-	    catch (const runtime_error& e)
-	    {
-		y2err("removing from fstab failed, " << e.what());
-	    }
+	    removeFromFstab();
 	}
 #endif
 
@@ -164,6 +143,44 @@ namespace snapper
 	    y2err("delete subvolume failed, " << e.what());
 	    throw DeleteConfigFailedException("deleting btrfs snapshot failed");
 	}
+    }
+
+
+    void
+    Btrfs::addToFstab(const string& default_subvolume_name) const
+    {
+#ifdef ENABLE_ROLLBACK
+	if (subvolume == "/")
+	{
+	    try
+	    {
+		addToFstabHelper(default_subvolume_name);
+	    }
+	    catch (const runtime_error& e)
+	    {
+		y2err("adding to fstab failed, " << e.what());
+	    }
+	}
+#endif
+    }
+
+
+    void
+    Btrfs::removeFromFstab() const
+    {
+#ifdef ENABLE_ROLLBACK
+	if (subvolume == "/")
+	{
+	    try
+	    {
+		removeFromFstabHelper();
+	    }
+	    catch (const runtime_error& e)
+	    {
+		y2err("removing from fstab failed, " << e.what());
+	    }
+	}
+#endif
     }
 
 
@@ -1377,8 +1394,8 @@ namespace snapper
 
     public:
 
-	MntTable()
-	    : table(mnt_new_table())
+	MntTable(const string& root_prefix)
+	    : root_prefix(root_prefix), table(mnt_new_table())
 	{
 	    if (!table)
 		throw runtime_error("mnt_new_table failed");
@@ -1393,13 +1410,13 @@ namespace snapper
 
 	void parse_fstab()
 	{
-	    if (mnt_table_parse_fstab(table, "/etc/fstab") != 0)
+	    if (mnt_table_parse_fstab(table, xxx().c_str()) != 0)
 		throw runtime_error("mnt_table_parse_fstab failed");
 	}
 
 	void replace_file()
 	{
-	    if (mnt_table_replace_file(table, "/etc/fstab") != 0)
+	    if (mnt_table_replace_file(table, xxx().c_str()) != 0)
 		throw runtime_error("mnt_table_replace_file failed");
 	}
 
@@ -1422,19 +1439,27 @@ namespace snapper
 
     private:
 
+	string xxx() const	// TODO
+	{
+	    return prepend_root_prefix(root_prefix, "/etc/fstab");
+	}
+
+	const string root_prefix;
+
 	struct libmnt_table* table;
 
     };
 
 
     void
-    Btrfs::addToFstab() const
+    Btrfs::addToFstabHelper(const string& default_subvolume_name) const
     {
-	SDir infos_dir = openInfosDir();
-	unsigned long long id = get_id(infos_dir.fd());
-	string subvol_option = get_subvolume(infos_dir.fd(), id);
+	string subvol_option = default_subvolume_name;
+	if (!subvol_option.empty())
+	    subvol_option += "/";
+	subvol_option += ".snapshots";
 
-	MntTable mnt_table;
+	MntTable mnt_table(root_prefix);
 	mnt_table.parse_fstab();
 
 	libmnt_fs* root = mnt_table.find_target(subvolume, MNT_ITER_FORWARD);
@@ -1445,8 +1470,7 @@ namespace snapper
 	if (!snapshots)
 	    throw runtime_error("mnt_copy_fs failed");
 
-	string mountpoint = (subvolume == "/" ? "" : subvolume) +  "/.snapshots";
-	mnt_fs_set_target(snapshots, mountpoint.c_str());
+	mnt_fs_set_target(snapshots, "/.snapshots");
 
 	char* options = mnt_fs_strdup_options(snapshots);
 	mnt_optstr_remove_option(&options, "defaults");
@@ -1460,9 +1484,9 @@ namespace snapper
 
 
     void
-    Btrfs::removeFromFstab() const
+    Btrfs::removeFromFstabHelper() const
     {
-	MntTable mnt_table;
+	MntTable mnt_table(root_prefix);
 	mnt_table.parse_fstab();
 
 	string mountpoint = (subvolume == "/" ? "" : subvolume) +  "/.snapshots";

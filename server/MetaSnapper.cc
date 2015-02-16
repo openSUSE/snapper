@@ -160,7 +160,7 @@ Snapper*
 MetaSnapper::getSnapper()
 {
     if (!snapper)
-	snapper = new Snapper(config_info.getConfigName());
+	snapper = new Snapper(config_info.getConfigName(), "/");
 
     update_use_time();
 
@@ -189,7 +189,7 @@ MetaSnappers::~MetaSnappers()
 void
 MetaSnappers::init()
 {
-    list<ConfigInfo> config_infos = Snapper::getConfigs();
+    list<ConfigInfo> config_infos = Snapper::getConfigs("/");
 
     for (list<ConfigInfo>::iterator it = config_infos.begin(); it != config_infos.end(); ++it)
     {
@@ -213,9 +213,9 @@ void
 MetaSnappers::createConfig(const string& config_name, const string& subvolume,
 			   const string& fstype, const string& template_name)
 {
-    Snapper::createConfig(config_name, subvolume, fstype, template_name);
+    Snapper::createConfig(config_name, "/", subvolume, fstype, template_name);
 
-    ConfigInfo config_info = Snapper::getConfig(config_name);
+    ConfigInfo config_info = Snapper::getConfig(config_name, "/");
 
     entries.emplace_back(config_info);
 }
@@ -224,7 +224,7 @@ MetaSnappers::createConfig(const string& config_name, const string& subvolume,
 void
 MetaSnappers::deleteConfig(iterator it)
 {
-    Snapper::deleteConfig(it->configName());
+    Snapper::deleteConfig(it->configName(), "/");
 
     entries.erase(it);
 }

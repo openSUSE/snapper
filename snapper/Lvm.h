@@ -78,13 +78,14 @@ namespace snapper
     {
     public:
 
-	static Filesystem* create(const string& fstype, const string& subvolume);
+	static Filesystem* create(const string& fstype, const string& subvolume,
+				  const string& root_prefix);
 
-	Lvm(const string& subvolume, const string& mount_type);
+	Lvm(const string& subvolume, const string& root_prefix, const string& mount_type);
 
 	virtual string fstype() const { return "lvm(" + mount_type + ")"; }
 
-	virtual void createConfig(bool add_fstab) const;
+	virtual void createConfig() const;
 	virtual void deleteConfig() const;
 
 	virtual string snapshotDir(unsigned int num) const;

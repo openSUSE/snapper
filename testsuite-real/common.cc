@@ -34,7 +34,7 @@ setup()
 
     initDefaultLogger();
 
-    sh = new Snapper(CONFIG);
+    sh = new Snapper(CONFIG, "/");
 }
 
 

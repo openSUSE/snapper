@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) [2011-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -35,16 +35,20 @@ namespace snapper
     {
     public:
 
-	static Filesystem* create(const string& fstype, const string& subvolume);
+	static Filesystem* create(const string& fstype, const string& subvolume,
+				  const string& root_prefix);
 
-	Btrfs(const string& subvolume);
+	Btrfs(const string& subvolume, const string& root_prefix);
 
 	virtual void evalConfigInfo(const ConfigInfo& config_info);
 
 	virtual string fstype() const { return "btrfs"; }
 
-	virtual void createConfig(bool add_fstab) const;
+	virtual void createConfig() const;
 	virtual void deleteConfig() const;
+
+	virtual void addToFstab(const string& default_subvolume_name) const;
+	virtual void removeFromFstab() const;
 
 	virtual string snapshotDir(unsigned int num) const;
 
@@ -73,8 +77,8 @@ namespace snapper
 
 	qgroup_t qgroup;
 
-	void addToFstab() const;
-	void removeFromFstab() const;
+	void addToFstabHelper(const string& default_subvolume_name) const;
+	void removeFromFstabHelper() const;
 
     };
 

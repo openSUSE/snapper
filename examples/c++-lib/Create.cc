@@ -12,7 +12,7 @@ using namespace std;
 int
 main(int argc, char** argv)
 {
-    Snapper* sh = new Snapper();
+    Snapper* sh = new Snapper("root", "/");
 
     SCD scd;
     scd.uid = getuid();

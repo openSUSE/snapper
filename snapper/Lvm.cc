@@ -47,20 +47,20 @@ namespace snapper
 {
 
     Filesystem*
-    Lvm::create(const string& fstype, const string& subvolume)
+    Lvm::create(const string& fstype, const string& subvolume, const string& root_prefix)
     {
 	Regex rx("^lvm\\(([_a-z0-9]+)\\)$");
 	if (rx.match(fstype))
-	    return new Lvm(subvolume, rx.cap(1));
+	    return new Lvm(subvolume, root_prefix, rx.cap(1));
 
 	return NULL;
     }
 
 
-    Lvm::Lvm(const string& subvolume, const string& mount_type)
-	: Filesystem(subvolume), mount_type(mount_type),
-	caps(LvmCapabilities::get_lvm_capabilities()),
-	cache(LvmCache::get_lvm_cache())
+    Lvm::Lvm(const string& subvolume, const string& root_prefix, const string& mount_type)
+	: Filesystem(subvolume, root_prefix), mount_type(mount_type),
+	  caps(LvmCapabilities::get_lvm_capabilities()),
+	  cache(LvmCache::get_lvm_cache())
     {
 	if (access(LVCREATEBIN, X_OK) != 0)
 	{
@@ -102,7 +102,7 @@ namespace snapper
 
 
     void
-    Lvm::createConfig(bool add_fstab) const
+    Lvm::createConfig() const
     {
 	SDir subvolume_dir = openSubvolumeDir();
 

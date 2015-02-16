@@ -44,7 +44,7 @@ namespace snapper
     {
     public:
 
-	explicit ConfigInfo(const string& config_name);
+	explicit ConfigInfo(const string& config_name, const string& root_prefix);
 
 	const string& getConfigName() const { return config_name; }
 	const string& getSubvolume() const { return subvolume; }
@@ -110,7 +110,7 @@ namespace snapper
     {
     public:
 
-	Snapper(const string& config_name = "root", bool disable_filters = false);
+	Snapper(const string& config_name, const string& root_prefix, bool disable_filters = false);
 	~Snapper();
 
 	string configName() const { return config_info->getConfigName(); }
@@ -137,14 +137,13 @@ namespace snapper
 
 	const vector<string>& getIgnorePatterns() const { return ignore_patterns; }
 
-	static ConfigInfo getConfig(const string& config_name);
-	static list<ConfigInfo> getConfigs();
-	static void createConfig(const string& config_name, const string& subvolume,
-				 const string& fstype, const string& template_name);
-	static void createConfig(const string& config_name, const string& subvolume,
-				 const string& fstype, const string& template_name,
-				 bool add_fstab);
-	static void deleteConfig(const string& config_name);
+	static ConfigInfo getConfig(const string& config_name, const string& root_prefix);
+	static list<ConfigInfo> getConfigs(const string& root_prefix);
+
+	static void createConfig(const string& config_name, const string& root_prefix,
+				 const string& subvolume, const string& fstype,
+				 const string& template_name);
+	static void deleteConfig(const string& config_name, const string& root_prefix);
 
 	static bool detectFstype(const string& subvolume, string& fstype);
 

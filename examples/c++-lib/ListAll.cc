@@ -10,12 +10,12 @@ using namespace std;
 int
 main(int argc, char** argv)
 {
-    list<ConfigInfo> c = Snapper::getConfigs();
+    list<ConfigInfo> c = Snapper::getConfigs("/");
 
     list<Snapper*> sh;
 
     for (list<ConfigInfo>::const_iterator it = c.begin(); it != c.end(); ++it)
-	sh.push_back(new Snapper(it->getConfigName()));
+	sh.push_back(new Snapper(it->getConfigName(), "/"));
 
     for (list<Snapper*>::const_iterator it = sh.begin(); it != sh.end(); ++it)
 	cout << (*it)->configName() << " " << (*it)->subvolumeDir() << " "

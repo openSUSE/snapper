@@ -14,7 +14,7 @@ using namespace std;
 void
 deleteAll()
 {
-    Snapper* sh = new Snapper("testsuite");
+    Snapper* sh = new Snapper("testsuite", "/");
 
     Snapshots snapshots = sh->getSnapshots();
 
@@ -35,7 +35,7 @@ main()
 {
     deleteAll();
 
-    Snapper* sh = new Snapper("testsuite");
+    Snapper* sh = new Snapper("testsuite", "/");
 
     for (size_t i = 0; i < 100; ++i)
     {

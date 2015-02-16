@@ -51,8 +51,9 @@ namespace snapper
     using namespace std;
 
 
-    ConfigInfo::ConfigInfo(const string& config_name)
-	: SysconfigFile(CONFIGSDIR "/" + config_name), config_name(config_name), subvolume("/")
+    ConfigInfo::ConfigInfo(const string& config_name, const string& root_prefix)
+	: SysconfigFile(prepend_root_prefix(root_prefix, CONFIGSDIR "/" + config_name)),
+	  config_name(config_name), subvolume("/")
     {
 	if (!getValue(KEY_SUBVOLUME, subvolume))
 	    throw InvalidConfigException();
@@ -76,7 +77,7 @@ namespace snapper
     }
 
 
-    Snapper::Snapper(const string& config_name, bool disable_filters)
+    Snapper::Snapper(const string& config_name, const string& root_prefix, bool disable_filters)
 	: config_info(NULL), filesystem(NULL), snapshots(this)
     {
 	y2mil("Snapper constructor");
@@ -85,14 +86,14 @@ namespace snapper
 
 	try
 	{
-	    config_info = new ConfigInfo(config_name);
+	    config_info = new ConfigInfo(config_name, root_prefix);
 	}
 	catch (const FileNotFoundException& e)
 	{
 	    throw ConfigNotFoundException();
 	}
 
-	filesystem = Filesystem::create(*config_info);
+	filesystem = Filesystem::create(*config_info, root_prefix);
 
 	bool sync_acl;
 	if (config_info->getValue(KEY_SYNC_ACL, sync_acl) && sync_acl == true)
@@ -234,14 +235,14 @@ namespace snapper
 
 
     ConfigInfo
-    Snapper::getConfig(const string& config_name)
+    Snapper::getConfig(const string& config_name, const string& root_prefix)
     {
-	return ConfigInfo(config_name);
+	return ConfigInfo(config_name, root_prefix);
     }
 
 
     list<ConfigInfo>
-    Snapper::getConfigs()
+    Snapper::getConfigs(const string& root_prefix)
     {
 	y2mil("Snapper get-configs");
 	y2mil("libsnapper version " VERSION);
@@ -258,7 +259,7 @@ namespace snapper
 	    {
 		try
 		{
-		    config_infos.push_back(getConfig(*it));
+		    config_infos.push_back(getConfig(*it, root_prefix));
 		}
 		catch (const FileNotFoundException& e)
 		{
@@ -280,17 +281,9 @@ namespace snapper
 
 
     void
-    Snapper::createConfig(const string& config_name, const string& subvolume,
-			  const string& fstype, const string& template_name)
-    {
-	createConfig(config_name, subvolume, fstype, template_name, false);
-    }
-
-
-    void
-    Snapper::createConfig(const string& config_name, const string& subvolume,
-			  const string& fstype, const string& template_name,
-			  bool add_fstab)
+    Snapper::createConfig(const string& config_name, const string& root_prefix,
+			  const string& subvolume, const string& fstype,
+			  const string& template_name)
     {
 	y2mil("Snapper create-config");
 	y2mil("libsnapper version " VERSION);
@@ -307,7 +300,7 @@ namespace snapper
 	    throw CreateConfigFailedException("illegal subvolume");
 	}
 
-	list<ConfigInfo> configs = getConfigs();
+	list<ConfigInfo> configs = getConfigs(root_prefix);
 	for (list<ConfigInfo>::const_iterator it = configs.begin(); it != configs.end(); ++it)
 	{
 	    if (it->getSubvolume() == subvolume)
@@ -321,10 +314,10 @@ namespace snapper
 	    throw CreateConfigFailedException("cannot access template config");
 	}
 
-	auto_ptr<Filesystem> filesystem;
+	unique_ptr<Filesystem> filesystem;
 	try
 	{
-	    filesystem.reset(Filesystem::create(fstype, subvolume));
+	    filesystem.reset(Filesystem::create(fstype, subvolume, ""));
 	}
 	catch (const InvalidConfigException& e)
 	{
@@ -353,16 +346,12 @@ namespace snapper
 	    throw CreateConfigFailedException("sysconfig-file not found");
 	}
 
-	SystemCmd cmd1(CPBIN " " + quote(CONFIGTEMPLATEDIR "/" + template_name) + " " +
-		       quote(CONFIGSDIR "/" + config_name));
-	if (cmd1.retcode() != 0)
-	{
-	    throw CreateConfigFailedException("copying config-file template failed");
-	}
-
 	try
 	{
-	    SysconfigFile config(CONFIGSDIR "/" + config_name);
+	    SysconfigFile config(CONFIGTEMPLATEDIR "/" + template_name);
+
+	    config.setName(CONFIGSDIR "/" + config_name);
+
 	    config.setValue(KEY_SUBVOLUME, subvolume);
 	    config.setValue(KEY_FSTYPE, filesystem->fstype());
 	}
@@ -373,7 +362,7 @@ namespace snapper
 
 	try
 	{
-	    filesystem->createConfig(add_fstab);
+	    filesystem->createConfig();
 	}
 	catch (...)
 	{
@@ -394,12 +383,12 @@ namespace snapper
 
 
     void
-    Snapper::deleteConfig(const string& config_name)
+    Snapper::deleteConfig(const string& config_name, const string& root_prefix)
     {
 	y2mil("Snapper delete-config");
 	y2mil("libsnapper version " VERSION);
 
-	auto_ptr<Snapper> snapper(new Snapper(config_name));
+	unique_ptr<Snapper> snapper(new Snapper(config_name, root_prefix));
 
 	Hooks::delete_config(snapper->subvolumeDir(), snapper->getFilesystem());
 
