@@ -114,8 +114,6 @@ namespace snapper
 
 	for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); ++it)
 	{
-	    it->flushInfo();
-
 	    try
 	    {
 		it->handleUmountFilesystemSnapshot();
@@ -180,27 +178,6 @@ namespace snapper
     Snapper::getSnapshotCurrent() const
     {
 	return snapshots.getSnapshotCurrent();
-    }
-
-
-    Snapshots::iterator
-    Snapper::createSingleSnapshot(string description)
-    {
-	return snapshots.createSingleSnapshot(0, description, "", map<string, string>());
-    }
-
-
-    Snapshots::iterator
-    Snapper::createPreSnapshot(string description)
-    {
-	return snapshots.createPreSnapshot(0, description, "", map<string, string>());
-    }
-
-
-    Snapshots::iterator
-    Snapper::createPostSnapshot(string description, Snapshots::const_iterator pre)
-    {
-	return snapshots.createPostSnapshot(pre, 0, description, "", map<string, string>());
     }
 
 

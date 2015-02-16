@@ -75,8 +75,7 @@ namespace snapper
 
     Snapshot::Snapshot(const Snapper* snapper, SnapshotType type, unsigned int num, time_t date)
 	: snapper(snapper), type(type), num(num), date(date), uid(0), pre_num(0),
-	  info_modified(false), mount_checked(false), mount_user_request(false),
-	  mount_use_count(0)
+	  mount_checked(false), mount_user_request(false), mount_use_count(0)
     {
     }
 
@@ -129,59 +128,6 @@ namespace snapper
 	    return false;
 
 	return snapper->getFilesystem()->isSnapshotReadOnly(num);
-    }
-
-
-    void
-    Snapshot::setUid(uid_t val)
-    {
-	if (isCurrent())
-	    throw IllegalSnapshotException();
-
-	uid = val;
-	info_modified = true;
-    }
-
-
-    void
-    Snapshot::setDescription(const string& val)
-    {
-	if (isCurrent())
-	    throw IllegalSnapshotException();
-
-	description = val;
-	info_modified = true;
-    }
-
-
-    void
-    Snapshot::setCleanup(const string& val)
-    {
-	if (isCurrent())
-	    throw IllegalSnapshotException();
-
-	cleanup = val;
-	info_modified = true;
-    }
-
-
-    void
-    Snapshot::setUserdata(const map<string, string>& val)
-    {
-	if (isCurrent())
-	    throw IllegalSnapshotException();
-
-	for (map<string, string>::const_iterator it = val.begin(); it != val.end(); ++it)
-	{
-	    if (it->first.empty() || it->first.find_first_of(",=") != string::npos)
-		throw InvalidUserdataException();
-
-	    if (it->second.find_first_of(",=") != string::npos)
-		throw InvalidUserdataException();
-	}
-
-	userdata = val;
-	info_modified = true;
     }
 
 
@@ -453,17 +399,6 @@ namespace snapper
 
 
     void
-    Snapshot::flushInfo()
-    {
-	if (!info_modified)
-	    return;
-
-	writeInfo();
-	info_modified = false;
-    }
-
-
-    void
     Snapshot::writeInfo() const
     {
 	XmlFile xml;
@@ -592,27 +527,6 @@ namespace snapper
 
 	snapper->getFilesystem()->umountSnapshot(num);
 	snapper->getFilesystem()->deleteSnapshot(num);
-    }
-
-
-    Snapshots::iterator
-    Snapshots::createSingleSnapshot(string description)
-    {
-	return createSingleSnapshot(0, description, "", map<string, string>());
-    }
-
-
-    Snapshots::iterator
-    Snapshots::createPreSnapshot(string description)
-    {
-	return createPreSnapshot(0, description, "", map<string, string>());
-    }
-
-
-    Snapshots::iterator
-    Snapshots::createPostSnapshot(string description, Snapshots::const_iterator pre)
-    {
-	return createPostSnapshot(pre, 0, description, "", map<string, string>());
     }
 
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) [2011-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -94,21 +94,16 @@ namespace snapper
 
 	time_t getDate() const { return date; }
 
-	void setUid(uid_t uid) __attribute__ ((deprecated));
 	uid_t getUid() const { return uid; }
 
 	unsigned int getPreNum() const { return pre_num; }
 
-	void setDescription(const string& description) __attribute__ ((deprecated));
 	string getDescription() const { return description; }
 
-	void setCleanup(const string& cleanup) __attribute__ ((deprecated));
 	string getCleanup() const { return cleanup; }
 
-	void setUserdata(const map<string, string>& userdata) __attribute__ ((deprecated));
 	map<string, string> getUserdata() const { return userdata; }
 
-	void flushInfo() __attribute__ ((deprecated));
 
 	string snapshotDir() const;
 
@@ -142,8 +137,6 @@ namespace snapper
 	string cleanup;
 
 	map<string, string> userdata;
-
-	bool info_modified;
 
 	mutable bool mount_checked;
 	mutable bool mount_user_request;
@@ -204,10 +197,6 @@ namespace snapper
 	void check() const;
 
 	void checkUserdata(const map<string, string>& userdata) const;
-
-	iterator createSingleSnapshot(string description) __attribute__ ((deprecated));
-	iterator createPreSnapshot(string description) __attribute__ ((deprecated));
-	iterator createPostSnapshot(string description, const_iterator pre) __attribute__ ((deprecated));
 
 	iterator createSingleSnapshot(uid_t uid, const string& description, const string& cleanup,
 				      const map<string, string>& userdata);
