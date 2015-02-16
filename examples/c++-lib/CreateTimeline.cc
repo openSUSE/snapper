@@ -40,8 +40,12 @@ main()
     time_t t = time(NULL) - 100 * 24*60*60;
     while (t < time(NULL))
     {
-	Snapshots::iterator snap = sh->createSingleSnapshot(getuid(), "testsuite", "timeline",
-							    map<string, string>());
+	SCD scd;
+	scd.uid = getuid();
+	scd.description = "testsuite";
+	scd.cleanup = "timeline";
+
+	Snapshots::iterator snap = sh->createSingleSnapshot(scd);
 	// snap->setDate(t);
 
 	t += 60*60;

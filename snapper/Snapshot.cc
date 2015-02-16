@@ -533,89 +533,82 @@ namespace snapper
 
 
     Snapshots::iterator
-    Snapshots::createSingleSnapshot(uid_t uid, const string& description, const string& cleanup,
-				    const map<string, string>& userdata)
+    Snapshots::createSingleSnapshot(const SCD& scd)
     {
-	checkUserdata(userdata);
+	checkUserdata(scd.userdata);
 
 	Snapshot snapshot(snapper, SINGLE, nextNumber(), time(NULL));
-	snapshot.uid = uid;
-	snapshot.description = description;
-	snapshot.cleanup = cleanup;
-	snapshot.userdata = userdata;
+	snapshot.uid = scd.uid;
+	snapshot.description = scd.description;
+	snapshot.cleanup = scd.cleanup;
+	snapshot.userdata =scd. userdata;
 
-	return createHelper(snapshot, getSnapshotCurrent(), true);
+	return createHelper(snapshot, getSnapshotCurrent(), scd.read_only);
     }
 
 
     Snapshots::iterator
-    Snapshots::createSingleSnapshot(const_iterator parent, bool read_only, uid_t uid,
-				    const string& description, const string& cleanup,
-				    const map<string, string>& userdata)
+    Snapshots::createSingleSnapshot(const_iterator parent, const SCD& scd)
     {
-	checkUserdata(userdata);
+	checkUserdata(scd.userdata);
 
 	Snapshot snapshot(snapper, SINGLE, nextNumber(), time(NULL));
-	snapshot.uid = uid;
-	snapshot.description = description;
-	snapshot.cleanup = cleanup;
-	snapshot.userdata = userdata;
+	snapshot.uid = scd.uid;
+	snapshot.description = scd.description;
+	snapshot.cleanup = scd.cleanup;
+	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, parent, read_only);
+	return createHelper(snapshot, parent, scd.read_only);
     }
 
 
     Snapshots::iterator
-    Snapshots::createSingleSnapshotOfDefault(bool read_only, uid_t uid,
-					     const string& description, const string& cleanup,
-					     const map<string, string>& userdata)
+    Snapshots::createSingleSnapshotOfDefault(const SCD& scd)
     {
-	checkUserdata(userdata);
+	checkUserdata(scd.userdata);
 
 	Snapshot snapshot(snapper, SINGLE, nextNumber(), time(NULL));
-	snapshot.uid = uid;
-	snapshot.description = description;
-	snapshot.cleanup = cleanup;
-	snapshot.userdata = userdata;
+	snapshot.uid = scd.uid;
+	snapshot.description = scd.description;
+	snapshot.cleanup = scd.cleanup;
+	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, end(), read_only);
+	return createHelper(snapshot, end(), scd.read_only);
     }
 
 
     Snapshots::iterator
-    Snapshots::createPreSnapshot(uid_t uid, const string& description, const string& cleanup,
-				 const map<string, string>& userdata)
+    Snapshots::createPreSnapshot(const SCD& scd)
     {
-	checkUserdata(userdata);
+	checkUserdata(scd.userdata);
 
 	Snapshot snapshot(snapper, PRE, nextNumber(), time(NULL));
-	snapshot.uid = uid;
-	snapshot.description = description;
-	snapshot.cleanup = cleanup;
-	snapshot.userdata = userdata;
+	snapshot.uid = scd.uid;
+	snapshot.description = scd.description;
+	snapshot.cleanup = scd.cleanup;
+	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, getSnapshotCurrent(), true);
+	return createHelper(snapshot, getSnapshotCurrent(), scd.read_only);
     }
 
 
     Snapshots::iterator
-    Snapshots::createPostSnapshot(Snapshots::const_iterator pre, uid_t uid, const string& description,
-				  const string& cleanup, const map<string, string>& userdata)
+    Snapshots::createPostSnapshot(Snapshots::const_iterator pre, const SCD& scd)
     {
 	if (pre == entries.end() || pre->isCurrent() || pre->getType() != PRE ||
 	    findPost(pre) != entries.end())
 	    throw IllegalSnapshotException();
 
-	checkUserdata(userdata);
+	checkUserdata(scd.userdata);
 
 	Snapshot snapshot(snapper, POST, nextNumber(), time(NULL));
 	snapshot.pre_num = pre->getNum();
-	snapshot.uid = uid;
-	snapshot.description = description;
-	snapshot.cleanup = cleanup;
-	snapshot.userdata = userdata;
+	snapshot.uid = scd.uid;
+	snapshot.description = scd.description;
+	snapshot.cleanup = scd.cleanup;
+	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, getSnapshotCurrent(), true);
+	return createHelper(snapshot, getSnapshotCurrent(), scd.read_only);
     }
 
 
@@ -665,17 +658,16 @@ namespace snapper
 
 
     void
-    Snapshots::modifySnapshot(iterator snapshot, const string& description, const string& cleanup,
-			      const map<string, string>& userdata)
+    Snapshots::modifySnapshot(iterator snapshot, const SMD& smd)
     {
 	if (snapshot == entries.end() || snapshot->isCurrent())
 	    throw IllegalSnapshotException();
 
-	checkUserdata(userdata);
+	checkUserdata(smd.userdata);
 
-	snapshot->description = description;
-	snapshot->cleanup = cleanup;
-	snapshot->userdata = userdata;
+	snapshot->description = smd.description;
+	snapshot->cleanup = smd.cleanup;
+	snapshot->userdata = smd.userdata;
 
 	snapshot->writeInfo();
 

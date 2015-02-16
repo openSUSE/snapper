@@ -130,9 +130,7 @@ namespace snapper
 	unsigned int pre_num;	// valid only for type=POST
 
 	string description;	// likely empty for type=POST
-
 	string cleanup;
-
 	map<string, string> userdata;
 
 	mutable bool mount_checked;
@@ -152,6 +150,32 @@ namespace snapper
     {
 	return a.getNum() < b.getNum();
     }
+
+
+    // Snapshot Modify Data
+    class SMD
+    {
+    public:
+
+	SMD() : description(), cleanup(), userdata({}) {}
+
+	string description;
+	string cleanup;
+	map<string, string> userdata;
+
+    };
+
+    // Snapshot Create Data
+    class SCD : public SMD
+    {
+    public:
+
+	SCD() : SMD(), read_only(true), uid(0) {}
+
+	bool read_only;
+	uid_t uid;
+
+    };
 
 
     class Snapshots
@@ -195,23 +219,15 @@ namespace snapper
 
 	void checkUserdata(const map<string, string>& userdata) const;
 
-	iterator createSingleSnapshot(uid_t uid, const string& description, const string& cleanup,
-				      const map<string, string>& userdata);
-	iterator createSingleSnapshot(const_iterator parent, bool read_only, uid_t uid,
-				      const string& description, const string& cleanup,
-				      const map<string, string>& userdata);
-	iterator createSingleSnapshotOfDefault(bool read_only, uid_t uid, const string& description,
-					       const string& cleanup,
-					       const map<string, string>& userdata);
-	iterator createPreSnapshot(uid_t uid, const string& description, const string& cleanup,
-				   const map<string, string>& userdata);
-	iterator createPostSnapshot(const_iterator pre, uid_t uid, const string& description,
-				    const string& cleanup, const map<string, string>& userdata);
+	iterator createSingleSnapshot(const SCD& scd);
+	iterator createSingleSnapshot(const_iterator parent, const SCD& scd);
+	iterator createSingleSnapshotOfDefault(const SCD& scd);
+	iterator createPreSnapshot(const SCD& scd);
+	iterator createPostSnapshot(const_iterator pre, const SCD& scd);
 
 	iterator createHelper(Snapshot& snapshot, const_iterator parent, bool read_only);
 
-	void modifySnapshot(iterator snapshot, const string& description, const string& cleanup,
-			    const map<string, string>& userdata);
+	void modifySnapshot(iterator snapshot, const SMD& smd);
 
 	void deleteSnapshot(iterator snapshot);
 

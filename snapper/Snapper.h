@@ -125,26 +125,13 @@ namespace snapper
 
 	Snapshots::const_iterator getSnapshotCurrent() const;
 
+	Snapshots::iterator createSingleSnapshot(const SCD& scd);
+	Snapshots::iterator createSingleSnapshot(Snapshots::const_iterator parent, const SCD& scd);
+	Snapshots::iterator createSingleSnapshotOfDefault(const SCD& scd);
+	Snapshots::iterator createPreSnapshot(const SCD& scd);
+	Snapshots::iterator createPostSnapshot(Snapshots::const_iterator pre, const SCD& scd);
 
-	Snapshots::iterator createSingleSnapshot(uid_t uid, const string& description,
-						 const string& cleanup,
-						 const map<string, string>& userdata);
-	Snapshots::iterator createSingleSnapshot(Snapshots::const_iterator parent, bool read_only,
-						 uid_t uid, const string& description,
-						 const string& cleanup,
-						 const map<string, string>& userdata);
-	Snapshots::iterator createSingleSnapshotOfDefault(bool read_only, uid_t uid, const string& description,
-							  const string& cleanup,
-							  const map<string, string>& userdata);
-	Snapshots::iterator createPreSnapshot(uid_t uid, const string& description,
-					      const string& cleanup,
-					      const map<string, string>& userdata);
-	Snapshots::iterator createPostSnapshot(Snapshots::const_iterator pre, uid_t uid,
-					       const string& description, const string& cleanup,
-					       const map<string, string>& userdata);
-
-	void modifySnapshot(Snapshots::iterator snapshot, const string& description,
-			    const string& cleanup, const map<string, string>& userdata);
+	void modifySnapshot(Snapshots::iterator snapshot, const SMD& smd);
 
 	void deleteSnapshot(Snapshots::iterator snapshot);
 

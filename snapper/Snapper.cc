@@ -182,57 +182,47 @@ namespace snapper
 
 
     Snapshots::iterator
-    Snapper::createSingleSnapshot(uid_t uid, const string& description, const string& cleanup,
-				  const map<string, string>& userdata)
+    Snapper::createSingleSnapshot(const SCD& scd)
     {
-	return snapshots.createSingleSnapshot(uid, description, cleanup, userdata);
+	return snapshots.createSingleSnapshot(scd);
     }
 
 
     Snapshots::iterator
-    Snapper::createSingleSnapshot(Snapshots::const_iterator parent, bool read_only, uid_t uid,
-				  const string& description, const string& cleanup,
-				  const map<string, string>& userdata)
+    Snapper::createSingleSnapshot(Snapshots::const_iterator parent, const SCD& scd)
     {
 	if (parent == snapshots.end())
 	    throw IllegalSnapshotException();
 
-	return snapshots.createSingleSnapshot(parent, read_only, uid, description, cleanup,
-					      userdata);
+	return snapshots.createSingleSnapshot(parent, scd);
     }
 
 
     Snapshots::iterator
-    Snapper::createSingleSnapshotOfDefault(bool read_only, uid_t uid, const string& description,
-					   const string& cleanup,
-					   const map<string, string>& userdata)
+    Snapper::createSingleSnapshotOfDefault(const SCD& scd)
     {
-	return snapshots.createSingleSnapshotOfDefault(read_only, uid, description, cleanup,
-						       userdata);
+	return snapshots.createSingleSnapshotOfDefault(scd);
     }
 
 
     Snapshots::iterator
-    Snapper::createPreSnapshot(uid_t uid, const string& description, const string& cleanup,
-			       const map<string, string>& userdata)
+    Snapper::createPreSnapshot(const SCD& scd)
     {
-	return snapshots.createPreSnapshot(uid, description, cleanup, userdata);
+	return snapshots.createPreSnapshot(scd);
     }
 
 
     Snapshots::iterator
-    Snapper::createPostSnapshot(Snapshots::const_iterator pre, uid_t uid, const string& description,
-				const string& cleanup, const map<string, string>& userdata)
+    Snapper::createPostSnapshot(Snapshots::const_iterator pre, const SCD& scd)
     {
-	return snapshots.createPostSnapshot(pre, uid, description, cleanup, userdata);
+	return snapshots.createPostSnapshot(pre, scd);
     }
 
 
     void
-    Snapper::modifySnapshot(Snapshots::iterator snapshot, const string& description,
-			    const string& cleanup, const map<string, string>& userdata)
+    Snapper::modifySnapshot(Snapshots::iterator snapshot, const SMD& smd)
     {
-	snapshots.modifySnapshot(snapshot, description, cleanup, userdata);
+	snapshots.modifySnapshot(snapshot, smd);
     }
 
 
