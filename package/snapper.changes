@@ -1,4 +1,14 @@
 -------------------------------------------------------------------
+Mon Feb 16 12:01:03 CET 2015 - aschnell@suse.de
+
+- added helper to support installation into subvolume (fate#318392)
+- added root-prefix parameter for config functions
+- pass single struct instead of many values to create and modify
+  snapshot functions
+- removed deprecated functions
+- version 0.2.6
+
+-------------------------------------------------------------------
 Tue Jan 27 12:31:45 CET 2015 - aschnell@suse.de
 
 - use C++11 chrono::steady_clock
