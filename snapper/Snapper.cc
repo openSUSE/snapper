@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) [2011-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -43,6 +43,7 @@
 #include "snapper/File.h"
 #include "snapper/AsciiFile.h"
 #include "snapper/Exception.h"
+#include "snapper/Hooks.h"
 
 
 namespace snapper
@@ -421,13 +422,7 @@ namespace snapper
 	    throw;
 	}
 
-#ifdef ENABLE_ROLLBACK
-	if (subvolume == "/" && filesystem->fstype() == "btrfs" &&
-	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
-	{
-	    SystemCmd cmd("/usr/lib/snapper/plugins/grub --enable");
-	}
-#endif
+	Hooks::create_config(subvolume, filesystem.get());
     }
 
 
@@ -439,13 +434,7 @@ namespace snapper
 
 	auto_ptr<Snapper> snapper(new Snapper(config_name));
 
-#ifdef ENABLE_ROLLBACK
-	if (snapper->subvolumeDir() == "/" && snapper->getFilesystem()->fstype() == "btrfs" &&
-	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
-	{
-	    SystemCmd cmd("/usr/lib/snapper/plugins/grub --disable");
-	}
-#endif
+	Hooks::delete_config(snapper->subvolumeDir(), snapper->getFilesystem());
 
 	Snapshots& snapshots = snapper->getSnapshots();
 	for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); )

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) [2011-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -40,8 +40,8 @@
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/Exception.h"
-#include "snapper/SystemCmd.h"
 #include "snapper/Regex.h"
+#include "snapper/Hooks.h"
 
 
 namespace snapper
@@ -735,13 +735,7 @@ namespace snapper
 	    throw;
 	}
 
-#ifdef ENABLE_ROLLBACK
-	if (snapper->subvolumeDir() == "/" && snapper->getFilesystem()->fstype() == "btrfs" &&
-	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
-	{
-	    SystemCmd cmd("/usr/lib/snapper/plugins/grub --refresh");
-	}
-#endif
+	Hooks::create_snapshot(snapper->subvolumeDir(), snapper->getFilesystem());
 
 	return entries.insert(entries.end(), snapshot);
     }
@@ -769,13 +763,7 @@ namespace snapper
 
 	snapshot->writeInfo();
 
-#ifdef ENABLE_ROLLBACK
-	if (snapper->subvolumeDir() == "/" && snapper->getFilesystem()->fstype() == "btrfs" &&
-	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
-	{
-	    SystemCmd cmd("/usr/lib/snapper/plugins/grub --refresh");
-	}
-#endif
+	Hooks::modify_snapshot(snapper->subvolumeDir(), snapper->getFilesystem());
     }
 
 
@@ -811,13 +799,7 @@ namespace snapper
 
 	entries.erase(snapshot);
 
-#ifdef ENABLE_ROLLBACK
-	if (snapper->subvolumeDir() == "/" && snapper->getFilesystem()->fstype() == "btrfs" &&
-	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
-	{
-	    SystemCmd cmd("/usr/lib/snapper/plugins/grub --refresh");
-	}
-#endif
+	Hooks::delete_snapshot(snapper->subvolumeDir(), snapper->getFilesystem());
     }
 
 
