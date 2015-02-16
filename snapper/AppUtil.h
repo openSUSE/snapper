@@ -57,6 +57,8 @@ namespace snapper
 
     string realpath(const string& path);
 
+    string prepend_root_prefix(const string& root_prefix, const string& path);
+
     string stringerror(int errnum);
 
     string dirname(const string& name);
