@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2004-2013] Novell, Inc.
+ * Copyright (c) [2004-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -194,6 +194,13 @@ AsciiFile::save()
 
 	value = tmp == "yes";
 	return true;
+    }
+
+
+    void
+    SysconfigFile::setValue(const string& key, const char* value)
+    {
+	setValue(key, string(value));
     }
 
 
