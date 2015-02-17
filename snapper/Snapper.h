@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) [2011-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -113,7 +113,7 @@ namespace snapper
 	Snapper(const string& config_name, const string& root_prefix, bool disable_filters = false);
 	~Snapper();
 
-	string configName() const { return config_info->getConfigName(); }
+	const string& configName() const { return config_info->getConfigName(); }
 
 	string subvolumeDir() const;
 
