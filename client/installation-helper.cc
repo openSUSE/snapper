@@ -110,6 +110,9 @@ step2(const string& device, const string& root_prefix, const string& default_sub
 
     cout << "mounting device" << endl;
 
+    // The btrfs subvol mount option is either "@/.snapshots" or just
+    // ".snapshots" depending on whether default_subvolume_name is e.g. "@" or
+    // "".
     string subvol_option = default_subvolume_name;
     if (!subvol_option.empty())
 	subvol_option += "/";
