@@ -661,6 +661,13 @@ namespace snapper
     }
 
 
+    string
+    TmpDir::getFullname() const
+    {
+	return base_dir.fullname() + "/" + name;
+    }
+
+
     TmpMount::TmpMount(SDir& base_dir, const string& device, const string& name_template,
 		       const string& mount_type, unsigned long mount_flags,
 		       const string& mount_data)

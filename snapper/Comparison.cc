@@ -101,17 +101,6 @@ namespace snapper
     }
 
 
-    struct Comparison::AppendHelper
-    {
-	AppendHelper(const FilePaths* file_paths, Files& files)
-	    : file_paths(file_paths), files(files) {}
-	void operator()(const string& name, unsigned int status)
-	    { files.push_back(File(file_paths, name, status)); }
-	const FilePaths* file_paths;
-	Files& files;
-    };
-
-
     void
     Comparison::mount() const
     {
@@ -137,13 +126,9 @@ namespace snapper
     {
 	y2mil("num1:" << getSnapshot1()->getNum() << " num2:" << getSnapshot2()->getNum());
 
-#if 1
-	cmpdirs_cb_t cb = AppendHelper(&file_paths, files);
-#else
-	cmpdirs_cb_t cb = [&file_paths, &files](const string& name, unsigned int status) {
+	cmpdirs_cb_t cb = [this](const string& name, unsigned int status) {
 	    files.push_back(File(&file_paths, name, status));
 	};
-#endif
 
 	mount();
 

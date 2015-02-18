@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) [2011-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -40,8 +40,8 @@
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/Exception.h"
-#include "snapper/SystemCmd.h"
 #include "snapper/Regex.h"
+#include "snapper/Hooks.h"
 
 
 namespace snapper
@@ -58,7 +58,8 @@ namespace snapper
 
 	s << " date:\"" << datetime(snapshot.date, true, true) << "\"";
 
-	s << "uid:" << snapshot.uid;
+	if (snapshot.uid != 0)
+	    s << "uid:" << snapshot.uid;
 
 	if (!snapshot.description.empty())
 	    s << " description:\"" << snapshot.description << "\"";
@@ -75,8 +76,7 @@ namespace snapper
 
     Snapshot::Snapshot(const Snapper* snapper, SnapshotType type, unsigned int num, time_t date)
 	: snapper(snapper), type(type), num(num), date(date), uid(0), pre_num(0),
-	  info_modified(false), mount_checked(false), mount_user_request(false),
-	  mount_use_count(0)
+	  mount_checked(false), mount_user_request(false), mount_use_count(0)
     {
     }
 
@@ -129,59 +129,6 @@ namespace snapper
 	    return false;
 
 	return snapper->getFilesystem()->isSnapshotReadOnly(num);
-    }
-
-
-    void
-    Snapshot::setUid(uid_t val)
-    {
-	if (isCurrent())
-	    throw IllegalSnapshotException();
-
-	uid = val;
-	info_modified = true;
-    }
-
-
-    void
-    Snapshot::setDescription(const string& val)
-    {
-	if (isCurrent())
-	    throw IllegalSnapshotException();
-
-	description = val;
-	info_modified = true;
-    }
-
-
-    void
-    Snapshot::setCleanup(const string& val)
-    {
-	if (isCurrent())
-	    throw IllegalSnapshotException();
-
-	cleanup = val;
-	info_modified = true;
-    }
-
-
-    void
-    Snapshot::setUserdata(const map<string, string>& val)
-    {
-	if (isCurrent())
-	    throw IllegalSnapshotException();
-
-	for (map<string, string>::const_iterator it = val.begin(); it != val.end(); ++it)
-	{
-	    if (it->first.empty() || it->first.find_first_of(",=") != string::npos)
-		throw InvalidUserdataException();
-
-	    if (it->second.find_first_of(",=") != string::npos)
-		throw InvalidUserdataException();
-	}
-
-	userdata = val;
-	info_modified = true;
     }
 
 
@@ -453,17 +400,6 @@ namespace snapper
 
 
     void
-    Snapshot::flushInfo()
-    {
-	if (!info_modified)
-	    return;
-
-	writeInfo();
-	info_modified = false;
-    }
-
-
-    void
     Snapshot::writeInfo() const
     {
 	XmlFile xml;
@@ -476,7 +412,8 @@ namespace snapper
 
 	setChildValue(node, "date", datetime(date, true, true));
 
-	setChildValue(node, "uid", uid);
+	if (uid != 0)
+	    setChildValue(node, "uid", uid);
 
 	if (type == POST)
 	    setChildValue(node, "pre_num", pre_num);
@@ -596,110 +533,82 @@ namespace snapper
 
 
     Snapshots::iterator
-    Snapshots::createSingleSnapshot(string description)
+    Snapshots::createSingleSnapshot(const SCD& scd)
     {
-	return createSingleSnapshot(0, description, "", map<string, string>());
-    }
-
-
-    Snapshots::iterator
-    Snapshots::createPreSnapshot(string description)
-    {
-	return createPreSnapshot(0, description, "", map<string, string>());
-    }
-
-
-    Snapshots::iterator
-    Snapshots::createPostSnapshot(string description, Snapshots::const_iterator pre)
-    {
-	return createPostSnapshot(pre, 0, description, "", map<string, string>());
-    }
-
-
-    Snapshots::iterator
-    Snapshots::createSingleSnapshot(uid_t uid, const string& description, const string& cleanup,
-				    const map<string, string>& userdata)
-    {
-	checkUserdata(userdata);
+	checkUserdata(scd.userdata);
 
 	Snapshot snapshot(snapper, SINGLE, nextNumber(), time(NULL));
-	snapshot.uid = uid;
-	snapshot.description = description;
-	snapshot.cleanup = cleanup;
-	snapshot.userdata = userdata;
+	snapshot.uid = scd.uid;
+	snapshot.description = scd.description;
+	snapshot.cleanup = scd.cleanup;
+	snapshot.userdata =scd. userdata;
 
-	return createHelper(snapshot, getSnapshotCurrent(), true);
+	return createHelper(snapshot, getSnapshotCurrent(), scd.read_only);
     }
 
 
     Snapshots::iterator
-    Snapshots::createSingleSnapshot(const_iterator parent, bool read_only, uid_t uid,
-				    const string& description, const string& cleanup,
-				    const map<string, string>& userdata)
+    Snapshots::createSingleSnapshot(const_iterator parent, const SCD& scd)
     {
-	checkUserdata(userdata);
+	checkUserdata(scd.userdata);
 
 	Snapshot snapshot(snapper, SINGLE, nextNumber(), time(NULL));
-	snapshot.uid = uid;
-	snapshot.description = description;
-	snapshot.cleanup = cleanup;
-	snapshot.userdata = userdata;
+	snapshot.uid = scd.uid;
+	snapshot.description = scd.description;
+	snapshot.cleanup = scd.cleanup;
+	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, parent, read_only);
+	return createHelper(snapshot, parent, scd.read_only);
     }
 
 
     Snapshots::iterator
-    Snapshots::createSingleSnapshotOfDefault(bool read_only, uid_t uid,
-					     const string& description, const string& cleanup,
-					     const map<string, string>& userdata)
+    Snapshots::createSingleSnapshotOfDefault(const SCD& scd)
     {
-	checkUserdata(userdata);
+	checkUserdata(scd.userdata);
 
 	Snapshot snapshot(snapper, SINGLE, nextNumber(), time(NULL));
-	snapshot.uid = uid;
-	snapshot.description = description;
-	snapshot.cleanup = cleanup;
-	snapshot.userdata = userdata;
+	snapshot.uid = scd.uid;
+	snapshot.description = scd.description;
+	snapshot.cleanup = scd.cleanup;
+	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, end(), read_only);
+	return createHelper(snapshot, end(), scd.read_only);
     }
 
 
     Snapshots::iterator
-    Snapshots::createPreSnapshot(uid_t uid, const string& description, const string& cleanup,
-				 const map<string, string>& userdata)
+    Snapshots::createPreSnapshot(const SCD& scd)
     {
-	checkUserdata(userdata);
+	checkUserdata(scd.userdata);
 
 	Snapshot snapshot(snapper, PRE, nextNumber(), time(NULL));
-	snapshot.uid = uid;
-	snapshot.description = description;
-	snapshot.cleanup = cleanup;
-	snapshot.userdata = userdata;
+	snapshot.uid = scd.uid;
+	snapshot.description = scd.description;
+	snapshot.cleanup = scd.cleanup;
+	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, getSnapshotCurrent(), true);
+	return createHelper(snapshot, getSnapshotCurrent(), scd.read_only);
     }
 
 
     Snapshots::iterator
-    Snapshots::createPostSnapshot(Snapshots::const_iterator pre, uid_t uid, const string& description,
-				  const string& cleanup, const map<string, string>& userdata)
+    Snapshots::createPostSnapshot(Snapshots::const_iterator pre, const SCD& scd)
     {
 	if (pre == entries.end() || pre->isCurrent() || pre->getType() != PRE ||
 	    findPost(pre) != entries.end())
 	    throw IllegalSnapshotException();
 
-	checkUserdata(userdata);
+	checkUserdata(scd.userdata);
 
 	Snapshot snapshot(snapper, POST, nextNumber(), time(NULL));
 	snapshot.pre_num = pre->getNum();
-	snapshot.uid = uid;
-	snapshot.description = description;
-	snapshot.cleanup = cleanup;
-	snapshot.userdata = userdata;
+	snapshot.uid = scd.uid;
+	snapshot.description = scd.description;
+	snapshot.cleanup = scd.cleanup;
+	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, getSnapshotCurrent(), true);
+	return createHelper(snapshot, getSnapshotCurrent(), scd.read_only);
     }
 
 
@@ -735,13 +644,7 @@ namespace snapper
 	    throw;
 	}
 
-#ifdef ENABLE_ROLLBACK
-	if (snapper->subvolumeDir() == "/" && snapper->getFilesystem()->fstype() == "btrfs" &&
-	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
-	{
-	    SystemCmd cmd("/usr/lib/snapper/plugins/grub --refresh");
-	}
-#endif
+	Hooks::create_snapshot(snapper->subvolumeDir(), snapper->getFilesystem());
 
 	return entries.insert(entries.end(), snapshot);
     }
@@ -755,27 +658,20 @@ namespace snapper
 
 
     void
-    Snapshots::modifySnapshot(iterator snapshot, const string& description, const string& cleanup,
-			      const map<string, string>& userdata)
+    Snapshots::modifySnapshot(iterator snapshot, const SMD& smd)
     {
 	if (snapshot == entries.end() || snapshot->isCurrent())
 	    throw IllegalSnapshotException();
 
-	checkUserdata(userdata);
+	checkUserdata(smd.userdata);
 
-	snapshot->description = description;
-	snapshot->cleanup = cleanup;
-	snapshot->userdata = userdata;
+	snapshot->description = smd.description;
+	snapshot->cleanup = smd.cleanup;
+	snapshot->userdata = smd.userdata;
 
 	snapshot->writeInfo();
 
-#ifdef ENABLE_ROLLBACK
-	if (snapper->subvolumeDir() == "/" && snapper->getFilesystem()->fstype() == "btrfs" &&
-	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
-	{
-	    SystemCmd cmd("/usr/lib/snapper/plugins/grub --refresh");
-	}
-#endif
+	Hooks::modify_snapshot(snapper->subvolumeDir(), snapper->getFilesystem());
     }
 
 
@@ -811,13 +707,7 @@ namespace snapper
 
 	entries.erase(snapshot);
 
-#ifdef ENABLE_ROLLBACK
-	if (snapper->subvolumeDir() == "/" && snapper->getFilesystem()->fstype() == "btrfs" &&
-	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
-	{
-	    SystemCmd cmd("/usr/lib/snapper/plugins/grub --refresh");
-	}
-#endif
+	Hooks::delete_snapshot(snapper->subvolumeDir(), snapper->getFilesystem());
     }
 
 

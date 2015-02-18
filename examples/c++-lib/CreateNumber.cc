@@ -14,7 +14,7 @@ using namespace std;
 void
 deleteAll()
 {
-    Snapper* sh = new Snapper("testsuite");
+    Snapper* sh = new Snapper("testsuite", "/");
 
     Snapshots snapshots = sh->getSnapshots();
 
@@ -35,15 +35,18 @@ main()
 {
     deleteAll();
 
-    Snapper* sh = new Snapper("testsuite");
+    Snapper* sh = new Snapper("testsuite", "/");
 
     for (size_t i = 0; i < 100; ++i)
     {
-	map<string, string> userdata;
+	SCD scd;
+	scd.uid = getuid();
+	scd.description = "testsuite";
+	scd.cleanup = "number";
 	if (i % 5 == 0)
-	    userdata["important"] = "yes";
+	    scd.userdata["important"] = "yes";
 
-	sh->createSingleSnapshot(getuid(), "testsuite", "number", userdata);
+	sh->createSingleSnapshot(scd);
     }
 
     delete sh;

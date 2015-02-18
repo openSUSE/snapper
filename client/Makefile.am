@@ -18,6 +18,15 @@ snapper_SOURCES =			\
 
 snapper_LDADD = ../snapper/libsnapper.la utils/libutils.la ../dbus/libdbus.la
 
+libexecdir = /usr/lib/snapper
+
+libexec_PROGRAMS = installation-helper
+
+installation_helper_SOURCES =		\
+	installation-helper.cc
+
+installation_helper_LDADD = ../snapper/libsnapper.la utils/libutils.la
+
 noinst_PROGRAMS = systemd-helper
 
 systemd_helper_SOURCES =		\

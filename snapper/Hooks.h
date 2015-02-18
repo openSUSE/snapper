@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Novell, Inc.
+ * Copyright (c) [2011-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -20,37 +20,38 @@
  */
 
 
-#include <memory>
+#ifndef SNAPPER_HOOKS_H
+#define SNAPPER_HOOKS_H
 
-#include "snapper/Factory.h"
+
 #include "snapper/Snapper.h"
-#include "snapper/Exception.h"
+#include "snapper/Filesystem.h"
 
 
 namespace snapper
 {
+    using namespace std;
 
-    std::auto_ptr<Snapper> the_one;
 
-
-    Snapper*
-    createSnapper(const string& config_name, bool disable_filters)
+    class Hooks
     {
-	if (the_one.get())
-	    throw LogicErrorException();
+    public:
 
-	the_one.reset(new Snapper(config_name, disable_filters));
-	return the_one.get();
-    }
+	static void create_config(const string& subvolume, const Filesystem* filesystem);
+	static void delete_config(const string& subvolume, const Filesystem* filesystem);
 
+	static void create_snapshot(const string& subvolume, const Filesystem* filesystem);
+	static void modify_snapshot(const string& subvolume, const Filesystem* filesystem);
+	static void delete_snapshot(const string& subvolume, const Filesystem* filesystem);
 
-    void
-    deleteSnapper(Snapper* s)
-    {
-	if (!the_one.get() || s != the_one.get())
-	    throw LogicErrorException();
+    private:
 
-	the_one.reset();
-    }
+	static void grub(const string& subvolume, const Filesystem* filesystem,
+			 const char* option);
+
+    };
 
 }
+
+
+#endif

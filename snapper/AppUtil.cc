@@ -143,6 +143,16 @@ namespace snapper
 
 
     string
+    prepend_root_prefix(const string& root_prefix, const string& path)
+    {
+        if (root_prefix == "/")
+            return path;
+        else
+            return root_prefix + path;
+    }
+
+
+    string
     dirname(const string& name)
     {
 	string::size_type pos = name.find_last_of('/');

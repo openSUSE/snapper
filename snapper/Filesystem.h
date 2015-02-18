@@ -45,17 +45,18 @@ namespace snapper
     {
     public:
 
-	Filesystem(const string& subvolume) : subvolume(subvolume) {}
+	Filesystem(const string& subvolume, const string& root_prefix)
+	    : subvolume(subvolume), root_prefix(root_prefix) {}
 	virtual ~Filesystem() {}
 
-	static Filesystem* create(const string& fstype, const string& subvolume);
-	static Filesystem* create(const ConfigInfo& config_info);
+	static Filesystem* create(const string& fstype, const string& subvolume, const string& root_prefix);
+	static Filesystem* create(const ConfigInfo& config_info, const string& root_prefix);
 
 	virtual void evalConfigInfo(const ConfigInfo& config_info) {}
 
 	virtual string fstype() const = 0;
 
-	virtual void createConfig(bool add_fstab) const = 0;
+	virtual void createConfig() const = 0;
 	virtual void deleteConfig() const = 0;
 
 	virtual string snapshotDir(unsigned int num) const = 0;
@@ -85,6 +86,7 @@ namespace snapper
     protected:
 
 	const string subvolume;
+	const string root_prefix;
 
 	static vector<string> filter_mount_options(const vector<string>& options);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2012-2014] Novell, Inc.
+ * Copyright (c) [2012-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -823,12 +823,10 @@ Client::set_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     dbus_uint32_t num;
-    string description;
-    string cleanup;
-    map<string, string> userdata;
+    SMD smd;
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> num >> description >> cleanup >> userdata;
+    hihi >> config_name >> num >> smd.description >> smd.cleanup >> smd.userdata;
 
     y2deb("SetSnapshot config_name:" << config_name << " num:" << num);
 
@@ -845,7 +843,7 @@ Client::set_snapshot(DBus::Connection& conn, DBus::Message& msg)
     if (snap == snapshots.end())
 	throw IllegalSnapshotException();
 
-    snapper->modifySnapshot(snap, description, cleanup, userdata);
+    snapper->modifySnapshot(snap, smd);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -859,26 +857,24 @@ void
 Client::create_single_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
-    string description;
-    string cleanup;
-    map<string, string> userdata;
+    SCD scd;
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> description >> cleanup >> userdata;
+    hihi >> config_name >> scd.description >> scd.cleanup >> scd.userdata;
 
-    y2deb("CreateSingleSnapshot config_name:" << config_name << " description:" << description <<
-	  " cleanup:" << cleanup);
+    y2deb("CreateSingleSnapshot config_name:" << config_name << " description:" << scd.description <<
+	  " cleanup:" << scd.cleanup);
 
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
+    scd.uid = conn.get_unix_userid(msg);
 
     Snapper* snapper = it->getSnapper();
 
-    Snapshots::iterator snap1 = snapper->createSingleSnapshot(conn.get_unix_userid(msg),
-							      description, cleanup, userdata);
+    Snapshots::iterator snap1 = snapper->createSingleSnapshot(scd);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -896,22 +892,20 @@ Client::create_single_snapshot_v2(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     unsigned int parent_num;
-    bool read_only;
-    string description;
-    string cleanup;
-    map<string, string> userdata;
+    SCD scd;
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> parent_num >> read_only >> description >> cleanup >> userdata;
+    hihi >> config_name >> parent_num >> scd.read_only >> scd.description >> scd.cleanup >> scd.userdata;
 
     y2deb("CreateSingleSnapshotV2 config_name:" << config_name << " parent_num:" << parent_num <<
-	  " read_only:" << read_only << " description:" << description << " cleanup:" << cleanup);
+	  " read_only:" << scd.read_only << " description:" << scd.description << " cleanup:" << scd.cleanup);
 
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
+    scd.uid = conn.get_unix_userid(msg);
 
     Snapper* snapper = it->getSnapper();
 
@@ -919,9 +913,7 @@ Client::create_single_snapshot_v2(DBus::Connection& conn, DBus::Message& msg)
 
     Snapshots::iterator parent = snapshots.find(parent_num);
 
-    Snapshots::iterator snap2 = snapper->createSingleSnapshot(parent, read_only,
-							      conn.get_unix_userid(msg),
-							      description, cleanup, userdata);
+    Snapshots::iterator snap2 = snapper->createSingleSnapshot(parent, scd);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -938,29 +930,24 @@ void
 Client::create_single_snapshot_of_default(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
-    bool read_only;
-    string description;
-    string cleanup;
-    map<string, string> userdata;
+    SCD scd;
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> read_only >> description >> cleanup >> userdata;
+    hihi >> config_name >> scd.read_only >> scd.description >> scd.cleanup >> scd.userdata;
 
     y2deb("CreateSingleSnapshotOfDefault config_name:" << config_name << " read_only:" <<
-	  read_only << " description:" << description << " cleanup:" << cleanup);
+	  scd.read_only << " description:" << scd.description << " cleanup:" << scd.cleanup);
 
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
+    scd.uid = conn.get_unix_userid(msg);
 
     Snapper* snapper = it->getSnapper();
 
-    Snapshots::iterator snap = snapper->createSingleSnapshotOfDefault(read_only,
-								      conn.get_unix_userid(msg),
-								      description, cleanup,
-								      userdata);
+    Snapshots::iterator snap = snapper->createSingleSnapshotOfDefault(scd);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -977,26 +964,24 @@ void
 Client::create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
-    string description;
-    string cleanup;
-    map<string, string> userdata;
+    SCD scd;
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> description >> cleanup >> userdata;
+    hihi >> config_name >> scd.description >> scd.cleanup >> scd.userdata;
 
-    y2deb("CreatePreSnapshot config_name:" << config_name << " description:" << description <<
-	  " cleanup:" << cleanup);
+    y2deb("CreatePreSnapshot config_name:" << config_name << " description:" << scd.description <<
+	  " cleanup:" << scd.cleanup);
 
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
+    scd.uid = conn.get_unix_userid(msg);
 
     Snapper* snapper = it->getSnapper();
 
-    Snapshots::iterator snap1 = snapper->createPreSnapshot(conn.get_unix_userid(msg), description,
-							   cleanup, userdata);
+    Snapshots::iterator snap1 = snapper->createPreSnapshot(scd);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -1014,29 +999,27 @@ Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     unsigned int pre_num;
-    string description;
-    string cleanup;
-    map<string, string> userdata;
+    SCD scd;
 
     DBus::Hihi hihi(msg);
-    hihi >> config_name >> pre_num >> description >> cleanup >> userdata;
+    hihi >> config_name >> pre_num >> scd.description >> scd.cleanup >> scd.userdata;
 
     y2deb("CreatePostSnapshot config_name:" << config_name << " pre_num:" << pre_num <<
-	  " description:" << description << " cleanup:" << cleanup);
+	  " description:" << scd.description << " cleanup:" << scd.cleanup);
 
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
+    scd.uid = conn.get_unix_userid(msg);
 
     Snapper* snapper = it->getSnapper();
     Snapshots& snapshots = snapper->getSnapshots();
 
     Snapshots::iterator snap1 = snapshots.find(pre_num);
 
-    Snapshots::iterator snap2 = snapper->createPostSnapshot(snap1, conn.get_unix_userid(msg),
-							    description, cleanup, userdata);
+    Snapshots::iterator snap2 = snapper->createPostSnapshot(snap1, scd);
 
     bool background_comparison = true;
     it->getConfigInfo().getValue("BACKGROUND_COMPARISON", background_comparison);

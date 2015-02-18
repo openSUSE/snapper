@@ -10,7 +10,7 @@ using namespace std;
 int
 main(int argc, char** argv)
 {
-    Snapper* sh = new Snapper();
+    Snapper* sh = new Snapper("root", "/");
 
     const Snapshots& snapshots = sh->getSnapshots();
     for (Snapshots::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)

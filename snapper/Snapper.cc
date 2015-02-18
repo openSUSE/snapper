@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) [2011-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -43,6 +43,7 @@
 #include "snapper/File.h"
 #include "snapper/AsciiFile.h"
 #include "snapper/Exception.h"
+#include "snapper/Hooks.h"
 
 
 namespace snapper
@@ -50,8 +51,9 @@ namespace snapper
     using namespace std;
 
 
-    ConfigInfo::ConfigInfo(const string& config_name)
-	: SysconfigFile(CONFIGSDIR "/" + config_name), config_name(config_name), subvolume("/")
+    ConfigInfo::ConfigInfo(const string& config_name, const string& root_prefix)
+	: SysconfigFile(prepend_root_prefix(root_prefix, CONFIGSDIR "/" + config_name)),
+	  config_name(config_name), subvolume("/")
     {
 	if (!getValue(KEY_SUBVOLUME, subvolume))
 	    throw InvalidConfigException();
@@ -75,7 +77,7 @@ namespace snapper
     }
 
 
-    Snapper::Snapper(const string& config_name, bool disable_filters)
+    Snapper::Snapper(const string& config_name, const string& root_prefix, bool disable_filters)
 	: config_info(NULL), filesystem(NULL), snapshots(this)
     {
 	y2mil("Snapper constructor");
@@ -84,14 +86,14 @@ namespace snapper
 
 	try
 	{
-	    config_info = new ConfigInfo(config_name);
+	    config_info = new ConfigInfo(config_name, root_prefix);
 	}
 	catch (const FileNotFoundException& e)
 	{
 	    throw ConfigNotFoundException();
 	}
 
-	filesystem = Filesystem::create(*config_info);
+	filesystem = Filesystem::create(*config_info, root_prefix);
 
 	bool sync_acl;
 	if (config_info->getValue(KEY_SYNC_ACL, sync_acl) && sync_acl == true)
@@ -113,8 +115,6 @@ namespace snapper
 
 	for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); ++it)
 	{
-	    it->flushInfo();
-
 	    try
 	    {
 		it->handleUmountFilesystemSnapshot();
@@ -183,78 +183,47 @@ namespace snapper
 
 
     Snapshots::iterator
-    Snapper::createSingleSnapshot(string description)
+    Snapper::createSingleSnapshot(const SCD& scd)
     {
-	return snapshots.createSingleSnapshot(0, description, "", map<string, string>());
+	return snapshots.createSingleSnapshot(scd);
     }
 
 
     Snapshots::iterator
-    Snapper::createPreSnapshot(string description)
-    {
-	return snapshots.createPreSnapshot(0, description, "", map<string, string>());
-    }
-
-
-    Snapshots::iterator
-    Snapper::createPostSnapshot(string description, Snapshots::const_iterator pre)
-    {
-	return snapshots.createPostSnapshot(pre, 0, description, "", map<string, string>());
-    }
-
-
-    Snapshots::iterator
-    Snapper::createSingleSnapshot(uid_t uid, const string& description, const string& cleanup,
-				  const map<string, string>& userdata)
-    {
-	return snapshots.createSingleSnapshot(uid, description, cleanup, userdata);
-    }
-
-
-    Snapshots::iterator
-    Snapper::createSingleSnapshot(Snapshots::const_iterator parent, bool read_only, uid_t uid,
-				  const string& description, const string& cleanup,
-				  const map<string, string>& userdata)
+    Snapper::createSingleSnapshot(Snapshots::const_iterator parent, const SCD& scd)
     {
 	if (parent == snapshots.end())
 	    throw IllegalSnapshotException();
 
-	return snapshots.createSingleSnapshot(parent, read_only, uid, description, cleanup,
-					      userdata);
+	return snapshots.createSingleSnapshot(parent, scd);
     }
 
 
     Snapshots::iterator
-    Snapper::createSingleSnapshotOfDefault(bool read_only, uid_t uid, const string& description,
-					   const string& cleanup,
-					   const map<string, string>& userdata)
+    Snapper::createSingleSnapshotOfDefault(const SCD& scd)
     {
-	return snapshots.createSingleSnapshotOfDefault(read_only, uid, description, cleanup,
-						       userdata);
+	return snapshots.createSingleSnapshotOfDefault(scd);
     }
 
 
     Snapshots::iterator
-    Snapper::createPreSnapshot(uid_t uid, const string& description, const string& cleanup,
-			       const map<string, string>& userdata)
+    Snapper::createPreSnapshot(const SCD& scd)
     {
-	return snapshots.createPreSnapshot(uid, description, cleanup, userdata);
+	return snapshots.createPreSnapshot(scd);
     }
 
 
     Snapshots::iterator
-    Snapper::createPostSnapshot(Snapshots::const_iterator pre, uid_t uid, const string& description,
-				const string& cleanup, const map<string, string>& userdata)
+    Snapper::createPostSnapshot(Snapshots::const_iterator pre, const SCD& scd)
     {
-	return snapshots.createPostSnapshot(pre, uid, description, cleanup, userdata);
+	return snapshots.createPostSnapshot(pre, scd);
     }
 
 
     void
-    Snapper::modifySnapshot(Snapshots::iterator snapshot, const string& description,
-			    const string& cleanup, const map<string, string>& userdata)
+    Snapper::modifySnapshot(Snapshots::iterator snapshot, const SMD& smd)
     {
-	snapshots.modifySnapshot(snapshot, description, cleanup, userdata);
+	snapshots.modifySnapshot(snapshot, smd);
     }
 
 
@@ -266,14 +235,14 @@ namespace snapper
 
 
     ConfigInfo
-    Snapper::getConfig(const string& config_name)
+    Snapper::getConfig(const string& config_name, const string& root_prefix)
     {
-	return ConfigInfo(config_name);
+	return ConfigInfo(config_name, root_prefix);
     }
 
 
     list<ConfigInfo>
-    Snapper::getConfigs()
+    Snapper::getConfigs(const string& root_prefix)
     {
 	y2mil("Snapper get-configs");
 	y2mil("libsnapper version " VERSION);
@@ -290,7 +259,7 @@ namespace snapper
 	    {
 		try
 		{
-		    config_infos.push_back(getConfig(*it));
+		    config_infos.push_back(getConfig(*it, root_prefix));
 		}
 		catch (const FileNotFoundException& e)
 		{
@@ -312,17 +281,9 @@ namespace snapper
 
 
     void
-    Snapper::createConfig(const string& config_name, const string& subvolume,
-			  const string& fstype, const string& template_name)
-    {
-	createConfig(config_name, subvolume, fstype, template_name, false);
-    }
-
-
-    void
-    Snapper::createConfig(const string& config_name, const string& subvolume,
-			  const string& fstype, const string& template_name,
-			  bool add_fstab)
+    Snapper::createConfig(const string& config_name, const string& root_prefix,
+			  const string& subvolume, const string& fstype,
+			  const string& template_name)
     {
 	y2mil("Snapper create-config");
 	y2mil("libsnapper version " VERSION);
@@ -339,7 +300,7 @@ namespace snapper
 	    throw CreateConfigFailedException("illegal subvolume");
 	}
 
-	list<ConfigInfo> configs = getConfigs();
+	list<ConfigInfo> configs = getConfigs(root_prefix);
 	for (list<ConfigInfo>::const_iterator it = configs.begin(); it != configs.end(); ++it)
 	{
 	    if (it->getSubvolume() == subvolume)
@@ -353,10 +314,10 @@ namespace snapper
 	    throw CreateConfigFailedException("cannot access template config");
 	}
 
-	auto_ptr<Filesystem> filesystem;
+	unique_ptr<Filesystem> filesystem;
 	try
 	{
-	    filesystem.reset(Filesystem::create(fstype, subvolume));
+	    filesystem.reset(Filesystem::create(fstype, subvolume, ""));
 	}
 	catch (const InvalidConfigException& e)
 	{
@@ -385,16 +346,12 @@ namespace snapper
 	    throw CreateConfigFailedException("sysconfig-file not found");
 	}
 
-	SystemCmd cmd1(CPBIN " " + quote(CONFIGTEMPLATEDIR "/" + template_name) + " " +
-		       quote(CONFIGSDIR "/" + config_name));
-	if (cmd1.retcode() != 0)
-	{
-	    throw CreateConfigFailedException("copying config-file template failed");
-	}
-
 	try
 	{
-	    SysconfigFile config(CONFIGSDIR "/" + config_name);
+	    SysconfigFile config(CONFIGTEMPLATEDIR "/" + template_name);
+
+	    config.setName(CONFIGSDIR "/" + config_name);
+
 	    config.setValue(KEY_SUBVOLUME, subvolume);
 	    config.setValue(KEY_FSTYPE, filesystem->fstype());
 	}
@@ -405,7 +362,7 @@ namespace snapper
 
 	try
 	{
-	    filesystem->createConfig(add_fstab);
+	    filesystem->createConfig();
 	}
 	catch (...)
 	{
@@ -421,31 +378,19 @@ namespace snapper
 	    throw;
 	}
 
-#ifdef ENABLE_ROLLBACK
-	if (subvolume == "/" && filesystem->fstype() == "btrfs" &&
-	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
-	{
-	    SystemCmd cmd("/usr/lib/snapper/plugins/grub --enable");
-	}
-#endif
+	Hooks::create_config(subvolume, filesystem.get());
     }
 
 
     void
-    Snapper::deleteConfig(const string& config_name)
+    Snapper::deleteConfig(const string& config_name, const string& root_prefix)
     {
 	y2mil("Snapper delete-config");
 	y2mil("libsnapper version " VERSION);
 
-	auto_ptr<Snapper> snapper(new Snapper(config_name));
+	unique_ptr<Snapper> snapper(new Snapper(config_name, root_prefix));
 
-#ifdef ENABLE_ROLLBACK
-	if (snapper->subvolumeDir() == "/" && snapper->getFilesystem()->fstype() == "btrfs" &&
-	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
-	{
-	    SystemCmd cmd("/usr/lib/snapper/plugins/grub --disable");
-	}
-#endif
+	Hooks::delete_config(snapper->subvolumeDir(), snapper->getFilesystem());
 
 	Snapshots& snapshots = snapper->getSnapshots();
 	for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); )

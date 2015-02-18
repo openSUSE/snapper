@@ -27,7 +27,7 @@ struct helper
 bool
 cmp(const string& fstype, const string& subvolume, unsigned int num1, unsigned int num2)
 {
-    Filesystem* filesystem = Filesystem::create(fstype, subvolume);
+    Filesystem* filesystem = Filesystem::create(fstype, subvolume, "/");
 
     SDir dir1 = filesystem->openSnapshotDir(num1);
     SDir dir2 = filesystem->openSnapshotDir(num2);

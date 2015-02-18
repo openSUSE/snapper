@@ -91,9 +91,10 @@ namespace snapper
 
 
     Filesystem*
-    Filesystem::create(const string& fstype, const string& subvolume)
+    Filesystem::create(const string& fstype, const string& subvolume, const string& root_prefix)
     {
-	typedef Filesystem* (*func_t)(const string& fstype, const string& subvolume);
+	typedef Filesystem* (*func_t)(const string& fstype, const string& subvolume,
+				      const string& root_prefix);
 
 	static const func_t funcs[] = {
 #ifdef ENABLE_BTRFS
@@ -110,7 +111,7 @@ namespace snapper
 
 	for (const func_t* func = funcs; *func != NULL; ++func)
 	{
-	    Filesystem* fs = (*func)(fstype, subvolume);
+	    Filesystem* fs = (*func)(fstype, subvolume, root_prefix);
 	    if (fs)
 		return fs;
 	}
@@ -121,12 +122,12 @@ namespace snapper
 
 
     Filesystem*
-    Filesystem::create(const ConfigInfo& config_info)
+    Filesystem::create(const ConfigInfo& config_info, const string& root_prefix)
     {
 	string fstype = "btrfs";
 	config_info.getValue(KEY_FSTYPE, fstype);
 
-	Filesystem* fs = create(fstype, config_info.getSubvolume());
+	Filesystem* fs = create(fstype, config_info.getSubvolume(), root_prefix);
 
 	fs->evalConfigInfo(config_info);
 
@@ -137,7 +138,7 @@ namespace snapper
     SDir
     Filesystem::openSubvolumeDir() const
     {
-	SDir subvolume_dir(subvolume);
+	SDir subvolume_dir(prepend_root_prefix(root_prefix, subvolume));
 
 	return subvolume_dir;
     }

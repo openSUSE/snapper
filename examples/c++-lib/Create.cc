@@ -12,9 +12,14 @@ using namespace std;
 int
 main(int argc, char** argv)
 {
-    Snapper* sh = new Snapper();
+    Snapper* sh = new Snapper("root", "/");
 
-    sh->createSingleSnapshot(getuid(), "test", "number", map<string, string>());
+    SCD scd;
+    scd.uid = getuid();
+    scd.description = "test";
+    scd.cleanup = "number";
+
+    sh->createSingleSnapshot(scd);
 
     delete sh;
 

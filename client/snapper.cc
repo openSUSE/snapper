@@ -147,7 +147,7 @@ enum_configs(DBus::Connection* conn)
 
     if (no_dbus)
     {
-	list<ConfigInfo> config_infos = Snapper::getConfigs();
+	list<ConfigInfo> config_infos = Snapper::getConfigs("/");
 	for (list<ConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
 	{
 	    configs.push_back(make_pair(it->getConfigName(), it->getSubvolume()));
@@ -216,9 +216,6 @@ command_create_config(DBus::Connection* conn, Snapper* snapper)
     const struct option options[] = {
 	{ "fstype",		required_argument,	0,	'f' },
 	{ "template",		required_argument,	0,	't' },
-#ifdef ENABLE_ROLLBACK
-	{ "add-fstab",		no_argument,		0,	0 },
-#endif
 	{ 0, 0, 0, 0 }
     };
 
@@ -238,7 +235,6 @@ command_create_config(DBus::Connection* conn, Snapper* snapper)
 
     string fstype = "";
     string template_name = "default";
-    bool add_fstab = false;
 
     GetOpts::parsed_opts::const_iterator opt;
 
@@ -248,9 +244,6 @@ command_create_config(DBus::Connection* conn, Snapper* snapper)
     if ((opt = opts.find("template")) != opts.end())
 	template_name = opt->second;
 
-    if ((opt = opts.find("add-fstab")) != opts.end())
-	add_fstab = true;
-
     if (fstype.empty() && !Snapper::detectFstype(subvolume, fstype))
     {
 	cerr << _("Detecting filesystem type failed.") << endl;
@@ -259,7 +252,7 @@ command_create_config(DBus::Connection* conn, Snapper* snapper)
 
     if (no_dbus)
     {
-	Snapper::createConfig(config_name, subvolume, fstype, template_name, add_fstab);
+	Snapper::createConfig(config_name, "/", subvolume, fstype, template_name);
     }
     else
     {
@@ -289,7 +282,7 @@ command_delete_config(DBus::Connection* conn, Snapper* snapper)
 
     if (no_dbus)
     {
-	Snapper::deleteConfig(config_name);
+	Snapper::deleteConfig(config_name, "/");
     }
     else
     {
@@ -326,7 +319,7 @@ command_get_config(DBus::Connection* conn, Snapper* snapper)
 
     if (no_dbus)
     {
-	ConfigInfo config_info = Snapper::getConfig(config_name);
+	ConfigInfo config_info = Snapper::getConfig(config_name, "/");
 	map<string, string> raw = config_info.getAllValues();
 
 	for (map<string, string>::const_iterator it = raw.begin(); it != raw.end(); ++it)
@@ -1252,7 +1245,7 @@ getFilesystem(DBus::Connection* conn, Snapper* snapper)
 
     try
     {
-	return Filesystem::create(it->second, ci.subvolume);
+	return Filesystem::create(it->second, ci.subvolume, "/");
     }
     catch (const InvalidConfigException& e)
     {
@@ -1682,7 +1675,7 @@ main(int argc, char** argv)
 
 	try
 	{
-	    Snapper* snapper = cmd->needs_snapper ? new Snapper(config_name) : NULL;
+	    Snapper* snapper = cmd->needs_snapper ? new Snapper(config_name, "/") : NULL;
 
 	    (*cmd->cmd_func)(NULL, snapper);
 
