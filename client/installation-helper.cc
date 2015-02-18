@@ -73,7 +73,7 @@ step1(const string& device, const string& description)
     }
     catch (const FileNotFoundException& e)
     {
-	cerr << "copying config-file failed" << endl;
+	cerr << "copying/modifying config-file failed" << endl;
     }
 
     cout << "creating filesystem config" << endl;
