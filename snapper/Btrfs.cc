@@ -1410,13 +1410,13 @@ namespace snapper
 
 	void parse_fstab()
 	{
-	    if (mnt_table_parse_fstab(table, xxx().c_str()) != 0)
+	    if (mnt_table_parse_fstab(table, target_fstab().c_str()) != 0)
 		throw runtime_error("mnt_table_parse_fstab failed");
 	}
 
 	void replace_file()
 	{
-	    if (mnt_table_replace_file(table, xxx().c_str()) != 0)
+	    if (mnt_table_replace_file(table, target_fstab().c_str()) != 0)
 		throw runtime_error("mnt_table_replace_file failed");
 	}
 
@@ -1439,7 +1439,7 @@ namespace snapper
 
     private:
 
-	string xxx() const	// TODO
+	string target_fstab() const
 	{
 	    return prepend_root_prefix(root_prefix, "/etc/fstab");
 	}
