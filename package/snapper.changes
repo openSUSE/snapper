@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Feb 20 14:10:01 CET 2015 - aschnell@suse.de
+
+- added comments in helper program
+
+-------------------------------------------------------------------
 Mon Feb 16 12:01:03 CET 2015 - aschnell@suse.de
 
 - added helper to support installation into subvolume (fate#318392)

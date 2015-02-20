@@ -48,6 +48,10 @@ step1(const string& device, const string& description)
 {
     // step runs in inst-sys
 
+    // preconditions (maybe incomplete):
+    // device is formatted with btrfs
+    // default subvolume for device is set to (for installation) final value
+
     cout << "step 1 device:" << device << endl;
 
     cout << "temporarily mounting device" << endl;
@@ -105,6 +109,10 @@ step2(const string& device, const string& root_prefix, const string& default_sub
 {
     // step runs in inst-sys
 
+    // preconditions (maybe incomplete):
+    // default subvolume of device is mounted at root-prefix
+    // .snapshots subvolume is not mounted
+
     cout << "step 2 device:" << device << " root-prefix:" << root_prefix
 	 << " default-subvolume-name:" << default_subvolume_name << endl;
 
@@ -133,6 +141,10 @@ step3(const string& root_prefix, const string& default_subvolume_name)
 {
     // step runs in inst-sys
 
+    // preconditions (maybe incomplete):
+    // default subvolume of device is mounted at root-prefix
+    // fstab at root-prefix contains entry for default subvolume of device
+
     cout << "step 3 root-prefix:" << root_prefix << " default_subvolume_name:"
 	 << default_subvolume_name << endl;
 
@@ -150,6 +162,11 @@ void
 step4()
 {
     // step runs in chroot
+
+    // preconditions (maybe incomplete):
+    // snapper rpms installed in chroot
+    // all programs for snapper hooks installed in chroot
+    // all preconditions for hooks satisfied
 
     cout << "step 4" << endl;
 
