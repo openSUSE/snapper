@@ -35,6 +35,7 @@
 #include <snapper/Btrfs.h>
 #include <snapper/FileUtils.h>
 #include <snapper/Hooks.h>
+#include "snapper/Log.h"
 
 #include "utils/GetOpts.h"
 
@@ -48,6 +49,10 @@ step1(const string& device, const string& description)
 {
     // step runs in inst-sys
 
+    // preconditions (maybe incomplete):
+    // device is formatted with btrfs
+    // default subvolume for device is set to (for installation) final value
+
     cout << "step 1 device:" << device << endl;
 
     cout << "temporarily mounting device" << endl;
@@ -56,7 +61,7 @@ step1(const string& device, const string& description)
 
     TmpMount tmp_mount(s_dir, device, "tmp-mnt-XXXXXX", "btrfs", 0, "");
 
-    cout << "copying config-file" << endl;
+    cout << "copying/modifying config-file" << endl;
 
     mkdir((tmp_mount.getFullname() + "/etc").c_str(), 0777);
     mkdir((tmp_mount.getFullname() + "/etc/snapper").c_str(), 0777);
@@ -105,6 +110,10 @@ step2(const string& device, const string& root_prefix, const string& default_sub
 {
     // step runs in inst-sys
 
+    // preconditions (maybe incomplete):
+    // default subvolume of device is mounted at root-prefix
+    // .snapshots subvolume is not mounted
+
     cout << "step 2 device:" << device << " root-prefix:" << root_prefix
 	 << " default-subvolume-name:" << default_subvolume_name << endl;
 
@@ -133,6 +142,10 @@ step3(const string& root_prefix, const string& default_subvolume_name)
 {
     // step runs in inst-sys
 
+    // preconditions (maybe incomplete):
+    // default subvolume of device is mounted at root-prefix
+    // fstab at root-prefix contains entry for default subvolume of device
+
     cout << "step 3 root-prefix:" << root_prefix << " default_subvolume_name:"
 	 << default_subvolume_name << endl;
 
@@ -150,6 +163,11 @@ void
 step4()
 {
     // step runs in chroot
+
+    // preconditions (maybe incomplete):
+    // snapper rpms installed in chroot
+    // all programs for snapper hooks installed in chroot
+    // all preconditions for hooks satisfied
 
     cout << "step 4" << endl;
 
@@ -175,10 +193,28 @@ step4()
 }
 
 
+void
+log_do(LogLevel level, const string& component, const char* file, const int line, const char* func,
+       const string& text)
+{
+    cerr << text << endl;
+}
+
+
+bool
+log_query(LogLevel level, const string& component)
+{
+    return level == ERROR;
+}
+
+
 int
 main(int argc, char** argv)
 {
     setlocale(LC_ALL, "");
+
+    setLogDo(&log_do);
+    setLogQuery(&log_query);
 
     const struct option options[] = {
 	{ "step",			required_argument,	0,	0 },
