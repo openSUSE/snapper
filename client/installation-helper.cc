@@ -60,7 +60,7 @@ step1(const string& device, const string& description)
 
     TmpMount tmp_mount(s_dir, device, "tmp-mnt-XXXXXX", "btrfs", 0, "");
 
-    cout << "copying config-file" << endl;
+    cout << "copying/modifying config-file" << endl;
 
     mkdir((tmp_mount.getFullname() + "/etc").c_str(), 0777);
     mkdir((tmp_mount.getFullname() + "/etc/snapper").c_str(), 0777);
