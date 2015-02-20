@@ -35,6 +35,7 @@
 #include <snapper/Btrfs.h>
 #include <snapper/FileUtils.h>
 #include <snapper/Hooks.h>
+#include "snapper/Log.h"
 
 #include "utils/GetOpts.h"
 
@@ -192,10 +193,28 @@ step4()
 }
 
 
+void
+log_do(LogLevel level, const string& component, const char* file, const int line, const char* func,
+       const string& text)
+{
+    cerr << text << endl;
+}
+
+
+bool
+log_query(LogLevel level, const string& component)
+{
+    return level == ERROR;
+}
+
+
 int
 main(int argc, char** argv)
 {
     setlocale(LC_ALL, "");
+
+    setLogDo(&log_do);
+    setLogQuery(&log_query);
 
     const struct option options[] = {
 	{ "step",			required_argument,	0,	0 },
