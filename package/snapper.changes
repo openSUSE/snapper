@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Feb 24 11:48:12 CET 2015 - aschnell@suse.de
+
+- drop -mt decoration from boost libraries (see
+  http://www.boost.org/users/history/version_1_40_0.html)
+
+-------------------------------------------------------------------
 Fri Feb 20 14:10:01 CET 2015 - aschnell@suse.de
 
 - added comments in helper program
