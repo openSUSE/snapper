@@ -114,8 +114,8 @@ rm -rf "$RPM_BUILD_ROOT"
 %doc %{_mandir}/*/snapperd.8*
 %doc %{_mandir}/*/snapper-configs.5*
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
-/etc/cron.hourly/suse.de-snapper
-/etc/cron.daily/suse.de-snapper
+/etc/cron.hourly/suse.de-snapper-create
+/etc/cron.daily/suse.de-snapper-cleanup
 %config /etc/dbus-1/system.d/org.opensuse.Snapper.conf
 %{prefix}/share/dbus-1/system-services/org.opensuse.Snapper.service
 
