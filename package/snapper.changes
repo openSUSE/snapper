@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Mar 03 10:22:28 CET 2015 - aschnell@suse.de
+
+- allow to set userdata for snapshots created by helper programs
+
+-------------------------------------------------------------------
 Mon Mar 02 17:30:06 CET 2015 - aschnell@suse.de
 
 - install systemd unit files and helper (see

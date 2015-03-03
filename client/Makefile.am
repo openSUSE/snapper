@@ -23,7 +23,8 @@ libexecdir = /usr/lib/snapper
 libexec_PROGRAMS = installation-helper systemd-helper
 
 installation_helper_SOURCES =		\
-	installation-helper.cc
+	installation-helper.cc		\
+	misc.cc		misc.h
 
 installation_helper_LDADD = ../snapper/libsnapper.la utils/libutils.la
 
@@ -32,6 +33,7 @@ systemd_helper_SOURCES =		\
 	types.cc	types.h		\
 	commands.cc	commands.h	\
 	cleanup.cc	cleanup.h	\
+	misc.cc		misc.h		\
 	errors.cc	errors.h
 
 systemd_helper_LDADD = ../snapper/libsnapper.la utils/libutils.la ../dbus/libdbus.la

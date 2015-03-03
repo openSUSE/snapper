@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014 Novell, Inc.
+ * Copyright (c) [2014-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -31,20 +31,19 @@
 #include "commands.h"
 #include "cleanup.h"
 #include "errors.h"
+#include "misc.h"
 
 
 using namespace snapper;
 using namespace std;
 
 
-GetOpts getopts;
-
 bool do_timeline = false;
 bool do_cleanup = false;
 
 
 void
-timeline(DBus::Connection* conn)
+timeline(DBus::Connection* conn, const map<string, string>& userdata)
 {
     list<XConfigInfo> config_infos = command_list_xconfigs(*conn);
     for (const XConfigInfo& config_info : config_infos)
@@ -53,7 +52,7 @@ timeline(DBus::Connection* conn)
 	if (pos1 != config_info.raw.end() && pos1->second == "yes")
 	{
 	    command_create_single_xsnapshot(*conn, config_info.config_name, "timeline",
-					    "timeline", map<string, string>());
+					    "timeline", userdata);
 	}
     }
 }
@@ -94,12 +93,19 @@ main(int argc, char** argv)
     const struct option options[] = {
 	{ "timeline",		no_argument,		0,	0 },
 	{ "cleanup",		no_argument,		0,	0 },
+	{ "userdata",		required_argument,	0,	'u' },
 	{ 0, 0, 0, 0 }
     };
+
+    map<string, string> userdata;
+
+    GetOpts getopts;
 
     getopts.init(argc, argv);
 
     GetOpts::parsed_opts opts = getopts.parse(options);
+
+    GetOpts::parsed_opts::const_iterator opt;
 
     if (opts.find("timeline") != opts.end())
 	do_timeline = true;
@@ -107,12 +113,15 @@ main(int argc, char** argv)
     if (opts.find("cleanup") != opts.end())
 	do_cleanup = true;
 
+    if ((opt = opts.find("userdata")) != opts.end())
+	userdata = read_userdata(opt->second);
+
     try
     {
 	DBus::Connection conn(DBUS_BUS_SYSTEM);
 
 	if (do_timeline)
-	    timeline(&conn);
+	    timeline(&conn, userdata);
 
 	if (do_cleanup)
 	    cleanup(&conn);
