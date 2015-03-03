@@ -39,13 +39,15 @@
 
 #include "utils/GetOpts.h"
 
+#include "misc.h"
+
 
 using namespace snapper;
 using namespace std;
 
 
 void
-step1(const string& device, const string& description)
+step1(const string& device, const string& description, const map<string, string>& userdata)
 {
     // step runs in inst-sys
 
@@ -94,6 +96,7 @@ step1(const string& device, const string& description)
     SCD scd;
     scd.read_only = false;
     scd.description = description;
+    scd.userdata = userdata;
 
     Snapshots::iterator snapshot = snapper.createSingleSnapshot(scd);
 
@@ -222,6 +225,7 @@ main(int argc, char** argv)
 	{ "root-prefix",		required_argument,	0,	0 },
 	{ "default-subvolume-name",	required_argument,	0,	0 },
 	{ "description",		required_argument,	0,	0 },
+	{ "userdata",			required_argument,	0,	'u' },
 	{ 0, 0, 0, 0 }
     };
 
@@ -230,6 +234,7 @@ main(int argc, char** argv)
     string root_prefix = "/";
     string default_subvolume_name;
     string description;
+    map<string, string> userdata;
 
     GetOpts getopts;
 
@@ -254,8 +259,11 @@ main(int argc, char** argv)
     if ((opt = opts.find("description")) != opts.end())
 	description = opt->second;
 
+    if ((opt = opts.find("userdata")) != opts.end())
+	userdata = read_userdata(opt->second);
+
     if (step == "1")
-	step1(device, description);
+	step1(device, description, userdata);
     else if (step == "2")
 	step2(device, root_prefix, default_subvolume_name);
     else if (step == "3")
