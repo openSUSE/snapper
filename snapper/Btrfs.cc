@@ -402,6 +402,8 @@ namespace snapper
 	}
 	catch (const IOErrorException& e)
 	{
+	    // TODO the openInfoDir above logs an error although when this
+	    // function is used from nextNumber the failure is ok
 	    return false;
 	}
     }
