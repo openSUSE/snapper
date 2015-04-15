@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2012-2014] Novell, Inc.
+ * Copyright (c) [2012-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -351,6 +351,13 @@ command_delete_xcomparison(DBus::Connection& conn, const string& config_name, un
 }
 
 
+int
+operator<(const XFile& lhs, const XFile& rhs)
+{
+    return File::cmp_lt(lhs.name, rhs.name);
+}
+
+
 list<XFile>
 command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		   unsigned int number2)
@@ -366,6 +373,9 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
 
     DBus::Hihi hihi(reply);
     hihi >> files;
+
+    files.sort();		// snapperd can have different locale than client
+				// so sorting is required here
 
     return files;
 }

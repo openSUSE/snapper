@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) [2011-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -139,6 +139,9 @@ namespace snapper
 	friend std::ostream& operator<<(std::ostream& s, const File& file);
 
 	XAUndoStatistic getXAUndoStatistic() const;
+
+	// C++ locale aware less-than comparison
+	static bool cmp_lt(const string& lhs, const string& rhs);
 
     private:
 

@@ -1553,7 +1553,7 @@ help(const list<Cmd>& cmds)
 int
 main(int argc, char** argv)
 {
-    setlocale(LC_ALL, "");
+    locale::global(locale(""));
 
     setLogDo(&log_do);
     setLogQuery(&log_query);
