@@ -485,6 +485,12 @@
 	  deleted in the time between the two snapshots have been made.</para>
 	  <variablelist>
 	    <varlistentry>
+	      <term><option>-i, --input</option> <replaceable>file</replaceable></term>
+	      <listitem>
+		<para>Read files to diff from file <replaceable>file</replaceable>.</para>
+	      </listitem>
+	    </varlistentry>
+	    <varlistentry>
 	      <term><option>--diff-cmd</option> <replaceable>command</replaceable></term>
 	      <listitem>
 		<para>Command used for comparing files. The default is

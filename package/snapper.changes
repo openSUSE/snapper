@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Apr 14 17:58:17 CEST 2015 - aschnell@suse.de
+
+- added option --input to diff command
+- sort files according to locale
+
+-------------------------------------------------------------------
 Tue Mar 03 10:22:28 CET 2015 - aschnell@suse.de
 
 - allow to set userdata for snapshots created by helper programs

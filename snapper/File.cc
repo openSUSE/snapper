@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) [2011-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -29,6 +29,7 @@
 #include <fnmatch.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <locale>
 #include <boost/algorithm/string.hpp>
 
 #include "snapper/File.h"
@@ -72,33 +73,34 @@ namespace snapper
     }
 
 
-    struct FilterHelper
-    {
-	FilterHelper(const vector<string>& patterns)
-	    : patterns(patterns) {}
-	bool operator()(const File& file)
-	    {
-		for (vector<string>::const_iterator it = patterns.begin(); it != patterns.end(); ++it)
-		    if (fnmatch(it->c_str(), file.getName().c_str(), FNM_LEADING_DIR) == 0)
-			return true;
-		return false;
-	    }
-	const vector<string>& patterns;
-    };
-
-
     void
     Files::filter(const vector<string>& ignore_patterns)
     {
-	entries.erase(remove_if(entries.begin(), entries.end(), FilterHelper(ignore_patterns)),
-		      entries.end());
+	std::function<bool(const File&)> pred = [&ignore_patterns](const File& file) {
+	    for (const string& ignore_pattern : ignore_patterns)
+		if (fnmatch(ignore_pattern.c_str(), file.getName().c_str(), FNM_LEADING_DIR) == 0)
+		    return true;
+	    return false;
+	};
+
+	entries.erase(remove_if(entries.begin(), entries.end(), pred), entries.end());
     }
 
 
-    int
-    operator<(const File& a, const File& b)
+    bool
+    File::cmp_lt(const string& lhs, const string& rhs)
     {
-	return a.getName() < b.getName();
+	const std::collate<char>& c = std::use_facet<std::collate<char>>(std::locale());
+
+	return c.compare(lhs.c_str(), lhs.c_str() + lhs.length(),
+			 rhs.c_str(), rhs.c_str() + rhs.length()) < 0;
+    }
+
+
+    bool
+    operator<(const File& lhs, const File& rhs)
+    {
+	return File::cmp_lt(lhs.getName(), rhs.getName());
     }
 
 
@@ -110,16 +112,16 @@ namespace snapper
 
 
     bool
-    file_name_less(const File& file, const string& name)
+    operator<(const File& file, const string& name)
     {
-	return file.getName() < name;
+	return File::cmp_lt(file.getName(), name);
     }
 
 
     Files::iterator
     Files::find(const string& name)
     {
-	iterator ret = lower_bound(entries.begin(), entries.end(), name, file_name_less);
+	iterator ret = lower_bound(entries.begin(), entries.end(), name);
 	return (ret != end() && ret->getName() == name) ? ret : end();
     }
 
@@ -127,7 +129,7 @@ namespace snapper
     Files::const_iterator
     Files::find(const string& name) const
     {
-	const_iterator ret = lower_bound(entries.begin(), entries.end(), name, file_name_less);
+	const_iterator ret = lower_bound(entries.begin(), entries.end(), name);
 	return (ret != end() && ret->getName() == name) ? ret : end();
     }
 

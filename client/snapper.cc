@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) [2011-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -95,7 +95,72 @@ struct MyFiles : public Files
 
     MyFiles(const FilePaths* file_paths)
 	: Files(file_paths) {}
+
+    void bulk_process(FILE* file, std::function<void(File& file)> callback);
+
 };
+
+
+void
+MyFiles::bulk_process(FILE* file, std::function<void(File& file)> callback)
+{
+    if (file)
+    {
+	AsciiFileReader asciifile(file);
+
+	string line;
+	while (asciifile.getline(line))
+	{
+	    if (line.empty())
+		continue;
+
+	    string name = line;
+
+	    // strip optional status
+	    if (name[0] != '/')
+	    {
+		string::size_type pos = name.find(" ");
+		if (pos == string::npos)
+		    continue;
+
+		name.erase(0, pos + 1);
+	    }
+
+	    Files::iterator it = findAbsolutePath(name);
+	    if (it == end())
+	    {
+		cerr << sformat(_("File '%s' not found."), name.c_str()) << endl;
+		exit(EXIT_FAILURE);
+	    }
+
+	    callback(*it);
+	}
+    }
+    else
+    {
+	if (getopts.numArgs() == 0)
+	{
+	    for (Files::iterator it = begin(); it != end(); ++it)
+		callback(*it);
+	}
+	else
+	{
+	    while (getopts.numArgs() > 0)
+	    {
+		string name = getopts.popArg();
+
+		Files::iterator it = findAbsolutePath(name);
+		if (it == end())
+		{
+		    cerr << sformat(_("File '%s' not found."), name.c_str()) << endl;
+		    exit(EXIT_FAILURE);
+		}
+
+		callback(*it);
+	    }
+	}
+    }
+}
 
 
 struct MyComparison
@@ -1005,6 +1070,7 @@ help_diff()
 	 << _("\tsnapper diff <number1>..<number2> [files]") << endl
 	 << endl
 	 << _("    Options for 'diff' command:") << endl
+	 << _("\t--input, -i <file>\t\tRead files to diff from file.") << endl
 	 << _("\t--diff-cmd <command>\t\tCommand used for comparing files.") << endl
 	 << _("\t--extensions, -x <options>\tExtra options passed to the diff command.") << endl
 	 << endl;
@@ -1015,6 +1081,7 @@ void
 command_diff(DBus::Connection* conn, Snapper* snapper)
 {
     const struct option options[] = {
+	{ "input",		required_argument,	0,	'i' },
 	{ "diff-cmd",		required_argument,	0,	0 },
 	{ "extensions",		required_argument,	0,	'x' },
 	{ 0, 0, 0, 0 }
@@ -1028,9 +1095,20 @@ command_diff(DBus::Connection* conn, Snapper* snapper)
 	exit(EXIT_FAILURE);
     }
 
+    FILE* file = NULL;
     Differ differ;
 
     GetOpts::parsed_opts::const_iterator opt;
+
+    if ((opt = opts.find("input")) != opts.end())
+    {
+	file = fopen(opt->second.c_str(), "r");
+	if (!file)
+	{
+	    cerr << sformat(_("Opening file '%s' failed."), opt->second.c_str()) << endl;
+	    exit(EXIT_FAILURE);
+	}
+    }
 
     if ((opt = opts.find("diff-cmd")) != opts.end())
 	differ.command = opt->second;
@@ -1043,22 +1121,9 @@ command_diff(DBus::Connection* conn, Snapper* snapper)
     MyComparison comparison(*conn, nums, true);
     MyFiles& files = comparison.files;
 
-    if (getopts.numArgs() == 0)
-    {
-	for (Files::const_iterator it1 = files.begin(); it1 != files.end(); ++it1)
-	    differ.run(it1->getAbsolutePath(LOC_PRE), it1->getAbsolutePath(LOC_POST));
-    }
-    else
-    {
-	while (getopts.numArgs() > 0)
-	{
-	    string name = getopts.popArg();
-
-	    Files::const_iterator it1 = files.findAbsolutePath(name);
-	    if (it1 != files.end())
-		differ.run(it1->getAbsolutePath(LOC_PRE), it1->getAbsolutePath(LOC_POST));
-	}
-    }
+    files.bulk_process(file, [differ](const File& file) {
+	differ.run(file.getAbsolutePath(LOC_PRE), file.getAbsolutePath(LOC_POST));
+    });
 }
 
 
@@ -1114,57 +1179,9 @@ command_undo(DBus::Connection* conn, Snapper* snapper)
     MyComparison comparison(*conn, nums, true);
     MyFiles& files = comparison.files;
 
-    if (file)
-    {
-	AsciiFileReader asciifile(file);
-
-	string line;
-	while (asciifile.getline(line))
-	{
-	    if (line.empty())
-		continue;
-
-	    string name = line;
-
-	    // strip optional status
-	    if (name[0] != '/')
-	    {
-		string::size_type pos = name.find(" ");
-		if (pos == string::npos)
-		    continue;
-
-		name.erase(0, pos + 1);
-	    }
-
-	    Files::iterator it = files.findAbsolutePath(name);
-	    if (it == files.end())
-            {
-                cerr << sformat(_("File '%s' not found."), name.c_str()) << endl;
-                exit(EXIT_FAILURE);
-            }
-
-	    it->setUndo(true);
-	}
-    }
-    else
-    {
-	if (getopts.numArgs() == 0)
-	{
-	    for (Files::iterator it = files.begin(); it != files.end(); ++it)
-		it->setUndo(true);
-	}
-	else
-	{
-	    while (getopts.numArgs() > 0)
-	    {
-		Files::iterator it = files.findAbsolutePath(getopts.popArg());
-		if (it == files.end())
-                    continue;
-
-		it->setUndo(true);
-	    }
-	}
-    }
+    files.bulk_process(file, [](File& file) {
+	file.setUndo(true);
+    });
 
     UndoStatistic undo_statistic = files.getUndoStatistic();
 
@@ -1553,7 +1570,7 @@ help(const list<Cmd>& cmds)
 int
 main(int argc, char** argv)
 {
-    setlocale(LC_ALL, "");
+    locale::global(locale(""));
 
     setLogDo(&log_do);
     setLogQuery(&log_query);
