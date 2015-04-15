@@ -1,6 +1,7 @@
 -------------------------------------------------------------------
 Tue Apr 14 17:58:17 CEST 2015 - aschnell@suse.de
 
+- added option --input to diff command
 - sort files according to locale
 
 -------------------------------------------------------------------
