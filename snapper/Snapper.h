@@ -153,6 +153,8 @@ namespace snapper
 
 	void syncAcl() const;
 
+	void syncFilesystem() const;
+
 	static const char* compileVersion();
 	static const char* compileFlags();
 

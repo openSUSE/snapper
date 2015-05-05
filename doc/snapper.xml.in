@@ -409,6 +409,18 @@
 	<replaceable>number1-number2</replaceable></option></term>
 	<listitem>
 	  <para>Delete a snapshot or a range of snapshots.</para>
+	  <variablelist>
+	    <varlistentry>
+	      <term><option>-s, --sync</option></term>
+	      <listitem>
+		<para>Sync the filesystem after deleting the snapshots. The
+		details depend on the filesystem type.</para>
+		<para>Btrfs normally asynchronously frees space after deleting
+		snapshots. With this option snapper will wait until the space once used by the
+		deleted snapshots is actually available again.</para>
+	      </listitem>
+	    </varlistentry>
+	  </variablelist>
 	</listitem>
       </varlistentry>
 

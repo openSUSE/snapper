@@ -844,7 +844,6 @@ command_modify(DBus::Connection* conn, Snapper* snapper)
     };
 
     GetOpts::parsed_opts opts = getopts.parse("modify", options);
-
     if (!getopts.hasArgs())
     {
 	cerr << _("Command 'modify' needs at least one argument.") << endl;
@@ -878,6 +877,9 @@ help_delete()
 {
     cout << _("  Delete snapshot:") << endl
 	 << _("\tsnapper delete <number>") << endl
+	 << endl
+	 << _("    Options for 'delete' command:") << endl
+	 << _("\t--sync, -s\t\t\tSync after deletion.") << endl
 	 << endl;
 }
 
@@ -885,12 +887,24 @@ help_delete()
 void
 command_delete(DBus::Connection* conn, Snapper* snapper)
 {
-    getopts.parse("delete", GetOpts::no_options);
+    const struct option options[] = {
+	{ "sync",		no_argument,		0,	's' },
+	{ 0, 0, 0, 0 }
+    };
+
+    GetOpts::parsed_opts opts = getopts.parse("delete", options);
     if (!getopts.hasArgs())
     {
 	cerr << _("Command 'delete' needs at least one argument.") << endl;
 	exit(EXIT_FAILURE);
     }
+
+    bool sync = false;
+
+    GetOpts::parsed_opts::const_iterator opt;
+
+    if ((opt = opts.find("sync")) != opts.end())
+	sync = true;
 
     XSnapshots snapshots = command_list_xsnapshots(*conn, config_name);
 
@@ -924,6 +938,9 @@ command_delete(DBus::Connection* conn, Snapper* snapper)
     }
 
     command_delete_xsnapshots(*conn, config_name, nums);
+
+    if (sync)
+	command_xsync(*conn, config_name);
 }
 
 
@@ -1088,7 +1105,6 @@ command_diff(DBus::Connection* conn, Snapper* snapper)
     };
 
     GetOpts::parsed_opts opts = getopts.parse("diff", options);
-
     if (getopts.numArgs() < 1)
     {
 	cerr << _("Command 'diff' needs at least one argument.") << endl;
@@ -1472,7 +1488,6 @@ void
 command_xa_diff(DBus::Connection* conn, Snapper* snapper)
 {
     GetOpts::parsed_opts opts = getopts.parse("xadiff", GetOpts::no_options);
-
     if (getopts.numArgs() < 1)
     {
         cerr << _("Command 'xadiff' needs at least one argument.") << endl;

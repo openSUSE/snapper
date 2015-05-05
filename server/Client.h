@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2012-2014] Novell, Inc.
+ * Copyright (c) [2012-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -104,6 +104,7 @@ public:
     void create_comparison(DBus::Connection& conn, DBus::Message& msg);
     void delete_comparison(DBus::Connection& conn, DBus::Message& msg);
     void get_files(DBus::Connection& conn, DBus::Message& msg);
+    void sync(DBus::Connection& conn, DBus::Message& msg);
     void debug(DBus::Connection& conn, DBus::Message& msg) const;
 
     void dispatch(DBus::Connection& conn, DBus::Message& msg);

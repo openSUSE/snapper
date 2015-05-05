@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2012-2014] Novell, Inc.
+ * Copyright (c) [2012-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -114,6 +114,9 @@ command_delete_xcomparison(DBus::Connection& conn, const string& config_name, un
 list<XFile>
 command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		   unsigned int number2);
+
+void
+command_xsync(DBus::Connection& conn, const string& config_name);
 
 vector<string>
 command_xdebug(DBus::Connection& conn);

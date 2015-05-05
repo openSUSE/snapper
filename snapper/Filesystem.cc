@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2013] Novell, Inc.
+ * Copyright (c) [2011-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -172,6 +172,12 @@ namespace snapper
     Filesystem::setDefault(unsigned int num) const
     {
 	throw std::logic_error("not implemented");
+    }
+
+
+    void
+    Filesystem::sync() const
+    {
     }
 
 }

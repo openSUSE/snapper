@@ -42,6 +42,8 @@ method GetMountPoint config-name number
 Snapshots mounted with user-request set to false will be unmounted (delayed)
 after the client disconnects.
 
+method Sync config-name
+
 
 method CreateComparison config-name number1 number2
 method DeleteComparison config-name number1 number2

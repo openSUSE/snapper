@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue May 05 14:08:03 CEST 2015 - aschnell@suse.de
+
+- added option --sync to delete command (fate#317066)
+
+-------------------------------------------------------------------
 Tue Apr 14 17:58:17 CEST 2015 - aschnell@suse.de
 
 - added option --input to diff command
