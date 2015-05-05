@@ -347,6 +347,10 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='files' type='v' direction='out'/>\n"
 	"    </method>\n"
 
+	"    <method name='Sync'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"    </method>\n"
+
 	"  </interface>\n"
 	"</node>\n";
 
