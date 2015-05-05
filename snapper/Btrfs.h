@@ -31,6 +31,9 @@
 namespace snapper
 {
 
+    using namespace BtrfsUtils;
+
+
     class Btrfs : public Filesystem
     {
     public:
@@ -73,9 +76,13 @@ namespace snapper
 
 	virtual void setDefault(unsigned int num) const;
 
+	virtual void sync() const;
+
     private:
 
 	qgroup_t qgroup;
+
+	mutable vector<subvolid_t> deleted_subvolids;
 
 	void addToFstabHelper(const string& default_subvolume_name) const;
 	void removeFromFstabHelper() const;

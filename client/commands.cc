@@ -381,6 +381,18 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
 }
 
 
+void
+command_xsync(DBus::Connection& conn, const string& config_name)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "Sync");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name;
+
+    conn.send_with_reply_and_block(call);
+}
+
+
 vector<string>
 command_xdebug(DBus::Connection& conn)
 {

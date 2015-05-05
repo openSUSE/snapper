@@ -492,6 +492,13 @@ namespace snapper
     }
 
 
+    void
+    Snapper::syncFilesystem() const
+    {
+	filesystem->sync();
+    }
+
+
     static void
     set_acl_permissions(acl_entry_t entry)
     {

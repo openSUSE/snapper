@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) [2011-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -32,26 +32,37 @@ namespace snapper
     using std::string;
 
 
-    typedef uint64_t qgroup_t;
-    const qgroup_t no_qgroup = 0;
+    namespace BtrfsUtils
+    {
 
-    bool is_subvolume(const struct stat& stat);
+	typedef uint64_t subvolid_t;
 
-    bool is_subvolume_read_only(int fd);
+	typedef uint64_t qgroup_t;
+	const qgroup_t no_qgroup = 0;
 
-    void create_subvolume(int fddst, const string& name);
-    void create_snapshot(int fd, int fddst, const string& name, bool read_only,
-			 qgroup_t qgroup);
-    void delete_subvolume(int fd, const string& name);
+	bool is_subvolume(const struct stat& stat);
 
-    void set_default_id(int fd, unsigned long long id);
-    unsigned long long get_default_id(int fd);
+	bool is_subvolume_read_only(int fd);
 
-    string get_subvolume(int fd, unsigned long long id);
-    unsigned long long get_id(int fd);
+	bool does_subvolume_exist(int fd, subvolid_t id);
 
-    qgroup_t make_qgroup(uint64_t level, uint64_t id);
-    qgroup_t make_qgroup(const string& str);
+	void create_subvolume(int fddst, const string& name);
+	void create_snapshot(int fd, int fddst, const string& name, bool read_only,
+			     qgroup_t qgroup);
+	void delete_subvolume(int fd, const string& name);
+
+	void set_default_id(int fd, subvolid_t id);
+	subvolid_t get_default_id(int fd);
+
+	string get_subvolume(int fd, subvolid_t id);
+	subvolid_t get_id(int fd);
+
+	qgroup_t make_qgroup(uint64_t level, subvolid_t id);
+	qgroup_t make_qgroup(const string& str);
+
+	void sync(int fd);
+
+    }
 
 }
 

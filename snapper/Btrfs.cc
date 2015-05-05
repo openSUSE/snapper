@@ -305,7 +305,7 @@ namespace snapper
     Btrfs::createSnapshotOfDefault(unsigned int num, bool read_only) const
     {
 	SDir subvolume_dir = openSubvolumeDir();
-	unsigned long long id = get_default_id(subvolume_dir.fd());
+	subvolid_t id = get_default_id(subvolume_dir.fd());
 	string name = get_subvolume(subvolume_dir.fd(), id);
 
 	bool found = false;
@@ -352,7 +352,11 @@ namespace snapper
 
 	try
 	{
+	    subvolid_t subvolid = get_id(openSnapshotDir(num).fd());
+
 	    delete_subvolume(info_dir.fd(), "snapshot");
+
+	    deleted_subvolids.push_back(subvolid);
 	}
 	catch (const runtime_error& e)
 	{
@@ -1359,13 +1363,13 @@ namespace snapper
 	    if (num == 0)
 	    {
 		SDir subvolume_dir = openSubvolumeDir();
-		unsigned long long id = get_id(subvolume_dir.fd());
+		subvolid_t id = get_id(subvolume_dir.fd());
 		set_default_id(subvolume_dir.fd(), id);
 	    }
 	    else
 	    {
 		SDir snapshot_dir = openSnapshotDir(num);
-		unsigned long long id = get_id(snapshot_dir.fd());
+		subvolid_t id = get_id(snapshot_dir.fd());
 
 		SDir subvolume_dir = openSubvolumeDir();
 		set_default_id(subvolume_dir.fd(), id);
@@ -1387,6 +1391,28 @@ namespace snapper
     }
 
 #endif
+
+
+    void
+    Btrfs::sync() const
+    {
+	SDir subvolume_dir = openSubvolumeDir();
+
+	BtrfsUtils::sync(subvolume_dir.fd());
+
+	if (!deleted_subvolids.empty())
+	{
+	    for (subvolid_t subvolid : deleted_subvolids)
+	    {
+		while (!does_subvolume_exist(subvolume_dir.fd(), subvolid))
+		    sleep(1);
+	    }
+
+	    deleted_subvolids.clear();
+
+	    BtrfsUtils::sync(subvolume_dir.fd());
+	}
+    }
 
 
 #ifdef ENABLE_ROLLBACK

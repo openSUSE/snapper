@@ -1288,6 +1288,30 @@ Client::get_files(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
+Client::sync(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name;
+
+    y2deb("Sync config_name:" << config_name);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
+
+    snapper->syncFilesystem();
+
+    DBus::MessageMethodReturn reply(msg);
+
+    conn.send(reply);
+}
+
+
+void
 Client::debug(DBus::Connection& conn, DBus::Message& msg) const
 {
     y2deb("Debug");
@@ -1403,6 +1427,8 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    delete_comparison(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetFiles"))
 	    get_files(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "Sync"))
+	    sync(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "Debug"))
 	    debug(conn, msg);
 	else

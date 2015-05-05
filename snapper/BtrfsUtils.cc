@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) [2011-2015] Novell, Inc.
  *
  * All Rights Reserved.
  *
@@ -77,200 +77,237 @@ struct btrfs_ioctl_vol_args_v2
 namespace snapper
 {
 
-    // See btrfsprogs source code for references.
-
-
-    bool
-    is_subvolume(const struct stat& stat)
+    namespace BtrfsUtils
     {
-	return stat.st_ino == 256 && S_ISDIR(stat.st_mode);
-    }
+
+	// See btrfsprogs source code for references.
 
 
-    bool
-    is_subvolume_read_only(int fd)
-    {
-	__u64 flags;
-	if (ioctl(fd, BTRFS_IOC_SUBVOL_GETFLAGS, &flags) != 0)
-	    throw runtime_error_with_errno("ioctl(BTRFS_IOC_SUBVOL_GETFLAGS) failed", errno);
-
-	return flags & BTRFS_SUBVOL_RDONLY;
-    }
+	bool
+	is_subvolume(const struct stat& stat)
+	{
+	    return stat.st_ino == 256 && S_ISDIR(stat.st_mode);
+	}
 
 
-    void
-    create_subvolume(int fddst, const string& name)
-    {
-	struct btrfs_ioctl_vol_args args;
-	memset(&args, 0, sizeof(args));
+	bool
+	is_subvolume_read_only(int fd)
+	{
+	    __u64 flags;
+	    if (ioctl(fd, BTRFS_IOC_SUBVOL_GETFLAGS, &flags) != 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_SUBVOL_GETFLAGS) failed", errno);
 
-	strncpy(args.name, name.c_str(), sizeof(args.name) - 1);
-
-	if (ioctl(fddst, BTRFS_IOC_SUBVOL_CREATE, &args) != 0)
-	    throw runtime_error_with_errno("ioctl(BTRFS_IOC_SUBVOL_CREATE) failed", errno);
-    }
+	    return flags & BTRFS_SUBVOL_RDONLY;
+	}
 
 
-    void
-    create_snapshot(int fd, int fddst, const string& name, bool read_only, qgroup_t qgroup)
-    {
-	struct btrfs_ioctl_vol_args_v2 args_v2;
-	memset(&args_v2, 0, sizeof(args_v2));
+	void
+	create_subvolume(int fddst, const string& name)
+	{
+	    struct btrfs_ioctl_vol_args args;
+	    memset(&args, 0, sizeof(args));
 
-	args_v2.fd = fd;
-	args_v2.flags = read_only ? BTRFS_SUBVOL_RDONLY : 0;
-	strncpy(args_v2.name, name.c_str(), sizeof(args_v2.name) - 1);
+	    strncpy(args.name, name.c_str(), sizeof(args.name) - 1);
+
+	    if (ioctl(fddst, BTRFS_IOC_SUBVOL_CREATE, &args) != 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_SUBVOL_CREATE) failed", errno);
+	}
+
+
+	void
+	create_snapshot(int fd, int fddst, const string& name, bool read_only, qgroup_t qgroup)
+	{
+	    struct btrfs_ioctl_vol_args_v2 args_v2;
+	    memset(&args_v2, 0, sizeof(args_v2));
+
+	    args_v2.fd = fd;
+	    args_v2.flags = read_only ? BTRFS_SUBVOL_RDONLY : 0;
+	    strncpy(args_v2.name, name.c_str(), sizeof(args_v2.name) - 1);
 
 #ifdef ENABLE_BTRFS_QUOTA
-	if (qgroup != no_qgroup)
-	{
-	    size_t size = sizeof(btrfs_qgroup_inherit) + sizeof(((btrfs_qgroup_inherit*) 0)->qgroups[0]);
-	    vector<char> buffer(size, 0);
-	    struct btrfs_qgroup_inherit* inherit = (btrfs_qgroup_inherit*) &buffer[0];
+	    if (qgroup != no_qgroup)
+	    {
+		size_t size = sizeof(btrfs_qgroup_inherit) + sizeof(((btrfs_qgroup_inherit*) 0)->qgroups[0]);
+		vector<char> buffer(size, 0);
+		struct btrfs_qgroup_inherit* inherit = (btrfs_qgroup_inherit*) &buffer[0];
 
-	    inherit->num_qgroups = 1;
-	    inherit->num_ref_copies = 0;
-	    inherit->num_excl_copies = 0;
-	    inherit->qgroups[0] = qgroup;
+		inherit->num_qgroups = 1;
+		inherit->num_ref_copies = 0;
+		inherit->num_excl_copies = 0;
+		inherit->qgroups[0] = qgroup;
 
-	    args_v2.flags |= BTRFS_SUBVOL_QGROUP_INHERIT;
-	    args_v2.size = size;
-	    args_v2.qgroup_inherit = inherit;
-	}
+		args_v2.flags |= BTRFS_SUBVOL_QGROUP_INHERIT;
+		args_v2.size = size;
+		args_v2.qgroup_inherit = inherit;
+	    }
 #endif
 
-	if (ioctl(fddst, BTRFS_IOC_SNAP_CREATE_V2, &args_v2) == 0)
-	    return;
-	else if (errno != ENOTTY && errno != EINVAL)
-	    throw runtime_error_with_errno("ioctl(BTRFS_IOC_SNAP_CREATE_V2) failed", errno);
+	    if (ioctl(fddst, BTRFS_IOC_SNAP_CREATE_V2, &args_v2) == 0)
+		return;
+	    else if (errno != ENOTTY && errno != EINVAL)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_SNAP_CREATE_V2) failed", errno);
 
-	struct btrfs_ioctl_vol_args args;
-	memset(&args, 0, sizeof(args));
+	    struct btrfs_ioctl_vol_args args;
+	    memset(&args, 0, sizeof(args));
 
-	args.fd = fd;
-	strncpy(args.name, name.c_str(), sizeof(args.name) - 1);
+	    args.fd = fd;
+	    strncpy(args.name, name.c_str(), sizeof(args.name) - 1);
 
-	if (ioctl(fddst, BTRFS_IOC_SNAP_CREATE, &args) != 0)
-	    throw runtime_error_with_errno("ioctl(BTRFS_IOC_SNAP_CREATE) failed", errno);
-    }
+	    if (ioctl(fddst, BTRFS_IOC_SNAP_CREATE, &args) != 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_SNAP_CREATE) failed", errno);
+	}
 
 
-    void
-    delete_subvolume(int fd, const string& name)
-    {
-	struct btrfs_ioctl_vol_args args;
-	memset(&args, 0, sizeof(args));
+	void
+	delete_subvolume(int fd, const string& name)
+	{
+	    struct btrfs_ioctl_vol_args args;
+	    memset(&args, 0, sizeof(args));
 
-	strncpy(args.name, name.c_str(), sizeof(args.name) - 1);
+	    strncpy(args.name, name.c_str(), sizeof(args.name) - 1);
 
-	if (ioctl(fd, BTRFS_IOC_SNAP_DESTROY, &args) != 0)
-	    throw runtime_error_with_errno("ioctl(BTRFS_IOC_SNAP_DESTROY) failed", errno);
-    }
+	    if (ioctl(fd, BTRFS_IOC_SNAP_DESTROY, &args) != 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_SNAP_DESTROY) failed", errno);
+	}
 
 
 #ifdef ENABLE_ROLLBACK
 
-    void
-    set_default_id(int fd, unsigned long long id)
-    {
-	if (ioctl(fd, BTRFS_IOC_DEFAULT_SUBVOL, &id) != 0)
-	    throw runtime_error_with_errno("ioctl(BTRFS_IOC_DEFAULT_SUBVOL) failed", errno);
-    }
+	void
+	set_default_id(int fd, subvolid_t id)
+	{
+	    if (ioctl(fd, BTRFS_IOC_DEFAULT_SUBVOL, &id) != 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_DEFAULT_SUBVOL) failed", errno);
+	}
 
 
-    unsigned long long
-    get_default_id(int fd)
-    {
-	struct btrfs_ioctl_search_args args;
-	memset(&args, 0, sizeof(args));
+	subvolid_t
+	get_default_id(int fd)
+	{
+	    struct btrfs_ioctl_search_args args;
+	    memset(&args, 0, sizeof(args));
 
-	struct btrfs_ioctl_search_key* sk = &args.key;
-	sk->tree_id = BTRFS_ROOT_TREE_OBJECTID;
-	sk->nr_items = 1;
-	sk->max_objectid = BTRFS_ROOT_TREE_DIR_OBJECTID;
-	sk->min_objectid = BTRFS_ROOT_TREE_DIR_OBJECTID;
-	sk->max_type = BTRFS_DIR_ITEM_KEY;
-	sk->min_type = BTRFS_DIR_ITEM_KEY;
-	sk->max_offset = (__u64) -1;
-	sk->max_transid = (__u64) -1;
+	    struct btrfs_ioctl_search_key* sk = &args.key;
+	    sk->tree_id = BTRFS_ROOT_TREE_OBJECTID;
+	    sk->nr_items = 1;
+	    sk->max_objectid = BTRFS_ROOT_TREE_DIR_OBJECTID;
+	    sk->min_objectid = BTRFS_ROOT_TREE_DIR_OBJECTID;
+	    sk->max_type = BTRFS_DIR_ITEM_KEY;
+	    sk->min_type = BTRFS_DIR_ITEM_KEY;
+	    sk->max_offset = (__u64) -1;
+	    sk->max_transid = (__u64) -1;
 
-	if (ioctl(fd, BTRFS_IOC_TREE_SEARCH, &args) != 0)
-	    throw runtime_error_with_errno("ioctl(BTRFS_IOC_TREE_SEARCH) failed", errno);
+	    if (ioctl(fd, BTRFS_IOC_TREE_SEARCH, &args) != 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_TREE_SEARCH) failed", errno);
 
-	if (sk->nr_items == 0)
-	    throw std::runtime_error("sk->nr_items == 0");
+	    if (sk->nr_items == 0)
+		throw std::runtime_error("sk->nr_items == 0");
 
-	struct btrfs_ioctl_search_header* sh = (struct btrfs_ioctl_search_header*) args.buf;
-	if (sh->type != BTRFS_DIR_ITEM_KEY)
-	    throw std::runtime_error("sh->type != BTRFS_DIR_ITEM_KEY");
+	    struct btrfs_ioctl_search_header* sh = (struct btrfs_ioctl_search_header*) args.buf;
+	    if (sh->type != BTRFS_DIR_ITEM_KEY)
+		throw std::runtime_error("sh->type != BTRFS_DIR_ITEM_KEY");
 
-	struct btrfs_dir_item* di = (struct btrfs_dir_item*)(sh + 1);
-	int name_len = btrfs_stack_dir_name_len(di);
-	const char* name = (const char*)(di + 1);
-	if (strncmp("default", name, name_len) != 0)
-	    throw std::runtime_error("name != default");
+	    struct btrfs_dir_item* di = (struct btrfs_dir_item*)(sh + 1);
+	    int name_len = btrfs_stack_dir_name_len(di);
+	    const char* name = (const char*)(di + 1);
+	    if (strncmp("default", name, name_len) != 0)
+		throw std::runtime_error("name != default");
 
-	return btrfs_disk_key_objectid(&di->location);
-    }
-
-
-    string
-    get_subvolume(int fd, unsigned long long id)
-    {
-	char path[BTRFS_PATH_NAME_MAX + 1];
-
-	if (btrfs_subvolid_resolve(fd, path, sizeof(path), id) != 0)
-	    throw std::runtime_error("btrfs_subvolid_resolve failed");
-
-	path[BTRFS_PATH_NAME_MAX] = '\0';
-	return path;
-    }
+	    return btrfs_disk_key_objectid(&di->location);
+	}
 
 
-    unsigned long long
-    get_id(int fd)
-    {
-	struct btrfs_ioctl_ino_lookup_args args;
-	memset(&args, 0, sizeof(args));
-	args.treeid = 0;
-	args.objectid = BTRFS_FIRST_FREE_OBJECTID;
+	string
+	get_subvolume(int fd, subvolid_t id)
+	{
+	    char path[BTRFS_PATH_NAME_MAX + 1];
 
-	if (ioctl(fd, BTRFS_IOC_INO_LOOKUP, &args) != 0)
-	    throw runtime_error_with_errno("ioctl(BTRFS_IOC_INO_LOOKUP) failed", errno);
+	    if (btrfs_subvolid_resolve(fd, path, sizeof(path), id) != 0)
+		throw std::runtime_error("btrfs_subvolid_resolve failed");
 
-	return args.treeid;
-    }
+	    path[BTRFS_PATH_NAME_MAX] = '\0';
+	    return path;
+	}
 
 #endif
 
 
-    qgroup_t
-    make_qgroup(uint64_t level, uint64_t id)
-    {
-	return (level << 48) | id;
-    }
+	subvolid_t
+	get_id(int fd)
+	{
+	    struct btrfs_ioctl_ino_lookup_args args;
+	    memset(&args, 0, sizeof(args));
+	    args.treeid = 0;
+	    args.objectid = BTRFS_FIRST_FREE_OBJECTID;
+
+	    if (ioctl(fd, BTRFS_IOC_INO_LOOKUP, &args) != 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_INO_LOOKUP) failed", errno);
+
+	    return args.treeid;
+	}
 
 
-    qgroup_t
-    make_qgroup(const string& str)
-    {
-	string::size_type pos = str.find('/');
-	if (pos == string::npos)
-	    throw std::runtime_error("parsing qgroup failed");
+	qgroup_t
+	make_qgroup(uint64_t level, subvolid_t id)
+	{
+	    return (level << 48) | id;
+	}
 
-	std::istringstream a(str.substr(0, pos));
-	uint64_t level = 0;
-	a >> level;
-	if (a.fail() || !a.eof())
-	    throw std::runtime_error("parsing qgroup failed");
 
-	std::istringstream b(str.substr(pos + 1));
-	uint64_t id = 0;
-	b >> id;
-	if (b.fail() || !b.eof())
-	    throw std::runtime_error("parsing qgroup failed");
+	qgroup_t
+	make_qgroup(const string& str)
+	{
+	    string::size_type pos = str.find('/');
+	    if (pos == string::npos)
+		throw std::runtime_error("parsing qgroup failed");
 
-	return make_qgroup(level, id);
+	    std::istringstream a(str.substr(0, pos));
+	    uint64_t level = 0;
+	    a >> level;
+	    if (a.fail() || !a.eof())
+		throw std::runtime_error("parsing qgroup failed");
+
+	    std::istringstream b(str.substr(pos + 1));
+	    subvolid_t id = 0;
+	    b >> id;
+	    if (b.fail() || !b.eof())
+		throw std::runtime_error("parsing qgroup failed");
+
+	    return make_qgroup(level, id);
+	}
+
+
+	bool
+	does_subvolume_exist(int fd, subvolid_t subvolid)
+	{
+	    struct btrfs_ioctl_search_args args;
+	    struct btrfs_ioctl_search_key* sk = &args.key;
+
+	    sk->tree_id = BTRFS_ROOT_TREE_OBJECTID;
+	    sk->min_objectid = subvolid;
+	    sk->max_objectid = subvolid;
+	    sk->min_type = BTRFS_ROOT_ITEM_KEY;
+	    sk->max_type = BTRFS_ROOT_ITEM_KEY;
+	    sk->min_offset = 0;
+	    sk->max_offset = (u64) -1;
+	    sk->min_transid = 0;
+	    sk->max_transid = (u64) -1;
+	    sk->nr_items = 1;
+
+	    if (ioctl(fd, BTRFS_IOC_TREE_SEARCH, &args) != 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_TREE_SEARCH) failed", errno);
+
+	    return sk->nr_items == 0;
+	}
+
+
+	void
+	sync(int fd)
+	{
+	    if (ioctl(fd, BTRFS_IOC_SYNC) != 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_SYNC) failed", errno);
+	}
+
     }
 
 }
