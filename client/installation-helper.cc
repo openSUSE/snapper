@@ -195,6 +195,38 @@ step4()
     cout << "done" << endl;
 }
 
+void
+step5(const string& description)
+{
+    // step runs in chroot
+
+    // preconditions (maybe incomplete):
+    // snapper rpms installed in chroot
+
+    unsigned int num;
+
+    SCD scd;
+    scd.read_only = false;
+    scd.description = description;
+
+    Snapper snapper("root", "/");
+
+    try
+    {
+        Snapshots::iterator snapshot = snapper.createSingleSnapshot(scd);
+        num = snapshot->getNum();
+        snapper.getFilesystem()->setDefault(num);
+    }
+    catch (const runtime_error& e)
+    {
+        y2err("create snapshot failed, " << e.what());
+        exit(EXIT_FAILURE);
+    }
+
+    cout << num << endl;
+    exit(EXIT_SUCCESS);
+}
+
 
 void
 log_do(LogLevel level, const string& component, const char* file, const int line, const char* func,
@@ -270,4 +302,6 @@ main(int argc, char** argv)
 	step3(root_prefix, default_subvolume_name);
     else if (step == "4")
 	step4();
+    else if (step == "5")
+	step5(description);
 }
