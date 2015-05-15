@@ -198,6 +198,7 @@ step4()
 void
 step5(const string& description)
 {
+    // fate #317973
     // step runs in chroot
 
     // preconditions (maybe incomplete):
