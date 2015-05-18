@@ -195,15 +195,15 @@ step4()
     cout << "done" << endl;
 }
 
-void
-step5(const string& root_prefix, const string& snapshot_type, unsigned int pre_num, const string& description, const map<string, string>& userdata)
+int
+step5(const string& root_prefix, const string& description, const string& snapshot_type,
+    unsigned int pre_num, const map<string, string>& userdata)
 {
     // fate #317973
 
     // preconditions (maybe incomplete):
     // snapper rpms installed
 
-    unsigned int num;
     Snapshots::iterator snapshot;
     SCD scd;
 
@@ -228,11 +228,11 @@ step5(const string& root_prefix, const string& snapshot_type, unsigned int pre_n
     catch (const runtime_error& e)
     {
         y2err("create snapshot failed, " << e.what());
-        exit(EXIT_FAILURE);
+        return EXIT_FAILURE;
     }
 
     cout << snapshot->getNum() << endl;
-    exit(EXIT_SUCCESS);
+    return EXIT_SUCCESS;
 }
 
 
@@ -277,7 +277,7 @@ main(int argc, char** argv)
     string default_subvolume_name;
     string description;
     string snapshot_type = "single";
-    unsigned int pre_num;
+    unsigned int pre_num = 0;
     map<string, string> userdata;
 
     GetOpts getopts;
@@ -321,5 +321,5 @@ main(int argc, char** argv)
     else if (step == "4")
 	step4();
     else if (step == "5")
-	step5(root_prefix, snapshot_type, pre_num, description, userdata);
+	exit(step5(root_prefix, description, snapshot_type, pre_num, userdata));
 }
