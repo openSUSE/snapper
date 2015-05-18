@@ -196,27 +196,34 @@ step4()
 }
 
 void
-step5(const string& description)
+step5(const string& root_prefix, const string& snapshot_type, unsigned int pre_num, const string& description, const map<string, string>& userdata)
 {
     // fate #317973
-    // step runs in chroot
 
     // preconditions (maybe incomplete):
-    // snapper rpms installed in chroot
+    // snapper rpms installed
 
     unsigned int num;
-
+    Snapshots::iterator snapshot;
     SCD scd;
-    scd.read_only = false;
-    scd.description = description;
 
-    Snapper snapper("root", "/");
+    scd.read_only = true;
+    scd.description = description;
+    scd.userdata = userdata;
+
+    Snapper snapper("root", root_prefix);
 
     try
     {
-        Snapshots::iterator snapshot = snapper.createSingleSnapshot(scd);
-        num = snapshot->getNum();
-        snapper.getFilesystem()->setDefault(num);
+        if (snapshot_type == "single") {
+            snapshot = snapper.createSingleSnapshot(scd);
+        } else if (snapshot_type == "pre") {
+            snapshot = snapper.createPreSnapshot(scd);
+        } else if (snapshot_type == "post") {
+            Snapshots snapshots = snapper.getSnapshots();
+            Snapshots::iterator pre = snapshots.find(pre_num);
+            snapshot = snapper.createPostSnapshot(pre, scd);
+        }
     }
     catch (const runtime_error& e)
     {
@@ -224,7 +231,7 @@ step5(const string& description)
         exit(EXIT_FAILURE);
     }
 
-    cout << num << endl;
+    cout << snapshot->getNum() << endl;
     exit(EXIT_SUCCESS);
 }
 
@@ -258,6 +265,8 @@ main(int argc, char** argv)
 	{ "root-prefix",		required_argument,	0,	0 },
 	{ "default-subvolume-name",	required_argument,	0,	0 },
 	{ "description",		required_argument,	0,	0 },
+	{ "snapshot-type",		required_argument,	0,	0 },
+	{ "pre-num",     		required_argument,	0,	0 },
 	{ "userdata",			required_argument,	0,	'u' },
 	{ 0, 0, 0, 0 }
     };
@@ -267,6 +276,8 @@ main(int argc, char** argv)
     string root_prefix = "/";
     string default_subvolume_name;
     string description;
+    string snapshot_type = "single";
+    unsigned int pre_num;
     map<string, string> userdata;
 
     GetOpts getopts;
@@ -292,6 +303,12 @@ main(int argc, char** argv)
     if ((opt = opts.find("description")) != opts.end())
 	description = opt->second;
 
+    if ((opt = opts.find("snapshot-type")) != opts.end())
+	snapshot_type = opt->second;
+
+    if ((opt = opts.find("pre-num")) != opts.end())
+	pre_num = read_num(opt->second);
+
     if ((opt = opts.find("userdata")) != opts.end())
 	userdata = read_userdata(opt->second);
 
@@ -304,5 +321,5 @@ main(int argc, char** argv)
     else if (step == "4")
 	step4();
     else if (step == "5")
-	step5(description);
+	step5(root_prefix, snapshot_type, pre_num, description, userdata);
 }
