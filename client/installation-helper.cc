@@ -195,7 +195,7 @@ step4()
     cout << "done" << endl;
 }
 
-int
+bool
 step5(const string& root_prefix, const string& description, const string& snapshot_type,
     unsigned int pre_num, const map<string, string>& userdata)
 {
@@ -228,11 +228,11 @@ step5(const string& root_prefix, const string& description, const string& snapsh
     catch (const runtime_error& e)
     {
         y2err("create snapshot failed, " << e.what());
-        return EXIT_FAILURE;
+        return false;
     }
 
     cout << snapshot->getNum() << endl;
-    return EXIT_SUCCESS;
+    return true;
 }
 
 
@@ -321,5 +321,5 @@ main(int argc, char** argv)
     else if (step == "4")
 	step4();
     else if (step == "5")
-	exit(step5(root_prefix, description, snapshot_type, pre_num, userdata));
+	return step5(root_prefix, description, snapshot_type, pre_num, userdata) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
