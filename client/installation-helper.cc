@@ -195,6 +195,46 @@ step4()
     cout << "done" << endl;
 }
 
+bool
+step5(const string& root_prefix, const string& description, const string& snapshot_type,
+    unsigned int pre_num, const map<string, string>& userdata)
+{
+    // fate #317973
+
+    // preconditions (maybe incomplete):
+    // snapper rpms installed
+
+    Snapshots::iterator snapshot;
+    SCD scd;
+
+    scd.read_only = true;
+    scd.description = description;
+    scd.userdata = userdata;
+
+    Snapper snapper("root", root_prefix);
+
+    try
+    {
+        if (snapshot_type == "single") {
+            snapshot = snapper.createSingleSnapshot(scd);
+        } else if (snapshot_type == "pre") {
+            snapshot = snapper.createPreSnapshot(scd);
+        } else if (snapshot_type == "post") {
+            Snapshots snapshots = snapper.getSnapshots();
+            Snapshots::iterator pre = snapshots.find(pre_num);
+            snapshot = snapper.createPostSnapshot(pre, scd);
+        }
+    }
+    catch (const runtime_error& e)
+    {
+        y2err("create snapshot failed, " << e.what());
+        return false;
+    }
+
+    cout << snapshot->getNum() << endl;
+    return true;
+}
+
 
 void
 log_do(LogLevel level, const string& component, const char* file, const int line, const char* func,
@@ -225,6 +265,8 @@ main(int argc, char** argv)
 	{ "root-prefix",		required_argument,	0,	0 },
 	{ "default-subvolume-name",	required_argument,	0,	0 },
 	{ "description",		required_argument,	0,	0 },
+	{ "snapshot-type",		required_argument,	0,	0 },
+	{ "pre-num",     		required_argument,	0,	0 },
 	{ "userdata",			required_argument,	0,	'u' },
 	{ 0, 0, 0, 0 }
     };
@@ -234,6 +276,8 @@ main(int argc, char** argv)
     string root_prefix = "/";
     string default_subvolume_name;
     string description;
+    string snapshot_type = "single";
+    unsigned int pre_num = 0;
     map<string, string> userdata;
 
     GetOpts getopts;
@@ -259,6 +303,12 @@ main(int argc, char** argv)
     if ((opt = opts.find("description")) != opts.end())
 	description = opt->second;
 
+    if ((opt = opts.find("snapshot-type")) != opts.end())
+	snapshot_type = opt->second;
+
+    if ((opt = opts.find("pre-num")) != opts.end())
+	pre_num = read_num(opt->second);
+
     if ((opt = opts.find("userdata")) != opts.end())
 	userdata = read_userdata(opt->second);
 
@@ -270,4 +320,6 @@ main(int argc, char** argv)
 	step3(root_prefix, default_subvolume_name);
     else if (step == "4")
 	step4();
+    else if (step == "5")
+	return step5(root_prefix, description, snapshot_type, pre_num, userdata) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
