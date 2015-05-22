@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri May 22 07:15:24 UTC 2015 - igonzalezsosa@suse.com
+
+- Version 0.2.7
+
+-------------------------------------------------------------------
 Mon May 18 14:38:17 UTC 2015 - igonzalezsosa@suse.com
 
 - added a helper to create snapshots without D-Bus
