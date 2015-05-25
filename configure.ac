@@ -134,6 +134,9 @@ AM_CONDITIONAL(HAVE_PAM, [test "x$with_pam" = "xyes"])
 
 PKG_CHECK_MODULES(DBUS, dbus-1)
 
+AC_CHECK_HEADER(acl/libacl.h,[],[AC_MSG_ERROR([Cannout find libacl headers. Please install libacl-devel])])
+AC_CHECK_HEADER(libmount/libmount.h,[],[AC_MSG_ERROR([Cannout find libmount headers. Please install libmount-devel])])
+
 AC_SUBST(VERSION)
 AC_SUBST(LIBVERSION_MAJOR)
 AC_SUBST(LIBVERSION_MINOR)
