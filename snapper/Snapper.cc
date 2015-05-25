@@ -251,7 +251,7 @@ namespace snapper
 
 	try
 	{
-	    SysconfigFile sysconfig(SYSCONFIGFILE);
+	    SysconfigFile sysconfig(root_prefix + SYSCONFIGFILE);
 	    vector<string> config_names;
 	    sysconfig.getValue("SNAPPER_CONFIGS", config_names);
 

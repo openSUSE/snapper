@@ -201,18 +201,22 @@ help_list_configs()
 {
     cout << _("  List configs:") << endl
 	 << _("\tsnapper list-configs") << endl
+         << endl
+         << _("    Options for 'list-configs' command:") << endl
+         << _("\t--target-root, -r <path>\tRead configuration from target root (works only without dbus).") << endl
+
 	 << endl;
 }
 
 
 list<pair<string, string>>
-enum_configs(DBus::Connection* conn)
+enum_configs(DBus::Connection* conn, const string& target_root = "/")
 {
     list<pair<string, string>> configs;
 
     if (no_dbus)
     {
-	list<ConfigInfo> config_infos = Snapper::getConfigs("/");
+	list<ConfigInfo> config_infos = Snapper::getConfigs(target_root);
 	for (list<ConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
 	{
 	    configs.push_back(make_pair(it->getConfigName(), it->getSubvolume()));
@@ -234,12 +238,24 @@ enum_configs(DBus::Connection* conn)
 void
 command_list_configs(DBus::Connection* conn, Snapper* snapper)
 {
-    getopts.parse("list-configs", GetOpts::no_options);
+    const struct option options[] = {
+      { "target-root",        optional_argument,      0,      'r' },
+      { 0, 0, 0, 0 }
+    };
+    GetOpts::parsed_opts opts = getopts.parse("list-configs", options);
+
     if (getopts.hasArgs())
     {
 	cerr << _("Command 'list-configs' does not take arguments.") << endl;
 	exit(EXIT_FAILURE);
     }
+
+    string target_root = "/";
+
+    GetOpts::parsed_opts::const_iterator opt;
+
+    if ((opt = opts.find("target-root")) != opts.end())
+	target_root = opt->second;
 
     Table table;
 
@@ -248,7 +264,7 @@ command_list_configs(DBus::Connection* conn, Snapper* snapper)
     header.add(_("Subvolume"));
     table.setHeader(header);
 
-    list<pair<string, string> > configs = enum_configs(conn);
+    list<pair<string, string> > configs = enum_configs(conn, target_root);
 
     for (list<pair<string,string> >::iterator it = configs.begin(); it != configs.end(); ++it)
     {
