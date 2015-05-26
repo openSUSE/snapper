@@ -235,7 +235,7 @@ enum_configs(DBus::Connection* conn)
 void
 command_list_configs(DBus::Connection* conn, Snapper* snapper)
 {
-    GetOpts::parsed_opts opts = getopts.parse("list-configs", GetOpts::no_options);
+    getopts.parse("list-configs", GetOpts::no_options);
 
     if (getopts.hasArgs())
     {
