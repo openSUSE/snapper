@@ -2,7 +2,7 @@
 Mon May 25 11:41:59 UTC 2015 - jreidinger@suse.com
 
 - allow list-configs command to work on different root
-  (fate#317900)
+  (for fate#317900)
 
 -------------------------------------------------------------------
 Fri May 22 07:15:24 UTC 2015 - igonzalezsosa@suse.com

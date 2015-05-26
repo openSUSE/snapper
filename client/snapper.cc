@@ -87,6 +87,7 @@ bool utc = false;
 bool iso = false;
 string config_name = "root";
 bool no_dbus = false;
+string target_root = "/";
 
 
 struct MyFiles : public Files
@@ -210,7 +211,7 @@ help_list_configs()
 
 
 list<pair<string, string>>
-enum_configs(DBus::Connection* conn, const string& target_root = "/")
+enum_configs(DBus::Connection* conn)
 {
     list<pair<string, string>> configs;
 
@@ -238,24 +239,13 @@ enum_configs(DBus::Connection* conn, const string& target_root = "/")
 void
 command_list_configs(DBus::Connection* conn, Snapper* snapper)
 {
-    const struct option options[] = {
-      { "target-root",        optional_argument,      0,      'r' },
-      { 0, 0, 0, 0 }
-    };
-    GetOpts::parsed_opts opts = getopts.parse("list-configs", options);
+    GetOpts::parsed_opts opts = getopts.parse("list-configs", GetOpts::no_options);
 
     if (getopts.hasArgs())
     {
 	cerr << _("Command 'list-configs' does not take arguments.") << endl;
 	exit(EXIT_FAILURE);
     }
-
-    string target_root = "/";
-
-    GetOpts::parsed_opts::const_iterator opt;
-
-    if ((opt = opts.find("target-root")) != opts.end())
-	target_root = opt->second;
 
     Table table;
 
@@ -264,7 +254,7 @@ command_list_configs(DBus::Connection* conn, Snapper* snapper)
     header.add(_("Subvolume"));
     table.setHeader(header);
 
-    list<pair<string, string> > configs = enum_configs(conn, target_root);
+    list<pair<string, string> > configs = enum_configs(conn);
 
     for (list<pair<string,string> >::iterator it = configs.begin(); it != configs.end(); ++it)
     {
@@ -1588,6 +1578,7 @@ help(const list<Cmd>& cmds)
 	 << _("\t--table-style, -t <style>\tTable style (integer).") << endl
 	 << _("\t--config, -c <name>\t\tSet name of config to use.") << endl
 	 << _("\t--no-dbus\t\t\tOperate without DBus.") << endl
+	 << _("\t--root, -r <path>\t\tOperate on target root (works only without DBus).") << endl
 	 << _("\t--version\t\t\tPrint version and exit.") << endl
 	 << endl;
 
@@ -1639,6 +1630,7 @@ main(int argc, char** argv)
 	{ "table-style",	required_argument,	0,	't' },
 	{ "config",		required_argument,	0,	'c' },
 	{ "no-dbus",		no_argument,		0,	0 },
+	{ "root",		required_argument,	0,	'r' },
 	{ "version",		no_argument,		0,	0 },
 	{ "help",		no_argument,		0,	0 },
 	{ 0, 0, 0, 0 }
@@ -1680,6 +1672,17 @@ main(int argc, char** argv)
 
     if ((opt = opts.find("no-dbus")) != opts.end())
 	no_dbus = true;
+
+    if ((opt = opts.find("root")) != opts.end())
+    {
+	target_root = opt->second;
+        if (!no_dbus)
+        {
+            cerr << _("root argument can be used only together with no-dbus.") << endl
+                 << _("Try 'snapper --help' for more information.") << endl;
+            exit(EXIT_FAILURE);
+        }
+    }
 
     if ((opt = opts.find("version")) != opts.end())
     {
