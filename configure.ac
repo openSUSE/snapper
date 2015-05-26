@@ -118,6 +118,8 @@ AM_CONDITIONAL(ENABLE_ROLLBACK, [test "x$enable_rollback" = "xyes"])
 
 if test "x$enable_rollback" = "xyes"; then
 	AC_DEFINE(ENABLE_ROLLBACK, 1, [Enable rollback support])
+        # libmount is needed for rollback feature
+        AC_CHECK_HEADER(libmount/libmount.h,[],[AC_MSG_ERROR([Cannout find libmount headers. Please install libmount-devel])])
 fi
 
 AC_ARG_ENABLE([btrfs-quota], AC_HELP_STRING([--disable-btrfs-quota],[Disable btrfs quota support]),
@@ -135,7 +137,6 @@ AM_CONDITIONAL(HAVE_PAM, [test "x$with_pam" = "xyes"])
 PKG_CHECK_MODULES(DBUS, dbus-1)
 
 AC_CHECK_HEADER(acl/libacl.h,[],[AC_MSG_ERROR([Cannout find libacl headers. Please install libacl-devel])])
-AC_CHECK_HEADER(libmount/libmount.h,[],[AC_MSG_ERROR([Cannout find libmount headers. Please install libmount-devel])])
 
 AC_SUBST(VERSION)
 AC_SUBST(LIBVERSION_MAJOR)
