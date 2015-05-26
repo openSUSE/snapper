@@ -206,7 +206,7 @@
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>-c, --root <replaceable>path</replaceable></option></term>
+	<term><option>-r, --root <replaceable>path</replaceable></option></term>
 	<listitem>
 	  <para>Operate on target root. Only works together with no-dbus and only for some commands.</para>
 	</listitem>

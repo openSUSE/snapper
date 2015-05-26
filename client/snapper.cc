@@ -202,10 +202,6 @@ help_list_configs()
 {
     cout << _("  List configs:") << endl
 	 << _("\tsnapper list-configs") << endl
-         << endl
-         << _("    Options for 'list-configs' command:") << endl
-         << _("\t--target-root, -r <path>\tRead configuration from target root (works only without dbus).") << endl
-
 	 << endl;
 }
 
