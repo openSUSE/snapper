@@ -236,7 +236,6 @@ void
 command_list_configs(DBus::Connection* conn, Snapper* snapper)
 {
     getopts.parse("list-configs", GetOpts::no_options);
-
     if (getopts.hasArgs())
     {
 	cerr << _("Command 'list-configs' does not take arguments.") << endl;
