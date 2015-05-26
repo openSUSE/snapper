@@ -319,7 +319,7 @@ command_create_config(DBus::Connection* conn, Snapper* snapper)
 
     if (no_dbus)
     {
-	Snapper::createConfig(config_name, "/", subvolume, fstype, template_name);
+	Snapper::createConfig(config_name, target_root, subvolume, fstype, template_name);
     }
     else
     {
@@ -349,7 +349,7 @@ command_delete_config(DBus::Connection* conn, Snapper* snapper)
 
     if (no_dbus)
     {
-	Snapper::deleteConfig(config_name, "/");
+	Snapper::deleteConfig(config_name, target_root);
     }
     else
     {
@@ -386,7 +386,7 @@ command_get_config(DBus::Connection* conn, Snapper* snapper)
 
     if (no_dbus)
     {
-	ConfigInfo config_info = Snapper::getConfig(config_name, "/");
+	ConfigInfo config_info = Snapper::getConfig(config_name, target_root);
 	map<string, string> raw = config_info.getAllValues();
 
 	for (map<string, string>::const_iterator it = raw.begin(); it != raw.end(); ++it)
@@ -1280,7 +1280,7 @@ getFilesystem(DBus::Connection* conn, Snapper* snapper)
 
     try
     {
-	return Filesystem::create(it->second, ci.subvolume, "/");
+	return Filesystem::create(it->second, ci.subvolume, target_root);
     }
     catch (const InvalidConfigException& e)
     {
@@ -1722,7 +1722,7 @@ main(int argc, char** argv)
 
 	try
 	{
-	    Snapper* snapper = cmd->needs_snapper ? new Snapper(config_name, "/") : NULL;
+	    Snapper* snapper = cmd->needs_snapper ? new Snapper(config_name, target_root) : NULL;
 
 	    (*cmd->cmd_func)(NULL, snapper);
 
