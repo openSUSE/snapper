@@ -87,6 +87,7 @@ bool utc = false;
 bool iso = false;
 string config_name = "root";
 bool no_dbus = false;
+string target_root = "/";
 
 
 struct MyFiles : public Files
@@ -212,7 +213,7 @@ enum_configs(DBus::Connection* conn)
 
     if (no_dbus)
     {
-	list<ConfigInfo> config_infos = Snapper::getConfigs("/");
+	list<ConfigInfo> config_infos = Snapper::getConfigs(target_root);
 	for (list<ConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
 	{
 	    configs.push_back(make_pair(it->getConfigName(), it->getSubvolume()));
@@ -317,7 +318,7 @@ command_create_config(DBus::Connection* conn, Snapper* snapper)
 
     if (no_dbus)
     {
-	Snapper::createConfig(config_name, "/", subvolume, fstype, template_name);
+	Snapper::createConfig(config_name, target_root, subvolume, fstype, template_name);
     }
     else
     {
@@ -347,7 +348,7 @@ command_delete_config(DBus::Connection* conn, Snapper* snapper)
 
     if (no_dbus)
     {
-	Snapper::deleteConfig(config_name, "/");
+	Snapper::deleteConfig(config_name, target_root);
     }
     else
     {
@@ -384,7 +385,7 @@ command_get_config(DBus::Connection* conn, Snapper* snapper)
 
     if (no_dbus)
     {
-	ConfigInfo config_info = Snapper::getConfig(config_name, "/");
+	ConfigInfo config_info = Snapper::getConfig(config_name, target_root);
 	map<string, string> raw = config_info.getAllValues();
 
 	for (map<string, string>::const_iterator it = raw.begin(); it != raw.end(); ++it)
@@ -1278,7 +1279,7 @@ getFilesystem(DBus::Connection* conn, Snapper* snapper)
 
     try
     {
-	return Filesystem::create(it->second, ci.subvolume, "/");
+	return Filesystem::create(it->second, ci.subvolume, target_root);
     }
     catch (const InvalidConfigException& e)
     {
@@ -1572,6 +1573,7 @@ help(const list<Cmd>& cmds)
 	 << _("\t--table-style, -t <style>\tTable style (integer).") << endl
 	 << _("\t--config, -c <name>\t\tSet name of config to use.") << endl
 	 << _("\t--no-dbus\t\t\tOperate without DBus.") << endl
+	 << _("\t--root, -r <path>\t\tOperate on target root (works only without DBus).") << endl
 	 << _("\t--version\t\t\tPrint version and exit.") << endl
 	 << endl;
 
@@ -1623,6 +1625,7 @@ main(int argc, char** argv)
 	{ "table-style",	required_argument,	0,	't' },
 	{ "config",		required_argument,	0,	'c' },
 	{ "no-dbus",		no_argument,		0,	0 },
+	{ "root",		required_argument,	0,	'r' },
 	{ "version",		no_argument,		0,	0 },
 	{ "help",		no_argument,		0,	0 },
 	{ 0, 0, 0, 0 }
@@ -1664,6 +1667,17 @@ main(int argc, char** argv)
 
     if ((opt = opts.find("no-dbus")) != opts.end())
 	no_dbus = true;
+
+    if ((opt = opts.find("root")) != opts.end())
+    {
+	target_root = opt->second;
+        if (!no_dbus)
+        {
+            cerr << _("root argument can be used only together with no-dbus.") << endl
+                 << _("Try 'snapper --help' for more information.") << endl;
+            exit(EXIT_FAILURE);
+        }
+    }
 
     if ((opt = opts.find("version")) != opts.end())
     {
@@ -1707,7 +1721,7 @@ main(int argc, char** argv)
 
 	try
 	{
-	    Snapper* snapper = cmd->needs_snapper ? new Snapper(config_name, "/") : NULL;
+	    Snapper* snapper = cmd->needs_snapper ? new Snapper(config_name, target_root) : NULL;
 
 	    (*cmd->cmd_func)(NULL, snapper);
 

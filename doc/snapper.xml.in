@@ -206,6 +206,12 @@
 	</listitem>
       </varlistentry>
       <varlistentry>
+	<term><option>-r, --root <replaceable>path</replaceable></option></term>
+	<listitem>
+	  <para>Operate on target root. Only works together with no-dbus and only for some commands.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
 	<term><option>--version</option></term>
 	<listitem>
 	  <para>Print version and exit.</para>
