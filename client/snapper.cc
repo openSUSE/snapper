@@ -1593,7 +1593,7 @@ main(int argc, char** argv)
     }
     catch (const runtime_error& e)
     {
-	cerr << "Failed to set locale. Fix you system." << endl;
+	cerr << "Failed to set locale. Fix your system." << endl;
 	exit (EXIT_FAILURE);
     }
 
