@@ -15,7 +15,11 @@ To create package use commands `make -f Makefile.repo && make package`.
 Then use common work-flow to submit package to build service. For factory
 send at first package to devel project YaST:Head on OBS.
 
-When version is increased then git repo have to be tagged, obs project
-filesystems:snapper have to be updated and placing bzip2 on ftp.suse.com.
-When documentation changes e.g. man page or an important functionality, then
-also snapper.io webpages have to be updated.
+When version is increased then git repo have to be tagged. For tag use existing
+convention `vX.Y.Z`. Also obs project filesystems:snapper have to be updated.
+Please note, that this OBS project builds for more distribution so more metadata
+files have to be updated. See OBS documentation for more info. Generated bzip2
+tarball have to be placed on ftp.suse.com/pub/projects/snapper. When
+documentation changes e.g. man page or an important functionality, then also
+snapper.io webpages have to be updated. It is hosted as github pages in gh-pages
+branch in snapper git repository.
