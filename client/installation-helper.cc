@@ -47,7 +47,8 @@ using namespace std;
 
 
 void
-step1(const string& device, const string& description, const map<string, string>& userdata)
+step1(const string& device, const string& description, const string& cleanup,
+      const map<string, string>& userdata)
 {
     // step runs in inst-sys
 
@@ -96,6 +97,7 @@ step1(const string& device, const string& description, const map<string, string>
     SCD scd;
     scd.read_only = false;
     scd.description = description;
+    scd.cleanup = cleanup;
     scd.userdata = userdata;
 
     Snapshots::iterator snapshot = snapper.createSingleSnapshot(scd);
@@ -196,22 +198,23 @@ step4()
 }
 
 bool
-step5(const string& root_prefix, const string& description, const string& snapshot_type,
-    unsigned int pre_num, const map<string, string>& userdata)
+step5(const string& root_prefix, const string& snapshot_type, unsigned int pre_num,
+      const string& description, const string& cleanup, const map<string, string>& userdata)
 {
     // fate #317973
 
     // preconditions (maybe incomplete):
     // snapper rpms installed
 
-    Snapshots::iterator snapshot;
     SCD scd;
-
     scd.read_only = true;
     scd.description = description;
+    scd.cleanup = cleanup;
     scd.userdata = userdata;
 
     Snapper snapper("root", root_prefix);
+
+    Snapshots::iterator snapshot;
 
     try
     {
@@ -264,10 +267,11 @@ main(int argc, char** argv)
 	{ "device",			required_argument,	0,	0 },
 	{ "root-prefix",		required_argument,	0,	0 },
 	{ "default-subvolume-name",	required_argument,	0,	0 },
-	{ "description",		required_argument,	0,	0 },
 	{ "snapshot-type",		required_argument,	0,	0 },
 	{ "pre-num",     		required_argument,	0,	0 },
-	{ "userdata",			required_argument,	0,	'u' },
+	{ "description",		required_argument,	0,	0 },
+	{ "cleanup",			required_argument,	0,	0 },
+	{ "userdata",			required_argument,	0,	0 },
 	{ 0, 0, 0, 0 }
     };
 
@@ -275,9 +279,10 @@ main(int argc, char** argv)
     string device;
     string root_prefix = "/";
     string default_subvolume_name;
-    string description;
     string snapshot_type = "single";
     unsigned int pre_num = 0;
+    string description;
+    string cleanup;
     map<string, string> userdata;
 
     GetOpts getopts;
@@ -300,20 +305,23 @@ main(int argc, char** argv)
     if ((opt = opts.find("default-subvolume-name")) != opts.end())
 	default_subvolume_name = opt->second;
 
-    if ((opt = opts.find("description")) != opts.end())
-	description = opt->second;
-
     if ((opt = opts.find("snapshot-type")) != opts.end())
 	snapshot_type = opt->second;
 
     if ((opt = opts.find("pre-num")) != opts.end())
 	pre_num = read_num(opt->second);
 
+    if ((opt = opts.find("description")) != opts.end())
+	description = opt->second;
+
+    if ((opt = opts.find("cleanup")) != opts.end())
+	cleanup = opt->second;
+
     if ((opt = opts.find("userdata")) != opts.end())
 	userdata = read_userdata(opt->second);
 
     if (step == "1")
-	step1(device, description, userdata);
+	step1(device, description, cleanup, userdata);
     else if (step == "2")
 	step2(device, root_prefix, default_subvolume_name);
     else if (step == "3")
@@ -321,5 +329,5 @@ main(int argc, char** argv)
     else if (step == "4")
 	step4();
     else if (step == "5")
-	return step5(root_prefix, description, snapshot_type, pre_num, userdata) ? EXIT_SUCCESS : EXIT_FAILURE;
+	return step5(root_prefix, snapshot_type, pre_num, description, cleanup, userdata) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
