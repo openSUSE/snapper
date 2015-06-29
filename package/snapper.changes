@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Jun 29 14:52:31 CEST 2015 - aschnell@suse.de
+
+- allow to set cleanup algorithm for snapshots created by helper
+  programs
+
+-------------------------------------------------------------------
 Tue Jun 02 14:55:07 CEST 2015 - aschnell@suse.de
 
 - added error message for invalid locale setting (see bsc#933241)
