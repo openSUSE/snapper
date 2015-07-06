@@ -39,6 +39,20 @@ piwik: true
     </li>
 
     <li>
+      <h3>How can I exclude directories from snapshotting?</h3>
+
+      <p>When you are using btrfs you can create
+      <a href="https://btrfs.wiki.kernel.org/index.php/FAQ#What_is_a_subvolume.3F">btrfs
+      subvolumes</a> for the directories you want to exclude from
+      snapshotting. Unfortunately there is no dedicated command to
+      <a href="http://www.spinics.net/lists/linux-btrfs/msg33258.html">convert a
+      directory to a subvolume</a>.</p>
+
+      <p>For all filesystem types you can exclude directories from
+      snapshotting by making the directories mount points.<p>
+    </li>
+
+    <li>
       <h3>Does snapper support ext4?</h3>
 
       <p>Yes, but only experimentally and you need a special kernel and
