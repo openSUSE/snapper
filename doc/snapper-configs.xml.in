@@ -239,6 +239,13 @@
     </variablelist>
   </refsect1>
 
+  <refsect1 id='notes'>
+    <title>NOTES</title>
+    <para>The default values stated here are the values snapper uses when the
+    entry is missing in the configuration file. Some are not identical to the
+    values from the configuration file template.</para>
+  </refsect1>
+
   <refsect1 id='homepage'>
     <title>HOMEPAGE</title>
     <para><ulink url='http://snapper.io/'>http://snapper.io/</ulink></para>
