@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Jul 07 12:49:16 CEST 2015 - aschnell@suse.de
+
+- extended snapper-configs man-page
+
+-------------------------------------------------------------------
 Mon Jun 29 14:52:31 CEST 2015 - aschnell@suse.de
 
 - allow to set cleanup algorithm for snapshots created by helper
