@@ -207,7 +207,10 @@ namespace snapper
 
 	vector<string> ret;
 
-	size_t len = offsetof(struct dirent, d_name) + fpathconf(dirfd, _PC_NAME_MAX) + 1;
+	long sz = fpathconf(dirfd, _PC_NAME_MAX);
+	if (sz == -1)
+	    sz = NAME_MAX;
+	size_t len = offsetof(struct dirent, d_name) + sz + 1;
 	struct dirent* ep = (struct dirent*) malloc(len);
 	struct dirent* epp;
 
