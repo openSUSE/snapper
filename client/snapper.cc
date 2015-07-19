@@ -938,7 +938,7 @@ command_delete(DBus::Connection* conn, Snapper* snapper)
 	}
     }
 
-    command_delete_xsnapshots(*conn, config_name, nums);
+    command_delete_xsnapshots(*conn, config_name, nums, verbose);
 
     if (sync)
 	command_xsync(*conn, config_name);

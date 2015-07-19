@@ -153,7 +153,7 @@ do_cleanup_number(DBus::Connection& conn, const string& config_name)
     {
 	list<unsigned int> nums;
 	nums.push_back((*it)->getNum());
-	command_delete_xsnapshots(conn, config_name, nums);
+	command_delete_xsnapshots(conn, config_name, nums, false);
     }
 
     return true;
@@ -318,7 +318,7 @@ do_cleanup_timeline(DBus::Connection& conn, const string& config_name)
     {
 	list<unsigned int> nums;
 	nums.push_back((*it)->getNum());
-	command_delete_xsnapshots(conn, config_name, nums);
+	command_delete_xsnapshots(conn, config_name, nums, false);
     }
 
     return true;
@@ -369,7 +369,7 @@ do_cleanup_empty_pre_post(DBus::Connection& conn, const string& config_name)
     {
 	list<unsigned int> nums;
 	nums.push_back((*it)->getNum());
-	command_delete_xsnapshots(conn, config_name, nums);
+	command_delete_xsnapshots(conn, config_name, nums, false);
     }
 
     return true;

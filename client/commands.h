@@ -89,7 +89,7 @@ command_create_post_xsnapshot(DBus::Connection& conn, const string& config_name,
 
 void
 command_delete_xsnapshots(DBus::Connection& conn, const string& config_name,
-			  list<unsigned int> nums);
+			  list<unsigned int> nums, bool verbose);
 
 string
 command_mount_xsnapshots(DBus::Connection& conn, const string& config_name,
