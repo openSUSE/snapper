@@ -94,7 +94,7 @@ is_important(XSnapshots::const_iterator it1)
 
 
 bool
-do_cleanup_number(DBus::Connection& conn, const string& config_name)
+do_cleanup_number(DBus::Connection& conn, const string& config_name, bool verbose)
 {
     time_t min_age = 1800;
     size_t limit = 50;
@@ -153,7 +153,7 @@ do_cleanup_number(DBus::Connection& conn, const string& config_name)
     {
 	list<unsigned int> nums;
 	nums.push_back((*it)->getNum());
-	command_delete_xsnapshots(conn, config_name, nums, false);
+	command_delete_xsnapshots(conn, config_name, nums, verbose);
     }
 
     return true;
@@ -232,7 +232,7 @@ is_first_hourly(list<XSnapshots::const_iterator>::const_iterator first,
 
 
 bool
-do_cleanup_timeline(DBus::Connection& conn, const string& config_name)
+do_cleanup_timeline(DBus::Connection& conn, const string& config_name, bool verbose)
 {
     time_t min_age = 1800;
     size_t limit_hourly = 10;
@@ -318,7 +318,7 @@ do_cleanup_timeline(DBus::Connection& conn, const string& config_name)
     {
 	list<unsigned int> nums;
 	nums.push_back((*it)->getNum());
-	command_delete_xsnapshots(conn, config_name, nums, false);
+	command_delete_xsnapshots(conn, config_name, nums, verbose);
     }
 
     return true;
@@ -326,7 +326,7 @@ do_cleanup_timeline(DBus::Connection& conn, const string& config_name)
 
 
 bool
-do_cleanup_empty_pre_post(DBus::Connection& conn, const string& config_name)
+do_cleanup_empty_pre_post(DBus::Connection& conn, const string& config_name, bool verbose)
 {
     time_t min_age = 1800;
 
@@ -369,7 +369,7 @@ do_cleanup_empty_pre_post(DBus::Connection& conn, const string& config_name)
     {
 	list<unsigned int> nums;
 	nums.push_back((*it)->getNum());
-	command_delete_xsnapshots(conn, config_name, nums, false);
+	command_delete_xsnapshots(conn, config_name, nums, verbose);
     }
 
     return true;
