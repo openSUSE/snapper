@@ -1420,15 +1420,15 @@ command_cleanup(DBus::Connection* conn, Snapper* snapper)
 
     if (cleanup == "number")
     {
-	do_cleanup_number(*conn, config_name);
+	do_cleanup_number(*conn, config_name, verbose);
     }
     else if (cleanup == "timeline")
     {
-	do_cleanup_timeline(*conn, config_name);
+	do_cleanup_timeline(*conn, config_name, verbose);
     }
     else if (cleanup == "empty-pre-post")
     {
-	do_cleanup_empty_pre_post(*conn, config_name);
+	do_cleanup_empty_pre_post(*conn, config_name, verbose);
     }
     else
     {

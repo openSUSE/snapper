@@ -67,19 +67,19 @@ cleanup(DBus::Connection* conn)
 	map<string, string>::const_iterator pos1 = config_info.raw.find("NUMBER_CLEANUP");
 	if (pos1 != config_info.raw.end() && pos1->second == "yes")
 	{
-	    do_cleanup_number(*conn, config_info.config_name);
+	    do_cleanup_number(*conn, config_info.config_name, false);
 	}
 
 	map<string, string>::const_iterator pos2 = config_info.raw.find("TIMELINE_CLEANUP");
 	if (pos2 != config_info.raw.end() && pos2->second == "yes")
 	{
-	    do_cleanup_timeline(*conn, config_info.config_name);
+	    do_cleanup_timeline(*conn, config_info.config_name, false);
 	}
 
 	map<string, string>::const_iterator pos3 = config_info.raw.find("EMPTY_PRE_POST_CLEANUP");
 	if (pos3 != config_info.raw.end() && pos3->second == "yes")
 	{
-	    do_cleanup_empty_pre_post(*conn, config_info.config_name);
+	    do_cleanup_empty_pre_post(*conn, config_info.config_name, false);
 	}
     }
 }
