@@ -36,6 +36,8 @@
 #include <dbus/DBusConnection.h>
 #include <dbus/DBusMessage.h>
 
+#include "RefComparison.h"
+#include "FilesTransferTask.h"
 #include "MetaSnapper.h"
 
 
@@ -104,6 +106,7 @@ public:
     void create_comparison(DBus::Connection& conn, DBus::Message& msg);
     void delete_comparison(DBus::Connection& conn, DBus::Message& msg);
     void get_files(DBus::Connection& conn, DBus::Message& msg);
+    void get_files_socket(DBus::Connection& conn, DBus::Message& msg);
     void sync(DBus::Connection& conn, DBus::Message& msg);
     void debug(DBus::Connection& conn, DBus::Message& msg) const;
 
@@ -112,14 +115,14 @@ public:
     Client(const string& name);
     ~Client();
 
-    list<Comparison*>::iterator find_comparison(Snapper* snapper, unsigned int number1,
+    list<XComparison*>::iterator find_comparison(Snapper* snapper, unsigned int number1,
 						unsigned int number2);
 
-    list<Comparison*>::iterator find_comparison(Snapper* snapper,
+    list<XComparison*>::iterator find_comparison(Snapper* snapper,
 						Snapshots::const_iterator snapshot1,
 						Snapshots::const_iterator snapshot2);
 
-    void delete_comparison(list<Comparison*>::iterator);
+    void delete_comparison(list<XComparison*>::iterator);
 
     void add_lock(const string& config_name);
     void remove_lock(const string& config_name);
@@ -130,7 +133,7 @@ public:
 
     const string name;
 
-    list<Comparison*> comparisons;
+    list<XComparison*> comparisons;
 
     set<string> locks;
 
@@ -147,15 +150,23 @@ public:
     boost::condition_variable condition;
     boost::mutex mutex;
     boost::thread thread;
+
+    boost::condition_variable ft_condition;
+    boost::mutex ft_mutex;
+    boost::thread ft_thread;
+
     queue<Task> tasks;
+    queue<boost::shared_ptr<FilesTransferTask>> ft_tasks;
 
     bool zombie;
 
     void add_task(DBus::Connection& conn, DBus::Message& msg);
+    void add_transfer_task(boost::shared_ptr<FilesTransferTask> p_ft);
 
 private:
 
     void worker();
+    void files_transfer_worker();
 
 };
 

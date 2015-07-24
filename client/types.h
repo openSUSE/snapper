@@ -24,6 +24,8 @@
 #include <list>
 #include <map>
 
+#include <boost/serialization/split_free.hpp>
+
 using std::string;
 using std::list;
 using std::map;
@@ -114,4 +116,22 @@ namespace DBus
 
     Hihi& operator>>(Hihi& hihi, XFile& data);
 
+}
+
+namespace boost
+{
+    namespace serialization
+    {
+	template<class Archive>
+	void load(Archive& ar, XFile& f, const unsigned int v)
+	{
+	    ar >> f.name >> f.status;
+	}
+
+	template<class Archive>
+	void serialize(Archive& ar, XFile& f, const unsigned int v)
+	{
+	    boost::serialization::split_free(ar, f, v);
+	}
+    }
 }

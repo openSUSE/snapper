@@ -12,7 +12,8 @@ snapperd_SOURCES =					\
 	MetaSnapper.cc		MetaSnapper.h		\
 	Background.cc		Background.h		\
 	Types.cc		Types.h			\
-	RefCounter.cc		RefCounter.h
+	RefCounter.cc		RefCounter.h		\
+	FilesTransferTask.cc	FilesTransferTask.h
 
-snapperd_LDADD = ../snapper/libsnapper.la ../dbus/libdbus.la -lrt
+snapperd_LDADD = ../snapper/libsnapper.la ../dbus/libdbus.la ../sck/libsck.la -lrt
 

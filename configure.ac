@@ -154,6 +154,7 @@ AC_OUTPUT(
 	examples/c/Makefile
 	examples/c++-lib/Makefile
 	dbus/Makefile
+	sck/Makefile
 	server/Makefile
 	client/Makefile
 	client/utils/Makefile

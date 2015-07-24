@@ -48,10 +48,19 @@ Client::Client(const string& name)
 Client::~Client()
 {
     thread.interrupt();
+    ft_thread.interrupt();
+
     if (thread.joinable())
 	thread.join();
 
-    for (list<Comparison*>::iterator it = comparisons.begin(); it != comparisons.end(); ++it)
+    if (ft_thread.joinable())
+	ft_thread.join();
+
+    // must empty FileTransferTask queue first
+    while (!ft_tasks.empty())
+	ft_tasks.pop();
+
+    for (list<XComparison*>::iterator it = comparisons.begin(); it != comparisons.end(); ++it)
     {
 	delete_comparison(it);
     }
@@ -78,14 +87,14 @@ Client::~Client()
 }
 
 
-list<Comparison*>::iterator
+list<XComparison*>::iterator
 Client::find_comparison(Snapper* snapper, Snapshots::const_iterator snapshot1,
 			Snapshots::const_iterator snapshot2)
 {
-    for (list<Comparison*>::iterator it = comparisons.begin(); it != comparisons.end(); ++it)
+    for (list<XComparison*>::iterator it = comparisons.begin(); it != comparisons.end(); ++it)
     {
-	if ((*it)->getSnapper() == snapper && (*it)->getSnapshot1() == snapshot1 &&
-	    (*it)->getSnapshot2() == snapshot2)
+	if ((*it)->cmp->getSnapper() == snapper && (*it)->cmp->getSnapshot1() == snapshot1 &&
+	    (*it)->cmp->getSnapshot2() == snapshot2)
 	    return it;
     }
 
@@ -93,7 +102,7 @@ Client::find_comparison(Snapper* snapper, Snapshots::const_iterator snapshot1,
 }
 
 
-list<Comparison*>::iterator
+list<XComparison*>::iterator
 Client::find_comparison(Snapper* snapper, unsigned int number1, unsigned int number2)
 {
     Snapshots& snapshots = snapper->getSnapshots();
@@ -105,9 +114,9 @@ Client::find_comparison(Snapper* snapper, unsigned int number1, unsigned int num
 
 
 void
-Client::delete_comparison(list<Comparison*>::iterator it)
+Client::delete_comparison(list<XComparison*>::iterator it)
 {
-    const Snapper* s = (*it)->getSnapper();
+    const Snapper* s = (*it)->cmp->getSnapper();
 
     for (MetaSnappers::iterator it2 = meta_snappers.begin(); it2 != meta_snappers.end(); ++it2)
     {
@@ -345,6 +354,14 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='number1' type='u' direction='in'/>\n"
 	"      <arg name='number2' type='u' direction='in'/>\n"
 	"      <arg name='files' type='v' direction='out'/>\n"
+	"    </method>\n"
+
+	"    <method name='GetFilesBySocket'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='path' type='s' direction='in'/>\n"
+	"      <arg name='number1' type='u' direction='in'/>\n"
+	"      <arg name='number2' type='u' direction='in'/>\n"
+	"      <arg name='fd' type='h' direction='out'/>\n"
 	"    </method>\n"
 
 	"    <method name='Sync'>\n"
@@ -1223,7 +1240,7 @@ Client::create_comparison(DBus::Connection& conn, DBus::Message& msg)
 
     lock.lock();
 
-    comparisons.push_back(comparison);
+    comparisons.push_back(new XComparison(comparison));
 
     it->inc_use_count();
 
@@ -1231,6 +1248,13 @@ Client::create_comparison(DBus::Connection& conn, DBus::Message& msg)
 
     conn.send(reply);
 }
+
+
+struct ComparisonInUse : public std::exception
+{
+    explicit ComparisonInUse() throw() {}
+    virtual const char* what() const throw() { return "comparison in use"; }
+};
 
 
 void
@@ -1250,7 +1274,10 @@ Client::delete_comparison(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    list<Comparison*>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
+    list<XComparison*>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
+
+    if ((*it2)->use_count() > 0)
+	throw ComparisonInUse();
 
     delete_comparison(it2);
     comparisons.erase(it2);
@@ -1278,9 +1305,9 @@ Client::get_files(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    list<Comparison*>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
+    list<XComparison*>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
 
-    const Files& files = (*it2)->getFiles();
+    const Files& files = (*it2)->cmp->getFiles();
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -1288,6 +1315,52 @@ Client::get_files(DBus::Connection& conn, DBus::Message& msg)
     hoho << files;
 
     conn.send(reply);
+}
+
+
+struct PathException : public std::exception
+{
+    explicit PathException() throw() {}
+    virtual const char* what() const throw() { return "Invalid path"; }
+};
+
+
+void
+Client::get_files_socket(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    string path; // relative to volume root
+    dbus_uint32_t num1, num2;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> path >> num1 >> num2;
+
+    y2deb("GetFilesBySocket config_name:" << config_name << " subpath: " << path << " num1:" << num1 << " num2:" << num2);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    // We don't support paths yet
+    if (path != "/")
+	throw PathException();
+
+    list<XComparison*>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
+
+    DBus::MessageMethodReturn reply(msg);
+    DBus::Hoho hoho(reply);
+
+    boost::shared_ptr<FilesTransferTask> st(new FilesTransferTask(**it2));
+
+    hoho << st->get_read_socket();
+    conn.send(reply);
+
+    st->get_read_socket().close();
+
+    st->init();
+    add_transfer_task(st);
 }
 
 
@@ -1431,6 +1504,8 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    delete_comparison(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetFiles"))
 	    get_files(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "GetFilesBySocket"))
+	    get_files_socket(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "Sync"))
 	    sync(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "Debug"))
@@ -1555,6 +1630,16 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	DBus::MessageError reply(msg, "error.invalid_group", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
+    catch (const SocketStreamException& e)
+    {
+	DBus::MessageError reply(msg, "error.socket_stream", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
+    catch (const ComparisonInUse& e)
+    {
+	DBus::MessageError reply(msg, "error.comparison_in_use", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
     catch (...)
     {
 	y2err("caught unknown exception");
@@ -1575,6 +1660,20 @@ Client::add_task(DBus::Connection& conn, DBus::Message& msg)
     lock.unlock();
 
     condition.notify_one();
+}
+
+
+void
+Client::add_transfer_task(boost::shared_ptr<FilesTransferTask> f_pt)
+{
+    if (ft_thread.get_id() == boost::thread::id())
+	ft_thread = boost::thread(boost::bind(&Client::files_transfer_worker, this));
+
+    boost::unique_lock<boost::mutex> lock(ft_mutex);
+    ft_tasks.push(f_pt);
+    lock.unlock();
+
+    ft_condition.notify_one();
 }
 
 
@@ -1645,4 +1744,36 @@ Clients::has_zombies() const
 	    return true;
 
     return false;
+}
+
+
+void
+Client::files_transfer_worker()
+{
+    try
+    {
+	while (true)
+	{
+	    boost::unique_lock<boost::mutex> lock(ft_mutex);
+	    while (ft_tasks.empty())
+		ft_condition.wait(lock);
+
+	    boost::shared_ptr<FilesTransferTask> ptr(ft_tasks.front());
+	    ft_tasks.pop();
+	    lock.unlock();
+
+	    try
+	    {
+		ptr->start();
+	    }
+	    catch (const SocketStreamException& e)
+	    {
+		y2err("Error occured during files transfer: " << e.what());
+	    }
+	}
+    }
+    catch (const boost::thread_interrupted&)
+    {
+	y2deb("files transfer worker interrupted");
+    }
 }

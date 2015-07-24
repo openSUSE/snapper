@@ -123,6 +123,7 @@ MyMainLoop::client_disconnected(const string& name)
     {
 	client->zombie = true;
 	client->thread.interrupt();
+	client->ft_thread.interrupt();
     }
     reset_idle_count();
 }

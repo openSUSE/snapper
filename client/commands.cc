@@ -22,6 +22,7 @@
 
 #include "commands.h"
 
+#include <boost/serialization/vector.hpp>
 
 #define SERVICE "org.opensuse.Snapper"
 #define OBJECT "/org/opensuse/Snapper"
@@ -359,20 +360,37 @@ operator<(const XFile& lhs, const XFile& rhs)
 
 
 list<XFile>
-command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
-		   unsigned int number2)
+command_get_xfiles_socket(DBus::Connection& conn, const string& config_name, unsigned int number1,
+			  unsigned int number2)
 {
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetFiles");
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetFilesBySocket");
 
     DBus::Hoho hoho(call);
-    hoho << config_name << number1 << number2;
+    hoho << config_name << "/" << number1 << number2;
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
+    sck::SocketFd fd;
+    DBus::Hihi hihi(reply);
+    hihi >> fd;
+
+    sck::ReadStream<vector<XFile *>> rs(fd);
+
     list<XFile> files;
 
-    DBus::Hihi hihi(reply);
-    hihi >> files;
+    struct Ffunc {
+	Ffunc(list<XFile>& fs) : files(fs) {}
+	void operator()(XFile* f) { files.push_back(*f); delete f; }
+	list<XFile>& files;
+    };
+
+    Ffunc ff(files);
+
+    while (rs.incoming())
+    {
+	vector<XFile *> tmp = rs.receive();
+	std::for_each(tmp.begin(), tmp.end(), ff);
+    }
 
     files.sort();		// snapperd can have different locale than client
 				// so sorting is required here
