@@ -24,55 +24,13 @@
 #define SNAPPER_META_SNAPPER_H
 
 
-#include <chrono>
-#include <boost/thread.hpp>
+#include "RefCounter.h"
 
 #include <snapper/Snapper.h>
 
 
 using namespace std;
-using namespace std::chrono;
 using namespace snapper;
-
-
-class RefCounter : private boost::noncopyable
-{
-public:
-
-    RefCounter();
-
-    int inc_use_count();
-    int dec_use_count();
-    void update_use_time();
-
-    int use_count() const;
-    milliseconds unused_for() const;
-
-private:
-
-    mutable boost::mutex mutex;
-
-    int counter;
-
-    steady_clock::time_point last_used;
-
-};
-
-
-class RefHolder
-{
-public:
-
-    RefHolder(RefCounter& ref) : ref(ref)
-	{ ref.inc_use_count(); }
-    ~RefHolder()
-	{ ref.dec_use_count(); }
-
-private:
-
-    RefCounter& ref;
-
-};
 
 
 struct UnknownConfig : public std::exception
