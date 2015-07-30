@@ -8,5 +8,3 @@ noinst_LTLIBRARIES = libsck.la
 
 libsck_la_SOURCES =					\
 	Socket.cc		Socket.h
-
-libsck_la_LIBADD = -lboost_system
