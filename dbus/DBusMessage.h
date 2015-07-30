@@ -246,9 +246,6 @@ namespace DBus
     Hihi& operator>>(Hihi& hihi, sck::SocketFd& data);
     Hoho& operator<<(Hoho& hoho, const sck::SocketFd& data);
 
-    Hihi& operator>>(Hihi& hihi, size_t& data);
-    Hoho& operator<<(Hoho& hoho, const size_t& data);
-
     template <typename Type>
     Hihi& operator>>(Hihi& hihi, vector<Type>& data)
     {
