@@ -18,37 +18,56 @@
  *
  */
 
-#include "sck/DataStream.h"
+#ifndef SNAPPER_SOCKET_H
+#define SNAPPER_SOCKET_H
 
-#include <sys/types.h>
-#include <sys/socket.h>
+#include <exception>
+
+#include <boost/utility.hpp>
 
 namespace sck
 {
-
-    void
-    SocketFd::close()
+    struct SocketPairException : public std::exception
     {
-	if (_fd != -1)
-	{
-	    ::close(_fd);
-	    _fd = -1;
-	}
-    }
+	explicit SocketPairException() throw() {}
+	virtual const char* what() const throw() { return "Socket pair exception"; }
+    };
 
 
-    SocketPair::SocketPair()
-	: rs(), ws()
+    class SocketFd : boost::noncopyable
     {
-	int sv[2];
+    public:
 
-	if (socketpair(AF_UNIX, SOCK_STREAM | SOCK_CLOEXEC, 0, sv))
-	{
-	    throw SocketStreamException();
-	}
+	SocketFd() : _fd(-1) {}
+	SocketFd(int fd) : _fd(fd) {}
+	~SocketFd() { close(); }
 
-	rs.set_fd(sv[0]);
-	ws.set_fd(sv[1]);
-    }
+	int get_fd() const { return _fd; }
+	void set_fd(int fd) { _fd = fd; }
+	void close();
 
+    private:
+
+	int _fd;
+
+    };
+
+
+    class SocketPair
+    {
+    public:
+
+	SocketPair();
+
+	SocketFd& read_socket() { return rs; }
+	SocketFd& write_socket() { return ws; }
+
+    private:
+
+	SocketFd rs;
+	SocketFd ws;
+
+    };
 }
+
+#endif

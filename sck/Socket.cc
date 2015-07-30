@@ -18,43 +18,36 @@
  *
  */
 
-#ifndef SNAPPER_FILES_TRANSFER_H
-#define SNAPPER_FILES_TRANSFER_H
+#include <sys/types.h>
+#include <sys/socket.h>
 
-#include <vector>
+#include "sck/Socket.h"
 
-#include "sck/DataStream.h"
-#include "RefCounter.h"
-#include "RefComparison.h"
-
-using namespace sck;
-using namespace snapper;
-
-
-class FilesTransferTask : public RefHolder
+namespace sck
 {
-public:
+    void
+    SocketFd::close()
+    {
+	if (_fd != -1)
+	{
+	    ::close(_fd);
+	    _fd = -1;
+	}
+    }
 
-    FilesTransferTask(XComparison& xcmp);
 
-    SocketFd& get_read_socket() { return pair.read_socket(); }
+    SocketPair::SocketPair()
+	: rs(), ws()
+    {
+	int sv[2];
 
-    void init();
-    void start() { ws.run(); }
+	if (socketpair(AF_UNIX, SOCK_STREAM | SOCK_CLOEXEC, 0, sv))
+	{
+	    throw SocketPairException();
+	}
 
-private:
+	rs.set_fd(sv[0]);
+	ws.set_fd(sv[1]);
+    }
 
-    struct addressor {
-	const File* operator()(const File & f) const { return &f; }
-    };
-
-    void append_next();
-
-    XComparison& xcmp;
-    Files::const_iterator cit;
-
-    SocketPair pair;
-    AsyncWriteStream<vector<const File *>> ws;
-};
-
-#endif
+}

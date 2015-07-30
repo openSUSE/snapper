@@ -15,5 +15,5 @@ snapperd_SOURCES =					\
 	RefCounter.cc		RefCounter.h		\
 	FilesTransferTask.cc	FilesTransferTask.h
 
-snapperd_LDADD = ../snapper/libsnapper.la ../dbus/libdbus.la ../sck/libsck.la -lrt
+snapperd_LDADD = ../snapper/libsnapper.la ../dbus/libdbus.la ../sck/libsck.la -lrt -lboost_serialization
 

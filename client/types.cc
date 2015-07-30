@@ -125,4 +125,18 @@ namespace DBus
 	return hoho;
     }
 
+
+    Hihi&
+    operator>>(Hihi& hihi, SocketFd& data)
+    {
+	if (hihi.get_type() != DBUS_TYPE_UNIX_FD)
+	    throw MarshallingException();
+
+	int fd;
+	dbus_message_iter_get_basic(hihi.top(), &fd);
+	dbus_message_iter_next(hihi.top());
+	data.set_fd(fd);
+
+	return hihi;
+    }
 }

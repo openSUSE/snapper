@@ -33,6 +33,8 @@
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/function.hpp>
 
+#include "sck/Socket.h"
+
 namespace sck
 {
     using boost::asio::io_service;
@@ -51,41 +53,7 @@ namespace sck
 	virtual const char* what() const throw() { return "Serialization exception"; }
     };
 
-    class SocketFd : public boost::noncopyable
-    {
-    public:
-
-	SocketFd() : _fd(-1) {}
-	SocketFd(int fd) : _fd(fd) {}
-	~SocketFd() { close(); }
-
-	int get_fd() const { return _fd; }
-	void set_fd(int fd) { _fd = fd; }
-	void close();
-
-    private:
-
-	int _fd;
-
-    };
-
     typedef boost::function<void()> callback;
-
-    class SocketPair
-    {
-    public:
-
-	SocketPair();
-
-	SocketFd& read_socket() { return rs; }
-	SocketFd& write_socket() { return ws; }
-
-    private:
-
-	SocketFd rs;
-	SocketFd ws;
-
-    };
 
 
     template <class T>

@@ -21,6 +21,7 @@
 
 
 #include "commands.h"
+#include "sck/DataStream.h"
 
 #include <boost/serialization/vector.hpp>
 
