@@ -21,9 +21,9 @@
 #ifndef SNAPPER_FILE_SERIALIZATION_H
 #define SNAPPER_FILE_SERIALIZATION_H
 
-#include "snapper/File.h"
-
 #include <boost/serialization/split_free.hpp>
+
+#include "snapper/File.h"
 
 namespace boost
 {

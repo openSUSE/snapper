@@ -13,7 +13,8 @@ snapperd_SOURCES =					\
 	Background.cc		Background.h		\
 	Types.cc		Types.h			\
 	RefCounter.cc		RefCounter.h		\
-	FilesTransferTask.cc	FilesTransferTask.h
+	FilesTransferTask.cc	FilesTransferTask.h	\
+	FileSerialization.h
 
 snapperd_LDADD = ../snapper/libsnapper.la ../dbus/libdbus.la ../sck/libsck.la -lrt -lboost_serialization
 

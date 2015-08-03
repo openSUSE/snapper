@@ -23,7 +23,7 @@
 
 #include <exception>
 
-#include <boost/utility.hpp>
+#include <boost/core/noncopyable.hpp>
 
 namespace sck
 {

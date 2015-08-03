@@ -23,7 +23,7 @@
 
 #include <vector>
 
-#include "sck/DataStream.h"
+#include "sck/AsyncWriteStream.h"
 #include "RefCounter.h"
 #include "RefComparison.h"
 

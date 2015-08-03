@@ -18,10 +18,10 @@
  *
  */
 
+#include <boost/serialization/vector.hpp>
+
 #include "FilesTransferTask.h"
 #include "FileSerialization.h"
-
-#include <boost/serialization/vector.hpp>
 
 #define BUF_SIZE 65536
 

@@ -19,11 +19,11 @@
  * find current contact information at www.novell.com.
  */
 
+#include <boost/serialization/string.hpp>
+#include <boost/serialization/vector.hpp>
 
 #include "commands.h"
-#include "sck/DataStream.h"
-
-#include <boost/serialization/vector.hpp>
+#include "sck/SyncReadStream.h"
 
 #define SERVICE "org.opensuse.Snapper"
 #define OBJECT "/org/opensuse/Snapper"
