@@ -22,6 +22,7 @@
 
 #include <stdlib.h>
 #include <getopt.h>
+#include <signal.h>
 #include <iostream>
 #include <string>
 
@@ -261,6 +262,8 @@ main(int argc, char** argv)
 	setLogDo(&log_do);
 	setLogQuery(&log_query);
     }
+
+    signal(SIGPIPE, SIG_IGN);
 
     dbus_threads_init_default();
 

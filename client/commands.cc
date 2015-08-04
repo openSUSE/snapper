@@ -379,13 +379,13 @@ command_get_xfiles_socket(DBus::Connection& conn, const string& config_name, uns
 
     list<XFile> files;
 
-    struct Ffunc {
-	Ffunc(list<XFile>& fs) : files(fs) {}
+    struct Ffunct {
+	Ffunct(list<XFile>& fs) : files(fs) {}
 	void operator()(XFile* f) { files.push_back(*f); delete f; }
 	list<XFile>& files;
     };
 
-    Ffunc ff(files);
+    Ffunct ff(files);
 
     while (rs.incoming())
     {

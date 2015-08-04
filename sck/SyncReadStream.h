@@ -30,6 +30,8 @@
 
 namespace sck
 {
+    using boost::asio::posix::stream_descriptor;
+
     template <class T>
     class ReadStream : public SocketStream<T>
     {
@@ -42,6 +44,7 @@ namespace sck
 
     private:
 
+	stream_descriptor _pipe;
 	size_t header;
 
     };
@@ -49,16 +52,8 @@ namespace sck
 
     template <class T>
     ReadStream<T>::ReadStream(const SocketFd& fd)
-	: SocketStream<T>(fd), header(0)
+	: SocketStream<T>(), _pipe(this->_io_service, fd.get_fd()),  header(0)
     {
-	try
-	{
-	    // will not send any data via socket
-	    this->_socket.shutdown(socket_base::shutdown_send);
-	}
-	catch (const boost::system::system_error&)
-	{
-	}
     }
 
 
@@ -67,11 +62,11 @@ namespace sck
     {
 	try
 	{
-	    boost::asio::read(this->_socket, boost::asio::buffer(&header, sizeof(header)));
+	    boost::asio::read(this->_pipe, boost::asio::buffer(&header, sizeof(header)));
 
 	    if (header > 0)
 	    {
-		boost::asio::read(this->_socket, this->_data_buf.prepare(header));
+		boost::asio::read(this->_pipe, this->_data_buf.prepare(header));
 		this->_data_buf.commit(header);
 	    }
 	}

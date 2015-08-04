@@ -22,6 +22,7 @@
 #define SNAPPER_DATASTREAM_H
 
 #include <exception>
+#include <string>
 
 #include <boost/asio.hpp>
 
@@ -29,14 +30,15 @@
 
 namespace sck
 {
+    using std::string;
     using boost::asio::io_service;
-    using boost::asio::socket_base;
-    using boost::asio::local::stream_protocol;
 
     struct SocketStreamException : public std::exception
     {
-	explicit SocketStreamException() throw() {}
-	virtual const char* what() const throw() { return "Socket stream exception"; }
+	explicit SocketStreamException() throw() : msg("Stream exception") {}
+	explicit SocketStreamException(const char* msg) throw() : msg(msg) {}
+	virtual const char* what() const throw() { return msg.c_str(); }
+	const string msg;
     };
 
     struct SocketStreamSerializationException : public SocketStreamException
@@ -51,38 +53,16 @@ namespace sck
     {
     public:
 
-	virtual ~SocketStream();
+	virtual ~SocketStream() {}
 
     protected:
 
-	SocketStream(const SocketFd& fd);
+	SocketStream(): _io_service(), _data_buf() {}
 
 	io_service _io_service;
-	stream_protocol::socket _socket;
 	boost::asio::streambuf _data_buf;
 
     };
-
-
-    template <class T>
-    SocketStream<T>::SocketStream(const SocketFd& fd)
-	: _io_service(), _socket(_io_service, stream_protocol(), fd.get_fd()), _data_buf()
-    {
-    }
-
-
-    template <class T>
-    SocketStream<T>::~SocketStream()
-    {
-	try
-	{
-	    if (_socket.is_open())
-		_socket.shutdown(socket_base::shutdown_both);
-	}
-	catch (const boost::system::system_error&)
-	{
-	}
-    }
 
 }
 

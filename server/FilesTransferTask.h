@@ -37,7 +37,7 @@ public:
 
     FilesTransferTask(XComparison& xcmp);
 
-    SocketFd& get_read_socket() { return pair.read_socket(); }
+    SocketFd& get_read_socket() { return _pipe.read_socket(); }
 
     void init();
     void start() { ws.run(); }
@@ -53,7 +53,7 @@ private:
     XComparison& xcmp;
     Files::const_iterator cit;
 
-    SocketPair pair;
+    Pipe _pipe;
     AsyncWriteStream<vector<const File *>> ws;
 };
 

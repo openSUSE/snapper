@@ -33,6 +33,8 @@
 
 namespace sck
 {
+    using boost::asio::posix::stream_descriptor;
+
     typedef boost::function<void()> callback;
 
     template <class T>
@@ -50,25 +52,18 @@ namespace sck
 
 	void handle_write(const boost::system::error_code& ec);
 	void terminate();
+
 	callback _cb;
+	stream_descriptor _pipe;
 
     };
 
 
     template <class T>
     AsyncWriteStream<T>::AsyncWriteStream(const SocketFd& fd, callback cb)
-	: SocketStream<T>(fd), _cb(cb)
+	: SocketStream<T>(), _cb(cb), _pipe(this->_io_service, fd.get_fd())
     {
 	assert(cb != NULL);
-
-	try
-	{
-	    // will not read receive any data from socket
-	    this->_socket.shutdown(socket_base::shutdown_receive);
-	}
-	catch (const boost::system::system_error&)
-	{
-	}
     }
 
 
@@ -93,13 +88,14 @@ namespace sck
     void AsyncWriteStream<T>::terminate()
     {
 	const size_t terminator = 0;
+
 	try
 	{
-	    boost::asio::write(this->_socket, boost::asio::buffer(&terminator, sizeof(terminator)));
+	    boost::asio::write(this->_pipe, boost::asio::buffer(&terminator, sizeof(terminator)));
 	}
 	catch (const boost::system::system_error& e)
 	{
-	    throw SocketStreamException();
+	    throw SocketStreamException(e.what());
 	}
     }
 
@@ -116,7 +112,7 @@ namespace sck
 	    buffers.push_back(boost::asio::buffer(&header, sizeof(header)));
 	    buffers.push_back(this->_data_buf.data());
 
-	    boost::asio::async_write(this->_socket,
+	    boost::asio::async_write(this->_pipe,
 				     buffers,
 				     boost::bind(
 					&AsyncWriteStream<T>::handle_write,
@@ -141,7 +137,7 @@ namespace sck
 	}
 	else
 	{
-	    throw SocketStreamException();
+	    throw SocketStreamException(boost::system::system_error(ec).what());
 	}
     }
 
@@ -155,7 +151,7 @@ namespace sck
 	}
 	catch (const boost::system::system_error& e)
 	{
-	    throw SocketStreamException();
+	    throw SocketStreamException(e.what());
 	}
     }
 

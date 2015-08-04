@@ -18,6 +18,7 @@
  *
  */
 
+#include <fcntl.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <unistd.h>
@@ -49,6 +50,27 @@ namespace sck
 
 	rs.set_fd(sv[0]);
 	ws.set_fd(sv[1]);
+    }
+
+
+    Pipe::Pipe()
+	: rs(), ws()
+    {
+	int pipefd[2];
+
+	if (pipe(pipefd))
+	{
+	    throw SocketPairException();
+	}
+
+	// fcntl(pipefd[1], F_SETPIPE_SZ, ???)
+	if (fcntl(pipefd[0], F_SETFD, FD_CLOEXEC) < 0 || fcntl(pipefd[1], F_SETFD, FD_CLOEXEC) < 0)
+	{
+	    throw SocketPairException();
+	}
+
+	rs.set_fd(pipefd[0]);
+	ws.set_fd(pipefd[1]);
     }
 
 }

@@ -23,7 +23,7 @@
 
 #include <exception>
 
-#include <boost/core/noncopyable.hpp>
+#include <boost/noncopyable.hpp>
 
 namespace sck
 {
@@ -58,6 +58,21 @@ namespace sck
     public:
 
 	SocketPair();
+
+	SocketFd& read_socket() { return rs; }
+	SocketFd& write_socket() { return ws; }
+
+    private:
+
+	SocketFd rs;
+	SocketFd ws;
+
+    };
+
+    class Pipe
+    {
+    public:
+	Pipe();
 
 	SocketFd& read_socket() { return rs; }
 	SocketFd& write_socket() { return ws; }
