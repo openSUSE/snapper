@@ -23,7 +23,7 @@
 #include <boost/serialization/vector.hpp>
 
 #include "commands.h"
-#include "sck/SyncReadStream.h"
+#include "pipe/SyncReadStream.h"
 
 #define SERVICE "org.opensuse.Snapper"
 #define OBJECT "/org/opensuse/Snapper"
@@ -361,21 +361,21 @@ operator<(const XFile& lhs, const XFile& rhs)
 
 
 list<XFile>
-command_get_xfiles_socket(DBus::Connection& conn, const string& config_name, unsigned int number1,
-			  unsigned int number2)
+command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
+		   unsigned int number2)
 {
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetFilesBySocket");
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetFilesByPipe");
 
     DBus::Hoho hoho(call);
     hoho << config_name << "/" << number1 << number2;
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
-    sck::SocketFd fd;
+    pipe_stream::FileDescriptor fd;
     DBus::Hihi hihi(reply);
     hihi >> fd;
 
-    sck::ReadStream<vector<XFile *>> rs(fd);
+    pipe_stream::ReadStream<vector<XFile *>> rs(fd);
 
     list<XFile> files;
 

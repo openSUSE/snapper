@@ -16,7 +16,7 @@ snapper_SOURCES =			\
 	misc.cc		misc.h		\
 	errors.cc	errors.h
 
-snapper_LDADD = ../snapper/libsnapper.la utils/libutils.la ../dbus/libdbus.la ../sck/libsck.la -lboost_serialization
+snapper_LDADD = ../snapper/libsnapper.la utils/libutils.la ../dbus/libdbus.la ../pipe/libpipe.la -lboost_serialization
 
 libexecdir = /usr/lib/snapper
 
@@ -36,5 +36,5 @@ systemd_helper_SOURCES =		\
 	misc.cc		misc.h		\
 	errors.cc	errors.h
 
-systemd_helper_LDADD = ../snapper/libsnapper.la utils/libutils.la ../dbus/libdbus.la ../sck/libsck.la -lboost_serialization
+systemd_helper_LDADD = ../snapper/libsnapper.la utils/libutils.la ../dbus/libdbus.la ../pipe/libpipe.la -lboost_serialization
 

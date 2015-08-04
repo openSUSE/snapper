@@ -356,7 +356,7 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='files' type='v' direction='out'/>\n"
 	"    </method>\n"
 
-	"    <method name='GetFilesBySocket'>\n"
+	"    <method name='GetFilesByPipe'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='path' type='s' direction='in'/>\n"
 	"      <arg name='number1' type='u' direction='in'/>\n"
@@ -1326,7 +1326,7 @@ struct PathException : public std::exception
 
 
 void
-Client::get_files_socket(DBus::Connection& conn, DBus::Message& msg)
+Client::get_files_pipe(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
     string path; // relative to volume root
@@ -1335,7 +1335,7 @@ Client::get_files_socket(DBus::Connection& conn, DBus::Message& msg)
     DBus::Hihi hihi(msg);
     hihi >> config_name >> path >> num1 >> num2;
 
-    y2deb("GetFilesBySocket config_name:" << config_name << " subpath: " << path << " num1:" << num1 << " num2:" << num2);
+    y2deb("GetFilesByPipe config_name:" << config_name << " subpath: " << path << " num1:" << num1 << " num2:" << num2);
 
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
@@ -1354,10 +1354,10 @@ Client::get_files_socket(DBus::Connection& conn, DBus::Message& msg)
 
     boost::shared_ptr<FilesTransferTask> st(new FilesTransferTask(**it2));
 
-    hoho << st->get_read_socket();
+    hoho << st->get_read_end();
     conn.send(reply);
 
-    st->get_read_socket().close();
+    st->get_read_end().close();
 
     st->init();
     add_transfer_task(st);
@@ -1504,8 +1504,8 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    delete_comparison(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetFiles"))
 	    get_files(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "GetFilesBySocket"))
-	    get_files_socket(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "GetFilesByPipe"))
+	    get_files_pipe(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "Sync"))
 	    sync(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "Debug"))
@@ -1630,9 +1630,9 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	DBus::MessageError reply(msg, "error.invalid_group", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
-    catch (const SocketStreamException& e)
+    catch (const StreamException& e)
     {
-	DBus::MessageError reply(msg, "error.socket_stream", DBUS_ERROR_FAILED);
+	DBus::MessageError reply(msg, "error.pipe_stream", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const ComparisonInUse& e)
@@ -1766,7 +1766,7 @@ Client::files_transfer_worker()
 	    {
 		ptr->start();
 	    }
-	    catch (const SocketStreamException& e)
+	    catch (const StreamException& e)
 	    {
 		y2err("Error occured during files transfer: " << e.what());
 	    }

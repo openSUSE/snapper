@@ -112,7 +112,7 @@ command_delete_xcomparison(DBus::Connection& conn, const string& config_name, un
 			   unsigned int number2);
 
 list<XFile>
-command_get_xfiles_socket(DBus::Connection& conn, const string& config_name, unsigned int number1,
+command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		   unsigned int number2);
 
 void

@@ -23,11 +23,11 @@
 
 #include <vector>
 
-#include "sck/AsyncWriteStream.h"
+#include "pipe/AsyncWriteStream.h"
 #include "RefCounter.h"
 #include "RefComparison.h"
 
-using namespace sck;
+using namespace pipe_stream;
 using namespace snapper;
 
 
@@ -37,7 +37,7 @@ public:
 
     FilesTransferTask(XComparison& xcmp);
 
-    SocketFd& get_read_socket() { return _pipe.read_socket(); }
+    FileDescriptor& get_read_end() { return _pipe.read_end(); }
 
     void init();
     void start() { ws.run(); }

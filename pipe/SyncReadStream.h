@@ -26,18 +26,19 @@
 
 #include <boost/archive/text_iarchive.hpp>
 
-#include "sck/DataStream.h"
+#include "pipe/Pipe.h"
+#include "pipe/DataStream.h"
 
-namespace sck
+namespace pipe_stream
 {
     using boost::asio::posix::stream_descriptor;
 
     template <class T>
-    class ReadStream : public SocketStream<T>
+    class ReadStream : public BaseStream<T>
     {
     public:
 
-	ReadStream(const SocketFd& fd);
+	ReadStream(const FileDescriptor& fd);
 
 	bool incoming();
 	T receive();
@@ -51,8 +52,8 @@ namespace sck
 
 
     template <class T>
-    ReadStream<T>::ReadStream(const SocketFd& fd)
-	: SocketStream<T>(), _pipe(this->_io_service, fd.get_fd()),  header(0)
+    ReadStream<T>::ReadStream(const FileDescriptor& fd)
+	: BaseStream<T>(), _pipe(this->_io_service, fd.get_fd()),  header(0)
     {
     }
 
@@ -72,7 +73,7 @@ namespace sck
 	}
 	catch (const boost::system::system_error& e)
 	{
-	    throw SocketStreamException();
+	    throw StreamException(boost::system::system_error(e).what());
 	}
 
 	return header > 0;
@@ -92,7 +93,7 @@ namespace sck
 	}
 	catch (const boost::archive::archive_exception& e)
 	{
-	    throw SocketStreamSerializationException();
+	    throw StreamSerializationException();
 	}
 
 	this->_data_buf.consume(header);

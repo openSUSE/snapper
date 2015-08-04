@@ -34,10 +34,10 @@ using std::map;
 #include "dbus/DBusConnection.h"
 #include "snapper/Snapshot.h"
 #include "snapper/File.h"
-#include "sck/Socket.h"
+#include "pipe/Pipe.h"
 
 using namespace snapper;
-using namespace sck;
+using namespace pipe_stream;
 
 struct XConfigInfo
 {
@@ -117,7 +117,7 @@ namespace DBus
 
     Hihi& operator>>(Hihi& hihi, XFile& data);
 
-    Hihi& operator>>(Hihi& hihi, SocketFd& data);
+    Hihi& operator>>(Hihi& hihi, FileDescriptor& data);
 
 }
 

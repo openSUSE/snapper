@@ -18,29 +18,29 @@
  *
  */
 
-#ifndef SNAPPER_SOCKET_H
-#define SNAPPER_SOCKET_H
+#ifndef SNAPPER_PIPE_H
+#define SNAPPER_PIPE_H
 
 #include <exception>
 
 #include <boost/noncopyable.hpp>
 
-namespace sck
+namespace pipe_stream
 {
-    struct SocketPairException : public std::exception
+    struct PipeException : public std::exception
     {
-	explicit SocketPairException() throw() {}
+	explicit PipeException() throw() {}
 	virtual const char* what() const throw() { return "Socket pair exception"; }
     };
 
 
-    class SocketFd : boost::noncopyable
+    class FileDescriptor : boost::noncopyable
     {
     public:
 
-	SocketFd() : _fd(-1) {}
-	SocketFd(int fd) : _fd(fd) {}
-	~SocketFd() { close(); }
+	FileDescriptor() : _fd(-1) {}
+	FileDescriptor(int fd) : _fd(fd) {}
+	~FileDescriptor() { close(); }
 
 	int get_fd() const { return _fd; }
 	void set_fd(int fd) { _fd = fd; }
@@ -53,34 +53,18 @@ namespace sck
     };
 
 
-    class SocketPair
-    {
-    public:
-
-	SocketPair();
-
-	SocketFd& read_socket() { return rs; }
-	SocketFd& write_socket() { return ws; }
-
-    private:
-
-	SocketFd rs;
-	SocketFd ws;
-
-    };
-
     class Pipe
     {
     public:
 	Pipe();
 
-	SocketFd& read_socket() { return rs; }
-	SocketFd& write_socket() { return ws; }
+	FileDescriptor& read_end() { return rs; }
+	FileDescriptor& write_end() { return ws; }
 
     private:
 
-	SocketFd rs;
-	SocketFd ws;
+	FileDescriptor rs;
+	FileDescriptor ws;
 
     };
 }

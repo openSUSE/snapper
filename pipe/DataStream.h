@@ -26,38 +26,36 @@
 
 #include <boost/asio.hpp>
 
-#include "sck/Socket.h"
-
-namespace sck
+namespace pipe_stream
 {
     using std::string;
     using boost::asio::io_service;
 
-    struct SocketStreamException : public std::exception
+    struct StreamException : public std::exception
     {
-	explicit SocketStreamException() throw() : msg("Stream exception") {}
-	explicit SocketStreamException(const char* msg) throw() : msg(msg) {}
+	explicit StreamException() throw() : msg("Stream exception") {}
+	explicit StreamException(const char* msg) throw() : msg(msg) {}
 	virtual const char* what() const throw() { return msg.c_str(); }
 	const string msg;
     };
 
-    struct SocketStreamSerializationException : public SocketStreamException
+    struct StreamSerializationException : public StreamException
     {
-	explicit SocketStreamSerializationException() throw() {}
+	explicit StreamSerializationException() throw() {}
 	virtual const char* what() const throw() { return "Serialization exception"; }
     };
 
 
     template <class T>
-    class SocketStream
+    class BaseStream
     {
     public:
 
-	virtual ~SocketStream() {}
+	virtual ~BaseStream() {}
 
     protected:
 
-	SocketStream(): _io_service(), _data_buf() {}
+	BaseStream(): _io_service(), _data_buf() {}
 
 	io_service _io_service;
 	boost::asio::streambuf _data_buf;

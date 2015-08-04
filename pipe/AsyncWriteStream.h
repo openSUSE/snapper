@@ -29,20 +29,21 @@
 
 #include <boost/archive/text_oarchive.hpp>
 
-#include "sck/DataStream.h"
+#include "pipe/Pipe.h"
+#include "pipe/DataStream.h"
 
-namespace sck
+namespace pipe_stream
 {
     using boost::asio::posix::stream_descriptor;
 
     typedef boost::function<void()> callback;
 
     template <class T>
-    class AsyncWriteStream : public SocketStream<T>
+    class AsyncWriteStream : public BaseStream<T>
     {
     public:
 
-	AsyncWriteStream(const SocketFd& fd, callback cb);
+	AsyncWriteStream(const FileDescriptor& fd, callback cb);
 
 	void async_write();
 	void append(const T& data);
@@ -60,8 +61,8 @@ namespace sck
 
 
     template <class T>
-    AsyncWriteStream<T>::AsyncWriteStream(const SocketFd& fd, callback cb)
-	: SocketStream<T>(), _cb(cb), _pipe(this->_io_service, fd.get_fd())
+    AsyncWriteStream<T>::AsyncWriteStream(const FileDescriptor& fd, callback cb)
+	: BaseStream<T>(), _cb(cb), _pipe(this->_io_service, fd.get_fd())
     {
 	assert(cb != NULL);
     }
@@ -79,7 +80,7 @@ namespace sck
 	}
 	catch (const boost::archive::archive_exception& e)
 	{
-	    throw SocketStreamSerializationException();
+	    throw StreamSerializationException();
 	}
     }
 
@@ -95,7 +96,7 @@ namespace sck
 	}
 	catch (const boost::system::system_error& e)
 	{
-	    throw SocketStreamException(e.what());
+	    throw StreamException(e.what());
 	}
     }
 
@@ -137,7 +138,7 @@ namespace sck
 	}
 	else
 	{
-	    throw SocketStreamException(boost::system::system_error(ec).what());
+	    throw StreamException(boost::system::system_error(ec).what());
 	}
     }
 
@@ -151,7 +152,7 @@ namespace sck
 	}
 	catch (const boost::system::system_error& e)
 	{
-	    throw SocketStreamException(e.what());
+	    throw StreamException(e.what());
 	}
     }
 

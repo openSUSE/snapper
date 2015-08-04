@@ -127,7 +127,7 @@ namespace DBus
 
 
     Hihi&
-    operator>>(Hihi& hihi, SocketFd& data)
+    operator>>(Hihi& hihi, FileDescriptor& data)
     {
 	if (hihi.get_type() != DBUS_TYPE_UNIX_FD)
 	    throw MarshallingException();

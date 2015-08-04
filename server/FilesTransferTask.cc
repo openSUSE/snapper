@@ -26,7 +26,7 @@
 #define BUF_SIZE 65536
 
 FilesTransferTask::FilesTransferTask(XComparison& xcmp)
-    : RefHolder(xcmp), xcmp(xcmp), _pipe(), ws(_pipe.write_socket(), boost::bind(&FilesTransferTask::append_next, this))
+    : RefHolder(xcmp), xcmp(xcmp), _pipe(), ws(_pipe.write_end(), boost::bind(&FilesTransferTask::append_next, this))
 {
 }
 

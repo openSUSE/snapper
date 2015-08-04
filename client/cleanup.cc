@@ -349,7 +349,7 @@ do_cleanup_empty_pre_post(DBus::Connection& conn, const string& config_name)
 	    {
 		command_create_xcomparison(conn, config_name, it1->getNum(), it2->getNum());
 
-		list<XFile> files = command_get_xfiles_socket(conn, config_name, it1->getNum(), it2->getNum());
+		list<XFile> files = command_get_xfiles(conn, config_name, it1->getNum(), it2->getNum());
 
 		if (files.empty())
 		{

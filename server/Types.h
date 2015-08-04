@@ -32,14 +32,14 @@
 #include <snapper/Snapshot.h>
 #include <snapper/File.h>
 #include <dbus/DBusMessage.h>
-#include <sck/Socket.h>
+#include <pipe/Pipe.h>
 
 
 using std::string;
 using std::list;
 
 using namespace snapper;
-using sck::SocketFd;
+using pipe_stream::FileDescriptor;
 
 
 namespace DBus
@@ -61,6 +61,6 @@ namespace DBus
 
     Hoho& operator<<(Hoho& hoho, const Files& data);
 
-    Hoho& operator<<(Hoho& hoho, const SocketFd& data);
+    Hoho& operator<<(Hoho& hoho, const FileDescriptor& data);
 
 }

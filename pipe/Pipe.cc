@@ -19,37 +19,20 @@
  */
 
 #include <fcntl.h>
-#include <sys/types.h>
-#include <sys/socket.h>
 #include <unistd.h>
 
-#include "sck/Socket.h"
+#include "pipe/Pipe.h"
 
-namespace sck
+namespace pipe_stream
 {
     void
-    SocketFd::close()
+    FileDescriptor::close()
     {
 	if (_fd != -1)
 	{
 	    ::close(_fd);
 	    _fd = -1;
 	}
-    }
-
-
-    SocketPair::SocketPair()
-	: rs(), ws()
-    {
-	int sv[2];
-
-	if (socketpair(AF_UNIX, SOCK_STREAM | SOCK_CLOEXEC, 0, sv))
-	{
-	    throw SocketPairException();
-	}
-
-	rs.set_fd(sv[0]);
-	ws.set_fd(sv[1]);
     }
 
 
@@ -60,13 +43,13 @@ namespace sck
 
 	if (pipe(pipefd))
 	{
-	    throw SocketPairException();
+	    throw PipeException();
 	}
 
-	// fcntl(pipefd[1], F_SETPIPE_SZ, ???)
+	// FIXME: of a race is found to be real issue, use pipe2 instead
 	if (fcntl(pipefd[0], F_SETFD, FD_CLOEXEC) < 0 || fcntl(pipefd[1], F_SETFD, FD_CLOEXEC) < 0)
 	{
-	    throw SocketPairException();
+	    throw PipeException();
 	}
 
 	rs.set_fd(pipefd[0]);

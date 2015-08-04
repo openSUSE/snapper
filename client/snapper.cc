@@ -186,7 +186,7 @@ struct MyComparison
 		file_paths.post_path = file_paths.system_path;
 	}
 
-	list<XFile> tmp = command_get_xfiles_socket(conn, config_name, nums.first, nums.second);
+	list<XFile> tmp = command_get_xfiles(conn, config_name, nums.first, nums.second);
 	for (list<XFile>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
 	    files.push_back(File(&file_paths, it->name, it->status));
     }

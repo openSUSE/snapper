@@ -102,7 +102,7 @@ namespace DBus
     }
 
     Hoho&
-    operator<<(Hoho& hoho, const SocketFd& data)
+    operator<<(Hoho& hoho, const FileDescriptor& data)
     {
 	const int fd = data.get_fd();
 	if (!dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_UNIX_FD, &fd))
