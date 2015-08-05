@@ -25,6 +25,7 @@
 #include "commands.h"
 #include "pipe/SyncReadStream.h"
 
+
 #define SERVICE "org.opensuse.Snapper"
 #define OBJECT "/org/opensuse/Snapper"
 #define INTERFACE "org.opensuse.Snapper"
@@ -375,7 +376,7 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
     DBus::Hihi hihi(reply);
     hihi >> fd;
 
-    pipe_stream::ReadStream<vector<XFile *>> rs(fd);
+    pipe_stream::SyncReadStream<vector<XFile *>> rs(fd);
 
     list<XFile> files;
 

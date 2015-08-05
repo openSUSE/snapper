@@ -1352,15 +1352,15 @@ Client::get_files_pipe(DBus::Connection& conn, DBus::Message& msg)
     DBus::MessageMethodReturn reply(msg);
     DBus::Hoho hoho(reply);
 
-    boost::shared_ptr<FilesTransferTask> st(new FilesTransferTask(**it2));
+    boost::shared_ptr<FilesTransferTask> ftask(new FilesTransferTask(**it2));
 
-    hoho << st->get_read_end();
+    hoho << ftask->get_read_end();
     conn.send(reply);
 
-    st->get_read_end().close();
+    ftask->get_read_end().close();
 
-    st->init();
-    add_transfer_task(st);
+    ftask->init();
+    add_transfer_task(ftask);
 }
 
 

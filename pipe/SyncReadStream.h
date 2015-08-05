@@ -34,11 +34,11 @@ namespace pipe_stream
     using boost::asio::posix::stream_descriptor;
 
     template <class T>
-    class ReadStream : public BaseStream<T>
+    class SyncReadStream : public BaseStream<T>
     {
     public:
 
-	ReadStream(const FileDescriptor& fd);
+	SyncReadStream(const FileDescriptor& fd);
 
 	bool incoming();
 	T receive();
@@ -52,14 +52,14 @@ namespace pipe_stream
 
 
     template <class T>
-    ReadStream<T>::ReadStream(const FileDescriptor& fd)
+    SyncReadStream<T>::SyncReadStream(const FileDescriptor& fd)
 	: BaseStream<T>(), _pipe(this->_io_service, fd.get_fd()),  header(0)
     {
     }
 
 
     template <class T>
-    bool ReadStream<T>::incoming()
+    bool SyncReadStream<T>::incoming()
     {
 	try
 	{
@@ -81,7 +81,7 @@ namespace pipe_stream
 
 
     template <class T>
-    T ReadStream<T>::receive()
+    T SyncReadStream<T>::receive()
     {
 	T t;
 	std::istream is(&this->_data_buf);
@@ -104,3 +104,4 @@ namespace pipe_stream
 }
 
 #endif
+

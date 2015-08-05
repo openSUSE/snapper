@@ -32,3 +32,4 @@ struct XComparison : public RefCounter
 };
 
 #endif
+

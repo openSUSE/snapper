@@ -39,6 +39,7 @@ using std::map;
 using namespace snapper;
 using namespace pipe_stream;
 
+
 struct XConfigInfo
 {
     string config_name;
