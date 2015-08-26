@@ -3,6 +3,7 @@ Wed Aug 26 11:58:24 CEST 2015 - aschnell@suse.de
 
 - allow to disable zypp plugin via environment variable (see
   fate#319316)
+- version 0.2.8
 
 -------------------------------------------------------------------
 Tue Jul 07 12:49:16 CEST 2015 - aschnell@suse.de
