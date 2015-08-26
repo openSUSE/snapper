@@ -1,6 +1,7 @@
 #!/usr/bin/python
 #
 # Copyright (c) [2011-2014] Novell, Inc.
+# Copyright (c) [2015] SUSE LLC
 #
 # All Rights Reserved.
 #
@@ -23,7 +24,7 @@
 #
 
 
-from os import readlink, getppid
+from os import readlink, getppid, environ
 from os.path import basename
 import sys
 import fnmatch
@@ -236,17 +237,26 @@ class MyPlugin(Plugin):
         self.ack()
 
 
+if "DISABLE_SNAPPER_ZYPP_PLUGIN" in environ:
 
-config = Config()
+    logging.info("$DISABLE_SNAPPER_ZYPP_PLUGIN is set - disabling snapper-zypp-plugin")
 
-try:
-    bus = SystemBus()
-    snapper = Interface(bus.get_object('org.opensuse.Snapper', '/org/opensuse/Snapper'),
-                        dbus_interface='org.opensuse.Snapper')
-except DBusException as e:
-    logging.error("connect to snapperd failed:")
-    logging.error("  %s", e)
-    sys.exit(1)
+    # a dummy Plugin is needed
+    plugin = Plugin()
+    plugin.main()
 
-plugin = MyPlugin()
-plugin.main()
+else:
+
+    config = Config()
+
+    try:
+        bus = SystemBus()
+        snapper = Interface(bus.get_object('org.opensuse.Snapper', '/org/opensuse/Snapper'),
+                            dbus_interface='org.opensuse.Snapper')
+    except DBusException as e:
+        logging.error("connect to snapperd failed:")
+        logging.error("  %s", e)
+        sys.exit(1)
+
+    plugin = MyPlugin()
+    plugin.main()
