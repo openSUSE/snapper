@@ -21,6 +21,8 @@
 
 
 #include "commands.h"
+#include "utils/text.h"
+#include "misc.h"
 
 
 #define SERVICE "org.opensuse.Snapper"
@@ -267,6 +269,16 @@ command_delete_xsnapshots(DBus::Connection& conn, const string& config_name,
 
     DBus::Hoho hoho(call);
     hoho << config_name << nums;
+
+    if (verbose) {
+      cout << _("Deleting snapshots from ") << config_name << ": ";
+	for (list<unsigned int>::const_iterator it = nums.begin(); it != nums.end(); ++it) {
+	    if (it != nums.begin())
+		cout << ", ";
+	    cout << *it;
+	}
+	cout << endl;
+    }
 
     conn.send_with_reply_and_block(call);
 }
