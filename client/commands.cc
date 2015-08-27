@@ -20,9 +20,13 @@
  */
 
 
+#include <iostream>
+
 #include "commands.h"
 #include "utils/text.h"
-#include "misc.h"
+#include "snapper/AppUtil.h"
+
+using namespace std;
 
 
 #define SERVICE "org.opensuse.Snapper"
@@ -263,22 +267,26 @@ command_create_post_xsnapshot(DBus::Connection& conn, const string& config_name,
 
 void
 command_delete_xsnapshots(DBus::Connection& conn, const string& config_name,
-			  list<unsigned int> nums, bool verbose)
+			  const list<unsigned int>& nums, bool verbose)
 {
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "DeleteSnapshots");
+    if (verbose)
+    {
+	cout << sformat(_("Deleting snapshot from %s:", "Deleting snapshots from %s:", nums.size()),
+			config_name.c_str()) << endl;
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << nums;
-
-    if (verbose) {
-	cout << _("Deleting snapshots from ") << config_name << ": ";
-	for (list<unsigned int>::const_iterator it = nums.begin(); it != nums.end(); ++it) {
+	for (list<unsigned int>::const_iterator it = nums.begin(); it != nums.end(); ++it)
+	{
 	    if (it != nums.begin())
 		cout << ", ";
 	    cout << *it;
 	}
 	cout << endl;
     }
+
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "DeleteSnapshots");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << nums;
 
     conn.send_with_reply_and_block(call);
 }
