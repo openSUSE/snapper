@@ -263,7 +263,7 @@ command_create_post_xsnapshot(DBus::Connection& conn, const string& config_name,
 
 void
 command_delete_xsnapshots(DBus::Connection& conn, const string& config_name,
-			  list<unsigned int> nums, bool verbose)
+			  const list<unsigned int>& nums, bool verbose)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "DeleteSnapshots");
 
