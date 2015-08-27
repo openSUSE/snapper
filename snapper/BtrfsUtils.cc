@@ -51,6 +51,7 @@
 #define BTRFS_IOC_SUBVOL_CREATE _IOW(BTRFS_IOCTL_MAGIC, 14, struct btrfs_ioctl_vol_args)
 #define BTRFS_IOC_SNAP_DESTROY _IOW(BTRFS_IOCTL_MAGIC, 15, struct btrfs_ioctl_vol_args)
 #define BTRFS_IOC_SNAP_CREATE_V2 _IOW(BTRFS_IOCTL_MAGIC, 23, struct btrfs_ioctl_vol_args_v2)
+#define BTRFS_IOC_SYNC _IO(BTRFS_IOCTL_MAGIC, 8)
 
 struct btrfs_ioctl_vol_args
 {
@@ -232,6 +233,8 @@ namespace snapper
 #endif
 
 
+#ifdef HAVE_LIBBTRFS
+
 	subvolid_t
 	get_id(int fd)
 	{
@@ -245,6 +248,8 @@ namespace snapper
 
 	    return args.treeid;
 	}
+
+#endif
 
 
 	qgroup_t
@@ -277,6 +282,8 @@ namespace snapper
 	}
 
 
+#ifdef HAVE_LIBBTRFS
+
 	bool
 	does_subvolume_exist(int fd, subvolid_t subvolid)
 	{
@@ -299,6 +306,8 @@ namespace snapper
 
 	    return sk->nr_items == 0;
 	}
+
+#endif
 
 
 	void

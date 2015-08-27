@@ -352,11 +352,15 @@ namespace snapper
 
 	try
 	{
+#ifdef HAVE_LIBBTRFS
 	    subvolid_t subvolid = get_id(openSnapshotDir(num).fd());
+#endif
 
 	    delete_subvolume(info_dir.fd(), "snapshot");
 
+#ifdef HAVE_LIBBTRFS
 	    deleted_subvolids.push_back(subvolid);
+#endif
 	}
 	catch (const runtime_error& e)
 	{
@@ -1404,8 +1408,10 @@ namespace snapper
 	{
 	    for (subvolid_t subvolid : deleted_subvolids)
 	    {
+#ifdef HAVE_LIBBTRFS
 		while (!does_subvolume_exist(subvolume_dir.fd(), subvolid))
 		    sleep(1);
+#endif
 	    }
 
 	    deleted_subvolids.clear();
