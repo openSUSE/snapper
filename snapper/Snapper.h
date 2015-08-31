@@ -60,49 +60,39 @@ namespace snapper
     };
 
 
-    struct ConfigNotFoundException : public SnapperException
+    struct ConfigNotFoundException : public Exception
     {
-	explicit ConfigNotFoundException() throw() {}
-	virtual const char* what() const throw() { return "config not found"; }
+	explicit ConfigNotFoundException() : Exception("config not found") {}
     };
 
-    struct InvalidConfigException : public SnapperException
+    struct InvalidConfigException : public Exception
     {
-	explicit InvalidConfigException() throw() {}
-	virtual const char* what() const throw() { return "invalid config"; }
+	explicit InvalidConfigException() : Exception("invalid config") {}
     };
 
-    struct InvalidConfigdataException : public SnapperException
+    struct InvalidConfigdataException : public Exception
     {
-	explicit InvalidConfigdataException() throw() {}
-	virtual const char* what() const throw() { return "invalid configdata"; }
+	explicit InvalidConfigdataException() : Exception("invalid configdata") {}
     };
 
-    struct InvalidUserdataException : public SnapperException
+    struct InvalidUserdataException : public Exception
     {
-	explicit InvalidUserdataException() throw() {}
-	virtual const char* what() const throw() { return "invalid userdata"; }
+	explicit InvalidUserdataException() : Exception("invalid userdata") {}
     };
 
-    struct ListConfigsFailedException : public SnapperException
+    struct ListConfigsFailedException : public Exception
     {
-	explicit ListConfigsFailedException(const char* msg) throw() : msg(msg) {}
-	virtual const char* what() const throw() { return msg; }
-	const char* msg;
+	explicit ListConfigsFailedException(const char* msg) : Exception(msg) {}
     };
 
-    struct CreateConfigFailedException : public SnapperException
+    struct CreateConfigFailedException : public Exception
     {
-	explicit CreateConfigFailedException(const char* msg) throw() : msg(msg) {}
-	virtual const char* what() const throw() { return msg; }
-	const char* msg;
+	explicit CreateConfigFailedException(const char* msg) : Exception(msg) {}
     };
 
-    struct DeleteConfigFailedException : public SnapperException
+    struct DeleteConfigFailedException : public Exception
     {
-	explicit DeleteConfigFailedException(const char* msg) throw() : msg(msg) {}
-	virtual const char* what() const throw() { return msg; }
-	const char* msg;
+	explicit DeleteConfigFailedException(const char* msg) : Exception(msg) {}
     };
 
 

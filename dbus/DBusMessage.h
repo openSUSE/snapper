@@ -31,6 +31,8 @@
 #include <list>
 #include <map>
 
+#include "snapper/Exception.h"
+
 
 namespace DBus
 {
@@ -40,18 +42,18 @@ namespace DBus
     using std::map;
 
 
-    struct Exception : public std::exception
+    struct Exception : public snapper::Exception
     {
-	explicit Exception() throw() {}
-	virtual const char* what() const throw() { return "dbus generic exception"; }
+	explicit Exception() : snapper::Exception("dbus generic exception") {}
+	explicit Exception(const string& msg) : snapper::Exception(msg) {}
     };
 
 
     struct ErrorException : public Exception
     {
-	explicit ErrorException(const DBusError err) throw() : err(err) {}
+	explicit ErrorException(const DBusError err)
+	    : Exception("dbus error exception"), err(err) {}
 	virtual ~ErrorException() throw() { dbus_error_free(&err); }
-	virtual const char* what() const throw() { return "dbus error exception"; }
 	virtual const char* name() const throw() { return err.name; }
 	virtual const char* message() const throw() { return err.message; }
 	DBusError err;
@@ -60,15 +62,13 @@ namespace DBus
 
     struct MarshallingException : public Exception
     {
-	explicit MarshallingException() throw() {}
-	virtual const char* what() const throw() { return "dbus marshalling exception"; }
+	explicit MarshallingException() : Exception("dbus marshalling exception") {}
     };
 
 
     struct FatalException : public Exception
     {
-	explicit FatalException() throw() {}
-	virtual const char* what() const throw() { return "dbus fatal exception"; }
+	explicit FatalException() : Exception("dbus fatal exception") {}
     };
 
 

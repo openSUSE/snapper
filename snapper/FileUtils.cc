@@ -55,23 +55,16 @@ namespace snapper
     {
 	dirfd = ::open(base_path.c_str(), O_RDONLY | O_NOATIME | O_CLOEXEC);
 	if (dirfd < 0)
-	{
-	    y2err("open failed path:" << base_path << " error:" << stringerror(errno));
-	    throw IOErrorException();
-	}
+	    throw IOErrorException(sformat("open failed path:%s errno:%d (%s)", base_path.c_str(),
+					   errno, stringerror(errno).c_str()));
 
 	struct stat buf;
 	if (fstat(dirfd, &buf) != 0)
-	{
-	    y2err("fstat failed path:" << base_path << " error:" << stringerror(errno));
-	    throw IOErrorException();
-	}
+	    throw IOErrorException(sformat("fstat failed path:%s errno:%d (%s)", base_path.c_str(),
+					   errno, stringerror(errno).c_str()));
 
 	if (!S_ISDIR(buf.st_mode))
-	{
-	    y2err("not a directory path:" << base_path);
-	    throw IOErrorException();
-	}
+	    throw IOErrorException("not a directory path:" + base_path);
 
 	setXaStatus();
     }
@@ -85,23 +78,18 @@ namespace snapper
 
 	dirfd = ::openat(dir.dirfd, name.c_str(), O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
 	if (dirfd < 0)
-	{
-	    y2err("open failed path:" << dir.fullname(name) << " (" << stringerror(errno) << ")");
-	    throw IOErrorException();
-	}
+	    throw IOErrorException(sformat("open failed path:%s errno:%d (%s)", dir.fullname().c_str(),
+					   errno, stringerror(errno).c_str()));
 
 	struct stat buf;
 	if (fstat(dirfd, &buf) != 0)
-	{
-	    y2err("fstat failed path:" << base_path << " error:" << stringerror(errno));
-	    throw IOErrorException();
-	}
+	    throw IOErrorException(sformat("fstat failed path:%s errno:%d (%s)", base_path.c_str(),
+					   errno, stringerror(errno).c_str()));
 
 	if (!S_ISDIR(buf.st_mode))
 	{
-	    y2err("not a directory path:" << dir.fullname(name));
 	    close(dirfd);
-	    throw IOErrorException();
+	    throw IOErrorException("not a directory path:" + dir.fullname(name));
 	}
 
 	xastatus = dir.xastatus;
@@ -113,10 +101,8 @@ namespace snapper
     {
 	dirfd = fcntl(dir.dirfd, F_DUPFD_CLOEXEC, 0);
 	if (dirfd == -1)
-	{
-	    y2err("fcntl(F_DUPFD_CLOEXEC) failed error:" << stringerror(errno));
-	    throw IOErrorException();
-	}
+	    throw IOErrorException(sformat("fcntl(F_DUPFD_CLOEXEC) failed error:%d (%s)", errno,
+					   stringerror(errno).c_str()));
 
 	xastatus = dir.xastatus;
     }
@@ -130,10 +116,8 @@ namespace snapper
 	    ::close(dirfd);
 	    dirfd = fcntl(dir.dirfd, F_DUPFD_CLOEXEC, 0);
 	    if (dirfd == -1)
-	    {
-		y2err("fcntl(F_DUPFD_CLOEXEC) failed error:" << stringerror(errno));
-		throw IOErrorException();
-	    }
+		throw IOErrorException(sformat("fcntl(F_DUPFD_CLOEXEC) failed error:%d (%s)", errno,
+					       stringerror(errno).c_str()));
 
 	    xastatus = dir.xastatus;
 	}
@@ -192,17 +176,15 @@ namespace snapper
     {
 	int fd = fcntl(dirfd, F_DUPFD_CLOEXEC, 0);
 	if (fd == -1)
-	{
-	    y2err("fcntl(F_DUPFD_CLOEXEC) failed error:" << stringerror(errno));
-	    throw IOErrorException();
-	}
+	    throw IOErrorException(sformat("fcntl(F_DUPFD_CLOEXEC) failed error:%d (%s)", errno,
+					   stringerror(errno).c_str()));
 
 	DIR* dp = fdopendir(fd);
 	if (dp == NULL)
 	{
-	    y2err("fdopendir failed path:" << fullname() << " error:" << stringerror(errno));
 	    ::close(fd);
-	    throw IOErrorException();
+	    throw IOErrorException(sformat("fdopendir failed path:%s error:%d (%s)",
+					   fullname().c_str(), errno, stringerror(errno).c_str()));
 	}
 
 	vector<string> ret;
@@ -517,9 +499,9 @@ namespace snapper
 	    }
 	    else
 	    {
-                y2err("Couldn't get extended attributes status for " << base_path << "/" <<
-		      path << stringerror(errno));
-                throw IOErrorException();
+                throw IOErrorException(sformat("Couldn't get extended attributes status for %s/%s, "
+					       "errno:%d (%s)", base_path.c_str(), path.c_str(),
+					       errno, stringerror(errno).c_str()));
 	    }
 	}
 	else

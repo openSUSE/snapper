@@ -51,10 +51,9 @@ using namespace snapper;
 extern boost::shared_mutex big_mutex;
 
 
-struct NoComparison : public std::exception
+struct NoComparison : Exception
 {
-    explicit NoComparison() throw() {}
-    virtual const char* what() const throw() { return "no comparison"; }
+    explicit NoComparison() : Exception("no comparison") {}
 };
 
 

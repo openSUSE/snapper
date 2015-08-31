@@ -44,7 +44,7 @@ namespace snapper
 	close(fd);
 
 	if (!doc)
-	    throw IOErrorException();
+	    throw IOErrorException("xmlReadFd failed");
     }
 
 
@@ -52,7 +52,7 @@ namespace snapper
 	: doc(xmlReadFile(filename.c_str(), NULL, XML_PARSE_NOBLANKS | XML_PARSE_NONET))
     {
 	if (!doc)
-	    throw IOErrorException();
+	    throw IOErrorException("xmlReadFile failed");
     }
 
 
@@ -67,12 +67,12 @@ namespace snapper
     {
 	FILE* f = fdopen(fd, "w");
 	if (!f)
-	    throw IOErrorException();
+	    throw IOErrorException("fdopen");
 
 	if (xmlDocFormatDump(f, doc, 1) == -1)
 	{
 	    fclose(f);
-	    throw IOErrorException();
+	    throw IOErrorException("xmlDocFormatDump failed");
 	}
 
 	fclose(f);
@@ -83,7 +83,7 @@ namespace snapper
     XmlFile::save(const string& filename)
     {
 	if (xmlSaveFormatFile(filename.c_str(), doc, 1) == -1)
-	    throw IOErrorException();
+	    throw IOErrorException("xmlSaveFormatFile failed");
     }
 
 

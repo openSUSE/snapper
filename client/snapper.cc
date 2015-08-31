@@ -1283,6 +1283,7 @@ getFilesystem(DBus::Connection* conn, Snapper* snapper)
     }
     catch (const InvalidConfigException& e)
     {
+	SN_CAUGHT(e);
 	cerr << _("Failed to initialize filesystem handler.") << endl;
 	exit(EXIT_FAILURE);
     }
@@ -1473,7 +1474,8 @@ help_xa_diff()
 void
 print_xa_diff(const string loc_pre, const string loc_post)
 {
-    try {
+    try
+    {
         XAModification xa_mod = XAModification(XAttributes(loc_pre), XAttributes(loc_post));
 
         if (!xa_mod.empty())
@@ -1482,7 +1484,10 @@ print_xa_diff(const string loc_pre, const string loc_post)
 	    xa_mod.dumpDiffReport(cout);
 	}
     }
-    catch (const XAttributesException& e) {}
+    catch (const XAttributesException& e)
+    {
+	SN_CAUGHT(e);
+    }
 }
 
 void
@@ -1737,47 +1742,62 @@ main(int argc, char** argv)
 	}
 
 	catch (const ConfigNotFoundException& e)
-        {
-            cerr << sformat(_("Config '%s' not found."), config_name.c_str()) << endl;
-            exit(EXIT_FAILURE);
-        }
-        catch (const InvalidConfigException& e)
-        {
-            cerr << sformat(_("Config '%s' is invalid."), config_name.c_str()) << endl;
-            exit(EXIT_FAILURE);
-        }
+	{
+	    SN_CAUGHT(e);
+	    cerr << sformat(_("Config '%s' not found."), config_name.c_str()) << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const InvalidConfigException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << sformat(_("Config '%s' is invalid."), config_name.c_str()) << endl;
+	    exit(EXIT_FAILURE);
+	}
 	catch (const ListConfigsFailedException& e)
 	{
+	    SN_CAUGHT(e);
 	    cerr << sformat(_("Listing configs failed (%s)."), e.what()) << endl;
 	    exit(EXIT_FAILURE);
 	}
 	catch (const CreateConfigFailedException& e)
 	{
+	    SN_CAUGHT(e);
 	    cerr << sformat(_("Creating config failed (%s)."), e.what()) << endl;
 	    exit(EXIT_FAILURE);
 	}
 	catch (const DeleteConfigFailedException& e)
 	{
+	    SN_CAUGHT(e);
 	    cerr << sformat(_("Deleting config failed (%s)."), e.what()) << endl;
 	    exit(EXIT_FAILURE);
 	}
 	catch (const InvalidConfigdataException& e)
 	{
+	    SN_CAUGHT(e);
 	    cerr << _("Invalid configdata.") << endl;
 	    exit(EXIT_FAILURE);
 	}
 	catch (const AclException& e)
 	{
+	    SN_CAUGHT(e);
 	    cerr << _("ACL error.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const IOErrorException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << sformat(_("IO error (%s)."), e.what()) << endl;
 	    exit(EXIT_FAILURE);
 	}
 	catch (const InvalidUserException& e)
 	{
+	    SN_CAUGHT(e);
 	    cerr << _("Invalid user.") << endl;
 	    exit(EXIT_FAILURE);
 	}
 	catch (const InvalidGroupException& e)
 	{
+	    SN_CAUGHT(e);
 	    cerr << _("Invalid group.") << endl;
 	    exit(EXIT_FAILURE);
 	}
@@ -1792,6 +1812,8 @@ main(int argc, char** argv)
 	}
 	catch (const DBus::ErrorException& e)
 	{
+	    SN_CAUGHT(e);
+
 	    if (strcmp(e.name(), "error.unknown_config") == 0 && config_name == "root")
 	    {
 		cerr << _("The config 'root' does not exist. Likely snapper is not configured.") << endl
@@ -1804,6 +1826,7 @@ main(int argc, char** argv)
 	}
 	catch (const DBus::FatalException& e)
 	{
+	    SN_CAUGHT(e);
 	    cerr << _("Failure") << " (" << e.what() << ")." << endl;
 	    exit(EXIT_FAILURE);
 	}

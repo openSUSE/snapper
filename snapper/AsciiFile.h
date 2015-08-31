@@ -96,10 +96,9 @@ namespace snapper
     {
     public:
 
-	struct InvalidKeyException : public SnapperException
+	struct InvalidKeyException : public Exception
 	{
-	    explicit InvalidKeyException() throw() {}
-	    virtual const char* what() const throw() { return "invalid key"; }
+	    explicit InvalidKeyException() : Exception("invalid key") {}
 	};
 
 	SysconfigFile(const char* name) : AsciiFile(name), modified(false) {}

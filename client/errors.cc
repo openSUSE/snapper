@@ -61,7 +61,7 @@ error_description(const DBus::ErrorException& e)
 	return _("Snapshot is in use.");
 
     if (name == "error.io_error")
-	return _("IO Error.");
+	return sformat(_("IO Error (%s)."), e.message());
 
     if (name == "error.create_config_failed")
 	return sformat(_("Creating config failed (%s)."), e.message());
