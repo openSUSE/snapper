@@ -75,10 +75,9 @@ private:
 };
 
 
-struct UnknownConfig : public std::exception
+struct UnknownConfig : public Exception
 {
-    explicit UnknownConfig() throw() {}
-    virtual const char* what() const throw() { return "unknown config"; }
+    explicit UnknownConfig() : Exception("unknown config") {}
 };
 
 

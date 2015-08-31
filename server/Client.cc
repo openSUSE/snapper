@@ -363,10 +363,9 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 }
 
 
-struct Permissions : public std::exception
+struct Permissions : public Exception
 {
-    explicit Permissions() throw() {}
-    virtual const char* what() const throw() { return "permissions"; }
+    explicit Permissions() : Exception("no permissions") {}
 };
 
 
@@ -417,10 +416,9 @@ Client::check_permission(DBus::Connection& conn, DBus::Message& msg,
 }
 
 
-struct Lock : public std::exception
+struct Lock : public Exception
 {
-    explicit Lock() throw() {}
-    virtual const char* what() const throw() { return "locked"; }
+    explicit Lock() : Exception("locked") {}
 };
 
 
@@ -438,17 +436,15 @@ Client::check_lock(DBus::Connection& conn, DBus::Message& msg, const string& con
 }
 
 
-struct ConfigInUse : public std::exception
+struct ConfigInUse : public Exception
 {
-    explicit ConfigInUse() throw() {}
-    virtual const char* what() const throw() { return "config in use"; }
+    explicit ConfigInUse() : Exception("config in use") {}
 };
 
 
-struct SnapshotInUse : public std::exception
+struct SnapshotInUse : public Exception
 {
-    explicit SnapshotInUse() throw() {}
-    virtual const char* what() const throw() { return "snapshot in use"; }
+    explicit SnapshotInUse() : Exception("snapshot in use") {}
 };
 
 
@@ -1447,112 +1443,140 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
     }
     catch (const DBus::MarshallingException& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.dbus.marshalling", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const DBus::FatalException& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.dbus.fatal", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const UnknownConfig& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.unknown_config", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const CreateConfigFailedException& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.create_config_failed", e.what());
 	conn.send(reply);
     }
     catch (const DeleteConfigFailedException& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.delete_config_failed", e.what());
 	conn.send(reply);
     }
     catch (const Permissions& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.no_permissions", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const Lock& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.config_locked", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const ConfigInUse& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.config_in_use", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const SnapshotInUse& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.snapshot_in_use", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const NoComparison& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.no_comparisons", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const IllegalSnapshotException& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.illegal_snapshot", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const CreateSnapshotFailedException& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.create_snapshot_failed", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const DeleteSnapshotFailedException& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.delete_snapshot_failed", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const InvalidConfigdataException& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.invalid_configdata", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const InvalidUserdataException& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.invalid_userdata", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const AclException& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.acl_error", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const IOErrorException& e)
     {
-	DBus::MessageError reply(msg, "error.io_error", DBUS_ERROR_FAILED);
+	SN_CAUGHT(e);
+	DBus::MessageError reply(msg, "error.io_error", e.what());
 	conn.send(reply);
     }
     catch (const IsSnapshotMountedFailedException& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.is_snapshot_mounted", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const MountSnapshotFailedException& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.mount_snapshot", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const UmountSnapshotFailedException& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.umount_snapshot", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const InvalidUserException& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.invalid_user", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (const InvalidGroupException& e)
     {
+	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.invalid_group", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
+    catch (const Exception& e)
+    {
+	SN_CAUGHT(e);
+	DBus::MessageError reply(msg, "error.something", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
     catch (...)

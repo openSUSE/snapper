@@ -46,35 +46,30 @@ namespace snapper
     enum SnapshotType { SINGLE, PRE, POST };
 
 
-    struct CreateSnapshotFailedException : public SnapperException
+    struct CreateSnapshotFailedException : public Exception
     {
-	explicit CreateSnapshotFailedException() throw() {}
-	virtual const char* what() const throw() { return "create snapshot failed"; }
+	explicit CreateSnapshotFailedException() : Exception("create snapshot failed") {}
     };
 
-    struct DeleteSnapshotFailedException : public SnapperException
+    struct DeleteSnapshotFailedException : public Exception
     {
-	explicit DeleteSnapshotFailedException() throw() {}
-	virtual const char* what() const throw() { return "delete snapshot failed"; }
+	explicit DeleteSnapshotFailedException() : Exception("delete snapshot failed") {}
     };
 
 
-    struct IsSnapshotMountedFailedException : public SnapperException
+    struct IsSnapshotMountedFailedException : public Exception
     {
-	explicit IsSnapshotMountedFailedException() throw() {}
-	virtual const char* what() const throw() { return "is snapshot mounted failed"; }
+	explicit IsSnapshotMountedFailedException() : Exception("is snapshot mounted failed") {}
     };
 
-    struct MountSnapshotFailedException : public SnapperException
+    struct MountSnapshotFailedException : public Exception
     {
-	explicit MountSnapshotFailedException() throw() {}
-	virtual const char* what() const throw() { return "mount snapshot failed"; }
+	explicit MountSnapshotFailedException() : Exception("mount snapshot failed") {}
     };
 
-    struct UmountSnapshotFailedException : public SnapperException
+    struct UmountSnapshotFailedException : public Exception
     {
-	explicit UmountSnapshotFailedException() throw() {}
-	virtual const char* what() const throw() { return "umount snapshot failed"; }
+	explicit UmountSnapshotFailedException() : Exception("umount snapshot failed") {}
     };
 
 

@@ -227,10 +227,8 @@ namespace snapper
 
 	FILE* file = fdopen(info_dir.mktemp(tmp_name), "w");
 	if (!file)
-	{
-	    y2err("mkstemp failed errno:" << errno << " (" << stringerror(errno) << ")");
-	    throw IOErrorException();
-	}
+	    throw IOErrorException(sformat("mkstemp failed errno:%d (%s)", errno,
+					   stringerror(errno).c_str()));
 
 	for (Files::const_iterator it = files.begin(); it != files.end(); ++it)
 	{

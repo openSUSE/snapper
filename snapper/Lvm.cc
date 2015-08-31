@@ -146,25 +146,25 @@ namespace snapper
 	struct stat stat;
 	if (infos_dir.stat(&stat) != 0)
 	{
-	    throw IOErrorException();
+	    throw IOErrorException("stat on .snapshots failed");
 	}
 
 	if (stat.st_uid != 0)
 	{
 	    y2err(".snapshots must have owner root");
-	    throw IOErrorException();
+	    throw IOErrorException(".snapshots must have owner root");
 	}
 
 	if (stat.st_gid != 0 && stat.st_mode & S_IWGRP)
 	{
 	    y2err(".snapshots must have group root or must not be group-writable");
-	    throw IOErrorException();
+	    throw IOErrorException(".snapshots must have group root or must not be group-writable");
 	}
 
 	if (stat.st_mode & S_IWOTH)
 	{
 	    y2err(".snapshots must not be world-writable");
-	    throw IOErrorException();
+	    throw IOErrorException(".snapshots must not be world-writable");
 	}
 
 	return infos_dir;

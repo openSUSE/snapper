@@ -389,8 +389,8 @@ namespace snapper
 	    if (errno == EEXIST)
 		continue;
 
-	    y2err("mkdir failed errno:" << errno << " (" << stringerror(errno) << ")");
-	    throw IOErrorException();
+	    throw IOErrorException(sformat("mkdir failed errno:%d (%s)", errno,
+					   stringerror(errno).c_str()));
 	}
 
 	infos_dir.chmod(decString(num), 0755, 0);
@@ -439,11 +439,9 @@ namespace snapper
 	xml.save(info_dir.mktemp(tmp_name));
 
 	if (info_dir.rename(tmp_name, file_name) != 0)
-	{
-	    y2err("rename info.xml failed infoDir: " << info_dir.fullname() << " errno: " <<
-		  errno << " (" << stringerror(errno) << ")");
-	    throw IOErrorException();
-	}
+	    throw IOErrorException(sformat("rename info.xml failed infoDir:%s errno:%d (%s)",
+					   info_dir.fullname().c_str(), errno,
+					   stringerror(errno).c_str()));
     }
 
 

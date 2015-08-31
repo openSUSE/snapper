@@ -27,7 +27,7 @@ libsnapper_la_SOURCES =					\
 	Regex.cc		Regex.h			\
 	Acls.cc			Acls.h			\
 	Hooks.cc		Hooks.h			\
-	Exception.h					\
+	Exception.cc		Exception.h		\
 	SnapperTmpl.h					\
 	SnapperTypes.h					\
 	SnapperDefines.h				\
