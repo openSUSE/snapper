@@ -206,7 +206,7 @@ namespace snapper
 
 	if (!is_subvolume(stat))
 	{
-	    throw IOErrorException("subvolume is not a btrfs snapshot");
+	    throw IOErrorException("subvolume is not a btrfs subvolume");
 	}
 
 	return subvolume_dir;
@@ -227,7 +227,7 @@ namespace snapper
 
 	if (!is_subvolume(stat))
 	{
-	    SN_THROW(IOErrorException(".snapshots is not a btrfs snapshot"));
+	    SN_THROW(IOErrorException(".snapshots is not a btrfs subvolume"));
 	}
 
 	if (stat.st_uid != 0)
