@@ -1,4 +1,15 @@
 -------------------------------------------------------------------
+Thu Sep 17 11:52:10 CEST 2015 - shundhammer@suse.de
+
+- version 0.2.4.1
+
+-------------------------------------------------------------------
+Wed Aug 26 11:58:24 CEST 2015 - aschnell@suse.de
+
+- allow to disable zypp plugin via environment variable (see
+  fate#319316)
+
+-------------------------------------------------------------------
 Mon Sep 29 11:55:37 CEST 2014 - aschnell@suse.de
 
 - updated translations
