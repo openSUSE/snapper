@@ -167,6 +167,7 @@ AC_OUTPUT(
 	doc/snapper-zypp-plugin.xml:doc/snapper-zypp-plugin.xml.in
 	doc/snapper-zypp-plugin.conf.xml:doc/snapper-zypp-plugin.conf.xml.in
 	doc/pam_snapper.xml:doc/pam_snapper.xml.in
+	doc/mksubvolume.xml:doc/mksubvolume.xml.in
 	po/Makefile
 	testsuite/Makefile
 	testsuite-real/Makefile

@@ -18,6 +18,17 @@ snapper_SOURCES =			\
 
 snapper_LDADD = ../snapper/libsnapper.la utils/libutils.la ../dbus/libdbus.la
 
+if ENABLE_ROLLBACK
+
+sbin_PROGRAMS = mksubvolume
+
+mksubvolume_SOURCES =			\
+	mksubvolume.cc
+
+mksubvolume_LDADD = ../snapper/libsnapper.la utils/libutils.la
+
+endif
+
 libexecdir = /usr/lib/snapper
 
 libexec_PROGRAMS = installation-helper systemd-helper

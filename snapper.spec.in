@@ -27,6 +27,7 @@ BuildRequires:  gcc-c++
 BuildRequires:  libacl-devel
 BuildRequires:  libtool
 BuildRequires:  libxml2-devel
+BuildRequires:  e2fsprogs-devel
 %if 0%{?suse_version} > 1230
 BuildRequires:  libbtrfs-devel
 %endif
@@ -109,10 +110,12 @@ rm -rf "$RPM_BUILD_ROOT"
 %defattr(-,root,root)
 %{prefix}/bin/snapper
 %{prefix}/sbin/snapperd
+%{prefix}/sbin/mksubvolume
 %{prefix}/lib/snapper
 %doc %{_mandir}/*/snapper.8*
 %doc %{_mandir}/*/snapperd.8*
 %doc %{_mandir}/*/snapper-configs.5*
+%doc %{_mandir}/*/mksubvolume.8*
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
 /etc/cron.hourly/suse.de-snapper
 /etc/cron.daily/suse.de-snapper
