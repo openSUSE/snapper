@@ -201,6 +201,65 @@ do_set_nocow()
 }
 
 
+bool
+is_subvol_mount(const string& fs_options)
+{
+    list<string> tmp1;
+    boost::split(tmp1, fs_options, boost::is_any_of(","), boost::token_compress_on);
+    for (const string& tmp2 : tmp1)
+    {
+	if (boost::starts_with(tmp2, "subvol=") || boost::starts_with(tmp2, "subvolid="))
+	    return true;
+    }
+
+    return false;
+}
+
+
+libmnt_fs*
+find_filesystem(MntTable& mnt_table)
+{
+    string tmp = target;
+
+    for (;;)
+    {
+	libmnt_fs* fs = mnt_table.find_target_up(tmp, MNT_ITER_FORWARD);
+	if (!fs)
+	    throw runtime_error("filesystem not found");
+
+	string fs_device = mnt_fs_get_source(fs);
+	string fs_fstype = mnt_fs_get_fstype(fs);
+	string fs_target = mnt_fs_get_target(fs);
+	string fs_options = mnt_fs_get_options(fs);
+
+	if (verbose)
+	{
+	    cout << "fs-device:" << fs_device << endl;
+	    cout << "fs-fstype:" << fs_fstype << endl;
+	    cout << "fs-target:" << fs_target << endl;
+	    cout << "fs-options:" << fs_options << endl;
+	}
+
+	if (fs_fstype != "btrfs")
+	    throw runtime_error("filesystem is not btrfs");
+
+	if (fs_target == target)
+	    throw runtime_error("target exists in fstab");
+
+	if (!is_subvol_mount(fs_options))
+	    return fs;
+
+	if (verbose)
+	    cout << "ignoring subvol mount" << endl;
+
+	if (tmp == "/")
+	    throw runtime_error("filesystem not found");
+
+	tmp = dirname(fs_target);
+    }
+}
+
+
 void
 doit()
 {
@@ -218,23 +277,8 @@ doit()
 
     // Find filesystem.
 
-    libmnt_fs* fs = mnt_table.find_target_up(target, MNT_ITER_FORWARD);
-    string fs_fstype = mnt_fs_get_fstype(fs);
+    libmnt_fs* fs = find_filesystem(mnt_table);
     string fs_target = mnt_fs_get_target(fs);
-
-    if (verbose)
-    {
-	cout << "fs-device:" << mnt_fs_get_source(fs) << endl;
-	cout << "fs-fstype:" << fs_fstype << endl;
-	cout << "fs-target:" << fs_target << endl;
-	cout << "fs-options:" << mnt_fs_get_options(fs) << endl;
-    }
-
-    if (fs_fstype != "btrfs")
-	throw runtime_error("filesystem is not btrfs");
-
-    if (fs_target == target)
-	throw runtime_error("target exists in fstab");
 
     // Get default subvolume of filesystem.
 
@@ -254,7 +298,9 @@ doit()
 
     // Determine subvol mount-option for tmp mount. The '@' is used on SLE.
 
-    string subvol_option = boost::starts_with(default_subvolume_name, "@/") ? "@" : "";
+    string subvol_option = "";
+    if (default_subvolume_name == "@" || boost::starts_with(default_subvolume_name, "@/"))
+	subvol_option = "@";
     if (verbose)
 	cout << "subvol-option:" << subvol_option << endl;
 
@@ -307,7 +353,7 @@ void usage() __attribute__ ((__noreturn__));
 void
 usage()
 {
-    cerr << "usage: --target=target [--nocow] [--verbose]" << endl;
+    cerr << "usage: [--nocow] [--verbose] target" << endl;
     exit(EXIT_FAILURE);
 }
 
@@ -318,7 +364,6 @@ main(int argc, char** argv)
     setlocale(LC_ALL, "");
 
     const struct option options[] = {
-	{ "target",		required_argument,	0,	't' },
 	{ "nocow",		no_argument,		0,	0 },
 	{ "verbose",            no_argument,            0,      'v' },
 	{ 0, 0, 0, 0 }
@@ -332,16 +377,16 @@ main(int argc, char** argv)
 
     GetOpts::parsed_opts::const_iterator opt;
 
-    if ((opt = opts.find("target")) != opts.end())
-        target = opt->second;
-    else
-	usage();
-
     if ((opt = opts.find("nocow")) != opts.end())
         set_nocow = true;
 
     if ((opt = opts.find("verbose")) != opts.end())
         verbose = true;
+
+    if (getopts.numArgs() != 1)
+	usage();
+
+    target = getopts.popArg();
 
     try
     {

@@ -21,27 +21,22 @@
   <refsynopsisdiv id='synopsis'>
     <cmdsynopsis>
       <command>mksubvolume</command>
-      <arg choice='req'>--target=<replaceable>path</replaceable></arg>
       <arg choice='opt'>--nocow</arg>
       <arg choice='opt'>--verbose</arg>
+      <arg choice='req'><replaceable>path</replaceable></arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 
   <refsect1 id='description'>
     <title>DESCRIPTION</title>
     <para>Mksubvolume is a command-line program to create a btrfs subvolume
-    including adding a fstab entry and mounting the subvolume.</para>
+    including adding a fstab entry and mounting the subvolume at
+    <replaceable>path</replaceable>.</para>
   </refsect1>
 
   <refsect1 id='global_options'>
     <title>OPTIONS</title>
     <variablelist>
-      <varlistentry>
-	<term><option>--target <replaceable>path</replaceable></option></term>
-	<listitem>
-	  <para>Path of the subvolume to create.</para>
-	</listitem>
-      </varlistentry>
       <varlistentry>
 	<term><option>--nocow</option></term>
 	<listitem>
