@@ -37,8 +37,6 @@
 #include "utils/GetOpts.h"
 
 
-using namespace std;
-
 using namespace snapper;
 using namespace BtrfsUtils;
 
@@ -77,12 +75,12 @@ do_tmp_mount(const libmnt_fs* fs, const char* tmp_mountpoint, const string& subv
 
 
 void
-do_create_subvolume(const char* tmp_mountpoint, const string& subvolume_name)
+do_create_subvolume(const string& tmp_mountpoint, const string& subvolume_name)
 {
     if (verbose)
 	cout << "do-create-subvolume" << endl;
 
-    string parent = sformat("%s/%s", tmp_mountpoint, dirname(subvolume_name).c_str());
+    string parent = tmp_mountpoint + "/" + dirname(subvolume_name);
 
     if (mkdir(parent.c_str(), 0777) != 0 && errno != EEXIST)
 	throw runtime_error_with_errno("mkdir failed", errno);
@@ -135,13 +133,13 @@ do_add_fstab_and_mount(MntTable& mnt_table, const libmnt_fs* fs, const string& s
 
     mnt_fs_set_target(x, target.c_str());
 
-    string y = subvolume_name;
+    string full_subvol_option = subvolume_name;
     if (!subvol_option.empty())
-	y.insert(0, subvol_option + "/");
+	full_subvol_option.insert(0, subvol_option + "/");
 
     char* options = mnt_fs_strdup_options(x);
     mnt_optstr_remove_option(&options, "defaults");
-    mnt_optstr_set_option(&options, "subvol", y.c_str());
+    mnt_optstr_set_option(&options, "subvol", full_subvol_option.c_str());
     mnt_fs_set_options(x, options);
     free(options);
 
@@ -304,7 +302,8 @@ doit()
     if (verbose)
 	cout << "subvol-option:" << subvol_option << endl;
 
-    // Determine name for new subvolume.
+    // Determine name for new subvolume: It is the target name without the
+    // leading filesystem target.
 
     string subvolume_name = target.substr(fs_target.size() + (fs_target == "/" ? 0 : 1));
     if (verbose)
