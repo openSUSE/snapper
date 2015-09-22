@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Tue Sep 22 15:44:22 CEST 2015 - shundhammer@suse.de
+
+- Backport from SP1: Call script /usr/lib/snapper/plugins/rollback
+  if present upon rollback (fate#319108)
+- version 0.2.4.2
+
+-------------------------------------------------------------------
 Thu Sep 17 11:52:10 CEST 2015 - shundhammer@suse.de
 
 - version 0.2.4.1

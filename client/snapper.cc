@@ -1227,6 +1227,19 @@ help_rollback()
 
 
 void
+rollback_hook(const string& old_root, const string& new_root)
+{
+#define ROLLBACK_SCRIPT "/usr/lib/snapper/plugins/rollback"
+
+    // Fate#319108
+    if (access(ROLLBACK_SCRIPT, X_OK) == 0)
+    {
+	SystemCmd cmd(string(ROLLBACK_SCRIPT) + " " + old_root + " " + new_root);
+    }
+}
+
+
+void
 command_rollback(DBus::Connection* conn, Snapper* snapper)
 {
     const struct option options[] = {
@@ -1270,15 +1283,16 @@ command_rollback(DBus::Connection* conn, Snapper* snapper)
 	exit(EXIT_FAILURE);
     }
 
+    unsigned int num1;
     unsigned int num2;
 
     if (getopts.numArgs() == 0)
     {
 	if (!quiet)
 	    cout << _("Creating read-only snapshot of default subvolume.") << flush;
-	unsigned int num1 = command_create_single_xsnapshot_of_default(*conn, config_name, true,
-								       description, cleanup,
-								       userdata);
+	num1 = command_create_single_xsnapshot_of_default(*conn, config_name, true,
+							  description, cleanup,
+							  userdata);
 	if (!quiet)
 	    cout << " " << sformat(_("(Snapshot %d.)"), num1) << endl;
 
@@ -1295,8 +1309,8 @@ command_rollback(DBus::Connection* conn, Snapper* snapper)
 
 	if (!quiet)
 	    cout << _("Creating read-only snapshot of current system.") << flush;
-	unsigned int num1 = command_create_single_xsnapshot(*conn, config_name, description,
-							    cleanup, userdata);
+	num1 = command_create_single_xsnapshot(*conn, config_name, description,
+					       cleanup, userdata);
 	if (!quiet)
 	    cout << " " << sformat(_("(Snapshot %d.)"), num1) << endl;
 
@@ -1311,6 +1325,8 @@ command_rollback(DBus::Connection* conn, Snapper* snapper)
     if (!quiet)
 	cout << sformat(_("Setting default subvolume to snapshot %d."), num2) << endl;
     filesystem->setDefault(num2);
+
+    rollback_hook(filesystem->snapshotDir(num1), filesystem->snapshotDir(num2));
 
     if (print_number)
 	cout << num2 << endl;
