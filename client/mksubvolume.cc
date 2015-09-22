@@ -63,7 +63,7 @@ do_tmp_mount(const libmnt_fs* fs, const char* tmp_mountpoint, const string& subv
     if (!subvol_option.empty())
 	mnt_context_set_options(cxt, ("subvol=" + subvol_option).c_str());
     else
-	mnt_context_set_options(cxt, "subvolid=5");
+	mnt_context_set_options(cxt, "subvolid=5"); // 5 is the btrfs initial top-level subvolume
 
     int ret = mnt_context_mount(cxt);
     if (ret != 0)
