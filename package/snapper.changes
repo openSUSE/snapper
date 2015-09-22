@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Sep 22 16:51:23 CEST 2015 - aschnell@suse.com
+
+- updated translations
+
+-------------------------------------------------------------------
 Tue Sep 22 14:55:10 CEST 2015 - shundhammer@suse.de
 
 - Call script /usr/lib/snapper/plugins/rollback if present upon
