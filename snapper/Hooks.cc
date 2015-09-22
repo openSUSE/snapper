@@ -78,4 +78,19 @@ namespace snapper
 #endif
     }
 
+
+    void
+    Hooks::rollback(const string& old_root, const string& new_root)
+    {
+#ifdef ENABLE_ROLLBACK
+#define ROLLBACK_SCRIPT "/usr/lib/snapper/plugins/rollback"
+
+	// Fate#319108
+	if (access(ROLLBACK_SCRIPT, X_OK) == 0)
+	{
+	    SystemCmd cmd(string(ROLLBACK_SCRIPT) + " " + old_root + " " + new_root);
+	}
+#endif
+    }
+
 }
