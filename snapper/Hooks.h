@@ -44,6 +44,8 @@ namespace snapper
 	static void modify_snapshot(const string& subvolume, const Filesystem* filesystem);
 	static void delete_snapshot(const string& subvolume, const Filesystem* filesystem);
 
+	static void rollback(const string& old_root, const string& new_root);
+
     private:
 
 	static void grub(const string& subvolume, const Filesystem* filesystem,
