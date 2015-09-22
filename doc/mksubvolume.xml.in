@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<refentry id='mksubvolume8'>
+
+  <refentryinfo>
+    <date>2015-09-17</date>
+  </refentryinfo>
+
+  <refmeta>
+    <refentrytitle>mksubvolume</refentrytitle>
+    <manvolnum>8</manvolnum>
+    <refmiscinfo class='date'>2015-09-17</refmiscinfo>
+    <refmiscinfo class='version'>@VERSION@</refmiscinfo>
+    <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
+  </refmeta>
+
+  <refnamediv>
+    <refname>mksubvolume</refname>
+    <refpurpose>Command-line program to create btrfs subvolume</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv id='synopsis'>
+    <cmdsynopsis>
+      <command>mksubvolume</command>
+      <arg choice='opt'>--nocow</arg>
+      <arg choice='opt'>--verbose</arg>
+      <arg choice='req'><replaceable>path</replaceable></arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 id='description'>
+    <title>DESCRIPTION</title>
+    <para>Mksubvolume is a command-line program to create a btrfs subvolume
+    including adding a fstab entry and mounting the subvolume at
+    <replaceable>path</replaceable>.</para>
+  </refsect1>
+
+  <refsect1 id='global_options'>
+    <title>OPTIONS</title>
+    <variablelist>
+      <varlistentry>
+	<term><option>--nocow</option></term>
+	<listitem>
+	  <para>Set the no-copy-on-write flag for the subvolume.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>-v, --verbose</option></term>
+	<listitem>
+	  <para>Increase verbosity.</para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='authors'>
+    <title>AUTHORS</title>
+    <para>Arvin Schnell <email>aschnell@suse.com</email></para>
+  </refsect1>
+
+  <refsect1 id='see_also'>
+    <title>SEE ALSO</title>
+    <para>
+      <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+      <citerefentry role="nolink"><refentrytitle>btrfs</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+      <citerefentry role="nolink"><refentrytitle>fstab</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+      <citerefentry role="nolink"><refentrytitle>mount</refentrytitle><manvolnum>8</manvolnum></citerefentry>
+    </para>
+  </refsect1>
+
+</refentry>

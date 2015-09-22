@@ -6,6 +6,13 @@ Tue Sep 22 14:55:10 CEST 2015 - shundhammer@suse.de
 - version 0.2.9
 
 -------------------------------------------------------------------
+
+Tue Sep 22 12:20:28 CEST 2015 - aschnell@suse.com
+
+- added program to create btrfs subvolume suitable for systems
+  supporting rollback (bsc#944120)
+
+-------------------------------------------------------------------
 Mon Aug 31 16:26:51 CEST 2015 - aschnell@suse.com
 
 - improved error reporting (bsc#940046)

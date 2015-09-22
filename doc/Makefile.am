@@ -12,6 +12,10 @@ if HAVE_ZYPP
 man_MANS += snapper-zypp-plugin.conf.5 snapper-zypp-plugin.8
 endif
 
+if ENABLE_ROLLBACK
+man_MANS += mksubvolume.8
+endif
+
 .xml.5: .xml
 	$(XSLTPROC) --nonet manpages.xsl $<
 

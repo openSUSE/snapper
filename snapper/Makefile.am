@@ -51,6 +51,10 @@ libsnapper_la_SOURCES +=				\
 	LvmCache.cc		LvmCache.h
 endif
 
+if ENABLE_ROLLBACK
+libsnapper_la_SOURCES +=				\
+	MntTable.cc		MntTable.h
+endif
 
 libsnapper_la_LDFLAGS = -version-info @LIBVERSION_INFO@
 libsnapper_la_LIBADD = -lboost_thread -lboost_system -lxml2 -lacl -lz -lm

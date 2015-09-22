@@ -30,9 +30,6 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <asm/types.h>
-#ifdef ENABLE_ROLLBACK
-#include <libmount/libmount.h>
-#endif
 #ifdef HAVE_LIBBTRFS
 #ifdef HAVE_BTRFS_VERSION_H
 #include <btrfs/version.h>
@@ -57,6 +54,9 @@
 #include "snapper/SnapperDefines.h"
 #include "snapper/Acls.h"
 #include "snapper/Exception.h"
+#ifdef ENABLE_ROLLBACK
+#include "snapper/MntTable.h"
+#endif
 
 
 namespace snapper
@@ -1419,68 +1419,6 @@ namespace snapper
 
 
 #ifdef ENABLE_ROLLBACK
-
-    class MntTable
-    {
-
-    public:
-
-	MntTable(const string& root_prefix)
-	    : root_prefix(root_prefix), table(mnt_new_table())
-	{
-	    if (!table)
-		throw runtime_error("mnt_new_table failed");
-
-	    mnt_table_enable_comments(table, 1);
-	}
-
-	~MntTable()
-	{
-	    mnt_reset_table(table);
-	}
-
-	void parse_fstab()
-	{
-	    if (mnt_table_parse_fstab(table, target_fstab().c_str()) != 0)
-		throw runtime_error("mnt_table_parse_fstab failed");
-	}
-
-	void replace_file()
-	{
-	    if (mnt_table_replace_file(table, target_fstab().c_str()) != 0)
-		throw runtime_error("mnt_table_replace_file failed");
-	}
-
-	struct libmnt_fs* find_target(const string& path, int directon)
-	{
-	    return mnt_table_find_target(table, path.c_str(), directon);
-	}
-
-	void add_fs(struct libmnt_fs* fs)
-	{
-	    if (mnt_table_add_fs(table, fs) != 0)
-		throw runtime_error("mnt_table_add_fs failed");
-	}
-
-	void remove_fs(struct libmnt_fs* fs)
-	{
-	    if (mnt_table_remove_fs(table, fs) != 0)
-		throw runtime_error("mnt_table_remove_fs failed");
-	}
-
-    private:
-
-	string target_fstab() const
-	{
-	    return prepend_root_prefix(root_prefix, "/etc/fstab");
-	}
-
-	const string root_prefix;
-
-	struct libmnt_table* table;
-
-    };
-
 
     void
     Btrfs::addToFstabHelper(const string& default_subvolume_name) const
