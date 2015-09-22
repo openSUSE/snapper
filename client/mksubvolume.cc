@@ -258,6 +258,23 @@ find_filesystem(MntTable& mnt_table)
 }
 
 
+/*
+ * The used algorithm is as follow:
+ *
+ * 1. Search upwards from target for a filesystem (not mounted with subvol
+ *    option). The filesystem must of course be btrfs.
+ *
+ * 2. Determine the name for new subvolume: It is the target name without the
+ *    leading filesystem target (mountpoint).
+ *
+ * 3. Temporarily mount the filesystem and create new subvolume. Reasons for
+ *    the mount are documented in bsc #910602.
+ *
+ * 4. Create new subvolume.
+ *
+ * 5. Add new subvolume mount to fstab and mount new subvolume.
+ */
+
 void
 doit()
 {
