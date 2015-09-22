@@ -264,11 +264,14 @@ doit()
     if (verbose)
 	cout << "target:" << target << endl;
 
+    if (target.empty() || boost::ends_with(target, "/"))
+	throw runtime_error("invalid target");
+
     if (access(target.c_str(), F_OK) == 0)
 	throw runtime_error("target exists");
 
     if (access(dirname(target).c_str(), F_OK) != 0)
-	throw runtime_error("parent of target exists");
+	throw runtime_error("parent of target does not exist");
 
     MntTable mnt_table("/");
     mnt_table.parse_fstab();
