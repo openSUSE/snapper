@@ -1,1004 +1,715 @@
-# @TITLE@
-# Copyright (C) 2006, SUSE Linux GmbH, Nuremberg
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-# This file is distributed under the same license as @PACKAGE@ package. FIRST
+# Esperato message file (@memory@).
+# Copyright (C) 2012 SUSE Linux Products GmbH.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: @PACKAGE@\n"
+"Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-01 11:36+0200\n"
-"PO-Revision-Date: 2005-09-18 19:09+0200\n"
-"Last-Translator: Mattias Newzella <newzella@linux.se>\n"
-"Language-Team: Swedish <sv@li.org>\n"
-"Language: sv\n"
+"PO-Revision-Date: 2012-02-12 09:27+0100\n"
+"Last-Translator: Karl Eichwalder <ke@suse.de>\n"
+"Language-Team: Esperanto <i18n@suse.de>\n"
+"Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# SLE12
 #: ../client/snapper.cc:599 ../client/snapper.cc:733
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr ""
-"\t--cleanup-algorithm, -c <algoritm>\tUpprensningsalgoritm för "
-"ögonblicksbild."
 
-# SLE12
 #: ../client/snapper.cc:1223
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr ""
-"\t--cleanup-algorithm, -c <algo>\tUpprensningsalgoritm för ögonblicksbilder."
 
-# SLE12
 #: ../client/snapper.cc:601
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
 msgstr ""
-"\t--command <kommando>\tKör kommandot och skapa före- och efter-"
-"ögonblicksbilder."
 
-# SLE12
 #: ../client/snapper.cc:1494
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr ""
-"\t--config, -c <namn>\t\tAnge namnet på den konfiguration som ska användas."
 
-# SLE12
 #: ../client/snapper.cc:598 ../client/snapper.cc:732
 msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <beskrivning>\tBeskrivning av ögonblicksbild."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1222
 msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr "\t--description, -d <beskrivning>\tBeskrivning för ögonblicksbilder."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:195
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--fstype, -f <fstyp>\t\tAnge filsystemtyp manuellt."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1028
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr ""
-"\t--input, -i <fil>\t\tLäs filer som ändringar ska ångras för från filen."
 
-# SLE12
 #: ../client/snapper.cc:1492
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr "\t--iso\t\t\t\tVisa datum och tider i ISO-format."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1495
 msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr "\t--no-dbus\t\t\tAnvänd utan DBus."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:914
 msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <fil>\t\tSpara status till fil."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:596
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <nummer>\t\tNummer för motsvarande för-ögonblicksbild."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:597
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tSkriv ut nummer på skapad ögonblicksbild."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1221
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
 msgstr ""
-"\t--print-number, -p\t\tSkriv ut nummer för den andra skapade "
-"ögonblicksbilden."
 
-# SLE12
 #: ../client/snapper.cc:1489
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\tUtelämna normal utmatning."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1493
 msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <stil>\tTabellstil (heltal)."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:196
 msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <namn>\t\tNamn på konfigurationsmall att använda."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:595
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <typ>\t\tTyp för ögonblicksbild."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:384
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <typ>\t\tTyper av ögonblicksbilder att lista."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:600 ../client/snapper.cc:734
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <användardata>\tAnvändardata för ögonblicksbilden."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1224
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata, -u <användardata>\tAnvändardata för ögonblicksbilder."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1491
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr "\t--utc\t\t\t\tVisa datum och tider i UTC."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1490
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tÖka utförligheten."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1496
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tVisa version och avsluta."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1326
 msgid "\tsnapper cleanup <cleanup-algorithm>"
-msgstr "\tsnapper cleanup <upprensningsalgoritm>"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:592
 msgid "\tsnapper create"
-msgstr "\tsnapper create"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:192
 msgid "\tsnapper create-config <subvolume>"
-msgstr "\tsnapper create-config <undervolym>"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:783
 msgid "\tsnapper delete <number>"
-msgstr "\tsnapper delete <nummer>"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:263
 msgid "\tsnapper delete-config"
-msgstr "\tsnapper delete-config"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:966
 msgid "\tsnapper diff <number1>..<number2> [files]"
-msgstr "\tsnapper diff <nummer1>..<nummer2> [filer]"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:293
 msgid "\tsnapper get-config"
-msgstr "\tsnapper get-config"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:381
 msgid "\tsnapper list"
-msgstr "\tsnapper list"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:139
 msgid "\tsnapper list-configs"
-msgstr "\tsnapper list-configs"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:729
 msgid "\tsnapper modify <number>"
-msgstr "\tsnapper modify <nummer>"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:837
 msgid "\tsnapper mount <number>"
-msgstr "\tsnapper mount <nummer>"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1218
 msgid "\tsnapper rollback [number]"
-msgstr "\tsnapper-återställning [nummer]"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:349
 msgid "\tsnapper set-config <configdata>"
-msgstr "\tsnapper set-config <configdata>"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:911
 msgid "\tsnapper status <number1>..<number2>"
-msgstr "\tsnapper status <nummer1>..<nummer2>"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:874
 msgid "\tsnapper umount <number>"
-msgstr "\tsnapper umount <nummer>"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1025
 msgid "\tsnapper undochange <number1>..<number2> [files]"
-msgstr "\tsnapper undochange <nummer1>..<nummer2> [filer]"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1391
 msgid "\tsnapper xadiff <number1>..<number2> [files]"
-msgstr "\tsnapper xadiff <number1>..<number2> [filer]"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1488
 msgid "    Global options:"
-msgstr "    Globala alternativ:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:594
 msgid "    Options for 'create' command:"
-msgstr "    Alternativ för kommandot create:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:194
 msgid "    Options for 'create-config' command:"
-msgstr "    Alternativ för kommandot create-config:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:383
 msgid "    Options for 'list' command:"
-msgstr "    Alternativ för kommandot list:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:731
 msgid "    Options for 'modify' command:"
-msgstr "    Alternativ för kommandot modify:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1220
 msgid "    Options for 'rollback' command:"
-msgstr "    Alternativ för kommandot rollback:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:913
 msgid "    Options for 'status' command:"
-msgstr "    Alternativ för kommandot status:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1027
 msgid "    Options for 'undochange' command:"
-msgstr "    Alternativ för kommandot undochange:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1325
 msgid "  Cleanup snapshots:"
-msgstr "  Rensa upp ögonblicksbilder:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1390
 msgid "  Comparing snapshots extended attributes:"
-msgstr "  Jämför ögonblicksbilders utökade attribut:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:910 ../client/snapper.cc:965
 msgid "  Comparing snapshots:"
-msgstr "  Jämför ögonblicksbilder:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:191
 msgid "  Create config:"
-msgstr "  Skapa konfiguration:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:591
 msgid "  Create snapshot:"
-msgstr "  Skapa ögonblicksbild:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:262
 msgid "  Delete config:"
-msgstr "  Ta bort konfiguration:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:782
 msgid "  Delete snapshot:"
-msgstr "  Ta bort ögonblicksbilder:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:292
 msgid "  Get config:"
-msgstr "  Hämta konfiguration:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:138
 msgid "  List configs:"
-msgstr "  Lista konfigurationer:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:380
 msgid "  List snapshots:"
-msgstr "  Lista ögonblicksbilder:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:728
 msgid "  Modify snapshot:"
-msgstr "  Ändra ögonblicksbild:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:836
 msgid "  Mount snapshot:"
-msgstr "  Montera ögonblicksbild:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1217
 msgid "  Rollback:"
-msgstr "  Återställning:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:348
 msgid "  Set config:"
-msgstr "  Ange konfiguration:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:873
 msgid "  Umount snapshot:"
-msgstr "  Avmontera ögonblicksbild:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1024
 msgid "  Undo changes:"
-msgstr "  Ångra ändringar:"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:432 ../client/snapper.cc:481
 msgid "#"
-msgstr "#"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1283 ../client/snapper.cc:1290
 #: ../client/snapper.cc:1301 ../client/snapper.cc:1308
 #, c-format
 msgid "(Snapshot %d.)"
-msgstr "(Ögonblicksbild %d.)"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1669 ../client/errors.cc:88
 msgid "ACL error."
-msgstr "ACL-fel."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:436
 msgid "Cleanup"
-msgstr "Upprensning"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1624
 #, c-format
 msgid "Command '%s' does not work without DBus."
-msgstr "Kommandot %s fungerar inte utan DBus."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1337
 msgid "Command 'cleanup' needs one arguments."
-msgstr "Kommandot cleanup måste ha ett argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:623
 msgid "Command 'create' does not take arguments."
-msgstr "Kommandot create tar inga argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:216
 msgid "Command 'create-config' needs one argument."
-msgstr "Kommandot create-config måste ha ett argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1375
 msgid "Command 'debug' does not take arguments."
-msgstr "Kommandot debug tar inga argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:794
 msgid "Command 'delete' needs at least one argument."
-msgstr "Kommandot delete måste ha minst ett argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:274
 msgid "Command 'delete-config' does not take arguments."
-msgstr "Kommandot delete-config tar inga argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:977
 msgid "Command 'diff' needs at least one argument."
-msgstr "Kommandot diff måste ha minst ett argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:304
 msgid "Command 'get-config' does not take arguments."
-msgstr "Kommandot get-config tar inga argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1481
 msgid "Command 'help' does not take arguments."
-msgstr "Kommandot help tar inga argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:400
 msgid "Command 'list' does not take arguments."
-msgstr "Kommandot list tar inga argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:150
 msgid "Command 'list-configs' does not take arguments."
-msgstr "Kommandot list-configs tar inga argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:753
 msgid "Command 'modify' needs at least one argument."
-msgstr "Kommandot modify måste ha minst ett argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:848 ../client/snapper.cc:885
 msgid "Command 'mount' needs at least one argument."
-msgstr "Kommandot mount måste ha minst ett argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1269
 msgid "Command 'rollback' only available for btrfs."
-msgstr "Kommandot rollback är bara tillgängligt för btrfs."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1243
 msgid "Command 'rollback' takes either one or no argument."
-msgstr "Kommandot rollback tar antingen ett eller inget argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:360
 msgid "Command 'set-config' needs at least one argument."
-msgstr "Kommandot set-config måste ha minst ett argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:930
 msgid "Command 'status' needs one argument."
-msgstr "Kommandot status måste ha ett argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1044
 msgid "Command 'undochange' needs at least one argument."
-msgstr "Kommandot undochange måste ha minst ett argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1416
 msgid "Command 'xadiff' needs at least one argument."
-msgstr "Kommandot xadiff måste ha minst ett argument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:157
 msgid "Config"
-msgstr "Konfiguration"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1644
 #, c-format
 msgid "Config '%s' is invalid."
-msgstr "Konfigurationen %s är ogiltig."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1639
 #, c-format
 msgid "Config '%s' not found."
-msgstr "Konfigurationen %s hittades inte."
+msgstr ""
 
-# SLE12
 #: ../client/errors.cc:58
 msgid "Config is in use."
-msgstr "Config används."
+msgstr ""
 
-# SLE12
 #: ../client/errors.cc:55
 msgid "Config is locked."
-msgstr "Config är låst."
+msgstr ""
 
-# SLE12
 #: ../client/misc.cc:181
 #, c-format
 msgid "Configdata '%s' does not include '=' sign."
-msgstr "Konfigurationsdata %s inkluderar inte tecknet =."
+msgstr ""
 
-# SLE12
 #: ../client/misc.cc:190
 #, c-format
 msgid "Configdata '%s' has empty key."
-msgstr "Konfigurationsdata %s har tom nyckel."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1654 ../client/errors.cc:70
 #, c-format
 msgid "Creating config failed (%s)."
-msgstr "Det gick inte att skapa konfiguration (%s)."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1297
 msgid "Creating read-only snapshot of current system."
-msgstr "Skapar skrivskyddad ögonblicksbild av det aktuella systemet."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1278
 msgid "Creating read-only snapshot of default subvolume."
-msgstr "Skapar skrivskyddad ögonblicksbild av standardundervolymen."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1286
 msgid "Creating read-write snapshot of current subvolume."
 msgstr ""
-"Skapar ögonblicksbild med läs- och skrivrättigheter av den aktuella "
-"undervolymen."
 
-# SLE12
 #: ../client/snapper.cc:1304
 #, c-format
 msgid "Creating read-write snapshot of snapshot %d."
 msgstr ""
-"Skapar ögonblicksbild med läs- och skrivrättigheter av ögonblicksbilden %d."
 
-# SLE12
 #: ../client/errors.cc:76
 msgid "Creating snapshot failed."
-msgstr "Det gick inte att skapa någon ögonblicksbild."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:434 ../client/snapper.cc:482
 msgid "Date"
-msgstr "Datum"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1659 ../client/errors.cc:73
 #, c-format
 msgid "Deleting config failed (%s)."
-msgstr "Det gick inte att ta bort konfigurationen (%s)."
+msgstr ""
 
-# SLE12
 #: ../client/errors.cc:79
 msgid "Deleting snapshot failed."
-msgstr "Det gick inte att ta bort ögonblicksbilden."
+msgstr ""
 
 #: ../client/snapper.cc:437 ../client/snapper.cc:484 ../client/snapper.cc:532
 msgid "Description"
-msgstr "Beskrivning"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:244
 msgid "Detecting filesystem type failed."
-msgstr "Det gick inte att identifiera filsystemstypen."
+msgstr ""
 
-# SLE12
 #: ../client/misc.cc:170
 msgid "Empty configdata."
-msgstr "Tomma konfigurationsdata."
+msgstr ""
 
-# SLE12
 #: ../client/misc.cc:107 ../client/misc.cc:115
 msgid "Empty userdata."
-msgstr "Tomma användardata."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1198 ../client/snapper.cc:1208
 msgid "Failed to initialize filesystem handler."
-msgstr "Det gick inte att initiera filsystemhanteraren."
+msgstr ""
 
-# SLE12
 #: ../client/systemd-helper.cc:127 ../client/snapper.cc:1698
 msgid "Failure"
-msgstr "Misslyckades"
+msgstr ""
 
-# SLE12
 #: ../client/errors.cc:90
 #, c-format
 msgid "Failure (%s)."
-msgstr "Fel (%s)."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1098
 #, c-format
 msgid "File '%s' not found."
-msgstr "Filen %s hittades inte."
+msgstr ""
 
-# SLE12
 #: ../client/errors.cc:67
 msgid "IO Error."
-msgstr "I/O-fel."
+msgstr ""
 
-# SLE12
 #: ../client/misc.cc:94
 msgid "Identical snapshots."
-msgstr "Identiska ögonblicksbilder."
+msgstr ""
 
-# SLE12
 #: ../client/errors.cc:52
 msgid "Illegal Snapshot."
-msgstr "Otillåten ögonblicksbild."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1664 ../client/errors.cc:49
 msgid "Invalid configdata."
-msgstr "Ogiltiga konfigurationsdata."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1679 ../client/errors.cc:85
 msgid "Invalid group."
-msgstr "Ogiltig grupp."
+msgstr ""
 
-# SLE12
 #: ../client/misc.cc:47 ../client/misc.cc:71
 #, c-format
 msgid "Invalid snapshot '%s'."
-msgstr "Ogiltig ögonblicksbild \"%s\"."
+msgstr ""
 
-# SLE12
 #: ../client/misc.cc:85 ../client/snapper.cc:1066
 msgid "Invalid snapshots."
-msgstr "Ogiltiga ögonblicksbilder."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:223
 msgid "Invalid subvolume."
-msgstr "Ogiltig undervolym."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1576
 #, c-format
 msgid "Invalid table style %d."
-msgstr "Ogiltig tabellstil %d."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1674 ../client/errors.cc:82
 msgid "Invalid user."
-msgstr "Ogiltig användare."
+msgstr ""
 
-# SLE12
 #: ../client/errors.cc:46
 msgid "Invalid userdata."
-msgstr "Ogiltiga användardata."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:311
 msgid "Key"
-msgstr "Nyckel"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1649
 #, c-format
 msgid "Listing configs failed (%s)."
-msgstr "Listningen av konfigurationer misslyckades (%s)."
+msgstr ""
 
-# SLE12
 #: ../client/utils/GetOpts.cc:68
 #, c-format
 msgid "Missing argument for command option '%s'."
-msgstr "Argument för kommandoalternativet %s saknas."
+msgstr ""
 
-# SLE12
 #: ../client/utils/GetOpts.cc:66
 #, c-format
 msgid "Missing argument for global option '%s'."
-msgstr "Argument för det globala alternativet %s saknas."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:685
 msgid "Missing command argument."
-msgstr "Det saknas kommandoargument."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:679
 msgid "Missing or invalid pre-number."
-msgstr "Före-nummer saknas eller är ogiltigt."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1602
 msgid "No command provided."
-msgstr "Inget kommando angavs."
+msgstr ""
 
-# SLE12
 #: ../client/errors.cc:43
 msgid "No permissions."
-msgstr "Ingen behörighet."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:948 ../client/snapper.cc:1059
 #, c-format
 msgid "Opening file '%s' failed."
-msgstr "Det gick inte att öppna filen %s."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:529
 msgid "Post #"
-msgstr "Efter #"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:531
 msgid "Post Date"
-msgstr "Efter datum"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:433 ../client/snapper.cc:528
 msgid "Pre #"
-msgstr "Före #"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:530
 msgid "Pre Date"
-msgstr "Före datum"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1312
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
-msgstr "Ställer in standardundervolymen till ögonblicksbild %d."
+msgstr ""
 
-# SLE12
 #: ../client/misc.cc:54
 #, c-format
 msgid "Snapshot '%u' not found."
-msgstr "Ögonblicksbilden %u hittades inte."
+msgstr ""
 
-# SLE12
 #: ../client/errors.cc:61
 msgid "Snapshot is in use."
-msgstr "Ögonblicksbilden används."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:158
 msgid "Subvolume"
-msgstr "Undervolym"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1603 ../client/snapper.cc:1616
 #: ../client/utils/GetOpts.cc:61 ../client/utils/GetOpts.cc:69
 msgid "Try 'snapper --help' for more information."
-msgstr "Försök med \"snapper --help\" för mer information."
+msgstr ""
 
 #: ../client/snapper.cc:431
 msgid "Type"
-msgstr "Typ"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1357
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
-msgstr "Okänd upprensningsalgoritm \"%s\"."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1615
 #, c-format
 msgid "Unknown command '%s'."
-msgstr "Kommandot %s är okänt."
+msgstr ""
 
-# SLE12
 #: ../client/errors.cc:40
 msgid "Unknown config."
-msgstr "Okänd konfiguration."
+msgstr ""
 
-# SLE12
 #: ../client/errors.cc:64
 msgid "Unknown file."
-msgstr "Okänd fil."
+msgstr ""
 
-# SLE12
 #: ../client/utils/GetOpts.cc:58
 #, c-format
 msgid "Unknown global option '%s'."
-msgstr "Okänt globalt alternativ %s."
+msgstr ""
 
-# SLE12
 #: ../client/utils/GetOpts.cc:60
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
-msgstr "Alternativet %s för kommandot %s är okänt."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:651
 msgid "Unknown type of snapshot."
-msgstr "Okänd typ av ögonblicksbild."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:419
 msgid "Unknown type of snapshots."
-msgstr "Okända typer av ögonblicksbilder."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1577
 #, c-format
 msgid "Use an integer number from %d to %d."
-msgstr "Använd ett heltal från %d till %d."
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:435 ../client/snapper.cc:483
 msgid "User"
-msgstr "Användare"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:438 ../client/snapper.cc:485 ../client/snapper.cc:533
 msgid "Userdata"
-msgstr "Användardata"
+msgstr ""
 
-# SLE12
 #: ../client/misc.cc:126
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
-msgstr "Användardata %s inkluderar inte tecknet =."
+msgstr ""
 
-# SLE12
 #: ../client/misc.cc:135
 #, c-format
 msgid "Userdata '%s' has empty key."
-msgstr "Användardata %s har tom nyckel."
+msgstr ""
 
 #: ../client/snapper.cc:312
 msgid "Value"
-msgstr "Värde"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1133
 #, c-format
 msgid "create:%d modify:%d delete:%d"
-msgstr "skapa:%d ändra:%d ta bort:%d"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1158
 #, c-format
 msgid "creating %s"
-msgstr "skapar %s"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1164
 #, c-format
 msgid "deleting %s"
-msgstr "tar bort %s"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1174
 #, c-format
 msgid "failed to create %s"
-msgstr "det gick inte att skapa %s"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1180
 #, c-format
 msgid "failed to delete %s"
-msgstr "det gick inte att ta bort %s"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1177
 #, c-format
 msgid "failed to modify %s"
-msgstr "det gick inte att ändra %s"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1161
 #, c-format
 msgid "modifying %s"
-msgstr "ändrar %s"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1129
 msgid "nothing to do"
-msgstr "ingenting att göra"
+msgstr ""
 
-# SLE12
 #: ../client/snapper.cc:1485
-msgid ""
-"usage: snapper [--global-options] <command> [--command-options] [command-"
-"arguments]"
+msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
-"usage: snapper [--globala alternativ] <kommando> [--kommandoalternativ] "
-"[kommandoargument]"
-
-#: ../client/snapper.cc:457
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tVisa snapshots från alla tillgängliga konfig."
-
-#: ../client/snapper.cc:1093
-msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr "\t--diff-cmd <command>\t\tKommandot används för att jämföra filer."
-
-#: ../client/snapper.cc:1094
-msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
-msgstr ""
-"\t--extensions, -x <options>\tExtra alternativ skickades till diffkommandot."
-
-#: ../client/snapper.cc:1092
-msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr "\t--input, -i <file>\t\tLäs filer som ska diffa från filen."
-
-#: ../client/snapper.cc:1585
-msgid ""
-"\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
-msgstr "\t--root, -r <path>\t\tArbeta i målroten (fungerar enbart utan DBus)."
-
-#: ../client/snapper.cc:884
-msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr "\t--sync, -s\t\t\tSynka efter radering."
-
-#: ../client/snapper.cc:883
-msgid "    Options for 'delete' command:"
-msgstr "    Alternativ för kommadot radera:"
-
-#: ../client/snapper.cc:1091
-msgid "    Options for 'diff' command:"
-msgstr "    Alternativ för kommandot diff:"
-
-#: ../client/commands.cc:274
-#, c-format
-msgid "Deleting snapshot from %s:"
-msgid_plural "Deleting snapshots from %s:"
-msgstr[0] "Raderar snapshot från %s:"
-msgstr[1] "Raderar snapshots från %s:"
-
-#: ../client/errors.cc:64
-#, c-format
-msgid "IO Error (%s)."
-msgstr "IO-fel (%s)."
-
-#: ../client/snapper.cc:1793
-#, c-format
-msgid "IO error (%s)."
-msgstr "IO-fel (%s)."
-
-#: ../client/snapper.cc:1050
-msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
-msgstr "Kanske glömde du avgränsaren '..' mellan snapshot-numren."
-
-#: ../client/misc.cc:88
-msgid "Missing delimiter '..' between snapshot numbers."
-msgstr "Avgränsaren '..' saknas mellan snapshot-numren."
-
-#: ../client/misc.cc:89 ../client/snapper.cc:1051 ../client/snapper.cc:1824
-msgid "See 'man snapper' for further instructions."
-msgstr "Se 'man snapper' för mer instruktioner."
-
-#: ../client/snapper.cc:1823
-msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr ""
-"Konfig. 'root' existerar inte. Troligtvis är inte snapper konfigurerad."
-
-#: ../client/snapper.cc:1693
-msgid "root argument can be used only together with no-dbus."
-msgstr "Rotargument kan enbart användas tillsammans med no-dbus."
-
-#, fuzzy
-#~| msgid "Try `%s --help' or `%s --usage' for more information.\n"
-#~ msgid "Command failed (%s). See log for more information."
-#~ msgstr ""
-#~ "Ange '%s --help' eller '%s --usage' om du vill ha mer information.\n"
-
-#~ msgid "done"
-#~ msgstr "klar"
-
-#, fuzzy
-#~| msgid "add needs one argument"
-#~ msgid "Command 'modify' needs one argument."
-#~ msgstr "add måste ha ett argument"
-
-#, fuzzy
-#~| msgid "add needs one argument"
-#~ msgid "Command 'diff' needs one argument."
-#~ msgstr "add måste ha ett argument"
-
-#, fuzzy
-#~| msgid "Rollback Support: "
-#~ msgid "  Rollback snapshots:"
-#~ msgstr "Stöd för återställning: "
-
-#, fuzzy
-#~| msgid "diff needs two arguments"
-#~ msgid "Command 'diff' needs two arguments."
-#~ msgstr "diff måste ha två argument"
-
-#, fuzzy
-#~| msgid "Rollback"
-#~ msgid "rollback done"
-#~ msgstr "Återställ"

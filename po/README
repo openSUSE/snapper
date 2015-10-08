@@ -1,10 +1,2 @@
-
-Do not edit the PO files here. Changes will be overwritten.
-
-The POT file snapper.pot is given to the openSUSE Localization Team and the
-resulting PO files are placed here. For more information see:
-
-https://en.opensuse.org/OpenSUSE_Localization_Guide
-
-use "make snapper min=50"
-
+If you want to participate in the translation of this project, please go to
+https://l10n.opensuse.org/projects/snapper/
