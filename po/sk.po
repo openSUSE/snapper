@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-01 11:36+0200\n"
+"POT-Creation-Date: 2015-10-09 16:24+0200\n"
 "PO-Revision-Date: 2003-09-24 10:40+0200\n"
 "Last-Translator: Stanislav Visnovsky <visnovsky@kde.org>\n"
 "Language-Team: Slovak <sk-i18n@linux.sk>\n"
@@ -19,400 +19,428 @@ msgstr ""
 "X-Generator: KBabel 1.2\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;\n"
 
-#: ../client/snapper.cc:599 ../client/snapper.cc:733
+#: ../client/snapper.cc:457
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr ""
+
+#: ../client/snapper.cc:698 ../client/snapper.cc:832
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr ""
 
-#: ../client/snapper.cc:1223
+#: ../client/snapper.cc:1303
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr ""
 
-#: ../client/snapper.cc:601
+#: ../client/snapper.cc:700
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
 msgstr ""
 
-#: ../client/snapper.cc:1494
+#: ../client/snapper.cc:1583
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr ""
 
-#: ../client/snapper.cc:598 ../client/snapper.cc:732
+#: ../client/snapper.cc:697 ../client/snapper.cc:831
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr ""
 
-#: ../client/snapper.cc:1222
+#: ../client/snapper.cc:1302
 msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr ""
 
-#: ../client/snapper.cc:195
+#: ../client/snapper.cc:1093
+msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
+msgstr ""
+
+#: ../client/snapper.cc:1094
+msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
+msgstr ""
+
+#: ../client/snapper.cc:274
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr ""
 
-#: ../client/snapper.cc:1028
+#: ../client/snapper.cc:1155
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr ""
 
-#: ../client/snapper.cc:1492
+#: ../client/snapper.cc:1092
+msgid "\t--input, -i <file>\t\tRead files to diff from file."
+msgstr ""
+
+#: ../client/snapper.cc:1581
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr ""
 
-#: ../client/snapper.cc:1495
+#: ../client/snapper.cc:1584
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr ""
 
-#: ../client/snapper.cc:914
+#: ../client/snapper.cc:1030
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr ""
 
-#: ../client/snapper.cc:596
+#: ../client/snapper.cc:695
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr ""
 
-#: ../client/snapper.cc:597
+#: ../client/snapper.cc:696
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
 msgstr ""
 
-#: ../client/snapper.cc:1221
+#: ../client/snapper.cc:1301
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
 msgstr ""
 
-#: ../client/snapper.cc:1489
+#: ../client/snapper.cc:1578
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr ""
 
-#: ../client/snapper.cc:1493
+#: ../client/snapper.cc:1585
+msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
+msgstr ""
+
+#: ../client/snapper.cc:884
+msgid "\t--sync, -s\t\t\tSync after deletion."
+msgstr ""
+
+#: ../client/snapper.cc:1582
 msgid "\t--table-style, -t <style>\tTable style (integer)."
 msgstr ""
 
-#: ../client/snapper.cc:196
+#: ../client/snapper.cc:275
 msgid "\t--template, -t <name>\t\tName of config template to use."
 msgstr ""
 
-#: ../client/snapper.cc:595
+#: ../client/snapper.cc:694
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr ""
 
-#: ../client/snapper.cc:384
+#: ../client/snapper.cc:456
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
 msgstr ""
 
-#: ../client/snapper.cc:600 ../client/snapper.cc:734
+#: ../client/snapper.cc:699 ../client/snapper.cc:833
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr ""
 
-#: ../client/snapper.cc:1224
+#: ../client/snapper.cc:1304
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
 msgstr ""
 
-#: ../client/snapper.cc:1491
+#: ../client/snapper.cc:1580
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
 msgstr ""
 
-#: ../client/snapper.cc:1490
+#: ../client/snapper.cc:1579
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
 msgstr ""
 
-#: ../client/snapper.cc:1496
+#: ../client/snapper.cc:1586
 msgid "\t--version\t\t\tPrint version and exit."
 msgstr ""
 
-#: ../client/snapper.cc:1326
+#: ../client/snapper.cc:1409
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr ""
 
-#: ../client/snapper.cc:592
+#: ../client/snapper.cc:691
 msgid "\tsnapper create"
 msgstr ""
 
-#: ../client/snapper.cc:192
+#: ../client/snapper.cc:271
 msgid "\tsnapper create-config <subvolume>"
 msgstr ""
 
-#: ../client/snapper.cc:783
+#: ../client/snapper.cc:881
 msgid "\tsnapper delete <number>"
 msgstr ""
 
-#: ../client/snapper.cc:263
+#: ../client/snapper.cc:335
 msgid "\tsnapper delete-config"
 msgstr ""
 
-#: ../client/snapper.cc:966
+#: ../client/snapper.cc:1089
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr ""
 
-#: ../client/snapper.cc:293
+#: ../client/snapper.cc:365
 msgid "\tsnapper get-config"
 msgstr ""
 
-#: ../client/snapper.cc:381
+#: ../client/snapper.cc:453
 msgid "\tsnapper list"
 msgstr ""
 
-#: ../client/snapper.cc:139
+#: ../client/snapper.cc:205
 msgid "\tsnapper list-configs"
 msgstr ""
 
-#: ../client/snapper.cc:729
+#: ../client/snapper.cc:828
 msgid "\tsnapper modify <number>"
 msgstr ""
 
-#: ../client/snapper.cc:837
+#: ../client/snapper.cc:953
 msgid "\tsnapper mount <number>"
 msgstr ""
 
-#: ../client/snapper.cc:1218
+#: ../client/snapper.cc:1298
 msgid "\tsnapper rollback [number]"
 msgstr ""
 
-#: ../client/snapper.cc:349
+#: ../client/snapper.cc:421
 msgid "\tsnapper set-config <configdata>"
 msgstr ""
 
-#: ../client/snapper.cc:911
+#: ../client/snapper.cc:1027
 msgid "\tsnapper status <number1>..<number2>"
 msgstr ""
 
-#: ../client/snapper.cc:874
+#: ../client/snapper.cc:990
 msgid "\tsnapper umount <number>"
 msgstr ""
 
-#: ../client/snapper.cc:1025
+#: ../client/snapper.cc:1152
 msgid "\tsnapper undochange <number1>..<number2> [files]"
 msgstr ""
 
-#: ../client/snapper.cc:1391
+#: ../client/snapper.cc:1474
 msgid "\tsnapper xadiff <number1>..<number2> [files]"
 msgstr ""
 
-#: ../client/snapper.cc:1488
+#: ../client/snapper.cc:1577
 #, fuzzy
 msgid "    Global options:"
 msgstr "  Voľby príkazu:"
 
-#: ../client/snapper.cc:594
+#: ../client/snapper.cc:693
 msgid "    Options for 'create' command:"
 msgstr ""
 
-#: ../client/snapper.cc:194
+#: ../client/snapper.cc:273
 msgid "    Options for 'create-config' command:"
 msgstr ""
 
-#: ../client/snapper.cc:383
+#: ../client/snapper.cc:883
+msgid "    Options for 'delete' command:"
+msgstr ""
+
+#: ../client/snapper.cc:1091
+msgid "    Options for 'diff' command:"
+msgstr ""
+
+#: ../client/snapper.cc:455
 msgid "    Options for 'list' command:"
 msgstr ""
 
-#: ../client/snapper.cc:731
+#: ../client/snapper.cc:830
 msgid "    Options for 'modify' command:"
 msgstr ""
 
-#: ../client/snapper.cc:1220
+#: ../client/snapper.cc:1300
 msgid "    Options for 'rollback' command:"
 msgstr ""
 
-#: ../client/snapper.cc:913
+#: ../client/snapper.cc:1029
 msgid "    Options for 'status' command:"
 msgstr ""
 
-#: ../client/snapper.cc:1027
+#: ../client/snapper.cc:1154
 msgid "    Options for 'undochange' command:"
 msgstr ""
 
-#: ../client/snapper.cc:1325
+#: ../client/snapper.cc:1408
 msgid "  Cleanup snapshots:"
 msgstr ""
 
-#: ../client/snapper.cc:1390
+#: ../client/snapper.cc:1473
 msgid "  Comparing snapshots extended attributes:"
 msgstr ""
 
-#: ../client/snapper.cc:910 ../client/snapper.cc:965
+#: ../client/snapper.cc:1026 ../client/snapper.cc:1088
 msgid "  Comparing snapshots:"
 msgstr ""
 
-#: ../client/snapper.cc:191
+#: ../client/snapper.cc:270
 msgid "  Create config:"
 msgstr ""
 
-#: ../client/snapper.cc:591
+#: ../client/snapper.cc:690
 #, fuzzy
 msgid "  Create snapshot:"
 msgstr "Dátum vytvorenia: "
 
-#: ../client/snapper.cc:262
+#: ../client/snapper.cc:334
 #, fuzzy
 msgid "  Delete config:"
 msgstr "Odstrániť pripojenie"
 
-#: ../client/snapper.cc:782
+#: ../client/snapper.cc:880
 msgid "  Delete snapshot:"
 msgstr ""
 
-#: ../client/snapper.cc:292
+#: ../client/snapper.cc:364
 #, fuzzy
 msgid "  Get config:"
 msgstr "Odstrániť pripojenie"
 
-#: ../client/snapper.cc:138
+#: ../client/snapper.cc:204
 msgid "  List configs:"
 msgstr ""
 
-#: ../client/snapper.cc:380
+#: ../client/snapper.cc:452
 msgid "  List snapshots:"
 msgstr ""
 
-#: ../client/snapper.cc:728
+#: ../client/snapper.cc:827
 msgid "  Modify snapshot:"
 msgstr ""
 
-#: ../client/snapper.cc:836
+#: ../client/snapper.cc:952
 #, fuzzy
 msgid "  Mount snapshot:"
 msgstr "Dátum vytvorenia: "
 
-#: ../client/snapper.cc:1217
+#: ../client/snapper.cc:1297
 msgid "  Rollback:"
 msgstr ""
 
-#: ../client/snapper.cc:348
+#: ../client/snapper.cc:420
 #, fuzzy
 msgid "  Set config:"
 msgstr "Odstrániť pripojenie"
 
-#: ../client/snapper.cc:873
+#: ../client/snapper.cc:989
 #, fuzzy
 msgid "  Umount snapshot:"
 msgstr "Dátum vytvorenia: "
 
-#: ../client/snapper.cc:1024
+#: ../client/snapper.cc:1151
 msgid "  Undo changes:"
 msgstr ""
 
-#: ../client/snapper.cc:432 ../client/snapper.cc:481
+#: ../client/snapper.cc:531 ../client/snapper.cc:580
 msgid "#"
 msgstr ""
 
-#: ../client/snapper.cc:1283 ../client/snapper.cc:1290
-#: ../client/snapper.cc:1301 ../client/snapper.cc:1308
+#: ../client/snapper.cc:1364 ../client/snapper.cc:1371
+#: ../client/snapper.cc:1382 ../client/snapper.cc:1389
 #, fuzzy, c-format
-#| msgid "%s '%s' not found."
 msgid "(Snapshot %d.)"
 msgstr "%s '%s' nebol nájdený(á)"
 
-#: ../client/snapper.cc:1669 ../client/errors.cc:88
+#: ../client/snapper.cc:1787 ../client/errors.cc:85
 #, fuzzy
-#| msgid "error"
 msgid "ACL error."
 msgstr "chyba"
 
-#: ../client/snapper.cc:436
+#: ../client/snapper.cc:535
 msgid "Cleanup"
 msgstr ""
 
-#: ../client/snapper.cc:1624
+#: ../client/snapper.cc:1735
 #, fuzzy, c-format
 msgid "Command '%s' does not work without DBus."
 msgstr "Príliš málo argumentov."
 
-#: ../client/snapper.cc:1337
+#: ../client/snapper.cc:1420
 msgid "Command 'cleanup' needs one arguments."
 msgstr ""
 
-#: ../client/snapper.cc:623
+#: ../client/snapper.cc:722
 msgid "Command 'create' does not take arguments."
 msgstr ""
 
-#: ../client/snapper.cc:216
+#: ../client/snapper.cc:292
 msgid "Command 'create-config' needs one argument."
 msgstr ""
 
-#: ../client/snapper.cc:1375
+#: ../client/snapper.cc:1458
 #, fuzzy
 msgid "Command 'debug' does not take arguments."
 msgstr "Príliš málo argumentov."
 
-#: ../client/snapper.cc:794
+#: ../client/snapper.cc:900
 msgid "Command 'delete' needs at least one argument."
 msgstr ""
 
-#: ../client/snapper.cc:274
+#: ../client/snapper.cc:346
 #, fuzzy
 msgid "Command 'delete-config' does not take arguments."
 msgstr "Príliš málo argumentov."
 
-#: ../client/snapper.cc:977
+#: ../client/snapper.cc:1112
 #, fuzzy
 msgid "Command 'diff' needs at least one argument."
 msgstr "Príliš málo argumentov."
 
-#: ../client/snapper.cc:304
+#: ../client/snapper.cc:376
 #, fuzzy
 msgid "Command 'get-config' does not take arguments."
 msgstr "Príliš málo argumentov."
 
-#: ../client/snapper.cc:1481
+#: ../client/snapper.cc:1570
 msgid "Command 'help' does not take arguments."
 msgstr ""
 
-#: ../client/snapper.cc:400
+#: ../client/snapper.cc:477
 msgid "Command 'list' does not take arguments."
 msgstr ""
 
-#: ../client/snapper.cc:150
+#: ../client/snapper.cc:242
 msgid "Command 'list-configs' does not take arguments."
 msgstr ""
 
-#: ../client/snapper.cc:753
+#: ../client/snapper.cc:851
 #, fuzzy
 msgid "Command 'modify' needs at least one argument."
 msgstr "Príliš málo argumentov."
 
-#: ../client/snapper.cc:848 ../client/snapper.cc:885
+#: ../client/snapper.cc:964 ../client/snapper.cc:1001
 #, fuzzy
 msgid "Command 'mount' needs at least one argument."
 msgstr "Príliš málo argumentov."
 
-#: ../client/snapper.cc:1269
+#: ../client/snapper.cc:1349
 msgid "Command 'rollback' only available for btrfs."
 msgstr ""
 
-#: ../client/snapper.cc:1243
+#: ../client/snapper.cc:1323
 #, fuzzy
 msgid "Command 'rollback' takes either one or no argument."
 msgstr "Príliš málo argumentov."
 
-#: ../client/snapper.cc:360
+#: ../client/snapper.cc:432
 #, fuzzy
 msgid "Command 'set-config' needs at least one argument."
 msgstr "Príliš málo argumentov."
 
-#: ../client/snapper.cc:930
+#: ../client/snapper.cc:1046
 #, fuzzy
 msgid "Command 'status' needs one argument."
 msgstr "Príliš málo argumentov."
 
-#: ../client/snapper.cc:1044
+#: ../client/snapper.cc:1171
 #, fuzzy
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Príliš málo argumentov."
 
-#: ../client/snapper.cc:1416
+#: ../client/snapper.cc:1503
 #, fuzzy
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Príliš málo argumentov."
 
-#: ../client/snapper.cc:157
+#: ../client/snapper.cc:249
 #, fuzzy
 msgid "Config"
 msgstr "kdmconfig"
 
-#: ../client/snapper.cc:1644
+#: ../client/snapper.cc:1757
 #, fuzzy, c-format
-#| msgid "Repository '%s' is invalid."
 msgid "Config '%s' is invalid."
 msgstr "Repozitár '%s' je neplatný."
 
-#: ../client/snapper.cc:1639
+#: ../client/snapper.cc:1751
 #, fuzzy, c-format
-#| msgid "'%s' not found."
 msgid "Config '%s' not found."
 msgstr "'%s' nebol nájdený."
 
@@ -426,106 +454,118 @@ msgstr "'%s' nebol nájdený."
 msgid "Config is locked."
 msgstr "Konfiguračný dialóg"
 
-#: ../client/misc.cc:181
+#: ../client/misc.cc:189
 #, fuzzy, c-format
-#| msgid "File '%s' not found on medium '%s'"
 msgid "Configdata '%s' does not include '=' sign."
 msgstr "Súbor '%s' nebol nájdený na médiu '%s'"
 
-#: ../client/misc.cc:190
+#: ../client/misc.cc:198
 #, c-format
 msgid "Configdata '%s' has empty key."
 msgstr ""
 
-#: ../client/snapper.cc:1654 ../client/errors.cc:70
+#: ../client/snapper.cc:1769 ../client/errors.cc:67
 #, fuzzy, c-format
 msgid "Creating config failed (%s)."
 msgstr "Zlyhalo čítanie konfiguračného súboru"
 
-#: ../client/snapper.cc:1297
+#: ../client/snapper.cc:1378
 msgid "Creating read-only snapshot of current system."
 msgstr ""
 
-#: ../client/snapper.cc:1278
+#: ../client/snapper.cc:1359
 #, fuzzy
 msgid "Creating read-only snapshot of default subvolume."
 msgstr "Zlyhalo čítanie konfiguračného súboru"
 
-#: ../client/snapper.cc:1286
+#: ../client/snapper.cc:1367
 msgid "Creating read-write snapshot of current subvolume."
 msgstr ""
 
-#: ../client/snapper.cc:1304
+#: ../client/snapper.cc:1385
 #, fuzzy, c-format
 msgid "Creating read-write snapshot of snapshot %d."
 msgstr "Zlyhalo čítanie konfiguračného súboru"
 
-#: ../client/errors.cc:76
+#: ../client/errors.cc:73
 #, fuzzy
 msgid "Creating snapshot failed."
 msgstr "Zlyhalo čítanie konfiguračného súboru"
 
-#: ../client/snapper.cc:434 ../client/snapper.cc:482
+#: ../client/snapper.cc:533 ../client/snapper.cc:581
 #, fuzzy
 msgid "Date"
 msgstr "Dátum: %1"
 
-#: ../client/snapper.cc:1659 ../client/errors.cc:73
+#: ../client/snapper.cc:1775 ../client/errors.cc:70
 #, fuzzy, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Zlyhalo čítanie konfiguračného súboru"
 
-#: ../client/errors.cc:79
+#: ../client/errors.cc:76
 #, fuzzy
 msgid "Deleting snapshot failed."
 msgstr "Zlyhalo čítanie konfiguračného súboru"
 
-#: ../client/snapper.cc:437 ../client/snapper.cc:484 ../client/snapper.cc:532
+#: ../client/commands.cc:274
+#, fuzzy, c-format
+msgid "Deleting snapshot from %s:"
+msgid_plural "Deleting snapshots from %s:"
+msgstr[0] "Zlyhalo čítanie konfiguračného súboru"
+msgstr[1] "Zlyhalo čítanie konfiguračného súboru"
+msgstr[2] "Zlyhalo čítanie konfiguračného súboru"
+
+#: ../client/snapper.cc:536 ../client/snapper.cc:583 ../client/snapper.cc:631
 msgid "Description"
 msgstr "Popis"
 
-#: ../client/snapper.cc:244
+#: ../client/snapper.cc:316
 msgid "Detecting filesystem type failed."
 msgstr ""
 
-#: ../client/misc.cc:170
+#: ../client/misc.cc:178
 #, fuzzy
 msgid "Empty configdata."
 msgstr "Nesprávny štýl tabuľky %d."
 
-#: ../client/misc.cc:107 ../client/misc.cc:115
+#: ../client/misc.cc:115 ../client/misc.cc:123
 #, fuzzy
 msgid "Empty userdata."
 msgstr "Nesprávny štýl tabuľky %d."
 
-#: ../client/snapper.cc:1198 ../client/snapper.cc:1208
+#: ../client/snapper.cc:1277 ../client/snapper.cc:1288
 #, fuzzy
-#| msgid "Failed to initialize"
 msgid "Failed to initialize filesystem handler."
 msgstr "Zlyhala inicializácia"
 
-#: ../client/systemd-helper.cc:127 ../client/snapper.cc:1698
+#: ../client/systemd-helper.cc:136 ../client/snapper.cc:1834
 #, fuzzy
 msgid "Failure"
 msgstr "Zlyhalo"
 
-#: ../client/errors.cc:90
+#: ../client/errors.cc:87
 #, fuzzy, c-format
 msgid "Failure (%s)."
 msgstr "Zlyhalo"
 
-#: ../client/snapper.cc:1098
+#: ../client/snapper.cc:134 ../client/snapper.cc:157
 #, fuzzy, c-format
 msgid "File '%s' not found."
 msgstr "'%s' nebol nájdený."
 
 # error box title
-#: ../client/errors.cc:67
-#, fuzzy
-msgid "IO Error."
+#: ../client/errors.cc:64
+#, fuzzy, c-format
+msgid "IO Error (%s)."
 msgstr "Chyba vstupu/výstupu"
 
-#: ../client/misc.cc:94
+# error box title
+#: ../client/snapper.cc:1793
+#, fuzzy, c-format
+msgid "IO error (%s)."
+msgstr "Chyba vstupu/výstupu"
+
+#: ../client/misc.cc:102
 msgid "Identical snapshots."
 msgstr ""
 
@@ -534,36 +574,35 @@ msgstr ""
 msgid "Illegal Snapshot."
 msgstr "Nesprávny štýl tabuľky %d."
 
-#: ../client/snapper.cc:1664 ../client/errors.cc:49
+#: ../client/snapper.cc:1781 ../client/errors.cc:49
 #, fuzzy
 msgid "Invalid configdata."
 msgstr "Nesprávny štýl tabuľky %d."
 
-#: ../client/snapper.cc:1679 ../client/errors.cc:85
+#: ../client/snapper.cc:1805 ../client/errors.cc:82
 #, fuzzy
-#| msgid "Invalid input."
 msgid "Invalid group."
 msgstr "Neplatný vstup."
 
-#: ../client/misc.cc:47 ../client/misc.cc:71
+#: ../client/misc.cc:48 ../client/misc.cc:72
 #, fuzzy, c-format
 msgid "Invalid snapshot '%s'."
 msgstr "Nesprávny štýl tabuľky %d."
 
-#: ../client/misc.cc:85 ../client/snapper.cc:1066
+#: ../client/misc.cc:93 ../client/snapper.cc:1193
 msgid "Invalid snapshots."
 msgstr ""
 
-#: ../client/snapper.cc:223
+#: ../client/snapper.cc:299
 msgid "Invalid subvolume."
 msgstr ""
 
-#: ../client/snapper.cc:1576
+#: ../client/snapper.cc:1675
 #, c-format
 msgid "Invalid table style %d."
 msgstr "Nesprávny štýl tabuľky %d."
 
-#: ../client/snapper.cc:1674 ../client/errors.cc:82
+#: ../client/snapper.cc:1799 ../client/errors.cc:79
 #, fuzzy
 msgid "Invalid user."
 msgstr "Nesprávny štýl tabuľky %d."
@@ -574,18 +613,20 @@ msgid "Invalid userdata."
 msgstr "Nesprávny štýl tabuľky %d."
 
 # KE
-#: ../client/snapper.cc:311
+#: ../client/snapper.cc:383
 #, fuzzy
-#| msgid "Kenya"
 msgid "Key"
 msgstr "Keňa"
 
 # %s is either BOOTP or DHCP
-#: ../client/snapper.cc:1649
+#: ../client/snapper.cc:1763
 #, fuzzy, c-format
-#| msgid "%s configuration failed."
 msgid "Listing configs failed (%s)."
 msgstr "Konfigurácia pomocou %s zlyhala."
+
+#: ../client/snapper.cc:1050
+msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
+msgstr ""
 
 #: ../client/utils/GetOpts.cc:68
 #, fuzzy, c-format
@@ -597,16 +638,20 @@ msgstr "Chýbajúci argument pre "
 msgid "Missing argument for global option '%s'."
 msgstr "Chýbajúci argument pre "
 
-#: ../client/snapper.cc:685
+#: ../client/snapper.cc:784
 #, fuzzy
 msgid "Missing command argument."
 msgstr "Chýbajúci argument pre "
 
-#: ../client/snapper.cc:679
+#: ../client/misc.cc:88
+msgid "Missing delimiter '..' between snapshot numbers."
+msgstr ""
+
+#: ../client/snapper.cc:778
 msgid "Missing or invalid pre-number."
 msgstr ""
 
-#: ../client/snapper.cc:1602
+#: ../client/snapper.cc:1713
 #, fuzzy
 msgid "No command provided."
 msgstr "Nebol zadaný žiaden príkaz"
@@ -616,36 +661,41 @@ msgstr "Nebol zadaný žiaden príkaz"
 msgid "No permissions."
 msgstr "Žiadna VJ kompresia"
 
-#: ../client/snapper.cc:948 ../client/snapper.cc:1059
+#: ../client/snapper.cc:1071 ../client/snapper.cc:1126
+#: ../client/snapper.cc:1186
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr ""
 
-#: ../client/snapper.cc:529
+#: ../client/snapper.cc:628
 msgid "Post #"
 msgstr ""
 
-#: ../client/snapper.cc:531
+#: ../client/snapper.cc:630
 #, fuzzy
 msgid "Post Date"
 msgstr "Hostitelia"
 
-#: ../client/snapper.cc:433 ../client/snapper.cc:528
+#: ../client/snapper.cc:532 ../client/snapper.cc:627
 msgid "Pre #"
 msgstr ""
 
-#: ../client/snapper.cc:530
+#: ../client/snapper.cc:629
 msgid "Pre Date"
 msgstr ""
 
-#: ../client/snapper.cc:1312
+#: ../client/misc.cc:89 ../client/snapper.cc:1051 ../client/snapper.cc:1824
+#, fuzzy
+msgid "See 'man snapper' for further instructions."
+msgstr "Viac informácií získate zadaním prepínača `%s --help' alebo `%s --usage'.\n"
+
+#: ../client/snapper.cc:1393
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
 msgstr ""
 
-#: ../client/misc.cc:54
+#: ../client/misc.cc:55
 #, fuzzy, c-format
-#| msgid "%s '%s' not found."
 msgid "Snapshot '%u' not found."
 msgstr "%s '%s' nebol nájdený(á)"
 
@@ -654,26 +704,31 @@ msgstr "%s '%s' nebol nájdený(á)"
 msgid "Snapshot is in use."
 msgstr "'%s' nebol nájdený."
 
-#: ../client/snapper.cc:158
+#: ../client/snapper.cc:250
 msgid "Subvolume"
 msgstr ""
 
-#: ../client/snapper.cc:1603 ../client/snapper.cc:1616
-#: ../client/utils/GetOpts.cc:61 ../client/utils/GetOpts.cc:69
+#: ../client/snapper.cc:1823
+msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+#: ../client/snapper.cc:1694 ../client/snapper.cc:1714
+#: ../client/snapper.cc:1727 ../client/utils/GetOpts.cc:61
+#: ../client/utils/GetOpts.cc:69
 #, fuzzy
 msgid "Try 'snapper --help' for more information."
 msgstr "Viac informácií získate zadaním prepínača `%s --help' alebo `%s --usage'.\n"
 
-#: ../client/snapper.cc:431
+#: ../client/snapper.cc:530
 msgid "Type"
 msgstr "Typ"
 
-#: ../client/snapper.cc:1357
+#: ../client/snapper.cc:1440
 #, fuzzy, c-format
 msgid "Unknown cleanup algorithm '%s'."
 msgstr "Neznámy príkaz '%s'"
 
-#: ../client/snapper.cc:1615
+#: ../client/snapper.cc:1726
 #, fuzzy, c-format
 msgid "Unknown command '%s'."
 msgstr "Neznámy príkaz '%s'"
@@ -682,11 +737,6 @@ msgstr "Neznámy príkaz '%s'"
 #, fuzzy
 msgid "Unknown config."
 msgstr "Neznámy príkaz"
-
-#: ../client/errors.cc:64
-#, fuzzy
-msgid "Unknown file."
-msgstr "Neznáma"
 
 #: ../client/utils/GetOpts.cc:58
 #, fuzzy, c-format
@@ -698,90 +748,96 @@ msgstr "Neznáma všeobecná voľba "
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Neznámy príkaz '%s'"
 
-#: ../client/snapper.cc:651
+#: ../client/snapper.cc:750
 msgid "Unknown type of snapshot."
 msgstr ""
 
-#: ../client/snapper.cc:419
+#: ../client/snapper.cc:495
 msgid "Unknown type of snapshots."
 msgstr ""
 
-#: ../client/snapper.cc:1577
+#: ../client/snapper.cc:1676
 #, fuzzy, c-format
-#| msgid "Use an integer number from %d to %d"
 msgid "Use an integer number from %d to %d."
 msgstr "Použite celé číslo od %d do %d"
 
-#: ../client/snapper.cc:435 ../client/snapper.cc:483
+#: ../client/snapper.cc:534 ../client/snapper.cc:582
 #, fuzzy
 msgid "User"
 msgstr "Meno používateľa"
 
-#: ../client/snapper.cc:438 ../client/snapper.cc:485 ../client/snapper.cc:533
+#: ../client/snapper.cc:537 ../client/snapper.cc:584 ../client/snapper.cc:632
 msgid "Userdata"
 msgstr ""
 
-#: ../client/misc.cc:126
+#: ../client/misc.cc:134
 #, fuzzy, c-format
-#| msgid "File '%s' not found on medium '%s'"
 msgid "Userdata '%s' does not include '=' sign."
 msgstr "Súbor '%s' nebol nájdený na médiu '%s'"
 
-#: ../client/misc.cc:135
+#: ../client/misc.cc:143
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr ""
 
-#: ../client/snapper.cc:312
+#: ../client/snapper.cc:384
 msgid "Value"
 msgstr "Hodnota"
 
-#: ../client/snapper.cc:1133
+#: ../client/snapper.cc:1212
 #, c-format
 msgid "create:%d modify:%d delete:%d"
 msgstr ""
 
-#: ../client/snapper.cc:1158
+#: ../client/snapper.cc:1237
 #, fuzzy, c-format
 msgid "creating %s"
 msgstr "Vytváram %s"
 
-#: ../client/snapper.cc:1164
+#: ../client/snapper.cc:1243
 #, fuzzy, c-format
 msgid "deleting %s"
 msgstr "Vytváram %s"
 
-#: ../client/snapper.cc:1174
+#: ../client/snapper.cc:1253
 #, fuzzy, c-format
 msgid "failed to create %s"
 msgstr "Zlyhalo vytvorenie vlákna"
 
-#: ../client/snapper.cc:1180
+#: ../client/snapper.cc:1259
 #, fuzzy, c-format
 msgid "failed to delete %s"
 msgstr "Nepodarilo zmazať kľúč."
 
-#: ../client/snapper.cc:1177
+#: ../client/snapper.cc:1256
 #, fuzzy, c-format
 msgid "failed to modify %s"
 msgstr "Nepodarilo sa odpojiť %s."
 
-#: ../client/snapper.cc:1161
+#: ../client/snapper.cc:1240
 #, fuzzy, c-format
 msgid "modifying %s"
 msgstr "Odstraňujem %s-%s"
 
-#: ../client/snapper.cc:1129
+#: ../client/snapper.cc:1208
 #, fuzzy
 msgid "nothing to do"
 msgstr "Nie je čo vykonať."
 
-#: ../client/snapper.cc:1485
+#: ../client/snapper.cc:1693
+msgid "root argument can be used only together with no-dbus."
+msgstr ""
+
+#: ../client/snapper.cc:1574
 #, fuzzy
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
 "  Použitie:\n"
 "\tzypper [--všeobecné-voľby] <príkaz> [--voľby-príkazu] argumenty\n"
+
+#, fuzzy
+#~ msgid "Unknown file."
+#~ msgstr "Neznáma"
 
 #, fuzzy
 #~| msgid "Try `%s --help' or `%s --usage' for more information.\n"
