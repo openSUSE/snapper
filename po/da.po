@@ -7,19 +7,21 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2015-10-06 22:47+0200\n"
-"Last-Translator: Martin Schlander <mschlander@opensuse.org>\n"
-"Language-Team: Danish <opensuse-translation@opensuse.org>\n"
+"PO-Revision-Date: 2015-10-13 18:00+0200\n"
+"Last-Translator: Martin Schlander <martin.schlander@gmail.com>\n"
+"Language-Team: Danish <http://10n.opensuse.org/projects/snapper/master/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.3\n"
 
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr ""
+"\t--all-configs, -a\t\tOplist øjebliksbilleder fra alle tilgængelige "
+"konfigurationer."
 
 #: ../client/snapper.cc:698 ../client/snapper.cc:832
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
@@ -47,11 +49,13 @@ msgstr "\t--description, -d <description>\tBeskrivelse af øjebliksbilleder."
 
 #: ../client/snapper.cc:1093
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr ""
+msgstr "\t--diff-cmd <command>\t\tKommando som bruges til at sammenligne filer."
 
 #: ../client/snapper.cc:1094
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
+"\t--extensions, -x <tilvalg>\t\tEkstra tilvalg som sendes til diff-"
+"kommandoen."
 
 #: ../client/snapper.cc:274
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
@@ -62,9 +66,8 @@ msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr "\t--input, -i <file>\t\tLæs filer for hvilke ændringer fra fil skal fortrydes."
 
 #: ../client/snapper.cc:1092
-#, fuzzy
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr "\t--input, -i <file>\t\tLæs filer for hvilke ændringer fra fil skal fortrydes."
+msgstr "\t--input, -i <file>\t\tLæs filer til diff fra fil."
 
 #: ../client/snapper.cc:1581
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
@@ -184,7 +187,7 @@ msgstr "\tsnapper mount <nummer>"
 
 #: ../client/snapper.cc:1298
 msgid "\tsnapper rollback [number]"
-msgstr "\tsnapper rollback [number]"
+msgstr "\tsnapper rollback [nummer]"
 
 #: ../client/snapper.cc:421
 msgid "\tsnapper set-config <configdata>"
@@ -219,14 +222,12 @@ msgid "    Options for 'create-config' command:"
 msgstr "    Tilvalg for kommandoen \"create-config\":"
 
 #: ../client/snapper.cc:883
-#, fuzzy
 msgid "    Options for 'delete' command:"
-msgstr "    Tilvalg for kommandoen \"create\":"
+msgstr "    Tilvalg for kommandoen \"delete\":"
 
 #: ../client/snapper.cc:1091
-#, fuzzy
 msgid "    Options for 'diff' command:"
-msgstr "    Tilvalg for kommandoen \"modify\":"
+msgstr "    Tilvalg for kommandoen \"diff\":"
 
 #: ../client/snapper.cc:455
 msgid "    Options for 'list' command:"
@@ -278,7 +279,7 @@ msgstr "  Slet øjebliksbillede:"
 
 #: ../client/snapper.cc:364
 msgid "  Get config:"
-msgstr " Hent konfiguration:"
+msgstr "  Hent konfiguration:"
 
 #: ../client/snapper.cc:204
 msgid "  List configs:"
@@ -483,11 +484,11 @@ msgid "Deleting snapshot failed."
 msgstr "Sletning af øjebliksbillede mislykkedes."
 
 #: ../client/commands.cc:274
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
-msgstr[0] "Sletning af øjebliksbillede mislykkedes."
-msgstr[1] "Sletning af øjebliksbillede mislykkedes."
+msgstr[0] "Sletning af øjebliksbillede fra %s:"
+msgstr[1] "Sletning af øjebliksbilleder fra %s:"
 
 #: ../client/snapper.cc:536 ../client/snapper.cc:583 ../client/snapper.cc:631
 msgid "Description"
@@ -525,15 +526,15 @@ msgstr "Filen \"%s\" blev ikke fundet."
 
 # error box title
 #: ../client/errors.cc:64
-#, fuzzy, c-format
+#, c-format
 msgid "IO Error (%s)."
-msgstr "I/O-fejl."
+msgstr "I/O-fejl (%s)."
 
 # error box title
 #: ../client/snapper.cc:1793
-#, fuzzy, c-format
+#, c-format
 msgid "IO error (%s)."
-msgstr "I/O-fejl."
+msgstr "I/O-fejl (%s)."
 
 #: ../client/misc.cc:102
 msgid "Identical snapshots."
@@ -643,9 +644,8 @@ msgid "Pre Date"
 msgstr "Præ-dato"
 
 #: ../client/misc.cc:89 ../client/snapper.cc:1051 ../client/snapper.cc:1824
-#, fuzzy
 msgid "See 'man snapper' for further instructions."
-msgstr "Prøv \"snapper --help\" for at få mere information."
+msgstr "Se \"man snapper\" for yderligere vejledning."
 
 #: ../client/snapper.cc:1393
 #, c-format
