@@ -3,19 +3,22 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2014-09-12 19:44+0100\n"
-"Last-Translator: David Medina <opensusecatala@gmail.com>\n"
-"Language-Team: Catalan\n"
-"Language: \n"
+"PO-Revision-Date: 2015-10-14 09:04+0200\n"
+"Last-Translator: David Medina <medipas@gmail.com>\n"
+"Language-Team: Catalan <http://10n.opensuse.org/projects/snapper/master/ca/>"
+"\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.5.7\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.3\n"
 
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr ""
+"\t--all-configs, -a\t\tLlista les instantànies des de totes les "
+"configuracions accessibles."
 
 #: ../client/snapper.cc:698 ../client/snapper.cc:832
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
@@ -43,11 +46,11 @@ msgstr "\t--description, -d <description>\tDescripció per a instantànies."
 
 #: ../client/snapper.cc:1093
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr ""
+msgstr "\t--diff-cmd <command>\t\tOrdre per comparar fitxers."
 
 #: ../client/snapper.cc:1094
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
-msgstr ""
+msgstr "\t--extensions, -x <options>\tOpcions extres passades a l'ordre diff."
 
 #: ../client/snapper.cc:274
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
@@ -58,9 +61,8 @@ msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr "\t--input, -i <file>\t\tLlegeix els fitxers per als quals desfer els canvis des del fitxer."
 
 #: ../client/snapper.cc:1092
-#, fuzzy
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr "\t--input, -i <file>\t\tLlegeix els fitxers per als quals desfer els canvis des del fitxer."
+msgstr "\t--input, -i <file>\t\tLlegeix els fitxers que diff del fitxer."
 
 #: ../client/snapper.cc:1581
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
@@ -93,10 +95,12 @@ msgstr "\t--quiet, -q\t\t\tSuprimeix la sortida normal."
 #: ../client/snapper.cc:1585
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr ""
+"\t--root, -r <path>\t\tOpera a l'arrel de destinació (només funciona sense "
+"DBus)."
 
 #: ../client/snapper.cc:884
 msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr ""
+msgstr "\t--sync, -s\t\t\tSincronitza després d'una supressió."
 
 #: ../client/snapper.cc:1582
 msgid "\t--table-style, -t <style>\tTable style (integer)."
@@ -215,14 +219,12 @@ msgid "    Options for 'create-config' command:"
 msgstr "    Opcions de l'ordre 'create-config':"
 
 #: ../client/snapper.cc:883
-#, fuzzy
 msgid "    Options for 'delete' command:"
-msgstr "    Opcions de l'ordre 'create':"
+msgstr "    Opcions de l'ordre \"delete\":"
 
 #: ../client/snapper.cc:1091
-#, fuzzy
 msgid "    Options for 'diff' command:"
-msgstr "    Opcions de l'ordre 'modify' :"
+msgstr "    Opcions de l'ordre \"diff\":"
 
 #: ../client/snapper.cc:455
 msgid "    Options for 'list' command:"
@@ -479,11 +481,11 @@ msgid "Deleting snapshot failed."
 msgstr "Ha fallat la supressió de la instantània."
 
 #: ../client/commands.cc:274
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
-msgstr[0] "Ha fallat la supressió de la instantània."
-msgstr[1] "Ha fallat la supressió de la instantània."
+msgstr[0] "Suprimint la instantània de %s:"
+msgstr[1] "Suprimint les instantànies de %s:"
 
 #: ../client/snapper.cc:536 ../client/snapper.cc:583 ../client/snapper.cc:631
 msgid "Description"
@@ -520,14 +522,14 @@ msgid "File '%s' not found."
 msgstr "No s'ha trobat el fitxer '%s'"
 
 #: ../client/errors.cc:64
-#, fuzzy, c-format
+#, c-format
 msgid "IO Error (%s)."
-msgstr "Error d'IO"
+msgstr "Error d'IO (%s)."
 
 #: ../client/snapper.cc:1793
-#, fuzzy, c-format
+#, c-format
 msgid "IO error (%s)."
-msgstr "Error d'IO"
+msgstr "Error d'IO (%s)."
 
 #: ../client/misc.cc:102
 msgid "Identical snapshots."
@@ -584,6 +586,7 @@ msgstr "Ha fallat la llista de configs (%s)."
 #: ../client/snapper.cc:1050
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr ""
+"Potser heu oblidat el delimitador \"..\" entre els números d'instantània."
 
 #: ../client/utils/GetOpts.cc:68
 #, c-format
@@ -601,7 +604,7 @@ msgstr "Falta un argument per a l'ordre."
 
 #: ../client/misc.cc:88
 msgid "Missing delimiter '..' between snapshot numbers."
-msgstr ""
+msgstr "Falta el delimitador \"..\" entre els números d'instantània."
 
 #: ../client/snapper.cc:778
 msgid "Missing or invalid pre-number."
@@ -638,9 +641,8 @@ msgid "Pre Date"
 msgstr "Pre Data"
 
 #: ../client/misc.cc:89 ../client/snapper.cc:1051 ../client/snapper.cc:1824
-#, fuzzy
 msgid "See 'man snapper' for further instructions."
-msgstr "Proveu 'snapper --help' per a més informació."
+msgstr "Vegeu \"man snapper\" per a més informació."
 
 #: ../client/snapper.cc:1393
 #, c-format
@@ -662,7 +664,7 @@ msgstr "Subvolum"
 
 #: ../client/snapper.cc:1823
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr ""
+msgstr "La config \"root\" no existeix. Potser l'snapper no està configurat."
 
 #: ../client/snapper.cc:1694 ../client/snapper.cc:1714
 #: ../client/snapper.cc:1727 ../client/utils/GetOpts.cc:61
@@ -774,7 +776,7 @@ msgstr "Res a fer"
 
 #: ../client/snapper.cc:1693
 msgid "root argument can be used only together with no-dbus."
-msgstr ""
+msgstr "l'argument root només es pot usar conjuntament amb no-dbus."
 
 #: ../client/snapper.cc:1574
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
