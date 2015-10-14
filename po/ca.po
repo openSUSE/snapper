@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2015-10-14 09:04+0200\n"
+"PO-Revision-Date: 2015-10-14 09:12+0200\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
 "Language-Team: Catalan <http://10n.opensuse.org/projects/snapper/master/ca/>"
 "\n"
@@ -132,7 +132,7 @@ msgstr "\t--utc\t\t\t\tMostra dates i hores en UTC."
 
 #: ../client/snapper.cc:1579
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tIncrease verbosity."
+msgstr "\t--verbose, -v\t\t\tIncrementa'n la mostra de detalls."
 
 #: ../client/snapper.cc:1586
 msgid "\t--version\t\t\tPrint version and exit."
@@ -140,11 +140,11 @@ msgstr "\t--version\t\t\tImprimeix la versió i surt."
 
 #: ../client/snapper.cc:1409
 msgid "\tsnapper cleanup <cleanup-algorithm>"
-msgstr "\tsnapper cleanup <cleanup-algorithm>"
+msgstr "\tneteja de l'snapper <cleanup-algorithm>"
 
 #: ../client/snapper.cc:691
 msgid "\tsnapper create"
-msgstr "\tsnapper create"
+msgstr "\tcreació de l'snapper"
 
 #: ../client/snapper.cc:271
 msgid "\tsnapper create-config <subvolume>"
@@ -188,7 +188,7 @@ msgstr "\tsnapper rollback [número]"
 
 #: ../client/snapper.cc:421
 msgid "\tsnapper set-config <configdata>"
-msgstr "\tsnapper set-config <configdata>"
+msgstr "\tsnapper set-config <dades de configuració>"
 
 #: ../client/snapper.cc:1027
 msgid "\tsnapper status <number1>..<number2>"
@@ -296,7 +296,7 @@ msgstr "  Munta la instantània:"
 
 #: ../client/snapper.cc:1297
 msgid "  Rollback:"
-msgstr "  Rollback:"
+msgstr "  Retrocés:"
 
 #: ../client/snapper.cc:420
 msgid "  Set config:"
@@ -519,7 +519,7 @@ msgstr "Error (%s)."
 #: ../client/snapper.cc:134 ../client/snapper.cc:157
 #, c-format
 msgid "File '%s' not found."
-msgstr "No s'ha trobat el fitxer '%s'"
+msgstr "No s'ha trobat el fitxer \"%s\""
 
 #: ../client/errors.cc:64
 #, c-format
@@ -719,7 +719,7 @@ msgstr "Usuari"
 
 #: ../client/snapper.cc:537 ../client/snapper.cc:584 ../client/snapper.cc:632
 msgid "Userdata"
-msgstr "Userdata"
+msgstr "Dades de l'usuari"
 
 #: ../client/misc.cc:134
 #, c-format
