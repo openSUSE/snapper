@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Oct 14 13:52:10 CEST 2015 - aschnell@suse.com
+
+- added conditional compilation of installation-helper
+  (gh#openSUSE/snapper#202)
+
+-------------------------------------------------------------------
 Tue Sep 22 16:51:23 CEST 2015 - aschnell@suse.com
 
 - updated translations
