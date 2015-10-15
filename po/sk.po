@@ -208,9 +208,8 @@ msgid "\tsnapper xadiff <number1>..<number2> [files]"
 msgstr ""
 
 #: ../client/snapper.cc:1577
-#, fuzzy
 msgid "    Global options:"
-msgstr "  Voľby príkazu:"
+msgstr "  Globálne voľby:"
 
 #: ../client/snapper.cc:693
 msgid "    Options for 'create' command:"
@@ -265,23 +264,20 @@ msgid "  Create config:"
 msgstr ""
 
 #: ../client/snapper.cc:690
-#, fuzzy
 msgid "  Create snapshot:"
-msgstr "Dátum vytvorenia: "
+msgstr "  Vytvoriť snímku: "
 
 #: ../client/snapper.cc:334
-#, fuzzy
 msgid "  Delete config:"
-msgstr "Odstrániť pripojenie"
+msgstr "  Vymazať konfiguráciu:"
 
 #: ../client/snapper.cc:880
 msgid "  Delete snapshot:"
 msgstr ""
 
 #: ../client/snapper.cc:364
-#, fuzzy
 msgid "  Get config:"
-msgstr "Odstrániť pripojenie"
+msgstr "  Získať konfiguráciu:"
 
 #: ../client/snapper.cc:204
 msgid "  List configs:"
@@ -305,9 +301,8 @@ msgid "  Rollback:"
 msgstr ""
 
 #: ../client/snapper.cc:420
-#, fuzzy
 msgid "  Set config:"
-msgstr "Odstrániť pripojenie"
+msgstr "  Nastaviť konfiguráciu:"
 
 #: ../client/snapper.cc:989
 #, fuzzy
@@ -320,7 +315,7 @@ msgstr ""
 
 #: ../client/snapper.cc:531 ../client/snapper.cc:580
 msgid "#"
-msgstr ""
+msgstr "#"
 
 #: ../client/snapper.cc:1364 ../client/snapper.cc:1371
 #: ../client/snapper.cc:1382 ../client/snapper.cc:1389
@@ -329,9 +324,8 @@ msgid "(Snapshot %d.)"
 msgstr "%s '%s' nebol nájdený(á)"
 
 #: ../client/snapper.cc:1787 ../client/errors.cc:85
-#, fuzzy
 msgid "ACL error."
-msgstr "chyba"
+msgstr "ACL chyba."
 
 #: ../client/snapper.cc:535
 msgid "Cleanup"
@@ -430,29 +424,26 @@ msgid "Command 'xadiff' needs at least one argument."
 msgstr "Príliš málo argumentov."
 
 #: ../client/snapper.cc:249
-#, fuzzy
 msgid "Config"
-msgstr "kdmconfig"
+msgstr "Konfigurácia"
 
 #: ../client/snapper.cc:1757
-#, fuzzy, c-format
+#, c-format
 msgid "Config '%s' is invalid."
-msgstr "Repozitár '%s' je neplatný."
+msgstr "Konfigurácia '%s' je neplatná."
 
 #: ../client/snapper.cc:1751
-#, fuzzy, c-format
+#, c-format
 msgid "Config '%s' not found."
-msgstr "'%s' nebol nájdený."
+msgstr "Konfigurácia '%s' nebola nájdená."
 
 #: ../client/errors.cc:58
-#, fuzzy
 msgid "Config is in use."
-msgstr "'%s' nebol nájdený."
+msgstr "Konfigurácia sa používa."
 
 #: ../client/errors.cc:55
-#, fuzzy
 msgid "Config is locked."
-msgstr "Konfiguračný dialóg"
+msgstr "Konfigurácia je je uzamknutá."
 
 #: ../client/misc.cc:189
 #, fuzzy, c-format
@@ -465,13 +456,13 @@ msgid "Configdata '%s' has empty key."
 msgstr ""
 
 #: ../client/snapper.cc:1769 ../client/errors.cc:67
-#, fuzzy, c-format
+#, c-format
 msgid "Creating config failed (%s)."
-msgstr "Zlyhalo čítanie konfiguračného súboru"
+msgstr "Vytvorenie konfigurácie zlyhalo (%s)."
 
 #: ../client/snapper.cc:1378
 msgid "Creating read-only snapshot of current system."
-msgstr ""
+msgstr "Vytvorenie snímky súčasného systému len na čítanie."
 
 #: ../client/snapper.cc:1359
 #, fuzzy
@@ -498,9 +489,9 @@ msgid "Date"
 msgstr "Dátum: %1"
 
 #: ../client/snapper.cc:1775 ../client/errors.cc:70
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting config failed (%s)."
-msgstr "Zlyhalo čítanie konfiguračného súboru"
+msgstr "Vymazanie konfigurácie zlyhalo (%s)."
 
 #: ../client/errors.cc:76
 #, fuzzy
@@ -567,7 +558,7 @@ msgstr "Chyba vstupu/výstupu"
 
 #: ../client/misc.cc:102
 msgid "Identical snapshots."
-msgstr ""
+msgstr "Totožné snímky."
 
 #: ../client/errors.cc:52
 #, fuzzy
@@ -591,7 +582,7 @@ msgstr "Nesprávny štýl tabuľky %d."
 
 #: ../client/misc.cc:93 ../client/snapper.cc:1193
 msgid "Invalid snapshots."
-msgstr ""
+msgstr "Neplatné snímky."
 
 #: ../client/snapper.cc:299
 msgid "Invalid subvolume."
@@ -614,19 +605,18 @@ msgstr "Nesprávny štýl tabuľky %d."
 
 # KE
 #: ../client/snapper.cc:383
-#, fuzzy
 msgid "Key"
-msgstr "Keňa"
+msgstr "Kľúč"
 
 # %s is either BOOTP or DHCP
 #: ../client/snapper.cc:1763
-#, fuzzy, c-format
+#, c-format
 msgid "Listing configs failed (%s)."
-msgstr "Konfigurácia pomocou %s zlyhala."
+msgstr "Výpis konfigurácie zlyhal (%s)."
 
 #: ../client/snapper.cc:1050
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
-msgstr ""
+msgstr "Možno, že ste zabudli oddeľovač '..' medzi číslami snímok."
 
 #: ../client/utils/GetOpts.cc:68
 #, fuzzy, c-format
@@ -645,7 +635,7 @@ msgstr "Chýbajúci argument pre "
 
 #: ../client/misc.cc:88
 msgid "Missing delimiter '..' between snapshot numbers."
-msgstr ""
+msgstr "Chýbajúci oddeľovač '..' medzi číslami snímok."
 
 #: ../client/snapper.cc:778
 msgid "Missing or invalid pre-number."
@@ -706,7 +696,7 @@ msgstr "'%s' nebol nájdený."
 
 #: ../client/snapper.cc:250
 msgid "Subvolume"
-msgstr ""
+msgstr "Podzväzok"
 
 #: ../client/snapper.cc:1823
 msgid "The config 'root' does not exist. Likely snapper is not configured."
@@ -734,9 +724,8 @@ msgid "Unknown command '%s'."
 msgstr "Neznámy príkaz '%s'"
 
 #: ../client/errors.cc:40
-#, fuzzy
 msgid "Unknown config."
-msgstr "Neznámy príkaz"
+msgstr "Neznáma Konfigurácia."
 
 #: ../client/utils/GetOpts.cc:58
 #, fuzzy, c-format
@@ -750,11 +739,11 @@ msgstr "Neznámy príkaz '%s'"
 
 #: ../client/snapper.cc:750
 msgid "Unknown type of snapshot."
-msgstr ""
+msgstr "Neznámy typ snímky."
 
 #: ../client/snapper.cc:495
 msgid "Unknown type of snapshots."
-msgstr ""
+msgstr "Neznámy typ snímok."
 
 #: ../client/snapper.cc:1676
 #, fuzzy, c-format
@@ -762,9 +751,8 @@ msgid "Use an integer number from %d to %d."
 msgstr "Použite celé číslo od %d do %d"
 
 #: ../client/snapper.cc:534 ../client/snapper.cc:582
-#, fuzzy
 msgid "User"
-msgstr "Meno používateľa"
+msgstr "Používateľ"
 
 #: ../client/snapper.cc:537 ../client/snapper.cc:584 ../client/snapper.cc:632
 msgid "Userdata"
