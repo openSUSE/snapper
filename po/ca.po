@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2015-10-14 09:12+0200\n"
+"PO-Revision-Date: 2015-10-15 16:11+0200\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
 "Language-Team: Catalan <http://10n.opensuse.org/projects/snapper/master/ca/>"
 "\n"
@@ -519,7 +519,7 @@ msgstr "Error (%s)."
 #: ../client/snapper.cc:134 ../client/snapper.cc:157
 #, c-format
 msgid "File '%s' not found."
-msgstr "No s'ha trobat el fitxer \"%s\""
+msgstr "No s'ha trobat el fitxer \"%s\"."
 
 #: ../client/errors.cc:64
 #, c-format
@@ -758,7 +758,7 @@ msgstr "Ha fallat la creació de %s"
 #: ../client/snapper.cc:1259
 #, c-format
 msgid "failed to delete %s"
-msgstr "Ha fallat l'eliminació de %s."
+msgstr "Ha fallat eliminar %s"
 
 #: ../client/snapper.cc:1256
 #, c-format
