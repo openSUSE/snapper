@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2012-05-23 15:59+0800\n"
-"Last-Translator: Ray Chen <swyear@opensuse.org>\n"
-"Language-Team: Chinese Traditional <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2015-10-15 21:37+0200\n"
+"Last-Translator: Ramax Lo <ramaxlo@gmail.com>\n"
+"Language-Team: Chinese (Taiwan) "
+"<http://10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.4\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 2.3\n"
 
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
@@ -616,7 +617,7 @@ msgstr "無效的子磁碟區。"
 #: ../client/snapper.cc:1675
 #, c-format
 msgid "Invalid table style %d."
-msgstr "無效的表格樣式 %d"
+msgstr "無效的表格樣式 %d。"
 
 # SLE12
 #: ../client/snapper.cc:1799 ../client/errors.cc:79
