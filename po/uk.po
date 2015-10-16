@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2015-10-10 20:14+0200\n"
+"PO-Revision-Date: 2015-10-16 21:19+0200\n"
 "Last-Translator: Andriy Bandura <andriykopanytsia@gmail.com>\n"
 "Language-Team: Ukrainian "
 "<http://10n.opensuse.org/projects/snapper/master/uk/>\n"
@@ -23,7 +23,7 @@ msgstr ""
 
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr ""
+msgstr "\t--all-configs, -a\t\tСписок знімків із усіх доступних конфігурацій."
 
 #: ../client/snapper.cc:698 ../client/snapper.cc:832
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
@@ -51,11 +51,12 @@ msgstr "\t--description, -d <опис>\tОпис знімків."
 
 #: ../client/snapper.cc:1093
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr ""
+msgstr "\t--diff-cmd <command>\t\tКоманда для порівняння файлів."
 
 #: ../client/snapper.cc:1094
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
+"\t--extensions, -x <options>\tДодаткові параметри, передані у команду diff."
 
 #: ../client/snapper.cc:274
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
@@ -66,9 +67,8 @@ msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr "\t--input, -i <файл>\t\tПрочитати файли для відкоту змін з файлу."
 
 #: ../client/snapper.cc:1092
-#, fuzzy
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr "\t--input, -i <файл>\t\tПрочитати файли для відкоту змін з файлу."
+msgstr "\t--input, -i <файл>\t\tПрочитати файли у diff з файлу."
 
 #: ../client/snapper.cc:1581
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
@@ -101,10 +101,12 @@ msgstr "\t--тихо, -q\t\t\tПоглушити нормальне виведе
 #: ../client/snapper.cc:1585
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr ""
+"\t--root, -r <path>\t\tРобота із цільовим коренем (підтримується тільки без "
+"DBus)."
 
 #: ../client/snapper.cc:884
 msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr ""
+msgstr "\t--sync, -s\t\t\tСинхронізація після вилучення."
 
 #: ../client/snapper.cc:1582
 msgid "\t--table-style, -t <style>\tTable style (integer)."
@@ -223,14 +225,12 @@ msgid "    Options for 'create-config' command:"
 msgstr " Параметри команди 'create-config':"
 
 #: ../client/snapper.cc:883
-#, fuzzy
 msgid "    Options for 'delete' command:"
-msgstr " Параметри команди 'create':"
+msgstr "    Параметри команди 'delete':"
 
 #: ../client/snapper.cc:1091
-#, fuzzy
 msgid "    Options for 'diff' command:"
-msgstr " Параметри команди 'modify':"
+msgstr "    Параметри команди 'diff':"
 
 #: ../client/snapper.cc:455
 msgid "    Options for 'list' command:"
@@ -487,12 +487,12 @@ msgid "Deleting snapshot failed."
 msgstr "Не вдалося видалити знімок."
 
 #: ../client/commands.cc:274
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
-msgstr[0] "Не вдалося видалити знімок."
-msgstr[1] "Не вдалося видалити знімок."
-msgstr[2] "Не вдалося видалити знімок."
+msgstr[0] "Вилучення знімка із %s:"
+msgstr[1] "Вилучення знімків із %s:"
+msgstr[2] "Вилучення знімків із %s:"
 
 #: ../client/snapper.cc:536 ../client/snapper.cc:583 ../client/snapper.cc:631
 msgid "Description"
@@ -530,15 +530,15 @@ msgstr "Файл '%s' не знайдений."
 
 # error box title
 #: ../client/errors.cc:64
-#, fuzzy, c-format
+#, c-format
 msgid "IO Error (%s)."
-msgstr "Помилка вводу/виводу."
+msgstr "Помилка вводу/виводу (%s)."
 
 # error box title
 #: ../client/snapper.cc:1793
-#, fuzzy, c-format
+#, c-format
 msgid "IO error (%s)."
-msgstr "Помилка вводу/виводу."
+msgstr "Помилка вводу/виводу (%s)."
 
 #: ../client/misc.cc:102
 msgid "Identical snapshots."
@@ -593,7 +593,7 @@ msgstr "Збій при перерахуванні конфігурацій (%s)
 
 #: ../client/snapper.cc:1050
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
-msgstr ""
+msgstr "Можливо, ви забули роздільник '..' між номерами моментальних знімків."
 
 #: ../client/utils/GetOpts.cc:68
 #, c-format
@@ -611,7 +611,7 @@ msgstr "Відсутній  аргумент команди."
 
 #: ../client/misc.cc:88
 msgid "Missing delimiter '..' between snapshot numbers."
-msgstr ""
+msgstr "Відсутній роздільник '..' між номерами знімків."
 
 #: ../client/snapper.cc:778
 msgid "Missing or invalid pre-number."
@@ -648,9 +648,8 @@ msgid "Pre Date"
 msgstr "Дата попереднього знімка"
 
 #: ../client/misc.cc:89 ../client/snapper.cc:1051 ../client/snapper.cc:1824
-#, fuzzy
 msgid "See 'man snapper' for further instructions."
-msgstr "Щоб отримати більше інформації, спробуйте \"snapper --help'."
+msgstr "Додаткові вказівки див. у 'man snapper'."
 
 #: ../client/snapper.cc:1393
 #, c-format
@@ -672,7 +671,7 @@ msgstr "Підтом"
 
 #: ../client/snapper.cc:1823
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr ""
+msgstr "Конфігурація root не існує. Ймовірно, snapper не налаштований."
 
 #: ../client/snapper.cc:1694 ../client/snapper.cc:1714
 #: ../client/snapper.cc:1727 ../client/utils/GetOpts.cc:61
@@ -784,7 +783,7 @@ msgstr "нема що робити"
 
 #: ../client/snapper.cc:1693
 msgid "root argument can be used only together with no-dbus."
-msgstr ""
+msgstr "Аргумент root можна використовувати тільки разом з no-dbus."
 
 #: ../client/snapper.cc:1574
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
