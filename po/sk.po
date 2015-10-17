@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2015-10-15 16:27+0200\n"
+"PO-Revision-Date: 2015-10-17 08:20+0200\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <http://10n.opensuse.org/projects/snapper/master/sk/>\n"
 "Language: sk\n"
@@ -612,7 +612,7 @@ msgstr "Kľúč"
 #: ../client/snapper.cc:1763
 #, c-format
 msgid "Listing configs failed (%s)."
-msgstr "Výpis konfigurácie zlyhal (%s)."
+msgstr "Výpis konfigurácií zlyhal (%s)."
 
 #: ../client/snapper.cc:1050
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
