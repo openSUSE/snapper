@@ -22,14 +22,15 @@ msgstr ""
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr ""
+"\t--all-configs, -a\t\tZoznam snímok zo všetkých dostupných konfigurácií."
 
 #: ../client/snapper.cc:698 ../client/snapper.cc:832
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr ""
+msgstr "\t--cleanup-algorithm, -c <algo>\tČistiaci algoritmus pre snímku."
 
 #: ../client/snapper.cc:1303
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
-msgstr ""
+msgstr "\t--cleanup-algorithm, -c <algo>\tČistiaci algoritmus pre snímky."
 
 #: ../client/snapper.cc:700
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
@@ -37,15 +38,15 @@ msgstr ""
 
 #: ../client/snapper.cc:1583
 msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr ""
+msgstr "\t--config, -c <name>\t\tNastaví názov konfigurácie, ktorá sa použije."
 
 #: ../client/snapper.cc:697 ../client/snapper.cc:831
 msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr ""
+msgstr "\t--description, -d <popis>\tPopis pre snímku."
 
 #: ../client/snapper.cc:1302
 msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr ""
+msgstr "\t--description, -d <popis>\tPopis pre snímky."
 
 #: ../client/snapper.cc:1093
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
@@ -110,6 +111,7 @@ msgstr ""
 #: ../client/snapper.cc:275
 msgid "\t--template, -t <name>\t\tName of config template to use."
 msgstr ""
+"\t--template, -t <name>\t\tNázov konfiguračnej šablóny, ktorá sa použije."
 
 #: ../client/snapper.cc:694
 msgid "\t--type, -t <type>\t\tType for snapshot."
@@ -137,7 +139,7 @@ msgstr ""
 
 #: ../client/snapper.cc:1586
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr ""
+msgstr "\t--version\t\t\tVypíše verziu a skončí."
 
 #: ../client/snapper.cc:1409
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -149,7 +151,7 @@ msgstr ""
 
 #: ../client/snapper.cc:271
 msgid "\tsnapper create-config <subvolume>"
-msgstr ""
+msgstr "\tsnapper create-config <podzväzok>"
 
 #: ../client/snapper.cc:881
 msgid "\tsnapper delete <number>"
@@ -213,39 +215,39 @@ msgstr "    Globálne voľby:"
 
 #: ../client/snapper.cc:693
 msgid "    Options for 'create' command:"
-msgstr ""
+msgstr "    Voľby pre príkaz 'create':"
 
 #: ../client/snapper.cc:273
 msgid "    Options for 'create-config' command:"
-msgstr ""
+msgstr "    Voľby pre príkaz 'create-config':"
 
 #: ../client/snapper.cc:883
 msgid "    Options for 'delete' command:"
-msgstr ""
+msgstr "    Voľby pre príkaz 'delete':"
 
 #: ../client/snapper.cc:1091
 msgid "    Options for 'diff' command:"
-msgstr ""
+msgstr "    Voľby pre príkaz 'diff':"
 
 #: ../client/snapper.cc:455
 msgid "    Options for 'list' command:"
-msgstr ""
+msgstr "    Voľby pre príkaz 'list':"
 
 #: ../client/snapper.cc:830
 msgid "    Options for 'modify' command:"
-msgstr ""
+msgstr "    Voľby pre príkaz 'modify':"
 
 #: ../client/snapper.cc:1300
 msgid "    Options for 'rollback' command:"
-msgstr ""
+msgstr "    Voľby pre príkaz 'rollback':"
 
 #: ../client/snapper.cc:1029
 msgid "    Options for 'status' command:"
-msgstr ""
+msgstr "    Voľby pre príkaz 'status':"
 
 #: ../client/snapper.cc:1154
 msgid "    Options for 'undochange' command:"
-msgstr ""
+msgstr "    Voľby pre príkaz 'undochange':"
 
 #: ../client/snapper.cc:1408
 msgid "  Cleanup snapshots:"
@@ -338,15 +340,15 @@ msgstr "Príliš málo argumentov."
 
 #: ../client/snapper.cc:1420
 msgid "Command 'cleanup' needs one arguments."
-msgstr ""
+msgstr "Príkaz 'cleanup' potrebuje jeden argument."
 
 #: ../client/snapper.cc:722
 msgid "Command 'create' does not take arguments."
-msgstr ""
+msgstr "Príkaz 'create' neberie argumenty."
 
 #: ../client/snapper.cc:292
 msgid "Command 'create-config' needs one argument."
-msgstr ""
+msgstr "Príkaz 'create-config' potrebuje jeden argument."
 
 #: ../client/snapper.cc:1458
 #, fuzzy
@@ -355,7 +357,7 @@ msgstr "Príliš málo argumentov."
 
 #: ../client/snapper.cc:900
 msgid "Command 'delete' needs at least one argument."
-msgstr ""
+msgstr "Príkaz 'delete' potrebuje aspoň jeden argument."
 
 #: ../client/snapper.cc:346
 #, fuzzy
@@ -374,15 +376,15 @@ msgstr "Príliš málo argumentov."
 
 #: ../client/snapper.cc:1570
 msgid "Command 'help' does not take arguments."
-msgstr ""
+msgstr "Príkaz 'help' neberie argumenty."
 
 #: ../client/snapper.cc:477
 msgid "Command 'list' does not take arguments."
-msgstr ""
+msgstr "Príkaz 'list' neberie argumenty."
 
 #: ../client/snapper.cc:242
 msgid "Command 'list-configs' does not take arguments."
-msgstr ""
+msgstr "Príkaz 'list-configs' neberie argumenty."
 
 #: ../client/snapper.cc:851
 #, fuzzy
@@ -396,7 +398,7 @@ msgstr "Príliš málo argumentov."
 
 #: ../client/snapper.cc:1349
 msgid "Command 'rollback' only available for btrfs."
-msgstr ""
+msgstr "Príkaz 'rollback' je dostupný iba pre btrfs."
 
 #: ../client/snapper.cc:1323
 #, fuzzy
@@ -471,7 +473,7 @@ msgstr "Zlyhalo čítanie konfiguračného súboru"
 
 #: ../client/snapper.cc:1367
 msgid "Creating read-write snapshot of current subvolume."
-msgstr ""
+msgstr "Vytvorenie snímky aktuálneho podzväzku na čítanie a zápis."
 
 #: ../client/snapper.cc:1385
 #, fuzzy, c-format
@@ -512,7 +514,7 @@ msgstr "Popis"
 
 #: ../client/snapper.cc:316
 msgid "Detecting filesystem type failed."
-msgstr ""
+msgstr "Detekcia typu súborového systému zlyhala."
 
 #: ../client/misc.cc:178
 #, fuzzy
@@ -586,7 +588,7 @@ msgstr "Neplatné snímky."
 
 #: ../client/snapper.cc:299
 msgid "Invalid subvolume."
-msgstr ""
+msgstr "Neplatný podzväzok"
 
 #: ../client/snapper.cc:1675
 #, c-format
@@ -682,7 +684,7 @@ msgstr "Viac informácií získate zadaním prepínača `%s --help' alebo `%s --
 #: ../client/snapper.cc:1393
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
-msgstr ""
+msgstr "Nastavenie predvoleného podzväzku pre snímku %d."
 
 #: ../client/misc.cc:55
 #, fuzzy, c-format
