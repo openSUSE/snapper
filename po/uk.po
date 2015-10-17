@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2015-10-16 21:19+0200\n"
+"PO-Revision-Date: 2015-10-17 16:22+0200\n"
 "Last-Translator: Andriy Bandura <andriykopanytsia@gmail.com>\n"
 "Language-Team: Ukrainian "
 "<http://10n.opensuse.org/projects/snapper/master/uk/>\n"
@@ -214,15 +214,15 @@ msgstr "\tsnapper xadiff <число1>..<число2> [файли]"
 
 #: ../client/snapper.cc:1577
 msgid "    Global options:"
-msgstr "Загальні параметри:"
+msgstr "    Загальні параметри:"
 
 #: ../client/snapper.cc:693
 msgid "    Options for 'create' command:"
-msgstr " Параметри команди 'create':"
+msgstr "    Параметри команди 'create':"
 
 #: ../client/snapper.cc:273
 msgid "    Options for 'create-config' command:"
-msgstr " Параметри команди 'create-config':"
+msgstr "    Параметри команди 'create-config':"
 
 #: ../client/snapper.cc:883
 msgid "    Options for 'delete' command:"
@@ -234,39 +234,39 @@ msgstr "    Параметри команди 'diff':"
 
 #: ../client/snapper.cc:455
 msgid "    Options for 'list' command:"
-msgstr " Параметри команди 'list':"
+msgstr "    Параметри команди 'list':"
 
 #: ../client/snapper.cc:830
 msgid "    Options for 'modify' command:"
-msgstr " Параметри команди 'modify':"
+msgstr "    Параметри команди 'modify':"
 
 #: ../client/snapper.cc:1300
 msgid "    Options for 'rollback' command:"
-msgstr " Параметри команди 'rollback':"
+msgstr "    Параметри команди 'rollback':"
 
 #: ../client/snapper.cc:1029
 msgid "    Options for 'status' command:"
-msgstr " Параметри команди 'status':"
+msgstr "    Параметри команди 'status':"
 
 #: ../client/snapper.cc:1154
 msgid "    Options for 'undochange' command:"
-msgstr " Параметри команди 'undochange':"
+msgstr "    Параметри команди 'undochange':"
 
 #: ../client/snapper.cc:1408
 msgid "  Cleanup snapshots:"
-msgstr " Очищення знімків:"
+msgstr "  Очищення знімків:"
 
 #: ../client/snapper.cc:1473
 msgid "  Comparing snapshots extended attributes:"
-msgstr " Порівняння розширених атрибутів знімків:"
+msgstr "  Порівняння розширених атрибутів знімків:"
 
 #: ../client/snapper.cc:1026 ../client/snapper.cc:1088
 msgid "  Comparing snapshots:"
-msgstr " Порівняння знімків:"
+msgstr "  Порівняння знімків:"
 
 #: ../client/snapper.cc:270
 msgid "  Create config:"
-msgstr "Створити конфігурації:"
+msgstr "  Створити конфігурації:"
 
 #: ../client/snapper.cc:690
 msgid "  Create snapshot:"
@@ -274,47 +274,47 @@ msgstr "  Створити знімок:"
 
 #: ../client/snapper.cc:334
 msgid "  Delete config:"
-msgstr " Вилучити конфігурацію:"
+msgstr "  Вилучити конфігурацію:"
 
 #: ../client/snapper.cc:880
 msgid "  Delete snapshot:"
-msgstr " Видалення знімка:"
+msgstr "  Видалення знімка:"
 
 #: ../client/snapper.cc:364
 msgid "  Get config:"
-msgstr " Отримати конфігурацію:"
+msgstr "  Отримати конфігурацію:"
 
 #: ../client/snapper.cc:204
 msgid "  List configs:"
-msgstr " Список конфігурацій:"
+msgstr "  Список конфігурацій:"
 
 #: ../client/snapper.cc:452
 msgid "  List snapshots:"
-msgstr " Список знімків:"
+msgstr "  Список знімків:"
 
 #: ../client/snapper.cc:827
 msgid "  Modify snapshot:"
-msgstr " Зміна знімка:"
+msgstr "  Зміна знімка:"
 
 #: ../client/snapper.cc:952
 msgid "  Mount snapshot:"
-msgstr " Змонтувати знімок:"
+msgstr "  Змонтувати знімок:"
 
 #: ../client/snapper.cc:1297
 msgid "  Rollback:"
-msgstr " Відкочення:"
+msgstr "  Відкочення:"
 
 #: ../client/snapper.cc:420
 msgid "  Set config:"
-msgstr " Задати конфігурацію:"
+msgstr "  Задати конфігурацію:"
 
 #: ../client/snapper.cc:989
 msgid "  Umount snapshot:"
-msgstr " Відмонтувати знімок:"
+msgstr "  Відмонтувати знімок:"
 
 #: ../client/snapper.cc:1151
 msgid "  Undo changes:"
-msgstr " Скасувати зміни:"
+msgstr "  Скасувати зміни:"
 
 #: ../client/snapper.cc:531 ../client/snapper.cc:580
 msgid "#"
