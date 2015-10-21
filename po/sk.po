@@ -34,7 +34,7 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tČistiaci algoritmus pre snímky."
 
 #: ../client/snapper.cc:700
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
-msgstr ""
+msgstr "\t--command <príkaz>\tSpustí príkaz a vytvorí snímky pred a po snímky."
 
 #: ../client/snapper.cc:1583
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -50,39 +50,42 @@ msgstr "\t--description, -d <popis>\tPopis pre snímky."
 
 #: ../client/snapper.cc:1093
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr ""
+msgstr "\t--diff-cmd <command>\tPríkaz slúži na porovnávanie súborov."
 
 #: ../client/snapper.cc:1094
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
-msgstr ""
+msgstr "\t--extensions, -x <voľby>\tĎalšie voľby odovzdané príkazu diff."
 
 #: ../client/snapper.cc:274
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr ""
+"\t--fstype, -f <typ_súborového_systému>\t\tRučne nastaví typ súborového "
+"systému."
 
 #: ../client/snapper.cc:1155
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr ""
+"\t--input, -i <súbor>\t\tČíta súbory, pre ktoré vráti späť zmeny zo súboru."
 
 #: ../client/snapper.cc:1092
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr ""
+msgstr "\t--input, -i <súbor>\t\tČíta súbory pre príkaz diff zo súboru."
 
 #: ../client/snapper.cc:1581
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr ""
+msgstr "\t--iso\t\t\t\tZobrazí dátumy a časy vo formáte ISO."
 
 #: ../client/snapper.cc:1584
 msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr ""
+msgstr "\t--no-dbus\t\t\tBeží bez DBus."
 
 #: ../client/snapper.cc:1030
 msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr ""
+msgstr "\t--output, -o <súbor>\t\tUloží stav do súboru."
 
 #: ../client/snapper.cc:695
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr ""
+msgstr "\t--pre-number <číslo>\t\tČíslo zodpovedajúce snímke pred."
 
 #: ../client/snapper.cc:696
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
