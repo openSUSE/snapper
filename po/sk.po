@@ -297,9 +297,8 @@ msgid "  Modify snapshot:"
 msgstr ""
 
 #: ../client/snapper.cc:952
-#, fuzzy
 msgid "  Mount snapshot:"
-msgstr "Dátum vytvorenia: "
+msgstr "  Pripojiť snímku:"
 
 #: ../client/snapper.cc:1297
 msgid "  Rollback:"
@@ -310,9 +309,8 @@ msgid "  Set config:"
 msgstr "  Nastaviť konfiguráciu:"
 
 #: ../client/snapper.cc:989
-#, fuzzy
 msgid "  Umount snapshot:"
-msgstr "Dátum vytvorenia: "
+msgstr "  Odpojiť snímku:"
 
 #: ../client/snapper.cc:1151
 msgid "  Undo changes:"
@@ -324,9 +322,9 @@ msgstr "#"
 
 #: ../client/snapper.cc:1364 ../client/snapper.cc:1371
 #: ../client/snapper.cc:1382 ../client/snapper.cc:1389
-#, fuzzy, c-format
+#, c-format
 msgid "(Snapshot %d.)"
-msgstr "%s '%s' nebol nájdený(á)"
+msgstr "(Snímka %d.)"
 
 #: ../client/snapper.cc:1787 ../client/errors.cc:85
 msgid "ACL error."
@@ -470,23 +468,21 @@ msgid "Creating read-only snapshot of current system."
 msgstr "Vytvorenie snímky súčasného systému len na čítanie."
 
 #: ../client/snapper.cc:1359
-#, fuzzy
 msgid "Creating read-only snapshot of default subvolume."
-msgstr "Zlyhalo čítanie konfiguračného súboru"
+msgstr "Vytvorenie snímky predvoleného podzväzku len na čítanie."
 
 #: ../client/snapper.cc:1367
 msgid "Creating read-write snapshot of current subvolume."
 msgstr "Vytvorenie snímky aktuálneho podzväzku na čítanie a zápis."
 
 #: ../client/snapper.cc:1385
-#, fuzzy, c-format
+#, c-format
 msgid "Creating read-write snapshot of snapshot %d."
-msgstr "Zlyhalo čítanie konfiguračného súboru"
+msgstr "Vytvorenie snímky zo snímky %d na čítanie a zápis."
 
 #: ../client/errors.cc:73
-#, fuzzy
 msgid "Creating snapshot failed."
-msgstr "Zlyhalo čítanie konfiguračného súboru"
+msgstr "Vytvorenie snímky zlyhalo."
 
 #: ../client/snapper.cc:533 ../client/snapper.cc:581
 #, fuzzy
@@ -499,17 +495,16 @@ msgid "Deleting config failed (%s)."
 msgstr "Vymazanie konfigurácie zlyhalo (%s)."
 
 #: ../client/errors.cc:76
-#, fuzzy
 msgid "Deleting snapshot failed."
-msgstr "Zlyhalo čítanie konfiguračného súboru"
+msgstr "Vymazanie snímky zlyhalo."
 
 #: ../client/commands.cc:274
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
-msgstr[0] "Zlyhalo čítanie konfiguračného súboru"
-msgstr[1] "Zlyhalo čítanie konfiguračného súboru"
-msgstr[2] "Zlyhalo čítanie konfiguračného súboru"
+msgstr[0] "Vymazanie snímky z %s:"
+msgstr[1] "Vymazanie snímok z %s:"
+msgstr[2] "Vymazanie snímok z %s:"
 
 #: ../client/snapper.cc:536 ../client/snapper.cc:583 ../client/snapper.cc:631
 msgid "Description"
@@ -566,9 +561,8 @@ msgid "Identical snapshots."
 msgstr "Totožné snímky."
 
 #: ../client/errors.cc:52
-#, fuzzy
 msgid "Illegal Snapshot."
-msgstr "Nesprávny štýl tabuľky %d."
+msgstr "Nepovolená snímka."
 
 #: ../client/snapper.cc:1781 ../client/errors.cc:49
 #, fuzzy
@@ -581,9 +575,9 @@ msgid "Invalid group."
 msgstr "Neplatný vstup."
 
 #: ../client/misc.cc:48 ../client/misc.cc:72
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid snapshot '%s'."
-msgstr "Nesprávny štýl tabuľky %d."
+msgstr "Neplatná snímka '%s'."
 
 #: ../client/misc.cc:93 ../client/snapper.cc:1193
 msgid "Invalid snapshots."
