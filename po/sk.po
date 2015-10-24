@@ -89,23 +89,25 @@ msgstr "\t--pre-number <číslo>\t\tČíslo zodpovedajúce snímke pred."
 
 #: ../client/snapper.cc:696
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr ""
+msgstr "\t--print-number, -p\t\tVypíše číslo vytvorenej snímky."
 
 #: ../client/snapper.cc:1301
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr ""
+msgstr "\t--print-number, -p\t\tVypíše číslo druhej vytvorenej snímky."
 
 #: ../client/snapper.cc:1578
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr ""
+msgstr "\t--quiet, -q\t\t\tPotlačí normálny výstup."
 
 #: ../client/snapper.cc:1585
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr ""
+"\t--root, -r <cesta>\t\tdbus\t\t\tBeží na cieľovom správcovi systému root ("
+"funguje len bez DBus)."
 
 #: ../client/snapper.cc:884
 msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr ""
+msgstr "\t--sync, -s\t\t\tSynchronizácia po zmazaní."
 
 #: ../client/snapper.cc:1582
 msgid "\t--table-style, -t <style>\tTable style (integer)."
@@ -158,11 +160,11 @@ msgstr "\tsnapper create-config <podzväzok>"
 
 #: ../client/snapper.cc:881
 msgid "\tsnapper delete <number>"
-msgstr ""
+msgstr "\tsnapper delete <číslo>"
 
 #: ../client/snapper.cc:335
 msgid "\tsnapper delete-config"
-msgstr ""
+msgstr "\tsnapper delete-config"
 
 #: ../client/snapper.cc:1089
 msgid "\tsnapper diff <number1>..<number2> [files]"
@@ -278,7 +280,7 @@ msgstr "  Vymazať konfiguráciu:"
 
 #: ../client/snapper.cc:880
 msgid "  Delete snapshot:"
-msgstr ""
+msgstr "  Zmazať snímku:"
 
 #: ../client/snapper.cc:364
 msgid "  Get config:"
@@ -700,6 +702,7 @@ msgstr "Podzväzok"
 #: ../client/snapper.cc:1823
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr ""
+"Konfigurácia 'root' neexistuje. Pravdepodobne nie je snapper nakonfigurovaný."
 
 #: ../client/snapper.cc:1694 ../client/snapper.cc:1714
 #: ../client/snapper.cc:1727 ../client/utils/GetOpts.cc:61
@@ -813,7 +816,7 @@ msgstr "Nie je čo vykonať."
 
 #: ../client/snapper.cc:1693
 msgid "root argument can be used only together with no-dbus."
-msgstr ""
+msgstr "Argument root možno použiť len spoločne s no-dbus."
 
 #: ../client/snapper.cc:1574
 #, fuzzy
