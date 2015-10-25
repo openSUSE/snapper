@@ -337,9 +337,9 @@ msgid "Cleanup"
 msgstr ""
 
 #: ../client/snapper.cc:1735
-#, fuzzy, c-format
+#, c-format
 msgid "Command '%s' does not work without DBus."
-msgstr "Príliš málo argumentov."
+msgstr "Príkaz '%s' nefunguje bez DBus."
 
 #: ../client/snapper.cc:1420
 msgid "Command 'cleanup' needs one arguments."
@@ -354,28 +354,24 @@ msgid "Command 'create-config' needs one argument."
 msgstr "Príkaz 'create-config' potrebuje jeden argument."
 
 #: ../client/snapper.cc:1458
-#, fuzzy
 msgid "Command 'debug' does not take arguments."
-msgstr "Príliš málo argumentov."
+msgstr "Príkaz 'debug' neprijíma argumenty."
 
 #: ../client/snapper.cc:900
 msgid "Command 'delete' needs at least one argument."
 msgstr "Príkaz 'delete' potrebuje aspoň jeden argument."
 
 #: ../client/snapper.cc:346
-#, fuzzy
 msgid "Command 'delete-config' does not take arguments."
-msgstr "Príliš málo argumentov."
+msgstr "Príkaz 'delete-config' neprijíma argumenty."
 
 #: ../client/snapper.cc:1112
-#, fuzzy
 msgid "Command 'diff' needs at least one argument."
-msgstr "Príliš málo argumentov."
+msgstr "Príkaz 'diff' potrebuje aspoň jeden argument."
 
 #: ../client/snapper.cc:376
-#, fuzzy
 msgid "Command 'get-config' does not take arguments."
-msgstr "Príliš málo argumentov."
+msgstr "Príkaz 'get-config' neprijíma argumenty."
 
 #: ../client/snapper.cc:1570
 msgid "Command 'help' does not take arguments."
@@ -390,33 +386,28 @@ msgid "Command 'list-configs' does not take arguments."
 msgstr "Príkaz 'list-configs' neberie argumenty."
 
 #: ../client/snapper.cc:851
-#, fuzzy
 msgid "Command 'modify' needs at least one argument."
-msgstr "Príliš málo argumentov."
+msgstr "Príkaz 'modify' potrebuje aspoň jeden argument."
 
 #: ../client/snapper.cc:964 ../client/snapper.cc:1001
-#, fuzzy
 msgid "Command 'mount' needs at least one argument."
-msgstr "Príliš málo argumentov."
+msgstr "Príkaz 'mount' potrebuje aspoň jeden argument."
 
 #: ../client/snapper.cc:1349
 msgid "Command 'rollback' only available for btrfs."
 msgstr "Príkaz 'rollback' je dostupný iba pre btrfs."
 
 #: ../client/snapper.cc:1323
-#, fuzzy
 msgid "Command 'rollback' takes either one or no argument."
-msgstr "Príliš málo argumentov."
+msgstr "Príkaz 'rollback' prijíma jeden alebo žiadny argument."
 
 #: ../client/snapper.cc:432
-#, fuzzy
 msgid "Command 'set-config' needs at least one argument."
-msgstr "Príliš málo argumentov."
+msgstr "Príkaz 'set-config' potrebuje aspoň jeden argument."
 
 #: ../client/snapper.cc:1046
-#, fuzzy
 msgid "Command 'status' needs one argument."
-msgstr "Príliš málo argumentov."
+msgstr "Príkaz 'status' potrebuje jeden argument."
 
 #: ../client/snapper.cc:1171
 #, fuzzy
