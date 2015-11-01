@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2015-10-17 12:26+0200\n"
+"PO-Revision-Date: 2015-11-01 08:01+0200\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <http://10n.opensuse.org/projects/snapper/master/sk/>\n"
 "Language: sk\n"
@@ -216,7 +216,7 @@ msgstr ""
 
 #: ../client/snapper.cc:1577
 msgid "    Global options:"
-msgstr "  Globálne voľby:"
+msgstr "    Globálne voľby:"
 
 #: ../client/snapper.cc:693
 msgid "    Options for 'create' command:"
@@ -272,7 +272,7 @@ msgstr "  Vytvoriť konfiguráciu:"
 
 #: ../client/snapper.cc:690
 msgid "  Create snapshot:"
-msgstr "  Vytvoriť snímku: "
+msgstr "  Vytvoriť snímku:"
 
 #: ../client/snapper.cc:334
 msgid "  Delete config:"
@@ -442,7 +442,7 @@ msgstr "Konfigurácia je je uzamknutá."
 #: ../client/misc.cc:189
 #, c-format
 msgid "Configdata '%s' does not include '=' sign."
-msgstr "Konfiguračné údaje '%s' nezahŕňajú znamienko '='. "
+msgstr "Konfiguračné údaje '%s' nezahŕňajú znamienko '='."
 
 #: ../client/misc.cc:198
 #, c-format
@@ -571,7 +571,7 @@ msgstr "Neplatné snímky."
 
 #: ../client/snapper.cc:299
 msgid "Invalid subvolume."
-msgstr "Neplatný podzväzok"
+msgstr "Neplatný podzväzok."
 
 #: ../client/snapper.cc:1675
 #, c-format
@@ -701,7 +701,7 @@ msgstr "Typ"
 #: ../client/snapper.cc:1440
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
-msgstr "Neznámy upratovací algoritmus '%s'"
+msgstr "Neznámy upratovací algoritmus '%s'."
 
 #: ../client/snapper.cc:1726
 #, fuzzy, c-format
