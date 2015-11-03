@@ -124,23 +124,23 @@ msgstr "\t--type, -t <typ>\t\t\t\tTyp pre snímku."
 
 #: ../client/snapper.cc:456
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr ""
+msgstr "\t--type, -t <typ>\t\tTyp snímok pre výpis."
 
 #: ../client/snapper.cc:699 ../client/snapper.cc:833
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr ""
+msgstr "\t--userdata, -u <používateľské-údaje>\tPoužívateľské údaje pre snímku."
 
 #: ../client/snapper.cc:1304
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr ""
+msgstr "\t--userdata, -u <používateľské-údaje>\tPoužívateľské údaje pre snímky."
 
 #: ../client/snapper.cc:1580
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr ""
+msgstr "\t--utc\t\t\t\tZobrazí dátumy a časy v UTC."
 
 #: ../client/snapper.cc:1579
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr ""
+msgstr "\t--verbose, -v\t\t\tZvýši podrobnosť."
 
 #: ../client/snapper.cc:1586
 msgid "\t--version\t\t\tPrint version and exit."
@@ -152,7 +152,7 @@ msgstr "\tsnapper cleanup <upratovací-algoritmus>"
 
 #: ../client/snapper.cc:691
 msgid "\tsnapper create"
-msgstr ""
+msgstr "\tsnapper create"
 
 #: ../client/snapper.cc:271
 msgid "\tsnapper create-config <subvolume>"
@@ -176,7 +176,7 @@ msgstr "\tsnapper get-config"
 
 #: ../client/snapper.cc:453
 msgid "\tsnapper list"
-msgstr ""
+msgstr "\tsnapper list"
 
 #: ../client/snapper.cc:205
 msgid "\tsnapper list-configs"
@@ -184,7 +184,7 @@ msgstr "\tsnapper list-configs"
 
 #: ../client/snapper.cc:828
 msgid "\tsnapper modify <number>"
-msgstr ""
+msgstr "\tsnapper modify <číslo>"
 
 #: ../client/snapper.cc:953
 msgid "\tsnapper mount <number>"
@@ -518,19 +518,18 @@ msgid "Failed to initialize filesystem handler."
 msgstr "Zlyhala inicializácia"
 
 #: ../client/systemd-helper.cc:136 ../client/snapper.cc:1834
-#, fuzzy
 msgid "Failure"
-msgstr "Zlyhalo"
+msgstr "Zlyhanie"
 
 #: ../client/errors.cc:87
-#, fuzzy, c-format
+#, c-format
 msgid "Failure (%s)."
-msgstr "Zlyhalo"
+msgstr "Zlyhanie  (%s)."
 
 #: ../client/snapper.cc:134 ../client/snapper.cc:157
-#, fuzzy, c-format
+#, c-format
 msgid "File '%s' not found."
-msgstr "'%s' nebol nájdený."
+msgstr "Súbor '%s' nebol nájdený."
 
 # error box title
 #: ../client/errors.cc:64
@@ -583,9 +582,8 @@ msgid "Invalid user."
 msgstr "Neplatný používateľ."
 
 #: ../client/errors.cc:46
-#, fuzzy
 msgid "Invalid userdata."
-msgstr "Nesprávny štýl tabuľky %d."
+msgstr "Neplatné používateľské údaje."
 
 # KE
 #: ../client/snapper.cc:383
@@ -669,14 +667,13 @@ msgid "Setting default subvolume to snapshot %d."
 msgstr "Nastavenie predvoleného podzväzku pre snímku %d."
 
 #: ../client/misc.cc:55
-#, fuzzy, c-format
+#, c-format
 msgid "Snapshot '%u' not found."
-msgstr "%s '%s' nebol nájdený(á)"
+msgstr "Snímka '%u' nebola nájdená."
 
 #: ../client/errors.cc:61
-#, fuzzy
 msgid "Snapshot is in use."
-msgstr "'%s' nebol nájdený."
+msgstr "Snímka sa používa."
 
 #: ../client/snapper.cc:250
 msgid "Subvolume"
@@ -704,9 +701,9 @@ msgid "Unknown cleanup algorithm '%s'."
 msgstr "Neznámy upratovací algoritmus '%s'."
 
 #: ../client/snapper.cc:1726
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown command '%s'."
-msgstr "Neznámy príkaz '%s'"
+msgstr "Neznámy príkaz '%s'."
 
 #: ../client/errors.cc:40
 msgid "Unknown config."
@@ -718,9 +715,9 @@ msgid "Unknown global option '%s'."
 msgstr "Neznáma všeobecná voľba "
 
 #: ../client/utils/GetOpts.cc:60
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown option '%s' for command '%s'."
-msgstr "Neznámy príkaz '%s'"
+msgstr "Neznáma voľba '%s' pre príkaz '%s'."
 
 #: ../client/snapper.cc:750
 msgid "Unknown type of snapshot."
@@ -741,17 +738,17 @@ msgstr "Používateľ"
 
 #: ../client/snapper.cc:537 ../client/snapper.cc:584 ../client/snapper.cc:632
 msgid "Userdata"
-msgstr ""
+msgstr "Používateľské údaje"
 
 #: ../client/misc.cc:134
-#, fuzzy, c-format
+#, c-format
 msgid "Userdata '%s' does not include '=' sign."
-msgstr "Súbor '%s' nebol nájdený na médiu '%s'"
+msgstr "Používateľské údaje '%s' nezahŕňajú znamienko '='."
 
 #: ../client/misc.cc:143
 #, c-format
 msgid "Userdata '%s' has empty key."
-msgstr ""
+msgstr "Používateľské údaje '%s' majú prázdny kľúč."
 
 #: ../client/snapper.cc:384
 msgid "Value"
@@ -793,9 +790,8 @@ msgid "modifying %s"
 msgstr "Odstraňujem %s-%s"
 
 #: ../client/snapper.cc:1208
-#, fuzzy
 msgid "nothing to do"
-msgstr "Nie je čo vykonať."
+msgstr "nie je čo vykonať"
 
 #: ../client/snapper.cc:1693
 msgid "root argument can be used only together with no-dbus."
