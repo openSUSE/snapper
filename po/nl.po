@@ -10,15 +10,15 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2014-07-02 00:21+0200\n"
+"PO-Revision-Date: 2015-11-04 11:54+0200\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
-"Language-Team: Dutch <opensuse-nl@opensuse.org>\n"
+"Language-Team: Dutch <http://10n.opensuse.org/projects/snapper/master/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.5\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.3\n"
 
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
@@ -54,7 +54,8 @@ msgstr "\t--diff-cmd <command>\t\tOpdracht gebruikt voor het vergelijken van bes
 
 #: ../client/snapper.cc:1094
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
-msgstr "\t--extensions, -x <options>\tExtra opties doorgegeven aan de diff-opdracht"
+msgstr ""
+"\t--extensions, -x <options>\tExtra opties doorgeven aan het commando diff."
 
 #: ../client/snapper.cc:274
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
@@ -146,7 +147,7 @@ msgstr "\tsnapper cleanup <opschoonalgoritme>"
 
 #: ../client/snapper.cc:691
 msgid "\tsnapper create"
-msgstr "\tsnapper create"
+msgstr "\tsnapper aanmaken"
 
 #: ../client/snapper.cc:271
 msgid "\tsnapper create-config <subvolume>"
@@ -190,7 +191,7 @@ msgstr "\tsnapper rollback [nummer]"
 
 #: ../client/snapper.cc:421
 msgid "\tsnapper set-config <configdata>"
-msgstr "\tsnapper set-config <configdata>"
+msgstr "\tsnapper set-config <configuratiegegevens>"
 
 #: ../client/snapper.cc:1027
 msgid "\tsnapper status <number1>..<number2>"
@@ -298,7 +299,7 @@ msgstr "  Momentopname aankoppelen:"
 
 #: ../client/snapper.cc:1297
 msgid "  Rollback:"
-msgstr "  Rollback:"
+msgstr "  Terugrollen:"
 
 #: ../client/snapper.cc:420
 msgid "  Set config:"
@@ -508,7 +509,7 @@ msgstr "Lege gebruikersgegevens."
 
 #: ../client/snapper.cc:1277 ../client/snapper.cc:1288
 msgid "Failed to initialize filesystem handler."
-msgstr "Behandelaar van bestandssysteem initialiseren is mislukt"
+msgstr "Behandelaar van bestandssysteem initialiseren is mislukt."
 
 #: ../client/systemd-helper.cc:136 ../client/snapper.cc:1834
 msgid "Failure"
