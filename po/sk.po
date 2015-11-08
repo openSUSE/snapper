@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2015-11-01 08:01+0200\n"
+"PO-Revision-Date: 2015-11-08 12:20+0200\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <http://10n.opensuse.org/projects/snapper/master/sk/>\n"
 "Language: sk\n"
@@ -653,7 +653,7 @@ msgstr "Dátum pred"
 
 #: ../client/misc.cc:89 ../client/snapper.cc:1051 ../client/snapper.cc:1824
 msgid "See 'man snapper' for further instructions."
-msgstr "Viac informácií nájdete na 'man snapper'"
+msgstr "Viac informácií nájdete na 'man snapper'."
 
 #: ../client/snapper.cc:1393
 #, c-format
@@ -682,7 +682,7 @@ msgstr ""
 #: ../client/snapper.cc:1727 ../client/utils/GetOpts.cc:61
 #: ../client/utils/GetOpts.cc:69
 msgid "Try 'snapper --help' for more information."
-msgstr "Skúste 'snapper --help' pre viac informácií"
+msgstr "Skúste 'snapper --help' pre viac informácií."
 
 #: ../client/snapper.cc:530
 msgid "Type"
