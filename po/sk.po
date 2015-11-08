@@ -168,7 +168,7 @@ msgstr "\tsnapper delete-config"
 
 #: ../client/snapper.cc:1089
 msgid "\tsnapper diff <number1>..<number2> [files]"
-msgstr ""
+msgstr "\tsnapper diff <číslo1>..<číslo2> [súbory]"
 
 #: ../client/snapper.cc:365
 msgid "\tsnapper get-config"
@@ -188,11 +188,11 @@ msgstr "\tsnapper modify <číslo>"
 
 #: ../client/snapper.cc:953
 msgid "\tsnapper mount <number>"
-msgstr ""
+msgstr "\tsnapper mount <číslo>"
 
 #: ../client/snapper.cc:1298
 msgid "\tsnapper rollback [number]"
-msgstr ""
+msgstr "\tsnapper rollback [číslo]"
 
 #: ../client/snapper.cc:421
 msgid "\tsnapper set-config <configdata>"
@@ -200,19 +200,19 @@ msgstr "\tsnapper set-config <konfiguračné-údaje>"
 
 #: ../client/snapper.cc:1027
 msgid "\tsnapper status <number1>..<number2>"
-msgstr ""
+msgstr "\tsnapper status <číslo1>..<číslo2>"
 
 #: ../client/snapper.cc:990
 msgid "\tsnapper umount <number>"
-msgstr ""
+msgstr "\tsnapper umount <číslo>"
 
 #: ../client/snapper.cc:1152
 msgid "\tsnapper undochange <number1>..<number2> [files]"
-msgstr ""
+msgstr "\tsnapper undochange <číslo1>..<číslo2> [súbory]"
 
 #: ../client/snapper.cc:1474
 msgid "\tsnapper xadiff <number1>..<number2> [files]"
-msgstr ""
+msgstr "\tsnapper xadiff <číslo1>..<číslo2> [súbory]"
 
 #: ../client/snapper.cc:1577
 msgid "    Global options:"
@@ -260,11 +260,11 @@ msgstr "  Upratovanie snímok:"
 
 #: ../client/snapper.cc:1473
 msgid "  Comparing snapshots extended attributes:"
-msgstr ""
+msgstr "  Rozšírené atribúty porovnania snímok:"
 
 #: ../client/snapper.cc:1026 ../client/snapper.cc:1088
 msgid "  Comparing snapshots:"
-msgstr ""
+msgstr "  Porovnanie snímok:"
 
 #: ../client/snapper.cc:270
 msgid "  Create config:"
@@ -292,11 +292,11 @@ msgstr "  Zoznam konfigurácií:"
 
 #: ../client/snapper.cc:452
 msgid "  List snapshots:"
-msgstr ""
+msgstr "  Zoznam snímok:"
 
 #: ../client/snapper.cc:827
 msgid "  Modify snapshot:"
-msgstr ""
+msgstr "  Upraviť snímku:"
 
 #: ../client/snapper.cc:952
 msgid "  Mount snapshot:"
@@ -304,7 +304,7 @@ msgstr "  Pripojiť snímku:"
 
 #: ../client/snapper.cc:1297
 msgid "  Rollback:"
-msgstr ""
+msgstr "  Vrátiť späť:"
 
 #: ../client/snapper.cc:420
 msgid "  Set config:"
@@ -316,7 +316,7 @@ msgstr "  Odpojiť snímku:"
 
 #: ../client/snapper.cc:1151
 msgid "  Undo changes:"
-msgstr ""
+msgstr "  Vrátiť späť zmeny:"
 
 #: ../client/snapper.cc:531 ../client/snapper.cc:580
 msgid "#"
@@ -447,7 +447,7 @@ msgstr "Konfiguračné údaje '%s' nezahŕňajú znamienko '='."
 #: ../client/misc.cc:198
 #, c-format
 msgid "Configdata '%s' has empty key."
-msgstr ""
+msgstr "Konfiguračné údaje '%s' majú prázdny kľúč."
 
 #: ../client/snapper.cc:1769 ../client/errors.cc:67
 #, c-format
@@ -513,9 +513,8 @@ msgid "Empty userdata."
 msgstr "Prázdne používateľské údaje."
 
 #: ../client/snapper.cc:1277 ../client/snapper.cc:1288
-#, fuzzy
 msgid "Failed to initialize filesystem handler."
-msgstr "Zlyhala inicializácia"
+msgstr "Zlyhala inicializácia obslužného programu systému súborov."
 
 #: ../client/systemd-helper.cc:136 ../client/snapper.cc:1834
 msgid "Failure"
@@ -533,15 +532,15 @@ msgstr "Súbor '%s' nebol nájdený."
 
 # error box title
 #: ../client/errors.cc:64
-#, fuzzy, c-format
+#, c-format
 msgid "IO Error (%s)."
-msgstr "Chyba vstupu/výstupu"
+msgstr "V/V chyba (%s)."
 
 # error box title
 #: ../client/snapper.cc:1793
-#, fuzzy, c-format
+#, c-format
 msgid "IO error (%s)."
-msgstr "Chyba vstupu/výstupu"
+msgstr "V/V chyba (%s)."
 
 #: ../client/misc.cc:102
 msgid "Identical snapshots."
@@ -601,19 +600,18 @@ msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Možno, že ste zabudli oddeľovač '..' medzi číslami snímok."
 
 #: ../client/utils/GetOpts.cc:68
-#, fuzzy, c-format
+#, c-format
 msgid "Missing argument for command option '%s'."
-msgstr "Chýbajúci argument pre "
+msgstr "Chýbajúci argument pre voľbu príkazu '%s'."
 
 #: ../client/utils/GetOpts.cc:66
-#, fuzzy, c-format
+#, c-format
 msgid "Missing argument for global option '%s'."
-msgstr "Chýbajúci argument pre "
+msgstr "Chýbajúci argument pre globálnu voľbu '%s'."
 
 #: ../client/snapper.cc:784
-#, fuzzy
 msgid "Missing command argument."
-msgstr "Chýbajúci argument pre "
+msgstr "Chýbajúci argument pre príkaz."
 
 #: ../client/misc.cc:88
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -621,45 +619,41 @@ msgstr "Chýbajúci oddeľovač '..' medzi číslami snímok."
 
 #: ../client/snapper.cc:778
 msgid "Missing or invalid pre-number."
-msgstr ""
+msgstr "Chýbajúce alebo neplatné číslo pred."
 
 #: ../client/snapper.cc:1713
-#, fuzzy
 msgid "No command provided."
-msgstr "Nebol zadaný žiaden príkaz"
+msgstr "Nebol zadaný žiadny príkaz."
 
 #: ../client/errors.cc:43
-#, fuzzy
 msgid "No permissions."
-msgstr "Žiadna VJ kompresia"
+msgstr "Žiadne práva."
 
 #: ../client/snapper.cc:1071 ../client/snapper.cc:1126
 #: ../client/snapper.cc:1186
 #, c-format
 msgid "Opening file '%s' failed."
-msgstr ""
+msgstr "Otvorenie súboru '%s' zlyhalo."
 
 #: ../client/snapper.cc:628
 msgid "Post #"
-msgstr ""
+msgstr "Po #"
 
 #: ../client/snapper.cc:630
-#, fuzzy
 msgid "Post Date"
-msgstr "Hostitelia"
+msgstr "Dátum po"
 
 #: ../client/snapper.cc:532 ../client/snapper.cc:627
 msgid "Pre #"
-msgstr ""
+msgstr "Pred #"
 
 #: ../client/snapper.cc:629
 msgid "Pre Date"
-msgstr ""
+msgstr "Dátum pred"
 
 #: ../client/misc.cc:89 ../client/snapper.cc:1051 ../client/snapper.cc:1824
-#, fuzzy
 msgid "See 'man snapper' for further instructions."
-msgstr "Viac informácií získate zadaním prepínača `%s --help' alebo `%s --usage'.\n"
+msgstr "Viac informácií nájdete na 'man snapper'"
 
 #: ../client/snapper.cc:1393
 #, c-format
@@ -687,9 +681,8 @@ msgstr ""
 #: ../client/snapper.cc:1694 ../client/snapper.cc:1714
 #: ../client/snapper.cc:1727 ../client/utils/GetOpts.cc:61
 #: ../client/utils/GetOpts.cc:69
-#, fuzzy
 msgid "Try 'snapper --help' for more information."
-msgstr "Viac informácií získate zadaním prepínača `%s --help' alebo `%s --usage'.\n"
+msgstr "Skúste 'snapper --help' pre viac informácií"
 
 #: ../client/snapper.cc:530
 msgid "Type"
@@ -710,9 +703,9 @@ msgid "Unknown config."
 msgstr "Neznáma Konfigurácia."
 
 #: ../client/utils/GetOpts.cc:58
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown global option '%s'."
-msgstr "Neznáma všeobecná voľba "
+msgstr "Neznáma globálna voľba '%s'."
 
 #: ../client/utils/GetOpts.cc:60
 #, c-format
@@ -728,9 +721,9 @@ msgid "Unknown type of snapshots."
 msgstr "Neznámy typ snímok."
 
 #: ../client/snapper.cc:1676
-#, fuzzy, c-format
+#, c-format
 msgid "Use an integer number from %d to %d."
-msgstr "Použite celé číslo od %d do %d"
+msgstr "Použite celé číslo od %d do %d."
 
 #: ../client/snapper.cc:534 ../client/snapper.cc:582
 msgid "User"
@@ -757,37 +750,37 @@ msgstr "Hodnota"
 #: ../client/snapper.cc:1212
 #, c-format
 msgid "create:%d modify:%d delete:%d"
-msgstr ""
+msgstr "vytvoriť:%d upraviť:%d vymazať:%d"
 
 #: ../client/snapper.cc:1237
-#, fuzzy, c-format
+#, c-format
 msgid "creating %s"
-msgstr "Vytváram %s"
+msgstr "vytvorenie %s"
 
 #: ../client/snapper.cc:1243
-#, fuzzy, c-format
+#, c-format
 msgid "deleting %s"
-msgstr "Vytváram %s"
+msgstr "vymazanie %s"
 
 #: ../client/snapper.cc:1253
-#, fuzzy, c-format
+#, c-format
 msgid "failed to create %s"
-msgstr "Zlyhalo vytvorenie vlákna"
+msgstr "zlyhalo vytvorenie %s"
 
 #: ../client/snapper.cc:1259
-#, fuzzy, c-format
+#, c-format
 msgid "failed to delete %s"
-msgstr "Nepodarilo zmazať kľúč."
+msgstr "zlyhalo vymazanie %s"
 
 #: ../client/snapper.cc:1256
-#, fuzzy, c-format
+#, c-format
 msgid "failed to modify %s"
-msgstr "Nepodarilo sa odpojiť %s."
+msgstr "zlyhala úprava %s"
 
 #: ../client/snapper.cc:1240
-#, fuzzy, c-format
+#, c-format
 msgid "modifying %s"
-msgstr "Odstraňujem %s-%s"
+msgstr "upravenie %s"
 
 #: ../client/snapper.cc:1208
 msgid "nothing to do"
@@ -798,11 +791,10 @@ msgid "root argument can be used only together with no-dbus."
 msgstr "Argument root možno použiť len spoločne s no-dbus."
 
 #: ../client/snapper.cc:1574
-#, fuzzy
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
-"  Použitie:\n"
-"\tzypper [--všeobecné-voľby] <príkaz> [--voľby-príkazu] argumenty\n"
+"použitie: snapper [--globálne-voľby] <príkaz> [--voľby-príkazu] [argumenty-"
+"príkazu]"
 
 #, fuzzy
 #~ msgid "Unknown file."
