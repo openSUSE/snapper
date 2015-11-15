@@ -86,7 +86,7 @@ autoconf
 	--disable-rollback							\
 %endif
 	--disable-silent-rules --disable-ext4 --disable-btrfs-quota
-make %{?jobs:-j%jobs}
+make %{?_smp_mflags}
 
 %install
 make install DESTDIR="$RPM_BUILD_ROOT"
@@ -111,7 +111,7 @@ rm -rf "$RPM_BUILD_ROOT"
 %{prefix}/bin/snapper
 %{prefix}/sbin/snapperd
 %{prefix}/sbin/mksubvolume
-%{prefix}/lib/snapper
+%{_libexecdir}/snapper
 %doc %{_mandir}/*/snapper.8*
 %doc %{_mandir}/*/snapperd.8*
 %doc %{_mandir}/*/snapper-configs.5*
