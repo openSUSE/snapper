@@ -81,7 +81,7 @@ automake --add-missing --copy
 autoconf
 
 ./configure --libdir=%{_libdir} --prefix=%{prefix} --mandir=%{_mandir}		\
-	--docdir=%{prefix}/share/doc/packages/snapper				\
+	--docdir=%{prefix}/share/doc/packages/snapper --libexecdir=%{_libexecdir} \
 %if 0%{?suse_version} <= 1310
 	--disable-rollback							\
 %endif
