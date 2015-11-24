@@ -17,18 +17,20 @@ Usage: main <options>
 Options:
 -P <OBS project>
 -p <OBS package>
+-o <OBS target directory> (will be removed first)
 -c <command> Shell command to make a package
 '
-    local COMMAND PROJECT PACKAGE
+    local COMMAND OBSDIR PROJECT PACKAGE
     local USAGE=false RC=0
-    while getopts c:hP:p: FLAG; do
+    while getopts c:ho:P:p: FLAG; do
         case $FLAG in
             c) COMMAND="$OPTARG";;
-	    h) USAGE=true;;
+            h) USAGE=true;;
+            o) OBSDIR="$OPTARG";;
             P) PROJECT="$OPTARG";;
-	    p) PACKAGE="$OPTARG";;
+            p) PACKAGE="$OPTARG";;
 
-	    *) USAGE=true; RC=1;;
+            *) USAGE=true; RC=1;;
         esac
     done
     shift $((OPTIND-1))
@@ -39,7 +41,6 @@ Options:
     fi
 
     local GITDIR=`pwd`
-    OBSDIR=`pwd`/.obsdir
     rm -rf $OBSDIR
     osc checkout --output-dir=$OBSDIR $PROJECT $PACKAGE
     cd $OBSDIR
@@ -70,7 +71,6 @@ init_build_root() {
     sed -i -e "/^%build/atouch $SUCCESS_FILE; : intentional fail; exit 1" *.spec
     osc build --build-uid=caller || :
     rm $OSC_BUILD_ROOT/$SUCCESS_FILE # fails if not present
-
 }
 
 TMPGIT=/tmp/gitdir
@@ -93,6 +93,8 @@ cleanup_git_in_chroot() {
 
 # in:
 #   $1 command to make package
+# out:
+#   package in $OSC_BUILD_ROOT/$TMPGIT/package
 make_package() {
     sudo chroot --userspec=$USER $OSC_BUILD_ROOT \
         sh -c "cd ${TMPGIT#$OSC_BUILD_ROOT}; $1"
@@ -100,7 +102,6 @@ make_package() {
 
 # in:
 #    pwd: obs dir
-
 fetch_package() {
     rm -v *.tar.*
     cp -av $OSC_BUILD_ROOT/$TMPGIT/package/* .

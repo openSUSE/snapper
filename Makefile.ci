@@ -6,14 +6,15 @@
 # Simplicity is complicated?
 
 # Usage in Jenkins:
-# make -f Makefile.ci osc:sr
-# make -f Makefile.ci osc:ci
-# make -f Makefile.ci osc:build
-# make -f Makefile.ci package
+# make -f Makefile.ci osc_build
 
-.PHONY: package
+.PHONY: package osc_build
 
 package:
 	./git-to-obs-package \
 		-P YaST:Head -p snapper \
+		-o .obsdir \
 		-c 'make -f Makefile.repo && make package'
+
+osc_build: package
+	cd .obsdir; osc build
