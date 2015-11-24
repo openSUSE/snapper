@@ -1,0 +1,19 @@
+# -*- Makefile -*-
+# if "rake" is undesirable, reimplement it in make?
+# Not everything, just the bare minimum that makes sense
+# And let Rakefile be a redirector to this Makefile.ci
+
+# Simplicity is complicated?
+
+# Usage in Jenkins:
+# make -f Makefile.ci osc:sr
+# make -f Makefile.ci osc:ci
+# make -f Makefile.ci osc:build
+# make -f Makefile.ci package
+
+.PHONY: package
+
+package:
+	./git-to-obs-package \
+		-P YaST:Head -p snapper \
+		-c 'make -f Makefile.repo && make package'
