@@ -11,7 +11,7 @@
 .PHONY: package osc_build
 
 package:
-	./git-to-obs-package \
+	./obs-package-from-git \
 		-P YaST:Head -p snapper \
 		-o .obsdir \
 		-c 'make -f Makefile.repo && make package'

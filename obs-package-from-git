@@ -6,7 +6,7 @@ set -eu
 # using `osc` to bring the dependencies to a chroot.
 
 # Minimal dependencies:
-# - git-core
+# - git-core (not used here; our caller, typically Jenkins, will have used it)
 # - osc
 # - build
 
