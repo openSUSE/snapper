@@ -1,12 +1,7 @@
 # -*- Makefile -*-
-# if "rake" is undesirable, reimplement it in make?
-# Not everything, just the bare minimum that makes sense
-# And let Rakefile be a redirector to this Makefile.ci
-
-# Simplicity is complicated?
 
 # Usage in Jenkins:
-# make -f Makefile.ci osc_build
+# make -f Makefile.ci package
 
 .PHONY: package
 package: obs-package-from-git
@@ -14,10 +9,6 @@ package: obs-package-from-git
 		-P YaST:Head -p snapper \
 		-o .obsdir \
 		-c 'make -f Makefile.repo && make package'
-
-.PHONY: osc_build
-osc_build: package
-	cd .obsdir; osc build
 
 # A script that is shared with other projects and should be always refreshed
 URL=https://raw.githubusercontent.com/openSUSE/obs-package-from-git/master/obs-package-from-git
