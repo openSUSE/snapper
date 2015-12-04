@@ -55,10 +55,22 @@ sudo killall snapperd
 (sudo) snapper ...
 ```
 
+### Running Tests
+
+Snapper includes some internal unit tests to avoid some bugs and regressions.
+The tests are located in the `testsuite` subdirectory and you can start them
+using the `make check` command.
+
+There are also some additional tests in the `testsuite-real` subdirectory,
+but be careful. *These tests really execute snapper commands and they can
+destroy your data! Run these tests only in a testing environment!*
+
 ### Releasing
 
 - Before releasing the Snapper package ensure that the changes made to the package
 are mentioned in the `package/snapper.changes` file.
+
+- Make sure the units tests still passes ([see above](running-tests)).
 
 - When the version is increased then the Git repo has to be tagged, use the
 `vX.Y.Z` format for the tag. Also the
