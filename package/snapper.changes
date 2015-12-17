@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Dec 14 16:25:32 UTC 2015 - lslezak@suse.cz
+
+- Allow rollback only for the root file system (bsc#954445)
+- version 0.2.9.1
+
+-------------------------------------------------------------------
 Tue Sep 22 16:51:23 CEST 2015 - aschnell@suse.com
 
 - updated translations
