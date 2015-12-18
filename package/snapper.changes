@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Dec 18 15:41:16 CET 2015 - aschnell@suse.com
+
+- improved error message (see bsc#956606)
+
+-------------------------------------------------------------------
 Mon Dec 14 16:25:32 UTC 2015 - lslezak@suse.cz
 
 - Allow rollback only for the root file system (bsc#954445)
