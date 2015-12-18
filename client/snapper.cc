@@ -1267,10 +1267,8 @@ command_undo(DBus::Connection* conn, Snapper* snapper)
 #ifdef ENABLE_ROLLBACK
 
 const Filesystem*
-getFilesystem(DBus::Connection* conn, Snapper* snapper)
+getFilesystem(const XConfigInfo &ci, Snapper* snapper)
 {
-    XConfigInfo ci = command_get_xconfig(*conn, config_name);
-
     map<string, string>::const_iterator it = ci.raw.find(KEY_FSTYPE);
     if (it == ci.raw.end())
     {
@@ -1288,6 +1286,19 @@ getFilesystem(DBus::Connection* conn, Snapper* snapper)
 	cerr << _("Failed to initialize filesystem handler.") << endl;
 	exit(EXIT_FAILURE);
     }
+}
+
+const string
+getSubvolume(const XConfigInfo &ci, Snapper* snapper)
+{
+    map<string, string>::const_iterator it = ci.raw.find(KEY_SUBVOLUME);
+    if (it == ci.raw.end())
+    {
+	cerr << _("Failed to initialize subvolume handler.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    return it->second;
 }
 
 
@@ -1343,12 +1354,23 @@ command_rollback(DBus::Connection* conn, Snapper* snapper)
     if ((opt = opts.find("userdata")) != opts.end())
 	userdata = read_userdata(opt->second);
 
-    const Filesystem* filesystem = getFilesystem(conn, snapper);
+    XConfigInfo ci = command_get_xconfig(*conn, config_name);
+
+    const Filesystem* filesystem = getFilesystem(ci, snapper);
     if (filesystem->fstype() != "btrfs")
     {
 	cerr << _("Command 'rollback' only available for btrfs.") << endl;
 	exit(EXIT_FAILURE);
     }
+
+    const string subvolume = getSubvolume(ci, snapper);
+    if (subvolume != "/")
+    {
+        cerr << sformat(_("Command 'rollback' cannot be used on a non-root subvolume %s."),
+            subvolume.c_str()) << endl;
+        exit(EXIT_FAILURE);
+    }
+
 
     unsigned int num1;
     unsigned int num2;
