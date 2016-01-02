@@ -57,7 +57,7 @@ libsnapper_la_SOURCES +=				\
 endif
 
 libsnapper_la_LDFLAGS = -version-info @LIBVERSION_INFO@ @BOOST_LDFLAGS@
-libsnapper_la_LIBADD = @BOOST_THREAD_LIB@ @BOOST_SYSTEM_LIB@ -lxml2 -lacl -lz -lm
+libsnapper_la_LIBADD = @BOOST_THREAD_LIB@ @BOOST_SYSTEM_LIB@ @LTLIBINTL@ -lxml2 -lacl -lz -lm
 if ENABLE_ROLLBACK
 libsnapper_la_LIBADD += -lmount
 endif

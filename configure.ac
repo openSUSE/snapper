@@ -141,6 +141,9 @@ PKG_CHECK_MODULES(DBUS, dbus-1)
 
 AC_CHECK_HEADER(acl/libacl.h,[],[AC_MSG_ERROR([Cannout find libacl headers. Please install libacl-devel])])
 
+AM_GNU_GETTEXT_VERSION([0.18.1])
+AM_GNU_GETTEXT([external])
+
 AX_BOOST_BASE([1.40], [has_boost=yes], [AC_MSG_ERROR(["Cannot find boost headers. Please ensure that the headers are installed at a known location or provide the installation directory via --with-boost"])])
 AX_BOOST_SYSTEM
 AX_BOOST_THREAD
