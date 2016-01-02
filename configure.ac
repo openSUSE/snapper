@@ -1,6 +1,8 @@
 
 AC_INIT(snapper/Snapper.h)
 
+AC_CONFIG_MACRO_DIR([m4])
+
 VERSION=`cat ./VERSION`
 
 LIBVERSION=`cat ./LIBVERSION`
@@ -138,6 +140,10 @@ AM_CONDITIONAL(HAVE_PAM, [test "x$with_pam" = "xyes"])
 PKG_CHECK_MODULES(DBUS, dbus-1)
 
 AC_CHECK_HEADER(acl/libacl.h,[],[AC_MSG_ERROR([Cannout find libacl headers. Please install libacl-devel])])
+
+AX_BOOST_BASE([1.40], [has_boost=yes], [AC_MSG_ERROR(["Cannot find boost headers. Please ensure that the headers are installed at a known location or provide the installation directory via --with-boost"])])
+AX_BOOST_SYSTEM
+AX_BOOST_THREAD
 
 AC_MSG_CHECKING([if the GNU variant of strerror_r is available])
 AC_COMPILE_IFELSE([

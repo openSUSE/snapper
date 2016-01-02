@@ -2,7 +2,7 @@
 # Makefile.am for snapper/snapper
 #
 
-AM_CXXFLAGS = -D_FILE_OFFSET_BITS=64
+AM_CXXFLAGS = -D_FILE_OFFSET_BITS=64 @BOOST_CPPFLAGS@
 
 AM_CPPFLAGS = -I/usr/include/libxml2
 
@@ -56,8 +56,8 @@ libsnapper_la_SOURCES +=				\
 	MntTable.cc		MntTable.h
 endif
 
-libsnapper_la_LDFLAGS = -version-info @LIBVERSION_INFO@
-libsnapper_la_LIBADD = -lboost_thread -lboost_system -lxml2 -lacl -lz -lm
+libsnapper_la_LDFLAGS = -version-info @LIBVERSION_INFO@ @BOOST_LDFLAGS@
+libsnapper_la_LIBADD = @BOOST_THREAD_LIB@ @BOOST_SYSTEM_LIB@ -lxml2 -lacl -lz -lm
 if ENABLE_ROLLBACK
 libsnapper_la_LIBADD += -lmount
 endif
