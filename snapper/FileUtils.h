@@ -28,7 +28,7 @@
 #include <vector>
 #include <functional>
 #include <boost/thread.hpp>
-
+#include <sys/types.h>
 
 namespace snapper
 {
