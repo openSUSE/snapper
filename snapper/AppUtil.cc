@@ -209,7 +209,7 @@ namespace snapper
     string
     stringerror(int errnum)
     {
-#if (_POSIX_C_SOURCE >= 200112L || _XOPEN_SOURCE >= 600) && ! _GNU_SOURCE
+#ifndef HAVE_GNU_STRERROR_R
 	char buf1[100];
 	if (strerror_r(errno, buf1, sizeof(buf1)-1) == 0)
 	    return string(buf1);

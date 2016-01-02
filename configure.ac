@@ -19,6 +19,7 @@ AC_CONFIG_HEADERS(config.h)
 AC_DISABLE_STATIC
 
 AC_PROG_CXX
+AC_LANG([C++])
 LT_INIT
 
 AC_PREFIX_DEFAULT(/usr)
@@ -137,6 +138,20 @@ AM_CONDITIONAL(HAVE_PAM, [test "x$with_pam" = "xyes"])
 PKG_CHECK_MODULES(DBUS, dbus-1)
 
 AC_CHECK_HEADER(acl/libacl.h,[],[AC_MSG_ERROR([Cannout find libacl headers. Please install libacl-devel])])
+
+AC_MSG_CHECKING([if the GNU variant of strerror_r is available])
+AC_COMPILE_IFELSE([
+    AC_LANG_SOURCE([
+        [#include <string.h>]
+        [int main() { int (*cb) (int, char *, size_t) = strerror_r; (void) cb; return 0; }]
+    ])
+], [gnu_strerror_r=no], [gnu_strerror_r=yes])
+AC_MSG_RESULT($gnu_strerror_r)
+
+
+AS_IF([test "x$gnu_strerror_r" = "xyes"], [
+    AC_DEFINE(HAVE_GNU_STRERROR_R, 1, [Use GNU variant of strerror_r])
+])
 
 AC_SUBST(VERSION)
 AC_SUBST(LIBVERSION_MAJOR)
