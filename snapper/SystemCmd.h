@@ -32,6 +32,9 @@
 #include <list>
 #include <boost/noncopyable.hpp>
 
+// These macro definitions collide with SystemCmd::(stdin|stderr)(...)
+#undef stderr
+#undef stdout
 
 namespace snapper
 {
