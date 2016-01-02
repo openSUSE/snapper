@@ -183,6 +183,9 @@ fi
 
 AC_CHECK_HEADER(acl/libacl.h,[],[AC_MSG_ERROR([Cannout find libacl headers. Please install libacl-devel])])
 
+AM_GNU_GETTEXT_VERSION([0.18.1])
+AM_GNU_GETTEXT([external])
+
 AC_SUBST(VERSION)
 AC_SUBST(LIBVERSION_MAJOR)
 AC_SUBST(LIBVERSION_MINOR)

@@ -63,7 +63,7 @@ libsnapper_la_SOURCES +=				\
 endif
 
 libsnapper_la_LDFLAGS = -version-info @LIBVERSION_INFO@
-libsnapper_la_LIBADD = -lboost_thread -lboost_system $(XML2_LIBS) -lacl -lz -lm
+libsnapper_la_LIBADD = -lboost_thread -lboost_system @LTLIBINTL@ $(XML2_LIBS) -lacl -lz -lm
 if ENABLE_ROLLBACK
 libsnapper_la_LIBADD += -lmount
 endif
