@@ -90,6 +90,11 @@
 #define CDBUS_SIG_CREATE_SNAP_RSP "u"
 #define CDBUS_SIG_STRING_DICT "{ss}"
 
+/*
+ * Constants
+*/
+#define GETPWNAM_R_DEFAULT_BUFFER_SIZE 1024
+
 /**
  * A simple dictionary, ...
  *
@@ -518,6 +523,9 @@ static int get_ugid( pam_handle_t * pamh, const char *pam_user, uid_t * uid, gid
 	struct passwd *result;
 
 	long bufsize = sysconf( _SC_GETPW_R_SIZE_MAX );
+	if (bufsize == -1) {
+		bufsize = GETPWNAM_R_DEFAULT_BUFFER_SIZE;
+	}
 	char buf[bufsize];
 
 	if ( getpwnam_r( pam_user, &pwd, buf, bufsize, &result ) != 0 || result != &pwd ) {

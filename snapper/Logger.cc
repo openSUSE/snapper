@@ -146,6 +146,9 @@ namespace snapper
 	    struct passwd* result;
 
 	    long bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
+	    if (bufsize == -1) {
+		bufsize = GETPWNAM_R_DEFAULT_BUFFER_SIZE;
+	    }
 	    char buf[bufsize];
 
 	    if (getpwuid_r(geteuid(), &pwd, buf, bufsize, &result) == 0 && result == &pwd)

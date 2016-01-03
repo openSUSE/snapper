@@ -285,6 +285,9 @@ namespace snapper
 	struct passwd* result;
 
 	long bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
+	if (bufsize == -1) {
+		bufsize = GETPWNAM_R_DEFAULT_BUFFER_SIZE;
+	}
 	char buf[bufsize];
 
 	if (getpwuid_r(uid, &pwd, buf, bufsize, &result) != 0 || result != &pwd)
@@ -306,6 +309,9 @@ namespace snapper
 	struct passwd* result;
 
 	long bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
+	if (bufsize == -1) {
+		bufsize = GETPWNAM_R_DEFAULT_BUFFER_SIZE;
+	}
 	char buf[bufsize];
 
 	if (getpwnam_r(username, &pwd, buf, bufsize, &result) != 0 || result != &pwd)
@@ -329,6 +335,9 @@ namespace snapper
 	struct group* result;
 
 	long bufsize = sysconf(_SC_GETGR_R_SIZE_MAX);
+	if (bufsize == -1) {
+		bufsize = GETGRNAM_R_DEFAULT_BUFFER_SIZE;
+	}
 	char buf[bufsize];
 
 	if (getgrnam_r(groupname, &grp, buf, bufsize, &result) != 0 || result != &grp)

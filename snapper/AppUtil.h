@@ -44,6 +44,8 @@ namespace snapper
     using std::map;
     using std::vector;
 
+    const std::size_t GETPWNAM_R_DEFAULT_BUFFER_SIZE = 1024;
+    const std::size_t GETGRNAM_R_DEFAULT_BUFFER_SIZE = 1024;
 
     bool checkDir(const string& Path_Cv);
 
