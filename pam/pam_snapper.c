@@ -518,6 +518,9 @@ static int get_ugid( pam_handle_t * pamh, const char *pam_user, uid_t * uid, gid
 	struct passwd *result;
 
 	long bufsize = sysconf( _SC_GETPW_R_SIZE_MAX );
+	if (bufsize == -1) {
+		bufsize = 1024;
+	}
 	char buf[bufsize];
 
 	if ( getpwnam_r( pam_user, &pwd, buf, bufsize, &result ) != 0 || result != &pwd ) {
