@@ -211,7 +211,7 @@ AsciiFile::save()
 
 	string line = key + "=\"" + value + "\"";
 
-	Regex rx('^' + Regex::ws + key + '=' + "(['\"]?)([^'\"]*)\\1" + Regex::ws + '$');
+	Regex rx('^' + Regex::ws + key + '=' + "(\"[^'\"]*\"|'[^'\"]*'|[^'\"]*)" + Regex::ws + '$');
 
 	vector<string>::iterator it = find_if(lines(), regex_matches(rx));
 	if (it == lines().end())
@@ -226,12 +226,14 @@ AsciiFile::save()
     bool
     SysconfigFile::getValue(const string& key, string& value) const
     {
-	Regex rx('^' + Regex::ws + key + '=' + "(['\"]?)([^'\"]*)\\1" + Regex::ws + '$');
+	Regex rx('^' + Regex::ws + key + '=' + "(\"[^'\"]*\"|'[^'\"]*'|[^'\"]*)" + Regex::ws + '$');
 
 	if (find_if(lines(), regex_matches(rx)) == lines().end())
 	    return false;
-
-	value = rx.cap(2);
+	value = rx.cap(1);
+	if (!value.empty() && (value.front() == '"' || value.front() == '\'')) {
+	    value = std::string(value.begin() + 1, value.end() - 1);
+	}
 	y2mil("key:" << key << " value:" << value);
 	return true;
     }
@@ -295,12 +297,18 @@ AsciiFile::save()
     {
 	map<string, string> ret;
 
-	Regex rx('^' + Regex::ws + "([0-9A-Z_]+)" + '=' + "(['\"]?)([^'\"]*)\\2" + Regex::ws + '$');
+	Regex rx('^' + Regex::ws + "([0-9A-Z_]+)" + '=' + "(\"[^'\"]*\"|'[^'\"]*'|[^'\"]*)" + Regex::ws + '$');
 
 	for (vector<string>::const_iterator it = Lines_C.begin(); it != Lines_C.end(); ++it)
 	{
 	    if (rx.match(*it))
-		ret[rx.cap(1)] = rx.cap(3);
+	    {
+		string value = rx.cap(2);
+		if (!value.empty() && (value.front() == '"' || value.front() == '\'')) {
+		    value = std::string(value.begin() + 1, value.end() - 1);
+		}
+		ret[rx.cap(1)] = value;
+	    }
 	}
 
 	return ret;
