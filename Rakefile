@@ -8,10 +8,11 @@ require "packaging/configuration"
 # skip 'tarball' task, it's redefined here
 Packaging::Tasks.load_tasks(:exclude => ["tarball.rake"])
 
+require "yast/tasks"
+Yast::Tasks.submit_to(ENV.fetch("YAST_SUBMIT", "factory").to_sym)
+
 Packaging.configuration do |conf|
-  conf.obs_project    = "YaST:Head"
-  conf.obs_sr_project = "openSUSE:Factory"
-  conf.package_dir    = ".obsdir"
+  conf.package_dir    = ".obsdir" # Makefile.ci puts it there
   conf.skip_license_check << /.*/
 end
 
