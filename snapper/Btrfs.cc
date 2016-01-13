@@ -108,10 +108,19 @@ namespace snapper
 	{
 	    create_subvolume(subvolume_dir.fd(), ".snapshots");
 	}
-	catch (const runtime_error& e)
+	catch (const runtime_error_with_errno& e)
 	{
 	    y2err("create subvolume failed, " << e.what());
-	    throw CreateConfigFailedException("creating btrfs snapshot failed");
+
+	    switch (e.error_number)
+	    {
+		case EEXIST:
+		    throw CreateConfigFailedException("creating btrfs subvolume .snapshots failed "
+						      "since it already exists");
+
+		default:
+		    throw CreateConfigFailedException("creating btrfs subvolume .snapshots failed");
+	    }
 	}
 
 	SFile x(subvolume_dir, ".snapshots");

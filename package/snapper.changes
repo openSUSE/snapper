@@ -1,4 +1,15 @@
 -------------------------------------------------------------------
+Fri Dec 18 15:41:16 CET 2015 - aschnell@suse.com
+
+- improved error message (see bsc#956606)
+
+-------------------------------------------------------------------
+Mon Dec 14 16:25:32 UTC 2015 - lslezak@suse.cz
+
+- Allow rollback only for the root file system (bsc#954445)
+- version 0.2.10
+
+-------------------------------------------------------------------
 Wed Oct 14 13:52:10 CEST 2015 - aschnell@suse.com
 
 - added conditional compilation of installation-helper

@@ -116,10 +116,13 @@ namespace snapper
 
     struct runtime_error_with_errno : public std::runtime_error
     {
-	explicit runtime_error_with_errno(const char* what_arg, int errnum)
-	    : runtime_error(sformat("%s, errno:%d (%s)", what_arg, errnum,
-				    stringerror(errnum).c_str()))
+	explicit runtime_error_with_errno(const char* what_arg, int error_number)
+	    : runtime_error(sformat("%s, errno:%d (%s)", what_arg, error_number,
+				    stringerror(error_number).c_str())),
+	      error_number(error_number)
 	{}
+
+	const int error_number;
     };
 
 }
