@@ -213,6 +213,14 @@
             </dd>
             <dt>
               <span class="term">
+                <code class="option">-r, --root <em class="replaceable"><code>path</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Operate on target root. Only works together with no-dbus and only for some commands.</p>
+            </dd>
+            <dt>
+              <span class="term">
                 <code class="option">--version</code>
               </span>
             </dt>
@@ -436,6 +444,22 @@
             </dt>
             <dd>
               <p>Delete a snapshot or a range of snapshots.</p>
+              <div class="variablelist">
+                <dl class="variablelist">
+                  <dt>
+                    <span class="term">
+                      <code class="option">-s, --sync</code>
+                    </span>
+                  </dt>
+                  <dd>
+                    <p>Sync the filesystem after deleting the snapshots. The
+		details depend on the filesystem type.</p>
+                    <p>Btrfs normally asynchronously frees space after deleting
+		snapshots. With this option snapper will wait until the space once used by the
+		deleted snapshots is actually available again.</p>
+                  </dd>
+                </dl>
+              </div>
             </dd>
             <dt>
               <span class="term">
@@ -520,6 +544,12 @@
 	  deleted in the time between the two snapshots have been made.</p>
               <div class="variablelist">
                 <dl class="variablelist">
+                  <dt>
+                    <span class="term"><code class="option">-i, --input</code> <em class="replaceable"><code>file</code></em></span>
+                  </dt>
+                  <dd>
+                    <p>Read files to diff from file <em class="replaceable"><code>file</code></em>.</p>
+                  </dd>
                   <dt>
                     <span class="term"><code class="option">--diff-cmd</code> <em class="replaceable"><code>command</code></em></span>
                   </dt>
