@@ -70,7 +70,7 @@ destroy your data! Run these tests only in a testing environment!*
 - Before releasing the Snapper package ensure that the changes made to the package
 are mentioned in the `package/snapper.changes` file.
 
-- Make sure the units tests still passes ([see above](running-tests)).
+- Make sure the units tests still passes ([see above](#running-tests)).
 
 - When the version is increased then the Git repo has to be tagged, use the
 `vX.Y.Z` format for the tag. Also the
