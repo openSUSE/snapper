@@ -15,6 +15,7 @@ ListAll_SOURCES = ListAll.cc
 Create_SOURCES = Create.cc
 
 CmpDirs_SOURCES = CmpDirs.cc
+CmpDirs_LDADD = $(LDADD) -lboost_system
 
 CreateNumber_SOURCES = CreateNumber.cc
 
