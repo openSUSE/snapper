@@ -12,6 +12,7 @@ require "yast/tasks"
 Yast::Tasks.submit_to(ENV.fetch("YAST_SUBMIT", "factory").to_sym)
 
 Packaging.configuration do |conf|
+  conf.package_name.sub!(/-.*/, "") # strip branch name
   conf.package_dir    = ".obsdir" # Makefile.ci puts it there
   conf.skip_license_check << /.*/
 end
