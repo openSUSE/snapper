@@ -1,0 +1,17 @@
+# -*- Makefile -*-
+
+# Usage in Jenkins:
+# make -f Makefile.ci package
+
+.PHONY: package
+package: obs-package-from-git
+	./$^ \
+		-P YaST:Head -p snapper \
+		-o .obsdir \
+		-c 'make -f Makefile.repo && make package'
+
+# A script that is shared with other projects and should be always refreshed
+URL=https://raw.githubusercontent.com/openSUSE/obs-package-from-git/master/obs-package-from-git
+.PHONY: always_out_of_date
+obs-package-from-git: always_out_of_date
+	wget -O $@ $(URL) && chmod +x $@
