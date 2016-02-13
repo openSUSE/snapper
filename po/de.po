@@ -7,15 +7,16 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2014-09-17 18:47+0200\n"
-"Last-Translator: Michael Skiba <trans@michael-skiba.de>\n"
-"Language-Team: German <opensuse-translation-de@opensuse.org>\n"
+"PO-Revision-Date: 2016-02-13 09:12+0200\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"Language-Team: German <http://l10n.opensuse.org/projects/snapper/master/de/>"
+"\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.5\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.3\n"
 
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
@@ -79,7 +80,8 @@ msgstr "\t--output, -o <Datei>\t\tStatus in <Datei> speichern."
 
 #: ../client/snapper.cc:695
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <Nummer>\t\tNummer des zugehörigen Vorher-Schnappschusses"
+msgstr ""
+"\t--pre-number <Nummer>\t\tNummer des zugehörigen Vorher-Schnappschusses."
 
 #: ../client/snapper.cc:696
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
@@ -147,7 +149,7 @@ msgstr "\tsnapper create"
 
 #: ../client/snapper.cc:271
 msgid "\tsnapper create-config <subvolume>"
-msgstr "\tsnapper create-config <subvolume>"
+msgstr "\tsnapper create-config <Subvolume>"
 
 #: ../client/snapper.cc:881
 msgid "\tsnapper delete <number>"
@@ -295,7 +297,7 @@ msgstr "  Schnappschuss einhängen:"
 
 #: ../client/snapper.cc:1297
 msgid "  Rollback:"
-msgstr "  Rollback:"
+msgstr "  Zurückrollen:"
 
 #: ../client/snapper.cc:420
 msgid "  Set config:"
