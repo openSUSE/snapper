@@ -35,9 +35,9 @@ signal SnapshotCreated config-name number
 signal SnapshotModified config-name number
 signal SnapshotsDeleted config-name list(numbers)
 
-method MountSnapshot config-name number user-request
+method MountSnapshot config-name number user-request -> path
 method UmountSnapshot config-name number user-request
-method GetMountPoint config-name number
+method GetMountPoint config-name number -> path
 
 Snapshots mounted with user-request set to false will be unmounted (delayed)
 after the client disconnects.
@@ -45,7 +45,7 @@ after the client disconnects.
 method Sync config-name
 
 
-method CreateComparison config-name number1 number2
+method CreateComparison config-name number1 number2 -> num-files
 method DeleteComparison config-name number1 number2
 
 The following command require a successful CreateComparison in advance.
