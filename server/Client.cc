@@ -203,7 +203,7 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"    </signal>\n"
 
 	"    <method name='ListConfigs'>\n"
-	"      <arg name='configs' type='v' direction='out'/>\n"
+	"      <arg name='configs' type='a(ssa{ss})' direction='out'/>\n"
 	"    </method>\n"
 
 	"    <method name='GetConfig'>\n"
@@ -237,14 +237,14 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 
 	"    <method name='ListSnapshots'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
-	"      <arg name='snapshots' type='v' direction='out'/>\n"
+	"      <arg name='snapshots' type='a(uquxussa{ss})' direction='out'/>\n"
 	"    </method>\n"
 
 	"    <method name='ListSnapshotsAtTime'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='begin' type='x' direction='in'/>\n"
 	"      <arg name='end' type='x' direction='in'/>\n"
-	"      <arg name='snapshots' type='v' direction='out'/>\n"
+	"      <arg name='snapshots' type='a(uquxussa{ss})' direction='out'/>\n"
 	"    </method>\n"
 
 	"    <method name='GetSnapshot'>\n"
@@ -314,6 +314,7 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='number' type='u' direction='in'/>\n"
 	"      <arg name='user-request' type='b' direction='in'/>\n"
+	"      <arg name='path' type='s' direction='out'/>\n"
 	"    </method>\n"
 
 	"    <method name='UmountSnapshot'>\n"
@@ -325,6 +326,7 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"    <method name='GetMountPoint'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='number' type='u' direction='in'/>\n"
+	"      <arg name='path' type='s' direction='out'/>\n"
 	"    </method>\n"
 
 	"    <method name='CreateComparison'>\n"
@@ -344,7 +346,7 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='number1' type='u' direction='in'/>\n"
 	"      <arg name='number2' type='u' direction='in'/>\n"
-	"      <arg name='files' type='v' direction='out'/>\n"
+	"      <arg name='files' type='a(su)' direction='out'/>\n"
 	"    </method>\n"
 
 	"    <method name='Sync'>\n"
@@ -1224,6 +1226,10 @@ Client::create_comparison(DBus::Connection& conn, DBus::Message& msg)
     it->inc_use_count();
 
     DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
+    dbus_uint32_t num_files = comparison->getFiles().size();
+    hoho << num_files;
 
     conn.send(reply);
 }
