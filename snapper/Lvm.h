@@ -24,6 +24,7 @@
 #define SNAPPER_LVM_H
 
 #include <boost/noncopyable.hpp>
+#include <boost/thread/mutex.hpp>
 
 #include "snapper/Filesystem.h"
 
@@ -107,6 +108,8 @@ namespace snapper
 	virtual bool checkSnapshot(unsigned int num) const;
 
     private:
+
+	mutable boost::mutex mount_mutex;
 
 	const string mount_type;
 	const LvmCapabilities* caps;
