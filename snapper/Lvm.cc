@@ -251,6 +251,8 @@ namespace snapper
     void
     Lvm::mountSnapshot(unsigned int num) const
     {
+	boost::unique_lock<boost::mutex> lock(mount_mutex);
+
 	if (isSnapshotMounted(num))
 	    return;
 
@@ -273,6 +275,8 @@ namespace snapper
     void
     Lvm::umountSnapshot(unsigned int num) const
     {
+	boost::unique_lock<boost::mutex> lock(mount_mutex);
+
 	if (isSnapshotMounted(num))
 	{
 	    SDir info_dir = openInfoDir(num);
