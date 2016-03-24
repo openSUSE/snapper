@@ -83,12 +83,14 @@ namespace snapper
     void
     Btrfs::evalConfigInfo(const ConfigInfo& config_info)
     {
+#ifdef ENABLE_BTRFS_QUOTA
+
 	string qgroup_str;
 	if (config_info.getValue("QGROUP", qgroup_str) && !qgroup_str.empty())
 	{
 	    try
 	    {
-		qgroup = make_qgroup(qgroup_str);
+		qgroup = parse_qgroup(qgroup_str);
 	    }
 	    catch (const runtime_error& e)
 	    {
@@ -96,6 +98,8 @@ namespace snapper
 		throw InvalidConfigException();
 	    }
 	}
+
+#endif
     }
 
 

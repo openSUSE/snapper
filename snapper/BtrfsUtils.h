@@ -57,8 +57,16 @@ namespace snapper
 	string get_subvolume(int fd, subvolid_t id);
 	subvolid_t get_id(int fd);
 
-	qgroup_t make_qgroup(uint64_t level, subvolid_t id);
-	qgroup_t make_qgroup(const string& str);
+	qgroup_t calc_qgroup(uint64_t level, subvolid_t id);
+	qgroup_t parse_qgroup(const string& str);
+
+	void qgroup_create(int fd, qgroup_t qgroup);
+	void qgroup_destroy(int fd, qgroup_t qgroup);
+
+	void qgroup_assign(int fd, qgroup_t src, qgroup_t dst);
+	void qgroup_remove(int fd, qgroup_t src, qgroup_t dst);
+
+	void quota_rescan(int fd);
 
 	void sync(int fd);
 

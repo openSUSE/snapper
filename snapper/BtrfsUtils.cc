@@ -126,6 +126,7 @@ namespace snapper
 	    strncpy(args_v2.name, name.c_str(), sizeof(args_v2.name) - 1);
 
 #ifdef ENABLE_BTRFS_QUOTA
+
 	    if (qgroup != no_qgroup)
 	    {
 		size_t size = sizeof(btrfs_qgroup_inherit) + sizeof(((btrfs_qgroup_inherit*) 0)->qgroups[0]);
@@ -141,6 +142,7 @@ namespace snapper
 		args_v2.size = size;
 		args_v2.qgroup_inherit = inherit;
 	    }
+
 #endif
 
 	    if (ioctl(fddst, BTRFS_IOC_SNAP_CREATE_V2, &args_v2) == 0)
@@ -249,40 +251,6 @@ namespace snapper
 	    return args.treeid;
 	}
 
-#endif
-
-
-	qgroup_t
-	make_qgroup(uint64_t level, subvolid_t id)
-	{
-	    return (level << 48) | id;
-	}
-
-
-	qgroup_t
-	make_qgroup(const string& str)
-	{
-	    string::size_type pos = str.find('/');
-	    if (pos == string::npos)
-		throw std::runtime_error("parsing qgroup failed");
-
-	    std::istringstream a(str.substr(0, pos));
-	    uint64_t level = 0;
-	    a >> level;
-	    if (a.fail() || !a.eof())
-		throw std::runtime_error("parsing qgroup failed");
-
-	    std::istringstream b(str.substr(pos + 1));
-	    subvolid_t id = 0;
-	    b >> id;
-	    if (b.fail() || !b.eof())
-		throw std::runtime_error("parsing qgroup failed");
-
-	    return make_qgroup(level, id);
-	}
-
-
-#ifdef HAVE_LIBBTRFS
 
 	bool
 	does_subvolume_exist(int fd, subvolid_t subvolid)
@@ -309,6 +277,117 @@ namespace snapper
 
 #endif
 
+
+#ifdef ENABLE_BTRFS_QUOTA
+
+	qgroup_t
+	calc_qgroup(uint64_t level, subvolid_t id)
+	{
+	    return (level << 48) | id;
+	}
+
+
+	qgroup_t
+	parse_qgroup(const string& str)
+	{
+	    string::size_type pos = str.find('/');
+	    if (pos == string::npos)
+		throw std::runtime_error("parsing qgroup failed");
+
+	    std::istringstream a(str.substr(0, pos));
+	    uint64_t level = 0;
+	    a >> level;
+	    if (a.fail() || !a.eof())
+		throw std::runtime_error("parsing qgroup failed");
+
+	    std::istringstream b(str.substr(pos + 1));
+	    subvolid_t id = 0;
+	    b >> id;
+	    if (b.fail() || !b.eof())
+		throw std::runtime_error("parsing qgroup failed");
+
+	    return calc_qgroup(level, id);
+	}
+
+
+	void
+	qgroup_create(int fd, qgroup_t qgroup)
+	{
+	    struct btrfs_ioctl_qgroup_create_args args;
+	    memset(&args, 0, sizeof(args));
+	    args.create = 1;
+	    args.qgroupid = qgroup;
+
+	    if (ioctl(fd, BTRFS_IOC_QGROUP_CREATE, &args) != 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_QGROUP_CREATE) failed", errno);
+	}
+
+
+	void
+	qgroup_destroy(int fd, qgroup_t qgroup)
+	{
+	    struct btrfs_ioctl_qgroup_create_args args;
+	    memset(&args, 0, sizeof(args));
+	    args.create = 0;
+	    args.qgroupid = qgroup;
+
+	    if (ioctl(fd, BTRFS_IOC_QGROUP_CREATE, &args) != 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_QGROUP_CREATE) failed", errno);
+	}
+
+
+	void
+	qgroup_assign(int fd, qgroup_t src, qgroup_t dst)
+	{
+	    struct btrfs_ioctl_qgroup_assign_args args;
+	    memset(&args, 0, sizeof(args));
+	    args.assign = 1;
+	    args.src = src;
+	    args.dst = dst;
+
+	    if (ioctl(fd, BTRFS_IOC_QGROUP_ASSIGN, &args) != 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_QGROUP_ASSIGN) failed", errno);
+	}
+
+
+	void
+	qgroup_remove(int fd, qgroup_t src, qgroup_t dst)
+	{
+	    struct btrfs_ioctl_qgroup_assign_args args;
+	    memset(&args, 0, sizeof(args));
+	    args.assign = 0;
+	    args.src = src;
+	    args.dst = dst;
+
+	    if (ioctl(fd, BTRFS_IOC_QGROUP_ASSIGN, &args) != 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_QGROUP_ASSIGN) failed", errno);
+	}
+
+
+	void
+	quota_rescan(int fd)
+	{
+	    struct btrfs_ioctl_quota_rescan_args args;
+	    memset(&args, 0, sizeof(args));
+
+	    if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN, &args) < 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_RESCAN) failed", errno);
+
+	    while (true)
+	    {
+		sleep(1);
+
+		memset(&args, 0, sizeof(args));
+
+		if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN_STATUS, &args) < 0)
+		    throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_STATUS) failed", errno);
+
+		if (!args.flags)
+		    break;
+	    }
+	}
+
+#endif
 
 	void
 	sync(int fd)
