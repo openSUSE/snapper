@@ -160,6 +160,8 @@ AC_OUTPUT(
 	scripts/Makefile
 	pam/Makefile
 	data/Makefile
+	data/cleanup.service:data/cleanup.service.in
+	data/timeline.service:data/timeline.service.in
 	doc/Makefile
 	doc/snapper.xml:doc/snapper.xml.in
 	doc/snapperd.xml:doc/snapperd.xml.in
