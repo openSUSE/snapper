@@ -376,7 +376,8 @@ namespace snapper
 #ifdef ENABLE_BTRFS_QUOTA
 	    // see https://bugzilla.suse.com/show_bug.cgi?id=972511
 	    SDir subvolume_dir = openSubvolumeDir();
-	    qgroup_remove(subvolume_dir.fd(), calc_qgroup(0, subvolid), qgroup);
+	    if (qgroup != no_qgroup)
+		qgroup_remove(subvolume_dir.fd(), calc_qgroup(0, subvolid), qgroup);
 	    qgroup_destroy(subvolume_dir.fd(), calc_qgroup(0, subvolid));
 #endif
 
