@@ -65,6 +65,7 @@ namespace snapper
 
 	qgroup_t calc_qgroup(uint64_t level, subvolid_t id);
 	qgroup_t parse_qgroup(const string& str);
+	string format_qgroup(qgroup_t qgroup);
 
 	void qgroup_create(int fd, qgroup_t qgroup);
 	void qgroup_destroy(int fd, qgroup_t qgroup);

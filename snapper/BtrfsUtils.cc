@@ -358,6 +358,16 @@ namespace snapper
 	}
 
 
+	string
+	format_qgroup(qgroup_t qgroup)
+	{
+	    std::ostringstream ret;
+	    classic(ret);
+	    ret << (qgroup >> 48) << "/" << (qgroup & ((1LLU << 48) - 1));
+	    return ret.str();
+	}
+
+
 	void
 	qgroup_create(int fd, qgroup_t qgroup)
 	{

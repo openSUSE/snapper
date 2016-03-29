@@ -7,7 +7,7 @@ AM_CPPFLAGS = -I$(top_srcdir) $(DBUS_CFLAGS)
 LDADD = ../snapper/libsnapper.la ../dbus/libdbus.la -lboost_unit_test_framework
 
 check_PROGRAMS = sysconfig-get1.test dirname1.test basename1.test		\
-	equal-date.test dbus-escape.test cmp-lt.test
+	equal-date.test dbus-escape.test cmp-lt.test qgroup1.test
 
 TESTS = $(check_PROGRAMS)
 
