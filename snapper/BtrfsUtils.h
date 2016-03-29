@@ -24,12 +24,15 @@
 #define SNAPPER_BTRFS_UTILS_H
 
 
+#include <stdint.h>
 #include <string>
+#include <vector>
 
 
 namespace snapper
 {
     using std::string;
+    using std::vector;
 
 
     namespace BtrfsUtils
@@ -57,8 +60,35 @@ namespace snapper
 	string get_subvolume(int fd, subvolid_t id);
 	subvolid_t get_id(int fd);
 
-	qgroup_t make_qgroup(uint64_t level, subvolid_t id);
-	qgroup_t make_qgroup(const string& str);
+	void quota_enable(int fd);
+	void quota_disable(int fd);
+
+	void quota_rescan(int fd);
+
+	qgroup_t calc_qgroup(uint64_t level, subvolid_t id);
+	qgroup_t parse_qgroup(const string& str);
+	string format_qgroup(qgroup_t qgroup);
+
+	void qgroup_create(int fd, qgroup_t qgroup);
+	void qgroup_destroy(int fd, qgroup_t qgroup);
+
+	void qgroup_assign(int fd, qgroup_t src, qgroup_t dst);
+	void qgroup_remove(int fd, qgroup_t src, qgroup_t dst);
+
+	vector<qgroup_t> qgroup_query_children(int fd, qgroup_t qgroup);
+
+	struct QGroupUsage
+	{
+	    QGroupUsage() : referenced(0), referenced_compressed(0), exclusive(0),
+			    exclusive_compressed(0) {}
+
+	    uint64_t referenced;
+	    uint64_t referenced_compressed;
+	    uint64_t exclusive;
+	    uint64_t exclusive_compressed;
+	};
+
+	QGroupUsage qgroup_query_usage(int fd, qgroup_t qgroup);
 
 	void sync(int fd);
 

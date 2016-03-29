@@ -83,12 +83,14 @@ namespace snapper
     void
     Btrfs::evalConfigInfo(const ConfigInfo& config_info)
     {
+#ifdef ENABLE_BTRFS_QUOTA
+
 	string qgroup_str;
 	if (config_info.getValue("QGROUP", qgroup_str) && !qgroup_str.empty())
 	{
 	    try
 	    {
-		qgroup = make_qgroup(qgroup_str);
+		qgroup = parse_qgroup(qgroup_str);
 	    }
 	    catch (const runtime_error& e)
 	    {
@@ -96,6 +98,8 @@ namespace snapper
 		throw InvalidConfigException();
 	    }
 	}
+
+#endif
     }
 
 
@@ -368,6 +372,15 @@ namespace snapper
 
 #ifdef HAVE_LIBBTRFS
 	    deleted_subvolids.push_back(subvolid);
+
+#ifdef ENABLE_BTRFS_QUOTA
+	    // see https://bugzilla.suse.com/show_bug.cgi?id=972511
+	    SDir subvolume_dir = openSubvolumeDir();
+	    if (qgroup != no_qgroup)
+		qgroup_remove(subvolume_dir.fd(), calc_qgroup(0, subvolid), qgroup);
+	    qgroup_destroy(subvolume_dir.fd(), calc_qgroup(0, subvolid));
+#endif
+
 #endif
 	}
 	catch (const runtime_error& e)
