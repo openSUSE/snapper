@@ -280,6 +280,54 @@ namespace snapper
 
 #ifdef ENABLE_BTRFS_QUOTA
 
+	void
+	quota_enable(int fd)
+	{
+	     struct btrfs_ioctl_quota_ctl_args args;
+	     memset(&args, 0, sizeof(args));
+	     args.cmd = BTRFS_QUOTA_CTL_ENABLE;
+
+	     if (ioctl(fd, BTRFS_IOC_QUOTA_CTL, &args) < 0)
+		 throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_CTL) failed", errno);
+	}
+
+
+	void
+	quota_disable(int fd)
+	{
+	     struct btrfs_ioctl_quota_ctl_args args;
+	     memset(&args, 0, sizeof(args));
+	     args.cmd = BTRFS_QUOTA_CTL_DISABLE;
+
+	     if (ioctl(fd, BTRFS_IOC_QUOTA_CTL, &args) < 0)
+		 throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_CTL) failed", errno);
+	}
+
+
+	void
+	quota_rescan(int fd)
+	{
+	    struct btrfs_ioctl_quota_rescan_args args;
+	    memset(&args, 0, sizeof(args));
+
+	    if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN, &args) < 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_RESCAN) failed", errno);
+
+	    while (true)
+	    {
+		sleep(1);
+
+		memset(&args, 0, sizeof(args));
+
+		if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN_STATUS, &args) < 0)
+		    throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_STATUS) failed", errno);
+
+		if (!args.flags)
+		    break;
+	    }
+	}
+
+
 	qgroup_t
 	calc_qgroup(uint64_t level, subvolid_t id)
 	{
@@ -364,30 +412,51 @@ namespace snapper
 	}
 
 
-	void
-	quota_rescan(int fd)
+	QGroupUsage
+	qgroup_query_usage(int fd, qgroup_t qgroup)
 	{
-	    struct btrfs_ioctl_quota_rescan_args args;
+	    struct btrfs_ioctl_search_args args;
 	    memset(&args, 0, sizeof(args));
 
-	    if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN, &args) < 0)
-		throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_RESCAN) failed", errno);
+	    struct btrfs_ioctl_search_key* sk = &args.key;
+	    sk->tree_id = BTRFS_QUOTA_TREE_OBJECTID;
+	    sk->min_objectid = 0;
+	    sk->max_objectid = 0;
+	    sk->min_offset = qgroup;
+	    sk->max_offset = qgroup;
+	    sk->min_transid = 0;
+	    sk->max_transid = (u64) -1;
+	    sk->min_type = BTRFS_QGROUP_INFO_KEY;
+	    sk->max_type = BTRFS_QGROUP_INFO_KEY;
+	    sk->nr_items = 16;
 
-	    while (true)
-	    {
-		sleep(1);
+	    if (ioctl(fd, BTRFS_IOC_TREE_SEARCH, &args) < 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_TREE_SEARCH) failed", errno);
 
-		memset(&args, 0, sizeof(args));
+	    if (sk->nr_items != 1)
+		throw std::runtime_error("sk->qnr_items != 1");
 
-		if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN_STATUS, &args) < 0)
-		    throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_STATUS) failed", errno);
+	    struct btrfs_ioctl_search_header* sh = (struct btrfs_ioctl_search_header*)(args.buf);
+	    if (sh->offset != qgroup)
+		throw std::runtime_error("sh->offset != qgroup");
 
-		if (!args.flags)
-		    break;
-	    }
+	    if (sh->type != BTRFS_QGROUP_INFO_KEY)
+		throw std::runtime_error("sh->type != BTRFS_QGROUP_INFO_KEY");
+
+	    struct btrfs_qgroup_info_item info;
+	    memcpy(&info, (struct btrfs_qgroup_info_item*)(args.buf + sizeof(*sh)), sizeof(info));
+
+	    QGroupUsage qgroup_usage;
+	    qgroup_usage.referenced = le64_to_cpu(info.referenced);
+	    qgroup_usage.referenced_compressed = le64_to_cpu(info.referenced_compressed);
+	    qgroup_usage.exclusive = le64_to_cpu(info.exclusive);
+	    qgroup_usage.exclusive_compressed = le64_to_cpu(info.exclusive_compressed);
+
+	    return qgroup_usage;
 	}
 
 #endif
+
 
 	void
 	sync(int fd)
