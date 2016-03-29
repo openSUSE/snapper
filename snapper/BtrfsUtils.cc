@@ -287,7 +287,7 @@ namespace snapper
 	     memset(&args, 0, sizeof(args));
 	     args.cmd = BTRFS_QUOTA_CTL_ENABLE;
 
-	     if (ioctl(fd, BTRFS_IOC_QUOTA_CTL, &args) < 0)
+	     if (ioctl(fd, BTRFS_IOC_QUOTA_CTL, &args) != 0)
 		 throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_CTL) failed", errno);
 	}
 
@@ -299,7 +299,7 @@ namespace snapper
 	     memset(&args, 0, sizeof(args));
 	     args.cmd = BTRFS_QUOTA_CTL_DISABLE;
 
-	     if (ioctl(fd, BTRFS_IOC_QUOTA_CTL, &args) < 0)
+	     if (ioctl(fd, BTRFS_IOC_QUOTA_CTL, &args) != 0)
 		 throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_CTL) failed", errno);
 	}
 
@@ -310,7 +310,7 @@ namespace snapper
 	    struct btrfs_ioctl_quota_rescan_args args;
 	    memset(&args, 0, sizeof(args));
 
-	    if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN, &args) < 0)
+	    if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN, &args) != 0)
 		throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_RESCAN) failed", errno);
 
 	    while (true)
@@ -319,8 +319,8 @@ namespace snapper
 
 		memset(&args, 0, sizeof(args));
 
-		if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN_STATUS, &args) < 0)
-		    throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_STATUS) failed", errno);
+		if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN_STATUS, &args) != 0)
+		    throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_RESCAN_STATUS) failed", errno);
 
 		if (!args.flags)
 		    break;
@@ -445,7 +445,7 @@ namespace snapper
 
 	    while (true)
 	    {
-		if (ioctl(fd, BTRFS_IOC_TREE_SEARCH, &args) < 0)
+		if (ioctl(fd, BTRFS_IOC_TREE_SEARCH, &args) != 0)
 		    throw runtime_error_with_errno("ioctl(BTRFS_IOC_TREE_SEARCH) failed", errno);
 
 		if (sk->nr_items == 0)
@@ -500,7 +500,7 @@ namespace snapper
 	    sk->max_type = BTRFS_QGROUP_INFO_KEY;
 	    sk->nr_items = 16;
 
-	    if (ioctl(fd, BTRFS_IOC_TREE_SEARCH, &args) < 0)
+	    if (ioctl(fd, BTRFS_IOC_TREE_SEARCH, &args) != 0)
 		throw runtime_error_with_errno("ioctl(BTRFS_IOC_TREE_SEARCH) failed", errno);
 
 	    if (sk->nr_items != 1)
