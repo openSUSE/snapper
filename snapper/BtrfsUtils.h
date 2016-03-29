@@ -26,11 +26,13 @@
 
 #include <stdint.h>
 #include <string>
+#include <vector>
 
 
 namespace snapper
 {
     using std::string;
+    using std::vector;
 
 
     namespace BtrfsUtils
@@ -72,6 +74,8 @@ namespace snapper
 
 	void qgroup_assign(int fd, qgroup_t src, qgroup_t dst);
 	void qgroup_remove(int fd, qgroup_t src, qgroup_t dst);
+
+	vector<qgroup_t> qgroup_query_children(int fd, qgroup_t qgroup);
 
 	struct QGroupUsage
 	{

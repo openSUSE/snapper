@@ -422,6 +422,66 @@ namespace snapper
 	}
 
 
+	vector<qgroup_t>
+	qgroup_query_children(int fd, qgroup_t qgroup)
+	{
+	    struct btrfs_ioctl_search_args args;
+	    memset(&args, 0, sizeof(args));
+
+	    struct btrfs_ioctl_search_key* sk = &args.key;
+	    sk->tree_id = BTRFS_QUOTA_TREE_OBJECTID;
+
+	    sk->min_type = BTRFS_QGROUP_RELATION_KEY;
+	    sk->max_type = BTRFS_QGROUP_RELATION_KEY;
+	    sk->min_objectid = 0;
+	    sk->max_objectid = BTRFS_LAST_FREE_OBJECTID;
+	    sk->min_offset = 0;
+	    sk->max_offset = (u64)(-1);
+	    sk->min_transid = 0;
+	    sk->max_transid = (u64)(-1);
+	    sk->nr_items = 4096;
+
+	    vector<qgroup_t> ret;
+
+	    while (true)
+	    {
+		if (ioctl(fd, BTRFS_IOC_TREE_SEARCH, &args) < 0)
+		    throw runtime_error_with_errno("ioctl(BTRFS_IOC_TREE_SEARCH) failed", errno);
+
+		if (sk->nr_items == 0)
+		    break;
+
+		u64 off = 0;
+
+		for (unsigned int i = 0; i < sk->nr_items; ++i)
+		{
+		    struct btrfs_ioctl_search_header* sh = (struct btrfs_ioctl_search_header*)(args.buf + off);
+		    off += sizeof(*sh);
+
+		    if (sh->type != BTRFS_QGROUP_RELATION_KEY)
+			throw std::runtime_error("sh->type != BTRFS_QGROUP_RELATION_KEY");
+
+		    if (sh->offset == qgroup)
+			ret.push_back(sh->objectid);
+
+		    off += sh->len;
+
+		    sk->min_objectid = sh->objectid;
+		    sk->min_offset = sh->offset;
+		}
+
+		sk->nr_items = 4096;
+
+		if (sk->min_offset < (u64)(-1))
+		    sk->min_offset++;
+		else
+		    break;
+	    }
+
+	    return ret;
+	}
+
+
 	QGroupUsage
 	qgroup_query_usage(int fd, qgroup_t qgroup)
 	{
