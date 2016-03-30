@@ -56,7 +56,7 @@ dnl Disable it by "configure --disable-silent-rules" or "make V=1"
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 CFLAGS="${CFLAGS} -std=c99 -Wall -Wextra -Wformat=2 -Wmissing-prototypes -Wno-unused-parameter"
-CXXFLAGS="${CXXFLAGS} -std=c++0x -Wall -Wextra -Wformat=2 -Wnon-virtual-dtor -Wno-unused-parameter"
+CXXFLAGS="${CXXFLAGS} -std=c++11 -Wall -Wextra -Wformat=2 -Wnon-virtual-dtor -Wno-unused-parameter"
 
 fillupdir=/var/adm/fillup-templates
 
