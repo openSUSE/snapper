@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -117,7 +118,8 @@ namespace snapper
 	}
 
 	y2err("do not know about fstype '" << fstype << "'");
-	throw InvalidConfigException();
+	SN_THROW(InvalidConfigException());
+	__builtin_unreachable();
     }
 
 
@@ -162,7 +164,7 @@ namespace snapper
 
 
     void
-    Filesystem::createSnapshotOfDefault(unsigned int num, bool read_only) const
+    Filesystem::createSnapshotOfDefault(unsigned int num, bool read_only, bool quota) const
     {
 	throw std::logic_error("not implemented");
     }

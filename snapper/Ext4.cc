@@ -164,7 +164,7 @@ namespace snapper
 
 
     void
-    Ext4::createSnapshot(unsigned int num, unsigned int num_parent, bool read_only) const
+    Ext4::createSnapshot(unsigned int num, unsigned int num_parent, bool read_only, bool quota) const
     {
 	if (num_parent != 0 || !read_only)
 	    throw std::logic_error("not implemented");

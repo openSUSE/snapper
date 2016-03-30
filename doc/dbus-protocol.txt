@@ -53,6 +53,8 @@ The following command require a successful CreateComparison in advance.
 method GetFiles config-name number1 number2 -> list(filename status)
 
 
+Intentionally not documented are PrepareQuota and QueryQuota.
+
 
 Filenames do not include the subvolume.
 

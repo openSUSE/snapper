@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -1294,6 +1295,61 @@ Client::get_files(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
+Client::prepare_quota(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name;
+
+    y2deb("PrepareQuota config_name:" << config_name);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
+
+    snapper->prepareQuota();
+
+    DBus::MessageMethodReturn reply(msg);
+
+    conn.send(reply);
+}
+
+
+void
+Client::query_quota(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name;
+
+    y2deb("QueryQuota config_name:" << config_name);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
+
+    QuotaData quota_data = snapper->queryQuotaData();
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
+    hoho << quota_data;
+
+    conn.send(reply);
+}
+
+
+void
 Client::sync(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
@@ -1433,6 +1489,10 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    delete_comparison(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetFiles"))
 	    get_files(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "PrepareQuota"))
+	    prepare_quota(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "QueryQuota"))
+	    query_quota(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "Sync"))
 	    sync(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "Debug"))
@@ -1577,6 +1637,12 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
     {
 	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.invalid_group", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
+    catch (const QuotaException& e)
+    {
+	SN_CAUGHT(e);
+	DBus::MessageError reply(msg, "error.quota", e.what());
 	conn.send(reply);
     }
     catch (const Exception& e)

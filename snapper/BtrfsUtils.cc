@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -327,6 +328,8 @@ namespace snapper
 	    }
 	}
 
+#endif
+
 
 	qgroup_t
 	calc_qgroup(uint64_t level, subvolid_t id)
@@ -367,6 +370,8 @@ namespace snapper
 	    return ret.str();
 	}
 
+
+#ifdef ENABLE_BTRFS_QUOTA
 
 	void
 	qgroup_create(int fd, qgroup_t qgroup)

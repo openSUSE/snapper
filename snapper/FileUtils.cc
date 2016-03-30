@@ -55,16 +55,16 @@ namespace snapper
     {
 	dirfd = ::open(base_path.c_str(), O_RDONLY | O_NOATIME | O_CLOEXEC);
 	if (dirfd < 0)
-	    throw IOErrorException(sformat("open failed path:%s errno:%d (%s)", base_path.c_str(),
-					   errno, stringerror(errno).c_str()));
+	    SN_THROW(IOErrorException(sformat("open failed path:%s errno:%d (%s)", base_path.c_str(),
+					      errno, stringerror(errno).c_str())));
 
 	struct stat buf;
 	if (fstat(dirfd, &buf) != 0)
-	    throw IOErrorException(sformat("fstat failed path:%s errno:%d (%s)", base_path.c_str(),
-					   errno, stringerror(errno).c_str()));
+	    SN_THROW(IOErrorException(sformat("fstat failed path:%s errno:%d (%s)", base_path.c_str(),
+					      errno, stringerror(errno).c_str())));
 
 	if (!S_ISDIR(buf.st_mode))
-	    throw IOErrorException("not a directory path:" + base_path);
+	    SN_THROW(IOErrorException("not a directory path:" + base_path));
 
 	setXaStatus();
     }
@@ -78,18 +78,18 @@ namespace snapper
 
 	dirfd = ::openat(dir.dirfd, name.c_str(), O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
 	if (dirfd < 0)
-	    throw IOErrorException(sformat("open failed path:%s errno:%d (%s)", dir.fullname().c_str(),
-					   errno, stringerror(errno).c_str()));
+	    SN_THROW(IOErrorException(sformat("open failed path:%s errno:%d (%s)", dir.fullname().c_str(),
+					      errno, stringerror(errno).c_str())));
 
 	struct stat buf;
 	if (fstat(dirfd, &buf) != 0)
-	    throw IOErrorException(sformat("fstat failed path:%s errno:%d (%s)", base_path.c_str(),
-					   errno, stringerror(errno).c_str()));
+	    SN_THROW(IOErrorException(sformat("fstat failed path:%s errno:%d (%s)", base_path.c_str(),
+					      errno, stringerror(errno).c_str())));
 
 	if (!S_ISDIR(buf.st_mode))
 	{
 	    close(dirfd);
-	    throw IOErrorException("not a directory path:" + dir.fullname(name));
+	    SN_THROW(IOErrorException("not a directory path:" + dir.fullname(name)));
 	}
 
 	xastatus = dir.xastatus;
@@ -101,8 +101,8 @@ namespace snapper
     {
 	dirfd = fcntl(dir.dirfd, F_DUPFD_CLOEXEC, 0);
 	if (dirfd == -1)
-	    throw IOErrorException(sformat("fcntl(F_DUPFD_CLOEXEC) failed error:%d (%s)", errno,
-					   stringerror(errno).c_str()));
+	    SN_THROW(IOErrorException(sformat("fcntl(F_DUPFD_CLOEXEC) failed error:%d (%s)", errno,
+					      stringerror(errno).c_str())));
 
 	xastatus = dir.xastatus;
     }
@@ -116,8 +116,8 @@ namespace snapper
 	    ::close(dirfd);
 	    dirfd = fcntl(dir.dirfd, F_DUPFD_CLOEXEC, 0);
 	    if (dirfd == -1)
-		throw IOErrorException(sformat("fcntl(F_DUPFD_CLOEXEC) failed error:%d (%s)", errno,
-					       stringerror(errno).c_str()));
+		SN_THROW(IOErrorException(sformat("fcntl(F_DUPFD_CLOEXEC) failed error:%d (%s)", errno,
+						  stringerror(errno).c_str())));
 
 	    xastatus = dir.xastatus;
 	}
@@ -176,15 +176,15 @@ namespace snapper
     {
 	int fd = fcntl(dirfd, F_DUPFD_CLOEXEC, 0);
 	if (fd == -1)
-	    throw IOErrorException(sformat("fcntl(F_DUPFD_CLOEXEC) failed error:%d (%s)", errno,
-					   stringerror(errno).c_str()));
+	    SN_THROW(IOErrorException(sformat("fcntl(F_DUPFD_CLOEXEC) failed error:%d (%s)", errno,
+					      stringerror(errno).c_str())));
 
 	DIR* dp = fdopendir(fd);
 	if (dp == NULL)
 	{
 	    ::close(fd);
-	    throw IOErrorException(sformat("fdopendir failed path:%s error:%d (%s)",
-					   fullname().c_str(), errno, stringerror(errno).c_str()));
+	    SN_THROW(IOErrorException(sformat("fdopendir failed path:%s error:%d (%s)",
+					      fullname().c_str(), errno, stringerror(errno).c_str())));
 	}
 
 	vector<string> ret;
@@ -499,9 +499,9 @@ namespace snapper
 	    }
 	    else
 	    {
-                throw IOErrorException(sformat("Couldn't get extended attributes status for %s/%s, "
-					       "errno:%d (%s)", base_path.c_str(), path.c_str(),
-					       errno, stringerror(errno).c_str()));
+                SN_THROW(IOErrorException(sformat("Couldn't get extended attributes status for %s/%s, "
+						  "errno:%d (%s)", base_path.c_str(), path.c_str(),
+						  errno, stringerror(errno).c_str())));
 	    }
 	}
 	else

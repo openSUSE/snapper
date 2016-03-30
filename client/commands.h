@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -114,6 +115,12 @@ command_delete_xcomparison(DBus::Connection& conn, const string& config_name, un
 list<XFile>
 command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		   unsigned int number2);
+
+void
+command_prepare_quota(DBus::Connection& conn, const string& config_name);
+
+XQuotaData
+command_query_quota(DBus::Connection& conn, const string& config_name);
 
 void
 command_xsync(DBus::Connection& conn, const string& config_name);

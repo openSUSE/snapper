@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012 Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -164,6 +165,7 @@ namespace DBus
     template <typename Type> struct TypeInfo {};
 
     template <> struct TypeInfo<dbus_uint32_t> { static const char* signature; };
+    template <> struct TypeInfo<dbus_uint64_t> { static const char* signature; };
     template <> struct TypeInfo<string> { static const char* signature; };
 
 
@@ -230,6 +232,9 @@ namespace DBus
 
     Hihi& operator>>(Hihi& hihi, dbus_uint32_t& data);
     Hoho& operator<<(Hoho& hoho, dbus_uint32_t data);
+
+    Hihi& operator>>(Hihi& hihi, dbus_uint64_t& data);
+    Hoho& operator<<(Hoho& hoho, dbus_uint64_t data);
 
     Hihi& operator>>(Hihi& hihi, time_t& data);
     Hoho& operator<<(Hoho& hoho, time_t data);

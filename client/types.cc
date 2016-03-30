@@ -118,6 +118,16 @@ namespace DBus
     }
 
 
+    Hihi&
+    operator>>(Hihi& hihi, XQuotaData& data)
+    {
+	hihi.open_recurse();
+	hihi >> data.size >> data.used;
+	hihi.close_recurse();
+	return hihi;
+    }
+
+
     Hoho&
     operator<<(Hoho& hoho, SnapshotType data)
     {
