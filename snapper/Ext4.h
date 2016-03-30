@@ -51,7 +51,7 @@ namespace snapper
 	virtual SDir openSnapshotDir(unsigned int num) const;
 
 	virtual void createSnapshot(unsigned int num, unsigned int num_parent,
-				    bool read_only) const;
+				    bool read_only, bool quota) const;
 	virtual void deleteSnapshot(unsigned int num) const;
 
 	virtual bool isSnapshotMounted(unsigned int num) const;

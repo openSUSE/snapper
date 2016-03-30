@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -276,7 +277,8 @@ namespace snapper
 
 
     void
-    Btrfs::createSnapshot(unsigned int num, unsigned int num_parent, bool read_only) const
+    Btrfs::createSnapshot(unsigned int num, unsigned int num_parent, bool read_only,
+			  bool quota) const
     {
 	if (num_parent == 0)
 	{
@@ -285,7 +287,8 @@ namespace snapper
 
 	    try
 	    {
-		create_snapshot(subvolume_dir.fd(), info_dir.fd(), "snapshot", read_only, qgroup);
+		create_snapshot(subvolume_dir.fd(), info_dir.fd(), "snapshot", read_only,
+				quota ? qgroup : no_qgroup);
 	    }
 	    catch (const runtime_error& e)
 	    {
@@ -300,7 +303,8 @@ namespace snapper
 
 	    try
 	    {
-		create_snapshot(snapshot_dir.fd(), info_dir.fd(), "snapshot", read_only, qgroup);
+		create_snapshot(snapshot_dir.fd(), info_dir.fd(), "snapshot", read_only,
+				quota ? qgroup : no_qgroup);
 	    }
 	    catch (const runtime_error& e)
 	    {
@@ -314,7 +318,7 @@ namespace snapper
 #ifdef ENABLE_ROLLBACK
 
     void
-    Btrfs::createSnapshotOfDefault(unsigned int num, bool read_only) const
+    Btrfs::createSnapshotOfDefault(unsigned int num, bool read_only, bool quota) const
     {
 	SDir subvolume_dir = openSubvolumeDir();
 	subvolid_t id = get_default_id(subvolume_dir.fd());
@@ -337,7 +341,8 @@ namespace snapper
 
 	try
 	{
-	    create_snapshot(tmp_mount_dir.fd(), info_dir.fd(), "snapshot", read_only, qgroup);
+	    create_snapshot(tmp_mount_dir.fd(), info_dir.fd(), "snapshot", read_only,
+			    quota ? qgroup : no_qgroup);
 	}
 	catch (const runtime_error& e)
 	{
@@ -349,7 +354,7 @@ namespace snapper
 #else
 
     void
-    Btrfs::createSnapshotOfDefault(unsigned int num, bool read_only) const
+    Btrfs::createSnapshotOfDefault(unsigned int num, bool read_only, bool quota) const
     {
 	throw std::logic_error("not implemented");
     }

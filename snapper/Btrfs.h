@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -59,9 +60,9 @@ namespace snapper
 	virtual SDir openInfosDir() const;
 	virtual SDir openSnapshotDir(unsigned int num) const;
 
-	virtual void createSnapshot(unsigned int num, unsigned int num_parent,
-				    bool read_only) const;
-	virtual void createSnapshotOfDefault(unsigned int num, bool read_only) const;
+	virtual void createSnapshot(unsigned int num, unsigned int num_parent, bool read_only,
+				    bool quota) const;
+	virtual void createSnapshotOfDefault(unsigned int num, bool read_only, bool quota) const;
 	virtual void deleteSnapshot(unsigned int num) const;
 
 	virtual bool isSnapshotMounted(unsigned int num) const;
@@ -77,6 +78,8 @@ namespace snapper
 	virtual void setDefault(unsigned int num) const;
 
 	virtual void sync() const;
+
+	virtual qgroup_t getQGroup() const { return qgroup; }
 
     private:
 

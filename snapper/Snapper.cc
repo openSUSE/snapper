@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -24,6 +25,7 @@
 
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <sys/statvfs.h>
 #include <glob.h>
 #include <string.h>
 #include <mntent.h>
@@ -44,6 +46,8 @@
 #include "snapper/AsciiFile.h"
 #include "snapper/Exception.h"
 #include "snapper/Hooks.h"
+#include "snapper/Btrfs.h"
+#include "snapper/BtrfsUtils.h"
 
 
 namespace snapper
@@ -622,6 +626,104 @@ namespace snapper
 
 	if (acl_free(acl) != 0)
 	    SN_THROW(AclException());
+    }
+
+
+    void
+    Snapper::prepareQuota() const
+    {
+#ifdef ENABLE_BTRFS_QUOTA
+
+	const Btrfs* btrfs = dynamic_cast<const Btrfs*>(getFilesystem());
+	if (!btrfs)
+	    SN_THROW(QuotaException("quota only supported with btrfs"));
+
+	if (btrfs->getQGroup() == no_qgroup)
+	    SN_THROW(QuotaException("qgroup not set"));
+
+	SDir subvolume_dir = openSubvolumeDir();
+
+	vector<qgroup_t> children = BtrfsUtils::qgroup_query_children(subvolume_dir.fd(),
+								      btrfs->getQGroup());
+	sort(children.begin(), children.end());
+
+	// Iterate all snapshot and ensure that those and only those with a
+	// cleanup algorithm are included in the high level qgroup.
+
+	for (const Snapshot& snapshot : snapshots)
+	{
+	    if (snapshot.isCurrent())
+		continue;
+
+	    BtrfsUtils::subvolid_t subvolid = get_id(snapshot.openSnapshotDir().fd());
+	    BtrfsUtils::qgroup_t qgroup = calc_qgroup(0, subvolid);
+
+	    bool included = binary_search(children.begin(), children.end(), qgroup);
+
+	    if (!snapshot.getCleanup().empty() && !included)
+	    {
+		BtrfsUtils::qgroup_assign(subvolume_dir.fd(), qgroup, btrfs->getQGroup());
+	    }
+	    else if (snapshot.getCleanup().empty() && included)
+	    {
+		BtrfsUtils::qgroup_remove(subvolume_dir.fd(), qgroup, btrfs->getQGroup());
+	    }
+	}
+
+	// Strictly speaking the rescan is not needed if we did not assign or
+	// remove qgroups. On the other hand the consistency of qgroup data
+	// before our modifications is not guaranteed. The status flag is
+	// unfortunately not reliable, see
+	// https://bugzilla.suse.com/show_bug.cgi?id=972508#c5.
+
+	quota_rescan(subvolume_dir.fd());
+
+#else
+
+	SN_THROW(QuotaException("not implemented"));
+	__builtin_unreachable();
+
+#endif
+    }
+
+
+    QuotaData
+    Snapper::queryQuotaData() const
+    {
+#ifdef ENABLE_BTRFS_QUOTA
+
+	const Btrfs* btrfs = dynamic_cast<const Btrfs*>(getFilesystem());
+	if (!btrfs)
+	    SN_THROW(QuotaException("quota only supported with btrfs"));
+
+	if (btrfs->getQGroup() == no_qgroup)
+	    SN_THROW(QuotaException("qgroup not set"));
+
+	QuotaData quota_data;
+
+	SDir subvolume_dir = openSubvolumeDir();
+
+	BtrfsUtils::sync(subvolume_dir.fd());
+
+	struct statvfs64 fsbuf;
+	if (fstatvfs64(subvolume_dir.fd(), &fsbuf) != 0)
+	    SN_THROW(QuotaException("statvfs64 failed"));
+	quota_data.size = fsbuf.f_blocks * fsbuf.f_bsize;
+
+	BtrfsUtils::QGroupUsage qgroup_usage = BtrfsUtils::qgroup_query_usage(subvolume_dir.fd(),
+									      btrfs->getQGroup());
+	quota_data.used = qgroup_usage.exclusive;
+
+	y2mil("size:" << quota_data.size << " used:" << quota_data.used);
+
+	return quota_data;
+
+#else
+
+	SN_THROW(QuotaException("not implemented"));
+	__builtin_unreachable();
+
+#endif
     }
 
 

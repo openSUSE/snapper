@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -95,6 +96,18 @@ namespace snapper
 	explicit DeleteConfigFailedException(const char* msg) : Exception(msg) {}
     };
 
+    struct QuotaException : public Exception
+    {
+	explicit QuotaException(const char* msg) : Exception(msg) {}
+    };
+
+
+    struct QuotaData
+    {
+	uint64_t size;
+	uint64_t used;
+    };
+
 
     class Snapper : private boost::noncopyable
     {
@@ -144,6 +157,10 @@ namespace snapper
 	void syncAcl() const;
 
 	void syncFilesystem() const;
+
+	void prepareQuota() const;
+
+	QuotaData queryQuotaData() const;
 
 	static const char* compileVersion();
 	static const char* compileFlags();

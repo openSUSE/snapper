@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -505,7 +506,7 @@ namespace snapper
 	if (isCurrent())
 	    SN_THROW(IllegalSnapshotException());
 
-	snapper->getFilesystem()->createSnapshot(num, num_parent, read_only);
+	snapper->getFilesystem()->createSnapshot(num, num_parent, read_only, !cleanup.empty());
     }
 
 
@@ -515,7 +516,7 @@ namespace snapper
 	if (isCurrent())
 	    SN_THROW(IllegalSnapshotException());
 
-	snapper->getFilesystem()->createSnapshotOfDefault(num, read_only);
+	snapper->getFilesystem()->createSnapshotOfDefault(num, read_only, !cleanup.empty());
     }
 
 
