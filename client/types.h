@@ -98,6 +98,13 @@ struct XFile
 };
 
 
+struct XQuotaData
+{
+    uint64_t size;
+    uint64_t used;
+};
+
+
 namespace DBus
 {
 
@@ -113,5 +120,7 @@ namespace DBus
     Hihi& operator>>(Hihi& hihi, XSnapshot& data);
 
     Hihi& operator>>(Hihi& hihi, XFile& data);
+
+    Hihi& operator>>(Hihi& hihi, XQuotaData& data);
 
 }

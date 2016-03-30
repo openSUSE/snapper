@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) [2016] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -83,6 +84,9 @@ error_description(const DBus::ErrorException& e)
 
     if (name == "error.acl_error")
 	return _("ACL error.");
+
+    if (name == "error.quota")
+	return sformat(_("Quota failure (%s)."), e.message());
 
     return sformat(_("Failure (%s)."), name.c_str());
 }
