@@ -56,6 +56,11 @@ libsnapper_la_SOURCES +=				\
 	MntTable.cc		MntTable.h
 endif
 
+if ENABLE_SELINUX
+libsnapper_la_SOURCES +=				\
+	Selinux.cc		Selinux.h
+endif
+
 libsnapper_la_LDFLAGS = -version-info @LIBVERSION_INFO@
 libsnapper_la_LIBADD = -lboost_thread -lboost_system -lxml2 -lacl -lz -lm
 if ENABLE_ROLLBACK
