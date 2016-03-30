@@ -84,7 +84,7 @@ namespace snapper
         {
             y2err("Couldn't get xattributes names-list size. link: " << path
 		  << ", error: " << stringerror(errno));
-            throw XAttributesException();
+            SN_THROW(XAttributesException());
         }
 
         y2deb("XAttributes names-list size is: " << size);
@@ -99,7 +99,7 @@ namespace snapper
         {
             y2err("Couldn't get xattributes names-list. link: " << path <<
 		  ", error: " << stringerror(errno));
-            throw XAttributesException();
+            SN_THROW(XAttributesException());
         }
 
 	ssize_t pos = 0;
@@ -115,7 +115,7 @@ namespace snapper
             {
                 y2err("Couldn't get a xattribute value size for the xattribute name '" << name
 		      << "': " << stringerror(errno));
-                throw XAttributesException();
+                SN_THROW(XAttributesException());
             }
 
             y2deb("XAttribute value size for xattribute name: '" << name << "' is " << v_size);
@@ -128,14 +128,14 @@ namespace snapper
 		if (v_size < 0)
 		{
 		    y2err("Couldn't get xattribute value for the xattribute name '" << name << "': ");
-		    throw XAttributesException();
+		    SN_THROW(XAttributesException());
 		}
 	    }
 
 	    if (!xamap.insert(make_pair(name, xa_value_t(buffer.get(), buffer.get() + v_size))).second)
 	    {
 		y2err("Duplicite extended attribute name in source file!");
-		throw XAttributesException();
+		SN_THROW(XAttributesException());
 	    }
 	}
 
@@ -152,7 +152,7 @@ namespace snapper
 	{
 	    y2err("Couldn't get xattributes names-list size. link: " << file.fullname(true) <<
 		  ", error: " << stringerror(errno));
-	    throw XAttributesException();
+	    SN_THROW(XAttributesException());
 	}
 
 	y2deb("XAttributes names-list size is: " << size);
@@ -167,7 +167,7 @@ namespace snapper
 	{
 	    y2err("Couldn't get xattributes names-list. link: " << file.fullname(true) <<
 		  ", error: " << stringerror(errno));
-	    throw XAttributesException();
+	    SN_THROW(XAttributesException());
 	}
 
 	ssize_t pos = 0;
@@ -182,7 +182,7 @@ namespace snapper
 	    {
 		y2err("Couldn't get a xattribute value size for the xattribute name '" <<
 		      name << "': " << stringerror(errno));
-		throw XAttributesException();
+		SN_THROW(XAttributesException());
 	    }
 
 	    y2deb("XAttribute value size for xattribute name: '" << name << "' is " << v_size);
@@ -195,14 +195,14 @@ namespace snapper
 		if (v_size < 0)
 		{
 		    y2err("Couldn't get xattribute value for the xattribute name '" << name << "': ");
-		    throw XAttributesException();
+		    SN_THROW(XAttributesException());
 		}
 	    }
 
 	    if (!xamap.insert(make_pair(name, xa_value_t(buffer.get(), buffer.get() + v_size))).second)
 	    {
 		y2err("Duplicite extended attribute name in source file!");
-		throw XAttributesException();
+		SN_THROW(XAttributesException());
 	    }
 	}
 

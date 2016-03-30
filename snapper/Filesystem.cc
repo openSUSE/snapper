@@ -117,7 +117,8 @@ namespace snapper
 	}
 
 	y2err("do not know about fstype '" << fstype << "'");
-	throw InvalidConfigException();
+	SN_THROW(InvalidConfigException());
+	__builtin_unreachable();
     }
 
 

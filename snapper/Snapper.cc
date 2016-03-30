@@ -56,7 +56,7 @@ namespace snapper
 	  config_name(config_name), subvolume("/")
     {
 	if (!getValue(KEY_SUBVOLUME, subvolume))
-	    throw InvalidConfigException();
+	    SN_THROW(InvalidConfigException());
     }
 
 
@@ -64,7 +64,7 @@ namespace snapper
     ConfigInfo::checkKey(const string& key) const
     {
 	if (key == KEY_SUBVOLUME || key == KEY_FSTYPE)
-	    throw InvalidConfigdataException();
+	    SN_THROW(InvalidConfigdataException());
 
 	try
 	{
@@ -72,7 +72,7 @@ namespace snapper
 	}
 	catch (const InvalidKeyException& e)
 	{
-	    throw InvalidConfigdataException();
+	    SN_THROW(InvalidConfigdataException());
 	}
     }
 
@@ -90,7 +90,7 @@ namespace snapper
 	}
 	catch (const FileNotFoundException& e)
 	{
-	    throw ConfigNotFoundException();
+	    SN_THROW(ConfigNotFoundException());
 	}
 
 	filesystem = Filesystem::create(*config_info, root_prefix);
@@ -193,7 +193,7 @@ namespace snapper
     Snapper::createSingleSnapshot(Snapshots::const_iterator parent, const SCD& scd)
     {
 	if (parent == snapshots.end())
-	    throw IllegalSnapshotException();
+	    SN_THROW(IllegalSnapshotException());
 
 	return snapshots.createSingleSnapshot(parent, scd);
     }
@@ -273,7 +273,7 @@ namespace snapper
 	}
 	catch (const FileNotFoundException& e)
 	{
-	    throw ListConfigsFailedException("sysconfig-file not found");
+	    SN_THROW(ListConfigsFailedException("sysconfig-file not found"));
 	}
 
 	return config_infos;
@@ -292,12 +292,12 @@ namespace snapper
 
 	if (config_name.empty() || config_name.find_first_of(", \t") != string::npos)
 	{
-	    throw CreateConfigFailedException("illegal config name");
+	    SN_THROW(CreateConfigFailedException("illegal config name"));
 	}
 
 	if (!boost::starts_with(subvolume, "/") || !checkDir(subvolume))
 	{
-	    throw CreateConfigFailedException("illegal subvolume");
+	    SN_THROW(CreateConfigFailedException("illegal subvolume"));
 	}
 
 	list<ConfigInfo> configs = getConfigs(root_prefix);
@@ -305,13 +305,13 @@ namespace snapper
 	{
 	    if (it->getSubvolume() == subvolume)
 	    {
-		throw CreateConfigFailedException("subvolume already covered");
+		SN_THROW(CreateConfigFailedException("subvolume already covered"));
 	    }
 	}
 
 	if (access(string(CONFIGTEMPLATEDIR "/" + template_name).c_str(), R_OK) != 0)
 	{
-	    throw CreateConfigFailedException("cannot access template config");
+	    SN_THROW(CreateConfigFailedException("cannot access template config"));
 	}
 
 	unique_ptr<Filesystem> filesystem;
@@ -321,11 +321,11 @@ namespace snapper
 	}
 	catch (const InvalidConfigException& e)
 	{
-	    throw CreateConfigFailedException("invalid filesystem type");
+	    SN_THROW(CreateConfigFailedException("invalid filesystem type"));
 	}
 	catch (const ProgramNotInstalledException& e)
 	{
-	    throw CreateConfigFailedException(e.what());
+	    SN_THROW(CreateConfigFailedException(e.what()));
 	}
 
 	try
@@ -335,7 +335,7 @@ namespace snapper
 	    sysconfig.getValue("SNAPPER_CONFIGS", config_names);
 	    if (find(config_names.begin(), config_names.end(), config_name) != config_names.end())
 	    {
-		throw CreateConfigFailedException("config already exists");
+		SN_THROW(CreateConfigFailedException("config already exists"));
 	    }
 
 	    config_names.push_back(config_name);
@@ -343,7 +343,7 @@ namespace snapper
 	}
 	catch (const FileNotFoundException& e)
 	{
-	    throw CreateConfigFailedException("sysconfig-file not found");
+	    SN_THROW(CreateConfigFailedException("sysconfig-file not found"));
 	}
 
 	try
@@ -357,15 +357,17 @@ namespace snapper
 	}
 	catch (const FileNotFoundException& e)
 	{
-	    throw CreateConfigFailedException("modifying config failed");
+	    SN_THROW(CreateConfigFailedException("modifying config failed"));
 	}
 
 	try
 	{
 	    filesystem->createConfig();
 	}
-	catch (...)
+	catch (const Exception& e)
 	{
+	    SN_CAUGHT(e);
+
 	    SysconfigFile sysconfig(SYSCONFIGFILE);
 	    vector<string> config_names;
 	    sysconfig.getValue("SNAPPER_CONFIGS", config_names);
@@ -375,7 +377,7 @@ namespace snapper
 
 	    SystemCmd cmd(RMBIN " " + quote(CONFIGSDIR "/" + config_name));
 
-	    throw;
+	    SN_RETHROW(e);
 	}
 
 	Hooks::create_config(subvolume, filesystem.get());
@@ -416,13 +418,13 @@ namespace snapper
 	}
 	catch (const DeleteConfigFailedException& e)
 	{
-	    throw DeleteConfigFailedException("deleting snapshot failed");
+	    SN_THROW(DeleteConfigFailedException("deleting snapshot failed"));
 	}
 
 	SystemCmd cmd1(RMBIN " " + quote(CONFIGSDIR "/" + config_name));
 	if (cmd1.retcode() != 0)
 	{
-	    throw DeleteConfigFailedException("deleting config-file failed");
+	    SN_THROW(DeleteConfigFailedException("deleting config-file failed"));
 	}
 
 	try
@@ -436,7 +438,7 @@ namespace snapper
 	}
 	catch (const FileNotFoundException& e)
 	{
-	    throw DeleteConfigFailedException("sysconfig-file not found");
+	    SN_THROW(DeleteConfigFailedException("sysconfig-file not found"));
 	}
     }
 
@@ -470,7 +472,7 @@ namespace snapper
 	    {
 		uid_t uid;
 		if (!get_user_uid(it->c_str(), uid))
-		    throw InvalidUserException();
+		    SN_THROW(InvalidUserException());
 		uids.push_back(uid);
 	    }
 	}
@@ -483,7 +485,7 @@ namespace snapper
 	    {
 		gid_t gid;
 		if (!get_group_gid(it->c_str(), gid))
-		    throw InvalidGroupException();
+		    SN_THROW(InvalidGroupException());
 		gids.push_back(gid);
 	    }
 	}
@@ -504,11 +506,11 @@ namespace snapper
     {
 	acl_permset_t permset;
 	if (acl_get_permset(entry, &permset) != 0)
-	    throw AclException();
+	    SN_THROW(AclException());
 
 	if (acl_add_perm(permset, ACL_READ) != 0 || acl_delete_perm(permset, ACL_WRITE) != 0 ||
 	    acl_add_perm(permset, ACL_EXECUTE) != 0)
-	    throw AclException();
+	    SN_THROW(AclException());
     };
 
 
@@ -517,13 +519,13 @@ namespace snapper
     {
 	acl_entry_t entry;
 	if (acl_create_entry(acl, &entry) != 0)
-	    throw AclException();
+	    SN_THROW(AclException());
 
 	if (acl_set_tag_type(entry, tag) != 0)
-	    throw AclException();
+	    SN_THROW(AclException());
 
 	if (acl_set_qualifier(entry, qualifier) != 0)
-	    throw AclException();
+	    SN_THROW(AclException());
 
 	set_acl_permissions(entry);
     };
@@ -536,11 +538,11 @@ namespace snapper
 
 	acl_t orig_acl = acl_get_fd(infos_dir.fd());
 	if (!orig_acl)
-	    throw AclException();
+	    SN_THROW(AclException());
 
 	acl_t acl = acl_dup(orig_acl);
 	if (!acl)
-	    throw AclException();
+	    SN_THROW(AclException());
 
 	set<uid_t> remaining_uids = set<uid_t>(uids.begin(), uids.end());
 	set<gid_t> remaining_gids = set<gid_t>(gids.begin(), gids.end());
@@ -552,7 +554,7 @@ namespace snapper
 
 		acl_tag_t tag;
 		if (acl_get_tag_type(entry, &tag) != 0)
-		    throw AclException();
+		    SN_THROW(AclException());
 
 		switch (tag)
 		{
@@ -560,7 +562,7 @@ namespace snapper
 
 			uid_t* uid = (uid_t*) acl_get_qualifier(entry);
 			if (!uid)
-			    throw AclException();
+			    SN_THROW(AclException());
 
 			if (contains(remaining_uids, *uid))
 			{
@@ -571,7 +573,7 @@ namespace snapper
 			else
 			{
 			    if (acl_delete_entry(acl, entry) != 0)
-				throw AclException();
+				SN_THROW(AclException());
 			}
 
 		    } break;
@@ -580,7 +582,7 @@ namespace snapper
 
 			gid_t* gid = (gid_t*) acl_get_qualifier(entry);
 			if (!gid)
-			    throw AclException();
+			    SN_THROW(AclException());
 
 			if (contains(remaining_gids, *gid))
 			{
@@ -591,7 +593,7 @@ namespace snapper
 			else
 			{
 			    if (acl_delete_entry(acl, entry) != 0)
-				throw AclException();
+				SN_THROW(AclException());
 			}
 
 		    } break;
@@ -612,14 +614,14 @@ namespace snapper
 	}
 
 	if (acl_calc_mask(&acl) != 0)
-	    throw AclException();
+	    SN_THROW(AclException());
 
 	if (acl_cmp(orig_acl, acl) == 1)
 	    if (acl_set_fd(infos_dir.fd(), acl) != 0)
-		throw AclException();
+		SN_THROW(AclException());
 
 	if (acl_free(acl) != 0)
-	    throw AclException();
+	    SN_THROW(AclException());
     }
 
 

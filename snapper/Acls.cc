@@ -57,7 +57,7 @@ namespace snapper
 	    if (stat(path.c_str(), &buf) < 0)
 	    {
 		y2err("stat failed errno: " << errno << " (" << stringerror(errno) << ")");
-		throw AclException();
+		SN_THROW(AclException());
 	    }
 	}
 	else
@@ -66,7 +66,7 @@ namespace snapper
 	    {
 		y2err("fstat failed errno: " << errno << " (" << stringerror(errno) << ")");
 		::close(fd);
-		throw AclException();
+		SN_THROW(AclException());
 	    }
 
 	    acl_access = acl_get_fd(fd);
@@ -74,7 +74,7 @@ namespace snapper
 	    {
 		y2err("acl_get_fd failed errno: " << errno << " (" << stringerror(errno) << ")");
 		::close(fd);
-		throw AclException();
+		SN_THROW(AclException());
 	    }
 
 	    ::close(fd);
@@ -91,7 +91,7 @@ namespace snapper
 	    if (!acl_access)
 	    {
 		y2err("acl_get_file failed errno: " << errno << " (" << stringerror(errno) << ")");
-		throw AclException();
+		SN_THROW(AclException());
 	    }
 	}
 
@@ -107,7 +107,7 @@ namespace snapper
 		    y2err("acl_free failed errno: " << errno << " (" << stringerror(errno) << ")");
 		}
 
-		throw AclException();
+		SN_THROW(AclException());
 	    }
 	}
     }
@@ -131,7 +131,7 @@ namespace snapper
 	if (acl_set_file(path.c_str(), ACL_TYPE_ACCESS, acl_access))
 	{
 	    y2err("acl_set_file failed errno: " << errno << " (" << stringerror(errno) << ")");
-	    throw AclException();
+	    SN_THROW(AclException());
 	}
 
 	if (get_acl_types() & ACL_TYPE_DEFAULT)
@@ -139,7 +139,7 @@ namespace snapper
 	    if (acl_set_file(path.c_str(), ACL_TYPE_DEFAULT, acl_default))
 	    {
 		y2err("acl_set_file failed errno: " << errno << " (" << stringerror(errno) << ")");
-		throw AclException();
+		SN_THROW(AclException());
 	    }
 	}
     }

@@ -95,7 +95,7 @@ namespace snapper
 	    catch (const runtime_error& e)
 	    {
 		y2err("failed to parse qgroup '" << qgroup_str << "'");
-		throw InvalidConfigException();
+		SN_THROW(InvalidConfigException());
 	    }
 	}
 
@@ -119,11 +119,11 @@ namespace snapper
 	    switch (e.error_number)
 	    {
 		case EEXIST:
-		    throw CreateConfigFailedException("creating btrfs subvolume .snapshots failed "
-						      "since it already exists");
+		    SN_THROW(CreateConfigFailedException("creating btrfs subvolume .snapshots failed "
+							 "since it already exists"));
 
 		default:
-		    throw CreateConfigFailedException("creating btrfs subvolume .snapshots failed");
+		    SN_THROW(CreateConfigFailedException("creating btrfs subvolume .snapshots failed"));
 	    }
 	}
 
@@ -155,7 +155,7 @@ namespace snapper
 	catch (const runtime_error& e)
 	{
 	    y2err("delete subvolume failed, " << e.what());
-	    throw DeleteConfigFailedException("deleting btrfs snapshot failed");
+	    SN_THROW(DeleteConfigFailedException("deleting btrfs snapshot failed"));
 	}
     }
 
@@ -214,12 +214,12 @@ namespace snapper
 	struct stat stat;
 	if (subvolume_dir.stat(&stat) != 0)
 	{
-	    throw IOErrorException("stat on subvolume directory failed");
+	    SN_THROW(IOErrorException("stat on subvolume directory failed"));
 	}
 
 	if (!is_subvolume(stat))
 	{
-	    throw IOErrorException("subvolume is not a btrfs subvolume");
+	    SN_THROW(IOErrorException("subvolume is not a btrfs subvolume"));
 	}
 
 	return subvolume_dir;
@@ -235,7 +235,7 @@ namespace snapper
 	struct stat stat;
 	if (infos_dir.stat(&stat) != 0)
 	{
-	    throw IOErrorException("stat on info directory failed");
+	    SN_THROW(IOErrorException("stat on info directory failed"));
 	}
 
 	if (!is_subvolume(stat))
@@ -246,19 +246,19 @@ namespace snapper
 	if (stat.st_uid != 0)
 	{
 	    y2err(".snapshots must have owner root");
-	    throw IOErrorException(".snapshots must have owner root");
+	    SN_THROW(IOErrorException(".snapshots must have owner root"));
 	}
 
 	if (stat.st_gid != 0 && stat.st_mode & S_IWGRP)
 	{
 	    y2err(".snapshots must have group root or must not be group-writable");
-	    throw IOErrorException(".snapshots must have group root or must not be group-writable");
+	    SN_THROW(IOErrorException(".snapshots must have group root or must not be group-writable"));
 	}
 
 	if (stat.st_mode & S_IWOTH)
 	{
 	    y2err(".snapshots must not be world-writable");
-	    throw IOErrorException(".snapshots must not be world-writable");
+	    SN_THROW(IOErrorException(".snapshots must not be world-writable"));
 	}
 
 	return infos_dir;
@@ -290,7 +290,7 @@ namespace snapper
 	    catch (const runtime_error& e)
 	    {
 		y2err("create snapshot failed, " << e.what());
-		throw CreateSnapshotFailedException();
+		SN_THROW(CreateSnapshotFailedException());
 	    }
 	}
 	else
@@ -305,7 +305,7 @@ namespace snapper
 	    catch (const runtime_error& e)
 	    {
 		y2err("create snapshot failed, " << e.what());
-		throw CreateSnapshotFailedException();
+		SN_THROW(CreateSnapshotFailedException());
 	    }
 	}
     }
@@ -325,7 +325,7 @@ namespace snapper
 	if (!getMtabData(subvolume, found, mtab_data))
 	{
 	    y2err("failed to find device");
-	    throw CreateSnapshotFailedException();
+	    SN_THROW(CreateSnapshotFailedException());
 	}
 
 	SDir infos_dir = openInfosDir();
@@ -342,7 +342,7 @@ namespace snapper
 	catch (const runtime_error& e)
 	{
 	    y2err("create snapshot failed, " << e.what());
-	    throw CreateSnapshotFailedException();
+	    SN_THROW(CreateSnapshotFailedException());
 	}
     }
 
@@ -386,7 +386,7 @@ namespace snapper
 	catch (const runtime_error& e)
 	{
 	    y2err("delete snapshot failed, " << e.what());
-	    throw DeleteSnapshotFailedException();
+	    SN_THROW(DeleteSnapshotFailedException());
 	}
     }
 
@@ -711,7 +711,7 @@ namespace snapper
 	if (r < 0)
 	{
 	    y2err("failed to initialize subvol search (" << stringerror(r) << ")");
-	    throw BtrfsSendReceiveException();
+	    SN_THROW(BtrfsSendReceiveException());
 	}
     }
 
@@ -1234,7 +1234,7 @@ namespace snapper
 	if (r1 < 0)
 	{
 	    y2err("pipe failed errno:" << errno << " (" << stringerror(errno) << ")");
-	    throw BtrfsSendReceiveException();
+	    SN_THROW(BtrfsSendReceiveException());
 	}
 
 	struct btrfs_ioctl_send_args io_send;
@@ -1266,7 +1266,7 @@ namespace snapper
 
 	if (r2 < 0 || !uf.get())
 	{
-	    throw BtrfsSendReceiveException();
+	    SN_THROW(BtrfsSendReceiveException());
 	}
 
 #else
@@ -1287,7 +1287,7 @@ namespace snapper
 
 	if (r2 < 0 || !dumper_ret)
 	{
-	    throw BtrfsSendReceiveException();
+	    SN_THROW(BtrfsSendReceiveException());
 	}
 
 #endif
@@ -1300,7 +1300,7 @@ namespace snapper
 	u64 flags;
 	if (ioctl(dir.fd(), BTRFS_IOC_SUBVOL_GETFLAGS, &flags) < 0)
 	{
-	    throw IOErrorException("ioctl BTRFS_IOC_SUBVOL_GETFLAGS failed");
+	    SN_THROW(IOErrorException("ioctl BTRFS_IOC_SUBVOL_GETFLAGS failed"));
 	}
 
 	return flags & BTRFS_SUBVOL_RDONLY;
@@ -1315,7 +1315,7 @@ namespace snapper
 	if (!is_subvolume_ro(dir1) || !is_subvolume_ro(dir2))
 	{
 	    y2err("not read-only snapshots");
-	    throw BtrfsSendReceiveException();
+	    SN_THROW(BtrfsSendReceiveException());
 	}
 
 	u64 parent_root_id = 0;
@@ -1323,7 +1323,7 @@ namespace snapper
 	if (!get_root_id(name1, &parent_root_id))
 	{
 	    y2err("could not resolve root_id for " << name1);
-	    throw BtrfsSendReceiveException();
+	    SN_THROW(BtrfsSendReceiveException());
 	}
 
 	vector<u64> clone_sources;
@@ -1401,7 +1401,7 @@ namespace snapper
 	}
 	catch (const runtime_error& e)
 	{
-	    throw IOErrorException(string("set default failed, ") + e.what());
+	    SN_THROW(IOErrorException(string("set default failed, ") + e.what()));
 	}
     }
 

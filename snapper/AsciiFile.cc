@@ -41,7 +41,7 @@ namespace snapper
 	if (file == NULL)
 	{
 	    y2war("file is NULL");
-	    throw FileNotFoundException();
+	    SN_THROW(FileNotFoundException());
 	}
     }
 
@@ -52,7 +52,7 @@ namespace snapper
 	if (file == NULL)
 	{
 	    y2war("file is NULL");
-	    throw FileNotFoundException();
+	    SN_THROW(FileNotFoundException());
 	}
     }
 
@@ -64,7 +64,7 @@ namespace snapper
 	if (file == NULL)
 	{
 	    y2war("open for '" << filename << "' failed");
-	    throw FileNotFoundException();
+	    SN_THROW(FileNotFoundException());
 	}
     }
 
@@ -174,7 +174,7 @@ AsciiFile::save()
 	Regex rx("^" "([0-9A-Z_]+)" "$");
 
 	if (!rx.match(key))
-	    throw InvalidKeyException();
+	    SN_THROW(InvalidKeyException());
     }
 
 

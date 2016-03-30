@@ -158,7 +158,7 @@ namespace snapper
 		    const struct stat& stat2)
     {
 	if ((stat1.st_mode & S_IFMT) != (stat2.st_mode & S_IFMT))
-	    throw LogicErrorException();
+	    SN_THROW(LogicErrorException());
 
 	switch (stat1.st_mode & S_IFMT)
 	{
@@ -247,10 +247,10 @@ namespace snapper
 	    return DELETED;
 
 	if (r1 != 0)
-	    throw IOErrorException("stat failed path:" + file1.fullname());
+	    SN_THROW(IOErrorException("stat failed path:" + file1.fullname()));
 
 	if (r2 != 0)
-	    throw IOErrorException("lstat failed path:" + file2.fullname());
+	    SN_THROW(IOErrorException("lstat failed path:" + file2.fullname()));
 
 	return cmpFiles(file1, stat1, file2, stat2);
     }
@@ -409,7 +409,7 @@ namespace snapper
 	    else
 	    {
 		if (*first1 != *first2)
-		    throw LogicErrorException();
+		    SN_THROW(LogicErrorException());
 
 		struct stat stat1;
 		dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW); // TODO error check
@@ -433,12 +433,14 @@ namespace snapper
 	struct stat stat1;
 	int r1 = dir1.stat(&stat1);
 	if (r1 != 0)
-	    throw IOErrorException(sformat("stat failed path:%s errno:%d", dir1.fullname().c_str(), errno));
+	    SN_THROW(IOErrorException(sformat("stat failed path:%s errno:%d",
+					      dir1.fullname().c_str(), errno)));
 
 	struct stat stat2;
 	int r2 = dir2.stat(&stat2);
 	if (r2 != 0)
-	    throw IOErrorException(sformat("stat failed path:%s errno:%d", dir2.fullname().c_str(), errno));
+	    SN_THROW(IOErrorException(sformat("stat failed path:%s errno:%d",
+					      dir2.fullname().c_str(), errno)));
 
 	CmpData cmp_data;
 	cmp_data.cb = cb;
