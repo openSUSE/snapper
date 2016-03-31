@@ -67,6 +67,8 @@ namespace snapper
 	void quota_rescan(int fd);
 
 	qgroup_t calc_qgroup(uint64_t level, subvolid_t id);
+	uint64_t get_level(qgroup_t qgroup);
+	uint64_t get_subvolid(qgroup_t qgroup);
 	qgroup_t parse_qgroup(const string& str);
 	string format_qgroup(qgroup_t qgroup);
 
@@ -76,7 +78,9 @@ namespace snapper
 	void qgroup_assign(int fd, qgroup_t src, qgroup_t dst);
 	void qgroup_remove(int fd, qgroup_t src, qgroup_t dst);
 
-	vector<qgroup_t> qgroup_query_children(int fd, qgroup_t qgroup);
+	qgroup_t qgroup_find_free(int fd, uint64_t level);
+
+	vector<qgroup_t> qgroup_query_children(int fd, qgroup_t parent);
 
 	struct QGroupUsage
 	{

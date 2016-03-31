@@ -85,7 +85,7 @@ autoconf
 %if 0%{?suse_version} <= 1310
 	--disable-rollback							\
 %endif
-	--disable-silent-rules --disable-ext4 --disable-btrfs-quota
+	--disable-silent-rules --disable-ext4
 make %{?jobs:-j%jobs}
 
 %install
