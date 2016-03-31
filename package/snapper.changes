@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Mar 31 16:00:54 CEST 2016 - aschnell@suse.com
+
+- allow to setup quota (for fate#312751)
+
+-------------------------------------------------------------------
 Fri Dec 18 15:41:16 CET 2015 - aschnell@suse.com
 
 - improved error message (see bsc#956606)

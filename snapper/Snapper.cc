@@ -630,6 +630,39 @@ namespace snapper
 
 
     void
+    Snapper::setupQuota()
+    {
+#ifdef ENABLE_BTRFS_QUOTA
+
+	const Btrfs* btrfs = dynamic_cast<const Btrfs*>(getFilesystem());
+	if (!btrfs)
+	    SN_THROW(QuotaException("quota only supported with btrfs"));
+
+	if (btrfs->getQGroup() != no_qgroup)
+	    SN_THROW(QuotaException("qgroup already set"));
+
+	SDir subvolume_dir = openSubvolumeDir();
+
+	BtrfsUtils::quota_enable(subvolume_dir.fd());
+
+	qgroup_t qgroup = BtrfsUtils::qgroup_find_free(subvolume_dir.fd(), 1);
+
+	y2mil("free qgroup:" << format_qgroup(qgroup));
+
+	BtrfsUtils::qgroup_create(subvolume_dir.fd(), qgroup);
+
+	config_info->setValue("QGROUP", format_qgroup(qgroup));
+
+#else
+
+	SN_THROW(QuotaException("not implemented"));
+	__builtin_unreachable();
+
+#endif
+    }
+
+
+    void
     Snapper::prepareQuota() const
     {
 #ifdef ENABLE_BTRFS_QUOTA

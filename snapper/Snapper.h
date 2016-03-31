@@ -158,6 +158,8 @@ namespace snapper
 
 	void syncFilesystem() const;
 
+	void setupQuota();
+
 	void prepareQuota() const;
 
 	QuotaData queryQuotaData() const;

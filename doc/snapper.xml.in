@@ -594,6 +594,13 @@
       </varlistentry>
 
       <varlistentry>
+	<term><option>setup-quota</option></term>
+	<listitem>
+	  <para>Sets up quota. Currently only supported with btrfs.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
 	<term><option>cleanup <replaceable>cleanup-algorithm</replaceable></option></term>
 	<listitem>
 	  <para>Run the cleanup algorithm

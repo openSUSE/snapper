@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -1425,6 +1426,36 @@ command_rollback(DBus::Connection* conn, Snapper* snapper)
 
 
 void
+help_setup_quota()
+{
+    cout << _("  Setup quota:") << endl
+	 << _("\tsnapper setup-quota") << endl
+	 << endl;
+}
+
+
+void
+command_setup_quota(DBus::Connection* conn, Snapper* snapper)
+{
+    GetOpts::parsed_opts opts = getopts.parse("setup-quota", GetOpts::no_options);
+    if (getopts.numArgs() != 0)
+    {
+	cerr << _("Command 'setup-quota' does not take arguments.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    if (no_dbus)
+    {
+	snapper->setupQuota();
+    }
+    else
+    {
+	command_setup_quota(*conn, config_name);
+    }
+}
+
+
+void
 help_cleanup()
 {
     cout << _("  Cleanup snapshots:") << endl
@@ -1652,6 +1683,7 @@ main(int argc, char** argv)
 #ifdef ENABLE_ROLLBACK
 	Cmd("rollback", command_rollback, help_rollback, false, true),
 #endif
+	Cmd("setup-quota", command_setup_quota, help_setup_quota, true, true),
 	Cmd("cleanup", command_cleanup, help_cleanup, false, true),
 	Cmd("debug", command_debug, help_debug, false, false)
     };
@@ -1825,6 +1857,12 @@ main(int argc, char** argv)
 	{
 	    SN_CAUGHT(e);
 	    cerr << _("Invalid group.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const QuotaException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << sformat(_("Quota error (%s)."), e.what()) << endl;
 	    exit(EXIT_FAILURE);
 	}
     }

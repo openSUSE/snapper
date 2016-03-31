@@ -117,6 +117,9 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
 		   unsigned int number2);
 
 void
+command_setup_quota(DBus::Connection& conn, const string& config_name);
+
+void
 command_prepare_quota(DBus::Connection& conn, const string& config_name);
 
 XQuotaData
