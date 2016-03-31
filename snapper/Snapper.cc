@@ -749,6 +749,9 @@ namespace snapper
 
 	y2mil("size:" << quota_data.size << " used:" << quota_data.used);
 
+	if (quota_data.used > quota_data.size)
+	    SN_THROW(QuotaException("impossible quota values"));
+
 	return quota_data;
 
 #else
