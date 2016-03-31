@@ -36,6 +36,7 @@
 #include <btrfs/send-utils.h>
 #endif
 #include <algorithm>
+#include <functional>
 
 #include "snapper/Log.h"
 #include "snapper/AppUtil.h"
