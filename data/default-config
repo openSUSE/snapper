@@ -6,6 +6,10 @@ SUBVOLUME="/"
 FSTYPE="btrfs"
 
 
+# btrfs qgroup for space aware cleanup algorithms
+QGROUP=""
+
+
 # users and groups allowed to work with config
 ALLOW_USERS=""
 ALLOW_GROUPS=""

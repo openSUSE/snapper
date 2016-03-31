@@ -52,6 +52,15 @@
       </varlistentry>
 
       <varlistentry>
+	<term><option>QGROUP=<replaceable>value</replaceable></option></term>
+	<listitem>
+	  <para>The btrfs quota group used for space aware cleanup
+	  algorithms.</para>
+	  <para>Only supported for btrfs.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
 	<term><option>ALLOW_USERS=<replaceable>users</replaceable></option></term>
 	<listitem>
 	  <para>List of users allowed to operate with the config. The user-names
