@@ -3,14 +3,16 @@ msgstr ""
 "Project-Id-Version: entries\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2006-06-12 16:56+0100\n"
-"Last-Translator: \n"
-"Language-Team:  <en@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2016-03-31 16:28+0000\n"
+"Last-Translator: YunSeok Choi <xein@naver.com>\n"
+"Language-Team: Korean <http://l10n.opensuse.org/projects/snapper/master/ko/>"
+"\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 2.5\n"
 
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
@@ -899,19 +901,19 @@ msgstr "%s 삭제 중"
 #: ../client/snapper.cc:1253
 #, c-format
 msgid "failed to create %s"
-msgstr "%s을(를) 생성하지 못했습니다."
+msgstr "%s 생성에 실패"
 
 # SLE12
 #: ../client/snapper.cc:1259
 #, c-format
 msgid "failed to delete %s"
-msgstr "%s을(를) 삭제하지 못했습니다."
+msgstr "%s 삭제에 실패"
 
 # SLE12
 #: ../client/snapper.cc:1256
 #, c-format
 msgid "failed to modify %s"
-msgstr "%s을(를) 수정하지 못했습니다."
+msgstr "%s 수정에 실패"
 
 # SLE12
 #: ../client/snapper.cc:1240
