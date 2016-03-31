@@ -35,6 +35,7 @@
 #include <btrfs/ioctl.h>
 #include <btrfs/send-utils.h>
 #endif
+#include <algorithm>
 
 #include "snapper/Log.h"
 #include "snapper/AppUtil.h"
@@ -338,6 +339,20 @@ namespace snapper
 	}
 
 
+	uint64_t
+	get_level(qgroup_t qgroup)
+	{
+	    return qgroup >> 48;
+	}
+
+
+	uint64_t
+	get_subvolid(qgroup_t qgroup)
+	{
+	    return qgroup & ((1LLU << 48) - 1);
+	}
+
+
 	qgroup_t
 	parse_qgroup(const string& str)
 	{
@@ -366,7 +381,7 @@ namespace snapper
 	{
 	    std::ostringstream ret;
 	    classic(ret);
-	    ret << (qgroup >> 48) << "/" << (qgroup & ((1LLU << 48) - 1));
+	    ret << get_level(qgroup) << "/" << get_subvolid(qgroup);
 	    return ret.str();
 	}
 
@@ -427,26 +442,38 @@ namespace snapper
 	}
 
 
-	vector<qgroup_t>
-	qgroup_query_children(int fd, qgroup_t qgroup)
+	struct TreeSearchOpts
+	{
+	    TreeSearchOpts(__u32 type) : min_offset(0), max_offset(-1), min_type(type), max_type(type) {}
+
+	    __u64 min_offset;
+	    __u64 max_offset;
+
+	    __u32 min_type;
+	    __u32 max_type;
+
+	    std::function<void(const struct btrfs_ioctl_search_args& args,
+			       const struct btrfs_ioctl_search_header& sh)> callback;
+	};
+
+
+	void
+	qgroups_tree_search(int fd, const TreeSearchOpts& tree_search_opts)
 	{
 	    struct btrfs_ioctl_search_args args;
 	    memset(&args, 0, sizeof(args));
 
 	    struct btrfs_ioctl_search_key* sk = &args.key;
 	    sk->tree_id = BTRFS_QUOTA_TREE_OBJECTID;
-
-	    sk->min_type = BTRFS_QGROUP_RELATION_KEY;
-	    sk->max_type = BTRFS_QGROUP_RELATION_KEY;
 	    sk->min_objectid = 0;
 	    sk->max_objectid = BTRFS_LAST_FREE_OBJECTID;
-	    sk->min_offset = 0;
-	    sk->max_offset = (u64)(-1);
+	    sk->min_offset = tree_search_opts.min_offset;
+	    sk->max_offset = tree_search_opts.max_offset;
 	    sk->min_transid = 0;
 	    sk->max_transid = (u64)(-1);
+	    sk->min_type = tree_search_opts.min_type;
+	    sk->max_type = tree_search_opts.max_type;
 	    sk->nr_items = 4096;
-
-	    vector<qgroup_t> ret;
 
 	    while (true)
 	    {
@@ -461,16 +488,14 @@ namespace snapper
 		for (unsigned int i = 0; i < sk->nr_items; ++i)
 		{
 		    struct btrfs_ioctl_search_header* sh = (struct btrfs_ioctl_search_header*)(args.buf + off);
-		    off += sizeof(*sh);
 
-		    if (sh->type != BTRFS_QGROUP_RELATION_KEY)
-			throw std::runtime_error("sh->type != BTRFS_QGROUP_RELATION_KEY");
+		    if (sh->offset >= tree_search_opts.min_offset && sh->offset <= tree_search_opts.max_offset &&
+			sh->type >= tree_search_opts.min_type && sh->type <= tree_search_opts.max_type)
+			tree_search_opts.callback(args, *sh);
 
-		    if (sh->offset == qgroup)
-			ret.push_back(sh->objectid);
+		    off += sizeof(*sh) + sh->len;
 
-		    off += sh->len;
-
+		    sk->min_type = sh->type;
 		    sk->min_objectid = sh->objectid;
 		    sk->min_offset = sh->offset;
 		}
@@ -482,6 +507,54 @@ namespace snapper
 		else
 		    break;
 	    }
+	}
+
+
+	qgroup_t
+	qgroup_find_free(int fd, uint64_t level)
+	{
+	    vector<qgroup_t> qgroups;
+
+	    TreeSearchOpts tree_search_opts(BTRFS_QGROUP_INFO_KEY);
+	    tree_search_opts.min_offset = calc_qgroup(level, 0);
+	    tree_search_opts.max_offset = calc_qgroup(level, (1LLU << 48) - 1);
+	    tree_search_opts.callback = [&qgroups](const struct btrfs_ioctl_search_args& args,
+						   const struct btrfs_ioctl_search_header& sh)
+	    {
+		qgroups.push_back(sh.offset);
+	    };
+
+	    qgroups_tree_search(fd, tree_search_opts);
+
+	    if (qgroups.empty() || get_subvolid(qgroups.front()) != 0)
+		return calc_qgroup(level, 0);
+
+	    sort(qgroups.begin(), qgroups.end());
+
+	    vector<qgroup_t>::const_iterator it = adjacent_find(qgroups.begin(), qgroups.end(),
+		[](qgroup_t a, qgroup_t b) { return get_subvolid(a) + 1 < get_subvolid(b); });
+
+	    if (it == qgroups.end())
+		--it;
+
+	    return calc_qgroup(level, get_subvolid(*it) + 1);
+	}
+
+
+	vector<qgroup_t>
+	qgroup_query_children(int fd, qgroup_t parent)
+	{
+	    vector<qgroup_t> ret;
+
+	    TreeSearchOpts tree_search_opts(BTRFS_QGROUP_RELATION_KEY);
+	    tree_search_opts.callback = [parent, &ret](const struct btrfs_ioctl_search_args& args,
+						       const struct btrfs_ioctl_search_header& sh)
+	    {
+		if (sh.offset == parent)
+		    ret.push_back(sh.objectid);
+	    };
+
+	    qgroups_tree_search(fd, tree_search_opts);
 
 	    return ret;
 	}
@@ -490,42 +563,34 @@ namespace snapper
 	QGroupUsage
 	qgroup_query_usage(int fd, qgroup_t qgroup)
 	{
-	    struct btrfs_ioctl_search_args args;
-	    memset(&args, 0, sizeof(args));
-
-	    struct btrfs_ioctl_search_key* sk = &args.key;
-	    sk->tree_id = BTRFS_QUOTA_TREE_OBJECTID;
-	    sk->min_objectid = 0;
-	    sk->max_objectid = 0;
-	    sk->min_offset = qgroup;
-	    sk->max_offset = qgroup;
-	    sk->min_transid = 0;
-	    sk->max_transid = (u64) -1;
-	    sk->min_type = BTRFS_QGROUP_INFO_KEY;
-	    sk->max_type = BTRFS_QGROUP_INFO_KEY;
-	    sk->nr_items = 16;
-
-	    if (ioctl(fd, BTRFS_IOC_TREE_SEARCH, &args) != 0)
-		throw runtime_error_with_errno("ioctl(BTRFS_IOC_TREE_SEARCH) failed", errno);
-
-	    if (sk->nr_items != 1)
-		throw std::runtime_error("sk->qnr_items != 1");
-
-	    struct btrfs_ioctl_search_header* sh = (struct btrfs_ioctl_search_header*)(args.buf);
-	    if (sh->offset != qgroup)
-		throw std::runtime_error("sh->offset != qgroup");
-
-	    if (sh->type != BTRFS_QGROUP_INFO_KEY)
-		throw std::runtime_error("sh->type != BTRFS_QGROUP_INFO_KEY");
-
-	    struct btrfs_qgroup_info_item info;
-	    memcpy(&info, (struct btrfs_qgroup_info_item*)(args.buf + sizeof(*sh)), sizeof(info));
-
 	    QGroupUsage qgroup_usage;
-	    qgroup_usage.referenced = le64_to_cpu(info.referenced);
-	    qgroup_usage.referenced_compressed = le64_to_cpu(info.referenced_compressed);
-	    qgroup_usage.exclusive = le64_to_cpu(info.exclusive);
-	    qgroup_usage.exclusive_compressed = le64_to_cpu(info.exclusive_compressed);
+	    int n = 0;
+
+	    TreeSearchOpts tree_search_opts(BTRFS_QGROUP_INFO_KEY);
+	    tree_search_opts.min_offset = tree_search_opts.max_offset = qgroup;
+	    tree_search_opts.callback = [qgroup, &n, &qgroup_usage](const struct btrfs_ioctl_search_args& args,
+								    const struct btrfs_ioctl_search_header& sh)
+	    {
+		if (sh.offset == qgroup)
+		{
+		    ++n;
+
+		    struct btrfs_qgroup_info_item info;
+		    memcpy(&info, (struct btrfs_qgroup_info_item*)(args.buf + sizeof(sh)), sizeof(info));
+
+		    qgroup_usage.referenced = le64_to_cpu(info.referenced);
+		    qgroup_usage.referenced_compressed = le64_to_cpu(info.referenced_compressed);
+		    qgroup_usage.exclusive = le64_to_cpu(info.exclusive);
+		    qgroup_usage.exclusive_compressed = le64_to_cpu(info.exclusive_compressed);
+		}
+	    };
+
+	    qgroups_tree_search(fd, tree_search_opts);
+
+	    if (n == 0)
+		throw std::runtime_error("qgroup info not found");
+	    else if (n > 1)
+		throw std::runtime_error("several qgroups found");
 
 	    return qgroup_usage;
 	}
