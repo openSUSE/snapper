@@ -99,6 +99,10 @@ namespace snapper
 		SN_THROW(InvalidConfigException());
 	    }
 	}
+	else
+	{
+	    qgroup = no_qgroup;
+	}
 
 #endif
     }

@@ -455,6 +455,8 @@ namespace snapper
 
 	config_info->save();
 
+	filesystem->evalConfigInfo(*config_info);
+
 	if (raw.find(KEY_ALLOW_USERS) != raw.end() || raw.find(KEY_ALLOW_GROUPS) != raw.end() ||
 	    raw.find(KEY_SYNC_ACL) != raw.end())
 	{
@@ -651,7 +653,7 @@ namespace snapper
 
 	BtrfsUtils::qgroup_create(subvolume_dir.fd(), qgroup);
 
-	config_info->setValue("QGROUP", format_qgroup(qgroup));
+	setConfigInfo({ { "QGROUP", format_qgroup(qgroup) } });
 
 #else
 
