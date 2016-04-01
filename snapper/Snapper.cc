@@ -736,6 +736,10 @@ namespace snapper
 
 	SDir subvolume_dir = openSubvolumeDir();
 
+	// Since we already did a rescan in prepareQuota we should be fine
+	// with just a sync here, see
+	// https://bugzilla.suse.com/show_bug.cgi?id=972508#c7.
+
 	BtrfsUtils::sync(subvolume_dir.fd());
 
 	struct statvfs64 fsbuf;
