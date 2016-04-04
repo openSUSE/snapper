@@ -462,7 +462,8 @@ namespace snapper
 	 * Wrapper for ioctl(BTRFS_IOC_TREE_SEARCH). Calls callback of
 	 * tree_search_opts for every found item.  In contrast to the bare
 	 * ioctl the wrapper ensures that the min and max values in
-	 * tree_search_opts are satisfied.
+	 * tree_search_opts are satisfied.  Returns the number of times the
+	 * callback was called.
 	 */
 	size_t
 	qgroups_tree_search(int fd, const TreeSearchOpts& tree_search_opts)
