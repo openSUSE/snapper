@@ -1,5 +1,12 @@
 
 
+/*
+ * Utility program to test functions in BtrfsUtils. You have to adapt the
+ * parameters, e.g. mount point and qgroup ids, and enable specific tests
+ * before using this program.
+ */
+
+
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
