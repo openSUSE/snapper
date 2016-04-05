@@ -455,6 +455,8 @@ namespace snapper
 
 	config_info->save();
 
+	filesystem->evalConfigInfo(*config_info);
+
 	if (raw.find(KEY_ALLOW_USERS) != raw.end() || raw.find(KEY_ALLOW_GROUPS) != raw.end() ||
 	    raw.find(KEY_SYNC_ACL) != raw.end())
 	{
@@ -651,7 +653,7 @@ namespace snapper
 
 	BtrfsUtils::qgroup_create(subvolume_dir.fd(), qgroup);
 
-	config_info->setValue("QGROUP", format_qgroup(qgroup));
+	setConfigInfo({ { "QGROUP", format_qgroup(qgroup) } });
 
 #else
 
@@ -735,6 +737,10 @@ namespace snapper
 	QuotaData quota_data;
 
 	SDir subvolume_dir = openSubvolumeDir();
+
+	// Since we already did a rescan in prepareQuota we should be fine
+	// with just a sync here, see
+	// https://bugzilla.suse.com/show_bug.cgi?id=972508#c7.
 
 	BtrfsUtils::sync(subvolume_dir.fd());
 
