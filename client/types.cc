@@ -40,6 +40,22 @@ XSnapshots::find(unsigned int num) const
 }
 
 
+XSnapshots::iterator
+XSnapshots::findPre(iterator post)
+{
+    if (post == entries.end() || post->isCurrent() || post->getType() != POST)
+	SN_THROW(IllegalSnapshotException());
+
+    for (iterator it = begin(); it != end(); ++it)
+    {
+	if (it->getType() == PRE && it->getNum() == post->getPreNum())
+	    return it;
+    }
+
+    return end();
+}
+
+
 XSnapshots::const_iterator
 XSnapshots::findPre(const_iterator post) const
 {
@@ -49,6 +65,22 @@ XSnapshots::findPre(const_iterator post) const
     for (const_iterator it = begin(); it != end(); ++it)
     {
 	if (it->getType() == PRE && it->getNum() == post->getPreNum())
+	    return it;
+    }
+
+    return end();
+}
+
+
+XSnapshots::iterator
+XSnapshots::findPost(iterator pre)
+{
+    if (pre == entries.end() || pre->isCurrent() || pre->getType() != PRE)
+	SN_THROW(IllegalSnapshotException());
+
+    for (iterator it = begin(); it != end(); ++it)
+    {
+	if (it->getType() == POST && it->getPreNum() == pre->getNum())
 	    return it;
     }
 
