@@ -84,7 +84,10 @@ namespace snapper
     namespace BtrfsUtils
     {
 
-	// See btrfsprogs source code for references.
+	// For general information about btrfs see
+	// https://btrfs.wiki.kernel.org/ and for more information about btrfs
+	// quota groups see http://sensille.com/qgroups.pdf.  For ioctls see
+	// btrfsprogs source code for references.
 
 
 	bool
