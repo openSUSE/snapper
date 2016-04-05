@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012 Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -93,6 +94,8 @@ struct XSnapshots
 
     iterator findPost(iterator pre);
     const_iterator findPost(const_iterator pre) const;
+
+    iterator erase(iterator pos) { return entries.erase(pos); }
 
     list<XSnapshot> entries;
 };
