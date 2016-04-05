@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012 Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -21,6 +22,7 @@
 
 
 #include <snapper/SnapperTmpl.h>
+#include <snapper/Exception.h>
 
 #include "types.h"
 
@@ -42,7 +44,7 @@ XSnapshots::const_iterator
 XSnapshots::findPre(const_iterator post) const
 {
     if (post == entries.end() || post->isCurrent() || post->getType() != POST)
-	throw;
+	SN_THROW(IllegalSnapshotException());
 
     for (const_iterator it = begin(); it != end(); ++it)
     {
@@ -58,7 +60,7 @@ XSnapshots::const_iterator
 XSnapshots::findPost(const_iterator pre) const
 {
     if (pre == entries.end() || pre->isCurrent() || pre->getType() != PRE)
-	throw;
+	SN_THROW(IllegalSnapshotException());
 
     for (const_iterator it = begin(); it != end(); ++it)
     {
