@@ -33,6 +33,7 @@ using std::map;
 #include "dbus/DBusConnection.h"
 #include "snapper/Snapshot.h"
 #include "snapper/File.h"
+#include "snapper/SnapperTmpl.h"
 
 using namespace snapper;
 
@@ -43,6 +44,14 @@ struct XConfigInfo
     string subvolume;
 
     map<string, string> raw;
+
+    template<typename Type>
+    void read(const char* name, Type& value)
+    {
+	map<string, string>::const_iterator pos = raw.find(name);
+	if (pos != raw.end())
+	    pos->second >> value;
+    }
 };
 
 
