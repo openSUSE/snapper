@@ -381,14 +381,24 @@ namespace snapper
 
 #ifdef HAVE_LIBBTRFS
 	    deleted_subvolids.push_back(subvolid);
+#endif
 
 #ifdef ENABLE_BTRFS_QUOTA
-	    // see https://bugzilla.suse.com/show_bug.cgi?id=972511
-	    SDir subvolume_dir = openSubvolumeDir();
-	    if (qgroup != no_qgroup)
-		qgroup_remove(subvolume_dir.fd(), calc_qgroup(0, subvolid), qgroup);
-	    qgroup_destroy(subvolume_dir.fd(), calc_qgroup(0, subvolid));
-#endif
+
+	    // workaround for the kernel not deleting the qgroup of a
+	    // subvolume when deleting the subvolume, see
+	    // https://bugzilla.suse.com/show_bug.cgi?id=972511
+
+	    try
+	    {
+		SDir subvolume_dir = openSubvolumeDir();
+		qgroup_destroy(subvolume_dir.fd(), calc_qgroup(0, subvolid));
+	    }
+	    catch (const runtime_error& e)
+	    {
+		// Ignore that the qgroup could not be destroyed. Should not
+		// cause problems except of having unused qgroups.
+	    }
 
 #endif
 	}

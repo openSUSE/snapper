@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2011-2012] Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -20,11 +20,32 @@
  */
 
 
-void
-do_cleanup_number(DBus::Connection& conn, const string& config_name, bool verbose);
+#include <ostream>
 
-void
-do_cleanup_timeline(DBus::Connection& conn, const string& config_name, bool verbose);
+using std::istream;
+using std::ostream;
 
-void
-do_cleanup_empty_pre_post(DBus::Connection& conn, const string& config_name, bool verbose);
+
+/*
+ * Simple class to hold a range of two size_ts as min and max.
+ */
+class Range
+{
+public:
+
+    enum Value { MIN, MAX };
+
+    Range(size_t value) : min(value), max(value) {}
+
+    size_t value(Value value) const { return value == MIN ? min : max; }
+
+    bool is_degenerated() const { return min == max; }
+
+    friend istream& operator>>(istream& s, Range& range);
+    friend ostream& operator<<(ostream& s, const Range& range);
+
+private:
+
+    size_t min;
+    size_t max;
+};

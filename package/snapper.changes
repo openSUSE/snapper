@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Apr 06 15:41:49 CEST 2016 - aschnell@suse.com
+
+- implemented space aware cleanup algorithms (fate#312751)
+- version 0.3.0
+
+-------------------------------------------------------------------
 Thu Mar 31 16:00:54 CEST 2016 - aschnell@suse.com
 
 - allow to setup quota (for fate#312751)
