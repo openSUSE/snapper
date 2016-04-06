@@ -645,13 +645,13 @@ namespace snapper
 
 	SDir subvolume_dir = openSubvolumeDir();
 
-	BtrfsUtils::quota_enable(subvolume_dir.fd());
+	quota_enable(subvolume_dir.fd());
 
-	qgroup_t qgroup = BtrfsUtils::qgroup_find_free(subvolume_dir.fd(), 1);
+	qgroup_t qgroup = qgroup_find_free(subvolume_dir.fd(), 1);
 
 	y2mil("free qgroup:" << format_qgroup(qgroup));
 
-	BtrfsUtils::qgroup_create(subvolume_dir.fd(), qgroup);
+	qgroup_create(subvolume_dir.fd(), qgroup);
 
 	setConfigInfo({ { "QGROUP", format_qgroup(qgroup) } });
 
@@ -678,8 +678,7 @@ namespace snapper
 
 	SDir subvolume_dir = openSubvolumeDir();
 
-	vector<qgroup_t> children = BtrfsUtils::qgroup_query_children(subvolume_dir.fd(),
-								      btrfs->getQGroup());
+	vector<qgroup_t> children = qgroup_query_children(subvolume_dir.fd(), btrfs->getQGroup());
 	sort(children.begin(), children.end());
 
 	// Iterate all snapshot and ensure that those and only those with a
@@ -690,18 +689,18 @@ namespace snapper
 	    if (snapshot.isCurrent())
 		continue;
 
-	    BtrfsUtils::subvolid_t subvolid = get_id(snapshot.openSnapshotDir().fd());
-	    BtrfsUtils::qgroup_t qgroup = calc_qgroup(0, subvolid);
+	    subvolid_t subvolid = get_id(snapshot.openSnapshotDir().fd());
+	    qgroup_t qgroup = calc_qgroup(0, subvolid);
 
 	    bool included = binary_search(children.begin(), children.end(), qgroup);
 
 	    if (!snapshot.getCleanup().empty() && !included)
 	    {
-		BtrfsUtils::qgroup_assign(subvolume_dir.fd(), qgroup, btrfs->getQGroup());
+		qgroup_assign(subvolume_dir.fd(), qgroup, btrfs->getQGroup());
 	    }
 	    else if (snapshot.getCleanup().empty() && included)
 	    {
-		BtrfsUtils::qgroup_remove(subvolume_dir.fd(), qgroup, btrfs->getQGroup());
+		qgroup_remove(subvolume_dir.fd(), qgroup, btrfs->getQGroup());
 	    }
 	}
 
@@ -742,15 +741,14 @@ namespace snapper
 	// with just a sync here, see
 	// https://bugzilla.suse.com/show_bug.cgi?id=972508#c7.
 
-	BtrfsUtils::sync(subvolume_dir.fd());
+	sync(subvolume_dir.fd());
 
 	struct statvfs64 fsbuf;
 	if (fstatvfs64(subvolume_dir.fd(), &fsbuf) != 0)
 	    SN_THROW(QuotaException("statvfs64 failed"));
 	quota_data.size = fsbuf.f_blocks * fsbuf.f_bsize;
 
-	BtrfsUtils::QGroupUsage qgroup_usage = BtrfsUtils::qgroup_query_usage(subvolume_dir.fd(),
-									      btrfs->getQGroup());
+	QGroupUsage qgroup_usage = qgroup_query_usage(subvolume_dir.fd(), btrfs->getQGroup());
 	quota_data.used = qgroup_usage.exclusive;
 
 	y2mil("size:" << quota_data.size << " used:" << quota_data.used);
