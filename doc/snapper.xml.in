@@ -152,7 +152,8 @@
 	</listitem>
       </orderedlist>
       The limit for the used space can be configured via the SPACE_LIMIT
-      variable.
+      variable. Note: Only snapshots that have a cleanup algorithm set are
+      taken into account when calculating the used space.
       </para>
 
     </refsect2>
