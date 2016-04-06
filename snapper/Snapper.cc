@@ -704,12 +704,6 @@ namespace snapper
 	    }
 	}
 
-	// Strictly speaking the rescan is not needed if we did not assign or
-	// remove qgroups. On the other hand the consistency of qgroup data
-	// before our modifications is not guaranteed. The status flag is
-	// unfortunately not reliable, see
-	// https://bugzilla.suse.com/show_bug.cgi?id=972508#c5.
-
 	quota_rescan(subvolume_dir.fd());
 
 #else
@@ -733,19 +727,20 @@ namespace snapper
 	if (btrfs->getQGroup() == no_qgroup)
 	    SN_THROW(QuotaException("qgroup not set"));
 
-	QuotaData quota_data;
-
 	SDir subvolume_dir = openSubvolumeDir();
 
-	// Since we already did a rescan in prepareQuota we should be fine
-	// with just a sync here, see
-	// https://bugzilla.suse.com/show_bug.cgi?id=972508#c7.
+	// Tests have shown that without a rescan and sync here the quota data
+	// is incorrect.
 
+	quota_rescan(subvolume_dir.fd());
 	sync(subvolume_dir.fd());
 
 	struct statvfs64 fsbuf;
 	if (fstatvfs64(subvolume_dir.fd(), &fsbuf) != 0)
 	    SN_THROW(QuotaException("statvfs64 failed"));
+
+	QuotaData quota_data;
+
 	quota_data.size = fsbuf.f_blocks * fsbuf.f_bsize;
 
 	QGroupUsage qgroup_usage = qgroup_query_usage(subvolume_dir.fd(), btrfs->getQGroup());
