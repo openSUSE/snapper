@@ -11,7 +11,7 @@ QGROUP=""
 
 
 # fraction of the filesystems space the snapshots may use
-QUOTA_LIMIT="0.5"
+SPACE_LIMIT="0.5"
 
 
 # users and groups allowed to work with config

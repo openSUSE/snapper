@@ -117,7 +117,8 @@
 	<glossentry>
 	  <glossterm>number</glossterm>
 	  <glossdef>
-	    <para>Deletes old snapshots when a certain number of snapshots is reached.</para>
+	    <para>Deletes old snapshots when a certain number of snapshots is
+	    reached.</para>
 	  </glossdef>
 	</glossentry>
 	<glossentry>
@@ -134,6 +135,26 @@
 	  </glossdef>
 	</glossentry>
       </glosslist>
+
+      <para>The number and timeline cleanup algorithm can also try to keep the
+      space used by snapshots below a limit. For that quota must be setup, see
+      command setup-quota, and the LIMIT variables in the config file must
+      have ranges (min- and max-value). The algorithms will then make two
+      passes:
+      <orderedlist>
+	<listitem>
+	  <para>Delete snapshots above the max-value independent of the used
+	  space.</para>
+	</listitem>
+	<listitem>
+	  <para>Delete snapshots above the min-value until the limit for
+	  the used space is reached.</para>
+	</listitem>
+      </orderedlist>
+      The limit for the used space can be configured via the SPACE_LIMIT
+      variable.
+      </para>
+
     </refsect2>
 
     <refsect2 id='filters'>

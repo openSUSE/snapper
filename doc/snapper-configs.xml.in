@@ -61,6 +61,17 @@
       </varlistentry>
 
       <varlistentry>
+	<term><option>SPACE_LIMIT=<replaceable>float</replaceable></option></term>
+	<listitem>
+	  <para>Limit for the fraction of the filesystems space the snapshots
+	  should use.</para>
+	  <para>Only supported for btrfs.</para>
+	  <para>Default value is &quot;0.5&quot;.</para>
+	  <para>New in version 0.3.0.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
 	<term><option>ALLOW_USERS=<replaceable>users</replaceable></option></term>
 	<listitem>
 	  <para>List of users allowed to operate with the config. The user-names
@@ -126,7 +137,8 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>NUMBER_LIMIT=<replaceable>number</replaceable></option></term>
+	<term><option>NUMBER_LIMIT=<replaceable>number</replaceable> or
+	<replaceable>range</replaceable></option></term>
 	<listitem>
 	  <para>Defines how many snapshots the number cleanup algorithm should
 	  keep. The youngest snapshots will be kept.</para>
@@ -135,7 +147,8 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>NUMBER_LIMIT_IMPORTANT=<replaceable>number</replaceable></option></term>
+	<term><option>NUMBER_LIMIT_IMPORTANT=<replaceable>number</replaceable> or
+	<replaceable>range</replaceable></option></term>
 	<listitem>
 	  <para>Defines how many important snapshots the number cleanup
 	  algorithm should keep. Important snapshots have important=yes in the
@@ -177,7 +190,8 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>TIMELINE_LIMIT_HOURLY=<replaceable>number</replaceable></option></term>
+	<term><option>TIMELINE_LIMIT_HOURLY=<replaceable>number</replaceable> or
+	<replaceable>range</replaceable></option></term>
 	<listitem>
 	  <para>Defines how many hourly snapshots the timeline cleanup
 	  algorithm should keep. An hourly snapshot is the first snapshot in an
@@ -187,7 +201,8 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>TIMELINE_LIMIT_DAILY=<replaceable>number</replaceable></option></term>
+	<term><option>TIMELINE_LIMIT_DAILY=<replaceable>number</replaceable> or
+	<replaceable>range</replaceable></option></term>
 	<listitem>
 	  <para>Defines how many daily snapshots the timeline cleanup
 	  algorithm should keep. A daily snapshot is the first snapshot in a day. The
@@ -197,7 +212,8 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>TIMELINE_LIMIT_WEEKLY=<replaceable>number</replaceable></option></term>
+	<term><option>TIMELINE_LIMIT_WEEKLY=<replaceable>number</replaceable> or
+	<replaceable>range</replaceable></option></term>
 	<listitem>
 	  <para>Defines how many weekly snapshots the timeline cleanup
 	  algorithm should keep. A weekly snapshot is the first snapshot in a week. The
@@ -208,7 +224,8 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>TIMELINE_LIMIT_MONTHLY=<replaceable>number</replaceable></option></term>
+	<term><option>TIMELINE_LIMIT_MONTHLY=<replaceable>number</replaceable> or
+	<replaceable>range</replaceable></option></term>
 	<listitem>
 	  <para>Defines how many monthly snapshots the timeline cleanup
 	  algorithm should keep. A monthly snapshot is the first snapshot in a month. The
@@ -218,7 +235,8 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>TIMELINE_LIMIT_YEARLY=<replaceable>number</replaceable></option></term>
+	<term><option>TIMELINE_LIMIT_YEARLY=<replaceable>number</replaceable> or
+	<replaceable>range</replaceable></option></term>
 	<listitem>
 	  <para>Defines how many yearly snapshots the timeline cleanup
 	  algorithm should keep. A yearly snapshot is the first snapshot in a year. The

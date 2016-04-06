@@ -40,16 +40,16 @@ struct Parameters
     friend ostream& operator<<(ostream& s, const Parameters& parameters);
 
     time_t min_age;
-    double quota_limit;
+    double space_limit;
 };
 
 
 Parameters::Parameters(DBus::Connection& conn, const string& config_name)
-    : min_age(1800), quota_limit(0.5)
+    : min_age(1800), space_limit(0.5)
 {
     XConfigInfo ci = command_get_xconfig(conn, config_name);
 
-    ci.read("QUOTA_LIMIT", quota_limit);
+    ci.read("SPACE_LIMIT", space_limit);
 }
 
 
@@ -57,7 +57,7 @@ ostream&
 operator<<(ostream& s, const Parameters& parameters)
 {
     return s << "min-age:" << parameters.min_age << endl
-	     << "quota-limit:" << parameters.quota_limit;
+	     << "space-limit:" << parameters.space_limit;
 }
 
 
@@ -205,7 +205,7 @@ Cleaner::is_quota_satisfied() const
 {
     XQuotaData quota_data = command_query_quota(conn, config_name);
 
-    return quota_data.used < parameters.quota_limit * quota_data.size;
+    return quota_data.used < parameters.space_limit * quota_data.size;
 }
 
 
