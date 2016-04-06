@@ -10,6 +10,10 @@ FSTYPE="btrfs"
 QGROUP=""
 
 
+# fraction of the filesystems space the snapshots may use
+QUOTA_LIMIT="0.5"
+
+
 # users and groups allowed to work with config
 ALLOW_USERS=""
 ALLOW_GROUPS=""
@@ -29,7 +33,7 @@ NUMBER_CLEANUP="yes"
 
 # limit for number cleanup
 NUMBER_MIN_AGE="1800"
-NUMBER_LIMIT="50"
+NUMBER_LIMIT="10-50"
 NUMBER_LIMIT_IMPORTANT="10"
 
 
@@ -41,11 +45,11 @@ TIMELINE_CLEANUP="yes"
 
 # limits for timeline cleanup
 TIMELINE_MIN_AGE="1800"
-TIMELINE_LIMIT_HOURLY="10"
-TIMELINE_LIMIT_DAILY="10"
+TIMELINE_LIMIT_HOURLY="4-10"
+TIMELINE_LIMIT_DAILY="4-10"
 TIMELINE_LIMIT_WEEKLY="0"
-TIMELINE_LIMIT_MONTHLY="10"
-TIMELINE_LIMIT_YEARLY="10"
+TIMELINE_LIMIT_MONTHLY="4-10"
+TIMELINE_LIMIT_YEARLY="4-10"
 
 
 # cleanup empty pre-post-pairs
@@ -53,4 +57,3 @@ EMPTY_PRE_POST_CLEANUP="yes"
 
 # limits for empty pre-post-pair cleanup
 EMPTY_PRE_POST_MIN_AGE="1800"
-
