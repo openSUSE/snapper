@@ -65,7 +65,7 @@ This package contains snapper, a tool for filesystem snapshot management.
 
 Authors:
 --------
-    Arvin Schnell <aschnell@suse.de>
+    Arvin Schnell <aschnell@suse.com>
 
 %prep
 %setup -n snapper-%{version}
@@ -138,7 +138,7 @@ This package contains libsnapper, a library for filesystem snapshot management.
 
 Authors:
 --------
-    Arvin Schnell <aschnell@suse.de>
+    Arvin Schnell <aschnell@suse.com>
 
 %files -n libsnapper@LIBVERSION_MAJOR@
 %defattr(-,root,root)
@@ -189,7 +189,7 @@ libsnapper.
 
 Authors:
 --------
-    Arvin Schnell <aschnell@suse.de>
+    Arvin Schnell <aschnell@suse.com>
 
 %files -n libsnapper-devel
 %defattr(-,root,root)
@@ -213,7 +213,7 @@ snapper during commits.
 
 Authors:
 --------
-    Arvin Schnell <aschnell@suse.de>
+    Arvin Schnell <aschnell@suse.com>
 
 %files -n snapper-zypp-plugin
 %defattr(-,root,root)
