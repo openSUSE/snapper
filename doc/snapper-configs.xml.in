@@ -275,7 +275,8 @@
 	<term>range</term>
 	<listitem>
 	  <para>A range of numbers given as
-	  &lt;max-value&gt;-&lt;min-value&gt;, e.g. &quot;10-20&quot;.</para>
+	  <replaceable>min-value</replaceable>-<replaceable>max-value</replaceable>,
+	  e.g. &quot;10-20&quot;.</para>
 	</listitem>
       </varlistentry>
 
@@ -283,7 +284,8 @@
 	<term>qgroup</term>
 	<listitem>
 	  <para>A btrfs qgroup in the standard form
-	  &lt;level&gt;/&lt;id&gt;, e.g. &quot;1/0&quot;.</para>
+	  <replaceable>level</replaceable>-<replaceable>id</replaceable>,
+	  e.g. &quot;1/0&quot;.</para>
 	</listitem>
       </varlistentry>
 
