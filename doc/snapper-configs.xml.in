@@ -52,7 +52,7 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>QGROUP=<replaceable>value</replaceable></option></term>
+	<term><option>QGROUP=<replaceable>qgroup</replaceable></option></term>
 	<listitem>
 	  <para>The btrfs quota group used for space aware cleanup
 	  algorithms.</para>
@@ -260,6 +260,30 @@
 	  <para>Minimal age for snapshots to be deleted by the empty-pre-post
 	  cleanup algorithm.</para>
 	  <para>Default value is &quot;1800&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='types'>
+    <title>TYPES</title>
+    <para>Some of the types used for the variables deserve an explanation.</para>
+    <variablelist>
+
+      <varlistentry>
+	<term>range</term>
+	<listitem>
+	  <para>A range of numbers given as
+	  &lt;max-value&gt;-&lt;min-value&gt;, e.g. &quot;10-20&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term>qgroup</term>
+	<listitem>
+	  <para>A btrfs qgroup in the standard form
+	  &lt;level&gt;/&lt;id&gt;, e.g. &quot;1/0&quot;.</para>
 	</listitem>
       </varlistentry>
 
