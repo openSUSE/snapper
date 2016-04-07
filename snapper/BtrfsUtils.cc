@@ -351,7 +351,7 @@ namespace snapper
 
 
 	uint64_t
-	get_subvolid(qgroup_t qgroup)
+	get_id(qgroup_t qgroup)
 	{
 	    return qgroup & ((1LLU << BTRFS_QGROUP_LEVEL_SHIFT) - 1);
 	}
@@ -385,7 +385,7 @@ namespace snapper
 	{
 	    std::ostringstream ret;
 	    classic(ret);
-	    ret << get_level(qgroup) << "/" << get_subvolid(qgroup);
+	    ret << get_level(qgroup) << "/" << get_id(qgroup);
 	    return ret.str();
 	}
 
@@ -544,18 +544,18 @@ namespace snapper
 
 	    qgroups_tree_search(fd, tree_search_opts);
 
-	    if (qgroups.empty() || get_subvolid(qgroups.front()) != 0)
+	    if (qgroups.empty() || get_id(qgroups.front()) != 0)
 		return calc_qgroup(level, 0);
 
 	    sort(qgroups.begin(), qgroups.end());
 
 	    vector<qgroup_t>::const_iterator it = adjacent_find(qgroups.begin(), qgroups.end(),
-		[](qgroup_t a, qgroup_t b) { return get_subvolid(a) + 1 < get_subvolid(b); });
+		[](qgroup_t a, qgroup_t b) { return get_id(a) + 1 < get_id(b); });
 
 	    if (it == qgroups.end())
 		--it;
 
-	    return calc_qgroup(level, get_subvolid(*it) + 1);
+	    return calc_qgroup(level, get_id(*it) + 1);
 	}
 
 

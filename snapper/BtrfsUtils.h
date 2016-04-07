@@ -68,7 +68,7 @@ namespace snapper
 
 	qgroup_t calc_qgroup(uint64_t level, subvolid_t id);
 	uint64_t get_level(qgroup_t qgroup);
-	uint64_t get_subvolid(qgroup_t qgroup);
+	uint64_t get_id(qgroup_t qgroup);
 	qgroup_t parse_qgroup(const string& str);
 	string format_qgroup(qgroup_t qgroup);
 
