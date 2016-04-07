@@ -339,21 +339,21 @@ namespace snapper
 	qgroup_t
 	calc_qgroup(uint64_t level, subvolid_t id)
 	{
-	    return (level << 48) | id;
+	    return (level << BTRFS_QGROUP_LEVEL_SHIFT) | id;
 	}
 
 
 	uint64_t
 	get_level(qgroup_t qgroup)
 	{
-	    return qgroup >> 48;
+	    return qgroup >> BTRFS_QGROUP_LEVEL_SHIFT;
 	}
 
 
 	uint64_t
 	get_subvolid(qgroup_t qgroup)
 	{
-	    return qgroup & ((1LLU << 48) - 1);
+	    return qgroup & ((1LLU << BTRFS_QGROUP_LEVEL_SHIFT) - 1);
 	}
 
 
@@ -535,7 +535,7 @@ namespace snapper
 
 	    TreeSearchOpts tree_search_opts(BTRFS_QGROUP_INFO_KEY);
 	    tree_search_opts.min_offset = calc_qgroup(level, 0);
-	    tree_search_opts.max_offset = calc_qgroup(level, (1LLU << 48) - 1);
+	    tree_search_opts.max_offset = calc_qgroup(level, (1LLU << BTRFS_QGROUP_LEVEL_SHIFT) - 1);
 	    tree_search_opts.callback = [&qgroups](const struct btrfs_ioctl_search_args& args,
 						   const struct btrfs_ioctl_search_header& sh)
 	    {
