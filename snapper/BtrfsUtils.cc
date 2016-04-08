@@ -339,21 +339,21 @@ namespace snapper
 	qgroup_t
 	calc_qgroup(uint64_t level, subvolid_t id)
 	{
-	    return (level << 48) | id;
+	    return (level << BTRFS_QGROUP_LEVEL_SHIFT) | id;
 	}
 
 
 	uint64_t
 	get_level(qgroup_t qgroup)
 	{
-	    return qgroup >> 48;
+	    return qgroup >> BTRFS_QGROUP_LEVEL_SHIFT;
 	}
 
 
 	uint64_t
-	get_subvolid(qgroup_t qgroup)
+	get_id(qgroup_t qgroup)
 	{
-	    return qgroup & ((1LLU << 48) - 1);
+	    return qgroup & ((1LLU << BTRFS_QGROUP_LEVEL_SHIFT) - 1);
 	}
 
 
@@ -385,7 +385,7 @@ namespace snapper
 	{
 	    std::ostringstream ret;
 	    classic(ret);
-	    ret << get_level(qgroup) << "/" << get_subvolid(qgroup);
+	    ret << get_level(qgroup) << "/" << get_id(qgroup);
 	    return ret.str();
 	}
 
@@ -535,7 +535,7 @@ namespace snapper
 
 	    TreeSearchOpts tree_search_opts(BTRFS_QGROUP_INFO_KEY);
 	    tree_search_opts.min_offset = calc_qgroup(level, 0);
-	    tree_search_opts.max_offset = calc_qgroup(level, (1LLU << 48) - 1);
+	    tree_search_opts.max_offset = calc_qgroup(level, (1LLU << BTRFS_QGROUP_LEVEL_SHIFT) - 1);
 	    tree_search_opts.callback = [&qgroups](const struct btrfs_ioctl_search_args& args,
 						   const struct btrfs_ioctl_search_header& sh)
 	    {
@@ -544,18 +544,18 @@ namespace snapper
 
 	    qgroups_tree_search(fd, tree_search_opts);
 
-	    if (qgroups.empty() || get_subvolid(qgroups.front()) != 0)
+	    if (qgroups.empty() || get_id(qgroups.front()) != 0)
 		return calc_qgroup(level, 0);
 
 	    sort(qgroups.begin(), qgroups.end());
 
 	    vector<qgroup_t>::const_iterator it = adjacent_find(qgroups.begin(), qgroups.end(),
-		[](qgroup_t a, qgroup_t b) { return get_subvolid(a) + 1 < get_subvolid(b); });
+		[](qgroup_t a, qgroup_t b) { return get_id(a) + 1 < get_id(b); });
 
 	    if (it == qgroups.end())
 		--it;
 
-	    return calc_qgroup(level, get_subvolid(*it) + 1);
+	    return calc_qgroup(level, get_id(*it) + 1);
 	}
 
 
