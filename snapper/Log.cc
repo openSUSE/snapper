@@ -29,13 +29,14 @@ namespace snapper
     using namespace std;
 
 
-    const string component = "libsnapper";
+    // Intentionally leaving this behind as a mem leak (bsc#940154)
+    const string* component = new string("libsnapper");
 
 
     bool
     testLogLevel(LogLevel level)
     {
-	return callLogQuery(level, component);
+	return callLogQuery(level, *component);
     }
 
 
@@ -61,7 +62,7 @@ namespace snapper
     logStreamClose(LogLevel level, const char* file, unsigned line, const char* func,
 		   ostringstream* stream)
     {
-	callLogDo(level, component, file, line, func, stream->str());
+	callLogDo(level, *component, file, line, func, stream->str());
 	delete stream;
     }
 
