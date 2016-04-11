@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Apr 11 15:45:05 CEST 2016 - shundhammer@suse.de
+
+- make sure 'component' string is not destroyed prematurely
+  (bsc#940154)
+- version 0.3.1
+
+-------------------------------------------------------------------
 Wed Apr 06 15:41:49 CEST 2016 - aschnell@suse.com
 
 - implemented space aware cleanup algorithms (fate#312751)
