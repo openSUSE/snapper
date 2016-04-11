@@ -48,6 +48,10 @@
 #include "snapper/Hooks.h"
 #include "snapper/Btrfs.h"
 #include "snapper/BtrfsUtils.h"
+#ifdef ENABLE_SELINUX
+#include "snapper/Selinux.h"
+#include "snapper/Regex.h"
+#endif
 
 
 namespace snapper
@@ -82,11 +86,22 @@ namespace snapper
 
 
     Snapper::Snapper(const string& config_name, const string& root_prefix, bool disable_filters)
-	: config_info(NULL), filesystem(NULL), snapshots(this)
+	: config_info(NULL), filesystem(NULL), snapshots(this), selabel_handle(NULL)
     {
 	y2mil("Snapper constructor");
 	y2mil("libsnapper version " VERSION);
 	y2mil("config_name:" << config_name << " disable_filters:" << disable_filters);
+
+#ifdef ENABLE_SELINUX
+	try
+	{
+	    selabel_handle = SelinuxLabelHandle::get_selinux_handle();
+	}
+	catch (const SelinuxException& e)
+	{
+	    SN_RETHROW(e);
+	}
+#endif
 
 	try
 	{
@@ -98,6 +113,8 @@ namespace snapper
 	}
 
 	filesystem = Filesystem::create(*config_info, root_prefix);
+
+	syncSelinuxContexts();
 
 	bool sync_acl;
 	if (config_info->getValue(KEY_SYNC_ACL, sync_acl) && sync_acl == true)
@@ -762,6 +779,76 @@ namespace snapper
     }
 
 
+    void
+    Snapper::syncSelinuxContexts() const
+    {
+#ifdef ENABLE_SELINUX
+	try
+	{
+	    SDir subvol_dir = openSubvolumeDir();
+	    SDir infos_dir(subvol_dir, ".snapshots");
+
+	    if (infos_dir.restorecon(selabel_handle))
+	    {
+		syncSelinuxContextsInInfosDir();
+	    }
+	    else
+	    {
+		SnapperContexts scons;
+
+		if (infos_dir.fsetfilecon(scons.subvolume_context()))
+		    syncSelinuxContextsInInfosDir();
+	    }
+	}
+	catch (const SelinuxException& e)
+	{
+	    SN_CAUGHT(e);
+	    // fall through intentional
+	}
+#endif
+    }
+
+
+    void
+    Snapper::syncSelinuxContextsInInfosDir() const
+    {
+#ifdef ENABLE_SELINUX
+	Regex rx("^[0-9]+$");
+	Regex rx_filelist("^filelist-[0-9]+.txt$");
+
+	y2deb("Syncing Selinux contexts in infos dir");
+
+	SDir infos_dir = openInfosDir();
+
+	vector<string> infos = infos_dir.entries();
+	for (vector<string>::const_iterator it1 = infos.begin(); it1 != infos.end(); ++it1)
+	{
+	    if (!rx.match(*it1))
+		continue;
+
+	    SDir info_dir(infos_dir, *it1);
+	    info_dir.restorecon(selabel_handle);
+
+	    SFile info(info_dir, "info.xml");
+	    info.restorecon(selabel_handle);
+
+	    SFile snapshot_dir(info_dir, "snapshot");
+	    snapshot_dir.restorecon(selabel_handle); // this usually fails w/ btrfs backend (it's RO)
+
+	    vector<string> info_content = info_dir.entries();
+	    for (vector<string>::const_iterator it2 = info_content.begin(); it2 != info_content.end(); ++it2)
+	    {
+		if (!rx_filelist.match(*it2))
+		    continue;
+
+		SFile fl(info_dir, *it2);
+		fl.restorecon(selabel_handle);
+	    }
+	}
+#endif
+    }
+
+
     static bool
     is_subpath(const string& a, const string& b)
     {
@@ -860,7 +947,12 @@ namespace snapper
 #ifndef ENABLE_BTRFS_QUOTA
 	    "no-"
 #endif
-	    "btrfs-quota"
+	    "btrfs-quota,"
+
+#ifndef ENABLE_SELINUX
+	    "no-"
+#endif
+	    "selinux"
 
 	    ;
     }
