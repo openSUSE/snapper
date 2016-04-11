@@ -58,6 +58,9 @@
 #ifdef ENABLE_ROLLBACK
 #include "snapper/MntTable.h"
 #endif
+#ifdef ENABLE_SELINUX
+#include "snapper/Selinux.h"
+#endif
 
 
 namespace snapper
@@ -133,6 +136,19 @@ namespace snapper
 	}
 
 	SFile x(subvolume_dir, ".snapshots");
+#ifdef ENABLE_SELINUX
+	try
+	{
+	    SnapperContexts scontexts;
+
+	    x.fsetfilecon(scontexts.subvolume_context());
+	}
+	catch (const SelinuxException& e)
+	{
+	    SN_CAUGHT(e);
+	    // fall through intentional
+	}
+#endif
 	struct stat stat;
 	if (x.stat(&stat, 0) == 0)
 	    x.chmod(stat.st_mode & ~0027, 0);
