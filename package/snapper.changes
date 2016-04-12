@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Tue Apr 12 14:58:25 CEST 2016 - shundhammer@suse.de
+
+- make sure 'component' string is not destroyed prematurely
+  (bsc#940154)
+- version 0.2.9.2
+
+-------------------------------------------------------------------
 Mon Dec 14 16:25:32 UTC 2015 - lslezak@suse.cz
 
 - Allow rollback only for the root file system (bsc#954445)
