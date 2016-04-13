@@ -183,4 +183,5 @@ AC_OUTPUT(
 	testsuite-real/Makefile
 	testsuite-cmp/Makefile
 	package/snapper.spec:snapper.spec.in
+        debian/snapper.dsc:debian/snapper.dsc.in
 )
