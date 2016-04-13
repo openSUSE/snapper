@@ -1,0 +1,45 @@
+Source: snapper
+Priority: optional
+Section: admin
+Maintainer: Arvin Schnell <aschnell@suse.com>
+Build-Depends: debhelper (>= 4.1.16), g++, libboost-dev, libboost-thread-dev, libboost-system-dev, libboost-test-dev, libxml2-dev, libz-dev, libdbus-1-dev, libpam-dev, xsltproc, docbook-xsl
+Homepage: http://en.opensuse.org/Portal:Snapper
+
+Package: snapper
+Priority: optional
+Section: admin
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: snapper
+ This package contains snapper, a tool for filesystem snapshot management.
+
+Package: libsnapper
+Priority: optional
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: snapper
+ This package contains libsnapper, a library for filesystem snapshot management.
+
+Package: libsnapper-dev
+Priority: optional
+Section: libdevel
+Architecture: any
+Description: snapper
+ This package contains header files and documentation for developing with
+ libsnapper.
+
+Package: snapper-zypp-plugin
+Priority: optional
+Section: admin
+Architecture: any
+Description: snapper
+ This package contains a plugin for zypp that makes filesystem snapshots with
+ snapper during commits.
+
+Package: libpam-snapper
+Priority: optional
+Section: admin
+Architecture: any
+Description: pam_snapper
+ A PAM module for calling snapper during user login and logout.

@@ -1,0 +1,71 @@
+#!/usr/bin/make -f
+
+# Turn on verbose mode.
+export DH_VERBOSE=1
+
+# Set debhelper compatibility version.
+export DH_COMPAT=5
+
+CFLAGS = -g
+ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
+CFLAGS += -O0 -Wall
+else
+CFLAGS += -O2 -Wall
+endif
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+
+	./configure --docdir=/usr/share/doc/packages/snapper --disable-silent-rules	\
+		--disable-ext4 --enable-xattrs --disable-rollback --disable-btrfs-quota
+	make
+
+	make check
+
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+
+	make clean || true
+
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+
+	make install DESTDIR=/usr/src/packages/BUILD/debian/tmp
+	install -D -m 644 data/sysconfig.snapper /usr/src/packages/BUILD/debian/tmp/etc/sysconfig/snapper
+
+# Build architecture-independent files here.
+binary-indep: build install
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+
+	mv debian/tmp/etc/cron.hourly/suse.de-snapper debian/tmp/etc/cron.hourly/snapper
+	mv debian/tmp/etc/cron.daily/suse.de-snapper debian/tmp/etc/cron.daily/snapper
+
+	dh_install --sourcedir=debian/tmp
+	dh_installman
+	dh_installchangelogs
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_makeshlibs
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install

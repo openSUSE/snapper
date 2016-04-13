@@ -1,0 +1,6 @@
+etc/snapper/config-templates
+etc/snapper/configs
+etc/snapper/filters
+etc/sysconfig/snapper
+usr/lib/libsnapper.so.*
+usr/share/doc/packages/snapper
