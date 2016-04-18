@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Apr 18 12:20:51 CEST 2016 - aschnell@suse.com
+
+- reverted some changes done accidentally to default-config (see
+  fate#312751)
+- version 0.3.2
+
+-------------------------------------------------------------------
 Mon Apr 11 15:45:05 CEST 2016 - shundhammer@suse.de
 
 - make sure 'component' string is not destroyed prematurely
