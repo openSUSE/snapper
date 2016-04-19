@@ -6,18 +6,20 @@ msgstr ""
 "Project-Id-Version: installation\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2006-11-03 14:26\n"
-"Last-Translator: Novell Language <language@novell.com>\n"
-"Language-Team: Novell Language <language@novell.com>\n"
-"Language: \n"
+"PO-Revision-Date: 2016-04-19 09:51+0000\n"
+"Last-Translator: Shane Wims <shane.wims@microfocus.com>\n"
+"Language-Team: Zulu <http://l10n.opensuse.org/projects/snapper/master/zu/>\n"
+"Language: zu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.5\n"
 
 #: ../client/snapper.cc:457
+#, fuzzy
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr ""
+msgstr "\t-- all-configs, -a\t\tList snapshots from accessible configs."
 
 #: ../client/snapper.cc:698 ../client/snapper.cc:832
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
