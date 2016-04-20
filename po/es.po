@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2013-10-03 09:30-0300\n"
-"Last-Translator: Sergio Gabriel Teves <gabriel@opensuse.org>\n"
-"Language-Team: Spanish <opensuse-translation-es@opensuse.org>\n"
+"PO-Revision-Date: 2016-04-20 14:30+0000\n"
+"Last-Translator: Victor hck <correohck@gmail.com>\n"
+"Language-Team: Spanish <http://l10n.opensuse.org/projects/snapper/master/es/>"
+"\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.5\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.5\n"
 
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
@@ -138,7 +139,7 @@ msgstr "\t--verbose, -v\t\t\tAumenta la verbosidad."
 
 #: ../client/snapper.cc:1586
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tMuestra la versión y sale"
+msgstr "\t--version\t\t\tMuestra la versión y sale."
 
 #: ../client/snapper.cc:1409
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -215,11 +216,11 @@ msgstr "    Opciones Globales:"
 
 #: ../client/snapper.cc:693
 msgid "    Options for 'create' command:"
-msgstr "    Opciones para el comando 'create'."
+msgstr "    Opciones para el comando 'create':"
 
 #: ../client/snapper.cc:273
 msgid "    Options for 'create-config' command:"
-msgstr "    Opciones para el comando 'create-config'."
+msgstr "    Opciones para el comando 'create-config':"
 
 #: ../client/snapper.cc:883
 msgid "    Options for 'delete' command:"
@@ -227,27 +228,27 @@ msgstr "    Opciones del comando delete:"
 
 #: ../client/snapper.cc:1091
 msgid "    Options for 'diff' command:"
-msgstr "    Opciones para el comando 'diff'."
+msgstr "    Opciones para el comando 'diff':"
 
 #: ../client/snapper.cc:455
 msgid "    Options for 'list' command:"
-msgstr "    Opciones para el comando 'list'."
+msgstr "    Opciones para el comando 'list':"
 
 #: ../client/snapper.cc:830
 msgid "    Options for 'modify' command:"
-msgstr "    Opciones para el comando 'modify'."
+msgstr "    Opciones para el comando 'modify':"
 
 #: ../client/snapper.cc:1300
 msgid "    Options for 'rollback' command:"
-msgstr "    Opciones para el comando 'rollback'."
+msgstr "    Opciones para el comando 'rollback':"
 
 #: ../client/snapper.cc:1029
 msgid "    Options for 'status' command:"
-msgstr "    Opciones para el comando 'status'."
+msgstr "    Opciones para el comando 'status':"
 
 #: ../client/snapper.cc:1154
 msgid "    Options for 'undochange' command:"
-msgstr "    Opciones para el comando 'undochange'."
+msgstr "    Opciones para el comando 'undochange':"
 
 #: ../client/snapper.cc:1408
 msgid "  Cleanup snapshots:"
@@ -559,7 +560,7 @@ msgstr "Imagen no válida."
 
 #: ../client/snapper.cc:1781 ../client/errors.cc:49
 msgid "Invalid configdata."
-msgstr "Información de configuración no válida"
+msgstr "Información de configuración no válida."
 
 # SLE12
 #: ../client/snapper.cc:1805 ../client/errors.cc:82
@@ -618,7 +619,7 @@ msgstr "Falta un argumento para la opción global '%s'."
 
 #: ../client/snapper.cc:784
 msgid "Missing command argument."
-msgstr "Falta un argumento del comando. "
+msgstr "Falta un argumento del comando."
 
 #: ../client/misc.cc:88
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -630,7 +631,7 @@ msgstr "Número pre faltante o no válido."
 
 #: ../client/snapper.cc:1713
 msgid "No command provided."
-msgstr "Ningún comando especificado"
+msgstr "Ningún comando especificado."
 
 #: ../client/errors.cc:43
 msgid "No permissions."
