@@ -1398,6 +1398,33 @@ namespace snapper
 
 #ifdef ENABLE_ROLLBACK
 
+    bool
+    Btrfs::isDefault(unsigned int num) const
+    {
+	bool ret = false;
+
+	try
+	{
+	    SDir subvolume_dir = openSubvolumeDir();
+	    subvolid_t id = get_default_id(subvolume_dir.fd());
+	    if (num == 0)
+	    {
+		ret = get_id(subvolume_dir.fd()) == id;
+	    }
+	    else
+	    {
+		ret = get_id(openSnapshotDir(num).fd()) == id;
+	    }
+	}
+	catch (const runtime_error& e)
+	{
+	    SN_THROW(IOErrorException(string("get default failed, ") + e.what()));
+	}
+
+	return ret;
+    }
+
+
     void
     Btrfs::setDefault(unsigned int num) const
     {
@@ -1425,6 +1452,13 @@ namespace snapper
     }
 
 #else
+
+    bool
+    Btrfs::isDefault(unsigned int num) const
+    {
+	throw std::logic_error("not implemented");
+    }
+
 
     void
     Btrfs::setDefault(unsigned int num) const
