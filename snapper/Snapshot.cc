@@ -147,6 +147,13 @@ namespace snapper
     }
 
 
+    bool
+    Snapshot::isActive() const
+    {
+	return !isCurrent() && snapper->getFilesystem()->isActive(num);
+    }
+
+
     void
     Snapshots::read()
     {
