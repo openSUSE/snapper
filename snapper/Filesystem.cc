@@ -184,6 +184,13 @@ namespace snapper
     }
 
 
+    bool
+    Filesystem::isActive(unsigned int num) const
+    {
+	throw std::logic_error("not implemented");
+    }
+
+
     void
     Filesystem::sync() const
     {
