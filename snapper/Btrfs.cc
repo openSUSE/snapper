@@ -1451,6 +1451,29 @@ namespace snapper
 	}
     }
 
+
+    bool
+    Btrfs::isActive(unsigned int num) const
+    {
+	bool ret = false;
+
+	try
+	{
+	    if (num == 0)
+		SN_THROW(IllegalSnapshotException());
+
+	    SDir snapshot_dir = openSnapshotDir(num);
+	    SDir subvolume_dir = openSubvolumeDir();
+	    ret = get_id(snapshot_dir.fd()) == get_id(subvolume_dir.fd());
+	}
+	catch (const runtime_error& e)
+	{
+	    SN_THROW(IOErrorException(string("get active failed, ") + e.what()));
+	}
+
+	return ret;
+    }
+
 #else
 
     bool
@@ -1462,6 +1485,13 @@ namespace snapper
 
     void
     Btrfs::setDefault(unsigned int num) const
+    {
+	throw std::logic_error("not implemented");
+    }
+
+
+    bool
+    Btrfs::isActive(unsigned int num) const
     {
 	throw std::logic_error("not implemented");
     }

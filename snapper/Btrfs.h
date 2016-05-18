@@ -78,6 +78,8 @@ namespace snapper
 	virtual bool isDefault(unsigned int num) const;
 	virtual void setDefault(unsigned int num) const;
 
+	virtual bool isActive(unsigned int num) const;
+
 	virtual void sync() const;
 
 	virtual qgroup_t getQGroup() const { return qgroup; }
