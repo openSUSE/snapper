@@ -133,6 +133,13 @@ namespace snapper
     }
 
 
+    bool
+    Snapshot::isDefault() const
+    {
+	return snapper->getFilesystem()->isDefault(num);
+    }
+
+
     void
     Snapshot::setDefault() const
     {
