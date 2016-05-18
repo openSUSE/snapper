@@ -82,6 +82,7 @@ namespace snapper
 
 	virtual void cmpDirs(const SDir& dir1, const SDir& dir2, cmpdirs_cb_t cb) const;
 
+	virtual bool isDefault(unsigned int num) const;
 	virtual void setDefault(unsigned int num) const;
 
 	virtual void sync() const;
