@@ -134,6 +134,13 @@ namespace snapper
 
 
     void
+    Snapshot::setDefault() const
+    {
+	return snapper->getFilesystem()->setDefault(num);
+    }
+
+
+    void
     Snapshots::read()
     {
 	Regex rx("^[0-9]+$");

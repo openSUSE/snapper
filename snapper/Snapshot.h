@@ -104,6 +104,8 @@ namespace snapper
 
 	bool isReadOnly() const;
 
+	void setDefault() const;
+
 	void mountFilesystemSnapshot(bool user_request) const;
 	void umountFilesystemSnapshot(bool user_request) const;
 	void handleUmountFilesystemSnapshot() const;
