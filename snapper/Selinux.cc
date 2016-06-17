@@ -125,15 +125,15 @@ namespace snapper
     }
 
 
-    int
+    bool
     _is_selinux_enabled()
     {
-	static int selinux_checked = 0, selinux_enabled = 0;
+	static bool selinux_enabled, selinux_checked = false;
 
 	if (!selinux_checked)
 	{
-	    selinux_enabled = is_selinux_enabled();
-	    selinux_checked = 1;
+	    selinux_enabled = (is_selinux_enabled() == 1); // may return -1 on error
+	    selinux_checked = true;
 	    y2mil("Selinux support " << (selinux_enabled ? "en" : "dis") << "abled");
 	}
 

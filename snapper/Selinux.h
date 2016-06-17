@@ -45,7 +45,7 @@ namespace snapper {
 
     const static string selinux_snapperd_data = "snapperd_data";
 
-    int _is_selinux_enabled();
+    bool _is_selinux_enabled();
 
     class SnapperContexts
     {
