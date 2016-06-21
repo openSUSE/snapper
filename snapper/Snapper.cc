@@ -114,7 +114,8 @@ namespace snapper
 
 	filesystem = Filesystem::create(*config_info, root_prefix);
 
-	syncSelinuxContexts();
+	// With btrfs backend, it's useless try syncing snapshot RO subvolumes
+	syncSelinuxContexts(filesystem->fstype() == "btrfs");
 
 	bool sync_acl;
 	if (config_info->getValue(KEY_SYNC_ACL, sync_acl) && sync_acl == true)
@@ -780,7 +781,7 @@ namespace snapper
 
 
     void
-    Snapper::syncSelinuxContexts() const
+    Snapper::syncSelinuxContexts(bool skip_snapshot_dir) const
     {
 #ifdef ENABLE_SELINUX
 	try
@@ -790,14 +791,14 @@ namespace snapper
 
 	    if (infos_dir.restorecon(selabel_handle))
 	    {
-		syncSelinuxContextsInInfosDir();
+		syncSelinuxContextsInInfosDir(skip_snapshot_dir);
 	    }
 	    else
 	    {
 		SnapperContexts scons;
 
 		if (infos_dir.fsetfilecon(scons.subvolume_context()))
-		    syncSelinuxContextsInInfosDir();
+		    syncSelinuxContextsInInfosDir(skip_snapshot_dir);
 	    }
 	}
 	catch (const SelinuxException& e)
@@ -810,7 +811,7 @@ namespace snapper
 
 
     void
-    Snapper::syncSelinuxContextsInInfosDir() const
+    Snapper::syncSelinuxContextsInInfosDir(bool skip_snapshot_dir) const
     {
 #ifdef ENABLE_SELINUX
 	Regex rx("^[0-9]+$");
@@ -832,8 +833,11 @@ namespace snapper
 	    SFile info(info_dir, "info.xml");
 	    info.restorecon(selabel_handle);
 
-	    SFile snapshot_dir(info_dir, "snapshot");
-	    snapshot_dir.restorecon(selabel_handle); // this usually fails w/ btrfs backend (it's RO)
+	    if (!skip_snapshot_dir)
+	    {
+		SFile snapshot_dir(info_dir, "snapshot");
+		snapshot_dir.restorecon(selabel_handle);
+	    }
 
 	    vector<string> info_content = info_dir.entries();
 	    for (vector<string>::const_iterator it2 = info_content.begin(); it2 != info_content.end(); ++it2)

@@ -177,8 +177,8 @@ namespace snapper
 
 	void syncAcl(const vector<uid_t>& uids, const vector<gid_t>& gids) const;
 
-	void syncSelinuxContexts() const;
-	void syncSelinuxContextsInInfosDir() const;
+	void syncSelinuxContexts(bool skip_snapshot_dir) const;
+	void syncSelinuxContextsInInfosDir(bool skip_snapshot_dir) const;
 	void syncInfoDir(SDir& dir) const;
 
 	ConfigInfo* config_info;
