@@ -1,17 +1,4 @@
 ---
-navigation:
-- text: Snapper
-  url: /index.html
-- text: Overview
-  url: /overview.html
-- text: News
-  url: /news.html
-- text: Documentation
-  url: /documentation.html
-- text: Videos
-  url: /videos.html
-- text: Development
-  url: /development.html
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -45,10 +32,12 @@ navigation:
       <div class="navbar-inner">
 	<div class="container">
 	  <ul class="nav">
-	    {% for link in page.navigation %}
-	    <li {% if link.url == page.url %}class="active"{% endif %}>
-	      <a href="{{ link.url | remove: 'index.html' }}">{{ link.text }}</a></li>
-	    {% endfor %}
+	    <li><a href="/">Snapper</a></li>
+	    <li><a href="/overview.html">Overview</a></li>
+	    <li><a href="/news.html">News</a></li>
+	    <li><a href="/documentation.html">Documentation</a></li>
+	    <li><a href="/videos.html">Videos</a></li>
+	    <li><a href="/development.html">Development</a></li>
 	  </ul>
 	</div>
       </div>
