@@ -1,7 +1,7 @@
 #
 # spec file for package snapper
 #
-# Copyright (c) 2015 SUSE LINUX GmbH, Nuernberg, Germany.
+# Copyright (c) 2016 SUSE LINUX GmbH, Nuernberg, Germany.
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -19,232 +19,216 @@
 Name:           snapper
 Version:        @VERSION@
 Release:        0
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-Source:         snapper-%{version}.tar.bz2
-Prefix:         /usr
-BuildRequires:  boost-devel
-BuildRequires:  gcc-c++
-BuildRequires:  libacl-devel
-BuildRequires:  libtool
-BuildRequires:  libxml2-devel
-BuildRequires:  e2fsprogs-devel
-%if 0%{?suse_version} > 1230
-BuildRequires:  libbtrfs-devel
-%endif
-%if 0%{?suse_version} > 1310
-BuildRequires:  libmount-devel >= 2.24
-%endif
-BuildRequires:  pkg-config
-%if ! 0%{?mandriva_version}
-BuildRequires:  dbus-1-devel
-BuildRequires:  docbook-xsl-stylesheets
-BuildRequires:  libxslt
-%else
-BuildRequires:  docbook-dtd45-xml
-BuildRequires:  docbook-xsl
-BuildRequires:  libdbus-1-devel
-BuildRequires:  xsltproc
-%endif
-%if (0%{?suse_version} && 0%{?suse_version} >= 1210)
-BuildRequires:  libzypp(plugin:commit)
-%endif
-BuildRequires:  pam-devel
-Requires:       diffutils
-Requires:       libsnapper@LIBVERSION_MAJOR@ = %version
-%if 0%{?suse_version}
-Recommends:     cron logrotate snapper-zypp-plugin
-Supplements:    btrfsprogs
-%endif
 Summary:        Tool for filesystem snapshot management
 License:        GPL-2.0
 Group:          System/Packages
 Url:            http://snapper.io/
+Source:         snapper-%{version}.tar.bz2
+BuildRequires:  boost-devel
+BuildRequires:  docbook-xsl-stylesheets
+BuildRequires:  e2fsprogs-devel
+BuildRequires:  gcc-c++
+BuildRequires:  libacl-devel
+BuildRequires:  libtool
+BuildRequires:  libxslt
+BuildRequires:  pam-devel
+BuildRequires:  pkgconfig
+BuildRequires:  pkgconfig(dbus-1)
+BuildRequires:  pkgconfig(libxml-2.0)
+Requires:       diffutils
+Requires:       libsnapper@LIBVERSION_MAJOR@ = %{version}
+Recommends:     cron
+Recommends:     logrotate
+Recommends:     snapper-zypp-plugin
+Supplements:    btrfsprogs
+BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+%if 0%{?suse_version} > 1230
+BuildRequires:  libbtrfs-devel
+%endif
+%if 0%{?suse_version} > 1310
+BuildRequires:  pkgconfig
+BuildRequires:  pkgconfig(mount) >= 2.24
+%endif
+%if 0%{?suse_version} >= 1210
+BuildRequires:  libzypp(plugin:commit)
+%endif
 
 %description
 This package contains snapper, a tool for filesystem snapshot management.
 
-Authors:
---------
-    Arvin Schnell <aschnell@suse.com>
+%package -n snapper-config
+Summary:        Configuration files for snapper
+Group:          System/Configuration
+Conflicts:      libsnapper1
+Conflicts:      libsnapper2
+Conflicts:      libsnapper3 < %{version}
+Requires(post): %fillup_prereq
 
-%prep
-%setup -n snapper-%{version}
-
-%build
-export CFLAGS="$RPM_OPT_FLAGS -DNDEBUG"
-export CXXFLAGS="$RPM_OPT_FLAGS -DNDEBUG"
-
-aclocal
-libtoolize --force --automake --copy
-autoheader
-automake --add-missing --copy
-autoconf
-
-./configure --libdir=%{_libdir} --prefix=%{prefix} --mandir=%{_mandir}		\
-	--docdir=%{prefix}/share/doc/packages/snapper				\
-%if 0%{?suse_version} <= 1310
-	--disable-rollback							\
-%endif
-	--disable-silent-rules --disable-ext4
-make %{?jobs:-j%jobs}
-
-%install
-make install DESTDIR="$RPM_BUILD_ROOT"
-rm $RPM_BUILD_ROOT/%{_lib}/security/pam_snapper.la
-
-%if 0%{?suse_version}
-install -D -m 644 data/sysconfig.snapper $RPM_BUILD_ROOT/var/adm/fillup-templates/sysconfig.snapper
-%else
-install -D -m 644 data/sysconfig.snapper $RPM_BUILD_ROOT/etc/sysconfig/snapper
-%endif
-
-%{find_lang} snapper
-
-%check
-make check
-
-%clean
-rm -rf "$RPM_BUILD_ROOT"
-
-%files -f snapper.lang
-%defattr(-,root,root)
-%{prefix}/bin/snapper
-%{prefix}/sbin/snapperd
-%{prefix}/sbin/mksubvolume
-%{prefix}/lib/snapper
-%doc %{_mandir}/*/snapper.8*
-%doc %{_mandir}/*/snapperd.8*
-%doc %{_mandir}/*/snapper-configs.5*
-%doc %{_mandir}/*/mksubvolume.8*
-%config(noreplace) %{_sysconfdir}/logrotate.d/snapper
-/etc/cron.hourly/suse.de-snapper
-/etc/cron.daily/suse.de-snapper
-/usr/lib/systemd/system/snapper-*.*
-%config /etc/dbus-1/system.d/org.opensuse.Snapper.conf
-%{prefix}/share/dbus-1/system-services/org.opensuse.Snapper.service
+%description -n snapper-config
+This package contains snapper configuration files and templates.
 
 %package -n libsnapper@LIBVERSION_MAJOR@
 Summary:        Library for filesystem snapshot management
 Group:          System/Libraries
+Requires:       snapper-config
 Requires:       util-linux
-%if 0%{?suse_version}
-PreReq:         %fillup_prereq
-%endif
 # expands to Obsoletes: libsnapper1 libsnapper2 libsnapper3...
 Obsoletes:      %(echo `seq -s " " -f "libsnapper%.f" $((@LIBVERSION_MAJOR@ - 1))`)
 
 %description -n libsnapper@LIBVERSION_MAJOR@
 This package contains libsnapper, a library for filesystem snapshot management.
 
-Authors:
---------
-    Arvin Schnell <aschnell@suse.com>
+%package -n libsnapper-devel
+Summary:        Header files and documentation for libsnapper
+Group:          Development/Languages/C and C++
+Requires:       boost-devel
+Requires:       gcc-c++
+Requires:       libacl-devel
+Requires:       libsnapper@LIBVERSION_MAJOR@ = %{version}
+Requires:       libstdc++-devel
+Requires:       pkgconfig
+Requires:       pkgconfig(libxml-2.0)
+%if 0%{?suse_version} > 1230
+Requires:       libbtrfs-devel
+%endif
+%if 0%{?suse_version} > 1310
+Requires:       pkgconfig
+Requires:       pkgconfig(mount) >= 2.24
+%endif
 
-%files -n libsnapper@LIBVERSION_MAJOR@
+%description -n libsnapper-devel
+This package contains header files and documentation for developing with
+libsnapper.
+
+%package -n snapper-zypp-plugin
+Summary:        A zypp commit plugin for calling snapper
+Group:          System/Packages
+Requires:       dbus-1-python
+Requires:       libzypp(plugin:commit) = 1
+Requires:       python-xml
+Requires:       snapper = %{version}
+Requires:       zypp-plugin-python
+BuildArch:      noarch
+
+%description -n snapper-zypp-plugin
+This package contains a plugin for zypp that makes filesystem snapshots with
+snapper during commits.
+
+%package -n pam_snapper
+Summary:        PAM module for calling snapper
+Group:          System/Packages
+Requires:       pam
+Requires:       snapper = %{version}
+
+%description -n pam_snapper
+A PAM module for calling snapper during user login and logout.
+
+%prep
+%setup -q -n snapper-%{version}
+
+%build
+export CFLAGS="%{optflags} -DNDEBUG"
+export CXXFLAGS="%{optflags} -DNDEBUG"
+
+autoreconf -fiv
+
+%configure --docdir=%{_docdir}/snapper \
+%if 0%{?suse_version} <= 1310
+	--disable-rollback \
+%endif
+	--disable-silent-rules --disable-ext4
+make %{?_smp_mflags}
+
+%install
+make %{?_smp_mflags} DESTDIR=%{buildroot} install
+rm %{buildroot}/%{_lib}/security/pam_snapper.la
+rm %{buildroot}/%{_libdir}/libsnapper.la
+
+install -D -m 644 data/sysconfig.snapper %{buildroot}%{_localstatedir}/adm/fillup-templates/sysconfig.snapper
+
+ln -s service %{buildroot}/%{_sbindir}/rcsnapper-cleanup
+ln -s service %{buildroot}/%{_sbindir}/rcsnapper-timeline
+
+%find_lang snapper
+
+%check
+make %{?_smp_mflags} check
+
+%pre
+%service_add_pre snapper-timeline.service snapper-cleanup.service
+
+%post
+%service_add_post snapper-timeline.service snapper-cleanup.service
+
+%preun
+%service_del_preun snapper-timeline.service snapper-cleanup.service
+
+%postun
+%service_del_postun snapper-timeline.service snapper-cleanup.service
+
+%files -f snapper.lang
 %defattr(-,root,root)
-%{_libdir}/libsnapper.so.*
+%{_bindir}/snapper
+%{_sbindir}/snapperd
+%{_sbindir}/mksubvolume
+%{_sbindir}/rcsnapper-cleanup
+%{_sbindir}/rcsnapper-timeline
+%{_prefix}/lib/snapper
+%{_mandir}/*/snapper.8*
+%{_mandir}/*/snapperd.8*
+%{_mandir}/*/snapper-configs.5*
+%{_mandir}/*/mksubvolume.8*
+%config(noreplace) %{_sysconfdir}/logrotate.d/snapper
+%{_sysconfdir}/cron.hourly/suse.de-snapper
+%{_sysconfdir}/cron.daily/suse.de-snapper
+%{_prefix}/lib/systemd/system/snapper-*.*
+%config %{_sysconfdir}/dbus-1/system.d/org.opensuse.Snapper.conf
+%{_datadir}/dbus-1/system-services/org.opensuse.Snapper.service
+
+%post -n snapper-config
+%{fillup_only -n snapper}
+
+%files -n snapper-config
 %dir %{_sysconfdir}/snapper
 %dir %{_sysconfdir}/snapper/configs
 %dir %{_sysconfdir}/snapper/config-templates
 %config(noreplace) %{_sysconfdir}/snapper/config-templates/default
 %dir %{_sysconfdir}/snapper/filters
 %config(noreplace) %{_sysconfdir}/snapper/filters/*.txt
-%doc %dir %{prefix}/share/doc/packages/snapper
-%doc %{prefix}/share/doc/packages/snapper/AUTHORS
-%doc %{prefix}/share/doc/packages/snapper/COPYING
-%if 0%{?suse_version}
-/var/adm/fillup-templates/sysconfig.snapper
-%else
-%config(noreplace) %{_sysconfdir}/sysconfig/snapper
-%endif
+%doc %dir %{_docdir}/snapper
+%doc %{_docdir}/snapper/AUTHORS
+%doc %{_docdir}/snapper/COPYING
+%{_localstatedir}/adm/fillup-templates/sysconfig.snapper
 
-%post -n libsnapper@LIBVERSION_MAJOR@
-/sbin/ldconfig
-%if 0%{?suse_version}
-%{fillup_only -n snapper}
-%endif
+%post -n libsnapper@LIBVERSION_MAJOR@ -p /sbin/ldconfig
+%postun -n libsnapper@LIBVERSION_MAJOR@ -p /sbin/ldconfig
 
-%postun -n libsnapper@LIBVERSION_MAJOR@
-/sbin/ldconfig
-
-%package -n libsnapper-devel
-Requires:       boost-devel
-Requires:       gcc-c++
-Requires:	libacl-devel
-Requires:       libsnapper@LIBVERSION_MAJOR@ = %version
-Requires:       libstdc++-devel
-Requires:       libxml2-devel
-%if 0%{?suse_version} > 1230
-Requires:       libbtrfs-devel
-%endif
-%if 0%{?suse_version} > 1310
-Requires:       libmount-devel >= 2.24
-%endif
-Summary:        Header files and documentation for libsnapper
-Group:          Development/Languages/C and C++
-
-%description -n libsnapper-devel
-This package contains header files and documentation for developing with
-libsnapper.
-
-Authors:
---------
-    Arvin Schnell <aschnell@suse.com>
+%files -n libsnapper@LIBVERSION_MAJOR@
+%defattr(-,root,root)
+%{_libdir}/libsnapper.so.*
 
 %files -n libsnapper-devel
 %defattr(-,root,root)
-%{_libdir}/libsnapper.la
 %{_libdir}/libsnapper.so
-%{prefix}/include/snapper
-
-%package -n snapper-zypp-plugin
-BuildArch:	noarch
-Requires:       dbus-1-python
-Requires:       libzypp(plugin:commit) = 1
-Requires:	python-xml
-Requires:       snapper = %version
-Requires:       zypp-plugin-python
-Summary:        A zypp commit plugin for calling snapper
-Group:          System/Packages
-
-%description -n snapper-zypp-plugin
-This package contains a plugin for zypp that makes filesystem snapshots with
-snapper during commits.
-
-Authors:
---------
-    Arvin Schnell <aschnell@suse.com>
+%{_includedir}/snapper
 
 %files -n snapper-zypp-plugin
 %defattr(-,root,root)
 %config(noreplace) %{_sysconfdir}/snapper/zypp-plugin.conf
 %if 0%{?suse_version} < 1210
-%dir /usr/lib/zypp
-%dir /usr/lib/zypp/plugins
-%dir /usr/lib/zypp/plugins/commit
+%dir %{_prefix}/lib/zypp
+%dir %{_prefix}/lib/zypp/plugins
+%dir %{_prefix}/lib/zypp/plugins/commit
 %endif
-/usr/lib/zypp/plugins/commit/snapper.py*
-%doc %{_mandir}/*/snapper-zypp-plugin.8*
-%doc %{_mandir}/*/snapper-zypp-plugin.conf.5*
-
-%package -n pam_snapper
-Requires:       pam
-Requires:       snapper = %version
-Summary:        PAM module for calling snapper
-Group:          System/Packages
-
-%description -n pam_snapper
-A PAM module for calling snapper during user login and logout.
-
-Authors:
---------
-    Matthias G. Eckermann <mge@suse.com>
+%{_prefix}/lib/zypp/plugins/commit/snapper.py*
+%{_mandir}/*/snapper-zypp-plugin.8*
+%{_mandir}/*/snapper-zypp-plugin.conf.5*
 
 %files -n pam_snapper
 %defattr(-,root,root)
 /%{_lib}/security/pam_snapper.so
-%dir /usr/lib/pam_snapper
-/usr/lib/pam_snapper/*.sh
-%doc %{_mandir}/*/pam_snapper.8*
+%dir %{_prefix}/lib/pam_snapper
+%{_prefix}/lib/pam_snapper/*.sh
+%{_mandir}/*/pam_snapper.8*
 
 %changelog
