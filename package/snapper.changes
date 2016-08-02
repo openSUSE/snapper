@@ -2,7 +2,7 @@
 Tue Aug 02 09:46:52 CEST 2016 - aschnell@suse.com
 
 - merged SELinux support from Red Hat (disabled at compile-time
-  per default)
+  per default) (gh#openSUSE/snapper#239)
 - version 0.3.3
 
 -------------------------------------------------------------------
