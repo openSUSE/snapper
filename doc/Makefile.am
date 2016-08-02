@@ -29,6 +29,10 @@ html: $(man_MANS:%.5=%.html) $(man_MANS:%.8=%.html)
 
 EXTRA_DIST = dbus-protocol.txt manpages.xsl html.xsl
 
+if ENABLE_SELINUX
+EXTRA_DIST += selinux-readme.txt
+endif
+
 clean-local:
 	rm -f *.{5,8} *.html
 
