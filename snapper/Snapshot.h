@@ -104,6 +104,11 @@ namespace snapper
 
 	bool isReadOnly() const;
 
+	bool isDefault() const;
+	void setDefault() const;
+
+	bool isActive() const;
+
 	void mountFilesystemSnapshot(bool user_request) const;
 	void umountFilesystemSnapshot(bool user_request) const;
 	void handleUmountFilesystemSnapshot() const;
