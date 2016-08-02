@@ -3,6 +3,7 @@ Tue Aug 02 09:46:52 CEST 2016 - aschnell@suse.com
 
 - merged SELinux support from Red Hat (disabled at compile-time
   per default)
+- version 0.3.3
 
 -------------------------------------------------------------------
 Mon Apr 18 12:20:51 CEST 2016 - aschnell@suse.com
