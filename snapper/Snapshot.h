@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -104,9 +105,19 @@ namespace snapper
 
 	bool isReadOnly() const;
 
+	/**
+	 * Determine iff snapshot is default (will be activated on next boot time).
+	 */
 	bool isDefault() const;
+
+	/**
+	 * Change default snapshot (will be activated on next boot time).
+	 */
 	void setDefault() const;
 
+	/**
+	 * Determine iff snapshot is active (activated on last boot time).
+	 */
 	bool isActive() const;
 
 	void mountFilesystemSnapshot(bool user_request) const;
