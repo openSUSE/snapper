@@ -5,6 +5,7 @@
 AM_CPPFLAGS = -I$(top_srcdir)
 
 LDADD = ../../snapper/libsnapper.la
+AM_LDFLAGS = -lboost_system
 
 noinst_PROGRAMS = List ListAll Create CmpDirs CreateNumber CreateTimeline
 
