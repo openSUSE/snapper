@@ -41,6 +41,9 @@
 #include "snapper/SnapperDefines.h"
 #include "snapper/Regex.h"
 #include "snapper/LvmCache.h"
+#ifdef ENABLE_SELINUX
+#include "snapper/Selinux.h"
+#endif
 
 
 namespace snapper
@@ -60,7 +63,7 @@ namespace snapper
     Lvm::Lvm(const string& subvolume, const string& root_prefix, const string& mount_type)
 	: Filesystem(subvolume, root_prefix), mount_type(mount_type),
 	  caps(LvmCapabilities::get_lvm_capabilities()),
-	  cache(LvmCache::get_lvm_cache())
+	  cache(LvmCache::get_lvm_cache()), sh(NULL)
     {
 	if (access(LVCREATEBIN, X_OK) != 0)
 	{
@@ -98,20 +101,87 @@ namespace snapper
 	    mount_options.push_back("nouuid");
 	    mount_options.push_back("norecovery");
 	}
+
+#ifdef ENABLE_SELINUX
+	try
+	{
+	    sh = SelinuxLabelHandle::get_selinux_handle();
+	}
+	catch (const SelinuxException& e)
+	{
+	    SN_RETHROW(e);
+	}
+#endif
+
+    }
+
+
+    void
+    Lvm::createLvmConfig(const SDir& subvolume_dir, int mode) const
+    {
+	int r1 = subvolume_dir.mkdir(".snapshots", mode);
+	if (r1 != 0 && errno != EEXIST)
+	{
+	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
+	    SN_THROW(CreateConfigFailedException("mkdir failed"));
+	}
     }
 
 
     void
     Lvm::createConfig() const
     {
+	int mode = 0750;
 	SDir subvolume_dir = openSubvolumeDir();
 
-	int r1 = subvolume_dir.mkdir(".snapshots", 0750);
-	if (r1 != 0 && errno != EEXIST)
+#ifdef ENABLE_SELINUX
+	if (_is_selinux_enabled())
 	{
-	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
-	    throw CreateConfigFailedException("mkdir failed");
+	    assert(sh);
+
+	    char* con = NULL;
+
+	    try
+	    {
+		string path(subvolume_dir.fullname() + "/.snapshots");
+
+		con = sh->selabel_lookup(path, mode);
+		if (con)
+		{
+		    // race free mkdir with correct Selinux context preset
+		    DefaultSelinuxFileContext defcon(con);
+		    createLvmConfig(subvolume_dir, mode);
+		}
+		else
+		{
+		    y2deb("Selinux policy does not define context for path: " << path);
+
+		    // race free mkdir with correct Selinux context preset even in case
+		    // Selinux policy does not define context for the path
+		    SnapperContexts scontexts;
+		    DefaultSelinuxFileContext defcon(scontexts.subvolume_context());
+
+		    createLvmConfig(subvolume_dir, mode);
+		}
+
+		freecon(con);
+
+		return;
+	    }
+	    catch (const SelinuxException& e)
+	    {
+		SN_CAUGHT(e);
+		freecon(con);
+		// fall through intentional
+	    }
+	    catch (const CreateConfigFailedException& e)
+	    {
+		freecon(con);
+		SN_RETHROW(e);
+	    }
 	}
+#endif
+	createLvmConfig(subvolume_dir, mode);
     }
 
 

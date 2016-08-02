@@ -134,6 +134,16 @@ AC_ARG_ENABLE([pam], AC_HELP_STRING([--disable-pam],[Disable pam plugin support]
                 [with_pam=$enableval],[with_pam=yes])
 AM_CONDITIONAL(HAVE_PAM, [test "x$with_pam" = "xyes"])
 
+AC_ARG_ENABLE([selinux], AC_HELP_STRING([--enable-selinux],[Enable support for SELinux LSM]),
+		[with_selinux=$enableval],[with_selinux=no])
+AM_CONDITIONAL(ENABLE_SELINUX, [test "x$enable_selinux" = "xyes"])
+
+if test "x$with_selinux" = "xyes"; then
+	AC_DEFINE(ENABLE_SELINUX, 1, [Enable SELinux support])
+	AC_CHECK_HEADER(selinux/selinux.h,[],[AC_MSG_ERROR([Cannot find libselinux headers. Please install libselinux-devel])])
+	AC_CHECK_LIB(selinux, selinux_snapperd_contexts_path, [], [AC_MSG_ERROR([selinux library does not provide selinux_snapperd_contexts_path symbol])])
+fi
+
 PKG_CHECK_MODULES(DBUS, dbus-1)
 
 AC_CHECK_HEADER(acl/libacl.h,[],[AC_MSG_ERROR([Cannout find libacl headers. Please install libacl-devel])])
