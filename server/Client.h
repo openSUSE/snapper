@@ -51,6 +51,9 @@ using namespace snapper;
 
 extern boost::shared_mutex big_mutex;
 
+class Backgrounds;
+class Clients;
+
 
 struct NoComparison : Exception
 {
@@ -112,7 +115,7 @@ public:
 
     void dispatch(DBus::Connection& conn, DBus::Message& msg);
 
-    Client(const string& name);
+    Client(const string& name, const Clients& clients);
     ~Client();
 
     list<Comparison*>::iterator find_comparison(Snapper* snapper, unsigned int number1,
@@ -160,12 +163,15 @@ private:
 
     void worker();
 
+    const Clients& clients;
+
 };
 
 
 class Clients
 {
 public:
+    Clients(Backgrounds& backgrounds);
 
     typedef list<Client>::iterator iterator;
     typedef list<Client>::const_iterator const_iterator;
@@ -185,14 +191,15 @@ public:
 
     bool has_zombies() const;
 
+    Backgrounds& backgrounds() const;
+
 private:
 
     list<Client> entries;
 
+    Backgrounds& bgs;
+
 };
-
-
-extern Clients clients;
 
 
 #endif

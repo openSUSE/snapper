@@ -31,9 +31,6 @@
 #include "Background.h"
 
 
-Backgrounds backgrounds;
-
-
 Backgrounds::Backgrounds()
 {
 }
