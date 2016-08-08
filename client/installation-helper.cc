@@ -197,6 +197,7 @@ step4()
     cout << "done" << endl;
 }
 
+
 bool
 step5(const string& root_prefix, const string& snapshot_type, unsigned int pre_num,
       const string& description, const string& cleanup, const map<string, string>& userdata)
