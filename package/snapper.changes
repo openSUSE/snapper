@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Aug 08 14:40:32 CEST 2016 - aschnell@suse.com
+
+- better messages for some btrfs quota errors
+  (gh#openSUSE/snapper#257)
+
+-------------------------------------------------------------------
 Tue Aug 02 09:46:52 CEST 2016 - aschnell@suse.com
 
 - merged SELinux support from Red Hat (disabled at compile-time

@@ -696,33 +696,38 @@ namespace snapper
 
 	SDir subvolume_dir = openSubvolumeDir();
 
-	vector<qgroup_t> children = qgroup_query_children(subvolume_dir.fd(), btrfs->getQGroup());
-	sort(children.begin(), children.end());
-
-	// Iterate all snapshot and ensure that those and only those with a
-	// cleanup algorithm are included in the high level qgroup.
-
-	for (const Snapshot& snapshot : snapshots)
+	try
 	{
-	    if (snapshot.isCurrent())
-		continue;
+	    vector<qgroup_t> children = qgroup_query_children(subvolume_dir.fd(), btrfs->getQGroup());
+	    sort(children.begin(), children.end());
 
-	    subvolid_t subvolid = get_id(snapshot.openSnapshotDir().fd());
-	    qgroup_t qgroup = calc_qgroup(0, subvolid);
+	    // Iterate all snapshot and ensure that those and only those with a
+	    // cleanup algorithm are included in the high level qgroup.
 
-	    bool included = binary_search(children.begin(), children.end(), qgroup);
-
-	    if (!snapshot.getCleanup().empty() && !included)
+	    for (const Snapshot& snapshot : snapshots)
 	    {
-		qgroup_assign(subvolume_dir.fd(), qgroup, btrfs->getQGroup());
-	    }
-	    else if (snapshot.getCleanup().empty() && included)
-	    {
-		qgroup_remove(subvolume_dir.fd(), qgroup, btrfs->getQGroup());
+		if (snapshot.isCurrent())
+		    continue;
+
+		subvolid_t subvolid = get_id(snapshot.openSnapshotDir().fd());
+		qgroup_t qgroup = calc_qgroup(0, subvolid);
+
+		bool included = binary_search(children.begin(), children.end(), qgroup);
+
+		if (!snapshot.getCleanup().empty() && !included)
+		{
+		    qgroup_assign(subvolume_dir.fd(), qgroup, btrfs->getQGroup());
+		}
+		else if (snapshot.getCleanup().empty() && included)
+		{
+		    qgroup_remove(subvolume_dir.fd(), qgroup, btrfs->getQGroup());
+		}
 	    }
 	}
-
-	quota_rescan(subvolume_dir.fd());
+	catch (const runtime_error& e)
+	{
+	    SN_THROW(QuotaException("preparing quota failed"));
+	}
 
 #else
 
