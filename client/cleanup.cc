@@ -189,7 +189,7 @@ Cleaner::is_quota_aware() const
 
 	if (strcmp(e.name(), "error.quota") == 0)
 	{
-	    cerr << "quota not working" << endl;
+	    cerr << "quota not working (" << e.message() << ")" << endl;
 	    return false;
 	}
 
