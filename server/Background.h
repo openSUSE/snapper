@@ -75,7 +75,4 @@ private:
 };
 
 
-extern Backgrounds backgrounds;
-
-
 #endif

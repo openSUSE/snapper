@@ -37,11 +37,9 @@
 
 boost::shared_mutex big_mutex;
 
-Clients clients;
 
-
-Client::Client(const string& name)
-    : name(name), zombie(false)
+Client::Client(const string& name, const Clients& clients)
+    : name(name), zombie(false), clients(clients)
 {
 }
 
@@ -1027,7 +1025,7 @@ Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
     bool background_comparison = true;
     it->getConfigInfo().getValue("BACKGROUND_COMPARISON", background_comparison);
     if (background_comparison)
-	backgrounds.add_task(it, snap1, snap2);
+	clients.backgrounds().add_task(it, snap1, snap2);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -1431,7 +1429,7 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg) const
     }
 
     hoho << "backgrounds:";
-    for (Backgrounds::const_iterator it = backgrounds.begin(); it != backgrounds.end(); ++it)
+    for (Backgrounds::const_iterator it = clients.backgrounds().begin(); it != clients.backgrounds().end(); ++it)
     {
 	std::ostringstream s;
 	s << "    name:'" << it->meta_snapper->configName() << "'";
@@ -1726,6 +1724,19 @@ Client::worker()
 }
 
 
+Clients::Clients(Backgrounds& backgrounds)
+    : bgs(backgrounds)
+{
+}
+
+
+Backgrounds&
+Clients::backgrounds() const
+{
+    return bgs;
+}
+
+
 Clients::iterator
 Clients::find(const string& name)
 {
@@ -1742,7 +1753,7 @@ Clients::add(const string& name)
 {
     assert(find(name) == entries.end());
 
-    entries.emplace_back(name);
+    entries.emplace_back(name, *this);
 
     return --entries.end();
 }

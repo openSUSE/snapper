@@ -57,11 +57,16 @@ public:
     void periodic();
     milliseconds periodic_timeout();
 
+private:
+
+    Backgrounds backgrounds;
+    Clients clients;
+
 };
 
 
 MyMainLoop::MyMainLoop(DBusBusType type)
-    : MainLoop(type)
+    : MainLoop(type), backgrounds(), clients(backgrounds)
 {
 }
 
