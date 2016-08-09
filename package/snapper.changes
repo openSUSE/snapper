@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Aug 09 21:53:02 CEST 2016 - aschnell@suse.com
+
+- merged patch to fix order of object destruction on shutdown
+  (gh#openSUSE/snapper#258)
+
+-------------------------------------------------------------------
 Mon Aug 08 14:40:32 CEST 2016 - aschnell@suse.com
 
 - better messages for some btrfs quota errors
