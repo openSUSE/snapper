@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2004-2015] Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -362,18 +363,14 @@ namespace snapper
     getgrouplist(const char* username, gid_t gid)
     {
 	int n = 16;
-	gid_t* buf = (gid_t*) malloc(sizeof(gid_t) * n);
+	vector<gid_t> gids(n);
 
-	if (::getgrouplist(username, gid, buf, &n) == -1)
-	{
-	    buf = (gid_t*) realloc(buf, sizeof(gid_t) * n);
-	    ::getgrouplist(username, gid, buf, &n);
-	}
+	while (::getgrouplist(username, gid, &gids[0], &n) == -1)
+	    gids.resize(n);
 
-	vector<gid_t> gids(&buf[0], &buf[n]);
+	gids.resize(n);
+
 	sort(gids.begin(), gids.end());
-
-	free(buf);
 
 	return gids;
     }
