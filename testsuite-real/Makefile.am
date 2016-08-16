@@ -16,7 +16,7 @@ noinst_SCRIPTS = run-all
 
 noinst_PROGRAMS = simple1 permissions1 permissions2 permissions3 owner1 owner2 \
 	owner3 directory1 missing-directory1 error1 error2 error4 \
-	$(TMP_XATST) test-btrfsutils
+	$(TMP_XATST) test-btrfsutils ug-tests
 
 simple1_SOURCES = simple1.cc common.h common.cc
 
@@ -42,6 +42,8 @@ xattrs3_SOURCES = xattrs3.cc xattrs_utils.cc xattrs_utils.h common.h common.cc
 xattrs4_SOURCES = xattrs4.cc xattrs_utils.cc xattrs_utils.h common.h common.cc
 
 test_btrfsutils_SOURCES = test-btrfsutils.cc
+
+ug_tests_SOURCES = ug-tests.cc
 
 EXTRA_DIST = $(noinst_SCRIPTS)
 
