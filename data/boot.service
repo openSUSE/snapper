@@ -1,0 +1,6 @@
+[Unit]
+Description=Take snapper snapshot of root on boot
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/snapper --config root create --cleanup-algorithm number --description "boot"
