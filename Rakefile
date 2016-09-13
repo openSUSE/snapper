@@ -9,7 +9,7 @@ require "packaging/configuration"
 Packaging::Tasks.load_tasks(:exclude => ["tarball.rake"])
 
 require "yast/tasks"
-Yast::Tasks.submit_to(:sle12sp2)
+Yast::Tasks.submit_to(ENV.fetch("YAST_SUBMIT", "factory").to_sym)
 
 Packaging.configuration do |conf|
   conf.package_name.sub!(/-.*/, "") # strip branch name
