@@ -77,7 +77,7 @@
 	  <para>List of users allowed to operate with the config. The user-names
 	  must be separated by spaces. Spaces in usernames can be escaped with a
 	  &quot;\&quot;.</para>
-	  <para>Also see the PERMISSONS section in
+	  <para>Also see the PERMISSIONS section in
 	  <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>.</para>
 	  <para>Default value is &quot;&quot; but &quot;root&quot; is always
 	  implicitly included.</para>
@@ -90,7 +90,7 @@
 	  <para>List of groups allowed to operate with the config. The group-names
 	  must be separated by spaces. Spaces in group-names can be escaped with a
 	  &quot;\&quot;.</para>
-	  <para>Also see the PERMISSONS section in
+	  <para>Also see the PERMISSIONS section in
 	  <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>.</para>
 	  <para>Default value is &quot;&quot;.</para>
 	</listitem>
@@ -102,7 +102,7 @@
 	  <para>Defines whether snapper will sync the users and groups from
 	  ALLOW_USERS and ALLOW_GROUPS to the ACL of the <filename>.snapshots</filename>
 	  directory.</para>
-	  <para>Also see the PERMISSONS section in
+	  <para>Also see the PERMISSIONS section in
 	  <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>.</para>
 	  <para>Default value is &quot;no&quot;.</para>
 	  <para>New in version 0.2.0.</para>
