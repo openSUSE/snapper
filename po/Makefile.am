@@ -26,8 +26,8 @@ merge: $(PACKAGE).pot
 	files='$(POFILES)'; \
 	for file in $$files; do \
 	    base=`basename $$file`; \
-	    echo "$(MSGMERGE) --no-wrap --update $$base $(PACKAGE).pot"; \
-	    $(MSGMERGE) --no-wrap --update $$base $(PACKAGE).pot; \
+	    echo "$(MSGMERGE) --no-wrap --previous --update $$base $(PACKAGE).pot"; \
+	    $(MSGMERGE) --no-wrap --previous --update $$base $(PACKAGE).pot; \
 	done
 
 install-data-local: $(MOFILES)
