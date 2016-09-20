@@ -1,7 +1,7 @@
 #
 # spec file for package snapper
 #
-# Copyright (c) 2015 SUSE LINUX GmbH, Nuernberg, Germany.
+# Copyright (c) 2016 SUSE LINUX GmbH, Nuernberg, Germany.
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -34,10 +34,19 @@ BuildRequires:  libbtrfs-devel
 %if 0%{?suse_version} > 1310
 BuildRequires:  libmount-devel >= 2.24
 %endif
+%if 0%{?fedora_version} >= 23
+BuildRequires:  pkgconfig
+%else
 BuildRequires:  pkg-config
+%endif
 %if ! 0%{?mandriva_version}
+%if 0%{?fedora_version} >= 23
+BuildRequires:  dbus-devel
+BuildRequires:  docbook-style-xsl
+%else
 BuildRequires:  dbus-1-devel
 BuildRequires:  docbook-xsl-stylesheets
+%endif
 BuildRequires:  libxslt
 %else
 BuildRequires:  docbook-dtd45-xml
