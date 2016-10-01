@@ -5,4 +5,4 @@ Description=Take snapper snapshot of root on boot
 OnBootSec=1
 
 [Install]
-WantedBy=basic.target
+WantedBy=timers.target
