@@ -1524,13 +1524,13 @@ namespace snapper
 
 	if (!deleted_subvolids.empty())
 	{
+#ifdef HAVE_LIBBTRFS
 	    for (subvolid_t subvolid : deleted_subvolids)
 	    {
-#ifdef HAVE_LIBBTRFS
 		while (!does_subvolume_exist(subvolume_dir.fd(), subvolid))
 		    sleep(1);
-#endif
 	    }
+#endif
 
 	    deleted_subvolids.clear();
 
