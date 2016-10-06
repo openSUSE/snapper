@@ -39,6 +39,10 @@ BuildRequires:  pkgconfig
 %else
 BuildRequires:  pkg-config
 %endif
+%if 0%{?fedora_version} >= 24
+BuildRequires:	glibc-langpack-en
+BuildRequires:	glibc-langpack-de
+%endif
 %if ! 0%{?mandriva_version}
 %if 0%{?fedora_version} >= 23
 BuildRequires:  dbus-devel
@@ -94,6 +98,9 @@ autoconf
 %if 0%{?suse_version} <= 1310
 	--disable-rollback							\
 %endif
+%if 0%{?suse_version} <= 1320
+	--disable-btrfs-quota							\
+%endif
 	--disable-silent-rules --disable-ext4
 make %{?jobs:-j%jobs}
 
@@ -119,12 +126,16 @@ rm -rf "$RPM_BUILD_ROOT"
 %defattr(-,root,root)
 %{prefix}/bin/snapper
 %{prefix}/sbin/snapperd
+%if 0%{?suse_version} > 1310
 %{prefix}/sbin/mksubvolume
+%endif
 %{prefix}/lib/snapper
 %doc %{_mandir}/*/snapper.8*
 %doc %{_mandir}/*/snapperd.8*
 %doc %{_mandir}/*/snapper-configs.5*
+%if 0%{?suse_version} > 1310
 %doc %{_mandir}/*/mksubvolume.8*
+%endif
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
 /etc/cron.hourly/suse.de-snapper
 /etc/cron.daily/suse.de-snapper
