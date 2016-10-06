@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2016-09-20 19:08+0000\n"
+"PO-Revision-Date: 2016-10-05 18:00+0000\n"
 "Last-Translator: Mariusz Fik <fisiu@opensuse.org>\n"
 "Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>"
 "\n"
@@ -147,7 +147,6 @@ msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <algorytm czyszczenia>"
 
 #: ../client/snapper.cc:691
-#, fuzzy
 msgid "\tsnapper create"
 msgstr "\tsnapper create"
 
@@ -157,7 +156,7 @@ msgstr "\tsnapper create-config <subvolume>"
 
 #: ../client/snapper.cc:881
 msgid "\tsnapper delete <number>"
-msgstr "\tsnapper delete <number>"
+msgstr "\tsnapper delete <numer>"
 
 #: ../client/snapper.cc:335
 msgid "\tsnapper delete-config"
@@ -168,7 +167,6 @@ msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <numer1>..<numer2> [pliki]"
 
 #: ../client/snapper.cc:365
-#, fuzzy
 msgid "\tsnapper get-config"
 msgstr "\tsnapper get-config"
 
@@ -282,7 +280,7 @@ msgstr "  Usunięcie zrzutu:"
 
 #: ../client/snapper.cc:364
 msgid "  Get config:"
-msgstr "  Pobieranie konfiguracji: "
+msgstr "  Pobieranie konfiguracji:"
 
 #: ../client/snapper.cc:204
 msgid "  List configs:"
@@ -324,7 +322,7 @@ msgstr "#"
 #: ../client/snapper.cc:1382 ../client/snapper.cc:1389
 #, c-format
 msgid "(Snapshot %d.)"
-msgstr "(Migawka %d)."
+msgstr "(Migawka %d.)"
 
 #: ../client/snapper.cc:1787 ../client/errors.cc:85
 msgid "ACL error."
@@ -777,7 +775,7 @@ msgstr "modyfikowanie %s"
 
 #: ../client/snapper.cc:1208
 msgid "nothing to do"
-msgstr "Nie ma nic do zrobienia."
+msgstr "nie ma nic do zrobienia"
 
 #: ../client/snapper.cc:1693
 msgid "root argument can be used only together with no-dbus."
