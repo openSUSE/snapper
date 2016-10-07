@@ -14,7 +14,7 @@ pam_snapper_SCRIPTS =			\
 
 endif
 
-EXTRA_DIST = snapper-hourly snapper-daily zypp-plugin.py $(pam_snapper_SCRIPTS)
+EXTRA_DIST = snapper-hourly snapper-daily zypp-plugin.py $(pam_snapper_SCRIPTS) bash-completion.sh
 
 install-data-local:
 	install -D snapper-hourly $(DESTDIR)/etc/cron.hourly/suse.de-snapper
