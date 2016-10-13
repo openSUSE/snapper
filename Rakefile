@@ -16,10 +16,11 @@ Packaging.configuration do |conf|
   conf.package_dir    = ".obsdir" # Makefile.ci puts it there
   conf.skip_license_check << /.*/
 
+  # defined in Rakefile in https://github.com/openSUSE/packaging_rake_tasks
   conf.obs_api = "https://api.opensuse.org/"
   conf.obs_project = "filesystems:snapper"
   conf.obs_target = "openSUSE_Factory"
-  conf.obs_sr_project = "openSUSE_Factory"
+  conf.obs_sr_project = "filesystems:snapper"
 end
 
 desc 'Pretend to run the test suite'
