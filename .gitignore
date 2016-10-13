@@ -12,7 +12,7 @@ install-sh
 libtool
 ltmain.sh
 missing
-/obs-package-from-git
+obs-package-from-git
 stamp-h1
 py-compile
 test-driver

@@ -15,6 +15,11 @@ Packaging.configuration do |conf|
   conf.package_name.sub!(/-.*/, "") # strip branch name
   conf.package_dir    = ".obsdir" # Makefile.ci puts it there
   conf.skip_license_check << /.*/
+
+  conf.obs_api = "https://api.opensuse.org/"
+  conf.obs_project = "filesystems:snapper"
+  conf.obs_target = "openSUSE_Factory"
+  conf.obs_sr_project = "openSUSE_Factory"
 end
 
 desc 'Pretend to run the test suite'
