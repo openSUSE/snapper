@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2016-06-04 11:53+0000\n"
+"PO-Revision-Date: 2016-10-14 11:19+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
 "Language-Team: Catalan "
 "<https://l10n.opensuse.org/projects/snapper/master/ca/>\n"
@@ -656,7 +656,7 @@ msgstr "No s'ha trobat la instantània '%u'."
 
 #: ../client/errors.cc:61
 msgid "Snapshot is in use."
-msgstr "La instantània s'està usant."
+msgstr "La instantània s'usa."
 
 #: ../client/snapper.cc:250
 msgid "Subvolume"
