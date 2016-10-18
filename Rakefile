@@ -9,7 +9,8 @@ require "packaging/configuration"
 Packaging::Tasks.load_tasks(:exclude => ["tarball.rake"])
 
 require "yast/tasks"
-Yast::Tasks.submit_to(ENV.fetch("YAST_SUBMIT", "factory").to_sym)
+yast_submit = ENV.fetch("YAST_SUBMIT", "factory").to_sym
+Yast::Tasks.submit_to(yast_submit)
 
 Packaging.configuration do |conf|
   conf.package_name.sub!(/-.*/, "") # strip branch name
@@ -17,10 +18,26 @@ Packaging.configuration do |conf|
   conf.skip_license_check << /.*/
 
   # defined in Rakefile in https://github.com/openSUSE/packaging_rake_tasks
-  conf.obs_api = "https://api.opensuse.org/"
-  conf.obs_project = "filesystems:snapper"
-  conf.obs_target = "openSUSE_Factory"
-  conf.obs_sr_project = "filesystems:snapper"
+  if yast_submit == :factory
+    # Override values from
+    # https://github.com/yast/yast-rake/blob/master/data/targets.yml
+    # loaded by Yast::Tasks.submit_to() for OBS:
+    # filesystems:snapper/snapper
+    conf.obs_api = "https://api.opensuse.org/"
+    conf.obs_project = "filesystems:snapper"
+    conf.obs_sr_project = "filesystems:snapper"
+    conf.obs_target = "openSUSE_Factory"
+  end
+end
+
+desc 'Show configuration'
+task :show_config do
+  Packaging.configuration do |conf|
+    puts "API: #{conf.obs_api}"
+    puts "Project: #{conf.obs_project}"
+    puts "SR Project: #{conf.obs_sr_project}"
+    puts "Target: #{conf.obs_target}"
+  end
 end
 
 desc 'Pretend to run the test suite'
