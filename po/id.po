@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2002-10-08 13:38+0200\n"
+"PO-Revision-Date: 2016-10-20 23:33+0800\n"
 "Last-Translator: I Made Wiryana <made@nakula.rvs.uni-bielefeld.de>\n"
 "Language-Team: Indonesian <i18n@suse.de>\n"
 "Language: id\n"
@@ -15,477 +15,481 @@ msgstr ""
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr ""
+"\t--all-configs, -a\t\tDaftar snapshot dari semua pengaksesan konfigurasi."
 
 #: ../client/snapper.cc:698 ../client/snapper.cc:832
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr ""
+msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritma pembersihan untuk snapshot."
 
 #: ../client/snapper.cc:1303
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr ""
+"\t--cleanup-algorithm, -c <algo>\tAlgoritma pembersihan untuk snapshots."
 
 #: ../client/snapper.cc:700
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
 msgstr ""
+"\t--command <command>\tMenjalankan perintah dan membuat pre dan pos "
+"snapshots."
 
 #: ../client/snapper.cc:1583
 msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr ""
+msgstr "\t--config, -c <name>\t\tMengatur nama untuk menggunakan konfigurasi."
 
 #: ../client/snapper.cc:697 ../client/snapper.cc:831
 msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr ""
+msgstr "\t--description, -d <description>\tDeskripsi untuk snapshot."
 
 #: ../client/snapper.cc:1302
 msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr ""
+msgstr "\t--description, -d <description>\tDeskripsi untuk snapshots."
 
 #: ../client/snapper.cc:1093
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr ""
+"\t--diff-cmd <command>\t\tPerintah digunakan untuk membandingkan berkas."
 
 #: ../client/snapper.cc:1094
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
+"\t--extensions, -x <options>\tPilihan ekstra diteruskan untuk perintah diff."
 
 #: ../client/snapper.cc:274
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr ""
+msgstr "\t--fstype, -f <fstype>\t\tSecara manual mengatur jenis sistem berkas."
 
 #: ../client/snapper.cc:1155
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr ""
+"\t--input, -i <file>\t\tBaca berkas untuk yang mana membatalkan perubahan "
+"dari berkas."
 
 #: ../client/snapper.cc:1092
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr ""
+msgstr "\t--input, -i <file>\t\tBaca berkas ke diff dari berkas."
 
 #: ../client/snapper.cc:1581
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr ""
+msgstr "\t--iso\t\t\t\tMenampilkan tanggal dan waktu dalam format ISO."
 
 #: ../client/snapper.cc:1584
 msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr ""
+msgstr "\t--no-dbus\t\t\tMengoperasikan tanpa DBus."
 
 #: ../client/snapper.cc:1030
 msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr ""
+msgstr "\t--output, -o <file>\t\tMenyimpan status ke berkas."
 
 #: ../client/snapper.cc:695
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr ""
+msgstr "\t--pre-number <number>\t\tJumlah yang sesuai pre snapshot."
 
 #: ../client/snapper.cc:696
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr ""
+msgstr "\t--print-number, -p\t\tMencetak jumlah dari snapshot yang dibuat."
 
 #: ../client/snapper.cc:1301
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
 msgstr ""
+"\t--print-number, -p\t\tMencetak jumlah dari snapshot kedua yang dibuat."
 
 #: ../client/snapper.cc:1578
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr ""
+msgstr "\t--quiet, -q\t\t\tMenekan keluaran normal."
 
 #: ../client/snapper.cc:1585
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr ""
+"\t--root, -r <path>\t\tBeroperasi pada target root (hanya bekerja tanpa "
+"DBus)."
 
 #: ../client/snapper.cc:884
 msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr ""
+msgstr "\t--sync, -s\t\t\tSync setelah penghapusan."
 
 #: ../client/snapper.cc:1582
 msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr ""
+msgstr "\t--table-style, -t <style>\tGaya tabel (integer)."
 
 #: ../client/snapper.cc:275
 msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr ""
+msgstr "\t--template, -t <name>\t\tNama dari konfig template untuk menggunakan."
 
 #: ../client/snapper.cc:694
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr ""
+msgstr "\t--type, -t <type>\t\tJenis untuk snapshot."
 
 #: ../client/snapper.cc:456
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr ""
+msgstr "\t--type, -t <type>\t\tJenis dari snapshots untuk daftar."
 
 #: ../client/snapper.cc:699 ../client/snapper.cc:833
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr ""
+msgstr "\t--userdata, -u <userdata>\tData pengguna untuk snapshot."
 
 #: ../client/snapper.cc:1304
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr ""
+msgstr "\t--userdata, -u <userdata>\tData pengguna untuk snapshots."
 
 #: ../client/snapper.cc:1580
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr ""
+msgstr "\t--utc\t\t\t\tMenampilkan tanggal dan waktu dalam UTC."
 
 #: ../client/snapper.cc:1579
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr ""
+msgstr "\t--verbose, -v\t\t\tMeningkatkan verbositas."
 
 #: ../client/snapper.cc:1586
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr ""
+msgstr "\t--version\t\t\tCetak versi dan keluar."
 
 #: ../client/snapper.cc:1409
 msgid "\tsnapper cleanup <cleanup-algorithm>"
-msgstr ""
+msgstr "\tpembersihan snapper <algoritma-pembersihan>"
 
 #: ../client/snapper.cc:691
 msgid "\tsnapper create"
-msgstr ""
+msgstr "\tmembuat snapper"
 
 #: ../client/snapper.cc:271
 msgid "\tsnapper create-config <subvolume>"
-msgstr ""
+msgstr "\tsnapper membuat-konfig <subvolume>"
 
 #: ../client/snapper.cc:881
 msgid "\tsnapper delete <number>"
-msgstr ""
+msgstr "\tsnapper hapus <angka>"
 
 #: ../client/snapper.cc:335
 msgid "\tsnapper delete-config"
-msgstr ""
+msgstr "\tsnapper hapus-konfig"
 
 #: ../client/snapper.cc:1089
 msgid "\tsnapper diff <number1>..<number2> [files]"
-msgstr ""
+msgstr "\tsnapper diff <angka1>..<angka2> [berkas]"
 
 #: ../client/snapper.cc:365
 msgid "\tsnapper get-config"
-msgstr ""
+msgstr "\tsnapper get-konfig"
 
 #: ../client/snapper.cc:453
 msgid "\tsnapper list"
-msgstr ""
+msgstr "\tsnapper list"
 
 #: ../client/snapper.cc:205
 msgid "\tsnapper list-configs"
-msgstr ""
+msgstr "\tsnapper list-konfig"
 
 #: ../client/snapper.cc:828
 msgid "\tsnapper modify <number>"
-msgstr ""
+msgstr "\tsnapper modif <angka>"
 
 #: ../client/snapper.cc:953
 msgid "\tsnapper mount <number>"
-msgstr ""
+msgstr "\tsnapper mount <angka>"
 
 #: ../client/snapper.cc:1298
 msgid "\tsnapper rollback [number]"
-msgstr ""
+msgstr "\tsnapper rollback [angka]"
 
 #: ../client/snapper.cc:421
 msgid "\tsnapper set-config <configdata>"
-msgstr ""
+msgstr "\tsnapper set-config <konfigdata>"
 
 #: ../client/snapper.cc:1027
 msgid "\tsnapper status <number1>..<number2>"
-msgstr ""
+msgstr "\tsnapper status <angka1>..<angka2>"
 
 #: ../client/snapper.cc:990
 msgid "\tsnapper umount <number>"
-msgstr ""
+msgstr "\tsnapper umount <nomor>"
 
 #: ../client/snapper.cc:1152
 msgid "\tsnapper undochange <number1>..<number2> [files]"
-msgstr ""
+msgstr "\tsnapper membatalkan perubahan <nomor1>..<nomor2> [berkas]"
 
 #: ../client/snapper.cc:1474
 msgid "\tsnapper xadiff <number1>..<number2> [files]"
-msgstr ""
+msgstr "\tsnapper xadiff <angka1>..<angka2> [berkas]"
 
 #: ../client/snapper.cc:1577
 msgid "    Global options:"
-msgstr ""
+msgstr "    Pilihan global:"
 
 #: ../client/snapper.cc:693
 msgid "    Options for 'create' command:"
-msgstr ""
+msgstr "    Opsi untuk perintah 'create':"
 
 #: ../client/snapper.cc:273
 msgid "    Options for 'create-config' command:"
-msgstr ""
+msgstr "    Opsi untuk perintah 'create-config':"
 
 #: ../client/snapper.cc:883
 msgid "    Options for 'delete' command:"
-msgstr ""
+msgstr "    Opsi untuk perintah'delete':"
 
 #: ../client/snapper.cc:1091
 msgid "    Options for 'diff' command:"
-msgstr ""
+msgstr "    Opsi untuk perintah 'diff':"
 
 #: ../client/snapper.cc:455
 msgid "    Options for 'list' command:"
-msgstr ""
+msgstr "    Opsi untuk perintah 'list':"
 
 #: ../client/snapper.cc:830
 msgid "    Options for 'modify' command:"
-msgstr ""
+msgstr "    Opsi untuk perintah 'modify':"
 
 #: ../client/snapper.cc:1300
 msgid "    Options for 'rollback' command:"
-msgstr ""
+msgstr "    Opai untuk perintah 'rollback':"
 
 #: ../client/snapper.cc:1029
 msgid "    Options for 'status' command:"
-msgstr ""
+msgstr "    Opsi untuk perintah 'status':"
 
 #: ../client/snapper.cc:1154
 msgid "    Options for 'undochange' command:"
-msgstr ""
+msgstr "    Opsi untuk perintah 'undochange':"
 
 #: ../client/snapper.cc:1408
 msgid "  Cleanup snapshots:"
-msgstr ""
+msgstr "  Pembersihan snapshots:"
 
 #: ../client/snapper.cc:1473
 msgid "  Comparing snapshots extended attributes:"
-msgstr ""
+msgstr "  Membandingkan atribut tambahan snapshots:"
 
 #: ../client/snapper.cc:1026 ../client/snapper.cc:1088
 msgid "  Comparing snapshots:"
-msgstr ""
+msgstr "  Membandingkan snapshots:"
 
 #: ../client/snapper.cc:270
 msgid "  Create config:"
-msgstr ""
+msgstr "  Membuat konfig:"
 
 #: ../client/snapper.cc:690
 msgid "  Create snapshot:"
-msgstr ""
+msgstr "  Membuat snapshot:"
 
 #: ../client/snapper.cc:334
 msgid "  Delete config:"
-msgstr ""
+msgstr "  Menghapus konfig:"
 
 #: ../client/snapper.cc:880
 msgid "  Delete snapshot:"
-msgstr ""
+msgstr "  Menghapus snapshot:"
 
 #: ../client/snapper.cc:364
 msgid "  Get config:"
-msgstr ""
+msgstr "  Mendapatkan konfig:"
 
 #: ../client/snapper.cc:204
 msgid "  List configs:"
-msgstr ""
+msgstr "  Daftar konfig:"
 
 #: ../client/snapper.cc:452
 msgid "  List snapshots:"
-msgstr ""
+msgstr "  Daftar snapshots:"
 
 #: ../client/snapper.cc:827
 msgid "  Modify snapshot:"
-msgstr ""
+msgstr "  Memodifikasi snapshot:"
 
 #: ../client/snapper.cc:952
 msgid "  Mount snapshot:"
-msgstr ""
+msgstr "  Mount snapshot:"
 
 #: ../client/snapper.cc:1297
 msgid "  Rollback:"
-msgstr ""
+msgstr "  Rollback:"
 
 #: ../client/snapper.cc:420
 msgid "  Set config:"
-msgstr ""
+msgstr "  Atur konfig:"
 
 #: ../client/snapper.cc:989
 msgid "  Umount snapshot:"
-msgstr ""
+msgstr "  Umount snapshot:"
 
 #: ../client/snapper.cc:1151
 msgid "  Undo changes:"
-msgstr ""
+msgstr "  Membatalkan perubahan:"
 
 #: ../client/snapper.cc:531 ../client/snapper.cc:580
 msgid "#"
-msgstr ""
+msgstr "#"
 
 #: ../client/snapper.cc:1364 ../client/snapper.cc:1371
 #: ../client/snapper.cc:1382 ../client/snapper.cc:1389
-#, fuzzy, c-format
+#, c-format, c-format
 msgid "(Snapshot %d.)"
-msgstr "Path kamus %s tidak valid"
+msgstr "(Snapshot %d.)"
 
 #: ../client/snapper.cc:1787 ../client/errors.cc:85
-#, fuzzy
 msgid "ACL error."
-msgstr "Kesalahan I/O"
+msgstr "ACL galat."
 
 #: ../client/snapper.cc:535
 msgid "Cleanup"
-msgstr ""
+msgstr "Pembersihan"
 
 #: ../client/snapper.cc:1735
 #, c-format
 msgid "Command '%s' does not work without DBus."
-msgstr ""
+msgstr "Perintah '%s' tidak bekerja tanpa DBus."
 
 #: ../client/snapper.cc:1420
 msgid "Command 'cleanup' needs one arguments."
-msgstr ""
+msgstr "Perintah 'cleanup' membutuhkan satu argumen."
 
 #: ../client/snapper.cc:722
 msgid "Command 'create' does not take arguments."
-msgstr ""
+msgstr "Perintah 'create' tidak membawa argumen."
 
 #: ../client/snapper.cc:292
 msgid "Command 'create-config' needs one argument."
-msgstr ""
+msgstr "Perintah 'create-config' membutuhkan satu argumen."
 
 #: ../client/snapper.cc:1458
 msgid "Command 'debug' does not take arguments."
-msgstr ""
+msgstr "Perintah 'debug' tidak membawa argumen."
 
 #: ../client/snapper.cc:900
 msgid "Command 'delete' needs at least one argument."
-msgstr ""
+msgstr "Perintah 'delete' membutuhkan setidaknya satu argumen."
 
 #: ../client/snapper.cc:346
 msgid "Command 'delete-config' does not take arguments."
-msgstr ""
+msgstr "Perintah 'delete-config' tidak membawa argumen."
 
 #: ../client/snapper.cc:1112
 msgid "Command 'diff' needs at least one argument."
-msgstr ""
+msgstr "Perintah 'diff' membutuhkan setidaknya satu argumen."
 
 #: ../client/snapper.cc:376
 msgid "Command 'get-config' does not take arguments."
-msgstr ""
+msgstr "Perintah 'get-config' tidak membawa argumen."
 
 #: ../client/snapper.cc:1570
 msgid "Command 'help' does not take arguments."
-msgstr ""
+msgstr "Perintah 'help' tidak membawa argumen."
 
 #: ../client/snapper.cc:477
 msgid "Command 'list' does not take arguments."
-msgstr ""
+msgstr "Perintah 'list' tidak membawa argumen."
 
 #: ../client/snapper.cc:242
 msgid "Command 'list-configs' does not take arguments."
-msgstr ""
+msgstr "Perintah 'list-configs' tidak membawa argumen."
 
 #: ../client/snapper.cc:851
 msgid "Command 'modify' needs at least one argument."
-msgstr ""
+msgstr "Perintah 'modify' membutuhkan setidaknya satu argumen."
 
 #: ../client/snapper.cc:964 ../client/snapper.cc:1001
 msgid "Command 'mount' needs at least one argument."
-msgstr ""
+msgstr "Perintah 'mount' membutuhkan setidaknya satu argumen."
 
 #: ../client/snapper.cc:1349
 msgid "Command 'rollback' only available for btrfs."
-msgstr ""
+msgstr "Perintah 'rollback' hanya tersedia untuk btrfs."
 
 #: ../client/snapper.cc:1323
 msgid "Command 'rollback' takes either one or no argument."
-msgstr ""
+msgstr "Perintah 'rollback' membawa satu atau tidak argumen."
 
 #: ../client/snapper.cc:432
 msgid "Command 'set-config' needs at least one argument."
-msgstr ""
+msgstr "Perintah 'set-config' membutuhkan setidaknya satu argumen."
 
 #: ../client/snapper.cc:1046
 msgid "Command 'status' needs one argument."
-msgstr ""
+msgstr "Perintah 'status' membutuhkan satu argumen."
 
 #: ../client/snapper.cc:1171
 msgid "Command 'undochange' needs at least one argument."
-msgstr ""
+msgstr "Perintah 'undochange' membutuhkan setidaknya satu argument."
 
 #: ../client/snapper.cc:1503
 msgid "Command 'xadiff' needs at least one argument."
-msgstr ""
+msgstr "Perintah 'xadiff' membutuhkan setidaknya satu argumen."
 
 #: ../client/snapper.cc:249
-#, fuzzy
 msgid "Config"
 msgstr "Konfigurasi"
 
 #: ../client/snapper.cc:1757
-#, fuzzy, c-format
+#, c-format, c-format
 msgid "Config '%s' is invalid."
-msgstr "Path kamus %s tidak valid"
+msgstr "Konfig '%s' tidak valid."
 
 #: ../client/snapper.cc:1751
-#, fuzzy, c-format
+#, c-format, c-format
 msgid "Config '%s' not found."
-msgstr "Path kamus %s tidak valid"
+msgstr "Konfig '%s' tidak ditemukan."
 
 #: ../client/errors.cc:58
-#, fuzzy
 msgid "Config is in use."
-msgstr "Path kamus %s tidak valid"
+msgstr "Konfig sedang digunakan."
 
 #: ../client/errors.cc:55
-#, fuzzy
 msgid "Config is locked."
-msgstr "Path kamus %s tidak valid"
+msgstr "Konfig terkunci."
 
 #: ../client/misc.cc:189
 #, c-format
 msgid "Configdata '%s' does not include '=' sign."
-msgstr ""
+msgstr "Konfigdata '%s' tidak membaca tanda '='."
 
 #: ../client/misc.cc:198
 #, c-format
 msgid "Configdata '%s' has empty key."
-msgstr ""
+msgstr "Konfigdata '%s' memiliki kunci kosong."
 
 #: ../client/snapper.cc:1769 ../client/errors.cc:67
-#, fuzzy, c-format
+#, c-format, c-format
 msgid "Creating config failed (%s)."
-msgstr "DBI Execution failed: %s."
+msgstr "Gagal membuat konfig (%s)."
 
 #: ../client/snapper.cc:1378
 msgid "Creating read-only snapshot of current system."
-msgstr ""
+msgstr "Membuat snapshot read-only di sistem saat ini."
 
 #: ../client/snapper.cc:1359
-#, fuzzy
 msgid "Creating read-only snapshot of default subvolume."
-msgstr "DBI Execution failed: %s."
+msgstr "Membuat snapshot read-only dari subvolume bawaan."
 
 #: ../client/snapper.cc:1367
 msgid "Creating read-write snapshot of current subvolume."
-msgstr ""
+msgstr "Membuat snapshot read-write dari subvolume saat ini."
 
 #: ../client/snapper.cc:1385
-#, fuzzy, c-format
+#, c-format, c-format
 msgid "Creating read-write snapshot of snapshot %d."
-msgstr "DBI Execution failed: %s."
+msgstr "Membuat snapshot read-write dari snapshot %d."
 
 #: ../client/errors.cc:73
-#, fuzzy
 msgid "Creating snapshot failed."
-msgstr "DBI Execution failed: %s."
+msgstr "Gagal membuat snapshot."
 
 #: ../client/snapper.cc:533 ../client/snapper.cc:581
 msgid "Date"
-msgstr ""
+msgstr "Tanggal"
 
 #: ../client/snapper.cc:1775 ../client/errors.cc:70
-#, fuzzy, c-format
+#, c-format, c-format
 msgid "Deleting config failed (%s)."
-msgstr "DBI Execution failed: %s."
+msgstr "Gagal menghapus konfig (%s)."
 
 #: ../client/errors.cc:76
-#, fuzzy
 msgid "Deleting snapshot failed."
-msgstr "DBI Execution failed: %s."
+msgstr "Gagal menghapus snapshot."
 
 #: ../client/commands.cc:274
-#, fuzzy, c-format
+#, c-format, c-format
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
-msgstr[0] "DBI Execution failed: %s."
+msgstr[0] "Menghapus snapshot dari %s:"
 
 #: ../client/snapper.cc:536 ../client/snapper.cc:583 ../client/snapper.cc:631
 msgid "Description"
@@ -493,310 +497,304 @@ msgstr "Deskripsi"
 
 #: ../client/snapper.cc:316
 msgid "Detecting filesystem type failed."
-msgstr ""
+msgstr "Gagal mendeteksi jenis sistem berkas."
 
 #: ../client/misc.cc:178
 msgid "Empty configdata."
-msgstr ""
+msgstr "Konfigdata kosong."
 
 #: ../client/misc.cc:115 ../client/misc.cc:123
 msgid "Empty userdata."
-msgstr ""
+msgstr "Penggunadata kosong."
 
 #: ../client/snapper.cc:1277 ../client/snapper.cc:1288
 msgid "Failed to initialize filesystem handler."
-msgstr ""
+msgstr "Gagal untuk menginisialisasi handler sistem berkas."
 
 #: ../client/systemd-helper.cc:136 ../client/snapper.cc:1834
 msgid "Failure"
-msgstr ""
+msgstr "Kegagalan"
 
 #: ../client/errors.cc:87
-#, fuzzy, c-format
+#, c-format, c-format
 msgid "Failure (%s)."
-msgstr "Failed to parse: %s."
+msgstr "Kegagalan: %s."
 
 #: ../client/snapper.cc:134 ../client/snapper.cc:157
 #, c-format
 msgid "File '%s' not found."
-msgstr ""
+msgstr "Berkas '%s' tidak ditemukan."
 
 #: ../client/errors.cc:64
-#, fuzzy, c-format
+#, c-format, c-format
 msgid "IO Error (%s)."
-msgstr "Kesalahan I/O"
+msgstr "Galat I/O (%s)."
 
 #: ../client/snapper.cc:1793
-#, fuzzy, c-format
+#, c-format, c-format
 msgid "IO error (%s)."
-msgstr "Kesalahan I/O"
+msgstr "galat I/O (%s)."
 
 #: ../client/misc.cc:102
 msgid "Identical snapshots."
-msgstr ""
+msgstr "Identik snapshots."
 
 #: ../client/errors.cc:52
 msgid "Illegal Snapshot."
-msgstr ""
+msgstr "Snapshot Ilegal."
 
 #: ../client/snapper.cc:1781 ../client/errors.cc:49
 msgid "Invalid configdata."
-msgstr ""
+msgstr "Konfigdata tidak valid."
 
 #: ../client/snapper.cc:1805 ../client/errors.cc:82
 msgid "Invalid group."
-msgstr ""
+msgstr "Grup tidak valid."
 
 #: ../client/misc.cc:48 ../client/misc.cc:72
 #, c-format
 msgid "Invalid snapshot '%s'."
-msgstr ""
+msgstr "Snapshot tidak valid '%s'."
 
 #: ../client/misc.cc:93 ../client/snapper.cc:1193
 msgid "Invalid snapshots."
-msgstr ""
+msgstr "Snapshots tidak valid."
 
 #: ../client/snapper.cc:299
 msgid "Invalid subvolume."
-msgstr ""
+msgstr "Subvolume tidak valid."
 
 #: ../client/snapper.cc:1675
 #, c-format
 msgid "Invalid table style %d."
-msgstr ""
+msgstr "Moda tabel tidak valid %d."
 
 #: ../client/snapper.cc:1799 ../client/errors.cc:79
 msgid "Invalid user."
-msgstr ""
+msgstr "Pengguna tidak valid."
 
 #: ../client/errors.cc:46
 msgid "Invalid userdata."
-msgstr ""
+msgstr "Penggunadata tidak valid."
 
 # KE
 #: ../client/snapper.cc:383
-#, fuzzy
 msgid "Key"
-msgstr "Kenya"
+msgstr "Kunci"
 
 #: ../client/snapper.cc:1763
-#, fuzzy, c-format
+#, c-format, c-format
 msgid "Listing configs failed (%s)."
-msgstr "DBI Execution failed: %s."
+msgstr "Listing konfig gagal (%s)."
 
 #: ../client/snapper.cc:1050
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
-msgstr ""
+msgstr "Mungkin anda lupa pembatas '..' antara nomor snapshot."
 
 #: ../client/utils/GetOpts.cc:68
 #, c-format
 msgid "Missing argument for command option '%s'."
-msgstr ""
+msgstr "Kehilangan argumen untuk opsi perintah '%s'."
 
 #: ../client/utils/GetOpts.cc:66
 #, c-format
 msgid "Missing argument for global option '%s'."
-msgstr ""
+msgstr "Kehilangan argumen untuk opsi global '%s'."
 
 #: ../client/snapper.cc:784
 msgid "Missing command argument."
-msgstr ""
+msgstr "Kehilangan argumen perintah."
 
 #: ../client/misc.cc:88
 msgid "Missing delimiter '..' between snapshot numbers."
-msgstr ""
+msgstr "Kehilangan pembatas '..' antara nomor snapshot."
 
 #: ../client/snapper.cc:778
 msgid "Missing or invalid pre-number."
-msgstr ""
+msgstr "Hilang atau tidak pre-nomor."
 
 #: ../client/snapper.cc:1713
 msgid "No command provided."
-msgstr ""
+msgstr "Tidak ada perintah yang tersedia."
 
 #: ../client/errors.cc:43
 msgid "No permissions."
-msgstr ""
+msgstr "Tidak ada izin."
 
 #: ../client/snapper.cc:1071 ../client/snapper.cc:1126
 #: ../client/snapper.cc:1186
 #, c-format
 msgid "Opening file '%s' failed."
-msgstr ""
+msgstr "Membuka berkas '%s' gagal."
 
 #: ../client/snapper.cc:628
 msgid "Post #"
-msgstr ""
+msgstr "Pos #"
 
 #: ../client/snapper.cc:630
 msgid "Post Date"
-msgstr ""
+msgstr "Tanggal Pos"
 
 #: ../client/snapper.cc:532 ../client/snapper.cc:627
 msgid "Pre #"
-msgstr ""
+msgstr "Pre #"
 
 #: ../client/snapper.cc:629
 msgid "Pre Date"
-msgstr ""
+msgstr "Pre Tanggal"
 
 #: ../client/misc.cc:89 ../client/snapper.cc:1051 ../client/snapper.cc:1824
-#, fuzzy
 msgid "See 'man snapper' for further instructions."
-msgstr "Mencari informasi memori..."
+msgstr "Lihat 'man snapper' untuk instruksi lebih lanjut."
 
 #: ../client/snapper.cc:1393
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
-msgstr ""
+msgstr "Pengaturan bawaan subvolume untuk snapshot %d."
 
 #: ../client/misc.cc:55
-#, fuzzy, c-format
+#, c-format, c-format
 msgid "Snapshot '%u' not found."
-msgstr "Path kamus %s tidak valid"
+msgstr "Snapshot '%u' tidak ditemukan."
 
 #: ../client/errors.cc:61
-#, fuzzy
 msgid "Snapshot is in use."
-msgstr "Path kamus %s tidak valid"
+msgstr "Snapshot sedang digunakan."
 
 #: ../client/snapper.cc:250
 msgid "Subvolume"
-msgstr ""
+msgstr "Subvolume"
 
 #: ../client/snapper.cc:1823
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr ""
+msgstr "Konfig 'root' tidak ada. Sepertinya snapper tidak dikonfigurasi."
 
 #: ../client/snapper.cc:1694 ../client/snapper.cc:1714
 #: ../client/snapper.cc:1727 ../client/utils/GetOpts.cc:61
 #: ../client/utils/GetOpts.cc:69
-#, fuzzy
 msgid "Try 'snapper --help' for more information."
-msgstr "Mencari informasi memori..."
+msgstr "Coba 'snapper --help' untuk informasi lebih."
 
 #: ../client/snapper.cc:530
 msgid "Type"
-msgstr ""
+msgstr "Jenis"
 
 #: ../client/snapper.cc:1440
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
-msgstr ""
+msgstr "Algoritma pembersihan tidak diketahui '%s'."
 
 #: ../client/snapper.cc:1726
 #, c-format
 msgid "Unknown command '%s'."
-msgstr ""
+msgstr "Perintah tidak diketahui '%s'."
 
 #: ../client/errors.cc:40
 msgid "Unknown config."
-msgstr ""
+msgstr "Konfig tidak diketahui."
 
 #: ../client/utils/GetOpts.cc:58
 #, c-format
 msgid "Unknown global option '%s'."
-msgstr ""
+msgstr "Opsi global tidak diketahui '%s'."
 
 #: ../client/utils/GetOpts.cc:60
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
-msgstr ""
+msgstr "Opsi tidak diketahui '%s' untuk perintah '%s'."
 
 #: ../client/snapper.cc:750
 msgid "Unknown type of snapshot."
-msgstr ""
+msgstr "Jenis tidak diketahui dari snapshot."
 
 #: ../client/snapper.cc:495
-#, fuzzy
 msgid "Unknown type of snapshots."
-msgstr "Status network tidak diketahui"
+msgstr "Jenis tidak diketahui dari snapshots."
 
 #: ../client/snapper.cc:1676
 #, c-format
 msgid "Use an integer number from %d to %d."
-msgstr ""
+msgstr "Gunakan sebuah angka integer dari %d untuk %d."
 
 #: ../client/snapper.cc:534 ../client/snapper.cc:582
 msgid "User"
-msgstr ""
+msgstr "Pengguna"
 
 #: ../client/snapper.cc:537 ../client/snapper.cc:584 ../client/snapper.cc:632
 msgid "Userdata"
-msgstr ""
+msgstr "Penggunadata"
 
 #: ../client/misc.cc:134
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
-msgstr ""
+msgstr "Penggunadata '%s' tidak membawa tanda '='."
 
 #: ../client/misc.cc:143
 #, c-format
 msgid "Userdata '%s' has empty key."
-msgstr ""
+msgstr "Penggunadata '%s' mempunyai kunci kosong."
 
 #: ../client/snapper.cc:384
 msgid "Value"
-msgstr ""
+msgstr "Nilai"
 
 #: ../client/snapper.cc:1212
 #, c-format
 msgid "create:%d modify:%d delete:%d"
-msgstr ""
+msgstr "membuat:%d modif:%d hapus:%d"
 
 #: ../client/snapper.cc:1237
-#, fuzzy, c-format
+#, c-format, c-format
 msgid "creating %s"
 msgstr "Membuat %s"
 
 #: ../client/snapper.cc:1243
-#, fuzzy, c-format
+#, c-format, c-format
 msgid "deleting %s"
-msgstr "Membuat %s"
+msgstr "Menghapus %s"
 
 #: ../client/snapper.cc:1253
-#, fuzzy, c-format
+#, c-format, c-format
 msgid "failed to create %s"
-msgstr "Failed to parse: %s."
+msgstr "Gagal membuat %s"
 
 #: ../client/snapper.cc:1259
-#, fuzzy, c-format
+#, c-format, c-format
 msgid "failed to delete %s"
-msgstr "Failed to parse: %s."
+msgstr "Gagal menghapus %s"
 
 #: ../client/snapper.cc:1256
-#, fuzzy, c-format
+#, c-format, c-format
 msgid "failed to modify %s"
-msgstr "Failed to parse: %s."
+msgstr "Gagal untuk memodif %s."
 
 #: ../client/snapper.cc:1240
 #, c-format
 msgid "modifying %s"
-msgstr ""
+msgstr "Memodifikasi %s"
 
 #: ../client/snapper.cc:1208
 msgid "nothing to do"
-msgstr ""
+msgstr "tidak ada yang dilakukan"
 
 #: ../client/snapper.cc:1693
 msgid "root argument can be used only together with no-dbus."
-msgstr ""
+msgstr "argumen root hanya dapat digunakan bersama dengan no-dbus."
 
 #: ../client/snapper.cc:1574
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
+"penggunaan: snapper [--global-options] <command> [--command-options] "
+"[command-arguments]"
 
-#, fuzzy
 #~ msgid "Unknown file."
 #~ msgstr "tidak dikenal"
 
-#, fuzzy
 #~| msgid "Looking for memory information..."
 #~ msgid "Command failed (%s). See log for more information."
 #~ msgstr "Mencari informasi memori..."
 
 # ID
-#, fuzzy
 #~| msgid "Indonesia"
 #~ msgid "done"
 #~ msgstr "Indonesia"
