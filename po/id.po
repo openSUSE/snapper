@@ -322,6 +322,7 @@ msgstr "#"
 #: ../client/snapper.cc:1364 ../client/snapper.cc:1371
 #: ../client/snapper.cc:1382 ../client/snapper.cc:1389
 #, c-format, c-format
+#, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Snapshot %d.)"
 
@@ -420,11 +421,13 @@ msgstr "Konfigurasi"
 
 #: ../client/snapper.cc:1757
 #, c-format, c-format
+#, c-format
 msgid "Config '%s' is invalid."
 msgstr "Konfig '%s' tidak valid."
 
 #: ../client/snapper.cc:1751
 #, c-format, c-format
+#, c-format
 msgid "Config '%s' not found."
 msgstr "Konfig '%s' tidak ditemukan."
 
@@ -448,6 +451,7 @@ msgstr "Konfigdata '%s' memiliki kunci kosong."
 
 #: ../client/snapper.cc:1769 ../client/errors.cc:67
 #, c-format, c-format
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "Gagal membuat konfig (%s)."
 
@@ -465,6 +469,7 @@ msgstr "Membuat snapshot read-write dari subvolume saat ini."
 
 #: ../client/snapper.cc:1385
 #, c-format, c-format
+#, c-format
 msgid "Creating read-write snapshot of snapshot %d."
 msgstr "Membuat snapshot read-write dari snapshot %d."
 
@@ -478,6 +483,7 @@ msgstr "Tanggal"
 
 #: ../client/snapper.cc:1775 ../client/errors.cc:70
 #, c-format, c-format
+#, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Gagal menghapus konfig (%s)."
 
@@ -487,6 +493,7 @@ msgstr "Gagal menghapus snapshot."
 
 #: ../client/commands.cc:274
 #, c-format, c-format
+#, c-format
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Menghapus snapshot dari %s:"
@@ -517,6 +524,7 @@ msgstr "Kegagalan"
 
 #: ../client/errors.cc:87
 #, c-format, c-format
+#, c-format
 msgid "Failure (%s)."
 msgstr "Kegagalan: %s."
 
@@ -527,11 +535,13 @@ msgstr "Berkas '%s' tidak ditemukan."
 
 #: ../client/errors.cc:64
 #, c-format, c-format
+#, c-format
 msgid "IO Error (%s)."
 msgstr "Galat I/O (%s)."
 
 #: ../client/snapper.cc:1793
 #, c-format, c-format
+#, c-format
 msgid "IO error (%s)."
 msgstr "galat I/O (%s)."
 
@@ -584,6 +594,7 @@ msgstr "Kunci"
 
 #: ../client/snapper.cc:1763
 #, c-format, c-format
+#, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Listing konfig gagal (%s)."
 
@@ -654,6 +665,7 @@ msgstr "Pengaturan bawaan subvolume untuk snapshot %d."
 
 #: ../client/misc.cc:55
 #, c-format, c-format
+#, c-format
 msgid "Snapshot '%u' not found."
 msgstr "Snapshot '%u' tidak ditemukan."
 
@@ -745,26 +757,31 @@ msgstr "membuat:%d modif:%d hapus:%d"
 
 #: ../client/snapper.cc:1237
 #, c-format, c-format
+#, c-format
 msgid "creating %s"
 msgstr "Membuat %s"
 
 #: ../client/snapper.cc:1243
 #, c-format, c-format
+#, c-format
 msgid "deleting %s"
 msgstr "Menghapus %s"
 
 #: ../client/snapper.cc:1253
 #, c-format, c-format
+#, c-format
 msgid "failed to create %s"
 msgstr "Gagal membuat %s"
 
 #: ../client/snapper.cc:1259
 #, c-format, c-format
+#, c-format
 msgid "failed to delete %s"
 msgstr "Gagal menghapus %s"
 
 #: ../client/snapper.cc:1256
 #, c-format, c-format
+#, c-format
 msgid "failed to modify %s"
 msgstr "Gagal untuk memodif %s."
 
