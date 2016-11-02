@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Nov 02 22:17:16 CET 2016 - aschnell@suse.com
+
+- fixed use of getpwuid_r, getpwnam_r and getgrnam_r
+
+-------------------------------------------------------------------
 Tue Aug 09 21:53:02 CEST 2016 - aschnell@suse.com
 
 - merged patch to fix order of object destruction on shutdown
