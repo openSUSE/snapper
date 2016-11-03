@@ -292,16 +292,27 @@ namespace snapper
     }
 
 
+    long
+    sysconf(int name, long fallback)
+    {
+	long ret = ::sysconf(name);
+	return ret == -1 ? fallback : ret;
+    }
+
+
     bool
     get_uid_username_gid(uid_t uid, string& username, gid_t& gid)
     {
 	struct passwd pwd;
 	struct passwd* result;
 
-	long bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
-	char buf[bufsize];
+	vector<char> buf(sysconf(_SC_GETPW_R_SIZE_MAX, 1024));
 
-	if (getpwuid_r(uid, &pwd, buf, bufsize, &result) != 0 || result != &pwd)
+	int e;
+	while ((e = getpwuid_r(uid, &pwd, buf.data(), buf.size(), &result)) == ERANGE)
+	    buf.resize(2 * buf.size());
+
+	if (e != 0 || result == NULL)
 	    return false;
 
 	memset(pwd.pw_passwd, 0, strlen(pwd.pw_passwd));
@@ -319,10 +330,13 @@ namespace snapper
 	struct passwd pwd;
 	struct passwd* result;
 
-	long bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
-	char buf[bufsize];
+	vector<char> buf(sysconf(_SC_GETPW_R_SIZE_MAX, 1024));
 
-	if (getpwnam_r(username, &pwd, buf, bufsize, &result) != 0 || result != &pwd)
+	int e;
+	while ((e = getpwnam_r(username, &pwd, buf.data(), buf.size(), &result)) == ERANGE)
+	    buf.resize(2 * buf.size());
+
+	if (e != 0 || result == NULL)
 	{
 	    y2war("couldn't find username '" << username << "'");
 	    return false;
@@ -342,10 +356,13 @@ namespace snapper
 	struct group grp;
 	struct group* result;
 
-	long bufsize = sysconf(_SC_GETGR_R_SIZE_MAX);
-	char buf[bufsize];
+	vector<char> buf(sysconf(_SC_GETGR_R_SIZE_MAX, 1024));
 
-	if (getgrnam_r(groupname, &grp, buf, bufsize, &result) != 0 || result != &grp)
+	int e;
+	while ((e = getgrnam_r(groupname, &grp, buf.data(), buf.size(), &result)) == ERANGE)
+	    buf.resize(2 * buf.size());
+
+	if (e != 0 || result == NULL)
 	{
 	    y2war("couldn't find groupname '" << groupname << "'");
 	    return false;
