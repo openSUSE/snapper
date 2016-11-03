@@ -4,16 +4,16 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2016-04-20 14:30+0000\n"
-"Last-Translator: Victor hck <correohck@gmail.com>\n"
-"Language-Team: Spanish <http://l10n.opensuse.org/projects/snapper/master/es/>"
-"\n"
+"PO-Revision-Date: 2016-11-03 22:17+0000\n"
+"Last-Translator: jc sl <trcs@gmx.com>\n"
+"Language-Team: Spanish "
+"<https://l10n.opensuse.org/projects/snapper/master/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.5\n"
+"X-Generator: Weblate 2.6\n"
 
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
@@ -143,7 +143,7 @@ msgstr "\t--version\t\t\tMuestra la versión y sale."
 
 #: ../client/snapper.cc:1409
 msgid "\tsnapper cleanup <cleanup-algorithm>"
-msgstr "\tsnapper cleanup <cleanup-algorithm>"
+msgstr "\tsnapper cleanup <algoritmo-de-limpieza>"
 
 #: ../client/snapper.cc:691
 msgid "\tsnapper create"
@@ -151,11 +151,11 @@ msgstr "\tsnapper create"
 
 #: ../client/snapper.cc:271
 msgid "\tsnapper create-config <subvolume>"
-msgstr "\tsnapper create-config <subvolume>"
+msgstr "\tsnapper create-config <subvolumen>"
 
 #: ../client/snapper.cc:881
 msgid "\tsnapper delete <number>"
-msgstr "\tsnapper delete <number>"
+msgstr "\tsnapper delete <número>"
 
 #: ../client/snapper.cc:335
 msgid "\tsnapper delete-config"
@@ -179,7 +179,7 @@ msgstr "\tsnapper list-configs"
 
 #: ../client/snapper.cc:828
 msgid "\tsnapper modify <number>"
-msgstr "\tsnapper modify <number>"
+msgstr "\tsnapper modify <número>"
 
 #: ../client/snapper.cc:953
 msgid "\tsnapper mount <number>"
@@ -256,7 +256,7 @@ msgstr "  Limpieza de imágenes:"
 
 #: ../client/snapper.cc:1473
 msgid "  Comparing snapshots extended attributes:"
-msgstr "  Comparing snapshots extended attributes:"
+msgstr "  Comparar los atributos extendidos de las instantáneas:"
 
 #: ../client/snapper.cc:1026 ../client/snapper.cc:1088
 msgid "  Comparing snapshots:"
@@ -324,7 +324,7 @@ msgstr "#"
 #: ../client/snapper.cc:1382 ../client/snapper.cc:1389
 #, c-format
 msgid "(Snapshot %d.)"
-msgstr "(Instantánea %d)."
+msgstr "(Instantánea %d.)"
 
 # SLE12
 #: ../client/snapper.cc:1787 ../client/errors.cc:85
