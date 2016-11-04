@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Nov 04 16:28:49 CET 2016 - aschnell@suse.com
+
+- catch exception if setting default subvolume fails (bsc#1008544)
+
+-------------------------------------------------------------------
 Wed Nov 02 22:17:16 CET 2016 - aschnell@suse.com
 
 - fixed use of getpwuid_r, getpwnam_r and getgrnam_r
