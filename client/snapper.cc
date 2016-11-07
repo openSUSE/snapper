@@ -1368,10 +1368,9 @@ command_rollback(DBus::Connection* conn, Snapper* snapper)
     if (subvolume != "/")
     {
         cerr << sformat(_("Command 'rollback' cannot be used on a non-root subvolume %s."),
-            subvolume.c_str()) << endl;
+			subvolume.c_str()) << endl;
         exit(EXIT_FAILURE);
     }
-
 
     unsigned int num1;
     unsigned int num2;
@@ -1782,118 +1781,114 @@ main(int argc, char** argv)
 	exit(EXIT_FAILURE);
     }
 
-    if (no_dbus)
+    try
     {
-	if (!cmd->works_without_dbus)
+	if (no_dbus)
 	{
-	    cerr << sformat(_("Command '%s' does not work without DBus."), cmd->name.c_str()) << endl;
-	    exit(EXIT_FAILURE);
-	}
+	    if (!cmd->works_without_dbus)
+	    {
+		cerr << sformat(_("Command '%s' does not work without DBus."), cmd->name.c_str()) << endl;
+		exit(EXIT_FAILURE);
+	    }
 
-	try
-	{
 	    Snapper* snapper = cmd->needs_snapper ? new Snapper(config_name, target_root) : NULL;
 
 	    (*cmd->cmd_func)(NULL, snapper);
 
 	    delete snapper;
 	}
-
-	catch (const ConfigNotFoundException& e)
-	{
-	    SN_CAUGHT(e);
-	    cerr << sformat(_("Config '%s' not found."), config_name.c_str()) << endl;
-	    exit(EXIT_FAILURE);
-	}
-	catch (const InvalidConfigException& e)
-	{
-	    SN_CAUGHT(e);
-	    cerr << sformat(_("Config '%s' is invalid."), config_name.c_str()) << endl;
-	    exit(EXIT_FAILURE);
-	}
-	catch (const ListConfigsFailedException& e)
-	{
-	    SN_CAUGHT(e);
-	    cerr << sformat(_("Listing configs failed (%s)."), e.what()) << endl;
-	    exit(EXIT_FAILURE);
-	}
-	catch (const CreateConfigFailedException& e)
-	{
-	    SN_CAUGHT(e);
-	    cerr << sformat(_("Creating config failed (%s)."), e.what()) << endl;
-	    exit(EXIT_FAILURE);
-	}
-	catch (const DeleteConfigFailedException& e)
-	{
-	    SN_CAUGHT(e);
-	    cerr << sformat(_("Deleting config failed (%s)."), e.what()) << endl;
-	    exit(EXIT_FAILURE);
-	}
-	catch (const InvalidConfigdataException& e)
-	{
-	    SN_CAUGHT(e);
-	    cerr << _("Invalid configdata.") << endl;
-	    exit(EXIT_FAILURE);
-	}
-	catch (const AclException& e)
-	{
-	    SN_CAUGHT(e);
-	    cerr << _("ACL error.") << endl;
-	    exit(EXIT_FAILURE);
-	}
-	catch (const IOErrorException& e)
-	{
-	    SN_CAUGHT(e);
-	    cerr << sformat(_("IO error (%s)."), e.what()) << endl;
-	    exit(EXIT_FAILURE);
-	}
-	catch (const InvalidUserException& e)
-	{
-	    SN_CAUGHT(e);
-	    cerr << _("Invalid user.") << endl;
-	    exit(EXIT_FAILURE);
-	}
-	catch (const InvalidGroupException& e)
-	{
-	    SN_CAUGHT(e);
-	    cerr << _("Invalid group.") << endl;
-	    exit(EXIT_FAILURE);
-	}
-	catch (const QuotaException& e)
-	{
-	    SN_CAUGHT(e);
-	    cerr << sformat(_("Quota error (%s)."), e.what()) << endl;
-	    exit(EXIT_FAILURE);
-	}
-    }
-    else
-    {
-	try
+	else
 	{
 	    DBus::Connection conn(DBUS_BUS_SYSTEM);
 
 	    (*cmd->cmd_func)(&conn, NULL);
 	}
-	catch (const DBus::ErrorException& e)
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	SN_CAUGHT(e);
+
+	if (strcmp(e.name(), "error.unknown_config") == 0 && config_name == "root")
 	{
-	    SN_CAUGHT(e);
-
-	    if (strcmp(e.name(), "error.unknown_config") == 0 && config_name == "root")
-	    {
-		cerr << _("The config 'root' does not exist. Likely snapper is not configured.") << endl
-		     << _("See 'man snapper' for further instructions.") << endl;
-		exit(EXIT_FAILURE);
-	    }
-
-	    cerr << error_description(e) << endl;
+	    cerr << _("The config 'root' does not exist. Likely snapper is not configured.") << endl
+		 << _("See 'man snapper' for further instructions.") << endl;
 	    exit(EXIT_FAILURE);
 	}
-	catch (const DBus::FatalException& e)
-	{
-	    SN_CAUGHT(e);
-	    cerr << _("Failure") << " (" << e.what() << ")." << endl;
-	    exit(EXIT_FAILURE);
-	}
+
+	cerr << error_description(e) << endl;
+	exit(EXIT_FAILURE);
+    }
+    catch (const DBus::FatalException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << _("Failure") << " (" << e.what() << ")." << endl;
+	exit(EXIT_FAILURE);
+    }
+    catch (const ConfigNotFoundException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << sformat(_("Config '%s' not found."), config_name.c_str()) << endl;
+	exit(EXIT_FAILURE);
+    }
+    catch (const InvalidConfigException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << sformat(_("Config '%s' is invalid."), config_name.c_str()) << endl;
+	exit(EXIT_FAILURE);
+    }
+    catch (const ListConfigsFailedException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << sformat(_("Listing configs failed (%s)."), e.what()) << endl;
+	exit(EXIT_FAILURE);
+    }
+    catch (const CreateConfigFailedException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << sformat(_("Creating config failed (%s)."), e.what()) << endl;
+	exit(EXIT_FAILURE);
+    }
+    catch (const DeleteConfigFailedException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << sformat(_("Deleting config failed (%s)."), e.what()) << endl;
+	exit(EXIT_FAILURE);
+    }
+    catch (const InvalidConfigdataException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << _("Invalid configdata.") << endl;
+	exit(EXIT_FAILURE);
+    }
+    catch (const AclException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << _("ACL error.") << endl;
+	exit(EXIT_FAILURE);
+    }
+    catch (const IOErrorException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << sformat(_("IO error (%s)."), e.what()) << endl;
+	exit(EXIT_FAILURE);
+    }
+    catch (const InvalidUserException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << _("Invalid user.") << endl;
+	exit(EXIT_FAILURE);
+    }
+    catch (const InvalidGroupException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << _("Invalid group.") << endl;
+	exit(EXIT_FAILURE);
+    }
+    catch (const QuotaException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << sformat(_("Quota error (%s)."), e.what()) << endl;
+	exit(EXIT_FAILURE);
     }
 
     exit(EXIT_SUCCESS);
