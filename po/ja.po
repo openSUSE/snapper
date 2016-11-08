@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2014-07-02 08:07+0900\n"
+"PO-Revision-Date: 2016-11-08 05:39+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese <opensuse-ja@opensuse.org>\n"
+"Language-Team: Japanese "
+"<https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Weblate 2.6\n"
 
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
@@ -25,27 +26,27 @@ msgstr "\t--all-configs, -a\t\tアクセス可能なすべての環境設定か�
 
 #: ../client/snapper.cc:698 ../client/snapper.cc:832
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <アルゴリズム>\tスナップショットに対するクリーンアップアルゴリズムの指定"
+msgstr "\t--cleanup-algorithm, -c <アルゴリズム>\tスナップショットに対するクリーンアップアルゴリズムの指定。"
 
 #: ../client/snapper.cc:1303
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <アルゴリズム>\tスナップショットに対するクリーンアップアルゴリズムの指定"
+msgstr "\t--cleanup-algorithm, -c <アルゴリズム>\tスナップショットに対するクリーンアップアルゴリズムの指定。"
 
 #: ../client/snapper.cc:700
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
-msgstr "\t--command <command>\tコマンドを実行し、その前後にスナップショットを採取する"
+msgstr "\t--command <command>\tコマンドを実行し、その前後にスナップショットを採取する。"
 
 #: ../client/snapper.cc:1583
 msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <名前>\t\t使用する設定ファイル名を指定する"
+msgstr "\t--config, -c <名前>\t\t使用する設定ファイル名を指定する。"
 
 #: ../client/snapper.cc:697 ../client/snapper.cc:831
 msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <説明>\tスナップショットの説明を指定する"
+msgstr "\t--description, -d <説明>\tスナップショットの説明を指定する。"
 
 #: ../client/snapper.cc:1302
 msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr "\t--description, -d <説明>\tスナップショットの説明を指定する"
+msgstr "\t--description, -d <説明>\tスナップショットの説明を指定する。"
 
 #: ../client/snapper.cc:1093
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
@@ -57,11 +58,11 @@ msgstr "\t--extensions, -x <オプション>\tdiffコマンドに渡される追
 
 #: ../client/snapper.cc:274
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--fstype, -f <種類>\t\t手動でファイルシステムの種類を指定する"
+msgstr "\t--fstype, -f <種類>\t\t手動でファイルシステムの種類を指定する。"
 
 #: ../client/snapper.cc:1155
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <ファイル>\t\tファイルから巻き戻すべきファイルを読み込む"
+msgstr "\t--input, -i <ファイル>\t\tファイルから巻き戻すべきファイルを読み込む。"
 
 #: ../client/snapper.cc:1092
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
@@ -69,31 +70,31 @@ msgstr "\t--input, -i <ファイル>\t\tファイルからdiffへファイルを
 
 #: ../client/snapper.cc:1581
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr "\t--iso\t\t\t\tISO 形式で日時を表示する"
+msgstr "\t--iso\t\t\t\tISO 形式で日時を表示する。"
 
 #: ../client/snapper.cc:1584
 msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr "\t--no-dbus\t\t\tDBus 無しで処理を行なう"
+msgstr "\t--no-dbus\t\t\tDBus 無しで処理を行なう。"
 
 #: ../client/snapper.cc:1030
 msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <ファイル>\t\t状態をファイルに保存する"
+msgstr "\t--output, -o <ファイル>\t\t状態をファイルに保存する。"
 
 #: ../client/snapper.cc:695
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <番号>\t\t事前スナップショットの番号を指定する"
+msgstr "\t--pre-number <番号>\t\t事前スナップショットの番号を指定する。"
 
 #: ../client/snapper.cc:696
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\t作成したスナップショットの数を表示する"
+msgstr "\t--print-number, -p\t\t作成したスナップショットの数を表示する。"
 
 #: ../client/snapper.cc:1301
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr "\t--print-number, -p\t\t作成したスナップショットの数を表示する"
+msgstr "\t--print-number, -p\t\t作成したスナップショットの数を表示する。"
 
 #: ../client/snapper.cc:1578
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\t通常出力される項目の省略"
+msgstr "\t--quiet, -q\t\t\t通常出力される項目を省略する。"
 
 #: ../client/snapper.cc:1585
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
@@ -105,39 +106,39 @@ msgstr "\t--sync, -s\t\t\t削除後に同期する。"
 
 #: ../client/snapper.cc:1582
 msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <スタイル>\t表のスタイル (整数) "
+msgstr "\t--table-style, -t <スタイル>\t表のスタイル (整数) 。"
 
 #: ../client/snapper.cc:275
 msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <名前>\t\t使用する設定雛型の指定"
+msgstr "\t--template, -t <名前>\t\t使用する設定雛型の指定。"
 
 #: ../client/snapper.cc:694
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <種類>\t\tスナップショットの種類"
+msgstr "\t--type, -t <種類>\t\tスナップショットの種類。"
 
 #: ../client/snapper.cc:456
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <種類>\t\t一覧表示するスナップショットの種類"
+msgstr "\t--type, -t <種類>\t\t一覧表示するスナップショットの種類。"
 
 #: ../client/snapper.cc:699 ../client/snapper.cc:833
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <データ>\tスナップショットに対するユーザデータの指定"
+msgstr "\t--userdata, -u <データ>\tスナップショットに対するユーザデータの指定。"
 
 #: ../client/snapper.cc:1304
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata, -u <データ>\tスナップショットに対するユーザデータの指定"
+msgstr "\t--userdata, -u <データ>\tスナップショットに対するユーザデータの指定。"
 
 #: ../client/snapper.cc:1580
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr "\t--utc\t\t\t\t日時を UTC で表示する"
+msgstr "\t--utc\t\t\t\t日時を UTC で表示する。"
 
 #: ../client/snapper.cc:1579
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tより詳しい出力を行なう"
+msgstr "\t--verbose, -v\t\t\tより詳しい出力を行なう。"
 
 #: ../client/snapper.cc:1586
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tバージョンを表示して終了する"
+msgstr "\t--version\t\t\tバージョンを表示して終了する。"
 
 #: ../client/snapper.cc:1409
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -422,7 +423,7 @@ msgstr "設定 '%s' が正しくありません。"
 #: ../client/snapper.cc:1751
 #, c-format
 msgid "Config '%s' not found."
-msgstr "設定 '%s' が見つかりません"
+msgstr "設定 '%s' が見つかりません。"
 
 #: ../client/errors.cc:58
 msgid "Config is in use."
