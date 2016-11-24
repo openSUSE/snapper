@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2014-07-29 22:37-0300\n"
-"Last-Translator: Luiz Fernando Ranghetti <elchevive@opensuse.org>\n"
-"Language-Team: Brazilian Portuguese <opensuse-pt@opensuse.org>\n"
+"PO-Revision-Date: 2016-11-24 12:19+0000\n"
+"Last-Translator: Luiz Fernando Ranghetti <elchevive68@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) "
+"<https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.5\n"
-"Plural-Forms: nplurals=2; plural=n>1;\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 2.6\n"
 
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
@@ -388,7 +389,7 @@ msgstr "O comando 'mount' precisa de, no mínimo, um argumento."
 
 #: ../client/snapper.cc:1349
 msgid "Command 'rollback' only available for btrfs."
-msgstr "O comando 'rollback' (desfazer) é disponível apenas para btrfs."
+msgstr "O comando 'rollback' (desfazer) está disponível apenas para btrfs."
 
 #: ../client/snapper.cc:1323
 msgid "Command 'rollback' takes either one or no argument."
