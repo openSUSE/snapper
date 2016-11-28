@@ -49,6 +49,8 @@
 #include "commands.h"
 #include "cleanup.h"
 #include "errors.h"
+#include "proxy-dbus.h"
+#include "proxy-lib.h"
 #include "misc.h"
 
 
@@ -58,8 +60,13 @@ using namespace std;
 
 struct Cmd
 {
-    typedef void (*cmd_func_t)(DBus::Connection* conn, Snapper* snapper);
+    // TODO remove conn and snapper argument, maybe even proxy_snapper
+
+    typedef void (*cmd_func_t)(DBus::Connection* conn, Snapper* snapper,
+			       ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper);
     typedef void (*help_func_t)();
+
+    // TODO remove works_without_dbus
 
     Cmd(const string& name, cmd_func_t cmd_func, help_func_t help_func,
 	bool works_without_dbus, bool needs_snapper)
@@ -235,7 +242,7 @@ enum_configs(DBus::Connection* conn)
 
 
 void
-command_list_configs(DBus::Connection* conn, Snapper* snapper)
+command_list_configs(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     getopts.parse("list-configs", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -279,7 +286,7 @@ help_create_config()
 
 
 void
-command_create_config(DBus::Connection* conn, Snapper* snapper)
+command_create_config(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     const struct option options[] = {
 	{ "fstype",		required_argument,	0,	'f' },
@@ -318,14 +325,7 @@ command_create_config(DBus::Connection* conn, Snapper* snapper)
 	exit(EXIT_FAILURE);
     }
 
-    if (no_dbus)
-    {
-	Snapper::createConfig(config_name, target_root, subvolume, fstype, template_name);
-    }
-    else
-    {
-	command_create_xconfig(*conn, config_name, subvolume, fstype, template_name);
-    }
+    proxy_snappers->createConfig(config_name, subvolume, fstype, template_name);
 }
 
 
@@ -339,7 +339,7 @@ help_delete_config()
 
 
 void
-command_delete_config(DBus::Connection* conn, Snapper* snapper)
+command_delete_config(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     getopts.parse("delete-config", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -348,14 +348,7 @@ command_delete_config(DBus::Connection* conn, Snapper* snapper)
 	exit(EXIT_FAILURE);
     }
 
-    if (no_dbus)
-    {
-	Snapper::deleteConfig(config_name, target_root);
-    }
-    else
-    {
-	command_delete_xconfig(*conn, config_name);
-    }
+    proxy_snappers->deleteConfig(config_name);
 }
 
 
@@ -369,7 +362,7 @@ help_get_config()
 
 
 void
-command_get_config(DBus::Connection* conn, Snapper* snapper)
+command_get_config(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     getopts.parse("get-config", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -425,7 +418,7 @@ help_set_config()
 
 
 void
-command_set_config(DBus::Connection* conn, Snapper* snapper)
+command_set_config(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     getopts.parse("set-config", GetOpts::no_options);
     if (!getopts.hasArgs())
@@ -436,14 +429,7 @@ command_set_config(DBus::Connection* conn, Snapper* snapper)
 
     map<string, string> raw = read_configdata(getopts.getArgs());
 
-    if (no_dbus)
-    {
-	snapper->setConfigInfo(raw);
-    }
-    else
-    {
-	command_set_xconfig(*conn, config_name, raw);
-    }
+    proxy_snapper->setConfigInfo(raw);
 }
 
 
@@ -461,10 +447,13 @@ help_list()
 
 enum ListMode { LM_ALL, LM_SINGLE, LM_PRE_POST };
 
-void list_from_one_config(DBus::Connection* conn, Snapper* snapper, string config_name, ListMode list_mode);
 
 void
-command_list(DBus::Connection* conn, Snapper* snapper)
+list_from_one_config(ProxySnapper* proxy_snapper, ListMode list_mode);
+
+
+void
+command_list(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
@@ -498,6 +487,7 @@ command_list(DBus::Connection* conn, Snapper* snapper)
 	}
     }
 
+    /*
     list<pair<string, string> > configs;
     if ((opt = opts.find("all-configs")) != opts.end())
     {
@@ -508,18 +498,24 @@ command_list(DBus::Connection* conn, Snapper* snapper)
 	configs.push_back(make_pair(config_name, ""));
     }
 
-    for (list<pair<string,string> >::iterator it = configs.begin(); it != configs.end(); ++it)
+    for (list<pair<string, string>>::iterator it = configs.begin(); it != configs.end(); ++it)
     {
 	if (it != configs.begin())
 	    cout << endl;
 
 	if (configs.size() > 1)
 	    cout << "Config: " << it->first << ", subvolume: " << it->second << endl;
+
 	list_from_one_config(conn, snapper, it->first, list_mode);
     }
+    */
+
+    list_from_one_config(proxy_snapper, list_mode);
 }
 
-void list_from_one_config(DBus::Connection* conn, Snapper* snapper, string config_name, ListMode list_mode)
+
+void
+list_from_one_config(ProxySnapper* proxy_snapper, ListMode list_mode)
 {
     Table table;
 
@@ -538,39 +534,19 @@ void list_from_one_config(DBus::Connection* conn, Snapper* snapper, string confi
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
 
-	    if (no_dbus)
+	    const ProxySnapshots& proxy_snapshots = proxy_snapper->getSnapshots();
+	    for (const ProxySnapshot& proxy_snapshot : proxy_snapshots)
 	    {
-		const Snapshots& snapshots = snapper->getSnapshots();
-		for (Snapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
-		{
-		    TableRow row;
-		    row.add(toString(it1->getType()));
-		    row.add(decString(it1->getNum()));
-		    row.add(it1->getType() == POST ? decString(it1->getPreNum()) : "");
-		    row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), utc, iso));
-		    row.add(username(it1->getUid()));
-		    row.add(it1->getCleanup());
-		    row.add(it1->getDescription());
-		    row.add(show_userdata(it1->getUserdata()));
-		    table.add(row);
-		}
-	    }
-	    else
-	    {
-		XSnapshots snapshots = command_list_xsnapshots(*conn, config_name);
-		for (XSnapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
-		{
-		    TableRow row;
-		    row.add(toString(it1->getType()));
-		    row.add(decString(it1->getNum()));
-		    row.add(it1->getType() == POST ? decString(it1->getPreNum()) : "");
-		    row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), utc, iso));
-		    row.add(username(it1->getUid()));
-		    row.add(it1->getCleanup());
-		    row.add(it1->getDescription());
-		    row.add(show_userdata(it1->getUserdata()));
-		    table.add(row);
-		}
+		TableRow row;
+		row.add(toString(proxy_snapshot.getType()));
+		row.add(decString(proxy_snapshot.getNum()));
+		row.add(proxy_snapshot.getType() == POST ? decString(proxy_snapshot.getPreNum()) : "");
+		row.add(proxy_snapshot.isCurrent() ? "" : datetime(proxy_snapshot.getDate(), utc, iso));
+		row.add(username(proxy_snapshot.getUid()));
+		row.add(proxy_snapshot.getCleanup());
+		row.add(proxy_snapshot.getDescription());
+		row.add(show_userdata(proxy_snapshot.getUserdata()));
+		table.add(row);
 	    }
 	}
 	break;
@@ -585,39 +561,19 @@ void list_from_one_config(DBus::Connection* conn, Snapper* snapper, string confi
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
 
-	    if (no_dbus)
+	    const ProxySnapshots& proxy_snapshots = proxy_snapper->getSnapshots();
+	    for (const ProxySnapshot& proxy_snapshot : proxy_snapshots)
 	    {
-		const Snapshots& snapshots = snapper->getSnapshots();
-		for (Snapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
-		{
-		    if (it1->getType() != SINGLE)
-			continue;
+		if (proxy_snapshot.getType() != SINGLE)
+		    continue;
 
-		    TableRow row;
-		    row.add(decString(it1->getNum()));
-		    row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), utc, iso));
-		    row.add(username(it1->getUid()));
-		    row.add(it1->getDescription());
-		    row.add(show_userdata(it1->getUserdata()));
-		    table.add(row);
-		}
-	    }
-	    else
-	    {
-		XSnapshots snapshots = command_list_xsnapshots(*conn, config_name);
-		for (XSnapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
-		{
-		    if (it1->getType() != SINGLE)
-			continue;
-
-		    TableRow row;
-		    row.add(decString(it1->getNum()));
-		    row.add(it1->isCurrent() ? "" : datetime(it1->getDate(), utc, iso));
-		    row.add(username(it1->getUid()));
-		    row.add(it1->getDescription());
-		    row.add(show_userdata(it1->getUserdata()));
-		    table.add(row);
-		}
+		TableRow row;
+		row.add(decString(proxy_snapshot.getNum()));
+		row.add(proxy_snapshot.isCurrent() ? "" : datetime(proxy_snapshot.getDate(), utc, iso));
+		row.add(username(proxy_snapshot.getUid()));
+		row.add(proxy_snapshot.getDescription());
+		row.add(show_userdata(proxy_snapshot.getUserdata()));
+		table.add(row);
 	    }
 	}
 	break;
@@ -633,49 +589,27 @@ void list_from_one_config(DBus::Connection* conn, Snapper* snapper, string confi
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
 
-	    if (no_dbus)
+	    const ProxySnapshots& proxy_snapshots = proxy_snapper->getSnapshots();
+	    for (ProxySnapshots::const_iterator it1 = proxy_snapshots.begin(); it1 != proxy_snapshots.end(); ++it1)
 	    {
-		const Snapshots& snapshots = snapper->getSnapshots();
-		for (Snapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
-		{
-		    if (it1->getType() != PRE)
-			continue;
+		if (it1->getType() != PRE)
+		    continue;
 
-		    Snapshots::const_iterator it2 = snapshots.findPost(it1);
-		    if (it2 == snapshots.end())
-			continue;
+		ProxySnapshots::const_iterator it2 = proxy_snapshots.findPost(it1);
+		if (it2 == proxy_snapshots.end())
+		    continue;
 
-		    TableRow row;
-		    row.add(decString(it1->getNum()));
-		    row.add(decString(it2->getNum()));
-		    row.add(datetime(it1->getDate(), utc, iso));
-		    row.add(datetime(it2->getDate(), utc, iso));
-		    row.add(it1->getDescription());
-		    row.add(show_userdata(it1->getUserdata()));
-		    table.add(row);
-		}
-	    }
-	    else
-	    {
-		XSnapshots snapshots = command_list_xsnapshots(*conn, config_name);
-		for (XSnapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
-		{
-		    if (it1->getType() != PRE)
-			continue;
+		const ProxySnapshot& pre = *it1;
+		const ProxySnapshot& post = *it2;
 
-		    XSnapshots::const_iterator it2 = snapshots.findPost(it1);
-		    if (it2 == snapshots.end())
-			continue;
-
-		    TableRow row;
-		    row.add(decString(it1->getNum()));
-		    row.add(decString(it2->getNum()));
-		    row.add(datetime(it1->getDate(), utc, iso));
-		    row.add(datetime(it2->getDate(), utc, iso));
-		    row.add(it1->getDescription());
-		    row.add(show_userdata(it1->getUserdata()));
-		    table.add(row);
-		}
+		TableRow row;
+		row.add(decString(pre.getNum()));
+		row.add(decString(post.getNum()));
+		row.add(datetime(pre.getDate(), utc, iso));
+		row.add(datetime(post.getDate(), utc, iso));
+		row.add(pre.getDescription());
+		row.add(show_userdata(pre.getUserdata()));
+		table.add(row);
 	    }
 	}
 	break;
@@ -704,7 +638,7 @@ help_create()
 
 
 void
-command_create(DBus::Connection* conn, Snapper* snapper)
+command_create(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
@@ -726,12 +660,13 @@ command_create(DBus::Connection* conn, Snapper* snapper)
 
     enum CreateType { CT_SINGLE, CT_PRE, CT_POST, CT_PRE_POST };
 
+    const ProxySnapshots& proxy_snapshots = proxy_snapper->getSnapshots();
+
     CreateType type = CT_SINGLE;
-    unsigned int num1 = 0;
+    ProxySnapshots::const_iterator proxy_snapshot1 = proxy_snapshots.end();
+    ProxySnapshots::const_iterator proxy_snapshot2 = proxy_snapshots.end();
     bool print_number = false;
-    string description;
-    string cleanup;
-    map<string, string> userdata;
+    SCD scd;
     string command;
 
     GetOpts::parsed_opts::const_iterator opt;
@@ -754,19 +689,19 @@ command_create(DBus::Connection* conn, Snapper* snapper)
     }
 
     if ((opt = opts.find("pre-number")) != opts.end())
-	num1 = read_num(opt->second);
+	proxy_snapshot1 = proxy_snapshots.findNum(opt->second);
 
     if ((opt = opts.find("print-number")) != opts.end())
 	print_number = true;
 
     if ((opt = opts.find("description")) != opts.end())
-	description = opt->second;
+	scd.description = opt->second;
 
     if ((opt = opts.find("cleanup-algorithm")) != opts.end())
-	cleanup = opt->second;
+	scd.cleanup = opt->second;
 
     if ((opt = opts.find("userdata")) != opts.end())
-	userdata = read_userdata(opt->second);
+	scd.userdata = read_userdata(opt->second);
 
     if ((opt = opts.find("command")) != opts.end())
     {
@@ -774,7 +709,7 @@ command_create(DBus::Connection* conn, Snapper* snapper)
 	type = CT_PRE_POST;
     }
 
-    if (type == CT_POST && (num1 == 0))
+    if (type == CT_POST && proxy_snapshot1 == proxy_snapshots.end())
     {
 	cerr << _("Missing or invalid pre-number.") << endl;
 	exit(EXIT_FAILURE);
@@ -789,34 +724,29 @@ command_create(DBus::Connection* conn, Snapper* snapper)
     switch (type)
     {
 	case CT_SINGLE: {
-	    unsigned int num1 = command_create_single_xsnapshot(*conn, config_name, description,
-								cleanup, userdata);
+	    proxy_snapshot1 = proxy_snapper->createSingleSnapshot(scd);
 	    if (print_number)
-		cout << num1 << endl;
+		cout << proxy_snapshot1->getNum() << endl;
 	} break;
 
 	case CT_PRE: {
-	    unsigned int num1 = command_create_pre_xsnapshot(*conn, config_name, description,
-							     cleanup, userdata);
+	    proxy_snapshot1 = proxy_snapper->createPreSnapshot(scd);
 	    if (print_number)
-		cout << num1 << endl;
+		cout << proxy_snapshot1->getNum() << endl;
 	} break;
 
 	case CT_POST: {
-	    unsigned int num2 = command_create_post_xsnapshot(*conn, config_name, num1, description,
-							      cleanup, userdata);
+	    proxy_snapshot2 = proxy_snapper->createPostSnapshot(proxy_snapshot1, scd);
 	    if (print_number)
-		cout << num2 << endl;
+		cout << proxy_snapshot2->getNum() << endl;
 	} break;
 
 	case CT_PRE_POST: {
-	    unsigned int num1 = command_create_pre_xsnapshot(*conn, config_name, description,
-							     cleanup, userdata);
+	    proxy_snapshot1 = proxy_snapper->createPreSnapshot(scd);
 	    system(command.c_str());
-	    unsigned int num2 = command_create_post_xsnapshot(*conn, config_name, num1, "",
-							      cleanup, userdata);
+	    proxy_snapshot2 = proxy_snapper->createPostSnapshot(proxy_snapshot1, scd);
 	    if (print_number)
-		cout << num1 << ".." << num2 << endl;
+		cout << proxy_snapshot1->getNum() << ".." << proxy_snapshot2->getNum() << endl;
 	} break;
     }
 }
@@ -837,7 +767,7 @@ help_modify()
 
 
 void
-command_modify(DBus::Connection* conn, Snapper* snapper)
+command_modify(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     const struct option options[] = {
 	{ "description",	required_argument,	0,	'd' },
@@ -888,7 +818,7 @@ help_delete()
 
 
 void
-command_delete(DBus::Connection* conn, Snapper* snapper)
+command_delete(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     const struct option options[] = {
 	{ "sync",		no_argument,		0,	's' },
@@ -957,7 +887,7 @@ help_mount()
 
 
 void
-command_mount(DBus::Connection* conn, Snapper* snapper)
+command_mount(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     getopts.parse("mount", GetOpts::no_options);
     if (!getopts.hasArgs())
@@ -994,7 +924,7 @@ help_umount()
 
 
 void
-command_umount(DBus::Connection* conn, Snapper* snapper)
+command_umount(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     getopts.parse("mount", GetOpts::no_options);
     if (!getopts.hasArgs())
@@ -1034,7 +964,7 @@ help_status()
 
 
 void
-command_status(DBus::Connection* conn, Snapper* snapper)
+command_status(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     const struct option options[] = {
 	{ "output",		required_argument,	0,	'o' },
@@ -1098,7 +1028,7 @@ help_diff()
 
 
 void
-command_diff(DBus::Connection* conn, Snapper* snapper)
+command_diff(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     const struct option options[] = {
 	{ "input",		required_argument,	0,	'i' },
@@ -1159,7 +1089,7 @@ help_undo()
 
 
 void
-command_undo(DBus::Connection* conn, Snapper* snapper)
+command_undo(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     const struct option options[] = {
 	{ "input",		required_argument,	0,	'i' },
@@ -1319,7 +1249,7 @@ help_rollback()
 
 
 void
-command_rollback(DBus::Connection* conn, Snapper* snapper)
+command_rollback(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     const struct option options[] = {
 	{ "print-number",       no_argument,            0,      'p' },
@@ -1434,7 +1364,7 @@ help_setup_quota()
 
 
 void
-command_setup_quota(DBus::Connection* conn, Snapper* snapper)
+command_setup_quota(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     GetOpts::parsed_opts opts = getopts.parse("setup-quota", GetOpts::no_options);
     if (getopts.numArgs() != 0)
@@ -1464,7 +1394,7 @@ help_cleanup()
 
 
 void
-command_cleanup(DBus::Connection* conn, Snapper* snapper)
+command_cleanup(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     GetOpts::parsed_opts opts = getopts.parse("cleanup", GetOpts::no_options);
     if (getopts.numArgs() != 1)
@@ -1502,7 +1432,7 @@ help_debug()
 
 
 void
-command_debug(DBus::Connection* conn, Snapper* snapper)
+command_debug(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     getopts.parse("debug", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -1547,7 +1477,7 @@ print_xa_diff(const string loc_pre, const string loc_post)
 }
 
 void
-command_xa_diff(DBus::Connection* conn, Snapper* snapper)
+command_xa_diff(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     GetOpts::parsed_opts opts = getopts.parse("xadiff", GetOpts::no_options);
     if (getopts.numArgs() < 1)
@@ -1655,7 +1585,7 @@ main(int argc, char** argv)
     catch (const runtime_error& e)
     {
 	cerr << "Failed to set locale. Fix your system." << endl;
-	exit (EXIT_FAILURE);
+	exit(EXIT_FAILURE);
     }
 
     setLogDo(&log_do);
@@ -1668,7 +1598,7 @@ main(int argc, char** argv)
 	Cmd("get-config", command_get_config, help_get_config, true, false),
 	Cmd("set-config", command_set_config, help_set_config, true, true),
 	Cmd("list", { "ls" }, command_list, help_list, true, true),
-	Cmd("create", command_create, help_create, false, true),
+	Cmd("create", command_create, help_create, true, true),
 	Cmd("modify", command_modify, help_modify, false, true),
 	Cmd("delete", { "remove", "rm" }, command_delete, help_delete, false, true),
 	Cmd("mount", command_mount, help_mount, true, true),
@@ -1783,26 +1713,23 @@ main(int argc, char** argv)
 
     try
     {
+	unique_ptr<DBus::Connection> dbus_connection;
+	unique_ptr<ProxySnappers> proxy_snappers;
+
 	if (no_dbus)
 	{
-	    if (!cmd->works_without_dbus)
-	    {
-		cerr << sformat(_("Command '%s' does not work without DBus."), cmd->name.c_str()) << endl;
-		exit(EXIT_FAILURE);
-	    }
-
-	    Snapper* snapper = cmd->needs_snapper ? new Snapper(config_name, target_root) : NULL;
-
-	    (*cmd->cmd_func)(NULL, snapper);
-
-	    delete snapper;
+	    proxy_snappers.reset(new ProxySnappersLib(target_root));
 	}
 	else
 	{
-	    DBus::Connection conn(DBUS_BUS_SYSTEM);
-
-	    (*cmd->cmd_func)(&conn, NULL);
+	    dbus_connection.reset(new DBus::Connection(DBUS_BUS_SYSTEM));
+	    proxy_snappers.reset(new ProxySnappersDbus(dbus_connection.get()));
 	}
+
+	if (cmd->needs_snapper)
+	    (*cmd->cmd_func)(nullptr, nullptr, proxy_snappers.get(), proxy_snappers->getSnapper(config_name));
+	else
+	    (*cmd->cmd_func)(nullptr, nullptr, proxy_snappers.get(), nullptr);
     }
     catch (const DBus::ErrorException& e)
     {
