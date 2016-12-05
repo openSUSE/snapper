@@ -116,6 +116,8 @@ public:
 
     virtual const ProxySnapshots& getSnapshots() override;
 
+    virtual void setupQuota() override;
+
     ProxySnappersDbus* backref;
 
     string config_name;

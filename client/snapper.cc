@@ -1348,7 +1348,7 @@ help_setup_quota()
 
 
 void
-command_setup_quota(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_setup_quota(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     GetOpts::parsed_opts opts = getopts.parse("setup-quota", GetOpts::no_options);
     if (getopts.numArgs() != 0)
@@ -1357,14 +1357,7 @@ command_setup_quota(DBus::Connection* conn, Snapper* snapper, ProxySnappers* pro
 	exit(EXIT_FAILURE);
     }
 
-    if (no_dbus)
-    {
-	snapper->setupQuota();
-    }
-    else
-    {
-	command_setup_quota(*conn, config_name);
-    }
+    proxy_snapper->setupQuota();
 }
 
 

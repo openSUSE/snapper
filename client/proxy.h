@@ -169,6 +169,8 @@ public:
 
     virtual const ProxySnapshots& getSnapshots() = 0;
 
+    virtual void setupQuota() = 0;
+
 };
 
 

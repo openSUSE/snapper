@@ -98,6 +98,8 @@ public:
 
     virtual const ProxySnapshots& getSnapshots() override;
 
+    virtual void setupQuota() override { snapper->setupQuota(); }
+
     Snapper* snapper;
 
     ProxySnapshotsLib proxy_snapshots;

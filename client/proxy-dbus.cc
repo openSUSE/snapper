@@ -79,6 +79,13 @@ ProxySnapperDbus::setConfigInfo(const map<string, string>& raw)
 }
 
 
+void
+ProxySnapperDbus::setupQuota()
+{
+    command_setup_quota(*backref->conn, config_name);
+}
+
+
 ProxySnapshots::const_iterator
 ProxySnapperDbus::createSingleSnapshot(const SCD& scd)
 {
