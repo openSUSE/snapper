@@ -926,10 +926,10 @@ help_umount()
 void
 command_umount(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
-    getopts.parse("mount", GetOpts::no_options);
+    getopts.parse("umount", GetOpts::no_options);
     if (!getopts.hasArgs())
     {
-	cerr << _("Command 'mount' needs at least one argument.") << endl;
+	cerr << _("Command 'umount' needs at least one argument.") << endl;
 	exit(EXIT_FAILURE);
     }
 
