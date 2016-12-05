@@ -45,9 +45,9 @@ class ProxySnapshotDbus : public ProxySnapshot::Impl
 
 public:
 
-    ProxySnapshotDbus(SnapshotType type, unsigned int num, time_t date, uid_t uid,
-		      unsigned int pre_num, const string& description, const string& cleanup,
-		      const map<string, string>& userdata);
+    ProxySnapshotDbus(ProxySnapshotsDbus* backref, SnapshotType type, unsigned int num,
+		      time_t date, uid_t uid, unsigned int pre_num, const string& description,
+		      const string& cleanup, const map<string, string>& userdata);
 
     ProxySnapshotDbus(ProxySnapshotsDbus* backref, unsigned int num);
 
@@ -61,6 +61,11 @@ public:
     virtual const map<string, string>& getUserdata() const override { return userdata; }
 
     virtual bool isCurrent() const override { return num == 0; }
+
+    virtual void mountFilesystemSnapshot(bool user_request) const override;
+    virtual void umountFilesystemSnapshot(bool user_request) const override;
+
+    ProxySnapshotsDbus* backref;
 
     SnapshotType type;
     unsigned int num;

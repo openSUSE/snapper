@@ -31,7 +31,7 @@ using namespace std;
 
 
 ProxySnapshotDbus::ProxySnapshotDbus(ProxySnapshotsDbus* backref, unsigned int num)
-    : num(num)
+    : backref(backref), num(num)
 {
     XSnapshot x = command_get_xsnapshot(*backref->backref->backref->conn,
 					backref->backref->config_name, num);
@@ -46,12 +46,29 @@ ProxySnapshotDbus::ProxySnapshotDbus(ProxySnapshotsDbus* backref, unsigned int n
 }
 
 
-ProxySnapshotDbus::ProxySnapshotDbus(SnapshotType type, unsigned int num, time_t date, uid_t uid,
-				     unsigned int pre_num, const string& description,
-				     const string& cleanup, const map<string, string>& userdata)
-    : type(type), num(num), date(date), uid(uid), pre_num(pre_num), description(description),
+ProxySnapshotDbus::ProxySnapshotDbus(ProxySnapshotsDbus* backref, SnapshotType type, unsigned int num,
+				     time_t date, uid_t uid, unsigned int pre_num,
+				     const string& description, const string& cleanup,
+				     const map<string, string>& userdata)
+    : backref(backref), type(type), num(num), date(date), uid(uid), pre_num(pre_num), description(description),
       cleanup(cleanup), userdata(userdata)
 {
+}
+
+
+void
+ProxySnapshotDbus::mountFilesystemSnapshot(bool user_request) const
+{
+    command_mount_xsnapshots(*backref->backref->backref->conn, backref->backref->config_name,
+			     num, user_request);
+}
+
+
+void
+ProxySnapshotDbus::umountFilesystemSnapshot(bool user_request) const
+{
+    command_umount_xsnapshots(*backref->backref->backref->conn, backref->backref->config_name,
+			      num, user_request);
 }
 
 
@@ -105,7 +122,7 @@ ProxySnapshotsDbus::update()
 
     XSnapshots x = command_list_xsnapshots(*backref->backref->conn, backref->config_name);
     for (XSnapshots::const_iterator it = x.begin(); it != x.end(); ++it)
-	proxy_snapshots.push_back(new ProxySnapshotDbus(it->getType(), it->getNum(), it->getDate(),
+	proxy_snapshots.push_back(new ProxySnapshotDbus(this, it->getType(), it->getNum(), it->getDate(),
 							it->getUid(), it->getPreNum(), it->getDescription(),
 							it->getCleanup(), it->getUserdata()));
 }

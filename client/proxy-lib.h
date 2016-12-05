@@ -49,6 +49,14 @@ public:
 
     virtual bool isCurrent() const override { return it->isCurrent(); }
 
+    virtual void mountFilesystemSnapshot(bool user_request) const override {
+	it->mountFilesystemSnapshot(user_request);
+    }
+
+    virtual void umountFilesystemSnapshot(bool user_request) const override {
+	it->umountFilesystemSnapshot(user_request);
+    }
+
     Snapshots::const_iterator it;
 
 };

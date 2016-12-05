@@ -887,7 +887,7 @@ help_mount()
 
 
 void
-command_mount(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_mount(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     getopts.parse("mount", GetOpts::no_options);
     if (!getopts.hasArgs())
@@ -896,20 +896,12 @@ command_mount(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_sna
 	exit(EXIT_FAILURE);
     }
 
+    const ProxySnapshots& proxy_snapshots = proxy_snapper->getSnapshots();
+
     while (getopts.hasArgs())
     {
-	if (no_dbus)
-	{
-	    Snapshots::iterator snapshot = read_num(snapper, getopts.popArg());
-
-            snapshot->mountFilesystemSnapshot(true);
-	}
-	else
-	{
-	    unsigned int num = read_num(getopts.popArg());
-
-	    command_mount_xsnapshots(*conn, config_name, num, true);
-	}
+	ProxySnapshots::const_iterator proxy_snapshot = proxy_snapshots.findNum(getopts.popArg());
+	proxy_snapshot->mountFilesystemSnapshot(true);
     }
 }
 
@@ -924,7 +916,7 @@ help_umount()
 
 
 void
-command_umount(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_umount(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     getopts.parse("umount", GetOpts::no_options);
     if (!getopts.hasArgs())
@@ -933,20 +925,12 @@ command_umount(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_sn
 	exit(EXIT_FAILURE);
     }
 
+    const ProxySnapshots& proxy_snapshots = proxy_snapper->getSnapshots();
+
     while (getopts.hasArgs())
     {
-	if (no_dbus)
-	{
-	    Snapshots::iterator snapshot = read_num(snapper, getopts.popArg());
-
-            snapshot->umountFilesystemSnapshot(true);
-	}
-	else
-	{
-	    unsigned int num = read_num(getopts.popArg());
-
-	    command_umount_xsnapshots(*conn, config_name, num, true);
-	}
+	ProxySnapshots::const_iterator proxy_snapshot = proxy_snapshots.findNum(getopts.popArg());
+	proxy_snapshot->umountFilesystemSnapshot(true);
     }
 }
 

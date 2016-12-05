@@ -82,6 +82,14 @@ public:
 
     bool isCurrent() const { return impl->isCurrent(); }
 
+    void mountFilesystemSnapshot(bool user_request) const {
+	impl->mountFilesystemSnapshot(user_request);
+    }
+
+    void umountFilesystemSnapshot(bool user_request) const {
+	impl->umountFilesystemSnapshot(user_request);
+    }
+
 public:
 
     class Impl
@@ -101,6 +109,9 @@ public:
 	virtual const map<string, string>& getUserdata() const = 0;
 
 	virtual bool isCurrent() const = 0;
+
+	virtual void mountFilesystemSnapshot(bool user_request) const = 0;
+	virtual void umountFilesystemSnapshot(bool user_request) const = 0;
 
     };
 
