@@ -143,6 +143,8 @@ public:
 
     virtual ProxySnapper* getSnapper(const string& config_name) override;
 
+    virtual std::vector<string> debug() override;
+
     DBus::Connection* conn;
 
     list<std::unique_ptr<ProxySnapperDbus>> proxy_snappers;

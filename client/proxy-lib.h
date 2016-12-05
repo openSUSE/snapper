@@ -123,6 +123,8 @@ public:
 
     virtual ProxySnapper* getSnapper(const string& config_name) override;
 
+    virtual vector<string> debug() { return Snapper::debug(); }
+
     const string target_root;
 
     list<std::unique_ptr<ProxySnapperLib>> proxy_snappers;

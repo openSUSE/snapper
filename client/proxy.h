@@ -25,6 +25,8 @@
 
 
 #include <memory>
+#include <list>
+#include <vector>
 
 #include <snapper/Snapshot.h>
 
@@ -187,6 +189,8 @@ public:
     virtual void deleteConfig(const string& config_name) = 0;
 
     virtual ProxySnapper* getSnapper(const string& config_name) = 0;
+
+    virtual std::vector<string> debug() = 0;
 
 };
 

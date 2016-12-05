@@ -1418,9 +1418,8 @@ command_debug(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_sna
 	exit(EXIT_FAILURE);
     }
 
-    vector<string> lines = command_xdebug(*conn);
-    for (vector<string>::const_iterator it = lines.begin(); it != lines.end(); ++it)
-	cout << *it << endl;
+    for (const string& line : proxy_snappers->debug())
+	cout << line << endl;
 }
 
 
@@ -1591,7 +1590,7 @@ main(int argc, char** argv)
 #endif
 	Cmd("setup-quota", command_setup_quota, help_setup_quota, true, true),
 	Cmd("cleanup", command_cleanup, help_cleanup, false, true),
-	Cmd("debug", command_debug, help_debug, false, false)
+	Cmd("debug", command_debug, help_debug, false, true)
     };
 
     const struct option options[] = {

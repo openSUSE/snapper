@@ -172,3 +172,10 @@ ProxySnappersDbus::getSnapper(const string& config_name)
     proxy_snappers.push_back(unique_ptr<ProxySnapperDbus>(ret));
     return ret;
 }
+
+
+vector<string>
+ProxySnappersDbus::debug()
+{
+     return command_xdebug(*conn);
+}
