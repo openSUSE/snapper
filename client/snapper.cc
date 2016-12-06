@@ -767,7 +767,7 @@ help_modify()
 
 
 void
-command_modify(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_modify(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     const struct option options[] = {
 	{ "description",	required_argument,	0,	'd' },
@@ -783,24 +783,32 @@ command_modify(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_sn
 	exit(EXIT_FAILURE);
     }
 
+    ProxySnapshots& proxy_snapshots = proxy_snapper->getSnapshots();
+
     while (getopts.hasArgs())
     {
-	unsigned int num = read_num(getopts.popArg());
+	ProxySnapshots::iterator proxy_snapshot = proxy_snapshots.findNum(getopts.popArg());
 
-	XSnapshot data = command_get_xsnapshot(*conn, config_name, num);
+	SMD smd;
 
 	GetOpts::parsed_opts::const_iterator opt;
 
 	if ((opt = opts.find("description")) != opts.end())
-	    data.description = opt->second;
+	    smd.description = opt->second;
+	else
+	    smd.description = proxy_snapshot->getDescription();
 
 	if ((opt = opts.find("cleanup-algorithm")) != opts.end())
-	    data.cleanup = opt->second;
+	    smd.cleanup = opt->second;
+	else
+	    smd.cleanup = proxy_snapshot->getCleanup();
 
 	if ((opt = opts.find("userdata")) != opts.end())
-	    data.userdata = read_userdata(opt->second, data.userdata);
+	    smd.userdata = read_userdata(opt->second, proxy_snapshot->getUserdata());
+	else
+	    smd.userdata = proxy_snapshot->getUserdata();
 
-	command_set_xsnapshot(*conn, config_name, num, data);
+	proxy_snapper->modifySnapshot(proxy_snapshot, smd);
     }
 }
 
@@ -818,7 +826,7 @@ help_delete()
 
 
 void
-command_delete(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_delete(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     const struct option options[] = {
 	{ "sync",		no_argument,		0,	's' },
@@ -839,9 +847,9 @@ command_delete(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_sn
     if ((opt = opts.find("sync")) != opts.end())
 	sync = true;
 
-    XSnapshots snapshots = command_list_xsnapshots(*conn, config_name);
+    ProxySnapshots& proxy_snapshots = proxy_snapper->getSnapshots();
 
-    list<unsigned int> nums;
+    list<ProxySnapshots::iterator> nums;
 
     while (getopts.hasArgs())
     {
@@ -849,31 +857,32 @@ command_delete(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_sn
 
 	if (arg.find_first_of("-") == string::npos)
 	{
-	    unsigned int i = read_num(arg);
-	    nums.push_back(i);
+	    ProxySnapshots::iterator tmp = proxy_snapshots.findNum(arg);
+	    nums.push_back(tmp);
 	}
 	else
 	{
-	    pair<unsigned int, unsigned int> r(read_nums(arg, "-"));
+	    pair<ProxySnapshots::iterator, ProxySnapshots::iterator> tmp(proxy_snapshots.findNums(arg, "-"));
 
-	    if (r.first > r.second)
-		swap(r.first, r.second);
+	    if (tmp.first->getNum() > tmp.second->getNum())
+		swap(tmp.first, tmp.second);
 
-	    for (unsigned int i = r.first; i <= r.second; ++i)
+	    for (unsigned int i = tmp.first->getNum(); i <= tmp.second->getNum(); ++i)
 	    {
-		if (snapshots.find(i) != snapshots.end() &&
-		    find(nums.begin(), nums.end(), i) == nums.end())
+		ProxySnapshots::iterator x = proxy_snapshots.find(i);
+		if (x != proxy_snapshots.end())
 		{
-		    nums.push_back(i);
+		    if (find_if(nums.begin(), nums.end(), [i](ProxySnapshots::iterator it) { return it->getNum() == i; }) == nums.end())
+			nums.push_back(x);
 		}
 	    }
 	}
     }
 
-    command_delete_xsnapshots(*conn, config_name, nums, verbose);
+    proxy_snapper->deleteSnapshots(nums);
 
     if (sync)
-	command_xsync(*conn, config_name);
+	proxy_snapper->syncFilesystem();
 }
 
 
@@ -1575,8 +1584,8 @@ main(int argc, char** argv)
 	Cmd("set-config", command_set_config, help_set_config, true, true),
 	Cmd("list", { "ls" }, command_list, help_list, true, true),
 	Cmd("create", command_create, help_create, true, true),
-	Cmd("modify", command_modify, help_modify, false, true),
-	Cmd("delete", { "remove", "rm" }, command_delete, help_delete, false, true),
+	Cmd("modify", command_modify, help_modify, true, true),
+	Cmd("delete", { "remove", "rm" }, command_delete, help_delete, true, true),
 	Cmd("mount", command_mount, help_mount, true, true),
 	Cmd("umount", command_umount, help_umount, true, true),
 	Cmd("status", command_status, help_status, false, true),

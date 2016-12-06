@@ -62,7 +62,7 @@ public:
 
     virtual bool isCurrent() const override { return num == 0; }
 
-    virtual void mountFilesystemSnapshot(bool user_request) const override;
+    virtual string mountFilesystemSnapshot(bool user_request) const override;
     virtual void umountFilesystemSnapshot(bool user_request) const override;
 
     ProxySnapshotsDbus* backref;
@@ -114,9 +114,17 @@ public:
     virtual ProxySnapshots::const_iterator createPreSnapshot(const SCD& scd) override;
     virtual ProxySnapshots::const_iterator createPostSnapshot(const ProxySnapshots::const_iterator pre, const SCD& scd) override;
 
-    virtual const ProxySnapshots& getSnapshots() override;
+    virtual void modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd) override;
+
+    virtual void deleteSnapshots(list<ProxySnapshots::iterator> snapshots) override;
+
+    virtual void syncFilesystem() const override;
+
+    virtual ProxySnapshots& getSnapshots() override;
 
     virtual void setupQuota() override;
+
+    virtual void prepareQuota() const override;
 
     ProxySnappersDbus* backref;
 

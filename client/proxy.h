@@ -112,13 +112,14 @@ public:
 
 	virtual bool isCurrent() const = 0;
 
-	virtual void mountFilesystemSnapshot(bool user_request) const = 0;
+	virtual string mountFilesystemSnapshot(bool user_request) const = 0;
 	virtual void umountFilesystemSnapshot(bool user_request) const = 0;
 
     };
 
     ProxySnapshot(Impl* impl) : impl(impl) {}
 
+    Impl& get_impl() { return *impl; }
     const Impl& get_impl() const { return *impl; }
 
 private:
@@ -135,13 +136,20 @@ public:
 
     virtual ~ProxySnapshots() {}
 
+    typedef list<ProxySnapshot>::iterator iterator;
     typedef list<ProxySnapshot>::const_iterator const_iterator;
     typedef list<ProxySnapshot>::size_type size_type;
 
     const_iterator begin() const { return proxy_snapshots.begin(); }
     const_iterator end() const { return proxy_snapshots.end(); }
 
+    iterator find(unsigned int i);
+    const_iterator find(unsigned int i) const;
+
+    iterator findNum(const string& str);
     const_iterator findNum(const string& str) const;
+
+    std::pair<iterator, iterator> findNums(const string& str, const string& delim = "..");
 
     const_iterator findPost(const_iterator pre) const;
 
@@ -169,9 +177,17 @@ public:
     virtual ProxySnapshots::const_iterator createPreSnapshot(const SCD& scd) = 0;
     virtual ProxySnapshots::const_iterator createPostSnapshot(const ProxySnapshots::const_iterator pre, const SCD& scd) = 0;
 
-    virtual const ProxySnapshots& getSnapshots() = 0;
+    virtual void modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd) = 0;
+
+    virtual void deleteSnapshots(list<ProxySnapshots::iterator> snapshots) = 0;
+
+    virtual void syncFilesystem() const = 0;
+
+    virtual ProxySnapshots& getSnapshots() = 0;
 
     virtual void setupQuota() = 0;
+
+    virtual void prepareQuota() const = 0;
 
 };
 

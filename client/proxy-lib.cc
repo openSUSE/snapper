@@ -71,17 +71,38 @@ ProxySnapshotsLib::update()
     proxy_snapshots.clear();
 
     Snapshots& x = backref->snapper->getSnapshots();
-    for (Snapshots::const_iterator it = x.begin(); it != x.end(); ++it)
+    for (Snapshots::iterator it = x.begin(); it != x.end(); ++it)
 	proxy_snapshots.push_back(new ProxySnapshotLib(it));
 }
 
 
-const ProxySnapshots&
+ProxySnapshots&
 ProxySnapperLib::getSnapshots()
 {
     proxy_snapshots.update();
 
     return proxy_snapshots;
+}
+
+
+void
+ProxySnapperLib::modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd)
+{
+    ProxySnapshotLib& x = dynamic_cast<ProxySnapshotLib&>(snapshot->get_impl());
+
+    snapper->modifySnapshot(x.it, smd);
+}
+
+
+void
+ProxySnapperLib::deleteSnapshots(list<ProxySnapshots::iterator> snapshots)
+{
+    for (ProxySnapshots::iterator& snapshot : snapshots)
+    {
+	ProxySnapshotLib& x = dynamic_cast<ProxySnapshotLib&>(snapshot->get_impl());
+
+	snapper->deleteSnapshot(x.it);
+    }
 }
 
 

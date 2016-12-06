@@ -34,7 +34,7 @@ class ProxySnapshotLib : public ProxySnapshot::Impl
 
 public:
 
-    ProxySnapshotLib(Snapshots::const_iterator it)
+    ProxySnapshotLib(Snapshots::iterator it)
 	: it(it)
     {}
 
@@ -49,15 +49,16 @@ public:
 
     virtual bool isCurrent() const override { return it->isCurrent(); }
 
-    virtual void mountFilesystemSnapshot(bool user_request) const override {
+    virtual string mountFilesystemSnapshot(bool user_request) const override {
 	it->mountFilesystemSnapshot(user_request);
+	return it->snapshotDir();
     }
 
     virtual void umountFilesystemSnapshot(bool user_request) const override {
 	it->umountFilesystemSnapshot(user_request);
     }
 
-    Snapshots::const_iterator it;
+    Snapshots::iterator it;
 
 };
 
@@ -96,9 +97,17 @@ public:
     virtual ProxySnapshots::const_iterator createPreSnapshot(const SCD& scd) override;
     virtual ProxySnapshots::const_iterator createPostSnapshot(const ProxySnapshots::const_iterator pre, const SCD& scd) override;
 
-    virtual const ProxySnapshots& getSnapshots() override;
+    virtual void modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd) override;
+
+    virtual void deleteSnapshots(list<ProxySnapshots::iterator> snapshots) override;
+
+    virtual void syncFilesystem() const override { snapper->syncFilesystem(); }
+
+    virtual ProxySnapshots& getSnapshots() override;
 
     virtual void setupQuota() override { snapper->setupQuota(); }
+
+    virtual void prepareQuota() const override { snapper->prepareQuota(); }
 
     Snapper* snapper;
 

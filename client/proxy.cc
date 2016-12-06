@@ -33,6 +33,46 @@
 using namespace std;
 
 
+ProxySnapshots::iterator
+ProxySnapshots::find(unsigned int num)
+{
+    return find_if(proxy_snapshots.begin(), proxy_snapshots.end(),
+		   [num](const ProxySnapshot& x) { return x.getNum() == num; });
+}
+
+
+ProxySnapshots::const_iterator
+ProxySnapshots::find(unsigned int num) const
+{
+    return find_if(proxy_snapshots.begin(), proxy_snapshots.end(),
+		   [num](const ProxySnapshot& x) { return x.getNum() == num; });
+}
+
+
+ProxySnapshots::iterator
+ProxySnapshots::findNum(const string& str)
+{
+    istringstream s(str);
+    unsigned int num = 0;
+    s >> num;
+
+    if (s.fail() || !s.eof())
+    {
+	cerr << sformat(_("Invalid snapshot '%s'."), str.c_str()) << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    iterator ret = find(num);
+    if (ret == proxy_snapshots.end())
+    {
+	cerr << sformat(_("Snapshot '%u' not found."), num) << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    return ret;
+}
+
+
 ProxySnapshots::const_iterator
 ProxySnapshots::findNum(const string& str) const
 {
@@ -46,7 +86,7 @@ ProxySnapshots::findNum(const string& str) const
 	exit(EXIT_FAILURE);
     }
 
-    const_iterator ret = find_if(proxy_snapshots.begin(), proxy_snapshots.end(), [num](const ProxySnapshot& x) { return x.getNum() == num; });
+    const_iterator ret = find(num);
     if (ret == proxy_snapshots.end())
     {
 	cerr << sformat(_("Snapshot '%u' not found."), num) << endl;
@@ -54,6 +94,36 @@ ProxySnapshots::findNum(const string& str) const
     }
 
     return ret;
+}
+
+
+pair<ProxySnapshots::iterator, ProxySnapshots::iterator>
+ProxySnapshots::findNums(const string& str, const string& delim)
+{
+    string::size_type pos = str.find(delim);
+    if (pos == string::npos)
+    {
+	if (delim == "..")
+	{
+	    cerr << _("Missing delimiter '..' between snapshot numbers.") << endl
+		 << _("See 'man snapper' for further instructions.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	cerr << _("Invalid snapshots.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    ProxySnapshots::iterator num1 = findNum(str.substr(0, pos));
+    ProxySnapshots::iterator num2 = findNum(str.substr(pos + delim.size()));
+
+    if (num1->getNum() == num2->getNum())
+    {
+	cerr << _("Identical snapshots.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    return make_pair(num1, num2);
 }
 
 
