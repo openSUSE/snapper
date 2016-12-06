@@ -966,4 +966,12 @@ namespace snapper
 	    ;
     }
 
+
+    vector<string>
+    Snapper::debug()
+    {
+	return { "version " + string(compileVersion()),
+		 "flags " + string(compileFlags()) };
+    }
+
 }

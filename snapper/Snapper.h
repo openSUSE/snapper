@@ -168,6 +168,8 @@ namespace snapper
 	static const char* compileVersion();
 	static const char* compileFlags();
 
+	static vector<string> debug();
+
     private:
 
 	void filter1(list<Snapshots::iterator>& tmp, time_t min_age);

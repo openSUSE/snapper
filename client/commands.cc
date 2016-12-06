@@ -70,44 +70,6 @@ command_get_xconfig(DBus::Connection& conn, const string& config_name)
 }
 
 
-void
-command_set_xconfig(DBus::Connection& conn, const string& config_name,
-		    const map<string, string>& raw)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "SetConfig");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name << raw;
-
-    conn.send_with_reply_and_block(call);
-}
-
-
-void
-command_create_xconfig(DBus::Connection& conn, const string& config_name, const string& subvolume,
-		       const string& fstype, const string& template_name)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreateConfig");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name << subvolume << fstype << template_name;
-
-    conn.send_with_reply_and_block(call);
-}
-
-
-void
-command_delete_xconfig(DBus::Connection& conn, const string& config_name)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "DeleteConfig");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name;
-
-    conn.send_with_reply_and_block(call);
-}
-
-
 XSnapshots
 command_list_xsnapshots(DBus::Connection& conn, const string& config_name)
 {
@@ -224,48 +186,6 @@ command_create_single_xsnapshot_of_default(DBus::Connection& conn, const string&
 }
 
 
-unsigned int
-command_create_pre_xsnapshot(DBus::Connection& conn, const string& config_name,
-			     const string& description, const string& cleanup,
-			     const map<string, string>& userdata)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreatePreSnapshot");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name << description << cleanup << userdata;
-
-    DBus::Message reply = conn.send_with_reply_and_block(call);
-
-    unsigned int number;
-
-    DBus::Hihi hihi(reply);
-    hihi >> number;
-
-    return number;
-}
-
-
-unsigned int
-command_create_post_xsnapshot(DBus::Connection& conn, const string& config_name,
-			      unsigned int prenum, const string& description,
-			      const string& cleanup, const map<string, string>& userdata)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreatePostSnapshot");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name << prenum << description << cleanup << userdata;
-
-    DBus::Message reply = conn.send_with_reply_and_block(call);
-
-    unsigned int number;
-
-    DBus::Hihi hihi(reply);
-    hihi >> number;
-
-    return number;
-}
-
-
 void
 command_delete_xsnapshots(DBus::Connection& conn, const string& config_name,
 			  const list<unsigned int>& nums, bool verbose)
@@ -310,19 +230,6 @@ command_mount_xsnapshots(DBus::Connection& conn, const string& config_name,
     hihi >> mount_point;
 
     return mount_point;
-}
-
-
-void
-command_umount_xsnapshots(DBus::Connection& conn, const string& config_name,
-			  unsigned int num, bool user_request)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "UmountSnapshot");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name << num << user_request;
-
-    conn.send_with_reply_and_block(call);
 }
 
 
@@ -403,18 +310,6 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
 
 
 void
-command_setup_quota(DBus::Connection& conn, const string& config_name)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "SetupQuota");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name;
-
-    conn.send_with_reply_and_block(call);
-}
-
-
-void
 command_prepare_quota(DBus::Connection& conn, const string& config_name)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "PrepareQuota");
@@ -442,32 +337,4 @@ command_query_quota(DBus::Connection& conn, const string& config_name)
     hihi >> quota_data;
 
     return quota_data;
-}
-
-
-void
-command_xsync(DBus::Connection& conn, const string& config_name)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "Sync");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name;
-
-    conn.send_with_reply_and_block(call);
-}
-
-
-vector<string>
-command_xdebug(DBus::Connection& conn)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "Debug");
-
-    DBus::Message reply = conn.send_with_reply_and_block(call);
-
-    vector<string> lines;
-
-    DBus::Hihi hihi(reply);
-    hihi >> lines;
-
-    return lines;
 }

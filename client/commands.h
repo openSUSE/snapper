@@ -40,17 +40,6 @@ command_list_xconfigs(DBus::Connection& conn);
 XConfigInfo
 command_get_xconfig(DBus::Connection& conn, const string& config_name);
 
-void
-command_set_xconfig(DBus::Connection& conn, const string& config_name,
-		    const map<string, string>& raw);
-
-void
-command_create_xconfig(DBus::Connection& conn, const string& config_name, const string& subvolume,
-		       const string& fstype, const string& template_name);
-
-void
-command_delete_xconfig(DBus::Connection& conn, const string& config_name);
-
 XSnapshots
 command_list_xsnapshots(DBus::Connection& conn, const string& config_name);
 
@@ -78,16 +67,6 @@ command_create_single_xsnapshot_of_default(DBus::Connection& conn, const string&
 					   const string& cleanup,
 					   const map<string, string>& userdata);
 
-unsigned int
-command_create_pre_xsnapshot(DBus::Connection& conn, const string& config_name,
-			     const string& description, const string& cleanup,
-			     const map<string, string>& userdata);
-
-unsigned int
-command_create_post_xsnapshot(DBus::Connection& conn, const string& config_name,
-			      unsigned int prenum, const string& description,
-			      const string& cleanup, const map<string, string>& userdata);
-
 void
 command_delete_xsnapshots(DBus::Connection& conn, const string& config_name,
 			  const list<unsigned int>& nums, bool verbose);
@@ -95,10 +74,6 @@ command_delete_xsnapshots(DBus::Connection& conn, const string& config_name,
 string
 command_mount_xsnapshots(DBus::Connection& conn, const string& config_name,
 			 unsigned int num, bool user_request);
-
-void
-command_umount_xsnapshots(DBus::Connection& conn, const string& config_name,
-			  unsigned int num, bool user_request);
 
 string
 command_get_xmount_point(DBus::Connection& conn, const string& config_name,
@@ -117,16 +92,8 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
 		   unsigned int number2);
 
 void
-command_setup_quota(DBus::Connection& conn, const string& config_name);
-
-void
 command_prepare_quota(DBus::Connection& conn, const string& config_name);
 
 XQuotaData
 command_query_quota(DBus::Connection& conn, const string& config_name);
 
-void
-command_xsync(DBus::Connection& conn, const string& config_name);
-
-vector<string>
-command_xdebug(DBus::Connection& conn);
