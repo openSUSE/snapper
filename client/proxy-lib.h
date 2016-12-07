@@ -141,4 +141,7 @@ public:
 };
 
 
+const ProxySnapshotLib& to_lib(const ProxySnapshot& proxy_snapshot);
+
+
 #endif

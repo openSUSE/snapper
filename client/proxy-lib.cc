@@ -57,9 +57,7 @@ ProxySnapperLib::createPreSnapshot(const SCD& scd)
 ProxySnapshots::const_iterator
 ProxySnapperLib::createPostSnapshot(const ProxySnapshots::const_iterator pre, const SCD& scd)
 {
-    const ProxySnapshotLib& x = dynamic_cast<const ProxySnapshotLib&>(pre->get_impl());
-
-    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createPostSnapshot(x.it, scd)));
+    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createPostSnapshot(to_lib(*pre).it, scd)));
 
     return --proxy_snapshots.end();
 }
@@ -88,9 +86,7 @@ ProxySnapperLib::getSnapshots()
 void
 ProxySnapperLib::modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd)
 {
-    ProxySnapshotLib& x = dynamic_cast<ProxySnapshotLib&>(snapshot->get_impl());
-
-    snapper->modifySnapshot(x.it, smd);
+    snapper->modifySnapshot(to_lib(*snapshot).it, smd);
 }
 
 
@@ -98,11 +94,7 @@ void
 ProxySnapperLib::deleteSnapshots(list<ProxySnapshots::iterator> snapshots)
 {
     for (ProxySnapshots::iterator& snapshot : snapshots)
-    {
-	ProxySnapshotLib& x = dynamic_cast<ProxySnapshotLib&>(snapshot->get_impl());
-
-	snapper->deleteSnapshot(x.it);
-    }
+	snapper->deleteSnapshot(to_lib(*snapshot).it);
 }
 
 
@@ -133,4 +125,11 @@ ProxySnappersLib::getSnapper(const string& config_name)
     ProxySnapperLib* ret = new ProxySnapperLib(config_name);
     proxy_snappers.push_back(unique_ptr<ProxySnapperLib>(ret));
     return ret;
+}
+
+
+const ProxySnapshotLib&
+to_lib(const ProxySnapshot& proxy_snapshot)
+{
+    return dynamic_cast<const ProxySnapshotLib&>(proxy_snapshot.get_impl());
 }

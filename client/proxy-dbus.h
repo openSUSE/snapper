@@ -33,7 +33,10 @@
 // TODO move code from types.{cc,h} and commands.{cc,h} to proxy-dbus.{cc,h}
 
 
+class ProxySnapshotDbus;
 class ProxySnapshotsDbus;
+class ProxySnapperDbus;
+class ProxySnappersDbus;
 
 
 /**
@@ -65,6 +68,9 @@ public:
     virtual string mountFilesystemSnapshot(bool user_request) const override;
     virtual void umountFilesystemSnapshot(bool user_request) const override;
 
+    DBus::Connection* conn() const;
+    const string config_name() const;
+
     ProxySnapshotsDbus* backref;
 
     SnapshotType type;
@@ -79,9 +85,6 @@ public:
 };
 
 
-class ProxySnapperDbus;
-
-
 class ProxySnapshotsDbus : public ProxySnapshots
 {
 
@@ -91,12 +94,12 @@ public:
 
     void update();
 
+    DBus::Connection* conn() const;
+    const string config_name() const;
+
     ProxySnapperDbus* backref;
 
 };
-
-
-class ProxySnappersDbus;
 
 
 class ProxySnapperDbus : public ProxySnapper
@@ -125,6 +128,8 @@ public:
     virtual void setupQuota() override;
 
     virtual void prepareQuota() const override;
+
+    DBus::Connection* conn() const;
 
     ProxySnappersDbus* backref;
 
