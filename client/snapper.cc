@@ -215,34 +215,8 @@ help_list_configs()
 }
 
 
-list<pair<string, string>>
-enum_configs(DBus::Connection* conn)
-{
-    list<pair<string, string>> configs;
-
-    if (no_dbus)
-    {
-	list<ConfigInfo> config_infos = Snapper::getConfigs(target_root);
-	for (list<ConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
-	{
-	    configs.push_back(make_pair(it->getConfigName(), it->getSubvolume()));
-	}
-    }
-    else
-    {
-	list<XConfigInfo> config_infos = command_list_xconfigs(*conn);
-	for (list<XConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
-	{
-	    configs.push_back(make_pair(it->config_name, it->subvolume));
-	}
-    }
-
-    return configs;
-}
-
-
 void
-command_list_configs(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_list_configs(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     getopts.parse("list-configs", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -258,13 +232,12 @@ command_list_configs(DBus::Connection* conn, Snapper* snapper, ProxySnappers* pr
     header.add(_("Subvolume"));
     table.setHeader(header);
 
-    list<pair<string, string> > configs = enum_configs(conn);
-
-    for (list<pair<string,string> >::iterator it = configs.begin(); it != configs.end(); ++it)
+    map<string, ProxyConfig> proxy_configs = proxy_snappers->getConfigs();
+    for (const map<string, ProxyConfig>::value_type value : proxy_configs)
     {
 	TableRow row;
-	row.add(it->first);
-	row.add(it->second);
+	row.add(value.first);
+	row.add(value.second.getSubvolume());
 	table.add(row);
     }
 
@@ -362,7 +335,7 @@ help_get_config()
 
 
 void
-command_get_config(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_get_config(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
 {
     getopts.parse("get-config", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -378,30 +351,13 @@ command_get_config(DBus::Connection* conn, Snapper* snapper, ProxySnappers* prox
     header.add(_("Value"));
     table.setHeader(header);
 
-    if (no_dbus)
+    ProxyConfig proxy_config = proxy_snapper->getConfig();
+    for (const map<string, string>::value_type& value : proxy_config.getAllValues())
     {
-	ConfigInfo config_info = Snapper::getConfig(config_name, target_root);
-	map<string, string> raw = config_info.getAllValues();
-
-	for (map<string, string>::const_iterator it = raw.begin(); it != raw.end(); ++it)
-	{
-	    TableRow row;
-	    row.add(it->first);
-	    row.add(it->second);
-	    table.add(row);
-	}
-    }
-    else
-    {
-	XConfigInfo ci = command_get_xconfig(*conn, config_name);
-
-	for (map<string, string>::const_iterator it = ci.raw.begin(); it != ci.raw.end(); ++it)
-	{
-	    TableRow row;
-	    row.add(it->first);
-	    row.add(it->second);
-	    table.add(row);
-	}
+	TableRow row;
+	row.add(value.first);
+	row.add(value.second);
+	table.add(row);
     }
 
     cout << table;
@@ -427,9 +383,9 @@ command_set_config(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, P
 	exit(EXIT_FAILURE);
     }
 
-    map<string, string> raw = read_configdata(getopts.getArgs());
+    ProxyConfig proxy_config(read_configdata(getopts.getArgs()));
 
-    proxy_snapper->setConfigInfo(raw);
+    proxy_snapper->setConfig(proxy_config);
 }
 
 
@@ -487,30 +443,34 @@ command_list(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySn
 	}
     }
 
-    /*
-    list<pair<string, string> > configs;
-    if ((opt = opts.find("all-configs")) != opts.end())
+    vector<string> tmp;
+
+    if ((opt = opts.find("all-configs")) == opts.end())
     {
-	configs = enum_configs(conn);
+        tmp.push_back(config_name);
     }
     else
     {
-	configs.push_back(make_pair(config_name, ""));
+        map<string, ProxyConfig> proxy_configs = proxy_snappers->getConfigs();
+        for (map<string, ProxyConfig>::value_type it : proxy_configs)
+            tmp.push_back(it.first);
     }
 
-    for (list<pair<string, string>>::iterator it = configs.begin(); it != configs.end(); ++it)
+    for (vector<string>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
     {
-	if (it != configs.begin())
-	    cout << endl;
+	ProxySnapper* x = proxy_snappers->getSnapper(*it);
 
-	if (configs.size() > 1)
-	    cout << "Config: " << it->first << ", subvolume: " << it->second << endl;
+        if (it != tmp.begin())
+            cout << endl;
 
-	list_from_one_config(conn, snapper, it->first, list_mode);
+        if (tmp.size() > 1)
+        {
+            cout << "Config: " << x->configName() << ", subvolume: "
+                 << x->getConfig().getSubvolume() << endl;
+        }
+
+        list_from_one_config(x, list_mode);
     }
-    */
-
-    list_from_one_config(proxy_snapper, list_mode);
 }
 
 
@@ -1191,7 +1151,7 @@ command_undo(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snap
 #ifdef ENABLE_ROLLBACK
 
 const Filesystem*
-getFilesystem(const XConfigInfo &ci, Snapper* snapper)
+getFilesystem(const XConfigInfo& ci, Snapper*)
 {
     map<string, string>::const_iterator it = ci.raw.find(KEY_FSTYPE);
     if (it == ci.raw.end())
@@ -1213,7 +1173,7 @@ getFilesystem(const XConfigInfo &ci, Snapper* snapper)
 }
 
 const string
-getSubvolume(const XConfigInfo &ci, Snapper* snapper)
+getSubvolume(const XConfigInfo& ci, Snapper*)
 {
     map<string, string>::const_iterator it = ci.raw.find(KEY_SUBVOLUME);
     if (it == ci.raw.end())
@@ -1580,9 +1540,9 @@ main(int argc, char** argv)
 	Cmd("list-configs", command_list_configs, help_list_configs, true, false),
 	Cmd("create-config", command_create_config, help_create_config, true, false),
 	Cmd("delete-config", command_delete_config, help_delete_config, true, false),
-	Cmd("get-config", command_get_config, help_get_config, true, false),
+	Cmd("get-config", command_get_config, help_get_config, true, true),
 	Cmd("set-config", command_set_config, help_set_config, true, true),
-	Cmd("list", { "ls" }, command_list, help_list, true, true),
+	Cmd("list", { "ls" }, command_list, help_list, true, false),
 	Cmd("create", command_create, help_create, true, true),
 	Cmd("modify", command_modify, help_modify, true, true),
 	Cmd("delete", { "remove", "rm" }, command_delete, help_delete, true, true),

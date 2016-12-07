@@ -29,10 +29,17 @@
 using namespace std;
 
 
-void
-ProxySnapperLib::setConfigInfo(const map<string, string>& raw)
+ProxyConfig
+ProxySnapperLib::getConfig() const
 {
-    snapper->setConfigInfo(raw);
+    return ProxyConfig(snapper->getConfigInfo().getAllValues());
+}
+
+
+void
+ProxySnapperLib::setConfig(const ProxyConfig& proxy_config)
+{
+    snapper->setConfigInfo(proxy_config.getAllValues());
 }
 
 
@@ -124,6 +131,19 @@ ProxySnappersLib::getSnapper(const string& config_name)
 
     ProxySnapperLib* ret = new ProxySnapperLib(config_name);
     proxy_snappers.push_back(unique_ptr<ProxySnapperLib>(ret));
+    return ret;
+}
+
+
+map<string, ProxyConfig>
+ProxySnappersLib::getConfigs() const
+{
+    map<string, ProxyConfig> ret;
+
+    list<ConfigInfo> config_infos = Snapper::getConfigs(target_root);
+    for (const ConfigInfo& config_info : config_infos)
+	ret.emplace(make_pair(config_info.getConfigName(), config_info.getAllValues()));
+
     return ret;
 }
 

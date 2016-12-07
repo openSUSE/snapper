@@ -91,7 +91,10 @@ public:
 	: snapper(new Snapper(config_name, "/")), proxy_snapshots(this)
     {}
 
-    virtual void setConfigInfo(const map<string, string>& raw) override;
+    virtual const string& configName() const override { return snapper->configName(); }
+
+    virtual ProxyConfig getConfig() const override;
+    virtual void setConfig(const ProxyConfig& proxy_config) override;
 
     virtual ProxySnapshots::const_iterator createSingleSnapshot(const SCD& scd) override;
     virtual ProxySnapshots::const_iterator createPreSnapshot(const SCD& scd) override;
@@ -131,6 +134,8 @@ public:
     virtual void deleteConfig(const string& config_name) override;
 
     virtual ProxySnapper* getSnapper(const string& config_name) override;
+
+    virtual map<string, ProxyConfig> getConfigs() const override;
 
     virtual vector<string> debug() { return Snapper::debug(); }
 

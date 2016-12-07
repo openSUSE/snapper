@@ -33,6 +33,28 @@
 using namespace std;
 
 
+
+string
+ProxyConfig::getSubvolume() const
+{
+    string subvolume;
+    getValue("SUBVOLUME", subvolume);
+    return subvolume;
+}
+
+
+bool
+ProxyConfig::getValue(const string& key, string& value) const
+{
+    map<string, string>::const_iterator it = values.find(key);
+    if (it == values.end())
+	return false;
+
+    value = it->second;
+    return true;
+}
+
+
 ProxySnapshots::iterator
 ProxySnapshots::find(unsigned int num)
 {

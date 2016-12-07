@@ -25,8 +25,9 @@
 
 
 #include <memory>
-#include <list>
 #include <vector>
+#include <list>
+#include <map>
 
 #include <snapper/Snapshot.h>
 
@@ -66,6 +67,26 @@ using namespace snapper;
 
 // TODO maybe unique error handling, e.g. catch dbus exceptions and throw
 // snapper or new exceptions
+
+
+class ProxyConfig
+{
+
+public:
+
+    ProxyConfig(const map<string, string>& values) : values(values) {}
+
+    const map<string, string>& getAllValues() const { return values; }
+
+    string getSubvolume() const;
+
+    bool getValue(const string& key, string& value) const;
+
+protected:
+
+    map<string, string> values;
+
+};
 
 
 class ProxySnapshot
@@ -171,7 +192,10 @@ public:
 
     virtual ~ProxySnapper() {}
 
-    virtual void setConfigInfo(const map<string, string>& raw) = 0;
+    virtual const string& configName() const = 0;
+
+    virtual ProxyConfig getConfig() const = 0;
+    virtual void setConfig(const ProxyConfig& proxy_config) = 0;
 
     virtual ProxySnapshots::const_iterator createSingleSnapshot(const SCD& scd) = 0;
     virtual ProxySnapshots::const_iterator createPreSnapshot(const SCD& scd) = 0;
@@ -205,6 +229,8 @@ public:
     virtual void deleteConfig(const string& config_name) = 0;
 
     virtual ProxySnapper* getSnapper(const string& config_name) = 0;
+
+    virtual map<string, ProxyConfig> getConfigs() const = 0;
 
     virtual std::vector<string> debug() = 0;
 

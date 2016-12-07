@@ -119,13 +119,22 @@ ProxySnapshotsDbus::config_name() const
 }
 
 
+ProxyConfig
+ProxySnapperDbus::getConfig() const
+{
+    XConfigInfo tmp = command_get_xconfig(*conn(), config_name);
+
+    return ProxyConfig(tmp.raw);
+}
+
+
 void
-ProxySnapperDbus::setConfigInfo(const map<string, string>& raw)
+ProxySnapperDbus::setConfig(const ProxyConfig& proxy_config)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "SetConfig");
 
     DBus::Hoho hoho(call);
-    hoho << config_name << raw;
+    hoho << config_name << proxy_config.getAllValues();
 
     conn()->send_with_reply_and_block(call);
 }
@@ -310,6 +319,19 @@ ProxySnappersDbus::getSnapper(const string& config_name)
     ProxySnapperDbus* ret = new ProxySnapperDbus(this, config_name);
     proxy_snappers.push_back(unique_ptr<ProxySnapperDbus>(ret));
     return ret;
+}
+
+
+map<string, ProxyConfig>
+ProxySnappersDbus::getConfigs() const
+{
+   map<string, ProxyConfig> ret;
+
+   list<XConfigInfo> config_infos = command_list_xconfigs(*conn);
+   for (XConfigInfo& x : config_infos)
+       ret.emplace(make_pair(x.config_name, x.raw));
+
+   return ret;
 }
 
 
