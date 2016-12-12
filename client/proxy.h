@@ -38,9 +38,9 @@ using namespace snapper;
 
 
 /**
- * The four proxy classes here allow clients, so far only the snapper command
- * line interface, to work with and without DBus in a transparent way by
- * providing the same interface in both cases.
+ * The proxy classes here allow clients, so far only the snapper command line
+ * interface, to work with and without DBus in a transparent way by providing
+ * the same interface in both cases.
  *
  * The main idea for providing the same interface is to have an abstract
  * class, e.g. ProxySnapper, and two concrete implementation ProxySnapperDbus
@@ -64,8 +64,6 @@ using namespace snapper;
  * interface. Other use-cases are not supported.
  */
 
-
-// TODO add namespace proxy and shorter class names?
 
 // TODO maybe unique error handling, e.g. catch dbus exceptions and throw
 // snapper or new exceptions
