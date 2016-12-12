@@ -153,7 +153,7 @@ namespace DBus
 
 
     Hihi&
-    operator>>(Hihi& hihi, XQuotaData& data)
+    operator>>(Hihi& hihi, QuotaData& data)
     {
 	hihi.open_recurse();
 	hihi >> data.size >> data.used;

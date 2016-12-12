@@ -283,7 +283,7 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
 }
 
 
-XQuotaData
+QuotaData
 command_query_quota(DBus::Connection& conn, const string& config_name)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "QueryQuota");
@@ -293,7 +293,7 @@ command_query_quota(DBus::Connection& conn, const string& config_name)
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
-    XQuotaData quota_data;
+    QuotaData quota_data;
 
     DBus::Hihi hihi(reply);
     hihi >> quota_data;

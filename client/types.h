@@ -34,6 +34,7 @@ using std::map;
 #include "snapper/Snapshot.h"
 #include "snapper/File.h"
 #include "snapper/SnapperTmpl.h"
+#include "snapper/Snapper.h"
 
 using namespace snapper;
 
@@ -109,13 +110,6 @@ struct XFile
 };
 
 
-struct XQuotaData
-{
-    uint64_t size;
-    uint64_t used;
-};
-
-
 namespace DBus
 {
 
@@ -132,6 +126,6 @@ namespace DBus
 
     Hihi& operator>>(Hihi& hihi, XFile& data);
 
-    Hihi& operator>>(Hihi& hihi, XQuotaData& data);
+    Hihi& operator>>(Hihi& hihi, QuotaData& data);
 
 }

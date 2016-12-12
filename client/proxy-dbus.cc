@@ -167,7 +167,7 @@ ProxySnapperDbus::prepareQuota() const
 QuotaData
 ProxySnapperDbus::queryQuotaData() const
 {
-    // TODO
+    return command_query_quota(conn(), config_name);
 }
 
 

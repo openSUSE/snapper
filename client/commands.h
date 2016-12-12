@@ -83,6 +83,6 @@ list<XFile>
 command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		   unsigned int number2);
 
-XQuotaData
+QuotaData
 command_query_quota(DBus::Connection& conn, const string& config_name);
 
