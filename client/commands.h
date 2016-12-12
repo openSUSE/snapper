@@ -79,20 +79,9 @@ string
 command_get_xmount_point(DBus::Connection& conn, const string& config_name,
 			 unsigned int num);
 
-void
-command_create_xcomparison(DBus::Connection& conn, const string& config_name, unsigned int number1,
-			   unsigned int number2);
-
-void
-command_delete_xcomparison(DBus::Connection& conn, const string& config_name, unsigned int number1,
-			   unsigned int number2);
-
 list<XFile>
 command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		   unsigned int number2);
-
-void
-command_prepare_quota(DBus::Connection& conn, const string& config_name);
 
 XQuotaData
 command_query_quota(DBus::Connection& conn, const string& config_name);

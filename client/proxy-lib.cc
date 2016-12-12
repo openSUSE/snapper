@@ -62,7 +62,7 @@ ProxySnapperLib::createPreSnapshot(const SCD& scd)
 
 
 ProxySnapshots::const_iterator
-ProxySnapperLib::createPostSnapshot(const ProxySnapshots::const_iterator pre, const SCD& scd)
+ProxySnapperLib::createPostSnapshot(ProxySnapshots::const_iterator pre, const SCD& scd)
 {
     proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createPostSnapshot(to_lib(*pre).it, scd)));
 
@@ -98,10 +98,17 @@ ProxySnapperLib::modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& sm
 
 
 void
-ProxySnapperLib::deleteSnapshots(list<ProxySnapshots::iterator> snapshots)
+ProxySnapperLib::deleteSnapshots(list<ProxySnapshots::iterator> snapshots, bool verbose)
 {
     for (ProxySnapshots::iterator& snapshot : snapshots)
 	snapper->deleteSnapshot(to_lib(*snapshot).it);
+}
+
+
+ProxyComparison
+ProxySnapperLib::createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs, bool mount)
+{
+    return ProxyComparison(new ProxyComparisonLib(this, lhs, rhs, mount));
 }
 
 
@@ -145,6 +152,25 @@ ProxySnappersLib::getConfigs() const
 	ret.emplace(make_pair(config_info.getConfigName(), config_info.getAllValues()));
 
     return ret;
+}
+
+
+ProxyComparisonLib::ProxyComparisonLib(ProxySnapperLib* proxy_snapper, const ProxySnapshot& lhs,
+				       const ProxySnapshot& rhs, bool mount)
+    : proxy_snapper(proxy_snapper)
+{
+    comparison.reset(new Comparison(proxy_snapper->snapper, to_lib(lhs).it, to_lib(rhs).it));
+
+    // TODO file_paths stuff
+
+    // TODO handle mount
+}
+
+
+ProxySnappers
+ProxySnappers::createLib(const string& target_root)
+{
+    return ProxySnappers(new ProxySnappersLib(target_root));
 }
 
 

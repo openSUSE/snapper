@@ -253,32 +253,6 @@ command_get_xmount_point(DBus::Connection& conn, const string& config_name,
 }
 
 
-void
-command_create_xcomparison(DBus::Connection& conn, const string& config_name, unsigned int number1,
-			   unsigned int number2)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreateComparison");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name << number1 << number2;
-
-    conn.send_with_reply_and_block(call);
-}
-
-
-void
-command_delete_xcomparison(DBus::Connection& conn, const string& config_name, unsigned int number1,
-			   unsigned int number2)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "DeleteComparison");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name << number1 << number2;
-
-    conn.send_with_reply_and_block(call);
-}
-
-
 int
 operator<(const XFile& lhs, const XFile& rhs)
 {
@@ -306,18 +280,6 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
 				// so sorting is required here
 
     return files;
-}
-
-
-void
-command_prepare_quota(DBus::Connection& conn, const string& config_name)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "PrepareQuota");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name;
-
-    conn.send_with_reply_and_block(call);
 }
 
 

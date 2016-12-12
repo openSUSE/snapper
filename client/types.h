@@ -44,14 +44,6 @@ struct XConfigInfo
     string subvolume;
 
     map<string, string> raw;
-
-    template<typename Type>
-    void read(const char* name, Type& value)
-    {
-	map<string, string>::const_iterator pos = raw.find(name);
-	if (pos != raw.end())
-	    pos->second >> value;
-    }
 };
 
 

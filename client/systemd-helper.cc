@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2014-2015] Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -28,7 +29,7 @@
 #include "utils/text.h"
 #include "utils/GetOpts.h"
 
-#include "commands.h"
+#include "proxy.h"
 #include "cleanup.h"
 #include "errors.h"
 #include "misc.h"
@@ -38,48 +39,56 @@ using namespace snapper;
 using namespace std;
 
 
-bool do_timeline = false;
-bool do_cleanup = false;
-
-
 void
-timeline(DBus::Connection* conn, const map<string, string>& userdata)
+timeline(ProxySnappers* snappers, const map<string, string>& userdata)
 {
-    list<XConfigInfo> config_infos = command_list_xconfigs(*conn);
-    for (const XConfigInfo& config_info : config_infos)
+    map<string, ProxyConfig> configs = snappers->getConfigs();
+    for (const map<string, ProxyConfig>::value_type value : configs)
     {
-	map<string, string>::const_iterator pos1 = config_info.raw.find("TIMELINE_CREATE");
-	if (pos1 != config_info.raw.end() && pos1->second == "yes")
+	const map<string, string>& raw = value.second.getAllValues();
+
+	map<string, string>::const_iterator pos1 = raw.find("TIMELINE_CREATE");
+	if (pos1 != raw.end() && pos1->second == "yes")
 	{
-	    command_create_single_xsnapshot(*conn, config_info.config_name, "timeline",
-					    "timeline", userdata);
+	    ProxySnapper* snapper = snappers->getSnapper(value.first);
+
+	    SCD scd;
+	    scd.description = "timeline";
+	    scd.cleanup = "timeline";
+	    scd.userdata = userdata;
+
+	    snapper->createSingleSnapshot(scd);
 	}
     }
 }
 
 
 void
-cleanup(DBus::Connection* conn)
+cleanup(ProxySnappers* snappers)
 {
-    list<XConfigInfo> config_infos = command_list_xconfigs(*conn);
-    for (const XConfigInfo& config_info : config_infos)
+    map<string, ProxyConfig> configs = snappers->getConfigs();
+    for (const map<string, ProxyConfig>::value_type value : configs)
     {
-	map<string, string>::const_iterator pos1 = config_info.raw.find("NUMBER_CLEANUP");
-	if (pos1 != config_info.raw.end() && pos1->second == "yes")
+	const map<string, string>& raw = value.second.getAllValues();
+
+	ProxySnapper* snapper = snappers->getSnapper(value.first);
+
+	map<string, string>::const_iterator pos1 = raw.find("NUMBER_CLEANUP");
+	if (pos1 != raw.end() && pos1->second == "yes")
 	{
-	    do_cleanup_number(*conn, config_info.config_name, false);
+	    do_cleanup_number(snapper, false);
 	}
 
-	map<string, string>::const_iterator pos2 = config_info.raw.find("TIMELINE_CLEANUP");
-	if (pos2 != config_info.raw.end() && pos2->second == "yes")
+	map<string, string>::const_iterator pos2 = raw.find("TIMELINE_CLEANUP");
+	if (pos2 != raw.end() && pos2->second == "yes")
 	{
-	    do_cleanup_timeline(*conn, config_info.config_name, false);
+	    do_cleanup_timeline(snapper, false);
 	}
 
-	map<string, string>::const_iterator pos3 = config_info.raw.find("EMPTY_PRE_POST_CLEANUP");
-	if (pos3 != config_info.raw.end() && pos3->second == "yes")
+	map<string, string>::const_iterator pos3 = raw.find("EMPTY_PRE_POST_CLEANUP");
+	if (pos3 != raw.end() && pos3->second == "yes")
 	{
-	    do_cleanup_empty_pre_post(*conn, config_info.config_name, false);
+	    do_cleanup_empty_pre_post(snapper, false);
 	}
     }
 }
@@ -96,6 +105,9 @@ main(int argc, char** argv)
 	{ "userdata",		required_argument,	0,	'u' },
 	{ 0, 0, 0, 0 }
     };
+
+    bool do_timeline = false;
+    bool do_cleanup = false;
 
     map<string, string> userdata;
 
@@ -118,13 +130,13 @@ main(int argc, char** argv)
 
     try
     {
-	DBus::Connection conn(DBUS_BUS_SYSTEM);
+	ProxySnappers snappers(ProxySnappers::createDbus());
 
 	if (do_timeline)
-	    timeline(&conn, userdata);
+	    timeline(&snappers, userdata);
 
 	if (do_cleanup)
-	    cleanup(&conn);
+	    cleanup(&snappers);
     }
     catch (const DBus::ErrorException& e)
     {

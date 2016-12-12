@@ -68,7 +68,7 @@ public:
     virtual string mountFilesystemSnapshot(bool user_request) const override;
     virtual void umountFilesystemSnapshot(bool user_request) const override;
 
-    DBus::Connection* conn() const;
+    DBus::Connection& conn() const;
     const string config_name() const;
 
     ProxySnapshotsDbus* backref;
@@ -90,11 +90,13 @@ class ProxySnapshotsDbus : public ProxySnapshots
 
 public:
 
-    ProxySnapshotsDbus(ProxySnapperDbus* backref) : backref(backref) {}
+    ProxySnapshotsDbus(ProxySnapperDbus* backref)
+	: backref(backref)
+    {}
 
     void update();
 
-    DBus::Connection* conn() const;
+    DBus::Connection& conn() const;
     const string config_name() const;
 
     ProxySnapperDbus* backref;
@@ -118,11 +120,15 @@ public:
 
     virtual ProxySnapshots::const_iterator createSingleSnapshot(const SCD& scd) override;
     virtual ProxySnapshots::const_iterator createPreSnapshot(const SCD& scd) override;
-    virtual ProxySnapshots::const_iterator createPostSnapshot(const ProxySnapshots::const_iterator pre, const SCD& scd) override;
+    virtual ProxySnapshots::const_iterator createPostSnapshot(ProxySnapshots::const_iterator pre,
+							      const SCD& scd) override;
 
     virtual void modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd) override;
 
-    virtual void deleteSnapshots(list<ProxySnapshots::iterator> snapshots) override;
+    virtual void deleteSnapshots(list<ProxySnapshots::iterator> snapshots, bool verbose) override;
+
+    virtual ProxyComparison createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs,
+					     bool mount) override;
 
     virtual void syncFilesystem() const override;
 
@@ -132,7 +138,9 @@ public:
 
     virtual void prepareQuota() const override;
 
-    DBus::Connection* conn() const;
+    virtual QuotaData queryQuotaData() const override;
+
+    DBus::Connection& conn() const;
 
     ProxySnappersDbus* backref;
 
@@ -143,13 +151,13 @@ public:
 };
 
 
-class ProxySnappersDbus : public ProxySnappers
+class ProxySnappersDbus : public ProxySnappers::Impl
 {
 
 public:
 
-    ProxySnappersDbus(DBus::Connection* conn)
-	: conn(conn)
+    ProxySnappersDbus()
+	: conn(DBUS_BUS_SYSTEM)
     {}
 
     virtual void createConfig(const string& config_name, const string& subvolume,
@@ -161,11 +169,34 @@ public:
 
     virtual map<string, ProxyConfig> getConfigs() const override;
 
-    virtual std::vector<string> debug() override;
+    virtual std::vector<string> debug() const override;
 
-    DBus::Connection* conn;
+    mutable DBus::Connection conn;
 
     list<std::unique_ptr<ProxySnapperDbus>> proxy_snappers;
+
+};
+
+
+class ProxyComparisonDbus : public ProxyComparison::Impl
+{
+public:
+
+    ProxyComparisonDbus(ProxySnapperDbus* backref, const ProxySnapshot& lhs,
+			const ProxySnapshot& rhs, bool mount);
+
+    ~ProxyComparisonDbus();
+
+    virtual const Files& getFiles() const override { return files; }
+
+    ProxySnapperDbus* backref;
+
+    const ProxySnapshot& lhs;
+    const ProxySnapshot& rhs;
+
+    FilePaths file_paths;
+
+    Files files;
 
 };
 

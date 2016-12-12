@@ -27,6 +27,7 @@
 #include "proxy.h"
 
 #include <snapper/Snapper.h>
+#include <snapper/Comparison.h>
 
 
 class ProxySnapshotLib : public ProxySnapshot::Impl
@@ -98,11 +99,15 @@ public:
 
     virtual ProxySnapshots::const_iterator createSingleSnapshot(const SCD& scd) override;
     virtual ProxySnapshots::const_iterator createPreSnapshot(const SCD& scd) override;
-    virtual ProxySnapshots::const_iterator createPostSnapshot(const ProxySnapshots::const_iterator pre, const SCD& scd) override;
+    virtual ProxySnapshots::const_iterator createPostSnapshot(ProxySnapshots::const_iterator pre,
+							      const SCD& scd) override;
 
     virtual void modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd) override;
 
-    virtual void deleteSnapshots(list<ProxySnapshots::iterator> snapshots) override;
+    virtual void deleteSnapshots(list<ProxySnapshots::iterator> snapshots, bool verbose) override;
+
+    virtual ProxyComparison createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs,
+					     bool mount) override;
 
     virtual void syncFilesystem() const override { snapper->syncFilesystem(); }
 
@@ -112,6 +117,8 @@ public:
 
     virtual void prepareQuota() const override { snapper->prepareQuota(); }
 
+    virtual QuotaData queryQuotaData() const override { return snapper->queryQuotaData(); }
+
     Snapper* snapper;
 
     ProxySnapshotsLib proxy_snapshots;
@@ -119,7 +126,7 @@ public:
 };
 
 
-class ProxySnappersLib : public ProxySnappers
+class ProxySnappersLib : public ProxySnappers::Impl
 {
 
 public:
@@ -137,11 +144,28 @@ public:
 
     virtual map<string, ProxyConfig> getConfigs() const override;
 
-    virtual vector<string> debug() { return Snapper::debug(); }
+    virtual vector<string> debug() const { return Snapper::debug(); }
 
     const string target_root;
 
     list<std::unique_ptr<ProxySnapperLib>> proxy_snappers;
+
+};
+
+
+class ProxyComparisonLib : public ProxyComparison::Impl
+{
+
+public:
+
+    ProxyComparisonLib(ProxySnapperLib* proxy_snapper, const ProxySnapshot& lhs,
+		       const ProxySnapshot& rhs, bool mount);
+
+    virtual const Files& getFiles() const override { return comparison->getFiles(); }
+
+    ProxySnapper* proxy_snapper;
+
+    std::unique_ptr<Comparison> comparison;
 
 };
 

@@ -25,20 +25,20 @@
 #include <algorithm>
 
 #include <snapper/AppUtil.h>
+#include <snapper/SnapperDefines.h>
 
-#include "proxy.h"
 #include "utils/text.h"
+#include "proxy.h"
 
 
 using namespace std;
-
 
 
 string
 ProxyConfig::getSubvolume() const
 {
     string subvolume;
-    getValue("SUBVOLUME", subvolume);
+    getValue(KEY_SUBVOLUME, subvolume);
     return subvolume;
 }
 
@@ -146,6 +146,32 @@ ProxySnapshots::findNums(const string& str, const string& delim)
     }
 
     return make_pair(num1, num2);
+}
+
+
+ProxySnapshots::const_iterator
+ProxySnapshots::findPre(const_iterator post) const
+{
+    for (const_iterator it = begin(); it != end(); ++it)
+    {
+	if (it->getType() == PRE && it->getNum() == post->getPreNum())
+	    return it;
+    }
+
+    return end();
+}
+
+
+ProxySnapshots::iterator
+ProxySnapshots::findPost(iterator pre)
+{
+    for (iterator it = begin(); it != end(); ++it)
+    {
+	if (it->getType() == POST && it->getPreNum() == pre->getNum())
+	    return it;
+    }
+
+    return end();
 }
 
 

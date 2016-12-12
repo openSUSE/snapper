@@ -38,7 +38,7 @@ using namespace std;
 ProxySnapshotDbus::ProxySnapshotDbus(ProxySnapshotsDbus* backref, unsigned int num)
     : backref(backref), num(num)
 {
-    XSnapshot x = command_get_xsnapshot(*conn(), config_name(), num);
+    XSnapshot x = command_get_xsnapshot(conn(), config_name(), num);
 
     type = x.type;
     date = x.date;
@@ -68,7 +68,7 @@ ProxySnapshotDbus::mountFilesystemSnapshot(bool user_request) const
     DBus::Hoho hoho(call);
     hoho << config_name() << num << user_request;
 
-    DBus::Message reply = conn()->send_with_reply_and_block(call);
+    DBus::Message reply = conn().send_with_reply_and_block(call);
 
     string mount_point;
 
@@ -87,11 +87,11 @@ ProxySnapshotDbus::umountFilesystemSnapshot(bool user_request) const
     DBus::Hoho hoho(call);
     hoho << config_name() << getNum() << user_request;
 
-    conn()->send_with_reply_and_block(call);
+    conn().send_with_reply_and_block(call);
 }
 
 
-DBus::Connection*
+DBus::Connection&
 ProxySnapshotDbus::conn() const
 {
     return backref->conn();
@@ -105,7 +105,7 @@ ProxySnapshotDbus::config_name() const
 }
 
 
-DBus::Connection*
+DBus::Connection&
 ProxySnapshotsDbus::conn() const
 {
     return backref->conn();
@@ -122,7 +122,7 @@ ProxySnapshotsDbus::config_name() const
 ProxyConfig
 ProxySnapperDbus::getConfig() const
 {
-    XConfigInfo tmp = command_get_xconfig(*conn(), config_name);
+    XConfigInfo tmp = command_get_xconfig(conn(), config_name);
 
     return ProxyConfig(tmp.raw);
 }
@@ -136,7 +136,7 @@ ProxySnapperDbus::setConfig(const ProxyConfig& proxy_config)
     DBus::Hoho hoho(call);
     hoho << config_name << proxy_config.getAllValues();
 
-    conn()->send_with_reply_and_block(call);
+    conn().send_with_reply_and_block(call);
 }
 
 
@@ -148,7 +148,7 @@ ProxySnapperDbus::setupQuota()
     DBus::Hoho hoho(call);
     hoho << config_name;
 
-    conn()->send_with_reply_and_block(call);
+    conn().send_with_reply_and_block(call);
 }
 
 
@@ -160,14 +160,21 @@ ProxySnapperDbus::prepareQuota() const
     DBus::Hoho hoho(call);
     hoho << config_name;
 
-    conn()->send_with_reply_and_block(call);
+    conn().send_with_reply_and_block(call);
+}
+
+
+QuotaData
+ProxySnapperDbus::queryQuotaData() const
+{
+    // TODO
 }
 
 
 ProxySnapshots::const_iterator
 ProxySnapperDbus::createSingleSnapshot(const SCD& scd)
 {
-    unsigned int num = command_create_single_xsnapshot(*conn(), config_name, scd.description,
+    unsigned int num = command_create_single_xsnapshot(conn(), config_name, scd.description,
 						       scd.cleanup, scd.userdata);
 
     proxy_snapshots.emplace_back(new ProxySnapshotDbus(&proxy_snapshots, num));
@@ -184,7 +191,7 @@ ProxySnapperDbus::createPreSnapshot(const SCD& scd)
     DBus::Hoho hoho(call);
     hoho << config_name << scd.description << scd.cleanup << scd.userdata;
 
-    DBus::Message reply = conn()->send_with_reply_and_block(call);
+    DBus::Message reply = conn().send_with_reply_and_block(call);
 
     unsigned int num;
 
@@ -198,14 +205,14 @@ ProxySnapperDbus::createPreSnapshot(const SCD& scd)
 
 
 ProxySnapshots::const_iterator
-ProxySnapperDbus::createPostSnapshot(const ProxySnapshots::const_iterator pre, const SCD& scd)
+ProxySnapperDbus::createPostSnapshot(ProxySnapshots::const_iterator pre, const SCD& scd)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreatePostSnapshot");
 
     DBus::Hoho hoho(call);
     hoho << config_name << pre->getNum() << scd.description << scd.cleanup << scd.userdata;
 
-    DBus::Message reply = conn()->send_with_reply_and_block(call);
+    DBus::Message reply = conn().send_with_reply_and_block(call);
 
     unsigned int num;
 
@@ -226,18 +233,27 @@ ProxySnapperDbus::modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& s
     DBus::Hoho hoho(call);
     hoho << config_name << snapshot->getNum() << smd.description << smd.cleanup << smd.userdata;
 
-    conn()->send_with_reply_and_block(call);
+    conn().send_with_reply_and_block(call);
 }
 
 
 void
-ProxySnapperDbus::deleteSnapshots(list<ProxySnapshots::iterator> snapshots)
+ProxySnapperDbus::deleteSnapshots(list<ProxySnapshots::iterator> snapshots, bool verbose)
 {
     list<unsigned int> nums;
     for (const ProxySnapshots::iterator& proxy_snapshot : snapshots)
 	nums.push_back(proxy_snapshot->getNum());
 
-    command_delete_xsnapshots(*conn(), config_name, nums, false);
+    command_delete_xsnapshots(conn(), config_name, nums, verbose);
+
+    // TODO remove from internal list
+}
+
+
+ProxyComparison
+ProxySnapperDbus::createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs, bool mount)
+{
+    return ProxyComparison(new ProxyComparisonDbus(this, lhs, rhs, mount));
 }
 
 
@@ -249,7 +265,7 @@ ProxySnapperDbus::syncFilesystem() const
     DBus::Hoho hoho(call);
     hoho << config_name;
 
-    conn()->send_with_reply_and_block(call);
+    conn().send_with_reply_and_block(call);
 }
 
 
@@ -258,7 +274,7 @@ ProxySnapshotsDbus::update()
 {
     proxy_snapshots.clear();
 
-    XSnapshots x = command_list_xsnapshots(*conn(), config_name());
+    XSnapshots x = command_list_xsnapshots(conn(), config_name());
     for (XSnapshots::const_iterator it = x.begin(); it != x.end(); ++it)
 	proxy_snapshots.push_back(new ProxySnapshotDbus(this, it->getType(), it->getNum(), it->getDate(),
 							it->getUid(), it->getPreNum(), it->getDescription(),
@@ -275,7 +291,7 @@ ProxySnapperDbus::getSnapshots()
 }
 
 
-DBus::Connection*
+DBus::Connection&
 ProxySnapperDbus::conn() const
 {
     return backref->conn;
@@ -291,7 +307,7 @@ ProxySnappersDbus::createConfig(const string& config_name, const string& subvolu
     DBus::Hoho hoho(call);
     hoho << config_name << subvolume << fstype << template_name;
 
-    conn->send_with_reply_and_block(call);
+    conn.send_with_reply_and_block(call);
 }
 
 
@@ -303,7 +319,7 @@ ProxySnappersDbus::deleteConfig(const string& config_name)
     DBus::Hoho hoho(call);
     hoho << config_name;
 
-    conn->send_with_reply_and_block(call);
+    conn.send_with_reply_and_block(call);
 }
 
 
@@ -327,7 +343,7 @@ ProxySnappersDbus::getConfigs() const
 {
    map<string, ProxyConfig> ret;
 
-   list<XConfigInfo> config_infos = command_list_xconfigs(*conn);
+   list<XConfigInfo> config_infos = command_list_xconfigs(conn);
    for (XConfigInfo& x : config_infos)
        ret.emplace(make_pair(x.config_name, x.raw));
 
@@ -336,11 +352,11 @@ ProxySnappersDbus::getConfigs() const
 
 
 vector<string>
-ProxySnappersDbus::debug()
+ProxySnappersDbus::debug() const
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "Debug");
 
-    DBus::Message reply = conn->send_with_reply_and_block(call);
+    DBus::Message reply = conn.send_with_reply_and_block(call);
 
     vector<string> lines;
 
@@ -348,4 +364,67 @@ ProxySnappersDbus::debug()
     hihi >> lines;
 
     return lines;
+}
+
+
+ProxyComparisonDbus::ProxyComparisonDbus(ProxySnapperDbus* backref, const ProxySnapshot& lhs,
+					 const ProxySnapshot& rhs, bool mount)
+    : backref(backref), lhs(lhs), rhs(rhs), files(&file_paths)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreateComparison");
+
+    DBus::Hoho hoho(call);
+    hoho << backref->config_name << lhs.getNum() << rhs.getNum();
+
+    backref->conn().send_with_reply_and_block(call);
+
+    // TODO file_paths stuff
+
+    if (mount)
+    {
+	if (!lhs.isCurrent())
+	    file_paths.pre_path = command_mount_xsnapshots(backref->conn(), backref->config_name,
+							   lhs.getNum(), false);
+	else
+	    file_paths.pre_path = file_paths.system_path;
+
+	if (!rhs.isCurrent())
+	    file_paths.post_path = command_mount_xsnapshots(backref->conn(), backref->config_name,
+							    rhs.getNum(), false);
+	else
+	    file_paths.post_path = file_paths.system_path;
+    }
+
+    // TODO, use less tmps
+
+    list<XFile> tmp1 = command_get_xfiles(backref->conn(), backref->config_name, lhs.getNum(),
+					  rhs.getNum());
+
+    vector<File> tmp2;
+
+    for (list<XFile>::const_iterator it = tmp1.begin(); it != tmp1.end(); ++it)
+    {
+	File file(&file_paths, it->name, it->status);
+	tmp2.push_back(file);
+    }
+
+    files = Files(&file_paths, tmp2);
+}
+
+
+ProxyComparisonDbus::~ProxyComparisonDbus()
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "DeleteComparison");
+
+    DBus::Hoho hoho(call);
+    hoho << backref->config_name << lhs.getNum() << rhs.getNum();
+
+    backref->conn().send_with_reply_and_block(call);
+}
+
+
+ProxySnappers
+ProxySnappers::createDbus()
+{
+    return ProxySnappers(new ProxySnappersDbus());
 }
