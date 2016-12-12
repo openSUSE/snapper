@@ -25,10 +25,10 @@
 
 
 void
-do_cleanup_number(ProxySnapper* proxy_snapper, bool verbose);
+do_cleanup_number(ProxySnapper* snapper, bool verbose);
 
 void
-do_cleanup_timeline(ProxySnapper* proxy_snapper, bool verbose);
+do_cleanup_timeline(ProxySnapper* snapper, bool verbose);
 
 void
-do_cleanup_empty_pre_post(ProxySnapper* proxy_snapper, bool verbose);
+do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose);

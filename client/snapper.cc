@@ -766,7 +766,7 @@ command_delete(ProxySnappers* snappers, ProxySnapper* snapper)
 
     ProxySnapshots& snapshots = snapper->getSnapshots();
 
-    list<ProxySnapshots::iterator> nums;
+    vector<ProxySnapshots::iterator> nums;
 
     while (getopts.hasArgs())
     {
@@ -1181,9 +1181,7 @@ command_rollback(ProxySnappers* snappers, ProxySnapper* snapper)
     }
 
     bool print_number = false;
-    string description;
-    string cleanup;
-    map<string, string> userdata;
+    SCD scd;
 
     GetOpts::parsed_opts::const_iterator opt;
 
@@ -1191,13 +1189,13 @@ command_rollback(ProxySnappers* snappers, ProxySnapper* snapper)
 	print_number = true;
 
     if ((opt = opts.find("description")) != opts.end())
-	description = opt->second;
+	scd.description = opt->second;
 
     if ((opt = opts.find("cleanup-algorithm")) != opts.end())
-	cleanup = opt->second;
+	scd.cleanup = opt->second;
 
     if ((opt = opts.find("userdata")) != opts.end())
-	userdata = read_userdata(opt->second);
+	scd.userdata = read_userdata(opt->second);
 
     ProxyConfig config = snapper->getConfig();
 
@@ -1216,55 +1214,63 @@ command_rollback(ProxySnappers* snappers, ProxySnapper* snapper)
         exit(EXIT_FAILURE);
     }
 
-    /*
-    unsigned int num1;
-    unsigned int num2;
+    ProxySnapshots& snapshots = snapper->getSnapshots();
+
+    ProxySnapshots::const_iterator snapshot1 = snapshots.end();
+    ProxySnapshots::const_iterator snapshot2 = snapshots.end();
 
     if (getopts.numArgs() == 0)
     {
 	if (!quiet)
 	    cout << _("Creating read-only snapshot of default subvolume.") << flush;
-	num1 = command_create_single_xsnapshot_of_default(*conn, config_name, true,
-							  description, cleanup,
-							  userdata);
-	if (!quiet)
-	    cout << " " << sformat(_("(Snapshot %d.)"), num1) << endl;
+
+	scd.read_only = true;
+	snapshot1 = snapper->createSingleSnapshotOfDefault(scd);
 
 	if (!quiet)
-	    cout << _("Creating read-write snapshot of current subvolume.") <<flush;
-	num2 = command_create_single_xsnapshot_v2(*conn, config_name, 0, false, description,
-						  cleanup, userdata);
+	    cout << " " << sformat(_("(Snapshot %d.)"), snapshot1->getNum()) << endl;
+
 	if (!quiet)
-	    cout << " " << sformat(_("(Snapshot %d.)"), num2) << endl;
+	    cout << _("Creating read-write snapshot of current subvolume.") << flush;
+
+	scd.read_only = false;
+	snapshot2 = snapper->createSingleSnapshot(snapshots.getCurrent(), scd);
+
+	if (!quiet)
+	    cout << " " << sformat(_("(Snapshot %d.)"), snapshot2->getNum()) << endl;
     }
     else
     {
-	unsigned int tmp = read_num(getopts.popArg());
+	ProxySnapshots::const_iterator tmp = snapshots.findNum(getopts.popArg());
 
 	if (!quiet)
 	    cout << _("Creating read-only snapshot of current system.") << flush;
-	num1 = command_create_single_xsnapshot(*conn, config_name, description,
-					       cleanup, userdata);
-	if (!quiet)
-	    cout << " " << sformat(_("(Snapshot %d.)"), num1) << endl;
+
+	snapshot1 = snapper->createSingleSnapshot(scd);
 
 	if (!quiet)
-	    cout << sformat(_("Creating read-write snapshot of snapshot %d."), tmp) << flush;
-	num2 = command_create_single_xsnapshot_v2(*conn, config_name, tmp, false,
-						  description, cleanup, userdata);
+	    cout << " " << sformat(_("(Snapshot %d.)"), snapshot1->getNum()) << endl;
+
 	if (!quiet)
-	    cout << " " << sformat(_("(Snapshot %d.)"), num2) << endl;
+	    cout << sformat(_("Creating read-write snapshot of snapshot %d."), tmp->getNum()) << flush;
+
+	scd.read_only = false;
+	snapshot2 = snapper->createSingleSnapshot(tmp, scd);
+
+	if (!quiet)
+	    cout << " " << sformat(_("(Snapshot %d.)"), snapshot2->getNum()) << endl;
     }
 
     if (!quiet)
-	cout << sformat(_("Setting default subvolume to snapshot %d."), num2) << endl;
-    filesystem->setDefault(num2);
+	cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot2->getNum()) << endl;
 
-    Hooks::rollback(filesystem->snapshotDir(num1), filesystem->snapshotDir(num2));
+    filesystem->setDefault(snapshot2->getNum());
+
+    Hooks::rollback(filesystem->snapshotDir(snapshot1->getNum()),
+		    filesystem->snapshotDir(snapshot2->getNum()));
 
     if (print_number)
-	cout << num2 << endl;
-    */
+	cout << snapshot2->getNum() << endl;
 }
 
 #endif
@@ -1632,7 +1638,6 @@ main(int argc, char** argv)
 	    (*cmd->cmd_func)(&snappers, snappers.getSnapper(config_name));
 	else
 	    (*cmd->cmd_func)(&snappers, nullptr);
-
     }
     catch (const DBus::ErrorException& e)
     {

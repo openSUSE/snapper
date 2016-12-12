@@ -179,11 +179,7 @@ Cleaner::remove(const list<ProxySnapshots::iterator>& tmp)
 {
     for (list<ProxySnapshots::iterator>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
     {
-	cout << (*it)->getNum() << endl;
-
 	snapper->deleteSnapshots({ *it }, verbose);
-
-	// snapshots.erase(*it); // TODO handle in proxy
     }
 }
 

@@ -53,6 +53,24 @@ ProxySnapperLib::createSingleSnapshot(const SCD& scd)
 
 
 ProxySnapshots::const_iterator
+ProxySnapperLib::createSingleSnapshot(ProxySnapshots::const_iterator parent, const SCD& scd)
+{
+    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createSingleSnapshot(to_lib(*parent).it, scd)));
+
+    return --proxy_snapshots.end();
+}
+
+
+ProxySnapshots::const_iterator
+ProxySnapperLib::createSingleSnapshotOfDefault(const SCD& scd)
+{
+    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createSingleSnapshotOfDefault(scd)));
+
+    return --proxy_snapshots.end();
+}
+
+
+ProxySnapshots::const_iterator
 ProxySnapperLib::createPreSnapshot(const SCD& scd)
 {
     proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createPreSnapshot(scd)));
@@ -98,7 +116,7 @@ ProxySnapperLib::modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& sm
 
 
 void
-ProxySnapperLib::deleteSnapshots(list<ProxySnapshots::iterator> snapshots, bool verbose)
+ProxySnapperLib::deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, bool verbose)
 {
     for (ProxySnapshots::iterator& snapshot : snapshots)
 	snapper->deleteSnapshot(to_lib(*snapshot).it);
@@ -161,9 +179,14 @@ ProxyComparisonLib::ProxyComparisonLib(ProxySnapperLib* proxy_snapper, const Pro
 {
     comparison.reset(new Comparison(proxy_snapper->snapper, to_lib(lhs).it, to_lib(rhs).it));
 
-    // TODO file_paths stuff
+    if (mount)
+    {
+	if (!lhs.isCurrent())
+	    lhs.mountFilesystemSnapshot(false);
 
-    // TODO handle mount
+        if (!rhs.isCurrent())
+	    rhs.mountFilesystemSnapshot(false);
+    }
 }
 
 

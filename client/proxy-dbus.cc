@@ -184,6 +184,32 @@ ProxySnapperDbus::createSingleSnapshot(const SCD& scd)
 
 
 ProxySnapshots::const_iterator
+ProxySnapperDbus::createSingleSnapshot(ProxySnapshots::const_iterator parent, const SCD& scd)
+{
+    unsigned int num = command_create_single_xsnapshot_v2(conn(), config_name, parent->getNum(),
+							  scd.read_only, scd.description, scd.cleanup,
+							  scd.userdata);
+
+    proxy_snapshots.emplace_back(new ProxySnapshotDbus(&proxy_snapshots, num));
+
+    return --proxy_snapshots.end();
+}
+
+
+ProxySnapshots::const_iterator
+ProxySnapperDbus::createSingleSnapshotOfDefault(const SCD& scd)
+{
+    unsigned int num = command_create_single_xsnapshot_of_default(conn(), config_name, scd.read_only,
+								  scd.description, scd.cleanup,
+								  scd.userdata);
+
+    proxy_snapshots.emplace_back(new ProxySnapshotDbus(&proxy_snapshots, num));
+
+    return --proxy_snapshots.end();
+}
+
+
+ProxySnapshots::const_iterator
 ProxySnapperDbus::createPreSnapshot(const SCD& scd)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreatePreSnapshot");
@@ -238,7 +264,7 @@ ProxySnapperDbus::modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& s
 
 
 void
-ProxySnapperDbus::deleteSnapshots(list<ProxySnapshots::iterator> snapshots, bool verbose)
+ProxySnapperDbus::deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, bool verbose)
 {
     list<unsigned int> nums;
     for (const ProxySnapshots::iterator& proxy_snapshot : snapshots)
@@ -246,7 +272,9 @@ ProxySnapperDbus::deleteSnapshots(list<ProxySnapshots::iterator> snapshots, bool
 
     command_delete_xsnapshots(conn(), config_name, nums, verbose);
 
-    // TODO remove from internal list
+    ProxySnapshots& proxy_snapshots = getSnapshots();
+    for (ProxySnapshots::iterator& proxy_snapshot : snapshots)
+	proxy_snapshots.erase(proxy_snapshot);
 }
 
 
@@ -378,7 +406,7 @@ ProxyComparisonDbus::ProxyComparisonDbus(ProxySnapperDbus* backref, const ProxyS
 
     backref->conn().send_with_reply_and_block(call);
 
-    // TODO file_paths stuff
+    file_paths.system_path = command_get_xmount_point(backref->conn(), backref->config_name, 0);
 
     if (mount)
     {

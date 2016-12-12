@@ -119,13 +119,16 @@ public:
     virtual void setConfig(const ProxyConfig& proxy_config) override;
 
     virtual ProxySnapshots::const_iterator createSingleSnapshot(const SCD& scd) override;
+    virtual ProxySnapshots::const_iterator createSingleSnapshot(ProxySnapshots::const_iterator parent,
+								const SCD& scd) override;
+    virtual ProxySnapshots::const_iterator createSingleSnapshotOfDefault(const SCD& scd) override;
     virtual ProxySnapshots::const_iterator createPreSnapshot(const SCD& scd) override;
     virtual ProxySnapshots::const_iterator createPostSnapshot(ProxySnapshots::const_iterator pre,
 							      const SCD& scd) override;
 
     virtual void modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd) override;
 
-    virtual void deleteSnapshots(list<ProxySnapshots::iterator> snapshots, bool verbose) override;
+    virtual void deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, bool verbose) override;
 
     virtual ProxyComparison createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs,
 					     bool mount) override;
@@ -169,7 +172,7 @@ public:
 
     virtual map<string, ProxyConfig> getConfigs() const override;
 
-    virtual std::vector<string> debug() const override;
+    virtual vector<string> debug() const override;
 
     mutable DBus::Connection conn;
 
@@ -190,6 +193,8 @@ public:
     virtual const Files& getFiles() const override { return files; }
 
     ProxySnapperDbus* backref;
+
+private:
 
     const ProxySnapshot& lhs;
     const ProxySnapshot& rhs;

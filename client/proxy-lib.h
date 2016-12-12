@@ -50,12 +50,14 @@ public:
 
     virtual bool isCurrent() const override { return it->isCurrent(); }
 
-    virtual string mountFilesystemSnapshot(bool user_request) const override {
+    virtual string mountFilesystemSnapshot(bool user_request) const override
+    {
 	it->mountFilesystemSnapshot(user_request);
 	return it->snapshotDir();
     }
 
-    virtual void umountFilesystemSnapshot(bool user_request) const override {
+    virtual void umountFilesystemSnapshot(bool user_request) const override
+    {
 	it->umountFilesystemSnapshot(user_request);
     }
 
@@ -98,13 +100,16 @@ public:
     virtual void setConfig(const ProxyConfig& proxy_config) override;
 
     virtual ProxySnapshots::const_iterator createSingleSnapshot(const SCD& scd) override;
+    virtual ProxySnapshots::const_iterator createSingleSnapshot(ProxySnapshots::const_iterator parent,
+								const SCD& scd) override;
+    virtual ProxySnapshots::const_iterator createSingleSnapshotOfDefault(const SCD& scd) override;
     virtual ProxySnapshots::const_iterator createPreSnapshot(const SCD& scd) override;
     virtual ProxySnapshots::const_iterator createPostSnapshot(ProxySnapshots::const_iterator pre,
 							      const SCD& scd) override;
 
     virtual void modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd) override;
 
-    virtual void deleteSnapshots(list<ProxySnapshots::iterator> snapshots, bool verbose) override;
+    virtual void deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, bool verbose) override;
 
     virtual ProxyComparison createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs,
 					     bool mount) override;
@@ -120,6 +125,8 @@ public:
     virtual QuotaData queryQuotaData() const override { return snapper->queryQuotaData(); }
 
     Snapper* snapper;
+
+private:
 
     ProxySnapshotsLib proxy_snapshots;
 
@@ -146,6 +153,8 @@ public:
 
     virtual vector<string> debug() const { return Snapper::debug(); }
 
+private:
+
     const string target_root;
 
     list<std::unique_ptr<ProxySnapperLib>> proxy_snappers;
@@ -165,12 +174,15 @@ public:
 
     ProxySnapper* proxy_snapper;
 
+private:
+
     std::unique_ptr<Comparison> comparison;
 
 };
 
 
-const ProxySnapshotLib& to_lib(const ProxySnapshot& proxy_snapshot);
+const ProxySnapshotLib&
+to_lib(const ProxySnapshot& proxy_snapshot);
 
 
 #endif

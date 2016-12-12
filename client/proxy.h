@@ -82,7 +82,7 @@ public:
 
     bool getValue(const string& key, string& value) const;
 
-protected:
+private:
 
     map<string, string> values;
 
@@ -105,13 +105,11 @@ public:
 
     bool isCurrent() const { return impl->isCurrent(); }
 
-    void mountFilesystemSnapshot(bool user_request) const {
-	impl->mountFilesystemSnapshot(user_request);
-    }
+    void mountFilesystemSnapshot(bool user_request) const
+	{ impl->mountFilesystemSnapshot(user_request); }
 
-    void umountFilesystemSnapshot(bool user_request) const {
-	impl->umountFilesystemSnapshot(user_request);
-    }
+    void umountFilesystemSnapshot(bool user_request) const
+	{ impl->umountFilesystemSnapshot(user_request); }
 
 public:
 
@@ -167,6 +165,8 @@ public:
     iterator end() { return proxy_snapshots.end(); }
     const_iterator end() const { return proxy_snapshots.end(); }
 
+    const_iterator getCurrent() const { return proxy_snapshots.begin(); }
+
     iterator find(unsigned int i);
     const_iterator find(unsigned int i) const;
 
@@ -181,6 +181,8 @@ public:
     const_iterator findPost(const_iterator pre) const;
 
     void emplace_back(ProxySnapshot::Impl* value) { proxy_snapshots.emplace_back(value); }
+
+    void erase(iterator it) { proxy_snapshots.erase(it); }
 
 protected:
 
@@ -207,14 +209,19 @@ public:
     virtual void setConfig(const ProxyConfig& proxy_config) = 0;
 
     virtual ProxySnapshots::const_iterator createSingleSnapshot(const SCD& scd) = 0;
+    virtual ProxySnapshots::const_iterator createSingleSnapshot(ProxySnapshots::const_iterator parent,
+								const SCD& scd) = 0;
+    virtual ProxySnapshots::const_iterator createSingleSnapshotOfDefault(const SCD& scd) = 0;
     virtual ProxySnapshots::const_iterator createPreSnapshot(const SCD& scd) = 0;
-    virtual ProxySnapshots::const_iterator createPostSnapshot(ProxySnapshots::const_iterator pre, const SCD& scd) = 0;
+    virtual ProxySnapshots::const_iterator createPostSnapshot(ProxySnapshots::const_iterator pre,
+							      const SCD& scd) = 0;
 
     virtual void modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd) = 0;
 
-    virtual void deleteSnapshots(list<ProxySnapshots::iterator> snapshots, bool verbose) = 0;
+    virtual void deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, bool verbose) = 0;
 
-    virtual ProxyComparison createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs, bool mount) = 0;
+    virtual ProxyComparison createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs,
+					     bool mount) = 0;
 
     virtual void syncFilesystem() const = 0;
 
@@ -237,8 +244,8 @@ public:
     static ProxySnappers createDbus();
     static ProxySnappers createLib(const string& target_root);
 
-    void createConfig(const string& config_name, const string& subvolume,
-		      const string& fstype, const string& template_name)
+    void createConfig(const string& config_name, const string& subvolume, const string& fstype,
+		      const string& template_name)
 	{ return impl->createConfig(config_name, subvolume, fstype, template_name); }
 
     void deleteConfig(const string& config_name)
@@ -250,7 +257,7 @@ public:
     map<string, ProxyConfig> getConfigs() const
 	{ return impl->getConfigs(); }
 
-    std::vector<string> debug() const
+    vector<string> debug() const
 	{ return impl->debug(); }
 
 public:
@@ -271,7 +278,7 @@ public:
 
 	virtual map<string, ProxyConfig> getConfigs() const = 0;
 
-	virtual std::vector<string> debug() const = 0;
+	virtual vector<string> debug() const = 0;
 
     };
 
