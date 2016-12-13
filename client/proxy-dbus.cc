@@ -206,7 +206,7 @@ ProxySnapperDbus::modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& s
 void
 ProxySnapperDbus::deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, bool verbose)
 {
-    list<unsigned int> nums;
+    vector<unsigned int> nums;
     for (const ProxySnapshots::iterator& proxy_snapshot : snapshots)
 	nums.push_back(proxy_snapshot->getNum());
 
@@ -286,7 +286,7 @@ ProxySnappersDbus::getSnapper(const string& config_name)
     }
 
     ProxySnapperDbus* ret = new ProxySnapperDbus(this, config_name);
-    proxy_snappers.push_back(unique_ptr<ProxySnapperDbus>(ret));
+    proxy_snappers.emplace_back(ret);
     return ret;
 }
 
@@ -296,7 +296,7 @@ ProxySnappersDbus::getConfigs() const
 {
     map<string, ProxyConfig> ret;
 
-    list<XConfigInfo> config_infos = command_list_xconfigs(conn);
+    vector<XConfigInfo> config_infos = command_list_xconfigs(conn);
     for (XConfigInfo& x : config_infos)
 	ret.emplace(make_pair(x.config_name, x.raw));
 
@@ -334,18 +334,13 @@ ProxyComparisonDbus::ProxyComparisonDbus(ProxySnapperDbus* backref, const ProxyS
 	    file_paths.post_path = file_paths.system_path;
     }
 
-    // TODO, use less tmps
-
-    list<XFile> tmp1 = command_get_xfiles(backref->conn(), backref->config_name, lhs.getNum(),
-					  rhs.getNum());
+    vector<XFile> tmp1 = command_get_xfiles(backref->conn(), backref->config_name, lhs.getNum(),
+					    rhs.getNum());
 
     vector<File> tmp2;
 
-    for (list<XFile>::const_iterator it = tmp1.begin(); it != tmp1.end(); ++it)
-    {
-	File file(&file_paths, it->name, it->status);
-	tmp2.push_back(file);
-    }
+    for (const XFile& xfile : tmp1)
+	tmp2.emplace_back(&file_paths, xfile.name, xfile.status);
 
     files = Files(&file_paths, tmp2);
 }

@@ -68,6 +68,8 @@ public:
     DBus::Connection& conn() const;
     const string config_name() const;
 
+private:
+
     ProxySnapshotsDbus* backref;
 
     SnapshotType type;
@@ -95,6 +97,8 @@ public:
 
     DBus::Connection& conn() const;
     const string config_name() const;
+
+private:
 
     ProxySnapperDbus* backref;
 
@@ -142,7 +146,11 @@ public:
 
     DBus::Connection& conn() const;
 
+private:
+
     ProxySnappersDbus* backref;
+
+public:
 
     string config_name;
 
@@ -192,9 +200,9 @@ public:
     DBus::Connection& conn() const;
     const string config_name() const;
 
-    ProxySnapperDbus* backref;
-
 private:
+
+    ProxySnapperDbus* backref;
 
     const ProxySnapshot& lhs;
     const ProxySnapshot& rhs;
