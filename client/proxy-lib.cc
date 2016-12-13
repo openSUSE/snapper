@@ -29,10 +29,17 @@
 using namespace std;
 
 
-void
-ProxySnapperLib::setConfigInfo(const map<string, string>& raw)
+ProxyConfig
+ProxySnapperLib::getConfig() const
 {
-    snapper->setConfigInfo(raw);
+    return ProxyConfig(snapper->getConfigInfo().getAllValues());
+}
+
+
+void
+ProxySnapperLib::setConfig(const ProxyConfig& proxy_config)
+{
+    snapper->setConfigInfo(proxy_config.getAllValues());
 }
 
 
@@ -40,6 +47,24 @@ ProxySnapshots::const_iterator
 ProxySnapperLib::createSingleSnapshot(const SCD& scd)
 {
     proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createSingleSnapshot(scd)));
+
+    return --proxy_snapshots.end();
+}
+
+
+ProxySnapshots::const_iterator
+ProxySnapperLib::createSingleSnapshot(ProxySnapshots::const_iterator parent, const SCD& scd)
+{
+    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createSingleSnapshot(to_lib(*parent).it, scd)));
+
+    return --proxy_snapshots.end();
+}
+
+
+ProxySnapshots::const_iterator
+ProxySnapperLib::createSingleSnapshotOfDefault(const SCD& scd)
+{
+    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createSingleSnapshotOfDefault(scd)));
 
     return --proxy_snapshots.end();
 }
@@ -55,11 +80,9 @@ ProxySnapperLib::createPreSnapshot(const SCD& scd)
 
 
 ProxySnapshots::const_iterator
-ProxySnapperLib::createPostSnapshot(const ProxySnapshots::const_iterator pre, const SCD& scd)
+ProxySnapperLib::createPostSnapshot(ProxySnapshots::const_iterator pre, const SCD& scd)
 {
-    const ProxySnapshotLib& x = dynamic_cast<const ProxySnapshotLib&>(pre->get_impl());
-
-    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createPostSnapshot(x.it, scd)));
+    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createPostSnapshot(to_lib(*pre).it, scd)));
 
     return --proxy_snapshots.end();
 }
@@ -88,21 +111,22 @@ ProxySnapperLib::getSnapshots()
 void
 ProxySnapperLib::modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd)
 {
-    ProxySnapshotLib& x = dynamic_cast<ProxySnapshotLib&>(snapshot->get_impl());
-
-    snapper->modifySnapshot(x.it, smd);
+    snapper->modifySnapshot(to_lib(*snapshot).it, smd);
 }
 
 
 void
-ProxySnapperLib::deleteSnapshots(list<ProxySnapshots::iterator> snapshots)
+ProxySnapperLib::deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, bool verbose)
 {
     for (ProxySnapshots::iterator& snapshot : snapshots)
-    {
-	ProxySnapshotLib& x = dynamic_cast<ProxySnapshotLib&>(snapshot->get_impl());
+	snapper->deleteSnapshot(to_lib(*snapshot).it);
+}
 
-	snapper->deleteSnapshot(x.it);
-    }
+
+ProxyComparison
+ProxySnapperLib::createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs, bool mount)
+{
+    return ProxyComparison(new ProxyComparisonLib(this, lhs, rhs, mount));
 }
 
 
@@ -133,4 +157,48 @@ ProxySnappersLib::getSnapper(const string& config_name)
     ProxySnapperLib* ret = new ProxySnapperLib(config_name);
     proxy_snappers.push_back(unique_ptr<ProxySnapperLib>(ret));
     return ret;
+}
+
+
+map<string, ProxyConfig>
+ProxySnappersLib::getConfigs() const
+{
+    map<string, ProxyConfig> ret;
+
+    list<ConfigInfo> config_infos = Snapper::getConfigs(target_root);
+    for (const ConfigInfo& config_info : config_infos)
+	ret.emplace(make_pair(config_info.getConfigName(), config_info.getAllValues()));
+
+    return ret;
+}
+
+
+ProxyComparisonLib::ProxyComparisonLib(ProxySnapperLib* proxy_snapper, const ProxySnapshot& lhs,
+				       const ProxySnapshot& rhs, bool mount)
+    : proxy_snapper(proxy_snapper)
+{
+    comparison.reset(new Comparison(proxy_snapper->snapper, to_lib(lhs).it, to_lib(rhs).it));
+
+    if (mount)
+    {
+	if (!lhs.isCurrent())
+	    lhs.mountFilesystemSnapshot(false);
+
+        if (!rhs.isCurrent())
+	    rhs.mountFilesystemSnapshot(false);
+    }
+}
+
+
+ProxySnappers
+ProxySnappers::createLib(const string& target_root)
+{
+    return ProxySnappers(new ProxySnappersLib(target_root));
+}
+
+
+const ProxySnapshotLib&
+to_lib(const ProxySnapshot& proxy_snapshot)
+{
+    return dynamic_cast<const ProxySnapshotLib&>(proxy_snapshot.get_impl());
 }

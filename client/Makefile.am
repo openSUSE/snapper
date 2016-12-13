@@ -30,6 +30,9 @@ systemd_helper_SOURCES =		\
 	types.cc	types.h		\
 	commands.cc	commands.h	\
 	cleanup.cc	cleanup.h	\
+	proxy.cc	proxy.h		\
+	proxy-dbus.cc	proxy-dbus.h	\
+	proxy-lib.cc	proxy-lib.h	\
 	misc.cc		misc.h		\
 	errors.cc	errors.h
 

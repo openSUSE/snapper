@@ -25,19 +25,22 @@
 
 
 #include <memory>
-#include <list>
 #include <vector>
+#include <list>
+#include <map>
 
 #include <snapper/Snapshot.h>
+#include <snapper/Snapper.h>
+#include <snapper/File.h>
 
 
 using namespace snapper;
 
 
 /**
- * The four proxy classes here allow clients, so far only the snapper command
- * line interface, to work with and without DBus in a transparent way by
- * providing the same interface in both cases.
+ * The proxy classes here allow clients, so far only the snapper command line
+ * interface, to work with and without DBus in a transparent way by providing
+ * the same interface in both cases.
  *
  * The main idea for providing the same interface is to have an abstract
  * class, e.g. ProxySnapper, and two concrete implementation ProxySnapperDbus
@@ -62,10 +65,28 @@ using namespace snapper;
  */
 
 
-// TODO add namespace proxy and shorter class names?
-
 // TODO maybe unique error handling, e.g. catch dbus exceptions and throw
 // snapper or new exceptions
+
+
+class ProxyConfig
+{
+
+public:
+
+    ProxyConfig(const map<string, string>& values) : values(values) {}
+
+    const map<string, string>& getAllValues() const { return values; }
+
+    string getSubvolume() const;
+
+    bool getValue(const string& key, string& value) const;
+
+private:
+
+    map<string, string> values;
+
+};
 
 
 class ProxySnapshot
@@ -84,13 +105,11 @@ public:
 
     bool isCurrent() const { return impl->isCurrent(); }
 
-    void mountFilesystemSnapshot(bool user_request) const {
-	impl->mountFilesystemSnapshot(user_request);
-    }
+    void mountFilesystemSnapshot(bool user_request) const
+	{ impl->mountFilesystemSnapshot(user_request); }
 
-    void umountFilesystemSnapshot(bool user_request) const {
-	impl->umountFilesystemSnapshot(user_request);
-    }
+    void umountFilesystemSnapshot(bool user_request) const
+	{ impl->umountFilesystemSnapshot(user_request); }
 
 public:
 
@@ -140,8 +159,13 @@ public:
     typedef list<ProxySnapshot>::const_iterator const_iterator;
     typedef list<ProxySnapshot>::size_type size_type;
 
+    iterator begin() { return proxy_snapshots.begin(); }
     const_iterator begin() const { return proxy_snapshots.begin(); }
+
+    iterator end() { return proxy_snapshots.end(); }
     const_iterator end() const { return proxy_snapshots.end(); }
+
+    const_iterator getCurrent() const { return proxy_snapshots.begin(); }
 
     iterator find(unsigned int i);
     const_iterator find(unsigned int i) const;
@@ -151,9 +175,14 @@ public:
 
     std::pair<iterator, iterator> findNums(const string& str, const string& delim = "..");
 
+    const_iterator findPre(const_iterator post) const;
+
+    iterator findPost(iterator pre);
     const_iterator findPost(const_iterator pre) const;
 
     void emplace_back(ProxySnapshot::Impl* value) { proxy_snapshots.emplace_back(value); }
+
+    void erase(iterator it) { proxy_snapshots.erase(it); }
 
 protected:
 
@@ -164,6 +193,9 @@ protected:
 };
 
 
+class ProxyComparison;
+
+
 class ProxySnapper
 {
 
@@ -171,15 +203,25 @@ public:
 
     virtual ~ProxySnapper() {}
 
-    virtual void setConfigInfo(const map<string, string>& raw) = 0;
+    virtual const string& configName() const = 0;
+
+    virtual ProxyConfig getConfig() const = 0;
+    virtual void setConfig(const ProxyConfig& proxy_config) = 0;
 
     virtual ProxySnapshots::const_iterator createSingleSnapshot(const SCD& scd) = 0;
+    virtual ProxySnapshots::const_iterator createSingleSnapshot(ProxySnapshots::const_iterator parent,
+								const SCD& scd) = 0;
+    virtual ProxySnapshots::const_iterator createSingleSnapshotOfDefault(const SCD& scd) = 0;
     virtual ProxySnapshots::const_iterator createPreSnapshot(const SCD& scd) = 0;
-    virtual ProxySnapshots::const_iterator createPostSnapshot(const ProxySnapshots::const_iterator pre, const SCD& scd) = 0;
+    virtual ProxySnapshots::const_iterator createPostSnapshot(ProxySnapshots::const_iterator pre,
+							      const SCD& scd) = 0;
 
     virtual void modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd) = 0;
 
-    virtual void deleteSnapshots(list<ProxySnapshots::iterator> snapshots) = 0;
+    virtual void deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, bool verbose) = 0;
+
+    virtual ProxyComparison createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs,
+					     bool mount) = 0;
 
     virtual void syncFilesystem() const = 0;
 
@@ -189,6 +231,8 @@ public:
 
     virtual void prepareQuota() const = 0;
 
+    virtual QuotaData queryQuotaData() const = 0;
+
 };
 
 
@@ -197,16 +241,87 @@ class ProxySnappers
 
 public:
 
-    virtual ~ProxySnappers() {}
+    static ProxySnappers createDbus();
+    static ProxySnappers createLib(const string& target_root);
 
-    virtual void createConfig(const string& config_name, const string& subvolume,
-			      const string& fstype, const string& template_name) = 0;
+    void createConfig(const string& config_name, const string& subvolume, const string& fstype,
+		      const string& template_name)
+	{ return impl->createConfig(config_name, subvolume, fstype, template_name); }
 
-    virtual void deleteConfig(const string& config_name) = 0;
+    void deleteConfig(const string& config_name)
+	{ return impl->deleteConfig(config_name); }
 
-    virtual ProxySnapper* getSnapper(const string& config_name) = 0;
+    ProxySnapper* getSnapper(const string& config_name)
+	{ return impl->getSnapper(config_name); }
 
-    virtual std::vector<string> debug() = 0;
+    map<string, ProxyConfig> getConfigs() const
+	{ return impl->getConfigs(); }
+
+    vector<string> debug() const
+	{ return impl->debug(); }
+
+public:
+
+    class Impl
+    {
+
+    public:
+
+	virtual ~Impl() {}
+
+	virtual void createConfig(const string& config_name, const string& subvolume,
+				  const string& fstype, const string& template_name) = 0;
+
+	virtual void deleteConfig(const string& config_name) = 0;
+
+	virtual ProxySnapper* getSnapper(const string& config_name) = 0;
+
+	virtual map<string, ProxyConfig> getConfigs() const = 0;
+
+	virtual vector<string> debug() const = 0;
+
+    };
+
+    ProxySnappers(Impl* impl) : impl(impl) {}
+
+    Impl& get_impl() { return *impl; }
+    const Impl& get_impl() const { return *impl; }
+
+private:
+
+    std::unique_ptr<Impl> impl;
+
+};
+
+
+class ProxyComparison
+{
+
+public:
+
+    const Files& getFiles() const { return impl->getFiles(); }
+
+public:
+
+    class Impl
+    {
+
+    public:
+
+	virtual ~Impl() {}
+
+	virtual const Files& getFiles() const = 0;
+
+    };
+
+    ProxyComparison(Impl* impl) : impl(impl) {}
+
+    Impl& get_impl() { return *impl; }
+    const Impl& get_impl() const { return *impl; }
+
+private:
+
+    std::unique_ptr<Impl> impl;
 
 };
 

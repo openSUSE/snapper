@@ -30,10 +30,10 @@
 #include "proxy.h"
 
 
-// TODO move code from types.{cc,h} and commands.{cc,h} to proxy-dbus.{cc,h}
-
-
+class ProxySnapshotDbus;
 class ProxySnapshotsDbus;
+class ProxySnapperDbus;
+class ProxySnappersDbus;
 
 
 /**
@@ -65,6 +65,9 @@ public:
     virtual string mountFilesystemSnapshot(bool user_request) const override;
     virtual void umountFilesystemSnapshot(bool user_request) const override;
 
+    DBus::Connection& conn() const;
+    const string config_name() const;
+
     ProxySnapshotsDbus* backref;
 
     SnapshotType type;
@@ -79,24 +82,23 @@ public:
 };
 
 
-class ProxySnapperDbus;
-
-
 class ProxySnapshotsDbus : public ProxySnapshots
 {
 
 public:
 
-    ProxySnapshotsDbus(ProxySnapperDbus* backref) : backref(backref) {}
+    ProxySnapshotsDbus(ProxySnapperDbus* backref)
+	: backref(backref)
+    {}
 
     void update();
+
+    DBus::Connection& conn() const;
+    const string config_name() const;
 
     ProxySnapperDbus* backref;
 
 };
-
-
-class ProxySnappersDbus;
 
 
 class ProxySnapperDbus : public ProxySnapper
@@ -108,15 +110,25 @@ public:
 	: backref(backref), config_name(config_name), proxy_snapshots(this)
     {}
 
-    virtual void setConfigInfo(const map<string, string>& raw) override;
+    virtual const string& configName() const override { return config_name; }
+
+    virtual ProxyConfig getConfig() const override;
+    virtual void setConfig(const ProxyConfig& proxy_config) override;
 
     virtual ProxySnapshots::const_iterator createSingleSnapshot(const SCD& scd) override;
+    virtual ProxySnapshots::const_iterator createSingleSnapshot(ProxySnapshots::const_iterator parent,
+								const SCD& scd) override;
+    virtual ProxySnapshots::const_iterator createSingleSnapshotOfDefault(const SCD& scd) override;
     virtual ProxySnapshots::const_iterator createPreSnapshot(const SCD& scd) override;
-    virtual ProxySnapshots::const_iterator createPostSnapshot(const ProxySnapshots::const_iterator pre, const SCD& scd) override;
+    virtual ProxySnapshots::const_iterator createPostSnapshot(ProxySnapshots::const_iterator pre,
+							      const SCD& scd) override;
 
     virtual void modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd) override;
 
-    virtual void deleteSnapshots(list<ProxySnapshots::iterator> snapshots) override;
+    virtual void deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, bool verbose) override;
+
+    virtual ProxyComparison createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs,
+					     bool mount) override;
 
     virtual void syncFilesystem() const override;
 
@@ -125,6 +137,10 @@ public:
     virtual void setupQuota() override;
 
     virtual void prepareQuota() const override;
+
+    virtual QuotaData queryQuotaData() const override;
+
+    DBus::Connection& conn() const;
 
     ProxySnappersDbus* backref;
 
@@ -135,13 +151,13 @@ public:
 };
 
 
-class ProxySnappersDbus : public ProxySnappers
+class ProxySnappersDbus : public ProxySnappers::Impl
 {
 
 public:
 
-    ProxySnappersDbus(DBus::Connection* conn)
-	: conn(conn)
+    ProxySnappersDbus()
+	: conn(DBUS_BUS_SYSTEM)
     {}
 
     virtual void createConfig(const string& config_name, const string& subvolume,
@@ -151,11 +167,41 @@ public:
 
     virtual ProxySnapper* getSnapper(const string& config_name) override;
 
-    virtual std::vector<string> debug() override;
+    virtual map<string, ProxyConfig> getConfigs() const override;
 
-    DBus::Connection* conn;
+    virtual vector<string> debug() const override;
+
+    mutable DBus::Connection conn;
 
     list<std::unique_ptr<ProxySnapperDbus>> proxy_snappers;
+
+};
+
+
+class ProxyComparisonDbus : public ProxyComparison::Impl
+{
+public:
+
+    ProxyComparisonDbus(ProxySnapperDbus* backref, const ProxySnapshot& lhs,
+			const ProxySnapshot& rhs, bool mount);
+
+    ~ProxyComparisonDbus();
+
+    virtual const Files& getFiles() const override { return files; }
+
+    DBus::Connection& conn() const;
+    const string config_name() const;
+
+    ProxySnapperDbus* backref;
+
+private:
+
+    const ProxySnapshot& lhs;
+    const ProxySnapshot& rhs;
+
+    FilePaths file_paths;
+
+    Files files;
 
 };
 

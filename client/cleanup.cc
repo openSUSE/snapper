@@ -21,35 +21,48 @@
  */
 
 
+#include <vector>
+
+#include "dbus/DBusMessage.h"
+#include "dbus/DBusConnection.h"
+#include "snapper/SnapperTmpl.h"
+#include "snapper/Snapper.h"
+
 #include "utils/Range.h"
 #include "utils/equal-date.h"
-#include "commands.h"
+#include "cleanup.h"
 
-#include <vector>
 
 using namespace std;
 
 
 struct Parameters
 {
-    Parameters(DBus::Connection& conn, const string& config_name);
+    Parameters(const ProxySnapper* snapper);
     virtual ~Parameters() {}
 
     virtual bool is_degenerated() const { return true; }
 
-    friend ostream& operator<<(ostream& s, const Parameters& parameters);
-
     time_t min_age;
     double space_limit;
+
+    template<typename Type>
+    void read(const ProxyConfig& config, const char* name, Type& value)
+    {
+	const map<string, string>& raw = config.getAllValues();
+	map<string, string>::const_iterator pos = raw.find(name);
+	if (pos != raw.end())
+	    pos->second >> value;
+    }
 };
 
 
-Parameters::Parameters(DBus::Connection& conn, const string& config_name)
+Parameters::Parameters(const ProxySnapper* snapper)
     : min_age(1800), space_limit(0.5)
 {
-    XConfigInfo ci = command_get_xconfig(conn, config_name);
+    ProxyConfig config = snapper->getConfig();
 
-    ci.read("SPACE_LIMIT", space_limit);
+    read(config, "SPACE_LIMIT", space_limit);
 }
 
 
@@ -65,8 +78,8 @@ class Cleaner
 {
 public:
 
-    Cleaner(DBus::Connection& conn, const string& config_name, bool verbose, const Parameters& parameters)
-	: conn(conn), config_name(config_name), verbose(verbose), parameters(parameters) {}
+    Cleaner(ProxySnapper* snapper, bool verbose, const Parameters& parameters)
+	: snapper(snapper), verbose(verbose), parameters(parameters) {}
 
     virtual ~Cleaner() {}
 
@@ -74,54 +87,53 @@ public:
 
 protected:
 
-    virtual list<XSnapshots::iterator> calculate_candidates(Range::Value value) = 0;
+    virtual list<ProxySnapshots::iterator> calculate_candidates(ProxySnapshots& snapshots,
+								Range::Value value) = 0;
 
     struct younger_than
     {
 	younger_than(time_t t)
 	    : t(t) {}
-	bool operator()(XSnapshots::const_iterator it)
+	bool operator()(ProxySnapshots::const_iterator it)
 	    { return it->getDate() > t; }
 	const time_t t;
     };
 
-    void filter(list<XSnapshots::iterator>& tmp) const;
+    void filter(ProxySnapshots& snapshots, list<ProxySnapshots::iterator>& tmp) const;
 
     // Removes snapshots younger than parameters.min_age from tmp
-    void filter_min_age(list<XSnapshots::iterator>& tmp) const;
+    void filter_min_age(ProxySnapshots& snapshots, list<ProxySnapshots::iterator>& tmp) const;
 
     // Removes pre and post snapshots from tmp that do have a corresponding
     // snapshot but which is not included in tmp.
-    void filter_pre_post(list<XSnapshots::iterator>& tmp) const;
+    void filter_pre_post(ProxySnapshots& snapshots, list<ProxySnapshots::iterator>& tmp) const;
 
-    void remove(const list<XSnapshots::iterator>& tmp);
+    void remove(const list<ProxySnapshots::iterator>& tmp);
 
     bool is_quota_aware() const;
     bool is_quota_satisfied() const;
 
-    void cleanup_quota_unaware();
-    void cleanup_quota_aware();
+    void cleanup_quota_unaware(ProxySnapshots& snapshots);
+    void cleanup_quota_aware(ProxySnapshots& snapshots);
 
-    DBus::Connection& conn;
-    const string& config_name;
+    ProxySnapper* snapper;
     bool verbose;
 
     const Parameters& parameters;
 
-    XSnapshots snapshots;
 };
 
 
 void
-Cleaner::filter(list<XSnapshots::iterator>& tmp) const
+Cleaner::filter(ProxySnapshots& snapshots, list<ProxySnapshots::iterator>& tmp) const
 {
-    filter_min_age(tmp);
-    filter_pre_post(tmp);
+    filter_min_age(snapshots, tmp);
+    filter_pre_post(snapshots, tmp);
 }
 
 
 void
-Cleaner::filter_min_age(list<XSnapshots::iterator>& tmp) const
+Cleaner::filter_min_age(ProxySnapshots& snapshots, list<ProxySnapshots::iterator>& tmp) const
 {
     time_t now = time(NULL);
     tmp.remove_if(younger_than(now - parameters.min_age));
@@ -129,15 +141,15 @@ Cleaner::filter_min_age(list<XSnapshots::iterator>& tmp) const
 
 
 void
-Cleaner::filter_pre_post(list<XSnapshots::iterator>& tmp) const
+Cleaner::filter_pre_post(ProxySnapshots& snapshots, list<ProxySnapshots::iterator>& tmp) const
 {
-    list<XSnapshots::iterator> ret;
+    list<ProxySnapshots::iterator> ret;
 
-    for (list<XSnapshots::iterator>::iterator it1 = tmp.begin(); it1 != tmp.end(); ++it1)
+    for (list<ProxySnapshots::iterator>::iterator it1 = tmp.begin(); it1 != tmp.end(); ++it1)
     {
 	if ((*it1)->getType() == PRE)
 	{
-	    XSnapshots::const_iterator it2 = snapshots.findPost(*it1);
+	    ProxySnapshots::const_iterator it2 = snapshots.findPost(*it1);
 	    if (it2 != snapshots.end())
 	    {
 		if (find(tmp.begin(), tmp.end(), it2) == tmp.end())
@@ -147,7 +159,7 @@ Cleaner::filter_pre_post(list<XSnapshots::iterator>& tmp) const
 
 	if ((*it1)->getType() == POST)
 	{
-	    XSnapshots::const_iterator it2 = snapshots.findPre(*it1);
+	    ProxySnapshots::const_iterator it2 = snapshots.findPre(*it1);
 	    if (it2 != snapshots.end())
 	    {
 		if (find(tmp.begin(), tmp.end(), it2) == tmp.end())
@@ -163,12 +175,11 @@ Cleaner::filter_pre_post(list<XSnapshots::iterator>& tmp) const
 
 
 void
-Cleaner::remove(const list<XSnapshots::iterator>& tmp)
+Cleaner::remove(const list<ProxySnapshots::iterator>& tmp)
 {
-    for (list<XSnapshots::iterator>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
+    for (list<ProxySnapshots::iterator>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
     {
-	command_delete_xsnapshots(conn, config_name, { (*it)->getNum() }, verbose);
-	snapshots.erase(*it);
+	snapper->deleteSnapshots({ *it }, verbose);
     }
 }
 
@@ -181,7 +192,7 @@ Cleaner::is_quota_aware() const
 
     try
     {
-	command_prepare_quota(conn, config_name);
+	snapper->prepareQuota();
     }
     catch (const DBus::ErrorException& e)
     {
@@ -195,6 +206,13 @@ Cleaner::is_quota_aware() const
 
 	SN_RETHROW(e);
     }
+    catch (const QuotaException& e)
+    {
+	SN_CAUGHT(e);
+
+	cerr << "quota not working (" << e.what() << ")" << endl;
+	return false;
+    }
 
     return true;
 }
@@ -203,29 +221,29 @@ Cleaner::is_quota_aware() const
 bool
 Cleaner::is_quota_satisfied() const
 {
-    XQuotaData quota_data = command_query_quota(conn, config_name);
+    QuotaData quota_data = snapper->queryQuotaData();
 
     return quota_data.used < parameters.space_limit * quota_data.size;
 }
 
 
 void
-Cleaner::cleanup_quota_unaware()
+Cleaner::cleanup_quota_unaware(ProxySnapshots& snapshots)
 {
-    list<XSnapshots::iterator> candidates = calculate_candidates(Range::MAX);
+    list<ProxySnapshots::iterator> candidates = calculate_candidates(snapshots, Range::MAX);
 
-    filter(candidates);
+    filter(snapshots, candidates);
 
     remove(candidates);
 }
 
 
 void
-Cleaner::cleanup_quota_aware()
+Cleaner::cleanup_quota_aware(ProxySnapshots& snapshots)
 {
     while (!is_quota_satisfied())
     {
-	list<XSnapshots::iterator> candidates = calculate_candidates(Range::MIN);
+	list<ProxySnapshots::iterator> candidates = calculate_candidates(snapshots, Range::MIN);
 	if (candidates.empty())
 	{
 	    // not enough candidates to satisfy quota
@@ -237,11 +255,11 @@ Cleaner::cleanup_quota_aware()
 	// snapshot candidate if the post snapshot is missing so simply
 	// removing the first candidate is not possible.
 
-	for (list<XSnapshots::iterator>::iterator e = candidates.begin(); e != candidates.end(); ++e)
+	for (list<ProxySnapshots::iterator>::iterator e = candidates.begin(); e != candidates.end(); ++e)
 	{
-	    list<XSnapshots::iterator> tmp = list<XSnapshots::iterator>(candidates.begin(), next(e));
+	    list<ProxySnapshots::iterator> tmp = list<ProxySnapshots::iterator>(candidates.begin(), next(e));
 
-	    filter(tmp);
+	    filter(snapshots, tmp);
 
 	    if (!tmp.empty())
 	    {
@@ -263,37 +281,35 @@ Cleaner::cleanup_quota_aware()
 void
 Cleaner::cleanup()
 {
-    snapshots = command_list_xsnapshots(conn, config_name);
+    ProxySnapshots& snapshots = snapper->getSnapshots();
 
-    cleanup_quota_unaware();
+    cleanup_quota_unaware(snapshots);
 
     if (is_quota_aware())
-	cleanup_quota_aware();
+	cleanup_quota_aware(snapshots);
 }
 
 
 struct NumberParameters : public Parameters
 {
-    NumberParameters(DBus::Connection& conn, const string& config_name);
+    NumberParameters(const ProxySnapper* snapper);
 
     bool is_degenerated() const;
-
-    friend ostream& operator<<(ostream& s, const NumberParameters& parameters);
 
     Range limit;
     Range limit_important;
 };
 
 
-NumberParameters::NumberParameters(DBus::Connection& conn, const string& config_name)
-    : Parameters(conn, config_name), limit(50), limit_important(10)
+NumberParameters::NumberParameters(const ProxySnapper* snapper)
+    : Parameters(snapper), limit(50), limit_important(10)
 {
-    XConfigInfo ci = command_get_xconfig(conn, config_name);
+    ProxyConfig config = snapper->getConfig();
 
-    ci.read("NUMBER_MIN_AGE", min_age);
+    read(config, "NUMBER_MIN_AGE", min_age);
 
-    ci.read("NUMBER_LIMIT", limit);
-    ci.read("NUMBER_LIMIT_IMPORTANT", limit_important);
+    read(config, "NUMBER_LIMIT", limit);
+    read(config, "NUMBER_LIMIT_IMPORTANT", limit_important);
 }
 
 
@@ -318,28 +334,27 @@ class NumberCleaner : public Cleaner
 
 public:
 
-    NumberCleaner(DBus::Connection& conn, const string& config_name, bool verbose,
-		  const NumberParameters& parameters)
-	: Cleaner(conn, config_name, verbose, parameters) {}
+    NumberCleaner(ProxySnapper* snapper, bool verbose, const NumberParameters& parameters)
+	: Cleaner(snapper, verbose, parameters) {}
 
 private:
 
     bool
-    is_important(XSnapshots::const_iterator it1)
+    is_important(ProxySnapshots::const_iterator it1)
     {
 	map<string, string>::const_iterator it2 = it1->getUserdata().find("important");
 	return it2 != it1->getUserdata().end() && it2->second == "yes";
     }
 
 
-    list<XSnapshots::iterator>
-    calculate_candidates(Range::Value value)
+    list<ProxySnapshots::iterator>
+    calculate_candidates(ProxySnapshots& snapshots, Range::Value value) override
     {
 	const NumberParameters& parameters = dynamic_cast<const NumberParameters&>(Cleaner::parameters);
 
-	list<XSnapshots::iterator> ret;
+	list<ProxySnapshots::iterator> ret;
 
-	for (XSnapshots::iterator it = snapshots.begin(); it != snapshots.end(); ++it)
+	for (ProxySnapshots::iterator it = snapshots.begin(); it != snapshots.end(); ++it)
 	{
 	    if (it->getCleanup() == "number")
 		ret.push_front(it);
@@ -348,7 +363,7 @@ private:
 	size_t num = 0;
 	size_t num_important = 0;
 
-	list<XSnapshots::iterator>::iterator it = ret.begin();
+	list<ProxySnapshots::iterator>::iterator it = ret.begin();
 	while (it != ret.end())
 	{
 	    bool keep = false;
@@ -378,17 +393,17 @@ private:
 
 
 void
-do_cleanup_number(DBus::Connection& conn, const string& config_name, bool verbose)
+do_cleanup_number(ProxySnapper* snapper, bool verbose)
 {
-    NumberParameters parameters(conn, config_name);
-    NumberCleaner cleaner(conn, config_name, verbose, parameters);
+    NumberParameters parameters(snapper);
+    NumberCleaner cleaner(snapper, verbose, parameters);
     cleaner.cleanup();
 }
 
 
 struct TimelineParameters : public Parameters
 {
-    TimelineParameters(DBus::Connection& conn, const string& config_name);
+    TimelineParameters(const ProxySnapper* snapper);
 
     bool is_degenerated() const;
 
@@ -400,19 +415,19 @@ struct TimelineParameters : public Parameters
 };
 
 
-TimelineParameters::TimelineParameters(DBus::Connection& conn, const string& config_name)
-    : Parameters(conn, config_name), limit_hourly(10), limit_daily(10), limit_monthly(10),
+TimelineParameters::TimelineParameters(const ProxySnapper* snapper)
+    : Parameters(snapper), limit_hourly(10), limit_daily(10), limit_monthly(10),
       limit_weekly(0), limit_yearly(10)
 {
-    XConfigInfo ci = command_get_xconfig(conn, config_name);
+    ProxyConfig config = snapper->getConfig();
 
-    ci.read("TIMELINE_MIN_AGE", min_age);
+    read(config, "TIMELINE_MIN_AGE", min_age);
 
-    ci.read("TIMELINE_LIMIT_HOURLY", limit_hourly);
-    ci.read("TIMELINE_LIMIT_DAILY", limit_daily);
-    ci.read("TIMELINE_LIMIT_WEEKLY", limit_weekly);
-    ci.read("TIMELINE_LIMIT_MONTHLY", limit_monthly);
-    ci.read("TIMELINE_LIMIT_YEARLY", limit_yearly);
+    read(config, "TIMELINE_LIMIT_HOURLY", limit_hourly);
+    read(config, "TIMELINE_LIMIT_DAILY", limit_daily);
+    read(config, "TIMELINE_LIMIT_WEEKLY", limit_weekly);
+    read(config, "TIMELINE_LIMIT_MONTHLY", limit_monthly);
+    read(config, "TIMELINE_LIMIT_YEARLY", limit_yearly);
 }
 
 
@@ -441,23 +456,22 @@ class TimelineCleaner : public Cleaner
 {
 public:
 
-    TimelineCleaner(DBus::Connection& conn, const string& config_name, bool verbose,
-		    const TimelineParameters& parameters)
-	: Cleaner(conn, config_name, verbose, parameters) {}
+    TimelineCleaner(ProxySnapper* snapper, bool verbose, const TimelineParameters& parameters)
+	: Cleaner(snapper, verbose, parameters) {}
 
 private:
 
     bool
-    is_first(list<XSnapshots::iterator>::const_iterator first,
-	     list<XSnapshots::iterator>::const_iterator last,
-	     XSnapshots::const_iterator it1,
+    is_first(list<ProxySnapshots::iterator>::const_iterator first,
+	     list<ProxySnapshots::iterator>::const_iterator last,
+	     ProxySnapshots::const_iterator it1,
 	     std::function<bool(const struct tm& tmp1, const struct tm& tmp2)> pred)
     {
 	time_t t1 = it1->getDate();
 	struct tm tmp1;
 	localtime_r(&t1, &tmp1);
 
-	for (list<XSnapshots::iterator>::const_iterator it2 = first; it2 != last; ++it2)
+	for (list<ProxySnapshots::iterator>::const_iterator it2 = first; it2 != last; ++it2)
 	{
 	    if (it1 == *it2)
 		continue;
@@ -478,54 +492,54 @@ private:
 
 
     bool
-    is_first_yearly(list<XSnapshots::iterator>::const_iterator first,
-		    list<XSnapshots::iterator>::const_iterator last,
-		    XSnapshots::const_iterator it1)
+    is_first_yearly(list<ProxySnapshots::iterator>::const_iterator first,
+		    list<ProxySnapshots::iterator>::const_iterator last,
+		    ProxySnapshots::const_iterator it1)
     {
 	return is_first(first, last, it1, equal_year);
     }
 
     bool
-    is_first_monthly(list<XSnapshots::iterator>::const_iterator first,
-		     list<XSnapshots::iterator>::const_iterator last,
-		     XSnapshots::const_iterator it1)
+    is_first_monthly(list<ProxySnapshots::iterator>::const_iterator first,
+		     list<ProxySnapshots::iterator>::const_iterator last,
+		     ProxySnapshots::const_iterator it1)
     {
 	return is_first(first, last, it1, equal_month);
     }
 
     bool
-    is_first_weekly(list<XSnapshots::iterator>::const_iterator first,
-		    list<XSnapshots::iterator>::const_iterator last,
-		    XSnapshots::const_iterator it1)
+    is_first_weekly(list<ProxySnapshots::iterator>::const_iterator first,
+		    list<ProxySnapshots::iterator>::const_iterator last,
+		    ProxySnapshots::const_iterator it1)
     {
 	return is_first(first, last, it1, equal_week);
     }
 
     bool
-    is_first_daily(list<XSnapshots::iterator>::const_iterator first,
-		   list<XSnapshots::iterator>::const_iterator last,
-		   XSnapshots::const_iterator it1)
+    is_first_daily(list<ProxySnapshots::iterator>::const_iterator first,
+		   list<ProxySnapshots::iterator>::const_iterator last,
+		   ProxySnapshots::const_iterator it1)
     {
 	return is_first(first, last, it1, equal_day);
     }
 
     bool
-    is_first_hourly(list<XSnapshots::iterator>::const_iterator first,
-		    list<XSnapshots::iterator>::const_iterator last,
-		    XSnapshots::const_iterator it1)
+    is_first_hourly(list<ProxySnapshots::iterator>::const_iterator first,
+		    list<ProxySnapshots::iterator>::const_iterator last,
+		    ProxySnapshots::const_iterator it1)
     {
 	return is_first(first, last, it1, equal_hour);
     }
 
 
-    list<XSnapshots::iterator>
-    calculate_candidates(Range::Value value)
+    list<ProxySnapshots::iterator>
+    calculate_candidates(ProxySnapshots& snapshots, Range::Value value) override
     {
 	const TimelineParameters& parameters = dynamic_cast<const TimelineParameters&>(Cleaner::parameters);
 
-	list<XSnapshots::iterator> ret;
+	list<ProxySnapshots::iterator> ret;
 
-	for (XSnapshots::iterator it = snapshots.begin(); it != snapshots.end(); ++it)
+	for (ProxySnapshots::iterator it = snapshots.begin(); it != snapshots.end(); ++it)
 	{
 	    if (it->getCleanup() == "timeline")
 		ret.push_front(it);
@@ -537,7 +551,7 @@ private:
 	size_t num_monthly = 0;
 	size_t num_yearly = 0;
 
-	list<XSnapshots::iterator>::iterator it = ret.begin();
+	list<ProxySnapshots::iterator>::iterator it = ret.begin();
 	while (it != ret.end())
 	{
 	    bool keep = false;
@@ -582,26 +596,26 @@ private:
 
 
 void
-do_cleanup_timeline(DBus::Connection& conn, const string& config_name, bool verbose)
+do_cleanup_timeline(ProxySnapper* snapper, bool verbose)
 {
-    TimelineParameters parameters(conn, config_name);
-    TimelineCleaner cleaner(conn, config_name, verbose, parameters);
+    TimelineParameters parameters(snapper);
+    TimelineCleaner cleaner(snapper, verbose, parameters);
     cleaner.cleanup();
 }
 
 
 struct EmptyPrePostParameters : public Parameters
 {
-    EmptyPrePostParameters(DBus::Connection& conn, const string& config_name);
+    EmptyPrePostParameters(const ProxySnapper* snapper);
 };
 
 
-EmptyPrePostParameters::EmptyPrePostParameters(DBus::Connection& conn, const string& config_name)
-    : Parameters(conn, config_name)
+EmptyPrePostParameters::EmptyPrePostParameters(const ProxySnapper* snapper)
+    : Parameters(snapper)
 {
-    XConfigInfo ci = command_get_xconfig(conn, config_name);
+    ProxyConfig config = snapper->getConfig();
 
-    ci.read("EMPTY_PRE_POST_MIN_AGE", min_age);
+    read(config, "EMPTY_PRE_POST_MIN_AGE", min_age);
 }
 
 
@@ -609,36 +623,30 @@ class EmptyPrePostCleaner : public Cleaner
 {
 public:
 
-    EmptyPrePostCleaner(DBus::Connection& conn, const string& config_name, bool verbose,
+    EmptyPrePostCleaner(ProxySnapper* snapper, bool verbose,
 			const EmptyPrePostParameters& parameters)
-	: Cleaner(conn, config_name, verbose, parameters) {}
+	: Cleaner(snapper, verbose, parameters) {}
 
 private:
 
-    list<XSnapshots::iterator>
-    calculate_candidates(Range::Value value)
+    list<ProxySnapshots::iterator>
+    calculate_candidates(ProxySnapshots& snapshots, Range::Value value) override
     {
-	list<XSnapshots::iterator> ret;
+	list<ProxySnapshots::iterator> ret;
 
-	for (XSnapshots::iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
+	for (ProxySnapshots::iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
 	{
 	    if (it1->getType() == PRE)
 	    {
-		XSnapshots::iterator it2 = snapshots.findPost(it1);
-
+		ProxySnapshots::iterator it2 = snapshots.findPost(it1);
 		if (it2 != snapshots.end())
 		{
-		    command_create_xcomparison(conn, config_name, it1->getNum(), it2->getNum());
-
-		    list<XFile> files = command_get_xfiles(conn, config_name, it1->getNum(), it2->getNum());
-
-		    if (files.empty())
+		    ProxyComparison comparison = snapper->createComparison(*it1, *it2, false);
+		    if (comparison.getFiles().empty())
 		    {
 			ret.push_back(it1);
 			ret.push_back(it2);
 		    }
-
-		    command_delete_xcomparison(conn, config_name, it1->getNum(), it2->getNum());
 		}
 	    }
 	}
@@ -649,9 +657,9 @@ private:
 
 
 void
-do_cleanup_empty_pre_post(DBus::Connection& conn, const string& config_name, bool verbose)
+do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose)
 {
-    EmptyPrePostParameters parameters(conn, config_name);
-    EmptyPrePostCleaner cleaner(conn, config_name, verbose, parameters);
+    EmptyPrePostParameters parameters(snapper);
+    EmptyPrePostCleaner cleaner(snapper, verbose, parameters);
     cleaner.cleanup();
 }

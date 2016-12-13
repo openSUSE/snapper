@@ -46,11 +46,9 @@
 #include "utils/Table.h"
 #include "utils/GetOpts.h"
 
-#include "commands.h"
 #include "cleanup.h"
 #include "errors.h"
-#include "proxy-dbus.h"
-#include "proxy-lib.h"
+#include "proxy.h"
 #include "misc.h"
 
 
@@ -60,33 +58,27 @@ using namespace std;
 
 struct Cmd
 {
-    // TODO remove conn and snapper argument, maybe even proxy_snapper
-
-    typedef void (*cmd_func_t)(DBus::Connection* conn, Snapper* snapper,
-			       ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper);
+    typedef void (*cmd_func_t)(ProxySnappers* snappers, ProxySnapper* snapper);
     typedef void (*help_func_t)();
 
-    // TODO remove works_without_dbus
-
-    Cmd(const string& name, cmd_func_t cmd_func, help_func_t help_func,
-	bool works_without_dbus, bool needs_snapper)
-	: name(name), cmd_func(cmd_func), help_func(help_func),
-	  works_without_dbus(works_without_dbus), needs_snapper(needs_snapper)
+    Cmd(const string& name, cmd_func_t cmd_func, help_func_t help_func, bool needs_snapper)
+	: name(name), aliases(), cmd_func(cmd_func), help_func(help_func),
+	  needs_snapper(needs_snapper)
     {}
 
     Cmd(const string& name, const vector<string>& aliases, cmd_func_t cmd_func,
-	help_func_t help_func, bool works_without_dbus, bool needs_snapper)
+	help_func_t help_func, bool needs_snapper)
 	: name(name), aliases(aliases), cmd_func(cmd_func), help_func(help_func),
-	  works_without_dbus(works_without_dbus), needs_snapper(needs_snapper)
+	  needs_snapper(needs_snapper)
     {}
 
     const string name;
     const vector<string> aliases;
     const cmd_func_t cmd_func;
     const help_func_t help_func;
-    const bool works_without_dbus;
     const bool needs_snapper;
 };
+
 
 GetOpts getopts;
 
@@ -101,10 +93,8 @@ string target_root = "/";
 
 struct MyFiles : public Files
 {
-    friend struct MyComparison;
 
-    MyFiles(const FilePaths* file_paths)
-	: Files(file_paths) {}
+    MyFiles(const Files& files) : Files(files) {}
 
     void bulk_process(FILE* file, std::function<void(File& file)> callback);
 
@@ -173,39 +163,6 @@ MyFiles::bulk_process(FILE* file, std::function<void(File& file)> callback)
 }
 
 
-struct MyComparison
-{
-    MyComparison(DBus::Connection& conn, pair<unsigned int, unsigned int> nums, bool mount)
-	: files(&file_paths)
-    {
-	command_create_xcomparison(conn, config_name, nums.first, nums.second);
-
-	file_paths.system_path = command_get_xmount_point(conn, config_name, 0);
-
-	if (mount)
-	{
-	    if (nums.first != 0)
-		file_paths.pre_path = command_mount_xsnapshots(conn, config_name, nums.first, false);
-	    else
-		file_paths.pre_path = file_paths.system_path;
-
-	    if (nums.second != 0)
-		file_paths.post_path = command_mount_xsnapshots(conn, config_name, nums.second, false);
-	    else
-		file_paths.post_path = file_paths.system_path;
-	}
-
-	list<XFile> tmp = command_get_xfiles(conn, config_name, nums.first, nums.second);
-	for (list<XFile>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
-	    files.push_back(File(&file_paths, it->name, it->status));
-    }
-
-    FilePaths file_paths;
-
-    MyFiles files;
-};
-
-
 void
 help_list_configs()
 {
@@ -215,34 +172,8 @@ help_list_configs()
 }
 
 
-list<pair<string, string>>
-enum_configs(DBus::Connection* conn)
-{
-    list<pair<string, string>> configs;
-
-    if (no_dbus)
-    {
-	list<ConfigInfo> config_infos = Snapper::getConfigs(target_root);
-	for (list<ConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
-	{
-	    configs.push_back(make_pair(it->getConfigName(), it->getSubvolume()));
-	}
-    }
-    else
-    {
-	list<XConfigInfo> config_infos = command_list_xconfigs(*conn);
-	for (list<XConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
-	{
-	    configs.push_back(make_pair(it->config_name, it->subvolume));
-	}
-    }
-
-    return configs;
-}
-
-
 void
-command_list_configs(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_list_configs(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     getopts.parse("list-configs", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -258,13 +189,12 @@ command_list_configs(DBus::Connection* conn, Snapper* snapper, ProxySnappers* pr
     header.add(_("Subvolume"));
     table.setHeader(header);
 
-    list<pair<string, string> > configs = enum_configs(conn);
-
-    for (list<pair<string,string> >::iterator it = configs.begin(); it != configs.end(); ++it)
+    map<string, ProxyConfig> configs = snappers->getConfigs();
+    for (const map<string, ProxyConfig>::value_type value : configs)
     {
 	TableRow row;
-	row.add(it->first);
-	row.add(it->second);
+	row.add(value.first);
+	row.add(value.second.getSubvolume());
 	table.add(row);
     }
 
@@ -286,7 +216,7 @@ help_create_config()
 
 
 void
-command_create_config(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_create_config(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "fstype",		required_argument,	0,	'f' },
@@ -325,7 +255,7 @@ command_create_config(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers
 	exit(EXIT_FAILURE);
     }
 
-    proxy_snappers->createConfig(config_name, subvolume, fstype, template_name);
+    snappers->createConfig(config_name, subvolume, fstype, template_name);
 }
 
 
@@ -339,7 +269,7 @@ help_delete_config()
 
 
 void
-command_delete_config(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_delete_config(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     getopts.parse("delete-config", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -348,7 +278,7 @@ command_delete_config(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers
 	exit(EXIT_FAILURE);
     }
 
-    proxy_snappers->deleteConfig(config_name);
+    snappers->deleteConfig(config_name);
 }
 
 
@@ -362,7 +292,7 @@ help_get_config()
 
 
 void
-command_get_config(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_get_config(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     getopts.parse("get-config", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -378,30 +308,13 @@ command_get_config(DBus::Connection* conn, Snapper* snapper, ProxySnappers* prox
     header.add(_("Value"));
     table.setHeader(header);
 
-    if (no_dbus)
+    ProxyConfig config = snapper->getConfig();
+    for (const map<string, string>::value_type& value : config.getAllValues())
     {
-	ConfigInfo config_info = Snapper::getConfig(config_name, target_root);
-	map<string, string> raw = config_info.getAllValues();
-
-	for (map<string, string>::const_iterator it = raw.begin(); it != raw.end(); ++it)
-	{
-	    TableRow row;
-	    row.add(it->first);
-	    row.add(it->second);
-	    table.add(row);
-	}
-    }
-    else
-    {
-	XConfigInfo ci = command_get_xconfig(*conn, config_name);
-
-	for (map<string, string>::const_iterator it = ci.raw.begin(); it != ci.raw.end(); ++it)
-	{
-	    TableRow row;
-	    row.add(it->first);
-	    row.add(it->second);
-	    table.add(row);
-	}
+	TableRow row;
+	row.add(value.first);
+	row.add(value.second);
+	table.add(row);
     }
 
     cout << table;
@@ -418,7 +331,7 @@ help_set_config()
 
 
 void
-command_set_config(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_set_config(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     getopts.parse("set-config", GetOpts::no_options);
     if (!getopts.hasArgs())
@@ -427,9 +340,9 @@ command_set_config(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, P
 	exit(EXIT_FAILURE);
     }
 
-    map<string, string> raw = read_configdata(getopts.getArgs());
+    ProxyConfig config(read_configdata(getopts.getArgs()));
 
-    proxy_snapper->setConfigInfo(raw);
+    snapper->setConfig(config);
 }
 
 
@@ -449,11 +362,11 @@ enum ListMode { LM_ALL, LM_SINGLE, LM_PRE_POST };
 
 
 void
-list_from_one_config(ProxySnapper* proxy_snapper, ListMode list_mode);
+list_from_one_config(ProxySnapper* snapper, ListMode list_mode);
 
 
 void
-command_list(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_list(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
@@ -487,35 +400,39 @@ command_list(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySn
 	}
     }
 
-    /*
-    list<pair<string, string> > configs;
-    if ((opt = opts.find("all-configs")) != opts.end())
+    vector<string> tmp;
+
+    if ((opt = opts.find("all-configs")) == opts.end())
     {
-	configs = enum_configs(conn);
+        tmp.push_back(config_name);
     }
     else
     {
-	configs.push_back(make_pair(config_name, ""));
+        map<string, ProxyConfig> configs = snappers->getConfigs();
+        for (map<string, ProxyConfig>::value_type it : configs)
+            tmp.push_back(it.first);
     }
 
-    for (list<pair<string, string>>::iterator it = configs.begin(); it != configs.end(); ++it)
+    for (vector<string>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
     {
-	if (it != configs.begin())
-	    cout << endl;
+	ProxySnapper* x = snappers->getSnapper(*it);
 
-	if (configs.size() > 1)
-	    cout << "Config: " << it->first << ", subvolume: " << it->second << endl;
+        if (it != tmp.begin())
+            cout << endl;
 
-	list_from_one_config(conn, snapper, it->first, list_mode);
+        if (tmp.size() > 1)
+        {
+            cout << "Config: " << x->configName() << ", subvolume: "
+                 << x->getConfig().getSubvolume() << endl;
+        }
+
+        list_from_one_config(x, list_mode);
     }
-    */
-
-    list_from_one_config(proxy_snapper, list_mode);
 }
 
 
 void
-list_from_one_config(ProxySnapper* proxy_snapper, ListMode list_mode)
+list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
 {
     Table table;
 
@@ -534,18 +451,18 @@ list_from_one_config(ProxySnapper* proxy_snapper, ListMode list_mode)
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
 
-	    const ProxySnapshots& proxy_snapshots = proxy_snapper->getSnapshots();
-	    for (const ProxySnapshot& proxy_snapshot : proxy_snapshots)
+	    const ProxySnapshots& snapshots = snapper->getSnapshots();
+	    for (const ProxySnapshot& snapshot : snapshots)
 	    {
 		TableRow row;
-		row.add(toString(proxy_snapshot.getType()));
-		row.add(decString(proxy_snapshot.getNum()));
-		row.add(proxy_snapshot.getType() == POST ? decString(proxy_snapshot.getPreNum()) : "");
-		row.add(proxy_snapshot.isCurrent() ? "" : datetime(proxy_snapshot.getDate(), utc, iso));
-		row.add(username(proxy_snapshot.getUid()));
-		row.add(proxy_snapshot.getCleanup());
-		row.add(proxy_snapshot.getDescription());
-		row.add(show_userdata(proxy_snapshot.getUserdata()));
+		row.add(toString(snapshot.getType()));
+		row.add(decString(snapshot.getNum()));
+		row.add(snapshot.getType() == POST ? decString(snapshot.getPreNum()) : "");
+		row.add(snapshot.isCurrent() ? "" : datetime(snapshot.getDate(), utc, iso));
+		row.add(username(snapshot.getUid()));
+		row.add(snapshot.getCleanup());
+		row.add(snapshot.getDescription());
+		row.add(show_userdata(snapshot.getUserdata()));
 		table.add(row);
 	    }
 	}
@@ -561,18 +478,18 @@ list_from_one_config(ProxySnapper* proxy_snapper, ListMode list_mode)
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
 
-	    const ProxySnapshots& proxy_snapshots = proxy_snapper->getSnapshots();
-	    for (const ProxySnapshot& proxy_snapshot : proxy_snapshots)
+	    const ProxySnapshots& snapshots = snapper->getSnapshots();
+	    for (const ProxySnapshot& snapshot : snapshots)
 	    {
-		if (proxy_snapshot.getType() != SINGLE)
+		if (snapshot.getType() != SINGLE)
 		    continue;
 
 		TableRow row;
-		row.add(decString(proxy_snapshot.getNum()));
-		row.add(proxy_snapshot.isCurrent() ? "" : datetime(proxy_snapshot.getDate(), utc, iso));
-		row.add(username(proxy_snapshot.getUid()));
-		row.add(proxy_snapshot.getDescription());
-		row.add(show_userdata(proxy_snapshot.getUserdata()));
+		row.add(decString(snapshot.getNum()));
+		row.add(snapshot.isCurrent() ? "" : datetime(snapshot.getDate(), utc, iso));
+		row.add(username(snapshot.getUid()));
+		row.add(snapshot.getDescription());
+		row.add(show_userdata(snapshot.getUserdata()));
 		table.add(row);
 	    }
 	}
@@ -589,14 +506,14 @@ list_from_one_config(ProxySnapper* proxy_snapper, ListMode list_mode)
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
 
-	    const ProxySnapshots& proxy_snapshots = proxy_snapper->getSnapshots();
-	    for (ProxySnapshots::const_iterator it1 = proxy_snapshots.begin(); it1 != proxy_snapshots.end(); ++it1)
+	    const ProxySnapshots& snapshots = snapper->getSnapshots();
+	    for (ProxySnapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
 	    {
 		if (it1->getType() != PRE)
 		    continue;
 
-		ProxySnapshots::const_iterator it2 = proxy_snapshots.findPost(it1);
-		if (it2 == proxy_snapshots.end())
+		ProxySnapshots::const_iterator it2 = snapshots.findPost(it1);
+		if (it2 == snapshots.end())
 		    continue;
 
 		const ProxySnapshot& pre = *it1;
@@ -638,7 +555,7 @@ help_create()
 
 
 void
-command_create(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_create(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
@@ -660,11 +577,11 @@ command_create(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, Proxy
 
     enum CreateType { CT_SINGLE, CT_PRE, CT_POST, CT_PRE_POST };
 
-    const ProxySnapshots& proxy_snapshots = proxy_snapper->getSnapshots();
+    const ProxySnapshots& snapshots = snapper->getSnapshots();
 
     CreateType type = CT_SINGLE;
-    ProxySnapshots::const_iterator proxy_snapshot1 = proxy_snapshots.end();
-    ProxySnapshots::const_iterator proxy_snapshot2 = proxy_snapshots.end();
+    ProxySnapshots::const_iterator snapshot1 = snapshots.end();
+    ProxySnapshots::const_iterator snapshot2 = snapshots.end();
     bool print_number = false;
     SCD scd;
     string command;
@@ -689,7 +606,7 @@ command_create(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, Proxy
     }
 
     if ((opt = opts.find("pre-number")) != opts.end())
-	proxy_snapshot1 = proxy_snapshots.findNum(opt->second);
+	snapshot1 = snapshots.findNum(opt->second);
 
     if ((opt = opts.find("print-number")) != opts.end())
 	print_number = true;
@@ -709,7 +626,7 @@ command_create(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, Proxy
 	type = CT_PRE_POST;
     }
 
-    if (type == CT_POST && proxy_snapshot1 == proxy_snapshots.end())
+    if (type == CT_POST && snapshot1 == snapshots.end())
     {
 	cerr << _("Missing or invalid pre-number.") << endl;
 	exit(EXIT_FAILURE);
@@ -724,29 +641,29 @@ command_create(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, Proxy
     switch (type)
     {
 	case CT_SINGLE: {
-	    proxy_snapshot1 = proxy_snapper->createSingleSnapshot(scd);
+	    snapshot1 = snapper->createSingleSnapshot(scd);
 	    if (print_number)
-		cout << proxy_snapshot1->getNum() << endl;
+		cout << snapshot1->getNum() << endl;
 	} break;
 
 	case CT_PRE: {
-	    proxy_snapshot1 = proxy_snapper->createPreSnapshot(scd);
+	    snapshot1 = snapper->createPreSnapshot(scd);
 	    if (print_number)
-		cout << proxy_snapshot1->getNum() << endl;
+		cout << snapshot1->getNum() << endl;
 	} break;
 
 	case CT_POST: {
-	    proxy_snapshot2 = proxy_snapper->createPostSnapshot(proxy_snapshot1, scd);
+	    snapshot2 = snapper->createPostSnapshot(snapshot1, scd);
 	    if (print_number)
-		cout << proxy_snapshot2->getNum() << endl;
+		cout << snapshot2->getNum() << endl;
 	} break;
 
 	case CT_PRE_POST: {
-	    proxy_snapshot1 = proxy_snapper->createPreSnapshot(scd);
+	    snapshot1 = snapper->createPreSnapshot(scd);
 	    system(command.c_str());
-	    proxy_snapshot2 = proxy_snapper->createPostSnapshot(proxy_snapshot1, scd);
+	    snapshot2 = snapper->createPostSnapshot(snapshot1, scd);
 	    if (print_number)
-		cout << proxy_snapshot1->getNum() << ".." << proxy_snapshot2->getNum() << endl;
+		cout << snapshot1->getNum() << ".." << snapshot2->getNum() << endl;
 	} break;
     }
 }
@@ -767,7 +684,7 @@ help_modify()
 
 
 void
-command_modify(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_modify(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "description",	required_argument,	0,	'd' },
@@ -783,11 +700,11 @@ command_modify(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, Proxy
 	exit(EXIT_FAILURE);
     }
 
-    ProxySnapshots& proxy_snapshots = proxy_snapper->getSnapshots();
+    ProxySnapshots& snapshots = snapper->getSnapshots();
 
     while (getopts.hasArgs())
     {
-	ProxySnapshots::iterator proxy_snapshot = proxy_snapshots.findNum(getopts.popArg());
+	ProxySnapshots::iterator snapshot = snapshots.findNum(getopts.popArg());
 
 	SMD smd;
 
@@ -796,19 +713,19 @@ command_modify(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, Proxy
 	if ((opt = opts.find("description")) != opts.end())
 	    smd.description = opt->second;
 	else
-	    smd.description = proxy_snapshot->getDescription();
+	    smd.description = snapshot->getDescription();
 
 	if ((opt = opts.find("cleanup-algorithm")) != opts.end())
 	    smd.cleanup = opt->second;
 	else
-	    smd.cleanup = proxy_snapshot->getCleanup();
+	    smd.cleanup = snapshot->getCleanup();
 
 	if ((opt = opts.find("userdata")) != opts.end())
-	    smd.userdata = read_userdata(opt->second, proxy_snapshot->getUserdata());
+	    smd.userdata = read_userdata(opt->second, snapshot->getUserdata());
 	else
-	    smd.userdata = proxy_snapshot->getUserdata();
+	    smd.userdata = snapshot->getUserdata();
 
-	proxy_snapper->modifySnapshot(proxy_snapshot, smd);
+	snapper->modifySnapshot(snapshot, smd);
     }
 }
 
@@ -826,7 +743,7 @@ help_delete()
 
 
 void
-command_delete(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_delete(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "sync",		no_argument,		0,	's' },
@@ -847,9 +764,9 @@ command_delete(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, Proxy
     if ((opt = opts.find("sync")) != opts.end())
 	sync = true;
 
-    ProxySnapshots& proxy_snapshots = proxy_snapper->getSnapshots();
+    ProxySnapshots& snapshots = snapper->getSnapshots();
 
-    list<ProxySnapshots::iterator> nums;
+    vector<ProxySnapshots::iterator> nums;
 
     while (getopts.hasArgs())
     {
@@ -857,32 +774,34 @@ command_delete(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, Proxy
 
 	if (arg.find_first_of("-") == string::npos)
 	{
-	    ProxySnapshots::iterator tmp = proxy_snapshots.findNum(arg);
+	    ProxySnapshots::iterator tmp = snapshots.findNum(arg);
 	    nums.push_back(tmp);
 	}
 	else
 	{
-	    pair<ProxySnapshots::iterator, ProxySnapshots::iterator> tmp(proxy_snapshots.findNums(arg, "-"));
+	    pair<ProxySnapshots::iterator, ProxySnapshots::iterator> range =
+		snapshots.findNums(arg, "-");
 
-	    if (tmp.first->getNum() > tmp.second->getNum())
-		swap(tmp.first, tmp.second);
+	    if (range.first->getNum() > range.second->getNum())
+		swap(range.first, range.second);
 
-	    for (unsigned int i = tmp.first->getNum(); i <= tmp.second->getNum(); ++i)
+	    for (unsigned int i = range.first->getNum(); i <= range.second->getNum(); ++i)
 	    {
-		ProxySnapshots::iterator x = proxy_snapshots.find(i);
-		if (x != proxy_snapshots.end())
+		ProxySnapshots::iterator x = snapshots.find(i);
+		if (x != snapshots.end())
 		{
-		    if (find_if(nums.begin(), nums.end(), [i](ProxySnapshots::iterator it) { return it->getNum() == i; }) == nums.end())
+		    if (find_if(nums.begin(), nums.end(), [i](ProxySnapshots::iterator it)
+				{ return it->getNum() == i; }) == nums.end())
 			nums.push_back(x);
 		}
 	    }
 	}
     }
 
-    proxy_snapper->deleteSnapshots(nums);
+    snapper->deleteSnapshots(nums, verbose);
 
     if (sync)
-	proxy_snapper->syncFilesystem();
+	snapper->syncFilesystem();
 }
 
 
@@ -896,7 +815,7 @@ help_mount()
 
 
 void
-command_mount(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_mount(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     getopts.parse("mount", GetOpts::no_options);
     if (!getopts.hasArgs())
@@ -905,12 +824,12 @@ command_mount(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxyS
 	exit(EXIT_FAILURE);
     }
 
-    const ProxySnapshots& proxy_snapshots = proxy_snapper->getSnapshots();
+    const ProxySnapshots& snapshots = snapper->getSnapshots();
 
     while (getopts.hasArgs())
     {
-	ProxySnapshots::const_iterator proxy_snapshot = proxy_snapshots.findNum(getopts.popArg());
-	proxy_snapshot->mountFilesystemSnapshot(true);
+	ProxySnapshots::const_iterator snapshot = snapshots.findNum(getopts.popArg());
+	snapshot->mountFilesystemSnapshot(true);
     }
 }
 
@@ -925,7 +844,7 @@ help_umount()
 
 
 void
-command_umount(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_umount(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     getopts.parse("umount", GetOpts::no_options);
     if (!getopts.hasArgs())
@@ -934,12 +853,12 @@ command_umount(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, Proxy
 	exit(EXIT_FAILURE);
     }
 
-    const ProxySnapshots& proxy_snapshots = proxy_snapper->getSnapshots();
+    const ProxySnapshots& snapshots = snapper->getSnapshots();
 
     while (getopts.hasArgs())
     {
-	ProxySnapshots::const_iterator proxy_snapshot = proxy_snapshots.findNum(getopts.popArg());
-	proxy_snapshot->umountFilesystemSnapshot(true);
+	ProxySnapshots::const_iterator snapshot = snapshots.findNum(getopts.popArg());
+	snapshot->umountFilesystemSnapshot(true);
     }
 }
 
@@ -957,7 +876,7 @@ help_status()
 
 
 void
-command_status(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_status(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "output",		required_argument,	0,	'o' },
@@ -980,10 +899,14 @@ command_status(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_sn
 
     GetOpts::parsed_opts::const_iterator opt;
 
-    pair<unsigned int, unsigned int> nums(read_nums(getopts.popArg()));
+    ProxySnapshots& snapshots = snapper->getSnapshots();
 
-    MyComparison comparison(*conn, nums, false);
-    MyFiles& files = comparison.files;
+    pair<ProxySnapshots::const_iterator, ProxySnapshots::const_iterator> range =
+	snapshots.findNums(getopts.popArg());
+
+    ProxyComparison comparison = snapper->createComparison(*range.first, *range.second, false);
+
+    MyFiles files(comparison.getFiles());
 
     FILE* file = stdout;
 
@@ -1021,7 +944,7 @@ help_diff()
 
 
 void
-command_diff(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_diff(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "input",		required_argument,	0,	'i' },
@@ -1058,10 +981,14 @@ command_diff(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snap
     if ((opt = opts.find("extensions")) != opts.end())
 	differ.extensions = opt->second;
 
-    pair<unsigned int, unsigned int> nums(read_nums(getopts.popArg()));
+    ProxySnapshots& snapshots = snapper->getSnapshots();
 
-    MyComparison comparison(*conn, nums, true);
-    MyFiles& files = comparison.files;
+    pair<ProxySnapshots::const_iterator, ProxySnapshots::const_iterator> range =
+	snapshots.findNums(getopts.popArg());
+
+    ProxyComparison comparison = snapper->createComparison(*range.first, *range.second, true);
+
+    MyFiles files(comparison.getFiles());
 
     files.bulk_process(file, [differ](const File& file) {
 	differ.run(file.getAbsolutePath(LOC_PRE), file.getAbsolutePath(LOC_POST));
@@ -1082,7 +1009,7 @@ help_undo()
 
 
 void
-command_undo(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_undo(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "input",		required_argument,	0,	'i' },
@@ -1096,7 +1023,10 @@ command_undo(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snap
 	exit(EXIT_FAILURE);
     }
 
-    pair<unsigned int, unsigned int> nums(read_nums(getopts.popArg()));
+    ProxySnapshots& snapshots = snapper->getSnapshots();
+
+    pair<ProxySnapshots::const_iterator, ProxySnapshots::const_iterator> range =
+	snapshots.findNums(getopts.popArg());
 
     FILE* file = NULL;
 
@@ -1112,14 +1042,15 @@ command_undo(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snap
 	}
     }
 
-    if (nums.first == 0)
+    if (range.first->isCurrent())
     {
 	cerr << _("Invalid snapshots.") << endl;
 	exit(EXIT_FAILURE);
     }
 
-    MyComparison comparison(*conn, nums, true);
-    MyFiles& files = comparison.files;
+    ProxyComparison comparison = snapper->createComparison(*range.first, *range.second, true);
+
+    MyFiles files(comparison.getFiles());
 
     files.bulk_process(file, [](File& file) {
 	file.setUndo(true);
@@ -1191,10 +1122,13 @@ command_undo(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snap
 #ifdef ENABLE_ROLLBACK
 
 const Filesystem*
-getFilesystem(const XConfigInfo &ci, Snapper* snapper)
+getFilesystem(const ProxyConfig& config)
 {
-    map<string, string>::const_iterator it = ci.raw.find(KEY_FSTYPE);
-    if (it == ci.raw.end())
+    const map<string, string>& raw = config.getAllValues();
+
+    map<string, string>::const_iterator pos1 = raw.find(KEY_FSTYPE);
+    map<string, string>::const_iterator pos2 = raw.find(KEY_SUBVOLUME);
+    if (pos1 == raw.end() || pos2 == raw.end())
     {
 	cerr << _("Failed to initialize filesystem handler.") << endl;
 	exit(EXIT_FAILURE);
@@ -1202,7 +1136,7 @@ getFilesystem(const XConfigInfo &ci, Snapper* snapper)
 
     try
     {
-	return Filesystem::create(it->second, ci.subvolume, target_root);
+	return Filesystem::create(pos1->second, pos2->second, target_root);
     }
     catch (const InvalidConfigException& e)
     {
@@ -1210,19 +1144,6 @@ getFilesystem(const XConfigInfo &ci, Snapper* snapper)
 	cerr << _("Failed to initialize filesystem handler.") << endl;
 	exit(EXIT_FAILURE);
     }
-}
-
-const string
-getSubvolume(const XConfigInfo &ci, Snapper* snapper)
-{
-    map<string, string>::const_iterator it = ci.raw.find(KEY_SUBVOLUME);
-    if (it == ci.raw.end())
-    {
-	cerr << _("Failed to initialize subvolume handler.") << endl;
-	exit(EXIT_FAILURE);
-    }
-
-    return it->second;
 }
 
 
@@ -1242,7 +1163,7 @@ help_rollback()
 
 
 void
-command_rollback(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_rollback(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "print-number",       no_argument,            0,      'p' },
@@ -1260,9 +1181,7 @@ command_rollback(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_
     }
 
     bool print_number = false;
-    string description;
-    string cleanup;
-    map<string, string> userdata;
+    SCD scd;
 
     GetOpts::parsed_opts::const_iterator opt;
 
@@ -1270,24 +1189,24 @@ command_rollback(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_
 	print_number = true;
 
     if ((opt = opts.find("description")) != opts.end())
-	description = opt->second;
+	scd.description = opt->second;
 
     if ((opt = opts.find("cleanup-algorithm")) != opts.end())
-	cleanup = opt->second;
+	scd.cleanup = opt->second;
 
     if ((opt = opts.find("userdata")) != opts.end())
-	userdata = read_userdata(opt->second);
+	scd.userdata = read_userdata(opt->second);
 
-    XConfigInfo ci = command_get_xconfig(*conn, config_name);
+    ProxyConfig config = snapper->getConfig();
 
-    const Filesystem* filesystem = getFilesystem(ci, snapper);
+    const Filesystem* filesystem = getFilesystem(config);
     if (filesystem->fstype() != "btrfs")
     {
 	cerr << _("Command 'rollback' only available for btrfs.") << endl;
 	exit(EXIT_FAILURE);
     }
 
-    const string subvolume = getSubvolume(ci, snapper);
+    const string subvolume = config.getSubvolume();
     if (subvolume != "/")
     {
         cerr << sformat(_("Command 'rollback' cannot be used on a non-root subvolume %s."),
@@ -1295,53 +1214,63 @@ command_rollback(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_
         exit(EXIT_FAILURE);
     }
 
-    unsigned int num1;
-    unsigned int num2;
+    ProxySnapshots& snapshots = snapper->getSnapshots();
+
+    ProxySnapshots::const_iterator snapshot1 = snapshots.end();
+    ProxySnapshots::const_iterator snapshot2 = snapshots.end();
 
     if (getopts.numArgs() == 0)
     {
 	if (!quiet)
 	    cout << _("Creating read-only snapshot of default subvolume.") << flush;
-	num1 = command_create_single_xsnapshot_of_default(*conn, config_name, true,
-							  description, cleanup,
-							  userdata);
-	if (!quiet)
-	    cout << " " << sformat(_("(Snapshot %d.)"), num1) << endl;
+
+	scd.read_only = true;
+	snapshot1 = snapper->createSingleSnapshotOfDefault(scd);
 
 	if (!quiet)
-	    cout << _("Creating read-write snapshot of current subvolume.") <<flush;
-	num2 = command_create_single_xsnapshot_v2(*conn, config_name, 0, false, description,
-						  cleanup, userdata);
+	    cout << " " << sformat(_("(Snapshot %d.)"), snapshot1->getNum()) << endl;
+
 	if (!quiet)
-	    cout << " " << sformat(_("(Snapshot %d.)"), num2) << endl;
+	    cout << _("Creating read-write snapshot of current subvolume.") << flush;
+
+	scd.read_only = false;
+	snapshot2 = snapper->createSingleSnapshot(snapshots.getCurrent(), scd);
+
+	if (!quiet)
+	    cout << " " << sformat(_("(Snapshot %d.)"), snapshot2->getNum()) << endl;
     }
     else
     {
-	unsigned int tmp = read_num(getopts.popArg());
+	ProxySnapshots::const_iterator tmp = snapshots.findNum(getopts.popArg());
 
 	if (!quiet)
 	    cout << _("Creating read-only snapshot of current system.") << flush;
-	num1 = command_create_single_xsnapshot(*conn, config_name, description,
-					       cleanup, userdata);
-	if (!quiet)
-	    cout << " " << sformat(_("(Snapshot %d.)"), num1) << endl;
+
+	snapshot1 = snapper->createSingleSnapshot(scd);
 
 	if (!quiet)
-	    cout << sformat(_("Creating read-write snapshot of snapshot %d."), tmp) << flush;
-	num2 = command_create_single_xsnapshot_v2(*conn, config_name, tmp, false,
-						  description, cleanup, userdata);
+	    cout << " " << sformat(_("(Snapshot %d.)"), snapshot1->getNum()) << endl;
+
 	if (!quiet)
-	    cout << " " << sformat(_("(Snapshot %d.)"), num2) << endl;
+	    cout << sformat(_("Creating read-write snapshot of snapshot %d."), tmp->getNum()) << flush;
+
+	scd.read_only = false;
+	snapshot2 = snapper->createSingleSnapshot(tmp, scd);
+
+	if (!quiet)
+	    cout << " " << sformat(_("(Snapshot %d.)"), snapshot2->getNum()) << endl;
     }
 
     if (!quiet)
-	cout << sformat(_("Setting default subvolume to snapshot %d."), num2) << endl;
-    filesystem->setDefault(num2);
+	cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot2->getNum()) << endl;
 
-    Hooks::rollback(filesystem->snapshotDir(num1), filesystem->snapshotDir(num2));
+    filesystem->setDefault(snapshot2->getNum());
+
+    Hooks::rollback(filesystem->snapshotDir(snapshot1->getNum()),
+		    filesystem->snapshotDir(snapshot2->getNum()));
 
     if (print_number)
-	cout << num2 << endl;
+	cout << snapshot2->getNum() << endl;
 }
 
 #endif
@@ -1357,7 +1286,7 @@ help_setup_quota()
 
 
 void
-command_setup_quota(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_setup_quota(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     GetOpts::parsed_opts opts = getopts.parse("setup-quota", GetOpts::no_options);
     if (getopts.numArgs() != 0)
@@ -1366,7 +1295,7 @@ command_setup_quota(DBus::Connection*, Snapper*, ProxySnappers* proxy_snappers, 
 	exit(EXIT_FAILURE);
     }
 
-    proxy_snapper->setupQuota();
+    snapper->setupQuota();
 }
 
 
@@ -1380,7 +1309,7 @@ help_cleanup()
 
 
 void
-command_cleanup(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_cleanup(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     GetOpts::parsed_opts opts = getopts.parse("cleanup", GetOpts::no_options);
     if (getopts.numArgs() != 1)
@@ -1393,15 +1322,15 @@ command_cleanup(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_s
 
     if (cleanup == "number")
     {
-	do_cleanup_number(*conn, config_name, verbose);
+	do_cleanup_number(snapper, verbose);
     }
     else if (cleanup == "timeline")
     {
-	do_cleanup_timeline(*conn, config_name, verbose);
+	do_cleanup_timeline(snapper, verbose);
     }
     else if (cleanup == "empty-pre-post")
     {
-	do_cleanup_empty_pre_post(*conn, config_name, verbose);
+	do_cleanup_empty_pre_post(snapper, verbose);
     }
     else
     {
@@ -1418,7 +1347,7 @@ help_debug()
 
 
 void
-command_debug(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_debug(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     getopts.parse("debug", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -1427,7 +1356,7 @@ command_debug(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_sna
 	exit(EXIT_FAILURE);
     }
 
-    for (const string& line : proxy_snappers->debug())
+    for (const string& line : snappers->debug())
 	cout << line << endl;
 }
 
@@ -1462,7 +1391,7 @@ print_xa_diff(const string loc_pre, const string loc_post)
 }
 
 void
-command_xa_diff(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_snappers, ProxySnapper* proxy_snapper)
+command_xa_diff(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     GetOpts::parsed_opts opts = getopts.parse("xadiff", GetOpts::no_options);
     if (getopts.numArgs() < 1)
@@ -1471,10 +1400,14 @@ command_xa_diff(DBus::Connection* conn, Snapper* snapper, ProxySnappers* proxy_s
         exit(EXIT_FAILURE);
     }
 
-    pair<unsigned int, unsigned int> nums(read_nums(getopts.popArg()));
+    ProxySnapshots& snapshots = snapper->getSnapshots();
 
-    MyComparison comparison(*conn, nums, true);
-    MyFiles& files = comparison.files;
+    pair<ProxySnapshots::const_iterator, ProxySnapshots::const_iterator> range =
+	snapshots.findNums(getopts.popArg());
+
+    ProxyComparison comparison = snapper->createComparison(*range.first, *range.second, true);
+
+    MyFiles files(comparison.getFiles());
 
     if (getopts.numArgs() == 0)
     {
@@ -1577,29 +1510,29 @@ main(int argc, char** argv)
     setLogQuery(&log_query);
 
     const list<Cmd> cmds = {
-	Cmd("list-configs", command_list_configs, help_list_configs, true, false),
-	Cmd("create-config", command_create_config, help_create_config, true, false),
-	Cmd("delete-config", command_delete_config, help_delete_config, true, false),
-	Cmd("get-config", command_get_config, help_get_config, true, false),
-	Cmd("set-config", command_set_config, help_set_config, true, true),
-	Cmd("list", { "ls" }, command_list, help_list, true, true),
-	Cmd("create", command_create, help_create, true, true),
-	Cmd("modify", command_modify, help_modify, true, true),
-	Cmd("delete", { "remove", "rm" }, command_delete, help_delete, true, true),
-	Cmd("mount", command_mount, help_mount, true, true),
-	Cmd("umount", command_umount, help_umount, true, true),
-	Cmd("status", command_status, help_status, false, true),
-	Cmd("diff", command_diff, help_diff, false, true),
+	Cmd("list-configs", command_list_configs, help_list_configs, false),
+	Cmd("create-config", command_create_config, help_create_config, false),
+	Cmd("delete-config", command_delete_config, help_delete_config, false),
+	Cmd("get-config", command_get_config, help_get_config, true),
+	Cmd("set-config", command_set_config, help_set_config, true),
+	Cmd("list", { "ls" }, command_list, help_list, false),
+	Cmd("create", command_create, help_create, true),
+	Cmd("modify", command_modify, help_modify, true),
+	Cmd("delete", { "remove", "rm" }, command_delete, help_delete, true),
+	Cmd("mount", command_mount, help_mount, true),
+	Cmd("umount", command_umount, help_umount, true),
+	Cmd("status", command_status, help_status, true),
+	Cmd("diff", command_diff, help_diff, true),
 #ifdef ENABLE_XATTRS
-	Cmd("xadiff", command_xa_diff, help_xa_diff, false, true),
+	Cmd("xadiff", command_xa_diff, help_xa_diff, true),
 #endif
-	Cmd("undochange", command_undo, help_undo, false, true),
+	Cmd("undochange", command_undo, help_undo, true),
 #ifdef ENABLE_ROLLBACK
-	Cmd("rollback", command_rollback, help_rollback, false, true),
+	Cmd("rollback", command_rollback, help_rollback, true),
 #endif
-	Cmd("setup-quota", command_setup_quota, help_setup_quota, true, true),
-	Cmd("cleanup", command_cleanup, help_cleanup, false, true),
-	Cmd("debug", command_debug, help_debug, false, true)
+	Cmd("setup-quota", command_setup_quota, help_setup_quota, true),
+	Cmd("cleanup", command_cleanup, help_cleanup, true),
+	Cmd("debug", command_debug, help_debug, false)
     };
 
     const struct option options[] = {
@@ -1698,23 +1631,13 @@ main(int argc, char** argv)
 
     try
     {
-	unique_ptr<DBus::Connection> dbus_connection;
-	unique_ptr<ProxySnappers> proxy_snappers;
-
-	if (no_dbus)
-	{
-	    proxy_snappers.reset(new ProxySnappersLib(target_root));
-	}
-	else
-	{
-	    dbus_connection.reset(new DBus::Connection(DBUS_BUS_SYSTEM));
-	    proxy_snappers.reset(new ProxySnappersDbus(dbus_connection.get()));
-	}
+	ProxySnappers snappers(no_dbus ? ProxySnappers::createLib(target_root) :
+			       ProxySnappers::createDbus());
 
 	if (cmd->needs_snapper)
-	    (*cmd->cmd_func)(nullptr, nullptr, proxy_snappers.get(), proxy_snappers->getSnapper(config_name));
+	    (*cmd->cmd_func)(&snappers, snappers.getSnapper(config_name));
 	else
-	    (*cmd->cmd_func)(nullptr, nullptr, proxy_snappers.get(), nullptr);
+	    (*cmd->cmd_func)(&snappers, nullptr);
     }
     catch (const DBus::ErrorException& e)
     {

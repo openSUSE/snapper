@@ -153,6 +153,7 @@ namespace snapper
 
 	const Filesystem* getFilesystem() const { return filesystem; }
 
+	const ConfigInfo& getConfigInfo() { return *config_info; }
 	void setConfigInfo(const map<string, string>& raw);
 
 	void syncAcl() const;
