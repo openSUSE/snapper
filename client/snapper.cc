@@ -173,7 +173,7 @@ help_list_configs()
 
 
 void
-command_list_configs(ProxySnappers* snappers, ProxySnapper* snapper)
+command_list_configs(ProxySnappers* snappers, ProxySnapper*)
 {
     getopts.parse("list-configs", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -216,7 +216,7 @@ help_create_config()
 
 
 void
-command_create_config(ProxySnappers* snappers, ProxySnapper* snapper)
+command_create_config(ProxySnappers* snappers, ProxySnapper*)
 {
     const struct option options[] = {
 	{ "fstype",		required_argument,	0,	'f' },
@@ -269,7 +269,7 @@ help_delete_config()
 
 
 void
-command_delete_config(ProxySnappers* snappers, ProxySnapper* snapper)
+command_delete_config(ProxySnappers* snappers, ProxySnapper*)
 {
     getopts.parse("delete-config", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -366,7 +366,7 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode);
 
 
 void
-command_list(ProxySnappers* snappers, ProxySnapper* snapper)
+command_list(ProxySnappers* snappers, ProxySnapper*)
 {
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
@@ -415,18 +415,18 @@ command_list(ProxySnappers* snappers, ProxySnapper* snapper)
 
     for (vector<string>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
     {
-	ProxySnapper* x = snappers->getSnapper(*it);
+	ProxySnapper* snapper = snappers->getSnapper(*it);
 
         if (it != tmp.begin())
             cout << endl;
 
         if (tmp.size() > 1)
         {
-            cout << "Config: " << x->configName() << ", subvolume: "
-                 << x->getConfig().getSubvolume() << endl;
+            cout << "Config: " << snapper->configName() << ", subvolume: "
+                 << snapper->getConfig().getSubvolume() << endl;
         }
 
-        list_from_one_config(x, list_mode);
+        list_from_one_config(snapper, list_mode);
     }
 }
 
@@ -1347,7 +1347,7 @@ help_debug()
 
 
 void
-command_debug(ProxySnappers* snappers, ProxySnapper* snapper)
+command_debug(ProxySnappers* snappers, ProxySnapper*)
 {
     getopts.parse("debug", GetOpts::no_options);
     if (getopts.hasArgs())

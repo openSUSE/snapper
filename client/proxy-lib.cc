@@ -20,9 +20,6 @@
  */
 
 
-#include <sstream>
-#include <iostream>
-
 #include "proxy-lib.h"
 
 
