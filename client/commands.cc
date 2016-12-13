@@ -35,14 +35,14 @@ using namespace std;
 #define INTERFACE "org.opensuse.Snapper"
 
 
-list<XConfigInfo>
+vector<XConfigInfo>
 command_list_xconfigs(DBus::Connection& conn)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "ListConfigs");
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
-    list<XConfigInfo> ret;
+    vector<XConfigInfo> ret;
 
     DBus::Hihi hihi(reply);
     hihi >> ret;
@@ -268,14 +268,14 @@ command_create_post_snapshot(DBus::Connection& conn, const string& config_name,
 
 void
 command_delete_snapshots(DBus::Connection& conn, const string& config_name,
-			 const list<unsigned int>& nums, bool verbose)
+			 const vector<unsigned int>& nums, bool verbose)
 {
     if (verbose)
     {
 	cout << sformat(_("Deleting snapshot from %s:", "Deleting snapshots from %s:", nums.size()),
 			config_name.c_str()) << endl;
 
-	for (list<unsigned int>::const_iterator it = nums.begin(); it != nums.end(); ++it)
+	for (vector<unsigned int>::const_iterator it = nums.begin(); it != nums.end(); ++it)
 	{
 	    if (it != nums.begin())
 		cout << ", ";
@@ -378,7 +378,7 @@ operator<(const XFile& lhs, const XFile& rhs)
 }
 
 
-list<XFile>
+vector<XFile>
 command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		   unsigned int number2)
 {
@@ -389,13 +389,13 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
-    list<XFile> files;
+    vector<XFile> files;
 
     DBus::Hihi hihi(reply);
     hihi >> files;
 
-    files.sort();		// snapperd can have different locale than client
-				// so sorting is required here
+    sort(files.begin(), files.end());	// snapperd can have different locale than client
+					// so sorting is required here
 
     return files;
 }

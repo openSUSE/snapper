@@ -22,11 +22,11 @@
 
 
 #include <string>
-#include <list>
+#include <vector>
 #include <map>
 
 using std::string;
-using std::list;
+using std::vector;
 using std::map;
 
 #include "dbus/DBusMessage.h"
@@ -79,12 +79,12 @@ struct XSnapshot
 
 struct XSnapshots
 {
-    typedef list<XSnapshot>::const_iterator const_iterator;
+    typedef vector<XSnapshot>::const_iterator const_iterator;
 
     const_iterator begin() const { return entries.begin(); }
     const_iterator end() const { return entries.end(); }
 
-    list<XSnapshot> entries;
+    vector<XSnapshot> entries;
 };
 
 

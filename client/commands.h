@@ -23,18 +23,16 @@
 
 #include <string>
 #include <vector>
-#include <list>
 #include <map>
 
 using std::string;
 using std::vector;
-using std::list;
 using std::map;
 
 #include "types.h"
 
 
-list<XConfigInfo>
+vector<XConfigInfo>
 command_list_xconfigs(DBus::Connection& conn);
 
 XConfigInfo
@@ -90,7 +88,7 @@ command_create_post_snapshot(DBus::Connection& conn, const string& config_name,
 
 void
 command_delete_snapshots(DBus::Connection& conn, const string& config_name,
-			 const list<unsigned int>& nums, bool verbose);
+			 const vector<unsigned int>& nums, bool verbose);
 
 string
 command_mount_snapshot(DBus::Connection& conn, const string& config_name,
@@ -112,7 +110,7 @@ void
 command_delete_comparison(DBus::Connection& conn, const string& config_name, unsigned int number1,
 			  unsigned int number2);
 
-list<XFile>
+vector<XFile>
 command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		   unsigned int number2);
 

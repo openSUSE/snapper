@@ -93,8 +93,8 @@ ProxySnapshotsLib::update()
 {
     proxy_snapshots.clear();
 
-    Snapshots& x = backref->snapper->getSnapshots();
-    for (Snapshots::iterator it = x.begin(); it != x.end(); ++it)
+    Snapshots& tmp = backref->snapper->getSnapshots();
+    for (Snapshots::iterator it = tmp.begin(); it != tmp.end(); ++it)
 	proxy_snapshots.push_back(new ProxySnapshotLib(it));
 }
 
@@ -134,14 +134,14 @@ void
 ProxySnappersLib::createConfig(const string& config_name, const string& subvolume,
 			       const string& fstype, const string& template_name)
 {
-    Snapper::createConfig(config_name, "/", subvolume, fstype, template_name);
+    Snapper::createConfig(config_name, target_root, subvolume, fstype, template_name);
 }
 
 
 void
 ProxySnappersLib::deleteConfig(const string& config_name)
 {
-    Snapper::deleteConfig(config_name, "/");
+    Snapper::deleteConfig(config_name, target_root);
 }
 
 
@@ -155,7 +155,7 @@ ProxySnappersLib::getSnapper(const string& config_name)
     }
 
     ProxySnapperLib* ret = new ProxySnapperLib(config_name);
-    proxy_snappers.push_back(unique_ptr<ProxySnapperLib>(ret));
+    proxy_snappers.emplace_back(ret);
     return ret;
 }
 

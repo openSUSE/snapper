@@ -157,7 +157,6 @@ public:
 
     typedef list<ProxySnapshot>::iterator iterator;
     typedef list<ProxySnapshot>::const_iterator const_iterator;
-    typedef list<ProxySnapshot>::size_type size_type;
 
     iterator begin() { return proxy_snapshots.begin(); }
     const_iterator begin() const { return proxy_snapshots.begin(); }
