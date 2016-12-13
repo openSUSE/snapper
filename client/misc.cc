@@ -34,32 +34,6 @@
 #include "misc.h"
 
 
-Snapshots::iterator
-read_num(Snapper* snapper, const string& str)
-{
-    Snapshots& snapshots = snapper->getSnapshots();
-
-    istringstream s(str);
-    unsigned int num = 0;
-    s >> num;
-
-    if (s.fail() || !s.eof())
-    {
-	cerr << sformat(_("Invalid snapshot '%s'."), str.c_str()) << endl;
-	exit(EXIT_FAILURE);
-    }
-
-    Snapshots::iterator snap = snapshots.find(num);
-    if (snap == snapshots.end())
-    {
-	cerr << sformat(_("Snapshot '%u' not found."), num) << endl;
-	exit(EXIT_FAILURE);
-    }
-
-    return snap;
-}
-
-
 unsigned int
 read_num(const string& str)
 {
@@ -74,36 +48,6 @@ read_num(const string& str)
     }
 
     return num;
-}
-
-
-pair<unsigned int, unsigned int>
-read_nums(const string& str, const string& delim)
-{
-    string::size_type pos = str.find(delim);
-    if (pos == string::npos)
-    {
-	if (delim == "..")
-	{
-	    cerr << _("Missing delimiter '..' between snapshot numbers.") << endl
-		 << _("See 'man snapper' for further instructions.") << endl;
-	    exit(EXIT_FAILURE);
-	}
-
-	cerr << _("Invalid snapshots.") << endl;
-	exit(EXIT_FAILURE);
-    }
-
-    unsigned int num1 = read_num(str.substr(0, pos));
-    unsigned int num2 = read_num(str.substr(pos + delim.size()));
-
-    if (num1 == num2)
-    {
-	cerr << _("Identical snapshots.") << endl;
-	exit(EXIT_FAILURE);
-    }
-
-    return pair<unsigned int, unsigned int>(num1, num2);
 }
 
 

@@ -29,14 +29,8 @@ using namespace snapper;
 using namespace std;
 
 
-Snapshots::iterator
-read_num(Snapper* snapper, const string& str);
-
 unsigned int
 read_num(const string& str);
-
-pair<unsigned int, unsigned int>
-read_nums(const string& str, const string& delim = "..");
 
 map<string, string>
 read_userdata(const string& s, const map<string, string>& old = map<string, string>());

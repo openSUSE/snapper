@@ -30,9 +30,6 @@
 #include "proxy.h"
 
 
-// TODO move code from types.{cc,h} and commands.{cc,h} to proxy-dbus.{cc,h}
-
-
 class ProxySnapshotDbus;
 class ProxySnapshotsDbus;
 class ProxySnapperDbus;
@@ -191,6 +188,9 @@ public:
     ~ProxyComparisonDbus();
 
     virtual const Files& getFiles() const override { return files; }
+
+    DBus::Connection& conn() const;
+    const string config_name() const;
 
     ProxySnapperDbus* backref;
 
