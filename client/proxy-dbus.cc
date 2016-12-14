@@ -81,6 +81,17 @@ ProxySnapshotDbus::config_name() const
 }
 
 
+ProxySnapshotsDbus::ProxySnapshotsDbus(ProxySnapperDbus* backref)
+    : backref(backref)
+{
+    XSnapshots tmp = command_list_xsnapshots(conn(), config_name());
+    for (XSnapshots::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
+	proxy_snapshots.push_back(new ProxySnapshotDbus(this, it->getType(), it->getNum(), it->getDate(),
+							it->getUid(), it->getPreNum(), it->getDescription(),
+							it->getCleanup(), it->getUserdata()));
+}
+
+
 DBus::Connection&
 ProxySnapshotsDbus::conn() const
 {
@@ -227,28 +238,6 @@ void
 ProxySnapperDbus::syncFilesystem() const
 {
     command_sync(conn(), config_name);
-}
-
-
-void
-ProxySnapshotsDbus::update()
-{
-    proxy_snapshots.clear();
-
-    XSnapshots x = command_list_xsnapshots(conn(), config_name());
-    for (XSnapshots::const_iterator it = x.begin(); it != x.end(); ++it)
-	proxy_snapshots.push_back(new ProxySnapshotDbus(this, it->getType(), it->getNum(), it->getDate(),
-							it->getUid(), it->getPreNum(), it->getDescription(),
-							it->getCleanup(), it->getUserdata()));
-}
-
-
-ProxySnapshots&
-ProxySnapperDbus::getSnapshots()
-{
-    proxy_snapshots.update();
-
-    return proxy_snapshots;
 }
 
 

@@ -89,11 +89,7 @@ class ProxySnapshotsDbus : public ProxySnapshots
 
 public:
 
-    ProxySnapshotsDbus(ProxySnapperDbus* backref)
-	: backref(backref)
-    {}
-
-    void update();
+    ProxySnapshotsDbus(ProxySnapperDbus* backref);
 
     DBus::Connection& conn() const;
     const string config_name() const;
@@ -136,7 +132,8 @@ public:
 
     virtual void syncFilesystem() const override;
 
-    virtual ProxySnapshots& getSnapshots() override;
+    virtual ProxySnapshots& getSnapshots() override { return proxy_snapshots; }
+    virtual const ProxySnapshots& getSnapshots() const override { return proxy_snapshots; }
 
     virtual void setupQuota() override;
 
