@@ -50,7 +50,7 @@ error_description(const DBus::ErrorException& e)
 	return _("Invalid configdata.");
 
     if (name == "error.illegal_snapshot")
-	return _("Illegal Snapshot.");
+	return _("Illegal snapshot.");
 
     if (name == "error.config_locked")
 	return _("Config is locked.");
