@@ -185,8 +185,6 @@ public:
 
 protected:
 
-    virtual void update() = 0;
-
     list<ProxySnapshot> proxy_snapshots;
 
 };
@@ -225,6 +223,7 @@ public:
     virtual void syncFilesystem() const = 0;
 
     virtual ProxySnapshots& getSnapshots() = 0;
+    virtual const ProxySnapshots& getSnapshots() const = 0;
 
     virtual void setupQuota() = 0;
 

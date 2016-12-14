@@ -86,26 +86,6 @@ ProxySnapperLib::createPostSnapshot(ProxySnapshots::const_iterator pre, const SC
 
 
 void
-ProxySnapshotsLib::update()
-{
-    proxy_snapshots.clear();
-
-    Snapshots& tmp = backref->snapper->getSnapshots();
-    for (Snapshots::iterator it = tmp.begin(); it != tmp.end(); ++it)
-	proxy_snapshots.push_back(new ProxySnapshotLib(it));
-}
-
-
-ProxySnapshots&
-ProxySnapperLib::getSnapshots()
-{
-    proxy_snapshots.update();
-
-    return proxy_snapshots;
-}
-
-
-void
 ProxySnapperLib::modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd)
 {
     snapper->modifySnapshot(to_lib(*snapshot).it, smd);
@@ -117,6 +97,10 @@ ProxySnapperLib::deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, boo
 {
     for (ProxySnapshots::iterator& snapshot : snapshots)
 	snapper->deleteSnapshot(to_lib(*snapshot).it);
+
+    ProxySnapshots& proxy_snapshots = getSnapshots();
+    for (ProxySnapshots::iterator& proxy_snapshot : snapshots)
+        proxy_snapshots.erase(proxy_snapshot);
 }
 
 
@@ -124,6 +108,15 @@ ProxyComparison
 ProxySnapperLib::createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs, bool mount)
 {
     return ProxyComparison(new ProxyComparisonLib(this, lhs, rhs, mount));
+}
+
+
+ProxySnapshotsLib::ProxySnapshotsLib(ProxySnapperLib* backref)
+    : backref(backref)
+{
+    Snapshots& tmp = backref->snapper->getSnapshots();
+    for (Snapshots::iterator it = tmp.begin(); it != tmp.end(); ++it)
+	proxy_snapshots.push_back(new ProxySnapshotLib(it));
 }
 
 

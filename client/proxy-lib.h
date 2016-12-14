@@ -74,11 +74,7 @@ class ProxySnapshotsLib : public ProxySnapshots
 
 public:
 
-    ProxySnapshotsLib(ProxySnapperLib* backref)
-	: backref(backref)
-    {}
-
-    void update();
+    ProxySnapshotsLib(ProxySnapperLib* backref);
 
     ProxySnapperLib* backref;
 
@@ -116,7 +112,8 @@ public:
 
     virtual void syncFilesystem() const override { snapper->syncFilesystem(); }
 
-    virtual ProxySnapshots& getSnapshots() override;
+    virtual ProxySnapshots& getSnapshots() override { return proxy_snapshots; }
+    virtual const ProxySnapshots& getSnapshots() const override { return proxy_snapshots; }
 
     virtual void setupQuota() override { snapper->setupQuota(); }
 
