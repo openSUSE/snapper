@@ -1659,6 +1659,12 @@ main(int argc, char** argv)
 	cerr << _("Failure") << " (" << e.what() << ")." << endl;
 	exit(EXIT_FAILURE);
     }
+    catch (const IllegalSnapshotException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << _("Illegal snapshot.") << endl;
+	exit(EXIT_FAILURE);
+    }
     catch (const ConfigNotFoundException& e)
     {
 	SN_CAUGHT(e);
