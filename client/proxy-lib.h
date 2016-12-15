@@ -121,7 +121,7 @@ public:
 
     virtual QuotaData queryQuotaData() const override { return snapper->queryQuotaData(); }
 
-    Snapper* snapper;
+    std::unique_ptr<Snapper> snapper;
 
 private:
 

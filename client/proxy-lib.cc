@@ -167,16 +167,8 @@ ProxyComparisonLib::ProxyComparisonLib(ProxySnapperLib* proxy_snapper, const Pro
 				       const ProxySnapshot& rhs, bool mount)
     : proxy_snapper(proxy_snapper)
 {
-    comparison.reset(new Comparison(proxy_snapper->snapper, to_lib(lhs).it, to_lib(rhs).it));
-
-    if (mount)
-    {
-	if (!lhs.isCurrent())
-	    lhs.mountFilesystemSnapshot(false);
-
-        if (!rhs.isCurrent())
-	    rhs.mountFilesystemSnapshot(false);
-    }
+    comparison.reset(new Comparison(proxy_snapper->snapper.get(), to_lib(lhs).it, to_lib(rhs).it,
+				    mount));
 }
 
 
