@@ -70,7 +70,7 @@ second_snapshot()
 void
 check_undo_statistics(unsigned int numCreate, unsigned int numModify, unsigned int numDelete)
 {
-    Comparison comparison(sh, first, second);
+    Comparison comparison(sh, first, second, false);
 
     Files& files = comparison.getFiles();
     for (Files::iterator it = files.begin(); it != files.end(); ++it)
@@ -101,7 +101,7 @@ undo()
 
     cout << "comparing snapshots..." << flush;
 
-    Comparison comparison(sh, first, second);
+    Comparison comparison(sh, first, second, false);
 
     cout << " done" << endl;
 
@@ -158,7 +158,7 @@ check_first()
 {
     Snapshots::const_iterator current = sh->getSnapshotCurrent();
 
-    Comparison comparison(sh, first, current);
+    Comparison comparison(sh, first, current, false);
 
     const Files& files = comparison.getFiles();
     for (Files::const_iterator it = files.begin(); it != files.end(); ++it)

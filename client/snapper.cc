@@ -1731,6 +1731,12 @@ main(int argc, char** argv)
 	cerr << sformat(_("Quota error (%s)."), e.what()) << endl;
 	exit(EXIT_FAILURE);
     }
+    catch (const Exception& e)
+    {
+	SN_CAUGHT(e);
+	cerr << sformat(_("Error (%s)."), e.what()) << endl;
+	exit(EXIT_FAILURE);
+    }
 
     exit(EXIT_SUCCESS);
 }
