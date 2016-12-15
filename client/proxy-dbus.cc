@@ -31,7 +31,7 @@ using namespace std;
 ProxySnapshotDbus::ProxySnapshotDbus(ProxySnapshotsDbus* backref, unsigned int num)
     : backref(backref), num(num)
 {
-    XSnapshot x = command_get_xsnapshot(conn(), config_name(), num);
+    XSnapshot x = command_get_xsnapshot(conn(), configName(), num);
 
     type = x.type;
     date = x.date;
@@ -56,14 +56,14 @@ ProxySnapshotDbus::ProxySnapshotDbus(ProxySnapshotsDbus* backref, SnapshotType t
 string
 ProxySnapshotDbus::mountFilesystemSnapshot(bool user_request) const
 {
-    return command_mount_snapshot(conn(), config_name(), num, user_request);
+    return command_mount_snapshot(conn(), configName(), num, user_request);
 }
 
 
 void
 ProxySnapshotDbus::umountFilesystemSnapshot(bool user_request) const
 {
-    command_umount_snapshot(conn(), config_name(), num, user_request);
+    command_umount_snapshot(conn(), configName(), num, user_request);
 }
 
 
@@ -74,17 +74,17 @@ ProxySnapshotDbus::conn() const
 }
 
 
-const string
-ProxySnapshotDbus::config_name() const
+const string&
+ProxySnapshotDbus::configName() const
 {
-    return backref->config_name();
+    return backref->configName();
 }
 
 
 ProxySnapshotsDbus::ProxySnapshotsDbus(ProxySnapperDbus* backref)
     : backref(backref)
 {
-    XSnapshots tmp = command_list_xsnapshots(conn(), config_name());
+    XSnapshots tmp = command_list_xsnapshots(conn(), configName());
     for (XSnapshots::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
 	proxy_snapshots.push_back(new ProxySnapshotDbus(this, it->getType(), it->getNum(), it->getDate(),
 							it->getUid(), it->getPreNum(), it->getDescription(),
@@ -99,8 +99,8 @@ ProxySnapshotsDbus::conn() const
 }
 
 
-const string
-ProxySnapshotsDbus::config_name() const
+const string&
+ProxySnapshotsDbus::configName() const
 {
     return backref->config_name;
 }
@@ -302,7 +302,7 @@ ProxyComparisonDbus::ProxyComparisonDbus(ProxySnapperDbus* backref, const ProxyS
 					 const ProxySnapshot& rhs, bool mount)
     : backref(backref), lhs(lhs), rhs(rhs), files(&file_paths)
 {
-    command_create_comparison(conn(), config_name(), lhs.getNum(), rhs.getNum());
+    command_create_comparison(conn(), configName(), lhs.getNum(), rhs.getNum());
 
     file_paths.system_path = command_get_mount_point(backref->conn(), backref->config_name, 0);
 
@@ -335,7 +335,7 @@ ProxyComparisonDbus::ProxyComparisonDbus(ProxySnapperDbus* backref, const ProxyS
 
 ProxyComparisonDbus::~ProxyComparisonDbus()
 {
-    command_delete_comparison(conn(), config_name(), lhs.getNum(), rhs.getNum());
+    command_delete_comparison(conn(), configName(), lhs.getNum(), rhs.getNum());
 }
 
 
@@ -346,8 +346,8 @@ ProxyComparisonDbus::conn() const
 }
 
 
-const string
-ProxyComparisonDbus::config_name() const
+const string&
+ProxyComparisonDbus::configName() const
 {
     return backref->config_name;
 }
