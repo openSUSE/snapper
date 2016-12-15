@@ -66,7 +66,7 @@ public:
     virtual void umountFilesystemSnapshot(bool user_request) const override;
 
     DBus::Connection& conn() const;
-    const string config_name() const;
+    const string& configName() const;
 
 private:
 
@@ -92,7 +92,7 @@ public:
     ProxySnapshotsDbus(ProxySnapperDbus* backref);
 
     DBus::Connection& conn() const;
-    const string config_name() const;
+    const string& configName() const;
 
 private:
 
@@ -195,7 +195,7 @@ public:
     virtual const Files& getFiles() const override { return files; }
 
     DBus::Connection& conn() const;
-    const string config_name() const;
+    const string& configName() const;
 
 private:
 
