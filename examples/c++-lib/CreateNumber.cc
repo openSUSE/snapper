@@ -12,11 +12,11 @@ using namespace std;
 
 
 void
-deleteAll()
+delete_all()
 {
-    Snapper* sh = new Snapper("testsuite", "/");
+    Snapper snapper("testsuite", "/");
 
-    Snapshots snapshots = sh->getSnapshots();
+    Snapshots snapshots = snapper.getSnapshots();
 
     vector<Snapshots::iterator> tmp;
     for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); ++it)
@@ -24,18 +24,14 @@ deleteAll()
 	    tmp.push_back(it);
 
     for (vector<Snapshots::iterator>::iterator it = tmp.begin(); it != tmp.end(); ++it)
-	sh->deleteSnapshot(*it);
-
-    delete sh;
+	snapper.deleteSnapshot(*it);
 }
 
 
-int
-main()
+void
+create_number()
 {
-    deleteAll();
-
-    Snapper* sh = new Snapper("testsuite", "/");
+    Snapper snapper("testsuite", "/");
 
     for (size_t i = 0; i < 100; ++i)
     {
@@ -46,10 +42,17 @@ main()
 	if (i % 5 == 0)
 	    scd.userdata["important"] = "yes";
 
-	sh->createSingleSnapshot(scd);
+	snapper.createSingleSnapshot(scd);
     }
+}
 
-    delete sh;
+
+int
+main()
+{
+    delete_all();
+
+    create_number();
 
     exit(EXIT_SUCCESS);
 }

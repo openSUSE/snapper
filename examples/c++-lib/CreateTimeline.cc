@@ -12,11 +12,11 @@ using namespace std;
 
 
 void
-deleteAll()
+delete_all()
 {
-    Snapper* sh = new Snapper("testsuite", "/");
+    Snapper snapper("testsuite", "/");
 
-    Snapshots snapshots = sh->getSnapshots();
+    Snapshots snapshots = snapper.getSnapshots();
 
     vector<Snapshots::iterator> tmp;
     for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); ++it)
@@ -24,18 +24,14 @@ deleteAll()
 	    tmp.push_back(it);
 
     for (vector<Snapshots::iterator>::iterator it = tmp.begin(); it != tmp.end(); ++it)
-	sh->deleteSnapshot(*it);
-
-    delete sh;
+	snapper.deleteSnapshot(*it);
 }
 
 
-int
-main()
+void
+create_timeline()
 {
-    deleteAll();
-
-    Snapper* sh = new Snapper("testsuite", "/");
+    Snapper snapper("testsuite", "/");
 
     time_t t = time(NULL) - 100 * 24*60*60;
     while (t < time(NULL))
@@ -45,13 +41,21 @@ main()
 	scd.description = "testsuite";
 	scd.cleanup = "timeline";
 
-	Snapshots::iterator snap = sh->createSingleSnapshot(scd);
-	// snap->setDate(t);
+	Snapshots::iterator snapshot = snapper.createSingleSnapshot(scd);
+	// snapshot->setDate(t);
+	snapper.modifySnapshot(snapshot, scd);
 
 	t += 60*60;
     }
+}
 
-    delete sh;
+
+int
+main()
+{
+    delete_all();
+
+    create_timeline();
 
     exit(EXIT_SUCCESS);
 }
