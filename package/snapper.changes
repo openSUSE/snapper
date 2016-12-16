@@ -2,7 +2,7 @@
 Thu Dec 15 21:36:23 CET 2016 - aschnell@suse.com
 
 - support option --no-dbus for all snapper commands (fate#319404,
-  fate#321049
+  fate#321049)
 - version 0.4.0
 
 -------------------------------------------------------------------
