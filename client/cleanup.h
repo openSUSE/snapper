@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2012] Novell, Inc.
+ * Copyright (c) 2016 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -20,11 +21,14 @@
  */
 
 
-void
-do_cleanup_number(DBus::Connection& conn, const string& config_name, bool verbose);
+#include "proxy.h"
+
 
 void
-do_cleanup_timeline(DBus::Connection& conn, const string& config_name, bool verbose);
+do_cleanup_number(ProxySnapper* snapper, bool verbose);
 
 void
-do_cleanup_empty_pre_post(DBus::Connection& conn, const string& config_name, bool verbose);
+do_cleanup_timeline(ProxySnapper* snapper, bool verbose);
+
+void
+do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose);

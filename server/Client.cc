@@ -1216,7 +1216,7 @@ Client::create_comparison(DBus::Connection& conn, DBus::Message& msg)
 
     lock.unlock();
 
-    Comparison* comparison = new Comparison(snapper, snapshot1, snapshot2);
+    Comparison* comparison = new Comparison(snapper, snapshot1, snapshot2, false);
 
     lock.lock();
 

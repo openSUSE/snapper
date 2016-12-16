@@ -22,11 +22,11 @@
 
 
 #include <string>
-#include <list>
+#include <vector>
 #include <map>
 
 using std::string;
-using std::list;
+using std::vector;
 using std::map;
 
 #include "dbus/DBusMessage.h"
@@ -34,6 +34,7 @@ using std::map;
 #include "snapper/Snapshot.h"
 #include "snapper/File.h"
 #include "snapper/SnapperTmpl.h"
+#include "snapper/Snapper.h"
 
 using namespace snapper;
 
@@ -44,14 +45,6 @@ struct XConfigInfo
     string subvolume;
 
     map<string, string> raw;
-
-    template<typename Type>
-    void read(const char* name, Type& value)
-    {
-	map<string, string>::const_iterator pos = raw.find(name);
-	if (pos != raw.end())
-	    pos->second >> value;
-    }
 };
 
 
@@ -60,7 +53,6 @@ struct XSnapshot
     SnapshotType getType() const { return type; }
 
     unsigned int getNum() const { return num; }
-    bool isCurrent() const { return num == 0; }
 
     time_t getDate() const { return date; }
 
@@ -87,26 +79,12 @@ struct XSnapshot
 
 struct XSnapshots
 {
-    typedef list<XSnapshot>::iterator iterator;
-    typedef list<XSnapshot>::const_iterator const_iterator;
+    typedef vector<XSnapshot>::const_iterator const_iterator;
 
-    iterator begin() { return entries.begin(); }
     const_iterator begin() const { return entries.begin(); }
-
-    iterator end() { return entries.end(); }
     const_iterator end() const { return entries.end(); }
 
-    const_iterator find(unsigned int num) const;
-
-    iterator findPre(iterator post);
-    const_iterator findPre(const_iterator post) const;
-
-    iterator findPost(iterator pre);
-    const_iterator findPost(const_iterator pre) const;
-
-    iterator erase(iterator pos) { return entries.erase(pos); }
-
-    list<XSnapshot> entries;
+    vector<XSnapshot> entries;
 };
 
 
@@ -114,13 +92,6 @@ struct XFile
 {
     string name;
     unsigned int status;
-};
-
-
-struct XQuotaData
-{
-    uint64_t size;
-    uint64_t used;
 };
 
 
@@ -140,6 +111,6 @@ namespace DBus
 
     Hihi& operator>>(Hihi& hihi, XFile& data);
 
-    Hihi& operator>>(Hihi& hihi, XQuotaData& data);
+    Hihi& operator>>(Hihi& hihi, QuotaData& data);
 
 }

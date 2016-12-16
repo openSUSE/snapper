@@ -185,6 +185,9 @@ namespace snapper
 	Files(const FilePaths* file_paths)
 	    : file_paths(file_paths) {}
 
+	Files(const FilePaths* file_paths, const vector<File>& entries)
+	    : file_paths(file_paths), entries(entries) {}
+
 	typedef vector<File>::iterator iterator;
 	typedef vector<File>::const_iterator const_iterator;
 	typedef vector<File>::size_type size_type;

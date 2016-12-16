@@ -35,8 +35,16 @@ namespace snapper
     {
     public:
 
+	/**
+	 * Create a comparison.
+	 *
+	 * The mount parameter allows to ensure that the two snapshots are
+	 * mounted for the lifetime of the Comparison object.
+	 */
 	Comparison(const Snapper* snapper, Snapshots::const_iterator snapshot1,
-		   Snapshots::const_iterator snapshot2);
+		   Snapshots::const_iterator snapshot2, bool mount);
+
+	~Comparison();
 
 	const Snapper* getSnapper() const { return snapper; }
 
@@ -45,9 +53,6 @@ namespace snapper
 
 	Files& getFiles() { return files; }
 	const Files& getFiles() const { return files; }
-
-	void mount() const;
-	void umount() const;
 
 	UndoStatistic getUndoStatistic() const;
         XAUndoStatistic getXAUndoStatistic() const;
@@ -64,10 +69,15 @@ namespace snapper
 	void save();
 	void filter();
 
+	void do_mount() const;
+	void do_umount() const;
+
 	const Snapper* snapper;
 
 	Snapshots::const_iterator snapshot1;
 	Snapshots::const_iterator snapshot2;
+
+	const bool mount;
 
 	FilePaths file_paths;
 
