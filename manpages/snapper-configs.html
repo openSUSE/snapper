@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>snapper-configs</title>
-    <meta name="generator" content="DocBook XSL Stylesheets V1.78.1" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.79.0" />
   </head>
   <body>
     <div class="refentry">
@@ -50,6 +50,28 @@
             </dd>
             <dt>
               <span class="term">
+                <code class="option">QGROUP=<em class="replaceable"><code>qgroup</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>The btrfs quota group used for space aware cleanup
+	  algorithms.</p>
+              <p>Only supported for btrfs.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">SPACE_LIMIT=<em class="replaceable"><code>float</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Limit for the fraction of the filesystems space the snapshots
+	  should use.</p>
+              <p>Only supported for btrfs.</p>
+              <p>Default value is "0.5".</p>
+              <p>New in version 0.3.0.</p>
+            </dd>
+            <dt>
+              <span class="term">
                 <code class="option">ALLOW_USERS=<em class="replaceable"><code>users</code></em></code>
               </span>
             </dt>
@@ -57,7 +79,7 @@
               <p>List of users allowed to operate with the config. The user-names
 	  must be separated by spaces. Spaces in usernames can be escaped with a
 	  "\".</p>
-              <p>Also see the PERMISSONS section in
+              <p>Also see the PERMISSIONS section in
 	  <a class="citerefentry" href="snapper.html"><span class="citerefentry"><span class="refentrytitle">snapper</span>(8)</span></a>.</p>
               <p>Default value is "" but "root" is always
 	  implicitly included.</p>
@@ -71,7 +93,7 @@
               <p>List of groups allowed to operate with the config. The group-names
 	  must be separated by spaces. Spaces in group-names can be escaped with a
 	  "\".</p>
-              <p>Also see the PERMISSONS section in
+              <p>Also see the PERMISSIONS section in
 	  <a class="citerefentry" href="snapper.html"><span class="citerefentry"><span class="refentrytitle">snapper</span>(8)</span></a>.</p>
               <p>Default value is "".</p>
             </dd>
@@ -84,7 +106,7 @@
               <p>Defines whether snapper will sync the users and groups from
 	  ALLOW_USERS and ALLOW_GROUPS to the ACL of the <code class="filename">.snapshots</code>
 	  directory.</p>
-              <p>Also see the PERMISSONS section in
+              <p>Also see the PERMISSIONS section in
 	  <a class="citerefentry" href="snapper.html"><span class="citerefentry"><span class="refentrytitle">snapper</span>(8)</span></a>.</p>
               <p>Default value is "no".</p>
               <p>New in version 0.2.0.</p>
@@ -121,7 +143,8 @@
             </dd>
             <dt>
               <span class="term">
-                <code class="option">NUMBER_LIMIT=<em class="replaceable"><code>number</code></em></code>
+                <code class="option">NUMBER_LIMIT=<em class="replaceable"><code>number</code></em> or
+	<em class="replaceable"><code>range</code></em></code>
               </span>
             </dt>
             <dd>
@@ -131,7 +154,8 @@
             </dd>
             <dt>
               <span class="term">
-                <code class="option">NUMBER_LIMIT_IMPORTANT=<em class="replaceable"><code>number</code></em></code>
+                <code class="option">NUMBER_LIMIT_IMPORTANT=<em class="replaceable"><code>number</code></em> or
+	<em class="replaceable"><code>range</code></em></code>
               </span>
             </dt>
             <dd>
@@ -177,7 +201,8 @@
             </dd>
             <dt>
               <span class="term">
-                <code class="option">TIMELINE_LIMIT_HOURLY=<em class="replaceable"><code>number</code></em></code>
+                <code class="option">TIMELINE_LIMIT_HOURLY=<em class="replaceable"><code>number</code></em> or
+	<em class="replaceable"><code>range</code></em></code>
               </span>
             </dt>
             <dd>
@@ -188,7 +213,8 @@
             </dd>
             <dt>
               <span class="term">
-                <code class="option">TIMELINE_LIMIT_DAILY=<em class="replaceable"><code>number</code></em></code>
+                <code class="option">TIMELINE_LIMIT_DAILY=<em class="replaceable"><code>number</code></em> or
+	<em class="replaceable"><code>range</code></em></code>
               </span>
             </dt>
             <dd>
@@ -199,7 +225,8 @@
             </dd>
             <dt>
               <span class="term">
-                <code class="option">TIMELINE_LIMIT_WEEKLY=<em class="replaceable"><code>number</code></em></code>
+                <code class="option">TIMELINE_LIMIT_WEEKLY=<em class="replaceable"><code>number</code></em> or
+	<em class="replaceable"><code>range</code></em></code>
               </span>
             </dt>
             <dd>
@@ -211,7 +238,8 @@
             </dd>
             <dt>
               <span class="term">
-                <code class="option">TIMELINE_LIMIT_MONTHLY=<em class="replaceable"><code>number</code></em></code>
+                <code class="option">TIMELINE_LIMIT_MONTHLY=<em class="replaceable"><code>number</code></em> or
+	<em class="replaceable"><code>range</code></em></code>
               </span>
             </dt>
             <dd>
@@ -222,7 +250,8 @@
             </dd>
             <dt>
               <span class="term">
-                <code class="option">TIMELINE_LIMIT_YEARLY=<em class="replaceable"><code>number</code></em></code>
+                <code class="option">TIMELINE_LIMIT_YEARLY=<em class="replaceable"><code>number</code></em> or
+	<em class="replaceable"><code>range</code></em></code>
               </span>
             </dt>
             <dd>
@@ -255,6 +284,31 @@
         </div>
       </div>
       <div class="refsect1">
+        <a id="types"></a>
+        <h2>TYPES</h2>
+        <p>Some of the types used for the variables deserve an explanation.</p>
+        <div class="variablelist">
+          <dl class="variablelist">
+            <dt>
+              <span class="term">range</span>
+            </dt>
+            <dd>
+              <p>A range of numbers given as
+	  <em class="replaceable"><code>min-value</code></em>-<em class="replaceable"><code>max-value</code></em>,
+	  e.g. "10-20".</p>
+            </dd>
+            <dt>
+              <span class="term">qgroup</span>
+            </dt>
+            <dd>
+              <p>A btrfs qgroup in the standard form
+	  <em class="replaceable"><code>level</code></em>-<em class="replaceable"><code>id</code></em>,
+	  e.g. "1/0".</p>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="refsect1">
         <a id="notes"></a>
         <h2>NOTES</h2>
         <p>The default values stated here are the values snapper uses when the
@@ -271,7 +325,7 @@
       <div class="refsect1">
         <a id="authors"></a>
         <h2>AUTHORS</h2>
-        <p>Arvin Schnell <code class="email">&lt;<a class="email" href="mailto:aschnell@suse.de">aschnell@suse.de</a>&gt;</code></p>
+        <p>Arvin Schnell <code class="email">&lt;<a class="email" href="mailto:aschnell@suse.com">aschnell@suse.com</a>&gt;</code></p>
       </div>
       <div class="refsect1">
         <a id="see_also"></a>

@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>snapper</title>
-    <meta name="generator" content="DocBook XSL Stylesheets V1.78.1" />
+    <meta name="generator" content="DocBook XSL Stylesheets V1.79.0" />
   </head>
   <body>
     <div class="refentry">
@@ -112,7 +112,8 @@
                 <span class="glossterm">number</span>
               </dt>
               <dd class="glossdef">
-                <p>Deletes old snapshots when a certain number of snapshots is reached.</p>
+                <p>Deletes old snapshots when a certain number of snapshots is
+	    reached.</p>
               </dd>
               <dt>
                 <span class="glossterm">timeline</span>
@@ -129,13 +130,36 @@
               </dd>
             </dl>
           </div>
+          <p>The number and timeline cleanup algorithm can also try to keep the
+      space used by snapshots below a limit. For that quota must be setup, see
+      command setup-quota, and the LIMIT variables in the config file must
+      have ranges (min- and max-value). The algorithms will then make two
+      passes:
+      </p>
+          <div class="orderedlist">
+            <ol class="orderedlist" type="1">
+              <li class="listitem">
+                <p>Delete snapshots above the max-value independent of the used
+	  space.</p>
+              </li>
+              <li class="listitem">
+                <p>Delete snapshots above the min-value until the limit for
+	  the used space is reached.</p>
+              </li>
+            </ol>
+          </div>
+          <p>
+      The limit for the used space can be configured via the SPACE_LIMIT
+      variable. Note: Only snapshots that have a cleanup algorithm set are
+      taken into account when calculating the used space.
+      </p>
         </div>
         <div class="refsect2">
           <a id="filters"></a>
           <h3>Filters</h3>
           <p>Some files keep state information of the system,
       e.g. <code class="filename">/etc/mtab</code>. Such files should never be
-      reverted. To help users, snapper allows to ignore these files.</p>
+      reverted. To help users, snapper allows one to ignore these files.</p>
           <p>Each line in all
       files <code class="filename">/etc/snapper/filters/*.txt</code> specifies a
       pattern. When snapper computes the difference between two snapshots it
@@ -207,7 +231,7 @@
               </span>
             </dt>
             <dd>
-              <p>Operate without a DBus connection. Only works for some commands.</p>
+              <p>Operate without a DBus connection.</p>
               <p>Use with caution since a running snapperd will not know about
 	  modifications made to the system.</p>
             </dd>
@@ -646,6 +670,14 @@
             </dd>
             <dt>
               <span class="term">
+                <code class="option">setup-quota</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Sets up quota. Currently only supported with btrfs.</p>
+            </dd>
+            <dt>
+              <span class="term">
                 <code class="option">cleanup <em class="replaceable"><code>cleanup-algorithm</code></em></code>
               </span>
             </dt>
@@ -790,7 +822,7 @@
       <div class="refsect1">
         <a id="authors"></a>
         <h2>AUTHORS</h2>
-        <p>Arvin Schnell <code class="email">&lt;<a class="email" href="mailto:aschnell@suse.de">aschnell@suse.de</a>&gt;</code></p>
+        <p>Arvin Schnell <code class="email">&lt;<a class="email" href="mailto:aschnell@suse.com">aschnell@suse.com</a>&gt;</code></p>
       </div>
       <div class="refsect1">
         <a id="see_also"></a>
