@@ -144,7 +144,7 @@ ProxySnappersLib::getSnapper(const string& config_name)
 	    return proxy_snapper.get();
     }
 
-    ProxySnapperLib* ret = new ProxySnapperLib(config_name);
+    ProxySnapperLib* ret = new ProxySnapperLib(config_name, target_root);
     proxy_snappers.emplace_back(ret);
     return ret;
 }

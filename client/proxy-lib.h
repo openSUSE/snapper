@@ -86,8 +86,8 @@ class ProxySnapperLib : public ProxySnapper
 
 public:
 
-    ProxySnapperLib(const string& config_name)
-	: snapper(new Snapper(config_name, "/")), proxy_snapshots(this)
+    ProxySnapperLib(const string& config_name, const string& target_root)
+	: snapper(new Snapper(config_name, target_root)), proxy_snapshots(this)
     {}
 
     virtual const string& configName() const override { return snapper->configName(); }
