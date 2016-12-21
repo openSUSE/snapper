@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Dec 21 10:29:57 CET 2016 - aschnell@suse.com
+
+- fixed --root option (bsc#1016633)
+- version 0.4.1
+
+-------------------------------------------------------------------
 Thu Dec 15 21:36:23 CET 2016 - aschnell@suse.com
 
 - support option --no-dbus for all snapper commands (fate#319404,
