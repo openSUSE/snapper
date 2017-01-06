@@ -145,6 +145,12 @@ class MyPlugin(Plugin):
                     if found and important:
                         return True, True
         return found, important
+    
+    def zypper_arguments(self):
+        if basename(readlink("/proc/%d/exe" % getppid())) == "zypper":
+            return " ".join(open("/proc/%s/cmdline" % getppid()).read().split('\x00')[1:])
+        else:
+            return ""
 
 
     def PLUGINBEGIN(self, headers, body):
@@ -153,7 +159,7 @@ class MyPlugin(Plugin):
 
         logging.debug("headers: %s" % headers)
 
-        self.description = "zypp(%s)" % basename(readlink("/proc/%d/exe" % getppid()))
+        self.description = "zypp(%s) %s" % (basename(readlink("/proc/%d/exe" % getppid())), self.zypper_arguments())
         self.userdata = self.get_userdata(headers)
 
         self.ack()
