@@ -1,0 +1,20 @@
+sudo: required
+language: bash
+services:
+  - docker
+
+# define the build matrix
+env:
+  - BUILD_FLAVOR=tumbleweed
+  - BUILD_FLAVOR=leap
+  - BUILD_FLAVOR=fedora
+  - BUILD_FLAVOR=ubuntu
+  - BUILD_FLAVOR=debian
+
+before_install:
+  # use the Dockerfile.<distro> file for building the image
+  - docker build -f Dockerfile.$BUILD_FLAVOR -t snapper-devel .
+
+script:
+  # run the respective .travis.<distro>.sh script
+  - docker run -it snapper-devel ./.travis.$BUILD_FLAVOR.sh
