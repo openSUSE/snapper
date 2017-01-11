@@ -372,7 +372,7 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
 	{ "all-configs",	no_argument,		0,	'a' },
-	{ "full",	no_argument,	0, 'f' }'
+	{ "full",	no_argument,	0, 'f' },
 	{ 0, 0, 0, 0 }
     };
 
