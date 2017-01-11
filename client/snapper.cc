@@ -355,6 +355,7 @@ help_list()
 	 << _("    Options for 'list' command:") << endl
 	 << _("\t--type, -t <type>\t\tType of snapshots to list.") << endl
 	 << _("\t--all-configs, -a\t\tList snapshots from all accessible configs.") << endl
+	 << _("\t--full, -a\t\tDisplay full description even if it may wrap.") << endl
 	 << endl;
 }
 
