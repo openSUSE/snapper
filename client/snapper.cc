@@ -363,7 +363,7 @@ enum ListMode { LM_ALL, LM_SINGLE, LM_PRE_POST };
 
 
 void
-list_from_one_config(ProxySnapper* snapper, ListMode list_mode);
+list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool full);
 
 
 void
