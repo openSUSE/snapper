@@ -355,6 +355,7 @@ help_list()
 	 << _("    Options for 'list' command:") << endl
 	 << _("\t--type, -t <type>\t\tType of snapshots to list.") << endl
 	 << _("\t--all-configs, -a\t\tList snapshots from all accessible configs.") << endl
+	 << _("\t--full, -f\t\tDo not truncate snapshots descriptions even if they may wrap.") << endl
 	 << endl;
 }
 
@@ -371,6 +372,7 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
 	{ "all-configs",	no_argument,		0,	'a' },
+	{ "full",	no_argument,	0, 'f' }'
 	{ 0, 0, 0, 0 }
     };
 
@@ -380,6 +382,12 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
 	cerr << _("Command 'list' does not take arguments.") << endl;
 	exit(EXIT_FAILURE);
     }
+	
+	bool full = false;
+	if ((opt = opts.find("full")) != opts.end())
+	{
+		full = true;
+	}
 
     ListMode list_mode = LM_ALL;
 
@@ -426,13 +434,13 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
                  << snapper->getConfig().getSubvolume() << endl;
         }
 
-        list_from_one_config(snapper, list_mode);
+        list_from_one_config(snapper, list_mode, full);
     }
 }
 
 
 void
-list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
+list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool full)
 {
     Table table;
 
@@ -450,6 +458,12 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
 	    header.add(_("Description"));
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
+	    
+	    //truncate description?
+	    if (full == false)
+	    {
+			table.allowAbbrev(6);
+		}
 
 	    const ProxySnapshots& snapshots = snapper->getSnapshots();
 	    for (const ProxySnapshot& snapshot : snapshots)
@@ -477,6 +491,11 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
 	    header.add(_("Description"));
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
+	    
+	    //truncate description?
+	    if (full == false) {
+			table.allowAbbrev(3);
+		}
 
 	    const ProxySnapshots& snapshots = snapper->getSnapshots();
 	    for (const ProxySnapshot& snapshot : snapshots)
@@ -505,6 +524,12 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
 	    header.add(_("Description"));
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
+	    
+	    //truncate description?
+	    
+	    if (full == false) {
+			table.allowAbbrev(4);
+		}
 
 	    const ProxySnapshots& snapshots = snapper->getSnapshots();
 	    for (ProxySnapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
