@@ -371,6 +371,7 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
 	{ "all-configs",	no_argument,		0,	'a' },
+	{"full",	no_argument, 0, 'f'},
 	{ 0, 0, 0, 0 }
     };
 
@@ -399,6 +400,12 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
 	    exit(EXIT_FAILURE);
 	}
     }
+    
+    bool full = false;
+    if ((opt = opts.find("full")) != opts.end())
+    {
+		full = true;
+	}
 
     vector<string> tmp;
 
@@ -426,13 +433,13 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
                  << snapper->getConfig().getSubvolume() << endl;
         }
 
-        list_from_one_config(snapper, list_mode);
+        list_from_one_config(snapper, list_mode, full);
     }
 }
 
 
 void
-list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
+list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool full)
 {
     Table table;
 
@@ -450,6 +457,11 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
 	    header.add(_("Description"));
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
+	    
+	    if (full == false)
+		{
+			table.allowAbbrev(6);
+		}
 
 	    const ProxySnapshots& snapshots = snapper->getSnapshots();
 	    for (const ProxySnapshot& snapshot : snapshots)
@@ -477,6 +489,11 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
 	    header.add(_("Description"));
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
+	    
+	    if (full == false)
+	    {
+			table.allowAbbrev(3);
+		}
 
 	    const ProxySnapshots& snapshots = snapper->getSnapshots();
 	    for (const ProxySnapshot& snapshot : snapshots)
@@ -505,6 +522,11 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
 	    header.add(_("Description"));
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
+	    
+	    if (full == false)
+	    {
+			table.allowAbbrev(4);
+		}
 
 	    const ProxySnapshots& snapshots = snapper->getSnapshots();
 	    for (ProxySnapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
