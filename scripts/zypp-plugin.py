@@ -166,7 +166,7 @@ class MyPlugin(Plugin):
             argument = " " + " ".join(open("/proc/%s/cmdline" % getppid()).read().split('\x00')[1:])
         else:
             return ""
-	if config.zypper_extended_description_length == "0":
+	if config.zypper_extended_description_length == 0:
 		return argument
 	else:
 		return argument[0:config.zypper_extended_description_length]
