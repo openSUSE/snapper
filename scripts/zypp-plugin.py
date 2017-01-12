@@ -56,9 +56,8 @@ class Config:
 
     def __init__(self):
         self.solvables = []
-	self.zypper_extended_description = []
-	self.zypper_extended_description.append("false")
-	self.zypper_extended_description.append("0")
+	self.self.zypper_extended_description_enabled = "false"
+	self.self.zypper_extended_description_length = 0
         self.load_file("/etc/snapper/zypp-plugin.conf")
 
 
@@ -102,8 +101,8 @@ class Config:
 					loggin.error("unknown extended-config enabled attribute %s" % description_enabled)
 					continue
 				if description_enabled == "true":
-					self.zypper_extended_description[0] = "true"
-					self.zypper_extended_description[1] = string_size
+					self.zypper_extended_description_enabled = "true"
+					self.zypper_extended_description_length = string_size
 	except:
 		pass
 
@@ -167,10 +166,10 @@ class MyPlugin(Plugin):
             argument = " " + " ".join(open("/proc/%s/cmdline" % getppid()).read().split('\x00')[1:])
         else:
             return ""
-	if config.zypper_extended_description[1] == "0":
+	if config.zypper_extended_description_length == "0":
 		return argument
 	else:
-		return argument[0:int(config.zypper_extended_description[1])]
+		return argument[0:int(config.zypper_extended_description_length)]
 
 
     def PLUGINBEGIN(self, headers, body):
@@ -178,10 +177,9 @@ class MyPlugin(Plugin):
         logging.info("PLUGINBEGIN")
 
         logging.debug("headers: %s" % headers)
-	if config.zypper_extended_description[0] != "true":
-		self.description = "zypp(%s)" % basename(readlink("/proc/%d/exe" % getppid()))
-	elif config.zypper_extended_description[0] == "true":
-        	self.description = "zypp(%s)%s" % (basename(readlink("/proc/%d/exe" % getppid())), self.zypper_arguments())
+	self.description = "zypp(%s)" % basename(readlink("/proc/%d/exe" % getppid()))
+	if config.zypper_extended_description_enabled == "true":
+		self.description.append(self.zypper_arguments())
         self.userdata = self.get_userdata(headers)
 
         self.ack()
