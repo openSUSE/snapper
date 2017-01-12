@@ -462,7 +462,7 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool no_abbrev)
 	    //truncate description?
 	    if (no_abbrev == false)
 	    {
-			table.allowAbbrev(6);
+			table.allowAbbrev(7);
 		}
 
 	    const ProxySnapshots& snapshots = snapper->getSnapshots();
@@ -494,7 +494,7 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool no_abbrev)
 	    
 	    //truncate description?
 	    if (no_abbrev == false) {
-			table.allowAbbrev(3);
+			table.allowAbbrev(4);
 		}
 
 	    const ProxySnapshots& snapshots = snapper->getSnapshots();
@@ -528,7 +528,7 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool no_abbrev)
 	    //truncate description?
 	    
 	    if (no_abbrev == false) {
-			table.allowAbbrev(4);
+			table.allowAbbrev(5);
 		}
 
 	    const ProxySnapshots& snapshots = snapper->getSnapshots();
