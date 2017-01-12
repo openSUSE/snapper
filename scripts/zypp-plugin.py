@@ -56,7 +56,7 @@ class Config:
 
     def __init__(self):
         self.solvables = []
-	self.self.zypper_extended_description_enabled = "false"
+	self.self.zypper_extended_description_enabled = False
 	self.self.zypper_extended_description_length = 0
         self.load_file("/etc/snapper/zypp-plugin.conf")
 
