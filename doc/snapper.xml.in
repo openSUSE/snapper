@@ -345,7 +345,7 @@
 	      </listitem>
 	    </varlistentry>
 	    <varlistentry>
-			<term><option>-f, --full</option></term>
+			<term><option>-A, --no-abbrev</option></term>
 			<listitem>
 				<para>Do not truncate snapshots descriptions. Output may wrap.</para>
 			</listitem>
