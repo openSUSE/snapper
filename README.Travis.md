@@ -22,8 +22,8 @@ https://docs.travis-ci.com/user/customizing-the-build#Build-Matrix).
   Dockerfile.tumbleweed -t snapper-devel .`, the Docker image automatically
   includes also the copy of the current Snapper sources.
 - Then run the build: `docker run -it --rm snapper-devel ./.travis.tumbleweed.sh`
-  (The `--rm` will cleanup the new layer created by the build, if want to
-  inspect it then remove it.)
+  (The `--rm` will cleanup the new Docker image layer created by the build,
+  if you want to inspect the build artifacts then remove it.)
 - If you need to debug a failure then run `bash` instead of the Travis script
   and run the build steps manually. If you need an editor or some other tool
   you can install them via the respective packaging tool, see the `Dockerfile`

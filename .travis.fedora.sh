@@ -15,11 +15,11 @@ rpmbuild -bb -D "fedora_version 25" -D "jobs `nproc`" package/*.spec
 
 # test the %pre/%post scripts by installing/updating/removing the built packages
 # ignore the dependencies to make the test easier, as a smoke test it's good enough
-rpm -iv --force --nodeps /root/rpmbuild/RPMS/**/*.rpm
+rpm -iv --force --nodeps /root/rpmbuild/RPMS/*/*.rpm
 
 # smoke test, make sure snapper at least starts
 snapper --version
 
-rpm -Uv --force --nodeps /root/rpmbuild/RPMS/**/*.rpm
+rpm -Uv --force --nodeps /root/rpmbuild/RPMS/*/*.rpm
 # get the plain package names and remove all packages at once
 rpm -ev --nodeps `rpm -q --qf '%{NAME} ' -p /root/rpmbuild/RPMS/**/*.rpm`
