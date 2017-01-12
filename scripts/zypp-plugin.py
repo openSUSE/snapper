@@ -101,8 +101,8 @@ class Config:
 					loggin.error("unknown extended-config enabled attribute %s" % description_enabled)
 					continue
 				if description_enabled == "true":
-					self.zypper_extended_description_enabled = "true"
-					self.zypper_extended_description_length = string_size
+					self.zypper_extended_description_enabled = True
+					self.zypper_extended_description_length = int(string_size)
 	except:
 		pass
 
@@ -169,7 +169,7 @@ class MyPlugin(Plugin):
 	if config.zypper_extended_description_length == "0":
 		return argument
 	else:
-		return argument[0:int(config.zypper_extended_description_length)]
+		return argument[0:config.zypper_extended_description_length]
 
 
     def PLUGINBEGIN(self, headers, body):
@@ -178,7 +178,7 @@ class MyPlugin(Plugin):
 
         logging.debug("headers: %s" % headers)
 	self.description = "zypp(%s)" % basename(readlink("/proc/%d/exe" % getppid()))
-	if config.zypper_extended_description_enabled == "true":
+	if config.zypper_extended_description_enabled == True:
 		self.description.append(self.zypper_arguments())
         self.userdata = self.get_userdata(headers)
 
