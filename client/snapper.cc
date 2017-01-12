@@ -355,7 +355,7 @@ help_list()
 	 << _("    Options for 'list' command:") << endl
 	 << _("\t--type, -t <type>\t\tType of snapshots to list.") << endl
 	 << _("\t--all-configs, -a\t\tList snapshots from all accessible configs.") << endl
-	 << _("\t--full, -f\t\tDo not truncate snapshots descriptions even if they may wrap.") << endl
+	 << _("\t--no-abbrev, -A\t\tDo not truncate snapshots descriptions even if they may wrap.") << endl
 	 << endl;
 }
 
@@ -363,7 +363,7 @@ enum ListMode { LM_ALL, LM_SINGLE, LM_PRE_POST };
 
 
 void
-list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool full);
+list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool no_abbrev);
 
 
 void
@@ -372,7 +372,7 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
 	{ "all-configs",	no_argument,		0,	'a' },
-	{ "full",	no_argument,	0, 'f' },
+	{ "no-abbrev",	no_argument,	0, 'A' },
 	{ 0, 0, 0, 0 }
     };
 
@@ -382,16 +382,16 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
 	cerr << _("Command 'list' does not take arguments.") << endl;
 	exit(EXIT_FAILURE);
     }
-	
-	bool full = false;
-	if ((opt = opts.find("full")) != opts.end())
-	{
-		full = true;
-	}
 
     ListMode list_mode = LM_ALL;
 
     GetOpts::parsed_opts::const_iterator opt;
+	
+	bool no_abbrev = false;
+	if ((opt = opts.find("no-abbrev")) != opts.end())
+	{
+		no_abbrev = true;
+	}
 
     if ((opt = opts.find("type")) != opts.end())
     {
@@ -434,13 +434,13 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
                  << snapper->getConfig().getSubvolume() << endl;
         }
 
-        list_from_one_config(snapper, list_mode, full);
+        list_from_one_config(snapper, list_mode, no_abbrev);
     }
 }
 
 
 void
-list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool full)
+list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool no_abbrev)
 {
     Table table;
 
@@ -460,7 +460,7 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool full)
 	    table.setHeader(header);
 	    
 	    //truncate description?
-	    if (full == false)
+	    if (no_abbrev == false)
 	    {
 			table.allowAbbrev(6);
 		}
@@ -493,7 +493,7 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool full)
 	    table.setHeader(header);
 	    
 	    //truncate description?
-	    if (full == false) {
+	    if (no_abbrev == false) {
 			table.allowAbbrev(3);
 		}
 
@@ -527,7 +527,7 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool full)
 	    
 	    //truncate description?
 	    
-	    if (full == false) {
+	    if (no_abbrev == false) {
 			table.allowAbbrev(4);
 		}
 
