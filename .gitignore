@@ -8,6 +8,7 @@ autom4te.cache
 config.*
 configure
 depcomp
+/debian
 install-sh
 libtool
 ltmain.sh

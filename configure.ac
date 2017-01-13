@@ -183,6 +183,6 @@ AC_OUTPUT(
 	testsuite-real/Makefile
 	testsuite-cmp/Makefile
 	package/snapper.spec:snapper.spec.in
-        debian/snapper-Debian.dsc.in:debian/snapper-Debian.dsc.in.in
-        debian/snapper-xUbuntu.dsc.in:debian/snapper-xUbuntu.dsc.in.in
+	dists/debian/snapper-Debian.dsc.in:dists/debian/snapper-Debian.dsc.in.in
+	dists/debian/snapper-xUbuntu.dsc.in:dists/debian/snapper-xUbuntu.dsc.in.in
 )

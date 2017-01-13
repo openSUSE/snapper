@@ -4,8 +4,8 @@ set -e -x
 
 make -f Makefile.repo
 
-# convert the OBS Debian files to the native Debian files
-(cd debian && rename 's/^debian\.//' debian.*)
+# copy the Debian files to the expected place
+cp -a dists/debian debian
 
 # build binary packages
 dpkg-buildpackage -j`nproc` -rfakeroot -b
