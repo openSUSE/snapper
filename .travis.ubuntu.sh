@@ -5,7 +5,7 @@ set -e -x
 make -f Makefile.repo
 
 # copy the Debian files to the expected place
-cp -a package_deb debian
+cp -a dists/debian debian
 
 # build binary packages
 dpkg-buildpackage -j`nproc` -rfakeroot -b
