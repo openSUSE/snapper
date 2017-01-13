@@ -1,5 +1,5 @@
-etc/cron.daily/snapper
-etc/cron.hourly/snapper
+etc/cron.daily/suse.de-snapper etc/cron.daily/snapper
+etc/cron.hourly/suse.de-snapper etc/cron.hourly/snapper
 etc/dbus-1/system.d/org.opensuse.Snapper.conf
 etc/logrotate.d/snapper
 usr/bin/snapper

@@ -1,0 +1,26 @@
+# Build the latest openSUSE Leap (42.x) image
+FROM opensuse:leap
+
+RUN zypper --non-interactive in --no-recommends \
+  autoconf \
+  automake \
+  boost-devel \
+  dbus-1-devel \
+  docbook-xsl-stylesheets \
+  e2fsprogs-devel \
+  gcc-c++ \
+  grep \
+  libacl-devel \
+  libbtrfs-devel \
+  libmount-devel \
+  libtool \
+  libxml2-devel \
+  libxslt \
+  pam-devel \
+  rpm-build \
+  which
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+COPY . /usr/src/app
