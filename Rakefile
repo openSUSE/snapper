@@ -25,7 +25,7 @@ Packaging.configuration do |conf|
     # filesystems:snapper/snapper
     conf.obs_api = "https://api.opensuse.org/"
     conf.obs_project = "filesystems:snapper"
-    conf.obs_sr_project = "filesystems:snapper"
+    conf.obs_sr_project = "openSUSE:Factory"
     conf.obs_target = "openSUSE_Factory"
   end
 end
