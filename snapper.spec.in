@@ -98,7 +98,7 @@ autoconf
 %if 0%{?suse_version} <= 1310
 	--disable-rollback							\
 %endif
-%if 0%{?suse_version} <= 1320
+%if 0%{?suse_version} <= 1310
 	--disable-btrfs-quota							\
 %endif
 	--disable-silent-rules --disable-ext4

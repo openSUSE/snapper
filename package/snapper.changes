@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Feb 02 14:49:59 CET 2017 - aschnell@suse.com
+
+- build SLE12 versions with quota support again (bsc#1021370)
+- versions 0.4.2
+
+-------------------------------------------------------------------
 Wed Dec 21 10:29:57 CET 2016 - aschnell@suse.com
 
 - fixed --root option (bsc#1016633)

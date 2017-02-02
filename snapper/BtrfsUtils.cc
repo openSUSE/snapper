@@ -77,6 +77,10 @@ struct btrfs_ioctl_vol_args_v2
 #define BTRFS_IOC_SUBVOL_GETFLAGS _IOR(BTRFS_IOCTL_MAGIC, 25, __u64)
 #endif
 
+#ifndef BTRFS_QGROUP_LEVEL_SHIFT
+#define BTRFS_QGROUP_LEVEL_SHIFT 48
+#endif
+
 
 namespace snapper
 {
