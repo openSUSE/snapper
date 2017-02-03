@@ -661,15 +661,15 @@ namespace snapper
 	if (btrfs->getQGroup() != no_qgroup)
 	    SN_THROW(QuotaException("qgroup already set"));
 
-	SDir subvolume_dir = openSubvolumeDir();
+	SDir general_dir = btrfs->openGeneralDir();
 
-	quota_enable(subvolume_dir.fd());
+	quota_enable(general_dir.fd());
 
-	qgroup_t qgroup = qgroup_find_free(subvolume_dir.fd(), 1);
+	qgroup_t qgroup = qgroup_find_free(general_dir.fd(), 1);
 
 	y2mil("free qgroup:" << format_qgroup(qgroup));
 
-	qgroup_create(subvolume_dir.fd(), qgroup);
+	qgroup_create(general_dir.fd(), qgroup);
 
 	setConfigInfo({ { "QGROUP", format_qgroup(qgroup) } });
 
@@ -694,15 +694,15 @@ namespace snapper
 	if (btrfs->getQGroup() == no_qgroup)
 	    SN_THROW(QuotaException("qgroup not set"));
 
-	SDir subvolume_dir = openSubvolumeDir();
+	SDir general_dir = btrfs->openGeneralDir();
 
 	try
 	{
-	    vector<qgroup_t> children = qgroup_query_children(subvolume_dir.fd(), btrfs->getQGroup());
+	    vector<qgroup_t> children = qgroup_query_children(general_dir.fd(), btrfs->getQGroup());
 	    sort(children.begin(), children.end());
 
-	    // Iterate all snapshot and ensure that those and only those with a
-	    // cleanup algorithm are included in the high level qgroup.
+	    // Iterate all snapshots and ensure that those and only those with
+	    // a cleanup algorithm are included in the high level qgroup.
 
 	    for (const Snapshot& snapshot : snapshots)
 	    {
@@ -716,11 +716,11 @@ namespace snapper
 
 		if (!snapshot.getCleanup().empty() && !included)
 		{
-		    qgroup_assign(subvolume_dir.fd(), qgroup, btrfs->getQGroup());
+		    qgroup_assign(general_dir.fd(), qgroup, btrfs->getQGroup());
 		}
 		else if (snapshot.getCleanup().empty() && included)
 		{
-		    qgroup_remove(subvolume_dir.fd(), qgroup, btrfs->getQGroup());
+		    qgroup_remove(general_dir.fd(), qgroup, btrfs->getQGroup());
 		}
 	    }
 	}
@@ -750,23 +750,23 @@ namespace snapper
 	if (btrfs->getQGroup() == no_qgroup)
 	    SN_THROW(QuotaException("qgroup not set"));
 
-	SDir subvolume_dir = openSubvolumeDir();
+	SDir general_dir = btrfs->openGeneralDir();
 
 	// Tests have shown that without a rescan and sync here the quota data
 	// is incorrect.
 
-	quota_rescan(subvolume_dir.fd());
-	sync(subvolume_dir.fd());
+	quota_rescan(general_dir.fd());
+	sync(general_dir.fd());
 
 	struct statvfs64 fsbuf;
-	if (fstatvfs64(subvolume_dir.fd(), &fsbuf) != 0)
+	if (fstatvfs64(general_dir.fd(), &fsbuf) != 0)
 	    SN_THROW(QuotaException("statvfs64 failed"));
 
 	QuotaData quota_data;
 
 	quota_data.size = fsbuf.f_blocks * fsbuf.f_bsize;
 
-	QGroupUsage qgroup_usage = qgroup_query_usage(subvolume_dir.fd(), btrfs->getQGroup());
+	QGroupUsage qgroup_usage = qgroup_query_usage(general_dir.fd(), btrfs->getQGroup());
 	quota_data.used = qgroup_usage.exclusive;
 
 	y2mil("size:" << quota_data.size << " used:" << quota_data.used);

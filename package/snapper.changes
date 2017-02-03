@@ -1,8 +1,15 @@
 -------------------------------------------------------------------
+Thu Feb 02 19:07:40 CET 2017 - aschnell@suse.com
+
+- deal with CaaSP btrfs setup where certain subvolumes are
+  read-only (bsc#1018302 and bsc#1018095)
+- version 0.4.3
+
+-------------------------------------------------------------------
 Thu Feb 02 14:49:59 CET 2017 - aschnell@suse.com
 
 - build SLE12 versions with quota support again (bsc#1021370)
-- versions 0.4.2
+- version 0.4.2
 
 -------------------------------------------------------------------
 Wed Dec 21 10:29:57 CET 2016 - aschnell@suse.com
