@@ -60,6 +60,13 @@ namespace snapper
 	virtual SDir openInfosDir() const;
 	virtual SDir openSnapshotDir(unsigned int num) const;
 
+	/**
+	 * A general read-write directory that can be used for ioctls. The
+	 * exact directory can change to adapt to the system changes,
+	 * e.g. which subvolumes are read-only.
+	 */
+	SDir openGeneralDir() const;
+
 	virtual void createSnapshot(unsigned int num, unsigned int num_parent, bool read_only,
 				    bool quota) const;
 	virtual void createSnapshotOfDefault(unsigned int num, bool read_only, bool quota) const;

@@ -296,6 +296,13 @@ namespace snapper
     }
 
 
+    SDir
+    Btrfs::openGeneralDir() const
+    {
+	return openInfosDir();
+    }
+
+
     void
     Btrfs::createSnapshot(unsigned int num, unsigned int num_parent, bool read_only,
 			  bool quota) const
@@ -1446,19 +1453,19 @@ namespace snapper
     {
 	try
 	{
+	    SDir general_dir = openGeneralDir();
+
 	    if (num == 0)
 	    {
 		SDir subvolume_dir = openSubvolumeDir();
 		subvolid_t id = get_id(subvolume_dir.fd());
-		set_default_id(subvolume_dir.fd(), id);
+		set_default_id(general_dir.fd(), id);
 	    }
 	    else
 	    {
 		SDir snapshot_dir = openSnapshotDir(num);
 		subvolid_t id = get_id(snapshot_dir.fd());
-
-		SDir subvolume_dir = openSubvolumeDir();
-		set_default_id(subvolume_dir.fd(), id);
+		set_default_id(general_dir.fd(), id);
 	    }
 	}
 	catch (const runtime_error& e)
