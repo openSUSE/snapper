@@ -5,6 +5,9 @@ set -e -x
 make -f Makefile.repo
 make package
 
+# run the osc source validator to check the .spec and .changes locally
+(cd package && /usr/lib/obs/service/source_validator)
+
 # Build the binary package locally, use plain "rpmbuild" to make it simple.
 # "osc build" is too resource hungry (builds a complete chroot from scratch).
 # Moreover it does not work in a Docker container (it fails when trying to mount
