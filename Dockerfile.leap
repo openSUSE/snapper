@@ -16,6 +16,7 @@ RUN zypper --non-interactive in --no-recommends \
   libtool \
   libxml2-devel \
   libxslt \
+  obs-service-source_validator \
   pam-devel \
   rpm-build \
   which
