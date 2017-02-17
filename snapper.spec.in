@@ -22,7 +22,13 @@ Release:        0
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Source:         snapper-%{version}.tar.bz2
 Prefix:         /usr
+%if 0%{?suse_version} > 1325
+BuildRequires:  libboost_system-devel
+BuildRequires:  libboost_thread-devel
+BuildRequires:  libboost_test-devel
+%else
 BuildRequires:  boost-devel
+%endif
 BuildRequires:  gcc-c++
 BuildRequires:  libacl-devel
 BuildRequires:  libtool
@@ -188,7 +194,11 @@ Authors:
 /sbin/ldconfig
 
 %package -n libsnapper-devel
+%if 0%{?suse_version} > 1325
+Requires:       libboost_headers-devel
+%else
 Requires:       boost-devel
+%endif
 Requires:       gcc-c++
 Requires:	libacl-devel
 Requires:       libsnapper@LIBVERSION_MAJOR@ = %version
