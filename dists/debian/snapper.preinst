@@ -1,0 +1,35 @@
+#!/bin/sh
+set -e
+
+action=$1
+version=$2
+
+# This is a cleanup script for removing the fallout of bug
+# https://github.com/openSUSE/snapper/issues/328
+#
+# Normally the /etc/cron.daily/snapper item should be a file,
+# but due to that bug it was a directory for a while.
+#
+# We need to handle upgrading from the broken package specifically
+# and move the cron files to the correct location.
+# 
+# TODO: This script can be removed after some time, it is just needed
+# to overcome the temporary upgrade issue. The following package upgrades
+# will not need this.
+
+if [ "$action" = upgrade ]; then
+  # move /etc/cron.daily/snapper/suse.de-snapper to the correct location
+  if [ -e /etc/cron.daily/snapper/suse.de-snapper ]; then
+    mv /etc/cron.daily/snapper/suse.de-snapper /etc/cron.daily/snapper.cron
+    rm -rf /etc/cron.daily/snapper
+    mv /etc/cron.daily/snapper.cron /etc/cron.daily/snapper
+  fi
+  # move /etc/cron.hourly/snapper/suse.de-snapper to the correct location
+  if [ -e /etc/cron.hourly/snapper/suse.de-snapper ]; then
+    mv /etc/cron.hourly/snapper/suse.de-snapper /etc/cron.hourly/snapper.cron
+    rm -rf /etc/cron.hourly/snapper
+    mv /etc/cron.hourly/snapper.cron /etc/cron.hourly/snapper
+  fi
+fi
+
+exit 0
