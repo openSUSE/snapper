@@ -577,7 +577,7 @@
 	    </listitem>
 	    <listitem>
 	      <para>With a number, a first read-only snapshot of the current
-	      system in created. A second read-write snapshot is created of
+	      system is created. A second read-write snapshot is created of
 	      <replaceable>number</replaceable>. The system is set to boot from the second
 	      snapshot.</para>
 	    </listitem>
