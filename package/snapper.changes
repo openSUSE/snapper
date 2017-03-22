@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Wed Mar 22 16:47:56 CET 2017 - aschnell@suse.com
+
+- remove read-only mount option for new fstab entry in mksubvolume
+  (bsc#1030257)
+- version 0.4.4
+
+-------------------------------------------------------------------
 Thu Feb 02 19:07:40 CET 2017 - aschnell@suse.com
 
 - deal with CaaSP btrfs setup where certain subvolumes are
