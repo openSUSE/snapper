@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2015] SUSE LLC
+ * Copyright (c) [2015-2017] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -63,7 +63,7 @@ do_tmp_mount(const libmnt_fs* fs, const char* tmp_mountpoint, const string& subv
     if (!subvol_option.empty())
 	mnt_context_set_options(cxt, ("subvol=" + subvol_option).c_str());
     else
-	mnt_context_set_options(cxt, "subvolid=5"); // 5 is the btrfs initial top-level subvolume
+	mnt_context_set_options(cxt, "subvolid=5"); // 5 is the btrfs top-level subvolume
 
     int ret = mnt_context_mount(cxt);
     if (ret != 0)
@@ -139,6 +139,7 @@ do_add_fstab_and_mount(MntTable& mnt_table, const libmnt_fs* fs, const string& s
 
     char* options = mnt_fs_strdup_options(x);
     mnt_optstr_remove_option(&options, "defaults");
+    mnt_optstr_remove_option(&options, "ro");
     mnt_optstr_set_option(&options, "subvol", full_subvol_option.c_str());
     mnt_fs_set_options(x, options);
     free(options);
@@ -202,7 +203,7 @@ do_set_nocow()
 bool
 is_subvol_mount(const string& fs_options)
 {
-    list<string> tmp1;
+    vector<string> tmp1;
     boost::split(tmp1, fs_options, boost::is_any_of(","), boost::token_compress_on);
     for (const string& tmp2 : tmp1)
     {
