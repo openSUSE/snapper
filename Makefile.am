@@ -23,7 +23,8 @@ UBUNTU_FLAVOURS =	\
     xUbuntu_15.04	\
     xUbuntu_15.10	\
     xUbuntu_16.04	\
-    xUbuntu_16.10
+    xUbuntu_16.10	\
+    xUbuntu_17.04
 
 show-debian:
 	@echo "Debian flavors: $(DEBIAN_FLAVOURS)"

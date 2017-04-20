@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Apr 20 10:22:57 CEST 2017 - aschnell@suse.com
+
+- generate build file for Ubuntu 17.04
+- version 0.4.5
+
+-------------------------------------------------------------------
 Wed Mar 22 16:47:56 CET 2017 - aschnell@suse.com
 
 - remove read-only mount option for new fstab entry in mksubvolume
