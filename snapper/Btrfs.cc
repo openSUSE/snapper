@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2017] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -55,6 +55,7 @@
 #include "snapper/SnapperDefines.h"
 #include "snapper/Acls.h"
 #include "snapper/Exception.h"
+#include "snapper/Regex.h"
 #ifdef ENABLE_ROLLBACK
 #include "snapper/MntTable.h"
 #endif
@@ -1448,6 +1449,28 @@ namespace snapper
     }
 
 
+    std::pair<bool, unsigned int>
+    Btrfs::getDefault() const
+    {
+	SDir subvolume_dir = openSubvolumeDir();
+
+	subvolid_t id = get_default_id(subvolume_dir.fd());
+
+	string path = get_subvolume(subvolume_dir.fd(), id);
+
+	Regex rx("/([0-9]+)/snapshot$");
+	if (!rx.match(path))
+	    return make_pair(false, 0);
+
+	unsigned int num = stoi(rx.cap(1));
+
+	if (get_id(openSnapshotDir(num).fd()) != id)
+	    return make_pair(false, 0);
+
+	return make_pair(true, num);
+    }
+
+
     void
     Btrfs::setDefault(unsigned int num) const
     {
@@ -1501,6 +1524,13 @@ namespace snapper
 
     bool
     Btrfs::isDefault(unsigned int num) const
+    {
+	throw std::logic_error("not implemented");
+    }
+
+
+    std::pair<bool, unsigned int>
+    Btrfs::getDefault() const
     {
 	throw std::logic_error("not implemented");
     }

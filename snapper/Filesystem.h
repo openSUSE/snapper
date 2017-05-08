@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2017] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -27,6 +27,7 @@
 
 #include <string>
 #include <vector>
+#include <utility>
 
 #include "snapper/FileUtils.h"
 #include "snapper/Compare.h"
@@ -83,6 +84,14 @@ namespace snapper
 	virtual void cmpDirs(const SDir& dir1, const SDir& dir2, cmpdirs_cb_t cb) const;
 
 	virtual bool isDefault(unsigned int num) const;
+
+	/**
+	 * Query the number of the default snapshot. The first entry of the
+	 * pair indicates whether the default snapshot is a snapper snapshot.
+	 * Currently only available for btrfs.
+	 */
+	virtual std::pair<bool, unsigned int> getDefault() const;
+
 	virtual void setDefault(unsigned int num) const;
 
 	virtual bool isActive(unsigned int num) const;
