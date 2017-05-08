@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2017] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -52,6 +52,19 @@ ProxyConfig::getValue(const string& key, string& value) const
 
     value = it->second;
     return true;
+}
+
+
+SMD
+ProxySnapshot::getSmd() const
+{
+    SMD smd;
+
+    smd.description = getDescription();
+    smd.cleanup = getCleanup();
+    smd.userdata = getUserdata();
+
+    return smd;
 }
 
 

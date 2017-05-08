@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2017] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -102,6 +102,8 @@ public:
     const string& getDescription() const { return impl->getDescription(); }
     const string& getCleanup() const { return impl->getCleanup(); }
     const map<string, string>& getUserdata() const { return impl->getUserdata(); }
+
+    SMD getSmd() const;
 
     bool isCurrent() const { return impl->isCurrent(); }
 
