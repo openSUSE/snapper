@@ -612,6 +612,9 @@
 	      </listitem>
 	    </varlistentry>
 	  </variablelist>
+	  <para>The rollback command also sets the description, the cleanup
+	  algorithm and some userdata unless the values are specified on the command
+	  line. This will automate cleanup of snapshots created by rollbacks.</para>
 	</listitem>
       </varlistentry>
 
