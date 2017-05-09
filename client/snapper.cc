@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2017] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -706,24 +706,18 @@ command_modify(ProxySnappers* snappers, ProxySnapper* snapper)
     {
 	ProxySnapshots::iterator snapshot = snapshots.findNum(getopts.popArg());
 
-	SMD smd;
+	SMD smd = snapshot->getSmd();
 
 	GetOpts::parsed_opts::const_iterator opt;
 
 	if ((opt = opts.find("description")) != opts.end())
 	    smd.description = opt->second;
-	else
-	    smd.description = snapshot->getDescription();
 
 	if ((opt = opts.find("cleanup-algorithm")) != opts.end())
 	    smd.cleanup = opt->second;
-	else
-	    smd.cleanup = snapshot->getCleanup();
 
 	if ((opt = opts.find("userdata")) != opts.end())
 	    smd.userdata = read_userdata(opt->second, snapshot->getUserdata());
-	else
-	    smd.userdata = snapshot->getUserdata();
 
 	snapper->modifySnapshot(snapshot, smd);
     }

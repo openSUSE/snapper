@@ -168,7 +168,7 @@ namespace snapper
     {
     public:
 
-	SMD() : description(), cleanup(), userdata({}) {}
+	SMD() : description(), cleanup(), userdata() {}
 
 	string description;
 	string cleanup;
