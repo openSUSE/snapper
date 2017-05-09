@@ -72,9 +72,9 @@ destroy your data! Run these tests only in a testing environment!*
 
 ### Releasing
 
-- Before releasing the Snapper package ensure that the changes made to the package
-are mentioned in the `package/snapper.changes` file, update also the
-`debian/debian.changelog` file.
+- Before releasing the Snapper package ensure that the changes made to the
+package are mentioned in the `package/snapper.changes` file, update also the
+`dists/debian/changelog` file.
 
 - Make sure the units tests still passes ([see above](#running-tests)).
 
