@@ -627,7 +627,7 @@
                   </li>
                   <li class="listitem">
                     <p>With a number, a first read-only snapshot of the current
-	      system in created. A second read-write snapshot is created of
+	      system is created. A second read-write snapshot is created of
 	      <em class="replaceable"><code>number</code></em>. The system is set to boot from the second
 	      snapshot.</p>
                   </li>
@@ -667,6 +667,9 @@
                   </dd>
                 </dl>
               </div>
+              <p>The rollback command also sets the description, the cleanup
+	  algorithm and some userdata unless the values are specified on the command
+	  line. This will automate cleanup of snapshots created by rollbacks.</p>
             </dd>
             <dt>
               <span class="term">
