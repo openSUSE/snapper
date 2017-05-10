@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue May 09 13:52:46 CEST 2017 - aschnell@suse.com
+
+- set cleanup algorithm for rollback snapshots (fate#321773)
+- version 0.5.0
+
+-------------------------------------------------------------------
 Thu Apr 20 10:22:57 CEST 2017 - aschnell@suse.com
 
 - generate build file for Ubuntu 17.04
