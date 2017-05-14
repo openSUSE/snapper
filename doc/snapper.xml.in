@@ -344,6 +344,12 @@
 		<para>List snapshots from all configs accessible by the user.</para>
 	      </listitem>
 	    </varlistentry>
+	    <varlistentry>
+			<term><option>-A, --no-abbrev</option></term>
+			<listitem>
+				<para>Do not truncate snapshots descriptions. Output may wrap.</para>
+			</listitem>
+	    </varlistentry>
 	  </variablelist>
 	</listitem>
       </varlistentry>

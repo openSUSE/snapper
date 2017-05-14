@@ -19,8 +19,6 @@ using namespace std;
 
 unsigned get_screen_width()
 {
-  if (!::isatty(STDOUT_FILENO))
-    return -1; // no clipping
 
   int width = 80;
 
