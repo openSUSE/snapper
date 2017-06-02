@@ -324,7 +324,7 @@ msgstr "Nr."
 
 #: ../client/snapper.cc:1364 ../client/snapper.cc:1371
 #: ../client/snapper.cc:1382 ../client/snapper.cc:1389
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "(Snapshot %d.)"
 msgstr "Rinkmena „%s“ nerasta."
 
@@ -427,12 +427,12 @@ msgid "Config"
 msgstr "Konfigūracija"
 
 #: ../client/snapper.cc:1757
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "Config '%s' is invalid."
 msgstr "Konfigūracija naudojama."
 
 #: ../client/snapper.cc:1751
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "Config '%s' not found."
 msgstr "Rinkmena „%s“ nerasta."
 
@@ -473,7 +473,7 @@ msgid "Creating read-write snapshot of current subvolume."
 msgstr ""
 
 #: ../client/snapper.cc:1385
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "Creating read-write snapshot of snapshot %d."
 msgstr "Klaida kuriant momentinę kopiją."
 
@@ -495,7 +495,7 @@ msgid "Deleting snapshot failed."
 msgstr "Klaida bandant pašalinti momentinę kopiją."
 
 #: ../client/commands.cc:274
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Klaida bandant pašalinti momentinę kopiją."
@@ -530,7 +530,7 @@ msgid "Failure"
 msgstr "Nesėkmė"
 
 #: ../client/errors.cc:87
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "Failure (%s)."
 msgstr "Nesėkmė"
 
@@ -540,12 +540,12 @@ msgid "File '%s' not found."
 msgstr "Rinkmena „%s“ nerasta."
 
 #: ../client/errors.cc:64
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "IO Error (%s)."
 msgstr "Skaitymo/rašymo klaida."
 
 #: ../client/snapper.cc:1793
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "IO error (%s)."
 msgstr "Skaitymo/rašymo klaida."
 
@@ -670,7 +670,7 @@ msgid "Setting default subvolume to snapshot %d."
 msgstr ""
 
 #: ../client/misc.cc:55
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "Snapshot '%u' not found."
 msgstr "Rinkmena „%s“ nerasta."
 
@@ -729,7 +729,7 @@ msgid "Unknown type of snapshots."
 msgstr "Nežinomi momentinių kopijų tipai."
 
 #: ../client/snapper.cc:1676
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "Use an integer number from %d to %d."
 msgstr "Naudokite sveikąjį skaičių iš intervalo nuo %d iki %d"
 
@@ -800,7 +800,9 @@ msgstr ""
 
 #: ../client/snapper.cc:1574
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "naudojimas: snapper [--visuotinės-parinktys] <komanda> [--komandos-parinktys] [komandos-argumentai]"
+msgstr ""
+"naudojimas: snapper [--visuotinės-parinktys] <komanda> [--komandos-parinktys]"
+" [komandos-argumentai]"
 
 #~ msgid "Unknown file."
 #~ msgstr "Nežinoma rinkmena."
