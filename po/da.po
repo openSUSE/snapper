@@ -7,15 +7,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2015-10-13 18:00+0200\n"
-"Last-Translator: Martin Schlander <martin.schlander@gmail.com>\n"
-"Language-Team: Danish <http://10n.opensuse.org/projects/snapper/master/da/>\n"
+"PO-Revision-Date: 2017-06-03 21:05+0000\n"
+"Last-Translator: scootergrisen Required Fields <scootergrisen@gmail.com>\n"
+"Language-Team: Danish <https://l10n.opensuse.org/projects/snapper/master/da/>"
+"\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.3\n"
+"X-Generator: Weblate 2.6\n"
 
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
@@ -99,11 +100,11 @@ msgstr "\t--quiet, -q\t\t\tTilbagehold normalt output."
 
 #: ../client/snapper.cc:1585
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
-msgstr ""
+msgstr "\t--root, -r <sti>\t\t\tOperer på målrod (virker kun uden DBus)."
 
 #: ../client/snapper.cc:884
 msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr ""
+msgstr "\t--sync, -s\t\t\tSynkroniser efter sletning."
 
 #: ../client/snapper.cc:1582
 msgid "\t--table-style, -t <style>\tTable style (integer)."
@@ -589,7 +590,7 @@ msgstr "Oplistning af konfigurationer mislykkedes (%s)."
 
 #: ../client/snapper.cc:1050
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
-msgstr ""
+msgstr "Måske glemte du afgrænseren '..' mellem snapshot-numrene."
 
 #: ../client/utils/GetOpts.cc:68
 #, c-format
@@ -607,7 +608,7 @@ msgstr "Mangler kommandoargument."
 
 #: ../client/misc.cc:88
 msgid "Missing delimiter '..' between snapshot numbers."
-msgstr ""
+msgstr "Manglende afgrænser '..' mellem snapshot-numre."
 
 #: ../client/snapper.cc:778
 msgid "Missing or invalid pre-number."
@@ -668,6 +669,8 @@ msgstr "Underdiskområde"
 #: ../client/snapper.cc:1823
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr ""
+"Konfigurationen 'root' findes ikke. Snapper er sandsynligvis ikke "
+"konfigureret."
 
 #: ../client/snapper.cc:1694 ../client/snapper.cc:1714
 #: ../client/snapper.cc:1727 ../client/utils/GetOpts.cc:61
@@ -779,7 +782,7 @@ msgstr "intet at gøre"
 
 #: ../client/snapper.cc:1693
 msgid "root argument can be used only together with no-dbus."
-msgstr ""
+msgstr "root-argumentet kan kun bruges sammen med no-dbus."
 
 #: ../client/snapper.cc:1574
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
