@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2017-06-07 13:09+0000\n"
+"PO-Revision-Date: 2017-06-07 18:38+0000\n"
 "Last-Translator: scootergrisen Required Fields <scootergrisen@gmail.com>\n"
 "Language-Team: Danish <https://l10n.opensuse.org/projects/snapper/master/da/>"
 "\n"
@@ -589,7 +589,7 @@ msgstr "Oplistning af konfigurationer mislykkedes (%s)."
 
 #: ../client/snapper.cc:1050
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
-msgstr "Måske glemte du afgrænseren '..' mellem snapshot-numrene."
+msgstr "Måske glemte du afgrænseren '..' mellem øjebliksbilledsnumrene."
 
 #: ../client/utils/GetOpts.cc:68
 #, c-format
@@ -607,7 +607,7 @@ msgstr "Mangler kommandoargument."
 
 #: ../client/misc.cc:88
 msgid "Missing delimiter '..' between snapshot numbers."
-msgstr "Manglende afgrænser '..' mellem snapshot-numre."
+msgstr "Manglende afgrænser '..' mellem øjebliksbilledsnumre."
 
 #: ../client/snapper.cc:778
 msgid "Missing or invalid pre-number."
