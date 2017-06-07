@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2017-06-03 21:05+0000\n"
+"PO-Revision-Date: 2017-06-07 13:09+0000\n"
 "Last-Translator: scootergrisen Required Fields <scootergrisen@gmail.com>\n"
 "Language-Team: Danish <https://l10n.opensuse.org/projects/snapper/master/da/>"
 "\n"
@@ -55,8 +55,7 @@ msgstr "\t--diff-cmd <command>\t\tKommando som bruges til at sammenligne filer."
 #: ../client/snapper.cc:1094
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
-"\t--extensions, -x <tilvalg>\t\tEkstra tilvalg som sendes til diff-"
-"kommandoen."
+"\t--extensions, -x <tilvalg>\tEkstra tilvalg som sendes til diff-kommandoen."
 
 #: ../client/snapper.cc:274
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
@@ -100,7 +99,7 @@ msgstr "\t--quiet, -q\t\t\tTilbagehold normalt output."
 
 #: ../client/snapper.cc:1585
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
-msgstr "\t--root, -r <sti>\t\t\tOperer på målrod (virker kun uden DBus)."
+msgstr "\t--root, -r <sti>\t\tOperer på målrod (virker kun uden DBus)."
 
 #: ../client/snapper.cc:884
 msgid "\t--sync, -s\t\t\tSync after deletion."
