@@ -1,14 +1,14 @@
 # Copyright (C) YEAR SUSE Linux Products GmbH, Nuernberg
 # This file is distributed under the same license as the PACKAGE package.
-#
 # Martin Schlander <mschlander@opensuse.org>, 2015.
+# scootergrisen, 2017.
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
 "PO-Revision-Date: 2017-06-08 13:01+0000\n"
-"Last-Translator: scootergrisen <scootergrisen@gmail.com>\n"
+"Last-Translator: scootergrisen\n"
 "Language-Team: Danish <https://l10n.opensuse.org/projects/snapper/master/da/>"
 "\n"
 "Language: da\n"
