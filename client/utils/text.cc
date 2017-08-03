@@ -65,6 +65,9 @@ int mbs_width_e (const string & str)
 
     s_bytes -= c_bytes;
     ptr += c_bytes;
+
+    // end of string
+    if (s_bytes == 0) break;
   }
 
   return s_cols;
@@ -142,6 +145,9 @@ std::string mbs_substr_by_width(
 
     s_bytes -= c_bytes;
     ptr += c_bytes;
+
+    // end of string
+    if (s_bytes == 0) break;
   }
 
   if (eptr == NULL)
