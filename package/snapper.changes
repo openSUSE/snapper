@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Thu Aug  3 18:12:17 UTC 2017 - lslezak@suse.com
+
+- fixed table formatting for non-ACSII characters (bsc#1051901)
+  (::mbrtowc behavior has been changed in glibc-2.22)
+- version 0.5.1
+
+-------------------------------------------------------------------
 Tue May 09 13:52:46 CEST 2017 - aschnell@suse.com
 
 - set cleanup algorithm for rollback snapshots (fate#321773)
