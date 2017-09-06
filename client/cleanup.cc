@@ -21,6 +21,7 @@
  */
 
 
+#include <iostream>
 #include <vector>
 
 #include "dbus/DBusMessage.h"
