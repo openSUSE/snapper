@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Sep  6 09:53:12 CEST 2017 - aschnell@suse.com
+
+- fix compilation with boost 1.65.0 (gh#openSUSE/snapper#354)
+- version 0.5.2
+
+-------------------------------------------------------------------
 Thu Aug  3 18:12:17 UTC 2017 - lslezak@suse.com
 
 - fixed table formatting for non-ACSII characters (bsc#1051901)
