@@ -21,6 +21,8 @@
 
 /* ZFS Snapper 2017 Daniel Sullivan (mumblepins@gmail.com)
  * 
+ * See issue https://github.com/openSUSE/snapper/issues/145
+ *
  * TODO:
  *  - Deal with ACLs
  *  - implement bind and legacy mounts *  
