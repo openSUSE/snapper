@@ -2,6 +2,7 @@
 Wed Sep  6 09:53:12 CEST 2017 - aschnell@suse.com
 
 - fix compilation with boost 1.65.0 (gh#openSUSE/snapper#354)
+  (bsc#1061262)
 - version 0.5.2
 
 -------------------------------------------------------------------
