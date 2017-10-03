@@ -948,7 +948,7 @@ namespace snapper
 #ifndef ENABLE_ZFS
 	    "no-"
 #endif
-	    "zfs-"
+	    "zfs,"
 
 #ifndef ENABLE_XATTRS
 	    "no-"
