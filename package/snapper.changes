@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Nov 23 13:51:45 UTC 2017 - rbrown@suse.com
+
+- Replace references to /var/adm/fillup-templates with new 
+  %_fillupdir macro (boo#1069468)
+
+-------------------------------------------------------------------
 Wed Sep  6 09:53:12 CEST 2017 - aschnell@suse.com
 
 - fix compilation with boost 1.65.0 (gh#openSUSE/snapper#354)
