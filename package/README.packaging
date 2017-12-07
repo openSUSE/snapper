@@ -11,5 +11,5 @@ http://github.com/openSUSE/snapper
 For building the package from git run the service directly:
 osc service disabledrun
 
-Note that aaa_base.spec and aaa_base.changes are part of the git
+Note that snapper.spec and snapper.changes are part of the git
 repo.
