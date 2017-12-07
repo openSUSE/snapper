@@ -74,7 +74,7 @@ BuildRequires:  pam-devel
 Requires:       diffutils
 Requires:       libsnapper@LIBVERSION_MAJOR@ = %version
 %if 0%{?suse_version}
-Recommends:     cron logrotate snapper-zypp-plugin
+Recommends:     logrotate snapper-zypp-plugin
 Supplements:    btrfsprogs
 %endif
 Summary:        Tool for filesystem snapshot management
@@ -107,6 +107,8 @@ make %{?_smp_mflags}
 %install
 %make_install
 rm -f "%{buildroot}/%{_libdir}"/*.la "%{buildroot}/%{_lib}/security/pam_snapper.la"
+rm -f %{buildroot}/etc/cron.hourly/suse.de-snapper
+rm -f %{buildroot}/etc/cron.daily/suse.de-snapper
 
 %if 0%{?suse_version}
 install -D -m 644 data/sysconfig.snapper "%{buildroot}%{_fillupdir}/sysconfig.snapper"
@@ -118,6 +120,22 @@ install -D -m 644 data/sysconfig.snapper "%{buildroot}/etc/sysconfig/snapper"
 
 %check
 make check
+
+%pre
+%service_add_pre snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer
+
+%post
+# special hack, since the macros were added much later than
+# the systemd timer
+test -f /etc/cron.hourly/suse.de-snapper && systemctl preset snapper-timeline.timer ||:
+test -f /etc/cron.daily/suse.de-snapper && systemctl preset snapper-cleanup.timer ||:
+%service_add_post snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer
+
+%preun
+%service_del_preun snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer
+
+%postun
+%service_del_postun snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer
 
 %files -f snapper.lang
 %defattr(-,root,root)
@@ -134,8 +152,6 @@ make check
 %doc %{_mandir}/*/mksubvolume.8*
 %endif
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
-/etc/cron.hourly/suse.de-snapper
-/etc/cron.daily/suse.de-snapper
 /usr/lib/systemd/system/snapper-*.*
 %config /etc/dbus-1/system.d/org.opensuse.Snapper.conf
 %{_datadir}/dbus-1/system-services/org.opensuse.Snapper.service
