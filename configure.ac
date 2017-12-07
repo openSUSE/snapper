@@ -58,8 +58,6 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 CFLAGS="${CFLAGS} -std=c99 -Wall -Wextra -Wformat=2 -Wmissing-prototypes -Wno-unused-parameter"
 CXXFLAGS="${CXXFLAGS} -std=c++11 -Wall -Wextra -Wformat=2 -Wnon-virtual-dtor -Wno-unused-parameter"
 
-fillupdir=/var/adm/fillup-templates
-
 AC_ARG_WITH([conf], AC_HELP_STRING([--with-conf], [Use a custom sysconfig directory (default is /etc/sysconfig)]),
 	[with_conf=$withval], [with_conf=no])
 
@@ -154,7 +152,6 @@ AC_SUBST(LIBVERSION_MINOR)
 AC_SUBST(LIBVERSION_PATCHLEVEL)
 AC_SUBST(LIBVERSION_INFO)
 AC_SUBST(docdir)
-AC_SUBST(fillupdir)
 
 AC_OUTPUT(
 	Makefile
