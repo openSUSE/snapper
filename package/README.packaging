@@ -1,9 +1,6 @@
 This package should use just the content of the git tree. If you need
-to make changes, you have the following options:
-* Make them in git and update the package from git (you can send merge
-  request if you don't have write access)
-* Create a patch, add the patch to the package and let one of the
-  snapper packagers commit it for you
+to make changes, make them in git and update the package from git
+(you can send merge request if you don't have write access)
 
 The online repository is at:
 http://github.com/openSUSE/snapper

@@ -3,7 +3,7 @@ Wed Dec  6 16:49:06 CET 2017 - kukuk@suse.de
 
 - Add missing systemd services/timer macros
 - Remove cron scripts
-- Workaround systemd preset due to missing systemd macros before
+- Switched from cron to systemd timers
 - 0.5.3
 
 -------------------------------------------------------------------
