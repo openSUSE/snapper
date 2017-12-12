@@ -3,7 +3,7 @@ Wed Dec  6 16:49:06 CET 2017 - kukuk@suse.de
 
 - Add missing systemd services/timer macros
 - Remove cron scripts
-- Switched from cron to systemd timers
+- Switched from cron to systemd timers (fate#324529)
 - 0.5.3
 
 -------------------------------------------------------------------
