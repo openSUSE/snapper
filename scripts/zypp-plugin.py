@@ -1,7 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 #
 # Copyright (c) [2011-2014] Novell, Inc.
-# Copyright (c) [2015] SUSE LLC
+# Copyright (c) [2015,2018] SUSE LLC
 #
 # All Rights Reserved.
 #

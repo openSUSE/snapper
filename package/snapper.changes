@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Jan 10 14:33:11 CET 2018 - aschnell@suse.com
+
+- use python3 instead of python2 (bsc#1070324)
+
+-------------------------------------------------------------------
 Thu Nov 23 13:51:45 UTC 2017 - rbrown@suse.com
 
 - Replace references to /var/adm/fillup-templates with new 

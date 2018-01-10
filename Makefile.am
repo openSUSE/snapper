@@ -15,7 +15,8 @@ snapper-$(VERSION).tar.bz2: dist-bzip2
 
 DEBIAN_FLAVOURS =	\
     Debian_7.0		\
-    Debian_8.0
+    Debian_8.0		\
+    Debian_9.0
 
 UBUNTU_FLAVOURS =	\
     xUbuntu_14.04	\
@@ -24,7 +25,8 @@ UBUNTU_FLAVOURS =	\
     xUbuntu_15.10	\
     xUbuntu_16.04	\
     xUbuntu_16.10	\
-    xUbuntu_17.04
+    xUbuntu_17.04	\
+    xUbuntu_17.10
 
 show-debian:
 	@echo "Debian flavors: $(DEBIAN_FLAVOURS)"

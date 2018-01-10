@@ -4,13 +4,15 @@ FROM opensuse:tumbleweed
 RUN zypper --non-interactive in --no-recommends \
   autoconf \
   automake \
-  boost-devel \
   dbus-1-devel \
   docbook-xsl-stylesheets \
   e2fsprogs-devel \
   gcc-c++ \
   grep \
   libacl-devel \
+  libboost_system-devel \
+  libboost_test-devel \
+  libboost_thread-devel \
   libbtrfs-devel \
   libmount-devel \
   libtool \
