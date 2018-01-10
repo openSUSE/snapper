@@ -1,7 +1,7 @@
 #
 # spec file for package snapper
 #
-# Copyright (c) 2016 SUSE LINUX GmbH, Nuernberg, Germany.
+# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -210,11 +210,10 @@ libsnapper.
 
 %package -n snapper-zypp-plugin
 BuildArch:	noarch
-Requires:       dbus-1-python
 Requires:       libzypp(plugin:commit) = 1
-Requires:	python-xml
+Requires:	python3-dbus-python
+Requires:	python3-zypp-plugin
 Requires:       snapper = %version
-Requires:       zypp-plugin-python
 Summary:        A zypp commit plugin for calling snapper
 Group:          System/Packages
 
