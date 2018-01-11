@@ -1,5 +1,5 @@
-# Build Debian 8 image
-FROM debian:8
+# Build Debian 9 image
+FROM debian:9
 
 # see https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#/run
 RUN apt-get update && \
