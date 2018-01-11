@@ -128,11 +128,11 @@ make check
 # special hack, since the macros were added much later than
 # the systemd timer
 if [ -f /etc/cron.hourly/suse.de-snapper ]; then
- systemctl preset snapper-timeline.timer ||:
+ systemctl preset snapper-timeline.timer || :
  systemctl is-enabled -q snapper-timeline.timer && systemctl start snapper-timeline.timer || :
 fi
 if [ -f /etc/cron.daily/suse.de-snapper ]; then
- systemctl preset snapper-cleanup.timer ||:
+ systemctl preset snapper-cleanup.timer || :
  systemctl is-enabled -q snapper-cleanup.timer && systemctl start snapper-cleanup.timer || :
 fi
 %service_add_post snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer
