@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Jan 10 14:33:11 CET 2018 - aschnell@suse.com
+
+- use python3 instead of python2 (bsc#1070324)
+
+-------------------------------------------------------------------
 Wed Dec  6 16:49:06 CET 2017 - kukuk@suse.de
 
 - Add missing systemd services/timer macros

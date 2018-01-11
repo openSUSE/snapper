@@ -1,5 +1,5 @@
-# Build Fedora 25 image
-FROM fedora:25
+# Build Fedora 27 image
+FROM fedora:27
 
 RUN dnf -y install \
   autoconf \
