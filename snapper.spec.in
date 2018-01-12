@@ -158,7 +158,7 @@ fi
 %doc %{_mandir}/*/mksubvolume.8*
 %endif
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
-/usr/lib/systemd/system/snapper-*.*
+%{_unitdir}/snapper-*.*
 %config /etc/dbus-1/system.d/org.opensuse.Snapper.conf
 %{_datadir}/dbus-1/system-services/org.opensuse.Snapper.service
 
