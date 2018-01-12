@@ -122,9 +122,12 @@ install -D -m 644 data/sysconfig.snapper "%{buildroot}/etc/sysconfig/snapper"
 make check
 
 %pre
+%if 0%{?suse_version}
 %service_add_pre snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer
+%endif
 
 %post
+%if 0%{?suse_version}
 # special hack, since the macros were added much later than
 # the systemd timer
 if [ -f /etc/cron.hourly/suse.de-snapper ]; then
@@ -136,12 +139,17 @@ if [ -f /etc/cron.daily/suse.de-snapper ]; then
  systemctl is-enabled -q snapper-cleanup.timer && systemctl start snapper-cleanup.timer || :
 fi
 %service_add_post snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer
+%endif
 
 %preun
+%if 0%{?suse_version}
 %service_del_preun snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer
+%endif
 
 %postun
+%if 0%{?suse_version}
 %service_del_postun snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer
+%endif
 
 %files -f snapper.lang
 %defattr(-,root,root)
