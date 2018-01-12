@@ -74,7 +74,7 @@ BuildRequires:  pam-devel
 Requires:       diffutils
 Requires:       libsnapper@LIBVERSION_MAJOR@ = %version
 %if 0%{?suse_version}
-Recommends:     cron logrotate snapper-zypp-plugin
+Recommends:     logrotate snapper-zypp-plugin
 Supplements:    btrfsprogs
 %endif
 Summary:        Tool for filesystem snapshot management
@@ -107,6 +107,8 @@ make %{?_smp_mflags}
 %install
 %make_install
 rm -f "%{buildroot}/%{_libdir}"/*.la "%{buildroot}/%{_lib}/security/pam_snapper.la"
+rm -f %{buildroot}/etc/cron.hourly/suse.de-snapper
+rm -f %{buildroot}/etc/cron.daily/suse.de-snapper
 
 %if 0%{?suse_version}
 install -D -m 644 data/sysconfig.snapper "%{buildroot}%{_fillupdir}/sysconfig.snapper"
@@ -118,6 +120,36 @@ install -D -m 644 data/sysconfig.snapper "%{buildroot}/etc/sysconfig/snapper"
 
 %check
 make check
+
+%pre
+%if 0%{?suse_version}
+%service_add_pre snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer
+%endif
+
+%post
+%if 0%{?suse_version}
+# special hack, since the macros were added much later than
+# the systemd timer
+if [ -f /etc/cron.hourly/suse.de-snapper ]; then
+ systemctl preset snapper-timeline.timer || :
+ systemctl is-enabled -q snapper-timeline.timer && systemctl start snapper-timeline.timer || :
+fi
+if [ -f /etc/cron.daily/suse.de-snapper ]; then
+ systemctl preset snapper-cleanup.timer || :
+ systemctl is-enabled -q snapper-cleanup.timer && systemctl start snapper-cleanup.timer || :
+fi
+%service_add_post snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer
+%endif
+
+%preun
+%if 0%{?suse_version}
+%service_del_preun snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer
+%endif
+
+%postun
+%if 0%{?suse_version}
+%service_del_postun snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer
+%endif
 
 %files -f snapper.lang
 %defattr(-,root,root)
@@ -134,9 +166,7 @@ make check
 %doc %{_mandir}/*/mksubvolume.8*
 %endif
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
-/etc/cron.hourly/suse.de-snapper
-/etc/cron.daily/suse.de-snapper
-/usr/lib/systemd/system/snapper-*.*
+%{_unitdir}/snapper-*.*
 %config /etc/dbus-1/system.d/org.opensuse.Snapper.conf
 %{_datadir}/dbus-1/system-services/org.opensuse.Snapper.service
 
