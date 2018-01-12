@@ -6,9 +6,8 @@ Wed Jan 10 14:33:11 CET 2018 - aschnell@suse.com
 -------------------------------------------------------------------
 Wed Dec  6 16:49:06 CET 2017 - kukuk@suse.de
 
-- Add missing systemd services/timer macros
-- Remove cron scripts
-- Switched from cron to systemd timers (fate#324529)
+- Switched from cron to systemd timers (spec file based
+  distributions) (fate#324529)
 - 0.5.3
 
 -------------------------------------------------------------------
