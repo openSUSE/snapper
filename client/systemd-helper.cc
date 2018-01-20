@@ -62,9 +62,14 @@ timeline(ProxySnappers* snappers, const map<string, string>& userdata)
 		snapper->createSingleSnapshot(scd);
 	    }
 	}
-	catch (exception& e)
+	catch (const DBus::ErrorException& e)
 	{
-	    cerr << "Error processing config '" << value.first << "'\n";
+	    cerr << "Error processing config '" << value.first << "': " << error_description(e) << endl;
+	}
+	catch (const exception& e)
+	{
+	    cerr << _("Failure") << " processing config '" << value.first << "' (" << e.what() << ")." << endl;
+	    exit(EXIT_FAILURE);
 	}
     }
 }
