@@ -45,19 +45,31 @@ timeline(ProxySnappers* snappers, const map<string, string>& userdata)
     map<string, ProxyConfig> configs = snappers->getConfigs();
     for (const map<string, ProxyConfig>::value_type value : configs)
     {
-	const map<string, string>& raw = value.second.getAllValues();
-
-	map<string, string>::const_iterator pos1 = raw.find("TIMELINE_CREATE");
-	if (pos1 != raw.end() && pos1->second == "yes")
+	try
 	{
-	    ProxySnapper* snapper = snappers->getSnapper(value.first);
+	    const map<string, string>& raw = value.second.getAllValues();
 
-	    SCD scd;
-	    scd.description = "timeline";
-	    scd.cleanup = "timeline";
-	    scd.userdata = userdata;
+	    map<string, string>::const_iterator pos1 = raw.find("TIMELINE_CREATE");
+	    if (pos1 != raw.end() && pos1->second == "yes")
+	    {
+		ProxySnapper* snapper = snappers->getSnapper(value.first);
 
-	    snapper->createSingleSnapshot(scd);
+		SCD scd;
+		scd.description = "timeline";
+		scd.cleanup = "timeline";
+		scd.userdata = userdata;
+
+		snapper->createSingleSnapshot(scd);
+	    }
+	}
+	catch (const DBus::ErrorException& e)
+	{
+	    cerr << "Error processing config '" << value.first << "': " << error_description(e) << endl;
+	}
+	catch (const exception& e)
+	{
+	    cerr << _("Failure") << " processing config '" << value.first << "' (" << e.what() << ")." << endl;
+	    exit(EXIT_FAILURE);
 	}
     }
 }
