@@ -5,15 +5,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2013-01-11 20:24+0100\n"
-"Last-Translator: Kalman Kemenczy <kkemenczy@opensuse.org>\n"
-"Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
+"PO-Revision-Date: 2018-01-26 20:03+0000\n"
+"Last-Translator: Robert Taisz <robert.taisz@emerald.hu>\n"
+"Language-Team: Hungarian "
+"<https://l10n.opensuse.org/projects/snapper/master/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.18\n"
 
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
@@ -754,7 +755,7 @@ msgstr "Felhasználó"
 
 #: ../client/snapper.cc:537 ../client/snapper.cc:584 ../client/snapper.cc:632
 msgid "Userdata"
-msgstr "Userdata"
+msgstr "Felhasználói adatok"
 
 # SLE12
 #: ../client/misc.cc:134
