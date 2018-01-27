@@ -58,11 +58,15 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 CFLAGS="${CFLAGS} -std=c99 -Wall -Wextra -Wformat=2 -Wmissing-prototypes -Wno-unused-parameter"
 CXXFLAGS="${CXXFLAGS} -std=c++11 -Wall -Wextra -Wformat=2 -Wnon-virtual-dtor -Wno-unused-parameter"
 
+SYSCONFIG=/etc/sysconfig
+
 AC_ARG_WITH([conf], AC_HELP_STRING([--with-conf], [Use a custom sysconfig directory (default is /etc/sysconfig)]),
 	[with_conf=$withval], [with_conf=no])
 
-AS_IF([test "x$with_conf" != xno], [CPPFLAGS="${CPPFLAGS} -DCONFDIR='\"${with_conf}\"'"],
-	[CPPFLAGS="${CPPFLAGS} -DCONFDIR='\"/etc/sysconfig\"'"])
+AS_IF([test "x$with_conf" != xno], [SYSCONFIG="${with_conf}"])
+
+CPPFLAGS="${CPPFLAGS} -DCONFDIR='\"${SYSCONFIG}\"'"
+
 
 AC_ARG_ENABLE([btrfs], AC_HELP_STRING([--disable-btrfs],[Disable Btrfs internal snapshots support]),
 		[with_btrfs=$enableval],[with_btrfs=yes])
@@ -151,6 +155,7 @@ AC_SUBST(LIBVERSION_MAJOR)
 AC_SUBST(LIBVERSION_MINOR)
 AC_SUBST(LIBVERSION_PATCHLEVEL)
 AC_SUBST(LIBVERSION_INFO)
+AC_SUBST(SYSCONFIG)
 AC_SUBST(docdir)
 
 AC_OUTPUT(
