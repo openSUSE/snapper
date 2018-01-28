@@ -147,7 +147,7 @@ msgstr "\tsnapper cleanup <opschoonalgoritme>"
 
 #: ../client/snapper.cc:691
 msgid "\tsnapper create"
-msgstr "\tsnapper aanmaken"
+msgstr "\tsnapper create"
 
 #: ../client/snapper.cc:271
 msgid "\tsnapper create-config <subvolume>"
