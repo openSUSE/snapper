@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2014-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016,2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -39,9 +39,36 @@ using namespace snapper;
 using namespace std;
 
 
-void
+// cout and cerr are visible with 'journalctl' and 'systemctl status
+// snapper-<name>.service'.
+
+
+bool
+call_with_error_check(std::function<void()> func)
+{
+    try
+    {
+	func();
+	return true;
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	cerr << error_description(e) << endl;
+	return false;
+    }
+    catch (const DBus::FatalException& e)
+    {
+	cerr << "failure (" << e.what() << ")." << endl;
+	return false;
+    }
+}
+
+
+bool
 timeline(ProxySnappers* snappers, const map<string, string>& userdata)
 {
+    bool ok = true;
+
     map<string, ProxyConfig> configs = snappers->getConfigs();
     for (const map<string, ProxyConfig>::value_type value : configs)
     {
@@ -57,15 +84,25 @@ timeline(ProxySnappers* snappers, const map<string, string>& userdata)
 	    scd.cleanup = "timeline";
 	    scd.userdata = userdata;
 
-	    snapper->createSingleSnapshot(scd);
+	    cout << "running timeline for '" << value.first << "'." << endl;
+
+	    if (!call_with_error_check([snapper, scd](){ snapper->createSingleSnapshot(scd); }))
+	    {
+		cerr << "timeline for '" << value.first << "' failed." << endl;
+		ok = false;
+	    }
 	}
     }
+
+    return ok;
 }
 
 
-void
+bool
 cleanup(ProxySnappers* snappers)
 {
+    bool ok = true;
+
     map<string, ProxyConfig> configs = snappers->getConfigs();
     for (const map<string, ProxyConfig>::value_type value : configs)
     {
@@ -76,21 +113,41 @@ cleanup(ProxySnappers* snappers)
 	map<string, string>::const_iterator pos1 = raw.find("NUMBER_CLEANUP");
 	if (pos1 != raw.end() && pos1->second == "yes")
 	{
-	    do_cleanup_number(snapper, false);
+	    cout << "running number cleanup for '" << value.first << "'." << endl;
+
+	    if (!call_with_error_check([snapper](){ do_cleanup_number(snapper, false); }))
+	    {
+		cerr << "number cleanup for '" << value.first << "' failed." << endl;
+		ok = false;
+	    }
 	}
 
 	map<string, string>::const_iterator pos2 = raw.find("TIMELINE_CLEANUP");
 	if (pos2 != raw.end() && pos2->second == "yes")
 	{
-	    do_cleanup_timeline(snapper, false);
+	    cout << "running timeline cleanup for '" << value.first << "'." << endl;
+
+	    if (!call_with_error_check([snapper](){ do_cleanup_timeline(snapper, false); }))
+	    {
+		cerr << "timeline cleanup for '" << value.first << "' failed." << endl;
+		ok = false;
+	    }
 	}
 
 	map<string, string>::const_iterator pos3 = raw.find("EMPTY_PRE_POST_CLEANUP");
 	if (pos3 != raw.end() && pos3->second == "yes")
 	{
-	    do_cleanup_empty_pre_post(snapper, false);
+	    cout << "running empty-pre-post cleanup for '" << value.first << "'." << endl;
+
+	    if (!call_with_error_check([snapper](){ do_cleanup_empty_pre_post(snapper, false); }))
+	    {
+		cerr << "empty-pre-post cleanup for " << value.first << " failed." << endl;
+		ok = false;
+	    }
 	}
     }
+
+    return ok;
 }
 
 
@@ -128,24 +185,24 @@ main(int argc, char** argv)
     if ((opt = opts.find("userdata")) != opts.end())
 	userdata = read_userdata(opt->second);
 
-    try
-    {
+    bool ok = true;
+
+    if (!call_with_error_check([do_timeline, do_cleanup, userdata, &ok]() {
+
 	ProxySnappers snappers(ProxySnappers::createDbus());
 
 	if (do_timeline)
-	    timeline(&snappers, userdata);
+	    if (!timeline(&snappers, userdata))
+		ok = false;
 
 	if (do_cleanup)
-	    cleanup(&snappers);
-    }
-    catch (const DBus::ErrorException& e)
+	    if (!cleanup(&snappers))
+		ok = false;
+
+    }))
     {
-	cerr << error_description(e) << endl;
-	exit(EXIT_FAILURE);
+	ok = false;
     }
-    catch (const DBus::FatalException& e)
-    {
-	cerr << _("Failure") << " (" << e.what() << ")." << endl;
-	exit(EXIT_FAILURE);
-    }
+
+    exit(ok ? EXIT_SUCCESS : EXIT_FAILURE);
 }
