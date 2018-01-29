@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2015 Novell, Inc.
+ * Copyright (c) 2018 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -90,17 +91,29 @@ step1(const string& device, const string& description, const string& cleanup,
 
     btrfs.createConfig();
 
-    cout << "creating snapshot" << endl;
+    cout << "creating subvolume" << endl;
 
     Snapper snapper("root", tmp_mount.getFullname());
 
     SCD scd;
     scd.read_only = false;
+    scd.empty = true;
     scd.description = description;
     scd.cleanup = cleanup;
     scd.userdata = userdata;
 
     Snapshots::iterator snapshot = snapper.createSingleSnapshot(scd);
+
+    cout << "again copying config-file" << endl;
+
+    string ris = tmp_mount.getFullname() + snapshot->snapshotDir();
+
+    mkdir((ris + "/etc").c_str(), 0777);
+    mkdir((ris + "/etc/snapper").c_str(), 0777);
+    mkdir((ris + "/etc/snapper/configs").c_str(), 0777);
+
+    system(("/bin/cp " + tmp_mount.getFullname() + "/etc/snapper/configs/root " + ris +
+	    "/etc/snapper/configs").c_str());
 
     cout << "setting default subvolume" << endl;
 
@@ -131,6 +144,8 @@ step2(const string& device, const string& root_prefix, const string& default_sub
     if (!subvol_option.empty())
 	subvol_option += "/";
     subvol_option += ".snapshots";
+
+    mkdir((root_prefix + "/.snapshots").c_str(), 0777);
 
     SDir s_dir(root_prefix + "/.snapshots");
     if (!s_dir.mount(device, "btrfs", 0, "subvol=" + subvol_option))
