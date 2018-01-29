@@ -686,7 +686,7 @@
     <title>FILES</title>
     <variablelist>
       <varlistentry>
-	<term><filename>/etc/sysconfig/snapper</filename></term>
+	<term><filename>@SYSCONFIG@/snapper</filename></term>
 	<listitem>
 	  <para>Global configuration file.</para>
 	</listitem>
