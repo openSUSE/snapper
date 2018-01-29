@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2017] SUSE LLC
+ * Copyright (c) [2016-2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -68,7 +68,7 @@ namespace snapper
 	SDir openGeneralDir() const;
 
 	virtual void createSnapshot(unsigned int num, unsigned int num_parent, bool read_only,
-				    bool quota) const;
+				    bool quota, bool empty) const;
 	virtual void createSnapshotOfDefault(unsigned int num, bool read_only, bool quota) const;
 	virtual void deleteSnapshot(unsigned int num) const;
 

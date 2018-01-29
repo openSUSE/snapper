@@ -259,7 +259,8 @@ namespace snapper
 
 
     void
-    Lvm::createSnapshot(unsigned int num, unsigned int num_parent, bool read_only, bool quota) const
+    Lvm::createSnapshot(unsigned int num, unsigned int num_parent, bool read_only, bool quota,
+			bool empty) const
     {
 	if (num_parent != 0 || !read_only)
 	    throw std::logic_error("not implemented");
