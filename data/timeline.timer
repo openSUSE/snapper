@@ -5,6 +5,7 @@ Documentation=man:snapper(8) man:snapper-configs(5)
 
 [Timer]
 OnCalendar=hourly
+Persistent=true
 
 [Install]
 WantedBy=timers.target
