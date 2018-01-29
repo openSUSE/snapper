@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2017] SUSE LLC
+ * Copyright (c) [2016-2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -305,8 +305,8 @@ namespace snapper
 
 
     void
-    Btrfs::createSnapshot(unsigned int num, unsigned int num_parent, bool read_only,
-			  bool quota) const
+    Btrfs::createSnapshot(unsigned int num, unsigned int num_parent, bool read_only, bool quota,
+			  bool empty) const
     {
 	if (num_parent == 0)
 	{
@@ -315,8 +315,11 @@ namespace snapper
 
 	    try
 	    {
-		create_snapshot(subvolume_dir.fd(), info_dir.fd(), "snapshot", read_only,
-				quota ? qgroup : no_qgroup);
+		if (empty)
+		    create_subvolume(info_dir.fd(), "snapshot");
+		else
+		    create_snapshot(subvolume_dir.fd(), info_dir.fd(), "snapshot", read_only,
+				    quota ? qgroup : no_qgroup);
 	    }
 	    catch (const runtime_error& e)
 	    {

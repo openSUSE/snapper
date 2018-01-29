@@ -1,9 +1,15 @@
 -------------------------------------------------------------------
+Mon Jan 29 11:32:56 CET 2018 - aschnell@suse.com
+
+- create subvolume instead of snapshot for initial system
+  (bsc#1077240)
+- version 0.5.4
+
+-------------------------------------------------------------------
 Fri Jan 26 14:36:20 CET 2018 - aschnell@suse.com
 
 - improved error handling for systemd services
   (gh#openSUSE/snapper#382)
-- version 0.5.4
 
 -------------------------------------------------------------------
 Wed Jan 10 14:33:11 CET 2018 - aschnell@suse.com

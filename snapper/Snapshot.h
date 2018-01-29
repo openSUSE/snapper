@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016,2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -150,7 +150,7 @@ namespace snapper
 
 	void writeInfo() const;
 
-	void createFilesystemSnapshot(unsigned int num_parent, bool read_only) const;
+	void createFilesystemSnapshot(unsigned int num_parent, bool read_only, bool empty) const;
 	void createFilesystemSnapshotOfDefault(bool read_only) const;
 	void deleteFilesystemSnapshot() const;
 
@@ -181,9 +181,16 @@ namespace snapper
     {
     public:
 
-	SCD() : SMD(), read_only(true), uid(0) {}
+	SCD() : SMD(), read_only(true), empty(false), uid(0) {}
 
 	bool read_only;
+
+	/**
+	 * Create an empty snapshot. For btrfs this creates a subvolume
+	 * instead of a snapshot, for other filesystem types ignored.
+	 */
+	bool empty;
+
 	uid_t uid;
 
     };
@@ -236,7 +243,8 @@ namespace snapper
 	iterator createPreSnapshot(const SCD& scd);
 	iterator createPostSnapshot(const_iterator pre, const SCD& scd);
 
-	iterator createHelper(Snapshot& snapshot, const_iterator parent, bool read_only);
+	iterator createHelper(Snapshot& snapshot, const_iterator parent, bool read_only,
+			      bool empty = false);
 
 	void modifySnapshot(iterator snapshot, const SMD& smd);
 

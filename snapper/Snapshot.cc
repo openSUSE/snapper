@@ -522,12 +522,13 @@ namespace snapper
 
 
     void
-    Snapshot::createFilesystemSnapshot(unsigned int num_parent, bool read_only) const
+    Snapshot::createFilesystemSnapshot(unsigned int num_parent, bool read_only, bool empty) const
     {
 	if (isCurrent())
 	    SN_THROW(IllegalSnapshotException());
 
-	snapper->getFilesystem()->createSnapshot(num, num_parent, read_only, !cleanup.empty());
+	snapper->getFilesystem()->createSnapshot(num, num_parent, read_only, !cleanup.empty(),
+						 empty);
     }
 
 
@@ -561,9 +562,9 @@ namespace snapper
 	snapshot.uid = scd.uid;
 	snapshot.description = scd.description;
 	snapshot.cleanup = scd.cleanup;
-	snapshot.userdata =scd. userdata;
+	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, getSnapshotCurrent(), scd.read_only);
+	return createHelper(snapshot, getSnapshotCurrent(), scd.read_only, scd.empty);
     }
 
 
@@ -633,7 +634,8 @@ namespace snapper
 
 
     Snapshots::iterator
-    Snapshots::createHelper(Snapshot& snapshot, const_iterator parent, bool read_only)
+    Snapshots::createHelper(Snapshot& snapshot, const_iterator parent, bool read_only,
+			    bool empty)
     {
 	// parent == end indicates the btrfs default subvolume. Unclean, but
 	// adding a special snapshot like current needs too many API changes.
@@ -641,7 +643,7 @@ namespace snapper
 	try
 	{
 	    if (parent != end())
-		snapshot.createFilesystemSnapshot(parent->getNum(), read_only);
+		snapshot.createFilesystemSnapshot(parent->getNum(), read_only, empty);
 	    else
 		snapshot.createFilesystemSnapshotOfDefault(read_only);
 	}
