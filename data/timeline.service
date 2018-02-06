@@ -4,6 +4,6 @@ Description=Timeline of Snapper Snapshots
 Documentation=man:snapper(8) man:snapper-configs(5)
 
 [Service]
-Type=simple
+Type=oneshot
 ExecStart=/usr/lib/snapper/systemd-helper --timeline
 
