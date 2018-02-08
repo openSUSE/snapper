@@ -10,19 +10,22 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2015-11-04 11:54+0200\n"
-"Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
-"Language-Team: Dutch <http://10n.opensuse.org/projects/snapper/master/nl/>\n"
+"PO-Revision-Date: 2018-02-08 16:01+0000\n"
+"Last-Translator: Eva van Rein <vistatec@globaltextware.nl>\n"
+"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
+"\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.3\n"
+"X-Generator: Weblate 2.18\n"
 
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tSnapshots weergeven van alle beschikbare configuraties."
+msgstr ""
+"\t--all-configs, -a\t\tMomentopnamen weergeven van alle beschikbare "
+"configuraties."
 
 #: ../client/snapper.cc:698 ../client/snapper.cc:832
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
@@ -34,7 +37,8 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tOpschoonalgoritme voor momentopnamen."
 
 #: ../client/snapper.cc:700
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
-msgstr "\t--command <command>\tVoer commando uit en maak pre- en post-momentopnamen."
+msgstr ""
+"\t--command <command>\tVoer opdracht uit en maak pre- en post-momentopnamen."
 
 #: ../client/snapper.cc:1583
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -55,7 +59,7 @@ msgstr "\t--diff-cmd <command>\t\tOpdracht gebruikt voor het vergelijken van bes
 #: ../client/snapper.cc:1094
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
-"\t--extensions, -x <options>\tExtra opties doorgeven aan het commando diff."
+"\t--extensions, -x <options>\tExtra opties doorgeven aan de opdracht diff."
 
 #: ../client/snapper.cc:274
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
@@ -211,15 +215,15 @@ msgstr "\tsnapper xadiff <number1>..<number2> [bestanden]"
 
 #: ../client/snapper.cc:1577
 msgid "    Global options:"
-msgstr "    Globale opties:"
+msgstr "    Algemene opties:"
 
 #: ../client/snapper.cc:693
 msgid "    Options for 'create' command:"
-msgstr "    Opties voor 'create' commando:"
+msgstr "    Opties voor opdracht 'create':"
 
 #: ../client/snapper.cc:273
 msgid "    Options for 'create-config' command:"
-msgstr "    Opties voor 'create-config' commando:"
+msgstr "    Opties voor opdracht 'create-config':"
 
 #: ../client/snapper.cc:883
 msgid "    Options for 'delete' command:"
@@ -227,27 +231,27 @@ msgstr "    Opties voor 'verwijderen'-opdracht:"
 
 #: ../client/snapper.cc:1091
 msgid "    Options for 'diff' command:"
-msgstr "    Opties voor 'diff' commando:"
+msgstr "    Opties voor opdracht 'diff':"
 
 #: ../client/snapper.cc:455
 msgid "    Options for 'list' command:"
-msgstr "    Opties voor 'list' commando:"
+msgstr "    Opties voor opdracht 'list':"
 
 #: ../client/snapper.cc:830
 msgid "    Options for 'modify' command:"
-msgstr "    Opties voor 'modify' commando:"
+msgstr "    Opties voor opdracht 'modify':"
 
 #: ../client/snapper.cc:1300
 msgid "    Options for 'rollback' command:"
-msgstr "    Opties voor 'rollback' commando:"
+msgstr "    Opties voor opdracht 'rollback':"
 
 #: ../client/snapper.cc:1029
 msgid "    Options for 'status' command:"
-msgstr "    Opties voor 'status' commando:"
+msgstr "    Opties voor opdracht 'status':"
 
 #: ../client/snapper.cc:1154
 msgid "    Options for 'undochange' command:"
-msgstr "    Opties voor 'undochange' commando:"
+msgstr "    Opties voor opdracht 'undochange':"
 
 #: ../client/snapper.cc:1408
 msgid "  Cleanup snapshots:"
@@ -335,83 +339,83 @@ msgstr "Opschonen"
 #: ../client/snapper.cc:1735
 #, c-format
 msgid "Command '%s' does not work without DBus."
-msgstr "Commando '%s' werkt niet zonder D-Bus."
+msgstr "Opdracht '%s' werkt niet zonder D-Bus."
 
 #: ../client/snapper.cc:1420
 msgid "Command 'cleanup' needs one arguments."
-msgstr "Commando 'cleanup' heeft één argument."
+msgstr "Opdracht 'cleanup' heeft één argument."
 
 #: ../client/snapper.cc:722
 msgid "Command 'create' does not take arguments."
-msgstr "Commando 'create' heeft geen argumenten."
+msgstr "Opdracht 'create' heeft geen argumenten."
 
 #: ../client/snapper.cc:292
 msgid "Command 'create-config' needs one argument."
-msgstr "Commando 'create-config' heeft één argument."
+msgstr "Opdracht 'create-config' heeft één argument."
 
 #: ../client/snapper.cc:1458
 msgid "Command 'debug' does not take arguments."
-msgstr "Commando 'debug' heeft geen argumenten."
+msgstr "Opdracht 'debug' heeft geen argumenten."
 
 #: ../client/snapper.cc:900
 msgid "Command 'delete' needs at least one argument."
-msgstr "Commando 'delete' heeft minstens één argument."
+msgstr "Opdracht 'delete' heeft minstens één argument."
 
 #: ../client/snapper.cc:346
 msgid "Command 'delete-config' does not take arguments."
-msgstr "Commando 'delete-config' heeft geen argumenten."
+msgstr "Opdracht 'delete-config' heeft geen argumenten."
 
 #: ../client/snapper.cc:1112
 msgid "Command 'diff' needs at least one argument."
-msgstr "Commando 'diff' heeft minstens één argument."
+msgstr "Opdracht 'diff' heeft minstens één argument."
 
 #: ../client/snapper.cc:376
 msgid "Command 'get-config' does not take arguments."
-msgstr "Commando 'get-config' heeft geen argumenten."
+msgstr "Opdracht 'get-config' heeft geen argumenten."
 
 #: ../client/snapper.cc:1570
 msgid "Command 'help' does not take arguments."
-msgstr "Commando 'help' heeft geen argumenten."
+msgstr "Opdracht 'help' heeft geen argumenten."
 
 #: ../client/snapper.cc:477
 msgid "Command 'list' does not take arguments."
-msgstr "Commando 'list' heeft geen argumenten."
+msgstr "Opdracht 'list' heeft geen argumenten."
 
 #: ../client/snapper.cc:242
 msgid "Command 'list-configs' does not take arguments."
-msgstr "Commando 'list-configs' heeft geen argumenten."
+msgstr "Opdracht 'list-configs' heeft geen argumenten."
 
 #: ../client/snapper.cc:851
 msgid "Command 'modify' needs at least one argument."
-msgstr "Commando 'modify' heeft minstens één argument."
+msgstr "Opdracht 'modify' heeft minstens één argument."
 
 #: ../client/snapper.cc:964 ../client/snapper.cc:1001
 msgid "Command 'mount' needs at least one argument."
-msgstr "Commando 'mount' heeft minstens één argument."
+msgstr "Opdracht 'mount' heeft minstens één argument."
 
 #: ../client/snapper.cc:1349
 msgid "Command 'rollback' only available for btrfs."
-msgstr "Commando 'rollback' is alleen beschikbaar voor btrfs."
+msgstr "Opdracht 'rollback' is alleen beschikbaar voor btrfs."
 
 #: ../client/snapper.cc:1323
 msgid "Command 'rollback' takes either one or no argument."
-msgstr "Commando 'rollback' heeft één of geen argument."
+msgstr "Opdracht 'rollback' heeft één of geen argument."
 
 #: ../client/snapper.cc:432
 msgid "Command 'set-config' needs at least one argument."
-msgstr "Commando 'set-config' heeft minstens één argument."
+msgstr "Opdracht 'set-config' heeft minstens één argument."
 
 #: ../client/snapper.cc:1046
 msgid "Command 'status' needs one argument."
-msgstr "Commando 'status' heeft één argument."
+msgstr "Opdracht 'status' heeft één argument."
 
 #: ../client/snapper.cc:1171
 msgid "Command 'undochange' needs at least one argument."
-msgstr "Commando 'undochange' heeft minstens één argument."
+msgstr "Opdracht 'undochange' heeft minstens één argument."
 
 #: ../client/snapper.cc:1503
 msgid "Command 'xadiff' needs at least one argument."
-msgstr "Commando 'xadiff' heeft minstens één argument."
+msgstr "Opdracht 'xadiff' heeft minstens één argument."
 
 #: ../client/snapper.cc:249
 msgid "Config"
@@ -488,7 +492,7 @@ msgstr "Verwijderen van momentopname is mislukt."
 #, c-format
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
-msgstr[0] "Snapshot verwijderen van %s:"
+msgstr[0] "Momentopnamen verwijderen van %s:"
 msgstr[1] "Snapshots verwijderen van %s:"
 
 #: ../client/snapper.cc:536 ../client/snapper.cc:583 ../client/snapper.cc:631
@@ -593,7 +597,7 @@ msgstr "Misschien bent u het scheidingsteken '..' tussen de snapshotnummer verge
 #: ../client/utils/GetOpts.cc:68
 #, c-format
 msgid "Missing argument for command option '%s'."
-msgstr "Argument ontbreekt voor commando-optie '%s'."
+msgstr "Argument ontbreekt voor opdrachtoptie '%s'."
 
 #: ../client/utils/GetOpts.cc:66
 #, c-format
@@ -602,7 +606,7 @@ msgstr "Argument ontbreekt voor globale optie '%s'."
 
 #: ../client/snapper.cc:784
 msgid "Missing command argument."
-msgstr "Argument van commando ontbreekt."
+msgstr "Argument van opdracht ontbreekt."
 
 #: ../client/misc.cc:88
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -614,7 +618,7 @@ msgstr "Ontbrekend of ongeldig 'pre'-nummer."
 
 #: ../client/snapper.cc:1713
 msgid "No command provided."
-msgstr "Geen commando aangeleverd."
+msgstr "Geen opdracht opgegeven."
 
 #: ../client/errors.cc:43
 msgid "No permissions."
@@ -686,7 +690,7 @@ msgstr "Onbekend opschoonalgoritme '%s'."
 #: ../client/snapper.cc:1726
 #, c-format
 msgid "Unknown command '%s'."
-msgstr "Onbekend commando '%s'."
+msgstr "Onbekende opdracht '%s'."
 
 #: ../client/errors.cc:40
 msgid "Unknown config."
@@ -700,7 +704,7 @@ msgstr "Onbekende globale optie '%s'."
 #: ../client/utils/GetOpts.cc:60
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
-msgstr "Onbekende optie '%s' voor commando '%s'."
+msgstr "Onbekende optie '%s' voor opdracht '%s'."
 
 #: ../client/snapper.cc:750
 msgid "Unknown type of snapshot."
@@ -782,7 +786,9 @@ msgstr "rootargument kan alleen samen worden gebruikt met no-dbus."
 
 #: ../client/snapper.cc:1574
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "gebruik: snapper [--global-options] <commando> [--commando-options] [commando-arguments]"
+msgstr ""
+"gebruik: snapper [--global-options] <opdracht> [--commando-options] "
+"[commando-arguments]"
 
 # error box title
 #~ msgid "IO Error."
