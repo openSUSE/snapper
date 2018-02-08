@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2016-10-14 11:19+0000\n"
+"PO-Revision-Date: 2018-02-08 18:01+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
 "Language-Team: Catalan "
 "<https://l10n.opensuse.org/projects/snapper/master/ca/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.6\n"
+"X-Generator: Weblate 2.18\n"
 
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
@@ -78,7 +78,7 @@ msgstr "\t--output, -o <file>\t\tDesa l'estat en un fitxer."
 
 #: ../client/snapper.cc:695
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <number>\t\tNúmero de la corresponent preinstantània."
+msgstr "\t--pre-number <number>\t\tNúmero de la preinstantània corresponent."
 
 #: ../client/snapper.cc:696
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
@@ -100,7 +100,7 @@ msgstr ""
 
 #: ../client/snapper.cc:884
 msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr "\t--sync, -s\t\t\tSincronitza després d'una supressió."
+msgstr "\t--sync, -s\t\t\tSincronitza després d'una eliminació."
 
 #: ../client/snapper.cc:1582
 msgid "\t--table-style, -t <style>\tTable style (integer)."
@@ -220,7 +220,7 @@ msgstr "    Opcions de l'ordre 'create-config':"
 
 #: ../client/snapper.cc:883
 msgid "    Options for 'delete' command:"
-msgstr "    Opcions de l'ordre \"delete\":"
+msgstr "    Opcions de l'ordre delete:"
 
 #: ../client/snapper.cc:1091
 msgid "    Options for 'diff' command:"
@@ -252,11 +252,11 @@ msgstr "  Neteja les instantànies:"
 
 #: ../client/snapper.cc:1473
 msgid "  Comparing snapshots extended attributes:"
-msgstr "  Comparant atributs ampliats d'instantànies:"
+msgstr "  Comparació d'atributs ampliats d'instantànies:"
 
 #: ../client/snapper.cc:1026 ../client/snapper.cc:1088
 msgid "  Comparing snapshots:"
-msgstr "  Comparant instantànies:"
+msgstr "  Comparació d'instantànies:"
 
 #: ../client/snapper.cc:270
 msgid "  Create config:"
@@ -268,11 +268,11 @@ msgstr "  Crea la instantània:"
 
 #: ../client/snapper.cc:334
 msgid "  Delete config:"
-msgstr "  Esborra config:"
+msgstr "  Elimina config:"
 
 #: ../client/snapper.cc:880
 msgid "  Delete snapshot:"
-msgstr "  Esborra la instantània:"
+msgstr "  Elimina la instantània:"
 
 #: ../client/snapper.cc:364
 msgid "  Get config:"
@@ -351,11 +351,11 @@ msgstr "L'ordre 'debug' no pot tenir arguments."
 
 #: ../client/snapper.cc:900
 msgid "Command 'delete' needs at least one argument."
-msgstr "L'ordre 'delete' no pot tenir arguments."
+msgstr "L'ordre delete necessita com a mínim un argument."
 
 #: ../client/snapper.cc:346
 msgid "Command 'delete-config' does not take arguments."
-msgstr "L'ordre 'delete-config' no pot tenir arguments."
+msgstr "L'ordre delete-config no admet arguments."
 
 #: ../client/snapper.cc:1112
 msgid "Command 'diff' needs at least one argument."
@@ -478,14 +478,14 @@ msgstr "Ha fallat l'eliminació de config (%s)."
 
 #: ../client/errors.cc:76
 msgid "Deleting snapshot failed."
-msgstr "Ha fallat la supressió de la instantània."
+msgstr "Ha fallat eliminar la instantània."
 
 #: ../client/commands.cc:274
 #, c-format
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
-msgstr[0] "Suprimint la instantània de %s:"
-msgstr[1] "Suprimint les instantànies de %s:"
+msgstr[0] "Eliminant la instantània de %s:"
+msgstr[1] "Eliminant les instantànies de %s:"
 
 #: ../client/snapper.cc:536 ../client/snapper.cc:583 ../client/snapper.cc:631
 msgid "Description"
@@ -738,7 +738,7 @@ msgstr "Valor"
 #: ../client/snapper.cc:1212
 #, c-format
 msgid "create:%d modify:%d delete:%d"
-msgstr "crea:%d modica:%d elimina:%d"
+msgstr "crea:%d, modica:%d, elimina:%d"
 
 #: ../client/snapper.cc:1237
 #, c-format
@@ -758,7 +758,7 @@ msgstr "Ha fallat la creació de %s"
 #: ../client/snapper.cc:1259
 #, c-format
 msgid "failed to delete %s"
-msgstr "Ha fallat eliminar %s"
+msgstr "ha fallat eliminar %s"
 
 #: ../client/snapper.cc:1256
 #, c-format
