@@ -34,7 +34,7 @@ sudo zypper install git libmount-devel dbus-1-devel libacl-devel \
 ```
 
 Alternatively you can use a [Docker](https://www.docker.com/) container,
-see [REAME.Travis.md](REAME.Travis.md) file for some hints.
+see [README.Travis.md](README.Travis.md) file for some hints.
 
 ### Building Snapper
 
