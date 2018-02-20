@@ -6,26 +6,28 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2015-09-27 21:10+0200\n"
-"Last-Translator: Harri Miettinen <harmie@opensuse.fi>\n"
-"Language-Team: Finnish <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2018-02-20 12:02+0000\n"
+"Last-Translator: Tommi Nieminen <software@legisign.org>\n"
+"Language-Team: Finnish "
+"<https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 2.0\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.18\n"
 
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr ""
+"\t--all-configs, -a\t\tLuettele saatavilla olevien määritysten "
+"tilannevedokset."
 
 #: ../client/snapper.cc:698 ../client/snapper.cc:832
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\tTilannevedoksen puhdistusalgoritmi."
 
 #: ../client/snapper.cc:1303
-#, fuzzy
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tTilannevedoksen puhdistusalgoritmi."
 
@@ -42,17 +44,17 @@ msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <kuvaus>\tTilannevedoksen kuvaus."
 
 #: ../client/snapper.cc:1302
-#, fuzzy
 msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr "\t--description, -d <kuvaus>\tTilannevedoksen kuvaus."
 
 #: ../client/snapper.cc:1093
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr ""
+msgstr "\t--diff-cmd <komento>\t\tKomento tiedostojen vertailemiseksi."
 
 #: ../client/snapper.cc:1094
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
+"\t--extensions, -x <valinnat>\tdiff-komennolle välitettävät lisävalinnat."
 
 #: ../client/snapper.cc:274
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
@@ -63,14 +65,12 @@ msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr "\t--input, -i <tiedosto>\t\tLue tiedostot, joista tehdään peruutusmuutokset tiedostoon."
 
 #: ../client/snapper.cc:1092
-#, fuzzy
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr "\t--input, -i <tiedosto>\t\tLue tiedostot, joista tehdään peruutusmuutokset tiedostoon."
+msgstr "\t--input, -i <tiedosto>\t\tLue tiedostot, joita tiedostoon verrataan."
 
 #: ../client/snapper.cc:1581
-#, fuzzy
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr "\t--iso\t\t\tNäytä päivämäärä ja aika ISO-muodossa"
+msgstr "\t--iso\t\t\tNäytä päiväys ja aika ISO-muodossa."
 
 #: ../client/snapper.cc:1584
 msgid "\t--no-dbus\t\t\tOperate without DBus."
@@ -89,7 +89,6 @@ msgid "\t--print-number, -p\t\tPrint number of created snapshot."
 msgstr "\t--print-number, -p\t\tTulosta luodun tilannevedoksen numero."
 
 #: ../client/snapper.cc:1301
-#, fuzzy
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
 msgstr "\t--print-number, -p\t\tTulosta luodun tilannevedoksen numero."
 
@@ -100,10 +99,12 @@ msgstr "\t--quiet, -q\t\t\tVähentää näytettävän tiedon määrää."
 #: ../client/snapper.cc:1585
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr ""
+"\t--root, -r <sijainti>\t\tToimi asetetussa juuressa (toimii vain ilman "
+"DBusia)."
 
 #: ../client/snapper.cc:884
 msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr ""
+msgstr "\t--sync, -s\t\t\tTahdista poistamisen jälkeen."
 
 #: ../client/snapper.cc:1582
 msgid "\t--table-style, -t <style>\tTable style (integer)."
@@ -126,14 +127,12 @@ msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <avain=arvo>\tTilannevedoksen lisäinfo."
 
 #: ../client/snapper.cc:1304
-#, fuzzy
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata, -u <avain=arvo>\tTilannevedoksen lisäinfo."
+msgstr "\t--userdata, -u <käyttäjätieto>\tTilannevedoksen käyttäjätieto."
 
 #: ../client/snapper.cc:1580
-#, fuzzy
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr "\t--utc\t\t\tNäytä päivämäärä ja aika UTC-muodossa."
+msgstr "\t--utc\t\t\t\tNäytä päiväys ja aika UTC:na."
 
 #: ../client/snapper.cc:1579
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
@@ -188,13 +187,12 @@ msgid "\tsnapper mount <number>"
 msgstr "\tsnapper mount <numero>"
 
 #: ../client/snapper.cc:1298
-#, fuzzy
 msgid "\tsnapper rollback [number]"
-msgstr "\tsnapper palautus [numero]"
+msgstr "\tsnapper-palautus [numero]"
 
 #: ../client/snapper.cc:421
 msgid "\tsnapper set-config <configdata>"
-msgstr "\tsnapper set-config <configdata>"
+msgstr "\tsnapper set-config <määritystieto>"
 
 #: ../client/snapper.cc:1027
 msgid "\tsnapper status <number1>..<number2>"
@@ -225,35 +223,32 @@ msgid "    Options for 'create-config' command:"
 msgstr "    \"create-config\" komennon valinnat:"
 
 #: ../client/snapper.cc:883
-#, fuzzy
 msgid "    Options for 'delete' command:"
-msgstr "    \"create\" komennon valinnat:"
+msgstr "    \"delete\"-komennon valinnat:"
 
 #: ../client/snapper.cc:1091
-#, fuzzy
 msgid "    Options for 'diff' command:"
-msgstr "    \"modify\" komennon valinnat:"
+msgstr "    \"diff\"-komennon valinnat:"
 
 #: ../client/snapper.cc:455
 msgid "    Options for 'list' command:"
-msgstr "    \"list\" komennon valinnat:"
+msgstr "    \"list\"-komennon valinnat:"
 
 #: ../client/snapper.cc:830
 msgid "    Options for 'modify' command:"
-msgstr "    \"modify\" komennon valinnat:"
+msgstr "    \"modify\"-komennon valinnat:"
 
 #: ../client/snapper.cc:1300
-#, fuzzy
 msgid "    Options for 'rollback' command:"
-msgstr "    Valinnat 'palautus' komennolle"
+msgstr "    \"rollback\"-komennon valinnat:"
 
 #: ../client/snapper.cc:1029
 msgid "    Options for 'status' command:"
-msgstr "    \"status\" komennon valinnat:"
+msgstr "    \"status\"-komennon valinnat:"
 
 #: ../client/snapper.cc:1154
 msgid "    Options for 'undochange' command:"
-msgstr "    \"undochange\" komennon valinnat:"
+msgstr "    \"undochange\"-komennon valinnat:"
 
 #: ../client/snapper.cc:1408
 msgid "  Cleanup snapshots:"
@@ -304,9 +299,8 @@ msgid "  Mount snapshot:"
 msgstr "  Liitä tilannevedos:"
 
 #: ../client/snapper.cc:1297
-#, fuzzy
 msgid "  Rollback:"
-msgstr "Palaa takaisin"
+msgstr "  Palaa:"
 
 #: ../client/snapper.cc:420
 msgid "  Set config:"
@@ -425,7 +419,7 @@ msgstr "Komento \"xadiff\" tarvitsee ainakin yhden argumentin."
 
 #: ../client/snapper.cc:249
 msgid "Config"
-msgstr " Määritys"
+msgstr "Määritys"
 
 #: ../client/snapper.cc:1757
 #, c-format
@@ -608,7 +602,7 @@ msgstr "Määritysten listaaminen epäonnistui (%s)."
 
 #: ../client/snapper.cc:1050
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
-msgstr ""
+msgstr "Unohdit ehkä erottimen \"..\" tilannevedosnumeroiden välistä."
 
 #: ../client/utils/GetOpts.cc:68
 #, c-format
@@ -626,7 +620,7 @@ msgstr "Komennon valinta puuttuu."
 
 #: ../client/misc.cc:88
 msgid "Missing delimiter '..' between snapshot numbers."
-msgstr ""
+msgstr "Erotin \"..\" puuttuu tilannevedosnumeroiden välistä."
 
 #: ../client/snapper.cc:778
 msgid "Missing or invalid pre-number."
@@ -634,7 +628,7 @@ msgstr "Puuttuva tai virheellinen ennen numero."
 
 #: ../client/snapper.cc:1713
 msgid "No command provided."
-msgstr "Komentoa ei annettu"
+msgstr "Komentoa ei annettu."
 
 #: ../client/errors.cc:43
 msgid "No permissions."
@@ -687,7 +681,7 @@ msgstr "Alitaltio"
 
 #: ../client/snapper.cc:1823
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr ""
+msgstr "\"root\"-määritys puuttuu. Luultavasti snapperiä ei ole asetettu."
 
 #: ../client/snapper.cc:1694 ../client/snapper.cc:1714
 #: ../client/snapper.cc:1727 ../client/utils/GetOpts.cc:61
@@ -795,11 +789,11 @@ msgstr "muokataan %s"
 
 #: ../client/snapper.cc:1208
 msgid "nothing to do"
-msgstr "Ei mitään tehtävää."
+msgstr "ei mitään tehtävää"
 
 #: ../client/snapper.cc:1693
 msgid "root argument can be used only together with no-dbus."
-msgstr ""
+msgstr "Juuriparametria voi käyttää vain yhdessä no-dbus-asetuksen kanssa."
 
 #: ../client/snapper.cc:1574
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
