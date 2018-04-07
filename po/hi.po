@@ -3,18 +3,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-09 16:24+0200\n"
-"PO-Revision-Date: 2005-07-29 15:37+0530\n"
-"Last-Translator: Prasanth Kurian <prasanth.kurian@agreeya.com>\n"
-"Language-Team: Hindi <i18n@suse.de>\n"
+"PO-Revision-Date: 2018-04-07 16:03+0000\n"
+"Last-Translator: Anshul Panwar <caspian7pena@gmail.com>\n"
+"Language-Team: Hindi <https://l10n.opensuse.org/projects/snapper/master/hi/>"
+"\n"
 "Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"\n"
-"\n"
-"\n"
-"Plural-Forms: nplurals=2; plural=(n!=1);\n"
-"\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.18\n"
 
 #: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
@@ -793,34 +791,33 @@ msgid "creating %s"
 msgstr "%s सृजित कर रहा है"
 
 #: ../client/snapper.cc:1243
-#, fuzzy, c-format
+#, c-format
 msgid "deleting %s"
-msgstr "%s सृजित कर रहा है"
+msgstr "%s को हटाया जा रहा है"
 
 #: ../client/snapper.cc:1253
-#, fuzzy, c-format
+#, c-format
 msgid "failed to create %s"
-msgstr "Failed to parse: %s."
+msgstr "%s बनाने में विफल"
 
 #: ../client/snapper.cc:1259
-#, fuzzy, c-format
+#, c-format
 msgid "failed to delete %s"
-msgstr "Failed to parse: %s."
+msgstr "%s हटाने में विफल"
 
 #: ../client/snapper.cc:1256
-#, fuzzy, c-format
+#, c-format
 msgid "failed to modify %s"
-msgstr "\"%s\" मोड्यूल लोड करने में असफल।"
+msgstr "%s संशोधित करने में विफल"
 
 #: ../client/snapper.cc:1240
 #, c-format
 msgid "modifying %s"
-msgstr ""
+msgstr "%s को संशोधित किया जा रहा है"
 
 #: ../client/snapper.cc:1208
-#, fuzzy
 msgid "nothing to do"
-msgstr "कुछ नहीं करने को"
+msgstr "करने के लिए कुछ नहीं है"
 
 #: ../client/snapper.cc:1693
 msgid "root argument can be used only together with no-dbus."
