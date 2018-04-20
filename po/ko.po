@@ -2,11 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: entries\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-09 16:24+0200\n"
+"POT-Creation-Date: 2018-04-20 14:05+0200\n"
 "PO-Revision-Date: 2016-03-31 16:28+0000\n"
 "Last-Translator: YunSeok Choi <xein@naver.com>\n"
-"Language-Team: Korean <http://l10n.opensuse.org/projects/snapper/master/ko/>"
-"\n"
+"Language-Team: Korean <http://l10n.opensuse.org/projects/snapper/master/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,926 +13,784 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 2.5\n"
 
-#: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\t액세스 가능한 구성의 스냅샷을 모두 나열합니다."
 
 # SLE12
-#: ../client/snapper.cc:698 ../client/snapper.cc:832
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\t스냅샷에 대한 정리 알고리즘."
 
 # SLE12
-#: ../client/snapper.cc:1303
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\t스냅샷에 대한 정리 알고리즘입니다."
 
 # SLE12
-#: ../client/snapper.cc:700
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
 msgstr "\t--command <command>\t명령을 실행하고 사전 및 사후 스냅샷을 생성합니다."
 
 # SLE12
-#: ../client/snapper.cc:1583
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <name>\t\t사용할 구성의 이름을 설정합니다."
 
 # SLE12
-#: ../client/snapper.cc:697 ../client/snapper.cc:831
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <description>\t스냅샷에 대한 설명입니다."
 
 # SLE12
-#: ../client/snapper.cc:1302
 msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr "\t--description, -d <description>\t스냅샷에 대한 설명입니다."
 
-#: ../client/snapper.cc:1093
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\t파일을 비교하는 데 쓰는 명령입니다."
 
-#: ../client/snapper.cc:1094
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tdiff 명령에 전달되는 추가 옵션입니다."
 
 # SLE12
-#: ../client/snapper.cc:274
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <fstype>\t\t파일 시스템 유형을 수동으로 설정합니다."
 
 # SLE12
-#: ../client/snapper.cc:1155
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr "\t--input, -i <file>\t\t파일에서 변경을 취소할 파일을 읽습니다."
 
-#: ../client/snapper.cc:1092
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
 msgstr "\t--input, -i <file>\t\tdiff from 파일로 파일을 읽습니다."
 
 # SLE12
-#: ../client/snapper.cc:1581
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\t날짜와 시간을 ISO 형식으로 표시합니다."
 
 # SLE12
-#: ../client/snapper.cc:1584
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tDBus 없이 작동합니다."
 
 # SLE12
-#: ../client/snapper.cc:1030
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <file>\t\t상태를 파일에 저장합니다."
 
 # SLE12
-#: ../client/snapper.cc:695
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <number>\t\t해당되는 사전 스냅샷 수."
 
 # SLE12
-#: ../client/snapper.cc:696
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
 msgstr "\t--print-number, -p\t\t생성된 스냅샷의 번호를 입쇄합니다."
 
 # SLE12
-#: ../client/snapper.cc:1301
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
 msgstr "\t--print-number, -p\t\t두 번째로 생성된 스냅샷의 번호를 인쇄합니다."
 
 # SLE12
-#: ../client/snapper.cc:1578
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\t정상적인 출력을 억제합니다."
 
-#: ../client/snapper.cc:1585
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <path>\t\t대상 루트에서 작업합니다(DBus 없이만 작동)."
 
-#: ../client/snapper.cc:884
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\t삭제 후에 동기화합니다."
 
 # SLE12
-#: ../client/snapper.cc:1582
 msgid "\t--table-style, -t <style>\tTable style (integer)."
 msgstr "\t--table-style, -t <style>\t테이블 스타일(정수)."
 
 # SLE12
-#: ../client/snapper.cc:275
 msgid "\t--template, -t <name>\t\tName of config template to use."
 msgstr "\t--template, -t <name>\t\t사용할 구성 템플릿의 이름."
 
 # SLE12
-#: ../client/snapper.cc:694
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <type>\t\t스냅샷 유형."
 
 # SLE12
-#: ../client/snapper.cc:456
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
 msgstr "\t--type, -t <type>\t\t나열할 스냅샷 유형."
 
 # SLE12
-#: ../client/snapper.cc:699 ../client/snapper.cc:833
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <userdata>\t스냅샷용 사용자 데이터."
 
 # SLE12
-#: ../client/snapper.cc:1304
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
 msgstr "\t--userdata, -u <userdata>\t스냅샷용 사용자 데이터입니다."
 
 # SLE12
-#: ../client/snapper.cc:1580
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
 msgstr "\t--utc\t\t\t\t날짜와 시간을 UTC로 표시합니다."
 
 # SLE12
-#: ../client/snapper.cc:1579
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
 msgstr "\t--verbose, -v\t\t\t자세한 표시 수준을 증가시킵니다."
 
 # SLE12
-#: ../client/snapper.cc:1586
 msgid "\t--version\t\t\tPrint version and exit."
 msgstr "\t--version\t\t\t버전을 인쇄하고 종료합니다."
 
 # SLE12
-#: ../client/snapper.cc:1409
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <cleanup-algorithm>"
 
 # SLE12
-#: ../client/snapper.cc:691
 msgid "\tsnapper create"
 msgstr "\tsnapper create"
 
 # SLE12
-#: ../client/snapper.cc:271
 msgid "\tsnapper create-config <subvolume>"
 msgstr "\tsnapper create-config <subvolume>"
 
 # SLE12
-#: ../client/snapper.cc:881
 msgid "\tsnapper delete <number>"
 msgstr "\tsnapper delete <number>"
 
 # SLE12
-#: ../client/snapper.cc:335
 msgid "\tsnapper delete-config"
 msgstr "\tsnapper delete-config"
 
 # SLE12
-#: ../client/snapper.cc:1089
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <number1>..<number2> [files]"
 
 # SLE12
-#: ../client/snapper.cc:365
 msgid "\tsnapper get-config"
 msgstr "\tsnapper get-config"
 
 # SLE12
-#: ../client/snapper.cc:453
 msgid "\tsnapper list"
 msgstr "\tsnapper list"
 
 # SLE12
-#: ../client/snapper.cc:205
 msgid "\tsnapper list-configs"
 msgstr "\tsnapper list-configs"
 
 # SLE12
-#: ../client/snapper.cc:828
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <number>"
 
 # SLE12
-#: ../client/snapper.cc:953
 msgid "\tsnapper mount <number>"
 msgstr "\tsnapper mount <number>"
 
 # SLE12
-#: ../client/snapper.cc:1298
 msgid "\tsnapper rollback [number]"
 msgstr "\tsnapper rollback [number]"
 
 # SLE12
-#: ../client/snapper.cc:421
 msgid "\tsnapper set-config <configdata>"
 msgstr "\tsnapper set-config <configdata>"
 
 # SLE12
-#: ../client/snapper.cc:1027
+#, fuzzy
+msgid "\tsnapper setup-quota"
+msgstr "\tsnapper get-config"
+
+# SLE12
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tsnapper status <number1>..<number2>"
 
 # SLE12
-#: ../client/snapper.cc:990
 msgid "\tsnapper umount <number>"
 msgstr "\tsnapper umount <number>"
 
 # SLE12
-#: ../client/snapper.cc:1152
 msgid "\tsnapper undochange <number1>..<number2> [files]"
 msgstr "\tsnapper undochange <number1>..<number2> [files]"
 
 # SLE12
-#: ../client/snapper.cc:1474
 msgid "\tsnapper xadiff <number1>..<number2> [files]"
 msgstr "\tsnapper xadiff <number1>..<number2> [files]"
 
 # SLE12
-#: ../client/snapper.cc:1577
 msgid "    Global options:"
 msgstr "    전역 옵션:"
 
 # SLE12
-#: ../client/snapper.cc:693
 msgid "    Options for 'create' command:"
 msgstr "    'create' 명령에 대한 옵션:"
 
 # SLE12
-#: ../client/snapper.cc:273
 msgid "    Options for 'create-config' command:"
 msgstr "    'create-config' 명령에 대한 옵션:"
 
-#: ../client/snapper.cc:883
 msgid "    Options for 'delete' command:"
 msgstr "    'delete' 명령에 대한 옵션:"
 
-#: ../client/snapper.cc:1091
 msgid "    Options for 'diff' command:"
 msgstr "    'diff' 명령에 대한 옵션:"
 
 # SLE12
-#: ../client/snapper.cc:455
 msgid "    Options for 'list' command:"
 msgstr "    'list' 명령에 대한 옵션:"
 
 # SLE12
-#: ../client/snapper.cc:830
 msgid "    Options for 'modify' command:"
 msgstr "    'modify' 명령에 대한 옵션:"
 
 # SLE12
-#: ../client/snapper.cc:1300
 msgid "    Options for 'rollback' command:"
 msgstr "    'rollback' 명령에 대한 옵션:"
 
 # SLE12
-#: ../client/snapper.cc:1029
 msgid "    Options for 'status' command:"
 msgstr "    'status' 명령 옵션:"
 
 # SLE12
-#: ../client/snapper.cc:1154
 msgid "    Options for 'undochange' command:"
 msgstr "    'undochange' 명령에 대한 옵션:"
 
 # SLE12
-#: ../client/snapper.cc:1408
 msgid "  Cleanup snapshots:"
 msgstr "  스냅샷 정리:"
 
 # SLE12
-#: ../client/snapper.cc:1473
 msgid "  Comparing snapshots extended attributes:"
 msgstr "  스냅샷 확장 특성 비교:"
 
 # SLE12
-#: ../client/snapper.cc:1026 ../client/snapper.cc:1088
 msgid "  Comparing snapshots:"
 msgstr "  스냅샷 비교:"
 
 # SLE12
-#: ../client/snapper.cc:270
 msgid "  Create config:"
 msgstr "  구성 생성:"
 
 # SLE12
-#: ../client/snapper.cc:690
 msgid "  Create snapshot:"
 msgstr "  스냅샷 생성:"
 
 # SLE12
-#: ../client/snapper.cc:334
 msgid "  Delete config:"
 msgstr "  구성 삭제:"
 
 # SLE12
-#: ../client/snapper.cc:880
 msgid "  Delete snapshot:"
 msgstr "  스냅샷 삭제:"
 
 # SLE12
-#: ../client/snapper.cc:364
 msgid "  Get config:"
 msgstr "  구성 가져오기:"
 
 # SLE12
-#: ../client/snapper.cc:204
 msgid "  List configs:"
 msgstr "  구성 나열:"
 
 # SLE12
-#: ../client/snapper.cc:452
 msgid "  List snapshots:"
 msgstr "  스냅샷 나열:"
 
 # SLE12
-#: ../client/snapper.cc:827
 msgid "  Modify snapshot:"
 msgstr "  스냅샷 수정:"
 
 # SLE12
-#: ../client/snapper.cc:952
 msgid "  Mount snapshot:"
 msgstr "  스냅샷 마운트:"
 
 # SLE12
-#: ../client/snapper.cc:1297
 msgid "  Rollback:"
 msgstr "  롤백:"
 
 # SLE12
-#: ../client/snapper.cc:420
 msgid "  Set config:"
 msgstr "  구성 설정:"
 
+msgid "  Setup quota:"
+msgstr ""
+
 # SLE12
-#: ../client/snapper.cc:989
 msgid "  Umount snapshot:"
 msgstr "  스냅샷 마운트 해제:"
 
 # SLE12
-#: ../client/snapper.cc:1151
 msgid "  Undo changes:"
 msgstr "  변경 취소:"
 
 # SLE12
-#: ../client/snapper.cc:531 ../client/snapper.cc:580
 msgid "#"
 msgstr "#"
 
 # SLE12
-#: ../client/snapper.cc:1364 ../client/snapper.cc:1371
-#: ../client/snapper.cc:1382 ../client/snapper.cc:1389
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(스냅샷 %d)"
 
 # SLE12
-#: ../client/snapper.cc:1787 ../client/errors.cc:85
 msgid "ACL error."
 msgstr "ACL 오류입니다."
 
 # SLE12
-#: ../client/snapper.cc:535
 msgid "Cleanup"
 msgstr "정리"
 
 # SLE12
-#: ../client/snapper.cc:1735
-#, c-format
-msgid "Command '%s' does not work without DBus."
-msgstr "DBus가 없으면 '%s' 명령이 작동하지 않습니다."
-
-# SLE12
-#: ../client/snapper.cc:1420
 msgid "Command 'cleanup' needs one arguments."
 msgstr "'cleanup' 명령에 하나의 인수가 필요합니다."
 
 # SLE12
-#: ../client/snapper.cc:722
 msgid "Command 'create' does not take arguments."
 msgstr "'create' 명령은 인수를 사용하지 않습니다."
 
 # SLE12
-#: ../client/snapper.cc:292
 msgid "Command 'create-config' needs one argument."
 msgstr "'create-config' 명령에 하나의 인수가 필요합니다."
 
 # SLE12
-#: ../client/snapper.cc:1458
 msgid "Command 'debug' does not take arguments."
 msgstr "'debug' 명령은 인수를 사용하지 않습니다."
 
 # SLE12
-#: ../client/snapper.cc:900
 msgid "Command 'delete' needs at least one argument."
 msgstr "'delete' 명령에 하나 이상의 인수가 필요합니다."
 
 # SLE12
-#: ../client/snapper.cc:346
 msgid "Command 'delete-config' does not take arguments."
 msgstr "'delete-config' 명령은 인수를 사용하지 않습니다."
 
 # SLE12
-#: ../client/snapper.cc:1112
 msgid "Command 'diff' needs at least one argument."
 msgstr "'diff' 명령에 하나 이상의 인수가 필요합니다."
 
 # SLE12
-#: ../client/snapper.cc:376
 msgid "Command 'get-config' does not take arguments."
 msgstr "'get-config' 명령은 인수를 사용하지 않습니다."
 
 # SLE12
-#: ../client/snapper.cc:1570
 msgid "Command 'help' does not take arguments."
 msgstr "'help' 명령은 인수를 사용하지 않습니다."
 
 # SLE12
-#: ../client/snapper.cc:477
 msgid "Command 'list' does not take arguments."
 msgstr "'list' 명령은 인수를 사용하지 않습니다."
 
 # SLE12
-#: ../client/snapper.cc:242
 msgid "Command 'list-configs' does not take arguments."
 msgstr "'list-configs' 명령은 인수를 사용하지 않습니다."
 
 # SLE12
-#: ../client/snapper.cc:851
 msgid "Command 'modify' needs at least one argument."
 msgstr "'modify' 명령에 하나 이상의 인수가 필요합니다."
 
 # SLE12
-#: ../client/snapper.cc:964 ../client/snapper.cc:1001
 msgid "Command 'mount' needs at least one argument."
 msgstr "'mount' 명령에 하나 이상의 인수가 필요합니다."
 
 # SLE12
-#: ../client/snapper.cc:1349
+#, fuzzy, c-format
+msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
+msgstr "'rollback' 명령은 인수 한 개를 사용하거나 인수를 사용하지 않습니다."
+
+# SLE12
 msgid "Command 'rollback' only available for btrfs."
 msgstr "'rollback' 명령은 btrfs에만 사용할 수 있습니다."
 
 # SLE12
-#: ../client/snapper.cc:1323
 msgid "Command 'rollback' takes either one or no argument."
 msgstr "'rollback' 명령은 인수 한 개를 사용하거나 인수를 사용하지 않습니다."
 
 # SLE12
-#: ../client/snapper.cc:432
 msgid "Command 'set-config' needs at least one argument."
 msgstr "'set-config' 명령에는 인수가 하나 이상 필요합니다."
 
 # SLE12
-#: ../client/snapper.cc:1046
+#, fuzzy
+msgid "Command 'setup-quota' does not take arguments."
+msgstr "'help' 명령은 인수를 사용하지 않습니다."
+
+# SLE12
 msgid "Command 'status' needs one argument."
 msgstr "'status' 명령에 하나의 인수가 필요합니다."
 
 # SLE12
-#: ../client/snapper.cc:1171
+#, fuzzy
+msgid "Command 'umount' needs at least one argument."
+msgstr "'mount' 명령에 하나 이상의 인수가 필요합니다."
+
+# SLE12
 msgid "Command 'undochange' needs at least one argument."
 msgstr "'undochange' 명령에 하나 이상의 인수가 필요합니다."
 
 # SLE12
-#: ../client/snapper.cc:1503
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "'xadiff' 명령에는 인수가 하나 이상 필요합니다."
 
 # SLE12
-#: ../client/snapper.cc:249
 msgid "Config"
 msgstr "구성"
 
 # SLE12
-#: ../client/snapper.cc:1757
 #, c-format
 msgid "Config '%s' is invalid."
 msgstr "'%s' 구성이 잘못되었습니다."
 
 # SLE12
-#: ../client/snapper.cc:1751
 #, c-format
 msgid "Config '%s' not found."
 msgstr "'%s' 구성을 찾을 수 없습니다."
 
 # SLE12
-#: ../client/errors.cc:58
 msgid "Config is in use."
 msgstr "구성이 사용 중입니다."
 
 # SLE12
-#: ../client/errors.cc:55
 msgid "Config is locked."
 msgstr "구성이 잠겼습니다."
 
 # SLE12
-#: ../client/misc.cc:189
 #, c-format
 msgid "Configdata '%s' does not include '=' sign."
 msgstr "Configdata '%s'에 '=' 기호가 포함되어 있지 않습니다."
 
 # SLE12
-#: ../client/misc.cc:198
 #, c-format
 msgid "Configdata '%s' has empty key."
 msgstr "Configdata '%s'에 빈 키가 있습니다."
 
 # SLE12
-#: ../client/snapper.cc:1769 ../client/errors.cc:67
 #, c-format
 msgid "Creating config failed (%s)."
 msgstr "구성 생성 실패(%s)."
 
 # SLE12
-#: ../client/snapper.cc:1378
 msgid "Creating read-only snapshot of current system."
 msgstr "현재 시스템의 읽기 전용 스냅샷을 생성합니다."
 
 # SLE12
-#: ../client/snapper.cc:1359
 msgid "Creating read-only snapshot of default subvolume."
 msgstr "기본 하위 볼륨의 읽기 전용 스냅샷을 생성합니다."
 
 # SLE12
-#: ../client/snapper.cc:1367
 msgid "Creating read-write snapshot of current subvolume."
 msgstr "현재 하위 볼륨의 읽기 쓰기 스냅샷을 생성합니다."
 
 # SLE12
-#: ../client/snapper.cc:1385
 #, c-format
 msgid "Creating read-write snapshot of snapshot %d."
 msgstr "스냅샷 %d의 읽기 쓰기 스냅샷을 생성합니다."
 
 # SLE12
-#: ../client/errors.cc:73
 msgid "Creating snapshot failed."
 msgstr "스냅샷을 생성하지 못했습니다."
 
 # SLE12
-#: ../client/snapper.cc:533 ../client/snapper.cc:581
 msgid "Date"
 msgstr "날짜"
 
 # SLE12
-#: ../client/snapper.cc:1775 ../client/errors.cc:70
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "구성을 삭제하지 못했습니다(%s)."
 
 # SLE12
-#: ../client/errors.cc:76
 msgid "Deleting snapshot failed."
 msgstr "스냅샷을 삭제하지 못했습니다."
 
-#: ../client/commands.cc:274
 #, c-format
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "%s에서 스냅샷 삭제 중:"
 
-#: ../client/snapper.cc:536 ../client/snapper.cc:583 ../client/snapper.cc:631
 msgid "Description"
 msgstr "설명"
 
 # SLE12
-#: ../client/snapper.cc:316
 msgid "Detecting filesystem type failed."
 msgstr "파일 시스템 유형을 감지하지 못했습니다."
 
 # SLE12
-#: ../client/misc.cc:178
 msgid "Empty configdata."
 msgstr "configdata가 비어 있습니다."
 
 # SLE12
-#: ../client/misc.cc:115 ../client/misc.cc:123
 msgid "Empty userdata."
 msgstr "userdata가 비어 있습니다."
 
+#, fuzzy, c-format
+msgid "Error (%s)."
+msgstr "IO 오류입니다(%s)."
+
 # SLE12
-#: ../client/snapper.cc:1277 ../client/snapper.cc:1288
 msgid "Failed to initialize filesystem handler."
 msgstr "파일 시스템 처리기를 초기화하지 못했습니다."
 
+msgid "Failed to set locale. Fix your system."
+msgstr ""
+
 # SLE12
-#: ../client/systemd-helper.cc:136 ../client/snapper.cc:1834
 msgid "Failure"
 msgstr "실패"
 
 # SLE12
-#: ../client/errors.cc:87
 #, c-format
 msgid "Failure (%s)."
 msgstr "실패(%s)입니다."
 
 # SLE12
-#: ../client/snapper.cc:134 ../client/snapper.cc:157
 #, c-format
 msgid "File '%s' not found."
 msgstr "'%s' 파일을 찾을 수 없습니다."
 
-#: ../client/errors.cc:64
 #, c-format
 msgid "IO Error (%s)."
 msgstr "IO 오류입니다(%s)."
 
-#: ../client/snapper.cc:1793
 #, c-format
 msgid "IO error (%s)."
 msgstr "IO 오류입니다(%s)."
 
 # SLE12
-#: ../client/misc.cc:102
 msgid "Identical snapshots."
 msgstr "동일한 스냅샷."
 
 # SLE12
-#: ../client/errors.cc:52
-msgid "Illegal Snapshot."
+#, fuzzy
+msgid "Illegal snapshot."
 msgstr "잘못된 스냅샷입니다."
 
 # SLE12
-#: ../client/snapper.cc:1781 ../client/errors.cc:49
 msgid "Invalid configdata."
 msgstr "잘못된 configdata입니다."
 
 # SLE12
-#: ../client/snapper.cc:1805 ../client/errors.cc:82
 msgid "Invalid group."
 msgstr "잘못된 그룹입니다."
 
 # SLE12
-#: ../client/misc.cc:48 ../client/misc.cc:72
 #, c-format
 msgid "Invalid snapshot '%s'."
 msgstr "'%s' 스냅샷이 잘못되었습니다."
 
 # SLE12
-#: ../client/misc.cc:93 ../client/snapper.cc:1193
 msgid "Invalid snapshots."
 msgstr "스냅샷이 잘못되었습니다."
 
 # SLE12
-#: ../client/snapper.cc:299
 msgid "Invalid subvolume."
 msgstr "하위 볼륨이 잘못되었습니다."
 
-#: ../client/snapper.cc:1675
 #, c-format
 msgid "Invalid table style %d."
 msgstr "잘못된 테이블 모양 %d 입니다."
 
 # SLE12
-#: ../client/snapper.cc:1799 ../client/errors.cc:79
 msgid "Invalid user."
 msgstr "잘못된 사용자입니다."
 
 # SLE12
-#: ../client/errors.cc:46
 msgid "Invalid userdata."
 msgstr "잘못된 사용자 데이터입니다."
 
 # SLE12
-#: ../client/snapper.cc:383
 msgid "Key"
 msgstr "키"
 
 # SLE12
-#: ../client/snapper.cc:1763
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "구성 나열에 실패했습니다(%s)."
 
-#: ../client/snapper.cc:1050
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "스냅샷 번호 사이에 '..' 구분 기호가 누락된 것 같습니다."
 
 # SLE12
-#: ../client/utils/GetOpts.cc:68
 #, c-format
 msgid "Missing argument for command option '%s'."
 msgstr "명령 옵션 '%s'에 대한 인수가 누락되었습니다."
 
 # SLE12
-#: ../client/utils/GetOpts.cc:66
 #, c-format
 msgid "Missing argument for global option '%s'."
 msgstr "전역 옵션 '%s'에 대한 인수가 누락되었습니다."
 
 # SLE12
-#: ../client/snapper.cc:784
 msgid "Missing command argument."
 msgstr "명령 인수가 누락되었습니다."
 
-#: ../client/misc.cc:88
 msgid "Missing delimiter '..' between snapshot numbers."
 msgstr "스냅샷 번호 사이에 '..' 구분 기호가 누락되었습니다."
 
 # SLE12
-#: ../client/snapper.cc:778
 msgid "Missing or invalid pre-number."
 msgstr "사전 번호가 누락되었거나 잘못되었습니다."
 
 # SLE12
-#: ../client/snapper.cc:1713
 msgid "No command provided."
 msgstr "제공된 명령이 없습니다."
 
 # SLE12
-#: ../client/errors.cc:43
 msgid "No permissions."
 msgstr "권한 없음."
 
 # SLE12
-#: ../client/snapper.cc:1071 ../client/snapper.cc:1126
-#: ../client/snapper.cc:1186
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "'%s' 파일을 열지 못했습니다."
 
 # SLE12
-#: ../client/snapper.cc:628
 msgid "Post #"
 msgstr "사후 번호"
 
 # SLE12
-#: ../client/snapper.cc:630
 msgid "Post Date"
 msgstr "게시 날짜"
 
 # SLE12
-#: ../client/snapper.cc:532 ../client/snapper.cc:627
 msgid "Pre #"
 msgstr "사전 번호"
 
 # SLE12
-#: ../client/snapper.cc:629
 msgid "Pre Date"
 msgstr "사전 날짜"
 
-#: ../client/misc.cc:89 ../client/snapper.cc:1051 ../client/snapper.cc:1824
+#, fuzzy, c-format
+msgid "Quota error (%s)."
+msgstr "IO 오류입니다(%s)."
+
+# SLE12
+#, fuzzy, c-format
+msgid "Quota failure (%s)."
+msgstr "실패(%s)입니다."
+
+msgid "Running in non UTF-8 locale. Setup is unsupported."
+msgstr ""
+
 msgid "See 'man snapper' for further instructions."
 msgstr "추가 지침은 'man snapper'를 참조하십시오."
 
 # SLE12
-#: ../client/snapper.cc:1393
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
 msgstr "기본 하위 볼륨을 스냅샷 %d(으)로 설정합니다."
 
 # SLE12
-#: ../client/misc.cc:55
 #, c-format
 msgid "Snapshot '%u' not found."
 msgstr "'%u' 스냅샷을 찾을 수 없습니다."
 
 # SLE12
-#: ../client/errors.cc:61
 msgid "Snapshot is in use."
 msgstr "스냅샷이 사용 중입니다."
 
 # SLE12
-#: ../client/snapper.cc:250
 msgid "Subvolume"
 msgstr "하위 볼륨"
 
-#: ../client/snapper.cc:1823
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "'root' 구성이 존재하지 않습니다. 스냅퍼가 구성되지 않았을 수 있습니다."
 
 # SLE12
-#: ../client/snapper.cc:1694 ../client/snapper.cc:1714
-#: ../client/snapper.cc:1727 ../client/utils/GetOpts.cc:61
-#: ../client/utils/GetOpts.cc:69
 msgid "Try 'snapper --help' for more information."
 msgstr "자세한 내용을 보려면 'snapper --help'를 실행하십시오."
 
-#: ../client/snapper.cc:530
 msgid "Type"
 msgstr "타입"
 
 # SLE12
-#: ../client/snapper.cc:1440
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
 msgstr "알 수 없는 정리 알고리즘 '%s'입니다."
 
 # SLE12
-#: ../client/snapper.cc:1726
 #, c-format
 msgid "Unknown command '%s'."
 msgstr "알 수 없는 명령 '%s'."
 
 # SLE12
-#: ../client/errors.cc:40
 msgid "Unknown config."
 msgstr "알 수 없는 구성입니다."
 
 # SLE12
-#: ../client/utils/GetOpts.cc:58
 #, c-format
 msgid "Unknown global option '%s'."
 msgstr "알 수 없는 전역 옵션 '%s'."
 
 # SLE12
-#: ../client/utils/GetOpts.cc:60
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "알 수 없는 옵션 '%s' - '%s' 명령."
 
 # SLE12
-#: ../client/snapper.cc:750
 msgid "Unknown type of snapshot."
 msgstr "알 수 없는 스냅샷 유형입니다."
 
 # SLE12
-#: ../client/snapper.cc:495
 msgid "Unknown type of snapshots."
 msgstr "알 수 없는 스냅샷 유형입니다."
 
 # SLE12
-#: ../client/snapper.cc:1676
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "%d에서 %d 사이의 정수를 사용하십시오."
 
 # SLE12
-#: ../client/snapper.cc:534 ../client/snapper.cc:582
 msgid "User"
 msgstr "사용자"
 
 # SLE12
-#: ../client/snapper.cc:537 ../client/snapper.cc:584 ../client/snapper.cc:632
 msgid "Userdata"
 msgstr "사용자 데이터"
 
 # SLE12
-#: ../client/misc.cc:134
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
 msgstr "Userdata '%s'에 '=' 기호가 포함되어 있지 않습니다."
 
 # SLE12
-#: ../client/misc.cc:143
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "Userdata '%s'에 빈 키가 있습니다."
 
-#: ../client/snapper.cc:384
 msgid "Value"
 msgstr "값"
 
 # SLE12
-#: ../client/snapper.cc:1212
 #, c-format
 msgid "create:%d modify:%d delete:%d"
 msgstr "생성:%d 수정:%d 삭제:%d"
 
 # SLE12
-#: ../client/snapper.cc:1237
 #, c-format
 msgid "creating %s"
 msgstr "%s 생성 중"
 
 # SLE12
-#: ../client/snapper.cc:1243
 #, c-format
 msgid "deleting %s"
 msgstr "%s 삭제 중"
 
 # SLE12
-#: ../client/snapper.cc:1253
 #, c-format
 msgid "failed to create %s"
 msgstr "%s 생성에 실패"
 
 # SLE12
-#: ../client/snapper.cc:1259
 #, c-format
 msgid "failed to delete %s"
 msgstr "%s 삭제에 실패"
 
 # SLE12
-#: ../client/snapper.cc:1256
 #, c-format
 msgid "failed to modify %s"
 msgstr "%s 수정에 실패"
 
 # SLE12
-#: ../client/snapper.cc:1240
 #, c-format
 msgid "modifying %s"
 msgstr "%s 수정 중"
 
 # SLE12
-#: ../client/snapper.cc:1208
 msgid "nothing to do"
 msgstr "수행할 작업 없음"
 
-#: ../client/snapper.cc:1693
 msgid "root argument can be used only together with no-dbus."
 msgstr "루트 인수는 no-dbus와 함께 사용해야 합니다."
 
 # SLE12
-#: ../client/snapper.cc:1574
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "사용법: snapper [--global-options] <command> [--command-options] [command-arguments]"
+
+# SLE12
+#~ msgid "Command '%s' does not work without DBus."
+#~ msgstr "DBus가 없으면 '%s' 명령이 작동하지 않습니다."
 
 # SLE12
 #~ msgid "IO Error."
