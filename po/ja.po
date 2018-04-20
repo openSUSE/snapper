@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-20 14:05+0200\n"
-"PO-Revision-Date: 2016-11-08 05:39+0000\n"
+"PO-Revision-Date: 2018-04-20 23:06+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
+"Language-Team: Japanese "
+"<https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.6\n"
+"X-Generator: Weblate 2.18\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tアクセス可能なすべての環境設定からのスナップショットを一覧表示する。"
@@ -77,7 +78,7 @@ msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\t通常出力される項目を省略する。"
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
-msgstr "\t--root, -r <パス>\t\tターゲットのルートに対して操作を行う(DBusの不使用時にのみ有効)。"
+msgstr "\t--root, -r <パス>\t\t指定したルートに対して操作を行なう　(DBus を使用しない場合にのみ動作します)。"
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\t削除後に同期する。"
@@ -148,9 +149,8 @@ msgstr "\tsnapper rollback [番号]"
 msgid "\tsnapper set-config <configdata>"
 msgstr "\tsnapper set-config <設定データ>"
 
-#, fuzzy
 msgid "\tsnapper setup-quota"
-msgstr "\tsnapper get-config"
+msgstr "\tsnapper setup-quota"
 
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tsnapper status <番号 1>..<番号 2>"
@@ -237,7 +237,7 @@ msgid "  Set config:"
 msgstr "  設定の適用:"
 
 msgid "  Setup quota:"
-msgstr ""
+msgstr "  クォータの設定:"
 
 msgid "  Umount snapshot:"
 msgstr "  スナップショットのマウント解除:"
@@ -297,9 +297,9 @@ msgstr "'modify' コマンドには少なくとも 1 つのパラメータが必
 msgid "Command 'mount' needs at least one argument."
 msgstr "'mount' コマンドには少なくとも 1 つのパラメータが必要です。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr "'rollback' コマンドには 1 つのパラメータが必要です。"
+msgstr "'rollback' コマンドは非ルートサブボリューム %s に対しては使用できません。"
 
 msgid "Command 'rollback' only available for btrfs."
 msgstr "'rollback' コマンドは btrfs に対してのみ動作します。"
@@ -310,16 +310,14 @@ msgstr "'rollback' コマンドには 1 つのパラメータが必要です。"
 msgid "Command 'set-config' needs at least one argument."
 msgstr "'set-config' コマンドには少なくとも 1 つのパラメータが必要です。"
 
-#, fuzzy
 msgid "Command 'setup-quota' does not take arguments."
-msgstr "'help' コマンドにはパラメータはありません。"
+msgstr "'setup-quota' コマンドにはパラメータはありません。"
 
 msgid "Command 'status' needs one argument."
 msgstr "'status' コマンドには 1 つのパラメータが必要です。"
 
-#, fuzzy
 msgid "Command 'umount' needs at least one argument."
-msgstr "'mount' コマンドには少なくとも 1 つのパラメータが必要です。"
+msgstr "'umount' コマンドには少なくとも 1 つのパラメータが必要です。"
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "'undochange' コマンドには少なくとも 1 つのパラメータが必要です。"
@@ -399,15 +397,15 @@ msgstr "設定データがありません。"
 msgid "Empty userdata."
 msgstr "ユーザデータがありません。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Error (%s)."
-msgstr "IOエラー(%s)。"
+msgstr "エラー (%s) 。"
 
 msgid "Failed to initialize filesystem handler."
 msgstr "ファイルシステムハンドラの準備に失敗しました。"
 
 msgid "Failed to set locale. Fix your system."
-msgstr ""
+msgstr "ロケールの設定に失敗しました。システムを修復してください。"
 
 msgid "Failure"
 msgstr "失敗"
@@ -431,7 +429,6 @@ msgstr "IOエラー(%s)。"
 msgid "Identical snapshots."
 msgstr "同一のスナップショットです。"
 
-#, fuzzy
 msgid "Illegal snapshot."
 msgstr "スナップショットが正しくありません。"
 
@@ -510,16 +507,16 @@ msgstr "前 #"
 msgid "Pre Date"
 msgstr "前日付"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Quota error (%s)."
-msgstr "IOエラー(%s)。"
+msgstr "クォータエラー (%s) 。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Quota failure (%s)."
-msgstr "失敗しました (%s) 。"
+msgstr "クォータ設定に失敗しました (%s) 。"
 
 msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
+msgstr "UTF-8 ではないロケールを使用しているため、設定に対応できません。"
 
 msgid "See 'man snapper' for further instructions."
 msgstr "詳しい手順については、「man snapper」を参照してください。"
