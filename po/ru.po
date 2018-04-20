@@ -4,15 +4,17 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-20 14:05+0200\n"
-"PO-Revision-Date: 2014-07-29 23:58+0400\n"
-"Last-Translator: Alexander Melentev <minton@opensuse.org>\n"
-"Language-Team: Russian <opensuse-translation-ru@opensuse.org>\n"
+"PO-Revision-Date: 2018-04-20 17:30+0000\n"
+"Last-Translator: Mikhail Kasimov <mikhail.kasimov@gmail.com>\n"
+"Language-Team: Russian "
+"<https://l10n.opensuse.org/projects/snapper/master/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.5\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 2.18\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tСписок моментальных снимков из всех доступных конфигураций."
@@ -143,9 +145,8 @@ msgstr "\tsnapper rollback [число]"
 msgid "\tsnapper set-config <configdata>"
 msgstr "\tsnapper set-config <настройки>"
 
-#, fuzzy
 msgid "\tsnapper setup-quota"
-msgstr "\tsnapper get-config"
+msgstr "\tsnapper setup-quota"
 
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tsnapper status <число1>..<число2>"
@@ -232,7 +233,7 @@ msgid "  Set config:"
 msgstr "  Указать параметр:"
 
 msgid "  Setup quota:"
-msgstr ""
+msgstr "  Установить квоту:"
 
 msgid "  Umount snapshot:"
 msgstr "  Отмонтировать снимок:"
@@ -293,9 +294,9 @@ msgstr "Команде 'modify' нужен хотя бы один аргумен
 msgid "Command 'mount' needs at least one argument."
 msgstr "Команде 'mount' нужен хотя бы один аргумент."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr "Команде 'rollback' нужно не более одного аргумента."
+msgstr "Команда 'rollback' неприменима к некорневому подразделу %s."
 
 msgid "Command 'rollback' only available for btrfs."
 msgstr "Команда 'rollback' доступна только для btrfs."
@@ -306,16 +307,14 @@ msgstr "Команде 'rollback' нужно не более одного арг
 msgid "Command 'set-config' needs at least one argument."
 msgstr "Команде 'set-config' нужен хотя бы один аргумент."
 
-#, fuzzy
 msgid "Command 'setup-quota' does not take arguments."
-msgstr "Команде 'help' не нужны аргументы."
+msgstr "Команде 'setup-quota' не нужны аргументы."
 
 msgid "Command 'status' needs one argument."
 msgstr "Команде 'status' нужен один аргумент."
 
-#, fuzzy
 msgid "Command 'umount' needs at least one argument."
-msgstr "Команде 'mount' нужен хотя бы один аргумент."
+msgstr "Команде 'umount' нужен хотя бы один аргумент."
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Команде 'undochange' нужен хотя бы один аргумент."
@@ -335,7 +334,7 @@ msgid "Config '%s' not found."
 msgstr "Конфигурация '%s' не найдена."
 
 msgid "Config is in use."
-msgstr "Конфигурация используется."
+msgstr "Конфигурация уже используется."
 
 msgid "Config is locked."
 msgstr "Конфигурация заблокирована."
@@ -397,22 +396,22 @@ msgstr "Пустые данные конфигурации."
 msgid "Empty userdata."
 msgstr "Пустые данные пользователя."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Error (%s)."
-msgstr "Ошибка ввода-вывода (%s)."
+msgstr "Ошибка (%s)."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Не удалось инициализировать обработчик файловой системы."
 
 msgid "Failed to set locale. Fix your system."
-msgstr ""
+msgstr "Сбой определения локали. Исправьте системные настройки."
 
 msgid "Failure"
-msgstr "Ошибка"
+msgstr "Сбой"
 
 #, c-format
 msgid "Failure (%s)."
-msgstr "Ошибка (%s)."
+msgstr "Сбой (%s)."
 
 #, c-format
 msgid "File '%s' not found."
@@ -429,7 +428,6 @@ msgstr "Ошибка ввода-вывода (%s)."
 msgid "Identical snapshots."
 msgstr "Снимки идентичны."
 
-#, fuzzy
 msgid "Illegal snapshot."
 msgstr "Некорректный снимок."
 
@@ -508,16 +506,16 @@ msgstr "№ предварительного снимка"
 msgid "Pre Date"
 msgstr "Дата предварительного снимка"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Quota error (%s)."
-msgstr "Ошибка ввода-вывода (%s)."
+msgstr "Ошибка квоты (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Quota failure (%s)."
-msgstr "Ошибка (%s)."
+msgstr "Сбой квоты (%s)."
 
 msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
+msgstr "Запуск под локалью, отличной от UTF-8.  Неподдерживаемая установка."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Дополнительные инструкции см. в man snapper."
