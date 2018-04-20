@@ -10,9 +10,10 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-20 14:05+0200\n"
-"PO-Revision-Date: 2018-02-08 16:01+0000\n"
-"Last-Translator: Eva van Rein <vistatec@globaltextware.nl>\n"
-"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
+"PO-Revision-Date: 2018-04-20 17:22+0000\n"
+"Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
+"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
+"\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -149,9 +150,8 @@ msgstr "\tsnapper rollback [nummer]"
 msgid "\tsnapper set-config <configdata>"
 msgstr "\tsnapper set-config <configuratiegegevens>"
 
-#, fuzzy
 msgid "\tsnapper setup-quota"
-msgstr "\tsnapper get-config"
+msgstr "\tsnapper setup-quota"
 
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tsnapper status <nummer1>..<nummer2>"
@@ -238,7 +238,7 @@ msgid "  Set config:"
 msgstr "  Configuratie instellen:"
 
 msgid "  Setup quota:"
-msgstr ""
+msgstr "  Quota instellen:"
 
 msgid "  Umount snapshot:"
 msgstr "  Momentopnamen afkoppelen:"
@@ -299,9 +299,10 @@ msgstr "Opdracht 'modify' heeft minstens één argument."
 msgid "Command 'mount' needs at least one argument."
 msgstr "Opdracht 'mount' heeft minstens één argument."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr "Opdracht 'rollback' heeft één of geen argument."
+msgstr ""
+"Opdracht 'rollback' kan niet gebruikt worden op een niet-root subvolume %s."
 
 msgid "Command 'rollback' only available for btrfs."
 msgstr "Opdracht 'rollback' is alleen beschikbaar voor btrfs."
@@ -312,16 +313,14 @@ msgstr "Opdracht 'rollback' heeft één of geen argument."
 msgid "Command 'set-config' needs at least one argument."
 msgstr "Opdracht 'set-config' heeft minstens één argument."
 
-#, fuzzy
 msgid "Command 'setup-quota' does not take arguments."
-msgstr "Opdracht 'help' heeft geen argumenten."
+msgstr "Opdracht 'setup-quota' heeft geen argumenten."
 
 msgid "Command 'status' needs one argument."
 msgstr "Opdracht 'status' heeft één argument."
 
-#, fuzzy
 msgid "Command 'umount' needs at least one argument."
-msgstr "Opdracht 'mount' heeft minstens één argument."
+msgstr "Opdracht 'umount' heeft minstens één argument."
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Opdracht 'undochange' heeft minstens één argument."
@@ -402,15 +401,15 @@ msgstr "Lege configuratiegegevens."
 msgid "Empty userdata."
 msgstr "Lege gebruikersgegevens."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Error (%s)."
-msgstr "IO-fout (%s)."
+msgstr "Fout (%s)."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Behandelaar van bestandssysteem initialiseren is mislukt."
 
 msgid "Failed to set locale. Fix your system."
-msgstr ""
+msgstr "Locale instellen is mislukt. Repareer uw systeem."
 
 msgid "Failure"
 msgstr "Mislukt"
@@ -434,7 +433,6 @@ msgstr "IO-fout (%s)."
 msgid "Identical snapshots."
 msgstr "Identieke momentopnamen."
 
-#, fuzzy
 msgid "Illegal snapshot."
 msgstr "Ongeldige momentopname."
 
@@ -513,16 +511,16 @@ msgstr "Pre #"
 msgid "Pre Date"
 msgstr "Pre-datum"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Quota error (%s)."
-msgstr "IO-fout (%s)."
+msgstr "Qouta-fout (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Quota failure (%s)."
-msgstr "Mislukking (%s)."
+msgstr "Quota-mislukking (%s)."
 
 msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
+msgstr "Uitvoering in niet UTF-8 locale. Instelling wordt niet ondersteund."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Zie 'man snapper' voor meer instructies."
