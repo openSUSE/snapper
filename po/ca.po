@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-20 14:05+0200\n"
-"PO-Revision-Date: 2018-02-08 18:01+0000\n"
+"PO-Revision-Date: 2018-04-20 19:06+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
-"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/>\n"
+"Language-Team: Catalan "
+"<https://l10n.opensuse.org/projects/snapper/master/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -142,9 +143,8 @@ msgstr "\tsnapper rollback [número]"
 msgid "\tsnapper set-config <configdata>"
 msgstr "\tsnapper set-config <dades de configuració>"
 
-#, fuzzy
 msgid "\tsnapper setup-quota"
-msgstr "\tsnapper get-config"
+msgstr "\tsnapper setup-quota"
 
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tsnapper status <número1>..<número2>"
@@ -231,7 +231,7 @@ msgid "  Set config:"
 msgstr "  Estableix config:"
 
 msgid "  Setup quota:"
-msgstr ""
+msgstr "  Establiment de quota:"
 
 msgid "  Umount snapshot:"
 msgstr "  Desmunta la instantània:"
@@ -291,9 +291,9 @@ msgstr "L'ordre 'modify' necessita almenys un argument."
 msgid "Command 'mount' needs at least one argument."
 msgstr "L'ordre 'mount' necessita almenys un argument."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr "rename necessita dos arguments"
+msgstr "L'ordre \"rollback\" no es pot usar en un subvolum no d'arrel %s."
 
 msgid "Command 'rollback' only available for btrfs."
 msgstr "L'ordre 'rollback' només està disponible per a btrfs."
@@ -304,16 +304,14 @@ msgstr "L'ordre 'rollback' admet o bé un argument o cap."
 msgid "Command 'set-config' needs at least one argument."
 msgstr "L'ordre 'set-config' necessita almenys un argument."
 
-#, fuzzy
 msgid "Command 'setup-quota' does not take arguments."
-msgstr "L'ordre 'help' no pot tenir arguments."
+msgstr "L'ordre \"setup-quota\" no pot tenir arguments."
 
 msgid "Command 'status' needs one argument."
 msgstr "L'ordre 'status' necessita almenys un argument."
 
-#, fuzzy
 msgid "Command 'umount' needs at least one argument."
-msgstr "L'ordre 'mount' necessita almenys un argument."
+msgstr "L'ordre \"umount\" necessita almenys un argument."
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "L'ordre 'undochange' necessita almenys un argument."
@@ -394,15 +392,15 @@ msgstr "Configdata buit."
 msgid "Empty userdata."
 msgstr "Userdata buit."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Error (%s)."
-msgstr "Error d'IO (%s)."
+msgstr "Error (%s)."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Ha fallat l'inici del manejador de sistemes de fitxers."
 
 msgid "Failed to set locale. Fix your system."
-msgstr ""
+msgstr "Ha fallat establir la llengua. Corregiu el sistema."
 
 msgid "Failure"
 msgstr "Error"
@@ -426,7 +424,6 @@ msgstr "Error d'IO (%s)."
 msgid "Identical snapshots."
 msgstr "Instantànies idèntiques."
 
-#, fuzzy
 msgid "Illegal snapshot."
 msgstr "Instantània il·legal."
 
@@ -506,16 +503,16 @@ msgstr "Pre #"
 msgid "Pre Date"
 msgstr "Data Pre"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Quota error (%s)."
-msgstr "Error d'IO (%s)."
+msgstr "Error de quota (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Quota failure (%s)."
-msgstr "Error (%s)."
+msgstr "Fallada de quota (%s)."
 
 msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
+msgstr "Funcionant amb una llengua no UTF-8. No s'admet la configuració."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Vegeu \"man snapper\" per a més informació."
