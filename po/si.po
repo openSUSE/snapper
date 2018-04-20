@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-09 16:24+0200\n"
+"POT-Creation-Date: 2018-04-20 14:05+0200\n"
 "PO-Revision-Date: 2005-07-29 15:37+0530\n"
 "Last-Translator: i18n@suse.de\n"
 "Language-Team: Sinhala <i18n@suse.de>\n"
@@ -15,767 +15,614 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
-#: ../client/snapper.cc:457
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr ""
 
-#: ../client/snapper.cc:698 ../client/snapper.cc:832
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr ""
 
-#: ../client/snapper.cc:1303
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr ""
 
-#: ../client/snapper.cc:700
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
 msgstr ""
 
-#: ../client/snapper.cc:1583
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr ""
 
-#: ../client/snapper.cc:697 ../client/snapper.cc:831
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr ""
 
-#: ../client/snapper.cc:1302
 msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr ""
 
-#: ../client/snapper.cc:1093
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr ""
 
-#: ../client/snapper.cc:1094
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
 
-#: ../client/snapper.cc:274
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr ""
 
-#: ../client/snapper.cc:1155
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr ""
 
-#: ../client/snapper.cc:1092
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
 msgstr ""
 
-#: ../client/snapper.cc:1581
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr ""
 
-#: ../client/snapper.cc:1584
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr ""
 
-#: ../client/snapper.cc:1030
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr ""
 
-#: ../client/snapper.cc:695
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr ""
 
-#: ../client/snapper.cc:696
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
 msgstr ""
 
-#: ../client/snapper.cc:1301
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
 msgstr ""
 
-#: ../client/snapper.cc:1578
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr ""
 
-#: ../client/snapper.cc:1585
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr ""
 
-#: ../client/snapper.cc:884
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr ""
 
-#: ../client/snapper.cc:1582
 msgid "\t--table-style, -t <style>\tTable style (integer)."
 msgstr ""
 
-#: ../client/snapper.cc:275
 msgid "\t--template, -t <name>\t\tName of config template to use."
 msgstr ""
 
-#: ../client/snapper.cc:694
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr ""
 
-#: ../client/snapper.cc:456
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
 msgstr ""
 
-#: ../client/snapper.cc:699 ../client/snapper.cc:833
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr ""
 
-#: ../client/snapper.cc:1304
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
 msgstr ""
 
-#: ../client/snapper.cc:1580
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
 msgstr ""
 
-#: ../client/snapper.cc:1579
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
 msgstr ""
 
-#: ../client/snapper.cc:1586
 msgid "\t--version\t\t\tPrint version and exit."
 msgstr ""
 
-#: ../client/snapper.cc:1409
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr ""
 
-#: ../client/snapper.cc:691
 msgid "\tsnapper create"
 msgstr ""
 
-#: ../client/snapper.cc:271
 msgid "\tsnapper create-config <subvolume>"
 msgstr ""
 
-#: ../client/snapper.cc:881
 msgid "\tsnapper delete <number>"
 msgstr ""
 
-#: ../client/snapper.cc:335
 msgid "\tsnapper delete-config"
 msgstr ""
 
-#: ../client/snapper.cc:1089
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr ""
 
-#: ../client/snapper.cc:365
 msgid "\tsnapper get-config"
 msgstr ""
 
-#: ../client/snapper.cc:453
 msgid "\tsnapper list"
 msgstr ""
 
-#: ../client/snapper.cc:205
 msgid "\tsnapper list-configs"
 msgstr ""
 
-#: ../client/snapper.cc:828
 msgid "\tsnapper modify <number>"
 msgstr ""
 
-#: ../client/snapper.cc:953
 msgid "\tsnapper mount <number>"
 msgstr ""
 
-#: ../client/snapper.cc:1298
 msgid "\tsnapper rollback [number]"
 msgstr ""
 
-#: ../client/snapper.cc:421
 msgid "\tsnapper set-config <configdata>"
 msgstr ""
 
-#: ../client/snapper.cc:1027
+msgid "\tsnapper setup-quota"
+msgstr ""
+
 msgid "\tsnapper status <number1>..<number2>"
 msgstr ""
 
-#: ../client/snapper.cc:990
 msgid "\tsnapper umount <number>"
 msgstr ""
 
-#: ../client/snapper.cc:1152
 msgid "\tsnapper undochange <number1>..<number2> [files]"
 msgstr ""
 
-#: ../client/snapper.cc:1474
 msgid "\tsnapper xadiff <number1>..<number2> [files]"
 msgstr ""
 
-#: ../client/snapper.cc:1577
 msgid "    Global options:"
 msgstr ""
 
-#: ../client/snapper.cc:693
 msgid "    Options for 'create' command:"
 msgstr ""
 
-#: ../client/snapper.cc:273
 msgid "    Options for 'create-config' command:"
 msgstr ""
 
-#: ../client/snapper.cc:883
 msgid "    Options for 'delete' command:"
 msgstr ""
 
-#: ../client/snapper.cc:1091
 msgid "    Options for 'diff' command:"
 msgstr ""
 
-#: ../client/snapper.cc:455
 msgid "    Options for 'list' command:"
 msgstr ""
 
-#: ../client/snapper.cc:830
 msgid "    Options for 'modify' command:"
 msgstr ""
 
-#: ../client/snapper.cc:1300
 msgid "    Options for 'rollback' command:"
 msgstr ""
 
-#: ../client/snapper.cc:1029
 msgid "    Options for 'status' command:"
 msgstr ""
 
-#: ../client/snapper.cc:1154
 msgid "    Options for 'undochange' command:"
 msgstr ""
 
-#: ../client/snapper.cc:1408
 msgid "  Cleanup snapshots:"
 msgstr ""
 
-#: ../client/snapper.cc:1473
 msgid "  Comparing snapshots extended attributes:"
 msgstr ""
 
-#: ../client/snapper.cc:1026 ../client/snapper.cc:1088
 msgid "  Comparing snapshots:"
 msgstr ""
 
-#: ../client/snapper.cc:270
 msgid "  Create config:"
 msgstr ""
 
-#: ../client/snapper.cc:690
 msgid "  Create snapshot:"
 msgstr ""
 
-#: ../client/snapper.cc:334
 msgid "  Delete config:"
 msgstr ""
 
-#: ../client/snapper.cc:880
 msgid "  Delete snapshot:"
 msgstr ""
 
-#: ../client/snapper.cc:364
 msgid "  Get config:"
 msgstr ""
 
-#: ../client/snapper.cc:204
 msgid "  List configs:"
 msgstr ""
 
-#: ../client/snapper.cc:452
 msgid "  List snapshots:"
 msgstr ""
 
-#: ../client/snapper.cc:827
 msgid "  Modify snapshot:"
 msgstr ""
 
-#: ../client/snapper.cc:952
 msgid "  Mount snapshot:"
 msgstr ""
 
-#: ../client/snapper.cc:1297
 msgid "  Rollback:"
 msgstr ""
 
-#: ../client/snapper.cc:420
 msgid "  Set config:"
 msgstr ""
 
-#: ../client/snapper.cc:989
+msgid "  Setup quota:"
+msgstr ""
+
 msgid "  Umount snapshot:"
 msgstr ""
 
-#: ../client/snapper.cc:1151
 msgid "  Undo changes:"
 msgstr ""
 
-#: ../client/snapper.cc:531 ../client/snapper.cc:580
 msgid "#"
 msgstr ""
 
-#: ../client/snapper.cc:1364 ../client/snapper.cc:1371
-#: ../client/snapper.cc:1382 ../client/snapper.cc:1389
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr ""
 
-#: ../client/snapper.cc:1787 ../client/errors.cc:85
 msgid "ACL error."
 msgstr ""
 
-#: ../client/snapper.cc:535
 msgid "Cleanup"
 msgstr ""
 
-#: ../client/snapper.cc:1735
-#, c-format
-msgid "Command '%s' does not work without DBus."
-msgstr ""
-
-#: ../client/snapper.cc:1420
 msgid "Command 'cleanup' needs one arguments."
 msgstr ""
 
-#: ../client/snapper.cc:722
 msgid "Command 'create' does not take arguments."
 msgstr ""
 
-#: ../client/snapper.cc:292
 msgid "Command 'create-config' needs one argument."
 msgstr ""
 
-#: ../client/snapper.cc:1458
 msgid "Command 'debug' does not take arguments."
 msgstr ""
 
-#: ../client/snapper.cc:900
 msgid "Command 'delete' needs at least one argument."
 msgstr ""
 
-#: ../client/snapper.cc:346
 msgid "Command 'delete-config' does not take arguments."
 msgstr ""
 
-#: ../client/snapper.cc:1112
 msgid "Command 'diff' needs at least one argument."
 msgstr ""
 
-#: ../client/snapper.cc:376
 msgid "Command 'get-config' does not take arguments."
 msgstr ""
 
-#: ../client/snapper.cc:1570
 msgid "Command 'help' does not take arguments."
 msgstr ""
 
-#: ../client/snapper.cc:477
 msgid "Command 'list' does not take arguments."
 msgstr ""
 
-#: ../client/snapper.cc:242
 msgid "Command 'list-configs' does not take arguments."
 msgstr ""
 
-#: ../client/snapper.cc:851
 msgid "Command 'modify' needs at least one argument."
 msgstr ""
 
-#: ../client/snapper.cc:964 ../client/snapper.cc:1001
 msgid "Command 'mount' needs at least one argument."
 msgstr ""
 
-#: ../client/snapper.cc:1349
+#, c-format
+msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
+msgstr ""
+
 msgid "Command 'rollback' only available for btrfs."
 msgstr ""
 
-#: ../client/snapper.cc:1323
 msgid "Command 'rollback' takes either one or no argument."
 msgstr ""
 
-#: ../client/snapper.cc:432
 msgid "Command 'set-config' needs at least one argument."
 msgstr ""
 
-#: ../client/snapper.cc:1046
+msgid "Command 'setup-quota' does not take arguments."
+msgstr ""
+
 msgid "Command 'status' needs one argument."
 msgstr ""
 
-#: ../client/snapper.cc:1171
+msgid "Command 'umount' needs at least one argument."
+msgstr ""
+
 msgid "Command 'undochange' needs at least one argument."
 msgstr ""
 
-#: ../client/snapper.cc:1503
 msgid "Command 'xadiff' needs at least one argument."
 msgstr ""
 
-#: ../client/snapper.cc:249
 msgid "Config"
 msgstr ""
 
-#: ../client/snapper.cc:1757
 #, c-format
 msgid "Config '%s' is invalid."
 msgstr ""
 
-#: ../client/snapper.cc:1751
 #, c-format
 msgid "Config '%s' not found."
 msgstr ""
 
-#: ../client/errors.cc:58
 msgid "Config is in use."
 msgstr ""
 
-#: ../client/errors.cc:55
 msgid "Config is locked."
 msgstr ""
 
-#: ../client/misc.cc:189
 #, c-format
 msgid "Configdata '%s' does not include '=' sign."
 msgstr ""
 
-#: ../client/misc.cc:198
 #, c-format
 msgid "Configdata '%s' has empty key."
 msgstr ""
 
-#: ../client/snapper.cc:1769 ../client/errors.cc:67
 #, fuzzy, c-format
 msgid "Creating config failed (%s)."
 msgstr "DBI Execution failed: %s."
 
-#: ../client/snapper.cc:1378
 msgid "Creating read-only snapshot of current system."
 msgstr ""
 
-#: ../client/snapper.cc:1359
 #, fuzzy
 msgid "Creating read-only snapshot of default subvolume."
 msgstr "DBI Execution failed: %s."
 
-#: ../client/snapper.cc:1367
 msgid "Creating read-write snapshot of current subvolume."
 msgstr ""
 
-#: ../client/snapper.cc:1385
 #, fuzzy, c-format
 msgid "Creating read-write snapshot of snapshot %d."
 msgstr "DBI Execution failed: %s."
 
-#: ../client/errors.cc:73
 #, fuzzy
 msgid "Creating snapshot failed."
 msgstr "DBI Execution failed: %s."
 
-#: ../client/snapper.cc:533 ../client/snapper.cc:581
 msgid "Date"
 msgstr ""
 
-#: ../client/snapper.cc:1775 ../client/errors.cc:70
 #, fuzzy, c-format
 msgid "Deleting config failed (%s)."
 msgstr "DBI Execution failed: %s."
 
-#: ../client/errors.cc:76
 #, fuzzy
 msgid "Deleting snapshot failed."
 msgstr "DBI Execution failed: %s."
 
-#: ../client/commands.cc:274
 #, fuzzy, c-format
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "DBI Execution failed: %s."
 msgstr[1] "DBI Execution failed: %s."
 
-#: ../client/snapper.cc:536 ../client/snapper.cc:583 ../client/snapper.cc:631
 msgid "Description"
 msgstr ""
 
-#: ../client/snapper.cc:316
 msgid "Detecting filesystem type failed."
 msgstr ""
 
-#: ../client/misc.cc:178
 msgid "Empty configdata."
 msgstr ""
 
-#: ../client/misc.cc:115 ../client/misc.cc:123
 msgid "Empty userdata."
 msgstr ""
 
-#: ../client/snapper.cc:1277 ../client/snapper.cc:1288
+#, c-format
+msgid "Error (%s)."
+msgstr ""
+
 msgid "Failed to initialize filesystem handler."
 msgstr ""
 
-#: ../client/systemd-helper.cc:136 ../client/snapper.cc:1834
+msgid "Failed to set locale. Fix your system."
+msgstr ""
+
 msgid "Failure"
 msgstr ""
 
-#: ../client/errors.cc:87
 #, fuzzy, c-format
 msgid "Failure (%s)."
 msgstr "Failed to parse: %s."
 
-#: ../client/snapper.cc:134 ../client/snapper.cc:157
 #, c-format
 msgid "File '%s' not found."
 msgstr ""
 
-#: ../client/errors.cc:64
 #, c-format
 msgid "IO Error (%s)."
 msgstr ""
 
-#: ../client/snapper.cc:1793
 #, c-format
 msgid "IO error (%s)."
 msgstr ""
 
-#: ../client/misc.cc:102
 msgid "Identical snapshots."
 msgstr ""
 
-#: ../client/errors.cc:52
-msgid "Illegal Snapshot."
-msgstr ""
+#, fuzzy
+msgid "Illegal snapshot."
+msgstr "DBI Execution failed: %s."
 
-#: ../client/snapper.cc:1781 ../client/errors.cc:49
 msgid "Invalid configdata."
 msgstr ""
 
-#: ../client/snapper.cc:1805 ../client/errors.cc:82
 msgid "Invalid group."
 msgstr ""
 
-#: ../client/misc.cc:48 ../client/misc.cc:72
 #, c-format
 msgid "Invalid snapshot '%s'."
 msgstr ""
 
-#: ../client/misc.cc:93 ../client/snapper.cc:1193
 msgid "Invalid snapshots."
 msgstr ""
 
-#: ../client/snapper.cc:299
 msgid "Invalid subvolume."
 msgstr ""
 
-#: ../client/snapper.cc:1675
 #, c-format
 msgid "Invalid table style %d."
 msgstr ""
 
-#: ../client/snapper.cc:1799 ../client/errors.cc:79
 msgid "Invalid user."
 msgstr ""
 
-#: ../client/errors.cc:46
 msgid "Invalid userdata."
 msgstr ""
 
-#: ../client/snapper.cc:383
 msgid "Key"
 msgstr ""
 
-#: ../client/snapper.cc:1763
 #, fuzzy, c-format
 msgid "Listing configs failed (%s)."
 msgstr "DBI Execution failed: %s."
 
-#: ../client/snapper.cc:1050
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr ""
 
-#: ../client/utils/GetOpts.cc:68
 #, c-format
 msgid "Missing argument for command option '%s'."
 msgstr ""
 
-#: ../client/utils/GetOpts.cc:66
 #, c-format
 msgid "Missing argument for global option '%s'."
 msgstr ""
 
-#: ../client/snapper.cc:784
 msgid "Missing command argument."
 msgstr ""
 
-#: ../client/misc.cc:88
 msgid "Missing delimiter '..' between snapshot numbers."
 msgstr ""
 
-#: ../client/snapper.cc:778
 msgid "Missing or invalid pre-number."
 msgstr ""
 
-#: ../client/snapper.cc:1713
 msgid "No command provided."
 msgstr ""
 
-#: ../client/errors.cc:43
 msgid "No permissions."
 msgstr ""
 
-#: ../client/snapper.cc:1071 ../client/snapper.cc:1126
-#: ../client/snapper.cc:1186
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr ""
 
-#: ../client/snapper.cc:628
 msgid "Post #"
 msgstr ""
 
-#: ../client/snapper.cc:630
 msgid "Post Date"
 msgstr ""
 
-#: ../client/snapper.cc:532 ../client/snapper.cc:627
 msgid "Pre #"
 msgstr ""
 
-#: ../client/snapper.cc:629
 msgid "Pre Date"
 msgstr ""
 
-#: ../client/misc.cc:89 ../client/snapper.cc:1051 ../client/snapper.cc:1824
+#, c-format
+msgid "Quota error (%s)."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Quota failure (%s)."
+msgstr "Failed to parse: %s."
+
+msgid "Running in non UTF-8 locale. Setup is unsupported."
+msgstr ""
+
 msgid "See 'man snapper' for further instructions."
 msgstr ""
 
-#: ../client/snapper.cc:1393
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
 msgstr ""
 
-#: ../client/misc.cc:55
 #, c-format
 msgid "Snapshot '%u' not found."
 msgstr ""
 
-#: ../client/errors.cc:61
 msgid "Snapshot is in use."
 msgstr ""
 
-#: ../client/snapper.cc:250
 msgid "Subvolume"
 msgstr ""
 
-#: ../client/snapper.cc:1823
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr ""
 
-#: ../client/snapper.cc:1694 ../client/snapper.cc:1714
-#: ../client/snapper.cc:1727 ../client/utils/GetOpts.cc:61
-#: ../client/utils/GetOpts.cc:69
 msgid "Try 'snapper --help' for more information."
 msgstr ""
 
-#: ../client/snapper.cc:530
 msgid "Type"
 msgstr ""
 
-#: ../client/snapper.cc:1440
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
 msgstr ""
 
-#: ../client/snapper.cc:1726
 #, c-format
 msgid "Unknown command '%s'."
 msgstr ""
 
-#: ../client/errors.cc:40
 msgid "Unknown config."
 msgstr ""
 
-#: ../client/utils/GetOpts.cc:58
 #, c-format
 msgid "Unknown global option '%s'."
 msgstr ""
 
-#: ../client/utils/GetOpts.cc:60
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr ""
 
-#: ../client/snapper.cc:750
 msgid "Unknown type of snapshot."
 msgstr ""
 
-#: ../client/snapper.cc:495
 msgid "Unknown type of snapshots."
 msgstr ""
 
-#: ../client/snapper.cc:1676
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr ""
 
-#: ../client/snapper.cc:534 ../client/snapper.cc:582
 msgid "User"
 msgstr ""
 
-#: ../client/snapper.cc:537 ../client/snapper.cc:584 ../client/snapper.cc:632
 msgid "Userdata"
 msgstr ""
 
-#: ../client/misc.cc:134
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
 msgstr ""
 
-#: ../client/misc.cc:143
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr ""
 
-#: ../client/snapper.cc:384
 msgid "Value"
 msgstr ""
 
-#: ../client/snapper.cc:1212
 #, c-format
 msgid "create:%d modify:%d delete:%d"
 msgstr ""
 
-#: ../client/snapper.cc:1237
 #, c-format
 msgid "creating %s"
 msgstr ""
 
-#: ../client/snapper.cc:1243
 #, c-format
 msgid "deleting %s"
 msgstr ""
 
-#: ../client/snapper.cc:1253
 #, fuzzy, c-format
 msgid "failed to create %s"
 msgstr "Failed to parse: %s."
 
-#: ../client/snapper.cc:1259
 #, fuzzy, c-format
 msgid "failed to delete %s"
 msgstr "Failed to parse: %s."
 
-#: ../client/snapper.cc:1256
 #, fuzzy, c-format
 msgid "failed to modify %s"
 msgstr "Failed to parse: %s."
 
-#: ../client/snapper.cc:1240
 #, c-format
 msgid "modifying %s"
 msgstr ""
 
-#: ../client/snapper.cc:1208
 msgid "nothing to do"
 msgstr ""
 
-#: ../client/snapper.cc:1693
 msgid "root argument can be used only together with no-dbus."
 msgstr ""
 
-#: ../client/snapper.cc:1574
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
