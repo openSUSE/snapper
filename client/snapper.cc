@@ -1522,12 +1522,12 @@ main(int argc, char** argv)
     }
     catch (const runtime_error& e)
     {
-	cerr << "Failed to set locale. Fix your system." << endl;
+	cerr << _("Failed to set locale. Fix your system.") << endl;
     }
 
     if (strcmp(nl_langinfo(CODESET), "UTF-8") != 0)
     {
-	cerr << "Running in non UTF-8 locale. Setup is unsupported." << endl;
+	cerr << _("Running in non UTF-8 locale. Setup is unsupported.") << endl;
     }
 
     setLogDo(&log_do);
