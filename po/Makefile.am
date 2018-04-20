@@ -15,8 +15,9 @@ MOFILES = $(POFILES:.po=.mo)
 all: $(MOFILES)
 
 $(PACKAGE).pot: $(SRCFILES)
-	$(XGETTEXT) -s --no-wrap --add-comments --add-location --keyword=_ --keyword=_:1,2 \
-	    --foreign-user --copyright-holder="SUSE Linux Products GmbH, Nuernberg" \
+	$(XGETTEXT) --sort-output --no-wrap --add-comments --no-location \
+	    --keyword=_ --keyword=_:1,2 --foreign-user \
+	    --copyright-holder="SUSE Linux GmbH, Nuernberg" \
 	    --default-domain=$(PACKAGE) --output=$(PACKAGE).pot $(SRCFILES)
 
 %.mo: %.po
@@ -41,6 +42,6 @@ install-data-local: $(MOFILES)
 	    $(INSTALL_DATA) $(srcdir)/$$file $(DESTDIR)$$langdir/$(PACKAGE).mo; \
 	done
 
-CLEANFILES = $(PACKAGE).pot $(MOFILES)
+CLEANFILES = $(MOFILES)
 
 EXTRA_DIST = $(POFILES)

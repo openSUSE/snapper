@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2017] SUSE LLC
+ * Copyright (c) [2016-2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -28,6 +28,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
+#include <langinfo.h>
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 
@@ -1521,8 +1522,12 @@ main(int argc, char** argv)
     }
     catch (const runtime_error& e)
     {
-	cerr << "Failed to set locale. Fix your system." << endl;
-	exit(EXIT_FAILURE);
+	cerr << _("Failed to set locale. Fix your system.") << endl;
+    }
+
+    if (strcmp(nl_langinfo(CODESET), "UTF-8") != 0)
+    {
+	cerr << _("Running in non UTF-8 locale. Setup is unsupported.") << endl;
     }
 
     setLogDo(&log_do);

@@ -1,0 +1,627 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR SUSE Linux GmbH, Nuernberg
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr ""
+
+msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
+msgstr ""
+
+msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
+msgstr ""
+
+msgid "\t--command <command>\tRun command and create pre and post snapshots."
+msgstr ""
+
+msgid "\t--config, -c <name>\t\tSet name of config to use."
+msgstr ""
+
+msgid "\t--description, -d <description>\tDescription for snapshot."
+msgstr ""
+
+msgid "\t--description, -d <description>\tDescription for snapshots."
+msgstr ""
+
+msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
+msgstr ""
+
+msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
+msgstr ""
+
+msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
+msgstr ""
+
+msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
+msgstr ""
+
+msgid "\t--input, -i <file>\t\tRead files to diff from file."
+msgstr ""
+
+msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
+msgstr ""
+
+msgid "\t--no-dbus\t\t\tOperate without DBus."
+msgstr ""
+
+msgid "\t--output, -o <file>\t\tSave status to file."
+msgstr ""
+
+msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
+msgstr ""
+
+msgid "\t--print-number, -p\t\tPrint number of created snapshot."
+msgstr ""
+
+msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
+msgstr ""
+
+msgid "\t--quiet, -q\t\t\tSuppress normal output."
+msgstr ""
+
+msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
+msgstr ""
+
+msgid "\t--sync, -s\t\t\tSync after deletion."
+msgstr ""
+
+msgid "\t--table-style, -t <style>\tTable style (integer)."
+msgstr ""
+
+msgid "\t--template, -t <name>\t\tName of config template to use."
+msgstr ""
+
+msgid "\t--type, -t <type>\t\tType for snapshot."
+msgstr ""
+
+msgid "\t--type, -t <type>\t\tType of snapshots to list."
+msgstr ""
+
+msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
+msgstr ""
+
+msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
+msgstr ""
+
+msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
+msgstr ""
+
+msgid "\t--verbose, -v\t\t\tIncrease verbosity."
+msgstr ""
+
+msgid "\t--version\t\t\tPrint version and exit."
+msgstr ""
+
+msgid "\tsnapper cleanup <cleanup-algorithm>"
+msgstr ""
+
+msgid "\tsnapper create"
+msgstr ""
+
+msgid "\tsnapper create-config <subvolume>"
+msgstr ""
+
+msgid "\tsnapper delete <number>"
+msgstr ""
+
+msgid "\tsnapper delete-config"
+msgstr ""
+
+msgid "\tsnapper diff <number1>..<number2> [files]"
+msgstr ""
+
+msgid "\tsnapper get-config"
+msgstr ""
+
+msgid "\tsnapper list"
+msgstr ""
+
+msgid "\tsnapper list-configs"
+msgstr ""
+
+msgid "\tsnapper modify <number>"
+msgstr ""
+
+msgid "\tsnapper mount <number>"
+msgstr ""
+
+msgid "\tsnapper rollback [number]"
+msgstr ""
+
+msgid "\tsnapper set-config <configdata>"
+msgstr ""
+
+msgid "\tsnapper setup-quota"
+msgstr ""
+
+msgid "\tsnapper status <number1>..<number2>"
+msgstr ""
+
+msgid "\tsnapper umount <number>"
+msgstr ""
+
+msgid "\tsnapper undochange <number1>..<number2> [files]"
+msgstr ""
+
+msgid "\tsnapper xadiff <number1>..<number2> [files]"
+msgstr ""
+
+msgid "    Global options:"
+msgstr ""
+
+msgid "    Options for 'create' command:"
+msgstr ""
+
+msgid "    Options for 'create-config' command:"
+msgstr ""
+
+msgid "    Options for 'delete' command:"
+msgstr ""
+
+msgid "    Options for 'diff' command:"
+msgstr ""
+
+msgid "    Options for 'list' command:"
+msgstr ""
+
+msgid "    Options for 'modify' command:"
+msgstr ""
+
+msgid "    Options for 'rollback' command:"
+msgstr ""
+
+msgid "    Options for 'status' command:"
+msgstr ""
+
+msgid "    Options for 'undochange' command:"
+msgstr ""
+
+msgid "  Cleanup snapshots:"
+msgstr ""
+
+msgid "  Comparing snapshots extended attributes:"
+msgstr ""
+
+msgid "  Comparing snapshots:"
+msgstr ""
+
+msgid "  Create config:"
+msgstr ""
+
+msgid "  Create snapshot:"
+msgstr ""
+
+msgid "  Delete config:"
+msgstr ""
+
+msgid "  Delete snapshot:"
+msgstr ""
+
+msgid "  Get config:"
+msgstr ""
+
+msgid "  List configs:"
+msgstr ""
+
+msgid "  List snapshots:"
+msgstr ""
+
+msgid "  Modify snapshot:"
+msgstr ""
+
+msgid "  Mount snapshot:"
+msgstr ""
+
+msgid "  Rollback:"
+msgstr ""
+
+msgid "  Set config:"
+msgstr ""
+
+msgid "  Setup quota:"
+msgstr ""
+
+msgid "  Umount snapshot:"
+msgstr ""
+
+msgid "  Undo changes:"
+msgstr ""
+
+msgid "#"
+msgstr ""
+
+#, c-format
+msgid "(Snapshot %d.)"
+msgstr ""
+
+msgid "ACL error."
+msgstr ""
+
+msgid "Cleanup"
+msgstr ""
+
+msgid "Command 'cleanup' needs one arguments."
+msgstr ""
+
+msgid "Command 'create' does not take arguments."
+msgstr ""
+
+msgid "Command 'create-config' needs one argument."
+msgstr ""
+
+msgid "Command 'debug' does not take arguments."
+msgstr ""
+
+msgid "Command 'delete' needs at least one argument."
+msgstr ""
+
+msgid "Command 'delete-config' does not take arguments."
+msgstr ""
+
+msgid "Command 'diff' needs at least one argument."
+msgstr ""
+
+msgid "Command 'get-config' does not take arguments."
+msgstr ""
+
+msgid "Command 'help' does not take arguments."
+msgstr ""
+
+msgid "Command 'list' does not take arguments."
+msgstr ""
+
+msgid "Command 'list-configs' does not take arguments."
+msgstr ""
+
+msgid "Command 'modify' needs at least one argument."
+msgstr ""
+
+msgid "Command 'mount' needs at least one argument."
+msgstr ""
+
+#, c-format
+msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
+msgstr ""
+
+msgid "Command 'rollback' only available for btrfs."
+msgstr ""
+
+msgid "Command 'rollback' takes either one or no argument."
+msgstr ""
+
+msgid "Command 'set-config' needs at least one argument."
+msgstr ""
+
+msgid "Command 'setup-quota' does not take arguments."
+msgstr ""
+
+msgid "Command 'status' needs one argument."
+msgstr ""
+
+msgid "Command 'umount' needs at least one argument."
+msgstr ""
+
+msgid "Command 'undochange' needs at least one argument."
+msgstr ""
+
+msgid "Command 'xadiff' needs at least one argument."
+msgstr ""
+
+msgid "Config"
+msgstr ""
+
+#, c-format
+msgid "Config '%s' is invalid."
+msgstr ""
+
+#, c-format
+msgid "Config '%s' not found."
+msgstr ""
+
+msgid "Config is in use."
+msgstr ""
+
+msgid "Config is locked."
+msgstr ""
+
+#, c-format
+msgid "Configdata '%s' does not include '=' sign."
+msgstr ""
+
+#, c-format
+msgid "Configdata '%s' has empty key."
+msgstr ""
+
+#, c-format
+msgid "Creating config failed (%s)."
+msgstr ""
+
+msgid "Creating read-only snapshot of current system."
+msgstr ""
+
+msgid "Creating read-only snapshot of default subvolume."
+msgstr ""
+
+msgid "Creating read-write snapshot of current subvolume."
+msgstr ""
+
+#, c-format
+msgid "Creating read-write snapshot of snapshot %d."
+msgstr ""
+
+msgid "Creating snapshot failed."
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+#, c-format
+msgid "Deleting config failed (%s)."
+msgstr ""
+
+msgid "Deleting snapshot failed."
+msgstr ""
+
+#, c-format
+msgid "Deleting snapshot from %s:"
+msgid_plural "Deleting snapshots from %s:"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Description"
+msgstr ""
+
+msgid "Detecting filesystem type failed."
+msgstr ""
+
+msgid "Empty configdata."
+msgstr ""
+
+msgid "Empty userdata."
+msgstr ""
+
+#, c-format
+msgid "Error (%s)."
+msgstr ""
+
+msgid "Failed to initialize filesystem handler."
+msgstr ""
+
+msgid "Failed to set locale. Fix your system."
+msgstr ""
+
+msgid "Failure"
+msgstr ""
+
+#, c-format
+msgid "Failure (%s)."
+msgstr ""
+
+#, c-format
+msgid "File '%s' not found."
+msgstr ""
+
+#, c-format
+msgid "IO Error (%s)."
+msgstr ""
+
+#, c-format
+msgid "IO error (%s)."
+msgstr ""
+
+msgid "Identical snapshots."
+msgstr ""
+
+msgid "Illegal snapshot."
+msgstr ""
+
+msgid "Invalid configdata."
+msgstr ""
+
+msgid "Invalid group."
+msgstr ""
+
+#, c-format
+msgid "Invalid snapshot '%s'."
+msgstr ""
+
+msgid "Invalid snapshots."
+msgstr ""
+
+msgid "Invalid subvolume."
+msgstr ""
+
+#, c-format
+msgid "Invalid table style %d."
+msgstr ""
+
+msgid "Invalid user."
+msgstr ""
+
+msgid "Invalid userdata."
+msgstr ""
+
+msgid "Key"
+msgstr ""
+
+#, c-format
+msgid "Listing configs failed (%s)."
+msgstr ""
+
+msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
+msgstr ""
+
+#, c-format
+msgid "Missing argument for command option '%s'."
+msgstr ""
+
+#, c-format
+msgid "Missing argument for global option '%s'."
+msgstr ""
+
+msgid "Missing command argument."
+msgstr ""
+
+msgid "Missing delimiter '..' between snapshot numbers."
+msgstr ""
+
+msgid "Missing or invalid pre-number."
+msgstr ""
+
+msgid "No command provided."
+msgstr ""
+
+msgid "No permissions."
+msgstr ""
+
+#, c-format
+msgid "Opening file '%s' failed."
+msgstr ""
+
+msgid "Post #"
+msgstr ""
+
+msgid "Post Date"
+msgstr ""
+
+msgid "Pre #"
+msgstr ""
+
+msgid "Pre Date"
+msgstr ""
+
+#, c-format
+msgid "Quota error (%s)."
+msgstr ""
+
+#, c-format
+msgid "Quota failure (%s)."
+msgstr ""
+
+msgid "Running in non UTF-8 locale. Setup is unsupported."
+msgstr ""
+
+msgid "See 'man snapper' for further instructions."
+msgstr ""
+
+#, c-format
+msgid "Setting default subvolume to snapshot %d."
+msgstr ""
+
+#, c-format
+msgid "Snapshot '%u' not found."
+msgstr ""
+
+msgid "Snapshot is in use."
+msgstr ""
+
+msgid "Subvolume"
+msgstr ""
+
+msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+msgid "Try 'snapper --help' for more information."
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
+#, c-format
+msgid "Unknown cleanup algorithm '%s'."
+msgstr ""
+
+#, c-format
+msgid "Unknown command '%s'."
+msgstr ""
+
+msgid "Unknown config."
+msgstr ""
+
+#, c-format
+msgid "Unknown global option '%s'."
+msgstr ""
+
+#, c-format
+msgid "Unknown option '%s' for command '%s'."
+msgstr ""
+
+msgid "Unknown type of snapshot."
+msgstr ""
+
+msgid "Unknown type of snapshots."
+msgstr ""
+
+#, c-format
+msgid "Use an integer number from %d to %d."
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "Userdata"
+msgstr ""
+
+#, c-format
+msgid "Userdata '%s' does not include '=' sign."
+msgstr ""
+
+#, c-format
+msgid "Userdata '%s' has empty key."
+msgstr ""
+
+msgid "Value"
+msgstr ""
+
+#, c-format
+msgid "create:%d modify:%d delete:%d"
+msgstr ""
+
+#, c-format
+msgid "creating %s"
+msgstr ""
+
+#, c-format
+msgid "deleting %s"
+msgstr ""
+
+#, c-format
+msgid "failed to create %s"
+msgstr ""
+
+#, c-format
+msgid "failed to delete %s"
+msgstr ""
+
+#, c-format
+msgid "failed to modify %s"
+msgstr ""
+
+#, c-format
+msgid "modifying %s"
+msgstr ""
+
+msgid "nothing to do"
+msgstr ""
+
+msgid "root argument can be used only together with no-dbus."
+msgstr ""
+
+msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr ""

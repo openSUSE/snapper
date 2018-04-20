@@ -1,2 +1,10 @@
-If you want to participate in the translation of this project, please go to
+
+After adding or modifying messages run 'make merge' and commit the pot and po
+files.
+
+Translations themself are done in Weblate.
+
+Do not edit the translations here. Changes will be overwritten by Weblate.
+
 https://l10n.opensuse.org/projects/snapper/
+
