@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-20 14:05+0200\n"
-"PO-Revision-Date: 2018-04-20 17:30+0000\n"
+"PO-Revision-Date: 2018-04-20 20:05+0000\n"
 "Last-Translator: Mikhail Kasimov <mikhail.kasimov@gmail.com>\n"
 "Language-Team: Russian "
 "<https://l10n.opensuse.org/projects/snapper/master/ru/>\n"
@@ -145,6 +145,7 @@ msgstr "\tsnapper rollback [число]"
 msgid "\tsnapper set-config <configdata>"
 msgstr "\tsnapper set-config <настройки>"
 
+#, fuzzy
 msgid "\tsnapper setup-quota"
 msgstr "\tsnapper setup-quota"
 
