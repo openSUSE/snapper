@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-20 14:05+0200\n"
-"PO-Revision-Date: 2017-11-28 10:58+0000\n"
-"Last-Translator: Arvin Schnell <aschnell@suse.com>\n"
-"Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/>\n"
+"PO-Revision-Date: 2018-04-23 01:06+0000\n"
+"Last-Translator: jc sl <trcs@gmx.com>\n"
+"Language-Team: Spanish "
+"<https://l10n.opensuse.org/projects/snapper/master/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.13.1\n"
+"X-Generator: Weblate 2.18\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tMuestra las instantáneas de todas las configuraciones a las que se puede acceder."
@@ -240,7 +241,7 @@ msgid "  Set config:"
 msgstr "  Guardar configuración:"
 
 msgid "  Setup quota:"
-msgstr ""
+msgstr "  Configurar cuotas:"
 
 msgid "  Umount snapshot:"
 msgstr "  Desmontar imagen:"
@@ -302,9 +303,9 @@ msgstr "El comando 'modifcar' requiere al menos un argumento."
 msgid "Command 'mount' needs at least one argument."
 msgstr "El comando 'mount' necesita al menos un argumento."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr "El comando 'rollback' necesita dos argumentos."
+msgstr "El comando 'rollback' no puede usarse en un subvolumen no raíz %s."
 
 # SLE12
 msgid "Command 'rollback' only available for btrfs."
@@ -317,16 +318,14 @@ msgstr "El comando rollback admite un argumento o ninguno."
 msgid "Command 'set-config' needs at least one argument."
 msgstr "El comando \"set-config\" necesita al menos un argumento."
 
-#, fuzzy
 msgid "Command 'setup-quota' does not take arguments."
-msgstr "El comando 'help'  no tiene argumentos."
+msgstr "El comando 'setup-quota'  no tiene argumentos."
 
 msgid "Command 'status' needs one argument."
 msgstr "El comando 'status' necesita un argumento."
 
-#, fuzzy
 msgid "Command 'umount' needs at least one argument."
-msgstr "El comando 'mount' necesita al menos un argumento."
+msgstr "El comando 'unmount' necesita al menos un argumento."
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "El comando 'undochange' necesita al menos un argumento."
@@ -415,16 +414,16 @@ msgstr "Datos de configuración vacíos."
 msgid "Empty userdata."
 msgstr "Datos de usuario vacíos."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Error (%s)."
-msgstr "Error de E/S (%s)."
+msgstr "Error (%s)."
 
 # SLE12
 msgid "Failed to initialize filesystem handler."
 msgstr "Error al inicializar el gestor del sistema de archivos."
 
 msgid "Failed to set locale. Fix your system."
-msgstr ""
+msgstr "Error al establecer la configuración regional. Repare su sistema."
 
 msgid "Failure"
 msgstr "Fallo"
@@ -530,17 +529,19 @@ msgstr "Pre número"
 msgid "Pre Date"
 msgstr "Fecha previa"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Quota error (%s)."
-msgstr "Error de E/S (%s)."
+msgstr "Error de cuota (%s)."
 
 # SLE12
-#, fuzzy, c-format
+#, c-format
 msgid "Quota failure (%s)."
-msgstr "Error (%s)."
+msgstr "Error de cuota (%s)."
 
 msgid "Running in non UTF-8 locale. Setup is unsupported."
 msgstr ""
+"La configuración regional en ejecución no es UTF-8. Esta configuración es "
+"inadmisible."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Consulte la página man snapper para obtener más instrucciones."
