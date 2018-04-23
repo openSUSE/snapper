@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-20 14:05+0200\n"
-"PO-Revision-Date: 2015-10-15 21:37+0200\n"
-"Last-Translator: Ramax Lo <ramaxlo@gmail.com>\n"
-"Language-Team: Chinese (Taiwan) <http://10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
+"PO-Revision-Date: 2018-04-23 03:25+0000\n"
+"Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
+"Language-Team: Chinese (Taiwan) "
+"<https://l10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.3\n"
+"X-Generator: Weblate 2.18\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\t列出所有可存取組態中的快照。"
@@ -165,9 +166,8 @@ msgid "\tsnapper set-config <configdata>"
 msgstr "\tsnapper set-config <configdata>"
 
 # SLE12
-#, fuzzy
 msgid "\tsnapper setup-quota"
-msgstr "\tsnapper get-config"
+msgstr "\tsnapper setup-quota"
 
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tsnapper status <數字1>..<數字2>"
@@ -260,7 +260,7 @@ msgid "  Set config:"
 msgstr "  設定組態︰"
 
 msgid "  Setup quota:"
-msgstr ""
+msgstr "  設定定額："
 
 msgid "  Umount snapshot:"
 msgstr "  卸載快照："
@@ -327,9 +327,9 @@ msgid "Command 'mount' needs at least one argument."
 msgstr "命令 'mount' 需要至少一個參數。"
 
 # SLE12
-#, fuzzy, c-format
+#, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr "指令「rollback」可使用一個引數或不使用引數。"
+msgstr "不能在非根子磁碟區 %s 上使用指令「rollback」。"
 
 # SLE12
 msgid "Command 'rollback' only available for btrfs."
@@ -343,16 +343,14 @@ msgstr "指令「rollback」可使用一個引數或不使用引數。"
 msgid "Command 'set-config' needs at least one argument."
 msgstr "指令「set-config」至少需要一個引數。"
 
-#, fuzzy
 msgid "Command 'setup-quota' does not take arguments."
-msgstr "命令 'help' 不需參數。"
+msgstr "指令「setup-quota」不需要引數。"
 
 msgid "Command 'status' needs one argument."
 msgstr "命令 'status' 需要一個參數。"
 
-#, fuzzy
 msgid "Command 'umount' needs at least one argument."
-msgstr "命令 'mount' 需要至少一個參數。"
+msgstr "指令「umount」至少需要一個引數。"
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "命令 'undochange' 需要至少一個參數。"
@@ -446,16 +444,16 @@ msgstr "組態資料空白。"
 msgid "Empty userdata."
 msgstr "使用者資料空白。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Error (%s)."
-msgstr "IO 錯誤 (%s)。"
+msgstr "錯誤 (%s)。"
 
 # SLE12
 msgid "Failed to initialize filesystem handler."
 msgstr "無法啟始化檔案系統處理器。"
 
 msgid "Failed to set locale. Fix your system."
-msgstr ""
+msgstr "無法設定地區設定。請修復您的系統。"
 
 # SLE12
 msgid "Failure"
@@ -482,7 +480,6 @@ msgid "Identical snapshots."
 msgstr "完全相同的快照。"
 
 # SLE12
-#, fuzzy
 msgid "Illegal snapshot."
 msgstr "快照不合法。"
 
@@ -567,17 +564,17 @@ msgstr "之前 #"
 msgid "Pre Date"
 msgstr "之前 日期"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Quota error (%s)."
-msgstr "IO 錯誤 (%s)。"
+msgstr "定額錯誤 (%s)。"
 
 # SLE12
-#, fuzzy, c-format
+#, c-format
 msgid "Quota failure (%s)."
-msgstr "失敗 (%s)。"
+msgstr "定額失敗 (%s)。"
 
 msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
+msgstr "正採用非 UTF-8 地區設定執行。不支援設定。"
 
 msgid "See 'man snapper' for further instructions."
 msgstr "如需更多指示，請參閱「man snapper」。"
