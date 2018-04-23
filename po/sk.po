@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-20 14:05+0200\n"
-"PO-Revision-Date: 2015-11-08 12:20+0200\n"
+"PO-Revision-Date: 2018-04-23 05:47+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
-"Language-Team: Slovak <http://10n.opensuse.org/projects/snapper/master/sk/>\n"
+"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
+"\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 2.3\n"
+"X-Generator: Weblate 2.18\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tZoznam snímok zo všetkých dostupných konfigurácií."
@@ -148,9 +149,8 @@ msgstr "\tsnapper rollback [číslo]"
 msgid "\tsnapper set-config <configdata>"
 msgstr "\tsnapper set-config <konfiguračné-údaje>"
 
-#, fuzzy
 msgid "\tsnapper setup-quota"
-msgstr "\tsnapper get-config"
+msgstr "\tsnapper setup-quota"
 
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tsnapper status <číslo1>..<číslo2>"
@@ -237,7 +237,7 @@ msgid "  Set config:"
 msgstr "  Nastaviť konfiguráciu:"
 
 msgid "  Setup quota:"
-msgstr ""
+msgstr "  Nastaviť kvótu:"
 
 msgid "  Umount snapshot:"
 msgstr "  Odpojiť snímku:"
@@ -297,9 +297,9 @@ msgstr "Príkaz 'modify' potrebuje aspoň jeden argument."
 msgid "Command 'mount' needs at least one argument."
 msgstr "Príkaz 'mount' potrebuje aspoň jeden argument."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr "Príkaz 'rollback' prijíma jeden alebo žiadny argument."
+msgstr "Príkaz 'rollback' nie je možné použiť na nekoreňovom podzväzku %s."
 
 msgid "Command 'rollback' only available for btrfs."
 msgstr "Príkaz 'rollback' je dostupný iba pre btrfs."
@@ -310,16 +310,14 @@ msgstr "Príkaz 'rollback' prijíma jeden alebo žiadny argument."
 msgid "Command 'set-config' needs at least one argument."
 msgstr "Príkaz 'set-config' potrebuje aspoň jeden argument."
 
-#, fuzzy
 msgid "Command 'setup-quota' does not take arguments."
-msgstr "Príkaz 'help' neprijíma argumenty."
+msgstr "Príkaz 'setup-quota' nepodporuje argumenty."
 
 msgid "Command 'status' needs one argument."
 msgstr "Príkaz 'status' potrebuje jeden argument."
 
-#, fuzzy
 msgid "Command 'umount' needs at least one argument."
-msgstr "Príkaz 'mount' potrebuje aspoň jeden argument."
+msgstr "Príkaz 'umount' potrebuje aspoň jeden argument."
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Príkaz 'undochange' potrebuje aspoň jeden argument."
@@ -402,15 +400,15 @@ msgid "Empty userdata."
 msgstr "Prázdne používateľské údaje."
 
 # error box title
-#, fuzzy, c-format
+#, c-format
 msgid "Error (%s)."
-msgstr "V/V chyba (%s)."
+msgstr "Chyba (%s)."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Zlyhala inicializácia obslužného programu systému súborov."
 
 msgid "Failed to set locale. Fix your system."
-msgstr ""
+msgstr "Zlyhalo nastavenie lokalizácie. Opravte si systém."
 
 msgid "Failure"
 msgstr "Zlyhanie"
@@ -436,7 +434,6 @@ msgstr "V/V chyba (%s)."
 msgid "Identical snapshots."
 msgstr "Totožné snímky."
 
-#, fuzzy
 msgid "Illegal snapshot."
 msgstr "Nepovolená snímka."
 
@@ -518,16 +515,16 @@ msgid "Pre Date"
 msgstr "Dátum pred"
 
 # error box title
-#, fuzzy, c-format
+#, c-format
 msgid "Quota error (%s)."
-msgstr "V/V chyba (%s)."
+msgstr "Chyba kvóty (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Quota failure (%s)."
-msgstr "Zlyhanie  (%s)."
+msgstr "Zlyhanie kvóty (%s)."
 
 msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
+msgstr "Beh v lokalizácii, ktorá nie je UTF-8. Nastavenie nie je podporované."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Viac informácií nájdete na 'man snapper'."
