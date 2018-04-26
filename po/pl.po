@@ -10,14 +10,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-20 14:05+0200\n"
-"PO-Revision-Date: 2018-01-25 14:05+0000\n"
+"PO-Revision-Date: 2018-04-26 14:31+0000\n"
 "Last-Translator: Ewelina Michalowska <ewelina.michalowska@stgambit.com>\n"
-"Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>\n"
+"Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>"
+"\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 2.18\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
@@ -149,9 +151,8 @@ msgstr "\tsnapper rollback [numer]"
 msgid "\tsnapper set-config <configdata>"
 msgstr "\tsnapper set-config <dane_konfiguracyjne>"
 
-#, fuzzy
 msgid "\tsnapper setup-quota"
-msgstr "\tsnapper get-config"
+msgstr "\tsnapper setup-quota"
 
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tsnapper status <numer1>..<numer2>"
@@ -238,7 +239,7 @@ msgid "  Set config:"
 msgstr "  Ustawianie konfiguracji:"
 
 msgid "  Setup quota:"
-msgstr ""
+msgstr "  Konfiguracja przydziału:"
 
 msgid "  Umount snapshot:"
 msgstr "  Odmontowanie zrzutu:"
@@ -298,9 +299,11 @@ msgstr "Polecenie 'modify' wymaga co najmniej jednego argumentu."
 msgid "Command 'mount' needs at least one argument."
 msgstr "Polecenie 'mount' wymaga co najmniej jednego argumentu."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr "Polecenie \"rollback\" może mieć jeden parametr lub wcale go nie zawierać."
+msgstr ""
+"Polecenia rollback nie można użyć w przypadku podwoluminu %s, ponieważ nie "
+"jest on podwoluminem głównym."
 
 msgid "Command 'rollback' only available for btrfs."
 msgstr "Polecenie \"rollback\" jest dostępne tylko w systemie plików btrfs."
@@ -311,16 +314,14 @@ msgstr "Polecenie \"rollback\" może mieć jeden parametr lub wcale go nie zawie
 msgid "Command 'set-config' needs at least one argument."
 msgstr "Polecenie 'set-config' wymaga podania co najmniej jednego argumentu."
 
-#, fuzzy
 msgid "Command 'setup-quota' does not take arguments."
-msgstr "Polecenie 'help' nie przyjmuje argumentów."
+msgstr "Polecenie setup-quota nie przyjmuje argumentów."
 
 msgid "Command 'status' needs one argument."
 msgstr "Polecenie 'status' wymaga jednego argumentu."
 
-#, fuzzy
 msgid "Command 'umount' needs at least one argument."
-msgstr "Polecenie 'mount' wymaga co najmniej jednego argumentu."
+msgstr "Polecenie unmount wymaga co najmniej jednego argumentu."
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Polecenie 'undochange' wymaga co najmniej jednego argumentu."
@@ -402,15 +403,15 @@ msgstr "Puste dane konfiguracyjne."
 msgid "Empty userdata."
 msgstr "Puste dane użytkownika."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Error (%s)."
-msgstr "Błąd we-wy (%s)."
+msgstr "Błąd (%s)."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Inicjowanie programu obsługi systemu plików nie powiodło się."
 
 msgid "Failed to set locale. Fix your system."
-msgstr ""
+msgstr "Nie można skonfigurować ustawień regionalnych. Napraw system."
 
 msgid "Failure"
 msgstr "Niepowodzenie"
@@ -434,9 +435,8 @@ msgstr "Błąd we-wy (%s)."
 msgid "Identical snapshots."
 msgstr "Identyczne zrzuty."
 
-#, fuzzy
 msgid "Illegal snapshot."
-msgstr "Nieprawidłowy zrzut."
+msgstr "Niedozwolony zrzut."
 
 msgid "Invalid configdata."
 msgstr "Nieprawidłowe dane konfiguracyjne."
@@ -513,16 +513,18 @@ msgstr "Pre #"
 msgid "Pre Date"
 msgstr "Przed datą"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Quota error (%s)."
-msgstr "Błąd we-wy (%s)."
+msgstr "Błąd przydziału (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Quota failure (%s)."
-msgstr "Niepowodzenie (%s)."
+msgstr "Niepowodzenie przydziału (%s)."
 
 msgid "Running in non UTF-8 locale. Setup is unsupported."
 msgstr ""
+"W systemie są uruchomione ustawienia regionalne inne niż UTF-8. Instalacja "
+"jest nieobsługiwana."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Dodatkowe instrukcje można uzyskać, wydając polecenie \"man snapper\"."
