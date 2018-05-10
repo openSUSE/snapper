@@ -89,6 +89,8 @@
       <para>With each snapshot a description and some userdata can be associated. The
       description is a string. The userdata is a list of key-value pairs where the
       keys and values are strings.</para>
+      <para>Do not use non-ASCII characters for the snapshot description, unless you
+      always use the UTF-8 character encoding.</para>
     </refsect2>
 
     <refsect2 id='automatic_snapshot_creation'>

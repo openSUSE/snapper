@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu May 10 11:43:53 UTC 2018 - jsrain@suse.cz
+
+- move warning in case of non-UTF8 locale to man page (bsc#1092103)
+
+-------------------------------------------------------------------
 Fri Apr 20 14:19:29 CEST 2018 - aschnell@suse.com
 
 - soften error handling if setting locale fails due to broken

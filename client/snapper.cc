@@ -1525,11 +1525,6 @@ main(int argc, char** argv)
 	cerr << _("Failed to set locale. Fix your system.") << endl;
     }
 
-    if (strcmp(nl_langinfo(CODESET), "UTF-8") != 0)
-    {
-	cerr << _("Running in non UTF-8 locale. Setup is unsupported.") << endl;
-    }
-
     setLogDo(&log_do);
     setLogQuery(&log_query);
 
