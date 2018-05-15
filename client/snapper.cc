@@ -28,7 +28,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
-#include <langinfo.h>
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 
