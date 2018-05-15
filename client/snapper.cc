@@ -28,7 +28,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
-#include <langinfo.h>
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 
@@ -1523,11 +1522,6 @@ main(int argc, char** argv)
     catch (const runtime_error& e)
     {
 	cerr << _("Failed to set locale. Fix your system.") << endl;
-    }
-
-    if (strcmp(nl_langinfo(CODESET), "UTF-8") != 0)
-    {
-	cerr << _("Running in non UTF-8 locale. Setup is unsupported.") << endl;
     }
 
     setLogDo(&log_do);
