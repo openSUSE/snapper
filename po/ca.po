@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-20 14:05+0200\n"
-"PO-Revision-Date: 2018-04-20 19:06+0000\n"
+"PO-Revision-Date: 2018-05-23 18:01+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
 "Language-Team: Catalan "
 "<https://l10n.opensuse.org/projects/snapper/master/ca/>\n"
@@ -75,7 +75,7 @@ msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <path>\t\tOpera a l'arrel de destinació (només funciona sense DBus)."
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr "\t--sync, -s\t\t\tSincronitza després d'una eliminació."
+msgstr "\t--sync, -s\t\t\tSincronitza després d'una supressió."
 
 msgid "\t--table-style, -t <style>\tTable style (integer)."
 msgstr "\t--table-style, -t <style>\tEstil de taula (enter)."
@@ -204,10 +204,10 @@ msgid "  Create snapshot:"
 msgstr "  Crea la instantània:"
 
 msgid "  Delete config:"
-msgstr "  Elimina config:"
+msgstr "  Suprimeix config.:"
 
 msgid "  Delete snapshot:"
-msgstr "  Elimina la instantània:"
+msgstr "  Suprimeix la instantània:"
 
 msgid "  Get config:"
 msgstr "  Obtén config:"
@@ -369,16 +369,16 @@ msgstr "Data"
 
 #, c-format
 msgid "Deleting config failed (%s)."
-msgstr "Ha fallat l'eliminació de config (%s)."
+msgstr "Ha fallat la supressió de config (%s)."
 
 msgid "Deleting snapshot failed."
-msgstr "Ha fallat eliminar la instantània."
+msgstr "Ha fallat suprimir la instantània."
 
 #, c-format
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
-msgstr[0] "Eliminant la instantània de %s:"
-msgstr[1] "Eliminant les instantànies de %s:"
+msgstr[0] "Suprimint la instantània de %s:"
+msgstr[1] "Suprimint les instantànies de %s:"
 
 msgid "Description"
 msgstr "Descripció"
@@ -588,7 +588,7 @@ msgstr "Valor"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
-msgstr "crea:%d, modica:%d, elimina:%d"
+msgstr "crea:%d, modica:%d, suprimeix:%d"
 
 #, c-format
 msgid "creating %s"
@@ -596,7 +596,7 @@ msgstr "creant %s"
 
 #, c-format
 msgid "deleting %s"
-msgstr "eliminant %s"
+msgstr "suprimint %s"
 
 #, c-format
 msgid "failed to create %s"
@@ -604,7 +604,7 @@ msgstr "Ha fallat la creació de %s"
 
 #, c-format
 msgid "failed to delete %s"
-msgstr "ha fallat eliminar %s"
+msgstr "ha fallat suprimir %s"
 
 #, c-format
 msgid "failed to modify %s"
