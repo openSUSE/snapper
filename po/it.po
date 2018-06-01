@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-20 14:05+0200\n"
-"PO-Revision-Date: 2018-04-22 20:57+0000\n"
+"PO-Revision-Date: 2018-06-01 16:03+0000\n"
 "Last-Translator: Alessio Adamo <alessio.adamo@gmail.com>\n"
 "Language-Team: Italian "
 "<https://l10n.opensuse.org/projects/snapper/master/it/>\n"
@@ -112,7 +112,7 @@ msgid "\tsnapper create"
 msgstr "\tsnapper create"
 
 msgid "\tsnapper create-config <subvolume>"
-msgstr "\tsnapper create-config <sotto-volume>"
+msgstr "\tsnapper create-config <sottovolume>"
 
 msgid "\tsnapper delete <number>"
 msgstr "\tsnapper delete <numero>"
@@ -355,10 +355,11 @@ msgid "Creating read-only snapshot of current system."
 msgstr "Creazione di un'istantanea in sola lettura del sistema corrente."
 
 msgid "Creating read-only snapshot of default subvolume."
-msgstr "Creazione di un'istantanea in sola lettura del sotto-volume predefinito."
+msgstr "Creazione di un'istantanea in sola lettura del sottovolume predefinito."
 
 msgid "Creating read-write snapshot of current subvolume."
-msgstr "Creazione di un'istantanea in lettura/scrittura del sotto-volume corrente."
+msgstr ""
+"Creazione di un'istantanea in lettura/scrittura del sottovolume corrente."
 
 #, c-format
 msgid "Creating read-write snapshot of snapshot %d."
@@ -444,7 +445,7 @@ msgid "Invalid snapshots."
 msgstr "Istantanee non valide."
 
 msgid "Invalid subvolume."
-msgstr "Sotto-volume non valido."
+msgstr "Sottovolume non valido."
 
 #, c-format
 msgid "Invalid table style %d."
@@ -522,7 +523,7 @@ msgstr "Vedere 'man snapper' per ulteriori istruzioni."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
-msgstr "Impostazione del sotto-volume predefinito all'istantanea %d."
+msgstr "Impostazione del sottovolume predefinito all'istantanea %d."
 
 #, c-format
 msgid "Snapshot '%u' not found."
@@ -532,7 +533,7 @@ msgid "Snapshot is in use."
 msgstr "L'istantanea è in uso."
 
 msgid "Subvolume"
-msgstr "Sotto-volume"
+msgstr "Sottovolume"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Configurazione 'root' inesistente. È probabile che snapper non sia configurato."
