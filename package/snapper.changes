@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon May 28 10:44:49 CEST 2018 - aschnell@suse.com
+
+- merged (gh#openSUSE/snapper#409) to build with boost 1.67.0
+  (bsc#1096208)
+- version 0.5.5
+
+-------------------------------------------------------------------
 Thu May 10 11:43:53 UTC 2018 - jsrain@suse.cz
 
 - move warning in case of non-UTF8 locale to man page (bsc#1092103)
