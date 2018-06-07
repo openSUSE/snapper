@@ -7,15 +7,16 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-20 14:05+0200\n"
-"PO-Revision-Date: 2017-06-08 13:01+0000\n"
-"Last-Translator: scootergrisen\n"
-"Language-Team: Danish <https://l10n.opensuse.org/projects/snapper/master/da/>\n"
+"PO-Revision-Date: 2018-06-07 10:10+0000\n"
+"Last-Translator: scootergrisen <scootergrisen@gmail.com>\n"
+"Language-Team: Danish <https://l10n.opensuse.org/projects/snapper/master/da/>"
+"\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.6\n"
+"X-Generator: Weblate 2.18\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tOplist øjebliksbilleder fra alle tilgængelige konfigurationer."
@@ -146,9 +147,8 @@ msgstr "\tsnapper rollback [nummer]"
 msgid "\tsnapper set-config <configdata>"
 msgstr "\tsnapper set-config <konfigurationsdata>"
 
-#, fuzzy
 msgid "\tsnapper setup-quota"
-msgstr "\tsnapper get-config"
+msgstr "\tsnapper setup-quota"
 
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tsnapper status <nummer1>..<nummer2>"
@@ -235,7 +235,7 @@ msgid "  Set config:"
 msgstr "  Sæt konfiguration:"
 
 msgid "  Setup quota:"
-msgstr ""
+msgstr "  Opsætningskvote:"
 
 msgid "  Umount snapshot:"
 msgstr "  Afmontér øjebliksbillede:"
@@ -295,9 +295,11 @@ msgstr "Kommandoen \"modify\" kræver mindst ét argument."
 msgid "Command 'mount' needs at least one argument."
 msgstr "Kommandoen \"mount\" kræver mindst ét argument."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr "Kommandoen \"rollback\" accepterer ét eller ingen argumenter."
+msgstr ""
+"Kommandoen 'rollback' kan ikke bruges på et underdiskområde som ikke er root "
+"%s."
 
 msgid "Command 'rollback' only available for btrfs."
 msgstr "Kommandoen \"rollback\" er kun tilgængelig med btrfs."
@@ -308,16 +310,14 @@ msgstr "Kommandoen \"rollback\" accepterer ét eller ingen argumenter."
 msgid "Command 'set-config' needs at least one argument."
 msgstr "Kommandoen \"set-config\" kræver mindst ét argument."
 
-#, fuzzy
 msgid "Command 'setup-quota' does not take arguments."
-msgstr "Kommandoen \"help\" tager ikke argumenter."
+msgstr "Kommandoen 'setup-quota' tager ikke imod argumenter."
 
 msgid "Command 'status' needs one argument."
 msgstr "Kommandoen \"status\" kræver et argument."
 
-#, fuzzy
 msgid "Command 'umount' needs at least one argument."
-msgstr "Kommandoen \"mount\" kræver mindst ét argument."
+msgstr "Kommandoen \"umount\" kræver mindst ét argument."
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Kommandoen \"undochange\" kræver mindst ét argument."
@@ -399,15 +399,15 @@ msgid "Empty userdata."
 msgstr "Tomme brugerdata."
 
 # error box title
-#, fuzzy, c-format
+#, c-format
 msgid "Error (%s)."
-msgstr "I/O-fejl (%s)."
+msgstr "Fejl (%s)."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Kunne ikke initialisere filsystemhåndtering."
 
 msgid "Failed to set locale. Fix your system."
-msgstr ""
+msgstr "Kunne ikke sætte lokalitet. Ret dit system."
 
 msgid "Failure"
 msgstr "Fejl"
@@ -433,7 +433,6 @@ msgstr "I/O-fejl (%s)."
 msgid "Identical snapshots."
 msgstr "Identiske øjebliksbilleder."
 
-#, fuzzy
 msgid "Illegal snapshot."
 msgstr "Ulovligt øjebliksbillede."
 
@@ -513,16 +512,16 @@ msgid "Pre Date"
 msgstr "Præ-dato"
 
 # error box title
-#, fuzzy, c-format
+#, c-format
 msgid "Quota error (%s)."
-msgstr "I/O-fejl (%s)."
+msgstr "Fejl i kvote (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Quota failure (%s)."
-msgstr "Fejl (%s)."
+msgstr "Kvote mislykkedes (%s)."
 
 msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
+msgstr "Kører i ikke-UTF-8-lokalitet. Opsætning understøttes ikke."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Se \"man snapper\" for yderligere vejledning."
