@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
+ * Copyright (c) 2018 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -103,6 +104,7 @@ MetaSnapper::MetaSnapper(ConfigInfo& config_info)
 MetaSnapper::~MetaSnapper()
 {
     delete snapper;
+    snapper = nullptr;
 }
 
 
@@ -172,7 +174,7 @@ void
 MetaSnapper::unload()
 {
     delete snapper;
-    snapper = NULL;
+    snapper = nullptr;
 }
 
 

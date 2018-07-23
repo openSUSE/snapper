@@ -113,6 +113,7 @@ Client::delete_comparison(list<Comparison*>::iterator it)
     }
 
     delete *it;
+    *it = nullptr;
 }
 
 
