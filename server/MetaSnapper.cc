@@ -200,6 +200,14 @@ MetaSnappers::init()
 }
 
 
+void
+MetaSnappers::unload()
+{
+    for (iterator it = entries.begin(); it != entries.end(); ++it)
+	it->unload();
+}
+
+
 MetaSnappers::iterator
 MetaSnappers::find(const string& config_name)
 {
