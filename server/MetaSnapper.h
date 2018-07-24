@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
+ * Copyright (c) 2018 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -122,6 +123,8 @@ public:
     ~MetaSnappers();
 
     void init();
+
+    void unload();
 
     typedef list<MetaSnapper>::iterator iterator;
     typedef list<MetaSnapper>::const_iterator const_iterator;

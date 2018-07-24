@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
+ * Copyright (c) 2018 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -285,6 +286,8 @@ main(int argc, char** argv)
     mainloop.run();
 
     y2mil("Exiting");
+
+    meta_snappers.unload();
 
     return 0;
 }

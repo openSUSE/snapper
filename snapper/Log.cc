@@ -64,6 +64,7 @@ namespace snapper
     {
 	callLogDo(level, *component, file, line, func, stream->str());
 	delete stream;
+	stream = nullptr;
     }
 
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016,2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -147,7 +147,10 @@ namespace snapper
 	}
 
 	delete filesystem;
+	filesystem = nullptr;
+
 	delete config_info;
+	config_info = nullptr;
     }
 
 
