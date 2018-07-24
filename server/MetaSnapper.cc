@@ -203,8 +203,8 @@ MetaSnappers::init()
 void
 MetaSnappers::unload()
 {
-    for (iterator it = entries.begin(); it != entries.end(); ++it)
-	it->unload();
+    for (MetaSnapper& meta_snapper : entries)
+	meta_snapper.unload();
 }
 
 
