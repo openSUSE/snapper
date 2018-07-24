@@ -33,6 +33,9 @@
 #include "snapper/AppUtil.h"
 
 
+#define LOG_FILENAME "/var/log/snapper.log"
+
+
 namespace snapper
 {
     using namespace std;
@@ -43,7 +46,7 @@ namespace snapper
 
 	struct LoggerData
 	{
-	    LoggerData() : filename("/var/log/snapper.log"), mutex() {}
+	    LoggerData() : filename(LOG_FILENAME), mutex() {}
 
 	    string filename;
 	    boost::mutex mutex;
@@ -151,7 +154,7 @@ namespace snapper
     void
     initDefaultLogger()
     {
-	logger_data->filename = "/var/log/snapper.log";
+	logger_data->filename = LOG_FILENAME;
 
 	if (geteuid())
 	{
