@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016,2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -68,11 +68,9 @@ Client::~Client()
 	Snapshots& snapshots = snapper->getSnapshots();
 
 	Snapshots::iterator snap = snapshots.find(number);
-	if (snap == snapshots.end())
-	    throw IllegalSnapshotException();
-
-	for (unsigned int i = 0; i < use_count; ++i)
-	    snap->umountFilesystemSnapshot(false);
+	if (snap != snapshots.end())
+	    for (unsigned int i = 0; i < use_count; ++i)
+		snap->umountFilesystemSnapshot(false);
     }
 }
 
