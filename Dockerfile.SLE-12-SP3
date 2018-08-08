@@ -1,5 +1,5 @@
-# Build the latest openSUSE Tumbleweed image
-FROM opensuse:tumbleweed
+# Build the latest SLE-12-SP3 image
+FROM yastdevel/ruby:sle12-sp3
 
 RUN zypper --non-interactive in --no-recommends \
   autoconf \
