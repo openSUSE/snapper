@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2004-2011] Novell, Inc.
+ * Copyright (c) 2018 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -29,6 +30,8 @@
 #include <sys/wait.h>
 #include <string>
 #include <boost/algorithm/string.hpp>
+
+extern char **environ;
 
 #include "snapper/Log.h"
 #include "snapper/AppUtil.h"
@@ -205,11 +208,12 @@ SystemCmd::doExecute( const string& Cmd )
 		}
 	    }
 	y2deb("sout:" << pfds[0].fd << " serr:" << (Combine_b?-1:pfds[1].fd));
+
+	const vector<const char*> env = make_env();
+
 	switch( (Pid_i=fork()) )
 	    {
 	    case 0:
-		setenv( "LC_ALL", "C", 1 );
-		setenv( "LANGUAGE", "C", 1 );
 		if( dup2( sout[1], STDOUT_FILENO )<0 )
 		    {
 		    y2err("dup2 stdout child failed errno:" << errno << " (" << stringerror(errno) << ")");
@@ -231,8 +235,7 @@ SystemCmd::doExecute( const string& Cmd )
 		    y2err("close child failed errno:" << errno << " (" << stringerror(errno) << ")");
 		    }
 		closeOpenFds();
-		Ret_i = execl( Shell_Ci.c_str(), Shell_Ci.c_str(), "-c",
-			       Cmd.c_str(), NULL );
+		Ret_i = execle(Shell_Ci.c_str(), Shell_Ci.c_str(), "-c", Cmd.c_str(), nullptr, &env[0]);
 		y2err("SHOULD NOT HAPPEN \"" << Shell_Ci << "\" Ret:" << Ret_i);
 		break;
 	    case -1:
@@ -565,6 +568,27 @@ SystemCmd::logOutput() const
 	    y2mil("stdout:" << getLine(i, false, IDX_STDOUT));
     }
 }
+
+
+    vector<const char*>
+    SystemCmd::make_env() const
+    {
+	vector<const char*> env;
+
+	for (char** v = environ; *v != NULL; ++v)
+	{
+	    if (strncmp(*v, "LC_ALL=", strlen("LC_ALL=")) != 0 &&
+		strncmp(*v, "LANGUAGE=", strlen("LANGUAGE=")) != 0)
+		env.push_back(*v);
+	}
+
+	env.push_back("LC_ALL=C");
+	env.push_back("LANGUAGE=C");
+
+	env.push_back(nullptr);
+
+	return env;
+    }
 
 
 string

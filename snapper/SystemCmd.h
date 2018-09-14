@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2004-2014] Novell, Inc.
+ * Copyright (c) 2018 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -100,6 +101,16 @@ namespace snapper
 	void init();
 
 	void logOutput() const;
+
+	/**
+	 * Constructs the environment for the child process.
+	 *
+	 * Must not be called after exec since allocating the memory
+	 * for the vector is not allowed then (in a multithreaded
+	 * program), see fork(2) and signal-safety(7). So simply call
+	 * it right before fork.
+	 */
+	vector<const char*> make_env() const;
 
 	FILE* File_aC[2];
 	std::vector<string> Lines_aC[2];

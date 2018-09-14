@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Sep 14 12:13:05 CEST 2018 - aschnell@suse.com
+
+- avoid setenv after fork (bsc#1107587)
+
+-------------------------------------------------------------------
 Mon Jul 23 20:52:26 CEST 2018 - aschnell@suse.com
 
 - fixed logging during shutdown of snapperd to avoid core dumps
