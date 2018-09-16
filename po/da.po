@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-20 14:05+0200\n"
-"PO-Revision-Date: 2018-06-07 13:01+0000\n"
+"PO-Revision-Date: 2018-09-16 10:02+0000\n"
 "Last-Translator: scootergrisen <scootergrisen@gmail.com>\n"
 "Language-Team: Danish <https://l10n.opensuse.org/projects/snapper/master/da/>"
 "\n"
@@ -31,16 +31,17 @@ msgid "\t--command <command>\tRun command and create pre and post snapshots."
 msgstr "\t--command <kommando>\tKør kommando og opret præ- og post-øjebliksbilleder."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <name>\t\tAngiv navn på konfiguration der skal bruges."
+msgstr "\t--config, -c <navn>\t\tAngiv navn på konfiguration der skal bruges."
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <description>\tBeskrivelse af øjebliksbillede."
+msgstr "\t--description, -d <beskrivelse>\tBeskrivelse af øjebliksbillede."
 
 msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr "\t--description, -d <description>\tBeskrivelse af øjebliksbilleder."
+msgstr "\t--description, -d <beskrivelse>\tBeskrivelse af øjebliksbilleder."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr "\t--diff-cmd <command>\t\tKommando som bruges til at sammenligne filer."
+msgstr ""
+"\t--diff-cmd <kommando>\t\tKommando som bruges til at sammenligne filer."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <tilvalg>\tEkstra tilvalg som sendes til diff-kommandoen."
@@ -49,10 +50,11 @@ msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <fstype>\t\tAngiv type af filsystem manuelt."
 
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <file>\t\tLæs filer for hvilke ændringer fra fil skal fortrydes."
+msgstr ""
+"\t--input, -i <fil>\t\tLæs filer for hvilke ændringer fra fil skal fortrydes."
 
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr "\t--input, -i <file>\t\tLæs filer til diff fra fil."
+msgstr "\t--input, -i <fil>\t\tLæs filer til diff fra fil."
 
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\tVis datoer og tidspunkter i ISO-format."
@@ -64,7 +66,7 @@ msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <file>\t\tGem status til fil."
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <number>\t\tAntal tilsvarende præ-øjebliksbillede."
+msgstr "\t--pre-number <nummer>\t\tAntal tilsvarende præ-øjebliksbillede."
 
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
 msgstr "\t--print-number, -p\t\tSkriv nummer for oprettet øjebliksbillede."
@@ -82,7 +84,7 @@ msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tSynkroniser efter sletning."
 
 msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <style>\tTabelstil (heltal)."
+msgstr "\t--table-style, -t <stil>\tTabelstil (heltal)."
 
 msgid "\t--template, -t <name>\t\tName of config template to use."
 msgstr "\t--template, -t <name>\t\tNavn på konfigurationsskabelon der skal bruges."
@@ -94,10 +96,10 @@ msgid "\t--type, -t <type>\t\tType of snapshots to list."
 msgstr "\t--type, -t <type>\t\tType af øjebliksbilleder der skal oplistes."
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <userdata>\tBrugerdata for øjebliksbillede."
+msgstr "\t--userdata, -u <brugerdata>\tBrugerdata for øjebliksbillede."
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata, -u <userdata>\tBrugerdata for øjebliksbilleder."
+msgstr "\t--userdata, -u <brugerdata>\tBrugerdata for øjebliksbilleder."
 
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
 msgstr "\t--utc\t\t\t\tVis datoer og tidspunkter i UTC."
