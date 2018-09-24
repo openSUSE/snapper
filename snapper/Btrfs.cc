@@ -1235,6 +1235,8 @@ namespace snapper
     bool
     StreamProcessor::dumper(int fd)
     {
+	unsigned int count = 0;
+
 	while (true)
 	{
 	    boost::this_thread::interruption_point();
@@ -1248,7 +1250,10 @@ namespace snapper
 	    r = btrfs_read_and_process_send_stream(fd, &send_ops, &*this, 0, 1);
 #endif
 
-	    if (r < 0)
+	    /* We only return an error when r == -ENODATA if this was the first
+	     * call to btrfs_read_and_process_send_stream.
+	     */
+	    if (r < 0 && !(r == -ENODATA && count > 0))
 	    {
 		y2err("btrfs_read_and_process_send_stream failed");
 
@@ -1258,6 +1263,7 @@ namespace snapper
 
 		return false;
 	    }
+	    count++;
 
 	    if (r)
 	    {
