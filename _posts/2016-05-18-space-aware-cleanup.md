@@ -11,7 +11,8 @@ snapper so we were able to implement that desire in snapper.
 
 You should become familiar with the concept of btrfs quota groups,
 esp. "exclusive referenced space" and "qgroup hierarchy". You may read
-http://sensille.com/qgroups.pdf, here I just give a short summary:
+[qgroups.pdf](http://sensille.com/qgroups.pdf), here I just give a
+short summary:
 
 Each btrfs subvolume has an associated qgroup that tracks the amount of disk
 space exclusive referenced by that subvolume. That means a 1 GiB file in that
