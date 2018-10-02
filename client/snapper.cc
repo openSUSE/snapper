@@ -1549,7 +1549,7 @@ help(const list<Cmd>& cmds)
     for (list<Cmd>::const_iterator cmd = cmds.begin(); cmd != cmds.end(); ++cmd)
 	(*cmd->help_func)();
 
-    exit (EXIT_SUCCESS);
+    exit(EXIT_SUCCESS);
 }
 
 
