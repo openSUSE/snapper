@@ -24,6 +24,7 @@
 #include <locale>
 #include <cmath>
 #include <sstream>
+#include <stdexcept>
 
 #include "HumanString.h"
 #include "text.h"

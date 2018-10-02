@@ -119,7 +119,7 @@ install -D -m 644 data/sysconfig.snapper "%{buildroot}/etc/sysconfig/snapper"
 %{find_lang} snapper
 
 %check
-make %{?_smp_mflags} check LOCALEDIR=%{buildroot}%{_datadir}/locale
+make %{?_smp_mflags} check LOCALEDIR=%{buildroot}%{_datadir}/locale VERBOSE=1
 
 %pre
 %if 0%{?suse_version}
