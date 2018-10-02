@@ -549,7 +549,7 @@ help_create()
 	 << _("\t--description, -d <description>\tDescription for snapshot.") << endl
 	 << _("\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot.") << endl
 	 << _("\t--userdata, -u <userdata>\tUserdata for snapshot.") << endl
-	 << _("\t--command <command>\tRun command and create pre and post snapshots.") << endl
+	 << _("\t--command <command>\t\tRun command and create pre and post snapshots.") << endl
 	 << endl;
 }
 
