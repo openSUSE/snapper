@@ -16,6 +16,7 @@ RUN apt-get update && \
   gettext \
   language-pack-de \
   language-pack-en \
+  language-pack-fr \
   libboost-dev \
   libboost-system-dev \
   libboost-test-dev \

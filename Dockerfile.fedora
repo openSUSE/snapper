@@ -12,6 +12,7 @@ RUN dnf -y install \
   gettext \
   glibc-langpack-de \
   glibc-langpack-en \
+  glibc-langpack-fr \
   libacl-devel \
   libmount-devel \
   libtool \
