@@ -120,6 +120,14 @@ namespace snapper
 	 */
 	bool isActive() const;
 
+	/**
+	 * Query the disk space used by the snapshot. So far only
+	 * available for btrfs and only if quota is enabled. In that
+	 * case the used space is the exclusive space of the btrfs
+	 * qgroup of the snapshot.
+	 */
+	uint64_t getUsedSpace() const;
+
 	void mountFilesystemSnapshot(bool user_request) const;
 	void umountFilesystemSnapshot(bool user_request) const;
 	void handleUmountFilesystemSnapshot() const;

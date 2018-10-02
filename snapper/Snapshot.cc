@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016,2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -37,6 +37,7 @@
 #include "snapper/AppUtil.h"
 #include "snapper/XmlFile.h"
 #include "snapper/Filesystem.h"
+#include "snapper/Btrfs.h"
 #include "snapper/Enum.h"
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"
@@ -151,6 +152,33 @@ namespace snapper
     Snapshot::isActive() const
     {
 	return !isCurrent() && snapper->getFilesystem()->isActive(num);
+    }
+
+
+    uint64_t
+    Snapshot::getUsedSpace() const
+    {
+#ifdef ENABLE_BTRFS_QUOTA
+
+	const Btrfs* btrfs = dynamic_cast<const Btrfs*>(snapper->getFilesystem());
+	if (!btrfs)
+	    SN_THROW(QuotaException("quota only supported with btrfs"));
+
+	SDir general_dir = btrfs->openGeneralDir();
+
+	subvolid_t subvolid = get_id(openSnapshotDir().fd());
+	qgroup_t qgroup = calc_qgroup(0, subvolid);
+
+	QGroupUsage qgroup_usage = qgroup_query_usage(general_dir.fd(), qgroup);
+
+	return qgroup_usage.exclusive;
+
+#else
+
+	SN_THROW(QuotaException("not implemented"));
+	__builtin_unreachable();
+
+#endif
     }
 
 
