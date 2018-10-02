@@ -51,7 +51,6 @@ BuildRequires:  pkg-config
 %if 0%{?fedora_version} >= 24
 BuildRequires:	glibc-langpack-en
 BuildRequires:	glibc-langpack-de
-BuildRequires:	glibc-langpack-fr
 %endif
 %if ! 0%{?mandriva_version}
 %if 0%{?fedora_version} >= 23

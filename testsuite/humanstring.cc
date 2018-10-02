@@ -19,23 +19,6 @@ using namespace snapper;
 // HumanString.cc.
 
 
-class Fixture
-{
-public:
-
-    Fixture()
-    {
-	const char* localedir = getenv("LOCALEDIR");
-	if (localedir)
-	    bindtextdomain("snapper", localedir);
-    }
-
-};
-
-
-BOOST_GLOBAL_FIXTURE(Fixture);
-
-
 string
 test(const char* loc, unsigned long long size, int precision)
 {
@@ -58,8 +41,6 @@ BOOST_AUTO_TEST_CASE(test_byte_to_humanstring)
 
     BOOST_CHECK_EQUAL(test("de_DE.UTF-8", 123456789, 4), "117,7376 MiB");
 
-    BOOST_CHECK_EQUAL(test("fr_FR.UTF-8", 123456789, 4), "117,7376 Mio");
-
     BOOST_CHECK_EQUAL(test("en_GB.UTF-8", 1000 * KiB, 2), "1,000.00 KiB");
     BOOST_CHECK_EQUAL(test("de_DE.UTF-8", 1000 * KiB, 2), "1.000,00 KiB");
     BOOST_CHECK_EQUAL(test("de_CH.UTF-8", 1000 * KiB, 2), "1'000.00 KiB");
@@ -67,7 +48,6 @@ BOOST_AUTO_TEST_CASE(test_byte_to_humanstring)
     BOOST_CHECK_EQUAL(test("en_GB.UTF-8", 50 * MiB, 2), "50.00 MiB");
     BOOST_CHECK_EQUAL(test("de_DE.UTF-8", 50 * MiB, 2), "50,00 MiB");
     BOOST_CHECK_EQUAL(test("de_CH.UTF-8", 50 * MiB, 2), "50.00 MiB");
-    BOOST_CHECK_EQUAL(test("fr_FR.UTF-8", 50 * MiB, 2), "50,00 Mio");
 }
 
 
