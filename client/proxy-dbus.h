@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016,2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -61,6 +61,8 @@ public:
     virtual const map<string, string>& getUserdata() const override { return userdata; }
 
     virtual bool isCurrent() const override { return num == 0; }
+
+    virtual uint64_t getUsedSpace() const override;
 
     virtual string mountFilesystemSnapshot(bool user_request) const override;
     virtual void umountFilesystemSnapshot(bool user_request) const override;
@@ -140,6 +142,8 @@ public:
     virtual void prepareQuota() const override;
 
     virtual QuotaData queryQuotaData() const override;
+
+    virtual void calculateUsedSpace() const override;
 
     DBus::Connection& conn() const;
 

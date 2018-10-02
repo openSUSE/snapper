@@ -45,6 +45,7 @@
 #include "utils/text.h"
 #include "utils/Table.h"
 #include "utils/GetOpts.h"
+#include "utils/HumanString.h"
 
 #include "cleanup.h"
 #include "errors.h"
@@ -354,6 +355,7 @@ help_list()
 	 << endl
 	 << _("    Options for 'list' command:") << endl
 	 << _("\t--type, -t <type>\t\tType of snapshots to list.") << endl
+	 << _("\t--disable-used-space\t\tDisable showing used space.") << endl
 	 << _("\t--all-configs, -a\t\tList snapshots from all accessible configs.") << endl
 	 << endl;
 }
@@ -362,7 +364,7 @@ enum ListMode { LM_ALL, LM_SINGLE, LM_PRE_POST };
 
 
 void
-list_from_one_config(ProxySnapper* snapper, ListMode list_mode);
+list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool show_used_space);
 
 
 void
@@ -370,6 +372,7 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
 {
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
+	{ "disable-used-space", no_argument,            0,      0 },
 	{ "all-configs",	no_argument,		0,	'a' },
 	{ 0, 0, 0, 0 }
     };
@@ -382,6 +385,7 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
     }
 
     ListMode list_mode = LM_ALL;
+    bool show_used_space = true;
 
     GetOpts::parsed_opts::const_iterator opt;
 
@@ -398,6 +402,11 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
 	    cerr << _("Unknown type of snapshots.") << endl;
 	    exit(EXIT_FAILURE);
 	}
+    }
+
+    if ((opt = opts.find("disable-used-space")) != opts.end())
+    {
+       show_used_space = false;
     }
 
     vector<string> tmp;
@@ -426,14 +435,40 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
                  << snapper->getConfig().getSubvolume() << endl;
         }
 
-        list_from_one_config(snapper, list_mode);
+        list_from_one_config(snapper, list_mode, show_used_space);
     }
 }
 
 
 void
-list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
+list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool show_used_space)
 {
+    if (list_mode != LM_ALL && list_mode != LM_SINGLE)
+	show_used_space = false;
+
+    if (show_used_space)
+    {
+	try
+	{
+	    snapper->calculateUsedSpace();
+	}
+	catch (const QuotaException& e)
+	{
+	    SN_CAUGHT(e);
+
+	    show_used_space = false;
+	}
+    }
+
+    auto add_date = [](TableRow& row, const ProxySnapshot& snapshot) {
+	row.add(snapshot.isCurrent() ? "" : datetime(snapshot.getDate(), utc, iso));
+    };
+
+    auto add_used_space = [show_used_space](TableRow& row, const ProxySnapshot& snapshot) {
+	if (show_used_space)
+	    row.add(snapshot.isCurrent() ? "" : byte_to_humanstring(snapshot.getUsedSpace(), 2));
+    };
+
     Table table;
 
     switch (list_mode)
@@ -446,6 +481,8 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
 	    header.add(_("Pre #"));
 	    header.add(_("Date"));
 	    header.add(_("User"));
+	    if (show_used_space)
+		header.add(_("Used Space"));
 	    header.add(_("Cleanup"));
 	    header.add(_("Description"));
 	    header.add(_("Userdata"));
@@ -458,8 +495,9 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
 		row.add(toString(snapshot.getType()));
 		row.add(decString(snapshot.getNum()));
 		row.add(snapshot.getType() == POST ? decString(snapshot.getPreNum()) : "");
-		row.add(snapshot.isCurrent() ? "" : datetime(snapshot.getDate(), utc, iso));
+		add_date(row, snapshot);
 		row.add(username(snapshot.getUid()));
+		add_used_space(row, snapshot);
 		row.add(snapshot.getCleanup());
 		row.add(snapshot.getDescription());
 		row.add(show_userdata(snapshot.getUserdata()));
@@ -474,6 +512,8 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
 	    header.add(_("#"));
 	    header.add(_("Date"));
 	    header.add(_("User"));
+	    if (show_used_space)
+		header.add(_("Used Space"));
 	    header.add(_("Description"));
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
@@ -486,8 +526,9 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
 
 		TableRow row;
 		row.add(decString(snapshot.getNum()));
-		row.add(snapshot.isCurrent() ? "" : datetime(snapshot.getDate(), utc, iso));
+		add_date(row, snapshot);
 		row.add(username(snapshot.getUid()));
+		add_used_space(row, snapshot);
 		row.add(snapshot.getDescription());
 		row.add(show_userdata(snapshot.getUserdata()));
 		table.add(row);
