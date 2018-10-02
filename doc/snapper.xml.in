@@ -347,7 +347,7 @@
 		<para>Calculating the used space needs some time. Thus
 		this option can speedup the listing.</para>
 		<para>Display of used space is automatically disable
-		is not available, e.g. quota not enabled on btrfs.</para>
+		if not available, e.g. quota not enabled on btrfs.</para>
 	      </listitem>
 	    </varlistentry>
 	    <varlistentry>
