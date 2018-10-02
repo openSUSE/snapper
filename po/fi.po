@@ -5,11 +5,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 12:19+0200\n"
 "PO-Revision-Date: 2018-05-21 16:01+0000\n"
 "Last-Translator: Tommi Nieminen <software@legisign.org>\n"
-"Language-Team: Finnish "
-"<https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
+"Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,7 +25,8 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tTilannevedoksen puhdistusalgoritmi."
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tTilannevedoksen puhdistusalgoritmi."
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+#, fuzzy
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <komento>\tSuorita komento ja luo ennen ja jälkeen tilannevedokset."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -40,6 +40,10 @@ msgstr "\t--description, -d <kuvaus>\tTilannevedoksen kuvaus."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <komento>\t\tKomento tiedostojen vertailemiseksi."
+
+#, fuzzy
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-filters\t\tPoista suotimet käytöstä."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <valinnat>\tdiff-komennolle välitettävät lisävalinnat."
@@ -254,6 +258,10 @@ msgstr "(Tilannevedos %d.)"
 msgid "ACL error."
 msgstr "I/O-virhe"
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr "Puhdistus"
 
@@ -398,6 +406,10 @@ msgstr "Kuvaus"
 msgid "Detecting filesystem type failed."
 msgstr "Tiedostojärjestelmän tyypin tunnistaminen epäonnistui."
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 #, fuzzy
 msgid "Empty configdata."
 msgstr "Tyhjä määritystieto."
@@ -428,6 +440,10 @@ msgstr "Epäonnistui (%s)."
 #, c-format
 msgid "File '%s' not found."
 msgstr "Tiedostoa \"%s\" ei löytynyt."
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 # error box title
 #, fuzzy, c-format
@@ -477,12 +493,20 @@ msgstr "Virheellinen lisäinfo."
 msgid "Key"
 msgstr "Avain"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Määritysten listaaminen epäonnistui (%s)."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Unohdit ehkä erottimen \"..\" tilannevedosnumeroiden välistä."
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
+msgstr ""
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -511,6 +535,10 @@ msgstr "Ei käyttöoikeutta."
 msgid "Opening file '%s' failed."
 msgstr "Tiedoston \"%s\" avaaminen epäonnistui."
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr "Jälkeen #"
 
@@ -532,9 +560,6 @@ msgstr "I/O-virhe"
 msgid "Quota failure (%s)."
 msgstr "Epäonnistui (%s)."
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
-
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "Kokeile \"snapper --help\" saadaksesi lisätietoa."
@@ -555,6 +580,10 @@ msgstr "Alitaltio"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "\"root\"-määritys puuttuu. Luultavasti snapperiä ei ole asetettu."
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
+msgstr ""
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Kokeile \"snapper --help\" saadaksesi lisätietoa."
@@ -590,6 +619,9 @@ msgstr "Tuntemattomat tilannevedosten tyypit."
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "Käytä kokonaislukua %d ja %d väliltä."
+
+msgid "Used Space"
+msgstr ""
 
 msgid "User"
 msgstr "Käyttäjä"
@@ -654,9 +686,6 @@ msgstr "käyttö: snapper [--yleiset-valinnat] <komento> [--komennon-valinnat] [
 
 #~ msgid "Unknown file."
 #~ msgstr "Tuntematon tiedosto."
-
-#~ msgid "\t--disable-filters\t\tDisable filters."
-#~ msgstr "\t--disable-filters\t\tPoista suotimet käytöstä."
 
 #~ msgid "Command failed (%s). See log for more information."
 #~ msgstr "Komento epäonnistui (%s). Katso lokista lisätietoja."

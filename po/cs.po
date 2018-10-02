@@ -3,11 +3,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 12:19+0200\n"
 "PO-Revision-Date: 2018-06-01 11:01+0000\n"
 "Last-Translator: Jiri Machalek <jiri.machalek@tieto.com>\n"
-"Language-Team: Czech <https://l10n.opensuse.org/projects/snapper/master/cs/>"
-"\n"
+"Language-Team: Czech <https://l10n.opensuse.org/projects/snapper/master/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,7 +24,8 @@ msgstr "\t--cleanup-algorithm, -c <algoritmus>\tÚklidový algoritmus snímku."
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algoritmus>\tÚklidový algoritmus snímků."
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+#, fuzzy
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <command>\tSpustit příkaz a vytvořit snímky před a po."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -40,6 +40,10 @@ msgstr "\t--description, -d <popis>\tPopis snímků."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <příkaz>\t\tJedná se o příkaz, který se používá k porovnávání souborů."
+
+#, fuzzy
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-filters\t\tZakázat filtry."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <možnosti>\tJedná se o další možnosti předané příkazu diff."
@@ -261,6 +265,10 @@ msgstr "(Snímek %d.)"
 msgid "ACL error."
 msgstr "Chyba seznamu řízení přístupu."
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr "Úklid"
 
@@ -407,6 +415,10 @@ msgstr "Popis"
 msgid "Detecting filesystem type failed."
 msgstr "Selhala detekce typu souborového systému."
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 # SLE12
 msgid "Empty configdata."
 msgstr "Konfigurační data jsou prázdná."
@@ -437,6 +449,10 @@ msgstr "Selhání (%s)."
 #, c-format
 msgid "File '%s' not found."
 msgstr "Soubor '%s' nenalezen."
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 #, c-format
 msgid "IO Error (%s)."
@@ -483,12 +499,20 @@ msgstr "Neplatná uživatelská data."
 msgid "Key"
 msgstr "Klíč"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Výpis konfigurací selhal (%s)."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Možná jste zapomněli použít oddělovač „..“ mezi čísly snímků."
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
+msgstr ""
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -517,6 +541,10 @@ msgstr "Chybí oprávnění."
 msgid "Opening file '%s' failed."
 msgstr "Otevírání souboru '%s' selhalo."
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr "Po #"
 
@@ -538,9 +566,6 @@ msgstr "Chyba kvóty (%s)."
 msgid "Quota failure (%s)."
 msgstr "Selhání kvóty (%s)."
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr "Neběží v lokalizaci UTF-8. Nastavení není podporováno."
-
 msgid "See 'man snapper' for further instructions."
 msgstr "Další informace naleznete v popisu příkazu man snapper."
 
@@ -561,6 +586,10 @@ msgstr "Podřízená jednotka"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Účet root konfigurace neexistuje. Nástroj Snapper pravděpodobně není nakonfigurován."
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
+msgstr ""
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Pro více informací zkuste 'snapper --help'."
@@ -597,6 +626,9 @@ msgstr "Neznámý typ snímků."
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "Použijte celé číslo od %d do %d."
+
+msgid "Used Space"
+msgstr ""
 
 msgid "User"
 msgstr "Uživatel"
@@ -656,6 +688,9 @@ msgstr ""
 "Použití:\n"
 "\tsnapper [--obecné-volby] <příkaz> [--volby-příkazu] [argumenty]"
 
+#~ msgid "Running in non UTF-8 locale. Setup is unsupported."
+#~ msgstr "Neběží v lokalizaci UTF-8. Nastavení není podporováno."
+
 #~ msgid "Command '%s' does not work without DBus."
 #~ msgstr "Příkaz '%s' nepracuje bez DBusu."
 
@@ -668,9 +703,6 @@ msgstr ""
 
 #~ msgid "Use an integer number from %d to %d"
 #~ msgstr "Zadejte celé číslo z intervalu %d až %d"
-
-#~ msgid "\t--disable-filters\t\tDisable filters."
-#~ msgstr "\t--disable-filters\t\tZakázat filtry."
 
 #~ msgid "Command failed (%s). See log for more information."
 #~ msgstr "Příkaz selhal (%s). Pro více informací si přečtěte záznamy v protokolu."

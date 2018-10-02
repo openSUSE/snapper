@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 12:19+0200\n"
 "PO-Revision-Date: 2016-10-20 23:33+0800\n"
 "Last-Translator: I Made Wiryana <made@nakula.rvs.uni-bielefeld.de>\n"
 "Language-Team: Indonesian <i18n@suse.de>\n"
@@ -21,7 +21,8 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritma pembersihan untuk snapshot."
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritma pembersihan untuk snapshots."
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+#, fuzzy
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <command>\tMenjalankan perintah dan membuat pre dan pos snapshots."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -35,6 +36,9 @@ msgstr "\t--description, -d <description>\tDeskripsi untuk snapshots."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\tPerintah digunakan untuk membandingkan berkas."
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr ""
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tPilihan ekstra diteruskan untuk perintah diff."
@@ -248,6 +252,10 @@ msgstr "(Snapshot %d.)"
 msgid "ACL error."
 msgstr "ACL galat."
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr "Pembersihan"
 
@@ -386,6 +394,10 @@ msgstr "Deskripsi"
 msgid "Detecting filesystem type failed."
 msgstr "Gagal mendeteksi jenis sistem berkas."
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 msgid "Empty configdata."
 msgstr "Konfigdata kosong."
 
@@ -412,6 +424,10 @@ msgstr "Kegagalan: %s."
 #, c-format
 msgid "File '%s' not found."
 msgstr "Berkas '%s' tidak ditemukan."
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 #, c-format
 msgid "IO Error (%s)."
@@ -458,12 +474,20 @@ msgstr "Penggunadata tidak valid."
 msgid "Key"
 msgstr "Kunci"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Listing konfig gagal (%s)."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Mungkin anda lupa pembatas '..' antara nomor snapshot."
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
+msgstr ""
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -492,6 +516,10 @@ msgstr "Tidak ada izin."
 msgid "Opening file '%s' failed."
 msgstr "Membuka berkas '%s' gagal."
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr "Pos #"
 
@@ -512,9 +540,6 @@ msgstr "galat I/O (%s)."
 msgid "Quota failure (%s)."
 msgstr "Kegagalan: %s."
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
-
 msgid "See 'man snapper' for further instructions."
 msgstr "Lihat 'man snapper' untuk instruksi lebih lanjut."
 
@@ -534,6 +559,10 @@ msgstr "Subvolume"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Konfig 'root' tidak ada. Sepertinya snapper tidak dikonfigurasi."
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
+msgstr ""
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Coba 'snapper --help' untuk informasi lebih."
@@ -569,6 +598,9 @@ msgstr "Jenis tidak diketahui dari snapshots."
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "Gunakan sebuah angka integer dari %d untuk %d."
+
+msgid "Used Space"
+msgstr ""
 
 msgid "User"
 msgstr "Pengguna"

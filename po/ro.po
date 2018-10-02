@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenSUSE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 12:19+0200\n"
 "PO-Revision-Date: 2011-11-01 00:08-0700\n"
 "Last-Translator: Alexandru Szasz <alexxed@gmail.com>\n"
 "Language-Team: Romanian <LL@li.org>\n"
@@ -34,7 +34,7 @@ msgstr ""
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr ""
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr ""
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -47,6 +47,9 @@ msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr ""
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
+msgstr ""
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
 msgstr ""
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
@@ -274,6 +277,10 @@ msgstr "Nu am găsit sursa de instalare '%s'."
 msgid "ACL error."
 msgstr "eroare"
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr "Curățenie"
 
@@ -427,6 +434,10 @@ msgstr "Descriere"
 msgid "Detecting filesystem type failed."
 msgstr ""
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 #, fuzzy
 msgid "Empty configdata."
 msgstr "Date de emitere invalide."
@@ -456,6 +467,10 @@ msgstr "Eșec"
 
 #, c-format
 msgid "File '%s' not found."
+msgstr ""
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
 msgstr ""
 
 # error box title
@@ -509,11 +524,19 @@ msgstr "Date de emitere invalide."
 msgid "Key"
 msgstr "Kenia"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Listarea configurațiilor a eșuat (%s)."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
+msgstr ""
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
 msgstr ""
 
 #, c-format
@@ -545,6 +568,10 @@ msgstr "(permisiunile posesorului dezactivate)"
 msgid "Opening file '%s' failed."
 msgstr ""
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr ""
 
@@ -566,9 +593,6 @@ msgstr "Eroare I/O"
 msgid "Quota failure (%s)."
 msgstr "Eșec"
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
-
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "Încercați `%s --help' or `%s --usage' pentru mai multe informații\n"
@@ -589,6 +613,10 @@ msgid "Subvolume"
 msgstr ""
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
 msgstr ""
 
 #, fuzzy
@@ -627,6 +655,9 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "Utilizați un număr întreg între %d și %d"
+
+msgid "Used Space"
+msgstr ""
 
 #, fuzzy
 msgid "User"

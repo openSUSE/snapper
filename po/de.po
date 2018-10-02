@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 12:19+0200\n"
 "PO-Revision-Date: 2018-04-20 14:16+0000\n"
 "Last-Translator: Sarah Kriesch <ada.lovelace@gmx.de>\n"
-"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
-"\n"
+"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,7 +26,8 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tBereinigungsalgorithmus für den Schna
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tBereinigungsalgorithmus für Schnappschüsse."
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+#, fuzzy
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <Befehl>\tBefehl ausführen und Vorher- und Nachher-Schnappschuss erstellen."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -41,6 +41,10 @@ msgstr "\t--description, -d <Beschreibung>\tBeschreibung für Schnappschüsse."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <Kommando>\t\tKommando zum Vergleichen von Dateien."
+
+#, fuzzy
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-filters\t\tFilter deaktivieren."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <Optionen>\tZusätzliche Optionen, die an den diff-Befehl übergeben wurden."
@@ -253,6 +257,10 @@ msgstr "(Schnappschuss %d.)"
 msgid "ACL error."
 msgstr "ACL-Fehler."
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr "Bereinigen"
 
@@ -297,9 +305,7 @@ msgstr "Befehl 'mount' benötigt mindestens ein Argument."
 
 #, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr ""
-"Befehl 'rollback' kann nicht für ein nicht-root-Subvolume %s verwendet "
-"werden."
+msgstr "Befehl 'rollback' kann nicht für ein nicht-root-Subvolume %s verwendet werden."
 
 msgid "Command 'rollback' only available for btrfs."
 msgstr "Befehl 'rollback' nur für Btrfs verfügbar."
@@ -392,6 +398,10 @@ msgstr "Beschreibung"
 msgid "Detecting filesystem type failed."
 msgstr "Erkennung des Dateisystemtyps nicht möglich."
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 msgid "Empty configdata."
 msgstr "Leere Konfigurationsdaten."
 
@@ -406,8 +416,7 @@ msgid "Failed to initialize filesystem handler."
 msgstr "Initialisierung des Dateisystem-Handlers fehlgeschlagen."
 
 msgid "Failed to set locale. Fix your system."
-msgstr ""
-"Das Setzen den Locale ist fehlgeschlagen. Beheben Sie die Systemprobleme."
+msgstr "Das Setzen den Locale ist fehlgeschlagen. Beheben Sie die Systemprobleme."
 
 msgid "Failure"
 msgstr "Fehlgeschlagen"
@@ -419,6 +428,10 @@ msgstr "Fehler (%s)."
 #, c-format
 msgid "File '%s' not found."
 msgstr "Datei '%s' wurde nicht gefunden."
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 #, c-format
 msgid "IO Error (%s)."
@@ -463,12 +476,20 @@ msgstr "Ungültige Benutzerdaten."
 msgid "Key"
 msgstr "Schlüssel"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Auflistung der Konfigurationsdateien nicht erfolgreich (%s)."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Sie haben möglicherweise das Trennzeichen \"..\" zwischen den Snapshot-Nummern vergessen."
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
+msgstr ""
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -497,6 +518,10 @@ msgstr "Keine Berechtigungen."
 msgid "Opening file '%s' failed."
 msgstr "Öffnen der Datei '%s' nicht möglich."
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr "Nachher #"
 
@@ -517,9 +542,6 @@ msgstr "Quota-Fehler (%s)."
 msgid "Quota failure (%s)."
 msgstr "Quota-Störung (%s)."
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr "Läuft in einer nicht-UTF-8-Locale. Setup wird nicht unterstützt."
-
 msgid "See 'man snapper' for further instructions."
 msgstr "Weitere Anweisungen finden Sie im \"man snapper\"."
 
@@ -539,6 +561,10 @@ msgstr "Subvolumen"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Die Konfiguration \"Root\" ist nicht vorhanden. Snapper ist wahrscheinlich nicht konfiguriert."
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
+msgstr ""
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Versuchen Sie 'snapper --help' für weitere Informationen."
@@ -574,6 +600,9 @@ msgstr "Unbekannter Typ der Schnappschüsse."
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "Verwenden Sie eine integer-Zahl von %d bis %d."
+
+msgid "Used Space"
+msgstr ""
 
 msgid "User"
 msgstr "Benutzer"
@@ -629,6 +658,9 @@ msgstr "Root-Argument kann nur zusammen mit \"no-dbus\" verwendet werden."
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "Aufruf: snapper [--Globale-Optionen] <Befehl> [--Befehlsoptionen] [Befehlsargumente]"
 
+#~ msgid "Running in non UTF-8 locale. Setup is unsupported."
+#~ msgstr "Läuft in einer nicht-UTF-8-Locale. Setup wird nicht unterstützt."
+
 #~ msgid "Command '%s' does not work without DBus."
 #~ msgstr "Befehl '%s' funktioniert nur mit aktivem DBus."
 
@@ -641,9 +673,6 @@ msgstr "Aufruf: snapper [--Globale-Optionen] <Befehl> [--Befehlsoptionen] [Befeh
 
 #~ msgid "Use an integer number from %d to %d"
 #~ msgstr "Bitte eine ganze Zahl von %d bis %d verwenden."
-
-#~ msgid "\t--disable-filters\t\tDisable filters."
-#~ msgstr "\t--disable-filters\t\tFilter deaktivieren."
 
 #~| msgid "Try `%s --help' or `%s --usage' for more information.\n"
 #~ msgid "Command failed (%s). See log for more information."

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LCN (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 12:19+0200\n"
 "PO-Revision-Date: 2017-06-02 16:57+0000\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <https://l10n.opensuse.org/projects/snapper/master/lt/>\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr ""
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr ""
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -42,6 +42,9 @@ msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr ""
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
+msgstr ""
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
 msgstr ""
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
@@ -258,6 +261,10 @@ msgstr "Rinkmena „%s“ nerasta."
 msgid "ACL error."
 msgstr "Skaitymo/rašymo klaida."
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr "Išvalymas"
 
@@ -404,6 +411,10 @@ msgstr "Aprašas"
 msgid "Detecting filesystem type failed."
 msgstr "Nepavyko nustatyti rinkmenų sistemos tipo."
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 #, fuzzy
 msgid "Empty configdata."
 msgstr "Netinkami naudotojo meta duomenys."
@@ -432,6 +443,10 @@ msgstr "Nesėkmė"
 #, c-format
 msgid "File '%s' not found."
 msgstr "Rinkmena „%s“ nerasta."
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "IO Error (%s)."
@@ -480,11 +495,19 @@ msgstr "Netinkami naudotojo meta duomenys."
 msgid "Key"
 msgstr ""
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr ""
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
+msgstr ""
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
 msgstr ""
 
 #, c-format
@@ -514,6 +537,10 @@ msgstr "Nėra leidimų."
 msgid "Opening file '%s' failed."
 msgstr "Nepavyko atverti rinkmenos „%s“."
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr "Po: Nr."
 
@@ -534,9 +561,6 @@ msgstr "Skaitymo/rašymo klaida."
 msgid "Quota failure (%s)."
 msgstr "Nesėkmė"
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
-
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "Daugiau informacijos gausite įvykdę „snapper --help“."
@@ -556,6 +580,10 @@ msgid "Subvolume"
 msgstr "Potomis"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
 msgstr ""
 
 msgid "Try 'snapper --help' for more information."
@@ -592,6 +620,9 @@ msgstr "Nežinomi momentinių kopijų tipai."
 #, fuzzy, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "Naudokite sveikąjį skaičių iš intervalo nuo %d iki %d"
+
+msgid "Used Space"
+msgstr ""
 
 msgid "User"
 msgstr "Naudotojas"

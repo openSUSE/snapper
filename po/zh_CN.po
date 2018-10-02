@@ -9,11 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 12:19+0200\n"
 "PO-Revision-Date: 2018-04-23 05:47+0000\n"
 "Last-Translator: Emily Dong <Emily.Dong@excel-gits.com>\n"
-"Language-Team: Chinese (China) "
-"<https://l10n.opensuse.org/projects/snapper/master/zh_CN/>\n"
+"Language-Team: Chinese (China) <https://l10n.opensuse.org/projects/snapper/master/zh_CN/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,7 +29,8 @@ msgstr "\t--cleanup-algorithm, -c <算法> \t快照的清理算法。选项：nu
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <算法>\t快照的清理算法。选项：number, timeline, empty-pre-post。"
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+#, fuzzy
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <命令> \t运行命令，创建前期和后期快照。"
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -44,6 +44,10 @@ msgstr "\t--description, -d <描述>\t快照描述。"
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <命令>\t\t用于比较文件的命令。"
+
+#, fuzzy
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-filters \t\t禁用过滤器。"
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <选项>\t传递到 diff 命令的额外选项。"
@@ -257,6 +261,10 @@ msgstr "(快照 '%d'。)"
 msgid "ACL error."
 msgstr "访问控制列表错误。"
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr "清空"
 
@@ -393,6 +401,10 @@ msgstr "描述"
 msgid "Detecting filesystem type failed."
 msgstr "检测文件系统类型失败。"
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 msgid "Empty configdata."
 msgstr "空的配置数据。"
 
@@ -419,6 +431,10 @@ msgstr "失败 (%s)。"
 #, c-format
 msgid "File '%s' not found."
 msgstr "未找到文件 '%s'。"
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 #, c-format
 msgid "IO Error (%s)."
@@ -463,12 +479,20 @@ msgstr "无效的用户数据。"
 msgid "Key"
 msgstr "键"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "列出配置失败 (%s)。"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "可能您忘记在快照编号之间输入分界符“..”。"
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
+msgstr ""
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -497,6 +521,10 @@ msgstr "无权限。"
 msgid "Opening file '%s' failed."
 msgstr "打开文件 '%s' 失败。"
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr "后期 #"
 
@@ -517,9 +545,6 @@ msgstr "定额错误 (%s)。"
 msgid "Quota failure (%s)."
 msgstr "定额失败 (%s)。"
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr "正以非 UTF-8 区域设置运行。不支持设置。"
-
 msgid "See 'man snapper' for further instructions."
 msgstr "有关更多指导，请参见“man snapper”。"
 
@@ -539,6 +564,10 @@ msgstr "子卷"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "配置“root”不存在。snapper 可能未配置。"
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
+msgstr ""
 
 msgid "Try 'snapper --help' for more information."
 msgstr "更多信息可尝试 'snapper help'。"
@@ -574,6 +603,9 @@ msgstr "未知快照类型。"
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "请使用一个从 %d 到 %d 的整数。"
+
+msgid "Used Space"
+msgstr ""
 
 msgid "User"
 msgstr "用户"
@@ -629,6 +661,9 @@ msgstr "根自变量只能与 no-dbus 一起使用。"
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "用法：snapper  [--全局选项] <命令> [--命令选项] [命令参数]"
 
+#~ msgid "Running in non UTF-8 locale. Setup is unsupported."
+#~ msgstr "正以非 UTF-8 区域设置运行。不支持设置。"
+
 #~ msgid "Command '%s' does not work without DBus."
 #~ msgstr "命令 '%s' 没有 DBus 不能运行。"
 
@@ -638,9 +673,6 @@ msgstr "用法：snapper  [--全局选项] <命令> [--命令选项] [命令参�
 
 #~ msgid "Unknown file."
 #~ msgstr "未知文件。"
-
-#~ msgid "\t--disable-filters\t\tDisable filters."
-#~ msgstr "\t--disable-filters \t\t禁用过滤器。"
 
 #~ msgid "Command failed (%s). See log for more information."
 #~ msgstr "执行命令失败（ %s）。参考日志文件获取更多信息。"
