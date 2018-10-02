@@ -4,7 +4,6 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <stdlib.h>
 #include <iostream>
 #include <locale>
 
@@ -26,7 +25,6 @@ test(const char* loc, unsigned long long size, int precision)
 
     return byte_to_humanstring(size, precision);
 }
-
 
 
 BOOST_AUTO_TEST_CASE(test_byte_to_humanstring)
