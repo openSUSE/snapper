@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016,2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -101,6 +101,8 @@ public:
     void create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void create_post_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void delete_snapshots(DBus::Connection& conn, DBus::Message& msg);
+    void calculate_used_space(DBus::Connection& conn, DBus::Message& msg);
+    void get_used_space(DBus::Connection& conn, DBus::Message& msg);
     void mount_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void umount_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void get_mount_point(DBus::Connection& conn, DBus::Message& msg);

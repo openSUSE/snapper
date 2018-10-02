@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 09:27+0200\n"
 "PO-Revision-Date: 2018-09-16 10:02+0000\n"
 "Last-Translator: scootergrisen <scootergrisen@gmail.com>\n"
-"Language-Team: Danish <https://l10n.opensuse.org/projects/snapper/master/da/>"
-"\n"
+"Language-Team: Danish <https://l10n.opensuse.org/projects/snapper/master/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,7 +26,8 @@ msgstr "\t--cleanup-algorithm, -c<algo>\tRyd algoritme op til øjebliksbillede."
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c<algo>\tRyd algoritme op til øjebliksbilleder."
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+#, fuzzy
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <kommando>\tKør kommando og opret præ- og post-øjebliksbilleder."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -40,8 +40,11 @@ msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr "\t--description, -d <beskrivelse>\tBeskrivelse af øjebliksbilleder."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr ""
-"\t--diff-cmd <kommando>\t\tKommando som bruges til at sammenligne filer."
+msgstr "\t--diff-cmd <kommando>\t\tKommando som bruges til at sammenligne filer."
+
+#, fuzzy
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-filters\t\tDeaktivér filtre."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <tilvalg>\tEkstra tilvalg som sendes til diff-kommandoen."
@@ -50,8 +53,7 @@ msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <fstype>\t\tAngiv type af filsystem manuelt."
 
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr ""
-"\t--input, -i <fil>\t\tLæs filer for hvilke ændringer fra fil skal fortrydes."
+msgstr "\t--input, -i <fil>\t\tLæs filer for hvilke ændringer fra fil skal fortrydes."
 
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
 msgstr "\t--input, -i <fil>\t\tLæs filer til diff fra fil."
@@ -255,6 +257,10 @@ msgstr "(Øjebliksbillede %d.)"
 msgid "ACL error."
 msgstr "ACL-fejl."
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr "Oprydning"
 
@@ -299,9 +305,7 @@ msgstr "Kommandoen \"mount\" kræver mindst ét argument."
 
 #, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr ""
-"Kommandoen 'rollback' kan ikke bruges på et underdiskområde som ikke er root "
-"%s."
+msgstr "Kommandoen 'rollback' kan ikke bruges på et underdiskområde som ikke er root %s."
 
 msgid "Command 'rollback' only available for btrfs."
 msgstr "Kommandoen \"rollback\" er kun tilgængelig med btrfs."
@@ -394,6 +398,10 @@ msgstr "Beskrivelse"
 msgid "Detecting filesystem type failed."
 msgstr "Detektion af filsystemtype mislykkedes."
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 msgid "Empty configdata."
 msgstr "Tomme konfigurationsdata."
 
@@ -421,6 +429,10 @@ msgstr "Fejl (%s)."
 #, c-format
 msgid "File '%s' not found."
 msgstr "Filen \"%s\" blev ikke fundet."
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 # error box title
 #, c-format
@@ -467,12 +479,20 @@ msgstr "Ugyldige brugerdata."
 msgid "Key"
 msgstr "Nøgle"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Oplistning af konfigurationer mislykkedes (%s)."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Måske glemte du afgrænseren '..' mellem øjebliksbilledsnumrene."
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
+msgstr ""
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -501,6 +521,10 @@ msgstr "Ingen rettigheder."
 msgid "Opening file '%s' failed."
 msgstr "Åbning af filen \"%s\" mislykkedes."
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr "Post #"
 
@@ -522,9 +546,6 @@ msgstr "Fejl i kvote (%s)."
 msgid "Quota failure (%s)."
 msgstr "Kvote mislykkedes (%s)."
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr "Kører i ikke-UTF-8-lokalitet. Opsætning understøttes ikke."
-
 msgid "See 'man snapper' for further instructions."
 msgstr "Se \"man snapper\" for yderligere vejledning."
 
@@ -544,6 +565,10 @@ msgstr "Underdiskområde"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Konfigurationen 'root' findes ikke. Snapper er sandsynligvis ikke konfigureret."
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
+msgstr ""
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Prøv \"snapper --help\" for at få mere information."
@@ -579,6 +604,9 @@ msgstr "Ukendt type af øjebliksbilleder."
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "Benyt et heltal fra %d til %d."
+
+msgid "Used Space"
+msgstr ""
 
 msgid "User"
 msgstr "Bruger"
@@ -634,6 +662,9 @@ msgstr "root-argumentet kan kun bruges sammen med no-dbus."
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "brug: snapper [--globale-tilvalg] <kommando> [--kommando-tilvalg] [kommando-argumenter]"
 
+#~ msgid "Running in non UTF-8 locale. Setup is unsupported."
+#~ msgstr "Kører i ikke-UTF-8-lokalitet. Opsætning understøttes ikke."
+
 #~ msgid "Command '%s' does not work without DBus."
 #~ msgstr "Kommandoen \"%s\" virker ikke uden DBus."
 
@@ -646,9 +677,6 @@ msgstr "brug: snapper [--globale-tilvalg] <kommando> [--kommando-tilvalg] [komma
 # SLE12
 #~ msgid "Use an integer number from %d to %d"
 #~ msgstr "Benyt et heltal fra %d til %d"
-
-#~ msgid "\t--disable-filters\t\tDisable filters."
-#~ msgstr "\t--disable-filters\t\tDeaktivér filtre."
 
 #~ msgid "Command failed (%s). See log for more information."
 #~ msgstr "Kommandoen mislykkedes (%s). Se loggen for at få mere information."

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper.km\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 09:27+0200\n"
 "PO-Revision-Date: 2011-10-24 10:40+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -26,7 +26,8 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tសម្អាត​អាល់ក�
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tសម្អាត​អាល់កូរីត​សម្រាប់ snapshot ។"
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+#, fuzzy
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <command>\tដំណើរការ​ពាក្យ​បញ្ជា និង​បង្កើត​រូបថត​មុន និង​ក្រោយ ។"
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -41,6 +42,10 @@ msgstr "\t--description, -d <description>\tសេចក្ដី​ពិពណ�
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr ""
+
+#, fuzzy
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-filters\t\tបិទ​តម្រង ។"
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
@@ -269,6 +274,10 @@ msgstr "រក​មិន​ឃើញ​រូបថត '%u' ។"
 msgid "ACL error."
 msgstr "បង្កើត​កំហុស"
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr "Cleanup"
 
@@ -419,6 +428,10 @@ msgstr "សេចក្តី​ពិពណ៌នា"
 msgid "Detecting filesystem type failed."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​រក​ប្រភេទ​ប្រព័ន្ធ​ឯកសារ ។"
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 #, fuzzy
 msgid "Empty configdata."
 msgstr "ទិន្នន័យ​ផ្សាយ​មិន​ត្រឹមត្រូវ ។"
@@ -449,6 +462,10 @@ msgstr "​បរាជ័យ"
 #, c-format
 msgid "File '%s' not found."
 msgstr "រក​មិន​ឃើញ​ឯកសារ '%s' ។"
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 # error box title
 #, fuzzy, c-format
@@ -500,11 +517,19 @@ msgstr "ទិន្នន័យ​អ្នក​ប្រើ​មិន​ត
 msgid "Key"
 msgstr "សោ ៖"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​រាយ​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
+msgstr ""
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
 msgstr ""
 
 #, c-format
@@ -535,6 +560,10 @@ msgstr "(បិទ​សិទ្ធិ​ជា​​ម្ចាស់)"
 msgid "Opening file '%s' failed."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បើក​ឯកសារ '%s' ។"
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr "លេខ​ក្រោយ"
 
@@ -556,9 +585,6 @@ msgstr "កំហុស I/O"
 msgid "Quota failure (%s)."
 msgstr "​បរាជ័យ"
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
-
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "ចំពោះ​ព័ត៌មាន​បន្ថែម​ សូម​អាន 'ជំនួយ​របស់​កម្មវិធី​ថត' ។"
@@ -579,6 +605,10 @@ msgid "Subvolume"
 msgstr "ភាគ​រង"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
 msgstr ""
 
 #, fuzzy
@@ -617,6 +647,9 @@ msgstr "មិន​ស្គាល់​ប្រភេទ​រូបថត �
 #, fuzzy, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "ប្រើ​លេខ​ចំនួន​គត់​ពី %d ដល់ %d"
+
+msgid "Used Space"
+msgstr ""
 
 #, fuzzy
 msgid "User"
@@ -686,9 +719,6 @@ msgstr "ការ​ប្រើប្រាស់ ៖ កម្មវិធី�
 #, fuzzy
 #~ msgid "Unknown file."
 #~ msgstr "មិន​ស្គាល់​ប្រភេទ ។"
-
-#~ msgid "\t--disable-filters\t\tDisable filters."
-#~ msgstr "\t--disable-filters\t\tបិទ​តម្រង ។"
 
 #~ msgid "Command failed (%s). See log for more information."
 #~ msgstr "ពាក្យ​បញ្ជា​បាន​បរាជ័យ (%s) ។ ចំពោះ​ព័ត៌មាន​បន្ថែម សូម​មើល​កំណត់ហេតុ ។"

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016,2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -49,6 +49,11 @@ public:
     virtual const map<string, string>& getUserdata() const override { return it->getUserdata(); }
 
     virtual bool isCurrent() const override { return it->isCurrent(); }
+
+    virtual uint64_t getUsedSpace() const override
+    {
+	return it->getUsedSpace();
+    }
 
     virtual string mountFilesystemSnapshot(bool user_request) const override
     {
@@ -120,6 +125,8 @@ public:
     virtual void prepareQuota() const override { snapper->prepareQuota(); }
 
     virtual QuotaData queryQuotaData() const override { return snapper->queryQuotaData(); }
+
+    virtual void calculateUsedSpace() const override { snapper->calculateUsedSpace(); }
 
     std::unique_ptr<Snapper> snapper;
 

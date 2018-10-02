@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016,2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -290,6 +290,49 @@ command_delete_snapshots(DBus::Connection& conn, const string& config_name,
     hoho << config_name << nums;
 
     conn.send_with_reply_and_block(call);
+}
+
+
+void
+command_calculate_used_space(DBus::Connection& conn, const string& config_name)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CalculateUsedSpace");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name;
+
+    try
+    {
+	conn.send_with_reply_and_block(call);
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	SN_CAUGHT(e);
+
+	if (strcmp(e.name(), "error.quota") == 0)
+	    SN_THROW(QuotaException(e.message()));
+
+	SN_RETHROW(e);
+    }
+}
+
+
+uint64_t
+command_get_used_space(DBus::Connection& conn, const string& config_name, unsigned int num)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetUsedSpace");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << num;
+
+    DBus::Message reply = conn.send_with_reply_and_block(call);
+
+    uint64_t used_space;
+
+    DBus::Hihi hihi(reply);
+    hihi >> used_space;
+
+    return used_space;
 }
 
 

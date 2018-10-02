@@ -2,11 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: entries\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 09:27+0200\n"
 "PO-Revision-Date: 2018-04-26 01:32+0000\n"
 "Last-Translator: Hwajin Kim <hwajin.kim@e4net.net>\n"
-"Language-Team: Korean <https://l10n.opensuse.org/projects/snapper/master/ko/>"
-"\n"
+"Language-Team: Korean <https://l10n.opensuse.org/projects/snapper/master/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,7 +25,8 @@ msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\t스냅샷에 대한 정리 알고리즘입니다."
 
 # SLE12
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+#, fuzzy
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <command>\t명령을 실행하고 사전 및 사후 스냅샷을 생성합니다."
 
 # SLE12
@@ -43,6 +43,9 @@ msgstr "\t--description, -d <description>\t스냅샷에 대한 설명입니다."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\t파일을 비교하는 데 쓰는 명령입니다."
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr ""
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tdiff 명령에 전달되는 추가 옵션입니다."
@@ -318,6 +321,10 @@ msgstr "(스냅샷 %d)"
 msgid "ACL error."
 msgstr "ACL 오류입니다."
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 # SLE12
 msgid "Cleanup"
 msgstr "정리"
@@ -494,6 +501,10 @@ msgstr "설명"
 msgid "Detecting filesystem type failed."
 msgstr "파일 시스템 유형을 감지하지 못했습니다."
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 # SLE12
 msgid "Empty configdata."
 msgstr "configdata가 비어 있습니다."
@@ -526,6 +537,10 @@ msgstr "실패(%s)입니다."
 #, c-format
 msgid "File '%s' not found."
 msgstr "'%s' 파일을 찾을 수 없습니다."
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 #, c-format
 msgid "IO Error (%s)."
@@ -580,6 +595,10 @@ msgstr "잘못된 사용자 데이터입니다."
 msgid "Key"
 msgstr "키"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 # SLE12
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -587,6 +606,10 @@ msgstr "구성 나열에 실패했습니다(%s)."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "스냅샷 번호 사이에 '..' 구분 기호가 누락된 것 같습니다."
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
+msgstr ""
 
 # SLE12
 #, c-format
@@ -622,6 +645,10 @@ msgstr "권한 없음."
 msgid "Opening file '%s' failed."
 msgstr "'%s' 파일을 열지 못했습니다."
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 # SLE12
 msgid "Post #"
 msgstr "사후 번호"
@@ -647,9 +674,6 @@ msgstr "할당량 오류입니다(%s)."
 msgid "Quota failure (%s)."
 msgstr "할당량 실패입니다(%s)."
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr "UTF-8이 아닌 로케일에서 실행 중입니다. 설정이 지원되지 않습니다."
-
 msgid "See 'man snapper' for further instructions."
 msgstr "추가 지침은 'man snapper'를 참조하십시오."
 
@@ -673,6 +697,10 @@ msgstr "하위 볼륨"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "'root' 구성이 존재하지 않습니다. 스냅퍼가 구성되지 않았을 수 있습니다."
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
+msgstr ""
 
 # SLE12
 msgid "Try 'snapper --help' for more information."
@@ -717,6 +745,9 @@ msgstr "알 수 없는 스냅샷 유형입니다."
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "%d에서 %d 사이의 정수를 사용하십시오."
+
+msgid "Used Space"
+msgstr ""
 
 # SLE12
 msgid "User"
@@ -784,6 +815,9 @@ msgstr "루트 인수는 no-dbus와 함께 사용해야 합니다."
 # SLE12
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "사용법: snapper [--global-options] <command> [--command-options] [command-arguments]"
+
+#~ msgid "Running in non UTF-8 locale. Setup is unsupported."
+#~ msgstr "UTF-8이 아닌 로케일에서 실행 중입니다. 설정이 지원되지 않습니다."
 
 # SLE12
 #~ msgid "Command '%s' does not work without DBus."

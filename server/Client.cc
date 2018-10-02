@@ -308,6 +308,16 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='numbers' type='au' direction='in'/>\n"
 	"    </method>\n"
 
+	"    <method name='CalculateUsedSpace'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"    </method>\n"
+
+	"    <method name='GetUsedSpace'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='number' type='u' direction='in'/>\n"
+	"      <arg name='sued-space' type='u' direction='out'/>\n"
+	"    </method>\n"
+
 	"    <method name='MountSnapshot'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='number' type='u' direction='in'/>\n"
@@ -1077,6 +1087,68 @@ Client::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
+Client::calculate_used_space(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name;
+
+    y2deb("CalculateUsedSpace config_name:" << config_name);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
+
+    snapper->calculateUsedSpace();
+
+    DBus::MessageMethodReturn reply(msg);
+
+    conn.send(reply);
+}
+
+
+void
+Client::get_used_space(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    dbus_uint32_t num;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> num;
+
+    y2deb("GetUsedSpace config_name:" << config_name << " num:" << num);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
+
+    Snapshots& snapshots = snapper->getSnapshots();
+
+    Snapshots::iterator snap = snapshots.find(num);
+    if (snap == snapshots.end())
+	throw IllegalSnapshotException();
+
+    uint64_t used_space = snap->getUsedSpace();
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
+    hoho << used_space;
+
+    conn.send(reply);
+}
+
+
+void
 Client::mount_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
@@ -1500,6 +1572,10 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    create_post_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "DeleteSnapshots"))
 	    delete_snapshots(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "CalculateUsedSpace"))
+	    calculate_used_space(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "GetUsedSpace"))
+	    get_used_space(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "MountSnapshot"))
 	    mount_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "UmountSnapshot"))

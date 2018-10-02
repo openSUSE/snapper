@@ -3,17 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 09:27+0200\n"
 "PO-Revision-Date: 2018-04-26 13:05+0000\n"
 "Last-Translator: Nikita Maynagashev <maynagashev@palex.ru>\n"
-"Language-Team: Russian "
-"<https://l10n.opensuse.org/projects/snapper/master/ru/>\n"
+"Language-Team: Russian <https://l10n.opensuse.org/projects/snapper/master/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 2.18\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
@@ -25,7 +23,8 @@ msgstr "\t--cleanup-algorithm, -c <алгоритм>\tАлгоритм очис�
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <алгоритм>\tАлгоритм очистки для снимков."
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+#, fuzzy
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <команда>\tЗапустить команду и создать пре- и пост-снимок."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -39,6 +38,10 @@ msgstr "\t--description, -d <описание>\tОписание снимков.
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\tКоманда для сравнения файлов."
+
+#, fuzzy
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-filters\t\tОтключить фильтры."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tДополнительные параметры, переданные в команду diff."
@@ -252,6 +255,10 @@ msgstr "(Снимок %d.)"
 msgid "ACL error."
 msgstr "Ошибка ACL."
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr "Очистка"
 
@@ -390,6 +397,10 @@ msgstr "Описание"
 msgid "Detecting filesystem type failed."
 msgstr "Сбой при определении типа файловой системы."
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 msgid "Empty configdata."
 msgstr "Пустые данные конфигурации."
 
@@ -416,6 +427,10 @@ msgstr "Сбой (%s)."
 #, c-format
 msgid "File '%s' not found."
 msgstr "Файл '%s' не найден."
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 #, c-format
 msgid "IO Error (%s)."
@@ -460,12 +475,20 @@ msgstr "Неверные данные пользователя."
 msgid "Key"
 msgstr "Ключ"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Сбой при перечислении конфигураций (%s)."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Возможно, вы забыли разделитель .. между номерами моментальных снимков."
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
+msgstr ""
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -494,6 +517,10 @@ msgstr "Нет прав."
 msgid "Opening file '%s' failed."
 msgstr "Сбой при открытии файла '%s'."
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr "№ последующего снимка"
 
@@ -514,9 +541,6 @@ msgstr "Ошибка квоты (%s)."
 msgid "Quota failure (%s)."
 msgstr "Сбой квоты (%s)."
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr "Запуск под локалью, отличной от UTF-8.  Неподдерживаемая установка."
-
 msgid "See 'man snapper' for further instructions."
 msgstr "Дополнительные инструкции см. в man snapper."
 
@@ -536,6 +560,10 @@ msgstr "Субтом"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Конфигурация root не существует. Вероятно, snapper не настроен."
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
+msgstr ""
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Больше сведений можно найти в 'snapper --help'."
@@ -571,6 +599,9 @@ msgstr "Неизвестный тип снимков."
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "Используйте целое число от %d до %d."
+
+msgid "Used Space"
+msgstr ""
 
 msgid "User"
 msgstr "Пользователь"
@@ -626,6 +657,9 @@ msgstr "Аргумент root можно использовать только �
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "использование: snapper [--общие-параметры] <команда> [--опции-команды] [аргументы-команды]"
 
+#~ msgid "Running in non UTF-8 locale. Setup is unsupported."
+#~ msgstr "Запуск под локалью, отличной от UTF-8.  Неподдерживаемая установка."
+
 #~ msgid "Command '%s' does not work without DBus."
 #~ msgstr "Команда '%s' не работает без DBus."
 
@@ -635,9 +669,6 @@ msgstr "использование: snapper [--общие-параметры] <�
 
 #~ msgid "Unknown file."
 #~ msgstr "Неизвестный файл."
-
-#~ msgid "\t--disable-filters\t\tDisable filters."
-#~ msgstr "\t--disable-filters\t\tОтключить фильтры."
 
 #~ msgid "Command failed (%s). See log for more information."
 #~ msgstr "Сбой команды %s. Больше сведений можно найти в журнале."
