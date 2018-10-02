@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 09:27+0200\n"
 "PO-Revision-Date: 2016-04-28 04:47+0000\n"
 "Last-Translator: mohammad alhargan <malham1@gmail.com>\n"
 "Language-Team: Arabic <http://l10n.opensuse.org/projects/snapper/master/ar/>\n"
@@ -26,7 +26,8 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tتنظيف خوارزمية اللقط
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tتنظيف خوارزمية اللقطة."
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+#, fuzzy
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <command>\tقم بتشغيل الأمر وإنشاء ما قبل وبعد لقطات."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -40,6 +41,10 @@ msgstr "\t--description, -d <description>\tوصف اللقطة."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\tأمر مستخدم لمقارنة الملفات."
+
+#, fuzzy
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-filters\t\tإيقاف المرشحات."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions، -x <options>\tخيارات إضافية تم تمريرها إلى أمر diff."
@@ -253,6 +258,10 @@ msgstr "(لقطة %d.)"
 msgid "ACL error."
 msgstr "خطأ ACL."
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr "تنظيف"
 
@@ -396,6 +405,10 @@ msgstr "الوصف"
 msgid "Detecting filesystem type failed."
 msgstr "فشل الكشف عن نوع نظام الملفات."
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 msgid "Empty configdata."
 msgstr "معلومات الإعداد خالية."
 
@@ -422,6 +435,10 @@ msgstr "فشل (%s)."
 #, c-format
 msgid "File '%s' not found."
 msgstr "الملف '%s' غير موجود."
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 #, c-format
 msgid "IO Error (%s)."
@@ -467,12 +484,20 @@ msgstr "بيانات المستخدم غير صالحة."
 msgid "Key"
 msgstr "مفتاح"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "فشل سرد إعداد (%s)."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "ربما نسيت المحدد '..' بين أرقام اللقطة."
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
+msgstr ""
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -501,6 +526,10 @@ msgstr "لا توجد أذونات."
 msgid "Opening file '%s' failed."
 msgstr "فتح الملف '%s' فشل."
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr "قياس ورق #"
 
@@ -521,9 +550,6 @@ msgstr "خطأ ‎‏IO ‏(%s)."
 msgid "Quota failure (%s)."
 msgstr "فشل (%s)."
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
-
 msgid "See 'man snapper' for further instructions."
 msgstr "لمزيد من التعليمات، راجع 'man snapper'."
 
@@ -543,6 +569,10 @@ msgstr "الحجم الفرعي"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "'root' للتكوين غير موجود. غالبًا لم يتم تكوين snapper."
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
+msgstr ""
 
 msgid "Try 'snapper --help' for more information."
 msgstr "جرب 'التقاط --help' لمزيد من المعلومات."
@@ -578,6 +608,9 @@ msgstr "نوع اللقطات غير معروف."
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "استخدم رقم صحيح من %d إلى %d."
+
+msgid "Used Space"
+msgstr ""
 
 msgid "User"
 msgstr "مستخدم"
@@ -644,9 +677,6 @@ msgstr "استخدام: اللقطة [--global-options] <command> [--command-opt
 
 #~ msgid "Use an integer number from %d to %d"
 #~ msgstr "استخدام رقم صحيح من %d إلى %d"
-
-#~ msgid "\t--disable-filters\t\tDisable filters."
-#~ msgstr "\t--disable-filters\t\tإيقاف المرشحات."
 
 #~ msgid "Command failed (%s). See log for more information."
 #~ msgstr "فشل أمر (%s). انظر السجل للحصول على مزيد من المعلومات."

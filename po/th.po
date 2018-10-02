@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 09:27+0200\n"
 "PO-Revision-Date: 2008-01-04 08:58+0100\n"
 "Last-Translator: i18n@suse.de\n"
 "Language-Team: Thai <i18n@suse.de>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr ""
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr ""
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -37,6 +37,9 @@ msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr ""
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
+msgstr ""
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
 msgstr ""
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
@@ -267,6 +270,10 @@ msgstr "ไม่พบรายการบูตระบบ %1"
 msgid "ACL error."
 msgstr "ผิดพลาด"
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 #, fuzzy
 msgid "Cleanup"
 msgstr "ล้างค่า"
@@ -411,6 +418,10 @@ msgstr "ข้อมูลอธิบาย"
 msgid "Detecting filesystem type failed."
 msgstr "การสร้างระบบแฟ้มล้มเหลว"
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 #, fuzzy
 msgid "Empty configdata."
 msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งานไม่ได้"
@@ -440,6 +451,10 @@ msgstr "ล้มเหลว"
 #, fuzzy, c-format
 msgid "File '%s' not found."
 msgstr "ไม่พบแฟ้มควบคุม %1 บนสื่อการติดตั้ง"
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "IO Error (%s)."
@@ -489,11 +504,19 @@ msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งาน
 msgid "Key"
 msgstr "คีย์"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Listing configs failed (%s)."
 msgstr "การเขียนการตั้งค่าล้มเหลว"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
+msgstr ""
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
 msgstr ""
 
 #, fuzzy, c-format
@@ -524,6 +547,10 @@ msgstr "สิทธิ์ที่อนุญาตในการบูตร
 msgid "Opening file '%s' failed."
 msgstr "การสร้างระบบแฟ้มล้มเหลว"
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 #, fuzzy
 msgid "Post #"
 msgstr "เครื่อง %1"
@@ -546,9 +573,6 @@ msgstr "ผิดพลาด"
 msgid "Quota failure (%s)."
 msgstr "ล้มเหลว"
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
-
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "กำลังหาข้อมูลของหน่วยความจำ..."
@@ -570,6 +594,10 @@ msgid "Subvolume"
 msgstr "จัดเก็บระดับเสียง"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
 msgstr ""
 
 #, fuzzy
@@ -609,6 +637,9 @@ msgstr "ไม่รู้จักชนิด"
 
 #, c-format
 msgid "Use an integer number from %d to %d."
+msgstr ""
+
+msgid "Used Space"
 msgstr ""
 
 msgid "User"

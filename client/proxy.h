@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2017] SUSE LLC
+ * Copyright (c) [2016-2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -107,6 +107,8 @@ public:
 
     bool isCurrent() const { return impl->isCurrent(); }
 
+    uint64_t getUsedSpace() const { return impl->getUsedSpace(); }
+
     void mountFilesystemSnapshot(bool user_request) const
 	{ impl->mountFilesystemSnapshot(user_request); }
 
@@ -132,6 +134,8 @@ public:
 	virtual const map<string, string>& getUserdata() const = 0;
 
 	virtual bool isCurrent() const = 0;
+
+	virtual uint64_t getUsedSpace() const = 0;
 
 	virtual string mountFilesystemSnapshot(bool user_request) const = 0;
 	virtual void umountFilesystemSnapshot(bool user_request) const = 0;
@@ -232,6 +236,8 @@ public:
     virtual void prepareQuota() const = 0;
 
     virtual QuotaData queryQuotaData() const = 0;
+
+    virtual void calculateUsedSpace() const = 0;
 
 };
 

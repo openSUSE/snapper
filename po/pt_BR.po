@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 09:27+0200\n"
 "PO-Revision-Date: 2018-04-20 14:34+0000\n"
 "Last-Translator: carlo valente <carlo.gt.valente@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) "
-"<https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,7 +28,8 @@ msgstr "\t--cleanup-algorithm, -c <algoritmo>\tAlgoritmo de limpeza do instantâ
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algoritmo>\tAlgoritmo de limpeza dos instantâneos."
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+#, fuzzy
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <comando>\tExecutar comando e criar pré e pós instantâneos."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -43,6 +43,10 @@ msgstr "\t--description, -d <descrição>\tDescrição dos instantâneos."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <comando>\t\tComando usado para comparação de arquivos."
+
+#, fuzzy
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-filters\t\tDesabilitar filtros."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <opções>\tOpções adicionais passadas para o comando diff."
@@ -255,6 +259,10 @@ msgstr "(Instantâneo %d.)"
 msgid "ACL error."
 msgstr "Erro ACL."
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr "Limpeza"
 
@@ -392,6 +400,10 @@ msgstr "Descrição"
 msgid "Detecting filesystem type failed."
 msgstr "Falha ao detectar o tipo de sistema de arquivos."
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 msgid "Empty configdata."
 msgstr "Dado de configuração vazio."
 
@@ -418,6 +430,10 @@ msgstr "Falha (%s)."
 #, c-format
 msgid "File '%s' not found."
 msgstr "Arquivo '%s' não encontrado."
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 #, c-format
 msgid "IO Error (%s)."
@@ -462,12 +478,20 @@ msgstr "Dados de usuário inválidos."
 msgid "Key"
 msgstr "Chave"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Falha ao listar arquivos de configuração (%s)."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Talvez você não tenha incluído o delimitador '..' entre os números dos instantâneos."
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
+msgstr ""
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -496,6 +520,10 @@ msgstr "Sem permissões."
 msgid "Opening file '%s' failed."
 msgstr "Falha ao abrir o arquivo '%s'."
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr "Post #"
 
@@ -516,9 +544,6 @@ msgstr "Erro de quota (%s)."
 msgid "Quota failure (%s)."
 msgstr "Falha de quota (%s)."
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr "Executando num sistema não UTF-8. Configuração não suportada."
-
 msgid "See 'man snapper' for further instructions."
 msgstr "Consulte \"man snapper\" para obter mais instruções."
 
@@ -538,6 +563,10 @@ msgstr "Subvolume"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "A configuração \"root\" não existe. Provavelmente, o snapper não está configurado."
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
+msgstr ""
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Tente 'snapper --help' para obter mais informações."
@@ -573,6 +602,9 @@ msgstr "Tipo de instantâneo desconhecido."
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "Use um número inteiro de %d a %d."
+
+msgid "Used Space"
+msgstr ""
 
 msgid "User"
 msgstr "Usuário"
@@ -628,6 +660,9 @@ msgstr "É possível usar o argumento root apenas com no-dbus."
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "uso: snapper [--opções-globais] <comando> [--opções-do-comando] [argumentos]"
 
+#~ msgid "Running in non UTF-8 locale. Setup is unsupported."
+#~ msgstr "Executando num sistema não UTF-8. Configuração não suportada."
+
 #~ msgid "Command '%s' does not work without DBus."
 #~ msgstr "O comando '%s' não funciona sem o DBus."
 
@@ -640,9 +675,6 @@ msgstr "uso: snapper [--opções-globais] <comando> [--opções-do-comando] [arg
 
 #~ msgid "Use an integer number from %d to %d"
 #~ msgstr "Use um número inteiro de %d a %d"
-
-#~ msgid "\t--disable-filters\t\tDisable filters."
-#~ msgstr "\t--disable-filters\t\tDesabilitar filtros."
 
 #~ msgid "Command failed (%s). See log for more information."
 #~ msgstr "O comando falhou (%s). Veja o log para mais informações."

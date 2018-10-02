@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016,2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -89,6 +89,12 @@ command_create_post_snapshot(DBus::Connection& conn, const string& config_name,
 void
 command_delete_snapshots(DBus::Connection& conn, const string& config_name,
 			 const vector<unsigned int>& nums, bool verbose);
+
+void
+command_calculate_used_space(DBus::Connection& conn, const string& config_name);
+
+uint64_t
+command_get_used_space(DBus::Connection& conn, const string& config_name, unsigned int num);
 
 string
 command_mount_snapshot(DBus::Connection& conn, const string& config_name,

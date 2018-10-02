@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 09:27+0200\n"
 "PO-Revision-Date: 2018-04-20 23:06+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese "
-"<https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
+"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,7 +28,8 @@ msgstr "\t--cleanup-algorithm, -c <アルゴリズム>\tスナップショット
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <アルゴリズム>\tスナップショットに対するクリーンアップアルゴリズムの指定。"
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+#, fuzzy
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <command>\tコマンドを実行し、その前後にスナップショットを採取する。"
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -43,6 +43,9 @@ msgstr "\t--description, -d <説明>\tスナップショットの説明を指定
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <コマンド>\t\tファイルの比較に使用するコマンド。"
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr ""
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <オプション>\tdiffコマンドに渡される追加オプション。"
@@ -255,6 +258,10 @@ msgstr "(スナップショット %d)"
 msgid "ACL error."
 msgstr "ACL エラーです。"
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr "クリーンアップ"
 
@@ -391,6 +398,10 @@ msgstr "説明"
 msgid "Detecting filesystem type failed."
 msgstr "ファイルシステムの種類の検出に失敗しました。"
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 msgid "Empty configdata."
 msgstr "設定データがありません。"
 
@@ -417,6 +428,10 @@ msgstr "失敗しました (%s) 。"
 #, c-format
 msgid "File '%s' not found."
 msgstr "'%s' というファイルが見つかりません。"
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 #, c-format
 msgid "IO Error (%s)."
@@ -461,12 +476,20 @@ msgstr "ユーザデータが正しくありません。"
 msgid "Key"
 msgstr "キー"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "設定の一覧表示に失敗しました (%s)。"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "スナップショット番号の間に区切り記号「..」を入力していない可能性があります。"
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
+msgstr ""
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -495,6 +518,10 @@ msgstr "許可がありません。"
 msgid "Opening file '%s' failed."
 msgstr "ファイル '%s' を開けませんでした。"
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr "後 #"
 
@@ -515,9 +542,6 @@ msgstr "クォータエラー (%s) 。"
 msgid "Quota failure (%s)."
 msgstr "クォータ設定に失敗しました (%s) 。"
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr "UTF-8 ではないロケールを使用しているため、設定に対応できません。"
-
 msgid "See 'man snapper' for further instructions."
 msgstr "詳しい手順については、「man snapper」を参照してください。"
 
@@ -537,6 +561,10 @@ msgstr "サブボリューム"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "環境設定「root」は存在しません。snapperが設定されていない可能性があります。"
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
+msgstr ""
 
 msgid "Try 'snapper --help' for more information."
 msgstr "詳しくは 'snapper --help' コマンドをご利用ください。"
@@ -572,6 +600,9 @@ msgstr "不明なスナップショットの種類です。"
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "%d から %d までの整数を指定してください。"
+
+msgid "Used Space"
+msgstr ""
 
 msgid "User"
 msgstr "ユーザ"
@@ -626,6 +657,9 @@ msgstr "root引数はno-dbusも指定した場合にのみ使用できます。"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "usage: snapper [グローバルオプション] <コマンド> [コマンドオプション] [コマンドパラメータ]"
+
+#~ msgid "Running in non UTF-8 locale. Setup is unsupported."
+#~ msgstr "UTF-8 ではないロケールを使用しているため、設定に対応できません。"
 
 #~ msgid "Command '%s' does not work without DBus."
 #~ msgstr "'%s' コマンドは DBus 無しでは動作しません。"

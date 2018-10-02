@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 09:27+0200\n"
 "PO-Revision-Date: 2011-11-23 07:21+0200\n"
 "Last-Translator: Halil <halilpk@gmail.com>\n"
 "Language-Team: turkish <i18n@suse.de>\n"
@@ -27,7 +27,7 @@ msgstr "\t--temizleme-algoritması, -c <algo>\tAnlık görüntüler için temizl
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr ""
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr ""
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -41,6 +41,10 @@ msgstr ""
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr ""
+
+#, fuzzy
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--filtreleri-gösterme\t\tFiltreleri gösterme."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
@@ -272,6 +276,10 @@ msgstr ""
 msgid "ACL error."
 msgstr ""
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr "Temizle"
 
@@ -419,6 +427,10 @@ msgstr "Tanım"
 msgid "Detecting filesystem type failed."
 msgstr "Dosya sistemi formatını belirleme başarısız oldu."
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 msgid "Empty configdata."
 msgstr ""
 
@@ -446,6 +458,10 @@ msgstr ""
 #, c-format
 msgid "File '%s' not found."
 msgstr "'%s' dosyası bulunamadı."
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 # include/ui/common_messages.ycp:95
 #, fuzzy, c-format
@@ -496,11 +512,19 @@ msgstr "Geçersiz kullanıcı verisi."
 msgid "Key"
 msgstr "Kenya"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Yapılandırmayı listeleme başarısız oldu (%s)."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
+msgstr ""
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
 msgstr ""
 
 #, c-format
@@ -532,6 +556,10 @@ msgstr ""
 msgid "Opening file '%s' failed."
 msgstr "'%s ' dosyasını açma başarısız oldu."
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr "Posta #"
 
@@ -553,9 +581,6 @@ msgstr "Giriş/Çıkış hatası"
 msgid "Quota failure (%s)."
 msgstr ""
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
-
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "Daha fazla bilgi için 'Yakalayıcı yardımı'nı okumayı deneyin."
@@ -575,6 +600,10 @@ msgid "Subvolume"
 msgstr "Arkases"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
 msgstr ""
 
 #, fuzzy
@@ -612,6 +641,9 @@ msgstr "Bilinmeyen anlık görüntü formatı."
 
 #, c-format
 msgid "Use an integer number from %d to %d."
+msgstr ""
+
+msgid "Used Space"
 msgstr ""
 
 #, fuzzy
@@ -684,9 +716,6 @@ msgstr "kullanım: yakalayıcı  [--global-options] <command> [--command-options
 
 #~ msgid "Use an integer number from %d to %d"
 #~ msgstr "%d ile %d arasında bir sayı kullanınız"
-
-#~ msgid "\t--disable-filters\t\tDisable filters."
-#~ msgstr "\t--filtreleri-gösterme\t\tFiltreleri gösterme."
 
 #, fuzzy
 #~| msgid "Try 'snapper help' for more information."

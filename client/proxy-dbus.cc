@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016,2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -50,6 +50,20 @@ ProxySnapshotDbus::ProxySnapshotDbus(ProxySnapshotsDbus* backref, SnapshotType t
     : backref(backref), type(type), num(num), date(date), uid(uid), pre_num(pre_num),
       description(description), cleanup(cleanup), userdata(userdata)
 {
+}
+
+
+void
+ProxySnapperDbus::calculateUsedSpace() const
+{
+    command_calculate_used_space(conn(), config_name);
+}
+
+
+uint64_t
+ProxySnapshotDbus::getUsedSpace() const
+{
+    return command_get_used_space(conn(), configName(), num);
 }
 
 

@@ -3,11 +3,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 09:27+0200\n"
 "PO-Revision-Date: 2018-06-01 16:03+0000\n"
 "Last-Translator: Alessio Adamo <alessio.adamo@gmail.com>\n"
-"Language-Team: Italian "
-"<https://l10n.opensuse.org/projects/snapper/master/it/>\n"
+"Language-Team: Italian <https://l10n.opensuse.org/projects/snapper/master/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,7 +23,8 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritmo di pulitura per l'istantanea
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritmo di pulitura per le istantanee."
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+#, fuzzy
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <comando>\tLancia il comando e crea istantanee pre e post."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -38,6 +38,10 @@ msgstr "\t--description, -d <descrizione>\tDescrizione delle istantanee."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <comando>\t\tComando utilizzato per confrontare i file."
+
+#, fuzzy
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-filters\t\tDisabilita i filtri."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <opzioni>\tOpzioni supplementari trasmesse al comando diff."
@@ -251,6 +255,10 @@ msgstr "(Istantanea %d.)"
 msgid "ACL error."
 msgstr "Errore ACL."
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr "Pulitura"
 
@@ -295,8 +303,7 @@ msgstr "Il comando 'mount' richiede almeno un argomento."
 
 #, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr ""
-"Il comando 'rollback' non può essere usato su un sottovolume non radice %s."
+msgstr "Il comando 'rollback' non può essere usato su un sottovolume non radice %s."
 
 msgid "Command 'rollback' only available for btrfs."
 msgstr "Il comando 'rollback' è disponibile solo per btrfs."
@@ -358,8 +365,7 @@ msgid "Creating read-only snapshot of default subvolume."
 msgstr "Creazione di un'istantanea in sola lettura del sottovolume predefinito."
 
 msgid "Creating read-write snapshot of current subvolume."
-msgstr ""
-"Creazione di un'istantanea in lettura/scrittura del sottovolume corrente."
+msgstr "Creazione di un'istantanea in lettura/scrittura del sottovolume corrente."
 
 #, c-format
 msgid "Creating read-write snapshot of snapshot %d."
@@ -390,6 +396,10 @@ msgstr "Descrizione"
 msgid "Detecting filesystem type failed."
 msgstr "Rilevamento del tipo di file system fallito."
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 msgid "Empty configdata."
 msgstr "Dati di configurazione vuoti."
 
@@ -416,6 +426,10 @@ msgstr "Operazione non riuscita (%s)."
 #, c-format
 msgid "File '%s' not found."
 msgstr "File '%s' non trovato."
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 #, c-format
 msgid "IO Error (%s)."
@@ -460,12 +474,20 @@ msgstr "Dati utente non validi."
 msgid "Key"
 msgstr "Chiave"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Elenco dei file di configurazione fallito (%s)."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "È possibile che si sia dimenticato il delimitatore '..' tra i numeri di snapshot."
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
+msgstr ""
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -494,6 +516,10 @@ msgstr "Permessi mancanti."
 msgid "Opening file '%s' failed."
 msgstr "Apertura del file '%s' fallita."
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr "Post #"
 
@@ -514,10 +540,6 @@ msgstr "Errore di quota (%s)."
 msgid "Quota failure (%s)."
 msgstr "Avaria quota (%s)."
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
-"Esecuzione in localizzazione non UTF-8. La configurazione non è supportata."
-
 msgid "See 'man snapper' for further instructions."
 msgstr "Vedere 'man snapper' per ulteriori istruzioni."
 
@@ -537,6 +559,10 @@ msgstr "Sottovolume"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Configurazione 'root' inesistente. È probabile che snapper non sia configurato."
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
+msgstr ""
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Per ulteriori informazioni, usare 'snapper --help'."
@@ -572,6 +598,9 @@ msgstr "Tipo sconosciuto di istantanee."
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "Usare un numero intero da %d a %d."
+
+msgid "Used Space"
+msgstr ""
 
 msgid "User"
 msgstr "Utente"
@@ -629,6 +658,9 @@ msgstr ""
 "Uso:\n"
 "\tsnapper [--opzioni-globali] <comando> [--opzioni-del-comando] [argomenti-del-comando]"
 
+#~ msgid "Running in non UTF-8 locale. Setup is unsupported."
+#~ msgstr "Esecuzione in localizzazione non UTF-8. La configurazione non è supportata."
+
 #~ msgid "Command '%s' does not work without DBus."
 #~ msgstr "Il comando '%s' non funziona senza DBus."
 
@@ -638,9 +670,6 @@ msgstr ""
 
 #~ msgid "Unknown file."
 #~ msgstr "File sconosciuto."
-
-#~ msgid "\t--disable-filters\t\tDisable filters."
-#~ msgstr "\t--disable-filters\t\tDisabilita i filtri."
 
 #~ msgid "Command failed (%s). See log for more information."
 #~ msgstr "Comando fallito (%s). Si veda il log per ulteriori informazioni."
