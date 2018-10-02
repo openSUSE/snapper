@@ -1,6 +1,6 @@
 
 #define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE libstorage
+#define BOOST_TEST_MODULE snapper
 
 #include <boost/test/unit_test.hpp>
 
