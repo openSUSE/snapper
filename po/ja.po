@@ -9,9 +9,10 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-02 12:19+0200\n"
-"PO-Revision-Date: 2018-04-20 23:06+0000\n"
+"PO-Revision-Date: 2018-10-04 08:40+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
+"Language-Team: Japanese "
+"<https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,9 +29,8 @@ msgstr "\t--cleanup-algorithm, -c <アルゴリズム>\tスナップショット
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <アルゴリズム>\tスナップショットに対するクリーンアップアルゴリズムの指定。"
 
-#, fuzzy
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <command>\tコマンドを実行し、その前後にスナップショットを採取する。"
+msgstr "\t--command <コマンド>\t\tコマンドを実行し、その前後にスナップショットを採取する。"
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <名前>\t\t使用する設定ファイル名を指定する。"
@@ -45,7 +45,7 @@ msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <コマンド>\t\tファイルの比較に使用するコマンド。"
 
 msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr ""
+msgstr "\t--disable-used-space\t\t使用済み領域の表示を無効にする。"
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <オプション>\tdiffコマンドに渡される追加オプション。"
@@ -260,7 +260,7 @@ msgstr "ACL エラーです。"
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
-msgstr ""
+msgstr "B"
 
 msgid "Cleanup"
 msgstr "クリーンアップ"
@@ -400,7 +400,7 @@ msgstr "ファイルシステムの種類の検出に失敗しました。"
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
-msgstr ""
+msgstr "EiB"
 
 msgid "Empty configdata."
 msgstr "設定データがありません。"
@@ -431,7 +431,7 @@ msgstr "'%s' というファイルが見つかりません。"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
-msgstr ""
+msgstr "GiB"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -478,7 +478,7 @@ msgstr "キー"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -489,7 +489,7 @@ msgstr "スナップショット番号の間に区切り記号「..」を入力�
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -520,7 +520,7 @@ msgstr "ファイル '%s' を開けませんでした。"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
-msgstr ""
+msgstr "PiB"
 
 msgid "Post #"
 msgstr "後 #"
@@ -564,7 +564,7 @@ msgstr "環境設定「root」は存在しません。snapperが設定されて�
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
-msgstr ""
+msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "詳しくは 'snapper --help' コマンドをご利用ください。"
@@ -602,7 +602,7 @@ msgid "Use an integer number from %d to %d."
 msgstr "%d から %d までの整数を指定してください。"
 
 msgid "Used Space"
-msgstr ""
+msgstr "使用済み領域"
 
 msgid "User"
 msgstr "ユーザ"
