@@ -7,7 +7,7 @@ AM_CPPFLAGS = -I$(top_srcdir) $(DBUS_CFLAGS)
 LDADD = ../snapper/libsnapper.la ../dbus/libdbus.la -lboost_unit_test_framework
 
 check_PROGRAMS = sysconfig-get1.test dirname1.test basename1.test		\
-	equal-date.test dbus-escape.test cmp-lt.test humanstring.test
+	equal-date.test dbus-escape.test cmp-lt.test humanstring.test table.test
 
 if ENABLE_BTRFS_QUOTA
 check_PROGRAMS +=  qgroup1.test
@@ -22,4 +22,6 @@ EXTRA_DIST = $(noinst_SCRIPTS) sysconfig-get1.txt
 equal_date_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
 
 humanstring_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
+
+table_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
 
