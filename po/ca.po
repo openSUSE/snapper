@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-02 12:19+0200\n"
-"PO-Revision-Date: 2018-05-23 18:01+0000\n"
+"PO-Revision-Date: 2018-10-04 13:43+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
-"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/>\n"
+"Language-Team: Catalan "
+"<https://l10n.opensuse.org/projects/snapper/master/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,9 +23,9 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tNeteja l'algoritme per a la instantàn
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tNeteja l'algoritme per a les instantànies."
 
-#, fuzzy
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <command>\tExecuta l'ordre i crea instantànies pre i post."
+msgstr ""
+"\t--command <ordre>\t\tExecuta l'ordre i crea les instantànies pre i post."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <name>\t\tEstableix el nom de config a usar."
@@ -39,7 +40,7 @@ msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\tOrdre per comparar fitxers."
 
 msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr ""
+msgstr "\t--disable-used-space\t\tInhabilita mostrar l'espai usat."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tOpcions extres passades a l'ordre diff."
@@ -254,7 +255,7 @@ msgstr "Error ACL."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
-msgstr ""
+msgstr "B"
 
 msgid "Cleanup"
 msgstr "Neteja"
@@ -395,7 +396,7 @@ msgstr "Ha fallat la detecció del tipus de sistema de fitxers."
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
-msgstr ""
+msgstr "EiB"
 
 msgid "Empty configdata."
 msgstr "Configdata buit."
@@ -426,7 +427,7 @@ msgstr "No s'ha trobat el fitxer \"%s\"."
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
-msgstr ""
+msgstr "GiB"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -474,7 +475,7 @@ msgstr "Clau"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -485,7 +486,7 @@ msgstr "Potser heu oblidat el delimitador \"..\" entre els números d'instantàn
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -516,7 +517,7 @@ msgstr "Ha fallat l'obertura del fitxer '%s'."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
-msgstr ""
+msgstr "PiB"
 
 msgid "Post #"
 msgstr "Post #"
@@ -560,7 +561,7 @@ msgstr "La config \"root\" no existeix. Potser l'snapper no està configurat."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
-msgstr ""
+msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Proveu 'snapper --help' per a més informació."
@@ -598,7 +599,7 @@ msgid "Use an integer number from %d to %d."
 msgstr "Useu un número enter entre el %d i el %d."
 
 msgid "Used Space"
-msgstr ""
+msgstr "Espai usat"
 
 msgid "User"
 msgstr "Usuari"
