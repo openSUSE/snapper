@@ -2,16 +2,10 @@
 #include <cstring>
 #include <cstdlib>
 
-// #include "zypp/base/Logger.h"
-
 #include "console.h"
 #include "text.h"
 
 #include "Table.h"
-
-// libzypp logger settings
-// #undef  ZYPP_BASE_LOGGER_LOGGROUP
-// #define ZYPP_BASE_LOGGER_LOGGROUP "zypper"
 
 using namespace std;
 
@@ -111,14 +105,25 @@ void TableRow::dumpTo (ostream &stream, const Table & parent) const
     }
     else
     {
+      stream.setf(parent._header.align(c) == TableAlign::LEFT ? ios::left : ios::right,
+		  ios::adjustfield);
+      stream.width(parent._max_width[c]);
       stream << s;
-      stream.width (parent._max_width[c] - ssize);
     }
     stream << "";
     curpos += parent._max_width[c] + (parent._style != none ? 2 : 3);
   }
   stream << endl;
 }
+
+
+void
+TableHeader::add(const string& s, TableAlign align)
+{
+  TableRow::add(s);
+  _aligns.push_back(align);
+}
+
 
 // ----------------------( Table )---------------------------------------------
 
