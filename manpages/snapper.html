@@ -82,6 +82,8 @@
           <p>With each snapshot a description and some userdata can be associated. The
       description is a string. The userdata is a list of key-value pairs where the
       keys and values are strings.</p>
+          <p>Do not use non-ASCII characters for the snapshot description, userdata or
+      any other strings, unless you always use the UTF-8 character encoding.</p>
         </div>
         <div class="refsect2">
           <a id="automatic_snapshot_creation"></a>
@@ -356,6 +358,18 @@
                   <dd>
                     <p>Selects type of snapshots to list. Possible values are
 		all, single and pre-post.</p>
+                  </dd>
+                  <dt>
+                    <span class="term">
+                      <code class="option">--disable-used-space</code>
+                    </span>
+                  </dt>
+                  <dd>
+                    <p>Disable display of used space.</p>
+                    <p>Calculating the used space needs some time. Thus
+		this option can speedup the listing.</p>
+                    <p>Display of used space is automatically disabled
+		if not available, e.g. quota not enabled on btrfs.</p>
                   </dd>
                   <dt>
                     <span class="term">
