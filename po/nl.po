@@ -10,9 +10,10 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-02 12:19+0200\n"
-"PO-Revision-Date: 2018-04-20 17:22+0000\n"
+"PO-Revision-Date: 2018-10-04 12:51+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
-"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
+"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
+"\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,9 +30,10 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tOpschoonalgoritme voor momentopname."
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tOpschoonalgoritme voor momentopnamen."
 
-#, fuzzy
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <command>\tVoer opdracht uit en maak pre- en post-momentopnamen."
+msgstr ""
+"\t--command <command>\t\tVoer opdracht uit en maak pre- en post-"
+"momentopnamen."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <name>\t\tStel naam van te gebruiken configuratie in."
@@ -45,9 +47,8 @@ msgstr "\t--description, -d <description>\tBeschrijving van momentopnamen."
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\tOpdracht gebruikt voor het vergelijken van bestanden."
 
-#, fuzzy
 msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-filters\t\tFilters uitschakelen."
+msgstr "\t--disable-used-space\t\tGebruikte ruimte tonen uitschakelen."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tExtra opties doorgeven aan de opdracht diff."
@@ -263,7 +264,7 @@ msgstr "ACL-fout."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
-msgstr ""
+msgstr "B"
 
 msgid "Cleanup"
 msgstr "Opschonen"
@@ -404,7 +405,7 @@ msgstr "Type bestandssysteem detecteren is mislukt."
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
-msgstr ""
+msgstr "EiB"
 
 msgid "Empty configdata."
 msgstr "Lege configuratiegegevens."
@@ -435,7 +436,7 @@ msgstr "Bestand '%s' niet gevonden."
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
-msgstr ""
+msgstr "GiB"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -482,7 +483,7 @@ msgstr "Sleutel"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -493,7 +494,7 @@ msgstr "Misschien bent u het scheidingsteken '..' tussen de snapshotnummer verge
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -524,7 +525,7 @@ msgstr "Openen van bestand '%s' is mislukt."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
-msgstr ""
+msgstr "PiB"
 
 msgid "Post #"
 msgstr "Post #"
@@ -568,7 +569,7 @@ msgstr "De 'root' van de configuratie bestaat niet. Waarschijnlijk is snapper ni
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
-msgstr ""
+msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Probeer 'snapper --help' voor meer informatie."
@@ -606,7 +607,7 @@ msgid "Use an integer number from %d to %d."
 msgstr "Gebruik een geheel getal van %d tot %d."
 
 msgid "Used Space"
-msgstr ""
+msgstr "Gebruikte ruimte"
 
 msgid "User"
 msgstr "Gebruiker"
