@@ -45,6 +45,7 @@
 #include "utils/text.h"
 #include "utils/Table.h"
 #include "utils/GetOpts.h"
+#include "utils/HumanString.h"
 
 #include "cleanup.h"
 #include "errors.h"
@@ -166,8 +167,8 @@ MyFiles::bulk_process(FILE* file, std::function<void(File& file)> callback)
 void
 help_list_configs()
 {
-    cout << _("  List configs:") << endl
-	 << _("\tsnapper list-configs") << endl
+    cout << _("  List configs:") << '\n'
+	 << _("\tsnapper list-configs") << '\n'
 	 << endl;
 }
 
@@ -205,12 +206,12 @@ command_list_configs(ProxySnappers* snappers, ProxySnapper*)
 void
 help_create_config()
 {
-    cout << _("  Create config:") << endl
-	 << _("\tsnapper create-config <subvolume>") << endl
-	 << endl
-	 << _("    Options for 'create-config' command:") << endl
-	 << _("\t--fstype, -f <fstype>\t\tManually set filesystem type.") << endl
-	 << _("\t--template, -t <name>\t\tName of config template to use.") << endl
+    cout << _("  Create config:") << '\n'
+	 << _("\tsnapper create-config <subvolume>") << '\n'
+	 << '\n'
+	 << _("    Options for 'create-config' command:") << '\n'
+	 << _("\t--fstype, -f <fstype>\t\tManually set filesystem type.") << '\n'
+	 << _("\t--template, -t <name>\t\tName of config template to use.") << '\n'
 	 << endl;
 }
 
@@ -262,8 +263,8 @@ command_create_config(ProxySnappers* snappers, ProxySnapper*)
 void
 help_delete_config()
 {
-    cout << _("  Delete config:") << endl
-	 << _("\tsnapper delete-config") << endl
+    cout << _("  Delete config:") << '\n'
+	 << _("\tsnapper delete-config") << '\n'
 	 << endl;
 }
 
@@ -285,8 +286,8 @@ command_delete_config(ProxySnappers* snappers, ProxySnapper*)
 void
 help_get_config()
 {
-    cout << _("  Get config:") << endl
-	 << _("\tsnapper get-config") << endl
+    cout << _("  Get config:") << '\n'
+	 << _("\tsnapper get-config") << '\n'
 	 << endl;
 }
 
@@ -324,8 +325,8 @@ command_get_config(ProxySnappers* snappers, ProxySnapper* snapper)
 void
 help_set_config()
 {
-    cout << _("  Set config:") << endl
-	 << _("\tsnapper set-config <configdata>") << endl
+    cout << _("  Set config:") << '\n'
+	 << _("\tsnapper set-config <configdata>") << '\n'
 	 << endl;
 }
 
@@ -349,12 +350,13 @@ command_set_config(ProxySnappers* snappers, ProxySnapper* snapper)
 void
 help_list()
 {
-    cout << _("  List snapshots:") << endl
-	 << _("\tsnapper list") << endl
-	 << endl
-	 << _("    Options for 'list' command:") << endl
-	 << _("\t--type, -t <type>\t\tType of snapshots to list.") << endl
-	 << _("\t--all-configs, -a\t\tList snapshots from all accessible configs.") << endl
+    cout << _("  List snapshots:") << '\n'
+	 << _("\tsnapper list") << '\n'
+	 << '\n'
+	 << _("    Options for 'list' command:") << '\n'
+	 << _("\t--type, -t <type>\t\tType of snapshots to list.") << '\n'
+	 << _("\t--disable-used-space\t\tDisable showing used space.") << '\n'
+	 << _("\t--all-configs, -a\t\tList snapshots from all accessible configs.") << '\n'
 	 << endl;
 }
 
@@ -362,7 +364,7 @@ enum ListMode { LM_ALL, LM_SINGLE, LM_PRE_POST };
 
 
 void
-list_from_one_config(ProxySnapper* snapper, ListMode list_mode);
+list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool show_used_space);
 
 
 void
@@ -370,6 +372,7 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
 {
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
+	{ "disable-used-space", no_argument,            0,      0 },
 	{ "all-configs",	no_argument,		0,	'a' },
 	{ 0, 0, 0, 0 }
     };
@@ -382,6 +385,7 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
     }
 
     ListMode list_mode = LM_ALL;
+    bool show_used_space = true;
 
     GetOpts::parsed_opts::const_iterator opt;
 
@@ -398,6 +402,11 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
 	    cerr << _("Unknown type of snapshots.") << endl;
 	    exit(EXIT_FAILURE);
 	}
+    }
+
+    if ((opt = opts.find("disable-used-space")) != opts.end())
+    {
+       show_used_space = false;
     }
 
     vector<string> tmp;
@@ -426,14 +435,40 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
                  << snapper->getConfig().getSubvolume() << endl;
         }
 
-        list_from_one_config(snapper, list_mode);
+        list_from_one_config(snapper, list_mode, show_used_space);
     }
 }
 
 
 void
-list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
+list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool show_used_space)
 {
+    if (list_mode != LM_ALL && list_mode != LM_SINGLE)
+	show_used_space = false;
+
+    if (show_used_space)
+    {
+	try
+	{
+	    snapper->calculateUsedSpace();
+	}
+	catch (const QuotaException& e)
+	{
+	    SN_CAUGHT(e);
+
+	    show_used_space = false;
+	}
+    }
+
+    auto add_date = [](TableRow& row, const ProxySnapshot& snapshot) {
+	row.add(snapshot.isCurrent() ? "" : datetime(snapshot.getDate(), utc, iso));
+    };
+
+    auto add_used_space = [show_used_space](TableRow& row, const ProxySnapshot& snapshot) {
+	if (show_used_space)
+	    row.add(snapshot.isCurrent() ? "" : byte_to_humanstring(snapshot.getUsedSpace(), 2));
+    };
+
     Table table;
 
     switch (list_mode)
@@ -446,6 +481,8 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
 	    header.add(_("Pre #"));
 	    header.add(_("Date"));
 	    header.add(_("User"));
+	    if (show_used_space)
+		header.add(_("Used Space"));
 	    header.add(_("Cleanup"));
 	    header.add(_("Description"));
 	    header.add(_("Userdata"));
@@ -458,8 +495,9 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
 		row.add(toString(snapshot.getType()));
 		row.add(decString(snapshot.getNum()));
 		row.add(snapshot.getType() == POST ? decString(snapshot.getPreNum()) : "");
-		row.add(snapshot.isCurrent() ? "" : datetime(snapshot.getDate(), utc, iso));
+		add_date(row, snapshot);
 		row.add(username(snapshot.getUid()));
+		add_used_space(row, snapshot);
 		row.add(snapshot.getCleanup());
 		row.add(snapshot.getDescription());
 		row.add(show_userdata(snapshot.getUserdata()));
@@ -474,6 +512,8 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
 	    header.add(_("#"));
 	    header.add(_("Date"));
 	    header.add(_("User"));
+	    if (show_used_space)
+		header.add(_("Used Space"));
 	    header.add(_("Description"));
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
@@ -486,8 +526,9 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
 
 		TableRow row;
 		row.add(decString(snapshot.getNum()));
-		row.add(snapshot.isCurrent() ? "" : datetime(snapshot.getDate(), utc, iso));
+		add_date(row, snapshot);
 		row.add(username(snapshot.getUid()));
+		add_used_space(row, snapshot);
 		row.add(snapshot.getDescription());
 		row.add(show_userdata(snapshot.getUserdata()));
 		table.add(row);
@@ -539,17 +580,17 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode)
 void
 help_create()
 {
-    cout << _("  Create snapshot:") << endl
-	 << _("\tsnapper create") << endl
-	 << endl
-	 << _("    Options for 'create' command:") << endl
-	 << _("\t--type, -t <type>\t\tType for snapshot.") << endl
-	 << _("\t--pre-number <number>\t\tNumber of corresponding pre snapshot.") << endl
-	 << _("\t--print-number, -p\t\tPrint number of created snapshot.") << endl
-	 << _("\t--description, -d <description>\tDescription for snapshot.") << endl
-	 << _("\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot.") << endl
-	 << _("\t--userdata, -u <userdata>\tUserdata for snapshot.") << endl
-	 << _("\t--command <command>\tRun command and create pre and post snapshots.") << endl
+    cout << _("  Create snapshot:") << '\n'
+	 << _("\tsnapper create") << '\n'
+	 << '\n'
+	 << _("    Options for 'create' command:") << '\n'
+	 << _("\t--type, -t <type>\t\tType for snapshot.") << '\n'
+	 << _("\t--pre-number <number>\t\tNumber of corresponding pre snapshot.") << '\n'
+	 << _("\t--print-number, -p\t\tPrint number of created snapshot.") << '\n'
+	 << _("\t--description, -d <description>\tDescription for snapshot.") << '\n'
+	 << _("\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot.") << '\n'
+	 << _("\t--userdata, -u <userdata>\tUserdata for snapshot.") << '\n'
+	 << _("\t--command <command>\t\tRun command and create pre and post snapshots.") << endl
 	 << endl;
 }
 
@@ -672,13 +713,13 @@ command_create(ProxySnappers* snappers, ProxySnapper* snapper)
 void
 help_modify()
 {
-    cout << _("  Modify snapshot:") << endl
-	 << _("\tsnapper modify <number>") << endl
-	 << endl
-	 << _("    Options for 'modify' command:") << endl
-	 << _("\t--description, -d <description>\tDescription for snapshot.") << endl
-	 << _("\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot.") << endl
-	 << _("\t--userdata, -u <userdata>\tUserdata for snapshot.") << endl
+    cout << _("  Modify snapshot:") << '\n'
+	 << _("\tsnapper modify <number>") << '\n'
+	 << '\n'
+	 << _("    Options for 'modify' command:") << '\n'
+	 << _("\t--description, -d <description>\tDescription for snapshot.") << '\n'
+	 << _("\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot.") << '\n'
+	 << _("\t--userdata, -u <userdata>\tUserdata for snapshot.") << '\n'
 	 << endl;
 }
 
@@ -727,11 +768,11 @@ command_modify(ProxySnappers* snappers, ProxySnapper* snapper)
 void
 help_delete()
 {
-    cout << _("  Delete snapshot:") << endl
-	 << _("\tsnapper delete <number>") << endl
-	 << endl
-	 << _("    Options for 'delete' command:") << endl
-	 << _("\t--sync, -s\t\t\tSync after deletion.") << endl
+    cout << _("  Delete snapshot:") << '\n'
+	 << _("\tsnapper delete <number>") << '\n'
+	 << '\n'
+	 << _("    Options for 'delete' command:") << '\n'
+	 << _("\t--sync, -s\t\t\tSync after deletion.") << '\n'
 	 << endl;
 }
 
@@ -802,8 +843,8 @@ command_delete(ProxySnappers* snappers, ProxySnapper* snapper)
 void
 help_mount()
 {
-    cout << _("  Mount snapshot:") << endl
-	 << _("\tsnapper mount <number>") << endl
+    cout << _("  Mount snapshot:") << '\n'
+	 << _("\tsnapper mount <number>") << '\n'
 	 << endl;
 }
 
@@ -831,8 +872,8 @@ command_mount(ProxySnappers* snappers, ProxySnapper* snapper)
 void
 help_umount()
 {
-    cout << _("  Umount snapshot:") << endl
-	 << _("\tsnapper umount <number>") << endl
+    cout << _("  Umount snapshot:") << '\n'
+	 << _("\tsnapper umount <number>") << '\n'
 	 << endl;
 }
 
@@ -860,11 +901,11 @@ command_umount(ProxySnappers* snappers, ProxySnapper* snapper)
 void
 help_status()
 {
-    cout << _("  Comparing snapshots:") << endl
-	 << _("\tsnapper status <number1>..<number2>") << endl
-	 << endl
-	 << _("    Options for 'status' command:") << endl
-	 << _("\t--output, -o <file>\t\tSave status to file.") << endl
+    cout << _("  Comparing snapshots:") << '\n'
+	 << _("\tsnapper status <number1>..<number2>") << '\n'
+	 << '\n'
+	 << _("    Options for 'status' command:") << '\n'
+	 << _("\t--output, -o <file>\t\tSave status to file.") << '\n'
 	 << endl;
 }
 
@@ -926,13 +967,13 @@ command_status(ProxySnappers* snappers, ProxySnapper* snapper)
 void
 help_diff()
 {
-    cout << _("  Comparing snapshots:") << endl
-	 << _("\tsnapper diff <number1>..<number2> [files]") << endl
-	 << endl
-	 << _("    Options for 'diff' command:") << endl
-	 << _("\t--input, -i <file>\t\tRead files to diff from file.") << endl
-	 << _("\t--diff-cmd <command>\t\tCommand used for comparing files.") << endl
-	 << _("\t--extensions, -x <options>\tExtra options passed to the diff command.") << endl
+    cout << _("  Comparing snapshots:") << '\n'
+	 << _("\tsnapper diff <number1>..<number2> [files]") << '\n'
+	 << '\n'
+	 << _("    Options for 'diff' command:") << '\n'
+	 << _("\t--input, -i <file>\t\tRead files to diff from file.") << '\n'
+	 << _("\t--diff-cmd <command>\t\tCommand used for comparing files.") << '\n'
+	 << _("\t--extensions, -x <options>\tExtra options passed to the diff command.") << '\n'
 	 << endl;
 }
 
@@ -993,11 +1034,11 @@ command_diff(ProxySnappers* snappers, ProxySnapper* snapper)
 void
 help_undo()
 {
-    cout << _("  Undo changes:") << endl
-	 << _("\tsnapper undochange <number1>..<number2> [files]") << endl
-	 << endl
-	 << _("    Options for 'undochange' command:") << endl
-	 << _("\t--input, -i <file>\t\tRead files for which to undo changes from file.") << endl
+    cout << _("  Undo changes:") << '\n'
+	 << _("\tsnapper undochange <number1>..<number2> [files]") << '\n'
+	 << '\n'
+	 << _("    Options for 'undochange' command:") << '\n'
+	 << _("\t--input, -i <file>\t\tRead files for which to undo changes from file.") << '\n'
 	 << endl;
 }
 
@@ -1144,14 +1185,14 @@ getFilesystem(const ProxyConfig& config)
 void
 help_rollback()
 {
-    cout << _("  Rollback:") << endl
-	 << _("\tsnapper rollback [number]") << endl
-	 << endl
-	 << _("    Options for 'rollback' command:") << endl
-	 << _("\t--print-number, -p\t\tPrint number of second created snapshot.") << endl
-	 << _("\t--description, -d <description>\tDescription for snapshots.") << endl
-	 << _("\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots.") << endl
-	 << _("\t--userdata, -u <userdata>\tUserdata for snapshots.") << endl
+    cout << _("  Rollback:") << '\n'
+	 << _("\tsnapper rollback [number]") << '\n'
+	 << '\n'
+	 << _("    Options for 'rollback' command:") << '\n'
+	 << _("\t--print-number, -p\t\tPrint number of second created snapshot.") << '\n'
+	 << _("\t--description, -d <description>\tDescription for snapshots.") << '\n'
+	 << _("\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots.") << '\n'
+	 << _("\t--userdata, -u <userdata>\tUserdata for snapshots.") << '\n'
 	 << endl;
 }
 
@@ -1298,8 +1339,8 @@ command_rollback(ProxySnappers* snappers, ProxySnapper* snapper)
 void
 help_setup_quota()
 {
-    cout << _("  Setup quota:") << endl
-	 << _("\tsnapper setup-quota") << endl
+    cout << _("  Setup quota:") << '\n'
+	 << _("\tsnapper setup-quota") << '\n'
 	 << endl;
 }
 
@@ -1321,8 +1362,8 @@ command_setup_quota(ProxySnappers* snappers, ProxySnapper* snapper)
 void
 help_cleanup()
 {
-    cout << _("  Cleanup snapshots:") << endl
-	 << _("\tsnapper cleanup <cleanup-algorithm>") << endl
+    cout << _("  Cleanup snapshots:") << '\n'
+	 << _("\tsnapper cleanup <cleanup-algorithm>") << '\n'
 	 << endl;
 }
 
@@ -1385,8 +1426,8 @@ command_debug(ProxySnappers* snappers, ProxySnapper*)
 void
 help_xa_diff()
 {
-    cout << _("  Comparing snapshots extended attributes:") << endl
-         << _("\tsnapper xadiff <number1>..<number2> [files]") << endl
+    cout << _("  Comparing snapshots extended attributes:") << '\n'
+         << _("\tsnapper xadiff <number1>..<number2> [files]") << '\n'
          << endl;
 }
 
@@ -1490,25 +1531,25 @@ help(const list<Cmd>& cmds)
 	exit(EXIT_FAILURE);
     }
 
-    cout << _("usage: snapper [--global-options] <command> [--command-options] [command-arguments]") << endl
+    cout << _("usage: snapper [--global-options] <command> [--command-options] [command-arguments]") << '\n'
 	 << endl;
 
-    cout << _("    Global options:") << endl
-	 << _("\t--quiet, -q\t\t\tSuppress normal output.") << endl
-	 << _("\t--verbose, -v\t\t\tIncrease verbosity.") << endl
-	 << _("\t--utc\t\t\t\tDisplay dates and times in UTC.") << endl
-	 << _("\t--iso\t\t\t\tDisplay dates and times in ISO format.") << endl
-	 << _("\t--table-style, -t <style>\tTable style (integer).") << endl
-	 << _("\t--config, -c <name>\t\tSet name of config to use.") << endl
-	 << _("\t--no-dbus\t\t\tOperate without DBus.") << endl
-	 << _("\t--root, -r <path>\t\tOperate on target root (works only without DBus).") << endl
-	 << _("\t--version\t\t\tPrint version and exit.") << endl
+    cout << _("    Global options:") << '\n'
+	 << _("\t--quiet, -q\t\t\tSuppress normal output.") << '\n'
+	 << _("\t--verbose, -v\t\t\tIncrease verbosity.") << '\n'
+	 << _("\t--utc\t\t\t\tDisplay dates and times in UTC.") << '\n'
+	 << _("\t--iso\t\t\t\tDisplay dates and times in ISO format.") << '\n'
+	 << _("\t--table-style, -t <style>\tTable style (integer).") << '\n'
+	 << _("\t--config, -c <name>\t\tSet name of config to use.") << '\n'
+	 << _("\t--no-dbus\t\t\tOperate without DBus.") << '\n'
+	 << _("\t--root, -r <path>\t\tOperate on target root (works only without DBus).") << '\n'
+	 << _("\t--version\t\t\tPrint version and exit.") << '\n'
 	 << endl;
 
     for (list<Cmd>::const_iterator cmd = cmds.begin(); cmd != cmds.end(); ++cmd)
 	(*cmd->help_func)();
 
-    exit (EXIT_SUCCESS);
+    exit(EXIT_SUCCESS);
 }
 
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 12:19+0200\n"
 "PO-Revision-Date: 2003-08-14 10:47+0200\n"
 "Last-Translator: xxx <yyy@example.org>\n"
 "Language-Team: Tamil <i18n@suse.de>\n"
@@ -27,7 +27,7 @@ msgstr ""
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr ""
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr ""
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -40,6 +40,9 @@ msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr ""
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
+msgstr ""
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
 msgstr ""
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
@@ -257,6 +260,10 @@ msgstr "புரவலன் %s காணப்படவில்லை."
 msgid "ACL error."
 msgstr "பிழை"
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr ""
 
@@ -421,6 +428,10 @@ msgstr "விளக்கம்"
 msgid "Detecting filesystem type failed."
 msgstr ""
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 #, fuzzy
 msgid "Empty configdata."
 msgstr "செல்லாத அளிப்பு தரவு."
@@ -450,6 +461,10 @@ msgstr "தோல்வியுற்றது"
 #, fuzzy, c-format
 msgid "File '%s' not found."
 msgstr "சேமிப்பிடத்தில் கோப்பு %1 காணப்படவில்லை."
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "IO Error (%s)."
@@ -500,11 +515,19 @@ msgstr "செல்லாத வகை %1."
 msgid "Key"
 msgstr "கென்யா"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Listing configs failed (%s)."
 msgstr "உள்ளமைவு கோப்புகள் விளக்கப்படுகின்றன..."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
+msgstr ""
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
 msgstr ""
 
 #, fuzzy, c-format
@@ -537,6 +560,10 @@ msgstr "அனுமதிகள் மறுக்கப்படுகின�
 msgid "Opening file '%s' failed."
 msgstr ""
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr ""
 
@@ -558,9 +585,6 @@ msgstr "ஐ/ஓ தவறு"
 msgid "Quota failure (%s)."
 msgstr "தோல்வியுற்றது"
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
-
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "கூடுதல் தகவலுக்கு`%s --உதவி' அல்லது`%s –பயன்பாடு'வை முயற்சிக்கவும்.\n"
@@ -581,6 +605,10 @@ msgid "Subvolume"
 msgstr ""
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
 msgstr ""
 
 #, fuzzy
@@ -620,6 +648,9 @@ msgstr "அறிந்திராத வகை."
 
 #, c-format
 msgid "Use an integer number from %d to %d."
+msgstr ""
+
+msgid "Used Space"
 msgstr ""
 
 msgid "User"

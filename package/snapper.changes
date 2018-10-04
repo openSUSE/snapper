@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Tue Oct 02 09:56:59 CEST 2018 - aschnell@suse.com
+
+- show used space (exclusive space of btrfs qgroup) for each
+  snapshot (fate#323843)
+- version 0.6.0
+
+-------------------------------------------------------------------
 Fri Sep 14 12:13:05 CEST 2018 - aschnell@suse.com
 
 - avoid setenv after fork (bsc#1107587)

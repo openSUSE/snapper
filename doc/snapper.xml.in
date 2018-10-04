@@ -341,6 +341,16 @@
 	      </listitem>
 	    </varlistentry>
 	    <varlistentry>
+	      <term><option>--disable-used-space</option></term>
+	      <listitem>
+		<para>Disable display of used space.</para>
+		<para>Calculating the used space needs some time. Thus
+		this option can speedup the listing.</para>
+		<para>Display of used space is automatically disabled
+		if not available, e.g. quota not enabled on btrfs.</para>
+	      </listitem>
+	    </varlistentry>
+	    <varlistentry>
 	      <term><option>-a, --all-configs</option></term>
 	      <listitem>
 		<para>List snapshots from all configs accessible by the user.</para>

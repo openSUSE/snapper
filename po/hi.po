@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 12:19+0200\n"
 "PO-Revision-Date: 2018-04-07 16:03+0000\n"
 "Last-Translator: Anshul Panwar <caspian7pena@gmail.com>\n"
 "Language-Team: Hindi <https://l10n.opensuse.org/projects/snapper/master/hi/>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr ""
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr ""
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -35,6 +35,9 @@ msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr ""
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
+msgstr ""
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
 msgstr ""
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
@@ -254,6 +257,10 @@ msgstr "%s '%s' नहीं मिला"
 msgid "ACL error."
 msgstr "त्रुटि"
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr ""
 
@@ -419,6 +426,10 @@ msgstr "विवरण"
 msgid "Detecting filesystem type failed."
 msgstr ""
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 #, fuzzy
 msgid "Empty configdata."
 msgstr "अमान्य जारी डेटा।"
@@ -448,6 +459,10 @@ msgstr "असफल"
 #, fuzzy, c-format
 msgid "File '%s' not found."
 msgstr "कोष में फाइल %1 नहीं प्राप्त हुई।"
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "IO Error (%s)."
@@ -498,11 +513,19 @@ msgstr "अमान्य प्रकार %1।"
 msgid "Key"
 msgstr "केन्या"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Listing configs failed (%s)."
 msgstr "पार्सिंग समरूपण फाइलें..."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
+msgstr ""
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
 msgstr ""
 
 #, c-format
@@ -535,6 +558,10 @@ msgstr "अनुमति अस्वीकृत"
 msgid "Opening file '%s' failed."
 msgstr ""
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr ""
 
@@ -556,9 +583,6 @@ msgstr "I/O त्रुटि"
 msgid "Quota failure (%s)."
 msgstr "असफल"
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
-
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "अधिक जानकारी के लिए `%s --मदद' या `%s --प्रयोग' प्रयास करें।\n"
@@ -579,6 +603,10 @@ msgid "Subvolume"
 msgstr ""
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
 msgstr ""
 
 #, fuzzy
@@ -618,6 +646,9 @@ msgstr "अनंजान"
 
 #, c-format
 msgid "Use an integer number from %d to %d."
+msgstr ""
+
+msgid "Used Space"
 msgstr ""
 
 msgid "User"

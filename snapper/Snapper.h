@@ -166,6 +166,13 @@ namespace snapper
 
 	QuotaData queryQuotaData() const;
 
+	/**
+	 * Calculate used spaces. So far only available for btrfs and
+	 * only if quota is enabled. In that a btrfs rescan and sync
+	 * is triggered.
+	 */
+	void calculateUsedSpace() const;
+
 	static const char* compileVersion();
 	static const char* compileFlags();
 

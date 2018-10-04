@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: base\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-20 14:05+0200\n"
+"POT-Creation-Date: 2018-10-02 12:19+0200\n"
 "PO-Revision-Date: 2006-11-03 14:26\n"
 "Last-Translator: Novell Language <language@novell.com>\n"
 "Language-Team: Novell Language <language@novell.com>\n"
@@ -24,7 +24,7 @@ msgstr ""
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr ""
 
-msgid "\t--command <command>\tRun command and create pre and post snapshots."
+msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr ""
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -37,6 +37,9 @@ msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr ""
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
+msgstr ""
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
 msgstr ""
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
@@ -254,6 +257,10 @@ msgstr "Umamkeli %s akafunyenwanga."
 msgid "ACL error."
 msgstr "impazamo"
 
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+msgid "B"
+msgstr ""
+
 msgid "Cleanup"
 msgstr ""
 
@@ -418,6 +425,10 @@ msgstr "Inkcazelo"
 msgid "Detecting filesystem type failed."
 msgstr ""
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+msgid "EiB"
+msgstr ""
+
 #, fuzzy
 msgid "Empty configdata."
 msgstr "Iinkcukacha zombandela azisebenziseki."
@@ -448,6 +459,10 @@ msgstr "Kusilele"
 #, fuzzy, c-format
 msgid "File '%s' not found."
 msgstr "Ifayili %1 ayifunyenwanga elugcinweni."
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+msgid "GiB"
+msgstr ""
 
 # error box title
 #, fuzzy, c-format
@@ -500,11 +515,19 @@ msgstr "Uhlobo %1.alusebenziseki."
 msgid "Key"
 msgstr "i-Kenya"
 
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+msgid "KiB"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Kwahlulwa iifayili zobumbeko..."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
+msgstr ""
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+msgid "MiB"
 msgstr ""
 
 #, fuzzy, c-format
@@ -537,6 +560,10 @@ msgstr "Iimvume zaliwe"
 msgid "Opening file '%s' failed."
 msgstr ""
 
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+msgid "PiB"
+msgstr ""
+
 msgid "Post #"
 msgstr ""
 
@@ -559,9 +586,6 @@ msgstr "Imposiso ye-I/O "
 msgid "Quota failure (%s)."
 msgstr "Kusilele"
 
-msgid "Running in non UTF-8 locale. Setup is unsupported."
-msgstr ""
-
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "Try `%s --help' or `%s --usage' for more information.\n"
@@ -582,6 +606,10 @@ msgid "Subvolume"
 msgstr ""
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+msgid "TiB"
 msgstr ""
 
 #, fuzzy
@@ -621,6 +649,9 @@ msgstr "Uhlobo olungaziwayo."
 
 #, c-format
 msgid "Use an integer number from %d to %d."
+msgstr ""
+
+msgid "Used Space"
 msgstr ""
 
 msgid "User"

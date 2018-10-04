@@ -741,6 +741,36 @@ namespace snapper
     }
 
 
+    void
+    Snapper::calculateUsedSpace() const
+    {
+#ifdef ENABLE_BTRFS_QUOTA
+
+	const Btrfs* btrfs = dynamic_cast<const Btrfs*>(getFilesystem());
+	if (!btrfs)
+	    SN_THROW(QuotaException("quota only supported with btrfs"));
+
+	try
+	{
+	    SDir general_dir = btrfs->openGeneralDir();
+
+	    quota_rescan(general_dir.fd());
+	    sync(general_dir.fd());
+	}
+	catch (...)
+	{
+	    SN_THROW(QuotaException("quota rescan or sync failed"));
+	}
+
+#else
+
+	SN_THROW(QuotaException("not implemented"));
+	__builtin_unreachable();
+
+#endif
+    }
+
+
     QuotaData
     Snapper::queryQuotaData() const
     {

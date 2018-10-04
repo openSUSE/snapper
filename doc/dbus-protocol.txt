@@ -35,6 +35,9 @@ signal SnapshotCreated config-name number
 signal SnapshotModified config-name number
 signal SnapshotsDeleted config-name list(numbers)
 
+method CalculateUsedSpace config-name (experimental)
+method GetUsedSpace config-name number -> number (experimental)
+
 method MountSnapshot config-name number user-request -> path
 method UmountSnapshot config-name number user-request
 method GetMountPoint config-name number -> path

@@ -12,7 +12,8 @@ libutils_la_SOURCES =			\
 	console.cc	console.h	\
 	equal-date.cc	equal-date.h	\
 	GetOpts.cc	GetOpts.h	\
-	Range.cc	Range.h
+	Range.cc	Range.h		\
+	HumanString.cc  HumanString.h
 
 libutils_la_LIBADD = ../../snapper/libsnapper.la
 
