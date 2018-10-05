@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-02 12:19+0200\n"
 "PO-Revision-Date: 2018-10-05 12:44+0000\n"
-"Last-Translator: gatot koco <rootelang@gmail.com>\n"
+"Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
 "Language-Team: Indonesian "
 "<https://l10n.opensuse.org/projects/snapper/master/id/>\n"
 "Language: id\n"
@@ -41,7 +41,7 @@ msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\tPerintah digunakan untuk membandingkan berkas."
 
 msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr ""
+msgstr "\t--disable-used-space\t\tNonaktifkan menampilkan ruang yang digunakan."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tPilihan ekstra diteruskan untuk perintah diff."
@@ -148,9 +148,8 @@ msgstr "\tsnapper rollback [angka]"
 msgid "\tsnapper set-config <configdata>"
 msgstr "\tsnapper set-config <konfigdata>"
 
-#, fuzzy
 msgid "\tsnapper setup-quota"
-msgstr "\tsnapper get-konfig"
+msgstr "\tsnapper setup-quota"
 
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tsnapper status <angka1>..<angka2>"
@@ -237,7 +236,7 @@ msgid "  Set config:"
 msgstr "  Atur konfig:"
 
 msgid "  Setup quota:"
-msgstr ""
+msgstr "  Atur kuota:"
 
 msgid "  Umount snapshot:"
 msgstr "  Umount snapshot:"
@@ -257,7 +256,7 @@ msgstr "ACL galat."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
-msgstr ""
+msgstr "B"
 
 msgid "Cleanup"
 msgstr "Pembersihan"
@@ -301,9 +300,9 @@ msgstr "Perintah 'modify' membutuhkan setidaknya satu argumen."
 msgid "Command 'mount' needs at least one argument."
 msgstr "Perintah 'mount' membutuhkan setidaknya satu argumen."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr "Perintah 'rollback' membawa satu atau tidak argumen."
+msgstr "Perintah 'rollback' tidak dapat digunakan pada subvolume non-root %s."
 
 msgid "Command 'rollback' only available for btrfs."
 msgstr "Perintah 'rollback' hanya tersedia untuk btrfs."
@@ -314,16 +313,14 @@ msgstr "Perintah 'rollback' membawa satu atau tidak argumen."
 msgid "Command 'set-config' needs at least one argument."
 msgstr "Perintah 'set-config' membutuhkan setidaknya satu argumen."
 
-#, fuzzy
 msgid "Command 'setup-quota' does not take arguments."
-msgstr "Perintah 'help' tidak membawa argumen."
+msgstr "Perintah 'setup-quota' tidak mengambil argumen."
 
 msgid "Command 'status' needs one argument."
 msgstr "Perintah 'status' membutuhkan satu argumen."
 
-#, fuzzy
 msgid "Command 'umount' needs at least one argument."
-msgstr "Perintah 'mount' membutuhkan setidaknya satu argumen."
+msgstr "Perintah 'unmount' membutuhkan setidaknya satu argumen."
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Perintah 'undochange' membutuhkan setidaknya satu argument."
@@ -399,7 +396,7 @@ msgstr "Gagal mendeteksi jenis sistem berkas."
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
-msgstr ""
+msgstr "EiB"
 
 msgid "Empty configdata."
 msgstr "Konfigdata kosong."
@@ -407,15 +404,15 @@ msgstr "Konfigdata kosong."
 msgid "Empty userdata."
 msgstr "Penggunadata kosong."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Error (%s)."
-msgstr "Galat I/O (%s)."
+msgstr "Galat (%s)."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Gagal untuk menginisialisasi handler sistem berkas."
 
 msgid "Failed to set locale. Fix your system."
-msgstr ""
+msgstr "Failed to set locale. Fix your system."
 
 msgid "Failure"
 msgstr "Kegagalan"
@@ -430,7 +427,7 @@ msgstr "Berkas '%s' tidak ditemukan."
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
-msgstr ""
+msgstr "GiB"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -438,14 +435,13 @@ msgstr "Galat I/O (%s)."
 
 #, c-format
 msgid "IO error (%s)."
-msgstr "galat I/O (%s)."
+msgstr "Galat I/O (%s)."
 
 msgid "Identical snapshots."
 msgstr "Identik snapshots."
 
-#, fuzzy
 msgid "Illegal snapshot."
-msgstr "Snapshot Ilegal."
+msgstr "Snapshot ilegal."
 
 msgid "Invalid configdata."
 msgstr "Konfigdata tidak valid."
@@ -479,7 +475,7 @@ msgstr "Kunci"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -490,7 +486,7 @@ msgstr "Mungkin anda lupa pembatas '..' antara nomor snapshot."
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -521,7 +517,7 @@ msgstr "Membuka berkas '%s' gagal."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
-msgstr ""
+msgstr "PiB"
 
 msgid "Post #"
 msgstr "Pos #"
@@ -535,13 +531,13 @@ msgstr "Pre #"
 msgid "Pre Date"
 msgstr "Pre Tanggal"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Quota error (%s)."
-msgstr "galat I/O (%s)."
+msgstr "Galat kuota (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Quota failure (%s)."
-msgstr "Kegagalan: %s."
+msgstr "Kegagalan kuota (%s)."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Lihat 'man snapper' untuk instruksi lebih lanjut."
@@ -565,7 +561,7 @@ msgstr "Konfig 'root' tidak ada. Sepertinya snapper tidak dikonfigurasi."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
-msgstr ""
+msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Coba 'snapper --help' untuk informasi lebih."
@@ -603,7 +599,7 @@ msgid "Use an integer number from %d to %d."
 msgstr "Gunakan sebuah angka integer dari %d untuk %d."
 
 msgid "Used Space"
-msgstr ""
+msgstr "Ruang yang digunakan"
 
 msgid "User"
 msgstr "Pengguna"
@@ -628,27 +624,27 @@ msgstr "membuat:%d modif:%d hapus:%d"
 
 #, c-format
 msgid "creating %s"
-msgstr "Membuat %s"
+msgstr "membuat %s"
 
 #, c-format
 msgid "deleting %s"
-msgstr "Menghapus %s"
+msgstr "menghapus %s"
 
 #, c-format
 msgid "failed to create %s"
-msgstr "Gagal membuat %s"
+msgstr "gagal membuat %s"
 
 #, c-format
 msgid "failed to delete %s"
-msgstr "Gagal menghapus %s"
+msgstr "gagal menghapus %s"
 
 #, c-format
 msgid "failed to modify %s"
-msgstr "Gagal untuk memodif %s."
+msgstr "gagal memodifikasi %s"
 
 #, c-format
 msgid "modifying %s"
-msgstr "Memodifikasi %s"
+msgstr "memodifikasi %s"
 
 msgid "nothing to do"
 msgstr "tidak ada yang dilakukan"
