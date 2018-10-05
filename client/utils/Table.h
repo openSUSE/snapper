@@ -37,6 +37,10 @@ enum TableLineStyle {
   _End,			       ///< sentinel
 };
 
+enum class TableAlign {
+  LEFT, RIGHT
+};
+
 class Table;
 
 class TableRow {
@@ -77,6 +81,13 @@ class TableHeader : public TableRow {
 public:
   //! Constructor. Reserve place for c columns.
   TableHeader (unsigned c = 0): TableRow (c) {}
+
+  void add(const string& s, TableAlign align = TableAlign::LEFT);
+
+  TableAlign align(int c) const { return _aligns[c]; }
+
+private:
+  vector<TableAlign> _aligns;
 };
 
 inline

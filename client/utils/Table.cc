@@ -1,17 +1,13 @@
 #include <iostream>
 #include <cstring>
 #include <cstdlib>
-
-// #include "zypp/base/Logger.h"
+#include <iomanip>
+#include <boost/io/ios_state.hpp>
 
 #include "console.h"
 #include "text.h"
 
 #include "Table.h"
-
-// libzypp logger settings
-// #undef  ZYPP_BASE_LOGGER_LOGGROUP
-// #define ZYPP_BASE_LOGGER_LOGGROUP "zypper"
 
 using namespace std;
 
@@ -64,7 +60,6 @@ void TableRow::dumpTo (ostream &stream, const Table & parent) const
     i = _columns.begin (),
     e = _columns.end ();
 
-  stream.setf (ios::left, ios::adjustfield);
   stream << string(parent._margin, ' ');
   // current position at currently printed line
   int curpos = parent._margin;
@@ -95,7 +90,6 @@ void TableRow::dumpTo (ostream &stream, const Table & parent) const
       else
         // vertical line, padded with spaces
         stream << ' ' << vline << ' ';
-      stream.width (0);
     }
     else
       seen_first = true;
@@ -111,14 +105,24 @@ void TableRow::dumpTo (ostream &stream, const Table & parent) const
     }
     else
     {
-      stream << s;
-      stream.width (parent._max_width[c] - ssize);
+      if (parent._header.align(c) == TableAlign::LEFT)
+	stream << s << setw(parent._max_width[c] - ssize) << "";
+      else
+	stream << setw(parent._max_width[c] - ssize) << "" << s;
     }
-    stream << "";
     curpos += parent._max_width[c] + (parent._style != none ? 2 : 3);
   }
   stream << endl;
 }
+
+
+void
+TableHeader::add(const string& s, TableAlign align)
+{
+  TableRow::add(s);
+  _aligns.push_back(align);
+}
+
 
 // ----------------------( Table )---------------------------------------------
 
@@ -189,7 +193,6 @@ void Table::dumpRule (ostream &stream) const {
 
   bool seen_first = false;
 
-  stream.width (0);
   stream << string(_margin, ' ');
   for (unsigned c = 0; c <= _max_col; ++c) {
     if (seen_first) {
@@ -205,6 +208,9 @@ void Table::dumpRule (ostream &stream) const {
 }
 
 void Table::dumpTo (ostream &stream) const {
+
+  boost::io::ios_flags_saver ifs(stream);
+  stream.width(0);
 
   // reset column widths for columns that can be abbreviated
   //! \todo allow abbrev of multiple columns?

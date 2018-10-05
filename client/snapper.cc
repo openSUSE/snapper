@@ -482,7 +482,7 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool show_used_s
 	    header.add(_("Date"));
 	    header.add(_("User"));
 	    if (show_used_space)
-		header.add(_("Used Space"));
+		header.add(_("Used Space"), TableAlign::RIGHT);
 	    header.add(_("Cleanup"));
 	    header.add(_("Description"));
 	    header.add(_("Userdata"));
@@ -513,7 +513,7 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool show_used_s
 	    header.add(_("Date"));
 	    header.add(_("User"));
 	    if (show_used_space)
-		header.add(_("Used Space"));
+		header.add(_("Used Space"), TableAlign::RIGHT);
 	    header.add(_("Description"));
 	    header.add(_("Userdata"));
 	    table.setHeader(header);
