@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Oct 05 12:07:53 CEST 2018 - aschnell@suse.com
+
+- right align used space in table output
+- version 0.6.1
+
+-------------------------------------------------------------------
 Tue Oct 02 09:56:59 CEST 2018 - aschnell@suse.com
 
 - show used space (exclusive space of btrfs qgroup) for each
