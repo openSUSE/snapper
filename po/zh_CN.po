@@ -10,9 +10,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-02 12:19+0200\n"
-"PO-Revision-Date: 2018-04-23 05:47+0000\n"
-"Last-Translator: Emily Dong <Emily.Dong@excel-gits.com>\n"
-"Language-Team: Chinese (China) <https://l10n.opensuse.org/projects/snapper/master/zh_CN/>\n"
+"PO-Revision-Date: 2018-10-06 15:55+0000\n"
+"Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
+"Language-Team: Chinese (China) "
+"<https://l10n.opensuse.org/projects/snapper/master/zh_CN/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,9 +30,8 @@ msgstr "\t--cleanup-algorithm, -c <算法> \t快照的清理算法。选项：nu
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <算法>\t快照的清理算法。选项：number, timeline, empty-pre-post。"
 
-#, fuzzy
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <命令> \t运行命令，创建前期和后期快照。"
+msgstr "\t--command <命令>\t\t运行命令，创建前期和后期快照。"
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <配置名称> \t\t设置要使用的配置名称。"
@@ -45,9 +45,8 @@ msgstr "\t--description, -d <描述>\t快照描述。"
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <命令>\t\t用于比较文件的命令。"
 
-#, fuzzy
 msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-filters \t\t禁用过滤器。"
+msgstr "\t--disable-used-space\t\t禁用已用空间的显示。"
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <选项>\t传递到 diff 命令的额外选项。"
@@ -263,7 +262,7 @@ msgstr "访问控制列表错误。"
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
-msgstr ""
+msgstr "B"
 
 msgid "Cleanup"
 msgstr "清空"
@@ -403,7 +402,7 @@ msgstr "检测文件系统类型失败。"
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
-msgstr ""
+msgstr "EiB"
 
 msgid "Empty configdata."
 msgstr "空的配置数据。"
@@ -434,7 +433,7 @@ msgstr "未找到文件 '%s'。"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
-msgstr ""
+msgstr "GiB"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -481,7 +480,7 @@ msgstr "键"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -492,7 +491,7 @@ msgstr "可能您忘记在快照编号之间输入分界符“..”。"
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -523,7 +522,7 @@ msgstr "打开文件 '%s' 失败。"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
-msgstr ""
+msgstr "PiB"
 
 msgid "Post #"
 msgstr "后期 #"
@@ -567,7 +566,7 @@ msgstr "配置“root”不存在。snapper 可能未配置。"
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
-msgstr ""
+msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "更多信息可尝试 'snapper help'。"
@@ -605,7 +604,7 @@ msgid "Use an integer number from %d to %d."
 msgstr "请使用一个从 %d 到 %d 的整数。"
 
 msgid "Used Space"
-msgstr ""
+msgstr "已用空间"
 
 msgid "User"
 msgstr "用户"
