@@ -1,17 +1,16 @@
 # @TITLE@
 # Copyright (C) 2006, SUSE Linux GmbH, Nuremberg
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 # This file is distributed under the same license as @PACKAGE@ package. FIRST
-#
+# Ferdinand Galko <galko.ferdinand@gmail.com>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-02 12:19+0200\n"
-"PO-Revision-Date: 2018-04-23 05:47+0000\n"
+"PO-Revision-Date: 2018-10-06 11:37+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
-"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
+"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
+"\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,9 +27,9 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tUpratovací algoritmus pre snímku."
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\t\tUpratovací algoritmus pre snímky."
 
-#, fuzzy
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <príkaz>\tSpustí príkaz a vytvorí snímky pred a po snímky."
+msgstr ""
+"\t--command <príkaz>\t\tSpustí príkaz a vytvorí snímky pred a po snímky."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <name>\t\tNastaví názov konfigurácie, ktorá sa použije."
@@ -45,7 +44,7 @@ msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\tPríkaz slúži na porovnávanie súborov."
 
 msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr ""
+msgstr "\t--disable-used-space\t\tZakázať ukazovanie použitého miesta."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <voľby>\tĎalšie voľby odovzdané príkazu diff."
@@ -260,7 +259,7 @@ msgstr "ACL chyba."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
-msgstr ""
+msgstr "B"
 
 msgid "Cleanup"
 msgstr "Upratovanie"
@@ -402,7 +401,7 @@ msgstr "Detekcia typu súborového systému zlyhala."
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
-msgstr ""
+msgstr "EiB"
 
 msgid "Empty configdata."
 msgstr "Prázdne konfiguračné údaje."
@@ -434,7 +433,7 @@ msgstr "Súbor '%s' nebol nájdený."
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
-msgstr ""
+msgstr "GiB"
 
 # error box title
 #, c-format
@@ -484,7 +483,7 @@ msgstr "Kľúč"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 # %s is either BOOTP or DHCP
 #, c-format
@@ -496,7 +495,7 @@ msgstr "Možno, že ste zabudli oddeľovač '..' medzi číslami snímok."
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -527,7 +526,7 @@ msgstr "Otvorenie súboru '%s' zlyhalo."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
-msgstr ""
+msgstr "PiB"
 
 msgid "Post #"
 msgstr "Po #"
@@ -572,7 +571,7 @@ msgstr "Konfigurácia 'root' neexistuje. Pravdepodobne nie je snapper nakonfigur
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
-msgstr ""
+msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Skúste 'snapper --help' pre viac informácií."
@@ -610,7 +609,7 @@ msgid "Use an integer number from %d to %d."
 msgstr "Použite celé číslo od %d do %d."
 
 msgid "Used Space"
-msgstr ""
+msgstr "Použité miesto"
 
 msgid "User"
 msgstr "Používateľ"
