@@ -106,6 +106,24 @@ ProxySnapshotsDbus::ProxySnapshotsDbus(ProxySnapperDbus* backref)
 }
 
 
+ProxySnapshots::const_iterator
+ProxySnapshotsDbus::getDefault() const
+{
+    pair<bool, unsigned int> tmp = command_get_default_snapshot(conn(), configName());
+
+    return tmp.first ? find(tmp.second) : end();
+}
+
+
+ProxySnapshots::const_iterator
+ProxySnapshotsDbus::getActive() const
+{
+    pair<bool, unsigned int> tmp = command_get_active_snapshot(conn(), configName());
+
+    return tmp.first ? find(tmp.second) : end();
+}
+
+
 DBus::Connection&
 ProxySnapshotsDbus::conn() const
 {

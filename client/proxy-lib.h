@@ -79,6 +79,10 @@ class ProxySnapshotsLib : public ProxySnapshots
 
 public:
 
+    virtual const_iterator getDefault() const;
+
+    virtual const_iterator getActive() const;
+
     ProxySnapshotsLib(ProxySnapperLib* backref);
 
     ProxySnapperLib* backref;

@@ -172,6 +172,10 @@ public:
 
     const_iterator getCurrent() const { return proxy_snapshots.begin(); }
 
+    virtual const_iterator getDefault() const = 0;
+
+    virtual const_iterator getActive() const = 0;
+
     iterator find(unsigned int i);
     const_iterator find(unsigned int i) const;
 

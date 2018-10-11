@@ -90,6 +90,12 @@ void
 command_delete_snapshots(DBus::Connection& conn, const string& config_name,
 			 const vector<unsigned int>& nums, bool verbose);
 
+std::pair<bool, unsigned int>
+command_get_default_snapshot(DBus::Connection& conn, const string& config_name);
+
+std::pair<bool, unsigned int>
+command_get_active_snapshot(DBus::Connection& conn, const string& config_name);
+
 void
 command_calculate_used_space(DBus::Connection& conn, const string& config_name);
 
