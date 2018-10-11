@@ -157,7 +157,7 @@ void Table::allowAbbrev(unsigned column) {
 }
 
 void Table::updateColWidths (const TableRow& tr) {
-  // how much columns spearators add to the width of the table
+  // how much columns the separators add to the width of the table
   int sepwidth = _style == none ? 2 : 3;
   // initialize the width to -sepwidth (the first column does not have a line
   // on the left)
