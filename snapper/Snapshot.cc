@@ -767,6 +767,24 @@ namespace snapper
     }
 
 
+    Snapshots::const_iterator
+    Snapshots::getDefault() const
+    {
+	std::pair<bool, unsigned int> tmp = snapper->getFilesystem()->getDefault();
+
+	return tmp.first ? find(tmp.second) : end();
+    }
+
+
+    Snapshots::const_iterator
+    Snapshots::getActive() const
+    {
+	std::pair<bool, unsigned int> tmp = snapper->getFilesystem()->getActive();
+
+	return tmp.first ? find(tmp.second) : end();
+    }
+
+
     struct num_is
     {
 	num_is(unsigned int num) : num(num) {}

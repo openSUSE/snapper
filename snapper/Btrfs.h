@@ -89,6 +89,8 @@ namespace snapper
 
 	virtual bool isActive(unsigned int num) const;
 
+	virtual std::pair<bool, unsigned int> getActive() const;
+
 	virtual void sync() const;
 
 	virtual qgroup_t getQGroup() const { return qgroup; }
@@ -101,6 +103,12 @@ namespace snapper
 
 	void addToFstabHelper(const string& default_subvolume_name) const;
 	void removeFromFstabHelper() const;
+
+	/**
+	 * Find the snapper snapshot number corresponding to the btrfs
+	 * subvol id.
+	 */
+	std::pair<bool, unsigned int> idToNum(int fd, subvolid_t id) const;
 
     };
 
