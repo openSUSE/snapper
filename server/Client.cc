@@ -308,6 +308,18 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='numbers' type='au' direction='in'/>\n"
 	"    </method>\n"
 
+	"    <method name='GetDefaultSnapshot'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='valid' type='b' direction='out'/>\n"
+	"      <arg name='number' type='u' direction='out'/>\n"
+	"    </method>\n"
+
+	"    <method name='GetActiveSnapshot'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='valid' type='b' direction='out'/>\n"
+	"      <arg name='number' type='u' direction='out'/>\n"
+	"    </method>\n"
+
 	"    <method name='CalculateUsedSpace'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"    </method>\n"
@@ -1087,6 +1099,74 @@ Client::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
+Client::get_default_snapshot(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name;
+
+    y2deb("GetDefaultSnapshot config_name:" << config_name);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
+    Snapshots& snapshots = snapper->getSnapshots();
+
+    Snapshots::const_iterator tmp = snapshots.getDefault();
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
+
+    if (tmp != snapshots.end())
+	hoho << true << tmp->getNum();
+    else
+	hoho << false << (unsigned int)(0);
+
+    conn.send(reply);
+}
+
+
+void
+Client::get_active_snapshot(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name;
+
+    y2deb("GetActiveSnapshot config_name:" << config_name);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
+    Snapshots& snapshots = snapper->getSnapshots();
+
+    Snapshots::const_iterator tmp = snapshots.getActive();
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
+
+    if (tmp != snapshots.end())
+	hoho << true << tmp->getNum();
+    else
+	hoho << false << (unsigned int)(0);
+
+    conn.send(reply);
+}
+
+
+void
 Client::calculate_used_space(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
@@ -1572,6 +1652,10 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    create_post_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "DeleteSnapshots"))
 	    delete_snapshots(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "GetDefaultSnapshot"))
+	    get_default_snapshot(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "GetActiveSnapshot"))
+	    get_active_snapshot(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "CalculateUsedSpace"))
 	    calculate_used_space(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetUsedSpace"))
@@ -1744,6 +1828,12 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
     {
 	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.quota", e.what());
+	conn.send(reply);
+    }
+    catch (const UnsupportedException& e)
+    {
+	SN_CAUGHT(e);
+	DBus::MessageError reply(msg, "error.unsupported", e.what());
 	conn.send(reply);
     }
     catch (const Exception& e)

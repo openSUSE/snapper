@@ -101,6 +101,8 @@ public:
     void create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void create_post_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void delete_snapshots(DBus::Connection& conn, DBus::Message& msg);
+    void get_default_snapshot(DBus::Connection& conn, DBus::Message& msg);
+    void get_active_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void calculate_used_space(DBus::Connection& conn, DBus::Message& msg);
     void get_used_space(DBus::Connection& conn, DBus::Message& msg);
     void mount_snapshot(DBus::Connection& conn, DBus::Message& msg);

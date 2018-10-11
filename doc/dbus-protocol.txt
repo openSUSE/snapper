@@ -35,6 +35,9 @@ signal SnapshotCreated config-name number
 signal SnapshotModified config-name number
 signal SnapshotsDeleted config-name list(numbers)
 
+method GetDefaultSnapshot config-name -> bool number
+method GetActiveSnapshot config-name -> bool number
+
 method CalculateUsedSpace config-name (experimental)
 method GetUsedSpace config-name number -> number (experimental)
 
