@@ -235,6 +235,27 @@ namespace snapper
 
 	const_iterator getSnapshotCurrent() const { return entries.begin(); }
 
+	/**
+	 * Query the default snapshot. Only supported for btrfs.
+	 *
+	 * For btrfs the default btrfs snapshot will be mounted next
+	 * time the filesystem is mounted (unless overridden).
+	 *
+	 * The default btrfs snapshot may not be controlled by snapper
+	 * in which this function returns end().
+	 */
+	const_iterator getDefault() const;
+
+	/**
+	 * Query the active snapshot. Only supported for btrfs.
+	 *
+	 * For btrfs the active btrfs snapshot is the one currently mounted.
+	 *
+	 * The active btrfs snapshot may not be controlled by snapper
+	 * in which this function returns end().
+	 */
+	const_iterator getActive() const;
+
     private:
 
 	void initialize();

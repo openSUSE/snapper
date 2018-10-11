@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2015] SUSE LLC
+ * Copyright (c) [2015,2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -391,6 +391,11 @@ namespace snapper
     struct InvalidGroupException : public Exception
     {
 	explicit InvalidGroupException() : Exception("invalid group") {}
+    };
+
+    struct UnsupportedException : public Exception
+    {
+        explicit UnsupportedException() : Exception("unsupported") {}
     };
 
 }

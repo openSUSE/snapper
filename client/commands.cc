@@ -293,6 +293,72 @@ command_delete_snapshots(DBus::Connection& conn, const string& config_name,
 }
 
 
+std::pair<bool, unsigned int>
+command_get_default_snapshot(DBus::Connection& conn, const string& config_name)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetDefaultSnapshot");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name;
+
+    try
+    {
+	DBus::Message reply = conn.send_with_reply_and_block(call);
+
+	bool valid;
+	unsigned int number;
+
+	DBus::Hihi hihi(reply);
+	hihi >> valid >> number;
+
+	return make_pair(valid, number);
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	SN_CAUGHT(e);
+
+	if (strcmp(e.name(), "error.unsupported") == 0)
+	    SN_THROW(UnsupportedException());
+
+	SN_RETHROW(e);
+	__builtin_unreachable();
+    }
+}
+
+
+std::pair<bool, unsigned int>
+command_get_active_snapshot(DBus::Connection& conn, const string& config_name)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetActiveSnapshot");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name;
+
+    try
+    {
+	DBus::Message reply = conn.send_with_reply_and_block(call);
+
+	bool valid;
+	unsigned int number;
+
+	DBus::Hihi hihi(reply);
+	hihi >> valid >> number;
+
+	return make_pair(valid, number);
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	SN_CAUGHT(e);
+
+	if (strcmp(e.name(), "error.unsupported") == 0)
+	    SN_THROW(UnsupportedException());
+
+	SN_RETHROW(e);
+	__builtin_unreachable();
+    }
+}
+
+
 void
 command_calculate_used_space(DBus::Connection& conn, const string& config_name)
 {

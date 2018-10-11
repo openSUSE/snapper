@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2017] SUSE LLC
+ * Copyright (c) [2016-2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -93,6 +93,8 @@ namespace snapper
 	virtual std::pair<bool, unsigned int> getDefault() const;
 
 	virtual void setDefault(unsigned int num) const;
+
+	virtual std::pair<bool, unsigned int> getActive() const;
 
 	virtual bool isActive(unsigned int num) const;
 

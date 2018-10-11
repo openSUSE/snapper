@@ -1453,13 +1453,9 @@ namespace snapper
 
 
     std::pair<bool, unsigned int>
-    Btrfs::getDefault() const
+    Btrfs::idToNum(int fd, subvolid_t id) const
     {
-	SDir subvolume_dir = openSubvolumeDir();
-
-	subvolid_t id = get_default_id(subvolume_dir.fd());
-
-	string path = get_subvolume(subvolume_dir.fd(), id);
+	string path = get_subvolume(fd, id);
 
 	Regex rx("/([0-9]+)/snapshot$");
 	if (!rx.match(path))
@@ -1471,6 +1467,16 @@ namespace snapper
 	    return make_pair(false, 0);
 
 	return make_pair(true, num);
+    }
+
+
+    std::pair<bool, unsigned int>
+    Btrfs::getDefault() const
+    {
+	SDir subvolume_dir = openSubvolumeDir();
+	int fd = subvolume_dir.fd();
+
+	return idToNum(fd, get_default_id(fd));
     }
 
 
@@ -1501,6 +1507,16 @@ namespace snapper
     }
 
 
+    std::pair<bool, unsigned int>
+    Btrfs::getActive() const
+    {
+	SDir subvolume_dir = openSubvolumeDir();
+	int fd = subvolume_dir.fd();
+
+	return idToNum(fd, get_id(fd));
+    }
+
+
     bool
     Btrfs::isActive(unsigned int num) const
     {
@@ -1528,28 +1544,40 @@ namespace snapper
     bool
     Btrfs::isDefault(unsigned int num) const
     {
-	throw std::logic_error("not implemented");
+	SN_THROW(UnsupportedException());
+	__builtin_unreachable();
     }
 
 
     std::pair<bool, unsigned int>
     Btrfs::getDefault() const
     {
-	throw std::logic_error("not implemented");
+	SN_THROW(UnsupportedException());
+	__builtin_unreachable();
     }
 
 
     void
     Btrfs::setDefault(unsigned int num) const
     {
-	throw std::logic_error("not implemented");
+	SN_THROW(UnsupportedException());
+	__builtin_unreachable();
+    }
+
+
+    std::pair<bool, unsigned int>
+    Btrfs::getActive() const
+    {
+	SN_THROW(UnsupportedException());
+	__builtin_unreachable();
     }
 
 
     bool
     Btrfs::isActive(unsigned int num) const
     {
-	throw std::logic_error("not implemented");
+	SN_THROW(UnsupportedException());
+	__builtin_unreachable();
     }
 
 #endif

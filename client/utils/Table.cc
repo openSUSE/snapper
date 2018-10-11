@@ -54,7 +54,6 @@ void TableRow::dumpTo (ostream &stream, const Table & parent) const
 {
   const char * vline = parent._style != none ? lines[parent._style][0] : "";
 
-  unsigned int ssize = 0; // string size in columns
   bool seen_first = false;
   container::const_iterator
     i = _columns.begin (),
@@ -96,7 +95,7 @@ void TableRow::dumpTo (ostream &stream, const Table & parent) const
 
     // stream.width (widths[c]); // that does not work with multibyte chars
     const string & s = *i;
-    ssize = mbs_width (s);
+    unsigned int ssize = mbs_width(s);
     if (ssize > parent._max_width[c])
     {
       unsigned cutby = parent._max_width[c] - 2;
@@ -158,7 +157,7 @@ void Table::allowAbbrev(unsigned column) {
 }
 
 void Table::updateColWidths (const TableRow& tr) {
-  // how much columns spearators add to the width of the table
+  // how much columns the separators add to the width of the table
   int sepwidth = _style == none ? 2 : 3;
   // initialize the width to -sepwidth (the first column does not have a line
   // on the left)
