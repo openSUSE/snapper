@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Thu Oct 11 11:10:11 CEST 2018 - aschnell@suse.com
+
+- mark active and default btrfs subvolume in list output
+  (fate#326479)
+- reorder columns in snapper list output (fate#326479)
+- version 0.7.0
+
+-------------------------------------------------------------------
 Fri Oct 05 12:07:53 CEST 2018 - aschnell@suse.com
 
 - right align used space in table output

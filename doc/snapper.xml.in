@@ -346,8 +346,6 @@
 		<para>Disable display of used space.</para>
 		<para>Calculating the used space needs some time. Thus
 		this option can speedup the listing.</para>
-		<para>Display of used space is automatically disabled
-		if not available, e.g. quota not enabled on btrfs.</para>
 	      </listitem>
 	    </varlistentry>
 	    <varlistentry>
@@ -357,6 +355,32 @@
 	      </listitem>
 	    </varlistentry>
 	  </variablelist>
+	  <para>For each snapshot the output consists of several
+	  columns. Some need explanation:</para>
+	  <glosslist>
+            <glossentry>
+              <glossterm>#, Pre # and Post #</glossterm>
+              <glossdef>
+		<para>The number of the snapshot.</para>
+		<para>For btrfs the number can be followed by a sign.
+		A "<computeroutput>-</computeroutput>" indicates that the snapshot is
+		the currently mounted snapshot and a
+		"<computeroutput>+</computeroutput>" indicates that the snapshot will
+		be mounted next time (It is the btrfs default subvolume). If both
+		conditions apply a
+		"<computeroutput>*</computeroutput>" is displayed.</para>
+              </glossdef>
+            </glossentry>
+            <glossentry>
+              <glossterm>Used Space</glossterm>
+              <glossdef>
+		<para>For btrfs the exclusive space of the btrfs quota
+		group corresponding to the snapshot.</para>
+		<para>Display of used space is automatically disabled
+		if not available, e.g. quota not enabled on btrfs.</para>
+	      </glossdef>
+            </glossentry>
+	  </glosslist>
 	</listitem>
       </varlistentry>
 
