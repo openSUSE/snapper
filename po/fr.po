@@ -4,9 +4,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-02 12:19+0200\n"
-"PO-Revision-Date: 2018-04-20 15:16+0000\n"
-"Last-Translator: Christine Gabriel <christine@stoquart.com>\n"
-"Language-Team: French <https://l10n.opensuse.org/projects/snapper/master/fr/>\n"
+"PO-Revision-Date: 2018-10-13 08:30+0000\n"
+"Last-Translator: Antoine Belvire <antoine.belvire@opensuse.org>\n"
+"Language-Team: French <https://l10n.opensuse.org/projects/snapper/master/fr/>"
+"\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,9 +26,10 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorithme de nettoyage pour l'instant
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorithme de nettoyage des instantanés."
 
-#, fuzzy
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <commande>\tLance la commande et crée les instantanés pre et post."
+msgstr ""
+"\t--command <commande>\t\tLance la commande et crée les instantanés pre et "
+"post."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <nom>\t\tDéfinit le nom de la configuration à utiliser."
@@ -42,9 +44,8 @@ msgstr "\t--description, -d <description>\tDescription des instantanés."
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <commande>\t\tCommande utilisée pour comparer des fichiers."
 
-#, fuzzy
 msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-filters\t\tDésactive les filtres."
+msgstr "\t--disable-used-space\t\tDésactive l'affichage de l'espace utilisé."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tOptions supplémentaires transmises à la commande diff."
@@ -268,7 +269,7 @@ msgstr "Erreur ACL."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
-msgstr ""
+msgstr "o"
 
 msgid "Cleanup"
 msgstr "Nettoyer"
@@ -419,7 +420,7 @@ msgstr "Échec de la détection du système de fichiers."
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
-msgstr ""
+msgstr "Eio"
 
 # SLE12
 msgid "Empty configdata."
@@ -454,7 +455,7 @@ msgstr "Fichier '%s' introuvable."
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
-msgstr ""
+msgstr "Gio"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -503,7 +504,7 @@ msgstr "Clé"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
-msgstr ""
+msgstr "Kio"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -514,7 +515,7 @@ msgstr "Vous avez peut-être oublié le séparateur '..' entre les numéros d'in
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
-msgstr ""
+msgstr "Mio"
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -545,7 +546,7 @@ msgstr "Échec de l'ouverture du fichier '%s'."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
-msgstr ""
+msgstr "Pio"
 
 msgid "Post #"
 msgstr "Post #"
@@ -591,7 +592,7 @@ msgstr "La configuration 'root' n'existe pas. Snapper n'est probablement pas con
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
-msgstr ""
+msgstr "Tio"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Essayez 'snapper --help' pour plus d'informations."
@@ -630,7 +631,7 @@ msgid "Use an integer number from %d to %d."
 msgstr "Utilisez un nombre entier compris entre %d et %d."
 
 msgid "Used Space"
-msgstr ""
+msgstr "Espace utilisé"
 
 msgid "User"
 msgstr "Utilisateur"
