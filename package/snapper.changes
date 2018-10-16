@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Tue Oct 16 14:00:56 CEST 2018 - aschnell@suse.com
+
+- disallow to delete special (for btrfs currently mounted and next
+  to be mounted) snapshots (fate#326479)
+- version 0.7.1
+
+-------------------------------------------------------------------
 Thu Oct 11 11:10:11 CEST 2018 - aschnell@suse.com
 
 - mark active and default btrfs subvolume in list output

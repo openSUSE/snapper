@@ -445,18 +445,8 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool show_used_s
 {
     const ProxySnapshots& snapshots = snapper->getSnapshots();
 
-    ProxySnapshots::const_iterator default_snapshot = snapshots.end();
-    ProxySnapshots::const_iterator active_snapshot = snapshots.end();
-
-    try
-    {
-	default_snapshot = snapshots.getDefault();
-	active_snapshot = snapshots.getActive();
-    }
-    catch (const UnsupportedException& e)
-    {
-	SN_CAUGHT(e);
-    }
+    ProxySnapshots::const_iterator default_snapshot = snapshots.getDefault();
+    ProxySnapshots::const_iterator active_snapshot = snapshots.getActive();
 
     if (list_mode != LM_ALL && list_mode != LM_SINGLE)
 	show_used_space = false;
@@ -798,6 +788,35 @@ help_delete()
 
 
 void
+filter_undeletables(ProxySnapshots& snapshots, vector<ProxySnapshots::iterator>& nums)
+{
+    vector<ProxySnapshots::const_iterator> undeletables;
+
+    undeletables.push_back(snapshots.begin());
+
+    ProxySnapshots::const_iterator default_snapshot = snapshots.getDefault();
+    if (default_snapshot != snapshots.end())
+	undeletables.push_back(default_snapshot);
+
+    ProxySnapshots::const_iterator active_snapshot = snapshots.getActive();
+    if (active_snapshot != snapshots.end())
+	undeletables.push_back(active_snapshot);
+
+    for (ProxySnapshots::const_iterator undeletable : undeletables)
+    {
+	vector<ProxySnapshots::iterator>::iterator keep = find_if(nums.begin(), nums.end(),
+	    [undeletable](ProxySnapshots::iterator it){ return undeletable->getNum() == it->getNum(); });
+
+	if (keep != nums.end())
+	{
+	    cerr << sformat(_("Cannot delete snapshot %d."), (*keep)->getNum()) << endl;
+	    nums.erase(keep);
+	}
+    }
+}
+
+
+void
 command_delete(ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
@@ -852,6 +871,8 @@ command_delete(ProxySnappers* snappers, ProxySnapper* snapper)
 	    }
 	}
     }
+
+    filter_undeletables(snapshots, nums);
 
     snapper->deleteSnapshots(nums, verbose);
 
