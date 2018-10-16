@@ -174,16 +174,14 @@ namespace snapper
     bool
     Filesystem::isDefault(unsigned int num) const
     {
-	SN_THROW(UnsupportedException());
-	__builtin_unreachable();
+	return false;
     }
 
 
     std::pair<bool, unsigned int>
     Filesystem::getDefault() const
     {
-	SN_THROW(UnsupportedException());
-	__builtin_unreachable();
+	return std::make_pair(false, 0);
     }
 
 
@@ -198,16 +196,14 @@ namespace snapper
     std::pair<bool, unsigned int>
     Filesystem::getActive() const
     {
-	SN_THROW(UnsupportedException());
-	__builtin_unreachable();
+	return std::make_pair(false, 0);
     }
 
 
     bool
     Filesystem::isActive(unsigned int num) const
     {
-	SN_THROW(UnsupportedException());
-	__builtin_unreachable();
+	return false;
     }
 
 

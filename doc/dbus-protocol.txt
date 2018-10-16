@@ -69,3 +69,7 @@ hexadecimal as "\x??". As a consequence "\" must be encoded as "\\".
 
 Due to security concerns there are no methods to get, compare or revert
 files. This can be done in the client.
+
+
+Some snapshots cannot be deleted (current, default and active). Delete
+requests for these are ignored.

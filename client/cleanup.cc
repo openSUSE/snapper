@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016,2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -102,6 +102,9 @@ protected:
 
     void filter(ProxySnapshots& snapshots, list<ProxySnapshots::iterator>& tmp) const;
 
+    // Removes snapshots that cannot be removed (e.g. btrfs active and default)
+    void filter_undeletables(ProxySnapshots& snapshots, list<ProxySnapshots::iterator>& tmp) const;
+
     // Removes snapshots younger than parameters.min_age from tmp
     void filter_min_age(ProxySnapshots& snapshots, list<ProxySnapshots::iterator>& tmp) const;
 
@@ -128,8 +131,33 @@ protected:
 void
 Cleaner::filter(ProxySnapshots& snapshots, list<ProxySnapshots::iterator>& tmp) const
 {
+    filter_undeletables(snapshots, tmp);
     filter_min_age(snapshots, tmp);
     filter_pre_post(snapshots, tmp);
+}
+
+
+void
+Cleaner::filter_undeletables(ProxySnapshots& snapshots, list<ProxySnapshots::iterator>& tmp) const
+{
+    vector<ProxySnapshots::const_iterator> undeletables;
+
+    ProxySnapshots::const_iterator default_snapshot = snapshots.getDefault();
+    if (default_snapshot != snapshots.end())
+	undeletables.push_back(default_snapshot);
+
+    ProxySnapshots::const_iterator active_snapshot = snapshots.getActive();
+    if (active_snapshot != snapshots.end())
+	undeletables.push_back(active_snapshot);
+
+    for (ProxySnapshots::const_iterator undeletable : undeletables)
+    {
+	list<ProxySnapshots::iterator>::iterator keep = find_if(tmp.begin(), tmp.end(),
+	    [undeletable](ProxySnapshots::iterator it){ return undeletable->getNum() == it->getNum(); });
+
+	if (keep != tmp.end())
+	    tmp.erase(keep);
+    }
 }
 
 

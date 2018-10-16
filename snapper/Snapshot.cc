@@ -573,9 +573,6 @@ namespace snapper
     void
     Snapshot::deleteFilesystemSnapshot() const
     {
-	if (isCurrent())
-	    SN_THROW(IllegalSnapshotException());
-
 	snapper->getFilesystem()->umountSnapshot(num);
 	snapper->getFilesystem()->deleteSnapshot(num);
     }
@@ -734,7 +731,8 @@ namespace snapper
     void
     Snapshots::deleteSnapshot(iterator snapshot)
     {
-	if (snapshot == entries.end() || snapshot->isCurrent())
+	if (snapshot == entries.end() || snapshot->isCurrent() || snapshot->isDefault() ||
+	    snapshot->isActive())
 	    SN_THROW(IllegalSnapshotException());
 
 	snapshot->deleteFilesystemSnapshot();

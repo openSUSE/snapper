@@ -2,13 +2,13 @@
 <refentry id='snapper8'>
 
   <refentryinfo>
-    <date>2014-04-07</date>
+    <date>2018-10-16</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2014-04-07</refmiscinfo>
+    <refmiscinfo class='date'>2018-10-16</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -485,6 +485,9 @@
 	      </listitem>
 	    </varlistentry>
 	  </variablelist>
+	  <para>Snapshot 0 cannot be deleted. For btrfs the currently
+	  mounted snapshot and the snapshot that will be mounted next time
+	  (the btrfs default subvolume) can also not be deleted.</para>
 	</listitem>
       </varlistentry>
 
