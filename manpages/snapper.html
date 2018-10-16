@@ -368,8 +368,6 @@
                     <p>Disable display of used space.</p>
                     <p>Calculating the used space needs some time. Thus
 		this option can speedup the listing.</p>
-                    <p>Display of used space is automatically disabled
-		if not available, e.g. quota not enabled on btrfs.</p>
                   </dd>
                   <dt>
                     <span class="term">
@@ -378,6 +376,34 @@
                   </dt>
                   <dd>
                     <p>List snapshots from all configs accessible by the user.</p>
+                  </dd>
+                </dl>
+              </div>
+              <p>For each snapshot the output consists of several
+	  columns. Some need explanation:</p>
+              <div class="glosslist">
+                <dl>
+                  <dt>
+                    <span class="glossterm">#, Pre # and Post #</span>
+                  </dt>
+                  <dd class="glossdef">
+                    <p>The number of the snapshot.</p>
+                    <p>For btrfs the number can be followed by a sign.
+		A "<code class="computeroutput">-</code>" indicates that the snapshot is
+		the currently mounted snapshot and a
+		"<code class="computeroutput">+</code>" indicates that the snapshot will
+		be mounted next time (It is the btrfs default subvolume). If both
+		conditions apply a
+		"<code class="computeroutput">*</code>" is displayed.</p>
+                  </dd>
+                  <dt>
+                    <span class="glossterm">Used Space</span>
+                  </dt>
+                  <dd class="glossdef">
+                    <p>For btrfs the exclusive space of the btrfs quota
+		group corresponding to the snapshot.</p>
+                    <p>Display of used space is automatically disabled
+		if not available, e.g. quota not enabled on btrfs.</p>
                   </dd>
                 </dl>
               </div>
@@ -498,6 +524,9 @@
                   </dd>
                 </dl>
               </div>
+              <p>Snapshot 0 cannot be deleted. For btrfs the currently
+	  mounted snapshot and the snapshot that will be mounted next time
+	  (the btrfs default subvolume) can also not be deleted.</p>
             </dd>
             <dt>
               <span class="term">
