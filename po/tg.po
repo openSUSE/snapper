@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tajik openSUSE Localization\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-02 12:19+0200\n"
+"POT-Creation-Date: 2018-10-16 15:03+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: Tajik KDE & Software Localization - Victor Ibragimov <victor.ibragimov@gmail.com>\n"
@@ -254,6 +254,10 @@ msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
+msgstr ""
+
+#, c-format
+msgid "Cannot delete snapshot %d."
 msgstr ""
 
 msgid "Cleanup"
