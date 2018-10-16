@@ -420,11 +420,15 @@ namespace snapper
 	Hooks::delete_config(snapper->subvolumeDir(), snapper->getFilesystem());
 
 	Snapshots& snapshots = snapper->getSnapshots();
+
+	Snapshots::const_iterator default_snapshot = snapshots.getDefault();
+	Snapshots::const_iterator active_snapshot = snapshots.getActive();
+
 	for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); )
 	{
 	    Snapshots::iterator tmp = it++;
 
-	    if (tmp->isCurrent())
+	    if (tmp->isCurrent() || tmp == default_snapshot || tmp == active_snapshot)
 		continue;
 
 	    try
