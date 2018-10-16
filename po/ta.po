@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-02 12:19+0200\n"
+"POT-Creation-Date: 2018-10-16 15:03+0200\n"
 "PO-Revision-Date: 2003-08-14 10:47+0200\n"
 "Last-Translator: xxx <yyy@example.org>\n"
 "Language-Team: Tamil <i18n@suse.de>\n"
@@ -263,6 +263,10 @@ msgstr "பிழை"
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Cannot delete snapshot %d."
+msgstr "சிடீ நீக்கப்படுதல் தோல்வியுற்றது: %1."
 
 msgid "Cleanup"
 msgstr ""

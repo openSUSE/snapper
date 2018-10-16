@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: entries\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-02 12:19+0200\n"
+"POT-Creation-Date: 2018-10-16 15:03+0200\n"
 "PO-Revision-Date: 2018-04-26 01:32+0000\n"
 "Last-Translator: Hwajin Kim <hwajin.kim@e4net.net>\n"
 "Language-Team: Korean <https://l10n.opensuse.org/projects/snapper/master/ko/>\n"
@@ -324,6 +324,11 @@ msgstr "ACL 오류입니다."
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
 msgstr ""
+
+# SLE12
+#, fuzzy, c-format
+msgid "Cannot delete snapshot %d."
+msgstr "  스냅샷 삭제:"
 
 # SLE12
 msgid "Cleanup"

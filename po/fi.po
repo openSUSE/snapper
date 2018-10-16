@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-02 12:19+0200\n"
+"POT-Creation-Date: 2018-10-16 15:03+0200\n"
 "PO-Revision-Date: 2018-05-21 16:01+0000\n"
 "Last-Translator: Tommi Nieminen <software@legisign.org>\n"
 "Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
@@ -261,6 +261,10 @@ msgstr "I/O-virhe"
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Cannot delete snapshot %d."
+msgstr "  Poista tilannevedos:"
 
 msgid "Cleanup"
 msgstr "Puhdistus"

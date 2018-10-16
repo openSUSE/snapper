@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: memory.ku.po\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-02 12:19+0200\n"
+"POT-Creation-Date: 2018-10-16 15:03+0200\n"
 "PO-Revision-Date: 2005-09-23 00:15+0200\n"
 "Last-Translator: Kurdish Team <i18n@suse.de>\n"
 "Language-Team: Kurdish Team <i18n@suse.de>\n"
@@ -265,6 +265,10 @@ msgstr "Çewtiyên &Rojnivîsk"
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Cannot delete snapshot %d."
+msgstr "Nivîsandina mîhengan têk çû"
 
 #, fuzzy
 msgid "Cleanup"

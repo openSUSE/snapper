@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-02 12:19+0200\n"
+"POT-Creation-Date: 2018-10-16 15:03+0200\n"
 "PO-Revision-Date: 2017-10-29 20:52+0000\n"
 "Last-Translator: strahil nikolov <hunter86_bg@yahoo.com>\n"
 "Language-Team: Bulgarian <https://l10n.opensuse.org/projects/snapper/master/bg/>\n"
@@ -269,6 +269,11 @@ msgstr "Входно/Изходна грешка"
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
 msgstr ""
+
+# %s is either BOOTP or DHCP
+#, fuzzy, c-format
+msgid "Cannot delete snapshot %d."
+msgstr "Настройването чрез %s бе неуспешно."
 
 msgid "Cleanup"
 msgstr ""
