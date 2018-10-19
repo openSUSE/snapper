@@ -7,7 +7,7 @@ piwik: true
 
 For btrfs there are some special snapshots: Once the snapshot
 currently mounted and the snapshot that will be mounted next time
-unless a special snapshot is selected in grub.
+unless a specific snapshot is selected in grub.
 
 Now snapper informs the user about these special snapshot in the
 output of "snapper list": A "-" after the snapshot number indicates
