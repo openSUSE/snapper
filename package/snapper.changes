@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Oct 22 09:52:01 CEST 2018 - aschnell@suse.com
+
+- fixed querying default and active snapshot if compiled without
+  rollback support (gh#openSUSE/snapper#442)
+- version 0.7.2
+
+-------------------------------------------------------------------
 Tue Oct 16 14:00:56 CEST 2018 - aschnell@suse.com
 
 - disallow to delete special (for btrfs currently mounted and next

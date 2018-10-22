@@ -1,3 +1,9 @@
+snapper (0.7.2) stable; urgency=low
+
+  * Updated to version 0.7.2
+
+ -- Arvin Schnell <aschnell@suse.com>  Mon, 22 Oct 2018 09:57:01 +0200
+
 snapper (0.7.1) stable; urgency=low
 
   * Updated to version 0.7.1

@@ -1544,40 +1544,35 @@ namespace snapper
     bool
     Btrfs::isDefault(unsigned int num) const
     {
-	SN_THROW(UnsupportedException());
-	__builtin_unreachable();
+	return Filesystem::isDefault(num);
     }
 
 
     std::pair<bool, unsigned int>
     Btrfs::getDefault() const
     {
-	SN_THROW(UnsupportedException());
-	__builtin_unreachable();
+	return Filesystem::getDefault();
     }
 
 
     void
     Btrfs::setDefault(unsigned int num) const
     {
-	SN_THROW(UnsupportedException());
-	__builtin_unreachable();
+	Filesystem::setDefault(num);
     }
 
 
     std::pair<bool, unsigned int>
     Btrfs::getActive() const
     {
-	SN_THROW(UnsupportedException());
-	__builtin_unreachable();
+	return Filesystem::getActive();
     }
 
 
     bool
     Btrfs::isActive(unsigned int num) const
     {
-	SN_THROW(UnsupportedException());
-	__builtin_unreachable();
+	return Filesystem::isActive(num);
     }
 
 #endif
