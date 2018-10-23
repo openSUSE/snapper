@@ -790,29 +790,31 @@ help_delete()
 void
 filter_undeletables(ProxySnapshots& snapshots, vector<ProxySnapshots::iterator>& nums)
 {
-    vector<ProxySnapshots::const_iterator> undeletables;
-
-    undeletables.push_back(snapshots.begin());
-
-    ProxySnapshots::const_iterator default_snapshot = snapshots.getDefault();
-    if (default_snapshot != snapshots.end())
-	undeletables.push_back(default_snapshot);
-
-    ProxySnapshots::const_iterator active_snapshot = snapshots.getActive();
-    if (active_snapshot != snapshots.end())
-	undeletables.push_back(active_snapshot);
-
-    for (ProxySnapshots::const_iterator undeletable : undeletables)
+    auto filter = [&snapshots, &nums](ProxySnapshots::const_iterator undeletable, const string& message)
     {
+	if (undeletable == snapshots.end())
+	    return;
+
+	unsigned int num = undeletable->getNum();
+
 	vector<ProxySnapshots::iterator>::iterator keep = find_if(nums.begin(), nums.end(),
-	    [undeletable](ProxySnapshots::iterator it){ return undeletable->getNum() == it->getNum(); });
+	    [num](ProxySnapshots::iterator it){ return num == it->getNum(); });
 
 	if (keep != nums.end())
 	{
-	    cerr << sformat(_("Cannot delete snapshot %d."), (*keep)->getNum()) << endl;
+	    cerr << sformat(message, num) << endl;
 	    nums.erase(keep);
 	}
-    }
+    };
+
+    ProxySnapshots::const_iterator current_snapshot = snapshots.begin();
+    filter(current_snapshot, _("Cannot delete snapshot %d since it is the current system."));
+
+    ProxySnapshots::const_iterator active_snapshot = snapshots.getActive();
+    filter(active_snapshot, _("Cannot delete snapshot %d since it is the currently mounted snapshot."));
+
+    ProxySnapshots::const_iterator default_snapshot = snapshots.getDefault();
+    filter(default_snapshot, _("Cannot delete snapshot %d since it is the next to be mounted snapshot."));
 }
 
 
