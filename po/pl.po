@@ -10,22 +10,25 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-23 09:41+0200\n"
-"PO-Revision-Date: 2018-04-26 14:31+0000\n"
-"Last-Translator: Ewelina Michalowska <ewelina.michalowska@stgambit.com>\n"
-"Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>\n"
+"PO-Revision-Date: 2018-10-23 20:05+0000\n"
+"Last-Translator: Damian Zaręba <damianzrb@gmail.com>\n"
+"Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>"
+"\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 2.18\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tWyświetla listę migawek z wszystkich dostępnych konfiguracji."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorytm kasowania starych zrzutów."
+msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorytm usuwania starych zrzutów."
 
+#, fuzzy
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorytm czyszczenia migawek."
 
@@ -79,6 +82,7 @@ msgstr "\t--print-number, -p\t\tWyświetl numer tworzonego zrzutu."
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
 msgstr "\t--print-number, -p\t\tWyświetlenie numeru migawki utworzonej jako druga."
 
+#, fuzzy
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\tWyłącza normalne wyjście."
 
@@ -89,10 +93,10 @@ msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tPrzeprowadza synchronizację po usunięciu."
 
 msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <styl>\tStyl tabeli (całkowity)."
+msgstr "\t--table-style, -t <styl>\tStyl tabeli (liczba całkowita)."
 
 msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <name>\t\tNazwa konfiguracji szablonu do użycia."
+msgstr "\t--template, -t <name>\t\tNazwa szablonu konfiguracji do użycia."
 
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <type>\t\tRodzaj zrzutu."
@@ -122,7 +126,7 @@ msgid "\tsnapper create"
 msgstr "\tsnapper create"
 
 msgid "\tsnapper create-config <subvolume>"
-msgstr "\tsnapper create-config <podwolumen>"
+msgstr "\tsnapper create-config <podwolumin>"
 
 msgid "\tsnapper delete <number>"
 msgstr "\tsnapper delete <numer>"
