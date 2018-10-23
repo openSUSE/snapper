@@ -4,9 +4,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-29 14:27+0100\n"
-"PO-Revision-Date: 2018-10-23 14:41+0000\n"
+"PO-Revision-Date: 2018-11-11 14:48+0000\n"
 "Last-Translator: Alessio Adamo <alessio.adamo@gmail.com>\n"
-"Language-Team: Italian <https://l10n.opensuse.org/projects/snapper/master/it/>\n"
+"Language-Team: Italian "
+"<https://l10n.opensuse.org/projects/snapper/master/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -437,9 +438,9 @@ msgstr "Operazione non riuscita (%s)."
 msgid "File '%s' not found."
 msgstr "File '%s' non trovato."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Free space error (%s)."
-msgstr "Errore di IO (%s)."
+msgstr "Errore di spazio libero (%s)."
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
