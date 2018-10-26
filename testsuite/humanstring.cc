@@ -41,7 +41,6 @@ BOOST_AUTO_TEST_CASE(test_byte_to_humanstring)
 
     BOOST_CHECK_EQUAL(test("en_GB.UTF-8", 1000 * KiB, 2), "1,000.00 KiB");
     BOOST_CHECK_EQUAL(test("de_DE.UTF-8", 1000 * KiB, 2), "1.000,00 KiB");
-    BOOST_CHECK_EQUAL(test("de_CH.UTF-8", 1000 * KiB, 2), "1'000.00 KiB");
 
     BOOST_CHECK_EQUAL(test("en_GB.UTF-8", 50 * MiB, 2), "50.00 MiB");
     BOOST_CHECK_EQUAL(test("de_DE.UTF-8", 50 * MiB, 2), "50,00 MiB");
