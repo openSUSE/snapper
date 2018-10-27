@@ -7,9 +7,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-29 14:27+0100\n"
-"PO-Revision-Date: 2018-10-27 11:32+0000\n"
+"PO-Revision-Date: 2018-11-05 12:25+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
-"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
+"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
+"\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -442,9 +443,9 @@ msgid "File '%s' not found."
 msgstr "Súbor '%s' nebol nájdený."
 
 # error box title
-#, fuzzy, c-format
+#, c-format
 msgid "Free space error (%s)."
-msgstr "V/V chyba (%s)."
+msgstr "Chyba voľného miesta (%s)."
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
