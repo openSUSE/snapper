@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-23 09:41+0200\n"
-"PO-Revision-Date: 2018-10-24 13:06+0000\n"
+"PO-Revision-Date: 2018-10-27 11:32+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
 "\n"
@@ -266,11 +266,12 @@ msgstr "Nemožno zmazať snímku %d, pretože je to súčasný systém."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr ""
+msgstr "Nemožno zmazať snímku %d, pretože je to aktuálne pripojená snímka."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr ""
+"Nemožno zmazať snímku %d, pretože je to nasledujúca snímka na pripojenie."
 
 msgid "Cleanup"
 msgstr "Upratovanie"
