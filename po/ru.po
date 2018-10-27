@@ -1,11 +1,11 @@
-# Alexander Melentiev <minton@opensuse.org>, 2011, 2012, 2013, 2014.
+# Alexander Melentiev <minton@opensuse.org>, 2011, 2012, 2013, 2014, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-23 09:41+0200\n"
-"PO-Revision-Date: 2018-10-27 18:24+0000\n"
-"Last-Translator: Nikita Maynagashev <maynagashev@palex.ru>\n"
+"PO-Revision-Date: 2018-10-27 18:25+0000\n"
+"Last-Translator: Alex Minton <alex239@gmail.com>\n"
 "Language-Team: Russian "
 "<https://l10n.opensuse.org/projects/snapper/master/ru/>\n"
 "Language: ru\n"
@@ -41,9 +41,8 @@ msgstr "\t--description, -d <описание>\tОписание снимков.
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\tКоманда для сравнения файлов."
 
-#, fuzzy
 msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-filters\t\tОтключить фильтры."
+msgstr "\t--disable-used-space\t\tОтключить показ используемого места."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tДополнительные параметры, переданные в команду diff."
@@ -259,19 +258,20 @@ msgstr "Ошибка ACL."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
-msgstr ""
+msgstr "Б"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr "  Удаление снимка:"
+msgstr "Невозможно удалить снимок %d, так как с него загружена система."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr ""
+msgstr "Невозможно удалить снимок %d, так как он сейчас примонтирован."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr ""
+"Невозможно удалить снимок %d, так как он следующий в очереди на монтирование."
 
 msgid "Cleanup"
 msgstr "Очистка"
@@ -413,7 +413,7 @@ msgstr "Сбой при определении типа файловой сис�
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
-msgstr ""
+msgstr "ЭиБ"
 
 msgid "Empty configdata."
 msgstr "Пустые данные конфигурации."
@@ -444,7 +444,7 @@ msgstr "Файл '%s' не найден."
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
-msgstr ""
+msgstr "ГиБ"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -491,7 +491,7 @@ msgstr "Ключ"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
-msgstr ""
+msgstr "КиБ"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -502,7 +502,7 @@ msgstr "Возможно, вы забыли разделитель .. между
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
-msgstr ""
+msgstr "МиБ"
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -533,7 +533,7 @@ msgstr "Сбой при открытии файла '%s'."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
-msgstr ""
+msgstr "ПиБ"
 
 msgid "Post #"
 msgstr "№ последующего снимка"
@@ -577,7 +577,7 @@ msgstr "Конфигурация root не существует. Вероятн�
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
-msgstr ""
+msgstr "ТиБ"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Больше сведений можно найти в 'snapper --help'."
@@ -615,7 +615,7 @@ msgid "Use an integer number from %d to %d."
 msgstr "Используйте целое число от %d до %d."
 
 msgid "Used Space"
-msgstr ""
+msgstr "Использовано места"
 
 msgid "User"
 msgstr "Пользователь"
