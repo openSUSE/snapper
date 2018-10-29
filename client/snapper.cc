@@ -1833,6 +1833,12 @@ main(int argc, char** argv)
 	cerr << sformat(_("Quota error (%s)."), e.what()) << endl;
 	exit(EXIT_FAILURE);
     }
+    catch (const FreeSpaceException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << sformat(_("Free space error (%s)."), e.what()) << endl;
+	exit(EXIT_FAILURE);
+    }
     catch (const Exception& e)
     {
 	SN_CAUGHT(e);
