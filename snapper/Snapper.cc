@@ -822,6 +822,38 @@ namespace snapper
     }
 
 
+    FreeSpaceData
+    Snapper::queryFreeSpaceData() const
+    {
+	const Btrfs* btrfs = dynamic_cast<const Btrfs*>(getFilesystem());
+	if (!btrfs)
+	    SN_THROW(FreeSpaceException("free space only supported with btrfs"));
+
+	SDir general_dir = btrfs->openGeneralDir();
+
+	filesystem->sync();
+
+	struct statvfs64 fsbuf;
+	if (fstatvfs64(general_dir.fd(), &fsbuf) != 0)
+	    SN_THROW(FreeSpaceException("statvfs64 failed"));
+
+	FreeSpaceData free_space_data;
+
+	// f_bavail is used (not f_bfree) since df seems to do the
+	// same. Thus it allows the user to check the result easily.
+
+	free_space_data.size = fsbuf.f_blocks * fsbuf.f_bsize;
+	free_space_data.free = fsbuf.f_bavail * fsbuf.f_bsize;
+
+	y2mil("size:" << free_space_data.size << " free:" << free_space_data.free);
+
+	if (free_space_data.free > free_space_data.size)
+	    SN_THROW(FreeSpaceException("impossible free space values"));
+
+	return free_space_data;
+    }
+
+
     void
     Snapper::syncSelinuxContexts(bool skip_snapshot_dir) const
     {
