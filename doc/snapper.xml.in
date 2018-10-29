@@ -2,13 +2,13 @@
 <refentry id='snapper8'>
 
   <refentryinfo>
-    <date>2018-10-16</date>
+    <date>2018-10-29</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2018-10-16</refmiscinfo>
+    <refmiscinfo class='date'>2018-10-29</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -138,24 +138,32 @@
 	</glossentry>
       </glosslist>
 
-      <para>The number and timeline cleanup algorithm can also try to keep the
-      space used by snapshots below a limit. For that quota must be setup, see
-      command setup-quota, and the LIMIT variables in the config file must
-      have ranges (min- and max-value). The algorithms will then make two
-      passes:
+      <para>The number and timeline cleanup algorithms can also try to
+      keep the space used by snapshots below a limit and the free space of
+      the filesystem above a limit. For the first condition quota must be
+      setup, see command setup-quota. Additional the NUMBER_LIMIT and
+      TIMELINE_LIMIT variables in the config file must have ranges (min- and
+      max-value). The algorithms will then make two passes:
+
       <orderedlist>
 	<listitem>
-	  <para>Delete snapshots above the max-value independent of the used
-	  space.</para>
+	  <para>Delete snapshots above the max-value independent of
+	  the snapshot and filesystem space.</para>
 	</listitem>
 	<listitem>
-	  <para>Delete snapshots above the min-value until the limit for
-	  the used space is reached.</para>
+	  <para>Delete snapshots above the min-value until the limits for
+	  the snapshot and filesystem are reached.</para>
 	</listitem>
       </orderedlist>
-      The limit for the used space can be configured via the SPACE_LIMIT
-      variable. Note: Only snapshots that have a cleanup algorithm set are
-      taken into account when calculating the used space.
+
+      The limit for the used space can be configured via the
+      SPACE_LIMIT variable. Note: Only snapshots that have a cleanup
+      algorithm set are taken into account when calculating the space
+      used by snapshots.
+
+      The limit for the free space can be configured via the
+      FREE_LIMIT variable.
+
       </para>
 
     </refsect2>

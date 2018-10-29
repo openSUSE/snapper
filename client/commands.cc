@@ -24,6 +24,7 @@
 #include <iostream>
 
 #include "commands.h"
+#include "errors.h"
 #include "utils/text.h"
 #include "snapper/AppUtil.h"
 
@@ -296,13 +297,13 @@ command_delete_snapshots(DBus::Connection& conn, const string& config_name,
 std::pair<bool, unsigned int>
 command_get_default_snapshot(DBus::Connection& conn, const string& config_name)
 {
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetDefaultSnapshot");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name;
-
     try
     {
+	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetDefaultSnapshot");
+
+	DBus::Hoho hoho(call);
+	hoho << config_name;
+
 	DBus::Message reply = conn.send_with_reply_and_block(call);
 
 	bool valid;
@@ -315,13 +316,7 @@ command_get_default_snapshot(DBus::Connection& conn, const string& config_name)
     }
     catch (const DBus::ErrorException& e)
     {
-	SN_CAUGHT(e);
-
-	if (strcmp(e.name(), "error.unsupported") == 0)
-	    SN_THROW(UnsupportedException());
-
-	SN_RETHROW(e);
-	__builtin_unreachable();
+	convert_exception(e);
     }
 }
 
@@ -329,13 +324,13 @@ command_get_default_snapshot(DBus::Connection& conn, const string& config_name)
 std::pair<bool, unsigned int>
 command_get_active_snapshot(DBus::Connection& conn, const string& config_name)
 {
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetActiveSnapshot");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name;
-
     try
     {
+	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetActiveSnapshot");
+
+	DBus::Hoho hoho(call);
+	hoho << config_name;
+
 	DBus::Message reply = conn.send_with_reply_and_block(call);
 
 	bool valid;
@@ -348,13 +343,7 @@ command_get_active_snapshot(DBus::Connection& conn, const string& config_name)
     }
     catch (const DBus::ErrorException& e)
     {
-	SN_CAUGHT(e);
-
-	if (strcmp(e.name(), "error.unsupported") == 0)
-	    SN_THROW(UnsupportedException());
-
-	SN_RETHROW(e);
-	__builtin_unreachable();
+	convert_exception(e);
     }
 }
 
@@ -362,23 +351,18 @@ command_get_active_snapshot(DBus::Connection& conn, const string& config_name)
 void
 command_calculate_used_space(DBus::Connection& conn, const string& config_name)
 {
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CalculateUsedSpace");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name;
-
     try
     {
+	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CalculateUsedSpace");
+
+	DBus::Hoho hoho(call);
+	hoho << config_name;
+
 	conn.send_with_reply_and_block(call);
     }
     catch (const DBus::ErrorException& e)
     {
-	SN_CAUGHT(e);
-
-	if (strcmp(e.name(), "error.quota") == 0)
-	    SN_THROW(QuotaException(e.message()));
-
-	SN_RETHROW(e);
+	convert_exception(e);
     }
 }
 
@@ -525,31 +509,71 @@ command_setup_quota(DBus::Connection& conn, const string& config_name)
 void
 command_prepare_quota(DBus::Connection& conn, const string& config_name)
 {
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "PrepareQuota");
+    try
+    {
+	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "PrepareQuota");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name;
+	DBus::Hoho hoho(call);
+	hoho << config_name;
 
-    conn.send_with_reply_and_block(call);
+        conn.send_with_reply_and_block(call);
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	convert_exception(e);
+    }
 }
 
 
 QuotaData
 command_query_quota(DBus::Connection& conn, const string& config_name)
 {
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "QueryQuota");
+    try
+    {
+	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "QueryQuota");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name;
+	DBus::Hoho hoho(call);
+	hoho << config_name;
 
-    DBus::Message reply = conn.send_with_reply_and_block(call);
+	DBus::Message reply = conn.send_with_reply_and_block(call);
 
-    QuotaData quota_data;
+	QuotaData quota_data;
 
-    DBus::Hihi hihi(reply);
-    hihi >> quota_data;
+	DBus::Hihi hihi(reply);
+	hihi >> quota_data;
 
-    return quota_data;
+	return quota_data;
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	convert_exception(e);
+    }
+}
+
+
+FreeSpaceData
+command_query_free_space(DBus::Connection& conn, const string& config_name)
+{
+    try
+    {
+	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "QueryFreeSpace");
+
+	DBus::Hoho hoho(call);
+	hoho << config_name;
+
+	DBus::Message reply = conn.send_with_reply_and_block(call);
+
+	FreeSpaceData free_space_data;
+
+	DBus::Hihi hihi(reply);
+	hihi >> free_space_data;
+
+	return free_space_data;
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	convert_exception(e);
+    }
 }
 
 

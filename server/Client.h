@@ -114,6 +114,7 @@ public:
     void setup_quota(DBus::Connection& conn, DBus::Message& msg);
     void prepare_quota(DBus::Connection& conn, DBus::Message& msg);
     void query_quota(DBus::Connection& conn, DBus::Message& msg);
+    void query_free_space(DBus::Connection& conn, DBus::Message& msg);
     void sync(DBus::Connection& conn, DBus::Message& msg);
     void debug(DBus::Connection& conn, DBus::Message& msg) const;
 

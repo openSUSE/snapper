@@ -175,6 +175,13 @@ ProxySnapperDbus::queryQuotaData() const
 }
 
 
+FreeSpaceData
+ProxySnapperDbus::queryFreeSpaceData() const
+{
+    return command_query_free_space(conn(), config_name);
+}
+
+
 ProxySnapshots::const_iterator
 ProxySnapperDbus::createSingleSnapshot(const SCD& scd)
 {

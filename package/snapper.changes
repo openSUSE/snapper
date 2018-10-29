@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Oct 29 10:38:59 CET 2018 - aschnell@suse.com
+
+- extended space aware cleanup algorithm to ensure minimal
+  free space for btrfs (within known ranges) (fate#325774)
+- version 0.8.0
+
+-------------------------------------------------------------------
 Mon Oct 22 09:52:01 CEST 2018 - aschnell@suse.com
 
 - fixed querying default and active snapshot if compiled without

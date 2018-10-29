@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016,2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -80,6 +80,16 @@ namespace DBus
     {
 	hihi.open_recurse();
 	hihi >> data.size >> data.used;
+	hihi.close_recurse();
+	return hihi;
+    }
+
+
+    Hihi&
+    operator>>(Hihi& hihi, FreeSpaceData& data)
+    {
+	hihi.open_recurse();
+	hihi >> data.size >> data.free;
 	hihi.close_recurse();
 	return hihi;
     }

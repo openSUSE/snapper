@@ -130,6 +130,8 @@ public:
 
     virtual QuotaData queryQuotaData() const override { return snapper->queryQuotaData(); }
 
+    virtual FreeSpaceData queryFreeSpaceData() const override { return snapper->queryFreeSpaceData(); }
+
     virtual void calculateUsedSpace() const override { snapper->calculateUsedSpace(); }
 
     std::unique_ptr<Snapper> snapper;

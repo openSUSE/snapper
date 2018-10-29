@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016,2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -47,6 +47,7 @@ namespace DBus
     template <> struct TypeInfo<Snapshot> { static const char* signature; };
     template <> struct TypeInfo<File> { static const char* signature; };
     template <> struct TypeInfo<QuotaData> { static const char* signature; };
+    template <> struct TypeInfo<FreeSpaceData> { static const char* signature; };
 
     Hoho& operator<<(Hoho& hoho, const ConfigInfo& data);
 
@@ -62,5 +63,7 @@ namespace DBus
     Hoho& operator<<(Hoho& hoho, const Files& data);
 
     Hoho& operator<<(Hoho& hoho, const QuotaData& data);
+
+    Hoho& operator<<(Hoho& hoho, const FreeSpaceData& data);
 
 }
