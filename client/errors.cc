@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2016] SUSE LLC
+ * Copyright (c) [2016,2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -22,6 +22,7 @@
 
 
 #include <snapper/AppUtil.h>
+#include <snapper/Snapper.h>
 
 #include "utils/text.h"
 
@@ -30,6 +31,27 @@
 
 using namespace std;
 using namespace snapper;
+
+
+void
+convert_exception(const DBus::ErrorException& e)
+{
+    SN_CAUGHT(e);
+
+    string name = e.name();
+
+    if (name == "error.unsupported")
+	SN_THROW(UnsupportedException());
+
+    if (name == "error.quota")
+	SN_THROW(QuotaException(e.message()));
+
+    if (name == "error.free_space")
+	SN_THROW(FreeSpaceException(e.message()));
+
+    SN_RETHROW(e);
+    __builtin_unreachable();
+}
 
 
 string
@@ -86,7 +108,10 @@ error_description(const DBus::ErrorException& e)
 	return _("ACL error.");
 
     if (name == "error.quota")
-	return sformat(_("Quota failure (%s)."), e.message());
+	return sformat(_("Quota error (%s)."), e.message());
+
+    if (name == "error.free_space")
+	return sformat(_("Free space error (%s)."), e.message());
 
     return sformat(_("Failure (%s)."), name.c_str());
 }

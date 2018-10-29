@@ -147,6 +147,8 @@ public:
 
     virtual QuotaData queryQuotaData() const override;
 
+    virtual FreeSpaceData queryFreeSpaceData() const override;
+
     virtual void calculateUsedSpace() const override;
 
     DBus::Connection& conn() const;

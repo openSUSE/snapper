@@ -135,6 +135,9 @@ command_prepare_quota(DBus::Connection& conn, const string& config_name);
 QuotaData
 command_query_quota(DBus::Connection& conn, const string& config_name);
 
+FreeSpaceData
+command_query_free_space(DBus::Connection& conn, const string& config_name);
+
 void
 command_sync(DBus::Connection& conn, const string& config_name);
 
