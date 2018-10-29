@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2013-10-04 18:20+0200\n"
 "Last-Translator: Olav Pettershagen <olpetter@bbnett.no>\n"
 "Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
@@ -465,6 +465,11 @@ msgstr "Mislyktes"
 msgid "File '%s' not found."
 msgstr "Filen '%s' ikke funnet."
 
+# error box title
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "Inn/ut-feil."
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
@@ -579,10 +584,6 @@ msgstr "Før dato"
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "Inn/ut-feil."
-
-#, fuzzy, c-format
-msgid "Quota failure (%s)."
-msgstr "Mislyktes"
 
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
@@ -700,6 +701,10 @@ msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "bruk: snapper [--globale valg] <kommando> [--kommandovalg] [kommandoargumenter]"
+
+#, fuzzy
+#~ msgid "Quota failure (%s)."
+#~ msgstr "Mislyktes"
 
 #~ msgid "Command '%s' does not work without DBus."
 #~ msgstr "Kommandoen «%s» fungerer ikke uten DBus."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2018-10-05 12:44+0000\n"
 "Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
 "Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/id/>\n"
@@ -434,6 +434,10 @@ msgstr "Kegagalan: %s."
 msgid "File '%s' not found."
 msgstr "Berkas '%s' tidak ditemukan."
 
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "Galat I/O (%s)."
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
@@ -543,10 +547,6 @@ msgstr "Pre Tanggal"
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Galat kuota (%s)."
-
-#, c-format
-msgid "Quota failure (%s)."
-msgstr "Kegagalan kuota (%s)."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Lihat 'man snapper' untuk instruksi lebih lanjut."
@@ -663,6 +663,9 @@ msgstr "argumen root hanya dapat digunakan bersama dengan no-dbus."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "penggunaan: snapper [--global-options] <command> [--command-options] [command-arguments]"
+
+#~ msgid "Quota failure (%s)."
+#~ msgstr "Kegagalan kuota (%s)."
 
 #~ msgid "Command '%s' does not work without DBus."
 #~ msgstr "Perintah '%s' tidak bekerja tanpa DBus."

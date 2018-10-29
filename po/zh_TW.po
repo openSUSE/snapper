@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2018-10-18 09:32+0000\n"
 "Last-Translator: Yi-Jyun Pan <pan93412@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
@@ -490,6 +490,10 @@ msgstr "失敗 (%s)。"
 msgid "File '%s' not found."
 msgstr "檔案 '%s' 找不到。"
 
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "IO 錯誤 (%s)。"
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
@@ -605,11 +609,6 @@ msgstr "之前 日期"
 #, c-format
 msgid "Quota error (%s)."
 msgstr "定額錯誤 (%s)。"
-
-# SLE12
-#, c-format
-msgid "Quota failure (%s)."
-msgstr "定額失敗 (%s)。"
 
 msgid "See 'man snapper' for further instructions."
 msgstr "如需更多指示，請參閱「man snapper」。"
@@ -738,6 +737,10 @@ msgstr "根引數只能與 no-dbus 配合使用。"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "用法： snapper [--全域選項] <命令> [--命令選項] [命令參數]"
+
+# SLE12
+#~ msgid "Quota failure (%s)."
+#~ msgstr "定額失敗 (%s)。"
 
 #~ msgid "Running in non UTF-8 locale. Setup is unsupported."
 #~ msgstr "正採用非 UTF-8 地區設定執行。不支援設定。"

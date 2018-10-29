@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2018-05-21 16:01+0000\n"
 "Last-Translator: Tommi Nieminen <software@legisign.org>\n"
 "Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
@@ -453,6 +453,11 @@ msgstr "Epäonnistui (%s)."
 msgid "File '%s' not found."
 msgstr "Tiedostoa \"%s\" ei löytynyt."
 
+# error box title
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "I/O-virhe"
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
@@ -567,10 +572,6 @@ msgstr "Ennen-päiväys"
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "I/O-virhe"
-
-#, fuzzy, c-format
-msgid "Quota failure (%s)."
-msgstr "Epäonnistui (%s)."
 
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
@@ -688,6 +689,10 @@ msgstr "Juuriparametria voi käyttää vain yhdessä no-dbus-asetuksen kanssa."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "käyttö: snapper [--yleiset-valinnat] <komento> [--komennon-valinnat] [komennon-argumentit]"
+
+#, fuzzy
+#~ msgid "Quota failure (%s)."
+#~ msgstr "Epäonnistui (%s)."
 
 #~ msgid "Command '%s' does not work without DBus."
 #~ msgstr "Komento '%s' ei toimi ilman DBus:ia."

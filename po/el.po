@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2016-09-24 16:01+0000\n"
 "Last-Translator: Efstathios Iosifidis <eiosifidis@gmail.com>\n"
 "Language-Team: Greek <https://l10n.opensuse.org/projects/snapper/master/el/>\n"
@@ -449,6 +449,11 @@ msgstr "Αποτυχία (%s)."
 msgid "File '%s' not found."
 msgstr "Δεν βρέθηκε το αρχείο '%s'."
 
+# error box title
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "Σφάλμα I/O."
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
@@ -561,10 +566,6 @@ msgstr "Ημερομηνία προ-στιγμιοτύπου"
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "Σφάλμα I/O."
-
-#, fuzzy, c-format
-msgid "Quota failure (%s)."
-msgstr "Αποτυχία (%s)."
 
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
@@ -682,6 +683,10 @@ msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "Χρήση: snapper [--global-options] <command> [--command-options] [command-arguments]"
+
+#, fuzzy
+#~ msgid "Quota failure (%s)."
+#~ msgstr "Αποτυχία (%s)."
 
 #~ msgid "Command '%s' does not work without DBus."
 #~ msgstr "Η εντολή '%s' δεν λειτουργεί χωρίς το DBus."

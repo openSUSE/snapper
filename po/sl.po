@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2005-08-24 17:37+0200\n"
 "Last-Translator: Janez Krek <janez.krek@euroteh.si>\n"
 "Language-Team: Slovenščina <sl@li.org>\n"
@@ -456,6 +456,11 @@ msgstr ""
 msgid "File '%s' not found."
 msgstr "Gostitelja %s ni."
 
+# error box title
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "V/I napaka"
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
@@ -576,10 +581,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "V/I napaka"
-
-#, c-format
-msgid "Quota failure (%s)."
-msgstr ""
 
 #, fuzzy
 msgid "See 'man snapper' for further instructions."

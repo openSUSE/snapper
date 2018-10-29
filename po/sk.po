@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2018-10-27 11:32+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
-"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
-"\n"
+"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -270,8 +269,7 @@ msgstr "Nemožno zmazať snímku %d, pretože je to aktuálne pripojená snímka
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
-"Nemožno zmazať snímku %d, pretože je to nasledujúca snímka na pripojenie."
+msgstr "Nemožno zmazať snímku %d, pretože je to nasledujúca snímka na pripojenie."
 
 msgid "Cleanup"
 msgstr "Upratovanie"
@@ -443,6 +441,11 @@ msgstr "Zlyhanie  (%s)."
 msgid "File '%s' not found."
 msgstr "Súbor '%s' nebol nájdený."
 
+# error box title
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "V/V chyba (%s)."
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
@@ -556,10 +559,6 @@ msgstr "Dátum pred"
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Chyba kvóty (%s)."
-
-#, c-format
-msgid "Quota failure (%s)."
-msgstr "Zlyhanie kvóty (%s)."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Viac informácií nájdete na 'man snapper'."
@@ -676,6 +675,9 @@ msgstr "Argument root možno použiť len spoločne s no-dbus."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "použitie: snapper [--globálne-voľby] <príkaz> [--voľby-príkazu] [argumenty-príkazu]"
+
+#~ msgid "Quota failure (%s)."
+#~ msgstr "Zlyhanie kvóty (%s)."
 
 #~ msgid "Running in non UTF-8 locale. Setup is unsupported."
 #~ msgstr "Beh v lokalizácii, ktorá nie je UTF-8. Nastavenie nie je podporované."

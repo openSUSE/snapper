@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2018-10-18 22:33+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
 "Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
@@ -440,6 +440,10 @@ msgstr "失敗しました (%s) 。"
 msgid "File '%s' not found."
 msgstr "'%s' というファイルが見つかりません。"
 
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "IOエラー(%s)。"
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
@@ -548,10 +552,6 @@ msgstr "前日付"
 #, c-format
 msgid "Quota error (%s)."
 msgstr "クォータエラー (%s) 。"
-
-#, c-format
-msgid "Quota failure (%s)."
-msgstr "クォータ設定に失敗しました (%s) 。"
 
 msgid "See 'man snapper' for further instructions."
 msgstr "詳しい手順については、「man snapper」を参照してください。"
@@ -668,6 +668,9 @@ msgstr "root引数はno-dbusも指定した場合にのみ使用できます。"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "usage: snapper [グローバルオプション] <コマンド> [コマンドオプション] [コマンドパラメータ]"
+
+#~ msgid "Quota failure (%s)."
+#~ msgstr "クォータ設定に失敗しました (%s) 。"
 
 #~ msgid "Running in non UTF-8 locale. Setup is unsupported."
 #~ msgstr "UTF-8 ではないロケールを使用しているため、設定に対応できません。"

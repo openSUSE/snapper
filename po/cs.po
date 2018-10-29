@@ -3,11 +3,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2018-10-23 18:43+0000\n"
 "Last-Translator: Aleš Kastner <alkas@volny.cz>\n"
-"Language-Team: Czech <https://l10n.opensuse.org/projects/snapper/master/cs/>"
-"\n"
+"Language-Team: Czech <https://l10n.opensuse.org/projects/snapper/master/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -461,6 +460,10 @@ msgstr "Selhání (%s)."
 msgid "File '%s' not found."
 msgstr "Soubor '%s' nenalezen."
 
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "Došlo k chybě V/V (%s)."
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
@@ -571,11 +574,6 @@ msgstr "Před datem"
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Chyba kvóty (%s)."
-
-# SLE12
-#, c-format
-msgid "Quota failure (%s)."
-msgstr "Selhání kvóty (%s)."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Další informace naleznete v popisu příkazu man snapper."
@@ -698,6 +696,10 @@ msgid "usage: snapper [--global-options] <command> [--command-options] [command-
 msgstr ""
 "Použití:\n"
 "\tsnapper [--obecné-volby] <příkaz> [--volby-příkazu] [argumenty]"
+
+# SLE12
+#~ msgid "Quota failure (%s)."
+#~ msgstr "Selhání kvóty (%s)."
 
 #~ msgid "Running in non UTF-8 locale. Setup is unsupported."
 #~ msgstr "Neběží v lokalizaci UTF-8. Nastavení není podporováno."
