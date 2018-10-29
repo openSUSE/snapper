@@ -445,8 +445,25 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool show_used_s
 {
     const ProxySnapshots& snapshots = snapper->getSnapshots();
 
-    ProxySnapshots::const_iterator default_snapshot = snapshots.getDefault();
-    ProxySnapshots::const_iterator active_snapshot = snapshots.getActive();
+    ProxySnapshots::const_iterator default_snapshot = snapshots.end();
+    ProxySnapshots::const_iterator active_snapshot = snapshots.end();
+
+    try
+    {
+	default_snapshot = snapshots.getDefault();
+	active_snapshot = snapshots.getActive();
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	SN_CAUGHT(e);
+
+	// If snapper was just updated and the old snapperd is still
+	// running it might not know the GetDefaultSnapshot and
+	// GetActiveSnapshot methods.
+
+	if (strcmp(e.name(), "error.unknown_method") != 0)
+	    SN_RETHROW(e);
+    }
 
     if (list_mode != LM_ALL && list_mode != LM_SINGLE)
 	show_used_space = false;
