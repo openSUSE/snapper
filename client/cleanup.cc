@@ -253,6 +253,9 @@ Cleaner::is_quota_satisfied() const
 {
     QuotaData quota_data = snapper->queryQuotaData();
 
+    if (quota_data.size == 0)
+	return true;
+
     double fraction = (double)(quota_data.used) / (double)(quota_data.size);
 
     bool satisfied = fraction < parameters.space_limit;
@@ -293,6 +296,9 @@ bool
 Cleaner::is_free_satisfied() const
 {
     FreeSpaceData free_space_data = snapper->queryFreeSpaceData();
+
+    if (free_space_data.size == 0)
+	return true;
 
     double fraction = (double)(free_space_data.free) / (double)(free_space_data.size);
 
