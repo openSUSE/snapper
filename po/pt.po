@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2018-06-01 11:05+0000\n"
 "Last-Translator: Jiri Machalek <jiri.machalek@tieto.com>\n"
 "Language-Team: Portuguese <https://l10n.opensuse.org/projects/snapper/master/pt/>\n"
@@ -485,6 +485,11 @@ msgstr ""
 msgid "File '%s' not found."
 msgstr "'%s' não encontrado."
 
+# error box title
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "Erro de I/O"
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
@@ -605,10 +610,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "Erro de I/O"
-
-#, c-format
-msgid "Quota failure (%s)."
-msgstr ""
 
 #, fuzzy
 msgid "See 'man snapper' for further instructions."

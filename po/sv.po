@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2018-04-23 17:33+0000\n"
 "Last-Translator: Martin Devenney <devenneymartin@gmail.com>\n"
 "Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/sv/>\n"
@@ -558,6 +558,10 @@ msgstr "Fel (%s)."
 msgid "File '%s' not found."
 msgstr "Filen %s hittades inte."
 
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "IO-fel (%s)."
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
@@ -688,11 +692,6 @@ msgstr "Före datum"
 
 #, c-format
 msgid "Quota error (%s)."
-msgstr "Kvotfel (%s)."
-
-# SLE12
-#, c-format
-msgid "Quota failure (%s)."
 msgstr "Kvotfel (%s)."
 
 msgid "See 'man snapper' for further instructions."
@@ -836,6 +835,10 @@ msgstr "Rotargument kan enbart användas tillsammans med no-dbus."
 # SLE12
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "usage: snapper [--globala alternativ] <kommando> [--kommandoalternativ] [kommandoargument]"
+
+# SLE12
+#~ msgid "Quota failure (%s)."
+#~ msgstr "Kvotfel (%s)."
 
 #~ msgid "Running in non UTF-8 locale. Setup is unsupported."
 #~ msgstr "Körs på en plats som inte är UTF-8. Inställningarna stöds inte."

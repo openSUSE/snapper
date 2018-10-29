@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: base\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2006-11-03 14:26\n"
 "Last-Translator: Novell Language <language@novell.com>\n"
 "Language-Team: Novell Language <language@novell.com>\n"
@@ -472,6 +472,11 @@ msgstr "Kusilele"
 msgid "File '%s' not found."
 msgstr "Ifayili %1 ayifunyenwanga elugcinweni."
 
+# error box title
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "Imposiso ye-I/O "
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
@@ -593,10 +598,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "Imposiso ye-I/O "
-
-#, fuzzy, c-format
-msgid "Quota failure (%s)."
-msgstr "Kusilele"
 
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
@@ -720,6 +721,10 @@ msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Quota failure (%s)."
+#~ msgstr "Kusilele"
 
 #, fuzzy
 #~ msgid "Command '%s' does not work without DBus."

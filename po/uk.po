@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2015-10-17 16:22+0200\n"
 "Last-Translator: Andriy Bandura <andriykopanytsia@gmail.com>\n"
 "Language-Team: Ukrainian <http://10n.opensuse.org/projects/snapper/master/uk/>\n"
@@ -447,6 +447,11 @@ msgstr "Помилка (%s)."
 msgid "File '%s' not found."
 msgstr "Файл '%s' не знайдений."
 
+# error box title
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "Помилка вводу/виводу (%s)."
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
@@ -559,10 +564,6 @@ msgstr "Дата попереднього знімка"
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "Помилка вводу/виводу (%s)."
-
-#, fuzzy, c-format
-msgid "Quota failure (%s)."
-msgstr "Помилка (%s)."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Додаткові вказівки див. у 'man snapper'."
@@ -679,6 +680,10 @@ msgstr "Аргумент root можна використовувати тіль
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "використання: snapper [--загальні параметри] <команда> [--параметри команди] [аргументи команди]"
+
+#, fuzzy
+#~ msgid "Quota failure (%s)."
+#~ msgstr "Помилка (%s)."
 
 #~ msgid "Command '%s' does not work without DBus."
 #~ msgstr "Команда '%s' не працює без DBus."

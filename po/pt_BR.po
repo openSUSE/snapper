@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2018-10-24 15:01+0000\n"
 "Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) "
-"<https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -268,15 +267,11 @@ msgstr "Não é possível excluir o instantâneo %d, pois é o sistema atual."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr ""
-"Não é possível excluir o instantâneo %d, pois é o instantâneo atualmente "
-"montado."
+msgstr "Não é possível excluir o instantâneo %d, pois é o instantâneo atualmente montado."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
-"Não é possível excluir o instantâneo %d, pois é o próximo a ser montado "
-"instantâneo."
+msgstr "Não é possível excluir o instantâneo %d, pois é o próximo a ser montado instantâneo."
 
 msgid "Cleanup"
 msgstr "Limpeza"
@@ -446,6 +441,10 @@ msgstr "Falha (%s)."
 msgid "File '%s' not found."
 msgstr "Arquivo '%s' não encontrado."
 
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "Erro de E/S (%s)."
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
@@ -554,10 +553,6 @@ msgstr "Data anterior"
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Erro de quota (%s)."
-
-#, c-format
-msgid "Quota failure (%s)."
-msgstr "Falha de quota (%s)."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Consulte \"man snapper\" para obter mais instruções."
@@ -674,6 +669,9 @@ msgstr "É possível usar o argumento root apenas com no-dbus."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "uso: snapper [--opções-globais] <comando> [--opções-do-comando] [argumentos]"
+
+#~ msgid "Quota failure (%s)."
+#~ msgstr "Falha de quota (%s)."
 
 #~ msgid "Running in non UTF-8 locale. Setup is unsupported."
 #~ msgstr "Executando num sistema não UTF-8. Configuração não suportada."

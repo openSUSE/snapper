@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2018-04-07 16:03+0000\n"
 "Last-Translator: Anshul Panwar <caspian7pena@gmail.com>\n"
 "Language-Team: Hindi <https://l10n.opensuse.org/projects/snapper/master/hi/>\n"
@@ -472,6 +472,10 @@ msgstr "असफल"
 msgid "File '%s' not found."
 msgstr "कोष में फाइल %1 नहीं प्राप्त हुई।"
 
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "I/O त्रुटि"
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
@@ -590,10 +594,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "I/O त्रुटि"
-
-#, fuzzy, c-format
-msgid "Quota failure (%s)."
-msgstr "असफल"
 
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
@@ -716,6 +716,10 @@ msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Quota failure (%s)."
+#~ msgstr "असफल"
 
 #, fuzzy
 #~ msgid "Command '%s' does not work without DBus."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: entries\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2018-04-26 01:32+0000\n"
 "Last-Translator: Hwajin Kim <hwajin.kim@e4net.net>\n"
 "Language-Team: Korean <https://l10n.opensuse.org/projects/snapper/master/ko/>\n"
@@ -551,6 +551,10 @@ msgstr "실패(%s)입니다."
 msgid "File '%s' not found."
 msgstr "'%s' 파일을 찾을 수 없습니다."
 
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "IO 오류입니다(%s)."
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
@@ -681,11 +685,6 @@ msgstr "사전 날짜"
 #, c-format
 msgid "Quota error (%s)."
 msgstr "할당량 오류입니다(%s)."
-
-# SLE12
-#, c-format
-msgid "Quota failure (%s)."
-msgstr "할당량 실패입니다(%s)."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "추가 지침은 'man snapper'를 참조하십시오."
@@ -828,6 +827,10 @@ msgstr "루트 인수는 no-dbus와 함께 사용해야 합니다."
 # SLE12
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "사용법: snapper [--global-options] <command> [--command-options] [command-arguments]"
+
+# SLE12
+#~ msgid "Quota failure (%s)."
+#~ msgstr "할당량 실패입니다(%s)."
 
 #~ msgid "Running in non UTF-8 locale. Setup is unsupported."
 #~ msgstr "UTF-8이 아닌 로케일에서 실행 중입니다. 설정이 지원되지 않습니다."

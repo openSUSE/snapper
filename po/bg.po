@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2017-10-29 20:52+0000\n"
 "Last-Translator: strahil nikolov <hunter86_bg@yahoo.com>\n"
 "Language-Team: Bulgarian <https://l10n.opensuse.org/projects/snapper/master/bg/>\n"
@@ -462,6 +462,11 @@ msgstr "Неуспех"
 msgid "File '%s' not found."
 msgstr "ВНИМАНИЕ: файлът „%s“ не е намерен. Пропускане на резервния архив.\n"
 
+# error box title
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "Входно/Изходна грешка"
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
@@ -586,10 +591,6 @@ msgstr ""
 msgid "Quota error (%s)."
 msgstr "Входно/Изходна грешка"
 
-#, fuzzy, c-format
-msgid "Quota failure (%s)."
-msgstr "Неуспех"
-
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "За повече информация опитайте  `%s --help' или`%s --usage'.\n"
@@ -711,6 +712,10 @@ msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Quota failure (%s)."
+#~ msgstr "Неуспех"
 
 #, fuzzy
 #~ msgid "Unknown file."

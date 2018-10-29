@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LCN (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2017-06-02 16:57+0000\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <https://l10n.opensuse.org/projects/snapper/master/lt/>\n"
@@ -456,6 +456,10 @@ msgstr "Nesėkmė"
 msgid "File '%s' not found."
 msgstr "Rinkmena „%s“ nerasta."
 
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "Skaitymo/rašymo klaida."
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
@@ -568,10 +572,6 @@ msgstr "Prieš: data"
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "Skaitymo/rašymo klaida."
-
-#, fuzzy, c-format
-msgid "Quota failure (%s)."
-msgstr "Nesėkmė"
 
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
@@ -689,6 +689,10 @@ msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "naudojimas: snapper [--visuotinės-parinktys] <komanda> [--komandos-parinktys] [komandos-argumentai]"
+
+#, fuzzy
+#~ msgid "Quota failure (%s)."
+#~ msgstr "Nesėkmė"
 
 #~ msgid "Unknown file."
 #~ msgstr "Nežinoma rinkmena."

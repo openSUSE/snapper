@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2004-08-09 10:24+0200\n"
 "Last-Translator: xxx <yyy@example.org>\n"
 "Language-Team: Bengali <i18n@suse.de>\n"
@@ -468,6 +468,10 @@ msgstr "ব্যর্থ"
 msgid "File '%s' not found."
 msgstr "রিপোসিটারিতে ফাইল %1 পাওয়া যায়নি"
 
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "I/O ত্রুটি"
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
@@ -586,10 +590,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "I/O ত্রুটি"
-
-#, fuzzy, c-format
-msgid "Quota failure (%s)."
-msgstr "ব্যর্থ"
 
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
@@ -713,6 +713,10 @@ msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Quota failure (%s)."
+#~ msgstr "ব্যর্থ"
 
 #, fuzzy
 #~ msgid "Command '%s' does not work without DBus."

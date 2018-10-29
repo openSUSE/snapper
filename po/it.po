@@ -3,11 +3,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2018-10-23 14:41+0000\n"
 "Last-Translator: Alessio Adamo <alessio.adamo@gmail.com>\n"
-"Language-Team: Italian "
-"<https://l10n.opensuse.org/projects/snapper/master/it/>\n"
+"Language-Team: Italian <https://l10n.opensuse.org/projects/snapper/master/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -260,21 +259,15 @@ msgstr "B"
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr ""
-"Impossibile eliminare l'istantanea %d poiché utilizzata attualmente dal "
-"sistema."
+msgstr "Impossibile eliminare l'istantanea %d poiché utilizzata attualmente dal sistema."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr ""
-"Impossibile eliminare l'istantanea %d poiché si tratta di quella montata "
-"attualmente."
+msgstr "Impossibile eliminare l'istantanea %d poiché si tratta di quella montata attualmente."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
-"Impossibile eliminare l'istantanea %d poiché si tratta della prossima che "
-"deve essere montata."
+msgstr "Impossibile eliminare l'istantanea %d poiché si tratta della prossima che deve essere montata."
 
 msgid "Cleanup"
 msgstr "Pulitura"
@@ -444,6 +437,10 @@ msgstr "Operazione non riuscita (%s)."
 msgid "File '%s' not found."
 msgstr "File '%s' non trovato."
 
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "Errore di IO (%s)."
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
@@ -552,10 +549,6 @@ msgstr "Pre data"
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Errore di quota (%s)."
-
-#, c-format
-msgid "Quota failure (%s)."
-msgstr "Avaria quota (%s)."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Vedere 'man snapper' per ulteriori istruzioni."
@@ -674,6 +667,9 @@ msgid "usage: snapper [--global-options] <command> [--command-options] [command-
 msgstr ""
 "Uso:\n"
 "\tsnapper [--opzioni-globali] <comando> [--opzioni-del-comando] [argomenti-del-comando]"
+
+#~ msgid "Quota failure (%s)."
+#~ msgstr "Avaria quota (%s)."
 
 #~ msgid "Running in non UTF-8 locale. Setup is unsupported."
 #~ msgstr "Esecuzione in localizzazione non UTF-8. La configurazione non è supportata."

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: installation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2016-04-19 09:51+0000\n"
 "Last-Translator: Shane Wims <shane.wims@microfocus.com>\n"
 "Language-Team: Zulu <http://l10n.opensuse.org/projects/snapper/master/zu/>\n"
@@ -475,6 +475,11 @@ msgstr "Kuhlulekile"
 msgid "File '%s' not found."
 msgstr "Ifayela %1 ayitholakali enqolobaneni yamafayela."
 
+# error box title
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "Iphutha le-I/O"
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
@@ -596,10 +601,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "Iphutha le-I/O"
-
-#, fuzzy, c-format
-msgid "Quota failure (%s)."
-msgstr "Kuhlulekile"
 
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
@@ -723,6 +724,10 @@ msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Quota failure (%s)."
+#~ msgstr "Kuhlulekile"
 
 #, fuzzy
 #~ msgid "Command '%s' does not work without DBus."

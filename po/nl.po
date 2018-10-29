@@ -9,11 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-23 09:41+0200\n"
+"POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2018-10-24 08:19+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
-"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
-"\n"
+"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -270,15 +269,11 @@ msgstr "Kan momentopname %d niet verwijderen omdat deze het huidige systeem is."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr ""
-"Kan momentopname %d niet verwijderen omdat deze de huidige aangekoppelde "
-"momentopname is."
+msgstr "Kan momentopname %d niet verwijderen omdat deze de huidige aangekoppelde momentopname is."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
-"Kan momentopname %d niet verwijderen omdat deze de volgende aan te koppelen "
-"momentopname is."
+msgstr "Kan momentopname %d niet verwijderen omdat deze de volgende aan te koppelen momentopname is."
 
 msgid "Cleanup"
 msgstr "Opschonen"
@@ -448,6 +443,10 @@ msgstr "Mislukking (%s)."
 msgid "File '%s' not found."
 msgstr "Bestand '%s' niet gevonden."
 
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "IO-fout (%s)."
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
@@ -556,10 +555,6 @@ msgstr "Pre-datum"
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Qouta-fout (%s)."
-
-#, c-format
-msgid "Quota failure (%s)."
-msgstr "Quota-mislukking (%s)."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Zie 'man snapper' voor meer instructies."
@@ -676,6 +671,9 @@ msgstr "rootargument kan alleen samen worden gebruikt met no-dbus."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "gebruik: snapper [--global-options] <opdracht> [--commando-options] [commando-arguments]"
+
+#~ msgid "Quota failure (%s)."
+#~ msgstr "Quota-mislukking (%s)."
 
 #~ msgid "Running in non UTF-8 locale. Setup is unsupported."
 #~ msgstr "Uitvoering in niet UTF-8 locale. Instelling wordt niet ondersteund."
