@@ -132,28 +132,36 @@
               </dd>
             </dl>
           </div>
-          <p>The number and timeline cleanup algorithm can also try to keep the
-      space used by snapshots below a limit. For that quota must be setup, see
-      command setup-quota, and the LIMIT variables in the config file must
-      have ranges (min- and max-value). The algorithms will then make two
-      passes:
+          <p>The number and timeline cleanup algorithms can also try to
+      keep the space used by snapshots below a limit and the free space of
+      the filesystem above a limit. For the first condition quota must be
+      setup, see command setup-quota. Additional the NUMBER_LIMIT and
+      TIMELINE_LIMIT variables in the config file must have ranges (min- and
+      max-value). The algorithms will then make two passes:
+
       </p>
           <div class="orderedlist">
             <ol class="orderedlist" type="1">
               <li class="listitem">
-                <p>Delete snapshots above the max-value independent of the used
-	  space.</p>
+                <p>Delete snapshots above the max-value independent of
+	  the snapshot and filesystem space.</p>
               </li>
               <li class="listitem">
-                <p>Delete snapshots above the min-value until the limit for
-	  the used space is reached.</p>
+                <p>Delete snapshots above the min-value until the limits for
+	  the snapshot and filesystem are reached.</p>
               </li>
             </ol>
           </div>
           <p>
-      The limit for the used space can be configured via the SPACE_LIMIT
-      variable. Note: Only snapshots that have a cleanup algorithm set are
-      taken into account when calculating the used space.
+
+      The limit for the used space can be configured via the
+      SPACE_LIMIT variable. Note: Only snapshots that have a cleanup
+      algorithm set are taken into account when calculating the space
+      used by snapshots.
+
+      The limit for the free space can be configured via the
+      FREE_LIMIT variable.
+
       </p>
         </div>
         <div class="refsect2">
