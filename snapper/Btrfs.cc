@@ -1463,6 +1463,9 @@ namespace snapper
 
 	unsigned int num = stoi(rx.cap(1));
 
+	if (!checkSnapshot(num))
+	    return make_pair(false, 0);
+
 	if (get_id(openSnapshotDir(num).fd()) != id)
 	    return make_pair(false, 0);
 

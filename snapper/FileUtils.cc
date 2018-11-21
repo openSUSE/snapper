@@ -84,8 +84,11 @@ namespace snapper
 
 	dirfd = ::openat(dir.dirfd, name.c_str(), O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
 	if (dirfd < 0)
-	    SN_THROW(IOErrorException(sformat("open failed path:%s errno:%d (%s)", dir.fullname().c_str(),
+	{
+	    string failed_path = dir.fullname() + "/" + name;
+	    SN_THROW(IOErrorException(sformat("open failed path:%s errno:%d (%s)", failed_path.c_str(),
 					      errno, stringerror(errno).c_str())));
+	}
 
 	struct stat buf;
 	if (fstat(dirfd, &buf) != 0)
