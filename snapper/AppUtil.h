@@ -111,7 +111,7 @@ namespace snapper
     };
 
 
-    string sformat(const string& format, ...);
+    string sformat(const char* format, ...) __attribute__ ((format(printf, 1, 2)));
 
 
     struct runtime_error_with_errno : public std::runtime_error

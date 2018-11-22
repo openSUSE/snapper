@@ -807,7 +807,7 @@ help_delete()
 void
 filter_undeletables(ProxySnapshots& snapshots, vector<ProxySnapshots::iterator>& nums)
 {
-    auto filter = [&snapshots, &nums](ProxySnapshots::const_iterator undeletable, const string& message)
+    auto filter = [&snapshots, &nums](ProxySnapshots::const_iterator undeletable, const char* message)
     {
 	if (undeletable == snapshots.end())
 	    return;

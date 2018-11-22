@@ -11,8 +11,10 @@
 #include <string>
 #include <iosfwd>
 
-std::string _(const char* msgid);
-std::string _(const char* msgid, const char* msgid_plural, unsigned long int n);
+const char* _(const char* msgid) __attribute__ ((format_arg(1)));
+
+const char* _(const char* msgid, const char* msgid_plural, unsigned long int n)
+    __attribute__ ((format_arg(1))) __attribute__ ((format_arg(2)));
 
 /** Returns the column width of a multi-byte character string \a str */
 unsigned mbs_width (const std::string & str);

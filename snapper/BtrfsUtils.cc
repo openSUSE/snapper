@@ -566,8 +566,8 @@ namespace snapper
 
 	    TreeSearchOpts tree_search_opts(BTRFS_QGROUP_RELATION_KEY);
 	    tree_search_opts.min_offset = tree_search_opts.max_offset = parent;
-	    tree_search_opts.callback = [parent, &ret](const struct btrfs_ioctl_search_args& args,
-						       const struct btrfs_ioctl_search_header& sh)
+	    tree_search_opts.callback = [&ret](const struct btrfs_ioctl_search_args& args,
+					       const struct btrfs_ioctl_search_header& sh)
 	    {
 		ret.push_back(sh.objectid);
 	    };
@@ -585,8 +585,8 @@ namespace snapper
 
 	    TreeSearchOpts tree_search_opts(BTRFS_QGROUP_INFO_KEY);
 	    tree_search_opts.min_offset = tree_search_opts.max_offset = qgroup;
-	    tree_search_opts.callback = [qgroup, &qgroup_usage](const struct btrfs_ioctl_search_args& args,
-								const struct btrfs_ioctl_search_header& sh)
+	    tree_search_opts.callback = [&qgroup_usage](const struct btrfs_ioctl_search_args& args,
+							const struct btrfs_ioctl_search_header& sh)
 	    {
 		struct btrfs_qgroup_info_item info;
 		memcpy(&info, (struct btrfs_qgroup_info_item*)(args.buf + sizeof(sh)), sizeof(info));
