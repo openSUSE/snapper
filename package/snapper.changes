@@ -3,6 +3,7 @@ Wed Nov 21 18:59:09 CET 2018 - gergo@borus.hu
 
 - validate snapshot id corresponding to the default subvolume
   before using it for the current config (gh#openSUSE/snapper#449)
+- version 0.8.1
 
 -------------------------------------------------------------------
 Mon Oct 29 10:38:59 CET 2018 - aschnell@suse.com
