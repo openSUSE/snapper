@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) 2018 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -198,6 +199,24 @@ namespace snapper
 
 	vector<string> ret;
 
+#if defined(__GLIBC__) && ((__GLIBC__ > 2) || ((__GLIBC__ == 2) && (__GLIBC_MINOR__ >= 24)))
+
+	// Since glibc 2.24 readdir is thread safe under certain
+	// condidtions, which apply here, and readdir_r is deprecated
+	// (see readdir(3)).
+
+	struct dirent* ep = nullptr;
+
+	rewinddir(dp);
+	while ((ep = readdir(dp)) != nullptr)
+	{
+	    if (strcmp(ep->d_name, ".") != 0 && strcmp(ep->d_name, "..") != 0 &&
+		pred(ep->d_type, ep->d_name))
+		ret.push_back(ep->d_name);
+	}
+
+#else
+
 	long sz = fpathconf(dirfd, _PC_NAME_MAX);
 	if (sz == -1)
 	    sz = NAME_MAX;
@@ -214,6 +233,8 @@ namespace snapper
 	}
 
 	free(ep);
+
+#endif
 
 	closedir(dp);
 
