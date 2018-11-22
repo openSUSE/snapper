@@ -237,14 +237,14 @@ namespace snapper
 
 
     string
-    sformat(const string& format, ...)
+    sformat(const char* format, ...)
     {
 	char* result;
 	string str;
 
 	va_list ap;
 	va_start(ap, format);
-	if (vasprintf(&result, format.c_str(), ap) != -1)
+	if (vasprintf(&result, format, ap) != -1)
 	{
 	    str = result;
 	    free(result);

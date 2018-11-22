@@ -14,12 +14,16 @@
 
 using namespace std;
 
-string _(const char* msgid)
+
+const char*
+_(const char* msgid)
 {
     return dgettext("snapper", msgid);
 }
 
-string _(const char* msgid, const char* msgid_plural, unsigned long int n)
+
+const char*
+_(const char* msgid, const char* msgid_plural, unsigned long int n)
 {
     return dngettext("snapper", msgid, msgid_plural, n);
 }
