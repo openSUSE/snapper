@@ -356,6 +356,7 @@ help_list()
 	 << _("    Options for 'list' command:") << '\n'
 	 << _("\t--type, -t <type>\t\tType of snapshots to list.") << '\n'
 	 << _("\t--disable-used-space\t\tDisable showing used space.") << '\n'
+	 << _("\t--no-used-space-update\t\tDo not update used space information.") << '\n'
 	 << _("\t--all-configs, -a\t\tList snapshots from all accessible configs.") << '\n'
 	 << endl;
 }
@@ -364,7 +365,7 @@ enum ListMode { LM_ALL, LM_SINGLE, LM_PRE_POST };
 
 
 void
-list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool show_used_space);
+list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool show_used_space, bool update_used_space);
 
 
 void
@@ -373,6 +374,7 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
 	{ "disable-used-space", no_argument,            0,      0 },
+	{ "no-used-space-update",no_argument,		0,	0 },
 	{ "all-configs",	no_argument,		0,	'a' },
 	{ 0, 0, 0, 0 }
     };
@@ -386,6 +388,7 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
 
     ListMode list_mode = LM_ALL;
     bool show_used_space = true;
+    bool update_used_space = true;
 
     GetOpts::parsed_opts::const_iterator opt;
 
@@ -407,6 +410,11 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
     if ((opt = opts.find("disable-used-space")) != opts.end())
     {
        show_used_space = false;
+    }
+
+    if ((opt = opts.find("no-used-space-update")) != opts.end())
+    {
+       update_used_space = false;
     }
 
     vector<string> tmp;
@@ -435,13 +443,13 @@ command_list(ProxySnappers* snappers, ProxySnapper*)
                  << snapper->getConfig().getSubvolume() << endl;
         }
 
-        list_from_one_config(snapper, list_mode, show_used_space);
+        list_from_one_config(snapper, list_mode, show_used_space, update_used_space);
     }
 }
 
 
 void
-list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool show_used_space)
+list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool show_used_space, bool update_used_space)
 {
     const ProxySnapshots& snapshots = snapper->getSnapshots();
 
@@ -473,7 +481,7 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool show_used_s
     if (list_mode != LM_ALL && list_mode != LM_SINGLE)
 	show_used_space = false;
 
-    if (show_used_space)
+    if (show_used_space && update_used_space)
     {
 	try
 	{

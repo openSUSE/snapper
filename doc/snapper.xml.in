@@ -356,6 +356,12 @@
 		this option can speedup the listing.</para>
 	      </listitem>
 	    </varlistentry>
+            <varlistentry>
+              <term><option>--no-used-space-update</option></term>
+              <listitem>
+                <para>Do not update used space information.</para>
+              </listitem>
+            </varlistentry>
 	    <varlistentry>
 	      <term><option>-a, --all-configs</option></term>
 	      <listitem>
