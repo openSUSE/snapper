@@ -78,7 +78,7 @@ Recommends:     logrotate snapper-zypp-plugin
 Supplements:    btrfsprogs
 %endif
 Summary:        Tool for filesystem snapshot management
-License:        GPL-2.0
+License:        GPL-2.0-only
 Group:          System/Packages
 Url:            http://snapper.io/
 
