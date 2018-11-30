@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-29 14:27+0100\n"
-"PO-Revision-Date: 2018-11-12 11:06+0000\n"
-"Last-Translator: Antonio Larrosa <alarrosa@suse.com>\n"
+"PO-Revision-Date: 2018-11-30 23:06+0000\n"
+"Last-Translator: jc sl <trcs@gmx.com>\n"
 "Language-Team: Spanish "
 "<https://l10n.opensuse.org/projects/snapper/master/es/>\n"
 "Language: es\n"
@@ -269,17 +269,21 @@ msgstr "Error de ACL."
 msgid "B"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr "  Borrar imagen:"
+msgstr "No se puede borrar la imagen %d porque es el sistema actual."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
 msgstr ""
+"No se puede borrar la imagen %d porque es la imagen montada en estos "
+"momentos."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr ""
+"No se puede borrar la imagen %d porque es la siguiente imagen que se va a "
+"montar."
 
 msgid "Cleanup"
 msgstr "Limpieza"
@@ -461,9 +465,9 @@ msgstr "Error (%s)."
 msgid "File '%s' not found."
 msgstr "No se ha encontrado el archivo '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Free space error (%s)."
-msgstr "Error de E/S (%s)."
+msgstr "Error de espacio libre (%s)."
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -639,7 +643,7 @@ msgid "Use an integer number from %d to %d."
 msgstr "Use un número entero entre %d y %d."
 
 msgid "Used Space"
-msgstr ""
+msgstr "Espacio usado"
 
 msgid "User"
 msgstr "Usuario"
