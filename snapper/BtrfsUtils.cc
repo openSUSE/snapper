@@ -34,6 +34,9 @@
 #ifdef HAVE_LIBBTRFS
 #include <btrfs/ioctl.h>
 #include <btrfs/send-utils.h>
+#ifdef swap
+#undef swap
+#endif
 #endif
 #include <algorithm>
 #include <functional>

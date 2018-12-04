@@ -41,6 +41,9 @@
 #include <btrfs/send.h>
 #include <btrfs/send-stream.h>
 #include <btrfs/send-utils.h>
+#ifdef swap
+#undef swap
+#endif
 #include <boost/version.hpp>
 #include <boost/thread.hpp>
 #endif
