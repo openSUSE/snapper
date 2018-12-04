@@ -6,7 +6,7 @@
 require "packaging/tasks"
 require "packaging/configuration"
 # skip 'tarball' task, it's redefined here
-Packaging::Tasks.load_tasks(:exclude => ["tarball.rake"])
+Packaging::Tasks.load_tasks(:exclude => ["tarball.rake", "check_changelog.rake"])
 
 require "yast/tasks"
 yast_submit = ENV.fetch("YAST_SUBMIT", "factory").to_sym
@@ -48,4 +48,11 @@ end
 desc 'Build a tarball for OBS'
 task :tarball do
   sh "make -f Makefile.ci package"
+end
+
+# the "check:changelog" task is required by the "osc:sr" task
+namespace "check" do
+  task :changelog do
+    # do nothing, we do not require a bugzilla/fate number for new changelog entries
+  end
 end
