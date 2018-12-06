@@ -35,6 +35,9 @@
 #include <btrfs/ioctl.h>
 #include <btrfs/send-utils.h>
 #ifdef swap
+// temporary workaround, see
+// https://github.com/openSUSE/snapper/issues/459, fixed properly in
+// btrfs-progs 4.19.1
 #undef swap
 #endif
 #endif
