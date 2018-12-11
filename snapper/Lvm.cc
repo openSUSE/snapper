@@ -387,7 +387,7 @@ namespace snapper
     bool
     Lvm::detectThinVolumeNames(const MtabData& mtab_data)
     {
-	Regex rx("^/dev/mapper/(.+[^-])-([^-].+)$");
+	Regex rx("^/dev/mapper/([^-]+)-([^-].+)$");
 	if (!rx.match(mtab_data.device))
 	{
 	    y2err("could not detect lvm names from '" << mtab_data.device << "'");
