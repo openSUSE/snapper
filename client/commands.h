@@ -126,6 +126,9 @@ vector<XFile>
 command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		   unsigned int number2);
 
+bool
+command_is_quota_enabled(DBus::Connection& conn, const string& config_name);
+
 void
 command_setup_quota(DBus::Connection& conn, const string& config_name);
 

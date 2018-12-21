@@ -235,6 +235,8 @@ public:
     virtual ProxySnapshots& getSnapshots() = 0;
     virtual const ProxySnapshots& getSnapshots() const = 0;
 
+    virtual bool isQuotaEnabled() const = 0;
+
     virtual void setupQuota() = 0;
 
     virtual void prepareQuota() const = 0;

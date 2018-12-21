@@ -655,6 +655,11 @@ namespace snapper
 	    SN_THROW(AclException());
     }
 
+    bool
+    Snapper::isQuotaEnabled() const
+    {
+	return getFilesystem()->isQuotaEnabled();
+    }
 
     void
     Snapper::setupQuota()

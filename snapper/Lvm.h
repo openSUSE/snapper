@@ -104,6 +104,8 @@ namespace snapper
 	virtual void mountSnapshot(unsigned int num) const;
 	virtual void umountSnapshot(unsigned int num) const;
 
+	virtual bool isQuotaEnabled() const;
+
 	virtual bool isSnapshotReadOnly(unsigned int num) const;
 
 	virtual bool checkSnapshot(unsigned int num) const;

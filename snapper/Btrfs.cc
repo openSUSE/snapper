@@ -461,6 +461,17 @@ namespace snapper
     {
     }
 
+    bool
+    Btrfs::isQuotaEnabled() const
+    {
+#ifdef ENABLE_BTRFS_QUOTA
+	SDir subvolume_dir = openSubvolumeDir();
+	return is_quota_enabled(subvolume_dir.fd());
+#else
+	return false;
+#endif
+    }
+
 
     bool
     Btrfs::isSnapshotReadOnly(unsigned int num) const

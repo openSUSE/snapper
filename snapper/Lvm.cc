@@ -367,6 +367,12 @@ namespace snapper
 	}
     }
 
+    bool
+    Lvm::isQuotaEnabled() const
+    {
+	return false;
+    }
+
 
     bool
     Lvm::isSnapshotReadOnly(unsigned int num) const

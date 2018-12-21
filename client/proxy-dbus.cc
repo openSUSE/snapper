@@ -154,6 +154,13 @@ ProxySnapperDbus::setConfig(const ProxyConfig& proxy_config)
 }
 
 
+bool
+ProxySnapperDbus::isQuotaEnabled() const
+{
+    return command_is_quota_enabled(conn(), config_name);
+}
+
+
 void
 ProxySnapperDbus::setupQuota()
 {

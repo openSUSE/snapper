@@ -141,6 +141,8 @@ public:
     virtual ProxySnapshots& getSnapshots() override { return proxy_snapshots; }
     virtual const ProxySnapshots& getSnapshots() const override { return proxy_snapshots; }
 
+    virtual bool isQuotaEnabled() const override;
+
     virtual void setupQuota() override;
 
     virtual void prepareQuota() const override;

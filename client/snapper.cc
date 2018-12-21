@@ -452,6 +452,11 @@ list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool show_used_s
     {
 	default_snapshot = snapshots.getDefault();
 	active_snapshot = snapshots.getActive();
+
+	if (show_used_space)
+	{
+	    show_used_space = snapper->isQuotaEnabled();
+	}
     }
     catch (const DBus::ErrorException& e)
     {

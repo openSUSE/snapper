@@ -240,6 +240,11 @@ namespace snapper
 	rmdir(snapshotDir(num).c_str());
     }
 
+    bool
+    Ext4::isQuotaEnabled() const
+    {
+	return false;
+    }
 
     bool
     Ext4::isSnapshotReadOnly(unsigned int num) const

@@ -494,6 +494,24 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
 }
 
 
+bool
+command_is_quota_enabled(DBus::Connection& conn, const string& config_name)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "IsQuotaEnabled");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name;
+
+    DBus::Message reply = conn.send_with_reply_and_block(call);
+    bool is_quota_enabled = false;
+
+    DBus::Hihi hihi(reply);
+    hihi >> is_quota_enabled;
+
+    return is_quota_enabled;
+}
+
+
 void
 command_setup_quota(DBus::Connection& conn, const string& config_name)
 {

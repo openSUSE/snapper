@@ -171,6 +171,8 @@ namespace snapper
 
 	void syncFilesystem() const;
 
+	bool isQuotaEnabled() const;
+
 	void setupQuota();
 
 	void prepareQuota() const;

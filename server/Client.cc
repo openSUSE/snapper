@@ -320,6 +320,11 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='number' type='u' direction='out'/>\n"
 	"    </method>\n"
 
+	"    <method name='IsQuotaEnabled'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='is-quota-enabled' type='b' direction='out'/>\n"
+	"    </method>\n"
+
 	"    <method name='CalculateUsedSpace'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"    </method>\n"
@@ -1444,6 +1449,35 @@ Client::get_files(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
+Client::is_quota_enabled(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name;
+
+    y2deb("IsQuotaEnabled config_name:" << config_name);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
+
+    bool is_quota_enabled = snapper->isQuotaEnabled();
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
+    hoho << is_quota_enabled;
+   
+    conn.send(reply);
+}
+
+
+void
 Client::setup_quota(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
@@ -1701,6 +1735,8 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    delete_comparison(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetFiles"))
 	    get_files(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "IsQuotaEnabled"))
+	    is_quota_enabled(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "SetupQuota"))
 	    setup_quota(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "PrepareQuota"))
