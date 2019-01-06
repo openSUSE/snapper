@@ -134,7 +134,7 @@
 	<listitem>
 	  <para>Defines whether the number cleanup algorithm should be run for
 	  the config.</para>
-	  <para>Default value is &quot;no&quot;.</para>
+	  <para>Default value is &quot;yes&quot;.</para>
 	</listitem>
       </varlistentry>
 
@@ -178,7 +178,7 @@
 	  <para>Together with the timeline cleanup algorithm this will create
 	  a collection of snapshots with more snapshots is the near past and
 	  less snapshots in the far past.</para>
-	  <para>Default value is &quot;no&quot;.</para>
+	  <para>Default value is &quot;yes&quot;.</para>
 	</listitem>
       </varlistentry>
 
@@ -187,7 +187,7 @@
 	<listitem>
 	  <para>Defines whether the timeline cleanup algorithm should be run for
 	  the config.</para>
-	  <para>Default value is &quot;no&quot;.</para>
+	  <para>Default value is &quot;yes&quot;.</para>
 	</listitem>
       </varlistentry>
 
