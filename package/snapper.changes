@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Jan 18 10:45:54 CET 2019 - aschnell@suse.com
+
+- avoid deadlock for special btrfs directory comparison
+  (bsc#1049574)
+
+-------------------------------------------------------------------
 Wed Nov 21 18:59:09 CET 2018 - gergo@borus.hu
 
 - validate snapshot id corresponding to the default subvolume
