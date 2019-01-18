@@ -1238,9 +1238,43 @@ namespace snapper
     };
 
 
+    struct FdCloser
+    {
+	FdCloser(int fd)
+	    : fd(fd)
+	{
+	}
+
+	~FdCloser()
+	{
+	    if (fd > -1 )
+		::close(fd);
+	}
+
+	void reset()
+	{
+	    fd = -1;
+	}
+
+	int close()
+	{
+	    int r = ::close(fd);
+	    fd = -1;
+	    return r;
+	}
+
+    private:
+
+	int fd;
+
+    };
+
+
     bool
     StreamProcessor::dumper(int fd)
     {
+	FdCloser fd_closer(fd);
+
 	while (true)
 	{
 	    boost::this_thread::interruption_point();
@@ -1256,7 +1290,7 @@ namespace snapper
 
 	    if (r < 0)
 	    {
-		y2err("btrfs_read_and_process_send_stream failed");
+		y2err("btrfs_read_and_process_send_stream failed " << r);
 
 #if BOOST_VERSION < 104100
 		dumper_ret = false;
@@ -1289,6 +1323,10 @@ namespace snapper
 	    SN_THROW(BtrfsSendReceiveException());
 	}
 
+	// Use RAII to help close fds.
+	FdCloser fd0_closer(pipefd[0]);
+	FdCloser fd1_closer(pipefd[1]);
+
 	struct btrfs_ioctl_send_args io_send;
 	memset(&io_send, 0, sizeof(io_send));
 	io_send.send_fd = pipefd[1];
@@ -1304,17 +1342,17 @@ namespace snapper
 
 	boost::thread task(boost::move(pt));
 
+	fd0_closer.reset();
+
 	int r2 = ioctl(dir2.fd(), BTRFS_IOC_SEND, &io_send);
 	if (r2 < 0)
 	{
 	    y2err("send ioctl failed errno:" << errno << " (" << stringerror(errno) << ")");
 	}
 
-	close(pipefd[1]);
+	fd1_closer.close();
 
 	uf.wait();
-
-	close(pipefd[0]);
 
 	if (r2 < 0 || !uf.get())
 	{
@@ -1325,17 +1363,17 @@ namespace snapper
 
 	boost::thread dumper_thread(boost::bind(&StreamProcessor::dumper, this, pipefd[0]));
 
+	fd0_closer.reset();
+
 	int r2 = ioctl(dir2.fd(), BTRFS_IOC_SEND, &io_send);
 	if (r2 < 0)
 	{
 	    y2err("send ioctl failed errno:" << errno << " (" << stringerror(errno) << ")");
 	}
 
-	close(pipefd[1]);
+	fd1_closer.close();
 
 	dumper_thread.join();
-
-	close(pipefd[0]);
 
 	if (r2 < 0 || !dumper_ret)
 	{
