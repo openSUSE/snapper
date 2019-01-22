@@ -1275,11 +1275,13 @@ namespace snapper
     {
 	FdCloser fd_closer(fd);
 
+	unsigned int iterations = 0;
+
 	while (true)
 	{
 	    boost::this_thread::interruption_point();
 
-	     // remove the fourth parameter for older versions of libbtrfs
+	    // remove the fourth parameter for older versions of libbtrfs
 	    int r;
 
 #if BTRFS_LIB_VERSION < 101
@@ -1288,7 +1290,13 @@ namespace snapper
 	    r = btrfs_read_and_process_send_stream(fd, &send_ops, &*this, 0, 1);
 #endif
 
-	    if (r < 0)
+	    // Only return an error when r == -ENODATA if this was the
+	    // first call to btrfs_read_and_process_send_stream(). See
+	    // https://github.com/openSUSE/snapper/pull/438,
+	    // https://bugzilla.suse.com/show_bug.cgi?id=1111414 and
+	    // the btrfs-progs source code.
+
+	    if (r < 0 && !(r == -ENODATA && iterations > 0))
 	    {
 		y2err("btrfs_read_and_process_send_stream failed " << r);
 
@@ -1308,6 +1316,7 @@ namespace snapper
 		return true;
 	    }
 
+	    ++iterations;
 	}
     }
 
