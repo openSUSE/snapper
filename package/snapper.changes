@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Tue Jan 22 11:05:01 CET 2019 - aschnell@suse.com
+
+- adapted to libbtrfs changes to resurrect special btrfs directory
+  comparison (bsc#1111414)
+- version 0.8.2
+
+-------------------------------------------------------------------
 Fri Jan 18 10:45:54 CET 2019 - aschnell@suse.com
 
 - avoid deadlock for special btrfs directory comparison
