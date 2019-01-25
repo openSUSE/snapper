@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-29 14:27+0100\n"
-"PO-Revision-Date: 2019-01-20 17:44+0000\n"
-"Last-Translator: jcsl <trcs@gmx.com>\n"
+"PO-Revision-Date: 2019-03-01 20:28+0000\n"
+"Last-Translator: Patricia Pazos <pms.malaga@hermestrans.com>\n"
 "Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/"
 ">\n"
 "Language: es\n"
@@ -25,9 +25,9 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritmo de limpieza para la instant�
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algoritmo>\tAlgoritmo de limpieza para las instantáneas."
 
-#, fuzzy
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <command>\tEjecuta el comando y crea imágenes pre y post."
+msgstr ""
+"\t--command <command>\t\tEjecuta el comando y crea instantáneas pre y post."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <name>\t\tEstablecer el nombre a usar por la configuración."
@@ -42,9 +42,8 @@ msgstr "\t--description, -d <descripción>\tDescripción de las instantáneas."
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <comando>\t\tEl comando usado para comparar archivos."
 
-#, fuzzy
 msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-filters\t\tDeshabilitar filtros."
+msgstr "\t--disable-used-space\t\tDeshabilita el espacio usado que se muestra."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <opciones>\tOpciones adicionales que se pasan al comando diff."
@@ -267,7 +266,7 @@ msgstr "Error de ACL."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
@@ -432,7 +431,7 @@ msgstr "Falló la detección del sistema de ficheros."
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
-msgstr ""
+msgstr "EiB"
 
 # SLE12
 msgid "Empty configdata."
@@ -471,7 +470,7 @@ msgstr "Error de espacio libre (%s)."
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
-msgstr ""
+msgstr "GiB"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -520,7 +519,7 @@ msgstr "Clave"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -531,7 +530,7 @@ msgstr "Puede que haya olvidado indica el delimitador .. entre los números de l
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -562,7 +561,7 @@ msgstr "Falló la apertura del archivo '%s'."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
-msgstr ""
+msgstr "PiB"
 
 msgid "Post #"
 msgstr "Post número"
@@ -604,7 +603,7 @@ msgstr "La raíz de configuración no existe. Es probable que snapper no se haya
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
-msgstr ""
+msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Pruebe 'snapper --help' for more information."
