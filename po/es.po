@@ -5,7 +5,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-29 14:27+0100\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
-"Last-Translator: Patricia Pazos <pms.malaga@hermestrans.com>\n"
+"Last-Translator: jcsl <trcs@gmx.com>\n"
 "Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/"
 ">\n"
 "Language: es\n"
@@ -180,7 +180,7 @@ msgid "    Options for 'create-config' command:"
 msgstr "    Opciones para el comando 'create-config':"
 
 msgid "    Options for 'delete' command:"
-msgstr "    Opciones del comando delete:"
+msgstr "    Opciones del comando 'delete':"
 
 msgid "    Options for 'diff' command:"
 msgstr "    Opciones para el comando 'diff':"
@@ -207,10 +207,10 @@ msgid "  Comparing snapshots extended attributes:"
 msgstr "  Comparar los atributos extendidos de las instantáneas:"
 
 msgid "  Comparing snapshots:"
-msgstr "  Comparación de capturas:"
+msgstr "  Comparación de instantáneas:"
 
 msgid "  Create config:"
-msgstr "  Crear Configuración:"
+msgstr "  Crear configuración:"
 
 msgid "  Create snapshot:"
 msgstr "  Crear imagen:"
@@ -526,7 +526,9 @@ msgid "Listing configs failed (%s)."
 msgstr "Falló el listado de configuraciones (%s)."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
-msgstr "Puede que haya olvidado indica el delimitador .. entre los números de las instantáneas."
+msgstr ""
+"Puede que haya olvidado indica el delimitador '..' entre los números de las "
+"instantáneas."
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
@@ -544,7 +546,7 @@ msgid "Missing command argument."
 msgstr "Falta un argumento del comando."
 
 msgid "Missing delimiter '..' between snapshot numbers."
-msgstr "Falta el delimitador .. entre los números de las instantáneas."
+msgstr "Falta el delimitador '..' entre los números de las instantáneas."
 
 msgid "Missing or invalid pre-number."
 msgstr "Número pre faltante o no válido."
@@ -606,7 +608,7 @@ msgid "TiB"
 msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
-msgstr "Pruebe 'snapper --help' for more information."
+msgstr "Pruebe 'snapper --help' para obtener más información."
 
 msgid "Type"
 msgstr "Tipo"
@@ -702,7 +704,9 @@ msgid "root argument can be used only together with no-dbus."
 msgstr "El argumento root solo se puede usar junto con no-dbus."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "usage: snapper [--global-options] <command> [--command-options] [argumentos-comando]"
+msgstr ""
+"uso: snapper [--global-options] <comando> [--command-options] [argumentos-"
+"comando]"
 
 # SLE12
 #~ msgid "Quota failure (%s)."
