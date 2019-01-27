@@ -7,15 +7,17 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-29 14:27+0100\n"
-"PO-Revision-Date: 2016-04-28 04:47+0000\n"
-"Last-Translator: mohammad alhargan <malham1@gmail.com>\n"
-"Language-Team: Arabic <http://l10n.opensuse.org/projects/snapper/master/ar/>\n"
+"PO-Revision-Date: 2019-03-01 20:28+0000\n"
+"Last-Translator: George Yacoub <george.yacoub@arabize.com>\n"
+"Language-Team: Arabic <https://l10n.opensuse.org/projects/snapper/master/ar/>"
+"\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 2.5\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 3.3\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs، -a\t\tقائمة باللقطات من كل التكوينات التي يمكن الوصول إليها."
@@ -26,9 +28,8 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tتنظيف خوارزمية اللقط
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tتنظيف خوارزمية اللقطة."
 
-#, fuzzy
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <command>\tقم بتشغيل الأمر وإنشاء ما قبل وبعد لقطات."
+msgstr "\t--command <command>\t\tتشغيل الامر وإنشاء لقطات قبل وبعد."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <name>\t\tعين اسم لتستخدمه للإعدادات."
@@ -42,9 +43,8 @@ msgstr "\t--description, -d <description>\tوصف اللقطة."
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\tأمر مستخدم لمقارنة الملفات."
 
-#, fuzzy
 msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-filters\t\tإيقاف المرشحات."
+msgstr "\t--disable-used-space\t\tتعطيل عرض المساحة المستخدمة."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions، -x <options>\tخيارات إضافية تم تمريرها إلى أمر diff."
@@ -151,9 +151,8 @@ msgstr "\tالتراجع عن اللقطة [number]"
 msgid "\tsnapper set-config <configdata>"
 msgstr "\tإعداد snapper <configdata>"
 
-#, fuzzy
 msgid "\tsnapper setup-quota"
-msgstr "\tضبط تهيئة الملتقط"
+msgstr "\tإعداد حصة الملتقط"
 
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tحالة الملتقط <number1>..<number2>"
@@ -240,7 +239,7 @@ msgid "  Set config:"
 msgstr "  ضبط التهيئة:"
 
 msgid "  Setup quota:"
-msgstr ""
+msgstr "  إعداد الحصة:"
 
 msgid "  Umount snapshot:"
 msgstr "  الغ تحميل لقطة:"
@@ -260,19 +259,19 @@ msgstr "خطأ ACL."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
-msgstr ""
+msgstr "B"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr "  حذف اللقطات:"
+msgstr "لا يمكن حذف اللقطة %d لأنها النظام الحالي."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr ""
+msgstr "لا يمكن حذف اللقطة %d لأنها اللقطة التي تم تثبيتها حاليًا."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
+msgstr "لا يمكن حذف اللقطة %d لأنها اللقطة التالية التي يجب تثبيتها."
 
 msgid "Cleanup"
 msgstr "تنظيف"
@@ -316,9 +315,9 @@ msgstr "يحتاج الأمر 'تعديل' وسيطة واحدة على الأق
 msgid "Command 'mount' needs at least one argument."
 msgstr "يحتاج الأمر 'تحميل' وسيطة واحدة على الأقل."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr "الأمر 'تراجع' يأخذ وسيط واحد أو لا يأخذ."
+msgstr "لا يمكن استخدام الأمر 'rollback' في وحدة تخزين فرعية غير رئيسية %s1."
 
 msgid "Command 'rollback' only available for btrfs."
 msgstr "الأمر 'تراجع' متاح فقط لbtrfs."
@@ -329,16 +328,14 @@ msgstr "الأمر 'تراجع' يأخذ وسيط واحد أو لا يأخذ."
 msgid "Command 'set-config' needs at least one argument."
 msgstr "يحتاج الأمر 'ضبط التهيئة' وسيطة واحدة على الأقل."
 
-#, fuzzy
 msgid "Command 'setup-quota' does not take arguments."
-msgstr "لا يأخذ الأمر 'تعليمات' الوسائط."
+msgstr "لا يدعم الأمر 'setup-quota' وسيطات."
 
 msgid "Command 'status' needs one argument."
 msgstr "يحتاج الأمر 'الحالة' لأحد الوسائط."
 
-#, fuzzy
 msgid "Command 'umount' needs at least one argument."
-msgstr "يحتاج الأمر 'تحميل' وسيطة واحدة على الأقل."
+msgstr "يحتاج الأمر 'umount' وسيطة واحدة على الأقل."
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "يحتاج الأمر 'تراجع عن التغييرات' وسيطة واحدة على الأقل."
@@ -419,7 +416,7 @@ msgstr "فشل الكشف عن نوع نظام الملفات."
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
-msgstr ""
+msgstr "EiB"
 
 msgid "Empty configdata."
 msgstr "معلومات الإعداد خالية."
@@ -427,15 +424,15 @@ msgstr "معلومات الإعداد خالية."
 msgid "Empty userdata."
 msgstr "معلومات المستخدم خالية."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Error (%s)."
-msgstr "خطأ ‎‏IO ‏(%s)."
+msgstr "خطأ (%s)."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "فشل في تهيئة نظام معالجة الملفات."
 
 msgid "Failed to set locale. Fix your system."
-msgstr ""
+msgstr "فشل تعيين الإعدادات المحلية. الرجاء إصلاح النظام."
 
 msgid "Failure"
 msgstr "فشل"
@@ -448,13 +445,13 @@ msgstr "فشل (%s)."
 msgid "File '%s' not found."
 msgstr "الملف '%s' غير موجود."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Free space error (%s)."
-msgstr "خطأ ‎‏IO ‏(%s)."
+msgstr "خطأ في المساحة الخالية (%s)."
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
-msgstr ""
+msgstr "GiB"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -467,9 +464,8 @@ msgstr "خطأ ‎‏IO ‏(%s)."
 msgid "Identical snapshots."
 msgstr "لقطات متطابقة."
 
-#, fuzzy
 msgid "Illegal snapshot."
-msgstr "اللقطة غير شرعية."
+msgstr "لقطة غير مسموح بها."
 
 msgid "Invalid configdata."
 msgstr "بيانات إعداد غير صالحة."
@@ -502,7 +498,7 @@ msgstr "مفتاح"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -513,7 +509,7 @@ msgstr "ربما نسيت المحدد '..' بين أرقام اللقطة."
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -544,7 +540,7 @@ msgstr "فتح الملف '%s' فشل."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
-msgstr ""
+msgstr "PiB"
 
 msgid "Post #"
 msgstr "قياس ورق #"
@@ -558,9 +554,9 @@ msgstr "ما قبل #"
 msgid "Pre Date"
 msgstr "ما قبل التاريخ"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Quota error (%s)."
-msgstr "خطأ ‎‏IO ‏(%s)."
+msgstr "خطأ في الحصة (%s)."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "لمزيد من التعليمات، راجع 'man snapper'."
@@ -584,7 +580,7 @@ msgstr "'root' للتكوين غير موجود. غالبًا لم يتم تكو
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
-msgstr ""
+msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "جرب 'التقاط --help' لمزيد من المعلومات."
@@ -622,7 +618,7 @@ msgid "Use an integer number from %d to %d."
 msgstr "استخدم رقم صحيح من %d إلى %d."
 
 msgid "Used Space"
-msgstr ""
+msgstr "المساحة المستخدمة"
 
 msgid "User"
 msgstr "مستخدم"
