@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: entries\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-29 14:27+0100\n"
-"PO-Revision-Date: 2018-04-26 01:32+0000\n"
+"PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Hwajin Kim <hwajin.kim@e4net.net>\n"
-"Language-Team: Korean <https://l10n.opensuse.org/projects/snapper/master/ko/>\n"
+"Language-Team: Korean <https://l10n.opensuse.org/projects/snapper/master/ko/>"
+"\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.18\n"
+"X-Generator: Weblate 3.3\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\t액세스 가능한 구성의 스냅샷을 모두 나열합니다."
@@ -25,9 +26,8 @@ msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\t스냅샷에 대한 정리 알고리즘입니다."
 
 # SLE12
-#, fuzzy
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <command>\t명령을 실행하고 사전 및 사후 스냅샷을 생성합니다."
+msgstr "\t--command <command>\t\t명령을 실행하고 사전 및 사후 스냅샷을 생성합니다."
 
 # SLE12
 msgid "\t--config, -c <name>\t\tSet name of config to use."
@@ -45,7 +45,7 @@ msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\t파일을 비교하는 데 쓰는 명령입니다."
 
 msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr ""
+msgstr "\t--disable-used-space\t\t사용된 공간 표시를 비활성화합니다."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tdiff 명령에 전달되는 추가 옵션입니다."
@@ -323,20 +323,20 @@ msgstr "ACL 오류입니다."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
-msgstr ""
+msgstr "B"
 
 # SLE12
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr "  스냅샷 삭제:"
+msgstr "현재 시스템이므로 %d 스냅샷을 삭제할 수 없습니다."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr ""
+msgstr "%d 스냅샷은 현재 마운트되어 있으므로 삭제할 수 없습니다."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
+msgstr "%d 스냅샷은 다음으로 마운트될 스냅샷이므로 삭제할 수 없습니다."
 
 # SLE12
 msgid "Cleanup"
@@ -516,7 +516,7 @@ msgstr "파일 시스템 유형을 감지하지 못했습니다."
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
-msgstr ""
+msgstr "EiB"
 
 # SLE12
 msgid "Empty configdata."
@@ -551,13 +551,13 @@ msgstr "실패(%s)입니다."
 msgid "File '%s' not found."
 msgstr "'%s' 파일을 찾을 수 없습니다."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Free space error (%s)."
-msgstr "IO 오류입니다(%s)."
+msgstr "사용 가능한 공간 오류(%s)입니다."
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
-msgstr ""
+msgstr "GiB"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -614,7 +614,7 @@ msgstr "키"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 # SLE12
 #, c-format
@@ -626,7 +626,7 @@ msgstr "스냅샷 번호 사이에 '..' 구분 기호가 누락된 것 같습니
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 # SLE12
 #, c-format
@@ -664,7 +664,7 @@ msgstr "'%s' 파일을 열지 못했습니다."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
-msgstr ""
+msgstr "PiB"
 
 # SLE12
 msgid "Post #"
@@ -712,7 +712,7 @@ msgstr "'root' 구성이 존재하지 않습니다. 스냅퍼가 구성되지 �
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
-msgstr ""
+msgstr "TiB"
 
 # SLE12
 msgid "Try 'snapper --help' for more information."
@@ -759,7 +759,7 @@ msgid "Use an integer number from %d to %d."
 msgstr "%d에서 %d 사이의 정수를 사용하십시오."
 
 msgid "Used Space"
-msgstr ""
+msgstr "사용된 공간"
 
 # SLE12
 msgid "User"
