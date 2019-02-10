@@ -61,6 +61,7 @@ namespace snapper
 	string get_subvolume(int fd, subvolid_t id);
 	subvolid_t get_id(int fd);
 
+	bool is_quota_enabled(int fd);
 	void quota_enable(int fd);
 	void quota_disable(int fd);
 

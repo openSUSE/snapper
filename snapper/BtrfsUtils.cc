@@ -614,6 +614,26 @@ namespace snapper
 	    return qgroup_usage;
 	}
 
+	bool is_quota_enabled(int fd)
+	{
+	    struct btrfs_ioctl_search_args args;
+	    struct btrfs_ioctl_search_key *sk = &args.key;
+	    sk->tree_id = BTRFS_ROOT_TREE_OBJECTID;
+	    sk->min_objectid =  sk->max_objectid = BTRFS_QUOTA_TREE_OBJECTID;
+	    sk->min_offset = 0;
+	    sk->max_offset = (u64)(-1);
+	    sk->min_transid = 0;
+	    sk->max_transid = (u64)(-1);
+	    sk->min_type = sk->max_type = BTRFS_ROOT_ITEM_KEY;
+	    sk->nr_items = 4096;
+
+	    if (ioctl(fd, BTRFS_IOC_TREE_SEARCH, &args) < 0) {
+            throw runtime_error_with_errno("ioctl(BTRFS_IOC_TREE_SEARCH) failed", errno);
+	    }
+
+	    return sk->nr_items != 0;
+	}
+
 #endif
 
 
