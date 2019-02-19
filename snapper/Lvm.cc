@@ -63,7 +63,7 @@ namespace snapper
     Lvm::Lvm(const string& subvolume, const string& root_prefix, const string& mount_type)
 	: Filesystem(subvolume, root_prefix), mount_type(mount_type),
 	  caps(LvmCapabilities::get_lvm_capabilities()),
-	  cache(LvmCache::get_lvm_cache())
+	  cache(LvmCache::get_lvm_cache()), sh(NULL)
     {
 	if (access(LVCREATEBIN, X_OK) != 0)
 	{
