@@ -10,15 +10,17 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-29 14:27+0100\n"
-"PO-Revision-Date: 2018-10-23 20:05+0000\n"
-"Last-Translator: Damian Zaręba <damianzrb@gmail.com>\n"
-"Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>\n"
+"PO-Revision-Date: 2019-03-01 20:28+0000\n"
+"Last-Translator: Ewelina Michalowska <ewelina.michalowska@stgambit.com>\n"
+"Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>"
+"\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2.18\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.3\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tWyświetla listę migawek z wszystkich dostępnych konfiguracji."
@@ -26,13 +28,13 @@ msgstr "\t--all-configs, -a\t\tWyświetla listę migawek z wszystkich dostępnyc
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorytm usuwania starych zrzutów."
 
-#, fuzzy
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorytm czyszczenia migawek."
 
-#, fuzzy
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <polecenie>\tWykonanie polecenia oraz utworzenie zrzutów typu pre i post."
+msgstr ""
+"\t--command <polecenie>\t\tWykonanie polecenia oraz utworzenie zrzutów typu "
+"pre i post."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <nazwa>\t\tUstawienie nazwy konfiguracji do użycia."
@@ -46,9 +48,8 @@ msgstr "\t--description, -d <opis>\tOpis migawek."
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <polecenie>\t\tPolecenie służące do porównywania plików."
 
-#, fuzzy
 msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-filters\t\tWyłącz filtry."
+msgstr "\t--disable-used-space\t\tWyłącz wyświetlanie wykorzystanego miejsca."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <opcje>\tDodatkowe opcje przekazywane do polecenia diff."
@@ -80,9 +81,8 @@ msgstr "\t--print-number, -p\t\tWyświetl numer tworzonego zrzutu."
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
 msgstr "\t--print-number, -p\t\tWyświetlenie numeru migawki utworzonej jako druga."
 
-#, fuzzy
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\tWyłącza normalne wyjście."
+msgstr "\t--quiet, -q\t\t\tWyłącz normalne wyjście."
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <ścieżka>\t\tDziałanie na katalogu głównym obiektu docelowego (działa tylko bez systemu DBus)."
@@ -264,19 +264,22 @@ msgstr "Błąd ACL."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
-msgstr ""
+msgstr "B"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr "  Usunięcie zrzutu:"
+msgstr "Nie można usunąć migawki %d, ponieważ to jest bieżący system."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
 msgstr ""
+"Nie można usunąć migawki %d, ponieważ to jest aktualnie zamontowana migawka."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr ""
+"Nie można usunąć migawki %d, ponieważ to jest migawka następna w kolejności "
+"do zamontowania."
 
 msgid "Cleanup"
 msgstr "Wyczyszczono"
@@ -418,7 +421,7 @@ msgstr "Wykrywanie systemu plików nie powiodło się."
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
-msgstr ""
+msgstr "EiB"
 
 msgid "Empty configdata."
 msgstr "Puste dane konfiguracyjne."
@@ -447,13 +450,13 @@ msgstr "Niepowodzenie (%s)."
 msgid "File '%s' not found."
 msgstr "Nie znaleziono pliku '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Free space error (%s)."
-msgstr "Błąd we-wy (%s)."
+msgstr "Błąd wolnego miejsca (%s)."
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
-msgstr ""
+msgstr "GiB"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -500,7 +503,7 @@ msgstr "Klucz"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -511,7 +514,7 @@ msgstr "Być może zapomniano ogranicznika \"..\" między numerami migawek."
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -542,7 +545,7 @@ msgstr "Otwieranie pliku '%s' nie powiodło się."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
-msgstr ""
+msgstr "PiB"
 
 msgid "Post #"
 msgstr "Post #"
@@ -582,7 +585,7 @@ msgstr "Folder główny konfiguracji nie istnieje. Narzędzie snapper prawdopodo
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
-msgstr ""
+msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Wypróbuj polecenie 'snapper --help', aby uzyskać więcej informacji."
@@ -620,7 +623,7 @@ msgid "Use an integer number from %d to %d."
 msgstr "Użyj liczby całkowitej z zakresu od %d do %d."
 
 msgid "Used Space"
-msgstr ""
+msgstr "Wykorzystane miejsce"
 
 msgid "User"
 msgstr "Użytkownik"

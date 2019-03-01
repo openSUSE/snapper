@@ -5,15 +5,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-29 14:27+0100\n"
-"PO-Revision-Date: 2018-04-26 15:16+0000\n"
+"PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Robert Taisz <robert.taisz@emerald.hu>\n"
-"Language-Team: Hungarian <https://l10n.opensuse.org/projects/snapper/master/hu/>\n"
+"Language-Team: Hungarian <https://l10n.opensuse.org/projects/snapper/master/"
+"hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.18\n"
+"X-Generator: Weblate 3.3\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tA pillanatképek listázása minden elérhető konfigurációból."
@@ -25,9 +26,10 @@ msgstr "\t--cleanup-algorithm, -c <algoritmus>\tPillanatkép tisztítási algori
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algoritmus>\tKarbantartási algoritmus a pillanatfelvételekhez."
 
-#, fuzzy
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <parancs>\tFuttassa a parancsot és készítsen pillanatképet előtte, majd utána."
+msgstr ""
+"\t--command <parancs>\t\tFuttassa a parancsot, és készítsen pillanatképet "
+"előtte, majd utána."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <név>\t\tFelhasznált beállítás nevének megadása."
@@ -42,9 +44,9 @@ msgstr "\t--description, -d <leírás>\tPillanatfelvételekhez tartozó leírás
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <parancs>\t\tA fájlok összehasonlítására használt parancs."
 
-#, fuzzy
 msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-filters\t\tSzűrők letiltása."
+msgstr ""
+"\t--disable-used-space\t\tFelhasznált terület megjelenítésének letiltása."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <beállítások>\tA diff parancsnak átadott további beállítások."
@@ -275,19 +277,23 @@ msgstr "ACL-hiba."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
-msgstr ""
+msgstr "bájt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr "  Pillanatkép törlése:"
+msgstr "A(z) %d pillanatkép nem törölhető, mivel az aktuális rendszerben van."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
 msgstr ""
+"A(z) %d pillanatkép nem törölhető, mivel ez az aktuálisan csatlakoztatott "
+"pillanatkép."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr ""
+"A(z) %d pillanatkép nem törölhető, mivel ez a következő csatlakoztatandó "
+"pillanatkép."
 
 msgid "Cleanup"
 msgstr "Tisztítás"
@@ -440,7 +446,7 @@ msgstr "A fájlrendszer típusának felismerése sikertelen."
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
-msgstr ""
+msgstr "EiB"
 
 # SLE12
 msgid "Empty configdata."
@@ -473,13 +479,13 @@ msgstr "Hiba (%s)."
 msgid "File '%s' not found."
 msgstr "A(z) '%s' fájl nem található."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Free space error (%s)."
-msgstr "I/O-hiba (%s)."
+msgstr "Szabad terület hibája (%s)."
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
-msgstr ""
+msgstr "GiB"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -530,7 +536,7 @@ msgstr "Kulcs"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -541,7 +547,7 @@ msgstr "Lehet, hogy elfeledkezett a pillanatképek száma közötti '..' elvála
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 #, c-format
 msgid "Missing argument for command option '%s'."
@@ -572,7 +578,7 @@ msgstr "A(z) '%s' fájl megnyitása sikertelen."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
-msgstr ""
+msgstr "PiB"
 
 msgid "Post #"
 msgstr "Utáni #"
@@ -613,7 +619,7 @@ msgstr "A 'root' konfiguráció nem létezik. A snapper valószínűleg nincs ko
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
-msgstr ""
+msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "További információ a 'snapper --help' parancs segítségével érhető el."
@@ -652,7 +658,7 @@ msgid "Use an integer number from %d to %d."
 msgstr "Használjon %d és %d közötti egész számot."
 
 msgid "Used Space"
-msgstr ""
+msgstr "Használt terület"
 
 msgid "User"
 msgstr "Felhasználó"

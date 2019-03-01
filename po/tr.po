@@ -9,20 +9,24 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-29 14:27+0100\n"
-"PO-Revision-Date: 2011-11-23 07:21+0200\n"
-"Last-Translator: Halil <halilpk@gmail.com>\n"
-"Language-Team: turkish <i18n@suse.de>\n"
-"Language: \n"
+"PO-Revision-Date: 2019-03-01 20:28+0000\n"
+"Last-Translator: Murat Servan Kahraman <muratservan@outlook.com>\n"
+"Language-Team: Turkish <https://l10n.opensuse.org/projects/snapper/master/tr/"
+">\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.3\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr ""
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--temizleme-algoritması, -c <algo>\tAnlık görüntüler için temizleme algoritması."
+msgstr ""
+"\t--cleanup-algorithm, -c <algo>\tAnlık görüntüler için temizleme "
+"algoritması."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr ""
@@ -31,10 +35,10 @@ msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr ""
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--yapılandırma, -c <name>\t\tKullanmak için yapılandırma ismini ayarla."
+msgstr "\t--config, -c <name>\t\tKullanmak için yapılandırma ismini ayarla."
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--tanım, -d <description>\tAnlık görüntü tanımı."
+msgstr "\t--description, -d <description>\tAnlık görüntü tanımı."
 
 msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr ""
@@ -50,10 +54,13 @@ msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
 
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--dstipi, -f <fstype>\t\tDosya sistemi tipini manuel olarak ayarla."
+msgstr "\t--fstype, -f <fstype>\t\tDosya sistemi türünü elle ayarla."
 
+#, fuzzy
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--giriş, -i <file>\t\tDosyadan değişiklikleri geri almak için dosyaları oku."
+msgstr ""
+"\t--giriş, -i <file>\t\tDosyadan değişiklikleri geri almak için dosyaları "
+"oku."
 
 #, fuzzy
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
@@ -66,19 +73,20 @@ msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr ""
 
 msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--çıkış, -o <file>\t\tStatüleri dosyaya kaydet."
+msgstr "\t--output, -o <file>\t\tDurumu dosyaya kaydet."
 
+#, fuzzy
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--ön-numara <number>\t\tİlgili önceki anlık görüntü numarası."
 
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--numara-yazdır, -p\t\tOluşturulan anlık görüntünün numarasını yaz."
+msgstr "\t--print-number, -p\t\tOluşturulan anlık görüntünün numarasını yaz."
 
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
 msgstr ""
 
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--sessiz, -q\t\t\tNormal çıkış bastırılması."
+msgstr "\t--quiet, -q\t\t\tNormal olan çıktıları gizle."
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr ""
@@ -86,20 +94,25 @@ msgstr ""
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr ""
 
+#, fuzzy
 msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--tablo-stili, -t <style>\tTablo stili (sayı)."
+msgstr "\t--table-style, -t <style>\tTablo stili (tamsayı)."
 
+#, fuzzy
 msgid "\t--template, -t <name>\t\tName of config template to use."
 msgstr "\t--şablon, -t <name>\t\tKullanmak için yapılandırma şablonu ismi."
 
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--tip, -t <type>\t\tAnlım görüntü tipi."
+msgstr "\t--type, -t <type>\t\tAnlık görüntü türü."
 
+#, fuzzy
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
 msgstr "\t--tip, -t <type>\t\tListelemek için anlım görüntü tipleri."
 
+#, fuzzy
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--kullanıcıverisi, -u <userdata>\tAnlık görüntü için kullanıcı verisi."
+msgstr ""
+"\t--kullanıcıverisi, -u <userdata>\tAnlık görüntü için kullanıcı verisi."
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
 msgstr ""
@@ -108,20 +121,24 @@ msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
 msgstr ""
 
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--ayrıntılı, -v\t\t\tAyrıntılılığı yükselt."
+msgstr "\t--verbose, -v\t\t\tAyrıntıyı arttır."
 
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--versiyon\t\t\tVersiyonu yazdır ve çık."
+msgstr "\t--version\t\t\tSürümü yazdır ve çık."
 
+#, fuzzy
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tyakalayıcı temizle <cleanup-algorithm>"
 
+#, fuzzy
 msgid "\tsnapper create"
 msgstr "\tyakalayıcı oluştur"
 
+#, fuzzy
 msgid "\tsnapper create-config <subvolume>"
 msgstr "\tyakalayıcı yapılandırma-oluştur <subvolume>"
 
+#, fuzzy
 msgid "\tsnapper delete <number>"
 msgstr "\tyakalayıcı silme <number>"
 
@@ -129,6 +146,7 @@ msgstr "\tyakalayıcı silme <number>"
 msgid "\tsnapper delete-config"
 msgstr "\tyakalayıcı yapılandırmayı listele"
 
+#, fuzzy
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tyakalayıcı fark <number1>..<number2> [dosyalar]"
 
@@ -136,15 +154,19 @@ msgstr "\tyakalayıcı fark <number1>..<number2> [dosyalar]"
 msgid "\tsnapper get-config"
 msgstr "\tyakalayıcı yapılandırmayı listele"
 
+#, fuzzy
 msgid "\tsnapper list"
 msgstr "\tyakalayıcı listele"
 
+#, fuzzy
 msgid "\tsnapper list-configs"
 msgstr "\tyakalayıcı yapılandırmayı listele"
 
+#, fuzzy
 msgid "\tsnapper modify <number>"
 msgstr "\tyakalayıcı değiştirme <number>"
 
+#, fuzzy
 msgid "\tsnapper mount <number>"
 msgstr "\tyakalayıcı çerçevele <number>"
 
@@ -159,12 +181,15 @@ msgstr "\tyakalayıcı yapılandırmayı listele"
 msgid "\tsnapper setup-quota"
 msgstr "\tyakalayıcı yapılandırmayı listele"
 
+#, fuzzy
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tyakalayıcı statü <number1>..<number2>"
 
+#, fuzzy
 msgid "\tsnapper umount <number>"
 msgstr "\tyakalayıcı çerçeveleme <number>"
 
+#, fuzzy
 msgid "\tsnapper undochange <number1>..<number2> [files]"
 msgstr "\tyakalayıcı değişikleri geri al <number1>..<number2> [dosyalar]"
 
@@ -173,13 +198,13 @@ msgid "\tsnapper xadiff <number1>..<number2> [files]"
 msgstr "\tyakalayıcı fark <number1>..<number2> [dosyalar]"
 
 msgid "    Global options:"
-msgstr "    Küresel seçenekler:"
+msgstr "    Evrensel seçenekler:"
 
 msgid "    Options for 'create' command:"
-msgstr "    'oluştur' komutu için seçenekler:"
+msgstr "    'create' komutu için seçenekler:"
 
 msgid "    Options for 'create-config' command:"
-msgstr "    'yapılandırma-oluştur' komutu için seçenekler:"
+msgstr "    'create-config' komutu için seçenekler:"
 
 #, fuzzy
 msgid "    Options for 'delete' command:"
@@ -190,63 +215,71 @@ msgid "    Options for 'diff' command:"
 msgstr "    'değiştir' komutu için seçenekler:"
 
 msgid "    Options for 'list' command:"
-msgstr "    'listele' komutu için seçenekler:"
+msgstr "    'list' komutu için seçenekler:"
 
 msgid "    Options for 'modify' command:"
-msgstr "    'değiştir' komutu için seçenekler:"
+msgstr "    'modify' komutu için seçenekler:"
 
 msgid "    Options for 'rollback' command:"
 msgstr ""
 
 msgid "    Options for 'status' command:"
-msgstr "    'statü' komutu için seçenekler:"
+msgstr "    'status komutu için seçenekler:"
 
 msgid "    Options for 'undochange' command:"
-msgstr "    'değişiklikleri geri al' komutu için seçenekler:"
+msgstr "    'undochange' komutu için seçenekler:"
 
+#, fuzzy
 msgid "  Cleanup snapshots:"
-msgstr "Anlık görüntüleri temizle:"
+msgstr "  Anlık görüntüleri temizle:"
 
 #, fuzzy
 msgid "  Comparing snapshots extended attributes:"
 msgstr " Anlık görüntüleri karşılaştırma:"
 
 msgid "  Comparing snapshots:"
-msgstr " Anlık görüntüleri karşılaştırma:"
+msgstr "  Anlık görüntüleri karşılaştırma:"
 
 # clients/inst_custom_part.ycp:2940
+#, fuzzy
 msgid "  Create config:"
-msgstr " Yapılandırma oluştur: "
+msgstr "  Yapılandırma oluştur:"
 
 # clients/inst_custom_part.ycp:2940
+#, fuzzy
 msgid "  Create snapshot:"
-msgstr " Anlık görüntü oluştur:"
+msgstr "  Anlık görüntü oluştur:"
 
 # clients/inst_custom_part.ycp:2940
 #, fuzzy
 msgid "  Delete config:"
 msgstr " Yapılandırma oluştur: "
 
+#, fuzzy
 msgid "  Delete snapshot:"
-msgstr " Anlık görüntüyü sil:"
+msgstr "  Anlık görüntüyü sil:"
 
 # clients/inst_custom_part.ycp:2940
 #, fuzzy
 msgid "  Get config:"
 msgstr " Yapılandırma oluştur: "
 
+#, fuzzy
 msgid "  List configs:"
-msgstr " Yapılandırmayı listele:"
+msgstr "  Yapılandırmayı listele:"
 
+#, fuzzy
 msgid "  List snapshots:"
-msgstr "Anlık görüntüleri listele:"
+msgstr "  Anlık görüntüleri listele:"
 
+#, fuzzy
 msgid "  Modify snapshot:"
-msgstr " Anlık görüntüyü değiştir:"
+msgstr "  Anlık görüntüyü değiştir:"
 
 # clients/inst_custom_part.ycp:2940
+#, fuzzy
 msgid "  Mount snapshot:"
-msgstr " Anlık görüntüyü çerçevele: "
+msgstr "  Anlık görüntüyü çerçevele:"
 
 msgid "  Rollback:"
 msgstr ""
@@ -260,11 +293,13 @@ msgid "  Setup quota:"
 msgstr ""
 
 # clients/inst_custom_part.ycp:2940
+#, fuzzy
 msgid "  Umount snapshot:"
-msgstr " Anlık görüntüyü çerçeveleme: "
+msgstr "  Anlık görüntüyü çerçeveleme:"
 
+#, fuzzy
 msgid "  Undo changes:"
-msgstr " Değişikikleri geri al:"
+msgstr "  Değişikikleri geri al:"
 
 msgid "#"
 msgstr "#"
@@ -292,15 +327,19 @@ msgstr ""
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr ""
 
+#, fuzzy
 msgid "Cleanup"
 msgstr "Temizle"
 
+#, fuzzy
 msgid "Command 'cleanup' needs one arguments."
 msgstr "'temizle' komutu için bir argüman gereklidir."
 
+#, fuzzy
 msgid "Command 'create' does not take arguments."
 msgstr "'oluştur' komutu argüman almamaktadır."
 
+#, fuzzy
 msgid "Command 'create-config' needs one argument."
 msgstr "'yapılandırma-oluştur' komutu için bir argüman gereklidir."
 
@@ -308,6 +347,7 @@ msgstr "'yapılandırma-oluştur' komutu için bir argüman gereklidir."
 msgid "Command 'debug' does not take arguments."
 msgstr "'yardım komutu' argüman almamaktadır."
 
+#, fuzzy
 msgid "Command 'delete' needs at least one argument."
 msgstr "'sil' komutu için en az bir argüman gereklidir."
 
@@ -322,18 +362,23 @@ msgstr ""
 msgid "Command 'get-config' does not take arguments."
 msgstr "'yapılandırmayı-listele' komutu argüman almamaktadır."
 
+#, fuzzy
 msgid "Command 'help' does not take arguments."
 msgstr "'yardım komutu' argüman almamaktadır."
 
+#, fuzzy
 msgid "Command 'list' does not take arguments."
 msgstr "'listele' komutu argüman almamaktadır."
 
+#, fuzzy
 msgid "Command 'list-configs' does not take arguments."
 msgstr "'yapılandırmayı-listele' komutu argüman almamaktadır."
 
+#, fuzzy
 msgid "Command 'modify' needs at least one argument."
 msgstr "'değiştir' komutu için en az bir argüman gereklidir."
 
+#, fuzzy
 msgid "Command 'mount' needs at least one argument."
 msgstr "'çerçevele' komutu için en az bir argüman gereklidir."
 
@@ -355,6 +400,7 @@ msgstr "'çerçevele' komutu için en az bir argüman gereklidir."
 msgid "Command 'setup-quota' does not take arguments."
 msgstr "'yardım komutu' argüman almamaktadır."
 
+#, fuzzy
 msgid "Command 'status' needs one argument."
 msgstr "'statü' komutu için bir argüman gereklidir."
 
@@ -362,6 +408,7 @@ msgstr "'statü' komutu için bir argüman gereklidir."
 msgid "Command 'umount' needs at least one argument."
 msgstr "'çerçevele' komutu için en az bir argüman gereklidir."
 
+#, fuzzy
 msgid "Command 'undochange' needs at least one argument."
 msgstr "'değişiklikleri geri al' komutu için en az bir argüman gereklidir."
 
@@ -369,6 +416,7 @@ msgstr "'değişiklikleri geri al' komutu için en az bir argüman gereklidir."
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "'değiştir' komutu için en az bir argüman gereklidir."
 
+#, fuzzy
 msgid "Config"
 msgstr "Yapılandırma"
 
@@ -437,7 +485,7 @@ msgid "Description"
 msgstr "Tanım"
 
 msgid "Detecting filesystem type failed."
-msgstr "Dosya sistemi formatını belirleme başarısız oldu."
+msgstr "Dosya sistemi türünü tespit etme başarısız oldu."
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
@@ -490,6 +538,7 @@ msgstr "Giriş/Çıkış hatası"
 msgid "IO error (%s)."
 msgstr "Giriş/Çıkış hatası"
 
+#, fuzzy
 msgid "Identical snapshots."
 msgstr "Özdeş anlık görüntüler."
 
@@ -511,10 +560,11 @@ msgstr "Geçersiz '%s' anlık görüntüsü."
 msgid "Invalid snapshots."
 msgstr "Geçersiz anlık görüntüler."
 
+#, fuzzy
 msgid "Invalid subvolume."
 msgstr "Geçersiz arkases."
 
-#, c-format
+#, c-format, fuzzy
 msgid "Invalid table style %d."
 msgstr "%d geçersiz tablo stili."
 
@@ -535,7 +585,7 @@ msgstr ""
 
 #, c-format
 msgid "Listing configs failed (%s)."
-msgstr "Yapılandırmayı listeleme başarısız oldu (%s)."
+msgstr "Yapılandırmaları listeleme başarısız oldu (%s)."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr ""
@@ -544,11 +594,11 @@ msgstr ""
 msgid "MiB"
 msgstr ""
 
-#, c-format
+#, c-format, fuzzy
 msgid "Missing argument for command option '%s'."
 msgstr "'%s' komut seçeneği için eksik argüman."
 
-#, c-format
+#, c-format, fuzzy
 msgid "Missing argument for global option '%s'."
 msgstr "'%s' küresel seçeneği için eksik argüman."
 
@@ -560,11 +610,12 @@ msgstr "Çok fazla argüman."
 msgid "Missing delimiter '..' between snapshot numbers."
 msgstr ""
 
+#, fuzzy
 msgid "Missing or invalid pre-number."
 msgstr "Eksik ya da geçersiz ön numara."
 
 msgid "No command provided."
-msgstr "Komut sağlanmıyor."
+msgstr "Komut sağlanmadı."
 
 msgid "No permissions."
 msgstr ""
@@ -577,15 +628,19 @@ msgstr "'%s ' dosyasını açma başarısız oldu."
 msgid "PiB"
 msgstr ""
 
+#, fuzzy
 msgid "Post #"
 msgstr "Posta #"
 
+#, fuzzy
 msgid "Post Date"
 msgstr "Mesaj Tarihi"
 
+#, fuzzy
 msgid "Pre #"
 msgstr "Önce #"
 
+#, fuzzy
 msgid "Pre Date"
 msgstr "Düzenlenme Tarihi"
 
@@ -609,6 +664,7 @@ msgstr "'%u' anlık görüntüsü bulunamadı."
 msgid "Snapshot is in use."
 msgstr ""
 
+#, fuzzy
 msgid "Subvolume"
 msgstr "Arkases"
 
@@ -630,7 +686,7 @@ msgstr "Tür"
 msgid "Unknown cleanup algorithm '%s'."
 msgstr "Bilinmeyen '%s' temizleme algoritması."
 
-#, c-format
+#, c-format, fuzzy
 msgid "Unknown command '%s'."
 msgstr "'Bilinmeyen komut '%s'."
 
@@ -640,15 +696,17 @@ msgstr "'Bilinmeyen komut '%s'."
 
 #, c-format
 msgid "Unknown global option '%s'."
-msgstr "Bilinmeyen '%s' küresel seçeneği."
+msgstr "Bilinmeyen '%s' evrensel seçeneği."
 
-#, c-format
+#, c-format, fuzzy
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Bilinmeyen '%s' seçeneği; '%s' komutu için."
 
+#, fuzzy
 msgid "Unknown type of snapshot."
 msgstr "Bilinmeyen anlık görüntü formatı."
 
+#, fuzzy
 msgid "Unknown type of snapshots."
 msgstr "Bilinmeyen anlık görüntü formatı."
 
@@ -689,21 +747,21 @@ msgstr "%s oluşturuluyor"
 msgid "deleting %s"
 msgstr "%s siliniyor"
 
-#, c-format
+#, c-format, fuzzy
 msgid "failed to create %s"
 msgstr "%s oluşturma başarısız oldu"
 
-#, c-format
+#, c-format, fuzzy
 msgid "failed to delete %s"
 msgstr "%s 'i silme başarısız oldu"
 
-#, c-format
+#, c-format, fuzzy
 msgid "failed to modify %s"
 msgstr "%s 'i değiştirme başarısız oldu"
 
 #, c-format
 msgid "modifying %s"
-msgstr "%s değiştiriliyor"
+msgstr "%s üzerinde değişiklik yapılıyor"
 
 msgid "nothing to do"
 msgstr ""
@@ -711,8 +769,11 @@ msgstr ""
 msgid "root argument can be used only together with no-dbus."
 msgstr ""
 
+#, fuzzy
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "kullanım: yakalayıcı  [--global-options] <command> [--command-options] [command-arguments]"
+msgstr ""
+"kullanım: yakalayıcı  [--global-options] <command> [--command-options] "
+"[command-arguments]"
 
 #, fuzzy
 #~ msgid "Command '%s' does not work without DBus."
