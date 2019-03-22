@@ -2,13 +2,14 @@
 # Michael Skiba <trans@michael-skiba.de>, 2012, 2013, 2014.
 # Hendrik Woltersdorf <hendrikw@arcor.de>, 2013.
 # Sarah Kriesch <ada.lovelace@gmx.de>, 2014.
+# Maximilian Trummer <opensuse@trummer.xyz>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-29 14:27+0100\n"
-"PO-Revision-Date: 2018-10-29 14:29+0000\n"
-"Last-Translator: Sarah Kriesch <ada.lovelace@gmx.de>\n"
+"PO-Revision-Date: 2019-03-22 03:10+1000\n"
+"Last-Translator: Maximilian Trummer <opensuse@trummer.xyz>\n"
 "Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
 "\n"
 "Language: de\n"
@@ -262,15 +263,15 @@ msgstr "B"
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr "Schnappschuss %d kann nicht gelöscht werden, seitdem es das jetzt laufende System ist."
+msgstr "Schnappschuss %d kann nicht gelöscht werden, weil es das jetzt laufende System ist."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr "Schnappschuss %d kann nicht gelöscht werden, seitdem es der jetzt gemountete Schnappschuss ist."
+msgstr "Schnappschuss %d kann nicht gelöscht werden, weil es der derzeit gemountete Schnappschuss ist."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr "Schnappschuss %d kann nicht gelöscht werden, seitdem es der nächste zu mountende Schnappschuss ist."
+msgstr "Schnappschuss %d kann nicht gelöscht werden, weil es der nächste zu mountende Schnappschuss ist."
 
 msgid "Cleanup"
 msgstr "Bereinigen"
