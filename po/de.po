@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-29 14:27+0100\n"
-"PO-Revision-Date: 2018-10-29 14:29+0000\n"
-"Last-Translator: Sarah Kriesch <ada.lovelace@gmx.de>\n"
+"PO-Revision-Date: 2019-03-26 16:46+0000\n"
+"Last-Translator: Maximilian Trummer <opensuse@trummer.xyz>\n"
 "Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
 "\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2.18\n"
+"X-Generator: Weblate 3.3\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tSnapshots von allen verfügbaren Konfigurationen auflisten."
@@ -43,7 +43,7 @@ msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <Kommando>\t\tKommando zum Vergleichen von Dateien."
 
 msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-used-space\t\tAngegebenen gebrauchten Platz deaktivieren."
+msgstr "\t--disable-used-space\t\tVerbrauchten Platz nicht anzeigen."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <Optionen>\tZusätzliche Optionen, die an den diff-Befehl übergeben wurden."
@@ -175,10 +175,10 @@ msgid "    Options for 'create-config' command:"
 msgstr "    Optionen für den Befehl 'create-config':"
 
 msgid "    Options for 'delete' command:"
-msgstr "    Optionen für Kommando 'delete':"
+msgstr "    Optionen für den Befehl 'delete':"
 
 msgid "    Options for 'diff' command:"
-msgstr "    Optionen für Kommando 'diff':"
+msgstr "    Optionen für den Befehl 'diff':"
 
 msgid "    Options for 'list' command:"
 msgstr "    Optionen für den Befehl 'list':"
@@ -262,15 +262,21 @@ msgstr "B"
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr "Schnappschuss %d kann nicht gelöscht werden, seitdem es das jetzt laufende System ist."
+msgstr ""
+"Schnappschuss %d kann nicht gelöscht werden, weil es das derzeit laufende "
+"System ist."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr "Schnappschuss %d kann nicht gelöscht werden, seitdem es der jetzt gemountete Schnappschuss ist."
+msgstr ""
+"Schnappschuss %d kann nicht gelöscht werden, weil es der derzeit gemountete "
+"Schnappschuss ist."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr "Schnappschuss %d kann nicht gelöscht werden, seitdem es der nächste zu mountende Schnappschuss ist."
+msgstr ""
+"Schnappschuss %d kann nicht gelöscht werden, weil es der nächste zu "
+"mountende Schnappschuss ist."
 
 msgid "Cleanup"
 msgstr "Bereinigen"
@@ -331,7 +337,7 @@ msgid "Command 'setup-quota' does not take arguments."
 msgstr "Befehl 'setup-quota' akzeptiert keine Argumente."
 
 msgid "Command 'status' needs one argument."
-msgstr "Befehl 'status' erfordert ein Argument."
+msgstr "Befehl 'status' benötigt ein Argument."
 
 msgid "Command 'umount' needs at least one argument."
 msgstr "Befehl 'umount' benötigt mindestens ein Argument."
@@ -340,7 +346,7 @@ msgid "Command 'undochange' needs at least one argument."
 msgstr "Befehl 'undochange' benötigt mindestens ein Argument."
 
 msgid "Command 'xadiff' needs at least one argument."
-msgstr "Befehl 'xadiff' braucht mindestens ein Argument."
+msgstr "Befehl 'xadiff' benötigt mindestens ein Argument."
 
 msgid "Config"
 msgstr "Konfiguration"
@@ -372,17 +378,18 @@ msgid "Creating config failed (%s)."
 msgstr "Erstellen der Konfigurationsdatei ist fehlgeschlagen (%s)."
 
 msgid "Creating read-only snapshot of current system."
-msgstr "Nur-Lesen Schnappschuss des laufenden Systems erstellen."
+msgstr "Nur-Lesen-Schnappschuss des derzeit laufenden Systems erstellen."
 
 msgid "Creating read-only snapshot of default subvolume."
-msgstr "Nur-Lesen Schnappschuss des Standard Subvolumens erstellen."
+msgstr "Nur-Lesen-Schnappschuss des Standard-Subvolumens erstellen."
 
 msgid "Creating read-write snapshot of current subvolume."
-msgstr "Lesen-Schreiben Schnappschuss des jetzigen Subvolumens erstellen."
+msgstr ""
+"Lesen-Schreiben-Schnappschuss des derzeit laufenden Subvolumens erstellen."
 
 #, c-format
 msgid "Creating read-write snapshot of snapshot %d."
-msgstr "Lesen-Schreiben Schnappschuss des Schnappschusses %d erstellen."
+msgstr "Lesen-Schreiben-Schnappschuss des Schnappschusses %d erstellen."
 
 msgid "Creating snapshot failed."
 msgstr "Das Erstellen eines Schnappschusses ist fehlgeschlagen."
@@ -442,7 +449,7 @@ msgstr "Datei '%s' wurde nicht gefunden."
 
 #, c-format
 msgid "Free space error (%s)."
-msgstr "Speicherplatz-Fehler (%s)."
+msgstr "Freier Speicherplatz-Fehler (%s)."
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -554,11 +561,11 @@ msgid "Quota error (%s)."
 msgstr "Quota-Fehler (%s)."
 
 msgid "See 'man snapper' for further instructions."
-msgstr "Weitere Anweisungen finden Sie im \"man snapper\"."
+msgstr "Weitere Anweisungen finden Sie in \"man snapper\"."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
-msgstr "Einstellung des Standard Subvolumens zu Schnappschuss %d."
+msgstr "Einstellung des Standard-Subvolumens zu Schnappschuss %d."
 
 #, c-format
 msgid "Snapshot '%u' not found."
@@ -610,7 +617,7 @@ msgstr "Unbekannter Typ der Schnappschüsse."
 
 #, c-format
 msgid "Use an integer number from %d to %d."
-msgstr "Verwenden Sie eine integer-Zahl von %d bis %d."
+msgstr "Verwenden Sie eine Ganzzahl von %d bis %d."
 
 msgid "Used Space"
 msgstr "Verwendeter Platz"
