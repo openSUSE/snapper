@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2018] SUSE LLC
+ * Copyright (c) [2016-2019] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -87,7 +87,8 @@ namespace snapper
 
 	/**
 	 * Query the number of the default snapshot. The first entry of the
-	 * pair indicates whether the default snapshot is a snapper snapshot.
+	 * pair indicates whether the default snapshot is a snapper snapshot
+	 * (not necessarily in the list of snapshots known to snapper).
 	 * Currently only available for btrfs.
 	 */
 	virtual std::pair<bool, unsigned int> getDefault() const;

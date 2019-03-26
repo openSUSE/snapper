@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2018] SUSE LLC
+ * Copyright (c) [2016-2019] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -1275,10 +1275,12 @@ command_rollback(ProxySnappers* snappers, ProxySnapper* snapper)
 	exit(EXIT_FAILURE);
     }
 
+    const string default_description = "rollback backup";
+
     bool print_number = false;
 
     SCD scd1;
-    scd1.description = "rollback backup";
+    scd1.description = default_description;
     scd1.cleanup = "number";
     scd1.userdata["important"] = "yes";
 
@@ -1318,12 +1320,12 @@ command_rollback(ProxySnappers* snappers, ProxySnapper* snapper)
 	exit(EXIT_FAILURE);
     }
 
-    pair<bool, unsigned int> previous_default = filesystem->getDefault();
-
-    if (previous_default.first && scd1.description == "rollback backup")
-	scd1.description += sformat(" of #%d", previous_default.second);
-
     ProxySnapshots& snapshots = snapper->getSnapshots();
+
+    ProxySnapshots::iterator previous_default = snapshots.getDefault();
+
+    if (previous_default != snapshots.end() && scd1.description == default_description)
+        scd1.description += sformat(" of #%d", previous_default->getNum());
 
     ProxySnapshots::const_iterator snapshot1 = snapshots.end();
     ProxySnapshots::const_iterator snapshot2 = snapshots.end();
@@ -1370,15 +1372,11 @@ command_rollback(ProxySnappers* snappers, ProxySnapper* snapper)
 	    cout << " " << sformat(_("(Snapshot %d.)"), snapshot2->getNum()) << endl;
     }
 
-    if (previous_default.first)
+    if (previous_default != snapshots.end() && previous_default->getCleanup().empty())
     {
-	ProxySnapshots::iterator it = snapshots.find(previous_default.second);
-	if (it->getCleanup().empty())
-	{
-	    SMD smd = it->getSmd();
-	    smd.cleanup = "number";
-	    snapper->modifySnapshot(it, smd);
-	}
+	SMD smd = previous_default->getSmd();
+	smd.cleanup = "number";
+	snapper->modifySnapshot(previous_default, smd);
     }
 
     if (!quiet)

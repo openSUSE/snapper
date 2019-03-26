@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Tue Mar 26 10:15:55 CET 2019 - aschnell@suse.com
+
+- fixed seg.fault during rollback if the previous default subvolume
+  is missing in the snapshot list (bsc#1130273)
+- version 0.8.3
+
+-------------------------------------------------------------------
 Tue Jan 22 11:05:01 CET 2019 - aschnell@suse.com
 
 - adapted to libbtrfs changes to resurrect special btrfs directory
@@ -118,7 +125,7 @@ Wed Dec  6 16:49:06 CET 2017 - kukuk@suse.de
 -------------------------------------------------------------------
 Thu Nov 23 13:51:45 UTC 2017 - rbrown@suse.com
 
-- Replace references to /var/adm/fillup-templates with new 
+- Replace references to /var/adm/fillup-templates with new
   %_fillupdir macro (boo#1069468)
 
 -------------------------------------------------------------------

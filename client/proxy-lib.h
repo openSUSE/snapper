@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2019] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -79,6 +79,7 @@ class ProxySnapshotsLib : public ProxySnapshots
 
 public:
 
+    virtual iterator getDefault();
     virtual const_iterator getDefault() const;
 
     virtual const_iterator getActive() const;

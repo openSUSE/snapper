@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2018] SUSE LLC
+ * Copyright (c) [2016-2019] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -172,6 +172,7 @@ public:
 
     const_iterator getCurrent() const { return proxy_snapshots.begin(); }
 
+    virtual iterator getDefault() = 0;
     virtual const_iterator getDefault() const = 0;
 
     virtual const_iterator getActive() const = 0;

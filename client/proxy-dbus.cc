@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2019] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -108,6 +108,15 @@ ProxySnapshotsDbus::ProxySnapshotsDbus(ProxySnapperDbus* backref)
 
 ProxySnapshots::const_iterator
 ProxySnapshotsDbus::getDefault() const
+{
+    pair<bool, unsigned int> tmp = command_get_default_snapshot(conn(), configName());
+
+    return tmp.first ? find(tmp.second) : end();
+}
+
+
+ProxySnapshots::iterator
+ProxySnapshotsDbus::getDefault()
 {
     pair<bool, unsigned int> tmp = command_get_default_snapshot(conn(), configName());
 

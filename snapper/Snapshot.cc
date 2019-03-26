@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2019] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -762,6 +762,15 @@ namespace snapper
 	entries.erase(snapshot);
 
 	Hooks::delete_snapshot(snapper->subvolumeDir(), snapper->getFilesystem());
+    }
+
+
+    Snapshots::iterator
+    Snapshots::getDefault()
+    {
+	std::pair<bool, unsigned int> tmp = snapper->getFilesystem()->getDefault();
+
+	return tmp.first ? find(tmp.second) : end();
     }
 
 
