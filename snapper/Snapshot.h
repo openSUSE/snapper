@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2019] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -244,6 +244,8 @@ namespace snapper
 	 * The default btrfs snapshot may not be controlled by snapper
 	 * in which this function returns end().
 	 */
+	iterator getDefault();
+
 	const_iterator getDefault() const;
 
 	/**

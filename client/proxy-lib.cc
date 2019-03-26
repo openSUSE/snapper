@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2019] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -26,10 +26,21 @@
 using namespace std;
 
 
+ProxySnapshots::iterator
+ProxySnapshotsLib::getDefault()
+{
+    Snapshots& snapshots = backref->snapper->getSnapshots();
+
+    Snapshots::iterator tmp = snapshots.getDefault();
+
+    return tmp != snapshots.end() ? find(tmp->getNum()) : end();
+}
+
+
 ProxySnapshots::const_iterator
 ProxySnapshotsLib::getDefault() const
 {
-    Snapshots& snapshots = backref->snapper->getSnapshots();
+    const Snapshots& snapshots = backref->snapper->getSnapshots();
 
     Snapshots::const_iterator tmp = snapshots.getDefault();
 
