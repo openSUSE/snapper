@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Jul 23 20:52:26 CEST 2018 - aschnell@suse.com
+
+- fixed logging during shutdown of snapperd to avoid core dumps
+  (bsc#1051922 and others)
+
+-------------------------------------------------------------------
 Tue May 09 13:52:46 CEST 2017 - aschnell@suse.com
 
 - set cleanup algorithm for rollback snapshots (fate#321773)

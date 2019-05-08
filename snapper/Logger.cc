@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2004-2013] Novell, Inc.
+ * Copyright (c) 2018 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -32,15 +33,33 @@
 #include "snapper/AppUtil.h"
 
 
+#define LOG_FILENAME "/var/log/snapper.log"
+
+
 namespace snapper
 {
     using namespace std;
 
 
-    // Use a pointer to avoid a global destructor. Otherwise the Snapper
-    // destructor in Factory.cc can be called after when logging does not work
-    // anymore. TODO: nicer solution.
-    string* filename = new string("/var/log/snapper.log");
+    namespace
+    {
+
+	struct LoggerData
+	{
+	    LoggerData() : filename(LOG_FILENAME), mutex() {}
+
+	    string filename;
+	    boost::mutex mutex;
+	};
+
+
+	// Use pointer to avoid a global destructor. Otherwise other global
+	// destructors using logging can cause errors.
+
+	LoggerData* logger_data = new LoggerData();
+
+    }
+
 
     LogDo log_do = NULL;
     LogQuery log_query = NULL;
@@ -69,11 +88,9 @@ namespace snapper
 	string prefix = sformat("%s %s libsnapper(%d) %s(%s):%d", datetime(time(0), false, true).c_str(),
 				ln[level], getpid(), file, func, line);
 
-	static boost::mutex mutex;
+	boost::lock_guard<boost::mutex> lock(logger_data->mutex);
 
-	boost::lock_guard<boost::mutex> lock(mutex);
-
-	FILE* f = fopen(filename->c_str(), "ae");
+	FILE* f = fopen(logger_data->filename.c_str(), "ae");
 	if (f)
 	{
 	    string tmp = text;
@@ -137,8 +154,7 @@ namespace snapper
     void
     initDefaultLogger()
     {
-	delete filename;
-	filename = new string("/var/log/snapper.log");
+	logger_data->filename = LOG_FILENAME;
 
 	if (geteuid())
 	{
@@ -152,8 +168,7 @@ namespace snapper
 	    {
 		memset(pwd.pw_passwd, 0, strlen(pwd.pw_passwd));
 
-		delete filename;
-		filename = new string(string(pwd.pw_dir) + "/.snapper.log");
+		logger_data->filename = string(pwd.pw_dir) + "/.snapper.log";
 	    }
 	}
 
