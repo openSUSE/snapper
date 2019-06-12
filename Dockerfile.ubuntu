@@ -1,5 +1,5 @@
-# Build Ubuntu 17.10 image
-FROM ubuntu:17.10
+# Build Ubuntu 18.10 image
+FROM ubuntu:18.10
 
 # see https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#/run
 RUN apt-get update && \
