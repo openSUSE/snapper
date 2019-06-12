@@ -1,5 +1,5 @@
 # Build the latest openSUSE Tumbleweed image
-FROM opensuse:tumbleweed
+FROM opensuse/tumbleweed
 
 RUN zypper --non-interactive in --no-recommends \
   autoconf \
