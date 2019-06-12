@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2019] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -112,5 +112,7 @@ namespace DBus
     Hihi& operator>>(Hihi& hihi, XFile& data);
 
     Hihi& operator>>(Hihi& hihi, QuotaData& data);
+
+    Hihi& operator>>(Hihi& hihi, FreeSpaceData& data);
 
 }

@@ -1373,6 +1373,35 @@ Client::query_quota(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
+Client::query_free_space(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name;
+
+    y2deb("QueryFreeSpace config_name:" << config_name);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
+
+    FreeSpaceData free_space_data = snapper->queryFreeSpaceData();
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
+    hoho << free_space_data;
+
+    conn.send(reply);
+}
+
+
+void
 Client::sync(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
@@ -1518,6 +1547,8 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    prepare_quota(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "QueryQuota"))
 	    query_quota(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "QueryFreeSpace"))
+	    query_free_space(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "Sync"))
 	    sync(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "Debug"))
@@ -1668,6 +1699,12 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
     {
 	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.quota", e.what());
+	conn.send(reply);
+    }
+    catch (const FreeSpaceException& e)
+    {
+	SN_CAUGHT(e);
+	DBus::MessageError reply(msg, "error.free_space", e.what());
 	conn.send(reply);
     }
     catch (const Exception& e)

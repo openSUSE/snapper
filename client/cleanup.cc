@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2019] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -21,6 +21,7 @@
  */
 
 
+#include <iostream>
 #include <vector>
 
 #include "dbus/DBusMessage.h"
@@ -30,6 +31,7 @@
 
 #include "utils/Range.h"
 #include "utils/equal-date.h"
+#include "utils/HumanString.h"
 #include "cleanup.h"
 
 
@@ -45,6 +47,7 @@ struct Parameters
 
     time_t min_age;
     double space_limit;
+    double free_limit;
 
     template<typename Type>
     void read(const ProxyConfig& config, const char* name, Type& value)
@@ -58,11 +61,12 @@ struct Parameters
 
 
 Parameters::Parameters(const ProxySnapper* snapper)
-    : min_age(1800), space_limit(0.5)
+    : min_age(1800), space_limit(0.5), free_limit(0.2)
 {
     ProxyConfig config = snapper->getConfig();
 
     read(config, "SPACE_LIMIT", space_limit);
+    read(config, "FREE_LIMIT", free_limit);
 }
 
 
@@ -70,7 +74,8 @@ ostream&
 operator<<(ostream& s, const Parameters& parameters)
 {
     return s << "min-age:" << parameters.min_age << endl
-	     << "space-limit:" << parameters.space_limit;
+	     << "space-limit:" << parameters.space_limit
+	     << "free-limit:" << parameters.free_limit;
 }
 
 
@@ -110,11 +115,20 @@ protected:
 
     void remove(const list<ProxySnapshots::iterator>& tmp);
 
+    // Should the cleanup with quota space be run?
     bool is_quota_aware() const;
+
+    // Is the quota space condition satisfied?
     bool is_quota_satisfied() const;
 
-    void cleanup_quota_unaware(ProxySnapshots& snapshots);
-    void cleanup_quota_aware(ProxySnapshots& snapshots);
+    // Should the cleanup with free space be run?
+    bool is_free_aware() const;
+
+    // Is the free space condition satisfied?
+    bool is_free_satisfied() const;
+
+    void cleanup(ProxySnapshots& snapshots);
+    void cleanup(ProxySnapshots& snapshots, std::function<bool()> condition);
 
     ProxySnapper* snapper;
     bool verbose;
@@ -194,18 +208,6 @@ Cleaner::is_quota_aware() const
     {
 	snapper->prepareQuota();
     }
-    catch (const DBus::ErrorException& e)
-    {
-	SN_CAUGHT(e);
-
-	if (strcmp(e.name(), "error.quota") == 0)
-	{
-	    cerr << "quota not working (" << e.message() << ")" << endl;
-	    return false;
-	}
-
-	SN_RETHROW(e);
-    }
     catch (const QuotaException& e)
     {
 	SN_CAUGHT(e);
@@ -214,7 +216,7 @@ Cleaner::is_quota_aware() const
 	return false;
     }
 
-    return true;
+    return parameters.space_limit < 1.0;
 }
 
 
@@ -223,12 +225,69 @@ Cleaner::is_quota_satisfied() const
 {
     QuotaData quota_data = snapper->queryQuotaData();
 
-    return quota_data.used < parameters.space_limit * quota_data.size;
+    if (quota_data.size == 0)
+	return true;
+
+    double fraction = (double)(quota_data.used) / (double)(quota_data.size);
+
+    bool satisfied = fraction < parameters.space_limit;
+
+#ifdef VERBOSE_LOGGING
+    cout << byte_to_humanstring(quota_data.size, 2) << ", "
+	 << byte_to_humanstring(quota_data.used, 2) << ", "
+	 << fraction << ", " << satisfied << endl;
+#endif
+
+    return satisfied;
+}
+
+
+bool
+Cleaner::is_free_aware() const
+{
+    if (parameters.is_degenerated())
+	return false;
+
+    try
+    {
+	snapper->queryFreeSpaceData();
+    }
+    catch (const FreeSpaceException& e)
+    {
+	SN_CAUGHT(e);
+
+	cerr << "free space not working (" << e.what() << ")" << endl;
+	return false;
+    }
+
+    return parameters.free_limit > 0.0;
+}
+
+
+bool
+Cleaner::is_free_satisfied() const
+{
+    FreeSpaceData free_space_data = snapper->queryFreeSpaceData();
+
+    if (free_space_data.size == 0)
+	return true;
+
+    double fraction = (double)(free_space_data.free) / (double)(free_space_data.size);
+
+    bool satisfied = fraction > parameters.free_limit;
+
+#ifdef VERBOSE_LOGGING
+    cout << byte_to_humanstring(free_space_data.size, 2) << ", "
+	 << byte_to_humanstring(free_space_data.free, 2) << ", "
+	 << fraction << ", " << satisfied << endl;
+#endif
+
+    return satisfied;
 }
 
 
 void
-Cleaner::cleanup_quota_unaware(ProxySnapshots& snapshots)
+Cleaner::cleanup(ProxySnapshots& snapshots)
 {
     list<ProxySnapshots::iterator> candidates = calculate_candidates(snapshots, Range::MAX);
 
@@ -239,14 +298,19 @@ Cleaner::cleanup_quota_unaware(ProxySnapshots& snapshots)
 
 
 void
-Cleaner::cleanup_quota_aware(ProxySnapshots& snapshots)
+Cleaner::cleanup(ProxySnapshots& snapshots, std::function<bool()> condition)
 {
-    while (!is_quota_satisfied())
+    while (!condition())
     {
 	list<ProxySnapshots::iterator> candidates = calculate_candidates(snapshots, Range::MIN);
 	if (candidates.empty())
 	{
-	    // not enough candidates to satisfy quota
+	    // not enough candidates to satisfy the condition
+
+#ifdef VERBOSE_LOGGING
+	    cout << "condition not satisfied" << endl;
+#endif
+
 	    return;
 	}
 
@@ -264,17 +328,27 @@ Cleaner::cleanup_quota_aware(ProxySnapshots& snapshots)
 	    if (!tmp.empty())
 	    {
 		remove(tmp);
-		// after removing snapshots is_quota_satisfied must be reevaluated
+
+		// after removing snapshots the condition must be reevaluated
 		break;
 	    }
 
 	    if (next(e) == candidates.end())
 	    {
-		// not enough candidates to satisfy quota
+		// not enough candidates to satisfy the condition
+
+#ifdef VERBOSE_LOGGING
+		cout << "condition not satisfied" << endl;
+#endif
+
 		return;
 	    }
 	}
     }
+
+#ifdef VERBOSE_LOGGING
+    cout << "condition satisfied" << endl;
+#endif
 }
 
 
@@ -283,10 +357,41 @@ Cleaner::cleanup()
 {
     ProxySnapshots& snapshots = snapper->getSnapshots();
 
-    cleanup_quota_unaware(snapshots);
+#ifdef VERBOSE_LOGGING
+    cout << "cleanup without condition" << endl;
+#endif
+
+    cleanup(snapshots);
 
     if (is_quota_aware())
-	cleanup_quota_aware(snapshots);
+    {
+#ifdef VERBOSE_LOGGING
+	cout << "cleanup with quota condition" << endl;
+#endif
+
+	cleanup(snapshots, std::bind(&Cleaner::is_quota_satisfied, this));
+    }
+    else
+    {
+#ifdef VERBOSE_LOGGING
+	cout << "no cleanup with quota condition" << endl;
+#endif
+    }
+
+    if (is_free_aware())
+    {
+#ifdef VERBOSE_LOGGING
+	cout << "cleanup with free condition" << endl;
+#endif
+
+	cleanup(snapshots, std::bind(&Cleaner::is_free_satisfied, this));
+    }
+    else
+    {
+#ifdef VERBOSE_LOGGING
+	cout << "no cleanup with free condition" << endl;
+#endif
+    }
 }
 
 
