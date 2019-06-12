@@ -43,6 +43,7 @@ using namespace BtrfsUtils;
 
 string target;
 
+bool force = false;
 bool set_nocow = false;
 bool verbose = false;
 
@@ -89,7 +90,15 @@ do_create_subvolume(const string& tmp_mountpoint, const string& subvolume_name)
     if (fd < 0)
 	throw runtime_error_with_errno("open failed", errno);
 
-    create_subvolume(fd, basename(subvolume_name));
+    try
+    {
+	create_subvolume(fd, basename(subvolume_name));
+    }
+    catch(...)
+    {
+	close(fd);
+	throw;
+    }
 
     close(fd);
 }
@@ -258,6 +267,33 @@ find_filesystem(MntTable& mnt_table)
     }
 }
 
+struct TmpMountpoint {
+    unique_ptr<char[]> mountpoint;
+    const libmnt_fs* fs;
+    TmpMountpoint(const string tmpMountpoint, const libmnt_fs* libmntfs, const string& subvol_opts)
+	: mountpoint(strdup(tmpMountpoint.c_str())), fs(libmntfs)
+    {
+	if (!mkdtemp(mountpoint.get()))
+	    throw runtime_error_with_errno("mkdtemp failed", errno);
+
+	try
+	{
+	    do_tmp_mount(fs, mountpoint.get(), subvol_opts);
+	}
+	catch (...)
+	{
+	    rmdir(mountpoint.get());
+	    throw;
+	}
+    }
+
+    ~TmpMountpoint()
+    {
+	do_tmp_umount(fs, mountpoint.get());
+	rmdir(mountpoint.get());
+    }
+};
+
 
 /*
  * The used algorithm is as follow:
@@ -332,35 +368,19 @@ doit()
 
     // Execute all steps.
 
-    char* tmp_mountpoint = strdup("/tmp/mksubvolume-XXXXXX");
-    if (!mkdtemp(tmp_mountpoint))
-	throw runtime_error_with_errno("mkdtemp failed", errno);
-
-    do_tmp_mount(fs, tmp_mountpoint, subvol_option);
+    TmpMountpoint tmp_mountpoint("/tmp/mksubvolume-XXXXXX", fs, subvol_option);
 
     try
     {
-	do_create_subvolume(tmp_mountpoint, subvolume_name);
+	do_create_subvolume(tmp_mountpoint.mountpoint.get(), subvolume_name);
     }
-    catch (...)
+    catch (const runtime_error_with_errno& e)
     {
-	// Rethrow the original exception, not a potential exception of do_tmp_umount.
-	try
-	{
-	    do_tmp_umount(fs, tmp_mountpoint);
-	    rmdir(tmp_mountpoint);
-	    free(tmp_mountpoint);
-	}
-	catch (...)
-	{
-	}
-
-	throw;
+	if (e.error_number == EEXIST)
+	    cout << "subvolume exists already" << endl;
+	else
+	    throw;
     }
-
-    do_tmp_umount(fs, tmp_mountpoint);
-    rmdir(tmp_mountpoint);
-    free(tmp_mountpoint);
 
     do_add_fstab_and_mount(mnt_table, fs, subvol_option, subvolume_name);
 
@@ -373,7 +393,7 @@ void usage() __attribute__ ((__noreturn__));
 void
 usage()
 {
-    cerr << "usage: [--nocow] [--verbose] target" << endl;
+    cerr << "usage: [--force] [--nocow] [--verbose] target" << endl;
     exit(EXIT_FAILURE);
 }
 
@@ -384,6 +404,7 @@ main(int argc, char** argv)
     setlocale(LC_ALL, "");
 
     const struct option options[] = {
+	{ "force",		no_argument,		0,	'f' },
 	{ "nocow",		no_argument,		0,	0 },
 	{ "verbose",            no_argument,            0,      'v' },
 	{ 0, 0, 0, 0 }
@@ -396,6 +417,9 @@ main(int argc, char** argv)
     GetOpts::parsed_opts opts = getopts.parse(options);
 
     GetOpts::parsed_opts::const_iterator opt;
+
+    if ((opt = opts.find("force")) != opts.end())
+        force = true;
 
     if ((opt = opts.find("nocow")) != opts.end())
         set_nocow = true;
