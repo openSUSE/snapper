@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-09 16:24+0200\n"
+"POT-Creation-Date: 2019-06-12 11:46+0200\n"
 "PO-Revision-Date: 2015-10-15 21:37+0200\n"
 "Last-Translator: Ramax Lo <ramaxlo@gmail.com>\n"
-"Language-Team: Chinese (Taiwan) "
-"<http://10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
+"Language-Team: Chinese (Taiwan) <http://10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,627 +19,683 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 2.3\n"
 
-#: ../client/snapper.cc:457
+#: ../client/snapper.cc:357
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\t列出所有可存取組態中的快照。"
 
-#: ../client/snapper.cc:698 ../client/snapper.cc:832
+#: ../client/snapper.cc:550 ../client/snapper.cc:680
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\t清理快照的演算法。"
 
 # SLE12
-#: ../client/snapper.cc:1303
+#: ../client/snapper.cc:1153
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm、-c <演算法>\t清理快照的演算法。"
 
 # SLE12
-#: ../client/snapper.cc:700
+#: ../client/snapper.cc:552
 msgid "\t--command <command>\tRun command and create pre and post snapshots."
 msgstr "\t--command <指令>\t執行指令並建立前和後快照。"
 
-#: ../client/snapper.cc:1583
+#: ../client/snapper.cc:1502
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <名稱>\t\t設定要使用的設定法名稱。"
 
-#: ../client/snapper.cc:697 ../client/snapper.cc:831
+#: ../client/snapper.cc:549 ../client/snapper.cc:679
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <描述>\t快照的描述。"
 
 # SLE12
-#: ../client/snapper.cc:1302
+#: ../client/snapper.cc:1152
 msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr "\t--description、-d <描述>\t快照的描述。"
 
-#: ../client/snapper.cc:1093
+#: ../client/snapper.cc:934
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <指令>\t\t用於比較檔案的指令。"
 
-#: ../client/snapper.cc:1094
+#: ../client/snapper.cc:935
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <選項>\t傳送到 diff 指令的額外選項。"
 
-#: ../client/snapper.cc:274
+#: ../client/snapper.cc:212
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <檔案系統類型>\t\t手動設定檔案系統類型。"
 
-#: ../client/snapper.cc:1155
+#: ../client/snapper.cc:1000
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr "\t--input, -i <檔案>\t\t讀取要由此回復變更的檔案。"
 
-#: ../client/snapper.cc:1092
+#: ../client/snapper.cc:933
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
 msgstr "\t--input, -i <檔案>\t\t讀取檔案，以比較檔案的差異。"
 
 # SLE12
-#: ../client/snapper.cc:1581
+#: ../client/snapper.cc:1500
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\t以 ISO 格式顯示日期與時間。"
 
 # SLE12
-#: ../client/snapper.cc:1584
+#: ../client/snapper.cc:1503
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\t不使用 DBus 操作。"
 
-#: ../client/snapper.cc:1030
+#: ../client/snapper.cc:867
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <檔案>\t\t儲存狀態到檔案。"
 
-#: ../client/snapper.cc:695
+#: ../client/snapper.cc:547
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <數字>\t\t之前快照的相對應數字。"
 
-#: ../client/snapper.cc:696
+#: ../client/snapper.cc:548
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
 msgstr "\t--print-number, -p\t\t印出所建立快照的數字。"
 
 # SLE12
-#: ../client/snapper.cc:1301
+#: ../client/snapper.cc:1151
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
 msgstr "\t--print-number、-p\t\t列印第二個建立之快照的編號。"
 
-#: ../client/snapper.cc:1578
+#: ../client/snapper.cc:1497
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\t減少一般輸出。"
 
-#: ../client/snapper.cc:1585
+#: ../client/snapper.cc:1504
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <路徑>\t\t在目標根目錄操作 (不使用 DBus 時才起作用)。"
 
-#: ../client/snapper.cc:884
+#: ../client/snapper.cc:734
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\t刪除後同步。"
 
-#: ../client/snapper.cc:1582
+#: ../client/snapper.cc:1501
 msgid "\t--table-style, -t <style>\tTable style (integer)."
 msgstr "\t--table-style, -t <類型>\t表格類型 (整數)。"
 
-#: ../client/snapper.cc:275
+#: ../client/snapper.cc:213
 msgid "\t--template, -t <name>\t\tName of config template to use."
 msgstr "\t--template, -t <名稱>\t\t要使用的設定樣本的名稱。"
 
-#: ../client/snapper.cc:694
+#: ../client/snapper.cc:546
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <類型>\t\t快照的類型。"
 
-#: ../client/snapper.cc:456
+#: ../client/snapper.cc:356
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
 msgstr "\t--type, -t <類型>\t\t要列出的快照類型。"
 
-#: ../client/snapper.cc:699 ../client/snapper.cc:833
+#: ../client/snapper.cc:551 ../client/snapper.cc:681
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <userdata>\t快照的使用者資料。"
 
 # SLE12
-#: ../client/snapper.cc:1304
+#: ../client/snapper.cc:1154
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
 msgstr "\t--userdata、-u <使用者資料>\t快照的使用者資料。"
 
 # SLE12
-#: ../client/snapper.cc:1580
+#: ../client/snapper.cc:1499
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
 msgstr "\t--utc\t\t\t\t以 UTC 格式顯示日期與時間。"
 
-#: ../client/snapper.cc:1579
+#: ../client/snapper.cc:1498
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
 msgstr "\t--verbose, -v\t\t\t增加詳細結果。"
 
-#: ../client/snapper.cc:1586
+#: ../client/snapper.cc:1505
 msgid "\t--version\t\t\tPrint version and exit."
 msgstr "\t--version\t\t\t印出版本並離開。"
 
-#: ../client/snapper.cc:1409
+#: ../client/snapper.cc:1325
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <清理演算法>"
 
 # SLE12
-#: ../client/snapper.cc:691
+#: ../client/snapper.cc:543
 msgid "\tsnapper create"
 msgstr "\tsnapper create"
 
 # SLE12
-#: ../client/snapper.cc:271
+#: ../client/snapper.cc:209
 msgid "\tsnapper create-config <subvolume>"
 msgstr "\tsnapper create-config <子磁碟區>"
 
-#: ../client/snapper.cc:881
+#: ../client/snapper.cc:731
 msgid "\tsnapper delete <number>"
 msgstr "\tsnapper delete <數字>"
 
 # SLE12
-#: ../client/snapper.cc:335
+#: ../client/snapper.cc:266
 msgid "\tsnapper delete-config"
 msgstr "\tsnapper delete-config"
 
-#: ../client/snapper.cc:1089
+#: ../client/snapper.cc:930
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <數字1>..<數字2> [檔案]"
 
 # SLE12
-#: ../client/snapper.cc:365
+#: ../client/snapper.cc:289
 msgid "\tsnapper get-config"
 msgstr "\tsnapper get-config"
 
 # SLE12
-#: ../client/snapper.cc:453
+#: ../client/snapper.cc:353
 msgid "\tsnapper list"
 msgstr "\tsnapper list"
 
 # SLE12
-#: ../client/snapper.cc:205
+#: ../client/snapper.cc:170
 msgid "\tsnapper list-configs"
 msgstr "\tsnapper list-configs"
 
-#: ../client/snapper.cc:828
+#: ../client/snapper.cc:676
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <數字>"
 
-#: ../client/snapper.cc:953
+#: ../client/snapper.cc:806
 msgid "\tsnapper mount <number>"
 msgstr "\tsnapper mount <數字>"
 
 # SLE12
-#: ../client/snapper.cc:1298
+#: ../client/snapper.cc:1148
 msgid "\tsnapper rollback [number]"
 msgstr "\tsnapper rollback [編號]"
 
 # SLE12
-#: ../client/snapper.cc:421
+#: ../client/snapper.cc:328
 msgid "\tsnapper set-config <configdata>"
 msgstr "\tsnapper set-config <configdata>"
 
-#: ../client/snapper.cc:1027
+# SLE12
+#: ../client/snapper.cc:1302
+#, fuzzy
+msgid "\tsnapper setup-quota"
+msgstr "\tsnapper get-config"
+
+#: ../client/snapper.cc:864
 msgid "\tsnapper status <number1>..<number2>"
 msgstr "\tsnapper status <數字1>..<數字2>"
 
-#: ../client/snapper.cc:990
+#: ../client/snapper.cc:835
 msgid "\tsnapper umount <number>"
 msgstr "\tsnapper umount <數字>"
 
-#: ../client/snapper.cc:1152
+#: ../client/snapper.cc:997
 msgid "\tsnapper undochange <number1>..<number2> [files]"
 msgstr "\tsnapper undochange <數字1>..<數字2> [檔案]"
 
 # SLE12
-#: ../client/snapper.cc:1474
+#: ../client/snapper.cc:1389
 msgid "\tsnapper xadiff <number1>..<number2> [files]"
 msgstr "\tsnapper xadiff <數字1>..<數字2> [檔案]"
 
-#: ../client/snapper.cc:1577
+#: ../client/snapper.cc:1496
 msgid "    Global options:"
 msgstr "    全域選項："
 
-#: ../client/snapper.cc:693
+#: ../client/snapper.cc:545
 msgid "    Options for 'create' command:"
 msgstr "    'create' 命令的選項："
 
-#: ../client/snapper.cc:273
+#: ../client/snapper.cc:211
 msgid "    Options for 'create-config' command:"
 msgstr "    'create-config' 命令的選項："
 
-#: ../client/snapper.cc:883
+#: ../client/snapper.cc:733
 msgid "    Options for 'delete' command:"
 msgstr "    用於「delete」指令的選項︰"
 
-#: ../client/snapper.cc:1091
+#: ../client/snapper.cc:932
 msgid "    Options for 'diff' command:"
 msgstr "    用於「diff」指令的選項︰"
 
-#: ../client/snapper.cc:455
+#: ../client/snapper.cc:355
 msgid "    Options for 'list' command:"
 msgstr "    'list' 命令的選項："
 
-#: ../client/snapper.cc:830
+#: ../client/snapper.cc:678
 msgid "    Options for 'modify' command:"
 msgstr "    'modify' 命令的選項："
 
 # SLE12
-#: ../client/snapper.cc:1300
+#: ../client/snapper.cc:1150
 msgid "    Options for 'rollback' command:"
 msgstr "    用於「rollback」指令的選項︰"
 
-#: ../client/snapper.cc:1029
+#: ../client/snapper.cc:866
 msgid "    Options for 'status' command:"
 msgstr "    'status' 命令的選項："
 
-#: ../client/snapper.cc:1154
+#: ../client/snapper.cc:999
 msgid "    Options for 'undochange' command:"
 msgstr "    'undochange' 命令的選項："
 
-#: ../client/snapper.cc:1408
+#: ../client/snapper.cc:1324
 msgid "  Cleanup snapshots:"
 msgstr "  清理快照："
 
 # SLE12
-#: ../client/snapper.cc:1473
+#: ../client/snapper.cc:1388
 msgid "  Comparing snapshots extended attributes:"
 msgstr "  正在比較快照延伸屬性︰"
 
-#: ../client/snapper.cc:1026 ../client/snapper.cc:1088
+#: ../client/snapper.cc:863 ../client/snapper.cc:929
 msgid "  Comparing snapshots:"
 msgstr "  比較快照："
 
-#: ../client/snapper.cc:270
+#: ../client/snapper.cc:208
 msgid "  Create config:"
 msgstr "  建立設定："
 
-#: ../client/snapper.cc:690
+#: ../client/snapper.cc:542
 msgid "  Create snapshot:"
 msgstr "  建立快照："
 
-#: ../client/snapper.cc:334
+#: ../client/snapper.cc:265
 msgid "  Delete config:"
 msgstr " 刪除設定："
 
-#: ../client/snapper.cc:880
+#: ../client/snapper.cc:730
 msgid "  Delete snapshot:"
 msgstr "  刪除快照："
 
 # SLE12
-#: ../client/snapper.cc:364
+#: ../client/snapper.cc:288
 msgid "  Get config:"
 msgstr "  取得組態︰"
 
-#: ../client/snapper.cc:204
+#: ../client/snapper.cc:169
 msgid "  List configs:"
 msgstr "  列出設定："
 
-#: ../client/snapper.cc:452
+#: ../client/snapper.cc:352
 msgid "  List snapshots:"
 msgstr "  列出快照："
 
-#: ../client/snapper.cc:827
+#: ../client/snapper.cc:675
 msgid "  Modify snapshot:"
 msgstr "  修改快照："
 
-#: ../client/snapper.cc:952
+#: ../client/snapper.cc:805
 msgid "  Mount snapshot:"
 msgstr "  掛載快照："
 
 # SLE12
-#: ../client/snapper.cc:1297
+#: ../client/snapper.cc:1147
 msgid "  Rollback:"
 msgstr "  復原︰"
 
 # SLE12
-#: ../client/snapper.cc:420
+#: ../client/snapper.cc:327
 msgid "  Set config:"
 msgstr "  設定組態︰"
 
-#: ../client/snapper.cc:989
+#: ../client/snapper.cc:1301
+msgid "  Setup quota:"
+msgstr ""
+
+#: ../client/snapper.cc:834
 msgid "  Umount snapshot:"
 msgstr "  卸載快照："
 
-#: ../client/snapper.cc:1151
+#: ../client/snapper.cc:996
 msgid "  Undo changes:"
 msgstr "  回復變更："
 
 # SLE12
-#: ../client/snapper.cc:531 ../client/snapper.cc:580
+#: ../client/snapper.cc:445 ../client/snapper.cc:474
 msgid "#"
 msgstr "編號＼"
 
 # SLE12
-#: ../client/snapper.cc:1364 ../client/snapper.cc:1371
-#: ../client/snapper.cc:1382 ../client/snapper.cc:1389
+#: ../client/snapper.cc:1239 ../client/snapper.cc:1248
+#: ../client/snapper.cc:1260 ../client/snapper.cc:1269
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(快照 %d。)"
 
 # SLE12
-#: ../client/snapper.cc:1787 ../client/errors.cc:85
+#: ../client/snapper.cc:1726 ../client/errors.cc:105
 msgid "ACL error."
 msgstr "ACL 錯誤。"
 
-#: ../client/snapper.cc:535
+#. TRANSLATORS: symbol for "bytes" (best keep untranslated)
+#: ../client/utils/HumanString.cc:57
+msgid "B"
+msgstr ""
+
+#: ../client/snapper.cc:449
 msgid "Cleanup"
 msgstr "清理"
 
-# SLE12
-#: ../client/snapper.cc:1735
-#, c-format
-msgid "Command '%s' does not work without DBus."
-msgstr "不使用 DBus 時指令「%s」不起作用。"
-
-#: ../client/snapper.cc:1420
+#: ../client/snapper.cc:1336
 msgid "Command 'cleanup' needs one arguments."
 msgstr "命令 'cleanup' 需要一個參數。"
 
-#: ../client/snapper.cc:722
+#: ../client/snapper.cc:574
 msgid "Command 'create' does not take arguments."
 msgstr "命令 'create' 不需參數。"
 
-#: ../client/snapper.cc:292
+#: ../client/snapper.cc:230
 msgid "Command 'create-config' needs one argument."
 msgstr "命令 'create-config' 需要一個參數。"
 
 # SLE12
-#: ../client/snapper.cc:1458
+#: ../client/snapper.cc:1374
 msgid "Command 'debug' does not take arguments."
 msgstr "指令「debug」未收到引數。"
 
-#: ../client/snapper.cc:900
+#: ../client/snapper.cc:750
 msgid "Command 'delete' needs at least one argument."
 msgstr "命令 'delete' 需要至少一個參數。"
 
-#: ../client/snapper.cc:346
+#: ../client/snapper.cc:277
 msgid "Command 'delete-config' does not take arguments."
 msgstr "命令 'delete-config' 不需參數。"
 
 # SLE12
-#: ../client/snapper.cc:1112
+#: ../client/snapper.cc:953
 msgid "Command 'diff' needs at least one argument."
 msgstr "指令「diff」需要至少一個引數。"
 
 # SLE12
-#: ../client/snapper.cc:376
+#: ../client/snapper.cc:300
 msgid "Command 'get-config' does not take arguments."
 msgstr "指令「get-config」未收到引數。"
 
-#: ../client/snapper.cc:1570
+#: ../client/snapper.cc:1489
 msgid "Command 'help' does not take arguments."
 msgstr "命令 'help' 不需參數。"
 
-#: ../client/snapper.cc:477
+#: ../client/snapper.cc:380
 msgid "Command 'list' does not take arguments."
 msgstr "命令 'list' 不需參數。"
 
-#: ../client/snapper.cc:242
+#: ../client/snapper.cc:181
 msgid "Command 'list-configs' does not take arguments."
 msgstr "命令 'list-configs' 不需參數。"
 
-#: ../client/snapper.cc:851
+#: ../client/snapper.cc:699
 msgid "Command 'modify' needs at least one argument."
 msgstr "命令 'moodify' 需要至少一個參數。"
 
-#: ../client/snapper.cc:964 ../client/snapper.cc:1001
+#: ../client/snapper.cc:817
 msgid "Command 'mount' needs at least one argument."
 msgstr "命令 'mount' 需要至少一個參數。"
 
 # SLE12
-#: ../client/snapper.cc:1349
+#: ../client/snapper.cc:1215
+#, fuzzy, c-format
+msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
+msgstr "指令「rollback」可使用一個引數或不使用引數。"
+
+# SLE12
+#: ../client/snapper.cc:1208
 msgid "Command 'rollback' only available for btrfs."
 msgstr "指令「rollback」僅適用於 Btrfs。"
 
 # SLE12
-#: ../client/snapper.cc:1323
+#: ../client/snapper.cc:1173
 msgid "Command 'rollback' takes either one or no argument."
 msgstr "指令「rollback」可使用一個引數或不使用引數。"
 
 # SLE12
-#: ../client/snapper.cc:432
+#: ../client/snapper.cc:339
 msgid "Command 'set-config' needs at least one argument."
 msgstr "指令「set-config」至少需要一個引數。"
 
-#: ../client/snapper.cc:1046
+#: ../client/snapper.cc:1313
+#, fuzzy
+msgid "Command 'setup-quota' does not take arguments."
+msgstr "命令 'help' 不需參數。"
+
+#: ../client/snapper.cc:883
 msgid "Command 'status' needs one argument."
 msgstr "命令 'status' 需要一個參數。"
 
-#: ../client/snapper.cc:1171
+#: ../client/snapper.cc:846
+#, fuzzy
+msgid "Command 'umount' needs at least one argument."
+msgstr "命令 'mount' 需要至少一個參數。"
+
+#: ../client/snapper.cc:1016
 msgid "Command 'undochange' needs at least one argument."
 msgstr "命令 'undochange' 需要至少一個參數。"
 
 # SLE12
-#: ../client/snapper.cc:1503
+#: ../client/snapper.cc:1418
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "指令「xadiff」至少需要一個引數。"
 
-#: ../client/snapper.cc:249
+#: ../client/snapper.cc:188
 msgid "Config"
 msgstr "設定"
 
-#: ../client/snapper.cc:1757
+#: ../client/snapper.cc:1696
 #, c-format
 msgid "Config '%s' is invalid."
 msgstr "設定 '%s' 不適用。"
 
 # SLE12
-#: ../client/snapper.cc:1751
+#: ../client/snapper.cc:1690
 #, c-format
 msgid "Config '%s' not found."
 msgstr "找不到組態「%s」。"
 
 # SLE12
-#: ../client/errors.cc:58
+#: ../client/errors.cc:78
 msgid "Config is in use."
 msgstr "組態正在使用中。"
 
 # SLE12
-#: ../client/errors.cc:55
+#: ../client/errors.cc:75
 msgid "Config is locked."
 msgstr "組態已鎖定。"
 
 # SLE12
-#: ../client/misc.cc:189
+#: ../client/misc.cc:133
 #, c-format
 msgid "Configdata '%s' does not include '=' sign."
 msgstr "組態資料「%s」沒有包含「=」符號。"
 
 # SLE12
-#: ../client/misc.cc:198
+#: ../client/misc.cc:142
 #, c-format
 msgid "Configdata '%s' has empty key."
 msgstr "組態資料「%s」的鍵為空白。"
 
-#: ../client/snapper.cc:1769 ../client/errors.cc:67
+#: ../client/snapper.cc:1708 ../client/errors.cc:87
 #, c-format
 msgid "Creating config failed (%s)."
 msgstr "建立設定失敗 (%s)。"
 
 # SLE12
-#: ../client/snapper.cc:1378
+#: ../client/snapper.cc:1255
 msgid "Creating read-only snapshot of current system."
 msgstr "正在建立目前系統的唯讀快照。"
 
 # SLE12
-#: ../client/snapper.cc:1359
+#: ../client/snapper.cc:1233
 msgid "Creating read-only snapshot of default subvolume."
 msgstr "正在建立預設子磁碟區的唯讀快照。"
 
 # SLE12
-#: ../client/snapper.cc:1367
+#: ../client/snapper.cc:1242
 msgid "Creating read-write snapshot of current subvolume."
 msgstr "正在建立目前子磁碟區的讀寫快照。"
 
 # SLE12
-#: ../client/snapper.cc:1385
+#: ../client/snapper.cc:1263
 #, c-format
 msgid "Creating read-write snapshot of snapshot %d."
 msgstr "正在建立快照 %d 的讀寫快照。"
 
 # SLE12
-#: ../client/errors.cc:73
+#: ../client/errors.cc:93
 msgid "Creating snapshot failed."
 msgstr "建立快照失敗。"
 
-#: ../client/snapper.cc:533 ../client/snapper.cc:581
+#: ../client/snapper.cc:447 ../client/snapper.cc:475
 msgid "Date"
 msgstr "日期"
 
-#: ../client/snapper.cc:1775 ../client/errors.cc:70
+#: ../client/snapper.cc:1714 ../client/errors.cc:90
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "刪除設定失敗 (%s)。"
 
 # SLE12
-#: ../client/errors.cc:76
+#: ../client/errors.cc:96
 msgid "Deleting snapshot failed."
 msgstr "刪除快照失敗。"
 
-#: ../client/commands.cc:274
+#: ../client/commands.cc:276
 #, c-format
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "從 %s 刪除快照︰"
 
-#: ../client/snapper.cc:536 ../client/snapper.cc:583 ../client/snapper.cc:631
+#: ../client/snapper.cc:450 ../client/snapper.cc:477 ../client/snapper.cc:505
 msgid "Description"
 msgstr "描述"
 
-#: ../client/snapper.cc:316
+#: ../client/snapper.cc:254
 msgid "Detecting filesystem type failed."
 msgstr "偵測檔案系統類型失敗。"
 
+#. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
+#: ../client/utils/HumanString.cc:81
+msgid "EiB"
+msgstr ""
+
 # SLE12
-#: ../client/misc.cc:178
+#: ../client/misc.cc:122
 msgid "Empty configdata."
 msgstr "組態資料空白。"
 
 # SLE12
-#: ../client/misc.cc:115 ../client/misc.cc:123
+#: ../client/misc.cc:59 ../client/misc.cc:67
 msgid "Empty userdata."
 msgstr "使用者資料空白。"
 
+#: ../client/snapper.cc:1762
+#, fuzzy, c-format
+msgid "Error (%s)."
+msgstr "IO 錯誤 (%s)。"
+
 # SLE12
-#: ../client/snapper.cc:1277 ../client/snapper.cc:1288
+#: ../client/snapper.cc:1127 ../client/snapper.cc:1138
 msgid "Failed to initialize filesystem handler."
 msgstr "無法啟始化檔案系統處理器。"
 
 # SLE12
-#: ../client/systemd-helper.cc:136 ../client/snapper.cc:1834
+#: ../client/systemd-helper.cc:148 ../client/snapper.cc:1678
 msgid "Failure"
 msgstr "失敗"
 
 # SLE12
-#: ../client/errors.cc:87
+#: ../client/errors.cc:113
 #, c-format
 msgid "Failure (%s)."
 msgstr "失敗 (%s)。"
 
-#: ../client/snapper.cc:134 ../client/snapper.cc:157
+#: ../client/snapper.cc:132 ../client/snapper.cc:155
 #, c-format
 msgid "File '%s' not found."
 msgstr "檔案 '%s' 找不到。"
 
-#: ../client/errors.cc:64
+#: ../client/snapper.cc:1756 ../client/errors.cc:111
+#, fuzzy, c-format
+msgid "Free space error (%s)."
+msgstr "IO 錯誤 (%s)。"
+
+#. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
+#: ../client/utils/HumanString.cc:69
+msgid "GiB"
+msgstr ""
+
+#: ../client/errors.cc:84
 #, c-format
 msgid "IO Error (%s)."
 msgstr "IO 錯誤 (%s)。"
 
-#: ../client/snapper.cc:1793
+#: ../client/snapper.cc:1732
 #, c-format
 msgid "IO error (%s)."
 msgstr "IO 錯誤 (%s)。"
 
-#: ../client/misc.cc:102
+#: ../client/proxy.cc:157
 msgid "Identical snapshots."
 msgstr "完全相同的快照。"
 
 # SLE12
-#: ../client/errors.cc:52
-msgid "Illegal Snapshot."
+#: ../client/snapper.cc:1684 ../client/errors.cc:72
+#, fuzzy
+msgid "Illegal snapshot."
 msgstr "快照不合法。"
 
 # SLE12
-#: ../client/snapper.cc:1781 ../client/errors.cc:49
+#: ../client/snapper.cc:1720 ../client/errors.cc:69
 msgid "Invalid configdata."
 msgstr "無效的 configdata。"
 
 # SLE12
-#: ../client/snapper.cc:1805 ../client/errors.cc:82
+#: ../client/snapper.cc:1744 ../client/errors.cc:102
 msgid "Invalid group."
 msgstr "無效的群組。"
 
-#: ../client/misc.cc:48 ../client/misc.cc:72
+#: ../client/proxy.cc:96 ../client/proxy.cc:120 ../client/misc.cc:46
 #, c-format
 msgid "Invalid snapshot '%s'."
 msgstr "不適用的快照 '%s'。"
 
-#: ../client/misc.cc:93 ../client/snapper.cc:1193
+#: ../client/snapper.cc:1041 ../client/proxy.cc:148
 msgid "Invalid snapshots."
 msgstr "不適用的快照。"
 
 # SLE12
-#: ../client/snapper.cc:299
+#: ../client/snapper.cc:237
 msgid "Invalid subvolume."
 msgstr "無效的子磁碟區。"
 
-#: ../client/snapper.cc:1675
+#: ../client/snapper.cc:1595
 #, c-format
 msgid "Invalid table style %d."
 msgstr "無效的表格樣式 %d。"
 
 # SLE12
-#: ../client/snapper.cc:1799 ../client/errors.cc:79
+#: ../client/snapper.cc:1738 ../client/errors.cc:99
 msgid "Invalid user."
 msgstr "無效的使用者。"
 
-#: ../client/errors.cc:46
+#: ../client/errors.cc:66
 msgid "Invalid userdata."
 msgstr "不適用的 userdata 。"
 
 # SLE12
-#: ../client/snapper.cc:383
+#: ../client/snapper.cc:307
 msgid "Key"
 msgstr "鍵"
 
-#: ../client/snapper.cc:1763
+#. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
+#: ../client/utils/HumanString.cc:61
+msgid "KiB"
+msgstr ""
+
+#: ../client/snapper.cc:1702
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "列出設定失敗 (%s)。"
 
-#: ../client/snapper.cc:1050
+#: ../client/snapper.cc:887
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "可能您忘記在快照編號之間輸入分隔符「..」。"
+
+#. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
+#: ../client/utils/HumanString.cc:65
+msgid "MiB"
+msgstr ""
 
 #: ../client/utils/GetOpts.cc:68
 #, c-format
@@ -652,101 +707,115 @@ msgstr "命令選項 '%s' 遺失參數。"
 msgid "Missing argument for global option '%s'."
 msgstr "全域選項 '%s' 遺失參數。"
 
-#: ../client/snapper.cc:784
+#: ../client/snapper.cc:637
 msgid "Missing command argument."
 msgstr "遺失指令引數。"
 
-#: ../client/misc.cc:88
+#: ../client/proxy.cc:143
 msgid "Missing delimiter '..' between snapshot numbers."
 msgstr "快照編號之間缺少分隔符「..」。"
 
-#: ../client/snapper.cc:778
+#: ../client/snapper.cc:631
 msgid "Missing or invalid pre-number."
 msgstr "遺失或不適用的 之前-數字。"
 
-#: ../client/snapper.cc:1713
+#: ../client/snapper.cc:1633
 msgid "No command provided."
 msgstr "沒有提供命令。"
 
 # SLE12
-#: ../client/errors.cc:43
+#: ../client/errors.cc:63
 msgid "No permissions."
 msgstr "無許可權。"
 
-#: ../client/snapper.cc:1071 ../client/snapper.cc:1126
-#: ../client/snapper.cc:1186
+#: ../client/snapper.cc:912 ../client/snapper.cc:967 ../client/snapper.cc:1034
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "開啟檔案 '%s' 失敗。"
 
-#: ../client/snapper.cc:628
+#. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
+#: ../client/utils/HumanString.cc:77
+msgid "PiB"
+msgstr ""
+
+#: ../client/snapper.cc:502
 msgid "Post #"
 msgstr "之後 #"
 
-#: ../client/snapper.cc:630
+#: ../client/snapper.cc:504
 msgid "Post Date"
 msgstr "之後 日期"
 
-#: ../client/snapper.cc:532 ../client/snapper.cc:627
+#: ../client/snapper.cc:446 ../client/snapper.cc:501
 msgid "Pre #"
 msgstr "之前 #"
 
-#: ../client/snapper.cc:629
+#: ../client/snapper.cc:503
 msgid "Pre Date"
 msgstr "之前 日期"
 
-#: ../client/misc.cc:89 ../client/snapper.cc:1051 ../client/snapper.cc:1824
+#: ../client/snapper.cc:1750 ../client/errors.cc:108
+#, fuzzy, c-format
+msgid "Quota error (%s)."
+msgstr "IO 錯誤 (%s)。"
+
+#: ../client/snapper.cc:888 ../client/snapper.cc:1668 ../client/proxy.cc:144
 msgid "See 'man snapper' for further instructions."
 msgstr "如需更多指示，請參閱「man snapper」。"
 
 # SLE12
-#: ../client/snapper.cc:1393
+#: ../client/snapper.cc:1284
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
 msgstr "正在將預設子磁碟區設定為快照 %d。"
 
-#: ../client/misc.cc:55
+#: ../client/proxy.cc:103 ../client/proxy.cc:127
 #, c-format
 msgid "Snapshot '%u' not found."
 msgstr "快照 '%u' 找不到。"
 
 # SLE12
-#: ../client/errors.cc:61
+#: ../client/errors.cc:81
 msgid "Snapshot is in use."
 msgstr "快照正在使用中。"
 
 # SLE12
-#: ../client/snapper.cc:250
+#: ../client/snapper.cc:189
 msgid "Subvolume"
 msgstr "子磁碟區"
 
-#: ../client/snapper.cc:1823
+#: ../client/snapper.cc:1667
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "組態「root」不存在。snapper 可能未設定。"
 
+#. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
+#: ../client/utils/HumanString.cc:73
+msgid "TiB"
+msgstr ""
+
 # SLE12
-#: ../client/snapper.cc:1694 ../client/snapper.cc:1714
-#: ../client/snapper.cc:1727 ../client/utils/GetOpts.cc:61
+#: ../client/snapper.cc:1614 ../client/snapper.cc:1634
+#: ../client/snapper.cc:1647 ../client/utils/GetOpts.cc:61
 #: ../client/utils/GetOpts.cc:69
 msgid "Try 'snapper --help' for more information."
 msgstr "請嘗試執行「snapper --help」以獲得詳細資訊。"
 
-#: ../client/snapper.cc:530
+#: ../client/snapper.cc:444
 msgid "Type"
 msgstr "類型"
 
-#: ../client/snapper.cc:1440
+#: ../client/snapper.cc:1356
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
 msgstr "未知的清理演算法 '%s'。"
 
-#: ../client/snapper.cc:1726
+#: ../client/snapper.cc:1646
 #, c-format
 msgid "Unknown command '%s'."
 msgstr "未知的命令 '%s'。"
 
 # SLE12
-#: ../client/errors.cc:40
+#: ../client/errors.cc:60
 msgid "Unknown config."
 msgstr "未知的組態檔。"
 
@@ -760,94 +829,98 @@ msgstr "未知的全域選項 '%s'。"
 msgid "Unknown option '%s' for command '%s'."
 msgstr "未知選項 '%s'，命令 '%s'。"
 
-#: ../client/snapper.cc:750
+#: ../client/snapper.cc:603
 msgid "Unknown type of snapshot."
 msgstr "未知類型的快照。"
 
-#: ../client/snapper.cc:495
+#: ../client/snapper.cc:398
 msgid "Unknown type of snapshots."
 msgstr "未知類型的快照。"
 
 # SLE12
-#: ../client/snapper.cc:1676
+#: ../client/snapper.cc:1596
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "使用介於 %d 到 %d 的整數。"
 
 # SLE12
-#: ../client/snapper.cc:534 ../client/snapper.cc:582
+#: ../client/snapper.cc:448 ../client/snapper.cc:476
 msgid "User"
 msgstr "使用者"
 
 # SLE12
-#: ../client/snapper.cc:537 ../client/snapper.cc:584 ../client/snapper.cc:632
+#: ../client/snapper.cc:451 ../client/snapper.cc:478 ../client/snapper.cc:506
 msgid "Userdata"
 msgstr "使用者資料"
 
 # SLE12
-#: ../client/misc.cc:134
+#: ../client/misc.cc:78
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
 msgstr "使用者資料「%s」沒有包含「=」符號。"
 
 # SLE12
-#: ../client/misc.cc:143
+#: ../client/misc.cc:87
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "使用者資料「%s」的鍵為空白。"
 
-#: ../client/snapper.cc:384
+#: ../client/snapper.cc:308
 msgid "Value"
 msgstr "值"
 
 # SLE12
-#: ../client/snapper.cc:1212
+#: ../client/snapper.cc:1061
 #, c-format
 msgid "create:%d modify:%d delete:%d"
 msgstr "建立︰%d 修改︰%d 刪除︰%d"
 
-#: ../client/snapper.cc:1237
+#: ../client/snapper.cc:1086
 #, c-format
 msgid "creating %s"
 msgstr "正在建立 %s"
 
-#: ../client/snapper.cc:1243
+#: ../client/snapper.cc:1092
 #, c-format
 msgid "deleting %s"
 msgstr "正在刪除 %s"
 
-#: ../client/snapper.cc:1253
+#: ../client/snapper.cc:1102
 #, c-format
 msgid "failed to create %s"
 msgstr "建立 %s 失敗"
 
-#: ../client/snapper.cc:1259
+#: ../client/snapper.cc:1108
 #, c-format
 msgid "failed to delete %s"
 msgstr "刪除 %s 失敗"
 
-#: ../client/snapper.cc:1256
+#: ../client/snapper.cc:1105
 #, c-format
 msgid "failed to modify %s"
 msgstr "修改 %s 失敗"
 
-#: ../client/snapper.cc:1240
+#: ../client/snapper.cc:1089
 #, c-format
 msgid "modifying %s"
 msgstr "正在修改 %s"
 
 # SLE12
-#: ../client/snapper.cc:1208
+#: ../client/snapper.cc:1057
 msgid "nothing to do"
 msgstr "無執行動作"
 
-#: ../client/snapper.cc:1693
+#: ../client/snapper.cc:1613
 msgid "root argument can be used only together with no-dbus."
 msgstr "根引數只能與 no-dbus 配合使用。"
 
-#: ../client/snapper.cc:1574
+#: ../client/snapper.cc:1493
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "用法： snapper [--全域選項] <命令> [--命令選項] [命令參數]"
+
+# SLE12
+#~ msgid "Command '%s' does not work without DBus."
+#~ msgstr "不使用 DBus 時指令「%s」不起作用。"
 
 # SLE12
 #~ msgid "IO Error."
