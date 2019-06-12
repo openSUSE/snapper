@@ -1,5 +1,5 @@
-# Build the latest openSUSE Leap (42.x) image
-FROM opensuse:leap
+# Build the latest openSUSE Leap image
+FROM opensuse/leap
 
 RUN zypper --non-interactive in --no-recommends \
   autoconf \
