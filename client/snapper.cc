@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2017] SUSE LLC
+ * Copyright (c) [2016-2019] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -1748,6 +1748,12 @@ main(int argc, char** argv)
     {
 	SN_CAUGHT(e);
 	cerr << sformat(_("Quota error (%s)."), e.what()) << endl;
+	exit(EXIT_FAILURE);
+    }
+    catch (const FreeSpaceException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << sformat(_("Free space error (%s)."), e.what()) << endl;
 	exit(EXIT_FAILURE);
     }
     catch (const Exception& e)

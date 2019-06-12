@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2019] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -140,6 +140,13 @@ QuotaData
 ProxySnapperDbus::queryQuotaData() const
 {
     return command_query_quota(conn(), config_name);
+}
+
+
+FreeSpaceData
+ProxySnapperDbus::queryFreeSpaceData() const
+{
+    return command_query_free_space(conn(), config_name);
 }
 
 

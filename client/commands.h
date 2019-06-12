@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2019] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -122,6 +122,9 @@ command_prepare_quota(DBus::Connection& conn, const string& config_name);
 
 QuotaData
 command_query_quota(DBus::Connection& conn, const string& config_name);
+
+FreeSpaceData
+command_query_free_space(DBus::Connection& conn, const string& config_name);
 
 void
 command_sync(DBus::Connection& conn, const string& config_name);

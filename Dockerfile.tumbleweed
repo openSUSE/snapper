@@ -1,5 +1,5 @@
 # Build the latest openSUSE Tumbleweed image
-FROM opensuse:tumbleweed
+FROM opensuse/tumbleweed
 
 RUN zypper --non-interactive in --no-recommends \
   autoconf \
@@ -11,6 +11,9 @@ RUN zypper --non-interactive in --no-recommends \
   gcc-c++ \
   grep \
   libacl-devel \
+  libboost_system-devel \
+  libboost_test-devel \
+  libboost_thread-devel \
   libbtrfs-devel \
   libmount-devel \
   libtool \

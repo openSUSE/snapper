@@ -102,11 +102,22 @@ namespace snapper
 	explicit QuotaException(const char* msg) : Exception(msg) {}
     };
 
+    struct FreeSpaceException : public Exception
+    {
+	explicit FreeSpaceException(const char* msg) : Exception(msg) {}
+    };
+
 
     struct QuotaData
     {
 	uint64_t size;
 	uint64_t used;
+    };
+
+    struct FreeSpaceData
+    {
+	uint64_t size;
+	uint64_t free;
     };
 
 
@@ -165,6 +176,8 @@ namespace snapper
 	void prepareQuota() const;
 
 	QuotaData queryQuotaData() const;
+
+	FreeSpaceData queryFreeSpaceData() const;
 
 	static const char* compileVersion();
 	static const char* compileFlags();

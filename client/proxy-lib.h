@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2019] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -120,6 +120,8 @@ public:
     virtual void prepareQuota() const override { snapper->prepareQuota(); }
 
     virtual QuotaData queryQuotaData() const override { return snapper->queryQuotaData(); }
+
+    virtual FreeSpaceData queryFreeSpaceData() const override { return snapper->queryFreeSpaceData(); }
 
     std::unique_ptr<Snapper> snapper;
 

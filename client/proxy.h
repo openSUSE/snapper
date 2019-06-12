@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2017] SUSE LLC
+ * Copyright (c) [2016-2019] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -65,8 +65,8 @@ using namespace snapper;
  */
 
 
-// TODO maybe unique error handling, e.g. catch dbus exceptions and throw
-// snapper or new exceptions
+// TODO Maybe unique error handling, e.g. catch dbus exceptions and
+// throw snapper or new exceptions. Partly done, see errors.h.
 
 
 class ProxyConfig
@@ -232,6 +232,8 @@ public:
     virtual void prepareQuota() const = 0;
 
     virtual QuotaData queryQuotaData() const = 0;
+
+    virtual FreeSpaceData queryFreeSpaceData() const = 0;
 
 };
 

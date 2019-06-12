@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2019] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -24,6 +24,7 @@
 #include <iostream>
 
 #include "commands.h"
+#include "errors.h"
 #include "utils/text.h"
 #include "snapper/AppUtil.h"
 
@@ -416,31 +417,71 @@ command_setup_quota(DBus::Connection& conn, const string& config_name)
 void
 command_prepare_quota(DBus::Connection& conn, const string& config_name)
 {
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "PrepareQuota");
+    try
+    {
+	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "PrepareQuota");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name;
+	DBus::Hoho hoho(call);
+	hoho << config_name;
 
-    conn.send_with_reply_and_block(call);
+        conn.send_with_reply_and_block(call);
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	convert_exception(e);
+    }
 }
 
 
 QuotaData
 command_query_quota(DBus::Connection& conn, const string& config_name)
 {
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "QueryQuota");
+    try
+    {
+	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "QueryQuota");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name;
+	DBus::Hoho hoho(call);
+	hoho << config_name;
 
-    DBus::Message reply = conn.send_with_reply_and_block(call);
+	DBus::Message reply = conn.send_with_reply_and_block(call);
 
-    QuotaData quota_data;
+	QuotaData quota_data;
 
-    DBus::Hihi hihi(reply);
-    hihi >> quota_data;
+	DBus::Hihi hihi(reply);
+	hihi >> quota_data;
 
-    return quota_data;
+	return quota_data;
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	convert_exception(e);
+    }
+}
+
+
+FreeSpaceData
+command_query_free_space(DBus::Connection& conn, const string& config_name)
+{
+    try
+    {
+	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "QueryFreeSpace");
+
+	DBus::Hoho hoho(call);
+	hoho << config_name;
+
+	DBus::Message reply = conn.send_with_reply_and_block(call);
+
+	FreeSpaceData free_space_data;
+
+	DBus::Hihi hihi(reply);
+	hihi >> free_space_data;
+
+	return free_space_data;
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	convert_exception(e);
+    }
 }
 
 

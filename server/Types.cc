@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2013] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016,2018] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -30,6 +30,7 @@ namespace DBus
     const char* TypeInfo<Snapshot>::signature = "(uquxussa{ss})";
     const char* TypeInfo<File>::signature = "(su)";
     const char* TypeInfo<QuotaData>::signature = "(tt)";
+    const char* TypeInfo<FreeSpaceData>::signature = "(tt)";
 
 
     Hoho&
@@ -98,6 +99,16 @@ namespace DBus
     {
 	hoho.open_struct();
 	hoho << data.size << data.used;
+	hoho.close_struct();
+	return hoho;
+    }
+
+
+    Hoho&
+    operator<<(Hoho& hoho, const FreeSpaceData& data)
+    {
+	hoho.open_struct();
+	hoho << data.size << data.free;
 	hoho.close_struct();
 	return hoho;
     }

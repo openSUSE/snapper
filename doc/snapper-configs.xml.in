@@ -2,13 +2,13 @@
 <refentry id='snapper-configs5'>
 
   <refentryinfo>
-    <date>2014-05-20</date>
+    <date>2019-05-08</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper-configs</refentrytitle>
     <manvolnum>5</manvolnum>
-    <refmiscinfo class='date'>2013-07-09</refmiscinfo>
+    <refmiscinfo class='date'>2019-05-08</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -68,6 +68,17 @@
 	  <para>Only supported for btrfs.</para>
 	  <para>Default value is &quot;0.5&quot;.</para>
 	  <para>New in version 0.3.0.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>FREE_LIMIT=<replaceable>float</replaceable></option></term>
+	<listitem>
+	  <para>Limit for the fraction of the filesystem space that
+	  should be free.</para>
+	  <para>Only supported for btrfs.</para>
+	  <para>Default value is &quot;0.2&quot;.</para>
+	  <para>New in version 0.8.0 and backported to some specific releases.</para>
 	</listitem>
       </varlistentry>
 

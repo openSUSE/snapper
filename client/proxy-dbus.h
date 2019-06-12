@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2019] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -140,6 +140,8 @@ public:
     virtual void prepareQuota() const override;
 
     virtual QuotaData queryQuotaData() const override;
+
+    virtual FreeSpaceData queryFreeSpaceData() const override;
 
     DBus::Connection& conn() const;
 
