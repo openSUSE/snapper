@@ -5,12 +5,14 @@ Wed May 08 12:20:40 CEST 2019 - aschnell@suse.com
   free space for btrfs (within known ranges) (jsd#SLE-7025,
   backport of fate#325774)
 - version 0.5.0.1
+  - remove: bsc1051922.diff (included in tarball)
 
 -------------------------------------------------------------------
 Mon Jul 23 20:52:26 CEST 2018 - aschnell@suse.com
 
 - fixed logging during shutdown of snapperd to avoid core dumps
   (bsc#1051922 and others)
+  - add: bsc1051922.diff
 
 -------------------------------------------------------------------
 Tue May 09 13:52:46 CEST 2017 - aschnell@suse.com
