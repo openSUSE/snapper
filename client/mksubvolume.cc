@@ -270,7 +270,7 @@ find_filesystem(MntTable& mnt_table)
 struct TmpMountpoint {
     unique_ptr<char[]> mountpoint;
     const libmnt_fs* fs;
-    TmpMountpoint(const string tmpMountpoint, const libmnt_fs* libmntfs, const string& subvol_opts)
+    TmpMountpoint(const string& tmpMountpoint, const libmnt_fs* libmntfs, const string& subvol_opts)
 	: mountpoint(strdup(tmpMountpoint.c_str())), fs(libmntfs)
     {
 	if (!mkdtemp(mountpoint.get()))
@@ -376,8 +376,8 @@ doit()
     }
     catch (const runtime_error_with_errno& e)
     {
-	if (e.error_number == EEXIST)
-	    cout << "subvolume exists already" << endl;
+	if (e.error_number == EEXIST && force)
+	    cout << "subvolume exists already, reusing" << endl;
 	else
 	    throw;
     }
