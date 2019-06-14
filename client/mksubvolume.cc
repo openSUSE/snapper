@@ -377,7 +377,14 @@ doit()
     catch (const runtime_error_with_errno& e)
     {
 	if (e.error_number == EEXIST && force)
+	{
+	    const string path = string(tmp_mountpoint.mountpoint.get()).append("/").append(subvolume_name);
+
+	    struct stat sb;
+	    if (stat(path.c_str(), &sb) == 0 && !is_subvolume(sb))
+		throw runtime_error_with_errno("path exists, but isn't a subvolume", e.error_number);
 	    cout << "subvolume exists already, reusing" << endl;
+	}
 	else
 	    throw;
     }
