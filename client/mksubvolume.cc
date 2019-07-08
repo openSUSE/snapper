@@ -322,7 +322,13 @@ doit()
 	throw runtime_error("invalid target");
 
     if (access(target.c_str(), F_OK) == 0)
-	throw runtime_error("target exists");
+    {
+	struct stat sb;
+	if (force && lstat(target.c_str(), &sb) == 0 && sb.st_mode & S_IFDIR)
+	    cout << "reusing target dir" << endl;
+	else
+	    throw runtime_error("target exists");
+    }
 
     if (access(dirname(target).c_str(), F_OK) != 0)
 	throw runtime_error("parent of target does not exist");

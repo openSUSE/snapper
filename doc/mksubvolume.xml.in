@@ -41,8 +41,8 @@
       <varlistentry>
 	<term><option>-f, --force</option></term>
 	<listitem>
-	  <para>Ignore if subvolume already exists - reuse it and
-	  proceed.</para>
+	  <para>Ignore if subvolume or target directory already exist - reuse
+	  them and proceed.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
