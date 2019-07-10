@@ -140,21 +140,6 @@ do_add_fstab_and_mount(MntTable& mnt_table, const libmnt_fs* fs, const string& s
     if (!x)
 	throw runtime_error("mnt_copy_fs failed");
 
-    if (force)
-    {
-	struct libmnt_context* cxt = mnt_new_context();
-	libmnt_fs* y;
-	mnt_context_set_fs(cxt, x);
-	mnt_context_set_target(cxt, target.c_str());
-	if (!mnt_context_find_umount_fs(cxt, target.c_str(), &y))
-	{
-	    cout << "target mounted - umounting" << endl;
-	    int ret = mnt_context_umount(cxt);
-	    if (ret != 0)
-		throw runtime_error(sformat("mnt_context_umount failed, ret:%d", errno));
-	}
-    }
-
     mnt_fs_set_target(x, target.c_str());
 
     string full_subvol_option = subvolume_name;
@@ -168,20 +153,31 @@ do_add_fstab_and_mount(MntTable& mnt_table, const libmnt_fs* fs, const string& s
     mnt_fs_set_options(x, options);
     free(options);
 
-    // Caution: mnt_context_mount may change the source of x so the fstab
-    // functions must be called first.
-    mnt_table.add_fs(x);
-    mnt_table.replace_file();
+    if (mnt_table.find_target(target.c_str(), MNT_ITER_FORWARD) == NULL)
+    {
+	// Caution: mnt_context_mount may change the source of x so the fstab
+	// functions must be called first.
+	mnt_table.add_fs(x);
+	mnt_table.replace_file();
+    }
+    else
+	cout << "fstab entry exists already, skipping" << endl;
 
     if (mkdir(target.c_str(), 0777) != 0 && errno != EEXIST)
 	throw runtime_error_with_errno("mkdir failed", errno);
 
     struct libmnt_context* cxt = mnt_new_context();
-    mnt_context_set_fs(cxt, x);
+    libmnt_fs* y;
+    if (mnt_context_find_umount_fs(cxt, target.c_str(), &y))
+    {
+	mnt_context_set_fs(cxt, x);
 
-    int ret = mnt_context_mount(cxt);
-    if (ret != 0)
-	throw runtime_error(sformat("mnt_context_mount failed, ret:%d", ret));
+	int ret = mnt_context_mount(cxt);
+	if (ret != 0)
+	    throw runtime_error(sformat("mnt_context_mount failed, ret:%d", ret));
+    }
+    else
+	cout << "target mounted already, skipping" << endl;
 
     mnt_free_context(cxt);
 
@@ -266,20 +262,8 @@ find_filesystem(MntTable& mnt_table)
 	if (fs_fstype != "btrfs")
 	    throw runtime_error("filesystem is not btrfs");
 
-	if (fs_target == target)
-	{
-	    if (force)
-	    {
-		libmnt_fs* fs = mnt_table.find_target(target.c_str(), MNT_ITER_FORWARD);
-	        if (fs != NULL)
-		{
-		    cout << "removing existing fstab entry" << endl;
-		    mnt_table.remove_fs(fs);
-		}
-	    }
-	    else
-		throw runtime_error("target exists in fstab");
-	}
+	if (fs_target == target && !force)
+	    throw runtime_error("target exists in fstab");
 
 	if (!is_subvol_mount(fs_options))
 	    return fs;
