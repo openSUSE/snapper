@@ -379,9 +379,13 @@ doit()
     // Determine name for new subvolume: It is the target name without the
     // leading filesystem target.
 
-    string subvolume_name = target.substr(fs_target.size() + (fs_target == "/" ? 0 : 1));
+    string subvolume_name = target.substr(fs_target.size() +
+					 (fs_target == "/" || fs_target == target ? 0 : 1));
     if (verbose)
 	cout << "subvolume-name:" << subvolume_name << endl;
+
+    if (subvolume_name.empty())
+	throw runtime_error("target is a dedicated mountpoint");
 
     // Execute all steps.
 
