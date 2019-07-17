@@ -186,13 +186,10 @@ do_add_fstab_and_mount(MntTable& mnt_table, const libmnt_fs* fs, const string& s
 
 
 void
-do_set_nocow()
+do_set_cow_flag()
 {
-    if (!set_nocow)
-	return;
-
     if (verbose)
-	cout << "do-set-nocow" << endl;
+	cout << "do-set-cow-flag" << endl;
 
     int fd = open(target.c_str(), O_RDONLY);
     if (fd == -1)
@@ -208,7 +205,10 @@ do_set_nocow()
 	throw runtime_error_with_errno("ioctl(EXT2_IOC_GETFLAGS) failed", errno);
     }
 
-    flags |= FS_NOCOW_FL;
+    if (set_nocow)
+	flags |= FS_NOCOW_FL;
+    else
+	flags &= ~FS_NOCOW_FL;
 
     if (ioctl(fd, EXT2_IOC_SETFLAGS, &flags) == -1)
     {
@@ -413,7 +413,7 @@ doit()
 
     do_add_fstab_and_mount(mnt_table, fs, subvol_option, subvolume_name);
 
-    do_set_nocow();
+    do_set_cow_flag();
 }
 
 
