@@ -129,13 +129,10 @@ do_tmp_umount(const libmnt_fs* fs, const char* tmp_mountpoint)
 }
 
 
-void
-do_add_fstab_and_mount(MntTable& mnt_table, const libmnt_fs* fs, const string& subvol_option,
-		       const string& subvolume_name)
+libmnt_fs*
+create_fstab_line(const libmnt_fs* fs, const string& subvol_option,
+		  const string& subvolume_name)
 {
-    if (verbose)
-	cout << "do-add-fstab-and-mount" << endl;
-
     libmnt_fs* x = mnt_copy_fs(NULL, fs);
     if (!x)
 	throw runtime_error("mnt_copy_fs failed");
@@ -152,6 +149,16 @@ do_add_fstab_and_mount(MntTable& mnt_table, const libmnt_fs* fs, const string& s
     mnt_optstr_set_option(&options, "subvol", full_subvol_option.c_str());
     mnt_fs_set_options(x, options);
     free(options);
+
+    return x;
+}
+
+
+void
+do_add_fstab_and_mount(MntTable& mnt_table, libmnt_fs* x)
+{
+    if (verbose)
+	cout << "do-add-fstab-and-mount" << endl;
 
     if (mnt_table.find_target(target.c_str(), MNT_ITER_FORWARD) == NULL)
     {
@@ -384,8 +391,47 @@ doit()
     if (verbose)
 	cout << "subvolume-name:" << subvolume_name << endl;
 
+    // Set up cache for UUID / LABEL resolution in mnt_table_find_source
+    libmnt_cache* cache = mnt_new_cache();
+    libmnt_table* mtab_table = mnt_new_table();
+    mnt_table_set_cache(mtab_table, cache);
+    mnt_table_parse_mtab(mtab_table, NULL);
+
+    libmnt_fs* expected_fs = create_fstab_line(fs, subvol_option, subvolume_name);
+    char* expected_target = mnt_fs_get_target(expected_fs);
+
+    // Consistency checks on (partially) existing entries
+    libmnt_fs* fstab_entry = mnt_table.find_target(target, MNT_ITER_FORWARD);
+    libmnt_fs* mounted_entry = mnt_table_find_target(mtab_table, mnt_fs_get_target(expected_fs),
+						     MNT_ITER_BACKWARD);
     if (subvolume_name.empty())
 	throw runtime_error("target is a dedicated mountpoint");
+    if (fstab_entry != NULL && strcmp(mnt_fs_get_source(fstab_entry), mnt_fs_get_source(expected_fs)) != 0)
+	throw runtime_error("existing fstab entry doesn't match target device");
+    if (fstab_entry != NULL && strcmp(mnt_fs_get_options(fstab_entry), mnt_fs_get_options(expected_fs)) != 0)
+	throw runtime_error("existing fstab entry options don't match");
+    // Something is mounted there already. Is it the correct device?
+    if (mounted_entry != NULL)
+    {
+        char* subvol_expected;
+	size_t valsz;
+	mnt_fs_get_option(expected_fs, "subvol", &subvol_expected, &valsz);
+	// Map UUID / LABEL to a physical device name
+	const char* real_device = mnt_fs_get_source(mnt_table_find_source(mtab_table,
+							mnt_fs_get_source(expected_fs), MNT_ITER_BACKWARD));
+	// Find last device in mtab to get the actual mount
+	mounted_entry = mnt_table_find_target(mtab_table, mnt_fs_get_target(expected_fs),
+					      MNT_ITER_BACKWARD);
+	if (mounted_entry != NULL)
+	{
+	    if (strcmp(real_device, mnt_fs_get_source(mounted_entry)) != 0)
+		throw runtime_error("different device mounted on target");
+	    char* subvol_real;
+	    mnt_fs_get_option(mounted_entry, "subvol", &subvol_real, &valsz);
+	    if (strcmp(("/" + string(subvol_expected)).c_str(), subvol_real) != 0)
+		throw runtime_error("mount options of mounted target don't match");
+	}
+    }
 
     // Execute all steps.
 
@@ -411,7 +457,7 @@ doit()
 	    throw;
     }
 
-    do_add_fstab_and_mount(mnt_table, fs, subvol_option, subvolume_name);
+    do_add_fstab_and_mount(mnt_table, expected_fs);
 
     do_set_cow_flag();
 }
