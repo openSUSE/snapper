@@ -21,7 +21,6 @@
   <refsynopsisdiv id='synopsis'>
     <cmdsynopsis>
       <command>mksubvolume</command>
-      <arg choice='opt'>--force</arg>
       <arg choice='opt'>--nocow</arg>
       <arg choice='opt'>--verbose</arg>
       <arg choice='req'><replaceable>path</replaceable></arg>
@@ -38,13 +37,6 @@
   <refsect1 id='global_options'>
     <title>OPTIONS</title>
     <variablelist>
-      <varlistentry>
-	<term><option>-f, --force</option></term>
-	<listitem>
-	  <para>Ignore if subvolume or target directory already exist - reuse
-	  them and proceed.</para>
-	</listitem>
-      </varlistentry>
       <varlistentry>
 	<term><option>--nocow</option></term>
 	<listitem>

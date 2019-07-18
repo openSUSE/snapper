@@ -43,7 +43,6 @@ using namespace BtrfsUtils;
 
 string target;
 
-bool force = false;
 bool set_nocow = false;
 bool verbose = false;
 
@@ -168,7 +167,7 @@ do_add_fstab_and_mount(MntTable& mnt_table, libmnt_fs* x)
 	mnt_table.replace_file();
     }
     else
-	cout << "fstab entry exists already, skipping" << endl;
+	cout << "reusing existing fstab entry" << endl;
 
     if (mkdir(target.c_str(), 0777) != 0 && errno != EEXIST)
 	throw runtime_error_with_errno("mkdir failed", errno);
@@ -184,7 +183,7 @@ do_add_fstab_and_mount(MntTable& mnt_table, libmnt_fs* x)
 	    throw runtime_error(sformat("mnt_context_mount failed, ret:%d", ret));
     }
     else
-	cout << "target mounted already, skipping" << endl;
+	cout << "reusing mounted target" << endl;
 
     mnt_free_context(cxt);
 
@@ -269,9 +268,6 @@ find_filesystem(MntTable& mnt_table)
 	if (fs_fstype != "btrfs")
 	    throw runtime_error("filesystem is not btrfs");
 
-	if (fs_target == target && !force)
-	    throw runtime_error("target exists in fstab");
-
 	if (!is_subvol_mount(fs_options))
 	    return fs;
 
@@ -342,8 +338,8 @@ doit()
     if (access(target.c_str(), F_OK) == 0)
     {
 	struct stat sb;
-	if (force && lstat(target.c_str(), &sb) == 0 && sb.st_mode & S_IFDIR)
-	    cout << "reusing target dir" << endl;
+	if (lstat(target.c_str(), &sb) == 0 && sb.st_mode & S_IFDIR)
+	    cout << "reusing existing target dir" << endl;
 	else
 	    throw runtime_error("target exists");
     }
@@ -443,13 +439,13 @@ doit()
     }
     catch (const runtime_error_with_errno& e)
     {
-	if (e.error_number == EEXIST && force)
+	if (e.error_number == EEXIST)
 	{
 	    const string path = string(tmp_mountpoint.mountpoint.get()) + "/" + subvolume_name;
 	    struct stat sb;
 
 	    if (lstat(path.c_str(), &sb) == 0 && is_subvolume(sb))
-		cout << "subvolume exists already, reusing" << endl;
+		cout << "reusing existing subvolume" << endl;
 	    else
 		throw runtime_error_with_errno("cannot reuse path as subvolume", e.error_number);
 	}
@@ -468,7 +464,7 @@ void usage() __attribute__ ((__noreturn__));
 void
 usage()
 {
-    cerr << "usage: [--force] [--nocow] [--verbose] target" << endl;
+    cerr << "usage: [--nocow] [--verbose] target" << endl;
     exit(EXIT_FAILURE);
 }
 
@@ -479,7 +475,6 @@ main(int argc, char** argv)
     setlocale(LC_ALL, "");
 
     const struct option options[] = {
-	{ "force",		no_argument,		0,	'f' },
 	{ "nocow",		no_argument,		0,	0 },
 	{ "verbose",            no_argument,            0,      'v' },
 	{ 0, 0, 0, 0 }
@@ -492,9 +487,6 @@ main(int argc, char** argv)
     GetOpts::parsed_opts opts = getopts.parse(options);
 
     GetOpts::parsed_opts::const_iterator opt;
-
-    if ((opt = opts.find("force")) != opts.end())
-        force = true;
 
     if ((opt = opts.find("nocow")) != opts.end())
         set_nocow = true;
