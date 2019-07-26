@@ -227,16 +227,12 @@ do_set_cow_flag()
 
 
 bool
-is_subvol_mount(const string& fs_options)
+is_subvol_mount(libmnt_fs* fs)
 {
-    vector<string> tmp1;
-    boost::split(tmp1, fs_options, boost::is_any_of(","), boost::token_compress_on);
-    for (const string& tmp2 : tmp1)
-    {
-	if (boost::starts_with(tmp2, "subvol=") || boost::starts_with(tmp2, "subvolid="))
-	    return true;
-    }
-
+    if (mnt_fs_get_option(fs, "subvol", NULL, NULL) == 0)
+	return true;
+    if (mnt_fs_get_option(fs, "subvolid", NULL, NULL) == 0)
+	return true;
     return false;
 }
 
@@ -268,7 +264,7 @@ find_filesystem(MntTable& mnt_table)
 	if (fs_fstype != "btrfs")
 	    throw runtime_error("filesystem is not btrfs");
 
-	if (!is_subvol_mount(fs_options))
+	if (!is_subvol_mount(fs))
 	    return fs;
 
 	if (verbose)
