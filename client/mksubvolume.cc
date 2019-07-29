@@ -390,7 +390,6 @@ doit()
     mnt_table_parse_mtab(mtab_table, NULL);
 
     libmnt_fs* expected_fs = create_fstab_line(fs, subvol_option, subvolume_name);
-    char* expected_target = mnt_fs_get_target(expected_fs);
 
     // Consistency checks on (partially) existing entries
     libmnt_fs* fstab_entry = mnt_table.find_target(target, MNT_ITER_FORWARD);
