@@ -277,6 +277,16 @@ find_filesystem(MntTable& mnt_table)
     }
 }
 
+
+string
+get_abs_subvol_path(string subvolume)
+{
+    if(!boost::starts_with(subvolume, "/"))
+	subvolume.insert(0, "/");
+    return subvolume;
+}
+
+
 struct TmpMountpoint {
     unique_ptr<char[]> mountpoint;
     const libmnt_fs* fs;
@@ -389,7 +399,10 @@ doit()
     mnt_table_set_cache(mtab_table, cache);
     mnt_table_parse_mtab(mtab_table, NULL);
 
+    char* subvol_expected;
     libmnt_fs* expected_fs = create_fstab_line(fs, subvol_option, subvolume_name);
+    mnt_fs_get_option(expected_fs, "subvol", &subvol_expected, NULL);
+    assert(subvol_expected != NULL);
 
     // Consistency checks on (partially) existing entries
     libmnt_fs* fstab_entry = mnt_table.find_target(target, MNT_ITER_FORWARD);
@@ -399,14 +412,16 @@ doit()
 	throw runtime_error("target is a dedicated mountpoint");
     if (fstab_entry != NULL && strcmp(mnt_fs_get_source(fstab_entry), mnt_fs_get_source(expected_fs)) != 0)
 	throw runtime_error("existing fstab entry doesn't match target device");
-    if (fstab_entry != NULL && strcmp(mnt_fs_get_options(fstab_entry), mnt_fs_get_options(expected_fs)) != 0)
-	throw runtime_error("existing fstab entry options don't match");
+    if (fstab_entry != NULL)
+    {
+	char* subvol_fstab;
+	mnt_fs_get_option(fstab_entry, "subvol", &subvol_fstab, NULL);
+	if (!subvol_fstab || get_abs_subvol_path(subvol_fstab) != get_abs_subvol_path(subvol_expected))
+	    throw runtime_error("existing fstab entry's subvolume doesn't match");
+    }
     // Something is mounted there already. Is it the correct device?
     if (mounted_entry != NULL)
     {
-        char* subvol_expected;
-	size_t valsz;
-	mnt_fs_get_option(expected_fs, "subvol", &subvol_expected, &valsz);
 	// Map UUID / LABEL to a physical device name
 	const char* real_device = mnt_fs_get_source(mnt_table_find_source(mtab_table,
 							mnt_fs_get_source(expected_fs), MNT_ITER_BACKWARD));
@@ -415,12 +430,12 @@ doit()
 					      MNT_ITER_BACKWARD);
 	if (mounted_entry != NULL)
 	{
-	    if (strcmp(real_device, mnt_fs_get_source(mounted_entry)) != 0)
+	    if (!real_device || strcmp(real_device, mnt_fs_get_source(mounted_entry)) != 0)
 		throw runtime_error("different device mounted on target");
 	    char* subvol_real;
-	    mnt_fs_get_option(mounted_entry, "subvol", &subvol_real, &valsz);
-	    if (strcmp(("/" + string(subvol_expected)).c_str(), subvol_real) != 0)
-		throw runtime_error("mount options of mounted target don't match");
+	    mnt_fs_get_option(mounted_entry, "subvol", &subvol_real, NULL);
+	    if (!subvol_real || get_abs_subvol_path(subvol_expected) != get_abs_subvol_path(subvol_real))
+		throw runtime_error("subvolume of mounted target doesn't match");
 	}
     }
 
