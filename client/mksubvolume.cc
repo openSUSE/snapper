@@ -287,9 +287,11 @@ get_abs_subvol_path(string subvolume)
 }
 
 
-struct TmpMountpoint {
+class TmpMountpoint {
     unique_ptr<char[]> mountpoint;
     const libmnt_fs* fs;
+
+public:
     TmpMountpoint(const string& tmpMountpoint, const libmnt_fs* libmntfs, const string& subvol_opts)
 	: mountpoint(strdup(tmpMountpoint.c_str())), fs(libmntfs)
     {
@@ -311,6 +313,12 @@ struct TmpMountpoint {
     {
 	do_tmp_umount(fs, mountpoint.get());
 	rmdir(mountpoint.get());
+    }
+
+    string
+    get_path()
+    {
+	return mountpoint.get();
     }
 };
 
@@ -445,13 +453,13 @@ doit()
 
     try
     {
-	do_create_subvolume(tmp_mountpoint.mountpoint.get(), subvolume_name);
+	do_create_subvolume(tmp_mountpoint.get_path(), subvolume_name);
     }
     catch (const runtime_error_with_errno& e)
     {
 	if (e.error_number == EEXIST)
 	{
-	    const string path = string(tmp_mountpoint.mountpoint.get()) + "/" + subvolume_name;
+	    const string path = string(tmp_mountpoint.get_path()) + "/" + subvolume_name;
 	    struct stat sb;
 
 	    if (lstat(path.c_str(), &sb) == 0 && is_subvolume(sb))
