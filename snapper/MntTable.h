@@ -61,6 +61,18 @@ namespace snapper
 		throw runtime_error("mnt_table_parse_fstab failed");
 	}
 
+	void parse_mtab()
+	{
+	    if (mnt_table_parse_mtab(table, NULL))
+		throw runtime_error("mnt_table_parse_mtab failed");
+	}
+
+	void set_cache(libmnt_cache* cache)
+	{
+	    if (cache == NULL || mnt_table_set_cache(table, cache) != 0)
+		throw runtime_error("Setting the file system cache failed");
+	}
+
 	void replace_file()
 	{
 	    if (mnt_table_replace_file(table, target_fstab().c_str()) != 0)
