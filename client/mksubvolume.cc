@@ -418,7 +418,8 @@ doit()
 						     MNT_ITER_BACKWARD);
     if (subvolume_name.empty())
 	throw runtime_error("target is a dedicated mountpoint");
-    if (fstab_entry != NULL && strcmp(mnt_fs_get_source(fstab_entry), mnt_fs_get_source(expected_fs)) != 0)
+    if (fstab_entry != NULL && strcmp(mnt_resolve_spec(mnt_fs_get_source(fstab_entry), cache),
+				      mnt_resolve_spec(mnt_fs_get_source(expected_fs), cache)) != 0)
 	throw runtime_error("existing fstab entry doesn't match target device");
     if (fstab_entry != NULL)
     {
@@ -431,8 +432,7 @@ doit()
     if (mounted_entry != NULL)
     {
 	// Map UUID / LABEL to a physical device name
-	const char* real_device = mnt_fs_get_source(mnt_table_find_source(mtab_table,
-							mnt_fs_get_source(expected_fs), MNT_ITER_BACKWARD));
+	const char* real_device = mnt_resolve_spec(mnt_fs_get_source(expected_fs), cache);
 	// Find last device in mtab to get the actual mount
 	mounted_entry = mnt_table_find_target(mtab_table, mnt_fs_get_target(expected_fs),
 					      MNT_ITER_BACKWARD);
