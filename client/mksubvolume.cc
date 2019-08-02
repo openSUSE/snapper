@@ -315,7 +315,7 @@ public:
 	rmdir(mountpoint.get());
     }
 
-    string
+    const string
     get_path()
     {
 	return mountpoint.get();
@@ -459,7 +459,7 @@ doit()
     {
 	if (e.error_number == EEXIST)
 	{
-	    const string path = string(tmp_mountpoint.get_path()) + "/" + subvolume_name;
+	    const string path = tmp_mountpoint.get_path() + "/" + subvolume_name;
 	    struct stat sb;
 
 	    if (lstat(path.c_str(), &sb) == 0 && is_subvolume(sb))
