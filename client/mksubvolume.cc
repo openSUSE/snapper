@@ -418,8 +418,12 @@ doit()
 						      MNT_ITER_BACKWARD);
     if (subvolume_name.empty())
 	throw runtime_error("target is a dedicated mountpoint");
+    // Map UUID / LABEL to a physical device name
+    const char* real_device = mnt_resolve_spec(mnt_fs_get_source(expected_fs), cache);
+    if (real_device == NULL)
+	throw runtime_error("parent volume in fstab does not match expected device");
     if (fstab_entry != NULL && strcmp(mnt_resolve_spec(mnt_fs_get_source(fstab_entry), cache),
-				      mnt_resolve_spec(mnt_fs_get_source(expected_fs), cache)) != 0)
+				      real_device) != 0)
 	throw runtime_error("existing fstab entry doesn't match target device");
     if (fstab_entry != NULL)
     {
@@ -431,8 +435,6 @@ doit()
     // Something is mounted there already. Is it the correct device?
     if (mounted_entry != NULL)
     {
-	// Map UUID / LABEL to a physical device name
-	const char* real_device = mnt_resolve_spec(mnt_fs_get_source(expected_fs), cache);
 	// Find last device in mtab to get the actual mount
 	mounted_entry = mtab_table.find_target(mnt_fs_get_target(expected_fs), MNT_ITER_BACKWARD);
 	if (mounted_entry != NULL)
