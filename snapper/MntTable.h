@@ -53,6 +53,8 @@ namespace snapper
 	~MntTable()
 	{
 	    mnt_reset_table(table);
+	    if (cachep)
+		mnt_unref_cache(cachep);
 	}
 
 	void parse_fstab()
@@ -71,6 +73,7 @@ namespace snapper
 	{
 	    if (cache == NULL || mnt_table_set_cache(table, cache) != 0)
 		throw runtime_error("Setting the file system cache failed");
+	    cachep = cache;
 	}
 
 	void replace_file()
@@ -109,6 +112,7 @@ namespace snapper
 
 	struct libmnt_table* table;
 
+	struct libmnt_cache* cachep;
     };
 
 }
