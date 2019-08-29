@@ -287,6 +287,57 @@ get_abs_subvol_path(string subvolume)
 }
 
 
+void
+do_consistency_checks(MntTable& mnt_table, libmnt_fs* fs, libmnt_fs* expected_fs)
+{
+    char *subvol_expected, *subvol_fstab, *subvol_real;
+    const char *dev_expected, *dev_fstab;
+
+    // Set up cache for UUID / LABEL resolution in mnt_table_find_source
+    libmnt_cache* cache = mnt_new_cache();
+    MntTable mtab_table("/");
+    mtab_table.set_cache(cache);
+    mtab_table.parse_mtab();
+
+    if (mnt_fs_get_option(expected_fs, "subvol", &subvol_expected, NULL) != 0)
+	throw runtime_error("mnt_fs_get_option failed");
+
+    // Consistency checks on (partially) existing entries
+    libmnt_fs* fstab_entry = mnt_table.find_target(target, MNT_ITER_FORWARD);
+    libmnt_fs* mounted_entry = mtab_table.find_target(mnt_fs_get_target(expected_fs),
+						      MNT_ITER_BACKWARD);
+    // Map UUID / LABEL to a physical device name
+    dev_expected = mnt_resolve_spec(mnt_fs_get_source(expected_fs), cache);
+    dev_fstab = mnt_resolve_spec(mnt_fs_get_source(fstab_entry), cache);
+    if (dev_expected == NULL)
+	throw runtime_error("parent volume in fstab does not match expected device");
+    if (fstab_entry != NULL && dev_fstab == NULL)
+	throw runtime_error("fstab entry does not map to a real device");
+    if (fstab_entry != NULL && strcmp(dev_fstab, dev_expected) != 0)
+	throw runtime_error("existing fstab entry doesn't match target device");
+    if (fstab_entry != NULL)
+    {
+	if (mnt_fs_get_option(fstab_entry, "subvol", &subvol_fstab, NULL) != 0 ||
+		get_abs_subvol_path(subvol_fstab) != get_abs_subvol_path(subvol_expected))
+	    throw runtime_error("existing fstab entry's subvolume doesn't match");
+    }
+    // Something is mounted there already. Is it the correct device?
+    if (mounted_entry != NULL)
+    {
+	// Find last device in mtab to get the actual mount
+	mounted_entry = mtab_table.find_target(mnt_fs_get_target(expected_fs), MNT_ITER_BACKWARD);
+	if (mounted_entry != NULL)
+	{
+	    if (strcmp(dev_expected, mnt_fs_get_source(mounted_entry)) != 0)
+		throw runtime_error("different device mounted on target");
+	    if (mnt_fs_get_option(mounted_entry, "subvol", &subvol_real, NULL) != 0 ||
+		    get_abs_subvol_path(subvol_expected) != get_abs_subvol_path(subvol_real))
+		throw runtime_error("subvolume of mounted target doesn't match");
+	}
+    }
+}
+
+
 class TmpMountpoint {
     unique_ptr<char[]> mountpoint;
     const libmnt_fs* fs;
@@ -398,55 +449,15 @@ doit()
 
     string subvolume_name = target.substr(fs_target.size() +
 					 (fs_target == "/" || fs_target == target ? 0 : 1));
+    if (subvolume_name.empty())
+	throw runtime_error("target is a dedicated mountpoint");
     if (verbose)
 	cout << "subvolume-name:" << subvolume_name << endl;
 
-    // Set up cache for UUID / LABEL resolution in mnt_table_find_source
-    libmnt_cache* cache = mnt_new_cache();
-    MntTable mtab_table("/");
-    mtab_table.set_cache(cache);
-    mtab_table.parse_mtab();
+    // Create the new subvolume in memory and check system environment
 
-    char* subvol_expected;
     libmnt_fs* expected_fs = create_fstab_line(fs, subvol_option, subvolume_name);
-    if (mnt_fs_get_option(expected_fs, "subvol", &subvol_expected, NULL) != 0)
-	throw runtime_error("mnt_fs_get_option failed");
-
-    // Consistency checks on (partially) existing entries
-    libmnt_fs* fstab_entry = mnt_table.find_target(target, MNT_ITER_FORWARD);
-    libmnt_fs* mounted_entry = mtab_table.find_target(mnt_fs_get_target(expected_fs),
-						      MNT_ITER_BACKWARD);
-    if (subvolume_name.empty())
-	throw runtime_error("target is a dedicated mountpoint");
-    // Map UUID / LABEL to a physical device name
-    const char* real_device = mnt_resolve_spec(mnt_fs_get_source(expected_fs), cache);
-    if (real_device == NULL)
-	throw runtime_error("parent volume in fstab does not match expected device");
-    if (fstab_entry != NULL && strcmp(mnt_resolve_spec(mnt_fs_get_source(fstab_entry), cache),
-				      real_device) != 0)
-	throw runtime_error("existing fstab entry doesn't match target device");
-    if (fstab_entry != NULL)
-    {
-	char* subvol_fstab;
-	if (mnt_fs_get_option(fstab_entry, "subvol", &subvol_fstab, NULL) != 0 ||
-		get_abs_subvol_path(subvol_fstab) != get_abs_subvol_path(subvol_expected))
-	    throw runtime_error("existing fstab entry's subvolume doesn't match");
-    }
-    // Something is mounted there already. Is it the correct device?
-    if (mounted_entry != NULL)
-    {
-	// Find last device in mtab to get the actual mount
-	mounted_entry = mtab_table.find_target(mnt_fs_get_target(expected_fs), MNT_ITER_BACKWARD);
-	if (mounted_entry != NULL)
-	{
-	    if (!real_device || strcmp(real_device, mnt_fs_get_source(mounted_entry)) != 0)
-		throw runtime_error("different device mounted on target");
-	    char* subvol_real;
-	    if (mnt_fs_get_option(mounted_entry, "subvol", &subvol_real, NULL) != 0 ||
-		    get_abs_subvol_path(subvol_expected) != get_abs_subvol_path(subvol_real))
-		throw runtime_error("subvolume of mounted target doesn't match");
-	}
-    }
+    do_consistency_checks(mnt_table, fs, expected_fs);
 
     // Execute all steps.
 
