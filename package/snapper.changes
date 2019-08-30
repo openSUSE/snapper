@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Aug 30 17:29:34 CET 2019 - iforster@suse.com
+
+- reusing existing subvolumes on mksubvolume run
+  (bsc#1138725, bsc#1126900, gh#openSUSE/snapper#236)
+
+-------------------------------------------------------------------
 Tue Mar 26 10:15:55 CET 2019 - aschnell@suse.com
 
 - fixed seg.fault during rollback if the previous default subvolume
