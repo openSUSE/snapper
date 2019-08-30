@@ -52,13 +52,25 @@ namespace snapper
 
 	~MntTable()
 	{
-	    mnt_reset_table(table);
+	    mnt_unref_table(table);
 	}
 
 	void parse_fstab()
 	{
 	    if (mnt_table_parse_fstab(table, target_fstab().c_str()) != 0)
 		throw runtime_error("mnt_table_parse_fstab failed");
+	}
+
+	void parse_mtab()
+	{
+	    if (mnt_table_parse_mtab(table, NULL))
+		throw runtime_error("mnt_table_parse_mtab failed");
+	}
+
+	void set_cache(libmnt_cache* cache)
+	{
+	    if (cache == NULL || mnt_table_set_cache(table, cache) != 0)
+		throw runtime_error("Setting the file system cache failed");
 	}
 
 	void replace_file()
@@ -96,7 +108,6 @@ namespace snapper
 	const string root_prefix;
 
 	struct libmnt_table* table;
-
     };
 
 }

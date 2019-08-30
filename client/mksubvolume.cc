@@ -89,7 +89,15 @@ do_create_subvolume(const string& tmp_mountpoint, const string& subvolume_name)
     if (fd < 0)
 	throw runtime_error_with_errno("open failed", errno);
 
-    create_subvolume(fd, basename(subvolume_name));
+    try
+    {
+	create_subvolume(fd, basename(subvolume_name));
+    }
+    catch(...)
+    {
+	close(fd);
+	throw;
+    }
 
     close(fd);
 }
@@ -120,13 +128,10 @@ do_tmp_umount(const libmnt_fs* fs, const char* tmp_mountpoint)
 }
 
 
-void
-do_add_fstab_and_mount(MntTable& mnt_table, const libmnt_fs* fs, const string& subvol_option,
-		       const string& subvolume_name)
+libmnt_fs*
+create_fstab_line(const libmnt_fs* fs, const string& subvol_option,
+		  const string& subvolume_name)
 {
-    if (verbose)
-	cout << "do-add-fstab-and-mount" << endl;
-
     libmnt_fs* x = mnt_copy_fs(NULL, fs);
     if (!x)
 	throw runtime_error("mnt_copy_fs failed");
@@ -144,20 +149,41 @@ do_add_fstab_and_mount(MntTable& mnt_table, const libmnt_fs* fs, const string& s
     mnt_fs_set_options(x, options);
     free(options);
 
-    // Caution: mnt_context_mount may change the source of x so the fstab
-    // functions must be called first.
-    mnt_table.add_fs(x);
-    mnt_table.replace_file();
+    return x;
+}
+
+
+void
+do_add_fstab_and_mount(MntTable& mnt_table, libmnt_fs* x)
+{
+    if (verbose)
+	cout << "do-add-fstab-and-mount" << endl;
+
+    if (mnt_table.find_target(target.c_str(), MNT_ITER_FORWARD) == NULL)
+    {
+	// Caution: mnt_context_mount may change the source of x so the fstab
+	// functions must be called first.
+	mnt_table.add_fs(x);
+	mnt_table.replace_file();
+    }
+    else
+	cout << "reusing existing fstab entry" << endl;
 
     if (mkdir(target.c_str(), 0777) != 0 && errno != EEXIST)
 	throw runtime_error_with_errno("mkdir failed", errno);
 
     struct libmnt_context* cxt = mnt_new_context();
-    mnt_context_set_fs(cxt, x);
+    libmnt_fs* y;
+    if (mnt_context_find_umount_fs(cxt, target.c_str(), &y))
+    {
+	mnt_context_set_fs(cxt, x);
 
-    int ret = mnt_context_mount(cxt);
-    if (ret != 0)
-	throw runtime_error(sformat("mnt_context_mount failed, ret:%d", ret));
+	int ret = mnt_context_mount(cxt);
+	if (ret != 0)
+	    throw runtime_error(sformat("mnt_context_mount failed, ret:%d", ret));
+    }
+    else
+	cout << "reusing mounted target" << endl;
 
     mnt_free_context(cxt);
 
@@ -166,13 +192,10 @@ do_add_fstab_and_mount(MntTable& mnt_table, const libmnt_fs* fs, const string& s
 
 
 void
-do_set_nocow()
+do_set_cow_flag()
 {
-    if (!set_nocow)
-	return;
-
     if (verbose)
-	cout << "do-set-nocow" << endl;
+	cout << "do-set-cow-flag" << endl;
 
     int fd = open(target.c_str(), O_RDONLY);
     if (fd == -1)
@@ -188,7 +211,10 @@ do_set_nocow()
 	throw runtime_error_with_errno("ioctl(EXT2_IOC_GETFLAGS) failed", errno);
     }
 
-    flags |= FS_NOCOW_FL;
+    if (set_nocow)
+	flags |= FS_NOCOW_FL;
+    else
+	flags &= ~FS_NOCOW_FL;
 
     if (ioctl(fd, EXT2_IOC_SETFLAGS, &flags) == -1)
     {
@@ -201,16 +227,12 @@ do_set_nocow()
 
 
 bool
-is_subvol_mount(const string& fs_options)
+is_subvol_mount(libmnt_fs* fs)
 {
-    vector<string> tmp1;
-    boost::split(tmp1, fs_options, boost::is_any_of(","), boost::token_compress_on);
-    for (const string& tmp2 : tmp1)
-    {
-	if (boost::starts_with(tmp2, "subvol=") || boost::starts_with(tmp2, "subvolid="))
-	    return true;
-    }
-
+    if (mnt_fs_get_option(fs, "subvol", NULL, NULL) == 0)
+	return true;
+    if (mnt_fs_get_option(fs, "subvolid", NULL, NULL) == 0)
+	return true;
     return false;
 }
 
@@ -242,10 +264,7 @@ find_filesystem(MntTable& mnt_table)
 	if (fs_fstype != "btrfs")
 	    throw runtime_error("filesystem is not btrfs");
 
-	if (fs_target == target)
-	    throw runtime_error("target exists in fstab");
-
-	if (!is_subvol_mount(fs_options))
+	if (!is_subvol_mount(fs))
 	    return fs;
 
 	if (verbose)
@@ -257,6 +276,111 @@ find_filesystem(MntTable& mnt_table)
 	tmp = dirname(fs_target);
     }
 }
+
+
+string
+get_abs_subvol_path(string subvolume)
+{
+    if(!boost::starts_with(subvolume, "/"))
+	subvolume.insert(0, "/");
+    return subvolume;
+}
+
+
+void
+do_consistency_checks(MntTable& mnt_table, libmnt_fs* fs, libmnt_fs* expected_fs)
+{
+    // Set up cache for UUID / LABEL resolution in mnt_table_find_source
+    libmnt_cache* cache = mnt_new_cache();
+    MntTable mtab_table("/");
+    mtab_table.set_cache(cache);
+    mtab_table.parse_mtab();
+
+    char* subvol_expected;
+    if (mnt_fs_get_option(expected_fs, "subvol", &subvol_expected, NULL) != 0)
+	throw runtime_error("mnt_fs_get_option failed");
+
+    // Consistency checks on (partially) existing entries
+    libmnt_fs* fstab_entry = mnt_table.find_target(target, MNT_ITER_FORWARD);
+    libmnt_fs* mounted_entry = mtab_table.find_target(mnt_fs_get_target(expected_fs),
+						      MNT_ITER_BACKWARD);
+    // Map UUID / LABEL to a physical device name
+    const char* dev_expected = mnt_resolve_spec(mnt_fs_get_source(expected_fs), cache);
+    const char* dev_fstab = mnt_resolve_spec(mnt_fs_get_source(fstab_entry), cache);
+    if (dev_expected == NULL)
+	throw runtime_error("parent volume in fstab does not match expected device");
+    if (fstab_entry != NULL && dev_fstab == NULL)
+	throw runtime_error("fstab entry does not map to a real device");
+    if (fstab_entry != NULL && strcmp(dev_fstab, dev_expected) != 0)
+	throw runtime_error("existing fstab entry doesn't match target device");
+    if (fstab_entry != NULL)
+    {
+	char* subvol_fstab;
+	if (mnt_fs_get_option(fstab_entry, "subvol", &subvol_fstab, NULL) != 0 ||
+		get_abs_subvol_path(subvol_fstab) != get_abs_subvol_path(subvol_expected))
+	    throw runtime_error("existing fstab entry's subvolume doesn't match");
+    }
+
+    // Something is mounted there already. Is it the correct device?
+    if (mounted_entry != NULL)
+    {
+	if (strcmp(dev_expected, mnt_fs_get_source(mounted_entry)) != 0)
+	{
+	    // In case of multi device btrfs the device name can differ, so compare the UUIDs.
+	    const char* uuid_expected = mnt_cache_find_tag_value(cache, dev_expected, "UUID");
+	    const char* uuid_mounted = mnt_cache_find_tag_value(cache, mnt_fs_get_source(mounted_entry), "UUID");
+
+	    if (!uuid_expected || !uuid_mounted)
+		throw runtime_error("failed to get uuid");
+
+	    if (strcmp(uuid_expected, uuid_mounted) != 0)
+		throw runtime_error("different device mounted on target");
+	}
+
+	char* subvol_real;
+	if (mnt_fs_get_option(mounted_entry, "subvol", &subvol_real, NULL) != 0 ||
+	    get_abs_subvol_path(subvol_expected) != get_abs_subvol_path(subvol_real))
+	    throw runtime_error("subvolume of mounted target doesn't match");
+    }
+
+    mnt_unref_cache(cache);
+}
+
+
+class TmpMountpoint {
+    unique_ptr<char[]> mountpoint;
+    const libmnt_fs* fs;
+
+public:
+    TmpMountpoint(const string& tmpMountpoint, const libmnt_fs* libmntfs, const string& subvol_opts)
+	: mountpoint(strdup(tmpMountpoint.c_str())), fs(libmntfs)
+    {
+	if (!mkdtemp(mountpoint.get()))
+	    throw runtime_error_with_errno("mkdtemp failed", errno);
+
+	try
+	{
+	    do_tmp_mount(fs, mountpoint.get(), subvol_opts);
+	}
+	catch (...)
+	{
+	    rmdir(mountpoint.get());
+	    throw;
+	}
+    }
+
+    ~TmpMountpoint()
+    {
+	do_tmp_umount(fs, mountpoint.get());
+	rmdir(mountpoint.get());
+    }
+
+    const string
+    get_path()
+    {
+	return mountpoint.get();
+    }
+};
 
 
 /*
@@ -286,7 +410,13 @@ doit()
 	throw runtime_error("invalid target");
 
     if (access(target.c_str(), F_OK) == 0)
-	throw runtime_error("target exists");
+    {
+	struct stat sb;
+	if (lstat(target.c_str(), &sb) == 0 && sb.st_mode & S_IFDIR)
+	    cout << "reusing existing target dir" << endl;
+	else
+	    throw runtime_error("target exists");
+    }
 
     if (access(dirname(target).c_str(), F_OK) != 0)
 	throw runtime_error("parent of target does not exist");
@@ -326,45 +456,45 @@ doit()
     // Determine name for new subvolume: It is the target name without the
     // leading filesystem target.
 
-    string subvolume_name = target.substr(fs_target.size() + (fs_target == "/" ? 0 : 1));
+    string subvolume_name = target.substr(fs_target.size() +
+					 (fs_target == "/" || fs_target == target ? 0 : 1));
+    if (subvolume_name.empty())
+	throw runtime_error("target is a dedicated mountpoint");
     if (verbose)
 	cout << "subvolume-name:" << subvolume_name << endl;
 
+    // Create the new subvolume in memory and check system environment
+
+    libmnt_fs* expected_fs = create_fstab_line(fs, subvol_option, subvolume_name);
+    do_consistency_checks(mnt_table, fs, expected_fs);
+
     // Execute all steps.
 
-    char* tmp_mountpoint = strdup("/tmp/mksubvolume-XXXXXX");
-    if (!mkdtemp(tmp_mountpoint))
-	throw runtime_error_with_errno("mkdtemp failed", errno);
-
-    do_tmp_mount(fs, tmp_mountpoint, subvol_option);
+    TmpMountpoint tmp_mountpoint("/tmp/mksubvolume-XXXXXX", fs, subvol_option);
 
     try
     {
-	do_create_subvolume(tmp_mountpoint, subvolume_name);
+	do_create_subvolume(tmp_mountpoint.get_path(), subvolume_name);
     }
-    catch (...)
+    catch (const runtime_error_with_errno& e)
     {
-	// Rethrow the original exception, not a potential exception of do_tmp_umount.
-	try
+	if (e.error_number == EEXIST)
 	{
-	    do_tmp_umount(fs, tmp_mountpoint);
-	    rmdir(tmp_mountpoint);
-	    free(tmp_mountpoint);
-	}
-	catch (...)
-	{
-	}
+	    const string path = tmp_mountpoint.get_path() + "/" + subvolume_name;
+	    struct stat sb;
 
-	throw;
+	    if (lstat(path.c_str(), &sb) == 0 && is_subvolume(sb))
+		cout << "reusing existing subvolume" << endl;
+	    else
+		throw runtime_error_with_errno("cannot reuse path as subvolume", e.error_number);
+	}
+	else
+	    throw;
     }
 
-    do_tmp_umount(fs, tmp_mountpoint);
-    rmdir(tmp_mountpoint);
-    free(tmp_mountpoint);
+    do_add_fstab_and_mount(mnt_table, expected_fs);
 
-    do_add_fstab_and_mount(mnt_table, fs, subvol_option, subvolume_name);
-
-    do_set_nocow();
+    do_set_cow_flag();
 }
 
 
