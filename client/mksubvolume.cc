@@ -335,6 +335,8 @@ do_consistency_checks(MntTable& mnt_table, libmnt_fs* fs, libmnt_fs* expected_fs
 		throw runtime_error("subvolume of mounted target doesn't match");
 	}
     }
+
+    mnt_unref_cache(cache);
 }
 
 
