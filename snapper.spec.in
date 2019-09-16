@@ -167,7 +167,7 @@ fi
 %endif
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
 %{_unitdir}/snapper-*.*
-%config /etc/dbus-1/system.d/org.opensuse.Snapper.conf
+%{_datadir}/dbus-1/system.d/org.opensuse.Snapper.conf
 %{_datadir}/dbus-1/system-services/org.opensuse.Snapper.service
 
 %package -n libsnapper@LIBVERSION_MAJOR@

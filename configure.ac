@@ -146,6 +146,14 @@ if test "x$with_selinux" = "xyes"; then
 	AC_CHECK_LIB(selinux, selinux_snapperd_contexts_path, [], [AC_MSG_ERROR([selinux library does not provide selinux_snapperd_contexts_path symbol])])
 fi
 
+AC_ARG_WITH(dbus-sys, [  --with-dbus-sys=<dir>   where D-BUS system.d directory is])
+if ! test -z "$with_dbus_sys" ; then
+    DBUS_SYS_DIR="$with_dbus_sys"
+else
+    DBUS_SYS_DIR="$datadir/dbus-1/system.d"
+fi
+AC_SUBST(DBUS_SYS_DIR)
+
 PKG_CHECK_MODULES(DBUS, dbus-1)
 
 AC_CHECK_HEADER(acl/libacl.h,[],[AC_MSG_ERROR([Cannout find libacl headers. Please install libacl-devel])])
