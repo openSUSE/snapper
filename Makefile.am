@@ -16,7 +16,8 @@ snapper-$(VERSION).tar.bz2: dist-bzip2
 DEBIAN_FLAVOURS =	\
     Debian_7.0		\
     Debian_8.0		\
-    Debian_9.0
+    Debian_9.0		\
+    Debian_10.0
 
 UBUNTU_FLAVOURS =	\
     xUbuntu_14.04	\
