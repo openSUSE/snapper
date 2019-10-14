@@ -31,6 +31,7 @@ BOOST_AUTO_TEST_CASE(sysconfig_get1)
 
     BOOST_CHECK(s.getValue("V1", tmp_vector));
     BOOST_CHECK_EQUAL(boost::join(tmp_vector, "-"), "one word");
+    BOOST_CHECK_EQUAL(s.getAllValues()["V1"], "one\\ word");
 
     BOOST_CHECK(s.getValue("V2", tmp_vector));
     BOOST_CHECK_EQUAL(boost::join(tmp_vector, "-"), "two-words");
