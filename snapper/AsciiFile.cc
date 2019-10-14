@@ -297,7 +297,9 @@ AsciiFile::save()
     {
 	map<string, string> ret;
 
-	Regex rx('^' + Regex::ws + "([0-9A-Z_]+)" + '=' + "(['\"]?)([^'\"]*)\\2" + Regex::ws + '$');
+	Regex rx('^' + Regex::ws +
+                 "([0-9A-Z_]+)" + '=' + "(['\"]?)([^'\"]*)\\2" +
+                 Regex::ws + Regex::trailing_comment + '$');
 
 	for (vector<string>::const_iterator it = Lines_C.begin(); it != Lines_C.end(); ++it)
 	{
