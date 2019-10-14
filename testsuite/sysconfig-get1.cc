@@ -42,4 +42,7 @@ BOOST_AUTO_TEST_CASE(sysconfig_get1)
     BOOST_CHECK_EQUAL(boost::join(tmp_vector, "-"), "c:\\io.sys");
 
     BOOST_CHECK(!s.getValue("V5", tmp_vector));
+
+    BOOST_CHECK(s.getValue("V6", tmp_vector));
+    BOOST_CHECK_EQUAL(boost::join(tmp_vector, "-"), "a-value-with-a-#-hash");
 }

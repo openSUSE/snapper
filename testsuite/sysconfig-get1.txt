@@ -12,3 +12,4 @@ V3=" now  three  words "
 V4="c:\\io.sys"
 V5="error\"
 
+V6="a value with a # hash"
