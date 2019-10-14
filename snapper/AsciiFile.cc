@@ -226,7 +226,9 @@ AsciiFile::save()
     bool
     SysconfigFile::getValue(const string& key, string& value) const
     {
-	Regex rx('^' + Regex::ws + key + '=' + "(['\"]?)([^'\"]*)\\1" + Regex::ws + '$');
+        Regex rx('^' + Regex::ws +
+                 key + '=' + "(['\"]?)([^'\"]*)\\1" +
+                 Regex::ws + Regex::trailing_comment + '$');
 
 	if (find_if(lines(), regex_matches(rx)) == lines().end())
 	    return false;
