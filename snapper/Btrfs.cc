@@ -136,6 +136,7 @@ namespace snapper
 		case EEXIST:
 		    SN_THROW(CreateConfigFailedException("creating btrfs subvolume .snapshots failed "
 							 "since it already exists"));
+                    break;
 
 		default:
 		    SN_THROW(CreateConfigFailedException("creating btrfs subvolume .snapshots failed"));
