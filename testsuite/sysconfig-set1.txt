@@ -1,0 +1,3 @@
+K1="foo"
+K2="changeme"     # changing the value should preserve this comment
+K3="bar"
