@@ -79,23 +79,28 @@ package are mentioned in the `package/snapper.changes` file, update also the
 - Make sure the units tests still passes ([see above](#running-tests)).
 
 - When the version is increased then the Git repo has to be tagged, use the
-`vX.Y.Z` format for the tag. Also the
-[filesystems:snapper](https://build.opensuse.org/project/show/filesystems:snapper)
-OBS project has to be updated.
+  `vX.Y.Z` format for the tag. Also the [filesystems:snapper][]
+  OBS project has to be updated.
 
-- To create the package use command `make package`. Then use the common work-flow to submit
-package to the build service. For [openSUSE:Factory](https://build.opensuse.org/project/show/openSUSE:Factory)
-send at first the package to the devel project
-[YaST:Head](https://build.opensuse.org/project/show/YaST:Head) in OBS.  
-*Please note that this OBS project builds for more distributions so more metadata
-files have to be updated. See the OBS documentation for more info ([cross distribution
-howto](https://en.opensuse.org/openSUSE:Build_Service_cross_distribution_howto),
-[Debian builds](https://en.opensuse.org/openSUSE:Build_Service_Debian_builds)).*
+- To create the package use command `make package`. Then use the common
+  work-flow to submit the
+package to the build service. For [openSUSE:Factory][]
+  send at first the package to the devel project [filesystems:snapper][] in OBS.
+
+    *Please note that this OBS project builds for more distributions
+    so more metadata files have to be updated. See the OBS documentation
+    for more info ([cross distribution howto][xdist], [Debian builds][]).*
+
+[filesystems:snapper]: https://build.opensuse.org/project/show/filesystems:snapper
+[openSUSE:Factory]: https://build.opensuse.org/project/show/openSUSE:Factory
+[xdist]: https://en.opensuse.org/openSUSE:Build_Service_cross_distribution_howto
+[Debian builds]: https://en.opensuse.org/openSUSE:Build_Service_Debian_builds
 
 - The generated bzip2 tarball has to be also placed at
-[ftp.suse.com/pub/projects/snapper](ftp://ftp.suse.com/pub/projects/snapper).
+  <http://ftp.suse.com/pub/projects/snapper/>.
 
-- When the documentation changes e.g. the man page or an important functionality then also
-the [snapper.io](http://snapper.io/) web pages have to be updated. They are hosted
-as GitHub pages in the [gh-pages branch](https://github.com/openSUSE/snapper/tree/gh-pages)
-in the Snapper Git repository.
+- When the documentation changes e.g. the man page or an important
+  functionality then also the [snapper.io](http://snapper.io/) web pages
+  have to be updated. They are hosted as GitHub pages
+  in the  [gh-pages branch](https://github.com/openSUSE/snapper/tree/gh-pages)
+  in the Snapper Git repository.
