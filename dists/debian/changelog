@@ -1,3 +1,9 @@
+snapper (0.8.5) stable; urgency=low
+
+  * allow trailing comments in configuration files (bsc#1005342)
+
+ -- Martin Vidner <mvidner@suse.com>  Tue, 15 Oct 2019 12:42:39 +0000
+
 snapper (0.8.4) stable; urgency=low
 
   * Updated to version 0.8.4
