@@ -7,15 +7,16 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-15 11:05+0200\n"
-"PO-Revision-Date: 2019-04-04 18:42+0000\n"
+"PO-Revision-Date: 2019-10-15 16:53+0000\n"
 "Last-Translator: Sarah Kriesch <ada.lovelace@gmx.de>\n"
-"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
+"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
+"\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.3\n"
+"X-Generator: Weblate 3.6.1\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tSnapshots von allen verfügbaren Konfigurationen auflisten."
@@ -49,6 +50,8 @@ msgstr "\t--extensions, -x <Optionen>\tExtra Optionen, die an den diff-Befehl ü
 
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr ""
+"\t--from\t\t\t\tEinen Schnappschuss von dem speziellen Schnappschuss "
+"erstellen."
 
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <fstype>\t\tDateisystem-Typ manuell setzen."
@@ -81,10 +84,10 @@ msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\tNormale Ausgabe unterdrücken."
 
 msgid "\t--read-only\t\t\tCreate read-only snapshot."
-msgstr ""
+msgstr "\t--read-only\t\t\tEinen nur lesbaren Schnappschuss erstellen."
 
 msgid "\t--read-write\t\t\tCreate read-write snapshot."
-msgstr ""
+msgstr "\t--read-write\t\t\tEinen nur schreibbaren Schnappschuss erstellen."
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <Pfad>\t\tAm Ziel-Root arbeiten (funktioniert nur ohne DBus)."
@@ -543,9 +546,12 @@ msgstr "Öffnen der Datei '%s' nicht möglich."
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr ""
+"Die Option --from wird nur für Schnappschüsse vom Typ Einzeln unterstützt."
 
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr ""
+"Die Option --read-write wird nur für Schnappschüsse vom Typ Einzeln "
+"unterstützt."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
