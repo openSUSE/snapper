@@ -209,15 +209,21 @@ AsciiFile::save()
     {
 	checkKey(key);
 
-	string line = key + "=\"" + value + "\"";
-
-	Regex rx('^' + Regex::ws + key + '=' + "(['\"]?)([^'\"]*)\\1" + Regex::ws + '$');
+	Regex rx('^' + Regex::ws +
+                 key + '=' + "(['\"]?)([^'\"]*)\\1" +
+                 '(' + Regex::ws + Regex::trailing_comment + ")$");
 
 	vector<string>::iterator it = find_if(lines(), regex_matches(rx));
 	if (it == lines().end())
+	{
+	    string line = key + "=\"" + value + "\"";
 	    push_back(line);
+	}
 	else
+	{
+	    string line = key + "=\"" + value + "\"" + rx.cap(3);
 	    *it = line;
+	}
 
 	modified = true;
     }
