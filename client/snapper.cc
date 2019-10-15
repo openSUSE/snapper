@@ -618,6 +618,9 @@ help_create()
 	 << _("\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot.") << '\n'
 	 << _("\t--userdata, -u <userdata>\tUserdata for snapshot.") << '\n'
 	 << _("\t--command <command>\t\tRun command and create pre and post snapshots.") << endl
+	 << _("\t--read-only\t\t\tCreate read-only snapshot.") << '\n'
+	 << _("\t--read-write\t\t\tCreate read-write snapshot.") << '\n'
+	 << _("\t--from\t\t\t\tCreate a snapshot from the specified snapshot.") << '\n'
 	 << endl;
 }
 
@@ -633,6 +636,9 @@ command_create(ProxySnappers* snappers, ProxySnapper* snapper)
 	{ "cleanup-algorithm",	required_argument,	0,	'c' },
 	{ "userdata",		required_argument,	0,	'u' },
 	{ "command",		required_argument,	0,	0 },
+	{ "read-only",		no_argument,		0,	0 },
+	{ "read-write",		no_argument,		0,	0 },
+	{ "from",		required_argument,	0,	0 },
 	{ 0, 0, 0, 0 }
     };
 
@@ -653,6 +659,7 @@ command_create(ProxySnappers* snappers, ProxySnapper* snapper)
     bool print_number = false;
     SCD scd;
     string command;
+    ProxySnapshots::const_iterator parent = snapshots.getCurrent();
 
     GetOpts::parsed_opts::const_iterator opt;
 
@@ -694,6 +701,15 @@ command_create(ProxySnappers* snappers, ProxySnapper* snapper)
 	type = CT_PRE_POST;
     }
 
+    if ((opt = opts.find("read-only")) != opts.end())
+	scd.read_only = true;
+
+    if ((opt = opts.find("read-write")) != opts.end())
+	scd.read_only = false;
+
+    if ((opt = opts.find("from")) != opts.end())
+	parent = snapshots.findNum(opt->second);
+
     if (type == CT_POST && snapshot1 == snapshots.end())
     {
 	cerr << _("Missing or invalid pre-number.") << endl;
@@ -706,10 +722,22 @@ command_create(ProxySnappers* snappers, ProxySnapper* snapper)
 	exit(EXIT_FAILURE);
     }
 
+    if (type != CT_SINGLE && !scd.read_only)
+    {
+	cerr << _("Option --read-write only supported for snapshots of type single.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    if (type != CT_SINGLE && parent != snapshots.getCurrent())
+    {
+	cerr << _("Option --from only supported for snapshots of type single.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
     switch (type)
     {
 	case CT_SINGLE: {
-	    snapshot1 = snapper->createSingleSnapshot(scd);
+	    snapshot1 = snapper->createSingleSnapshot(parent, scd);
 	    if (print_number)
 		cout << snapshot1->getNum() << endl;
 	} break;

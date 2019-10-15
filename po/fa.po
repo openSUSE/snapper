@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opensuse-i 18n\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-29 14:27+0100\n"
+"POT-Creation-Date: 2019-10-15 11:05+0200\n"
 "PO-Revision-Date: 2016-11-05 14:28+0000\n"
 "Last-Translator: hayyan rostami <hayyan71@yahoo.com>\n"
 "Language-Team: Persian <https://l10n.opensuse.org/projects/snapper/master/fa/>\n"
@@ -45,6 +45,9 @@ msgstr ""
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
 
+msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
+msgstr ""
+
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr ""
 
@@ -73,6 +76,12 @@ msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
 msgstr ""
 
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
+msgstr ""
+
+msgid "\t--read-only\t\t\tCreate read-only snapshot."
+msgstr ""
+
+msgid "\t--read-write\t\t\tCreate read-write snapshot."
 msgstr ""
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
@@ -529,6 +538,12 @@ msgstr ""
 
 #, c-format
 msgid "Opening file '%s' failed."
+msgstr ""
+
+msgid "Option --from only supported for snapshots of type single."
+msgstr ""
+
+msgid "Option --read-write only supported for snapshots of type single."
 msgstr ""
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)

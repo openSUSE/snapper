@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-29 14:27+0100\n"
+"POT-Creation-Date: 2019-10-15 11:05+0200\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Murat Servan Kahraman <muratservan@outlook.com>\n"
-"Language-Team: Turkish <https://l10n.opensuse.org/projects/snapper/master/tr/"
-">\n"
+"Language-Team: Turkish <https://l10n.opensuse.org/projects/snapper/master/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,9 +23,7 @@ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr ""
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr ""
-"\t--cleanup-algorithm, -c <algo>\tAnlık görüntüler için temizleme "
-"algoritması."
+msgstr "\t--cleanup-algorithm, -c <algo>\tAnlık görüntüler için temizleme algoritması."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr ""
@@ -53,14 +50,15 @@ msgstr "\t--filtreleri-gösterme\t\tFiltreleri gösterme."
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
 
+msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
+msgstr ""
+
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <fstype>\t\tDosya sistemi türünü elle ayarla."
 
 #, fuzzy
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr ""
-"\t--giriş, -i <file>\t\tDosyadan değişiklikleri geri almak için dosyaları "
-"oku."
+msgstr "\t--giriş, -i <file>\t\tDosyadan değişiklikleri geri almak için dosyaları oku."
 
 #, fuzzy
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
@@ -88,6 +86,12 @@ msgstr ""
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\tNormal olan çıktıları gizle."
 
+msgid "\t--read-only\t\t\tCreate read-only snapshot."
+msgstr ""
+
+msgid "\t--read-write\t\t\tCreate read-write snapshot."
+msgstr ""
+
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr ""
 
@@ -111,8 +115,7 @@ msgstr "\t--tip, -t <type>\t\tListelemek için anlım görüntü tipleri."
 
 #, fuzzy
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr ""
-"\t--kullanıcıverisi, -u <userdata>\tAnlık görüntü için kullanıcı verisi."
+msgstr "\t--kullanıcıverisi, -u <userdata>\tAnlık görüntü için kullanıcı verisi."
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
 msgstr ""
@@ -564,7 +567,7 @@ msgstr "Geçersiz anlık görüntüler."
 msgid "Invalid subvolume."
 msgstr "Geçersiz arkases."
 
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "Invalid table style %d."
 msgstr "%d geçersiz tablo stili."
 
@@ -594,11 +597,11 @@ msgstr ""
 msgid "MiB"
 msgstr ""
 
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "Missing argument for command option '%s'."
 msgstr "'%s' komut seçeneği için eksik argüman."
 
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "Missing argument for global option '%s'."
 msgstr "'%s' küresel seçeneği için eksik argüman."
 
@@ -623,6 +626,12 @@ msgstr ""
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "'%s ' dosyasını açma başarısız oldu."
+
+msgid "Option --from only supported for snapshots of type single."
+msgstr ""
+
+msgid "Option --read-write only supported for snapshots of type single."
+msgstr ""
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -686,7 +695,7 @@ msgstr "Tür"
 msgid "Unknown cleanup algorithm '%s'."
 msgstr "Bilinmeyen '%s' temizleme algoritması."
 
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "Unknown command '%s'."
 msgstr "'Bilinmeyen komut '%s'."
 
@@ -698,7 +707,7 @@ msgstr "'Bilinmeyen komut '%s'."
 msgid "Unknown global option '%s'."
 msgstr "Bilinmeyen '%s' evrensel seçeneği."
 
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Bilinmeyen '%s' seçeneği; '%s' komutu için."
 
@@ -747,15 +756,15 @@ msgstr "%s oluşturuluyor"
 msgid "deleting %s"
 msgstr "%s siliniyor"
 
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "failed to create %s"
 msgstr "%s oluşturma başarısız oldu"
 
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "failed to delete %s"
 msgstr "%s 'i silme başarısız oldu"
 
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "failed to modify %s"
 msgstr "%s 'i değiştirme başarısız oldu"
 
@@ -771,9 +780,7 @@ msgstr ""
 
 #, fuzzy
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr ""
-"kullanım: yakalayıcı  [--global-options] <command> [--command-options] "
-"[command-arguments]"
+msgstr "kullanım: yakalayıcı  [--global-options] <command> [--command-options] [command-arguments]"
 
 #, fuzzy
 #~ msgid "Command '%s' does not work without DBus."

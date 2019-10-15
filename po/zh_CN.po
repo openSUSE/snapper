@@ -9,11 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-29 14:27+0100\n"
+"POT-Creation-Date: 2019-10-15 11:05+0200\n"
 "PO-Revision-Date: 2018-11-03 02:15+0000\n"
 "Last-Translator: Marguerite Su <i@marguerite.su>\n"
-"Language-Team: Chinese (China) "
-"<https://l10n.opensuse.org/projects/snapper/master/zh_CN/>\n"
+"Language-Team: Chinese (China) <https://l10n.opensuse.org/projects/snapper/master/zh_CN/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -51,6 +50,9 @@ msgstr "\t--disable-used-space\t\t禁用已用空间的显示。"
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <选项>\t传递到 diff 命令的额外选项。"
 
+msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
+msgstr ""
+
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <文件系统类型> \t\t手动设置文件系统类型。"
 
@@ -80,6 +82,12 @@ msgstr "\t--print-number, -p\t\t打印所创建的第二个快照的编号。"
 
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\t静默正常输出。"
+
+msgid "\t--read-only\t\t\tCreate read-only snapshot."
+msgstr ""
+
+msgid "\t--read-write\t\t\tCreate read-write snapshot."
+msgstr ""
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <路径>\t\t在目标根目录上操作（不用 DBus 时才起作用）。"
@@ -535,6 +543,12 @@ msgstr "无权限。"
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "打开文件 '%s' 失败。"
+
+msgid "Option --from only supported for snapshots of type single."
+msgstr ""
+
+msgid "Option --read-write only supported for snapshots of type single."
+msgstr ""
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"

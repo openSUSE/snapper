@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Tue Oct 15 11:06:51 CEST 2019 - aschnell@suse.com
+
+- allow to make snapshot from other snapshot that the current one
+  (jse#SLE-7333)
+- version 0.8.4
+
+-------------------------------------------------------------------
 Fri Aug 30 17:29:34 CET 2019 - iforster@suse.com
 
 - reusing existing subvolumes on mksubvolume run

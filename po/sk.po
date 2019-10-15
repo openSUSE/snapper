@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-29 14:27+0100\n"
+"POT-Creation-Date: 2019-10-15 11:05+0200\n"
 "PO-Revision-Date: 2018-11-05 12:25+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
-"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
-"\n"
+"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,6 +47,9 @@ msgstr "\t--disable-used-space\t\tZakázať ukazovanie použitého miesta."
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <voľby>\tĎalšie voľby odovzdané príkazu diff."
 
+msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
+msgstr ""
+
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <typ_súborového_systému>\t\tRučne nastaví typ súborového systému."
 
@@ -77,6 +79,12 @@ msgstr "\t--print-number, -p\t\tVypíše číslo druhej vytvorenej snímky."
 
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\tPotlačí normálny výstup."
+
+msgid "\t--read-only\t\t\tCreate read-only snapshot."
+msgstr ""
+
+msgid "\t--read-write\t\t\tCreate read-write snapshot."
+msgstr ""
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <cesta>\t\tBeží na cieľovom správcovi systému root (funguje len bez DBus)."
@@ -539,6 +547,12 @@ msgstr "Žiadne práva."
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "Otvorenie súboru '%s' zlyhalo."
+
+msgid "Option --from only supported for snapshots of type single."
+msgstr ""
+
+msgid "Option --read-write only supported for snapshots of type single."
+msgstr ""
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
