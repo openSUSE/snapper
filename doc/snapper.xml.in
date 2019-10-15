@@ -2,13 +2,13 @@
 <refentry id='snapper8'>
 
   <refentryinfo>
-    <date>2018-10-29</date>
+    <date>2019-10-14</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2018-10-29</refmiscinfo>
+    <refmiscinfo class='date'>2019-10-14</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -441,6 +441,25 @@
 	      <term><option>--command</option> <replaceable>command</replaceable></term>
 	      <listitem>
 		<para>Create a pre and post snapshot and run command in between.</para>
+	      </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><option>--read-only</option></term>
+	      <listitem>
+		<para>Create a read-only snapshot. This is the default.</para>
+	      </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><option>--read-write</option></term>
+	      <listitem>
+		<para>Create a read-write snapshot.</para>
+	      </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><option>--from</option> <replaceable>number</replaceable></term>
+	      <listitem>
+		<para>Create a snapshot from the snapshot with the
+		provided number instead of snapshot 0.</para>
 	      </listitem>
 	    </varlistentry>
 	  </variablelist>

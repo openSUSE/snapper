@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-29 14:27+0100\n"
+"POT-Creation-Date: 2019-10-15 11:05+0200\n"
 "PO-Revision-Date: 2018-10-29 22:35+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese "
-"<https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
+"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,6 +49,9 @@ msgstr "\t--disable-used-space\t\t使用済み領域の表示を無効にする�
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <オプション>\tdiffコマンドに渡される追加オプション。"
 
+msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
+msgstr ""
+
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <種類>\t\t手動でファイルシステムの種類を指定する。"
 
@@ -79,6 +81,12 @@ msgstr "\t--print-number, -p\t\t作成したスナップショットの数を表
 
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\t通常出力される項目を省略する。"
+
+msgid "\t--read-only\t\t\tCreate read-only snapshot."
+msgstr ""
+
+msgid "\t--read-write\t\t\tCreate read-write snapshot."
+msgstr ""
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <パス>\t\t指定したルートに対して操作を行なう　(DBus を使用しない場合にのみ動作します)。"
@@ -533,6 +541,12 @@ msgstr "許可がありません。"
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "ファイル '%s' を開けませんでした。"
+
+msgid "Option --from only supported for snapshots of type single."
+msgstr ""
+
+msgid "Option --read-write only supported for snapshots of type single."
+msgstr ""
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
