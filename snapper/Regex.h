@@ -54,6 +54,7 @@ public:
 
     static const string ws;
     static const string number;
+    static const string trailing_comment;
 
 private:
 

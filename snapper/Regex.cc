@@ -97,5 +97,6 @@ Regex::cap (unsigned int i) const
 
 const string Regex::ws = "[ \t]*";
 const string Regex::number = "[0123456789]+";
+const string Regex::trailing_comment = "(#.*)?";
 
 }

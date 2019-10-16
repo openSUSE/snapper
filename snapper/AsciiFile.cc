@@ -209,15 +209,21 @@ AsciiFile::save()
     {
 	checkKey(key);
 
-	string line = key + "=\"" + value + "\"";
-
-	Regex rx('^' + Regex::ws + key + '=' + "(['\"]?)([^'\"]*)\\1" + Regex::ws + '$');
+	Regex rx('^' + Regex::ws +
+                 key + '=' + "(['\"]?)([^'\"]*)\\1" +
+                 '(' + Regex::ws + Regex::trailing_comment + ")$");
 
 	vector<string>::iterator it = find_if(lines(), regex_matches(rx));
 	if (it == lines().end())
+	{
+	    string line = key + "=\"" + value + "\"";
 	    push_back(line);
+	}
 	else
+	{
+	    string line = key + "=\"" + value + "\"" + rx.cap(3);
 	    *it = line;
+	}
 
 	modified = true;
     }
@@ -226,7 +232,9 @@ AsciiFile::save()
     bool
     SysconfigFile::getValue(const string& key, string& value) const
     {
-	Regex rx('^' + Regex::ws + key + '=' + "(['\"]?)([^'\"]*)\\1" + Regex::ws + '$');
+        Regex rx('^' + Regex::ws +
+                 key + '=' + "(['\"]?)([^'\"]*)\\1" +
+                 Regex::ws + Regex::trailing_comment + '$');
 
 	if (find_if(lines(), regex_matches(rx)) == lines().end())
 	    return false;
@@ -295,7 +303,9 @@ AsciiFile::save()
     {
 	map<string, string> ret;
 
-	Regex rx('^' + Regex::ws + "([0-9A-Z_]+)" + '=' + "(['\"]?)([^'\"]*)\\2" + Regex::ws + '$');
+	Regex rx('^' + Regex::ws +
+                 "([0-9A-Z_]+)" + '=' + "(['\"]?)([^'\"]*)\\2" +
+                 Regex::ws + Regex::trailing_comment + '$');
 
 	for (vector<string>::const_iterator it = Lines_C.begin(); it != Lines_C.end(); ++it)
 	{

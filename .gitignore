@@ -17,4 +17,5 @@ obs-package-from-git
 stamp-h1
 py-compile
 test-driver
+testsuite/*.txt.tmp
 /compile

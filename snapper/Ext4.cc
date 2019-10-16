@@ -153,6 +153,8 @@ namespace snapper
     Ext4::openInfosDir() const
     {
 	// TODO
+	SDir not_there("/dev/null");
+	return not_there;
     }
 
 
@@ -160,6 +162,8 @@ namespace snapper
     Ext4::openSnapshotDir(unsigned int num) const
     {
 	// TODO
+	SDir not_there("/dev/null");
+	return not_there;
     }
 
 

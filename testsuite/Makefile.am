@@ -17,7 +17,7 @@ TESTS = $(check_PROGRAMS)
 
 AM_DEFAULT_SOURCE_EXT = .cc
 
-EXTRA_DIST = $(noinst_SCRIPTS) sysconfig-get1.txt
+EXTRA_DIST = $(noinst_SCRIPTS) sysconfig-get1.txt sysconfig-set1.txt
 
 equal_date_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
 

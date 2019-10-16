@@ -4,9 +4,12 @@ S1="hello"
 B1="yes"
 B2="no"
 
-V1="one\ word"
+# this is a comment
+
+V1="one\ word" # this is a trailing comment (bsc#1005342)
 V2="two words"
 V3=" now  three  words "
 V4="c:\\io.sys"
 V5="error\"
 
+V6="a value with a # hash"
