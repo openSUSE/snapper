@@ -239,7 +239,6 @@ libsnapper.
 %{_includedir}/snapper
 
 %package -n snapper-zypp-plugin
-BuildArch:	noarch
 Requires:       libzypp(plugin:commit) = 1
 Requires:	python3-dbus-python
 Requires:	python3-zypp-plugin
@@ -259,6 +258,7 @@ snapper during commits.
 %dir /usr/lib/zypp/plugins
 %dir /usr/lib/zypp/plugins/commit
 %endif
+/usr/lib/zypp/plugins/commit/snapper-zypp-plugin
 /usr/lib/zypp/plugins/commit/snapper.py*
 %doc %{_mandir}/*/snapper-zypp-plugin.8*
 %doc %{_mandir}/*/snapper-zypp-plugin.conf.5*

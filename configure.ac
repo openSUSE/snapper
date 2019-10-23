@@ -191,6 +191,7 @@ AC_OUTPUT(
 	testsuite/Makefile
 	testsuite-real/Makefile
 	testsuite-cmp/Makefile
+	zypp-plugin/Makefile
 	package/snapper.spec:snapper.spec.in
 	dists/debian/snapper-Debian.dsc.in:dists/debian/snapper-Debian.dsc.in.in
 	dists/debian/snapper-xUbuntu.dsc.in:dists/debian/snapper-xUbuntu.dsc.in.in

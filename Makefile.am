@@ -3,7 +3,7 @@
 #
 
 SUBDIRS = snapper examples dbus server client scripts pam data doc po		\
-	testsuite testsuite-real testsuite-cmp
+	testsuite testsuite-real testsuite-cmp zypp-plugin
 
 AUTOMAKE_OPTIONS = foreign dist-bzip2 no-dist-gzip
 
