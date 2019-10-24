@@ -98,7 +98,7 @@ Message ZyppPlugin::dispatch(const Message& msg) {
 
 class ZyppCommitPlugin : public ZyppPlugin {
 public:
-    Message dispatch(const Message& msg);
+    Message dispatch(const Message& msg) override;
 
     virtual Message plugin_begin(const Message& m) {
 	return ack();
@@ -139,18 +139,18 @@ Message ZyppCommitPlugin::dispatch(const Message& msg) {
 
 class SnapperZyppPlugin : public ZyppCommitPlugin {
 public:
-    Message plugin_begin(const Message& m) {
+    Message plugin_begin(const Message& m) override {
 	userdata = get_userdata(m);
 
 	return ack();
     }
-    Message plugin_end(Message) {
+    Message plugin_end(Message) override {
 	return ack();
     }
-    Message commit_begin(Message) {
+    Message commit_begin(Message) override {
 	return ack();
     }
-    Message commit_end(Message) {
+    Message commit_end(Message) override {
 	return ack();
     }
 
