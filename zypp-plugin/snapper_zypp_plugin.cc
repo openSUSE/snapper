@@ -33,6 +33,15 @@ public:
     virtual ~ZyppPlugin() {}
 };
 
+void ZyppPlugin::answer(const Message& msg) {
+    cout << msg.command << endl;
+    for(auto it: msg.headers) {
+	cout << it.first << ':' << it.second << endl;
+    }
+    cout << endl;
+    cout << msg.body << '\0';
+    cout.flush();
+}
 
 int ZyppPlugin::main() {
     enum class State {
@@ -71,7 +80,9 @@ int ZyppPlugin::main() {
 		state = State::Start;
 	    }
 	    else {
-		
+		//string key, value;
+		// TODO: parse the header
+		//msg.headers[key] = value;
 	    }
 	}
     }
@@ -89,12 +100,24 @@ class ZyppCommitPlugin : public ZyppPlugin {
 public:
     Message dispatch(const Message& msg);
 
-    virtual Message plugin_begin(Message) {}
-    virtual Message plugin_end(Message) {}
-    virtual Message commit_begin(Message) {}
-    virtual Message commit_end(Message) {}
+    virtual Message plugin_begin(const Message& m) {
+	return ack();
+    }
+    virtual Message plugin_end(Message) {
+	return ack();
+    }
+    virtual Message commit_begin(Message) {
+	return ack();
+    }
+    virtual Message commit_end(Message) {
+	return ack();
+    }
 
-    Message ack();
+    Message ack() {
+	Message a;
+	a.command = "ACK";
+	return a;
+    }
 };
 
 Message ZyppCommitPlugin::dispatch(const Message& msg) {
@@ -121,15 +144,26 @@ public:
 
 	return ack();
     }
-    Message plugin_end(Message);
-    Message commit_begin(Message);
-    Message commit_end(Message);
+    Message plugin_end(Message) {
+	return ack();
+    }
+    Message commit_begin(Message) {
+	return ack();
+    }
+    Message commit_end(Message) {
+	return ack();
+    }
 
 private:
     map<string, string> userdata;
 
     map<string, string> get_userdata(const Message&);
 };
+
+map<string, string> SnapperZyppPlugin::get_userdata(const Message&) {
+    map<string, string> ret;
+    return ret;
+}
 
 int main() {
     if (getenv("DISABLE_SNAPPER_ZYPP_PLUGIN") != nullptr) {
