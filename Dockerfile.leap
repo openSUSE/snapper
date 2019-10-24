@@ -10,6 +10,7 @@ RUN zypper --non-interactive in --no-recommends \
   gcc-c++ \
   grep \
   libacl-devel \
+  libboost_regex-devel \
   libboost_system-devel \
   libboost_test-devel \
   libboost_thread-devel \

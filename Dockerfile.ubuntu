@@ -17,6 +17,7 @@ RUN apt-get update && \
   language-pack-de \
   language-pack-en \
   libboost-dev \
+  libboost-regex-dev \
   libboost-system-dev \
   libboost-test-dev \
   libboost-thread-dev \

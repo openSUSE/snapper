@@ -26,6 +26,7 @@ Release:        0
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Source:         snapper-%{version}.tar.bz2
 %if 0%{?suse_version} > 1325
+BuildRequires:  libboost_regex-devel
 BuildRequires:  libboost_system-devel
 BuildRequires:  libboost_thread-devel
 BuildRequires:  libboost_test-devel
