@@ -1,6 +1,11 @@
 // getenv
 #include <stdlib.h>
+// getppid
+#include <sys/types.h>
+#include <unistd.h>
 
+#include <boost/format.hpp>
+using boost::format;
 #include <boost/regex.hpp>
 #include <boost/algorithm/string/trim.hpp>
 
@@ -155,7 +160,7 @@ public:
 
 	bool found, important;
         match_solvables(solvables, found, important);
-        //logging.info("found: %s, important: %s" % (found, important))
+        logging.info(str(format("found: %s, important: %s") % found % important));
 
         if (found || important) {
             userdata["important"] = important ? "yes" : "no";
@@ -166,7 +171,7 @@ public:
 
                 pre_snapshot_num = create_pre_snapshot("root", description, cleanup_algorithm,
                                                       userdata);
-                logging.debug("created pre snapshot %d" /*% pre_snapshot_num*/);
+                logging.debug(str(format("created pre snapshot %u") % pre_snapshot_num));
 	    }
 	    catch (...) {
                 logging.error("creating snapshot failed:");
