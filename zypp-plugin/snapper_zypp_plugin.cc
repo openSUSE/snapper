@@ -11,9 +11,9 @@ using namespace std;
 
 class Logging {
 public:
-    void debug(const string&);
+    void debug(const string& s) { cerr << s << endl; }
     void info(const string& s) { cerr << s << endl; }
-    void error(const string&);
+    void error(const string& s) { cerr << s << endl; }
 };
 Logging logging;
 
@@ -103,13 +103,13 @@ public:
     virtual Message plugin_begin(const Message& m) {
 	return ack();
     }
-    virtual Message plugin_end(Message) {
+    virtual Message plugin_end(const Message& m) {
 	return ack();
     }
-    virtual Message commit_begin(Message) {
+    virtual Message commit_begin(const Message& m) {
 	return ack();
     }
-    virtual Message commit_end(Message) {
+    virtual Message commit_end(const Message& m) {
 	return ack();
     }
 
@@ -144,25 +144,79 @@ public:
 
 	return ack();
     }
-    Message plugin_end(Message) override {
+    Message plugin_end(const Message& m) override {
 	return ack();
     }
-    Message commit_begin(Message) override {
+    Message commit_begin(const Message& msg) override {
+        logging.info("COMMITBEGIN");
+
+        auto solvables = get_solvables(msg, true);
+        //logging.debug("solvables: %s" % solvables);
+
+	bool found, important;
+        match_solvables(solvables, found, important);
+        //logging.info("found: %s, important: %s" % (found, important))
+
+        if (found || important) {
+            userdata["important"] = important ? "yes" : "no";
+
+            try {
+                logging.info("creating pre snapshot");
+		string description = "zypp(%s)"; // % basename(readlink("/proc/%d/exe" % getppid()))
+
+                pre_snapshot_num = create_pre_snapshot("root", description, cleanup_algorithm,
+                                                      userdata);
+                logging.debug("created pre snapshot %d" /*% pre_snapshot_num*/);
+	    }
+	    catch (...) {
+                logging.error("creating snapshot failed:");
+                //logging.error("  %s", e)
+	    }
+	}
+
 	return ack();
     }
-    Message commit_end(Message) override {
+    Message commit_end(const Message& m) override {
 	return ack();
     }
 
 private:
+    static const string cleanup_algorithm;
+
+    unsigned int pre_snapshot_num;
     map<string, string> userdata;
 
     map<string, string> get_userdata(const Message&);
+
+    // FIXME: what does the todo flag mean?
+    set<string> get_solvables(const Message&, bool todo);
+
+    void match_solvables(const set<string>&, bool& found, bool& important);
+
+    unsigned int create_pre_snapshot(string config_name, string description, string cleanup, map<string, string> userdata);
 };
 
+const string SnapperZyppPlugin::cleanup_algorithm = "number";
+
 map<string, string> SnapperZyppPlugin::get_userdata(const Message&) {
-    map<string, string> ret;
-    return ret;
+    map<string, string> result;
+    return result;
+}
+
+set<string> SnapperZyppPlugin::get_solvables(const Message&, bool todo) {
+    set<string> result;
+    return result;
+}
+
+void SnapperZyppPlugin::match_solvables(const set<string>&, bool& found, bool& important) {
+    found = true;
+    important = true;
+}
+
+unsigned int SnapperZyppPlugin::create_pre_snapshot(string config_name, string description, string cleanup, map<string, string> userdata) {
+    // call DBus;
+    unsigned int snapshot_num = 0;
+    return snapshot_num;
 }
 
 int main() {
