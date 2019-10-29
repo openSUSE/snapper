@@ -14,6 +14,8 @@ using boost::format;
 #include <string>
 using namespace std;
 
+#include "client/commands.h"
+
 class Logging {
 public:
     void debug(const string& s) { cerr << s << endl; }
@@ -169,7 +171,8 @@ public:
                 logging.info("creating pre snapshot");
 		string description = "zypp(%s)"; // % basename(readlink("/proc/%d/exe" % getppid()))
 
-                pre_snapshot_num = create_pre_snapshot("root", description, cleanup_algorithm,
+		DBus::Connection conn(DBUS_BUS_SYSTEM);
+		pre_snapshot_num = command_create_pre_snapshot(conn, "root", description, cleanup_algorithm,
                                                       userdata);
                 logging.debug(str(format("created pre snapshot %u") % pre_snapshot_num));
 	    }
@@ -218,10 +221,30 @@ void SnapperZyppPlugin::match_solvables(const set<string>&, bool& found, bool& i
     important = true;
 }
 
-unsigned int SnapperZyppPlugin::create_pre_snapshot(string config_name, string description, string cleanup, map<string, string> userdata) {
-    // call DBus;
-    unsigned int snapshot_num = 0;
-    return snapshot_num;
+// this is copied from command.cc
+
+#define SERVICE "org.opensuse.Snapper"
+#define OBJECT "/org/opensuse/Snapper"
+#define INTERFACE "org.opensuse.Snapper"
+
+unsigned int
+command_create_pre_snapshot(DBus::Connection& conn, const string& config_name,
+			    const string& description, const string& cleanup,
+			    const map<string, string>& userdata)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreatePreSnapshot");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << description << cleanup << userdata;
+
+    DBus::Message reply = conn.send_with_reply_and_block(call);
+
+    unsigned int number;
+
+    DBus::Hihi hihi(reply);
+    hihi >> number;
+
+    return number;
 }
 
 int main() {
