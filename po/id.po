@@ -3,111 +3,120 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-15 11:05+0200\n"
-"PO-Revision-Date: 2018-11-02 14:47+0000\n"
+"PO-Revision-Date: 2019-10-29 08:53+0000\n"
 "Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
-"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/id/>\n"
+"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/"
+"id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 2.18\n"
+"X-Generator: Weblate 3.6.1\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tDaftar snapshot dari semua pengaksesan konfigurasi."
+msgstr ""
+"\t--all-configs, -a\t\tDaftar snapshot dari semua config yang dapat diakses."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritma pembersihan untuk snapshot."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritma pembersihan untuk snapshots."
+msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritma pembersihan untuk snapshot."
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <command>\tJalankan perintah dan buat snapshot sebelum dan sesudah."
+msgstr ""
+"\t--command <perintah>\tJalankan perintah dan buat pre dan pos snapshot."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <name>\t\tMengatur nama untuk menggunakan konfigurasi."
+msgstr "\t--config, -c <nama>\t\tAtur nama config untuk digunakan."
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <description>\tDeskripsi untuk snapshot."
+msgstr "\t--description, -d <deskripsi>\tDeskripsi untuk snapshot."
 
 msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr "\t--description, -d <description>\tDeskripsi untuk snapshots."
+msgstr "\t--description, -d <deskripsi>\tDeskripsi untuk snapshot."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr "\t--diff-cmd <command>\t\tPerintah digunakan untuk membandingkan berkas."
+msgstr ""
+"\t--diff-cmd <perintah>\t\tPerintah yang digunakan untuk membandingkan "
+"berkas."
 
 msgid "\t--disable-used-space\t\tDisable showing used space."
 msgstr "\t--disable-used-space\t\tNonaktifkan menampilkan ruang yang digunakan."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
-msgstr "\t--extensions, -x <options>\tPilihan ekstra diteruskan untuk perintah diff."
+msgstr "\t--extensions, -x <opsi>\tOpsi tambahan diteruskan ke perintah diff."
 
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
-msgstr ""
+msgstr "\t--from\t\t\t\tBuat snapshot dari snapshot yang ditentukan."
 
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <fstype>\t\tSecara manual mengatur jenis sistem berkas."
 
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <file>\t\tBaca berkas untuk yang mana membatalkan perubahan dari berkas."
+msgstr ""
+"\t--input, -i <berkas>\t\tBaca berkas untuk membatalkan perubahan dari "
+"berkas."
 
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr "\t--input, -i <file>\t\tBaca berkas ke diff dari berkas."
+msgstr "\t--input, -i <berkas>\t\tBaca berkas diff dari berkas."
 
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr "\t--iso\t\t\t\tMenampilkan tanggal dan waktu dalam format ISO."
+msgstr "\t--iso\t\t\t\tTampilkan tanggal dan waktu dalam format ISO."
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr "\t--no-dbus\t\t\tMengoperasikan tanpa DBus."
+msgstr "\t--no-dbus\t\t\tOperasikan tanpa DBus."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <file>\t\tMenyimpan status ke berkas."
+msgstr "\t--output, -o <berkas>\t\tSimpan status ke berkas."
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <number>\t\tJumlah yang sesuai pre snapshot."
+msgstr "\t--pre-number <nomor>\t\tJumlah snapshot pra yang sesuai."
 
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tMencetak jumlah dari snapshot yang dibuat."
+msgstr "\t--print-number, -p\t\tCetak jumlah snapshot yang dibuat."
 
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr "\t--print-number, -p\t\tMencetak jumlah dari snapshot kedua yang dibuat."
+msgstr "\t--print-number, -p\t\tCetak jumlah snapshot kedua yang dibuat."
 
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
 msgstr "\t--quiet, -q\t\t\tMenekan keluaran normal."
 
 msgid "\t--read-only\t\t\tCreate read-only snapshot."
-msgstr ""
+msgstr "\t--read-only\t\t\tBuat snapshot hanya baca."
 
 msgid "\t--read-write\t\t\tCreate read-write snapshot."
-msgstr ""
+msgstr "\t--read-write\t\t\tBuat snapshot baca-tulis."
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
-msgstr "\t--root, -r <path>\t\tBeroperasi pada target root (hanya bekerja tanpa DBus)."
+msgstr ""
+"\t--root, -r <path>\t\tBeroperasi pada root target (hanya bekerja tanpa "
+"DBus)."
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr "\t--sync, -s\t\t\tSync setelah penghapusan."
+msgstr "\t--sync, -s\t\t\tSinkronkan setelah penghapusan."
 
 msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <style>\tGaya tabel (integer)."
+msgstr "\t--table-style, -t <gaya>\tGaya tabel (bilangan bulat)."
 
 msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <name>\t\tNama dari konfig template untuk menggunakan."
+msgstr "\t--template, -t <nama>\t\tNama templat konfigurasi untuk digunakan."
 
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <type>\t\tJenis untuk snapshot."
+msgstr "\t--type, -t <jenis>\t\tJenis snapshot."
 
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <type>\t\tJenis dari snapshots untuk daftar."
+msgstr "\t--type, -t <jenis>\t\tJenis snapshot yang ada dalam daftar."
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <userdata>\tData pengguna untuk snapshot."
+msgstr "\t--userdata, -u <userdata>\tUserdata untuk snapshot."
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata, -u <userdata>\tData pengguna untuk snapshots."
+msgstr "\t--userdata, -u <userdata>\tUserdata untuk snapshot."
 
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr "\t--utc\t\t\t\tMenampilkan tanggal dan waktu dalam UTC."
+msgstr "\t--utc\t\t\t\tTampilkan tanggal dan waktu dalam UTC."
 
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
 msgstr "\t--verbose, -v\t\t\tMeningkatkan verbositas."
@@ -116,61 +125,61 @@ msgid "\t--version\t\t\tPrint version and exit."
 msgstr "\t--version\t\t\tCetak versi dan keluar."
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
-msgstr "\tpembersihan snapper <algoritma-pembersihan>"
+msgstr "\tsnapper cleanup <algoritma-pembersihan>"
 
 msgid "\tsnapper create"
-msgstr "\tmembuat snapper"
+msgstr "\tsnapper create"
 
 msgid "\tsnapper create-config <subvolume>"
-msgstr "\tsnapper membuat-konfig <subvolume>"
+msgstr "\tsnapper create-config <subvolume>"
 
 msgid "\tsnapper delete <number>"
-msgstr "\tsnapper hapus <angka>"
+msgstr "\tsnapper delete <nomor>"
 
 msgid "\tsnapper delete-config"
-msgstr "\tsnapper hapus-konfig"
+msgstr "\tsnapper delete-config"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
-msgstr "\tsnapper diff <angka1>..<angka2> [berkas]"
+msgstr "\tsnapper diff <nomor1>..<nomor2> [berkas]"
 
 msgid "\tsnapper get-config"
-msgstr "\tsnapper get-konfig"
+msgstr "\tsnapper get-config"
 
 msgid "\tsnapper list"
 msgstr "\tsnapper list"
 
 msgid "\tsnapper list-configs"
-msgstr "\tsnapper list-konfig"
+msgstr "\tsnapper list-configs"
 
 msgid "\tsnapper modify <number>"
-msgstr "\tsnapper modif <angka>"
+msgstr "\tsnapper modif <nomor>"
 
 msgid "\tsnapper mount <number>"
-msgstr "\tsnapper mount <angka>"
+msgstr "\tsnapper mount <nomor>"
 
 msgid "\tsnapper rollback [number]"
-msgstr "\tsnapper rollback [angka]"
+msgstr "\tsnapper rollback [nomor]"
 
 msgid "\tsnapper set-config <configdata>"
-msgstr "\tsnapper set-config <konfigdata>"
+msgstr "\tsnapper set-config <configdata>"
 
 msgid "\tsnapper setup-quota"
 msgstr "\tsnapper setup-quota"
 
 msgid "\tsnapper status <number1>..<number2>"
-msgstr "\tsnapper status <angka1>..<angka2>"
+msgstr "\tsnapper status <nomor1>..<nomor2>"
 
 msgid "\tsnapper umount <number>"
 msgstr "\tsnapper umount <nomor>"
 
 msgid "\tsnapper undochange <number1>..<number2> [files]"
-msgstr "\tsnapper membatalkan perubahan <nomor1>..<nomor2> [berkas]"
+msgstr "\tsnapper undochange <nomor1>..<nomor2> [berkas]"
 
 msgid "\tsnapper xadiff <number1>..<number2> [files]"
-msgstr "\tsnapper xadiff <angka1>..<angka2> [berkas]"
+msgstr "\tsnapper xadiff <nomor1>..<nomor2> [berkas]"
 
 msgid "    Global options:"
-msgstr "    Pilihan global:"
+msgstr "    Opsi global:"
 
 msgid "    Options for 'create' command:"
 msgstr "    Opsi untuk perintah 'create':"
@@ -200,52 +209,52 @@ msgid "    Options for 'undochange' command:"
 msgstr "    Opsi untuk perintah 'undochange':"
 
 msgid "  Cleanup snapshots:"
-msgstr "  Pembersihan snapshots:"
+msgstr "  Membersihkan snapshot:"
 
 msgid "  Comparing snapshots extended attributes:"
-msgstr "  Membandingkan atribut tambahan snapshots:"
+msgstr "  Membandingkan atribut tambahan snapshot:"
 
 msgid "  Comparing snapshots:"
-msgstr "  Membandingkan snapshots:"
+msgstr "  Membandingkan snapshot:"
 
 msgid "  Create config:"
-msgstr "  Membuat konfig:"
+msgstr "  Buat config:"
 
 msgid "  Create snapshot:"
-msgstr "  Membuat snapshot:"
+msgstr "  Buat snapshot:"
 
 msgid "  Delete config:"
-msgstr "  Menghapus konfig:"
+msgstr "  Hapus config:"
 
 msgid "  Delete snapshot:"
-msgstr "  Menghapus snapshot:"
+msgstr "  Hapus snapshot:"
 
 msgid "  Get config:"
-msgstr "  Mendapatkan konfig:"
+msgstr "  Dapatkan config:"
 
 msgid "  List configs:"
-msgstr "  Daftar konfig:"
+msgstr "  Daftar config:"
 
 msgid "  List snapshots:"
-msgstr "  Daftar snapshots:"
+msgstr "  Daftar snapshot:"
 
 msgid "  Modify snapshot:"
-msgstr "  Memodifikasi snapshot:"
+msgstr "  Modifikasi snapshot:"
 
 msgid "  Mount snapshot:"
-msgstr "  Mount snapshot:"
+msgstr "  Kaitkan snapshot:"
 
 msgid "  Rollback:"
 msgstr "  Rollback:"
 
 msgid "  Set config:"
-msgstr "  Atur konfig:"
+msgstr "  Atur config:"
 
 msgid "  Setup quota:"
 msgstr "  Atur kuota:"
 
 msgid "  Umount snapshot:"
-msgstr "  Umount snapshot:"
+msgstr "  Lepas snapshot:"
 
 msgid "  Undo changes:"
 msgstr "  Membatalkan perubahan:"
@@ -258,7 +267,7 @@ msgid "(Snapshot %d.)"
 msgstr "(Snapshot %d.)"
 
 msgid "ACL error."
-msgstr "ACL galat."
+msgstr "Galat ACL."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -270,47 +279,49 @@ msgstr "Tidak dapat menghapus snapshot %d karena ini adalah sistem saat ini."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr "Tidak dapat menghapus snapshot %d karena ini adalah snapshot yang saat ini terpasang."
+msgstr ""
+"Tidak dapat menghapus snapshot %d karena ini adalah snapshot yang dipasang "
+"saat ini."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Tidak dapat menghapus snapshot %d karena ini adalah snapshot yang dipasang selanjutnya."
 
 msgid "Cleanup"
-msgstr "Pembersihan"
+msgstr "Membersihkan"
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Perintah 'cleanup' membutuhkan satu argumen."
 
 msgid "Command 'create' does not take arguments."
-msgstr "Perintah 'create' tidak membawa argumen."
+msgstr "Perintah 'create' tidak mengambil argumen."
 
 msgid "Command 'create-config' needs one argument."
 msgstr "Perintah 'create-config' membutuhkan satu argumen."
 
 msgid "Command 'debug' does not take arguments."
-msgstr "Perintah 'debug' tidak membawa argumen."
+msgstr "Perintah 'debug' tidak mengambil argumen."
 
 msgid "Command 'delete' needs at least one argument."
 msgstr "Perintah 'delete' membutuhkan setidaknya satu argumen."
 
 msgid "Command 'delete-config' does not take arguments."
-msgstr "Perintah 'delete-config' tidak membawa argumen."
+msgstr "Perintah 'delete-config' tidak mengambil argumen."
 
 msgid "Command 'diff' needs at least one argument."
 msgstr "Perintah 'diff' membutuhkan setidaknya satu argumen."
 
 msgid "Command 'get-config' does not take arguments."
-msgstr "Perintah 'get-config' tidak membawa argumen."
+msgstr "Perintah 'get-config' tidak mengambil argumen."
 
 msgid "Command 'help' does not take arguments."
-msgstr "Perintah 'help' tidak membawa argumen."
+msgstr "Perintah 'help' tidak mengambil argumen."
 
 msgid "Command 'list' does not take arguments."
-msgstr "Perintah 'list' tidak membawa argumen."
+msgstr "Perintah 'list' tidak mengambil argumen."
 
 msgid "Command 'list-configs' does not take arguments."
-msgstr "Perintah 'list-configs' tidak membawa argumen."
+msgstr "Perintah 'list-configs' tidak mengambil argumen."
 
 msgid "Command 'modify' needs at least one argument."
 msgstr "Perintah 'modify' membutuhkan setidaknya satu argumen."
@@ -341,52 +352,52 @@ msgid "Command 'umount' needs at least one argument."
 msgstr "Perintah 'unmount' membutuhkan setidaknya satu argumen."
 
 msgid "Command 'undochange' needs at least one argument."
-msgstr "Perintah 'undochange' membutuhkan setidaknya satu argument."
+msgstr "Perintah 'undochange' membutuhkan setidaknya satu argumen."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Perintah 'xadiff' membutuhkan setidaknya satu argumen."
 
 msgid "Config"
-msgstr "Konfigurasi"
+msgstr "Config"
 
 #, c-format
 msgid "Config '%s' is invalid."
-msgstr "Konfig '%s' tidak valid."
+msgstr "Config '%s' tidak valid."
 
 #, c-format
 msgid "Config '%s' not found."
-msgstr "Konfig '%s' tidak ditemukan."
+msgstr "Config '%s' tidak ditemukan."
 
 msgid "Config is in use."
-msgstr "Konfig sedang digunakan."
+msgstr "Config sedang digunakan."
 
 msgid "Config is locked."
-msgstr "Konfig terkunci."
+msgstr "Config dikunci."
 
 #, c-format
 msgid "Configdata '%s' does not include '=' sign."
-msgstr "Konfigdata '%s' tidak membaca tanda '='."
+msgstr "Configdata '%s' tidak termasuk tanda '='."
 
 #, c-format
 msgid "Configdata '%s' has empty key."
-msgstr "Konfigdata '%s' memiliki kunci kosong."
+msgstr "Configdata '%s' memiliki kunci kosong."
 
 #, c-format
 msgid "Creating config failed (%s)."
-msgstr "Gagal membuat konfig (%s)."
+msgstr "Gagal membuat config (%s)."
 
 msgid "Creating read-only snapshot of current system."
-msgstr "Membuat snapshot read-only di sistem saat ini."
+msgstr "Membuat snapshot hanya-baca dari sistem saat ini."
 
 msgid "Creating read-only snapshot of default subvolume."
-msgstr "Membuat snapshot read-only dari subvolume bawaan."
+msgstr "Membuat snapshot hanya-baca dari subvolume bawaan."
 
 msgid "Creating read-write snapshot of current subvolume."
-msgstr "Membuat snapshot read-write dari subvolume saat ini."
+msgstr "Membuat snapshot baca-tulis dari subvolume saat ini."
 
 #, c-format
 msgid "Creating read-write snapshot of snapshot %d."
-msgstr "Membuat snapshot read-write dari snapshot %d."
+msgstr "Membuat snapshot baca-tulis dari snapshot %d."
 
 msgid "Creating snapshot failed."
 msgstr "Gagal membuat snapshot."
@@ -396,7 +407,7 @@ msgstr "Tanggal"
 
 #, c-format
 msgid "Deleting config failed (%s)."
-msgstr "Gagal menghapus konfig (%s)."
+msgstr "Gagal menghapus config (%s)."
 
 msgid "Deleting snapshot failed."
 msgstr "Gagal menghapus snapshot."
@@ -417,27 +428,27 @@ msgid "EiB"
 msgstr "EiB"
 
 msgid "Empty configdata."
-msgstr "Konfigdata kosong."
+msgstr "Configdata kosong."
 
 msgid "Empty userdata."
-msgstr "Penggunadata kosong."
+msgstr "Userdata kosong."
 
 #, c-format
 msgid "Error (%s)."
 msgstr "Galat (%s)."
 
 msgid "Failed to initialize filesystem handler."
-msgstr "Gagal untuk menginisialisasi handler sistem berkas."
+msgstr "Gagal menginisialisasi penangan sistem berkas."
 
 msgid "Failed to set locale. Fix your system."
-msgstr "Failed to set locale. Fix your system."
+msgstr "Gagal menyetel locale. Perbaiki sistem Anda."
 
 msgid "Failure"
-msgstr "Kegagalan"
+msgstr "Gagal"
 
 #, c-format
 msgid "Failure (%s)."
-msgstr "Kegagalan: %s."
+msgstr "Gagal (%s)."
 
 #, c-format
 msgid "File '%s' not found."
@@ -453,43 +464,43 @@ msgstr "GiB"
 
 #, c-format
 msgid "IO Error (%s)."
-msgstr "Galat I/O (%s)."
+msgstr "Galat IO (%s)."
 
 #, c-format
 msgid "IO error (%s)."
-msgstr "Galat I/O (%s)."
+msgstr "Galat IO (%s)."
 
 msgid "Identical snapshots."
-msgstr "Identik snapshots."
+msgstr "Snapshot identik."
 
 msgid "Illegal snapshot."
 msgstr "Snapshot ilegal."
 
 msgid "Invalid configdata."
-msgstr "Konfigdata tidak valid."
+msgstr "Configdata tidak valid."
 
 msgid "Invalid group."
 msgstr "Grup tidak valid."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
-msgstr "Snapshot tidak valid '%s'."
+msgstr "Snapshot '%s' tidak valid."
 
 msgid "Invalid snapshots."
-msgstr "Snapshots tidak valid."
+msgstr "Snapshot tidak valid."
 
 msgid "Invalid subvolume."
 msgstr "Subvolume tidak valid."
 
 #, c-format
 msgid "Invalid table style %d."
-msgstr "Moda tabel tidak valid %d."
+msgstr "Gaya tabel %d tidak valid."
 
 msgid "Invalid user."
 msgstr "Pengguna tidak valid."
 
 msgid "Invalid userdata."
-msgstr "Penggunadata tidak valid."
+msgstr "Userdata tidak valid."
 
 # KE
 msgid "Key"
@@ -501,10 +512,10 @@ msgstr "KiB"
 
 #, c-format
 msgid "Listing configs failed (%s)."
-msgstr "Listing konfig gagal (%s)."
+msgstr "Config listing gagal (%s)."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
-msgstr "Mungkin anda lupa pembatas '..' antara nomor snapshot."
+msgstr "Mungkin Anda lupa pembatas '..' di antara nomor snapshot."
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
@@ -512,20 +523,20 @@ msgstr "MiB"
 
 #, c-format
 msgid "Missing argument for command option '%s'."
-msgstr "Kehilangan argumen untuk opsi perintah '%s'."
+msgstr "Argumen tidak ada untuk opsi perintah '%s'."
 
 #, c-format
 msgid "Missing argument for global option '%s'."
-msgstr "Kehilangan argumen untuk opsi global '%s'."
+msgstr "Argumen tidak ada untuk opsi global '%s'."
 
 msgid "Missing command argument."
-msgstr "Kehilangan argumen perintah."
+msgstr "Argumen perintah tidak ada."
 
 msgid "Missing delimiter '..' between snapshot numbers."
-msgstr "Kehilangan pembatas '..' antara nomor snapshot."
+msgstr "Pembatas '..' tidak ada di antara nomor snapshot."
 
 msgid "Missing or invalid pre-number."
-msgstr "Hilang atau tidak pre-nomor."
+msgstr "Pra-nomor tidak ada atau tidak valid."
 
 msgid "No command provided."
 msgstr "Tidak ada perintah yang tersedia."
@@ -538,10 +549,10 @@ msgid "Opening file '%s' failed."
 msgstr "Membuka berkas '%s' gagal."
 
 msgid "Option --from only supported for snapshots of type single."
-msgstr ""
+msgstr "Opsi --from hanya didukung untuk snapshot dari tipe tunggal."
 
 msgid "Option --read-write only supported for snapshots of type single."
-msgstr ""
+msgstr "Opsi --read-write hanya didukung untuk snapshot dari tipe tunggal."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -554,10 +565,10 @@ msgid "Post Date"
 msgstr "Tanggal Pos"
 
 msgid "Pre #"
-msgstr "Pre #"
+msgstr "Pra #"
 
 msgid "Pre Date"
-msgstr "Pre Tanggal"
+msgstr "Tanggal Pra"
 
 #, c-format
 msgid "Quota error (%s)."
@@ -568,7 +579,7 @@ msgstr "Lihat 'man snapper' untuk instruksi lebih lanjut."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
-msgstr "Pengaturan bawaan subvolume untuk snapshot %d."
+msgstr "Mengatur subvolume bawaan ke snapshot %d."
 
 #, c-format
 msgid "Snapshot '%u' not found."
@@ -581,46 +592,46 @@ msgid "Subvolume"
 msgstr "Subvolume"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr "Konfig 'root' tidak ada. Sepertinya snapper tidak dikonfigurasi."
+msgstr "Config 'root' tidak ada. Kemungkinan snapper tidak dikonfigurasi."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
 msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
-msgstr "Coba 'snapper --help' untuk informasi lebih."
+msgstr "Coba 'snapper --help' untuk informasi lebih lanjut."
 
 msgid "Type"
 msgstr "Jenis"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
-msgstr "Algoritma pembersihan tidak diketahui '%s'."
+msgstr "Algoritma pembersihan tidak dikenal '%s'."
 
 #, c-format
 msgid "Unknown command '%s'."
-msgstr "Perintah tidak diketahui '%s'."
+msgstr "Perintah '%s' tidak dikenal."
 
 msgid "Unknown config."
-msgstr "Konfig tidak diketahui."
+msgstr "Config tidak dikenal."
 
 #, c-format
 msgid "Unknown global option '%s'."
-msgstr "Opsi global tidak diketahui '%s'."
+msgstr "Opsi global tidak dikenal '%s'."
 
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
-msgstr "Opsi tidak diketahui '%s' untuk perintah '%s'."
+msgstr "Opsi tidak dikenal '%s' untuk perintah '%s'."
 
 msgid "Unknown type of snapshot."
-msgstr "Jenis tidak diketahui dari snapshot."
+msgstr "Jenis snapshot tidak dikenal."
 
 msgid "Unknown type of snapshots."
-msgstr "Jenis tidak diketahui dari snapshots."
+msgstr "Jenis snapshot tidak dikenal."
 
 #, c-format
 msgid "Use an integer number from %d to %d."
-msgstr "Gunakan sebuah angka integer dari %d untuk %d."
+msgstr "Gunakan bilangan bulat dari %d hingga %d."
 
 msgid "Used Space"
 msgstr "Ruang yang digunakan"
@@ -629,22 +640,22 @@ msgid "User"
 msgstr "Pengguna"
 
 msgid "Userdata"
-msgstr "Penggunadata"
+msgstr "Userdata"
 
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
-msgstr "Penggunadata '%s' tidak membawa tanda '='."
+msgstr "Userdata '%s' tidak membawa tanda '='."
 
 #, c-format
 msgid "Userdata '%s' has empty key."
-msgstr "Penggunadata '%s' mempunyai kunci kosong."
+msgstr "Userdata '%s' mempunyai kunci kosong."
 
 msgid "Value"
 msgstr "Nilai"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
-msgstr "membuat:%d modif:%d hapus:%d"
+msgstr "membuat:%d memodifikasi:%d hapus:%d"
 
 #, c-format
 msgid "creating %s"
