@@ -12,6 +12,8 @@ using boost::format;
 #include <string>
 using namespace std;
 
+#include <rapidjson/document.h>
+
 #include "dbus/DBusConnection.h"
 #include "snapper/Exception.h"
 using snapper::Exception;
@@ -156,8 +158,30 @@ map<string, string> SnapperZyppPlugin::get_userdata(const Message&) {
     return result;
 }
 
-set<string> SnapperZyppPlugin::get_solvables(const Message&, bool todo) {
+set<string> SnapperZyppPlugin::get_solvables(const Message& msg, bool todo) {
     set<string> result;
+
+    rapidjson::Document doc;
+    const char * c_body = msg.body.c_str();
+    if (doc.Parse(c_body).HasParseError()) {
+	logging.error("parsing zypp JSON failed");
+	return result;
+    }
+    // https://doc.opensuse.org/projects/libzypp/SLE12SP2/plugin-commit.html
+    using rapidjson::Value;
+    const Value& steps = doc["TransactionStepList"];
+    for (Value::ConstValueIterator it = steps.Begin(); it != steps.End(); ++it) {
+	const Value& step = *it;
+	if (step.HasMember("type")) {
+	    if (todo || step.HasMember("stage")) {
+		const Value& solvable = step["solvable"];
+		const Value& name = solvable["n"];
+		// FIXME: what happens when the doc structure is different?
+		result.insert(name.GetString());
+	    }
+	}
+    }
+
     return result;
 }
 

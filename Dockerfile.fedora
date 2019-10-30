@@ -20,6 +20,7 @@ RUN dnf -y install \
   make \
   pam-devel \
   pkgconfig \
+  rapidjson-devel \
   rpm-build
 
 RUN mkdir -p /usr/src/app

@@ -21,6 +21,7 @@ RUN zypper --non-interactive in --no-recommends \
   libxslt \
   obs-service-source_validator \
   pam-devel \
+  rapidjson-devel \
   rpm-build \
   which
 

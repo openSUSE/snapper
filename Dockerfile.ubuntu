@@ -27,6 +27,7 @@ RUN apt-get update && \
   libtool \
   libxml2-dev \
   libz-dev \
+  rapidjson-dev \
   xsltproc
 
 RUN mkdir -p /usr/src/app
