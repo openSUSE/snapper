@@ -39,28 +39,28 @@ namespace snapper
 
 	Ext4(const string& subvolume, const string& root_prefix);
 
-	virtual string fstype() const { return "ext4"; }
+	virtual string fstype() const override { return "ext4"; }
 
-	virtual void createConfig() const;
-	virtual void deleteConfig() const;
+	virtual void createConfig() const override;
+	virtual void deleteConfig() const override;
 
-	virtual string snapshotDir(unsigned int num) const;
+	virtual string snapshotDir(unsigned int num) const override;
 	virtual string snapshotFile(unsigned int num) const;
 
-	virtual SDir openInfosDir() const;
-	virtual SDir openSnapshotDir(unsigned int num) const;
+	virtual SDir openInfosDir() const override;
+	virtual SDir openSnapshotDir(unsigned int num) const override;
 
 	virtual void createSnapshot(unsigned int num, unsigned int num_parent, bool read_only,
-				    bool quota, bool empty) const;
-	virtual void deleteSnapshot(unsigned int num) const;
+				    bool quota, bool empty) const override;
+	virtual void deleteSnapshot(unsigned int num) const override;
 
-	virtual bool isSnapshotMounted(unsigned int num) const;
-	virtual void mountSnapshot(unsigned int num) const;
-	virtual void umountSnapshot(unsigned int num) const;
+	virtual bool isSnapshotMounted(unsigned int num) const override;
+	virtual void mountSnapshot(unsigned int num) const override;
+	virtual void umountSnapshot(unsigned int num) const override;
 
-	virtual bool isSnapshotReadOnly(unsigned int num) const;
+	virtual bool isSnapshotReadOnly(unsigned int num) const override;
 
-	virtual bool checkSnapshot(unsigned int num) const;
+	virtual bool checkSnapshot(unsigned int num) const override;
 
     private:
 

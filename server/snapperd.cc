@@ -52,11 +52,11 @@ public:
     MyMainLoop(DBusBusType type);
     ~MyMainLoop();
 
-    void method_call(DBus::Message& message);
-    void signal(DBus::Message& message);
-    void client_disconnected(const string& name);
-    void periodic();
-    milliseconds periodic_timeout();
+    void method_call(DBus::Message& message) override;
+    void signal(DBus::Message& message) override;
+    void client_disconnected(const string& name) override;
+    void periodic() override;
+    milliseconds periodic_timeout() override;
 
 private:
 

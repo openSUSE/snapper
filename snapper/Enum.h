@@ -42,7 +42,7 @@ namespace snapper
     struct OutOfRangeException : public std::exception
     {
 	explicit OutOfRangeException() throw() {}
-	virtual const char* what() const throw() { return "out of range"; }
+	virtual const char* what() const throw() override { return "out of range"; }
     };
 
 

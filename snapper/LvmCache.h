@@ -46,7 +46,7 @@ namespace snapper
     struct LvmCacheException : public std::exception
     {
 	explicit LvmCacheException() throw() {}
-	virtual const char* what() const throw() { return "lvm cache exception"; }
+	virtual const char* what() const throw() override { return "lvm cache exception"; }
     };
 
     struct LvAttrs

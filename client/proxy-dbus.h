@@ -93,10 +93,10 @@ public:
 
     ProxySnapshotsDbus(ProxySnapperDbus* backref);
 
-    virtual iterator getDefault();
-    virtual const_iterator getDefault() const;
+    virtual iterator getDefault() override;
+    virtual const_iterator getDefault() const override;
 
-    virtual const_iterator getActive() const;
+    virtual const_iterator getActive() const override;
 
     DBus::Connection& conn() const;
     const string& configName() const;
