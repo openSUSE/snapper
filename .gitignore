@@ -19,3 +19,4 @@ py-compile
 test-driver
 testsuite/*.txt.tmp
 /compile
+/.vscode/
