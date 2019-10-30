@@ -16,79 +16,9 @@ using namespace std;
 #include "snapper/Exception.h"
 using snapper::Exception;
 using snapper::CodeLocation;
+#include "client/commands.h"
 
 #include "zypp_commit_plugin.h"
-
-// this is copied from command.cc, not part of any library now
-
-#define SERVICE "org.opensuse.Snapper"
-#define OBJECT "/org/opensuse/Snapper"
-#define INTERFACE "org.opensuse.Snapper"
-
-unsigned int
-command_create_pre_snapshot(DBus::Connection& conn, const string& config_name,
-			    const string& description, const string& cleanup,
-			    const map<string, string>& userdata)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreatePreSnapshot");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name << description << cleanup << userdata;
-
-    DBus::Message reply = conn.send_with_reply_and_block(call);
-
-    unsigned int number;
-
-    DBus::Hihi hihi(reply);
-    hihi >> number;
-
-    return number;
-}
-
-unsigned int
-command_create_post_snapshot(DBus::Connection& conn, const string& config_name,
-			     unsigned int prenum, const string& description,
-			     const string& cleanup, const map<string, string>& userdata)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreatePostSnapshot");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name << prenum << description << cleanup << userdata;
-
-    DBus::Message reply = conn.send_with_reply_and_block(call);
-
-    unsigned int number;
-
-    DBus::Hihi hihi(reply);
-    hihi >> number;
-
-    return number;
-}
-
-void
-command_set_snapshot(DBus::Connection& conn, const string& config_name, unsigned int num,
-		     const string& description, const string& cleanup,
-		     const map<string, string>& userdata)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "SetSnapshot");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name << num << description << cleanup << userdata;
-
-    conn.send_with_reply_and_block(call);
-}
-
-void
-command_delete_snapshots(DBus::Connection& conn, const string& config_name,
-			 const vector<unsigned int>& nums)
-{
-    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "DeleteSnapshots");
-
-    DBus::Hoho hoho(call);
-    hoho << config_name << nums;
-
-    conn.send_with_reply_and_block(call);
-}
 
 class Logging {
 public:
@@ -160,8 +90,11 @@ public:
 		userdata["important"] = important ? "yes" : "no";
 
 		try {
-		    command_set_snapshot(dbus_conn, "root", pre_snapshot_num, snapshot_description, cleanup_algorithm,
-					userdata);
+		    snapper::SMD modification_data;
+		    modification_data.description = snapshot_description;
+		    modification_data.cleanup = cleanup_algorithm;
+		    modification_data.userdata = userdata;
+		    command_set_snapshot(dbus_conn, "root", pre_snapshot_num, modification_data);
 		}
 		catch (const Exception& ex) {
 		    logging.error("setting snapshot data failed:");
@@ -184,7 +117,8 @@ public:
 		try {
 		    logging.info("deleting pre snapshot");
 		    vector<unsigned int> nums{ pre_snapshot_num };
-		    command_delete_snapshots(dbus_conn, "root", nums);
+		    bool verbose = false;
+		    command_delete_snapshots(dbus_conn, "root", nums, verbose);
 		    logging.debug(str(format("deleted pre snapshot %u") % pre_snapshot_num));
 		}
 		catch (const Exception& ex) {
