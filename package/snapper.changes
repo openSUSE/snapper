@@ -1,4 +1,13 @@
 -------------------------------------------------------------------
+Wed Oct 23 13:00:36 UTC 2019 - José Iván López González <jlopez@suse.com>
+
+- add --machine-readable option for CSV and JSON outputs.
+- add --columns option for selecting columns in the commands list,
+  list-configs and get-config.
+- bsc#1149322
+- version 0.8.6
+
+-------------------------------------------------------------------
 Tue Oct 15 12:42:39 UTC 2019 - Martin Vidner <mvidner@suse.com>
 
 - allow trailing comments in configuration files (bsc#1005342)
