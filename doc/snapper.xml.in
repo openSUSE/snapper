@@ -223,6 +223,30 @@
 	</listitem>
       </varlistentry>
       <varlistentry>
+	<term><option>--machine-readable</option></term>
+	<listitem>
+	  <para>Specifies a machine-readable output format. Possible options are csv and json.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--csvout</option></term>
+	<listitem>
+	  <para>Sets CSV output format.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--jsonout</option></term>
+	<listitem>
+	  <para>Sets JSON output format.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--separator</option></term>
+	<listitem>
+	  <para>Specifies the character separator for CSV output format.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
 	<term><option>-c, --config <replaceable>name</replaceable></option></term>
 	<listitem>
 	  <para>Use specified configuration instead of the default configuration. The default
@@ -277,6 +301,16 @@
 	<term><option>list-configs</option></term>
 	<listitem>
 	  <para>List available configurations.</para>
+
+	  <variablelist>
+	    <varlistentry>
+	      <term><option>--columns</option> <replaceable>columns</replaceable></term>
+	      <listitem>
+		<para>Select columns to show separated by comma.</para>
+		<para>Possible columns are: config, subvolume.</para>
+	      </listitem>
+	    </varlistentry>
+	  </variablelist>
 	</listitem>
       </varlistentry>
 
@@ -322,6 +356,17 @@
 	<term><option>get-config</option></term>
 	<listitem>
 	  <para>Displays the settings of the configuration.</para>
+
+	  <variablelist>
+	    <varlistentry>
+	      <term><option>--columns</option> <replaceable>columns</replaceable></term>
+	      <listitem>
+		<para>Select columns to show separated by comma.</para>
+		<para>Possible columns are: key, value.</para>
+		<para>Columns are not selected when JSON format is used.</para>
+	      </listitem>
+	    </varlistentry>
+	  </variablelist>
 	</listitem>
       </varlistentry>
 
@@ -360,6 +405,15 @@
 	      <term><option>-a, --all-configs</option></term>
 	      <listitem>
 		<para>List snapshots from all configs accessible by the user.</para>
+	      </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><option>--columns</option> <replaceable>columns</replaceable></term>
+	      <listitem>
+		<para>Select columns to show separated by comma.</para>
+		<para>Possible columns are: config, subvolume, number, default, active,
+		date, user, used-space, cleanup, description, userdata, pre-number, post-number,
+		post-date.</para>
 	      </listitem>
 	    </varlistentry>
 	  </variablelist>
