@@ -2,24 +2,33 @@
 # Makefile.am for snapper/client
 #
 
-SUBDIRS = utils
+SUBDIRS = 		\
+	utils		\
+	Command
 
 AM_CPPFLAGS = -I$(top_srcdir) $(DBUS_CFLAGS)
 
 bin_PROGRAMS = snapper
 
-snapper_SOURCES =			\
-	snapper.cc			\
-	types.cc	types.h		\
-	commands.cc	commands.h	\
-	cleanup.cc	cleanup.h	\
-	proxy.cc	proxy.h		\
-	proxy-dbus.cc	proxy-dbus.h	\
-	proxy-lib.cc	proxy-lib.h	\
-	misc.cc		misc.h		\
-	errors.cc	errors.h
+snapper_SOURCES =					\
+	snapper.cc					\
+	types.cc		types.h			\
+	commands.cc		commands.h		\
+	cleanup.cc		cleanup.h		\
+	proxy.cc		proxy.h			\
+	proxy-dbus.cc		proxy-dbus.h		\
+	proxy-lib.cc		proxy-lib.h		\
+	misc.cc			misc.h			\
+	errors.cc		errors.h		\
+	Options.cc		Options.h		\
+	GlobalOptions.cc	GlobalOptions.h		\
+	Command.cc		Command.h
 
-snapper_LDADD = ../snapper/libsnapper.la utils/libutils.la ../dbus/libdbus.la
+snapper_LDADD = 			\
+	../snapper/libsnapper.la	\
+	utils/libutils.la		\
+	Command/libcommand.la		\
+	../dbus/libdbus.la
 
 libexecdir = /usr/lib/snapper
 
