@@ -15,4 +15,10 @@ public:
     virtual Message dispatch(const Message&);
     void answer(const Message&);
     virtual ~ZyppPlugin() {}
+
+    Message ack() {
+	Message a;
+	a.command = "ACK";
+	return a;
+    }
 };

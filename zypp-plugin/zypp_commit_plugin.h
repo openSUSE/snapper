@@ -16,11 +16,5 @@ public:
     virtual Message commit_end(const Message& m) {
 	return ack();
     }
-
-    Message ack() {
-	Message a;
-	a.command = "ACK";
-	return a;
-    }
 };
 
