@@ -4,8 +4,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <boost/format.hpp>
-using boost::format;
+#include <boost/regex.hpp>
 
 #include <iostream>
 #include <map>
@@ -19,17 +18,23 @@ using namespace std;
 using snapper::Exception;
 using snapper::CodeLocation;
 #include "client/commands.h"
+#include "snapper/Log.h"
 
 #include "zypp_commit_plugin.h"
 
-class Logging {
-public:
-    void debug(const string& s) { cerr << s << endl; }
-    void info(const string& s) { cerr << s << endl; }
-    void error(const string& s) { cerr << s << endl; }
-};
-Logging logging;
-
+ostream& operator <<(ostream& os, set<string> ss) {
+    bool seen_first = false;
+    os << '{';
+    for(auto s: ss) {
+	if (seen_first) {
+	    os << ", ";
+	}
+	os << s;
+	seen_first = true;
+    }
+    os << '}';
+    return os;
+}
 
 class SnapperZyppPlugin : public ZyppCommitPlugin {
 public:
@@ -41,32 +46,33 @@ public:
     }
 
     Message plugin_begin(const Message& m) override {
+	y2mil("PLUGINBEGIN");
 	userdata = get_userdata(m);
 
 	return ack();
     }
     Message plugin_end(const Message& m) override {
-	logging.info("PLUGINEND");
+	y2mil("PLUGINEND");
 	return ack();
     }
     Message commit_begin(const Message& msg) override {
-	logging.info("COMMITBEGIN");
+	y2mil("COMMITBEGIN");
 
 	set<string> solvables = get_solvables(msg, true);
-	logging.debug("solvables: %s" /*% solvables*/);
+	y2deb("solvables: " << solvables);
 
 	bool found, important;
 	match_solvables(solvables, found, important);
-	logging.info(str(format("found: %s, important: %s") % found % important));
+	y2mil("found: " << found << ", important: " << important);
 
 	if (found || important) {
 	    userdata["important"] = important ? "yes" : "no";
 
 	    try {
-		logging.info("creating pre snapshot");
+		y2mil("creating pre snapshot");
 		pre_snapshot_num = command_create_pre_snapshot(dbus_conn, "root", snapshot_description, cleanup_algorithm,
 						      userdata);
-		logging.debug(str(format("created pre snapshot %u") % pre_snapshot_num));
+		y2deb("created pre snapshot " << pre_snapshot_num);
 	    }
 	    catch (const Exception& ex) {
 		// assumes a logging setup
@@ -78,15 +84,15 @@ public:
     }
 
     Message commit_end(const Message& msg) override {
-	logging.info("COMMITEND");
+	y2mil("COMMITEND");
 
 	if (pre_snapshot_num != 0) {
 	    set<string> solvables = get_solvables(msg, false);
-	    logging.debug("solvables: %s" /*% solvables*/);
+	    y2deb("solvables: " << solvables);
 
 	    bool found, important;
 	    match_solvables(solvables, found, important);
-	    logging.info(str(format("found: %s, important: %s") % found % important));
+	    y2mil("found: " << found << ", important: " << important);
 
 	    if (found || important) {
 		userdata["important"] = important ? "yes" : "no";
@@ -99,32 +105,32 @@ public:
 		    command_set_snapshot(dbus_conn, "root", pre_snapshot_num, modification_data);
 		}
 		catch (const Exception& ex) {
-		    logging.error("setting snapshot data failed:");
+		    y2err("setting snapshot data failed:");
 		    // assumes a logging setup
 		    SN_CAUGHT(ex);
 		}
 		try {
-		    logging.info("creating post snapshot");
+		    y2mil("creating post snapshot");
 		    unsigned int post_snapshot_num = command_create_post_snapshot(dbus_conn, "root", pre_snapshot_num, "", cleanup_algorithm,
 								     userdata);
-		    logging.debug(str(format("created post snapshot %u") % post_snapshot_num));
+		    y2deb("created post snapshot " << post_snapshot_num);
 		}
 		catch (const Exception& ex) {
-		    logging.error("creating snapshot failed:");
+		    y2err("creating snapshot failed:");
 		    // assumes a logging setup
 		    SN_CAUGHT(ex);
 		}
 	    }
 	    else {
 		try {
-		    logging.info("deleting pre snapshot");
+		    y2mil("deleting pre snapshot");
 		    vector<unsigned int> nums{ pre_snapshot_num };
 		    bool verbose = false;
 		    command_delete_snapshots(dbus_conn, "root", nums, verbose);
-		    logging.debug(str(format("deleted pre snapshot %u") % pre_snapshot_num));
+		    y2deb("deleted pre snapshot " << pre_snapshot_num);
 		}
 		catch (const Exception& ex) {
-		    logging.error("deleting snapshot failed:");
+		    y2err("deleting snapshot failed:");
 		    // assumes a logging setup
 		    SN_CAUGHT(ex);
 		}
@@ -164,7 +170,7 @@ set<string> SnapperZyppPlugin::get_solvables(const Message& msg, bool todo) {
     rapidjson::Document doc;
     const char * c_body = msg.body.c_str();
     if (doc.Parse(c_body).HasParseError()) {
-	logging.error("parsing zypp JSON failed");
+	y2err("parsing zypp JSON failed");
 	return result;
     }
     // https://doc.opensuse.org/projects/libzypp/SLE12SP2/plugin-commit.html
@@ -190,9 +196,19 @@ void SnapperZyppPlugin::match_solvables(const set<string>&, bool& found, bool& i
     important = true;
 }
 
+bool
+log_query(LogLevel level, const string& component)
+{
+    if (level == DEBUG)
+	return getenv("DEBUG") != nullptr;
+    else
+	return true;
+}
+
 int main() {
+    setLogQuery(&log_query);
     if (getenv("DISABLE_SNAPPER_ZYPP_PLUGIN") != nullptr) {
-	logging.info("$DISABLE_SNAPPER_ZYPP_PLUGIN is set - disabling snapper-zypp-plugin");
+	y2mil("$DISABLE_SNAPPER_ZYPP_PLUGIN is set - disabling snapper-zypp-plugin");
 	ZyppCommitPlugin plugin;
 	return plugin.main();
     }
