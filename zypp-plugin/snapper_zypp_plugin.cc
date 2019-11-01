@@ -169,6 +169,7 @@ set<string> SnapperZyppPlugin::get_solvables(const Message& msg, bool todo) {
 
     rapidjson::Document doc;
     const char * c_body = msg.body.c_str();
+    y2deb("parsing zypp JSON: " << c_body);
     if (doc.Parse(c_body).HasParseError()) {
 	y2err("parsing zypp JSON failed");
 	return result;

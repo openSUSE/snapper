@@ -40,7 +40,7 @@ int ZyppPlugin::main() {
 		state = State::Headers;
 	    }
 	    else {
-		throw "FIXME: expected a command";
+		throw runtime_error("Plugin protocol error: expected a command. Got '" + line + "'");
 	    }
 	}
 	else if (state == State::Headers) {
@@ -53,9 +53,16 @@ int ZyppPlugin::main() {
 		state = State::Start;
 	    }
 	    else {
-		//string key, value;
-		// TODO: parse the header
-		//msg.headers[key] = value;
+		static const boost::regex rx_header("([A-Za-z0-9_]+):[ \t]*(.+)");
+		boost::smatch what;
+		if (boost::regex_match(line, what, rx_header)) {
+		    string key = what[1];
+		    string value = what[2];
+		    msg.headers[key] = value;
+		}
+		else {
+		    throw runtime_error("Plugin protocol error: expected a header or new line. Got '" + line + "'");
+		}
 	    }
 	}
     }
