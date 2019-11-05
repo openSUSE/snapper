@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<refentry id='snapper8'>
+<refentry id='snapper8' xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <refentryinfo>
     <date>2019-10-14</date>
@@ -207,13 +207,14 @@
       <varlistentry>
 	<term><option>--utc</option></term>
 	<listitem>
-	  <para>Display dates and times in UTC.</para>
+	  <para>Display dates and times in UTC. By default, local time is used.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
 	<term><option>--iso</option></term>
 	<listitem>
-	  <para>Display dates and times in ISO format.</para>
+	  <para>Display dates and times in ISO format. ISO format is always used for machine-readable
+	  outputs.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
@@ -231,7 +232,9 @@
       <varlistentry>
 	<term><option>--csvout</option></term>
 	<listitem>
-	  <para>Sets CSV output format.</para>
+	  <para>Sets CSV output format. See
+	  <link xlink:href="https://tools.ietf.org/html/rfc4180">RFC 4180</link>
+	  for the details, except lines end with a LF, not CR+LF.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
