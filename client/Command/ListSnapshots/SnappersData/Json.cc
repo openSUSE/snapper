@@ -103,14 +103,13 @@ namespace snapper
 		    if (column == Options::Columns::USERDATA)
 			value = userdata_json(snapshot->getUserdata());
 
-		    if (value.empty())
+		    if (!is_json_string(column))
 		    {
-			value = "null";
 			skip_format.push_back(column);
-		    }
 
-		    if (skip_format_value(column))
-			skip_format.push_back(column);
+			if (value.empty())
+			    value = "null";
+		    }
 
 		    snapshot_data.emplace_back(column, value);
 		}
@@ -128,7 +127,7 @@ namespace snapper
 	}
 
 
-	bool Command::ListSnapshots::SnappersData::Json::skip_format_value(const string& column) const
+	bool Command::ListSnapshots::SnappersData::Json::is_json_string(const string& column) const
 	{
 	    if (column == Options::Columns::NUMBER ||
 		column == Options::Columns::DEFAULT ||
@@ -137,9 +136,9 @@ namespace snapper
 		column == Options::Columns::USERDATA ||
 		column == Options::Columns::PRE_NUMBER ||
 		column == Options::Columns::POST_NUMBER)
-		return true;
-	    else
 		return false;
+	    else
+		return true;
 	}
 
 

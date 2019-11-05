@@ -49,7 +49,7 @@ namespace snapper
 
 	    std::string snapshot_json(const ProxySnapshot* snapshot) const;
 
-	    bool skip_format_value(const string& column) const;
+	    bool is_json_string(const string& column) const;
 
 	    virtual string boolean_text(bool value) const override;
 
