@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<refentry id='snapper8'>
+<refentry id='snapper8' xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <refentryinfo>
     <date>2019-10-14</date>
@@ -207,19 +207,46 @@
       <varlistentry>
 	<term><option>--utc</option></term>
 	<listitem>
-	  <para>Display dates and times in UTC.</para>
+	  <para>Display dates and times in UTC. By default, local time is used.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
 	<term><option>--iso</option></term>
 	<listitem>
-	  <para>Display dates and times in ISO format.</para>
+	  <para>Display dates and times in ISO format. ISO format is always used for machine-readable
+	  outputs.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
 	<term><option>-t, --table-style</option></term>
 	<listitem>
 	  <para>Specifies table style. Table style is identified by an integer number.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--machine-readable</option></term>
+	<listitem>
+	  <para>Specifies a machine-readable output format. Possible options are csv and json.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--csvout</option></term>
+	<listitem>
+	  <para>Sets CSV output format. See
+	  <link xlink:href="https://tools.ietf.org/html/rfc4180">RFC 4180</link>
+	  for the details, except lines end with a LF, not CR+LF.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--jsonout</option></term>
+	<listitem>
+	  <para>Sets JSON output format.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--separator</option></term>
+	<listitem>
+	  <para>Specifies the character separator for CSV output format.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
@@ -277,6 +304,16 @@
 	<term><option>list-configs</option></term>
 	<listitem>
 	  <para>List available configurations.</para>
+
+	  <variablelist>
+	    <varlistentry>
+	      <term><option>--columns</option> <replaceable>columns</replaceable></term>
+	      <listitem>
+		<para>Select columns to show separated by comma.</para>
+		<para>Possible columns are: config, subvolume.</para>
+	      </listitem>
+	    </varlistentry>
+	  </variablelist>
 	</listitem>
       </varlistentry>
 
@@ -322,6 +359,17 @@
 	<term><option>get-config</option></term>
 	<listitem>
 	  <para>Displays the settings of the configuration.</para>
+
+	  <variablelist>
+	    <varlistentry>
+	      <term><option>--columns</option> <replaceable>columns</replaceable></term>
+	      <listitem>
+		<para>Select columns to show separated by comma.</para>
+		<para>Possible columns are: key, value.</para>
+		<para>Columns are not selected when JSON format is used.</para>
+	      </listitem>
+	    </varlistentry>
+	  </variablelist>
 	</listitem>
       </varlistentry>
 
@@ -360,6 +408,15 @@
 	      <term><option>-a, --all-configs</option></term>
 	      <listitem>
 		<para>List snapshots from all configs accessible by the user.</para>
+	      </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><option>--columns</option> <replaceable>columns</replaceable></term>
+	      <listitem>
+		<para>Select columns to show separated by comma.</para>
+		<para>Possible columns are: config, subvolume, number, default, active,
+		date, user, used-space, cleanup, description, userdata, pre-number, post-number,
+		post-date.</para>
 	      </listitem>
 	    </varlistentry>
 	  </variablelist>

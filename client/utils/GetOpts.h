@@ -1,3 +1,5 @@
+#ifndef GET_OPTS_H
+#define GET_OPTS_H
 
 #include <getopt.h>
 #include <string>
@@ -42,3 +44,4 @@ private:
 
 };
 
+#endif

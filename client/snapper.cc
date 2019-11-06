@@ -52,6 +52,10 @@
 #include "proxy.h"
 #include "misc.h"
 
+#include "GlobalOptions.h"
+#include "Command/ListSnapshots.h"
+#include "Command/ListConfigs.h"
+#include "Command/GetConfig.h"
 
 using namespace snapper;
 using namespace std;
@@ -59,7 +63,9 @@ using namespace std;
 
 struct Cmd
 {
-    typedef void (*cmd_func_t)(ProxySnappers* snappers, ProxySnapper* snapper);
+    typedef void (*cmd_func_t)(cli::GlobalOptions* global_options, ProxySnappers* snappers,
+	ProxySnapper* snapper);
+
     typedef void (*help_func_t)();
 
     Cmd(const string& name, cmd_func_t cmd_func, help_func_t help_func, bool needs_snapper)
@@ -82,14 +88,6 @@ struct Cmd
 
 
 GetOpts getopts;
-
-bool quiet = false;
-bool verbose = false;
-bool utc = false;
-bool iso = false;
-string config_name = "root";
-bool no_dbus = false;
-string target_root = "/";
 
 
 struct MyFiles : public Files
@@ -167,39 +165,16 @@ MyFiles::bulk_process(FILE* file, std::function<void(File& file)> callback)
 void
 help_list_configs()
 {
-    cout << _("  List configs:") << '\n'
-	 << _("\tsnapper list-configs") << '\n'
-	 << endl;
+    cout << cli::Command::ListConfigs::help() << endl;
 }
 
 
 void
-command_list_configs(ProxySnappers* snappers, ProxySnapper*)
+command_list_configs(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper*)
 {
-    getopts.parse("list-configs", GetOpts::no_options);
-    if (getopts.hasArgs())
-    {
-	cerr << _("Command 'list-configs' does not take arguments.") << endl;
-	exit(EXIT_FAILURE);
-    }
+    cli::Command::ListConfigs command(*global_options, getopts, *snappers);
 
-    Table table;
-
-    TableHeader header;
-    header.add(_("Config"));
-    header.add(_("Subvolume"));
-    table.setHeader(header);
-
-    map<string, ProxyConfig> configs = snappers->getConfigs();
-    for (const map<string, ProxyConfig>::value_type value : configs)
-    {
-	TableRow row;
-	row.add(value.first);
-	row.add(value.second.getSubvolume());
-	table.add(row);
-    }
-
-    cout << table;
+    command.run();
 }
 
 
@@ -217,7 +192,7 @@ help_create_config()
 
 
 void
-command_create_config(ProxySnappers* snappers, ProxySnapper*)
+command_create_config(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper*)
 {
     const struct option options[] = {
 	{ "fstype",		required_argument,	0,	'f' },
@@ -256,7 +231,7 @@ command_create_config(ProxySnappers* snappers, ProxySnapper*)
 	exit(EXIT_FAILURE);
     }
 
-    snappers->createConfig(config_name, subvolume, fstype, template_name);
+    snappers->createConfig(global_options->config(), subvolume, fstype, template_name);
 }
 
 
@@ -270,7 +245,7 @@ help_delete_config()
 
 
 void
-command_delete_config(ProxySnappers* snappers, ProxySnapper*)
+command_delete_config(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper*)
 {
     getopts.parse("delete-config", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -279,46 +254,23 @@ command_delete_config(ProxySnappers* snappers, ProxySnapper*)
 	exit(EXIT_FAILURE);
     }
 
-    snappers->deleteConfig(config_name);
+    snappers->deleteConfig(global_options->config());
 }
 
 
 void
 help_get_config()
 {
-    cout << _("  Get config:") << '\n'
-	 << _("\tsnapper get-config") << '\n'
-	 << endl;
+    cout << cli::Command::GetConfig::help() << endl;
 }
 
 
 void
-command_get_config(ProxySnappers* snappers, ProxySnapper* snapper)
+command_get_config(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper*)
 {
-    getopts.parse("get-config", GetOpts::no_options);
-    if (getopts.hasArgs())
-    {
-	cerr << _("Command 'get-config' does not take arguments.") << endl;
-	exit(EXIT_FAILURE);
-    }
+    cli::Command::GetConfig command(*global_options, getopts, *snappers);
 
-    Table table;
-
-    TableHeader header;
-    header.add(_("Key"));
-    header.add(_("Value"));
-    table.setHeader(header);
-
-    ProxyConfig config = snapper->getConfig();
-    for (const map<string, string>::value_type& value : config.getAllValues())
-    {
-	TableRow row;
-	row.add(value.first);
-	row.add(value.second);
-	table.add(row);
-    }
-
-    cout << table;
+    command.run();
 }
 
 
@@ -332,7 +284,7 @@ help_set_config()
 
 
 void
-command_set_config(ProxySnappers* snappers, ProxySnapper* snapper)
+command_set_config(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     getopts.parse("set-config", GetOpts::no_options);
     if (!getopts.hasArgs())
@@ -350,257 +302,16 @@ command_set_config(ProxySnappers* snappers, ProxySnapper* snapper)
 void
 help_list()
 {
-    cout << _("  List snapshots:") << '\n'
-	 << _("\tsnapper list") << '\n'
-	 << '\n'
-	 << _("    Options for 'list' command:") << '\n'
-	 << _("\t--type, -t <type>\t\tType of snapshots to list.") << '\n'
-	 << _("\t--disable-used-space\t\tDisable showing used space.") << '\n'
-	 << _("\t--all-configs, -a\t\tList snapshots from all accessible configs.") << '\n'
-	 << endl;
-}
-
-enum ListMode { LM_ALL, LM_SINGLE, LM_PRE_POST };
-
-
-void
-list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool show_used_space);
-
-
-void
-command_list(ProxySnappers* snappers, ProxySnapper*)
-{
-    const struct option options[] = {
-	{ "type",		required_argument,	0,	't' },
-	{ "disable-used-space", no_argument,            0,      0 },
-	{ "all-configs",	no_argument,		0,	'a' },
-	{ 0, 0, 0, 0 }
-    };
-
-    GetOpts::parsed_opts opts = getopts.parse("list", options);
-    if (getopts.hasArgs())
-    {
-	cerr << _("Command 'list' does not take arguments.") << endl;
-	exit(EXIT_FAILURE);
-    }
-
-    ListMode list_mode = LM_ALL;
-    bool show_used_space = true;
-
-    GetOpts::parsed_opts::const_iterator opt;
-
-    if ((opt = opts.find("type")) != opts.end())
-    {
-	if (opt->second == "all")
-	    list_mode = LM_ALL;
-	else if (opt->second == "single")
-	    list_mode = LM_SINGLE;
-	else if (opt->second == "pre-post")
-	    list_mode = LM_PRE_POST;
-	else
-	{
-	    cerr << _("Unknown type of snapshots.") << endl;
-	    exit(EXIT_FAILURE);
-	}
-    }
-
-    if ((opt = opts.find("disable-used-space")) != opts.end())
-    {
-       show_used_space = false;
-    }
-
-    vector<string> tmp;
-
-    if ((opt = opts.find("all-configs")) == opts.end())
-    {
-        tmp.push_back(config_name);
-    }
-    else
-    {
-        map<string, ProxyConfig> configs = snappers->getConfigs();
-        for (map<string, ProxyConfig>::value_type it : configs)
-            tmp.push_back(it.first);
-    }
-
-    for (vector<string>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
-    {
-	ProxySnapper* snapper = snappers->getSnapper(*it);
-
-        if (it != tmp.begin())
-            cout << endl;
-
-        if (tmp.size() > 1)
-        {
-            cout << "Config: " << snapper->configName() << ", subvolume: "
-                 << snapper->getConfig().getSubvolume() << endl;
-        }
-
-        list_from_one_config(snapper, list_mode, show_used_space);
-    }
+    cout << cli::Command::ListSnapshots::help() << endl;
 }
 
 
 void
-list_from_one_config(ProxySnapper* snapper, ListMode list_mode, bool show_used_space)
+command_list(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper*)
 {
-    const ProxySnapshots& snapshots = snapper->getSnapshots();
+    cli::Command::ListSnapshots command(*global_options, getopts, *snappers);
 
-    ProxySnapshots::const_iterator default_snapshot = snapshots.end();
-    ProxySnapshots::const_iterator active_snapshot = snapshots.end();
-
-    try
-    {
-	default_snapshot = snapshots.getDefault();
-	active_snapshot = snapshots.getActive();
-    }
-    catch (const DBus::ErrorException& e)
-    {
-	SN_CAUGHT(e);
-
-	// If snapper was just updated and the old snapperd is still
-	// running it might not know the GetDefaultSnapshot and
-	// GetActiveSnapshot methods.
-
-	if (strcmp(e.name(), "error.unknown_method") != 0)
-	    SN_RETHROW(e);
-    }
-
-    if (list_mode != LM_ALL && list_mode != LM_SINGLE)
-	show_used_space = false;
-
-    if (show_used_space)
-    {
-	try
-	{
-	    snapper->calculateUsedSpace();
-	}
-	catch (const QuotaException& e)
-	{
-	    SN_CAUGHT(e);
-
-	    show_used_space = false;
-	}
-    }
-
-    auto format_num = [&snapshots, default_snapshot, active_snapshot](const ProxySnapshot& snapshot) -> string {
-	bool is_default = default_snapshot != snapshots.end() && default_snapshot->getNum() == snapshot.getNum();
-	bool is_active = active_snapshot != snapshots.end() && active_snapshot->getNum() == snapshot.getNum();
-	static const char sign[2][2] = { { ' ', '-' }, { '+', '*' } };
-	return decString(snapshot.getNum()) + sign[is_default][is_active];
-    };
-
-    auto format_date = [](const ProxySnapshot& snapshot) -> string {
-	return snapshot.isCurrent() ? "" : datetime(snapshot.getDate(), utc, iso);
-    };
-
-    auto format_used_space = [](const ProxySnapshot& snapshot) -> string {
-	return snapshot.isCurrent() ? "" : byte_to_humanstring(snapshot.getUsedSpace(), 2);
-    };
-
-    Table table;
-
-    switch (list_mode)
-    {
-	case LM_ALL:
-	{
-	    TableHeader header;
-	    header.add(_("#"), TableAlign::RIGHT);
-	    header.add(_("Type"));
-	    header.add(_("Pre #"), TableAlign::RIGHT);
-	    header.add(_("Date"));
-	    header.add(_("User"));
-	    if (show_used_space)
-		header.add(_("Used Space"), TableAlign::RIGHT);
-	    header.add(_("Cleanup"));
-	    header.add(_("Description"));
-	    header.add(_("Userdata"));
-	    table.setHeader(header);
-
-	    for (const ProxySnapshot& snapshot : snapshots)
-	    {
-		TableRow row;
-		row.add(format_num(snapshot));
-		row.add(toString(snapshot.getType()));
-		row.add(snapshot.getType() == POST ? decString(snapshot.getPreNum()) : "");
-		row.add(format_date(snapshot));
-		row.add(username(snapshot.getUid()));
-		if (show_used_space)
-		    row.add(format_used_space(snapshot));
-		row.add(snapshot.getCleanup());
-		row.add(snapshot.getDescription());
-		row.add(show_userdata(snapshot.getUserdata()));
-		table.add(row);
-	    }
-	}
-	break;
-
-	case LM_SINGLE:
-	{
-	    TableHeader header;
-	    header.add(_("#"), TableAlign::RIGHT);
-	    header.add(_("Date"));
-	    header.add(_("User"));
-	    if (show_used_space)
-		header.add(_("Used Space"), TableAlign::RIGHT);
-	    header.add(_("Description"));
-	    header.add(_("Userdata"));
-	    table.setHeader(header);
-
-	    for (const ProxySnapshot& snapshot : snapshots)
-	    {
-		if (snapshot.getType() != SINGLE)
-		    continue;
-
-		TableRow row;
-		row.add(format_num(snapshot));
-		row.add(format_date(snapshot));
-		row.add(username(snapshot.getUid()));
-		if (show_used_space)
-		    row.add(format_used_space(snapshot));
-		row.add(snapshot.getDescription());
-		row.add(show_userdata(snapshot.getUserdata()));
-		table.add(row);
-	    }
-	}
-	break;
-
-	case LM_PRE_POST:
-	{
-	    TableHeader header;
-	    header.add(_("Pre #"), TableAlign::RIGHT);
-	    header.add(_("Post #"), TableAlign::RIGHT);
-	    header.add(_("Pre Date"));
-	    header.add(_("Post Date"));
-	    header.add(_("Description"));
-	    header.add(_("Userdata"));
-	    table.setHeader(header);
-
-	    for (ProxySnapshots::const_iterator it1 = snapshots.begin(); it1 != snapshots.end(); ++it1)
-	    {
-		if (it1->getType() != PRE)
-		    continue;
-
-		ProxySnapshots::const_iterator it2 = snapshots.findPost(it1);
-		if (it2 == snapshots.end())
-		    continue;
-
-		const ProxySnapshot& pre = *it1;
-		const ProxySnapshot& post = *it2;
-
-		TableRow row;
-		row.add(format_num(pre));
-		row.add(format_num(post));
-		row.add(datetime(pre.getDate(), utc, iso));
-		row.add(datetime(post.getDate(), utc, iso));
-		row.add(pre.getDescription());
-		row.add(show_userdata(pre.getUserdata()));
-		table.add(row);
-	    }
-	}
-	break;
-    }
-
-    cout << table;
+    command.run();
 }
 
 
@@ -626,7 +337,7 @@ help_create()
 
 
 void
-command_create(ProxySnappers* snappers, ProxySnapper* snapper)
+command_create(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
@@ -780,7 +491,7 @@ help_modify()
 
 
 void
-command_modify(ProxySnappers* snappers, ProxySnapper* snapper)
+command_modify(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "description",	required_argument,	0,	'd' },
@@ -864,7 +575,7 @@ filter_undeletables(ProxySnapshots& snapshots, vector<ProxySnapshots::iterator>&
 
 
 void
-command_delete(ProxySnappers* snappers, ProxySnapper* snapper)
+command_delete(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "sync",		no_argument,		0,	's' },
@@ -921,7 +632,7 @@ command_delete(ProxySnappers* snappers, ProxySnapper* snapper)
 
     filter_undeletables(snapshots, nums);
 
-    snapper->deleteSnapshots(nums, verbose);
+    snapper->deleteSnapshots(nums, global_options->verbose());
 
     if (sync)
 	snapper->syncFilesystem();
@@ -938,7 +649,7 @@ help_mount()
 
 
 void
-command_mount(ProxySnappers* snappers, ProxySnapper* snapper)
+command_mount(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     getopts.parse("mount", GetOpts::no_options);
     if (!getopts.hasArgs())
@@ -967,7 +678,7 @@ help_umount()
 
 
 void
-command_umount(ProxySnappers* snappers, ProxySnapper* snapper)
+command_umount(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     getopts.parse("umount", GetOpts::no_options);
     if (!getopts.hasArgs())
@@ -999,7 +710,7 @@ help_status()
 
 
 void
-command_status(ProxySnappers* snappers, ProxySnapper* snapper)
+command_status(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "output",		required_argument,	0,	'o' },
@@ -1067,7 +778,7 @@ help_diff()
 
 
 void
-command_diff(ProxySnappers* snappers, ProxySnapper* snapper)
+command_diff(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "input",		required_argument,	0,	'i' },
@@ -1132,7 +843,7 @@ help_undo()
 
 
 void
-command_undo(ProxySnappers* snappers, ProxySnapper* snapper)
+command_undo(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "input",		required_argument,	0,	'i' },
@@ -1207,7 +918,7 @@ command_undo(ProxySnappers* snappers, ProxySnapper* snapper)
 	    exit(EXIT_FAILURE);
 	}
 
-	if (verbose)
+	if (global_options->verbose())
 	{
 	    switch (it1->action)
 	    {
@@ -1245,7 +956,7 @@ command_undo(ProxySnappers* snappers, ProxySnapper* snapper)
 #ifdef ENABLE_ROLLBACK
 
 const Filesystem*
-getFilesystem(const ProxyConfig& config)
+getFilesystem(const ProxyConfig& config, const string& target_root)
 {
     const map<string, string>& raw = config.getAllValues();
 
@@ -1286,7 +997,7 @@ help_rollback()
 
 
 void
-command_rollback(ProxySnappers* snappers, ProxySnapper* snapper)
+command_rollback(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "print-number",       no_argument,            0,      'p' },
@@ -1333,7 +1044,7 @@ command_rollback(ProxySnappers* snappers, ProxySnapper* snapper)
 
     ProxyConfig config = snapper->getConfig();
 
-    const Filesystem* filesystem = getFilesystem(config);
+    const Filesystem* filesystem = getFilesystem(config, global_options->root());
     if (filesystem->fstype() != "btrfs")
     {
 	cerr << _("Command 'rollback' only available for btrfs.") << endl;
@@ -1360,43 +1071,43 @@ command_rollback(ProxySnappers* snappers, ProxySnapper* snapper)
 
     if (getopts.numArgs() == 0)
     {
-	if (!quiet)
+	if (!global_options->quiet())
 	    cout << _("Creating read-only snapshot of default subvolume.") << flush;
 
 	scd1.read_only = true;
 	snapshot1 = snapper->createSingleSnapshotOfDefault(scd1);
 
-	if (!quiet)
+	if (!global_options->quiet())
 	    cout << " " << sformat(_("(Snapshot %d.)"), snapshot1->getNum()) << endl;
 
-	if (!quiet)
+	if (!global_options->quiet())
 	    cout << _("Creating read-write snapshot of current subvolume.") << flush;
 
 	scd2.read_only = false;
 	snapshot2 = snapper->createSingleSnapshot(snapshots.getCurrent(), scd2);
 
-	if (!quiet)
+	if (!global_options->quiet())
 	    cout << " " << sformat(_("(Snapshot %d.)"), snapshot2->getNum()) << endl;
     }
     else
     {
 	ProxySnapshots::const_iterator tmp = snapshots.findNum(getopts.popArg());
 
-	if (!quiet)
+	if (!global_options->quiet())
 	    cout << _("Creating read-only snapshot of current system.") << flush;
 
 	snapshot1 = snapper->createSingleSnapshot(scd1);
 
-	if (!quiet)
+	if (!global_options->quiet())
 	    cout << " " << sformat(_("(Snapshot %d.)"), snapshot1->getNum()) << endl;
 
-	if (!quiet)
+	if (!global_options->quiet())
 	    cout << sformat(_("Creating read-write snapshot of snapshot %d."), tmp->getNum()) << flush;
 
 	scd2.read_only = false;
 	snapshot2 = snapper->createSingleSnapshot(tmp, scd2);
 
-	if (!quiet)
+	if (!global_options->quiet())
 	    cout << " " << sformat(_("(Snapshot %d.)"), snapshot2->getNum()) << endl;
     }
 
@@ -1407,7 +1118,7 @@ command_rollback(ProxySnappers* snappers, ProxySnapper* snapper)
 	snapper->modifySnapshot(previous_default, smd);
     }
 
-    if (!quiet)
+    if (!global_options->quiet())
 	cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot2->getNum()) << endl;
 
     filesystem->setDefault(snapshot2->getNum());
@@ -1432,7 +1143,7 @@ help_setup_quota()
 
 
 void
-command_setup_quota(ProxySnappers* snappers, ProxySnapper* snapper)
+command_setup_quota(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     GetOpts::parsed_opts opts = getopts.parse("setup-quota", GetOpts::no_options);
     if (getopts.numArgs() != 0)
@@ -1455,7 +1166,7 @@ help_cleanup()
 
 
 void
-command_cleanup(ProxySnappers* snappers, ProxySnapper* snapper)
+command_cleanup(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     GetOpts::parsed_opts opts = getopts.parse("cleanup", GetOpts::no_options);
     if (getopts.numArgs() != 1)
@@ -1468,15 +1179,15 @@ command_cleanup(ProxySnappers* snappers, ProxySnapper* snapper)
 
     if (cleanup == "number")
     {
-	do_cleanup_number(snapper, verbose);
+	do_cleanup_number(snapper, global_options->verbose());
     }
     else if (cleanup == "timeline")
     {
-	do_cleanup_timeline(snapper, verbose);
+	do_cleanup_timeline(snapper, global_options->verbose());
     }
     else if (cleanup == "empty-pre-post")
     {
-	do_cleanup_empty_pre_post(snapper, verbose);
+	do_cleanup_empty_pre_post(snapper, global_options->verbose());
     }
     else
     {
@@ -1493,7 +1204,7 @@ help_debug()
 
 
 void
-command_debug(ProxySnappers* snappers, ProxySnapper*)
+command_debug(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper*)
 {
     getopts.parse("debug", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -1537,7 +1248,7 @@ print_xa_diff(const string loc_pre, const string loc_post)
 }
 
 void
-command_xa_diff(ProxySnappers* snappers, ProxySnapper* snapper)
+command_xa_diff(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     GetOpts::parsed_opts opts = getopts.parse("xadiff", GetOpts::no_options);
     if (getopts.numArgs() < 1)
@@ -1620,17 +1331,7 @@ help(const list<Cmd>& cmds)
     cout << _("usage: snapper [--global-options] <command> [--command-options] [command-arguments]") << '\n'
 	 << endl;
 
-    cout << _("    Global options:") << '\n'
-	 << _("\t--quiet, -q\t\t\tSuppress normal output.") << '\n'
-	 << _("\t--verbose, -v\t\t\tIncrease verbosity.") << '\n'
-	 << _("\t--utc\t\t\t\tDisplay dates and times in UTC.") << '\n'
-	 << _("\t--iso\t\t\t\tDisplay dates and times in ISO format.") << '\n'
-	 << _("\t--table-style, -t <style>\tTable style (integer).") << '\n'
-	 << _("\t--config, -c <name>\t\tSet name of config to use.") << '\n'
-	 << _("\t--no-dbus\t\t\tOperate without DBus.") << '\n'
-	 << _("\t--root, -r <path>\t\tOperate on target root (works only without DBus).") << '\n'
-	 << _("\t--version\t\t\tPrint version and exit.") << '\n'
-	 << endl;
+    cout << cli::GlobalOptions::help_text() << endl;
 
     for (list<Cmd>::const_iterator cmd = cmds.begin(); cmd != cmds.end(); ++cmd)
 	(*cmd->help_func)();
@@ -1680,76 +1381,25 @@ main(int argc, char** argv)
 	Cmd("debug", command_debug, help_debug, false)
     };
 
-    const struct option options[] = {
-	{ "quiet",		no_argument,		0,	'q' },
-	{ "verbose",		no_argument,		0,	'v' },
-	{ "utc",		no_argument,		0,	0 },
-	{ "iso",		no_argument,		0,	0 },
-	{ "table-style",	required_argument,	0,	't' },
-	{ "config",		required_argument,	0,	'c' },
-	{ "no-dbus",		no_argument,		0,	0 },
-	{ "root",		required_argument,	0,	'r' },
-	{ "version",		no_argument,		0,	0 },
-	{ "help",		no_argument,		0,	0 },
-	{ 0, 0, 0, 0 }
-    };
-
     getopts.init(argc, argv);
 
-    GetOpts::parsed_opts opts = getopts.parse(options);
+    cli::GlobalOptions global_options(getopts);
 
-    GetOpts::parsed_opts::const_iterator opt;
-
-    if ((opt = opts.find("quiet")) != opts.end())
-	quiet = true;
-
-    if ((opt = opts.find("verbose")) != opts.end())
-	verbose = true;
-
-    if ((opt = opts.find("utc")) != opts.end())
-	utc = true;
-
-    if ((opt = opts.find("iso")) != opts.end())
-	iso = true;
-
-    if ((opt = opts.find("table-style")) != opts.end())
+    if (global_options.has_errors())
     {
-	unsigned int s;
-	opt->second >> s;
-	if (s >= Table::numStyles)
-	{
-	    cerr << sformat(_("Invalid table style %d."), s) << " "
-		 << sformat(_("Use an integer number from %d to %d."), 0, Table::numStyles - 1) << endl;
-	    exit(EXIT_FAILURE);
-	}
-	Table::defaultStyle = (TableLineStyle) s;
+	cerr << global_options.errors().front() << endl;
+
+	exit(EXIT_FAILURE);
     }
 
-    if ((opt = opts.find("config")) != opts.end())
-	config_name = opt->second;
-
-    if ((opt = opts.find("no-dbus")) != opts.end())
-	no_dbus = true;
-
-    if ((opt = opts.find("root")) != opts.end())
-    {
-	target_root = opt->second;
-        if (!no_dbus)
-        {
-            cerr << _("root argument can be used only together with no-dbus.") << endl
-                 << _("Try 'snapper --help' for more information.") << endl;
-            exit(EXIT_FAILURE);
-        }
-    }
-
-    if ((opt = opts.find("version")) != opts.end())
+    if (global_options.version())
     {
 	cout << "snapper " << Snapper::compileVersion() << endl;
 	cout << "flags " << Snapper::compileFlags() << endl;
 	exit(EXIT_SUCCESS);
     }
 
-    if ((opt = opts.find("help")) != opts.end())
+    if (global_options.help())
     {
 	help(cmds);
     }
@@ -1776,19 +1426,19 @@ main(int argc, char** argv)
 
     try
     {
-	ProxySnappers snappers(no_dbus ? ProxySnappers::createLib(target_root) :
+	ProxySnappers snappers(global_options.no_dbus() ? ProxySnappers::createLib(global_options.root()) :
 			       ProxySnappers::createDbus());
 
 	if (cmd->needs_snapper)
-	    (*cmd->cmd_func)(&snappers, snappers.getSnapper(config_name));
+	    (*cmd->cmd_func)(&global_options, &snappers, snappers.getSnapper(global_options.config()));
 	else
-	    (*cmd->cmd_func)(&snappers, nullptr);
+	    (*cmd->cmd_func)(&global_options, &snappers, nullptr);
     }
     catch (const DBus::ErrorException& e)
     {
 	SN_CAUGHT(e);
 
-	if (strcmp(e.name(), "error.unknown_config") == 0 && config_name == "root")
+	if (strcmp(e.name(), "error.unknown_config") == 0 && global_options.config() == "root")
 	{
 	    cerr << _("The config 'root' does not exist. Likely snapper is not configured.") << endl
 		 << _("See 'man snapper' for further instructions.") << endl;
@@ -1813,13 +1463,13 @@ main(int argc, char** argv)
     catch (const ConfigNotFoundException& e)
     {
 	SN_CAUGHT(e);
-	cerr << sformat(_("Config '%s' not found."), config_name.c_str()) << endl;
+	cerr << sformat(_("Config '%s' not found."), global_options.config().c_str()) << endl;
 	exit(EXIT_FAILURE);
     }
     catch (const InvalidConfigException& e)
     {
 	SN_CAUGHT(e);
-	cerr << sformat(_("Config '%s' is invalid."), config_name.c_str()) << endl;
+	cerr << sformat(_("Config '%s' is invalid."), global_options.config().c_str()) << endl;
 	exit(EXIT_FAILURE);
     }
     catch (const ListConfigsFailedException& e)
