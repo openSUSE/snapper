@@ -17,8 +17,12 @@ BOOST_AUTO_TEST_CASE(test1_escape_values)
 	{ "key1", "value1" },
 	{ "key2", "value\"2" },
 	{ "key3", "value\\3" },
-	{ "key3", "value\n3" },
-	{ "key4", "\"value4\"" }
+	{ "key3", "value\b4" },
+	{ "key3", "value\f5" },
+	{ "key3", "value\n6" },
+	{ "key3", "value\r7" },
+	{ "key3", "value\t8" },
+	{ "key4", "\"value9\"" }
     };
 
     string expected_result =
@@ -26,8 +30,12 @@ BOOST_AUTO_TEST_CASE(test1_escape_values)
 	"  \"key1\": \"value1\",\n"
 	"  \"key2\": \"value\\\"2\",\n"
 	"  \"key3\": \"value\\\\3\",\n"
-	"  \"key3\": \"value3\",\n"
-	"  \"key4\": \"\\\"value4\\\"\"\n"
+	"  \"key3\": \"value\\b4\",\n"
+	"  \"key3\": \"value\\f5\",\n"
+	"  \"key3\": \"value\\n6\",\n"
+	"  \"key3\": \"value\\r7\",\n"
+	"  \"key3\": \"value\\t8\",\n"
+	"  \"key4\": \"\\\"value9\\\"\"\n"
 	"}";
 
     snapper::cli::JsonFormatter formatter(data);

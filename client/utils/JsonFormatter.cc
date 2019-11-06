@@ -48,7 +48,11 @@ namespace snapper
 
 		boost::algorithm::replace_all(fixed_value, "\\", "\\\\");
 		boost::algorithm::replace_all(fixed_value, "\"", "\\\"");
-		boost::algorithm::replace_all(fixed_value, "\n", "");
+		boost::algorithm::replace_all(fixed_value, "\b", "\\b");
+		boost::algorithm::replace_all(fixed_value, "\f", "\\f");
+		boost::algorithm::replace_all(fixed_value, "\n", "\\n");
+		boost::algorithm::replace_all(fixed_value, "\r", "\\r");
+		boost::algorithm::replace_all(fixed_value, "\t", "\\t");
 
 		return fixed_value;
 	    }
