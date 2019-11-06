@@ -220,11 +220,45 @@
             </dd>
             <dt>
               <span class="term">
-                <code class="option">-t, --table-style</code>
+                <code class="option">-t, --table-style <em class="replaceable"><code>style</code></em></code>
               </span>
             </dt>
             <dd>
               <p>Specifies table style. Table style is identified by an integer number.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">--machine-readable <em class="replaceable"><code>format</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Specifies a machine-readable output format. Possible options are csv and json.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">--csvout</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Sets CSV output format. See
+                <a class="link" href="https://tools.ietf.org/html/rfc4180" title="RFC 4180">RFC 4180</a>
+                for the details, except lines end with a LF, not CR+LF.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">---jsonout</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Sets JSON output format.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">--separator <em class="replaceable"><code>character</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Specifies the character separator for CSV output format.</p>
             </dd>
             <dt>
               <span class="term">
@@ -286,11 +320,22 @@
             </dd>
             <dt>
               <span class="term">
-                <code class="option">list-configs</code>
+                <code class="option">list-configs [options]</code>
               </span>
             </dt>
             <dd>
               <p>List available configurations.</p>
+              <div class="variablelist">
+                <dl class="variablelist">
+                  <dt>
+                    <span class="term"><code class="option">--columns</code> <em class="replaceable"><code>columns</code></em></span>
+                  </dt>
+                  <dd>
+                    <p>Select columns to show separated by comma.</p>
+                    <p>Possible columns are: config, subvolume.</p>
+                  </dd>
+                </dl>
+              </div>
             </dd>
             <dt>
               <span class="term">
@@ -335,11 +380,23 @@
             </dd>
             <dt>
               <span class="term">
-                <code class="option">get-config</code>
+                <code class="option">get-config [options]</code>
               </span>
             </dt>
             <dd>
               <p>Displays the settings of the configuration.</p>
+              <div class="variablelist">
+                <dl class="variablelist">
+                  <dt>
+                    <span class="term"><code class="option">--columns</code> <em class="replaceable"><code>columns</code></em></span>
+                  </dt>
+                  <dd>
+                    <p>Select columns to show separated by comma.</p>
+                    <p>Possible columns are: key, value</p>
+                    <p>Columns are not selected when JSON format is used.</p>
+                  </dd>
+                </dl>
+              </div>
             </dd>
             <dt>
               <span class="term"><code class="option">set-config</code> <em class="replaceable"><code>configdata</code></em></span>
@@ -384,6 +441,16 @@
                   </dt>
                   <dd>
                     <p>List snapshots from all configs accessible by the user.</p>
+                  </dd>
+                  <dt>
+                    <span class="term">
+                      <code class="option">--columns</code>
+                    </span>
+                  </dt>
+                  <dd>
+                    <p>Select columns to show separated by comma.</p>
+                    <p>Possible columns are: config, subvolume, number, default, active, date, user,
+                      used-space, cleanup, description, userdata, pre-number, post-number, post-date.</p>
                   </dd>
                 </dl>
               </div>
