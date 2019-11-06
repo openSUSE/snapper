@@ -3,6 +3,8 @@
 // getppid
 #include <sys/types.h>
 #include <unistd.h>
+// fnmatch
+#include <fnmatch.h>
 
 #include <boost/regex.hpp>
 
@@ -19,6 +21,7 @@ using snapper::Exception;
 using snapper::CodeLocation;
 #include "client/commands.h"
 #include "snapper/Log.h"
+#include "snapper/XmlFile.h"
 
 #include "zypp_commit_plugin.h"
 
@@ -36,11 +39,71 @@ ostream& operator <<(ostream& os, set<string> ss) {
     return os;
 }
 
+
 class SnapperZyppPlugin : public ZyppCommitPlugin {
 public:
+    struct SolvableMatcher {
+	enum class Kind {
+	    Glob,
+	    Regex
+	};
+	string pattern;
+	Kind kind;
+	bool important;
+
+	SolvableMatcher(string apattern, Kind akind, bool aimportant)
+	: pattern(apattern)
+	, kind(akind)
+	, important(aimportant)
+	{}
+
+	bool match(const string& solvable) {
+	    y2deb("match? " << solvable << " by " << ((kind == Kind::Glob)? "GLOB '": "REGEX '") << pattern << '\'');
+	    bool res;
+	    if (kind == Kind::Glob) {
+		static const int flags = 0;
+		res = fnmatch(pattern.c_str(), solvable.c_str(), flags) == 0;
+	    }
+	    else {
+		// POSIX Extended Regular Expression Syntax
+		boost::regex rx_pattern(pattern, boost::regex::extended);
+		res = boost::regex_match(solvable, rx_pattern);
+	    }
+	    y2deb("-> " << res);
+	    return res;
+	}
+
+	static vector<SolvableMatcher> load_config() {
+	    vector<SolvableMatcher> result;
+
+	    XmlFile config("/etc/snapper/zypp-plugin.conf");
+	    // FIXME test parse errors
+	    const xmlNode* root = config.getRootElement();
+	    const xmlNode* solvables_n = getChildNode(root, "solvables");
+	    const list<const xmlNode*> solvables_l = getChildNodes(solvables_n, "solvable");
+	    for (auto it = solvables_l.begin(); it != solvables_l.end(); ++it) {
+		string pattern;
+		Kind kind = Kind::Regex;
+		bool important = false;
+
+		getAttributeValue(*it, "important", important);
+		string kind_s;
+		getAttributeValue(*it, "match", kind_s);
+		if (kind_s == "w") { // w for wildcard
+		    kind = Kind::Glob;
+		}
+		getValue(*it, pattern);
+
+		result.emplace_back(SolvableMatcher(pattern, kind, important));
+	    }
+	    return result;
+	}
+    };
+
     SnapperZyppPlugin()
     : dbus_conn(DBUS_BUS_SYSTEM)
     , pre_snapshot_num(0)
+    , solvable_matchers(SolvableMatcher::load_config())
     {
 	snapshot_description = "zypp(%s)"; // % basename(readlink("/proc/%d/exe" % getppid()))
     }
@@ -147,12 +210,14 @@ private:
     string snapshot_description;
     map<string, string> userdata;
 
+    vector<SolvableMatcher> solvable_matchers;
+
     map<string, string> get_userdata(const Message&);
 
     // FIXME: what does the todo flag mean?
     set<string> get_solvables(const Message&, bool todo);
 
-    void match_solvables(const set<string>&, bool& found, bool& important);
+    void match_solvables(const set<string>& solvables, bool& found, bool& important);
 
     unsigned int create_pre_snapshot(string config_name, string description, string cleanup, map<string, string> userdata);
 };
@@ -192,9 +257,19 @@ set<string> SnapperZyppPlugin::get_solvables(const Message& msg, bool todo) {
     return result;
 }
 
-void SnapperZyppPlugin::match_solvables(const set<string>&, bool& found, bool& important) {
-    found = true;
-    important = true;
+void SnapperZyppPlugin::match_solvables(const set<string>& solvables, bool& found, bool& important) {
+    found = false;
+    important = false;
+    for (auto s: solvables) {
+	for (auto matcher: solvable_matchers) {
+	    if (matcher.match(s)) {
+		found = true;
+		important = important || matcher.important;
+		if (found && important)
+		    return; // short circuit
+	    }
+	}
+    }
 }
 
 bool

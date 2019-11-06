@@ -137,6 +137,18 @@ namespace snapper
 	return ret;
     }
 
+    bool
+    getValue(const xmlNode* node, string& value)
+    {
+	xmlChar* tmp = xmlNodeGetContent(node);
+	if (tmp == nullptr)
+	    value = "";
+	else {
+	    value = (const char *) tmp;
+	    xmlFree(tmp);
+	}
+	return true;
+    }
 
     bool
     getChildValue(const xmlNode* node, const char* name, string& value)
@@ -172,6 +184,27 @@ namespace snapper
 	return true;
     }
 
+    bool
+    getAttributeValue(const xmlNode* node, const char* name, string& value)
+    {
+	xmlChar* tmp = xmlGetNoNsProp(node, (const xmlChar *) name);
+	if (tmp == nullptr)
+	    return false;
+	value = (const char *) tmp;
+	xmlFree(tmp);
+	return true;
+    }
+
+    bool
+    getAttributeValue(const xmlNode* node, const char* name, bool& value)
+    {
+	string tmp;
+	if (!getAttributeValue(node, name, tmp))
+	    return false;
+
+	value = tmp == "true";
+	return true;
+    }
 
     void
     setChildValue(xmlNode* node, const char* name, const char* value)
