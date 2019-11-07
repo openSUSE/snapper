@@ -201,8 +201,7 @@ namespace snapper
 		int fd = info_dir.open("info.xml", O_NOFOLLOW | O_CLOEXEC);
 		XmlFile file(fd, "");
 
-		const xmlNode* root = file.getRootElement();
-		const xmlNode* node = getChildNode(root, "snapshot");
+		const xmlNode* node = file.getRootElement();
 
 		string tmp;
 

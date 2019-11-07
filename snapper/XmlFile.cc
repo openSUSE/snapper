@@ -104,12 +104,13 @@ namespace snapper
     const xmlNode*
     getChildNode(const xmlNode* node, const char* name)
     {
+	if (node != NULL)
+	    node = node->children;
 	for (const xmlNode* cur_node = node; cur_node; cur_node = cur_node->next)
 	{
 	    if (strcmp(name, (const char*) cur_node->name) == 0)
 	    {
-		if (cur_node->children)
-		    return cur_node->children;
+		return cur_node;
 	    }
 	}
 
@@ -122,13 +123,14 @@ namespace snapper
     {
 	list<const xmlNode*> ret;
 
+	if (node != NULL)
+	    node = node->children;
 	for (const xmlNode* cur_node = node; cur_node; cur_node = cur_node->next)
 	{
 	    if (cur_node->type == XML_ELEMENT_NODE &&
 		strcmp(name, (const char*) cur_node->name) == 0)
 	    {
-		if (cur_node->children)
-		    ret.push_back(cur_node->children);
+		ret.push_back(cur_node);
 	    }
 	}
 
@@ -139,6 +141,8 @@ namespace snapper
     bool
     getChildValue(const xmlNode* node, const char* name, string& value)
     {
+	if (node != NULL)
+	    node = node->children;
 	for (const xmlNode* cur_node = node; cur_node; cur_node = cur_node->next)
 	{
 	    if (cur_node->type == XML_ELEMENT_NODE &&
