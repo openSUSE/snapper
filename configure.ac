@@ -147,6 +147,7 @@ if test "x$with_selinux" = "xyes"; then
 fi
 
 PKG_CHECK_MODULES(DBUS, dbus-1)
+PKG_CHECK_MODULES(XML2, libxml-2.0)
 
 AC_CHECK_HEADER(acl/libacl.h,[],[AC_MSG_ERROR([Cannout find libacl headers. Please install libacl-devel])])
 
