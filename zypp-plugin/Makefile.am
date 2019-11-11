@@ -1,3 +1,5 @@
+if HAVE_ZYPP
+
 plugindir = /usr/lib/zypp/plugins/commit
 plugin_PROGRAMS = snapper-zypp-plugin
 
@@ -12,3 +14,5 @@ snapper_zypp_plugin_LDFLAGS = \
     ../snapper/libsnapper.la \
     ../dbus/libdbus.la \
     -lboost_regex
+
+endif
