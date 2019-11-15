@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ "$(id -u)" != "0" ]; then
+   echo "These tests only work when run as root." >&2
+   echo "Yes. See also the CAUTION file." >&2
+   exit 1
+fi
 
 function run()
 {
