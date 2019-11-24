@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: autoinst.fi\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-15 11:05+0200\n"
-"PO-Revision-Date: 2019-11-24 12:54+0000\n"
+"PO-Revision-Date: 2019-11-24 21:54+0000\n"
 "Last-Translator: Jaanus Ojangu <jaanus.ojangu@gmail.com>\n"
 "Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/"
 "et/>\n"
@@ -137,108 +137,103 @@ msgid "\tsnapper delete-config"
 msgstr "\tsnapper delete-config"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
-msgstr ""
+msgstr "\tsnapper diff <number1>..<number2> [failid]"
 
 msgid "\tsnapper get-config"
-msgstr ""
+msgstr "\tsnapper get-config 'vali seaded'"
 
 msgid "\tsnapper list"
-msgstr ""
+msgstr "\tsnapper loetelu"
 
 msgid "\tsnapper list-configs"
-msgstr ""
+msgstr "\tsnapper seadete loetelu"
 
 msgid "\tsnapper modify <number>"
-msgstr ""
+msgstr "\tsnapper muuda <number>"
 
 msgid "\tsnapper mount <number>"
-msgstr ""
+msgstr "\tsnapper haagi <number>"
 
 msgid "\tsnapper rollback [number]"
-msgstr ""
+msgstr "\tsnapper tagasipööramine [number]"
 
 msgid "\tsnapper set-config <configdata>"
-msgstr ""
+msgstr "\tsnapper set-config <seadistused>"
 
 msgid "\tsnapper setup-quota"
-msgstr ""
+msgstr "\tsnapper setup-quota"
 
 msgid "\tsnapper status <number1>..<number2>"
-msgstr ""
+msgstr "\tsnapper olek <number1>..<number2>"
 
 msgid "\tsnapper umount <number>"
-msgstr ""
+msgstr "\tsnapper lahtihaakimine <number>"
 
 msgid "\tsnapper undochange <number1>..<number2> [files]"
-msgstr ""
+msgstr "\tsnapper undochange <number1>..<number2> [failid]"
 
 msgid "\tsnapper xadiff <number1>..<number2> [files]"
-msgstr ""
+msgstr "\tsnapper xadiff <number1>..<number2> [failid]"
 
-#, fuzzy
 msgid "    Global options:"
-msgstr "Tundmatu globaalne säte "
+msgstr "    Globaalsed valikud:"
 
 msgid "    Options for 'create' command:"
-msgstr ""
+msgstr "    Valikud 'create' käsule:"
 
 msgid "    Options for 'create-config' command:"
-msgstr ""
+msgstr "    Valikud 'create-config' käsule:"
 
 msgid "    Options for 'delete' command:"
-msgstr ""
+msgstr "    Valikud 'delete' käsule:"
 
 msgid "    Options for 'diff' command:"
-msgstr ""
+msgstr "    Valikud 'diff' käsule:"
 
 msgid "    Options for 'list' command:"
-msgstr ""
+msgstr "    Valikud 'list käsule:"
 
 msgid "    Options for 'modify' command:"
-msgstr ""
+msgstr "    Valikud 'modify' käsule:"
 
 msgid "    Options for 'rollback' command:"
-msgstr ""
+msgstr "    Valikud 'rollback' käsule:"
 
 msgid "    Options for 'status' command:"
-msgstr ""
+msgstr "    Valikud 'status' käsule:"
 
 msgid "    Options for 'undochange' command:"
-msgstr ""
+msgstr "    Valikud 'undochange' käsule:"
 
 msgid "  Cleanup snapshots:"
-msgstr ""
+msgstr "  Puhasta hetketõmmised:"
 
 msgid "  Comparing snapshots extended attributes:"
-msgstr ""
+msgstr "  Hetketõmmiste laiendatud atribuutide võrdlus:"
 
 msgid "  Comparing snapshots:"
-msgstr ""
+msgstr "  Hetketõmmiste võrdlemine:"
 
-#, fuzzy
 msgid "  Create config:"
-msgstr "Loodud: "
+msgstr "  Loo seadistus:"
 
-#, fuzzy
 msgid "  Create snapshot:"
-msgstr "Loodud: "
+msgstr "  Looge hetkekoopia:"
 
-#, fuzzy
 msgid "  Delete config:"
-msgstr "Loodud: "
+msgstr "  Kustuta seaded:"
 
 msgid "  Delete snapshot:"
-msgstr ""
+msgstr "  Kustuta hetkekoopia:"
 
-#, fuzzy
 msgid "  Get config:"
-msgstr "Loodud: "
+msgstr "  Lae seaded::"
 
 msgid "  List configs:"
-msgstr ""
+msgstr "  Seadete loetelu:"
 
 msgid "  List snapshots:"
-msgstr ""
+msgstr "  Hetkekoopiate loetelu:"
 
 msgid "  Modify snapshot:"
 msgstr ""
