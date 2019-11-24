@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: autoinst.fi\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-15 11:05+0200\n"
-"PO-Revision-Date: 2019-11-03 20:53+0000\n"
+"PO-Revision-Date: 2019-11-24 12:54+0000\n"
 "Last-Translator: Jaanus Ojangu <jaanus.ojangu@gmail.com>\n"
 "Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/"
 "et/>\n"
@@ -30,109 +30,111 @@ msgstr ""
 "\t--command <command>\t\tKäivitage käsk ja looge eel- ja järelhetketõmmis."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr ""
+msgstr "\t--config, -c <name>\t\tMäära seadistusele nimi."
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr ""
+msgstr "\t--description, -d <description>\tHetkekoopia kirjeldus."
 
 msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr ""
+msgstr "\t--description, -d <description>\tHetkekoopia kirjeldus."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr ""
+msgstr "\t--diff-cmd <command>\t\tFailide võrdlemise käsk."
 
 msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr ""
+msgstr "\t--disable-used-space\t\tEi näita kasutatud ruumi."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
-msgstr ""
+msgstr "\t--extensions, -x <options>\tLisavalikud edastatud diff-käsule.."
 
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
-msgstr ""
+msgstr "\t--from\t\t\t\tLuuakse hetketõmmis etteantud hetketõmmisest."
 
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr ""
+msgstr "\t--fstype, -f <fstype>\t\tFailisüsteemi tüübi käsitsi määramine."
 
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr ""
+"\t--input, -i <file>\t\tLoeb faile, mille muudatused failist tagasi võtta."
 
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr ""
+msgstr "\t--input, -i <file>\t\tLoeb faile erinevuste väljatoomiseks."
 
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr ""
+msgstr "\t--iso\t\t\t\tNäitab kuupäevi ja aega ISO formaadis."
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr ""
+msgstr "\t--no-dbus\t\t\tTöötab ilma DBus-ta."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr ""
+msgstr "\t--output, -o <file>\t\tOleku salvestamine faili."
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr ""
+msgstr "\t--pre-number <number>\t\tEelneva vastava hetketõmmise number."
 
 msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr ""
+msgstr "\t--print-number, -p\t\tNäitab tehtud hetketõmmiste arvu."
 
 msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr ""
+msgstr "\t--print-number, -p\t\tNäitab teisena tehtud hetketõmmiste arvu."
 
 msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr ""
+msgstr "\t--quiet, -q\t\t\tVaigistab normaalse väljundi."
 
 msgid "\t--read-only\t\t\tCreate read-only snapshot."
-msgstr ""
+msgstr "\t--read-only\t\t\tLoob ainult-loetava hetketõmmise."
 
 msgid "\t--read-write\t\t\tCreate read-write snapshot."
-msgstr ""
+msgstr "\t--read-write\t\t\tLoob muudetava hetketõmmise 'read-write'."
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr ""
+"\t--root, -r <path>\t\tTöötab määratud juurel (töötab ainult ilma DBus-ta)."
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr ""
+msgstr "\t--sync, -s\t\t\tSünkroniseerimine peale kustutamist."
 
 msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr ""
+msgstr "\t--table-style, -t <style>\tTabeli stiil (täisarvud)."
 
 msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr ""
+msgstr "\t--template, -t <name>\t\tKasutatava seadistusmalli nimi."
 
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr ""
+msgstr "\t--type, -t <type>\t\tHetkekoopia tüüp."
 
 msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr ""
+msgstr "\t--type, -t <type>\t\tNäidatavate hetketõmmiste tüüp."
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr ""
+msgstr "\t--userdata, -u <userdata>\tKasutaja andmed hetketõmmise jaoks."
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr ""
+msgstr "\t--userdata, -u <userdata>\tKasutaja andmed hetketõmmiste jaoks."
 
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr ""
+msgstr "\t--utc\t\t\t\tNäita kuupäevi ja kellaaegu UTC-s."
 
 msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr ""
+msgstr "\t--verbose, -v\t\t\tRohkem selgitusi."
 
 msgid "\t--version\t\t\tPrint version and exit."
-msgstr ""
+msgstr "\t--version\t\t\tNäita versiooni ja välju."
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
-msgstr ""
+msgstr "\tsnapper cleanup <puhastamise algoritm>"
 
 msgid "\tsnapper create"
-msgstr ""
+msgstr "\tsnapper loomine"
 
 msgid "\tsnapper create-config <subvolume>"
-msgstr ""
+msgstr "\tsnapper create-config <alamkaust>"
 
 msgid "\tsnapper delete <number>"
-msgstr ""
+msgstr "\tsnapper kustutamine <number>"
 
 msgid "\tsnapper delete-config"
-msgstr ""
+msgstr "\tsnapper delete-config"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr ""
