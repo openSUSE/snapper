@@ -24,7 +24,7 @@
 #ifndef SNAPPER_SYSTEM_CMD_H
 #define SNAPPER_SYSTEM_CMD_H
 
-#include <sys/poll.h>
+#include <poll.h>
 #include <stdio.h>
 
 #include <string>
