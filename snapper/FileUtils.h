@@ -24,6 +24,7 @@
 #define SNAPPER_FILE_UTILS_H
 
 
+#include <fcntl.h>
 #include <string>
 #include <vector>
 #include <functional>
