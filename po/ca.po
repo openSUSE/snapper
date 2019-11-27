@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-15 11:05+0200\n"
-"PO-Revision-Date: 2019-10-15 16:53+0000\n"
+"PO-Revision-Date: 2019-11-27 19:54+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
 "Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/"
 ">\n"
@@ -175,10 +175,10 @@ msgid "    Global options:"
 msgstr "    Opcions globals:"
 
 msgid "    Options for 'create' command:"
-msgstr "    Opcions de l'ordre 'create':"
+msgstr "    Opcions de l'ordre create:"
 
 msgid "    Options for 'create-config' command:"
-msgstr "    Opcions de l'ordre 'create-config':"
+msgstr "    Opcions de l'ordre create-config:"
 
 msgid "    Options for 'delete' command:"
 msgstr "    Opcions de l'ordre delete:"
@@ -187,19 +187,19 @@ msgid "    Options for 'diff' command:"
 msgstr "    Opcions de l'ordre \"diff\":"
 
 msgid "    Options for 'list' command:"
-msgstr "    Opcions de l'ordre 'list':"
+msgstr "    Opcions de l'ordre list:"
 
 msgid "    Options for 'modify' command:"
-msgstr "    Opcions de l'ordre 'modify' :"
+msgstr "    Opcions de l'ordre modify:"
 
 msgid "    Options for 'rollback' command:"
-msgstr "    Opcions de l'ordre 'rollback':"
+msgstr "    Opcions de l'ordre rollback:"
 
 msgid "    Options for 'status' command:"
-msgstr "    Opcions de l'ordre 'status':"
+msgstr "    Opcions de l'ordre status:"
 
 msgid "    Options for 'undochange' command:"
-msgstr "    Opcions de l'ordre 'undochange':"
+msgstr "    Opcions de l'ordre undochange:"
 
 msgid "  Cleanup snapshots:"
 msgstr "  Neteja les instantànies:"
@@ -282,16 +282,16 @@ msgid "Cleanup"
 msgstr "Neteja"
 
 msgid "Command 'cleanup' needs one arguments."
-msgstr "L'ordre 'cleanup' necessita un argument."
+msgstr "L'ordre cleanup necessita un argument."
 
 msgid "Command 'create' does not take arguments."
-msgstr "L'ordre 'create' no pot tenir arguments."
+msgstr "L'ordre create no pot tenir arguments."
 
 msgid "Command 'create-config' needs one argument."
-msgstr "L'ordre 'create-config' necessita un argument."
+msgstr "L'ordre create-config necessita un argument."
 
 msgid "Command 'debug' does not take arguments."
-msgstr "L'ordre 'debug' no pot tenir arguments."
+msgstr "L'ordre debug no pot tenir arguments."
 
 msgid "Command 'delete' needs at least one argument."
 msgstr "L'ordre delete necessita com a mínim un argument."
@@ -300,53 +300,53 @@ msgid "Command 'delete-config' does not take arguments."
 msgstr "L'ordre delete-config no admet arguments."
 
 msgid "Command 'diff' needs at least one argument."
-msgstr "L'ordre 'diff' necessita com a mínim un argument."
+msgstr "L'ordre diff necessita com a mínim un argument."
 
 msgid "Command 'get-config' does not take arguments."
-msgstr "L'ordre 'get-config' no pot tenir arguments."
+msgstr "L'ordre get-config no pot tenir arguments."
 
 msgid "Command 'help' does not take arguments."
-msgstr "L'ordre 'help' no pot tenir arguments."
+msgstr "L'ordre help no pot tenir arguments."
 
 msgid "Command 'list' does not take arguments."
-msgstr "L'ordre 'list' no pot tenir arguments."
+msgstr "L'ordre list no pot tenir arguments."
 
 msgid "Command 'list-configs' does not take arguments."
-msgstr "L'ordre 'list-configs' no pot tenir arguments."
+msgstr "L'ordre list-configs no pot tenir arguments."
 
 msgid "Command 'modify' needs at least one argument."
-msgstr "L'ordre 'modify' necessita almenys un argument."
+msgstr "L'ordre modify necessita almenys un argument."
 
 msgid "Command 'mount' needs at least one argument."
-msgstr "L'ordre 'mount' necessita almenys un argument."
+msgstr "L'ordre mount necessita almenys un argument."
 
 #, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr "L'ordre \"rollback\" no es pot usar en un subvolum no d'arrel %s."
+msgstr "L'ordre rollback no es pot usar en un subvolum no d'arrel %s."
 
 msgid "Command 'rollback' only available for btrfs."
-msgstr "L'ordre 'rollback' només està disponible per a btrfs."
+msgstr "L'ordre rollback només està disponible per a btrfs."
 
 msgid "Command 'rollback' takes either one or no argument."
-msgstr "L'ordre 'rollback' admet o bé un argument o cap."
+msgstr "L'ordre rollback admet o bé un argument o cap."
 
 msgid "Command 'set-config' needs at least one argument."
-msgstr "L'ordre 'set-config' necessita almenys un argument."
+msgstr "L'ordre set-config necessita almenys un argument."
 
 msgid "Command 'setup-quota' does not take arguments."
-msgstr "L'ordre \"setup-quota\" no pot tenir arguments."
+msgstr "L'ordre setup-quota no pot tenir arguments."
 
 msgid "Command 'status' needs one argument."
-msgstr "L'ordre 'status' necessita almenys un argument."
+msgstr "L'ordre status necessita almenys un argument."
 
 msgid "Command 'umount' needs at least one argument."
-msgstr "L'ordre \"umount\" necessita almenys un argument."
+msgstr "L'ordre umount necessita almenys un argument."
 
 msgid "Command 'undochange' needs at least one argument."
-msgstr "L'ordre 'undochange' necessita almenys un argument."
+msgstr "L'ordre undochange necessita almenys un argument."
 
 msgid "Command 'xadiff' needs at least one argument."
-msgstr "L'ordre 'xadiff' necessita almenys un argument."
+msgstr "L'ordre xadiff necessita almenys un argument."
 
 msgid "Config"
 msgstr "Config"
@@ -515,11 +515,11 @@ msgstr "MiB"
 
 #, c-format
 msgid "Missing argument for command option '%s'."
-msgstr "Falta un argument per a l'opció de l'ordre '%s'."
+msgstr "Falta un argument per a l'opció de l'ordre %s."
 
 #, c-format
 msgid "Missing argument for global option '%s'."
-msgstr "Falta un argument per a l'opció global '%s'."
+msgstr "Falta un argument per a l'opció global \"%s\"."
 
 msgid "Missing command argument."
 msgstr "Falta un argument per a l'ordre."
@@ -614,7 +614,7 @@ msgstr "Opció global desconeguda '%s'."
 
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
-msgstr "Opció desconeguda '%s' per a l'ordre '%s'."
+msgstr "Opció desconeguda \"%s\" per a l'ordre %s."
 
 msgid "Unknown type of snapshot."
 msgstr "Tipus d'instantània desconegut."
