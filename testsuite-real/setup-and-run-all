@@ -10,9 +10,9 @@ fi
 
 CFG=testsuite
 MNT=/"$CFG"
-#CFG=scratch2
-#MNT=~/"$CFG"-btrfs
-IMG="$MNT".img
+# $CFG and $MNT are hardcoded in the tests
+# but $IMG is not so we can use it to hint at its purpose
+IMG="$MNT"-of-snapper.img
 
 forget_config() {
     sed -i -e "/^SNAPPER_CONFIGS=/s/\b${CFG}\b//" /etc/sysconfig/snapper
@@ -26,7 +26,8 @@ setup() {
         echo >&2 "After you inspect the artifacts, run '$0 teardown' to clean up."
         exit 1
     fi
-    dd if=/dev/zero of="$IMG" bs=1M count=110
+    # BTRFS requires at least 109MiB; a 150MiB sparse image should be enough
+    truncate --size=150M "$IMG"
     LOOP=$(losetup --find)
     losetup "$LOOP" "$IMG"
     mkfs.btrfs "$LOOP"
