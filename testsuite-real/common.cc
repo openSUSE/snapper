@@ -41,6 +41,8 @@ setup()
 void
 cleanup()
 {
+    sh->deleteSnapshot(second);
+    sh->deleteSnapshot(first);
     delete sh;
 }
 
