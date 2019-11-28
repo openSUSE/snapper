@@ -1,6 +1,11 @@
 #!/bin/bash
-set -eu
-set -x
+set -e # exit on failure.
+# ^
+# This also ensures that a failed test does not run the teardown step
+# and we can inspect the artifacts.
+set -u # unset variables are an error
+set -x # echo what's being done
+
 if [ "$(id -u)" != "0" ]; then
     set +x
     echo "These tests only work when run as root." >&2

@@ -7,7 +7,7 @@ The tests in this directory only work when run as the root user.
 
 They operate
 - on a scratch BTRFS filesystem (`/testsuite`)
-- created in a loopback-mounted file (`/testsuite.img`),
+- created in a loopback-mounted file (`/testsuite-of-snapper.img`),
 - using a scratch Snapper configuration (`testsuite`).
 
 However bugs do happen so it is recommended that you
@@ -16,3 +16,6 @@ LOSS OR CORRUPTION OF YOUR OWN BTRFS SNAPSHOTS AND DATA.
 
 See `setup-and-run-all` for the scratch setup and `run-all` for the actual
 test set.
+
+The tests conform to the Test Anything Protocol (sloppily).
+`prove setup-and-run-all` works.
