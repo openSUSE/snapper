@@ -1,19 +1,33 @@
 #!/bin/bash
 
+if [ "$(id -u)" != "0" ]; then
+   echo "These tests only work when run as root." >&2
+   echo "Yes. See also the CAUTION file." >&2
+   exit 1
+fi
+
+# This test has been quickly and dirtily converted to TAP,
+# the Test Anything Protocol, http://testanything.org/tap-specification.html
+COUNT=0
+SUCCESS=true
 
 function run()
 {
+    COUNT=$((COUNT + 1))
     cmd=$1
 
-    echo
-    echo "*** running $cmd ***"
-    echo
+    echo >&2
+    echo >&2 "*** running $cmd ***"
+    echo >&2
 
     ./$cmd
 
     if [ $? != 0 ] ; then
-        echo "failed"
-        exit 1
+        echo "not ok $COUNT $cmd"
+        SUCCESS=false
+        # exit 1
+    else
+        echo "ok $COUNT $cmd"
     fi
 }
 
@@ -40,3 +54,6 @@ test -x xattrs1 && run xattrs1
 test -x xattrs2 && run xattrs2
 test -x xattrs3 && run xattrs3
 test -x xattrs4 && run xattrs4
+
+echo "1..$COUNT" # TAP test plan
+$SUCCESS

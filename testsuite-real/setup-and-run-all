@@ -1,0 +1,74 @@
+#!/bin/bash
+set -e # exit on failure.
+# ^
+# This also ensures that a failed test does not run the teardown step
+# and we can inspect the artifacts.
+set -u # unset variables are an error
+set -x # echo what's being done
+
+if [ "$(id -u)" != "0" ]; then
+    set +x
+    echo "These tests only work when run as root." >&2
+    echo "Yes. See also the CAUTION file." >&2
+    exit 1
+fi
+
+CFG=testsuite
+MNT=/"$CFG"
+# $CFG and $MNT are hardcoded in the tests
+# but $IMG is not so we can use it to hint at its purpose
+IMG="$MNT"-of-snapper.img
+
+forget_config() {
+    sed -i -e "/^SNAPPER_CONFIGS=/s/\b${CFG}\b//" /etc/sysconfig/snapper
+}
+
+setup() {
+    if [ -f "$IMG" ]; then
+        set +x
+        echo >&2 "The image '$IMG' already exists, aborting setup."
+        echo >&2 "Probably a previous test run failed."
+        echo >&2 "After you inspect the artifacts, run '$0 teardown' to clean up."
+        exit 1
+    fi
+    # BTRFS requires at least 109MiB; a 150MiB sparse image should be enough
+    truncate --size=150M "$IMG"
+    LOOP=$(losetup --find)
+    losetup "$LOOP" "$IMG"
+    mkfs.btrfs "$LOOP"
+    mkdir -p "$MNT"
+    mount "$IMG" "$MNT"
+    forget_config
+    snapper --no-dbus --config="$CFG" create-config "$MNT"
+}
+
+main() {
+    # read -p "Enter to CONTINUE, Ctrl-C to exit:"
+    ./run-all
+}
+
+teardown() {
+    snapper --no-dbus --config="$CFG" delete-config || forget_config
+    if grep "$MNT" /proc/mounts >/dev/null; then
+        umount "$MNT"
+    fi
+    if [ -d "$MNT" ]; then
+        rmdir "$MNT"
+    fi
+    # mapfile is better than VAR=($(cmd))
+    # https://github.com/koalaman/shellcheck/wiki/SC2207
+    mapfile -t LOOPS < <(losetup --associated "$IMG" | cut -f1 -d:)
+    if [ ${#LOOPS[@]} != 0 ]; then
+        losetup --detach "${LOOPS[@]}"
+    fi
+    rm -f "$IMG"
+}
+
+all() {
+    setup
+    main
+    teardown
+}
+
+ACTION=${1-all}
+$ACTION

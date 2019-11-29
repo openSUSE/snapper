@@ -279,4 +279,17 @@ A PAM module for calling snapper during user login and logout.
 /usr/lib/pam_snapper/*.sh
 %doc %{_mandir}/*/pam_snapper.8*
 
+%package testsuite
+Summary:        Integration tests for snapper
+Group:          System/Packages
+
+%description testsuite
+Tests to be run in a scratch machine to test that snapper operates as expected.
+
+%files testsuite
+%defattr(-,root,root)
+%dir %{_libdir}/snapper
+%dir %{_libdir}/snapper/testsuite
+%{_libdir}/snapper/testsuite/*
+
 %changelog

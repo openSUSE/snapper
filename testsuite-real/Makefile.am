@@ -12,9 +12,12 @@ if HAVE_XATTRS
 TMP_XATST = xattrs1 xattrs2 xattrs3 xattrs4
 endif
 
-noinst_SCRIPTS = run-all
+testdir = $(libdir)/snapper/testsuite
 
-noinst_PROGRAMS = simple1 permissions1 permissions2 permissions3 owner1 owner2 \
+test_DATA = CAUTION
+test_SCRIPTS = run-all setup-and-run-all
+
+test_PROGRAMS = simple1 permissions1 permissions2 permissions3 owner1 owner2 \
 	owner3 directory1 missing-directory1 error1 error2 error4 \
 	$(TMP_XATST) test-btrfsutils ug-tests
 
@@ -45,5 +48,5 @@ test_btrfsutils_SOURCES = test-btrfsutils.cc
 
 ug_tests_SOURCES = ug-tests.cc
 
-EXTRA_DIST = $(noinst_SCRIPTS)
+EXTRA_DIST = $(test_DATA) $(test_SCRIPTS)
 
