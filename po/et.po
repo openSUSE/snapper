@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: autoinst.fi\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-15 11:05+0200\n"
-"PO-Revision-Date: 2019-11-24 21:54+0000\n"
+"PO-Revision-Date: 2019-11-30 10:54+0000\n"
 "Last-Translator: Jaanus Ojangu <jaanus.ojangu@gmail.com>\n"
 "Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/"
 "et/>\n"
@@ -236,47 +236,43 @@ msgid "  List snapshots:"
 msgstr "  Hetkekoopiate loetelu:"
 
 msgid "  Modify snapshot:"
-msgstr ""
+msgstr "  Muuda hetketõmmist:"
 
-#, fuzzy
 msgid "  Mount snapshot:"
-msgstr "Loodud: "
+msgstr "  Haagi tõmmis:"
 
 msgid "  Rollback:"
-msgstr ""
+msgstr "  Tagasivõtt:"
 
-#, fuzzy
 msgid "  Set config:"
-msgstr "Loodud: "
+msgstr "  Määra seadistus:"
 
 msgid "  Setup quota:"
-msgstr ""
+msgstr "  Seadista kvoot:"
 
-#, fuzzy
 msgid "  Umount snapshot:"
-msgstr "Loodud: "
+msgstr "  Haagi tõmmis lahti:"
 
 msgid "  Undo changes:"
-msgstr ""
+msgstr "  Tühista muudatused:"
 
 msgid "#"
-msgstr ""
+msgstr "#"
 
-#, fuzzy, c-format
+#, c-format
 msgid "(Snapshot %d.)"
-msgstr "%s '%s' puudub"
+msgstr "(Tõmmis %d.)"
 
-#, fuzzy
 msgid "ACL error."
-msgstr "viga"
+msgstr "ACL viga."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
-msgstr ""
+msgstr "B"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr "SK kustutamine nurjus: %1."
+msgstr "Tõmmist %d ei saa kustutada, kuna see on töösolev süsteem."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
