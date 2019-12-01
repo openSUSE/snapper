@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: autoinst.fi\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-15 11:05+0200\n"
-"PO-Revision-Date: 2019-12-01 11:54+0000\n"
+"PO-Revision-Date: 2019-12-01 15:54+0000\n"
 "Last-Translator: Jaanus Ojangu <jaanus.ojangu@gmail.com>\n"
 "Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/"
 "et/>\n"
@@ -311,274 +311,246 @@ msgstr "Käsk 'diff' vajab vähemalt ühte argumenti."
 msgid "Command 'get-config' does not take arguments."
 msgstr "Käsk 'get-config' ei kasuta argumente."
 
-#, fuzzy
 msgid "Command 'help' does not take arguments."
-msgstr "reload peab olema ilma argumentideta"
+msgstr "Käsk 'help' ei kaasa argumente."
 
-#, fuzzy
 msgid "Command 'list' does not take arguments."
-msgstr "reload peab olema ilma argumentideta"
+msgstr "Käsk 'list' ei kasuta argumente."
 
-#, fuzzy
 msgid "Command 'list-configs' does not take arguments."
-msgstr "list_groups peab olema argumentideta"
+msgstr "Käsk 'list-configs' ei kasuta argumente."
 
-#, fuzzy
 msgid "Command 'modify' needs at least one argument."
-msgstr "get vajab vähemalt üht argumenti"
+msgstr "Käsk 'modify' vajab vähemalt ühte argumenti."
 
-#, fuzzy
 msgid "Command 'mount' needs at least one argument."
-msgstr "get vajab vähemalt üht argumenti"
+msgstr "Käsk 'mount' vajab vähemalt ühte argumenti."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr "rename vajab kaht argumenti"
+msgstr "Käsk 'rollback' ei ole kasutatav mitte-juur alamosades %s."
 
-#, fuzzy
 msgid "Command 'rollback' only available for btrfs."
-msgstr "rename vajab kaht argumenti"
+msgstr "Käsk 'rollback' on kasutatav ainult btrfs formaadis."
 
-#, fuzzy
 msgid "Command 'rollback' takes either one or no argument."
-msgstr "rename vajab kaht argumenti"
+msgstr "Käsk 'rollback' kasutab ühte või üldse ei kasuta argumente."
 
-#, fuzzy
 msgid "Command 'set-config' needs at least one argument."
-msgstr "get vajab vähemalt üht argumenti"
+msgstr "Käsk 'set-config' vajab vähemalt ühte argumenti."
 
-#, fuzzy
 msgid "Command 'setup-quota' does not take arguments."
-msgstr "reload peab olema ilma argumentideta"
+msgstr "Käsk 'setup-quota' ei kasuta argumente."
 
-#, fuzzy
 msgid "Command 'status' needs one argument."
-msgstr "add vajab üht argumenti"
+msgstr "Käsk 'status' vajab ühte argumenti."
 
-#, fuzzy
 msgid "Command 'umount' needs at least one argument."
-msgstr "get vajab vähemalt üht argumenti"
+msgstr "Käsk 'umount' vajab vähemalt ühte argumenti."
 
 #, fuzzy
 msgid "Command 'undochange' needs at least one argument."
-msgstr "get vajab vähemalt üht argumenti"
+msgstr "Käsk 'undochange' vajab vähemalt ühte argumenti."
 
 #, fuzzy
 msgid "Command 'xadiff' needs at least one argument."
-msgstr "get vajab vähemalt üht argumenti"
+msgstr "Käsk 'xadiff' vajab vähemalt ühte argumenti."
 
-#, fuzzy
 msgid "Config"
-msgstr "Kinnitamine"
+msgstr "Seadistus"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Config '%s' is invalid."
-msgstr "Antud URL on vigane."
+msgstr "Seadistus '%s' on vigane."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Config '%s' not found."
-msgstr "Faili ei leitud: %1."
+msgstr "Seadistust '%s' ei leitud."
 
-#, fuzzy
 msgid "Config is in use."
-msgstr "%s '%s' puudub"
+msgstr "Seadistus on kasutuses."
 
-#, fuzzy
 msgid "Config is locked."
-msgstr "Häälestusdialoog"
+msgstr "Seadistus on lukustatud."
 
 #, c-format
 msgid "Configdata '%s' does not include '=' sign."
-msgstr ""
+msgstr "Seadistusandmed  '%s' ei sisalda '=' märki."
 
 #, c-format
 msgid "Configdata '%s' has empty key."
-msgstr ""
+msgstr "Seadistusandmetes '%s' on tühi võti."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Creating config failed (%s)."
-msgstr "Häälestusfailide parsimine..."
+msgstr "Loodud seadistus nurjus (%s)."
 
 msgid "Creating read-only snapshot of current system."
-msgstr ""
+msgstr "Luuakse kirjutuskaitstud hetktõmmis praegusest süsteemist."
 
-#, fuzzy
 msgid "Creating read-only snapshot of default subvolume."
-msgstr "Häälestusfailide parsimine..."
+msgstr "Luuakse ainult lugemiseks hetktõmmis vaikimisi alamjaotisest."
 
 msgid "Creating read-write snapshot of current subvolume."
-msgstr ""
+msgstr "Luuakse muudetav hetktõmmis kasutuses olevast alamosast."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Creating read-write snapshot of snapshot %d."
-msgstr "Häälestusfailide parsimine..."
+msgstr "Luukase muudetav hetktõmmis tõmmisest %d."
 
-#, fuzzy
 msgid "Creating snapshot failed."
-msgstr "Häälestusfailide parsimine..."
+msgstr "Hetktõmmise loomine nurjus."
 
-#, fuzzy
 msgid "Date"
-msgstr "Kuupäev: %1"
+msgstr "Kuupäev"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting config failed (%s)."
-msgstr "Häälestusfailide parsimine..."
+msgstr "Seadistuse kustutamine nurjus (%s)."
 
-#, fuzzy
 msgid "Deleting snapshot failed."
-msgstr "SK kustutamine nurjus: %1."
+msgstr "Tõmmis kustutamine nurjus."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
-msgstr[0] "SK kustutamine nurjus: %1."
-msgstr[1] "SK kustutamine nurjus: %1."
+msgstr[0] "Tõmmise kustutamine asukohast %s:"
+msgstr[1] "Tõmmiste kustutamine asukohast %s:"
 
 msgid "Description"
 msgstr "Kirjeldus"
 
 msgid "Detecting filesystem type failed."
-msgstr ""
+msgstr "Failisüsteemi tüübi tuvastamine ebaõnnestus."
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
-msgstr ""
+msgstr "EiB"
 
-#, fuzzy
 msgid "Empty configdata."
-msgstr "Vigased väljalaske andmed."
+msgstr "Tühjad seadistusandmed."
 
-#, fuzzy
 msgid "Empty userdata."
-msgstr "Vigane tabeli stiil "
+msgstr "Kasutajaandmed on tühjad."
 
 # error box title
-#, fuzzy, c-format
+#, c-format
 msgid "Error (%s)."
-msgstr "I/O viga"
+msgstr "Viga (%s)."
 
 msgid "Failed to initialize filesystem handler."
-msgstr ""
+msgstr "Failisüsteemi seadistaja lähtestamine ebaõnnestus."
 
 msgid "Failed to set locale. Fix your system."
 msgstr ""
+"Asukoha kohanduste (lokaadi) määramine ebaõnnestus. Parandage oma süsteem."
 
 msgid "Failure"
-msgstr ""
+msgstr "Tõrge"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failure (%s)."
-msgstr "Parsimine nurjus: %s."
+msgstr "Tõrge (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "File '%s' not found."
-msgstr "Faili ei leitud: %1."
+msgstr "Faili '%s' ei leitud."
 
 # error box title
-#, fuzzy, c-format
+#, c-format
 msgid "Free space error (%s)."
-msgstr "I/O viga"
+msgstr "Vaba ruumi viga (%s)."
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
-msgstr ""
+msgstr "GB"
 
 # error box title
-#, fuzzy, c-format
+#, c-format
 msgid "IO Error (%s)."
-msgstr "I/O viga"
+msgstr "I/O viga (%s)."
 
 # error box title
-#, fuzzy, c-format
+#, c-format
 msgid "IO error (%s)."
-msgstr "I/O viga"
+msgstr "I/O viga (%s)."
 
 msgid "Identical snapshots."
-msgstr ""
+msgstr "Identsed tõmmised."
 
-#, fuzzy
 msgid "Illegal snapshot."
-msgstr "Vigane tabeli stiil "
+msgstr "Illegaalne tõmmis."
 
-#, fuzzy
 msgid "Invalid configdata."
-msgstr "Vigased väljalaske andmed."
+msgstr "Vigased seadistuse andmed."
 
-#, fuzzy
 msgid "Invalid group."
-msgstr "Vigane CRL põhjus."
+msgstr "Vigane grupp."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid snapshot '%s'."
-msgstr "Vigane tabeli stiil "
+msgstr "Vigane tõmmis '%s'."
 
 msgid "Invalid snapshots."
-msgstr ""
+msgstr "Vigane tõmmis."
 
 msgid "Invalid subvolume."
-msgstr ""
+msgstr "Vigane alamosa."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid table style %d."
-msgstr "Vigane tabeli stiil "
+msgstr "Vigane tabeli stiil %d."
 
-#, fuzzy
 msgid "Invalid user."
-msgstr "Vigane tabeli stiil "
+msgstr "Vigane kasutaja."
 
-#, fuzzy
 msgid "Invalid userdata."
-msgstr "Vigane tabeli stiil "
+msgstr "Vigased kasutajaandmed."
 
-#, fuzzy
 msgid "Key"
-msgstr "Kenya"
+msgstr "Võti"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
-msgstr ""
+msgstr "KB"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Listing configs failed (%s)."
-msgstr "Häälestusfailide parsimine..."
+msgstr "Seadistusfailide loendi loomine nurjus (%s)."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
-msgstr ""
+msgstr "Võib-olla unustasite hetktõmmiste numbrite vahel eraldaja '..'."
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
-msgstr ""
+msgstr "MB"
 
 #, c-format
 msgid "Missing argument for command option '%s'."
-msgstr ""
+msgstr "Käsu valikutes puudub argument '%s'."
 
 #, c-format
 msgid "Missing argument for global option '%s'."
-msgstr ""
+msgstr "Puudub globaalse valiku argument '%s'."
 
-#, fuzzy
 msgid "Missing command argument."
-msgstr "%s: Liiga palju argumente.\n"
+msgstr "Puudub käsu argument."
 
 msgid "Missing delimiter '..' between snapshot numbers."
-msgstr ""
+msgstr "Puudub eraldaja '..' hetktõmmiste numbrite vahel."
 
 msgid "Missing or invalid pre-number."
-msgstr ""
+msgstr "Puudub või vigane eel-number."
 
-#, fuzzy
 msgid "No command provided."
-msgstr "Käsku pole antud"
+msgstr "Käsku pole antud."
 
-#, fuzzy
 msgid "No permissions."
-msgstr "Ligipääs on keelatud"
+msgstr "Ligipääs puudub."
 
 #, c-format
 msgid "Opening file '%s' failed."
-msgstr ""
+msgstr "Faili '%s' avamine ebaõnnestus."
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr ""
