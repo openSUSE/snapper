@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: autoinst.fi\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-15 11:05+0200\n"
-"PO-Revision-Date: 2019-11-30 10:54+0000\n"
+"PO-Revision-Date: 2019-12-01 11:54+0000\n"
 "Last-Translator: Jaanus Ojangu <jaanus.ojangu@gmail.com>\n"
 "Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/"
 "et/>\n"
@@ -277,45 +277,39 @@ msgstr "Tõmmist %d ei saa kustutada, kuna see on töösolev süsteem."
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
 msgstr ""
+"Hetktõmmist %d ei saa kustutada, kuna see on töös olev süsteemi haagitud "
+"tõmmis."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
+msgstr "Hetktõmmist %d ei saa kustutada, kuna see on järgmine haagitav tõmmis."
 
 msgid "Cleanup"
-msgstr ""
+msgstr "Puhastamine"
 
-#, fuzzy
 msgid "Command 'cleanup' needs one arguments."
-msgstr "add vajab üht argumenti"
+msgstr "Käsk 'Puhastamine' vajab ühte argumenti."
 
-#, fuzzy
 msgid "Command 'create' does not take arguments."
-msgstr "create vajab vähemalt 3 argumenti"
+msgstr "Käsk 'create' ei vaja argumente."
 
-#, fuzzy
 msgid "Command 'create-config' needs one argument."
-msgstr "delete vajab üht argumenti"
+msgstr "Käsk 'create-config' vajab ühte argumenti."
 
-#, fuzzy
 msgid "Command 'debug' does not take arguments."
-msgstr "reload peab olema ilma argumentideta"
+msgstr "Käsk 'debug' ei kasuta argumente."
 
-#, fuzzy
 msgid "Command 'delete' needs at least one argument."
-msgstr "get vajab vähemalt üht argumenti"
+msgstr "Käsk 'delete' vajab vähemalt üht argumenti."
 
-#, fuzzy
 msgid "Command 'delete-config' does not take arguments."
-msgstr "list_groups peab olema argumentideta"
+msgstr "Käsk 'delete-config' ei kasuta argumente."
 
-#, fuzzy
 msgid "Command 'diff' needs at least one argument."
-msgstr "get vajab vähemalt üht argumenti"
+msgstr "Käsk 'diff' vajab vähemalt ühte argumenti."
 
-#, fuzzy
 msgid "Command 'get-config' does not take arguments."
-msgstr "list_groups peab olema argumentideta"
+msgstr "Käsk 'get-config' ei kasuta argumente."
 
 #, fuzzy
 msgid "Command 'help' does not take arguments."
