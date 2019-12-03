@@ -39,6 +39,28 @@ ostream& operator <<(ostream& os, set<string> ss) {
     return os;
 }
 
+class ProgramOptions {
+public:
+    string plugin_config;
+    string snapper_config;
+
+    ProgramOptions()
+    : plugin_config("/etc/snapper/zypp-plugin.conf")
+    , snapper_config("root")
+    {
+	const char * s;
+
+	s = getenv("SNAPPER_ZYPP_PLUGIN_CONFIG");
+	if (s != nullptr) {
+	    plugin_config = s;
+	}
+
+	s = getenv("SNAPPER_ZYPP_PLUGIN_SNAPPER_CONFIG");
+	if (s != nullptr) {
+	    snapper_config = s;
+	}
+    }
+};
 
 class SnapperZyppPlugin : public ZyppCommitPlugin {
 public:
@@ -73,10 +95,10 @@ public:
 	    return res;
 	}
 
-	static vector<SolvableMatcher> load_config() {
+	static vector<SolvableMatcher> load_config(const string& cfg_filename) {
 	    vector<SolvableMatcher> result;
 
-	    XmlFile config("/etc/snapper/zypp-plugin.conf");
+	    XmlFile config(cfg_filename);
 	    // FIXME test parse errors
 	    const xmlNode* root = config.getRootElement();
 	    const xmlNode* solvables_n = getChildNode(root, "solvables");
@@ -100,10 +122,11 @@ public:
 	}
     };
 
-    SnapperZyppPlugin()
-    : dbus_conn(DBUS_BUS_SYSTEM)
+    SnapperZyppPlugin(const ProgramOptions& opts)
+    : snapper_cfg(opts.snapper_config)
+    , dbus_conn(DBUS_BUS_SYSTEM)
     , pre_snapshot_num(0)
-    , solvable_matchers(SolvableMatcher::load_config())
+    , solvable_matchers(SolvableMatcher::load_config(opts.plugin_config))
     {
 	snapshot_description = "zypp(%s)"; // % basename(readlink("/proc/%d/exe" % getppid()))
     }
@@ -133,8 +156,10 @@ public:
 
 	    try {
 		y2mil("creating pre snapshot");
-		pre_snapshot_num = command_create_pre_snapshot(dbus_conn, "root", snapshot_description, cleanup_algorithm,
-						      userdata);
+		pre_snapshot_num = command_create_pre_snapshot(
+                    dbus_conn, snapper_cfg,
+                    snapshot_description, cleanup_algorithm, userdata
+                );
 		y2deb("created pre snapshot " << pre_snapshot_num);
 	    }
 	    catch (const Exception& ex) {
@@ -165,7 +190,10 @@ public:
 		    modification_data.description = snapshot_description;
 		    modification_data.cleanup = cleanup_algorithm;
 		    modification_data.userdata = userdata;
-		    command_set_snapshot(dbus_conn, "root", pre_snapshot_num, modification_data);
+		    command_set_snapshot(
+                        dbus_conn, snapper_cfg,
+                        pre_snapshot_num, modification_data
+                    );
 		}
 		catch (const Exception& ex) {
 		    y2err("setting snapshot data failed:");
@@ -174,8 +202,10 @@ public:
 		}
 		try {
 		    y2mil("creating post snapshot");
-		    unsigned int post_snapshot_num = command_create_post_snapshot(dbus_conn, "root", pre_snapshot_num, "", cleanup_algorithm,
-								     userdata);
+		    unsigned int post_snapshot_num = command_create_post_snapshot(
+                        dbus_conn, snapper_cfg,
+                        pre_snapshot_num, "", cleanup_algorithm, userdata
+                    );
 		    y2deb("created post snapshot " << post_snapshot_num);
 		}
 		catch (const Exception& ex) {
@@ -189,7 +219,7 @@ public:
 		    y2mil("deleting pre snapshot");
 		    vector<unsigned int> nums{ pre_snapshot_num };
 		    bool verbose = false;
-		    command_delete_snapshots(dbus_conn, "root", nums, verbose);
+		    command_delete_snapshots(dbus_conn, snapper_cfg, nums, verbose);
 		    y2deb("deleted pre snapshot " << pre_snapshot_num);
 		}
 		catch (const Exception& ex) {
@@ -204,6 +234,8 @@ public:
 
 private:
     static const string cleanup_algorithm;
+
+    string snapper_cfg;
 
     DBus::Connection dbus_conn;
     unsigned int pre_snapshot_num;
@@ -289,6 +321,7 @@ int main() {
 	return plugin.main();
     }
 
-    SnapperZyppPlugin plugin;
+    ProgramOptions options;
+    SnapperZyppPlugin plugin(options);
     return plugin.main();
 }
