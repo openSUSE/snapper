@@ -1,0 +1,65 @@
+#!/usr/bin/ruby
+require "dbus"
+
+SNAPPER_SERVICE = "org.opensuse.Snapper"
+SNAPPER_OBJECT = "/org/opensuse/Snapper"
+SNAPPER_INTERFACE = "org.opensuse.Snapper"
+
+class MockSnapper < DBus::Object
+  def report_mock(name, args)
+    puts format("Mock %-20s %s", name, args.inspect)
+  end
+
+  dbus_interface SNAPPER_INTERFACE do
+    dbus_method :CreatePreSnapshot,
+                "in config_name:s, " \
+                "in description:s, " \
+                "in cleanup:s, " \
+                "in userdata:a{ss}, " \
+                "out num:u" do |*args|
+      report_mock :CreatePreSnapshot, args
+      99
+    end
+
+    dbus_method :CreatePostSnapshot,
+                "in config_name:s, " \
+                "in pre_num:u, " \
+                "in description:s, " \
+                "in cleanup:s, " \
+                "in userdata:a{ss}, " \
+                "out num:u" do |*args|
+      report_mock :CreatePostSnapshot, args
+      999
+    end
+
+    dbus_method :DeleteSnapshots,
+                "in config_name:s, " \
+                "in nums:au" do |*args|
+      report_mock :DeleteSnapshots, args
+      nil
+    end
+
+    dbus_method :SetSnapshot,
+                "in config_name:s, " \
+                "in num:u, " \
+                "in description:s, " \
+                "in cleanup:s, " \
+                "in userdata:a{ss}" do |*args|
+      report_mock :SetSnapshot, args
+      nil
+    end
+  end
+end
+
+bus = DBus::SessionBus.instance
+service = bus.request_service(SNAPPER_SERVICE)
+object = MockSnapper.new(SNAPPER_OBJECT)
+service.export(object)
+
+main = DBus::Main.new
+main << bus
+begin
+  main.run
+rescue SystemCallError
+  # the test driver will kill the bus, that's OK
+end

@@ -20,6 +20,7 @@ using namespace std;
 using snapper::Exception;
 using snapper::CodeLocation;
 #include "client/commands.h"
+#include "client/errors.h"
 #include "snapper/Log.h"
 #include "snapper/XmlFile.h"
 
@@ -43,10 +44,12 @@ class ProgramOptions {
 public:
     string plugin_config;
     string snapper_config;
+    DBusBusType bus;
 
     ProgramOptions()
     : plugin_config("/etc/snapper/zypp-plugin.conf")
     , snapper_config("root")
+    , bus(DBUS_BUS_SYSTEM)
     {
 	const char * s;
 
@@ -59,6 +62,11 @@ public:
 	if (s != nullptr) {
 	    snapper_config = s;
 	}
+
+	s = getenv("SNAPPER_ZYPP_PLUGIN_DBUS_SESSION");
+	if (s != nullptr) {
+            bus = DBUS_BUS_SESSION;
+        }
     }
 };
 
@@ -124,7 +132,7 @@ public:
 
     SnapperZyppPlugin(const ProgramOptions& opts)
     : snapper_cfg(opts.snapper_config)
-    , dbus_conn(DBUS_BUS_SYSTEM)
+    , dbus_conn(opts.bus)
     , pre_snapshot_num(0)
     , solvable_matchers(SolvableMatcher::load_config(opts.plugin_config))
     {
@@ -162,8 +170,11 @@ public:
                 );
 		y2deb("created pre snapshot " << pre_snapshot_num);
 	    }
+            catch (const DBus::ErrorException& ex) {
+		SN_CAUGHT(ex);
+		y2err(error_description(ex));
+	    }
 	    catch (const Exception& ex) {
-		// assumes a logging setup
 		SN_CAUGHT(ex);
 	    }
 	}
@@ -186,6 +197,7 @@ public:
 		userdata["important"] = important ? "yes" : "no";
 
 		try {
+		    y2mil("setting snapshot data");
 		    snapper::SMD modification_data;
 		    modification_data.description = snapshot_description;
 		    modification_data.cleanup = cleanup_algorithm;
@@ -195,9 +207,11 @@ public:
                         pre_snapshot_num, modification_data
                     );
 		}
+		catch (const DBus::ErrorException& ex) {
+		    SN_CAUGHT(ex);
+		    y2err(error_description(ex));
+		}
 		catch (const Exception& ex) {
-		    y2err("setting snapshot data failed:");
-		    // assumes a logging setup
 		    SN_CAUGHT(ex);
 		}
 		try {
@@ -208,9 +222,11 @@ public:
                     );
 		    y2deb("created post snapshot " << post_snapshot_num);
 		}
+		catch (const DBus::ErrorException& ex) {
+		    SN_CAUGHT(ex);
+		    y2err(error_description(ex));
+		}
 		catch (const Exception& ex) {
-		    y2err("creating snapshot failed:");
-		    // assumes a logging setup
 		    SN_CAUGHT(ex);
 		}
 	    }
@@ -222,9 +238,11 @@ public:
 		    command_delete_snapshots(dbus_conn, snapper_cfg, nums, verbose);
 		    y2deb("deleted pre snapshot " << pre_snapshot_num);
 		}
+		catch (const DBus::ErrorException& ex) {
+		    SN_CAUGHT(ex);
+		    y2err(error_description(ex));
+		}
 		catch (const Exception& ex) {
-		    y2err("deleting snapshot failed:");
-		    // assumes a logging setup
 		    SN_CAUGHT(ex);
 		}
 	    }
@@ -258,6 +276,7 @@ const string SnapperZyppPlugin::cleanup_algorithm = "number";
 
 map<string, string> SnapperZyppPlugin::get_userdata(const Message&) {
     map<string, string> result;
+    // FIXME: implement this
     return result;
 }
 
@@ -314,6 +333,7 @@ log_query(LogLevel level, const string& component)
 }
 
 int main() {
+    initDefaultLogger();
     setLogQuery(&log_query);
     if (getenv("DISABLE_SNAPPER_ZYPP_PLUGIN") != nullptr) {
 	y2mil("$DISABLE_SNAPPER_ZYPP_PLUGIN is set - disabling snapper-zypp-plugin");
