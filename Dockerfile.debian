@@ -8,6 +8,7 @@ RUN apt-get update && \
   autoconf \
   automake \
   build-essential \
+  dbus \
   debhelper \
   devscripts \
   docbook-xsl \
@@ -27,6 +28,7 @@ RUN apt-get update && \
   libz-dev \
   locales-all \
   rapidjson-dev \
+  ruby-dbus \
   xsltproc
 
 RUN mkdir -p /usr/src/app

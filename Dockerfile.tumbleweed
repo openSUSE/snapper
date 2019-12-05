@@ -1,7 +1,14 @@
 # Build the latest openSUSE Tumbleweed image
 FROM opensuse/tumbleweed
 
-RUN zypper --non-interactive in --no-recommends \
+# we need to install Ruby first to define the %{rb_ver} RPM macro
+# see https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#run
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#/build-cache
+# why we need "zypper clean -a" at the end
+RUN zypper --non-interactive in --no-recommends --force-resolution ruby && zypper clean -a
+
+RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
+  zypper --non-interactive in --no-recommends \
   autoconf \
   automake \
   dbus-1-devel \
@@ -23,6 +30,7 @@ RUN zypper --non-interactive in --no-recommends \
   pam-devel \
   rapidjson-devel \
   rpm-build \
+  "rubygem($RUBY_VERSION:ruby-dbus)" \
   which
 
 RUN mkdir -p /usr/src/app

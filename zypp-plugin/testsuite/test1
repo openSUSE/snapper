@@ -51,6 +51,12 @@ test_pre_del() {
 }
 
 setup() {
+    MOCKDEP=(ruby -rdbus -e 1)
+    if ! "${MOCKDEP[@]}"; then
+        echo "Mock snapperd cannot be run, skipping test"
+        echo "('${MOCKDEP[@]}' failed)"
+        exit 77
+    fi
     $MYDIR/mock-snapperd &
     sleep 1
     PID=$!

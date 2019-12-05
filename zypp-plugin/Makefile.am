@@ -1,3 +1,5 @@
+SUBDIRS = testsuite
+
 if HAVE_ZYPP
 
 plugindir = /usr/lib/zypp/plugins/commit
