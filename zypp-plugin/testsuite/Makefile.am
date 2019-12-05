@@ -1,4 +1,6 @@
 if HAVE_ZYPP
+LOG_COMPILER = dbus-run-session
+AM_LOG_FLAGS = --
 
 check_SCRIPTS = test1
 noinst_SCRIPTS = mock-snapperd
