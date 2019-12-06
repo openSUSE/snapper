@@ -74,8 +74,8 @@ class SnapperZyppPlugin : public ZyppCommitPlugin {
 public:
     struct SolvableMatcher {
 	enum class Kind {
-	    Glob,
-	    Regex
+	    GLOB,
+	    REGEX
 	};
 	string pattern;
 	Kind kind;
@@ -88,9 +88,9 @@ public:
 	{}
 
 	bool match(const string& solvable) {
-	    y2deb("match? " << solvable << " by " << ((kind == Kind::Glob)? "GLOB '": "REGEX '") << pattern << '\'');
+	    y2deb("match? " << solvable << " by " << ((kind == Kind::GLOB)? "GLOB '": "REGEX '") << pattern << '\'');
 	    bool res;
-	    if (kind == Kind::Glob) {
+	    if (kind == Kind::GLOB) {
 		static const int flags = 0;
 		res = fnmatch(pattern.c_str(), solvable.c_str(), flags) == 0;
 	    }
@@ -113,16 +113,23 @@ public:
 	    const list<const xmlNode*> solvables_l = getChildNodes(solvables_n, "solvable");
 	    for (auto it = solvables_l.begin(); it != solvables_l.end(); ++it) {
 		string pattern;
-		Kind kind = Kind::Regex;
+		Kind kind;
 		bool important = false;
 
 		getAttributeValue(*it, "important", important);
 		string kind_s;
 		getAttributeValue(*it, "match", kind_s);
-		if (kind_s == "w") { // w for wildcard
-		    kind = Kind::Glob;
-		}
 		getValue(*it, pattern);
+		if (kind_s == "w") { // w for wildcard
+		    kind = Kind::GLOB;
+		}
+		else if (kind_s == "re") { // Regular Expression
+		    kind = Kind::REGEX;
+		}
+		else {
+		    y2err("Unknown match attribute'" << kind_s << "', disregarding pattern '"<< pattern << "'");
+		    continue;
+		}
 
 		result.emplace_back(SolvableMatcher(pattern, kind, important));
 	    }
@@ -136,7 +143,9 @@ public:
     , pre_snapshot_num(0)
     , solvable_matchers(SolvableMatcher::load_config(opts.plugin_config))
     {
-	snapshot_description = "zypp(%s)"; // % basename(readlink("/proc/%d/exe" % getppid()))
+	string caller_prog;
+	readlink(sformat("/proc/%d/exe", getppid()), caller_prog);
+	snapshot_description = sformat("zypp(%s)", basename(caller_prog).c_str());
     }
 
     Message plugin_begin(const Message& m) override {
