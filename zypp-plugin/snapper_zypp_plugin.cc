@@ -108,6 +108,7 @@ public:
 	static vector<SolvableMatcher> load_config(const string& cfg_filename) {
 	    vector<SolvableMatcher> result;
 
+	    y2deb("parsing " << cfg_filename);
 	    XmlFile config(cfg_filename);
 	    // FIXME test parse errors
 	    const xmlNode* root = config.getRootElement();
