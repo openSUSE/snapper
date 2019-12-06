@@ -1024,6 +1024,7 @@ command_rollback(cli::GlobalOptions* global_options, ProxySnappers* snappers, Pr
     scd1.userdata["important"] = "yes";
 
     SCD scd2;
+    scd2.description = default_description;
 
     GetOpts::parsed_opts::const_iterator opt;
 
@@ -1065,6 +1066,10 @@ command_rollback(cli::GlobalOptions* global_options, ProxySnappers* snappers, Pr
 
     if (previous_default != snapshots.end() && scd1.description == default_description)
         scd1.description += sformat(" of #%d", previous_default->getNum());
+
+    ProxySnapshots::const_iterator active = snapshots.getActive();
+    if (active != snapshots.end() && scd2.description == default_description)
+        scd2.description += sformat(" of #%d", active->getNum());
 
     ProxySnapshots::const_iterator snapshot1 = snapshots.end();
     ProxySnapshots::const_iterator snapshot2 = snapshots.end();
