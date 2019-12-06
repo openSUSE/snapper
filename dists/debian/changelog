@@ -1,3 +1,9 @@
+snapper (0.8.7) stable; urgency=low
+
+  * snapper-zypp-plugin subpackage rewritten from Python to C++ (jsc#SLE-10500)
+
+ -- Martin Vidner <mvidner@suse.com>  Fri 06 Dec 2019 10:12:42 +0000
+
 snapper (0.8.6) stable; urgency=low
 
   * Updated to version 0.8.6

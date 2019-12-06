@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Fri Dec  6 10:12:42 UTC 2019 - Martin Vidner <mvidner@suse.com>
+
+- snapper-zypp-plugin subpackage rewritten from Python to C++
+  (jsc#SLE-10500)
+- added integration tests in snapper-testsuite subpackage
+- version 0.8.7
+
+-------------------------------------------------------------------
 Wed Oct 23 13:00:36 UTC 2019 - José Iván López González <jlopez@suse.com>
 
 - add --machine-readable option for CSV and JSON outputs.
