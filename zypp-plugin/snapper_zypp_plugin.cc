@@ -29,7 +29,7 @@ using snapper::CodeLocation;
 ostream& operator <<(ostream& os, set<string> ss) {
     bool seen_first = false;
     os << '{';
-    for(auto s: ss) {
+    for (auto s: ss) {
 	if (seen_first) {
 	    os << ", ";
 	}
@@ -81,7 +81,7 @@ public:
 	Kind kind;
 	bool important;
 
-	SolvableMatcher(string apattern, Kind akind, bool aimportant)
+	SolvableMatcher(const string& apattern, Kind akind, bool aimportant)
 	: pattern(apattern)
 	, kind(akind)
 	, important(aimportant)
@@ -111,15 +111,15 @@ public:
 	    const xmlNode* root = config.getRootElement();
 	    const xmlNode* solvables_n = getChildNode(root, "solvables");
 	    const list<const xmlNode*> solvables_l = getChildNodes(solvables_n, "solvable");
-	    for (auto it = solvables_l.begin(); it != solvables_l.end(); ++it) {
+	    for (auto node: solvables_l) {
 		string pattern;
 		Kind kind;
 		bool important = false;
 
-		getAttributeValue(*it, "important", important);
+		getAttributeValue(node, "important", important);
 		string kind_s;
-		getAttributeValue(*it, "match", kind_s);
-		getValue(*it, pattern);
+		getAttributeValue(node, "match", kind_s);
+		getValue(node, pattern);
 		if (kind_s == "w") { // w for wildcard
 		    kind = Kind::GLOB;
 		}
