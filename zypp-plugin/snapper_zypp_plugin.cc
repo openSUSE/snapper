@@ -7,6 +7,8 @@
 #include <fnmatch.h>
 
 #include <boost/regex.hpp>
+// split
+#include <boost/algorithm/string.hpp>
 
 #include <iostream>
 #include <map>
@@ -283,9 +285,26 @@ private:
 
 const string SnapperZyppPlugin::cleanup_algorithm = "number";
 
-map<string, string> SnapperZyppPlugin::get_userdata(const Message&) {
+map<string, string> SnapperZyppPlugin::get_userdata(const Message& msg) {
     map<string, string> result;
-    // FIXME: implement this
+    auto it = msg.headers.find("userdata");
+    if (it != msg.headers.end()) {
+	const string& userdata_s = it->second;
+        vector<string> key_values;
+	boost::split(key_values, userdata_s, boost::is_any_of(","));
+	for (auto kv: key_values) {
+	    static const boost::regex rx_keyval("([^=]*)=(.+)");
+	    boost::smatch what;
+	    if (boost::regex_match(kv, what, rx_keyval)) {
+		string key = boost::trim_copy(string(what[1]));
+		string value = boost::trim_copy(string(what[2]));
+		result[key] = value;
+	    }
+	    else {
+		y2err("invalid userdata: expecting comma separated key=value pairs");
+	    }
+	}
+    }
     return result;
 }
 
