@@ -42,6 +42,12 @@ ostream& operator <<(ostream& os, set<string> ss) {
     return os;
 }
 
+// Normally the only configuration this program needs is
+// the /etc/snapper/zypp-plugin.conf file.
+// But for testing we need more places to inject mocks.
+// This is done with SNAPPER_ZYPP_PLUGIN_* environment variables.
+// (Using argv is not useful since libzypp does not use it in the
+// plugin protocol.)
 class ProgramOptions {
 public:
     string plugin_config;
