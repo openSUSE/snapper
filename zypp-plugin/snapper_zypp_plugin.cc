@@ -23,7 +23,6 @@ using snapper::Exception;
 using snapper::CodeLocation;
 #include "client/commands.h"
 #include "client/errors.h"
-#include "snapper/Log.h"
 #include "snapper/XmlFile.h"
 
 #include "zypp_commit_plugin.h"
@@ -96,7 +95,7 @@ public:
 	{}
 
 	bool match(const string& solvable) {
-	    y2deb("match? " << solvable << " by " << ((kind == Kind::GLOB)? "GLOB '": "REGEX '") << pattern << '\'');
+	    cerr << "DEBUG:" << "match? " << solvable << " by " << ((kind == Kind::GLOB)? "GLOB '": "REGEX '") << pattern << '\'' << endl;
 	    bool res;
 	    if (kind == Kind::GLOB) {
 		static const int flags = 0;
@@ -107,14 +106,14 @@ public:
 		boost::regex rx_pattern(pattern, boost::regex::extended);
 		res = boost::regex_match(solvable, rx_pattern);
 	    }
-	    y2deb("-> " << res);
+	    cerr << "DEBUG:" << "-> " << res << endl;
 	    return res;
 	}
 
 	static vector<SolvableMatcher> load_config(const string& cfg_filename) {
 	    vector<SolvableMatcher> result;
 
-	    y2deb("parsing " << cfg_filename);
+	    cerr << "DEBUG:" << "parsing " << cfg_filename << endl;
 	    XmlFile config(cfg_filename);
 	    // FIXME test parse errors
 	    const xmlNode* root = config.getRootElement();
@@ -136,7 +135,7 @@ public:
 		    kind = Kind::REGEX;
 		}
 		else {
-		    y2err("Unknown match attribute'" << kind_s << "', disregarding pattern '"<< pattern << "'");
+		    cerr << "ERROR:" << "Unknown match attribute '" << kind_s << "', disregarding pattern '"<< pattern << "'" << endl;
 		    continue;
 		}
 
@@ -158,39 +157,39 @@ public:
     }
 
     Message plugin_begin(const Message& m) override {
-	y2mil("PLUGINBEGIN");
+	cerr << "INFO:" << "PLUGINBEGIN" << endl;
 	userdata = get_userdata(m);
 
 	return ack();
     }
     Message plugin_end(const Message& m) override {
-	y2mil("PLUGINEND");
+	cerr << "INFO:" << "PLUGINEND" << endl;
 	return ack();
     }
     Message commit_begin(const Message& msg) override {
-	y2mil("COMMITBEGIN");
+	cerr << "INFO:" << "COMMITBEGIN" << endl;
 
 	set<string> solvables = get_solvables(msg, true);
-	y2deb("solvables: " << solvables);
+	cerr << "DEBUG:" << "solvables: " << solvables << endl;
 
 	bool found, important;
 	match_solvables(solvables, found, important);
-	y2mil("found: " << found << ", important: " << important);
+	cerr << "INFO:" << "found: " << found << ", important: " << important << endl;
 
 	if (found || important) {
 	    userdata["important"] = important ? "yes" : "no";
 
 	    try {
-		y2mil("creating pre snapshot");
+		cerr << "INFO:" << "creating pre snapshot" << endl;
 		pre_snapshot_num = command_create_pre_snapshot(
                     dbus_conn, snapper_cfg,
                     snapshot_description, cleanup_algorithm, userdata
                 );
-		y2deb("created pre snapshot " << pre_snapshot_num);
+		cerr << "DEBUG:" << "created pre snapshot " << pre_snapshot_num << endl;
 	    }
             catch (const DBus::ErrorException& ex) {
 		SN_CAUGHT(ex);
-		y2err(error_description(ex));
+		cerr << "ERROR:" << error_description(ex) << endl;
 	    }
 	    catch (const Exception& ex) {
 		SN_CAUGHT(ex);
@@ -201,21 +200,21 @@ public:
     }
 
     Message commit_end(const Message& msg) override {
-	y2mil("COMMITEND");
+	cerr << "INFO:" << "COMMITEND" << endl;
 
 	if (pre_snapshot_num != 0) {
 	    set<string> solvables = get_solvables(msg, false);
-	    y2deb("solvables: " << solvables);
+	    cerr << "DEBUG:" << "solvables: " << solvables << endl;
 
 	    bool found, important;
 	    match_solvables(solvables, found, important);
-	    y2mil("found: " << found << ", important: " << important);
+	    cerr << "INFO:" << "found: " << found << ", important: " << important << endl;
 
 	    if (found || important) {
 		userdata["important"] = important ? "yes" : "no";
 
 		try {
-		    y2mil("setting snapshot data");
+		    cerr << "INFO:" << "setting snapshot data" << endl;
 		    snapper::SMD modification_data;
 		    modification_data.description = snapshot_description;
 		    modification_data.cleanup = cleanup_algorithm;
@@ -227,22 +226,22 @@ public:
 		}
 		catch (const DBus::ErrorException& ex) {
 		    SN_CAUGHT(ex);
-		    y2err(error_description(ex));
+		    cerr << "ERROR:" << error_description(ex) << endl;
 		}
 		catch (const Exception& ex) {
 		    SN_CAUGHT(ex);
 		}
 		try {
-		    y2mil("creating post snapshot");
+		    cerr << "INFO:" << "creating post snapshot" << endl;
 		    unsigned int post_snapshot_num = command_create_post_snapshot(
                         dbus_conn, snapper_cfg,
                         pre_snapshot_num, "", cleanup_algorithm, userdata
                     );
-		    y2deb("created post snapshot " << post_snapshot_num);
+		    cerr << "DEBUG:" << "created post snapshot " << post_snapshot_num << endl;
 		}
 		catch (const DBus::ErrorException& ex) {
 		    SN_CAUGHT(ex);
-		    y2err(error_description(ex));
+		    cerr << "ERROR:" << error_description(ex) << endl;
 		}
 		catch (const Exception& ex) {
 		    SN_CAUGHT(ex);
@@ -250,15 +249,15 @@ public:
 	    }
 	    else {
 		try {
-		    y2mil("deleting pre snapshot");
+		    cerr << "INFO:" << "deleting pre snapshot" << endl;
 		    vector<unsigned int> nums{ pre_snapshot_num };
 		    bool verbose = false;
 		    command_delete_snapshots(dbus_conn, snapper_cfg, nums, verbose);
-		    y2deb("deleted pre snapshot " << pre_snapshot_num);
+		    cerr << "DEBUG:" << "deleted pre snapshot " << pre_snapshot_num << endl;
 		}
 		catch (const DBus::ErrorException& ex) {
 		    SN_CAUGHT(ex);
-		    y2err(error_description(ex));
+		    cerr << "ERROR:" << error_description(ex) << endl;
 		}
 		catch (const Exception& ex) {
 		    SN_CAUGHT(ex);
@@ -308,7 +307,7 @@ map<string, string> SnapperZyppPlugin::get_userdata(const Message& msg) {
 		result[key] = value;
 	    }
 	    else {
-		y2err("invalid userdata: expecting comma separated key=value pairs");
+		cerr << "ERROR:" << "invalid userdata: expecting comma separated key=value pairs" << endl;
 	    }
 	}
     }
@@ -320,9 +319,9 @@ set<string> SnapperZyppPlugin::get_solvables(const Message& msg, bool todo) {
 
     rapidjson::Document doc;
     const char * c_body = msg.body.c_str();
-    y2deb("parsing zypp JSON: " << c_body);
+    cerr << "DEBUG:" << "parsing zypp JSON: " << c_body << endl;
     if (doc.Parse(c_body).HasParseError()) {
-	y2err("parsing zypp JSON failed");
+	cerr << "ERROR:" << "parsing zypp JSON failed" << endl;
 	return result;
     }
     // https://doc.opensuse.org/projects/libzypp/SLE12SP2/plugin-commit.html
@@ -358,20 +357,9 @@ void SnapperZyppPlugin::match_solvables(const set<string>& solvables, bool& foun
     }
 }
 
-bool
-log_query(LogLevel level, const string& component)
-{
-    if (level == DEBUG)
-	return getenv("DEBUG") != nullptr;
-    else
-	return true;
-}
-
 int main() {
-    initDefaultLogger();
-    setLogQuery(&log_query);
     if (getenv("DISABLE_SNAPPER_ZYPP_PLUGIN") != nullptr) {
-	y2mil("$DISABLE_SNAPPER_ZYPP_PLUGIN is set - disabling snapper-zypp-plugin");
+	cerr << "INFO:" << "$DISABLE_SNAPPER_ZYPP_PLUGIN is set - disabling snapper-zypp-plugin" << endl;
 	ZyppCommitPlugin plugin;
 	return plugin.main();
     }
