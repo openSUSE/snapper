@@ -142,11 +142,10 @@ namespace snapper
     {
 	xmlChar* tmp = xmlNodeGetContent(node);
 	if (tmp == nullptr)
-	    value = "";
-	else {
-	    value = (const char *) tmp;
-	    xmlFree(tmp);
-	}
+	    return false;
+
+	value = (const char *) tmp;
+	xmlFree(tmp);
 	return true;
     }
 
@@ -190,6 +189,7 @@ namespace snapper
 	xmlChar* tmp = xmlGetNoNsProp(node, (const xmlChar *) name);
 	if (tmp == nullptr)
 	    return false;
+
 	value = (const char *) tmp;
 	xmlFree(tmp);
 	return true;
