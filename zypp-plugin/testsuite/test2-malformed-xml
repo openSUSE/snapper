@@ -1,0 +1,43 @@
+#!/bin/bash
+set -e
+set -u
+#set -x
+
+MYDIR=$(dirname $0)
+
+runit() {
+    local STRACE=""
+    # STRACE="strace -efile"
+
+    SNAPPER_ZYPP_PLUGIN_CONFIG=$MYDIR/zypp-plugin-malformed.conf \
+      SNAPPER_ZYPP_PLUGIN_SNAPPER_CONFIG=testsuite \
+      SNAPPER_ZYPP_PLUGIN_DBUS_SESSION=1 \
+      DEBUG=1 \
+      $STRACE \
+      $MYDIR/../snapper-zypp-plugin
+}
+
+stomp_message() {
+    local COMMAND="$1"
+    local HEADERS="$2"
+    local BODY="$3"
+    printf '%s\n%s\n\n%s\0' "$COMMAND" "$HEADERS" "$BODY"
+}
+
+test_empty_messages() {
+    stomp_message PLUGINBEGIN "" ""
+    stomp_message COMMITBEGIN "" ""
+    stomp_message COMMITEND "" ""
+    stomp_message PLUGINEND "" ""
+}
+
+setup() {
+    :
+}
+teardown() {
+    :
+}
+
+setup
+test_empty_messages | runit > /dev/null
+teardown
