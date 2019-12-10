@@ -1,0 +1,14 @@
+#!/bin/bash
+if ! type -P shellcheck >/dev/null; then
+   echo "1..0 # SKIP No shellcheck"
+   exit
+fi
+echo "1..1"
+
+TEST="1 - All shell scripts pass shellcheck"
+
+FILES=([0-9]*.test test-helper.sh)
+if ! shellcheck --wiki-link-count=99 "${FILES[@]}"; then
+    echo -n "not "
+fi
+echo "ok $TEST"

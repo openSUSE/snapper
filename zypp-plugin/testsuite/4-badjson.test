@@ -1,0 +1,28 @@
+#!/bin/bash
+set -e
+set -u
+#set -x
+
+. test-helper.sh
+
+mock_snapperd_setup || { echo "1..0 # SKIP"; exit; }
+
+# http://testanything.org/
+echo 1..1
+
+test_bad_json() {
+    local JSON=("${1?JSON payload expected}")
+
+    stomp_message PLUGINBEGIN "" ""
+    stomp_message COMMITBEGIN "" "${JSON[@]}"
+    stomp_message COMMITEND "" ""
+    stomp_message PLUGINEND "" ""
+}
+
+TEST="1 - It complains about bad JSON"
+STDERR=$(test_bad_json '{"well-formed": "but-invalid"}' | runit "" 2>&1 >/dev/null || :)
+echo "$STDERR"
+if [[ ! "$STDERR" =~ rapidjson.*Assertion.*failed ]]; then
+    echo -n "not "
+fi
+echo "ok $TEST"

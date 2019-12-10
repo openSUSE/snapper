@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+set -u
+#set -x
+
+# http://testanything.org/
+echo 1..1
+
+. test-helper.sh
+
+TEST="1 - It complains about invalid XML in config file"
+STDERR=$(test_pre_post_snapshots | runit zypp-plugin-invalid.conf 2>&1 >/dev/null || :)
+echo "$STDERR"
+if [[ ! "$STDERR" =~ boost::regex_error ]]; then
+    echo -n "not "
+fi
+echo "ok $TEST"

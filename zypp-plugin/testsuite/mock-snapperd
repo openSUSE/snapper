@@ -7,7 +7,9 @@ SNAPPER_INTERFACE = "org.opensuse.Snapper"
 
 class MockSnapper < DBus::Object
   def report_mock(name, args)
-    puts format("Mock %-20s %s", name, args.inspect)
+    File.open("mock-snapperd.log", "a") do |f|
+      f.puts format("Mock %-20s %s", name, args.inspect)
+    end
   end
 
   dbus_interface SNAPPER_INTERFACE do
@@ -60,6 +62,8 @@ main = DBus::Main.new
 main << bus
 begin
   main.run
+rescue DBus::Connection::NameRequestError
+  warn "Cannot claim #{SNAPPER_SERVICE}, is it already running?"
 rescue SystemCallError
   # the test driver will kill the bus, that's OK
 end

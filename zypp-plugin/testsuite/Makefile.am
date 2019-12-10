@@ -1,13 +1,15 @@
 if HAVE_ZYPP
-LOG_COMPILER = dbus-run-session
-AM_LOG_FLAGS = --
+TEST_LOG_DRIVER = dbus-run-session -- $(SHELL) tap-driver.sh
 
-check_SCRIPTS = test1 test2-malformed-xml test3-invalid-xml test4-badjson
-noinst_SCRIPTS = mock-snapperd
+check_SCRIPTS = 1-happy.test 2-malformed-xml.test 3-invalid-xml.test 4-badjson.test 99-shell.test
+noinst_SCRIPTS = mock-snapperd test-helper.sh
 noinst_DATA = zypp-plugin-malformed.conf zypp-plugin-invalid.conf
 
-TESTS = $(check_SCRIPTS)
-XFAIL_TESTS = test2-malformed-xml test3-invalid-xml test4-badjson
+# Hack: these tests both use mock-snapperd which is not paralellized
+# so serialize them
+4-badjson.log: 1-happy.log
 
-EXTRA_DIST = $(check_SCRIPTS) $(noinst_SCRIPTS) $(noinst_DATA)
+TESTS = $(check_SCRIPTS)
+
+EXTRA_DIST = $(check_SCRIPTS) $(noinst_SCRIPTS) $(noinst_DATA) tap-driver.sh
 endif
