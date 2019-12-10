@@ -1067,10 +1067,6 @@ command_rollback(cli::GlobalOptions* global_options, ProxySnappers* snappers, Pr
     if (previous_default != snapshots.end() && scd1.description == default_description)
         scd1.description += sformat(" of #%d", previous_default->getNum());
 
-    ProxySnapshots::const_iterator active = snapshots.getActive();
-    if (active != snapshots.end() && scd2.description == default_description)
-        scd2.description += sformat(" of #%d", active->getNum());
-
     ProxySnapshots::const_iterator snapshot1 = snapshots.end();
     ProxySnapshots::const_iterator snapshot2 = snapshots.end();
 
@@ -1087,6 +1083,10 @@ command_rollback(cli::GlobalOptions* global_options, ProxySnappers* snappers, Pr
 
 	if (!global_options->quiet())
 	    cout << _("Creating read-write snapshot of current subvolume.") << flush;
+
+    ProxySnapshots::const_iterator active = snapshots.getActive();
+    if (active != snapshots.end() && scd2.description == default_description)
+        scd2.description += sformat(" of #%d", active->getNum());
 
 	scd2.read_only = false;
 	snapshot2 = snapper->createSingleSnapshot(snapshots.getCurrent(), scd2);
@@ -1108,6 +1108,9 @@ command_rollback(cli::GlobalOptions* global_options, ProxySnappers* snappers, Pr
 
 	if (!global_options->quiet())
 	    cout << sformat(_("Creating read-write snapshot of snapshot %d."), tmp->getNum()) << flush;
+
+    if (tmp != snapshots.end() && scd2.description == default_description)
+        scd2.description += sformat(" of #%d", tmp->getNum());
 
 	scd2.read_only = false;
 	snapshot2 = snapper->createSingleSnapshot(tmp, scd2);
