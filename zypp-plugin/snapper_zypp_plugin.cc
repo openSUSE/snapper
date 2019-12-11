@@ -169,7 +169,7 @@ public:
     Message commit_begin(const Message& msg) override {
 	cerr << "INFO:" << "COMMITBEGIN" << endl;
 
-	set<string> solvables = get_solvables(msg, true);
+	set<string> solvables = get_solvables(msg, Phase::BEFORE);
 	cerr << "DEBUG:" << "solvables: " << solvables << endl;
 
 	bool found, important;
@@ -203,7 +203,7 @@ public:
 	cerr << "INFO:" << "COMMITEND" << endl;
 
 	if (pre_snapshot_num != 0) {
-	    set<string> solvables = get_solvables(msg, false);
+	    set<string> solvables = get_solvables(msg, Phase::AFTER);
 	    cerr << "DEBUG:" << "solvables: " << solvables << endl;
 
 	    bool found, important;
@@ -281,8 +281,9 @@ private:
 
     map<string, string> get_userdata(const Message&);
 
-    // FIXME: what does the todo flag mean?
-    set<string> get_solvables(const Message&, bool todo);
+    enum class Phase { BEFORE, AFTER };
+
+    set<string> get_solvables(const Message&, Phase phase);
 
     void match_solvables(const set<string>& solvables, bool& found, bool& important);
 
@@ -314,7 +315,7 @@ map<string, string> SnapperZyppPlugin::get_userdata(const Message& msg) {
     return result;
 }
 
-set<string> SnapperZyppPlugin::get_solvables(const Message& msg, bool todo) {
+set<string> SnapperZyppPlugin::get_solvables(const Message& msg, Phase phase) {
     set<string> result;
 
     rapidjson::Document doc;
@@ -330,7 +331,7 @@ set<string> SnapperZyppPlugin::get_solvables(const Message& msg, bool todo) {
     for (Value::ConstValueIterator it = steps.Begin(); it != steps.End(); ++it) {
 	const Value& step = *it;
 	if (step.HasMember("type")) {
-	    if (todo || step.HasMember("stage")) {
+	    if (phase == Phase::BEFORE || step.HasMember("stage")) {
 		const Value& solvable = step["solvable"];
 		const Value& name = solvable["n"];
 		// FIXME: what happens when the doc structure is different?
