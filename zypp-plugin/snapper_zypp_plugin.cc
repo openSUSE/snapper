@@ -15,7 +15,11 @@
 #include <string>
 using namespace std;
 
-#include <rapidjson/document.h>
+#include <json.h>
+// a collision with client/errors.h
+#ifdef error_description
+#undef error_description
+#endif
 
 #include "dbus/DBusConnection.h"
 #include "snapper/Exception.h"
@@ -315,29 +319,64 @@ map<string, string> SnapperZyppPlugin::get_userdata(const Message& msg) {
     return result;
 }
 
+static
+json_object * object_get(json_object * obj, const char * name) {
+    json_object * result;
+    if (!json_object_object_get_ex(obj, name, &result)) {
+	cerr << "ERROR:" << '"' << name << "\" not found" << endl;
+	return NULL;
+    }
+    return result;
+}
+
 set<string> SnapperZyppPlugin::get_solvables(const Message& msg, Phase phase) {
     set<string> result;
 
-    rapidjson::Document doc;
-    const char * c_body = msg.body.c_str();
-    cerr << "DEBUG:" << "parsing zypp JSON: " << c_body << endl;
-    if (doc.Parse(c_body).HasParseError()) {
-	cerr << "ERROR:" << "parsing zypp JSON failed" << endl;
+    json_tokener * tok = json_tokener_new();
+    json_object * zypp = json_tokener_parse_ex(tok, msg.body.c_str(), msg.body.size());
+    json_tokener_error jerr = json_tokener_get_error(tok);
+    if (jerr != json_tokener_success) {
+	cerr << "ERROR:" << "parsing zypp JSON failed: "
+			 << json_tokener_error_desc(jerr) << endl;
 	return result;
     }
+
+    // JSON structure:
+    // {"TransactionStepList":[{"type":"?","stage":"?","solvable":{"n":"mypackage"}}]}
     // https://doc.opensuse.org/projects/libzypp/SLE12SP2/plugin-commit.html
-    using rapidjson::Value;
-    const Value& steps = doc["TransactionStepList"];
-    for (Value::ConstValueIterator it = steps.Begin(); it != steps.End(); ++it) {
-	const Value& step = *it;
-	if (step.HasMember("type")) {
-	    if (phase == Phase::BEFORE || step.HasMember("stage")) {
-		const Value& solvable = step["solvable"];
-		const Value& name = solvable["n"];
-		// FIXME: what happens when the doc structure is different?
-		result.insert(name.GetString());
-	    }
-	}
+    json_object * steps = object_get(zypp, "TransactionStepList");
+    if (!steps)
+        return result;
+
+    if (json_object_get_type(steps) == json_type_array) {
+        size_t i, len = json_object_array_length(steps);
+        printf("steps: %zu\n", len);
+        for (i = 0; i < len; ++i) {
+            json_object * step = json_object_array_get_idx(steps, i);
+            bool have_type = json_object_object_get_ex(step, "type", NULL);
+            bool have_stage = json_object_object_get_ex(step, "stage", NULL);
+            if (have_type && (phase == Phase::BEFORE || have_stage)) {
+                json_object * solvable = object_get(step, "solvable");
+                if (!solvable) {
+                    cerr << "ERROR:" << "in item #" << i << endl;
+                    continue;
+                }
+                json_object * name = object_get(solvable, "n");
+                if (!name) {
+                    cerr << "ERROR:" << "in item #" << i << endl;
+                    continue;
+                }
+                if (json_object_get_type(name) != json_type_string) {
+                    cerr << "ERROR:" << "\"n\" is not a string" << endl;
+                    cerr << "ERROR:" << "in item #" << i << endl;
+                    continue;
+                }
+                else {
+                    const char * prize = json_object_get_string(name);
+		    result.insert(prize);
+                }
+            }
+        }
     }
 
     return result;

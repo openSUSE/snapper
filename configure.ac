@@ -148,6 +148,9 @@ fi
 
 PKG_CHECK_MODULES(DBUS, dbus-1)
 PKG_CHECK_MODULES(XML2, libxml-2.0)
+if test "x$with_zypp" = "xyes"; then
+   PKG_CHECK_MODULES(JSONC, json-c)
+fi
 
 AC_CHECK_HEADER(acl/libacl.h,[],[AC_MSG_ERROR([Cannout find libacl headers. Please install libacl-devel])])
 

@@ -22,13 +22,13 @@ RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
   libboost_test-devel \
   libboost_thread-devel \
   libbtrfs-devel \
+  libjson-c-devel \
   libmount-devel \
   libtool \
   libxml2-devel \
   libxslt \
   obs-service-source_validator \
   pam-devel \
-  rapidjson-devel \
   rpm-build \
   "rubygem($RUBY_VERSION:ruby-dbus)" \
   which

@@ -72,7 +72,11 @@ BuildRequires:  xsltproc
 BuildRequires:  libzypp(plugin:commit)
 %endif
 BuildRequires:  pam-devel
-BuildRequires:  rapidjson-devel
+%if 0%{?fedora_version}
+BuildRequires:  json-c-devel
+%else
+BuildRequires:  libjson-c-devel
+%endif
 Requires:       diffutils
 Requires:       libsnapper@LIBVERSION_MAJOR@ = %version
 %if 0%{?suse_version}
