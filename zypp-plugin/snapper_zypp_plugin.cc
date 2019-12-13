@@ -3,9 +3,8 @@
 // getppid
 #include <sys/types.h>
 #include <unistd.h>
-// fnmatch
-#include <fnmatch.h>
 
+// FIXME for userdata
 #include <boost/regex.hpp>
 // split
 #include <boost/algorithm/string.hpp>
@@ -27,9 +26,9 @@ using snapper::Exception;
 using snapper::CodeLocation;
 #include "client/commands.h"
 #include "client/errors.h"
-#include "snapper/XmlFile.h"
 
 #include "zypp_commit_plugin.h"
+#include "solvable_matcher.h"
 
 ostream& operator <<(ostream& os, set<string> ss) {
     bool seen_first = false;
@@ -83,72 +82,6 @@ public:
 
 class SnapperZyppPlugin : public ZyppCommitPlugin {
 public:
-    struct SolvableMatcher {
-	enum class Kind {
-	    GLOB,
-	    REGEX
-	};
-	string pattern;
-	Kind kind;
-	bool important;
-
-	SolvableMatcher(const string& apattern, Kind akind, bool aimportant)
-	: pattern(apattern)
-	, kind(akind)
-	, important(aimportant)
-	{}
-
-	bool match(const string& solvable) {
-	    cerr << "DEBUG:" << "match? " << solvable << " by " << ((kind == Kind::GLOB)? "GLOB '": "REGEX '") << pattern << '\'' << endl;
-	    bool res;
-	    if (kind == Kind::GLOB) {
-		static const int flags = 0;
-		res = fnmatch(pattern.c_str(), solvable.c_str(), flags) == 0;
-	    }
-	    else {
-		// POSIX Extended Regular Expression Syntax
-		boost::regex rx_pattern(pattern, boost::regex::extended);
-		res = boost::regex_match(solvable, rx_pattern);
-	    }
-	    cerr << "DEBUG:" << "-> " << res << endl;
-	    return res;
-	}
-
-	static vector<SolvableMatcher> load_config(const string& cfg_filename) {
-	    vector<SolvableMatcher> result;
-
-	    cerr << "DEBUG:" << "parsing " << cfg_filename << endl;
-	    XmlFile config(cfg_filename);
-	    // FIXME test parse errors
-	    const xmlNode* root = config.getRootElement();
-	    const xmlNode* solvables_n = getChildNode(root, "solvables");
-	    const list<const xmlNode*> solvables_l = getChildNodes(solvables_n, "solvable");
-	    for (auto node: solvables_l) {
-		string pattern;
-		Kind kind;
-		bool important = false;
-
-		getAttributeValue(node, "important", important);
-		string kind_s;
-		getAttributeValue(node, "match", kind_s);
-		getValue(node, pattern);
-		if (kind_s == "w") { // w for wildcard
-		    kind = Kind::GLOB;
-		}
-		else if (kind_s == "re") { // Regular Expression
-		    kind = Kind::REGEX;
-		}
-		else {
-		    cerr << "ERROR:" << "Unknown match attribute '" << kind_s << "', disregarding pattern '"<< pattern << "'" << endl;
-		    continue;
-		}
-
-		result.emplace_back(SolvableMatcher(pattern, kind, important));
-	    }
-	    return result;
-	}
-    };
-
     SnapperZyppPlugin(const ProgramOptions& opts)
     : snapper_cfg(opts.snapper_config)
     , dbus_conn(opts.bus)

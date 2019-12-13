@@ -1,2 +1,6 @@
 *.o
 snapper-zypp-plugin
+*.test
+*.log
+*.trs
+test-suite.log
