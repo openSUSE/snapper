@@ -19,7 +19,7 @@
  * find current contact information at www.novell.com.
  */
 
-
+#include <stdexcept>
 #include "snapper/Regex.h"
 
 extern int _nl_msg_cat_cntr;
@@ -28,23 +28,18 @@ extern int _nl_msg_cat_cntr;
 namespace snapper
 {
 
-Regex::Regex (const char* pattern, int cflags, unsigned int nm)
-    : pattern (pattern),
-      cflags (cflags),
-      nm (cflags & REG_NOSUB ? 0 : nm)
-{
-    regcomp (&rx, pattern, cflags);
-    my_nl_msg_cat_cntr = _nl_msg_cat_cntr;
-    rm = new regmatch_t[nm];
-}
-
-
 Regex::Regex (const string& pattern, int cflags, unsigned int nm)
     : pattern (pattern),
       cflags (cflags),
       nm (cflags & REG_NOSUB ? 0 : nm)
 {
-    regcomp (&rx, pattern.c_str (), cflags);
+    int errcode = regcomp (&rx, pattern.c_str (), cflags);
+    if (errcode) {
+	size_t esize = regerror(errcode, &rx, nullptr, 0);
+	char error[esize];
+	regerror(errcode, &rx, error, esize);
+	throw std::runtime_error(string("Regex compilation error: ") + error);
+    }
     my_nl_msg_cat_cntr = _nl_msg_cat_cntr;
     rm = new regmatch_t[nm];
 }

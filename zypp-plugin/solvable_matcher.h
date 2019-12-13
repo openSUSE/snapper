@@ -12,7 +12,7 @@ struct SolvableMatcher {
     bool important;
 
     static std::ostream& log;
-    SolvableMatcher(const std::string& apattern, Kind akind, bool aimportant)                    
+    SolvableMatcher(const std::string& apattern, Kind akind, bool aimportant)
 	: pattern(apattern)
 	, kind(akind)
 	, important(aimportant)

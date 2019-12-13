@@ -16,8 +16,7 @@ snapper_zypp_plugin_LDADD = \
     ../client/libclient.la \
     ../snapper/libsnapper.la \
     ../dbus/libdbus.la \
-    $(JSONC_LIBS) \
-    -lboost_regex
+    $(JSONC_LIBS)
 
 check_PROGRAMS = regex.test
 TESTS = $(check_PROGRAMS)
@@ -25,7 +24,6 @@ regex_test_SOURCES = regex_test.cc \
     solvable_matcher.cc solvable_matcher.h
 regex_test_LDADD = \
     ../snapper/libsnapper.la \
-    -lboost_regex \
     -lboost_unit_test_framework
 
 endif

@@ -16,7 +16,6 @@ RUN apt-get update && \
   g++ \
   gettext \
   libboost-dev \
-  libboost-regex-dev \
   libboost-system-dev \
   libboost-test-dev \
   libboost-thread-dev \

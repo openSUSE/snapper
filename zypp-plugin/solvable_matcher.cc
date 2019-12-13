@@ -7,7 +7,7 @@ using namespace std;
 
 // fnmatch
 #include <fnmatch.h>
-#include <boost/regex.hpp>
+#include "snapper/Regex.h"
 #include "snapper/XmlFile.h"
 using namespace snapper;
 
@@ -25,8 +25,9 @@ bool SolvableMatcher::match(const string& solvable) const {
     }
     else {
         // POSIX Extended Regular Expression Syntax
-        boost::regex rx_pattern(pattern, boost::regex::extended);
-        res = boost::regex_match(solvable, rx_pattern);
+	// The original Python implementation allows "foo" to match "foo-devel"
+	snapper::Regex rx_pattern("^" + pattern, REG_EXTENDED | REG_NOSUB);
+        res = rx_pattern.match(solvable);
     }
     log << "DEBUG:" << "-> " << res << endl;
     return res;

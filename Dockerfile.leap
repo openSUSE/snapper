@@ -17,7 +17,6 @@ RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
   gcc-c++ \
   grep \
   libacl-devel \
-  libboost_regex-devel \
   libboost_system-devel \
   libboost_test-devel \
   libboost_thread-devel \

@@ -1,9 +1,9 @@
 #include <iostream>
-#include <boost/regex.hpp>
 #include <boost/algorithm/string/trim.hpp>
 #include <string>
 using namespace std;
 
+#include "snapper/Regex.h"
 #include "zypp_plugin.h"
 
 void ZyppPlugin::answer(const Message& msg) {
@@ -24,7 +24,7 @@ int ZyppPlugin::main() {
     } state = State::Start;
 
     Message msg;
-    static const boost::regex rx_word("[A-Za-z0-9_]+");
+    static const snapper::Regex rx_word("^[A-Za-z0-9_]+$");
     while(!cin.eof()) {
 	string line;
 
@@ -34,7 +34,7 @@ int ZyppPlugin::main() {
 	if (state == State::Start) {
 	    if (line.empty())
 		continue;
-	    if (boost::regex_match(line, rx_word)) {
+	    if (rx_word.match(line)) {
 		msg = Message();
 		msg.command = line;
 		state = State::Headers;
@@ -53,11 +53,10 @@ int ZyppPlugin::main() {
 		state = State::Start;
 	    }
 	    else {
-		static const boost::regex rx_header("([A-Za-z0-9_]+):[ \t]*(.+)");
-		boost::smatch what;
-		if (boost::regex_match(line, what, rx_header)) {
-		    string key = what[1];
-		    string value = what[2];
+		static const snapper::Regex rx_header("^([A-Za-z0-9_]+):[ \t]*(.+)$");
+		if (rx_header.match(line)) {
+		    string key = rx_header.cap(1);
+		    string value = rx_header.cap(2);
 		    msg.headers[key] = value;
 		}
 		else {
@@ -78,4 +77,3 @@ ZyppPlugin::Message ZyppPlugin::dispatch(const Message& msg) {
     a.headers["Command"] = msg.command;
     return a;
 }
-

@@ -4,8 +4,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-// FIXME for userdata
-#include <boost/regex.hpp>
 // split
 #include <boost/algorithm/string.hpp>
 
@@ -21,6 +19,7 @@ using namespace std;
 #endif
 
 #include "dbus/DBusConnection.h"
+#include "snapper/Regex.h"
 #include "snapper/Exception.h"
 using snapper::Exception;
 using snapper::CodeLocation;
@@ -237,11 +236,10 @@ map<string, string> SnapperZyppPlugin::get_userdata(const Message& msg) {
         vector<string> key_values;
 	boost::split(key_values, userdata_s, boost::is_any_of(","));
 	for (auto kv: key_values) {
-	    static const boost::regex rx_keyval("([^=]*)=(.+)");
-	    boost::smatch what;
-	    if (boost::regex_match(kv, what, rx_keyval)) {
-		string key = boost::trim_copy(string(what[1]));
-		string value = boost::trim_copy(string(what[2]));
+	    static const snapper::Regex rx_keyval("^([^=]*)=(.+)$");
+	    if (rx_keyval.match(kv)) {
+		string key = boost::trim_copy(rx_keyval.cap(1));
+		string value = boost::trim_copy(rx_keyval.cap(2));
 		result[key] = value;
 	    }
 	    else {
