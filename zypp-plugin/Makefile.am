@@ -24,6 +24,7 @@ regex_test_SOURCES = regex_test.cc \
     solvable_matcher.cc solvable_matcher.h
 regex_test_LDADD = \
     ../snapper/libsnapper.la \
+    $(XML2_LIBS) \
     -lboost_unit_test_framework
 
 endif
