@@ -1,6 +1,9 @@
 #!/bin/bash
+set -e
+set -u
+
 if ! type -P shellcheck >/dev/null; then
-   echo "1..0 # SKIP No shellcheck"
+   echo "1..0 # SKIP https://www.shellcheck.net/ is not installed"
    exit
 fi
 echo "1..1"
