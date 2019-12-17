@@ -74,8 +74,8 @@ public:
 
 	s = getenv("SNAPPER_ZYPP_PLUGIN_DBUS_SESSION");
 	if (s != nullptr) {
-            bus = DBUS_BUS_SESSION;
-        }
+	    bus = DBUS_BUS_SESSION;
+	}
     }
 };
 
@@ -118,12 +118,12 @@ public:
 	    try {
 		cerr << "INFO:" << "creating pre snapshot" << endl;
 		pre_snapshot_num = command_create_pre_snapshot(
-                    dbus_conn, snapper_cfg,
-                    snapshot_description, cleanup_algorithm, userdata
-                );
+		    dbus_conn, snapper_cfg,
+		    snapshot_description, cleanup_algorithm, userdata
+		);
 		cerr << "DEBUG:" << "created pre snapshot " << pre_snapshot_num << endl;
 	    }
-            catch (const DBus::ErrorException& ex) {
+	    catch (const DBus::ErrorException& ex) {
 		SN_CAUGHT(ex);
 		cerr << "ERROR:" << error_description(ex) << endl;
 	    }
@@ -156,9 +156,9 @@ public:
 		    modification_data.cleanup = cleanup_algorithm;
 		    modification_data.userdata = userdata;
 		    command_set_snapshot(
-                        dbus_conn, snapper_cfg,
-                        pre_snapshot_num, modification_data
-                    );
+			dbus_conn, snapper_cfg,
+			pre_snapshot_num, modification_data
+		    );
 		}
 		catch (const DBus::ErrorException& ex) {
 		    SN_CAUGHT(ex);
@@ -170,9 +170,9 @@ public:
 		try {
 		    cerr << "INFO:" << "creating post snapshot" << endl;
 		    unsigned int post_snapshot_num = command_create_post_snapshot(
-                        dbus_conn, snapper_cfg,
-                        pre_snapshot_num, "", cleanup_algorithm, userdata
-                    );
+			dbus_conn, snapper_cfg,
+			pre_snapshot_num, "", cleanup_algorithm, userdata
+		    );
 		    cerr << "DEBUG:" << "created post snapshot " << post_snapshot_num << endl;
 		}
 		catch (const DBus::ErrorException& ex) {
@@ -233,7 +233,7 @@ map<string, string> SnapperZyppPlugin::get_userdata(const Message& msg) {
     auto it = msg.headers.find("userdata");
     if (it != msg.headers.end()) {
 	const string& userdata_s = it->second;
-        vector<string> key_values;
+	vector<string> key_values;
 	boost::split(key_values, userdata_s, boost::is_any_of(","));
 	for (auto kv: key_values) {
 	    static const snapper::Regex rx_keyval("^([^=]*)=(.+)$");
@@ -277,37 +277,37 @@ set<string> SnapperZyppPlugin::get_solvables(const Message& msg, Phase phase) {
     // https://doc.opensuse.org/projects/libzypp/SLE12SP2/plugin-commit.html
     json_object * steps = object_get(zypp, "TransactionStepList");
     if (!steps)
-        return result;
+	return result;
 
     if (json_object_get_type(steps) == json_type_array) {
-        size_t i, len = json_object_array_length(steps);
-        printf("steps: %zu\n", len);
-        for (i = 0; i < len; ++i) {
-            json_object * step = json_object_array_get_idx(steps, i);
-            bool have_type = json_object_object_get_ex(step, "type", NULL);
-            bool have_stage = json_object_object_get_ex(step, "stage", NULL);
-            if (have_type && (phase == Phase::BEFORE || have_stage)) {
-                json_object * solvable = object_get(step, "solvable");
-                if (!solvable) {
-                    cerr << "ERROR:" << "in item #" << i << endl;
-                    continue;
-                }
-                json_object * name = object_get(solvable, "n");
-                if (!name) {
-                    cerr << "ERROR:" << "in item #" << i << endl;
-                    continue;
-                }
-                if (json_object_get_type(name) != json_type_string) {
-                    cerr << "ERROR:" << "\"n\" is not a string" << endl;
-                    cerr << "ERROR:" << "in item #" << i << endl;
-                    continue;
-                }
-                else {
-                    const char * prize = json_object_get_string(name);
+	size_t i, len = json_object_array_length(steps);
+	printf("steps: %zu\n", len);
+	for (i = 0; i < len; ++i) {
+	    json_object * step = json_object_array_get_idx(steps, i);
+	    bool have_type = json_object_object_get_ex(step, "type", NULL);
+	    bool have_stage = json_object_object_get_ex(step, "stage", NULL);
+	    if (have_type && (phase == Phase::BEFORE || have_stage)) {
+		json_object * solvable = object_get(step, "solvable");
+		if (!solvable) {
+		    cerr << "ERROR:" << "in item #" << i << endl;
+		    continue;
+		}
+		json_object * name = object_get(solvable, "n");
+		if (!name) {
+		    cerr << "ERROR:" << "in item #" << i << endl;
+		    continue;
+		}
+		if (json_object_get_type(name) != json_type_string) {
+		    cerr << "ERROR:" << "\"n\" is not a string" << endl;
+		    cerr << "ERROR:" << "in item #" << i << endl;
+		    continue;
+		}
+		else {
+		    const char * prize = json_object_get_string(name);
 		    result.insert(prize);
-                }
-            }
-        }
+		}
+	    }
+	}
     }
 
     return result;

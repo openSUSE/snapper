@@ -10,8 +10,8 @@ public:
     // https://doc.opensuse.org/projects/libzypp/SLE12SP2/zypp-plugins.html
     struct Message {
 	std::string command;
-    	std::map<std::string, std::string> headers;
-    	std::string body;
+	std::map<std::string, std::string> headers;
+	std::string body;
     };
 
     virtual int main();
