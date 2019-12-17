@@ -38,7 +38,6 @@ class Regex : private boost::noncopyable
 {
 public:
 
-    Regex (const char* pattern, int cflags = REG_EXTENDED, unsigned int = 10);
     Regex (const string& pattern, int cflags = REG_EXTENDED, unsigned int = 10);
     ~Regex ();
 

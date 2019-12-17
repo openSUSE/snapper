@@ -12,6 +12,7 @@ RUN dnf -y install \
   gettext \
   glibc-langpack-de \
   glibc-langpack-en \
+  json-c-devel \
   libacl-devel \
   libmount-devel \
   libtool \

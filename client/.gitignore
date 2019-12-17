@@ -1,4 +1,6 @@
 *.o
+*.lo
+*.la
 snapper
 systemd-helper
 installation-helper

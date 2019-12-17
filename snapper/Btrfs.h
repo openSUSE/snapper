@@ -44,21 +44,21 @@ namespace snapper
 
 	Btrfs(const string& subvolume, const string& root_prefix);
 
-	virtual void evalConfigInfo(const ConfigInfo& config_info);
+	virtual void evalConfigInfo(const ConfigInfo& config_info) override;
 
-	virtual string fstype() const { return "btrfs"; }
+	virtual string fstype() const override { return "btrfs"; }
 
-	virtual void createConfig() const;
-	virtual void deleteConfig() const;
+	virtual void createConfig() const override;
+	virtual void deleteConfig() const override;
 
 	virtual void addToFstab(const string& default_subvolume_name) const;
 	virtual void removeFromFstab() const;
 
-	virtual string snapshotDir(unsigned int num) const;
+	virtual string snapshotDir(unsigned int num) const override;
 
-	virtual SDir openSubvolumeDir() const;
-	virtual SDir openInfosDir() const;
-	virtual SDir openSnapshotDir(unsigned int num) const;
+	virtual SDir openSubvolumeDir() const override;
+	virtual SDir openInfosDir() const override;
+	virtual SDir openSnapshotDir(unsigned int num) const override;
 
 	/**
 	 * A general read-write directory that can be used for ioctls. The
@@ -68,30 +68,30 @@ namespace snapper
 	SDir openGeneralDir() const;
 
 	virtual void createSnapshot(unsigned int num, unsigned int num_parent, bool read_only,
-				    bool quota, bool empty) const;
-	virtual void createSnapshotOfDefault(unsigned int num, bool read_only, bool quota) const;
-	virtual void deleteSnapshot(unsigned int num) const;
+				    bool quota, bool empty) const override;
+	virtual void createSnapshotOfDefault(unsigned int num, bool read_only, bool quota) const override;
+	virtual void deleteSnapshot(unsigned int num) const override;
 
-	virtual bool isSnapshotMounted(unsigned int num) const;
-	virtual void mountSnapshot(unsigned int num) const;
-	virtual void umountSnapshot(unsigned int num) const;
+	virtual bool isSnapshotMounted(unsigned int num) const override;
+	virtual void mountSnapshot(unsigned int num) const override;
+	virtual void umountSnapshot(unsigned int num) const override;
 
-	virtual bool isSnapshotReadOnly(unsigned int num) const;
+	virtual bool isSnapshotReadOnly(unsigned int num) const override;
 
-	virtual bool checkSnapshot(unsigned int num) const;
+	virtual bool checkSnapshot(unsigned int num) const override;
 
-	virtual void cmpDirs(const SDir& dir1, const SDir& dir2, cmpdirs_cb_t cb) const;
+	virtual void cmpDirs(const SDir& dir1, const SDir& dir2, cmpdirs_cb_t cb) const override;
 
-	virtual bool isDefault(unsigned int num) const;
+	virtual bool isDefault(unsigned int num) const override;
 
-	virtual std::pair<bool, unsigned int> getDefault() const;
-	virtual void setDefault(unsigned int num) const;
+	virtual std::pair<bool, unsigned int> getDefault() const override;
+	virtual void setDefault(unsigned int num) const override;
 
-	virtual bool isActive(unsigned int num) const;
+	virtual bool isActive(unsigned int num) const override;
 
-	virtual std::pair<bool, unsigned int> getActive() const;
+	virtual std::pair<bool, unsigned int> getActive() const override;
 
-	virtual void sync() const;
+	virtual void sync() const override;
 
 	virtual qgroup_t getQGroup() const { return qgroup; }
 

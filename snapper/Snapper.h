@@ -51,7 +51,7 @@ namespace snapper
 	const string& getConfigName() const { return config_name; }
 	const string& getSubvolume() const { return subvolume; }
 
-	virtual void checkKey(const string& key) const;
+	virtual void checkKey(const string& key) const override;
 
     private:
 

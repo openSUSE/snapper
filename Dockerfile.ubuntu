@@ -8,6 +8,7 @@ RUN apt-get update && \
   autoconf \
   automake \
   build-essential \
+  dbus \
   debhelper \
   devscripts \
   docbook-xsl \
@@ -21,11 +22,13 @@ RUN apt-get update && \
   libboost-test-dev \
   libboost-thread-dev \
   libdbus-1-dev \
+  libjson-c-dev \
   libmount-dev \
   libpam-dev \
   libtool \
   libxml2-dev \
   libz-dev \
+  ruby-dbus \
   xsltproc
 
 RUN mkdir -p /usr/src/app

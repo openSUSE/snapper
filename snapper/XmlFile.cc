@@ -104,12 +104,13 @@ namespace snapper
     const xmlNode*
     getChildNode(const xmlNode* node, const char* name)
     {
+	if (node != NULL)
+	    node = node->children;
 	for (const xmlNode* cur_node = node; cur_node; cur_node = cur_node->next)
 	{
 	    if (strcmp(name, (const char*) cur_node->name) == 0)
 	    {
-		if (cur_node->children)
-		    return cur_node->children;
+		return cur_node;
 	    }
 	}
 
@@ -122,23 +123,37 @@ namespace snapper
     {
 	list<const xmlNode*> ret;
 
+	if (node != NULL)
+	    node = node->children;
 	for (const xmlNode* cur_node = node; cur_node; cur_node = cur_node->next)
 	{
 	    if (cur_node->type == XML_ELEMENT_NODE &&
 		strcmp(name, (const char*) cur_node->name) == 0)
 	    {
-		if (cur_node->children)
-		    ret.push_back(cur_node->children);
+		ret.push_back(cur_node);
 	    }
 	}
 
 	return ret;
     }
 
+    bool
+    getValue(const xmlNode* node, string& value)
+    {
+	xmlChar* tmp = xmlNodeGetContent(node);
+	if (tmp == nullptr)
+	    return false;
+
+	value = (const char *) tmp;
+	xmlFree(tmp);
+	return true;
+    }
 
     bool
     getChildValue(const xmlNode* node, const char* name, string& value)
     {
+	if (node != NULL)
+	    node = node->children;
 	for (const xmlNode* cur_node = node; cur_node; cur_node = cur_node->next)
 	{
 	    if (cur_node->type == XML_ELEMENT_NODE &&
@@ -168,6 +183,28 @@ namespace snapper
 	return true;
     }
 
+    bool
+    getAttributeValue(const xmlNode* node, const char* name, string& value)
+    {
+	xmlChar* tmp = xmlGetNoNsProp(node, (const xmlChar *) name);
+	if (tmp == nullptr)
+	    return false;
+
+	value = (const char *) tmp;
+	xmlFree(tmp);
+	return true;
+    }
+
+    bool
+    getAttributeValue(const xmlNode* node, const char* name, bool& value)
+    {
+	string tmp;
+	if (!getAttributeValue(node, name, tmp))
+	    return false;
+
+	value = tmp == "true";
+	return true;
+    }
 
     void
     setChildValue(xmlNode* node, const char* name, const char* value)

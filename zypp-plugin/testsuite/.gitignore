@@ -1,0 +1,6 @@
+*.log
+*.trs
+test-suite.log
+# in the parent dir, *.test is a compilation result
+# but here it is our script so unignore it
+!*.test

@@ -8,23 +8,29 @@ SUBDIRS = 		\
 
 AM_CPPFLAGS = -I$(top_srcdir) $(DBUS_CFLAGS)
 
+noinst_LTLIBRARIES = libclient.la
+libclient_la_SOURCES =                  \
+	types.cc	types.h		\
+	commands.cc	commands.h      \
+	errors.cc	errors.h
+
+libclient_la_LIBADD =  utils/libutils.la ../dbus/libdbus.la
+
 bin_PROGRAMS = snapper
 
 snapper_SOURCES =					\
 	snapper.cc					\
-	types.cc		types.h			\
-	commands.cc		commands.h		\
 	cleanup.cc		cleanup.h		\
 	proxy.cc		proxy.h			\
 	proxy-dbus.cc		proxy-dbus.h		\
 	proxy-lib.cc		proxy-lib.h		\
 	misc.cc			misc.h			\
-	errors.cc		errors.h		\
 	Options.cc		Options.h		\
 	GlobalOptions.cc	GlobalOptions.h		\
 	Command.cc		Command.h
 
 snapper_LDADD = 			\
+	libclient.la			\
 	../snapper/libsnapper.la	\
 	utils/libutils.la		\
 	Command/libcommand.la		\
@@ -36,16 +42,13 @@ libexec_PROGRAMS = systemd-helper
 
 systemd_helper_SOURCES =		\
 	systemd-helper.cc		\
-	types.cc	types.h		\
-	commands.cc	commands.h	\
 	cleanup.cc	cleanup.h	\
 	proxy.cc	proxy.h		\
 	proxy-dbus.cc	proxy-dbus.h	\
 	proxy-lib.cc	proxy-lib.h	\
-	misc.cc		misc.h		\
-	errors.cc	errors.h
+	misc.cc		misc.h
 
-systemd_helper_LDADD = ../snapper/libsnapper.la utils/libutils.la ../dbus/libdbus.la
+systemd_helper_LDADD = libclient.la ../snapper/libsnapper.la utils/libutils.la ../dbus/libdbus.la
 
 if ENABLE_BTRFS
 

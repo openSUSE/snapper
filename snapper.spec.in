@@ -71,6 +71,11 @@ BuildRequires:  xsltproc
 BuildRequires:  libzypp(plugin:commit)
 %endif
 BuildRequires:  pam-devel
+%if 0%{?fedora_version}
+BuildRequires:  json-c-devel
+%else
+BuildRequires:  libjson-c-devel
+%endif
 Requires:       diffutils
 Requires:       libsnapper@LIBVERSION_MAJOR@ = %version
 %if 0%{?suse_version}
@@ -239,10 +244,7 @@ libsnapper.
 %{_includedir}/snapper
 
 %package -n snapper-zypp-plugin
-BuildArch:	noarch
 Requires:       libzypp(plugin:commit) = 1
-Requires:	python3-dbus-python
-Requires:	python3-zypp-plugin
 Requires:       snapper = %version
 Summary:        A zypp commit plugin for calling snapper
 Group:          System/Packages
@@ -259,7 +261,7 @@ snapper during commits.
 %dir /usr/lib/zypp/plugins
 %dir /usr/lib/zypp/plugins/commit
 %endif
-/usr/lib/zypp/plugins/commit/snapper.py*
+/usr/lib/zypp/plugins/commit/snapper-zypp-plugin
 %doc %{_mandir}/*/snapper-zypp-plugin.8*
 %doc %{_mandir}/*/snapper-zypp-plugin.conf.5*
 

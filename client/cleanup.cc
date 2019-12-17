@@ -427,7 +427,7 @@ struct NumberParameters : public Parameters
 {
     NumberParameters(const ProxySnapper* snapper);
 
-    bool is_degenerated() const;
+    bool is_degenerated() const override;
 
     Range limit;
     Range limit_important;
@@ -538,7 +538,7 @@ struct TimelineParameters : public Parameters
 {
     TimelineParameters(const ProxySnapper* snapper);
 
-    bool is_degenerated() const;
+    bool is_degenerated() const override;
 
     Range limit_hourly;
     Range limit_daily;

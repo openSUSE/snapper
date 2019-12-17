@@ -270,7 +270,7 @@ namespace snapper
 	 *
 	 * Reimplemented from std::exception.
 	 **/
-	virtual const char* what() const throw() { return _msg.c_str(); }
+	virtual const char* what() const throw() override { return _msg.c_str(); }
 
     protected:
 

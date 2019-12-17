@@ -73,6 +73,8 @@ namespace snapper
     list<const xmlNode*> getChildNodes(const xmlNode* node, const char* name);
 
 
+    bool getValue(const xmlNode* node, string& value);
+
     bool getChildValue(const xmlNode* node, const char* name, string& value);
     bool getChildValue(const xmlNode* node, const char* name, bool& value);
 
@@ -89,6 +91,8 @@ namespace snapper
 	return true;
     }
 
+    bool getAttributeValue(const xmlNode* node, const char* name, string& value);
+    bool getAttributeValue(const xmlNode* node, const char* name, bool& value);
 
     void setChildValue(xmlNode* node, const char* name, const char* value);
     void setChildValue(xmlNode* node, const char* name, const string& value);

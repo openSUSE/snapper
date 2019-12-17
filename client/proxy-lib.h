@@ -79,10 +79,10 @@ class ProxySnapshotsLib : public ProxySnapshots
 
 public:
 
-    virtual iterator getDefault();
-    virtual const_iterator getDefault() const;
+    virtual iterator getDefault() override;
+    virtual const_iterator getDefault() const override;
 
-    virtual const_iterator getActive() const;
+    virtual const_iterator getActive() const override;
 
     ProxySnapshotsLib(ProxySnapperLib* backref);
 
@@ -162,7 +162,7 @@ public:
 
     virtual map<string, ProxyConfig> getConfigs() const override;
 
-    virtual vector<string> debug() const { return Snapper::debug(); }
+    virtual vector<string> debug() const override { return Snapper::debug(); }
 
 private:
 

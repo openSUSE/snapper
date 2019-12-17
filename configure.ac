@@ -56,7 +56,7 @@ dnl Disable it by "configure --disable-silent-rules" or "make V=1"
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 CFLAGS="${CFLAGS} -std=c99 -Wall -Wextra -Wformat -Wmissing-prototypes -Wno-unused-parameter"
-CXXFLAGS="${CXXFLAGS} -std=c++11 -Wall -Wextra -Wformat -Wnon-virtual-dtor -Wno-unused-parameter"
+CXXFLAGS="${CXXFLAGS} -std=c++11 -Wall -Wextra -Wformat -Wnon-virtual-dtor -Wno-unused-parameter -Wsuggest-override"
 
 SYSCONFIG=/etc/sysconfig
 
@@ -147,6 +147,10 @@ if test "x$with_selinux" = "xyes"; then
 fi
 
 PKG_CHECK_MODULES(DBUS, dbus-1)
+PKG_CHECK_MODULES(XML2, libxml-2.0)
+if test "x$with_zypp" = "xyes"; then
+   PKG_CHECK_MODULES(JSONC, json-c)
+fi
 
 AC_CHECK_HEADER(acl/libacl.h,[],[AC_MSG_ERROR([Cannout find libacl headers. Please install libacl-devel])])
 
@@ -191,6 +195,8 @@ AC_OUTPUT(
 	testsuite/Makefile
 	testsuite-real/Makefile
 	testsuite-cmp/Makefile
+	zypp-plugin/Makefile
+	zypp-plugin/testsuite/Makefile
 	package/snapper.spec:snapper.spec.in
 	dists/debian/snapper-Debian.dsc.in:dists/debian/snapper-Debian.dsc.in.in
 	dists/debian/snapper-xUbuntu.dsc.in:dists/debian/snapper-xUbuntu.dsc.in.in

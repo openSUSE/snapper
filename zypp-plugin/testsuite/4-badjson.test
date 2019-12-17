@@ -1,0 +1,33 @@
+#!/bin/bash
+set -e
+set -u
+
+. test-helper.sh
+
+# http://testanything.org/
+echo 1..2
+
+test_bad_json() {
+    local JSON=("${1?JSON payload expected}")
+
+    stomp_message PLUGINBEGIN "" ""
+    stomp_message COMMITBEGIN "" "${JSON[@]}"
+    stomp_message COMMITEND "" ""
+    stomp_message PLUGINEND "" ""
+}
+
+TEST="1 - It complains about malformed JSON"
+STDERR=$(test_bad_json '{ malformed.1415926 ]' | runit "" 2>&1 >/dev/null || :)
+echo "$STDERR"
+if [[ ! "$STDERR" =~ parsing.*JSON.failed ]]; then
+    echo -n "not "
+fi
+echo "ok $TEST"
+
+TEST="2 - It complains about invalid JSON"
+STDERR=$(test_bad_json '{"well-formed": "but-invalid"}' | runit "" 2>&1 >/dev/null || :)
+echo "$STDERR"
+if [[ ! "$STDERR" =~ TransactionStepList.*not.found ]]; then
+    echo -n "not "
+fi
+echo "ok $TEST"
