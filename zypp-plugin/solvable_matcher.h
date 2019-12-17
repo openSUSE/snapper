@@ -1,3 +1,6 @@
+#ifndef SOLVABLE_MATCHER_H
+#define SOLVABLE_MATCHER_H
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -21,3 +24,5 @@ struct SolvableMatcher {
     bool match(const std::string& solvable) const;
     static std::vector<SolvableMatcher> load_config(const std::string& cfg_filename);
 };
+
+#endif //SOLVABLE_MATCHER_H

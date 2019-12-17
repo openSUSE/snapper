@@ -1,3 +1,6 @@
+#ifndef ZYPP_PLUGIN_H
+#define ZYPP_PLUGIN_H
+
 #include <map>
 #include <string>
 
@@ -22,3 +25,5 @@ public:
 	return a;
     }
 };
+
+#endif //ZYPP_PLUGIN_H

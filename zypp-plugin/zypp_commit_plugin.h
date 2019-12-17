@@ -1,3 +1,6 @@
+#ifndef ZYPP_COMMIT_PLUGIN_H
+#define ZYPP_COMMIT_PLUGIN_H
+
 #include "zypp_plugin.h"
 
 class ZyppCommitPlugin : public ZyppPlugin {
@@ -18,3 +21,4 @@ public:
     }
 };
 
+#endif //ZYPP_COMMIT_PLUGIN_H
