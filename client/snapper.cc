@@ -1015,6 +1015,7 @@ command_rollback(cli::GlobalOptions* global_options, ProxySnappers* snappers, Pr
     }
 
     const string default_description = "rollback backup";
+    const string default_description2 = "writable copy";
 
     bool print_number = false;
 
@@ -1024,7 +1025,7 @@ command_rollback(cli::GlobalOptions* global_options, ProxySnappers* snappers, Pr
     scd1.userdata["important"] = "yes";
 
     SCD scd2;
-    scd2.description = default_description;
+    scd2.description = default_description2;
 
     GetOpts::parsed_opts::const_iterator opt;
 
@@ -1085,7 +1086,7 @@ command_rollback(cli::GlobalOptions* global_options, ProxySnappers* snappers, Pr
 	    cout << _("Creating read-write snapshot of current subvolume.") << flush;
 
 	ProxySnapshots::const_iterator active = snapshots.getActive();
-	if (active != snapshots.end() && scd2.description == default_description)
+	if (active != snapshots.end() && scd2.description == default_description2)
 	    scd2.description += sformat(" of #%d", active->getNum());
 
 	scd2.read_only = false;
