@@ -56,7 +56,27 @@ dnl Disable it by "configure --disable-silent-rules" or "make V=1"
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 CFLAGS="${CFLAGS} -std=c99 -Wall -Wextra -Wformat -Wmissing-prototypes -Wno-unused-parameter"
-CXXFLAGS="${CXXFLAGS} -std=c++11 -Wall -Wextra -Wformat -Wnon-virtual-dtor -Wno-unused-parameter -Wsuggest-override"
+CXXFLAGS="${CXXFLAGS} -std=c++11 -Wall -Wextra -Wformat -Wnon-virtual-dtor -Wno-unused-parameter"
+
+AC_DEFUN([TRY_ADD_CXXFLAGS], [
+  AC_MSG_CHECKING([if $CXX supports $1])
+  OLD_CXXFLAGS="$CXXFLAGS"
+  CXXFLAGS="${CXXFLAGS} $1"
+  AC_LANG_PUSH([C++])
+  AC_TRY_COMPILE(
+    [], [],
+    [
+      AC_MSG_RESULT([yes])
+    ],
+    [
+      AC_MSG_RESULT([no])
+      CXXFLAGS="$OLD_CXXFLAGS"
+    ]
+  )
+  AC_LANG_POP([C++])
+])
+
+TRY_ADD_CXXFLAGS([-Wsuggest-override])
 
 SYSCONFIG=/etc/sysconfig
 
