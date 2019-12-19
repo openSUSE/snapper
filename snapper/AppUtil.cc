@@ -223,7 +223,7 @@ namespace snapper
     string
     stringerror(int errnum)
     {
-#if (_POSIX_C_SOURCE >= 200112L) && ! _GNU_SOURCE
+#if (_POSIX_C_SOURCE >= 200112L) && ! _GNU_SOURCE || MUSL_LIBC
 	char buf1[100];
 	if (strerror_r(errnum, buf1, sizeof(buf1) - 1) == 0)
 	    return string(buf1);
@@ -288,7 +288,7 @@ namespace snapper
 	const char* p = strptime(str.c_str(), "%F %T", &s);
 	if (!p || *p != '\0')
 	    return (time_t)(-1);
-	return utc ? timegm(&s) : timelocal(&s);
+	return utc ? timegm(&s) : mktime(&s);
     }
 
 

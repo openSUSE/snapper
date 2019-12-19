@@ -21,9 +21,9 @@
 
 #include <stdexcept>
 #include "snapper/Regex.h"
-
+#ifdef __GLIBC__
 extern int _nl_msg_cat_cntr;
-
+#endif
 
 namespace snapper
 {
@@ -40,8 +40,10 @@ Regex::Regex (const string& pattern, int cflags, unsigned int nm)
 	regerror(errcode, &rx, error, esize);
 	throw std::runtime_error(string("Regex compilation error: ") + error);
     }
+#ifdef __GLIBC__
     my_nl_msg_cat_cntr = _nl_msg_cat_cntr;
-    rm = new regmatch_t[nm];
+#endif
+	rm = new regmatch_t[nm];
 }
 
 
@@ -55,11 +57,16 @@ Regex::~Regex ()
 bool
 Regex::match (const string& str, int eflags) const
 {
-    if (my_nl_msg_cat_cntr != _nl_msg_cat_cntr) {
+#ifdef __GLIBC__
+    if (my_nl_msg_cat_cntr != _nl_msg_cat_cntr)
+#endif
+    {
 	regfree (&rx);
 	regcomp (&rx, pattern.c_str (), cflags);
+#ifdef __GLIBC__
 	my_nl_msg_cat_cntr = _nl_msg_cat_cntr;
-    }
+#endif
+	}
 
     last_str = str;
 

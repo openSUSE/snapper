@@ -25,6 +25,9 @@
 #include <string>
 #include <vector>
 #include <utility>
+#ifndef __GLIBC__
+#include <sys/types.h>
+#endif
 
 namespace snapper
 {
