@@ -1110,7 +1110,7 @@ command_rollback(cli::GlobalOptions* global_options, ProxySnappers* snappers, Pr
 	if (!global_options->quiet())
 	    cout << sformat(_("Creating read-write snapshot of snapshot %d."), tmp->getNum()) << flush;
 
-	if (tmp != snapshots.end() && scd2.description == default_description)
+	if (tmp != snapshots.end() && scd2.description == default_description2)
 	    scd2.description += sformat(" of #%d", tmp->getNum());
 
 	scd2.read_only = false;
