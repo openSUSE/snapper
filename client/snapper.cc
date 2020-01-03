@@ -1014,13 +1014,13 @@ command_rollback(cli::GlobalOptions* global_options, ProxySnappers* snappers, Pr
 	exit(EXIT_FAILURE);
     }
 
-    const string default_description = "rollback backup";
+    const string default_description1 = "rollback backup";
     const string default_description2 = "writable copy";
 
     bool print_number = false;
 
     SCD scd1;
-    scd1.description = default_description;
+    scd1.description = default_description1;
     scd1.cleanup = "number";
     scd1.userdata["important"] = "yes";
 
@@ -1065,7 +1065,7 @@ command_rollback(cli::GlobalOptions* global_options, ProxySnappers* snappers, Pr
 
     ProxySnapshots::iterator previous_default = snapshots.getDefault();
 
-    if (previous_default != snapshots.end() && scd1.description == default_description)
+    if (previous_default != snapshots.end() && scd1.description == default_description1)
         scd1.description += sformat(" of #%d", previous_default->getNum());
 
     ProxySnapshots::const_iterator snapshot1 = snapshots.end();
