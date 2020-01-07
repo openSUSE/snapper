@@ -163,7 +163,8 @@ fi
 %if 0%{?suse_version} > 1310
 %{_sbindir}/mksubvolume
 %endif
-%{_prefix}/lib/snapper
+%dir %{_prefix}/lib/snapper
+%{_prefix}/lib/snapper/*-helper
 %doc %{_mandir}/*/snapper.8*
 %doc %{_mandir}/*/snapperd.8*
 %doc %{_mandir}/*/snapper-configs.5*
