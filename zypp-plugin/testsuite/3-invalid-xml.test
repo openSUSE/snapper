@@ -2,10 +2,12 @@
 set -e
 set -u
 
+. test-helper.sh
+
+dbus_session_setup  || { echo "1..0 # SKIP"; exit; }
+
 # http://testanything.org/
 echo 1..1
-
-. test-helper.sh
 
 TEST="1 - It complains about invalid XML in config file"
 STDERR=$(test_pre_post_snapshots | runit zypp-plugin-invalid.conf 2>&1 >/dev/null || :)

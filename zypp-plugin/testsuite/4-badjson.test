@@ -4,6 +4,8 @@ set -u
 
 . test-helper.sh
 
+dbus_session_setup  || { echo "1..0 # SKIP"; exit; }
+
 # http://testanything.org/
 echo 1..2
 
