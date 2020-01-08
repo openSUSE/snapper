@@ -63,6 +63,19 @@ test_pre_del_snapshots() {
     stomp_message PLUGINEND "" ""
 }
 
+# snapper needs a DBus connection even if it ends up not using it :-/
+dbus_session_setup() {
+    if [ -z "${DBUS_SESSION_BUS_ADDRESS-}" ]; then
+        if ! type -P dbus-run-session >/dev/null; then
+            echo "dbus-run-session cannot be run, skipping test"
+            return 77
+        else
+            echo "Restarting test with dbus-run-session"
+            exec dbus-run-session -- "$0"
+        fi
+    fi
+}
+
 mock_snapperd_setup() {
     MOCKDEP=(ruby -e "require 'dbus'")
     if ! "${MOCKDEP[@]}"; then
