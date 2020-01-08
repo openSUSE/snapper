@@ -1,8 +1,18 @@
+snapper (0.8.8) stable; urgency=low
+
+  * Add a "writeble copy" description to the 2nd snapshot
+    of a rollback (Hrotkó Gábor).
+
+  * Fix the previous version to build on Debian, Ubuntu, and old GCC
+    (bsc#1160306).
+
+ -- Martin Vidner <mvidner@suse.com>  Wed, 08 Jan 2020 09:33:56 +0000
+
 snapper (0.8.7) stable; urgency=low
 
   * snapper-zypp-plugin subpackage rewritten from Python to C++ (jsc#SLE-10500)
 
- -- Martin Vidner <mvidner@suse.com>  Fri 06 Dec 2019 10:12:42 +0000
+ -- Martin Vidner <mvidner@suse.com>  Fri, 06 Dec 2019 10:12:42 +0000
 
 snapper (0.8.6) stable; urgency=low
 
