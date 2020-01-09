@@ -40,6 +40,14 @@ setup() {
     mount "$IMG" "$MNT"
     forget_config
     snapper --no-dbus --config="$CFG" create-config "$MNT"
+
+    # several tests assume nobody:nobody, but docker omits them
+    if ! getent group nobody; then
+        groupadd nobody
+    fi
+    if ! id -u nobody; then
+        useradd --no-log-init --group nobody nobody
+    fi
 }
 
 main() {
