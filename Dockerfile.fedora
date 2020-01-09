@@ -2,6 +2,7 @@
 FROM fedora:27
 
 RUN dnf -y install \
+  acl \
   autoconf \
   automake \
   boost-devel \

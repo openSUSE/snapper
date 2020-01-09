@@ -9,6 +9,7 @@ RUN zypper --non-interactive in --no-recommends --force-resolution ruby && zyppe
 
 RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
   zypper --non-interactive in --no-recommends \
+  acl \
   autoconf \
   automake \
   dbus-1-devel \
