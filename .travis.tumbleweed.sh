@@ -22,6 +22,11 @@ rpm -iv --force --nodeps /usr/src/packages/RPMS/*/*.rpm
 # smoke test, make sure snapper at least starts
 snapper --version
 
+# run the integration test
+cd /usr/lib*/snapper/testsuite
+./setup-and-run-all
+cd -
+
 rpm -Uv --force --nodeps /usr/src/packages/RPMS/*/*.rpm
 # get the plain package names and remove all packages at once
 rpm -ev --nodeps `rpm -q --qf '%{NAME} ' -p /usr/src/packages/RPMS/**/*.rpm`
