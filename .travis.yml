@@ -17,4 +17,5 @@ before_install:
 
 script:
   # run the respective .travis.<distro>.sh script
-  - docker run -it snapper-devel ./.travis.$BUILD_FLAVOR.sh
+  # (--privileged: integration tests mount a loopback device etc.)
+  - docker run --privileged -it snapper-devel ./.travis.$BUILD_FLAVOR.sh
