@@ -17,6 +17,7 @@ RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
   e2fsprogs-devel \
   gcc-c++ \
   grep \
+  lcov \
   libacl-devel \
   libboost_system-devel \
   libboost_test-devel \
@@ -29,6 +30,7 @@ RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
   libxslt \
   obs-service-source_validator \
   pam-devel \
+  perl-JSON \
   rpm-build \
   "rubygem($RUBY_VERSION:ruby-dbus)" \
   which
