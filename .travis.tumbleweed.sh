@@ -18,6 +18,7 @@ rpmbuild -bb --with coverage -D "jobs `nproc`" package/*.spec
 # test the %pre/%post scripts by installing/updating/removing the built packages
 # ignore the dependencies to make the test easier, as a smoke test it's good enough
 rpm -iv --force --nodeps /usr/src/packages/RPMS/*/*.rpm
+rpm -Uv --force --nodeps /usr/src/packages/RPMS/*/*.rpm
 
 # smoke test, make sure snapper at least starts
 snapper --version
@@ -30,9 +31,8 @@ popd
 
 # Coverage report
 pushd /usr/src/packages/BUILD/snapper-*
-make coverage
+make coveralls STRIP_PATH_PREFIX="$(pwd)"
 popd
 
-rpm -Uv --force --nodeps /usr/src/packages/RPMS/*/*.rpm
 # get the plain package names and remove all packages at once
 rpm -ev --nodeps `rpm -q --qf '%{NAME} ' -p /usr/src/packages/RPMS/**/*.rpm`

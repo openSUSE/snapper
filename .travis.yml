@@ -18,4 +18,4 @@ before_install:
 script:
   # run the respective .travis.<distro>.sh script
   # (--privileged: integration tests mount a loopback device etc.)
-  - docker run --privileged -it snapper-devel ./.travis.$BUILD_FLAVOR.sh
+  - docker run --privileged -it -e COVERALLS_TOKEN="$COVERALLS_TOKEN" snapper-devel ./.travis.$BUILD_FLAVOR.sh

@@ -1,11 +1,23 @@
 # Build the latest openSUSE Tumbleweed image
 FROM opensuse/tumbleweed
 
+# the NON-OSS repo is not needed, save the network bandwidth and some time (~5 seconds) for each refresh
+RUN zypper mr -d repo-non-oss
+
+
 # we need to install Ruby first to define the %{rb_ver} RPM macro
 # see https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#run
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#/build-cache
 # why we need "zypper clean -a" at the end
 RUN zypper --non-interactive in --no-recommends --force-resolution ruby && zypper clean -a
+
+# add the YaST repository - we need rubygem-coveralls-lcov
+RUN zypper ar -f http://download.opensuse.org/repositories/YaST:/Head/openSUSE_Tumbleweed/ yast
+RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
+  zypper --non-interactive --gpg-auto-import-keys \
+  in --no-recommends \
+  "rubygem($RUBY_VERSION:coveralls-lcov)" \
+  && zypper clean -a
 
 RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
   zypper --non-interactive in --no-recommends \
@@ -16,6 +28,7 @@ RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
   docbook-xsl-stylesheets \
   e2fsprogs-devel \
   gcc-c++ \
+  git-core \
   grep \
   lcov \
   libacl-devel \

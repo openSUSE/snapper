@@ -46,12 +46,21 @@ package-clean:
 if ENABLE_COVERAGE
 # Run `make coverage` after all the tests have been run.
 COVERAGE_INFO = coverage/coverage.info
-.PHONY: coverage
+.PHONY: coverage coveralls
 coverage:
 	mkdir -p $(dir $(COVERAGE_INFO))
 	lcov --capture --no-external --exclude '*/testsuite*/*' --output-file $(COVERAGE_INFO) --directory .  --quiet
 	lcov --list $(COVERAGE_INFO)
 	genhtml --output-directory coverage --legend --title "Snapper code coverage" -q $(COVERAGE_INFO)
+
+coveralls: coverage
+	## Strip the absolute path prefix from the coverage data
+	## so coveralls.io can find the source files at GitHub.
+	## STRIP_PATH_PREFIX should be set at 'make' time.
+	sed -i -e 's#^SF:'"$${STRIP_PATH_PREFIX}"'/\(.*\)#SF:\1#' "$(COVERAGE_INFO)"
+	## Send the code coverage to coveralls.io
+	## COVERALLS_TOKEN is set in Travis config and passed via .travis.yml
+	LC_ALL=en_US.UTF-8 coveralls-lcov --repo-token "$${COVERALLS_TOKEN}" "$(COVERAGE_INFO)"
 endif
 
 # Create all the files necessary for building the package with OBS:
