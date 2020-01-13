@@ -11,15 +11,26 @@ make package
 # /proc and /sys in the chroot).
 mkdir -p /root/rpmbuild/SOURCES
 cp package/* /root/rpmbuild/SOURCES
-rpmbuild -bb -D "fedora_version 25" -D "jobs `nproc`" package/*.spec
+rpmbuild -bb --with coverage -D "fedora_version 25" -D "jobs `nproc`" package/*.spec
 
 # test the %pre/%post scripts by installing/updating/removing the built packages
 # ignore the dependencies to make the test easier, as a smoke test it's good enough
 rpm -iv --force --nodeps /root/rpmbuild/RPMS/*/*.rpm
+rpm -Uv --force --nodeps /root/rpmbuild/RPMS/*/*.rpm
 
 # smoke test, make sure snapper at least starts
 snapper --version
 
-rpm -Uv --force --nodeps /root/rpmbuild/RPMS/*/*.rpm
+# Run the integration test
+# Running it in the source tree ensures that the coverage report finds it
+pushd /root/rpmbuild/BUILD/snapper-*/testsuite-real
+./setup-and-run-all
+popd
+
+# Coverage report
+pushd /root/rpmbuild/BUILD/snapper-*
+make coverage
+popd
+
 # get the plain package names and remove all packages at once
 rpm -ev --nodeps `rpm -q --qf '%{NAME} ' -p /root/rpmbuild/RPMS/**/*.rpm`

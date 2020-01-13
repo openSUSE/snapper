@@ -1,11 +1,12 @@
-# Build Fedora 27 image
-FROM fedora:27
+# Build Fedora 31 image
+FROM fedora:31
 
 RUN dnf -y install \
   acl \
   autoconf \
   automake \
   boost-devel \
+  btrfs-progs \
   dbus-devel \
   docbook-style-xsl \
   e2fsprogs-devel \
@@ -14,6 +15,7 @@ RUN dnf -y install \
   glibc-langpack-de \
   glibc-langpack-en \
   json-c-devel \
+  lcov \
   libacl-devel \
   libmount-devel \
   libtool \
