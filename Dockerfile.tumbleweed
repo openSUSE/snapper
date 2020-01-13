@@ -1,5 +1,10 @@
-# Build the latest openSUSE Tumbleweed image
-FROM opensuse/tumbleweed
+# Leap and Tumbleweed images differ only in the base image,
+# so use a parametrized Dockerfile. See
+# https://docs.docker.com/engine/reference/builder/#from
+ARG BUILD_FLAVOR
+
+# Build the latest openSUSE Tumbleweed or Leap image
+FROM opensuse/${BUILD_FLAVOR}
 
 # we need to install Ruby first to define the %{rb_ver} RPM macro
 # see https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#run
