@@ -1,5 +1,8 @@
-# Build Fedora 31 image
-FROM fedora:31
+# https://docs.docker.com/engine/reference/builder/#from
+ARG BUILD_FLAVOR
+ARG DOCKER_TAG
+
+FROM ${BUILD_FLAVOR}:${DOCKER_TAG}
 
 RUN dnf -y install \
   acl \

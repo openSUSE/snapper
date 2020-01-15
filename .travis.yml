@@ -7,7 +7,7 @@ services:
 env:
   - BUILD_FLAVOR=tumbleweed
   - BUILD_FLAVOR=leap
-  - BUILD_FLAVOR=fedora
+  - BUILD_FLAVOR=fedora DOCKER_TAG=31
   - BUILD_FLAVOR=ubuntu DOCKER_TAG=18.10
   - BUILD_FLAVOR=debian DOCKER_TAG=9
 
@@ -18,4 +18,4 @@ before_install:
 script:
   # run the respective .travis.<distro>.sh script
   # (--privileged: integration tests mount a loopback device etc.)
-  - docker run --privileged -it -e COVERALLS_TOKEN="$COVERALLS_TOKEN" snapper-devel ./.travis.$BUILD_FLAVOR.sh
+  - docker run --privileged -it -e COVERALLS_TOKEN="$COVERALLS_TOKEN" -e DOCKER_TAG=$DOCKER_TAG snapper-devel ./.travis.$BUILD_FLAVOR.sh

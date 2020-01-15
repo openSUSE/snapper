@@ -11,7 +11,7 @@ make package
 # /proc and /sys in the chroot).
 mkdir -p /root/rpmbuild/SOURCES
 cp package/* /root/rpmbuild/SOURCES
-rpmbuild -bb --with coverage -D "fedora_version 25" -D "jobs `nproc`" package/*.spec
+rpmbuild -bb --with coverage -D "fedora_version $DOCKER_TAG" -D "jobs `nproc`" package/*.spec
 
 # test the %pre/%post scripts by installing/updating/removing the built packages
 # ignore the dependencies to make the test easier, as a smoke test it's good enough
