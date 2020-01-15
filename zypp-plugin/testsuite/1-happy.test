@@ -12,7 +12,7 @@ echo 1..4
 
 TEST="1 - It wants to make pre and post snapshots"
 rm -f mock-snapperd.log
-test_pre_post_snapshots | runit ../../data/zypp-plugin.conf > /dev/null
+test_pre_post_snapshots | runit zypp-plugin-maxcover.conf > /dev/null
 if [ "${PIPESTATUS[1]}" != 0 ]; then
     echo -n "not "
 fi
@@ -26,7 +26,7 @@ echo "ok $TEST"
 
 TEST="3 - It wants to make and delete pre snapshot"
 rm -f mock-snapperd.log
-test_pre_del_snapshots  | runit ../../data/zypp-plugin.conf > /dev/null
+test_pre_del_snapshots  | runit zypp-plugin-maxcover.conf > /dev/null
 if [ "${PIPESTATUS[1]}" != 0 ]; then
     echo -n "not "
 fi

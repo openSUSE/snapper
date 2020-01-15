@@ -54,6 +54,8 @@ test_pre_post_snapshots() {
     stomp_message COMMITBEGIN "" "$(json mypkg)"
     stomp_message COMMITEND "" "$(json mypkg)"
     stomp_message PLUGINEND "" ""
+    stomp_message UNKNOWNMESSAGE "" ""
+    stomp_message _DISCONNECT "" ""
 }
 
 test_pre_del_snapshots() {
