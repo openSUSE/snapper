@@ -302,7 +302,6 @@ set<string> SnapperZyppPlugin::get_solvables(const Message& msg, Phase phase) {
 
     if (json_object_get_type(steps) == json_type_array) {
 	size_t i, len = json_object_array_length(steps);
-	printf("steps: %zu\n", len);
 	for (i = 0; i < len; ++i) {
 	    json_object * step = json_object_array_get_idx(steps, i);
 	    bool have_type = json_object_object_get_ex(step, "type", NULL);
