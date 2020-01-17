@@ -17,8 +17,16 @@ snapper_zypp_plugin_LDADD = \
     ../dbus/libdbus.la \
     $(JSONC_LIBS)
 
-check_PROGRAMS = regex.test
-TESTS = $(check_PROGRAMS)
+check_PROGRAMS = regex.test forwarding-zypp-plugin
+
+forwarding_zypp_plugin_SOURCES = \
+    forwarding_zypp_plugin.cc \
+    zypp_plugin.cc zypp_plugin.h
+forwarding_zypp_plugin_LDADD = \
+    ../snapper/libsnapper.la \
+    -lpthread
+
+TESTS = regex.test
 regex_test_SOURCES = regex_test.cc \
     solvable_matcher.cc solvable_matcher.h
 regex_test_LDADD = \

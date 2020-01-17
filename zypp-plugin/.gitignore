@@ -1,5 +1,6 @@
 *.o
 snapper-zypp-plugin
+forwarding-zypp-plugin
 *.test
 *.log
 *.trs

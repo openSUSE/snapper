@@ -12,6 +12,7 @@ runit() {
       SNAPPER_ZYPP_PLUGIN_SNAPPER_CONFIG=testsuite \
       SNAPPER_ZYPP_PLUGIN_DBUS_SESSION=1 \
       $STRACE \
+      "$MYDIR"/../forwarding-zypp-plugin \
       "$MYDIR"/../snapper-zypp-plugin
 }
 
