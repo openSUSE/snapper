@@ -100,8 +100,14 @@ This package contains snapper, a tool for filesystem snapshot management.
 %setup
 
 %build
+%if %{with coverage}
+# optimized code may confuse the coverage measurement, turn it off
+export CFLAGS="-g3"
+export CXXFLAGS="-g3"
+%else
 export CFLAGS="%{optflags} -DNDEBUG"
 export CXXFLAGS="%{optflags} -DNDEBUG"
+%endif
 
 autoreconf -fi
 %configure \
