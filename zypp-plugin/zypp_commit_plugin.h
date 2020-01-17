@@ -24,6 +24,8 @@
 
 #include "zypp_plugin.h"
 
+/// Dispatches begin+end of plugin+commit in dedicated methods.
+// The default implementations just ack.
 class ZyppCommitPlugin : public ZyppPlugin {
 public:
     Message dispatch(const Message& msg) override;
