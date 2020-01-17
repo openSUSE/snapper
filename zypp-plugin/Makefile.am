@@ -24,6 +24,7 @@ forwarding_zypp_plugin_SOURCES = \
     zypp_plugin.cc zypp_plugin.h
 forwarding_zypp_plugin_LDADD = \
     ../snapper/libsnapper.la \
+    -lboost_system \
     -lpthread
 
 TESTS = regex.test

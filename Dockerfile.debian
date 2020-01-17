@@ -1,5 +1,5 @@
-# Build Debian 9 image
-FROM debian:9
+# Build Debian 10 image
+FROM debian:10
 
 # see https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#/run
 RUN apt-get update && \
