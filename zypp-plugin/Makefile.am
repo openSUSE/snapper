@@ -1,4 +1,4 @@
-SUBDIRS = testsuite
+SUBDIRS = . testsuite
 
 if HAVE_ZYPP
 
