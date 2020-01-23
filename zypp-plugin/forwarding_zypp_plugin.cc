@@ -27,6 +27,14 @@ namespace bp = boost::process;
 
 #include "zypp_plugin.h"
 
+/**
+ * A middleware that can wrap an actual plugin for enhanced validation.
+ *
+ * In a test suite, SnapperZyppPlugin is fed by a shell script. The plugin can
+ * validate its input but shell will not validate all aspects of the
+ * output. Inserting ForwardingZyppPlugin in between means that ZyppPlugin's
+ * validation will check SnapperZyppPlugin's output.
+ */
 class ForwardingZyppPlugin : public ZyppPlugin {
 public:
     ForwardingZyppPlugin(const string& another_plugin);
