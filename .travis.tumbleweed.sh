@@ -31,8 +31,11 @@ popd
 
 # Coverage report
 pushd /usr/src/packages/BUILD/snapper-*
-make coveralls STRIP_PATH_PREFIX="$(pwd)"
+make coverage
 popd
+# Must call coveralls-lcov from the git directory
+BUILDDIR=(/usr/src/packages/BUILD/snapper-*) # expand glob
+make -f Makefile.repo coveralls BUILDDIR="${BUILDDIR[@]}"
 
 # get the plain package names and remove all packages at once
 rpm -ev --nodeps `rpm -q --qf '%{NAME} ' -p /usr/src/packages/RPMS/**/*.rpm`

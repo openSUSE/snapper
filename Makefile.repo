@@ -26,3 +26,15 @@ install: configure
 reconf: all
 	./config.status --recheck
 	./config.status
+
+# This needs access to the build (and test) results so you would expect it
+# in Makefile.am
+# But the coveralls tool needs info from the Git checkout.
+COVERAGE_INFO=$(BUILDDIR)/coverage/coverage.info
+coveralls:
+	# Strip the absolute path prefix from the coverage data
+	# so coveralls.io can find the source files at GitHub.
+	sed -i -e 's#^SF:'"$${BUILDDIR?}"'/\(.*\)#SF:\1#' "$(COVERAGE_INFO)"
+	# Send the code coverage to coveralls.io
+	# COVERALLS_TOKEN is set in Travis config and passed via .travis.yml
+	LC_ALL=en_US.UTF-8 coveralls-lcov --repo-token "$${COVERALLS_TOKEN}" "$(COVERAGE_INFO)"
