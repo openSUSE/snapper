@@ -43,6 +43,18 @@ package-clean:
 	rm -f package/debian.*
 	rm -f package/*.dsc*
 
+if ENABLE_COVERAGE
+# Run `make coverage` after all the tests have been run.
+# See also make -f Makefile.repo coveralls
+COVERAGE_INFO = coverage/coverage.info
+.PHONY: coverage
+coverage:
+	mkdir -p $(dir $(COVERAGE_INFO))
+	lcov --capture --no-external --exclude '*/testsuite*/*' --output-file $(COVERAGE_INFO) --directory .  --quiet
+	lcov --list $(COVERAGE_INFO)
+	genhtml --output-directory coverage --legend --title "Snapper code coverage" -q $(COVERAGE_INFO)
+endif
+
 # Create all the files necessary for building the package with OBS:
 #
 # - Clean up the package/ directory
