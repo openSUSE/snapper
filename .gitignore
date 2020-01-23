@@ -19,3 +19,7 @@ py-compile
 test-driver
 testsuite/*.txt.tmp
 /compile
+# gcov
+/coverage/
+*.gcno
+*.gcda

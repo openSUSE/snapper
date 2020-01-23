@@ -3,6 +3,7 @@ Snapper
 =======
 
 [![Build Status](https://travis-ci.org/openSUSE/snapper.svg?branch=master)](https://travis-ci.org/openSUSE/snapper)
+[![Coverage Status](https://coveralls.io/repos/github/openSUSE/snapper/badge.svg?branch=HEAD)](https://coveralls.io/github/openSUSE/snapper?branch=HEAD)
 
 Snapper is a tool for Linux file system snapshot management. Apart from the
 obvious creation and deletion of snapshots it can compare snapshots and

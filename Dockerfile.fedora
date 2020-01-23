@@ -1,11 +1,15 @@
-# Build Fedora 27 image
-FROM fedora:27
+# https://docs.docker.com/engine/reference/builder/#from
+ARG BUILD_FLAVOR
+ARG DOCKER_TAG
+
+FROM ${BUILD_FLAVOR}:${DOCKER_TAG}
 
 RUN dnf -y install \
   acl \
   autoconf \
   automake \
   boost-devel \
+  btrfs-progs \
   dbus-devel \
   docbook-style-xsl \
   e2fsprogs-devel \
@@ -14,6 +18,7 @@ RUN dnf -y install \
   glibc-langpack-de \
   glibc-langpack-en \
   json-c-devel \
+  lcov \
   libacl-devel \
   libmount-devel \
   libtool \

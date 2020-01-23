@@ -1,9 +1,22 @@
-# Build Ubuntu 18.10 image
-FROM ubuntu:18.10
+# Ubuntu and Debian images are similar
+# so use a parametrized Dockerfile. See
+# https://docs.docker.com/engine/reference/builder/#from
+ARG BUILD_FLAVOR
+ARG DOCKER_TAG
+
+FROM ${BUILD_FLAVOR}:${DOCKER_TAG}
+# Pre-FROM ARG and Post-FROM ARG have to be declared separately:
+# https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interatc
+ARG BUILD_FLAVOR
 
 # see https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#/run
 RUN apt-get update && \
+  case "${BUILD_FLAVOR}" in \
+  debian) MORE_PACKAGES="locales-all";; \
+  ubuntu) MORE_PACKAGES="language-pack-de language-pack-en";; \
+  esac; \
   apt-get install -y --no-install-recommends \
+  ${MORE_PACKAGES} \
   acl-dev \
   autoconf \
   automake \
@@ -15,8 +28,6 @@ RUN apt-get update && \
   fakeroot \
   g++ \
   gettext \
-  language-pack-de \
-  language-pack-en \
   libboost-dev \
   libboost-system-dev \
   libboost-test-dev \

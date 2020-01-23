@@ -166,6 +166,15 @@ if test "x$with_selinux" = "xyes"; then
 	AC_CHECK_LIB(selinux, selinux_snapperd_contexts_path, [], [AC_MSG_ERROR([selinux library does not provide selinux_snapperd_contexts_path symbol])])
 fi
 
+AC_ARG_ENABLE([coverage], AC_HELP_STRING([--enable-coverage], [Enable test coverage measurement]),
+                [enable_coverage=$enableval], [enable_coverage=no])
+AM_CONDITIONAL(ENABLE_COVERAGE, [test "x$enable_coverage" = "xyes"])
+if test "x$enable_coverage" = "xyes"; then
+        CFLAGS="${CFLAGS} --coverage"
+        CXXFLAGS="${CXXFLAGS} --coverage"
+        LDFLAGS="${LDFLAGS} --coverage"
+fi
+
 PKG_CHECK_MODULES(DBUS, dbus-1)
 PKG_CHECK_MODULES(XML2, libxml-2.0)
 if test "x$with_zypp" = "xyes"; then
