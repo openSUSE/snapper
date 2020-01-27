@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Thu Jan 16 13:01:15 UTC 2020 - Martin Vidner <mvidner@suse.com>
+
+- Fix "Snapper is not creating the post snapshot" (bsc#1160938)
+- Fix `make clean; make check` failing in zypp-plugin (bsc#1160891)
+- version 0.8.9
+
+-------------------------------------------------------------------
 Wed Jan  8 09:33:56 UTC 2020 - Martin Vidner <mvidner@suse.com>
 
 - Add a "writeble copy" description to the 2nd snapshot

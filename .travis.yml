@@ -9,7 +9,7 @@ env:
   - BUILD_FLAVOR=leap
   - BUILD_FLAVOR=fedora DOCKER_TAG=31
   - BUILD_FLAVOR=ubuntu DOCKER_TAG=18.10
-  - BUILD_FLAVOR=debian DOCKER_TAG=9
+  - BUILD_FLAVOR=debian DOCKER_TAG=10
 
 before_install:
   # use the Dockerfile.<distro> file for building the image

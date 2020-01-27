@@ -8,10 +8,6 @@ noinst_DATA = \
 	zypp-plugin-malformed.conf \
 	zypp-plugin-maxcover.conf
 
-# Hack: these tests both use mock-snapperd which is not paralellized
-# so serialize them
-4-badjson.log: 1-happy.log
-
 TESTS = $(check_SCRIPTS)
 
 EXTRA_DIST = $(check_SCRIPTS) $(noinst_SCRIPTS) $(noinst_DATA) tap-driver.sh

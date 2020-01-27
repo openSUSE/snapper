@@ -1,3 +1,11 @@
+snapper (0.8.9) stable; urgency=low
+
+  * Fix "Snapper is not creating the post snapshot" (bsc#1160938)
+
+  * Fix `make clean; make check` failing in zypp-plugin (bsc#1160891)
+
+ -- Martin Vidner <mvidner@suse.com>  Thu, 16 Jan 2020 14:03:44 +0100
+
 snapper (0.8.8) stable; urgency=low
 
   * Add a "writeble copy" description to the 2nd snapshot

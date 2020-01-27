@@ -27,17 +27,28 @@ using namespace std;
 #include "snapper/Regex.h"
 #include "zypp_plugin.h"
 
-void ZyppPlugin::answer(const Message& msg) {
-    cout << msg.command << endl;
-    for(auto it: msg.headers) {
-	cout << it.first << ':' << it.second << endl;
+int ZyppPlugin::main() {
+    while(true) {
+	Message msg = read_message(pin);
+	if (pin.eof())
+	    break;
+	Message reply = dispatch(msg);
+	write_message(pout, reply);
     }
-    cout << endl;
-    cout << msg.body << '\0';
-    cout.flush();
+    return 0;
 }
 
-int ZyppPlugin::main() {
+void ZyppPlugin::write_message(ostream& os, const Message& msg) {
+    os << msg.command << endl;
+    for(auto it: msg.headers) {
+	os << it.first << ':' << it.second << endl;
+    }
+    os << endl;
+    os << msg.body << '\0';
+    os.flush();
+}
+
+ZyppPlugin::Message ZyppPlugin::read_message(istream& is) {
     enum class State {
 		      Start,
 		      Headers,
@@ -45,16 +56,21 @@ int ZyppPlugin::main() {
     } state = State::Start;
 
     Message msg;
-    static const snapper::Regex rx_word("^[A-Za-z0-9_]+$");
-    while(!cin.eof()) {
+
+    while(!is.eof()) {
 	string line;
 
-	getline(cin, line);
+	getline(is, line);
 	boost::trim_right(line);
 
 	if (state == State::Start) {
+	    if (is.eof())
+		return msg; //empty
+
 	    if (line.empty())
 		continue;
+
+	    static const snapper::Regex rx_word("^[A-Za-z0-9_]+$");
 	    if (rx_word.match(line)) {
 		msg = Message();
 		msg.command = line;
@@ -66,12 +82,10 @@ int ZyppPlugin::main() {
 	}
 	else if (state == State::Headers) {
 	    if (line.empty()) {
-		getline(cin, msg.body, '\0');
+		state = State::Body;
+		getline(is, msg.body, '\0');
 
-		Message reply = dispatch(msg);
-		answer(reply);
-
-		state = State::Start;
+		return msg;
 	    }
 	    else {
 		static const snapper::Regex rx_header("^([A-Za-z0-9_]+):[ \t]*(.+)$");
@@ -86,7 +100,8 @@ int ZyppPlugin::main() {
 	    }
 	}
     }
-    return 0;
+
+    throw runtime_error("Plugin protocol error: expected a message, got a part of it");
 }
 
 ZyppPlugin::Message ZyppPlugin::dispatch(const Message& msg) {
