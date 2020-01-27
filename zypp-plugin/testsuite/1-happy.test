@@ -8,33 +8,40 @@ dbus_session_setup  || { echo "1..0 # SKIP"; exit; }
 mock_snapperd_setup || { echo "1..0 # SKIP"; exit; }
 
 # http://testanything.org/
-echo 1..4
+COUNT=0
+echo 1..8
 
-TEST="1 - It wants to make pre and post snapshots"
-rm -f mock-snapperd.log
-test_pre_post_snapshots | runit zypp-plugin-maxcover.conf > /dev/null
-if [ "${PIPESTATUS[1]}" != 0 ]; then
-    echo -n "not "
-fi
-echo "ok $TEST"
+for VALIDATION in "" --validate; do
+    COUNT=$((COUNT + 1))
+    TEST="$COUNT - It wants to make pre and post snapshots $VALIDATION"
+    rm -f mock-snapperd.log
+    test_pre_post_snapshots | runit $VALIDATION zypp-plugin-maxcover.conf > /dev/null
+    if [ "${PIPESTATUS[1]}" != 0 ]; then
+        echo -n "not "
+    fi
+    echo "ok $TEST"
 
-TEST="2 - It tells snapperd so"
-grep        "Mock CreatePreSnapshot"  mock-snapperd.log \
-    && grep "Mock CreatePostSnapshot" mock-snapperd.log \
-        || echo -n "not "
-echo "ok $TEST"
+    COUNT=$((COUNT + 1))
+    TEST="$COUNT - It tells snapperd so"
+    grep        "Mock CreatePreSnapshot"  mock-snapperd.log \
+        && grep "Mock CreatePostSnapshot" mock-snapperd.log \
+            || echo -n "not "
+    echo "ok $TEST"
 
-TEST="3 - It wants to make and delete pre snapshot"
-rm -f mock-snapperd.log
-test_pre_del_snapshots  | runit zypp-plugin-maxcover.conf > /dev/null
-if [ "${PIPESTATUS[1]}" != 0 ]; then
-    echo -n "not "
-fi
-echo "ok $TEST"
+    COUNT=$((COUNT + 1))
+    TEST="$COUNT - It wants to make and delete pre snapshot $VALIDATION"
+    rm -f mock-snapperd.log
+    test_pre_del_snapshots  | runit $VALIDATION zypp-plugin-maxcover.conf > /dev/null
+    if [ "${PIPESTATUS[1]}" != 0 ]; then
+        echo -n "not "
+    fi
+    echo "ok $TEST"
 
-TEST="4 - It tells snapperd so"
-grep        "Mock CreatePreSnapshot" mock-snapperd.log \
-    && grep "Mock DeleteSnapshots"   mock-snapperd.log \
-        || echo -n "not "
-rm -f mock-snapperd.log
-echo "ok $TEST"
+    COUNT=$((COUNT + 1))
+    TEST="$COUNT - It tells snapperd so"
+    grep        "Mock CreatePreSnapshot" mock-snapperd.log \
+        && grep "Mock DeleteSnapshots"   mock-snapperd.log \
+            || echo -n "not "
+    rm -f mock-snapperd.log
+    echo "ok $TEST"
+done

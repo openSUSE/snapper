@@ -3,7 +3,16 @@
 
 MYDIR=$(dirname "$0")
 
+# usage: echo "message..." | runit [--validate] > /dev/null
 runit() {
+    # with --validate, insert a validating plugin
+    # into the communication pipeline
+    if [ "$1" = "--validate" ]; then
+        local VALIDATE=("$MYDIR"/../forwarding-zypp-plugin)
+        shift
+    else
+        local VALIDATE=()
+    fi
     local CONFIG="${1:-../../data/zypp-plugin.conf}"
     local STRACE=""
     # STRACE="strace -efile"
@@ -12,7 +21,7 @@ runit() {
       SNAPPER_ZYPP_PLUGIN_SNAPPER_CONFIG=testsuite \
       SNAPPER_ZYPP_PLUGIN_DBUS_SESSION=1 \
       $STRACE \
-      "$MYDIR"/../forwarding-zypp-plugin \
+      "${VALIDATE[@]}" \
       "$MYDIR"/../snapper-zypp-plugin
 }
 

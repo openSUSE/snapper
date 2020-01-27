@@ -53,6 +53,9 @@ coverage:
 	lcov --capture --no-external --exclude '*/testsuite*/*' --output-file $(COVERAGE_INFO) --directory .  --quiet
 	lcov --list $(COVERAGE_INFO)
 	genhtml --output-directory coverage --legend --title "Snapper code coverage" -q $(COVERAGE_INFO)
+
+clean-local:
+	find -name '*.gcda' -o -name '*.gcno' | xargs rm
 endif
 
 # Create all the files necessary for building the package with OBS:
