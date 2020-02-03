@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-15 11:05+0200\n"
-"PO-Revision-Date: 2019-11-27 19:54+0000\n"
+"PO-Revision-Date: 2020-02-03 23:54+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
 "Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/"
 ">\n"
@@ -363,7 +363,7 @@ msgid "Config is in use."
 msgstr "Config és en ús."
 
 msgid "Config is locked."
-msgstr "Config està bloquejat."
+msgstr "Config està blocat."
 
 #, c-format
 msgid "Configdata '%s' does not include '=' sign."
