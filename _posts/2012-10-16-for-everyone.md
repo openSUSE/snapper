@@ -2,7 +2,6 @@
 title: Snapper for Everyone
 author: Arvin Schnell
 layout: post
-piwik: true
 ---
 
 With the release of snapper 0.1.0 also non-root users are able to

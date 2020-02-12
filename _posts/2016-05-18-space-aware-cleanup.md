@@ -2,7 +2,6 @@
 title: Cleanup based on Disk Usage
 author: Arvin Schnell
 layout: post
-piwik: true
 ---
 
 Users have long requested the possibility to cleanup snapshot based on disk

@@ -2,7 +2,6 @@
 title: Cleanup based on Free Space in Filesystem
 author: Arvin Schnell
 layout: post
-piwik: true
 ---
 
 So far the space aware cleanup algorithms looked at the space the

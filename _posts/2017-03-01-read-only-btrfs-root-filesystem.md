@@ -2,7 +2,6 @@
 title: Snapper with Read-Only Btrfs Root Filesystem
 author: Arvin Schnell
 layout: post
-piwik: true
 ---
 
 Snapper was just improved to work with a read-only btrfs root filesystem. You

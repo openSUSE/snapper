@@ -2,7 +2,6 @@
 title: Work without DBus
 author: Arvin Schnell
 layout: post
-piwik: true
 ---
 
 Normally the _snapper_ command line tool uses <a

@@ -2,7 +2,6 @@
 title: Machine-readable Output Formats
 author: José Iván López González
 layout: post
-piwik: true
 ---
 
 Third-party programs and scripts (e.g., YaST) parse the output of the *snapper* CLI commands to get some information. For example, to find out the number of all pre and post snapshots, scripts can run the following:

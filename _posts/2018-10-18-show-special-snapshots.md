@@ -2,7 +2,6 @@
 title: Display of Special Snapshots
 author: Arvin Schnell
 layout: post
-piwik: true
 ---
 
 For btrfs there are some special snapshots: Once the snapshot

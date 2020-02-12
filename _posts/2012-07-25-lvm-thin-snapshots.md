@@ -2,7 +2,6 @@
 title: Snapper and LVM thin-provisioned Snapshots
 author: Arvin Schnell
 layout: post
-piwik: true
 ---
 
 SUSE's Hackweek 8 allowed me to implement support for LVM

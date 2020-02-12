@@ -2,7 +2,6 @@
 title: Introducing snapper&#58; A tool for managing btrfs snapshots
 author: Arvin Schnell
 layout: post
-piwik: true
 ---
 
 Today we want to present the current development of snapper, a tool

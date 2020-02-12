@@ -2,7 +2,6 @@
 title: Display of Used Space per Snapshot
 author: Arvin Schnell
 layout: post
-piwik: true
 ---
 
 Btrfs with quota enabled can already show the exclusive space used by

@@ -2,7 +2,6 @@
 title: Automatic Cleanup of Snapshots created by Rollback
 author: Arvin Schnell
 layout: post
-piwik: true
 ---
 
 So far the user had to ensure that snapshots created by rollbacks get deleted

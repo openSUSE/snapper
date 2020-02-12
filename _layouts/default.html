@@ -21,10 +21,7 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-{% if site.safe %} {% comment %} GitHub sets site.safe {% endcomment %}
-{% if page.social %}{% include social.html %}{% endif %}
-{% if page.piwik %}{% include piwik.html %}{% endif %}
-{% endif %}
+{% if site.safe %} {% comment %} GitHub sets site.safe {% endcomment %} {% endif %}
 
   </head>
   <body>
