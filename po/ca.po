@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-15 11:05+0200\n"
-"PO-Revision-Date: 2020-02-03 23:54+0000\n"
+"PO-Revision-Date: 2020-02-12 17:54+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
 "Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/"
 ">\n"
@@ -585,7 +585,8 @@ msgid "Subvolume"
 msgstr "Subvolum"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr "La config \"root\" no existeix. Potser l'snapper no està configurat."
+msgstr ""
+"La configuració \"root\" no existeix. Potser l'snapper no està configurat."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
@@ -678,7 +679,7 @@ msgid "nothing to do"
 msgstr "Res a fer"
 
 msgid "root argument can be used only together with no-dbus."
-msgstr "l'argument root només es pot usar conjuntament amb no-dbus."
+msgstr "l'argument d'arrel només es pot usar conjuntament amb no-dbus."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "ús: snapper [--global-options] <command> [--command-options] [command-arguments]"
