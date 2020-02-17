@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-15 11:05+0200\n"
-"PO-Revision-Date: 2020-02-17 02:54+0000\n"
+"PO-Revision-Date: 2020-02-17 12:54+0000\n"
 "Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
 "Language-Team: Chinese (China) <https://l10n.opensuse.org/projects/snapper/"
 "master/zh_CN/>\n"
@@ -546,10 +546,10 @@ msgid "Opening file '%s' failed."
 msgstr "打开文件 '%s' 失败。"
 
 msgid "Option --from only supported for snapshots of type single."
-msgstr "选项 --from 只受单一类型的快照支持。"
+msgstr "选项 --from 仅适用于单一类型的快照。"
 
 msgid "Option --read-write only supported for snapshots of type single."
-msgstr "选项 --read-write 只受单一类型的快照支持。"
+msgstr "选项 --read-write 仅适用于单一类型的快照。"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
