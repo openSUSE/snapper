@@ -82,7 +82,6 @@ SYSCONFIG=/etc/sysconfig
 
 AC_ARG_WITH([conf], AC_HELP_STRING([--with-conf], [Use a custom sysconfig directory (default is /etc/sysconfig)]),
 	[with_conf=$withval], [with_conf=no])
-
 AS_IF([test "x$with_conf" != xno], [SYSCONFIG="${with_conf}"])
 
 CPPFLAGS="${CPPFLAGS} -DCONFDIR='\"${SYSCONFIG}\"'"
@@ -90,7 +89,6 @@ CPPFLAGS="${CPPFLAGS} -DCONFDIR='\"${SYSCONFIG}\"'"
 
 AC_ARG_ENABLE([btrfs], AC_HELP_STRING([--disable-btrfs],[Disable Btrfs internal snapshots support]),
 		[with_btrfs=$enableval],[with_btrfs=yes])
-
 AM_CONDITIONAL(ENABLE_BTRFS, [test "x$with_btrfs" = "xyes"])
 
 if test "x$with_btrfs" = "xyes"; then
@@ -99,7 +97,6 @@ fi
 
 AC_ARG_ENABLE([ext4], AC_HELP_STRING([--disable-ext4],[Disable ext4 snapshots support]),
 		[with_ext4=$enableval],[with_ext4=yes])
-
 AM_CONDITIONAL(ENABLE_EXT4, [test "x$with_ext4" = "xyes"])
 
 if test "x$with_ext4" = "xyes"; then
@@ -108,7 +105,6 @@ fi
 
 AC_ARG_ENABLE([lvm], AC_HELP_STRING([--disable-lvm],[Disable LVM thinprovisioned snapshots support]),
 		[with_lvm=$enableval],[with_lvm=yes])
-
 AM_CONDITIONAL(ENABLE_LVM, [test "x$with_lvm" = "xyes"])
 
 if test "x$with_lvm" = "xyes"; then
@@ -122,6 +118,10 @@ fi
 AC_ARG_ENABLE([zypp], AC_HELP_STRING([--disable-zypp],[Disable zypp plugin support]),
 		[with_zypp=$enableval],[with_zypp=yes])
 AM_CONDITIONAL(HAVE_ZYPP, [test "x$with_zypp" = "xyes"])
+
+AC_ARG_ENABLE([systemd], AC_HELP_STRING([--disable-systemd],[Disable systemd support]),
+		[enable_systemd=$enableval],[enable_systemd=yes])
+AM_CONDITIONAL(ENABLE_SYSTEMD, [test "x$enable_systemd" = "xyes"])
 
 AC_CHECK_LIB(btrfs, btrfs_read_and_process_send_stream)
 AC_CHECK_HEADERS([btrfs/version.h])

@@ -21,12 +21,14 @@ install-data-local:
 	install -D -m 644 org.opensuse.Snapper.conf $(DESTDIR)/etc/dbus-1/system.d/org.opensuse.Snapper.conf
 	install -D -m 644 org.opensuse.Snapper.service $(DESTDIR)/usr/share/dbus-1/system-services/org.opensuse.Snapper.service
 
+if ENABLE_SYSTEMD
 	install -D -m 644 timeline.service $(DESTDIR)/usr/lib/systemd/system/snapper-timeline.service
 	install -D -m 644 timeline.timer $(DESTDIR)/usr/lib/systemd/system/snapper-timeline.timer
 	install -D -m 644 cleanup.service $(DESTDIR)/usr/lib/systemd/system/snapper-cleanup.service
 	install -D -m 644 cleanup.timer $(DESTDIR)/usr/lib/systemd/system/snapper-cleanup.timer
 	install -D -m 644 boot.service $(DESTDIR)/usr/lib/systemd/system/snapper-boot.service
 	install -D -m 644 boot.timer $(DESTDIR)/usr/lib/systemd/system/snapper-boot.timer
+endif
 
 if HAVE_ZYPP
 	install -D -m 644 zypp-plugin.conf $(DESTDIR)/etc/snapper/zypp-plugin.conf
