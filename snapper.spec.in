@@ -122,7 +122,7 @@ autoreconf -fi
 %if 0%{?suse_version} <= 1310
 	--disable-btrfs-quota							\
 %endif
-	--disable-silent-rules --disable-ext4
+	--disable-silent-rules --enable-ext4
 make %{?_smp_mflags}
 
 %install
@@ -130,6 +130,9 @@ make %{?_smp_mflags}
 rm -f "%{buildroot}/%{_libdir}"/*.la "%{buildroot}/%{_lib}/security/pam_snapper.la"
 rm -f %{buildroot}/etc/cron.hourly/suse.de-snapper
 rm -f %{buildroot}/etc/cron.daily/suse.de-snapper
+%if 0%{?suse_version}
+rm -f %{buildroot}%{_defaultdocdir}/snapper/COPYING
+%endif
 
 %if 0%{?suse_version}
 install -D -m 644 data/sysconfig.snapper "%{buildroot}%{_fillupdir}/sysconfig.snapper"
@@ -207,6 +210,11 @@ This package contains libsnapper, a library for filesystem snapshot management.
 
 %files -n libsnapper@LIBVERSION_MAJOR@
 %defattr(-,root,root)
+%if 0%{?suse_version}
+%license COPYING
+%else
+%doc %{_defaultdocdir}/snapper/COPYING
+%endif
 %{_libdir}/libsnapper.so.*
 %dir %{_sysconfdir}/snapper
 %dir %{_sysconfdir}/snapper/configs
@@ -216,7 +224,6 @@ This package contains libsnapper, a library for filesystem snapshot management.
 %config(noreplace) %{_sysconfdir}/snapper/filters/*.txt
 %doc %dir %{_defaultdocdir}/snapper
 %doc %{_defaultdocdir}/snapper/AUTHORS
-%doc %{_defaultdocdir}/snapper/COPYING
 %if 0%{?suse_version}
 %{_fillupdir}/sysconfig.snapper
 %else
@@ -274,11 +281,11 @@ snapper during commits.
 %defattr(-,root,root)
 %config(noreplace) %{_sysconfdir}/snapper/zypp-plugin.conf
 %if 0%{?suse_version} < 1210
-%dir /usr/lib/zypp
-%dir /usr/lib/zypp/plugins
-%dir /usr/lib/zypp/plugins/commit
+%dir %{_libexecdir}/zypp
+%dir %{_libexecdir}/zypp/plugins
+%dir %{_libexecdir}/zypp/plugins/commit
 %endif
-/usr/lib/zypp/plugins/commit/snapper-zypp-plugin
+%{_libexecdir}/zypp/plugins/commit/snapper-zypp-plugin
 %doc %{_mandir}/*/snapper-zypp-plugin.8*
 %doc %{_mandir}/*/snapper-zypp-plugin.conf.5*
 
@@ -294,8 +301,8 @@ A PAM module for calling snapper during user login and logout.
 %files -n pam_snapper
 %defattr(-,root,root)
 /%{_lib}/security/pam_snapper.so
-%dir /usr/lib/pam_snapper
-/usr/lib/pam_snapper/*.sh
+%dir %{_libexecdir}/pam_snapper
+%{_libexecdir}/pam_snapper/*.sh
 %doc %{_mandir}/*/pam_snapper.8*
 
 %package testsuite

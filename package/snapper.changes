@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Apr  1 12:38:55 UTC 2020 - Hillwood Yang <hillwood@opensuse.org>
+
+- Enable ext4 support. 
+- Update the install path for document in openSUSE.
+
+-------------------------------------------------------------------
 Thu Jan 16 13:01:15 UTC 2020 - Martin Vidner <mvidner@suse.com>
 
 - Fix "Snapper is not creating the post snapshot" (bsc#1160938)
