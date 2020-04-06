@@ -8,7 +8,7 @@ env:
   - BUILD_FLAVOR=tumbleweed
   - BUILD_FLAVOR=leap
   - BUILD_FLAVOR=fedora DOCKER_TAG=31
-  - BUILD_FLAVOR=ubuntu DOCKER_TAG=18.10
+  - BUILD_FLAVOR=ubuntu DOCKER_TAG=19.10
   - BUILD_FLAVOR=debian DOCKER_TAG=10
 
 before_install:
