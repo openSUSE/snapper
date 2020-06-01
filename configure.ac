@@ -126,6 +126,14 @@ AM_CONDITIONAL(HAVE_ZYPP, [test "x$with_zypp" = "xyes"])
 AC_CHECK_LIB(btrfs, btrfs_read_and_process_send_stream)
 AC_CHECK_HEADERS([btrfs/version.h])
 
+AC_ARG_ENABLE([doc], AC_HELP_STRING([--disable-doc],[Disable Build DOC support]),
+		[enable_doc=$enableval],[enable_doc=yes])
+AM_CONDITIONAL(ENABLE_DOC, [test "x$enable_doc" = "xyes"])
+
+if test "x$enable_doc" = "xyes"; then
+	AC_DEFINE(ENABLE_DOC, 1, [Enable Build DOC support])
+fi
+
 AC_ARG_ENABLE([xattrs], AC_HELP_STRING([--disable-xattrs],[Disable extended attributes support]),
 		[with_xattrs=$enableval],[with_xattrs=yes])
 AM_CONDITIONAL(HAVE_XATTRS, [test "x$with_xattrs" = "xyes"])
