@@ -62,23 +62,11 @@ namespace snapper
 	}
 
 
-	vector<string> Command::ListConfigs::errors() const
-	{
-	    return options().errors();
-	}
-
-
 	void Command::ListConfigs::run()
 	{
 	    if (_options_parser.hasArgs())
 	    {
 		cerr << _("Command 'list-configs' does not take arguments.") << endl;
-		exit(EXIT_FAILURE);
-	    }
-
-	    if (options().has_errors())
-	    {
-		cerr << options().errors().front() << endl;
 		exit(EXIT_FAILURE);
 	    }
 

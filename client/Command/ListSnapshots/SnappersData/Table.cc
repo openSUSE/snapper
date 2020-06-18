@@ -75,7 +75,7 @@ namespace snapper
 		return _("Subvolume");
 
 	    if (column == Options::Columns::NUMBER)
-		return list_mode == Options::LM_PRE_POST ? _("Pre #") : _("#");
+		return list_mode == Options::ListMode::PRE_POST ? _("Pre #") : _("#");
 
 	    if (column == Options::Columns::DEFAULT)
 		return _("Default");
@@ -87,7 +87,7 @@ namespace snapper
 		return _("Type");
 
 	    if (column == Options::Columns::DATE)
-		return list_mode == Options::LM_PRE_POST ? _("Pre Date") : _("Date");
+		return list_mode == Options::ListMode::PRE_POST ? _("Pre Date") : _("Date");
 
 	    if (column == Options::Columns::USER)
 		return _("User");

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019] SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -25,10 +25,22 @@
 #include <string>
 #include <vector>
 
+#include <snapper/Exception.h>
+
 #include "client/utils/GetOpts.h"
 
 namespace snapper
 {
+    using std::string;
+    using std::vector;
+
+
+    struct OptionsException : public Exception
+    {
+        explicit OptionsException(const string& msg) : Exception(msg) {}
+    };
+
+
     namespace cli
     {
 
@@ -39,18 +51,13 @@ namespace snapper
 
 	    Options(GetOpts& parser);
 
-	    virtual bool has_errors() const;
-
-	    virtual std::vector<std::string> errors() const = 0;
-
-	    virtual ~Options();
+	    virtual ~Options() {}
 
 	protected:
 
-	    bool has_option(const std::string option_name) const;
+	    bool has_option(const string& name) const;
 
-	    GetOpts::parsed_opts::const_iterator
-	    get_option(const std::string option_name) const;
+	    const string& get_argument(const string& name) const;
 
 	    GetOpts& _parser;
 

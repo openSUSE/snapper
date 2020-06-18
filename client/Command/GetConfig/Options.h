@@ -50,8 +50,6 @@ namespace snapper
 
 	    std::vector<std::string> columns() const;
 
-	    virtual std::vector<std::string> errors() const override;
-
 	private:
 
 	    void parse_options();

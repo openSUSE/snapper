@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019] SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -36,27 +36,24 @@ namespace snapper
 	namespace
 	{
 
-	    const string CSV_OPTION = "csv";
-
-	    const string JSON_OPTION = "json";
-
 	    const string DEFAULT_CONFIG = "root";
 
 	    const string DEFAULT_ROOT = "/";
 
-	    const option OPTIONS[15] = {
+	    const option OPTIONS[] = {
 		{ "quiet",		no_argument,		0,	'q' },
 		{ "verbose",		no_argument,		0,	'v' },
 		{ "utc",		no_argument,		0,	0 },
 		{ "iso",		no_argument,		0,	0 },
 		{ "table-style",	required_argument,	0,	't' },
-		{ "machine-readable",	required_argument,	0,	0},
-		{ "csvout",		no_argument,		0,	0},
-		{ "jsonout",		no_argument,		0,	0},
-		{ "separator",		required_argument,	0,	0},
+		{ "machine-readable",	required_argument,	0,	0 },
+		{ "csvout",		no_argument,		0,	0 },
+		{ "jsonout",		no_argument,		0,	0 },
+		{ "separator",		required_argument,	0,	0 },
 		{ "config",		required_argument,	0,	'c' },
 		{ "no-dbus",		no_argument,		0,	0 },
 		{ "root",		required_argument,	0,	'r' },
+		{ "ambit",		required_argument,	0,	'a' },
 		{ "version",		no_argument,		0,	0 },
 		{ "help",		no_argument,		0,	'h' },
 		{ 0, 0, 0, 0 }
@@ -80,14 +77,16 @@ namespace snapper
 		+ _("\t--config, -c <name>\t\tSet name of config to use.") + '\n'
 		+ _("\t--no-dbus\t\t\tOperate without DBus.") + '\n'
 		+ _("\t--root, -r <path>\t\tOperate on target root (works only without DBus).") + '\n'
+		+ _("\t--ambit, -a ambit\t\tOperate in the specified ambit.") + '\n'
 		+ _("\t--version\t\t\tPrint version and exit.") + '\n';
 	}
 
 
-	GlobalOptions::GlobalOptions(GetOpts& parser) :
-	    Options(parser)
+	GlobalOptions::GlobalOptions(GetOpts& parser)
+	    : Options(parser), _ambit(Ambit::AUTO)
 	{
 	    parse_options();
+	    check_options();
 
 	    _quiet = has_option("quiet");
 	    _verbose = has_option("verbose");
@@ -101,6 +100,7 @@ namespace snapper
 	    _separator = separator_value();
 	    _config = config_value();
 	    _root = root_value();
+	    _ambit = ambit_value();
 	}
 
 
@@ -110,139 +110,123 @@ namespace snapper
 	}
 
 
-	vector<string> GlobalOptions::errors() const
+	void
+	GlobalOptions::check_options() const
 	{
-	    vector<string> detected_errors;
+	    if (has_option("root") && !has_option("no-dbus"))
+	    {
+		string error =_("root argument can be used only together with no-dbus.\n"
+				"Try 'snapper --help' for more information.");
 
-	    if (wrong_table_style())
-		detected_errors.push_back(table_style_error());
-
-	    if (wrong_machine_readable())
-		detected_errors.push_back(machine_readable_error());
-
-	    if (missing_no_dbus())
-		detected_errors.push_back(missing_no_dbus_error());
-
-	    return detected_errors;
+		SN_THROW(OptionsException(error));
+	    }
 	}
 
 
-	TableLineStyle GlobalOptions::table_style_value() const
+	TableLineStyle
+	GlobalOptions::table_style_value() const
 	{
-	    if (has_option("table-style") && !wrong_table_style())
-		return (TableLineStyle) table_style_raw();
+	    if (!has_option("table-style"))
+		return TableFormatter::default_style();
 
-	    return TableFormatter::default_style();
+	    string str = get_argument("table-style");
+
+	    unsigned long value = stoul(str);
+	    if (value >= Table::numStyles)
+	    {
+		string error = sformat(_("Invalid table style %s."), str.c_str()) + '\n' +
+		    sformat(_("Use an integer number from %d to %d."), 0, Table::numStyles - 1);
+
+		SN_THROW(OptionsException(error));
+	    }
+
+	    return (TableLineStyle)(value);
 	}
 
 
-	GlobalOptions::OutputFormat GlobalOptions::output_format_value() const
+	GlobalOptions::OutputFormat
+	GlobalOptions::output_format_value() const
 	{
-	    if (has_option("csvout") || machine_readable_value() == CSV_OPTION)
+	    if (has_option("csvout"))
 		return OutputFormat::CSV;
 
-	    if (has_option("jsonout") || machine_readable_value() == JSON_OPTION)
+	    if (has_option("jsonout"))
 		return OutputFormat::JSON;
 
-	    return OutputFormat::TABLE;
+	    if (!has_option("machine-readable"))
+		return OutputFormat::TABLE;
+
+	    string str = get_argument("machine-readable");
+
+	    OutputFormat output_format;
+	    if (!toValue(str, output_format, false))
+	    {
+		string error = sformat(_("Invalid machine readable format %s."), str.c_str()) + '\n' +
+		    sformat(_("Use %s, %s or %s."), toString(OutputFormat::TABLE).c_str(),
+			    toString(OutputFormat::CSV).c_str(), toString(OutputFormat::JSON).c_str());
+
+		SN_THROW(OptionsException(error));
+	    }
+
+	    return output_format;
 	}
 
 
-	string GlobalOptions::machine_readable_value() const
-	{
-	    if (has_option("machine-readable"))
-		return get_option("machine-readable")->second;
-
-	    return "";
-	}
-
-
-	string GlobalOptions::separator_value() const
+	string
+	GlobalOptions::separator_value() const
 	{
 	    if (has_option("separator"))
-		return get_option("separator")->second;
+		return get_argument("separator");
 
 	    return CsvFormatter::default_separator();
 	}
 
 
-	string GlobalOptions::config_value() const
+	string
+	GlobalOptions::config_value() const
 	{
 	    if (has_option("config"))
-		return get_option("config")->second;
+		return get_argument("config");
 
 	    return DEFAULT_CONFIG;
 	}
 
 
-	string GlobalOptions::root_value() const
+	string
+	GlobalOptions::root_value() const
 	{
 	    if (has_option("root"))
-		return get_option("root")->second;
+		return get_argument("root");
 
 	    return DEFAULT_ROOT;
 	}
 
 
-	unsigned int GlobalOptions::table_style_raw() const
+	GlobalOptions::Ambit
+	GlobalOptions::ambit_value() const
 	{
-	    return stoul(get_option("table-style")->second);
-	}
+	    if (!has_option("ambit"))
+		return Ambit::AUTO;
 
+	    string str = get_argument("ambit");
 
-	bool GlobalOptions::wrong_table_style() const
-	{
-	    if (!has_option("table-style"))
-		return false;
+	    Ambit ambit;
+	    if (!toValue(str, ambit, false))
+	    {
+		string error = sformat(_("Invalid ambit %s."), str.c_str()) + '\n' +
+		    sformat(_("Use %s, %s or %s."), toString(Ambit::AUTO).c_str(),
+			    toString(Ambit::CLASSIC).c_str(), toString(Ambit::TRANSACTIONAL).c_str());
 
-	    if (table_style_raw() >= Table::numStyles)
-		return true;
+		SN_THROW(OptionsException(error));
+	    }
 
-	    return false;
-	}
-
-
-	bool GlobalOptions::wrong_machine_readable() const
-	{
-	    if (!has_option("machine-readable"))
-		return false;
-
-	    string value = machine_readable_value();
-
-	    if (value != CSV_OPTION && value != JSON_OPTION)
-		return true;
-
-	    return false;
-	}
-
-
-	bool GlobalOptions::missing_no_dbus() const
-	{
-	    return has_option("root") && !has_option("no-dbus");
-	}
-
-
-	string GlobalOptions::table_style_error() const
-	{
-	    return sformat(_("Invalid table style %d."), table_style_raw()) + " " +
-		   sformat(_("Use an integer number from %d to %d."), 0, Table::numStyles - 1);
-	}
-
-
-	string GlobalOptions::machine_readable_error() const
-	{
-	    string format = machine_readable_value();
-
-	    return sformat(_("Invalid machine readable format %s."), format.c_str()) + " " +
-		   sformat(_("Use %s or %s."), CSV_OPTION.c_str(), JSON_OPTION.c_str());
-	}
-
-
-	string GlobalOptions::missing_no_dbus_error() const
-	{
-	    return _("root argument can be used only together with no-dbus.\n"
-		     "Try 'snapper --help' for more information.");
+	    return ambit;
 	}
 
     }
+
+    const vector<string> EnumInfo<cli::GlobalOptions::OutputFormat>::names({ "table", "csv", "json" });
+
+    const vector<string> EnumInfo<cli::GlobalOptions::Ambit>::names({ "auto", "classic", "transactional" });
+
 }

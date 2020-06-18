@@ -2,13 +2,13 @@
 <refentry id='snapper8' xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <refentryinfo>
-    <date>2019-10-14</date>
+    <date>2020-06-15</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2019-10-14</refmiscinfo>
+    <refmiscinfo class='date'>2020-06-15</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -268,6 +268,13 @@
 	<term><option>-r, --root <replaceable>path</replaceable></option></term>
 	<listitem>
 	  <para>Operate on target root. Only works together with no-dbus and only for some commands.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>-a, --ambit <replaceable>ambit</replaceable></option></term>
+	<listitem>
+	  <para>Operate in the specified ambit. Can be used to override the ambit detection.
+	  Allowed ambits are auto, classic and transactional.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
@@ -738,6 +745,9 @@
 	  <para>The rollback command also sets the description, the cleanup
 	  algorithm and some userdata unless the values are specified on the command
 	  line. This will automate cleanup of snapshots created by rollbacks.</para>
+	  <para>In other ambits than classic the rollback command does what is required
+	  to do a rollback. Anyway it is recommended to use specific programs in that
+	  case.</para>
 	</listitem>
       </varlistentry>
 

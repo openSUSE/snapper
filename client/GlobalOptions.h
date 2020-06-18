@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019] SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -24,6 +24,8 @@
 
 #include <string>
 
+#include <snapper/Enum.h>
+
 #include "client/Options.h"
 #include "client/utils/GetOpts.h"
 #include "client/utils/Table.h"
@@ -38,132 +40,64 @@ namespace snapper
 
 	public:
 
-	    enum OutputFormat { TABLE, CSV, JSON };
+	    enum class OutputFormat { TABLE, CSV, JSON };
+	    enum class Ambit { AUTO, CLASSIC, TRANSACTIONAL };
 
-	    static std::string help_text();
+	    static string help_text();
 
 	    GlobalOptions(GetOpts& parser);
 
-	    virtual std::vector<std::string> errors() const override;
+	    bool quiet() const { return _quiet; }
+	    bool verbose() const { return _verbose; }
+	    bool utc() const { return _utc; }
+	    bool iso() const { return _iso; }
+	    bool no_dbus() const { return _no_dbus; }
+	    bool version() const { return _version; }
+	    bool help() const { return _help; }
+	    TableLineStyle table_style() const { return _table_style; }
+	    OutputFormat output_format() const { return _output_format; }
+	    string separator() const { return _separator; }
+	    string config() const { return _config; }
+	    string root() const { return _root; }
+	    Ambit ambit() const { return _ambit; }
 
-	    bool quiet() const
-	    {
-		return _quiet;
-	    }
-
-	    bool verbose() const
-	    {
-		return _verbose;
-	    }
-
-	    bool utc() const
-	    {
-		return _utc;
-	    }
-
-	    bool iso() const
-	    {
-		return _iso;
-	    }
-
-	    bool no_dbus() const
-	    {
-		return _no_dbus;
-	    }
-
-	    bool version() const
-	    {
-		return _version;
-	    }
-
-	    bool help() const
-	    {
-		return _help;
-	    }
-
-	    TableLineStyle table_style() const
-	    {
-		return _table_style;
-	    }
-
-	    OutputFormat output_format() const
-	    {
-		return _output_format;
-	    }
-
-	    string separator() const
-	    {
-		return _separator;
-	    }
-
-	    string config() const
-	    {
-		return _config;
-	    }
-
-
-	    string root() const
-	    {
-		return _root;
-	    }
+	    void set_ambit(Ambit ambit) { _ambit = ambit; }
 
 	private:
 
 	    void parse_options();
+	    void check_options() const;
 
 	    TableLineStyle table_style_value() const;
-
 	    OutputFormat output_format_value() const;
-
-	    std::string machine_readable_value() const;
-
-	    std::string separator_value() const;
-
-	    std::string config_value() const;
-
-	    std::string root_value() const;
-
-	    unsigned int table_style_raw() const;
-
-	    bool wrong_table_style() const;
-
-	    bool wrong_machine_readable() const;
-
-	    bool missing_no_dbus() const;
-
-	    std::string table_style_error() const;
-
-	    std::string machine_readable_error() const;
-
-	    std::string missing_no_dbus_error() const;
+	    string separator_value() const;
+	    string config_value() const;
+	    string root_value() const;
+	    Ambit ambit_value() const;
 
 	    bool _quiet;
-
 	    bool _verbose;
-
 	    bool _utc;
-
 	    bool _iso;
-
 	    bool _no_dbus;
-
 	    bool _version;
-
 	    bool _help;
-
 	    TableLineStyle _table_style;
-
 	    OutputFormat _output_format;
-
 	    string _separator;
-
 	    string _config;
-
 	    string _root;
+	    Ambit _ambit;
 
 	};
 
     }
+
+
+    template <> struct EnumInfo<cli::GlobalOptions::OutputFormat> { static const vector<string> names; };
+
+    template <> struct EnumInfo<cli::GlobalOptions::Ambit> { static const vector<string> names; };
+
 }
 
 #endif

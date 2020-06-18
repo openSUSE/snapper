@@ -48,13 +48,7 @@ namespace snapper
 
 	    std::vector<std::string> selected_columns() const;
 
-	    std::string error() const;
-
-	    std::vector<std::string> wrong_columns() const;
-
 	private:
-
-	    bool wrong_column(const std::string& column) const;
 
 	    const std::vector<std::string>& _all_columns;
 

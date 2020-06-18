@@ -62,23 +62,11 @@ namespace snapper
 	}
 
 
-	vector<string> Command::GetConfig::errors() const
-	{
-	    return options().errors();
-	}
-
-
 	void Command::GetConfig::run()
 	{
 	    if (_options_parser.hasArgs())
 	    {
 		cerr << _("Command 'get-config' does not take arguments.") << endl;
-		exit(EXIT_FAILURE);
-	    }
-
-	    if (options().has_errors())
-	    {
-		cerr << options().errors().front() << endl;
 		exit(EXIT_FAILURE);
 	    }
 

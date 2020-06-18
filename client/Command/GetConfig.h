@@ -50,8 +50,6 @@ namespace snapper
 
 	    const Options& options() const;
 
-	    virtual std::vector<std::string> errors() const override;
-
 	    virtual void run() override;
 
 	    virtual ~GetConfig();

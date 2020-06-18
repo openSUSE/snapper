@@ -79,20 +79,20 @@ namespace snapper
 	    {
 		switch (command().options().list_mode())
 		{
-		    case Options::ListMode::LM_ALL:
+		    case Options::ListMode::ALL:
 		    {
 			selected.push_back(&snapshot);
 		    }
 		    break;
 
-		    case Options::ListMode::LM_SINGLE:
+		    case Options::ListMode::SINGLE:
 		    {
 			if (snapshot.getType() == SINGLE)
 			    selected.push_back(&snapshot);
 		    }
 		    break;
 
-		    case Options::ListMode::LM_PRE_POST:
+		    case Options::ListMode::PRE_POST:
 		    {
 			ProxySnapshots::const_iterator post_it = find_post(snapshot, snapshots);
 
@@ -293,7 +293,7 @@ namespace snapper
 	string
 	Command::ListSnapshots::SnappersData::date_value(const ProxySnapshot& snapshot) const
 	{
-	    if (command().options().list_mode() == Options::ListMode::LM_PRE_POST)
+	    if (command().options().list_mode() == Options::ListMode::PRE_POST)
 		return snapshot_date(snapshot);
 
 	    return snapshot.isCurrent() ? "" : snapshot_date(snapshot);

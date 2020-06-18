@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2019] SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -43,6 +43,17 @@ ProxySnapshotsLib::getDefault() const
     const Snapshots& snapshots = backref->snapper->getSnapshots();
 
     Snapshots::const_iterator tmp = snapshots.getDefault();
+
+    return tmp != snapshots.end() ? find(tmp->getNum()) : end();
+}
+
+
+ProxySnapshots::iterator
+ProxySnapshotsLib::getActive()
+{
+    Snapshots& snapshots = backref->snapper->getSnapshots();
+
+    Snapshots::const_iterator tmp = snapshots.getActive();
 
     return tmp != snapshots.end() ? find(tmp->getNum()) : end();
 }

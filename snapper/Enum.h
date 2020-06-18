@@ -63,7 +63,7 @@ namespace snapper
 	if ((size_t)(value) >= names.size())
 	    throw OutOfRangeException();
 
-	return names[value];
+	return names[(size_t)(value)];
     }
 
 
