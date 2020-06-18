@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
+"POT-Creation-Date: 2020-06-18 11:59+0200\n"
 "PO-Revision-Date: 2020-02-17 12:54+0000\n"
 "Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
-"Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/"
-"master/zh_TW/>\n"
+"Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,8 +19,8 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 3.6.1\n"
 
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\t列出所有可存取組態中的快照。"
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
+msgstr ""
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\t清理快照的演算法。"
@@ -37,6 +36,9 @@ msgstr "\t--command <指令>\t\t執行指令並建立前和後快照。"
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <名稱>\t\t設定要使用的設定法名稱。"
 
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr ""
+
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <描述>\t快照的描述。"
 
@@ -46,9 +48,6 @@ msgstr "\t--description、-d <描述>\t快照的描述。"
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <指令>\t\t用於比較檔案的指令。"
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-used-space\t\t停用顯示已用空間的功能。"
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <選項>\t傳送到 diff 指令的額外選項。"
@@ -68,6 +67,12 @@ msgstr "\t--input, -i <檔案>\t\t讀取檔案，以比較檔案的差異。"
 # SLE12
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\t以 ISO 格式顯示日期與時間。"
+
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr ""
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgstr ""
 
 # SLE12
 msgid "\t--no-dbus\t\t\tOperate without DBus."
@@ -98,6 +103,9 @@ msgstr "\t--read-write\t\t\t建立讀取寫入快照。"
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <路徑>\t\t在目標根目錄操作 (不使用 DBus 時才起作用)。"
 
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
+msgstr ""
+
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\t刪除後同步。"
 
@@ -109,9 +117,6 @@ msgstr "\t--template, -t <名稱>\t\t要使用的設定樣本的名稱。"
 
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <類型>\t\t快照的類型。"
-
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <類型>\t\t要列出的快照類型。"
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <userdata>\t快照的使用者資料。"
@@ -150,18 +155,6 @@ msgstr "\tsnapper delete-config"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <數字1>..<數字2> [檔案]"
-
-# SLE12
-msgid "\tsnapper get-config"
-msgstr "\tsnapper get-config"
-
-# SLE12
-msgid "\tsnapper list"
-msgstr "\tsnapper list"
-
-# SLE12
-msgid "\tsnapper list-configs"
-msgstr "\tsnapper list-configs"
 
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <數字>"
@@ -209,9 +202,6 @@ msgstr "    用於「delete」指令的選項︰"
 msgid "    Options for 'diff' command:"
 msgstr "    用於「diff」指令的選項︰"
 
-msgid "    Options for 'list' command:"
-msgstr "    'list' 命令的選項："
-
 msgid "    Options for 'modify' command:"
 msgstr "    'modify' 命令的選項："
 
@@ -247,16 +237,6 @@ msgstr "  刪除設定："
 msgid "  Delete snapshot:"
 msgstr "  刪除快照："
 
-# SLE12
-msgid "  Get config:"
-msgstr "  取得組態︰"
-
-msgid "  List configs:"
-msgstr "  列出設定："
-
-msgid "  List snapshots:"
-msgstr "  列出快照："
-
 msgid "  Modify snapshot:"
 msgstr "  修改快照："
 
@@ -281,10 +261,6 @@ msgid "  Undo changes:"
 msgstr "  回復變更："
 
 # SLE12
-msgid "#"
-msgstr "編號＼"
-
-# SLE12
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(快照 %d。)"
@@ -292,6 +268,13 @@ msgstr "(快照 %d。)"
 # SLE12
 msgid "ACL error."
 msgstr "ACL 錯誤。"
+
+msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+#, c-format
+msgid "Ambit is %s."
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -308,9 +291,6 @@ msgstr "無法刪除快照 %d，因為目前裝載的就是該快照。"
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "無法刪除快照 %d，因為接下來將要裝載該快照。"
-
-msgid "Cleanup"
-msgstr "清理"
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "命令 'cleanup' 需要一個參數。"
@@ -335,18 +315,8 @@ msgstr "命令 'delete-config' 不需參數。"
 msgid "Command 'diff' needs at least one argument."
 msgstr "指令「diff」需要至少一個引數。"
 
-# SLE12
-msgid "Command 'get-config' does not take arguments."
-msgstr "指令「get-config」未收到引數。"
-
 msgid "Command 'help' does not take arguments."
 msgstr "命令 'help' 不需參數。"
-
-msgid "Command 'list' does not take arguments."
-msgstr "命令 'list' 不需參數。"
-
-msgid "Command 'list-configs' does not take arguments."
-msgstr "命令 'list-configs' 不需參數。"
 
 msgid "Command 'modify' needs at least one argument."
 msgstr "命令 'moodify' 需要至少一個參數。"
@@ -386,9 +356,6 @@ msgstr "命令 'undochange' 需要至少一個參數。"
 # SLE12
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "指令「xadiff」至少需要一個引數。"
-
-msgid "Config"
-msgstr "設定"
 
 #, c-format
 msgid "Config '%s' is invalid."
@@ -442,9 +409,6 @@ msgstr "正在建立快照 %d 的讀寫快照。"
 msgid "Creating snapshot failed."
 msgstr "建立快照失敗。"
 
-msgid "Date"
-msgstr "日期"
-
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "刪除設定失敗 (%s)。"
@@ -457,9 +421,6 @@ msgstr "刪除快照失敗。"
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "從 %s 刪除快照︰"
-
-msgid "Description"
-msgstr "描述"
 
 msgid "Detecting filesystem type failed."
 msgstr "偵測檔案系統類型失敗。"
@@ -523,6 +484,10 @@ msgstr "完全相同的快照。"
 msgid "Illegal snapshot."
 msgstr "快照不合法。"
 
+#, fuzzy, c-format
+msgid "Invalid ambit %s."
+msgstr "不適用的快照 '%s'。"
+
 # SLE12
 msgid "Invalid configdata."
 msgstr "無效的 configdata。"
@@ -530,6 +495,10 @@ msgstr "無效的 configdata。"
 # SLE12
 msgid "Invalid group."
 msgstr "無效的群組。"
+
+#, c-format
+msgid "Invalid machine readable format %s."
+msgstr ""
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -542,8 +511,8 @@ msgstr "不適用的快照。"
 msgid "Invalid subvolume."
 msgstr "無效的子磁碟區。"
 
-#, c-format
-msgid "Invalid table style %d."
+#, fuzzy, c-format
+msgid "Invalid table style %s."
 msgstr "無效的表格樣式 %d。"
 
 # SLE12
@@ -552,10 +521,6 @@ msgstr "無效的使用者。"
 
 msgid "Invalid userdata."
 msgstr "不適用的 userdata 。"
-
-# SLE12
-msgid "Key"
-msgstr "鍵"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -610,18 +575,6 @@ msgstr "選項 --read-write 僅適用於單一類型的快照。"
 msgid "PiB"
 msgstr "PiB"
 
-msgid "Post #"
-msgstr "之後 #"
-
-msgid "Post Date"
-msgstr "之後 日期"
-
-msgid "Pre #"
-msgstr "之前 #"
-
-msgid "Pre Date"
-msgstr "之前 日期"
-
 #, c-format
 msgid "Quota error (%s)."
 msgstr "定額錯誤 (%s)。"
@@ -642,10 +595,6 @@ msgstr "快照 '%u' 找不到。"
 msgid "Snapshot is in use."
 msgstr "快照正在使用中。"
 
-# SLE12
-msgid "Subvolume"
-msgstr "子磁碟區"
-
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "組態「root」不存在。snapper 可能未設定。"
 
@@ -656,9 +605,6 @@ msgstr "TiB"
 # SLE12
 msgid "Try 'snapper --help' for more information."
 msgstr "請嘗試執行「snapper --help」以獲得詳細資訊。"
-
-msgid "Type"
-msgstr "類型"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -683,24 +629,14 @@ msgstr "未知選項 '%s'，命令 '%s'。"
 msgid "Unknown type of snapshot."
 msgstr "未知類型的快照。"
 
-msgid "Unknown type of snapshots."
-msgstr "未知類型的快照。"
+#, c-format
+msgid "Use %s, %s or %s."
+msgstr ""
 
 # SLE12
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "使用介於 %d 到 %d 的整數。"
-
-msgid "Used Space"
-msgstr "已用空間"
-
-# SLE12
-msgid "User"
-msgstr "使用者"
-
-# SLE12
-msgid "Userdata"
-msgstr "使用者資料"
 
 # SLE12
 #, c-format
@@ -711,9 +647,6 @@ msgstr "使用者資料「%s」沒有包含「=」符號。"
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "使用者資料「%s」的鍵為空白。"
-
-msgid "Value"
-msgstr "值"
 
 # SLE12
 #, c-format
@@ -748,11 +681,114 @@ msgstr "正在修改 %s"
 msgid "nothing to do"
 msgstr "無執行動作"
 
-msgid "root argument can be used only together with no-dbus."
+#, fuzzy
+msgid ""
+"root argument can be used only together with no-dbus.\n"
+"Try 'snapper --help' for more information."
 msgstr "根引數只能與 no-dbus 配合使用。"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "用法： snapper [--全域選項] <命令> [--命令選項] [命令參數]"
+
+#~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+#~ msgstr "\t--all-configs, -a\t\t列出所有可存取組態中的快照。"
+
+#~ msgid "\t--disable-used-space\t\tDisable showing used space."
+#~ msgstr "\t--disable-used-space\t\t停用顯示已用空間的功能。"
+
+#~ msgid "\t--type, -t <type>\t\tType of snapshots to list."
+#~ msgstr "\t--type, -t <類型>\t\t要列出的快照類型。"
+
+# SLE12
+#~ msgid "\tsnapper get-config"
+#~ msgstr "\tsnapper get-config"
+
+# SLE12
+#~ msgid "\tsnapper list"
+#~ msgstr "\tsnapper list"
+
+# SLE12
+#~ msgid "\tsnapper list-configs"
+#~ msgstr "\tsnapper list-configs"
+
+#~ msgid "    Options for 'list' command:"
+#~ msgstr "    'list' 命令的選項："
+
+# SLE12
+#~ msgid "  Get config:"
+#~ msgstr "  取得組態︰"
+
+#~ msgid "  List configs:"
+#~ msgstr "  列出設定："
+
+#~ msgid "  List snapshots:"
+#~ msgstr "  列出快照："
+
+# SLE12
+#~ msgid "#"
+#~ msgstr "編號＼"
+
+#~ msgid "Cleanup"
+#~ msgstr "清理"
+
+# SLE12
+#~ msgid "Command 'get-config' does not take arguments."
+#~ msgstr "指令「get-config」未收到引數。"
+
+#~ msgid "Command 'list' does not take arguments."
+#~ msgstr "命令 'list' 不需參數。"
+
+#~ msgid "Command 'list-configs' does not take arguments."
+#~ msgstr "命令 'list-configs' 不需參數。"
+
+#~ msgid "Config"
+#~ msgstr "設定"
+
+#~ msgid "Date"
+#~ msgstr "日期"
+
+#~ msgid "Description"
+#~ msgstr "描述"
+
+# SLE12
+#~ msgid "Key"
+#~ msgstr "鍵"
+
+#~ msgid "Post #"
+#~ msgstr "之後 #"
+
+#~ msgid "Post Date"
+#~ msgstr "之後 日期"
+
+#~ msgid "Pre #"
+#~ msgstr "之前 #"
+
+#~ msgid "Pre Date"
+#~ msgstr "之前 日期"
+
+# SLE12
+#~ msgid "Subvolume"
+#~ msgstr "子磁碟區"
+
+#~ msgid "Type"
+#~ msgstr "類型"
+
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "未知類型的快照。"
+
+#~ msgid "Used Space"
+#~ msgstr "已用空間"
+
+# SLE12
+#~ msgid "User"
+#~ msgstr "使用者"
+
+# SLE12
+#~ msgid "Userdata"
+#~ msgstr "使用者資料"
+
+#~ msgid "Value"
+#~ msgstr "值"
 
 # SLE12
 #~ msgid "Quota failure (%s)."

@@ -6,21 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
+"POT-Creation-Date: 2020-06-18 11:59+0200\n"
 "PO-Revision-Date: 2020-05-02 19:50+0000\n"
 "Last-Translator: mohammad alhargan <malham1@gmail.com>\n"
-"Language-Team: Arabic <https://l10n.opensuse.org/projects/snapper/master/ar/>"
-"\n"
+"Language-Team: Arabic <https://l10n.opensuse.org/projects/snapper/master/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 "X-Generator: Weblate 3.6.1\n"
 
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs، -a\t\tقائمة باللقطات من كل التكوينات التي يمكن الوصول إليها."
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
+msgstr ""
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\tتنظيف خوارزمية اللقطة."
@@ -34,6 +32,9 @@ msgstr "\t--command <command>\t\tتشغيل الامر وإنشاء لقطات �
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <name>\t\tعين اسم لتستخدمه للإعدادات."
 
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr ""
+
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <description>\tوصف اللقطة."
 
@@ -42,9 +43,6 @@ msgstr "\t--description, -d <description>\tوصف اللقطة."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\tأمر مستخدم لمقارنة الملفات."
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-used-space\t\tتعطيل عرض المساحة المستخدمة."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions، -x <options>\tخيارات إضافية تم تمريرها إلى أمر diff."
@@ -65,6 +63,12 @@ msgstr "\t--input، -i <file>\t\tقراءة الملفات إلى diff عن ال
 
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\tعرض التاريخ والوقت بصيغة ISO."
+
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr ""
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgstr ""
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tلا تعمل بدون تثبيت DBus."
@@ -93,6 +97,9 @@ msgstr "\t--قراءة-وكتابة\t\t\tإنشاء لقطة للقراءة وا
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root، -r <path>\t\tالعمل على الجذر الهدف (يعمل فقط بدون DBus)."
 
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
+msgstr ""
+
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync، -s\t\t\tالمزامنة بعد الحذف."
 
@@ -104,9 +111,6 @@ msgstr "\t--template, -t <name>\t\tاسم قالب الإعداد للاستخد
 
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <type>\t\tنوع اللقطة."
-
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <type>\t\tنوع اللقطة للقائمة."
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <userdata>\tمعلومات المستخدم للقطة."
@@ -140,15 +144,6 @@ msgstr "\tالملتقط إعداد-الحذف"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tإختلافات الملتقط <number1>..<number2> [ملف]"
-
-msgid "\tsnapper get-config"
-msgstr "\tضبط تهيئة الملتقط"
-
-msgid "\tsnapper list"
-msgstr "\tقائمة الملتقط"
-
-msgid "\tsnapper list-configs"
-msgstr "\tقائمة الملتقط-إعداد"
 
 msgid "\tsnapper modify <number>"
 msgstr "\tتعديل ملتقط<number>"
@@ -192,9 +187,6 @@ msgstr "    خيارات الأمر 'delete':"
 msgid "    Options for 'diff' command:"
 msgstr "    خيارات الأمر 'diff':"
 
-msgid "    Options for 'list' command:"
-msgstr "    أمر 'قائمة' خيارات:"
-
 msgid "    Options for 'modify' command:"
 msgstr "    أمر 'تعديل' خيارات:"
 
@@ -228,15 +220,6 @@ msgstr "  إعداد الحذف:"
 msgid "  Delete snapshot:"
 msgstr "  حذف اللقطات:"
 
-msgid "  Get config:"
-msgstr "  إنشاء تهيئة:"
-
-msgid "  List configs:"
-msgstr "  قائمة إعدادات:"
-
-msgid "  List snapshots:"
-msgstr "  قائمة اللقطات:"
-
 msgid "  Modify snapshot:"
 msgstr "  تعديل لقطة:"
 
@@ -258,15 +241,19 @@ msgstr "  الغ تحميل لقطة:"
 msgid "  Undo changes:"
 msgstr "  التراجع عن التغييرات:"
 
-msgid "#"
-msgstr "#"
-
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(لقطة %d.)"
 
 msgid "ACL error."
 msgstr "خطأ ACL."
+
+msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+#, c-format
+msgid "Ambit is %s."
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -283,9 +270,6 @@ msgstr "لا يمكن حذف اللقطة %d لأنها اللقطة التي ت
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "لا يمكن حذف اللقطة %d لأنها اللقطة التالية التي يجب تثبيتها."
-
-msgid "Cleanup"
-msgstr "تنظيف"
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "يحتاج الأمر 'تنظيف' لأحد الوسائط."
@@ -308,17 +292,8 @@ msgstr "لا يأخذ الأمر 'حذف إعداد' الوسائط."
 msgid "Command 'diff' needs at least one argument."
 msgstr "يحتاج الأمر 'اختلاف' وسيطة واحدة على الأقل."
 
-msgid "Command 'get-config' does not take arguments."
-msgstr "لا يأخذ الأمر 'ضبط التهيئة' الوسائط."
-
 msgid "Command 'help' does not take arguments."
 msgstr "لا يأخذ الأمر 'تعليمات' الوسائط."
-
-msgid "Command 'list' does not take arguments."
-msgstr "لا يأخذ الأمر 'قائمة' الوسائط."
-
-msgid "Command 'list-configs' does not take arguments."
-msgstr "لا يأخذ الأمر 'إعداد القائمة' الوسائط."
 
 msgid "Command 'modify' needs at least one argument."
 msgstr "يحتاج الأمر 'تعديل' وسيطة واحدة على الأقل."
@@ -353,9 +328,6 @@ msgstr "يحتاج الأمر 'تراجع عن التغييرات' وسيطة و
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "يحتاج الأمر 'xadiff' وسيطة واحدة على الأقل."
-
-msgid "Config"
-msgstr "إعداد"
 
 #, c-format
 msgid "Config '%s' is invalid."
@@ -399,9 +371,6 @@ msgstr "إنشاء لقطة للقراءة والكتابة من اللقطة %d
 msgid "Creating snapshot failed."
 msgstr "فشل إنشاء اللقطة."
 
-msgid "Date"
-msgstr "التاريخ"
-
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "فشل حذف الإعداد (%s)."
@@ -418,9 +387,6 @@ msgstr[2] "حذف لقطتان من %s:"
 msgstr[3] "حذف اللقطات من %s:"
 msgstr[4] "حذف اللقطات من %s:"
 msgstr[5] "حذف اللقطات من %s:"
-
-msgid "Description"
-msgstr "الوصف"
 
 msgid "Detecting filesystem type failed."
 msgstr "فشل الكشف عن نوع نظام الملفات."
@@ -478,11 +444,19 @@ msgstr "لقطات متطابقة."
 msgid "Illegal snapshot."
 msgstr "لقطة غير مسموح بها."
 
+#, fuzzy, c-format
+msgid "Invalid ambit %s."
+msgstr "لقطة غير صالحة '%s'."
+
 msgid "Invalid configdata."
 msgstr "بيانات إعداد غير صالحة."
 
 msgid "Invalid group."
 msgstr "مجموعة غير صالحة."
+
+#, c-format
+msgid "Invalid machine readable format %s."
+msgstr ""
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -494,8 +468,8 @@ msgstr "لقطات غير صالح."
 msgid "Invalid subvolume."
 msgstr "الحجم الفرعي غير صالح."
 
-#, c-format
-msgid "Invalid table style %d."
+#, fuzzy, c-format
+msgid "Invalid table style %s."
 msgstr "نمط الجدول غير صالح %d."
 
 msgid "Invalid user."
@@ -503,9 +477,6 @@ msgstr "المستخدم غير صالح."
 
 msgid "Invalid userdata."
 msgstr "بيانات المستخدم غير صالحة."
-
-msgid "Key"
-msgstr "مفتاح"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -559,18 +530,6 @@ msgstr "الاختيار --القراءة والكتابة مدعومة فقط �
 msgid "PiB"
 msgstr "PiB"
 
-msgid "Post #"
-msgstr "قياس ورق #"
-
-msgid "Post Date"
-msgstr "تاريخ المشاركة"
-
-msgid "Pre #"
-msgstr "ما قبل #"
-
-msgid "Pre Date"
-msgstr "ما قبل التاريخ"
-
 #, c-format
 msgid "Quota error (%s)."
 msgstr "خطأ في الحصة (%s)."
@@ -589,9 +548,6 @@ msgstr "اللقطة '%u' لم يتم العثور على."
 msgid "Snapshot is in use."
 msgstr "اللقطة قيد الاستخدام."
 
-msgid "Subvolume"
-msgstr "الحجم الفرعي"
-
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "'root' للتكوين غير موجود. غالبًا لم يتم تكوين snapper."
 
@@ -601,9 +557,6 @@ msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "جرب 'التقاط --help' لمزيد من المعلومات."
-
-msgid "Type"
-msgstr "النوع"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -627,21 +580,13 @@ msgstr "خيار غير معروف '%s' للأمر '%s'."
 msgid "Unknown type of snapshot."
 msgstr "نوع اللقطة غير معروف."
 
-msgid "Unknown type of snapshots."
-msgstr "نوع اللقطات غير معروف."
+#, c-format
+msgid "Use %s, %s or %s."
+msgstr ""
 
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "استخدم رقم صحيح من %d إلى %d."
-
-msgid "Used Space"
-msgstr "المساحة المستخدمة"
-
-msgid "User"
-msgstr "مستخدم"
-
-msgid "Userdata"
-msgstr "بيانات المستخدم"
 
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
@@ -650,9 +595,6 @@ msgstr "معلومات المستخدم '%s' لا تتضمن علامة '=' في
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "معلوات المستخدم '%s' تحتوي مفاتيح خالية."
-
-msgid "Value"
-msgstr "القيمة"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -685,11 +627,104 @@ msgstr "تعديل %s"
 msgid "nothing to do"
 msgstr "لا يوجد ما يمكن فعله"
 
-msgid "root argument can be used only together with no-dbus."
+#, fuzzy
+msgid ""
+"root argument can be used only together with no-dbus.\n"
+"Try 'snapper --help' for more information."
 msgstr "يمكن استخدام الوسيطة الجذر فقط في حالة عدم وجود dbus."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "استخدام: اللقطة [--global-options] <command> [--command-options] [أمر-وسائط]"
+
+#~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+#~ msgstr "\t--all-configs، -a\t\tقائمة باللقطات من كل التكوينات التي يمكن الوصول إليها."
+
+#~ msgid "\t--disable-used-space\t\tDisable showing used space."
+#~ msgstr "\t--disable-used-space\t\tتعطيل عرض المساحة المستخدمة."
+
+#~ msgid "\t--type, -t <type>\t\tType of snapshots to list."
+#~ msgstr "\t--type, -t <type>\t\tنوع اللقطة للقائمة."
+
+#~ msgid "\tsnapper get-config"
+#~ msgstr "\tضبط تهيئة الملتقط"
+
+#~ msgid "\tsnapper list"
+#~ msgstr "\tقائمة الملتقط"
+
+#~ msgid "\tsnapper list-configs"
+#~ msgstr "\tقائمة الملتقط-إعداد"
+
+#~ msgid "    Options for 'list' command:"
+#~ msgstr "    أمر 'قائمة' خيارات:"
+
+#~ msgid "  Get config:"
+#~ msgstr "  إنشاء تهيئة:"
+
+#~ msgid "  List configs:"
+#~ msgstr "  قائمة إعدادات:"
+
+#~ msgid "  List snapshots:"
+#~ msgstr "  قائمة اللقطات:"
+
+#~ msgid "#"
+#~ msgstr "#"
+
+#~ msgid "Cleanup"
+#~ msgstr "تنظيف"
+
+#~ msgid "Command 'get-config' does not take arguments."
+#~ msgstr "لا يأخذ الأمر 'ضبط التهيئة' الوسائط."
+
+#~ msgid "Command 'list' does not take arguments."
+#~ msgstr "لا يأخذ الأمر 'قائمة' الوسائط."
+
+#~ msgid "Command 'list-configs' does not take arguments."
+#~ msgstr "لا يأخذ الأمر 'إعداد القائمة' الوسائط."
+
+#~ msgid "Config"
+#~ msgstr "إعداد"
+
+#~ msgid "Date"
+#~ msgstr "التاريخ"
+
+#~ msgid "Description"
+#~ msgstr "الوصف"
+
+#~ msgid "Key"
+#~ msgstr "مفتاح"
+
+#~ msgid "Post #"
+#~ msgstr "قياس ورق #"
+
+#~ msgid "Post Date"
+#~ msgstr "تاريخ المشاركة"
+
+#~ msgid "Pre #"
+#~ msgstr "ما قبل #"
+
+#~ msgid "Pre Date"
+#~ msgstr "ما قبل التاريخ"
+
+#~ msgid "Subvolume"
+#~ msgstr "الحجم الفرعي"
+
+#~ msgid "Type"
+#~ msgstr "النوع"
+
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "نوع اللقطات غير معروف."
+
+#~ msgid "Used Space"
+#~ msgstr "المساحة المستخدمة"
+
+#~ msgid "User"
+#~ msgstr "مستخدم"
+
+#~ msgid "Userdata"
+#~ msgstr "بيانات المستخدم"
+
+#~ msgid "Value"
+#~ msgstr "القيمة"
 
 #, fuzzy
 #~ msgid "Quota failure (%s)."

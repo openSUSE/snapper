@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
+"POT-Creation-Date: 2020-06-18 11:59+0200\n"
 "PO-Revision-Date: 2017-10-29 20:52+0000\n"
 "Last-Translator: strahil nikolov <hunter86_bg@yahoo.com>\n"
 "Language-Team: Bulgarian <https://l10n.opensuse.org/projects/snapper/master/bg/>\n"
@@ -13,8 +13,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.13.1\n"
 
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs, -a Покажи всички снапшоти от всички достъпни конфигурационни файлове."
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
+msgstr ""
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr ""
@@ -28,6 +28,9 @@ msgstr ""
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr ""
 
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr ""
+
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr ""
 
@@ -35,9 +38,6 @@ msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr ""
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr ""
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
 msgstr ""
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
@@ -56,6 +56,12 @@ msgid "\t--input, -i <file>\t\tRead files to diff from file."
 msgstr ""
 
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
+msgstr ""
+
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr ""
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
 msgstr ""
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
@@ -85,6 +91,9 @@ msgstr ""
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr ""
 
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
+msgstr ""
+
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr ""
 
@@ -95,9 +104,6 @@ msgid "\t--template, -t <name>\t\tName of config template to use."
 msgstr ""
 
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr ""
-
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
 msgstr ""
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
@@ -131,15 +137,6 @@ msgid "\tsnapper delete-config"
 msgstr ""
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
-msgstr ""
-
-msgid "\tsnapper get-config"
-msgstr ""
-
-msgid "\tsnapper list"
-msgstr ""
-
-msgid "\tsnapper list-configs"
 msgstr ""
 
 msgid "\tsnapper modify <number>"
@@ -185,9 +182,6 @@ msgstr ""
 msgid "    Options for 'diff' command:"
 msgstr ""
 
-msgid "    Options for 'list' command:"
-msgstr ""
-
 msgid "    Options for 'modify' command:"
 msgstr ""
 
@@ -227,18 +221,6 @@ msgstr ""
 msgid "  Delete snapshot:"
 msgstr ""
 
-#, fuzzy
-msgid "  Get config:"
-msgstr ""
-"%s - създаване на файлове с настройки за PAM\n"
-"\n"
-
-msgid "  List configs:"
-msgstr ""
-
-msgid "  List snapshots:"
-msgstr ""
-
 msgid "  Modify snapshot:"
 msgstr ""
 
@@ -263,9 +245,6 @@ msgstr ""
 msgid "  Undo changes:"
 msgstr ""
 
-msgid "#"
-msgstr ""
-
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "Хостът %s не бе открит."
@@ -274,6 +253,13 @@ msgstr "Хостът %s не бе открит."
 #, fuzzy
 msgid "ACL error."
 msgstr "Входно/Изходна грешка"
+
+msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+#, c-format
+msgid "Ambit is %s."
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -290,9 +276,6 @@ msgstr ""
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
-
-msgid "Cleanup"
 msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
@@ -316,16 +299,7 @@ msgstr ""
 msgid "Command 'diff' needs at least one argument."
 msgstr ""
 
-msgid "Command 'get-config' does not take arguments."
-msgstr ""
-
 msgid "Command 'help' does not take arguments."
-msgstr ""
-
-msgid "Command 'list' does not take arguments."
-msgstr ""
-
-msgid "Command 'list-configs' does not take arguments."
 msgstr ""
 
 msgid "Command 'modify' needs at least one argument."
@@ -361,10 +335,6 @@ msgstr ""
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr ""
-
-#, fuzzy
-msgid "Config"
-msgstr "kdmconfig"
 
 #, fuzzy, c-format
 msgid "Config '%s' is invalid."
@@ -410,9 +380,6 @@ msgstr ""
 msgid "Creating snapshot failed."
 msgstr ""
 
-msgid "Date"
-msgstr ""
-
 # %s is either BOOTP or DHCP
 #, fuzzy, c-format
 msgid "Deleting config failed (%s)."
@@ -429,9 +396,6 @@ msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Настройването чрез %s бе неуспешно."
 msgstr[1] "Настройването чрез %s бе неуспешно."
-
-msgid "Description"
-msgstr "Описание"
 
 msgid "Detecting filesystem type failed."
 msgstr ""
@@ -498,6 +462,10 @@ msgstr ""
 msgid "Illegal snapshot."
 msgstr "Настройването чрез %s бе неуспешно."
 
+#, fuzzy, c-format
+msgid "Invalid ambit %s."
+msgstr "Невалиден вход."
+
 #, fuzzy
 msgid "Invalid configdata."
 msgstr "Невалиден вход."
@@ -505,6 +473,10 @@ msgstr "Невалиден вход."
 #, fuzzy
 msgid "Invalid group."
 msgstr "Невалиден вход."
+
+#, c-format
+msgid "Invalid machine readable format %s."
+msgstr ""
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -516,9 +488,9 @@ msgstr ""
 msgid "Invalid subvolume."
 msgstr ""
 
-#, c-format
-msgid "Invalid table style %d."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid table style %s."
+msgstr "Невалиден вход."
 
 #, fuzzy
 msgid "Invalid user."
@@ -526,11 +498,6 @@ msgstr "Невалиден вход."
 
 msgid "Invalid userdata."
 msgstr ""
-
-# KE
-#, fuzzy
-msgid "Key"
-msgstr "Кения"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -588,19 +555,6 @@ msgstr ""
 msgid "PiB"
 msgstr ""
 
-msgid "Post #"
-msgstr ""
-
-#, fuzzy
-msgid "Post Date"
-msgstr "Имена на машините"
-
-msgid "Pre #"
-msgstr ""
-
-msgid "Pre Date"
-msgstr ""
-
 # error box title
 #, fuzzy, c-format
 msgid "Quota error (%s)."
@@ -622,9 +576,6 @@ msgstr "Хостът %s не бе открит."
 msgid "Snapshot is in use."
 msgstr "Хостът %s не бе открит."
 
-msgid "Subvolume"
-msgstr ""
-
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr ""
 
@@ -635,9 +586,6 @@ msgstr ""
 #, fuzzy
 msgid "Try 'snapper --help' for more information."
 msgstr "За повече информация опитайте  `%s --help' или`%s --usage'.\n"
-
-msgid "Type"
-msgstr "Тип"
 
 #, fuzzy, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -662,21 +610,12 @@ msgstr "Неизвестен параметър за %s, пренебрегва�
 msgid "Unknown type of snapshot."
 msgstr ""
 
-#, fuzzy
-msgid "Unknown type of snapshots."
-msgstr "Неизвестно мрежово състояние"
+#, c-format
+msgid "Use %s, %s or %s."
+msgstr ""
 
 #, c-format
 msgid "Use an integer number from %d to %d."
-msgstr ""
-
-msgid "Used Space"
-msgstr ""
-
-msgid "User"
-msgstr ""
-
-msgid "Userdata"
 msgstr ""
 
 #, c-format
@@ -686,9 +625,6 @@ msgstr ""
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr ""
-
-msgid "Value"
-msgstr "Стойност"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -722,11 +658,49 @@ msgstr ""
 msgid "nothing to do"
 msgstr "без действие"
 
-msgid "root argument can be used only together with no-dbus."
-msgstr ""
+#, fuzzy
+msgid ""
+"root argument can be used only together with no-dbus.\n"
+"Try 'snapper --help' for more information."
+msgstr "За повече информация опитайте  `%s --help' или`%s --usage'.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
+
+#~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+#~ msgstr "\t--all-configs, -a Покажи всички снапшоти от всички достъпни конфигурационни файлове."
+
+#, fuzzy
+#~ msgid "  Get config:"
+#~ msgstr ""
+#~ "%s - създаване на файлове с настройки за PAM\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "Config"
+#~ msgstr "kdmconfig"
+
+#~ msgid "Description"
+#~ msgstr "Описание"
+
+# KE
+#, fuzzy
+#~ msgid "Key"
+#~ msgstr "Кения"
+
+#, fuzzy
+#~ msgid "Post Date"
+#~ msgstr "Имена на машините"
+
+#~ msgid "Type"
+#~ msgstr "Тип"
+
+#, fuzzy
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "Неизвестно мрежово състояние"
+
+#~ msgid "Value"
+#~ msgstr "Стойност"
 
 #, fuzzy
 #~ msgid "Quota failure (%s)."

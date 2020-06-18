@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
+"POT-Creation-Date: 2020-06-18 11:59+0200\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Ewelina Michalowska <ewelina.michalowska@stgambit.com>\n"
 "Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>\n"
@@ -20,8 +20,8 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.3\n"
 
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tWyświetla listę migawek z wszystkich dostępnych konfiguracji."
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
+msgstr ""
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorytm usuwania starych zrzutów."
@@ -35,6 +35,9 @@ msgstr "\t--command <polecenie>\t\tWykonanie polecenia oraz utworzenie zrzutów 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <nazwa>\t\tUstawienie nazwy konfiguracji do użycia."
 
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr ""
+
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <opis>\tOpis zrzutu."
 
@@ -43,9 +46,6 @@ msgstr "\t--description, -d <opis>\tOpis migawek."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <polecenie>\t\tPolecenie służące do porównywania plików."
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-used-space\t\tWyłącz wyświetlanie wykorzystanego miejsca."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <opcje>\tDodatkowe opcje przekazywane do polecenia diff."
@@ -64,6 +64,12 @@ msgstr "\t--input, -i <plik>\t\tWczytuje pliki do polecenia diff z pliku."
 
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\tWyświetla datę i godzinę w formacie ISO."
+
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr ""
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgstr ""
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tPracuj bez korzystania z systemu DBus."
@@ -92,6 +98,9 @@ msgstr ""
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <ścieżka>\t\tDziałanie na katalogu głównym obiektu docelowego (działa tylko bez systemu DBus)."
 
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
+msgstr ""
+
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tPrzeprowadza synchronizację po usunięciu."
 
@@ -103,9 +112,6 @@ msgstr "\t--template, -t <name>\t\tNazwa szablonu konfiguracji do użycia."
 
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <type>\t\tRodzaj zrzutu."
-
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <type>\t\tRodzaj zrzutów do wyświetlenia."
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <userdata>\tDane użytkownika dla zrzutu."
@@ -139,15 +145,6 @@ msgstr "\tsnapper delete-config"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <numer1>..<numer2> [pliki]"
-
-msgid "\tsnapper get-config"
-msgstr "\tsnapper get-config"
-
-msgid "\tsnapper list"
-msgstr "\tsnapper list"
-
-msgid "\tsnapper list-configs"
-msgstr "\tsnapper list-configs"
 
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <numer>"
@@ -191,9 +188,6 @@ msgstr "    Opcje polecenia \"delete\":"
 msgid "    Options for 'diff' command:"
 msgstr "    Opcje polecenia \"diff\":"
 
-msgid "    Options for 'list' command:"
-msgstr "    Opcje dla polecenia 'list':"
-
 msgid "    Options for 'modify' command:"
 msgstr "    Opcje dla polecenia 'modify':"
 
@@ -227,15 +221,6 @@ msgstr "  Usuwanie konfiguracji:"
 msgid "  Delete snapshot:"
 msgstr "  Usunięcie zrzutu:"
 
-msgid "  Get config:"
-msgstr "  Pobieranie konfiguracji:"
-
-msgid "  List configs:"
-msgstr "  Lista konfiguracji:"
-
-msgid "  List snapshots:"
-msgstr "  Lista zrzutów:"
-
 msgid "  Modify snapshot:"
 msgstr "  Modyfikacja zrzutu:"
 
@@ -257,15 +242,19 @@ msgstr "  Odmontowanie zrzutu:"
 msgid "  Undo changes:"
 msgstr "  Cofanie zmian:"
 
-msgid "#"
-msgstr "#"
-
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Migawka %d.)"
 
 msgid "ACL error."
 msgstr "Błąd ACL."
+
+msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+#, c-format
+msgid "Ambit is %s."
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -282,9 +271,6 @@ msgstr "Nie można usunąć migawki %d, ponieważ to jest aktualnie zamontowana 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Nie można usunąć migawki %d, ponieważ to jest migawka następna w kolejności do zamontowania."
-
-msgid "Cleanup"
-msgstr "Wyczyszczono"
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Polecenie  'cleanup' wymaga jednego argumentu."
@@ -307,17 +293,8 @@ msgstr "Polecenie 'delete-config' nie przyjmuje argumentów."
 msgid "Command 'diff' needs at least one argument."
 msgstr "Polecenie 'diff' wymaga podania co najmniej jednego argumentu."
 
-msgid "Command 'get-config' does not take arguments."
-msgstr "Polecenie 'get-config' nie przyjmuje argumentów."
-
 msgid "Command 'help' does not take arguments."
 msgstr "Polecenie 'help' nie przyjmuje argumentów."
-
-msgid "Command 'list' does not take arguments."
-msgstr "Polecenie 'list' nie przyjmuje argumentów."
-
-msgid "Command 'list-configs' does not take arguments."
-msgstr "Polecenie 'list-configs' nie przyjmuje argumentów."
 
 msgid "Command 'modify' needs at least one argument."
 msgstr "Polecenie 'modify' wymaga co najmniej jednego argumentu."
@@ -352,9 +329,6 @@ msgstr "Polecenie 'undochange' wymaga co najmniej jednego argumentu."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Polecenie 'xadiff' wymaga podania co najmniej jednego argumentu."
-
-msgid "Config"
-msgstr "Konfiguracja"
 
 #, c-format
 msgid "Config '%s' is invalid."
@@ -398,9 +372,6 @@ msgstr "Tworzenie migawki z migawki %d służącej do odczytu i zapisu."
 msgid "Creating snapshot failed."
 msgstr "Tworzenie zrzutu nie powiodło się (%s)."
 
-msgid "Date"
-msgstr "Data"
-
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Usuwanie konfiguracji nie powiodło się (%s)."
@@ -414,9 +385,6 @@ msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Usuwanie migawki z %s:"
 msgstr[1] "Usuwanie migawek z %s:"
 msgstr[2] "Usuwanie migawek z %s:"
-
-msgid "Description"
-msgstr "Opis"
 
 msgid "Detecting filesystem type failed."
 msgstr "Wykrywanie systemu plików nie powiodło się."
@@ -474,11 +442,19 @@ msgstr "Identyczne zrzuty."
 msgid "Illegal snapshot."
 msgstr "Niedozwolony zrzut."
 
+#, fuzzy, c-format
+msgid "Invalid ambit %s."
+msgstr "Nieprawidłowy zrzut '%s'."
+
 msgid "Invalid configdata."
 msgstr "Nieprawidłowe dane konfiguracyjne."
 
 msgid "Invalid group."
 msgstr "Nieprawidłowa grupa."
+
+#, c-format
+msgid "Invalid machine readable format %s."
+msgstr ""
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -490,8 +466,8 @@ msgstr "Nieprawidłowe zrzuty."
 msgid "Invalid subvolume."
 msgstr "Nieprawidłowy podwolumen."
 
-#, c-format
-msgid "Invalid table style %d."
+#, fuzzy, c-format
+msgid "Invalid table style %s."
 msgstr "Nieprawidłowy styl tabeli %d."
 
 msgid "Invalid user."
@@ -499,9 +475,6 @@ msgstr "Nieprawidłowy użytkownik."
 
 msgid "Invalid userdata."
 msgstr "Nieprawidłowe dane użytkownika."
-
-msgid "Key"
-msgstr "Klucz"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -555,18 +528,6 @@ msgstr ""
 msgid "PiB"
 msgstr "PiB"
 
-msgid "Post #"
-msgstr "Post #"
-
-msgid "Post Date"
-msgstr "Po dacie"
-
-msgid "Pre #"
-msgstr "Pre #"
-
-msgid "Pre Date"
-msgstr "Przed datą"
-
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Błąd przydziału (%s)."
@@ -585,9 +546,6 @@ msgstr "Nie znaleziono zrzutu '%u'."
 msgid "Snapshot is in use."
 msgstr "Dany zrzut jest już używany."
 
-msgid "Subvolume"
-msgstr "Podwolumen"
-
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Folder główny konfiguracji nie istnieje. Narzędzie snapper prawdopodobnie nie jest skonfigurowane."
 
@@ -597,9 +555,6 @@ msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Wypróbuj polecenie 'snapper --help', aby uzyskać więcej informacji."
-
-msgid "Type"
-msgstr "Rodzaj"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -623,21 +578,13 @@ msgstr "Nieznana opcja '%s' dla polecenia  '%s'."
 msgid "Unknown type of snapshot."
 msgstr "Nieznany rodzaj zrzutu."
 
-msgid "Unknown type of snapshots."
-msgstr "Nieznany rodzaj zrzutów."
+#, c-format
+msgid "Use %s, %s or %s."
+msgstr ""
 
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "Użyj liczby całkowitej z zakresu od %d do %d."
-
-msgid "Used Space"
-msgstr "Wykorzystane miejsce"
-
-msgid "User"
-msgstr "Użytkownik"
-
-msgid "Userdata"
-msgstr "Dane użytkownika"
 
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
@@ -646,9 +593,6 @@ msgstr "Dane użytkownika %s nie zawierają znaku =."
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "Dane użytkownika %s zawierają pusty klucz."
-
-msgid "Value"
-msgstr "Wartość"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -681,11 +625,104 @@ msgstr "modyfikowanie %s"
 msgid "nothing to do"
 msgstr "nie ma nic do zrobienia"
 
-msgid "root argument can be used only together with no-dbus."
+#, fuzzy
+msgid ""
+"root argument can be used only together with no-dbus.\n"
+"Try 'snapper --help' for more information."
 msgstr "argumentu root można użyć tylko razem z parametrem no-dbus."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "Użycie: snapper [--opcje-globalne] <polecenia> [--opcje-poleceń] [argumenty-polecenia]"
+
+#~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+#~ msgstr "\t--all-configs, -a\t\tWyświetla listę migawek z wszystkich dostępnych konfiguracji."
+
+#~ msgid "\t--disable-used-space\t\tDisable showing used space."
+#~ msgstr "\t--disable-used-space\t\tWyłącz wyświetlanie wykorzystanego miejsca."
+
+#~ msgid "\t--type, -t <type>\t\tType of snapshots to list."
+#~ msgstr "\t--type, -t <type>\t\tRodzaj zrzutów do wyświetlenia."
+
+#~ msgid "\tsnapper get-config"
+#~ msgstr "\tsnapper get-config"
+
+#~ msgid "\tsnapper list"
+#~ msgstr "\tsnapper list"
+
+#~ msgid "\tsnapper list-configs"
+#~ msgstr "\tsnapper list-configs"
+
+#~ msgid "    Options for 'list' command:"
+#~ msgstr "    Opcje dla polecenia 'list':"
+
+#~ msgid "  Get config:"
+#~ msgstr "  Pobieranie konfiguracji:"
+
+#~ msgid "  List configs:"
+#~ msgstr "  Lista konfiguracji:"
+
+#~ msgid "  List snapshots:"
+#~ msgstr "  Lista zrzutów:"
+
+#~ msgid "#"
+#~ msgstr "#"
+
+#~ msgid "Cleanup"
+#~ msgstr "Wyczyszczono"
+
+#~ msgid "Command 'get-config' does not take arguments."
+#~ msgstr "Polecenie 'get-config' nie przyjmuje argumentów."
+
+#~ msgid "Command 'list' does not take arguments."
+#~ msgstr "Polecenie 'list' nie przyjmuje argumentów."
+
+#~ msgid "Command 'list-configs' does not take arguments."
+#~ msgstr "Polecenie 'list-configs' nie przyjmuje argumentów."
+
+#~ msgid "Config"
+#~ msgstr "Konfiguracja"
+
+#~ msgid "Date"
+#~ msgstr "Data"
+
+#~ msgid "Description"
+#~ msgstr "Opis"
+
+#~ msgid "Key"
+#~ msgstr "Klucz"
+
+#~ msgid "Post #"
+#~ msgstr "Post #"
+
+#~ msgid "Post Date"
+#~ msgstr "Po dacie"
+
+#~ msgid "Pre #"
+#~ msgstr "Pre #"
+
+#~ msgid "Pre Date"
+#~ msgstr "Przed datą"
+
+#~ msgid "Subvolume"
+#~ msgstr "Podwolumen"
+
+#~ msgid "Type"
+#~ msgstr "Rodzaj"
+
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "Nieznany rodzaj zrzutów."
+
+#~ msgid "Used Space"
+#~ msgstr "Wykorzystane miejsce"
+
+#~ msgid "User"
+#~ msgstr "Użytkownik"
+
+#~ msgid "Userdata"
+#~ msgstr "Dane użytkownika"
+
+#~ msgid "Value"
+#~ msgstr "Wartość"
 
 #~ msgid "Quota failure (%s)."
 #~ msgstr "Niepowodzenie przydziału (%s)."

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
+"POT-Creation-Date: 2020-06-18 11:59+0200\n"
 "PO-Revision-Date: 2011-04-16 18:13+0200\n"
 "Last-Translator: Krešimir Jozić <kjozic@gmail.com>\n"
 "Language-Team: Croatian <kde-i18n-doc@kde.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr ""
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
@@ -32,6 +32,9 @@ msgstr ""
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr ""
 
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr ""
+
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr ""
 
@@ -39,9 +42,6 @@ msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr ""
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr ""
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
 msgstr ""
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
@@ -60,6 +60,12 @@ msgid "\t--input, -i <file>\t\tRead files to diff from file."
 msgstr ""
 
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
+msgstr ""
+
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr ""
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
 msgstr ""
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
@@ -89,6 +95,9 @@ msgstr ""
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr ""
 
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
+msgstr ""
+
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr ""
 
@@ -99,9 +108,6 @@ msgid "\t--template, -t <name>\t\tName of config template to use."
 msgstr ""
 
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr ""
-
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
 msgstr ""
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
@@ -135,15 +141,6 @@ msgid "\tsnapper delete-config"
 msgstr ""
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
-msgstr ""
-
-msgid "\tsnapper get-config"
-msgstr ""
-
-msgid "\tsnapper list"
-msgstr ""
-
-msgid "\tsnapper list-configs"
 msgstr ""
 
 msgid "\tsnapper modify <number>"
@@ -188,9 +185,6 @@ msgstr ""
 msgid "    Options for 'diff' command:"
 msgstr ""
 
-msgid "    Options for 'list' command:"
-msgstr ""
-
 msgid "    Options for 'modify' command:"
 msgstr ""
 
@@ -225,16 +219,6 @@ msgstr "Obriši vezu"
 msgid "  Delete snapshot:"
 msgstr ""
 
-#, fuzzy
-msgid "  Get config:"
-msgstr "Obriši vezu"
-
-msgid "  List configs:"
-msgstr ""
-
-msgid "  List snapshots:"
-msgstr ""
-
 msgid "  Modify snapshot:"
 msgstr ""
 
@@ -258,9 +242,6 @@ msgstr "Nepoznata vrsta."
 msgid "  Undo changes:"
 msgstr ""
 
-msgid "#"
-msgstr ""
-
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "%s '%s' nije pronađen."
@@ -268,6 +249,13 @@ msgstr "%s '%s' nije pronađen."
 #, fuzzy
 msgid "ACL error."
 msgstr "greška"
+
+msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+#, c-format
+msgid "Ambit is %s."
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -283,9 +271,6 @@ msgstr ""
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
-
-msgid "Cleanup"
 msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
@@ -312,17 +297,7 @@ msgstr "Naredba 'cleanup' treba jedan argument."
 msgid "Command 'diff' needs at least one argument."
 msgstr "Naredba 'cleanup' treba jedan argument."
 
-#, fuzzy
-msgid "Command 'get-config' does not take arguments."
-msgstr "Naredba 'cleanup' treba jedan argument."
-
 msgid "Command 'help' does not take arguments."
-msgstr ""
-
-msgid "Command 'list' does not take arguments."
-msgstr ""
-
-msgid "Command 'list-configs' does not take arguments."
 msgstr ""
 
 #, fuzzy
@@ -368,10 +343,6 @@ msgstr "Naredba 'cleanup' treba jedan argument."
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Naredba 'cleanup' treba jedan argument."
 
-#, fuzzy
-msgid "Config"
-msgstr "Podesi"
-
 #, fuzzy, c-format
 msgid "Config '%s' is invalid."
 msgstr "Repozitorij '%s' je neispravan."
@@ -416,10 +387,6 @@ msgstr ""
 msgid "Creating snapshot failed."
 msgstr ""
 
-#, fuzzy
-msgid "Date"
-msgstr "Datum: %1"
-
 #, fuzzy, c-format
 msgid "Deleting config failed (%s)."
 msgstr "%s postavke nisu uspjele."
@@ -434,9 +401,6 @@ msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "%s postavke nisu uspjele."
 msgstr[1] "%s postavke nisu uspjele."
 msgstr[2] "%s postavke nisu uspjele."
-
-msgid "Description"
-msgstr "Opis"
 
 #, fuzzy
 msgid "Detecting filesystem type failed."
@@ -498,6 +462,10 @@ msgstr ""
 msgid "Illegal snapshot."
 msgstr "Nesipravan stil tablice %d."
 
+#, fuzzy, c-format
+msgid "Invalid ambit %s."
+msgstr "Nesipravan stil tablice %d."
+
 #, fuzzy
 msgid "Invalid configdata."
 msgstr "Nesipravan stil tablice %d."
@@ -505,6 +473,10 @@ msgstr "Nesipravan stil tablice %d."
 #, fuzzy
 msgid "Invalid group."
 msgstr "Neispravna vrsta %1."
+
+#, c-format
+msgid "Invalid machine readable format %s."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid snapshot '%s'."
@@ -516,8 +488,8 @@ msgstr ""
 msgid "Invalid subvolume."
 msgstr ""
 
-#, c-format
-msgid "Invalid table style %d."
+#, fuzzy, c-format
+msgid "Invalid table style %s."
 msgstr "Nesipravan stil tablice %d."
 
 #, fuzzy
@@ -527,11 +499,6 @@ msgstr "Nesipravan stil tablice %d."
 #, fuzzy
 msgid "Invalid userdata."
 msgstr "Nesipravan stil tablice %d."
-
-# KE
-#, fuzzy
-msgid "Key"
-msgstr "Kenija"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -586,18 +553,6 @@ msgstr ""
 msgid "PiB"
 msgstr ""
 
-msgid "Post #"
-msgstr ""
-
-msgid "Post Date"
-msgstr ""
-
-msgid "Pre #"
-msgstr ""
-
-msgid "Pre Date"
-msgstr ""
-
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "Ulazno/izlazna pogreška"
@@ -617,9 +572,6 @@ msgstr "%s '%s' nije pronađen."
 msgid "Snapshot is in use."
 msgstr "'%s' nije pronađeno."
 
-msgid "Subvolume"
-msgstr ""
-
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr ""
 
@@ -629,9 +581,6 @@ msgstr ""
 
 msgid "Try 'snapper --help' for more information."
 msgstr ""
-
-msgid "Type"
-msgstr "Vrsta"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -657,23 +606,13 @@ msgstr ""
 msgid "Unknown type of snapshot."
 msgstr "Nepoznata vrsta."
 
-#, fuzzy
-msgid "Unknown type of snapshots."
-msgstr "Nepoznata vrsta."
+#, c-format
+msgid "Use %s, %s or %s."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "Koristite cijeli broj od %d do %d"
-
-msgid "Used Space"
-msgstr ""
-
-#, fuzzy
-msgid "User"
-msgstr "Korisničko ime"
-
-msgid "Userdata"
-msgstr ""
 
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
@@ -682,9 +621,6 @@ msgstr ""
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr ""
-
-msgid "Value"
-msgstr "Vrijednost"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -718,11 +654,51 @@ msgstr "Uklanjam %s-%s"
 msgid "nothing to do"
 msgstr "Nema ništa za napraviti."
 
-msgid "root argument can be used only together with no-dbus."
+msgid ""
+"root argument can be used only together with no-dbus.\n"
+"Try 'snapper --help' for more information."
 msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "  Get config:"
+#~ msgstr "Obriši vezu"
+
+#, fuzzy
+#~ msgid "Command 'get-config' does not take arguments."
+#~ msgstr "Naredba 'cleanup' treba jedan argument."
+
+#, fuzzy
+#~ msgid "Config"
+#~ msgstr "Podesi"
+
+#, fuzzy
+#~ msgid "Date"
+#~ msgstr "Datum: %1"
+
+#~ msgid "Description"
+#~ msgstr "Opis"
+
+# KE
+#, fuzzy
+#~ msgid "Key"
+#~ msgstr "Kenija"
+
+#~ msgid "Type"
+#~ msgstr "Vrsta"
+
+#, fuzzy
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "Nepoznata vrsta."
+
+#, fuzzy
+#~ msgid "User"
+#~ msgstr "Korisničko ime"
+
+#~ msgid "Value"
+#~ msgstr "Vrijednost"
 
 #, fuzzy
 #~ msgid "Command '%s' does not work without DBus."
