@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
+"POT-Creation-Date: 2020-06-18 11:59+0200\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Sven Åhr <anders.ahr@gmail.com>\n"
 "Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/sv/>\n"
@@ -19,8 +19,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.3\n"
 
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tVisa snapshots från alla tillgängliga konfig."
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
+msgstr ""
 
 # SLE12
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
@@ -38,6 +38,9 @@ msgstr "\t--command <kommando>\t\tKör kommandot och skapa före- och efter-ögo
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <namn>\t\tAnge namnet på den konfiguration som ska användas."
 
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr ""
+
 # SLE12
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <beskrivning>\tBeskrivning av ögonblicksbild."
@@ -48,9 +51,6 @@ msgstr "\t--description, -d <beskrivning>\tBeskrivning för ögonblicksbilder."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\tKommandot används för att jämföra filer."
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-used-space\t\tInaktivera visning av använt utrymme."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tExtra alternativ skickades till diffkommandot."
@@ -72,6 +72,12 @@ msgstr "\t--input, -i <file>\t\tLäs filer som ska diffa från filen."
 # SLE12
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\tVisa datum och tider i ISO-format."
+
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr ""
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgstr ""
 
 # SLE12
 msgid "\t--no-dbus\t\t\tOperate without DBus."
@@ -106,6 +112,9 @@ msgstr ""
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <path>\t\tArbeta i målroten (fungerar enbart utan DBus)."
 
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
+msgstr ""
+
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tSynka efter radering."
 
@@ -120,10 +129,6 @@ msgstr "\t--template, -t <namn>\t\tNamn på konfigurationsmall att använda."
 # SLE12
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <typ>\t\tTyp för ögonblicksbild."
-
-# SLE12
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <typ>\t\tTyper av ögonblicksbilder att lista."
 
 # SLE12
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
@@ -168,18 +173,6 @@ msgstr "\tsnapper delete-config"
 # SLE12
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <nummer1>..<nummer2> [filer]"
-
-# SLE12
-msgid "\tsnapper get-config"
-msgstr "\tsnapper get-config"
-
-# SLE12
-msgid "\tsnapper list"
-msgstr "\tsnapper list"
-
-# SLE12
-msgid "\tsnapper list-configs"
-msgstr "\tsnapper list-configs"
 
 # SLE12
 msgid "\tsnapper modify <number>"
@@ -236,10 +229,6 @@ msgid "    Options for 'diff' command:"
 msgstr "    Alternativ för kommandot diff:"
 
 # SLE12
-msgid "    Options for 'list' command:"
-msgstr "    Alternativ för kommandot list:"
-
-# SLE12
 msgid "    Options for 'modify' command:"
 msgstr "    Alternativ för kommandot modify:"
 
@@ -284,18 +273,6 @@ msgid "  Delete snapshot:"
 msgstr "  Ta bort ögonblicksbilder:"
 
 # SLE12
-msgid "  Get config:"
-msgstr "  Hämta konfiguration:"
-
-# SLE12
-msgid "  List configs:"
-msgstr "  Lista konfigurationer:"
-
-# SLE12
-msgid "  List snapshots:"
-msgstr "  Lista ögonblicksbilder:"
-
-# SLE12
 msgid "  Modify snapshot:"
 msgstr "  Ändra ögonblicksbild:"
 
@@ -323,10 +300,6 @@ msgid "  Undo changes:"
 msgstr "  Ångra ändringar:"
 
 # SLE12
-msgid "#"
-msgstr "#"
-
-# SLE12
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Ögonblicksbild %d.)"
@@ -334,6 +307,13 @@ msgstr "(Ögonblicksbild %d.)"
 # SLE12
 msgid "ACL error."
 msgstr "ACL-fel."
+
+msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+#, c-format
+msgid "Ambit is %s."
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -351,10 +331,6 @@ msgstr "Det går inte att radera ögonblicksbilden %d eftersom den är monterad.
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Det går inte att radera ögonblicksbilden %d eftersom den står på tur att monteras."
-
-# SLE12
-msgid "Cleanup"
-msgstr "Upprensning"
 
 # SLE12
 msgid "Command 'cleanup' needs one arguments."
@@ -385,20 +361,8 @@ msgid "Command 'diff' needs at least one argument."
 msgstr "Kommandot diff måste ha minst ett argument."
 
 # SLE12
-msgid "Command 'get-config' does not take arguments."
-msgstr "Kommandot get-config tar inga argument."
-
-# SLE12
 msgid "Command 'help' does not take arguments."
 msgstr "Kommandot help tar inga argument."
-
-# SLE12
-msgid "Command 'list' does not take arguments."
-msgstr "Kommandot list tar inga argument."
-
-# SLE12
-msgid "Command 'list-configs' does not take arguments."
-msgstr "Kommandot list-configs tar inga argument."
 
 # SLE12
 msgid "Command 'modify' needs at least one argument."
@@ -444,10 +408,6 @@ msgstr "Kommandot undochange måste ha minst ett argument."
 # SLE12
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Kommandot xadiff måste ha minst ett argument."
-
-# SLE12
-msgid "Config"
-msgstr "Konfiguration"
 
 # SLE12
 #, c-format
@@ -504,10 +464,6 @@ msgid "Creating snapshot failed."
 msgstr "Det gick inte att skapa någon ögonblicksbild."
 
 # SLE12
-msgid "Date"
-msgstr "Datum"
-
-# SLE12
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Det gick inte att ta bort konfigurationen (%s)."
@@ -521,9 +477,6 @@ msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Raderar snapshot från %s:"
 msgstr[1] "Raderar snapshots från %s:"
-
-msgid "Description"
-msgstr "Beskrivning"
 
 # SLE12
 msgid "Detecting filesystem type failed."
@@ -591,12 +544,21 @@ msgid "Illegal snapshot."
 msgstr "Otillåten ögonblicksbild."
 
 # SLE12
+#, fuzzy, c-format
+msgid "Invalid ambit %s."
+msgstr "Ogiltig ögonblicksbild \"%s\"."
+
+# SLE12
 msgid "Invalid configdata."
 msgstr "Ogiltiga konfigurationsdata."
 
 # SLE12
 msgid "Invalid group."
 msgstr "Ogiltig grupp."
+
+#, c-format
+msgid "Invalid machine readable format %s."
+msgstr ""
 
 # SLE12
 #, c-format
@@ -612,8 +574,8 @@ msgid "Invalid subvolume."
 msgstr "Ogiltig undervolym."
 
 # SLE12
-#, c-format
-msgid "Invalid table style %d."
+#, fuzzy, c-format
+msgid "Invalid table style %s."
 msgstr "Ogiltig tabellstil %d."
 
 # SLE12
@@ -623,10 +585,6 @@ msgstr "Ogiltig användare."
 # SLE12
 msgid "Invalid userdata."
 msgstr "Ogiltiga användardata."
-
-# SLE12
-msgid "Key"
-msgstr "Nyckel"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -688,22 +646,6 @@ msgstr ""
 msgid "PiB"
 msgstr "PiB"
 
-# SLE12
-msgid "Post #"
-msgstr "Efter #"
-
-# SLE12
-msgid "Post Date"
-msgstr "Efter datum"
-
-# SLE12
-msgid "Pre #"
-msgstr "Före #"
-
-# SLE12
-msgid "Pre Date"
-msgstr "Före datum"
-
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Kvotfel (%s)."
@@ -725,10 +667,6 @@ msgstr "Ögonblicksbilden %u hittades inte."
 msgid "Snapshot is in use."
 msgstr "Ögonblicksbilden används."
 
-# SLE12
-msgid "Subvolume"
-msgstr "Undervolym"
-
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Konfig. 'root' existerar inte. Troligtvis är inte snapper konfigurerad."
 
@@ -739,9 +677,6 @@ msgstr "TiB"
 # SLE12
 msgid "Try 'snapper --help' for more information."
 msgstr "Försök med \"snapper --help\" för mer information."
-
-msgid "Type"
-msgstr "Typ"
 
 # SLE12
 #, c-format
@@ -771,25 +706,14 @@ msgstr "Alternativet %s för kommandot %s är okänt."
 msgid "Unknown type of snapshot."
 msgstr "Okänd typ av ögonblicksbild."
 
-# SLE12
-msgid "Unknown type of snapshots."
-msgstr "Okända typer av ögonblicksbilder."
+#, c-format
+msgid "Use %s, %s or %s."
+msgstr ""
 
 # SLE12
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "Använd ett heltal från %d till %d."
-
-msgid "Used Space"
-msgstr "Utrymme som används"
-
-# SLE12
-msgid "User"
-msgstr "Användare"
-
-# SLE12
-msgid "Userdata"
-msgstr "Användardata"
 
 # SLE12
 #, c-format
@@ -800,9 +724,6 @@ msgstr "Användardata %s inkluderar inte tecknet =."
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "Användardata %s har tom nyckel."
-
-msgid "Value"
-msgstr "Värde"
 
 # SLE12
 #, c-format
@@ -843,12 +764,129 @@ msgstr "ändrar %s"
 msgid "nothing to do"
 msgstr "ingenting att göra"
 
-msgid "root argument can be used only together with no-dbus."
+#, fuzzy
+msgid ""
+"root argument can be used only together with no-dbus.\n"
+"Try 'snapper --help' for more information."
 msgstr "Rotargument kan enbart användas tillsammans med no-dbus."
 
 # SLE12
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "usage: snapper [--globala alternativ] <kommando> [--kommandoalternativ] [kommandoargument]"
+
+#~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+#~ msgstr "\t--all-configs, -a\t\tVisa snapshots från alla tillgängliga konfig."
+
+#~ msgid "\t--disable-used-space\t\tDisable showing used space."
+#~ msgstr "\t--disable-used-space\t\tInaktivera visning av använt utrymme."
+
+# SLE12
+#~ msgid "\t--type, -t <type>\t\tType of snapshots to list."
+#~ msgstr "\t--type, -t <typ>\t\tTyper av ögonblicksbilder att lista."
+
+# SLE12
+#~ msgid "\tsnapper get-config"
+#~ msgstr "\tsnapper get-config"
+
+# SLE12
+#~ msgid "\tsnapper list"
+#~ msgstr "\tsnapper list"
+
+# SLE12
+#~ msgid "\tsnapper list-configs"
+#~ msgstr "\tsnapper list-configs"
+
+# SLE12
+#~ msgid "    Options for 'list' command:"
+#~ msgstr "    Alternativ för kommandot list:"
+
+# SLE12
+#~ msgid "  Get config:"
+#~ msgstr "  Hämta konfiguration:"
+
+# SLE12
+#~ msgid "  List configs:"
+#~ msgstr "  Lista konfigurationer:"
+
+# SLE12
+#~ msgid "  List snapshots:"
+#~ msgstr "  Lista ögonblicksbilder:"
+
+# SLE12
+#~ msgid "#"
+#~ msgstr "#"
+
+# SLE12
+#~ msgid "Cleanup"
+#~ msgstr "Upprensning"
+
+# SLE12
+#~ msgid "Command 'get-config' does not take arguments."
+#~ msgstr "Kommandot get-config tar inga argument."
+
+# SLE12
+#~ msgid "Command 'list' does not take arguments."
+#~ msgstr "Kommandot list tar inga argument."
+
+# SLE12
+#~ msgid "Command 'list-configs' does not take arguments."
+#~ msgstr "Kommandot list-configs tar inga argument."
+
+# SLE12
+#~ msgid "Config"
+#~ msgstr "Konfiguration"
+
+# SLE12
+#~ msgid "Date"
+#~ msgstr "Datum"
+
+#~ msgid "Description"
+#~ msgstr "Beskrivning"
+
+# SLE12
+#~ msgid "Key"
+#~ msgstr "Nyckel"
+
+# SLE12
+#~ msgid "Post #"
+#~ msgstr "Efter #"
+
+# SLE12
+#~ msgid "Post Date"
+#~ msgstr "Efter datum"
+
+# SLE12
+#~ msgid "Pre #"
+#~ msgstr "Före #"
+
+# SLE12
+#~ msgid "Pre Date"
+#~ msgstr "Före datum"
+
+# SLE12
+#~ msgid "Subvolume"
+#~ msgstr "Undervolym"
+
+#~ msgid "Type"
+#~ msgstr "Typ"
+
+# SLE12
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "Okända typer av ögonblicksbilder."
+
+#~ msgid "Used Space"
+#~ msgstr "Utrymme som används"
+
+# SLE12
+#~ msgid "User"
+#~ msgstr "Användare"
+
+# SLE12
+#~ msgid "Userdata"
+#~ msgstr "Användardata"
+
+#~ msgid "Value"
+#~ msgstr "Värde"
 
 # SLE12
 #~ msgid "Quota failure (%s)."

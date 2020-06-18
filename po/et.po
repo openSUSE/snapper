@@ -2,11 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: autoinst.fi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
+"POT-Creation-Date: 2020-06-18 11:59+0200\n"
 "PO-Revision-Date: 2019-12-01 20:54+0000\n"
 "Last-Translator: Jaanus Ojangu <jaanus.ojangu@gmail.com>\n"
-"Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/"
-"et/>\n"
+"Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/et/>\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,10 +13,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.6.1\n"
 
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr ""
-"\t--all-configs, -a\t\tKõigi juurdepääsetavate konfiguratsioonide "
-"hetktõmmitse nimekiri."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\tPuhastusalgoritm hetktõmmise jaoks."
@@ -26,11 +23,13 @@ msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tPuhastusalgoritm hetktõmmise jaoks."
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr ""
-"\t--command <command>\t\tKäivitage käsk ja looge eel- ja järelhetketõmmis."
+msgstr "\t--command <command>\t\tKäivitage käsk ja looge eel- ja järelhetketõmmis."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <name>\t\tMäära seadistusele nimi."
+
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr ""
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <description>\tHetkekoopia kirjeldus."
@@ -40,9 +39,6 @@ msgstr "\t--description, -d <description>\tHetkekoopia kirjeldus."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\tFailide võrdlemise käsk."
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-used-space\t\tEi näita kasutatud ruumi."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tLisavalikud edastatud diff-käsule.."
@@ -54,14 +50,19 @@ msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <fstype>\t\tFailisüsteemi tüübi käsitsi määramine."
 
 msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr ""
-"\t--input, -i <file>\t\tLoeb faile, mille muudatused failist tagasi võtta."
+msgstr "\t--input, -i <file>\t\tLoeb faile, mille muudatused failist tagasi võtta."
 
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
 msgstr "\t--input, -i <file>\t\tLoeb faile erinevuste väljatoomiseks."
 
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\tNäitab kuupäevi ja aega ISO formaadis."
+
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr ""
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgstr ""
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tTöötab ilma DBus-ta."
@@ -88,8 +89,10 @@ msgid "\t--read-write\t\t\tCreate read-write snapshot."
 msgstr "\t--read-write\t\t\tLoob muudetava hetketõmmise 'read-write'."
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
+msgstr "\t--root, -r <path>\t\tTöötab määratud juurel (töötab ainult ilma DBus-ta)."
+
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
 msgstr ""
-"\t--root, -r <path>\t\tTöötab määratud juurel (töötab ainult ilma DBus-ta)."
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tSünkroniseerimine peale kustutamist."
@@ -102,9 +105,6 @@ msgstr "\t--template, -t <name>\t\tKasutatava seadistusmalli nimi."
 
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <type>\t\tHetkekoopia tüüp."
-
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <type>\t\tNäidatavate hetketõmmiste tüüp."
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <userdata>\tKasutaja andmed hetketõmmise jaoks."
@@ -138,15 +138,6 @@ msgstr "\t'snapper delete-config' kustutamise seadistus"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <number1>..<number2> [failid]"
-
-msgid "\tsnapper get-config"
-msgstr "\tsnapper get-config 'vali seaded'"
-
-msgid "\tsnapper list"
-msgstr "\tsnapper loetelu"
-
-msgid "\tsnapper list-configs"
-msgstr "\tsnapper seadete loetelu"
 
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper muuda <number>"
@@ -190,9 +181,6 @@ msgstr "    Valikud 'delete' käsule:"
 msgid "    Options for 'diff' command:"
 msgstr "    Valikud 'diff' käsule:"
 
-msgid "    Options for 'list' command:"
-msgstr "    Valikud 'list käsule:"
-
 msgid "    Options for 'modify' command:"
 msgstr "    Valikud 'modify' käsule:"
 
@@ -226,15 +214,6 @@ msgstr "  Kustuta seaded:"
 msgid "  Delete snapshot:"
 msgstr "  Kustuta hetkekoopia:"
 
-msgid "  Get config:"
-msgstr "  Lae seaded::"
-
-msgid "  List configs:"
-msgstr "  Seadete loetelu:"
-
-msgid "  List snapshots:"
-msgstr "  Hetkekoopiate loetelu:"
-
 msgid "  Modify snapshot:"
 msgstr "  Muuda hetketõmmist:"
 
@@ -256,15 +235,19 @@ msgstr "  Haagi tõmmis lahti:"
 msgid "  Undo changes:"
 msgstr "  Tühista muudatused:"
 
-msgid "#"
-msgstr "#"
-
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Tõmmis %d.)"
 
 msgid "ACL error."
 msgstr "ACL viga."
+
+msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+#, c-format
+msgid "Ambit is %s."
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -276,16 +259,11 @@ msgstr "Tõmmist %d ei saa kustutada, kuna see on töösolev süsteem."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr ""
-"Hetktõmmist %d ei saa kustutada, kuna see on töös olev süsteemi haagitud "
-"tõmmis."
+msgstr "Hetktõmmist %d ei saa kustutada, kuna see on töös olev süsteemi haagitud tõmmis."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Hetktõmmist %d ei saa kustutada, kuna see on järgmine haagitav tõmmis."
-
-msgid "Cleanup"
-msgstr "Puhastamine"
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Käsk 'Puhastamine' vajab ühte argumenti."
@@ -308,17 +286,8 @@ msgstr "Käsk 'delete-config' ei kasuta argumente."
 msgid "Command 'diff' needs at least one argument."
 msgstr "Käsk 'diff' vajab vähemalt ühte argumenti."
 
-msgid "Command 'get-config' does not take arguments."
-msgstr "Käsk 'get-config' ei kasuta argumente."
-
 msgid "Command 'help' does not take arguments."
 msgstr "Käsk 'help' ei kaasa argumente."
-
-msgid "Command 'list' does not take arguments."
-msgstr "Käsk 'list' ei kasuta argumente."
-
-msgid "Command 'list-configs' does not take arguments."
-msgstr "Käsk 'list-configs' ei kasuta argumente."
 
 msgid "Command 'modify' needs at least one argument."
 msgstr "Käsk 'modify' vajab vähemalt ühte argumenti."
@@ -353,9 +322,6 @@ msgstr "Käsk 'undochange' vajab vähemalt ühte argumenti."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Käsk 'xadiff' vajab vähemalt ühte argumenti."
-
-msgid "Config"
-msgstr "Seadistus"
 
 #, c-format
 msgid "Config '%s' is invalid."
@@ -399,9 +365,6 @@ msgstr "Luukase muudetav hetktõmmis tõmmisest %d."
 msgid "Creating snapshot failed."
 msgstr "Hetktõmmise loomine nurjus."
 
-msgid "Date"
-msgstr "Kuupäev"
-
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Seadistuse kustutamine nurjus (%s)."
@@ -414,9 +377,6 @@ msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Tõmmise kustutamine asukohast %s:"
 msgstr[1] "Tõmmiste kustutamine asukohast %s:"
-
-msgid "Description"
-msgstr "Kirjeldus"
 
 msgid "Detecting filesystem type failed."
 msgstr "Failisüsteemi tüübi tuvastamine ebaõnnestus."
@@ -440,8 +400,7 @@ msgid "Failed to initialize filesystem handler."
 msgstr "Failisüsteemi seadistaja lähtestamine ebaõnnestus."
 
 msgid "Failed to set locale. Fix your system."
-msgstr ""
-"Asukoha kohanduste (lokaadi) määramine ebaõnnestus. Parandage oma süsteem."
+msgstr "Asukoha kohanduste (lokaadi) määramine ebaõnnestus. Parandage oma süsteem."
 
 msgid "Failure"
 msgstr "Tõrge"
@@ -479,11 +438,19 @@ msgstr "Identsed tõmmised."
 msgid "Illegal snapshot."
 msgstr "Illegaalne tõmmis."
 
+#, fuzzy, c-format
+msgid "Invalid ambit %s."
+msgstr "Vigane tõmmis '%s'."
+
 msgid "Invalid configdata."
 msgstr "Vigased seadistuse andmed."
 
 msgid "Invalid group."
 msgstr "Vigane grupp."
+
+#, c-format
+msgid "Invalid machine readable format %s."
+msgstr ""
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -495,8 +462,8 @@ msgstr "Vigane tõmmis."
 msgid "Invalid subvolume."
 msgstr "Vigane alamosa."
 
-#, c-format
-msgid "Invalid table style %d."
+#, fuzzy, c-format
+msgid "Invalid table style %s."
 msgstr "Vigane tabeli stiil %d."
 
 msgid "Invalid user."
@@ -504,9 +471,6 @@ msgstr "Vigane kasutaja."
 
 msgid "Invalid userdata."
 msgstr "Vigased kasutajaandmed."
-
-msgid "Key"
-msgstr "Võti"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -554,24 +518,11 @@ msgid "Option --from only supported for snapshots of type single."
 msgstr "Valik - toetatakse ainult hetktõmmiseid tüübiga single."
 
 msgid "Option --read-write only supported for snapshots of type single."
-msgstr ""
-"Valik - muutmist toetatakse ainult hetktõmmiste tüübiga ühekordne jaoks."
+msgstr "Valik - muutmist toetatakse ainult hetktõmmiste tüübiga ühekordne jaoks."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PB"
-
-msgid "Post #"
-msgstr "Peale #"
-
-msgid "Post Date"
-msgstr "Pärast kuupäeva"
-
-msgid "Pre #"
-msgstr "Enne #"
-
-msgid "Pre Date"
-msgstr "Enne kuupäeva"
 
 # error box title
 #, c-format
@@ -592,9 +543,6 @@ msgstr "Tõmmist '%u' ei leita."
 msgid "Snapshot is in use."
 msgstr "Tõmmis on kasutuses."
 
-msgid "Subvolume"
-msgstr "Alamosa"
-
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Seaded 'juur' ei eksisteeri. Snapper ei ole vist seadistatud."
 
@@ -604,9 +552,6 @@ msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Rohkema teabe samiseks proovi `snapper --help'."
-
-msgid "Type"
-msgstr "Tüüp"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -630,21 +575,13 @@ msgstr "Tundmatu säte '%s' käsu '%s' jaoks."
 msgid "Unknown type of snapshot."
 msgstr "Tundmatu hetktõmmise tüüp."
 
-msgid "Unknown type of snapshots."
-msgstr "Tundmatu hetktõmmiste tüüp."
+#, c-format
+msgid "Use %s, %s or %s."
+msgstr ""
 
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "Kasutage täisarvu vahemikus %d kuni %d."
-
-msgid "Used Space"
-msgstr "Kasutatud ruum"
-
-msgid "User"
-msgstr "Kasutaja"
-
-msgid "Userdata"
-msgstr "Kasutajaandmed"
 
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
@@ -653,9 +590,6 @@ msgstr "Kasutajaandmed '%s' ei sisalda märki '='."
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "Kasutajaandmetes '%s' on tühi võti."
-
-msgid "Value"
-msgstr "Väärtus"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -688,13 +622,104 @@ msgstr "muutmine %s"
 msgid "nothing to do"
 msgstr "midagi pole teha"
 
-msgid "root argument can be used only together with no-dbus."
+#, fuzzy
+msgid ""
+"root argument can be used only together with no-dbus.\n"
+"Try 'snapper --help' for more information."
 msgstr "juur argumenti saab kasutada ainult koos no-dbus-ga."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr ""
-"kasutage: snapper [--global-options] <command> [--command-options] [command-"
-"arguments]"
+msgstr "kasutage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+
+#~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+#~ msgstr "\t--all-configs, -a\t\tKõigi juurdepääsetavate konfiguratsioonide hetktõmmitse nimekiri."
+
+#~ msgid "\t--disable-used-space\t\tDisable showing used space."
+#~ msgstr "\t--disable-used-space\t\tEi näita kasutatud ruumi."
+
+#~ msgid "\t--type, -t <type>\t\tType of snapshots to list."
+#~ msgstr "\t--type, -t <type>\t\tNäidatavate hetketõmmiste tüüp."
+
+#~ msgid "\tsnapper get-config"
+#~ msgstr "\tsnapper get-config 'vali seaded'"
+
+#~ msgid "\tsnapper list"
+#~ msgstr "\tsnapper loetelu"
+
+#~ msgid "\tsnapper list-configs"
+#~ msgstr "\tsnapper seadete loetelu"
+
+#~ msgid "    Options for 'list' command:"
+#~ msgstr "    Valikud 'list käsule:"
+
+#~ msgid "  Get config:"
+#~ msgstr "  Lae seaded::"
+
+#~ msgid "  List configs:"
+#~ msgstr "  Seadete loetelu:"
+
+#~ msgid "  List snapshots:"
+#~ msgstr "  Hetkekoopiate loetelu:"
+
+#~ msgid "#"
+#~ msgstr "#"
+
+#~ msgid "Cleanup"
+#~ msgstr "Puhastamine"
+
+#~ msgid "Command 'get-config' does not take arguments."
+#~ msgstr "Käsk 'get-config' ei kasuta argumente."
+
+#~ msgid "Command 'list' does not take arguments."
+#~ msgstr "Käsk 'list' ei kasuta argumente."
+
+#~ msgid "Command 'list-configs' does not take arguments."
+#~ msgstr "Käsk 'list-configs' ei kasuta argumente."
+
+#~ msgid "Config"
+#~ msgstr "Seadistus"
+
+#~ msgid "Date"
+#~ msgstr "Kuupäev"
+
+#~ msgid "Description"
+#~ msgstr "Kirjeldus"
+
+#~ msgid "Key"
+#~ msgstr "Võti"
+
+#~ msgid "Post #"
+#~ msgstr "Peale #"
+
+#~ msgid "Post Date"
+#~ msgstr "Pärast kuupäeva"
+
+#~ msgid "Pre #"
+#~ msgstr "Enne #"
+
+#~ msgid "Pre Date"
+#~ msgstr "Enne kuupäeva"
+
+#~ msgid "Subvolume"
+#~ msgstr "Alamosa"
+
+#~ msgid "Type"
+#~ msgstr "Tüüp"
+
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "Tundmatu hetktõmmiste tüüp."
+
+#~ msgid "Used Space"
+#~ msgstr "Kasutatud ruum"
+
+#~ msgid "User"
+#~ msgstr "Kasutaja"
+
+#~ msgid "Userdata"
+#~ msgstr "Kasutajaandmed"
+
+#~ msgid "Value"
+#~ msgstr "Väärtus"
 
 #, fuzzy
 #~ msgid "Quota failure (%s)."

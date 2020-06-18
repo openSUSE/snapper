@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opensuse-i 18n\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
+"POT-Creation-Date: 2020-06-18 11:59+0200\n"
 "PO-Revision-Date: 2016-11-05 14:28+0000\n"
 "Last-Translator: hayyan rostami <hayyan71@yahoo.com>\n"
 "Language-Team: Persian <https://l10n.opensuse.org/projects/snapper/master/fa/>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.6\n"
 
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr ""
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
@@ -30,6 +30,9 @@ msgstr ""
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr ""
 
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr ""
+
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr ""
 
@@ -37,9 +40,6 @@ msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr ""
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr ""
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
 msgstr ""
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
@@ -58,6 +58,12 @@ msgid "\t--input, -i <file>\t\tRead files to diff from file."
 msgstr ""
 
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
+msgstr ""
+
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr ""
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
 msgstr ""
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
@@ -87,6 +93,9 @@ msgstr ""
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr ""
 
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
+msgstr ""
+
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr ""
 
@@ -97,9 +106,6 @@ msgid "\t--template, -t <name>\t\tName of config template to use."
 msgstr ""
 
 msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr ""
-
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
 msgstr ""
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
@@ -133,15 +139,6 @@ msgid "\tsnapper delete-config"
 msgstr ""
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
-msgstr ""
-
-msgid "\tsnapper get-config"
-msgstr ""
-
-msgid "\tsnapper list"
-msgstr ""
-
-msgid "\tsnapper list-configs"
 msgstr ""
 
 msgid "\tsnapper modify <number>"
@@ -186,9 +183,6 @@ msgstr ""
 msgid "    Options for 'diff' command:"
 msgstr ""
 
-msgid "    Options for 'list' command:"
-msgstr ""
-
 msgid "    Options for 'modify' command:"
 msgstr ""
 
@@ -222,15 +216,6 @@ msgstr ""
 msgid "  Delete snapshot:"
 msgstr ""
 
-msgid "  Get config:"
-msgstr ""
-
-msgid "  List configs:"
-msgstr ""
-
-msgid "  List snapshots:"
-msgstr ""
-
 msgid "  Modify snapshot:"
 msgstr ""
 
@@ -252,14 +237,18 @@ msgstr ""
 msgid "  Undo changes:"
 msgstr ""
 
-msgid "#"
-msgstr ""
-
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr ""
 
 msgid "ACL error."
+msgstr ""
+
+msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+#, c-format
+msgid "Ambit is %s."
 msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
@@ -276,9 +265,6 @@ msgstr ""
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
-
-msgid "Cleanup"
 msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
@@ -302,16 +288,7 @@ msgstr ""
 msgid "Command 'diff' needs at least one argument."
 msgstr ""
 
-msgid "Command 'get-config' does not take arguments."
-msgstr ""
-
 msgid "Command 'help' does not take arguments."
-msgstr ""
-
-msgid "Command 'list' does not take arguments."
-msgstr ""
-
-msgid "Command 'list-configs' does not take arguments."
 msgstr ""
 
 msgid "Command 'modify' needs at least one argument."
@@ -346,9 +323,6 @@ msgid "Command 'undochange' needs at least one argument."
 msgstr ""
 
 msgid "Command 'xadiff' needs at least one argument."
-msgstr ""
-
-msgid "Config"
 msgstr ""
 
 #, c-format
@@ -393,9 +367,6 @@ msgstr ""
 msgid "Creating snapshot failed."
 msgstr ""
 
-msgid "Date"
-msgstr ""
-
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr ""
@@ -409,9 +380,6 @@ msgid_plural "Deleting snapshots from %s:"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
-
-msgid "Description"
-msgstr ""
 
 msgid "Detecting filesystem type failed."
 msgstr ""
@@ -469,10 +437,18 @@ msgstr ""
 msgid "Illegal snapshot."
 msgstr ""
 
+#, c-format
+msgid "Invalid ambit %s."
+msgstr ""
+
 msgid "Invalid configdata."
 msgstr ""
 
 msgid "Invalid group."
+msgstr ""
+
+#, c-format
+msgid "Invalid machine readable format %s."
 msgstr ""
 
 #, c-format
@@ -486,16 +462,13 @@ msgid "Invalid subvolume."
 msgstr ""
 
 #, c-format
-msgid "Invalid table style %d."
+msgid "Invalid table style %s."
 msgstr ""
 
 msgid "Invalid user."
 msgstr ""
 
 msgid "Invalid userdata."
-msgstr ""
-
-msgid "Key"
 msgstr ""
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
@@ -550,18 +523,6 @@ msgstr ""
 msgid "PiB"
 msgstr ""
 
-msgid "Post #"
-msgstr ""
-
-msgid "Post Date"
-msgstr ""
-
-msgid "Pre #"
-msgstr ""
-
-msgid "Pre Date"
-msgstr ""
-
 #, c-format
 msgid "Quota error (%s)."
 msgstr ""
@@ -580,9 +541,6 @@ msgstr ""
 msgid "Snapshot is in use."
 msgstr ""
 
-msgid "Subvolume"
-msgstr ""
-
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr ""
 
@@ -591,9 +549,6 @@ msgid "TiB"
 msgstr ""
 
 msgid "Try 'snapper --help' for more information."
-msgstr ""
-
-msgid "Type"
 msgstr ""
 
 #, c-format
@@ -618,20 +573,12 @@ msgstr ""
 msgid "Unknown type of snapshot."
 msgstr ""
 
-msgid "Unknown type of snapshots."
+#, c-format
+msgid "Use %s, %s or %s."
 msgstr ""
 
 #, c-format
 msgid "Use an integer number from %d to %d."
-msgstr ""
-
-msgid "Used Space"
-msgstr ""
-
-msgid "User"
-msgstr ""
-
-msgid "Userdata"
 msgstr ""
 
 #, c-format
@@ -640,9 +587,6 @@ msgstr ""
 
 #, c-format
 msgid "Userdata '%s' has empty key."
-msgstr ""
-
-msgid "Value"
 msgstr ""
 
 #, c-format
@@ -676,7 +620,9 @@ msgstr ""
 msgid "nothing to do"
 msgstr ""
 
-msgid "root argument can be used only together with no-dbus."
+msgid ""
+"root argument can be used only together with no-dbus.\n"
+"Try 'snapper --help' for more information."
 msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"

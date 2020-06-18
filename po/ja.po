@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
+"POT-Creation-Date: 2020-06-18 11:59+0200\n"
 "PO-Revision-Date: 2019-10-15 16:53+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/"
-"ja/>\n"
+"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,8 +19,8 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 3.6.1\n"
 
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tアクセス可能なすべての環境設定からのスナップショットを一覧表示する。"
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
+msgstr ""
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <アルゴリズム>\tスナップショットに対するクリーンアップアルゴリズムの指定。"
@@ -35,6 +34,9 @@ msgstr "\t--command <コマンド>\t\tコマンドを実行し、その前後に
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <名前>\t\t使用する設定ファイル名を指定する。"
 
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr ""
+
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <説明>\tスナップショットの説明を指定する。"
 
@@ -43,9 +45,6 @@ msgstr "\t--description, -d <説明>\tスナップショットの説明を指定
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <コマンド>\t\tファイルの比較に使用するコマンド。"
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-used-space\t\t使用済み領域の表示を無効にする。"
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <オプション>\tdiffコマンドに渡される追加オプション。"
@@ -64,6 +63,12 @@ msgstr "\t--input, -i <ファイル>\t\tファイルからdiffへファイルを
 
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\tISO 形式で日時を表示する。"
+
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr ""
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgstr ""
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tDBus 無しで処理を行なう。"
@@ -92,6 +97,9 @@ msgstr "\t--read-write\t\t\t読み書き可能なスナップショットを作�
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <パス>\t\t指定したルートに対して操作を行なう　(DBus を使用しない場合にのみ動作します)。"
 
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
+msgstr ""
+
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\t削除後に同期する。"
 
@@ -103,9 +111,6 @@ msgstr "\t--template, -t <名前>\t\t使用する設定雛型の指定。"
 
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <種類>\t\tスナップショットの種類。"
-
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <種類>\t\t一覧表示するスナップショットの種類。"
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <データ>\tスナップショットに対するユーザデータの指定。"
@@ -139,15 +144,6 @@ msgstr "\tsnapper delete-config"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <番号 1>..<番号 2> [ファイル]"
-
-msgid "\tsnapper get-config"
-msgstr "\tsnapper get-config"
-
-msgid "\tsnapper list"
-msgstr "\tsnapper list"
-
-msgid "\tsnapper list-configs"
-msgstr "\tsnapper list-configs"
 
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <番号>"
@@ -191,9 +187,6 @@ msgstr "    「delete」コマンドに対するオプション:"
 msgid "    Options for 'diff' command:"
 msgstr "    「diff」コマンドに対するオプション:"
 
-msgid "    Options for 'list' command:"
-msgstr "    'list' コマンドに対するオプション:"
-
 msgid "    Options for 'modify' command:"
 msgstr "    'modify' コマンドに対するオプション:"
 
@@ -227,15 +220,6 @@ msgstr "  設定の削除:"
 msgid "  Delete snapshot:"
 msgstr "  スナップショットの削除:"
 
-msgid "  Get config:"
-msgstr "  設定の取得:"
-
-msgid "  List configs:"
-msgstr "  設定の一覧表示:"
-
-msgid "  List snapshots:"
-msgstr "  スナップショットの一覧表示:"
-
 msgid "  Modify snapshot:"
 msgstr "  スナップショットの変更:"
 
@@ -257,15 +241,19 @@ msgstr "  スナップショットのマウント解除:"
 msgid "  Undo changes:"
 msgstr "  変更の取り消し:"
 
-msgid "#"
-msgstr "#"
-
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(スナップショット %d)"
 
 msgid "ACL error."
 msgstr "ACL エラーです。"
+
+msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+#, c-format
+msgid "Ambit is %s."
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -282,9 +270,6 @@ msgstr "スナップショット %d は現在マウントされているため�
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "スナップショット %d は次回マウントされるスナップショットであるため、削除できません。"
-
-msgid "Cleanup"
-msgstr "クリーンアップ"
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "'cleanup' コマンドには 1 つのパラメータが必要です。"
@@ -307,17 +292,8 @@ msgstr "'delete-config' コマンドにはパラメータはありません。"
 msgid "Command 'diff' needs at least one argument."
 msgstr "'diff' コマンドには少なくとも 1 つのパラメータが必要です。"
 
-msgid "Command 'get-config' does not take arguments."
-msgstr "'get-config' コマンドにはパラメータはありません。"
-
 msgid "Command 'help' does not take arguments."
 msgstr "'help' コマンドにはパラメータはありません。"
-
-msgid "Command 'list' does not take arguments."
-msgstr "'list' コマンドにはパラメータはありません。"
-
-msgid "Command 'list-configs' does not take arguments."
-msgstr "'list-configs' コマンドにはパラメータはありません。"
 
 msgid "Command 'modify' needs at least one argument."
 msgstr "'modify' コマンドには少なくとも 1 つのパラメータが必要です。"
@@ -352,9 +328,6 @@ msgstr "'undochange' コマンドには少なくとも 1 つのパラメータ�
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "'xadiff' コマンドには少なくとも 1 つのパラメータが必要です。"
-
-msgid "Config"
-msgstr "設定"
 
 #, c-format
 msgid "Config '%s' is invalid."
@@ -398,9 +371,6 @@ msgstr "スナップショット %d に対して読み書き可能なスナッ�
 msgid "Creating snapshot failed."
 msgstr "スナップショットの作成に失敗しました。"
 
-msgid "Date"
-msgstr "日付"
-
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "設定の削除に失敗しました (%s)。"
@@ -412,9 +382,6 @@ msgstr "スナップショットの削除に失敗しました。"
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "%s からスナップショットを削除しています:"
-
-msgid "Description"
-msgstr "説明"
 
 msgid "Detecting filesystem type failed."
 msgstr "ファイルシステムの種類の検出に失敗しました。"
@@ -472,11 +439,19 @@ msgstr "同一のスナップショットです。"
 msgid "Illegal snapshot."
 msgstr "スナップショットが正しくありません。"
 
+#, fuzzy, c-format
+msgid "Invalid ambit %s."
+msgstr "スナップショットが正しくありません ('%s') 。"
+
 msgid "Invalid configdata."
 msgstr "設定データが正しくありません。"
 
 msgid "Invalid group."
 msgstr "グループが正しくありません。"
+
+#, c-format
+msgid "Invalid machine readable format %s."
+msgstr ""
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -488,8 +463,8 @@ msgstr "スナップショットが正しくありません。"
 msgid "Invalid subvolume."
 msgstr "サブボリュームが正しくありません。"
 
-#, c-format
-msgid "Invalid table style %d."
+#, fuzzy, c-format
+msgid "Invalid table style %s."
 msgstr "表のスタイルが正しくありません (%d) 。"
 
 msgid "Invalid user."
@@ -497,9 +472,6 @@ msgstr "ユーザが正しくありません。"
 
 msgid "Invalid userdata."
 msgstr "ユーザデータが正しくありません。"
-
-msgid "Key"
-msgstr "キー"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -553,18 +525,6 @@ msgstr "--read-write オプションは、種類が single (単一) であるス
 msgid "PiB"
 msgstr "PiB"
 
-msgid "Post #"
-msgstr "後 #"
-
-msgid "Post Date"
-msgstr "後日付"
-
-msgid "Pre #"
-msgstr "前 #"
-
-msgid "Pre Date"
-msgstr "前日付"
-
 #, c-format
 msgid "Quota error (%s)."
 msgstr "クォータエラー (%s) 。"
@@ -583,9 +543,6 @@ msgstr "スナップショット '%u' が見つかりません。"
 msgid "Snapshot is in use."
 msgstr "スナップショットは使用中です。"
 
-msgid "Subvolume"
-msgstr "サブボリューム"
-
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "環境設定「root」は存在しません。snapperが設定されていない可能性があります。"
 
@@ -595,9 +552,6 @@ msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "詳しくは 'snapper --help' コマンドをご利用ください。"
-
-msgid "Type"
-msgstr "種類"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -621,21 +575,13 @@ msgstr "不明なオプション '%s' です (コマンド '%s') 。"
 msgid "Unknown type of snapshot."
 msgstr "不明なスナップショットの種類です。"
 
-msgid "Unknown type of snapshots."
-msgstr "不明なスナップショットの種類です。"
+#, c-format
+msgid "Use %s, %s or %s."
+msgstr ""
 
 #, c-format
 msgid "Use an integer number from %d to %d."
 msgstr "%d から %d までの整数を指定してください。"
-
-msgid "Used Space"
-msgstr "使用済み領域"
-
-msgid "User"
-msgstr "ユーザ"
-
-msgid "Userdata"
-msgstr "ユーザデータ"
 
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
@@ -644,9 +590,6 @@ msgstr "ユーザデータ '%s' には '=' 記号が含まれていません。"
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "ユーザデータ '%s' には値がありません。"
-
-msgid "Value"
-msgstr "値"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -679,11 +622,104 @@ msgstr "%s を修正しています"
 msgid "nothing to do"
 msgstr "何もすることがありません"
 
-msgid "root argument can be used only together with no-dbus."
+#, fuzzy
+msgid ""
+"root argument can be used only together with no-dbus.\n"
+"Try 'snapper --help' for more information."
 msgstr "root引数はno-dbusも指定した場合にのみ使用できます。"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "usage: snapper [グローバルオプション] <コマンド> [コマンドオプション] [コマンドパラメータ]"
+
+#~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+#~ msgstr "\t--all-configs, -a\t\tアクセス可能なすべての環境設定からのスナップショットを一覧表示する。"
+
+#~ msgid "\t--disable-used-space\t\tDisable showing used space."
+#~ msgstr "\t--disable-used-space\t\t使用済み領域の表示を無効にする。"
+
+#~ msgid "\t--type, -t <type>\t\tType of snapshots to list."
+#~ msgstr "\t--type, -t <種類>\t\t一覧表示するスナップショットの種類。"
+
+#~ msgid "\tsnapper get-config"
+#~ msgstr "\tsnapper get-config"
+
+#~ msgid "\tsnapper list"
+#~ msgstr "\tsnapper list"
+
+#~ msgid "\tsnapper list-configs"
+#~ msgstr "\tsnapper list-configs"
+
+#~ msgid "    Options for 'list' command:"
+#~ msgstr "    'list' コマンドに対するオプション:"
+
+#~ msgid "  Get config:"
+#~ msgstr "  設定の取得:"
+
+#~ msgid "  List configs:"
+#~ msgstr "  設定の一覧表示:"
+
+#~ msgid "  List snapshots:"
+#~ msgstr "  スナップショットの一覧表示:"
+
+#~ msgid "#"
+#~ msgstr "#"
+
+#~ msgid "Cleanup"
+#~ msgstr "クリーンアップ"
+
+#~ msgid "Command 'get-config' does not take arguments."
+#~ msgstr "'get-config' コマンドにはパラメータはありません。"
+
+#~ msgid "Command 'list' does not take arguments."
+#~ msgstr "'list' コマンドにはパラメータはありません。"
+
+#~ msgid "Command 'list-configs' does not take arguments."
+#~ msgstr "'list-configs' コマンドにはパラメータはありません。"
+
+#~ msgid "Config"
+#~ msgstr "設定"
+
+#~ msgid "Date"
+#~ msgstr "日付"
+
+#~ msgid "Description"
+#~ msgstr "説明"
+
+#~ msgid "Key"
+#~ msgstr "キー"
+
+#~ msgid "Post #"
+#~ msgstr "後 #"
+
+#~ msgid "Post Date"
+#~ msgstr "後日付"
+
+#~ msgid "Pre #"
+#~ msgstr "前 #"
+
+#~ msgid "Pre Date"
+#~ msgstr "前日付"
+
+#~ msgid "Subvolume"
+#~ msgstr "サブボリューム"
+
+#~ msgid "Type"
+#~ msgstr "種類"
+
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "不明なスナップショットの種類です。"
+
+#~ msgid "Used Space"
+#~ msgstr "使用済み領域"
+
+#~ msgid "User"
+#~ msgstr "ユーザ"
+
+#~ msgid "Userdata"
+#~ msgstr "ユーザデータ"
+
+#~ msgid "Value"
+#~ msgstr "値"
 
 #~ msgid "Quota failure (%s)."
 #~ msgstr "クォータ設定に失敗しました (%s) 。"
