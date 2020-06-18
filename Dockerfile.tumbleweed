@@ -52,6 +52,7 @@ RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
   perl-JSON \
   rpm-build \
   "rubygem($RUBY_VERSION:ruby-dbus)" \
+  util-linux \
   which
 
 RUN mkdir -p /usr/src/app
