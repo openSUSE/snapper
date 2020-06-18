@@ -59,7 +59,7 @@ namespace snapper
 	    string separator() const { return _separator; }
 	    string config() const { return _config; }
 	    string root() const { return _root; }
-	    Ambit ambit() { return _ambit; }
+	    Ambit ambit() const { return _ambit; }
 
 	    void set_ambit(Ambit ambit) { _ambit = ambit; }
 
