@@ -33,15 +33,5 @@ namespace snapper
 	    _options_parser(options_parser), _global_options(global_options), _snappers(snappers)
 	{}
 
-
-	bool Command::has_errors() const
-	{
-	    return !errors().empty();
-	}
-
-
-	Command::~Command()
-	{}
-
     }
 }

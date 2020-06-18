@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2019] SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -96,6 +96,7 @@ public:
     virtual iterator getDefault() override;
     virtual const_iterator getDefault() const override;
 
+    virtual iterator getActive() override;
     virtual const_iterator getActive() const override;
 
     DBus::Connection& conn() const;

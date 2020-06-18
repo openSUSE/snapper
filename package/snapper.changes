@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Jun 16 18:31:47 CEST 2020 - aschnell@suse.com
+
+- special rollback for transactional server (bsc#1172273)
+- version 0.8.10
+
+-------------------------------------------------------------------
 Mon Apr 06 16:22:29 CEST 2020 - aschnell@suse.com
 
 - updated translations (bsc#1149754)

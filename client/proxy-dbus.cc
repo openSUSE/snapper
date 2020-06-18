@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2019] SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -119,6 +119,15 @@ ProxySnapshots::iterator
 ProxySnapshotsDbus::getDefault()
 {
     pair<bool, unsigned int> tmp = command_get_default_snapshot(conn(), configName());
+
+    return tmp.first ? find(tmp.second) : end();
+}
+
+
+ProxySnapshots::iterator
+ProxySnapshotsDbus::getActive()
+{
+    pair<bool, unsigned int> tmp = command_get_active_snapshot(conn(), configName());
 
     return tmp.first ? find(tmp.second) : end();
 }

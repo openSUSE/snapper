@@ -61,13 +61,9 @@ namespace snapper
 		return _snappers;
 	    }
 
-	    virtual bool has_errors() const;
-
-	    virtual std::vector<std::string> errors() const = 0;
-
 	    virtual void run() = 0;
 
-	    virtual ~Command();
+	    virtual ~Command() {}
 
 	protected:
 

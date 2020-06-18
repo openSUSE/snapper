@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019] SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -19,8 +19,6 @@
  * find current contact information at www.novell.com.
  */
 
-#include <algorithm>
-
 #include <boost/algorithm/string.hpp>
 
 #include "client/Command/ColumnsOption.h"
@@ -33,45 +31,30 @@ namespace snapper
     namespace cli
     {
 
-	vector<string> Command::ColumnsOption::selected_columns() const
+	vector<string>
+	Command::ColumnsOption::selected_columns() const
 	{
-	    if (_raw_columns.empty())
-		return {};
-
 	    vector<string> columns;
 
 	    boost::split(columns, _raw_columns, boost::is_any_of(","), boost::token_compress_on);
 
-	    return columns;
-	}
-
-
-	string Command::ColumnsOption::error() const
-	{
-	    if (wrong_columns().empty())
-		return "";
-
-	    return _("Unknown columns: ") + boost::algorithm::join(wrong_columns(), ", ");
-	}
-
-
-	vector<string> Command::ColumnsOption::wrong_columns() const
-	{
-	    vector<string> wrong;
-
-	    for (auto column : selected_columns())
+	    vector<string> unknowns;
+	    for (const string& column : columns)
 	    {
-		if (wrong_column(column))
-		    wrong.push_back(column);
+		if (find(_all_columns.begin(), _all_columns.end(), column) == _all_columns.end())
+		    unknowns.push_back(column);
 	    }
 
-	    return wrong;
-	}
+	    if (!unknowns.empty())
+	    {
+		string error = _("Unknown column:", "Unknown columns:", unknowns.size()) + string(" ") +
+		    boost::algorithm::join(unknowns, ", ") + '\n' +
+		    _("Allowed columns are:") + string(" ") + boost::join(_all_columns, ", ");
 
+		SN_THROW(OptionsException(error));
+	    }
 
-	bool Command::ColumnsOption::wrong_column(const std::string& column) const
-	{
-	    return find(_all_columns.begin(), _all_columns.end(), column) == _all_columns.end();
+	    return columns;
 	}
 
     }

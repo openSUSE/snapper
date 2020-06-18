@@ -83,20 +83,9 @@ namespace snapper
 	}
 
 
-	vector<string> Command::GetConfig::Options::errors() const
-	{
-	    vector<string> detected_errors;
-
-	    if (!_columns_option.wrong_columns().empty())
-		detected_errors.push_back(_columns_option.error());
-
-	    return detected_errors;
-	}
-
-
 	string Command::GetConfig::Options::columns_raw() const
 	{
-	    return has_option("columns") ? get_option("columns")->second : "";
+	    return has_option("columns") ? get_argument("columns") : "";
 	}
 
     }

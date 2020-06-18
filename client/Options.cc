@@ -31,33 +31,22 @@ namespace snapper
     namespace cli
     {
 
-	Options::Options(GetOpts& parser) :
-	    _parser(parser), _options()
+	Options::Options(GetOpts& parser)
+	    : _parser(parser), _options()
 	{}
 
 
-	Options::~Options()
-	{}
-
-
-	bool Options::has_option(const string option_name) const
+	bool
+	Options::has_option(const string& name) const
 	{
-	    GetOpts::parsed_opts::const_iterator option = get_option(option_name);
-
-	    return option != _options.end();
+	    return _options.find(name) != _options.end();
 	}
 
 
-	GetOpts::parsed_opts::const_iterator
-	Options::get_option(const string option_name) const
+	const string&
+	Options::get_argument(const string& name) const
 	{
-	    return _options.find(option_name);
-	}
-
-
-	bool Options::has_errors() const
-	{
-	    return !errors().empty();
+	    return _options.find(name)->second;
 	}
 
     }

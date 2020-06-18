@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2019] SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -63,7 +63,7 @@ using namespace std;
 
 struct Cmd
 {
-    typedef void (*cmd_func_t)(cli::GlobalOptions* global_options, ProxySnappers* snappers,
+    typedef void (*cmd_func_t)(cli::GlobalOptions& global_options, ProxySnappers* snappers,
 	ProxySnapper* snapper);
 
     typedef void (*help_func_t)();
@@ -170,9 +170,9 @@ help_list_configs()
 
 
 void
-command_list_configs(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper*)
+command_list_configs(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper*)
 {
-    cli::Command::ListConfigs command(*global_options, getopts, *snappers);
+    cli::Command::ListConfigs command(global_options, getopts, *snappers);
 
     command.run();
 }
@@ -192,7 +192,7 @@ help_create_config()
 
 
 void
-command_create_config(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper*)
+command_create_config(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper*)
 {
     const struct option options[] = {
 	{ "fstype",		required_argument,	0,	'f' },
@@ -231,7 +231,7 @@ command_create_config(cli::GlobalOptions* global_options, ProxySnappers* snapper
 	exit(EXIT_FAILURE);
     }
 
-    snappers->createConfig(global_options->config(), subvolume, fstype, template_name);
+    snappers->createConfig(global_options.config(), subvolume, fstype, template_name);
 }
 
 
@@ -245,7 +245,7 @@ help_delete_config()
 
 
 void
-command_delete_config(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper*)
+command_delete_config(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper*)
 {
     getopts.parse("delete-config", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -254,7 +254,7 @@ command_delete_config(cli::GlobalOptions* global_options, ProxySnappers* snapper
 	exit(EXIT_FAILURE);
     }
 
-    snappers->deleteConfig(global_options->config());
+    snappers->deleteConfig(global_options.config());
 }
 
 
@@ -266,9 +266,9 @@ help_get_config()
 
 
 void
-command_get_config(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper*)
+command_get_config(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper*)
 {
-    cli::Command::GetConfig command(*global_options, getopts, *snappers);
+    cli::Command::GetConfig command(global_options, getopts, *snappers);
 
     command.run();
 }
@@ -284,7 +284,7 @@ help_set_config()
 
 
 void
-command_set_config(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_set_config(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     getopts.parse("set-config", GetOpts::no_options);
     if (!getopts.hasArgs())
@@ -307,9 +307,9 @@ help_list()
 
 
 void
-command_list(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper*)
+command_list(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper*)
 {
-    cli::Command::ListSnapshots command(*global_options, getopts, *snappers);
+    cli::Command::ListSnapshots command(global_options, getopts, *snappers);
 
     command.run();
 }
@@ -337,7 +337,7 @@ help_create()
 
 
 void
-command_create(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_create(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "type",		required_argument,	0,	't' },
@@ -360,11 +360,11 @@ command_create(cli::GlobalOptions* global_options, ProxySnappers* snappers, Prox
 	exit(EXIT_FAILURE);
     }
 
-    enum CreateType { CT_SINGLE, CT_PRE, CT_POST, CT_PRE_POST };
+    enum class CreateType { SINGLE, PRE, POST, PRE_POST };
 
     const ProxySnapshots& snapshots = snapper->getSnapshots();
 
-    CreateType type = CT_SINGLE;
+    CreateType type = CreateType::SINGLE;
     ProxySnapshots::const_iterator snapshot1 = snapshots.end();
     ProxySnapshots::const_iterator snapshot2 = snapshots.end();
     bool print_number = false;
@@ -377,13 +377,13 @@ command_create(cli::GlobalOptions* global_options, ProxySnappers* snappers, Prox
     if ((opt = opts.find("type")) != opts.end())
     {
 	if (opt->second == "single")
-	    type = CT_SINGLE;
+	    type = CreateType::SINGLE;
 	else if (opt->second == "pre")
-	    type = CT_PRE;
+	    type = CreateType::PRE;
 	else if (opt->second == "post")
-	    type = CT_POST;
+	    type = CreateType::POST;
 	else if (opt->second == "pre-post")
-	    type = CT_PRE_POST;
+	    type = CreateType::PRE_POST;
 	else
 	{
 	    cerr << _("Unknown type of snapshot.") << endl;
@@ -409,7 +409,7 @@ command_create(cli::GlobalOptions* global_options, ProxySnappers* snappers, Prox
     if ((opt = opts.find("command")) != opts.end())
     {
 	command = opt->second;
-	type = CT_PRE_POST;
+	type = CreateType::PRE_POST;
     }
 
     if ((opt = opts.find("read-only")) != opts.end())
@@ -421,25 +421,25 @@ command_create(cli::GlobalOptions* global_options, ProxySnappers* snappers, Prox
     if ((opt = opts.find("from")) != opts.end())
 	parent = snapshots.findNum(opt->second);
 
-    if (type == CT_POST && snapshot1 == snapshots.end())
+    if (type == CreateType::POST && snapshot1 == snapshots.end())
     {
 	cerr << _("Missing or invalid pre-number.") << endl;
 	exit(EXIT_FAILURE);
     }
 
-    if (type == CT_PRE_POST && command.empty())
+    if (type == CreateType::PRE_POST && command.empty())
     {
 	cerr << _("Missing command argument.") << endl;
 	exit(EXIT_FAILURE);
     }
 
-    if (type != CT_SINGLE && !scd.read_only)
+    if (type != CreateType::SINGLE && !scd.read_only)
     {
 	cerr << _("Option --read-write only supported for snapshots of type single.") << endl;
 	exit(EXIT_FAILURE);
     }
 
-    if (type != CT_SINGLE && parent != snapshots.getCurrent())
+    if (type != CreateType::SINGLE && parent != snapshots.getCurrent())
     {
 	cerr << _("Option --from only supported for snapshots of type single.") << endl;
 	exit(EXIT_FAILURE);
@@ -447,25 +447,25 @@ command_create(cli::GlobalOptions* global_options, ProxySnappers* snappers, Prox
 
     switch (type)
     {
-	case CT_SINGLE: {
+	case CreateType::SINGLE: {
 	    snapshot1 = snapper->createSingleSnapshot(parent, scd);
 	    if (print_number)
 		cout << snapshot1->getNum() << endl;
 	} break;
 
-	case CT_PRE: {
+	case CreateType::PRE: {
 	    snapshot1 = snapper->createPreSnapshot(scd);
 	    if (print_number)
 		cout << snapshot1->getNum() << endl;
 	} break;
 
-	case CT_POST: {
+	case CreateType::POST: {
 	    snapshot2 = snapper->createPostSnapshot(snapshot1, scd);
 	    if (print_number)
 		cout << snapshot2->getNum() << endl;
 	} break;
 
-	case CT_PRE_POST: {
+	case CreateType::PRE_POST: {
 	    snapshot1 = snapper->createPreSnapshot(scd);
 	    system(command.c_str());
 	    snapshot2 = snapper->createPostSnapshot(snapshot1, scd);
@@ -491,7 +491,7 @@ help_modify()
 
 
 void
-command_modify(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_modify(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "description",	required_argument,	0,	'd' },
@@ -575,7 +575,7 @@ filter_undeletables(ProxySnapshots& snapshots, vector<ProxySnapshots::iterator>&
 
 
 void
-command_delete(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_delete(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "sync",		no_argument,		0,	's' },
@@ -632,7 +632,7 @@ command_delete(cli::GlobalOptions* global_options, ProxySnappers* snappers, Prox
 
     filter_undeletables(snapshots, nums);
 
-    snapper->deleteSnapshots(nums, global_options->verbose());
+    snapper->deleteSnapshots(nums, global_options.verbose());
 
     if (sync)
 	snapper->syncFilesystem();
@@ -649,7 +649,7 @@ help_mount()
 
 
 void
-command_mount(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_mount(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     getopts.parse("mount", GetOpts::no_options);
     if (!getopts.hasArgs())
@@ -678,7 +678,7 @@ help_umount()
 
 
 void
-command_umount(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_umount(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     getopts.parse("umount", GetOpts::no_options);
     if (!getopts.hasArgs())
@@ -710,7 +710,7 @@ help_status()
 
 
 void
-command_status(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_status(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "output",		required_argument,	0,	'o' },
@@ -778,7 +778,7 @@ help_diff()
 
 
 void
-command_diff(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_diff(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "input",		required_argument,	0,	'i' },
@@ -843,7 +843,7 @@ help_undo()
 
 
 void
-command_undo(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_undo(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "input",		required_argument,	0,	'i' },
@@ -918,7 +918,7 @@ command_undo(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxyS
 	    exit(EXIT_FAILURE);
 	}
 
-	if (global_options->verbose())
+	if (global_options.verbose())
 	{
 	    switch (it1->action)
 	    {
@@ -997,7 +997,7 @@ help_rollback()
 
 
 void
-command_rollback(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_rollback(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const struct option options[] = {
 	{ "print-number",       no_argument,            0,      'p' },
@@ -1046,7 +1046,7 @@ command_rollback(cli::GlobalOptions* global_options, ProxySnappers* snappers, Pr
 
     ProxyConfig config = snapper->getConfig();
 
-    const Filesystem* filesystem = getFilesystem(config, global_options->root());
+    const Filesystem* filesystem = getFilesystem(config, global_options.root());
     if (filesystem->fstype() != "btrfs")
     {
 	cerr << _("Command 'rollback' only available for btrfs.") << endl;
@@ -1065,78 +1065,138 @@ command_rollback(cli::GlobalOptions* global_options, ProxySnappers* snappers, Pr
 
     ProxySnapshots::iterator previous_default = snapshots.getDefault();
 
+    if (global_options.ambit() == cli::GlobalOptions::Ambit::AUTO)
+    {
+	if (filesystem->isSnapshotReadOnly(previous_default->getNum()))
+	    global_options.set_ambit(cli::GlobalOptions::Ambit::TRANSACTIONAL);
+	else
+	    global_options.set_ambit(cli::GlobalOptions::Ambit::CLASSIC);
+    }
+
+    if (!global_options.quiet())
+	cout << sformat(_("Ambit is %s."), toString(global_options.ambit()).c_str()) << endl;
+
     if (previous_default != snapshots.end() && scd1.description == default_description1)
         scd1.description += sformat(" of #%d", previous_default->getNum());
 
-    ProxySnapshots::const_iterator snapshot1 = snapshots.end();
-    ProxySnapshots::const_iterator snapshot2 = snapshots.end();
-
-    if (getopts.numArgs() == 0)
+    switch (global_options.ambit())
     {
-	if (!global_options->quiet())
-	    cout << _("Creating read-only snapshot of default subvolume.") << flush;
+	case cli::GlobalOptions::Ambit::CLASSIC:
+	{
+	    ProxySnapshots::const_iterator snapshot1 = snapshots.end();
+	    ProxySnapshots::const_iterator snapshot2 = snapshots.end();
 
-	scd1.read_only = true;
-	snapshot1 = snapper->createSingleSnapshotOfDefault(scd1);
+	    if (getopts.numArgs() == 0)
+	    {
+		if (!global_options.quiet())
+		    cout << _("Creating read-only snapshot of default subvolume.") << flush;
 
-	if (!global_options->quiet())
-	    cout << " " << sformat(_("(Snapshot %d.)"), snapshot1->getNum()) << endl;
+		scd1.read_only = true;
+		snapshot1 = snapper->createSingleSnapshotOfDefault(scd1);
 
-	if (!global_options->quiet())
-	    cout << _("Creating read-write snapshot of current subvolume.") << flush;
+		if (!global_options.quiet())
+		    cout << " " << sformat(_("(Snapshot %d.)"), snapshot1->getNum()) << endl;
 
-	ProxySnapshots::const_iterator active = snapshots.getActive();
-	if (active != snapshots.end() && scd2.description == default_description2)
-	    scd2.description += sformat(" of #%d", active->getNum());
+		if (!global_options.quiet())
+		    cout << _("Creating read-write snapshot of current subvolume.") << flush;
 
-	scd2.read_only = false;
-	snapshot2 = snapper->createSingleSnapshot(snapshots.getCurrent(), scd2);
+		ProxySnapshots::const_iterator active = snapshots.getActive();
+		if (active != snapshots.end() && scd2.description == default_description2)
+		    scd2.description += sformat(" of #%d", active->getNum());
 
-	if (!global_options->quiet())
-	    cout << " " << sformat(_("(Snapshot %d.)"), snapshot2->getNum()) << endl;
+		scd2.read_only = false;
+		snapshot2 = snapper->createSingleSnapshot(snapshots.getCurrent(), scd2);
+
+		if (!global_options.quiet())
+		    cout << " " << sformat(_("(Snapshot %d.)"), snapshot2->getNum()) << endl;
+	    }
+	    else
+	    {
+		ProxySnapshots::const_iterator tmp = snapshots.findNum(getopts.popArg());
+
+		if (!global_options.quiet())
+		    cout << _("Creating read-only snapshot of current system.") << flush;
+
+		snapshot1 = snapper->createSingleSnapshot(scd1);
+
+		if (!global_options.quiet())
+		    cout << " " << sformat(_("(Snapshot %d.)"), snapshot1->getNum()) << endl;
+
+		if (!global_options.quiet())
+		    cout << sformat(_("Creating read-write snapshot of snapshot %d."), tmp->getNum()) << flush;
+
+		if (tmp != snapshots.end() && scd2.description == default_description2)
+		    scd2.description += sformat(" of #%d", tmp->getNum());
+
+		scd2.read_only = false;
+		snapshot2 = snapper->createSingleSnapshot(tmp, scd2);
+
+		if (!global_options.quiet())
+		    cout << " " << sformat(_("(Snapshot %d.)"), snapshot2->getNum()) << endl;
+	    }
+
+	    if (previous_default != snapshots.end() && previous_default->getCleanup().empty())
+	    {
+		SMD smd = previous_default->getSmd();
+		smd.cleanup = "number";
+		snapper->modifySnapshot(previous_default, smd);
+	    }
+
+	    if (!global_options.quiet())
+		cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot2->getNum()) << endl;
+
+	    filesystem->setDefault(snapshot2->getNum());
+
+	    Hooks::rollback(filesystem->snapshotDir(snapshot1->getNum()),
+			    filesystem->snapshotDir(snapshot2->getNum()));
+
+	    if (print_number)
+		cout << snapshot2->getNum() << endl;
+	}
+	break;
+
+	case cli::GlobalOptions::Ambit::TRANSACTIONAL:
+	{
+	    // see bsc #1172273
+
+	    ProxySnapshots::iterator snapshot = snapshots.end();
+
+	    if (getopts.numArgs() == 0)
+	    {
+		snapshot = snapshots.getActive();
+	    }
+	    else
+	    {
+		snapshot = snapshots.findNum(getopts.popArg());
+	    }
+
+	    if (previous_default == snapshot)
+	    {
+		cerr << _("Active snapshot is already default snapshot.") << endl;
+		exit(EXIT_FAILURE);
+	    }
+
+	    SMD smd = snapshot->getSmd();
+	    smd.cleanup = "";
+	    snapper->modifySnapshot(snapshot, smd);
+
+	    if (!global_options.quiet())
+		cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot->getNum()) << endl;
+
+	    filesystem->setDefault(snapshot->getNum());
+
+	    Hooks::rollback(filesystem->snapshotDir(previous_default->getNum()),
+			    filesystem->snapshotDir(snapshot->getNum()));
+	}
+	break;
+
+	case cli::GlobalOptions::Ambit::AUTO:
+	{
+	    cerr << "internal error: ambit is auto" << endl;
+	    exit(EXIT_FAILURE);
+	}
+	break;
     }
-    else
-    {
-	ProxySnapshots::const_iterator tmp = snapshots.findNum(getopts.popArg());
-
-	if (!global_options->quiet())
-	    cout << _("Creating read-only snapshot of current system.") << flush;
-
-	snapshot1 = snapper->createSingleSnapshot(scd1);
-
-	if (!global_options->quiet())
-	    cout << " " << sformat(_("(Snapshot %d.)"), snapshot1->getNum()) << endl;
-
-	if (!global_options->quiet())
-	    cout << sformat(_("Creating read-write snapshot of snapshot %d."), tmp->getNum()) << flush;
-
-	if (tmp != snapshots.end() && scd2.description == default_description2)
-	    scd2.description += sformat(" of #%d", tmp->getNum());
-
-	scd2.read_only = false;
-	snapshot2 = snapper->createSingleSnapshot(tmp, scd2);
-
-	if (!global_options->quiet())
-	    cout << " " << sformat(_("(Snapshot %d.)"), snapshot2->getNum()) << endl;
-    }
-
-    if (previous_default != snapshots.end() && previous_default->getCleanup().empty())
-    {
-	SMD smd = previous_default->getSmd();
-	smd.cleanup = "number";
-	snapper->modifySnapshot(previous_default, smd);
-    }
-
-    if (!global_options->quiet())
-	cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot2->getNum()) << endl;
-
-    filesystem->setDefault(snapshot2->getNum());
-
-    Hooks::rollback(filesystem->snapshotDir(snapshot1->getNum()),
-		    filesystem->snapshotDir(snapshot2->getNum()));
-
-    if (print_number)
-	cout << snapshot2->getNum() << endl;
 }
 
 #endif
@@ -1152,7 +1212,7 @@ help_setup_quota()
 
 
 void
-command_setup_quota(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_setup_quota(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     GetOpts::parsed_opts opts = getopts.parse("setup-quota", GetOpts::no_options);
     if (getopts.numArgs() != 0)
@@ -1175,7 +1235,7 @@ help_cleanup()
 
 
 void
-command_cleanup(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_cleanup(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     GetOpts::parsed_opts opts = getopts.parse("cleanup", GetOpts::no_options);
     if (getopts.numArgs() != 1)
@@ -1188,15 +1248,15 @@ command_cleanup(cli::GlobalOptions* global_options, ProxySnappers* snappers, Pro
 
     if (cleanup == "number")
     {
-	do_cleanup_number(snapper, global_options->verbose());
+	do_cleanup_number(snapper, global_options.verbose());
     }
     else if (cleanup == "timeline")
     {
-	do_cleanup_timeline(snapper, global_options->verbose());
+	do_cleanup_timeline(snapper, global_options.verbose());
     }
     else if (cleanup == "empty-pre-post")
     {
-	do_cleanup_empty_pre_post(snapper, global_options->verbose());
+	do_cleanup_empty_pre_post(snapper, global_options.verbose());
     }
     else
     {
@@ -1213,7 +1273,7 @@ help_debug()
 
 
 void
-command_debug(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper*)
+command_debug(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper*)
 {
     getopts.parse("debug", GetOpts::no_options);
     if (getopts.hasArgs())
@@ -1257,7 +1317,7 @@ print_xa_diff(const string loc_pre, const string loc_post)
 }
 
 void
-command_xa_diff(cli::GlobalOptions* global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_xa_diff(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     GetOpts::parsed_opts opts = getopts.parse("xadiff", GetOpts::no_options);
     if (getopts.numArgs() < 1)
@@ -1390,161 +1450,169 @@ main(int argc, char** argv)
 	Cmd("debug", command_debug, help_debug, false)
     };
 
-    getopts.init(argc, argv);
-
-    cli::GlobalOptions global_options(getopts);
-
-    if (global_options.has_errors())
-    {
-	cerr << global_options.errors().front() << endl;
-
-	exit(EXIT_FAILURE);
-    }
-
-    if (global_options.version())
-    {
-	cout << "snapper " << Snapper::compileVersion() << endl;
-	cout << "flags " << Snapper::compileFlags() << endl;
-	exit(EXIT_SUCCESS);
-    }
-
-    if (global_options.help())
-    {
-	help(cmds);
-    }
-
-    if (!getopts.hasArgs())
-    {
-	cerr << _("No command provided.") << endl
-	     << _("Try 'snapper --help' for more information.") << endl;
-	exit(EXIT_FAILURE);
-    }
-
-    const char* command = getopts.popArg();
-
-    list<Cmd>::const_iterator cmd = cmds.begin();
-    while (cmd != cmds.end() && (cmd->name != command && !contains(cmd->aliases, command)))
-	++cmd;
-
-    if (cmd == cmds.end())
-    {
-	cerr << sformat(_("Unknown command '%s'."), command) << endl
-	     << _("Try 'snapper --help' for more information.") << endl;
-	exit(EXIT_FAILURE);
-    }
-
     try
     {
-	ProxySnappers snappers(global_options.no_dbus() ? ProxySnappers::createLib(global_options.root()) :
-			       ProxySnappers::createDbus());
+	getopts.init(argc, argv);
 
-	if (cmd->needs_snapper)
-	    (*cmd->cmd_func)(&global_options, &snappers, snappers.getSnapper(global_options.config()));
-	else
-	    (*cmd->cmd_func)(&global_options, &snappers, nullptr);
-    }
-    catch (const DBus::ErrorException& e)
-    {
-	SN_CAUGHT(e);
+	cli::GlobalOptions global_options(getopts);
 
-	if (strcmp(e.name(), "error.unknown_config") == 0 && global_options.config() == "root")
+	if (global_options.version())
 	{
-	    cerr << _("The config 'root' does not exist. Likely snapper is not configured.") << endl
-		 << _("See 'man snapper' for further instructions.") << endl;
+	    cout << "snapper " << Snapper::compileVersion() << endl;
+	    cout << "flags " << Snapper::compileFlags() << endl;
+	    exit(EXIT_SUCCESS);
+	}
+
+	if (global_options.help())
+	{
+	    help(cmds);
+	}
+
+	if (!getopts.hasArgs())
+	{
+	    cerr << _("No command provided.") << endl
+		 << _("Try 'snapper --help' for more information.") << endl;
 	    exit(EXIT_FAILURE);
 	}
 
-	cerr << error_description(e) << endl;
-	exit(EXIT_FAILURE);
+	const char* command = getopts.popArg();
+
+	list<Cmd>::const_iterator cmd = cmds.begin();
+	while (cmd != cmds.end() && (cmd->name != command && !contains(cmd->aliases, command)))
+	    ++cmd;
+
+	if (cmd == cmds.end())
+	{
+	    cerr << sformat(_("Unknown command '%s'."), command) << endl
+		 << _("Try 'snapper --help' for more information.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	try
+	{
+	    ProxySnappers snappers(global_options.no_dbus() ? ProxySnappers::createLib(global_options.root()) :
+				   ProxySnappers::createDbus());
+
+	    if (cmd->needs_snapper)
+		(*cmd->cmd_func)(global_options, &snappers, snappers.getSnapper(global_options.config()));
+	    else
+		(*cmd->cmd_func)(global_options, &snappers, nullptr);
+	}
+	catch (const DBus::ErrorException& e)
+	{
+	    SN_CAUGHT(e);
+
+	    if (strcmp(e.name(), "error.unknown_config") == 0 && global_options.config() == "root")
+	    {
+		cerr << _("The config 'root' does not exist. Likely snapper is not configured.") << endl
+		     << _("See 'man snapper' for further instructions.") << endl;
+		exit(EXIT_FAILURE);
+	    }
+
+	    cerr << error_description(e) << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const DBus::FatalException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << _("Failure") << " (" << e.what() << ")." << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const IllegalSnapshotException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << _("Illegal snapshot.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const ConfigNotFoundException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << sformat(_("Config '%s' not found."), global_options.config().c_str()) << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const InvalidConfigException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << sformat(_("Config '%s' is invalid."), global_options.config().c_str()) << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const ListConfigsFailedException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << sformat(_("Listing configs failed (%s)."), e.what()) << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const CreateConfigFailedException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << sformat(_("Creating config failed (%s)."), e.what()) << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const DeleteConfigFailedException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << sformat(_("Deleting config failed (%s)."), e.what()) << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const InvalidConfigdataException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << _("Invalid configdata.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const AclException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << _("ACL error.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const IOErrorException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << sformat(_("IO error (%s)."), e.what()) << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const InvalidUserException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << _("Invalid user.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const InvalidGroupException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << _("Invalid group.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const QuotaException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << sformat(_("Quota error (%s)."), e.what()) << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const FreeSpaceException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << sformat(_("Free space error (%s)."), e.what()) << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const OptionsException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << e.what() << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const Exception& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << sformat(_("Error (%s)."), e.what()) << endl;
+	    exit(EXIT_FAILURE);
+	}
     }
-    catch (const DBus::FatalException& e)
+    catch (const OptionsException& e)
     {
 	SN_CAUGHT(e);
-	cerr << _("Failure") << " (" << e.what() << ")." << endl;
-	exit(EXIT_FAILURE);
-    }
-    catch (const IllegalSnapshotException& e)
-    {
-	SN_CAUGHT(e);
-	cerr << _("Illegal snapshot.") << endl;
-	exit(EXIT_FAILURE);
-    }
-    catch (const ConfigNotFoundException& e)
-    {
-	SN_CAUGHT(e);
-	cerr << sformat(_("Config '%s' not found."), global_options.config().c_str()) << endl;
-	exit(EXIT_FAILURE);
-    }
-    catch (const InvalidConfigException& e)
-    {
-	SN_CAUGHT(e);
-	cerr << sformat(_("Config '%s' is invalid."), global_options.config().c_str()) << endl;
-	exit(EXIT_FAILURE);
-    }
-    catch (const ListConfigsFailedException& e)
-    {
-	SN_CAUGHT(e);
-	cerr << sformat(_("Listing configs failed (%s)."), e.what()) << endl;
-	exit(EXIT_FAILURE);
-    }
-    catch (const CreateConfigFailedException& e)
-    {
-	SN_CAUGHT(e);
-	cerr << sformat(_("Creating config failed (%s)."), e.what()) << endl;
-	exit(EXIT_FAILURE);
-    }
-    catch (const DeleteConfigFailedException& e)
-    {
-	SN_CAUGHT(e);
-	cerr << sformat(_("Deleting config failed (%s)."), e.what()) << endl;
-	exit(EXIT_FAILURE);
-    }
-    catch (const InvalidConfigdataException& e)
-    {
-	SN_CAUGHT(e);
-	cerr << _("Invalid configdata.") << endl;
-	exit(EXIT_FAILURE);
-    }
-    catch (const AclException& e)
-    {
-	SN_CAUGHT(e);
-	cerr << _("ACL error.") << endl;
-	exit(EXIT_FAILURE);
-    }
-    catch (const IOErrorException& e)
-    {
-	SN_CAUGHT(e);
-	cerr << sformat(_("IO error (%s)."), e.what()) << endl;
-	exit(EXIT_FAILURE);
-    }
-    catch (const InvalidUserException& e)
-    {
-	SN_CAUGHT(e);
-	cerr << _("Invalid user.") << endl;
-	exit(EXIT_FAILURE);
-    }
-    catch (const InvalidGroupException& e)
-    {
-	SN_CAUGHT(e);
-	cerr << _("Invalid group.") << endl;
-	exit(EXIT_FAILURE);
-    }
-    catch (const QuotaException& e)
-    {
-	SN_CAUGHT(e);
-	cerr << sformat(_("Quota error (%s)."), e.what()) << endl;
-	exit(EXIT_FAILURE);
-    }
-    catch (const FreeSpaceException& e)
-    {
-	SN_CAUGHT(e);
-	cerr << sformat(_("Free space error (%s)."), e.what()) << endl;
-	exit(EXIT_FAILURE);
-    }
-    catch (const Exception& e)
-    {
-	SN_CAUGHT(e);
-	cerr << sformat(_("Error (%s)."), e.what()) << endl;
+	cerr << e.what() << endl;
 	exit(EXIT_FAILURE);
     }
 

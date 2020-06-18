@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019] SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -19,9 +19,9 @@
  * find current contact information at www.novell.com.
  */
 
-#include <stdexcept>
-
 #include <boost/algorithm/string.hpp>
+
+#include <snapper/AppUtil.h>
 
 #include "client/Command/ListSnapshots/Options.h"
 #include "client/utils/text.h"
@@ -123,41 +123,31 @@ namespace snapper
 	}
 
 
-	vector<string> Command::ListSnapshots::Options::errors() const
-	{
-	    vector<string> detected_errors;
-
-	    if (wrong_type())
-		detected_errors.push_back(type_error());
-
-	    if (wrong_columns())
-		detected_errors.push_back(columns_error());
-
-	    return detected_errors;
-	}
-
-
 	Command::ListSnapshots::Options::ListMode
 	Command::ListSnapshots::Options::list_mode_value() const
 	{
-	    string type = has_option("type") ? get_option("type")->second : "";
+	    if (!has_option("type"))
+		return ListMode::ALL;
 
-	    if (type == "all")
-		return LM_ALL;
+	    string str = get_argument("type");
 
-	    if (type == "single")
-		return LM_SINGLE;
+	    ListMode list_mode;
+	    if (!toValue(str, list_mode, false))
+	    {
+		string error = sformat(_("Unknown snapshots type %s."), str.c_str()) + '\n' +
+		    sformat(_("Use %s, %s or %s."), toString(ListMode::ALL).c_str(),
+			    toString(ListMode::SINGLE).c_str(), toString(ListMode::PRE_POST).c_str());
 
-	    if (type == "pre-post")
-		return LM_PRE_POST;
+		SN_THROW(OptionsException(error));
+	    }
 
-	    return LM_ALL;
+	    return list_mode;
 	}
 
 
 	string Command::ListSnapshots::Options::columns_raw() const
 	{
-	    return has_option("columns") ? get_option("columns")->second : "";
+	    return has_option("columns") ? get_argument("columns") : "";
 	}
 
 
@@ -168,15 +158,15 @@ namespace snapper
 
 	    switch (list_mode())
 	    {
-		case LM_ALL:
+		case ListMode::ALL:
 		    columns = all_mode_columns(format);
 		    break;
 
-		case LM_SINGLE:
+		case ListMode::SINGLE:
 		    columns = single_mode_columns(format);
 		    break;
 
-		case LM_PRE_POST:
+		case ListMode::PRE_POST:
 		    columns = pre_post_mode_columns(format);
 		    break;
 	    }
@@ -331,34 +321,8 @@ namespace snapper
 	    throw logic_error("unknown output format");
 	}
 
-
-	bool Command::ListSnapshots::Options::wrong_type() const
-	{
-	    if (!has_option("type"))
-		return false;
-
-	    string type = get_option("type")->second;
-
-	    return type != "all" && type != "single" && type != "pre-post";
-	}
-
-
-	bool Command::ListSnapshots::Options::wrong_columns() const
-	{
-	    return !_columns_option.wrong_columns().empty();
-	}
-
-
-	string Command::ListSnapshots::Options::type_error() const
-	{
-	    return _("Unknown type of snapshots.");
-	}
-
-
-	string Command::ListSnapshots::Options::columns_error() const
-	{
-	    return _columns_option.error();
-	}
-
     }
+
+    const vector<string> EnumInfo<cli::Command::ListSnapshots::Options::ListMode>::names({ "all", "single", "pre-post" });
+
 }

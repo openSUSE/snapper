@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019] SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -59,30 +59,17 @@ namespace snapper
 
 	    static const std::vector<std::string> ALL_COLUMNS;
 
-	    enum ListMode { LM_ALL, LM_SINGLE, LM_PRE_POST };
+	    enum class ListMode { ALL, SINGLE, PRE_POST };
 
 	    static std::string help_text();
 
 	    Options(GetOpts& parser);
 
-	    ListMode list_mode() const
-	    {
-		return _list_mode;
-	    }
-
-	    bool disable_used_space() const
-	    {
-		return _disable_used_space;
-	    }
-
-	    bool all_configs() const
-	    {
-		return _all_configs;
-	    }
+	    ListMode list_mode() const { return _list_mode; }
+	    bool disable_used_space() const { return _disable_used_space; }
+	    bool all_configs() const { return _all_configs; }
 
 	    std::vector<std::string> columns(GlobalOptions::OutputFormat format) const;
-
-	    virtual std::vector<std::string> errors() const override;
 
 	private:
 
@@ -100,14 +87,6 @@ namespace snapper
 
 	    std::vector<std::string> pre_post_mode_columns(GlobalOptions::OutputFormat format) const;
 
-	    bool wrong_type() const;
-
-	    bool wrong_columns() const;
-
-	    std::string type_error() const;
-
-	    std::string columns_error() const;
-
 	    ListMode _list_mode;
 
 	    bool _disable_used_space;
@@ -119,6 +98,9 @@ namespace snapper
 	};
 
     }
+
+    template <> struct EnumInfo<cli::Command::ListSnapshots::Options::ListMode> { static const vector<string> names; };
+
 }
 
 #endif
