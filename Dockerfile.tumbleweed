@@ -17,7 +17,7 @@ RUN zypper --non-interactive in --no-recommends --force-resolution ruby && zyppe
 
 # add the YaST repository - we need rubygem-coveralls-lcov
 RUN zypper ar -f http://download.opensuse.org/repositories/YaST:/Head/openSUSE_Tumbleweed/ yast_tw
-RUN zypper ar -f http://download.opensuse.org/repositories/YaST:/Head/openSUSE_Leap_15.2_Update/ yast_lp
+# RUN zypper ar -f http://download.opensuse.org/repositories/YaST:/Head/openSUSE_Leap_15.2_Update/ yast_lp
 RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
   zypper --non-interactive --gpg-auto-import-keys \
   in --no-recommends \
