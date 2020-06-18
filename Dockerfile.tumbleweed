@@ -13,11 +13,11 @@ RUN zypper mr -d repo-non-oss
 # see https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#run
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#/build-cache
 # why we need "zypper clean -a" at the end
-RUN zypper --non-interactive in --no-recommends --force-resolution ruby && zypper clean -a
+RUN zypper --non-interactive in --no-recommends --force-resolution util-linux && zypper clean -a
 
 # add the YaST repository - we need rubygem-coveralls-lcov
 RUN zypper ar -f http://download.opensuse.org/repositories/YaST:/Head/openSUSE_Tumbleweed/ yast_tw
-# RUN zypper ar -f http://download.opensuse.org/repositories/YaST:/Head/openSUSE_Leap_15.2_Update/ yast_lp
+RUN zypper ar -f http://download.opensuse.org/repositories/YaST:/Head/openSUSE_Leap_15.2_Update/ yast_lp
 RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
   zypper --non-interactive --gpg-auto-import-keys \
   in --no-recommends \
