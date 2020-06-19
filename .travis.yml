@@ -5,15 +5,15 @@ services:
 
 # define the build matrix
 env:
-  - BUILD_FLAVOR=tumbleweed
-  - BUILD_FLAVOR=leap
-  - BUILD_FLAVOR=fedora DOCKER_TAG=31
-  - BUILD_FLAVOR=ubuntu DOCKER_TAG=19.10
-  - BUILD_FLAVOR=debian DOCKER_TAG=10
+  - BUILD_FLAVOR=tumbleweed DOCKER_TAG=latest YAST_REPO=openSUSE_Tumbleweed
+  - BUILD_FLAVOR=leap       DOCKER_TAG=15.1   YAST_REPO=openSUSE_Leap_15.1_Update
+  - BUILD_FLAVOR=fedora     DOCKER_TAG=31
+  - BUILD_FLAVOR=ubuntu     DOCKER_TAG=19.10
+  - BUILD_FLAVOR=debian     DOCKER_TAG=10
 
 before_install:
   # use the Dockerfile.<distro> file for building the image
-  - docker build -f Dockerfile.$BUILD_FLAVOR -t snapper-devel --build-arg BUILD_FLAVOR=$BUILD_FLAVOR --build-arg DOCKER_TAG=$DOCKER_TAG .
+  - docker build -f Dockerfile.$BUILD_FLAVOR -t snapper-devel --build-arg BUILD_FLAVOR=$BUILD_FLAVOR --build-arg DOCKER_TAG=$DOCKER_TAG --build-arg YAST_REPO=$YAST_REPO .
 
 script:
   # run the respective .travis.<distro>.sh script

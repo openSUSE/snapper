@@ -2,9 +2,13 @@
 # so use a parametrized Dockerfile. See
 # https://docs.docker.com/engine/reference/builder/#from
 ARG BUILD_FLAVOR
+ARG DOCKER_TAG
 
 # Build the latest openSUSE Tumbleweed or Leap image
-FROM opensuse/${BUILD_FLAVOR}
+FROM opensuse/${BUILD_FLAVOR}:${DOCKER_TAG}
+
+# this one needs to be defined after "FROM" so the value is available in "RUN" later
+ARG YAST_REPO
 
 # the NON-OSS repo is not needed, save the network bandwidth and some time (~5 seconds) for each refresh
 RUN zypper mr -d repo-non-oss
@@ -16,8 +20,7 @@ RUN zypper mr -d repo-non-oss
 RUN zypper --non-interactive in --no-recommends --force-resolution util-linux ruby && zypper clean -a
 
 # add the YaST repository - we need rubygem-coveralls-lcov
-RUN zypper ar -f http://download.opensuse.org/repositories/YaST:/Head/openSUSE_Tumbleweed/ yast_tw
-RUN zypper ar -f http://download.opensuse.org/repositories/YaST:/Head/openSUSE_Leap_15.1_Update/ yast_lp
+RUN zypper ar -f http://download.opensuse.org/repositories/YaST:/Head/${YAST_REPO}/ yast
 RUN RUBY_VERSION=ruby:`rpm --eval '%{rb_ver}'` && \
   zypper --non-interactive --gpg-auto-import-keys \
   in --no-recommends \
