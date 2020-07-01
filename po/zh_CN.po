@@ -10,9 +10,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-18 11:59+0200\n"
-"PO-Revision-Date: 2020-02-17 12:54+0000\n"
-"Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
-"Language-Team: Chinese (China) <https://l10n.opensuse.org/projects/snapper/master/zh_CN/>\n"
+"PO-Revision-Date: 2020-07-02 07:26+0000\n"
+"Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
+"Language-Team: Chinese (China) <https://l10n.opensuse.org/projects/snapper/"
+"master/zh_CN/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +22,7 @@ msgstr ""
 "X-Generator: Weblate 3.6.1\n"
 
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr ""
+msgstr "\t--ambit, -a ambit\t\t在指定范围内操作。"
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <算法> \t快照的清理算法。选项：number, timeline, empty-pre-post。"
@@ -36,7 +37,7 @@ msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <配置名称> \t\t设置要使用的配置名称。"
 
 msgid "\t--csvout\t\t\tSet CSV output format."
-msgstr ""
+msgstr "\t--csvout\t\t\t设定 CSV 输出格式。"
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <描述> \t快照描述。"
@@ -66,10 +67,10 @@ msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\t以 ISO 格式显示日期和时间。"
 
 msgid "\t--jsonout\t\t\tSet JSON output format."
-msgstr ""
+msgstr "\t--jsonout\t\t\t设定 JSON 输出格式。"
 
 msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
-msgstr ""
+msgstr "\t--machine-readable <格式>\t设定机器可读的输出格式（csv、json）。"
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\t不是用 DBus。"
@@ -99,7 +100,7 @@ msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <路径>\t\t在目标根目录上操作（不用 DBus 时才起作用）。"
 
 msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
-msgstr ""
+msgstr "\t--separator <分隔符>\t\tCSV 输出格式的字符分隔符。"
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\t删除后同步。"
@@ -251,11 +252,11 @@ msgid "ACL error."
 msgstr "访问控制列表错误。"
 
 msgid "Active snapshot is already default snapshot."
-msgstr ""
+msgstr "激活的快照已经是默认快照。"
 
 #, c-format
 msgid "Ambit is %s."
-msgstr ""
+msgstr "范围是 %s。"
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -441,9 +442,9 @@ msgstr "重复的快照。"
 msgid "Illegal snapshot."
 msgstr "非法的快照。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid ambit %s."
-msgstr "无效的快照 '%s'。"
+msgstr "无效范围 %s。"
 
 msgid "Invalid configdata."
 msgstr "无效的配置数据。"
@@ -453,7 +454,7 @@ msgstr "无效组。"
 
 #, c-format
 msgid "Invalid machine readable format %s."
-msgstr ""
+msgstr "无效的机器可读格式 %s。"
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -465,9 +466,9 @@ msgstr "无效的快照。"
 msgid "Invalid subvolume."
 msgstr "无效的子卷。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid table style %s."
-msgstr "无效的表格样式 %d。"
+msgstr "无效的表格样式 %s。"
 
 msgid "Invalid user."
 msgstr "无效用户。"
@@ -579,7 +580,7 @@ msgstr "未知快照类型。"
 
 #, c-format
 msgid "Use %s, %s or %s."
-msgstr ""
+msgstr "使用 %s、%s 或 %s。"
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -624,11 +625,12 @@ msgstr "正在修订 %s"
 msgid "nothing to do"
 msgstr "无事可做"
 
-#, fuzzy
 msgid ""
 "root argument can be used only together with no-dbus.\n"
 "Try 'snapper --help' for more information."
-msgstr "根自变量只能与 no-dbus 一起使用。"
+msgstr ""
+"根参数只能与 no-dbus 一起使用。\n"
+"尝试 \"snapper --help\" 获取更多信息。"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "用法：snapper  [--全局选项] <命令> [--命令选项] [命令参数]"
