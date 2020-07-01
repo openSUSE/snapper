@@ -7,9 +7,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-18 11:59+0200\n"
-"PO-Revision-Date: 2019-10-15 19:53+0000\n"
+"PO-Revision-Date: 2020-07-02 07:26+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
-"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
+"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
+"\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,7 +19,7 @@ msgstr ""
 "X-Generator: Weblate 3.6.1\n"
 
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr ""
+msgstr "\t--ambit, -a oblasť\t\tPracujte v stanovenej oblasti."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\tUpratovací algoritmus pre snímku."
@@ -33,7 +34,7 @@ msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <name>\t\tNastaví názov konfigurácie, ktorá sa použije."
 
 msgid "\t--csvout\t\t\tSet CSV output format."
-msgstr ""
+msgstr "\t--csvout\t\t\tNastaví výstupný formát CSV."
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <popis>\tPopis pre snímku."
@@ -63,10 +64,12 @@ msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\tZobrazí dátumy a časy vo formáte ISO."
 
 msgid "\t--jsonout\t\t\tSet JSON output format."
-msgstr ""
+msgstr "\t--jsonout\t\t\tNastaví výstupný formát JSON."
 
 msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
 msgstr ""
+"\t--machine-readable <formát>\tNastaví výstupný formát čitateľný strojom ("
+"csv, json)."
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tBeží bez DBus."
@@ -96,7 +99,7 @@ msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <cesta>\t\tBeží na cieľovom správcovi systému root (funguje len bez DBus)."
 
 msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
-msgstr ""
+msgstr "\t--separator <oddeľovač>\t\tOddeľovač znakov pre výstupný formát CSV."
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tSynchronizácia po zmazaní."
@@ -247,11 +250,11 @@ msgid "ACL error."
 msgstr "ACL chyba."
 
 msgid "Active snapshot is already default snapshot."
-msgstr ""
+msgstr "Aktívna snímka je už predvolená snímka."
 
 #, c-format
 msgid "Ambit is %s."
-msgstr ""
+msgstr "Oblasť je %s."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -443,9 +446,9 @@ msgstr "Totožné snímky."
 msgid "Illegal snapshot."
 msgstr "Nepovolená snímka."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid ambit %s."
-msgstr "Neplatná snímka '%s'."
+msgstr "Neplatná oblasť '%s'."
 
 msgid "Invalid configdata."
 msgstr "Neplatné konfiguračné údaje."
@@ -455,7 +458,7 @@ msgstr "Neplatná skupina."
 
 #, c-format
 msgid "Invalid machine readable format %s."
-msgstr ""
+msgstr "Neplatný formát čitateľný strojom %s."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -467,9 +470,9 @@ msgstr "Neplatné snímky."
 msgid "Invalid subvolume."
 msgstr "Neplatný podzväzok."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid table style %s."
-msgstr "Neplatný štýl tabuľky %d."
+msgstr "Neplatný štýl tabuľky %s."
 
 msgid "Invalid user."
 msgstr "Neplatný používateľ."
@@ -583,7 +586,7 @@ msgstr "Neznámy typ snímky."
 
 #, c-format
 msgid "Use %s, %s or %s."
-msgstr ""
+msgstr "Použite %s, %s alebo %s."
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -628,11 +631,12 @@ msgstr "upravenie %s"
 msgid "nothing to do"
 msgstr "nie je čo vykonať"
 
-#, fuzzy
 msgid ""
 "root argument can be used only together with no-dbus.\n"
 "Try 'snapper --help' for more information."
-msgstr "Argument root možno použiť len spoločne s no-dbus."
+msgstr ""
+"Argument root možno použiť len spoločne s no-dbus.\n"
+"Skúste 'snapper --help' pre viac informácií."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "použitie: snapper [--globálne-voľby] <príkaz> [--voľby-príkazu] [argumenty-príkazu]"
