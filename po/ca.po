@@ -2,11 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-18 11:59+0200\n"
+"POT-Creation-Date: 2020-07-13 16:13+0200\n"
 "PO-Revision-Date: 2020-07-02 07:26+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
-"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/"
-">\n"
+"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -63,9 +62,7 @@ msgid "\t--jsonout\t\t\tSet JSON output format."
 msgstr "\t--jsonout\t\t\tEstableix el format de sortida JSON."
 
 msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
-msgstr ""
-"\t--machine-readable <format>\tEstableix un format de sortida llegible per a "
-"la màquina (csv, json)."
+msgstr "\t--machine-readable <format>\tEstableix un format de sortida llegible per a la màquina (csv, json)."
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tOpera sense DBus."
@@ -95,9 +92,7 @@ msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <path>\t\tOpera a l'arrel de destinació (només funciona sense DBus)."
 
 msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
-msgstr ""
-"\t--separator <separator>\t\tSeparador de caràcters per al format de sortida "
-"CSV."
+msgstr "\t--separator <separator>\t\tSeparador de caràcters per al format de sortida CSV."
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tSincronitza després d'una supressió."
@@ -269,6 +264,12 @@ msgstr "No es pot suprimir la instantània %d, ja que correspon a la instantàni
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "No es pot suprimir la instantània %d, ja que és la propera instantània per muntar."
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr ""
+
+msgid "Cannot do rollback since default subvolume is unknown."
+msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "L'ordre cleanup necessita un argument."
@@ -543,9 +544,14 @@ msgstr "No s'ha trobat la instantània %u."
 msgid "Snapshot is in use."
 msgstr "La instantània s'usa."
 
-msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
-"La configuració d'arrel no existeix. Potser l'snapper no està configurat."
+
+msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr "La configuració d'arrel no existeix. Potser l'snapper no està configurat."
+
+msgid "This can happen if the system was not set up for rollback."
+msgstr ""
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"

@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
+"POT-Creation-Date: 2020-07-13 16:13+0200\n"
 "PO-Revision-Date: 2020-05-26 14:40+0000\n"
 "Last-Translator: Jonas Svensson <jonas@ekhorva.se>\n"
-"Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/sv/"
-">\n"
+"Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -57,8 +56,7 @@ msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tExtra alternativ skickades till diffkommandot."
 
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
-msgstr ""
-"\t--from\t\t\t\tCreate a ögonblicksbild av den specifika ögonblicksbilden."
+msgstr "\t--from\t\t\t\tCreate a ögonblicksbild av den specifika ögonblicksbilden."
 
 # SLE12
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
@@ -333,6 +331,12 @@ msgstr "Det går inte att radera ögonblicksbilden %d eftersom den är monterad.
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Det går inte att radera ögonblicksbilden %d eftersom den står på tur att monteras."
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr ""
+
+msgid "Cannot do rollback since default subvolume is unknown."
+msgstr ""
 
 # SLE12
 msgid "Command 'cleanup' needs one arguments."
@@ -642,8 +646,7 @@ msgid "Option --from only supported for snapshots of type single."
 msgstr "Alternativet --from stöds bara för ögonblicksbilder av typen enkel."
 
 msgid "Option --read-write only supported for snapshots of type single."
-msgstr ""
-"Alternativet --read-write stöds bara för ögonblicksbilder av typen enkel."
+msgstr "Alternativet --read-write stöds bara för ögonblicksbilder av typen enkel."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -670,8 +673,14 @@ msgstr "Ögonblicksbilden %u hittades inte."
 msgid "Snapshot is in use."
 msgstr "Ögonblicksbilden används."
 
+msgid "The ambit can be specified manually using the --ambit option."
+msgstr ""
+
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Konfig. 'root' existerar inte. Troligtvis är inte snapper konfigurerad."
+
+msgid "This can happen if the system was not set up for rollback."
+msgstr ""
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"

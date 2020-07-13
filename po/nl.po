@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-18 11:59+0200\n"
+"POT-Creation-Date: 2020-07-13 16:13+0200\n"
 "PO-Revision-Date: 2019-10-15 16:53+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
 "Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
@@ -272,6 +272,12 @@ msgstr "Kan momentopname %d niet verwijderen omdat deze de huidige aangekoppelde
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Kan momentopname %d niet verwijderen omdat deze de volgende aan te koppelen momentopname is."
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr ""
+
+msgid "Cannot do rollback since default subvolume is unknown."
+msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Opdracht 'cleanup' heeft één argument."
@@ -546,8 +552,14 @@ msgstr "Momentopname '%u' niet gevonden."
 msgid "Snapshot is in use."
 msgstr "Momentopname is in gebruik."
 
+msgid "The ambit can be specified manually using the --ambit option."
+msgstr ""
+
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "De 'root' van de configuratie bestaat niet. Waarschijnlijk is snapper niet geconfigureerd."
+
+msgid "This can happen if the system was not set up for rollback."
+msgstr ""
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
