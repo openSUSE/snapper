@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-18 11:59+0200\n"
+"POT-Creation-Date: 2020-07-13 16:13+0200\n"
 "PO-Revision-Date: 2020-07-03 11:09+0000\n"
 "Last-Translator: Sarah Kriesch <ada.lovelace@gmx.de>\n"
-"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
-"\n"
+"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,9 +66,7 @@ msgid "\t--jsonout\t\t\tSet JSON output format."
 msgstr "\t--jsonout\t\t\tJSON-Ausgabeformat setzen."
 
 msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
-msgstr ""
-"\t--machine-readable <Format>\tEin Maschinen-lesbares Ausgabeformat (csv, "
-"json) setzen."
+msgstr "\t--machine-readable <Format>\tEin Maschinen-lesbares Ausgabeformat (csv, json) setzen."
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tOhne DBus arbeiten."
@@ -271,6 +268,12 @@ msgstr "Schnappschuss %d kann nicht gelöscht werden, seitdem es der derzeit gem
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Schnappschuss %d kann nicht gelöscht werden, seitdem es der nächste zu mountende Schnappschuss ist."
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr ""
+
+msgid "Cannot do rollback since default subvolume is unknown."
+msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Befehl 'cleanup' erfordert ein Argument."
@@ -545,8 +548,14 @@ msgstr "Schnappschuss '%u' wurde nicht gefunden."
 msgid "Snapshot is in use."
 msgstr "Der Schnappschuss ist in Benutzung."
 
+msgid "The ambit can be specified manually using the --ambit option."
+msgstr ""
+
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Die Konfiguration \"Root\" ist nicht vorhanden. Snapper ist wahrscheinlich nicht konfiguriert."
+
+msgid "This can happen if the system was not set up for rollback."
+msgstr ""
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: autoinst.fi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-18 11:59+0200\n"
+"POT-Creation-Date: 2020-07-13 16:13+0200\n"
 "PO-Revision-Date: 2019-12-01 20:54+0000\n"
 "Last-Translator: Jaanus Ojangu <jaanus.ojangu@gmail.com>\n"
 "Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/et/>\n"
@@ -264,6 +264,12 @@ msgstr "Hetktõmmist %d ei saa kustutada, kuna see on töös olev süsteemi haag
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Hetktõmmist %d ei saa kustutada, kuna see on järgmine haagitav tõmmis."
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr ""
+
+msgid "Cannot do rollback since default subvolume is unknown."
+msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Käsk 'Puhastamine' vajab ühte argumenti."
@@ -543,8 +549,14 @@ msgstr "Tõmmist '%u' ei leita."
 msgid "Snapshot is in use."
 msgstr "Tõmmis on kasutuses."
 
+msgid "The ambit can be specified manually using the --ambit option."
+msgstr ""
+
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Seaded 'juur' ei eksisteeri. Snapper ei ole vist seadistatud."
+
+msgid "This can happen if the system was not set up for rollback."
+msgstr ""
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-18 11:59+0200\n"
+"POT-Creation-Date: 2020-07-13 16:13+0200\n"
 "PO-Revision-Date: 2019-10-15 22:53+0000\n"
 "Last-Translator: scootergrisen <scootergrisen@gmail.com>\n"
 "Language-Team: Danish <https://l10n.opensuse.org/projects/snapper/master/da/>\n"
@@ -268,6 +268,12 @@ msgstr "Kan ikke slette øjebliksbilledet %d, eftersom det er det nuværende mon
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Kan ikke slette øjebliksbilledet %d, eftersom det er det øjebliksbillede der skal monteres næste gang."
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr ""
+
+msgid "Cannot do rollback since default subvolume is unknown."
+msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Kommandoen \"cleanup\" kræver et argument."
@@ -547,8 +553,14 @@ msgstr "Øjebliksbilledet \"%u\" blev ikke fundet."
 msgid "Snapshot is in use."
 msgstr "Øjebliksbilledet er i brug."
 
+msgid "The ambit can be specified manually using the --ambit option."
+msgstr ""
+
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Konfigurationen 'root' findes ikke. Snapper er sandsynligvis ikke konfigureret."
+
+msgid "This can happen if the system was not set up for rollback."
+msgstr ""
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"

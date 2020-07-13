@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-18 11:59+0200\n"
+"POT-Creation-Date: 2020-07-13 16:13+0200\n"
 "PO-Revision-Date: 2020-02-19 15:54+0000\n"
 "Last-Translator: Davide Aiello <davidea@novilinguists.com>\n"
 "Language-Team: Italian <https://l10n.opensuse.org/projects/snapper/master/it/>\n"
@@ -266,6 +266,12 @@ msgstr "Impossibile eliminare l'istantanea %d poiché si tratta di quella montat
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Impossibile eliminare l'istantanea %d poiché si tratta della prossima che deve essere montata."
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr ""
+
+msgid "Cannot do rollback since default subvolume is unknown."
+msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Il comando 'cleanup' richiede un argomento."
@@ -540,8 +546,14 @@ msgstr "Istantanea '%u' non trovata."
 msgid "Snapshot is in use."
 msgstr "L'istantanea è in uso."
 
+msgid "The ambit can be specified manually using the --ambit option."
+msgstr ""
+
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Configurazione 'root' inesistente. È probabile che snapper non sia configurato."
+
+msgid "This can happen if the system was not set up for rollback."
+msgstr ""
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
