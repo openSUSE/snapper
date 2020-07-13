@@ -1070,7 +1070,7 @@ command_rollback(cli::GlobalOptions& global_options, ProxySnappers* snappers, Pr
 	if (previous_default == snapshots.end())
 	{
 	    cerr << _("Cannot detect ambit since default subvolume is unknown.") << '\n'
-		 << _("This can happen if the system was not setup for rollback.") << '\n'
+		 << _("This can happen if the system was not set up for rollback.") << '\n'
 		 << _("The ambit can be specified manually using the --ambit option.") << endl;
 	    exit(EXIT_FAILURE);
 	}
