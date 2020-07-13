@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Jul 13 11:29:13 CEST 2020 - aschnell@suse.com
+
+- added error handing for failed ambit detection (bsc#1174038)
+- version 0.8.11
+
+-------------------------------------------------------------------
 Tue Jun 16 18:31:47 CEST 2020 - aschnell@suse.com
 
 - special rollback for transactional server (bsc#1172273)
