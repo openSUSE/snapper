@@ -48,6 +48,7 @@ BuildRequires:  libmount-devel >= 2.24
 %endif
 %if 0%{?fedora_version} >= 23
 BuildRequires:  pkgconfig
+BuildRequires:  systemd
 %else
 BuildRequires:  pkg-config
 %endif

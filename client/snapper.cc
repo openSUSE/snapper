@@ -1067,6 +1067,14 @@ command_rollback(cli::GlobalOptions& global_options, ProxySnappers* snappers, Pr
 
     if (global_options.ambit() == cli::GlobalOptions::Ambit::AUTO)
     {
+	if (previous_default == snapshots.end())
+	{
+	    cerr << _("Cannot detect ambit since default subvolume is unknown.") << '\n'
+		 << _("This can happen if the system was not set up for rollback.") << '\n'
+		 << _("The ambit can be specified manually using the --ambit option.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+
 	if (filesystem->isSnapshotReadOnly(previous_default->getNum()))
 	    global_options.set_ambit(cli::GlobalOptions::Ambit::TRANSACTIONAL);
 	else
@@ -1158,6 +1166,12 @@ command_rollback(cli::GlobalOptions& global_options, ProxySnappers* snappers, Pr
 	case cli::GlobalOptions::Ambit::TRANSACTIONAL:
 	{
 	    // see bsc #1172273
+
+	    if (previous_default == snapshots.end())
+	    {
+		cerr << _("Cannot do rollback since default subvolume is unknown.") << endl;
+		exit(EXIT_FAILURE);
+	    }
 
 	    ProxySnapshots::iterator snapshot = snapshots.end();
 

@@ -27,7 +27,8 @@ RUN dnf -y install \
   make \
   pam-devel \
   pkgconfig \
-  rpm-build
+  rpm-build \
+  systemd
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
