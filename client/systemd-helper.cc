@@ -70,7 +70,7 @@ timeline(ProxySnappers* snappers, const map<string, string>& userdata)
     bool ok = true;
 
     map<string, ProxyConfig> configs = snappers->getConfigs();
-    for (const map<string, ProxyConfig>::value_type value : configs)
+    for (const map<string, ProxyConfig>::value_type& value : configs)
     {
 	const map<string, string>& raw = value.second.getAllValues();
 
@@ -104,7 +104,7 @@ cleanup(ProxySnappers* snappers)
     bool ok = true;
 
     map<string, ProxyConfig> configs = snappers->getConfigs();
-    for (const map<string, ProxyConfig>::value_type value : configs)
+    for (const map<string, ProxyConfig>::value_type& value : configs)
     {
 	const map<string, string>& raw = value.second.getAllValues();
 
