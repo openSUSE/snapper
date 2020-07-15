@@ -218,13 +218,13 @@
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>-t, --table-style</option></term>
+	<term><option>-t, --table-style <replaceable>style</replaceable></option></term>
 	<listitem>
 	  <para>Specifies table style. Table style is identified by an integer number.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>--machine-readable</option></term>
+	<term><option>--machine-readable <replaceable>format</replaceable></option></term>
 	<listitem>
 	  <para>Specifies a machine-readable output format. Possible options are csv and json.</para>
 	</listitem>
@@ -244,7 +244,7 @@
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>--separator</option></term>
+	<term><option>--separator <replaceable>character</replaceable></option></term>
 	<listitem>
 	  <para>Specifies the character separator for CSV output format.</para>
 	</listitem>
@@ -308,7 +308,7 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>list-configs</option></term>
+	<term><option>list-configs [options]</option></term>
 	<listitem>
 	  <para>List available configurations.</para>
 
@@ -363,7 +363,7 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>get-config</option></term>
+	<term><option>get-config [options]</option></term>
 	<listitem>
 	  <para>Displays the settings of the configuration.</para>
 
