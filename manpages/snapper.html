@@ -208,7 +208,7 @@
               </span>
             </dt>
             <dd>
-              <p>Display dates and times in UTC.</p>
+              <p>Display dates and times in UTC. By default, local time is used.</p>
             </dd>
             <dt>
               <span class="term">
@@ -216,7 +216,8 @@
               </span>
             </dt>
             <dd>
-              <p>Display dates and times in ISO format.</p>
+              <p>Display dates and times in ISO format. ISO format is always used for machine-readable
+	  outputs.</p>
             </dd>
             <dt>
               <span class="term">
@@ -246,7 +247,7 @@
             </dd>
             <dt>
               <span class="term">
-                <code class="option">---jsonout</code>
+                <code class="option">--jsonout</code>
               </span>
             </dt>
             <dd>
@@ -286,6 +287,15 @@
             </dt>
             <dd>
               <p>Operate on target root. Only works together with no-dbus and only for some commands.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">-a, --ambit <em class="replaceable"><code>ambit</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Operate in the specified ambit. Can be used to override the ambit detection.
+	  Allowed ambits are auto, classic and transactional.</p>
             </dd>
             <dt>
               <span class="term">
@@ -392,7 +402,7 @@
                   </dt>
                   <dd>
                     <p>Select columns to show separated by comma.</p>
-                    <p>Possible columns are: key, value</p>
+                    <p>Possible columns are: key, value.</p>
                     <p>Columns are not selected when JSON format is used.</p>
                   </dd>
                 </dl>
@@ -443,9 +453,7 @@
                     <p>List snapshots from all configs accessible by the user.</p>
                   </dd>
                   <dt>
-                    <span class="term">
-                      <code class="option">--columns</code>
-                    </span>
+                    <span class="term"><code class="option">--columns</code> <em class="replaceable"><code>columns</code></em></span>
                   </dt>
                   <dd>
                     <p>Select columns to show separated by comma.</p>
@@ -811,6 +819,9 @@
               <p>The rollback command also sets the description, the cleanup
 	  algorithm and some userdata unless the values are specified on the command
 	  line. This will automate cleanup of snapshots created by rollbacks.</p>
+              <p>In other ambits than classic the rollback command does what is required
+	  to do a rollback. Anyway it is recommended to use specific programs in that
+	  case.</p>
             </dd>
             <dt>
               <span class="term">
