@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2015-2017] SUSE LLC
+ * Copyright (c) [2015-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -47,8 +47,68 @@ bool set_nocow = false;
 bool verbose = false;
 
 
+class TmpMountpoint
+{
+
+public:
+
+    TmpMountpoint(const libmnt_fs* fs, const string& subvol_opts);
+    ~TmpMountpoint();
+
+    const string& get_path() const { return path; }
+
+private:
+
+    void do_tmp_mount(const string& subvol_option) const;
+    void do_tmp_umount() const;
+
+    const libmnt_fs* fs;
+    string path;
+
+};
+
+
+TmpMountpoint::TmpMountpoint(const libmnt_fs* fs, const string& subvol_opts)
+    : fs(fs)
+{
+    char tmp[] = "/tmp/mksubvolume-XXXXXX";
+
+    if (mkdtemp(tmp) == nullptr)
+	throw runtime_error_with_errno("mkdtemp failed", errno);
+
+    path = tmp;
+
+    if (verbose)
+	cout << "tmp directory is " << path << endl;
+
+    try
+    {
+	do_tmp_mount(subvol_opts);
+    }
+    catch (...)
+    {
+	rmdir(path.c_str());
+	throw;
+    }
+}
+
+
+TmpMountpoint::~TmpMountpoint()
+{
+    try
+    {
+	do_tmp_umount();
+	rmdir(path.c_str());
+    }
+    catch (...)
+    {
+	cerr << "failed to unmount and remove tmp directory " << path << endl;
+    }
+}
+
+
 void
-do_tmp_mount(const libmnt_fs* fs, const char* tmp_mountpoint, const string& subvol_option)
+TmpMountpoint::do_tmp_mount(const string& subvol_option) const
 {
     if (verbose)
 	cout << "do-tmp-mount" << endl;
@@ -59,7 +119,7 @@ do_tmp_mount(const libmnt_fs* fs, const char* tmp_mountpoint, const string& subv
 
     struct libmnt_context* cxt = mnt_new_context();
     mnt_context_set_fs(cxt, x);
-    mnt_context_set_target(cxt, tmp_mountpoint);
+    mnt_context_set_target(cxt, path.c_str());
     if (!subvol_option.empty())
 	mnt_context_set_options(cxt, ("subvol=" + subvol_option).c_str());
     else
@@ -75,7 +135,32 @@ do_tmp_mount(const libmnt_fs* fs, const char* tmp_mountpoint, const string& subv
 
 
 void
-do_create_subvolume(const string& tmp_mountpoint, const string& subvolume_name)
+TmpMountpoint::do_tmp_umount() const
+{
+    if (verbose)
+	cout << "do-tmp-umount" << endl;
+
+    system("/usr/bin/udevadm settle --timeout 20");
+
+    libmnt_fs* x = mnt_copy_fs(NULL, fs);
+    if (!x)
+	throw runtime_error("mnt_copy_fs failed");
+
+    struct libmnt_context* cxt = mnt_new_context();
+    mnt_context_set_fs(cxt, x);
+    mnt_context_set_target(cxt, path.c_str());
+
+    int ret = mnt_context_umount(cxt);
+    if (ret != 0)
+	throw runtime_error(sformat("mnt_context_umount failed, ret:%d", ret));
+
+    mnt_free_context(cxt);
+    mnt_free_fs(x);
+}
+
+
+void
+do_create_subvolume_pure(const string& tmp_mountpoint, const string& subvolume_name)
 {
     if (verbose)
 	cout << "do-create-subvolume" << endl;
@@ -89,42 +174,37 @@ do_create_subvolume(const string& tmp_mountpoint, const string& subvolume_name)
     if (fd < 0)
 	throw runtime_error_with_errno("open failed", errno);
 
-    try
-    {
-	create_subvolume(fd, basename(subvolume_name));
-    }
-    catch(...)
-    {
-	close(fd);
-	throw;
-    }
+    FdCloser fd_closer(fd);
 
-    close(fd);
+    create_subvolume(fd, basename(subvolume_name));
 }
 
 
 void
-do_tmp_umount(const libmnt_fs* fs, const char* tmp_mountpoint)
+do_create_subvolume(const string& subvolume_name, const libmnt_fs* fs, const string& subvol_option)
 {
-    if (verbose)
-	cout << "do-tmp-umount" << endl;
+    // Note: If the target is /tmp it is important that the tmp mount is unmounted before
+    // the subvolume itself is mounted.
 
-    system("/sbin/udevadm settle --timeout 20");
+    TmpMountpoint tmp_mountpoint(fs, subvol_option);
 
-    libmnt_fs* x = mnt_copy_fs(NULL, fs);
-    if (!x)
-	throw runtime_error("mnt_copy_fs failed");
+    try
+    {
+	do_create_subvolume_pure(tmp_mountpoint.get_path(), subvolume_name);
+    }
+    catch (const runtime_error_with_errno& e)
+    {
+	if (e.error_number != EEXIST)
+	    throw;
 
-    struct libmnt_context* cxt = mnt_new_context();
-    mnt_context_set_fs(cxt, x);
-    mnt_context_set_target(cxt, tmp_mountpoint);
+	const string path = tmp_mountpoint.get_path() + "/" + subvolume_name;
 
-    int ret = mnt_context_umount(cxt);
-    if (ret != 0)
-	throw runtime_error(sformat("mnt_context_umount failed, ret:%d", ret));
-
-    mnt_free_context(cxt);
-    mnt_free_fs(x);
+	struct stat sb;
+	if (lstat(path.c_str(), &sb) == 0 && is_subvolume(sb))
+	    cout << "reusing existing subvolume" << endl;
+	else
+	    throw runtime_error_with_errno("cannot reuse path as subvolume", e.error_number);
+    }
 }
 
 
@@ -199,17 +279,14 @@ do_set_cow_flag()
 
     int fd = open(target.c_str(), O_RDONLY);
     if (fd == -1)
-    {
 	throw runtime_error_with_errno("open failed", errno);
-    }
+
+    FdCloser fd_closer(fd);
 
     unsigned long flags = 0;
 
     if (ioctl(fd, EXT2_IOC_GETFLAGS, &flags) == -1)
-    {
-	close(fd);
 	throw runtime_error_with_errno("ioctl(EXT2_IOC_GETFLAGS) failed", errno);
-    }
 
     if (set_nocow)
 	flags |= FS_NOCOW_FL;
@@ -217,12 +294,7 @@ do_set_cow_flag()
 	flags &= ~FS_NOCOW_FL;
 
     if (ioctl(fd, EXT2_IOC_SETFLAGS, &flags) == -1)
-    {
-	close(fd);
 	throw runtime_error_with_errno("ioctl(EXT2_IOC_SETFLAGS) failed", errno);
-    }
-
-    close(fd);
 }
 
 
@@ -288,7 +360,7 @@ get_abs_subvol_path(string subvolume)
 
 
 void
-do_consistency_checks(MntTable& mnt_table, libmnt_fs* fs, libmnt_fs* expected_fs)
+do_consistency_checks(MntTable& mnt_table, const libmnt_fs* fs, libmnt_fs* expected_fs)
 {
     // Set up cache for UUID / LABEL resolution in mnt_table_find_source
     libmnt_cache* cache = mnt_new_cache();
@@ -347,42 +419,6 @@ do_consistency_checks(MntTable& mnt_table, libmnt_fs* fs, libmnt_fs* expected_fs
 }
 
 
-class TmpMountpoint {
-    unique_ptr<char[]> mountpoint;
-    const libmnt_fs* fs;
-
-public:
-    TmpMountpoint(const string& tmpMountpoint, const libmnt_fs* libmntfs, const string& subvol_opts)
-	: mountpoint(strdup(tmpMountpoint.c_str())), fs(libmntfs)
-    {
-	if (!mkdtemp(mountpoint.get()))
-	    throw runtime_error_with_errno("mkdtemp failed", errno);
-
-	try
-	{
-	    do_tmp_mount(fs, mountpoint.get(), subvol_opts);
-	}
-	catch (...)
-	{
-	    rmdir(mountpoint.get());
-	    throw;
-	}
-    }
-
-    ~TmpMountpoint()
-    {
-	do_tmp_umount(fs, mountpoint.get());
-	rmdir(mountpoint.get());
-    }
-
-    const string
-    get_path()
-    {
-	return mountpoint.get();
-    }
-};
-
-
 /*
  * The used algorithm is as follow:
  *
@@ -435,6 +471,8 @@ doit()
     if (fd == -1)
 	throw runtime_error_with_errno("open failed", errno);
 
+    FdCloser fd_closer(fd);
+
     subvolid_t default_subvolume_id = get_default_id(fd);
     if (verbose)
 	cout << "default-subvolume-id:" << default_subvolume_id << endl;
@@ -443,7 +481,7 @@ doit()
     if (verbose)
 	cout << "default-subvolume-name:" << default_subvolume_name << endl;
 
-    close(fd);
+    fd_closer.close();
 
     // Determine subvol mount-option for tmp mount. The '@' is used on SLE.
 
@@ -470,27 +508,7 @@ doit()
 
     // Execute all steps.
 
-    TmpMountpoint tmp_mountpoint("/tmp/mksubvolume-XXXXXX", fs, subvol_option);
-
-    try
-    {
-	do_create_subvolume(tmp_mountpoint.get_path(), subvolume_name);
-    }
-    catch (const runtime_error_with_errno& e)
-    {
-	if (e.error_number == EEXIST)
-	{
-	    const string path = tmp_mountpoint.get_path() + "/" + subvolume_name;
-	    struct stat sb;
-
-	    if (lstat(path.c_str(), &sb) == 0 && is_subvolume(sb))
-		cout << "reusing existing subvolume" << endl;
-	    else
-		throw runtime_error_with_errno("cannot reuse path as subvolume", e.error_number);
-	}
-	else
-	    throw;
-    }
+    do_create_subvolume(subvolume_name, fs, subvol_option);
 
     do_add_fstab_and_mount(mnt_table, expected_fs);
 

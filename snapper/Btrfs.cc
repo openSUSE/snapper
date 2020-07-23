@@ -1239,38 +1239,6 @@ namespace snapper
     };
 
 
-    struct FdCloser
-    {
-	FdCloser(int fd)
-	    : fd(fd)
-	{
-	}
-
-	~FdCloser()
-	{
-	    if (fd > -1 )
-		::close(fd);
-	}
-
-	void reset()
-	{
-	    fd = -1;
-	}
-
-	int close()
-	{
-	    int r = ::close(fd);
-	    fd = -1;
-	    return r;
-	}
-
-    private:
-
-	int fd;
-
-    };
-
-
     bool
     StreamProcessor::dumper(int fd)
     {
