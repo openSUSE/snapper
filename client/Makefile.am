@@ -14,7 +14,7 @@ libclient_la_SOURCES =                  \
 	commands.cc	commands.h      \
 	errors.cc	errors.h
 
-libclient_la_LIBADD =  utils/libutils.la ../dbus/libdbus.la
+libclient_la_LIBADD = utils/libutils.la ../dbus/libdbus.la
 
 bin_PROGRAMS = snapper
 
