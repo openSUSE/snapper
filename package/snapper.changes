@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Jul 23 11:52:31 CEST 2020 - aschnell@suse.com
+
+- fixed error when using mksubvolume to create /tmp (bsc#1174401)
+- version 0.8.12
+
+-------------------------------------------------------------------
 Mon Jul 13 11:29:13 CEST 2020 - aschnell@suse.com
 
 - added error handing for failed ambit detection (bsc#1174038)

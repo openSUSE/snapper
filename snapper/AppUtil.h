@@ -27,6 +27,7 @@
 #include <sys/types.h>
 #include <pwd.h>
 #include <grp.h>
+#include <unistd.h>
 #include <sstream>
 #include <locale>
 #include <string>
@@ -107,6 +108,38 @@ namespace snapper
     protected:
 
 	std::chrono::steady_clock::time_point start_time;
+
+    };
+
+
+    struct FdCloser
+    {
+	FdCloser(int fd)
+	    : fd(fd)
+	{
+	}
+
+	~FdCloser()
+	{
+	    if (fd > -1 )
+		::close(fd);
+	}
+
+	void reset()
+	{
+	    fd = -1;
+	}
+
+	int close()
+	{
+	    int r = ::close(fd);
+	    fd = -1;
+	    return r;
+	}
+
+    private:
+
+	int fd;
 
     };
 

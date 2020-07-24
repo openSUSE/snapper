@@ -1,3 +1,27 @@
+snapper (0.8.12) stable; urgency=low
+
+  * Updated to version 0.8.12
+
+  * fixed error when using mksubvolume to create /tmp (bsc#1174401)
+
+ -- Arvin Schnell <aschnell@suse.com>  Thu, 23 Jul 23 2020 11:52:31 +0000
+
+snapper (0.8.11) stable; urgency=low
+
+  * Updated to version 0.8.11
+
+  * added error handing for failed ambit detection (bsc#1174038)
+
+ -- Arvin Schnell <aschnell@suse.com>  Mon, 13 Jul 2020 11:29:13 +0000
+
+snapper (0.8.10) stable; urgency=low
+
+  * Updated to version 0.8.11
+
+  * special rollback for transactional server (bsc#1172273)
+
+ -- Arvin Schnell <aschnell@suse.com>  Tue, 16 Jun 2020 18:31:47 +0000
+
 snapper (0.8.9) stable; urgency=low
 
   * Fix "Snapper is not creating the post snapshot" (bsc#1160938)
