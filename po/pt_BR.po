@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
-"PO-Revision-Date: 2019-10-15 16:53+0000\n"
-"Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
+"POT-Creation-Date: 2020-06-18 11:59+0200\n"
+"PO-Revision-Date: 2020-07-14 12:36+0000\n"
+"Last-Translator: Leonardo Teodoro <leonardosilvateodoro@hotmail.com>\n"
+"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/"
+"snapper/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +21,7 @@ msgstr ""
 "X-Generator: Weblate 3.6.1\n"
 
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr ""
+msgstr "\t--ambit, -a ambit\t\tOpere no âmbito especificado."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algoritmo>\tAlgoritmo de limpeza do instantâneo."
@@ -35,7 +36,7 @@ msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <nome>\t\tNome do conjunto de configurações a utilizar."
 
 msgid "\t--csvout\t\t\tSet CSV output format."
-msgstr ""
+msgstr "\t--csvout\t\t\tDefina o formato de saída CSV."
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <descrição>\tDescrição do instantâneo."
@@ -65,10 +66,12 @@ msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\tExibir datas e horas no formato ISO."
 
 msgid "\t--jsonout\t\t\tSet JSON output format."
-msgstr ""
+msgstr "\t--jsonout\t\t\tDefina o formato de saída JSON."
 
 msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
 msgstr ""
+"\t--machine-readable <formato>\tDefina um formato de saída legível para "
+"máquina (csv, json)."
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tOperar sem DBus."
@@ -99,6 +102,8 @@ msgstr "\t--root, -r <caminho>\t\tOperar na raiz do destino (apenas funciona sem
 
 msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
 msgstr ""
+"\t--separator <separador>\t\tSeparador de caracteres para o formato de saída "
+"CSV."
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tSincronizar após exclusão."
@@ -249,11 +254,11 @@ msgid "ACL error."
 msgstr "Erro ACL."
 
 msgid "Active snapshot is already default snapshot."
-msgstr ""
+msgstr "Snapshot ativa já é a snapshot padrão."
 
 #, c-format
 msgid "Ambit is %s."
-msgstr ""
+msgstr "O âmbito é %s."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -446,9 +451,9 @@ msgstr "Instantâneos idênticos."
 msgid "Illegal snapshot."
 msgstr "Instantâneo ilegal."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid ambit %s."
-msgstr "Instantâneo inválido '%s'."
+msgstr "O âmbito %s é inválido."
 
 msgid "Invalid configdata."
 msgstr "Arquivo de dados de configuração inválido."
@@ -458,7 +463,7 @@ msgstr "Grupo inválido."
 
 #, c-format
 msgid "Invalid machine readable format %s."
-msgstr ""
+msgstr "Formato legível para máquina inválido %s."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -470,9 +475,9 @@ msgstr "Instantâneo inválido."
 msgid "Invalid subvolume."
 msgstr "Subvolume inválido."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid table style %s."
-msgstr "Estilo de tabela inválido %d."
+msgstr "Estilo de tabela inválido %s."
 
 msgid "Invalid user."
 msgstr "Usuário inválido."
@@ -590,7 +595,7 @@ msgstr "Tipo de instantâneo desconhecido."
 
 #, c-format
 msgid "Use %s, %s or %s."
-msgstr ""
+msgstr "Use %s, %s ou %s."
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -635,11 +640,12 @@ msgstr "alterando %s"
 msgid "nothing to do"
 msgstr "nada a fazer"
 
-#, fuzzy
 msgid ""
 "root argument can be used only together with no-dbus.\n"
 "Try 'snapper --help' for more information."
-msgstr "É possível usar o argumento root apenas com no-dbus."
+msgstr ""
+"O argumento raiz pode ser usado apenas junto com o no-dbus.\n"
+"Tente 'snapper --help' para mais informações."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "uso: snapper [--opções-globais] <comando> [--opções-do-comando] [argumentos]"

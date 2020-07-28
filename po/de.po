@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
-"PO-Revision-Date: 2020-07-03 11:09+0000\n"
+"POT-Creation-Date: 2020-06-18 11:59+0200\n"
+"PO-Revision-Date: 2020-07-14 12:36+0000\n"
 "Last-Translator: Sarah Kriesch <ada.lovelace@gmx.de>\n"
 "Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
 "Language: de\n"
@@ -247,11 +247,11 @@ msgid "ACL error."
 msgstr "ACL-Fehler."
 
 msgid "Active snapshot is already default snapshot."
-msgstr ""
+msgstr "Aktiver Schnappschuss ist schon Standard-Schnappschuss."
 
 #, c-format
 msgid "Ambit is %s."
-msgstr ""
+msgstr "Anwendungsbereich ist %s."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -444,9 +444,9 @@ msgstr "Identische Schnappschüsse."
 msgid "Illegal snapshot."
 msgstr "Illegaler Schnappschuss."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid ambit %s."
-msgstr "Ungültiger Schnappschuss '%s'."
+msgstr "Ungültiger Anwendungsbereich %s."
 
 msgid "Invalid configdata."
 msgstr "Ungültige Konfigurationsdaten."
@@ -456,7 +456,7 @@ msgstr "Ungültige Gruppe."
 
 #, c-format
 msgid "Invalid machine readable format %s."
-msgstr ""
+msgstr "Ungültiges maschinenlesbares Format %s."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -468,9 +468,9 @@ msgstr "Ungültige Schnappschüsse."
 msgid "Invalid subvolume."
 msgstr "Ungültiges Subvolumen."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid table style %s."
-msgstr "Ungültiger Tabellenstil %d."
+msgstr "Ungültiger Tabellenstil %s."
 
 msgid "Invalid user."
 msgstr "Ungültiger Benutzer."
@@ -588,7 +588,7 @@ msgstr "Unbekannter Schnappschuss-Typ."
 
 #, c-format
 msgid "Use %s, %s or %s."
-msgstr ""
+msgstr "%s, %s oder %s verwenden."
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -633,11 +633,12 @@ msgstr "%s wird geändert"
 msgid "nothing to do"
 msgstr "keine auszuführenden Aktionen"
 
-#, fuzzy
 msgid ""
 "root argument can be used only together with no-dbus.\n"
 "Try 'snapper --help' for more information."
-msgstr "Root-Argument kann nur zusammen mit \"no-dbus\" verwendet werden."
+msgstr ""
+"Root-Argument kann nur zusammen mit no-dbus verwendet werden.\n"
+"'snapper --help' für mehr Informationen versuchen."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "Aufruf: snapper [--Globale-Optionen] <Befehl> [--Befehlsoptionen] [Befehlsargumente]"
