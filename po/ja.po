@@ -9,9 +9,10 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-13 16:13+0200\n"
-"PO-Revision-Date: 2020-06-30 08:32+0000\n"
+"PO-Revision-Date: 2020-07-29 08:32+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
+"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/"
+"ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -272,10 +273,10 @@ msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "スナップショット %d は次回マウントされるスナップショットであるため、削除できません。"
 
 msgid "Cannot detect ambit since default subvolume is unknown."
-msgstr ""
+msgstr "既定のサブボリュームが未知のものであるため、領域を検出できません。"
 
 msgid "Cannot do rollback since default subvolume is unknown."
-msgstr ""
+msgstr "既定のサブボリュームが未知のものであるため、ロールバックできません。"
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "'cleanup' コマンドには 1 つのパラメータが必要です。"
@@ -550,13 +551,13 @@ msgid "Snapshot is in use."
 msgstr "スナップショットは使用中です。"
 
 msgid "The ambit can be specified manually using the --ambit option."
-msgstr ""
+msgstr "領域を指定したい場合は、 --ambit オプションをお使いください。"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "環境設定「root」は存在しません。snapperが設定されていない可能性があります。"
 
 msgid "This can happen if the system was not set up for rollback."
-msgstr ""
+msgstr "この問題は、システム側でロールバックの設定がされていない場合に発生します。"
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
