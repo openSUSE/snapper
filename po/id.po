@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-13 16:13+0200\n"
-"PO-Revision-Date: 2019-10-29 08:53+0000\n"
+"PO-Revision-Date: 2020-08-24 00:40+0000\n"
 "Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
-"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/id/>\n"
+"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/"
+"id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,7 +15,7 @@ msgstr ""
 "X-Generator: Weblate 3.6.1\n"
 
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr ""
+msgstr "\t--ambit, -a ambit\t\tOperasikan dalam ruang yang ditentukan."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritma pembersihan untuk snapshot."
@@ -29,7 +30,7 @@ msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <nama>\t\tAtur nama config untuk digunakan."
 
 msgid "\t--csvout\t\t\tSet CSV output format."
-msgstr ""
+msgstr "\t--csvout\t\t\tAtur format keluaran CSV."
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <deskripsi>\tDeskripsi untuk snapshot."
@@ -59,10 +60,12 @@ msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\tTampilkan tanggal dan waktu dalam format ISO."
 
 msgid "\t--jsonout\t\t\tSet JSON output format."
-msgstr ""
+msgstr "\t--jsonout\t\t\tAtur format keluaran JSON."
 
 msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
 msgstr ""
+"\t--machine-readable <format>\\Atur format keluaran yang dapat dibaca mesin ("
+"csv, json)."
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tOperasikan tanpa DBus."
@@ -93,6 +96,7 @@ msgstr "\t--root, -r <path>\t\tBeroperasi pada root target (hanya bekerja tanpa 
 
 msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
 msgstr ""
+"\t--separator <separator>\t\tPemisah karakter untuk format keluaran CSV."
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tSinkronkan setelah penghapusan."
@@ -243,11 +247,11 @@ msgid "ACL error."
 msgstr "Galat ACL."
 
 msgid "Active snapshot is already default snapshot."
-msgstr ""
+msgstr "Snapshot aktif sudah menjadi snapshot bawaan."
 
 #, c-format
 msgid "Ambit is %s."
-msgstr ""
+msgstr "Ambit adalah %s."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -266,10 +270,10 @@ msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Tidak dapat menghapus snapshot %d karena ini adalah snapshot yang dipasang selanjutnya."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
-msgstr ""
+msgstr "Tidak dapat mendeteksi ambit sejak subvolume bawaan tidak diketahui."
 
 msgid "Cannot do rollback since default subvolume is unknown."
-msgstr ""
+msgstr "Tidak dapat melakukan rollback karena subvolume bawaan tidak diketahui."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Perintah 'cleanup' membutuhkan satu argumen."
@@ -439,9 +443,9 @@ msgstr "Snapshot identik."
 msgid "Illegal snapshot."
 msgstr "Snapshot ilegal."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid ambit %s."
-msgstr "Snapshot '%s' tidak valid."
+msgstr "Ambit %s tidak valid."
 
 msgid "Invalid configdata."
 msgstr "Configdata tidak valid."
@@ -451,7 +455,7 @@ msgstr "Grup tidak valid."
 
 #, c-format
 msgid "Invalid machine readable format %s."
-msgstr ""
+msgstr "Format terbaca mesin tidak valid %s."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -463,9 +467,9 @@ msgstr "Snapshot tidak valid."
 msgid "Invalid subvolume."
 msgstr "Subvolume tidak valid."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid table style %s."
-msgstr "Gaya tabel %d tidak valid."
+msgstr "Gaya tabel %s tidak valid."
 
 msgid "Invalid user."
 msgstr "Pengguna tidak valid."
@@ -544,13 +548,13 @@ msgid "Snapshot is in use."
 msgstr "Snapshot sedang digunakan."
 
 msgid "The ambit can be specified manually using the --ambit option."
-msgstr ""
+msgstr "Ambit dapat ditentukan secara manual menggunakan opsi--ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Config 'root' tidak ada. Kemungkinan snapper tidak dikonfigurasi."
 
 msgid "This can happen if the system was not set up for rollback."
-msgstr ""
+msgstr "Hal ini dapat terjadi jika sistem tidak diatur untuk rollback."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
@@ -583,7 +587,7 @@ msgstr "Jenis snapshot tidak dikenal."
 
 #, c-format
 msgid "Use %s, %s or %s."
-msgstr ""
+msgstr "Gunakan %s, %s atau %s."
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -628,11 +632,12 @@ msgstr "memodifikasi %s"
 msgid "nothing to do"
 msgstr "tidak ada yang dilakukan"
 
-#, fuzzy
 msgid ""
 "root argument can be used only together with no-dbus.\n"
 "Try 'snapper --help' for more information."
-msgstr "argumen root hanya dapat digunakan bersama dengan no-dbus."
+msgstr ""
+"argumen root hanya dapat digunakan bersama dengan no-dbus.\n"
+"Coba 'snapper --help' untuk informasi lebih lanjut."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "penggunaan: snapper [--global-options] <command> [--command-options] [command-arguments]"
