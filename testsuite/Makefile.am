@@ -11,7 +11,7 @@ check_PROGRAMS = sysconfig-get1.test dirname1.test basename1.test		    \
 	csv-formatter.test json-formatter.test
 
 if ENABLE_BTRFS_QUOTA
-check_PROGRAMS +=  qgroup1.test
+check_PROGRAMS += qgroup1.test
 endif
 
 TESTS = $(check_PROGRAMS)
