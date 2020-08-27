@@ -111,7 +111,7 @@ export CFLAGS="%{optflags} -DNDEBUG"
 export CXXFLAGS="%{optflags} -DNDEBUG"
 %endif
 
-autoreconf -fi
+autoreconf -fvi
 %configure \
 	--docdir="%{_defaultdocdir}/snapper"				\
 %if %{with coverage}
@@ -141,7 +141,7 @@ install -D -m 644 data/sysconfig.snapper "%{buildroot}/etc/sysconfig/snapper"
 %{find_lang} snapper
 
 %check
-make check VERBOSE=1
+make %{?_smp_mflags} check VERBOSE=1
 
 %pre
 %if 0%{?suse_version}

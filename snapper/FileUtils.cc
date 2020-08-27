@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) 2018 SUSE LLC
+ * Copyright (c) [2018-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -376,6 +376,13 @@ namespace snapper
 	assert(newname != "..");
 
 	return ::renameat(dirfd, oldname.c_str(), dirfd, newname.c_str());
+    }
+
+
+    int
+    SDir::fsync() const
+    {
+	return ::fsync(dirfd);
     }
 
 
