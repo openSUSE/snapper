@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2019] SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -491,6 +491,8 @@ namespace snapper
 	    SN_THROW(IOErrorException(sformat("rename info.xml failed infoDir:%s errno:%d (%s)",
 					      info_dir.fullname().c_str(), errno,
 					      stringerror(errno).c_str())));
+
+	info_dir.fsync();
     }
 
 

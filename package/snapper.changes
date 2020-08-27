@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Aug 27 12:04:44 CEST 2020 - aschnell@suse.com
+
+- call fsync after writing snapshot info file (bsc#1078336)
+- version 0.8.13
+
+-------------------------------------------------------------------
 Thu Jul 23 11:52:31 CEST 2020 - aschnell@suse.com
 
 - fixed error when using mksubvolume to create /tmp (bsc#1174401)

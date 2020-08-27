@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2010-2012] Novell, Inc.
+ * Copyright (c) 2020 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -75,6 +76,8 @@ namespace snapper
 	    throw IOErrorException("xmlDocFormatDump failed");
 	}
 
+	fflush(f);
+	fsync(fileno(f));
 	fclose(f);
     }
 
