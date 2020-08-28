@@ -63,7 +63,7 @@ using namespace std;
 
 struct Cmd
 {
-    typedef void (*cmd_func_t)(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+    typedef void (*cmd_func_t)(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
 			       ProxySnapper* snapper);
 
     typedef void (*help_func_t)();
@@ -167,7 +167,7 @@ help_list_configs()
 
 
 void
-command_list_configs(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
+command_list_configs(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
 {
     cli::Command::ListConfigs command(global_options, get_opts, *snappers);
 
@@ -189,7 +189,7 @@ help_create_config()
 
 
 void
-command_create_config(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
+command_create_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
 {
     const vector<Option> options = {
 	Option("fstype",	required_argument,	'f'),
@@ -241,7 +241,7 @@ help_delete_config()
 
 
 void
-command_delete_config(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
+command_delete_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
 {
     get_opts.parse("delete-config", GetOpts::no_options);
     if (get_opts.has_args())
@@ -262,7 +262,7 @@ help_get_config()
 
 
 void
-command_get_config(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
+command_get_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
 {
     cli::Command::GetConfig command(global_options, get_opts, *snappers);
 
@@ -280,7 +280,7 @@ help_set_config()
 
 
 void
-command_set_config(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+command_set_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     get_opts.parse("set-config", GetOpts::no_options);
     if (!get_opts.has_args())
@@ -303,7 +303,7 @@ help_list()
 
 
 void
-command_list(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
+command_list(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
 {
     cli::Command::ListSnapshots command(global_options, get_opts, *snappers);
 
@@ -333,7 +333,7 @@ help_create()
 
 
 void
-command_create(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+command_create(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const vector<Option> options = {
 	Option("type",			required_argument,	't'),
@@ -486,7 +486,7 @@ help_modify()
 
 
 void
-command_modify(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+command_modify(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const vector<Option> options = {
 	Option("description",		required_argument,	'd'),
@@ -569,7 +569,7 @@ filter_undeletables(ProxySnapshots& snapshots, vector<ProxySnapshots::iterator>&
 
 
 void
-command_delete(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+command_delete(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const vector<Option> options = {
 	Option("sync",	no_argument,	's')
@@ -642,7 +642,7 @@ help_mount()
 
 
 void
-command_mount(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+command_mount(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     get_opts.parse("mount", GetOpts::no_options);
     if (!get_opts.has_args())
@@ -671,7 +671,7 @@ help_umount()
 
 
 void
-command_umount(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+command_umount(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     get_opts.parse("umount", GetOpts::no_options);
     if (!get_opts.has_args())
@@ -703,7 +703,7 @@ help_status()
 
 
 void
-command_status(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+command_status(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const vector<Option> options = {
 	Option("output",	required_argument,	'o')
@@ -770,7 +770,7 @@ help_diff()
 
 
 void
-command_diff(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+command_diff(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const vector<Option> options = {
 	Option("input",		required_argument,	'i'),
@@ -834,7 +834,7 @@ help_undo()
 
 
 void
-command_undo(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+command_undo(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const vector<Option> options = {
 	Option("input",		required_argument,	'i')
@@ -987,7 +987,7 @@ help_rollback()
 
 
 void
-command_rollback(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+command_rollback(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     const vector<Option> options = {
 	Option("print-number",		no_argument,		'p'),
@@ -1054,7 +1054,7 @@ command_rollback(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySna
 
     ProxySnapshots::iterator previous_default = snapshots.getDefault();
 
-    if (global_options.ambit() == cli::GlobalOptions::Ambit::AUTO)
+    if (global_options.ambit() == GlobalOptions::Ambit::AUTO)
     {
 	if (previous_default == snapshots.end())
 	{
@@ -1065,9 +1065,9 @@ command_rollback(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySna
 	}
 
 	if (filesystem->isSnapshotReadOnly(previous_default->getNum()))
-	    global_options.set_ambit(cli::GlobalOptions::Ambit::TRANSACTIONAL);
+	    global_options.set_ambit(GlobalOptions::Ambit::TRANSACTIONAL);
 	else
-	    global_options.set_ambit(cli::GlobalOptions::Ambit::CLASSIC);
+	    global_options.set_ambit(GlobalOptions::Ambit::CLASSIC);
     }
 
     if (!global_options.quiet())
@@ -1078,7 +1078,7 @@ command_rollback(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySna
 
     switch (global_options.ambit())
     {
-	case cli::GlobalOptions::Ambit::CLASSIC:
+	case GlobalOptions::Ambit::CLASSIC:
 	{
 	    ProxySnapshots::const_iterator snapshot1 = snapshots.end();
 	    ProxySnapshots::const_iterator snapshot2 = snapshots.end();
@@ -1152,7 +1152,7 @@ command_rollback(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySna
 	}
 	break;
 
-	case cli::GlobalOptions::Ambit::TRANSACTIONAL:
+	case GlobalOptions::Ambit::TRANSACTIONAL:
 	{
 	    // see bsc #1172273
 
@@ -1193,7 +1193,7 @@ command_rollback(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySna
 	}
 	break;
 
-	case cli::GlobalOptions::Ambit::AUTO:
+	case GlobalOptions::Ambit::AUTO:
 	{
 	    cerr << "internal error: ambit is auto" << endl;
 	    exit(EXIT_FAILURE);
@@ -1215,7 +1215,7 @@ help_setup_quota()
 
 
 void
-command_setup_quota(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+command_setup_quota(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     ParsedOpts opts = get_opts.parse("setup-quota", GetOpts::no_options);
     if (get_opts.num_args() != 0)
@@ -1238,7 +1238,7 @@ help_cleanup()
 
 
 void
-command_cleanup(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+command_cleanup(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     ParsedOpts opts = get_opts.parse("cleanup", GetOpts::no_options);
     if (get_opts.num_args() != 1)
@@ -1276,7 +1276,7 @@ help_debug()
 
 
 void
-command_debug(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
+command_debug(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
 {
     get_opts.parse("debug", GetOpts::no_options);
     if (get_opts.has_args())
@@ -1320,7 +1320,7 @@ print_xa_diff(const string loc_pre, const string loc_post)
 }
 
 void
-command_xa_diff(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+command_xa_diff(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
     ParsedOpts opts = get_opts.parse("xadiff", GetOpts::no_options);
     if (get_opts.num_args() < 1)
@@ -1403,7 +1403,7 @@ help(const vector<Cmd>& cmds, GetOpts& get_opts)
     cout << _("usage: snapper [--global-options] <command> [--command-options] [command-arguments]") << '\n'
 	 << endl;
 
-    cout << cli::GlobalOptions::help_text() << endl;
+    cout << GlobalOptions::help_text() << endl;
 
     for (const Cmd& cmd : cmds)
 	(*cmd.help_func)();
@@ -1457,7 +1457,7 @@ main(int argc, char** argv)
     {
 	GetOpts get_opts(argc, argv);
 
-	cli::GlobalOptions global_options(get_opts);
+	GlobalOptions global_options(get_opts);
 
 	if (global_options.version())
 	{

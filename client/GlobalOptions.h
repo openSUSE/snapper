@@ -19,84 +19,79 @@
  * find current contact information at www.novell.com.
  */
 
-#ifndef SNAPPER_CLI_GLOBAL_OPTIONS_H
-#define SNAPPER_CLI_GLOBAL_OPTIONS_H
+#ifndef SNAPPER_GLOBAL_OPTIONS_H
+#define SNAPPER_GLOBAL_OPTIONS_H
 
 #include <string>
 
 #include <snapper/Enum.h>
 
-#include "client/Options.h"
 #include "client/utils/GetOpts.h"
 #include "client/utils/Table.h"
 
+
 namespace snapper
 {
-    namespace cli
+
+    class GlobalOptions
     {
 
-	class GlobalOptions : public Options
-	{
+    public:
 
-	public:
+	enum class OutputFormat { TABLE, CSV, JSON };
+	enum class Ambit { AUTO, CLASSIC, TRANSACTIONAL };
 
-	    enum class OutputFormat { TABLE, CSV, JSON };
-	    enum class Ambit { AUTO, CLASSIC, TRANSACTIONAL };
+	static string help_text();
 
-	    static string help_text();
+	GlobalOptions(GetOpts& get_opts);
 
-	    GlobalOptions(GetOpts& parser);
+	bool quiet() const { return _quiet; }
+	bool verbose() const { return _verbose; }
+	bool utc() const { return _utc; }
+	bool iso() const { return _iso; }
+	bool no_dbus() const { return _no_dbus; }
+	bool version() const { return _version; }
+	bool help() const { return _help; }
+	TableLineStyle table_style() const { return _table_style; }
+	OutputFormat output_format() const { return _output_format; }
+	string separator() const { return _separator; }
+	string config() const { return _config; }
+	string root() const { return _root; }
+	Ambit ambit() const { return _ambit; }
 
-	    bool quiet() const { return _quiet; }
-	    bool verbose() const { return _verbose; }
-	    bool utc() const { return _utc; }
-	    bool iso() const { return _iso; }
-	    bool no_dbus() const { return _no_dbus; }
-	    bool version() const { return _version; }
-	    bool help() const { return _help; }
-	    TableLineStyle table_style() const { return _table_style; }
-	    OutputFormat output_format() const { return _output_format; }
-	    string separator() const { return _separator; }
-	    string config() const { return _config; }
-	    string root() const { return _root; }
-	    Ambit ambit() const { return _ambit; }
+	void set_ambit(Ambit ambit) { _ambit = ambit; }
 
-	    void set_ambit(Ambit ambit) { _ambit = ambit; }
+    private:
 
-	private:
+	void check_options(const ParsedOpts& parsed_opts) const;
 
-	    void parse_options();
-	    void check_options() const;
+	TableLineStyle table_style_value(const ParsedOpts& parsed_opts) const;
+	OutputFormat output_format_value(const ParsedOpts& parsed_opts) const;
+	string separator_value(const ParsedOpts& parsed_opts) const;
+	string config_value(const ParsedOpts& parsed_opts) const;
+	string root_value(const ParsedOpts& parsed_opts) const;
+	Ambit ambit_value(const ParsedOpts& parsed_opts) const;
 
-	    TableLineStyle table_style_value() const;
-	    OutputFormat output_format_value() const;
-	    string separator_value() const;
-	    string config_value() const;
-	    string root_value() const;
-	    Ambit ambit_value() const;
+	bool _quiet;
+	bool _verbose;
+	bool _utc;
+	bool _iso;
+	bool _no_dbus;
+	bool _version;
+	bool _help;
+	TableLineStyle _table_style;
+	OutputFormat _output_format;
+	string _separator;
+	string _config;
+	string _root;
+	Ambit _ambit;
 
-	    bool _quiet;
-	    bool _verbose;
-	    bool _utc;
-	    bool _iso;
-	    bool _no_dbus;
-	    bool _version;
-	    bool _help;
-	    TableLineStyle _table_style;
-	    OutputFormat _output_format;
-	    string _separator;
-	    string _config;
-	    string _root;
-	    Ambit _ambit;
-
-	};
-
-    }
+    };
 
 
-    template <> struct EnumInfo<cli::GlobalOptions::OutputFormat> { static const vector<string> names; };
+    template <> struct EnumInfo<GlobalOptions::OutputFormat> { static const vector<string> names; };
 
-    template <> struct EnumInfo<cli::GlobalOptions::Ambit> { static const vector<string> names; };
+    template <> struct EnumInfo<GlobalOptions::Ambit> { static const vector<string> names; };
 
 }
 
