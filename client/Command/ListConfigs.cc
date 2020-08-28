@@ -64,7 +64,7 @@ namespace snapper
 
 	void Command::ListConfigs::run()
 	{
-	    if (_options_parser.hasArgs())
+	    if (_options_parser.has_args())
 	    {
 		cerr << _("Command 'list-configs' does not take arguments.") << endl;
 		exit(EXIT_FAILURE);

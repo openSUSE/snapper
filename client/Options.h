@@ -35,12 +35,6 @@ namespace snapper
     using std::vector;
 
 
-    struct OptionsException : public Exception
-    {
-        explicit OptionsException(const string& msg) : Exception(msg) {}
-    };
-
-
     namespace cli
     {
 
@@ -61,7 +55,7 @@ namespace snapper
 
 	    GetOpts& _parser;
 
-	    GetOpts::parsed_opts _options;
+	    ParsedOpts _options;
 
 	};
 

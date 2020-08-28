@@ -1,118 +1,184 @@
+/*
+ * Copyright (c) [2011-2015] Novell, Inc.
+ * Copyright (c) [2016-2020] SUSE LLC
+ *
+ * All Rights Reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of version 2 of the GNU General Public License as published
+ * by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, contact Novell, Inc.
+ *
+ * To contact Novell about this file by physical or electronic mail, you may
+ * find current contact information at www.novell.com.
+ */
 
-#include <iostream>
-#include <boost/algorithm/string.hpp>
+
+#include <algorithm>
 
 #include <snapper/AppUtil.h>
 
 #include "GetOpts.h"
 #include "text.h"
 
-using namespace std;
-using namespace snapper;
 
-
-// based on getopt.cc from zypper, thanks jkupec
-
-
-const struct option GetOpts::no_options[1] = {
-    { 0, 0, 0, 0 }
-};
-
-
-void
-GetOpts::init(int new_argc, char** new_argv)
+namespace snapper
 {
-    argc = new_argc;
-    argv = new_argv;
-}
+
+    using namespace std;
 
 
-GetOpts::parsed_opts
-GetOpts::parse(const struct option* longopts)
-{
-    return parse(NULL, longopts);
-}
+    const struct vector<Option> GetOpts::no_options = {};
 
 
-GetOpts::parsed_opts
-GetOpts::parse(const char* command, const struct option* longopts)
-{
-    parsed_opts result;
-    opterr = 0;			// we report errors on our own
-
-    string optstring = make_optstring(longopts);
-    short2long_t short2long = make_short2long(longopts);
-
-    while (true)
+    GetOpts::GetOpts(int argc, char** argv)
+	: argc(argc), argv(argv)
     {
-	int option_index = 0;
-	int c = getopt_long(argc, argv, optstring.c_str(), longopts, &option_index);
-
-	switch (c)
-	{
-	    case -1:
-		return result;
-
-	    case '?':
-		if (!command)
-		    cerr << sformat(_("Unknown global option '%s'."), argv[optind - 1]) << endl;
-		else
-		    cerr << sformat(_("Unknown option '%s' for command '%s'."), argv[optind - 1], command) << endl;
-		cerr << _("Try 'snapper --help' for more information.") << endl;
-		exit(EXIT_FAILURE);
-
-	    case ':':
-		if (!command)
-		    cerr << sformat(_("Missing argument for global option '%s'."), argv[optind - 1]) << endl;
-		else
-		    cerr << sformat(_("Missing argument for command option '%s'."), argv[optind - 1]) << endl;
-		cerr << _("Try 'snapper --help' for more information.") << endl;
-		exit(EXIT_FAILURE);
-
-	    default:
-		const char* opt = c ? short2long[c] : longopts[option_index].name;
-		result[opt] = optarg ? optarg : "";
-		break;
-	}
-    }
-}
-
-
-string
-GetOpts::make_optstring(const struct option* longopts) const
-{
-    // '+' - do not permute, stop at the 1st nonoption, which is the command or an argument
-    // ':' - return ':' to indicate missing arg, not '?'
-    string optstring = "+:";
-
-    for (; longopts && longopts->name; ++longopts)
-    {
-	if (!longopts->flag && longopts->val)
-	{
-	    optstring += (char) longopts->val;
-	    if (longopts->has_arg == required_argument)
-		optstring += ':';
-	    else if (longopts->has_arg == optional_argument)
-		optstring += "::";
-	}
+	opterr = 0;		// we report errors on our own
     }
 
-    return optstring;
-}
 
-
-GetOpts::short2long_t
-GetOpts::make_short2long(const struct option* longopts) const
-{
-    short2long_t result;
-
-    for (; longopts && longopts->name; ++longopts)
+    ParsedOpts
+    GetOpts::parse(const vector<Option>& options)
     {
-	if (!longopts->flag && longopts->val)
+	return parse(nullptr, options);
+    }
+
+
+    ParsedOpts
+    GetOpts::parse(const char* command, const vector<Option>& options)
+    {
+	string optstring = make_optstring(options);
+	vector<struct option> longopts = make_longopts(options);
+
+	map<string, string> result;
+
+	while (true)
 	{
-	    result[longopts->val] = longopts->name;
+	    int option_index = 0;
+	    int c = getopt_long(argc, argv, optstring.c_str(), &longopts[0], &option_index);
+
+	    switch (c)
+	    {
+		case -1:
+		{
+		    return result;
+		}
+
+		case '?':
+		{
+		    string opt;
+		    if (optopt != 0)
+			opt = string("-") + (char)(optopt);
+		    else
+			opt = argv[optind - 1];
+
+		    string msg;
+		    if (!command)
+			msg = sformat(_("Unknown global option '%s'."), opt.c_str());
+		    else
+			msg = sformat(_("Unknown option '%s' for command '%s'."), opt.c_str(), command);
+
+		    SN_THROW(OptionsException(msg));
+		    break;
+		}
+
+		case ':':
+		{
+		    string opt;
+		    if (optopt != 0)
+		    {
+			vector<Option>::const_iterator it = find(options, optopt);
+			if (it == options.end())
+			    SN_THROW(Exception("option not found"));
+
+			opt = string("--") + it->name;
+		    }
+		    else
+		    {
+			opt = argv[optind - 1];
+		    }
+
+		    string msg;
+		    if (!command)
+			msg = sformat(_("Missing argument for global option '%s'."), opt.c_str());
+		    else
+			msg = sformat(_("Missing argument for command option '%s'."), opt.c_str());
+
+		    SN_THROW(OptionsException(msg));
+		    break;
+		}
+
+		default:
+		{
+		    vector<Option>::const_iterator it = c ? find(options, c) : options.begin() + option_index;
+		    if (it == options.end())
+			SN_THROW(Exception("option not found"));
+
+		    result[it->name] = optarg ? optarg : "";
+		    break;
+		}
+	    }
 	}
     }
 
-    return result;
+
+    vector<Option>::const_iterator
+    GetOpts::find(const vector<Option>& options, char c) const
+    {
+	return find_if(options.begin(), options.end(), [c](const Option& option)
+	    { return option.c == c; }
+	);
+    }
+
+
+    string
+    GetOpts::make_optstring(const vector<Option>& options) const
+    {
+	// '+' - do not permute, stop at the 1st non-option, which is the command or an argument
+	// ':' - return ':' to indicate missing arg, not '?'
+	string optstring = "+:";
+
+	for (const Option& option : options)
+	{
+	    if (option.c == 0)
+		continue;
+
+	    optstring += option.c;
+
+	    switch (option.has_arg)
+	    {
+		case no_argument:
+		    break;
+
+		case required_argument:
+		    optstring += ':';
+		    break;
+	    }
+	}
+
+	return optstring;
+    }
+
+
+    vector<struct option>
+    GetOpts::make_longopts(const vector<Option> options) const
+    {
+	vector<struct option> ret;
+
+	for (const Option& option : options)
+	    ret.push_back({ option.name, option.has_arg, nullptr, option.c });
+
+	ret.push_back({ nullptr, 0, nullptr, 0 });
+
+	return ret;
+    }
+
 }

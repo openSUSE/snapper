@@ -64,7 +64,7 @@ namespace snapper
 
 	void Command::GetConfig::run()
 	{
-	    if (_options_parser.hasArgs())
+	    if (_options_parser.has_args())
 	    {
 		cerr << _("Command 'get-config' does not take arguments.") << endl;
 		exit(EXIT_FAILURE);

@@ -63,8 +63,8 @@ using namespace std;
 
 struct Cmd
 {
-    typedef void (*cmd_func_t)(cli::GlobalOptions& global_options, ProxySnappers* snappers,
-	ProxySnapper* snapper);
+    typedef void (*cmd_func_t)(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+			       ProxySnapper* snapper);
 
     typedef void (*help_func_t)();
 
@@ -87,21 +87,18 @@ struct Cmd
 };
 
 
-GetOpts getopts;
-
-
 struct MyFiles : public Files
 {
 
     MyFiles(const Files& files) : Files(files) {}
 
-    void bulk_process(FILE* file, std::function<void(File& file)> callback);
+    void bulk_process(FILE* file, GetOpts& get_opts, std::function<void(File& file)> callback);
 
 };
 
 
 void
-MyFiles::bulk_process(FILE* file, std::function<void(File& file)> callback)
+MyFiles::bulk_process(FILE* file, GetOpts& get_opts, std::function<void(File& file)> callback)
 {
     if (file)
     {
@@ -137,16 +134,16 @@ MyFiles::bulk_process(FILE* file, std::function<void(File& file)> callback)
     }
     else
     {
-	if (getopts.numArgs() == 0)
+	if (get_opts.num_args() == 0)
 	{
 	    for (Files::iterator it = begin(); it != end(); ++it)
 		callback(*it);
 	}
 	else
 	{
-	    while (getopts.numArgs() > 0)
+	    while (get_opts.num_args() > 0)
 	    {
-		string name = getopts.popArg();
+		string name = get_opts.pop_arg();
 
 		Files::iterator it = findAbsolutePath(name);
 		if (it == end())
@@ -170,9 +167,9 @@ help_list_configs()
 
 
 void
-command_list_configs(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper*)
+command_list_configs(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
 {
-    cli::Command::ListConfigs command(global_options, getopts, *snappers);
+    cli::Command::ListConfigs command(global_options, get_opts, *snappers);
 
     command.run();
 }
@@ -192,22 +189,21 @@ help_create_config()
 
 
 void
-command_create_config(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper*)
+command_create_config(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
 {
-    const struct option options[] = {
-	{ "fstype",		required_argument,	0,	'f' },
-	{ "template",		required_argument,	0,	't' },
-	{ 0, 0, 0, 0 }
+    const vector<Option> options = {
+	Option("fstype",	required_argument,	'f'),
+	Option("template",	required_argument,	't')
     };
 
-    GetOpts::parsed_opts opts = getopts.parse("create-config", options);
-    if (getopts.numArgs() != 1)
+    ParsedOpts opts = get_opts.parse("create-config", options);
+    if (get_opts.num_args() != 1)
     {
 	cerr << _("Command 'create-config' needs one argument.") << endl;
 	exit(EXIT_FAILURE);
     }
 
-    string subvolume = realpath(getopts.popArg());
+    string subvolume = realpath(get_opts.pop_arg());
     if (subvolume.empty())
     {
 	cerr << _("Invalid subvolume.") << endl;
@@ -217,7 +213,7 @@ command_create_config(cli::GlobalOptions& global_options, ProxySnappers* snapper
     string fstype = "";
     string template_name = "default";
 
-    GetOpts::parsed_opts::const_iterator opt;
+    ParsedOpts::const_iterator opt;
 
     if ((opt = opts.find("fstype")) != opts.end())
 	fstype = opt->second;
@@ -245,10 +241,10 @@ help_delete_config()
 
 
 void
-command_delete_config(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper*)
+command_delete_config(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
 {
-    getopts.parse("delete-config", GetOpts::no_options);
-    if (getopts.hasArgs())
+    get_opts.parse("delete-config", GetOpts::no_options);
+    if (get_opts.has_args())
     {
 	cerr << _("Command 'delete-config' does not take arguments.") << endl;
 	exit(EXIT_FAILURE);
@@ -266,9 +262,9 @@ help_get_config()
 
 
 void
-command_get_config(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper*)
+command_get_config(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
 {
-    cli::Command::GetConfig command(global_options, getopts, *snappers);
+    cli::Command::GetConfig command(global_options, get_opts, *snappers);
 
     command.run();
 }
@@ -284,16 +280,16 @@ help_set_config()
 
 
 void
-command_set_config(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_set_config(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
-    getopts.parse("set-config", GetOpts::no_options);
-    if (!getopts.hasArgs())
+    get_opts.parse("set-config", GetOpts::no_options);
+    if (!get_opts.has_args())
     {
 	cerr << _("Command 'set-config' needs at least one argument.") << endl;
 	exit(EXIT_FAILURE);
     }
 
-    ProxyConfig config(read_configdata(getopts.getArgs()));
+    ProxyConfig config(read_configdata(get_opts.get_args()));
 
     snapper->setConfig(config);
 }
@@ -307,9 +303,9 @@ help_list()
 
 
 void
-command_list(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper*)
+command_list(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
 {
-    cli::Command::ListSnapshots command(global_options, getopts, *snappers);
+    cli::Command::ListSnapshots command(global_options, get_opts, *snappers);
 
     command.run();
 }
@@ -337,24 +333,23 @@ help_create()
 
 
 void
-command_create(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_create(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
-    const struct option options[] = {
-	{ "type",		required_argument,	0,	't' },
-	{ "pre-number",		required_argument,	0,	0 },
-	{ "print-number",	no_argument,		0,	'p' },
-	{ "description",	required_argument,	0,	'd' },
-	{ "cleanup-algorithm",	required_argument,	0,	'c' },
-	{ "userdata",		required_argument,	0,	'u' },
-	{ "command",		required_argument,	0,	0 },
-	{ "read-only",		no_argument,		0,	0 },
-	{ "read-write",		no_argument,		0,	0 },
-	{ "from",		required_argument,	0,	0 },
-	{ 0, 0, 0, 0 }
+    const vector<Option> options = {
+	Option("type",			required_argument,	't'),
+	Option("pre-number",		required_argument),
+	Option("print-number",		no_argument,		'p'),
+	Option("description",		required_argument,	'd'),
+	Option("cleanup-algorithm",	required_argument,	'c'),
+	Option("userdata",		required_argument,	'u'),
+	Option("command",		required_argument),
+	Option("read-only",		no_argument),
+	Option("read-write",		no_argument),
+	Option("from",			required_argument)
     };
 
-    GetOpts::parsed_opts opts = getopts.parse("create", options);
-    if (getopts.hasArgs())
+    ParsedOpts opts = get_opts.parse("create", options);
+    if (get_opts.has_args())
     {
 	cerr << _("Command 'create' does not take arguments.") << endl;
 	exit(EXIT_FAILURE);
@@ -372,7 +367,7 @@ command_create(cli::GlobalOptions& global_options, ProxySnappers* snappers, Prox
     string command;
     ProxySnapshots::const_iterator parent = snapshots.getCurrent();
 
-    GetOpts::parsed_opts::const_iterator opt;
+    ParsedOpts::const_iterator opt;
 
     if ((opt = opts.find("type")) != opts.end())
     {
@@ -491,17 +486,16 @@ help_modify()
 
 
 void
-command_modify(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_modify(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
-    const struct option options[] = {
-	{ "description",	required_argument,	0,	'd' },
-	{ "cleanup-algorithm",	required_argument,	0,	'c' },
-	{ "userdata",		required_argument,	0,	'u' },
-	{ 0, 0, 0, 0 }
+    const vector<Option> options = {
+	Option("description",		required_argument,	'd'),
+	Option("cleanup-algorithm",	required_argument,	'c'),
+	Option("userdata",		required_argument,	'u')
     };
 
-    GetOpts::parsed_opts opts = getopts.parse("modify", options);
-    if (!getopts.hasArgs())
+    ParsedOpts opts = get_opts.parse("modify", options);
+    if (!get_opts.has_args())
     {
 	cerr << _("Command 'modify' needs at least one argument.") << endl;
 	exit(EXIT_FAILURE);
@@ -509,13 +503,13 @@ command_modify(cli::GlobalOptions& global_options, ProxySnappers* snappers, Prox
 
     ProxySnapshots& snapshots = snapper->getSnapshots();
 
-    while (getopts.hasArgs())
+    while (get_opts.has_args())
     {
-	ProxySnapshots::iterator snapshot = snapshots.findNum(getopts.popArg());
+	ProxySnapshots::iterator snapshot = snapshots.findNum(get_opts.pop_arg());
 
 	SMD smd = snapshot->getSmd();
 
-	GetOpts::parsed_opts::const_iterator opt;
+	ParsedOpts::const_iterator opt;
 
 	if ((opt = opts.find("description")) != opts.end())
 	    smd.description = opt->second;
@@ -575,15 +569,14 @@ filter_undeletables(ProxySnapshots& snapshots, vector<ProxySnapshots::iterator>&
 
 
 void
-command_delete(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_delete(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
-    const struct option options[] = {
-	{ "sync",		no_argument,		0,	's' },
-	{ 0, 0, 0, 0 }
+    const vector<Option> options = {
+	Option("sync",	no_argument,	's')
     };
 
-    GetOpts::parsed_opts opts = getopts.parse("delete", options);
-    if (!getopts.hasArgs())
+    ParsedOpts opts = get_opts.parse("delete", options);
+    if (!get_opts.has_args())
     {
 	cerr << _("Command 'delete' needs at least one argument.") << endl;
 	exit(EXIT_FAILURE);
@@ -591,7 +584,7 @@ command_delete(cli::GlobalOptions& global_options, ProxySnappers* snappers, Prox
 
     bool sync = false;
 
-    GetOpts::parsed_opts::const_iterator opt;
+    ParsedOpts::const_iterator opt;
 
     if ((opt = opts.find("sync")) != opts.end())
 	sync = true;
@@ -600,9 +593,9 @@ command_delete(cli::GlobalOptions& global_options, ProxySnappers* snappers, Prox
 
     vector<ProxySnapshots::iterator> nums;
 
-    while (getopts.hasArgs())
+    while (get_opts.has_args())
     {
-	string arg = getopts.popArg();
+	string arg = get_opts.pop_arg();
 
 	if (arg.find_first_of("-") == string::npos)
 	{
@@ -649,10 +642,10 @@ help_mount()
 
 
 void
-command_mount(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_mount(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
-    getopts.parse("mount", GetOpts::no_options);
-    if (!getopts.hasArgs())
+    get_opts.parse("mount", GetOpts::no_options);
+    if (!get_opts.has_args())
     {
 	cerr << _("Command 'mount' needs at least one argument.") << endl;
 	exit(EXIT_FAILURE);
@@ -660,9 +653,9 @@ command_mount(cli::GlobalOptions& global_options, ProxySnappers* snappers, Proxy
 
     const ProxySnapshots& snapshots = snapper->getSnapshots();
 
-    while (getopts.hasArgs())
+    while (get_opts.has_args())
     {
-	ProxySnapshots::const_iterator snapshot = snapshots.findNum(getopts.popArg());
+	ProxySnapshots::const_iterator snapshot = snapshots.findNum(get_opts.pop_arg());
 	snapshot->mountFilesystemSnapshot(true);
     }
 }
@@ -678,10 +671,10 @@ help_umount()
 
 
 void
-command_umount(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_umount(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
-    getopts.parse("umount", GetOpts::no_options);
-    if (!getopts.hasArgs())
+    get_opts.parse("umount", GetOpts::no_options);
+    if (!get_opts.has_args())
     {
 	cerr << _("Command 'umount' needs at least one argument.") << endl;
 	exit(EXIT_FAILURE);
@@ -689,9 +682,9 @@ command_umount(cli::GlobalOptions& global_options, ProxySnappers* snappers, Prox
 
     const ProxySnapshots& snapshots = snapper->getSnapshots();
 
-    while (getopts.hasArgs())
+    while (get_opts.has_args())
     {
-	ProxySnapshots::const_iterator snapshot = snapshots.findNum(getopts.popArg());
+	ProxySnapshots::const_iterator snapshot = snapshots.findNum(get_opts.pop_arg());
 	snapshot->umountFilesystemSnapshot(true);
     }
 }
@@ -710,19 +703,18 @@ help_status()
 
 
 void
-command_status(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_status(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
-    const struct option options[] = {
-	{ "output",		required_argument,	0,	'o' },
-	{ 0, 0, 0, 0 }
+    const vector<Option> options = {
+	Option("output",	required_argument,	'o')
     };
 
-    GetOpts::parsed_opts opts = getopts.parse("status", options);
-    if (getopts.numArgs() != 1)
+    ParsedOpts opts = get_opts.parse("status", options);
+    if (get_opts.num_args() != 1)
     {
 	cerr << _("Command 'status' needs one argument.") << endl;
 
-	if (getopts.numArgs() == 2)
+	if (get_opts.num_args() == 2)
 	{
 	    cerr << _("Maybe you forgot the delimiter '..' between the snapshot numbers.") << endl
 		 << _("See 'man snapper' for further instructions.") << endl;
@@ -731,12 +723,12 @@ command_status(cli::GlobalOptions& global_options, ProxySnappers* snappers, Prox
 	exit(EXIT_FAILURE);
     }
 
-    GetOpts::parsed_opts::const_iterator opt;
+    ParsedOpts::const_iterator opt;
 
     ProxySnapshots& snapshots = snapper->getSnapshots();
 
     pair<ProxySnapshots::const_iterator, ProxySnapshots::const_iterator> range =
-	snapshots.findNums(getopts.popArg());
+	snapshots.findNums(get_opts.pop_arg());
 
     ProxyComparison comparison = snapper->createComparison(*range.first, *range.second, false);
 
@@ -778,17 +770,16 @@ help_diff()
 
 
 void
-command_diff(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_diff(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
-    const struct option options[] = {
-	{ "input",		required_argument,	0,	'i' },
-	{ "diff-cmd",		required_argument,	0,	0 },
-	{ "extensions",		required_argument,	0,	'x' },
-	{ 0, 0, 0, 0 }
+    const vector<Option> options = {
+	Option("input",		required_argument,	'i'),
+	Option("diff-cmd",	required_argument),
+	Option("extensions",	required_argument,	'x'),
     };
 
-    GetOpts::parsed_opts opts = getopts.parse("diff", options);
-    if (getopts.numArgs() < 1)
+    ParsedOpts opts = get_opts.parse("diff", options);
+    if (get_opts.num_args() < 1)
     {
 	cerr << _("Command 'diff' needs at least one argument.") << endl;
 	exit(EXIT_FAILURE);
@@ -797,7 +788,7 @@ command_diff(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxyS
     FILE* file = NULL;
     Differ differ;
 
-    GetOpts::parsed_opts::const_iterator opt;
+    ParsedOpts::const_iterator opt;
 
     if ((opt = opts.find("input")) != opts.end())
     {
@@ -818,13 +809,13 @@ command_diff(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxyS
     ProxySnapshots& snapshots = snapper->getSnapshots();
 
     pair<ProxySnapshots::const_iterator, ProxySnapshots::const_iterator> range =
-	snapshots.findNums(getopts.popArg());
+	snapshots.findNums(get_opts.pop_arg());
 
     ProxyComparison comparison = snapper->createComparison(*range.first, *range.second, true);
 
     MyFiles files(comparison.getFiles());
 
-    files.bulk_process(file, [differ](const File& file) {
+    files.bulk_process(file, get_opts, [differ](const File& file) {
 	differ.run(file.getAbsolutePath(LOC_PRE), file.getAbsolutePath(LOC_POST));
     });
 }
@@ -843,15 +834,14 @@ help_undo()
 
 
 void
-command_undo(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_undo(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
-    const struct option options[] = {
-	{ "input",		required_argument,	0,	'i' },
-	{ 0, 0, 0, 0 }
+    const vector<Option> options = {
+	Option("input",		required_argument,	'i')
     };
 
-    GetOpts::parsed_opts opts = getopts.parse("undochange", options);
-    if (getopts.numArgs() < 1)
+    ParsedOpts opts = get_opts.parse("undochange", options);
+    if (get_opts.num_args() < 1)
     {
 	cerr << _("Command 'undochange' needs at least one argument.") << endl;
 	exit(EXIT_FAILURE);
@@ -860,11 +850,11 @@ command_undo(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxyS
     ProxySnapshots& snapshots = snapper->getSnapshots();
 
     pair<ProxySnapshots::const_iterator, ProxySnapshots::const_iterator> range =
-	snapshots.findNums(getopts.popArg());
+	snapshots.findNums(get_opts.pop_arg());
 
     FILE* file = NULL;
 
-    GetOpts::parsed_opts::const_iterator opt;
+    ParsedOpts::const_iterator opt;
 
     if ((opt = opts.find("input")) != opts.end())
     {
@@ -886,7 +876,7 @@ command_undo(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxyS
 
     MyFiles files(comparison.getFiles());
 
-    files.bulk_process(file, [](File& file) {
+    files.bulk_process(file, get_opts, [](File& file) {
 	file.setUndo(true);
     });
 
@@ -997,18 +987,17 @@ help_rollback()
 
 
 void
-command_rollback(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_rollback(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
-    const struct option options[] = {
-	{ "print-number",       no_argument,            0,      'p' },
-	{ "description",        required_argument,      0,      'd' },
-	{ "cleanup-algorithm",  required_argument,      0,      'c' },
-	{ "userdata",           required_argument,      0,      'u' },
-	{ 0, 0, 0, 0 }
+    const vector<Option> options = {
+	Option("print-number",		no_argument,		'p'),
+	Option("description",		required_argument,	'd'),
+	Option("cleanup-algorithm",	required_argument,	'c'),
+	Option("userdata",		required_argument,	'u')
     };
 
-    GetOpts::parsed_opts opts = getopts.parse("rollback", options);
-    if (getopts.hasArgs() && getopts.numArgs() != 1)
+    ParsedOpts opts = get_opts.parse("rollback", options);
+    if (get_opts.has_args() && get_opts.num_args() != 1)
     {
 	cerr << _("Command 'rollback' takes either one or no argument.") << endl;
 	exit(EXIT_FAILURE);
@@ -1027,7 +1016,7 @@ command_rollback(cli::GlobalOptions& global_options, ProxySnappers* snappers, Pr
     SCD scd2;
     scd2.description = default_description2;
 
-    GetOpts::parsed_opts::const_iterator opt;
+    ParsedOpts::const_iterator opt;
 
     if ((opt = opts.find("print-number")) != opts.end())
 	print_number = true;
@@ -1094,7 +1083,7 @@ command_rollback(cli::GlobalOptions& global_options, ProxySnappers* snappers, Pr
 	    ProxySnapshots::const_iterator snapshot1 = snapshots.end();
 	    ProxySnapshots::const_iterator snapshot2 = snapshots.end();
 
-	    if (getopts.numArgs() == 0)
+	    if (get_opts.num_args() == 0)
 	    {
 		if (!global_options.quiet())
 		    cout << _("Creating read-only snapshot of default subvolume.") << flush;
@@ -1120,7 +1109,7 @@ command_rollback(cli::GlobalOptions& global_options, ProxySnappers* snappers, Pr
 	    }
 	    else
 	    {
-		ProxySnapshots::const_iterator tmp = snapshots.findNum(getopts.popArg());
+		ProxySnapshots::const_iterator tmp = snapshots.findNum(get_opts.pop_arg());
 
 		if (!global_options.quiet())
 		    cout << _("Creating read-only snapshot of current system.") << flush;
@@ -1175,13 +1164,13 @@ command_rollback(cli::GlobalOptions& global_options, ProxySnappers* snappers, Pr
 
 	    ProxySnapshots::iterator snapshot = snapshots.end();
 
-	    if (getopts.numArgs() == 0)
+	    if (get_opts.num_args() == 0)
 	    {
 		snapshot = snapshots.getActive();
 	    }
 	    else
 	    {
-		snapshot = snapshots.findNum(getopts.popArg());
+		snapshot = snapshots.findNum(get_opts.pop_arg());
 	    }
 
 	    if (previous_default == snapshot)
@@ -1226,10 +1215,10 @@ help_setup_quota()
 
 
 void
-command_setup_quota(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_setup_quota(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
-    GetOpts::parsed_opts opts = getopts.parse("setup-quota", GetOpts::no_options);
-    if (getopts.numArgs() != 0)
+    ParsedOpts opts = get_opts.parse("setup-quota", GetOpts::no_options);
+    if (get_opts.num_args() != 0)
     {
 	cerr << _("Command 'setup-quota' does not take arguments.") << endl;
 	exit(EXIT_FAILURE);
@@ -1249,16 +1238,16 @@ help_cleanup()
 
 
 void
-command_cleanup(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_cleanup(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
-    GetOpts::parsed_opts opts = getopts.parse("cleanup", GetOpts::no_options);
-    if (getopts.numArgs() != 1)
+    ParsedOpts opts = get_opts.parse("cleanup", GetOpts::no_options);
+    if (get_opts.num_args() != 1)
     {
 	cerr << _("Command 'cleanup' needs one arguments.") << endl;
 	exit(EXIT_FAILURE);
     }
 
-    string cleanup = getopts.popArg();
+    string cleanup = get_opts.pop_arg();
 
     if (cleanup == "number")
     {
@@ -1287,10 +1276,10 @@ help_debug()
 
 
 void
-command_debug(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper*)
+command_debug(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
 {
-    getopts.parse("debug", GetOpts::no_options);
-    if (getopts.hasArgs())
+    get_opts.parse("debug", GetOpts::no_options);
+    if (get_opts.has_args())
     {
 	cerr << _("Command 'debug' does not take arguments.") << endl;
 	exit(EXIT_FAILURE);
@@ -1331,10 +1320,10 @@ print_xa_diff(const string loc_pre, const string loc_post)
 }
 
 void
-command_xa_diff(cli::GlobalOptions& global_options, ProxySnappers* snappers, ProxySnapper* snapper)
+command_xa_diff(cli::GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
 {
-    GetOpts::parsed_opts opts = getopts.parse("xadiff", GetOpts::no_options);
-    if (getopts.numArgs() < 1)
+    ParsedOpts opts = get_opts.parse("xadiff", GetOpts::no_options);
+    if (get_opts.num_args() < 1)
     {
         cerr << _("Command 'xadiff' needs at least one argument.") << endl;
         exit(EXIT_FAILURE);
@@ -1343,13 +1332,13 @@ command_xa_diff(cli::GlobalOptions& global_options, ProxySnappers* snappers, Pro
     ProxySnapshots& snapshots = snapper->getSnapshots();
 
     pair<ProxySnapshots::const_iterator, ProxySnapshots::const_iterator> range =
-	snapshots.findNums(getopts.popArg());
+	snapshots.findNums(get_opts.pop_arg());
 
     ProxyComparison comparison = snapper->createComparison(*range.first, *range.second, true);
 
     MyFiles files(comparison.getFiles());
 
-    if (getopts.numArgs() == 0)
+    if (get_opts.num_args() == 0)
     {
 	for (Files::const_iterator it1 = files.begin(); it1 != files.end(); ++it1)
             if (it1->getPreToPostStatus() & XATTRS)
@@ -1357,9 +1346,9 @@ command_xa_diff(cli::GlobalOptions& global_options, ProxySnappers* snappers, Pro
     }
     else
     {
-        while (getopts.numArgs() > 0)
+        while (get_opts.num_args() > 0)
         {
-            string name = getopts.popArg();
+            string name = get_opts.pop_arg();
 
             Files::const_iterator it1 = files.findAbsolutePath(name);
             if (it1 == files.end())
@@ -1402,10 +1391,10 @@ usage()
 void help() __attribute__ ((__noreturn__));
 
 void
-help(const list<Cmd>& cmds)
+help(const vector<Cmd>& cmds, GetOpts& get_opts)
 {
-    getopts.parse("help", GetOpts::no_options);
-    if (getopts.hasArgs())
+    get_opts.parse("help", GetOpts::no_options);
+    if (get_opts.has_args())
     {
 	cerr << _("Command 'help' does not take arguments.") << endl;
 	exit(EXIT_FAILURE);
@@ -1416,8 +1405,8 @@ help(const list<Cmd>& cmds)
 
     cout << cli::GlobalOptions::help_text() << endl;
 
-    for (list<Cmd>::const_iterator cmd = cmds.begin(); cmd != cmds.end(); ++cmd)
-	(*cmd->help_func)();
+    for (const Cmd& cmd : cmds)
+	(*cmd.help_func)();
 
     exit(EXIT_SUCCESS);
 }
@@ -1438,7 +1427,7 @@ main(int argc, char** argv)
     setLogDo(&log_do);
     setLogQuery(&log_query);
 
-    const list<Cmd> cmds = {
+    const vector<Cmd> cmds = {
 	Cmd("list-configs", command_list_configs, help_list_configs, false),
 	Cmd("create-config", command_create_config, help_create_config, false),
 	Cmd("delete-config", command_delete_config, help_delete_config, false),
@@ -1466,9 +1455,9 @@ main(int argc, char** argv)
 
     try
     {
-	getopts.init(argc, argv);
+	GetOpts get_opts(argc, argv);
 
-	cli::GlobalOptions global_options(getopts);
+	cli::GlobalOptions global_options(get_opts);
 
 	if (global_options.version())
 	{
@@ -1479,19 +1468,19 @@ main(int argc, char** argv)
 
 	if (global_options.help())
 	{
-	    help(cmds);
+	    help(cmds, get_opts);
 	}
 
-	if (!getopts.hasArgs())
+	if (!get_opts.has_args())
 	{
 	    cerr << _("No command provided.") << endl
 		 << _("Try 'snapper --help' for more information.") << endl;
 	    exit(EXIT_FAILURE);
 	}
 
-	const char* command = getopts.popArg();
+	const char* command = get_opts.pop_arg();
 
-	list<Cmd>::const_iterator cmd = cmds.begin();
+	vector<Cmd>::const_iterator cmd = cmds.begin();
 	while (cmd != cmds.end() && (cmd->name != command && !contains(cmd->aliases, command)))
 	    ++cmd;
 
@@ -1508,9 +1497,9 @@ main(int argc, char** argv)
 				   ProxySnappers::createDbus());
 
 	    if (cmd->needs_snapper)
-		(*cmd->cmd_func)(global_options, &snappers, snappers.getSnapper(global_options.config()));
+		(*cmd->cmd_func)(global_options, get_opts, &snappers, snappers.getSnapper(global_options.config()));
 	    else
-		(*cmd->cmd_func)(global_options, &snappers, nullptr);
+		(*cmd->cmd_func)(global_options, get_opts, &snappers, nullptr);
 	}
 	catch (const DBus::ErrorException& e)
 	{
@@ -1613,7 +1602,8 @@ main(int argc, char** argv)
 	catch (const OptionsException& e)
 	{
 	    SN_CAUGHT(e);
-	    cerr << e.what() << endl;
+	    cerr << e.what() << endl
+		 << _("Try 'snapper --help' for more information.") << endl;
 	    exit(EXIT_FAILURE);
 	}
 	catch (const Exception& e)
@@ -1626,7 +1616,8 @@ main(int argc, char** argv)
     catch (const OptionsException& e)
     {
 	SN_CAUGHT(e);
-	cerr << e.what() << endl;
+	cerr << e.what() << endl
+	     << _("Try 'snapper --help' for more information.") << endl;
 	exit(EXIT_FAILURE);
     }
 

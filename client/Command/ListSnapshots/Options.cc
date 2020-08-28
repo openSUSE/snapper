@@ -35,12 +35,11 @@ namespace snapper
 
 	namespace
 	{
-	    const option OPTIONS[] = {
-		{ "type",		required_argument,	0,	't' },
-		{ "disable-used-space",	no_argument,		0,	0 },
-		{ "all-configs",	no_argument,		0,	'a' },
-		{ "columns", 		required_argument,	0,	0},
-		{ 0, 0, 0, 0 }
+	    const vector<Option> OPTIONS = {
+		Option("type",			required_argument,	't'),
+		Option("disable-used-space",	no_argument),
+		Option("all-configs",		no_argument,		'a'),
+		Option("columns", 		required_argument)
 	    };
 	}
 

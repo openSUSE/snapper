@@ -40,23 +40,22 @@ namespace snapper
 
 	    const string DEFAULT_ROOT = "/";
 
-	    const option OPTIONS[] = {
-		{ "quiet",		no_argument,		0,	'q' },
-		{ "verbose",		no_argument,		0,	'v' },
-		{ "utc",		no_argument,		0,	0 },
-		{ "iso",		no_argument,		0,	0 },
-		{ "table-style",	required_argument,	0,	't' },
-		{ "machine-readable",	required_argument,	0,	0 },
-		{ "csvout",		no_argument,		0,	0 },
-		{ "jsonout",		no_argument,		0,	0 },
-		{ "separator",		required_argument,	0,	0 },
-		{ "config",		required_argument,	0,	'c' },
-		{ "no-dbus",		no_argument,		0,	0 },
-		{ "root",		required_argument,	0,	'r' },
-		{ "ambit",		required_argument,	0,	'a' },
-		{ "version",		no_argument,		0,	0 },
-		{ "help",		no_argument,		0,	'h' },
-		{ 0, 0, 0, 0 }
+	    const vector<Option> OPTIONS = {
+		Option("quiet",			no_argument,		'q'),
+		Option("verbose",		no_argument,		'v'),
+		Option("utc",			no_argument),
+		Option("iso",			no_argument),
+		Option("table-style",		required_argument,	't'),
+		Option("machine-readable",	required_argument),
+		Option("csvout",		no_argument),
+		Option("jsonout",		no_argument),
+		Option("separator",		required_argument),
+		Option("config",		required_argument,	'c'),
+		Option("no-dbus",		no_argument),
+		Option("root",			required_argument,	'r'),
+		Option("ambit",			required_argument,	'a'),
+		Option("version",		no_argument),
+		Option("help",			no_argument,		'h')
 	    };
 
 	}
@@ -115,8 +114,7 @@ namespace snapper
 	{
 	    if (has_option("root") && !has_option("no-dbus"))
 	    {
-		string error =_("root argument can be used only together with no-dbus.\n"
-				"Try 'snapper --help' for more information.");
+		string error =_("root argument can be used only together with no-dbus.");
 
 		SN_THROW(OptionsException(error));
 	    }

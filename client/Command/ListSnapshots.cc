@@ -64,7 +64,7 @@ namespace snapper
 
 	void Command::ListSnapshots::run()
 	{
-	    if (_options_parser.hasArgs())
+	    if (_options_parser.has_args())
 	    {
 		cerr << _("Command 'list' does not take arguments.") << endl;
 		exit(EXIT_FAILURE);
