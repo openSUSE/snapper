@@ -185,9 +185,9 @@ main(int argc, char** argv)
     }
     catch (const OptionsException& e)
     {
-        SN_CAUGHT(e);
-        cerr << e.what() << endl;
-        exit(EXIT_FAILURE);
+	SN_CAUGHT(e);
+	cerr << e.what() << endl;
+	exit(EXIT_FAILURE);
     }
 
     bool ok = true;

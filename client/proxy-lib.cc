@@ -144,7 +144,7 @@ ProxySnapperLib::deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, boo
 
     ProxySnapshots& proxy_snapshots = getSnapshots();
     for (ProxySnapshots::iterator& proxy_snapshot : snapshots)
-        proxy_snapshots.erase(proxy_snapshot);
+	proxy_snapshots.erase(proxy_snapshot);
 }
 
 

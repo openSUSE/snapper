@@ -555,9 +555,9 @@ main(int argc, char** argv)
     }
     catch (const OptionsException& e)
     {
-        SN_CAUGHT(e);
-        cerr << e.what() << endl;
-        usage();
+	SN_CAUGHT(e);
+	cerr << e.what() << endl;
+	usage();
     }
 
     try
