@@ -9,9 +9,10 @@ SUBDIRS = 		\
 AM_CPPFLAGS = -I$(top_srcdir) $(DBUS_CFLAGS)
 
 noinst_LTLIBRARIES = libclient.la
-libclient_la_SOURCES =                  \
+
+libclient_la_SOURCES =			\
 	types.cc	types.h		\
-	commands.cc	commands.h      \
+	commands.cc	commands.h	\
 	errors.cc	errors.h
 
 libclient_la_LIBADD = utils/libutils.la ../dbus/libdbus.la
@@ -93,4 +94,3 @@ mksubvolume_LDADD = ../snapper/libsnapper.la utils/libutils.la
 endif
 
 endif
-
