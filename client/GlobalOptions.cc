@@ -211,7 +211,7 @@ namespace snapper
 	Ambit ambit;
 	if (!toValue(str, ambit, false))
 	{
-	    string error = sformat(_("Invalid ambit %s."), str.c_str()) + '\n' +
+	    string error = sformat(_("Invalid ambit '%s'."), str.c_str()) + '\n' +
 		sformat(_("Use %s, %s or %s."), toString(Ambit::AUTO).c_str(),
 			toString(Ambit::CLASSIC).c_str(), toString(Ambit::TRANSACTIONAL).c_str());
 

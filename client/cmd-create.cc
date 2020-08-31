@@ -23,6 +23,8 @@
 
 #include <iostream>
 
+#include <snapper/AppUtil.h>
+
 #include "utils/text.h"
 #include "GlobalOptions.h"
 #include "proxy.h"
@@ -73,11 +75,6 @@ namespace snapper
 	};
 
 	ParsedOpts opts = get_opts.parse("create", options);
-	if (get_opts.has_args())
-	{
-	    cerr << _("Command 'create' does not take arguments.") << endl;
-	    exit(EXIT_FAILURE);
-	}
 
 	enum class CreateType { SINGLE, PRE, POST, PRE_POST };
 
@@ -105,8 +102,10 @@ namespace snapper
 		type = CreateType::PRE_POST;
 	    else
 	    {
-		cerr << _("Unknown type of snapshot.") << endl;
-		exit(EXIT_FAILURE);
+		string error = sformat(_("Unknown type '%s'."), opt->second.c_str()) + '\n' +
+		    sformat(_("Use %s, %s, %s or %s."), "single", "pre", "post", "pre-post");
+
+		SN_THROW(OptionsException(error));
 	    }
 	}
 
@@ -142,26 +141,27 @@ namespace snapper
 
 	if (type == CreateType::POST && snapshot1 == snapshots.end())
 	{
-	    cerr << _("Missing or invalid pre-number.") << endl;
-	    exit(EXIT_FAILURE);
+	    SN_THROW(OptionsException(_("Missing or invalid pre-number.")));
 	}
 
 	if (type == CreateType::PRE_POST && command.empty())
 	{
-	    cerr << _("Missing command argument.") << endl;
-	    exit(EXIT_FAILURE);
+	    SN_THROW(OptionsException(_("Missing command option.")));
 	}
 
 	if (type != CreateType::SINGLE && !scd.read_only)
 	{
-	    cerr << _("Option --read-write only supported for snapshots of type single.") << endl;
-	    exit(EXIT_FAILURE);
+	    SN_THROW(OptionsException(_("Option --read-write only supported for snapshots of type single.")));
 	}
 
 	if (type != CreateType::SINGLE && parent != snapshots.getCurrent())
 	{
-	    cerr << _("Option --from only supported for snapshots of type single.") << endl;
-	    exit(EXIT_FAILURE);
+	    SN_THROW(OptionsException(_("Option --from only supported for snapshots of type single.")));
+	}
+
+	if (get_opts.has_args())
+	{
+	    SN_THROW(OptionsException(_("Command 'create' does not take arguments.")));
 	}
 
 	switch (type)

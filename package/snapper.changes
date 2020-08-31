@@ -1,7 +1,8 @@
 -------------------------------------------------------------------
 Fri Aug 28 11:06:23 CEST 2020 - aschnell@suse.com
 
-- improved error reporting in getopt wrapper (part of bsc#1150156)
+- improved error messages for wrong command line options and
+  arguments (bsc#1150156)
 
 -------------------------------------------------------------------
 Thu Aug 27 12:04:44 CEST 2020 - aschnell@suse.com

@@ -87,11 +87,6 @@ namespace snapper
 	};
 
 	ParsedOpts opts = get_opts.parse("delete", options);
-	if (!get_opts.has_args())
-	{
-	    cerr << _("Command 'delete' needs at least one argument.") << endl;
-	    exit(EXIT_FAILURE);
-	}
 
 	bool sync = false;
 
@@ -99,6 +94,11 @@ namespace snapper
 
 	if ((opt = opts.find("sync")) != opts.end())
 	    sync = true;
+
+	if (!get_opts.has_args())
+	{
+	    SN_THROW(OptionsException(_("Command 'delete' needs at least one argument.")));
+	}
 
 	ProxySnapshots& snapshots = snapper->getSnapshots();
 

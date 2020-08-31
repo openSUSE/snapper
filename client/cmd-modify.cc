@@ -59,10 +59,10 @@ namespace snapper
 	};
 
 	ParsedOpts opts = get_opts.parse("modify", options);
+
 	if (!get_opts.has_args())
 	{
-	    cerr << _("Command 'modify' needs at least one argument.") << endl;
-	    exit(EXIT_FAILURE);
+	    SN_THROW(OptionsException(_("Command 'modify' needs at least one argument.")));
 	}
 
 	ProxySnapshots& snapshots = snapper->getSnapshots();
