@@ -1,5 +1,6 @@
 /*
- * Copyright (c) [2019-2020] SUSE LLC
+ * Copyright (c) [2011-2015] Novell, Inc.
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -19,47 +20,24 @@
  * find current contact information at www.novell.com.
  */
 
-#ifndef SNAPPER_CLI_OPTIONS_H
-#define SNAPPER_CLI_OPTIONS_H
 
-#include <string>
-#include <vector>
+#include <functional>
 
-#include <snapper/Exception.h>
+#include <snapper/File.h>
 
-#include "client/utils/GetOpts.h"
+#include "utils/GetOpts.h"
+
 
 namespace snapper
 {
-    using std::string;
-    using std::vector;
 
-
-    namespace cli
+    struct MyFiles : public Files
     {
 
-	class Options
-	{
+	MyFiles(const Files& files) : Files(files) {}
 
-	public:
+	void bulk_process(FILE* file, GetOpts& get_opts, std::function<void(File& file)> callback);
 
-	    Options(GetOpts& parser);
+    };
 
-	    virtual ~Options() {}
-
-	protected:
-
-	    bool has_option(const string& name) const;
-
-	    const string& get_argument(const string& name) const;
-
-	    GetOpts& _parser;
-
-	    ParsedOpts _options;
-
-	};
-
-    }
 }
-
-#endif

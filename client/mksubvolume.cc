@@ -531,30 +531,34 @@ main(int argc, char** argv)
 {
     setlocale(LC_ALL, "");
 
-    const struct option options[] = {
-	{ "nocow",		no_argument,		0,	0 },
-	{ "verbose",            no_argument,            0,      'v' },
-	{ 0, 0, 0, 0 }
-    };
+    try
+    {
+	const vector<Option> options = {
+	    Option("nocow",		no_argument),
+	    Option("verbose",		no_argument,	'v'),
+	};
 
-    GetOpts getopts;
+	GetOpts get_opts(argc, argv);
 
-    getopts.init(argc, argv);
+	ParsedOpts opts = get_opts.parse(options);
 
-    GetOpts::parsed_opts opts = getopts.parse(options);
+	if (opts.has_option("nocow"))
+	    set_nocow = true;
 
-    GetOpts::parsed_opts::const_iterator opt;
+	if (opts.has_option("verbose"))
+	    verbose = true;
 
-    if ((opt = opts.find("nocow")) != opts.end())
-        set_nocow = true;
+	if (get_opts.num_args() != 1)
+	    usage();
 
-    if ((opt = opts.find("verbose")) != opts.end())
-        verbose = true;
-
-    if (getopts.numArgs() != 1)
+	target = get_opts.pop_arg();
+    }
+    catch (const OptionsException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << e.what() << endl;
 	usage();
-
-    target = getopts.popArg();
+    }
 
     try
     {

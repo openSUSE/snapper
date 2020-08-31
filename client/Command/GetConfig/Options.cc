@@ -32,9 +32,8 @@ namespace snapper
 	namespace
 	{
 
-	    const option OPTIONS[] = {
-		{ "columns",	required_argument,	0,	0},
-		{ 0, 0, 0, 0 }
+	    const vector<Option> OPTIONS = {
+		Option("columns",	required_argument)
 	    };
 
 	}

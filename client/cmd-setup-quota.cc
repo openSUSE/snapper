@@ -1,5 +1,6 @@
 /*
- * Copyright (c) [2019-2020] SUSE LLC
+ * Copyright (c) [2011-2015] Novell, Inc.
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -19,47 +20,40 @@
  * find current contact information at www.novell.com.
  */
 
-#ifndef SNAPPER_CLI_OPTIONS_H
-#define SNAPPER_CLI_OPTIONS_H
 
-#include <string>
-#include <vector>
+#include <iostream>
 
-#include <snapper/Exception.h>
+#include "utils/text.h"
+#include "GlobalOptions.h"
+#include "proxy.h"
 
-#include "client/utils/GetOpts.h"
 
 namespace snapper
 {
-    using std::string;
-    using std::vector;
+
+    using namespace std;
 
 
-    namespace cli
+    void
+    help_setup_quota()
     {
-
-	class Options
-	{
-
-	public:
-
-	    Options(GetOpts& parser);
-
-	    virtual ~Options() {}
-
-	protected:
-
-	    bool has_option(const string& name) const;
-
-	    const string& get_argument(const string& name) const;
-
-	    GetOpts& _parser;
-
-	    ParsedOpts _options;
-
-	};
-
+	cout << _("  Setup quota:") << '\n'
+	     << _("\tsnapper setup-quota") << '\n'
+	     << endl;
     }
-}
 
-#endif
+
+    void
+    command_setup_quota(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+    {
+	ParsedOpts opts = get_opts.parse("setup-quota", GetOpts::no_options);
+	if (get_opts.num_args() != 0)
+	{
+	    cerr << _("Command 'setup-quota' does not take arguments.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	snapper->setupQuota();
+    }
+
+}

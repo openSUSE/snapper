@@ -1,5 +1,6 @@
 /*
- * Copyright (c) [2019-2020] SUSE LLC
+ * Copyright (c) [2011-2015] Novell, Inc.
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -19,47 +20,40 @@
  * find current contact information at www.novell.com.
  */
 
-#ifndef SNAPPER_CLI_OPTIONS_H
-#define SNAPPER_CLI_OPTIONS_H
 
-#include <string>
-#include <vector>
+#include <iostream>
 
-#include <snapper/Exception.h>
+#include "utils/text.h"
+#include "GlobalOptions.h"
+#include "proxy.h"
 
-#include "client/utils/GetOpts.h"
 
 namespace snapper
 {
-    using std::string;
-    using std::vector;
+
+    using namespace std;
 
 
-    namespace cli
+    void
+    help_delete_config()
     {
-
-	class Options
-	{
-
-	public:
-
-	    Options(GetOpts& parser);
-
-	    virtual ~Options() {}
-
-	protected:
-
-	    bool has_option(const string& name) const;
-
-	    const string& get_argument(const string& name) const;
-
-	    GetOpts& _parser;
-
-	    ParsedOpts _options;
-
-	};
-
+	cout << _("  Delete config:") << '\n'
+	     << _("\tsnapper delete-config") << '\n'
+	     << endl;
     }
-}
 
-#endif
+
+    void
+    command_delete_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
+    {
+	get_opts.parse("delete-config", GetOpts::no_options);
+	if (get_opts.has_args())
+	{
+	    cerr << _("Command 'delete-config' does not take arguments.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	snappers->deleteConfig(global_options.config());
+    }
+
+}

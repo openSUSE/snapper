@@ -115,9 +115,9 @@ show_userdata(const map<string, string>& userdata)
 
 
 map<string, string>
-read_configdata(const list<string>& l, const map<string, string>& old)
+read_configdata(const vector<string>& v, const map<string, string>& old)
 {
-    if (l.empty())
+    if (v.empty())
     {
 	cerr << _("Empty configdata.") << endl;
 	exit(EXIT_FAILURE);
@@ -125,7 +125,7 @@ read_configdata(const list<string>& l, const map<string, string>& old)
 
     map<string, string> configdata = old;
 
-    for (list<string>::const_iterator it = l.begin(); it != l.end(); ++it)
+    for (vector<string>::const_iterator it = v.begin(); it != v.end(); ++it)
     {
 	string::size_type pos = it->find("=");
 	if (pos == string::npos)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2015] SUSE LLC
+ * Copyright (c) [2015-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -40,7 +40,7 @@ namespace snapper
 	    if (fs)
 		return fs;
 
-	    if (tmp == "/")
+	    if (tmp == "/" || tmp == ".")
 		return nullptr;
 
 	    tmp = dirname(tmp);
