@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Aug 31 17:18:14 CEST 2020 - aschnell@suse.com
+
+- fix LVM setup for volume groups and logical volumes with one
+  character long names (gh#openSUSE/snapper#465)
+
+-------------------------------------------------------------------
 Fri Aug 28 11:06:23 CEST 2020 - aschnell@suse.com
 
 - improved error messages for wrong command line options and

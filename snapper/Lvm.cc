@@ -35,6 +35,7 @@
 #include "snapper/Log.h"
 #include "snapper/Filesystem.h"
 #include "snapper/Lvm.h"
+#include "snapper/LvmUtils.h"
 #include "snapper/Snapper.h"
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SystemCmd.h"
@@ -48,6 +49,8 @@
 
 namespace snapper
 {
+    using namespace std;
+
 
     Filesystem*
     Lvm::create(const string& fstype, const string& subvolume, const string& root_prefix)
@@ -387,15 +390,18 @@ namespace snapper
     bool
     Lvm::detectThinVolumeNames(const MtabData& mtab_data)
     {
-	Regex rx("^/dev/mapper/(.+[^-])-([^-].+)$");
-	if (!rx.match(mtab_data.device))
+	try
+	{
+	    pair<string, string> names = LvmUtils::split_device_name(mtab_data.device);
+
+	    vg_name = names.first;
+	    lv_name = names.second;
+	}
+	catch (const runtime_error& e)
 	{
 	    y2err("could not detect lvm names from '" << mtab_data.device << "'");
 	    return false;
 	}
-
-	vg_name = boost::replace_all_copy(rx.cap(1), "--", "-");
-	lv_name = boost::replace_all_copy(rx.cap(2), "--", "-");
 
 	try
 	{
