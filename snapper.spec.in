@@ -145,7 +145,7 @@ make %{?_smp_mflags} check VERBOSE=1
 
 %pre
 %if 0%{?suse_version}
-%service_add_pre snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer
+%service_add_pre snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer snapperd.service
 %endif
 
 %post
@@ -160,17 +160,17 @@ if [ -f /etc/cron.daily/suse.de-snapper ]; then
  systemctl preset snapper-cleanup.timer || :
  systemctl is-enabled -q snapper-cleanup.timer && systemctl start snapper-cleanup.timer || :
 fi
-%service_add_post snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer
+%service_add_post snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer snapperd.service
 %endif
 
 %preun
 %if 0%{?suse_version}
-%service_del_preun snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer
+%service_del_preun snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer snapperd.service
 %endif
 
 %postun
 %if 0%{?suse_version}
-%service_del_postun snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer
+%service_del_postun snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer snapperd.service
 %endif
 
 %files -f snapper.lang
@@ -189,7 +189,7 @@ fi
 %doc %{_mandir}/*/mksubvolume.8*
 %endif
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
-%{_unitdir}/snapper-*.*
+%{_unitdir}/snapper*.*
 %config /etc/dbus-1/system.d/org.opensuse.Snapper.conf
 %{_datadir}/dbus-1/system-services/org.opensuse.Snapper.service
 
