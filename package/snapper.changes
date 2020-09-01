@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Sep 01 09:50:00 CEST 2020 - lnussel@suse.com
+
+- activate snapperd using systemd service
+
+-------------------------------------------------------------------
 Mon Aug 31 17:18:14 CEST 2020 - aschnell@suse.com
 
 - fix LVM setup for volume groups and logical volumes with one
