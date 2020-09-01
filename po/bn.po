@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2004-08-09 10:24+0200\n"
 "Last-Translator: xxx <yyy@example.org>\n"
 "Language-Team: Bengali <i18n@suse.de>\n"
@@ -471,7 +471,7 @@ msgid "Illegal snapshot."
 msgstr "অবৈধ প্রকার %1."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "অবৈধ প্রকার %1."
 
 #, fuzzy
@@ -497,7 +497,7 @@ msgid "Invalid subvolume."
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "অবৈধ প্রকার %1."
 
 #, fuzzy
@@ -532,7 +532,7 @@ msgid "Missing argument for global option '%s'."
 msgstr "এর জন্য অনুপস্থির আর্গুমেন্ট "
 
 #, fuzzy
-msgid "Missing command argument."
+msgid "Missing command option."
 msgstr "এর জন্য অনুপস্থির আর্গুমেন্ট "
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -620,12 +620,16 @@ msgstr "অজ্ঞাত গ্লোবাল বিকল্প"
 msgid "Unknown option '%s' for command '%s'."
 msgstr "অজ্ঞাত রপ্তানি বিকল্প"
 
-#, fuzzy
-msgid "Unknown type of snapshot."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
 msgstr "অজানা"
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -673,13 +677,15 @@ msgid "nothing to do"
 msgstr "কিছু করার নেই।"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "আরও তথ্যের জন্য `%s --সহায়তা' বা `%s --ব্যবহার' চেষ্টা করুন।\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "অজানা"
 
 #, fuzzy
 #~ msgid "Command 'get-config' does not take arguments."

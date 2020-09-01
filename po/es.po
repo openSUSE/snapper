@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2020-02-20 00:54+0000\n"
 "Last-Translator: Juan Sarria <juansarriam@gmail.com>\n"
 "Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/>\n"
@@ -464,7 +464,7 @@ msgid "Illegal snapshot."
 msgstr "Imagen no válida."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Imagen '%s' no válida."
 
 msgid "Invalid configdata."
@@ -489,7 +489,7 @@ msgid "Invalid subvolume."
 msgstr "Subvolumen inválido."
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Estilo de tabla no válido %d."
 
 # SLE12
@@ -522,7 +522,8 @@ msgstr "Falta un argumento para el opción de comando '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Falta un argumento para la opción global '%s'."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Falta un argumento del comando."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -606,11 +607,16 @@ msgstr "Opción global desconocida '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Opción desconocida '%s' para el comando '%s'."
 
-msgid "Unknown type of snapshot."
-msgstr "Tipo de imagen desconocido."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Comando '%s' desconocido."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 # SLE12
@@ -664,13 +670,14 @@ msgid "nothing to do"
 msgstr "no hay nada que hacer"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "El argumento root solo se puede usar junto con no-dbus."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "uso: snapper [--global-options] <comando> [--command-options] [argumentos-comando]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Tipo de imagen desconocido."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tMuestra las instantáneas de todas las configuraciones a las que se puede acceder."

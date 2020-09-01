@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2018-04-07 16:03+0000\n"
 "Last-Translator: Anshul Panwar <caspian7pena@gmail.com>\n"
 "Language-Team: Hindi <https://l10n.opensuse.org/projects/snapper/master/hi/>\n"
@@ -474,7 +474,7 @@ msgid "Illegal snapshot."
 msgstr "अमान्य प्रकार %1।"
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "अमान्य प्रकार %1।"
 
 #, fuzzy
@@ -500,7 +500,7 @@ msgid "Invalid subvolume."
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "अमान्य प्रकार %1।"
 
 #, fuzzy
@@ -535,7 +535,7 @@ msgid "Missing argument for global option '%s'."
 msgstr ""
 
 #, fuzzy
-msgid "Missing command argument."
+msgid "Missing command option."
 msgstr "लॉगइनः बहुत से तर्क\n"
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -623,12 +623,16 @@ msgstr "अज्ञात ग्लोबल विकल्प"
 msgid "Unknown option '%s' for command '%s'."
 msgstr "अज्ञात निर्यात कमांड"
 
-#, fuzzy
-msgid "Unknown type of snapshot."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
 msgstr "अनंजान"
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -675,13 +679,15 @@ msgid "nothing to do"
 msgstr "करने के लिए कुछ नहीं है"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "अधिक जानकारी के लिए `%s --मदद' या `%s --प्रयोग' प्रयास करें।\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "अनंजान"
 
 #, fuzzy
 #~ msgid "Command 'get-config' does not take arguments."

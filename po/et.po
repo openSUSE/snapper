@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: autoinst.fi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2019-12-01 20:54+0000\n"
 "Last-Translator: Jaanus Ojangu <jaanus.ojangu@gmail.com>\n"
 "Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/et/>\n"
@@ -445,7 +445,7 @@ msgid "Illegal snapshot."
 msgstr "Illegaalne tõmmis."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Vigane tõmmis '%s'."
 
 msgid "Invalid configdata."
@@ -469,7 +469,7 @@ msgid "Invalid subvolume."
 msgstr "Vigane alamosa."
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Vigane tabeli stiil %d."
 
 msgid "Invalid user."
@@ -501,7 +501,8 @@ msgstr "Käsu valikutes puudub argument '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Puudub globaalse valiku argument '%s'."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Puudub käsu argument."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -584,11 +585,16 @@ msgstr "Tundmatu globaalne säte '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Tundmatu säte '%s' käsu '%s' jaoks."
 
-msgid "Unknown type of snapshot."
-msgstr "Tundmatu hetktõmmise tüüp."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Tundmatu käsk '%s'."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -635,13 +641,14 @@ msgid "nothing to do"
 msgstr "midagi pole teha"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "juur argumenti saab kasutada ainult koos no-dbus-ga."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "kasutage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Tundmatu hetktõmmise tüüp."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tKõigi juurdepääsetavate konfiguratsioonide hetktõmmitse nimekiri."

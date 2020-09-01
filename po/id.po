@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2019-10-29 08:53+0000\n"
 "Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
 "Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/id/>\n"
@@ -440,7 +440,7 @@ msgid "Illegal snapshot."
 msgstr "Snapshot ilegal."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Snapshot '%s' tidak valid."
 
 msgid "Invalid configdata."
@@ -464,7 +464,7 @@ msgid "Invalid subvolume."
 msgstr "Subvolume tidak valid."
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Gaya tabel %d tidak valid."
 
 msgid "Invalid user."
@@ -496,7 +496,8 @@ msgstr "Argumen tidak ada untuk opsi perintah '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Argumen tidak ada untuk opsi global '%s'."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Argumen perintah tidak ada."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -578,11 +579,16 @@ msgstr "Opsi global tidak dikenal '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Opsi tidak dikenal '%s' untuk perintah '%s'."
 
-msgid "Unknown type of snapshot."
-msgstr "Jenis snapshot tidak dikenal."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Perintah '%s' tidak dikenal."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -629,13 +635,14 @@ msgid "nothing to do"
 msgstr "tidak ada yang dilakukan"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "argumen root hanya dapat digunakan bersama dengan no-dbus."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "penggunaan: snapper [--global-options] <command> [--command-options] [command-arguments]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Jenis snapshot tidak dikenal."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tDaftar snapshot dari semua config yang dapat diakses."

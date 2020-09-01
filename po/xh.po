@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: base\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2006-11-03 14:26\n"
 "Last-Translator: Novell Language <language@novell.com>\n"
 "Language-Team: Novell Language <language@novell.com>\n"
@@ -478,7 +478,7 @@ msgid "Illegal snapshot."
 msgstr "Uhlobo %1.alusebenziseki."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Uhlobo %1.alusebenziseki."
 
 #, fuzzy
@@ -504,7 +504,7 @@ msgid "Invalid subvolume."
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Uhlobo %1.alusebenziseki."
 
 #, fuzzy
@@ -539,7 +539,7 @@ msgid "Missing argument for global option '%s'."
 msgstr "Impikiswano elahlekileyo ka"
 
 #, fuzzy
-msgid "Missing command argument."
+msgid "Missing command option."
 msgstr "Impikiswano elahlekileyo ka"
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -628,12 +628,16 @@ msgstr "Isikhethwa sehlabathi esingaziwa"
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Umyalelo wokuthumela awaziwa"
 
-#, fuzzy
-msgid "Unknown type of snapshot."
-msgstr "Uhlobo olungaziwayo."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Umyalelo ongaziwa"
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -681,13 +685,15 @@ msgid "nothing to do"
 msgstr "Akukho nto yakwenza."
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Try `%s --help' or `%s --usage' for more information.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Uhlobo olungaziwayo."
 
 #, fuzzy
 #~ msgid "Command 'get-config' does not take arguments."

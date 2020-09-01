@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2018-06-01 11:02+0000\n"
 "Last-Translator: Jiri Machalek <jiri.machalek@tieto.com>\n"
 "Language-Team: Galician <https://l10n.opensuse.org/projects/snapper/master/gl/>\n"
@@ -462,7 +462,7 @@ msgid "Illegal snapshot."
 msgstr "Estilo de táboa incorrecto %d."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Estilo de táboa incorrecto %d."
 
 #, fuzzy
@@ -487,7 +487,7 @@ msgid "Invalid subvolume."
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Estilo de táboa incorrecto %d."
 
 msgid "Invalid user."
@@ -521,7 +521,7 @@ msgid "Missing argument for global option '%s'."
 msgstr "Falta o argumento de "
 
 #, fuzzy
-msgid "Missing command argument."
+msgid "Missing command option."
 msgstr "Falta o argumento de "
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -606,11 +606,16 @@ msgstr "Opción descoñecida"
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Comando descoñecido '%s'"
 
-msgid "Unknown type of snapshot."
-msgstr ""
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Comando descoñecido '%s'"
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -658,9 +663,7 @@ msgid "nothing to do"
 msgstr "Non hai nada que facer."
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Intente utilizar \"%s --help\" ou \"%s --usage\" para obter máis información.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"

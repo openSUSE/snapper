@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2018-06-01 11:05+0000\n"
 "Last-Translator: Jiri Machalek <jiri.machalek@tieto.com>\n"
 "Language-Team: Portuguese <https://l10n.opensuse.org/projects/snapper/master/pt/>\n"
@@ -486,7 +486,7 @@ msgid "Illegal snapshot."
 msgstr "Estilo de tabela inválido %d."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Estilo de tabela inválido %d."
 
 #, fuzzy
@@ -511,7 +511,7 @@ msgid "Invalid subvolume."
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Estilo de tabela inválido %d."
 
 msgid "Invalid user."
@@ -545,7 +545,7 @@ msgid "Missing argument for global option '%s'."
 msgstr "Argumento em falta para "
 
 #, fuzzy
-msgid "Missing command argument."
+msgid "Missing command option."
 msgstr "Argumento em falta para "
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -633,12 +633,16 @@ msgstr "Opção global desconhecida"
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Opção desconhecida para %s, ignorado: '%s'\n"
 
-#, fuzzy
-msgid "Unknown type of snapshot."
-msgstr "Tipo desconhecido."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Comando '%s' desconhecido"
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -686,15 +690,17 @@ msgid "nothing to do"
 msgstr "Nada para fazer."
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Tente `%s --help' ou `%s --usage' para mais informações.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
 "Uso:\n"
 "\tsnapper [--opções-globais] <command> [--opções do comando] [argumentos]"
+
+#, fuzzy
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Tipo desconhecido."
 
 #, fuzzy
 #~ msgid "  Get config:"

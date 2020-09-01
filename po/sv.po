@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2020-05-26 14:40+0000\n"
 "Last-Translator: Jonas Svensson <jonas@ekhorva.se>\n"
 "Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/sv/>\n"
@@ -551,7 +551,7 @@ msgstr "Otillåten ögonblicksbild."
 
 # SLE12
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Ogiltig ögonblicksbild \"%s\"."
 
 # SLE12
@@ -581,7 +581,7 @@ msgstr "Ogiltig undervolym."
 
 # SLE12
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Ogiltig tabellstil %d."
 
 # SLE12
@@ -619,7 +619,8 @@ msgid "Missing argument for global option '%s'."
 msgstr "Argument för det globala alternativet %s saknas."
 
 # SLE12
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Det saknas kommandoargument."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -715,11 +716,16 @@ msgid "Unknown option '%s' for command '%s'."
 msgstr "Alternativet %s för kommandot %s är okänt."
 
 # SLE12
-msgid "Unknown type of snapshot."
-msgstr "Okänd typ av ögonblicksbild."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Kommandot %s är okänt."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 # SLE12
@@ -777,14 +783,16 @@ msgid "nothing to do"
 msgstr "ingenting att göra"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Rotargument kan enbart användas tillsammans med no-dbus."
 
 # SLE12
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "usage: snapper [--globala alternativ] <kommando> [--kommandoalternativ] [kommandoargument]"
+
+# SLE12
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Okänd typ av ögonblicksbild."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tVisa snapshots från alla tillgängliga konfig."

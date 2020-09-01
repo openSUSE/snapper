@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2019-10-15 22:53+0000\n"
 "Last-Translator: scootergrisen <scootergrisen@gmail.com>\n"
 "Language-Team: Danish <https://l10n.opensuse.org/projects/snapper/master/da/>\n"
@@ -449,7 +449,7 @@ msgid "Illegal snapshot."
 msgstr "Ulovligt øjebliksbillede."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Ugyldigt øjebliksbillede \"%s\"."
 
 msgid "Invalid configdata."
@@ -473,7 +473,7 @@ msgid "Invalid subvolume."
 msgstr "Ugyldigt underdiskområde."
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Ugyldig tabelstil %d."
 
 msgid "Invalid user."
@@ -505,7 +505,8 @@ msgstr "Manglende argument for kommandotilvalget \"%s\"."
 msgid "Missing argument for global option '%s'."
 msgstr "Manglende argument for det globale tilvalg \"%s\"."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Mangler kommandoargument."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -588,11 +589,16 @@ msgstr "Ukendt globalt tilvalg \"%s\"."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Ukendt tilvalg \"%s\" for kommandoen \"%s\"."
 
-msgid "Unknown type of snapshot."
-msgstr "Ukendt type af øjebliksbillede."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Ukendt kommando \"%s\"."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -639,13 +645,14 @@ msgid "nothing to do"
 msgstr "intet at gøre"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "root-argumentet kan kun bruges sammen med no-dbus."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "brug: snapper [--globale-tilvalg] <kommando> [--kommando-tilvalg] [kommando-argumenter]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Ukendt type af øjebliksbillede."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tOplist øjebliksbilleder fra alle tilgængelige konfigurationer."

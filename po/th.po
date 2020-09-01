@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2008-01-04 08:58+0100\n"
 "Last-Translator: i18n@suse.de\n"
 "Language-Team: Thai <i18n@suse.de>\n"
@@ -466,7 +466,7 @@ msgid "Illegal snapshot."
 msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งานไม่ได้"
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งานไม่ได้"
 
 #, fuzzy
@@ -492,7 +492,7 @@ msgid "Invalid subvolume."
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งานไม่ได้"
 
 #, fuzzy
@@ -526,8 +526,9 @@ msgstr "ไม่มีค่าของตัวเลือก"
 msgid "Missing argument for global option '%s'."
 msgstr "ไม่มีค่าของตัวเลือก"
 
-msgid "Missing command argument."
-msgstr ""
+#, fuzzy
+msgid "Missing command option."
+msgstr "ไม่มีค่าของตัวเลือก"
 
 msgid "Missing delimiter '..' between snapshot numbers."
 msgstr ""
@@ -613,12 +614,16 @@ msgstr "ไม่รู้จักตัวเลือก: '%1'"
 msgid "Unknown option '%s' for command '%s'."
 msgstr "ไม่รู้จักตัวเลือกสำหรับคำสั่ง '%1': %2"
 
-#, fuzzy
-msgid "Unknown type of snapshot."
-msgstr "ไม่รู้จักชนิด"
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "ไม่รู้จักคำสั่ง: %1"
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -666,13 +671,15 @@ msgid "nothing to do"
 msgstr "ไม่มีอะไรต้องทำ"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "กำลังหาข้อมูลของหน่วยความจำ..."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "ไม่รู้จักชนิด"
 
 #, fuzzy
 #~ msgid "    Options for 'list' command:"

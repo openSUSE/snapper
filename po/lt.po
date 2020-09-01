@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LCN (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2017-06-02 16:57+0000\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <https://l10n.opensuse.org/projects/snapper/master/lt/>\n"
@@ -462,7 +462,7 @@ msgid "Illegal snapshot."
 msgstr "Netinkama momentinė kopija."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Netinkama momentinė kopija „%s“."
 
 #, fuzzy
@@ -488,7 +488,7 @@ msgid "Invalid subvolume."
 msgstr "Netinkamas potomis."
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Netinkamas lentelės stilius %d."
 
 #, fuzzy
@@ -521,7 +521,8 @@ msgstr ""
 msgid "Missing argument for global option '%s'."
 msgstr ""
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Komandai trūksta argumentų."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -604,11 +605,16 @@ msgstr "Nežinoma visuotinė parinktis „%s“."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Nežinoma parinktis „%s“, kuri skirta komandai „%s“."
 
-msgid "Unknown type of snapshot."
-msgstr "Nežinomas momentinės kopijos tipas."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Nežinoma komanda „%s“."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, fuzzy, c-format
@@ -655,13 +661,14 @@ msgid "nothing to do"
 msgstr "nėra ką daryti"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Daugiau informacijos gausite įvykdę „snapper --help“."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "naudojimas: snapper [--visuotinės-parinktys] <komanda> [--komandos-parinktys] [komandos-argumentai]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Nežinomas momentinės kopijos tipas."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tpateikti visų prieinamų momentinių kopijų sąrašą."

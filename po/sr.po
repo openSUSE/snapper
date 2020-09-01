@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2005-08-03 21:03+0200\n"
 "Last-Translator: Данило Шеган <danilo@gnome.org>\n"
 "Language-Team: Serbian <novell@prevod.org>\n"
@@ -457,7 +457,7 @@ msgid "Illegal snapshot."
 msgstr "DBI Execution failed: %s."
 
 #, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr ""
 
 msgid "Invalid configdata."
@@ -481,7 +481,7 @@ msgid "Invalid subvolume."
 msgstr ""
 
 #, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr ""
 
 msgid "Invalid user."
@@ -513,7 +513,7 @@ msgstr ""
 msgid "Missing argument for global option '%s'."
 msgstr ""
 
-msgid "Missing command argument."
+msgid "Missing command option."
 msgstr ""
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -600,11 +600,16 @@ msgstr ""
 msgid "Unknown option '%s' for command '%s'."
 msgstr ""
 
-msgid "Unknown type of snapshot."
-msgstr ""
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Статус мреже непознат"
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -652,9 +657,7 @@ msgid "nothing to do"
 msgstr ""
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Прикупљам информације о меморији..."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
@@ -673,10 +676,6 @@ msgstr ""
 
 #~ msgid "Type"
 #~ msgstr "Тип"
-
-#, fuzzy
-#~ msgid "Unknown type of snapshots."
-#~ msgstr "Статус мреже непознат"
 
 #  table header
 #~ msgid "Value"
