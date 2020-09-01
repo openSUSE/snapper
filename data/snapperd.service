@@ -1,0 +1,8 @@
+[Unit]
+Description=DBus interface for snapper
+Documentation=man:snapperd(8)
+
+[Service]
+Type=dbus
+BusName=org.opensuse.Snapper
+ExecStart=/usr/sbin/snapperd
