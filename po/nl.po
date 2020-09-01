@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2019-10-15 16:53+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
 "Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
@@ -449,7 +449,7 @@ msgid "Illegal snapshot."
 msgstr "Ongeldige momentopname."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Ongeldige momentopname '%s'."
 
 msgid "Invalid configdata."
@@ -473,7 +473,7 @@ msgid "Invalid subvolume."
 msgstr "Ongeldig subvolume."
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Ongeldige tabelstijl %d."
 
 msgid "Invalid user."
@@ -505,7 +505,8 @@ msgstr "Argument ontbreekt voor opdrachtoptie '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Argument ontbreekt voor globale optie '%s'."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Argument van opdracht ontbreekt."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -587,11 +588,16 @@ msgstr "Onbekende globale optie '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Onbekende optie '%s' voor opdracht '%s'."
 
-msgid "Unknown type of snapshot."
-msgstr "Onbekend type momentopname."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Onbekende opdracht '%s'."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -638,13 +644,14 @@ msgid "nothing to do"
 msgstr "niets te doen"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "rootargument kan alleen samen worden gebruikt met no-dbus."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "gebruik: snapper [--global-options] <opdracht> [--commando-options] [commando-arguments]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Onbekend type momentopname."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tMomentopnamen weergeven van alle beschikbare configuraties."

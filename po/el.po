@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2016-09-24 16:01+0000\n"
 "Last-Translator: Efstathios Iosifidis <eiosifidis@gmail.com>\n"
 "Language-Team: Greek <https://l10n.opensuse.org/projects/snapper/master/el/>\n"
@@ -458,7 +458,7 @@ msgid "Illegal snapshot."
 msgstr "Αντικανονικό στιγμιότυπο."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Μη έγκυρο στιγμιότυπο '%s'."
 
 msgid "Invalid configdata."
@@ -482,7 +482,7 @@ msgid "Invalid subvolume."
 msgstr "Μη έγκυρος υποτόμος."
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Μη έγκυρος τύπος πίνακα %d."
 
 msgid "Invalid user."
@@ -514,7 +514,8 @@ msgstr "Απουσία παραμέτρου για την επιλογή εντ�
 msgid "Missing argument for global option '%s'."
 msgstr "Απουσία παραμέτρου για γενική ρύθμιση '%s'."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Απουσία παραμέτρου εντολής."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -598,11 +599,16 @@ msgstr "Άγνωστη γενική επιλογή '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Άγνωστη επιλογή '%s' για την εντολή '%s'."
 
-msgid "Unknown type of snapshot."
-msgstr "Άγνωστος τύπος στιγμιοτύπου."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Άγνωστη εντολή '%s'."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -649,13 +655,14 @@ msgid "nothing to do"
 msgstr "τίποτα για να γίνει"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Για περισσότερες πληροφορίες δοκιμάστε 'snapper --help'."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "Χρήση: snapper [--global-options] <command> [--command-options] [command-arguments]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Άγνωστος τύπος στιγμιοτύπου."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tΕμφανίζει τα στιγμιότυπα από όλες τις προσβάσιμες ρυθμίσεις."

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Robert Taisz <robert.taisz@emerald.hu>\n"
 "Language-Team: Hungarian <https://l10n.opensuse.org/projects/snapper/master/hu/>\n"
@@ -474,7 +474,7 @@ msgid "Illegal snapshot."
 msgstr "Érvénytelen pillanatkép."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Érvénytelen pillanatkép: '%s'."
 
 # SLE12
@@ -500,7 +500,7 @@ msgid "Invalid subvolume."
 msgstr "Érvénytelen alkötetek."
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Érvénytelen táblázatstílus: %d."
 
 # SLE12
@@ -533,7 +533,8 @@ msgstr "A(z) '%s' parancs kapcsolójához hiányzik egy paraméter."
 msgid "Missing argument for global option '%s'."
 msgstr "A(z) '%s' globális kapcsolóhoz hiányzik egy paraméter."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Hiányzó parancsparaméter."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -616,11 +617,16 @@ msgstr "Ismeretlen globális kapcsoló: '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Ismeretlen '%s' kapcsoló a(z) '%s' parancshoz."
 
-msgid "Unknown type of snapshot."
-msgstr "Ismeretlen típusú pillanatkép."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Ismeretlen parancs: '%s'."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 # SLE12
@@ -670,13 +676,14 @@ msgid "nothing to do"
 msgstr "nincs teendő"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "A root argumentum csak a no-dbus beállítással együtt használható."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "használat: snapper [--global-options] <parancs> [--command-options] [command-arguments]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Ismeretlen típusú pillanatkép."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tA pillanatképek listázása minden elérhető konfigurációból."

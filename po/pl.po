@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Ewelina Michalowska <ewelina.michalowska@stgambit.com>\n"
 "Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>\n"
@@ -449,7 +449,7 @@ msgid "Illegal snapshot."
 msgstr "Niedozwolony zrzut."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Nieprawidłowy zrzut '%s'."
 
 msgid "Invalid configdata."
@@ -473,7 +473,7 @@ msgid "Invalid subvolume."
 msgstr "Nieprawidłowy podwolumen."
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Nieprawidłowy styl tabeli %d."
 
 msgid "Invalid user."
@@ -505,7 +505,8 @@ msgstr "Brakujący argument dla opcji polecenia '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Brakujący argument dla opcji globalnej '%s'."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Brakujący argument polecenia."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -587,11 +588,16 @@ msgstr "Nieznana opcja globalna '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Nieznana opcja '%s' dla polecenia  '%s'."
 
-msgid "Unknown type of snapshot."
-msgstr "Nieznany rodzaj zrzutu."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Nieznane polecenie '%s'."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -638,13 +644,14 @@ msgid "nothing to do"
 msgstr "nie ma nic do zrobienia"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "argumentu root można użyć tylko razem z parametrem no-dbus."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "Użycie: snapper [--opcje-globalne] <polecenia> [--opcje-poleceń] [argumenty-polecenia]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Nieznany rodzaj zrzutu."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tWyświetla listę migawek z wszystkich dostępnych konfiguracji."

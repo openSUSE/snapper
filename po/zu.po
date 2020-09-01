@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: installation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2016-04-19 09:51+0000\n"
 "Last-Translator: Shane Wims <shane.wims@microfocus.com>\n"
 "Language-Team: Zulu <http://l10n.opensuse.org/projects/snapper/master/zu/>\n"
@@ -479,7 +479,7 @@ msgid "Illegal snapshot."
 msgstr "Akunanjongo %1."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Akunanjongo %1."
 
 #, fuzzy
@@ -505,7 +505,7 @@ msgid "Invalid subvolume."
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Akunanjongo %1."
 
 #, fuzzy
@@ -540,7 +540,7 @@ msgid "Missing argument for global option '%s'."
 msgstr "I-agumenti elahlekile ye-"
 
 #, fuzzy
-msgid "Missing command argument."
+msgid "Missing command option."
 msgstr "I-agumenti elahlekile ye-"
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -629,12 +629,16 @@ msgstr "Okukhethwa kukho kwembulunga yonke okungaziwa"
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Ikhomandi yokudlulisa engaziwa"
 
-#, fuzzy
-msgid "Unknown type of snapshot."
-msgstr "Uhlobo olungaziwa."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Ikhomandi engaziwa"
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -682,13 +686,15 @@ msgid "nothing to do"
 msgstr "Akukho okuzokwenziwa."
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Zama `%s --usizo' noma `%s –ukusetshenziswa' kokwaziswa okwengeziwe.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Uhlobo olungaziwa."
 
 #, fuzzy
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."

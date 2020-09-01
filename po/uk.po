@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2015-10-17 16:22+0200\n"
 "Last-Translator: Andriy Bandura <andriykopanytsia@gmail.com>\n"
 "Language-Team: Ukrainian <http://10n.opensuse.org/projects/snapper/master/uk/>\n"
@@ -457,7 +457,7 @@ msgid "Illegal snapshot."
 msgstr "Некоректний знімок."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Неправильний знімок '%s'."
 
 msgid "Invalid configdata."
@@ -481,7 +481,7 @@ msgid "Invalid subvolume."
 msgstr "Нечинний підтом."
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Непридатний стиль таблиці %d."
 
 msgid "Invalid user."
@@ -513,7 +513,8 @@ msgstr "Відсутній аргумент для параметру коман
 msgid "Missing argument for global option '%s'."
 msgstr "Відсутній аргумент для загального параметру '%s'."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Відсутній  аргумент команди."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -596,11 +597,16 @@ msgstr "Невідомий глобальний параметр '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Невідомий параметр '%s' для команди %s'."
 
-msgid "Unknown type of snapshot."
-msgstr "Невідомий тип знімка."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Невідома команда '%s'."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -647,13 +653,14 @@ msgid "nothing to do"
 msgstr "нема що робити"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Аргумент root можна використовувати тільки разом з no-dbus."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "використання: snapper [--загальні параметри] <команда> [--параметри команди] [аргументи команди]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Невідомий тип знімка."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tСписок знімків із усіх доступних конфігурацій."

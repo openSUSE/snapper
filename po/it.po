@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2020-02-19 15:54+0000\n"
 "Last-Translator: Davide Aiello <davidea@novilinguists.com>\n"
 "Language-Team: Italian <https://l10n.opensuse.org/projects/snapper/master/it/>\n"
@@ -443,7 +443,7 @@ msgid "Illegal snapshot."
 msgstr "Istantanea illegale."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Istantanea '%s' non valida."
 
 msgid "Invalid configdata."
@@ -467,7 +467,7 @@ msgid "Invalid subvolume."
 msgstr "Sottovolume non valido."
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Stile tabella %d non valido."
 
 msgid "Invalid user."
@@ -499,7 +499,8 @@ msgstr "Argomento mancante per l'opzione di comando '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Argomento mancante per l'opzione globale '%s'."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Argomento del comando mancante."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -581,11 +582,16 @@ msgstr "Opzione globale '%s' sconosciuta."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Opzione '%s' sconosciuta per il comando '%s'."
 
-msgid "Unknown type of snapshot."
-msgstr "Tipo sconosciuto di istantanea."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Comando '%s' sconosciuto."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -632,15 +638,16 @@ msgid "nothing to do"
 msgstr "nessuna operazione da eseguire"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "È possibile utilizzare l'argomento radice solo unitamente a no-dbus."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
 "Uso:\n"
 "\tsnapper [--opzioni-globali] <comando> [--opzioni-del-comando] [argomenti-del-comando]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Tipo sconosciuto di istantanea."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tElenca gli shapshot da tutte le configurazioni accessibili."

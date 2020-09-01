@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2001-07-17 16:12+0200\n"
 "Last-Translator: Зоран Димовски <zoki.dimovski@gmail.com>\n"
 "Language-Team: Macedonian <i18n@suse.de>\n"
@@ -449,7 +449,7 @@ msgid "Illegal snapshot."
 msgstr "DBI Execution failed: %s."
 
 #, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr ""
 
 msgid "Invalid configdata."
@@ -473,7 +473,7 @@ msgid "Invalid subvolume."
 msgstr ""
 
 #, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr ""
 
 msgid "Invalid user."
@@ -505,7 +505,7 @@ msgstr ""
 msgid "Missing argument for global option '%s'."
 msgstr ""
 
-msgid "Missing command argument."
+msgid "Missing command option."
 msgstr ""
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -587,11 +587,16 @@ msgstr ""
 msgid "Unknown option '%s' for command '%s'."
 msgstr ""
 
-msgid "Unknown type of snapshot."
+#, c-format
+msgid "Unknown type '%s'."
 msgstr ""
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -637,9 +642,7 @@ msgstr ""
 msgid "nothing to do"
 msgstr ""
 
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"

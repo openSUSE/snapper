@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2005-08-15 12:20+0530\n"
 "Last-Translator: Amanpreet Singh Alam <amanpreetalam@yahoo.com>\n"
 "Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
@@ -486,7 +486,7 @@ msgid "Illegal snapshot."
 msgstr "ਗਲਤ ਕਿਸਮ %1 ਹੈ।"
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "ਗਲਤ ਕਿਸਮ %1 ਹੈ।"
 
 #, fuzzy
@@ -511,7 +511,7 @@ msgid "Invalid subvolume."
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "ਗਲਤ ਕਿਸਮ %1 ਹੈ।"
 
 msgid "Invalid user."
@@ -545,7 +545,7 @@ msgid "Missing argument for global option '%s'."
 msgstr "ਗੁੰਮ ਆਰਗੂਮਿੰਟ"
 
 #, fuzzy
-msgid "Missing command argument."
+msgid "Missing command option."
 msgstr "ਗੁੰਮ ਆਰਗੂਮਿੰਟ"
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -633,12 +633,16 @@ msgstr "ਅਣਜਾਣ ਗਲੋਬਲ ਚੋਣ "
 msgid "Unknown option '%s' for command '%s'."
 msgstr "%s ਲਈ ਅਣਜਾਣੀ ਚੋਣ, ਅਣਡਿੱਠੀ ਕੀਤੀ: '%s'\n"
 
-#, fuzzy
-msgid "Unknown type of snapshot."
-msgstr "ਅਣਜਾਣ ਕਿਸਮ ਹੈ।"
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "ਅਣਜਾਣ ਕਮਾਂਡ '%s'"
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -686,13 +690,15 @@ msgid "nothing to do"
 msgstr "ਕੁਝ ਵੀ ਨਹੀਂ ਹੈ।"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "ਹੋਰ ਜਾਣਕਾਰੀ ਲਈ `%s --help' ਜਾਂ `%s --usage' ਨੂੰ ਵੇਖੋ।\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "ਅਣਜਾਣ ਕਿਸਮ ਹੈ।"
 
 #, fuzzy
 #~ msgid "  Get config:"

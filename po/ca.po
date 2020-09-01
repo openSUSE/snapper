@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2020-07-02 07:26+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
 "Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/>\n"
@@ -440,8 +440,8 @@ msgstr "Instantànies idèntiques."
 msgid "Illegal snapshot."
 msgstr "Instantània il·legal."
 
-#, c-format
-msgid "Invalid ambit %s."
+#, fuzzy, c-format
+msgid "Invalid ambit '%s'."
 msgstr "Àmbit no vàlid: %s."
 
 msgid "Invalid configdata."
@@ -464,8 +464,8 @@ msgstr "Instantànies no vàlides."
 msgid "Invalid subvolume."
 msgstr "Subvolum no vàlid."
 
-#, c-format
-msgid "Invalid table style %s."
+#, fuzzy, c-format
+msgid "Invalid table style '%s'."
 msgstr "Estil de taula no vàlid: %s."
 
 msgid "Invalid user."
@@ -497,7 +497,8 @@ msgstr "Falta un argument per a l'opció de l'ordre %s."
 msgid "Missing argument for global option '%s'."
 msgstr "Falta un argument per a l'opció global %s."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Falta un argument per a l'ordre."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -579,11 +580,16 @@ msgstr "Opció global desconeguda: %s."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Opció desconeguda %s per a l'ordre %s."
 
-msgid "Unknown type of snapshot."
-msgstr "Tipus d'instantània desconegut."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Ordre desconeguda: %s."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr "Useu %s, %s o %s."
+
+#, fuzzy, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr "Useu %s, %s o %s."
 
 #, c-format
@@ -629,15 +635,17 @@ msgstr "modificant %s"
 msgid "nothing to do"
 msgstr "Res a fer"
 
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+#, fuzzy
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr ""
 "L'argument d'arrel només es pot usar juntament amb no-dbus.\n"
 "Vegeu \"snapper --help\" per a més informació."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "ús: snapper [--global-options] <command> [--command-options] [command-arguments]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Tipus d'instantània desconegut."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tLlista les instantànies des de totes les configuracions accessibles."

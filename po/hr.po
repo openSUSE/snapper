@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2011-04-16 18:13+0200\n"
 "Last-Translator: Krešimir Jozić <kjozic@gmail.com>\n"
 "Language-Team: Croatian <kde-i18n-doc@kde.org>\n"
@@ -469,7 +469,7 @@ msgid "Illegal snapshot."
 msgstr "Nesipravan stil tablice %d."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Nesipravan stil tablice %d."
 
 #, fuzzy
@@ -495,7 +495,7 @@ msgid "Invalid subvolume."
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Nesipravan stil tablice %d."
 
 #, fuzzy
@@ -530,7 +530,7 @@ msgid "Missing argument for global option '%s'."
 msgstr ""
 
 #, fuzzy
-msgid "Missing command argument."
+msgid "Missing command option."
 msgstr "Nedostaje argument za"
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -614,12 +614,16 @@ msgstr ""
 msgid "Unknown option '%s' for command '%s'."
 msgstr ""
 
-#, fuzzy
-msgid "Unknown type of snapshot."
-msgstr "Nepoznata vrsta."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Nepoznata naredba '%s'."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, fuzzy, c-format
@@ -666,13 +670,15 @@ msgstr "Uklanjam %s-%s"
 msgid "nothing to do"
 msgstr "Nema ništa za napraviti."
 
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Nepoznata vrsta."
 
 #, fuzzy
 #~ msgid "  Get config:"

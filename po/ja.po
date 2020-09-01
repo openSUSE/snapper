@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2020-07-29 08:32+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/"
-"ja/>\n"
+"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -446,8 +445,8 @@ msgstr "同一のスナップショットです。"
 msgid "Illegal snapshot."
 msgstr "スナップショットが正しくありません。"
 
-#, c-format
-msgid "Invalid ambit %s."
+#, fuzzy, c-format
+msgid "Invalid ambit '%s'."
 msgstr "領域 %s が正しくありません。"
 
 msgid "Invalid configdata."
@@ -470,8 +469,8 @@ msgstr "スナップショットが正しくありません。"
 msgid "Invalid subvolume."
 msgstr "サブボリュームが正しくありません。"
 
-#, c-format
-msgid "Invalid table style %s."
+#, fuzzy, c-format
+msgid "Invalid table style '%s'."
 msgstr "表のスタイル %s が正しくありません。"
 
 msgid "Invalid user."
@@ -503,7 +502,8 @@ msgstr "'%s' コマンドオプションに対するパラメータがありま�
 msgid "Missing argument for global option '%s'."
 msgstr "'%s' グローバルオプションに対するパラメータがありません。"
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "引数がありません。"
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -585,11 +585,16 @@ msgstr "不明なグローバルオプション '%s' です。"
 msgid "Unknown option '%s' for command '%s'."
 msgstr "不明なオプション '%s' です (コマンド '%s') 。"
 
-msgid "Unknown type of snapshot."
-msgstr "不明なスナップショットの種類です。"
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "不明なコマンド '%s' です。"
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr "%s, %s, %s のいずれかをお使いください。"
+
+#, fuzzy, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr "%s, %s, %s のいずれかをお使いください。"
 
 #, c-format
@@ -635,15 +640,17 @@ msgstr "%s を修正しています"
 msgid "nothing to do"
 msgstr "何もすることがありません"
 
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+#, fuzzy
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr ""
 "root パラメータは no-dbus をあわせて指定した場合にのみ使用できます。\n"
 "詳しくは 'snapper --help' で表示される説明をお読みください。"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "usage: snapper [グローバルオプション] <コマンド> [コマンドオプション] [コマンドパラメータ]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "不明なスナップショットの種類です。"
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tアクセス可能なすべての環境設定からのスナップショットを一覧表示する。"

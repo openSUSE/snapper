@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2020-06-29 19:46+0000\n"
 "Last-Translator: Alex Minton <alex239@gmail.com>\n"
 "Language-Team: Russian <https://l10n.opensuse.org/projects/snapper/master/ru/>\n"
@@ -444,7 +444,7 @@ msgid "Illegal snapshot."
 msgstr "Некорректный снимок."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Неверный снимок '%s'."
 
 msgid "Invalid configdata."
@@ -468,7 +468,7 @@ msgid "Invalid subvolume."
 msgstr "Неверный подтом."
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Неверный стиль таблицы %d."
 
 msgid "Invalid user."
@@ -500,7 +500,8 @@ msgstr "Отсутствует аргумент для опции команды
 msgid "Missing argument for global option '%s'."
 msgstr "Отсутствует аргумент для опции '%s'."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Отсутствует аргумент команды."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -582,11 +583,16 @@ msgstr "Неизвестная опция '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Неизвестная опция '%s' для команды '%s'."
 
-msgid "Unknown type of snapshot."
-msgstr "Неизвестный тип снимка."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Неизвестная команда '%s'."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -633,13 +639,14 @@ msgid "nothing to do"
 msgstr "нечего выполнять"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Аргумент root можно использовать только вместе с no-dbus."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "использование: snapper [--общие-параметры] <команда> [--опции-команды] [аргументы-команды]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Неизвестный тип снимка."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tСписок моментальных снимков из всех доступных конфигураций."

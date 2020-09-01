@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2020-02-17 12:54+0000\n"
 "Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
 "Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
@@ -491,7 +491,7 @@ msgid "Illegal snapshot."
 msgstr "快照不合法。"
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "不適用的快照 '%s'。"
 
 # SLE12
@@ -518,7 +518,7 @@ msgid "Invalid subvolume."
 msgstr "無效的子磁碟區。"
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "無效的表格樣式 %d。"
 
 # SLE12
@@ -551,7 +551,8 @@ msgstr "命令選項 '%s' 遺失參數。"
 msgid "Missing argument for global option '%s'."
 msgstr "全域選項 '%s' 遺失參數。"
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "遺失指令引數。"
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -638,11 +639,16 @@ msgstr "未知的全域選項 '%s'。"
 msgid "Unknown option '%s' for command '%s'."
 msgstr "未知選項 '%s'，命令 '%s'。"
 
-msgid "Unknown type of snapshot."
-msgstr "未知類型的快照。"
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "未知的命令 '%s'。"
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 # SLE12
@@ -694,13 +700,14 @@ msgid "nothing to do"
 msgstr "無執行動作"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "根引數只能與 no-dbus 配合使用。"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "用法： snapper [--全域選項] <命令> [--命令選項] [命令參數]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "未知類型的快照。"
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\t列出所有可存取組態中的快照。"

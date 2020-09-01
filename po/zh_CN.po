@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2020-07-02 07:26+0000\n"
 "Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
 "Language-Team: Chinese (China) <https://l10n.opensuse.org/projects/snapper/master/zh_CN/>\n"
@@ -447,8 +447,8 @@ msgstr "重复的快照。"
 msgid "Illegal snapshot."
 msgstr "非法的快照。"
 
-#, c-format
-msgid "Invalid ambit %s."
+#, fuzzy, c-format
+msgid "Invalid ambit '%s'."
 msgstr "无效范围 %s。"
 
 msgid "Invalid configdata."
@@ -471,8 +471,8 @@ msgstr "无效的快照。"
 msgid "Invalid subvolume."
 msgstr "无效的子卷。"
 
-#, c-format
-msgid "Invalid table style %s."
+#, fuzzy, c-format
+msgid "Invalid table style '%s'."
 msgstr "无效的表格样式 %s。"
 
 msgid "Invalid user."
@@ -504,7 +504,8 @@ msgstr "缺少用于 '%s' 命令选项的参数。"
 msgid "Missing argument for global option '%s'."
 msgstr "缺少用于 '%s' 全局选项的参数。"
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "缺少命令参数。"
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -586,11 +587,16 @@ msgstr "未知的全局选项 '%s'。"
 msgid "Unknown option '%s' for command '%s'."
 msgstr "未知的选项 '%s' 用于命令 '%s'。"
 
-msgid "Unknown type of snapshot."
-msgstr "未知快照类型。"
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "未知命令 '%s'。"
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr "使用 %s、%s 或 %s。"
+
+#, fuzzy, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr "使用 %s、%s 或 %s。"
 
 #, c-format
@@ -636,15 +642,17 @@ msgstr "正在修订 %s"
 msgid "nothing to do"
 msgstr "无事可做"
 
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+#, fuzzy
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr ""
 "根参数只能与 no-dbus 一起使用。\n"
 "尝试 \"snapper --help\" 获取更多信息。"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "用法：snapper  [--全局选项] <命令> [--命令选项] [命令参数]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "未知快照类型。"
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\t列出所有可访问配置中的快照。"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2020-07-02 07:26+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
@@ -449,8 +449,8 @@ msgstr "Totožné snímky."
 msgid "Illegal snapshot."
 msgstr "Nepovolená snímka."
 
-#, c-format
-msgid "Invalid ambit %s."
+#, fuzzy, c-format
+msgid "Invalid ambit '%s'."
 msgstr "Neplatná oblasť '%s'."
 
 msgid "Invalid configdata."
@@ -473,8 +473,8 @@ msgstr "Neplatné snímky."
 msgid "Invalid subvolume."
 msgstr "Neplatný podzväzok."
 
-#, c-format
-msgid "Invalid table style %s."
+#, fuzzy, c-format
+msgid "Invalid table style '%s'."
 msgstr "Neplatný štýl tabuľky %s."
 
 msgid "Invalid user."
@@ -507,7 +507,8 @@ msgstr "Chýbajúci argument pre voľbu príkazu '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Chýbajúci argument pre globálnu voľbu '%s'."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Chýbajúci argument pre príkaz."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -590,11 +591,16 @@ msgstr "Neznáma globálna voľba '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Neznáma voľba '%s' pre príkaz '%s'."
 
-msgid "Unknown type of snapshot."
-msgstr "Neznámy typ snímky."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Neznámy príkaz '%s'."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr "Použite %s, %s alebo %s."
+
+#, fuzzy, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr "Použite %s, %s alebo %s."
 
 #, c-format
@@ -640,15 +646,17 @@ msgstr "upravenie %s"
 msgid "nothing to do"
 msgstr "nie je čo vykonať"
 
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+#, fuzzy
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr ""
 "Argument root možno použiť len spoločne s no-dbus.\n"
 "Skúste 'snapper --help' pre viac informácií."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "použitie: snapper [--globálne-voľby] <príkaz> [--voľby-príkazu] [argumenty-príkazu]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Neznámy typ snímky."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tZoznam snímok zo všetkých dostupných konfigurácií."

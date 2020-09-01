@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: memory.ku.po\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2005-09-23 00:15+0200\n"
 "Last-Translator: Kurdish Team <i18n@suse.de>\n"
 "Language-Team: Kurdish Team <i18n@suse.de>\n"
@@ -459,7 +459,7 @@ msgid "Illegal snapshot."
 msgstr "Vebijêrka nederbasdar: %1"
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Vebijêrka nederbasdar: %1"
 
 msgid "Invalid configdata."
@@ -484,7 +484,7 @@ msgid "Invalid subvolume."
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Vebijêrka nederbasdar: %1"
 
 msgid "Invalid user."
@@ -516,7 +516,7 @@ msgstr ""
 msgid "Missing argument for global option '%s'."
 msgstr ""
 
-msgid "Missing command argument."
+msgid "Missing command option."
 msgstr ""
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -601,11 +601,16 @@ msgstr "Vebijêrka nenas: %1"
 msgid "Unknown option '%s' for command '%s'."
 msgstr ""
 
-msgid "Unknown type of snapshot."
-msgstr ""
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Fermana Nenas: %1"
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -652,9 +657,7 @@ msgstr "%1$s tê rakirin"
 msgid "nothing to do"
 msgstr "Tiştekî bê te kirin nîn e."
 
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"

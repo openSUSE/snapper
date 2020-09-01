@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2019-11-28 21:54+0000\n"
 "Last-Translator: Kimmo Kujansuu <mrkujansuu@gmail.com>\n"
 "Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
@@ -449,7 +449,7 @@ msgid "Illegal snapshot."
 msgstr "Virheellinen tilannevedos."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Virheellinen tilannevedos \"%s\"."
 
 msgid "Invalid configdata."
@@ -473,7 +473,7 @@ msgid "Invalid subvolume."
 msgstr "Virheellinen alitaltio."
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Virheellinen taulukon tyyli %d."
 
 msgid "Invalid user."
@@ -505,7 +505,8 @@ msgstr "Komennon valitsimelta ”%s” puuttuu parametri."
 msgid "Missing argument for global option '%s'."
 msgstr "Yleisvalitsimelta ”%s” puuttuu parametri."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Komennolta puuttuu parametri."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -588,11 +589,16 @@ msgstr "Tuntematon yleisvalitsin \"%s\"."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Tuntematon valitsin \"%s\" komennolle \"%s\"."
 
-msgid "Unknown type of snapshot."
-msgstr "Tuntematon tilannevedostyyppi."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Tuntematon komento \"%s\"."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -639,13 +645,14 @@ msgid "nothing to do"
 msgstr "ei mitään tehtävää"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Juuriparametria voi käyttää vain no-dbus-asetuksen kanssa."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "käyttö: snapper [--yleisvalitsimet] <komento> [--komennon-valitsimet] [komennon-parametrit]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Tuntematon tilannevedostyyppi."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tLuettele tilannekuvia kaikista käytettävissä olevista kokoonpanoista."

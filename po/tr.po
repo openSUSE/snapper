@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Murat Servan Kahraman <muratservan@outlook.com>\n"
 "Language-Team: Turkish <https://l10n.opensuse.org/projects/snapper/master/tr/>\n"
@@ -510,7 +510,7 @@ msgid "Illegal snapshot."
 msgstr "Geçersiz anlık görüntü."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Geçersiz '%s' anlık görüntüsü."
 
 #, fuzzy
@@ -536,7 +536,7 @@ msgid "Invalid subvolume."
 msgstr "Geçersiz arkases."
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "%d geçersiz tablo stili."
 
 msgid "Invalid user."
@@ -570,7 +570,7 @@ msgstr "'%s' küresel seçeneği için eksik argüman."
 
 # clients/lan_inetd_custom.ycp:758
 #, fuzzy
-msgid "Missing command argument."
+msgid "Missing command option."
 msgstr "Çok fazla argüman."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -657,12 +657,16 @@ msgstr "Bilinmeyen '%s' evrensel seçeneği."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Bilinmeyen '%s' seçeneği; '%s' komutu için."
 
-#, fuzzy
-msgid "Unknown type of snapshot."
-msgstr "Bilinmeyen anlık görüntü formatı."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "'Bilinmeyen komut '%s'."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, c-format
@@ -709,14 +713,16 @@ msgid "nothing to do"
 msgstr ""
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Daha fazla bilgi için 'Yakalayıcı yardımı'nı okumayı deneyin."
 
 #, fuzzy
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "kullanım: yakalayıcı  [--global-options] <command> [--command-options] [command-arguments]"
+
+#, fuzzy
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Bilinmeyen anlık görüntü formatı."
 
 #, fuzzy
 #~ msgid "\t--disable-used-space\t\tDisable showing used space."

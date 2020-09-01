@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2020-06-30 08:32+0000\n"
 "Last-Translator: Antoine Belvire <antoine.belvire@opensuse.org>\n"
 "Language-Team: French <https://l10n.opensuse.org/projects/snapper/master/fr/>\n"
@@ -467,8 +467,8 @@ msgstr "Instantanés identiques."
 msgid "Illegal snapshot."
 msgstr "Instantané interdit."
 
-#, c-format
-msgid "Invalid ambit %s."
+#, fuzzy, c-format
+msgid "Invalid ambit '%s'."
 msgstr "Contexte %s non valide."
 
 msgid "Invalid configdata."
@@ -492,8 +492,8 @@ msgstr "Instantanés invalides."
 msgid "Invalid subvolume."
 msgstr "Sous-volume invalide."
 
-#, c-format
-msgid "Invalid table style %s."
+#, fuzzy, c-format
+msgid "Invalid table style '%s'."
 msgstr "Style de table %s non valide."
 
 # SLE12
@@ -526,7 +526,8 @@ msgstr "Argument manquant pour l'option de commande '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Argument manquant pour l'option globale '%s'."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Argument de commande manquant."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -609,11 +610,16 @@ msgstr "Option globale '%s' inconnue."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Option '%s' inconnue pour la commande '%s'."
 
-msgid "Unknown type of snapshot."
-msgstr "Type d'instantané inconnu."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Commande '%s' inconnue."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr "Utilisez %s, %s ou %s."
+
+#, fuzzy, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr "Utilisez %s, %s ou %s."
 
 # SLE12
@@ -665,15 +671,17 @@ msgstr "modification de %s"
 msgid "nothing to do"
 msgstr "Rien à faire"
 
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+#, fuzzy
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr ""
 "L'argument root peut uniquement être utilisé en association avec no-dbus.\n"
 "Essayez « snapper --help » pour plus d'informations."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "Utilisation : snapper [--options-globales] <commande> [--options-de-commande] [arguments-de-commande]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Type d'instantané inconnu."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tRépertorie les instantanés de toutes les configurations accessibles."

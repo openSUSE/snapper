@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper.km\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2011-10-24 10:40+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -481,7 +481,7 @@ msgid "Illegal snapshot."
 msgstr "រូបថត​មិន​ត្រឹមត្រូវ ។"
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "រូបថត​មិន​ត្រឹមត្រូវ '%s' ។"
 
 #, fuzzy
@@ -507,7 +507,7 @@ msgid "Invalid subvolume."
 msgstr "ភាគ​រង​មិន​ត្រឹមត្រូវ ។"
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "រចនាប័ទ្ម​តារាង %d មិន​ត្រឹមត្រូវ ។"
 
 #, fuzzy
@@ -540,7 +540,8 @@ msgstr "បាត់​អាគុយម៉ង់​សម្រាប់​ជ
 msgid "Missing argument for global option '%s'."
 msgstr "បាត់​អាគុយម៉ង់​សម្រាប់​ជម្រើស​សកល '%s' ។"
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "បាត់​អាគុយម៉ង់​ពាក្យ​បញ្ជា ។"
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -628,11 +629,16 @@ msgstr "មិន​ស្គាល់​ជម្រើស​សកល '%s' ។
 msgid "Unknown option '%s' for command '%s'."
 msgstr "មិន​ស្គាល់​ជម្រើស​ '%s' សម្រាប់​ពាក្យ​បញ្ជា '%s' ។"
 
-msgid "Unknown type of snapshot."
-msgstr "មិន​ស្គាល់​ប្រភេទ​រូបថត ។"
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "មិន​ស្គាល់​ពាក្យ​បញ្ជា '%s' ។"
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, fuzzy, c-format
@@ -680,13 +686,14 @@ msgid "nothing to do"
 msgstr "គ្មាន​អ្វី​ត្រូវ​ធ្វើ ។"
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "ចំពោះ​ព័ត៌មាន​បន្ថែម​ សូម​អាន 'ជំនួយ​របស់​កម្មវិធី​ថត' ។"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "ការ​ប្រើប្រាស់ ៖ កម្មវិធី​ថតរូប [--global-options] <command> [--command-options] [command-arguments]"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "មិន​ស្គាល់​ប្រភេទ​រូបថត ។"
 
 #, fuzzy
 #~ msgid "\t--disable-used-space\t\tDisable showing used space."

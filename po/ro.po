@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenSUSE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2011-11-01 00:08-0700\n"
 "Last-Translator: Alexandru Szasz <alexxed@gmail.com>\n"
 "Language-Team: Romanian <LL@li.org>\n"
@@ -488,7 +488,7 @@ msgid "Illegal snapshot."
 msgstr "Ștergerea CA a eșuat: %1."
 
 #, fuzzy, c-format
-msgid "Invalid ambit %s."
+msgid "Invalid ambit '%s'."
 msgstr "Date de emitere invalide."
 
 #, fuzzy
@@ -514,7 +514,7 @@ msgid "Invalid subvolume."
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Invalid table style %s."
+msgid "Invalid table style '%s'."
 msgstr "Date de emitere invalide."
 
 #, fuzzy
@@ -549,7 +549,7 @@ msgid "Missing argument for global option '%s'."
 msgstr ""
 
 #, fuzzy
-msgid "Missing command argument."
+msgid "Missing command option."
 msgstr "Lipsește un argument pentru"
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -637,11 +637,16 @@ msgstr ""
 msgid "Unknown option '%s' for command '%s'."
 msgstr ""
 
-msgid "Unknown type of snapshot."
-msgstr ""
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Tip necunoscut."
 
 #, c-format
 msgid "Use %s, %s or %s."
+msgstr ""
+
+#, c-format
+msgid "Use %s, %s, %s or %s."
 msgstr ""
 
 #, fuzzy, c-format
@@ -689,9 +694,7 @@ msgid "nothing to do"
 msgstr "Nimic de făcut."
 
 #, fuzzy
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Încercați `%s --help' or `%s --usage' pentru mai multe informații\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
@@ -760,10 +763,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Command '%s' does not work without DBus."
 #~ msgstr "Comanda 'help' nu acceptă argumente."
-
-#, fuzzy
-#~ msgid "Unknown file."
-#~ msgstr "Tip necunoscut."
 
 #~ msgid "done"
 #~ msgstr "gata"
