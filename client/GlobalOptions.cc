@@ -21,6 +21,7 @@
 
 #include <snapper/AppUtil.h>
 
+#include "misc.h"
 #include "client/GlobalOptions.h"
 #include "client/utils/text.h"
 #include "client/utils/TableFormatter.h"
@@ -114,11 +115,9 @@ namespace snapper
 	if (it == opts.end())
 	    return cli::TableFormatter::default_style;
 
-	string str = it->second;
-
 	try
 	{
-	    unsigned long value = stoul(str);
+	    unsigned long value = stoul(it->second);
 
 	    if (value >= Table::numStyles)
 		throw exception();
@@ -127,7 +126,7 @@ namespace snapper
 	}
 	catch (const exception&)
 	{
-	    string error = sformat(_("Invalid table style '%s'."), str.c_str()) + '\n' +
+	    string error = sformat(_("Invalid table style '%s'."), it->second.c_str()) + '\n' +
 		sformat(_("Use an integer number from %d to %d."), 0, Table::numStyles - 1);
 
 	    SN_THROW(OptionsException(error));
@@ -150,14 +149,11 @@ namespace snapper
 	if (it == opts.end())
 	    return OutputFormat::TABLE;
 
-	string str = it->second;
-
 	OutputFormat output_format;
-	if (!toValue(str, output_format, false))
+	if (!toValue(it->second, output_format, false))
 	{
-	    string error = sformat(_("Invalid machine readable format %s."), str.c_str()) + '\n' +
-		sformat(_("Use %s, %s or %s."), toString(OutputFormat::TABLE).c_str(),
-			toString(OutputFormat::CSV).c_str(), toString(OutputFormat::JSON).c_str());
+	    string error = sformat(_("Invalid machine readable format '%s'."), it->second.c_str()) + '\n' +
+		possible_enum_values<OutputFormat>();
 
 	    SN_THROW(OptionsException(error));
 	}
@@ -206,14 +202,11 @@ namespace snapper
 	if (it == opts.end())
 	    return Ambit::AUTO;
 
-	string str = it->second;
-
 	Ambit ambit;
-	if (!toValue(str, ambit, false))
+	if (!toValue(it->second, ambit, false))
 	{
-	    string error = sformat(_("Invalid ambit '%s'."), str.c_str()) + '\n' +
-		sformat(_("Use %s, %s or %s."), toString(Ambit::AUTO).c_str(),
-			toString(Ambit::CLASSIC).c_str(), toString(Ambit::TRANSACTIONAL).c_str());
+	    string error = sformat(_("Invalid ambit '%s'."), it->second.c_str()) + '\n' +
+		possible_enum_values<Ambit>();
 
 	    SN_THROW(OptionsException(error));
 	}

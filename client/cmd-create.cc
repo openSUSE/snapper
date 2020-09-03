@@ -58,8 +58,16 @@ namespace snapper
     }
 
 
+    namespace
+    {
+
+	enum class CreateType { SINGLE, PRE, POST, PRE_POST };
+
+    }
+
+
     void
-    command_create(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+    command_create(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*, ProxySnapper* snapper)
     {
 	const vector<Option> options = {
 	    Option("type",			required_argument,	't'),
@@ -76,8 +84,6 @@ namespace snapper
 
 	ParsedOpts opts = get_opts.parse("create", options);
 
-	enum class CreateType { SINGLE, PRE, POST, PRE_POST };
-
 	const ProxySnapshots& snapshots = snapper->getSnapshots();
 
 	CreateType type = CreateType::SINGLE;
@@ -92,18 +98,10 @@ namespace snapper
 
 	if ((opt = opts.find("type")) != opts.end())
 	{
-	    if (opt->second == "single")
-		type = CreateType::SINGLE;
-	    else if (opt->second == "pre")
-		type = CreateType::PRE;
-	    else if (opt->second == "post")
-		type = CreateType::POST;
-	    else if (opt->second == "pre-post")
-		type = CreateType::PRE_POST;
-	    else
+	    if (!toValue(opt->second, type, false))
 	    {
 		string error = sformat(_("Unknown type '%s'."), opt->second.c_str()) + '\n' +
-		    sformat(_("Use %s, %s, %s or %s."), "single", "pre", "post", "pre-post");
+		    possible_enum_values<CreateType>();
 
 		SN_THROW(OptionsException(error));
 	    }
@@ -193,5 +191,10 @@ namespace snapper
 	    } break;
 	}
     }
+
+
+    template <> struct EnumInfo<CreateType> { static const vector<string> names; };
+
+    const vector<string> EnumInfo<CreateType>::names({ "single", "pre", "post", "pre-post" });
 
 }
