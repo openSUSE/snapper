@@ -20,8 +20,8 @@ using std::ostream;
 using std::list;
 using std::vector;
 
-//! table drawing style
-enum TableLineStyle {
+//! table style
+enum TableStyle {
   Ascii         = 0,           ///< | - +
   Light,
   Heavy,
@@ -101,8 +101,6 @@ class Table {
 public:
   typedef list<TableRow> container;
 
-  static TableLineStyle defaultStyle;
-
   static const unsigned int numStyles = _End;
 
   void add (const TableRow& tr);
@@ -111,7 +109,7 @@ public:
   bool empty () const { return _rows.empty(); }
   void sort (unsigned by_column);       // columns start with 0...
 
-  void lineStyle (TableLineStyle st);
+  void set_style(TableStyle st);
   void wrap(int force_break_after = -1);
   void allowAbbrev(unsigned column);
   void margin(unsigned margin);
@@ -132,8 +130,8 @@ private:
   mutable vector<unsigned> _max_width;
   //! table width (columns)
   int _width;
-  //! table line drawing style
-  TableLineStyle _style;
+  //! table style
+  TableStyle _style;
   //! amount of space we have to print this table
   int _screen_width;
   //! whether to abbreviate the respective column if needed

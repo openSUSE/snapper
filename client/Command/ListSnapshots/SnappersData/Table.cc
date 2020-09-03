@@ -36,7 +36,7 @@ namespace snapper
     {
 
 	Command::ListSnapshots::SnappersData::Table::Table(
-	    const Command::ListSnapshots& command, TableLineStyle style) :
+	    const Command::ListSnapshots& command, TableStyle style) :
 	    SnappersData(command), _style(style)
 	{}
 
@@ -178,7 +178,7 @@ namespace snapper
 
 	    TableFormatter formatter(columns, rows, _style);
 
-	    return formatter.output();
+	    return formatter.str();
 	}
 
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019] SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -23,69 +23,47 @@
 
 #include "client/utils/TableFormatter.h"
 
-using namespace std;
 
 namespace snapper
 {
+
+    using namespace std;
+
+
     namespace cli
     {
 
-	namespace
+	const TableStyle TableFormatter::default_style = Ascii;
+
+
+	string
+	TableFormatter::str() const
 	{
-	    const TableLineStyle DEFAULT_STYLE = Table::defaultStyle;
-	}
-
-
-	TableLineStyle TableFormatter::default_style()
-	{
-	    return DEFAULT_STYLE;
-	}
-
-
-	TableFormatter::TableFormatter(
-	    vector<pair<string, TableAlign>> columns,
-	    vector<vector<string>> rows) :
-	    _columns(columns), _rows(rows), _style(default_style())
-	{}
-
-
-	TableFormatter::TableFormatter(
-	    vector<pair<string, TableAlign>> columns,
-	    vector<vector<string>> rows,
-	    TableLineStyle style) :
-	    _columns(columns), _rows(rows), _style(style)
-	{}
-
-
-	string TableFormatter::output() const
-	{
-	    Table::defaultStyle = _style;
-
 	    Table table;
+	    table.set_style(style);
 
-	    TableHeader header;
+	    TableHeader table_header;
 
-	    for (auto column : _columns)
-		header.add(column.first, column.second);
+	    for (const pair<string, TableAlign>& column : header)
+		table_header.add(column.first, column.second);
 
-	     table.setHeader(header);
+	    table.setHeader(table_header);
 
-	    for (auto row : _rows)
+	    for (const vector<string>& row : rows)
 	    {
 		TableRow table_row;
 
-		for (auto value : row)
+		for (const string& value : row)
 		    table_row.add(value);
 
 		table.add(table_row);
 	    }
 
 	    ostringstream stream;
-
 	    stream << table;
-
 	    return stream.str();
 	}
 
     }
+
 }

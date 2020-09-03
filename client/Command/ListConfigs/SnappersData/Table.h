@@ -37,7 +37,7 @@ namespace snapper
 
 	public:
 
-	    Table(const ListConfigs& command, TableLineStyle style);
+	    Table(const ListConfigs& command, TableStyle style);
 
 	    virtual std::string output() const override;
 
@@ -45,7 +45,7 @@ namespace snapper
 
 	    std::string label_for(const std::string& column) const;
 
-	    TableLineStyle _style;
+	    TableStyle _style;
 
 	};
 

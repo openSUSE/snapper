@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019] SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -28,8 +28,13 @@
 
 #include "client/utils/Table.h"
 
+
 namespace snapper
 {
+
+    using namespace std;
+
+
     namespace cli
     {
 
@@ -38,30 +43,26 @@ namespace snapper
 
 	public:
 
-	    static TableLineStyle default_style();
+	    static const TableStyle default_style;
 
-	    TableFormatter(
-		std::vector<std::pair<std::string, TableAlign>> columns,
-		std::vector<std::vector<std::string>> rows);
+	    TableFormatter(const vector<pair<string, TableAlign>>& header,
+			   const vector<vector<string>>& rows, TableStyle style)
+		: header(header), rows(rows), style(style)
+	    {
+	    }
 
-	    TableFormatter(
-		std::vector<std::pair<std::string, TableAlign>> columns,
-		std::vector<std::vector<std::string>> rows,
-		TableLineStyle style);
-
-	    std::string output() const;
+	    string str() const;
 
 	private:
 
-	    std::vector<std::pair<std::string, TableAlign>> _columns;
-
-	    std::vector<std::vector<std::string>> _rows;
-
-	    TableLineStyle _style;
+	    const vector<pair<string, TableAlign>> header;
+	    const vector<vector<string>> rows;
+	    const TableStyle style;
 
 	};
 
     }
+
 }
 
 #endif

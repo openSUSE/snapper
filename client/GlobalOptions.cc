@@ -107,12 +107,12 @@ namespace snapper
     }
 
 
-    TableLineStyle
+    TableStyle
     GlobalOptions::table_style_value(const ParsedOpts& opts) const
     {
 	ParsedOpts::const_iterator it = opts.find("table-style");
 	if (it == opts.end())
-	    return cli::TableFormatter::default_style();
+	    return cli::TableFormatter::default_style;
 
 	string str = it->second;
 
@@ -123,7 +123,7 @@ namespace snapper
 	    if (value >= Table::numStyles)
 		throw exception();
 
-	    return (TableLineStyle)(value);
+	    return (TableStyle)(value);
 	}
 	catch (const exception&)
 	{
@@ -133,7 +133,7 @@ namespace snapper
 	    SN_THROW(OptionsException(error));
 	}
 
-	return cli::TableFormatter::default_style();
+	return cli::TableFormatter::default_style;
     }
 
 
@@ -171,7 +171,7 @@ namespace snapper
     {
 	ParsedOpts::const_iterator it = opts.find("separator");
 	if (it == opts.end())
-	    return cli::CsvFormatter::default_separator();
+	    return cli::CsvFormatter::default_separator;
 
 	return it->second;
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019] SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -25,8 +25,13 @@
 #include <string>
 #include <vector>
 
+
 namespace snapper
 {
+
+    using namespace std;
+
+
     namespace cli
     {
 
@@ -35,36 +40,36 @@ namespace snapper
 
 	public:
 
-	    static const std::string default_separator();
+	    static const string default_separator;
 
-	    CsvFormatter(
-		std::vector<std::string> columns,
-		std::vector<std::vector<std::string>> rows);
+	    CsvFormatter(const vector<string>& header, const vector<vector<string>>& rows,
+			 const string& separator)
+		: header(header), rows(rows), separator(separator)
+	    {
+	    }
 
-	    CsvFormatter(
-		std::vector<std::string> columns,
-		std::vector<std::vector<std::string>> rows,
-		const std::string separator);
-
-	    std::string output() const;
+	    string str() const;
 
 	private:
 
-	    std::string csv_line(std::vector<std::string> values) const;
+	    string csv_line(const vector<string>& values) const;
 
-	    std::string csv_value(const std::string value) const;
+	    string csv_value(const string& value) const;
 
-	    bool has_special_chars(const std::string value) const;
+	    bool has_special_chars(const string& value) const;
 
-	    std::vector<std::string> _columns;
+	    static string double_quotes(const string& value);
 
-	    std::vector<std::vector<std::string>> _rows;
+	    static string enclose_with_quotes(const string& value);
 
-	    const std::string _separator;
+	    const vector<string> header;
+	    const vector<vector<string>> rows;
+	    const string separator;
 
 	};
 
     }
+
 }
 
 #endif
