@@ -59,7 +59,7 @@ namespace snapper
 
 	    CsvFormatter formatter(columns, rows, _separator);
 
-	    return formatter.output();
+	    return formatter.str();
 	}
 
     }

@@ -49,7 +49,7 @@ namespace snapper
 
 		formatter.set_inline(true);
 
-		return formatter.output(3);
+		return formatter.str(3);
 	    }
 
 	}
@@ -72,7 +72,7 @@ namespace snapper
 
 	    formatter.skip_format_values(keys);
 
-	    return formatter.output();
+	    return formatter.str();
 	}
 
 
@@ -118,12 +118,12 @@ namespace snapper
 
 		formatter.skip_format_values(skip_format);
 
-		data.push_back(formatter.output(2));
+		data.push_back(formatter.str(2));
 	    }
 
 	    JsonFormatter::List json_list(data);
 
-	    return json_list.output(1);
+	    return json_list.str(1);
 	}
 
 

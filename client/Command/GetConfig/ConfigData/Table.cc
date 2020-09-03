@@ -32,7 +32,7 @@ namespace snapper
     {
 
 	Command::GetConfig::ConfigData::Table::Table(
-	    const Command::GetConfig& command, TableLineStyle style) :
+	    const Command::GetConfig& command, TableStyle style) :
 	    ConfigData(command), _style(style)
 	{}
 
@@ -63,7 +63,7 @@ namespace snapper
 
 	    TableFormatter formatter(columns, rows, _style);
 
-	    return formatter.output();
+	    return formatter.str();
 	}
 
 

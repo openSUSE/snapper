@@ -38,7 +38,7 @@ namespace snapper
 
 	    JsonFormatter formatter(data);
 
-	    return formatter.output();
+	    return formatter.str();
 	}
 
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019] SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -26,15 +26,20 @@
 #include <vector>
 #include <utility>
 
+
 namespace snapper
 {
+
+    using namespace std;
+
+
     namespace cli
     {
 
 	/* Very simplistic JSON formatter, but enough for current requirements.
 	 *
 	 * If needed, this could be replaced by some modern library, for example:
-	 * https://github.com/nlohmann/json
+	 * libjson-c
 	 */
 	class JsonFormatter
 	{
@@ -43,11 +48,14 @@ namespace snapper
 
 	    class List;
 
-	    using Data = std::vector<std::pair<std::string, std::string>>;
+	    using Data = vector<pair<string, string>>;
 
-	    JsonFormatter(const Data& data);
+	    JsonFormatter(const Data& data)
+		: data(data), _inline(false)
+	    {
+	    }
 
-	    void skip_format_values(const std::vector<std::string>& skip_format_values)
+	    void skip_format_values(const vector<string>& skip_format_values)
 	    {
 		_skip_format_values = skip_format_values;
 	    }
@@ -57,19 +65,25 @@ namespace snapper
 		_inline = is_inline;
 	    }
 
-	    std::string output(u_int indent_level = 0) const;
+	    string str(u_int indent_level = 0) const;
 
 	private:
 
-	    std::string json_attributes(u_int indent_level) const;
+	    string json_attributes(u_int indent_level) const;
 
-	    bool skip_format_value(const std::string& key) const;
+	    bool skip_format_value(const string& key) const;
 
-	    const Data& _data;
+	    const Data& data;
 
-	    std::vector<std::string> _skip_format_values;
+	    vector<string> _skip_format_values;
 
 	    bool _inline;
+
+	    static string indent(u_int indent_level);
+	    static string escape(const string& value);
+	    static string quote(const string& value);
+	    static string to_json(const string& value);
+
 	};
 
 
@@ -78,17 +92,21 @@ namespace snapper
 
 	public:
 
-	    List(const std::vector<std::string>& data);
+	    List(const vector<string>& data)
+		: data(data)
+	    {
+	    }
 
-	    std::string output(u_int indent_level = 0) const;
+	    string str(u_int indent_level = 0) const;
 
 	private:
 
-	    const std::vector<std::string>& _data;
+	    const vector<string>& data;
 
 	};
 
     }
+
 }
 
 #endif

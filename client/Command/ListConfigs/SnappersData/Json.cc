@@ -48,7 +48,7 @@ namespace snapper
 
 	    formatter.skip_format_values({ SNAPPERS_KEY });
 
-	    return formatter.output();
+	    return formatter.str();
 	}
 
 
@@ -64,7 +64,7 @@ namespace snapper
 
 	    JsonFormatter::List json_list(data);
 
-	    return json_list.output(1);
+	    return json_list.str(1);
 	}
 
 
@@ -77,7 +77,7 @@ namespace snapper
 
 	    JsonFormatter formatter(data);
 
-	    return formatter.output(2);
+	    return formatter.str(2);
 	}
 
     }

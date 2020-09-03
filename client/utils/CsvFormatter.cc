@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019] SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -25,79 +25,47 @@
 
 #include "client/utils/CsvFormatter.h"
 
-using namespace std;
 
 namespace snapper
 {
+
+    using namespace std;
+
+
     namespace cli
     {
 
-	namespace
-	{
-
-	    const string DEFAULT_SEPARATOR = ",";
+	const std::string CsvFormatter::default_separator = ",";
 
 
-	    string double_quotes(const string value)
-	    {
-		return boost::algorithm::replace_all_copy(value, "\"", "\"\"" );
-	    }
-
-
-	    string enclose_with_quotes(const string value)
-	    {
-		return "\"" + value + "\"";
-	    }
-
-	}
-
-
-	const string CsvFormatter::default_separator()
-	{
-	    return DEFAULT_SEPARATOR;
-	}
-
-
-	CsvFormatter::CsvFormatter(
-	    vector<string> columns,
-	    vector<vector<string>> rows) :
-	    _columns(columns), _rows(rows), _separator(default_separator())
-	{}
-
-
-	CsvFormatter::CsvFormatter(
-	    vector<string> columns,
-	    vector<vector<string>> rows,
-	    const string separator) :
-	    _columns(columns), _rows(rows), _separator(separator)
-	{}
-
-
-	string CsvFormatter::output() const
+	string
+	CsvFormatter::str() const
 	{
 	    string cvs_output;
 
-	    cvs_output = csv_line(_columns);
+	    cvs_output = csv_line(header);
 
-	    for (auto row : _rows)
+	    for (const vector<string>& row : rows)
 		cvs_output += csv_line(row);
 
 	    return cvs_output;
 	}
 
 
-	string CsvFormatter::csv_line(vector<string> values) const
+	string
+	CsvFormatter::csv_line(const vector<string>& values) const
 	{
 	    vector<string> csv_values;
 
-	    for (auto value : values)
+	    for (const string& value : values)
 		csv_values.push_back(csv_value(value));
 
-	    return boost::algorithm::join(csv_values, _separator) + "\n";
+	    return boost::algorithm::join(csv_values, separator) + "\n";
 	}
 
 
-	string CsvFormatter::csv_value(const string value) const
+	string
+	CsvFormatter::csv_value(const string& value) const
 	{
 	    string fixed_value = boost::algorithm::trim_copy(value);
 
@@ -108,11 +76,12 @@ namespace snapper
 	}
 
 
-	bool CsvFormatter::has_special_chars(const string value) const
+	bool
+	CsvFormatter::has_special_chars(const string& value) const
 	{
-	    vector<string> special_chars = { _separator, "\n", "\"" };
+	    vector<string> special_chars = { separator, "\n", "\"" };
 
-	    for (auto special_char : special_chars)
+	    for (const string& special_char : special_chars)
 	    {
 		if (value.find(special_char) != string::npos)
 		    return true;
@@ -121,5 +90,20 @@ namespace snapper
 	    return false;
 	}
 
+
+	string
+	CsvFormatter::double_quotes(const string& value)
+	{
+	    return boost::algorithm::replace_all_copy(value, "\"", "\"\"" );
+	}
+
+
+	string
+	CsvFormatter::enclose_with_quotes(const string& value)
+	{
+	    return "\"" + value + "\"";
+	}
+
     }
+
 }

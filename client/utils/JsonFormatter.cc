@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019] SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -22,62 +22,59 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/algorithm/string/trim.hpp>
-#include <boost/algorithm/string/predicate.hpp>
 
 #include "client/utils/JsonFormatter.h"
 
-using namespace std;
 
 namespace snapper
 {
+
+    using namespace std;
+
+
     namespace cli
     {
 
-	namespace
+	string
+	JsonFormatter::indent(u_int indent_level)
 	{
-
-	    string indent(u_int indent_level)
-	    {
-		return string(indent_level * 2, ' ');
-	    }
-
-
-	    string escape(const string& value)
-	    {
-		string fixed_value = value;
-
-		boost::algorithm::replace_all(fixed_value, "\\", "\\\\");
-		boost::algorithm::replace_all(fixed_value, "\"", "\\\"");
-		boost::algorithm::replace_all(fixed_value, "\b", "\\b");
-		boost::algorithm::replace_all(fixed_value, "\f", "\\f");
-		boost::algorithm::replace_all(fixed_value, "\n", "\\n");
-		boost::algorithm::replace_all(fixed_value, "\r", "\\r");
-		boost::algorithm::replace_all(fixed_value, "\t", "\\t");
-
-		return fixed_value;
-	    }
-
-
-	    string quote(const string& value)
-	    {
-		return "\"" + value + "\"";
-	    }
-
-
-	    string to_json(const string& value)
-	    {
-		return quote(escape(boost::algorithm::trim_copy(value)));
-	    }
-
+	    return string(indent_level * 2, ' ');
 	}
 
 
-	JsonFormatter::JsonFormatter(const Data& data) :
-	    _data(data), _inline(false)
-	{}
+	string
+	JsonFormatter::escape(const string& value)
+	{
+	    string fixed_value = value;
+
+	    boost::algorithm::replace_all(fixed_value, "\\", "\\\\");
+	    boost::algorithm::replace_all(fixed_value, "\"", "\\\"");
+	    boost::algorithm::replace_all(fixed_value, "\b", "\\b");
+	    boost::algorithm::replace_all(fixed_value, "\f", "\\f");
+	    boost::algorithm::replace_all(fixed_value, "\n", "\\n");
+	    boost::algorithm::replace_all(fixed_value, "\r", "\\r");
+	    boost::algorithm::replace_all(fixed_value, "\t", "\\t");
+
+	    return fixed_value;
+	}
 
 
-	string JsonFormatter::output(u_int indent_level) const
+	string
+	JsonFormatter::quote(const string& value)
+	{
+	    return "\"" + value + "\"";
+	}
+
+
+	string
+	JsonFormatter::to_json(const string& value)
+	{
+	    return quote(escape(boost::algorithm::trim_copy(value)));
+	}
+
+
+	string
+	JsonFormatter::str(u_int indent_level) const
 	{
 	    string first_indent = _inline ? "" : indent(indent_level);
 
@@ -87,11 +84,12 @@ namespace snapper
 	}
 
 
-	string JsonFormatter::json_attributes(u_int indent_level) const
+	string
+	JsonFormatter::json_attributes(u_int indent_level) const
 	{
 	    vector<string> attributes;
 
-	    for (auto& data_pair : _data)
+	    for (auto& data_pair : data)
 	    {
 		string value = data_pair.second;
 
@@ -105,28 +103,22 @@ namespace snapper
 	}
 
 
-	bool JsonFormatter::skip_format_value(const string& key) const
+	bool
+	JsonFormatter::skip_format_value(const string& key) const
 	{
-	    auto it = find(_skip_format_values.begin(), _skip_format_values.end(), key);
-
-	    if (it != _skip_format_values.end())
-		return true;
-
-	    return false;
+	    return find(_skip_format_values.begin(), _skip_format_values.end(), key) !=
+		_skip_format_values.end();
 	}
 
 
-	JsonFormatter::JsonFormatter::List::List(const vector<string>& data) :
-	    _data(data)
-	{}
-
-
-	string JsonFormatter::List::output(u_int indent_level) const
+	string
+	JsonFormatter::List::str(u_int indent_level) const
 	{
 	    return "[\n" +
-		boost::algorithm::join(_data, ",\n") + "\n" +
+		boost::algorithm::join(data, ",\n") + "\n" +
 		indent(indent_level) + "]";
 	}
 
     }
+
 }
