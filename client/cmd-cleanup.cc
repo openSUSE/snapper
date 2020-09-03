@@ -47,7 +47,7 @@ namespace snapper
 
 
     void
-    command_cleanup(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+    command_cleanup(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*, ProxySnapper* snapper)
     {
 	ParsedOpts opts = get_opts.parse("cleanup", GetOpts::no_options);
 	if (get_opts.num_args() != 1)

@@ -88,7 +88,7 @@ namespace snapper
 
 
     void
-    command_rollback(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+    command_rollback(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*, ProxySnapper* snapper)
     {
 	const vector<Option> options = {
 	    Option("print-number",		no_argument,		'p'),

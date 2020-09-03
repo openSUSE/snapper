@@ -45,7 +45,7 @@ namespace snapper
 
 
     void
-    command_set_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+    command_set_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*, ProxySnapper* snapper)
     {
 	get_opts.parse("set-config", GetOpts::no_options);
 	if (!get_opts.has_args())
