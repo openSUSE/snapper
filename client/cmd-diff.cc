@@ -53,7 +53,7 @@ namespace snapper
 
 
     void
-    command_diff(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+    command_diff(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*, ProxySnapper* snapper)
     {
 	const vector<Option> options = {
 	    Option("input",		required_argument,	'i'),

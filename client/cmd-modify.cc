@@ -50,7 +50,7 @@ namespace snapper
 
 
     void
-    command_modify(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+    command_modify(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*, ProxySnapper* snapper)
     {
 	const vector<Option> options = {
 	    Option("description",		required_argument,	'd'),

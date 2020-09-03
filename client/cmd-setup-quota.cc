@@ -44,7 +44,7 @@ namespace snapper
 
 
     void
-    command_setup_quota(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+    command_setup_quota(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*, ProxySnapper* snapper)
     {
 	ParsedOpts opts = get_opts.parse("setup-quota", GetOpts::no_options);
 	if (get_opts.num_args() != 0)
