@@ -1,7 +1,7 @@
 #
 # spec file for package snapper
 #
-# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+# Copyright (c) 2020 SUSE LLC
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -12,8 +12,9 @@
 # license that conforms to the Open Source Definition (Version 1.9)
 # published by the Open Source Initiative.
 
-# Please submit bugfixes or comments via http://bugs.opensuse.org/
+# Please submit bugfixes or comments via https://bugs.opensuse.org/
 #
+
 
 #Compat macro for new _fillupdir macro introduced in Nov 2017
 %if ! %{defined _fillupdir}
@@ -52,7 +53,7 @@ BuildRequires:  systemd
 %else
 BuildRequires:  pkg-config
 %endif
-%if 0%{?fedora_version} >= 24
+%if 0%{?fedora_version} >= 24 || 0%{?centos_version} >= 800
 BuildRequires:	glibc-langpack-en
 BuildRequires:	glibc-langpack-de
 %endif
@@ -75,7 +76,7 @@ BuildRequires:  xsltproc
 BuildRequires:  libzypp(plugin:commit)
 %endif
 BuildRequires:  pam-devel
-%if 0%{?fedora_version}
+%if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version}
 BuildRequires:  json-c-devel
 %else
 BuildRequires:  libjson-c-devel
@@ -92,7 +93,7 @@ Supplements:    btrfsprogs
 Summary:        Tool for filesystem snapshot management
 License:        GPL-2.0-only
 Group:          System/Packages
-Url:            http://snapper.io/
+URL:            http://snapper.io/
 
 %description
 This package contains snapper, a tool for filesystem snapshot management.
