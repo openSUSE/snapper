@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Sep 04 19:10:26 CEST 2020 - aschnell@suse.com
+
+- package new snapperd.service file on Debian based distributions
+  (gh#openSUSE/snapper#557)
+
+-------------------------------------------------------------------
 Tue Sep 01 09:50:00 CEST 2020 - lnussel@suse.com
 
 - activate snapperd using systemd service

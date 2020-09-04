@@ -58,9 +58,9 @@ namespace snapper
 
 	    bool has_special_chars(const string& value) const;
 
-	    static string double_quotes(const string& value);
+	    string double_quotes(const string& value) const;
 
-	    static string enclose_with_quotes(const string& value);
+	    string enclose_with_quotes(const string& value) const;
 
 	    const vector<string> header;
 	    const vector<vector<string>> rows;
