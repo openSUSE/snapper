@@ -35,7 +35,7 @@ namespace snapper
     namespace cli
     {
 
-	const std::string CsvFormatter::default_separator = ",";
+	const string CsvFormatter::default_separator = ",";
 
 
 	string
@@ -92,14 +92,14 @@ namespace snapper
 
 
 	string
-	CsvFormatter::double_quotes(const string& value)
+	CsvFormatter::double_quotes(const string& value) const
 	{
 	    return boost::algorithm::replace_all_copy(value, "\"", "\"\"" );
 	}
 
 
 	string
-	CsvFormatter::enclose_with_quotes(const string& value)
+	CsvFormatter::enclose_with_quotes(const string& value) const
 	{
 	    return "\"" + value + "\"";
 	}
