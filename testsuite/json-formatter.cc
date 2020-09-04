@@ -4,12 +4,11 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include <vector>
-#include <string>
-
 #include "../client/utils/JsonFormatter.h"
 
+
 using namespace std;
+
 
 BOOST_AUTO_TEST_CASE(test1_escape_values)
 {
@@ -37,6 +36,9 @@ BOOST_AUTO_TEST_CASE(test1_escape_values)
 	"  \"key3\": \"value\\t8\",\n"
 	"  \"key4\": \"\\\"value9\\\"\"\n"
 	"}";
+
+    // TODO it is inconsistent that here a final newline is missing while the other
+    // formatters add it
 
     snapper::cli::JsonFormatter formatter(data);
 
