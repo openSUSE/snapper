@@ -6,10 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2020-07-02 07:26+0000\n"
+=======
+"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"PO-Revision-Date: 2020-08-24 00:41+0000\n"
+>>>>>>> weblate/master
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
-"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
+"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
+"\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -270,10 +276,11 @@ msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Nemožno zmazať snímku %d, pretože je to nasledujúca snímka na pripojenie."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
-msgstr ""
+msgstr "Nie je možné zistiť oblasť, pretože predvolený podzväzok nie je známy."
 
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
+"Nie je možné vykonať návrat späť, pretože predvolený podzväzok nie je známy."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Príkaz 'cleanup' potrebuje jeden argument."
@@ -557,13 +564,13 @@ msgid "Snapshot is in use."
 msgstr "Snímka sa používa."
 
 msgid "The ambit can be specified manually using the --ambit option."
-msgstr ""
+msgstr "Oblasť je možné zadať manuálne pomocou voľby --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Konfigurácia 'root' neexistuje. Pravdepodobne nie je snapper nakonfigurovaný."
 
 msgid "This can happen if the system was not set up for rollback."
-msgstr ""
+msgstr "To sa môže stať, ak systém nebol nastavený na vrátenie sa späť."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"

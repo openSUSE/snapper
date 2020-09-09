@@ -5,10 +5,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2019-11-28 21:54+0000\n"
 "Last-Translator: Kimmo Kujansuu <mrkujansuu@gmail.com>\n"
 "Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
+=======
+"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"PO-Revision-Date: 2020-08-24 00:40+0000\n"
+"Last-Translator: Tommi Nieminen <software@legisign.org>\n"
+"Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/"
+">\n"
+>>>>>>> weblate/master
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,7 +40,7 @@ msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <nimi>\t\tAseta käytettävän määrityksen nimi."
 
 msgid "\t--csvout\t\t\tSet CSV output format."
-msgstr ""
+msgstr "\t--csvout\t\t\tAsettaa CSV-tulosmuodon."
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <kuvaus>\tTilannevedoksen kuvaus."
@@ -62,10 +70,11 @@ msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\tNäytä päiväys ja aika ISO-muodossa."
 
 msgid "\t--jsonout\t\t\tSet JSON output format."
-msgstr ""
+msgstr "\t--jsonout\t\t\tAsettaa JSON-tulosmuodon."
 
 msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
 msgstr ""
+"\t--machine-readable <format>\tAsttaa koneluettavan tulosmuodon (CSV, JSON)."
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tToimi ilman DBusia."
@@ -95,7 +104,7 @@ msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <sijainti>\t\tToimi asetetussa juuressa (toimii vain ilman DBusia)."
 
 msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
-msgstr ""
+msgstr "\t--separator <separator>\t\tCSV-tulosmuodon erotinmerkki."
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tTahdista poistamisen jälkeen."
@@ -247,7 +256,7 @@ msgid "ACL error."
 msgstr "ACL-virhe."
 
 msgid "Active snapshot is already default snapshot."
-msgstr ""
+msgstr "Aktiivinen tilannekuva on jo oletus."
 
 #, c-format
 msgid "Ambit is %s."
@@ -274,6 +283,7 @@ msgstr ""
 
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
+"Palautusta (rollback) ei voi tehdä, koska oletusalitaltio on tuntematon."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "\"cleanup\"-komento vaatii yhden parametrin."
@@ -460,7 +470,7 @@ msgstr "Virheellinen ryhmä."
 
 #, c-format
 msgid "Invalid machine readable format %s."
-msgstr ""
+msgstr "Virheellinen koneluettava muoto %s."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -472,9 +482,15 @@ msgstr "Virheellisiä tilannevedoksia."
 msgid "Invalid subvolume."
 msgstr "Virheellinen alitaltio."
 
+<<<<<<< HEAD
 #, fuzzy, c-format
 msgid "Invalid table style '%s'."
 msgstr "Virheellinen taulukon tyyli %d."
+=======
+#, c-format
+msgid "Invalid table style %s."
+msgstr "Virheellinen taulukkotyyli %s."
+>>>>>>> weblate/master
 
 msgid "Invalid user."
 msgstr "Virheellinen käyttäjä."
@@ -561,7 +577,7 @@ msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "\"root\"-määritys puuttuu. Luultavasti snapperia ei ole määritetty."
 
 msgid "This can happen if the system was not set up for rollback."
-msgstr ""
+msgstr "Näin voi käydä, ellei järjestelmää ole asetettu palautusta varten."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
@@ -595,7 +611,7 @@ msgstr "Tuntematon komento \"%s\"."
 
 #, c-format
 msgid "Use %s, %s or %s."
-msgstr ""
+msgstr "Käytettävissä: %s, %s tai %s."
 
 #, c-format
 msgid "Use %s, %s, %s or %s."
@@ -644,9 +660,18 @@ msgstr "muokataan: %s"
 msgid "nothing to do"
 msgstr "ei mitään tehtävää"
 
+<<<<<<< HEAD
 #, fuzzy
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Juuriparametria voi käyttää vain no-dbus-asetuksen kanssa."
+=======
+msgid ""
+"root argument can be used only together with no-dbus.\n"
+"Try 'snapper --help' for more information."
+msgstr ""
+"juuriparametria voi käyttää vain ilman no-dbus-valitsinta.\n"
+"Lisäohjeita komennolla ”snapper --help”."
+>>>>>>> weblate/master
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "käyttö: snapper [--yleisvalitsimet] <komento> [--komennon-valitsimet] [komennon-parametrit]"

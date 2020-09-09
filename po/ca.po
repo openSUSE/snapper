@@ -2,10 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2020-09-01 09:04+0200\n"
 "PO-Revision-Date: 2020-07-02 07:26+0000\n"
+=======
+"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"PO-Revision-Date: 2020-07-29 20:49+0000\n"
+>>>>>>> weblate/master
 "Last-Translator: David Medina <medipas@gmail.com>\n"
-"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/>\n"
+"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/"
+">\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -267,9 +273,10 @@ msgstr "No es pot suprimir la instantània %d, ja que és la propera instantàni
 
 msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr ""
+"No se'n pot detectar l'àmbit ja que es desconeix el subvolum per defecte."
 
 msgid "Cannot do rollback since default subvolume is unknown."
-msgstr ""
+msgstr "No es pot fer un retrocés ja que es desconeix el subvolum per defecte."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "L'ordre cleanup necessita un argument."
@@ -546,13 +553,13 @@ msgid "Snapshot is in use."
 msgstr "La instantània s'usa."
 
 msgid "The ambit can be specified manually using the --ambit option."
-msgstr ""
+msgstr "L'àmbit es pot especificar manualment usant l'opció --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "La configuració d'arrel no existeix. Potser l'snapper no està configurat."
 
 msgid "This can happen if the system was not set up for rollback."
-msgstr ""
+msgstr "Això pot succeir si el sistema no s'ha configurat per al retrocés."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
