@@ -10,9 +10,10 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-01 09:04+0200\n"
-"PO-Revision-Date: 2019-10-15 16:53+0000\n"
+"PO-Revision-Date: 2020-09-10 14:47+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
-"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
+"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
+"\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +22,7 @@ msgstr ""
 "X-Generator: Weblate 3.6.1\n"
 
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr ""
+msgstr "\t--ambit, -a ambit\t\tIn de gespecificeerde ambit werken."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\tOpschoonalgoritme voor momentopname."
@@ -36,7 +37,7 @@ msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <name>\t\tStel naam van te gebruiken configuratie in."
 
 msgid "\t--csvout\t\t\tSet CSV output format."
-msgstr ""
+msgstr "\t--csvout\t\t\tCSV uitvoerformaat instellen."
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <description>\tBeschrijving van momentopname."
@@ -66,10 +67,12 @@ msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\tDatums en tijd tonen in ISO-formaat."
 
 msgid "\t--jsonout\t\t\tSet JSON output format."
-msgstr ""
+msgstr "\t--jsonout\t\t\tJSON uitvoerformaat instellen."
 
 msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
 msgstr ""
+"\t--machine-readable <format>\tEen machine-leesbaar uitvoerformaat instellen "
+"(csv, json)."
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tWerken zonder D-Bus."
@@ -99,7 +102,7 @@ msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <path>\t\tBewerking op targetroot (werkt alleen zonder D-Bus)."
 
 msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
-msgstr ""
+msgstr "\t--separator <separator>\t\tScheidingsteken voor CSV uitvoerformaat."
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tSynchroniseren na verwijdering."
@@ -251,11 +254,11 @@ msgid "ACL error."
 msgstr "ACL-fout."
 
 msgid "Active snapshot is already default snapshot."
-msgstr ""
+msgstr "Actieve momentopname is al standaard momentopname."
 
 #, c-format
 msgid "Ambit is %s."
-msgstr ""
+msgstr "Ambit is %s."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -274,10 +277,10 @@ msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Kan momentopname %d niet verwijderen omdat deze de volgende aan te koppelen momentopname is."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
-msgstr ""
+msgstr "Kan ambit niet detecteren omdat standaard subvolume onbekend is."
 
 msgid "Cannot do rollback since default subvolume is unknown."
-msgstr ""
+msgstr "Kan geen rollback doen omdat standaard subvolume onbekend is."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Opdracht 'cleanup' heeft één argument."
@@ -448,9 +451,9 @@ msgstr "Identieke momentopnamen."
 msgid "Illegal snapshot."
 msgstr "Ongeldige momentopname."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid ambit '%s'."
-msgstr "Ongeldige momentopname '%s'."
+msgstr "Ongeldige ambit '%s'."
 
 msgid "Invalid configdata."
 msgstr "Ongeldige configuratiegegevens."
@@ -460,7 +463,7 @@ msgstr "Ongeldig groep."
 
 #, c-format
 msgid "Invalid machine readable format %s."
-msgstr ""
+msgstr "Ongeldig machine-leesbaar formaat %s."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -472,9 +475,9 @@ msgstr "Ongeldige momentopnamen."
 msgid "Invalid subvolume."
 msgstr "Ongeldig subvolume."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid table style '%s'."
-msgstr "Ongeldige tabelstijl %d."
+msgstr "Ongeldige tabelstijl '%s'."
 
 msgid "Invalid user."
 msgstr "Ongeldige gebruiker."
@@ -505,9 +508,8 @@ msgstr "Argument ontbreekt voor opdrachtoptie '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Argument ontbreekt voor globale optie '%s'."
 
-#, fuzzy
 msgid "Missing command option."
-msgstr "Argument van opdracht ontbreekt."
+msgstr "Optie van opdracht ontbreekt."
 
 msgid "Missing delimiter '..' between snapshot numbers."
 msgstr "Scheidingsteken '..' ontbreekt tussen snapshotnummers."
@@ -554,13 +556,13 @@ msgid "Snapshot is in use."
 msgstr "Momentopname is in gebruik."
 
 msgid "The ambit can be specified manually using the --ambit option."
-msgstr ""
+msgstr "De ambit kan handmatig worden gespecificeerd met de optie --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "De 'root' van de configuratie bestaat niet. Waarschijnlijk is snapper niet geconfigureerd."
 
 msgid "This can happen if the system was not set up for rollback."
-msgstr ""
+msgstr "Dit kan geburen als het systeem niet is opgezet voor rollback."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
@@ -588,17 +590,17 @@ msgstr "Onbekende globale optie '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Onbekende optie '%s' voor opdracht '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown type '%s'."
-msgstr "Onbekende opdracht '%s'."
+msgstr "Onbekend type '%s'."
 
 #, c-format
 msgid "Use %s, %s or %s."
-msgstr ""
+msgstr "%s, %s of %s gebruiken."
 
 #, c-format
 msgid "Use %s, %s, %s or %s."
-msgstr ""
+msgstr "%s, %s, %s of %s gebruiken."
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -643,9 +645,8 @@ msgstr "%s wordt gewijzigd"
 msgid "nothing to do"
 msgstr "niets te doen"
 
-#, fuzzy
 msgid "root argument can be used only together with no-dbus.\n"
-msgstr "rootargument kan alleen samen worden gebruikt met no-dbus."
+msgstr "rootargument kan alleen samen worden gebruikt met no-dbus.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "gebruik: snapper [--global-options] <opdracht> [--commando-options] [commando-arguments]"
