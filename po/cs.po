@@ -4,9 +4,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-01 09:04+0200\n"
-"PO-Revision-Date: 2020-07-29 14:45+0000\n"
+"PO-Revision-Date: 2020-09-10 18:47+0000\n"
 "Last-Translator: Aleš Kastner <alkas@volny.cz>\n"
-"Language-Team: Czech <https://l10n.opensuse.org/projects/snapper/master/cs/>\n"
+"Language-Team: Czech <https://l10n.opensuse.org/projects/snapper/master/cs/>"
+"\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -465,7 +466,7 @@ msgstr "Stejné snímky."
 msgid "Illegal snapshot."
 msgstr "Nepřípustný snímek."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid ambit '%s'."
 msgstr "Neplatná oblast '%s'."
 
@@ -490,7 +491,7 @@ msgstr "Neplatný snímek."
 msgid "Invalid subvolume."
 msgstr "Neplatná podřízená jednotka."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid table style '%s'."
 msgstr "Neplatný styl tabulky %s."
 
@@ -524,7 +525,6 @@ msgstr "Chybí parametr pro příkaz volby '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Chybí parametr pro globální volbu '%s'."
 
-#, fuzzy
 msgid "Missing command option."
 msgstr "Chybí parametr příkazu."
 
@@ -608,17 +608,17 @@ msgstr "Neznámá globální volba '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Neznámá volba '%s' pro příkaz '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown type '%s'."
-msgstr "Neznámý příkaz '%s'."
+msgstr "Neznámý typ '%s'."
 
 #, c-format
 msgid "Use %s, %s or %s."
 msgstr "Použijte %s, %s or %s."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Use %s, %s, %s or %s."
-msgstr "Použijte %s, %s or %s."
+msgstr "Použijte %s, %s, %s nebo %s."
 
 # SLE12
 #, c-format
@@ -666,11 +666,8 @@ msgstr "upravuji %s"
 msgid "nothing to do"
 msgstr "nic k provedení"
 
-#, fuzzy
 msgid "root argument can be used only together with no-dbus.\n"
-msgstr ""
-"Argument root lze použít pouze ve spojení s argumentem no-dbus.\n"
-"Další informace: 'snapper --help'."
+msgstr "Argument root lze použít pouze společně s argumentem no-dbus.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
