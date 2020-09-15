@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: memory.ku.po\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2005-09-23 00:15+0200\n"
 "Last-Translator: Kurdish Team <i18n@suse.de>\n"
 "Language-Team: Kurdish Team <i18n@suse.de>\n"
@@ -244,6 +244,20 @@ msgstr ""
 msgid "  Undo changes:"
 msgstr "Guherîn:"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "Pakêta '%s' nehat dîtin."
@@ -469,9 +483,9 @@ msgstr ""
 msgid "Invalid group."
 msgstr "Vebijêrka nederbasdar: %1"
 
-#, c-format
-msgid "Invalid machine readable format %s."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "Vebijêrka nederbasdar: %1"
 
 #, fuzzy, c-format
 msgid "Invalid snapshot '%s'."
@@ -605,12 +619,10 @@ msgstr ""
 msgid "Unknown type '%s'."
 msgstr "Fermana Nenas: %1"
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr ""
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
+msgid "Use %1$s."
 msgstr ""
 
 #, c-format

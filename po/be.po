@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2006-01-04 08:58+0100\n"
 "Last-Translator: Alexander Nyakhaychyk <nyakhaychyk@gmail.com>\n"
 "Language-Team: Belarusian <i18n@suse.de>\n"
@@ -241,6 +241,20 @@ msgstr ""
 msgid "  Undo changes:"
 msgstr ""
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "'%1' памылковая сеткавая маска."
@@ -466,9 +480,9 @@ msgstr "Падрыхтоўка дыскаў..."
 msgid "Invalid group."
 msgstr "Падрыхтоўка дыскаў..."
 
-#, c-format
-msgid "Invalid machine readable format %s."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "Падрыхтоўка дыскаў..."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -604,12 +618,10 @@ msgstr "Невядомая опцыя для каманды '%1': %2"
 msgid "Unknown type '%s'."
 msgstr "Невядомая каманда: %1"
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr ""
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
+msgid "Use %1$s."
 msgstr ""
 
 #, c-format

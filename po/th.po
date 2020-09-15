@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2008-01-04 08:58+0100\n"
 "Last-Translator: i18n@suse.de\n"
 "Language-Team: Thai <i18n@suse.de>\n"
@@ -250,6 +250,20 @@ msgstr "ไม่ต้องสร้างการสำรองข้อม
 msgid "  Undo changes:"
 msgstr ""
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "ไม่พบรายการบูตระบบ %1"
@@ -477,9 +491,9 @@ msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งาน
 msgid "Invalid group."
 msgstr "พาธการสำรองข้อมูลใช้ไม่ได้"
 
-#, c-format
-msgid "Invalid machine readable format %s."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งานไม่ได้"
 
 #, fuzzy, c-format
 msgid "Invalid snapshot '%s'."
@@ -618,12 +632,10 @@ msgstr "ไม่รู้จักตัวเลือกสำหรับค
 msgid "Unknown type '%s'."
 msgstr "ไม่รู้จักคำสั่ง: %1"
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr ""
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
+msgid "Use %1$s."
 msgstr ""
 
 #, c-format

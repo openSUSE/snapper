@@ -9,11 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2020-09-10 14:47+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
-"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
-"\n"
+"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -70,9 +69,7 @@ msgid "\t--jsonout\t\t\tSet JSON output format."
 msgstr "\t--jsonout\t\t\tJSON uitvoerformaat instellen."
 
 msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
-msgstr ""
-"\t--machine-readable <format>\tEen machine-leesbaar uitvoerformaat instellen "
-"(csv, json)."
+msgstr "\t--machine-readable <format>\tEen machine-leesbaar uitvoerformaat instellen (csv, json)."
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tWerken zonder D-Bus."
@@ -244,6 +241,20 @@ msgstr "  Momentopnamen afkoppelen:"
 
 msgid "  Undo changes:"
 msgstr "  Wijzigingen ongedaan maken:"
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
 
 #, c-format
 msgid "(Snapshot %d.)"
@@ -461,8 +472,9 @@ msgstr "Ongeldige configuratiegegevens."
 msgid "Invalid group."
 msgstr "Ongeldig groep."
 
-#, c-format
-msgid "Invalid machine readable format %s."
+#, fuzzy, c-format
+#| msgid "Invalid machine readable format %s."
+msgid "Invalid machine readable format '%s'."
 msgstr "Ongeldig machine-leesbaar formaat %s."
 
 #, c-format
@@ -594,13 +606,11 @@ msgstr "Onbekende optie '%s' voor opdracht '%s'."
 msgid "Unknown type '%s'."
 msgstr "Onbekend type '%s'."
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr "%s, %s of %s gebruiken."
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
-msgstr "%s, %s, %s of %s gebruiken."
+msgid "Use %1$s."
+msgstr ""
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -650,6 +660,14 @@ msgstr "rootargument kan alleen samen worden gebruikt met no-dbus.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "gebruik: snapper [--global-options] <opdracht> [--commando-options] [commando-arguments]"
+
+#, c-format
+#~ msgid "Use %s, %s or %s."
+#~ msgstr "%s, %s of %s gebruiken."
+
+#, c-format
+#~ msgid "Use %s, %s, %s or %s."
+#~ msgstr "%s, %s, %s of %s gebruiken."
 
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "Onbekend type momentopname."

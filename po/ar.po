@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2020-05-02 19:50+0000\n"
 "Last-Translator: mohammad alhargan <malham1@gmail.com>\n"
 "Language-Team: Arabic <https://l10n.opensuse.org/projects/snapper/master/ar/>\n"
@@ -241,6 +241,20 @@ msgstr "  الغ تحميل لقطة:"
 msgid "  Undo changes:"
 msgstr "  التراجع عن التغييرات:"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(لقطة %d.)"
@@ -460,9 +474,9 @@ msgstr "بيانات إعداد غير صالحة."
 msgid "Invalid group."
 msgstr "مجموعة غير صالحة."
 
-#, c-format
-msgid "Invalid machine readable format %s."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "نمط الجدول غير صالح %d."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -594,12 +608,10 @@ msgstr "خيار غير معروف '%s' للأمر '%s'."
 msgid "Unknown type '%s'."
 msgstr "أمر غير معروف '%s'."
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr ""
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
+msgid "Use %1$s."
 msgstr ""
 
 #, c-format

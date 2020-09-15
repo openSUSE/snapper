@@ -7,11 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2020-09-10 21:48+0000\n"
 "Last-Translator: Efstathios Iosifidis <eiosifidis@gmail.com>\n"
-"Language-Team: Greek <https://l10n.opensuse.org/projects/snapper/master/el/>"
-"\n"
+"Language-Team: Greek <https://l10n.opensuse.org/projects/snapper/master/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,9 +29,7 @@ msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tΑλγόρυθμος εκκαθάρισης για τα στιγμιότυπα."
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr ""
-"\t--command <command>\tΕκτέλεση εντολής και δημιουργία στιγμιότυπου πριν και "
-"μετά."
+msgstr "\t--command <command>\tΕκτέλεση εντολής και δημιουργία στιγμιότυπου πριν και μετά."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <name>\t\tΟρίσετε το όνομα του αρχείου ρυθμίσεων που θα χρησιμοποιηθεί."
@@ -62,9 +59,7 @@ msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
 msgstr "\t--input, -i <file>\t\tΑνάγνωση αρχείων που θα γίνει αναίρεση αλλαγών από αρχείο."
 
 msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr ""
-"\t--input, -i <file>\t\tΑνάγνωση αρχείων που θα γίνει αναίρεση αλλαγών από "
-"αρχείο."
+msgstr "\t--input, -i <file>\t\tΑνάγνωση αρχείων που θα γίνει αναίρεση αλλαγών από αρχείο."
 
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\tΠροβολή ημερομηνίας και ώρας σε μορφή ISO."
@@ -245,6 +240,20 @@ msgstr "  Αποπροσάρτηση στιγμιοτύπου:"
 
 msgid "  Undo changes:"
 msgstr "  Αναίρεση αλλαγών:"
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
 
 #, c-format
 msgid "(Snapshot %d.)"
@@ -465,9 +474,10 @@ msgstr "Μη έγκυρα δεδομένα ρυθμίσεων."
 msgid "Invalid group."
 msgstr "Μη έγκυρη ομάδα."
 
-#, c-format
-msgid "Invalid machine readable format %s."
-msgstr ""
+#, fuzzy, c-format
+#| msgid "Invalid table style '%s'."
+msgid "Invalid machine readable format '%s'."
+msgstr "Μη έγκυρος τύπος πίνακα %d."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -599,13 +609,11 @@ msgstr "Άγνωστη επιλογή '%s' για την εντολή '%s'."
 msgid "Unknown type '%s'."
 msgstr "Άγνωστος τύπος '%s'."
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr "Χρήση %s, %s ή %s."
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
-msgstr "Χρήση %s, %s, %s ή %s."
+msgid "Use %1$s."
+msgstr ""
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -654,9 +662,15 @@ msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Για περισσότερες πληροφορίες δοκιμάστε 'snapper --help'."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr ""
-"χρήση: snapper [--global-options] <command> [--command-options] [command-"
-"arguments]"
+msgstr "χρήση: snapper [--global-options] <command> [--command-options] [command-arguments]"
+
+#, c-format
+#~ msgid "Use %s, %s or %s."
+#~ msgstr "Χρήση %s, %s ή %s."
+
+#, c-format
+#~ msgid "Use %s, %s, %s or %s."
+#~ msgstr "Χρήση %s, %s, %s ή %s."
 
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "Άγνωστος τύπος στιγμιοτύπου."

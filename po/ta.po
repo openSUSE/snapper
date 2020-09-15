@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2003-08-14 10:47+0200\n"
 "Last-Translator: xxx <yyy@example.org>\n"
 "Language-Team: Tamil <i18n@suse.de>\n"
@@ -241,6 +241,20 @@ msgid "  Umount snapshot:"
 msgstr "அறிந்திராத வகை."
 
 msgid "  Undo changes:"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
 msgstr ""
 
 #, fuzzy, c-format
@@ -488,9 +502,9 @@ msgstr "செல்லாத அளிப்பு தரவு."
 msgid "Invalid group."
 msgstr "செல்லாத சிஆர்எல் காரணம்."
 
-#, c-format
-msgid "Invalid machine readable format %s."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "செல்லாத வகை %1."
 
 #, fuzzy, c-format
 msgid "Invalid snapshot '%s'."
@@ -630,12 +644,10 @@ msgstr "தெரியாத ஏற்றுமதி ஆணை"
 msgid "Unknown type '%s'."
 msgstr "தெரியாத ஆணை "
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr ""
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
+msgid "Use %1$s."
 msgstr ""
 
 #, c-format

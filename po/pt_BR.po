@@ -8,18 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-<<<<<<< HEAD
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
-"PO-Revision-Date: 2020-07-14 12:36+0000\n"
-"Last-Translator: Leonardo Teodoro <leonardosilvateodoro@hotmail.com>\n"
-"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
-=======
-"POT-Creation-Date: 2020-06-18 11:59+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2020-08-24 00:41+0000\n"
 "Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/"
-"snapper/master/pt_BR/>\n"
->>>>>>> weblate/master
+"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -249,6 +241,20 @@ msgstr "  Desmontar instantâneo:"
 msgid "  Undo changes:"
 msgstr "  Desfazer alterações:"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Instantâneo %d.)"
@@ -280,8 +286,7 @@ msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Não é possível excluir o instantâneo %d, pois é o próximo a ser montado instantâneo."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
-msgstr ""
-"Não é possível detectar o âmbito porque o subvolume padrão é desconhecido."
+msgstr "Não é possível detectar o âmbito porque o subvolume padrão é desconhecido."
 
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Não é possível fazer rollback porque o subvolume padrão é desconhecido."
@@ -456,6 +461,7 @@ msgid "Illegal snapshot."
 msgstr "Instantâneo ilegal."
 
 #, fuzzy, c-format
+#| msgid "Invalid ambit %s."
 msgid "Invalid ambit '%s'."
 msgstr "O âmbito %s é inválido."
 
@@ -465,8 +471,9 @@ msgstr "Arquivo de dados de configuração inválido."
 msgid "Invalid group."
 msgstr "Grupo inválido."
 
-#, c-format
-msgid "Invalid machine readable format %s."
+#, fuzzy, c-format
+#| msgid "Invalid machine readable format %s."
+msgid "Invalid machine readable format '%s'."
 msgstr "Formato legível para máquina inválido %s."
 
 #, c-format
@@ -480,6 +487,7 @@ msgid "Invalid subvolume."
 msgstr "Subvolume inválido."
 
 #, fuzzy, c-format
+#| msgid "Invalid table style %s."
 msgid "Invalid table style '%s'."
 msgstr "Estilo de tabela inválido %s."
 
@@ -513,6 +521,7 @@ msgid "Missing argument for global option '%s'."
 msgstr "Argumento ausente para para a opção global '%s'."
 
 #, fuzzy
+#| msgid "Missing command argument."
 msgid "Missing command option."
 msgstr "Argumento de comando faltante."
 
@@ -596,16 +605,15 @@ msgid "Unknown option '%s' for command '%s'."
 msgstr "Opção desconhecida '%s' para comando ' %s'."
 
 #, fuzzy, c-format
+#| msgid "Unknown command '%s'."
 msgid "Unknown type '%s'."
 msgstr "Comando desconhecido '%s'."
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr "Use %s, %s ou %s."
-
-#, fuzzy, c-format
-msgid "Use %s, %s, %s or %s."
-msgstr "Use %s, %s ou %s."
+msgid "Use %1$s."
+msgstr ""
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -651,6 +659,9 @@ msgid "nothing to do"
 msgstr "nada a fazer"
 
 #, fuzzy
+#| msgid ""
+#| "root argument can be used only together with no-dbus.\n"
+#| "Try 'snapper --help' for more information."
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr ""
 "O argumento raiz pode ser usado apenas junto com o no-dbus.\n"
@@ -659,8 +670,20 @@ msgstr ""
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "uso: snapper [--opções-globais] <comando> [--opções-do-comando] [argumentos]"
 
+#, c-format
+#~ msgid "Invalid machine readable format %s."
+#~ msgstr "Formato legível para máquina inválido %s."
+
+#, fuzzy, c-format
+#~ msgid "Use %s, %s, %s or %s."
+#~ msgstr "Use %s, %s ou %s."
+
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "Tipo de instantâneo desconhecido."
+
+#, c-format
+#~ msgid "Use %s, %s or %s."
+#~ msgstr "Use %s, %s ou %s."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tListar os instantâneo de todas as configurações acessíveis."

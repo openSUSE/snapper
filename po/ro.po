@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenSUSE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2011-11-01 00:08-0700\n"
 "Last-Translator: Alexandru Szasz <alexxed@gmail.com>\n"
 "Language-Team: Romanian <LL@li.org>\n"
@@ -258,6 +258,20 @@ msgstr ""
 msgid "  Undo changes:"
 msgstr ""
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "Nu am găsit sursa de instalare '%s'."
@@ -499,9 +513,9 @@ msgstr "Date de emitere invalide."
 msgid "Invalid group."
 msgstr "Motiv CRL invalid."
 
-#, c-format
-msgid "Invalid machine readable format %s."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "Date de emitere invalide."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -641,12 +655,10 @@ msgstr ""
 msgid "Unknown type '%s'."
 msgstr "Tip necunoscut."
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr ""
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
+msgid "Use %1$s."
 msgstr ""
 
 #, fuzzy, c-format

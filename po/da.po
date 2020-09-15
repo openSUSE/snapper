@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2019-10-15 22:53+0000\n"
 "Last-Translator: scootergrisen <scootergrisen@gmail.com>\n"
 "Language-Team: Danish <https://l10n.opensuse.org/projects/snapper/master/da/>\n"
@@ -239,6 +239,20 @@ msgstr "  Afmontér øjebliksbillede:"
 msgid "  Undo changes:"
 msgstr "  Fortryd ændringer:"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Øjebliksbillede %d.)"
@@ -458,9 +472,9 @@ msgstr "Ugyldige konfigurationsdata."
 msgid "Invalid group."
 msgstr "Ugyldig gruppe."
 
-#, c-format
-msgid "Invalid machine readable format %s."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "Ugyldig tabelstil %d."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -593,12 +607,10 @@ msgstr "Ukendt tilvalg \"%s\" for kommandoen \"%s\"."
 msgid "Unknown type '%s'."
 msgstr "Ukendt kommando \"%s\"."
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr ""
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
+msgid "Use %1$s."
 msgstr ""
 
 #, c-format

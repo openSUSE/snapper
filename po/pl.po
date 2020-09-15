@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Ewelina Michalowska <ewelina.michalowska@stgambit.com>\n"
 "Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>\n"
@@ -242,6 +242,20 @@ msgstr "  Odmontowanie zrzutu:"
 msgid "  Undo changes:"
 msgstr "  Cofanie zmian:"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Migawka %d.)"
@@ -458,9 +472,9 @@ msgstr "Nieprawidłowe dane konfiguracyjne."
 msgid "Invalid group."
 msgstr "Nieprawidłowa grupa."
 
-#, c-format
-msgid "Invalid machine readable format %s."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "Nieprawidłowy styl tabeli %d."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -592,12 +606,10 @@ msgstr "Nieznana opcja '%s' dla polecenia  '%s'."
 msgid "Unknown type '%s'."
 msgstr "Nieznane polecenie '%s'."
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr ""
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
+msgid "Use %1$s."
 msgstr ""
 
 #, c-format

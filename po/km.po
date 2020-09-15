@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper.km\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2011-10-24 10:40+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -254,6 +254,20 @@ msgstr "  អាន់ម៉ោន​រូបថត ៖"
 msgid "  Undo changes:"
 msgstr "  មិន​ធ្វើ​ការ​ផ្លាស់ប្ដូរ​ឡើង​វិញ ៖"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "រក​មិន​ឃើញ​រូបថត '%u' ។"
@@ -492,9 +506,9 @@ msgstr "ទិន្នន័យ​ផ្សាយ​មិន​ត្រឹម
 msgid "Invalid group."
 msgstr "ភាគ​រង​មិន​ត្រឹមត្រូវ ។"
 
-#, c-format
-msgid "Invalid machine readable format %s."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "រចនាប័ទ្ម​តារាង %d មិន​ត្រឹមត្រូវ ។"
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -633,12 +647,10 @@ msgstr "មិន​ស្គាល់​ជម្រើស​ '%s' សម្រ
 msgid "Unknown type '%s'."
 msgstr "មិន​ស្គាល់​ពាក្យ​បញ្ជា '%s' ។"
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr ""
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
+msgid "Use %1$s."
 msgstr ""
 
 #, fuzzy, c-format

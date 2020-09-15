@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: entries\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Hwajin Kim <hwajin.kim@e4net.net>\n"
 "Language-Team: Korean <https://l10n.opensuse.org/projects/snapper/master/ko/>\n"
@@ -293,6 +293,20 @@ msgstr "  스냅샷 마운트 해제:"
 msgid "  Undo changes:"
 msgstr "  변경 취소:"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 # SLE12
 #, c-format
 msgid "(Snapshot %d.)"
@@ -555,9 +569,9 @@ msgstr "잘못된 configdata입니다."
 msgid "Invalid group."
 msgstr "잘못된 그룹입니다."
 
-#, c-format
-msgid "Invalid machine readable format %s."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "잘못된 테이블 모양 %d 입니다."
 
 # SLE12
 #, c-format
@@ -712,12 +726,10 @@ msgstr "알 수 없는 옵션 '%s' - '%s' 명령."
 msgid "Unknown type '%s'."
 msgstr "알 수 없는 명령 '%s'."
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr ""
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
+msgid "Use %1$s."
 msgstr ""
 
 # SLE12

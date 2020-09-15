@@ -5,18 +5,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-<<<<<<< HEAD
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
-"PO-Revision-Date: 2019-11-28 21:54+0000\n"
-"Last-Translator: Kimmo Kujansuu <mrkujansuu@gmail.com>\n"
-"Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
-=======
-"POT-Creation-Date: 2020-07-13 16:13+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2020-08-24 00:40+0000\n"
 "Last-Translator: Tommi Nieminen <software@legisign.org>\n"
-"Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/"
-">\n"
->>>>>>> weblate/master
+"Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -73,8 +65,7 @@ msgid "\t--jsonout\t\t\tSet JSON output format."
 msgstr "\t--jsonout\t\t\tAsettaa JSON-tulosmuodon."
 
 msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
-msgstr ""
-"\t--machine-readable <format>\tAsttaa koneluettavan tulosmuodon (CSV, JSON)."
+msgstr "\t--machine-readable <format>\tAsttaa koneluettavan tulosmuodon (CSV, JSON)."
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tToimi ilman DBusia."
@@ -247,6 +238,20 @@ msgstr "  Irrota tilannevedos:"
 msgid "  Undo changes:"
 msgstr "  Peru muutokset:"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Tilannevedos %d.)"
@@ -282,8 +287,7 @@ msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr ""
 
 msgid "Cannot do rollback since default subvolume is unknown."
-msgstr ""
-"Palautusta (rollback) ei voi tehdä, koska oletusalitaltio on tuntematon."
+msgstr "Palautusta (rollback) ei voi tehdä, koska oletusalitaltio on tuntematon."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "\"cleanup\"-komento vaatii yhden parametrin."
@@ -468,8 +472,9 @@ msgstr "Virheellinen määritystieto."
 msgid "Invalid group."
 msgstr "Virheellinen ryhmä."
 
-#, c-format
-msgid "Invalid machine readable format %s."
+#, fuzzy, c-format
+#| msgid "Invalid machine readable format %s."
+msgid "Invalid machine readable format '%s'."
 msgstr "Virheellinen koneluettava muoto %s."
 
 #, c-format
@@ -482,15 +487,10 @@ msgstr "Virheellisiä tilannevedoksia."
 msgid "Invalid subvolume."
 msgstr "Virheellinen alitaltio."
 
-<<<<<<< HEAD
 #, fuzzy, c-format
+#| msgid "Invalid table style %s."
 msgid "Invalid table style '%s'."
-msgstr "Virheellinen taulukon tyyli %d."
-=======
-#, c-format
-msgid "Invalid table style %s."
 msgstr "Virheellinen taulukkotyyli %s."
->>>>>>> weblate/master
 
 msgid "Invalid user."
 msgstr "Virheellinen käyttäjä."
@@ -522,6 +522,7 @@ msgid "Missing argument for global option '%s'."
 msgstr "Yleisvalitsimelta ”%s” puuttuu parametri."
 
 #, fuzzy
+#| msgid "Missing command argument."
 msgid "Missing command option."
 msgstr "Komennolta puuttuu parametri."
 
@@ -606,15 +607,14 @@ msgid "Unknown option '%s' for command '%s'."
 msgstr "Tuntematon valitsin \"%s\" komennolle \"%s\"."
 
 #, fuzzy, c-format
+#| msgid "Unknown command '%s'."
 msgid "Unknown type '%s'."
 msgstr "Tuntematon komento \"%s\"."
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr "Käytettävissä: %s, %s tai %s."
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
+msgid "Use %1$s."
 msgstr ""
 
 #, c-format
@@ -660,24 +660,24 @@ msgstr "muokataan: %s"
 msgid "nothing to do"
 msgstr "ei mitään tehtävää"
 
-<<<<<<< HEAD
 #, fuzzy
+#| msgid ""
+#| "root argument can be used only together with no-dbus.\n"
+#| "Try 'snapper --help' for more information."
 msgid "root argument can be used only together with no-dbus.\n"
-msgstr "Juuriparametria voi käyttää vain no-dbus-asetuksen kanssa."
-=======
-msgid ""
-"root argument can be used only together with no-dbus.\n"
-"Try 'snapper --help' for more information."
 msgstr ""
 "juuriparametria voi käyttää vain ilman no-dbus-valitsinta.\n"
 "Lisäohjeita komennolla ”snapper --help”."
->>>>>>> weblate/master
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "käyttö: snapper [--yleisvalitsimet] <komento> [--komennon-valitsimet] [komennon-parametrit]"
 
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "Tuntematon tilannevedostyyppi."
+
+#, c-format
+#~ msgid "Use %s, %s or %s."
+#~ msgstr "Käytettävissä: %s, %s tai %s."
 
 #~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 #~ msgstr "\t--all-configs, -a\t\tLuettele tilannekuvia kaikista käytettävissä olevista kokoonpanoista."

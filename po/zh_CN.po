@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2020-07-02 07:26+0000\n"
 "Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
 "Language-Team: Chinese (China) <https://l10n.opensuse.org/projects/snapper/master/zh_CN/>\n"
@@ -242,6 +242,20 @@ msgstr "  卸载快照："
 msgid "  Undo changes:"
 msgstr "  取消更改 (回滚)："
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(快照 '%d'。)"
@@ -457,8 +471,9 @@ msgstr "无效的配置数据。"
 msgid "Invalid group."
 msgstr "无效组。"
 
-#, c-format
-msgid "Invalid machine readable format %s."
+#, fuzzy, c-format
+#| msgid "Invalid machine readable format %s."
+msgid "Invalid machine readable format '%s'."
 msgstr "无效的机器可读格式 %s。"
 
 #, c-format
@@ -591,13 +606,11 @@ msgstr "未知的选项 '%s' 用于命令 '%s'。"
 msgid "Unknown type '%s'."
 msgstr "未知命令 '%s'。"
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr "使用 %s、%s 或 %s。"
-
-#, fuzzy, c-format
-msgid "Use %s, %s, %s or %s."
-msgstr "使用 %s、%s 或 %s。"
+msgid "Use %1$s."
+msgstr ""
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -650,6 +663,14 @@ msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "用法：snapper  [--全局选项] <命令> [--命令选项] [命令参数]"
+
+#, c-format
+#~ msgid "Use %s, %s or %s."
+#~ msgstr "使用 %s、%s 或 %s。"
+
+#, fuzzy, c-format
+#~ msgid "Use %s, %s, %s or %s."
+#~ msgstr "使用 %s、%s 或 %s。"
 
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "未知快照类型。"

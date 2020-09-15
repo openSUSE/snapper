@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2015-10-17 16:22+0200\n"
 "Last-Translator: Andriy Bandura <andriykopanytsia@gmail.com>\n"
 "Language-Team: Ukrainian <http://10n.opensuse.org/projects/snapper/master/uk/>\n"
@@ -243,6 +243,20 @@ msgstr "  Відмонтувати знімок:"
 msgid "  Undo changes:"
 msgstr "  Скасувати зміни:"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Знімок %d.)"
@@ -466,9 +480,9 @@ msgstr "Неправильні дані конфігурації."
 msgid "Invalid group."
 msgstr "Нечинна група."
 
-#, c-format
-msgid "Invalid machine readable format %s."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "Непридатний стиль таблиці %d."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -601,12 +615,10 @@ msgstr "Невідомий параметр '%s' для команди %s'."
 msgid "Unknown type '%s'."
 msgstr "Невідома команда '%s'."
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr ""
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
+msgid "Use %1$s."
 msgstr ""
 
 #, c-format

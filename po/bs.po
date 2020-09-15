@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2002-07-23 18:27+0200\n"
 "Last-Translator: Damir Bjelobradic <Nagual@lugbih.org>\n"
 "Language-Team: Bosnian <i18n@suse.de>\n"
@@ -234,6 +234,20 @@ msgstr ""
 msgid "  Undo changes:"
 msgstr ""
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 # %s is e.g. ext3 or reiserfs
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
@@ -462,7 +476,7 @@ msgid "Invalid group."
 msgstr ""
 
 #, c-format
-msgid "Invalid machine readable format %s."
+msgid "Invalid machine readable format '%s'."
 msgstr ""
 
 #, c-format
@@ -597,12 +611,10 @@ msgstr ""
 msgid "Unknown type '%s'."
 msgstr "Ne mogu pokrenuti naredbu \"%s\""
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr ""
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
+msgid "Use %1$s."
 msgstr ""
 
 #, c-format

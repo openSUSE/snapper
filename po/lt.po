@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LCN (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2017-06-02 16:57+0000\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <https://l10n.opensuse.org/projects/snapper/master/lt/>\n"
@@ -244,6 +244,20 @@ msgstr "  Momentinės kopijos atjungimas:"
 msgid "  Undo changes:"
 msgstr "  Atšaukti pakeitimus:"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "Rinkmena „%s“ nerasta."
@@ -473,9 +487,9 @@ msgstr "Netinkami naudotojo meta duomenys."
 msgid "Invalid group."
 msgstr "Netinkamas potomis."
 
-#, c-format
-msgid "Invalid machine readable format %s."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "Netinkamas lentelės stilius %d."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -609,12 +623,10 @@ msgstr "Nežinoma parinktis „%s“, kuri skirta komandai „%s“."
 msgid "Unknown type '%s'."
 msgstr "Nežinoma komanda „%s“."
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr ""
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
+msgid "Use %1$s."
 msgstr ""
 
 #, fuzzy, c-format

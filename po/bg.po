@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2017-10-29 20:52+0000\n"
 "Last-Translator: strahil nikolov <hunter86_bg@yahoo.com>\n"
 "Language-Team: Bulgarian <https://l10n.opensuse.org/projects/snapper/master/bg/>\n"
@@ -245,6 +245,20 @@ msgstr ""
 msgid "  Undo changes:"
 msgstr ""
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "Хостът %s не бе открит."
@@ -480,9 +494,9 @@ msgstr "Невалиден вход."
 msgid "Invalid group."
 msgstr "Невалиден вход."
 
-#, c-format
-msgid "Invalid machine readable format %s."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "Невалиден вход."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -623,12 +637,10 @@ msgstr "Неизвестен параметър за %s, пренебрегва�
 msgid "Unknown type '%s'."
 msgstr "Неизвестна държава: "
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr ""
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
+msgid "Use %1$s."
 msgstr ""
 
 #, c-format

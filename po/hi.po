@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-01 09:04+0200\n"
+"POT-Creation-Date: 2020-09-03 17:51+0200\n"
 "PO-Revision-Date: 2018-04-07 16:03+0000\n"
 "Last-Translator: Anshul Panwar <caspian7pena@gmail.com>\n"
 "Language-Team: Hindi <https://l10n.opensuse.org/projects/snapper/master/hi/>\n"
@@ -238,6 +238,20 @@ msgid "  Umount snapshot:"
 msgstr "इसपर बना"
 
 msgid "  Undo changes:"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
 msgstr ""
 
 #, fuzzy, c-format
@@ -485,9 +499,9 @@ msgstr "अमान्य जारी डेटा।"
 msgid "Invalid group."
 msgstr "अमान्य CRL कारण।"
 
-#, c-format
-msgid "Invalid machine readable format %s."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "अमान्य प्रकार %1।"
 
 #, fuzzy, c-format
 msgid "Invalid snapshot '%s'."
@@ -627,12 +641,10 @@ msgstr "अज्ञात निर्यात कमांड"
 msgid "Unknown type '%s'."
 msgstr "अनंजान"
 
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
 #, c-format
-msgid "Use %s, %s or %s."
-msgstr ""
-
-#, c-format
-msgid "Use %s, %s, %s or %s."
+msgid "Use %1$s."
 msgstr ""
 
 #, c-format
