@@ -9,9 +9,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-03 17:51+0200\n"
-"PO-Revision-Date: 2020-08-24 00:41+0000\n"
+"PO-Revision-Date: 2020-09-16 13:48+0000\n"
 "Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/"
+"snapper/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -131,7 +132,7 @@ msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <algoritmo de limpeza>"
 
 msgid "\tsnapper create"
-msgstr "\tsnapper create"
+msgstr "\tsnapper criado"
 
 msgid "\tsnapper create-config <subvolume>"
 msgstr "\tsnapper create-config <subvolume>"
@@ -246,14 +247,14 @@ msgstr "  Desfazer alterações:"
 #. %2$s is replaced by second value
 #, c-format
 msgid "%1$s or %2$s"
-msgstr ""
+msgstr "%1$s ou %2$s"
 
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
 #, c-format
 msgid "%1$s, %2$s"
-msgstr ""
+msgstr "%1$s, %2$s"
 
 #, c-format
 msgid "(Snapshot %d.)"
@@ -460,10 +461,9 @@ msgstr "Instantâneos idênticos."
 msgid "Illegal snapshot."
 msgstr "Instantâneo ilegal."
 
-#, fuzzy, c-format
-#| msgid "Invalid ambit %s."
+#, c-format
 msgid "Invalid ambit '%s'."
-msgstr "O âmbito %s é inválido."
+msgstr "Âmbito inválido '%s'."
 
 msgid "Invalid configdata."
 msgstr "Arquivo de dados de configuração inválido."
@@ -471,10 +471,9 @@ msgstr "Arquivo de dados de configuração inválido."
 msgid "Invalid group."
 msgstr "Grupo inválido."
 
-#, fuzzy, c-format
-#| msgid "Invalid machine readable format %s."
+#, c-format
 msgid "Invalid machine readable format '%s'."
-msgstr "Formato legível para máquina inválido %s."
+msgstr "Formato legível para máquina inválido '%s'."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -486,10 +485,9 @@ msgstr "Instantâneo inválido."
 msgid "Invalid subvolume."
 msgstr "Subvolume inválido."
 
-#, fuzzy, c-format
-#| msgid "Invalid table style %s."
+#, c-format
 msgid "Invalid table style '%s'."
-msgstr "Estilo de tabela inválido %s."
+msgstr "Estilo de tabela inválido '%s'."
 
 msgid "Invalid user."
 msgstr "Usuário inválido."
@@ -520,10 +518,8 @@ msgstr "Argumento ausente para opção do comando '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Argumento ausente para para a opção global '%s'."
 
-#, fuzzy
-#| msgid "Missing command argument."
 msgid "Missing command option."
-msgstr "Argumento de comando faltante."
+msgstr "Opção de comando faltante."
 
 msgid "Missing delimiter '..' between snapshot numbers."
 msgstr "Delimitador '..' ausente entre os números dos instantâneos."
@@ -604,16 +600,15 @@ msgstr "Opção global desconhecida '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Opção desconhecida '%s' para comando ' %s'."
 
-#, fuzzy, c-format
-#| msgid "Unknown command '%s'."
+#, c-format
 msgid "Unknown type '%s'."
-msgstr "Comando desconhecido '%s'."
+msgstr "Tipo desconhecido '%s'."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
 #, c-format
 msgid "Use %1$s."
-msgstr ""
+msgstr "Usar %1$s."
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -658,14 +653,8 @@ msgstr "alterando %s"
 msgid "nothing to do"
 msgstr "nada a fazer"
 
-#, fuzzy
-#| msgid ""
-#| "root argument can be used only together with no-dbus.\n"
-#| "Try 'snapper --help' for more information."
 msgid "root argument can be used only together with no-dbus.\n"
-msgstr ""
-"O argumento raiz pode ser usado apenas junto com o no-dbus.\n"
-"Tente 'snapper --help' para mais informações."
+msgstr "O argumento raiz pode ser usado apenas junto com o no-dbus.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "uso: snapper [--opções-globais] <comando> [--opções-do-comando] [argumentos]"
