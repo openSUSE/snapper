@@ -55,12 +55,15 @@
 #define BTRFS_PATH_NAME_MAX 4087
 #define BTRFS_SUBVOL_NAME_MAX 4039
 #define BTRFS_SUBVOL_RDONLY (1ULL << 1)
+#define BTRFS_FSID_SIZE 16
+#define BTRFS_UUID_SIZE 16
 
 #define BTRFS_IOC_SNAP_CREATE _IOW(BTRFS_IOCTL_MAGIC, 1, struct btrfs_ioctl_vol_args)
 #define BTRFS_IOC_SUBVOL_CREATE _IOW(BTRFS_IOCTL_MAGIC, 14, struct btrfs_ioctl_vol_args)
 #define BTRFS_IOC_SNAP_DESTROY _IOW(BTRFS_IOCTL_MAGIC, 15, struct btrfs_ioctl_vol_args)
 #define BTRFS_IOC_SNAP_CREATE_V2 _IOW(BTRFS_IOCTL_MAGIC, 23, struct btrfs_ioctl_vol_args_v2)
 #define BTRFS_IOC_SYNC _IO(BTRFS_IOCTL_MAGIC, 8)
+#define BTRFS_IOC_FS_INFO _IOR(BTRFS_IOCTL_MAGIC, 31, struct btrfs_ioctl_fs_info_args)
 
 struct btrfs_ioctl_vol_args
 {
@@ -75,6 +78,18 @@ struct btrfs_ioctl_vol_args_v2
     __u64 flags;
     __u64 unused[4];
     char name[BTRFS_SUBVOL_NAME_MAX + 1];
+};
+
+struct btrfs_ioctl_fs_info_args
+{
+    __u64 max_id;
+    __u64 num_devices;
+    __u8 fsid[BTRFS_FSID_SIZE];
+    __u32 nodesize;
+    __u32 sectorsize;
+    __u32 clone_alignment;
+    __u32 reserved32;
+    __u64 reserved[122];
 };
 
 #endif
