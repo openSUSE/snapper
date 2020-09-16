@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2014] Novell, Inc.
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -48,21 +48,33 @@ namespace snapper
      * Return a suffix.
      *
      * @param i index of suffix
-     * @param classic use classic locale instead of global C++ locale
      * @return suffix
      */
     std::string get_suffix(int i);
 
 
     /**
-     * Return a pretty description of a size with required precision and using
-     * B, KiB, MiB, GiB, TiB, PiB or EiB as unit as appropriate. Supported
-     * range is 0 B to (16 EiB - 1 B).
+     * Return a pretty description of a size with required precision and using B, KiB,
+     * MiB, GiB, TiB, PiB or EiB as unit as appropriate. Supported range is 0 B to (16 EiB
+     * - 1 B).
      *
      * @param size size in bytes
      * @param precision number of fraction digits in output
      * @return formatted string
      */
     std::string byte_to_humanstring(unsigned long long size, int precision);
+
+
+    /**
+     * Converts a size description using B, KiB, MiB, GiB, TiB, PiB or EiB into an
+     * integer. Decimal suffixes are also allowed and treated as binary. Supported range
+     * is 0 B to (16 EiB - 1 B).
+     *
+     * @param str size string
+     * @return bytes
+     *
+     * The conversion is always case-insensitive.
+     */
+    unsigned long long humanstring_to_byte(const std::string& str);
 
 }

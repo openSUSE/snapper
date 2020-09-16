@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -28,6 +28,8 @@
 #include <stdint.h>
 #include <string>
 #include <vector>
+
+#include "snapper/AppUtil.h"
 
 
 namespace snapper
@@ -84,18 +86,19 @@ namespace snapper
 
 	struct QGroupUsage
 	{
-	    QGroupUsage() : referenced(0), referenced_compressed(0), exclusive(0),
-			    exclusive_compressed(0) {}
-
-	    uint64_t referenced;
-	    uint64_t referenced_compressed;
-	    uint64_t exclusive;
-	    uint64_t exclusive_compressed;
+	    uint64_t referenced = 0;
+	    uint64_t referenced_compressed = 0;
+	    uint64_t exclusive = 0;
+	    uint64_t exclusive_compressed = 0;
 	};
 
 	QGroupUsage qgroup_query_usage(int fd, qgroup_t qgroup);
 
 	void sync(int fd);
+
+	Uuid get_uuid(int fd);
+
+	Uuid get_uuid(const string& path);
 
     }
 
