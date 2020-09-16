@@ -10,9 +10,10 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-03 17:51+0200\n"
-"PO-Revision-Date: 2020-09-10 14:47+0000\n"
+"PO-Revision-Date: 2020-09-16 13:48+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
-"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
+"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
+"\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -247,14 +248,14 @@ msgstr "  Wijzigingen ongedaan maken:"
 #. %2$s is replaced by second value
 #, c-format
 msgid "%1$s or %2$s"
-msgstr ""
+msgstr "%1$s of %2$s"
 
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
 #, c-format
 msgid "%1$s, %2$s"
-msgstr ""
+msgstr "%1$s, %2$s"
 
 #, c-format
 msgid "(Snapshot %d.)"
@@ -472,10 +473,9 @@ msgstr "Ongeldige configuratiegegevens."
 msgid "Invalid group."
 msgstr "Ongeldig groep."
 
-#, fuzzy, c-format
-#| msgid "Invalid machine readable format %s."
+#, c-format
 msgid "Invalid machine readable format '%s'."
-msgstr "Ongeldig machine-leesbaar formaat %s."
+msgstr "Ongeldig machine-leesbaar formaat '%s'."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -610,7 +610,7 @@ msgstr "Onbekend type '%s'."
 #. %1$s is replaced by list of possible values
 #, c-format
 msgid "Use %1$s."
-msgstr ""
+msgstr "%1$s gebruiken."
 
 #, c-format
 msgid "Use an integer number from %d to %d."
