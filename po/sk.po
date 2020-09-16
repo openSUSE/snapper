@@ -7,9 +7,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-03 17:51+0200\n"
-"PO-Revision-Date: 2020-08-24 00:41+0000\n"
+"PO-Revision-Date: 2020-09-16 18:48+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
-"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
+"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
+"\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -244,14 +245,14 @@ msgstr "  Vrátiť späť zmeny:"
 #. %2$s is replaced by second value
 #, c-format
 msgid "%1$s or %2$s"
-msgstr ""
+msgstr "%1$s alebo %2$s"
 
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
 #, c-format
 msgid "%1$s, %2$s"
-msgstr ""
+msgstr "%1$s, %2$s"
 
 #, c-format
 msgid "(Snapshot %d.)"
@@ -463,8 +464,7 @@ msgstr "Totožné snímky."
 msgid "Illegal snapshot."
 msgstr "Nepovolená snímka."
 
-#, fuzzy, c-format
-#| msgid "Invalid ambit %s."
+#, c-format
 msgid "Invalid ambit '%s'."
 msgstr "Neplatná oblasť '%s'."
 
@@ -474,10 +474,9 @@ msgstr "Neplatné konfiguračné údaje."
 msgid "Invalid group."
 msgstr "Neplatná skupina."
 
-#, fuzzy, c-format
-#| msgid "Invalid machine readable format %s."
+#, c-format
 msgid "Invalid machine readable format '%s'."
-msgstr "Neplatný formát čitateľný strojom %s."
+msgstr "Neplatný formát čitateľný strojom '%s'."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -489,10 +488,9 @@ msgstr "Neplatné snímky."
 msgid "Invalid subvolume."
 msgstr "Neplatný podzväzok."
 
-#, fuzzy, c-format
-#| msgid "Invalid table style %s."
+#, c-format
 msgid "Invalid table style '%s'."
-msgstr "Neplatný štýl tabuľky %s."
+msgstr "Neplatný štýl tabuľky '%s'."
 
 msgid "Invalid user."
 msgstr "Neplatný používateľ."
@@ -524,10 +522,8 @@ msgstr "Chýbajúci argument pre voľbu príkazu '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Chýbajúci argument pre globálnu voľbu '%s'."
 
-#, fuzzy
-#| msgid "Missing command argument."
 msgid "Missing command option."
-msgstr "Chýbajúci argument pre príkaz."
+msgstr "Chýbajúca voľba príkazu."
 
 msgid "Missing delimiter '..' between snapshot numbers."
 msgstr "Chýbajúci oddeľovač '..' medzi číslami snímok."
@@ -609,16 +605,15 @@ msgstr "Neznáma globálna voľba '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Neznáma voľba '%s' pre príkaz '%s'."
 
-#, fuzzy, c-format
-#| msgid "Unknown command '%s'."
+#, c-format
 msgid "Unknown type '%s'."
-msgstr "Neznámy príkaz '%s'."
+msgstr "Neznámy typ '%s'."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
 #, c-format
 msgid "Use %1$s."
-msgstr ""
+msgstr "Použiť %1$s."
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -663,14 +658,8 @@ msgstr "upravenie %s"
 msgid "nothing to do"
 msgstr "nie je čo vykonať"
 
-#, fuzzy
-#| msgid ""
-#| "root argument can be used only together with no-dbus.\n"
-#| "Try 'snapper --help' for more information."
 msgid "root argument can be used only together with no-dbus.\n"
-msgstr ""
-"Argument root možno použiť len spoločne s no-dbus.\n"
-"Skúste 'snapper --help' pre viac informácií."
+msgstr "Argument root možno použiť len spoločne s no-dbus.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "použitie: snapper [--globálne-voľby] <príkaz> [--voľby-príkazu] [argumenty-príkazu]"
