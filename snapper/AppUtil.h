@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2004-2015] Novell, Inc.
+ * Copyright (c) 2020 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -121,7 +122,7 @@ namespace snapper
 
 	~FdCloser()
 	{
-	    if (fd > -1 )
+	    if (fd > -1)
 		::close(fd);
 	}
 
@@ -156,6 +157,17 @@ namespace snapper
 	{}
 
 	const int error_number;
+    };
+
+
+    class Uuid
+    {
+    public:
+
+	uint8_t value[16];
+
+	bool operator==(const Uuid& rhs) const;
+
     };
 
 }

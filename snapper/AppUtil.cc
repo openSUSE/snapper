@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -413,6 +413,13 @@ namespace snapper
     {
 	boost::io::ios_all_saver ias(s);
 	return s << fixed << sw.read() << "s";
+    }
+
+
+    bool
+    Uuid::operator==(const Uuid& rhs) const
+    {
+	return std::equal(std::begin(value), std::end(value), std::begin(rhs.value));
     }
 
 }

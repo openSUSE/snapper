@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -145,7 +145,7 @@ namespace snapper
 
 	    size_t size = sizeof(btrfs_qgroup_inherit) + sizeof(((btrfs_qgroup_inherit*) 0)->qgroups[0]);
 	    vector<char> buffer(size, 0);
-        
+
 	    if (qgroup != no_qgroup)
 	    {
 		struct btrfs_qgroup_inherit* inherit = (btrfs_qgroup_inherit*) &buffer[0];
@@ -622,6 +622,34 @@ namespace snapper
 	{
 	    if (ioctl(fd, BTRFS_IOC_SYNC) < 0)
 		throw runtime_error_with_errno("ioctl(BTRFS_IOC_SYNC) failed", errno);
+	}
+
+
+	Uuid
+	get_uuid(int fd)
+	{
+	    static_assert(BTRFS_UUID_SIZE == 16);
+
+	    struct btrfs_ioctl_fs_info_args fs_info_args;
+	    if (ioctl(fd, BTRFS_IOC_FS_INFO, &fs_info_args) < 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_FS_INFO) failed", errno);
+
+	    Uuid uuid;
+	    std::copy(std::begin(fs_info_args.fsid), std::end(fs_info_args.fsid), std::begin(uuid.value));
+	    return uuid;
+	}
+
+
+	Uuid
+	get_uuid(const string& path)
+	{
+	    int fd = open(path.c_str(), O_RDONLY);
+	    if (fd < 0)
+		throw runtime_error_with_errno("open failed", errno);
+
+	    FdCloser fd_closer(fd);
+
+	    return BtrfsUtils::get_uuid(fd);
 	}
 
     }

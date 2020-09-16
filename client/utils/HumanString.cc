@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2014] Novell, Inc.
- * Copyright (c) [2016-2018] SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -21,22 +21,26 @@
  */
 
 
-#include <locale>
 #include <cmath>
+#include <vector>
 #include <sstream>
 #include <stdexcept>
+#include <boost/algorithm/string.hpp>
 
 #include "HumanString.h"
 #include "text.h"
 
+#include <snapper/Exception.h>
+
 
 namespace snapper
 {
-    using std::string;
+    using namespace std;
 
 
     /*
-     * These are simplified versions of the functions in libstorage-ng.
+     * These are simplified versions of the functions in libstorage-ng,
+     * https://github.com/openSUSE/libstorage-ng/blob/master/storage/Utils/HumanString.h.
      */
 
 
@@ -47,56 +51,180 @@ namespace snapper
     }
 
 
-    string
-    get_suffix(int i)
+    vector<string>
+    get_all_suffixes(int i, bool all = true)
     {
+	vector<string> ret;
+
 	switch (i)
 	{
 	    case 0:
 		// TRANSLATORS: symbol for "bytes" (best keep untranslated)
-		return _("B");
+		ret.push_back(_("B"));
+		if (all)
+		{
+		    ret.push_back("");
+		}
+		break;
 
 	    case 1:
 		// TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
-		return _("KiB");
+		ret.push_back(_("KiB"));
+		if (all)
+		{
+		    // TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+		    ret.push_back(_("kB"));
+		    // TRANSLATORS: symbol for "kilo" (best keep untranslated)
+		    ret.push_back(_("k"));
+		}
+		break;
 
 	    case 2:
 		// TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
-		return _("MiB");
+		ret.push_back(_("MiB"));
+		if (all)
+		{
+		    // TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+		    ret.push_back(_("MB"));
+		    // TRANSLATORS: symbol for "mega" (best keep untranslated)
+		    ret.push_back(_("M"));
+		}
+		break;
 
 	    case 3:
 		// TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
-		return _("GiB");
+		ret.push_back(_("GiB"));
+		if (all)
+		{
+		    // TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+		    ret.push_back(_("GB"));
+		    // TRANSLATORS: symbol for "giga" (best keep untranslated)
+		    ret.push_back(_("G"));
+		}
+		break;
 
 	    case 4:
 		// TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
-		return _("TiB");
+		ret.push_back(_("TiB"));
+		if (all)
+		{
+		    // TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+		    ret.push_back(_("TB"));
+		    // TRANSLATORS: symbol for "tera" (best keep untranslated)
+		    ret.push_back(_("T"));
+		}
+		break;
 
 	    case 5:
 		// TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
-		return _("PiB");
+		ret.push_back(_("PiB"));
+		if (all)
+		{
+		    // TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+		    ret.push_back(_("PB"));
+		    // TRANSLATORS: symbol for "peta" (best keep untranslated)
+		    ret.push_back(_("P"));
+		}
+		break;
 
 	    case 6:
 		// TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
-		return _("EiB");
-
-	    default:
-		throw std::logic_error("invalid prefix");
+		ret.push_back(_("EiB"));
+		if (all)
+		{
+		    // TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+		    ret.push_back(_("EB"));
+		    // TRANSLATORS: symbol for "exa" (best keep untranslated)
+		    ret.push_back(_("E"));
+		}
+		break;
 	}
+
+	return ret;
     }
 
 
-    bool
-    is_multiple_of(unsigned long long i, unsigned long long j)
+    string
+    get_suffix(int i)
     {
-	return i % j == 0;
+	return get_all_suffixes(i, false).front();
     }
 
 
-    int
-    clz(unsigned long long i)
+    namespace
     {
-	return __builtin_clzll(i);
+
+	int
+	clz(unsigned long long i)
+	{
+	    return __builtin_clzll(i);
+	}
+
+
+	// Helper functions to parse a number as int or float, multiply
+	// according to the suffix. Do all required error checks.
+
+	pair<bool, unsigned long long>
+	parse_i(const string& str, int i)
+	{
+	    istringstream s(str);
+
+	    unsigned long long v;
+	    s >> v;
+
+	    if (!s.eof())
+		return make_pair(false, 0);
+
+	    if (s.fail())
+	    {
+		if (v == std::numeric_limits<unsigned long long>::max())
+		    SN_THROW(Exception("overflow"));
+
+		return make_pair(false, 0);
+	    }
+
+	    if (v != 0 && str[0] == '-')
+		SN_THROW(Exception("overflow"));
+
+	    if (v > 0 && clz(v) < 10 * i)
+		SN_THROW(Exception("overflow"));
+
+	    v <<= 10 * i;
+
+	    return make_pair(true, v);
+	}
+
+
+	pair<bool, unsigned long long>
+	parse_f(const string& str, int i)
+	{
+	    istringstream s(str);
+
+	    long double v;
+	    s >> v;
+
+	    if (!s.eof())
+		return make_pair(false, 0);
+
+	    if (s.fail())
+	    {
+		if (v == std::numeric_limits<long double>::max())
+		    SN_THROW(Exception("overflow"));
+
+		return make_pair(false, 0);
+	    }
+
+	    if (v < 0.0)
+		SN_THROW(Exception("overflow"));
+
+	    v = std::round(std::ldexp(v, 10 * i));
+
+	    if (v > std::numeric_limits<unsigned long long>::max())
+		SN_THROW(Exception("overflow"));
+
+	    return make_pair(true, v);
+	}
+
     }
 
 
@@ -107,8 +235,6 @@ namespace snapper
     string
     byte_to_humanstring(unsigned long long size, int precision)
     {
-	const std::locale loc = std::locale();
-
 	// Calculate the index of the suffix to use. The index increases by 1
 	// when the number of leading zeros decreases by 10.
 
@@ -121,7 +247,6 @@ namespace snapper
 	    unsigned long long v = size >> 10 * i;
 
 	    std::ostringstream s;
-	    s.imbue(loc);
 	    s << v << ' ' << get_suffix(i);
 	    return s.str();
 	}
@@ -130,12 +255,42 @@ namespace snapper
 	    long double v = std::ldexp((long double)(size), - 10 * i);
 
 	    std::ostringstream s;
-	    s.imbue(loc);
 	    s.setf(std::ios::fixed);
 	    s.precision(precision);
 	    s << v << ' ' << get_suffix(i);
 	    return s.str();
 	}
+    }
+
+
+    unsigned long long
+    humanstring_to_byte(const string& str)
+    {
+	const string str_trimmed = boost::trim_copy(str);
+
+	for (int i = 0; i < num_suffixes(); ++i)
+	{
+	    for (const string& suffix : get_all_suffixes(i))
+	    {
+		if (boost::iends_with(str_trimmed, suffix))
+		{
+		    string number = boost::trim_copy(str_trimmed.substr(0, str_trimmed.size() - suffix.size()));
+
+		    pair<bool, unsigned long long> v;
+
+		    v = parse_i(number, i);
+		    if (v.first)
+			return v.second;
+
+		    v = parse_f(number, i);
+		    if (v.first)
+			return v.second;
+		}
+	    }
+	}
+
+	SN_THROW(Exception("failed to parse size"));
+	__builtin_unreachable();
     }
 
 }
