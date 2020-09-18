@@ -34,12 +34,8 @@
 #ifdef HAVE_LIBBTRFS
 #include <btrfs/ioctl.h>
 #include <btrfs/send-utils.h>
-#ifdef swap
-// temporary workaround, see
-// https://github.com/openSUSE/snapper/issues/459, fixed properly in
-// btrfs-progs 4.19.1
-#undef swap
-#endif
+#else
+#include <linux/btrfs.h>
 #endif
 #include <algorithm>
 #include <functional>
@@ -47,60 +43,6 @@
 #include "snapper/Log.h"
 #include "snapper/AppUtil.h"
 #include "snapper/BtrfsUtils.h"
-
-
-#ifndef HAVE_LIBBTRFS
-
-#define BTRFS_IOCTL_MAGIC 0x94
-#define BTRFS_PATH_NAME_MAX 4087
-#define BTRFS_SUBVOL_NAME_MAX 4039
-#define BTRFS_SUBVOL_RDONLY (1ULL << 1)
-#define BTRFS_FSID_SIZE 16
-#define BTRFS_UUID_SIZE 16
-
-#define BTRFS_IOC_SNAP_CREATE _IOW(BTRFS_IOCTL_MAGIC, 1, struct btrfs_ioctl_vol_args)
-#define BTRFS_IOC_SUBVOL_CREATE _IOW(BTRFS_IOCTL_MAGIC, 14, struct btrfs_ioctl_vol_args)
-#define BTRFS_IOC_SNAP_DESTROY _IOW(BTRFS_IOCTL_MAGIC, 15, struct btrfs_ioctl_vol_args)
-#define BTRFS_IOC_SNAP_CREATE_V2 _IOW(BTRFS_IOCTL_MAGIC, 23, struct btrfs_ioctl_vol_args_v2)
-#define BTRFS_IOC_SYNC _IO(BTRFS_IOCTL_MAGIC, 8)
-#define BTRFS_IOC_FS_INFO _IOR(BTRFS_IOCTL_MAGIC, 31, struct btrfs_ioctl_fs_info_args)
-
-struct btrfs_ioctl_vol_args
-{
-    __s64 fd;
-    char name[BTRFS_PATH_NAME_MAX + 1];
-};
-
-struct btrfs_ioctl_vol_args_v2
-{
-    __s64 fd;
-    __u64 transid;
-    __u64 flags;
-    __u64 unused[4];
-    char name[BTRFS_SUBVOL_NAME_MAX + 1];
-};
-
-struct btrfs_ioctl_fs_info_args
-{
-    __u64 max_id;
-    __u64 num_devices;
-    __u8 fsid[BTRFS_FSID_SIZE];
-    __u32 nodesize;
-    __u32 sectorsize;
-    __u32 clone_alignment;
-    __u32 reserved32;
-    __u64 reserved[122];
-};
-
-#endif
-
-#ifndef BTRFS_IOC_SUBVOL_GETFLAGS
-#define BTRFS_IOC_SUBVOL_GETFLAGS _IOR(BTRFS_IOCTL_MAGIC, 25, __u64)
-#endif
-
-#ifndef BTRFS_QGROUP_LEVEL_SHIFT
-#define BTRFS_QGROUP_LEVEL_SHIFT 48
-#endif
 
 
 namespace snapper
@@ -643,7 +585,7 @@ namespace snapper
 	Uuid
 	get_uuid(int fd)
 	{
-	    static_assert(BTRFS_UUID_SIZE == 16);
+	    static_assert(BTRFS_UUID_SIZE == 16, "unexpected value of BTRFS_UUID_SIZE");
 
 	    struct btrfs_ioctl_fs_info_args fs_info_args;
 	    if (ioctl(fd, BTRFS_IOC_FS_INFO, &fs_info_args) < 0)
