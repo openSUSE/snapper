@@ -73,9 +73,9 @@ step1(const string& device, const string& description, const string& cleanup,
 
     try
     {
-	SysconfigFile config(CONFIGTEMPLATEDIR "/" "default");
+	SysconfigFile config(CONFIG_TEMPLATE_DIR "/" "default");
 
-	config.setName(tmp_mount.getFullname() + CONFIGSDIR "/" "root");
+	config.setName(tmp_mount.getFullname() + CONFIGS_DIR "/" "root");
 
 	config.setValue(KEY_SUBVOLUME, "/");
 	config.setValue(KEY_FSTYPE, "btrfs");
@@ -195,7 +195,7 @@ step4()
 
     try
     {
-	SysconfigFile sysconfig(SYSCONFIGFILE);
+	SysconfigFile sysconfig(SYSCONFIG_FILE);
 	sysconfig.setValue("SNAPPER_CONFIGS", { "root" });
     }
     catch (const FileNotFoundException& e)

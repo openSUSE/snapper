@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -25,7 +25,6 @@
 
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <sys/statvfs.h>
 #include <glob.h>
 #include <string.h>
 #include <mntent.h>
@@ -60,7 +59,7 @@ namespace snapper
 
 
     ConfigInfo::ConfigInfo(const string& config_name, const string& root_prefix)
-	: SysconfigFile(prepend_root_prefix(root_prefix, CONFIGSDIR "/" + config_name)),
+	: SysconfigFile(prepend_root_prefix(root_prefix, CONFIGS_DIR "/" + config_name)),
 	  config_name(config_name), subvolume("/")
     {
 	if (!getValue(KEY_SUBVOLUME, subvolume))
@@ -157,7 +156,7 @@ namespace snapper
     void
     Snapper::loadIgnorePatterns()
     {
-	const list<string> files = glob(FILTERSDIR "/*.txt", GLOB_NOSORT);
+	const list<string> files = glob(FILTERS_DIR "/*.txt", GLOB_NOSORT);
 	for (list<string>::const_iterator it = files.begin(); it != files.end(); ++it)
 	{
 	    try
@@ -276,7 +275,7 @@ namespace snapper
 
 	try
 	{
-	    SysconfigFile sysconfig(prepend_root_prefix(root_prefix, SYSCONFIGFILE));
+	    SysconfigFile sysconfig(prepend_root_prefix(root_prefix, SYSCONFIG_FILE));
 	    vector<string> config_names;
 	    sysconfig.getValue("SNAPPER_CONFIGS", config_names);
 
@@ -334,7 +333,7 @@ namespace snapper
 	    }
 	}
 
-	if (access(string(CONFIGTEMPLATEDIR "/" + template_name).c_str(), R_OK) != 0)
+	if (access(string(CONFIG_TEMPLATE_DIR "/" + template_name).c_str(), R_OK) != 0)
 	{
 	    SN_THROW(CreateConfigFailedException("cannot access template config"));
 	}
@@ -355,7 +354,7 @@ namespace snapper
 
 	try
 	{
-	    SysconfigFile sysconfig(SYSCONFIGFILE);
+	    SysconfigFile sysconfig(SYSCONFIG_FILE);
 	    vector<string> config_names;
 	    sysconfig.getValue("SNAPPER_CONFIGS", config_names);
 	    if (find(config_names.begin(), config_names.end(), config_name) != config_names.end())
@@ -373,9 +372,9 @@ namespace snapper
 
 	try
 	{
-	    SysconfigFile config(CONFIGTEMPLATEDIR "/" + template_name);
+	    SysconfigFile config(CONFIG_TEMPLATE_DIR "/" + template_name);
 
-	    config.setName(CONFIGSDIR "/" + config_name);
+	    config.setName(CONFIGS_DIR "/" + config_name);
 
 	    config.setValue(KEY_SUBVOLUME, subvolume);
 	    config.setValue(KEY_FSTYPE, filesystem->fstype());
@@ -393,14 +392,14 @@ namespace snapper
 	{
 	    SN_CAUGHT(e);
 
-	    SysconfigFile sysconfig(SYSCONFIGFILE);
+	    SysconfigFile sysconfig(SYSCONFIG_FILE);
 	    vector<string> config_names;
 	    sysconfig.getValue("SNAPPER_CONFIGS", config_names);
 	    config_names.erase(remove(config_names.begin(), config_names.end(), config_name),
 			       config_names.end());
 	    sysconfig.setValue("SNAPPER_CONFIGS", config_names);
 
-	    SystemCmd cmd(RMBIN " " + quote(CONFIGSDIR "/" + config_name));
+	    SystemCmd cmd(RMBIN " " + quote(CONFIGS_DIR "/" + config_name));
 
 	    SN_RETHROW(e);
 	}
@@ -450,7 +449,7 @@ namespace snapper
 	    SN_THROW(DeleteConfigFailedException("deleting snapshot failed"));
 	}
 
-	SystemCmd cmd1(RMBIN " " + quote(CONFIGSDIR "/" + config_name));
+	SystemCmd cmd1(RMBIN " " + quote(CONFIGS_DIR "/" + config_name));
 	if (cmd1.retcode() != 0)
 	{
 	    SN_THROW(DeleteConfigFailedException("deleting config-file failed"));
@@ -458,7 +457,7 @@ namespace snapper
 
 	try
 	{
-	    SysconfigFile sysconfig(SYSCONFIGFILE);
+	    SysconfigFile sysconfig(SYSCONFIG_FILE);
 	    vector<string> config_names;
 	    sysconfig.getValue("SNAPPER_CONFIGS", config_names);
 	    config_names.erase(remove(config_names.begin(), config_names.end(), config_name),
@@ -795,13 +794,9 @@ namespace snapper
 	quota_rescan(general_dir.fd());
 	sync(general_dir.fd());
 
-	struct statvfs64 fsbuf;
-	if (fstatvfs64(general_dir.fd(), &fsbuf) != 0)
-	    SN_THROW(QuotaException("statvfs64 failed"));
-
 	QuotaData quota_data;
 
-	quota_data.size = fsbuf.f_blocks * fsbuf.f_bsize;
+	std::tie(quota_data.size, std::ignore) = general_dir.statvfs();
 
 	QGroupUsage qgroup_usage = qgroup_query_usage(general_dir.fd(), btrfs->getQGroup());
 	quota_data.used = qgroup_usage.exclusive;
@@ -833,17 +828,8 @@ namespace snapper
 
 	filesystem->sync();
 
-	struct statvfs64 fsbuf;
-	if (fstatvfs64(general_dir.fd(), &fsbuf) != 0)
-	    SN_THROW(FreeSpaceException("statvfs64 failed"));
-
 	FreeSpaceData free_space_data;
-
-	// f_bavail is used (not f_bfree) since df seems to do the
-	// same. Thus it allows the user to check the result easily.
-
-	free_space_data.size = fsbuf.f_blocks * fsbuf.f_bsize;
-	free_space_data.free = fsbuf.f_bavail * fsbuf.f_bsize;
+	std::tie(free_space_data.size, free_space_data.free) = general_dir.statvfs();
 
 	y2mil("size:" << free_space_data.size << " free:" << free_space_data.free);
 

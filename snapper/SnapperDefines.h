@@ -26,12 +26,12 @@
 
 // path definitions
 
-#define SYSCONFIGFILE CONFDIR "/snapper"
+#define SYSCONFIG_FILE CONF_DIR "/snapper"
 
-#define CONFIGSDIR "/etc/snapper/configs"
-#define CONFIGTEMPLATEDIR "/etc/snapper/config-templates"
+#define CONFIGS_DIR "/etc/snapper/configs"
+#define CONFIG_TEMPLATE_DIR "/etc/snapper/config-templates"
 
-#define FILTERSDIR "/etc/snapper/filters"
+#define FILTERS_DIR "/etc/snapper/filters"
 
 
 // keys from the config files

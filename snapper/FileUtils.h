@@ -93,6 +93,9 @@ namespace snapper
 	int rename(const string& oldname, const string& newname) const;
 	int fsync() const;
 
+	// Query size and free.
+	std::pair<unsigned long long, unsigned long long> statvfs() const;
+
 	int mktemp(string& name) const;
 	bool mkdtemp(string& name) const;
 
