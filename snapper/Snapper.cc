@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -25,7 +25,6 @@
 
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <sys/statvfs.h>
 #include <glob.h>
 #include <string.h>
 #include <mntent.h>
@@ -795,13 +794,9 @@ namespace snapper
 	quota_rescan(general_dir.fd());
 	sync(general_dir.fd());
 
-	struct statvfs64 fsbuf;
-	if (fstatvfs64(general_dir.fd(), &fsbuf) != 0)
-	    SN_THROW(QuotaException("statvfs64 failed"));
-
 	QuotaData quota_data;
 
-	quota_data.size = fsbuf.f_blocks * fsbuf.f_bsize;
+	std::tie(quota_data.size, std::ignore) = general_dir.statvfs();
 
 	QGroupUsage qgroup_usage = qgroup_query_usage(general_dir.fd(), btrfs->getQGroup());
 	quota_data.used = qgroup_usage.exclusive;
@@ -833,17 +828,8 @@ namespace snapper
 
 	filesystem->sync();
 
-	struct statvfs64 fsbuf;
-	if (fstatvfs64(general_dir.fd(), &fsbuf) != 0)
-	    SN_THROW(FreeSpaceException("statvfs64 failed"));
-
 	FreeSpaceData free_space_data;
-
-	// f_bavail is used (not f_bfree) since df seems to do the
-	// same. Thus it allows the user to check the result easily.
-
-	free_space_data.size = fsbuf.f_blocks * fsbuf.f_bsize;
-	free_space_data.free = fsbuf.f_bavail * fsbuf.f_bsize;
+	std::tie(free_space_data.size, free_space_data.free) = general_dir.statvfs();
 
 	y2mil("size:" << free_space_data.size << " free:" << free_space_data.free);
 
