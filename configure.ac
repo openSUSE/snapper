@@ -85,7 +85,7 @@ AC_ARG_WITH([conf], AC_HELP_STRING([--with-conf], [Use a custom sysconfig direct
 
 AS_IF([test "x$with_conf" != xno], [SYSCONFIG="${with_conf}"])
 
-CPPFLAGS="${CPPFLAGS} -DCONFDIR='\"${SYSCONFIG}\"'"
+CPPFLAGS="${CPPFLAGS} -DCONF_DIR='\"${SYSCONFIG}\"'"
 
 
 AC_ARG_ENABLE([btrfs], AC_HELP_STRING([--disable-btrfs],[Disable Btrfs internal snapshots support]),
