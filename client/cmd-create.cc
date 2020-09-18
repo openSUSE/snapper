@@ -102,7 +102,6 @@ namespace snapper
 	    {
 		string error = sformat(_("Unknown type '%s'."), opt->second.c_str()) + '\n' +
 		    possible_enum_values<CreateType>();
-
 		SN_THROW(OptionsException(error));
 	    }
 	}
