@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-03 17:51+0200\n"
-"PO-Revision-Date: 2020-08-24 00:40+0000\n"
+"PO-Revision-Date: 2020-09-20 05:48+0000\n"
 "Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
-"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/id/>\n"
+"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/"
+"id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,7 +27,7 @@ msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <perintah>\tJalankan perintah dan buat pre dan pos snapshot."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <nama>\t\tAtur nama config untuk digunakan."
+msgstr "\t--config, -c <nama>\t\tAtur nama konfigurasi untuk digunakan."
 
 msgid "\t--csvout\t\t\tSet CSV output format."
 msgstr "\t--csvout\t\t\tAtur format keluaran CSV."
@@ -203,13 +204,13 @@ msgid "  Comparing snapshots:"
 msgstr "  Membandingkan snapshot:"
 
 msgid "  Create config:"
-msgstr "  Buat config:"
+msgstr "  Buat konfigurasi:"
 
 msgid "  Create snapshot:"
 msgstr "  Buat snapshot:"
 
 msgid "  Delete config:"
-msgstr "  Hapus config:"
+msgstr "  Hapus konfigurasi:"
 
 msgid "  Delete snapshot:"
 msgstr "  Hapus snapshot:"
@@ -224,7 +225,7 @@ msgid "  Rollback:"
 msgstr "  Rollback:"
 
 msgid "  Set config:"
-msgstr "  Atur config:"
+msgstr "  Atur konfigurasi:"
 
 msgid "  Setup quota:"
 msgstr "  Atur kuota:"
@@ -240,14 +241,14 @@ msgstr "  Membatalkan perubahan:"
 #. %2$s is replaced by second value
 #, c-format
 msgid "%1$s or %2$s"
-msgstr ""
+msgstr "%1$s atau %2$s"
 
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
 #, c-format
 msgid "%1$s, %2$s"
-msgstr ""
+msgstr "%1$s, %2$s"
 
 #, c-format
 msgid "(Snapshot %d.)"
@@ -345,29 +346,29 @@ msgstr "Perintah 'xadiff' membutuhkan setidaknya satu argumen."
 
 #, c-format
 msgid "Config '%s' is invalid."
-msgstr "Config '%s' tidak valid."
+msgstr "Konfigurasi '%s' tidak valid."
 
 #, c-format
 msgid "Config '%s' not found."
-msgstr "Config '%s' tidak ditemukan."
+msgstr "Konfigurasi '%s' tidak ditemukan."
 
 msgid "Config is in use."
-msgstr "Config sedang digunakan."
+msgstr "Konfigurasi sedang digunakan."
 
 msgid "Config is locked."
-msgstr "Config dikunci."
+msgstr "Konfigurasi terkunci."
 
 #, c-format
 msgid "Configdata '%s' does not include '=' sign."
-msgstr "Configdata '%s' tidak termasuk tanda '='."
+msgstr "Data konfigurasi '%s' tidak termasuk tanda '='."
 
 #, c-format
 msgid "Configdata '%s' has empty key."
-msgstr "Configdata '%s' memiliki kunci kosong."
+msgstr "Data konfigurasi '%s' memiliki kunci kosong."
 
 #, c-format
 msgid "Creating config failed (%s)."
-msgstr "Gagal membuat config (%s)."
+msgstr "Gagal membuat konfigurasi (%s)."
 
 msgid "Creating read-only snapshot of current system."
 msgstr "Membuat snapshot hanya-baca dari sistem saat ini."
@@ -387,7 +388,7 @@ msgstr "Gagal membuat snapshot."
 
 #, c-format
 msgid "Deleting config failed (%s)."
-msgstr "Gagal menghapus config (%s)."
+msgstr "Gagal menghapus konfigurasi (%s)."
 
 msgid "Deleting snapshot failed."
 msgstr "Gagal menghapus snapshot."
@@ -405,10 +406,10 @@ msgid "EiB"
 msgstr "EiB"
 
 msgid "Empty configdata."
-msgstr "Configdata kosong."
+msgstr "Data konfigurasi kosong."
 
 msgid "Empty userdata."
-msgstr "Userdata kosong."
+msgstr "Data pengguna kosong."
 
 #, c-format
 msgid "Error (%s)."
@@ -453,21 +454,19 @@ msgstr "Snapshot identik."
 msgid "Illegal snapshot."
 msgstr "Snapshot ilegal."
 
-#, fuzzy, c-format
-#| msgid "Invalid ambit %s."
+#, c-format
 msgid "Invalid ambit '%s'."
-msgstr "Ambit %s tidak valid."
+msgstr "Ambit '%s' tidak valid."
 
 msgid "Invalid configdata."
-msgstr "Configdata tidak valid."
+msgstr "Data konfigurasi tidak valid."
 
 msgid "Invalid group."
 msgstr "Grup tidak valid."
 
-#, fuzzy, c-format
-#| msgid "Invalid machine readable format %s."
+#, c-format
 msgid "Invalid machine readable format '%s'."
-msgstr "Format terbaca mesin tidak valid %s."
+msgstr "Format '%s' yang dapat dibaca mesin tidak valid."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -479,16 +478,15 @@ msgstr "Snapshot tidak valid."
 msgid "Invalid subvolume."
 msgstr "Subvolume tidak valid."
 
-#, fuzzy, c-format
-#| msgid "Invalid table style %s."
+#, c-format
 msgid "Invalid table style '%s'."
-msgstr "Gaya tabel %s tidak valid."
+msgstr "Gaya tabel '%s' tidak valid."
 
 msgid "Invalid user."
 msgstr "Pengguna tidak valid."
 
 msgid "Invalid userdata."
-msgstr "Userdata tidak valid."
+msgstr "Data pengguna tidak valid."
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -496,7 +494,7 @@ msgstr "KiB"
 
 #, c-format
 msgid "Listing configs failed (%s)."
-msgstr "Config listing gagal (%s)."
+msgstr "Konfigurasi listing gagal (%s)."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Mungkin Anda lupa pembatas '..' di antara nomor snapshot."
@@ -513,10 +511,8 @@ msgstr "Argumen tidak ada untuk opsi perintah '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Argumen tidak ada untuk opsi global '%s'."
 
-#, fuzzy
-#| msgid "Missing command argument."
 msgid "Missing command option."
-msgstr "Argumen perintah tidak ada."
+msgstr "Opsi perintah hilang."
 
 msgid "Missing delimiter '..' between snapshot numbers."
 msgstr "Pembatas '..' tidak ada di antara nomor snapshot."
@@ -566,7 +562,7 @@ msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Ambit dapat ditentukan secara manual menggunakan opsi--ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr "Config 'root' tidak ada. Kemungkinan snapper tidak dikonfigurasi."
+msgstr "Konfigurasi 'root' tidak ada. Kemungkinan snapper tidak dikonfigurasi."
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "Hal ini dapat terjadi jika sistem tidak diatur untuk rollback."
@@ -587,7 +583,7 @@ msgid "Unknown command '%s'."
 msgstr "Perintah '%s' tidak dikenal."
 
 msgid "Unknown config."
-msgstr "Config tidak dikenal."
+msgstr "Konfigurasi tidak dikenal."
 
 #, c-format
 msgid "Unknown global option '%s'."
@@ -597,16 +593,15 @@ msgstr "Opsi global tidak dikenal '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Opsi tidak dikenal '%s' untuk perintah '%s'."
 
-#, fuzzy, c-format
-#| msgid "Unknown command '%s'."
+#, c-format
 msgid "Unknown type '%s'."
-msgstr "Perintah '%s' tidak dikenal."
+msgstr "Tipe '%s' tidak dikenal."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
 #, c-format
 msgid "Use %1$s."
-msgstr ""
+msgstr "Gunakan %1$s."
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -614,11 +609,11 @@ msgstr "Gunakan bilangan bulat dari %d hingga %d."
 
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
-msgstr "Userdata '%s' tidak membawa tanda '='."
+msgstr "Data pengguna '%s' tidak membawa tanda '='."
 
 #, c-format
 msgid "Userdata '%s' has empty key."
-msgstr "Userdata '%s' mempunyai kunci kosong."
+msgstr "Data pengguna '%s' mempunyai kunci kosong."
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -651,14 +646,8 @@ msgstr "memodifikasi %s"
 msgid "nothing to do"
 msgstr "tidak ada yang dilakukan"
 
-#, fuzzy
-#| msgid ""
-#| "root argument can be used only together with no-dbus.\n"
-#| "Try 'snapper --help' for more information."
 msgid "root argument can be used only together with no-dbus.\n"
-msgstr ""
-"argumen root hanya dapat digunakan bersama dengan no-dbus.\n"
-"Coba 'snapper --help' untuk informasi lebih lanjut."
+msgstr "argumen root dapat digunakan hanya bersama-sama dengan no-dbus.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "penggunaan: snapper [--global-options] <command> [--command-options] [command-arguments]"
