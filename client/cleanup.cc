@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -89,6 +89,7 @@ public:
     virtual ~Cleaner() {}
 
     void cleanup();
+    void cleanup(std::function<bool()> condition);
 
 protected:
 
@@ -423,6 +424,19 @@ Cleaner::cleanup()
 }
 
 
+void
+Cleaner::cleanup(std::function<bool()> condition)
+{
+    ProxySnapshots& snapshots = snapper->getSnapshots();
+
+#ifdef VERBOSE_LOGGING
+    cout << "cleanup with user condition" << '\n';
+#endif
+
+    cleanup(snapshots, condition);
+}
+
+
 struct NumberParameters : public Parameters
 {
     NumberParameters(const ProxySnapper* snapper);
@@ -531,6 +545,15 @@ do_cleanup_number(ProxySnapper* snapper, bool verbose)
     NumberParameters parameters(snapper);
     NumberCleaner cleaner(snapper, verbose, parameters);
     cleaner.cleanup();
+}
+
+
+void
+do_cleanup_number(ProxySnapper* snapper, bool verbose, std::function<bool()> condition)
+{
+    NumberParameters parameters(snapper);
+    NumberCleaner cleaner(snapper, verbose, parameters);
+    cleaner.cleanup(condition);
 }
 
 
@@ -737,6 +760,15 @@ do_cleanup_timeline(ProxySnapper* snapper, bool verbose)
 }
 
 
+void
+do_cleanup_timeline(ProxySnapper* snapper, bool verbose, std::function<bool()> condition)
+{
+    TimelineParameters parameters(snapper);
+    TimelineCleaner cleaner(snapper, verbose, parameters);
+    cleaner.cleanup(condition);
+}
+
+
 struct EmptyPrePostParameters : public Parameters
 {
     EmptyPrePostParameters(const ProxySnapper* snapper);
@@ -795,4 +827,13 @@ do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose)
     EmptyPrePostParameters parameters(snapper);
     EmptyPrePostCleaner cleaner(snapper, verbose, parameters);
     cleaner.cleanup();
+}
+
+
+void
+do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose, std::function<bool()> condition)
+{
+    EmptyPrePostParameters parameters(snapper);
+    EmptyPrePostCleaner cleaner(snapper, verbose, parameters);
+    cleaner.cleanup(condition);
 }

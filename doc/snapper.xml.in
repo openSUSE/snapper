@@ -759,11 +759,26 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>cleanup <replaceable>cleanup-algorithm</replaceable></option></term>
+	<term><option>cleanup [options] <replaceable>cleanup-algorithm</replaceable></option></term>
 	<listitem>
 	  <para>Run the cleanup algorithm
-	  <replaceable>cleanup-algorithm</replaceable>. Currently implemented
-	  cleanup algorithms are number, timeline and empty-pre-post.</para>
+	  <replaceable>cleanup-algorithm</replaceable>. Currently implemented cleanup algorithms
+	  are number, timeline and empty-pre-post. To run all cleanup algorithms, all can be
+	  provided as cleanup-algorithm.</para>
+	  <variablelist>
+	    <varlistentry>
+	      <term><option>--path</option> <replaceable>path</replaceable></term>
+	      <listitem>
+		<para>Cleanup all configs affecting path. Only useful for btrfs.</para>
+	      </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><option>--free-space</option> <replaceable>free-space</replaceable></term>
+	      <listitem>
+		<para>Try to make free-space available. Only useful for btrfs.</para>
+	      </listitem>
+	    </varlistentry>
+	  </variablelist>
 	</listitem>
       </varlistentry>
 
