@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2012] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -21,8 +21,15 @@
  */
 
 
+#include <functional>
+
 #include "proxy.h"
 
+
+/*
+ * The following three functions do the cleanup based on the conditionals defined in the
+ * config, that are hard limit, quota and free space.
+ */
 
 void
 do_cleanup_number(ProxySnapper* snapper, bool verbose);
@@ -32,3 +39,18 @@ do_cleanup_timeline(ProxySnapper* snapper, bool verbose);
 
 void
 do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose);
+
+
+/*
+ * The following three functions do the cleanup only based on the provided
+ * conditional. The lower range and min-age defined in the config are respected.
+ */
+
+void
+do_cleanup_number(ProxySnapper* snapper, bool verbose, std::function<bool()> condition);
+
+void
+do_cleanup_timeline(ProxySnapper* snapper, bool verbose, std::function<bool()> condition);
+
+void
+do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose, std::function<bool()> condition);

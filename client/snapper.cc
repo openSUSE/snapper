@@ -157,7 +157,7 @@ main(int argc, char** argv)
 	Cmd("rollback", command_rollback, help_rollback, true),
 #endif
 	Cmd("setup-quota", command_setup_quota, help_setup_quota, true),
-	Cmd("cleanup", command_cleanup, help_cleanup, true),
+	Cmd("cleanup", command_cleanup, help_cleanup, false),
 	Cmd("debug", command_debug, help_debug, false)
     };
 
@@ -312,6 +312,12 @@ main(int argc, char** argv)
 	    SN_CAUGHT(e);
 	    cerr << e.what() << endl
 		 << _("Try 'snapper --help' for more information.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+	catch (const CleanupException& e)
+	{
+	    SN_CAUGHT(e);
+	    cerr << e.what() << endl;
 	    exit(EXIT_FAILURE);
 	}
 	catch (const Exception& e)

@@ -157,6 +157,12 @@ namespace snapper
     command_setup_quota(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper);
 
 
+    struct CleanupException : public Exception
+    {
+	explicit CleanupException(const string& msg) : Exception(msg) {}
+    };
+
+
     void
     help_cleanup();
 
