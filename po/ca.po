@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-23 10:33+0200\n"
-"PO-Revision-Date: 2020-09-16 09:48+0000\n"
+"PO-Revision-Date: 2020-09-23 13:48+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
-"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/>\n"
+"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/"
+">\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -44,7 +45,7 @@ msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tOpcions extres passades a l'ordre diff."
 
 msgid "\t--free-space <space>\t\tTry to make space available."
-msgstr ""
+msgstr "\t--free-space <space>\t\tIntenta fer espai disponible."
 
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\tCrea una instantània a partir d'una instantània específica."
@@ -75,6 +76,7 @@ msgstr "\t--output, -o <file>\t\tDesa l'estat en un fitxer."
 
 msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
 msgstr ""
+"\t--path <path>\t\t\tNeteja totes les configuracions que afecten el camí."
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <number>\t\tNúmero de la preinstantània corresponent."
@@ -175,9 +177,8 @@ msgstr "\tsnapper xadiff <número1>..<número2> [fitxers]"
 msgid "    Global options:"
 msgstr "    Opcions globals:"
 
-#, fuzzy
 msgid "    Options for 'cleanup' command:"
-msgstr "    Opcions de l'ordre create:"
+msgstr "    Opcions per a l'ordre cleanup:"
 
 msgid "    Options for 'create' command:"
 msgstr "    Opcions de l'ordre create:"
@@ -377,10 +378,10 @@ msgstr "Les dades de configuració %s tenen una clau buida."
 
 #, c-format
 msgid "Could not make enough free space available for path '%s'."
-msgstr ""
+msgstr "No s'ha pogut fer prou espai disponible per al camí %s."
 
 msgid "Could not make enough free space available."
-msgstr ""
+msgstr "No s'ha pogut fer prou espai disponible."
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -420,12 +421,11 @@ msgstr "Ha fallat la detecció del tipus de sistema de fitxers."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
-msgstr ""
+msgstr "E"
 
 #. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
-#, fuzzy
 msgid "EB"
-msgstr "EiB"
+msgstr "EB"
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
@@ -444,17 +444,16 @@ msgstr "Error (%s)."
 msgid "Failed to initialize filesystem handler."
 msgstr "Ha fallat l'inici del manejador de sistemes de fitxers."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to parse '%s'."
-msgstr "Ha fallat la creació de %s"
+msgstr "Ha fallat analitzar %s."
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
-msgstr ""
+msgstr "Ha fallat consultar l'espai disponible per al camí %s."
 
-#, fuzzy
 msgid "Failed to query free space."
-msgstr "Ha fallat la creació de %s"
+msgstr "Ha fallat consultar l'espai disponible."
 
 msgid "Failed to set locale. Fix your system."
 msgstr "Ha fallat establir la llengua. Corregiu el sistema."
@@ -476,12 +475,11 @@ msgstr "Error d'espai lliure (%s)."
 
 #. TRANSLATORS: symbol for "giga" (best keep untranslated)
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
-#, fuzzy
 msgid "GB"
-msgstr "GiB"
+msgstr "GB"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -508,9 +506,8 @@ msgstr "Àmbit no vàlid: %s."
 msgid "Invalid configdata."
 msgstr "Dades de configuració no vàlides."
 
-#, fuzzy
 msgid "Invalid free-space value."
-msgstr "Subvolum no vàlid."
+msgstr "Valor d'espai disponible no vàlid."
 
 msgid "Invalid group."
 msgstr "Grup no vàlid."
@@ -519,9 +516,9 @@ msgstr "Grup no vàlid."
 msgid "Invalid machine readable format '%s'."
 msgstr "Format llegible per a la màquina no vàlid: %s."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid path '%s'."
-msgstr "Àmbit no vàlid: %s."
+msgstr "Camí no vàlid: %s."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -553,12 +550,11 @@ msgstr "Ha fallat la llista de configs (%s)."
 
 #. TRANSLATORS: symbol for "mega" (best keep untranslated)
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
-#, fuzzy
 msgid "MB"
-msgstr "MiB"
+msgstr "MB"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Potser heu oblidat el delimitador \"..\" entre els números d'instantània."
@@ -602,12 +598,11 @@ msgstr "L'opció --read-write només s'admet per a les instantànies de tipus si
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
-#, fuzzy
 msgid "PB"
-msgstr "PiB"
+msgstr "PB"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -633,12 +628,11 @@ msgstr "La instantània s'usa."
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
-#, fuzzy
 msgid "TB"
-msgstr "TiB"
+msgstr "TB"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "L'àmbit es pot especificar manualment usant l'opció --ambit."
@@ -723,12 +717,11 @@ msgstr "Ha fallat la modificació de %s"
 
 #. TRANSLATORS: symbol for "kilo" (best keep untranslated)
 msgid "k"
-msgstr ""
+msgstr "k"
 
 #. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
-#, fuzzy
 msgid "kB"
-msgstr "B"
+msgstr "kB"
 
 #, c-format
 msgid "modifying %s"
