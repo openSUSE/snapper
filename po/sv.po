@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 17:51+0200\n"
+"POT-Creation-Date: 2020-09-23 10:33+0200\n"
 "PO-Revision-Date: 2020-05-26 14:40+0000\n"
 "Last-Translator: Jonas Svensson <jonas@ekhorva.se>\n"
 "Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/sv/>\n"
@@ -55,6 +55,9 @@ msgstr "\t--diff-cmd <command>\t\tKommandot används för att jämföra filer."
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tExtra alternativ skickades till diffkommandot."
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\tCreate a ögonblicksbild av den specifika ögonblicksbilden."
 
@@ -86,6 +89,9 @@ msgstr "\t--no-dbus\t\t\tAnvänd utan DBus."
 # SLE12
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <fil>\t\tSpara status till fil."
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr ""
 
 # SLE12
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
@@ -213,6 +219,11 @@ msgstr "\tsnapper xadiff <number1>..<number2> [filer]"
 # SLE12
 msgid "    Global options:"
 msgstr "    Globala alternativ:"
+
+# SLE12
+#, fuzzy
+msgid "    Options for 'cleanup' command:"
+msgstr "    Alternativ för kommandot create:"
 
 # SLE12
 msgid "    Options for 'create' command:"
@@ -457,6 +468,13 @@ msgstr "Konfigurationsdata %s inkluderar inte tecknet =."
 msgid "Configdata '%s' has empty key."
 msgstr "Konfigurationsdata %s har tom nyckel."
 
+#, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
 # SLE12
 #, c-format
 msgid "Creating config failed (%s)."
@@ -502,6 +520,15 @@ msgstr[1] "Raderar snapshots från %s:"
 msgid "Detecting filesystem type failed."
 msgstr "Det gick inte att identifiera filsystemstypen."
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+#, fuzzy
+msgid "EB"
+msgstr "EiB"
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr "EiB"
@@ -521,6 +548,20 @@ msgstr "Fel (%s)."
 # SLE12
 msgid "Failed to initialize filesystem handler."
 msgstr "Det gick inte att initiera filsystemhanteraren."
+
+# SLE12
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "det gick inte att skapa %s"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+# SLE12
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "det gick inte att skapa %s"
 
 msgid "Failed to set locale. Fix your system."
 msgstr "Det gick inte att ställa in plats. Reparera ditt system."
@@ -542,6 +583,15 @@ msgstr "Filen %s hittades inte."
 #, c-format
 msgid "Free space error (%s)."
 msgstr "Fel ledigt utrymme (%s)."
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+#, fuzzy
+msgid "GB"
+msgstr "GiB"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -573,6 +623,11 @@ msgid "Invalid configdata."
 msgstr "Ogiltiga konfigurationsdata."
 
 # SLE12
+#, fuzzy
+msgid "Invalid free-space value."
+msgstr "Ogiltig undervolym."
+
+# SLE12
 msgid "Invalid group."
 msgstr "Ogiltig grupp."
 
@@ -580,6 +635,11 @@ msgstr "Ogiltig grupp."
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Ogiltig tabellstil %d."
+
+# SLE12
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "Ogiltig ögonblicksbild \"%s\"."
 
 # SLE12
 #, c-format
@@ -615,6 +675,15 @@ msgstr "KiB"
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Listningen av konfigurationer misslyckades (%s)."
+
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+#, fuzzy
+msgid "MB"
+msgstr "MiB"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Kanske glömde du avgränsaren '..' mellan snapshot-numren."
@@ -664,6 +733,15 @@ msgstr "Alternativet --from stöds bara för ögonblicksbilder av typen enkel."
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Alternativet --read-write stöds bara för ögonblicksbilder av typen enkel."
 
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+#, fuzzy
+msgid "PB"
+msgstr "PiB"
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -688,6 +766,15 @@ msgstr "Ögonblicksbilden %u hittades inte."
 # SLE12
 msgid "Snapshot is in use."
 msgstr "Ögonblicksbilden används."
+
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+#, fuzzy
+msgid "TB"
+msgstr "TiB"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
@@ -785,6 +872,15 @@ msgstr "det gick inte att ta bort %s"
 #, c-format
 msgid "failed to modify %s"
 msgstr "det gick inte att ändra %s"
+
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+#, fuzzy
+msgid "kB"
+msgstr "B"
 
 # SLE12
 #, c-format

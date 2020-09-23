@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper.km\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 17:51+0200\n"
+"POT-Creation-Date: 2020-09-23 10:33+0200\n"
 "PO-Revision-Date: 2011-10-24 10:40+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -49,6 +49,9 @@ msgstr ""
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr ""
 
@@ -76,6 +79,9 @@ msgstr ""
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <file>\t\tរក្សា​ទុក​ស្ថានភាព​ទៅ​ក្នុង​ឯកសារ ។"
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <number>\t\tចំនួន​រូបថតពី​មុន​ដែល​ត្រូវ​គ្នា​ ។"
@@ -181,6 +187,10 @@ msgstr "\tsnapper diff <number1>..<number2> [files]"
 
 msgid "    Global options:"
 msgstr "    ជម្រើស​សកល ៖"
+
+#, fuzzy
+msgid "    Options for 'cleanup' command:"
+msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា​ 'create' ៖"
 
 msgid "    Options for 'create' command:"
 msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា​ 'create' ៖"
@@ -395,6 +405,13 @@ msgid "Configdata '%s' has empty key."
 msgstr ""
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
 
@@ -433,6 +450,14 @@ msgstr[0] "ការ​លុប CA បាន​បរាជ័យ ៖ %1 ។"
 msgid "Detecting filesystem type failed."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​រក​ប្រភេទ​ប្រព័ន្ធ​ឯកសារ ។"
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+msgid "EB"
+msgstr ""
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr ""
@@ -454,6 +479,18 @@ msgstr "កំហុស I/O"
 msgid "Failed to initialize filesystem handler."
 msgstr "បាន​បរាជ័យ​ក្នុងកា​រដំឡើង​កម្មវិធី​គ្រប់គ្រង​ឯកសារ"
 
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត %s"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត %s"
+
 msgid "Failed to set locale. Fix your system."
 msgstr ""
 
@@ -472,6 +509,14 @@ msgstr "រក​មិន​ឃើញ​ឯកសារ '%s' ។"
 #, fuzzy, c-format
 msgid "Free space error (%s)."
 msgstr "កំហុស I/O"
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+msgid "GB"
+msgstr ""
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -503,12 +548,20 @@ msgid "Invalid configdata."
 msgstr "ទិន្នន័យ​ផ្សាយ​មិន​ត្រឹមត្រូវ ។"
 
 #, fuzzy
+msgid "Invalid free-space value."
+msgstr "ភាគ​រង​មិន​ត្រឹមត្រូវ ។"
+
+#, fuzzy
 msgid "Invalid group."
 msgstr "ភាគ​រង​មិន​ត្រឹមត្រូវ ។"
 
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "រចនាប័ទ្ម​តារាង %d មិន​ត្រឹមត្រូវ ។"
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "រូបថត​មិន​ត្រឹមត្រូវ '%s' ។"
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -538,6 +591,14 @@ msgstr ""
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​រាយ​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
+
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+msgid "MB"
+msgstr ""
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr ""
@@ -581,6 +642,14 @@ msgstr ""
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr ""
 
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+msgid "PB"
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr ""
@@ -605,6 +674,14 @@ msgstr "រក​មិន​ឃើញ​រូបថត '%u' ។"
 #, fuzzy
 msgid "Snapshot is in use."
 msgstr "រក​មិន​ឃើញ​ការ​កំណត់​រចនាសម្ព័ន្ធ '%s'  ។"
+
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+msgid "TB"
+msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
@@ -688,6 +765,14 @@ msgstr "បាន​បរាជ័យ​ក្នុង​ការ​លុប
 #, c-format
 msgid "failed to modify %s"
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​កែប្រែ %s"
+
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+msgid "kB"
+msgstr ""
 
 #, c-format
 msgid "modifying %s"

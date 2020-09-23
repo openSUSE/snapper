@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: memory.ku.po\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 17:51+0200\n"
+"POT-Creation-Date: 2020-09-23 10:33+0200\n"
 "PO-Revision-Date: 2005-09-23 00:15+0200\n"
 "Last-Translator: Kurdish Team <i18n@suse.de>\n"
 "Language-Team: Kurdish Team <i18n@suse.de>\n"
@@ -45,6 +45,9 @@ msgstr ""
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr ""
 
@@ -70,6 +73,9 @@ msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr ""
 
 msgid "\t--output, -o <file>\t\tSave status to file."
+msgstr ""
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
 msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
@@ -173,6 +179,9 @@ msgid "    Global options:"
 msgstr ""
 "\n"
 "    Vebijêrk:"
+
+msgid "    Options for 'cleanup' command:"
+msgstr ""
 
 msgid "    Options for 'create' command:"
 msgstr ""
@@ -378,6 +387,13 @@ msgid "Configdata '%s' has empty key."
 msgstr ""
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr ""
 
@@ -416,6 +432,14 @@ msgstr[1] "Nivîsandina mîhengan têk çû"
 msgid "Detecting filesystem type failed."
 msgstr ""
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+msgid "EB"
+msgstr ""
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr ""
@@ -435,6 +459,18 @@ msgstr "Çewtî"
 msgid "Failed to initialize filesystem handler."
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "Sepandina delta RPM têk çû"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "Sepandina delta RPM têk çû"
+
 msgid "Failed to set locale. Fix your system."
 msgstr ""
 
@@ -452,6 +488,14 @@ msgstr "Pel nehat dîtin."
 #, fuzzy, c-format
 msgid "Free space error (%s)."
 msgstr "Çewtî"
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+msgid "GB"
+msgstr ""
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -479,12 +523,19 @@ msgstr "Vebijêrka nederbasdar: %1"
 msgid "Invalid configdata."
 msgstr ""
 
+msgid "Invalid free-space value."
+msgstr ""
+
 #, fuzzy
 msgid "Invalid group."
 msgstr "Vebijêrka nederbasdar: %1"
 
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
+msgstr "Vebijêrka nederbasdar: %1"
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
 msgstr "Vebijêrka nederbasdar: %1"
 
 #, fuzzy, c-format
@@ -514,6 +565,14 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Nivîsandina mîhengan têk çû"
+
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+msgid "MB"
+msgstr ""
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr ""
@@ -556,6 +615,14 @@ msgstr ""
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr ""
 
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+msgid "PB"
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr ""
@@ -578,6 +645,14 @@ msgstr "Pakêta '%s' nehat dîtin."
 #, fuzzy
 msgid "Snapshot is in use."
 msgstr "Pakêta '%s' nehat dîtin."
+
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+msgid "TB"
+msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
@@ -659,6 +734,14 @@ msgstr "Sepandina delta RPM têk çû"
 
 #, c-format
 msgid "failed to modify %s"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+msgid "kB"
 msgstr ""
 
 #, fuzzy, c-format

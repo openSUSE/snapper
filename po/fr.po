@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 17:51+0200\n"
+"POT-Creation-Date: 2020-09-23 10:33+0200\n"
 "PO-Revision-Date: 2020-06-30 08:32+0000\n"
 "Last-Translator: Antoine Belvire <antoine.belvire@opensuse.org>\n"
 "Language-Team: French <https://l10n.opensuse.org/projects/snapper/master/fr/>\n"
@@ -47,6 +47,9 @@ msgstr "\t--diff-cmd <commande>\t\tCommande utilisée pour comparer des fichiers
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tOptions supplémentaires transmises à la commande diff."
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\tCrée un instantané à partir de l'instantané spécifié."
 
@@ -74,6 +77,9 @@ msgstr "\t--no-dbus\t\t\tFonctionner sans DBus."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <fichier>\t\tSauvegarde les statuts vers le fichier."
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <numéro>\t\tNuméro d'instantané pre correspondant."
@@ -177,6 +183,10 @@ msgstr "\tsnapper xadiff <numéro1>..<numéro2> [fichiers]"
 
 msgid "    Global options:"
 msgstr "    Options globales :"
+
+#, fuzzy
+msgid "    Options for 'cleanup' command:"
+msgstr "    Options pour la commande 'create' :"
 
 msgid "    Options for 'create' command:"
 msgstr "    Options pour la commande 'create' :"
@@ -385,6 +395,13 @@ msgid "Configdata '%s' has empty key."
 msgstr "Clé vide dans les données de configuration '%s'."
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "Échec de la création de la configuration (%s)."
 
@@ -424,6 +441,15 @@ msgstr[1] "Suppression des instantanés de %s :"
 msgid "Detecting filesystem type failed."
 msgstr "Échec de la détection du système de fichiers."
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+#, fuzzy
+msgid "EB"
+msgstr "Eio"
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr "Eio"
@@ -444,6 +470,20 @@ msgstr "Erreur (%s)."
 msgid "Failed to initialize filesystem handler."
 msgstr "Échec de l'initialisation du gestionnaire de système de fichiers."
 
+# TLABEL nfs_2002_01_04_0147__3
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "Impossible de créer %s"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+# TLABEL nfs_2002_01_04_0147__3
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "Impossible de créer %s"
+
 msgid "Failed to set locale. Fix your system."
 msgstr "Échec de la définition des paramètres régionaux. Corrigez votre système."
 
@@ -462,6 +502,15 @@ msgstr "Fichier '%s' introuvable."
 #, c-format
 msgid "Free space error (%s)."
 msgstr "Erreur d'espace libre (%s)."
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+#, fuzzy
+msgid "GB"
+msgstr "Gio"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -488,14 +537,21 @@ msgstr "Contexte %s non valide."
 msgid "Invalid configdata."
 msgstr "Données de configuration non valides."
 
+#, fuzzy
+msgid "Invalid free-space value."
+msgstr "Sous-volume invalide."
+
 # SLE12
 msgid "Invalid group."
 msgstr "Groupe non valide."
 
 #, fuzzy, c-format
-#| msgid "Invalid machine readable format %s."
 msgid "Invalid machine readable format '%s'."
 msgstr "Format de sortie %s non valide."
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "Contexte %s non valide."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -525,6 +581,15 @@ msgstr "Kio"
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Échec du listage des configurations (%s)."
+
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+#, fuzzy
+msgid "MB"
+msgstr "Mio"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Vous avez peut-être oublié le séparateur '..' entre les numéros d'instantané."
@@ -567,6 +632,15 @@ msgstr "L'option --from n'est supportée que pour les instantanés de type singl
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "L'option --read-write n'est supportée que pour les instantanés de type single."
 
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+#, fuzzy
+msgid "PB"
+msgstr "Pio"
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "Pio"
@@ -589,6 +663,15 @@ msgstr "Instantané '%u' non trouvé."
 
 msgid "Snapshot is in use."
 msgstr "Instantané en cours d'utilisation."
+
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+#, fuzzy
+msgid "TB"
+msgstr "Tio"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
@@ -676,6 +759,15 @@ msgstr "Impossible de supprimer %s"
 #, c-format
 msgid "failed to modify %s"
 msgstr "Impossible de modifier %s"
+
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+#, fuzzy
+msgid "kB"
+msgstr "o"
 
 #, c-format
 msgid "modifying %s"

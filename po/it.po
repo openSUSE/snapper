@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 17:51+0200\n"
+"POT-Creation-Date: 2020-09-23 10:33+0200\n"
 "PO-Revision-Date: 2020-08-24 16:13+0000\n"
 "Last-Translator: Paolo Za <zapaolo@email.it>\n"
 "Language-Team: Italian <https://l10n.opensuse.org/projects/snapper/master/it/>\n"
@@ -44,6 +44,9 @@ msgstr "\t--diff-cmd <comando>\t\tComando utilizzato per confrontare i file."
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <opzioni>\tOpzioni supplementari trasmesse al comando diff."
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\tCrea un'istantanea dall'istantanea specificata."
 
@@ -70,6 +73,9 @@ msgstr "\t--no-dbus\t\t\tOpera senza DBus."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <file>\t\tSalva lo stato sul file."
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <numero>\t\tNumero della pre-istantanea corrispondente."
@@ -169,6 +175,10 @@ msgstr "\tsnapper xadiff <numero1>..<numero2> [vari file]"
 
 msgid "    Global options:"
 msgstr "    Opzioni globali:"
+
+#, fuzzy
+msgid "    Options for 'cleanup' command:"
+msgstr "    Opzioni per il comando 'create':"
 
 msgid "    Options for 'create' command:"
 msgstr "    Opzioni per il comando 'create':"
@@ -368,6 +378,13 @@ msgid "Configdata '%s' has empty key."
 msgstr "Il dato di configurazione '%s' ha la chiave vuota."
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "Creazione della configurazione fallita (%s)."
 
@@ -403,6 +420,15 @@ msgstr[1] "Eliminazione degli snapshot da %s:"
 msgid "Detecting filesystem type failed."
 msgstr "Rilevamento del tipo di file system fallito."
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+#, fuzzy
+msgid "EB"
+msgstr "EiB"
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr "EiB"
@@ -419,6 +445,18 @@ msgstr "Errore (%s)."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Errore nell'inizializzazione del gestore del file system."
+
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "creazione di %s fallita"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "creazione di %s fallita"
 
 msgid "Failed to set locale. Fix your system."
 msgstr "Impossibile impostare la localizzazione. Correggere il sistema."
@@ -437,6 +475,15 @@ msgstr "File '%s' non trovato."
 #, c-format
 msgid "Free space error (%s)."
 msgstr "Errore di spazio libero (%s)."
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+#, fuzzy
+msgid "GB"
+msgstr "GiB"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -457,20 +504,26 @@ msgid "Illegal snapshot."
 msgstr "Istantanea illegale."
 
 #, fuzzy, c-format
-#| msgid "Invalid ambit %s."
 msgid "Invalid ambit '%s'."
 msgstr "Ambito '%s' non valido."
 
 msgid "Invalid configdata."
 msgstr "Dati di configurazione non validi."
 
+#, fuzzy
+msgid "Invalid free-space value."
+msgstr "Sottovolume non valido."
+
 msgid "Invalid group."
 msgstr "Gruppo non valido."
 
 #, fuzzy, c-format
-#| msgid "Invalid machine readable format %s."
 msgid "Invalid machine readable format '%s'."
 msgstr "Formato leggibile dalla macchina %s non valido."
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "Ambito '%s' non valido."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -483,7 +536,6 @@ msgid "Invalid subvolume."
 msgstr "Sottovolume non valido."
 
 #, fuzzy, c-format
-#| msgid "Invalid table style %s."
 msgid "Invalid table style '%s'."
 msgstr "Stile tabella %s non valido."
 
@@ -501,6 +553,15 @@ msgstr "KiB"
 msgid "Listing configs failed (%s)."
 msgstr "Elenco dei file di configurazione fallito (%s)."
 
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+#, fuzzy
+msgid "MB"
+msgstr "MiB"
+
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "È possibile che si sia dimenticato il delimitatore '..' tra i numeri di snapshot."
 
@@ -517,7 +578,6 @@ msgid "Missing argument for global option '%s'."
 msgstr "Argomento mancante per l'opzione globale '%s'."
 
 #, fuzzy
-#| msgid "Missing command argument."
 msgid "Missing command option."
 msgstr "Argomento del comando mancante."
 
@@ -543,6 +603,15 @@ msgstr "Opzione --from supportata solo per istantanee di tipo singolo."
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Opzione --read-write supportata solo per istantanee di tipo singolo."
 
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+#, fuzzy
+msgid "PB"
+msgstr "PiB"
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -564,6 +633,15 @@ msgstr "Istantanea '%u' non trovata."
 
 msgid "Snapshot is in use."
 msgstr "L'istantanea è in uso."
+
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+#, fuzzy
+msgid "TB"
+msgstr "TiB"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "L'ambito può essere specificato manualmente usando l'opzione --ambit."
@@ -601,7 +679,6 @@ msgid "Unknown option '%s' for command '%s'."
 msgstr "Opzione '%s' sconosciuta per il comando '%s'."
 
 #, fuzzy, c-format
-#| msgid "Unknown command '%s'."
 msgid "Unknown type '%s'."
 msgstr "Comando '%s' sconosciuto."
 
@@ -647,6 +724,15 @@ msgstr "eliminazione di %s fallita"
 msgid "failed to modify %s"
 msgstr "modifica di %s fallita"
 
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+#, fuzzy
+msgid "kB"
+msgstr "B"
+
 #, c-format
 msgid "modifying %s"
 msgstr "modifica di %s"
@@ -655,9 +741,6 @@ msgid "nothing to do"
 msgstr "nessuna operazione da eseguire"
 
 #, fuzzy
-#| msgid ""
-#| "root argument can be used only together with no-dbus.\n"
-#| "Try 'snapper --help' for more information."
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr ""
 "L'argomento principale può essere utilizzato solo unitamente a no-dbus.\n"

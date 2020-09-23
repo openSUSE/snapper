@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 17:51+0200\n"
+"POT-Creation-Date: 2020-09-23 10:33+0200\n"
 "PO-Revision-Date: 2019-10-15 22:53+0000\n"
 "Last-Translator: scootergrisen <scootergrisen@gmail.com>\n"
 "Language-Team: Danish <https://l10n.opensuse.org/projects/snapper/master/da/>\n"
@@ -47,6 +47,9 @@ msgstr "\t--diff-cmd <kommando>\t\tKommando som bruges til at sammenligne filer.
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <tilvalg>\tEkstra tilvalg som sendes til diff-kommandoen."
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\tOpret et øjebliksbillede fra det angivne øjebliksbillede."
 
@@ -73,6 +76,9 @@ msgstr "\t--no-dbus\t\t\tArbejd uden DBus."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <file>\t\tGem status til fil."
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <nummer>\t\tAntal tilsvarende præ-øjebliksbillede."
@@ -172,6 +178,10 @@ msgstr "\tsnapper xadiff <nummer1>..<nummer2> [filer]"
 
 msgid "    Global options:"
 msgstr "    Globale tilvalg:"
+
+#, fuzzy
+msgid "    Options for 'cleanup' command:"
+msgstr "    Tilvalg for kommandoen \"create\":"
 
 msgid "    Options for 'create' command:"
 msgstr "    Tilvalg for kommandoen \"create\":"
@@ -370,6 +380,13 @@ msgid "Configdata '%s' has empty key."
 msgstr "Konfigurationsdata \"%s\" har tom nøgle."
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "Oprettelse af konfiguration mislykkedes (%s)."
 
@@ -405,6 +422,15 @@ msgstr[1] "Sletning af øjebliksbilleder fra %s:"
 msgid "Detecting filesystem type failed."
 msgstr "Detektion af filsystemtype mislykkedes."
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+#, fuzzy
+msgid "EB"
+msgstr "EiB"
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr "EiB"
@@ -422,6 +448,18 @@ msgstr "Fejl (%s)."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Kunne ikke initialisere filsystemhåndtering."
+
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "kunne ikke oprette %s"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "kunne ikke oprette %s"
 
 msgid "Failed to set locale. Fix your system."
 msgstr "Kunne ikke sætte lokalitet. Ret dit system."
@@ -441,6 +479,15 @@ msgstr "Filen \"%s\" blev ikke fundet."
 #, c-format
 msgid "Free space error (%s)."
 msgstr "Fejl om ledig plads (%s)."
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+#, fuzzy
+msgid "GB"
+msgstr "GiB"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -469,12 +516,20 @@ msgstr "Ugyldigt øjebliksbillede \"%s\"."
 msgid "Invalid configdata."
 msgstr "Ugyldige konfigurationsdata."
 
+#, fuzzy
+msgid "Invalid free-space value."
+msgstr "Ugyldigt underdiskområde."
+
 msgid "Invalid group."
 msgstr "Ugyldig gruppe."
 
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Ugyldig tabelstil %d."
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "Ugyldigt øjebliksbillede \"%s\"."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -503,6 +558,15 @@ msgstr "KiB"
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Oplistning af konfigurationer mislykkedes (%s)."
+
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+#, fuzzy
+msgid "MB"
+msgstr "MiB"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Måske glemte du afgrænseren '..' mellem øjebliksbilledsnumrene."
@@ -545,6 +609,15 @@ msgstr "Tilvalget --from understøttes kun af øjebliksbilleder af typen enkelt.
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Tilvalget --read-write understøttes kun af øjebliksbilleder af typen enkelt."
 
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+#, fuzzy
+msgid "PB"
+msgstr "PiB"
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -567,6 +640,15 @@ msgstr "Øjebliksbilledet \"%u\" blev ikke fundet."
 
 msgid "Snapshot is in use."
 msgstr "Øjebliksbilledet er i brug."
+
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+#, fuzzy
+msgid "TB"
+msgstr "TiB"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
@@ -648,6 +730,15 @@ msgstr "kunne ikke slette %s"
 #, c-format
 msgid "failed to modify %s"
 msgstr "kunne ikke ændre %s"
+
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+#, fuzzy
+msgid "kB"
+msgstr "B"
 
 #, c-format
 msgid "modifying %s"

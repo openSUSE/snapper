@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LCN (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 17:51+0200\n"
+"POT-Creation-Date: 2020-09-23 10:33+0200\n"
 "PO-Revision-Date: 2017-06-02 16:57+0000\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <https://l10n.opensuse.org/projects/snapper/master/lt/>\n"
@@ -50,6 +50,9 @@ msgstr ""
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr ""
 
@@ -75,6 +78,9 @@ msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr ""
 
 msgid "\t--output, -o <file>\t\tSave status to file."
+msgstr ""
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
 msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
@@ -175,6 +181,9 @@ msgstr ""
 
 msgid "    Global options:"
 msgstr "    Visuotinės parinktys:"
+
+msgid "    Options for 'cleanup' command:"
+msgstr ""
 
 msgid "    Options for 'create' command:"
 msgstr ""
@@ -381,6 +390,13 @@ msgid "Configdata '%s' has empty key."
 msgstr ""
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr ""
 
@@ -419,6 +435,14 @@ msgstr[3] "Klaida bandant pašalinti momentinę kopiją."
 msgid "Detecting filesystem type failed."
 msgstr "Nepavyko nustatyti rinkmenų sistemos tipo."
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+msgid "EB"
+msgstr ""
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr ""
@@ -438,6 +462,18 @@ msgstr "Skaitymo/rašymo klaida."
 msgid "Failed to initialize filesystem handler."
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "nepavyko sukurti %s"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "nepavyko sukurti %s"
+
 msgid "Failed to set locale. Fix your system."
 msgstr ""
 
@@ -455,6 +491,14 @@ msgstr "Rinkmena „%s“ nerasta."
 #, fuzzy, c-format
 msgid "Free space error (%s)."
 msgstr "Skaitymo/rašymo klaida."
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+msgid "GB"
+msgstr ""
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -484,12 +528,20 @@ msgid "Invalid configdata."
 msgstr "Netinkami naudotojo meta duomenys."
 
 #, fuzzy
+msgid "Invalid free-space value."
+msgstr "Netinkamas potomis."
+
+#, fuzzy
 msgid "Invalid group."
 msgstr "Netinkamas potomis."
 
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Netinkamas lentelės stilius %d."
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "Netinkama momentinė kopija „%s“."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -518,6 +570,14 @@ msgstr ""
 
 #, c-format
 msgid "Listing configs failed (%s)."
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+msgid "MB"
 msgstr ""
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
@@ -561,6 +621,14 @@ msgstr ""
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr ""
 
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+msgid "PB"
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr ""
@@ -583,6 +651,14 @@ msgstr "Rinkmena „%s“ nerasta."
 
 msgid "Snapshot is in use."
 msgstr "Momentinė kopija naudojama."
+
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+msgid "TB"
+msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
@@ -664,6 +740,14 @@ msgstr "nepavyko pašalinti %s"
 #, c-format
 msgid "failed to modify %s"
 msgstr "nepavyko pakeisti %s"
+
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+msgid "kB"
+msgstr ""
 
 #, c-format
 msgid "modifying %s"
