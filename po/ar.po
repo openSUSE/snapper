@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 10:33+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2020-05-02 19:50+0000\n"
 "Last-Translator: mohammad alhargan <malham1@gmail.com>\n"
 "Language-Team: Arabic <https://l10n.opensuse.org/projects/snapper/master/ar/>\n"
@@ -17,6 +17,9 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 "X-Generator: Weblate 3.6.1\n"
 
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr "\t--all-configs، -a\t\tقائمة باللقطات من كل التكوينات التي يمكن الوصول إليها."
+
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr ""
 
@@ -25,6 +28,19 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tتنظيف خوارزمية اللقط
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tتنظيف خوارزمية اللقطة."
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <command>\t\tتشغيل الامر وإنشاء لقطات قبل وبعد."
@@ -43,6 +59,9 @@ msgstr "\t--description, -d <description>\tوصف اللقطة."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\tأمر مستخدم لمقارنة الملفات."
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-used-space\t\tتعطيل عرض المساحة المستخدمة."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions، -x <options>\tخيارات إضافية تم تمريرها إلى أمر diff."
@@ -118,6 +137,9 @@ msgstr "\t--template, -t <name>\t\tاسم قالب الإعداد للاستخد
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <type>\t\tنوع اللقطة."
 
+msgid "\t--type, -t <type>\t\tType of snapshots to list."
+msgstr "\t--type, -t <type>\t\tنوع اللقطة للقائمة."
+
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <userdata>\tمعلومات المستخدم للقطة."
 
@@ -150,6 +172,15 @@ msgstr "\tالملتقط إعداد-الحذف"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tإختلافات الملتقط <number1>..<number2> [ملف]"
+
+msgid "\tsnapper get-config"
+msgstr "\tضبط تهيئة الملتقط"
+
+msgid "\tsnapper list"
+msgstr "\tقائمة الملتقط"
+
+msgid "\tsnapper list-configs"
+msgstr "\tقائمة الملتقط-إعداد"
 
 msgid "\tsnapper modify <number>"
 msgstr "\tتعديل ملتقط<number>"
@@ -197,6 +228,19 @@ msgstr "    خيارات الأمر 'delete':"
 msgid "    Options for 'diff' command:"
 msgstr "    خيارات الأمر 'diff':"
 
+#, fuzzy
+msgid "    Options for 'get-config' command:"
+msgstr "    الأمر 'إنشاء تعديل' خيارات:"
+
+msgid "    Options for 'list' command:"
+msgstr "    أمر 'قائمة' خيارات:"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+
 msgid "    Options for 'modify' command:"
 msgstr "    أمر 'تعديل' خيارات:"
 
@@ -230,6 +274,15 @@ msgstr "  إعداد الحذف:"
 msgid "  Delete snapshot:"
 msgstr "  حذف اللقطات:"
 
+msgid "  Get config:"
+msgstr "  إنشاء تهيئة:"
+
+msgid "  List configs:"
+msgstr "  قائمة إعدادات:"
+
+msgid "  List snapshots:"
+msgstr "  قائمة اللقطات:"
+
 msgid "  Modify snapshot:"
 msgstr "  تعديل لقطة:"
 
@@ -251,6 +304,9 @@ msgstr "  الغ تحميل لقطة:"
 msgid "  Undo changes:"
 msgstr "  التراجع عن التغييرات:"
 
+msgid "#"
+msgstr "#"
+
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
@@ -271,6 +327,9 @@ msgstr "(لقطة %d.)"
 
 msgid "ACL error."
 msgstr "خطأ ACL."
+
+msgid "Active"
+msgstr ""
 
 msgid "Active snapshot is already default snapshot."
 msgstr ""
@@ -301,6 +360,9 @@ msgstr ""
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
+msgid "Cleanup"
+msgstr "تنظيف"
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "يحتاج الأمر 'تنظيف' لأحد الوسائط."
 
@@ -322,8 +384,17 @@ msgstr "لا يأخذ الأمر 'حذف إعداد' الوسائط."
 msgid "Command 'diff' needs at least one argument."
 msgstr "يحتاج الأمر 'اختلاف' وسيطة واحدة على الأقل."
 
+msgid "Command 'get-config' does not take arguments."
+msgstr "لا يأخذ الأمر 'ضبط التهيئة' الوسائط."
+
 msgid "Command 'help' does not take arguments."
 msgstr "لا يأخذ الأمر 'تعليمات' الوسائط."
+
+msgid "Command 'list' does not take arguments."
+msgstr "لا يأخذ الأمر 'قائمة' الوسائط."
+
+msgid "Command 'list-configs' does not take arguments."
+msgstr "لا يأخذ الأمر 'إعداد القائمة' الوسائط."
 
 msgid "Command 'modify' needs at least one argument."
 msgstr "يحتاج الأمر 'تعديل' وسيطة واحدة على الأقل."
@@ -358,6 +429,9 @@ msgstr "يحتاج الأمر 'تراجع عن التغييرات' وسيطة و
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "يحتاج الأمر 'xadiff' وسيطة واحدة على الأقل."
+
+msgid "Config"
+msgstr "إعداد"
 
 #, c-format
 msgid "Config '%s' is invalid."
@@ -408,6 +482,12 @@ msgstr "إنشاء لقطة للقراءة والكتابة من اللقطة %d
 msgid "Creating snapshot failed."
 msgstr "فشل إنشاء اللقطة."
 
+msgid "Date"
+msgstr "التاريخ"
+
+msgid "Default"
+msgstr ""
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "فشل حذف الإعداد (%s)."
@@ -424,6 +504,9 @@ msgstr[2] "حذف لقطتان من %s:"
 msgstr[3] "حذف اللقطات من %s:"
 msgstr[4] "حذف اللقطات من %s:"
 msgstr[5] "حذف اللقطات من %s:"
+
+msgid "Description"
+msgstr "الوصف"
 
 msgid "Detecting filesystem type failed."
 msgstr "فشل الكشف عن نوع نظام الملفات."
@@ -515,6 +598,10 @@ msgstr "لقطة غير مسموح بها."
 msgid "Invalid ambit '%s'."
 msgstr "لقطة غير صالحة '%s'."
 
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "لقطة غير صالحة '%s'."
+
 msgid "Invalid configdata."
 msgstr "بيانات إعداد غير صالحة."
 
@@ -552,6 +639,9 @@ msgstr "المستخدم غير صالح."
 
 msgid "Invalid userdata."
 msgstr "بيانات المستخدم غير صالحة."
+
+msgid "Key"
+msgstr "مفتاح"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -624,6 +714,18 @@ msgstr "PiB"
 msgid "PiB"
 msgstr "PiB"
 
+msgid "Post #"
+msgstr "قياس ورق #"
+
+msgid "Post Date"
+msgstr "تاريخ المشاركة"
+
+msgid "Pre #"
+msgstr "ما قبل #"
+
+msgid "Pre Date"
+msgstr "ما قبل التاريخ"
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "خطأ في الحصة (%s)."
@@ -641,6 +743,9 @@ msgstr "اللقطة '%u' لم يتم العثور على."
 
 msgid "Snapshot is in use."
 msgstr "اللقطة قيد الاستخدام."
+
+msgid "Subvolume"
+msgstr "الحجم الفرعي"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -666,6 +771,9 @@ msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "جرب 'التقاط --help' لمزيد من المعلومات."
+
+msgid "Type"
+msgstr "النوع"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -700,6 +808,15 @@ msgstr ""
 msgid "Use an integer number from %d to %d."
 msgstr "استخدم رقم صحيح من %d إلى %d."
 
+msgid "Used Space"
+msgstr "المساحة المستخدمة"
+
+msgid "User"
+msgstr "مستخدم"
+
+msgid "Userdata"
+msgstr "بيانات المستخدم"
+
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
 msgstr "معلومات المستخدم '%s' لا تتضمن علامة '=' فيها."
@@ -707,6 +824,9 @@ msgstr "معلومات المستخدم '%s' لا تتضمن علامة '=' في
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "معلوات المستخدم '%s' تحتوي مفاتيح خالية."
+
+msgid "Value"
+msgstr "القيمة"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -745,6 +865,9 @@ msgstr "B"
 msgid "modifying %s"
 msgstr "تعديل %s"
 
+msgid "no"
+msgstr ""
+
 msgid "nothing to do"
 msgstr "لا يوجد ما يمكن فعله"
 
@@ -755,98 +878,14 @@ msgstr "يمكن استخدام الوسيطة الجذر فقط في حالة �
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "استخدام: اللقطة [--global-options] <command> [--command-options] [أمر-وسائط]"
 
+msgid "yes"
+msgstr ""
+
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "نوع اللقطة غير معروف."
 
-#~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-#~ msgstr "\t--all-configs، -a\t\tقائمة باللقطات من كل التكوينات التي يمكن الوصول إليها."
-
-#~ msgid "\t--disable-used-space\t\tDisable showing used space."
-#~ msgstr "\t--disable-used-space\t\tتعطيل عرض المساحة المستخدمة."
-
-#~ msgid "\t--type, -t <type>\t\tType of snapshots to list."
-#~ msgstr "\t--type, -t <type>\t\tنوع اللقطة للقائمة."
-
-#~ msgid "\tsnapper get-config"
-#~ msgstr "\tضبط تهيئة الملتقط"
-
-#~ msgid "\tsnapper list"
-#~ msgstr "\tقائمة الملتقط"
-
-#~ msgid "\tsnapper list-configs"
-#~ msgstr "\tقائمة الملتقط-إعداد"
-
-#~ msgid "    Options for 'list' command:"
-#~ msgstr "    أمر 'قائمة' خيارات:"
-
-#~ msgid "  Get config:"
-#~ msgstr "  إنشاء تهيئة:"
-
-#~ msgid "  List configs:"
-#~ msgstr "  قائمة إعدادات:"
-
-#~ msgid "  List snapshots:"
-#~ msgstr "  قائمة اللقطات:"
-
-#~ msgid "#"
-#~ msgstr "#"
-
-#~ msgid "Cleanup"
-#~ msgstr "تنظيف"
-
-#~ msgid "Command 'get-config' does not take arguments."
-#~ msgstr "لا يأخذ الأمر 'ضبط التهيئة' الوسائط."
-
-#~ msgid "Command 'list' does not take arguments."
-#~ msgstr "لا يأخذ الأمر 'قائمة' الوسائط."
-
-#~ msgid "Command 'list-configs' does not take arguments."
-#~ msgstr "لا يأخذ الأمر 'إعداد القائمة' الوسائط."
-
-#~ msgid "Config"
-#~ msgstr "إعداد"
-
-#~ msgid "Date"
-#~ msgstr "التاريخ"
-
-#~ msgid "Description"
-#~ msgstr "الوصف"
-
-#~ msgid "Key"
-#~ msgstr "مفتاح"
-
-#~ msgid "Post #"
-#~ msgstr "قياس ورق #"
-
-#~ msgid "Post Date"
-#~ msgstr "تاريخ المشاركة"
-
-#~ msgid "Pre #"
-#~ msgstr "ما قبل #"
-
-#~ msgid "Pre Date"
-#~ msgstr "ما قبل التاريخ"
-
-#~ msgid "Subvolume"
-#~ msgstr "الحجم الفرعي"
-
-#~ msgid "Type"
-#~ msgstr "النوع"
-
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "نوع اللقطات غير معروف."
-
-#~ msgid "Used Space"
-#~ msgstr "المساحة المستخدمة"
-
-#~ msgid "User"
-#~ msgstr "مستخدم"
-
-#~ msgid "Userdata"
-#~ msgstr "بيانات المستخدم"
-
-#~ msgid "Value"
-#~ msgstr "القيمة"
 
 #, fuzzy
 #~ msgid "Quota failure (%s)."

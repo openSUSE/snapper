@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 10:33+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2020-09-16 18:48+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
@@ -17,6 +17,9 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Weblate 3.6.1\n"
 
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr "\t--all-configs, -a\t\tZoznam snímok zo všetkých dostupných konfigurácií."
+
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr "\t--ambit, -a oblasť\t\tPracujte v stanovenej oblasti."
 
@@ -25,6 +28,19 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tUpratovací algoritmus pre snímku."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\t\tUpratovací algoritmus pre snímky."
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <príkaz>\t\tSpustí príkaz a vytvorí snímky pred a po snímky."
@@ -43,6 +59,9 @@ msgstr "\t--description, -d <popis>\tPopis pre snímky."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\tPríkaz slúži na porovnávanie súborov."
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-used-space\t\tZakázať ukazovanie použitého miesta."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <voľby>\tĎalšie voľby odovzdané príkazu diff."
@@ -116,6 +135,9 @@ msgstr "\t--template, -t <name>\t\tNázov konfiguračnej šablóny, ktorá sa po
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <typ>\t\t\t\tTyp pre snímku."
 
+msgid "\t--type, -t <type>\t\tType of snapshots to list."
+msgstr "\t--type, -t <typ>\t\tTyp snímok pre výpis."
+
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <používateľské-údaje>\tPoužívateľské údaje pre snímku."
 
@@ -148,6 +170,15 @@ msgstr "\tsnapper delete-config"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <číslo1>..<číslo2> [súbory]"
+
+msgid "\tsnapper get-config"
+msgstr "\tsnapper get-config"
+
+msgid "\tsnapper list"
+msgstr "\tsnapper list"
+
+msgid "\tsnapper list-configs"
+msgstr "\tsnapper list-configs"
 
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <číslo>"
@@ -195,6 +226,19 @@ msgstr "    Voľby pre príkaz 'delete':"
 msgid "    Options for 'diff' command:"
 msgstr "    Voľby pre príkaz 'diff':"
 
+#, fuzzy
+msgid "    Options for 'get-config' command:"
+msgstr "    Voľby pre príkaz 'create-config':"
+
+msgid "    Options for 'list' command:"
+msgstr "    Voľby pre príkaz 'list':"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+
 msgid "    Options for 'modify' command:"
 msgstr "    Voľby pre príkaz 'modify':"
 
@@ -228,6 +272,15 @@ msgstr "  Vymazať konfiguráciu:"
 msgid "  Delete snapshot:"
 msgstr "  Zmazať snímku:"
 
+msgid "  Get config:"
+msgstr "  Získať konfiguráciu:"
+
+msgid "  List configs:"
+msgstr "  Zoznam konfigurácií:"
+
+msgid "  List snapshots:"
+msgstr "  Zoznam snímok:"
+
 msgid "  Modify snapshot:"
 msgstr "  Upraviť snímku:"
 
@@ -249,6 +302,9 @@ msgstr "  Odpojiť snímku:"
 msgid "  Undo changes:"
 msgstr "  Vrátiť späť zmeny:"
 
+msgid "#"
+msgstr "#"
+
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
@@ -269,6 +325,9 @@ msgstr "(Snímka %d.)"
 
 msgid "ACL error."
 msgstr "ACL chyba."
+
+msgid "Active"
+msgstr ""
 
 msgid "Active snapshot is already default snapshot."
 msgstr "Aktívna snímka je už predvolená snímka."
@@ -299,6 +358,9 @@ msgstr "Nie je možné zistiť oblasť, pretože predvolený podzväzok nie je z
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Nie je možné vykonať návrat späť, pretože predvolený podzväzok nie je známy."
 
+msgid "Cleanup"
+msgstr "Upratovanie"
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Príkaz 'cleanup' potrebuje jeden argument."
 
@@ -320,8 +382,17 @@ msgstr "Príkaz 'delete-config' neprijíma argumenty."
 msgid "Command 'diff' needs at least one argument."
 msgstr "Príkaz 'diff' potrebuje aspoň jeden argument."
 
+msgid "Command 'get-config' does not take arguments."
+msgstr "Príkaz 'get-config' neprijíma argumenty."
+
 msgid "Command 'help' does not take arguments."
 msgstr "Príkaz 'help' neprijíma argumenty."
+
+msgid "Command 'list' does not take arguments."
+msgstr "Príkaz 'list' neprijíma argumenty."
+
+msgid "Command 'list-configs' does not take arguments."
+msgstr "Príkaz 'list-configs' neprijíma argumenty."
 
 msgid "Command 'modify' needs at least one argument."
 msgstr "Príkaz 'modify' potrebuje aspoň jeden argument."
@@ -356,6 +427,9 @@ msgstr "Príkaz 'undochange' potrebuje aspoň jeden argument."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Príkaz 'xadiff' potrebuje aspoň jeden argument."
+
+msgid "Config"
+msgstr "Konfigurácia"
 
 #, c-format
 msgid "Config '%s' is invalid."
@@ -406,6 +480,12 @@ msgstr "Vytvorenie snímky zo snímky %d na čítanie a zápis."
 msgid "Creating snapshot failed."
 msgstr "Vytvorenie snímky zlyhalo."
 
+msgid "Date"
+msgstr "Dátum"
+
+msgid "Default"
+msgstr ""
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Vymazanie konfigurácie zlyhalo (%s)."
@@ -419,6 +499,9 @@ msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Vymazanie snímky z %s:"
 msgstr[1] "Vymazanie snímok z %s:"
 msgstr[2] "Vymazanie snímok z %s:"
+
+msgid "Description"
+msgstr "Popis"
 
 msgid "Detecting filesystem type failed."
 msgstr "Detekcia typu súborového systému zlyhala."
@@ -514,6 +597,10 @@ msgstr "Nepovolená snímka."
 msgid "Invalid ambit '%s'."
 msgstr "Neplatná oblasť '%s'."
 
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Neplatná oblasť '%s'."
+
 msgid "Invalid configdata."
 msgstr "Neplatné konfiguračné údaje."
 
@@ -551,6 +638,10 @@ msgstr "Neplatný používateľ."
 
 msgid "Invalid userdata."
 msgstr "Neplatné používateľské údaje."
+
+# KE
+msgid "Key"
+msgstr "Kľúč"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -623,6 +714,18 @@ msgstr "PiB"
 msgid "PiB"
 msgstr "PiB"
 
+msgid "Post #"
+msgstr "Po #"
+
+msgid "Post Date"
+msgstr "Dátum po"
+
+msgid "Pre #"
+msgstr "Pred #"
+
+msgid "Pre Date"
+msgstr "Dátum pred"
+
 # error box title
 #, c-format
 msgid "Quota error (%s)."
@@ -641,6 +744,9 @@ msgstr "Snímka '%u' nebola nájdená."
 
 msgid "Snapshot is in use."
 msgstr "Snímka sa používa."
+
+msgid "Subvolume"
+msgstr "Podzväzok"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -666,6 +772,9 @@ msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Skúste 'snapper --help' pre viac informácií."
+
+msgid "Type"
+msgstr "Typ"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -700,6 +809,15 @@ msgstr "Použiť %1$s."
 msgid "Use an integer number from %d to %d."
 msgstr "Použite celé číslo od %d do %d."
 
+msgid "Used Space"
+msgstr "Použité miesto"
+
+msgid "User"
+msgstr "Používateľ"
+
+msgid "Userdata"
+msgstr "Používateľské údaje"
+
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
 msgstr "Používateľské údaje '%s' nezahŕňajú znamienko '='."
@@ -707,6 +825,9 @@ msgstr "Používateľské údaje '%s' nezahŕňajú znamienko '='."
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "Používateľské údaje '%s' majú prázdny kľúč."
+
+msgid "Value"
+msgstr "Hodnota"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -745,6 +866,9 @@ msgstr "B"
 msgid "modifying %s"
 msgstr "upravenie %s"
 
+msgid "no"
+msgstr ""
+
 msgid "nothing to do"
 msgstr "nie je čo vykonať"
 
@@ -753,6 +877,9 @@ msgstr "Argument root možno použiť len spoločne s no-dbus.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "použitie: snapper [--globálne-voľby] <príkaz> [--voľby-príkazu] [argumenty-príkazu]"
+
+msgid "yes"
+msgstr ""
 
 #, c-format
 #~ msgid "Invalid machine readable format %s."
@@ -769,96 +896,8 @@ msgstr "použitie: snapper [--globálne-voľby] <príkaz> [--voľby-príkazu] [a
 #~ msgid "Use %s, %s or %s."
 #~ msgstr "Použite %s, %s alebo %s."
 
-#~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-#~ msgstr "\t--all-configs, -a\t\tZoznam snímok zo všetkých dostupných konfigurácií."
-
-#~ msgid "\t--disable-used-space\t\tDisable showing used space."
-#~ msgstr "\t--disable-used-space\t\tZakázať ukazovanie použitého miesta."
-
-#~ msgid "\t--type, -t <type>\t\tType of snapshots to list."
-#~ msgstr "\t--type, -t <typ>\t\tTyp snímok pre výpis."
-
-#~ msgid "\tsnapper get-config"
-#~ msgstr "\tsnapper get-config"
-
-#~ msgid "\tsnapper list"
-#~ msgstr "\tsnapper list"
-
-#~ msgid "\tsnapper list-configs"
-#~ msgstr "\tsnapper list-configs"
-
-#~ msgid "    Options for 'list' command:"
-#~ msgstr "    Voľby pre príkaz 'list':"
-
-#~ msgid "  Get config:"
-#~ msgstr "  Získať konfiguráciu:"
-
-#~ msgid "  List configs:"
-#~ msgstr "  Zoznam konfigurácií:"
-
-#~ msgid "  List snapshots:"
-#~ msgstr "  Zoznam snímok:"
-
-#~ msgid "#"
-#~ msgstr "#"
-
-#~ msgid "Cleanup"
-#~ msgstr "Upratovanie"
-
-#~ msgid "Command 'get-config' does not take arguments."
-#~ msgstr "Príkaz 'get-config' neprijíma argumenty."
-
-#~ msgid "Command 'list' does not take arguments."
-#~ msgstr "Príkaz 'list' neprijíma argumenty."
-
-#~ msgid "Command 'list-configs' does not take arguments."
-#~ msgstr "Príkaz 'list-configs' neprijíma argumenty."
-
-#~ msgid "Config"
-#~ msgstr "Konfigurácia"
-
-#~ msgid "Date"
-#~ msgstr "Dátum"
-
-#~ msgid "Description"
-#~ msgstr "Popis"
-
-# KE
-#~ msgid "Key"
-#~ msgstr "Kľúč"
-
-#~ msgid "Post #"
-#~ msgstr "Po #"
-
-#~ msgid "Post Date"
-#~ msgstr "Dátum po"
-
-#~ msgid "Pre #"
-#~ msgstr "Pred #"
-
-#~ msgid "Pre Date"
-#~ msgstr "Dátum pred"
-
-#~ msgid "Subvolume"
-#~ msgstr "Podzväzok"
-
-#~ msgid "Type"
-#~ msgstr "Typ"
-
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Neznámy typ snímok."
-
-#~ msgid "Used Space"
-#~ msgstr "Použité miesto"
-
-#~ msgid "User"
-#~ msgstr "Používateľ"
-
-#~ msgid "Userdata"
-#~ msgstr "Používateľské údaje"
-
-#~ msgid "Value"
-#~ msgstr "Hodnota"
 
 #~ msgid "Quota failure (%s)."
 #~ msgstr "Zlyhanie kvóty (%s)."

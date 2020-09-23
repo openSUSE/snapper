@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 10:33+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Robert Taisz <robert.taisz@emerald.hu>\n"
 "Language-Team: Hungarian <https://l10n.opensuse.org/projects/snapper/master/hu/>\n"
@@ -15,6 +15,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.3\n"
 
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr "\t--all-configs, -a\t\tA pillanatképek listázása minden elérhető konfigurációból."
+
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr ""
 
@@ -24,6 +27,19 @@ msgstr "\t--cleanup-algorithm, -c <algoritmus>\tPillanatkép tisztítási algori
 # SLE12
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algoritmus>\tKarbantartási algoritmus a pillanatfelvételekhez."
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <parancs>\t\tFuttassa a parancsot, és készítsen pillanatképet előtte, majd utána."
@@ -43,6 +59,9 @@ msgstr "\t--description, -d <leírás>\tPillanatfelvételekhez tartozó leírás
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <parancs>\t\tA fájlok összehasonlítására használt parancs."
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-used-space\t\tFelhasznált terület megjelenítésének letiltása."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <beállítások>\tA diff parancsnak átadott további beállítások."
@@ -119,6 +138,9 @@ msgstr "\t--template, -t <név>\t\tFelhasznált beállítássablon neve."
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <típus>\t\tPillanatkép típusa."
 
+msgid "\t--type, -t <type>\t\tType of snapshots to list."
+msgstr "\t--type, -t <típus>\t\tPillanatképtípusok listázása."
+
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <userdata>\tPillanatkép userdata."
 
@@ -153,6 +175,16 @@ msgstr "\tsnapper delete-config"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <szám1>..<szám2> [fájlok]"
+
+# SLE12
+msgid "\tsnapper get-config"
+msgstr "\tsnapper get-config"
+
+msgid "\tsnapper list"
+msgstr "\tsnapper list"
+
+msgid "\tsnapper list-configs"
+msgstr "\tsnapper list-configs"
 
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <szám>"
@@ -204,6 +236,19 @@ msgstr "    A 'delete' parancs beállításai:"
 msgid "    Options for 'diff' command:"
 msgstr "    'diff' parancs kapcsolói:"
 
+#, fuzzy
+msgid "    Options for 'get-config' command:"
+msgstr "    'create-config' parancs kapcsolói:"
+
+msgid "    Options for 'list' command:"
+msgstr "    'list' parancs kapcsolói:"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+
 msgid "    Options for 'modify' command:"
 msgstr "    'modify' parancs kapcsolói:"
 
@@ -238,6 +283,16 @@ msgstr "  Beállítás törlése:"
 msgid "  Delete snapshot:"
 msgstr "  Pillanatkép törlése:"
 
+# SLE12
+msgid "  Get config:"
+msgstr "  Beállítások beolvasása:"
+
+msgid "  List configs:"
+msgstr "  Beállítások listázása:"
+
+msgid "  List snapshots:"
+msgstr "  Pillanatképek listázása:"
+
 msgid "  Modify snapshot:"
 msgstr "  Pillanatkép módosítása:"
 
@@ -261,6 +316,9 @@ msgstr "  Pillanatkép leválasztása:"
 msgid "  Undo changes:"
 msgstr "  Változások visszavonása:"
 
+msgid "#"
+msgstr "#"
+
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
@@ -283,6 +341,9 @@ msgstr "(%d. pillanatkép)"
 # SLE12
 msgid "ACL error."
 msgstr "ACL-hiba."
+
+msgid "Active"
+msgstr ""
 
 msgid "Active snapshot is already default snapshot."
 msgstr ""
@@ -313,6 +374,9 @@ msgstr ""
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
+msgid "Cleanup"
+msgstr "Tisztítás"
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "A 'cleanup' parancshoz meg kell adni egy paraméter."
 
@@ -334,8 +398,18 @@ msgstr "A 'delete-configs' parancs nem értelmezi a paramétereket."
 msgid "Command 'diff' needs at least one argument."
 msgstr "A 'diff' parancshoz meg kell adni legalább egy paraméter."
 
+# SLE12
+msgid "Command 'get-config' does not take arguments."
+msgstr "A „get-config” parancshoz nem lehet megadni argumentumot."
+
 msgid "Command 'help' does not take arguments."
 msgstr "A 'help' parancs nem értelmezi a paramétereket."
+
+msgid "Command 'list' does not take arguments."
+msgstr "A 'list' parancs nem értelmezi a paramétereket."
+
+msgid "Command 'list-configs' does not take arguments."
+msgstr "A 'list-configs' parancs nem értelmezi a paramétereket."
 
 msgid "Command 'modify' needs at least one argument."
 msgstr "A 'modify' parancshoz meg kell adni legalább paramétert."
@@ -374,6 +448,9 @@ msgstr "A 'undochange parancshoz meg kell adni legalább egy paraméter."
 # SLE12
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "A 'xadiff' parancshoz legalább egy argumentumot meg kell adni."
+
+msgid "Config"
+msgstr "Beállítás"
 
 #, c-format
 msgid "Config '%s' is invalid."
@@ -431,6 +508,12 @@ msgstr "Csak olvasható pillanatkép létrehozása a(z) %d pillanatképről."
 msgid "Creating snapshot failed."
 msgstr "A pillanatkép létrehozása sikertelen."
 
+msgid "Date"
+msgstr "Dátum"
+
+msgid "Default"
+msgstr ""
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "A beállítás törlése sikertelen (%s)."
@@ -443,6 +526,9 @@ msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Pillanatkép törlése - %s:"
 msgstr[1] "Pillanatképek törlése - %s:"
+
+msgid "Description"
+msgstr "Leírás"
 
 msgid "Detecting filesystem type failed."
 msgstr "A fájlrendszer típusának felismerése sikertelen."
@@ -538,6 +624,10 @@ msgstr "Érvénytelen pillanatkép."
 msgid "Invalid ambit '%s'."
 msgstr "Érvénytelen pillanatkép: '%s'."
 
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Érvénytelen pillanatkép: '%s'."
+
 # SLE12
 msgid "Invalid configdata."
 msgstr "Érvénytelen beállításadatok."
@@ -578,6 +668,10 @@ msgstr "Érvénytelen felhasználó."
 
 msgid "Invalid userdata."
 msgstr "Érvénytelen userdata."
+
+# SLE12
+msgid "Key"
+msgstr "Kulcs"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -650,6 +744,18 @@ msgstr "PiB"
 msgid "PiB"
 msgstr "PiB"
 
+msgid "Post #"
+msgstr "Utáni #"
+
+msgid "Post Date"
+msgstr "Bejegyzés dátuma"
+
+msgid "Pre #"
+msgstr "Előtti #"
+
+msgid "Pre Date"
+msgstr "Dátum"
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Kvótahiba (%s)."
@@ -668,6 +774,9 @@ msgstr "A(z) '%u' pillanatkép nem található."
 
 msgid "Snapshot is in use."
 msgstr "A pillanatkép használatban van."
+
+msgid "Subvolume"
+msgstr "Alkötet"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -693,6 +802,9 @@ msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "További információ a 'snapper --help' parancs segítségével érhető el."
+
+msgid "Type"
+msgstr "Típus"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -728,6 +840,15 @@ msgstr ""
 msgid "Use an integer number from %d to %d."
 msgstr "Használjon %d és %d közötti egész számot."
 
+msgid "Used Space"
+msgstr "Használt terület"
+
+msgid "User"
+msgstr "Felhasználó"
+
+msgid "Userdata"
+msgstr "Felhasználói adatok"
+
 # SLE12
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
@@ -737,6 +858,9 @@ msgstr "A(z) '%s' felhasználói adatai között nem található meg a '=' jel."
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "A(z) '%s' felhasználói adatokhoz üres kulcs tartozik."
+
+msgid "Value"
+msgstr "Érték"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -775,6 +899,9 @@ msgstr "bájt"
 msgid "modifying %s"
 msgstr "%s módosítása"
 
+msgid "no"
+msgstr ""
+
 msgid "nothing to do"
 msgstr "nincs teendő"
 
@@ -785,102 +912,14 @@ msgstr "A root argumentum csak a no-dbus beállítással együtt használható."
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "használat: snapper [--global-options] <parancs> [--command-options] [command-arguments]"
 
+msgid "yes"
+msgstr ""
+
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "Ismeretlen típusú pillanatkép."
 
-#~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-#~ msgstr "\t--all-configs, -a\t\tA pillanatképek listázása minden elérhető konfigurációból."
-
-#~ msgid "\t--disable-used-space\t\tDisable showing used space."
-#~ msgstr "\t--disable-used-space\t\tFelhasznált terület megjelenítésének letiltása."
-
-#~ msgid "\t--type, -t <type>\t\tType of snapshots to list."
-#~ msgstr "\t--type, -t <típus>\t\tPillanatképtípusok listázása."
-
-# SLE12
-#~ msgid "\tsnapper get-config"
-#~ msgstr "\tsnapper get-config"
-
-#~ msgid "\tsnapper list"
-#~ msgstr "\tsnapper list"
-
-#~ msgid "\tsnapper list-configs"
-#~ msgstr "\tsnapper list-configs"
-
-#~ msgid "    Options for 'list' command:"
-#~ msgstr "    'list' parancs kapcsolói:"
-
-# SLE12
-#~ msgid "  Get config:"
-#~ msgstr "  Beállítások beolvasása:"
-
-#~ msgid "  List configs:"
-#~ msgstr "  Beállítások listázása:"
-
-#~ msgid "  List snapshots:"
-#~ msgstr "  Pillanatképek listázása:"
-
-#~ msgid "#"
-#~ msgstr "#"
-
-#~ msgid "Cleanup"
-#~ msgstr "Tisztítás"
-
-# SLE12
-#~ msgid "Command 'get-config' does not take arguments."
-#~ msgstr "A „get-config” parancshoz nem lehet megadni argumentumot."
-
-#~ msgid "Command 'list' does not take arguments."
-#~ msgstr "A 'list' parancs nem értelmezi a paramétereket."
-
-#~ msgid "Command 'list-configs' does not take arguments."
-#~ msgstr "A 'list-configs' parancs nem értelmezi a paramétereket."
-
-#~ msgid "Config"
-#~ msgstr "Beállítás"
-
-#~ msgid "Date"
-#~ msgstr "Dátum"
-
-#~ msgid "Description"
-#~ msgstr "Leírás"
-
-# SLE12
-#~ msgid "Key"
-#~ msgstr "Kulcs"
-
-#~ msgid "Post #"
-#~ msgstr "Utáni #"
-
-#~ msgid "Post Date"
-#~ msgstr "Bejegyzés dátuma"
-
-#~ msgid "Pre #"
-#~ msgstr "Előtti #"
-
-#~ msgid "Pre Date"
-#~ msgstr "Dátum"
-
-#~ msgid "Subvolume"
-#~ msgstr "Alkötet"
-
-#~ msgid "Type"
-#~ msgstr "Típus"
-
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Ismeretlen típusú pillanatképek."
-
-#~ msgid "Used Space"
-#~ msgstr "Használt terület"
-
-#~ msgid "User"
-#~ msgstr "Felhasználó"
-
-#~ msgid "Userdata"
-#~ msgstr "Felhasználói adatok"
-
-#~ msgid "Value"
-#~ msgstr "Érték"
 
 # SLE12
 #~ msgid "Quota failure (%s)."

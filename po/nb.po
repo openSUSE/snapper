@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 10:33+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2013-10-04 18:20+0200\n"
 "Last-Translator: Olav Pettershagen <olpetter@bbnett.no>\n"
 "Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
@@ -18,6 +18,9 @@ msgstr ""
 "X-Generator: Lokalize 1.5\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr ""
+
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr ""
 
@@ -27,6 +30,19 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tOppryddingsalgoritme for øyeblikksbil
 #, fuzzy
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tOppryddingsalgoritme for øyeblikksbilde."
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
 
 #, fuzzy
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
@@ -47,6 +63,10 @@ msgstr "\t--description, -d <beskrivelse>\tBeskrivelse av øyeblikksbilde."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr ""
+
+#, fuzzy
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-filters\t\tDeaktiver filtre."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
@@ -122,6 +142,9 @@ msgstr "\t--template, -t <navn>\t\tNavn på oppsettmal som skal brukes."
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <type>\t\tType øyeblikksbilde."
 
+msgid "\t--type, -t <type>\t\tType of snapshots to list."
+msgstr "\t--type, -t <type>\t\tType øyeblikksbilder som skal vises."
+
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <userdata>\tBrukerdata for øyeblikksbilde."
 
@@ -155,6 +178,15 @@ msgstr "\tsnapper delete-config"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <nummer1>..<nummer2> [filer]"
+
+msgid "\tsnapper get-config"
+msgstr "\tsnapper get-config"
+
+msgid "\tsnapper list"
+msgstr "\tsnapper list"
+
+msgid "\tsnapper list-configs"
+msgstr "\tsnapper list-configs"
 
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <nummer>"
@@ -206,6 +238,19 @@ msgstr "    Valg for 'create'-kommandoen:"
 msgid "    Options for 'diff' command:"
 msgstr "    Valg for 'modify'-kommandoen:"
 
+#, fuzzy
+msgid "    Options for 'get-config' command:"
+msgstr "    Valg for 'create config'-kommandoen:"
+
+msgid "    Options for 'list' command:"
+msgstr "    Valg for 'list'-kommandoen:"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+
 msgid "    Options for 'modify' command:"
 msgstr "    Valg for 'modify'-kommandoen:"
 
@@ -240,6 +285,15 @@ msgstr "  Slette oppsett:"
 msgid "  Delete snapshot:"
 msgstr "  Slette øyeblikksbilde:"
 
+msgid "  Get config:"
+msgstr "  Hent oppsett:"
+
+msgid "  List configs:"
+msgstr "  Vise oppsett:"
+
+msgid "  List snapshots:"
+msgstr "  Vise øyeblikksbilder:"
+
 msgid "  Modify snapshot:"
 msgstr "  Endre øyeblikksbilde:"
 
@@ -261,6 +315,9 @@ msgstr "  Avmontere øyeblikksbilde:"
 
 msgid "  Undo changes:"
 msgstr "  Angre endringer:"
+
+msgid "#"
+msgstr "#"
 
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
@@ -284,6 +341,9 @@ msgstr "Øyeblikksbildet '%u' ikke funnet."
 #, fuzzy
 msgid "ACL error."
 msgstr "Feil under oppretting"
+
+msgid "Active"
+msgstr ""
 
 msgid "Active snapshot is already default snapshot."
 msgstr ""
@@ -314,6 +374,9 @@ msgstr ""
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
+msgid "Cleanup"
+msgstr "Rydde opp"
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Kommandoen 'cleanup' trenger ett argument."
 
@@ -335,8 +398,17 @@ msgstr "Kommandoen 'delete-config' tar ikke argumenter."
 msgid "Command 'diff' needs at least one argument."
 msgstr "Kommandoen 'diff' trenger minst ett argument."
 
+msgid "Command 'get-config' does not take arguments."
+msgstr "Kommandoen «get-config» tar ikke argumenter."
+
 msgid "Command 'help' does not take arguments."
 msgstr "Kommandoen 'help' tar ikke argumenter."
+
+msgid "Command 'list' does not take arguments."
+msgstr "Kommandoen 'list' tar ikke argumenter."
+
+msgid "Command 'list-configs' does not take arguments."
+msgstr "Kommandoen 'list-configs' tar ikke argumenter."
 
 msgid "Command 'modify' needs at least one argument."
 msgstr "Kommandoen 'modify' trenger minst ett argument."
@@ -375,6 +447,9 @@ msgstr "Kommandoen 'undochange' trenger minst ett argument."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Kommandoen «xadiff» trenger minst ett argument."
+
+msgid "Config"
+msgstr "Oppsett"
 
 #, c-format
 msgid "Config '%s' is invalid."
@@ -427,6 +502,12 @@ msgstr "Diskbilde kunne ikke opprettes."
 msgid "Creating snapshot failed."
 msgstr "Diskbilde kunne ikke opprettes."
 
+msgid "Date"
+msgstr "Dato"
+
+msgid "Default"
+msgstr ""
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Oppsett kunne ikke slettes (%s)."
@@ -439,6 +520,9 @@ msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Diskbilde kunne ikke slettes."
 msgstr[1] "Diskbilde kunne ikke slettes."
+
+msgid "Description"
+msgstr "Beskrivelse"
 
 msgid "Detecting filesystem type failed."
 msgstr "Registrering av filsystemtype mislyktes"
@@ -536,6 +620,10 @@ msgstr "Ugyldig øyeblikksbilde."
 msgid "Invalid ambit '%s'."
 msgstr "Ugyldig øyeblikksbilde '%s'."
 
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Ugyldig øyeblikksbilde '%s'."
+
 msgid "Invalid configdata."
 msgstr "Ugyldige oppsettdata."
 
@@ -575,6 +663,9 @@ msgstr "Ugyldige brukerdata."
 
 msgid "Invalid userdata."
 msgstr "Ugyldige brukerdata."
+
+msgid "Key"
+msgstr "Nøkkel"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -645,6 +736,18 @@ msgstr ""
 msgid "PiB"
 msgstr ""
 
+msgid "Post #"
+msgstr "Etter #"
+
+msgid "Post Date"
+msgstr "Etter dato"
+
+msgid "Pre #"
+msgstr "Før #"
+
+msgid "Pre Date"
+msgstr "Før dato"
+
 # error box title
 #, fuzzy, c-format
 msgid "Quota error (%s)."
@@ -664,6 +767,9 @@ msgstr "Øyeblikksbildet '%u' ikke funnet."
 
 msgid "Snapshot is in use."
 msgstr "Øyeblikksbildet er i bruk."
+
+msgid "Subvolume"
+msgstr "Undervolum"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -688,6 +794,9 @@ msgstr ""
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Forsøk 'snapper --help' for mer informasjon."
+
+msgid "Type"
+msgstr "Type"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -722,6 +831,15 @@ msgstr ""
 msgid "Use an integer number from %d to %d."
 msgstr "Bruk et heltall fra %d til %d"
 
+msgid "Used Space"
+msgstr ""
+
+msgid "User"
+msgstr "Bruker"
+
+msgid "Userdata"
+msgstr "Brukerdata"
+
 #, fuzzy, c-format
 msgid "Userdata '%s' does not include '=' sign."
 msgstr "Filen '%s' ikke funnet på medium '%s'"
@@ -729,6 +847,9 @@ msgstr "Filen '%s' ikke funnet på medium '%s'"
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr ""
+
+msgid "Value"
+msgstr "Verdi"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -766,6 +887,9 @@ msgstr ""
 msgid "modifying %s"
 msgstr "endrer %s"
 
+msgid "no"
+msgstr ""
+
 msgid "nothing to do"
 msgstr "Ingenting å gjøre"
 
@@ -776,93 +900,14 @@ msgstr "Forsøk 'snapper --help' for mer informasjon."
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "bruk: snapper [--globale valg] <kommando> [--kommandovalg] [kommandoargumenter]"
 
+msgid "yes"
+msgstr ""
+
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "Ukjent type for øyeblikksbilde."
 
-#, fuzzy
-#~ msgid "\t--disable-used-space\t\tDisable showing used space."
-#~ msgstr "\t--disable-filters\t\tDeaktiver filtre."
-
-#~ msgid "\t--type, -t <type>\t\tType of snapshots to list."
-#~ msgstr "\t--type, -t <type>\t\tType øyeblikksbilder som skal vises."
-
-#~ msgid "\tsnapper get-config"
-#~ msgstr "\tsnapper get-config"
-
-#~ msgid "\tsnapper list"
-#~ msgstr "\tsnapper list"
-
-#~ msgid "\tsnapper list-configs"
-#~ msgstr "\tsnapper list-configs"
-
-#~ msgid "    Options for 'list' command:"
-#~ msgstr "    Valg for 'list'-kommandoen:"
-
-#~ msgid "  Get config:"
-#~ msgstr "  Hent oppsett:"
-
-#~ msgid "  List configs:"
-#~ msgstr "  Vise oppsett:"
-
-#~ msgid "  List snapshots:"
-#~ msgstr "  Vise øyeblikksbilder:"
-
-#~ msgid "#"
-#~ msgstr "#"
-
-#~ msgid "Cleanup"
-#~ msgstr "Rydde opp"
-
-#~ msgid "Command 'get-config' does not take arguments."
-#~ msgstr "Kommandoen «get-config» tar ikke argumenter."
-
-#~ msgid "Command 'list' does not take arguments."
-#~ msgstr "Kommandoen 'list' tar ikke argumenter."
-
-#~ msgid "Command 'list-configs' does not take arguments."
-#~ msgstr "Kommandoen 'list-configs' tar ikke argumenter."
-
-#~ msgid "Config"
-#~ msgstr "Oppsett"
-
-#~ msgid "Date"
-#~ msgstr "Dato"
-
-#~ msgid "Description"
-#~ msgstr "Beskrivelse"
-
-#~ msgid "Key"
-#~ msgstr "Nøkkel"
-
-#~ msgid "Post #"
-#~ msgstr "Etter #"
-
-#~ msgid "Post Date"
-#~ msgstr "Etter dato"
-
-#~ msgid "Pre #"
-#~ msgstr "Før #"
-
-#~ msgid "Pre Date"
-#~ msgstr "Før dato"
-
-#~ msgid "Subvolume"
-#~ msgstr "Undervolum"
-
-#~ msgid "Type"
-#~ msgstr "Type"
-
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Ukjent type for øyeblikksbilder."
-
-#~ msgid "User"
-#~ msgstr "Bruker"
-
-#~ msgid "Userdata"
-#~ msgstr "Brukerdata"
-
-#~ msgid "Value"
-#~ msgstr "Verdi"
 
 #, fuzzy
 #~ msgid "Quota failure (%s)."
