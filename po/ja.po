@@ -9,9 +9,10 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-23 18:35+0200\n"
-"PO-Revision-Date: 2020-09-23 13:48+0000\n"
+"PO-Revision-Date: 2020-09-24 00:48+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
+"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/"
+"ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,12 +38,19 @@ msgid ""
 "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
 "\t\t\t\t\tpre-number, post-number, post-date."
 msgstr ""
+"\t--columns <列>\t\t表示する列を指定する (カンマ区切り)\n"
+"\t\t\t\t\t指定可能な列: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
 
 msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
 "\t\t\t\t\tPossible columns: key, value.\n"
 "\t\t\t\t\tColumns are not selected when JSON format is used."
 msgstr ""
+"\t--columns <列>\t\t表示する列を指定する (カンマ区切り)\n"
+"\t\t\t\t\t指定可能な列: key, value.\n"
+"\t\t\t\t\tJSON 形式を使用した場合は列の選択はできません。"
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <コマンド>\t\tコマンドを実行し、その前後にスナップショットを採取する。"
@@ -227,9 +235,8 @@ msgstr "    「delete」コマンドに対するオプション:"
 msgid "    Options for 'diff' command:"
 msgstr "    「diff」コマンドに対するオプション:"
 
-#, fuzzy
 msgid "    Options for 'get-config' command:"
-msgstr "    'create-config' コマンドに対するオプション:"
+msgstr "    'get-config' コマンドに対するオプション:"
 
 msgid "    Options for 'list' command:"
 msgstr "    'list' コマンドに対するオプション:"
@@ -239,6 +246,9 @@ msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
 "\t\t\t\t\tPossible columns: config, subvolume.\n"
 msgstr ""
+"    'list-configs' コマンドに対するオプション:\n"
+"\t--columns <列>\t\t表示する列を指定する (カンマ区切り)\n"
+"\t\t\t\t\t指定可能な列: config, subvolume.\n"
 
 msgid "    Options for 'modify' command:"
 msgstr "    'modify' コマンドに対するオプション:"
@@ -328,7 +338,7 @@ msgid "ACL error."
 msgstr "ACL エラーです。"
 
 msgid "Active"
-msgstr ""
+msgstr "有効"
 
 msgid "Active snapshot is already default snapshot."
 msgstr "有効なスナップショットは既に既定のスナップショットです。"
@@ -485,7 +495,7 @@ msgid "Date"
 msgstr "日付"
 
 msgid "Default"
-msgstr ""
+msgstr "既定"
 
 #, c-format
 msgid "Deleting config failed (%s)."
@@ -589,9 +599,9 @@ msgstr "スナップショットが正しくありません。"
 msgid "Invalid ambit '%s'."
 msgstr "領域 '%s' が正しくありません。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid column '%s'."
-msgstr "領域 '%s' が正しくありません。"
+msgstr "列 '%s' が正しくありません。"
 
 msgid "Invalid configdata."
 msgstr "設定データが正しくありません。"
@@ -851,7 +861,7 @@ msgid "modifying %s"
 msgstr "%s を修正しています"
 
 msgid "no"
-msgstr ""
+msgstr "いいえ"
 
 msgid "nothing to do"
 msgstr "何もすることがありません"
@@ -863,7 +873,7 @@ msgid "usage: snapper [--global-options] <command> [--command-options] [command-
 msgstr "usage: snapper [グローバルオプション] <コマンド> [コマンドオプション] [コマンドパラメータ]"
 
 msgid "yes"
-msgstr ""
+msgstr "はい"
 
 #, c-format
 #~ msgid "Use %s, %s or %s."
