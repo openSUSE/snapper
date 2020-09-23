@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: autoinst.fi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 17:51+0200\n"
+"POT-Creation-Date: 2020-09-23 10:33+0200\n"
 "PO-Revision-Date: 2019-12-01 20:54+0000\n"
 "Last-Translator: Jaanus Ojangu <jaanus.ojangu@gmail.com>\n"
 "Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/et/>\n"
@@ -43,6 +43,9 @@ msgstr "\t--diff-cmd <command>\t\tFailide võrdlemise käsk."
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tLisavalikud edastatud diff-käsule.."
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\tLuuakse hetketõmmis etteantud hetketõmmisest."
 
@@ -69,6 +72,9 @@ msgstr "\t--no-dbus\t\t\tTöötab ilma DBus-ta."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <file>\t\tOleku salvestamine faili."
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <number>\t\tEelneva vastava hetketõmmise number."
@@ -168,6 +174,10 @@ msgstr "\tsnapper xadiff <number1>..<number2> [failid]"
 
 msgid "    Global options:"
 msgstr "    Globaalsed valikud:"
+
+#, fuzzy
+msgid "    Options for 'cleanup' command:"
+msgstr "    Valikud 'create' käsule:"
 
 msgid "    Options for 'create' command:"
 msgstr "    Valikud 'create' käsule:"
@@ -366,6 +376,13 @@ msgid "Configdata '%s' has empty key."
 msgstr "Seadistusandmetes '%s' on tühi võti."
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "Loodud seadistus nurjus (%s)."
 
@@ -401,6 +418,15 @@ msgstr[1] "Tõmmiste kustutamine asukohast %s:"
 msgid "Detecting filesystem type failed."
 msgstr "Failisüsteemi tüübi tuvastamine ebaõnnestus."
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+#, fuzzy
+msgid "EB"
+msgstr "EiB"
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr "EiB"
@@ -418,6 +444,18 @@ msgstr "Viga (%s)."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Failisüsteemi seadistaja lähtestamine ebaõnnestus."
+
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "loomine nurjus: %s"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "loomine nurjus: %s"
 
 msgid "Failed to set locale. Fix your system."
 msgstr "Asukoha kohanduste (lokaadi) määramine ebaõnnestus. Parandage oma süsteem."
@@ -437,6 +475,15 @@ msgstr "Faili '%s' ei leitud."
 #, c-format
 msgid "Free space error (%s)."
 msgstr "Vaba ruumi viga (%s)."
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+#, fuzzy
+msgid "GB"
+msgstr "GB"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -465,12 +512,20 @@ msgstr "Vigane tõmmis '%s'."
 msgid "Invalid configdata."
 msgstr "Vigased seadistuse andmed."
 
+#, fuzzy
+msgid "Invalid free-space value."
+msgstr "Vigane alamosa."
+
 msgid "Invalid group."
 msgstr "Vigane grupp."
 
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Vigane tabeli stiil %d."
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "Vigane tõmmis '%s'."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -499,6 +554,15 @@ msgstr "KB"
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Seadistusfailide loendi loomine nurjus (%s)."
+
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+#, fuzzy
+msgid "MB"
+msgstr "MB"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Võib-olla unustasite hetktõmmiste numbrite vahel eraldaja '..'."
@@ -541,6 +605,15 @@ msgstr "Valik - toetatakse ainult hetktõmmiseid tüübiga single."
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Valik - muutmist toetatakse ainult hetktõmmiste tüübiga ühekordne jaoks."
 
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+#, fuzzy
+msgid "PB"
+msgstr "PB"
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PB"
@@ -563,6 +636,15 @@ msgstr "Tõmmist '%u' ei leita."
 
 msgid "Snapshot is in use."
 msgstr "Tõmmis on kasutuses."
+
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+#, fuzzy
+msgid "TB"
+msgstr "TiB"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
@@ -644,6 +726,15 @@ msgstr "kustutamine nurjus: %s"
 #, c-format
 msgid "failed to modify %s"
 msgstr "muutmine nurjus %s"
+
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+#, fuzzy
+msgid "kB"
+msgstr "B"
 
 #, c-format
 msgid "modifying %s"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 17:51+0200\n"
+"POT-Creation-Date: 2020-09-23 10:33+0200\n"
 "PO-Revision-Date: 2020-02-17 12:54+0000\n"
 "Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
 "Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
@@ -52,6 +52,9 @@ msgstr "\t--diff-cmd <指令>\t\t用於比較檔案的指令。"
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <選項>\t傳送到 diff 指令的額外選項。"
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\t依據指定快照建立快照。"
 
@@ -80,6 +83,9 @@ msgstr "\t--no-dbus\t\t\t不使用 DBus 操作。"
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <檔案>\t\t儲存狀態到檔案。"
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <數字>\t\t之前快照的相對應數字。"
@@ -189,6 +195,10 @@ msgstr "\tsnapper xadiff <數字1>..<數字2> [檔案]"
 
 msgid "    Global options:"
 msgstr "    全域選項："
+
+#, fuzzy
+msgid "    Options for 'cleanup' command:"
+msgstr "    'create' 命令的選項："
 
 msgid "    Options for 'create' command:"
 msgstr "    'create' 命令的選項："
@@ -405,6 +415,13 @@ msgid "Configdata '%s' has empty key."
 msgstr "組態資料「%s」的鍵為空白。"
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "建立設定失敗 (%s)。"
 
@@ -445,6 +462,15 @@ msgstr[0] "從 %s 刪除快照︰"
 msgid "Detecting filesystem type failed."
 msgstr "偵測檔案系統類型失敗。"
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+#, fuzzy
+msgid "EB"
+msgstr "EiB"
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr "EiB"
@@ -465,6 +491,18 @@ msgstr "錯誤 (%s)。"
 msgid "Failed to initialize filesystem handler."
 msgstr "無法啟始化檔案系統處理器。"
 
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "建立 %s 失敗"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "建立 %s 失敗"
+
 msgid "Failed to set locale. Fix your system."
 msgstr "無法設定地區設定。請修復您的系統。"
 
@@ -484,6 +522,15 @@ msgstr "檔案 '%s' 找不到。"
 #, c-format
 msgid "Free space error (%s)."
 msgstr "可用空間錯誤 (%s)。"
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+#, fuzzy
+msgid "GB"
+msgstr "GiB"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -513,12 +560,21 @@ msgid "Invalid configdata."
 msgstr "無效的 configdata。"
 
 # SLE12
+#, fuzzy
+msgid "Invalid free-space value."
+msgstr "無效的子磁碟區。"
+
+# SLE12
 msgid "Invalid group."
 msgstr "無效的群組。"
 
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "無效的表格樣式 %d。"
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "不適用的快照 '%s'。"
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -549,6 +605,15 @@ msgstr "KiB"
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "列出設定失敗 (%s)。"
+
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+#, fuzzy
+msgid "MB"
+msgstr "MiB"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "可能您忘記在快照編號之間輸入分隔符「..」。"
@@ -592,6 +657,15 @@ msgstr "選項 --from 僅適用於單一類型的快照。"
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "選項 --read-write 僅適用於單一類型的快照。"
 
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+#, fuzzy
+msgid "PB"
+msgstr "PiB"
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -615,6 +689,15 @@ msgstr "快照 '%u' 找不到。"
 # SLE12
 msgid "Snapshot is in use."
 msgstr "快照正在使用中。"
+
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+#, fuzzy
+msgid "TB"
+msgstr "TiB"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
@@ -702,6 +785,15 @@ msgstr "刪除 %s 失敗"
 #, c-format
 msgid "failed to modify %s"
 msgstr "修改 %s 失敗"
+
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+#, fuzzy
+msgid "kB"
+msgstr "B"
 
 #, c-format
 msgid "modifying %s"

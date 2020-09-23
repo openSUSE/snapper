@@ -9,11 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 17:51+0200\n"
+"POT-Creation-Date: 2020-09-23 10:33+0200\n"
 "PO-Revision-Date: 2020-09-16 13:48+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
-"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
-"\n"
+"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -51,6 +50,9 @@ msgstr "\t--diff-cmd <command>\t\tOpdracht gebruikt voor het vergelijken van bes
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tExtra opties doorgeven aan de opdracht diff."
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\tEen momentopname maken van de gespecificeerde momentopname."
 
@@ -77,6 +79,9 @@ msgstr "\t--no-dbus\t\t\tWerken zonder D-Bus."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <file>\t\tStatus opslaan in bestand."
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <number>\t\tNummer van overeenkomende eerdere momentopname."
@@ -176,6 +181,10 @@ msgstr "\tsnapper xadiff <number1>..<number2> [bestanden]"
 
 msgid "    Global options:"
 msgstr "    Algemene opties:"
+
+#, fuzzy
+msgid "    Options for 'cleanup' command:"
+msgstr "    Opties voor opdracht 'create':"
 
 msgid "    Options for 'create' command:"
 msgstr "    Opties voor opdracht 'create':"
@@ -375,6 +384,13 @@ msgid "Configdata '%s' has empty key."
 msgstr "Configdata '%s' heeft lege key."
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "Configuratie aanmaken is mislukt (%s)."
 
@@ -410,6 +426,15 @@ msgstr[1] "Snapshots verwijderen van %s:"
 msgid "Detecting filesystem type failed."
 msgstr "Type bestandssysteem detecteren is mislukt."
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+#, fuzzy
+msgid "EB"
+msgstr "EiB"
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr "EiB"
@@ -426,6 +451,18 @@ msgstr "Fout (%s)."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Behandelaar van bestandssysteem initialiseren is mislukt."
+
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "aanmaken van %s is mislukt"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "aanmaken van %s is mislukt"
 
 msgid "Failed to set locale. Fix your system."
 msgstr "Locale instellen is mislukt. Repareer uw systeem."
@@ -444,6 +481,15 @@ msgstr "Bestand '%s' niet gevonden."
 #, c-format
 msgid "Free space error (%s)."
 msgstr "Fout in vrije ruimte (%s)."
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+#, fuzzy
+msgid "GB"
+msgstr "GiB"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -470,12 +516,20 @@ msgstr "Ongeldige ambit '%s'."
 msgid "Invalid configdata."
 msgstr "Ongeldige configuratiegegevens."
 
+#, fuzzy
+msgid "Invalid free-space value."
+msgstr "Ongeldig subvolume."
+
 msgid "Invalid group."
 msgstr "Ongeldig groep."
 
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Ongeldig machine-leesbaar formaat '%s'."
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "Ongeldige ambit '%s'."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -504,6 +558,15 @@ msgstr "KiB"
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Lijst maken van configuraties is mislukt (%s)."
+
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+#, fuzzy
+msgid "MB"
+msgstr "MiB"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Misschien bent u het scheidingsteken '..' tussen de snapshotnummer vergeten."
@@ -545,6 +608,15 @@ msgstr "Optie --from alleen ondersteund voor momentopnamen van het type single(e
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Optie --read-write alleen ondersteund voor momentopnamen van het type single(enkelvoudig)."
 
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+#, fuzzy
+msgid "PB"
+msgstr "PiB"
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -566,6 +638,15 @@ msgstr "Momentopname '%u' niet gevonden."
 
 msgid "Snapshot is in use."
 msgstr "Momentopname is in gebruik."
+
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+#, fuzzy
+msgid "TB"
+msgstr "TiB"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "De ambit kan handmatig worden gespecificeerd met de optie --ambit."
@@ -647,6 +728,15 @@ msgstr "verwijderen van %s is mislukt"
 #, c-format
 msgid "failed to modify %s"
 msgstr "wijzigen van %s is mislukt"
+
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+#, fuzzy
+msgid "kB"
+msgstr "B"
 
 #, c-format
 msgid "modifying %s"

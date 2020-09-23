@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 17:51+0200\n"
+"POT-Creation-Date: 2020-09-23 10:33+0200\n"
 "PO-Revision-Date: 2015-10-17 16:22+0200\n"
 "Last-Translator: Andriy Bandura <andriykopanytsia@gmail.com>\n"
 "Language-Team: Ukrainian <http://10n.opensuse.org/projects/snapper/master/uk/>\n"
@@ -50,6 +50,9 @@ msgstr "\t--diff-cmd <command>\t\tКоманда для порівняння ф�
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tДодаткові параметри, передані у команду diff."
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr ""
 
@@ -76,6 +79,9 @@ msgstr "\t--no-dbus\t\t\tПрацювати без DBus."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <файл>\t\tЗберегти статус у файл."
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <число>\t\tНомер відповідного попереднього знімка."
@@ -176,6 +182,10 @@ msgstr "\tsnapper xadiff <число1>..<число2> [файли]"
 
 msgid "    Global options:"
 msgstr "    Загальні параметри:"
+
+#, fuzzy
+msgid "    Options for 'cleanup' command:"
+msgstr "    Параметри команди 'create':"
 
 msgid "    Options for 'create' command:"
 msgstr "    Параметри команди 'create':"
@@ -376,6 +386,13 @@ msgid "Configdata '%s' has empty key."
 msgstr "Порожній ключ в даних конфігурації '%s'."
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "Помилка при створенні конфігурації (%s)."
 
@@ -412,6 +429,14 @@ msgstr[2] "Вилучення знімків із %s:"
 msgid "Detecting filesystem type failed."
 msgstr "Збій при визначенні типу файлової системи."
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+msgid "EB"
+msgstr ""
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr ""
@@ -429,6 +454,18 @@ msgstr "Помилка вводу/виводу (%s)."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Не вдалося ініціалізувати обробник файлової системи."
+
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "не вдалося створити %s"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "не вдалося створити %s"
 
 msgid "Failed to set locale. Fix your system."
 msgstr ""
@@ -448,6 +485,14 @@ msgstr "Файл '%s' не знайдений."
 #, fuzzy, c-format
 msgid "Free space error (%s)."
 msgstr "Помилка вводу/виводу (%s)."
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+msgid "GB"
+msgstr ""
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -477,12 +522,20 @@ msgstr "Неправильний знімок '%s'."
 msgid "Invalid configdata."
 msgstr "Неправильні дані конфігурації."
 
+#, fuzzy
+msgid "Invalid free-space value."
+msgstr "Нечинний підтом."
+
 msgid "Invalid group."
 msgstr "Нечинна група."
 
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Непридатний стиль таблиці %d."
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "Неправильний знімок '%s'."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -511,6 +564,14 @@ msgstr ""
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Збій при перерахуванні конфігурацій (%s)."
+
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+msgid "MB"
+msgstr ""
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Можливо, ви забули роздільник '..' між номерами моментальних знімків."
@@ -553,6 +614,14 @@ msgstr ""
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr ""
 
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+msgid "PB"
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr ""
@@ -575,6 +644,14 @@ msgstr "Знімок '%u' не знайдено."
 
 msgid "Snapshot is in use."
 msgstr "Знімок вже використовується."
+
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+msgid "TB"
+msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
@@ -656,6 +733,14 @@ msgstr "не вдалось вилучити %s"
 #, c-format
 msgid "failed to modify %s"
 msgstr "не вдалося змінити %s"
+
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+msgid "kB"
+msgstr ""
 
 #, c-format
 msgid "modifying %s"

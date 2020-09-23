@@ -3,11 +3,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 17:51+0200\n"
+"POT-Creation-Date: 2020-09-23 10:33+0200\n"
 "PO-Revision-Date: 2020-09-16 18:48+0000\n"
 "Last-Translator: Aleš Kastner <alkas@volny.cz>\n"
-"Language-Team: Czech <https://l10n.opensuse.org/projects/snapper/master/cs/>"
-"\n"
+"Language-Team: Czech <https://l10n.opensuse.org/projects/snapper/master/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,6 +46,9 @@ msgstr "\t--diff-cmd <příkaz>\t\tJedná se o příkaz, který se používá k 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <možnosti>\tJedná se o další možnosti předané příkazu diff."
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\tVytvoří snímek ze zadaného snímku."
 
@@ -74,6 +76,9 @@ msgstr "\t--no-dbus\t\t\tPracovat bez DBusu."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <soubor>\t\tUloží stav do souboru."
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <číslo>\t\tČíslo odpovídajícího předcházejícího snímku."
@@ -177,6 +182,10 @@ msgstr "\tsnapper xadiff <číslo1>..<číslo2> [soubory]"
 
 msgid "    Global options:"
 msgstr "    Globální volby:"
+
+#, fuzzy
+msgid "    Options for 'cleanup' command:"
+msgstr "    Volby pro příkaz 'create':"
 
 msgid "    Options for 'create' command:"
 msgstr "    Volby pro příkaz 'create':"
@@ -383,6 +392,13 @@ msgid "Configdata '%s' has empty key."
 msgstr "Konfigurační data %s obsahují prázdný klíč."
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "Vytváření konfiguračního souboru selhalo (%s)."
 
@@ -423,6 +439,15 @@ msgstr[2] "Odstraňování snímků z umístění %s:"
 msgid "Detecting filesystem type failed."
 msgstr "Selhala detekce typu souborového systému."
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+#, fuzzy
+msgid "EB"
+msgstr "EiB"
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr "EiB"
@@ -443,6 +468,18 @@ msgstr "Chyba (%s)."
 msgid "Failed to initialize filesystem handler."
 msgstr "Obslužný program systému souborů se nepodařilo inicializovat."
 
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "Selhalo vytvoření %s"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "Selhalo vytvoření %s"
+
 msgid "Failed to set locale. Fix your system."
 msgstr "Selhalo nastavení lokalizace. Opravte si systém."
 
@@ -461,6 +498,15 @@ msgstr "Soubor '%s' nenalezen."
 #, c-format
 msgid "Free space error (%s)."
 msgstr "Chybně uvedené volné místo (%s)."
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+#, fuzzy
+msgid "GB"
+msgstr "GiB"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -487,6 +533,10 @@ msgstr "Neplatná oblast '%s'."
 msgid "Invalid configdata."
 msgstr "Neplatná konfigurační data."
 
+#, fuzzy
+msgid "Invalid free-space value."
+msgstr "Neplatná podřízená jednotka."
+
 # SLE12
 msgid "Invalid group."
 msgstr "Neplatná skupina."
@@ -494,6 +544,10 @@ msgstr "Neplatná skupina."
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Neplatný strojově čitelný formát '%s'."
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "Neplatná oblast '%s'."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -523,6 +577,15 @@ msgstr "KiB"
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Výpis konfigurací selhal (%s)."
+
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+#, fuzzy
+msgid "MB"
+msgstr "MiB"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Možná jste zapomněli použít oddělovač „..“ mezi čísly snímků."
@@ -564,6 +627,15 @@ msgstr "Volba --from je podporována jen u snímků typu single."
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Volba --read-write je podporována jen pro snímky typu single."
 
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+#, fuzzy
+msgid "PB"
+msgstr "PiB"
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -586,6 +658,15 @@ msgstr "Snímek '%u' nebyl nalezen."
 
 msgid "Snapshot is in use."
 msgstr "Snímek se nyní používá."
+
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+#, fuzzy
+msgid "TB"
+msgstr "TiB"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Ambit lze určit ručně volbou --ambit."
@@ -670,6 +751,15 @@ msgstr "Selhalo smazání %s"
 #, c-format
 msgid "failed to modify %s"
 msgstr "Nepodařilo se upravit %s"
+
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+#, fuzzy
+msgid "kB"
+msgstr "B"
 
 #, c-format
 msgid "modifying %s"

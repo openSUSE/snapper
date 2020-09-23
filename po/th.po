@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-03 17:51+0200\n"
+"POT-Creation-Date: 2020-09-23 10:33+0200\n"
 "PO-Revision-Date: 2008-01-04 08:58+0100\n"
 "Last-Translator: i18n@suse.de\n"
 "Language-Team: Thai <i18n@suse.de>\n"
@@ -45,6 +45,9 @@ msgstr ""
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr ""
 
@@ -70,6 +73,9 @@ msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr ""
 
 msgid "\t--output, -o <file>\t\tSave status to file."
+msgstr ""
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
 msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
@@ -171,6 +177,10 @@ msgstr ""
 #, fuzzy
 msgid "    Global options:"
 msgstr "ตัวเลือกทั่วไป"
+
+#, fuzzy
+msgid "    Options for 'cleanup' command:"
+msgstr "ตัวเลือกต่อท้ายบรรทัดคำสั่งเพื่อส่งไปให้เคอร์เนล"
 
 #, fuzzy
 msgid "    Options for 'create' command:"
@@ -383,6 +393,13 @@ msgstr ""
 msgid "Configdata '%s' has empty key."
 msgstr ""
 
+#, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Creating config failed (%s)."
 msgstr "การสร้างระบบแฟ้มล้มเหลว"
@@ -422,6 +439,14 @@ msgstr[0] "การสร้างระบบแฟ้มล้มเหลว
 msgid "Detecting filesystem type failed."
 msgstr "การสร้างระบบแฟ้มล้มเหลว"
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+msgid "EB"
+msgstr ""
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr ""
@@ -442,6 +467,18 @@ msgstr "ผิดพลาด"
 msgid "Failed to initialize filesystem handler."
 msgstr "ล้มเหลวในการเริ่มเรียกใช้คลังแพกเกจของซอฟต์แวร์"
 
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "ล้มเหลวในการคืนค่าส่วน MBR ของฮาร์ดดิสก์"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "ล้มเหลวในการคืนค่าส่วน MBR ของฮาร์ดดิสก์"
+
 msgid "Failed to set locale. Fix your system."
 msgstr ""
 
@@ -459,6 +496,14 @@ msgstr "ไม่พบแฟ้มควบคุม %1 บนสื่อก�
 #, fuzzy, c-format
 msgid "Free space error (%s)."
 msgstr "ผิดพลาด"
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+msgid "GB"
+msgstr ""
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -487,12 +532,19 @@ msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งาน
 msgid "Invalid configdata."
 msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งานไม่ได้"
 
+msgid "Invalid free-space value."
+msgstr ""
+
 #, fuzzy
 msgid "Invalid group."
 msgstr "พาธการสำรองข้อมูลใช้ไม่ได้"
 
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
+msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งานไม่ได้"
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
 msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งานไม่ได้"
 
 #, fuzzy, c-format
@@ -524,6 +576,14 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Listing configs failed (%s)."
 msgstr "การเขียนการตั้งค่าล้มเหลว"
+
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+msgid "MB"
+msgstr ""
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr ""
@@ -567,6 +627,14 @@ msgstr ""
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr ""
 
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+msgid "PB"
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr ""
@@ -590,6 +658,14 @@ msgstr "ไม่พบรายการบูตระบบ %1"
 #, fuzzy
 msgid "Snapshot is in use."
 msgstr "ไม่พบรายการบูตระบบ %1"
+
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+msgid "TB"
+msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
@@ -672,6 +748,14 @@ msgstr "ล้มเหลวในการปรับใช้แฟ้ม de
 
 #, c-format
 msgid "failed to modify %s"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+msgid "kB"
 msgstr ""
 
 #, fuzzy, c-format
