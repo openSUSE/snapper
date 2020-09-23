@@ -9,9 +9,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-23 18:35+0200\n"
-"PO-Revision-Date: 2020-09-16 13:48+0000\n"
-"Last-Translator: Rodrigo Macedo <rmsolucoeseminformatic4@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
+"PO-Revision-Date: 2020-09-24 00:48+0000\n"
+"Last-Translator: Luiz Fernando Ranghetti <elchevive68@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/"
+"snapper/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +21,9 @@ msgstr ""
 "X-Generator: Weblate 3.6.1\n"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tListar os instantâneo de todas as configurações acessíveis."
+msgstr ""
+"\t--all-configs, -a\t\tListar os instantâneos de todas as configurações "
+"acessíveis."
 
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr "\t--ambit, -a ambit\t\tOpere no âmbito especificado."
@@ -37,12 +40,19 @@ msgid ""
 "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
 "\t\t\t\t\tpre-number, post-number, post-date."
 msgstr ""
+"\t--columns <colunas>\t\tColunas a exibir separados por vírgula.\n"
+"\t\t\t\t\tPossíveis colunas: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
 
 msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
 "\t\t\t\t\tPossible columns: key, value.\n"
 "\t\t\t\t\tColumns are not selected when JSON format is used."
 msgstr ""
+"\t--columns <colunas>\t\tColunas a exibir separadas por vírgula.\n"
+"\t\t\t\t\tPossíveis colunas: key, value.\n"
+"\t\t\t\t\tAs colunas não são selecionadas quando o formato JSON é usado."
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <comando>\t\tExecutar comando e criar pré e pós instantâneos."
@@ -69,7 +79,7 @@ msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <opções>\tOpções adicionais passadas para o comando diff."
 
 msgid "\t--free-space <space>\t\tTry to make space available."
-msgstr ""
+msgstr "\t--free-space <espaço>\t\tTentar disponibilizar o espaço."
 
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\tCrie um instantâneo a partir do instantâneo especificado."
@@ -100,6 +110,7 @@ msgstr "\t--output, -o <arquivo>\t\tSalvar status em arquivo."
 
 msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
 msgstr ""
+"\t--path <caminho>\t\t\tLimpar todas as configurações que afetam o caminho."
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <número>\t\tNúmero do pré instantâneo correspondente."
@@ -212,9 +223,8 @@ msgstr "\tsnapper xadiff <número1>..<número2> [arquivos]"
 msgid "    Global options:"
 msgstr "    Opções globais:"
 
-#, fuzzy
 msgid "    Options for 'cleanup' command:"
-msgstr "    Opções do comando 'create':"
+msgstr "    Opções do comando 'cleanup':"
 
 msgid "    Options for 'create' command:"
 msgstr "    Opções do comando 'create':"
@@ -223,14 +233,13 @@ msgid "    Options for 'create-config' command:"
 msgstr "    Opções do comando 'create-config':"
 
 msgid "    Options for 'delete' command:"
-msgstr "    Opções para o comando \"delete\":"
+msgstr "    Opções do comando \"delete\":"
 
 msgid "    Options for 'diff' command:"
 msgstr "    Opções do comando 'diff':"
 
-#, fuzzy
 msgid "    Options for 'get-config' command:"
-msgstr "    Opções do comando 'create-config':"
+msgstr "    Opções do comando 'get-config':"
 
 msgid "    Options for 'list' command:"
 msgstr "    Opções do comando 'list':"
@@ -240,6 +249,9 @@ msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
 "\t\t\t\t\tPossible columns: config, subvolume.\n"
 msgstr ""
+"    Opções do comando \"list-configs\":\n"
+"\t--columns <colunas>\t\tColunas a exibir separadas por vírgula.\n"
+"\t\t\t\t\tPossíveis colunas: config, subvolume.\n"
 
 msgid "    Options for 'modify' command:"
 msgstr "    Opções do comando 'modify':"
@@ -296,7 +308,7 @@ msgid "  Set config:"
 msgstr "  Definir a configuração:"
 
 msgid "  Setup quota:"
-msgstr "  Setup quota:"
+msgstr "  Configurar cota:"
 
 msgid "  Umount snapshot:"
 msgstr "  Desmontar instantâneo:"
@@ -329,10 +341,10 @@ msgid "ACL error."
 msgstr "Erro ACL."
 
 msgid "Active"
-msgstr ""
+msgstr "Ativo"
 
 msgid "Active snapshot is already default snapshot."
-msgstr "Snapshot ativa já é a snapshot padrão."
+msgstr "O instantâneo ativo já é o instantâneo padrão."
 
 #, c-format
 msgid "Ambit is %s."
@@ -344,15 +356,19 @@ msgstr "B"
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr "Não é possível excluir o instantâneo %d, pois é o sistema atual."
+msgstr "Não é possível excluir o instantâneo %d, pois ele é o sistema atual."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr "Não é possível excluir o instantâneo %d, pois é o instantâneo atualmente montado."
+msgstr ""
+"Não é possível excluir o instantâneo %d, pois ele é o instantâneo atualmente "
+"montado."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr "Não é possível excluir o instantâneo %d, pois é o próximo a ser montado instantâneo."
+msgstr ""
+"Não é possível excluir o instantâneo %d, pois ele é o próximo a ser montado "
+"instantâneo."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr "Não é possível detectar o âmbito porque o subvolume padrão é desconhecido."
@@ -458,9 +474,10 @@ msgstr "O dado de configuração tem a chave '%s' vazia."
 #, c-format
 msgid "Could not make enough free space available for path '%s'."
 msgstr ""
+"Não foi possível disponibilizar espaço livre suficiente para o caminho '%s'."
 
 msgid "Could not make enough free space available."
-msgstr ""
+msgstr "Não foi possível disponibilizar espaço livre suficiente."
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -486,7 +503,7 @@ msgid "Date"
 msgstr "Data"
 
 msgid "Default"
-msgstr ""
+msgstr "Padrão"
 
 #, c-format
 msgid "Deleting config failed (%s)."
@@ -509,12 +526,11 @@ msgstr "Falha ao detectar o tipo de sistema de arquivos."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
-msgstr ""
+msgstr "E"
 
 #. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
-#, fuzzy
 msgid "EB"
-msgstr "EiB"
+msgstr "EB"
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
@@ -533,17 +549,16 @@ msgstr "Erro (%s)."
 msgid "Failed to initialize filesystem handler."
 msgstr "Falha ao inicializar o manipulador do sistema de arquivos."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to parse '%s'."
-msgstr "falha ao criar %s"
+msgstr "Falhou ao analisar '%s'."
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
-msgstr ""
+msgstr "Falhou ao consultar o espaço livre para o caminho '%s'."
 
-#, fuzzy
 msgid "Failed to query free space."
-msgstr "falha ao criar %s"
+msgstr "Falhou ao consultar o espaço livre."
 
 msgid "Failed to set locale. Fix your system."
 msgstr "Falha ao configurar o idioma. Repare seu sistema."
@@ -565,12 +580,11 @@ msgstr "Erro de espaço livre (%s)."
 
 #. TRANSLATORS: symbol for "giga" (best keep untranslated)
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
-#, fuzzy
 msgid "GB"
-msgstr "GiB"
+msgstr "GB"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -594,16 +608,15 @@ msgstr "Instantâneo ilegal."
 msgid "Invalid ambit '%s'."
 msgstr "Âmbito inválido '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid column '%s'."
-msgstr "Âmbito inválido '%s'."
+msgstr "Coluna inválida '%s'."
 
 msgid "Invalid configdata."
 msgstr "Arquivo de dados de configuração inválido."
 
-#, fuzzy
 msgid "Invalid free-space value."
-msgstr "Subvolume inválido."
+msgstr "Valor de espaço livre inválido."
 
 msgid "Invalid group."
 msgstr "Grupo inválido."
@@ -612,9 +625,9 @@ msgstr "Grupo inválido."
 msgid "Invalid machine readable format '%s'."
 msgstr "Formato legível para máquina inválido '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid path '%s'."
-msgstr "Âmbito inválido '%s'."
+msgstr "Caminho inválido '%s'."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -649,12 +662,11 @@ msgstr "Falha ao listar arquivos de configuração (%s)."
 
 #. TRANSLATORS: symbol for "mega" (best keep untranslated)
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
-#, fuzzy
 msgid "MB"
-msgstr "MiB"
+msgstr "MB"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Talvez você não tenha incluído o delimitador '..' entre os números dos instantâneos."
@@ -698,12 +710,11 @@ msgstr "Opção --read-write suportada apenas para instantâneos do tipo único.
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
-#, fuzzy
 msgid "PB"
-msgstr "PiB"
+msgstr "PB"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -723,7 +734,7 @@ msgstr "Data anterior"
 
 #, c-format
 msgid "Quota error (%s)."
-msgstr "Erro de quota (%s)."
+msgstr "Erro de cota (%s)."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Consulte \"man snapper\" para obter mais instruções."
@@ -744,12 +755,11 @@ msgstr "Subvolume"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
-#, fuzzy
 msgid "TB"
-msgstr "TiB"
+msgstr "TB"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "O âmbito pode ser especificado manualmente usando a opção --ambit."
@@ -849,19 +859,18 @@ msgstr "falha ao alterar %s"
 
 #. TRANSLATORS: symbol for "kilo" (best keep untranslated)
 msgid "k"
-msgstr ""
+msgstr "k"
 
 #. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
-#, fuzzy
 msgid "kB"
-msgstr "B"
+msgstr "kB"
 
 #, c-format
 msgid "modifying %s"
 msgstr "alterando %s"
 
 msgid "no"
-msgstr ""
+msgstr "não"
 
 msgid "nothing to do"
 msgstr "nada a fazer"
@@ -873,7 +882,7 @@ msgid "usage: snapper [--global-options] <command> [--command-options] [command-
 msgstr "uso: snapper [--opções-globais] <comando> [--opções-do-comando] [argumentos]"
 
 msgid "yes"
-msgstr ""
+msgstr "sim"
 
 #, c-format
 #~ msgid "Invalid machine readable format %s."
