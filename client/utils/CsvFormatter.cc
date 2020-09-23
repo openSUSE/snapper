@@ -19,9 +19,9 @@
  * find current contact information at www.novell.com.
  */
 
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/replace.hpp>
-#include <boost/algorithm/string/trim.hpp>
 
 #include "client/utils/CsvFormatter.h"
 
@@ -32,24 +32,19 @@ namespace snapper
     using namespace std;
 
 
-    namespace cli
+    const string CsvFormatter::default_separator = ",";
+
+
+    ostream&
+    operator<<(ostream& stream, const CsvFormatter& csv_formatter)
     {
+	stream << csv_formatter.csv_line(csv_formatter._header);
 
-	const string CsvFormatter::default_separator = ",";
+	for (const vector<string>& row : csv_formatter._rows)
+	    stream << csv_formatter.csv_line(row);
 
-
-	string
-	CsvFormatter::str() const
-	{
-	    string cvs_output;
-
-	    cvs_output = csv_line(header);
-
-	    for (const vector<string>& row : rows)
-		cvs_output += csv_line(row);
-
-	    return cvs_output;
-	}
+	return stream;
+    }
 
 
 	string
@@ -67,12 +62,10 @@ namespace snapper
 	string
 	CsvFormatter::csv_value(const string& value) const
 	{
-	    string fixed_value = boost::algorithm::trim_copy(value);
-
 	    if (has_special_chars(value))
-		fixed_value = enclose_with_quotes(double_quotes(value));
+		return enclose_with_quotes(double_quotes(value));
 
-	    return fixed_value;
+	    return value;
 	}
 
 
@@ -103,7 +96,5 @@ namespace snapper
 	{
 	    return "\"" + value + "\"";
 	}
-
-    }
 
 }

@@ -202,13 +202,6 @@ AC_OUTPUT(
 	server/Makefile
 	client/Makefile
 	client/utils/Makefile
-	client/Command/Makefile
-	client/Command/ListSnapshots/Makefile
-	client/Command/ListSnapshots/SnappersData/Makefile
-	client/Command/ListConfigs/Makefile
-	client/Command/ListConfigs/SnappersData/Makefile
-	client/Command/GetConfig/Makefile
-	client/Command/GetConfig/ConfigData/Makefile
 	scripts/Makefile
 	pam/Makefile
 	data/Makefile

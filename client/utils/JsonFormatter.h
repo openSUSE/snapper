@@ -22,9 +22,11 @@
 #ifndef SNAPPER_CLI_JSON_FORMATTER_H
 #define SNAPPER_CLI_JSON_FORMATTER_H
 
+
+#include <json-c/json.h>
+
 #include <string>
-#include <vector>
-#include <utility>
+#include <ostream>
 
 
 namespace snapper
@@ -33,79 +35,28 @@ namespace snapper
     using namespace std;
 
 
-    namespace cli
+    class JsonFormatter
     {
 
-	/* Very simplistic JSON formatter, but enough for current requirements.
-	 *
-	 * If needed, this could be replaced by some modern library, for example:
-	 * libjson-c
-	 */
-	class JsonFormatter
-	{
+    public:
 
-	public:
+	JsonFormatter() : _root(json_object_new_object()) {}
 
-	    class List;
+	JsonFormatter(const JsonFormatter&) = delete;
 
-	    using Data = vector<pair<string, string>>;
+	JsonFormatter& operator=(const JsonFormatter&) = delete;
 
-	    JsonFormatter(const Data& data)
-		: data(data), _inline(false)
-	    {
-	    }
+	~JsonFormatter() { json_object_put(_root); }
 
-	    void skip_format_values(const vector<string>& skip_format_values)
-	    {
-		_skip_format_values = skip_format_values;
-	    }
+	json_object* root() { return _root; }
 
-	    void set_inline(bool is_inline)
-	    {
-		_inline = is_inline;
-	    }
+	friend ostream& operator<<(ostream& stream, const JsonFormatter& json_formatter);
 
-	    string str(u_int indent_level = 0) const;
+    private:
 
-	private:
+	json_object* _root;
 
-	    string json_attributes(u_int indent_level) const;
-
-	    bool skip_format_value(const string& key) const;
-
-	    const Data& data;
-
-	    vector<string> _skip_format_values;
-
-	    bool _inline;
-
-	    static string indent(u_int indent_level);
-	    static string escape(const string& value);
-	    static string quote(const string& value);
-	    static string to_json(const string& value);
-
-	};
-
-
-	class JsonFormatter::List
-	{
-
-	public:
-
-	    List(const vector<string>& data)
-		: data(data)
-	    {
-	    }
-
-	    string str(u_int indent_level = 0) const;
-
-	private:
-
-	    const vector<string>& data;
-
-	};
-
-    }
+    };
 
 }
 

@@ -31,7 +31,7 @@ table_formatter_test_LDADD = -lboost_unit_test_framework ../client/utils/libutil
 
 csv_formatter_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
 
-json_formatter_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
+json_formatter_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la $(JSONC_LIBS)
 
 getopts_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
 

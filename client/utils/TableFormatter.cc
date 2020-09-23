@@ -19,7 +19,6 @@
  * find current contact information at www.novell.com.
  */
 
-#include <sstream>
 
 #include "client/utils/TableFormatter.h"
 
@@ -30,40 +29,33 @@ namespace snapper
     using namespace std;
 
 
-    namespace cli
+    const TableStyle TableFormatter::default_style = Ascii;
+
+
+    ostream&
+    operator<<(ostream& stream, const TableFormatter& table_formatter)
     {
+	Table table;
+	table.set_style(table_formatter.style);
 
-	const TableStyle TableFormatter::default_style = Ascii;
+	TableHeader table_header;
 
+	for (const pair<string, TableAlign>& column : table_formatter._header)
+	    table_header.add(column.first, column.second);
 
-	string
-	TableFormatter::str() const
+	table.setHeader(table_header);
+
+	for (const vector<string>& row : table_formatter._rows)
 	{
-	    Table table;
-	    table.set_style(style);
+	    TableRow table_row;
 
-	    TableHeader table_header;
+	    for (const string& value : row)
+		table_row.add(value);
 
-	    for (const pair<string, TableAlign>& column : header)
-		table_header.add(column.first, column.second);
-
-	    table.setHeader(table_header);
-
-	    for (const vector<string>& row : rows)
-	    {
-		TableRow table_row;
-
-		for (const string& value : row)
-		    table_row.add(value);
-
-		table.add(table_row);
-	    }
-
-	    ostringstream stream;
-	    stream << table;
-	    return stream.str();
+	    table.add(table_row);
 	}
 
+	return stream << table;
     }
 
 }

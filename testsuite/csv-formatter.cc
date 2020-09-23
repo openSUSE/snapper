@@ -8,25 +8,33 @@
 
 
 using namespace std;
+using namespace snapper;
+
+
+string
+str(const CsvFormatter& formatter)
+{
+    ostringstream stream;
+    stream << formatter;
+    return stream.str();
+}
 
 
 BOOST_AUTO_TEST_CASE(test1)
 {
-    vector<string> columns = { "column1", "column2", "column3" };
+    CsvFormatter formatter(";");
 
-    vector<vector<string>> rows = {
+    formatter.header() = { "column1", "column2", "column3" };
+
+    formatter.rows() = {
 	{ "value;1", "value\n2", "value\"3" },
 	{ "value1", "\"value2\"", "value3" }
     };
-
-    string separator = ";";
-
-    snapper::cli::CsvFormatter formatter(columns, rows, separator);
 
     string result =
 	"column1;column2;column3\n"
 	"\"value;1\";\"value\n2\";\"value\"\"3\"\n"
 	"value1;\"\"\"value2\"\"\";value3\n";
 
-    BOOST_CHECK_EQUAL(formatter.str(), result);
+    BOOST_CHECK_EQUAL(str(formatter), result);
 }
