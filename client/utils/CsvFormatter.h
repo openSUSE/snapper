@@ -22,8 +22,10 @@
 #ifndef SNAPPER_CLI_CSV_FORMATTER_H
 #define SNAPPER_CLI_CSV_FORMATTER_H
 
+
 #include <string>
 #include <vector>
+#include <ostream>
 
 
 namespace snapper
@@ -32,43 +34,42 @@ namespace snapper
     using namespace std;
 
 
-    namespace cli
+    class CsvFormatter
     {
 
-	class CsvFormatter
-	{
+    public:
 
-	public:
+	static const string default_separator;
 
-	    static const string default_separator;
+	CsvFormatter(const string& separator) : separator(separator) {}
 
-	    CsvFormatter(const vector<string>& header, const vector<vector<string>>& rows,
-			 const string& separator)
-		: header(header), rows(rows), separator(separator)
-	    {
-	    }
+	CsvFormatter(const CsvFormatter&) = delete;
 
-	    string str() const;
+	CsvFormatter& operator=(const CsvFormatter&) = delete;
 
-	private:
+	vector<string>& header() { return _header; }
+	vector<vector<string>>&  rows() { return _rows; }
 
-	    string csv_line(const vector<string>& values) const;
+	friend ostream& operator<<(ostream& stream, const CsvFormatter& csv_formatter);
 
-	    string csv_value(const string& value) const;
+    private:
 
-	    bool has_special_chars(const string& value) const;
+	string csv_line(const vector<string>& values) const;
 
-	    string double_quotes(const string& value) const;
+	string csv_value(const string& value) const;
 
-	    string enclose_with_quotes(const string& value) const;
+	bool has_special_chars(const string& value) const;
 
-	    const vector<string> header;
-	    const vector<vector<string>> rows;
-	    const string separator;
+	string double_quotes(const string& value) const;
 
-	};
+	string enclose_with_quotes(const string& value) const;
 
-    }
+	const string separator;
+
+	vector<string> _header;
+	vector<vector<string>> _rows;
+
+    };
 
 }
 

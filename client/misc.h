@@ -22,11 +22,13 @@
 
 
 #include <string>
+#include <boost/algorithm/string.hpp>
 
 #include <snapper/Snapper.h>
 #include <snapper/AppUtil.h>
 #include <snapper/Enum.h>
 #include "client/utils/text.h"
+#include "client/utils/GetOpts.h"
 
 
 using namespace snapper;
@@ -100,6 +102,35 @@ namespace snapper
 	// TRANSLATORS: a list of possible values
 	// %1$s is replaced by list of possible values
 	return sformat(_("Use %1$s."), ret.c_str());
+    }
+
+
+    /**
+     * Transform a string with comma separated columns to a vector of columns.
+     */
+    template<class Column>
+    vector<Column>
+    parse_columns(const string& columns)
+    {
+	vector<string> tmp;
+	boost::split(tmp, columns, boost::is_any_of(","), boost::token_compress_on);
+
+	vector<Column> ret;
+
+	for (const string& str : tmp)
+	{
+	    Column column;
+	    if (!toValue(str, column, false))
+	    {
+		string error = sformat(_("Invalid column '%s'."), str.c_str()) + '\n' +
+		    possible_enum_values<Column>();
+		SN_THROW(OptionsException(error));
+	    }
+
+	    ret.push_back(column);
+	}
+
+	return ret;
     }
 
 }

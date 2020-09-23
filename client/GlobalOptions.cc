@@ -113,7 +113,7 @@ namespace snapper
     {
 	ParsedOpts::const_iterator it = opts.find("table-style");
 	if (it == opts.end())
-	    return cli::TableFormatter::default_style;
+	    return TableFormatter::default_style;
 
 	try
 	{
@@ -132,7 +132,7 @@ namespace snapper
 	    SN_THROW(OptionsException(error));
 	}
 
-	return cli::TableFormatter::default_style;
+	return TableFormatter::default_style;
     }
 
 
@@ -167,7 +167,7 @@ namespace snapper
     {
 	ParsedOpts::const_iterator it = opts.find("separator");
 	if (it == opts.end())
-	    return cli::CsvFormatter::default_separator;
+	    return CsvFormatter::default_separator;
 
 	return it->second;
     }

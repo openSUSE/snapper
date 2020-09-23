@@ -26,7 +26,10 @@
 #include "utils/text.h"
 #include "GlobalOptions.h"
 #include "proxy.h"
-#include "Command/GetConfig.h"
+#include "misc.h"
+#include "utils/TableFormatter.h"
+#include "utils/CsvFormatter.h"
+#include "utils/JsonFormatter.h"
 
 
 namespace snapper
@@ -38,16 +41,166 @@ namespace snapper
     void
     help_get_config()
     {
-	cout << cli::Command::GetConfig::help() << endl;
+	cout << _("  Get config:") << '\n'
+	     << _("\tsnapper get-config") << '\n'
+	     << '\n'
+	     << _("    Options for 'get-config' command:") << '\n'
+	     << _("\t--columns <columns>\t\tColumns to show separated by comma.\n"
+		  "\t\t\t\t\tPossible columns: key, value.\n"
+		  "\t\t\t\t\tColumns are not selected when JSON format is used.") << '\n'
+	     << endl;
+    }
+
+
+    namespace
+    {
+
+	enum class Column
+	{
+	    KEY, VALUE
+	};
+
+
+	pair<string, TableAlign>
+	header_for(Column column)
+	{
+	    switch (column)
+	    {
+		case Column::KEY:
+		    return make_pair(_("Key"), TableAlign::LEFT);
+
+		case Column::VALUE:
+		    return make_pair(_("Value"), TableAlign::LEFT);
+	    }
+
+	    SN_THROW(Exception("invalid column value"));
+	    __builtin_unreachable();
+	}
+
+
+	string
+	value_for_as_string(Column column, const pair<const string, string>& value)
+	{
+	    switch (column)
+	    {
+		case Column::KEY:
+		    return value.first;
+
+		case Column::VALUE:
+		    return value.second;
+	    }
+
+	    SN_THROW(Exception("invalid column value"));
+	    __builtin_unreachable();
+	}
+
+
+	void
+	output_table(const vector<Column>& columns, TableStyle style, ProxySnapper* snapper)
+	{
+	    TableFormatter formatter(style);
+
+	    for (Column column : columns)
+		formatter.header().push_back(header_for(column));
+
+	    ProxyConfig config = snapper->getConfig();
+	    for (const map<string, string>::value_type& value : config.getAllValues())
+	    {
+		vector<string> row;
+
+		for (Column column : columns)
+		    row.push_back(value_for_as_string(column, value));
+
+		formatter.rows().push_back(row);
+	    }
+
+	    cout << formatter;
+	}
+
+
+	void
+	output_csv(const vector<Column>& columns, const string& separator, ProxySnapper* snapper)
+	{
+	    CsvFormatter formatter(separator);
+
+	    for (Column column : columns)
+		formatter.header().push_back(toString(column));
+
+	    ProxyConfig config = snapper->getConfig();
+	    for (const map<string, string>::value_type& value : config.getAllValues())
+	    {
+		vector<string> row;
+
+		for (Column column : columns)
+		    row.push_back(value_for_as_string(column, value));
+
+		formatter.rows().push_back(row);
+	    }
+
+	    cout << formatter;
+	}
+
+
+	void
+	output_json(const vector<Column>& columns, ProxySnapper* snapper)
+	{
+	    JsonFormatter formatter;
+
+	    ProxyConfig config = snapper->getConfig();
+	    for (const map<string, string>::value_type& value : config.getAllValues())
+	    {
+		json_object_object_add(formatter.root(), value_for_as_string(Column::KEY, value).c_str(),
+				       json_object_new_string(value_for_as_string(Column::VALUE, value).c_str()));
+	    }
+
+	    cout << formatter;
+	}
+
     }
 
 
     void
-    command_get_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
+    command_get_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*, ProxySnapper* snapper)
     {
-	cli::Command::GetConfig command(global_options, get_opts, *snappers);
+	const vector<Option> options = {
+	    Option("columns",	required_argument)
+	};
 
-	command.run();
+	ParsedOpts opts = get_opts.parse("get-config", options);
+
+	vector<Column> columns = { Column::KEY, Column::VALUE };
+
+	ParsedOpts::const_iterator opt;
+
+	if ((opt = opts.find("columns")) != opts.end())
+	{
+	    columns = parse_columns<Column>(opt->second);
+	}
+
+	if (get_opts.has_args())
+	{
+	    SN_THROW(OptionsException(_("Command 'get-config' does not take arguments.")));
+	}
+
+	switch (global_options.output_format())
+	{
+	    case GlobalOptions::OutputFormat::TABLE:
+		output_table(columns, global_options.table_style(), snapper);
+		break;
+
+	    case GlobalOptions::OutputFormat::CSV:
+		output_csv(columns, global_options.separator(), snapper);
+		break;
+
+	    case GlobalOptions::OutputFormat::JSON:
+		output_json(columns, snapper);
+		break;
+	}
     }
+
+
+    template <> struct EnumInfo<Column> { static const vector<string> names; };
+
+    const vector<string> EnumInfo<Column>::names({ "key", "value" });
 
 }
