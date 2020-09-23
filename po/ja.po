@@ -9,9 +9,10 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-23 10:33+0200\n"
-"PO-Revision-Date: 2020-09-16 00:48+0000\n"
+"PO-Revision-Date: 2020-09-23 13:48+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
+"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/"
+"ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,7 +51,7 @@ msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <オプション>\tdiffコマンドに渡される追加オプション。"
 
 msgid "\t--free-space <space>\t\tTry to make space available."
-msgstr ""
+msgstr "\t--free-space <サイズ>\t\t指定した空き容量になるようにする。"
 
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\t指定したスナップショットから新しいスナップショットを作成する。"
@@ -80,7 +81,7 @@ msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <ファイル>\t\t状態をファイルに保存する。"
 
 msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
-msgstr ""
+msgstr "\t--path <パス>\t\t\t指定したパスに関わる全ての設定をクリーンアップする。"
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <番号>\t\t事前スナップショットの番号を指定する。"
@@ -181,9 +182,8 @@ msgstr "\tsnapper xadiff <番号 1>..<番号 2> [ファイル]"
 msgid "    Global options:"
 msgstr "    グローバルオプション:"
 
-#, fuzzy
 msgid "    Options for 'cleanup' command:"
-msgstr "    'create' コマンドに対するオプション:"
+msgstr "    'cleanup' コマンドに対するオプション:"
 
 msgid "    Options for 'create' command:"
 msgstr "    'create' コマンドに対するオプション:"
@@ -383,10 +383,10 @@ msgstr "設定データ '%s' には値がありません。"
 
 #, c-format
 msgid "Could not make enough free space available for path '%s'."
-msgstr ""
+msgstr "パス '%s' に対して十分な空き容量を確保できませんでした。"
 
 msgid "Could not make enough free space available."
-msgstr ""
+msgstr "十分な空き容量を確保できませんでした。"
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -425,12 +425,11 @@ msgstr "ファイルシステムの種類の検出に失敗しました。"
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
-msgstr ""
+msgstr "E"
 
 #. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
-#, fuzzy
 msgid "EB"
-msgstr "EiB"
+msgstr "EB"
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
@@ -449,17 +448,16 @@ msgstr "エラー (%s) 。"
 msgid "Failed to initialize filesystem handler."
 msgstr "ファイルシステムハンドラの準備に失敗しました。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to parse '%s'."
-msgstr "%s の作成に失敗しました"
+msgstr "'%s' の処理に失敗しました。"
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
-msgstr ""
+msgstr "パス '%s' に対する空き容量の問い合わせに失敗しました。"
 
-#, fuzzy
 msgid "Failed to query free space."
-msgstr "%s の作成に失敗しました"
+msgstr "空き容量の問い合わせに失敗しました。"
 
 msgid "Failed to set locale. Fix your system."
 msgstr "ロケールの設定に失敗しました。システムを修復してください。"
@@ -481,12 +479,11 @@ msgstr "空き容量エラー (%s) 。"
 
 #. TRANSLATORS: symbol for "giga" (best keep untranslated)
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
-#, fuzzy
 msgid "GB"
-msgstr "GiB"
+msgstr "GB"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -513,9 +510,8 @@ msgstr "領域 '%s' が正しくありません。"
 msgid "Invalid configdata."
 msgstr "設定データが正しくありません。"
 
-#, fuzzy
 msgid "Invalid free-space value."
-msgstr "サブボリュームが正しくありません。"
+msgstr "空き容量の値が正しくありません。"
 
 msgid "Invalid group."
 msgstr "グループが正しくありません。"
@@ -524,9 +520,9 @@ msgstr "グループが正しくありません。"
 msgid "Invalid machine readable format '%s'."
 msgstr "機械処理可能な形式の指定 '%s' が正しくありません。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid path '%s'."
-msgstr "領域 '%s' が正しくありません。"
+msgstr "パス '%s' が正しくありません。"
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -558,12 +554,11 @@ msgstr "設定の一覧表示に失敗しました (%s)。"
 
 #. TRANSLATORS: symbol for "mega" (best keep untranslated)
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
-#, fuzzy
 msgid "MB"
-msgstr "MiB"
+msgstr "MB"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "スナップショット番号の間に区切り記号「..」を入力していない可能性があります。"
@@ -607,12 +602,11 @@ msgstr "--read-write オプションは、種類が single (単一) であるス
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
-#, fuzzy
 msgid "PB"
-msgstr "PiB"
+msgstr "PB"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -638,12 +632,11 @@ msgstr "スナップショットは使用中です。"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
-#, fuzzy
 msgid "TB"
-msgstr "TiB"
+msgstr "TB"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "領域を指定したい場合は、 --ambit オプションをお使いください。"
@@ -728,12 +721,11 @@ msgstr "%s の修正に失敗しました"
 
 #. TRANSLATORS: symbol for "kilo" (best keep untranslated)
 msgid "k"
-msgstr ""
+msgstr "k"
 
 #. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
-#, fuzzy
 msgid "kB"
-msgstr "B"
+msgstr "kB"
 
 #, c-format
 msgid "modifying %s"
