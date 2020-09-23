@@ -7,9 +7,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-23 18:35+0200\n"
-"PO-Revision-Date: 2020-09-16 18:48+0000\n"
+"PO-Revision-Date: 2020-09-24 00:48+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
-"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
+"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
+"\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,7 +68,7 @@ msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <voľby>\tĎalšie voľby odovzdané príkazu diff."
 
 msgid "\t--free-space <space>\t\tTry to make space available."
-msgstr ""
+msgstr "\t--free-space <miesto>\t\tSkúsi sprístupniť miesto."
 
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\tVytvorí snímku zo zadanej snímky."
@@ -97,7 +98,7 @@ msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <súbor>\t\tUloží stav do súboru."
 
 msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
-msgstr ""
+msgstr "\t--path <cesta>\t\t\tVyčistí všetky konfigurácie ovplyvňujúce cestu."
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <číslo>\t\tČíslo zodpovedajúce snímke pred."
@@ -210,9 +211,8 @@ msgstr "\tsnapper xadiff <číslo1>..<číslo2> [súbory]"
 msgid "    Global options:"
 msgstr "    Globálne voľby:"
 
-#, fuzzy
 msgid "    Options for 'cleanup' command:"
-msgstr "    Voľby pre príkaz 'create':"
+msgstr "    Voľby pre príkaz 'cleanup':"
 
 msgid "    Options for 'create' command:"
 msgstr "    Voľby pre príkaz 'create':"
@@ -226,9 +226,8 @@ msgstr "    Voľby pre príkaz 'delete':"
 msgid "    Options for 'diff' command:"
 msgstr "    Voľby pre príkaz 'diff':"
 
-#, fuzzy
 msgid "    Options for 'get-config' command:"
-msgstr "    Voľby pre príkaz 'create-config':"
+msgstr "    Voľby pre príkaz 'get-config':"
 
 msgid "    Options for 'list' command:"
 msgstr "    Voľby pre príkaz 'list':"
@@ -327,7 +326,7 @@ msgid "ACL error."
 msgstr "ACL chyba."
 
 msgid "Active"
-msgstr ""
+msgstr "Aktívne"
 
 msgid "Active snapshot is already default snapshot."
 msgstr "Aktívna snímka je už predvolená snímka."
@@ -455,10 +454,10 @@ msgstr "Konfiguračné údaje '%s' majú prázdny kľúč."
 
 #, c-format
 msgid "Could not make enough free space available for path '%s'."
-msgstr ""
+msgstr "Nepodarilo sa sprístupniť dostatok voľného miesta pre cestu '%s'."
 
 msgid "Could not make enough free space available."
-msgstr ""
+msgstr "Nepodarilo sa sprístupniť dostatok voľného miesta."
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -511,9 +510,8 @@ msgid "E"
 msgstr ""
 
 #. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
-#, fuzzy
 msgid "EB"
-msgstr "EiB"
+msgstr "EB"
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
@@ -533,17 +531,16 @@ msgstr "Chyba (%s)."
 msgid "Failed to initialize filesystem handler."
 msgstr "Zlyhala inicializácia obslužného programu systému súborov."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to parse '%s'."
-msgstr "zlyhalo vytvorenie %s"
+msgstr "Nepodarilo sa analyzovať '%s'."
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr ""
 
-#, fuzzy
 msgid "Failed to query free space."
-msgstr "zlyhalo vytvorenie %s"
+msgstr "Nepodarilo sa zistiť voľné miesto."
 
 msgid "Failed to set locale. Fix your system."
 msgstr "Zlyhalo nastavenie lokalizácie. Opravte si systém."
@@ -569,9 +566,8 @@ msgid "G"
 msgstr ""
 
 #. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
-#, fuzzy
 msgid "GB"
-msgstr "GiB"
+msgstr "GB"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -597,16 +593,15 @@ msgstr "Nepovolená snímka."
 msgid "Invalid ambit '%s'."
 msgstr "Neplatná oblasť '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid column '%s'."
-msgstr "Neplatná oblasť '%s'."
+msgstr "Neplatný stĺpec '%s'."
 
 msgid "Invalid configdata."
 msgstr "Neplatné konfiguračné údaje."
 
-#, fuzzy
 msgid "Invalid free-space value."
-msgstr "Neplatný podzväzok."
+msgstr "Neplatná hodnota voľného miesta."
 
 msgid "Invalid group."
 msgstr "Neplatná skupina."
@@ -615,9 +610,9 @@ msgstr "Neplatná skupina."
 msgid "Invalid machine readable format '%s'."
 msgstr "Neplatný formát čitateľný strojom '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid path '%s'."
-msgstr "Neplatná oblasť '%s'."
+msgstr "Neplatná cesta '%s'."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -657,9 +652,8 @@ msgid "M"
 msgstr ""
 
 #. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
-#, fuzzy
 msgid "MB"
-msgstr "MiB"
+msgstr "MB"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Možno, že ste zabudli oddeľovač '..' medzi číslami snímok."
@@ -706,9 +700,8 @@ msgid "P"
 msgstr ""
 
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
-#, fuzzy
 msgid "PB"
-msgstr "PiB"
+msgstr "PB"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -753,9 +746,8 @@ msgid "T"
 msgstr ""
 
 #. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
-#, fuzzy
 msgid "TB"
-msgstr "TiB"
+msgstr "TB"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Oblasť je možné zadať manuálne pomocou voľby --ambit."
@@ -858,9 +850,8 @@ msgid "k"
 msgstr ""
 
 #. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
-#, fuzzy
 msgid "kB"
-msgstr "B"
+msgstr "kB"
 
 #, c-format
 msgid "modifying %s"
