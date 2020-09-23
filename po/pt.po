@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 10:33+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2018-06-01 11:05+0000\n"
 "Last-Translator: Jiri Machalek <jiri.machalek@tieto.com>\n"
 "Language-Team: Portuguese <https://l10n.opensuse.org/projects/snapper/master/pt/>\n"
@@ -19,6 +19,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.18\n"
 
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr ""
+
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr ""
 
@@ -26,6 +29,19 @@ msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr ""
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
 msgstr ""
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
@@ -44,6 +60,9 @@ msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr ""
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
+msgstr ""
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
 msgstr ""
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
@@ -118,6 +137,9 @@ msgstr ""
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr ""
 
+msgid "\t--type, -t <type>\t\tType of snapshots to list."
+msgstr ""
+
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr ""
 
@@ -150,6 +172,15 @@ msgid "\tsnapper delete-config"
 msgstr ""
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
+msgstr ""
+
+msgid "\tsnapper get-config"
+msgstr ""
+
+msgid "\tsnapper list"
+msgstr ""
+
+msgid "\tsnapper list-configs"
 msgstr ""
 
 msgid "\tsnapper modify <number>"
@@ -198,6 +229,18 @@ msgstr ""
 msgid "    Options for 'diff' command:"
 msgstr ""
 
+msgid "    Options for 'get-config' command:"
+msgstr ""
+
+msgid "    Options for 'list' command:"
+msgstr ""
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+
 msgid "    Options for 'modify' command:"
 msgstr ""
 
@@ -238,6 +281,22 @@ msgstr ""
 msgid "  Delete snapshot:"
 msgstr ""
 
+#, fuzzy
+msgid "  Get config:"
+msgstr ""
+"%s - criar ficheiros de configuração PAM\n"
+"\n"
+
+#, fuzzy
+msgid "  List configs:"
+msgstr ""
+"%s - criar ficheiros de configuração PAM\n"
+"\n"
+
+#, fuzzy
+msgid "  List snapshots:"
+msgstr "Criado em: "
+
 msgid "  Modify snapshot:"
 msgstr ""
 
@@ -264,6 +323,9 @@ msgstr "Criado em: "
 msgid "  Undo changes:"
 msgstr ""
 
+msgid "#"
+msgstr ""
+
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
@@ -283,6 +345,9 @@ msgid "(Snapshot %d.)"
 msgstr ""
 
 msgid "ACL error."
+msgstr ""
+
+msgid "Active"
 msgstr ""
 
 msgid "Active snapshot is already default snapshot."
@@ -315,6 +380,10 @@ msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
 #, fuzzy
+msgid "Cleanup"
+msgstr "Limpo"
+
+#, fuzzy
 msgid "Command 'cleanup' needs one arguments."
 msgstr "add necessita um argumento"
 
@@ -342,8 +411,20 @@ msgid "Command 'diff' needs at least one argument."
 msgstr ""
 
 #, fuzzy
+msgid "Command 'get-config' does not take arguments."
+msgstr "list_groups não tem argumentos"
+
+#, fuzzy
 msgid "Command 'help' does not take arguments."
 msgstr "reload não necessita argumentos"
+
+#, fuzzy
+msgid "Command 'list' does not take arguments."
+msgstr "reload não necessita argumentos"
+
+#, fuzzy
+msgid "Command 'list-configs' does not take arguments."
+msgstr "list_groups não tem argumentos"
 
 #, fuzzy
 msgid "Command 'modify' needs at least one argument."
@@ -386,6 +467,10 @@ msgstr "get necessita pelo menos um argumento"
 #, fuzzy
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "get necessita pelo menos um argumento"
+
+#, fuzzy
+msgid "Config"
+msgstr "Configurar"
 
 #, fuzzy, c-format
 msgid "Config '%s' is invalid."
@@ -439,6 +524,13 @@ msgstr ""
 msgid "Creating snapshot failed."
 msgstr "Falha na leitura do ficheiro de configuração"
 
+#, fuzzy
+msgid "Date"
+msgstr "Data: %1"
+
+msgid "Default"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Falha na leitura do ficheiro de configuração"
@@ -452,6 +544,9 @@ msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Falha ao apagar o CA: %1"
 msgstr[1] "Falha ao apagar o CA: %1"
+
+msgid "Description"
+msgstr "Descrição"
 
 msgid "Detecting filesystem type failed."
 msgstr ""
@@ -547,6 +642,10 @@ msgstr "Estilo de tabela inválido %d."
 msgid "Invalid ambit '%s'."
 msgstr "Estilo de tabela inválido %d."
 
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Estilo de tabela inválido %d."
+
 #, fuzzy
 msgid "Invalid configdata."
 msgstr "Dados de emissão inválidos."
@@ -585,6 +684,11 @@ msgstr ""
 #, fuzzy
 msgid "Invalid userdata."
 msgstr "Estilo de tabela inválido %d."
+
+# name for KEN
+#, fuzzy
+msgid "Key"
+msgstr "Quénia"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -657,6 +761,21 @@ msgstr ""
 msgid "PiB"
 msgstr ""
 
+#, fuzzy
+msgid "Post #"
+msgstr "Poststart"
+
+#, fuzzy
+msgid "Post Date"
+msgstr "Poststart"
+
+msgid "Pre #"
+msgstr ""
+
+#, fuzzy
+msgid "Pre Date"
+msgstr "Poststart"
+
 # error box title
 #, fuzzy, c-format
 msgid "Quota error (%s)."
@@ -675,6 +794,9 @@ msgid "Snapshot '%u' not found."
 msgstr "%s '%s' não encontrado."
 
 msgid "Snapshot is in use."
+msgstr ""
+
+msgid "Subvolume"
 msgstr ""
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
@@ -701,6 +823,9 @@ msgstr ""
 #, fuzzy
 msgid "Try 'snapper --help' for more information."
 msgstr "Tente `%s --help' ou `%s --usage' para mais informações.\n"
+
+msgid "Type"
+msgstr "Tipo"
 
 #, fuzzy, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -736,6 +861,17 @@ msgstr ""
 msgid "Use an integer number from %d to %d."
 msgstr ""
 
+msgid "Used Space"
+msgstr ""
+
+#, fuzzy
+msgid "User"
+msgstr "Nome de Utilizador"
+
+#, fuzzy
+msgid "Userdata"
+msgstr "Nome de Utilizador"
+
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
 msgstr ""
@@ -743,6 +879,9 @@ msgstr ""
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr ""
+
+msgid "Value"
+msgstr "Valor"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -780,6 +919,9 @@ msgstr ""
 msgid "modifying %s"
 msgstr "A remover %1$s"
 
+msgid "no"
+msgstr ""
+
 #, fuzzy
 msgid "nothing to do"
 msgstr "Nada para fazer."
@@ -793,65 +935,16 @@ msgstr ""
 "Uso:\n"
 "\tsnapper [--opções-globais] <command> [--opções do comando] [argumentos]"
 
+msgid "yes"
+msgstr ""
+
 #, fuzzy
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "Tipo desconhecido."
 
 #, fuzzy
-#~ msgid "  Get config:"
-#~ msgstr ""
-#~ "%s - criar ficheiros de configuração PAM\n"
-#~ "\n"
-
-#, fuzzy
-#~ msgid "Cleanup"
-#~ msgstr "Limpo"
-
-#, fuzzy
-#~ msgid "Command 'get-config' does not take arguments."
-#~ msgstr "list_groups não tem argumentos"
-
-#, fuzzy
-#~ msgid "Command 'list' does not take arguments."
-#~ msgstr "reload não necessita argumentos"
-
-#, fuzzy
-#~ msgid "Command 'list-configs' does not take arguments."
-#~ msgstr "list_groups não tem argumentos"
-
-#, fuzzy
-#~ msgid "Config"
-#~ msgstr "Configurar"
-
-#, fuzzy
-#~ msgid "Date"
-#~ msgstr "Data: %1"
-
-#~ msgid "Description"
-#~ msgstr "Descrição"
-
-# name for KEN
-#, fuzzy
-#~ msgid "Key"
-#~ msgstr "Quénia"
-
-#, fuzzy
-#~ msgid "Post Date"
-#~ msgstr "Poststart"
-
-#~ msgid "Type"
-#~ msgstr "Tipo"
-
-#, fuzzy
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Tipo desconhecido."
-
-#, fuzzy
-#~ msgid "User"
-#~ msgstr "Nome de Utilizador"
-
-#~ msgid "Value"
-#~ msgstr "Valor"
 
 #, fuzzy
 #~ msgid "Command '%s' does not work without DBus."

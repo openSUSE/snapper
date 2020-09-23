@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yast memory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 10:33+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2004-04-05 17:37+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <i18n@suse.de>\n"
@@ -17,6 +17,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr ""
+
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr ""
 
@@ -24,6 +27,19 @@ msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr ""
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
 msgstr ""
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
@@ -42,6 +58,9 @@ msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr ""
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
+msgstr ""
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
 msgstr ""
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
@@ -116,6 +135,9 @@ msgstr ""
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr ""
 
+msgid "\t--type, -t <type>\t\tType of snapshots to list."
+msgstr ""
+
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr ""
 
@@ -147,6 +169,15 @@ msgid "\tsnapper delete-config"
 msgstr ""
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
+msgstr ""
+
+msgid "\tsnapper get-config"
+msgstr ""
+
+msgid "\tsnapper list"
+msgstr ""
+
+msgid "\tsnapper list-configs"
 msgstr ""
 
 msgid "\tsnapper modify <number>"
@@ -194,6 +225,18 @@ msgstr ""
 msgid "    Options for 'diff' command:"
 msgstr ""
 
+msgid "    Options for 'get-config' command:"
+msgstr ""
+
+msgid "    Options for 'list' command:"
+msgstr ""
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+
 msgid "    Options for 'modify' command:"
 msgstr ""
 
@@ -228,6 +271,17 @@ msgstr "Disfacer l' profil"
 msgid "  Delete snapshot:"
 msgstr ""
 
+#, fuzzy
+msgid "  Get config:"
+msgstr "Disfacer l' profil"
+
+#, fuzzy
+msgid "  List configs:"
+msgstr "Disfacer l' profil"
+
+msgid "  List snapshots:"
+msgstr ""
+
 msgid "  Modify snapshot:"
 msgstr ""
 
@@ -248,6 +302,9 @@ msgid "  Umount snapshot:"
 msgstr ""
 
 msgid "  Undo changes:"
+msgstr ""
+
+msgid "#"
 msgstr ""
 
 #. TRANSLATORS: used to construct list of values
@@ -271,6 +328,9 @@ msgstr "Apontyî"
 #, fuzzy
 msgid "ACL error."
 msgstr "Aroke I/O"
+
+msgid "Active"
+msgstr ""
 
 msgid "Active snapshot is already default snapshot."
 msgstr ""
@@ -301,6 +361,9 @@ msgstr ""
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
+msgid "Cleanup"
+msgstr ""
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr ""
 
@@ -322,7 +385,16 @@ msgstr ""
 msgid "Command 'diff' needs at least one argument."
 msgstr ""
 
+msgid "Command 'get-config' does not take arguments."
+msgstr ""
+
 msgid "Command 'help' does not take arguments."
+msgstr ""
+
+msgid "Command 'list' does not take arguments."
+msgstr ""
+
+msgid "Command 'list-configs' does not take arguments."
 msgstr ""
 
 msgid "Command 'modify' needs at least one argument."
@@ -358,6 +430,10 @@ msgstr ""
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr ""
+
+#, fuzzy
+msgid "Config"
+msgstr "Apontyî"
 
 #, fuzzy, c-format
 msgid "Config '%s' is invalid."
@@ -412,6 +488,13 @@ msgstr "Dj' analijhe les fitchîs d' apontiaedje..."
 msgid "Creating snapshot failed."
 msgstr "Dj' analijhe les fitchîs d' apontiaedje..."
 
+#, fuzzy
+msgid "Date"
+msgstr "Date: %1"
+
+msgid "Default"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Dj' analijhe les fitchîs d' apontiaedje..."
@@ -425,6 +508,9 @@ msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Dj' analijhe les fitchîs d' apontiaedje..."
 msgstr[1] "Dj' analijhe les fitchîs d' apontiaedje..."
+
+msgid "Description"
+msgstr "Discrijhaedje"
 
 msgid "Detecting filesystem type failed."
 msgstr ""
@@ -518,6 +604,10 @@ msgstr "Li sôre di sistinme di fitchî n' clope nén"
 msgid "Invalid ambit '%s'."
 msgstr "Li sôre di sistinme di fitchî n' clope nén"
 
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Li sôre di sistinme di fitchî n' clope nén"
+
 #, fuzzy
 msgid "Invalid configdata."
 msgstr "Li sôre di sistinme di fitchî n' clope nén"
@@ -558,6 +648,10 @@ msgstr "Li sôre di sistinme di fitchî n' clope nén"
 #, fuzzy
 msgid "Invalid userdata."
 msgstr "Li sôre di sistinme di fitchî n' clope nén"
+
+#, fuzzy
+msgid "Key"
+msgstr "&Clé:"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -629,6 +723,21 @@ msgstr ""
 msgid "PiB"
 msgstr ""
 
+#, fuzzy
+msgid "Post #"
+msgstr "Nos des lodjoes"
+
+#, fuzzy
+msgid "Post Date"
+msgstr "Nos des lodjoes"
+
+msgid "Pre #"
+msgstr ""
+
+#, fuzzy
+msgid "Pre Date"
+msgstr "Nos des lodjoes"
+
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "Aroke I/O"
@@ -648,6 +757,9 @@ msgstr "Apontyî"
 #, fuzzy
 msgid "Snapshot is in use."
 msgstr "Apontyî"
+
+msgid "Subvolume"
+msgstr ""
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -673,6 +785,9 @@ msgstr ""
 #, fuzzy
 msgid "Try 'snapper --help' for more information."
 msgstr "Sayîz `%s --help' oudonbén `%s --usage' po pus d' informåcions.\n"
+
+msgid "Type"
+msgstr "Sôre"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -708,6 +823,17 @@ msgstr ""
 msgid "Use an integer number from %d to %d."
 msgstr ""
 
+msgid "Used Space"
+msgstr ""
+
+#, fuzzy
+msgid "User"
+msgstr "No d' &uzeu"
+
+#, fuzzy
+msgid "Userdata"
+msgstr "No d' &uzeu"
+
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
 msgstr ""
@@ -715,6 +841,9 @@ msgstr ""
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr ""
+
+msgid "Value"
+msgstr "Valixhance"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -752,6 +881,9 @@ msgstr ""
 msgid "modifying %s"
 msgstr ""
 
+msgid "no"
+msgstr ""
+
 msgid "nothing to do"
 msgstr ""
 
@@ -762,42 +894,12 @@ msgstr "Sayîz `%s --help' oudonbén `%s --usage' po pus d' informåcions.\n"
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
 
-#, fuzzy
-#~ msgid "  Get config:"
-#~ msgstr "Disfacer l' profil"
-
-#, fuzzy
-#~ msgid "Config"
-#~ msgstr "Apontyî"
-
-#, fuzzy
-#~ msgid "Date"
-#~ msgstr "Date: %1"
-
-#~ msgid "Description"
-#~ msgstr "Discrijhaedje"
-
-#, fuzzy
-#~ msgid "Key"
-#~ msgstr "&Clé:"
-
-#, fuzzy
-#~ msgid "Post Date"
-#~ msgstr "Nos des lodjoes"
-
-#~ msgid "Type"
-#~ msgstr "Sôre"
+msgid "yes"
+msgstr ""
 
 #, fuzzy
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Estat del rantoele nén cnoxhou"
-
-#, fuzzy
-#~ msgid "User"
-#~ msgstr "No d' &uzeu"
-
-#~ msgid "Value"
-#~ msgstr "Valixhance"
 
 #, fuzzy
 #~ msgid "Quota failure (%s)."

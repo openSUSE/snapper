@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 10:33+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2020-08-24 00:40+0000\n"
 "Last-Translator: Sarah Kriesch <ada.lovelace@gmx.de>\n"
 "Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
@@ -17,6 +17,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.6.1\n"
 
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr "\t--all-configs, -a\t\tSnapshots von allen verfügbaren Konfigurationen auflisten."
+
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr "\t--ambit, -a ambit\t\tIm angegebenen Anwendungsbereich funktionieren."
 
@@ -25,6 +28,19 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tBereinigungsalgorithmus für den Schna
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tBereinigungsalgorithmus für Schnappschüsse."
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <Befehl>\t\tBefehl ausführen und Vorher- und Nachher-Schnappschuss erstellen."
@@ -43,6 +59,9 @@ msgstr "\t--description, -d <Beschreibung>\tBeschreibung für Schnappschüsse."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <Kommando>\t\tKommando zum Vergleichen von Dateien."
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-used-space\t\tBenutzten Platz nicht anzeigen."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <Optionen>\tExtra Optionen, die an den diff-Befehl übergeben wurden."
@@ -116,6 +135,9 @@ msgstr "\t--template, -t <Name>\t\tName der zu benutzenden Konfigurationsvorlage
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <Typ>\t\tTyp für den Schnappschuss."
 
+msgid "\t--type, -t <type>\t\tType of snapshots to list."
+msgstr "\t--type, -t <Typ>\t\tTyp der anzuzeigenden Schnappschüsse."
+
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <Benutzerdaten>\tBenutzerdaten für den Schnappschuss."
 
@@ -148,6 +170,15 @@ msgstr "\tsnapper delete-config"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <Nummer1>..<Nummer2> [Dateien]"
+
+msgid "\tsnapper get-config"
+msgstr "\tsnapper get-config"
+
+msgid "\tsnapper list"
+msgstr "\tsnapper list"
+
+msgid "\tsnapper list-configs"
+msgstr "\tsnapper list-configs"
 
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <Nummer>"
@@ -195,6 +226,19 @@ msgstr "    Optionen für den Befehl 'delete':"
 msgid "    Options for 'diff' command:"
 msgstr "    Optionen für den Befehl 'diff':"
 
+#, fuzzy
+msgid "    Options for 'get-config' command:"
+msgstr "    Optionen für den Befehl 'create-config':"
+
+msgid "    Options for 'list' command:"
+msgstr "    Optionen für den Befehl 'list':"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+
 msgid "    Options for 'modify' command:"
 msgstr "    Optionen für den Befehl 'modify':"
 
@@ -228,6 +272,15 @@ msgstr "  Konfiguration löschen:"
 msgid "  Delete snapshot:"
 msgstr "  Schnappschuss löschen:"
 
+msgid "  Get config:"
+msgstr "  Konfiguration ausgeben:"
+
+msgid "  List configs:"
+msgstr "  Konfigurationen anzeigen:"
+
+msgid "  List snapshots:"
+msgstr "  Schnappschüsse anzeigen:"
+
 msgid "  Modify snapshot:"
 msgstr "  Schnappschuss verändern:"
 
@@ -249,6 +302,9 @@ msgstr "  Schnappschuss aushängen:"
 msgid "  Undo changes:"
 msgstr "  Änderungen zurücknehmen:"
 
+msgid "#"
+msgstr "#"
+
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
@@ -269,6 +325,9 @@ msgstr "(Schnappschuss %d.)"
 
 msgid "ACL error."
 msgstr "ACL-Fehler."
+
+msgid "Active"
+msgstr ""
 
 msgid "Active snapshot is already default snapshot."
 msgstr "Aktiver Schnappschuss ist schon Standard-Schnappschuss."
@@ -299,6 +358,9 @@ msgstr "Anwendungsbereich kann nicht erkannt werden, seitdem das Standard-Subvol
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Kann kein Rollback durchführen, seitdem das Standard-Subvolume unbekannt ist."
 
+msgid "Cleanup"
+msgstr "Bereinigen"
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Befehl 'cleanup' erfordert ein Argument."
 
@@ -320,8 +382,17 @@ msgstr "Befehl 'delete-config' akzeptiert keine Argumente."
 msgid "Command 'diff' needs at least one argument."
 msgstr "Befehl 'diff' braucht mindestens ein Argument."
 
+msgid "Command 'get-config' does not take arguments."
+msgstr "Befehl 'get-config' akzeptiert keine Argumente."
+
 msgid "Command 'help' does not take arguments."
 msgstr "Befehl 'help' akzeptiert keine Argumente."
+
+msgid "Command 'list' does not take arguments."
+msgstr "Befehl 'list' akzeptiert keine Argumente."
+
+msgid "Command 'list-configs' does not take arguments."
+msgstr "Befehl 'list-configs' akzeptiert keine Argumente."
 
 msgid "Command 'modify' needs at least one argument."
 msgstr "Befehl 'modify' benötigt mindestens ein Argument."
@@ -356,6 +427,9 @@ msgstr "Befehl 'undochange' benötigt mindestens ein Argument."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Befehl 'xadiff' benötigt mindestens ein Argument."
+
+msgid "Config"
+msgstr "Konfiguration"
 
 #, c-format
 msgid "Config '%s' is invalid."
@@ -406,6 +480,12 @@ msgstr "Lesen-Schreiben-Schnappschuss des Schnappschusses %d erstellen."
 msgid "Creating snapshot failed."
 msgstr "Das Erstellen eines Schnappschusses ist fehlgeschlagen."
 
+msgid "Date"
+msgstr "Datum"
+
+msgid "Default"
+msgstr ""
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Das Löschen der Konfiguration ist fehlgeschlagen (%s)."
@@ -418,6 +498,9 @@ msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Löschen des Snapshots aus %s:"
 msgstr[1] "Löschen der Snapshots aus %s:"
+
+msgid "Description"
+msgstr "Beschreibung"
 
 msgid "Detecting filesystem type failed."
 msgstr "Erkennung des Dateisystemtyps nicht möglich."
@@ -509,6 +592,10 @@ msgstr "Illegaler Schnappschuss."
 msgid "Invalid ambit '%s'."
 msgstr "Ungültiger Anwendungsbereich %s."
 
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Ungültiger Anwendungsbereich %s."
+
 msgid "Invalid configdata."
 msgstr "Ungültige Konfigurationsdaten."
 
@@ -546,6 +633,9 @@ msgstr "Ungültiger Benutzer."
 
 msgid "Invalid userdata."
 msgstr "Ungültige Benutzerdaten."
+
+msgid "Key"
+msgstr "Schlüssel"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -618,6 +708,18 @@ msgstr "PiB"
 msgid "PiB"
 msgstr "PiB"
 
+msgid "Post #"
+msgstr "Nachher #"
+
+msgid "Post Date"
+msgstr "Nachher-Datum"
+
+msgid "Pre #"
+msgstr "Vorher #"
+
+msgid "Pre Date"
+msgstr "Vorher-Datum"
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Quota-Fehler (%s)."
@@ -635,6 +737,9 @@ msgstr "Schnappschuss '%u' wurde nicht gefunden."
 
 msgid "Snapshot is in use."
 msgstr "Der Schnappschuss ist in Benutzung."
+
+msgid "Subvolume"
+msgstr "Subvolumen"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -660,6 +765,9 @@ msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Versuchen Sie 'snapper --help' für weitere Informationen."
+
+msgid "Type"
+msgstr "Typ"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -694,6 +802,15 @@ msgstr ""
 msgid "Use an integer number from %d to %d."
 msgstr "Verwenden Sie eine Ganzzahl von %d bis %d."
 
+msgid "Used Space"
+msgstr "Verwendeter Platz"
+
+msgid "User"
+msgstr "Benutzer"
+
+msgid "Userdata"
+msgstr "Benutzerdaten"
+
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
 msgstr "Benutzerdaten '%s' beinhalten kein Zeichen '='."
@@ -701,6 +818,9 @@ msgstr "Benutzerdaten '%s' beinhalten kein Zeichen '='."
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "Benutzerdaten '%s' haben einen leeren Schlüssel."
+
+msgid "Value"
+msgstr "Wert"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -739,6 +859,9 @@ msgstr "B"
 msgid "modifying %s"
 msgstr "%s wird geändert"
 
+msgid "no"
+msgstr ""
+
 msgid "nothing to do"
 msgstr "keine auszuführenden Aktionen"
 
@@ -750,6 +873,9 @@ msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "Aufruf: snapper [--Globale-Optionen] <Befehl> [--Befehlsoptionen] [Befehlsargumente]"
+
+msgid "yes"
+msgstr ""
 
 #, c-format
 #~ msgid "Invalid machine readable format %s."
@@ -766,95 +892,8 @@ msgstr "Aufruf: snapper [--Globale-Optionen] <Befehl> [--Befehlsoptionen] [Befeh
 #~ msgid "Use %s, %s or %s."
 #~ msgstr "%s, %s oder %s verwenden."
 
-#~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-#~ msgstr "\t--all-configs, -a\t\tSnapshots von allen verfügbaren Konfigurationen auflisten."
-
-#~ msgid "\t--disable-used-space\t\tDisable showing used space."
-#~ msgstr "\t--disable-used-space\t\tBenutzten Platz nicht anzeigen."
-
-#~ msgid "\t--type, -t <type>\t\tType of snapshots to list."
-#~ msgstr "\t--type, -t <Typ>\t\tTyp der anzuzeigenden Schnappschüsse."
-
-#~ msgid "\tsnapper get-config"
-#~ msgstr "\tsnapper get-config"
-
-#~ msgid "\tsnapper list"
-#~ msgstr "\tsnapper list"
-
-#~ msgid "\tsnapper list-configs"
-#~ msgstr "\tsnapper list-configs"
-
-#~ msgid "    Options for 'list' command:"
-#~ msgstr "    Optionen für den Befehl 'list':"
-
-#~ msgid "  Get config:"
-#~ msgstr "  Konfiguration ausgeben:"
-
-#~ msgid "  List configs:"
-#~ msgstr "  Konfigurationen anzeigen:"
-
-#~ msgid "  List snapshots:"
-#~ msgstr "  Schnappschüsse anzeigen:"
-
-#~ msgid "#"
-#~ msgstr "#"
-
-#~ msgid "Cleanup"
-#~ msgstr "Bereinigen"
-
-#~ msgid "Command 'get-config' does not take arguments."
-#~ msgstr "Befehl 'get-config' akzeptiert keine Argumente."
-
-#~ msgid "Command 'list' does not take arguments."
-#~ msgstr "Befehl 'list' akzeptiert keine Argumente."
-
-#~ msgid "Command 'list-configs' does not take arguments."
-#~ msgstr "Befehl 'list-configs' akzeptiert keine Argumente."
-
-#~ msgid "Config"
-#~ msgstr "Konfiguration"
-
-#~ msgid "Date"
-#~ msgstr "Datum"
-
-#~ msgid "Description"
-#~ msgstr "Beschreibung"
-
-#~ msgid "Key"
-#~ msgstr "Schlüssel"
-
-#~ msgid "Post #"
-#~ msgstr "Nachher #"
-
-#~ msgid "Post Date"
-#~ msgstr "Nachher-Datum"
-
-#~ msgid "Pre #"
-#~ msgstr "Vorher #"
-
-#~ msgid "Pre Date"
-#~ msgstr "Vorher-Datum"
-
-#~ msgid "Subvolume"
-#~ msgstr "Subvolumen"
-
-#~ msgid "Type"
-#~ msgstr "Typ"
-
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Unbekannter Typ der Schnappschüsse."
-
-#~ msgid "Used Space"
-#~ msgstr "Verwendeter Platz"
-
-#~ msgid "User"
-#~ msgstr "Benutzer"
-
-#~ msgid "Userdata"
-#~ msgstr "Benutzerdaten"
-
-#~ msgid "Value"
-#~ msgstr "Wert"
 
 #~ msgid "Quota failure (%s)."
 #~ msgstr "Quota-Störung (%s)."

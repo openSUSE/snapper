@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 10:33+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2020-09-16 13:48+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
 "Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
@@ -20,6 +20,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.6.1\n"
 
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr "\t--all-configs, -a\t\tMomentopnamen weergeven van alle beschikbare configuraties."
+
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr "\t--ambit, -a ambit\t\tIn de gespecificeerde ambit werken."
 
@@ -28,6 +31,19 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tOpschoonalgoritme voor momentopname."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tOpschoonalgoritme voor momentopnamen."
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <command>\t\tVoer opdracht uit en maak pre- en post-momentopnamen."
@@ -46,6 +62,9 @@ msgstr "\t--description, -d <description>\tBeschrijving van momentopnamen."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\tOpdracht gebruikt voor het vergelijken van bestanden."
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-used-space\t\tGebruikte ruimte tonen uitschakelen."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tExtra opties doorgeven aan de opdracht diff."
@@ -119,6 +138,9 @@ msgstr "\t--template, -t <name>\t\tNaam van te gebruiken configuratiesjabloon."
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <type>\t\tType momentopname."
 
+msgid "\t--type, -t <type>\t\tType of snapshots to list."
+msgstr "\t--type, -t <type>\t\tTe tonen type momentopname."
+
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <userdata>\tGebruikersgegevens voor momentopname."
 
@@ -151,6 +173,15 @@ msgstr "\tsnapper delete-config"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <nummer1>..<nummer2> [bestanden]"
+
+msgid "\tsnapper get-config"
+msgstr "\tsnapper get-config"
+
+msgid "\tsnapper list"
+msgstr "\tsnapper list"
+
+msgid "\tsnapper list-configs"
+msgstr "\tsnapper list-configs"
 
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <nummer>"
@@ -198,6 +229,19 @@ msgstr "    Opties voor 'verwijderen'-opdracht:"
 msgid "    Options for 'diff' command:"
 msgstr "    Opties voor opdracht 'diff':"
 
+#, fuzzy
+msgid "    Options for 'get-config' command:"
+msgstr "    Opties voor opdracht 'create-config':"
+
+msgid "    Options for 'list' command:"
+msgstr "    Opties voor opdracht 'list':"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+
 msgid "    Options for 'modify' command:"
 msgstr "    Opties voor opdracht 'modify':"
 
@@ -231,6 +275,15 @@ msgstr "  Configuratie verwijderen:"
 msgid "  Delete snapshot:"
 msgstr "  Momentopname verwijderen:"
 
+msgid "  Get config:"
+msgstr "  Configuratie ophalen:"
+
+msgid "  List configs:"
+msgstr "  Configuraties tonen:"
+
+msgid "  List snapshots:"
+msgstr "  Momentopnamen tonen:"
+
 msgid "  Modify snapshot:"
 msgstr "  Momentopname wijzigen:"
 
@@ -251,6 +304,9 @@ msgstr "  Momentopnamen afkoppelen:"
 
 msgid "  Undo changes:"
 msgstr "  Wijzigingen ongedaan maken:"
+
+msgid "#"
+msgstr "#"
 
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
@@ -273,6 +329,9 @@ msgstr "(Momentopname %d.)"
 # error box title
 msgid "ACL error."
 msgstr "ACL-fout."
+
+msgid "Active"
+msgstr ""
 
 msgid "Active snapshot is already default snapshot."
 msgstr "Actieve momentopname is al standaard momentopname."
@@ -303,6 +362,9 @@ msgstr "Kan ambit niet detecteren omdat standaard subvolume onbekend is."
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Kan geen rollback doen omdat standaard subvolume onbekend is."
 
+msgid "Cleanup"
+msgstr "Opschonen"
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Opdracht 'cleanup' heeft één argument."
 
@@ -324,8 +386,17 @@ msgstr "Opdracht 'delete-config' heeft geen argumenten."
 msgid "Command 'diff' needs at least one argument."
 msgstr "Opdracht 'diff' heeft minstens één argument."
 
+msgid "Command 'get-config' does not take arguments."
+msgstr "Opdracht 'get-config' heeft geen argumenten."
+
 msgid "Command 'help' does not take arguments."
 msgstr "Opdracht 'help' heeft geen argumenten."
+
+msgid "Command 'list' does not take arguments."
+msgstr "Opdracht 'list' heeft geen argumenten."
+
+msgid "Command 'list-configs' does not take arguments."
+msgstr "Opdracht 'list-configs' heeft geen argumenten."
 
 msgid "Command 'modify' needs at least one argument."
 msgstr "Opdracht 'modify' heeft minstens één argument."
@@ -360,6 +431,9 @@ msgstr "Opdracht 'undochange' heeft minstens één argument."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Opdracht 'xadiff' heeft minstens één argument."
+
+msgid "Config"
+msgstr "Configuratie"
 
 #, c-format
 msgid "Config '%s' is invalid."
@@ -410,6 +484,12 @@ msgstr "Bezig lezen-schrijven momentopname van momentopname %d te maken."
 msgid "Creating snapshot failed."
 msgstr "Maken van momentopname is mislukt."
 
+msgid "Date"
+msgstr "Datum"
+
+msgid "Default"
+msgstr ""
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Verwijderen van configuratie is mislukt (%s)."
@@ -422,6 +502,9 @@ msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Momentopnamen verwijderen van %s:"
 msgstr[1] "Snapshots verwijderen van %s:"
+
+msgid "Description"
+msgstr "Beschrijving"
 
 msgid "Detecting filesystem type failed."
 msgstr "Type bestandssysteem detecteren is mislukt."
@@ -513,6 +596,10 @@ msgstr "Ongeldige momentopname."
 msgid "Invalid ambit '%s'."
 msgstr "Ongeldige ambit '%s'."
 
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Ongeldige ambit '%s'."
+
 msgid "Invalid configdata."
 msgstr "Ongeldige configuratiegegevens."
 
@@ -550,6 +637,9 @@ msgstr "Ongeldige gebruiker."
 
 msgid "Invalid userdata."
 msgstr "Ongeldige gebruikersgegevens."
+
+msgid "Key"
+msgstr "Sleutel"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -621,6 +711,18 @@ msgstr "PiB"
 msgid "PiB"
 msgstr "PiB"
 
+msgid "Post #"
+msgstr "Post #"
+
+msgid "Post Date"
+msgstr "Postdatum"
+
+msgid "Pre #"
+msgstr "Pre #"
+
+msgid "Pre Date"
+msgstr "Pre-datum"
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Qouta-fout (%s)."
@@ -638,6 +740,9 @@ msgstr "Momentopname '%u' niet gevonden."
 
 msgid "Snapshot is in use."
 msgstr "Momentopname is in gebruik."
+
+msgid "Subvolume"
+msgstr "Subvolume"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -663,6 +768,9 @@ msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Probeer 'snapper --help' voor meer informatie."
+
+msgid "Type"
+msgstr "Type"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -697,6 +805,15 @@ msgstr "%1$s gebruiken."
 msgid "Use an integer number from %d to %d."
 msgstr "Gebruik een geheel getal van %d tot %d."
 
+msgid "Used Space"
+msgstr "Gebruikte ruimte"
+
+msgid "User"
+msgstr "Gebruiker"
+
+msgid "Userdata"
+msgstr "Gebruikersgegevens"
+
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
 msgstr "Gebruikersgegevens '%s' bevat geen '=' teken."
@@ -704,6 +821,9 @@ msgstr "Gebruikersgegevens '%s' bevat geen '=' teken."
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "Gebruikersgegevens '%s' heeft een lege key."
+
+msgid "Value"
+msgstr "Waarde"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -742,6 +862,9 @@ msgstr "B"
 msgid "modifying %s"
 msgstr "%s wordt gewijzigd"
 
+msgid "no"
+msgstr ""
+
 msgid "nothing to do"
 msgstr "niets te doen"
 
@@ -750,6 +873,9 @@ msgstr "rootargument kan alleen samen worden gebruikt met no-dbus.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "gebruik: snapper [--global-options] <opdracht> [--commando-options] [commando-arguments]"
+
+msgid "yes"
+msgstr ""
 
 #, c-format
 #~ msgid "Use %s, %s or %s."
@@ -762,95 +888,8 @@ msgstr "gebruik: snapper [--global-options] <opdracht> [--commando-options] [com
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "Onbekend type momentopname."
 
-#~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-#~ msgstr "\t--all-configs, -a\t\tMomentopnamen weergeven van alle beschikbare configuraties."
-
-#~ msgid "\t--disable-used-space\t\tDisable showing used space."
-#~ msgstr "\t--disable-used-space\t\tGebruikte ruimte tonen uitschakelen."
-
-#~ msgid "\t--type, -t <type>\t\tType of snapshots to list."
-#~ msgstr "\t--type, -t <type>\t\tTe tonen type momentopname."
-
-#~ msgid "\tsnapper get-config"
-#~ msgstr "\tsnapper get-config"
-
-#~ msgid "\tsnapper list"
-#~ msgstr "\tsnapper list"
-
-#~ msgid "\tsnapper list-configs"
-#~ msgstr "\tsnapper list-configs"
-
-#~ msgid "    Options for 'list' command:"
-#~ msgstr "    Opties voor opdracht 'list':"
-
-#~ msgid "  Get config:"
-#~ msgstr "  Configuratie ophalen:"
-
-#~ msgid "  List configs:"
-#~ msgstr "  Configuraties tonen:"
-
-#~ msgid "  List snapshots:"
-#~ msgstr "  Momentopnamen tonen:"
-
-#~ msgid "#"
-#~ msgstr "#"
-
-#~ msgid "Cleanup"
-#~ msgstr "Opschonen"
-
-#~ msgid "Command 'get-config' does not take arguments."
-#~ msgstr "Opdracht 'get-config' heeft geen argumenten."
-
-#~ msgid "Command 'list' does not take arguments."
-#~ msgstr "Opdracht 'list' heeft geen argumenten."
-
-#~ msgid "Command 'list-configs' does not take arguments."
-#~ msgstr "Opdracht 'list-configs' heeft geen argumenten."
-
-#~ msgid "Config"
-#~ msgstr "Configuratie"
-
-#~ msgid "Date"
-#~ msgstr "Datum"
-
-#~ msgid "Description"
-#~ msgstr "Beschrijving"
-
-#~ msgid "Key"
-#~ msgstr "Sleutel"
-
-#~ msgid "Post #"
-#~ msgstr "Post #"
-
-#~ msgid "Post Date"
-#~ msgstr "Postdatum"
-
-#~ msgid "Pre #"
-#~ msgstr "Pre #"
-
-#~ msgid "Pre Date"
-#~ msgstr "Pre-datum"
-
-#~ msgid "Subvolume"
-#~ msgstr "Subvolume"
-
-#~ msgid "Type"
-#~ msgstr "Type"
-
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Onbekend type momentopnamen."
-
-#~ msgid "Used Space"
-#~ msgstr "Gebruikte ruimte"
-
-#~ msgid "User"
-#~ msgstr "Gebruiker"
-
-#~ msgid "Userdata"
-#~ msgstr "Gebruikersgegevens"
-
-#~ msgid "Value"
-#~ msgstr "Waarde"
 
 #~ msgid "Quota failure (%s)."
 #~ msgstr "Quota-mislukking (%s)."

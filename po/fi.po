@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 10:33+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2020-08-24 00:40+0000\n"
 "Last-Translator: Tommi Nieminen <software@legisign.org>\n"
 "Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
@@ -16,6 +16,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.6.1\n"
 
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr "\t--all-configs, -a\t\tLuettele tilannekuvia kaikista käytettävissä olevista kokoonpanoista."
+
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr ""
 
@@ -24,6 +27,19 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tTilannevedoksen puhdistusalgoritmi."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tTilannevedoksen puhdistusalgoritmi."
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <komento>\t\tSuorita komento ja luo ennen- ja jälkeen-tilannevedokset."
@@ -42,6 +58,9 @@ msgstr "\t--description, -d <kuvaus>\tTilannevedoksen kuvaus."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <komento>\t\tKomento tiedostojen vertailemiseksi."
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-used-space\t\tÄlä näytä tilankäyttöä."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <valinnat>\tdiff-komennolle välitettävät lisävalinnat."
@@ -115,6 +134,9 @@ msgstr "\t--template, -t <nimi>\t\tKäytettävän määritysmallin nimi."
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <tyyppi>\t\tTilannevedoksen tyyppi."
 
+msgid "\t--type, -t <type>\t\tType of snapshots to list."
+msgstr "\t--type, -t <tyyppi>\t\tLueteltavien tilannevedosten tyyppi."
+
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <käyttäjätieto>\tTilannevedoksen käyttäjätiedot."
 
@@ -147,6 +169,15 @@ msgstr "\tsnapper delete-config"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <numero1>..<numero2> [tiedostot]"
+
+msgid "\tsnapper get-config"
+msgstr "\tsnapper get-config"
+
+msgid "\tsnapper list"
+msgstr "\tsnapper list"
+
+msgid "\tsnapper list-configs"
+msgstr "\tsnapper list-configs"
 
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <numero>"
@@ -194,6 +225,19 @@ msgstr "    ”delete”-komennon valitsimet:"
 msgid "    Options for 'diff' command:"
 msgstr "    ”diff”-komennon valitsimet:"
 
+#, fuzzy
+msgid "    Options for 'get-config' command:"
+msgstr "    ”create-config”-komennon valitsimet:"
+
+msgid "    Options for 'list' command:"
+msgstr "    ”list”-komennon valitsimet:"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+
 msgid "    Options for 'modify' command:"
 msgstr "    ”modify”-komennon valitsimet:"
 
@@ -227,6 +271,15 @@ msgstr "  Poista määritys:"
 msgid "  Delete snapshot:"
 msgstr "  Poista tilannevedos:"
 
+msgid "  Get config:"
+msgstr "  Nouda määritys:"
+
+msgid "  List configs:"
+msgstr "  Luettele määritykset:"
+
+msgid "  List snapshots:"
+msgstr "  Luettele tilannevedokset:"
+
 msgid "  Modify snapshot:"
 msgstr "  Muokkaa tilannevedosta:"
 
@@ -247,6 +300,9 @@ msgstr "  Irrota tilannevedos:"
 
 msgid "  Undo changes:"
 msgstr "  Peru muutokset:"
+
+msgid "#"
+msgstr "#"
 
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
@@ -269,6 +325,9 @@ msgstr "(Tilannevedos %d.)"
 # error box title
 msgid "ACL error."
 msgstr "ACL-virhe."
+
+msgid "Active"
+msgstr ""
 
 msgid "Active snapshot is already default snapshot."
 msgstr "Aktiivinen tilannekuva on jo oletus."
@@ -299,6 +358,9 @@ msgstr ""
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Palautusta (rollback) ei voi tehdä, koska oletusalitaltio on tuntematon."
 
+msgid "Cleanup"
+msgstr "Puhdistus"
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "\"cleanup\"-komento vaatii yhden parametrin."
 
@@ -320,8 +382,17 @@ msgstr "”delete-config”-komento ei hyväksy parametreja."
 msgid "Command 'diff' needs at least one argument."
 msgstr "”diff”-komento vaatii vähintään yhden parametrin."
 
+msgid "Command 'get-config' does not take arguments."
+msgstr "”get-config”-komento ei hyväksy parametreja."
+
 msgid "Command 'help' does not take arguments."
 msgstr "”help”-komento ei hyväksy parametreja."
+
+msgid "Command 'list' does not take arguments."
+msgstr "”list”-komento ei hyväksy parametreja."
+
+msgid "Command 'list-configs' does not take arguments."
+msgstr "”list-configs”-komento ei hyväksy parametreja."
 
 msgid "Command 'modify' needs at least one argument."
 msgstr "”modify”-komento vaatii vähintään yhden parametrin."
@@ -356,6 +427,9 @@ msgstr "”undochange”-komento vaatii vähintään yhden parametrin."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "”xadiff”-komento vaatii vähintään yhden parametrin."
+
+msgid "Config"
+msgstr "Määritys"
 
 #, c-format
 msgid "Config '%s' is invalid."
@@ -406,6 +480,12 @@ msgstr "Luodaan tilannevedoksesta %d kirjoitettavissa olevaa tilannevedosta."
 msgid "Creating snapshot failed."
 msgstr "Tilannevedoksen luominen epäonnistui."
 
+msgid "Date"
+msgstr "Päiväys"
+
+msgid "Default"
+msgstr ""
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Määrityksen poistaminen epäonnistui (%s)."
@@ -418,6 +498,9 @@ msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Poistetaan tilannevedosta taltiosta %s:"
 msgstr[1] "Poistetaan tilannevedoksia taltiosta %s:"
+
+msgid "Description"
+msgstr "Kuvaus"
 
 msgid "Detecting filesystem type failed."
 msgstr "Tiedostojärjestelmän tyypin tunnistaminen epäonnistui."
@@ -513,6 +596,10 @@ msgstr "Virheellinen tilannevedos."
 msgid "Invalid ambit '%s'."
 msgstr "Virheellinen tilannevedos \"%s\"."
 
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Virheellinen tilannevedos \"%s\"."
+
 msgid "Invalid configdata."
 msgstr "Virheellinen määritystieto."
 
@@ -550,6 +637,9 @@ msgstr "Virheellinen käyttäjä."
 
 msgid "Invalid userdata."
 msgstr "Virheellinen käyttäjätieto."
+
+msgid "Key"
+msgstr "Avain"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -622,6 +712,18 @@ msgstr "PiB"
 msgid "PiB"
 msgstr "PiB"
 
+msgid "Post #"
+msgstr "Jälkeen-#"
+
+msgid "Post Date"
+msgstr "Jälkeen-päiväys"
+
+msgid "Pre #"
+msgstr "Ennen-#"
+
+msgid "Pre Date"
+msgstr "Ennen-päiväys"
+
 # error box title
 #, c-format
 msgid "Quota error (%s)."
@@ -640,6 +742,9 @@ msgstr "Tilannevedosta \"%u\" ei löytynyt."
 
 msgid "Snapshot is in use."
 msgstr "Tilannevedos on käytössä."
+
+msgid "Subvolume"
+msgstr "Alitaltio"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -665,6 +770,9 @@ msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Kokeile ”snapper --help” saadaksesi lisätietoa."
+
+msgid "Type"
+msgstr "Tyyppi"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -699,6 +807,15 @@ msgstr ""
 msgid "Use an integer number from %d to %d."
 msgstr "Käytä kokonaislukua väliltä %d–%d."
 
+msgid "Used Space"
+msgstr "Käytetty tila"
+
+msgid "User"
+msgstr "Käyttäjä"
+
+msgid "Userdata"
+msgstr "Käyttäjätieto"
+
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
 msgstr "Käyttäjätieto '%s' ei sisällä '=' merkkiä."
@@ -706,6 +823,9 @@ msgstr "Käyttäjätieto '%s' ei sisällä '=' merkkiä."
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "Käyttäjätiedossa '%s' on tyhjä avain."
+
+msgid "Value"
+msgstr "Arvo"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -744,6 +864,9 @@ msgstr "B"
 msgid "modifying %s"
 msgstr "muokataan: %s"
 
+msgid "no"
+msgstr ""
+
 msgid "nothing to do"
 msgstr "ei mitään tehtävää"
 
@@ -756,6 +879,9 @@ msgstr ""
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "käyttö: snapper [--yleisvalitsimet] <komento> [--komennon-valitsimet] [komennon-parametrit]"
 
+msgid "yes"
+msgstr ""
+
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "Tuntematon tilannevedostyyppi."
 
@@ -763,95 +889,8 @@ msgstr "käyttö: snapper [--yleisvalitsimet] <komento> [--komennon-valitsimet] 
 #~ msgid "Use %s, %s or %s."
 #~ msgstr "Käytettävissä: %s, %s tai %s."
 
-#~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-#~ msgstr "\t--all-configs, -a\t\tLuettele tilannekuvia kaikista käytettävissä olevista kokoonpanoista."
-
-#~ msgid "\t--disable-used-space\t\tDisable showing used space."
-#~ msgstr "\t--disable-used-space\t\tÄlä näytä tilankäyttöä."
-
-#~ msgid "\t--type, -t <type>\t\tType of snapshots to list."
-#~ msgstr "\t--type, -t <tyyppi>\t\tLueteltavien tilannevedosten tyyppi."
-
-#~ msgid "\tsnapper get-config"
-#~ msgstr "\tsnapper get-config"
-
-#~ msgid "\tsnapper list"
-#~ msgstr "\tsnapper list"
-
-#~ msgid "\tsnapper list-configs"
-#~ msgstr "\tsnapper list-configs"
-
-#~ msgid "    Options for 'list' command:"
-#~ msgstr "    ”list”-komennon valitsimet:"
-
-#~ msgid "  Get config:"
-#~ msgstr "  Nouda määritys:"
-
-#~ msgid "  List configs:"
-#~ msgstr "  Luettele määritykset:"
-
-#~ msgid "  List snapshots:"
-#~ msgstr "  Luettele tilannevedokset:"
-
-#~ msgid "#"
-#~ msgstr "#"
-
-#~ msgid "Cleanup"
-#~ msgstr "Puhdistus"
-
-#~ msgid "Command 'get-config' does not take arguments."
-#~ msgstr "”get-config”-komento ei hyväksy parametreja."
-
-#~ msgid "Command 'list' does not take arguments."
-#~ msgstr "”list”-komento ei hyväksy parametreja."
-
-#~ msgid "Command 'list-configs' does not take arguments."
-#~ msgstr "”list-configs”-komento ei hyväksy parametreja."
-
-#~ msgid "Config"
-#~ msgstr "Määritys"
-
-#~ msgid "Date"
-#~ msgstr "Päiväys"
-
-#~ msgid "Description"
-#~ msgstr "Kuvaus"
-
-#~ msgid "Key"
-#~ msgstr "Avain"
-
-#~ msgid "Post #"
-#~ msgstr "Jälkeen-#"
-
-#~ msgid "Post Date"
-#~ msgstr "Jälkeen-päiväys"
-
-#~ msgid "Pre #"
-#~ msgstr "Ennen-#"
-
-#~ msgid "Pre Date"
-#~ msgstr "Ennen-päiväys"
-
-#~ msgid "Subvolume"
-#~ msgstr "Alitaltio"
-
-#~ msgid "Type"
-#~ msgstr "Tyyppi"
-
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Tuntematon tilannevedosten tyyppi."
-
-#~ msgid "Used Space"
-#~ msgstr "Käytetty tila"
-
-#~ msgid "User"
-#~ msgstr "Käyttäjä"
-
-#~ msgid "Userdata"
-#~ msgstr "Käyttäjätieto"
-
-#~ msgid "Value"
-#~ msgstr "Arvo"
 
 #, fuzzy
 #~ msgid "Quota failure (%s)."

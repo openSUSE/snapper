@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenSUSE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 10:33+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2011-11-01 00:08-0700\n"
 "Last-Translator: Alexandru Szasz <alexxed@gmail.com>\n"
 "Language-Team: Romanian <LL@li.org>\n"
@@ -25,6 +25,9 @@ msgstr ""
 "X-Generator: Narro 2.0 on http://tradu.softwareliber.ro\n"
 "Plural-Forms:  nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\n"
 
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr ""
+
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr ""
 
@@ -32,6 +35,19 @@ msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr ""
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
 msgstr ""
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
@@ -50,6 +66,9 @@ msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr ""
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
+msgstr ""
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
 msgstr ""
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
@@ -124,6 +143,9 @@ msgstr ""
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr ""
 
+msgid "\t--type, -t <type>\t\tType of snapshots to list."
+msgstr ""
+
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr ""
 
@@ -157,6 +179,16 @@ msgstr "\tsnapper list-configs"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr ""
+
+#, fuzzy
+msgid "\tsnapper get-config"
+msgstr "\tsnapper list-configs"
+
+msgid "\tsnapper list"
+msgstr "\tsnapper list"
+
+msgid "\tsnapper list-configs"
+msgstr "\tsnapper list-configs"
 
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <număr>"
@@ -210,6 +242,19 @@ msgstr "    Opțiuni pentru comanda 'create':"
 msgid "    Options for 'diff' command:"
 msgstr "    Opțiuni pentru comanda 'modify':"
 
+#, fuzzy
+msgid "    Options for 'get-config' command:"
+msgstr "    Opțiuni pentru comanda 'create':"
+
+msgid "    Options for 'list' command:"
+msgstr "    Opțiuni pentru comanda 'list':"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+
 msgid "    Options for 'modify' command:"
 msgstr "    Opțiuni pentru comanda 'modify':"
 
@@ -245,6 +290,17 @@ msgstr "  Listează configurațiile:"
 msgid "  Delete snapshot:"
 msgstr ""
 
+#, fuzzy
+msgid "  Get config:"
+msgstr "  Listează configurațiile:"
+
+msgid "  List configs:"
+msgstr "  Listează configurațiile:"
+
+#, fuzzy
+msgid "  List snapshots:"
+msgstr "  Listează configurațiile:"
+
 msgid "  Modify snapshot:"
 msgstr ""
 
@@ -268,6 +324,9 @@ msgstr ""
 msgid "  Undo changes:"
 msgstr ""
 
+msgid "#"
+msgstr "#"
+
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
@@ -289,6 +348,9 @@ msgstr "Nu am găsit sursa de instalare '%s'."
 #, fuzzy
 msgid "ACL error."
 msgstr "eroare"
+
+msgid "Active"
+msgstr ""
 
 msgid "Active snapshot is already default snapshot."
 msgstr ""
@@ -319,6 +381,9 @@ msgstr ""
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
+msgid "Cleanup"
+msgstr "Curățenie"
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr ""
 
@@ -343,7 +408,19 @@ msgstr "Comanda 'help' nu acceptă argumente."
 msgid "Command 'diff' needs at least one argument."
 msgstr "get necesită cel puțin un argument"
 
+#, fuzzy
+msgid "Command 'get-config' does not take arguments."
+msgstr "Comanda 'help' nu acceptă argumente."
+
 msgid "Command 'help' does not take arguments."
+msgstr "Comanda 'help' nu acceptă argumente."
+
+#, fuzzy
+msgid "Command 'list' does not take arguments."
+msgstr "Comanda 'help' nu acceptă argumente."
+
+#, fuzzy
+msgid "Command 'list-configs' does not take arguments."
 msgstr "Comanda 'help' nu acceptă argumente."
 
 #, fuzzy
@@ -385,6 +462,9 @@ msgstr ""
 #, fuzzy
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "get necesită cel puțin un argument"
+
+msgid "Config"
+msgstr "Configurare"
 
 #, c-format
 msgid "Config '%s' is invalid."
@@ -439,6 +519,12 @@ msgstr "Crearea configurației a eșuat (%s)."
 msgid "Creating snapshot failed."
 msgstr "Crearea configurației a eșuat (%s)."
 
+msgid "Date"
+msgstr "Dată"
+
+msgid "Default"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Crearea configurației a eșuat (%s)."
@@ -453,6 +539,9 @@ msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Ștergerea CA a eșuat: %1."
 msgstr[1] "Ștergerea CA a eșuat: %1."
 msgstr[2] "Ștergerea CA a eșuat: %1."
+
+msgid "Description"
+msgstr "Descriere"
 
 msgid "Detecting filesystem type failed."
 msgstr ""
@@ -549,6 +638,10 @@ msgstr "Ștergerea CA a eșuat: %1."
 msgid "Invalid ambit '%s'."
 msgstr "Date de emitere invalide."
 
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Date de emitere invalide."
+
 #, fuzzy
 msgid "Invalid configdata."
 msgstr "Date de emitere invalide."
@@ -589,6 +682,10 @@ msgstr "Date de emitere invalide."
 #, fuzzy
 msgid "Invalid userdata."
 msgstr "Date de emitere invalide."
+
+#, fuzzy
+msgid "Key"
+msgstr "Kenia"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -660,6 +757,20 @@ msgstr ""
 msgid "PiB"
 msgstr ""
 
+#, fuzzy
+msgid "Post #"
+msgstr "Data postării"
+
+msgid "Post Date"
+msgstr "Data postării"
+
+msgid "Pre #"
+msgstr ""
+
+#, fuzzy
+msgid "Pre Date"
+msgstr "Data postării"
+
 # error box title
 #, fuzzy, c-format
 msgid "Quota error (%s)."
@@ -680,6 +791,9 @@ msgstr "Nu am găsit sursa de instalare '%s'."
 #, fuzzy
 msgid "Snapshot is in use."
 msgstr "Configurația '%s' nu a fost găsită."
+
+msgid "Subvolume"
+msgstr ""
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -705,6 +819,9 @@ msgstr ""
 #, fuzzy
 msgid "Try 'snapper --help' for more information."
 msgstr "Încercați `%s --help' or `%s --usage' pentru mai multe informații\n"
+
+msgid "Type"
+msgstr "Tip"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -740,6 +857,17 @@ msgstr ""
 msgid "Use an integer number from %d to %d."
 msgstr "Utilizați un număr întreg între %d și %d"
 
+msgid "Used Space"
+msgstr ""
+
+#, fuzzy
+msgid "User"
+msgstr "Nume de utilizator"
+
+#, fuzzy
+msgid "Userdata"
+msgstr "Nume de utilizator"
+
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
 msgstr ""
@@ -747,6 +875,9 @@ msgstr ""
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr ""
+
+msgid "Value"
+msgstr "Valoare"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -784,6 +915,9 @@ msgstr ""
 msgid "modifying %s"
 msgstr ""
 
+msgid "no"
+msgstr ""
+
 #, fuzzy
 msgid "nothing to do"
 msgstr "Nimic de făcut."
@@ -795,61 +929,8 @@ msgstr "Încercați `%s --help' or `%s --usage' pentru mai multe informații\n"
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
 
-#, fuzzy
-#~ msgid "\tsnapper get-config"
-#~ msgstr "\tsnapper list-configs"
-
-#~ msgid "\tsnapper list"
-#~ msgstr "\tsnapper list"
-
-#~ msgid "\tsnapper list-configs"
-#~ msgstr "\tsnapper list-configs"
-
-#~ msgid "    Options for 'list' command:"
-#~ msgstr "    Opțiuni pentru comanda 'list':"
-
-#, fuzzy
-#~ msgid "  Get config:"
-#~ msgstr "  Listează configurațiile:"
-
-#~ msgid "  List configs:"
-#~ msgstr "  Listează configurațiile:"
-
-#~ msgid "#"
-#~ msgstr "#"
-
-#~ msgid "Cleanup"
-#~ msgstr "Curățenie"
-
-#, fuzzy
-#~ msgid "Command 'get-config' does not take arguments."
-#~ msgstr "Comanda 'help' nu acceptă argumente."
-
-#~ msgid "Config"
-#~ msgstr "Configurare"
-
-#~ msgid "Date"
-#~ msgstr "Dată"
-
-#~ msgid "Description"
-#~ msgstr "Descriere"
-
-#, fuzzy
-#~ msgid "Key"
-#~ msgstr "Kenia"
-
-#~ msgid "Post Date"
-#~ msgstr "Data postării"
-
-#~ msgid "Type"
-#~ msgstr "Tip"
-
-#, fuzzy
-#~ msgid "User"
-#~ msgstr "Nume de utilizator"
-
-#~ msgid "Value"
-#~ msgstr "Valoare"
+msgid "yes"
+msgstr ""
 
 #, fuzzy
 #~ msgid "Quota failure (%s)."

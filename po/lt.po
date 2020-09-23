@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LCN (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 10:33+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2017-06-02 16:57+0000\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <https://l10n.opensuse.org/projects/snapper/master/lt/>\n"
@@ -20,6 +20,9 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
 "X-Generator: Weblate 2.6\n"
 
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr "\t--all-configs, -a\t\tpateikti visų prieinamų momentinių kopijų sąrašą."
+
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr ""
 
@@ -27,6 +30,19 @@ msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr ""
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
 msgstr ""
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
@@ -45,6 +61,9 @@ msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr ""
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
+msgstr ""
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
 msgstr ""
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
@@ -119,6 +138,9 @@ msgstr ""
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr ""
 
+msgid "\t--type, -t <type>\t\tType of snapshots to list."
+msgstr ""
+
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr ""
 
@@ -150,6 +172,15 @@ msgid "\tsnapper delete-config"
 msgstr ""
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
+msgstr ""
+
+msgid "\tsnapper get-config"
+msgstr ""
+
+msgid "\tsnapper list"
+msgstr ""
+
+msgid "\tsnapper list-configs"
 msgstr ""
 
 msgid "\tsnapper modify <number>"
@@ -197,6 +228,18 @@ msgstr ""
 msgid "    Options for 'diff' command:"
 msgstr ""
 
+msgid "    Options for 'get-config' command:"
+msgstr ""
+
+msgid "    Options for 'list' command:"
+msgstr ""
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+
 msgid "    Options for 'modify' command:"
 msgstr ""
 
@@ -231,6 +274,16 @@ msgstr ""
 msgid "  Delete snapshot:"
 msgstr "  Momentinės kopijos šalinimas:"
 
+msgid "  Get config:"
+msgstr ""
+
+#, fuzzy
+msgid "  List configs:"
+msgstr "  Momentinių kopijų sąrašas:"
+
+msgid "  List snapshots:"
+msgstr "  Momentinių kopijų sąrašas:"
+
 msgid "  Modify snapshot:"
 msgstr "  Momentinės kopijos modifikavimas:"
 
@@ -253,6 +306,9 @@ msgstr "  Momentinės kopijos atjungimas:"
 msgid "  Undo changes:"
 msgstr "  Atšaukti pakeitimus:"
 
+msgid "#"
+msgstr "Nr."
+
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
@@ -274,6 +330,9 @@ msgstr "Rinkmena „%s“ nerasta."
 #, fuzzy
 msgid "ACL error."
 msgstr "Skaitymo/rašymo klaida."
+
+msgid "Active"
+msgstr ""
 
 msgid "Active snapshot is already default snapshot."
 msgstr ""
@@ -304,6 +363,9 @@ msgstr ""
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
+msgid "Cleanup"
+msgstr "Išvalymas"
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "„cleanup“ komandai reikia vieno argumento."
 
@@ -325,8 +387,20 @@ msgstr ""
 msgid "Command 'diff' needs at least one argument."
 msgstr "„diff“ komandai reikia bent vieno argumento."
 
+#, fuzzy
+msgid "Command 'get-config' does not take arguments."
+msgstr "„create-config“ komandai reikia vieno argumento."
+
 msgid "Command 'help' does not take arguments."
 msgstr ""
+
+#, fuzzy
+msgid "Command 'list' does not take arguments."
+msgstr "„create-config“ komandai reikia vieno argumento."
+
+#, fuzzy
+msgid "Command 'list-configs' does not take arguments."
+msgstr "„create-config“ komandai reikia vieno argumento."
 
 msgid "Command 'modify' needs at least one argument."
 msgstr ""
@@ -366,6 +440,9 @@ msgstr ""
 #, fuzzy
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "„diff“ komandai reikia bent vieno argumento."
+
+msgid "Config"
+msgstr "Konfigūracija"
 
 #, fuzzy, c-format
 msgid "Config '%s' is invalid."
@@ -417,6 +494,12 @@ msgstr "Klaida kuriant momentinę kopiją."
 msgid "Creating snapshot failed."
 msgstr "Klaida kuriant momentinę kopiją."
 
+msgid "Date"
+msgstr "Data"
+
+msgid "Default"
+msgstr ""
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr ""
@@ -431,6 +514,9 @@ msgstr[0] "Klaida bandant pašalinti momentinę kopiją."
 msgstr[1] "Klaida bandant pašalinti momentinę kopiją."
 msgstr[2] "Klaida bandant pašalinti momentinę kopiją."
 msgstr[3] "Klaida bandant pašalinti momentinę kopiją."
+
+msgid "Description"
+msgstr "Aprašas"
 
 msgid "Detecting filesystem type failed."
 msgstr "Nepavyko nustatyti rinkmenų sistemos tipo."
@@ -523,6 +609,10 @@ msgstr "Netinkama momentinė kopija."
 msgid "Invalid ambit '%s'."
 msgstr "Netinkama momentinė kopija „%s“."
 
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Netinkama momentinė kopija „%s“."
+
 #, fuzzy
 msgid "Invalid configdata."
 msgstr "Netinkami naudotojo meta duomenys."
@@ -563,6 +653,9 @@ msgstr "Netinkami naudotojo meta duomenys."
 
 msgid "Invalid userdata."
 msgstr "Netinkami naudotojo meta duomenys."
+
+msgid "Key"
+msgstr ""
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -633,6 +726,18 @@ msgstr ""
 msgid "PiB"
 msgstr ""
 
+msgid "Post #"
+msgstr "Po: Nr."
+
+msgid "Post Date"
+msgstr "Po: data"
+
+msgid "Pre #"
+msgstr "Prieš: Nr."
+
+msgid "Pre Date"
+msgstr "Prieš: data"
+
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "Skaitymo/rašymo klaida."
@@ -651,6 +756,9 @@ msgstr "Rinkmena „%s“ nerasta."
 
 msgid "Snapshot is in use."
 msgstr "Momentinė kopija naudojama."
+
+msgid "Subvolume"
+msgstr "Potomis"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -675,6 +783,9 @@ msgstr ""
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Daugiau informacijos gausite įvykdę „snapper --help“."
+
+msgid "Type"
+msgstr "Tipas"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -709,6 +820,15 @@ msgstr ""
 msgid "Use an integer number from %d to %d."
 msgstr "Naudokite sveikąjį skaičių iš intervalo nuo %d iki %d"
 
+msgid "Used Space"
+msgstr ""
+
+msgid "User"
+msgstr "Naudotojas"
+
+msgid "Userdata"
+msgstr "Naudotojo duomenys"
+
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
 msgstr ""
@@ -716,6 +836,9 @@ msgstr ""
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr ""
+
+msgid "Value"
+msgstr "Reikšmė"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -753,6 +876,9 @@ msgstr ""
 msgid "modifying %s"
 msgstr "keičiama %s"
 
+msgid "no"
+msgstr ""
+
 msgid "nothing to do"
 msgstr "nėra ką daryti"
 
@@ -763,63 +889,14 @@ msgstr "Daugiau informacijos gausite įvykdę „snapper --help“."
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "naudojimas: snapper [--visuotinės-parinktys] <komanda> [--komandos-parinktys] [komandos-argumentai]"
 
+msgid "yes"
+msgstr ""
+
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "Nežinomas momentinės kopijos tipas."
 
-#~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-#~ msgstr "\t--all-configs, -a\t\tpateikti visų prieinamų momentinių kopijų sąrašą."
-
-#~ msgid "  List snapshots:"
-#~ msgstr "  Momentinių kopijų sąrašas:"
-
-#~ msgid "#"
-#~ msgstr "Nr."
-
-#~ msgid "Cleanup"
-#~ msgstr "Išvalymas"
-
-#, fuzzy
-#~ msgid "Command 'get-config' does not take arguments."
-#~ msgstr "„create-config“ komandai reikia vieno argumento."
-
-#~ msgid "Config"
-#~ msgstr "Konfigūracija"
-
-#~ msgid "Date"
-#~ msgstr "Data"
-
-#~ msgid "Description"
-#~ msgstr "Aprašas"
-
-#~ msgid "Post #"
-#~ msgstr "Po: Nr."
-
-#~ msgid "Post Date"
-#~ msgstr "Po: data"
-
-#~ msgid "Pre #"
-#~ msgstr "Prieš: Nr."
-
-#~ msgid "Pre Date"
-#~ msgstr "Prieš: data"
-
-#~ msgid "Subvolume"
-#~ msgstr "Potomis"
-
-#~ msgid "Type"
-#~ msgstr "Tipas"
-
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Nežinomi momentinių kopijų tipai."
-
-#~ msgid "User"
-#~ msgstr "Naudotojas"
-
-#~ msgid "Userdata"
-#~ msgstr "Naudotojo duomenys"
-
-#~ msgid "Value"
-#~ msgstr "Reikšmė"
 
 #, fuzzy
 #~ msgid "Quota failure (%s)."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 10:33+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2001-07-17 16:27+0200\n"
 "Last-Translator: James Ogley <ogley@suse.co.uk>\n"
 "Language-Team: English <i18n@suse.de>\n"
@@ -12,6 +12,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8-bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr ""
+
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr ""
 
@@ -19,6 +22,19 @@ msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr ""
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
 msgstr ""
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
@@ -37,6 +53,9 @@ msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr ""
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
+msgstr ""
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
 msgstr ""
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
@@ -111,6 +130,9 @@ msgstr ""
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr ""
 
+msgid "\t--type, -t <type>\t\tType of snapshots to list."
+msgstr ""
+
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr ""
 
@@ -142,6 +164,15 @@ msgid "\tsnapper delete-config"
 msgstr ""
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
+msgstr ""
+
+msgid "\tsnapper get-config"
+msgstr ""
+
+msgid "\tsnapper list"
+msgstr ""
+
+msgid "\tsnapper list-configs"
 msgstr ""
 
 msgid "\tsnapper modify <number>"
@@ -190,6 +221,18 @@ msgstr ""
 msgid "    Options for 'diff' command:"
 msgstr ""
 
+msgid "    Options for 'get-config' command:"
+msgstr ""
+
+msgid "    Options for 'list' command:"
+msgstr ""
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+
 msgid "    Options for 'modify' command:"
 msgstr ""
 
@@ -230,6 +273,22 @@ msgstr ""
 msgid "  Delete snapshot:"
 msgstr ""
 
+#, fuzzy
+msgid "  Get config:"
+msgstr ""
+"%s - create PAM config files\n"
+"\n"
+
+#, fuzzy
+msgid "  List configs:"
+msgstr ""
+"%s - create PAM config files\n"
+"\n"
+
+#, fuzzy
+msgid "  List snapshots:"
+msgstr "Created On: "
+
 msgid "  Modify snapshot:"
 msgstr ""
 
@@ -257,6 +316,9 @@ msgstr "Created On: "
 msgid "  Undo changes:"
 msgstr ""
 
+msgid "#"
+msgstr ""
+
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
@@ -278,6 +340,9 @@ msgstr "%s '%s' not found"
 #, fuzzy
 msgid "ACL error."
 msgstr "error"
+
+msgid "Active"
+msgstr ""
 
 msgid "Active snapshot is already default snapshot."
 msgstr ""
@@ -306,6 +371,9 @@ msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr ""
 
 msgid "Cannot do rollback since default subvolume is unknown."
+msgstr ""
+
+msgid "Cleanup"
 msgstr ""
 
 #, fuzzy
@@ -337,8 +405,20 @@ msgid "Command 'diff' needs at least one argument."
 msgstr "get needs at least one argument"
 
 #, fuzzy
+msgid "Command 'get-config' does not take arguments."
+msgstr "list_groups must not have arguments"
+
+#, fuzzy
 msgid "Command 'help' does not take arguments."
 msgstr "reload must not have arguments"
+
+#, fuzzy
+msgid "Command 'list' does not take arguments."
+msgstr "reload must not have arguments"
+
+#, fuzzy
+msgid "Command 'list-configs' does not take arguments."
+msgstr "list_groups must not have arguments"
 
 #, fuzzy
 msgid "Command 'modify' needs at least one argument."
@@ -383,6 +463,10 @@ msgstr "get needs at least one argument"
 #, fuzzy
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "get needs at least one argument"
+
+#, fuzzy
+msgid "Config"
+msgstr "kdmconfig"
 
 #, fuzzy, c-format
 msgid "Config '%s' is invalid."
@@ -437,6 +521,13 @@ msgstr "Parsing configuration files..."
 msgid "Creating snapshot failed."
 msgstr "Parsing configuration files..."
 
+#, fuzzy
+msgid "Date"
+msgstr "Date: %1"
+
+msgid "Default"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Parsing configuration files..."
@@ -450,6 +541,9 @@ msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Deleting the CA failed: %1."
 msgstr[1] "Deleting the CA failed: %1."
+
+msgid "Description"
+msgstr "Description"
 
 msgid "Detecting filesystem type failed."
 msgstr ""
@@ -546,6 +640,10 @@ msgstr "Invalid type %1."
 msgid "Invalid ambit '%s'."
 msgstr "Invalid type %1."
 
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Invalid type %1."
+
 #, fuzzy
 msgid "Invalid configdata."
 msgstr "Invalid issue data."
@@ -586,6 +684,10 @@ msgstr "Invalid type %1."
 #, fuzzy
 msgid "Invalid userdata."
 msgstr "Invalid type %1."
+
+#, fuzzy
+msgid "Key"
+msgstr "Kenya"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -658,6 +760,21 @@ msgstr ""
 msgid "PiB"
 msgstr ""
 
+#, fuzzy
+msgid "Post #"
+msgstr "Poststart"
+
+#, fuzzy
+msgid "Post Date"
+msgstr "Poststart"
+
+msgid "Pre #"
+msgstr ""
+
+#, fuzzy
+msgid "Pre Date"
+msgstr "Poststart"
+
 # error box title
 #, fuzzy, c-format
 msgid "Quota error (%s)."
@@ -678,6 +795,9 @@ msgstr "%s '%s' not found"
 #, fuzzy
 msgid "Snapshot is in use."
 msgstr "%s '%s' not found"
+
+msgid "Subvolume"
+msgstr ""
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -703,6 +823,9 @@ msgstr ""
 #, fuzzy
 msgid "Try 'snapper --help' for more information."
 msgstr "Try `%s --help' or `%s --usage' for more information.\n"
+
+msgid "Type"
+msgstr "Type"
 
 #, fuzzy, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -738,6 +861,16 @@ msgstr ""
 msgid "Use an integer number from %d to %d."
 msgstr ""
 
+msgid "Used Space"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+#, fuzzy
+msgid "Userdata"
+msgstr "Invalid type %1."
+
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
 msgstr ""
@@ -745,6 +878,9 @@ msgstr ""
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr ""
+
+msgid "Value"
+msgstr "Value"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -782,6 +918,9 @@ msgstr ""
 msgid "modifying %s"
 msgstr ""
 
+msgid "no"
+msgstr ""
+
 #, fuzzy
 msgid "nothing to do"
 msgstr "Nothing to do."
@@ -793,56 +932,16 @@ msgstr "Try `%s --help' or `%s --usage' for more information.\n"
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
 
+msgid "yes"
+msgstr ""
+
 #, fuzzy
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "Unknown type."
 
 #, fuzzy
-#~ msgid "  Get config:"
-#~ msgstr ""
-#~ "%s - create PAM config files\n"
-#~ "\n"
-
-#, fuzzy
-#~ msgid "Command 'get-config' does not take arguments."
-#~ msgstr "list_groups must not have arguments"
-
-#, fuzzy
-#~ msgid "Command 'list' does not take arguments."
-#~ msgstr "reload must not have arguments"
-
-#, fuzzy
-#~ msgid "Command 'list-configs' does not take arguments."
-#~ msgstr "list_groups must not have arguments"
-
-#, fuzzy
-#~ msgid "Config"
-#~ msgstr "kdmconfig"
-
-#, fuzzy
-#~ msgid "Date"
-#~ msgstr "Date: %1"
-
-#~ msgid "Description"
-#~ msgstr "Description"
-
-#, fuzzy
-#~ msgid "Key"
-#~ msgstr "Kenya"
-
-#, fuzzy
-#~ msgid "Post Date"
-#~ msgstr "Poststart"
-
-#~ msgid "Type"
-#~ msgstr "Type"
-
-#, fuzzy
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Unknown type."
-
-#~ msgid "Value"
-#~ msgstr "Value"
 
 #, fuzzy
 #~ msgid "Quota failure (%s)."

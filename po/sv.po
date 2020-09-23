@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 10:33+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2020-05-26 14:40+0000\n"
 "Last-Translator: Jonas Svensson <jonas@ekhorva.se>\n"
 "Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/sv/>\n"
@@ -18,6 +18,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.6.1\n"
+
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr "\t--all-configs, -a\t\tVisa snapshots från alla tillgängliga konfig."
 
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr ""
@@ -29,6 +32,19 @@ msgstr "\t--cleanup-algorithm, -c <algoritm>\tUpprensningsalgoritm för ögonbli
 # SLE12
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tUpprensningsalgoritm för ögonblicksbilder."
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
 
 # SLE12
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
@@ -51,6 +67,9 @@ msgstr "\t--description, -d <beskrivning>\tBeskrivning för ögonblicksbilder."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\tKommandot används för att jämföra filer."
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-used-space\t\tInaktivera visning av använt utrymme."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tExtra alternativ skickades till diffkommandot."
@@ -137,6 +156,10 @@ msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <typ>\t\tTyp för ögonblicksbild."
 
 # SLE12
+msgid "\t--type, -t <type>\t\tType of snapshots to list."
+msgstr "\t--type, -t <typ>\t\tTyper av ögonblicksbilder att lista."
+
+# SLE12
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <användardata>\tAnvändardata för ögonblicksbilden."
 
@@ -179,6 +202,18 @@ msgstr "\tsnapper delete-config"
 # SLE12
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <nummer1>..<nummer2> [filer]"
+
+# SLE12
+msgid "\tsnapper get-config"
+msgstr "\tsnapper get-config"
+
+# SLE12
+msgid "\tsnapper list"
+msgstr "\tsnapper list"
+
+# SLE12
+msgid "\tsnapper list-configs"
+msgstr "\tsnapper list-configs"
 
 # SLE12
 msgid "\tsnapper modify <number>"
@@ -240,6 +275,21 @@ msgid "    Options for 'diff' command:"
 msgstr "    Alternativ för kommandot diff:"
 
 # SLE12
+#, fuzzy
+msgid "    Options for 'get-config' command:"
+msgstr "    Alternativ för kommandot create-config:"
+
+# SLE12
+msgid "    Options for 'list' command:"
+msgstr "    Alternativ för kommandot list:"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+
+# SLE12
 msgid "    Options for 'modify' command:"
 msgstr "    Alternativ för kommandot modify:"
 
@@ -284,6 +334,18 @@ msgid "  Delete snapshot:"
 msgstr "  Ta bort ögonblicksbilder:"
 
 # SLE12
+msgid "  Get config:"
+msgstr "  Hämta konfiguration:"
+
+# SLE12
+msgid "  List configs:"
+msgstr "  Lista konfigurationer:"
+
+# SLE12
+msgid "  List snapshots:"
+msgstr "  Lista ögonblicksbilder:"
+
+# SLE12
 msgid "  Modify snapshot:"
 msgstr "  Ändra ögonblicksbild:"
 
@@ -310,6 +372,10 @@ msgstr "  Avmontera ögonblicksbild:"
 msgid "  Undo changes:"
 msgstr "  Ångra ändringar:"
 
+# SLE12
+msgid "#"
+msgstr "#"
+
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
@@ -332,6 +398,9 @@ msgstr "(Ögonblicksbild %d.)"
 # SLE12
 msgid "ACL error."
 msgstr "ACL-fel."
+
+msgid "Active"
+msgstr ""
 
 msgid "Active snapshot is already default snapshot."
 msgstr ""
@@ -364,6 +433,10 @@ msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
 # SLE12
+msgid "Cleanup"
+msgstr "Upprensning"
+
+# SLE12
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Kommandot cleanup måste ha ett argument."
 
@@ -392,8 +465,20 @@ msgid "Command 'diff' needs at least one argument."
 msgstr "Kommandot diff måste ha minst ett argument."
 
 # SLE12
+msgid "Command 'get-config' does not take arguments."
+msgstr "Kommandot get-config tar inga argument."
+
+# SLE12
 msgid "Command 'help' does not take arguments."
 msgstr "Kommandot help tar inga argument."
+
+# SLE12
+msgid "Command 'list' does not take arguments."
+msgstr "Kommandot list tar inga argument."
+
+# SLE12
+msgid "Command 'list-configs' does not take arguments."
+msgstr "Kommandot list-configs tar inga argument."
 
 # SLE12
 msgid "Command 'modify' needs at least one argument."
@@ -439,6 +524,10 @@ msgstr "Kommandot undochange måste ha minst ett argument."
 # SLE12
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Kommandot xadiff måste ha minst ett argument."
+
+# SLE12
+msgid "Config"
+msgstr "Konfiguration"
 
 # SLE12
 #, c-format
@@ -502,6 +591,13 @@ msgid "Creating snapshot failed."
 msgstr "Det gick inte att skapa någon ögonblicksbild."
 
 # SLE12
+msgid "Date"
+msgstr "Datum"
+
+msgid "Default"
+msgstr ""
+
+# SLE12
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Det gick inte att ta bort konfigurationen (%s)."
@@ -515,6 +611,9 @@ msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Raderar snapshot från %s:"
 msgstr[1] "Raderar snapshots från %s:"
+
+msgid "Description"
+msgstr "Beskrivning"
 
 # SLE12
 msgid "Detecting filesystem type failed."
@@ -619,6 +718,11 @@ msgid "Invalid ambit '%s'."
 msgstr "Ogiltig ögonblicksbild \"%s\"."
 
 # SLE12
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Ogiltig ögonblicksbild \"%s\"."
+
+# SLE12
 msgid "Invalid configdata."
 msgstr "Ogiltiga konfigurationsdata."
 
@@ -666,6 +770,10 @@ msgstr "Ogiltig användare."
 # SLE12
 msgid "Invalid userdata."
 msgstr "Ogiltiga användardata."
+
+# SLE12
+msgid "Key"
+msgstr "Nyckel"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -746,6 +854,22 @@ msgstr "PiB"
 msgid "PiB"
 msgstr "PiB"
 
+# SLE12
+msgid "Post #"
+msgstr "Efter #"
+
+# SLE12
+msgid "Post Date"
+msgstr "Efter datum"
+
+# SLE12
+msgid "Pre #"
+msgstr "Före #"
+
+# SLE12
+msgid "Pre Date"
+msgstr "Före datum"
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Kvotfel (%s)."
@@ -766,6 +890,10 @@ msgstr "Ögonblicksbilden %u hittades inte."
 # SLE12
 msgid "Snapshot is in use."
 msgstr "Ögonblicksbilden används."
+
+# SLE12
+msgid "Subvolume"
+msgstr "Undervolym"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -792,6 +920,9 @@ msgstr "TiB"
 # SLE12
 msgid "Try 'snapper --help' for more information."
 msgstr "Försök med \"snapper --help\" för mer information."
+
+msgid "Type"
+msgstr "Typ"
 
 # SLE12
 #, c-format
@@ -833,6 +964,17 @@ msgstr ""
 msgid "Use an integer number from %d to %d."
 msgstr "Använd ett heltal från %d till %d."
 
+msgid "Used Space"
+msgstr "Utrymme som används"
+
+# SLE12
+msgid "User"
+msgstr "Användare"
+
+# SLE12
+msgid "Userdata"
+msgstr "Användardata"
+
 # SLE12
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
@@ -842,6 +984,9 @@ msgstr "Användardata %s inkluderar inte tecknet =."
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "Användardata %s har tom nyckel."
+
+msgid "Value"
+msgstr "Värde"
 
 # SLE12
 #, c-format
@@ -887,6 +1032,9 @@ msgstr "B"
 msgid "modifying %s"
 msgstr "ändrar %s"
 
+msgid "no"
+msgstr ""
+
 # SLE12
 msgid "nothing to do"
 msgstr "ingenting att göra"
@@ -899,123 +1047,16 @@ msgstr "Rotargument kan enbart användas tillsammans med no-dbus."
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "usage: snapper [--globala alternativ] <kommando> [--kommandoalternativ] [kommandoargument]"
 
+msgid "yes"
+msgstr ""
+
 # SLE12
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "Okänd typ av ögonblicksbild."
 
-#~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-#~ msgstr "\t--all-configs, -a\t\tVisa snapshots från alla tillgängliga konfig."
-
-#~ msgid "\t--disable-used-space\t\tDisable showing used space."
-#~ msgstr "\t--disable-used-space\t\tInaktivera visning av använt utrymme."
-
-# SLE12
-#~ msgid "\t--type, -t <type>\t\tType of snapshots to list."
-#~ msgstr "\t--type, -t <typ>\t\tTyper av ögonblicksbilder att lista."
-
-# SLE12
-#~ msgid "\tsnapper get-config"
-#~ msgstr "\tsnapper get-config"
-
-# SLE12
-#~ msgid "\tsnapper list"
-#~ msgstr "\tsnapper list"
-
-# SLE12
-#~ msgid "\tsnapper list-configs"
-#~ msgstr "\tsnapper list-configs"
-
-# SLE12
-#~ msgid "    Options for 'list' command:"
-#~ msgstr "    Alternativ för kommandot list:"
-
-# SLE12
-#~ msgid "  Get config:"
-#~ msgstr "  Hämta konfiguration:"
-
-# SLE12
-#~ msgid "  List configs:"
-#~ msgstr "  Lista konfigurationer:"
-
-# SLE12
-#~ msgid "  List snapshots:"
-#~ msgstr "  Lista ögonblicksbilder:"
-
-# SLE12
-#~ msgid "#"
-#~ msgstr "#"
-
-# SLE12
-#~ msgid "Cleanup"
-#~ msgstr "Upprensning"
-
-# SLE12
-#~ msgid "Command 'get-config' does not take arguments."
-#~ msgstr "Kommandot get-config tar inga argument."
-
-# SLE12
-#~ msgid "Command 'list' does not take arguments."
-#~ msgstr "Kommandot list tar inga argument."
-
-# SLE12
-#~ msgid "Command 'list-configs' does not take arguments."
-#~ msgstr "Kommandot list-configs tar inga argument."
-
-# SLE12
-#~ msgid "Config"
-#~ msgstr "Konfiguration"
-
-# SLE12
-#~ msgid "Date"
-#~ msgstr "Datum"
-
-#~ msgid "Description"
-#~ msgstr "Beskrivning"
-
-# SLE12
-#~ msgid "Key"
-#~ msgstr "Nyckel"
-
-# SLE12
-#~ msgid "Post #"
-#~ msgstr "Efter #"
-
-# SLE12
-#~ msgid "Post Date"
-#~ msgstr "Efter datum"
-
-# SLE12
-#~ msgid "Pre #"
-#~ msgstr "Före #"
-
-# SLE12
-#~ msgid "Pre Date"
-#~ msgstr "Före datum"
-
-# SLE12
-#~ msgid "Subvolume"
-#~ msgstr "Undervolym"
-
-#~ msgid "Type"
-#~ msgstr "Typ"
-
 # SLE12
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Okända typer av ögonblicksbilder."
-
-#~ msgid "Used Space"
-#~ msgstr "Utrymme som används"
-
-# SLE12
-#~ msgid "User"
-#~ msgstr "Användare"
-
-# SLE12
-#~ msgid "Userdata"
-#~ msgstr "Användardata"
-
-#~ msgid "Value"
-#~ msgstr "Värde"
 
 # SLE12
 #~ msgid "Quota failure (%s)."

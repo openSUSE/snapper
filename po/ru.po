@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 10:33+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2020-06-29 19:46+0000\n"
 "Last-Translator: Alex Minton <alex239@gmail.com>\n"
 "Language-Team: Russian <https://l10n.opensuse.org/projects/snapper/master/ru/>\n"
@@ -14,6 +14,9 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.6.1\n"
 
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr "\t--all-configs, -a\t\tСписок моментальных снимков из всех доступных конфигураций."
+
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr ""
 
@@ -22,6 +25,19 @@ msgstr "\t--cleanup-algorithm, -c <алгоритм>\tАлгоритм очис�
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <алгоритм>\tАлгоритм очистки для снимков."
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <команда>\t\tЗапустить команду и создать пре- и пост-снимок."
@@ -40,6 +56,9 @@ msgstr "\t--description, -d <описание>\tОписание снимков.
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\tКоманда для сравнения файлов."
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-used-space\t\tОтключить показ используемого места."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tДополнительные параметры, переданные в команду diff."
@@ -113,6 +132,9 @@ msgstr "\t--template, -t <имя>\t\tНазвание используемого
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <тип>\t\tТип снимка."
 
+msgid "\t--type, -t <type>\t\tType of snapshots to list."
+msgstr "\t--type, -t <тип>\t\tТип перечисляемых снимков."
+
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <данные>\tДанные для снимка."
 
@@ -145,6 +167,15 @@ msgstr "\tsnapper delete-config"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <число1>..<число2> [файлы]"
+
+msgid "\tsnapper get-config"
+msgstr "\tsnapper get-config"
+
+msgid "\tsnapper list"
+msgstr "\tsnapper list"
+
+msgid "\tsnapper list-configs"
+msgstr "\tsnapper list-configs"
 
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <число>"
@@ -192,6 +223,19 @@ msgstr "    Параметры для команды delete:"
 msgid "    Options for 'diff' command:"
 msgstr "    Опции команды 'diff':"
 
+#, fuzzy
+msgid "    Options for 'get-config' command:"
+msgstr "    Опции команды 'create-config':"
+
+msgid "    Options for 'list' command:"
+msgstr "    Опции команды 'list':"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+
 msgid "    Options for 'modify' command:"
 msgstr "    Опции команды 'modify':"
 
@@ -225,6 +269,15 @@ msgstr "  Удалить конфигурацию:"
 msgid "  Delete snapshot:"
 msgstr "  Удаление снимка:"
 
+msgid "  Get config:"
+msgstr "  Получить параметры:"
+
+msgid "  List configs:"
+msgstr "  Список конфигураций:"
+
+msgid "  List snapshots:"
+msgstr "  Список снимков:"
+
 msgid "  Modify snapshot:"
 msgstr "  Изменение снимка:"
 
@@ -245,6 +298,9 @@ msgstr "  Отмонтировать снимок:"
 
 msgid "  Undo changes:"
 msgstr "  Откат изменений:"
+
+msgid "#"
+msgstr "#"
 
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
@@ -267,6 +323,9 @@ msgstr "(Снимок %d.)"
 # error box title
 msgid "ACL error."
 msgstr "Ошибка ACL."
+
+msgid "Active"
+msgstr ""
 
 msgid "Active snapshot is already default snapshot."
 msgstr ""
@@ -297,6 +356,9 @@ msgstr ""
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
+msgid "Cleanup"
+msgstr "Очистка"
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Команде 'cleanup' нужен один аргумент."
 
@@ -318,8 +380,17 @@ msgstr "Команде 'delete-config' не нужны аргументы."
 msgid "Command 'diff' needs at least one argument."
 msgstr "Команде 'diff' нужен хотя бы один аргумент."
 
+msgid "Command 'get-config' does not take arguments."
+msgstr "Команде 'get-config' не нужны аргументы."
+
 msgid "Command 'help' does not take arguments."
 msgstr "Команде 'help' не нужны аргументы."
+
+msgid "Command 'list' does not take arguments."
+msgstr "Команде 'list' не нужны аргументы."
+
+msgid "Command 'list-configs' does not take arguments."
+msgstr "Команде 'list-configs' не нужны аргументы."
 
 msgid "Command 'modify' needs at least one argument."
 msgstr "Команде 'modify' нужен хотя бы один аргумент."
@@ -354,6 +425,9 @@ msgstr "Команде 'undochange' нужен хотя бы один аргум
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Команде 'xadiff' нужен хотя бы один аргумент."
+
+msgid "Config"
+msgstr "Конфигурация"
 
 #, c-format
 msgid "Config '%s' is invalid."
@@ -404,6 +478,12 @@ msgstr "Создание снимка %d для чтения-записи."
 msgid "Creating snapshot failed."
 msgstr "Не удалось сделать снимок."
 
+msgid "Date"
+msgstr "Дата"
+
+msgid "Default"
+msgstr ""
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Сбой при удалении конфигурации (%s)."
@@ -417,6 +497,9 @@ msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Удаление моментального снимка из %s:"
 msgstr[1] "Удаление моментальных снимков из %s:"
 msgstr[2] "Удаление моментальных снимков из %s:"
+
+msgid "Description"
+msgstr "Описание"
 
 msgid "Detecting filesystem type failed."
 msgstr "Сбой при определении типа файловой системы."
@@ -508,6 +591,10 @@ msgstr "Некорректный снимок."
 msgid "Invalid ambit '%s'."
 msgstr "Неверный снимок '%s'."
 
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Неверный снимок '%s'."
+
 msgid "Invalid configdata."
 msgstr "Неверные данные конфигурации."
 
@@ -545,6 +632,9 @@ msgstr "Неверный пользователь."
 
 msgid "Invalid userdata."
 msgstr "Неверные данные пользователя."
+
+msgid "Key"
+msgstr "Ключ"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -617,6 +707,18 @@ msgstr "ПиБ"
 msgid "PiB"
 msgstr "ПиБ"
 
+msgid "Post #"
+msgstr "№ последующего снимка"
+
+msgid "Post Date"
+msgstr "Дата последующего снимка"
+
+msgid "Pre #"
+msgstr "№ предварительного снимка"
+
+msgid "Pre Date"
+msgstr "Дата предварительного снимка"
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Ошибка квоты (%s)."
@@ -634,6 +736,9 @@ msgstr "Снимок '%u' не найден."
 
 msgid "Snapshot is in use."
 msgstr "Снимок уже используется."
+
+msgid "Subvolume"
+msgstr "Субтом"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -659,6 +764,9 @@ msgstr "ТиБ"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Больше сведений можно найти в 'snapper --help'."
+
+msgid "Type"
+msgstr "Тип"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -693,6 +801,15 @@ msgstr ""
 msgid "Use an integer number from %d to %d."
 msgstr "Используйте целое число от %d до %d."
 
+msgid "Used Space"
+msgstr "Использовано места"
+
+msgid "User"
+msgstr "Пользователь"
+
+msgid "Userdata"
+msgstr "Данные"
+
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
 msgstr "Данные пользователя '%s' не включают знак '='."
@@ -700,6 +817,9 @@ msgstr "Данные пользователя '%s' не включают зна�
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "Пустой ключ в данных пользователя '%s'."
+
+msgid "Value"
+msgstr "Значение"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -738,6 +858,9 @@ msgstr "Б"
 msgid "modifying %s"
 msgstr "изменение %s"
 
+msgid "no"
+msgstr ""
+
 msgid "nothing to do"
 msgstr "нечего выполнять"
 
@@ -748,98 +871,14 @@ msgstr "Аргумент root можно использовать только �
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "использование: snapper [--общие-параметры] <команда> [--опции-команды] [аргументы-команды]"
 
+msgid "yes"
+msgstr ""
+
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "Неизвестный тип снимка."
 
-#~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-#~ msgstr "\t--all-configs, -a\t\tСписок моментальных снимков из всех доступных конфигураций."
-
-#~ msgid "\t--disable-used-space\t\tDisable showing used space."
-#~ msgstr "\t--disable-used-space\t\tОтключить показ используемого места."
-
-#~ msgid "\t--type, -t <type>\t\tType of snapshots to list."
-#~ msgstr "\t--type, -t <тип>\t\tТип перечисляемых снимков."
-
-#~ msgid "\tsnapper get-config"
-#~ msgstr "\tsnapper get-config"
-
-#~ msgid "\tsnapper list"
-#~ msgstr "\tsnapper list"
-
-#~ msgid "\tsnapper list-configs"
-#~ msgstr "\tsnapper list-configs"
-
-#~ msgid "    Options for 'list' command:"
-#~ msgstr "    Опции команды 'list':"
-
-#~ msgid "  Get config:"
-#~ msgstr "  Получить параметры:"
-
-#~ msgid "  List configs:"
-#~ msgstr "  Список конфигураций:"
-
-#~ msgid "  List snapshots:"
-#~ msgstr "  Список снимков:"
-
-#~ msgid "#"
-#~ msgstr "#"
-
-#~ msgid "Cleanup"
-#~ msgstr "Очистка"
-
-#~ msgid "Command 'get-config' does not take arguments."
-#~ msgstr "Команде 'get-config' не нужны аргументы."
-
-#~ msgid "Command 'list' does not take arguments."
-#~ msgstr "Команде 'list' не нужны аргументы."
-
-#~ msgid "Command 'list-configs' does not take arguments."
-#~ msgstr "Команде 'list-configs' не нужны аргументы."
-
-#~ msgid "Config"
-#~ msgstr "Конфигурация"
-
-#~ msgid "Date"
-#~ msgstr "Дата"
-
-#~ msgid "Description"
-#~ msgstr "Описание"
-
-#~ msgid "Key"
-#~ msgstr "Ключ"
-
-#~ msgid "Post #"
-#~ msgstr "№ последующего снимка"
-
-#~ msgid "Post Date"
-#~ msgstr "Дата последующего снимка"
-
-#~ msgid "Pre #"
-#~ msgstr "№ предварительного снимка"
-
-#~ msgid "Pre Date"
-#~ msgstr "Дата предварительного снимка"
-
-#~ msgid "Subvolume"
-#~ msgstr "Субтом"
-
-#~ msgid "Type"
-#~ msgstr "Тип"
-
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Неизвестный тип снимков."
-
-#~ msgid "Used Space"
-#~ msgstr "Использовано места"
-
-#~ msgid "User"
-#~ msgstr "Пользователь"
-
-#~ msgid "Userdata"
-#~ msgstr "Данные"
-
-#~ msgid "Value"
-#~ msgstr "Значение"
 
 #~ msgid "Quota failure (%s)."
 #~ msgstr "Сбой квоты (%s)."

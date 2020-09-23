@@ -2,17 +2,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 10:33+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2020-09-23 13:48+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
-"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/"
-">\n"
+"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.6.1\n"
+
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr "\t--all-configs, -a\t\tLlista les instantànies des de totes les configuracions accessibles."
 
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr "\t--ambit, -a ambit\t\tOpera a l'àmbit especificat."
@@ -22,6 +24,19 @@ msgstr "\t--cleanup-algorithm, -c <algorisme>\tNeteja l'algorisme per a la insta
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algorisme>\tNeteja l'algorisme per a les instantànies."
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <ordre>\t\tExecuta l'ordre i crea les instantànies pre i post."
@@ -40,6 +55,9 @@ msgstr "\t--description, -d <description>\tDescripció per a instantànies."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
 msgstr "\t--diff-cmd <command>\t\tOrdre per comparar fitxers."
+
+msgid "\t--disable-used-space\t\tDisable showing used space."
+msgstr "\t--disable-used-space\t\tInhabilita mostrar l'espai usat."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tOpcions extres passades a l'ordre diff."
@@ -75,8 +93,7 @@ msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <file>\t\tDesa l'estat en un fitxer."
 
 msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
-msgstr ""
-"\t--path <path>\t\t\tNeteja totes les configuracions que afecten el camí."
+msgstr "\t--path <path>\t\t\tNeteja totes les configuracions que afecten el camí."
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <number>\t\tNúmero de la preinstantània corresponent."
@@ -114,6 +131,9 @@ msgstr "\t--template, -t <name>\t\tNom de la plantilla config per usar."
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <type>\t\tTipus per a la instantània."
 
+msgid "\t--type, -t <type>\t\tType of snapshots to list."
+msgstr "\t--type, -t <type>\t\tTipus d'instantànies a llistar."
+
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
 msgstr "\t--userdata, -u <userdata>\tDades d'usuari per a la instantània."
 
@@ -146,6 +166,15 @@ msgstr "\tsnapper delete-config"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
 msgstr "\tsnapper diff <número1>..<número2> [fitxers]"
+
+msgid "\tsnapper get-config"
+msgstr "\tsnapper get-config"
+
+msgid "\tsnapper list"
+msgstr "\tsnapper llista"
+
+msgid "\tsnapper list-configs"
+msgstr "\tsnapper list-configs"
 
 msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <número>"
@@ -192,6 +221,19 @@ msgstr "    Opcions de l'ordre delete:"
 msgid "    Options for 'diff' command:"
 msgstr "    Opcions de l'ordre \"diff\":"
 
+#, fuzzy
+msgid "    Options for 'get-config' command:"
+msgstr "    Opcions de l'ordre create-config:"
+
+msgid "    Options for 'list' command:"
+msgstr "    Opcions de l'ordre list:"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+
 msgid "    Options for 'modify' command:"
 msgstr "    Opcions de l'ordre modify:"
 
@@ -225,6 +267,15 @@ msgstr "  Suprimeix config.:"
 msgid "  Delete snapshot:"
 msgstr "  Suprimeix la instantània:"
 
+msgid "  Get config:"
+msgstr "  Obtén config:"
+
+msgid "  List configs:"
+msgstr "  Llista configs:"
+
+msgid "  List snapshots:"
+msgstr "  Llista les instantànies:"
+
 msgid "  Modify snapshot:"
 msgstr "  Modifica la instantània:"
 
@@ -246,6 +297,9 @@ msgstr "  Desmunta la instantània:"
 msgid "  Undo changes:"
 msgstr "  Desfés els canvis:"
 
+msgid "#"
+msgstr "#"
+
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
@@ -266,6 +320,9 @@ msgstr "(Instantània %d.)"
 
 msgid "ACL error."
 msgstr "Error ACL."
+
+msgid "Active"
+msgstr ""
 
 msgid "Active snapshot is already default snapshot."
 msgstr "La instantània activa ja és la instantània per defecte."
@@ -296,6 +353,9 @@ msgstr "No se'n pot detectar l'àmbit ja que es desconeix el subvolum per defect
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "No es pot fer un retrocés ja que es desconeix el subvolum per defecte."
 
+msgid "Cleanup"
+msgstr "Neteja"
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "L'ordre cleanup necessita un argument."
 
@@ -317,8 +377,17 @@ msgstr "L'ordre delete-config no admet arguments."
 msgid "Command 'diff' needs at least one argument."
 msgstr "L'ordre diff necessita com a mínim un argument."
 
+msgid "Command 'get-config' does not take arguments."
+msgstr "L'ordre get-config no pot tenir arguments."
+
 msgid "Command 'help' does not take arguments."
 msgstr "L'ordre help no pot tenir arguments."
+
+msgid "Command 'list' does not take arguments."
+msgstr "L'ordre list no pot tenir arguments."
+
+msgid "Command 'list-configs' does not take arguments."
+msgstr "L'ordre list-configs no pot tenir arguments."
 
 msgid "Command 'modify' needs at least one argument."
 msgstr "L'ordre modify necessita almenys un argument."
@@ -353,6 +422,9 @@ msgstr "L'ordre undochange necessita almenys un argument."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "L'ordre xadiff necessita almenys un argument."
+
+msgid "Config"
+msgstr "Config"
 
 #, c-format
 msgid "Config '%s' is invalid."
@@ -403,6 +475,12 @@ msgstr "Creant una instantània de lectura-escriptura de la instantània %d."
 msgid "Creating snapshot failed."
 msgstr "Ha fallat la creació de la instantània."
 
+msgid "Date"
+msgstr "Data"
+
+msgid "Default"
+msgstr ""
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Ha fallat la supressió de config (%s)."
@@ -415,6 +493,9 @@ msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
 msgstr[0] "Suprimint la instantània de %s:"
 msgstr[1] "Suprimint les instantànies de %s:"
+
+msgid "Description"
+msgstr "Descripció"
 
 msgid "Detecting filesystem type failed."
 msgstr "Ha fallat la detecció del tipus de sistema de fitxers."
@@ -503,6 +584,10 @@ msgstr "Instantània il·legal."
 msgid "Invalid ambit '%s'."
 msgstr "Àmbit no vàlid: %s."
 
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Àmbit no vàlid: %s."
+
 msgid "Invalid configdata."
 msgstr "Dades de configuració no vàlides."
 
@@ -539,6 +624,10 @@ msgstr "Usuari no vàlid."
 
 msgid "Invalid userdata."
 msgstr "Dades d'usuari no vàlides."
+
+# KE
+msgid "Key"
+msgstr "Clau"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
@@ -608,6 +697,18 @@ msgstr "PB"
 msgid "PiB"
 msgstr "PiB"
 
+msgid "Post #"
+msgstr "Post #"
+
+msgid "Post Date"
+msgstr "Data Post"
+
+msgid "Pre #"
+msgstr "Pre #"
+
+msgid "Pre Date"
+msgstr "Data Pre"
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Error de quota (%s)."
@@ -625,6 +726,9 @@ msgstr "No s'ha trobat la instantània %u."
 
 msgid "Snapshot is in use."
 msgstr "La instantània s'usa."
+
+msgid "Subvolume"
+msgstr "Subvolum"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -649,6 +753,9 @@ msgstr "TiB"
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Proveu 'snapper --help' per a més informació."
+
+msgid "Type"
+msgstr "Tipus"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -683,6 +790,15 @@ msgstr "Useu %1$s."
 msgid "Use an integer number from %d to %d."
 msgstr "Useu un número enter entre el %d i el %d."
 
+msgid "Used Space"
+msgstr "Espai usat"
+
+msgid "User"
+msgstr "Usuari"
+
+msgid "Userdata"
+msgstr "Dades de l'usuari"
+
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
 msgstr "Les dades d'usuari %s no inclouen el signe =."
@@ -690,6 +806,9 @@ msgstr "Les dades d'usuari %s no inclouen el signe =."
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "Les dades d'usuari %s tenen una clau buida."
+
+msgid "Value"
+msgstr "Valor"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
@@ -727,6 +846,9 @@ msgstr "kB"
 msgid "modifying %s"
 msgstr "modificant %s"
 
+msgid "no"
+msgstr ""
+
 msgid "nothing to do"
 msgstr "Res a fer"
 
@@ -735,6 +857,9 @@ msgstr "L'argument d'arrel només es pot usar juntament amb no-dbus.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "ús: snapper [--global-options] <command> [--command-options] [command-arguments]"
+
+msgid "yes"
+msgstr ""
 
 #, c-format
 #~ msgid "Invalid machine readable format %s."
@@ -751,96 +876,8 @@ msgstr "ús: snapper [--global-options] <command> [--command-options] [command-a
 #~ msgid "Use %s, %s or %s."
 #~ msgstr "Useu %s, %s o %s."
 
-#~ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-#~ msgstr "\t--all-configs, -a\t\tLlista les instantànies des de totes les configuracions accessibles."
-
-#~ msgid "\t--disable-used-space\t\tDisable showing used space."
-#~ msgstr "\t--disable-used-space\t\tInhabilita mostrar l'espai usat."
-
-#~ msgid "\t--type, -t <type>\t\tType of snapshots to list."
-#~ msgstr "\t--type, -t <type>\t\tTipus d'instantànies a llistar."
-
-#~ msgid "\tsnapper get-config"
-#~ msgstr "\tsnapper get-config"
-
-#~ msgid "\tsnapper list"
-#~ msgstr "\tsnapper llista"
-
-#~ msgid "\tsnapper list-configs"
-#~ msgstr "\tsnapper list-configs"
-
-#~ msgid "    Options for 'list' command:"
-#~ msgstr "    Opcions de l'ordre list:"
-
-#~ msgid "  Get config:"
-#~ msgstr "  Obtén config:"
-
-#~ msgid "  List configs:"
-#~ msgstr "  Llista configs:"
-
-#~ msgid "  List snapshots:"
-#~ msgstr "  Llista les instantànies:"
-
-#~ msgid "#"
-#~ msgstr "#"
-
-#~ msgid "Cleanup"
-#~ msgstr "Neteja"
-
-#~ msgid "Command 'get-config' does not take arguments."
-#~ msgstr "L'ordre get-config no pot tenir arguments."
-
-#~ msgid "Command 'list' does not take arguments."
-#~ msgstr "L'ordre list no pot tenir arguments."
-
-#~ msgid "Command 'list-configs' does not take arguments."
-#~ msgstr "L'ordre list-configs no pot tenir arguments."
-
-#~ msgid "Config"
-#~ msgstr "Config"
-
-#~ msgid "Date"
-#~ msgstr "Data"
-
-#~ msgid "Description"
-#~ msgstr "Descripció"
-
-# KE
-#~ msgid "Key"
-#~ msgstr "Clau"
-
-#~ msgid "Post #"
-#~ msgstr "Post #"
-
-#~ msgid "Post Date"
-#~ msgstr "Data Post"
-
-#~ msgid "Pre #"
-#~ msgstr "Pre #"
-
-#~ msgid "Pre Date"
-#~ msgstr "Data Pre"
-
-#~ msgid "Subvolume"
-#~ msgstr "Subvolum"
-
-#~ msgid "Type"
-#~ msgstr "Tipus"
-
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Tipus desconegut d'instantànies."
-
-#~ msgid "Used Space"
-#~ msgstr "Espai usat"
-
-#~ msgid "User"
-#~ msgstr "Usuari"
-
-#~ msgid "Userdata"
-#~ msgstr "Dades de l'usuari"
-
-#~ msgid "Value"
-#~ msgstr "Valor"
 
 #~ msgid "Quota failure (%s)."
 #~ msgstr "Fallada de quota (%s)."
