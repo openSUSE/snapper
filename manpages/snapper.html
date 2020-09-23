@@ -833,13 +833,30 @@
             </dd>
             <dt>
               <span class="term">
-                <code class="option">cleanup <em class="replaceable"><code>cleanup-algorithm</code></em></code>
+                <code class="option">cleanup [options] <em class="replaceable"><code>cleanup-algorithm</code></em></code>
               </span>
             </dt>
             <dd>
               <p>Run the cleanup algorithm
-	  <em class="replaceable"><code>cleanup-algorithm</code></em>. Currently implemented
-	  cleanup algorithms are number, timeline and empty-pre-post.</p>
+	  <em class="replaceable"><code>cleanup-algorithm</code></em>. Currently implemented cleanup algorithms
+	  are number, timeline and empty-pre-post. To run all cleanup algorithms, all can be
+	  provided as cleanup-algorithm.</p>
+              <div class="variablelist">
+                <dl class="variablelist">
+                  <dt>
+                    <span class="term"><code class="option">--path</code> <em class="replaceable"><code>path</code></em></span>
+                  </dt>
+                  <dd>
+                    <p>Cleanup all configs affecting path. Only useful for btrfs.</p>
+                  </dd>
+                  <dt>
+                    <span class="term"><code class="option">--free-space</code> <em class="replaceable"><code>free-space</code></em></span>
+                  </dt>
+                  <dd>
+                    <p>Try to make free-space available. Only useful for btrfs.</p>
+                  </dd>
+                </dl>
+              </div>
             </dd>
             <dt>
               <span class="term">
