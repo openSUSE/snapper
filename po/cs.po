@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-23 18:35+0200\n"
-"PO-Revision-Date: 2020-09-24 00:48+0000\n"
+"PO-Revision-Date: 2020-09-24 18:48+0000\n"
 "Last-Translator: Aleš Kastner <alkas@volny.cz>\n"
 "Language-Team: Czech <https://l10n.opensuse.org/projects/snapper/master/cs/>"
 "\n"
@@ -619,16 +619,15 @@ msgstr "Nepřípustný snímek."
 msgid "Invalid ambit '%s'."
 msgstr "Neplatná oblast '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid column '%s'."
-msgstr "Neplatná oblast '%s'."
+msgstr "Neplatný sloupec '%s'."
 
 msgid "Invalid configdata."
 msgstr "Neplatná konfigurační data."
 
-#, fuzzy
 msgid "Invalid free-space value."
-msgstr "Neplatná podřízená jednotka."
+msgstr "Neplatná hodnota velikosti volného prostoru."
 
 # SLE12
 msgid "Invalid group."
@@ -638,9 +637,9 @@ msgstr "Neplatná skupina."
 msgid "Invalid machine readable format '%s'."
 msgstr "Neplatný strojově čitelný formát '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid path '%s'."
-msgstr "Neplatná oblast '%s'."
+msgstr "Neplatná cesta '%s'."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -676,12 +675,11 @@ msgstr "Výpis konfigurací selhal (%s)."
 
 #. TRANSLATORS: symbol for "mega" (best keep untranslated)
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
-#, fuzzy
 msgid "MB"
-msgstr "MiB"
+msgstr "MB"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Možná jste zapomněli použít oddělovač „..“ mezi čísly snímků."
@@ -725,12 +723,11 @@ msgstr "Volba --read-write je podporována jen pro snímky typu single."
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
-#, fuzzy
 msgid "PB"
-msgstr "PiB"
+msgstr "PB"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -772,12 +769,11 @@ msgstr "Podřízená jednotka"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
-#, fuzzy
 msgid "TB"
-msgstr "TiB"
+msgstr "TB"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Ambit lze určit ručně volbou --ambit."
@@ -880,19 +876,18 @@ msgstr "Nepodařilo se upravit %s"
 
 #. TRANSLATORS: symbol for "kilo" (best keep untranslated)
 msgid "k"
-msgstr ""
+msgstr "k"
 
 #. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
-#, fuzzy
 msgid "kB"
-msgstr "B"
+msgstr "kB"
 
 #, c-format
 msgid "modifying %s"
 msgstr "upravuji %s"
 
 msgid "no"
-msgstr ""
+msgstr "ne"
 
 msgid "nothing to do"
 msgstr "nic k provedení"
@@ -906,7 +901,7 @@ msgstr ""
 "\tsnapper [--obecné-volby] <příkaz> [--volby-příkazu] [argumenty]"
 
 msgid "yes"
-msgstr ""
+msgstr "ano"
 
 #, c-format
 #~ msgid "Use %s, %s or %s."
