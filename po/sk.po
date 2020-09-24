@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-09-23 18:35+0200\n"
-"PO-Revision-Date: 2020-09-24 00:48+0000\n"
+"PO-Revision-Date: 2020-09-24 18:48+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
 "\n"
@@ -36,12 +36,19 @@ msgid ""
 "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
 "\t\t\t\t\tpre-number, post-number, post-date."
 msgstr ""
+"\t--columns <stĺpce>\t\tStĺpce na zobrazenie oddelené čiarkou.\n"
+"\t\t\t\t\tMožné stĺpce: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
 
 msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
 "\t\t\t\t\tPossible columns: key, value.\n"
 "\t\t\t\t\tColumns are not selected when JSON format is used."
 msgstr ""
+"\t--columns <stĺpce>\t\tStĺpce na zobrazenie oddelené čiarkou.\n"
+"\t\t\t\t\tMožné stĺpce: key, value.\n"
+"\t\t\t\t\tPri použití formátu JSON nie sú stĺpce vybrané."
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <príkaz>\t\tSpustí príkaz a vytvorí snímky pred a po snímky."
@@ -237,6 +244,9 @@ msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
 "\t\t\t\t\tPossible columns: config, subvolume.\n"
 msgstr ""
+"    Voľby pre príkaz 'list-configs':\n"
+"\t--columns <stĺpce>\t\tStĺpce na zobrazenie oddelené čiarkou.\n"
+"\t\t\t\t\tMožné stĺpce: config, subvolume.\n"
 
 msgid "    Options for 'modify' command:"
 msgstr "    Voľby pre príkaz 'modify':"
@@ -483,7 +493,7 @@ msgid "Date"
 msgstr "Dátum"
 
 msgid "Default"
-msgstr ""
+msgstr "Predvolené"
 
 #, c-format
 msgid "Deleting config failed (%s)."
@@ -507,7 +517,7 @@ msgstr "Detekcia typu súborového systému zlyhala."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
-msgstr ""
+msgstr "E"
 
 #. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
 msgid "EB"
@@ -537,7 +547,7 @@ msgstr "Nepodarilo sa analyzovať '%s'."
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
-msgstr ""
+msgstr "Nepodarilo sa zistiť voľné miesto pre cestu '%s'."
 
 msgid "Failed to query free space."
 msgstr "Nepodarilo sa zistiť voľné miesto."
@@ -563,7 +573,7 @@ msgstr "Chyba voľného miesta (%s)."
 
 #. TRANSLATORS: symbol for "giga" (best keep untranslated)
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
 msgid "GB"
@@ -649,7 +659,7 @@ msgstr "Výpis konfigurácií zlyhal (%s)."
 
 #. TRANSLATORS: symbol for "mega" (best keep untranslated)
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
 msgid "MB"
@@ -697,7 +707,7 @@ msgstr "Voľba --read-write podporovaná iba pre snímky typu single."
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
 msgid "PB"
@@ -743,7 +753,7 @@ msgstr "Podzväzok"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
 msgid "TB"
@@ -847,7 +857,7 @@ msgstr "zlyhala úprava %s"
 
 #. TRANSLATORS: symbol for "kilo" (best keep untranslated)
 msgid "k"
-msgstr ""
+msgstr "k"
 
 #. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
 msgid "kB"
@@ -858,7 +868,7 @@ msgid "modifying %s"
 msgstr "upravenie %s"
 
 msgid "no"
-msgstr ""
+msgstr "nie"
 
 msgid "nothing to do"
 msgstr "nie je čo vykonať"
@@ -870,7 +880,7 @@ msgid "usage: snapper [--global-options] <command> [--command-options] [command-
 msgstr "použitie: snapper [--globálne-voľby] <príkaz> [--voľby-príkazu] [argumenty-príkazu]"
 
 msgid "yes"
-msgstr ""
+msgstr "áno"
 
 #, c-format
 #~ msgid "Invalid machine readable format %s."
