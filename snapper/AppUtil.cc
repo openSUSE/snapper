@@ -325,6 +325,29 @@ namespace snapper
 
 
     bool
+    get_uid_dir(uid_t uid, string& dir)
+    {
+	struct passwd pwd;
+	struct passwd* result;
+
+	vector<char> buf(sysconf(_SC_GETPW_R_SIZE_MAX, 1024));
+
+	int e;
+	while ((e = getpwuid_r(uid, &pwd, buf.data(), buf.size(), &result)) == ERANGE)
+	    buf.resize(2 * buf.size());
+
+	if (e != 0 || result == NULL)
+	    return false;
+
+	memset(pwd.pw_passwd, 0, strlen(pwd.pw_passwd));
+
+	dir = pwd.pw_dir;
+
+	return true;
+    }
+
+
+    bool
     get_user_uid(const char* username, uid_t& uid)
     {
 	struct passwd pwd;
