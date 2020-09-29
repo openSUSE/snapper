@@ -90,9 +90,27 @@ namespace snapper
     string datetime(time_t time, bool utc, bool classic);
     time_t scan_datetime(const string& str, bool utc);
 
+    /**
+     * For the user with uid get the username (passwd.pw_name) and the gid
+     * (passwd.pw_gid).
+     */
     bool get_uid_username_gid(uid_t uid, string& username, gid_t& gid);
+
+    /**
+     * For the user with uid get the home directory (passwd.pw_dir).
+     */
+    bool get_uid_dir(uid_t uid, string& dir);
+
+    /*
+     * For the user with username get the uid (passwd.pw_uid).
+     */
     bool get_user_uid(const char* username, uid_t& uid);
+
+    /*
+     * For the group with groupname get the gid (group.gr_gid).
+     */
     bool get_group_gid(const char* groupname, gid_t& gid);
+
     vector<gid_t> getgrouplist(const char* username, gid_t gid);
 
 
