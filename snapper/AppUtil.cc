@@ -285,10 +285,10 @@ namespace snapper
     {
 	struct tm s;
 	memset(&s, 0, sizeof(s));
-	const char* p = strptime(str.c_str(), "%F %T", &s);
+	const char* p = strptime(str.c_str(), "%Y-%m-%d %T", &s);
 	if (!p || *p != '\0')
 	    return (time_t)(-1);
-	return utc ? timegm(&s) : timelocal(&s);
+	return utc ? timegm(&s) : mktime(&s);
     }
 
 
