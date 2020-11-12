@@ -1,0 +1,34 @@
+name: CI Debian
+
+on: [push, pull_request]
+
+jobs:
+  Tests:
+    runs-on: ubuntu-latest
+    container: debian
+
+    steps:
+
+    - name: Install additional packages
+      run: apt-get update && apt-get install -y --no-install-recommends acl-dev autoconf automake bzip2 docbook-xsl e2fslibs-dev g++ gettext libboost-dev libboost-system-dev libboost-test-dev libboost-thread-dev libbtrfs-dev libdbus-1-dev libjson-c-dev libmount-dev libpam-dev libtool libxml2-dev libz-dev locales-all make xsltproc
+
+    - name: List installed packages
+      run: apt list --installed | sort
+
+    - name: Git checkout
+      uses: actions/checkout@v1
+
+    - name: Configure
+      run: make -f Makefile.repo
+
+    - name: Compile
+      run: make -j 2
+
+    - name: Install
+      run: make install
+
+    - name: Run unit tests
+      run: make -j 2 check VERBOSE=1
+
+    - name: Make package
+      run: make package
