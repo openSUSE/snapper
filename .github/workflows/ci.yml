@@ -1,0 +1,34 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  Tests:
+    runs-on: ubuntu-latest
+    container: registry.opensuse.org/opensuse/tumbleweed:latest
+
+    steps:
+
+    - name: Install additional packages
+      run: zypper --non-interactive in --no-recommends autoconf automake bzip2 dbus-1-devel docbook-xsl-stylesheets e2fsprogs-devel gcc-c++ gettext-runtime glibc-locale libacl-devel libboost_system-devel libboost_test-devel libboost_thread-devel libbtrfs-devel libjson-c-devel libmount-devel libtool libxml2-devel libxslt make pam-devel
+
+    - name: List installed packages
+      run: rpm -qa | sort
+
+    - name: Git checkout
+      uses: actions/checkout@v1
+
+    - name: Configure
+      run: make -f Makefile.repo
+
+    - name: Compile
+      run: make -j 2
+
+    - name: Install
+      run: make install
+
+    - name: Run unit tests
+      run: make -j 2 check VERBOSE=1
+
+    - name: Make package
+      run: make package
