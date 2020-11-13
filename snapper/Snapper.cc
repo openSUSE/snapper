@@ -23,6 +23,7 @@
 
 #include "config.h"
 
+#include "snapper/ZfsUtils.h"
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <glob.h>
@@ -47,6 +48,7 @@
 #include "snapper/Hooks.h"
 #include "snapper/Btrfs.h"
 #include "snapper/BtrfsUtils.h"
+#include "snapper/ZfsUtils.h"
 #ifdef ENABLE_SELINUX
 #include "snapper/Selinux.h"
 #include "snapper/Regex.h"
@@ -997,6 +999,11 @@ namespace snapper
 	    "no-"
 #endif
 	    "ext4,"
+
+#ifndef ENABLE_ZFS
+	    "no-"
+#endif
+	    "zfs,"
 
 #ifndef ENABLE_XATTRS
 	    "no-"

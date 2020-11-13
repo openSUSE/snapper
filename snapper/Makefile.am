@@ -52,6 +52,12 @@ libsnapper_la_SOURCES +=				\
 	LvmUtils.cc		LvmUtils.h
 endif
 
+if ENABLE_ZFS
+libsnapper_la_SOURCES +=				\
+	Zfs.cc			Zfs.h		        \
+	ZfsUtils.cc		ZfsUtils.h
+endif
+
 if ENABLE_ROLLBACK
 libsnapper_la_SOURCES +=				\
 	MntTable.cc		MntTable.h
