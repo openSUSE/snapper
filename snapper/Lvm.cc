@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) 2020 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -467,7 +468,7 @@ namespace snapper
     {
 	SystemCmd cmd(string(LVMBIN " version"));
 
-	if (cmd.retcode() != 0 || cmd.stdout().empty())
+	if (cmd.retcode() != 0 || cmd.get_stdout().empty())
 	{
 	    y2war("Couldn't get LVM version info");
 	}
@@ -475,7 +476,7 @@ namespace snapper
 	{
 	    Regex rx(".*LVM[[:space:]]+version:[[:space:]]+([0-9]+)\\.([0-9]+)\\.([0-9]+).*$");
 
-	    if (!rx.match(cmd.stdout().front()))
+	    if (!rx.match(cmd.get_stdout().front()))
 	    {
 		y2war("LVM version format didn't match");
 	    }
