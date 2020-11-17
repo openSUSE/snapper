@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2013] Red Hat, Inc.
+ * Copyright (c) 2020 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -15,7 +16,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 
 #include "config.h"
@@ -143,14 +143,14 @@ namespace snapper
 	boost::unique_lock<boost::shared_mutex> unique_lock(lv_mutex);
 
 	SystemCmd cmd(LVSBIN " --noheadings -o lv_attr,segtype " + quote(vg->get_vg_name() + "/" + lv_name));
-	if (cmd.retcode() != 0 || cmd.stdout().empty())
+	if (cmd.retcode() != 0 || cmd.get_stdout().empty())
 	{
 	    y2err("lvm cache: failed to get info about " << vg->get_vg_name() << "/" << lv_name);
 	    throw LvmCacheException();
 	}
 
 	vector<string> args;
-	const string tmp = boost::trim_copy(cmd.stdout().front());
+	const string tmp = boost::trim_copy(cmd.get_stdout().front());
 	boost::split(args, tmp, boost::is_any_of(" \t\n"), boost::token_compress_on);
 	if (args.size() < 1)
 	    throw LvmCacheException();
@@ -180,7 +180,7 @@ namespace snapper
     VolumeGroup::VolumeGroup(vg_content_raw& input, const string& vg_name, const string& add_lv_name)
 	: vg_name(vg_name)
     {
-	for (vg_content_raw::const_iterator cit = input.begin(); cit != input.end(); cit++)
+	for (vg_content_raw::const_iterator cit = input.begin(); cit != input.end(); ++cit)
 	    if (cit->first == add_lv_name || cit->first.find("-snapshot") != string::npos)
 		lv_info_map.insert(make_pair(cit->first, new LogicalVolume(this, cit->first, LvAttrs(cit->second))));
     }
@@ -188,7 +188,7 @@ namespace snapper
 
     VolumeGroup::~VolumeGroup()
     {
-	for (const_iterator cit = lv_info_map.begin(); cit != lv_info_map.end(); cit++)
+	for (const_iterator cit = lv_info_map.begin(); cit != lv_info_map.end(); ++cit)
 	    delete cit->second;
     }
 
@@ -282,14 +282,14 @@ namespace snapper
 	else
 	{
 	    SystemCmd cmd(LVSBIN " --noheadings -o lv_attr,segtype " + quote(vg_name + "/" + lv_name));
-	    if (cmd.retcode() != 0 || cmd.stdout().empty())
+	    if (cmd.retcode() != 0 || cmd.get_stdout().empty())
 	    {
 		y2err("lvm cache: failed to get info about " << vg_name << "/" << lv_name);
 		throw LvmCacheException();
 	    }
 
 	    vector<string> args;
-	    const string tmp = boost::trim_copy(cmd.stdout().front());
+	    const string tmp = boost::trim_copy(cmd.get_stdout().front());
 	    boost::split(args, tmp, boost::is_any_of(" \t\n"), boost::token_compress_on);
 	    if (args.size() < 1)
 		throw LvmCacheException();
@@ -332,7 +332,7 @@ namespace snapper
 	// do not allow any modifications in a whole VG
 	boost::unique_lock<boost::shared_mutex> unique_lock(vg_mutex);
 
-	for (const_iterator cit = lv_info_map.begin(); cit != lv_info_map.end(); cit++)
+	for (const_iterator cit = lv_info_map.begin(); cit != lv_info_map.end(); ++cit)
 	    out << "\tLV:'" << cit->first << "':" << std::endl << "\t\t" << cit->second;
     }
 
@@ -347,7 +347,7 @@ namespace snapper
 
     LvmCache::~LvmCache()
     {
-	for (const_iterator cit = vgroups.begin(); cit != vgroups.end(); cit++)
+	for (const_iterator cit = vgroups.begin(); cit != vgroups.end(); ++cit)
 	   delete cit->second;
     }
 
@@ -445,7 +445,7 @@ namespace snapper
 
 	vg_content_raw new_content;
 
-	for (vector<string>::const_iterator cit = cmd.stdout().begin(); cit != cmd.stdout().end(); cit++)
+	for (vector<string>::const_iterator cit = cmd.get_stdout().begin(); cit != cmd.get_stdout().end(); ++cit)
 	{
 	    vector<string> args;
 
@@ -484,7 +484,7 @@ namespace snapper
     operator<<(std::ostream& out, const LvmCache* cache)
     {
 	out << "LvmCache:" << std::endl;
-	for (LvmCache::const_iterator cit = cache->vgroups.begin(); cit != cache->vgroups.end(); cit++)
+	for (LvmCache::const_iterator cit = cache->vgroups.begin(); cit != cache->vgroups.end(); ++cit)
 	    out << "Volume Group:'" << cit->first << "':" << std::endl << cit->second;
 
 	return out;

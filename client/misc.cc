@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) 2020 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -179,9 +180,9 @@ Differ::run(const string& f1, const string& f2) const
 
     SystemCmd cmd(tmp);
 
-    for (const string& line : cmd.stdout())
+    for (const string& line : cmd.get_stdout())
 	cout << line << endl;
 
-    for (const string& line : cmd.stderr())
+    for (const string& line : cmd.get_stderr())
 	cerr << line << endl;
 }
