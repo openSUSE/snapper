@@ -50,13 +50,16 @@ using snapper::CodeLocation;
 #include "zypp_commit_plugin.h"
 #include "solvable_matcher.h"
 
-ostream& operator <<(ostream& os, set<string> ss) {
+ostream&
+operator<<(ostream& os, const set<string>& ss)
+{
     bool seen_first = false;
     os << '{';
-    for (auto s: ss) {
-	if (seen_first) {
+    for (auto s : ss)
+    {
+	if (seen_first)
 	    os << ", ";
-	}
+
 	os << s;
 	seen_first = true;
     }
@@ -81,22 +84,19 @@ public:
     , snapper_config("root")
     , bus(DBUS_BUS_SYSTEM)
     {
-	const char * s;
+	const char* s;
 
 	s = getenv("SNAPPER_ZYPP_PLUGIN_CONFIG");
-	if (s != nullptr) {
+	if (s)
 	    plugin_config = s;
-	}
 
 	s = getenv("SNAPPER_ZYPP_PLUGIN_SNAPPER_CONFIG");
-	if (s != nullptr) {
+	if (s)
 	    snapper_config = s;
-	}
 
 	s = getenv("SNAPPER_ZYPP_PLUGIN_DBUS_SESSION");
-	if (s != nullptr) {
+	if (s)
 	    bus = DBUS_BUS_SESSION;
-	}
     }
 };
 

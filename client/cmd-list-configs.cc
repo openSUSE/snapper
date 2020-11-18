@@ -103,7 +103,7 @@ namespace snapper
 		formatter.header().push_back(header_for(column));
 
 	    map<string, ProxyConfig> configs = snappers->getConfigs();
-	    for (const map<string, ProxyConfig>::value_type value : configs)
+	    for (const map<string, ProxyConfig>::value_type& value : configs)
 	    {
 		vector<string> row;
 
@@ -126,7 +126,7 @@ namespace snapper
 		formatter.header().push_back(toString(column));
 
 	    map<string, ProxyConfig> configs = snappers->getConfigs();
-	    for (const map<string, ProxyConfig>::value_type value : configs)
+	    for (const map<string, ProxyConfig>::value_type& value : configs)
 	    {
 		vector<string> row;
 
@@ -149,7 +149,7 @@ namespace snapper
 	    json_object_object_add(formatter.root(), "configs", json_configs);
 
 	    map<string, ProxyConfig> configs = snappers->getConfigs();
-	    for (const map<string, ProxyConfig>::value_type value : configs)
+	    for (const map<string, ProxyConfig>::value_type& value : configs)
 	    {
 		json_object* json_config = json_object_new_object();
 		json_object_array_add(json_configs, json_config);
