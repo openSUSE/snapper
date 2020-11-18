@@ -21,11 +21,11 @@
  */
 
 
+#include <regex>
 #include <boost/algorithm/string.hpp>
 
 #include "snapper/LvmUtils.h"
-#include "snapper/Regex.h"
-#include "snapper/AppUtil.h"
+#include "snapper/SnapperDefines.h"
 
 
 namespace snapper
@@ -37,16 +37,19 @@ namespace snapper
 	pair<string, string>
 	split_device_name(const string& name)
 	{
-	    Regex rx("^/dev/mapper/(.*[^-])-([^-].*)$");
-	    if (!rx.match(name))
+	    static const std::regex rx(DEV_MAPPER_DIR "/(.*[^-])-([^-].*)", std::regex::extended);
+	    std::smatch match;
+
+	    if (!regex_match(name, match, rx))
 		throw std::runtime_error("faild to split device name into volume group and "
 					 "logical volume name");
 
-	    string vg_name = boost::replace_all_copy(rx.cap(1), "--", "-");
-	    string lv_name = boost::replace_all_copy(rx.cap(2), "--", "-");
+	    string vg_name = boost::replace_all_copy(match[1].str(), "--", "-");
+	    string lv_name = boost::replace_all_copy(match[2].str(), "--", "-");
 
 	    return make_pair(vg_name, lv_name);
 	}
 
     }
+
 }

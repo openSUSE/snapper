@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -31,6 +31,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <regex>
 using namespace std;
 
 #include <json.h>
@@ -40,7 +41,6 @@ using namespace std;
 #endif
 
 #include "dbus/DBusConnection.h"
-#include "snapper/Regex.h"
 #include "snapper/Exception.h"
 using snapper::Exception;
 using snapper::CodeLocation;
@@ -50,13 +50,16 @@ using snapper::CodeLocation;
 #include "zypp_commit_plugin.h"
 #include "solvable_matcher.h"
 
-ostream& operator <<(ostream& os, set<string> ss) {
+ostream&
+operator<<(ostream& os, const set<string>& ss)
+{
     bool seen_first = false;
     os << '{';
-    for (auto s: ss) {
-	if (seen_first) {
+    for (auto s : ss)
+    {
+	if (seen_first)
 	    os << ", ";
-	}
+
 	os << s;
 	seen_first = true;
     }
@@ -81,22 +84,19 @@ public:
     , snapper_config("root")
     , bus(DBUS_BUS_SYSTEM)
     {
-	const char * s;
+	const char* s;
 
 	s = getenv("SNAPPER_ZYPP_PLUGIN_CONFIG");
-	if (s != nullptr) {
+	if (s)
 	    plugin_config = s;
-	}
 
 	s = getenv("SNAPPER_ZYPP_PLUGIN_SNAPPER_CONFIG");
-	if (s != nullptr) {
+	if (s)
 	    snapper_config = s;
-	}
 
 	s = getenv("SNAPPER_ZYPP_PLUGIN_DBUS_SESSION");
-	if (s != nullptr) {
+	if (s)
 	    bus = DBUS_BUS_SESSION;
-	}
     }
 };
 
@@ -256,14 +256,19 @@ map<string, string> SnapperZyppPlugin::get_userdata(const Message& msg) {
 	const string& userdata_s = it->second;
 	vector<string> key_values;
 	boost::split(key_values, userdata_s, boost::is_any_of(","));
-	for (auto kv: key_values) {
-	    static const snapper::Regex rx_keyval("^([^=]*)=(.+)$");
-	    if (rx_keyval.match(kv)) {
-		string key = boost::trim_copy(rx_keyval.cap(1));
-		string value = boost::trim_copy(rx_keyval.cap(2));
+	for (auto kv : key_values)
+	{
+	    static const regex rx_keyval("([^=]*)=(.+)", regex::extended);
+	    smatch match;
+
+	    if (regex_match(kv, match, rx_keyval))
+	    {
+		string key = boost::trim_copy(match[1].str());
+		string value = boost::trim_copy(match[2].str());
 		result[key] = value;
 	    }
-	    else {
+	    else
+	    {
 		cerr << "ERROR:" << "invalid userdata: expecting comma separated key=value pairs" << endl;
 	    }
 	}

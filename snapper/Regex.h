@@ -20,6 +20,11 @@
  */
 
 
+// This file is obsolete. It is only present for compatibility of libsnapper, esp. the
+// Regex class was used in older versions of the zypp-plugin and we must avoid potentially
+// problems during updates.
+
+
 #ifndef SNAPPER_REGEX_H
 #define SNAPPER_REGEX_H
 

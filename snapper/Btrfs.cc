@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2018] SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -44,6 +44,7 @@
 #include <boost/version.hpp>
 #include <boost/thread.hpp>
 #endif
+#include <regex>
 #include <boost/algorithm/string.hpp>
 
 #include "snapper/Log.h"
@@ -55,7 +56,6 @@
 #include "snapper/SnapperDefines.h"
 #include "snapper/Acls.h"
 #include "snapper/Exception.h"
-#include "snapper/Regex.h"
 #ifdef ENABLE_ROLLBACK
 #include "snapper/MntTable.h"
 #endif
@@ -1473,11 +1473,13 @@ namespace snapper
     {
 	string path = get_subvolume(fd, id);
 
-	Regex rx("/([0-9]+)/snapshot$");
-	if (!rx.match(path))
+	static const regex rx("/([0-9]+)/snapshot$", regex::extended);
+	smatch match;
+
+	if (!regex_search(path, match, rx))
 	    return make_pair(false, 0);
 
-	unsigned int num = stoi(rx.cap(1));
+	unsigned int num = stoi(match[1].str());
 
 	if (!checkSnapshot(num))
 	    return make_pair(false, 0);

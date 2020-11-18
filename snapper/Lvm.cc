@@ -31,6 +31,7 @@
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <asm/types.h>
+#include <regex>
 #include <boost/algorithm/string.hpp>
 
 #include "snapper/Log.h"
@@ -41,7 +42,6 @@
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
-#include "snapper/Regex.h"
 #include "snapper/LvmCache.h"
 #ifdef ENABLE_SELINUX
 #include "snapper/Selinux.h"
@@ -56,9 +56,11 @@ namespace snapper
     Filesystem*
     Lvm::create(const string& fstype, const string& subvolume, const string& root_prefix)
     {
-	Regex rx("^lvm\\(([_a-z0-9]+)\\)$");
-	if (rx.match(fstype))
-	    return new Lvm(subvolume, root_prefix, rx.cap(1));
+	static const regex rx("lvm\\(([_a-z0-9]+)\\)", regex::extended);
+	smatch match;
+
+	if (regex_match(fstype, match, rx))
+	    return new Lvm(subvolume, root_prefix, match[1]);
 
 	return NULL;
     }
@@ -421,7 +423,7 @@ namespace snapper
     string
     Lvm::getDevice(unsigned int num) const
     {
-	return "/dev/mapper/" + boost::replace_all_copy(vg_name, "-", "--") + "-" +
+	return DEV_MAPPER_DIR "/" + boost::replace_all_copy(vg_name, "-", "--") + "-" +
 	    boost::replace_all_copy(snapshotLvName(num), "-", "--");
     }
 
@@ -474,9 +476,11 @@ namespace snapper
 	}
 	else
 	{
-	    Regex rx(".*LVM[[:space:]]+version:[[:space:]]+([0-9]+)\\.([0-9]+)\\.([0-9]+).*$");
+	    static const regex rx(".*LVM[[:space:]]+version:[[:space:]]+([0-9]+)\\.([0-9]+)\\.([0-9]+).*$",
+				  regex::extended);
+	    smatch match;
 
-	    if (!rx.match(cmd.get_stdout().front()))
+	    if (!regex_search(cmd.get_stdout().front(), match, rx))
 	    {
 		y2war("LVM version format didn't match");
 	    }
@@ -484,9 +488,9 @@ namespace snapper
 	    {
 		uint16_t maj, min, rev;
 
-		rx.cap(1) >> maj;
-		rx.cap(2) >> min;
-		rx.cap(3) >> rev;
+		match[1] >> maj;
+		match[2] >> min;
+		match[3] >> rev;
 
 		lvm_version version(maj, min, rev);
 

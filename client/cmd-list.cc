@@ -510,7 +510,7 @@ namespace snapper
 		    return nullptr;
 
 		json_object* json_userdata = json_object_new_object();
-		for (const map<string, string>::value_type sub_value : tmp)
+		for (const map<string, string>::value_type& sub_value : tmp)
 		    json_object_object_add(json_userdata, sub_value.first.c_str(),
 					   json_object_new_string(sub_value.second.c_str()));
 
