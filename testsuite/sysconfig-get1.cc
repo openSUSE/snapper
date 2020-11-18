@@ -19,6 +19,9 @@ BOOST_AUTO_TEST_CASE(sysconfig_get1)
     BOOST_CHECK(s.getValue("S1", tmp_string));
     BOOST_CHECK_EQUAL(tmp_string, "hello");
 
+    BOOST_CHECK(s.getValue("S2", tmp_string));
+    BOOST_CHECK_EQUAL(tmp_string, "hello");
+
     bool tmp_bool;
 
     BOOST_CHECK(s.getValue("B1", tmp_bool));

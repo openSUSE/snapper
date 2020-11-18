@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2004-2014] Novell, Inc.
+ * Copyright (c) 2020 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -32,6 +33,9 @@
 #define CONFIG_TEMPLATE_DIR "/etc/snapper/config-templates"
 
 #define FILTERS_DIR "/etc/snapper/filters"
+
+#define DEV_DIR "/dev"
+#define DEV_MAPPER_DIR "/dev/mapper"
 
 
 // keys from the config files

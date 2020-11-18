@@ -1,5 +1,6 @@
 
 S1="hello"
+S2=hello	# this is a comment
 
 B1="yes"
 B2="no"

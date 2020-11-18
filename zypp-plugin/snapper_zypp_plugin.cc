@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -31,6 +31,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <regex>
 using namespace std;
 
 #include <json.h>
@@ -40,7 +41,6 @@ using namespace std;
 #endif
 
 #include "dbus/DBusConnection.h"
-#include "snapper/Regex.h"
 #include "snapper/Exception.h"
 using snapper::Exception;
 using snapper::CodeLocation;
@@ -256,14 +256,19 @@ map<string, string> SnapperZyppPlugin::get_userdata(const Message& msg) {
 	const string& userdata_s = it->second;
 	vector<string> key_values;
 	boost::split(key_values, userdata_s, boost::is_any_of(","));
-	for (auto kv: key_values) {
-	    static const snapper::Regex rx_keyval("^([^=]*)=(.+)$");
-	    if (rx_keyval.match(kv)) {
-		string key = boost::trim_copy(rx_keyval.cap(1));
-		string value = boost::trim_copy(rx_keyval.cap(2));
+	for (auto kv : key_values)
+	{
+	    static const regex rx_keyval("([^=]*)=(.+)", regex::extended);
+	    smatch match;
+
+	    if (regex_match(kv, match, rx_keyval))
+	    {
+		string key = boost::trim_copy(match[1].str());
+		string value = boost::trim_copy(match[2].str());
 		result[key] = value;
 	    }
-	    else {
+	    else
+	    {
 		cerr << "ERROR:" << "invalid userdata: expecting comma separated key=value pairs" << endl;
 	    }
 	}

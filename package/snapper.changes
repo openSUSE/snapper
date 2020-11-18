@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Nov 18 12:13:56 CET 2020 - aschnell@suse.com
+
+- use C++11 regexes instead of own regcomp/regexec wrapper class
+  (see gh#openSUSE/snapper#583)
+
+-------------------------------------------------------------------
 Tue Sep 22 09:17:28 CEST 2020 - aschnell@suse.com
 
 - added option to cleanup to make requested free space available

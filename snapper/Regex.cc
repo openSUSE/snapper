@@ -19,6 +19,12 @@
  * find current contact information at www.novell.com.
  */
 
+
+// This file is obsolete. It is only present for compatibility of libsnapper, esp. the
+// Regex class was used in older versions of the zypp-plugin and we must avoid potentially
+// problems during updates.
+
+
 #include <stdexcept>
 #include "snapper/Regex.h"
 

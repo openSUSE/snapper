@@ -31,6 +31,7 @@
 #include <sys/acl.h>
 #include <acl/libacl.h>
 #include <set>
+#include <regex>
 #include <boost/algorithm/string.hpp>
 
 #include "snapper/Snapper.h"
@@ -49,7 +50,6 @@
 #include "snapper/BtrfsUtils.h"
 #ifdef ENABLE_SELINUX
 #include "snapper/Selinux.h"
-#include "snapper/Regex.h"
 #endif
 
 
@@ -874,8 +874,8 @@ namespace snapper
     Snapper::syncSelinuxContextsInInfosDir(bool skip_snapshot_dir) const
     {
 #ifdef ENABLE_SELINUX
-	Regex rx("^[0-9]+$");
-	Regex rx_filelist("^filelist-[0-9]+.txt$");
+	static const regex rx("[0-9]+", regex::extended);
+	static const regex rx_filelist("filelist-[0-9]+.txt", regex::extended);
 
 	y2deb("Syncing Selinux contexts in infos dir");
 
@@ -884,7 +884,7 @@ namespace snapper
 	vector<string> infos = infos_dir.entries();
 	for (vector<string>::const_iterator it1 = infos.begin(); it1 != infos.end(); ++it1)
 	{
-	    if (!rx.match(*it1))
+	    if (!regex_match(*it1, rx))
 		continue;
 
 	    SDir info_dir(infos_dir, *it1);
@@ -902,7 +902,7 @@ namespace snapper
 	    vector<string> info_content = info_dir.entries();
 	    for (vector<string>::const_iterator it2 = info_content.begin(); it2 != info_content.end(); ++it2)
 	    {
-		if (!rx_filelist.match(*it2))
+		if (!regex_match(*it2, rx_filelist))
 		    continue;
 
 		SFile fl(info_dir, *it2);
