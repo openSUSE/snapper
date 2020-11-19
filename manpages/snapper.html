@@ -31,7 +31,7 @@
     create, delete and compare snapshots and undo changes done between snapshots.</p>
         <p>Snapper never modifies the content of snapshots. Thus snapper creates
     read-only snapshots if supported by the kernel. Supported filesystems are
-    btrfs and ext4 as well as snapshots of LVM logical volumes with
+    btrfs and ext4 (discontinued) as well as snapshots of LVM logical volumes with
     thin-provisioning. Some filesystems might not be supported depending on your
     installation.</p>
       </div>
@@ -363,9 +363,10 @@
                     <span class="term"><code class="option">-f, --fstype</code> <em class="replaceable"><code>fstype</code></em></span>
                   </dt>
                   <dd>
-                    <p>Manually set filesystem type. Supported values are btrfs, ext4 and lvm. For
-		lvm, snapper uses LVM thin-provisioned snapshots. The filesystem type on top of
-		LVM must be provided in parentheses, e.g. lvm(xfs).</p>
+                    <p>Manually set filesystem type. Supported values are btrfs, ext4
+		(discontinued) and lvm. For lvm, snapper uses LVM thin-provisioned snapshots.
+		The filesystem type on top of LVM must be provided in parentheses,
+		e.g. lvm(xfs).</p>
                     <p>Without this option snapper tries to detect the filesystem.</p>
                   </dd>
                   <dt>
