@@ -14,25 +14,18 @@ EXTRA_DIST = $(doc_DATA) VERSION LIBVERSION
 snapper-$(VERSION).tar.bz2: dist-bzip2
 
 DEBIAN_FLAVOURS =	\
-    Debian_7.0		\
-    Debian_8.0		\
     Debian_9.0		\
     Debian_10.0
 
 UBUNTU_FLAVOURS =	\
-    xUbuntu_14.04	\
-    xUbuntu_14.10	\
-    xUbuntu_15.04	\
-    xUbuntu_15.10	\
-    xUbuntu_16.04	\
-    xUbuntu_16.10	\
     xUbuntu_17.04	\
     xUbuntu_17.10	\
     xUbuntu_18.04	\
     xUbuntu_18.10	\
     xUbuntu_19.04	\
     xUbuntu_19.10	\
-    xUbuntu_20.04
+    xUbuntu_20.04	\
+    xUbuntu_20.10
 
 show-debian:
 	@echo "Debian flavors: $(DEBIAN_FLAVOURS)"
