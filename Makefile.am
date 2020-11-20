@@ -15,7 +15,8 @@ snapper-$(VERSION).tar.bz2: dist-bzip2
 
 DEBIAN_FLAVOURS =	\
     Debian_9.0		\
-    Debian_10.0
+    Debian_10.0		\
+    Debian_Unstable
 
 UBUNTU_FLAVOURS =	\
     xUbuntu_17.04	\
