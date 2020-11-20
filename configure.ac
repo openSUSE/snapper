@@ -222,4 +222,5 @@ AC_OUTPUT(
 	package/snapper.spec:snapper.spec.in
 	dists/debian/snapper-Debian.dsc.in:dists/debian/snapper-Debian.dsc.in.in
 	dists/debian/snapper-xUbuntu.dsc.in:dists/debian/snapper-xUbuntu.dsc.in.in
+	dists/debian/snapper-Raspbian.dsc.in:dists/debian/snapper-Raspbian.dsc.in.in
 )
