@@ -4,6 +4,7 @@
  * @section License
  *
  * Copyright (c) [2013-2015] SUSE
+ * Copyright (c) 2020 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -518,18 +519,37 @@ static int get_ugid( pam_handle_t * pamh, const char *pam_user, uid_t * uid, gid
 	struct passwd *result;
 
 	long bufsize = sysconf( _SC_GETPW_R_SIZE_MAX );
-	if (bufsize == -1) {
+	if ( bufsize == -1 ) {
 		bufsize = 1024;
 	}
-	char buf[bufsize];
 
-	if ( getpwnam_r( pam_user, &pwd, buf, bufsize, &result ) != 0 || result != &pwd ) {
-		pam_syslog( pamh, LOG_ERR, "getpwnam failed" );
+	char *buf = malloc( bufsize );
+	if ( !buf ) {
+		pam_syslog( pamh, LOG_ERR, "out of memory" );
+		return -1;
+	}
+
+	int e;
+	while ( ( e = getpwnam_r( pam_user, &pwd, buf, bufsize, &result ) ) == ERANGE ) {
+		bufsize *= 2;
+		buf = realloc( buf, bufsize );
+
+		if ( !buf ) {
+			pam_syslog( pamh, LOG_ERR, "out of memory" );
+			return -1;
+		}
+	}
+
+	if ( e != 0 || result == NULL ) {
+		pam_syslog( pamh, LOG_ERR, "getpwnam_r failed" );
+		free( buf );
 		return -1;
 	}
 
 	*uid = pwd.pw_uid;
 	*gid = pwd.pw_gid;
+
+	free( buf );
 
 	return 0;
 }
