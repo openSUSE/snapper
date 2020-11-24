@@ -315,8 +315,6 @@ namespace snapper
 	if (e != 0 || result == NULL)
 	    return false;
 
-	memset(pwd.pw_passwd, 0, strlen(pwd.pw_passwd));
-
 	username = pwd.pw_name;
 	gid = pwd.pw_gid;
 
@@ -338,8 +336,6 @@ namespace snapper
 
 	if (e != 0 || result == NULL)
 	    return false;
-
-	memset(pwd.pw_passwd, 0, strlen(pwd.pw_passwd));
 
 	dir = pwd.pw_dir;
 
@@ -365,8 +361,6 @@ namespace snapper
 	    return false;
 	}
 
-	memset(pwd.pw_passwd, 0, strlen(pwd.pw_passwd));
-
 	uid = pwd.pw_uid;
 
 	return true;
@@ -390,8 +384,6 @@ namespace snapper
 	    y2war("couldn't find groupname '" << groupname << "'");
 	    return false;
 	}
-
-	memset(grp.gr_passwd, 0, strlen(grp.gr_passwd));
 
 	gid = grp.gr_gid;
 

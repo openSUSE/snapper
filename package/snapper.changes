@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Nov 24 11:58:44 CET 2020 - aschnell@suse.com
+
+- do not override passwd after getpwuid_r et.al. calls
+  (gh#openSUSE/snapper#589)
+
+-------------------------------------------------------------------
 Thu Nov 19 11:49:29 CET 2020 - aschnell@suse.com
 
 - state in man-pages that ext4 support is discontinued
