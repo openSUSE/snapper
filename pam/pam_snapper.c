@@ -268,12 +268,12 @@ static int cdbus_create_snap_pack( const char *snapper_conf, createmode_t create
 
 	char *cleanup_escaped = cdbus_escape( cleanup );
 	if ( !cleanup_escaped ) {
-	    return -ENOMEM;
+		return -ENOMEM;
 	}
 
 	if ( !dbus_message_iter_append_basic( &args, DBUS_TYPE_STRING, &cleanup_escaped ) ) {
-	    free( cleanup_escaped );
-	    return -ENOMEM;
+		free( cleanup_escaped );
+		return -ENOMEM;
 	}
 
 	free( cleanup_escaped );
@@ -300,7 +300,7 @@ static int cdbus_create_snap_pack( const char *snapper_conf, createmode_t create
 
 		if ( !dbus_message_iter_append_basic
 		     ( &struct_iter, DBUS_TYPE_STRING, &key_escaped ) ) {
-		    free( key_escaped );
+			free( key_escaped );
 			return -ENOMEM;
 		}
 
