@@ -528,8 +528,6 @@ static int get_ugid( pam_handle_t * pamh, const char *pam_user, uid_t * uid, gid
 		return -1;
 	}
 
-	memset( pwd.pw_passwd, 0, strlen( pwd.pw_passwd ) );
-
 	*uid = pwd.pw_uid;
 	*gid = pwd.pw_gid;
 
