@@ -17,6 +17,7 @@ libsnapper_la_SOURCES =					\
 	XmlFile.cc		XmlFile.h		\
 	Enum.cc			Enum.h			\
 	AppUtil.cc		AppUtil.h		\
+	AppUtil2.cc					\
 	FileUtils.cc		FileUtils.h		\
 	XAttributes.cc		XAttributes.h		\
 	Log.cc			Log.h			\
