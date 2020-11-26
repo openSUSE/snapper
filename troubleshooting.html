@@ -1,0 +1,29 @@
+---
+layout: default
+---
+<div>
+
+  <h2>Troubleshhting</h2>
+
+  <ol>
+
+    <li>
+      <h3>Creating snapshots fails</h3>
+
+      <p>One reason for this to happen is that there is an active
+      swapfile on the btrfs subvolume being snapshotted. That is not
+      supported by btrfs.</p>
+
+      <p>In that case /var/log/snapper.log shows the error:</p>
+      <pre><code>create snapshot failed, ioctl(BTRFS_IOC_SNAP_CREATE_V2) failed, errno:26 (Text file busy)</code></pre>
+
+      <p>dmesg shows the warning:</p>
+      <pre><code>cannot snapshot subvolume with active swapfile</code></pre>
+
+      <p>A solution is to create a separate subvolume for the
+      swapfile.</p>
+    </li>
+
+  </ol>
+
+</dev>
