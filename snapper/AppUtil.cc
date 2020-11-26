@@ -221,22 +221,6 @@ namespace snapper
 
 
     string
-    stringerror(int errnum)
-    {
-#if (_POSIX_C_SOURCE >= 200112L) && ! _GNU_SOURCE
-	char buf1[100];
-	if (strerror_r(errnum, buf1, sizeof(buf1) - 1) == 0)
-	    return string(buf1);
-	return string("strerror failed");
-#else
-	char buf1[100];
-	const char* buf2 = strerror_r(errnum, buf1, sizeof(buf1) - 1);
-	return string(buf2);
-#endif
-    }
-
-
-    string
     sformat(const char* format, ...)
     {
 	char* result;
