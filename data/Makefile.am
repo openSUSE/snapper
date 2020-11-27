@@ -28,7 +28,7 @@ if ENABLE_SYSTEMD
 	install -D -m 644 cleanup.timer $(DESTDIR)/usr/lib/systemd/system/snapper-cleanup.timer
 	install -D -m 644 boot.service $(DESTDIR)/usr/lib/systemd/system/snapper-boot.service
 	install -D -m 644 boot.timer $(DESTDIR)/usr/lib/systemd/system/snapper-boot.timer
-  install -D -m 644 snapperd.service $(DESTDIR)/usr/lib/systemd/system/snapperd.service
+	install -D -m 644 snapperd.service $(DESTDIR)/usr/lib/systemd/system/snapperd.service
 endif
 
 if HAVE_ZYPP
