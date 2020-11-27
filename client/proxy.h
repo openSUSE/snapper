@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2019] SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -175,6 +175,7 @@ public:
     virtual iterator getDefault() = 0;
     virtual const_iterator getDefault() const = 0;
 
+    virtual iterator getActive() = 0;
     virtual const_iterator getActive() const = 0;
 
     iterator find(unsigned int i);

@@ -70,10 +70,12 @@ namespace snapper
     Hooks::grub(const string& subvolume, const Filesystem* filesystem, const char* option)
     {
 #ifdef ENABLE_ROLLBACK
-	if (subvolume == "/" && filesystem->fstype() == "btrfs" &&
-	    access("/usr/lib/snapper/plugins/grub", X_OK) == 0)
+
+#define GRUB_SCRIPT "/usr/lib/snapper/plugins/grub"
+
+	if (subvolume == "/" && filesystem->fstype() == "btrfs" && access(GRUB_SCRIPT, X_OK) == 0)
 	{
-	    SystemCmd cmd(string("/usr/lib/snapper/plugins/grub ") + option);
+	    SystemCmd cmd(string(GRUB_SCRIPT) + " " + option);
 	}
 #endif
     }
@@ -83,6 +85,7 @@ namespace snapper
     Hooks::rollback(const string& old_root, const string& new_root)
     {
 #ifdef ENABLE_ROLLBACK
+
 #define ROLLBACK_SCRIPT "/usr/lib/snapper/plugins/rollback"
 
 	// Fate#319108

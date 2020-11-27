@@ -20,6 +20,9 @@
  */
 
 
+#ifndef SNAPPER_RANGE_H
+#define SNAPPER_RANGE_H
+
 #include <ostream>
 
 using std::istream;
@@ -49,3 +52,6 @@ private:
     size_t min;
     size_t max;
 };
+
+
+#endif

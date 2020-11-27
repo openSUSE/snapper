@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2013] Novell, Inc.
- * Copyright (c) 2018 SUSE LLC
+ * Copyright (c) [2018-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -158,17 +158,11 @@ namespace snapper
 
 	if (geteuid())
 	{
-	    struct passwd pwd;
-	    struct passwd* result;
+	    string dir;
 
-	    long bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
-	    char buf[bufsize];
-
-	    if (getpwuid_r(geteuid(), &pwd, buf, bufsize, &result) == 0 && result == &pwd)
+	    if (get_uid_dir(geteuid(), dir))
 	    {
-		memset(pwd.pw_passwd, 0, strlen(pwd.pw_passwd));
-
-		logger_data->filename = string(pwd.pw_dir) + "/.snapper.log";
+		logger_data->filename = dir + "/.snapper.log";
 	    }
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019] SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -22,49 +22,55 @@
 #ifndef SNAPPER_CLI_CSV_FORMATTER_H
 #define SNAPPER_CLI_CSV_FORMATTER_H
 
+
 #include <string>
 #include <vector>
+#include <ostream>
+
 
 namespace snapper
 {
-    namespace cli
+
+    using namespace std;
+
+
+    class CsvFormatter
     {
 
-	class CsvFormatter
-	{
+    public:
 
-	public:
+	static const string default_separator;
 
-	    static const std::string default_separator();
+	CsvFormatter(const string& separator) : separator(separator) {}
 
-	    CsvFormatter(
-		std::vector<std::string> columns,
-		std::vector<std::vector<std::string>> rows);
+	CsvFormatter(const CsvFormatter&) = delete;
 
-	    CsvFormatter(
-		std::vector<std::string> columns,
-		std::vector<std::vector<std::string>> rows,
-		const std::string separator);
+	CsvFormatter& operator=(const CsvFormatter&) = delete;
 
-	    std::string output() const;
+	vector<string>& header() { return _header; }
+	vector<vector<string>>&  rows() { return _rows; }
 
-	private:
+	friend ostream& operator<<(ostream& stream, const CsvFormatter& csv_formatter);
 
-	    std::string csv_line(std::vector<std::string> values) const;
+    private:
 
-	    std::string csv_value(const std::string value) const;
+	string csv_line(const vector<string>& values) const;
 
-	    bool has_special_chars(const std::string value) const;
+	string csv_value(const string& value) const;
 
-	    std::vector<std::string> _columns;
+	bool has_special_chars(const string& value) const;
 
-	    std::vector<std::vector<std::string>> _rows;
+	string double_quotes(const string& value) const;
 
-	    const std::string _separator;
+	string enclose_with_quotes(const string& value) const;
 
-	};
+	const string separator;
 
-    }
+	vector<string> _header;
+	vector<vector<string>> _rows;
+
+    };
+
 }
 
 #endif

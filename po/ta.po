@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2003-08-14 10:47+0200\n"
 "Last-Translator: xxx <yyy@example.org>\n"
 "Language-Team: Tamil <i18n@suse.de>\n"
@@ -21,16 +21,35 @@ msgstr ""
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr ""
 
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
+msgstr ""
+
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr ""
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr ""
 
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
+
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr ""
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
+msgstr ""
+
+msgid "\t--csvout\t\t\tSet CSV output format."
 msgstr ""
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
@@ -48,6 +67,9 @@ msgstr ""
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr ""
 
@@ -63,10 +85,19 @@ msgstr ""
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr ""
 
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr ""
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgstr ""
+
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr ""
 
 msgid "\t--output, -o <file>\t\tSave status to file."
+msgstr ""
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
 msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
@@ -88,6 +119,9 @@ msgid "\t--read-write\t\t\tCreate read-write snapshot."
 msgstr ""
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
+msgstr ""
+
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
 msgstr ""
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
@@ -178,6 +212,9 @@ msgstr ""
 msgid "    Global options:"
 msgstr "தெரியாத உலகமய விருப்பத்தேர்வு "
 
+msgid "    Options for 'cleanup' command:"
+msgstr ""
+
 msgid "    Options for 'create' command:"
 msgstr ""
 
@@ -190,7 +227,16 @@ msgstr ""
 msgid "    Options for 'diff' command:"
 msgstr ""
 
+msgid "    Options for 'get-config' command:"
+msgstr ""
+
 msgid "    Options for 'list' command:"
+msgstr ""
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
 msgstr ""
 
 msgid "    Options for 'modify' command:"
@@ -232,8 +278,9 @@ msgstr ""
 msgid "  List configs:"
 msgstr ""
 
+#, fuzzy
 msgid "  List snapshots:"
-msgstr ""
+msgstr "அறிந்திராத வகை."
 
 msgid "  Modify snapshot:"
 msgstr ""
@@ -261,6 +308,20 @@ msgstr ""
 msgid "#"
 msgstr ""
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "புரவலன் %s காணப்படவில்லை."
@@ -268,6 +329,16 @@ msgstr "புரவலன் %s காணப்படவில்லை."
 #, fuzzy
 msgid "ACL error."
 msgstr "பிழை"
+
+msgid "Active"
+msgstr ""
+
+msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+#, c-format
+msgid "Ambit is %s."
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -283,6 +354,12 @@ msgstr ""
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
+msgstr ""
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr ""
+
+msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
 msgid "Cleanup"
@@ -404,6 +481,13 @@ msgstr ""
 msgid "Configdata '%s' has empty key."
 msgstr ""
 
+#, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Creating config failed (%s)."
 msgstr "உள்ளமைவு கோப்புகள் விளக்கப்படுகின்றன..."
@@ -426,7 +510,11 @@ msgstr "உள்ளமைவு கோப்புகள் விளக்க�
 msgid "Creating snapshot failed."
 msgstr "உள்ளமைவு கோப்புகள் விளக்கப்படுகின்றன..."
 
+#, fuzzy
 msgid "Date"
+msgstr "துவக்கத்திற்குப்பின்"
+
+msgid "Default"
 msgstr ""
 
 #, fuzzy, c-format
@@ -449,6 +537,14 @@ msgstr "விளக்கம்"
 msgid "Detecting filesystem type failed."
 msgstr ""
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+msgid "EB"
+msgstr ""
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr ""
@@ -467,6 +563,18 @@ msgstr "ஐ/ஓ தவறு"
 
 msgid "Failed to initialize filesystem handler."
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "Failed to parse: %s."
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "Failed to parse: %s."
 
 msgid "Failed to set locale. Fix your system."
 msgstr ""
@@ -487,6 +595,14 @@ msgstr "சேமிப்பிடத்தில் கோப்பு %1 �
 msgid "Free space error (%s)."
 msgstr "ஐ/ஓ தவறு"
 
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+msgid "GB"
+msgstr ""
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
@@ -506,13 +622,32 @@ msgstr ""
 msgid "Illegal snapshot."
 msgstr "செல்லாத வகை %1."
 
+#, fuzzy, c-format
+msgid "Invalid ambit '%s'."
+msgstr "செல்லாத வகை %1."
+
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "செல்லாத வகை %1."
+
 #, fuzzy
 msgid "Invalid configdata."
 msgstr "செல்லாத அளிப்பு தரவு."
 
+msgid "Invalid free-space value."
+msgstr ""
+
 #, fuzzy
 msgid "Invalid group."
 msgstr "செல்லாத சிஆர்எல் காரணம்."
+
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "செல்லாத வகை %1."
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "செல்லாத வகை %1."
 
 #, fuzzy, c-format
 msgid "Invalid snapshot '%s'."
@@ -525,7 +660,7 @@ msgid "Invalid subvolume."
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Invalid table style %d."
+msgid "Invalid table style '%s'."
 msgstr "செல்லாத வகை %1."
 
 #, fuzzy
@@ -548,6 +683,14 @@ msgstr ""
 msgid "Listing configs failed (%s)."
 msgstr "உள்ளமைவு கோப்புகள் விளக்கப்படுகின்றன..."
 
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+msgid "MB"
+msgstr ""
+
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr ""
 
@@ -564,7 +707,7 @@ msgid "Missing argument for global option '%s'."
 msgstr "இதற்கான தொலைந்துபோன பயனிலை"
 
 #, fuzzy
-msgid "Missing command argument."
+msgid "Missing command option."
 msgstr "இதற்கான தொலைந்துபோன பயனிலை"
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -591,12 +734,21 @@ msgstr ""
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr ""
 
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+msgid "PB"
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr ""
 
+#, fuzzy
 msgid "Post #"
-msgstr ""
+msgstr "துவக்கத்திற்குப்பின்"
 
 #, fuzzy
 msgid "Post Date"
@@ -605,8 +757,9 @@ msgstr "துவக்கத்திற்குப்பின்"
 msgid "Pre #"
 msgstr ""
 
+#, fuzzy
 msgid "Pre Date"
-msgstr ""
+msgstr "துவக்கத்திற்குப்பின்"
 
 #, fuzzy, c-format
 msgid "Quota error (%s)."
@@ -631,7 +784,21 @@ msgstr "புரவலன் %s காணப்படவில்லை."
 msgid "Subvolume"
 msgstr ""
 
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+msgid "TB"
+msgstr ""
+
+msgid "The ambit can be specified manually using the --ambit option."
+msgstr ""
+
 msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+msgid "This can happen if the system was not set up for rollback."
 msgstr ""
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
@@ -665,13 +832,15 @@ msgstr "தெரியாத உலகமய விருப்பத்தே�
 msgid "Unknown option '%s' for command '%s'."
 msgstr "தெரியாத ஏற்றுமதி ஆணை"
 
-#, fuzzy
-msgid "Unknown type of snapshot."
-msgstr "அறிந்திராத வகை."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "தெரியாத ஆணை "
 
-#, fuzzy
-msgid "Unknown type of snapshots."
-msgstr "அறிந்திராத வகை."
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
+#, c-format
+msgid "Use %1$s."
+msgstr ""
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -683,8 +852,9 @@ msgstr ""
 msgid "User"
 msgstr ""
 
+#, fuzzy
 msgid "Userdata"
-msgstr ""
+msgstr "செல்லாத வகை %1."
 
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
@@ -721,19 +891,42 @@ msgstr "Failed to parse: %s."
 msgid "failed to modify %s"
 msgstr "கூறு\"%s\"ஐ ஏற்ற முடியவில்லை"
 
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+msgid "kB"
+msgstr ""
+
 #, c-format
 msgid "modifying %s"
+msgstr ""
+
+msgid "no"
 msgstr ""
 
 #, fuzzy
 msgid "nothing to do"
 msgstr "செய்வதற்கு ஏதுமில்லை."
 
-msgid "root argument can be used only together with no-dbus."
-msgstr ""
+#, fuzzy
+msgid "root argument can be used only together with no-dbus.\n"
+msgstr "கூடுதல் தகவலுக்கு`%s --உதவி' அல்லது`%s –பயன்பாடு'வை முயற்சிக்கவும்.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
+
+msgid "yes"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "அறிந்திராத வகை."
+
+#, fuzzy
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "அறிந்திராத வகை."
 
 #, fuzzy
 #~ msgid "Quota failure (%s)."

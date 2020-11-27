@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -24,11 +24,11 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <regex>
 using namespace std;
 
 // fnmatch
 #include <fnmatch.h>
-#include "snapper/Regex.h"
 #include "snapper/XmlFile.h"
 using namespace snapper;
 
@@ -44,11 +44,19 @@ bool SolvableMatcher::match(const string& solvable) const {
 	static const int flags = 0;
 	res = fnmatch(pattern.c_str(), solvable.c_str(), flags) == 0;
     }
-    else {
-	// POSIX Extended Regular Expression Syntax
-	// The original Python implementation allows "foo" to match "foo-devel"
-	snapper::Regex rx_pattern("^" + pattern, REG_EXTENDED | REG_NOSUB);
-	res = rx_pattern.match(solvable);
+    else
+    {
+	try
+	{
+	    // POSIX Extended Regular Expression Syntax
+	    // The original Python implementation allows "foo" to match "foo-devel"
+	    const regex rx_pattern("^" + pattern, regex::extended);
+	    res = regex_search(solvable, rx_pattern);
+	}
+	catch (const regex_error& e)
+	{
+	    throw std::runtime_error(string("Regex compilation error: ") + e.what());
+	}
     }
     log << "DEBUG:" << "-> " << res << endl;
     return res;

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2014-2015] Novell, Inc.
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -70,7 +70,7 @@ timeline(ProxySnappers* snappers, const map<string, string>& userdata)
     bool ok = true;
 
     map<string, ProxyConfig> configs = snappers->getConfigs();
-    for (const map<string, ProxyConfig>::value_type value : configs)
+    for (const map<string, ProxyConfig>::value_type& value : configs)
     {
 	const map<string, string>& raw = value.second.getAllValues();
 
@@ -104,7 +104,7 @@ cleanup(ProxySnappers* snappers)
     bool ok = true;
 
     map<string, ProxyConfig> configs = snappers->getConfigs();
-    for (const map<string, ProxyConfig>::value_type value : configs)
+    for (const map<string, ProxyConfig>::value_type& value : configs)
     {
 	const map<string, string>& raw = value.second.getAllValues();
 
@@ -156,34 +156,39 @@ main(int argc, char** argv)
 {
     setlocale(LC_ALL, "");
 
-    const struct option options[] = {
-	{ "timeline",		no_argument,		0,	0 },
-	{ "cleanup",		no_argument,		0,	0 },
-	{ "userdata",		required_argument,	0,	'u' },
-	{ 0, 0, 0, 0 }
-    };
-
     bool do_timeline = false;
     bool do_cleanup = false;
-
     map<string, string> userdata;
 
-    GetOpts getopts;
+    try
+    {
+	const vector<Option> options = {
+	    Option("timeline",		no_argument),
+	    Option("cleanup",		no_argument),
+	    Option("userdata",		required_argument,	'u')
+	};
 
-    getopts.init(argc, argv);
+	GetOpts get_opts(argc, argv);
 
-    GetOpts::parsed_opts opts = getopts.parse(options);
+	ParsedOpts opts = get_opts.parse(options);
 
-    GetOpts::parsed_opts::const_iterator opt;
+	ParsedOpts::const_iterator opt;
 
-    if (opts.find("timeline") != opts.end())
-	do_timeline = true;
+	if (opts.has_option("timeline"))
+	    do_timeline = true;
 
-    if (opts.find("cleanup") != opts.end())
-	do_cleanup = true;
+	if (opts.has_option("cleanup"))
+	    do_cleanup = true;
 
-    if ((opt = opts.find("userdata")) != opts.end())
-	userdata = read_userdata(opt->second);
+	if ((opt = opts.find("userdata")) != opts.end())
+	    userdata = read_userdata(opt->second);
+    }
+    catch (const OptionsException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << e.what() << endl;
+	exit(EXIT_FAILURE);
+    }
 
     bool ok = true;
 

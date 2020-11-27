@@ -33,7 +33,7 @@ struct SolvableMatcher {
     };
     std::string pattern;
     Kind kind;
-    bool important;
+    bool important = false;
 
     static std::ostream& log;
     SolvableMatcher(const std::string& apattern, Kind akind, bool aimportant)

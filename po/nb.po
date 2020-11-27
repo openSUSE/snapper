@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2013-10-04 18:20+0200\n"
 "Last-Translator: Olav Pettershagen <olpetter@bbnett.no>\n"
 "Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
@@ -21,6 +21,9 @@ msgstr ""
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr ""
 
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
+msgstr ""
+
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\tOppryddingsalgoritme for øyeblikksbilde."
 
@@ -28,12 +31,28 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tOppryddingsalgoritme for øyeblikksbil
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tOppryddingsalgoritme for øyeblikksbilde."
 
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
+
 #, fuzzy
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <kommando>\tKjør kommandoen og opprette før- og etter-øyeblikksbilder."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <navn>\t\tNavn som skal brukes i oppsettet."
+
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr ""
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <beskrivelse>\tBeskrivelse av øyeblikksbilde."
@@ -52,6 +71,9 @@ msgstr "\t--disable-filters\t\tDeaktiver filtre."
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr ""
 
@@ -68,11 +90,20 @@ msgstr "\t--input, -i <fil>\t\tLes filer der endringer skal angres."
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr ""
 
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr ""
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgstr ""
+
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tBruk systemet uten DBus."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <fil>\t\tLagre status i fil."
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <antall>\t\tAntall samsvarende før øyeblikksbilde."
@@ -94,6 +125,9 @@ msgid "\t--read-write\t\t\tCreate read-write snapshot."
 msgstr ""
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
+msgstr ""
+
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
 msgstr ""
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
@@ -186,6 +220,10 @@ msgstr "\tsnapper xadiff <number1>..<number2> [filer]"
 msgid "    Global options:"
 msgstr "    Globale valg:"
 
+#, fuzzy
+msgid "    Options for 'cleanup' command:"
+msgstr "    Valg for 'create'-kommandoen:"
+
 msgid "    Options for 'create' command:"
 msgstr "    Valg for 'create'-kommandoen:"
 
@@ -200,8 +238,18 @@ msgstr "    Valg for 'create'-kommandoen:"
 msgid "    Options for 'diff' command:"
 msgstr "    Valg for 'modify'-kommandoen:"
 
+#, fuzzy
+msgid "    Options for 'get-config' command:"
+msgstr "    Valg for 'create config'-kommandoen:"
+
 msgid "    Options for 'list' command:"
 msgstr "    Valg for 'list'-kommandoen:"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
 
 msgid "    Options for 'modify' command:"
 msgstr "    Valg for 'modify'-kommandoen:"
@@ -271,6 +319,20 @@ msgstr "  Angre endringer:"
 msgid "#"
 msgstr "#"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "Øyeblikksbildet '%u' ikke funnet."
@@ -279,6 +341,16 @@ msgstr "Øyeblikksbildet '%u' ikke funnet."
 #, fuzzy
 msgid "ACL error."
 msgstr "Feil under oppretting"
+
+msgid "Active"
+msgstr ""
+
+msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+#, c-format
+msgid "Ambit is %s."
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -294,6 +366,12 @@ msgstr ""
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
+msgstr ""
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr ""
+
+msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
 msgid "Cleanup"
@@ -396,6 +474,13 @@ msgid "Configdata '%s' has empty key."
 msgstr ""
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "Oppsett kunne ikke opprettes (%s)."
 
@@ -420,6 +505,9 @@ msgstr "Diskbilde kunne ikke opprettes."
 msgid "Date"
 msgstr "Dato"
 
+msgid "Default"
+msgstr ""
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Oppsett kunne ikke slettes (%s)."
@@ -438,6 +526,14 @@ msgstr "Beskrivelse"
 
 msgid "Detecting filesystem type failed."
 msgstr "Registrering av filsystemtype mislyktes"
+
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+msgid "EB"
+msgstr ""
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
@@ -460,6 +556,18 @@ msgstr "Inn/ut-feil."
 msgid "Failed to initialize filesystem handler."
 msgstr "Kunne ikke install filhåndterer"
 
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "kunne ikke opprette %s"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "kunne ikke opprette %s"
+
 msgid "Failed to set locale. Fix your system."
 msgstr ""
 
@@ -478,6 +586,14 @@ msgstr "Filen '%s' ikke funnet."
 #, fuzzy, c-format
 msgid "Free space error (%s)."
 msgstr "Inn/ut-feil."
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+msgid "GB"
+msgstr ""
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -500,12 +616,32 @@ msgstr "Identiske øyeblikksbilder."
 msgid "Illegal snapshot."
 msgstr "Ugyldig øyeblikksbilde."
 
+#, fuzzy, c-format
+msgid "Invalid ambit '%s'."
+msgstr "Ugyldig øyeblikksbilde '%s'."
+
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Ugyldig øyeblikksbilde '%s'."
+
 msgid "Invalid configdata."
 msgstr "Ugyldige oppsettdata."
 
 #, fuzzy
+msgid "Invalid free-space value."
+msgstr "Ugyldig undervolum."
+
+#, fuzzy
 msgid "Invalid group."
 msgstr "Ugyldig undervolum."
+
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "Ugyldig tabellstil %d."
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "Ugyldig øyeblikksbilde '%s'."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -517,8 +653,8 @@ msgstr "Ugyldige øyeblikksbilder."
 msgid "Invalid subvolume."
 msgstr "Ugyldig undervolum."
 
-#, c-format
-msgid "Invalid table style %d."
+#, fuzzy, c-format
+msgid "Invalid table style '%s'."
 msgstr "Ugyldig tabellstil %d."
 
 #, fuzzy
@@ -539,6 +675,14 @@ msgstr ""
 msgid "Listing configs failed (%s)."
 msgstr "Oppsett kunne ikke vises (%s)."
 
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+msgid "MB"
+msgstr ""
+
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr ""
 
@@ -554,7 +698,8 @@ msgstr "Manglende argument for kommandovalget '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Manglende argument for globalt valg '%s'."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Manglende kommandoargument."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -577,6 +722,14 @@ msgid "Option --from only supported for snapshots of type single."
 msgstr ""
 
 msgid "Option --read-write only supported for snapshots of type single."
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+msgid "PB"
 msgstr ""
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
@@ -618,7 +771,21 @@ msgstr "Øyeblikksbildet er i bruk."
 msgid "Subvolume"
 msgstr "Undervolum"
 
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+msgid "TB"
+msgstr ""
+
+msgid "The ambit can be specified manually using the --ambit option."
+msgstr ""
+
 msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+msgid "This can happen if the system was not set up for rollback."
 msgstr ""
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
@@ -650,11 +817,15 @@ msgstr "Ukjent globalt valg '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Ukjent valg '%s' for kommandoen '%s'."
 
-msgid "Unknown type of snapshot."
-msgstr "Ukjent type for øyeblikksbilde."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Ukjent kommando '%s'."
 
-msgid "Unknown type of snapshots."
-msgstr "Ukjent type for øyeblikksbilder."
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
+#, c-format
+msgid "Use %1$s."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Use an integer number from %d to %d."
@@ -704,18 +875,39 @@ msgstr "kunne ikke slette %s"
 msgid "failed to modify %s"
 msgstr "kunne ikke endre %s"
 
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+msgid "kB"
+msgstr ""
+
 #, c-format
 msgid "modifying %s"
 msgstr "endrer %s"
 
+msgid "no"
+msgstr ""
+
 msgid "nothing to do"
 msgstr "Ingenting å gjøre"
 
-msgid "root argument can be used only together with no-dbus."
-msgstr ""
+#, fuzzy
+msgid "root argument can be used only together with no-dbus.\n"
+msgstr "Forsøk 'snapper --help' for mer informasjon."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "bruk: snapper [--globale valg] <kommando> [--kommandovalg] [kommandoargumenter]"
+
+msgid "yes"
+msgstr ""
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Ukjent type for øyeblikksbilde."
+
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "Ukjent type for øyeblikksbilder."
 
 #, fuzzy
 #~ msgid "Quota failure (%s)."

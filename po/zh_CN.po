@@ -9,11 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
-"PO-Revision-Date: 2020-02-17 12:54+0000\n"
-"Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
-"Language-Team: Chinese (China) <https://l10n.opensuse.org/projects/snapper/"
-"master/zh_CN/>\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
+"PO-Revision-Date: 2020-07-02 07:26+0000\n"
+"Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
+"Language-Team: Chinese (China) <https://l10n.opensuse.org/projects/snapper/master/zh_CN/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,17 +23,36 @@ msgstr ""
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\t列出所有可访问配置中的快照。"
 
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
+msgstr "\t--ambit, -a ambit\t\t在指定范围内操作。"
+
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <算法> \t快照的清理算法。选项：number, timeline, empty-pre-post。"
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <算法>\t快照的清理算法。选项：number, timeline, empty-pre-post。"
 
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
+
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <命令>\t\t运行命令，创建前期和后期快照。"
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <配置名称> \t\t设置要使用的配置名称。"
+
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr "\t--csvout\t\t\t设定 CSV 输出格式。"
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <描述> \t快照描述。"
@@ -51,6 +69,9 @@ msgstr "\t--disable-used-space\t\t禁用已用空间的显示。"
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <选项>\t传递到 diff 命令的额外选项。"
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\t基于指定的快照创建快照。"
 
@@ -66,11 +87,20 @@ msgstr "\t--input, -i <文件>\t\t读取文件以比较文件的差异。"
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\t以 ISO 格式显示日期和时间。"
 
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr "\t--jsonout\t\t\t设定 JSON 输出格式。"
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgstr "\t--machine-readable <格式>\t设定机器可读的输出格式（csv、json）。"
+
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\t不是用 DBus。"
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <文件> \t\t保存状态到文件。"
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <编号> \t\t相关的前期快照编号。"
@@ -92,6 +122,9 @@ msgstr "\t--read-write\t\t\t创建读写快照。"
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <路径>\t\t在目标根目录上操作（不用 DBus 时才起作用）。"
+
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
+msgstr "\t--separator <分隔符>\t\tCSV 输出格式的字符分隔符。"
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\t删除后同步。"
@@ -180,6 +213,10 @@ msgstr "\tsnapper xadiff <编号1>..<编号2> [文件]"
 msgid "    Global options:"
 msgstr "    全局选项："
 
+#, fuzzy
+msgid "    Options for 'cleanup' command:"
+msgstr "    'create' 命令的选项："
+
 msgid "    Options for 'create' command:"
 msgstr "    'create' 命令的选项："
 
@@ -192,8 +229,18 @@ msgstr "    “delete”命令的选项："
 msgid "    Options for 'diff' command:"
 msgstr "    “diff”命令的选项："
 
+#, fuzzy
+msgid "    Options for 'get-config' command:"
+msgstr "    'create-config' 命令的选项："
+
 msgid "    Options for 'list' command:"
 msgstr "    'list' 命令的选项："
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
 
 msgid "    Options for 'modify' command:"
 msgstr "    'modify' 命令的选项："
@@ -261,6 +308,20 @@ msgstr "  取消更改 (回滚)："
 msgid "#"
 msgstr "#"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(快照 '%d'。)"
@@ -268,6 +329,16 @@ msgstr "(快照 '%d'。)"
 # error box title
 msgid "ACL error."
 msgstr "访问控制列表错误。"
+
+msgid "Active"
+msgstr ""
+
+msgid "Active snapshot is already default snapshot."
+msgstr "激活的快照已经是默认快照。"
+
+#, c-format
+msgid "Ambit is %s."
+msgstr "范围是 %s。"
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -284,6 +355,12 @@ msgstr "无法删除快照 %d 因为它就是当前挂载的快照。"
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "无法删除快照 %d 因为它是将要挂载的快照。"
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr ""
+
+msgid "Cannot do rollback since default subvolume is unknown."
+msgstr ""
 
 msgid "Cleanup"
 msgstr "清空"
@@ -381,6 +458,13 @@ msgid "Configdata '%s' has empty key."
 msgstr "配置数据 '%s' 有空密钥。"
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "创建配置失败 (%s)。"
 
@@ -403,6 +487,9 @@ msgstr "创建快照失败。"
 msgid "Date"
 msgstr "日期"
 
+msgid "Default"
+msgstr ""
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "删除配置失败 (%s)。"
@@ -421,6 +508,15 @@ msgstr "描述"
 msgid "Detecting filesystem type failed."
 msgstr "检测文件系统类型失败。"
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+#, fuzzy
+msgid "EB"
+msgstr "EiB"
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr "EiB"
@@ -437,6 +533,18 @@ msgstr "错误 (%s)。"
 
 msgid "Failed to initialize filesystem handler."
 msgstr "初始化文件系统处理器失败。"
+
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "创建 %s 失败"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "创建 %s 失败"
 
 msgid "Failed to set locale. Fix your system."
 msgstr "无法设置区域设置。请修复您的系统。"
@@ -456,6 +564,15 @@ msgstr "未找到文件 '%s'。"
 msgid "Free space error (%s)."
 msgstr "空余空间错误 (%s)。"
 
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+#, fuzzy
+msgid "GB"
+msgstr "GiB"
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
@@ -474,11 +591,31 @@ msgstr "重复的快照。"
 msgid "Illegal snapshot."
 msgstr "非法的快照。"
 
+#, fuzzy, c-format
+msgid "Invalid ambit '%s'."
+msgstr "无效范围 %s。"
+
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "无效范围 %s。"
+
 msgid "Invalid configdata."
 msgstr "无效的配置数据。"
 
+#, fuzzy
+msgid "Invalid free-space value."
+msgstr "无效的子卷。"
+
 msgid "Invalid group."
 msgstr "无效组。"
+
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "无效的机器可读格式 %s。"
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "无效范围 %s。"
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -490,9 +627,9 @@ msgstr "无效的快照。"
 msgid "Invalid subvolume."
 msgstr "无效的子卷。"
 
-#, c-format
-msgid "Invalid table style %d."
-msgstr "无效的表格样式 %d。"
+#, fuzzy, c-format
+msgid "Invalid table style '%s'."
+msgstr "无效的表格样式 %s。"
 
 msgid "Invalid user."
 msgstr "无效用户。"
@@ -511,6 +648,15 @@ msgstr "KiB"
 msgid "Listing configs failed (%s)."
 msgstr "列出配置失败 (%s)。"
 
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+#, fuzzy
+msgid "MB"
+msgstr "MiB"
+
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "可能您忘记在快照编号之间输入分界符“..”。"
 
@@ -526,7 +672,8 @@ msgstr "缺少用于 '%s' 命令选项的参数。"
 msgid "Missing argument for global option '%s'."
 msgstr "缺少用于 '%s' 全局选项的参数。"
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "缺少命令参数。"
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -550,6 +697,15 @@ msgstr "选项 --from 仅适用于单一类型的快照。"
 
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "选项 --read-write 仅适用于单一类型的快照。"
+
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+#, fuzzy
+msgid "PB"
+msgstr "PiB"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -588,8 +744,23 @@ msgstr "快照正在使用中。"
 msgid "Subvolume"
 msgstr "子卷"
 
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+#, fuzzy
+msgid "TB"
+msgstr "TiB"
+
+msgid "The ambit can be specified manually using the --ambit option."
+msgstr ""
+
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "配置“root”不存在。snapper 可能未配置。"
+
+msgid "This can happen if the system was not set up for rollback."
+msgstr ""
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
@@ -620,11 +791,15 @@ msgstr "未知的全局选项 '%s'。"
 msgid "Unknown option '%s' for command '%s'."
 msgstr "未知的选项 '%s' 用于命令 '%s'。"
 
-msgid "Unknown type of snapshot."
-msgstr "未知快照类型。"
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "未知命令 '%s'。"
 
-msgid "Unknown type of snapshots."
-msgstr "未知快照类型。"
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
+#, c-format
+msgid "Use %1$s."
+msgstr ""
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -674,18 +849,50 @@ msgstr "删除 %s 失败"
 msgid "failed to modify %s"
 msgstr "修订 %s 失败"
 
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+#, fuzzy
+msgid "kB"
+msgstr "B"
+
 #, c-format
 msgid "modifying %s"
 msgstr "正在修订 %s"
 
+msgid "no"
+msgstr ""
+
 msgid "nothing to do"
 msgstr "无事可做"
 
-msgid "root argument can be used only together with no-dbus."
-msgstr "根自变量只能与 no-dbus 一起使用。"
+#, fuzzy
+msgid "root argument can be used only together with no-dbus.\n"
+msgstr ""
+"根参数只能与 no-dbus 一起使用。\n"
+"尝试 \"snapper --help\" 获取更多信息。"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "用法：snapper  [--全局选项] <命令> [--命令选项] [命令参数]"
+
+msgid "yes"
+msgstr ""
+
+#, c-format
+#~ msgid "Use %s, %s or %s."
+#~ msgstr "使用 %s、%s 或 %s。"
+
+#, fuzzy, c-format
+#~ msgid "Use %s, %s, %s or %s."
+#~ msgstr "使用 %s、%s 或 %s。"
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "未知快照类型。"
+
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "未知快照类型。"
 
 #~ msgid "Quota failure (%s)."
 #~ msgstr "定额失败 (%s)。"

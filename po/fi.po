@@ -5,11 +5,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
-"PO-Revision-Date: 2019-11-28 21:54+0000\n"
-"Last-Translator: Kimmo Kujansuu <mrkujansuu@gmail.com>\n"
-"Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/"
-">\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
+"PO-Revision-Date: 2020-08-24 00:40+0000\n"
+"Last-Translator: Tommi Nieminen <software@legisign.org>\n"
+"Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,17 +19,36 @@ msgstr ""
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tLuettele tilannekuvia kaikista käytettävissä olevista kokoonpanoista."
 
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
+msgstr ""
+
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\tTilannevedoksen puhdistusalgoritmi."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tTilannevedoksen puhdistusalgoritmi."
 
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
+
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <komento>\t\tSuorita komento ja luo ennen- ja jälkeen-tilannevedokset."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <nimi>\t\tAseta käytettävän määrityksen nimi."
+
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr "\t--csvout\t\t\tAsettaa CSV-tulosmuodon."
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <kuvaus>\tTilannevedoksen kuvaus."
@@ -47,6 +65,9 @@ msgstr "\t--disable-used-space\t\tÄlä näytä tilankäyttöä."
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <valinnat>\tdiff-komennolle välitettävät lisävalinnat."
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\tLuo tilannekuva määritetystä tilannekuvasta."
 
@@ -62,11 +83,20 @@ msgstr "\t--input, -i <tiedosto>\t\tLue tiedostot, joita tiedostoon verrataan."
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\tNäytä päiväys ja aika ISO-muodossa."
 
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr "\t--jsonout\t\t\tAsettaa JSON-tulosmuodon."
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgstr "\t--machine-readable <format>\tAsttaa koneluettavan tulosmuodon (CSV, JSON)."
+
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tToimi ilman DBusia."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <tiedosto>\t\tTallenna tilatieto tiedostoon."
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <numero>\t\tVastaavan ennen-tilannevedoksen numero."
@@ -88,6 +118,9 @@ msgstr "\t--read-write\t\t\tLuo luku-ja kirjoitus tilannekuva."
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <sijainti>\t\tToimi asetetussa juuressa (toimii vain ilman DBusia)."
+
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
+msgstr "\t--separator <separator>\t\tCSV-tulosmuodon erotinmerkki."
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tTahdista poistamisen jälkeen."
@@ -176,6 +209,10 @@ msgstr "\tsnapper xadiff <numero1>..<numero2> [tiedostot]"
 msgid "    Global options:"
 msgstr "    Yleisvalitsimet:"
 
+#, fuzzy
+msgid "    Options for 'cleanup' command:"
+msgstr "    ”create”-komennon valitsimet:"
+
 msgid "    Options for 'create' command:"
 msgstr "    ”create”-komennon valitsimet:"
 
@@ -188,8 +225,18 @@ msgstr "    ”delete”-komennon valitsimet:"
 msgid "    Options for 'diff' command:"
 msgstr "    ”diff”-komennon valitsimet:"
 
+#, fuzzy
+msgid "    Options for 'get-config' command:"
+msgstr "    ”create-config”-komennon valitsimet:"
+
 msgid "    Options for 'list' command:"
 msgstr "    ”list”-komennon valitsimet:"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
 
 msgid "    Options for 'modify' command:"
 msgstr "    ”modify”-komennon valitsimet:"
@@ -257,6 +304,20 @@ msgstr "  Peru muutokset:"
 msgid "#"
 msgstr "#"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Tilannevedos %d.)"
@@ -264,6 +325,16 @@ msgstr "(Tilannevedos %d.)"
 # error box title
 msgid "ACL error."
 msgstr "ACL-virhe."
+
+msgid "Active"
+msgstr ""
+
+msgid "Active snapshot is already default snapshot."
+msgstr "Aktiivinen tilannekuva on jo oletus."
+
+#, c-format
+msgid "Ambit is %s."
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -280,6 +351,12 @@ msgstr "Tilannevedosta %d ei voi poistaa, koska se on tällä hetkellä liitetty
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Tilannevedosta %d ei voi poistaa, koska se on seuraavaksi liitettävä tilannevedos."
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr ""
+
+msgid "Cannot do rollback since default subvolume is unknown."
+msgstr "Palautusta (rollback) ei voi tehdä, koska oletusalitaltio on tuntematon."
 
 msgid "Cleanup"
 msgstr "Puhdistus"
@@ -377,6 +454,13 @@ msgid "Configdata '%s' has empty key."
 msgstr "Määritystiedossa ”%s” on tyhjä avain."
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "Määrityksen luominen epäonnistui (%s)."
 
@@ -399,6 +483,9 @@ msgstr "Tilannevedoksen luominen epäonnistui."
 msgid "Date"
 msgstr "Päiväys"
 
+msgid "Default"
+msgstr ""
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Määrityksen poistaminen epäonnistui (%s)."
@@ -418,6 +505,15 @@ msgstr "Kuvaus"
 msgid "Detecting filesystem type failed."
 msgstr "Tiedostojärjestelmän tyypin tunnistaminen epäonnistui."
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+#, fuzzy
+msgid "EB"
+msgstr "EiB"
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr "EiB"
@@ -435,6 +531,18 @@ msgstr "Virhe (%s)."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Tiedostojärjestelmäkäsittelyn alustus epäonnistui."
+
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "%s luominen epäonnistui"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "%s luominen epäonnistui"
 
 msgid "Failed to set locale. Fix your system."
 msgstr "Maa-asetuksen asettaminen epäonnistui. Korjaa järjestelmä."
@@ -454,6 +562,15 @@ msgstr "Tiedostoa \"%s\" ei löytynyt."
 #, c-format
 msgid "Free space error (%s)."
 msgstr "Vapaan tilan virhe (%s)."
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+#, fuzzy
+msgid "GB"
+msgstr "GiB"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -475,11 +592,31 @@ msgstr "Identtinen tilannevedos."
 msgid "Illegal snapshot."
 msgstr "Virheellinen tilannevedos."
 
+#, fuzzy, c-format
+msgid "Invalid ambit '%s'."
+msgstr "Virheellinen tilannevedos \"%s\"."
+
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Virheellinen tilannevedos \"%s\"."
+
 msgid "Invalid configdata."
 msgstr "Virheellinen määritystieto."
 
+#, fuzzy
+msgid "Invalid free-space value."
+msgstr "Virheellinen alitaltio."
+
 msgid "Invalid group."
 msgstr "Virheellinen ryhmä."
+
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "Virheellinen koneluettava muoto %s."
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "Virheellinen tilannevedos \"%s\"."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -491,9 +628,9 @@ msgstr "Virheellisiä tilannevedoksia."
 msgid "Invalid subvolume."
 msgstr "Virheellinen alitaltio."
 
-#, c-format
-msgid "Invalid table style %d."
-msgstr "Virheellinen taulukon tyyli %d."
+#, fuzzy, c-format
+msgid "Invalid table style '%s'."
+msgstr "Virheellinen taulukkotyyli %s."
 
 msgid "Invalid user."
 msgstr "Virheellinen käyttäjä."
@@ -512,6 +649,15 @@ msgstr "KiB"
 msgid "Listing configs failed (%s)."
 msgstr "Määritysten luetteleminen epäonnistui (%s)."
 
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+#, fuzzy
+msgid "MB"
+msgstr "MiB"
+
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Unohdit ehkä tilannevedosnumeroiden välistä erottimen ”..”."
 
@@ -527,7 +673,8 @@ msgstr "Komennon valitsimelta ”%s” puuttuu parametri."
 msgid "Missing argument for global option '%s'."
 msgstr "Yleisvalitsimelta ”%s” puuttuu parametri."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Komennolta puuttuu parametri."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -550,8 +697,16 @@ msgid "Option --from only supported for snapshots of type single."
 msgstr "Vaihtoehto --tuettu vain yksittäisille tilannekuville."
 
 msgid "Option --read-write only supported for snapshots of type single."
+msgstr "Vaihtoehto --luku ja kirjoitus tuettu vain yksittäisille tilannekuville."
+
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
 msgstr ""
-"Vaihtoehto --luku ja kirjoitus tuettu vain yksittäisille tilannekuville."
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+#, fuzzy
+msgid "PB"
+msgstr "PiB"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -591,8 +746,23 @@ msgstr "Tilannevedos on käytössä."
 msgid "Subvolume"
 msgstr "Alitaltio"
 
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+#, fuzzy
+msgid "TB"
+msgstr "TiB"
+
+msgid "The ambit can be specified manually using the --ambit option."
+msgstr ""
+
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "\"root\"-määritys puuttuu. Luultavasti snapperia ei ole määritetty."
+
+msgid "This can happen if the system was not set up for rollback."
+msgstr "Näin voi käydä, ellei järjestelmää ole asetettu palautusta varten."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
@@ -623,11 +793,15 @@ msgstr "Tuntematon yleisvalitsin \"%s\"."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Tuntematon valitsin \"%s\" komennolle \"%s\"."
 
-msgid "Unknown type of snapshot."
-msgstr "Tuntematon tilannevedostyyppi."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Tuntematon komento \"%s\"."
 
-msgid "Unknown type of snapshots."
-msgstr "Tuntematon tilannevedosten tyyppi."
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
+#, c-format
+msgid "Use %1$s."
+msgstr ""
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -677,18 +851,46 @@ msgstr "%s poistaminen epäonnistui"
 msgid "failed to modify %s"
 msgstr "muokkaus epäonnistui: %s"
 
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+#, fuzzy
+msgid "kB"
+msgstr "B"
+
 #, c-format
 msgid "modifying %s"
 msgstr "muokataan: %s"
 
+msgid "no"
+msgstr ""
+
 msgid "nothing to do"
 msgstr "ei mitään tehtävää"
 
-msgid "root argument can be used only together with no-dbus."
-msgstr "Juuriparametria voi käyttää vain no-dbus-asetuksen kanssa."
+#, fuzzy
+msgid "root argument can be used only together with no-dbus.\n"
+msgstr ""
+"juuriparametria voi käyttää vain ilman no-dbus-valitsinta.\n"
+"Lisäohjeita komennolla ”snapper --help”."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "käyttö: snapper [--yleisvalitsimet] <komento> [--komennon-valitsimet] [komennon-parametrit]"
+
+msgid "yes"
+msgstr ""
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Tuntematon tilannevedostyyppi."
+
+#, c-format
+#~ msgid "Use %s, %s or %s."
+#~ msgstr "Käytettävissä: %s, %s tai %s."
+
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "Tuntematon tilannevedosten tyyppi."
 
 #, fuzzy
 #~ msgid "Quota failure (%s)."

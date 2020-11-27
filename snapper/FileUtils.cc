@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) 2018 SUSE LLC
+ * Copyright (c) [2018-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -28,6 +28,7 @@
 #include <sys/stat.h>
 #include <sys/mount.h>
 #include <sys/xattr.h>
+#include <sys/statvfs.h>
 #include <fcntl.h>
 #include <stddef.h>
 #include <dirent.h>
@@ -376,6 +377,28 @@ namespace snapper
 	assert(newname != "..");
 
 	return ::renameat(dirfd, oldname.c_str(), dirfd, newname.c_str());
+    }
+
+
+    int
+    SDir::fsync() const
+    {
+	return ::fsync(dirfd);
+    }
+
+
+    std::pair<unsigned long long, unsigned long long>
+    SDir::statvfs() const
+    {
+	struct statvfs64 fsbuf;
+	if (fstatvfs64(dirfd, &fsbuf) != 0)
+	    SN_THROW(IOErrorException(sformat("statvfs64 failed path:%s errno:%d (%s)", base_path.c_str(),
+					      errno, stringerror(errno).c_str())));
+
+	// f_bavail is used (not f_bfree) since df seems to do the
+	// same. Thus it allows the user to check the result easily.
+
+	return make_pair(fsbuf.f_blocks * fsbuf.f_bsize, fsbuf.f_bavail * fsbuf.f_bsize);
     }
 
 

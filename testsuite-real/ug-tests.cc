@@ -23,6 +23,11 @@ test1()
     cout << "username:" << username << endl;
     cout << "gid:" << gid << endl;
 
+    string dir;
+    if (!get_uid_dir(uid, dir))
+	cerr << "failed to get dir" << endl;
+    cout << "dir:" << dir << endl;
+
     vector<gid_t> gids = getgrouplist(username.c_str(), gid);
     cout << "gids:";
     for (gid_t gid : gids)

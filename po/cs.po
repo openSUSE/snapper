@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
-"PO-Revision-Date: 2019-10-24 15:53+0000\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
+"PO-Revision-Date: 2020-09-24 18:48+0000\n"
 "Last-Translator: Aleš Kastner <alkas@volny.cz>\n"
 "Language-Team: Czech <https://l10n.opensuse.org/projects/snapper/master/cs/>"
 "\n"
@@ -18,6 +18,9 @@ msgstr ""
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tZobrazí seznam snímků ze všech dostupných konfigurací."
 
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
+msgstr "\t--oblast, -a oblast\t\tPracuje v zadané oblasti (ambitu)."
+
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algoritmus>\tÚklidový algoritmus snímku."
 
@@ -25,11 +28,34 @@ msgstr "\t--cleanup-algorithm, -c <algoritmus>\tÚklidový algoritmus snímku."
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algoritmus>\tÚklidový algoritmus snímků."
 
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+"\t--columns <sloupce>\t\tSloupce ke zobrazení, oddělené čárkami.\n"
+"\t\t\t\t\tLze zvolit sloupce: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
+"\t--columns <sloupce>\t\tSloupce ke zobrazení, oddělené čárkami.\n"
+"\t\t\t\t\tMožné sloupce: key, value.\n"
+"\t\t\t\t\tSloupce nejsou vybrány, když je použit formát JSON."
+
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <command>\t\tSpustit příkaz a vytvořit snímky před a po."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <jméno>\t\tNastavení jméno konfigurace, která se použije."
+
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr "\t--csvout\t\t\tNastaví výstupní formát CSV."
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <popis>\tPopis snímku."
@@ -47,6 +73,9 @@ msgstr "\t--disable-used-space\t\tZakázat zobrazení použitého místa."
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <možnosti>\tJedná se o další možnosti předané příkazu diff."
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr "\t--free-space <prostor>\t\tZkusí zpřístupnit prostor."
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\tVytvoří snímek ze zadaného snímku."
 
@@ -63,11 +92,20 @@ msgstr "\t--input, -i <soubor>\t\tPřečte soubory pro příkaz diff ze souboru.
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\tZobrazí údaje o datech a čase ve formátu ISO."
 
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr "\t--jsonout\t\t\tNastaví výstupní formát JSON."
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgstr "\t--machine-readable <formát>\tNastaví strojově čitelný výstupní formát (csv, json)."
+
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tPracovat bez DBusu."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <soubor>\t\tUloží stav do souboru."
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr "\t--path <cesta>\t\t\tVymaže všechny konfigurace s vlivem na cestu."
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <číslo>\t\tČíslo odpovídajícího předcházejícího snímku."
@@ -90,6 +128,9 @@ msgstr "\t--read-write\t\t\tVytvoří snímek pro čtení i zápis."
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <cesta>\t\tUmožňuje pracovat v cílovém účtu root (funguje pouze bez technologie DBus)."
+
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
+msgstr "\t--separator <oddělovač>\t\tOddělovací znak pro výstupní formát CSV."
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tProvede synchronizaci po odstranění."
@@ -181,6 +222,9 @@ msgstr "\tsnapper xadiff <číslo1>..<číslo2> [soubory]"
 msgid "    Global options:"
 msgstr "    Globální volby:"
 
+msgid "    Options for 'cleanup' command:"
+msgstr "    Volby pro příkaz 'cleanup':"
+
 msgid "    Options for 'create' command:"
 msgstr "    Volby pro příkaz 'create':"
 
@@ -193,8 +237,20 @@ msgstr "    Možnosti příkazu delete:"
 msgid "    Options for 'diff' command:"
 msgstr "    Možnosti příkazu diff:"
 
+msgid "    Options for 'get-config' command:"
+msgstr "    Volby pro příkaz 'get-config':"
+
 msgid "    Options for 'list' command:"
 msgstr "    Volby pro příkaz 'list':"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+"    Možnosti příkazu 'list-configs':\n"
+"\t--columns <sloupce>\t\tSloupce ke zobrazení, oddělené čárkami.\n"
+"\t\t\t\t\tLze zadat sloupce: config, subvolume.\n"
 
 msgid "    Options for 'modify' command:"
 msgstr "    Volby pro příkaz 'modify':"
@@ -264,6 +320,20 @@ msgstr "  Vrátit změny:"
 msgid "#"
 msgstr "#"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr "%1$s nebo %2$s"
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr "%1$s, %2$s"
+
 # SLE12
 #, c-format
 msgid "(Snapshot %d.)"
@@ -272,6 +342,16 @@ msgstr "(Snímek %d.)"
 # SLE12
 msgid "ACL error."
 msgstr "Chyba seznamu řízení přístupu."
+
+msgid "Active"
+msgstr "Aktivní"
+
+msgid "Active snapshot is already default snapshot."
+msgstr "Aktivní snímek je již výchozí snímek."
+
+#, c-format
+msgid "Ambit is %s."
+msgstr "Oblast je %s."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -288,6 +368,12 @@ msgstr "Nelze smazat snímek %d, protože je to aktzuálně připojený snímek.
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Nelze smazat snímek %d, protože je to další snímek k připojení."
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr "Nelze zjistit ambit, protože výchozí podsvazek není znám."
+
+msgid "Cannot do rollback since default subvolume is unknown."
+msgstr "Nelze provést rollback, protože výchozí podsvazek není znám."
 
 msgid "Cleanup"
 msgstr "Úklid"
@@ -389,6 +475,13 @@ msgid "Configdata '%s' has empty key."
 msgstr "Konfigurační data %s obsahují prázdný klíč."
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr "Pro cestu '%s' nelze uvolnit dostatek volného prostoru."
+
+msgid "Could not make enough free space available."
+msgstr "Nelze uvolnit dostatek volného prostoru."
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "Vytváření konfiguračního souboru selhalo (%s)."
 
@@ -415,6 +508,9 @@ msgstr "Vytváření snímku selhalo."
 msgid "Date"
 msgstr "Datum"
 
+msgid "Default"
+msgstr "Výchozí"
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Smazání konfigurace selhalo (%s)."
@@ -434,6 +530,14 @@ msgstr "Popis"
 
 msgid "Detecting filesystem type failed."
 msgstr "Selhala detekce typu souborového systému."
+
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr "E"
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+msgid "EB"
+msgstr "EB"
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
@@ -455,6 +559,17 @@ msgstr "Chyba (%s)."
 msgid "Failed to initialize filesystem handler."
 msgstr "Obslužný program systému souborů se nepodařilo inicializovat."
 
+#, c-format
+msgid "Failed to parse '%s'."
+msgstr "Chyba při analýze '%s'."
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr "Dotaz na volný prostor pro cestu '%s' se nezdařil."
+
+msgid "Failed to query free space."
+msgstr "Selhal dotaz na volný prostor."
+
 msgid "Failed to set locale. Fix your system."
 msgstr "Selhalo nastavení lokalizace. Opravte si systém."
 
@@ -474,6 +589,14 @@ msgstr "Soubor '%s' nenalezen."
 msgid "Free space error (%s)."
 msgstr "Chybně uvedené volné místo (%s)."
 
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr "G"
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+msgid "GB"
+msgstr "GB"
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
@@ -492,12 +615,31 @@ msgstr "Stejné snímky."
 msgid "Illegal snapshot."
 msgstr "Nepřípustný snímek."
 
+#, c-format
+msgid "Invalid ambit '%s'."
+msgstr "Neplatná oblast '%s'."
+
+#, c-format
+msgid "Invalid column '%s'."
+msgstr "Neplatný sloupec '%s'."
+
 msgid "Invalid configdata."
 msgstr "Neplatná konfigurační data."
+
+msgid "Invalid free-space value."
+msgstr "Neplatná hodnota velikosti volného prostoru."
 
 # SLE12
 msgid "Invalid group."
 msgstr "Neplatná skupina."
+
+#, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "Neplatný strojově čitelný formát '%s'."
+
+#, c-format
+msgid "Invalid path '%s'."
+msgstr "Neplatná cesta '%s'."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -510,8 +652,8 @@ msgid "Invalid subvolume."
 msgstr "Neplatná podřízená jednotka."
 
 #, c-format
-msgid "Invalid table style %d."
-msgstr "Neplatná tabulka stylu %d."
+msgid "Invalid table style '%s'."
+msgstr "Neplatný styl tabulky %s."
 
 # SLE12
 msgid "Invalid user."
@@ -531,6 +673,14 @@ msgstr "KiB"
 msgid "Listing configs failed (%s)."
 msgstr "Výpis konfigurací selhal (%s)."
 
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr "M"
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+msgid "MB"
+msgstr "MB"
+
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Možná jste zapomněli použít oddělovač „..“ mezi čísly snímků."
 
@@ -546,7 +696,7 @@ msgstr "Chybí parametr pro příkaz volby '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Chybí parametr pro globální volbu '%s'."
 
-msgid "Missing command argument."
+msgid "Missing command option."
 msgstr "Chybí parametr příkazu."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -570,6 +720,14 @@ msgstr "Volba --from je podporována jen u snímků typu single."
 
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Volba --read-write je podporována jen pro snímky typu single."
+
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr "P"
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+msgid "PB"
+msgstr "PB"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -609,8 +767,22 @@ msgstr "Snímek se nyní používá."
 msgid "Subvolume"
 msgstr "Podřízená jednotka"
 
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr "T"
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+msgid "TB"
+msgstr "TB"
+
+msgid "The ambit can be specified manually using the --ambit option."
+msgstr "Ambit lze určit ručně volbou --ambit."
+
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Účet root konfigurace neexistuje. Nástroj Snapper pravděpodobně není nakonfigurován."
+
+msgid "This can happen if the system was not set up for rollback."
+msgstr "Může to nastat, není-li systém nastaven pro rollback."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
@@ -641,11 +813,15 @@ msgstr "Neznámá globální volba '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Neznámá volba '%s' pro příkaz '%s'."
 
-msgid "Unknown type of snapshot."
-msgstr "Neznámý typ snímku."
+#, c-format
+msgid "Unknown type '%s'."
+msgstr "Neznámý typ '%s'."
 
-msgid "Unknown type of snapshots."
-msgstr "Neznámý typ snímků."
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
+#, c-format
+msgid "Use %1$s."
+msgstr "Použijte %1$s."
 
 # SLE12
 #, c-format
@@ -698,20 +874,48 @@ msgstr "Selhalo smazání %s"
 msgid "failed to modify %s"
 msgstr "Nepodařilo se upravit %s"
 
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr "k"
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+msgid "kB"
+msgstr "kB"
+
 #, c-format
 msgid "modifying %s"
 msgstr "upravuji %s"
 
+msgid "no"
+msgstr "ne"
+
 msgid "nothing to do"
 msgstr "nic k provedení"
 
-msgid "root argument can be used only together with no-dbus."
-msgstr "Argument root lze použít pouze ve spojení s argumentem no-dbus."
+msgid "root argument can be used only together with no-dbus.\n"
+msgstr "Argument root lze použít pouze společně s argumentem no-dbus.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
 "Použití:\n"
 "\tsnapper [--obecné-volby] <příkaz> [--volby-příkazu] [argumenty]"
+
+msgid "yes"
+msgstr "ano"
+
+#, c-format
+#~ msgid "Use %s, %s or %s."
+#~ msgstr "Použijte %s, %s or %s."
+
+#, c-format
+#~ msgid "Use %s, %s, %s or %s."
+#~ msgstr "Použijte %s, %s, %s nebo %s."
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Neznámý typ snímku."
+
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "Neznámý typ snímků."
 
 # SLE12
 #~ msgid "Quota failure (%s)."

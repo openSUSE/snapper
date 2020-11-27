@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -221,22 +221,6 @@ namespace snapper
 
 
     string
-    stringerror(int errnum)
-    {
-#if (_POSIX_C_SOURCE >= 200112L) && ! _GNU_SOURCE
-	char buf1[100];
-	if (strerror_r(errnum, buf1, sizeof(buf1) - 1) == 0)
-	    return string(buf1);
-	return string("strerror failed");
-#else
-	char buf1[100];
-	const char* buf2 = strerror_r(errnum, buf1, sizeof(buf1) - 1);
-	return string(buf2);
-#endif
-    }
-
-
-    string
     sformat(const char* format, ...)
     {
 	char* result;
@@ -285,10 +269,10 @@ namespace snapper
     {
 	struct tm s;
 	memset(&s, 0, sizeof(s));
-	const char* p = strptime(str.c_str(), "%F %T", &s);
+	const char* p = strptime(str.c_str(), "%Y-%m-%d %T", &s);
 	if (!p || *p != '\0')
 	    return (time_t)(-1);
-	return utc ? timegm(&s) : timelocal(&s);
+	return utc ? timegm(&s) : mktime(&s);
     }
 
 
@@ -315,10 +299,29 @@ namespace snapper
 	if (e != 0 || result == NULL)
 	    return false;
 
-	memset(pwd.pw_passwd, 0, strlen(pwd.pw_passwd));
-
 	username = pwd.pw_name;
 	gid = pwd.pw_gid;
+
+	return true;
+    }
+
+
+    bool
+    get_uid_dir(uid_t uid, string& dir)
+    {
+	struct passwd pwd;
+	struct passwd* result;
+
+	vector<char> buf(sysconf(_SC_GETPW_R_SIZE_MAX, 1024));
+
+	int e;
+	while ((e = getpwuid_r(uid, &pwd, buf.data(), buf.size(), &result)) == ERANGE)
+	    buf.resize(2 * buf.size());
+
+	if (e != 0 || result == NULL)
+	    return false;
+
+	dir = pwd.pw_dir;
 
 	return true;
     }
@@ -341,8 +344,6 @@ namespace snapper
 	    y2war("couldn't find username '" << username << "'");
 	    return false;
 	}
-
-	memset(pwd.pw_passwd, 0, strlen(pwd.pw_passwd));
 
 	uid = pwd.pw_uid;
 
@@ -367,8 +368,6 @@ namespace snapper
 	    y2war("couldn't find groupname '" << groupname << "'");
 	    return false;
 	}
-
-	memset(grp.gr_passwd, 0, strlen(grp.gr_passwd));
 
 	gid = grp.gr_gid;
 
@@ -413,6 +412,13 @@ namespace snapper
     {
 	boost::io::ios_all_saver ias(s);
 	return s << fixed << sw.read() << "s";
+    }
+
+
+    bool
+    Uuid::operator==(const Uuid& rhs) const
+    {
+	return std::equal(std::begin(value), std::end(value), std::begin(rhs.value));
     }
 
 }

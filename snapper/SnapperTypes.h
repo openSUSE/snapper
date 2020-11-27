@@ -29,21 +29,12 @@
 #include <ostream>
 #include <boost/algorithm/string.hpp>
 
-#include "snapper/Regex.h"
-
 
 namespace snapper
 {
     using std::string;
     using std::vector;
 
-
-    struct regex_matches
-    {
-	regex_matches(const Regex& t) : val(t) {}
-	bool operator()(const string& s) const { return val.match(s); }
-	const Regex& val;
-    };
 
     struct string_starts_with
     {

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2018] SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -41,15 +41,10 @@
 #include <btrfs/send.h>
 #include <btrfs/send-stream.h>
 #include <btrfs/send-utils.h>
-#ifdef swap
-// temporary workaround, see
-// https://github.com/openSUSE/snapper/issues/459, fixed properly in
-// btrfs-progs 4.19.1
-#undef swap
-#endif
 #include <boost/version.hpp>
 #include <boost/thread.hpp>
 #endif
+#include <regex>
 #include <boost/algorithm/string.hpp>
 
 #include "snapper/Log.h"
@@ -61,7 +56,6 @@
 #include "snapper/SnapperDefines.h"
 #include "snapper/Acls.h"
 #include "snapper/Exception.h"
-#include "snapper/Regex.h"
 #ifdef ENABLE_ROLLBACK
 #include "snapper/MntTable.h"
 #endif
@@ -1239,38 +1233,6 @@ namespace snapper
     };
 
 
-    struct FdCloser
-    {
-	FdCloser(int fd)
-	    : fd(fd)
-	{
-	}
-
-	~FdCloser()
-	{
-	    if (fd > -1 )
-		::close(fd);
-	}
-
-	void reset()
-	{
-	    fd = -1;
-	}
-
-	int close()
-	{
-	    int r = ::close(fd);
-	    fd = -1;
-	    return r;
-	}
-
-    private:
-
-	int fd;
-
-    };
-
-
     bool
     StreamProcessor::dumper(int fd)
     {
@@ -1511,11 +1473,13 @@ namespace snapper
     {
 	string path = get_subvolume(fd, id);
 
-	Regex rx("/([0-9]+)/snapshot$");
-	if (!rx.match(path))
+	static const regex rx("/([0-9]+)/snapshot$", regex::extended);
+	smatch match;
+
+	if (!regex_search(path, match, rx))
 	    return make_pair(false, 0);
 
-	unsigned int num = stoi(rx.cap(1));
+	unsigned int num = stoi(match[1].str());
 
 	if (!checkSnapshot(num))
 	    return make_pair(false, 0);

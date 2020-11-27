@@ -1,4 +1,82 @@
 -------------------------------------------------------------------
+Tue Nov 24 11:58:44 CET 2020 - aschnell@suse.com
+
+- do not override passwd after getpwuid_r et.al. calls
+  (gh#openSUSE/snapper#589)
+
+-------------------------------------------------------------------
+Thu Nov 19 11:49:29 CET 2020 - aschnell@suse.com
+
+- state in man-pages that ext4 support is discontinued
+  (gh#openSUSE/snapper#331)
+
+-------------------------------------------------------------------
+Wed Nov 18 12:13:56 CET 2020 - aschnell@suse.com
+
+- use C++11 regexes instead of own regcomp/regexec wrapper class
+  (see gh#openSUSE/snapper#583)
+
+-------------------------------------------------------------------
+Tue Sep 22 09:17:28 CEST 2020 - aschnell@suse.com
+
+- added option to cleanup to make requested free space available
+  (jsc#SLE-15765)
+- version 0.8.14
+
+-------------------------------------------------------------------
+Fri Sep 04 19:10:26 CEST 2020 - aschnell@suse.com
+
+- package new snapperd.service file on Debian based distributions
+  (gh#openSUSE/snapper#557)
+
+-------------------------------------------------------------------
+Tue Sep 01 09:50:00 CEST 2020 - lnussel@suse.com
+
+- activate snapperd using systemd service
+
+-------------------------------------------------------------------
+Mon Aug 31 17:18:14 CEST 2020 - aschnell@suse.com
+
+- fix LVM setup for volume groups and logical volumes with one
+  character long names (gh#openSUSE/snapper#465)
+
+-------------------------------------------------------------------
+Fri Aug 28 11:06:23 CEST 2020 - aschnell@suse.com
+
+- improved error messages for wrong command line options and
+  arguments (bsc#1150156)
+
+-------------------------------------------------------------------
+Thu Aug 27 12:04:44 CEST 2020 - aschnell@suse.com
+
+- call fsync after writing snapshot info file (bsc#1078336)
+- version 0.8.13
+
+-------------------------------------------------------------------
+Thu Jul 23 11:52:31 CEST 2020 - aschnell@suse.com
+
+- fixed error when using mksubvolume to create /tmp (bsc#1174401)
+- version 0.8.12
+
+-------------------------------------------------------------------
+Mon Jul 13 11:29:13 CEST 2020 - aschnell@suse.com
+
+- added error handing for failed ambit detection (bsc#1174038)
+- version 0.8.11
+
+-------------------------------------------------------------------
+Tue Jun 16 18:31:47 CEST 2020 - aschnell@suse.com
+
+- special rollback for transactional server (bsc#1172273)
+- version 0.8.10
+
+-------------------------------------------------------------------
+Mon Apr 06 16:22:29 CEST 2020 - aschnell@suse.com
+
+- updated translations (bsc#1149754)
+- generate dsc file for Ubuntu 19.10
+
+-------------------------------------------------------------------
 Thu Jan 16 13:01:15 UTC 2020 - Martin Vidner <mvidner@suse.com>
 
 - Fix "Snapper is not creating the post snapshot" (bsc#1160938)

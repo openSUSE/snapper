@@ -17,6 +17,7 @@ libsnapper_la_SOURCES =					\
 	XmlFile.cc		XmlFile.h		\
 	Enum.cc			Enum.h			\
 	AppUtil.cc		AppUtil.h		\
+	AppUtil2.cc					\
 	FileUtils.cc		FileUtils.h		\
 	XAttributes.cc		XAttributes.h		\
 	Log.cc			Log.h			\
@@ -48,7 +49,8 @@ endif
 if ENABLE_LVM
 libsnapper_la_SOURCES +=				\
 	Lvm.cc			Lvm.h			\
-	LvmCache.cc		LvmCache.h
+	LvmCache.cc		LvmCache.h		\
+	LvmUtils.cc		LvmUtils.h
 endif
 
 if ENABLE_ROLLBACK

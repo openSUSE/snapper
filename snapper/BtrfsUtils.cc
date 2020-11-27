@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -34,12 +34,8 @@
 #ifdef HAVE_LIBBTRFS
 #include <btrfs/ioctl.h>
 #include <btrfs/send-utils.h>
-#ifdef swap
-// temporary workaround, see
-// https://github.com/openSUSE/snapper/issues/459, fixed properly in
-// btrfs-progs 4.19.1
-#undef swap
-#endif
+#else
+#include <linux/btrfs.h>
 #endif
 #include <algorithm>
 #include <functional>
@@ -47,45 +43,6 @@
 #include "snapper/Log.h"
 #include "snapper/AppUtil.h"
 #include "snapper/BtrfsUtils.h"
-
-
-#ifndef HAVE_LIBBTRFS
-
-#define BTRFS_IOCTL_MAGIC 0x94
-#define BTRFS_PATH_NAME_MAX 4087
-#define BTRFS_SUBVOL_NAME_MAX 4039
-#define BTRFS_SUBVOL_RDONLY (1ULL << 1)
-
-#define BTRFS_IOC_SNAP_CREATE _IOW(BTRFS_IOCTL_MAGIC, 1, struct btrfs_ioctl_vol_args)
-#define BTRFS_IOC_SUBVOL_CREATE _IOW(BTRFS_IOCTL_MAGIC, 14, struct btrfs_ioctl_vol_args)
-#define BTRFS_IOC_SNAP_DESTROY _IOW(BTRFS_IOCTL_MAGIC, 15, struct btrfs_ioctl_vol_args)
-#define BTRFS_IOC_SNAP_CREATE_V2 _IOW(BTRFS_IOCTL_MAGIC, 23, struct btrfs_ioctl_vol_args_v2)
-#define BTRFS_IOC_SYNC _IO(BTRFS_IOCTL_MAGIC, 8)
-
-struct btrfs_ioctl_vol_args
-{
-    __s64 fd;
-    char name[BTRFS_PATH_NAME_MAX + 1];
-};
-
-struct btrfs_ioctl_vol_args_v2
-{
-    __s64 fd;
-    __u64 transid;
-    __u64 flags;
-    __u64 unused[4];
-    char name[BTRFS_SUBVOL_NAME_MAX + 1];
-};
-
-#endif
-
-#ifndef BTRFS_IOC_SUBVOL_GETFLAGS
-#define BTRFS_IOC_SUBVOL_GETFLAGS _IOR(BTRFS_IOCTL_MAGIC, 25, __u64)
-#endif
-
-#ifndef BTRFS_QGROUP_LEVEL_SHIFT
-#define BTRFS_QGROUP_LEVEL_SHIFT 48
-#endif
 
 
 namespace snapper
@@ -145,7 +102,7 @@ namespace snapper
 
 	    size_t size = sizeof(btrfs_qgroup_inherit) + sizeof(((btrfs_qgroup_inherit*) 0)->qgroups[0]);
 	    vector<char> buffer(size, 0);
-        
+
 	    if (qgroup != no_qgroup)
 	    {
 		struct btrfs_qgroup_inherit* inherit = (btrfs_qgroup_inherit*) &buffer[0];
@@ -622,6 +579,34 @@ namespace snapper
 	{
 	    if (ioctl(fd, BTRFS_IOC_SYNC) < 0)
 		throw runtime_error_with_errno("ioctl(BTRFS_IOC_SYNC) failed", errno);
+	}
+
+
+	Uuid
+	get_uuid(int fd)
+	{
+	    static_assert(BTRFS_UUID_SIZE == 16, "unexpected value of BTRFS_UUID_SIZE");
+
+	    struct btrfs_ioctl_fs_info_args fs_info_args;
+	    if (ioctl(fd, BTRFS_IOC_FS_INFO, &fs_info_args) < 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_FS_INFO) failed", errno);
+
+	    Uuid uuid;
+	    std::copy(std::begin(fs_info_args.fsid), std::end(fs_info_args.fsid), std::begin(uuid.value));
+	    return uuid;
+	}
+
+
+	Uuid
+	get_uuid(const string& path)
+	{
+	    int fd = open(path.c_str(), O_RDONLY);
+	    if (fd < 0)
+		throw runtime_error_with_errno("open failed", errno);
+
+	    FdCloser fd_closer(fd);
+
+	    return BtrfsUtils::get_uuid(fd);
 	}
 
     }

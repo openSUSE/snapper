@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2004-2015] Novell, Inc.
+ * Copyright (c) 2020 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -51,9 +52,9 @@ namespace snapper
 
     private:
 
-	FILE* file;
-	char* buffer;
-	size_t len;
+	FILE* file = nullptr;
+	char* buffer = nullptr;
+	size_t len = 0;
 
     };
 
@@ -126,6 +127,15 @@ namespace snapper
     private:
 
 	bool modified;
+
+	struct ParsedLine
+	{
+	    string key;
+	    string value;
+	    string comment;
+	};
+
+	bool parse_line(const string& line, ParsedLine& parsed_line) const;
 
     };
 

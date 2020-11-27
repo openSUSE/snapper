@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
-"PO-Revision-Date: 2020-02-12 17:54+0000\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
+"PO-Revision-Date: 2020-09-24 18:48+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
 "Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/"
 ">\n"
@@ -17,17 +17,45 @@ msgstr ""
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tLlista les instantànies des de totes les configuracions accessibles."
 
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
+msgstr "\t--ambit, -a ambit\t\tOpera a l'àmbit especificat."
+
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algorisme>\tNeteja l'algorisme per a la instantània."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algorisme>\tNeteja l'algorisme per a les instantànies."
 
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+"\t--columns <columnes>\t\tColumnes per mostrar separades per comes.\n"
+"\t\t\t\t\tColumnes possibles: configuració, subvolum, número, per defecte, "
+"activa,\n"
+"\t\t\t\t\ttipus, data, usuari, espai usat, neteja, descripció, dades "
+"d'usuari,\n"
+"\t\t\t\t\tnúmero pre, número post, data de post."
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
+"\t--columns <columnes>\t\tColumnes per mostrar separades per comes.\n"
+"\t\t\t\t\tColumnes possibles: clau, valor.\n"
+"\t\t\t\t\tLes columnes no estan seleccionades quan s'usa el format JSON."
+
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <ordre>\t\tExecuta l'ordre i crea les instantànies pre i post."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <name>\t\tEstableix el nom de config a usar."
+
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr "\t--csvout\t\t\tEstableix el format de sortida CSV."
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <description>\tDescripció per a la instantània."
@@ -44,9 +72,11 @@ msgstr "\t--disable-used-space\t\tInhabilita mostrar l'espai usat."
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tOpcions extres passades a l'ordre diff."
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr "\t--free-space <space>\t\tIntenta fer espai disponible."
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
-msgstr ""
-"\t--from\t\t\t\tCrea una instantània a partir d'una instantània específica."
+msgstr "\t--from\t\t\t\tCrea una instantània a partir d'una instantània específica."
 
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <fstype>\t\tEstableix el sistema de fitxers manualment."
@@ -60,11 +90,20 @@ msgstr "\t--input, -i <file>\t\tLlegeix els fitxers que diff del fitxer."
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\tMostra les dates i les hores en format ISO."
 
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr "\t--jsonout\t\t\tEstableix el format de sortida JSON."
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgstr "\t--machine-readable <format>\tEstableix un format de sortida llegible per a la màquina (csv, json)."
+
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tOpera sense DBus."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <file>\t\tDesa l'estat en un fitxer."
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr "\t--path <path>\t\t\tNeteja totes les configuracions que afecten el camí."
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <number>\t\tNúmero de la preinstantània corresponent."
@@ -87,6 +126,9 @@ msgstr "\t--read-write\t\t\tCrea una instantània de lectura i d'escriptura."
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <path>\t\tOpera a l'arrel de destinació (només funciona sense DBus)."
 
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
+msgstr "\t--separator <separator>\t\tSeparador de caràcters per al format de sortida CSV."
+
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tSincronitza després d'una supressió."
 
@@ -94,7 +136,7 @@ msgid "\t--table-style, -t <style>\tTable style (integer)."
 msgstr "\t--table-style, -t <style>\tEstil de taula (enter)."
 
 msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <name>\t\tNom de la plantilla config a usar."
+msgstr "\t--template, -t <name>\t\tNom de la plantilla config per usar."
 
 msgid "\t--type, -t <type>\t\tType for snapshot."
 msgstr "\t--type, -t <type>\t\tTipus per a la instantània."
@@ -103,10 +145,10 @@ msgid "\t--type, -t <type>\t\tType of snapshots to list."
 msgstr "\t--type, -t <type>\t\tTipus d'instantànies a llistar."
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <userdata>\tUserdata per a la instantània."
+msgstr "\t--userdata, -u <userdata>\tDades d'usuari per a la instantània."
 
 msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata, -u <userdata>\tUserdata per a instantànies."
+msgstr "\t--userdata, -u <userdata>\tDades d'usuari per a instantànies."
 
 msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
 msgstr "\t--utc\t\t\t\tMostra dates i hores en UTC."
@@ -174,6 +216,9 @@ msgstr "\tsnapper xadiff <número1>..<número2> [fitxers]"
 msgid "    Global options:"
 msgstr "    Opcions globals:"
 
+msgid "    Options for 'cleanup' command:"
+msgstr "    Opcions per a l'ordre cleanup:"
+
 msgid "    Options for 'create' command:"
 msgstr "    Opcions de l'ordre create:"
 
@@ -186,8 +231,20 @@ msgstr "    Opcions de l'ordre delete:"
 msgid "    Options for 'diff' command:"
 msgstr "    Opcions de l'ordre \"diff\":"
 
+msgid "    Options for 'get-config' command:"
+msgstr "    Opcions de l'ordre get-config:"
+
 msgid "    Options for 'list' command:"
 msgstr "    Opcions de l'ordre list:"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+"    Opcions per a l'ordre list-configs:\n"
+"\t--columns <columnes>\t\tColumnes per mostrar separades per comes.\n"
+"\t\t\t\t\tColumnes possibles: configuració, subvolum.\n"
 
 msgid "    Options for 'modify' command:"
 msgstr "    Opcions de l'ordre modify:"
@@ -255,12 +312,36 @@ msgstr "  Desfés els canvis:"
 msgid "#"
 msgstr "#"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr "%1$s o %2$s"
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr "%1$s, %2$s"
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Instantània %d.)"
 
 msgid "ACL error."
 msgstr "Error ACL."
+
+msgid "Active"
+msgstr "Activa"
+
+msgid "Active snapshot is already default snapshot."
+msgstr "La instantània activa ja és la instantània per defecte."
+
+#, c-format
+msgid "Ambit is %s."
+msgstr "L'àmbit és %s."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -277,6 +358,12 @@ msgstr "No es pot suprimir la instantània %d, ja que correspon a la instantàni
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "No es pot suprimir la instantània %d, ja que és la propera instantània per muntar."
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr "No se'n pot detectar l'àmbit ja que es desconeix el subvolum per defecte."
+
+msgid "Cannot do rollback since default subvolume is unknown."
+msgstr "No es pot fer un retrocés ja que es desconeix el subvolum per defecte."
 
 msgid "Cleanup"
 msgstr "Neteja"
@@ -349,15 +436,15 @@ msgid "Command 'xadiff' needs at least one argument."
 msgstr "L'ordre xadiff necessita almenys un argument."
 
 msgid "Config"
-msgstr "Config"
+msgstr "Configuració"
 
 #, c-format
 msgid "Config '%s' is invalid."
-msgstr "Config '%s' no és vàlid."
+msgstr "Config %s no és vàlid."
 
 #, c-format
 msgid "Config '%s' not found."
-msgstr "Config '%s' no trobat."
+msgstr "Config %s no trobat."
 
 msgid "Config is in use."
 msgstr "Config és en ús."
@@ -367,11 +454,18 @@ msgstr "Config està blocat."
 
 #, c-format
 msgid "Configdata '%s' does not include '=' sign."
-msgstr "Configdata '%s' no inclou el senyal '='."
+msgstr "Les dades de configuració %s no inclouen el signe =."
 
 #, c-format
 msgid "Configdata '%s' has empty key."
-msgstr "Configdata '%s' té una clau buida."
+msgstr "Les dades de configuració %s tenen una clau buida."
+
+#, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr "No s'ha pogut fer prou espai disponible per al camí %s."
+
+msgid "Could not make enough free space available."
+msgstr "No s'ha pogut fer prou espai disponible."
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -396,6 +490,9 @@ msgstr "Ha fallat la creació de la instantània."
 msgid "Date"
 msgstr "Data"
 
+msgid "Default"
+msgstr "Per defecte"
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Ha fallat la supressió de config (%s)."
@@ -415,15 +512,23 @@ msgstr "Descripció"
 msgid "Detecting filesystem type failed."
 msgstr "Ha fallat la detecció del tipus de sistema de fitxers."
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr "E"
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+msgid "EB"
+msgstr "EB"
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr "EiB"
 
 msgid "Empty configdata."
-msgstr "Configdata buit."
+msgstr "Dades de configuració buides."
 
 msgid "Empty userdata."
-msgstr "Userdata buit."
+msgstr "Dades d'usuari buides."
 
 #, c-format
 msgid "Error (%s)."
@@ -431,6 +536,17 @@ msgstr "Error (%s)."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Ha fallat l'inici del manejador de sistemes de fitxers."
+
+#, c-format
+msgid "Failed to parse '%s'."
+msgstr "Ha fallat analitzar %s."
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr "Ha fallat consultar l'espai disponible per al camí %s."
+
+msgid "Failed to query free space."
+msgstr "Ha fallat consultar l'espai disponible."
 
 msgid "Failed to set locale. Fix your system."
 msgstr "Ha fallat establir la llengua. Corregiu el sistema."
@@ -444,11 +560,19 @@ msgstr "Error (%s)."
 
 #, c-format
 msgid "File '%s' not found."
-msgstr "No s'ha trobat el fitxer \"%s\"."
+msgstr "No s'ha trobat el fitxer %s."
 
 #, c-format
 msgid "Free space error (%s)."
 msgstr "Error d'espai lliure (%s)."
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr "G"
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+msgid "GB"
+msgstr "GB"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -468,15 +592,34 @@ msgstr "Instantànies idèntiques."
 msgid "Illegal snapshot."
 msgstr "Instantània il·legal."
 
+#, c-format
+msgid "Invalid ambit '%s'."
+msgstr "Àmbit no vàlid: %s."
+
+#, c-format
+msgid "Invalid column '%s'."
+msgstr "Columna no vàlida: %s."
+
 msgid "Invalid configdata."
-msgstr "Invàlid configdata."
+msgstr "Dades de configuració no vàlides."
+
+msgid "Invalid free-space value."
+msgstr "Valor d'espai disponible no vàlid."
 
 msgid "Invalid group."
 msgstr "Grup no vàlid."
 
 #, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "Format llegible per a la màquina no vàlid: %s."
+
+#, c-format
+msgid "Invalid path '%s'."
+msgstr "Camí no vàlid: %s."
+
+#, c-format
 msgid "Invalid snapshot '%s'."
-msgstr "Instantània no vàlida '%s'."
+msgstr "Instantània no vàlida: %s."
 
 msgid "Invalid snapshots."
 msgstr "Instantànies no vàlides."
@@ -485,14 +628,14 @@ msgid "Invalid subvolume."
 msgstr "Subvolum no vàlid."
 
 #, c-format
-msgid "Invalid table style %d."
-msgstr "Estil de taula invàlid %d."
+msgid "Invalid table style '%s'."
+msgstr "Estil de taula no vàlid: %s."
 
 msgid "Invalid user."
 msgstr "Usuari no vàlid."
 
 msgid "Invalid userdata."
-msgstr "Invàlid userdata."
+msgstr "Dades d'usuari no vàlides."
 
 # KE
 msgid "Key"
@@ -505,6 +648,14 @@ msgstr "KiB"
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Ha fallat la llista de configs (%s)."
+
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr "M"
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+msgid "MB"
+msgstr "MB"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Potser heu oblidat el delimitador \"..\" entre els números d'instantània."
@@ -519,16 +670,16 @@ msgstr "Falta un argument per a l'opció de l'ordre %s."
 
 #, c-format
 msgid "Missing argument for global option '%s'."
-msgstr "Falta un argument per a l'opció global \"%s\"."
+msgstr "Falta un argument per a l'opció global %s."
 
-msgid "Missing command argument."
-msgstr "Falta un argument per a l'ordre."
+msgid "Missing command option."
+msgstr "Manca l'opció per a l'ordre."
 
 msgid "Missing delimiter '..' between snapshot numbers."
 msgstr "Falta el delimitador \"..\" entre els números d'instantània."
 
 msgid "Missing or invalid pre-number."
-msgstr "Número Pre inexistent o no vàlid."
+msgstr "Número de Pre inexistent o no vàlid."
 
 msgid "No command provided."
 msgstr "No s'ha determinat cap ordre."
@@ -538,14 +689,21 @@ msgstr "Sense permisos."
 
 #, c-format
 msgid "Opening file '%s' failed."
-msgstr "Ha fallat l'obertura del fitxer '%s'."
+msgstr "Ha fallat obrir el fitxer %s."
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr "L'opció --from només s'admet per a les instantànies de tipus simple."
 
 msgid "Option --read-write only supported for snapshots of type single."
-msgstr ""
-"L'opció --read-write només s'admet per a les instantànies de tipus simple."
+msgstr "L'opció --read-write només s'admet per a les instantànies de tipus simple."
+
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr "P"
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+msgid "PB"
+msgstr "PB"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -576,7 +734,7 @@ msgstr "Establint el subvolum per defecte a la instantània %d."
 
 #, c-format
 msgid "Snapshot '%u' not found."
-msgstr "No s'ha trobat la instantània '%u'."
+msgstr "No s'ha trobat la instantània %u."
 
 msgid "Snapshot is in use."
 msgstr "La instantània s'usa."
@@ -584,9 +742,22 @@ msgstr "La instantània s'usa."
 msgid "Subvolume"
 msgstr "Subvolum"
 
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr "T"
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+msgid "TB"
+msgstr "TB"
+
+msgid "The ambit can be specified manually using the --ambit option."
+msgstr "L'àmbit es pot especificar manualment usant l'opció --ambit."
+
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr ""
-"La configuració \"root\" no existeix. Potser l'snapper no està configurat."
+msgstr "La configuració d'arrel no existeix. Potser l'snapper no està configurat."
+
+msgid "This can happen if the system was not set up for rollback."
+msgstr "Això pot succeir si el sistema no s'ha configurat per al retrocés."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
@@ -600,28 +771,32 @@ msgstr "Tipus"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
-msgstr "Algorisme de neteja desconegut \"%s\"."
+msgstr "Algorisme de neteja desconegut: %s."
 
 #, c-format
 msgid "Unknown command '%s'."
-msgstr "Ordre desconeguda \"%s\"."
+msgstr "Ordre desconeguda: %s."
 
 msgid "Unknown config."
 msgstr "Configuració desconeguda."
 
 #, c-format
 msgid "Unknown global option '%s'."
-msgstr "Opció global desconeguda '%s'."
+msgstr "Opció global desconeguda: %s."
 
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
-msgstr "Opció desconeguda \"%s\" per a l'ordre %s."
+msgstr "Opció desconeguda %s per a l'ordre %s."
 
-msgid "Unknown type of snapshot."
-msgstr "Tipus d'instantània desconegut."
+#, c-format
+msgid "Unknown type '%s'."
+msgstr "Tipus desconegut: %s."
 
-msgid "Unknown type of snapshots."
-msgstr "Tipus desconegut d'instantànies."
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
+#, c-format
+msgid "Use %1$s."
+msgstr "Useu %1$s."
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -638,11 +813,11 @@ msgstr "Dades de l'usuari"
 
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
-msgstr "Userdata '%s' no inclou el senyal '='."
+msgstr "Les dades d'usuari %s no inclouen el signe =."
 
 #, c-format
 msgid "Userdata '%s' has empty key."
-msgstr "Userdata '%s' té una clau buida."
+msgstr "Les dades d'usuari %s tenen una clau buida."
 
 msgid "Value"
 msgstr "Valor"
@@ -671,18 +846,50 @@ msgstr "ha fallat suprimir %s"
 msgid "failed to modify %s"
 msgstr "Ha fallat la modificació de %s"
 
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr "k"
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+msgid "kB"
+msgstr "kB"
+
 #, c-format
 msgid "modifying %s"
 msgstr "modificant %s"
 
+msgid "no"
+msgstr "no"
+
 msgid "nothing to do"
 msgstr "Res a fer"
 
-msgid "root argument can be used only together with no-dbus."
-msgstr "l'argument d'arrel només es pot usar conjuntament amb no-dbus."
+msgid "root argument can be used only together with no-dbus.\n"
+msgstr "L'argument d'arrel només es pot usar juntament amb no-dbus.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "ús: snapper [--global-options] <command> [--command-options] [command-arguments]"
+
+msgid "yes"
+msgstr "sí"
+
+#, c-format
+#~ msgid "Invalid machine readable format %s."
+#~ msgstr "Format llegible per a la màquina no vàlid: %s."
+
+#, fuzzy, c-format
+#~ msgid "Use %s, %s, %s or %s."
+#~ msgstr "Useu %s, %s o %s."
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Tipus d'instantània desconegut."
+
+#, c-format
+#~ msgid "Use %s, %s or %s."
+#~ msgstr "Useu %s, %s o %s."
+
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "Tipus desconegut d'instantànies."
 
 #~ msgid "Quota failure (%s)."
 #~ msgstr "Fallada de quota (%s)."

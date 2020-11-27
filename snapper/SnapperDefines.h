@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2004-2014] Novell, Inc.
+ * Copyright (c) 2020 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -26,12 +27,15 @@
 
 // path definitions
 
-#define SYSCONFIGFILE CONFDIR "/snapper"
+#define SYSCONFIG_FILE CONF_DIR "/snapper"
 
-#define CONFIGSDIR "/etc/snapper/configs"
-#define CONFIGTEMPLATEDIR "/etc/snapper/config-templates"
+#define CONFIGS_DIR "/etc/snapper/configs"
+#define CONFIG_TEMPLATE_DIR "/etc/snapper/config-templates"
 
-#define FILTERSDIR "/etc/snapper/filters"
+#define FILTERS_DIR "/etc/snapper/filters"
+
+#define DEV_DIR "/dev"
+#define DEV_MAPPER_DIR "/dev/mapper"
 
 
 // keys from the config files

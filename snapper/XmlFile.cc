@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2010-2012] Novell, Inc.
+ * Copyright (c) 2020 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -75,6 +76,8 @@ namespace snapper
 	    throw IOErrorException("xmlDocFormatDump failed");
 	}
 
+	fflush(f);
+	fsync(fileno(f));
 	fclose(f);
     }
 
@@ -106,6 +109,7 @@ namespace snapper
     {
 	if (node != NULL)
 	    node = node->children;
+
 	for (const xmlNode* cur_node = node; cur_node; cur_node = cur_node->next)
 	{
 	    if (strcmp(name, (const char*) cur_node->name) == 0)
@@ -125,6 +129,7 @@ namespace snapper
 
 	if (node != NULL)
 	    node = node->children;
+
 	for (const xmlNode* cur_node = node; cur_node; cur_node = cur_node->next)
 	{
 	    if (cur_node->type == XML_ELEMENT_NODE &&
@@ -137,6 +142,7 @@ namespace snapper
 	return ret;
     }
 
+
     bool
     getValue(const xmlNode* node, string& value)
     {
@@ -144,16 +150,18 @@ namespace snapper
 	if (tmp == nullptr)
 	    return false;
 
-	value = (const char *) tmp;
+	value = (const char*) tmp;
 	xmlFree(tmp);
 	return true;
     }
+
 
     bool
     getChildValue(const xmlNode* node, const char* name, string& value)
     {
 	if (node != NULL)
 	    node = node->children;
+
 	for (const xmlNode* cur_node = node; cur_node; cur_node = cur_node->next)
 	{
 	    if (cur_node->type == XML_ELEMENT_NODE &&
@@ -183,17 +191,19 @@ namespace snapper
 	return true;
     }
 
+
     bool
     getAttributeValue(const xmlNode* node, const char* name, string& value)
     {
-	xmlChar* tmp = xmlGetNoNsProp(node, (const xmlChar *) name);
+	xmlChar* tmp = xmlGetNoNsProp(node, (const xmlChar*) name);
 	if (tmp == nullptr)
 	    return false;
 
-	value = (const char *) tmp;
+	value = (const char*) tmp;
 	xmlFree(tmp);
 	return true;
     }
+
 
     bool
     getAttributeValue(const xmlNode* node, const char* name, bool& value)
@@ -205,6 +215,7 @@ namespace snapper
 	value = tmp == "true";
 	return true;
     }
+
 
     void
     setChildValue(xmlNode* node, const char* name, const char* value)

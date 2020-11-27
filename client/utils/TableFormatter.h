@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019] SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -22,46 +22,47 @@
 #ifndef SNAPPER_CLI_TABLE_FORMATTER_H
 #define SNAPPER_CLI_TABLE_FORMATTER_H
 
+
 #include <string>
 #include <vector>
-#include <utility>
+#include <ostream>
 
 #include "client/utils/Table.h"
 
+
 namespace snapper
 {
-    namespace cli
+
+    using namespace std;
+
+
+    class TableFormatter
     {
 
-	class TableFormatter
-	{
+    public:
 
-	public:
+	static const TableStyle default_style;
 
-	    static TableLineStyle default_style();
+	TableFormatter(TableStyle style) : style(style) {}
 
-	    TableFormatter(
-		std::vector<std::pair<std::string, TableAlign>> columns,
-		std::vector<std::vector<std::string>> rows);
+	TableFormatter(const TableFormatter&) = delete;
 
-	    TableFormatter(
-		std::vector<std::pair<std::string, TableAlign>> columns,
-		std::vector<std::vector<std::string>> rows,
-		TableLineStyle style);
+	TableFormatter& operator=(const TableFormatter&) = delete;
 
-	    std::string output() const;
+	vector<pair<string, TableAlign>>& header() { return _header; }
+	vector<vector<string>>& rows() { return _rows; }
 
-	private:
+	friend ostream& operator<<(ostream& stream, const TableFormatter& table_formatter);
 
-	    std::vector<std::pair<std::string, TableAlign>> _columns;
+    private:
 
-	    std::vector<std::vector<std::string>> _rows;
+	const TableStyle style;
 
-	    TableLineStyle _style;
+	vector<pair<string, TableAlign>> _header;
+	vector<vector<string>> _rows;
 
-	};
+    };
 
-    }
 }
 
 #endif

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2019] SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -30,6 +30,7 @@
 #include <dirent.h>
 #include <errno.h>
 #include <string.h>
+#include <regex>
 #include <boost/algorithm/string.hpp>
 
 #include "snapper/Snapshot.h"
@@ -42,7 +43,6 @@
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/Exception.h"
-#include "snapper/Regex.h"
 #include "snapper/Hooks.h"
 
 
@@ -185,14 +185,14 @@ namespace snapper
     void
     Snapshots::read()
     {
-	Regex rx("^[0-9]+$");
+	static const regex rx("[0-9]+", regex::extended);
 
 	SDir infos_dir = snapper->openInfosDir();
 
 	vector<string> infos = infos_dir.entries();
 	for (vector<string>::const_iterator it1 = infos.begin(); it1 != infos.end(); ++it1)
 	{
-	    if (!rx.match(*it1))
+	    if (!regex_match(*it1, rx))
 		continue;
 
 	    try
@@ -491,6 +491,8 @@ namespace snapper
 	    SN_THROW(IOErrorException(sformat("rename info.xml failed infoDir:%s errno:%d (%s)",
 					      info_dir.fullname().c_str(), errno,
 					      stringerror(errno).c_str())));
+
+	info_dir.fsync();
     }
 
 

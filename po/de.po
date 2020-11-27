@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
-"PO-Revision-Date: 2019-10-15 16:53+0000\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
+"PO-Revision-Date: 2020-08-24 00:40+0000\n"
 "Last-Translator: Sarah Kriesch <ada.lovelace@gmx.de>\n"
-"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
-"\n"
+"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,17 +20,36 @@ msgstr ""
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tSnapshots von allen verfügbaren Konfigurationen auflisten."
 
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
+msgstr "\t--ambit, -a ambit\t\tIm angegebenen Anwendungsbereich funktionieren."
+
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\tBereinigungsalgorithmus für den Schnappschuss."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tBereinigungsalgorithmus für Schnappschüsse."
 
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
+
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <Befehl>\t\tBefehl ausführen und Vorher- und Nachher-Schnappschuss erstellen."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <Name>\t\tNamen der zu benutzenden Konfiguration einsetzen."
+
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr "\t--csvout\t\t\tCSV-Ausgabeformat setzen."
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <Beschreibung>\tBeschreibung des Schnappschusses."
@@ -48,10 +66,11 @@ msgstr "\t--disable-used-space\t\tBenutzten Platz nicht anzeigen."
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <Optionen>\tExtra Optionen, die an den diff-Befehl übergeben wurden."
 
-msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
+msgid "\t--free-space <space>\t\tTry to make space available."
 msgstr ""
-"\t--from\t\t\t\tEinen Schnappschuss von dem speziellen Schnappschuss "
-"erstellen."
+
+msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
+msgstr "\t--from\t\t\t\tEinen Schnappschuss von dem speziellen Schnappschuss erstellen."
 
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <fstype>\t\tDateisystem-Typ manuell setzen."
@@ -65,11 +84,20 @@ msgstr "\t--input, -i <Datei>\t\tDateien lesen zur Unterscheidung von der Datei.
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\tZeigt Datum und Zeiten im ISO-Format an."
 
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr "\t--jsonout\t\t\tJSON-Ausgabeformat setzen."
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgstr "\t--machine-readable <Format>\tEin Maschinen-lesbares Ausgabeformat (csv, json) setzen."
+
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tOhne DBus arbeiten."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <Datei>\t\tStatus in <Datei> speichern."
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <Nummer>\t\tNummer des zugehörigen Vorher-Schnappschusses."
@@ -91,6 +119,9 @@ msgstr "\t--read-write\t\t\tEinen nur schreibbaren Schnappschuss erstellen."
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <Pfad>\t\tAm Ziel-Root arbeiten (funktioniert nur ohne DBus)."
+
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
+msgstr "\t--separator <Separator>\t\tZeichen-Separator für CSV-Ausgabeformat."
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tNach Löschen synchronisieren."
@@ -179,6 +210,10 @@ msgstr "\tsnapper xadiff <Nummer1>..<Nummer2> [Dateien]"
 msgid "    Global options:"
 msgstr "    Globale Optionen:"
 
+#, fuzzy
+msgid "    Options for 'cleanup' command:"
+msgstr "    Optionen für den Befehl  'create' :"
+
 msgid "    Options for 'create' command:"
 msgstr "    Optionen für den Befehl  'create' :"
 
@@ -191,8 +226,18 @@ msgstr "    Optionen für den Befehl 'delete':"
 msgid "    Options for 'diff' command:"
 msgstr "    Optionen für den Befehl 'diff':"
 
+#, fuzzy
+msgid "    Options for 'get-config' command:"
+msgstr "    Optionen für den Befehl 'create-config':"
+
 msgid "    Options for 'list' command:"
 msgstr "    Optionen für den Befehl 'list':"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
 
 msgid "    Options for 'modify' command:"
 msgstr "    Optionen für den Befehl 'modify':"
@@ -260,12 +305,36 @@ msgstr "  Änderungen zurücknehmen:"
 msgid "#"
 msgstr "#"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Schnappschuss %d.)"
 
 msgid "ACL error."
 msgstr "ACL-Fehler."
+
+msgid "Active"
+msgstr ""
+
+msgid "Active snapshot is already default snapshot."
+msgstr "Aktiver Schnappschuss ist schon Standard-Schnappschuss."
+
+#, c-format
+msgid "Ambit is %s."
+msgstr "Anwendungsbereich ist %s."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -282,6 +351,12 @@ msgstr "Schnappschuss %d kann nicht gelöscht werden, seitdem es der derzeit gem
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Schnappschuss %d kann nicht gelöscht werden, seitdem es der nächste zu mountende Schnappschuss ist."
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr "Anwendungsbereich kann nicht erkannt werden, seitdem das Standard-Subvolume unbekannt ist."
+
+msgid "Cannot do rollback since default subvolume is unknown."
+msgstr "Kann kein Rollback durchführen, seitdem das Standard-Subvolume unbekannt ist."
 
 msgid "Cleanup"
 msgstr "Bereinigen"
@@ -379,6 +454,13 @@ msgid "Configdata '%s' has empty key."
 msgstr "Die Konfigurationsdaten '%s' haben einen leeren Schlüssel."
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "Erstellen der Konfigurationsdatei ist fehlgeschlagen (%s)."
 
@@ -401,6 +483,9 @@ msgstr "Das Erstellen eines Schnappschusses ist fehlgeschlagen."
 msgid "Date"
 msgstr "Datum"
 
+msgid "Default"
+msgstr ""
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Das Löschen der Konfiguration ist fehlgeschlagen (%s)."
@@ -420,6 +505,15 @@ msgstr "Beschreibung"
 msgid "Detecting filesystem type failed."
 msgstr "Erkennung des Dateisystemtyps nicht möglich."
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+#, fuzzy
+msgid "EB"
+msgstr "EiB"
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr "EiB"
@@ -436,6 +530,18 @@ msgstr "Fehler (%s)."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Initialisierung des Dateisystem-Handlers fehlgeschlagen."
+
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "%s kann nicht erstellt werden"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "%s kann nicht erstellt werden"
 
 msgid "Failed to set locale. Fix your system."
 msgstr "Das Setzen den Locale ist fehlgeschlagen. Beheben Sie die Systemprobleme."
@@ -455,6 +561,15 @@ msgstr "Datei '%s' wurde nicht gefunden."
 msgid "Free space error (%s)."
 msgstr "Speicherplatz-Fehler (%s)."
 
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+#, fuzzy
+msgid "GB"
+msgstr "GiB"
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
@@ -473,11 +588,31 @@ msgstr "Identische Schnappschüsse."
 msgid "Illegal snapshot."
 msgstr "Illegaler Schnappschuss."
 
+#, fuzzy, c-format
+msgid "Invalid ambit '%s'."
+msgstr "Ungültiger Anwendungsbereich %s."
+
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Ungültiger Anwendungsbereich %s."
+
 msgid "Invalid configdata."
 msgstr "Ungültige Konfigurationsdaten."
 
+#, fuzzy
+msgid "Invalid free-space value."
+msgstr "Ungültiges Subvolumen."
+
 msgid "Invalid group."
 msgstr "Ungültige Gruppe."
+
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "Ungültiges maschinenlesbares Format %s."
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "Ungültiger Anwendungsbereich %s."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -489,9 +624,9 @@ msgstr "Ungültige Schnappschüsse."
 msgid "Invalid subvolume."
 msgstr "Ungültiges Subvolumen."
 
-#, c-format
-msgid "Invalid table style %d."
-msgstr "Ungültiger Tabellenstil %d."
+#, fuzzy, c-format
+msgid "Invalid table style '%s'."
+msgstr "Ungültiger Tabellenstil %s."
 
 msgid "Invalid user."
 msgstr "Ungültiger Benutzer."
@@ -510,6 +645,15 @@ msgstr "KiB"
 msgid "Listing configs failed (%s)."
 msgstr "Auflistung der Konfigurationsdateien nicht erfolgreich (%s)."
 
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+#, fuzzy
+msgid "MB"
+msgstr "MiB"
+
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Sie haben möglicherweise das Trennzeichen \"..\" zwischen den Snapshot-Nummern vergessen."
 
@@ -525,7 +669,8 @@ msgstr "Fehlendes Argument für Befehlsoption '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Fehlendes Argument für globale Option '%s'."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Fehlendes Befehlsargument."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -545,13 +690,19 @@ msgid "Opening file '%s' failed."
 msgstr "Öffnen der Datei '%s' nicht möglich."
 
 msgid "Option --from only supported for snapshots of type single."
-msgstr ""
-"Die Option --from wird nur für Schnappschüsse vom Typ Einzeln unterstützt."
+msgstr "Die Option --from wird nur für Schnappschüsse vom Typ Einzeln unterstützt."
 
 msgid "Option --read-write only supported for snapshots of type single."
+msgstr "Die Option --read-write wird nur für Schnappschüsse vom Typ Einzeln unterstützt."
+
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
 msgstr ""
-"Die Option --read-write wird nur für Schnappschüsse vom Typ Einzeln "
-"unterstützt."
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+#, fuzzy
+msgid "PB"
+msgstr "PiB"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -590,8 +741,23 @@ msgstr "Der Schnappschuss ist in Benutzung."
 msgid "Subvolume"
 msgstr "Subvolumen"
 
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+#, fuzzy
+msgid "TB"
+msgstr "TiB"
+
+msgid "The ambit can be specified manually using the --ambit option."
+msgstr "Der Anwendungsbereich kann manuell durch die Verwendung der Option --ambit angegeben werden."
+
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Die Konfiguration \"Root\" ist nicht vorhanden. Snapper ist wahrscheinlich nicht konfiguriert."
+
+msgid "This can happen if the system was not set up for rollback."
+msgstr "Das kann passieren, wenn das System nicht für Rollbacks eingerichtet wurde."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
@@ -622,11 +788,15 @@ msgstr "Unbekannte globale Option '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Unbekannte Option '%s' für Befehl '%s'."
 
-msgid "Unknown type of snapshot."
-msgstr "Unbekannter Schnappschuss-Typ."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Unbekannter Befehl '%s'."
 
-msgid "Unknown type of snapshots."
-msgstr "Unbekannter Typ der Schnappschüsse."
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
+#, c-format
+msgid "Use %1$s."
+msgstr ""
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -676,18 +846,54 @@ msgstr "%s konnte nicht gelöscht werden"
 msgid "failed to modify %s"
 msgstr "%s konnte nicht geändert werden"
 
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+#, fuzzy
+msgid "kB"
+msgstr "B"
+
 #, c-format
 msgid "modifying %s"
 msgstr "%s wird geändert"
 
+msgid "no"
+msgstr ""
+
 msgid "nothing to do"
 msgstr "keine auszuführenden Aktionen"
 
-msgid "root argument can be used only together with no-dbus."
-msgstr "Root-Argument kann nur zusammen mit \"no-dbus\" verwendet werden."
+#, fuzzy
+msgid "root argument can be used only together with no-dbus.\n"
+msgstr ""
+"Root-Argument kann nur zusammen mit no-dbus verwendet werden.\n"
+"'snapper --help' für mehr Informationen versuchen."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "Aufruf: snapper [--Globale-Optionen] <Befehl> [--Befehlsoptionen] [Befehlsargumente]"
+
+msgid "yes"
+msgstr ""
+
+#, c-format
+#~ msgid "Invalid machine readable format %s."
+#~ msgstr "Ungültiges maschinenlesbares Format %s."
+
+#, fuzzy, c-format
+#~ msgid "Use %s, %s, %s or %s."
+#~ msgstr "%s, %s oder %s verwenden."
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Unbekannter Schnappschuss-Typ."
+
+#, c-format
+#~ msgid "Use %s, %s or %s."
+#~ msgstr "%s, %s oder %s verwenden."
+
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "Unbekannter Typ der Schnappschüsse."
 
 #~ msgid "Quota failure (%s)."
 #~ msgstr "Quota-Störung (%s)."

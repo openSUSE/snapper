@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) 2020 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -115,9 +116,9 @@ show_userdata(const map<string, string>& userdata)
 
 
 map<string, string>
-read_configdata(const list<string>& l, const map<string, string>& old)
+read_configdata(const vector<string>& v, const map<string, string>& old)
 {
-    if (l.empty())
+    if (v.empty())
     {
 	cerr << _("Empty configdata.") << endl;
 	exit(EXIT_FAILURE);
@@ -125,7 +126,7 @@ read_configdata(const list<string>& l, const map<string, string>& old)
 
     map<string, string> configdata = old;
 
-    for (list<string>::const_iterator it = l.begin(); it != l.end(); ++it)
+    for (vector<string>::const_iterator it = v.begin(); it != v.end(); ++it)
     {
 	string::size_type pos = it->find("=");
 	if (pos == string::npos)
@@ -179,9 +180,9 @@ Differ::run(const string& f1, const string& f2) const
 
     SystemCmd cmd(tmp);
 
-    for (const string& line : cmd.stdout())
+    for (const string& line : cmd.get_stdout())
 	cout << line << endl;
 
-    for (const string& line : cmd.stderr())
+    for (const string& line : cmd.get_stderr())
 	cerr << line << endl;
 }

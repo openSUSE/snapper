@@ -71,7 +71,7 @@ namespace snapper
 	// empty or " -K" if lvm supports ignore activation skip flag
 	string ignoreactivationskip;
 	// true if lvm2 supports time info stored in metadata
-	bool time_support;
+	bool time_support = false;
     };
 
     class SelinuxLabelHandle;

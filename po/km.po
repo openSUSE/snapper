@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper.km\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2011-10-24 10:40+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -19,6 +19,9 @@ msgstr ""
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr ""
 
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
+msgstr ""
+
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\tសម្អាត​អាល់កូរីត​សម្រាប់ snapshot ។"
 
@@ -26,12 +29,28 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tសម្អាត​អាល់ក�
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tសម្អាត​អាល់កូរីត​សម្រាប់ snapshot ។"
 
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
+
 #, fuzzy
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <command>\tដំណើរការ​ពាក្យ​បញ្ជា និង​បង្កើត​រូបថត​មុន និង​ក្រោយ ។"
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <name>\t\tកំណត់​ឈ្មោះ​រចនាសម្ព័ន្ធ​ដែល​ត្រូវប្រើ ។"
+
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr ""
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <description>\tសេចក្ដី​ពិពណ៌នា​អំពី​រូបថត ។"
@@ -50,6 +69,9 @@ msgstr "\t--disable-filters\t\tបិទ​តម្រង ។"
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr ""
 
@@ -66,11 +88,20 @@ msgstr "\t--input, -i <file>\t\tអាន​ឯកសារ​ដែល​នឹ
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr ""
 
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr ""
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgstr ""
+
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr ""
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <file>\t\tរក្សា​ទុក​ស្ថានភាព​ទៅ​ក្នុង​ឯកសារ ។"
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <number>\t\tចំនួន​រូបថតពី​មុន​ដែល​ត្រូវ​គ្នា​ ។"
@@ -92,6 +123,9 @@ msgid "\t--read-write\t\t\tCreate read-write snapshot."
 msgstr ""
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
+msgstr ""
+
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
 msgstr ""
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
@@ -187,6 +221,10 @@ msgstr "\tsnapper diff <number1>..<number2> [files]"
 msgid "    Global options:"
 msgstr "    ជម្រើស​សកល ៖"
 
+#, fuzzy
+msgid "    Options for 'cleanup' command:"
+msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា​ 'create' ៖"
+
 msgid "    Options for 'create' command:"
 msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា​ 'create' ៖"
 
@@ -201,8 +239,18 @@ msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​ប�
 msgid "    Options for 'diff' command:"
 msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា​ 'modify' ៖"
 
+#, fuzzy
+msgid "    Options for 'get-config' command:"
+msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា 'create-config' ៖"
+
 msgid "    Options for 'list' command:"
 msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា 'list' ៖"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
 
 msgid "    Options for 'modify' command:"
 msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា​ 'modify' ៖"
@@ -275,6 +323,20 @@ msgstr "  មិន​ធ្វើ​ការ​ផ្លាស់ប្ដូ�
 msgid "#"
 msgstr "#"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "រក​មិន​ឃើញ​រូបថត '%u' ។"
@@ -282,6 +344,16 @@ msgstr "រក​មិន​ឃើញ​រូបថត '%u' ។"
 #, fuzzy
 msgid "ACL error."
 msgstr "បង្កើត​កំហុស"
+
+msgid "Active"
+msgstr ""
+
+msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+#, c-format
+msgid "Ambit is %s."
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -297,6 +369,12 @@ msgstr ""
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
+msgstr ""
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr ""
+
+msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
 msgid "Cleanup"
@@ -405,6 +483,13 @@ msgid "Configdata '%s' has empty key."
 msgstr ""
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
 
@@ -430,6 +515,9 @@ msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្
 msgid "Date"
 msgstr "កាល​បរិច្ឆេទ"
 
+msgid "Default"
+msgstr ""
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​លុប​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
@@ -448,6 +536,14 @@ msgstr "សេចក្តី​ពិពណ៌នា"
 
 msgid "Detecting filesystem type failed."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​រក​ប្រភេទ​ប្រព័ន្ធ​ឯកសារ ។"
+
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+msgid "EB"
+msgstr ""
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
@@ -470,6 +566,18 @@ msgstr "កំហុស I/O"
 msgid "Failed to initialize filesystem handler."
 msgstr "បាន​បរាជ័យ​ក្នុងកា​រដំឡើង​កម្មវិធី​គ្រប់គ្រង​ឯកសារ"
 
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត %s"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត %s"
+
 msgid "Failed to set locale. Fix your system."
 msgstr ""
 
@@ -488,6 +596,14 @@ msgstr "រក​មិន​ឃើញ​ឯកសារ '%s' ។"
 #, fuzzy, c-format
 msgid "Free space error (%s)."
 msgstr "កំហុស I/O"
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+msgid "GB"
+msgstr ""
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -510,13 +626,33 @@ msgstr "រូបថត​ដូចគ្នា ។"
 msgid "Illegal snapshot."
 msgstr "រូបថត​មិន​ត្រឹមត្រូវ ។"
 
+#, fuzzy, c-format
+msgid "Invalid ambit '%s'."
+msgstr "រូបថត​មិន​ត្រឹមត្រូវ '%s' ។"
+
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "រូបថត​មិន​ត្រឹមត្រូវ '%s' ។"
+
 #, fuzzy
 msgid "Invalid configdata."
 msgstr "ទិន្នន័យ​ផ្សាយ​មិន​ត្រឹមត្រូវ ។"
 
 #, fuzzy
+msgid "Invalid free-space value."
+msgstr "ភាគ​រង​មិន​ត្រឹមត្រូវ ។"
+
+#, fuzzy
 msgid "Invalid group."
 msgstr "ភាគ​រង​មិន​ត្រឹមត្រូវ ។"
+
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "រចនាប័ទ្ម​តារាង %d មិន​ត្រឹមត្រូវ ។"
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "រូបថត​មិន​ត្រឹមត្រូវ '%s' ។"
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -528,8 +664,8 @@ msgstr "រូបថត​មិន​ត្រឹមត្រូវ ។"
 msgid "Invalid subvolume."
 msgstr "ភាគ​រង​មិន​ត្រឹមត្រូវ ។"
 
-#, c-format
-msgid "Invalid table style %d."
+#, fuzzy, c-format
+msgid "Invalid table style '%s'."
 msgstr "រចនាប័ទ្ម​តារាង %d មិន​ត្រឹមត្រូវ ។"
 
 #, fuzzy
@@ -551,6 +687,14 @@ msgstr ""
 msgid "Listing configs failed (%s)."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​រាយ​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
 
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+msgid "MB"
+msgstr ""
+
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr ""
 
@@ -566,7 +710,8 @@ msgstr "បាត់​អាគុយម៉ង់​សម្រាប់​ជ
 msgid "Missing argument for global option '%s'."
 msgstr "បាត់​អាគុយម៉ង់​សម្រាប់​ជម្រើស​សកល '%s' ។"
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "បាត់​អាគុយម៉ង់​ពាក្យ​បញ្ជា ។"
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -590,6 +735,14 @@ msgid "Option --from only supported for snapshots of type single."
 msgstr ""
 
 msgid "Option --read-write only supported for snapshots of type single."
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+msgid "PB"
 msgstr ""
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
@@ -632,7 +785,21 @@ msgstr "រក​មិន​ឃើញ​ការ​កំណត់​រចន
 msgid "Subvolume"
 msgstr "ភាគ​រង"
 
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+msgid "TB"
+msgstr ""
+
+msgid "The ambit can be specified manually using the --ambit option."
+msgstr ""
+
 msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+msgid "This can happen if the system was not set up for rollback."
 msgstr ""
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
@@ -666,11 +833,15 @@ msgstr "មិន​ស្គាល់​ជម្រើស​សកល '%s' ។
 msgid "Unknown option '%s' for command '%s'."
 msgstr "មិន​ស្គាល់​ជម្រើស​ '%s' សម្រាប់​ពាក្យ​បញ្ជា '%s' ។"
 
-msgid "Unknown type of snapshot."
-msgstr "មិន​ស្គាល់​ប្រភេទ​រូបថត ។"
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "មិន​ស្គាល់​ពាក្យ​បញ្ជា '%s' ។"
 
-msgid "Unknown type of snapshots."
-msgstr "មិន​ស្គាល់​ប្រភេទ​រូបថត ​​។"
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
+#, c-format
+msgid "Use %1$s."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Use an integer number from %d to %d."
@@ -721,19 +892,40 @@ msgstr "បាន​បរាជ័យ​ក្នុង​ការ​លុប
 msgid "failed to modify %s"
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​កែប្រែ %s"
 
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+msgid "kB"
+msgstr ""
+
 #, c-format
 msgid "modifying %s"
 msgstr "កំពុង​កែប្រែ %s"
+
+msgid "no"
+msgstr ""
 
 #, fuzzy
 msgid "nothing to do"
 msgstr "គ្មាន​អ្វី​ត្រូវ​ធ្វើ ។"
 
-msgid "root argument can be used only together with no-dbus."
-msgstr ""
+#, fuzzy
+msgid "root argument can be used only together with no-dbus.\n"
+msgstr "ចំពោះ​ព័ត៌មាន​បន្ថែម​ សូម​អាន 'ជំនួយ​របស់​កម្មវិធី​ថត' ។"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "ការ​ប្រើប្រាស់ ៖ កម្មវិធី​ថតរូប [--global-options] <command> [--command-options] [command-arguments]"
+
+msgid "yes"
+msgstr ""
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "មិន​ស្គាល់​ប្រភេទ​រូបថត ។"
+
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "មិន​ស្គាល់​ប្រភេទ​រូបថត ​​។"
 
 #, fuzzy
 #~ msgid "Quota failure (%s)."

@@ -2,13 +2,13 @@
 <refentry id='snapper8' xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <refentryinfo>
-    <date>2019-10-14</date>
+    <date>2020-06-15</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2019-10-14</refmiscinfo>
+    <refmiscinfo class='date'>2020-06-15</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -39,7 +39,7 @@
 
     <para>Snapper never modifies the content of snapshots. Thus snapper creates
     read-only snapshots if supported by the kernel. Supported filesystems are
-    btrfs and ext4 as well as snapshots of LVM logical volumes with
+    btrfs and ext4 (discontinued) as well as snapshots of LVM logical volumes with
     thin-provisioning. Some filesystems might not be supported depending on your
     installation.</para>
   </refsect1>
@@ -218,13 +218,13 @@
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>-t, --table-style</option></term>
+	<term><option>-t, --table-style <replaceable>style</replaceable></option></term>
 	<listitem>
 	  <para>Specifies table style. Table style is identified by an integer number.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>--machine-readable</option></term>
+	<term><option>--machine-readable <replaceable>format</replaceable></option></term>
 	<listitem>
 	  <para>Specifies a machine-readable output format. Possible options are csv and json.</para>
 	</listitem>
@@ -244,7 +244,7 @@
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>--separator</option></term>
+	<term><option>--separator <replaceable>character</replaceable></option></term>
 	<listitem>
 	  <para>Specifies the character separator for CSV output format.</para>
 	</listitem>
@@ -268,6 +268,13 @@
 	<term><option>-r, --root <replaceable>path</replaceable></option></term>
 	<listitem>
 	  <para>Operate on target root. Only works together with no-dbus and only for some commands.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>-a, --ambit <replaceable>ambit</replaceable></option></term>
+	<listitem>
+	  <para>Operate in the specified ambit. Can be used to override the ambit detection.
+	  Allowed ambits are auto, classic and transactional.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
@@ -301,7 +308,7 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>list-configs</option></term>
+	<term><option>list-configs [options]</option></term>
 	<listitem>
 	  <para>List available configurations.</para>
 
@@ -329,9 +336,10 @@
 	    <varlistentry>
 	      <term><option>-f, --fstype</option> <replaceable>fstype</replaceable></term>
 	      <listitem>
-		<para>Manually set filesystem type. Supported values are btrfs, ext4 and lvm. For
-		lvm, snapper uses LVM thin-provisioned snapshots. The filesystem type on top of
-		LVM must be provided in parentheses, e.g. lvm(xfs).</para>
+		<para>Manually set filesystem type. Supported values are btrfs, ext4
+		(discontinued) and lvm. For lvm, snapper uses LVM thin-provisioned snapshots.
+		The filesystem type on top of LVM must be provided in parentheses,
+		e.g. lvm(xfs).</para>
 		<para>Without this option snapper tries to detect the filesystem.</para>
 	      </listitem>
 	    </varlistentry>
@@ -356,7 +364,7 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>get-config</option></term>
+	<term><option>get-config [options]</option></term>
 	<listitem>
 	  <para>Displays the settings of the configuration.</para>
 
@@ -738,6 +746,9 @@
 	  <para>The rollback command also sets the description, the cleanup
 	  algorithm and some userdata unless the values are specified on the command
 	  line. This will automate cleanup of snapshots created by rollbacks.</para>
+	  <para>In other ambits than classic the rollback command does what is required
+	  to do a rollback. Anyway it is recommended to use specific programs in that
+	  case.</para>
 	</listitem>
       </varlistentry>
 
@@ -749,11 +760,26 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>cleanup <replaceable>cleanup-algorithm</replaceable></option></term>
+	<term><option>cleanup [options] <replaceable>cleanup-algorithm</replaceable></option></term>
 	<listitem>
 	  <para>Run the cleanup algorithm
-	  <replaceable>cleanup-algorithm</replaceable>. Currently implemented
-	  cleanup algorithms are number, timeline and empty-pre-post.</para>
+	  <replaceable>cleanup-algorithm</replaceable>. Currently implemented cleanup algorithms
+	  are number, timeline and empty-pre-post. To run all cleanup algorithms, all can be
+	  provided as cleanup-algorithm.</para>
+	  <variablelist>
+	    <varlistentry>
+	      <term><option>--path</option> <replaceable>path</replaceable></term>
+	      <listitem>
+		<para>Cleanup all configs affecting path. Only useful for btrfs.</para>
+	      </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><option>--free-space</option> <replaceable>free-space</replaceable></term>
+	      <listitem>
+		<para>Try to make free-space available. Only useful for btrfs.</para>
+	      </listitem>
+	    </varlistentry>
+	  </variablelist>
 	</listitem>
       </varlistentry>
 

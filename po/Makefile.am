@@ -6,7 +6,7 @@ XGETTEXT = xgettext
 MSGFMT = msgfmt
 MSGMERGE = msgmerge
 
-SRCFILES = $(wildcard ../client/*.cc ../client/utils/*.cc)
+SRCFILES = $(wildcard ../client/*.cc ../client/*.h ../client/utils/*.cc)
 
 POFILES = $(wildcard *.po)
 
@@ -17,7 +17,7 @@ all: $(MOFILES)
 $(PACKAGE).pot: $(SRCFILES)
 	$(XGETTEXT) --sort-output --no-wrap --add-comments --no-location \
 	    --keyword=_ --keyword=_:1,2 --foreign-user \
-	    --copyright-holder="SUSE Linux GmbH, Nuernberg" \
+	    --copyright-holder="SUSE LLC" \
 	    --default-domain=$(PACKAGE) --output=$(PACKAGE).pot $(SRCFILES)
 
 %.mo: %.po

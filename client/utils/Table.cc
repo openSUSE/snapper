@@ -11,7 +11,6 @@
 
 using namespace std;
 
-TableLineStyle Table::defaultStyle = Ascii;
 
 static
 const char * lines[][3] = {
@@ -130,7 +129,7 @@ Table::Table()
   , _max_col (0)
   , _max_width(1, 0)
   , _width(0)
-  , _style (defaultStyle)
+  , _style (Ascii)
   , _screen_width(get_screen_width())
   , _margin(0)
   , _force_break_after(-1)
@@ -248,10 +247,14 @@ void Table::wrap(int force_break_after)
   _do_wrap = true;
 }
 
-void Table::lineStyle (TableLineStyle st) {
-  if (st < _End)
-    _style = st;
+
+void
+Table::set_style(TableStyle st)
+{
+    if (st < _End)
+	_style = st;
 }
+
 
 void Table::margin(unsigned margin) {
   if (margin < (unsigned) (_screen_width/2))
@@ -269,7 +272,3 @@ void Table::sort (unsigned by_column) {
   TableRow::Less comp (by_column);
   _rows.sort (comp);
 }
-
-// Local Variables:
-// c-basic-offset: 2
-// End:

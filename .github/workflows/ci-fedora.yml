@@ -1,0 +1,34 @@
+name: CI Fedora
+
+on: [push, pull_request]
+
+jobs:
+  Tests:
+    runs-on: ubuntu-latest
+    container: fedora
+
+    steps:
+
+    - name: Install additional packages
+      run: dnf -y install acl autoconf automake boost-devel btrfs-progs-devel bzip2 dbus-devel diffutils docbook-style-xsl e2fsprogs-devel gcc-c++ gettext glibc-langpack-de glibc-langpack-en json-c-devel libacl-devel libmount-devel libtool libxml2-devel libxslt make pam-devel
+
+    - name: List installed packages
+      run: rpm -qa | sort
+
+    - name: Git checkout
+      uses: actions/checkout@v1
+
+    - name: Configure
+      run: make -f Makefile.repo
+
+    - name: Compile
+      run: make -j 2
+
+    - name: Install
+      run: make install
+
+    - name: Run unit tests
+      run: make -j 2 check VERBOSE=1
+
+    - name: Make package
+      run: make package

@@ -84,7 +84,7 @@ AC_ARG_WITH([conf], AC_HELP_STRING([--with-conf], [Use a custom sysconfig direct
 	[with_conf=$withval], [with_conf=no])
 AS_IF([test "x$with_conf" != xno], [SYSCONFIG="${with_conf}"])
 
-CPPFLAGS="${CPPFLAGS} -DCONFDIR='\"${SYSCONFIG}\"'"
+CPPFLAGS="${CPPFLAGS} -DCONF_DIR='\"${SYSCONFIG}\"'"
 
 
 AC_ARG_ENABLE([btrfs], AC_HELP_STRING([--disable-btrfs],[Disable Btrfs internal snapshots support]),
@@ -202,13 +202,6 @@ AC_OUTPUT(
 	server/Makefile
 	client/Makefile
 	client/utils/Makefile
-	client/Command/Makefile
-	client/Command/ListSnapshots/Makefile
-	client/Command/ListSnapshots/SnappersData/Makefile
-	client/Command/ListConfigs/Makefile
-	client/Command/ListConfigs/SnappersData/Makefile
-	client/Command/GetConfig/Makefile
-	client/Command/GetConfig/ConfigData/Makefile
 	scripts/Makefile
 	pam/Makefile
 	data/Makefile
@@ -229,4 +222,5 @@ AC_OUTPUT(
 	package/snapper.spec:snapper.spec.in
 	dists/debian/snapper-Debian.dsc.in:dists/debian/snapper-Debian.dsc.in.in
 	dists/debian/snapper-xUbuntu.dsc.in:dists/debian/snapper-xUbuntu.dsc.in.in
+	dists/debian/snapper-Raspbian.dsc.in:dists/debian/snapper-Raspbian.dsc.in.in
 )

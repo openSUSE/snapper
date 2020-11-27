@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2017-10-29 20:52+0000\n"
 "Last-Translator: strahil nikolov <hunter86_bg@yahoo.com>\n"
 "Language-Team: Bulgarian <https://l10n.opensuse.org/projects/snapper/master/bg/>\n"
@@ -16,16 +16,35 @@ msgstr ""
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a Покажи всички снапшоти от всички достъпни конфигурационни файлове."
 
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
+msgstr ""
+
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr ""
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr ""
 
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
+
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr ""
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
+msgstr ""
+
+msgid "\t--csvout\t\t\tSet CSV output format."
 msgstr ""
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
@@ -43,6 +62,9 @@ msgstr ""
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr ""
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr ""
 
@@ -58,10 +80,19 @@ msgstr ""
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr ""
 
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr ""
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgstr ""
+
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr ""
 
 msgid "\t--output, -o <file>\t\tSave status to file."
+msgstr ""
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
 msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
@@ -83,6 +114,9 @@ msgid "\t--read-write\t\t\tCreate read-write snapshot."
 msgstr ""
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
+msgstr ""
+
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
 msgstr ""
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
@@ -173,6 +207,9 @@ msgstr ""
 msgid "    Global options:"
 msgstr "Глобални настройки на модула:\n"
 
+msgid "    Options for 'cleanup' command:"
+msgstr ""
+
 msgid "    Options for 'create' command:"
 msgstr ""
 
@@ -185,7 +222,16 @@ msgstr ""
 msgid "    Options for 'diff' command:"
 msgstr ""
 
+msgid "    Options for 'get-config' command:"
+msgstr ""
+
 msgid "    Options for 'list' command:"
+msgstr ""
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
 msgstr ""
 
 msgid "    Options for 'modify' command:"
@@ -233,8 +279,11 @@ msgstr ""
 "%s - създаване на файлове с настройки за PAM\n"
 "\n"
 
+#, fuzzy
 msgid "  List configs:"
 msgstr ""
+"%s - създаване на файлове с настройки за PAM\n"
+"\n"
 
 msgid "  List snapshots:"
 msgstr ""
@@ -266,6 +315,20 @@ msgstr ""
 msgid "#"
 msgstr ""
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "Хостът %s не бе открит."
@@ -274,6 +337,16 @@ msgstr "Хостът %s не бе открит."
 #, fuzzy
 msgid "ACL error."
 msgstr "Входно/Изходна грешка"
+
+msgid "Active"
+msgstr ""
+
+msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+#, c-format
+msgid "Ambit is %s."
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -290,6 +363,12 @@ msgstr ""
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
+msgstr ""
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr ""
+
+msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
 msgid "Cleanup"
@@ -391,6 +470,13 @@ msgid "Configdata '%s' has empty key."
 msgstr ""
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr ""
 
@@ -410,7 +496,11 @@ msgstr ""
 msgid "Creating snapshot failed."
 msgstr ""
 
+#, fuzzy
 msgid "Date"
+msgstr "Имена на машините"
+
+msgid "Default"
 msgstr ""
 
 # %s is either BOOTP or DHCP
@@ -436,6 +526,14 @@ msgstr "Описание"
 msgid "Detecting filesystem type failed."
 msgstr ""
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+msgid "EB"
+msgstr ""
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr ""
@@ -456,6 +554,18 @@ msgstr "Входно/Изходна грешка"
 msgid "Failed to initialize filesystem handler."
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "Неуспешно зареждане на модула \"%s\"."
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "Неуспешно зареждане на модула \"%s\"."
+
 msgid "Failed to set locale. Fix your system."
 msgstr ""
 
@@ -475,6 +585,14 @@ msgstr "ВНИМАНИЕ: файлът „%s“ не е намерен. Проп
 #, fuzzy, c-format
 msgid "Free space error (%s)."
 msgstr "Входно/Изходна грешка"
+
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+msgid "GB"
+msgstr ""
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -498,12 +616,31 @@ msgstr ""
 msgid "Illegal snapshot."
 msgstr "Настройването чрез %s бе неуспешно."
 
+#, fuzzy, c-format
+msgid "Invalid ambit '%s'."
+msgstr "Невалиден вход."
+
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Невалиден вход."
+
 #, fuzzy
 msgid "Invalid configdata."
 msgstr "Невалиден вход."
 
+msgid "Invalid free-space value."
+msgstr ""
+
 #, fuzzy
 msgid "Invalid group."
+msgstr "Невалиден вход."
+
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "Невалиден вход."
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
 msgstr "Невалиден вход."
 
 #, c-format
@@ -516,9 +653,9 @@ msgstr ""
 msgid "Invalid subvolume."
 msgstr ""
 
-#, c-format
-msgid "Invalid table style %d."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid table style '%s'."
+msgstr "Невалиден вход."
 
 #, fuzzy
 msgid "Invalid user."
@@ -541,6 +678,14 @@ msgstr ""
 msgid "Listing configs failed (%s)."
 msgstr "Настройването чрез %s бе неуспешно."
 
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+msgid "MB"
+msgstr ""
+
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr ""
 
@@ -557,7 +702,7 @@ msgid "Missing argument for global option '%s'."
 msgstr ""
 
 #, fuzzy
-msgid "Missing command argument."
+msgid "Missing command option."
 msgstr "%s: Твърде много аргументи.\n"
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -584,12 +729,21 @@ msgstr ""
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr ""
 
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+msgid "PB"
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr ""
 
+#, fuzzy
 msgid "Post #"
-msgstr ""
+msgstr "Имена на машините"
 
 #, fuzzy
 msgid "Post Date"
@@ -598,8 +752,9 @@ msgstr "Имена на машините"
 msgid "Pre #"
 msgstr ""
 
+#, fuzzy
 msgid "Pre Date"
-msgstr ""
+msgstr "Имена на машините"
 
 # error box title
 #, fuzzy, c-format
@@ -625,7 +780,21 @@ msgstr "Хостът %s не бе открит."
 msgid "Subvolume"
 msgstr ""
 
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+msgid "TB"
+msgstr ""
+
+msgid "The ambit can be specified manually using the --ambit option."
+msgstr ""
+
 msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+msgid "This can happen if the system was not set up for rollback."
 msgstr ""
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
@@ -659,12 +828,15 @@ msgstr ""
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Неизвестен параметър за %s, пренебрегване на „%s“\n"
 
-msgid "Unknown type of snapshot."
-msgstr ""
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Неизвестна държава: "
 
-#, fuzzy
-msgid "Unknown type of snapshots."
-msgstr "Неизвестно мрежово състояние"
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
+#, c-format
+msgid "Use %1$s."
+msgstr ""
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -676,8 +848,9 @@ msgstr ""
 msgid "User"
 msgstr ""
 
+#, fuzzy
 msgid "Userdata"
-msgstr ""
+msgstr " "
 
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
@@ -714,19 +887,38 @@ msgstr "Неуспешно зареждане на модула \"%s\"."
 msgid "failed to modify %s"
 msgstr "Неуспешно зареждане на модула \"%s\"."
 
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+msgid "kB"
+msgstr ""
+
 #, c-format
 msgid "modifying %s"
+msgstr ""
+
+msgid "no"
 msgstr ""
 
 #, fuzzy
 msgid "nothing to do"
 msgstr "без действие"
 
-msgid "root argument can be used only together with no-dbus."
-msgstr ""
+#, fuzzy
+msgid "root argument can be used only together with no-dbus.\n"
+msgstr "За повече информация опитайте  `%s --help' или`%s --usage'.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr ""
+
+msgid "yes"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "Неизвестно мрежово състояние"
 
 #, fuzzy
 #~ msgid "Quota failure (%s)."

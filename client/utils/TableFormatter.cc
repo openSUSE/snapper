@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019] SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -19,73 +19,43 @@
  * find current contact information at www.novell.com.
  */
 
-#include <sstream>
 
 #include "client/utils/TableFormatter.h"
 
-using namespace std;
 
 namespace snapper
 {
-    namespace cli
+
+    using namespace std;
+
+
+    const TableStyle TableFormatter::default_style = Ascii;
+
+
+    ostream&
+    operator<<(ostream& stream, const TableFormatter& table_formatter)
     {
+	Table table;
+	table.set_style(table_formatter.style);
 
-	namespace
+	TableHeader table_header;
+
+	for (const pair<string, TableAlign>& column : table_formatter._header)
+	    table_header.add(column.first, column.second);
+
+	table.setHeader(table_header);
+
+	for (const vector<string>& row : table_formatter._rows)
 	{
-	    const TableLineStyle DEFAULT_STYLE = Table::defaultStyle;
+	    TableRow table_row;
+
+	    for (const string& value : row)
+		table_row.add(value);
+
+	    table.add(table_row);
 	}
 
-
-	TableLineStyle TableFormatter::default_style()
-	{
-	    return DEFAULT_STYLE;
-	}
-
-
-	TableFormatter::TableFormatter(
-	    vector<pair<string, TableAlign>> columns,
-	    vector<vector<string>> rows) :
-	    _columns(columns), _rows(rows), _style(default_style())
-	{}
-
-
-	TableFormatter::TableFormatter(
-	    vector<pair<string, TableAlign>> columns,
-	    vector<vector<string>> rows,
-	    TableLineStyle style) :
-	    _columns(columns), _rows(rows), _style(style)
-	{}
-
-
-	string TableFormatter::output() const
-	{
-	    Table::defaultStyle = _style;
-
-	    Table table;
-
-	    TableHeader header;
-
-	    for (auto column : _columns)
-		header.add(column.first, column.second);
-
-	     table.setHeader(header);
-
-	    for (auto row : _rows)
-	    {
-		TableRow table_row;
-
-		for (auto value : row)
-		    table_row.add(value);
-
-		table.add(table_row);
-	    }
-
-	    ostringstream stream;
-
-	    stream << table;
-
-	    return stream.str();
-	}
-
+	return stream << table;
     }
+
 }

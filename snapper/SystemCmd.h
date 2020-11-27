@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2014] Novell, Inc.
- * Copyright (c) 2018 SUSE LLC
+ * Copyright (c) [2018-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -59,8 +59,8 @@ namespace snapper
 
     public:
 
-	const vector<string>& stdout() const { return Lines_aC[IDX_STDOUT]; }
-	const vector<string>& stderr() const { return Lines_aC[IDX_STDERR]; }
+	const vector<string>& get_stdout() const { return Lines_aC[IDX_STDOUT]; }
+	const vector<string>& get_stderr() const { return Lines_aC[IDX_STDERR]; }
 
 	string cmd() const { return lastCmd; }
 	int retcode() const { return Ret_i; }

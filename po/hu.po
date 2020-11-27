@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Robert Taisz <robert.taisz@emerald.hu>\n"
 "Language-Team: Hungarian <https://l10n.opensuse.org/projects/snapper/master/hu/>\n"
@@ -18,6 +18,9 @@ msgstr ""
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tA pillanatképek listázása minden elérhető konfigurációból."
 
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
+msgstr ""
+
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algoritmus>\tPillanatkép tisztítási algoritmus."
 
@@ -25,11 +28,27 @@ msgstr "\t--cleanup-algorithm, -c <algoritmus>\tPillanatkép tisztítási algori
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algoritmus>\tKarbantartási algoritmus a pillanatfelvételekhez."
 
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
+
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <parancs>\t\tFuttassa a parancsot, és készítsen pillanatképet előtte, majd utána."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <név>\t\tFelhasznált beállítás nevének megadása."
+
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr ""
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <leírás>\tPillanatkép leírása."
@@ -47,6 +66,9 @@ msgstr "\t--disable-used-space\t\tFelhasznált terület megjelenítésének leti
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <beállítások>\tA diff parancsnak átadott további beállítások."
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr ""
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr ""
 
@@ -63,12 +85,21 @@ msgstr "\t--input, -i <fájl>\t\tA fájlok beolvasása a diff számára egy fáj
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\tDátumok és időértékek megjelenítése ISO formátum szerint."
 
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr ""
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgstr ""
+
 # SLE12
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tDBus nélküli működés."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <fájl>\t\tÁllapot mentése fájlba."
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr ""
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <szám>\t\tMegelőző pillanatfelvételek megfelelő száma."
@@ -91,6 +122,9 @@ msgstr ""
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <elérési út>\t\tMűvelet elvégzése a cél gyökér elérési úton (csak DBus nélkül működik)."
+
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
+msgstr ""
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tSzinkronizálás a törlés után."
@@ -186,6 +220,10 @@ msgstr "\tsnapper xadiff <szám1>..<szám2> [fájlok]"
 msgid "    Global options:"
 msgstr "    Globális kapcsolói:"
 
+#, fuzzy
+msgid "    Options for 'cleanup' command:"
+msgstr "    'create' parancs kapcsolói:"
+
 msgid "    Options for 'create' command:"
 msgstr "    'create' parancs kapcsolói:"
 
@@ -198,8 +236,18 @@ msgstr "    A 'delete' parancs beállításai:"
 msgid "    Options for 'diff' command:"
 msgstr "    'diff' parancs kapcsolói:"
 
+#, fuzzy
+msgid "    Options for 'get-config' command:"
+msgstr "    'create-config' parancs kapcsolói:"
+
 msgid "    Options for 'list' command:"
 msgstr "    'list' parancs kapcsolói:"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
 
 msgid "    Options for 'modify' command:"
 msgstr "    'modify' parancs kapcsolói:"
@@ -271,6 +319,20 @@ msgstr "  Változások visszavonása:"
 msgid "#"
 msgstr "#"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr ""
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr ""
+
 # SLE12
 #, c-format
 msgid "(Snapshot %d.)"
@@ -279,6 +341,16 @@ msgstr "(%d. pillanatkép)"
 # SLE12
 msgid "ACL error."
 msgstr "ACL-hiba."
+
+msgid "Active"
+msgstr ""
+
+msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+#, c-format
+msgid "Ambit is %s."
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -295,6 +367,12 @@ msgstr "A(z) %d pillanatkép nem törölhető, mivel ez az aktuálisan csatlakoz
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "A(z) %d pillanatkép nem törölhető, mivel ez a következő csatlakoztatandó pillanatkép."
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr ""
+
+msgid "Cannot do rollback since default subvolume is unknown."
+msgstr ""
 
 msgid "Cleanup"
 msgstr "Tisztítás"
@@ -400,6 +478,13 @@ msgid "Configdata '%s' has empty key."
 msgstr "A(z) '%s' konfigurációadathoz üres kulcs tartozik."
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr ""
+
+msgid "Could not make enough free space available."
+msgstr ""
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "A beállítás létrehozása sikertelen (%s)."
 
@@ -426,6 +511,9 @@ msgstr "A pillanatkép létrehozása sikertelen."
 msgid "Date"
 msgstr "Dátum"
 
+msgid "Default"
+msgstr ""
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "A beállítás törlése sikertelen (%s)."
@@ -444,6 +532,15 @@ msgstr "Leírás"
 
 msgid "Detecting filesystem type failed."
 msgstr "A fájlrendszer típusának felismerése sikertelen."
+
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr ""
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+#, fuzzy
+msgid "EB"
+msgstr "EiB"
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
@@ -465,6 +562,18 @@ msgstr "Hiba (%s)."
 msgid "Failed to initialize filesystem handler."
 msgstr "Nem sikerült inicializálni a fájlrendszer kezelőjét."
 
+#, fuzzy, c-format
+msgid "Failed to parse '%s'."
+msgstr "a(z) %s létrehozása sikertelen"
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr ""
+
+#, fuzzy
+msgid "Failed to query free space."
+msgstr "a(z) %s létrehozása sikertelen"
+
 msgid "Failed to set locale. Fix your system."
 msgstr "Nem sikerült a területi beállítás megadása. Javítsa ki a rendszert."
 
@@ -484,6 +593,15 @@ msgstr "A(z) '%s' fájl nem található."
 msgid "Free space error (%s)."
 msgstr "Szabad terület hibája (%s)."
 
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr ""
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+#, fuzzy
+msgid "GB"
+msgstr "GiB"
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
@@ -502,13 +620,33 @@ msgstr "Azonos pillanatképek."
 msgid "Illegal snapshot."
 msgstr "Érvénytelen pillanatkép."
 
+#, fuzzy, c-format
+msgid "Invalid ambit '%s'."
+msgstr "Érvénytelen pillanatkép: '%s'."
+
+#, fuzzy, c-format
+msgid "Invalid column '%s'."
+msgstr "Érvénytelen pillanatkép: '%s'."
+
 # SLE12
 msgid "Invalid configdata."
 msgstr "Érvénytelen beállításadatok."
 
+#, fuzzy
+msgid "Invalid free-space value."
+msgstr "Érvénytelen alkötetek."
+
 # SLE12
 msgid "Invalid group."
 msgstr "Érvénytelen csoport."
+
+#, fuzzy, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "Érvénytelen táblázatstílus: %d."
+
+#, fuzzy, c-format
+msgid "Invalid path '%s'."
+msgstr "Érvénytelen pillanatkép: '%s'."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -520,8 +658,8 @@ msgstr "Érvénytelen pillanatképek."
 msgid "Invalid subvolume."
 msgstr "Érvénytelen alkötetek."
 
-#, c-format
-msgid "Invalid table style %d."
+#, fuzzy, c-format
+msgid "Invalid table style '%s'."
 msgstr "Érvénytelen táblázatstílus: %d."
 
 # SLE12
@@ -543,6 +681,15 @@ msgstr "KiB"
 msgid "Listing configs failed (%s)."
 msgstr "Beállítások listázása sikertelen (%s)."
 
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr ""
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+#, fuzzy
+msgid "MB"
+msgstr "MiB"
+
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Lehet, hogy elfeledkezett a pillanatképek száma közötti '..' elválasztóról."
 
@@ -558,7 +705,8 @@ msgstr "A(z) '%s' parancs kapcsolójához hiányzik egy paraméter."
 msgid "Missing argument for global option '%s'."
 msgstr "A(z) '%s' globális kapcsolóhoz hiányzik egy paraméter."
 
-msgid "Missing command argument."
+#, fuzzy
+msgid "Missing command option."
 msgstr "Hiányzó parancsparaméter."
 
 msgid "Missing delimiter '..' between snapshot numbers."
@@ -582,6 +730,15 @@ msgstr ""
 
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr ""
+
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr ""
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+#, fuzzy
+msgid "PB"
+msgstr "PiB"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -621,8 +778,23 @@ msgstr "A pillanatkép használatban van."
 msgid "Subvolume"
 msgstr "Alkötet"
 
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr ""
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+#, fuzzy
+msgid "TB"
+msgstr "TiB"
+
+msgid "The ambit can be specified manually using the --ambit option."
+msgstr ""
+
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "A 'root' konfiguráció nem létezik. A snapper valószínűleg nincs konfigurálva."
+
+msgid "This can happen if the system was not set up for rollback."
+msgstr ""
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
@@ -653,11 +825,15 @@ msgstr "Ismeretlen globális kapcsoló: '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Ismeretlen '%s' kapcsoló a(z) '%s' parancshoz."
 
-msgid "Unknown type of snapshot."
-msgstr "Ismeretlen típusú pillanatkép."
+#, fuzzy, c-format
+msgid "Unknown type '%s'."
+msgstr "Ismeretlen parancs: '%s'."
 
-msgid "Unknown type of snapshots."
-msgstr "Ismeretlen típusú pillanatképek."
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
+#, c-format
+msgid "Use %1$s."
+msgstr ""
 
 # SLE12
 #, c-format
@@ -710,18 +886,40 @@ msgstr "a(z) %s törlése sikertelen"
 msgid "failed to modify %s"
 msgstr "a(z) %s módosítása sikertelen"
 
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr ""
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+#, fuzzy
+msgid "kB"
+msgstr "bájt"
+
 #, c-format
 msgid "modifying %s"
 msgstr "%s módosítása"
 
+msgid "no"
+msgstr ""
+
 msgid "nothing to do"
 msgstr "nincs teendő"
 
-msgid "root argument can be used only together with no-dbus."
+#, fuzzy
+msgid "root argument can be used only together with no-dbus.\n"
 msgstr "A root argumentum csak a no-dbus beállítással együtt használható."
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "használat: snapper [--global-options] <parancs> [--command-options] [command-arguments]"
+
+msgid "yes"
+msgstr ""
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Ismeretlen típusú pillanatkép."
+
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "Ismeretlen típusú pillanatképek."
 
 # SLE12
 #~ msgid "Quota failure (%s)."

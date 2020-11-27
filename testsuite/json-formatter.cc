@@ -3,124 +3,57 @@
 #define BOOST_TEST_MODULE snapper
 
 #include <boost/test/unit_test.hpp>
-
-#include <vector>
-#include <string>
+#include <boost/algorithm/string.hpp>
 
 #include "../client/utils/JsonFormatter.h"
 
+
 using namespace std;
+using namespace snapper;
 
-BOOST_AUTO_TEST_CASE(test1_escape_values)
+
+string
+str(const JsonFormatter& formatter)
 {
-    snapper::cli::JsonFormatter::Data data = {
-	{ "key1", "value1" },
-	{ "key2", "value\"2" },
-	{ "key3", "value\\3" },
-	{ "key3", "value\b4" },
-	{ "key3", "value\f5" },
-	{ "key3", "value\n6" },
-	{ "key3", "value\r7" },
-	{ "key3", "value\t8" },
-	{ "key4", "\"value9\"" }
-    };
+    ostringstream stream;
+    stream << formatter;
+    return stream.str();
+}
+
+
+string
+trim(const string& s)
+{
+    list<string> tmp1;
+    boost::split(tmp1, s, boost::is_any_of("\n"), boost::token_compress_on);
+
+    for (string& tmp2 : tmp1)
+	boost::trim(tmp2);
+
+    return boost::algorithm::join(tmp1, "\n");
+}
+
+
+BOOST_AUTO_TEST_CASE(test1)
+{
+    JsonFormatter formatter;
+
+    json_object_object_add(formatter.root(), "key1", json_object_new_string("hello"));
+    json_object_object_add(formatter.root(), "key2", json_object_new_int(1000));
+    json_object_object_add(formatter.root(), "key3", json_object_new_boolean(true));
+    json_object_object_add(formatter.root(), "key4", nullptr);
 
     string expected_result =
 	"{\n"
-	"  \"key1\": \"value1\",\n"
-	"  \"key2\": \"value\\\"2\",\n"
-	"  \"key3\": \"value\\\\3\",\n"
-	"  \"key3\": \"value\\b4\",\n"
-	"  \"key3\": \"value\\f5\",\n"
-	"  \"key3\": \"value\\n6\",\n"
-	"  \"key3\": \"value\\r7\",\n"
-	"  \"key3\": \"value\\t8\",\n"
-	"  \"key4\": \"\\\"value9\\\"\"\n"
-	"}";
+	"  \"key1\": \"hello\",\n"
+	"  \"key2\": 1000,\n"
+	"  \"key3\": true,\n"
+	"  \"key4\": null\n"
+	"}\n";
 
-    snapper::cli::JsonFormatter formatter(data);
-
-    BOOST_CHECK_EQUAL(formatter.output(), expected_result);
-}
-
-
-BOOST_AUTO_TEST_CASE(test2_skip_format)
-{
-    snapper::cli::JsonFormatter::Data data = {
-	{ "key1", "true" },
-	{ "key2", "value2" }
-    };
-
-    string expected_result =
-	"{\n"
-	"  \"key1\": true,\n"
-	"  \"key2\": \"value2\"\n"
-	"}";
-
-    snapper::cli::JsonFormatter formatter(data);
-
-    formatter.skip_format_values({ "key1" });
-
-    BOOST_CHECK_EQUAL(formatter.output(), expected_result);
-}
-
-
-BOOST_AUTO_TEST_CASE(test3_indent)
-{
-    // Using an ident level
-
-    snapper::cli::JsonFormatter::Data data = {
-	{ "key1", "value1" },
-	{ "key2", "value2" }
-    };
-
-    string expected_result =
-	"  {\n"
-	"    \"key1\": \"value1\",\n"
-	"    \"key2\": \"value2\"\n"
-	"  }";
-
-    snapper::cli::JsonFormatter formatter(data);
-
-    BOOST_CHECK_EQUAL(formatter.output(1), expected_result);
-}
-
-
-BOOST_AUTO_TEST_CASE(test4_inline)
-{
-    // Using inline
-
-    snapper::cli::JsonFormatter::Data data = {
-	{ "key1", "value1" },
-	{ "key2", "value2" }
-    };
-
-    string expected_result =
-	"{\n"
-	"    \"key1\": \"value1\",\n"
-	"    \"key2\": \"value2\"\n"
-	"  }";
-
-    snapper::cli::JsonFormatter formatter(data);
-
-    formatter.set_inline(true);
-
-    BOOST_CHECK_EQUAL(formatter.output(1), expected_result);
-}
-
-
-BOOST_AUTO_TEST_CASE(test5_list)
-{
-    vector<string> data = { "value1", "value2", "value3" };
-
-    snapper::cli::JsonFormatter::List formatter(data);
-
-    string result =
-	"[\n"
-	"value1,\n"
-	"value2,\n"
-	"value3\n"
-	"]";
-
-    BOOST_CHECK_EQUAL(formatter.output(), result);
+#if JSON_C_VERSION_NUM >= ((0 << 16) | (14 << 8) | 0)
+    BOOST_CHECK_EQUAL(str(formatter), expected_result);
+#else
+    BOOST_CHECK_EQUAL(trim(str(formatter)), trim(expected_result));
+#endif
 }

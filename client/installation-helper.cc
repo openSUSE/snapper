@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 Novell, Inc.
- * Copyright (c) 2018 SUSE LLC
+ * Copyright (c) [2018-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -73,9 +73,9 @@ step1(const string& device, const string& description, const string& cleanup,
 
     try
     {
-	SysconfigFile config(CONFIGTEMPLATEDIR "/" "default");
+	SysconfigFile config(CONFIG_TEMPLATE_DIR "/" "default");
 
-	config.setName(tmp_mount.getFullname() + CONFIGSDIR "/" "root");
+	config.setName(tmp_mount.getFullname() + CONFIGS_DIR "/" "root");
 
 	config.setValue(KEY_SUBVOLUME, "/");
 	config.setValue(KEY_FSTYPE, "btrfs");
@@ -195,7 +195,7 @@ step4()
 
     try
     {
-	SysconfigFile sysconfig(SYSCONFIGFILE);
+	SysconfigFile sysconfig(SYSCONFIG_FILE);
 	sysconfig.setValue("SNAPPER_CONFIGS", { "root" });
     }
     catch (const FileNotFoundException& e)
@@ -278,19 +278,6 @@ main(int argc, char** argv)
     setLogDo(&log_do);
     setLogQuery(&log_query);
 
-    const struct option options[] = {
-	{ "step",			required_argument,	0,	0 },
-	{ "device",			required_argument,	0,	0 },
-	{ "root-prefix",		required_argument,	0,	0 },
-	{ "default-subvolume-name",	required_argument,	0,	0 },
-	{ "snapshot-type",		required_argument,	0,	0 },
-	{ "pre-num",     		required_argument,	0,	0 },
-	{ "description",		required_argument,	0,	0 },
-	{ "cleanup",			required_argument,	0,	0 },
-	{ "userdata",			required_argument,	0,	0 },
-	{ 0, 0, 0, 0 }
-    };
-
     string step;
     string device;
     string root_prefix = "/";
@@ -301,40 +288,59 @@ main(int argc, char** argv)
     string cleanup;
     map<string, string> userdata;
 
-    GetOpts getopts;
+    try
+    {
+	const vector<Option> options = {
+	    Option("step",			required_argument),
+	    Option("device",			required_argument),
+	    Option("root-prefix",		required_argument),
+	    Option("default-subvolume-name",	required_argument),
+	    Option("snapshot-type",		required_argument),
+	    Option("pre-num",			required_argument),
+	    Option("description",		required_argument),
+	    Option("cleanup",			required_argument),
+	    Option("userdata",			required_argument)
+	};
 
-    getopts.init(argc, argv);
+	GetOpts get_opts(argc, argv);
 
-    GetOpts::parsed_opts opts = getopts.parse(options);
+	ParsedOpts opts = get_opts.parse(options);
 
-    GetOpts::parsed_opts::const_iterator opt;
+	ParsedOpts::const_iterator opt;
 
-    if ((opt = opts.find("step")) != opts.end())
-	step = opt->second;
+	if ((opt = opts.find("step")) != opts.end())
+	    step = opt->second;
 
-    if ((opt = opts.find("device")) != opts.end())
-	device = opt->second;
+	if ((opt = opts.find("device")) != opts.end())
+	    device = opt->second;
 
-    if ((opt = opts.find("root-prefix")) != opts.end())
-	root_prefix = opt->second;
+	if ((opt = opts.find("root-prefix")) != opts.end())
+	    root_prefix = opt->second;
 
-    if ((opt = opts.find("default-subvolume-name")) != opts.end())
-	default_subvolume_name = opt->second;
+	if ((opt = opts.find("default-subvolume-name")) != opts.end())
+	    default_subvolume_name = opt->second;
 
-    if ((opt = opts.find("snapshot-type")) != opts.end())
-	snapshot_type = opt->second;
+	if ((opt = opts.find("snapshot-type")) != opts.end())
+	    snapshot_type = opt->second;
 
-    if ((opt = opts.find("pre-num")) != opts.end())
-	pre_num = read_num(opt->second);
+	if ((opt = opts.find("pre-num")) != opts.end())
+	    pre_num = read_num(opt->second);
 
-    if ((opt = opts.find("description")) != opts.end())
-	description = opt->second;
+	if ((opt = opts.find("description")) != opts.end())
+	    description = opt->second;
 
-    if ((opt = opts.find("cleanup")) != opts.end())
-	cleanup = opt->second;
+	if ((opt = opts.find("cleanup")) != opts.end())
+	    cleanup = opt->second;
 
-    if ((opt = opts.find("userdata")) != opts.end())
-	userdata = read_userdata(opt->second);
+	if ((opt = opts.find("userdata")) != opts.end())
+	    userdata = read_userdata(opt->second);
+    }
+    catch (const OptionsException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << e.what() << endl;
+	return EXIT_FAILURE;
+    }
 
     if (step == "1")
 	step1(device, description, cleanup, userdata);

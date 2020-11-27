@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 SUSE LLC
+ * Copyright (c) [2019-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -22,9 +22,9 @@
 #include <iostream>
 #include <boost/algorithm/string/trim.hpp>
 #include <string>
+#include <regex>
 using namespace std;
 
-#include "snapper/Regex.h"
 #include "zypp_plugin.h"
 
 int ZyppPlugin::main() {
@@ -70,13 +70,15 @@ ZyppPlugin::Message ZyppPlugin::read_message(istream& is) {
 	    if (line.empty())
 		continue;
 
-	    static const snapper::Regex rx_word("^[A-Za-z0-9_]+$");
-	    if (rx_word.match(line)) {
+	    static const regex rx_word("[A-Za-z0-9_]+", regex::extended);
+	    if (regex_match(line, rx_word))
+	    {
 		msg = Message();
 		msg.command = line;
 		state = State::Headers;
 	    }
-	    else {
+	    else
+	    {
 		throw runtime_error("Plugin protocol error: expected a command. Got '" + line + "'");
 	    }
 	}
@@ -87,14 +89,19 @@ ZyppPlugin::Message ZyppPlugin::read_message(istream& is) {
 
 		return msg;
 	    }
-	    else {
-		static const snapper::Regex rx_header("^([A-Za-z0-9_]+):[ \t]*(.+)$");
-		if (rx_header.match(line)) {
-		    string key = rx_header.cap(1);
-		    string value = rx_header.cap(2);
+	    else
+	    {
+		static const regex rx_header("([A-Za-z0-9_]+):[ \t]*(.+)", regex::extended);
+		smatch match;
+
+		if (regex_match(line, match, rx_header))
+		{
+		    string key = match[1];
+		    string value = match[2];
 		    msg.headers[key] = value;
 		}
-		else {
+		else
+		{
 		    throw runtime_error("Plugin protocol error: expected a header or new line. Got '" + line + "'");
 		}
 	    }

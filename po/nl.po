@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-15 11:05+0200\n"
-"PO-Revision-Date: 2019-10-15 16:53+0000\n"
+"POT-Creation-Date: 2020-09-23 18:35+0200\n"
+"PO-Revision-Date: 2020-09-24 00:48+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
 "Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
 "\n"
@@ -24,17 +24,44 @@ msgstr ""
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tMomentopnamen weergeven van alle beschikbare configuraties."
 
+msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
+msgstr "\t--ambit, -a ambit\t\tIn de gespecificeerde ambit werken."
+
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\tOpschoonalgoritme voor momentopname."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tOpschoonalgoritme voor momentopnamen."
 
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+msgstr ""
+"\t--columns <columns>\t\tTe tonen kolommen gescheiden door een komma.\n"
+"\t\t\t\t\tMogelijke kolommen: config, subvolume, number, default, active,\n"
+"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+"\t\t\t\t\tpre-number, post-number, post-date."
+
+msgid ""
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: key, value.\n"
+"\t\t\t\t\tColumns are not selected when JSON format is used."
+msgstr ""
+"\t--columns <columns>\t\tTe tonen kolommen gescheiden door een komma.\n"
+"\t\t\t\t\tMogelijke kolommen: key, value.\n"
+"\t\t\t\t\tKolommen worden niet geselecteerd wanneer JSON-formaat wordt "
+"gebruikt."
+
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <command>\t\tVoer opdracht uit en maak pre- en post-momentopnamen."
 
 msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <name>\t\tStel naam van te gebruiken configuratie in."
+
+msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr "\t--csvout\t\t\tCSV uitvoerformaat instellen."
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <description>\tBeschrijving van momentopname."
@@ -51,9 +78,11 @@ msgstr "\t--disable-used-space\t\tGebruikte ruimte tonen uitschakelen."
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tExtra opties doorgeven aan de opdracht diff."
 
+msgid "\t--free-space <space>\t\tTry to make space available."
+msgstr "\t--free-space <space>\t\tRuimte proberen beschikbaar te maken."
+
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
-msgstr ""
-"\t--from\t\t\t\tEen momentopname maken van de gespecificeerde momentopname."
+msgstr "\t--from\t\t\t\tEen momentopname maken van de gespecificeerde momentopname."
 
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <fstype>\t\tStel handmatig het type bestandssysteem in."
@@ -67,11 +96,20 @@ msgstr "\t--input, -i <file>\t\tBestanden naar diff lezen vanuit bestand."
 msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\tDatums en tijd tonen in ISO-formaat."
 
+msgid "\t--jsonout\t\t\tSet JSON output format."
+msgstr "\t--jsonout\t\t\tJSON uitvoerformaat instellen."
+
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgstr "\t--machine-readable <format>\tEen machine-leesbaar uitvoerformaat instellen (csv, json)."
+
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tWerken zonder D-Bus."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <file>\t\tStatus opslaan in bestand."
+
+msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
+msgstr "\t--path <path>\t\t\tAlle configuraties die pad beïnvloeden opschonen."
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <number>\t\tNummer van overeenkomende eerdere momentopname."
@@ -93,6 +131,9 @@ msgstr "\t--read-write\t\t\tEen lezen-schrijven momentopname maken."
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <path>\t\tBewerking op targetroot (werkt alleen zonder D-Bus)."
+
+msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
+msgstr "\t--separator <separator>\t\tScheidingsteken voor CSV uitvoerformaat."
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tSynchroniseren na verwijdering."
@@ -181,6 +222,9 @@ msgstr "\tsnapper xadiff <number1>..<number2> [bestanden]"
 msgid "    Global options:"
 msgstr "    Algemene opties:"
 
+msgid "    Options for 'cleanup' command:"
+msgstr "    Opties voor opdracht 'cleanup':"
+
 msgid "    Options for 'create' command:"
 msgstr "    Opties voor opdracht 'create':"
 
@@ -193,8 +237,20 @@ msgstr "    Opties voor 'verwijderen'-opdracht:"
 msgid "    Options for 'diff' command:"
 msgstr "    Opties voor opdracht 'diff':"
 
+msgid "    Options for 'get-config' command:"
+msgstr "    Opties voor opdracht 'get-config':"
+
 msgid "    Options for 'list' command:"
 msgstr "    Opties voor opdracht 'list':"
+
+msgid ""
+"    Options for 'list-configs' command:\n"
+"\t--columns <columns>\t\tColumns to show separated by comma.\n"
+"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgstr ""
+"    Opties voor opdracht 'list-configs':\n"
+"\t--columns <columns>\t\tTe tonen kolommen gescheiden door een komma.\n"
+"\t\t\t\t\tMogelijke kolommen: config, subvolume.\n"
 
 msgid "    Options for 'modify' command:"
 msgstr "    Opties voor opdracht 'modify':"
@@ -262,6 +318,20 @@ msgstr "  Wijzigingen ongedaan maken:"
 msgid "#"
 msgstr "#"
 
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s or %2$s"
+msgstr "%1$s of %2$s"
+
+#. TRANSLATORS: used to construct list of values
+#. %1$s is replaced by first value
+#. %2$s is replaced by second value
+#, c-format
+msgid "%1$s, %2$s"
+msgstr "%1$s, %2$s"
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Momentopname %d.)"
@@ -269,6 +339,16 @@ msgstr "(Momentopname %d.)"
 # error box title
 msgid "ACL error."
 msgstr "ACL-fout."
+
+msgid "Active"
+msgstr "Actief"
+
+msgid "Active snapshot is already default snapshot."
+msgstr "Actieve momentopname is al standaard momentopname."
+
+#, c-format
+msgid "Ambit is %s."
+msgstr "Ambit is %s."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -285,6 +365,12 @@ msgstr "Kan momentopname %d niet verwijderen omdat deze de huidige aangekoppelde
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Kan momentopname %d niet verwijderen omdat deze de volgende aan te koppelen momentopname is."
+
+msgid "Cannot detect ambit since default subvolume is unknown."
+msgstr "Kan ambit niet detecteren omdat standaard subvolume onbekend is."
+
+msgid "Cannot do rollback since default subvolume is unknown."
+msgstr "Kan geen rollback doen omdat standaard subvolume onbekend is."
 
 msgid "Cleanup"
 msgstr "Opschonen"
@@ -382,6 +468,13 @@ msgid "Configdata '%s' has empty key."
 msgstr "Configdata '%s' heeft lege key."
 
 #, c-format
+msgid "Could not make enough free space available for path '%s'."
+msgstr "Kon niet genoeg vrije ruimte beschikbaar maken voor pad '%s'."
+
+msgid "Could not make enough free space available."
+msgstr "Kon niet genoeg vrije ruimte beschikbaar maken."
+
+#, c-format
 msgid "Creating config failed (%s)."
 msgstr "Configuratie aanmaken is mislukt (%s)."
 
@@ -404,6 +497,9 @@ msgstr "Maken van momentopname is mislukt."
 msgid "Date"
 msgstr "Datum"
 
+msgid "Default"
+msgstr "Standaard"
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Verwijderen van configuratie is mislukt (%s)."
@@ -423,6 +519,14 @@ msgstr "Beschrijving"
 msgid "Detecting filesystem type failed."
 msgstr "Type bestandssysteem detecteren is mislukt."
 
+#. TRANSLATORS: symbol for "exa" (best keep untranslated)
+msgid "E"
+msgstr "E"
+
+#. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
+msgid "EB"
+msgstr "EB"
+
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
 msgstr "EiB"
@@ -439,6 +543,17 @@ msgstr "Fout (%s)."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Behandelaar van bestandssysteem initialiseren is mislukt."
+
+#, c-format
+msgid "Failed to parse '%s'."
+msgstr "'%s' ontleden is mislukt."
+
+#, c-format
+msgid "Failed to query free space for path '%s'."
+msgstr "Opvragen van vrije ruimte voor pad '%s' is mislukt."
+
+msgid "Failed to query free space."
+msgstr "Opvragen van vrije ruimte is mislukt."
 
 msgid "Failed to set locale. Fix your system."
 msgstr "Locale instellen is mislukt. Repareer uw systeem."
@@ -458,6 +573,14 @@ msgstr "Bestand '%s' niet gevonden."
 msgid "Free space error (%s)."
 msgstr "Fout in vrije ruimte (%s)."
 
+#. TRANSLATORS: symbol for "giga" (best keep untranslated)
+msgid "G"
+msgstr "G"
+
+#. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
+msgid "GB"
+msgstr "GB"
+
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
@@ -476,11 +599,30 @@ msgstr "Identieke momentopnamen."
 msgid "Illegal snapshot."
 msgstr "Ongeldige momentopname."
 
+#, c-format
+msgid "Invalid ambit '%s'."
+msgstr "Ongeldige ambit '%s'."
+
+#, c-format
+msgid "Invalid column '%s'."
+msgstr "Ongeldige kolom '%s'."
+
 msgid "Invalid configdata."
 msgstr "Ongeldige configuratiegegevens."
 
+msgid "Invalid free-space value."
+msgstr "Ongeldige waarde voor vrije ruimte."
+
 msgid "Invalid group."
 msgstr "Ongeldig groep."
+
+#, c-format
+msgid "Invalid machine readable format '%s'."
+msgstr "Ongeldig machine-leesbaar formaat '%s'."
+
+#, c-format
+msgid "Invalid path '%s'."
+msgstr "Ongeldige pad '%s'."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -493,8 +635,8 @@ msgid "Invalid subvolume."
 msgstr "Ongeldig subvolume."
 
 #, c-format
-msgid "Invalid table style %d."
-msgstr "Ongeldige tabelstijl %d."
+msgid "Invalid table style '%s'."
+msgstr "Ongeldige tabelstijl '%s'."
 
 msgid "Invalid user."
 msgstr "Ongeldige gebruiker."
@@ -513,6 +655,14 @@ msgstr "KiB"
 msgid "Listing configs failed (%s)."
 msgstr "Lijst maken van configuraties is mislukt (%s)."
 
+#. TRANSLATORS: symbol for "mega" (best keep untranslated)
+msgid "M"
+msgstr "M"
+
+#. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
+msgid "MB"
+msgstr "MB"
+
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Misschien bent u het scheidingsteken '..' tussen de snapshotnummer vergeten."
 
@@ -528,8 +678,8 @@ msgstr "Argument ontbreekt voor opdrachtoptie '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Argument ontbreekt voor globale optie '%s'."
 
-msgid "Missing command argument."
-msgstr "Argument van opdracht ontbreekt."
+msgid "Missing command option."
+msgstr "Optie van opdracht ontbreekt."
 
 msgid "Missing delimiter '..' between snapshot numbers."
 msgstr "Scheidingsteken '..' ontbreekt tussen snapshotnummers."
@@ -548,14 +698,18 @@ msgid "Opening file '%s' failed."
 msgstr "Openen van bestand '%s' is mislukt."
 
 msgid "Option --from only supported for snapshots of type single."
-msgstr ""
-"Optie --from alleen ondersteund voor momentopnamen van het type "
-"single(enkelvoudig)."
+msgstr "Optie --from alleen ondersteund voor momentopnamen van het type single(enkelvoudig)."
 
 msgid "Option --read-write only supported for snapshots of type single."
-msgstr ""
-"Optie --read-write alleen ondersteund voor momentopnamen van het type "
-"single(enkelvoudig)."
+msgstr "Optie --read-write alleen ondersteund voor momentopnamen van het type single(enkelvoudig)."
+
+#. TRANSLATORS: symbol for "peta" (best keep untranslated)
+msgid "P"
+msgstr "P"
+
+#. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
+msgid "PB"
+msgstr "PB"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -594,8 +748,22 @@ msgstr "Momentopname is in gebruik."
 msgid "Subvolume"
 msgstr "Subvolume"
 
+#. TRANSLATORS: symbol for "tera" (best keep untranslated)
+msgid "T"
+msgstr "T"
+
+#. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
+msgid "TB"
+msgstr "TB"
+
+msgid "The ambit can be specified manually using the --ambit option."
+msgstr "De ambit kan handmatig worden gespecificeerd met de optie --ambit."
+
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "De 'root' van de configuratie bestaat niet. Waarschijnlijk is snapper niet geconfigureerd."
+
+msgid "This can happen if the system was not set up for rollback."
+msgstr "Dit kan geburen als het systeem niet is opgezet voor rollback."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
@@ -626,11 +794,15 @@ msgstr "Onbekende globale optie '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Onbekende optie '%s' voor opdracht '%s'."
 
-msgid "Unknown type of snapshot."
-msgstr "Onbekend type momentopname."
+#, c-format
+msgid "Unknown type '%s'."
+msgstr "Onbekend type '%s'."
 
-msgid "Unknown type of snapshots."
-msgstr "Onbekend type momentopnamen."
+#. TRANSLATORS: a list of possible values
+#. %1$s is replaced by list of possible values
+#, c-format
+msgid "Use %1$s."
+msgstr "%1$s gebruiken."
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -680,18 +852,46 @@ msgstr "verwijderen van %s is mislukt"
 msgid "failed to modify %s"
 msgstr "wijzigen van %s is mislukt"
 
+#. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+msgid "k"
+msgstr "k"
+
+#. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
+msgid "kB"
+msgstr "kB"
+
 #, c-format
 msgid "modifying %s"
 msgstr "%s wordt gewijzigd"
 
+msgid "no"
+msgstr "nee"
+
 msgid "nothing to do"
 msgstr "niets te doen"
 
-msgid "root argument can be used only together with no-dbus."
-msgstr "rootargument kan alleen samen worden gebruikt met no-dbus."
+msgid "root argument can be used only together with no-dbus.\n"
+msgstr "rootargument kan alleen samen worden gebruikt met no-dbus.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "gebruik: snapper [--global-options] <opdracht> [--commando-options] [commando-arguments]"
+
+msgid "yes"
+msgstr "ja"
+
+#, c-format
+#~ msgid "Use %s, %s or %s."
+#~ msgstr "%s, %s of %s gebruiken."
+
+#, c-format
+#~ msgid "Use %s, %s, %s or %s."
+#~ msgstr "%s, %s, %s of %s gebruiken."
+
+#~ msgid "Unknown type of snapshot."
+#~ msgstr "Onbekend type momentopname."
+
+#~ msgid "Unknown type of snapshots."
+#~ msgstr "Onbekend type momentopnamen."
 
 #~ msgid "Quota failure (%s)."
 #~ msgstr "Quota-mislukking (%s)."

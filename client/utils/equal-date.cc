@@ -24,6 +24,8 @@
 
 #include "equal-date.h"
 
+#define isleapyear(year) \
+    ((year) % 4 == 0 && ((year) % 100 != 0 || (year) % 400 == 0))
 
 int
 yday_of_weeks_monday(const struct tm& tmp)
@@ -35,7 +37,7 @@ yday_of_weeks_monday(const struct tm& tmp)
 int
 days_in_year(const struct tm& tmp)
 {
-    return __isleap(tmp.tm_year) ? 366 : 365;
+    return isleapyear(tmp.tm_year) ? 366 : 365;
 }
 
 

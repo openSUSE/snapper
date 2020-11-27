@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2004-2015] Novell, Inc.
+ * Copyright (c) 2020 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -27,6 +28,7 @@
 #include <sys/types.h>
 #include <pwd.h>
 #include <grp.h>
+#include <unistd.h>
 #include <sstream>
 #include <locale>
 #include <string>
@@ -88,9 +90,27 @@ namespace snapper
     string datetime(time_t time, bool utc, bool classic);
     time_t scan_datetime(const string& str, bool utc);
 
+    /**
+     * For the user with uid get the username (passwd.pw_name) and the gid
+     * (passwd.pw_gid).
+     */
     bool get_uid_username_gid(uid_t uid, string& username, gid_t& gid);
+
+    /**
+     * For the user with uid get the home directory (passwd.pw_dir).
+     */
+    bool get_uid_dir(uid_t uid, string& dir);
+
+    /*
+     * For the user with username get the uid (passwd.pw_uid).
+     */
     bool get_user_uid(const char* username, uid_t& uid);
+
+    /*
+     * For the group with groupname get the gid (group.gr_gid).
+     */
     bool get_group_gid(const char* groupname, gid_t& gid);
+
     vector<gid_t> getgrouplist(const char* username, gid_t gid);
 
 
@@ -111,6 +131,38 @@ namespace snapper
     };
 
 
+    struct FdCloser
+    {
+	FdCloser(int fd)
+	    : fd(fd)
+	{
+	}
+
+	~FdCloser()
+	{
+	    if (fd > -1)
+		::close(fd);
+	}
+
+	void reset()
+	{
+	    fd = -1;
+	}
+
+	int close()
+	{
+	    int r = ::close(fd);
+	    fd = -1;
+	    return r;
+	}
+
+    private:
+
+	int fd;
+
+    };
+
+
     string sformat(const char* format, ...) __attribute__ ((format(printf, 1, 2)));
 
 
@@ -123,6 +175,17 @@ namespace snapper
 	{}
 
 	const int error_number;
+    };
+
+
+    class Uuid
+    {
+    public:
+
+	uint8_t value[16];
+
+	bool operator==(const Uuid& rhs) const;
+
     };
 
 }

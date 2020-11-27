@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2004-2015] Novell, Inc.
+ * Copyright (c) 2020 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -22,6 +23,7 @@
 
 #include <unistd.h>
 #include <fstream>
+#include <regex>
 
 #include "snapper/Log.h"
 #include "snapper/AppUtil.h"
@@ -36,9 +38,9 @@ namespace snapper
 
 
     AsciiFileReader::AsciiFileReader(int fd)
-	: file(fdopen(fd, "r")), buffer(NULL), len(0)
+	: file(fdopen(fd, "r"))
     {
-	if (file == NULL)
+	if (!file)
 	{
 	    y2war("file is NULL");
 	    SN_THROW(FileNotFoundException());
@@ -47,9 +49,9 @@ namespace snapper
 
 
     AsciiFileReader::AsciiFileReader(FILE* file)
-	: file(file), buffer(NULL), len(0)
+	: file(file)
     {
-	if (file == NULL)
+	if (!file)
 	{
 	    y2war("file is NULL");
 	    SN_THROW(FileNotFoundException());
@@ -58,10 +60,9 @@ namespace snapper
 
 
     AsciiFileReader::AsciiFileReader(const string& filename)
-	: file(NULL), buffer(NULL), len(0)
+	: file(fopen(filename.c_str(), "re"))
     {
-	file = fopen(filename.c_str(), "re");
-	if (file == NULL)
+	if (!file)
 	{
 	    y2war("open for '" << filename << "' failed");
 	    SN_THROW(FileNotFoundException());
@@ -171,9 +172,9 @@ AsciiFile::save()
     void
     SysconfigFile::checkKey(const string& key) const
     {
-	Regex rx("^" "([0-9A-Z_]+)" "$");
+	static const regex rx("([0-9A-Z_]+)", regex::extended);
 
-	if (!rx.match(key))
+	if (!regex_match(key, rx))
 	    SN_THROW(InvalidKeyException());
     }
 
@@ -209,39 +210,41 @@ AsciiFile::save()
     {
 	checkKey(key);
 
-	Regex rx('^' + Regex::ws +
-                 key + '=' + "(['\"]?)([^'\"]*)\\1" +
-                 '(' + Regex::ws + Regex::trailing_comment + ")$");
-
-	vector<string>::iterator it = find_if(lines(), regex_matches(rx));
-	if (it == lines().end())
-	{
-	    string line = key + "=\"" + value + "\"";
-	    push_back(line);
-	}
-	else
-	{
-	    string line = key + "=\"" + value + "\"" + rx.cap(3);
-	    *it = line;
-	}
-
 	modified = true;
+
+	for (vector<string>::iterator it = Lines_C.begin(); it != Lines_C.end(); ++it)
+	{
+	    ParsedLine parsed_line;
+
+	    if (parse_line(*it, parsed_line) && parsed_line.key == key)
+	    {
+		string line = key + "=\"" + value + "\"" + parsed_line.comment;
+		*it = line;
+		return;
+	    }
+	}
+
+	string line = key + "=\"" + value + "\"";
+	push_back(line);
     }
 
 
     bool
     SysconfigFile::getValue(const string& key, string& value) const
     {
-        Regex rx('^' + Regex::ws +
-                 key + '=' + "(['\"]?)([^'\"]*)\\1" +
-                 Regex::ws + Regex::trailing_comment + '$');
+	for (const string& line : Lines_C)
+	{
+	    ParsedLine parsed_line;
 
-	if (find_if(lines(), regex_matches(rx)) == lines().end())
-	    return false;
+	    if (parse_line(line, parsed_line) && parsed_line.key == key)
+	    {
+		value = parsed_line.value;
+		y2mil("key:" << key << " value:" << value);
+		return true;
+	    }
+	}
 
-	value = rx.cap(2);
-	y2mil("key:" << key << " value:" << value);
-	return true;
+	return false;
     }
 
 
@@ -303,17 +306,47 @@ AsciiFile::save()
     {
 	map<string, string> ret;
 
-	Regex rx('^' + Regex::ws +
-                 "([0-9A-Z_]+)" + '=' + "(['\"]?)([^'\"]*)\\2" +
-                 Regex::ws + Regex::trailing_comment + '$');
-
-	for (vector<string>::const_iterator it = Lines_C.begin(); it != Lines_C.end(); ++it)
+	for (const string& line : Lines_C)
 	{
-	    if (rx.match(*it))
-		ret[rx.cap(1)] = rx.cap(3);
+	    ParsedLine parsed_line;
+
+	    if (parse_line(line, parsed_line))
+		ret[parsed_line.key] = parsed_line.value;
 	}
 
 	return ret;
+    }
+
+
+    bool
+    SysconfigFile::parse_line(const string& line, ParsedLine& parsed_line) const
+    {
+	const string whitespace = "[ \t]*";
+	const string comment = "(#.*)?";
+
+	// Note: Avoid back references. Whether they work depend on the regex flags. Also
+	// the old regcomp/regexec based implementation did not work with them with some
+	// libc implementations.
+
+	static const regex rx1(whitespace + "([0-9A-Z_]+)" + '=' + "\"([^\"]*)\"" +
+			       '(' + whitespace + comment + ")");
+
+	static const regex rx2(whitespace + "([0-9A-Z_]+)" + '=' + "'([^']*)'" +
+			       '(' + whitespace + comment + ")");
+
+	static const regex rx3(whitespace + "([0-9A-Z_]+)" + '=' + "([^ \t]*)" +
+			       '(' + whitespace + comment + ")");
+
+	smatch match;
+
+	if (!regex_match(line, match, rx1) && !regex_match(line, match, rx2) && !regex_match(line, match, rx3))
+	    return false;
+
+	parsed_line.key = match[1];
+	parsed_line.value = match[2];
+	parsed_line.comment = match[3];
+
+	return true;
     }
 
 }

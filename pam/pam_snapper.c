@@ -4,6 +4,7 @@
  * @section License
  *
  * Copyright (c) [2013-2015] SUSE
+ * Copyright (c) 2020 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -267,12 +268,12 @@ static int cdbus_create_snap_pack( const char *snapper_conf, createmode_t create
 
 	char *cleanup_escaped = cdbus_escape( cleanup );
 	if ( !cleanup_escaped ) {
-	    return -ENOMEM;
+		return -ENOMEM;
 	}
 
 	if ( !dbus_message_iter_append_basic( &args, DBUS_TYPE_STRING, &cleanup_escaped ) ) {
-	    free( cleanup_escaped );
-	    return -ENOMEM;
+		free( cleanup_escaped );
+		return -ENOMEM;
 	}
 
 	free( cleanup_escaped );
@@ -299,7 +300,7 @@ static int cdbus_create_snap_pack( const char *snapper_conf, createmode_t create
 
 		if ( !dbus_message_iter_append_basic
 		     ( &struct_iter, DBUS_TYPE_STRING, &key_escaped ) ) {
-		    free( key_escaped );
+			free( key_escaped );
 			return -ENOMEM;
 		}
 
@@ -518,17 +519,37 @@ static int get_ugid( pam_handle_t * pamh, const char *pam_user, uid_t * uid, gid
 	struct passwd *result;
 
 	long bufsize = sysconf( _SC_GETPW_R_SIZE_MAX );
-	char buf[bufsize];
+	if ( bufsize == -1 ) {
+		bufsize = 1024;
+	}
 
-	if ( getpwnam_r( pam_user, &pwd, buf, bufsize, &result ) != 0 || result != &pwd ) {
-		pam_syslog( pamh, LOG_ERR, "getpwnam failed" );
+	char *buf = malloc( bufsize );
+	if ( !buf ) {
+		pam_syslog( pamh, LOG_ERR, "out of memory" );
 		return -1;
 	}
 
-	memset( pwd.pw_passwd, 0, strlen( pwd.pw_passwd ) );
+	int e;
+	while ( ( e = getpwnam_r( pam_user, &pwd, buf, bufsize, &result ) ) == ERANGE ) {
+		bufsize *= 2;
+		buf = realloc( buf, bufsize );
+
+		if ( !buf ) {
+			pam_syslog( pamh, LOG_ERR, "out of memory" );
+			return -1;
+		}
+	}
+
+	if ( e != 0 || result == NULL ) {
+		pam_syslog( pamh, LOG_ERR, "getpwnam_r failed" );
+		free( buf );
+		return -1;
+	}
 
 	*uid = pwd.pw_uid;
 	*gid = pwd.pw_gid;
+
+	free( buf );
 
 	return 0;
 }
