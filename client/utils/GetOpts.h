@@ -61,8 +61,6 @@ namespace snapper
     {
     public:
 
-	ParsedOpts() = default;		// TODO remove
-
 	ParsedOpts(const map<string, string>& args) : args(args) {}
 
 	using const_iterator = map<string, string>::const_iterator;
@@ -75,7 +73,7 @@ namespace snapper
 
     private:
 
-	map<string, string> args;	// TODO make const
+	const map<string, string> args;
 
     };
 
