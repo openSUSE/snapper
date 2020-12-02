@@ -45,6 +45,9 @@
 #ifdef ENABLE_LVM
 #include "snapper/Lvm.h"
 #endif
+#ifdef ENABLE_ZFS
+#include "snapper/Zfs.h"
+#endif
 #include "snapper/Snapper.h"
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"
@@ -106,6 +109,9 @@ namespace snapper
 #endif
 #ifdef ENABLE_LVM
 		&Lvm::create,
+#endif
+#ifdef ENABLE_ZFS
+		&Zfs::create,
 #endif
 		NULL
 	};
