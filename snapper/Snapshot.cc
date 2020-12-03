@@ -38,7 +38,9 @@
 #include "snapper/AppUtil.h"
 #include "snapper/XmlFile.h"
 #include "snapper/Filesystem.h"
+#ifdef ENABLE_BTRFS
 #include "snapper/Btrfs.h"
+#endif
 #include "snapper/Enum.h"
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"

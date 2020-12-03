@@ -8,18 +8,21 @@ AM_CPPFLAGS = -I$(top_srcdir)
 
 LDADD = ../snapper/libsnapper.la
 
-if HAVE_XATTRS
-TMP_XATST = xattrs1 xattrs2 xattrs3 xattrs4
-endif
-
 testdir = $(libdir)/snapper/testsuite
 
 test_DATA = CAUTION
 test_SCRIPTS = run-all setup-and-run-all
 
 test_PROGRAMS = simple1 permissions1 permissions2 permissions3 owner1 owner2 \
-	owner3 directory1 missing-directory1 error1 error2 error4 \
-	$(TMP_XATST) test-btrfsutils ug-tests
+	owner3 directory1 missing-directory1 error1 error2 error4 ug-tests
+
+if ENABLE_BTRFS
+test_PROGRAMS += test-btrfsutils
+endif
+
+if HAVE_XATTRS
+test_PROGRAMS += xattrs1 xattrs2 xattrs3 xattrs4
+endif
 
 simple1_SOURCES = simple1.cc common.h common.cc
 

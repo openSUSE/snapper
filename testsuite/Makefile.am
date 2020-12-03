@@ -9,10 +9,14 @@ LDADD = ../snapper/libsnapper.la ../dbus/libdbus.la -lboost_unit_test_framework
 check_PROGRAMS = sysconfig-get1.test dirname1.test basename1.test 		\
 	equal-date.test dbus-escape.test cmp-lt.test humanstring.test 		\
 	table.test table-formatter.test csv-formatter.test json-formatter.test	\
-	getopts.test lvm-utils.test
+	getopts.test
 
 if ENABLE_BTRFS_QUOTA
 check_PROGRAMS += qgroup1.test
+endif
+
+if ENABLE_LVM
+check_PROGRAMS += lvm-utils.test
 endif
 
 TESTS = $(check_PROGRAMS)
