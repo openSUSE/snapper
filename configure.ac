@@ -139,9 +139,14 @@ AC_ARG_ENABLE([rollback], AC_HELP_STRING([--disable-rollback],[Disable rollback 
 AM_CONDITIONAL(ENABLE_ROLLBACK, [test "x$enable_rollback" = "xyes"])
 
 if test "x$enable_rollback" = "xyes"; then
+	if test "x$with_btrfs" != "xyes"; then
+		AC_MSG_ERROR([rollback support needs btrfs support])
+	fi
+
 	AC_DEFINE(ENABLE_ROLLBACK, 1, [Enable rollback support])
-        # libmount is needed for rollback feature
-        AC_CHECK_HEADER(libmount/libmount.h,[],[AC_MSG_ERROR([Cannout find libmount headers. Please install libmount-devel])])
+
+	# libmount is needed for rollback feature
+	AC_CHECK_HEADER(libmount/libmount.h,[],[AC_MSG_ERROR([Cannout find libmount headers. Please install libmount-devel])])
 fi
 
 AC_ARG_ENABLE([btrfs-quota], AC_HELP_STRING([--disable-btrfs-quota],[Disable btrfs quota support]),
@@ -149,6 +154,10 @@ AC_ARG_ENABLE([btrfs-quota], AC_HELP_STRING([--disable-btrfs-quota],[Disable btr
 AM_CONDITIONAL(ENABLE_BTRFS_QUOTA, [test "x$enable_btrfs_quota" = "xyes"])
 
 if test "x$enable_btrfs_quota" = "xyes"; then
+	if test "x$with_btrfs" != "xyes"; then
+		AC_MSG_ERROR([btrfs quota support needs btrfs support])
+	fi
+
 	AC_DEFINE(ENABLE_BTRFS_QUOTA, 1, [Enable btrfs quota support])
 fi
 

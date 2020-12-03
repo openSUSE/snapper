@@ -46,8 +46,10 @@
 #include "snapper/AsciiFile.h"
 #include "snapper/Exception.h"
 #include "snapper/Hooks.h"
+#ifdef ENABLE_BTRFS
 #include "snapper/Btrfs.h"
 #include "snapper/BtrfsUtils.h"
+#endif
 #ifdef ENABLE_SELINUX
 #include "snapper/Selinux.h"
 #endif
@@ -820,6 +822,8 @@ namespace snapper
     FreeSpaceData
     Snapper::queryFreeSpaceData() const
     {
+#ifdef ENABLE_BTRFS
+
 	const Btrfs* btrfs = dynamic_cast<const Btrfs*>(getFilesystem());
 	if (!btrfs)
 	    SN_THROW(FreeSpaceException("free space only supported with btrfs"));
@@ -837,6 +841,13 @@ namespace snapper
 	    SN_THROW(FreeSpaceException("impossible free space values"));
 
 	return free_space_data;
+
+#else
+
+        SN_THROW(QuotaException("not implemented"));
+        __builtin_unreachable();
+
+#endif
     }
 
 

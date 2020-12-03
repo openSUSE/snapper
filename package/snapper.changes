@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Dec 03 10:12:04 CET 2020 - aschnell@suse.com
+
+- fixed compilation with --disable-btrfs (gh#openSUSE/snapper#505)
+
+-------------------------------------------------------------------
 Tue Nov 24 11:58:44 CET 2020 - aschnell@suse.com
 
 - do not override passwd after getpwuid_r et.al. calls

@@ -21,11 +21,15 @@
  */
 
 
+#include "config.h"
+
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 
 #include <snapper/AppUtil.h>
+#ifdef ENABLE_BTRFS
 #include <snapper/BtrfsUtils.h>
+#endif
 #include <snapper/FileUtils.h>
 
 #include "utils/HumanString.h"
@@ -300,6 +304,8 @@ namespace snapper
 	{
 	    vector<ProxySnapper*> affected_snappers;
 
+#ifdef ENABLE_BTRFS
+
 	    try
 	    {
 		Uuid uuid = BtrfsUtils::get_uuid(path);
@@ -323,6 +329,8 @@ namespace snapper
 		// affected.  Anyway, the exit code of snapper still tells whether enough
 		// free space is available.
 	    }
+
+#endif
 
 	    if (global_options.verbose())
 	    {
