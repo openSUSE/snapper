@@ -72,25 +72,31 @@ timeline(ProxySnappers* snappers, const map<string, string>& userdata)
     map<string, ProxyConfig> configs = snappers->getConfigs();
     for (const map<string, ProxyConfig>::value_type& value : configs)
     {
-	const map<string, string>& raw = value.second.getAllValues();
+	const ProxyConfig& proxy_config = value.second;
 
-	map<string, string>::const_iterator pos1 = raw.find("TIMELINE_CREATE");
-	if (pos1 != raw.end() && pos1->second == "yes")
+	if (!proxy_config.is_yes("TIMELINE_CREATE"))
+	    continue;
+
+	cout << "running timeline for '" << value.first << "'." << endl;
+
+	ProxySnapper* snapper = nullptr;
+
+	if (!call_with_error_check([&snappers, &snapper, &value](){ snapper = snappers->getSnapper(value.first); }))
 	{
-	    ProxySnapper* snapper = snappers->getSnapper(value.first);
+	    cerr << "timeline for '" << value.first << "' failed." << endl;
+	    ok = false;
+	    continue;
+	}
 
-	    SCD scd;
-	    scd.description = "timeline";
-	    scd.cleanup = "timeline";
-	    scd.userdata = userdata;
+	SCD scd;
+	scd.description = "timeline";
+	scd.cleanup = "timeline";
+	scd.userdata = userdata;
 
-	    cout << "running timeline for '" << value.first << "'." << endl;
-
-	    if (!call_with_error_check([snapper, scd](){ snapper->createSingleSnapshot(scd); }))
-	    {
-		cerr << "timeline for '" << value.first << "' failed." << endl;
-		ok = false;
-	    }
+	if (!call_with_error_check([snapper, scd](){ snapper->createSingleSnapshot(scd); }))
+	{
+	    cerr << "timeline for '" << value.first << "' failed." << endl;
+	    ok = false;
 	}
     }
 
@@ -106,12 +112,27 @@ cleanup(ProxySnappers* snappers)
     map<string, ProxyConfig> configs = snappers->getConfigs();
     for (const map<string, ProxyConfig>::value_type& value : configs)
     {
-	const map<string, string>& raw = value.second.getAllValues();
+	const ProxyConfig& proxy_config = value.second;
 
-	ProxySnapper* snapper = snappers->getSnapper(value.first);
+	bool do_number = proxy_config.is_yes("NUMBER_CLEANUP");
+	bool do_timeline = proxy_config.is_yes("TIMELINE_CLEANUP");
+	bool do_empty_pre_post = proxy_config.is_yes("EMPTY_PRE_POST_CLEANUP");
 
-	map<string, string>::const_iterator pos1 = raw.find("NUMBER_CLEANUP");
-	if (pos1 != raw.end() && pos1->second == "yes")
+	if (!do_number && !do_timeline && !do_empty_pre_post)
+	    continue;
+
+	cout << "running cleanup for '" << value.first << "'." << endl;
+
+	ProxySnapper* snapper = nullptr;
+
+	if (!call_with_error_check([&snappers, &snapper, &value](){ snapper = snappers->getSnapper(value.first); }))
+	{
+	    cerr << "cleanup for '" << value.first << "' failed." << endl;
+	    ok = false;
+	    continue;
+	}
+
+	if (do_number)
 	{
 	    cout << "running number cleanup for '" << value.first << "'." << endl;
 
@@ -122,8 +143,7 @@ cleanup(ProxySnappers* snappers)
 	    }
 	}
 
-	map<string, string>::const_iterator pos2 = raw.find("TIMELINE_CLEANUP");
-	if (pos2 != raw.end() && pos2->second == "yes")
+	if (do_timeline)
 	{
 	    cout << "running timeline cleanup for '" << value.first << "'." << endl;
 
@@ -134,8 +154,7 @@ cleanup(ProxySnappers* snappers)
 	    }
 	}
 
-	map<string, string>::const_iterator pos3 = raw.find("EMPTY_PRE_POST_CLEANUP");
-	if (pos3 != raw.end() && pos3->second == "yes")
+	if (do_empty_pre_post)
 	{
 	    cout << "running empty-pre-post cleanup for '" << value.first << "'." << endl;
 

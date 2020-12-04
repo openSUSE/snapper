@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2017] SUSE LLC
+ * Copyright (c) [2016-2020] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -52,6 +52,14 @@ ProxyConfig::getValue(const string& key, string& value) const
 
     value = it->second;
     return true;
+}
+
+
+bool
+ProxyConfig::is_yes(const char* key) const
+{
+    map<string, string>::const_iterator pos = values.find(key);
+    return pos != values.end() && pos->second == "yes";
 }
 
 
