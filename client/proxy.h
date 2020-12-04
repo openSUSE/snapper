@@ -82,6 +82,8 @@ public:
 
     bool getValue(const string& key, string& value) const;
 
+    bool is_yes(const char* key) const;
+
 private:
 
     map<string, string> values;

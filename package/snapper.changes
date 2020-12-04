@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Dec 04 10:05:05 CET 2020 - aschnell@suse.com
+
+- in systemd-helper continue with other configs if one config is
+  broken (gh#openSUSE/snapper#495)
+
+-------------------------------------------------------------------
 Thu Dec 03 10:12:04 CET 2020 - aschnell@suse.com
 
 - fixed compilation with --disable-btrfs (gh#openSUSE/snapper#505)
