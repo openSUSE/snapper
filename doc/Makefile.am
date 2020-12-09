@@ -3,6 +3,7 @@
 #
 
 if ENABLE_DOC
+
 man_MANS = snapper.8 snapperd.8 snapper-configs.5
 
 if HAVE_PAM
@@ -28,9 +29,9 @@ html: $(man_MANS:%.5=%.html) $(man_MANS:%.8=%.html)
 .xml.html: .xml
 	$(XSLTPROC) --nonet html.xsl $< > $@
 
-EXTRA_DIST = dbus-protocol.txt manpages.xsl html.xsl selinux-readme.txt
-
 endif
+
+EXTRA_DIST = dbus-protocol.txt manpages.xsl html.xsl selinux-readme.txt
 
 clean-local:
 	rm -f *.{5,8} *.html
