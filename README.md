@@ -2,9 +2,6 @@
 Snapper
 =======
 
-[![Build Status](https://travis-ci.org/openSUSE/snapper.svg?branch=master)](https://travis-ci.org/openSUSE/snapper)
-[![Coverage Status](https://coveralls.io/repos/github/openSUSE/snapper/badge.svg?branch=HEAD)](https://coveralls.io/github/openSUSE/snapper?branch=HEAD)
-
 Snapper is a tool for Linux file system snapshot management. Apart from the
 obvious creation and deletion of snapshots it can compare snapshots and
 revert differences between them. In simple terms, this allows root and
@@ -33,9 +30,6 @@ sudo zypper install -t pattern devel_C_C++
 sudo zypper install git libmount-devel dbus-1-devel libacl-devel \
   docbook-xsl-stylesheets libxml2-devel libbtrfs-devel
 ```
-
-Alternatively you can use a [Docker](https://www.docker.com/) container,
-see [README.Travis.md](README.Travis.md) file for some hints.
 
 ### Building Snapper
 
