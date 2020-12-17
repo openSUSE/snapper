@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: installation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 18:35+0200\n"
+"POT-Creation-Date: 2020-12-17 13:34+0100\n"
 "PO-Revision-Date: 2016-04-19 09:51+0000\n"
 "Last-Translator: Shane Wims <shane.wims@microfocus.com>\n"
 "Language-Team: Zulu <http://l10n.opensuse.org/projects/snapper/master/zu/>\n"
@@ -15,6 +15,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2.5\n"
+
+msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
+msgstr ""
 
 #, fuzzy
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
