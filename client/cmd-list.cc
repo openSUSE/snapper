@@ -555,6 +555,8 @@ namespace snapper
 				continue;
 
 			    formatter.header().push_back(header_for(list_mode, column));
+			    formatter.abbrev().push_back(global_options.abbreviate() &&
+							 column == Column::DESCRIPTION);
 			}
 
 			for (const ProxySnapshot& snapshot : output_helper.snapshots)

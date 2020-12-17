@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Thu Dec 17 12:20:59 CET 2020 - aschnell@suse.com
+
+- added option to abbreviate columns in table (see
+  gh#openSUSE/snapper#268)
+- version 0.8.15
+
+-------------------------------------------------------------------
 Fri Dec 04 10:05:05 CET 2020 - aschnell@suse.com
 
 - in systemd-helper continue with other configs if one config is

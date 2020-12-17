@@ -111,7 +111,7 @@ public:
 
   void set_style(TableStyle st);
   void wrap(int force_break_after = -1);
-  void allowAbbrev(unsigned column);
+  void set_abbrev(const vector<bool>& abbrev);
   void margin(unsigned margin);
 
   Table ();
@@ -164,7 +164,5 @@ ostream& operator << (ostream& stream, const Table& table) {
   table.dumpTo (stream);
   return stream;
 }
-// Local Variables:
-// c-basic-offset: 2
-// End:
+
 #endif

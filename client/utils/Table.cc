@@ -130,7 +130,7 @@ Table::Table()
   , _max_width(1, 0)
   , _width(0)
   , _style (Ascii)
-  , _screen_width(get_screen_width())
+  , _screen_width(snapper::get_screen_width())
   , _margin(0)
   , _force_break_after(-1)
   , _do_wrap(false)
@@ -147,13 +147,13 @@ void Table::setHeader (const TableHeader& tr) {
   updateColWidths (tr);
 }
 
-void Table::allowAbbrev(unsigned column) {
-  if (column >= _abbrev_col.size()) {
-    _abbrev_col.reserve(column + 1);
-    _abbrev_col.insert(_abbrev_col.end(), column - _abbrev_col.size() + 1, false);
-  }
-  _abbrev_col[column] = true;
+
+void
+Table::set_abbrev(const vector<bool>& abbrev)
+{
+    _abbrev_col = abbrev;
 }
+
 
 void Table::updateColWidths (const TableRow& tr) {
   // how much columns the separators add to the width of the table

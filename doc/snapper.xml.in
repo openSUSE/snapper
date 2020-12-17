@@ -224,6 +224,12 @@
 	</listitem>
       </varlistentry>
       <varlistentry>
+	<term><option>--abbreviate</option></term>
+	<listitem>
+	  <para>Try to abbreviate texts in some columns so that tables fit the width of the screen.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
 	<term><option>--machine-readable <replaceable>format</replaceable></option></term>
 	<listitem>
 	  <para>Specifies a machine-readable output format. Possible options are csv and json.</para>

@@ -9,28 +9,56 @@
  * Miscellaneous console utilities.
  */
 
+
+#include <stdlib.h>
 #include <unistd.h>
-#include <string>
-#include <fstream>
-#include <iostream>
-#include <cstdlib>
+#include <term.h>
 
-using namespace std;
 
-unsigned get_screen_width()
+namespace snapper
 {
-  if (!::isatty(STDOUT_FILENO))
-    return -1; // no clipping
 
-  int width = 80;
 
-  const char *cols_env = getenv("COLUMNS");
-  if (cols_env)
-    width  = ::atoi (cols_env);
+    unsigned
+    get_screen_width_pure()
+    {
+	if (!isatty(STDOUT_FILENO))
+	    return -1; // no clipping
 
-  // safe default
-  if (!width)
-    width = 80;
+	int width = 0;
 
-  return width;
+	const char* cols_env = getenv("COLUMNS");
+	if (cols_env)
+	{
+	    width = atoi(cols_env);
+	}
+	else
+	{
+	    // use terminfo from ncurses
+	    setupterm(NULL, STDOUT_FILENO, NULL);
+	    width = tigetnum("cols");
+
+	    /*
+	    // use readline
+	    rl_initialize();
+	    rl_get_screen_size(NULL, &width);
+	    */
+	}
+
+	// safe default
+	if (width <= 0)
+	    width = 80;
+
+	return width;
+    }
+
+
+    unsigned
+    get_screen_width()
+    {
+	static unsigned width = get_screen_width_pure();
+
+	return width;
+    }
+
 }
