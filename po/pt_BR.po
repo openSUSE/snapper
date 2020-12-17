@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 18:35+0200\n"
+"POT-Creation-Date: 2020-12-17 13:34+0100\n"
 "PO-Revision-Date: 2020-09-24 00:48+0000\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive68@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/"
-"snapper/master/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,10 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 3.6.1\n"
 
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
 msgstr ""
-"\t--all-configs, -a\t\tListar os instantâneos de todas as configurações "
-"acessíveis."
+
+msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
+msgstr "\t--all-configs, -a\t\tListar os instantâneos de todas as configurações acessíveis."
 
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
 msgstr "\t--ambit, -a ambit\t\tOpere no âmbito especificado."
@@ -109,8 +109,7 @@ msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <arquivo>\t\tSalvar status em arquivo."
 
 msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
-msgstr ""
-"\t--path <caminho>\t\t\tLimpar todas as configurações que afetam o caminho."
+msgstr "\t--path <caminho>\t\t\tLimpar todas as configurações que afetam o caminho."
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <número>\t\tNúmero do pré instantâneo correspondente."
@@ -360,15 +359,11 @@ msgstr "Não é possível excluir o instantâneo %d, pois ele é o sistema atual
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr ""
-"Não é possível excluir o instantâneo %d, pois ele é o instantâneo atualmente "
-"montado."
+msgstr "Não é possível excluir o instantâneo %d, pois ele é o instantâneo atualmente montado."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
-"Não é possível excluir o instantâneo %d, pois ele é o próximo a ser montado "
-"instantâneo."
+msgstr "Não é possível excluir o instantâneo %d, pois ele é o próximo a ser montado instantâneo."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr "Não é possível detectar o âmbito porque o subvolume padrão é desconhecido."
@@ -473,8 +468,7 @@ msgstr "O dado de configuração tem a chave '%s' vazia."
 
 #, c-format
 msgid "Could not make enough free space available for path '%s'."
-msgstr ""
-"Não foi possível disponibilizar espaço livre suficiente para o caminho '%s'."
+msgstr "Não foi possível disponibilizar espaço livre suficiente para o caminho '%s'."
 
 msgid "Could not make enough free space available."
 msgstr "Não foi possível disponibilizar espaço livre suficiente."
