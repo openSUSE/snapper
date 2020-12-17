@@ -19,8 +19,8 @@
  * find current contact information at www.novell.com.
  */
 
-#ifndef SNAPPER_CLI_CSV_FORMATTER_H
-#define SNAPPER_CLI_CSV_FORMATTER_H
+#ifndef SNAPPER_CSV_FORMATTER_H
+#define SNAPPER_CSV_FORMATTER_H
 
 
 #include <string>

@@ -19,8 +19,8 @@
  * find current contact information at www.novell.com.
  */
 
-#ifndef SNAPPER_CLI_JSON_FORMATTER_H
-#define SNAPPER_CLI_JSON_FORMATTER_H
+#ifndef SNAPPER_JSON_FORMATTER_H
+#define SNAPPER_JSON_FORMATTER_H
 
 
 #include <json-c/json.h>
