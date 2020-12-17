@@ -41,6 +41,7 @@ BuildRequires:  libacl-devel
 BuildRequires:  libtool
 BuildRequires:  libxml2-devel
 BuildRequires:  e2fsprogs-devel
+BuildRequires:  ncurses-devel
 %if 0%{?suse_version} > 1230
 BuildRequires:  libbtrfs-devel
 %endif

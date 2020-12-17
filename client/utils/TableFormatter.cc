@@ -44,6 +44,7 @@ namespace snapper
 	    table_header.add(column.first, column.second);
 
 	table.setHeader(table_header);
+	table.set_abbrev(table_formatter._abbrev);
 
 	for (const vector<string>& row : table_formatter._rows)
 	{

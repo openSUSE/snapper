@@ -19,8 +19,8 @@
  * find current contact information at www.novell.com.
  */
 
-#ifndef SNAPPER_CLI_TABLE_FORMATTER_H
-#define SNAPPER_CLI_TABLE_FORMATTER_H
+#ifndef SNAPPER_TABLE_FORMATTER_H
+#define SNAPPER_TABLE_FORMATTER_H
 
 
 #include <string>
@@ -50,6 +50,7 @@ namespace snapper
 	TableFormatter& operator=(const TableFormatter&) = delete;
 
 	vector<pair<string, TableAlign>>& header() { return _header; }
+	vector<bool>& abbrev() { return _abbrev; }
 	vector<vector<string>>& rows() { return _rows; }
 
 	friend ostream& operator<<(ostream& stream, const TableFormatter& table_formatter);
@@ -59,6 +60,7 @@ namespace snapper
 	const TableStyle style;
 
 	vector<pair<string, TableAlign>> _header;
+	vector<bool> _abbrev;
 	vector<vector<string>> _rows;
 
     };

@@ -53,6 +53,7 @@ namespace snapper
 	bool version() const { return _version; }
 	bool help() const { return _help; }
 	TableStyle table_style() const { return _table_style; }
+	bool abbreviate() const { return _abbreviate; }
 	OutputFormat output_format() const { return _output_format; }
 	string separator() const { return _separator; }
 	string config() const { return _config; }
@@ -80,6 +81,7 @@ namespace snapper
 	bool _version;
 	bool _help;
 	TableStyle _table_style;
+	bool _abbreviate;
 	OutputFormat _output_format;
 	string _separator;
 	string _config;

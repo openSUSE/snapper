@@ -10,7 +10,7 @@ jobs:
     steps:
 
     - name: Install additional packages
-      run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends acl-dev autoconf automake bzip2 docbook-xsl e2fslibs-dev g++ gettext language-pack-de language-pack-en libboost-dev libboost-system-dev libboost-test-dev libboost-thread-dev libbtrfs-dev libdbus-1-dev libjson-c-dev libmount-dev libpam-dev libtool libxml2-dev libz-dev make xsltproc
+      run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends acl-dev autoconf automake bzip2 docbook-xsl e2fslibs-dev g++ gettext language-pack-de language-pack-en libboost-dev libboost-system-dev libboost-test-dev libboost-thread-dev libbtrfs-dev libdbus-1-dev libjson-c-dev libmount-dev libpam-dev libtool libxml2-dev libz-dev make ncurses-dev xsltproc
 
     - name: List installed packages
       run: apt list --installed | sort

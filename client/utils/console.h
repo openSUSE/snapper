@@ -9,16 +9,23 @@
  * Miscellaneous console utilities.
  */
 
-#ifndef CONSOLE_H_
-#define CONSOLE_H_
+#ifndef SNAPPER_CONSOLE_H
+#define SNAPPER_CONSOLE_H
 
-/**
- * Reads COLUMNS environment variable or gets the screen width from readline,
- * in that order. Falls back to 80 if all that fails.
- *
- * \NOTE In case stdout is not connected to a terminal max. unsigned
- * is returned. This should prevent clipping when output is redirected.
- */
-unsigned get_screen_width();
 
-#endif /* CONSOLE_H_ */
+namespace snapper
+{
+
+    /**
+     * Reads COLUMNS environment variable or gets the screen width from terminfo
+     * or readline, in that order. Falls back to 80 if all that fails.
+     *
+     * \NOTE In case stdout is not connected to a terminal max. unsigned
+     * is returned. This should prevent clipping when output is redirected.
+     */
+    unsigned get_screen_width();
+
+}
+
+
+#endif
