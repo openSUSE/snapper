@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-17 13:34+0100\n"
-"PO-Revision-Date: 2020-09-20 05:48+0000\n"
+"PO-Revision-Date: 2020-12-21 14:26+0000\n"
 "Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
-"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/id/>\n"
+"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/"
+"id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,7 +15,7 @@ msgstr ""
 "X-Generator: Weblate 3.6.1\n"
 
 msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
-msgstr ""
+msgstr "\t--abbreviate\t\t\tIzinkan untuk menyingkat kolom tabel."
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tDaftar snapshot dari semua config yang dapat diakses."
@@ -34,12 +35,20 @@ msgid ""
 "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
 "\t\t\t\t\tpre-number, post-number, post-date."
 msgstr ""
+"\t--columns <columns>\t\tKolom untuk ditampilkan dipisahkan oleh koma.\n"
+"\t\t\t\t\tKolom yang mungkin: konfigurasi, subvolume, angka, bawaan, aktif,\n"
+"\t\t\t\t\tipe, tanggal, pengguna, ruang bekas, pembersihan, deskripsi, "
+"userdata,\n"
+"\t\t\t\t\tpra-angka, pasca-angka, pasca-tanggal."
 
 msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
 "\t\t\t\t\tPossible columns: key, value.\n"
 "\t\t\t\t\tColumns are not selected when JSON format is used."
 msgstr ""
+"\t--columns <columns>\t\tKolom untuk ditampilkan dipisahkan oleh koma.\n"
+"\t\t\t\t\tKolom yang mungkin: kunci, nilai.\n"
+"\t\t\t\t\tKolom tidak dipilih saat format JSON digunakan."
 
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
 msgstr "\t--command <perintah>\tJalankan perintah dan buat pre dan pos snapshot."
@@ -66,7 +75,7 @@ msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <opsi>\tOpsi tambahan diteruskan ke perintah diff."
 
 msgid "\t--free-space <space>\t\tTry to make space available."
-msgstr ""
+msgstr "--free-space <space>\t\tCobalah untuk membuat ruang tersedia."
 
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\tBuat snapshot dari snapshot yang ditentukan."
@@ -96,7 +105,7 @@ msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <berkas>\t\tSimpan status ke berkas."
 
 msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
-msgstr ""
+msgstr "--path <path>\t\tBersihkan semua konfigurasi yang mempengaruhi path."
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <nomor>\t\tJumlah snapshot pra yang sesuai."
@@ -209,9 +218,8 @@ msgstr "\tsnapper xadiff <nomor1>..<nomor2> [berkas]"
 msgid "    Global options:"
 msgstr "    Opsi global:"
 
-#, fuzzy
 msgid "    Options for 'cleanup' command:"
-msgstr "    Opsi untuk perintah 'create':"
+msgstr "    Opsi untuk perintah 'cleanup':"
 
 msgid "    Options for 'create' command:"
 msgstr "    Opsi untuk perintah 'create':"
@@ -225,9 +233,8 @@ msgstr "    Opsi untuk perintah'delete':"
 msgid "    Options for 'diff' command:"
 msgstr "    Opsi untuk perintah 'diff':"
 
-#, fuzzy
 msgid "    Options for 'get-config' command:"
-msgstr "    Opsi untuk perintah 'create-config':"
+msgstr "    Opsi untuk perintah 'get-config':"
 
 msgid "    Options for 'list' command:"
 msgstr "    Opsi untuk perintah 'list':"
@@ -237,6 +244,9 @@ msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
 "\t\t\t\t\tPossible columns: config, subvolume.\n"
 msgstr ""
+"    Opsi untuk perintah 'list-configs':\n"
+"\t--columns <columns>\t\tKolom untuk ditampilkan dipisahkan oleh koma.\n"
+"\t\t\t\t\tKolom yang mungkin: konfigurasi, subvolume.\n"
 
 msgid "    Options for 'modify' command:"
 msgstr "    Opsi untuk perintah 'modify':"
@@ -326,7 +336,7 @@ msgid "ACL error."
 msgstr "Galat ACL."
 
 msgid "Active"
-msgstr ""
+msgstr "Aktif"
 
 msgid "Active snapshot is already default snapshot."
 msgstr "Snapshot aktif sudah menjadi snapshot bawaan."
@@ -454,10 +464,10 @@ msgstr "Data konfigurasi '%s' memiliki kunci kosong."
 
 #, c-format
 msgid "Could not make enough free space available for path '%s'."
-msgstr ""
+msgstr "Tidak dapat menyediakan cukup ruang bebas untuk path '%s'."
 
 msgid "Could not make enough free space available."
-msgstr ""
+msgstr "Tidak dapat menyediakan cukup ruang bebas."
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -483,7 +493,7 @@ msgid "Date"
 msgstr "Tanggal"
 
 msgid "Default"
-msgstr ""
+msgstr "Bawaan"
 
 #, c-format
 msgid "Deleting config failed (%s)."
@@ -505,12 +515,11 @@ msgstr "Gagal mendeteksi jenis sistem berkas."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
-msgstr ""
+msgstr "E"
 
 #. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
-#, fuzzy
 msgid "EB"
-msgstr "EiB"
+msgstr "EB"
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
@@ -529,17 +538,16 @@ msgstr "Galat (%s)."
 msgid "Failed to initialize filesystem handler."
 msgstr "Gagal menginisialisasi penangan sistem berkas."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to parse '%s'."
-msgstr "gagal membuat %s"
+msgstr "Gagal mengurai '%s'."
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
-msgstr ""
+msgstr "Gagal meminta ruang bebas untuk path '%s'."
 
-#, fuzzy
 msgid "Failed to query free space."
-msgstr "gagal membuat %s"
+msgstr "Gagal mengkueri ruang bebas."
 
 msgid "Failed to set locale. Fix your system."
 msgstr "Gagal menyetel locale. Perbaiki sistem Anda."
@@ -561,12 +569,11 @@ msgstr "Galat ruang bebas (%s)."
 
 #. TRANSLATORS: symbol for "giga" (best keep untranslated)
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
-#, fuzzy
 msgid "GB"
-msgstr "GiB"
+msgstr "GB"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -590,16 +597,15 @@ msgstr "Snapshot ilegal."
 msgid "Invalid ambit '%s'."
 msgstr "Ambit '%s' tidak valid."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid column '%s'."
-msgstr "Ambit '%s' tidak valid."
+msgstr "Kolom '%s' tidak valid."
 
 msgid "Invalid configdata."
 msgstr "Data konfigurasi tidak valid."
 
-#, fuzzy
 msgid "Invalid free-space value."
-msgstr "Subvolume tidak valid."
+msgstr "Nilai ruang bebas tidak valid."
 
 msgid "Invalid group."
 msgstr "Grup tidak valid."
@@ -608,9 +614,9 @@ msgstr "Grup tidak valid."
 msgid "Invalid machine readable format '%s'."
 msgstr "Format '%s' yang dapat dibaca mesin tidak valid."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid path '%s'."
-msgstr "Ambit '%s' tidak valid."
+msgstr "Path tidak valid '%s'."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -646,12 +652,11 @@ msgstr "Konfigurasi listing gagal (%s)."
 
 #. TRANSLATORS: symbol for "mega" (best keep untranslated)
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
-#, fuzzy
 msgid "MB"
-msgstr "MiB"
+msgstr "MB"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Mungkin Anda lupa pembatas '..' di antara nomor snapshot."
@@ -695,12 +700,11 @@ msgstr "Opsi --read-write hanya didukung untuk snapshot dari tipe tunggal."
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
-#, fuzzy
 msgid "PB"
-msgstr "PiB"
+msgstr "PB"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -741,12 +745,11 @@ msgstr "Subvolume"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
-#, fuzzy
 msgid "TB"
-msgstr "TiB"
+msgstr "TB"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Ambit dapat ditentukan secara manual menggunakan opsi--ambit."
@@ -846,19 +849,18 @@ msgstr "gagal memodifikasi %s"
 
 #. TRANSLATORS: symbol for "kilo" (best keep untranslated)
 msgid "k"
-msgstr ""
+msgstr "k"
 
 #. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
-#, fuzzy
 msgid "kB"
-msgstr "B"
+msgstr "kB"
 
 #, c-format
 msgid "modifying %s"
 msgstr "memodifikasi %s"
 
 msgid "no"
-msgstr ""
+msgstr "tidak"
 
 msgid "nothing to do"
 msgstr "tidak ada yang dilakukan"
@@ -870,7 +872,7 @@ msgid "usage: snapper [--global-options] <command> [--command-options] [command-
 msgstr "penggunaan: snapper [--global-options] <command> [--command-options] [command-arguments]"
 
 msgid "yes"
-msgstr ""
+msgstr "ya"
 
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "Jenis snapshot tidak dikenal."
