@@ -4,9 +4,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-17 13:34+0100\n"
-"PO-Revision-Date: 2020-10-01 09:48+0000\n"
+"PO-Revision-Date: 2020-12-25 17:27+0000\n"
 "Last-Translator: Paolo Za <zapaolo@email.it>\n"
-"Language-Team: Italian <https://l10n.opensuse.org/projects/snapper/master/it/>\n"
+"Language-Team: Italian <https://l10n.opensuse.org/projects/snapper/master/it/"
+">\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,7 +16,7 @@ msgstr ""
 "X-Generator: Weblate 3.6.1\n"
 
 msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
-msgstr ""
+msgstr "\t--abbreviate\t\t\tConsente di abbreviare le colonne della tabella."
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tElenca gli shapshot da tutte le configurazioni accessibili."
@@ -594,7 +595,7 @@ msgstr "Istantanee identiche."
 msgid "Illegal snapshot."
 msgstr "Istantanea illegale."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid ambit '%s'."
 msgstr "Ambito '%s' non valido."
 
