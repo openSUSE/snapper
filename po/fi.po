@@ -6,9 +6,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-17 13:34+0100\n"
-"PO-Revision-Date: 2020-08-24 00:40+0000\n"
-"Last-Translator: Tommi Nieminen <software@legisign.org>\n"
-"Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
+"PO-Revision-Date: 2020-12-28 01:27+0000\n"
+"Last-Translator: Kimmo Kujansuu <mrkujansuu@gmail.com>\n"
+"Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/"
+">\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,13 +18,13 @@ msgstr ""
 "X-Generator: Weblate 3.6.1\n"
 
 msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
-msgstr ""
+msgstr "\t--abbreviate\t\t\tSalli lyhentää taulukon sarakkeita."
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tLuettele tilannekuvia kaikista käytettävissä olevista kokoonpanoista."
 
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr ""
+msgstr "\t--ambit, -a ambit\t\tToimi ilmoitetulla tilalla."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\tTilannevedoksen puhdistusalgoritmi."
@@ -212,9 +213,8 @@ msgstr "\tsnapper xadiff <numero1>..<numero2> [tiedostot]"
 msgid "    Global options:"
 msgstr "    Yleisvalitsimet:"
 
-#, fuzzy
 msgid "    Options for 'cleanup' command:"
-msgstr "    ”create”-komennon valitsimet:"
+msgstr "    Vaihtoehdot \"cleanup\" komennolle:"
 
 msgid "    Options for 'create' command:"
 msgstr "    ”create”-komennon valitsimet:"
@@ -228,9 +228,8 @@ msgstr "    ”delete”-komennon valitsimet:"
 msgid "    Options for 'diff' command:"
 msgstr "    ”diff”-komennon valitsimet:"
 
-#, fuzzy
 msgid "    Options for 'get-config' command:"
-msgstr "    ”create-config”-komennon valitsimet:"
+msgstr "    Vaihtoehdot \"get-config\" komennolle:"
 
 msgid "    Options for 'list' command:"
 msgstr "    ”list”-komennon valitsimet:"
@@ -535,17 +534,16 @@ msgstr "Virhe (%s)."
 msgid "Failed to initialize filesystem handler."
 msgstr "Tiedostojärjestelmäkäsittelyn alustus epäonnistui."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to parse '%s'."
-msgstr "%s luominen epäonnistui"
+msgstr "\"%s\" luominen epäonnistui."
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr ""
 
-#, fuzzy
 msgid "Failed to query free space."
-msgstr "%s luominen epäonnistui"
+msgstr "Vapaan tilan kysely epäonnistui."
 
 msgid "Failed to set locale. Fix your system."
 msgstr "Maa-asetuksen asettaminen epäonnistui. Korjaa järjestelmä."
@@ -595,31 +593,30 @@ msgstr "Identtinen tilannevedos."
 msgid "Illegal snapshot."
 msgstr "Virheellinen tilannevedos."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid ambit '%s'."
-msgstr "Virheellinen tilannevedos \"%s\"."
+msgstr "Virheellinen alue \"%s\"."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid column '%s'."
-msgstr "Virheellinen tilannevedos \"%s\"."
+msgstr "Virheellinen sarake \"%s\"."
 
 msgid "Invalid configdata."
 msgstr "Virheellinen määritystieto."
 
-#, fuzzy
 msgid "Invalid free-space value."
-msgstr "Virheellinen alitaltio."
+msgstr "Virheellinen vapaan tilan arvo."
 
 msgid "Invalid group."
 msgstr "Virheellinen ryhmä."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid machine readable format '%s'."
-msgstr "Virheellinen koneluettava muoto %s."
+msgstr "Virheellinen tietokoneen formaatti \"%s\"."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid path '%s'."
-msgstr "Virheellinen tilannevedos \"%s\"."
+msgstr "Virheellinen polku \"%s\"."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -631,9 +628,9 @@ msgstr "Virheellisiä tilannevedoksia."
 msgid "Invalid subvolume."
 msgstr "Virheellinen alitaltio."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid table style '%s'."
-msgstr "Virheellinen taulukkotyyli %s."
+msgstr "Virheellinen taulukkotyyli \"%s\"."
 
 msgid "Invalid user."
 msgstr "Virheellinen käyttäjä."
@@ -676,7 +673,6 @@ msgstr "Komennon valitsimelta ”%s” puuttuu parametri."
 msgid "Missing argument for global option '%s'."
 msgstr "Yleisvalitsimelta ”%s” puuttuu parametri."
 
-#, fuzzy
 msgid "Missing command option."
 msgstr "Komennolta puuttuu parametri."
 
@@ -796,9 +792,9 @@ msgstr "Tuntematon yleisvalitsin \"%s\"."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Tuntematon valitsin \"%s\" komennolle \"%s\"."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown type '%s'."
-msgstr "Tuntematon komento \"%s\"."
+msgstr "Tuntematon tyyppi \"%s\"."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
@@ -873,11 +869,9 @@ msgstr ""
 msgid "nothing to do"
 msgstr "ei mitään tehtävää"
 
-#, fuzzy
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr ""
-"juuriparametria voi käyttää vain ilman no-dbus-valitsinta.\n"
-"Lisäohjeita komennolla ”snapper --help”."
+"root parametria voidaan käyttää vain yhdessä no-dbus-valitsimen kanssa.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "käyttö: snapper [--yleisvalitsimet] <komento> [--komennon-valitsimet] [komennon-parametrit]"
