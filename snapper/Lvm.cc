@@ -89,7 +89,7 @@ namespace snapper
 	bool found = false;
 	MtabData mtab_data;
 
-	if (!getMtabData(subvolume, found, mtab_data))
+	if (!getMtabData(prepend_root_prefix(root_prefix, subvolume), found, mtab_data))
 	    throw InvalidConfigException();
 
 	if (!found)

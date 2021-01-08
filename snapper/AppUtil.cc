@@ -147,10 +147,12 @@ namespace snapper
     string
     prepend_root_prefix(const string& root_prefix, const string& path)
     {
-        if (root_prefix == "/")
-            return path;
-        else
-            return root_prefix + path;
+	if (root_prefix == "/")
+	    return path;
+	else if (path == "/")
+	    return root_prefix;
+	else
+	    return root_prefix + path;
     }
 
 
