@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-17 13:34+0100\n"
-"PO-Revision-Date: 2020-12-28 19:37+0000\n"
+"PO-Revision-Date: 2021-02-09 00:17+0000\n"
 "Last-Translator: Tommi Nieminen <software@legisign.org>\n"
 "Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/"
 ">\n"
@@ -347,7 +347,7 @@ msgstr "Aktiivinen tilannekuva on jo oletus."
 
 #, c-format
 msgid "Ambit is %s."
-msgstr ""
+msgstr "Alue on %s."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -366,7 +366,7 @@ msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Tilannevedosta %d ei voi poistaa, koska se on seuraavaksi liitettävä tilannevedos."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
-msgstr ""
+msgstr "Aluetta ei voi tunnistaa, koska oletusalitaltio on tuntematon."
 
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Palautusta (rollback) ei voi tehdä, koska oletusalitaltio on tuntematon."
@@ -761,7 +761,7 @@ msgid "TB"
 msgstr "Tt"
 
 msgid "The ambit can be specified manually using the --ambit option."
-msgstr ""
+msgstr "Alueen voi määrittää itse --ambit-valitsimella."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "\"root\"-määritys puuttuu. Luultavasti snapperia ei ole määritetty."
