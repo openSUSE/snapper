@@ -4,9 +4,10 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-17 13:34+0100\n"
-"PO-Revision-Date: 2020-10-09 21:49+0000\n"
-"Last-Translator: Andrés Barrantes Silman <andresbs2000@protonmail.com>\n"
-"Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/>\n"
+"PO-Revision-Date: 2021-03-07 03:55+0000\n"
+"Last-Translator: Antonio Simón <antonio@trans-mission.com>\n"
+"Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/"
+">\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,7 +16,7 @@ msgstr ""
 "X-Generator: Weblate 3.6.1\n"
 
 msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
-msgstr ""
+msgstr "\t--abbreviate\t\t\tPermite abreviar las columnas de la tabla."
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tMuestra las instantáneas de todas las configuraciones a las que se puede acceder."
@@ -99,6 +100,8 @@ msgstr "\t--jsonout\t\t\tEstablecer el formato de salida como JSON."
 
 msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
 msgstr ""
+"\t--machine-readable <formato>\tDefine un formato de salida que puede leer "
+"el equipo (csv, json)."
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tTrabajar sin DBus."
@@ -108,6 +111,7 @@ msgstr "\t--output, -o <file>\t\tGuardar estado a archivo."
 
 msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
 msgstr ""
+"\t--path <vía>\t\t\tLimpia todas las configuraciones que afectan a la vía."
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <number>\t\tNúmero de pre imagen correspondiente."
@@ -133,6 +137,8 @@ msgstr "\t--root, -r <vía>\t\tFunciona en la raíz del destino (solo funciona s
 
 msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
 msgstr ""
+"\t--separator <separador>\t\tSeparador de caracteres para el formato de "
+"salida CSV."
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\tRealiza una sincronización después de suprimir."
@@ -224,9 +230,8 @@ msgstr "\tsnapper xadiff <número1>..<número2> [archivos]"
 msgid "    Global options:"
 msgstr "    Opciones Globales:"
 
-#, fuzzy
 msgid "    Options for 'cleanup' command:"
-msgstr "    Opciones para el comando 'create':"
+msgstr "    Opciones para el comando 'cleanup':"
 
 msgid "    Options for 'create' command:"
 msgstr "    Opciones para el comando 'create':"
@@ -240,9 +245,8 @@ msgstr "    Opciones del comando 'delete':"
 msgid "    Options for 'diff' command:"
 msgstr "    Opciones para el comando 'diff':"
 
-#, fuzzy
 msgid "    Options for 'get-config' command:"
-msgstr "    Opciones para el comando 'create-config':"
+msgstr "    Opciones para el comando 'get-config':"
 
 msgid "    Options for 'list' command:"
 msgstr "    Opciones para el comando 'list':"
@@ -252,6 +256,10 @@ msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
 "\t\t\t\t\tPossible columns: config, subvolume.\n"
 msgstr ""
+"    Opciones para el comando 'list-configs':\n"
+"\t--columns <columnas>\t\tLas columnas que se van a mostrar, separadas por "
+"coma.\n"
+"\t\t\t\t\tColumnas posibles: config, subvolumen.\n"
 
 msgid "    Options for 'modify' command:"
 msgstr "    Opciones para el comando 'modify':"
@@ -325,14 +333,14 @@ msgstr "#"
 #. %2$s is replaced by second value
 #, c-format
 msgid "%1$s or %2$s"
-msgstr ""
+msgstr "%1$s o %2$s"
 
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
 #, c-format
 msgid "%1$s, %2$s"
-msgstr ""
+msgstr "%1$s, %2$s"
 
 # SLE12
 #, c-format
@@ -344,14 +352,14 @@ msgid "ACL error."
 msgstr "Error de ACL."
 
 msgid "Active"
-msgstr ""
+msgstr "Activa"
 
 msgid "Active snapshot is already default snapshot."
-msgstr ""
+msgstr "La instantánea activa ya es la instantánea por defecto."
 
 #, c-format
 msgid "Ambit is %s."
-msgstr ""
+msgstr "El ámbito es %s."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -371,9 +379,10 @@ msgstr "No se puede borrar la imagen %d porque es la siguiente imagen que se va 
 
 msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr ""
+"No se puede detectar el ámbito porque no se conoce el subvolumen por defecto."
 
 msgid "Cannot do rollback since default subvolume is unknown."
-msgstr ""
+msgstr "No se puede revertir porque no se conoce el subvolumen por defecto."
 
 msgid "Cleanup"
 msgstr "Limpieza"
@@ -476,10 +485,10 @@ msgstr "Los datos de configuración %s tienen una clave vacía."
 
 #, c-format
 msgid "Could not make enough free space available for path '%s'."
-msgstr ""
+msgstr "No es posible crear espacio libre suficiente para la vía \"%s\"."
 
 msgid "Could not make enough free space available."
-msgstr ""
+msgstr "No es posible crear espacio libre suficiente."
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -509,7 +518,7 @@ msgid "Date"
 msgstr "Fecha"
 
 msgid "Default"
-msgstr ""
+msgstr "Por defecto"
 
 #, c-format
 msgid "Deleting config failed (%s)."
@@ -532,12 +541,11 @@ msgstr "Falló la detección del sistema de ficheros."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
-msgstr ""
+msgstr "E"
 
 #. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
-#, fuzzy
 msgid "EB"
-msgstr "EiB"
+msgstr "EB"
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
@@ -563,21 +571,20 @@ msgstr "Error al inicializar el gestor del sistema de archivos."
 # clients/lan_nfs_write.ycp:78
 # include/nfs/nfs_write.ycp:54
 # modules/Nfs.ycp:163
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to parse '%s'."
-msgstr "fallo al crear %s"
+msgstr "Error al analizar %s."
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
-msgstr ""
+msgstr "Error al consultar el espacio disponible para la vía \"%s\"."
 
 # clients/lan_nfs_write.ycp:78
 # clients/lan_nfs_write.ycp:78
 # include/nfs/nfs_write.ycp:54
 # modules/Nfs.ycp:163
-#, fuzzy
 msgid "Failed to query free space."
-msgstr "fallo al crear %s"
+msgstr "Error al consultar el espacio libre."
 
 msgid "Failed to set locale. Fix your system."
 msgstr "Error al establecer la configuración regional. Repare su sistema."
@@ -600,12 +607,11 @@ msgstr "Error de espacio libre (%s)."
 
 #. TRANSLATORS: symbol for "giga" (best keep untranslated)
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
-#, fuzzy
 msgid "GB"
-msgstr "GiB"
+msgstr "GB"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -625,32 +631,31 @@ msgstr "Imágenes idénticas."
 msgid "Illegal snapshot."
 msgstr "Imagen no válida."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid ambit '%s'."
-msgstr "Imagen '%s' no válida."
+msgstr "Ámbito %s no válido."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid column '%s'."
-msgstr "Imagen '%s' no válida."
+msgstr "Columna %s no válida."
 
 msgid "Invalid configdata."
 msgstr "Información de configuración no válida."
 
-#, fuzzy
 msgid "Invalid free-space value."
-msgstr "Subvolumen inválido."
+msgstr "Valor de espacio libre no válido."
 
 # SLE12
 msgid "Invalid group."
 msgstr "Grupo no válido."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid machine readable format '%s'."
-msgstr "Estilo de tabla no válido %d."
+msgstr "Formato que puede leer el equipo %s no válido."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid path '%s'."
-msgstr "Imagen '%s' no válida."
+msgstr "Vía %s no válida."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -662,9 +667,9 @@ msgstr "Imágenes inválidas."
 msgid "Invalid subvolume."
 msgstr "Subvolumen inválido."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid table style '%s'."
-msgstr "Estilo de tabla no válido %d."
+msgstr "Estilo de tabla %s no válido."
 
 # SLE12
 msgid "Invalid user."
@@ -686,12 +691,11 @@ msgstr "Falló el listado de configuraciones (%s)."
 
 #. TRANSLATORS: symbol for "mega" (best keep untranslated)
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
-#, fuzzy
 msgid "MB"
-msgstr "MiB"
+msgstr "MB"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Puede que haya olvidado indica el delimitador '..' entre los números de las instantáneas."
@@ -708,9 +712,8 @@ msgstr "Falta un argumento para el opción de comando '%s'."
 msgid "Missing argument for global option '%s'."
 msgstr "Falta un argumento para la opción global '%s'."
 
-#, fuzzy
 msgid "Missing command option."
-msgstr "Falta un argumento del comando."
+msgstr "Falta una opción del comando."
 
 msgid "Missing delimiter '..' between snapshot numbers."
 msgstr "Falta el delimitador '..' entre los números de las instantáneas."
@@ -736,12 +739,11 @@ msgstr "La opción --read-write solo se admite para instantáneas de tipo single
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
-#, fuzzy
 msgid "PB"
-msgstr "PiB"
+msgstr "PB"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -784,21 +786,21 @@ msgstr "Subvolumen"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
-#, fuzzy
 msgid "TB"
-msgstr "TiB"
+msgstr "TB"
 
 msgid "The ambit can be specified manually using the --ambit option."
-msgstr ""
+msgstr "El ámbito se puede especificar manualmente con la opción --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "La raíz de configuración no existe. Es probable que snapper no se haya configurado."
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr ""
+"Esto puede suceder si el sistema no se ha configurado para la reversión."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
@@ -829,15 +831,15 @@ msgstr "Opción global desconocida '%s'."
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Opción desconocida '%s' para el comando '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown type '%s'."
-msgstr "Comando '%s' desconocido."
+msgstr "Tipo %s desconocido."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
 #, c-format
 msgid "Use %1$s."
-msgstr ""
+msgstr "Use %1$s."
 
 # SLE12
 #, c-format
@@ -896,32 +898,30 @@ msgstr "fallo al modificar %s"
 
 #. TRANSLATORS: symbol for "kilo" (best keep untranslated)
 msgid "k"
-msgstr ""
+msgstr "k"
 
 #. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
-#, fuzzy
 msgid "kB"
-msgstr "B"
+msgstr "kB"
 
 #, c-format
 msgid "modifying %s"
 msgstr "modificando %s"
 
 msgid "no"
-msgstr ""
+msgstr "no"
 
 msgid "nothing to do"
 msgstr "no hay nada que hacer"
 
-#, fuzzy
 msgid "root argument can be used only together with no-dbus.\n"
-msgstr "El argumento root solo se puede usar junto con no-dbus."
+msgstr "El argumento root solo se puede usar junto con no-dbus.\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "uso: snapper [--global-options] <comando> [--command-options] [argumentos-comando]"
 
 msgid "yes"
-msgstr ""
+msgstr "sí"
 
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "Tipo de imagen desconocido."
