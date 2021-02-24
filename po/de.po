@@ -7,9 +7,10 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-17 13:34+0100\n"
-"PO-Revision-Date: 2020-11-30 01:26+0000\n"
-"Last-Translator: Fabian Niepelt <fniepelt@takios.de>\n"
-"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
+"PO-Revision-Date: 2021-03-07 13:54+0000\n"
+"Last-Translator: Gemineo <vistatec@gemineo.de>\n"
+"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
+"\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,7 +19,7 @@ msgstr ""
 "X-Generator: Weblate 3.6.1\n"
 
 msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
-msgstr ""
+msgstr "\t--abbreviate\t\t\tAbkürzung von Tabellenspalten zulassen."
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tSnapshots von allen verfügbaren Konfigurationen auflisten."
@@ -321,14 +322,14 @@ msgstr "#"
 #. %2$s is replaced by second value
 #, c-format
 msgid "%1$s or %2$s"
-msgstr ""
+msgstr "%1$s oder %2$s"
 
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
 #, c-format
 msgid "%1$s, %2$s"
-msgstr ""
+msgstr "%1$s, %2$s"
 
 #, c-format
 msgid "(Snapshot %d.)"
@@ -596,9 +597,9 @@ msgstr "Identische Schnappschüsse."
 msgid "Illegal snapshot."
 msgstr "Illegaler Schnappschuss."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid ambit '%s'."
-msgstr "Ungültiger Anwendungsbereich %s."
+msgstr "Ungültiger Anwendungsbereich '%s'."
 
 #, c-format
 msgid "Invalid column '%s'."
@@ -613,9 +614,9 @@ msgstr "Ungültiger Freier Speicher Wert."
 msgid "Invalid group."
 msgstr "Ungültige Gruppe."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid machine readable format '%s'."
-msgstr "Ungültiges maschinenlesbares Format %s."
+msgstr "Ungültiges maschinenlesbares Format '%s'."
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -631,9 +632,9 @@ msgstr "Ungültige Schnappschüsse."
 msgid "Invalid subvolume."
 msgstr "Ungültiges Subvolumen."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid table style '%s'."
-msgstr "Ungültiger Tabellenstil %s."
+msgstr "Ungültiger Tabellenstil '%s'."
 
 msgid "Invalid user."
 msgstr "Ungültiger Benutzer."
@@ -799,7 +800,7 @@ msgstr "Unbekannter Typ '%s'."
 #. %1$s is replaced by list of possible values
 #, c-format
 msgid "Use %1$s."
-msgstr ""
+msgstr "%1$s verwenden."
 
 #, c-format
 msgid "Use an integer number from %d to %d."
@@ -862,7 +863,7 @@ msgid "modifying %s"
 msgstr "%s wird geändert"
 
 msgid "no"
-msgstr ""
+msgstr "nein"
 
 msgid "nothing to do"
 msgstr "keine auszuführenden Aktionen"
@@ -874,7 +875,7 @@ msgid "usage: snapper [--global-options] <command> [--command-options] [command-
 msgstr "Aufruf: snapper [--Globale-Optionen] <Befehl> [--Befehlsoptionen] [Befehlsargumente]"
 
 msgid "yes"
-msgstr ""
+msgstr "ja"
 
 #, c-format
 #~ msgid "Invalid machine readable format %s."
