@@ -9,9 +9,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-17 13:34+0100\n"
-"PO-Revision-Date: 2020-02-17 12:54+0000\n"
+"PO-Revision-Date: 2021-03-07 13:51+0000\n"
 "Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
-"Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
+"Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/"
+"master/zh_TW/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,13 +21,13 @@ msgstr ""
 "X-Generator: Weblate 3.6.1\n"
 
 msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
-msgstr ""
+msgstr "\t--abbreviate\t\t\t允許使用表格各欄的縮寫。"
 
 msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\t列出所有可存取組態中的快照。"
 
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr ""
+msgstr "\t--ambit, -a ambit\t\t在指定範圍內操作。"
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <algo>\t清理快照的演算法。"
@@ -41,12 +42,19 @@ msgid ""
 "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
 "\t\t\t\t\tpre-number, post-number, post-date."
 msgstr ""
+"\t--columns <欄>\t\t要顯示的欄 (以逗號分隔)。\n"
+"\t\t\t\t\t可能的欄：config、subvolume、number、default、active、\n"
+"\t\t\t\t\ttype、date、user、used-space、cleanup、description、userdata、\n"
+"\t\t\t\t\tpre-number、post-number、post-date。"
 
 msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
 "\t\t\t\t\tPossible columns: key, value.\n"
 "\t\t\t\t\tColumns are not selected when JSON format is used."
 msgstr ""
+"\t--columns <欄>\t\t要顯示的欄 (以逗號分隔)。\n"
+"\t\t\t\t\t可能的欄：key、value。\n"
+"\t\t\t\t\t如果使用 JSON 格式，將不會選取欄。"
 
 # SLE12
 msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
@@ -56,7 +64,7 @@ msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <名稱>\t\t設定要使用的設定法名稱。"
 
 msgid "\t--csvout\t\t\tSet CSV output format."
-msgstr ""
+msgstr "\t--csvout\t\t\t設定 CSV 輸出格式。"
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <描述>\t快照的描述。"
@@ -75,7 +83,7 @@ msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
 msgstr "\t--extensions, -x <選項>\t傳送到 diff 指令的額外選項。"
 
 msgid "\t--free-space <space>\t\tTry to make space available."
-msgstr ""
+msgstr "\t--free-space <空間>\t\t嘗試釋放空間。"
 
 msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\t依據指定快照建立快照。"
@@ -94,10 +102,10 @@ msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
 msgstr "\t--iso\t\t\t\t以 ISO 格式顯示日期與時間。"
 
 msgid "\t--jsonout\t\t\tSet JSON output format."
-msgstr ""
+msgstr "\t--jsonout\t\t\t設定 JSON 輸出格式。"
 
 msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
-msgstr ""
+msgstr "\t--machine-readable <格式>\t設定機器可讀的輸出格式 (csv、json)。"
 
 # SLE12
 msgid "\t--no-dbus\t\t\tOperate without DBus."
@@ -107,7 +115,7 @@ msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <檔案>\t\t儲存狀態到檔案。"
 
 msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
-msgstr ""
+msgstr "\t--path <路徑>\t\t\t清理所有影響路徑的組態。"
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <數字>\t\t之前快照的相對應數字。"
@@ -132,7 +140,7 @@ msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <路徑>\t\t在目標根目錄操作 (不使用 DBus 時才起作用)。"
 
 msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
-msgstr ""
+msgstr "\t--separator <分隔符號>\t\tCSV 輸出格式的字元分隔符號。"
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s\t\t\t刪除後同步。"
@@ -233,9 +241,8 @@ msgstr "\tsnapper xadiff <數字1>..<數字2> [檔案]"
 msgid "    Global options:"
 msgstr "    全域選項："
 
-#, fuzzy
 msgid "    Options for 'cleanup' command:"
-msgstr "    'create' 命令的選項："
+msgstr "    \"cleanup\" 指令的選項："
 
 msgid "    Options for 'create' command:"
 msgstr "    'create' 命令的選項："
@@ -249,9 +256,8 @@ msgstr "    用於「delete」指令的選項︰"
 msgid "    Options for 'diff' command:"
 msgstr "    用於「diff」指令的選項︰"
 
-#, fuzzy
 msgid "    Options for 'get-config' command:"
-msgstr "    'create-config' 命令的選項："
+msgstr "    \"get-config\" 指令的選項："
 
 msgid "    Options for 'list' command:"
 msgstr "    'list' 命令的選項："
@@ -261,6 +267,9 @@ msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
 "\t\t\t\t\tPossible columns: config, subvolume.\n"
 msgstr ""
+"    \"list-configs\" 指令的選項：\n"
+"\t--columns <欄>\t\t要顯示的欄 (以逗號分隔)。\n"
+"\t\t\t\t\t可能的欄：config、subvolume。\n"
 
 msgid "    Options for 'modify' command:"
 msgstr "    'modify' 命令的選項："
@@ -299,7 +308,7 @@ msgstr "  刪除快照："
 
 # SLE12
 msgid "  Get config:"
-msgstr "  取得組態︰"
+msgstr "  取得組態："
 
 msgid "  List configs:"
 msgstr "  列出設定："
@@ -311,7 +320,7 @@ msgid "  Modify snapshot:"
 msgstr "  修改快照："
 
 msgid "  Mount snapshot:"
-msgstr "  掛載快照："
+msgstr "  裝載快照："
 
 # SLE12
 msgid "  Rollback:"
@@ -339,14 +348,14 @@ msgstr "編號＼"
 #. %2$s is replaced by second value
 #, c-format
 msgid "%1$s or %2$s"
-msgstr ""
+msgstr "%1$s 或 %2$s"
 
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
 #, c-format
 msgid "%1$s, %2$s"
-msgstr ""
+msgstr "%1$s，%2$s"
 
 # SLE12
 #, c-format
@@ -358,14 +367,14 @@ msgid "ACL error."
 msgstr "ACL 錯誤。"
 
 msgid "Active"
-msgstr ""
+msgstr "作用中"
 
 msgid "Active snapshot is already default snapshot."
-msgstr ""
+msgstr "作用中快照已經是預設快照。"
 
 #, c-format
 msgid "Ambit is %s."
-msgstr ""
+msgstr "範圍是 %s。"
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -384,10 +393,10 @@ msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "無法刪除快照 %d，因為接下來將要裝載該快照。"
 
 msgid "Cannot detect ambit since default subvolume is unknown."
-msgstr ""
+msgstr "無法偵測範圍，因為預設子磁碟區未知。"
 
 msgid "Cannot do rollback since default subvolume is unknown."
-msgstr ""
+msgstr "無法復原，因為預設子磁碟區未知。"
 
 msgid "Cleanup"
 msgstr "清理"
@@ -499,10 +508,10 @@ msgstr "組態資料「%s」的鍵為空白。"
 
 #, c-format
 msgid "Could not make enough free space available for path '%s'."
-msgstr ""
+msgstr "無法為路徑 \"%s\" 釋放足夠多的可用空間。"
 
 msgid "Could not make enough free space available."
-msgstr ""
+msgstr "無法釋放足夠多的可用空間。"
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -533,7 +542,7 @@ msgid "Date"
 msgstr "日期"
 
 msgid "Default"
-msgstr ""
+msgstr "預設值"
 
 #, c-format
 msgid "Deleting config failed (%s)."
@@ -556,12 +565,11 @@ msgstr "偵測檔案系統類型失敗。"
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
-msgstr ""
+msgstr "E"
 
 #. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
-#, fuzzy
 msgid "EB"
-msgstr "EiB"
+msgstr "EB"
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
@@ -583,17 +591,16 @@ msgstr "錯誤 (%s)。"
 msgid "Failed to initialize filesystem handler."
 msgstr "無法啟始化檔案系統處理器。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to parse '%s'."
-msgstr "建立 %s 失敗"
+msgstr "剖析 \"%s\" 失敗。"
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
-msgstr ""
+msgstr "查詢路徑 \"%s\" 的可用空間失敗。"
 
-#, fuzzy
 msgid "Failed to query free space."
-msgstr "建立 %s 失敗"
+msgstr "查詢可用空間失敗。"
 
 msgid "Failed to set locale. Fix your system."
 msgstr "無法設定地區設定。請修復您的系統。"
@@ -617,12 +624,11 @@ msgstr "可用空間錯誤 (%s)。"
 
 #. TRANSLATORS: symbol for "giga" (best keep untranslated)
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
-#, fuzzy
 msgid "GB"
-msgstr "GiB"
+msgstr "GB"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
@@ -643,34 +649,33 @@ msgstr "完全相同的快照。"
 msgid "Illegal snapshot."
 msgstr "快照不合法。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid ambit '%s'."
-msgstr "不適用的快照 '%s'。"
+msgstr "範圍 \"%s\" 無效。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid column '%s'."
-msgstr "不適用的快照 '%s'。"
+msgstr "欄 \"%s\" 無效。"
 
 # SLE12
 msgid "Invalid configdata."
 msgstr "無效的 configdata。"
 
 # SLE12
-#, fuzzy
 msgid "Invalid free-space value."
-msgstr "無效的子磁碟區。"
+msgstr "可用空間值無效。"
 
 # SLE12
 msgid "Invalid group."
 msgstr "無效的群組。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid machine readable format '%s'."
-msgstr "無效的表格樣式 %d。"
+msgstr "機器可讀格式 \"%s\" 無效。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid path '%s'."
-msgstr "不適用的快照 '%s'。"
+msgstr "路徑 \"%s\" 無效。"
 
 #, c-format
 msgid "Invalid snapshot '%s'."
@@ -683,9 +688,9 @@ msgstr "不適用的快照。"
 msgid "Invalid subvolume."
 msgstr "無效的子磁碟區。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid table style '%s'."
-msgstr "無效的表格樣式 %d。"
+msgstr "表格樣式 \"%s\" 無效。"
 
 # SLE12
 msgid "Invalid user."
@@ -708,12 +713,11 @@ msgstr "列出設定失敗 (%s)。"
 
 #. TRANSLATORS: symbol for "mega" (best keep untranslated)
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
-#, fuzzy
 msgid "MB"
-msgstr "MiB"
+msgstr "MB"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "可能您忘記在快照編號之間輸入分隔符「..」。"
@@ -730,9 +734,8 @@ msgstr "命令選項 '%s' 遺失參數。"
 msgid "Missing argument for global option '%s'."
 msgstr "全域選項 '%s' 遺失參數。"
 
-#, fuzzy
 msgid "Missing command option."
-msgstr "遺失指令引數。"
+msgstr "缺少指令選項。"
 
 msgid "Missing delimiter '..' between snapshot numbers."
 msgstr "快照編號之間缺少分隔符「..」。"
@@ -759,12 +762,11 @@ msgstr "選項 --read-write 僅適用於單一類型的快照。"
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
-#, fuzzy
 msgid "PB"
-msgstr "PiB"
+msgstr "PB"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -808,21 +810,20 @@ msgstr "子磁碟區"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
-#, fuzzy
 msgid "TB"
-msgstr "TiB"
+msgstr "TB"
 
 msgid "The ambit can be specified manually using the --ambit option."
-msgstr ""
+msgstr "可以使用 --ambit 選項以手動方式指定範圍。"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "組態「root」不存在。snapper 可能未設定。"
 
 msgid "This can happen if the system was not set up for rollback."
-msgstr ""
+msgstr "如果系統未設定為復原，便可能發生此情況。"
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
@@ -855,15 +856,15 @@ msgstr "未知的全域選項 '%s'。"
 msgid "Unknown option '%s' for command '%s'."
 msgstr "未知選項 '%s'，命令 '%s'。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown type '%s'."
-msgstr "未知的命令 '%s'。"
+msgstr "未知類型 \"%s\"。"
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
 #, c-format
 msgid "Use %1$s."
-msgstr ""
+msgstr "使用 %1$s。"
 
 # SLE12
 #, c-format
@@ -921,33 +922,31 @@ msgstr "修改 %s 失敗"
 
 #. TRANSLATORS: symbol for "kilo" (best keep untranslated)
 msgid "k"
-msgstr ""
+msgstr "k"
 
 #. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
-#, fuzzy
 msgid "kB"
-msgstr "B"
+msgstr "kB"
 
 #, c-format
 msgid "modifying %s"
 msgstr "正在修改 %s"
 
 msgid "no"
-msgstr ""
+msgstr "否"
 
 # SLE12
 msgid "nothing to do"
 msgstr "無執行動作"
 
-#, fuzzy
 msgid "root argument can be used only together with no-dbus.\n"
-msgstr "根引數只能與 no-dbus 配合使用。"
+msgstr "root 參數只能與 no-dbus 一併使用。\n"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "用法： snapper [--全域選項] <命令> [--命令選項] [命令參數]"
 
 msgid "yes"
-msgstr ""
+msgstr "是"
 
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "未知類型的快照。"
