@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Jan 25 11:29:45 CET 2021 - aschnell@suse.com
+
+- fixed testsuite for equal-date (gh#openSUSE/snapper#526)
+
+-------------------------------------------------------------------
 Thu Dec 17 12:20:59 CET 2020 - aschnell@suse.com
 
 - added option to abbreviate columns in table (see
