@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Mar 10 09:53:11 CET 2021 - aschnell@suse.com
+
+- updated translations (bsc#1149754)
+
+-------------------------------------------------------------------
 Mon Jan 25 11:29:45 CET 2021 - aschnell@suse.com
 
 - fixed testsuite for equal-date (gh#openSUSE/snapper#526)
