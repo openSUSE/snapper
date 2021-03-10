@@ -15,7 +15,7 @@ namespace std
     std::ostream&
     operator<<(std::ostream& s, const vector<string>& v)
     {
-	for(std::vector<string>::const_iterator it = v.begin(); it != v.end(); ++it)
+	for (std::vector<string>::const_iterator it = v.begin(); it != v.end(); ++it)
 	{
 	    if (it != v.begin())
 		s << " ";

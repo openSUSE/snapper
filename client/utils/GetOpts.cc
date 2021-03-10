@@ -97,7 +97,7 @@ namespace snapper
 		    {
 			vector<Option>::const_iterator it = find(options, optopt);
 			if (it == options.end())
-			    SN_THROW(Exception("option not found"));
+			    SN_THROW(OptionsException("option not found"));
 
 			opt = string("--") + it->name;
 		    }
@@ -120,7 +120,7 @@ namespace snapper
 		{
 		    vector<Option>::const_iterator it = c ? find(options, c) : options.begin() + option_index;
 		    if (it == options.end())
-			SN_THROW(Exception("option not found"));
+			SN_THROW(OptionsException("option not found"));
 
 		    result[it->name] = optarg ? optarg : "";
 		    break;
@@ -169,7 +169,7 @@ namespace snapper
 
 
     vector<struct option>
-    GetOpts::make_longopts(const vector<Option> options) const
+    GetOpts::make_longopts(const vector<Option>& options) const
     {
 	vector<struct option> ret;
 

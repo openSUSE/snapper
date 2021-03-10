@@ -103,7 +103,7 @@ namespace snapper
 	char** argv;
 
 	string make_optstring(const vector<Option>& options) const;
-	vector<struct option> make_longopts(const vector<Option> options) const;
+	vector<struct option> make_longopts(const vector<Option>& options) const;
 
 	vector<Option>::const_iterator find(const vector<Option>& options, char c) const;
 
