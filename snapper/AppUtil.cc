@@ -147,7 +147,9 @@ namespace snapper
     string
     prepend_root_prefix(const string& root_prefix, const string& path)
     {
-	if (root_prefix == "/")
+	// TODO use std::filesystem (C++17)
+
+	if (root_prefix == "/" || root_prefix.empty())
 	    return path;
 	else if (path == "/")
 	    return root_prefix;
