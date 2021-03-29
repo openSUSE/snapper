@@ -376,7 +376,8 @@ msgstr ""
 "unbekannt ist."
 
 msgid "Cannot do rollback since default subvolume is unknown."
-msgstr "Kann kein Rollback durchführen, seitdem das Standard-Subvolume unbekannt ist."
+msgstr ""
+"Kann kein Rollback durchführen, weil das Standard-Subvolume unbekannt ist."
 
 msgid "Cleanup"
 msgstr "Bereinigen"
