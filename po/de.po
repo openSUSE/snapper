@@ -366,7 +366,9 @@ msgstr ""
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr "Schnappschuss %d kann nicht gelöscht werden, seitdem es der nächste zu mountende Schnappschuss ist."
+msgstr ""
+"Schnappschuss %d kann nicht gelöscht werden, weil es der nächste zu "
+"mountende Schnappschuss ist."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr "Anwendungsbereich kann nicht erkannt werden, seitdem das Standard-Subvolume unbekannt ist."
