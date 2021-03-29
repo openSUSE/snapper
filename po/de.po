@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-17 13:34+0100\n"
 "PO-Revision-Date: 2021-03-29 16:36+0000\n"
-"Last-Translator: Gemineo <vistatec@gemineo.de>\n"
+"Last-Translator: Fabian Niepelt <fniepelt@takios.de>\n"
 "Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
 "\n"
 "Language: de\n"
@@ -360,7 +360,9 @@ msgstr ""
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr "Schnappschuss %d kann nicht gelöscht werden, seitdem es der derzeit gemountete Schnappschuss ist."
+msgstr ""
+"Schnappschuss %d kann nicht gelöscht werden, weil es der derzeit gemountete "
+"Schnappschuss ist."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
