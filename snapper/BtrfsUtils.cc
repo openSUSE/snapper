@@ -287,18 +287,8 @@ namespace snapper
 	    if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN, &args) < 0)
 		throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_RESCAN) failed", errno);
 
-	    while (true)
-	    {
-		sleep(1);
-
-		memset(&args, 0, sizeof(args));
-
-		if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN_STATUS, &args) < 0)
-		    throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_RESCAN_STATUS) failed", errno);
-
-		if (!args.flags)
-		    break;
-	    }
+	    if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN_WAIT, &args) < 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_WAIT_RESCAN) failed", errno);
 	}
 
 

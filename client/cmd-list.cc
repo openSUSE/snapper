@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2021] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -27,6 +27,7 @@
 #include "snapper/SnapperTmpl.h"
 #include "dbus/DBusMessage.h"
 #include "utils/HumanString.h"
+#include <snapper/BtrfsUtils.h>
 
 #include "utils/text.h"
 #include "GlobalOptions.h"
@@ -144,7 +145,16 @@ namespace snapper
 
 	    bool used_space_broken = true;
 
+	    /**
+	     * For all btrfses (by btrfs filesystem uuid) keep track of whether used space
+	     * is broken.
+	     */
+	    static map<Uuid, bool> used_space_broken_by_uuid;
+
 	};
+
+
+	map<Uuid, bool> OutputHelper::used_space_broken_by_uuid;
 
 
 	OutputHelper::OutputHelper(const ProxySnapper* snapper, const vector<Column>& columns)
@@ -169,18 +179,39 @@ namespace snapper
 	    }
 
 	    // Calculate the used space iff columns include USED_SPACE. Also sets
-	    // used_space_broken for use in skip_column.
+	    // used_space_broken (even cached) for use in skip_column.
 
 	    if (find(columns.begin(), columns.end(), Column::USED_SPACE) != columns.end())
 	    {
+		string subvolume = snapper->getConfig().getSubvolume();
+
 		try
 		{
-		    snapper->calculateUsedSpace();
-		    used_space_broken = false;
+		    Uuid uuid = BtrfsUtils::get_uuid(subvolume);
+
+		    map<Uuid, bool>::const_iterator pos = used_space_broken_by_uuid.find(uuid);
+		    if (pos != used_space_broken_by_uuid.end())
+		    {
+			used_space_broken = pos->second;
+		    }
+		    else
+		    {
+			try
+			{
+			    snapper->calculateUsedSpace();
+			    used_space_broken = used_space_broken_by_uuid[uuid] = false;
+			}
+			catch (const QuotaException& e)
+			{
+			    SN_CAUGHT(e);
+
+			    used_space_broken_by_uuid[uuid] = true;
+			}
+		    }
 		}
-		catch (const QuotaException& e)
+		catch (const runtime_error& e)
 		{
-		    SN_CAUGHT(e);
+		    // getting uuid failed, maybe it is a LVM config
 		}
 	    }
 	}
@@ -385,7 +416,7 @@ namespace snapper
 
 		    uint64_t used_space = snapshot.getUsedSpace();
 		    if (output_options.human)
-			return byte_to_humanstring(used_space, 2);
+			return byte_to_humanstring(used_space, false, 2);
 		    else
 			return used_space;
 		}

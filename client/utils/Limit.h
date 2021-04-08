@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2021] SUSE LLC
+ * Copyright (c) 2021 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -20,8 +20,8 @@
  */
 
 
-#ifndef SNAPPER_RANGE_H
-#define SNAPPER_RANGE_H
+#ifndef SNAPPER_LIMIT_H
+#define SNAPPER_LIMIT_H
 
 
 #include <string>
@@ -33,32 +33,56 @@ namespace snapper
     using namespace std;
 
 
-    /*
-     * Simple class to hold a range of two size_ts as min and max.
-     */
-    class Range
+    class Limit
     {
     public:
 
-	enum Value { MIN, MAX };
-
-	Range(size_t value) : min(value), max(value) {}
+	Limit(double fraction) : type(FRACTION), fraction(fraction) {}
 
 	/**
 	 * Uses the classic locale since the class is intended for config data.
 	 */
 	void parse(const string& s);
 
-	size_t value(Value value) const { return value == MIN ? min : max; }
+	friend ostream& operator<<(ostream& str, const Limit& limit);
 
-	bool is_degenerated() const { return min == max; }
+    protected:
 
-	friend ostream& operator<<(ostream& s, const Range& range);
+	enum Type { FRACTION, ABSOLUTE };
 
-    private:
+	Type type;
 
-	size_t min;
-	size_t max;
+	union
+	{
+	    double fraction;
+	    unsigned long long absolute;
+	};
+
+    };
+
+
+    class MaxUsedLimit : public Limit
+    {
+    public:
+
+	MaxUsedLimit(double fraction) : Limit(fraction) {}
+
+	bool is_enabled() const;
+
+	bool is_satisfied(unsigned long long size, unsigned long long used) const;
+
+    };
+
+
+    class MinFreeLimit : public Limit
+    {
+    public:
+
+	MinFreeLimit(double fraction) : Limit(fraction) {}
+
+	bool is_enabled() const;
+
+	bool is_satisfied(unsigned long long size, unsigned long long free) const;
 
     };
 

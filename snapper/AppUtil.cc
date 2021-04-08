@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2015] Novell, Inc.
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2021] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -423,6 +423,31 @@ namespace snapper
     Uuid::operator==(const Uuid& rhs) const
     {
 	return std::equal(std::begin(value), std::end(value), std::begin(rhs.value));
+    }
+
+
+    bool
+    Uuid::operator<(const Uuid& rhs) const
+    {
+	return std::lexicographical_compare(std::begin(value), std::end(value),
+					    std::begin(rhs.value), std::end(rhs.value));
+    }
+
+
+    std::ostream&
+    operator<<(std::ostream& s, const Uuid& uuid)
+    {
+	for (int i = 0; i < 16; ++i)
+	{
+	    char buf[4];
+	    snprintf(buf, 4, "%02x", uuid.value[i]);
+	    s << buf;
+
+	    if (i == 3 || i == 5 || i == 7 || i == 9)
+		s << '-';
+	}
+
+	return s;
     }
 
 }

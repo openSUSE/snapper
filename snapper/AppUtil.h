@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2015] Novell, Inc.
- * Copyright (c) 2020 SUSE LLC
+ * Copyright (c) [2020-2021] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -29,6 +29,7 @@
 #include <pwd.h>
 #include <grp.h>
 #include <unistd.h>
+#include <ostream>
 #include <sstream>
 #include <locale>
 #include <string>
@@ -185,6 +186,9 @@ namespace snapper
 	uint8_t value[16];
 
 	bool operator==(const Uuid& rhs) const;
+	bool operator<(const Uuid& rhs) const;
+
+	friend std::ostream& operator<<(std::ostream& s, const Uuid& uuid);
 
     };
 

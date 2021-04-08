@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Wed Apr 07 10:24:33 CEST 2021 - aschnell@suse.com
+
+- avoid redundant quota rescans for same btrfs (see
+  gh#openSUSE/snapper#507)
+- allow absolute sizes for SPACE_LIMIT and FREE_LIMIT
+  (gh#openSUSE/snapper#507)
+
+-------------------------------------------------------------------
 Fri Mar 19 10:30:06 CET 2021 - aschnell@suse.com
 
 - fixed creating root config (root prefix handling)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2021] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -20,71 +20,65 @@
  */
 
 
-#include <string>
 #include <sstream>
+
+#include <snapper/Exception.h>
+#include <snapper/SnapperTmpl.h>
 
 #include "Range.h"
 
-using namespace std;
 
-
-istream&
-operator>>(istream& s, Range& range)
+namespace snapper
 {
-    string value;
-    s >> value;
 
-    string::size_type pos = value.find('-');
-    if (pos == string::npos)
+    using namespace std;
+
+
+    void
+    Range::parse(const string& s)
     {
-	size_t v;
-
-	istringstream a(value);
-	a >> v;
-	if (a.fail() || !a.eof())
+	string::size_type pos = s.find('-');
+	if (pos == string::npos)
 	{
-	    s.setstate(ios::failbit);
-	    return s;
+	    size_t v;
+
+	    istringstream a(s);
+	    classic(a);
+	    a >> v;
+	    if (a.fail() || !a.eof())
+		SN_THROW(Exception("failed to parse range"));
+
+	    min = max = v;
 	}
-
-	range.min = range.max = v;
-    }
-    else
-    {
-	size_t v1, v2;
-
-	istringstream a(value.substr(0, pos));
-	a >> v1;
-	if (a.fail() || !a.eof())
+	else
 	{
-	    s.setstate(ios::failbit);
-	    return s;
-	}
+	    size_t v1, v2;
 
-	istringstream b(value.substr(pos + 1));
-	b >> v2;
-	if (b.fail() || !b.eof())
-	{
-	    s.setstate(ios::failbit);
-	    return s;
-	}
+	    istringstream a(s.substr(0, pos));
+	    classic(a);
+	    a >> v1;
+	    if (a.fail() || !a.eof())
+		SN_THROW(Exception("failed to parse range"));
 
-	if (v1 > v2)
-	{
-	    s.setstate(ios::failbit);
-	    return s;
-	}
+	    istringstream b(s.substr(pos + 1));
+	    classic(b);
+	    b >> v2;
+	    if (b.fail() || !b.eof())
+		SN_THROW(Exception("failed to parse range"));
 
-	range.min = v1;
-	range.max = v2;
+	    if (v1 > v2)
+		SN_THROW(Exception("failed to parse range"));
+
+	    min = v1;
+	    max = v2;
+	}
     }
 
-    return s;
-}
 
+    ostream&
+    operator<<(ostream& s, const Range& range)
+    {
+	return s << range.min << "-" << range.max;
+    }
 
-ostream&
-operator<<(ostream& s, const Range& range)
-{
-    return s << range.min << "-" << range.max;
 }

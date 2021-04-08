@@ -2,13 +2,13 @@
 <refentry id='snapper-configs5'>
 
   <refentryinfo>
-    <date>2018-10-29</date>
+    <date>2021-04-07</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper-configs</refentrytitle>
     <manvolnum>5</manvolnum>
-    <refmiscinfo class='date'>2018-10-29</refmiscinfo>
+    <refmiscinfo class='date'>2021-04-07</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -63,22 +63,25 @@
       <varlistentry>
 	<term><option>SPACE_LIMIT=<replaceable>float</replaceable></option></term>
 	<listitem>
-	  <para>Limit for the fraction of the filesystems space the snapshots
-	  should use.</para>
+	  <para>Limit of the filesystems space the snapshots should
+	  use. Either a fraction of the whole filesystem for an
+	  absolute value. An absolute value must use the C locale.</para>
 	  <para>Only supported for btrfs.</para>
 	  <para>Default value is &quot;0.5&quot;.</para>
-	  <para>New in version 0.3.0.</para>
+	  <para>New in version 0.3.0, absolute value new in version
+	  0.9.0.</para>
 	</listitem>
       </varlistentry>
 
       <varlistentry>
 	<term><option>FREE_LIMIT=<replaceable>float</replaceable></option></term>
 	<listitem>
-	  <para>Limit for the fraction of the filesystem space that
-	  should be free.</para>
+	  <para>Limit of the filesystem space that should be
+	  free. Either a fraction of the whole filesystem for an absolute
+	  value. An absolute value must use the C locale.</para>
 	  <para>Only supported for btrfs.</para>
 	  <para>Default value is &quot;0.2&quot;.</para>
-	  <para>New in version 0.8.0.</para>
+	  <para>New in version 0.8.0, absolute value new in version 0.9.0.</para>
 	</listitem>
       </varlistentry>
 

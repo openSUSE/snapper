@@ -14,6 +14,7 @@ libutils_la_SOURCES =				\
 	GetOpts.cc	    GetOpts.h		\
 	Range.cc	    Range.h		\
 	HumanString.cc	    HumanString.h	\
+	Limit.cc	    Limit.h		\
 	TableFormatter.cc   TableFormatter.h	\
 	CsvFormatter.cc	    CsvFormatter.h	\
 	JsonFormatter.cc    JsonFormatter.h
