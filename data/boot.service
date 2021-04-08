@@ -1,5 +1,6 @@
 [Unit]
 Description=Take snapper snapshot of root on boot
+ConditionPathExists=/etc/snapper/configs/root
 
 [Service]
 Type=oneshot
