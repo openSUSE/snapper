@@ -10,10 +10,10 @@ FSTYPE="btrfs"
 QGROUP=""
 
 
-# fraction of the filesystems space the snapshots may use
+# fraction or absolute size of the filesystems space the snapshots may use
 SPACE_LIMIT="0.5"
 
-# fraction of the filesystems space that should be free
+# fraction or absolute size of the filesystems space that should be free
 FREE_LIMIT="0.2"
 
 

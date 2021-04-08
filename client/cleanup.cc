@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2021] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -30,6 +30,7 @@
 #include "snapper/Snapper.h"
 
 #include "utils/Range.h"
+#include "utils/Limit.h"
 #include "utils/equal-date.h"
 #include "utils/HumanString.h"
 #include "cleanup.h"
@@ -46,8 +47,18 @@ struct Parameters
     virtual bool is_degenerated() const { return true; }
 
     time_t min_age;
-    double space_limit;
-    double free_limit;
+    MaxUsedLimit space_limit;
+    MinFreeLimit free_limit;
+
+
+    void read(const ProxyConfig& config, const char* name, long int& value)
+    {
+	const map<string, string>& raw = config.getAllValues();
+	map<string, string>::const_iterator pos = raw.find(name);
+	if (pos != raw.end())
+	    pos->second >> value;
+    }
+
 
     template<typename Type>
     void read(const ProxyConfig& config, const char* name, Type& value)
@@ -55,9 +66,29 @@ struct Parameters
 	const map<string, string>& raw = config.getAllValues();
 	map<string, string>::const_iterator pos = raw.find(name);
 	if (pos != raw.end())
-	    pos->second >> value;
+	{
+	    try
+	    {
+		value.parse(pos->second);
+	    }
+	    catch (const Exception& e)
+	    {
+		SN_CAUGHT(e);
+
+		cerr << "failed to parse \"" << pos->second << "\" for \"" << name << "\"" << endl;
+	    }
+	}
     }
 };
+
+
+ostream&
+operator<<(ostream& s, const Parameters& parameters)
+{
+    return s << "min-age:" << parameters.min_age << '\n'
+	     << "space-limit:" << parameters.space_limit << '\n'
+	     << "free-limit:" << parameters.free_limit;
+}
 
 
 Parameters::Parameters(const ProxySnapper* snapper)
@@ -67,15 +98,6 @@ Parameters::Parameters(const ProxySnapper* snapper)
 
     read(config, "SPACE_LIMIT", space_limit);
     read(config, "FREE_LIMIT", free_limit);
-}
-
-
-ostream&
-operator<<(ostream& s, const Parameters& parameters)
-{
-    return s << "min-age:" << parameters.min_age << '\n'
-	     << "space-limit:" << parameters.space_limit << '\n'
-	     << "free-limit:" << parameters.free_limit;
 }
 
 
@@ -245,7 +267,7 @@ Cleaner::is_quota_aware() const
 	return false;
     }
 
-    return parameters.space_limit < 1.0;
+    return parameters.space_limit.is_enabled();
 }
 
 
@@ -257,14 +279,12 @@ Cleaner::is_quota_satisfied() const
     if (quota_data.size == 0)
 	return true;
 
-    double fraction = (double)(quota_data.used) / (double)(quota_data.size);
-
-    bool satisfied = fraction < parameters.space_limit;
+    bool satisfied = parameters.space_limit.is_satisfied(quota_data.size, quota_data.used);
 
 #ifdef VERBOSE_LOGGING
-    cout << byte_to_humanstring(quota_data.size, 2) << ", "
-	 << byte_to_humanstring(quota_data.used, 2) << ", "
-	 << fraction << ", " << satisfied << '\n';
+    cout << byte_to_humanstring(quota_data.size, true, 2) << ", "
+	 << byte_to_humanstring(quota_data.used, true, 2) << ", "
+	 << satisfied << '\n';
 #endif
 
     return satisfied;
@@ -289,7 +309,7 @@ Cleaner::is_free_aware() const
 	return false;
     }
 
-    return parameters.free_limit > 0.0;
+    return parameters.free_limit.is_enabled();
 }
 
 
@@ -301,14 +321,12 @@ Cleaner::is_free_satisfied() const
     if (free_space_data.size == 0)
 	return true;
 
-    double fraction = (double)(free_space_data.free) / (double)(free_space_data.size);
-
-    bool satisfied = fraction > parameters.free_limit;
+    bool satisfied = parameters.free_limit.is_satisfied(free_space_data.size, free_space_data.free);
 
 #ifdef VERBOSE_LOGGING
-    cout << byte_to_humanstring(free_space_data.size, 2) << ", "
-	 << byte_to_humanstring(free_space_data.free, 2) << ", "
-	 << fraction << ", " << satisfied << '\n';
+    cout << byte_to_humanstring(free_space_data.size, true, 2) << ", "
+	 << byte_to_humanstring(free_space_data.free, true, 2) << ", "
+	 << satisfied << '\n';
 #endif
 
     return satisfied;
@@ -448,6 +466,15 @@ struct NumberParameters : public Parameters
 };
 
 
+ostream&
+operator<<(ostream& s, const NumberParameters& parameters)
+{
+    return s << dynamic_cast<const Parameters&>(parameters) << '\n'
+	     << "limit:" << parameters.limit << '\n'
+	     << "limit-important:" << parameters.limit_important;
+}
+
+
 NumberParameters::NumberParameters(const ProxySnapper* snapper)
     : Parameters(snapper), limit(50), limit_important(10)
 {
@@ -457,15 +484,10 @@ NumberParameters::NumberParameters(const ProxySnapper* snapper)
 
     read(config, "NUMBER_LIMIT", limit);
     read(config, "NUMBER_LIMIT_IMPORTANT", limit_important);
-}
 
-
-ostream&
-operator<<(ostream& s, const NumberParameters& parameters)
-{
-    return s << dynamic_cast<const Parameters&>(parameters) << '\n'
-	     << "limit:" << parameters.limit << '\n'
-	     << "limit-important:" << parameters.limit_important;
+#ifdef VERBOSE_LOGGING
+    cout << *this << '\n';
+#endif
 }
 
 
@@ -571,6 +593,18 @@ struct TimelineParameters : public Parameters
 };
 
 
+ostream&
+operator<<(ostream& s, const TimelineParameters& parameters)
+{
+    return s << dynamic_cast<const Parameters&>(parameters) << '\n'
+	     << "limit-hourly:" << parameters.limit_hourly << '\n'
+	     << "limit-daily:" << parameters.limit_daily << '\n'
+	     << "limit-weekly:" << parameters.limit_weekly << '\n'
+	     << "limit-monthly:" << parameters.limit_monthly << '\n'
+	     << "limit-yearly:" << parameters.limit_yearly;
+}
+
+
 TimelineParameters::TimelineParameters(const ProxySnapper* snapper)
     : Parameters(snapper), limit_hourly(10), limit_daily(10), limit_monthly(10),
       limit_weekly(0), limit_yearly(10)
@@ -584,18 +618,10 @@ TimelineParameters::TimelineParameters(const ProxySnapper* snapper)
     read(config, "TIMELINE_LIMIT_WEEKLY", limit_weekly);
     read(config, "TIMELINE_LIMIT_MONTHLY", limit_monthly);
     read(config, "TIMELINE_LIMIT_YEARLY", limit_yearly);
-}
 
-
-ostream&
-operator<<(ostream& s, const TimelineParameters& parameters)
-{
-    return s << dynamic_cast<const Parameters&>(parameters) << '\n'
-	     << "limit-hourly:" << parameters.limit_hourly << '\n'
-	     << "limit-daily:" << parameters.limit_daily << '\n'
-	     << "limit-weekly:" << parameters.limit_weekly << '\n'
-	     << "limit-monthly:" << parameters.limit_monthly << '\n'
-	     << "limit-yearly:" << parameters.limit_yearly;
+#ifdef VERBOSE_LOGGING
+    cout << *this << '\n';
+#endif
 }
 
 
@@ -781,6 +807,10 @@ EmptyPrePostParameters::EmptyPrePostParameters(const ProxySnapper* snapper)
     ProxyConfig config = snapper->getConfig();
 
     read(config, "EMPTY_PRE_POST_MIN_AGE", min_age);
+
+#ifdef VERBOSE_LOGGING
+    cout << *this << '\n';
+#endif
 }
 
 

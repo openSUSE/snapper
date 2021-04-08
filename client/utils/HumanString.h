@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2014] Novell, Inc.
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2021] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -48,9 +48,10 @@ namespace snapper
      * Return a suffix.
      *
      * @param i index of suffix
+     * @param classic use classic locale instead of global C++ locale
      * @return suffix
      */
-    std::string get_suffix(int i);
+    std::string get_suffix(int i, bool classic);
 
 
     /**
@@ -59,10 +60,11 @@ namespace snapper
      * - 1 B).
      *
      * @param size size in bytes
+     * @param classic use classic locale instead of global C++ locale
      * @param precision number of fraction digits in output
      * @return formatted string
      */
-    std::string byte_to_humanstring(unsigned long long size, int precision);
+    std::string byte_to_humanstring(unsigned long long size, bool classic, int precision);
 
 
     /**
@@ -71,10 +73,11 @@ namespace snapper
      * is 0 B to (16 EiB - 1 B).
      *
      * @param str size string
+     * @param classic use classic locale instead of global C++ locale
      * @return bytes
      *
      * The conversion is always case-insensitive.
      */
-    unsigned long long humanstring_to_byte(const std::string& str);
+    unsigned long long humanstring_to_byte(const std::string& str, bool classic);
 
 }

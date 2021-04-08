@@ -23,7 +23,7 @@ test(const char* loc, unsigned long long size, int precision)
 {
     locale::global(locale(loc));
 
-    return byte_to_humanstring(size, precision);
+    return byte_to_humanstring(size, false, precision);
 }
 
 
@@ -32,7 +32,7 @@ test(const char* loc, const char* str)
 {
     locale::global(locale(loc));
 
-    return humanstring_to_byte(str);
+    return humanstring_to_byte(str, false);
 }
 
 

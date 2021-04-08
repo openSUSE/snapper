@@ -239,7 +239,7 @@ namespace snapper
 	{
 	    try
 	    {
-		free_space = humanstring_to_byte(opt->second);
+		free_space = humanstring_to_byte(opt->second, false);
 	    }
 	    catch (const Exception& e)
 	    {

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2014] Novell, Inc.
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2021] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -21,6 +21,7 @@
  */
 
 
+#include <locale>
 #include <cmath>
 #include <vector>
 #include <sstream>
@@ -52,8 +53,10 @@ namespace snapper
 
 
     vector<string>
-    get_all_suffixes(int i, bool all = true)
+    get_all_suffixes(int i, bool all = true, bool classic = false)
     {
+	auto _ = [classic](const char* msg) { return classic ? msg : ::_(msg); };
+
 	vector<string> ret;
 
 	switch (i)
@@ -145,9 +148,9 @@ namespace snapper
 
 
     string
-    get_suffix(int i)
+    get_suffix(int i, bool classic)
     {
-	return get_all_suffixes(i, false).front();
+	return get_all_suffixes(i, false, classic).front();
     }
 
 
@@ -165,9 +168,10 @@ namespace snapper
 	// according to the suffix. Do all required error checks.
 
 	pair<bool, unsigned long long>
-	parse_i(const string& str, int i)
+	parse_i(const string& str, int i, const locale& loc)
 	{
 	    istringstream s(str);
+	    s.imbue(loc);
 
 	    unsigned long long v;
 	    s >> v;
@@ -196,9 +200,10 @@ namespace snapper
 
 
 	pair<bool, unsigned long long>
-	parse_f(const string& str, int i)
+	parse_f(const string& str, int i, const locale& loc)
 	{
 	    istringstream s(str);
+	    s.imbue(loc);
 
 	    long double v;
 	    s >> v;
@@ -233,12 +238,14 @@ namespace snapper
 
 
     string
-    byte_to_humanstring(unsigned long long size, int precision)
+    byte_to_humanstring(unsigned long long size, bool classic, int precision)
     {
 	// Calculate the index of the suffix to use. The index increases by 1
 	// when the number of leading zeros decreases by 10.
 
 	static_assert(sizeof(size) == 8, "unsigned long long not 64 bit");
+
+	const locale loc = classic ? locale::classic() : locale();
 
 	int i = size > 0 ? (64 - (clz(size) + 1)) / 10 : 0;
 
@@ -247,7 +254,8 @@ namespace snapper
 	    unsigned long long v = size >> 10 * i;
 
 	    std::ostringstream s;
-	    s << v << ' ' << get_suffix(i);
+	    s.imbue(loc);
+	    s << v << ' ' << get_suffix(i, classic);
 	    return s.str();
 	}
 	else
@@ -255,34 +263,39 @@ namespace snapper
 	    long double v = std::ldexp((long double)(size), - 10 * i);
 
 	    std::ostringstream s;
+	    s.imbue(loc);
 	    s.setf(std::ios::fixed);
 	    s.precision(precision);
-	    s << v << ' ' << get_suffix(i);
+	    s << v << ' ' << get_suffix(i, classic);
 	    return s.str();
 	}
     }
 
 
     unsigned long long
-    humanstring_to_byte(const string& str)
+    humanstring_to_byte(const string& str, bool classic)
     {
-	const string str_trimmed = boost::trim_copy(str);
+	const locale loc = classic ? locale::classic() : locale();
+
+	const string str_trimmed = boost::trim_copy(str, loc);
 
 	for (int i = 0; i < num_suffixes(); ++i)
 	{
-	    for (const string& suffix : get_all_suffixes(i))
+	    vector<string> suffixes = get_all_suffixes(i, true, classic);
+
+	    for (const string& suffix : suffixes)
 	    {
-		if (boost::iends_with(str_trimmed, suffix))
+		if (boost::iends_with(str_trimmed, suffix, loc))
 		{
-		    string number = boost::trim_copy(str_trimmed.substr(0, str_trimmed.size() - suffix.size()));
+		    string number = boost::trim_copy(str_trimmed.substr(0, str_trimmed.size() - suffix.size()), loc);
 
 		    pair<bool, unsigned long long> v;
 
-		    v = parse_i(number, i);
+		    v = parse_i(number, i, loc);
 		    if (v.first)
 			return v.second;
 
-		    v = parse_f(number, i);
+		    v = parse_f(number, i, loc);
 		    if (v.first)
 			return v.second;
 		}

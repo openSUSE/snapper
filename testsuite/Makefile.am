@@ -7,9 +7,9 @@ AM_CPPFLAGS = -I$(top_srcdir) $(DBUS_CFLAGS)
 LDADD = ../snapper/libsnapper.la ../dbus/libdbus.la -lboost_unit_test_framework
 
 check_PROGRAMS = sysconfig-get1.test dirname1.test basename1.test 		\
-	equal-date.test dbus-escape.test cmp-lt.test humanstring.test 		\
+	equal-date.test dbus-escape.test cmp-lt.test humanstring.test uuid.test	\
 	table.test table-formatter.test csv-formatter.test json-formatter.test	\
-	getopts.test scan-datetime.test root-prefix.test
+	getopts.test scan-datetime.test root-prefix.test range.test limit.test
 
 if ENABLE_BTRFS_QUOTA
 check_PROGRAMS += qgroup1.test
@@ -31,6 +31,8 @@ scan_datetime_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.
 
 humanstring_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
 
+uuid_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
+
 table_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
 
 table_formatter_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
@@ -42,3 +44,7 @@ json_formatter_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils
 getopts_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
 
 lvm_utils_test_LDADD = -lboost_unit_test_framework ../snapper/libsnapper.la
+
+range_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
+
+limit_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
