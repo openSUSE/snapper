@@ -55,8 +55,9 @@ BuildRequires:  systemd
 BuildRequires:  pkg-config
 %endif
 %if 0%{?fedora_version} >= 24 || 0%{?centos_version} >= 800
-BuildRequires:	glibc-langpack-en
 BuildRequires:	glibc-langpack-de
+BuildRequires:	glibc-langpack-fr
+BuildRequires:	glibc-langpack-en
 %endif
 %if ! 0%{?mandriva_version}
 %if 0%{?fedora_version} >= 23
