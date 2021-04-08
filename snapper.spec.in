@@ -1,7 +1,7 @@
 #
 # spec file for package snapper
 #
-# Copyright (c) 2020 SUSE LLC
+# Copyright (c) 2021 SUSE LLC
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -88,6 +88,7 @@ BuildRequires:  lcov
 %endif
 Requires:       diffutils
 Requires:       libsnapper@LIBVERSION_MAJOR@ = %version
+Requires:       systemd
 %if 0%{?suse_version}
 Recommends:     logrotate snapper-zypp-plugin
 Supplements:    btrfsprogs
@@ -193,7 +194,10 @@ fi
 %endif
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
 %{_unitdir}/snapper*.*
-%config /etc/dbus-1/system.d/org.opensuse.Snapper.conf
+%if 0%{?suse_version} <= 1500
+%dir %{_datadir}/dbus-1/system.d
+%endif
+%{_datadir}/dbus-1/system.d/org.opensuse.Snapper.conf
 %{_datadir}/dbus-1/system-services/org.opensuse.Snapper.service
 
 %package -n libsnapper@LIBVERSION_MAJOR@

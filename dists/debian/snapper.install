@@ -1,9 +1,9 @@
 etc/cron.daily/snapper
 etc/cron.hourly/snapper
-etc/dbus-1/system.d/org.opensuse.Snapper.conf
 etc/logrotate.d/snapper
 usr/bin/snapper
 usr/sbin/snapperd
+usr/share/dbus-1/system.d/org.opensuse.Snapper.conf
 usr/share/dbus-1/system-services/org.opensuse.Snapper.service
 usr/share/locale/*/LC_MESSAGES/snapper.mo
 usr/lib/systemd/system/snapperd.service

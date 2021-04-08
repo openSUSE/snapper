@@ -18,7 +18,7 @@ install-data-local:
 	install -D -m 644 lvm.txt $(DESTDIR)/etc/snapper/filters/lvm.txt
 	install -D -m 644 x11.txt $(DESTDIR)/etc/snapper/filters/x11.txt
 
-	install -D -m 644 org.opensuse.Snapper.conf $(DESTDIR)/etc/dbus-1/system.d/org.opensuse.Snapper.conf
+	install -D -m 644 org.opensuse.Snapper.conf $(DESTDIR)/usr/share/dbus-1/system.d/org.opensuse.Snapper.conf
 	install -D -m 644 org.opensuse.Snapper.service $(DESTDIR)/usr/share/dbus-1/system-services/org.opensuse.Snapper.service
 
 if ENABLE_SYSTEMD
