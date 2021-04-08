@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Apr 08 14:05:19 CEST 2021 - aschnell@suse.com
+
+- move org.opensuse.Snapper.conf from /etc to /usr (bsc#1183398 and
+  gh#openSUSE/snapper#492)
+
+-------------------------------------------------------------------
 Wed Apr 07 10:24:33 CEST 2021 - aschnell@suse.com
 
 - avoid redundant quota rescans for same btrfs (see
