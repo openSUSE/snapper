@@ -36,7 +36,7 @@
   <refsect1 id='description'>
     <title>DESCRIPTION</title>
 
-    <para>Create a snapshot at every login of a user, thus he or she always has a save
+    <para>Create a snapshot at every login of a user, thus they always have a save
     starting point.</para>
 
     <para>As many users do not logout for some time, it is a good idea to
