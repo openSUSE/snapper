@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Apr 09 15:23:14 CEST 2021 - aschnell@suse.com
+
+- improved error handling (see gh#openSUSE/snapper#626)
+
+-------------------------------------------------------------------
 Thu Apr 08 14:05:19 CEST 2021 - aschnell@suse.com
 
 - move org.opensuse.Snapper.conf from /etc to /usr (bsc#1183398 and

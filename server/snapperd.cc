@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) 2018 SUSE LLC
+ * Copyright (c) [2018-2021] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -279,7 +279,16 @@ main(int argc, char** argv)
 
     y2mil("Loading snapper configs");
 
-    meta_snappers.init();
+    try
+    {
+	meta_snappers.init();
+    }
+    catch (const Exception& e)
+    {
+	SN_CAUGHT(e);
+
+	y2err("failed to load snapper configs");
+    }
 
     y2mil("Listening for method calls and signals");
 
