@@ -160,7 +160,7 @@ public:
     boost::thread thread;
     queue<Task> tasks;
 
-    bool zombie;
+    bool zombie = false;
 
     void add_task(DBus::Connection& conn, DBus::Message& msg);
 
@@ -176,6 +176,7 @@ private:
 class Clients
 {
 public:
+
     Clients(Backgrounds& backgrounds);
 
     typedef list<Client>::iterator iterator;

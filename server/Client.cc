@@ -39,7 +39,7 @@ boost::shared_mutex big_mutex;
 
 
 Client::Client(const string& name, const Clients& clients)
-    : name(name), zombie(false), clients(clients)
+    : name(name), clients(clients)
 {
 }
 
