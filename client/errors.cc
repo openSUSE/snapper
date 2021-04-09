@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2021] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -85,6 +85,9 @@ error_description(const DBus::ErrorException& e)
 
     if (name == "error.io_error")
 	return sformat(_("IO Error (%s)."), e.message());
+
+    if (name == "error.list_configs_failed")
+	return sformat(_("Listing configs failed (%s)."), e.message());
 
     if (name == "error.create_config_failed")
 	return sformat(_("Creating config failed (%s)."), e.message());

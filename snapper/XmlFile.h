@@ -60,7 +60,7 @@ namespace snapper
 
     private:
 
-	xmlDoc* doc;
+	xmlDoc* doc = nullptr;
 
     };
 

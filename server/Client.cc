@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2021] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -39,7 +39,7 @@ boost::shared_mutex big_mutex;
 
 
 Client::Client(const string& name, const Clients& clients)
-    : name(name), zombie(false), clients(clients)
+    : name(name), clients(clients)
 {
 }
 
@@ -1739,6 +1739,12 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
     {
 	SN_CAUGHT(e);
 	DBus::MessageError reply(msg, "error.unknown_config", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
+    catch (const ListConfigsFailedException& e)
+    {
+	SN_CAUGHT(e);
+	DBus::MessageError reply(msg, "error.list_configs_failed", e.what());
 	conn.send(reply);
     }
     catch (const CreateConfigFailedException& e)

@@ -60,6 +60,7 @@ namespace snapper
     XmlFile::~XmlFile()
     {
 	xmlFreeDoc(doc);
+	doc = nullptr;
     }
 
 

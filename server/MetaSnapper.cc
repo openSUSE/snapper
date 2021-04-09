@@ -36,7 +36,7 @@ MetaSnappers meta_snappers;
 
 
 RefCounter::RefCounter()
-    : counter(0), last_used(steady_clock::now())
+    : last_used(steady_clock::now())
 {
 }
 
@@ -95,7 +95,7 @@ RefCounter::unused_for() const
 
 
 MetaSnapper::MetaSnapper(ConfigInfo& config_info)
-    : config_info(config_info), snapper(NULL)
+    : config_info(config_info)
 {
     set_permissions();
 }

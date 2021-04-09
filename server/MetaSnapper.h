@@ -53,7 +53,7 @@ private:
 
     mutable boost::mutex mutex;
 
-    int counter;
+    int counter = 0;
 
     steady_clock::time_point last_used;
 
@@ -109,7 +109,7 @@ private:
 
     ConfigInfo config_info;
 
-    Snapper* snapper;
+    Snapper* snapper = nullptr;
 
 };
 
