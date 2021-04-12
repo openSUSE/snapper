@@ -26,7 +26,8 @@ UBUNTU_FLAVOURS =	\
     xUbuntu_19.04	\
     xUbuntu_19.10	\
     xUbuntu_20.04	\
-    xUbuntu_20.10
+    xUbuntu_20.10	\
+    xUbuntu_21.04
 
 RASPBIAN_FLAVOURS =	\
     Raspbian_10
