@@ -1494,10 +1494,18 @@ namespace snapper
     std::pair<bool, unsigned int>
     Btrfs::getDefault() const
     {
-	SDir subvolume_dir = openSubvolumeDir();
-	int fd = subvolume_dir.fd();
+	try
+	{
+	    SDir subvolume_dir = openSubvolumeDir();
+	    int fd = subvolume_dir.fd();
 
-	return idToNum(fd, get_default_id(fd));
+	    return idToNum(fd, get_default_id(fd));
+	}
+	catch (const exception& e)
+	{
+	    SN_THROW(IOErrorException(string("query default id failed, ") + e.what()));
+	    __builtin_unreachable();
+	}
     }
 
 
