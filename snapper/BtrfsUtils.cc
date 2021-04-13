@@ -119,8 +119,10 @@ namespace snapper
 
 #endif
 
-	    if (ioctl(fddst, BTRFS_IOC_SNAP_CREATE_V2, &args_v2) == 0)
+	    if (ioctl(fddst, BTRFS_IOC_SNAP_CREATE_V2, &args_v2) == 0) {
+		symlink(std::to_string(fd), "latest");
 		return;
+	    }
 	    else if (errno != ENOTTY && errno != EINVAL)
 		throw runtime_error_with_errno("ioctl(BTRFS_IOC_SNAP_CREATE_V2) failed", errno);
 
