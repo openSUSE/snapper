@@ -61,7 +61,8 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>SPACE_LIMIT=<replaceable>float</replaceable></option></term>
+	<term><option>SPACE_LIMIT=<replaceable>float</replaceable> or
+	<replaceable>size</replaceable></option></term>
 	<listitem>
 	  <para>Limit of the filesystems space the snapshots should
 	  use. Either a fraction of the whole filesystem for an
@@ -74,7 +75,8 @@
       </varlistentry>
 
       <varlistentry>
-	<term><option>FREE_LIMIT=<replaceable>float</replaceable></option></term>
+	<term><option>FREE_LIMIT=<replaceable>float</replaceable> or
+	<replaceable>size</replaceable></option></term>
 	<listitem>
 	  <para>Limit of the filesystem space that should be
 	  free. Either a fraction of the whole filesystem for an absolute
