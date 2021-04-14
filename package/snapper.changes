@@ -2,6 +2,7 @@
 Fri Apr 09 15:23:14 CEST 2021 - aschnell@suse.com
 
 - improved error handling (see gh#openSUSE/snapper#626)
+- version 0.9.0
 
 -------------------------------------------------------------------
 Thu Apr 08 14:05:19 CEST 2021 - aschnell@suse.com
