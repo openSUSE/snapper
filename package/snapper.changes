@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Apr 19 09:56:40 CEST 2021 - aschnell@suse.com
+
+- fix build on 32 bit musl systems (gh#openSUSE/snapper#644)
+
+-------------------------------------------------------------------
 Fri Apr 09 15:23:14 CEST 2021 - aschnell@suse.com
 
 - improved error handling (see gh#openSUSE/snapper#626)
