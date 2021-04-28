@@ -360,7 +360,6 @@ namespace snapper
 
 	    if (!umount(info_dir, "snapshot"))
 		throw UmountSnapshotFailedException();
-
 	}
 
 	try
