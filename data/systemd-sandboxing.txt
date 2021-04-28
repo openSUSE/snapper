@@ -1,0 +1,21 @@
+
+Notes about systemd sandboxing
+------------------------------
+
+CapabilityBoundingSet=CAP_SYS_ADMIN is needed to get the btrfs default
+subvolume id.
+
+ProtectClock=true breaks LVM - strange.
+
+CAP_SYS_MODULE is needed for LVM (creating snapshots, loads
+dm_snapshot).
+
+ProtectKernelModules=true breaks LVM.
+
+CapabilityBoundingSet=CAP_SYS_NICE is also needed by LVM.
+
+ProtectHome=true breaks diff for LVM.
+
+SystemCallFilter=@mount breaks almost everything with older systemd,
+e.g. on SLE15 SP1.
+

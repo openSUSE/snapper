@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Apr 28 10:17:14 CEST 2021 - aschnell@suse.com
+
+- added systemd sandboxing for services
+
+-------------------------------------------------------------------
 Mon Apr 19 09:56:40 CEST 2021 - aschnell@suse.com
 
 - fix build on 32 bit musl systems (gh#openSUSE/snapper#644)
