@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-17 13:34+0100\n"
-"PO-Revision-Date: 2021-05-02 11:57+0000\n"
+"PO-Revision-Date: 2021-05-02 14:57+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
 "\n"
@@ -563,7 +563,7 @@ msgstr "Zlyhanie"
 
 #, c-format
 msgid "Failure (%s)."
-msgstr "Zlyhanie  (%s)."
+msgstr "Zlyhanie (%s)."
 
 #, c-format
 msgid "File '%s' not found."
