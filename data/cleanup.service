@@ -9,7 +9,7 @@ ExecStart=/usr/lib/snapper/systemd-helper --cleanup
 IOSchedulingClass=idle
 CPUSchedulingPolicy=idle
 
-CapabilityBoundingSet=CAP_CHOWN CAP_FSETID CAP_SETFCAP CAP_SYS_ADMIN CAP_SYS_MODULE CAP_IPC_LOCK CAP_SYS_NICE
+CapabilityBoundingSet=CAP_FOWNER CAP_CHOWN CAP_FSETID CAP_SETFCAP CAP_SYS_ADMIN CAP_SYS_MODULE CAP_IPC_LOCK CAP_SYS_NICE
 LockPersonality=true
 NoNewPrivileges=false
 PrivateNetwork=true
