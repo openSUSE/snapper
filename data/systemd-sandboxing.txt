@@ -19,3 +19,5 @@ ProtectHome=true breaks diff for LVM.
 SystemCallFilter=@mount breaks almost everything with older systemd,
 e.g. on SLE15 SP1.
 
+CapabilityBoundingSet=CAP_FOWNER is needed if for home directories.
+
