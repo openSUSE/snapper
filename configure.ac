@@ -51,10 +51,6 @@ AC_DEFINE_UNQUOTED([LVCHANGEBIN], ["$LVCHANGEBIN"], [Path of lvchange program.])
 AC_DEFINE_UNQUOTED([LVMBIN], ["$LVMBIN"], [Path of lvm program.])
 AC_DEFINE_UNQUOTED([LVRENAMEBIN], ["$LVRENAMEBIN"], [Path of lvrename program.])
 
-dnl Automake 1.11 enables silent compilation
-dnl Disable it by "configure --disable-silent-rules" or "make V=1"
-m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
-
 CFLAGS="${CFLAGS} -std=c99 -Wall -Wextra -Wformat -Wmissing-prototypes -Wno-unused-parameter"
 CXXFLAGS="${CXXFLAGS} -std=c++11 -Wall -Wextra -Wformat -Wnon-virtual-dtor -Wno-unused-parameter"
 
