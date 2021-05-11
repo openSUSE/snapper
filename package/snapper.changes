@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue May 11 10:01:30 CEST 2021 - aschnell@suse.com
+
+- fixed systemd sandboxing (gh#openSUSE/snapper#651)
+
+-------------------------------------------------------------------
 Tue May 04 08:35:28 CEST 2021 - aschnell@suse.com
 
 - fixed systemd sandboxing (bsc#1185596)
