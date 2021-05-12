@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-17 13:34+0100\n"
-"PO-Revision-Date: 2021-01-04 17:38+0000\n"
+"PO-Revision-Date: 2021-05-12 23:58+0000\n"
 "Last-Translator: Alex Minton <alex239@gmail.com>\n"
 "Language-Team: Russian <https://l10n.opensuse.org/projects/snapper/master/ru/"
 ">\n"
@@ -12,9 +12,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.6.1\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.6.2\n"
 
 msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
 msgstr "\t--abbreviate\t\t\tРазрешить аббревиатуры в столбцах таблицы."
@@ -23,7 +23,7 @@ msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tСписок моментальных снимков из всех доступных конфигураций."
 
 msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr ""
+msgstr "\t--ambit, -a ambit\t\tДействовать в указанной области."
 
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
 msgstr "\t--cleanup-algorithm, -c <алгоритм>\tАлгоритм очистки для снимка."
@@ -348,7 +348,7 @@ msgstr "Активный снимок уже является снимком п�
 
 #, c-format
 msgid "Ambit is %s."
-msgstr ""
+msgstr "Область %s."
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -367,7 +367,7 @@ msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
 msgstr "Невозможно удалить снимок %d, так как он следующий в очереди на монтирование."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
-msgstr ""
+msgstr "Невозможно определить область, поскольку подтом неизвестен."
 
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Невозможно выполнить откат, подтом по умолчанию неизвестен."
@@ -600,9 +600,9 @@ msgstr "Снимки идентичны."
 msgid "Illegal snapshot."
 msgstr "Некорректный снимок."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid ambit '%s'."
-msgstr "Неверный снимок '%s'."
+msgstr "Неверная область '%s'."
 
 #, c-format
 msgid "Invalid column '%s'."
@@ -758,7 +758,7 @@ msgid "TB"
 msgstr "ТБ"
 
 msgid "The ambit can be specified manually using the --ambit option."
-msgstr ""
+msgstr "Область можно указать вручную с помощью параметра --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Конфигурация root не существует. Вероятно, snapper не настроен."
