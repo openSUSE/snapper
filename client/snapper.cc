@@ -129,7 +129,7 @@ main(int argc, char** argv)
     }
     catch (const runtime_error& e)
     {
-	cerr << _("Failed to set locale. Fix your system.") << endl;
+	cerr << _("Failed to set locale.") << endl;
     }
 
     setLogDo(&log_do);
