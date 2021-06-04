@@ -275,7 +275,18 @@ main(int argc, char** argv)
 
     y2mil("Requesting DBus name");
 
-    mainloop.request_name(SERVICE, DBUS_NAME_FLAG_REPLACE_EXISTING);
+    try
+    {
+	mainloop.request_name(SERVICE, DBUS_NAME_FLAG_REPLACE_EXISTING);
+    }
+    catch (const Exception& e)
+    {
+	SN_CAUGHT(e);
+
+	y2err("Failed to request DBus name");
+
+	return EXIT_FAILURE;
+    }
 
     y2mil("Loading snapper configs");
 
@@ -287,7 +298,7 @@ main(int argc, char** argv)
     {
 	SN_CAUGHT(e);
 
-	y2err("failed to load snapper configs");
+	y2err("Failed to load snapper configs");
     }
 
     y2mil("Listening for method calls and signals");
@@ -298,5 +309,5 @@ main(int argc, char** argv)
 
     meta_snappers.unload();
 
-    return 0;
+    return EXIT_SUCCESS;
 }
