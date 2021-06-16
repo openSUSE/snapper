@@ -82,6 +82,11 @@ AS_IF([test "x$with_conf" != xno], [SYSCONFIG="${with_conf}"])
 
 CPPFLAGS="${CPPFLAGS} -DCONF_DIR='\"${SYSCONFIG}\"'"
 
+PAM_SECURITY=${libdir}/security
+
+AC_ARG_WITH([pam-security], AC_HELP_STRING([--pam-security], [Use a custom pam security directory (default is $libdir/security)]),
+	[with_pam_security=$withval], [with_pam_security=no])
+AS_IF([test "x$with_pam_security" != xno], [PAM_SECURITY="${with_pam_security}"])
 
 AC_ARG_ENABLE([btrfs], AC_HELP_STRING([--disable-btrfs],[Disable Btrfs internal snapshots support]),
 		[with_btrfs=$enableval],[with_btrfs=yes])
@@ -200,6 +205,7 @@ AC_SUBST(LIBVERSION_MINOR)
 AC_SUBST(LIBVERSION_PATCHLEVEL)
 AC_SUBST(LIBVERSION_INFO)
 AC_SUBST(SYSCONFIG)
+AC_SUBST(PAM_SECURITY)
 AC_SUBST(docdir)
 
 AC_OUTPUT(
