@@ -16,7 +16,8 @@ endif
 
 override_dh_auto_configure:
 	dh_auto_configure -- --docdir=/usr/share/doc/packages/snapper --disable-silent-rules	\
-	  --disable-ext4 --enable-xattrs --disable-rollback --disable-btrfs-quota
+	  --disable-ext4 --enable-xattrs --disable-rollback --disable-btrfs-quota		\
+	  --with-pam-security=/lib/security
 
 override_dh_auto_install:
 	dh_auto_install

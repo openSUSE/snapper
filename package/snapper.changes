@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Jun 16 11:50:49 CEST 2021 - aschnell@suse.com
+
+- added configure option for location of PAM module
+  (gh#openSUSE/snapper#659)
+
+-------------------------------------------------------------------
 Mon May 17 08:39:58 CEST 2021 - aschnell@suse.com
 
 - fixed systemd sandboxing (bsc#1186095)

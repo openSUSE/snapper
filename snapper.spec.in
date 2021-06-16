@@ -16,12 +16,19 @@
 #
 
 
-#Compat macro for new _fillupdir macro introduced in Nov 2017
+# Compat macro for new _fillupdir macro introduced in Nov 2017
 %if ! %{defined _fillupdir}
   %define _fillupdir /var/adm/fillup-templates
 %endif
 
-# optionally build with test coverage reporting
+# Location for PAM module
+%if 0%{?usrmerged}
+%define pam_security_dir %{_libdir}/security
+%else
+%define pam_security_dir /%{_lib}/security
+%endif
+
+# Optionally build with test coverage reporting
 %bcond_with coverage
 
 Name:           snapper
@@ -117,10 +124,11 @@ export CXXFLAGS="%{optflags} -DNDEBUG"
 
 autoreconf -fvi
 %configure \
-	--docdir="%{_defaultdocdir}/snapper"				\
+	--docdir="%{_defaultdocdir}/snapper"					\
 %if %{with coverage}
 	--enable-coverage \
 %endif
+	--with-pam-security="%{pam_security_dir}"				\
 %if 0%{?suse_version} <= 1310
 	--disable-rollback							\
 %endif
@@ -132,7 +140,7 @@ make %{?_smp_mflags}
 
 %install
 %make_install
-rm -f "%{buildroot}/%{_libdir}"/*.la "%{buildroot}/%{_lib}/security/pam_snapper.la"
+rm -f "%{buildroot}/%{_libdir}"/*.la "%{buildroot}/%{pam_security_dir}/pam_snapper.la"
 rm -f %{buildroot}/etc/cron.hourly/suse.de-snapper
 rm -f %{buildroot}/etc/cron.daily/suse.de-snapper
 
@@ -301,7 +309,7 @@ A PAM module for calling snapper during user login and logout.
 
 %files -n pam_snapper
 %defattr(-,root,root)
-/%{_lib}/security/pam_snapper.so
+/%{pam_security_dir}/pam_snapper.so
 %dir /usr/lib/pam_snapper
 /usr/lib/pam_snapper/*.sh
 %doc %{_mandir}/*/pam_snapper.8*
