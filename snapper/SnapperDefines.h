@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2014] Novell, Inc.
- * Copyright (c) 2020 SUSE LLC
+ * Copyright (c) [2020-2021] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -36,6 +36,11 @@
 
 #define DEV_DIR "/dev"
 #define DEV_MAPPER_DIR "/dev/mapper"
+
+
+// commands
+
+#define SH_BIN "/bin/sh"
 
 
 // keys from the config files

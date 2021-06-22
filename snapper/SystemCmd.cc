@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2011] Novell, Inc.
- * Copyright (c) 2018 SUSE LLC
+ * Copyright (c) [2018-2021] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -25,8 +25,6 @@
 #include <unistd.h>
 #include <errno.h>
 #include <fcntl.h>
-#include <ostream>
-#include <fstream>
 #include <sys/wait.h>
 #include <string>
 #include <boost/algorithm/string.hpp>
@@ -36,6 +34,7 @@ extern char **environ;
 #include "snapper/Log.h"
 #include "snapper/AppUtil.h"
 #include "snapper/SystemCmd.h"
+#include "snapper/SnapperDefines.h"
 
 
 namespace snapper
@@ -44,7 +43,7 @@ namespace snapper
 
 
     SystemCmd::SystemCmd(const string& Command_Cv, bool log_output)
-	: Combine_b(false), log_output(log_output)
+	: log_output(log_output)
 {
     y2mil("constructor SystemCmd:\"" << Command_Cv << "\"");
     init();
@@ -83,95 +82,13 @@ int
 SystemCmd::execute(const string& Cmd_Cv)
 {
     y2mil("SystemCmd Executing:\"" << Cmd_Cv << "\"");
-    Background_b = false;
     return doExecute(Cmd_Cv);
 }
 
-
-int
-SystemCmd::executeBackground( const string& Cmd_Cv )
-{
-    y2mil("SystemCmd Executing (Background):\"" << Cmd_Cv << "\"");
-    Background_b = true;
-    return doExecute(Cmd_Cv);
-}
-
-
-int
-SystemCmd::executeRestricted( const string& Command_Cv,
-			      long unsigned MaxTimeSec, long unsigned MaxLineOut,
-			      bool& ExceedTime, bool& ExceedLines )
-{
-    y2mil("cmd:" << Command_Cv << " MaxTime:" << MaxTimeSec << " MaxLines:" << MaxLineOut);
-    ExceedTime = ExceedLines = false;
-    int ret = executeBackground( Command_Cv );
-    unsigned long ts = 0;
-    unsigned long ls = 0;
-    unsigned long start_time = time(NULL);
-    while( !ExceedTime && !ExceedLines && !doWait( false, ret ) )
-	{
-	if( MaxTimeSec>0 )
-	    {
-	    ts = time(NULL)-start_time;
-	    y2mil( "time used:" << ts );
-	    }
-	if( MaxLineOut>0 )
-	    {
-	    ls = numLines()+numLines(false,IDX_STDERR);
-	    y2mil( "lines out:" << ls );
-	    }
-	ExceedTime = MaxTimeSec>0 && ts>MaxTimeSec;
-	ExceedLines = MaxLineOut>0 && ls>MaxLineOut;
-	sleep( 1 );
-	}
-    if( ExceedTime || ExceedLines )
-	{
-	int r = kill( Pid_i, SIGKILL );
-	y2mil( "kill pid:" << Pid_i << " ret:" << r );
-	unsigned count=0;
-	int Status_ii;
-	int Wait_ii = -1;
-	while( count<5 && Wait_ii<=0 )
-	    {
-	    Wait_ii = waitpid( Pid_i, &Status_ii, WNOHANG );
-	    y2mil( "waitpid:" << Wait_ii );
-	    count++;
-	    sleep( 1 );
-	    }
-	/*
-	r = kill( Pid_i, SIGKILL );
-	y2mil( "kill pid:" << Pid_i << " ret:" << r );
-	count=0;
-	waitDone = false;
-	while( count<8 && !waitDone )
-	    {
-	    y2mil( "doWait:" << count );
-	    waitDone = doWait( false, ret );
-	    count++;
-	    sleep( 1 );
-	    }
-	*/
-	Ret_i = -257;
-	}
-    else
-	Ret_i = ret;
-    y2mil("ret:" << ret << " ExceedTime:" << ExceedTime << " ExceedLines:" << ExceedLines);
-    return ret;
-}
-
-
-#define PRIMARY_SHELL "/bin/sh"
-#define ALTERNATE_SHELL "/bin/bash"
 
 int
 SystemCmd::doExecute( const string& Cmd )
     {
-    string Shell_Ci = PRIMARY_SHELL;
-    if( access( Shell_Ci.c_str(), X_OK ) != 0 )
-	{
-	Shell_Ci = ALTERNATE_SHELL;
-	}
-
     lastCmd = Cmd;
     y2deb("Cmd:" << Cmd);
 
@@ -182,32 +99,29 @@ SystemCmd::doExecute( const string& Cmd )
     int sout[2];
     int serr[2];
     bool ok_bi = true;
-    if( !testmode && pipe(sout)<0 )
+    if( pipe(sout)<0 )
 	{
 	y2err("pipe stdout creation failed errno:" << errno << " (" << stringerror(errno) << ")");
 	ok_bi = false;
 	}
-    if( !testmode && !Combine_b && pipe(serr)<0 )
+    if( pipe(serr)<0 )
 	{
 	y2err("pipe stderr creation failed errno:" << errno << " (" << stringerror(errno) << ")");
 	ok_bi = false;
 	}
-    if( !testmode && ok_bi )
+    if( ok_bi )
 	{
 	pfds[0].fd = sout[0];
 	if( fcntl( pfds[0].fd, F_SETFL, O_NONBLOCK )<0 )
 	    {
 	    y2err("fcntl O_NONBLOCK failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    }
-	if( !Combine_b )
+	pfds[1].fd = serr[0];
+	if( fcntl( pfds[1].fd, F_SETFL, O_NONBLOCK )<0 )
 	    {
-	    pfds[1].fd = serr[0];
-	    if( fcntl( pfds[1].fd, F_SETFL, O_NONBLOCK )<0 )
-		{
-		y2err("fcntl O_NONBLOCK failed errno:" << errno << " (" << stringerror(errno) << ")");
-		}
+	    y2err("fcntl O_NONBLOCK failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    }
-	y2deb("sout:" << pfds[0].fd << " serr:" << (Combine_b?-1:pfds[1].fd));
+	y2deb("sout:" << pfds[0].fd << " serr:" << pfds[1].fd);
 
 	const vector<const char*> env = make_env();
 
@@ -218,11 +132,7 @@ SystemCmd::doExecute( const string& Cmd )
 		    {
 		    y2err("dup2 stdout child failed errno:" << errno << " (" << stringerror(errno) << ")");
 		    }
-		if( !Combine_b && dup2( serr[1], STDERR_FILENO )<0 )
-		    {
-		    y2err("dup2 stderr child failed errno:" << errno << " (" << stringerror(errno) << ")");
-		    }
-		if( Combine_b && dup2( STDOUT_FILENO, STDERR_FILENO )<0 )
+		if( dup2( serr[1], STDERR_FILENO )<0 )
 		    {
 		    y2err("dup2 stderr child failed errno:" << errno << " (" << stringerror(errno) << ")");
 		    }
@@ -230,13 +140,13 @@ SystemCmd::doExecute( const string& Cmd )
 		    {
 		    y2err("close child failed errno:" << errno << " (" << stringerror(errno) << ")");
 		    }
-		if( !Combine_b && close( serr[0] )<0 )
+		if( close( serr[0] )<0 )
 		    {
 		    y2err("close child failed errno:" << errno << " (" << stringerror(errno) << ")");
 		    }
 		closeOpenFds();
-		Ret_i = execle(Shell_Ci.c_str(), Shell_Ci.c_str(), "-c", Cmd.c_str(), nullptr, &env[0]);
-		y2err("SHOULD NOT HAPPEN \"" << Shell_Ci << "\" Ret:" << Ret_i);
+		Ret_i = execle(SH_BIN, SH_BIN, "-c", Cmd.c_str(), nullptr, &env[0]);
+		y2err("SHOULD NOT HAPPEN \"" SH_BIN "\" Ret:" << Ret_i);
 		break;
 	    case -1:
 		Ret_i = -1;
@@ -246,7 +156,7 @@ SystemCmd::doExecute( const string& Cmd )
 		    {
 		    y2err("close parent failed errno:" << errno << " (" << stringerror(errno) << ")");
 		    }
-		if( !Combine_b && close( serr[1] )<0 )
+		if( close( serr[1] )<0 )
 		    {
 		    y2err("close parent failed errno:" << errno << " (" << stringerror(errno) << ")");
 		    }
@@ -256,37 +166,27 @@ SystemCmd::doExecute( const string& Cmd )
 		    {
 		    y2err("fdopen stdout failed errno:" << errno << " (" << stringerror(errno) << ")");
 		    }
-		if( !Combine_b )
+		File_aC[IDX_STDERR] = fdopen( serr[0], "r" );
+		if( File_aC[IDX_STDERR] == NULL )
 		    {
-		    File_aC[IDX_STDERR] = fdopen( serr[0], "r" );
-		    if( File_aC[IDX_STDERR] == NULL )
-			{
 			y2err("fdopen stderr failed errno:" << errno << " (" << stringerror(errno) << ")");
-			}
 		    }
-		if( !Background_b )
-		    {
-		    doWait( true, Ret_i );
-		    y2mil("stopwatch " << stopwatch << " for \"" << cmd() << "\"");
-		    }
+
+		doWait( Ret_i );
+		y2mil("stopwatch " << stopwatch << " for \"" << cmd() << "\"");
+
 		break;
 	    }
 	}
-    else if( !testmode )
-	{
-	Ret_i = -1;
-	}
     else
 	{
-	Ret_i = 0;
-	y2mil("TESTMODE would execute \"" << Cmd << "\"");
+	Ret_i = -1;
 	}
     if( Ret_i==-127 || Ret_i==-1 )
 	{
 	y2err("system (\"" << Cmd << "\") = " << Ret_i);
 	}
-    if( !testmode )
-	checkOutput();
+    checkOutput();
     y2mil("system() Returns:" << Ret_i);
     if (Ret_i != 0 && log_output)
 	logOutput();
@@ -295,16 +195,16 @@ SystemCmd::doExecute( const string& Cmd )
 
 
 bool
-SystemCmd::doWait( bool Hang_bv, int& Ret_ir )
+SystemCmd::doWait( int& Ret_ir )
     {
     int Wait_ii;
     int Status_ii;
 
     do
 	{
-	y2deb("[0] id:" <<  pfds[0].fd << " ev:" << hex << (unsigned)pfds[0].events << dec << " [1] fs:" <<
-	      (Combine_b?-1:pfds[1].fd) << " ev:" << hex << (Combine_b?0:(unsigned)pfds[1].events));
-	int sel = poll( pfds, Combine_b?1:2, 1000 );
+	y2deb("[0] fd:" << pfds[0].fd << " ev:" << hex << (unsigned)(pfds[0].events) << dec << " "
+	      "[1] fd:" << pfds[1].fd << " ev:" << hex << (unsigned)(pfds[1].events));
+	int sel = poll( pfds, 2, 1000 );
 	if (sel < 0)
 	    {
 	    y2err("poll failed errno:" << errno << " (" << stringerror(errno) << ")");
@@ -317,18 +217,15 @@ SystemCmd::doWait( bool Hang_bv, int& Ret_ir )
 	Wait_ii = waitpid( Pid_i, &Status_ii, WNOHANG );
 	y2deb("Wait ret:" << Wait_ii);
 	}
-    while( Hang_bv && Wait_ii == 0 );
+    while( Wait_ii == 0 );
 
     if( Wait_ii != 0 )
 	{
 	checkOutput();
 	fclose( File_aC[IDX_STDOUT] );
 	File_aC[IDX_STDOUT] = NULL;
-	if( !Combine_b )
-	    {
-	    fclose( File_aC[IDX_STDERR] );
-	    File_aC[IDX_STDERR] = NULL;
-	    }
+	fclose( File_aC[IDX_STDERR] );
+	File_aC[IDX_STDERR] = NULL;
 	if (WIFEXITED(Status_ii))
 	{
 	    Ret_ir = WEXITSTATUS(Status_ii);
@@ -345,27 +242,13 @@ SystemCmd::doWait( bool Hang_bv, int& Ret_ir )
 	}
 
     y2deb("Wait:" << Wait_ii << " pid:" << Pid_i << " stat:" << Status_ii <<
-	  " Hang:" << Hang_bv << " Ret:" << Ret_ir);
+	  " Ret:" << Ret_ir);
     return Wait_ii != 0;
     }
 
 
-void
-SystemCmd::setCombine(bool val)
-{
-    Combine_b = val;
-}
-
-
-void
-SystemCmd::setTestmode(bool val)
-{
-    testmode = val;
-}
-
-
 unsigned
-SystemCmd::numLines( bool Sel_bv, OutputStream Idx_iv ) const
+SystemCmd::numLines( OutputStream Idx_iv ) const
     {
     unsigned Ret_ii;
 
@@ -373,21 +256,14 @@ SystemCmd::numLines( bool Sel_bv, OutputStream Idx_iv ) const
 	{
 	y2err("invalid index " << Idx_iv);
 	}
-    if( Sel_bv )
-	{
-	Ret_ii = SelLines_aC[Idx_iv].size();
-	}
-    else
-	{
-	Ret_ii = Lines_aC[Idx_iv].size();
-	}
+    Ret_ii = Lines_aC[Idx_iv].size();
     y2deb("ret:" << Ret_ii);
     return Ret_ii;
     }
 
 
 string
-SystemCmd::getLine( unsigned Nr_iv, bool Sel_bv, OutputStream Idx_iv ) const
+SystemCmd::getLine( unsigned Nr_iv, OutputStream Idx_iv ) const
     {
     string ret;
 
@@ -395,19 +271,9 @@ SystemCmd::getLine( unsigned Nr_iv, bool Sel_bv, OutputStream Idx_iv ) const
 	{
 	y2err("invalid index " << Idx_iv);
 	}
-    if( Sel_bv )
+    if( Nr_iv < Lines_aC[Idx_iv].size() )
 	{
-	if( Nr_iv < SelLines_aC[Idx_iv].capacity() )
-	    {
-	    ret = *SelLines_aC[Idx_iv][Nr_iv];
-	    }
-	}
-    else
-	{
-	if( Nr_iv < Lines_aC[Idx_iv].size() )
-	    {
-	    ret = Lines_aC[Idx_iv][Nr_iv];
-	    }
+	ret = Lines_aC[Idx_iv][Nr_iv];
 	}
     return ret;
     }
@@ -418,7 +284,6 @@ SystemCmd::invalidate()
     {
     for (int Idx_ii = 0; Idx_ii < 2; Idx_ii++)
 	{
-	SelLines_aC[Idx_ii].resize(0);
 	Lines_aC[Idx_ii].clear();
 	NewLineSeen_ab[Idx_ii] = true;
 	}
@@ -538,34 +403,34 @@ SystemCmd::addLine(const string& Text_Cv, vector<string>& Lines_Cr)
 void
 SystemCmd::logOutput() const
 {
-    unsigned lines = numLines(false, IDX_STDERR);
+    unsigned lines = numLines(IDX_STDERR);
     if (lines <= line_limit)
     {
 	for (unsigned i = 0; i < lines; ++i)
-	    y2mil("stderr:" << getLine(i, false, IDX_STDERR));
+	    y2mil("stderr:" << getLine(i, IDX_STDERR));
     }
     else
     {
 	for (unsigned i = 0; i < line_limit / 2; ++i)
-	    y2mil("stderr:" << getLine(i, false, IDX_STDERR));
+	    y2mil("stderr:" << getLine(i, IDX_STDERR));
 	y2mil("stderr omitting lines");
 	for (unsigned i = lines - line_limit / 2; i < lines; ++i)
-	    y2mil("stderr:" << getLine(i, false, IDX_STDERR));
+	    y2mil("stderr:" << getLine(i, IDX_STDERR));
     }
 
-    lines = numLines(false, IDX_STDOUT);
+    lines = numLines(IDX_STDOUT);
     if (lines <= line_limit)
     {
 	for (unsigned i = 0; i < lines; ++i)
-	    y2mil("stdout:" << getLine(i, false, IDX_STDOUT));
+	    y2mil("stdout:" << getLine(i, IDX_STDOUT));
     }
     else
     {
 	for (unsigned i = 0; i < line_limit / 2; ++i)
-	    y2mil("stdout:" << getLine(i, false, IDX_STDOUT));
+	    y2mil("stdout:" << getLine(i, IDX_STDOUT));
 	y2mil("stdout omitting lines");
 	for (unsigned i = lines - line_limit / 2; i < lines; ++i)
-	    y2mil("stdout:" << getLine(i, false, IDX_STDOUT));
+	    y2mil("stdout:" << getLine(i, IDX_STDOUT));
     }
 }
 
@@ -596,22 +461,5 @@ SystemCmd::quote(const string& str)
 {
     return "'" + boost::replace_all_copy(str, "'", "'\\''") + "'";
 }
-
-
-string
-SystemCmd::quote(const list<string>& strs)
-{
-    string ret;
-    for (std::list<string>::const_iterator it = strs.begin(); it != strs.end(); it++)
-    {
-	if (it != strs.begin())
-	    ret.append(" ");
-	ret.append(quote(*it));
-    }
-    return ret;
-}
-
-
-bool SystemCmd::testmode = false;
 
 }
