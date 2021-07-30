@@ -92,7 +92,7 @@ package to the build service. For [openSUSE:Factory][]
 [Debian builds]: https://en.opensuse.org/openSUSE:Build_Service_Debian_builds
 
 - The generated bzip2 tarball has to be also placed at
-  <http://ftp.suse.com/pub/projects/snapper/>.
+  <https://ftp.suse.com/pub/projects/snapper/>.
 
 - When the documentation changes e.g. the man page or an important
   functionality then also the [snapper.io](http://snapper.io/) web pages
