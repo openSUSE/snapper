@@ -43,7 +43,7 @@ namespace snapper
 	    + _("\t--utc\t\t\t\tDisplay dates and times in UTC.") + '\n'
 	    + _("\t--iso\t\t\t\tDisplay dates and times in ISO format.") + '\n'
 	    + _("\t--table-style, -t <style>\tTable style (integer).") + '\n'
-	    + _("\t--abbreviate\t\t\tAllow to abbreviate table columns.") + '\n'
+	    + _("\t--abbreviate\t\t\tAllow one to abbreviate table columns.") + '\n'
 	    + _("\t--machine-readable <format>\tSet a machine-readable output format (csv, json).") + '\n'
 	    + _("\t--csvout\t\t\tSet CSV output format.") + '\n'
 	    + _("\t--jsonout\t\t\tSet JSON output format.") + '\n'
