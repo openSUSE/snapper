@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019-2020] SUSE LLC
+ * Copyright (c) [2019-2021] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -68,27 +68,29 @@ operator<<(ostream& os, const set<string>& ss)
 }
 
 // Normally the only configuration this program needs is
-// the /etc/snapper/zypp-plugin.conf file.
+// the zypp-plugin.conf file in /etc/snapper or /usr/share/snapper.
 // But for testing we need more places to inject mocks.
 // This is done with SNAPPER_ZYPP_PLUGIN_* environment variables.
 // (Using argv is not useful since libzypp does not use it in the
 // plugin protocol.)
-class ProgramOptions {
+class ProgramOptions
+{
+
 public:
+
     string plugin_config;
-    string snapper_config;
-    DBusBusType bus;
+    string snapper_config = "root";
+    DBusBusType bus = DBUS_BUS_SYSTEM;
 
     ProgramOptions()
-    : plugin_config("/etc/snapper/zypp-plugin.conf")
-    , snapper_config("root")
-    , bus(DBUS_BUS_SYSTEM)
     {
 	const char* s;
 
 	s = getenv("SNAPPER_ZYPP_PLUGIN_CONFIG");
 	if (s)
 	    plugin_config = s;
+	else
+	    plugin_config = locate_file("zypp-plugin.conf", "/etc/snapper", "/usr/share/snapper");
 
 	s = getenv("SNAPPER_ZYPP_PLUGIN_SNAPPER_CONFIG");
 	if (s)
@@ -98,6 +100,7 @@ public:
 	if (s)
 	    bus = DBUS_BUS_SESSION;
     }
+
 };
 
 class SnapperZyppPlugin : public ZyppCommitPlugin {

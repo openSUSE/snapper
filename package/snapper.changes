@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Tue Sep 21 13:30:29 CEST 2021 - aschnell@suse.com
+
+- look for most configuration files in /etc/snapper and
+  /usr/share/snapper (bsc#1189601)
+- version 0.9.1
+
+-------------------------------------------------------------------
 Wed Jun 16 11:50:49 CEST 2021 - aschnell@suse.com
 
 - added configure option for location of PAM module

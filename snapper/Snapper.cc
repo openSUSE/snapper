@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2021] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -158,12 +158,29 @@ namespace snapper
     void
     Snapper::loadIgnorePatterns()
     {
-	const list<string> files = glob(FILTERS_DIR "/*.txt", GLOB_NOSORT);
-	for (list<string>::const_iterator it = files.begin(); it != files.end(); ++it)
+	const vector<string> etc_files = glob(ETC_FILTERS_DIR "/*.txt", GLOB_NOSORT);
+	const vector<string> usr_files = glob(USR_FILTERS_DIR "/*.txt", GLOB_NOSORT);
+
+	// all files from /etc
+	vector<string> files = etc_files;
+
+	// files from /usr where no corresponding file in /etc exists
+	for (const string& usr_file : usr_files)
+	{
+	    string b1 = basename(usr_file);
+
+	    if (none_of(etc_files.begin(), etc_files.end(), [&b1](const string& etc_file) {
+		string b2 = basename(etc_file);
+		return b1 == b2;
+	    }))
+		files.push_back(usr_file);
+	}
+
+	for (const string& file : files)
 	{
 	    try
 	    {
-		AsciiFileReader asciifile(*it);
+		AsciiFileReader asciifile(file);
 
 		string line;
 		while (asciifile.getline(line))
@@ -335,7 +352,13 @@ namespace snapper
 	    }
 	}
 
-	if (access(string(CONFIG_TEMPLATE_DIR "/" + template_name).c_str(), R_OK) != 0)
+	string template_file;
+
+	try
+	{
+	    template_file = locate_file(template_name, ETC_CONFIG_TEMPLATE_DIR, USR_CONFIG_TEMPLATE_DIR);
+	}
+	catch (...)
 	{
 	    SN_THROW(CreateConfigFailedException("cannot access template config"));
 	}
@@ -374,7 +397,7 @@ namespace snapper
 
 	try
 	{
-	    SysconfigFile config(CONFIG_TEMPLATE_DIR "/" + template_name);
+	    SysconfigFile config(template_file);
 
 	    config.setName(CONFIGS_DIR "/" + config_name);
 

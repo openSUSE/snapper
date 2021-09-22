@@ -2,13 +2,13 @@
 <refentry id='snapper-zypp-plugin8'>
 
   <refentryinfo>
-    <date>2013-11-22</date>
+    <date>2021-09-21</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper-zypp-plugin</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2013-11-22</refmiscinfo>
+    <refmiscinfo class='date'>2021-09-21</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -32,6 +32,12 @@
 	<term><filename>/etc/snapper/zypp-plugin.conf</filename></term>
 	<listitem>
 	  <para>Configuration file. New in version 0.1.8.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><filename>/usr/share/snapper/zypp-plugin.conf</filename></term>
+	<listitem>
+	  <para>Fallback configuration file. New in version 0.9.1.</para>
 	</listitem>
       </varlistentry>
     </variablelist>

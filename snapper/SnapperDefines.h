@@ -30,9 +30,12 @@
 #define SYSCONFIG_FILE CONF_DIR "/snapper"
 
 #define CONFIGS_DIR "/etc/snapper/configs"
-#define CONFIG_TEMPLATE_DIR "/etc/snapper/config-templates"
 
-#define FILTERS_DIR "/etc/snapper/filters"
+#define ETC_CONFIG_TEMPLATE_DIR "/etc/snapper/config-templates"
+#define USR_CONFIG_TEMPLATE_DIR "/usr/share/snapper/config-templates"
+
+#define ETC_FILTERS_DIR "/etc/snapper/filters"
+#define USR_FILTERS_DIR "/usr/share/snapper/filters"
 
 #define DEV_DIR "/dev"
 #define DEV_MAPPER_DIR "/dev/mapper"

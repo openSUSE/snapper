@@ -2,13 +2,13 @@
 <refentry id='snapper8' xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <refentryinfo>
-    <date>2020-06-15</date>
+    <date>2021-09-21</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2020-06-15</refmiscinfo>
+    <refmiscinfo class='date'>2021-09-21</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -175,11 +175,13 @@
       e.g. <filename>/etc/mtab</filename>. Such files should never be
       reverted. To help users, snapper allows one to ignore these files.</para>
 
-      <para>Each line in all
-      files <filename>/etc/snapper/filters/*.txt</filename> specifies a
-      pattern. When snapper computes the difference between two snapshots it
-      ignores all files and directories matching any of those patterns by
-      using
+      <para>Filters are read from the files
+      <filename>/etc/snapper/filters/*.txt</filename> and
+      <filename>/usr/share/snapper/filters/*.txt</filename>, where
+      for files with the same name the former location has precedence.
+      Each line in those files specifies a pattern. When snapper
+      computes the difference between two snapshots it ignores all
+      files and directories matching any of those patterns by using
       <citerefentry role="nolink"><refentrytitle>fnmatch</refentrytitle><manvolnum>3</manvolnum></citerefentry>
       with the flag FNM_LEADING_DIR.</para>
 
@@ -859,9 +861,21 @@
 	</listitem>
       </varlistentry>
       <varlistentry>
+	<term><filename>/usr/share/snapper/config-templates</filename></term>
+	<listitem>
+	  <para>Fallback directory containing configuration templates.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
 	<term><filename>/etc/snapper/filters/*.txt</filename></term>
 	<listitem>
 	  <para>Filter files.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><filename>/usr/share/snapper/filters/*.txt</filename></term>
+	<listitem>
+	  <para>Fallback filter files.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>

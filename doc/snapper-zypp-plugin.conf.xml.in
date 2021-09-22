@@ -2,13 +2,13 @@
 <refentry id='snapper-zypp-plugin.conf5'>
 
   <refentryinfo>
-    <date>2013-11-22</date>
+    <date>2021-09-21</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper-zypp-plugin.conf</refentrytitle>
     <manvolnum>5</manvolnum>
-    <refmiscinfo class='date'>2013-11-22</refmiscinfo>
+    <refmiscinfo class='date'>2021-09-21</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -20,8 +20,10 @@
 
   <refsect1 id='description'>
     <title>DESCRIPTION</title>
-    <para>The file <filename>/etc/snapper/zypp-plugin.conf</filename> contains
-    the configuation for snapper-zypp-plugin.</para>
+    <para>The file <filename>/etc/snapper/zypp-plugin.conf</filename>
+    or as a fallback
+    <filename>/usr/share/snapper/zypp-plugin.conf</filename> contains the
+    configuation for snapper-zypp-plugin.</para>
 
     <para>The file uses XML syntax. For the XML structure have a look at the
     provided default config.</para>
