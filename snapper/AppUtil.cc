@@ -56,10 +56,10 @@ namespace snapper
     }
 
 
-    list<string>
+    vector<string>
     glob(const string& path, int flags)
     {
-	list<string> ret;
+	vector<string> ret;
 
 	glob_t globbuf;
 	if (glob(path.c_str(), flags, 0, &globbuf) == 0)
@@ -173,6 +173,21 @@ namespace snapper
     {
 	string::size_type pos = name.find_last_of('/');
 	return string(name, pos + 1);
+    }
+
+
+    string
+    locate_file(const string& f, const char* p1, const char* p2)
+    {
+	string f1 = string(p1) + "/" + f;
+	if (access(f1.c_str(), R_OK) == 0)
+	    return f1;
+
+	string f2 = string(p2) + "/" + f;
+	if (access(f2.c_str(), R_OK) == 0)
+	    return f2;
+
+	throw runtime_error(sformat("file '%s' not found in '%s' nor '%s'", f.c_str(), p1, p2));
     }
 
 

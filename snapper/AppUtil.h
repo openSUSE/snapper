@@ -33,7 +33,6 @@
 #include <sstream>
 #include <locale>
 #include <string>
-#include <list>
 #include <map>
 #include <vector>
 #include <stdexcept>
@@ -43,14 +42,13 @@
 namespace snapper
 {
     using std::string;
-    using std::list;
     using std::map;
     using std::vector;
 
 
     bool checkDir(const string& Path_Cv);
 
-    list<string> glob(const string& path, int flags);
+    vector<string> glob(const string& path, int flags);
 
     bool clonefile(int src_fd, int dest_fd);
     bool copyfile(int src_fd, int dest_fd);
@@ -66,6 +64,12 @@ namespace snapper
 
     string dirname(const string& name);
     string basename(const string& name);
+
+
+    /**
+     * Locate the file f first in p1 and second in p2.
+     */
+    string locate_file(const string& f, const char* p1, const char* p2);
 
 
     struct MtabData

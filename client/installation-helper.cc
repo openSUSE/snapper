@@ -73,7 +73,7 @@ step1(const string& device, const string& description, const string& cleanup,
 
     try
     {
-	SysconfigFile config(CONFIG_TEMPLATE_DIR "/" "default");
+	SysconfigFile config(locate_file("default", ETC_CONFIG_TEMPLATE_DIR, USR_CONFIG_TEMPLATE_DIR));
 
 	config.setName(tmp_mount.getFullname() + CONFIGS_DIR "/" "root");
 

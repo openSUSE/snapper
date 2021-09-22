@@ -1,2 +1,2 @@
 usr/lib/zypp/plugins/commit/snapper-zypp-plugin
-etc/snapper/zypp-plugin.conf
+usr/share/snapper/zypp-plugin.conf
