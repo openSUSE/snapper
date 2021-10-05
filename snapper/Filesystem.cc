@@ -57,7 +57,7 @@ namespace snapper
     vector<string>
     Filesystem::filter_mount_options(const vector<string>& options)
     {
-	static const char* ign_opt[] = {
+	static const char* ign_opts[] = {
 	    "ro", "rw",
 	    "exec", "noexec", "suid", "nosuid", "dev", "nodev",
 	    "atime", "noatime", "diratime", "nodiratime",
@@ -66,8 +66,8 @@ namespace snapper
 
 	vector<string> ret = options;
 
-	for (size_t i = 0; i < lengthof(ign_opt); ++i)
-	    ret.erase(remove(ret.begin(), ret.end(), ign_opt[i]), ret.end());
+	for (const char* ign_opt : ign_opts)
+	    ret.erase(remove(ret.begin(), ret.end(), ign_opt), ret.end());
 
 	return ret;
     }

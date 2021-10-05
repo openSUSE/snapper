@@ -27,11 +27,8 @@
 namespace snapper
 {
 
-    static const string snapshot_type_names[] = {
+    const vector<string> EnumInfo<SnapshotType>::names({
 	"single", "pre", "post"
-    };
-
-    const vector<string> EnumInfo<SnapshotType>::names(snapshot_type_names, snapshot_type_names +
-						       lengthof(snapshot_type_names));
+    });
 
 }

@@ -116,10 +116,6 @@ namespace snapper
 	return find_if(l.begin(), l.end(), pred) != l.end();
     }
 
-
-    template <class T, unsigned int sz>
-    inline unsigned int lengthof(T (&)[sz]) { return sz; }
-
 }
 
 #endif
