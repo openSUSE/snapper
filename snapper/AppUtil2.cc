@@ -21,7 +21,7 @@
 
 
 // This tiny file is separated from AppUtil.cc to allow setting specific
-// defines. Unsetting _GNU_SOURCE in AppUtil.cc causes may errors. See
+// defines. Unsetting _GNU_SOURCE in AppUtil.cc causes many errors. See
 // https://github.com/openSUSE/snapper/pull/581.
 
 // Defines to get the XSI-compliant strerror_r.
