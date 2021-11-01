@@ -25,7 +25,6 @@ libsnapper_la_SOURCES =					\
 	Compare.cc		Compare.h		\
 	SystemCmd.cc		SystemCmd.h		\
 	AsciiFile.cc		AsciiFile.h		\
-	Regex.cc		Regex.h			\
 	Acls.cc			Acls.h			\
 	Hooks.cc		Hooks.h			\
 	Exception.cc		Exception.h		\
