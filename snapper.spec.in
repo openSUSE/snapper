@@ -228,9 +228,9 @@ This package contains libsnapper, a library for filesystem snapshot management.
 %dir %{_sysconfdir}/snapper/configs
 %dir /usr/share/snapper
 %dir /usr/share/snapper/config-templates
-%config /usr/share/snapper/config-templates/default
+/usr/share/snapper/config-templates/default
 %dir /usr/share/snapper/filters
-%config /usr/share/snapper/filters/*.txt
+/usr/share/snapper/filters/*.txt
 %doc %dir %{_defaultdocdir}/snapper
 %doc %{_defaultdocdir}/snapper/AUTHORS
 %doc %{_defaultdocdir}/snapper/COPYING
@@ -301,7 +301,7 @@ snapper during commits.
 
 %files -n snapper-zypp-plugin
 %defattr(-,root,root)
-%config /usr/share/snapper/zypp-plugin.conf
+/usr/share/snapper/zypp-plugin.conf
 %if 0%{?suse_version} < 1210
 %dir /usr/lib/zypp
 %dir /usr/lib/zypp/plugins
