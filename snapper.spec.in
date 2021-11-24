@@ -49,7 +49,7 @@ BuildRequires:  libtool
 BuildRequires:  libxml2-devel
 BuildRequires:  e2fsprogs-devel
 BuildRequires:  ncurses-devel
-%if 0%{?suse_version} > 1230
+%if 0%{?suse_version}
 BuildRequires:  libbtrfs-devel
 %endif
 %if 0%{?suse_version} > 1310
@@ -272,7 +272,7 @@ Requires:	libacl-devel
 Requires:       libsnapper@LIBVERSION_MAJOR@ = %version
 Requires:       libstdc++-devel
 Requires:       libxml2-devel
-%if 0%{?suse_version} > 1230
+%if 0%{?suse_version}
 Requires:       libbtrfs-devel
 %endif
 %if 0%{?suse_version} > 1310

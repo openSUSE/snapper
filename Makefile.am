@@ -14,14 +14,11 @@ EXTRA_DIST = $(doc_DATA) VERSION LIBVERSION
 snapper-$(VERSION).tar.bz2: dist-bzip2
 
 DEBIAN_FLAVOURS =	\
-    Debian_9.0		\
     Debian_10.0		\
     Debian_11.0		\
     Debian_Unstable
 
 UBUNTU_FLAVOURS =	\
-    xUbuntu_17.04	\
-    xUbuntu_17.10	\
     xUbuntu_18.04	\
     xUbuntu_18.10	\
     xUbuntu_19.04	\
