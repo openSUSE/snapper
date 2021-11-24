@@ -19,5 +19,5 @@ EXTRA_DIST = snapper-hourly snapper-daily bash-completion.bash $(pam_snapper_SCR
 install-data-local:
 	install -D snapper-hourly $(DESTDIR)/etc/cron.hourly/suse.de-snapper
 	install -D snapper-daily $(DESTDIR)/etc/cron.daily/suse.de-snapper
-	install -D bash-completion.bash $(DESTDIR)/usr/share/bash-completion/completions/snapper
+	install -D --mode a+r,u+w bash-completion.bash $(DESTDIR)/usr/share/bash-completion/completions/snapper
 
