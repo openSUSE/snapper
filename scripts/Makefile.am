@@ -14,9 +14,10 @@ pam_snapper_SCRIPTS =			\
 
 endif
 
-EXTRA_DIST = snapper-hourly snapper-daily $(pam_snapper_SCRIPTS)
+EXTRA_DIST = snapper-hourly snapper-daily bash-completion.bash $(pam_snapper_SCRIPTS)
 
 install-data-local:
 	install -D snapper-hourly $(DESTDIR)/etc/cron.hourly/suse.de-snapper
 	install -D snapper-daily $(DESTDIR)/etc/cron.daily/suse.de-snapper
+	install -D bash-completion.bash $(DESTDIR)/usr/share/bash-completion/completions/snapper
 
