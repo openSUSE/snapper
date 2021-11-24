@@ -6,4 +6,5 @@ usr/sbin/snapperd
 usr/share/dbus-1/system.d/org.opensuse.Snapper.conf
 usr/share/dbus-1/system-services/org.opensuse.Snapper.service
 usr/share/locale/*/LC_MESSAGES/snapper.mo
+usr/share/bash-completion/completions/snapper
 usr/lib/systemd/system/snapperd.service

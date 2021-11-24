@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Nov 24 14:20:38 CET 2021 - aschnell@suse.com
+
+- added bash completion provided by community
+
+-------------------------------------------------------------------
 Tue Sep 21 13:30:29 CEST 2021 - aschnell@suse.com
 
 - look for most configuration files in /etc/snapper and
