@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2016-2021] SUSE LLC
+ * Copyright (c) [2016-2022] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -38,8 +38,8 @@
 boost::shared_mutex big_mutex;
 
 
-Client::Client(const string& name, const Clients& clients)
-    : name(name), clients(clients)
+Client::Client(const string& name, uid_t uid, const Clients& clients)
+    : name(name), uid(uid), clients(clients)
 {
 }
 
@@ -394,7 +394,7 @@ struct Permissions : public Exception
 void
 Client::check_permission(DBus::Connection& conn, DBus::Message& msg) const
 {
-    unsigned long uid = conn.get_unix_userid(msg);
+    // Check if the uid of the dbus-user is root.
     if (uid == 0)
 	return;
 
@@ -406,14 +406,12 @@ void
 Client::check_permission(DBus::Connection& conn, DBus::Message& msg,
 			 const MetaSnapper& meta_snapper) const
 {
-    unsigned long uid = conn.get_unix_userid(msg);
-
     // Check if the uid of the dbus-user is root.
     if (uid == 0)
 	return;
 
     // Check if the uid of the dbus-user is included in the allowed uids.
-    if (contains(meta_snapper.uids, uid))
+    if (contains(meta_snapper.get_allowed_uids(), uid))
 	return;
 
     string username;
@@ -422,7 +420,7 @@ Client::check_permission(DBus::Connection& conn, DBus::Message& msg,
     if (get_uid_username_gid(uid, username, gid))
     {
 	// Check if the primary gid of the dbus-user is included in the allowed gids.
-	if (contains(meta_snapper.gids, gid))
+	if (contains(meta_snapper.get_allowed_gids(), gid))
 	    return;
 
 	vector<gid_t> gids = getgrouplist(username.c_str(), gid);
@@ -430,7 +428,7 @@ Client::check_permission(DBus::Connection& conn, DBus::Message& msg,
 	// Check if any (primary or secondary) gid of the dbus-user is included in the allowed
 	// gids.
 	for (vector<gid_t>::const_iterator it = gids.begin(); it != gids.end(); ++it)
-	    if (contains(meta_snapper.gids, *it))
+	    if (contains(meta_snapper.get_allowed_gids(), *it))
 		return;
     }
 
@@ -892,7 +890,7 @@ Client::create_single_snapshot(DBus::Connection& conn, DBus::Message& msg)
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
-    scd.uid = conn.get_unix_userid(msg);
+    scd.uid = uid;
 
     Snapper* snapper = it->getSnapper();
 
@@ -927,7 +925,7 @@ Client::create_single_snapshot_v2(DBus::Connection& conn, DBus::Message& msg)
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
-    scd.uid = conn.get_unix_userid(msg);
+    scd.uid = uid;
 
     Snapper* snapper = it->getSnapper();
 
@@ -965,7 +963,7 @@ Client::create_single_snapshot_of_default(DBus::Connection& conn, DBus::Message&
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
-    scd.uid = conn.get_unix_userid(msg);
+    scd.uid = uid;
 
     Snapper* snapper = it->getSnapper();
 
@@ -999,7 +997,7 @@ Client::create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
-    scd.uid = conn.get_unix_userid(msg);
+    scd.uid = uid;
 
     Snapper* snapper = it->getSnapper();
 
@@ -1034,7 +1032,7 @@ Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
-    scd.uid = conn.get_unix_userid(msg);
+    scd.uid = uid;
 
     Snapper* snapper = it->getSnapper();
     Snapshots& snapshots = snapper->getSnapshots();
@@ -1596,7 +1594,7 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg) const
     for (Clients::const_iterator it = clients.begin(); it != clients.end(); ++it)
     {
 	std::ostringstream s;
-	s << "    name:'" << it->name << "'";
+	s << "    name:'" << it->name << "', uid:" << it->uid;
 	if (&*it == this)
 	    s << ", myself";
 	if (it->zombie)
@@ -1957,11 +1955,11 @@ Clients::find(const string& name)
 
 
 Clients::iterator
-Clients::add(const string& name)
+Clients::add(const string& name, uid_t uid)
 {
     assert(find(name) == entries.end());
 
-    entries.emplace_back(name, *this);
+    entries.emplace_back(name, uid, *this);
 
     return --entries.end();
 }

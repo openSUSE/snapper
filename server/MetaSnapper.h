@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) 2018 SUSE LLC
+ * Copyright (c) [2018-2022] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -94,8 +94,8 @@ public:
     const ConfigInfo& getConfigInfo() const { return config_info; }
     void setConfigInfo(const map<string, string>& raw);
 
-    vector<uid_t> uids;
-    vector<gid_t> gids;
+    const vector<uid_t>& get_allowed_uids() const { return allowed_uids; }
+    const vector<gid_t>& get_allowed_gids() const { return allowed_gids; }
 
     Snapper* getSnapper();
 
@@ -110,6 +110,9 @@ private:
     ConfigInfo config_info;
 
     Snapper* snapper = nullptr;
+
+    vector<uid_t> allowed_uids;
+    vector<gid_t> allowed_gids;
 
 };
 
