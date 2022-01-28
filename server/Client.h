@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2022] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -120,7 +120,7 @@ public:
 
     void dispatch(DBus::Connection& conn, DBus::Message& msg);
 
-    Client(const string& name, const Clients& clients);
+    Client(const string& name, uid_t uid, const Clients& clients);
     ~Client();
 
     list<Comparison*>::iterator find_comparison(Snapper* snapper, unsigned int number1,
@@ -140,6 +140,7 @@ public:
     void remove_mount(const string& config_name, unsigned int number);
 
     const string name;
+    const uid_t uid;
 
     list<Comparison*> comparisons;
 
@@ -192,7 +193,8 @@ public:
 
     iterator find(const string& name);
 
-    iterator add(const string& name);
+    iterator add(const string& name, uid_t uid);
+
     void remove_zombies();
 
     bool has_zombies() const;

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2018-2021] SUSE LLC
+ * Copyright (c) [2018-2022] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -93,12 +93,14 @@ MyMainLoop::method_call(DBus::Message& msg)
     {
 	boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
-	Clients::iterator client = clients.find(msg.get_sender());
+	const string name = msg.get_sender();
+
+	Clients::iterator client = clients.find(name);
 	if (client == clients.end())
 	{
-	    y2deb("client connected invisible '" << msg.get_sender() << "'");
-	    add_client_match(msg.get_sender());
-	    client = clients.add(msg.get_sender());
+	    y2deb("client connected invisible '" << name << "'");
+	    add_client_match(name);
+	    client = clients.add(name, get_unix_userid(msg));
 	    set_idle_timeout(seconds(-1));
 	}
 
