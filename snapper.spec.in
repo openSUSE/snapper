@@ -1,7 +1,7 @@
 #
 # spec file for package snapper
 #
-# Copyright (c) 2021 SUSE LLC
+# Copyright (c) 2022 SUSE LLC
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -34,7 +34,10 @@
 Name:           snapper
 Version:        @VERSION@
 Release:        0
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+Summary:        Tool for filesystem snapshot management
+License:        GPL-2.0-only
+Group:          System/Packages
+URL:            http://snapper.io/
 Source:         snapper-%{version}.tar.bz2
 %if 0%{?suse_version} > 1325
 BuildRequires:  libboost_system-devel
@@ -65,6 +68,8 @@ BuildRequires:  pkg-config
 BuildRequires:	glibc-langpack-de
 BuildRequires:	glibc-langpack-fr
 BuildRequires:	glibc-langpack-en
+%else
+BuildRequires:  glibc-locale
 %endif
 %if ! 0%{?mandriva_version}
 %if 0%{?fedora_version} >= 23
@@ -100,16 +105,12 @@ Requires:       systemd
 Recommends:     logrotate snapper-zypp-plugin
 Supplements:    btrfsprogs
 %endif
-Summary:        Tool for filesystem snapshot management
-License:        GPL-2.0-only
-Group:          System/Packages
-URL:            http://snapper.io/
 
 %description
 This package contains snapper, a tool for filesystem snapshot management.
 
 %prep
-%setup
+%setup -q
 
 %build
 %if %{with coverage}
@@ -194,9 +195,9 @@ fi
 %endif
 %dir %{_prefix}/lib/snapper
 %{_prefix}/lib/snapper/*-helper
-%doc %{_mandir}/*/snapper.8*
-%doc %{_mandir}/*/snapperd.8*
-%doc %{_mandir}/*/snapper-configs.5*
+%{_mandir}/*/snapper.8*
+%{_mandir}/*/snapperd.8*
+%{_mandir}/*/snapper-configs.5*
 %if 0%{?suse_version} > 1310
 %doc %{_mandir}/*/mksubvolume.8*
 %endif
@@ -223,7 +224,9 @@ Obsoletes:      %(echo `seq -s " " -f "libsnapper%.f" $((@LIBVERSION_MAJOR@ - 1)
 This package contains libsnapper, a library for filesystem snapshot management.
 
 %files -n libsnapper@LIBVERSION_MAJOR@
-%defattr(-,root,root)
+%license %{_defaultdocdir}/snapper/COPYING
+%doc %dir %{_defaultdocdir}/snapper
+%doc %{_defaultdocdir}/snapper/AUTHORS
 %{_libdir}/libsnapper.so.*
 %dir %{_sysconfdir}/snapper
 %dir %{_sysconfdir}/snapper/configs
@@ -232,9 +235,6 @@ This package contains libsnapper, a library for filesystem snapshot management.
 %{_datadir}/snapper/config-templates/default
 %dir %{_datadir}/snapper/filters
 %{_datadir}/snapper/filters/*.txt
-%doc %dir %{_defaultdocdir}/snapper
-%doc %{_defaultdocdir}/snapper/AUTHORS
-%doc %{_defaultdocdir}/snapper/COPYING
 %if 0%{?suse_version}
 %{_fillupdir}/sysconfig.snapper
 %else
@@ -268,7 +268,7 @@ Requires:       libboost_headers-devel
 Requires:       boost-devel
 %endif
 Requires:       gcc-c++
-Requires:	libacl-devel
+Requires:       libacl-devel
 Requires:       libsnapper@LIBVERSION_MAJOR@ = %version
 Requires:       libstdc++-devel
 Requires:       libxml2-devel
@@ -286,7 +286,6 @@ This package contains header files and documentation for developing with
 libsnapper.
 
 %files -n libsnapper-devel
-%defattr(-,root,root)
 %{_libdir}/libsnapper.so
 %{_includedir}/snapper
 
@@ -301,7 +300,6 @@ This package contains a plugin for zypp that makes filesystem snapshots with
 snapper during commits.
 
 %files -n snapper-zypp-plugin
-%defattr(-,root,root)
 %{_datadir}/snapper/zypp-plugin.conf
 /usr/lib/zypp/plugins/commit/snapper-zypp-plugin
 %doc %{_mandir}/*/snapper-zypp-plugin.8*
@@ -329,7 +327,6 @@ Group:          System/Packages
 A PAM module for calling snapper during user login and logout.
 
 %files -n pam_snapper
-%defattr(-,root,root)
 /%{pam_security_dir}/pam_snapper.so
 %dir /usr/lib/pam_snapper
 /usr/lib/pam_snapper/*.sh
@@ -343,7 +340,6 @@ Group:          System/Packages
 Tests to be run in a scratch machine to test that snapper operates as expected.
 
 %files testsuite
-%defattr(-,root,root)
 %dir %{_libdir}/snapper
 %dir %{_libdir}/snapper/testsuite
 %{_libdir}/snapper/testsuite/*
