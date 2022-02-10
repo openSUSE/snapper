@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-12-17 13:34+0100\n"
-"PO-Revision-Date: 2019-03-01 20:28+0000\n"
+"PO-Revision-Date: 2022-02-10 15:12+0000\n"
 "Last-Translator: Murat Servan Kahraman <muratservan@outlook.com>\n"
-"Language-Team: Turkish <https://l10n.opensuse.org/projects/snapper/master/tr/>\n"
+"Language-Team: Turkish <https://l10n.opensuse.org/projects/snapper/master/tr/"
+">\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.3\n"
+"X-Generator: Weblate 4.9.1\n"
 
 msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
 msgstr ""
@@ -539,8 +540,9 @@ msgstr ""
 msgid "Creating config failed (%s)."
 msgstr "Yapılandırma oluşturma başarısız oldu (%s)."
 
+#, fuzzy
 msgid "Creating read-only snapshot of current system."
-msgstr ""
+msgstr "Mevcut sistemin salt-okunur anlık görüntüsü oluşturuluyor."
 
 msgid "Creating read-only snapshot of default subvolume."
 msgstr ""
@@ -560,7 +562,7 @@ msgid "Date"
 msgstr "Tarih"
 
 msgid "Default"
-msgstr ""
+msgstr "Varsayılan"
 
 #, fuzzy, c-format
 msgid "Deleting config failed (%s)."
@@ -582,16 +584,17 @@ msgid "Detecting filesystem type failed."
 msgstr "Dosya sistemi türünü tespit etme başarısız oldu."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
+#, fuzzy
 msgid "E"
-msgstr ""
+msgstr "E"
 
 #. TRANSLATORS: symbol for "exa bytes" (best keep untranslated)
 msgid "EB"
-msgstr ""
+msgstr "EB"
 
 #. TRANSLATORS: symbol for "exbi bytes" (best keep untranslated)
 msgid "EiB"
-msgstr ""
+msgstr "EiB"
 
 msgid "Empty configdata."
 msgstr ""
@@ -640,15 +643,15 @@ msgstr "Giriş/Çıkış hatası"
 
 #. TRANSLATORS: symbol for "giga" (best keep untranslated)
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #. TRANSLATORS: symbol for "giga bytes" (best keep untranslated)
 msgid "GB"
-msgstr ""
+msgstr "GB"
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
-msgstr ""
+msgstr "GiB"
 
 # include/ui/common_messages.ycp:95
 #, fuzzy, c-format
@@ -723,7 +726,7 @@ msgstr "Kenya"
 
 #. TRANSLATORS: symbol for "kibi bytes" (best keep untranslated)
 msgid "KiB"
-msgstr ""
+msgstr "KiB"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -731,18 +734,18 @@ msgstr "Yapılandırmaları listeleme başarısız oldu (%s)."
 
 #. TRANSLATORS: symbol for "mega" (best keep untranslated)
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
 msgid "MB"
-msgstr ""
+msgstr "MB"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr ""
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
-msgstr ""
+msgstr "MiB"
 
 #, fuzzy, c-format
 msgid "Missing argument for command option '%s'."
@@ -782,15 +785,15 @@ msgstr ""
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
 msgid "PB"
-msgstr ""
+msgstr "PB"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
-msgstr ""
+msgstr "PiB"
 
 #, fuzzy
 msgid "Post #"
@@ -826,7 +829,7 @@ msgid "Snapshot '%u' not found."
 msgstr "'%u' anlık görüntüsü bulunamadı."
 
 msgid "Snapshot is in use."
-msgstr ""
+msgstr "Anlık görüntü kullanımda."
 
 #, fuzzy
 msgid "Subvolume"
@@ -834,11 +837,11 @@ msgstr "Arkases"
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
 msgid "TB"
-msgstr ""
+msgstr "TB"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
@@ -851,7 +854,7 @@ msgstr ""
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
-msgstr ""
+msgstr "TiB"
 
 #, fuzzy
 msgid "Try 'snapper --help' for more information."
@@ -890,12 +893,12 @@ msgstr "'Bilinmeyen komut '%s'."
 msgid "Use %1$s."
 msgstr ""
 
-#, c-format
+#, c-format, fuzzy
 msgid "Use an integer number from %d to %d."
-msgstr ""
+msgstr "%d ve %d aralığında bir tamsayı kullanın."
 
 msgid "Used Space"
-msgstr ""
+msgstr "Kullanılan Alan"
 
 #, fuzzy
 msgid "User"
@@ -940,19 +943,20 @@ msgid "failed to modify %s"
 msgstr "%s 'i değiştirme başarısız oldu"
 
 #. TRANSLATORS: symbol for "kilo" (best keep untranslated)
+#, fuzzy
 msgid "k"
-msgstr ""
+msgstr "k"
 
 #. TRANSLATORS: symbol for "kilo bytes" (best keep untranslated)
 msgid "kB"
-msgstr ""
+msgstr "kB"
 
 #, c-format
 msgid "modifying %s"
 msgstr "%s üzerinde değişiklik yapılıyor"
 
 msgid "no"
-msgstr ""
+msgstr "hayır"
 
 msgid "nothing to do"
 msgstr ""
@@ -966,7 +970,7 @@ msgid "usage: snapper [--global-options] <command> [--command-options] [command-
 msgstr "kullanım: yakalayıcı  [--global-options] <command> [--command-options] [command-arguments]"
 
 msgid "yes"
-msgstr ""
+msgstr "evet"
 
 #, fuzzy
 #~ msgid "Unknown type of snapshot."
