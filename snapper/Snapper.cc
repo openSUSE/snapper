@@ -853,7 +853,14 @@ namespace snapper
 
 	SDir general_dir = btrfs->openGeneralDir();
 
-	filesystem->sync();
+	try
+	{
+	    filesystem->sync();
+	}
+	catch (...)
+	{
+	    SN_THROW(FreeSpaceException("filesystem sync failed"));
+	}
 
 	FreeSpaceData free_space_data;
 	std::tie(free_space_data.size, free_space_data.free) = general_dir.statvfs();
