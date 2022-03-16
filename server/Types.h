@@ -27,7 +27,6 @@
 #include <dbus/dbus.h>
 
 #include <string>
-#include <list>
 
 #include <snapper/Snapper.h>
 #include <snapper/Snapshot.h>
@@ -36,7 +35,6 @@
 
 
 using std::string;
-using std::list;
 
 using namespace snapper;
 
