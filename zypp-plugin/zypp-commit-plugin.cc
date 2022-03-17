@@ -19,9 +19,12 @@
  * find current contact information at www.suse.com.
  */
 
-#include "zypp_commit_plugin.h"
 
-ZyppPlugin::Message ZyppCommitPlugin::dispatch(const Message& msg) {
+#include "zypp-commit-plugin.h"
+
+
+ZyppPlugin::Message ZyppCommitPlugin::dispatch(const Message& msg)
+{
     if (msg.command == "PLUGINBEGIN") {
 	return plugin_begin(msg);
     }

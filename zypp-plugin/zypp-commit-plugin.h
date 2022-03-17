@@ -22,7 +22,7 @@
 #ifndef ZYPP_COMMIT_PLUGIN_H
 #define ZYPP_COMMIT_PLUGIN_H
 
-#include "zypp_plugin.h"
+#include "zypp-plugin.h"
 
 /// Dispatches begin+end of plugin+commit in dedicated methods.
 // The default implementations just ack.

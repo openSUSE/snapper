@@ -20,12 +20,15 @@
  */
 
 #include <string>
+
 using namespace std;
 
 #include <boost/process.hpp>
+
 namespace bp = boost::process;
 
-#include "zypp_plugin.h"
+#include "zypp-plugin.h"
+
 
 /**
  * A middleware that can wrap an actual plugin for enhanced validation.
@@ -35,7 +38,8 @@ namespace bp = boost::process;
  * output. Inserting ForwardingZyppPlugin in between means that ZyppPlugin's
  * validation will check SnapperZyppPlugin's output.
  */
-class ForwardingZyppPlugin : public ZyppPlugin {
+class ForwardingZyppPlugin : public ZyppPlugin
+{
 public:
     ForwardingZyppPlugin(const string& another_plugin);
 
@@ -48,12 +52,16 @@ private:
     bp::opstream childs_in; // we write this
 };
 
+
 ForwardingZyppPlugin::ForwardingZyppPlugin(const string& another_plugin)
     : child_program(another_plugin)
 {
 }
 
-int ForwardingZyppPlugin::main() {
+
+int
+ForwardingZyppPlugin::main()
+{
     bp::child c(child_program,
 		bp::std_out > childs_out,
 		// bp::std_err > childs_err,
@@ -65,13 +73,19 @@ int ForwardingZyppPlugin::main() {
     return result;
 }
 
-ZyppPlugin::Message ForwardingZyppPlugin::dispatch(const Message& msg) {
+
+ZyppPlugin::Message
+ForwardingZyppPlugin::dispatch(const Message& msg)
+{
     write_message(childs_in, msg);
     Message reply = read_message(childs_out);
     return reply;
 }
 
-int main(int argc, char** argv) {
+
+int
+main(int argc, char** argv)
+{
     if (argc != 2)
 	throw runtime_error("Usage: forwarding-zypp-plugin ANOTHER_ZYPP_PLUGIN");
     ForwardingZyppPlugin plugin(argv[1]);
