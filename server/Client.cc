@@ -46,9 +46,10 @@ Client::Client(const string& name, uid_t uid, const Clients& clients)
 
 Client::~Client()
 {
-    thread.interrupt();
-    if (thread.joinable())
-	thread.join();
+    method_call_thread.interrupt();
+
+    if (method_call_thread.joinable())
+	method_call_thread.join();
 
     for (list<Comparison*>::iterator it = comparisons.begin(); it != comparisons.end(); ++it)
     {
@@ -1893,34 +1894,34 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Client::add_task(DBus::Connection& conn, DBus::Message& msg)
+Client::add_method_call_task(DBus::Connection& conn, DBus::Message& msg)
 {
-    if (thread.get_id() == boost::thread::id())
-	thread = boost::thread(boost::bind(&Client::worker, this));
+    if (method_call_thread.get_id() == boost::thread::id())
+	method_call_thread = boost::thread(boost::bind(&Client::method_call_worker, this));
 
-    boost::unique_lock<boost::mutex> lock(mutex);
-    tasks.push(Task(conn, msg));
+    boost::unique_lock<boost::mutex> lock(method_call_mutex);
+    method_call_tasks.push(MethodCallTask(conn, msg));
     lock.unlock();
 
-    condition.notify_one();
+    method_call_condition.notify_one();
 }
 
 
 void
-Client::worker()
+Client::method_call_worker()
 {
     try
     {
 	while (true)
 	{
-	    boost::unique_lock<boost::mutex> lock(mutex);
-	    while (tasks.empty())
-		condition.wait(lock);
-	    Task task = tasks.front();
-	    tasks.pop();
+	    boost::unique_lock<boost::mutex> lock(method_call_mutex);
+	    while (method_call_tasks.empty())
+		method_call_condition.wait(lock);
+	    MethodCallTask method_call_task = method_call_tasks.front();
+	    method_call_tasks.pop();
 	    lock.unlock();
 
-	    dispatch(task.conn, task.msg);
+	    dispatch(method_call_task.conn, method_call_task.msg);
 	}
     }
     catch (const boost::thread_interrupted&)
@@ -1970,7 +1971,7 @@ Clients::remove_zombies()
 {
     for (iterator it = begin(); it != end();)
     {
-	if (it->zombie && it->thread.timed_join(boost::posix_time::seconds(0)))
+	if (it->zombie && it->method_call_thread.timed_join(boost::posix_time::seconds(0)))
 	    it = entries.erase(it);
 	else
 	    ++it;

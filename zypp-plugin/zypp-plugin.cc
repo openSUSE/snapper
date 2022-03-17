@@ -23,12 +23,18 @@
 #include <boost/algorithm/string/trim.hpp>
 #include <string>
 #include <regex>
+
 using namespace std;
 
-#include "zypp_plugin.h"
 
-int ZyppPlugin::main() {
-    while(true) {
+#include "zypp-plugin.h"
+
+
+int
+ZyppPlugin::main()
+{
+    while(true)
+    {
 	Message msg = read_message(pin);
 	if (pin.eof())
 	    break;
@@ -38,7 +44,10 @@ int ZyppPlugin::main() {
     return 0;
 }
 
-void ZyppPlugin::write_message(ostream& os, const Message& msg) {
+
+void
+ZyppPlugin::write_message(ostream& os, const Message& msg)
+{
     os << msg.command << endl;
     for(auto it: msg.headers) {
 	os << it.first << ':' << it.second << endl;
@@ -48,7 +57,10 @@ void ZyppPlugin::write_message(ostream& os, const Message& msg) {
     os.flush();
 }
 
-ZyppPlugin::Message ZyppPlugin::read_message(istream& is) {
+
+ZyppPlugin::Message
+ZyppPlugin::read_message(istream& is)
+{
     enum class State {
 		      Start,
 		      Headers,
@@ -57,7 +69,8 @@ ZyppPlugin::Message ZyppPlugin::read_message(istream& is) {
 
     Message msg;
 
-    while(!is.eof()) {
+    while (!is.eof())
+    {
 	string line;
 
 	getline(is, line);
@@ -111,7 +124,10 @@ ZyppPlugin::Message ZyppPlugin::read_message(istream& is) {
     throw runtime_error("Plugin protocol error: expected a message, got a part of it");
 }
 
-ZyppPlugin::Message ZyppPlugin::dispatch(const Message& msg) {
+
+ZyppPlugin::Message
+ZyppPlugin::dispatch(const Message& msg)
+{
     if (msg.command == "_DISCONNECT") {
 	return ack();
     }

@@ -42,10 +42,10 @@ error1_SOURCES = error1.cc common.h common.cc
 error2_SOURCES = error2.cc common.h common.cc
 error4_SOURCES = error4.cc common.h common.cc
 
-xattrs1_SOURCES = xattrs1.cc xattrs_utils.cc xattrs_utils.h common.h common.cc
-xattrs2_SOURCES = xattrs2.cc xattrs_utils.cc xattrs_utils.h common.h common.cc
-xattrs3_SOURCES = xattrs3.cc xattrs_utils.cc xattrs_utils.h common.h common.cc
-xattrs4_SOURCES = xattrs4.cc xattrs_utils.cc xattrs_utils.h common.h common.cc
+xattrs1_SOURCES = xattrs1.cc xattrs-utils.cc xattrs-utils.h common.h common.cc
+xattrs2_SOURCES = xattrs2.cc xattrs-utils.cc xattrs-utils.h common.h common.cc
+xattrs3_SOURCES = xattrs3.cc xattrs-utils.cc xattrs-utils.h common.h common.cc
+xattrs4_SOURCES = xattrs4.cc xattrs-utils.cc xattrs-utils.h common.h common.cc
 
 test_btrfsutils_SOURCES = test-btrfsutils.cc
 

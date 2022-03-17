@@ -1,6 +1,6 @@
 
 #include "common.h"
-#include "xattrs_utils.h"
+#include "xattrs-utils.h"
 
 using namespace std;
 

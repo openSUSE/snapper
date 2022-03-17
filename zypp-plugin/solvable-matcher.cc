@@ -19,22 +19,28 @@
  * find current contact information at www.suse.com.
  */
 
-#include "solvable_matcher.h"
+#include "solvable-matcher.h"
 
 #include <iostream>
 #include <vector>
 #include <string>
 #include <regex>
+
 using namespace std;
 
 // fnmatch
 #include <fnmatch.h>
 #include "snapper/XmlFile.h"
+
 using namespace snapper;
+
 
 std::ostream& SolvableMatcher::log = std::cerr;
 
-bool SolvableMatcher::match(const string& solvable) const {
+
+bool
+SolvableMatcher::match(const string& solvable) const
+{
     log << "DEBUG:"
 	<< "match? " << solvable
 	<< " by " << ((kind == Kind::GLOB)? "GLOB '": "REGEX '")
@@ -62,7 +68,10 @@ bool SolvableMatcher::match(const string& solvable) const {
     return res;
 }
 
-vector<SolvableMatcher> SolvableMatcher::load_config(const string& cfg_filename) {
+
+vector<SolvableMatcher>
+SolvableMatcher::load_config(const string& cfg_filename)
+{
     vector<SolvableMatcher> result;
 
     log << "DEBUG:" << "parsing " << cfg_filename << endl;
@@ -92,5 +101,6 @@ vector<SolvableMatcher> SolvableMatcher::load_config(const string& cfg_filename)
 
 	result.emplace_back(SolvableMatcher(pattern, kind, important));
     }
+
     return result;
 }

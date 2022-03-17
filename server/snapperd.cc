@@ -104,7 +104,7 @@ MyMainLoop::method_call(DBus::Message& msg)
 	    set_idle_timeout(seconds(-1));
 	}
 
-	client->add_task(*this, msg);
+	client->add_method_call_task(*this, msg);
     }
 }
 
@@ -130,8 +130,9 @@ MyMainLoop::client_disconnected(const string& name)
     if (client != clients.end())
     {
 	client->zombie = true;
-	client->thread.interrupt();
+	client->method_call_thread.interrupt();
     }
+
     reset_idle_count();
 }
 

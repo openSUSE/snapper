@@ -2,11 +2,11 @@
 #define BOOST_TEST_MODULE regex
 
 #include <boost/test/unit_test.hpp>
-#include "solvable_matcher.h"
+#include "solvable-matcher.h"
 
 
-static
-SolvableMatcher make_glob(const char* regex)
+static SolvableMatcher
+make_glob(const char* regex)
 {
     bool is_important = false;
     return SolvableMatcher(regex, SolvableMatcher::Kind::GLOB, is_important);
@@ -25,8 +25,8 @@ BOOST_AUTO_TEST_CASE(glob)
 }
 
 
-static
-SolvableMatcher make_rx(const char* regex)
+static SolvableMatcher
+make_rx(const char* regex)
 {
     bool is_important = false;
     return SolvableMatcher(regex, SolvableMatcher::Kind::REGEX, is_important);

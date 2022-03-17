@@ -32,6 +32,7 @@
 #include <map>
 #include <string>
 #include <regex>
+
 using namespace std;
 
 #include <json.h>
@@ -47,8 +48,8 @@ using snapper::CodeLocation;
 #include "client/commands.h"
 #include "client/errors.h"
 
-#include "zypp_commit_plugin.h"
-#include "solvable_matcher.h"
+#include "zypp-commit-plugin.h"
+#include "solvable-matcher.h"
 
 ostream&
 operator<<(ostream& os, const set<string>& ss)
@@ -66,6 +67,7 @@ operator<<(ostream& os, const set<string>& ss)
     os << '}';
     return os;
 }
+
 
 // Normally the only configuration this program needs is
 // the zypp-plugin.conf file in /etc/snapper or /usr/share/snapper.
@@ -103,7 +105,9 @@ public:
 
 };
 
-class SnapperZyppPlugin : public ZyppCommitPlugin {
+
+class SnapperZyppPlugin : public ZyppCommitPlugin
+{
 public:
     SnapperZyppPlugin(const ProgramOptions& opts)
     : snapper_cfg(opts.snapper_config)
@@ -250,9 +254,13 @@ private:
     unsigned int create_pre_snapshot(string config_name, string description, string cleanup, map<string, string> userdata);
 };
 
+
 const string SnapperZyppPlugin::cleanup_algorithm = "number";
 
-map<string, string> SnapperZyppPlugin::get_userdata(const Message& msg) {
+
+map<string, string>
+SnapperZyppPlugin::get_userdata(const Message& msg)
+{
     map<string, string> result;
     auto it = msg.headers.find("userdata");
     if (it != msg.headers.end()) {
@@ -279,8 +287,11 @@ map<string, string> SnapperZyppPlugin::get_userdata(const Message& msg) {
     return result;
 }
 
+
 static
-json_object * object_get(json_object * obj, const char * name) {
+json_object*
+object_get(json_object* obj, const char* name)
+{
     json_object * result;
     if (!json_object_object_get_ex(obj, name, &result)) {
 	cerr << "ERROR:" << '"' << name << "\" not found" << endl;
@@ -289,7 +300,10 @@ json_object * object_get(json_object * obj, const char * name) {
     return result;
 }
 
-set<string> SnapperZyppPlugin::get_solvables(const Message& msg, Phase phase) {
+
+set<string>
+SnapperZyppPlugin::get_solvables(const Message& msg, Phase phase)
+{
     set<string> result;
 
     json_tokener * tok = json_tokener_new();
@@ -341,7 +355,10 @@ set<string> SnapperZyppPlugin::get_solvables(const Message& msg, Phase phase) {
     return result;
 }
 
-void SnapperZyppPlugin::match_solvables(const set<string>& solvables, bool& found, bool& important) {
+
+void
+SnapperZyppPlugin::match_solvables(const set<string>& solvables, bool& found, bool& important)
+{
     found = false;
     important = false;
     for (auto s: solvables) {
@@ -356,7 +373,10 @@ void SnapperZyppPlugin::match_solvables(const set<string>& solvables, bool& foun
     }
 }
 
-int main() {
+
+int
+main()
+{
     if (getenv("DISABLE_SNAPPER_ZYPP_PLUGIN") != nullptr) {
 	cerr << "INFO:" << "$DISABLE_SNAPPER_ZYPP_PLUGIN is set - disabling snapper-zypp-plugin" << endl;
 	ZyppCommitPlugin plugin;
