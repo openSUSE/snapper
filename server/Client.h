@@ -148,26 +148,26 @@ public:
 
     map<pair<string, unsigned int>, unsigned int> mounts;
 
-    struct Task
+    struct MethodCallTask
     {
-	Task(DBus::Connection& conn, DBus::Message& msg) : conn(conn), msg(msg) {}
+	MethodCallTask(DBus::Connection& conn, DBus::Message& msg) : conn(conn), msg(msg) {}
 
 	DBus::Connection& conn;
 	DBus::Message msg;
     };
 
-    boost::condition_variable condition;
-    boost::mutex mutex;
-    boost::thread thread;
-    queue<Task> tasks;
+    boost::condition_variable method_call_condition;
+    boost::mutex method_call_mutex;
+    boost::thread method_call_thread;
+    queue<MethodCallTask> method_call_tasks;
+    void add_method_call_task(DBus::Connection& conn, DBus::Message& msg);
 
     bool zombie = false;
 
-    void add_task(DBus::Connection& conn, DBus::Message& msg);
 
 private:
 
-    void worker();
+    void method_call_worker();
 
     const Clients& clients;
 
