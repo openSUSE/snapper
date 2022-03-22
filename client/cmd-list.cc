@@ -21,6 +21,8 @@
  */
 
 
+#include "config.h"
+
 #include <iostream>
 #include <boost/any.hpp>
 
@@ -145,16 +147,24 @@ namespace snapper
 
 	    bool used_space_broken = true;
 
+#ifdef ENABLE_BTRFS
+
 	    /**
 	     * For all btrfses (by btrfs filesystem uuid) keep track of whether used space
 	     * is broken.
 	     */
 	    static map<Uuid, bool> used_space_broken_by_uuid;
 
+#endif
+
 	};
 
 
+#ifdef ENABLE_BTRFS
+
 	map<Uuid, bool> OutputHelper::used_space_broken_by_uuid;
+
+#endif
 
 
 	OutputHelper::OutputHelper(const ProxySnapper* snapper, const vector<Column>& columns)
@@ -185,6 +195,8 @@ namespace snapper
 	    {
 		string subvolume = snapper->getConfig().getSubvolume();
 
+#ifdef ENABLE_BTRFS
+
 		try
 		{
 		    Uuid uuid = BtrfsUtils::get_uuid(subvolume);
@@ -213,6 +225,8 @@ namespace snapper
 		{
 		    // getting uuid failed, maybe it is a LVM config
 		}
+
+#endif
 	    }
 	}
 
