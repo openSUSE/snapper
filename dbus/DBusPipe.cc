@@ -89,10 +89,10 @@ namespace DBus
 	    {
 		out += "\\\\";
 	    }
-	    else if (c <= ' ')
+	    else if ((unsigned char)(c) <= ' ')
 	    {
 		char s[5];
-		snprintf(s, 5, "\\x%02x", c);
+		snprintf(s, 5, "\\x%02x", (unsigned char)(c));
 		out += string(s);
 	    }
 	    else
