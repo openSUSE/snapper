@@ -1638,6 +1638,13 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg) const
 
     hoho.open_array("s");
 
+    hoho << "server:";
+    {
+	std::ostringstream s;
+	s << "    pid:" << getpid();
+	hoho << s.str();
+    }
+
     hoho << "clients:";
     for (Clients::const_iterator it = clients.begin(); it != clients.end(); ++it)
     {
