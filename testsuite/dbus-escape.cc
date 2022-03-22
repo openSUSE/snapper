@@ -41,10 +41,14 @@ BOOST_AUTO_TEST_CASE(hihi_unescape)
 BOOST_AUTO_TEST_CASE(pipe_escape)
 {
     BOOST_CHECK_EQUAL(Pipe::escape("hello world\n"), "hello\\x20world\\x0a");
+
+    BOOST_CHECK_EQUAL(Pipe::escape("ä"), "ä");
 }
 
 
 BOOST_AUTO_TEST_CASE(pipe_unescape)
 {
     BOOST_CHECK_EQUAL(Pipe::unescape("hello\\x20world\\x0a"), "hello world\n");
+
+    BOOST_CHECK_EQUAL(Pipe::unescape("ä"), "ä");
 }

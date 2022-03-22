@@ -377,21 +377,21 @@ namespace DBus
     {
 	string out;
 
-	for (string::const_iterator it = in.begin(); it != in.end(); ++it)
+	for (const char c : in)
 	{
-	    if (*it == '\\')
+	    if (c == '\\')
 	    {
 		out += "\\\\";
 	    }
-	    else if ((unsigned char)(*it) > 127)
+	    else if ((unsigned char)(c) > 127)
 	    {
 		char s[5];
-		snprintf(s, 5, "\\x%02x", (unsigned char)(*it));
+		snprintf(s, 5, "\\x%02x", (unsigned char)(c));
 		out += string(s);
 	    }
 	    else
 	    {
-		out += *it;
+		out += c;
 	    }
 	}
 
