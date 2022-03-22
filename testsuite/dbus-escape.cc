@@ -5,12 +5,13 @@
 #include <boost/test/unit_test.hpp>
 
 #include <dbus/DBusMessage.h>
+#include <dbus/DBusPipe.h>
 
 
 using namespace DBus;
 
 
-BOOST_AUTO_TEST_CASE(escape)
+BOOST_AUTO_TEST_CASE(hoho_escape)
 {
     BOOST_CHECK_EQUAL(Hoho::escape("\\"), "\\\\");
 
@@ -21,7 +22,7 @@ BOOST_AUTO_TEST_CASE(escape)
 }
 
 
-BOOST_AUTO_TEST_CASE(unescape)
+BOOST_AUTO_TEST_CASE(hihi_unescape)
 {
     BOOST_CHECK_EQUAL(Hihi::unescape("\\\\"), "\\");
 
@@ -34,4 +35,16 @@ BOOST_AUTO_TEST_CASE(unescape)
     BOOST_CHECK_THROW(Hihi::unescape("\\x"), MarshallingException);
     BOOST_CHECK_THROW(Hihi::unescape("\\x0"), MarshallingException);
     BOOST_CHECK_THROW(Hihi::unescape("\\x0?"), MarshallingException);
+}
+
+
+BOOST_AUTO_TEST_CASE(pipe_escape)
+{
+    BOOST_CHECK_EQUAL(Pipe::escape("hello world\n"), "hello\\x20world\\x0a");
+}
+
+
+BOOST_AUTO_TEST_CASE(pipe_unescape)
+{
+    BOOST_CHECK_EQUAL(Pipe::unescape("hello\\x20world\\x0a"), "hello world\n");
 }

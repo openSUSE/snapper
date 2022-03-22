@@ -38,6 +38,7 @@
 #include <dbus/DBusMessage.h>
 
 #include "MetaSnapper.h"
+#include "FilesTransferTask.h"
 
 
 using namespace std;
@@ -111,6 +112,7 @@ public:
     void create_comparison(DBus::Connection& conn, DBus::Message& msg);
     void delete_comparison(DBus::Connection& conn, DBus::Message& msg);
     void get_files(DBus::Connection& conn, DBus::Message& msg);
+    void get_files_by_pipe(DBus::Connection& conn, DBus::Message& msg);
     void setup_quota(DBus::Connection& conn, DBus::Message& msg);
     void prepare_quota(DBus::Connection& conn, DBus::Message& msg);
     void query_quota(DBus::Connection& conn, DBus::Message& msg);
@@ -162,12 +164,18 @@ public:
     queue<MethodCallTask> method_call_tasks;
     void add_method_call_task(DBus::Connection& conn, DBus::Message& msg);
 
-    bool zombie = false;
+    boost::condition_variable file_transfer_condition;
+    boost::mutex file_transfer_mutex;
+    boost::thread file_transfer_thread;
+    queue<shared_ptr<FilesTransferTask>> file_transfer_tasks;
+    void add_file_transfer_task(shared_ptr<FilesTransferTask> file_transfer_task);
 
+    bool zombie = false;
 
 private:
 
     void method_call_worker();
+    void files_transfer_worker();
 
     const Clients& clients;
 

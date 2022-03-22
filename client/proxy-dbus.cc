@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2022] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -378,8 +378,26 @@ ProxyComparisonDbus::ProxyComparisonDbus(ProxySnapperDbus* backref, const ProxyS
 	    file_paths.post_path = file_paths.system_path;
     }
 
-    vector<XFile> tmp1 = command_get_xfiles(backref->conn(), backref->config_name, lhs.getNum(),
-					    rhs.getNum());
+    vector<XFile> tmp1;
+
+    try
+    {
+	tmp1 = command_get_xfiles_by_pipe(backref->conn(), backref->config_name, lhs.getNum(),
+					  rhs.getNum());
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	SN_CAUGHT(e);
+
+	// If snapper was just updated and the old snapperd is still running it might not
+	// know the GetFilesByPipe method.
+
+	if (strcmp(e.name(), "error.unknown_method") != 0)
+	    SN_RETHROW(e);
+
+	tmp1 = command_get_xfiles(backref->conn(), backref->config_name, lhs.getNum(),
+				  rhs.getNum());
+    }
 
     vector<File> tmp2;
 
