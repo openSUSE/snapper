@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2022] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -125,6 +125,10 @@ command_delete_comparison(DBus::Connection& conn, const string& config_name, uns
 vector<XFile>
 command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		   unsigned int number2);
+
+vector<XFile>
+command_get_xfiles_by_pipe(DBus::Connection& conn, const string& config_name, unsigned int number1,
+			   unsigned int number2);
 
 void
 command_setup_quota(DBus::Connection& conn, const string& config_name);

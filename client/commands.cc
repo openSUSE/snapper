@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2022] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -21,11 +21,13 @@
  */
 
 
+#include <stdio.h>
 #include <iostream>
 
 #include "commands.h"
 #include "errors.h"
 #include "utils/text.h"
+#include "dbus/DBusPipe.h"
 #include "snapper/AppUtil.h"
 
 using namespace std;
@@ -487,8 +489,71 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
     DBus::Hihi hihi(reply);
     hihi >> files;
 
-    sort(files.begin(), files.end());	// snapperd can have different locale than client
-					// so sorting is required here
+    sort(files.begin(), files.end());
+
+    return files;
+}
+
+
+vector<XFile>
+command_get_xfiles_by_pipe(DBus::Connection& conn, const string& config_name, unsigned int number1,
+			   unsigned int number2)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetFilesByPipe");
+
+    DBus::Hoho hoho(call);
+    hoho << config_name << number1 << number2;
+
+    DBus::Message reply = conn.send_with_reply_and_block(call);
+
+    DBus::FileDescriptor fd;
+
+    DBus::Hihi hihi(reply);
+    hihi >> fd;
+
+    vector<XFile> files;
+
+    FILE* fin = fdopen(fd.get_fd(), "r");
+    if (!fin)
+	SN_THROW(IOErrorException("reading pipe failed, fdopen failed: " + stringerror(errno)));
+
+    char* buffer = nullptr;
+    size_t len = 0;
+
+    while (true)
+    {
+	ssize_t n = getline(&buffer, &len, fin);
+	if (n == -1)
+	{
+	    if (feof(fin) != 0)
+		break;
+
+	    SN_THROW(IOErrorException("reading pipe failed, getline failed: " + stringerror(errno)));
+	}
+
+	if (n > 0 && buffer[n - 1] == '\n')
+	    --n;
+
+	const string line = string(buffer, 0, n);
+
+	string::size_type pos1 = line.find(" ");
+	if (pos1 == string::npos)
+	    SN_THROW(IOErrorException("reading pipe failed, parse error"));
+
+	string::size_type pos2 = line.find(" ", pos1 + 1);
+
+	XFile file;
+	file.name = DBus::Pipe::unescape(line.substr(0, pos1));
+	file.status = stoi(line.substr(pos1 + 1, pos2 - pos1 - 1));
+	files.push_back(file);
+    }
+
+    free(buffer);
+
+    if (fclose(fin) != 0)
+	SN_THROW(IOErrorException("reading pipe failed, fclose failed: " + stringerror(errno)));
+
+    sort(files.begin(), files.end());
 
     return files;
 }

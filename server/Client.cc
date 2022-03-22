@@ -47,9 +47,13 @@ Client::Client(const string& name, uid_t uid, const Clients& clients)
 Client::~Client()
 {
     method_call_thread.interrupt();
+    file_transfer_thread.interrupt();
 
     if (method_call_thread.joinable())
 	method_call_thread.join();
+
+    if (file_transfer_thread.joinable())
+	file_transfer_thread.join();
 
     for (list<Comparison*>::iterator it = comparisons.begin(); it != comparisons.end(); ++it)
     {
@@ -368,6 +372,13 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='number1' type='u' direction='in'/>\n"
 	"      <arg name='number2' type='u' direction='in'/>\n"
 	"      <arg name='files' type='a(su)' direction='out'/>\n"
+	"    </method>\n"
+
+	"    <method name='GetFilesByPipe'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='number1' type='u' direction='in'/>\n"
+	"      <arg name='number2' type='u' direction='in'/>\n"
+	"      <arg name='fd' type='h' direction='out'/>\n"
 	"    </method>\n"
 
 	"    <method name='Sync'>\n"
@@ -1443,6 +1454,42 @@ Client::get_files(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
+Client::get_files_by_pipe(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    dbus_uint32_t num1, num2;
+
+    DBus::Hihi hihi(msg);
+    hihi >> config_name >> num1 >> num2;
+
+    y2deb("GetFilesByPipe config_name:" << config_name << " num1:" << num1 << " num2:" << num2);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    list<Comparison*>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
+
+    const Files& files = (*it2)->getFiles();
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Hoho hoho(reply);
+
+    shared_ptr<FilesTransferTask> file_transfer_task = make_shared<FilesTransferTask>(files);
+
+    hoho << file_transfer_task->get_read_end();
+    conn.send(reply);
+
+    file_transfer_task->get_read_end().close();
+
+    add_file_transfer_task(file_transfer_task);
+}
+
+
+void
 Client::setup_quota(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
@@ -1700,6 +1747,8 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	    delete_comparison(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "GetFiles"))
 	    get_files(conn, msg);
+	else if (msg.is_method_call(INTERFACE, "GetFilesByPipe"))
+	    get_files_by_pipe(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "SetupQuota"))
 	    setup_quota(conn, msg);
 	else if (msg.is_method_call(INTERFACE, "PrepareQuota"))
@@ -1878,6 +1927,12 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	DBus::MessageError reply(msg, "error.unsupported", e.what());
 	conn.send(reply);
     }
+    catch (const StreamException& e)
+    {
+	SN_CAUGHT(e);
+	DBus::MessageError reply(msg, "error.stream", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
     catch (const Exception& e)
     {
 	SN_CAUGHT(e);
@@ -1904,6 +1959,20 @@ Client::add_method_call_task(DBus::Connection& conn, DBus::Message& msg)
     lock.unlock();
 
     method_call_condition.notify_one();
+}
+
+
+void
+Client::add_file_transfer_task(shared_ptr<FilesTransferTask> file_transfer_task)
+{
+    if (file_transfer_thread.get_id() == boost::thread::id())
+	file_transfer_thread = boost::thread(boost::bind(&Client::files_transfer_worker, this));
+
+    boost::unique_lock<boost::mutex> lock(file_transfer_mutex);
+    file_transfer_tasks.push(file_transfer_task);
+    lock.unlock();
+
+    file_transfer_condition.notify_one();
 }
 
 
@@ -1987,4 +2056,37 @@ Clients::has_zombies() const
 	    return true;
 
     return false;
+}
+
+
+void
+Client::files_transfer_worker()
+{
+    try
+    {
+	while (true)
+	{
+	    boost::unique_lock<boost::mutex> lock(file_transfer_mutex);
+	    while (file_transfer_tasks.empty())
+		file_transfer_condition.wait(lock);
+
+	    shared_ptr<FilesTransferTask> ptr(file_transfer_tasks.front());
+	    file_transfer_tasks.pop();
+	    lock.unlock();
+
+	    try
+	    {
+		ptr->run();
+	    }
+	    catch (const StreamException& e)
+	    {
+		SN_CAUGHT(e);
+		y2err("error occured during files transfer");
+	    }
+	}
+    }
+    catch (const boost::thread_interrupted&)
+    {
+	y2deb("files transfer worker interrupted");
+    }
 }

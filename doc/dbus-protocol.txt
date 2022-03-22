@@ -1,4 +1,7 @@
 
+Methods and Signals
+-------------------
+
 method ListConfigs
 method GetConfig config-name
 method SetConfig config-name configdata
@@ -54,23 +57,49 @@ method Sync config-name
 method CreateComparison config-name number1 number2 -> num-files
 method DeleteComparison config-name number1 number2
 
-The following command require a successful CreateComparison in advance.
+The following two commands require a successful CreateComparison in advance.
 
 method GetFiles config-name number1 number2 -> list(filename status)
+method GetFilesByPipe config-name number1 number2 -> fd
 
-Sorting for files is undefined, esp. since server and client can use
-different locales.
+Filenames do not include the subvolume.
+
+GetFilesByPipe returns a file descriptor from which the client can
+read the file list. This avoids the problem of GetFiles with exceeding
+the allowed DBus message size. GetFiles is deprecated.
+
+The file descriptor returned by GetFilesByPipe has one entry per file
+with two fields (separated by spaces), first the filename and second
+the status as an integer. Additional fields must be ignored by
+clients.
 
 
 Intentionally not documented are SetupQuota, PrepareQuota, QueryQuota
 and QueryFreeSpace.
 
 
-Filenames do not include the subvolume.
+Encoding and Escaping
+---------------------
 
-Strings are UTF-8. Other characters (e.g. in filenames) must be encoded
-hexadecimal as "\x??". As a consequence "\" must be encoded as "\\".
+Strings passed via DBus are UTF-8. Other characters (e.g. in
+filenames) must be encoded hexadecimal as "\x??". As a consequence,
+"\" is encoded as "\\".
 
+In strings passed via pipe the newline and space are escaped as
+"\x??". As a consequence, "\" is encoded as "\\".
+
+In general any character can be escaped as "\x??".
+
+
+Sorting
+-------
+
+Sorting for files is undefined, esp. since server and client can use
+different locales.
+
+
+Misc Notes
+----------
 
 Due to security concerns there are no methods to get, compare or revert
 files. This can be done in the client.

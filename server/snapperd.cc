@@ -23,6 +23,7 @@
 
 #include <stdlib.h>
 #include <getopt.h>
+#include <signal.h>
 #include <iostream>
 #include <string>
 
@@ -131,6 +132,7 @@ MyMainLoop::client_disconnected(const string& name)
     {
 	client->zombie = true;
 	client->method_call_thread.interrupt();
+	client->file_transfer_thread.interrupt();
     }
 
     reset_idle_count();
@@ -269,6 +271,8 @@ main(int argc, char** argv)
 	setLogDo(&log_do);
 	setLogQuery(&log_query);
     }
+
+    signal(SIGPIPE, SIG_IGN);
 
     dbus_threads_init_default();
 

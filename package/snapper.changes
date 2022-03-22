@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Mon Mar 21 17:29:07 CET 2022 - aschnell@suse.com
+
+- transfer filelist by pipe instead of DBus message to avoid
+  exceeding allowed DBus message size
+- version 0.10.0
+
+-------------------------------------------------------------------
 Wed Nov 24 14:20:38 CET 2021 - aschnell@suse.com
 
 - added bash completion provided by community
