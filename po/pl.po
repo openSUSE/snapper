@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-17 13:34+0100\n"
+"POT-Creation-Date: 2022-03-23 12:54+0100\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Ewelina Michalowska <ewelina.michalowska@stgambit.com>\n"
 "Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>\n"
@@ -550,7 +550,8 @@ msgstr ""
 msgid "Failed to query free space."
 msgstr "nie udało się utworzyć %s"
 
-msgid "Failed to set locale. Fix your system."
+#, fuzzy
+msgid "Failed to set locale."
 msgstr "Nie można skonfigurować ustawień regionalnych. Napraw system."
 
 msgid "Failure"

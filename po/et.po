@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: autoinst.fi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-17 13:34+0100\n"
+"POT-Creation-Date: 2022-03-23 12:54+0100\n"
 "PO-Revision-Date: 2019-12-01 20:54+0000\n"
 "Last-Translator: Jaanus Ojangu <jaanus.ojangu@gmail.com>\n"
 "Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/et/>\n"
@@ -543,7 +543,8 @@ msgstr ""
 msgid "Failed to query free space."
 msgstr "loomine nurjus: %s"
 
-msgid "Failed to set locale. Fix your system."
+#, fuzzy
+msgid "Failed to set locale."
 msgstr "Asukoha kohanduste (lokaadi) määramine ebaõnnestus. Parandage oma süsteem."
 
 msgid "Failure"

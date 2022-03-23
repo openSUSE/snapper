@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenSUSE\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-17 13:34+0100\n"
+"POT-Creation-Date: 2022-03-23 12:54+0100\n"
 "PO-Revision-Date: 2011-11-01 00:08-0700\n"
 "Last-Translator: Alexandru Szasz <alexxed@gmail.com>\n"
 "Language-Team: Romanian <LL@li.org>\n"
@@ -588,8 +588,9 @@ msgstr ""
 msgid "Failed to query free space."
 msgstr ""
 
-msgid "Failed to set locale. Fix your system."
-msgstr ""
+#, fuzzy
+msgid "Failed to set locale."
+msgstr "Date de emitere invalide."
 
 #, fuzzy
 msgid "Failure"

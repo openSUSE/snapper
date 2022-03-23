@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-17 13:34+0100\n"
+"POT-Creation-Date: 2022-03-23 12:54+0100\n"
 "PO-Revision-Date: 2017-10-29 20:52+0000\n"
 "Last-Translator: strahil nikolov <hunter86_bg@yahoo.com>\n"
 "Language-Team: Bulgarian <https://l10n.opensuse.org/projects/snapper/master/bg/>\n"
@@ -569,8 +569,9 @@ msgstr ""
 msgid "Failed to query free space."
 msgstr "Неуспешно зареждане на модула \"%s\"."
 
-msgid "Failed to set locale. Fix your system."
-msgstr ""
+#, fuzzy
+msgid "Failed to set locale."
+msgstr "Неуспешно зареждане на модула \"%s\"."
 
 #, fuzzy
 msgid "Failure"

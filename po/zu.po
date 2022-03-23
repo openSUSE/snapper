@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: installation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-17 13:34+0100\n"
+"POT-Creation-Date: 2022-03-23 12:54+0100\n"
 "PO-Revision-Date: 2016-04-19 09:51+0000\n"
 "Last-Translator: Shane Wims <shane.wims@microfocus.com>\n"
 "Language-Team: Zulu <http://l10n.opensuse.org/projects/snapper/master/zu/>\n"
@@ -579,8 +579,9 @@ msgstr ""
 msgid "Failed to query free space."
 msgstr "Failed to parse: %s."
 
-msgid "Failed to set locale. Fix your system."
-msgstr ""
+#, fuzzy
+msgid "Failed to set locale."
+msgstr "Failed to parse: %s."
 
 #, fuzzy
 msgid "Failure"

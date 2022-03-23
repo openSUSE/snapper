@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yast memory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-17 13:34+0100\n"
+"POT-Creation-Date: 2022-03-23 12:54+0100\n"
 "PO-Revision-Date: 2004-04-05 17:37+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <i18n@suse.de>\n"
@@ -557,8 +557,9 @@ msgstr ""
 msgid "Failed to query free space."
 msgstr "Failed to parse: %s."
 
-msgid "Failed to set locale. Fix your system."
-msgstr ""
+#, fuzzy
+msgid "Failed to set locale."
+msgstr "Failed to parse: %s."
 
 #, fuzzy
 msgid "Failure"
