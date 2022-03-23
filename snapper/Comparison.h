@@ -83,8 +83,6 @@ namespace snapper
 
 	Files files;
 
-	struct AppendHelper;
-
     };
 
 }

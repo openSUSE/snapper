@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-17 13:34+0100\n"
+"POT-Creation-Date: 2022-03-23 12:54+0100\n"
 "PO-Revision-Date: 2005-08-15 12:20+0530\n"
 "Last-Translator: Amanpreet Singh Alam <amanpreetalam@yahoo.com>\n"
 "Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
@@ -592,8 +592,9 @@ msgstr ""
 msgid "Failed to query free space."
 msgstr "ਪਾਰਸ ਕਰਨ ਦੌਰਾਨ ਫੇਲ੍ਹ: %s।"
 
-msgid "Failed to set locale. Fix your system."
-msgstr ""
+#, fuzzy
+msgid "Failed to set locale."
+msgstr "ਪਾਰਸ ਕਰਨ ਦੌਰਾਨ ਫੇਲ੍ਹ: %s।"
 
 #, fuzzy
 msgid "Failure"

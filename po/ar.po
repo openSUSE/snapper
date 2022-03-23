@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-17 13:34+0100\n"
+"POT-Creation-Date: 2022-03-23 12:54+0100\n"
 "PO-Revision-Date: 2020-05-02 19:50+0000\n"
 "Last-Translator: mohammad alhargan <malham1@gmail.com>\n"
 "Language-Team: Arabic <https://l10n.opensuse.org/projects/snapper/master/ar/>\n"
@@ -552,7 +552,8 @@ msgstr ""
 msgid "Failed to query free space."
 msgstr "فشل في إنشاء %s"
 
-msgid "Failed to set locale. Fix your system."
+#, fuzzy
+msgid "Failed to set locale."
 msgstr "فشل تعيين الإعدادات المحلية. الرجاء إصلاح النظام."
 
 msgid "Failure"

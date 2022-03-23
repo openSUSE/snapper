@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-17 13:34+0100\n"
+"POT-Creation-Date: 2022-03-23 12:54+0100\n"
 "PO-Revision-Date: 2018-06-01 11:05+0000\n"
 "Last-Translator: Jiri Machalek <jiri.machalek@tieto.com>\n"
 "Language-Team: Portuguese <https://l10n.opensuse.org/projects/snapper/master/pt/>\n"
@@ -592,8 +592,9 @@ msgstr ""
 msgid "Failed to query free space."
 msgstr "Falha na criação de um processo"
 
-msgid "Failed to set locale. Fix your system."
-msgstr ""
+#, fuzzy
+msgid "Failed to set locale."
+msgstr "Falha na criação de um processo"
 
 #, fuzzy
 msgid "Failure"

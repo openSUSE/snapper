@@ -2,7 +2,7 @@
 # Makefile.am for snapper/testsuite-real
 #
 
-CXXFLAGS += -std=gnu++0x
+CXXFLAGS += -std=gnu++11
 
 AM_CPPFLAGS = -I$(top_srcdir)
 

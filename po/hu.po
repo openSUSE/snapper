@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-17 13:34+0100\n"
+"POT-Creation-Date: 2022-03-23 12:54+0100\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Robert Taisz <robert.taisz@emerald.hu>\n"
 "Language-Team: Hungarian <https://l10n.opensuse.org/projects/snapper/master/hu/>\n"
@@ -577,7 +577,8 @@ msgstr ""
 msgid "Failed to query free space."
 msgstr "a(z) %s létrehozása sikertelen"
 
-msgid "Failed to set locale. Fix your system."
+#, fuzzy
+msgid "Failed to set locale."
 msgstr "Nem sikerült a területi beállítás megadása. Javítsa ki a rendszert."
 
 msgid "Failure"
