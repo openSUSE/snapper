@@ -24,7 +24,7 @@ test(const char* loc, const string& s)
     limit.parse(s);
 
     locale::global(locale::classic());
-    
+
     ostringstream tmp;
     tmp << limit;
     return tmp.str();

@@ -132,7 +132,7 @@ MyMainLoop::client_disconnected(const string& name)
     {
 	client->zombie = true;
 	client->method_call_thread.interrupt();
-	client->file_transfer_thread.interrupt();
+	client->files_transfer_thread.interrupt();
     }
 
     reset_idle_count();

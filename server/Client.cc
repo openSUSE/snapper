@@ -47,13 +47,13 @@ Client::Client(const string& name, uid_t uid, const Clients& clients)
 Client::~Client()
 {
     method_call_thread.interrupt();
-    file_transfer_thread.interrupt();
+    files_transfer_thread.interrupt();
 
     if (method_call_thread.joinable())
 	method_call_thread.join();
 
-    if (file_transfer_thread.joinable())
-	file_transfer_thread.join();
+    if (files_transfer_thread.joinable())
+	files_transfer_thread.join();
 
     for (list<Comparison*>::iterator it = comparisons.begin(); it != comparisons.end(); ++it)
     {
@@ -1478,14 +1478,14 @@ Client::get_files_by_pipe(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::Hoho hoho(reply);
 
-    shared_ptr<FilesTransferTask> file_transfer_task = make_shared<FilesTransferTask>(files);
+    shared_ptr<FilesTransferTask> files_transfer_task = make_shared<FilesTransferTask>(files);
 
-    hoho << file_transfer_task->get_read_end();
+    hoho << files_transfer_task->get_read_end();
     conn.send(reply);
 
-    file_transfer_task->get_read_end().close();
+    files_transfer_task->get_read_end().close();
 
-    add_file_transfer_task(file_transfer_task);
+    add_files_transfer_task(files_transfer_task);
 }
 
 
@@ -1970,16 +1970,16 @@ Client::add_method_call_task(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Client::add_file_transfer_task(shared_ptr<FilesTransferTask> file_transfer_task)
+Client::add_files_transfer_task(shared_ptr<FilesTransferTask> files_transfer_task)
 {
-    if (file_transfer_thread.get_id() == boost::thread::id())
-	file_transfer_thread = boost::thread(boost::bind(&Client::files_transfer_worker, this));
+    if (files_transfer_thread.get_id() == boost::thread::id())
+	files_transfer_thread = boost::thread(boost::bind(&Client::files_transfer_worker, this));
 
-    boost::unique_lock<boost::mutex> lock(file_transfer_mutex);
-    file_transfer_tasks.push(file_transfer_task);
+    boost::unique_lock<boost::mutex> lock(files_transfer_mutex);
+    files_transfer_tasks.push(files_transfer_task);
     lock.unlock();
 
-    file_transfer_condition.notify_one();
+    files_transfer_condition.notify_one();
 }
 
 
@@ -2073,12 +2073,12 @@ Client::files_transfer_worker()
     {
 	while (true)
 	{
-	    boost::unique_lock<boost::mutex> lock(file_transfer_mutex);
-	    while (file_transfer_tasks.empty())
-		file_transfer_condition.wait(lock);
+	    boost::unique_lock<boost::mutex> lock(files_transfer_mutex);
+	    while (files_transfer_tasks.empty())
+		files_transfer_condition.wait(lock);
 
-	    shared_ptr<FilesTransferTask> ptr(file_transfer_tasks.front());
-	    file_transfer_tasks.pop();
+	    shared_ptr<FilesTransferTask> ptr(files_transfer_tasks.front());
+	    files_transfer_tasks.pop();
 	    lock.unlock();
 
 	    try

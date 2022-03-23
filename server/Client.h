@@ -164,11 +164,11 @@ public:
     queue<MethodCallTask> method_call_tasks;
     void add_method_call_task(DBus::Connection& conn, DBus::Message& msg);
 
-    boost::condition_variable file_transfer_condition;
-    boost::mutex file_transfer_mutex;
-    boost::thread file_transfer_thread;
-    queue<shared_ptr<FilesTransferTask>> file_transfer_tasks;
-    void add_file_transfer_task(shared_ptr<FilesTransferTask> file_transfer_task);
+    boost::condition_variable files_transfer_condition;
+    boost::mutex files_transfer_mutex;
+    boost::thread files_transfer_thread;
+    queue<shared_ptr<FilesTransferTask>> files_transfer_tasks;
+    void add_files_transfer_task(shared_ptr<FilesTransferTask> files_transfer_task);
 
     bool zombie = false;
 

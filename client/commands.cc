@@ -581,7 +581,7 @@ command_prepare_quota(DBus::Connection& conn, const string& config_name)
 	DBus::Hoho hoho(call);
 	hoho << config_name;
 
-        conn.send_with_reply_and_block(call);
+	conn.send_with_reply_and_block(call);
     }
     catch (const DBus::ErrorException& e)
     {
