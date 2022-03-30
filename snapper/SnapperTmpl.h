@@ -25,8 +25,8 @@
 
 
 #include <ostream>
-#include <fstream>
 #include <sstream>
+#include <vector>
 #include <list>
 #include <map>
 
@@ -38,7 +38,8 @@ namespace snapper
     using std::string;
 
 
-    template<class Num> string decString(Num number)
+    template<class Num>
+    string decString(Num number)
     {
 	static_assert(std::is_integral<Num>::value, "not integral");
 
@@ -49,18 +50,8 @@ namespace snapper
     }
 
 
-    template<class Num> string hexString(Num number)
-    {
-	static_assert(std::is_integral<Num>::value, "not integral");
-
-	std::ostringstream num_str;
-	classic(num_str);
-	num_str << std::hex << number;
-	return num_str.str();
-    }
-
-
-    template<class Value> void operator>>(const string& d, Value& v)
+    template<class Value>
+    void operator>>(const string& d, Value& v)
     {
 	std::istringstream Data(d);
 	classic(Data);
@@ -68,38 +59,48 @@ namespace snapper
     }
 
 
-    template<class Value> std::ostream& operator<<( std::ostream& s, const std::list<Value>& l )
+    template<class Value>
+    std::ostream& operator<<(std::ostream& s, const std::vector<Value>& v)
     {
 	s << "<";
-	for( typename std::list<Value>::const_iterator i=l.begin(); i!=l.end(); i++ )
+	for (typename std::vector<Value>::const_iterator i = v.begin(); i != v.end(); ++i)
 	{
-	    if( i!=l.begin() )
+	    if (i != v.begin())
 		s << " ";
 	    s << *i;
 	}
 	s << ">";
-	return( s );
+	return s;
     }
 
 
-    template<class F, class S> std::ostream& operator<<( std::ostream& s, const std::pair<F,S>& p )
-    {
-	s << "[" << p.first << ":" << p.second << "]";
-	return( s );
-    }
-
-
-    template<class Key, class Value> std::ostream& operator<<( std::ostream& s, const std::map<Key,Value>& m )
+    template<class Value>
+    std::ostream& operator<<(std::ostream& s, const std::list<Value>& l)
     {
 	s << "<";
-	for( typename std::map<Key,Value>::const_iterator i=m.begin(); i!=m.end(); i++ )
+	for (typename std::list<Value>::const_iterator i = l.begin(); i != l.end(); ++i)
 	{
-	    if( i!=m.begin() )
+	    if (i != l.begin())
+		s << " ";
+	    s << *i;
+	}
+	s << ">";
+	return s;
+    }
+
+
+    template<class Key, class Value>
+    std::ostream& operator<<(std::ostream& s, const std::map<Key, Value>& m)
+    {
+	s << "<";
+	for (typename std::map<Key, Value>::const_iterator i = m.begin(); i != m.end(); ++i)
+	{
+	    if (i != m.begin())
 		s << " ";
 	    s << i->first << ":" << i->second;
 	}
 	s << ">";
-	return( s );
+	return s;
     }
 
 

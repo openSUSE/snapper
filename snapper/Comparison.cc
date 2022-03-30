@@ -216,7 +216,7 @@ namespace snapper
 
 
     void
-    Comparison::save()
+    Comparison::save() const
     {
 	y2mil("num1:" << getSnapshot1()->getNum() << " num2:" << getSnapshot2()->getNum());
 
