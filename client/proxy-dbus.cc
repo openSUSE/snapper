@@ -400,6 +400,7 @@ ProxyComparisonDbus::ProxyComparisonDbus(ProxySnapperDbus* backref, const ProxyS
     }
 
     vector<File> tmp2;
+    tmp2.reserve(tmp1.size());
 
     for (const XFile& xfile : tmp1)
 	tmp2.emplace_back(&file_paths, xfile.name, xfile.status);

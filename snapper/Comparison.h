@@ -66,7 +66,7 @@ namespace snapper
 	void initialize();
 	void create();
 	bool load();
-	void save();
+	void save() const;
 	void filter();
 
 	void do_mount() const;
@@ -74,8 +74,8 @@ namespace snapper
 
 	const Snapper* snapper;
 
-	Snapshots::const_iterator snapshot1;
-	Snapshots::const_iterator snapshot2;
+	const Snapshots::const_iterator snapshot1;
+	const Snapshots::const_iterator snapshot2;
 
 	const bool mount;
 
