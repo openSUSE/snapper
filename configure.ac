@@ -1,5 +1,6 @@
+AC_INIT
 
-AC_INIT(snapper/Snapper.h)
+AC_CONFIG_SRCDIR([snapper/Snapper.h])
 
 VERSION=`cat ./VERSION`
 
@@ -52,31 +53,11 @@ AC_DEFINE_UNQUOTED([LVMBIN], ["$LVMBIN"], [Path of lvm program.])
 AC_DEFINE_UNQUOTED([LVRENAMEBIN], ["$LVRENAMEBIN"], [Path of lvrename program.])
 
 CFLAGS="${CFLAGS} -std=c99 -Wall -Wextra -Wformat -Wmissing-prototypes -Wno-unused-parameter"
-CXXFLAGS="${CXXFLAGS} -std=c++11 -Wall -Wextra -Wformat -Wnon-virtual-dtor -Wno-unused-parameter"
-
-AC_DEFUN([TRY_ADD_CXXFLAGS], [
-  AC_MSG_CHECKING([if $CXX supports $1])
-  OLD_CXXFLAGS="$CXXFLAGS"
-  CXXFLAGS="${CXXFLAGS} $1"
-  AC_LANG_PUSH([C++])
-  AC_TRY_COMPILE(
-    [], [],
-    [
-      AC_MSG_RESULT([yes])
-    ],
-    [
-      AC_MSG_RESULT([no])
-      CXXFLAGS="$OLD_CXXFLAGS"
-    ]
-  )
-  AC_LANG_POP([C++])
-])
-
-TRY_ADD_CXXFLAGS([-Wsuggest-override])
+CXXFLAGS="${CXXFLAGS} -std=c++11 -Wall -Wextra -Wformat -Wnon-virtual-dtor -Wno-unused-parameter -Wsuggest-override"
 
 SYSCONFIG=/etc/sysconfig
 
-AC_ARG_WITH([conf], AC_HELP_STRING([--with-conf], [Use a custom sysconfig directory (default is /etc/sysconfig)]),
+AC_ARG_WITH([conf], AS_HELP_STRING([--with-conf], [Use a custom sysconfig directory (default is /etc/sysconfig)]),
 	[with_conf=$withval], [with_conf=no])
 AS_IF([test "x$with_conf" != xno], [SYSCONFIG="${with_conf}"])
 
@@ -84,28 +65,28 @@ CPPFLAGS="${CPPFLAGS} -DCONF_DIR='\"${SYSCONFIG}\"'"
 
 PAM_SECURITY=${libdir}/security
 
-AC_ARG_WITH([pam-security], AC_HELP_STRING([--pam-security], [Use a custom pam security directory (default is $libdir/security)]),
+AC_ARG_WITH([pam-security], AS_HELP_STRING([--pam-security], [Use a custom pam security directory (default is $libdir/security)]),
 	[with_pam_security=$withval], [with_pam_security=no])
 AS_IF([test "x$with_pam_security" != xno], [PAM_SECURITY="${with_pam_security}"])
 
-AC_ARG_ENABLE([btrfs], AC_HELP_STRING([--disable-btrfs],[Disable Btrfs internal snapshots support]),
-		[with_btrfs=$enableval],[with_btrfs=yes])
+AC_ARG_ENABLE([btrfs], AS_HELP_STRING([--disable-btrfs], [Disable Btrfs internal snapshots support]),
+		[with_btrfs=$enableval], [with_btrfs=yes])
 AM_CONDITIONAL(ENABLE_BTRFS, [test "x$with_btrfs" = "xyes"])
 
 if test "x$with_btrfs" = "xyes"; then
 	AC_DEFINE(ENABLE_BTRFS, 1, [Enable Btrfs internal snapshots support])
 fi
 
-AC_ARG_ENABLE([ext4], AC_HELP_STRING([--disable-ext4],[Disable ext4 snapshots support]),
-		[with_ext4=$enableval],[with_ext4=yes])
+AC_ARG_ENABLE([ext4], AS_HELP_STRING([--disable-ext4], [Disable ext4 snapshots support]),
+		[with_ext4=$enableval], [with_ext4=yes])
 AM_CONDITIONAL(ENABLE_EXT4, [test "x$with_ext4" = "xyes"])
 
 if test "x$with_ext4" = "xyes"; then
 	AC_DEFINE(ENABLE_EXT4, 1, [Enable Ext4 snapshots support])
 fi
 
-AC_ARG_ENABLE([lvm], AC_HELP_STRING([--disable-lvm],[Disable LVM thinprovisioned snapshots support]),
-		[with_lvm=$enableval],[with_lvm=yes])
+AC_ARG_ENABLE([lvm], AS_HELP_STRING([--disable-lvm], [Disable LVM thinprovisioned snapshots support]),
+		[with_lvm=$enableval], [with_lvm=yes])
 AM_CONDITIONAL(ENABLE_LVM, [test "x$with_lvm" = "xyes"])
 
 if test "x$with_lvm" = "xyes"; then
@@ -116,35 +97,35 @@ if test "x$with_btrfs" != "xyes" -a "x$with_lvm" != "xyes" -a "x$with_ext4" != "
 	AC_MSG_ERROR([You have to enable at least one snapshot type (remove some --disable-xxx parameter)])
 fi
 
-AC_ARG_ENABLE([zypp], AC_HELP_STRING([--disable-zypp],[Disable zypp plugin support]),
-		[with_zypp=$enableval],[with_zypp=yes])
+AC_ARG_ENABLE([zypp], AS_HELP_STRING([--disable-zypp], [Disable zypp plugin support]),
+		[with_zypp=$enableval], [with_zypp=yes])
 AM_CONDITIONAL(HAVE_ZYPP, [test "x$with_zypp" = "xyes"])
 
-AC_ARG_ENABLE([systemd], AC_HELP_STRING([--disable-systemd],[Disable systemd support]),
-		[enable_systemd=$enableval],[enable_systemd=yes])
+AC_ARG_ENABLE([systemd], AS_HELP_STRING([--disable-systemd], [Disable systemd support]),
+		[enable_systemd=$enableval], [enable_systemd=yes])
 AM_CONDITIONAL(ENABLE_SYSTEMD, [test "x$enable_systemd" = "xyes"])
 
 AC_CHECK_LIB(btrfs, btrfs_read_and_process_send_stream)
 AC_CHECK_HEADERS([btrfs/version.h])
 
-AC_ARG_ENABLE([doc], AC_HELP_STRING([--disable-doc],[Disable Build DOC support]),
-		[enable_doc=$enableval],[enable_doc=yes])
+AC_ARG_ENABLE([doc], AS_HELP_STRING([--disable-doc], [Disable Build DOC support]),
+		[enable_doc=$enableval], [enable_doc=yes])
 AM_CONDITIONAL(ENABLE_DOC, [test "x$enable_doc" = "xyes"])
 
 if test "x$enable_doc" = "xyes"; then
 	AC_DEFINE(ENABLE_DOC, 1, [Enable Build DOC support])
 fi
 
-AC_ARG_ENABLE([xattrs], AC_HELP_STRING([--disable-xattrs],[Disable extended attributes support]),
-		[with_xattrs=$enableval],[with_xattrs=yes])
+AC_ARG_ENABLE([xattrs], AS_HELP_STRING([--disable-xattrs], [Disable extended attributes support]),
+		[with_xattrs=$enableval], [with_xattrs=yes])
 AM_CONDITIONAL(HAVE_XATTRS, [test "x$with_xattrs" = "xyes"])
 
 if test "x$with_xattrs" = "xyes"; then
 	AC_DEFINE(ENABLE_XATTRS, 1, [Enable extended attributes support])
 fi
 
-AC_ARG_ENABLE([rollback], AC_HELP_STRING([--disable-rollback],[Disable rollback support]),
-		[enable_rollback=$enableval],[enable_rollback=yes])
+AC_ARG_ENABLE([rollback], AS_HELP_STRING([--disable-rollback], [Disable rollback support]),
+		[enable_rollback=$enableval], [enable_rollback=yes])
 AM_CONDITIONAL(ENABLE_ROLLBACK, [test "x$enable_rollback" = "xyes"])
 
 if test "x$enable_rollback" = "xyes"; then
@@ -158,8 +139,8 @@ if test "x$enable_rollback" = "xyes"; then
 	AC_CHECK_HEADER(libmount/libmount.h,[],[AC_MSG_ERROR([Cannout find libmount headers. Please install libmount-devel])])
 fi
 
-AC_ARG_ENABLE([btrfs-quota], AC_HELP_STRING([--disable-btrfs-quota],[Disable btrfs quota support]),
-		[enable_btrfs_quota=$enableval],[enable_btrfs_quota=yes])
+AC_ARG_ENABLE([btrfs-quota], AS_HELP_STRING([--disable-btrfs-quota], [Disable btrfs quota support]),
+		[enable_btrfs_quota=$enableval], [enable_btrfs_quota=yes])
 AM_CONDITIONAL(ENABLE_BTRFS_QUOTA, [test "x$enable_btrfs_quota" = "xyes"])
 
 if test "x$enable_btrfs_quota" = "xyes"; then
@@ -170,12 +151,12 @@ if test "x$enable_btrfs_quota" = "xyes"; then
 	AC_DEFINE(ENABLE_BTRFS_QUOTA, 1, [Enable btrfs quota support])
 fi
 
-AC_ARG_ENABLE([pam], AC_HELP_STRING([--disable-pam],[Disable pam plugin support]),
-                [with_pam=$enableval],[with_pam=yes])
+AC_ARG_ENABLE([pam], AS_HELP_STRING([--disable-pam], [Disable pam plugin support]),
+                [with_pam=$enableval], [with_pam=yes])
 AM_CONDITIONAL(HAVE_PAM, [test "x$with_pam" = "xyes"])
 
-AC_ARG_ENABLE([selinux], AC_HELP_STRING([--enable-selinux],[Enable support for SELinux LSM]),
-		[with_selinux=$enableval],[with_selinux=no])
+AC_ARG_ENABLE([selinux], AS_HELP_STRING([--enable-selinux], [Enable support for SELinux LSM]),
+		[with_selinux=$enableval], [with_selinux=no])
 AM_CONDITIONAL(ENABLE_SELINUX, [test "x$enable_selinux" = "xyes"])
 
 if test "x$with_selinux" = "xyes"; then
@@ -184,7 +165,7 @@ if test "x$with_selinux" = "xyes"; then
 	AC_CHECK_LIB(selinux, selinux_snapperd_contexts_path, [], [AC_MSG_ERROR([selinux library does not provide selinux_snapperd_contexts_path symbol])])
 fi
 
-AC_ARG_ENABLE([coverage], AC_HELP_STRING([--enable-coverage], [Enable test coverage measurement]),
+AC_ARG_ENABLE([coverage], AS_HELP_STRING([--enable-coverage], [Enable test coverage measurement]),
                 [enable_coverage=$enableval], [enable_coverage=no])
 AM_CONDITIONAL(ENABLE_COVERAGE, [test "x$enable_coverage" = "xyes"])
 if test "x$enable_coverage" = "xyes"; then
@@ -208,7 +189,7 @@ AC_SUBST(SYSCONFIG)
 AC_SUBST(PAM_SECURITY)
 AC_SUBST(docdir)
 
-AC_OUTPUT(
+AC_CONFIG_FILES([
 	Makefile
 	snapper/Makefile
 	snapper/Version.h:snapper/Version.h.in
@@ -240,4 +221,6 @@ AC_OUTPUT(
 	dists/debian/snapper-Debian.dsc.in:dists/debian/snapper-Debian.dsc.in.in
 	dists/debian/snapper-xUbuntu.dsc.in:dists/debian/snapper-xUbuntu.dsc.in.in
 	dists/debian/snapper-Raspbian.dsc.in:dists/debian/snapper-Raspbian.dsc.in.in
-)
+])
+
+AC_OUTPUT
