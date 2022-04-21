@@ -53,7 +53,7 @@ void
 MetaSnapper::setConfigInfo(const map<string, string>& raw)
 {
     for (map<string, string>::const_iterator it = raw.begin(); it != raw.end(); ++it)
-	config_info.setValue(it->first, it->second);
+	config_info.set_value(it->first, it->second);
 
     getSnapper()->setConfigInfo(raw);
 
@@ -68,7 +68,7 @@ MetaSnapper::set_permissions()
     allowed_uids.clear();
 
     vector<string> users;
-    if (config_info.getValue(KEY_ALLOW_USERS, users))
+    if (config_info.get_value(KEY_ALLOW_USERS, users))
     {
 	for (const string& user : users)
 	{
@@ -84,7 +84,7 @@ MetaSnapper::set_permissions()
     allowed_gids.clear();
 
     vector<string> groups;
-    if (config_info.getValue(KEY_ALLOW_GROUPS, groups))
+    if (config_info.get_value(KEY_ALLOW_GROUPS, groups))
     {
 	for (const string& group : groups)
 	{
@@ -103,7 +103,7 @@ Snapper*
 MetaSnapper::getSnapper()
 {
     if (!snapper)
-	snapper = new Snapper(config_info.getConfigName(), "/");
+	snapper = new Snapper(config_info.get_config_name(), "/");
 
     update_use_time();
 

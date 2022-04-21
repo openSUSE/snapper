@@ -95,6 +95,7 @@ BuildRequires:  json-c-devel
 %else
 BuildRequires:  libjson-c-devel
 %endif
+BuildRequires:  zlib-devel
 %if %{with coverage}
 BuildRequires:  lcov
 %endif

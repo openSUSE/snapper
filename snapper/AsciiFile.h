@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2015] Novell, Inc.
- * Copyright (c) 2020 SUSE LLC
+ * Copyright (c) [2020-2022] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -28,6 +28,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <memory>
 
 #include "snapper/Exception.h"
 
@@ -39,22 +40,65 @@ namespace snapper
     using std::map;
 
 
+    enum class Compression { NONE, GZIP };
+
+
+    bool
+    is_available(Compression compression);
+
+
+    string
+    add_extension(Compression compression, const string& name);
+
+
     class AsciiFileReader
     {
     public:
 
-	AsciiFileReader(int fd);
-	AsciiFileReader(FILE* file);
-	AsciiFileReader(const string& filename);
+	AsciiFileReader(int fd, Compression compression);
+	AsciiFileReader(FILE* fin, Compression compression);
+	AsciiFileReader(const string& name, Compression compression);
+
+	/**
+	 * Exceptions from close are ignored. Use close() explicitely.
+	 */
 	~AsciiFileReader();
 
-	bool getline(string& line);
+	bool read_line(string& line);
+
+	void close();
 
     private:
 
-	FILE* file = nullptr;
-	char* buffer = nullptr;
-	size_t len = 0;
+	class Impl;
+
+	std::unique_ptr<Impl> impl;
+
+    };
+
+
+    class AsciiFileWriter
+    {
+    public:
+
+	AsciiFileWriter(int fd, Compression compression);
+	AsciiFileWriter(FILE* fout, Compression compression);
+	AsciiFileWriter(const string& name, Compression compression);
+
+	/**
+	 * Exceptions from close are ignored. Use close() explicitely.
+	 */
+	~AsciiFileWriter();
+
+	void write_line(const string& line);
+
+	void close();
+
+    public:
+
+	class Impl;
+
+	std::unique_ptr<Impl> impl;
 
     };
 
@@ -63,32 +107,39 @@ namespace snapper
     {
     public:
 
-	explicit AsciiFile(const char* name, bool remove_empty = false);
 	explicit AsciiFile(const string& name, bool remove_empty = false);
 
-	string name() const { return Name_C; }
+	/**
+	 * Does not call save().
+	 */
+	~AsciiFile();
 
-	void setName(const string& name) { AsciiFile::Name_C = name; }
+	string get_name() const { return name; }
+	void set_name(const string& name) { AsciiFile::name = name; }
 
 	void reload();
-	bool save();
 
-	void logContent() const;
+	void save();
 
-	void clear() { Lines_C.clear(); }
-	void push_back(const string& line) { Lines_C.push_back(line); }
+	void log_content() const;
 
-	vector<string>& lines() { return Lines_C; }
-	const vector<string>& lines() const { return Lines_C; }
+	bool empty() const { return lines.empty(); }
+
+	void clear() { lines.clear(); }
+
+	void push_back(const string& line) { lines.push_back(line); }
+
+	vector<string>& get_lines() { return lines; }
+	const vector<string>& get_lines() const { return lines; }
 
     protected:
 
-	vector<string> Lines_C;
+	vector<string> lines;
 
     private:
 
-	string Name_C;
-	bool remove_empty;
+	string name;
+	bool remove_empty = false;
 
     };
 
@@ -102,31 +153,38 @@ namespace snapper
 	    explicit InvalidKeyException() : Exception("invalid key") {}
 	};
 
-	SysconfigFile(const char* name) : AsciiFile(name), modified(false) {}
-	SysconfigFile(const string& name) : AsciiFile(name), modified(false) {}
-	virtual ~SysconfigFile() { if (modified) save(); }
+	SysconfigFile(const string& name);
 
-	void setName(const string& name) { AsciiFile::setName(name); }
+	/**
+	 * Calls save(). Exceptions from save are ignored. Use save() explicitely in
+	 * needed.
+	 */
+	virtual ~SysconfigFile();
 
+	void set_name(const string& name) { AsciiFile::set_name(name); }
+
+	/**
+	 * Save if modified.
+	 */
 	void save();
 
-	virtual void checkKey(const string& key) const;
+	virtual void check_key(const string& key) const;
 
-	virtual void setValue(const string& key, bool value);
-	bool getValue(const string& key, bool& value) const;
+	virtual void set_value(const string& key, bool value);
+	bool get_value(const string& key, bool& value) const;
 
-	virtual void setValue(const string& key, const char* value);
-	virtual void setValue(const string& key, const string& value);
-	bool getValue(const string& key, string& value) const;
+	virtual void set_value(const string& key, const char* value);
+	virtual void set_value(const string& key, const string& value);
+	bool get_value(const string& key, string& value) const;
 
-	virtual void setValue(const string& key, const vector<string>& values);
-	bool getValue(const string& key, vector<string>& values) const;
+	virtual void set_value(const string& key, const vector<string>& values);
+	bool get_value(const string& key, vector<string>& values) const;
 
-	map<string, string> getAllValues() const;
+	map<string, string> get_all_values() const;
 
     private:
 
-	bool modified;
+	bool modified = false;
 
 	struct ParsedLine
 	{

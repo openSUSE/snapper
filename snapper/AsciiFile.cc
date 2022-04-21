@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2015] Novell, Inc.
- * Copyright (c) 2020 SUSE LLC
+ * Copyright (c) [2020-2022] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -22,13 +22,14 @@
 
 
 #include <unistd.h>
-#include <fstream>
+#include <fcntl.h>
+#include <zlib.h>
 #include <regex>
+#include <boost/algorithm/string.hpp>
 
 #include "snapper/Log.h"
 #include "snapper/AppUtil.h"
 #include "snapper/AsciiFile.h"
-#include "snapper/SnapperTypes.h"
 #include "snapper/Exception.h"
 
 
@@ -37,140 +38,789 @@ namespace snapper
     using namespace std;
 
 
-    AsciiFileReader::AsciiFileReader(int fd)
-	: file(fdopen(fd, "r"))
+    bool
+    is_available(Compression compression)
     {
-	if (!file)
+	switch (compression)
 	{
-	    y2war("file is NULL");
-	    SN_THROW(FileNotFoundException());
+	    case Compression::NONE:
+		return true;
+
+	    case Compression::GZIP:
+		return true;
 	}
+
+	return false;
     }
 
 
-    AsciiFileReader::AsciiFileReader(FILE* file)
-	: file(file)
+    string
+    add_extension(Compression compression, const string& name)
     {
-	if (!file)
+	switch (compression)
 	{
-	    y2war("file is NULL");
-	    SN_THROW(FileNotFoundException());
+	    case Compression::NONE:
+		return name;
+
+	    case Compression::GZIP:
+		return name + ".gz";
 	}
+
+	SN_THROW(LogicErrorException("unknown or unsupported compression"));
+	__builtin_unreachable();
     }
 
 
-    AsciiFileReader::AsciiFileReader(const string& filename)
-	: file(fopen(filename.c_str(), "re"))
+    class AsciiFileReader::Impl
     {
-	if (!file)
-	{
-	    y2war("open for '" << filename << "' failed");
-	    SN_THROW(FileNotFoundException());
-	}
+    public:
+
+	class None;
+	class Gzip;
+
+	template <typename T>
+	static std::unique_ptr<AsciiFileReader::Impl> factory(T t, Compression compression);
+
+	virtual ~Impl() = default;
+
+	virtual bool read_line(string& line) = 0;
+
+	virtual void close() = 0;
+
+    };
+
+
+    class AsciiFileReader::Impl::None : public AsciiFileReader::Impl
+    {
+    public:
+
+	None(int fd);
+	None(FILE* fin);
+	None(const string& name);
+
+	virtual ~None();
+
+	virtual bool read_line(string& line) override;
+
+	virtual void close() override;
+
+    private:
+
+	FILE* fin = nullptr;
+
+	char* buffer = nullptr;
+	size_t len = 0;
+
+    };
+
+
+    AsciiFileReader::Impl::None::None(int fd)
+    {
+	fin = fdopen(fd, "r");
+	if (!fin)
+	    SN_THROW(IOErrorException(sformat("fdopen failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
     }
 
 
-    AsciiFileReader::~AsciiFileReader()
+    AsciiFileReader::Impl::None::None(FILE* fin)
+	: fin(fin)
+    {
+    }
+
+
+    AsciiFileReader::Impl::None::None(const string& name)
+    {
+	fin = fopen(name.c_str(), "re");
+	if (!fin)
+	    SN_THROW(IOErrorException(sformat("fopen failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+    }
+
+
+    AsciiFileReader::Impl::None::~None()
     {
 	free(buffer);
-	fclose(file);
+
+	try
+	{
+	    close();
+	}
+	catch (const Exception& e)
+	{
+	    SN_CAUGHT(e);
+
+	    y2err("exception ignored");
+	}
     }
 
 
     bool
-    AsciiFileReader::getline(string& line)
+    AsciiFileReader::Impl::None::read_line(string& line)
     {
-	ssize_t n = ::getline(&buffer, &len, file);
+	ssize_t n = getline(&buffer, &len, fin);
 	if (n == -1)
 	    return false;
 
-	if (buffer[n - 1] != '\n')
-	    line = string(buffer, 0, n);
-	else
-	    line = string(buffer, 0, n - 1);
+	if (n > 0 && buffer[n - 1] == '\n')
+	    n--;
+
+	line = string(buffer, 0, n);
 
 	return true;
     }
 
 
-AsciiFile::AsciiFile(const char* Name_Cv, bool remove_empty)
-    : Name_C(Name_Cv),
-      remove_empty(remove_empty)
-{
-    reload();
-}
+    void
+    AsciiFileReader::Impl::None::close()
+    {
+	if (!fin)
+	    return;
+
+	FILE* tmp = fin;
+	fin = nullptr;
+
+	if (fclose(tmp) != 0)
+	    SN_THROW(IOErrorException(sformat("fclose failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+    }
 
 
-AsciiFile::AsciiFile(const string& Name_Cv, bool remove_empty)
-    : Name_C(Name_Cv),
-      remove_empty(remove_empty)
-{
-    reload();
-}
+    class AsciiFileReader::Impl::Gzip : public AsciiFileReader::Impl
+    {
+    public:
+
+	Gzip(int fd);
+	Gzip(FILE* fin);
+	Gzip(const string& name);
+
+	virtual ~Gzip();
+
+	virtual bool read_line(string& line) override;
+
+	virtual void close() override;
+
+    private:
+
+	Gzip();
+
+	gzFile gz_file = nullptr;
+
+	vector<char> buffer;
+	size_t buffer_read = 0;		// position to which the buffer has been read
+	size_t buffer_fill = 0;		// position to which the buffer is filled
+
+	bool read_buffer();
+
+    };
+
+
+    AsciiFileReader::Impl::Gzip::Gzip()
+    {
+	buffer.resize(16 * 1024);
+    }
+
+
+    AsciiFileReader::Impl::Gzip::Gzip(int fd)
+	: Gzip()
+    {
+	gz_file = gzdopen(fd, "r");
+	if (!gz_file)
+	    SN_THROW(IOErrorException(sformat("gzdopen failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+    }
+
+
+    AsciiFileReader::Impl::Gzip::Gzip(FILE* fin)
+	: Gzip()
+    {
+	int fd = fileno(fin);
+	if (fd < 0)
+	    SN_THROW(IOErrorException(sformat("fileno failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+
+	fd = dup(fd);
+	if (fd < 0)
+	    SN_THROW(IOErrorException(sformat("dup failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+
+	gz_file = gzdopen(fd, "r");
+	if (!gz_file)
+	    SN_THROW(IOErrorException(sformat("gzdopen failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+
+	fclose(fin);
+    }
+
+
+    AsciiFileReader::Impl::Gzip::Gzip(const string& name)
+	: Gzip()
+    {
+	int fd = open(name.c_str(), O_RDONLY | O_CLOEXEC | O_LARGEFILE);
+	if (fd < 0)
+	    SN_THROW(IOErrorException(sformat("open failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+
+	gz_file = gzdopen(fd, "r");
+	if (!gz_file)
+	    SN_THROW(IOErrorException(sformat("gzdopen failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+    }
+
+
+    AsciiFileReader::Impl::Gzip::~Gzip()
+    {
+	try
+	{
+	    close();
+	}
+	catch (const Exception& e)
+	{
+	    SN_CAUGHT(e);
+
+	    y2err("exception ignored");
+	}
+    }
+
+
+    void
+    AsciiFileReader::Impl::Gzip::close()
+    {
+	if (!gz_file)
+	    return;
+
+	gzFile tmp = gz_file;
+	gz_file = nullptr;
+
+	int r = gzclose(tmp);
+	if (r != Z_OK)
+	    SN_THROW(IOErrorException(sformat("gzclose failed errnum:%d", r)));
+    }
+
+
+    bool
+    AsciiFileReader::Impl::Gzip::read_buffer()
+    {
+	int r = gzread(gz_file, buffer.data(), buffer.size());
+	if (r <= 0)
+	{
+	    if (gzeof(gz_file))
+		return false;
+
+	    int errnum = 0;
+	    const char* msg = gzerror(gz_file, &errnum);
+	    SN_THROW(IOErrorException(sformat("gzread failed errno:%d (%s)", errnum, msg)));
+	}
+
+	buffer_read = 0;
+	buffer_fill = r;
+
+	return true;
+    }
+
+
+    bool
+    AsciiFileReader::Impl::Gzip::read_line(string& line)
+    {
+	line.clear();
+
+	while (true)
+	{
+	    // check if all of the output buffer has been used
+	    if (buffer_read == buffer_fill)
+	    {
+		if (!read_buffer())
+		    return !line.empty();
+	    }
+
+	    const char* p1 = buffer.data() + buffer_read;
+	    size_t remaining = buffer_fill - buffer_read;
+
+	    const char* p2 = (const char*) memchr(p1, '\n', remaining);
+
+	    if (p2)
+	    {
+		line += string(p1, p2 - p1);
+		buffer_read = p2 - buffer.data() + 1;
+		return true;
+	    }
+
+	    line += string(p1, remaining);
+	    buffer_read += remaining;
+	}
+    }
+
+
+    template <typename T>
+    std::unique_ptr<AsciiFileReader::Impl>
+    AsciiFileReader::Impl::factory(T t, Compression compression)
+    {
+	switch (compression)
+	{
+	    case Compression::NONE:
+		return unique_ptr<Impl::None>(new Impl::None(t));
+
+	    case Compression::GZIP:
+		return unique_ptr<Impl::Gzip>(new Impl::Gzip(t));
+	}
+
+	SN_THROW(LogicErrorException("unknown or unsupported compression"));
+	__builtin_unreachable();
+    }
+
+
+    AsciiFileReader::AsciiFileReader(int fd, Compression compression)
+	: impl(AsciiFileReader::Impl::factory(fd, compression))
+    {
+    }
+
+
+    AsciiFileReader::AsciiFileReader(FILE* fin, Compression compression)
+	: impl(AsciiFileReader::Impl::factory(fin, compression))
+    {
+    }
+
+
+    AsciiFileReader::AsciiFileReader(const string& name, Compression compression)
+	: impl(AsciiFileReader::Impl::factory(name, compression))
+    {
+    }
+
+
+    AsciiFileReader::~AsciiFileReader()
+    {
+    }
+
+
+    bool
+    AsciiFileReader::read_line(string& line)
+    {
+	return impl->read_line(line);
+    }
+
+
+    void
+    AsciiFileReader::close()
+    {
+	impl->close();
+    }
+
+
+    class AsciiFileWriter::Impl
+    {
+    public:
+
+	class None;
+	class Gzip;
+
+	template <typename T>
+	static std::unique_ptr<AsciiFileWriter::Impl> factory(T t, Compression compression);
+
+	virtual ~Impl() = default;
+
+	virtual void write_line(const string& line) = 0;
+
+	virtual void close() = 0;
+
+    };
+
+
+    class AsciiFileWriter::Impl::None : public AsciiFileWriter::Impl
+    {
+    public:
+
+	None(int fd);
+	None(FILE* fout);
+	None(const string& name);
+
+	virtual ~None();
+
+	virtual void write_line(const string& line) override;
+
+	virtual void close() override;
+
+    private:
+
+	FILE* fout = nullptr;
+
+    };
+
+
+    AsciiFileWriter::Impl::None::None(int fd)
+    {
+	fout = fdopen(fd, "w");
+	if (!fout)
+	    SN_THROW(IOErrorException(sformat("fdopen failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+    }
+
+
+    AsciiFileWriter::Impl::None::None(FILE* fout)
+	: fout(fout)
+    {
+    }
+
+
+    AsciiFileWriter::Impl::None::None(const string& name)
+    {
+	fout = fopen(name.c_str(), "we");
+	if (!fout)
+	    SN_THROW(IOErrorException(sformat("fopen failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+    }
+
+
+    AsciiFileWriter::Impl::None::~None()
+    {
+	try
+	{
+	    close();
+	}
+	catch (const Exception& e)
+	{
+	    SN_CAUGHT(e);
+
+	    y2err("exception ignored");
+	}
+    }
+
+
+    void
+    AsciiFileWriter::Impl::None::write_line(const string& line)
+    {
+	if (fprintf(fout, "%s\n", line.c_str()) != (int)(line.size() + 1))
+	    SN_THROW(IOErrorException(sformat("fprintf failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+    }
+
+
+    void
+    AsciiFileWriter::Impl::None::close()
+    {
+	if (!fout)
+	    return;
+
+	FILE* tmp = fout;
+	fout = nullptr;
+
+	if (fclose(tmp) != 0)
+	    SN_THROW(IOErrorException(sformat("fclose failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+    }
+
+
+    class AsciiFileWriter::Impl::Gzip : public AsciiFileWriter::Impl
+    {
+    public:
+
+	Gzip(int fd);
+	Gzip(FILE* fout);
+	Gzip(const string& name);
+
+	virtual ~Gzip();
+
+	virtual void write_line(const string& line) override;
+
+	virtual void close() override;
+
+    private:
+
+	Gzip();
+
+	gzFile gz_file = nullptr;
+
+	vector<char> buffer;
+	size_t buffer_fill = 0;		// position to which the buffer is full
+
+	void write_buffer();
+
+    };
+
+
+    AsciiFileWriter::Impl::Gzip::Gzip()
+    {
+	buffer.resize(16 * 1024);
+    }
+
+
+    AsciiFileWriter::Impl::Gzip::Gzip(int fd)
+	: Gzip()
+    {
+	gz_file = gzdopen(fd, "w");
+	if (!gz_file)
+	    SN_THROW(IOErrorException(sformat("gzdopen failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+    }
+
+
+    AsciiFileWriter::Impl::Gzip::Gzip(FILE* fout)
+	: Gzip()
+    {
+	int fd = fileno(fout);
+	if (fd < 0)
+	    SN_THROW(IOErrorException(sformat("fileno failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+
+	fd = dup(fd);
+	if (fd < 0)
+	    SN_THROW(IOErrorException(sformat("dup failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+
+	gz_file = gzdopen(fd, "w");
+	if (!gz_file)
+	    SN_THROW(IOErrorException(sformat("gzdopen failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+
+	fclose(fout);
+    }
+
+
+    AsciiFileWriter::Impl::Gzip::Gzip(const string& name)
+	: Gzip()
+    {
+	int fd = open(name.c_str(), O_WRONLY | O_CREAT | O_TRUNC | O_CLOEXEC | O_LARGEFILE, 0666);
+	if (fd < 0)
+	    SN_THROW(IOErrorException(sformat("open failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+
+	gz_file = gzdopen(fd, "w");
+	if (!gz_file)
+	    SN_THROW(IOErrorException(sformat("gzdopen failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+    }
+
+
+    AsciiFileWriter::Impl::Gzip::~Gzip()
+    {
+	try
+	{
+	    close();
+	}
+	catch (const Exception& e)
+	{
+	    SN_CAUGHT(e);
+
+	    y2err("exception ignored");
+	}
+    }
+
+
+    void
+    AsciiFileWriter::Impl::Gzip::close()
+    {
+	if (!gz_file)
+	    return;
+
+	write_buffer();
+
+	gzFile tmp = gz_file;
+	gz_file = nullptr;
+
+	int r = gzclose(tmp);
+	if (r != Z_OK)
+	    SN_THROW(IOErrorException(sformat("gzclose failed errnum:%d", r)));
+    }
+
+
+    void
+    AsciiFileWriter::Impl::Gzip::write_buffer()
+    {
+	int r = gzwrite(gz_file, buffer.data(), buffer_fill);
+	if (r <= 0)
+	{
+	    int errnum = 0;
+	    const char* msg = gzerror(gz_file, &errnum);
+	    SN_THROW(IOErrorException(sformat("gzwrite failed errno:%d (%s)", errnum, msg)));
+	}
+
+	buffer_fill = 0;
+    }
+
+
+    void
+    AsciiFileWriter::Impl::Gzip::write_line(const string& line)
+    {
+	string tmp = line + "\n";
+
+	while (!tmp.empty())
+	{
+	    // still available in input buffer
+	    size_t in_avail = buffer.size() - buffer_fill;
+
+	    // how much to copy into input buffer
+	    size_t to_copy = min(in_avail, tmp.size());
+
+	    // copy into input buffer and erase in tmp
+	    memcpy(buffer.data() + buffer_fill, tmp.data(), to_copy);
+	    buffer_fill += to_copy;
+	    tmp.erase(0, to_copy);
+
+	    // if input buffer is full, compress it and write to disk
+	    if (buffer_fill == buffer.size())
+		write_buffer();
+	}
+    }
+
+
+    template <typename T>
+    std::unique_ptr<AsciiFileWriter::Impl>
+    AsciiFileWriter::Impl::factory(T t, Compression compression)
+    {
+	switch (compression)
+	{
+	    case Compression::NONE:
+		return unique_ptr<Impl::None>(new Impl::None(t));
+
+	    case Compression::GZIP:
+		return unique_ptr<Impl::Gzip>(new Impl::Gzip(t));
+	}
+
+	SN_THROW(LogicErrorException("unknown or unsupported compression"));
+	__builtin_unreachable();
+    }
+
+
+    AsciiFileWriter::AsciiFileWriter(int fd, Compression compression)
+	: impl(AsciiFileWriter::Impl::factory(fd, compression))
+    {
+    }
+
+
+    AsciiFileWriter::AsciiFileWriter(FILE* fout, Compression compression)
+	: impl(AsciiFileWriter::Impl::factory(fout, compression))
+    {
+    }
+
+
+    AsciiFileWriter::AsciiFileWriter(const string& name, Compression compression)
+	: impl(AsciiFileWriter::Impl::factory(name, compression))
+    {
+    }
+
+
+    AsciiFileWriter::~AsciiFileWriter()
+    {
+    }
+
+
+    void
+    AsciiFileWriter::write_line(const string& line)
+    {
+	impl->write_line(line);
+    }
+
+
+    void
+    AsciiFileWriter::close()
+    {
+	impl->close();
+    }
+
+
+    AsciiFile::AsciiFile(const string& name, bool remove_empty)
+	: name(name), remove_empty(remove_empty)
+    {
+	reload();
+    }
+
+
+    AsciiFile::~AsciiFile()
+    {
+    }
 
 
     void
     AsciiFile::reload()
     {
-	y2mil("loading file " << Name_C);
+	y2mil("loading file " << name);
+
 	clear();
 
-	AsciiFileReader file(Name_C);
+	AsciiFileReader ascii_file_reader(name, Compression::NONE);
 
 	string line;
-	while (file.getline(line))
-	    Lines_C.push_back(line);
+	while (ascii_file_reader.read_line(line))
+	    lines.push_back(line);
+
+	ascii_file_reader.close();
     }
-
-
-bool
-AsciiFile::save()
-{
-    if (remove_empty && Lines_C.empty())
-    {
-	y2mil("deleting file " << Name_C);
-
-	if (access(Name_C.c_str(), F_OK) != 0)
-	    return true;
-
-	return unlink(Name_C.c_str()) == 0;
-    }
-    else
-    {
-	y2mil("saving file " << Name_C);
-
-	ofstream file( Name_C.c_str() );
-	classic(file);
-
-	for (vector<string>::const_iterator it = Lines_C.begin(); it != Lines_C.end(); ++it)
-	    file << *it << std::endl;
-
-	file.close();
-
-	return file.good();
-    }
-}
 
 
     void
-    AsciiFile::logContent() const
+    AsciiFile::save()
     {
-	y2mil("content of " << (Name_C.empty() ? "<nameless>" : Name_C));
-	for (vector<string>::const_iterator it = Lines_C.begin(); it != Lines_C.end(); ++it)
-	    y2mil(*it);
+	if (remove_empty && empty())
+	{
+	    y2mil("removing file " << name);
+
+	    if (access(name.c_str(), F_OK) != 0)
+		return;
+
+	    if (unlink(name.c_str()) != 0)
+		SN_THROW(IOErrorException(sformat("unlink failed errno:%d (%s)", errno,
+						  stringerror(errno).c_str())));
+	}
+	else
+	{
+	    y2mil("saving file " << name);
+
+	    AsciiFileWriter ascii_file_writer(name, Compression::NONE);
+
+	    for (const string& line : lines)
+		ascii_file_writer.write_line(line);
+
+	    ascii_file_writer.close();
+	}
+    }
+
+
+    void
+    AsciiFile::log_content() const
+    {
+	y2mil("content of " << (name.empty() ? "<nameless>" : name));
+
+	for (const string& line : lines)
+	    y2mil(line);
+    }
+
+
+    SysconfigFile::SysconfigFile(const string& name)
+	: AsciiFile(name)
+    {
+    }
+
+
+    SysconfigFile::~SysconfigFile()
+    {
+	if (!modified)
+	    return;
+
+	try
+	{
+	    save();
+	}
+	catch (const Exception& e)
+	{
+	    SN_CAUGHT(e);
+
+	    y2err("exception ignored");
+	}
     }
 
 
     void
     SysconfigFile::save()
     {
-	if (modified && AsciiFile::save())
-	    modified = false;
+	if (!modified)
+	    return;
+
+	AsciiFile::save();
+	modified = false;
     }
 
 
     void
-    SysconfigFile::checkKey(const string& key) const
+    SysconfigFile::check_key(const string& key) const
     {
 	static const regex rx("([0-9A-Z_]+)", regex::extended);
 
@@ -180,17 +830,17 @@ AsciiFile::save()
 
 
     void
-    SysconfigFile::setValue(const string& key, bool value)
+    SysconfigFile::set_value(const string& key, bool value)
     {
-	setValue(key, value ? "yes" : "no");
+	set_value(key, value ? "yes" : "no");
     }
 
 
     bool
-    SysconfigFile::getValue(const string& key, bool& value) const
+    SysconfigFile::get_value(const string& key, bool& value) const
     {
 	string tmp;
-	if (!getValue(key, tmp))
+	if (!get_value(key, tmp))
 	    return false;
 
 	value = tmp == "yes";
@@ -199,27 +849,26 @@ AsciiFile::save()
 
 
     void
-    SysconfigFile::setValue(const string& key, const char* value)
+    SysconfigFile::set_value(const string& key, const char* value)
     {
-	setValue(key, string(value));
+	set_value(key, string(value));
     }
 
 
     void
-    SysconfigFile::setValue(const string& key, const string& value)
+    SysconfigFile::set_value(const string& key, const string& value)
     {
-	checkKey(key);
+	check_key(key);
 
 	modified = true;
 
-	for (vector<string>::iterator it = Lines_C.begin(); it != Lines_C.end(); ++it)
+	for (vector<string>::iterator it = lines.begin(); it != lines.end(); ++it)
 	{
 	    ParsedLine parsed_line;
 
 	    if (parse_line(*it, parsed_line) && parsed_line.key == key)
 	    {
-		string line = key + "=\"" + value + "\"" + parsed_line.comment;
-		*it = line;
+		*it = key + "=\"" + value + "\"" + parsed_line.comment;
 		return;
 	    }
 	}
@@ -230,9 +879,9 @@ AsciiFile::save()
 
 
     bool
-    SysconfigFile::getValue(const string& key, string& value) const
+    SysconfigFile::get_value(const string& key, string& value) const
     {
-	for (const string& line : Lines_C)
+	for (const string& line : lines)
 	{
 	    ParsedLine parsed_line;
 
@@ -249,7 +898,7 @@ AsciiFile::save()
 
 
     void
-    SysconfigFile::setValue(const string& key, const vector<string>& values)
+    SysconfigFile::set_value(const string& key, const vector<string>& values)
     {
 	string tmp;
 	for (vector<string>::const_iterator it = values.begin(); it != values.end(); ++it)
@@ -258,15 +907,15 @@ AsciiFile::save()
 		tmp.append(" ");
 	    tmp.append(boost::replace_all_copy(*it, " ", "\\ "));
 	}
-	setValue(key, tmp);
+	set_value(key, tmp);
     }
 
 
     bool
-    SysconfigFile::getValue(const string& key, vector<string>& values) const
+    SysconfigFile::get_value(const string& key, vector<string>& values) const
     {
 	string tmp;
-	if (!getValue(key, tmp))
+	if (!get_value(key, tmp))
 	    return false;
 
 	values.clear();
@@ -302,11 +951,11 @@ AsciiFile::save()
 
 
     map<string, string>
-    SysconfigFile::getAllValues() const
+    SysconfigFile::get_all_values() const
     {
 	map<string, string> ret;
 
-	for (const string& line : Lines_C)
+	for (const string& line : lines)
 	{
 	    ParsedLine parsed_line;
 

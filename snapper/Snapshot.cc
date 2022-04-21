@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2022] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -26,8 +26,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
-#include <fnmatch.h>
-#include <dirent.h>
 #include <errno.h>
 #include <string.h>
 #include <regex>
@@ -46,6 +44,7 @@
 #include "snapper/SnapperDefines.h"
 #include "snapper/Exception.h"
 #include "snapper/Hooks.h"
+#include "snapper/ComparisonImpl.h"
 
 
 namespace snapper
@@ -79,8 +78,7 @@ namespace snapper
 
 
     Snapshot::Snapshot(const Snapper* snapper, SnapshotType type, unsigned int num, time_t date)
-	: snapper(snapper), type(type), num(num), date(date), uid(0), pre_num(0),
-	  mount_checked(false), mount_user_request(false), mount_use_count(0)
+	: snapper(snapper), type(type), num(num), date(date)
     {
     }
 
@@ -181,6 +179,17 @@ namespace snapper
 	__builtin_unreachable();
 
 #endif
+    }
+
+
+    Snapshots::Snapshots(const Snapper* snapper)
+	: snapper(snapper)
+    {
+    }
+
+
+    Snapshots::~Snapshots()
+    {
     }
 
 
@@ -706,13 +715,6 @@ namespace snapper
     }
 
 
-    static bool
-    is_filelist_file(unsigned char type, const char* name)
-    {
-	return (type == DT_UNKNOWN || type == DT_REG) && (fnmatch("filelist-*.txt", name, 0) == 0);
-    }
-
-
     void
     Snapshots::modifySnapshot(iterator snapshot, const SMD& smd)
     {
@@ -744,18 +746,22 @@ namespace snapper
 
 	info_dir.unlink("info.xml", 0);
 
+	// remove all filelists in the info directory of this shapshot
 	vector<string> tmp1 = info_dir.entries(is_filelist_file);
-	for (vector<string>::const_iterator it = tmp1.begin(); it != tmp1.end(); ++it)
+	for (const string& name : tmp1)
 	{
-	    info_dir.unlink(*it, 0);
+	    info_dir.unlink(name, 0);
 	}
 
+	// remove all filelists of the snapshot in the info directories of other snapshots
 	for (Snapshots::iterator it = begin(); it != end(); ++it)
 	{
 	    if (!it->isCurrent())
 	    {
 		SDir tmp2 = it->openInfoDir();
-		tmp2.unlink("filelist-" + decString(snapshot->getNum()) + ".txt", 0);
+		string name = filelist_name(snapshot->getNum());
+		tmp2.unlink(name, 0);
+		tmp2.unlink(name + ".gz", 0);
 	    }
 	}
 

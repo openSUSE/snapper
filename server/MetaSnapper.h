@@ -49,7 +49,7 @@ public:
     MetaSnapper(ConfigInfo& config_info);
     ~MetaSnapper();
 
-    const string& configName() const { return config_info.getConfigName(); }
+    const string& configName() const { return config_info.get_config_name(); }
 
     const ConfigInfo& getConfigInfo() const { return config_info; }
     void setConfigInfo(const map<string, string>& raw);

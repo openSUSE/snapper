@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) 2022 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -27,6 +28,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <errno.h>
+#include <regex>
 
 #include "snapper/Comparison.h"
 #include "snapper/Snapper.h"
@@ -37,6 +39,7 @@
 #include "snapper/SnapperTmpl.h"
 #include "snapper/AsciiFile.h"
 #include "snapper/Filesystem.h"
+#include "snapper/ComparisonImpl.h"
 
 
 namespace snapper
@@ -137,6 +140,8 @@ namespace snapper
     {
 	y2mil("num1:" << getSnapshot1()->getNum() << " num2:" << getSnapshot2()->getNum());
 
+	files.clear();
+
 	cmpdirs_cb_t cb = [this](const string& name, unsigned int status) {
 	    files.push_back(File(&file_paths, name, status));
 	};
@@ -154,6 +159,110 @@ namespace snapper
 	files.sort();
 
 	y2mil("found " << files.size() << " lines");
+    }
+
+
+    bool
+    Comparison::check_header(const string& line) const
+    {
+	static const regex rx_header("snapper-([0-9\\.]+)-([a-z]+)-([0-9]+)-begin", regex::extended);
+
+	smatch match;
+
+	if (regex_match(line, match, rx_header))
+	{
+	    if (match[2] != "list" || match[3] != "1")
+	    {
+		y2err("unknown filelist format:'" << match[2] << "' version:'" << match[3] << "'");
+		SN_THROW(Exception("header format/version not supported"));
+	    }
+
+	    return true;
+	}
+	else
+	{
+	    // fine, older files might not have a header
+
+	    return false;
+	}
+    }
+
+
+    bool
+    Comparison::check_footer(const string& line) const
+    {
+	static const regex rx_footer("snapper-([0-9\\.]+)-([a-z]+)-([0-9]+)-end", regex::extended);
+
+	return regex_match(line, rx_footer);
+    }
+
+
+    bool
+    Comparison::load(int fd, Compression compression, bool invert)
+    {
+	files.clear();
+
+	try
+	{
+	    AsciiFileReader ascii_file_reader(fd, compression);
+
+	    bool has_header = false;
+	    bool has_footer = false;
+
+	    bool first = true;
+
+	    string line;
+	    while (ascii_file_reader.read_line(line))
+	    {
+		if (first)
+		{
+		    first = false;
+		    if (check_header(line))
+		    {
+			has_header = true;
+			continue;
+		    }
+		}
+		else
+		{
+		    if (has_header && check_footer(line))
+		    {
+			has_footer = true;
+			break;
+		    }
+		}
+
+		string::size_type pos = line.find(" ");
+		if (pos == string::npos)
+		    SN_THROW(Exception("separator space not found"));
+
+		unsigned int status = stringToStatus(string(line, 0, pos));
+		string name = string(line, pos + 1);
+
+		if (invert)
+		    status = invertStatus(status);
+
+		File file(&file_paths, name, status);
+		files.push_back(file);
+	    }
+
+	    ascii_file_reader.close();
+
+	    if (has_header && !has_footer)
+		SN_THROW(Exception("footer not found"));
+
+	    files.sort();
+
+	    y2mil("read " << files.size() << " lines");
+
+	    return true;
+	}
+	catch (const Exception& e)
+	{
+	    SN_CAUGHT(e);
+
+	    return false;
+	}
     }
 
 
@@ -178,44 +287,32 @@ namespace snapper
 	    SDir infos_dir = getSnapper()->openInfosDir();
 	    SDir info_dir = SDir(infos_dir, decString(num2));
 
-	    int fd = info_dir.open("filelist-" + decString(num1) + ".txt", O_RDONLY | O_NOATIME |
-				   O_NOFOLLOW | O_CLOEXEC);
-	    if (fd == -1)
-		return false;
+	    string name = filelist_name(num1);
 
-	    AsciiFileReader asciifile(fd);
-
-	    string line;
-	    while (asciifile.getline(line))
+	    for (Compression compression : { Compression::GZIP, Compression::NONE })
 	    {
-		string::size_type pos = line.find(" ");
-		if (pos == string::npos)
+		if (!is_available(compression))
 		    continue;
 
-		unsigned int status = stringToStatus(string(line, 0, pos));
-		string name = string(line, pos + 1);
-
-		if (invert)
-		    status = invertStatus(status);
-
-		File file(&file_paths, name, status);
-		files.push_back(file);
+		int fd = info_dir.open(add_extension(compression, name), O_RDONLY | O_NOATIME |
+				       O_NOFOLLOW | O_CLOEXEC);
+		if (fd > -1)
+		{
+		    if (load(fd, compression, invert))
+			return true;
+		}
 	    }
 	}
-	catch (const FileNotFoundException& e)
+	catch (const Exception& e)
 	{
-	    return false;
+	    SN_CAUGHT(e);
 	}
 
-	files.sort();
-
-	y2mil("read " << files.size() << " lines");
-
-	return true;
+	return false;
     }
 
 
-    void
+    bool
     Comparison::save() const
     {
 	y2mil("num1:" << getSnapshot1()->getNum() << " num2:" << getSnapshot2()->getNum());
@@ -231,29 +328,52 @@ namespace snapper
 	if (invert)
 	    swap(num1, num2);
 
-	string file_name = "filelist-" + decString(num1) + ".txt";
+	Compression compression = snapper->get_compression();
+
+	string file_name = add_extension(compression, filelist_name(num1));
 	string tmp_name = file_name + ".tmp-XXXXXX";
 
 	SDir info_dir = invert ? getSnapshot1()->openInfoDir() : getSnapshot2()->openInfoDir();
 
-	FILE* file = fdopen(info_dir.mktemp(tmp_name), "w");
-	if (!file)
+	int fd = info_dir.mktemp(tmp_name);
+	if (fd < -1)
 	    SN_THROW(IOErrorException(sformat("mkstemp failed errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
 
-	for (Files::const_iterator it = files.begin(); it != files.end(); ++it)
+	try
 	{
-	    unsigned int status = it->getPreToPostStatus();
+	    AsciiFileWriter ascii_file_writer(fd, compression);
 
-	    if (invert)
-		status = invertStatus(status);
+	    ascii_file_writer.write_line("snapper-" VERSION "-list-1-begin");
 
-	    fprintf(file, "%s %s\n", statusToString(status).c_str(), it->getName().c_str());
+	    for (const File& file : files)
+	    {
+		unsigned int status = file.getPreToPostStatus();
+
+		if (invert)
+		    status = invertStatus(status);
+
+		string line = statusToString(status) + " " + file.getName();
+
+		ascii_file_writer.write_line(line);
+	    }
+
+	    ascii_file_writer.write_line("snapper-" VERSION "-list-1-end");
+
+	    ascii_file_writer.close();
+	}
+	catch (const Exception& e)
+	{
+	    SN_CAUGHT(e);
+
+	    info_dir.unlink(tmp_name, 0);
+
+	    return false;
 	}
 
-	fclose(file);
-
 	info_dir.rename(tmp_name, file_name);
+
+	return true;
     }
 
 

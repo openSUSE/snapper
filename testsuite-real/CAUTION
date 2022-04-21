@@ -3,7 +3,7 @@ CAUTION
 
 RUN THESE TESTS IN A SCRATCH MACHINE.
 
-The tests in this directory only work when run as the root user.
+Most tests in this directory only work when run as the root user.
 
 They operate
 - on a scratch BTRFS filesystem (`/testsuite`)

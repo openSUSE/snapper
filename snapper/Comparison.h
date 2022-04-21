@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2012] Novell, Inc.
+ * Copyright (c) 2022 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -25,6 +26,7 @@
 
 
 #include "snapper/Snapshot.h"
+#include "snapper/Snapper.h"
 #include "snapper/File.h"
 
 
@@ -55,7 +57,7 @@ namespace snapper
 	const Files& getFiles() const { return files; }
 
 	UndoStatistic getUndoStatistic() const;
-        XAUndoStatistic getXAUndoStatistic() const;
+	XAUndoStatistic getXAUndoStatistic() const;
 
 	vector<UndoStep> getUndoSteps() const;
 
@@ -65,8 +67,25 @@ namespace snapper
 
 	void initialize();
 	void create();
+
+	/**
+	 * Check the header. Throws if the header is unsupported. Return true iff a header
+	 * was found.
+	 */
+	bool check_header(const string& line) const;
+
+	/**
+	 * Check the footer. Throws if the footer is unsupported. Return true iff a footer
+	 * was found.
+	 */
+	bool check_footer(const string& line) const;
+
 	bool load();
-	void save() const;
+
+	bool load(int fd, Compression compression, bool invert);
+
+	bool save() const;
+
 	void filter();
 
 	void do_mount() const;

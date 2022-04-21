@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 Novell, Inc.
- * Copyright (c) [2018-2020] SUSE LLC
+ * Copyright (c) [2018-2022] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -75,14 +75,17 @@ step1(const string& device, const string& description, const string& cleanup,
     {
 	SysconfigFile config(locate_file("default", ETC_CONFIG_TEMPLATE_DIR, USR_CONFIG_TEMPLATE_DIR));
 
-	config.setName(tmp_mount.getFullname() + CONFIGS_DIR "/" "root");
+	config.set_name(tmp_mount.getFullname() + CONFIGS_DIR "/" "root");
 
-	config.setValue(KEY_SUBVOLUME, "/");
-	config.setValue(KEY_FSTYPE, "btrfs");
+	config.set_value(KEY_SUBVOLUME, "/");
+	config.set_value(KEY_FSTYPE, "btrfs");
+
+	config.save();
     }
-    catch (const FileNotFoundException& e)
+    catch (const Exception& e)
     {
-	cerr << "copying/modifying config-file failed" << endl;
+	cerr << "copying/modifying config-file failed"
+	     << e.what() << endl;
     }
 
     cout << "creating filesystem config" << endl;
@@ -196,11 +199,15 @@ step4()
     try
     {
 	SysconfigFile sysconfig(SYSCONFIG_FILE);
-	sysconfig.setValue("SNAPPER_CONFIGS", { "root" });
+
+	sysconfig.set_value("SNAPPER_CONFIGS", { "root" });
+
+	sysconfig.save();
     }
-    catch (const FileNotFoundException& e)
+    catch (const Exception& e)
     {
-	cerr << "sysconfig-file not found" << endl;
+	cerr << "modifying sysconfig-file failed"
+	     << e.what() << endl;
     }
 
     Btrfs btrfs("/", "");

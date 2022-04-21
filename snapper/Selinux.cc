@@ -33,16 +33,15 @@ namespace snapper
 {
 
     SnapperContexts::SnapperContexts()
-	: subvolume_ctx(NULL)
     {
 	std::map<string,string> snapperd_contexts;
 
 	try
 	{
-	    AsciiFileReader asciifile(selinux_snapperd_contexts_path());
+	    AsciiFileReader ascii_file_reader(selinux_snapperd_contexts_path(), Compression::NONE);
 
 	    string line;
-	    while (asciifile.getline(line))
+	    while (ascii_file_reader.read_line(line))
 	    {
 		// commented line
 		if (line[0] == '#')
@@ -53,7 +52,8 @@ namespace snapper
 		if (pos == string::npos)
 		    continue;
 
-		if (!snapperd_contexts.insert(make_pair(boost::trim_copy(line.substr(0, pos)), boost::trim_copy(line.substr(pos + 1)))).second)
+		if (!snapperd_contexts.insert(make_pair(boost::trim_copy(line.substr(0, pos)),
+							boost::trim_copy(line.substr(pos + 1)))).second)
 		{
 		    SN_THROW(SelinuxException("Duplicate key in contexts file"));
 		}

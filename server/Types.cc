@@ -37,7 +37,7 @@ namespace DBus
     operator<<(Hoho& hoho, const ConfigInfo& data)
     {
 	hoho.open_struct();
-	hoho << data.getConfigName() << data.getSubvolume() << data.getAllValues();
+	hoho << data.get_config_name() << data.get_subvolume() << data.get_all_values();
 	hoho.close_struct();
 	return hoho;
     }

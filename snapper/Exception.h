@@ -149,7 +149,7 @@ namespace snapper
 
 	/**
 	 * Default constructor.
-	 ***/
+	 **/
 	CodeLocation()
 	    : _line(0) {}
 
@@ -182,7 +182,7 @@ namespace snapper
 
 	std::string _file;
 	std::string _func;
-	int _line;
+	int _line = 0;
 
     };
 
@@ -361,6 +361,7 @@ namespace snapper
     struct LogicErrorException : public Exception
     {
 	explicit LogicErrorException() : Exception("logic error") {}
+	explicit LogicErrorException(const char* msg) : Exception(msg) {}
     };
 
     struct IOErrorException : public Exception

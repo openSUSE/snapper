@@ -91,7 +91,7 @@ namespace snapper
 #ifdef ENABLE_BTRFS_QUOTA
 
 	string qgroup_str;
-	if (config_info.getValue("QGROUP", qgroup_str) && !qgroup_str.empty())
+	if (config_info.get_value("QGROUP", qgroup_str) && !qgroup_str.empty())
 	{
 	    try
 	    {

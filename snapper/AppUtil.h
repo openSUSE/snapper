@@ -136,8 +136,10 @@ namespace snapper
     };
 
 
-    struct FdCloser
+    class FdCloser
     {
+    public:
+
 	FdCloser(int fd)
 	    : fd(fd)
 	{
@@ -163,7 +165,7 @@ namespace snapper
 
     private:
 
-	int fd;
+	int fd = -1;
 
     };
 

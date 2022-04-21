@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2019] SUSE LLC
+ * Copyright (c) [2016-2022] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -145,17 +145,17 @@ namespace snapper
 
 	time_t date;
 
-	uid_t uid;
+	uid_t uid = 0;
 
-	unsigned int pre_num;	// valid only for type=POST
+	unsigned int pre_num = 0;	// valid only for type=POST
 
 	string description;	// likely empty for type=POST
 	string cleanup;
 	map<string, string> userdata;
 
-	mutable bool mount_checked;
-	mutable bool mount_user_request;
-	mutable unsigned int mount_use_count;
+	mutable bool mount_checked = false;
+	mutable bool mount_user_request = false;
+	mutable unsigned int mount_use_count = 0;
 
 	void writeInfo() const;
 
@@ -177,8 +177,6 @@ namespace snapper
     {
     public:
 
-	SMD() : description(), cleanup(), userdata() {}
-
 	string description;
 	string cleanup;
 	map<string, string> userdata;
@@ -190,17 +188,15 @@ namespace snapper
     {
     public:
 
-	SCD() : SMD(), read_only(true), empty(false), uid(0) {}
-
-	bool read_only;
+	bool read_only = true;
 
 	/**
 	 * Create an empty snapshot. For btrfs this creates a subvolume
 	 * instead of a snapshot, for other filesystem types ignored.
 	 */
-	bool empty;
+	bool empty = false;
 
-	uid_t uid;
+	uid_t uid = 0;
 
     };
 
@@ -211,7 +207,8 @@ namespace snapper
 
 	friend class Snapper;
 
-	Snapshots(const Snapper* snapper) : snapper(snapper) {}
+	Snapshots(const Snapper* snapper);
+	~Snapshots();
 
 	typedef list<Snapshot>::iterator iterator;
 	typedef list<Snapshot>::const_iterator const_iterator;
