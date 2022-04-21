@@ -41,10 +41,10 @@ namespace snapper
     {
 	if (file)
 	{
-	    AsciiFileReader asciifile(file);
+	    AsciiFileReader asciifile(file, Compression::NONE);
 
 	    string line;
-	    while (asciifile.getline(line))
+	    while (asciifile.read_line(line))
 	    {
 		if (line.empty())
 		    continue;

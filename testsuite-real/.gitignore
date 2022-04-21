@@ -1,4 +1,5 @@
 *.o
+ascii-file
 simple1
 permissions1
 permissions2

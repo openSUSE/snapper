@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
+ * Copyright (c) 2022 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -94,6 +95,13 @@ namespace snapper
 
 	return c.compare(lhs.c_str(), lhs.c_str() + lhs.length(),
 			 rhs.c_str(), rhs.c_str() + rhs.length()) < 0;
+    }
+
+
+    void
+    Files::clear()
+    {
+	entries.clear();
     }
 
 

@@ -33,15 +33,15 @@
 #include "snapper/Exception.h"
 
 
-namespace snapper {
+namespace snapper
+{
+    using std::string;
 
     struct SelinuxException : public Exception
     {
 	explicit SelinuxException() : Exception("SELinux error") {}
-	explicit SelinuxException(const std::string& msg) : Exception(msg) {}
+	explicit SelinuxException(const string& msg) : Exception(msg) {}
     };
-
-    using std::string;
 
     const static string selinux_snapperd_data = "snapperd_data";
 
@@ -53,8 +53,9 @@ namespace snapper {
 	char* subvolume_context() const { return context_str(subvolume_ctx); }
 	SnapperContexts();
 	~SnapperContexts() { context_free(subvolume_ctx); }
+
     private:
-	context_t subvolume_ctx;
+	context_t subvolume_ctx = nullptr;
     };
 
     class DefaultSelinuxFileContext : private boost::noncopyable
@@ -73,6 +74,7 @@ namespace snapper {
 	char* selabel_lookup(const string& path, int mode);
 
 	~SelinuxLabelHandle() { selabel_close(handle); }
+
     private:
 	SelinuxLabelHandle();
 

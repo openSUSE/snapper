@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2022] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -48,10 +48,10 @@ namespace snapper
 
 	explicit ConfigInfo(const string& config_name, const string& root_prefix);
 
-	const string& getConfigName() const { return config_name; }
-	const string& getSubvolume() const { return subvolume; }
+	const string& get_config_name() const { return config_name; }
+	const string& get_subvolume() const { return subvolume; }
 
-	virtual void checkKey(const string& key) const override;
+	virtual void check_key(const string& key) const override;
 
     private:
 
@@ -128,7 +128,7 @@ namespace snapper
 	Snapper(const string& config_name, const string& root_prefix, bool disable_filters = false);
 	~Snapper();
 
-	const string& configName() const { return config_info->getConfigName(); }
+	const string& configName() const { return config_info->get_config_name(); }
 
 	string subvolumeDir() const;
 
@@ -186,6 +186,12 @@ namespace snapper
 	 */
 	void calculateUsedSpace() const;
 
+	/**
+	 * Return the compression algorithm set in the config file or a fallback. Also
+	 * checks if the compression is available and uses NONE as a fallback.
+	 */
+	Compression get_compression() const;
+
 	static const char* compileVersion();
 	static const char* compileFlags();
 
@@ -204,15 +210,15 @@ namespace snapper
 	void syncSelinuxContextsInInfosDir(bool skip_snapshot_dir) const;
 	void syncInfoDir(SDir& dir) const;
 
-	ConfigInfo* config_info;
+	ConfigInfo* config_info = nullptr;
 
-	Filesystem* filesystem;
+	Filesystem* filesystem = nullptr;
 
 	vector<string> ignore_patterns;
 
 	Snapshots snapshots;
 
-	SelinuxLabelHandle* selabel_handle;
+	SelinuxLabelHandle* selabel_handle = nullptr;
 
     };
 

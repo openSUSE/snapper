@@ -73,7 +73,7 @@ ProxySnapshotsLib::getActive() const
 ProxyConfig
 ProxySnapperLib::getConfig() const
 {
-    return ProxyConfig(snapper->getConfigInfo().getAllValues());
+    return ProxyConfig(snapper->getConfigInfo().get_all_values());
 }
 
 
@@ -201,7 +201,7 @@ ProxySnappersLib::getConfigs() const
 
     list<ConfigInfo> config_infos = Snapper::getConfigs(target_root);
     for (const ConfigInfo& config_info : config_infos)
-	ret.emplace(make_pair(config_info.getConfigName(), config_info.getAllValues()));
+	ret.emplace(make_pair(config_info.get_config_name(), config_info.get_all_values()));
 
     return ret;
 }

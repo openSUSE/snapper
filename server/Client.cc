@@ -1054,7 +1054,7 @@ Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
     Snapshots::iterator snap2 = snapper->createPostSnapshot(snap1, scd);
 
     bool background_comparison = true;
-    it->getConfigInfo().getValue("BACKGROUND_COMPARISON", background_comparison);
+    it->getConfigInfo().get_value("BACKGROUND_COMPARISON", background_comparison);
     if (background_comparison)
 	clients.backgrounds().add_task(it, snap1, snap2);
 

@@ -12,6 +12,7 @@ libsnapper_la_SOURCES =					\
 	Snapper.cc		Snapper.h		\
 	Snapshot.cc		Snapshot.h		\
 	Comparison.cc		Comparison.h		\
+	ComparisonImpl.cc	ComparisonImpl.h	\
 	Filesystem.cc		Filesystem.h		\
 	File.cc			File.h			\
 	XmlFile.cc		XmlFile.h		\
@@ -25,7 +26,6 @@ libsnapper_la_SOURCES =					\
 	Compare.cc		Compare.h		\
 	SystemCmd.cc		SystemCmd.h		\
 	AsciiFile.cc		AsciiFile.h		\
-	Regex.cc		Regex.h			\
 	Acls.cc			Acls.h			\
 	Hooks.cc		Hooks.h			\
 	Exception.cc		Exception.h		\
@@ -64,7 +64,7 @@ libsnapper_la_SOURCES +=				\
 endif
 
 libsnapper_la_LDFLAGS = -version-info @LIBVERSION_INFO@
-libsnapper_la_LIBADD = -lboost_thread -lboost_system $(XML2_LIBS) -lacl
+libsnapper_la_LIBADD = -lboost_thread -lboost_system $(XML2_LIBS) -lacl -lz
 if ENABLE_ROLLBACK
 libsnapper_la_LIBADD += -lmount
 endif

@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Apr 21 09:35:06 CEST 2022 - aschnell@suse.com
+
+- compress file lists using gzip
+- version 0.10.1
+
+-------------------------------------------------------------------
 Mon Mar 21 17:29:07 CET 2022 - aschnell@suse.com
 
 - transfer filelist by pipe instead of DBus message to avoid

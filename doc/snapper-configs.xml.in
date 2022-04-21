@@ -2,13 +2,13 @@
 <refentry id='snapper-configs5'>
 
   <refentryinfo>
-    <date>2021-04-07</date>
+    <date>2022-04-21</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper-configs</refentrytitle>
     <manvolnum>5</manvolnum>
-    <refmiscinfo class='date'>2021-04-07</refmiscinfo>
+    <refmiscinfo class='date'>2022-04-21</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -131,6 +131,18 @@
 	  <para>Defines whether pre and post snapshots should be compared in
 	  the background after creation.</para>
 	  <para>Default value is &quot;yes&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>COMPRESSION=<replaceable>algorithm</replaceable></option></term>
+	<listitem>
+	  <para>Defines the compression algorithm used for saving file
+	  list. Allowed values are &quot;none&quot; and
+	  &quot;gzip&quot;. Depending on the installed libraries, some
+	  compression algorithms might not be available.</para>
+	  <para>Default value is &quot;gzip&quot;.</para>
+	  <para>New in version 0.10.1.</para>
 	</listitem>
       </varlistentry>
 
