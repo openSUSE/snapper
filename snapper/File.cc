@@ -74,6 +74,24 @@ namespace snapper
     }
 
 
+    Files::Files(const FilePaths* file_paths)
+	: file_paths(file_paths)
+    {
+    }
+
+
+    Files::Files(const FilePaths* file_paths, const vector<File>& entries)
+	: file_paths(file_paths), entries(entries)
+    {
+	sort();
+    }
+
+
+    Files::~Files()
+    {
+    }
+
+
     void
     Files::filter(const vector<string>& ignore_patterns)
     {
@@ -89,7 +107,7 @@ namespace snapper
 
 
     bool
-    File::cmp_lt(const string& lhs, const string& rhs)
+    cmp_lt(const string& lhs, const string& rhs)
     {
 	const std::collate<char>& c = std::use_facet<std::collate<char>>(std::locale());
 
@@ -108,7 +126,7 @@ namespace snapper
     bool
     operator<(const File& lhs, const File& rhs)
     {
-	return File::cmp_lt(lhs.getName(), rhs.getName());
+	return cmp_lt(lhs.getName(), rhs.getName());
     }
 
 
@@ -122,7 +140,7 @@ namespace snapper
     bool
     operator<(const File& file, const string& name)
     {
-	return File::cmp_lt(file.getName(), name);
+	return cmp_lt(file.getName(), name);
     }
 
 

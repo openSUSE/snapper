@@ -136,9 +136,6 @@ namespace snapper
 
 	XAUndoStatistic getXAUndoStatistic() const;
 
-	// C++ locale aware less-than comparison
-	static bool cmp_lt(const string& lhs, const string& rhs);
-
     private:
 
 	bool createParentDirectories(const string& path) const;
@@ -172,17 +169,20 @@ namespace snapper
     };
 
 
+    /**
+     * Container class for files.
+     *
+     * The Files class keeps the files sorted, which is required for the find functions.
+     */
     class Files
     {
     public:
 
 	friend class Comparison;
 
-	Files(const FilePaths* file_paths)
-	    : file_paths(file_paths) {}
-
-	Files(const FilePaths* file_paths, const vector<File>& entries)
-	    : file_paths(file_paths), entries(entries) {}
+	Files(const FilePaths* file_paths);
+	Files(const FilePaths* file_paths, const vector<File>& entries);
+	~Files();
 
 	typedef vector<File>::iterator iterator;
 	typedef vector<File>::const_iterator const_iterator;
@@ -213,17 +213,18 @@ namespace snapper
 
 	XAUndoStatistic getXAUndoStatistic() const;
 
-    protected:
+    private:
 
+	/**
+	 * After using push_back, sort must be called before using any find function.
+	 */
 	void push_back(const File& file) { entries.push_back(file); }
-
-	void filter(const vector<string>& ignore_patterns);
 
 	void sort();
 
-	const FilePaths* file_paths;
+	void filter(const vector<string>& ignore_patterns);
 
-    private:
+	const FilePaths* file_paths;
 
 	vector<File> entries;
 
