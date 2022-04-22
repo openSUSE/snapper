@@ -466,13 +466,6 @@ command_delete_comparison(DBus::Connection& conn, const string& config_name, uns
 }
 
 
-int
-operator<(const XFile& lhs, const XFile& rhs)
-{
-    return File::cmp_lt(lhs.name, rhs.name);
-}
-
-
 vector<XFile>
 command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned int number1,
 		   unsigned int number2)
@@ -488,8 +481,6 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
 
     DBus::Hihi hihi(reply);
     hihi >> files;
-
-    sort(files.begin(), files.end());
 
     return files;
 }
@@ -553,7 +544,6 @@ command_get_xfiles_by_pipe(DBus::Connection& conn, const string& config_name, un
     if (fclose(fin) != 0)
 	SN_THROW(IOErrorException("reading pipe failed, fclose failed: " + stringerror(errno)));
 
-    sort(files.begin(), files.end());
 
     return files;
 }

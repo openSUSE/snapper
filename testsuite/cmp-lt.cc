@@ -26,13 +26,18 @@ namespace std
     }
 }
 
+namespace snapper
+{
+    bool cmp_lt(const string& lhs, const string& rhs);
+}
+
 
 BOOST_AUTO_TEST_CASE(test1)
 {
     std::locale::global(std::locale("C"));
 
     vector<string> v = { "A", "B", "b", "a" };
-    sort(v.begin(), v.end(), File::cmp_lt);
+    sort(v.begin(), v.end(), cmp_lt);
 
     BOOST_CHECK_EQUAL(v, vector<string>({ "A", "B", "a", "b" }));
 }
@@ -43,7 +48,7 @@ BOOST_AUTO_TEST_CASE(test2)
     std::locale::global(std::locale("en_US.UTF-8"));
 
     vector<string> v = { "A", "B", "b", "a" };
-    sort(v.begin(), v.end(), File::cmp_lt);
+    sort(v.begin(), v.end(), cmp_lt);
 
     BOOST_CHECK_EQUAL(v, vector<string>({ "a", "A", "b", "B" }));
 }
@@ -54,7 +59,7 @@ BOOST_AUTO_TEST_CASE(test3)
     std::locale::global(std::locale("de_DE.UTF-8"));
 
     vector<string> v = { "a", "b", "ä" };
-    sort(v.begin(), v.end(), File::cmp_lt);
+    sort(v.begin(), v.end(), cmp_lt);
 
     BOOST_CHECK_EQUAL(v, vector<string>({ "a", "ä", "b" }));
 }
@@ -65,7 +70,7 @@ BOOST_AUTO_TEST_CASE(test4)
     std::locale::global(std::locale("en_US.UTF-8"));
 
     vector<string> v = { "a", "\344" }; // invalid UTF-8
-    sort(v.begin(), v.end(), File::cmp_lt);
+    sort(v.begin(), v.end(), cmp_lt);
 
     BOOST_CHECK_EQUAL(v, vector<string>({ "\344", "a" }));
 }
