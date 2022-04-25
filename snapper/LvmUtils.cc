@@ -41,7 +41,7 @@ namespace snapper
 	    std::smatch match;
 
 	    if (!regex_match(name, match, rx))
-		throw std::runtime_error("faild to split device name into volume group and "
+		throw std::runtime_error("failed to split device name into volume group and "
 					 "logical volume name");
 
 	    string vg_name = boost::replace_all_copy(match[1].str(), "--", "-");
