@@ -48,6 +48,9 @@ namespace snapper
 
 	    case Compression::GZIP:
 		return true;
+
+	    case Compression::ZSTD:
+		return false;
 	}
 
 	return false;
@@ -64,6 +67,9 @@ namespace snapper
 
 	    case Compression::GZIP:
 		return name + ".gz";
+
+	    case Compression::ZSTD:
+		return name + ".zst";
 	}
 
 	SN_THROW(LogicErrorException("unknown or unsupported compression"));
@@ -77,6 +83,7 @@ namespace snapper
 
 	class None;
 	class Gzip;
+	class Zstd;
 
 	template <typename T>
 	static std::unique_ptr<AsciiFileReader::Impl> factory(T t, Compression compression);
@@ -362,6 +369,9 @@ namespace snapper
 
 	    case Compression::GZIP:
 		return unique_ptr<Impl::Gzip>(new Impl::Gzip(t));
+
+	    case Compression::ZSTD:
+		break;
 	}
 
 	SN_THROW(LogicErrorException("unknown or unsupported compression"));
@@ -412,6 +422,7 @@ namespace snapper
 
 	class None;
 	class Gzip;
+	class Zstd;
 
 	template <typename T>
 	static std::unique_ptr<AsciiFileWriter::Impl> factory(T t, Compression compression);
@@ -662,6 +673,176 @@ namespace snapper
     }
 
 
+#if 0
+
+    // Needs libzstd >= 1.4. So unfortunately currently not suitable.
+
+    class AsciiFileWriter::Impl::Zstd : public AsciiFileWriter::Impl
+    {
+    public:
+
+	Zstd(int fd);
+	Zstd(FILE* fout);
+	Zstd(const string& name);
+
+	virtual ~Zstd();
+
+	virtual void write_line(const string& line) override;
+
+	virtual void close() override;
+
+    private:
+
+	Zstd();
+
+	FILE* fout = nullptr;
+
+	ZSTD_CCtx* cctx = nullptr;
+
+	vector<char> in_buffer;
+	size_t in_buffer_fill = 0;		// position to which in_buffer is filled
+
+	vector<char> out_buffer;
+
+	void write_buffer(bool last);
+
+    };
+
+
+    AsciiFileWriter::Impl::Zstd::Zstd()
+    {
+	cctx = ZSTD_createCCtx();
+	if (!cctx)
+	    SN_THROW(Exception("ZSTD_createCCtx failed"));
+
+	size_t r1 = ZSTD_CCtx_setParameter(cctx, ZSTD_c_compressionLevel, 8);
+	if (ZSTD_isError(r1))
+	    SN_THROW(Exception("ZSTD_CCtx_setParameter with ZSTD_c_compressionLevel failed"));
+
+	size_t r2 = ZSTD_CCtx_setParameter(cctx, ZSTD_c_checksumFlag, 1);
+	if (ZSTD_isError(r2))
+	    SN_THROW(Exception("ZSTD_CCtx_setParameter with ZSTD_c_checksumFlag failed"));
+
+	in_buffer.resize(ZSTD_CStreamInSize());
+	out_buffer.resize(ZSTD_CStreamOutSize());
+    }
+
+
+    AsciiFileWriter::Impl::Zstd::Zstd(int fd)
+	: Zstd()
+    {
+	fout = fdopen(fd, "w");
+	if (!fout)
+	    SN_THROW(IOErrorException(sformat("fdopen failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+    }
+
+
+    AsciiFileWriter::Impl::Zstd::Zstd(FILE* fout)
+	: Zstd()
+    {
+	Zstd::fout = fout;
+    }
+
+
+    AsciiFileWriter::Impl::Zstd::Zstd(const string& name)
+	: Zstd()
+    {
+	fout = fopen(name.c_str(), "we");
+	if (!fout)
+	    SN_THROW(IOErrorException(sformat("fopen failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+    }
+
+
+    AsciiFileWriter::Impl::Zstd::~Zstd()
+    {
+	try
+	{
+	    close();
+	}
+	catch (const Exception& e)
+	{
+	    SN_CAUGHT(e);
+
+	    y2err("exception ignored");
+	}
+
+	ZSTD_freeCCtx(cctx);
+    }
+
+
+    void
+    AsciiFileWriter::Impl::Zstd::close()
+    {
+	if (!fout)
+	    return;
+
+	write_buffer(true);
+
+	FILE* tmp = fout;
+	fout = nullptr;
+
+	if (fclose(tmp) != 0)
+	    SN_THROW(IOErrorException(sformat("fclose failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
+    }
+
+
+    void
+    AsciiFileWriter::Impl::Zstd::write_buffer(bool last)
+    {
+	ZSTD_EndDirective mode = last ? ZSTD_e_end : ZSTD_e_continue;
+
+	ZSTD_inBuffer input = { in_buffer.data(), in_buffer_fill, 0 };
+
+	while (true)
+        {
+	    ZSTD_outBuffer output = { out_buffer.data(), out_buffer.size(), 0 };
+
+	    size_t remaining = ZSTD_compressStream2(cctx, &output, &input, mode);
+	    if (ZSTD_isError(remaining))
+		SN_THROW(Exception("ZSTD_compressStream2 failed"));
+
+	    size_t written = fwrite(output.dst, 1, output.pos, fout);
+	    if (written != output.pos)
+		SN_THROW(IOErrorException(""));
+
+	    if (last ? (remaining == 0) : (input.pos == input.size))
+                break;
+	}
+
+	in_buffer_fill = 0;
+    }
+
+
+    void
+    AsciiFileWriter::Impl::Zstd::write_line(const string& line)
+    {
+	string tmp = line + "\n";
+
+	while (!tmp.empty())
+	{
+	    // still available in input buffer
+	    size_t in_avail = in_buffer.size() - in_buffer_fill;
+
+	    // how much to copy into input buffer
+	    size_t to_copy = min(in_avail, tmp.size());
+
+	    // copy into input buffer and erase in tmp
+	    memcpy(in_buffer.data() + in_buffer_fill, tmp.data(), to_copy);
+	    in_buffer_fill += to_copy;
+	    tmp.erase(0, to_copy);
+
+	    // if input buffer is full, compress it and write to disk
+	    if (in_buffer_fill == in_buffer.size())
+		write_buffer(false);
+	}
+    }
+
+#endif
+
+
     template <typename T>
     std::unique_ptr<AsciiFileWriter::Impl>
     AsciiFileWriter::Impl::factory(T t, Compression compression)
@@ -673,6 +854,9 @@ namespace snapper
 
 	    case Compression::GZIP:
 		return unique_ptr<Impl::Gzip>(new Impl::Gzip(t));
+
+	    case Compression::ZSTD:
+		break;
 	}
 
 	SN_THROW(LogicErrorException("unknown or unsupported compression"));
