@@ -40,7 +40,7 @@ namespace snapper
     using std::map;
 
 
-    enum class Compression { NONE, GZIP };
+    enum class Compression { NONE, GZIP, ZSTD };
 
 
     bool

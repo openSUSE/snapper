@@ -1025,6 +1025,8 @@ namespace snapper
 		compression = Compression::NONE;
 	    else if (tmp == "gzip")
 		compression = Compression::GZIP;
+	    else if (tmp == "zstd")
+		compression = Compression::ZSTD;
 	}
 
 	if (!is_available(compression))
