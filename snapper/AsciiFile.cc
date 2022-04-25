@@ -530,7 +530,7 @@ namespace snapper
 	gzFile gz_file = nullptr;
 
 	vector<char> buffer;
-	size_t buffer_fill = 0;		// position to which the buffer is full
+	size_t buffer_fill = 0;		// position to which the buffer is filled
 
 	void write_buffer();
 
@@ -644,18 +644,18 @@ namespace snapper
 
 	while (!tmp.empty())
 	{
-	    // still available in input buffer
-	    size_t in_avail = buffer.size() - buffer_fill;
+	    // still available in buffer
+	    size_t avail = buffer.size() - buffer_fill;
 
-	    // how much to copy into input buffer
-	    size_t to_copy = min(in_avail, tmp.size());
+	    // how much to copy into buffer
+	    size_t to_copy = min(avail, tmp.size());
 
-	    // copy into input buffer and erase in tmp
+	    // copy into buffer and erase in tmp
 	    memcpy(buffer.data() + buffer_fill, tmp.data(), to_copy);
 	    buffer_fill += to_copy;
 	    tmp.erase(0, to_copy);
 
-	    // if input buffer is full, compress it and write to disk
+	    // if buffer is full, compress it and write to disk
 	    if (buffer_fill == buffer.size())
 		write_buffer();
 	}
