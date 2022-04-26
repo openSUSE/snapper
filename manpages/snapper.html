@@ -170,11 +170,13 @@
           <p>Some files keep state information of the system,
       e.g. <code class="filename">/etc/mtab</code>. Such files should never be
       reverted. To help users, snapper allows one to ignore these files.</p>
-          <p>Each line in all
-      files <code class="filename">/etc/snapper/filters/*.txt</code> specifies a
-      pattern. When snapper computes the difference between two snapshots it
-      ignores all files and directories matching any of those patterns by
-      using
+          <p>Filters are read from the files
+      <code class="filename">/etc/snapper/filters/*.txt</code> and
+      <code class="filename">/usr/share/snapper/filters/*.txt</code>, where
+      for files with the same name the former location has precedence.
+      Each line in those files specifies a pattern. When snapper
+      computes the difference between two snapshots it ignores all
+      files and directories matching any of those patterns by using
       <span class="citerefentry"><span class="refentrytitle">fnmatch</span>(3)</span>
       with the flag FNM_LEADING_DIR.</p>
           <p>Note that filters do not exclude files or directories from being
@@ -250,8 +252,8 @@
             </dt>
             <dd>
               <p>Sets CSV output format. See
-                <a class="link" href="https://tools.ietf.org/html/rfc4180" title="RFC 4180">RFC 4180</a>
-                for the details, except lines end with a LF, not CR+LF.</p>
+	  <a class="link" href="https://tools.ietf.org/html/rfc4180" target="_top">RFC 4180</a>
+	  for the details, except lines end with a LF, not CR+LF.</p>
             </dd>
             <dt>
               <span class="term">
@@ -466,8 +468,9 @@
                   </dt>
                   <dd>
                     <p>Select columns to show separated by comma.</p>
-                    <p>Possible columns are: config, subvolume, number, default, active, date, user,
-                      used-space, cleanup, description, userdata, pre-number, post-number, post-date.</p>
+                    <p>Possible columns are: config, subvolume, number, default, active,
+		date, user, used-space, cleanup, description, userdata, pre-number, post-number,
+		post-date.</p>
                   </dd>
                 </dl>
               </div>
@@ -964,11 +967,27 @@
             </dd>
             <dt>
               <span class="term">
+                <code class="filename">/usr/share/snapper/config-templates</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Fallback directory containing configuration templates.</p>
+            </dd>
+            <dt>
+              <span class="term">
                 <code class="filename">/etc/snapper/filters/*.txt</code>
               </span>
             </dt>
             <dd>
               <p>Filter files.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="filename">/usr/share/snapper/filters/*.txt</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Fallback filter files.</p>
             </dd>
             <dt>
               <span class="term">
