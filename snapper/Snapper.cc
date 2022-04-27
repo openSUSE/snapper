@@ -82,6 +82,8 @@ namespace snapper
 	}
 	catch (const InvalidKeyException& e)
 	{
+	    SN_CAUGHT(e);
+
 	    SN_THROW(InvalidConfigdataException());
 	}
     }
@@ -111,6 +113,8 @@ namespace snapper
 	}
 	catch (const FileNotFoundException& e)
 	{
+	    SN_CAUGHT(e);
+
 	    SN_THROW(ConfigNotFoundException());
 	}
 
@@ -145,6 +149,7 @@ namespace snapper
 	    }
 	    catch (const UmountSnapshotFailedException& e)
 	    {
+		SN_CAUGHT(e);
 	    }
 	}
 
@@ -310,16 +315,22 @@ namespace snapper
 		}
 		catch (const FileNotFoundException& e)
 		{
+		    SN_CAUGHT(e);
+
 		    y2err("config '" << *it << "' not found");
 		}
 		catch (const InvalidConfigException& e)
 		{
+		    SN_CAUGHT(e);
+
 		    y2err("config '" << *it << "' is invalid");
 		}
 	    }
 	}
 	catch (const FileNotFoundException& e)
 	{
+	    SN_CAUGHT(e);
+
 	    SN_THROW(ListConfigsFailedException("sysconfig-file not found"));
 	}
 
@@ -374,10 +385,14 @@ namespace snapper
 	}
 	catch (const InvalidConfigException& e)
 	{
+	    SN_CAUGHT(e);
+
 	    SN_THROW(CreateConfigFailedException("invalid filesystem type"));
 	}
 	catch (const ProgramNotInstalledException& e)
 	{
+	    SN_CAUGHT(e);
+
 	    SN_THROW(CreateConfigFailedException(e.what()));
 	}
 
@@ -396,6 +411,8 @@ namespace snapper
 	}
 	catch (const FileNotFoundException& e)
 	{
+	    SN_CAUGHT(e);
+
 	    SN_THROW(CreateConfigFailedException("sysconfig-file not found"));
 	}
 
@@ -410,6 +427,8 @@ namespace snapper
 	}
 	catch (const FileNotFoundException& e)
 	{
+	    SN_CAUGHT(e);
+
 	    SN_THROW(CreateConfigFailedException("modifying config failed"));
 	}
 
@@ -465,6 +484,8 @@ namespace snapper
 	    }
 	    catch (const DeleteSnapshotFailedException& e)
 	    {
+		SN_CAUGHT(e);
+
 		// ignore, Filesystem->deleteConfig will fail anyway
 	    }
 	}
@@ -475,6 +496,8 @@ namespace snapper
 	}
 	catch (const DeleteConfigFailedException& e)
 	{
+	    SN_CAUGHT(e);
+
 	    SN_THROW(DeleteConfigFailedException("deleting snapshot failed"));
 	}
 
@@ -495,6 +518,8 @@ namespace snapper
 	}
 	catch (const FileNotFoundException& e)
 	{
+	    SN_CAUGHT(e);
+
 	    SN_THROW(DeleteConfigFailedException("sysconfig-file not found"));
 	}
     }

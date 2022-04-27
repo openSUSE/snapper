@@ -866,7 +866,8 @@ namespace snapper
 	: base_dir(base_dir), name(name_template)
     {
 	if (!base_dir.mkdtemp(name))
-	    throw runtime_error_with_errno("mkdtemp failed", errno);
+	    SN_THROW(IOErrorException(sformat("mkdtmp failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
     }
 
 
@@ -891,7 +892,8 @@ namespace snapper
     {
 	SDir subdir(base_dir, name);
 	if (!subdir.mount(device, mount_type, mount_flags, mount_data))
-	    throw runtime_error_with_errno("mount failed", errno);
+	    SN_THROW(IOErrorException(sformat("mount failed errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
     }
 
 
