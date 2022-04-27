@@ -210,6 +210,9 @@ namespace snapper
 	    {
 		SDir info_dir(infos_dir, *it1);
 		int fd = info_dir.open("info.xml", O_NOFOLLOW | O_CLOEXEC);
+		if (fd < 0)
+		    SN_THROW(IOErrorException("open info.xml failed"));
+
 		XmlFile file(fd, "");
 
 		const xmlNode* node = file.getRootElement();
@@ -272,8 +275,10 @@ namespace snapper
 
 		entries.push_back(snapshot);
 	    }
-	    catch (const IOErrorException& e)
+	    catch (const Exception& e)
 	    {
+		SN_CAUGHT(e);
+
 		y2err("loading " << *it1 << " failed");
 	    }
 	}
@@ -370,6 +375,8 @@ namespace snapper
 	}
 	catch (const IOErrorException& e)
 	{
+	    SN_CAUGHT(e);
+
 	    y2err("reading failed");
 	}
 
@@ -496,12 +503,29 @@ namespace snapper
 
 	SDir info_dir = openInfoDir();
 
-	xml.save(info_dir.mktemp(tmp_name));
+	int fd = info_dir.mktemp(tmp_name);
+	if (fd < 0)
+	    SN_THROW(IOErrorException("mktemp failed"));
+
+	try
+	{
+	    xml.save(fd);
+	}
+	catch (const Exception& e)
+	{
+	    SN_CAUGHT(e);
+
+	    info_dir.unlink(tmp_name, 0);
+
+	    SN_RETHROW(e);
+	}
 
 	if (info_dir.rename(tmp_name, file_name) != 0)
+	{
 	    SN_THROW(IOErrorException(sformat("rename info.xml failed infoDir:%s errno:%d (%s)",
 					      info_dir.fullname().c_str(), errno,
 					      stringerror(errno).c_str())));
+	}
 
 	info_dir.fsync();
     }

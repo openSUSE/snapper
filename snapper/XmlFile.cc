@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2010-2012] Novell, Inc.
- * Copyright (c) 2020 SUSE LLC
+ * Copyright (c) [2020-2022] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -35,7 +35,7 @@ namespace snapper
 	: doc(xmlNewDoc((const xmlChar*) "1.0"))
     {
 	if (!doc)
-	    throw BadAllocException();
+	    SN_THROW(BadAllocException());
     }
 
 
@@ -45,7 +45,7 @@ namespace snapper
 	close(fd);
 
 	if (!doc)
-	    throw IOErrorException("xmlReadFd failed");
+	    SN_THROW(IOErrorException("xmlReadFd failed"));
     }
 
 
@@ -53,7 +53,7 @@ namespace snapper
 	: doc(xmlReadFile(filename.c_str(), NULL, XML_PARSE_NOBLANKS | XML_PARSE_NONET))
     {
 	if (!doc)
-	    throw IOErrorException("xmlReadFile failed");
+	    SN_THROW(IOErrorException("xmlReadFile failed"));
     }
 
 
@@ -69,17 +69,22 @@ namespace snapper
     {
 	FILE* f = fdopen(fd, "w");
 	if (!f)
-	    throw IOErrorException("fdopen");
+	{
+	    close(fd);
+	    SN_THROW(IOErrorException("fdopen"));
+	}
 
 	if (xmlDocFormatDump(f, doc, 1) == -1)
 	{
 	    fclose(f);
-	    throw IOErrorException("xmlDocFormatDump failed");
+	    SN_THROW(IOErrorException("xmlDocFormatDump failed"));
 	}
 
 	fflush(f);
 	fsync(fileno(f));
-	fclose(f);
+
+	if (fclose(f) != 0)
+	    SN_THROW(IOErrorException("fclose failed"));
     }
 
 
@@ -87,7 +92,7 @@ namespace snapper
     XmlFile::save(const string& filename)
     {
 	if (xmlSaveFormatFile(filename.c_str(), doc, 1) == -1)
-	    throw IOErrorException("xmlSaveFormatFile failed");
+	    SN_THROW(IOErrorException("xmlSaveFormatFile failed"));
     }
 
 
