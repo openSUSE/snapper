@@ -111,7 +111,7 @@
       <title>Cleanup Algorithms</title>
 
       <para>Snapper provides several algorithms to clean up old snapshots. The
-      algorithms are executed in a daily cron-job. This can be configured in the
+      algorithms are executed in a daily cronjob or systemd timer. This can be configured in the
       corresponding configurations files along with parameters for every
       algorithm.</para>
 
