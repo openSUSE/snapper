@@ -98,7 +98,7 @@
       <para>Next to manual snapshot creation, snapshots are also created automatically.</para>
       <itemizedlist>
 	<listitem>
-	  <para>A systemd timer creates hourly snapshots, if TIMELINE_CREATE is enabled for a config.</para>
+	  <para>A cronjob or systemd timer creates hourly snapshots, if TIMELINE_CREATE is enabled for a config.</para>
 	</listitem>
 	<listitem>
 	  <para>Certain programs like YaST and zypper create pre/post
