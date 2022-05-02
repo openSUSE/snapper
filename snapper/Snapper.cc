@@ -408,6 +408,8 @@ namespace snapper
 
 	    config_names.push_back(config_name);
 	    sysconfig.set_value("SNAPPER_CONFIGS", config_names);
+
+	    sysconfig.save();
 	}
 	catch (const FileNotFoundException& e)
 	{
@@ -424,6 +426,8 @@ namespace snapper
 
 	    config.set_value(KEY_SUBVOLUME, subvolume);
 	    config.set_value(KEY_FSTYPE, filesystem->fstype());
+
+	    config.save();
 	}
 	catch (const FileNotFoundException& e)
 	{
@@ -446,6 +450,8 @@ namespace snapper
 	    config_names.erase(remove(config_names.begin(), config_names.end(), config_name),
 			       config_names.end());
 	    sysconfig.set_value("SNAPPER_CONFIGS", config_names);
+
+	    sysconfig.save();
 
 	    SystemCmd cmd(RMBIN " " + quote(CONFIGS_DIR "/" + config_name));
 
@@ -515,6 +521,8 @@ namespace snapper
 	    config_names.erase(remove(config_names.begin(), config_names.end(), config_name),
 			       config_names.end());
 	    sysconfig.set_value("SNAPPER_CONFIGS", config_names);
+
+	    sysconfig.save();
 	}
 	catch (const FileNotFoundException& e)
 	{

@@ -125,7 +125,7 @@ namespace snapper
     {
 	fin = fdopen(fd, "r");
 	if (!fin)
-	    SN_THROW(IOErrorException(sformat("fdopen failed errno:%d (%s)", errno,
+	    SN_THROW(IOErrorException(sformat("fdopen failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
     }
 
@@ -140,8 +140,8 @@ namespace snapper
     {
 	fin = fopen(name.c_str(), "re");
 	if (!fin)
-	    SN_THROW(IOErrorException(sformat("fopen failed errno:%d (%s)", errno,
-					      stringerror(errno).c_str())));
+	    SN_THROW(IOErrorException(sformat("fopen '%s' for reading failed, errno:%d (%s)",
+					      name.c_str(), errno, stringerror(errno).c_str())));
     }
 
 
@@ -188,7 +188,7 @@ namespace snapper
 	fin = nullptr;
 
 	if (fclose(tmp) != 0)
-	    SN_THROW(IOErrorException(sformat("fclose failed errno:%d (%s)", errno,
+	    SN_THROW(IOErrorException(sformat("fclose failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
     }
 
@@ -233,7 +233,7 @@ namespace snapper
     {
 	gz_file = gzdopen(fd, "r");
 	if (!gz_file)
-	    SN_THROW(IOErrorException(sformat("gzdopen failed errno:%d (%s)", errno,
+	    SN_THROW(IOErrorException(sformat("gzdopen failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
     }
 
@@ -243,17 +243,17 @@ namespace snapper
     {
 	int fd = fileno(fin);
 	if (fd < 0)
-	    SN_THROW(IOErrorException(sformat("fileno failed errno:%d (%s)", errno,
+	    SN_THROW(IOErrorException(sformat("fileno failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
 
 	fd = dup(fd);
 	if (fd < 0)
-	    SN_THROW(IOErrorException(sformat("dup failed errno:%d (%s)", errno,
+	    SN_THROW(IOErrorException(sformat("dup failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
 
 	gz_file = gzdopen(fd, "r");
 	if (!gz_file)
-	    SN_THROW(IOErrorException(sformat("gzdopen failed errno:%d (%s)", errno,
+	    SN_THROW(IOErrorException(sformat("gzdopen failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
 
 	fclose(fin);
@@ -265,12 +265,12 @@ namespace snapper
     {
 	int fd = open(name.c_str(), O_RDONLY | O_CLOEXEC | O_LARGEFILE);
 	if (fd < 0)
-	    SN_THROW(IOErrorException(sformat("open failed errno:%d (%s)", errno,
-					      stringerror(errno).c_str())));
+	    SN_THROW(IOErrorException(sformat("open '%s' for reading failed, errno:%d (%s)",
+					      name.c_str(), errno, stringerror(errno).c_str())));
 
 	gz_file = gzdopen(fd, "r");
 	if (!gz_file)
-	    SN_THROW(IOErrorException(sformat("gzdopen failed errno:%d (%s)", errno,
+	    SN_THROW(IOErrorException(sformat("gzdopen failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
     }
 
@@ -301,7 +301,7 @@ namespace snapper
 
 	int r = gzclose(tmp);
 	if (r != Z_OK)
-	    SN_THROW(IOErrorException(sformat("gzclose failed errnum:%d", r)));
+	    SN_THROW(IOErrorException(sformat("gzclose failed, errnum:%d", r)));
     }
 
 
@@ -316,7 +316,7 @@ namespace snapper
 
 	    int errnum = 0;
 	    const char* msg = gzerror(gz_file, &errnum);
-	    SN_THROW(IOErrorException(sformat("gzread failed errno:%d (%s)", errnum, msg)));
+	    SN_THROW(IOErrorException(sformat("gzread failed, errnum:%d (%s)", errnum, msg)));
 	}
 
 	buffer_read = 0;
@@ -461,7 +461,7 @@ namespace snapper
     {
 	fout = fdopen(fd, "w");
 	if (!fout)
-	    SN_THROW(IOErrorException(sformat("fdopen failed errno:%d (%s)", errno,
+	    SN_THROW(IOErrorException(sformat("fdopen failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
     }
 
@@ -476,8 +476,8 @@ namespace snapper
     {
 	fout = fopen(name.c_str(), "we");
 	if (!fout)
-	    SN_THROW(IOErrorException(sformat("fopen failed errno:%d (%s)", errno,
-					      stringerror(errno).c_str())));
+	    SN_THROW(IOErrorException(sformat("fopen '%s' for writing failed, errno:%d (%s)",
+					      name.c_str(), errno, stringerror(errno).c_str())));
     }
 
 
@@ -500,7 +500,7 @@ namespace snapper
     AsciiFileWriter::Impl::None::write_line(const string& line)
     {
 	if (fprintf(fout, "%s\n", line.c_str()) != (int)(line.size() + 1))
-	    SN_THROW(IOErrorException(sformat("fprintf failed errno:%d (%s)", errno,
+	    SN_THROW(IOErrorException(sformat("fprintf failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
     }
 
@@ -515,7 +515,7 @@ namespace snapper
 	fout = nullptr;
 
 	if (fclose(tmp) != 0)
-	    SN_THROW(IOErrorException(sformat("fclose failed errno:%d (%s)", errno,
+	    SN_THROW(IOErrorException(sformat("fclose failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
     }
 
@@ -559,7 +559,7 @@ namespace snapper
     {
 	gz_file = gzdopen(fd, "w");
 	if (!gz_file)
-	    SN_THROW(IOErrorException(sformat("gzdopen failed errno:%d (%s)", errno,
+	    SN_THROW(IOErrorException(sformat("gzdopen failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
     }
 
@@ -569,17 +569,17 @@ namespace snapper
     {
 	int fd = fileno(fout);
 	if (fd < 0)
-	    SN_THROW(IOErrorException(sformat("fileno failed errno:%d (%s)", errno,
+	    SN_THROW(IOErrorException(sformat("fileno failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
 
 	fd = dup(fd);
 	if (fd < 0)
-	    SN_THROW(IOErrorException(sformat("dup failed errno:%d (%s)", errno,
+	    SN_THROW(IOErrorException(sformat("dup failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
 
 	gz_file = gzdopen(fd, "w");
 	if (!gz_file)
-	    SN_THROW(IOErrorException(sformat("gzdopen failed errno:%d (%s)", errno,
+	    SN_THROW(IOErrorException(sformat("gzdopen failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
 
 	fclose(fout);
@@ -591,12 +591,12 @@ namespace snapper
     {
 	int fd = open(name.c_str(), O_WRONLY | O_CREAT | O_TRUNC | O_CLOEXEC | O_LARGEFILE, 0666);
 	if (fd < 0)
-	    SN_THROW(IOErrorException(sformat("open failed errno:%d (%s)", errno,
-					      stringerror(errno).c_str())));
+	    SN_THROW(IOErrorException(sformat("open '%s' for writing failed, errno:%d (%s)",
+					      name.c_str(), errno, stringerror(errno).c_str())));
 
 	gz_file = gzdopen(fd, "w");
 	if (!gz_file)
-	    SN_THROW(IOErrorException(sformat("gzdopen failed errno:%d (%s)", errno,
+	    SN_THROW(IOErrorException(sformat("gzdopen failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
     }
 
@@ -629,19 +629,22 @@ namespace snapper
 
 	int r = gzclose(tmp);
 	if (r != Z_OK)
-	    SN_THROW(IOErrorException(sformat("gzclose failed errnum:%d", r)));
+	    SN_THROW(IOErrorException(sformat("gzclose failed, errnum:%d", r)));
     }
 
 
     void
     AsciiFileWriter::Impl::Gzip::write_buffer()
     {
+	if (buffer_fill == 0)
+	    return;
+
 	int r = gzwrite(gz_file, buffer.data(), buffer_fill);
-	if (r <= 0)
+	if (r < (int)(buffer_fill))
 	{
 	    int errnum = 0;
 	    const char* msg = gzerror(gz_file, &errnum);
-	    SN_THROW(IOErrorException(sformat("gzwrite failed errno:%d (%s)", errnum, msg)));
+	    SN_THROW(IOErrorException(sformat("gzwrite failed, errnum:%d (%s)", errnum, msg)));
 	}
 
 	buffer_fill = 0;
@@ -733,7 +736,7 @@ namespace snapper
     {
 	fout = fdopen(fd, "w");
 	if (!fout)
-	    SN_THROW(IOErrorException(sformat("fdopen failed errno:%d (%s)", errno,
+	    SN_THROW(IOErrorException(sformat("fdopen failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
     }
 
@@ -750,8 +753,8 @@ namespace snapper
     {
 	fout = fopen(name.c_str(), "we");
 	if (!fout)
-	    SN_THROW(IOErrorException(sformat("fopen failed errno:%d (%s)", errno,
-					      stringerror(errno).c_str())));
+	    SN_THROW(IOErrorException(sformat("fopen '%s' for writing failed, errno:%d (%s)",
+					      name.c_str(), errno, stringerror(errno).c_str())));
     }
 
 
@@ -784,7 +787,7 @@ namespace snapper
 	fout = nullptr;
 
 	if (fclose(tmp) != 0)
-	    SN_THROW(IOErrorException(sformat("fclose failed errno:%d (%s)", errno,
+	    SN_THROW(IOErrorException(sformat("fclose failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
     }
 
@@ -941,7 +944,7 @@ namespace snapper
 		return;
 
 	    if (unlink(name.c_str()) != 0)
-		SN_THROW(IOErrorException(sformat("unlink failed errno:%d (%s)", errno,
+		SN_THROW(IOErrorException(sformat("unlink failed, errno:%d (%s)", errno,
 						  stringerror(errno).c_str())));
 	}
 	else
