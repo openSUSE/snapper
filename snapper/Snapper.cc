@@ -111,7 +111,7 @@ namespace snapper
 	{
 	    config_info = new ConfigInfo(config_name, root_prefix);
 	}
-	catch (const FileNotFoundException& e)
+	catch (const Exception& e)
 	{
 	    SN_CAUGHT(e);
 
@@ -307,31 +307,25 @@ namespace snapper
 	    vector<string> config_names;
 	    sysconfig.get_value("SNAPPER_CONFIGS", config_names);
 
-	    for (vector<string>::const_iterator it = config_names.begin(); it != config_names.end(); ++it)
+	    for (const string& config_name : config_names)
 	    {
 		try
 		{
-		    config_infos.push_back(getConfig(*it, root_prefix));
+		    config_infos.push_back(getConfig(config_name, root_prefix));
 		}
-		catch (const FileNotFoundException& e)
+		catch (const Exception& e)
 		{
 		    SN_CAUGHT(e);
 
-		    y2err("config '" << *it << "' not found");
-		}
-		catch (const InvalidConfigException& e)
-		{
-		    SN_CAUGHT(e);
-
-		    y2err("config '" << *it << "' is invalid");
+		    y2err("reading config '" << config_name << "' failed");
 		}
 	    }
 	}
-	catch (const FileNotFoundException& e)
+	catch (const Exception& e)
 	{
 	    SN_CAUGHT(e);
 
-	    SN_THROW(ListConfigsFailedException("sysconfig-file not found"));
+	    SN_THROW(ListConfigsFailedException("reading sysconfig-file failed"));
 	}
 
 	return config_infos;
@@ -411,7 +405,7 @@ namespace snapper
 
 	    sysconfig.save();
 	}
-	catch (const FileNotFoundException& e)
+	catch (const Exception& e)
 	{
 	    SN_CAUGHT(e);
 
@@ -429,7 +423,7 @@ namespace snapper
 
 	    config.save();
 	}
-	catch (const FileNotFoundException& e)
+	catch (const Exception& e)
 	{
 	    SN_CAUGHT(e);
 
@@ -524,11 +518,11 @@ namespace snapper
 
 	    sysconfig.save();
 	}
-	catch (const FileNotFoundException& e)
+	catch (const Exception& e)
 	{
 	    SN_CAUGHT(e);
 
-	    SN_THROW(DeleteConfigFailedException("sysconfig-file not found"));
+	    SN_THROW(DeleteConfigFailedException("modifying sysconfig-file failed"));
 	}
     }
 

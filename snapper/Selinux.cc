@@ -32,9 +32,12 @@
 namespace snapper
 {
 
+    using std::map;
+
+
     SnapperContexts::SnapperContexts()
     {
-	std::map<string,string> snapperd_contexts;
+	map<string, string> snapperd_contexts;
 
 	try
 	{
@@ -59,13 +62,13 @@ namespace snapper
 		}
 	    }
 	}
-	catch (const FileNotFoundException& e)
+	catch (const Exception& e)
 	{
 	    SN_CAUGHT(e);
 	    SN_THROW(SelinuxException("Failed to parse contexts file"));
 	}
 
-	std::map<string,string>::const_iterator cit = snapperd_contexts.find(selinux_snapperd_data);
+	map<string, string>::const_iterator cit = snapperd_contexts.find(selinux_snapperd_data);
 	if (cit == snapperd_contexts.end())
 	{
 	    SN_THROW(SelinuxException("Snapperd data context not found"));
