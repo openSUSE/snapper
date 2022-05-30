@@ -47,21 +47,21 @@ namespace DBus
     template <> struct TypeInfo<QuotaData> { static const char* signature; };
     template <> struct TypeInfo<FreeSpaceData> { static const char* signature; };
 
-    Hoho& operator<<(Hoho& hoho, const ConfigInfo& data);
+    Marshaller& operator<<(Marshaller& marshaller, const ConfigInfo& data);
 
-    Hihi& operator>>(Hihi& hihi, SnapshotType& data);
-    Hoho& operator<<(Hoho& hoho, SnapshotType data);
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, SnapshotType& data);
+    Marshaller& operator<<(Marshaller& marshaller, SnapshotType data);
 
-    Hoho& operator<<(Hoho& hoho, const Snapshot& data);
+    Marshaller& operator<<(Marshaller& marshaller, const Snapshot& data);
 
-    Hoho& operator<<(Hoho& hoho, const Snapshots& data);
+    Marshaller& operator<<(Marshaller& marshaller, const Snapshots& data);
 
-    Hoho& operator<<(Hoho& hoho, const File& data);
+    Marshaller& operator<<(Marshaller& marshaller, const File& data);
 
-    Hoho& operator<<(Hoho& hoho, const Files& data);
+    Marshaller& operator<<(Marshaller& marshaller, const Files& data);
 
-    Hoho& operator<<(Hoho& hoho, const QuotaData& data);
+    Marshaller& operator<<(Marshaller& marshaller, const QuotaData& data);
 
-    Hoho& operator<<(Hoho& hoho, const FreeSpaceData& data);
+    Marshaller& operator<<(Marshaller& marshaller, const FreeSpaceData& data);
 
 }

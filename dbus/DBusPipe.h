@@ -51,8 +51,8 @@ namespace DBus
     };
 
 
-    Hihi& operator>>(Hihi& hoho, FileDescriptor& data);
-    Hoho& operator<<(Hoho& hoho, const FileDescriptor& data);
+    Unmarshaller& operator>>(Unmarshaller& marshaller, FileDescriptor& data);
+    Marshaller& operator<<(Marshaller& marshaller, const FileDescriptor& data);
 
 
     struct PipeException : public Exception

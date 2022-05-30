@@ -102,17 +102,17 @@ namespace DBus
     template <> struct TypeInfo<XConfigInfo> { static const char* signature; };
     template <> struct TypeInfo<XFile> { static const char* signature; };
 
-    Hihi& operator>>(Hihi& hihi, XConfigInfo& data);
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, XConfigInfo& data);
 
-    Hihi& operator>>(Hihi& hihi, SnapshotType& data);
-    Hoho& operator<<(Hoho& hoho, SnapshotType data);
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, SnapshotType& data);
+    Marshaller& operator<<(Marshaller& marshaller, SnapshotType data);
 
-    Hihi& operator>>(Hihi& hihi, XSnapshot& data);
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, XSnapshot& data);
 
-    Hihi& operator>>(Hihi& hihi, XFile& data);
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, XFile& data);
 
-    Hihi& operator>>(Hihi& hihi, QuotaData& data);
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, QuotaData& data);
 
-    Hihi& operator>>(Hihi& hihi, FreeSpaceData& data);
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, FreeSpaceData& data);
 
 }

@@ -390,8 +390,8 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
-    hoho << introspect;
+    DBus::Marshaller marshaller(reply);
+    marshaller << introspect;
 
     conn.send(reply);
 }
@@ -507,8 +507,8 @@ Client::signal_config_created(DBus::Connection& conn, const string& config_name)
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "ConfigCreated");
 
-    DBus::Hoho hoho(msg);
-    hoho << config_name;
+    DBus::Marshaller marshaller(msg);
+    marshaller << config_name;
 
     conn.send(msg);
 }
@@ -519,8 +519,8 @@ Client::signal_config_modified(DBus::Connection& conn, const string& config_name
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "ConfigModified");
 
-    DBus::Hoho hoho(msg);
-    hoho << config_name;
+    DBus::Marshaller marshaller(msg);
+    marshaller << config_name;
 
     conn.send(msg);
 }
@@ -531,8 +531,8 @@ Client::signal_config_deleted(DBus::Connection& conn, const string& config_name)
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "ConfigDeleted");
 
-    DBus::Hoho hoho(msg);
-    hoho << config_name;
+    DBus::Marshaller marshaller(msg);
+    marshaller << config_name;
 
     conn.send(msg);
 }
@@ -544,8 +544,8 @@ Client::signal_snapshot_created(DBus::Connection& conn, const string& config_nam
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "SnapshotCreated");
 
-    DBus::Hoho hoho(msg);
-    hoho << config_name << num;
+    DBus::Marshaller marshaller(msg);
+    marshaller << config_name << num;
 
     conn.send(msg);
 }
@@ -557,8 +557,8 @@ Client::signal_snapshot_modified(DBus::Connection& conn, const string& config_na
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "SnapshotModified");
 
-    DBus::Hoho hoho(msg);
-    hoho << config_name << num;
+    DBus::Marshaller marshaller(msg);
+    marshaller << config_name << num;
 
     conn.send(msg);
 }
@@ -570,8 +570,8 @@ Client::signal_snapshots_deleted(DBus::Connection& conn, const string& config_na
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "SnapshotsDeleted");
 
-    DBus::Hoho hoho(msg);
-    hoho << config_name << nums;
+    DBus::Marshaller marshaller(msg);
+    marshaller << config_name << nums;
 
     conn.send(msg);
 }
@@ -586,11 +586,11 @@ Client::list_configs(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
-    hoho.open_array(DBus::TypeInfo<ConfigInfo>::signature);
+    DBus::Marshaller marshaller(reply);
+    marshaller.open_array(DBus::TypeInfo<ConfigInfo>::signature);
     for (MetaSnappers::const_iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
-	hoho << it->getConfigInfo();
-    hoho.close_array();
+    marshaller << it->getConfigInfo();
+    marshaller.close_array();
 
     conn.send(reply);
 }
@@ -601,8 +601,8 @@ Client::get_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name;
 
     y2deb("GetConfig config_name:" << config_name);
 
@@ -614,8 +614,8 @@ Client::get_config(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
-    hoho << it->getConfigInfo();
+    DBus::Marshaller marshaller(reply);
+    marshaller << it->getConfigInfo();
 
     conn.send(reply);
 }
@@ -626,9 +626,9 @@ Client::set_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
-    DBus::Hihi hihi(msg);
+    DBus::Unmarshaller unmarshaller(msg);
     map<string, string> raw;
-    hihi >> config_name >> raw;
+    unmarshaller >> config_name >> raw;
 
     y2deb("SetConfig config_name:" << config_name << " raw:" << raw);
 
@@ -656,8 +656,8 @@ Client::create_config(DBus::Connection& conn, DBus::Message& msg)
     string fstype;
     string template_name;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> subvolume >> fstype >> template_name;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> subvolume >> fstype >> template_name;
 
     y2deb("CreateConfig config_name:" << config_name << " subvolume:" << subvolume <<
 	  " fstype:" << fstype << " template_name:" << template_name);
@@ -681,8 +681,8 @@ Client::delete_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name;
 
     y2deb("DeleteConfig config_name:" << config_name);
 
@@ -709,8 +709,8 @@ Client::lock_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name;
 
     y2deb("LockConfig config_name:" << config_name);
 
@@ -733,8 +733,8 @@ Client::unlock_config(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name;
 
     y2deb("UnlockConfig config_name:" << config_name);
 
@@ -757,8 +757,8 @@ Client::list_snapshots(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name;
 
     y2deb("ListSnapshots config_name:" << config_name);
 
@@ -773,8 +773,8 @@ Client::list_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
-    hoho << snapshots;
+    DBus::Marshaller marshaller(reply);
+    marshaller << snapshots;
 
     conn.send(reply);
 }
@@ -786,8 +786,8 @@ Client::list_snapshots_at_time(DBus::Connection& conn, DBus::Message& msg)
     string config_name;
     time_t begin, end;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> begin >> end;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> begin >> end;
 
     y2deb("ListSnapshotsAtTime config_name:" << config_name << " begin:" << begin <<
 	  " end:" << end);
@@ -803,15 +803,15 @@ Client::list_snapshots_at_time(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
+    DBus::Marshaller marshaller(reply);
 
-    hoho.open_array(DBus::TypeInfo<Snapshot>::signature);
+    marshaller.open_array(DBus::TypeInfo<Snapshot>::signature);
     for (Snapshots::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
     {
 	if (it->getDate() >= begin && it->getDate() <= end)
-	    hoho << *it;
+        marshaller << *it;
     }
-    hoho.close_array();
+    marshaller.close_array();
 
     conn.send(reply);
 }
@@ -823,8 +823,8 @@ Client::get_snapshot(DBus::Connection& conn, DBus::Message& msg)
     string config_name;
     dbus_uint32_t num;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> num;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> num;
 
     y2deb("GetSnapshot config_name:" << config_name << " num:" << num);
 
@@ -843,8 +843,8 @@ Client::get_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
-    hoho << *snap;
+    DBus::Marshaller marshaller(reply);
+    marshaller << *snap;
 
     conn.send(reply);
 }
@@ -857,8 +857,8 @@ Client::set_snapshot(DBus::Connection& conn, DBus::Message& msg)
     dbus_uint32_t num;
     SMD smd;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> num >> smd.description >> smd.cleanup >> smd.userdata;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> num >> smd.description >> smd.cleanup >> smd.userdata;
 
     y2deb("SetSnapshot config_name:" << config_name << " num:" << num);
 
@@ -891,8 +891,8 @@ Client::create_single_snapshot(DBus::Connection& conn, DBus::Message& msg)
     string config_name;
     SCD scd;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> scd.description >> scd.cleanup >> scd.userdata;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> scd.description >> scd.cleanup >> scd.userdata;
 
     y2deb("CreateSingleSnapshot config_name:" << config_name << " description:" << scd.description <<
 	  " cleanup:" << scd.cleanup);
@@ -910,8 +910,8 @@ Client::create_single_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
-    hoho << snap1->getNum();
+    DBus::Marshaller marshaller(reply);
+    marshaller << snap1->getNum();
 
     conn.send(reply);
 
@@ -926,8 +926,8 @@ Client::create_single_snapshot_v2(DBus::Connection& conn, DBus::Message& msg)
     unsigned int parent_num;
     SCD scd;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> parent_num >> scd.read_only >> scd.description >> scd.cleanup >> scd.userdata;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> parent_num >> scd.read_only >> scd.description >> scd.cleanup >> scd.userdata;
 
     y2deb("CreateSingleSnapshotV2 config_name:" << config_name << " parent_num:" << parent_num <<
 	  " read_only:" << scd.read_only << " description:" << scd.description << " cleanup:" << scd.cleanup);
@@ -949,8 +949,8 @@ Client::create_single_snapshot_v2(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
-    hoho << snap2->getNum();
+    DBus::Marshaller marshaller(reply);
+    marshaller << snap2->getNum();
 
     conn.send(reply);
 
@@ -964,8 +964,8 @@ Client::create_single_snapshot_of_default(DBus::Connection& conn, DBus::Message&
     string config_name;
     SCD scd;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> scd.read_only >> scd.description >> scd.cleanup >> scd.userdata;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> scd.read_only >> scd.description >> scd.cleanup >> scd.userdata;
 
     y2deb("CreateSingleSnapshotOfDefault config_name:" << config_name << " read_only:" <<
 	  scd.read_only << " description:" << scd.description << " cleanup:" << scd.cleanup);
@@ -983,8 +983,8 @@ Client::create_single_snapshot_of_default(DBus::Connection& conn, DBus::Message&
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
-    hoho << snap->getNum();
+    DBus::Marshaller marshaller(reply);
+    marshaller << snap->getNum();
 
     conn.send(reply);
 
@@ -998,8 +998,8 @@ Client::create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
     string config_name;
     SCD scd;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> scd.description >> scd.cleanup >> scd.userdata;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> scd.description >> scd.cleanup >> scd.userdata;
 
     y2deb("CreatePreSnapshot config_name:" << config_name << " description:" << scd.description <<
 	  " cleanup:" << scd.cleanup);
@@ -1017,8 +1017,8 @@ Client::create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
-    hoho << snap1->getNum();
+    DBus::Marshaller marshaller(reply);
+    marshaller << snap1->getNum();
 
     conn.send(reply);
 
@@ -1033,8 +1033,8 @@ Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
     unsigned int pre_num;
     SCD scd;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> pre_num >> scd.description >> scd.cleanup >> scd.userdata;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> pre_num >> scd.description >> scd.cleanup >> scd.userdata;
 
     y2deb("CreatePostSnapshot config_name:" << config_name << " pre_num:" << pre_num <<
 	  " description:" << scd.description << " cleanup:" << scd.cleanup);
@@ -1060,8 +1060,8 @@ Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
-    hoho << snap2->getNum();
+    DBus::Marshaller marshaller(reply);
+    marshaller << snap2->getNum();
 
     conn.send(reply);
 
@@ -1075,8 +1075,8 @@ Client::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
     string config_name;
     list<dbus_uint32_t> nums;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> nums;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> nums;
 
     y2deb("DeleteSnapshots config_name:" << config_name << " nums:" << nums);
 
@@ -1113,8 +1113,8 @@ Client::get_default_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name;
 
     y2deb("GetDefaultSnapshot config_name:" << config_name);
 
@@ -1131,12 +1131,12 @@ Client::get_default_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
+    DBus::Marshaller marshaller(reply);
 
     if (tmp != snapshots.end())
-	hoho << true << tmp->getNum();
+    marshaller << true << tmp->getNum();
     else
-	hoho << false << (unsigned int)(0);
+    marshaller << false << (unsigned int)(0);
 
     conn.send(reply);
 }
@@ -1147,8 +1147,8 @@ Client::get_active_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name;
 
     y2deb("GetActiveSnapshot config_name:" << config_name);
 
@@ -1165,12 +1165,12 @@ Client::get_active_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
+    DBus::Marshaller marshaller(reply);
 
     if (tmp != snapshots.end())
-	hoho << true << tmp->getNum();
+    marshaller << true << tmp->getNum();
     else
-	hoho << false << (unsigned int)(0);
+    marshaller << false << (unsigned int)(0);
 
     conn.send(reply);
 }
@@ -1181,8 +1181,8 @@ Client::calculate_used_space(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name;
 
     y2deb("CalculateUsedSpace config_name:" << config_name);
 
@@ -1208,8 +1208,8 @@ Client::get_used_space(DBus::Connection& conn, DBus::Message& msg)
     string config_name;
     dbus_uint32_t num;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> num;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> num;
 
     y2deb("GetUsedSpace config_name:" << config_name << " num:" << num);
 
@@ -1231,8 +1231,8 @@ Client::get_used_space(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
-    hoho << used_space;
+    DBus::Marshaller marshaller(reply);
+    marshaller << used_space;
 
     conn.send(reply);
 }
@@ -1245,8 +1245,8 @@ Client::mount_snapshot(DBus::Connection& conn, DBus::Message& msg)
     dbus_uint32_t num;
     bool user_request;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> num >> user_request;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> num >> user_request;
 
     y2deb("MountSnapshot config_name:" << config_name << " num:" << num <<
 	  " user_request:" << user_request);
@@ -1273,8 +1273,8 @@ Client::mount_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
-    hoho << mount_point;
+    DBus::Marshaller marshaller(reply);
+    marshaller << mount_point;
 
     conn.send(reply);
 }
@@ -1287,8 +1287,8 @@ Client::umount_snapshot(DBus::Connection& conn, DBus::Message& msg)
     dbus_uint32_t num;
     bool user_request;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> num >> user_request;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> num >> user_request;
 
     y2deb("UmountSnapshot config_name:" << config_name << " num:" << num <<
 	  " user_request:" << user_request);
@@ -1323,8 +1323,8 @@ Client::get_mount_point(DBus::Connection& conn, DBus::Message& msg)
     string config_name;
     dbus_uint32_t num;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> num;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> num;
 
     y2deb("GetMountPoint config_name:" << config_name << " num:" << num);
 
@@ -1344,8 +1344,8 @@ Client::get_mount_point(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
-    hoho << mount_point;
+    DBus::Marshaller marshaller(reply);
+    marshaller << mount_point;
 
     conn.send(reply);
 }
@@ -1357,8 +1357,8 @@ Client::create_comparison(DBus::Connection& conn, DBus::Message& msg)
     string config_name;
     dbus_uint32_t num1, num2;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> num1 >> num2;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> num1 >> num2;
 
     y2deb("CreateComparison config_name:" << config_name << " num1:" << num1 << " num2:" << num2);
 
@@ -1387,9 +1387,9 @@ Client::create_comparison(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
+    DBus::Marshaller marshaller(reply);
     dbus_uint32_t num_files = comparison->getFiles().size();
-    hoho << num_files;
+    marshaller << num_files;
 
     conn.send(reply);
 }
@@ -1401,8 +1401,8 @@ Client::delete_comparison(DBus::Connection& conn, DBus::Message& msg)
     string config_name;
     dbus_uint32_t num1, num2;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> num1 >> num2;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> num1 >> num2;
 
     y2deb("DeleteComparison config_name:" << config_name << " num1:" << num1 << " num2:" << num2);
 
@@ -1429,8 +1429,8 @@ Client::get_files(DBus::Connection& conn, DBus::Message& msg)
     string config_name;
     dbus_uint32_t num1, num2;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> num1 >> num2;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> num1 >> num2;
 
     y2deb("GetFiles config_name:" << config_name << " num1:" << num1 << " num2:" << num2);
 
@@ -1446,8 +1446,8 @@ Client::get_files(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
-    hoho << files;
+    DBus::Marshaller marshaller(reply);
+    marshaller << files;
 
     conn.send(reply);
 }
@@ -1459,8 +1459,8 @@ Client::get_files_by_pipe(DBus::Connection& conn, DBus::Message& msg)
     string config_name;
     dbus_uint32_t num1, num2;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name >> num1 >> num2;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> num1 >> num2;
 
     y2deb("GetFilesByPipe config_name:" << config_name << " num1:" << num1 << " num2:" << num2);
 
@@ -1476,11 +1476,11 @@ Client::get_files_by_pipe(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
+    DBus::Marshaller marshaller(reply);
 
     shared_ptr<FilesTransferTask> files_transfer_task = make_shared<FilesTransferTask>(files);
 
-    hoho << files_transfer_task->get_read_end();
+    marshaller << files_transfer_task->get_read_end();
     conn.send(reply);
 
     files_transfer_task->get_read_end().close();
@@ -1494,8 +1494,8 @@ Client::setup_quota(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name;
 
     y2deb("SetupQuota config_name:" << config_name);
 
@@ -1520,8 +1520,8 @@ Client::prepare_quota(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name;
 
     y2deb("PrepareQuota config_name:" << config_name);
 
@@ -1546,8 +1546,8 @@ Client::query_quota(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name;
 
     y2deb("QueryQuota config_name:" << config_name);
 
@@ -1563,8 +1563,8 @@ Client::query_quota(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
-    hoho << quota_data;
+    DBus::Marshaller marshaller(reply);
+    marshaller << quota_data;
 
     conn.send(reply);
 }
@@ -1575,8 +1575,8 @@ Client::query_free_space(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name;
 
     y2deb("QueryFreeSpace config_name:" << config_name);
 
@@ -1592,8 +1592,8 @@ Client::query_free_space(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
-    hoho << free_space_data;
+    DBus::Marshaller marshaller(reply);
+    marshaller << free_space_data;
 
     conn.send(reply);
 }
@@ -1604,8 +1604,8 @@ Client::sync(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
 
-    DBus::Hihi hihi(msg);
-    hihi >> config_name;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name;
 
     y2deb("Sync config_name:" << config_name);
 
@@ -1634,18 +1634,18 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg) const
 
     DBus::MessageMethodReturn reply(msg);
 
-    DBus::Hoho hoho(reply);
+    DBus::Marshaller marshaller(reply);
 
-    hoho.open_array("s");
+    marshaller.open_array("s");
 
-    hoho << "server:";
+    marshaller << "server:";
     {
 	std::ostringstream s;
 	s << "    pid:" << getpid();
-	hoho << s.str();
+    marshaller << s.str();
     }
 
-    hoho << "clients:";
+    marshaller << "clients:";
     for (Clients::const_iterator it = clients.begin(); it != clients.end(); ++it)
     {
 	std::ostringstream s;
@@ -1658,18 +1658,18 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg) const
 	    s << ", locks " << it->locks.size();
 	if (!it->comparisons.empty())
 	    s << ", comparisons " << it->comparisons.size();
-	hoho << s.str();
+    marshaller << s.str();
     }
 
-    hoho << "backgrounds:";
+    marshaller << "backgrounds:";
     for (Backgrounds::const_iterator it = clients.backgrounds().begin(); it != clients.backgrounds().end(); ++it)
     {
 	std::ostringstream s;
 	s << "    name:'" << it->meta_snapper->configName() << "'";
-	hoho << s.str();
+    marshaller << s.str();
     }
 
-    hoho << "meta-snappers:";
+    marshaller << "meta-snappers:";
     for (MetaSnappers::const_iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
     {
 	std::ostringstream s;
@@ -1682,14 +1682,14 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg) const
 	    else
 		s << ", use count " << it->use_count();
 	}
-	hoho << s.str();
+    marshaller << s.str();
     }
 
-    hoho << "compile options:";
-    hoho << "    version " + string(Snapper::compileVersion());
-    hoho << "    flags " + string(Snapper::compileFlags());
+    marshaller << "compile options:";
+    marshaller << "    version " + string(Snapper::compileVersion());
+    marshaller << "    flags " + string(Snapper::compileFlags());
 
-    hoho.close_array();
+    marshaller.close_array();
 
     conn.send(reply);
 }

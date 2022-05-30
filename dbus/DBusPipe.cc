@@ -40,29 +40,29 @@ namespace DBus
     }
 
 
-    Hihi&
-    operator>>(Hihi& hihi, FileDescriptor& data)
+    Unmarshaller&
+    operator>>(Unmarshaller& unmarshaller, FileDescriptor& data)
     {
-	if (hihi.get_type() != DBUS_TYPE_UNIX_FD)
+	if (unmarshaller.get_type() != DBUS_TYPE_UNIX_FD)
 	    throw MarshallingException();
 
 	int fd;
-	dbus_message_iter_get_basic(hihi.top(), &fd);
-	dbus_message_iter_next(hihi.top());
+	dbus_message_iter_get_basic(unmarshaller.top(), &fd);
+	dbus_message_iter_next(unmarshaller.top());
 	data.set_fd(fd);
 
-	return hihi;
+	return unmarshaller;
     }
 
 
-    Hoho&
-    operator<<(Hoho& hoho, const FileDescriptor& data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, const FileDescriptor& data)
     {
 	const int fd = data.get_fd();
-	if (!dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_UNIX_FD, &fd))
+	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_UNIX_FD, &fd))
 	    throw FatalException();
 
-	return hoho;
+	return marshaller;
     }
 
 
@@ -108,7 +108,7 @@ namespace DBus
     string
     Pipe::unescape(const string& in)
     {
-	return Hihi::unescape(in);
+	return Unmarshaller::unescape(in);
     }
 
 }
