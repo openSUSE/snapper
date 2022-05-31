@@ -11,7 +11,7 @@
 using namespace DBus;
 
 
-BOOST_AUTO_TEST_CASE(hoho_escape)
+BOOST_AUTO_TEST_CASE(marshaller_escape)
 {
     BOOST_CHECK_EQUAL(Marshaller::escape("\\"), "\\\\");
 
@@ -22,7 +22,7 @@ BOOST_AUTO_TEST_CASE(hoho_escape)
 }
 
 
-BOOST_AUTO_TEST_CASE(hihi_unescape)
+BOOST_AUTO_TEST_CASE(unmarshaller_unescape)
 {
     BOOST_CHECK_EQUAL(Unmarshaller::unescape("\\\\"), "\\");
 
