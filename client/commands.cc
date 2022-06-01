@@ -47,8 +47,8 @@ command_list_xconfigs(DBus::Connection& conn)
 
     vector<XConfigInfo> ret;
 
-    DBus::Hihi hihi(reply);
-    hihi >> ret;
+    DBus::Unmarshaller unmarshaller(reply);
+    unmarshaller >> ret;
 
     return ret;
 }
@@ -59,15 +59,15 @@ command_get_xconfig(DBus::Connection& conn, const string& config_name)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetConfig");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name;
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
     XConfigInfo ret;
 
-    DBus::Hihi hihi(reply);
-    hihi >> ret;
+    DBus::Unmarshaller unmarshaller(reply);
+    unmarshaller >> ret;
 
     return ret;
 }
@@ -79,8 +79,8 @@ command_set_xconfig(DBus::Connection& conn, const string& config_name,
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "SetConfig");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << raw;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << raw;
 
     conn.send_with_reply_and_block(call);
 }
@@ -92,8 +92,8 @@ command_create_config(DBus::Connection& conn, const string& config_name, const s
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreateConfig");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << subvolume << fstype << template_name;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << subvolume << fstype << template_name;
 
     conn.send_with_reply_and_block(call);
 }
@@ -104,8 +104,8 @@ command_delete_config(DBus::Connection& conn, const string& config_name)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "DeleteConfig");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name;
 
     conn.send_with_reply_and_block(call);
 }
@@ -116,15 +116,15 @@ command_list_xsnapshots(DBus::Connection& conn, const string& config_name)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "ListSnapshots");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name;
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
     XSnapshots ret;
 
-    DBus::Hihi hihi(reply);
-    hihi >> ret.entries;
+    DBus::Unmarshaller unmarshaller(reply);
+    unmarshaller >> ret.entries;
 
     return ret;
 }
@@ -135,15 +135,15 @@ command_get_xsnapshot(DBus::Connection& conn, const string& config_name, unsigne
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetSnapshot");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << num;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << num;
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
     XSnapshot ret;
 
-    DBus::Hihi hihi(reply);
-    hihi >> ret;
+    DBus::Unmarshaller unmarshaller(reply);
+    unmarshaller >> ret;
 
     return ret;
 }
@@ -155,8 +155,8 @@ command_set_snapshot(DBus::Connection& conn, const string& config_name, unsigned
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "SetSnapshot");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << num << smd.description << smd.cleanup << smd.userdata;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << num << smd.description << smd.cleanup << smd.userdata;
 
     conn.send_with_reply_and_block(call);
 }
@@ -169,15 +169,15 @@ command_create_single_snapshot(DBus::Connection& conn, const string& config_name
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreateSingleSnapshot");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << description << cleanup << userdata;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << description << cleanup << userdata;
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
     unsigned int number;
 
-    DBus::Hihi hihi(reply);
-    hihi >> number;
+    DBus::Unmarshaller unmarshaller(reply);
+    unmarshaller >> number;
 
     return number;
 }
@@ -191,15 +191,15 @@ command_create_single_snapshot_v2(DBus::Connection& conn, const string& config_n
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreateSingleSnapshotV2");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << parent_num << read_only << description << cleanup << userdata;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << parent_num << read_only << description << cleanup << userdata;
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
     unsigned int number;
 
-    DBus::Hihi hihi(reply);
-    hihi >> number;
+    DBus::Unmarshaller unmarshaller(reply);
+    unmarshaller >> number;
 
     return number;
 }
@@ -213,15 +213,15 @@ command_create_single_snapshot_of_default(DBus::Connection& conn, const string& 
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreateSingleSnapshotOfDefault");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << read_only << description << cleanup << userdata;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << read_only << description << cleanup << userdata;
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
     unsigned int number;
 
-    DBus::Hihi hihi(reply);
-    hihi >> number;
+    DBus::Unmarshaller unmarshaller(reply);
+    unmarshaller >> number;
 
     return number;
 }
@@ -234,15 +234,15 @@ command_create_pre_snapshot(DBus::Connection& conn, const string& config_name,
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreatePreSnapshot");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << description << cleanup << userdata;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << description << cleanup << userdata;
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
     unsigned int number;
 
-    DBus::Hihi hihi(reply);
-    hihi >> number;
+    DBus::Unmarshaller unmarshaller(reply);
+    unmarshaller >> number;
 
     return number;
 }
@@ -255,15 +255,15 @@ command_create_post_snapshot(DBus::Connection& conn, const string& config_name,
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreatePostSnapshot");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << prenum << description << cleanup << userdata;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << prenum << description << cleanup << userdata;
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
     unsigned int number;
 
-    DBus::Hihi hihi(reply);
-    hihi >> number;
+    DBus::Unmarshaller unmarshaller(reply);
+    unmarshaller >> number;
 
     return number;
 }
@@ -289,8 +289,8 @@ command_delete_snapshots(DBus::Connection& conn, const string& config_name,
 
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "DeleteSnapshots");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << nums;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << nums;
 
     conn.send_with_reply_and_block(call);
 }
@@ -303,16 +303,16 @@ command_get_default_snapshot(DBus::Connection& conn, const string& config_name)
     {
 	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetDefaultSnapshot");
 
-	DBus::Hoho hoho(call);
-	hoho << config_name;
+	DBus::Marshaller marshaller(call);
+	marshaller << config_name;
 
 	DBus::Message reply = conn.send_with_reply_and_block(call);
 
 	bool valid;
 	unsigned int number;
 
-	DBus::Hihi hihi(reply);
-	hihi >> valid >> number;
+	DBus::Unmarshaller unmarshaller(reply);
+	unmarshaller >> valid >> number;
 
 	return make_pair(valid, number);
     }
@@ -330,16 +330,16 @@ command_get_active_snapshot(DBus::Connection& conn, const string& config_name)
     {
 	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetActiveSnapshot");
 
-	DBus::Hoho hoho(call);
-	hoho << config_name;
+	DBus::Marshaller marshaller(call);
+	marshaller << config_name;
 
 	DBus::Message reply = conn.send_with_reply_and_block(call);
 
 	bool valid;
 	unsigned int number;
 
-	DBus::Hihi hihi(reply);
-	hihi >> valid >> number;
+	DBus::Unmarshaller unmarshaller(reply);
+	unmarshaller >> valid >> number;
 
 	return make_pair(valid, number);
     }
@@ -357,8 +357,8 @@ command_calculate_used_space(DBus::Connection& conn, const string& config_name)
     {
 	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CalculateUsedSpace");
 
-	DBus::Hoho hoho(call);
-	hoho << config_name;
+	DBus::Marshaller marshaller(call);
+	marshaller << config_name;
 
 	conn.send_with_reply_and_block(call);
     }
@@ -374,15 +374,15 @@ command_get_used_space(DBus::Connection& conn, const string& config_name, unsign
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetUsedSpace");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << num;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << num;
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
     uint64_t used_space;
 
-    DBus::Hihi hihi(reply);
-    hihi >> used_space;
+    DBus::Unmarshaller unmarshaller(reply);
+    unmarshaller >> used_space;
 
     return used_space;
 }
@@ -394,15 +394,15 @@ command_mount_snapshot(DBus::Connection& conn, const string& config_name,
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "MountSnapshot");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << num << user_request;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << num << user_request;
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
     string mount_point;
 
-    DBus::Hihi hihi(reply);
-    hihi >> mount_point;
+    DBus::Unmarshaller unmarshaller(reply);
+    unmarshaller >> mount_point;
 
     return mount_point;
 }
@@ -414,8 +414,8 @@ command_umount_snapshot(DBus::Connection& conn, const string& config_name, unsig
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "UmountSnapshot");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << num << user_request;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << num << user_request;
 
     conn.send_with_reply_and_block(call);
 }
@@ -426,15 +426,15 @@ command_get_mount_point(DBus::Connection& conn, const string& config_name, unsig
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetMountPoint");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << num;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << num;
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
     string mount_point;
 
-    DBus::Hihi hihi(reply);
-    hihi >> mount_point;
+    DBus::Unmarshaller unmarshaller(reply);
+    unmarshaller >> mount_point;
 
     return mount_point;
 }
@@ -446,8 +446,8 @@ command_create_comparison(DBus::Connection& conn, const string& config_name, uns
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CreateComparison");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << number1 << number2;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << number1 << number2;
 
     conn.send_with_reply_and_block(call);
 }
@@ -459,8 +459,8 @@ command_delete_comparison(DBus::Connection& conn, const string& config_name, uns
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "DeleteComparison");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << number1 << number2;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << number1 << number2;
 
     conn.send_with_reply_and_block(call);
 }
@@ -472,15 +472,15 @@ command_get_xfiles(DBus::Connection& conn, const string& config_name, unsigned i
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetFiles");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << number1 << number2;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << number1 << number2;
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
     vector<XFile> files;
 
-    DBus::Hihi hihi(reply);
-    hihi >> files;
+    DBus::Unmarshaller unmarshaller(reply);
+    unmarshaller >> files;
 
     return files;
 }
@@ -492,15 +492,15 @@ command_get_xfiles_by_pipe(DBus::Connection& conn, const string& config_name, un
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetFilesByPipe");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name << number1 << number2;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << number1 << number2;
 
     DBus::Message reply = conn.send_with_reply_and_block(call);
 
     DBus::FileDescriptor fd;
 
-    DBus::Hihi hihi(reply);
-    hihi >> fd;
+    DBus::Unmarshaller unmarshaller(reply);
+    unmarshaller >> fd;
 
     vector<XFile> files;
 
@@ -554,8 +554,8 @@ command_setup_quota(DBus::Connection& conn, const string& config_name)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "SetupQuota");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name;
 
     conn.send_with_reply_and_block(call);
 }
@@ -568,8 +568,8 @@ command_prepare_quota(DBus::Connection& conn, const string& config_name)
     {
 	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "PrepareQuota");
 
-	DBus::Hoho hoho(call);
-	hoho << config_name;
+	DBus::Marshaller marshaller(call);
+	marshaller << config_name;
 
 	conn.send_with_reply_and_block(call);
     }
@@ -587,15 +587,15 @@ command_query_quota(DBus::Connection& conn, const string& config_name)
     {
 	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "QueryQuota");
 
-	DBus::Hoho hoho(call);
-	hoho << config_name;
+	DBus::Marshaller marshaller(call);
+	marshaller << config_name;
 
 	DBus::Message reply = conn.send_with_reply_and_block(call);
 
 	QuotaData quota_data;
 
-	DBus::Hihi hihi(reply);
-	hihi >> quota_data;
+	DBus::Unmarshaller unmarshaller(reply);
+	unmarshaller >> quota_data;
 
 	return quota_data;
     }
@@ -613,15 +613,15 @@ command_query_free_space(DBus::Connection& conn, const string& config_name)
     {
 	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "QueryFreeSpace");
 
-	DBus::Hoho hoho(call);
-	hoho << config_name;
+	DBus::Marshaller marshaller(call);
+	marshaller << config_name;
 
 	DBus::Message reply = conn.send_with_reply_and_block(call);
 
 	FreeSpaceData free_space_data;
 
-	DBus::Hihi hihi(reply);
-	hihi >> free_space_data;
+	DBus::Unmarshaller unmarshaller(reply);
+	unmarshaller >> free_space_data;
 
 	return free_space_data;
     }
@@ -637,8 +637,8 @@ command_sync(DBus::Connection& conn, const string& config_name)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "Sync");
 
-    DBus::Hoho hoho(call);
-    hoho << config_name;
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name;
 
     conn.send_with_reply_and_block(call);
 }
@@ -653,8 +653,8 @@ command_debug(DBus::Connection& conn)
 
     vector<string> lines;
 
-    DBus::Hihi hihi(reply);
-    hihi >> lines;
+    DBus::Unmarshaller unmarshaller(reply);
+    unmarshaller >> lines;
 
     return lines;
 }

@@ -186,13 +186,13 @@ namespace DBus
     };
 
 
-    class Hihi : public Marshalling
+    class Unmarshaller : public Marshalling
     {
 
     public:
 
-	Hihi(Message& msg);
-	~Hihi();
+    Unmarshaller(Message& msg);
+    ~Unmarshaller();
 
 	void open_recurse();
 	void close_recurse();
@@ -202,13 +202,13 @@ namespace DBus
     };
 
 
-    class Hoho : public Marshalling
+    class Marshaller : public Marshalling
     {
 
     public:
 
-	Hoho(Message& msg);
-	~Hoho();
+    Marshaller(Message& msg);
+    ~Marshaller();
 
 	void open_struct();
 	void close_struct();
@@ -224,107 +224,107 @@ namespace DBus
     };
 
 
-    Hihi& operator>>(Hihi& hihi, bool& data);
-    Hoho& operator<<(Hoho& hoho, bool data);
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, bool& data);
+    Marshaller& operator<<(Marshaller& marshaller, bool data);
 
-    Hihi& operator>>(Hihi& hihi, dbus_uint16_t& data);
-    Hoho& operator<<(Hoho& hoho, dbus_uint16_t data);
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, dbus_uint16_t& data);
+    Marshaller& operator<<(Marshaller& marshaller, dbus_uint16_t data);
 
-    Hihi& operator>>(Hihi& hihi, dbus_uint32_t& data);
-    Hoho& operator<<(Hoho& hoho, dbus_uint32_t data);
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, dbus_uint32_t& data);
+    Marshaller& operator<<(Marshaller& marshaller, dbus_uint32_t data);
 
-    Hihi& operator>>(Hihi& hihi, dbus_uint64_t& data);
-    Hoho& operator<<(Hoho& hoho, dbus_uint64_t data);
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, dbus_uint64_t& data);
+    Marshaller& operator<<(Marshaller& marshaller, dbus_uint64_t data);
 
-    Hihi& operator>>(Hihi& hihi, time_t& data);
-    Hoho& operator<<(Hoho& hoho, time_t data);
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, time_t& data);
+    Marshaller& operator<<(Marshaller& marshaller, time_t data);
 
-    Hoho& operator<<(Hoho& hoho, const char* data);
+    Marshaller& operator<<(Marshaller& marshaller, const char* data);
 
-    Hihi& operator>>(Hihi& hihi, string& data);
-    Hoho& operator<<(Hoho& hoho, const string& data);
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, string& data);
+    Marshaller& operator<<(Marshaller& marshaller, const string& data);
 
-    Hihi& operator>>(Hihi& hihi, map<string, string>& data);
-    Hoho& operator<<(Hoho& hoho, const map<string, string>& data);
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, map<string, string>& data);
+    Marshaller& operator<<(Marshaller& marshaller, const map<string, string>& data);
 
 
     template <typename Type>
-    Hihi& operator>>(Hihi& hihi, vector<Type>& data)
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, vector<Type>& data)
     {
-	if (hihi.get_type() != DBUS_TYPE_ARRAY)
+    if (unmarshaller.get_type() != DBUS_TYPE_ARRAY)
 	    throw MarshallingException();
 
-	hihi.open_recurse();
+    unmarshaller.open_recurse();
 
-	while (hihi.get_type() != DBUS_TYPE_INVALID)
+    while (unmarshaller.get_type() != DBUS_TYPE_INVALID)
 	{
-	    if (hihi.get_signature() != TypeInfo<Type>::signature)
+        if (unmarshaller.get_signature() != TypeInfo<Type>::signature)
 		throw MarshallingException();
 
 	    Type tmp;
-	    hihi >> tmp;
+        unmarshaller >> tmp;
 	    data.push_back(tmp);
 	}
 
-	hihi.close_recurse();
+    unmarshaller.close_recurse();
 
-	return hihi;
+    return unmarshaller;
     }
 
 
     template <typename Type>
-    Hoho& operator<<(Hoho& hoho, const vector<Type>& data)
+    Marshaller& operator<<(Marshaller& marshaller, const vector<Type>& data)
     {
-	hoho.open_array(TypeInfo<Type>::signature);
+    marshaller.open_array(TypeInfo<Type>::signature);
 
 	for (typename vector<Type>::const_iterator it = data.begin(); it != data.end(); ++it)
 	{
-	    hoho << *it;
+        marshaller << *it;
 	}
 
-	hoho.close_array();
+    marshaller.close_array();
 
-	return hoho;
+    return marshaller;
     }
 
 
     template <typename Type>
-    Hihi& operator>>(Hihi& hihi, list<Type>& data)
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, list<Type>& data)
     {
-	if (hihi.get_type() != DBUS_TYPE_ARRAY)
+    if (unmarshaller.get_type() != DBUS_TYPE_ARRAY)
 	    throw MarshallingException();
 
-	hihi.open_recurse();
+    unmarshaller.open_recurse();
 
-	while (hihi.get_type() != DBUS_TYPE_INVALID)
+    while (unmarshaller.get_type() != DBUS_TYPE_INVALID)
 	{
-	    if (hihi.get_signature() != TypeInfo<Type>::signature)
+        if (unmarshaller.get_signature() != TypeInfo<Type>::signature)
 		throw MarshallingException();
 
 	    Type tmp;
-	    hihi >> tmp;
+        unmarshaller >> tmp;
 	    data.push_back(tmp);
 	}
 
-	hihi.close_recurse();
+    unmarshaller.close_recurse();
 
-	return hihi;
+    return unmarshaller;
     }
 
 
     template <typename Type>
-    Hoho& operator<<(Hoho& hoho, const list<Type>& data)
+    Marshaller& operator<<(Marshaller& marshaller, const list<Type>& data)
     {
-	hoho.open_array(TypeInfo<Type>::signature);
+    marshaller.open_array(TypeInfo<Type>::signature);
 
 	for (typename list<Type>::const_iterator it = data.begin(); it != data.end(); ++it)
 	{
-	    hoho << *it;
+        marshaller << *it;
 	}
 
-	hoho.close_array();
+    marshaller.close_array();
 
-	return hoho;
+    return marshaller;
     }
 
 }

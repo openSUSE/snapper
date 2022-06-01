@@ -70,7 +70,7 @@ namespace DBus
     const char* TypeInfo<string>::signature = "s";
 
 
-    Hihi::Hihi(Message& msg)
+    Unmarshaller::Unmarshaller(Message& msg)
     {
 	iters.push_back(new DBusMessageIter());
 	if (!dbus_message_iter_init(msg.get_message(), top()))
@@ -78,7 +78,7 @@ namespace DBus
     }
 
 
-    Hihi::~Hihi()
+    Unmarshaller::~Unmarshaller()
     {
 	delete iters.back();
 	iters.pop_back();
@@ -87,7 +87,7 @@ namespace DBus
 
 
     void
-    Hihi::open_recurse()
+    Unmarshaller::open_recurse()
     {
 	DBusMessageIter* iter2 = new DBusMessageIter();
 	dbus_message_iter_recurse(top(), iter2);
@@ -96,7 +96,7 @@ namespace DBus
 
 
     void
-    Hihi::close_recurse()
+    Unmarshaller::close_recurse()
     {
 	delete iters.back();
 	iters.pop_back();
@@ -104,14 +104,14 @@ namespace DBus
     }
 
 
-    Hoho::Hoho(Message& msg)
+    Marshaller::Marshaller(Message& msg)
     {
 	iters.push_back(new DBusMessageIter());
 	dbus_message_iter_init_append(msg.get_message(), top());
     }
 
 
-    Hoho::~Hoho()
+    Marshaller::~Marshaller()
     {
 	delete iters.back();
 	iters.pop_back();
@@ -119,7 +119,7 @@ namespace DBus
     }
 
     void
-    Hoho::open_struct()
+    Marshaller::open_struct()
     {
 	DBusMessageIter* iter2 = new DBusMessageIter();
 	if (!dbus_message_iter_open_container(top(), DBUS_TYPE_STRUCT, NULL, iter2))
@@ -129,7 +129,7 @@ namespace DBus
 
 
     void
-    Hoho::close_struct()
+    Marshaller::close_struct()
     {
 	DBusMessageIter* iter2 = top();
 	iters.pop_back();
@@ -140,7 +140,7 @@ namespace DBus
 
 
     void
-    Hoho::open_array(const char* signature)
+    Marshaller::open_array(const char* signature)
     {
 	DBusMessageIter* iter2 = new DBusMessageIter();
 	if (!dbus_message_iter_open_container(top(), DBUS_TYPE_ARRAY, signature, iter2))
@@ -150,7 +150,7 @@ namespace DBus
 
 
     void
-    Hoho::close_array()
+    Marshaller::close_array()
     {
 	DBusMessageIter* iter2 = top();
 	iters.pop_back();
@@ -161,7 +161,7 @@ namespace DBus
 
 
     void
-    Hoho::open_dict_entry()
+    Marshaller::open_dict_entry()
     {
 	DBusMessageIter* iter2 = new DBusMessageIter();
 	if (!dbus_message_iter_open_container(top(), DBUS_TYPE_DICT_ENTRY, 0, iter2))
@@ -171,7 +171,7 @@ namespace DBus
 
 
     void
-    Hoho::close_dict_entry()
+    Marshaller::close_dict_entry()
     {
 	DBusMessageIter* iter2 = top();
 	iters.pop_back();
@@ -181,139 +181,139 @@ namespace DBus
     }
 
 
-    Hihi&
-    operator>>(Hihi& hihi, bool& data)
+    Unmarshaller&
+    operator>>(Unmarshaller& unmarshaller, bool& data)
     {
-	if (hihi.get_type() != DBUS_TYPE_BOOLEAN)
+	if (unmarshaller.get_type() != DBUS_TYPE_BOOLEAN)
 	    throw MarshallingException();
 
 	dbus_bool_t tmp;
-	dbus_message_iter_get_basic(hihi.top(), &tmp);
-	dbus_message_iter_next(hihi.top());
+	dbus_message_iter_get_basic(unmarshaller.top(), &tmp);
+	dbus_message_iter_next(unmarshaller.top());
 	data = tmp;
 
-	return hihi;
+	return unmarshaller;
     }
 
 
-    Hoho&
-    operator<<(Hoho& hoho, bool data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, bool data)
     {
 	dbus_bool_t tmp = data;
-	if (!dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_BOOLEAN, &tmp))
+	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_BOOLEAN, &tmp))
 	    throw FatalException();
 
-	return hoho;
+	return marshaller;
     }
 
 
-    Hihi&
-    operator>>(Hihi& hihi, dbus_uint16_t& data)
+    Unmarshaller&
+    operator>>(Unmarshaller& unmarshaller, dbus_uint16_t& data)
     {
-	if (hihi.get_type() != DBUS_TYPE_UINT16)
+	if (unmarshaller.get_type() != DBUS_TYPE_UINT16)
 	    throw MarshallingException();
 
-	dbus_message_iter_get_basic(hihi.top(), &data);
-	dbus_message_iter_next(hihi.top());
+	dbus_message_iter_get_basic(unmarshaller.top(), &data);
+	dbus_message_iter_next(unmarshaller.top());
 
-	return hihi;
+	return unmarshaller;
     }
 
 
-    Hoho&
-    operator<<(Hoho& hoho, dbus_uint16_t data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, dbus_uint16_t data)
     {
-	if (!dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_UINT16, &data))
+	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_UINT16, &data))
 	    throw FatalException();
 
-	return hoho;
+	return marshaller;
     }
 
 
-    Hihi&
-    operator>>(Hihi& hihi, dbus_uint32_t& data)
+    Unmarshaller&
+    operator>>(Unmarshaller& unmarshaller, dbus_uint32_t& data)
     {
-	if (hihi.get_type() != DBUS_TYPE_UINT32)
+	if (unmarshaller.get_type() != DBUS_TYPE_UINT32)
 	    throw MarshallingException();
 
-	dbus_message_iter_get_basic(hihi.top(), &data);
-	dbus_message_iter_next(hihi.top());
+	dbus_message_iter_get_basic(unmarshaller.top(), &data);
+	dbus_message_iter_next(unmarshaller.top());
 
-	return hihi;
+	return unmarshaller;
     }
 
 
-    Hoho&
-    operator<<(Hoho& hoho, dbus_uint32_t data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, dbus_uint32_t data)
     {
-	if (!dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_UINT32, &data))
+	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_UINT32, &data))
 	    throw FatalException();
 
-	return hoho;
+	return marshaller;
     }
 
 
-    Hihi&
-    operator>>(Hihi& hihi, dbus_uint64_t& data)
+    Unmarshaller&
+    operator>>(Unmarshaller& unmarshaller, dbus_uint64_t& data)
     {
-	if (hihi.get_type() != DBUS_TYPE_UINT64)
+	if (unmarshaller.get_type() != DBUS_TYPE_UINT64)
 	    throw MarshallingException();
 
-	dbus_message_iter_get_basic(hihi.top(), &data);
-	dbus_message_iter_next(hihi.top());
+	dbus_message_iter_get_basic(unmarshaller.top(), &data);
+	dbus_message_iter_next(unmarshaller.top());
 
-	return hihi;
+	return unmarshaller;
     }
 
 
-    Hoho&
-    operator<<(Hoho& hoho, dbus_uint64_t data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, dbus_uint64_t data)
     {
-	if (!dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_UINT64, &data))
+	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_UINT64, &data))
 	    throw FatalException();
 
-	return hoho;
+	return marshaller;
     }
 
 
-    Hihi&
-    operator>>(Hihi& hihi, time_t& data)
+    Unmarshaller&
+    operator>>(Unmarshaller& unmarshaller, time_t& data)
     {
-	if (hihi.get_type() != DBUS_TYPE_INT64)
+	if (unmarshaller.get_type() != DBUS_TYPE_INT64)
 	    throw MarshallingException();
 
 	dbus_uint64_t tmp;
-	dbus_message_iter_get_basic(hihi.top(), &tmp);
-	dbus_message_iter_next(hihi.top());
+	dbus_message_iter_get_basic(unmarshaller.top(), &tmp);
+	dbus_message_iter_next(unmarshaller.top());
 	data = tmp;
 
-	return hihi;
+	return unmarshaller;
     }
 
 
-    Hoho&
-    operator<<(Hoho& hoho, time_t data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, time_t data)
     {
 	dbus_uint64_t tmp = data;
-	if (!dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_INT64, &tmp))
+	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_INT64, &tmp))
 	    throw FatalException();
 
-	return hoho;
+	return marshaller;
     }
 
 
-    Hoho&
-    operator<<(Hoho& hoho, const char* data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, const char* data)
     {
-	if (!dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_STRING, &data))
+	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_STRING, &data))
 	    throw FatalException();
 
-	return hoho;
+	return marshaller;
     }
 
 
     string
-    Hihi::unescape(const string& in)
+    Unmarshaller::unescape(const string& in)
     {
 	string out;
 
@@ -357,23 +357,23 @@ namespace DBus
     }
 
 
-    Hihi&
-    operator>>(Hihi& hihi, string& data)
+    Unmarshaller&
+    operator>>(Unmarshaller& unmarshaller, string& data)
     {
-	if (hihi.get_type() != DBUS_TYPE_STRING)
+	if (unmarshaller.get_type() != DBUS_TYPE_STRING)
 	    throw MarshallingException();
 
 	const char* p = NULL;
-	dbus_message_iter_get_basic(hihi.top(), &p);
-	dbus_message_iter_next(hihi.top());
-	data = hihi.unescape(p);
+	dbus_message_iter_get_basic(unmarshaller.top(), &p);
+	dbus_message_iter_next(unmarshaller.top());
+	data = unmarshaller.unescape(p);
 
-	return hihi;
+	return unmarshaller;
     }
 
 
     string
-    Hoho::escape(const string& in)
+    Marshaller::escape(const string& in)
     {
 	string out;
 
@@ -399,63 +399,63 @@ namespace DBus
     }
 
 
-    Hoho&
-    operator<<(Hoho& hoho, const string& data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, const string& data)
     {
-	string tmp = hoho.escape(data);
+	string tmp = marshaller.escape(data);
 	const char* p = tmp.c_str();
-	if (!dbus_message_iter_append_basic(hoho.top(), DBUS_TYPE_STRING, &p))
+	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_STRING, &p))
 	    throw FatalException();
 
-	return hoho;
+	return marshaller;
     }
 
 
-    Hihi&
-    operator>>(Hihi& hihi, map<string, string>& data)
+    Unmarshaller&
+    operator>>(Unmarshaller& unmarshaller, map<string, string>& data)
     {
-	if (hihi.get_type() != DBUS_TYPE_ARRAY)
+	if (unmarshaller.get_type() != DBUS_TYPE_ARRAY)
 	    throw MarshallingException();
 
-	hihi.open_recurse();
+	unmarshaller.open_recurse();
 
-	while (hihi.get_type() != DBUS_TYPE_INVALID)
+	while (unmarshaller.get_type() != DBUS_TYPE_INVALID)
 	{
-	    if (hihi.get_signature() != "{ss}")
+	    if (unmarshaller.get_signature() != "{ss}")
 		throw MarshallingException();
 
-	    hihi.open_recurse();
+	    unmarshaller.open_recurse();
 
 	    string k, v;
-	    hihi >> k >> v;
+	    unmarshaller >> k >> v;
 	    data[k] = v;
 
-	    hihi.close_recurse();
+	    unmarshaller.close_recurse();
 	}
 
-	hihi.close_recurse();
+	unmarshaller.close_recurse();
 
-	return hihi;
+	return unmarshaller;
     }
 
 
-    Hoho&
-    operator<<(Hoho& hoho, const map<string, string>& data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, const map<string, string>& data)
     {
-	hoho.open_array("{ss}");
+	marshaller.open_array("{ss}");
 
 	for (map<string, string>::const_iterator it = data.begin(); it != data.end() ; ++it)
 	{
-	    hoho.open_dict_entry();
+	    marshaller.open_dict_entry();
 
-	    hoho << it->first << it->second;
+	    marshaller << it->first << it->second;
 
-	    hoho.close_dict_entry();
+	    marshaller.close_dict_entry();
 	}
 
-	hoho.close_array();
+	marshaller.close_array();
 
-	return hoho;
+	return marshaller;
     }
 
 }

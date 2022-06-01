@@ -34,72 +34,72 @@ namespace DBus
     const char* TypeInfo<XFile>::signature = "(su)";
 
 
-    Hihi&
-    operator>>(Hihi& hihi, XConfigInfo& data)
+    Unmarshaller&
+    operator>>(Unmarshaller& unmarshaller, XConfigInfo& data)
     {
-	hihi.open_recurse();
-	hihi >> data.config_name >> data.subvolume >> data.raw;
-	hihi.close_recurse();
-	return hihi;
+	unmarshaller.open_recurse();
+	unmarshaller >> data.config_name >> data.subvolume >> data.raw;
+	unmarshaller.close_recurse();
+	return unmarshaller;
     }
 
 
-    Hihi&
-    operator>>(Hihi& hihi, SnapshotType& data)
+    Unmarshaller&
+    operator>>(Unmarshaller& unmarshaller, SnapshotType& data)
     {
 	dbus_uint16_t tmp;
-	hihi >> tmp;
+	unmarshaller >> tmp;
 	data = static_cast<SnapshotType>(tmp);
-	return hihi;
+	return unmarshaller;
     }
 
 
-    Hihi&
-    operator>>(Hihi& hihi, XSnapshot& data)
+    Unmarshaller&
+    operator>>(Unmarshaller& unmarshaller, XSnapshot& data)
     {
-	hihi.open_recurse();
-	hihi >> data.num >> data.type >> data.pre_num >> data.date >> data.uid >> data.description
+	unmarshaller.open_recurse();
+	unmarshaller >> data.num >> data.type >> data.pre_num >> data.date >> data.uid >> data.description
 	     >> data.cleanup >> data.userdata;
-	hihi.close_recurse();
-	return hihi;
+	unmarshaller.close_recurse();
+	return unmarshaller;
     }
 
 
-    Hihi&
-    operator>>(Hihi& hihi, XFile& data)
+    Unmarshaller&
+    operator>>(Unmarshaller& unmarshaller, XFile& data)
     {
-	hihi.open_recurse();
-	hihi >> data.name >> data.status;
-	hihi.close_recurse();
-	return hihi;
+	unmarshaller.open_recurse();
+	unmarshaller >> data.name >> data.status;
+	unmarshaller.close_recurse();
+	return unmarshaller;
     }
 
 
-    Hihi&
-    operator>>(Hihi& hihi, QuotaData& data)
+    Unmarshaller&
+    operator>>(Unmarshaller& unmarshaller, QuotaData& data)
     {
-	hihi.open_recurse();
-	hihi >> data.size >> data.used;
-	hihi.close_recurse();
-	return hihi;
+	unmarshaller.open_recurse();
+	unmarshaller >> data.size >> data.used;
+	unmarshaller.close_recurse();
+	return unmarshaller;
     }
 
 
-    Hihi&
-    operator>>(Hihi& hihi, FreeSpaceData& data)
+    Unmarshaller&
+    operator>>(Unmarshaller& unmarshaller, FreeSpaceData& data)
     {
-	hihi.open_recurse();
-	hihi >> data.size >> data.free;
-	hihi.close_recurse();
-	return hihi;
+	unmarshaller.open_recurse();
+	unmarshaller >> data.size >> data.free;
+	unmarshaller.close_recurse();
+	return unmarshaller;
     }
 
 
-    Hoho&
-    operator<<(Hoho& hoho, SnapshotType data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, SnapshotType data)
     {
-	hoho << static_cast<dbus_uint16_t>(data);
-	return hoho;
+	marshaller << static_cast<dbus_uint16_t>(data);
+	return marshaller;
     }
 
 }

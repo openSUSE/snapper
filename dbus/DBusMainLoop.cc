@@ -334,8 +334,8 @@ namespace DBus
 		{
 		    string name, old_owner, new_owner;
 
-		    DBus::Hihi hihi(msg);
-		    hihi >> name >> old_owner >> new_owner;
+		    DBus::Unmarshaller unmarshaller(msg);
+		    unmarshaller >> name >> old_owner >> new_owner;
 
 		    if (name == old_owner && new_owner.empty())
 			client_disconnected(name);

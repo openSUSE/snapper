@@ -33,95 +33,95 @@ namespace DBus
     const char* TypeInfo<FreeSpaceData>::signature = "(tt)";
 
 
-    Hoho&
-    operator<<(Hoho& hoho, const ConfigInfo& data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, const ConfigInfo& data)
     {
-	hoho.open_struct();
-	hoho << data.get_config_name() << data.get_subvolume() << data.get_all_values();
-	hoho.close_struct();
-	return hoho;
+	marshaller.open_struct();
+	marshaller << data.get_config_name() << data.get_subvolume() << data.get_all_values();
+	marshaller.close_struct();
+	return marshaller;
     }
 
 
-    Hihi&
-    operator>>(Hihi& hihi, SnapshotType& data)
+    Unmarshaller&
+    operator>>(Unmarshaller& unmarshaller, SnapshotType& data)
     {
 	dbus_uint16_t tmp;
-	hihi >> tmp;
+	unmarshaller >> tmp;
 	data = static_cast<SnapshotType>(tmp);
-	return hihi;
+	return unmarshaller;
     }
 
 
-    Hoho&
-    operator<<(Hoho& hoho, SnapshotType data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, SnapshotType data)
     {
-	hoho << static_cast<dbus_uint16_t>(data);
-	return hoho;
+	marshaller << static_cast<dbus_uint16_t>(data);
+	return marshaller;
     }
 
 
-    Hoho&
-    operator<<(Hoho& hoho, const Snapshot& data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, const Snapshot& data)
     {
-	hoho.open_struct();
-	hoho << data.getNum() << data.getType() << data.getPreNum() << data.getDate()
+	marshaller.open_struct();
+	marshaller << data.getNum() << data.getType() << data.getPreNum() << data.getDate()
 	     << data.getUid() << data.getDescription() << data.getCleanup()
 	     << data.getUserdata();
-	hoho.close_struct();
-	return hoho;
+	marshaller.close_struct();
+	return marshaller;
     }
 
 
-    Hoho&
-    operator<<(Hoho& hoho, const Snapshots& data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, const Snapshots& data)
     {
-	hoho.open_array(TypeInfo<Snapshot>::signature);
+	marshaller.open_array(TypeInfo<Snapshot>::signature);
 	for (Snapshots::const_iterator it = data.begin(); it != data.end(); ++it)
-	    hoho << *it;
-	hoho.close_array();
-	return hoho;
+	    marshaller << *it;
+	marshaller.close_array();
+	return marshaller;
     }
 
 
-    Hoho&
-    operator<<(Hoho& hoho, const File& data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, const File& data)
     {
-	hoho.open_struct();
-	hoho << data.getName() << data.getPreToPostStatus();
-	hoho.close_struct();
-	return hoho;
+	marshaller.open_struct();
+	marshaller << data.getName() << data.getPreToPostStatus();
+	marshaller.close_struct();
+	return marshaller;
     }
 
 
-    Hoho&
-    operator<<(Hoho& hoho, const QuotaData& data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, const QuotaData& data)
     {
-	hoho.open_struct();
-	hoho << data.size << data.used;
-	hoho.close_struct();
-	return hoho;
+	marshaller.open_struct();
+	marshaller << data.size << data.used;
+	marshaller.close_struct();
+	return marshaller;
     }
 
 
-    Hoho&
-    operator<<(Hoho& hoho, const FreeSpaceData& data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, const FreeSpaceData& data)
     {
-	hoho.open_struct();
-	hoho << data.size << data.free;
-	hoho.close_struct();
-	return hoho;
+	marshaller.open_struct();
+	marshaller << data.size << data.free;
+	marshaller.close_struct();
+	return marshaller;
     }
 
 
-    Hoho&
-    operator<<(Hoho& hoho, const Files& data)
+    Marshaller&
+    operator<<(Marshaller& marshaller, const Files& data)
     {
-	hoho.open_array(TypeInfo<File>::signature);
+	marshaller.open_array(TypeInfo<File>::signature);
 	for (Files::const_iterator it = data.begin(); it != data.end(); ++it)
-	    hoho << *it;
-	hoho.close_array();
-	return hoho;
+	    marshaller << *it;
+	marshaller.close_array();
+	return marshaller;
     }
 
 }
