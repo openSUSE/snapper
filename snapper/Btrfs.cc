@@ -51,6 +51,7 @@
 #include "snapper/Btrfs.h"
 #include "snapper/BtrfsUtils.h"
 #include "snapper/File.h"
+#include "snapper/Hooks.h"
 #include "snapper/Snapper.h"
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"
@@ -1530,6 +1531,8 @@ namespace snapper
 		SDir snapshot_dir = openSnapshotDir(num);
 		subvolid_t id = get_id(snapshot_dir.fd());
 		set_default_id(general_dir.fd(), id);
+
+		Hooks::set_default_snapshot(subvolume, this, num);
 	    }
 	}
 	catch (const runtime_error& e)
