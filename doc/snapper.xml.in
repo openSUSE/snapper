@@ -2,13 +2,13 @@
 <refentry id='snapper8' xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <refentryinfo>
-    <date>2021-09-21</date>
+    <date>2022-06-02</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2021-09-21</refmiscinfo>
+    <refmiscinfo class='date'>2022-06-02</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -845,33 +845,47 @@
     have to be placed in <filename>/usr/lib/snapper/plugins</filename>.
     The name has to start with a digit, execution order is alphabetical.</para>
     <para>The first argument of a script is the action snapper executed. The
-      following actions are defined:</para>
+    following actions are defined:</para>
     <variablelist>
       <varlistentry>
-	<term><option>create-snapshot <replaceable>subvolume</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<term><option>create-config <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable></option></term>
+	<listitem>
+	  <para>Executed when a new config gets created</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>delete-config <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable></option></term>
+	<listitem>
+	  <para>Executed when a config gets deleted</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>create-snapshot <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
 	<listitem>
 	  <para>Executed when a new snapshot gets created</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>delete-snapshot <replaceable>subvolume</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<term><option>delete-snapshot <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
 	<listitem>
 	  <para>Executed when a snapshot is removed</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>modify-snapshot <replaceable>subvolume</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<term><option>modify-snapshot <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
 	<listitem>
 	  <para>Executed when a snapshot gets modified</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>set-default-snapshot <replaceable>subvolume</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<term><option>set-default-snapshot <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
 	<listitem>
 	  <para>Executed when the default snapshot gets changed</para>
 	</listitem>
       </varlistentry>
     </variablelist>
+    <para>More arguments may be passed in the future. Using snapper in
+    the plugins is not allowed.</para>
   </refsect1>
 
   <refsect1 id='files'>

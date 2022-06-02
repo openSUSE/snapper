@@ -144,7 +144,7 @@ namespace snapper
     void
     Snapshot::setDefault() const
     {
-	return snapper->getFilesystem()->setDefault(num);
+	snapper->getFilesystem()->setDefault(num);
     }
 
 
@@ -792,9 +792,9 @@ namespace snapper
 	SDir infos_dir = snapper->openInfosDir();
 	infos_dir.unlink(decString(snapshot->getNum()), AT_REMOVEDIR);
 
-	entries.erase(snapshot);
-
 	Hooks::delete_snapshot(snapper->subvolumeDir(), snapper->getFilesystem(), *snapshot);
+
+	entries.erase(snapshot);
     }
 
 
