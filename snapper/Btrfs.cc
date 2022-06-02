@@ -1531,9 +1531,9 @@ namespace snapper
 		SDir snapshot_dir = openSnapshotDir(num);
 		subvolid_t id = get_id(snapshot_dir.fd());
 		set_default_id(general_dir.fd(), id);
-
-		Hooks::set_default_snapshot(subvolume, this, num);
 	    }
+
+	    Hooks::set_default_snapshot(subvolume, this, num);
 	}
 	catch (const runtime_error& e)
 	{

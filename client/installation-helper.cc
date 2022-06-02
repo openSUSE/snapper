@@ -120,7 +120,7 @@ step1(const string& device, const string& description, const string& cleanup,
 
     cout << "setting default subvolume" << endl;
 
-    snapper.getFilesystem()->setDefault(snapshot->getNum());
+    snapshot->setDefault();
 
     cout << "done" << endl;
 }

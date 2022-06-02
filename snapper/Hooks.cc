@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
+ * Copyright (c) 2022 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -22,50 +23,54 @@
 
 #include "config.h"
 
-#include <string.h>
-
-#include <boost/algorithm/string/join.hpp>
-
 #include "snapper/FileUtils.h"
 #include "snapper/Hooks.h"
 #include "snapper/SystemCmd.h"
-#include "snapper/Log.h"
+#include "snapper/SnapperDefines.h"
 
 
 namespace snapper
 {
     using namespace std;
 
+
     static bool
-    _plugins_filter_entries(unsigned char type, const char* name)
+    plugins_filter_entries(unsigned char type, const char* name)
     {
 	// must start with digit
-	if (*name >= '0' && *name <= '9')
-	    return true;
-	return false;
+	return *name >= '0' && *name <= '9';
     }
 
-    void
-    Hooks::run_scripts(const list<string>& args)
-    {
-	    SDir dir("/usr/lib/snapper/plugins");
 
-	    vector<string> scripts = dir.entries(_plugins_filter_entries);
+    void
+    Hooks::run_scripts(const vector<string>& args)
+    {
+	try
+	{
+	    SDir dir(PLUGINS_DIR);
+
+	    vector<string> scripts = dir.entries(plugins_filter_entries);
 	    std::sort(scripts.begin(), scripts.end());
 	    for (const string& script : scripts)
 	    {
-		string cmdln = dir.fullname(script);
-		for (const string& arg : args) {
-		    cmdln += " " + quote(arg);
-		}
-		SystemCmd cmd(cmdln);
+		string cmd_line = dir.fullname(script);
+		for (const string& arg : args)
+		    cmd_line += " " + quote(arg);
+		SystemCmd cmd(cmd_line);
 	    }
+	}
+	catch (const Exception& e)
+	{
+	    SN_CAUGHT(e);
+	}
     }
+
 
     void
     Hooks::create_config(const string& subvolume, const Filesystem* filesystem)
     {
 	grub(subvolume, filesystem, "--enable");
+	run_scripts({ "create-config", subvolume, filesystem->fstype() });
     }
 
 
@@ -73,6 +78,7 @@ namespace snapper
     Hooks::delete_config(const string& subvolume, const Filesystem* filesystem)
     {
 	grub(subvolume, filesystem, "--disable");
+	run_scripts({ "delete-config", subvolume, filesystem->fstype() });
     }
 
 
@@ -80,7 +86,7 @@ namespace snapper
     Hooks::create_snapshot(const string& subvolume, const Filesystem* filesystem, const Snapshot& snapshot)
     {
 	grub(subvolume, filesystem, "--refresh");
-	run_scripts(std::list<string>({"create-snapshot", subvolume, std::to_string(snapshot.getNum())}));
+	run_scripts({ "create-snapshot", subvolume, filesystem->fstype(), std::to_string(snapshot.getNum()) });
     }
 
 
@@ -88,7 +94,7 @@ namespace snapper
     Hooks::modify_snapshot(const string& subvolume, const Filesystem* filesystem, const Snapshot& snapshot)
     {
 	grub(subvolume, filesystem, "--refresh");
-	run_scripts(std::list<string>({"modify-snapshot", subvolume, std::to_string(snapshot.getNum())}));
+	run_scripts({ "modify-snapshot", subvolume, filesystem->fstype(), std::to_string(snapshot.getNum()) });
     }
 
 
@@ -96,14 +102,16 @@ namespace snapper
     Hooks::delete_snapshot(const string& subvolume, const Filesystem* filesystem, const Snapshot& snapshot)
     {
 	grub(subvolume, filesystem, "--refresh");
-	run_scripts(std::list<string>({"delete-snapshot", subvolume, std::to_string(snapshot.getNum())}));
+	run_scripts({ "delete-snapshot", subvolume, filesystem->fstype(), std::to_string(snapshot.getNum()) });
     }
+
 
     void
     Hooks::set_default_snapshot(const string& subvolume, const Filesystem* filesystem, unsigned int num)
     {
-	run_scripts(std::list<string>({"set-default-snapshot", subvolume, std::to_string(num)}));
+	run_scripts({ "set-default-snapshot", subvolume, filesystem->fstype(), std::to_string(num) });
     }
+
 
     void
     Hooks::grub(const string& subvolume, const Filesystem* filesystem, const char* option)

@@ -37,6 +37,8 @@
 #define ETC_FILTERS_DIR "/etc/snapper/filters"
 #define USR_FILTERS_DIR "/usr/share/snapper/filters"
 
+#define PLUGINS_DIR "/usr/lib/snapper/plugins"
+
 #define DEV_DIR "/dev"
 #define DEV_MAPPER_DIR "/dev/mapper"
 
