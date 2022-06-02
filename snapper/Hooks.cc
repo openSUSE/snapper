@@ -22,14 +22,45 @@
 
 #include "config.h"
 
+#include <string.h>
+
+#include <boost/algorithm/string/join.hpp>
+
+#include "snapper/FileUtils.h"
 #include "snapper/Hooks.h"
 #include "snapper/SystemCmd.h"
+#include "snapper/Log.h"
 
 
 namespace snapper
 {
     using namespace std;
 
+    static bool
+    _plugins_filter_entries(unsigned char type, const char* name)
+    {
+	// must start with digit
+	if (*name >= '0' && *name <= '9')
+	    return true;
+	return false;
+    }
+
+    void
+    Hooks::run_scripts(const list<string>& args)
+    {
+	    SDir dir("/usr/lib/snapper/plugins");
+
+	    vector<string> scripts = dir.entries(_plugins_filter_entries);
+	    std::sort(scripts.begin(), scripts.end());
+	    for (const string& script : scripts)
+	    {
+		string cmdln = dir.fullname(script);
+		for (const string& arg : args) {
+		    cmdln += " " + quote(arg);
+		}
+		SystemCmd cmd(cmdln);
+	    }
+    }
 
     void
     Hooks::create_config(const string& subvolume, const Filesystem* filesystem)
@@ -46,25 +77,33 @@ namespace snapper
 
 
     void
-    Hooks::create_snapshot(const string& subvolume, const Filesystem* filesystem)
+    Hooks::create_snapshot(const string& subvolume, const Filesystem* filesystem, const Snapshot& snapshot)
     {
 	grub(subvolume, filesystem, "--refresh");
+	run_scripts(std::list<string>({"create-snapshot", subvolume, std::to_string(snapshot.getNum())}));
     }
 
 
     void
-    Hooks::modify_snapshot(const string& subvolume, const Filesystem* filesystem)
+    Hooks::modify_snapshot(const string& subvolume, const Filesystem* filesystem, const Snapshot& snapshot)
     {
 	grub(subvolume, filesystem, "--refresh");
+	run_scripts(std::list<string>({"modify-snapshot", subvolume, std::to_string(snapshot.getNum())}));
     }
 
 
     void
-    Hooks::delete_snapshot(const string& subvolume, const Filesystem* filesystem)
+    Hooks::delete_snapshot(const string& subvolume, const Filesystem* filesystem, const Snapshot& snapshot)
     {
 	grub(subvolume, filesystem, "--refresh");
+	run_scripts(std::list<string>({"delete-snapshot", subvolume, std::to_string(snapshot.getNum())}));
     }
 
+    void
+    Hooks::set_default_snapshot(const string& subvolume, const Filesystem* filesystem, unsigned int num)
+    {
+	run_scripts(std::list<string>({"set-default-snapshot", subvolume, std::to_string(num)}));
+    }
 
     void
     Hooks::grub(const string& subvolume, const Filesystem* filesystem, const char* option)

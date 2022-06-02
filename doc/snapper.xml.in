@@ -839,6 +839,41 @@
     <citerefentry><refentrytitle>snapper-configs</refentrytitle><manvolnum>5</manvolnum></citerefentry>.</para>
   </refsect1>
 
+  <refsect1 id='plugins'>
+    <title>PLUGINS</title>
+    <para>snapper can execute external scripts after certain actions. Scripts
+    have to be placed in <filename>/usr/lib/snapper/plugins</filename>.
+    The name has to start with a digit, execution order is alphabetical.</para>
+    <para>The first argument of a script is the action snapper executed. The
+      following actions are defined:</para>
+    <variablelist>
+      <varlistentry>
+	<term><option>create-snapshot <replaceable>subvolume</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<listitem>
+	  <para>Executed when a new snapshot gets created</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>delete-snapshot <replaceable>subvolume</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<listitem>
+	  <para>Executed when a snapshot is removed</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>modify-snapshot <replaceable>subvolume</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<listitem>
+	  <para>Executed when a snapshot gets modified</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>set-default-snapshot <replaceable>subvolume</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<listitem>
+	  <para>Executed when the default snapshot gets changed</para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
   <refsect1 id='files'>
     <title>FILES</title>
     <variablelist>

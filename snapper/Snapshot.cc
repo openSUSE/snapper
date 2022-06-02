@@ -733,7 +733,7 @@ namespace snapper
 	    SN_RETHROW(e);
 	}
 
-	Hooks::create_snapshot(snapper->subvolumeDir(), snapper->getFilesystem());
+	Hooks::create_snapshot(snapper->subvolumeDir(), snapper->getFilesystem(), snapshot);
 
 	return entries.insert(entries.end(), snapshot);
     }
@@ -753,7 +753,7 @@ namespace snapper
 
 	snapshot->writeInfo();
 
-	Hooks::modify_snapshot(snapper->subvolumeDir(), snapper->getFilesystem());
+	Hooks::modify_snapshot(snapper->subvolumeDir(), snapper->getFilesystem(), *snapshot);
     }
 
 
@@ -794,7 +794,7 @@ namespace snapper
 
 	entries.erase(snapshot);
 
-	Hooks::delete_snapshot(snapper->subvolumeDir(), snapper->getFilesystem());
+	Hooks::delete_snapshot(snapper->subvolumeDir(), snapper->getFilesystem(), *snapshot);
     }
 
 
