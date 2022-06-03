@@ -1,7 +1,7 @@
 -------------------------------------------------------------------
 Thu Jun 02 13:01:49 CEST 2022 - lnussel@suse.com
 
-- added generic plugin supprot (gh#openSUSE/snapper#727)
+- added generic plugin support (gh#openSUSE/snapper#727)
 
 -------------------------------------------------------------------
 Tue May 03 08:46:28 CEST 2022 - aschnell@suse.com
