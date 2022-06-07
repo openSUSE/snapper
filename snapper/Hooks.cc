@@ -143,4 +143,11 @@ namespace snapper
 #endif
     }
 
+
+    void
+    Hooks::rollback(const string& subvolume, const Filesystem* filesystem, unsigned int old_num, unsigned int new_num)
+    {
+	run_scripts({ "rollback", subvolume, filesystem->fstype(), std::to_string(old_num), std::to_string(new_num) });
+    }
+
 }
