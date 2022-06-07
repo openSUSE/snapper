@@ -247,6 +247,7 @@ namespace snapper
 
 		Hooks::rollback(filesystem->snapshotDir(snapshot1->getNum()),
 				filesystem->snapshotDir(snapshot2->getNum()));
+		Hooks::rollback(subvolume, filesystem, snapshot1->getNum(), snapshot2->getNum());
 
 		if (print_number)
 		    cout << snapshot2->getNum() << endl;
@@ -291,6 +292,7 @@ namespace snapper
 
 		Hooks::rollback(filesystem->snapshotDir(previous_default->getNum()),
 				filesystem->snapshotDir(snapshot->getNum()));
+		Hooks::rollback(subvolume, filesystem, previous_default->getNum(), snapshot->getNum());
 	    }
 	    break;
 

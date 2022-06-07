@@ -48,6 +48,7 @@ namespace snapper
 	static void set_default_snapshot(const string& subvolume, const Filesystem* filesystem, unsigned int num);
 
 	static void rollback(const string& old_root, const string& new_root);
+	static void rollback(const string& subvolume, const Filesystem* filesystem, unsigned int old_num, unsigned int new_num);
 
     private:
 

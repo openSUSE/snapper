@@ -883,8 +883,14 @@
 	  <para>Executed when the default snapshot gets changed</para>
 	</listitem>
       </varlistentry>
+      <varlistentry>
+	<term><option>rollback <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>old-snapshot-number</replaceable> <replaceable>new-snapshot-number</replaceable></option></term>
+	<listitem>
+	  <para>Executed when a rollback is done</para>
+	</listitem>
+      </varlistentry>
     </variablelist>
-    <para>More arguments may be passed in the future. Using snapper in
+    <para>More actions and arguments can be added any time. Using snapper in
     the plugins is not allowed.</para>
   </refsect1>
 
