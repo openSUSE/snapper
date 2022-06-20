@@ -152,6 +152,12 @@ install -D -m 644 data/sysconfig.snapper "%{buildroot}%{_fillupdir}/sysconfig.sn
 install -D -m 644 data/sysconfig.snapper "%{buildroot}/etc/sysconfig/snapper"
 %endif
 
+# move logrotate files from /etc/logrotate.d to /usr/etc/logrotate.d
+%if 0%{?suse_version} > 1500
+mkdir -p %{buildroot}%{_distconfdir}/logrotate.d
+mv %{buildroot}/%{_sysconfdir}/logrotate.d/snapper %{buildroot}%{_distconfdir}/logrotate.d
+%endif
+
 %{find_lang} snapper
 
 %check
@@ -202,7 +208,11 @@ fi
 %if 0%{?suse_version} > 1310
 %doc %{_mandir}/*/mksubvolume.8*
 %endif
+%if 0%{?suse_version} > 1500
+%config(noreplace) %{_distconfdir}/logrotate.d/snapper
+%else
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
+%endif
 %{_unitdir}/snapper*.*
 %if 0%{?suse_version} <= 1500
 %dir %{_datadir}/dbus-1/system.d
