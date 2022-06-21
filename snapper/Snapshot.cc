@@ -764,6 +764,8 @@ namespace snapper
 	    snapshot->isActive())
 	    SN_THROW(IllegalSnapshotException());
 
+	Hooks::delete_snapshot(snapper->subvolumeDir(), snapper->getFilesystem(), *snapshot);
+
 	snapshot->deleteFilesystemSnapshot();
 
 	SDir info_dir = snapshot->openInfoDir();
@@ -791,8 +793,6 @@ namespace snapper
 
 	SDir infos_dir = snapper->openInfosDir();
 	infos_dir.unlink(decString(snapshot->getNum()), AT_REMOVEDIR);
-
-	Hooks::delete_snapshot(snapper->subvolumeDir(), snapper->getFilesystem(), *snapshot);
 
 	entries.erase(snapshot);
     }
