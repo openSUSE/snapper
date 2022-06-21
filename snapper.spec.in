@@ -209,7 +209,7 @@ fi
 %doc %{_mandir}/*/mksubvolume.8*
 %endif
 %if 0%{?suse_version} > 1500
-%config(noreplace) %{_distconfdir}/logrotate.d/snapper
+%config %{_distconfdir}/logrotate.d/snapper
 %else
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
 %endif
