@@ -82,10 +82,10 @@ namespace snapper
 
 	static_assert(sizeof(off_t) >= 8, "off_t is too small");
 
-	const off_t block_size = 4096;
+	const off_t block_size = 32 * 1024;
 
-	char block1[block_size];
-	char block2[block_size];
+	vector<char> block1(block_size);
+	vector<char> block2(block_size);
 
 	bool equal = true;
 
@@ -94,7 +94,7 @@ namespace snapper
 	{
 	    off_t t = min(block_size, length);
 
-	    ssize_t r1 = read(fd1, block1, t);
+	    ssize_t r1 = read(fd1, block1.data(), t);
 	    if (r1 != t)
 	    {
 		y2err("read failed path:" << file1.fullname() << " errno:" << errno);
@@ -102,7 +102,7 @@ namespace snapper
 		break;
 	    }
 
-	    ssize_t r2 = read(fd2, block2, t);
+	    ssize_t r2 = read(fd2, block2.data(), t);
 	    if (r2 != t)
 	    {
 		y2err("read failed path:" << file2.fullname() << " errno:" << errno);
@@ -110,7 +110,7 @@ namespace snapper
 		break;
 	    }
 
-	    if (memcmp(block1, block2, t) != 0)
+	    if (memcmp(block1.data(), block2.data(), t) != 0)
 	    {
 		equal = false;
 		break;
