@@ -809,7 +809,7 @@ Client::list_snapshots_at_time(DBus::Connection& conn, DBus::Message& msg)
     for (Snapshots::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
     {
 	if (it->getDate() >= begin && it->getDate() <= end)
-        marshaller << *it;
+	    marshaller << *it;
     }
     marshaller.close_array();
 
