@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) 2020 SUSE LLC
+ * Copyright (c) [2020-2022] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -73,33 +73,30 @@ namespace snapper
     {
 	if (access(LVCREATEBIN, X_OK) != 0)
 	{
-	    throw ProgramNotInstalledException(LVCREATEBIN " not installed");
+	    SN_THROW(ProgramNotInstalledException(LVCREATEBIN " not installed"));
 	}
 
 	if (access(LVSBIN, X_OK) != 0)
 	{
-	    throw ProgramNotInstalledException(LVSBIN " not installed");
+	    SN_THROW(ProgramNotInstalledException(LVSBIN " not installed"));
 	}
 
 	if (access(LVCHANGEBIN, X_OK) != 0)
 	{
-	    throw ProgramNotInstalledException(LVCHANGEBIN " not installed");
+	    SN_THROW(ProgramNotInstalledException(LVCHANGEBIN " not installed"));
 	}
 
 	bool found = false;
 	MtabData mtab_data;
 
 	if (!getMtabData(prepend_root_prefix(root_prefix, subvolume), found, mtab_data))
-	    throw InvalidConfigException();
+	    SN_THROW(IOErrorException("filesystem not mounted"));
 
 	if (!found)
-	{
-	    y2err("filesystem not mounted");
-	    throw InvalidConfigException();
-	}
+	    SN_THROW(IOErrorException("filesystem not mounted"));
 
 	if (!detectThinVolumeNames(mtab_data))
-	    throw InvalidConfigException();
+	    SN_THROW(InvalidConfigException());
 
 	mount_options = filter_mount_options(mtab_data.options);
 	if (mount_type == "xfs")
@@ -200,7 +197,7 @@ namespace snapper
 	if (r1 != 0)
 	{
 	    y2err("rmdir failed errno:" << errno << " (" << strerror(errno) << ")");
-	    throw DeleteConfigFailedException("rmdir failed");
+	    SN_THROW(DeleteConfigFailedException("rmdir failed"));
 	}
     }
 
@@ -222,25 +219,25 @@ namespace snapper
 	struct stat stat;
 	if (infos_dir.stat(&stat) != 0)
 	{
-	    throw IOErrorException("stat on .snapshots failed");
+	    SN_THROW(IOErrorException("stat on .snapshots failed"));
 	}
 
 	if (stat.st_uid != 0)
 	{
 	    y2err(".snapshots must have owner root");
-	    throw IOErrorException(".snapshots must have owner root");
+	    SN_THROW(IOErrorException(".snapshots must have owner root"));
 	}
 
 	if (stat.st_gid != 0 && stat.st_mode & S_IWGRP)
 	{
 	    y2err(".snapshots must have group root or must not be group-writable");
-	    throw IOErrorException(".snapshots must have group root or must not be group-writable");
+	    SN_THROW(IOErrorException(".snapshots must have group root or must not be group-writable"));
 	}
 
 	if (stat.st_mode & S_IWOTH)
 	{
 	    y2err(".snapshots must not be world-writable");
-	    throw IOErrorException(".snapshots must not be world-writable");
+	    SN_THROW(IOErrorException(".snapshots must not be world-writable"));
 	}
 
 	return infos_dir;
@@ -276,7 +273,7 @@ namespace snapper
 	if (r1 != 0 && errno != EEXIST)
 	{
 	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
-	    throw CreateSnapshotFailedException();
+	    SN_THROW(CreateSnapshotFailedException());
 	}
 
 	try
@@ -286,7 +283,7 @@ namespace snapper
 	catch (const LvmCacheException& e)
 	{
 	    y2deb(cache);
-	    throw CreateSnapshotFailedException();
+	    SN_THROW(CreateSnapshotFailedException());
 	}
     }
 
@@ -301,7 +298,7 @@ namespace snapper
 	catch (const LvmCacheException& e)
 	{
 	    y2deb(cache);
-	    throw DeleteSnapshotFailedException();
+	    SN_THROW(DeleteSnapshotFailedException());
 	}
 
 	SDir info_dir = openInfoDir(num);
@@ -319,7 +316,7 @@ namespace snapper
 	MtabData mtab_data;
 
 	if (!getMtabData(snapshotDir(num), mounted, mtab_data))
-	    throw IsSnapshotMountedFailedException();
+	    SN_THROW(IsSnapshotMountedFailedException());
 
 	return mounted;
     }
@@ -339,13 +336,13 @@ namespace snapper
 	}
 	catch (const LvmActivationException& e)
 	{
-	    throw MountSnapshotFailedException();
+	    SN_THROW(MountSnapshotFailedException());
 	}
 
 	SDir snapshot_dir = openSnapshotDir(num);
 
 	if (!mount(getDevice(num), snapshot_dir, mount_type, mount_options))
-	    throw MountSnapshotFailedException();
+	    SN_THROW(MountSnapshotFailedException());
     }
 
 
@@ -359,7 +356,7 @@ namespace snapper
 	    SDir info_dir = openInfoDir(num);
 
 	    if (!umount(info_dir, "snapshot"))
-		throw UmountSnapshotFailedException();
+		SN_THROW(UmountSnapshotFailedException());
 	}
 
 	try
