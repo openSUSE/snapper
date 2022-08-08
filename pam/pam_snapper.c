@@ -531,9 +531,11 @@ static int get_ugid( pam_handle_t * pamh, const char *pam_user, uid_t * uid, gid
 
 	int e;
 	while ( ( e = getpwnam_r( pam_user, &pwd, buf, bufsize, &result ) ) == ERANGE ) {
-		bufsize *= 2;
-		buf = realloc( buf, bufsize );
+		free( buf );
 
+		bufsize *= 2;
+
+		buf = malloc( bufsize );
 		if ( !buf ) {
 			pam_syslog( pamh, LOG_ERR, "out of memory" );
 			return -1;
