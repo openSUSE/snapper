@@ -4,8 +4,6 @@
 
 AM_CXXFLAGS = -D_FILE_OFFSET_BITS=64
 
-AM_CPPFLAGS = $(XML2_CFLAGS)
-
 lib_LTLIBRARIES = libsnapper.la
 
 libsnapper_la_SOURCES =					\
@@ -63,8 +61,9 @@ libsnapper_la_SOURCES +=				\
 	Selinux.cc		Selinux.h
 endif
 
+libsnapper_la_CPPFLAGS = $(XML2_CFLAGS) $(ZLIB_CFLAGS)
 libsnapper_la_LDFLAGS = -version-info @LIBVERSION_INFO@
-libsnapper_la_LIBADD = -lboost_thread -lboost_system $(XML2_LIBS) -lacl -lz
+libsnapper_la_LIBADD = -lboost_thread -lboost_system $(XML2_LIBS) -lacl $(ZLIB_LIBS)
 if ENABLE_ROLLBACK
 libsnapper_la_LIBADD += -lmount
 endif
