@@ -167,6 +167,10 @@ make %{?_smp_mflags} check VERBOSE=1
 %if 0%{?suse_version}
 %service_add_pre snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer snapperd.service
 %endif
+%if 0%{?suse_version} > 1500
+# Migration from /etc/logrotate.d to /usr/etc/logrotate.d
+test -f /etc/logrotate.d/snapper.rpmsave && mv -v /etc/logrotate.d/snapper.rpmsave /etc/logrotate.d/snapper.rpmsave.old ||:
+%endif
 
 %post
 %if 0%{?suse_version}
@@ -181,6 +185,12 @@ if [ -f /etc/cron.daily/suse.de-snapper ]; then
  systemctl is-enabled -q snapper-cleanup.timer && systemctl start snapper-cleanup.timer || :
 fi
 %service_add_post snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer snapperd.service
+%endif
+
+%if 0%{?suse_version} > 1500
+%posttrans
+# Migration from /etc/logrotate.d to /usr/etc/logrotate.d
+test -f /etc/logrotate.d/snapper.rpmsave && mv -v /etc/logrotate.d/snapper.rpmsave /etc/logrotate.d/snapper ||:
 %endif
 
 %preun
