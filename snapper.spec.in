@@ -152,6 +152,12 @@ install -D -m 644 data/sysconfig.snapper "%{buildroot}%{_fillupdir}/sysconfig.sn
 install -D -m 644 data/sysconfig.snapper "%{buildroot}/etc/sysconfig/snapper"
 %endif
 
+# move logrotate files from /etc/logrotate.d to /usr/etc/logrotate.d
+%if 0%{?suse_version} > 1500
+mkdir -p %{buildroot}%{_distconfdir}/logrotate.d
+mv %{buildroot}/%{_sysconfdir}/logrotate.d/snapper %{buildroot}%{_distconfdir}/logrotate.d
+%endif
+
 %{find_lang} snapper
 
 %check
@@ -160,6 +166,10 @@ make %{?_smp_mflags} check VERBOSE=1
 %pre
 %if 0%{?suse_version}
 %service_add_pre snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer snapperd.service
+%endif
+%if 0%{?suse_version} > 1500
+# Migration from /etc/logrotate.d to /usr/etc/logrotate.d
+test -f /etc/logrotate.d/snapper.rpmsave && mv -v /etc/logrotate.d/snapper.rpmsave /etc/logrotate.d/snapper.rpmsave.old ||:
 %endif
 
 %post
@@ -175,6 +185,12 @@ if [ -f /etc/cron.daily/suse.de-snapper ]; then
  systemctl is-enabled -q snapper-cleanup.timer && systemctl start snapper-cleanup.timer || :
 fi
 %service_add_post snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer snapperd.service
+%endif
+
+%if 0%{?suse_version} > 1500
+%posttrans
+# Migration from /etc/logrotate.d to /usr/etc/logrotate.d
+test -f /etc/logrotate.d/snapper.rpmsave && mv -v /etc/logrotate.d/snapper.rpmsave /etc/logrotate.d/snapper ||:
 %endif
 
 %preun
@@ -202,7 +218,11 @@ fi
 %if 0%{?suse_version} > 1310
 %doc %{_mandir}/*/mksubvolume.8*
 %endif
+%if 0%{?suse_version} > 1500
+%{_distconfdir}/logrotate.d/snapper
+%else
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
+%endif
 %{_unitdir}/snapper*.*
 %if 0%{?suse_version} <= 1500
 %dir %{_datadir}/dbus-1/system.d
