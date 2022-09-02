@@ -27,6 +27,7 @@
 
 #include <dbus/dbus.h>
 
+#include <ctime>
 #include <string>
 #include <vector>
 #include <list>
