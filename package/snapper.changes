@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Nov 15 13:24:47 CET 2022 - aschnell@suse.com
+
+- fix build with boost 1.81
+
+-------------------------------------------------------------------
 Tue Aug 30 10:35:28 UTC 2022 - Stefan Schubert <schubi@suse.com>
 
 - Moved logrotate files from user specific directory /etc/logrotate.d
