@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-23 12:54+0100\n"
-"PO-Revision-Date: 2022-07-09 23:13+0000\n"
+"PO-Revision-Date: 2022-11-16 08:13+0000\n"
 "Last-Translator: Kristijan Fremen Velkovski <me@krisfremen.com>\n"
 "Language-Team: Macedonian <https://l10n.opensuse.org/projects/snapper/master/"
 "mk/>\n"
@@ -342,9 +342,9 @@ msgstr ""
 msgid "B"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr "DBI Execution failed: %s."
+msgstr "Неможе да се избрише снимката %d поради тоа што е сегашниот систем."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
@@ -476,9 +476,9 @@ msgstr "DBI Execution failed: %s."
 msgid "Creating read-write snapshot of current subvolume."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Creating read-write snapshot of snapshot %d."
-msgstr "DBI Execution failed: %s."
+msgstr "Создавање на читај-пиши снимка од снимката %d."
 
 #, fuzzy
 msgid "Creating snapshot failed."
@@ -498,12 +498,12 @@ msgstr "DBI Execution failed: %s."
 msgid "Deleting snapshot failed."
 msgstr "DBI Execution failed: %s."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
-msgstr[0] "DBI Execution failed: %s."
-msgstr[1] "DBI Execution failed: %s."
-msgstr[2] "DBI Execution failed: %s."
+msgstr[0] "Бришење на снимка од %s:"
+msgstr[1] "Бришење на снимки од %s:"
+msgstr[2] "Бришење на снимките од %s:"
 
 msgid "Description"
 msgstr ""
@@ -835,17 +835,17 @@ msgstr ""
 msgid "deleting %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "failed to create %s"
-msgstr "Failed to parse: %s."
+msgstr "Неуспеа да се создаде %s"
 
 #, c-format
 msgid "failed to delete %s"
-msgstr "Неуспех при бришење: %s."
+msgstr "неуспех при бришење %s"
 
 #, c-format
 msgid "failed to modify %s"
-msgstr "Неуспех при изменување: %s."
+msgstr "неуспех при измена %s"
 
 #. TRANSLATORS: symbol for "kilo" (best keep untranslated)
 msgid "k"
