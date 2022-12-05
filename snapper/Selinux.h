@@ -50,7 +50,7 @@ namespace snapper
     class SnapperContexts
     {
     public:
-	char* subvolume_context() const { return context_str(subvolume_ctx); }
+	const char* subvolume_context() const { return context_str(subvolume_ctx); }
 	SnapperContexts();
 	~SnapperContexts() { context_free(subvolume_ctx); }
 
@@ -61,7 +61,7 @@ namespace snapper
     class DefaultSelinuxFileContext : private boost::noncopyable
     {
     public:
-	DefaultSelinuxFileContext(char* context);
+	DefaultSelinuxFileContext(const char* context);
 	~DefaultSelinuxFileContext();
     };
 

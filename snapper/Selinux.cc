@@ -82,7 +82,7 @@ namespace snapper
     }
 
 
-    DefaultSelinuxFileContext::DefaultSelinuxFileContext(char* context)
+    DefaultSelinuxFileContext::DefaultSelinuxFileContext(const char* context)
     {
 	if (setfscreatecon(context) < 0)
 	{
