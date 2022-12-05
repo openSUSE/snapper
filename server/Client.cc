@@ -1946,6 +1946,12 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	DBus::MessageError reply(msg, "error.something", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
+    catch (const exception& e)
+    {
+	y2err("caught unknown exception (" << e.what() << ")");
+	DBus::MessageError reply(msg, "error.something", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
     catch (...)
     {
 	y2err("caught unknown exception");
