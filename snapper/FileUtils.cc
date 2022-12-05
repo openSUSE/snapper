@@ -621,7 +621,7 @@ namespace snapper
 
 
     bool
-    SDir::fsetfilecon(const string& name, char* con) const
+    SDir::fsetfilecon(const string& name, const char* con) const
     {
 	assert(name.find('/') == string::npos);
 	assert(name != "..");
@@ -724,7 +724,7 @@ namespace snapper
 
 
     bool
-    SDir::fsetfilecon(char* con) const
+    SDir::fsetfilecon(const char* con) const
     {
 	bool retval = true;
 
@@ -850,7 +850,7 @@ namespace snapper
 
 
     void
-    SFile::fsetfilecon(char* con) const
+    SFile::fsetfilecon(const char* con) const
     {
 	dir.fsetfilecon(name, con);
     }
