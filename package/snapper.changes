@@ -2,6 +2,7 @@
 Mon Dec 05 08:13:07 CET 2022 - aschnell@suse.com
 
 - fix build with upcoming selinux
+- version 0.10.4
 
 -------------------------------------------------------------------
 Tue Nov 15 13:24:47 CET 2022 - aschnell@suse.com
