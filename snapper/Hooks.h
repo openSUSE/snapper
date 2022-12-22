@@ -38,17 +38,27 @@ namespace snapper
     {
     public:
 
-	static void create_config(const string& subvolume, const Filesystem* filesystem);
-	static void delete_config(const string& subvolume, const Filesystem* filesystem);
+	enum class Stage { PRE_ACTION, POST_ACTION };
 
-	static void create_snapshot(const string& subvolume, const Filesystem* filesystem, const Snapshot& snapshot);
-	static void modify_snapshot(const string& subvolume, const Filesystem* filesystem, const Snapshot& snapshot);
-	static void delete_snapshot(const string& subvolume, const Filesystem* filesystem, const Snapshot& snapshot);
+	static void create_config(Stage stage, const string& subvolume, const Filesystem* filesystem);
+	static void delete_config(Stage stage, const string& subvolume, const Filesystem* filesystem);
 
-	static void set_default_snapshot(const string& subvolume, const Filesystem* filesystem, unsigned int num);
+	static void create_snapshot(Stage stage, const string& subvolume, const Filesystem* filesystem,
+				    const Snapshot& snapshot);
+	static void modify_snapshot(Stage stage, const string& subvolume, const Filesystem* filesystem,
+				    const Snapshot& snapshot);
+	static void delete_snapshot(Stage stage, const string& subvolume, const Filesystem* filesystem,
+				    const Snapshot& snapshot);
+
+	static void set_default_snapshot(Stage stage, const string& subvolume, const Filesystem* filesystem,
+					 unsigned int num);
 
 	static void rollback(const string& old_root, const string& new_root);
-	static void rollback(const string& subvolume, const Filesystem* filesystem, unsigned int old_num, unsigned int new_num);
+
+	static void rollback(const string& subvolume, const Filesystem* filesystem, unsigned int old_num,
+			     unsigned int new_num) __attribute__((deprecated));
+	static void rollback(Stage stage, const string& subvolume, const Filesystem* filesystem, unsigned int old_num,
+			     unsigned int new_num);
 
     private:
 

@@ -2,13 +2,13 @@
 <refentry id='snapper8' xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <refentryinfo>
-    <date>2022-06-02</date>
+    <date>2022-12-22</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2022-06-02</refmiscinfo>
+    <refmiscinfo class='date'>2022-12-22</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -848,45 +848,81 @@
     following actions are defined:</para>
     <variablelist>
       <varlistentry>
-	<term><option>create-config <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable></option></term>
+	<term><option>create-config-pre <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable></option></term>
 	<listitem>
-	  <para>Executed when a new config gets created</para>
+	  <para>Executed before a new config is created</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>delete-config <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable></option></term>
+	<term><option>create-config-post <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable></option></term>
 	<listitem>
-	  <para>Executed when a config gets deleted</para>
+	  <para>Executed after a new config was created</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>create-snapshot <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<term><option>delete-config-pre <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable></option></term>
 	<listitem>
-	  <para>Executed when a new snapshot gets created</para>
+	  <para>Executed before a config is deleted</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>delete-snapshot <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<term><option>delete-config-post <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable></option></term>
 	<listitem>
-	  <para>Executed when a snapshot is removed</para>
+	  <para>Executed after a config was deleted</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>modify-snapshot <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<term><option>create-snapshot-pre <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
 	<listitem>
-	  <para>Executed when a snapshot gets modified</para>
+	  <para>Executed before a new snapshot is created</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>set-default-snapshot <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<term><option>create-snapshot-post <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
 	<listitem>
-	  <para>Executed when the default snapshot gets changed</para>
+	  <para>Executed after a new snapshot was created</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
-	<term><option>rollback <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>old-snapshot-number</replaceable> <replaceable>new-snapshot-number</replaceable></option></term>
+	<term><option>modify-snapshot-pre <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
 	<listitem>
-	  <para>Executed when a rollback is done</para>
+	  <para>Executed before a snapshot is modified</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>modify-snapshot-post <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<listitem>
+	  <para>Executed after a snapshot was modified</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>delete-snapshot-pre <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<listitem>
+	  <para>Executed before a snapshot is removed</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>delete-snapshot-post <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<listitem>
+	  <para>Executed after a snapshot was removed</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>set-default-snapshot-pre <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<listitem>
+	  <para>Executed before the default snapshot is changed</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>set-default-snapshot-post <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<listitem>
+	  <para>Executed after the default snapshot was changed</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>rollback-post <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>old-snapshot-number</replaceable> <replaceable>new-snapshot-number</replaceable></option></term>
+	<listitem>
+	  <para>Executed after a rollback was done</para>
 	</listitem>
       </varlistentry>
     </variablelist>

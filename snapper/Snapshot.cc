@@ -701,6 +701,9 @@ namespace snapper
 	// parent == end indicates the btrfs default subvolume. Unclean, but
 	// adding a special snapshot like current needs too many API changes.
 
+	Hooks::create_snapshot(Hooks::Stage::PRE_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
+			       snapshot);
+
 	try
 	{
 	    if (parent != end())
@@ -733,7 +736,8 @@ namespace snapper
 	    SN_RETHROW(e);
 	}
 
-	Hooks::create_snapshot(snapper->subvolumeDir(), snapper->getFilesystem(), snapshot);
+	Hooks::create_snapshot(Hooks::Stage::POST_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
+			       snapshot);
 
 	return entries.insert(entries.end(), snapshot);
     }
@@ -747,13 +751,17 @@ namespace snapper
 
 	checkUserdata(smd.userdata);
 
+	Hooks::modify_snapshot(Hooks::Stage::PRE_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
+			       *snapshot);
+
 	snapshot->description = smd.description;
 	snapshot->cleanup = smd.cleanup;
 	snapshot->userdata = smd.userdata;
 
 	snapshot->writeInfo();
 
-	Hooks::modify_snapshot(snapper->subvolumeDir(), snapper->getFilesystem(), *snapshot);
+	Hooks::modify_snapshot(Hooks::Stage::POST_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
+			       *snapshot);
     }
 
 
@@ -763,6 +771,9 @@ namespace snapper
 	if (snapshot == entries.end() || snapshot->isCurrent() || snapshot->isDefault() ||
 	    snapshot->isActive())
 	    SN_THROW(IllegalSnapshotException());
+
+	Hooks::delete_snapshot(Hooks::Stage::PRE_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
+			       *snapshot);
 
 	snapshot->deleteFilesystemSnapshot();
 
@@ -792,7 +803,8 @@ namespace snapper
 	SDir infos_dir = snapper->openInfosDir();
 	infos_dir.unlink(decString(snapshot->getNum()), AT_REMOVEDIR);
 
-	Hooks::delete_snapshot(snapper->subvolumeDir(), snapper->getFilesystem(), *snapshot);
+	Hooks::delete_snapshot(Hooks::Stage::POST_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
+			       *snapshot);
 
 	entries.erase(snapshot);
     }

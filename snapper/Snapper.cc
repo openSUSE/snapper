@@ -390,6 +390,8 @@ namespace snapper
 	    SN_THROW(CreateConfigFailedException(e.what()));
 	}
 
+	Hooks::create_config(Hooks::Stage::PRE_ACTION, subvolume, filesystem.get());
+
 	try
 	{
 	    SysconfigFile sysconfig(SYSCONFIG_FILE);
@@ -452,7 +454,7 @@ namespace snapper
 	    SN_RETHROW(e);
 	}
 
-	Hooks::create_config(subvolume, filesystem.get());
+	Hooks::create_config(Hooks::Stage::POST_ACTION, subvolume, filesystem.get());
     }
 
 
@@ -464,7 +466,7 @@ namespace snapper
 
 	unique_ptr<Snapper> snapper(new Snapper(config_name, root_prefix));
 
-	Hooks::delete_config(snapper->subvolumeDir(), snapper->getFilesystem());
+	Hooks::delete_config(Hooks::Stage::PRE_ACTION, snapper->subvolumeDir(), snapper->getFilesystem());
 
 	Snapshots& snapshots = snapper->getSnapshots();
 
@@ -524,6 +526,8 @@ namespace snapper
 
 	    SN_THROW(DeleteConfigFailedException("modifying sysconfig-file failed"));
 	}
+
+	Hooks::delete_config(Hooks::Stage::POST_ACTION, snapper->subvolumeDir(), snapper->getFilesystem());
     }
 
 
