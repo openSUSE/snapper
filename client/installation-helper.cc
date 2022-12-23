@@ -214,7 +214,7 @@ step4()
 
     cout << "running external programs" << endl;
 
-    Hooks::create_config("/", &btrfs);
+    Hooks::create_config(Hooks::Stage::POST_ACTION, "/", &btrfs);
 
     cout << "done" << endl;
 }

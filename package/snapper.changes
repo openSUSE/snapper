@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Dec 22 09:03:33 CET 2022 - aschnell@suse.com
+
+- call generic plugins before and after the action
+
+-------------------------------------------------------------------
 Mon Dec 05 08:13:07 CET 2022 - aschnell@suse.com
 
 - fix build with upcoming selinux

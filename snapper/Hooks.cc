@@ -66,50 +66,113 @@ namespace snapper
     }
 
 
+    // Actions without -pre/-post are legacy and deprecated (2022-12-22).
+
+
     void
-    Hooks::create_config(const string& subvolume, const Filesystem* filesystem)
+    Hooks::create_config(Stage stage, const string& subvolume, const Filesystem* filesystem)
     {
-	grub(subvolume, filesystem, "--enable");
-	run_scripts({ "create-config", subvolume, filesystem->fstype() });
+	switch (stage)
+	{
+	    case Stage::PRE_ACTION:
+		run_scripts({ "create-config-pre", subvolume, filesystem->fstype() });
+		break;
+
+	    case Stage::POST_ACTION:
+		grub(subvolume, filesystem, "--enable");
+		run_scripts({ "create-config", subvolume, filesystem->fstype() });
+		run_scripts({ "create-config-post", subvolume, filesystem->fstype() });
+		break;
+	}
     }
 
 
     void
-    Hooks::delete_config(const string& subvolume, const Filesystem* filesystem)
+    Hooks::delete_config(Stage stage, const string& subvolume, const Filesystem* filesystem)
     {
-	grub(subvolume, filesystem, "--disable");
-	run_scripts({ "delete-config", subvolume, filesystem->fstype() });
+	switch (stage)
+	{
+	    case Stage::PRE_ACTION:
+		grub(subvolume, filesystem, "--disable");
+		run_scripts({ "delete-config-pre", subvolume, filesystem->fstype() });
+		run_scripts({ "delete-config", subvolume, filesystem->fstype() });
+		break;
+
+	    case Stage::POST_ACTION:
+		run_scripts({ "delete-config-post", subvolume, filesystem->fstype() });
+		break;
+	}
     }
 
 
     void
-    Hooks::create_snapshot(const string& subvolume, const Filesystem* filesystem, const Snapshot& snapshot)
+    Hooks::create_snapshot(Stage stage, const string& subvolume, const Filesystem* filesystem, const Snapshot& snapshot)
     {
-	grub(subvolume, filesystem, "--refresh");
-	run_scripts({ "create-snapshot", subvolume, filesystem->fstype(), std::to_string(snapshot.getNum()) });
+	switch (stage)
+	{
+	    case Stage::PRE_ACTION:
+		run_scripts({ "create-snapshot-pre", subvolume, filesystem->fstype(), std::to_string(snapshot.getNum()) });
+		break;
+
+	    case Stage::POST_ACTION:
+		grub(subvolume, filesystem, "--refresh");
+		run_scripts({ "create-snapshot", subvolume, filesystem->fstype(), std::to_string(snapshot.getNum()) });
+		run_scripts({ "create-snapshot-post", subvolume, filesystem->fstype(), std::to_string(snapshot.getNum()) });
+		break;
+	}
     }
 
 
     void
-    Hooks::modify_snapshot(const string& subvolume, const Filesystem* filesystem, const Snapshot& snapshot)
+    Hooks::modify_snapshot(Stage stage, const string& subvolume, const Filesystem* filesystem, const Snapshot& snapshot)
     {
-	grub(subvolume, filesystem, "--refresh");
-	run_scripts({ "modify-snapshot", subvolume, filesystem->fstype(), std::to_string(snapshot.getNum()) });
+	switch (stage)
+	{
+	    case Stage::PRE_ACTION:
+		run_scripts({ "modify-snapshot-pre", subvolume, filesystem->fstype(), std::to_string(snapshot.getNum()) });
+		break;
+
+	    case Stage::POST_ACTION:
+		grub(subvolume, filesystem, "--refresh");
+		run_scripts({ "modify-snapshot", subvolume, filesystem->fstype(), std::to_string(snapshot.getNum()) });
+		run_scripts({ "modify-snapshot-post", subvolume, filesystem->fstype(), std::to_string(snapshot.getNum()) });
+		break;
+	}
     }
 
 
     void
-    Hooks::delete_snapshot(const string& subvolume, const Filesystem* filesystem, const Snapshot& snapshot)
+    Hooks::delete_snapshot(Stage stage, const string& subvolume, const Filesystem* filesystem, const Snapshot& snapshot)
     {
-	grub(subvolume, filesystem, "--refresh");
-	run_scripts({ "delete-snapshot", subvolume, filesystem->fstype(), std::to_string(snapshot.getNum()) });
+	switch (stage)
+	{
+	    case Stage::PRE_ACTION:
+		run_scripts({ "delete-snapshot-pre", subvolume, filesystem->fstype(), std::to_string(snapshot.getNum()) });
+		break;
+
+	    case Stage::POST_ACTION:
+		grub(subvolume, filesystem, "--refresh");
+		run_scripts({ "delete-snapshot", subvolume, filesystem->fstype(), std::to_string(snapshot.getNum()) });
+		run_scripts({ "delete-snapshot-post", subvolume, filesystem->fstype(), std::to_string(snapshot.getNum()) });
+		break;
+	}
     }
 
 
     void
-    Hooks::set_default_snapshot(const string& subvolume, const Filesystem* filesystem, unsigned int num)
+    Hooks::set_default_snapshot(Stage stage, const string& subvolume, const Filesystem* filesystem, unsigned int num)
     {
-	run_scripts({ "set-default-snapshot", subvolume, filesystem->fstype(), std::to_string(num) });
+	switch (stage)
+	{
+	    case Stage::PRE_ACTION:
+		run_scripts({ "set-default-snapshot-pre", subvolume, filesystem->fstype(), std::to_string(num) });
+		break;
+
+	    case Stage::POST_ACTION:
+		run_scripts({ "set-default-snapshot", subvolume, filesystem->fstype(), std::to_string(num) });
+		run_scripts({ "set-default-snapshot-post", subvolume, filesystem->fstype(), std::to_string(num) });
+		break;
+	}
     }
 
 
@@ -145,9 +208,31 @@ namespace snapper
 
 
     void
-    Hooks::rollback(const string& subvolume, const Filesystem* filesystem, unsigned int old_num, unsigned int new_num)
+    Hooks::rollback(const string& subvolume, const Filesystem* filesystem, unsigned int old_num,
+		    unsigned int new_num)
     {
-	run_scripts({ "rollback", subvolume, filesystem->fstype(), std::to_string(old_num), std::to_string(new_num) });
+	rollback(Stage::POST_ACTION, subvolume, filesystem, old_num, new_num);
+    }
+
+
+    void
+    Hooks::rollback(Stage stage, const string& subvolume, const Filesystem* filesystem, unsigned int old_num,
+		    unsigned int new_num)
+    {
+	switch (stage)
+	{
+	    case Stage::PRE_ACTION:
+		run_scripts({ "rollback-pre", subvolume, filesystem->fstype(), std::to_string(old_num),
+			std::to_string(new_num) });
+		break;
+
+	    case Stage::POST_ACTION:
+		run_scripts({ "rollback", subvolume, filesystem->fstype(), std::to_string(old_num),
+			std::to_string(new_num) });
+		run_scripts({ "rollback-post", subvolume, filesystem->fstype(), std::to_string(old_num),
+			std::to_string(new_num) });
+		break;
+	}
     }
 
 }

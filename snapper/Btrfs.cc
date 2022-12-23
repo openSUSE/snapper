@@ -1518,6 +1518,8 @@ namespace snapper
     {
 	try
 	{
+	    Hooks::set_default_snapshot(Hooks::Stage::PRE_ACTION, subvolume, this, num);
+
 	    SDir general_dir = openGeneralDir();
 
 	    if (num == 0)
@@ -1533,7 +1535,7 @@ namespace snapper
 		set_default_id(general_dir.fd(), id);
 	    }
 
-	    Hooks::set_default_snapshot(subvolume, this, num);
+	    Hooks::set_default_snapshot(Hooks::Stage::POST_ACTION, subvolume, this, num);
 	}
 	catch (const runtime_error& e)
 	{
