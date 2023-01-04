@@ -67,6 +67,10 @@ libsnapper_la_LIBADD = -lboost_thread -lboost_system $(XML2_LIBS) -lacl $(ZLIB_L
 if ENABLE_ROLLBACK
 libsnapper_la_LIBADD += -lmount
 endif
+if ENABLE_BTRFS
+libsnapper_la_CPPFLAGS += $(LIBBTRFSUTIL_CFLAGS)
+libsnapper_la_LIBADD += $(LIBBTRFSUTIL_LIBS)
+endif
 
 pkgincludedir = $(includedir)/snapper
 
