@@ -22,7 +22,7 @@
 %endif
 
 # Location for PAM module
-%if 0%{?usrmerged}
+%if 0%{?suse_version} >= 1550
 %define pam_security_dir %{_libdir}/security
 %else
 %define pam_security_dir /%{_lib}/security

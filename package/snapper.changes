@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Dec 27 13:20:38 UTC 2022 - Ludwig Nussel <lnussel@suse.com>
+
+- Replace transitional %usrmerged macro with regular version check (boo#1206798)
+
+-------------------------------------------------------------------
 Thu Dec 22 09:03:33 CET 2022 - aschnell@suse.com
 
 - call generic plugins before and after the action
