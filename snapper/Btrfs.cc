@@ -681,10 +681,6 @@ namespace snapper
 
 	bool dumper(int fd);
 
-#if BOOST_VERSION < 104100
-	bool dumper_ret;
-#endif
-
 	void do_send(u64 parent_root_id, const vector<u64>& clone_sources);
 
     };
@@ -1267,19 +1263,11 @@ namespace snapper
 	    {
 		y2err("btrfs_read_and_process_send_stream failed " << r);
 
-#if BOOST_VERSION < 104100
-		dumper_ret = false;
-#endif
-
 		return false;
 	    }
 
 	    if (r)
 	    {
-#if BOOST_VERSION < 104100
-		dumper_ret = true;
-#endif
-
 		return true;
 	    }
 
@@ -1311,8 +1299,6 @@ namespace snapper
 	io_send.parent_root = parent_root_id;
 	io_send.flags = BTRFS_SEND_FLAG_NO_FILE_DATA;
 
-#if BOOST_VERSION >= 104100
-
 	boost::packaged_task<bool> pt(boost::bind(&StreamProcessor::dumper, this, pipefd[0]));
 	boost::unique_future<bool> uf = pt.get_future();
 
@@ -1334,42 +1320,6 @@ namespace snapper
 	{
 	    SN_THROW(BtrfsSendReceiveException());
 	}
-
-#else
-
-	boost::thread dumper_thread(boost::bind(&StreamProcessor::dumper, this, pipefd[0]));
-
-	fd0_closer.reset();
-
-	int r2 = ioctl(dir2.fd(), BTRFS_IOC_SEND, &io_send);
-	if (r2 < 0)
-	{
-	    y2err("send ioctl failed errno:" << errno << " (" << stringerror(errno) << ")");
-	}
-
-	fd1_closer.close();
-
-	dumper_thread.join();
-
-	if (r2 < 0 || !dumper_ret)
-	{
-	    SN_THROW(BtrfsSendReceiveException());
-	}
-
-#endif
-    }
-
-
-    static bool
-    is_subvolume_ro(const SDir& dir)
-    {
-	u64 flags;
-	if (ioctl(dir.fd(), BTRFS_IOC_SUBVOL_GETFLAGS, &flags) < 0)
-	{
-	    SN_THROW(IOErrorException("ioctl BTRFS_IOC_SUBVOL_GETFLAGS failed"));
-	}
-
-	return flags & BTRFS_SUBVOL_RDONLY;
     }
 
 
@@ -1378,7 +1328,7 @@ namespace snapper
     {
 	y2mil("dir1:'" << dir1.fullname() << "' dir2:'" << dir2.fullname() << "'");
 
-	if (!is_subvolume_ro(dir1) || !is_subvolume_ro(dir2))
+	if (!is_subvolume_read_only(dir1.fd()) || !is_subvolume_read_only(dir2.fd()))
 	{
 	    y2err("not read-only snapshots");
 	    SN_THROW(BtrfsSendReceiveException());

@@ -2,7 +2,7 @@
 # Makefile.am for snapper
 #
 
-SUBDIRS = snapper examples dbus server client scripts pam data doc po		\
+SUBDIRS = snapper dbus server client scripts pam data doc po examples		\
 	testsuite testsuite-real testsuite-cmp zypp-plugin
 
 AUTOMAKE_OPTIONS = foreign dist-bzip2 no-dist-gzip

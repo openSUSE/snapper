@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019-2021] SUSE LLC
+ * Copyright (c) [2019-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -19,20 +19,16 @@
  * find current contact information at www.suse.com.
  */
 
-// getenv
 #include <stdlib.h>
-// getppid
 #include <sys/types.h>
 #include <unistd.h>
-
-// split
-#include <boost/algorithm/string.hpp>
 
 #include <iostream>
 #include <map>
 #include <set>
 #include <string>
 #include <regex>
+#include <boost/algorithm/string.hpp>
 
 using namespace std;
 
@@ -301,14 +297,39 @@ object_get(json_object* obj, const char* name)
 }
 
 
+class JsonTokener
+{
+public:
+
+    JsonTokener()
+	: p(json_tokener_new())
+    {
+	if (!p)
+	    throw runtime_error("out of memory");
+    }
+
+    ~JsonTokener()
+    {
+	json_tokener_free(p);
+    }
+
+    json_tokener* get() { return p; }
+
+private:
+
+    json_tokener* p;
+
+};
+
+
 set<string>
 SnapperZyppPlugin::get_solvables(const Message& msg, Phase phase)
 {
     set<string> result;
 
-    json_tokener * tok = json_tokener_new();
-    json_object * zypp = json_tokener_parse_ex(tok, msg.body.c_str(), msg.body.size());
-    json_tokener_error jerr = json_tokener_get_error(tok);
+    JsonTokener tokener;
+    json_object* zypp = json_tokener_parse_ex(tokener.get(), msg.body.c_str(), msg.body.size());
+    json_tokener_error jerr = json_tokener_get_error(tokener.get());
     if (jerr != json_tokener_success) {
 	cerr << "ERROR:" << "parsing zypp JSON failed: "
 			 << json_tokener_error_desc(jerr) << endl;
