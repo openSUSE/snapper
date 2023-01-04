@@ -1323,25 +1323,12 @@ namespace snapper
     }
 
 
-    static bool
-    is_subvolume_ro(const SDir& dir)
-    {
-	u64 flags;
-	if (ioctl(dir.fd(), BTRFS_IOC_SUBVOL_GETFLAGS, &flags) < 0)
-	{
-	    SN_THROW(IOErrorException("ioctl BTRFS_IOC_SUBVOL_GETFLAGS failed"));
-	}
-
-	return flags & BTRFS_SUBVOL_RDONLY;
-    }
-
-
     void
     StreamProcessor::process(cmpdirs_cb_t cb)
     {
 	y2mil("dir1:'" << dir1.fullname() << "' dir2:'" << dir2.fullname() << "'");
 
-	if (!is_subvolume_ro(dir1) || !is_subvolume_ro(dir2))
+	if (!is_subvolume_read_only(dir1.fd()) || !is_subvolume_read_only(dir2.fd()))
 	{
 	    y2err("not read-only snapshots");
 	    SN_THROW(BtrfsSendReceiveException());
