@@ -37,6 +37,9 @@
 #else
 #include <linux/btrfs.h>
 #endif
+#ifdef HAVE_LIBBTRFSUTIL
+#include <btrfsutil.h>
+#endif
 #include <algorithm>
 #include <functional>
 
@@ -44,9 +47,6 @@
 #include "snapper/AppUtil.h"
 #include "snapper/BtrfsUtils.h"
 
-#ifdef HAVE_LIBBTRFSUTIL
-#include <btrfsutil.h>
-#endif
 
 namespace snapper
 {
@@ -114,7 +114,6 @@ namespace snapper
 	create_snapshot(int fd, int fddst, const string& name, bool read_only, qgroup_t qgroup)
 	{
 #ifdef HAVE_LIBBTRFSUTIL
-	    enum btrfs_util_error err;
 	    struct btrfs_util_qgroup_inherit *util_inherit = NULL;
 	    int flags = 0;
 
@@ -137,8 +136,11 @@ namespace snapper
 		util_inherit = (struct btrfs_util_qgroup_inherit *)inherit;
 	    }
 #endif
-	    err = btrfs_util_create_snapshot_fd2(fd, fddst, name.c_str(), flags, NULL, util_inherit);
-	    if (err && errno != ENOTTY && errno != EINVAL)
+	    enum btrfs_util_error err = btrfs_util_create_snapshot_fd2(fd, fddst, name.c_str(), flags, NULL,
+								       util_inherit);
+	    if (!err)
+		return;
+	    else if (errno != ENOTTY && errno != EINVAL)
 		throw runtime_error_with_errno("btrfs_util_create_snapshot_fd2() failed", errno);
 
 	    /* No BTRFS_IOC_SNAP_CREATE fallback */
@@ -176,6 +178,8 @@ namespace snapper
 	    else if (errno != ENOTTY && errno != EINVAL)
 		throw runtime_error_with_errno("ioctl(BTRFS_IOC_SNAP_CREATE_V2) failed", errno);
 
+#endif
+
 	    struct btrfs_ioctl_vol_args args;
 	    memset(&args, 0, sizeof(args));
 
@@ -184,7 +188,6 @@ namespace snapper
 
 	    if (ioctl(fddst, BTRFS_IOC_SNAP_CREATE, &args) < 0)
 		throw runtime_error_with_errno("ioctl(BTRFS_IOC_SNAP_CREATE) failed", errno);
-#endif
 	}
 
 
