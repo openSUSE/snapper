@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -143,7 +143,6 @@ namespace snapper
 	    else if (errno != ENOTTY && errno != EINVAL)
 		throw runtime_error_with_errno("btrfs_util_create_snapshot_fd2() failed", errno);
 
-	    /* No BTRFS_IOC_SNAP_CREATE fallback */
 #else
 	    struct btrfs_ioctl_vol_args_v2 args_v2;
 	    memset(&args_v2, 0, sizeof(args_v2));
