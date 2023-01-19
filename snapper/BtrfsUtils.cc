@@ -279,6 +279,52 @@ namespace snapper
 	string
 	get_subvolume(int fd, subvolid_t id)
 	{
+#ifdef HAVE_LIBBTRFSUTIL
+	    enum btrfs_util_error err;
+	    char *tmp;
+	    string path;
+
+	    /* This requires CAP_SYS_ADMIN as it uses the TREE_SEARCH ioctl but is fast. */
+	    err = btrfs_util_subvolume_path_fd(fd, id, &tmp);
+	    if (err == BTRFS_UTIL_ERROR_SUBVOLUME_NOT_FOUND)
+		throw runtime_error_with_errno("btrfs_util_subvolume_path_fd() failed", errno);
+
+	    /* Try slower iterative search but without restrictions. */
+	    if (err == BTRFS_UTIL_OK) {
+		path = tmp;
+		free(tmp);
+	    } else if (err == BTRFS_UTIL_ERROR_SEARCH_FAILED || err == BTRFS_UTIL_ERROR_NO_MEMORY) {
+		struct btrfs_util_subvolume_iterator *iter;
+
+		err = btrfs_util_create_subvolume_iterator_fd(fd, 0, 0, &iter);
+		if (err)
+		    throw runtime_error_with_errno("btrfs_util_subvolume_path_fd() failed", errno);
+
+		while (1) {
+		    struct btrfs_util_subvolume_info subvol;
+
+		    err = btrfs_util_subvolume_iterator_next_info(iter, &tmp, &subvol);
+		    if (err != BTRFS_UTIL_OK) {
+			/* Nothing found or other error */
+			btrfs_util_destroy_subvolume_iterator(iter);
+			throw std::runtime_error("get_subvolume() failed");
+		    }
+
+		    if (subvol.id == id) {
+			btrfs_util_destroy_subvolume_iterator(iter);
+			path = tmp;
+			free(tmp);
+			break;
+		    }
+		    free(tmp);
+		}
+	    } else {
+		/* Unknown error */
+		throw std::runtime_error("get_subvolume() failed");
+	    }
+
+	    return path;
+#else
 	    char path[BTRFS_PATH_NAME_MAX + 1];
 
 	    if (btrfs_subvolid_resolve(fd, path, sizeof(path), id) != 0)
@@ -286,6 +332,7 @@ namespace snapper
 
 	    path[BTRFS_PATH_NAME_MAX] = '\0';
 	    return path;
+#endif
 	}
 
 #endif
