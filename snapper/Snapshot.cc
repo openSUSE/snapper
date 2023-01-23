@@ -505,7 +505,8 @@ namespace snapper
 
 	int fd = info_dir.mktemp(tmp_name);
 	if (fd < 0)
-	    SN_THROW(IOErrorException("mktemp failed"));
+	    SN_THROW(IOErrorException(sformat("SDir::mktemp failed, errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
 
 	try
 	{
