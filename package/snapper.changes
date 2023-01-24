@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Jan 24 10:56:29 CET 2023 - aschnell@suse.com
+
+- enable SELinux on Fedora and RHEL (gh#openSUSE/snapper#772)
+
+-------------------------------------------------------------------
 Thu Jan 19 12:00:00 PM CET 2023 - David Sterba <dsterba@suse.cz>
 
 - Use libbtrfsutil implementation for BtrfsUtil::get_subvolume
@@ -29,7 +34,7 @@ Thu Dec 22 09:03:33 CET 2022 - aschnell@suse.com
 -------------------------------------------------------------------
 Mon Dec 05 08:13:07 CET 2022 - aschnell@suse.com
 
-- fix build with upcoming selinux
+- fix build with upcoming SELinux
 - version 0.10.4
 
 -------------------------------------------------------------------

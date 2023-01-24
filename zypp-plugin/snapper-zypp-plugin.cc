@@ -229,9 +229,10 @@ public:
     }
 
 private:
+
     static const string cleanup_algorithm;
 
-    string snapper_cfg;
+    const string snapper_cfg;
 
     DBus::Connection dbus_conn;
     unsigned int pre_snapshot_num;
@@ -386,7 +387,7 @@ SnapperZyppPlugin::match_solvables(const set<string>& solvables, bool& found, bo
 	for (auto matcher: solvable_matchers) {
 	    if (matcher.match(s)) {
 		found = true;
-		important = important || matcher.important;
+		important = important || matcher.is_important();
 		if (found && important)
 		    return; // short circuit
 	    }
