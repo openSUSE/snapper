@@ -95,6 +95,7 @@ BuildRequires:  libzypp(plugin:commit)
 BuildRequires:  pam-devel
 %if 0%{?fedora_version} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
 BuildRequires:  json-c-devel
+BuildRequires:  libselinux-devel
 %else
 BuildRequires:  libjson-c-devel
 %endif
@@ -139,6 +140,9 @@ autoreconf -fvi
 %endif
 %if 0%{?suse_version} <= 1310
 	--disable-btrfs-quota							\
+%endif
+%if 0%{?fedora_version} || 0%{?rhel_version}
+	--enable-selinux							\
 %endif
 	--disable-silent-rules --disable-ext4
 make %{?_smp_mflags}
