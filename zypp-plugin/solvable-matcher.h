@@ -22,17 +22,16 @@
 #ifndef SOLVABLE_MATCHER_H
 #define SOLVABLE_MATCHER_H
 
-#include <iostream>
+
 #include <vector>
 #include <string>
+
 
 class SolvableMatcher
 {
 public:
 
     enum class Kind { GLOB, REGEX };
-
-    static std::ostream& log;
 
     SolvableMatcher(const std::string& pattern, Kind kind, bool important)
 	: pattern(pattern), kind(kind), important(important)

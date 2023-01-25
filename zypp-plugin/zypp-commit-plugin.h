@@ -22,6 +22,7 @@
 #ifndef ZYPP_COMMIT_PLUGIN_H
 #define ZYPP_COMMIT_PLUGIN_H
 
+
 #include "zypp-plugin.h"
 
 

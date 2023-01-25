@@ -19,29 +19,22 @@
  * find current contact information at www.suse.com.
  */
 
+
 #include "solvable-matcher.h"
 
-#include <iostream>
-#include <vector>
-#include <string>
-#include <regex>
 #include <fnmatch.h>
+#include <regex>
 #include "snapper/XmlFile.h"
+#include "snapper/Log.h"
 
 using namespace std;
 using namespace snapper;
 
 
-std::ostream& SolvableMatcher::log = std::cerr;
-
-
 bool
 SolvableMatcher::match(const string& solvable) const
 {
-    log << "DEBUG:"
-	<< "match? " << solvable
-	<< " by " << ((kind == Kind::GLOB)? "GLOB '": "REGEX '")
-	<< pattern << '\'' << endl;
+    y2deb("match '" << solvable << "' by " << (kind == Kind::GLOB ? "GLOB '": "REGEX '") << pattern << '\'');
 
     bool res = false;
 
@@ -65,14 +58,13 @@ SolvableMatcher::match(const string& solvable) const
 	    }
 	    catch (const regex_error& e)
 	    {
-		log << "ERROR:" << "Regex compilation error:" << e.what() << + " pattern:'" << pattern
-		    << "'" << endl;
+		y2err("Regex compilation error:" << e.what() << + " pattern:'" << pattern << "'");
 	    }
 	}
 	break;
     }
 
-    log << "DEBUG:" << "-> " << res << endl;
+    y2deb("-> " << res);
     return res;
 }
 
@@ -80,7 +72,7 @@ SolvableMatcher::match(const string& solvable) const
 vector<SolvableMatcher>
 SolvableMatcher::load_config(const string& cfg_filename)
 {
-    log << "DEBUG:" << "parsing " << cfg_filename << endl;
+    y2deb("parsing " << cfg_filename);
 
     vector<SolvableMatcher> result;
 
@@ -99,15 +91,14 @@ SolvableMatcher::load_config(const string& cfg_filename)
 	    Kind kind;
 	    string kind_s;
 	    getAttributeValue(node, "match", kind_s);
-	    getValue(node, pattern);
-	    if (kind_s == "w")		// w = wildcard
+	    if (kind_s == "w")		// w = Wildcard
 		kind = Kind::GLOB;
 	    else if (kind_s == "re")	// re = Regular Expression
 		kind = Kind::REGEX;
 	    else
 	    {
-		log << "ERROR:" << "Unknown match attribute '" << kind_s << "', disregarding pattern '"
-		    << pattern << "'" << endl;
+		y2err("Unknown match attribute '" << kind_s << "', disregarding pattern '" <<
+		      pattern << "'");
 		continue;
 	    }
 
@@ -119,7 +110,7 @@ SolvableMatcher::load_config(const string& cfg_filename)
     }
     catch (const exception& e)
     {
-	log << "ERROR:" << "Loading XML failed" << endl;
+	y2err("Loading XML failed");
     }
 
     return result;

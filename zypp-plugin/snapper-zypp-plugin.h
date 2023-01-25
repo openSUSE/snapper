@@ -22,6 +22,7 @@
 #ifndef SNAPPER_ZYPP_COMMIT_PLUGIN_H
 #define SNAPPER_ZYPP_COMMIT_PLUGIN_H
 
+
 #include "zypp-commit-plugin.h"
 #include "solvable-matcher.h"
 
