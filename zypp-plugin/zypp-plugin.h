@@ -43,11 +43,9 @@ public:
     std::istream& pin;
     /// Where the protocol writes to
     std::ostream& pout;
-    /// Where the plugin writes log messages to
-    std::ostream& plog;
 
-    ZyppPlugin(std::istream& in = std::cin, std::ostream& out = std::cout, std::ostream& log = std::cerr)
-	: pin(in), pout(out), plog(log)
+    ZyppPlugin(std::istream& in = std::cin, std::ostream& out = std::cout)
+	: pin(in), pout(out)
     {}
 
     virtual ~ZyppPlugin() {}

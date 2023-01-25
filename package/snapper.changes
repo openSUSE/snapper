@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Jan 25 12:25:23 CET 2023 - aschnell@suse.com
+
+- suppress debug logging in zypp-plugin per default
+
+-------------------------------------------------------------------
 Tue Jan 24 10:56:29 CET 2023 - aschnell@suse.com
 
 - enable SELinux on Fedora and RHEL (gh#openSUSE/snapper#772)
