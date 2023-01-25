@@ -383,13 +383,20 @@ SnapperZyppPlugin::match_solvables(const set<string>& solvables, bool& found, bo
 {
     found = false;
     important = false;
-    for (auto s: solvables) {
-	for (auto matcher: solvable_matchers) {
-	    if (matcher.match(s)) {
+
+    for (const string& solvable : solvables)
+    {
+	for (const SolvableMatcher& solvable_matcher : solvable_matchers)
+	{
+	    if (solvable_matcher.match(solvable))
+	    {
 		found = true;
-		important = important || matcher.is_important();
-		if (found && important)
+
+		if (solvable_matcher.is_important())
+		{
+		    important = true;
 		    return; // short circuit
+		}
 	    }
 	}
     }
