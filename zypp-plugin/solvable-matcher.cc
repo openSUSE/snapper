@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019-2020] SUSE LLC
+ * Copyright (c) [2019-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -25,13 +25,10 @@
 #include <vector>
 #include <string>
 #include <regex>
-
-using namespace std;
-
-// fnmatch
 #include <fnmatch.h>
 #include "snapper/XmlFile.h"
 
+using namespace std;
 using namespace snapper;
 
 
@@ -45,25 +42,36 @@ SolvableMatcher::match(const string& solvable) const
 	<< "match? " << solvable
 	<< " by " << ((kind == Kind::GLOB)? "GLOB '": "REGEX '")
 	<< pattern << '\'' << endl;
-    bool res;
-    if (kind == Kind::GLOB) {
-	static const int flags = 0;
-	res = fnmatch(pattern.c_str(), solvable.c_str(), flags) == 0;
-    }
-    else
+
+    bool res = false;
+
+    switch (kind)
     {
-	try
+	case Kind::GLOB:
 	{
-	    // POSIX Extended Regular Expression Syntax
-	    // The original Python implementation allows "foo" to match "foo-devel"
-	    const regex rx_pattern("^" + pattern, regex::extended);
-	    res = regex_search(solvable, rx_pattern);
+	    static const int flags = 0;
+	    res = fnmatch(pattern.c_str(), solvable.c_str(), flags) == 0;
 	}
-	catch (const regex_error& e)
+	break;
+
+	case Kind::REGEX:
 	{
-	    throw std::runtime_error(string("Regex compilation error: ") + e.what());
+	    try
+	    {
+		// POSIX Extended Regular Expression Syntax
+		// The original Python implementation allows "foo" to match "foo-devel"
+		const regex rx_pattern("^" + pattern, regex::extended);
+		res = regex_search(solvable, rx_pattern);
+	    }
+	    catch (const regex_error& e)
+	    {
+		log << "ERROR:" << "Regex compilation error:" << e.what() << + " pattern:'" << pattern
+		    << "'" << endl;
+	    }
 	}
+	break;
     }
+
     log << "DEBUG:" << "-> " << res << endl;
     return res;
 }
@@ -72,34 +80,46 @@ SolvableMatcher::match(const string& solvable) const
 vector<SolvableMatcher>
 SolvableMatcher::load_config(const string& cfg_filename)
 {
+    log << "DEBUG:" << "parsing " << cfg_filename << endl;
+
     vector<SolvableMatcher> result;
 
-    log << "DEBUG:" << "parsing " << cfg_filename << endl;
-    XmlFile config(cfg_filename);
-    const xmlNode* root = config.getRootElement();
-    const xmlNode* solvables_n = getChildNode(root, "solvables");
-    const list<const xmlNode*> solvables_l = getChildNodes(solvables_n, "solvable");
-    for (auto node: solvables_l) {
-	string pattern;
-	Kind kind;
-	bool important = false;
+    try
+    {
+	XmlFile config(cfg_filename);
 
-	getAttributeValue(node, "important", important);
-	string kind_s;
-	getAttributeValue(node, "match", kind_s);
-	getValue(node, pattern);
-	if (kind_s == "w") { // w for wildcard
-	    kind = Kind::GLOB;
-	}
-	else if (kind_s == "re") { // Regular Expression
-	    kind = Kind::REGEX;
-	}
-	else {
-	    log << "ERROR:" << "Unknown match attribute '" << kind_s << "', disregarding pattern '"<< pattern << "'" << endl;
-	    continue;
-	}
+	const xmlNode* root = config.getRootElement();
+	const xmlNode* solvables_n = getChildNode(root, "solvables");
+	const list<const xmlNode*> solvables_l = getChildNodes(solvables_n, "solvable");
+	for (const xmlNode* node : solvables_l)
+	{
+	    string pattern;
+	    getValue(node, pattern);
 
-	result.emplace_back(SolvableMatcher(pattern, kind, important));
+	    Kind kind;
+	    string kind_s;
+	    getAttributeValue(node, "match", kind_s);
+	    getValue(node, pattern);
+	    if (kind_s == "w")		// w = wildcard
+		kind = Kind::GLOB;
+	    else if (kind_s == "re")	// re = Regular Expression
+		kind = Kind::REGEX;
+	    else
+	    {
+		log << "ERROR:" << "Unknown match attribute '" << kind_s << "', disregarding pattern '"
+		    << pattern << "'" << endl;
+		continue;
+	    }
+
+	    bool important = false;
+	    getAttributeValue(node, "important", important);
+
+	    result.emplace_back(pattern, kind, important);
+	}
+    }
+    catch (const exception& e)
+    {
+	log << "ERROR:" << "Loading XML failed" << endl;
     }
 
     return result;
