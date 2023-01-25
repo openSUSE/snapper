@@ -26,11 +26,14 @@
 #include <map>
 #include <string>
 
-class ZyppPlugin {
+class ZyppPlugin
+{
 public:
+
     // Plugin message aka frame
     // https://doc.opensuse.org/projects/libzypp/SLE12SP2/zypp-plugins.html
-    struct Message {
+    struct Message
+    {
 	std::string command;
 	std::map<std::string, std::string> headers;
 	std::string body;
@@ -42,31 +45,31 @@ public:
     std::ostream& pout;
     /// Where the plugin writes log messages to
     std::ostream& plog;
-    ZyppPlugin(std::istream& in = std::cin,
-	       std::ostream& out = std::cout,
-	       std::ostream& log = std::cerr)
-	: pin(in)
-	, pout(out)
-	, plog(log)
+
+    ZyppPlugin(std::istream& in = std::cin, std::ostream& out = std::cout, std::ostream& log = std::cerr)
+	: pin(in), pout(out), plog(log)
     {}
+
     virtual ~ZyppPlugin() {}
 
     virtual int main();
 
 protected:
+
     /// Handle a message and return a reply.
     // Derived classes should override it.
     // The base acks a _DISCONNECT and replies _ENOMETHOD to everything else.
-    virtual Message dispatch(const Message&);
+    virtual Message dispatch(const Message& msg);
 
     Message read_message(std::istream& is);
     void write_message(std::ostream& os, const Message& msg);
 
-    Message ack() {
+    Message ack()
+    {
 	Message a;
 	a.command = "ACK";
 	return a;
     }
 };
 
-#endif //ZYPP_PLUGIN_H
+#endif

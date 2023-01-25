@@ -33,7 +33,7 @@ using namespace std;
 int
 ZyppPlugin::main()
 {
-    while(true)
+    while (true)
     {
 	Message msg = read_message(pin);
 	if (pin.eof())
@@ -49,7 +49,7 @@ void
 ZyppPlugin::write_message(ostream& os, const Message& msg)
 {
     os << msg.command << endl;
-    for(auto it: msg.headers) {
+    for (auto it: msg.headers) {
 	os << it.first << ':' << it.second << endl;
     }
     os << endl;
@@ -61,11 +61,7 @@ ZyppPlugin::write_message(ostream& os, const Message& msg)
 ZyppPlugin::Message
 ZyppPlugin::read_message(istream& is)
 {
-    enum class State {
-		      Start,
-		      Headers,
-		      Body
-    } state = State::Start;
+    enum class State { Start, Headers, Body } state = State::Start;
 
     Message msg;
 
@@ -76,7 +72,8 @@ ZyppPlugin::read_message(istream& is)
 	getline(is, line);
 	boost::trim_right(line);
 
-	if (state == State::Start) {
+	if (state == State::Start)
+	{
 	    if (is.eof())
 		return msg; //empty
 
@@ -95,8 +92,10 @@ ZyppPlugin::read_message(istream& is)
 		throw runtime_error("Plugin protocol error: expected a command. Got '" + line + "'");
 	    }
 	}
-	else if (state == State::Headers) {
-	    if (line.empty()) {
+	else if (state == State::Headers)
+	{
+	    if (line.empty())
+	    {
 		state = State::Body;
 		getline(is, msg.body, '\0');
 
@@ -128,9 +127,11 @@ ZyppPlugin::read_message(istream& is)
 ZyppPlugin::Message
 ZyppPlugin::dispatch(const Message& msg)
 {
-    if (msg.command == "_DISCONNECT") {
+    if (msg.command == "_DISCONNECT")
+    {
 	return ack();
     }
+
     Message a;
     a.command = "_ENOMETHOD";
     a.headers["Command"] = msg.command;

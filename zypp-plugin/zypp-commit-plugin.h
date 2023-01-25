@@ -24,24 +24,48 @@
 
 #include "zypp-plugin.h"
 
+
 /// Dispatches begin+end of plugin+commit in dedicated methods.
 // The default implementations just ack.
-class ZyppCommitPlugin : public ZyppPlugin {
+class ZyppCommitPlugin : public ZyppPlugin
+{
 public:
+
     Message dispatch(const Message& msg) override;
 
-    virtual Message plugin_begin(const Message& m) {
-	return ack();
-    }
-    virtual Message plugin_end(const Message& m) {
-	return ack();
-    }
-    virtual Message commit_begin(const Message& m) {
-	return ack();
-    }
-    virtual Message commit_end(const Message& m) {
-	return ack();
-    }
+    virtual Message plugin_begin(const Message& msg) = 0;
+    virtual Message plugin_end(const Message& msg) = 0;
+
+    virtual Message commit_begin(const Message& msg) = 0;
+    virtual Message commit_end(const Message& msg) = 0;
+
 };
 
-#endif //ZYPP_COMMIT_PLUGIN_H
+
+class DummyZyppCommitPlugin : public ZyppCommitPlugin
+{
+public:
+
+    virtual Message plugin_begin(const Message& msg) override
+    {
+	return ack();
+    }
+
+    virtual Message plugin_end(const Message& msg) override
+    {
+	return ack();
+    }
+
+    virtual Message commit_begin(const Message& msg) override
+    {
+	return ack();
+    }
+
+    virtual Message commit_end(const Message& msg) override
+    {
+	return ack();
+    }
+
+};
+
+#endif
