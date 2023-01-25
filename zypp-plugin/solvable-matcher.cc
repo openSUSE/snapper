@@ -19,6 +19,7 @@
  * find current contact information at www.suse.com.
  */
 
+
 #include "solvable-matcher.h"
 
 #include <fnmatch.h>

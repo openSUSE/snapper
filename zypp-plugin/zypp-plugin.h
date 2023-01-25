@@ -22,9 +22,11 @@
 #ifndef ZYPP_PLUGIN_H
 #define ZYPP_PLUGIN_H
 
+
 #include <iostream>
 #include <map>
 #include <string>
+
 
 class ZyppPlugin
 {

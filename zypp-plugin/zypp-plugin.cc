@@ -19,6 +19,7 @@
  * find current contact information at www.suse.com.
  */
 
+
 #include <iostream>
 #include <boost/algorithm/string/trim.hpp>
 #include <string>
@@ -38,9 +39,11 @@ ZyppPlugin::main()
 	Message msg = read_message(pin);
 	if (pin.eof())
 	    break;
+
 	Message reply = dispatch(msg);
 	write_message(pout, reply);
     }
+
     return 0;
 }
 
