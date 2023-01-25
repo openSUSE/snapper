@@ -41,7 +41,7 @@
 #include "client/commands.h"
 #include "client/errors.h"
 
-#include "snapper-zypp-commit-plugin.h"
+#include "snapper-zypp-plugin.h"
 
 using namespace std;
 using namespace snapper;

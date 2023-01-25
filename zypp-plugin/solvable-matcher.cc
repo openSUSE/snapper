@@ -38,9 +38,7 @@ std::ostream& SolvableMatcher::log = std::cerr;
 bool
 SolvableMatcher::match(const string& solvable) const
 {
-    log << "DEBUG:"
-	<< "match? " << solvable
-	<< " by " << ((kind == Kind::GLOB)? "GLOB '": "REGEX '")
+    log << "DEBUG:" << "match '" << solvable << "' by " << (kind == Kind::GLOB ? "GLOB '": "REGEX '")
 	<< pattern << '\'' << endl;
 
     bool res = false;
@@ -99,8 +97,7 @@ SolvableMatcher::load_config(const string& cfg_filename)
 	    Kind kind;
 	    string kind_s;
 	    getAttributeValue(node, "match", kind_s);
-	    getValue(node, pattern);
-	    if (kind_s == "w")		// w = wildcard
+	    if (kind_s == "w")		// w = Wildcard
 		kind = Kind::GLOB;
 	    else if (kind_s == "re")	// re = Regular Expression
 		kind = Kind::REGEX;

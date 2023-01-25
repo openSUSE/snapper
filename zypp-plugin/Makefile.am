@@ -12,7 +12,7 @@ plugin_PROGRAMS = snapper-zypp-plugin
 AM_CPPFLAGS = $(DBUS_CFLAGS) $(XML2_CFLAGS) $(JSONC_CFLAGS)
 
 snapper_zypp_plugin_SOURCES = \
-	snapper-zypp-commit-plugin.cc snapper-zypp-commit-plugin.h \
+	snapper-zypp-plugin.cc snapper-zypp-plugin.h \
 	solvable-matcher.cc solvable-matcher.h \
 	zypp-commit-plugin.cc zypp-commit-plugin.h \
 	zypp-plugin.cc zypp-plugin.h
