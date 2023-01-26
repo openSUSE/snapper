@@ -2,13 +2,13 @@
 <refentry id='snapper-zypp-plugin8'>
 
   <refentryinfo>
-    <date>2021-09-21</date>
+    <date>2023-01-26</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper-zypp-plugin</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2021-09-21</refmiscinfo>
+    <refmiscinfo class='date'>2023-01-26</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -38,6 +38,25 @@
 	<term><filename>/usr/share/snapper/zypp-plugin.conf</filename></term>
 	<listitem>
 	  <para>Fallback configuration file. New in version 0.9.1.</para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='environment'>
+    <title>ENVIRONMENT</title>
+    <variablelist>
+      <varlistentry>
+	<term><envar>SNAPPER_ZYPP_PLUGIN_DEBUG</envar></term>
+	<listitem>
+	  <para>If set, debug output is enabled. The debug output is
+	  usually included in <filename>/var/log/zypper.log</filename>.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><envar>DISABLE_SNAPPER_ZYPP_PLUGIN</envar></term>
+	<listitem>
+	  <para>If set, the plugin is disabled.</para>
 	</listitem>
       </varlistentry>
     </variablelist>
