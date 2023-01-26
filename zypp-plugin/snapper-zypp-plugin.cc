@@ -52,15 +52,12 @@ using namespace snapper;
 ostream&
 operator<<(ostream& os, const set<string>& ss)
 {
-    bool seen_first = false;
     os << '{';
-    for (auto s : ss)
+    for (typename set<string>::const_iterator it = ss.begin(); it != ss.end(); ++it)
     {
-	if (seen_first)
+	if (it != ss.begin())
 	    os << ", ";
-
-	os << s;
-	seen_first = true;
+	os << *it;
     }
     os << '}';
     return os;
@@ -232,6 +229,7 @@ SnapperZyppCommitPlugin::commit_end(const Message& msg)
 	    }
 	}
     }
+
     return ack();
 }
 
@@ -239,17 +237,21 @@ SnapperZyppCommitPlugin::commit_end(const Message& msg)
 const string SnapperZyppCommitPlugin::cleanup_algorithm = "number";
 
 
+// The user can provide userdata e.g. using zypper ('zypper --userdata foo=bar install
+// barrel').
+
 map<string, string>
 SnapperZyppCommitPlugin::get_userdata(const Message& msg)
 {
     map<string, string> result;
+
     auto it = msg.headers.find("userdata");
     if (it != msg.headers.end())
     {
 	const string& userdata_s = it->second;
 	vector<string> key_values;
 	boost::split(key_values, userdata_s, boost::is_any_of(","));
-	for (auto kv : key_values)
+	for (const string& kv : key_values)
 	{
 	    static const regex rx_keyval("([^=]*)=(.+)", regex::extended);
 	    smatch match;
@@ -266,6 +268,7 @@ SnapperZyppCommitPlugin::get_userdata(const Message& msg)
 	    }
 	}
     }
+
     return result;
 }
 
@@ -273,7 +276,7 @@ SnapperZyppCommitPlugin::get_userdata(const Message& msg)
 static json_object*
 object_get(json_object* obj, const char* name)
 {
-    json_object * result;
+    json_object* result;
     if (!json_object_object_get_ex(obj, name, &result))
     {
 	y2err('"' << name << "\" not found");
@@ -361,7 +364,7 @@ SnapperZyppCommitPlugin::get_solvables(const Message& msg, Phase phase) const
 		}
 		else
 		{
-		    const char * prize = json_object_get_string(name);
+		    const char* prize = json_object_get_string(name);
 		    result.insert(prize);
 		}
 	    }
@@ -375,8 +378,7 @@ SnapperZyppCommitPlugin::get_solvables(const Message& msg, Phase phase) const
 void
 SnapperZyppCommitPlugin::match_solvables(const set<string>& solvables, bool& found, bool& important) const
 {
-    found = false;
-    important = false;
+    found = important = false;
 
     for (const string& solvable : solvables)
     {

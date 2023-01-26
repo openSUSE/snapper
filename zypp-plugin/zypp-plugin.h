@@ -56,15 +56,15 @@ public:
 
 protected:
 
+    Message read_message(std::istream& is) const;
+    void write_message(std::ostream& os, const Message& msg) const;
+
     /// Handle a message and return a reply.
-    // Derived classes should override it.
+    // Derived classes must override it.
     // The base acks a _DISCONNECT and replies _ENOMETHOD to everything else.
-    virtual Message dispatch(const Message& msg);
+    virtual Message dispatch(const Message& msg) = 0;
 
-    Message read_message(std::istream& is);
-    void write_message(std::ostream& os, const Message& msg);
-
-    Message ack()
+    Message ack() const
     {
 	Message a;
 	a.command = "ACK";
