@@ -48,21 +48,8 @@ ZyppPlugin::main()
 }
 
 
-void
-ZyppPlugin::write_message(ostream& os, const Message& msg)
-{
-    os << msg.command << endl;
-    for (auto it: msg.headers) {
-	os << it.first << ':' << it.second << endl;
-    }
-    os << endl;
-    os << msg.body << '\0';
-    os.flush();
-}
-
-
 ZyppPlugin::Message
-ZyppPlugin::read_message(istream& is)
+ZyppPlugin::read_message(istream& is) const
 {
     enum class State { Start, Headers, Body } state = State::Start;
 
@@ -127,13 +114,23 @@ ZyppPlugin::read_message(istream& is)
 }
 
 
+void
+ZyppPlugin::write_message(ostream& os, const Message& msg) const
+{
+    os << msg.command << endl;
+    for (auto it : msg.headers)
+	os << it.first << ':' << it.second << endl;
+    os << endl;
+    os << msg.body << '\0';
+    os.flush();
+}
+
+
 ZyppPlugin::Message
 ZyppPlugin::dispatch(const Message& msg)
 {
     if (msg.command == "_DISCONNECT")
-    {
 	return ack();
-    }
 
     Message a;
     a.command = "_ENOMETHOD";
