@@ -77,8 +77,7 @@ ZyppPlugin::Message
 ForwardingZyppPlugin::dispatch(const Message& msg)
 {
     write_message(childs_in, msg);
-    Message reply = read_message(childs_out);
-    return reply;
+    return read_message(childs_out);
 }
 
 
