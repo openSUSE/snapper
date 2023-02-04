@@ -3,14 +3,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-23 12:54+0100\n"
-"PO-Revision-Date: 2005-05-18 10:33+0200\n"
-"Last-Translator: Aiet Kolkhi <aiet@qartuli.net>\n"
-"Language-Team: Georgian <i18n@suse.de>\n"
+"PO-Revision-Date: 2023-02-04 17:24+0000\n"
+"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"Language-Team: Georgian <https://l10n.opensuse.org/projects/snapper/master/"
+"ka/>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.9.1\n"
 
 msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
 msgstr ""
@@ -336,9 +338,9 @@ msgstr ""
 msgid "B"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr "DBI Execution failed: %s."
+msgstr ""
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
@@ -456,9 +458,9 @@ msgstr ""
 msgid "Could not make enough free space available."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Creating config failed (%s)."
-msgstr "DBI Execution failed: %s."
+msgstr ""
 
 msgid "Creating read-only snapshot of current system."
 msgstr ""
@@ -473,9 +475,8 @@ msgstr ""
 msgid "Creating read-write snapshot of snapshot %d."
 msgstr ""
 
-#, fuzzy
 msgid "Creating snapshot failed."
-msgstr "DBI Execution failed: %s."
+msgstr ""
 
 msgid "Date"
 msgstr ""
@@ -483,18 +484,17 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting config failed (%s)."
-msgstr "DBI Execution failed: %s."
+msgstr ""
 
-#, fuzzy
 msgid "Deleting snapshot failed."
-msgstr "DBI Execution failed: %s."
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting snapshot from %s:"
 msgid_plural "Deleting snapshots from %s:"
-msgstr[0] "DBI Execution failed: %s."
+msgstr[0] ""
 
 msgid "Description"
 msgstr ""
@@ -521,28 +521,26 @@ msgid "Empty userdata."
 msgstr ""
 
 # error box title
-#, fuzzy, c-format
+#, c-format
 msgid "Error (%s)."
-msgstr "I/O შეცდომა"
+msgstr ""
 
 msgid "Failed to initialize filesystem handler."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to parse '%s'."
-msgstr "Failed to parse: %s."
+msgstr ""
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr ""
 
-#, fuzzy
 msgid "Failed to query free space."
-msgstr "Failed to parse: %s."
+msgstr ""
 
-#, fuzzy
 msgid "Failed to set locale."
-msgstr "Failed to parse: %s."
+msgstr ""
 
 msgid "Failure"
 msgstr ""
@@ -556,9 +554,9 @@ msgid "File '%s' not found."
 msgstr ""
 
 # error box title
-#, fuzzy, c-format
+#, c-format
 msgid "Free space error (%s)."
-msgstr "I/O შეცდომა"
+msgstr ""
 
 #. TRANSLATORS: symbol for "giga" (best keep untranslated)
 msgid "G"
@@ -573,21 +571,20 @@ msgid "GiB"
 msgstr ""
 
 # error box title
-#, fuzzy, c-format
+#, c-format
 msgid "IO Error (%s)."
-msgstr "I/O შეცდომა"
+msgstr ""
 
 # error box title
-#, fuzzy, c-format
+#, c-format
 msgid "IO error (%s)."
-msgstr "I/O შეცდომა"
+msgstr ""
 
 msgid "Identical snapshots."
 msgstr ""
 
-#, fuzzy
 msgid "Illegal snapshot."
-msgstr "DBI Execution failed: %s."
+msgstr ""
 
 #, c-format
 msgid "Invalid ambit '%s'."
@@ -641,9 +638,9 @@ msgstr ""
 msgid "KiB"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Listing configs failed (%s)."
-msgstr "DBI Execution failed: %s."
+msgstr ""
 
 #. TRANSLATORS: symbol for "mega" (best keep untranslated)
 msgid "M"
@@ -718,9 +715,9 @@ msgid "Pre Date"
 msgstr ""
 
 # error box title
-#, fuzzy, c-format
+#, c-format
 msgid "Quota error (%s)."
-msgstr "I/O შეცდომა"
+msgstr ""
 
 msgid "See 'man snapper' for further instructions."
 msgstr ""
@@ -774,9 +771,8 @@ msgstr ""
 msgid "Unknown command '%s'."
 msgstr ""
 
-#, fuzzy
 msgid "Unknown config."
-msgstr "უცნობი"
+msgstr ""
 
 #, c-format
 msgid "Unknown global option '%s'."
@@ -786,9 +782,9 @@ msgstr ""
 msgid "Unknown option '%s' for command '%s'."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown type '%s'."
-msgstr "უცნობი"
+msgstr ""
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
@@ -832,17 +828,17 @@ msgstr ""
 msgid "deleting %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "failed to create %s"
-msgstr "Failed to parse: %s."
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "failed to delete %s"
-msgstr "Failed to parse: %s."
+msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "failed to modify %s"
-msgstr "Failed to parse: %s."
+msgstr ""
 
 #. TRANSLATORS: symbol for "kilo" (best keep untranslated)
 msgid "k"
