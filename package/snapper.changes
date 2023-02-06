@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Feb 06 10:43:33 CET 2023 - aschnell@suse.com
+
+- fix use of does_subvolume_exist() (bsc#1207901)
+
+-------------------------------------------------------------------
 Wed Jan 25 12:25:23 CET 2023 - aschnell@suse.com
 
 - suppress debug logging in zypp-plugin per default

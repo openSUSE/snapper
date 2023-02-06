@@ -1577,7 +1577,7 @@ namespace snapper
 #ifdef HAVE_LIBBTRFS
 	    for (subvolid_t subvolid : deleted_subvolids)
 	    {
-		while (!does_subvolume_exist(subvolume_dir.fd(), subvolid))
+		while (does_subvolume_exist(subvolume_dir.fd(), subvolid))
 		    sleep(1);
 	    }
 #endif

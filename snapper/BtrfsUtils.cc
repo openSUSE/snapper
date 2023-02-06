@@ -387,7 +387,7 @@ namespace snapper
 	    if (ioctl(fd, BTRFS_IOC_TREE_SEARCH, &args) < 0)
 		throw runtime_error_with_errno("ioctl(BTRFS_IOC_TREE_SEARCH) failed", errno);
 
-	    return sk->nr_items == 0;
+	    return sk->nr_items > 0;
 #endif
 	}
 
