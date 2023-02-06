@@ -37,6 +37,12 @@ main()
 
     if (false)
     {
+	cout << does_subvolume_exist(fd, 280) << '\n';
+    }
+
+
+    if (false)
+    {
 	quota_enable(fd);
     }
 
