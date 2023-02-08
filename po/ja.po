@@ -9,9 +9,10 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-08 08:09+0100\n"
-"PO-Revision-Date: 2022-03-23 18:12+0000\n"
+"PO-Revision-Date: 2023-02-08 15:14+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
+"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/"
+"ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -81,9 +82,8 @@ msgstr "\t--extensions, -x <オプション>\tdiffコマンドに渡される追
 msgid "\t--free-space <space>\t\tTry to make space available."
 msgstr "\t--free-space <サイズ>\t\t指定した空き容量になるようにする。"
 
-#, fuzzy
 msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
-msgstr "\t--from\t\t\t\t指定したスナップショットから新しいスナップショットを作成する。"
+msgstr "\t--from <番号>\t\t\t指定したスナップショットから新しいスナップショットを作成する。"
 
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <種類>\t\t手動でファイルシステムの種類を指定する。"
@@ -106,9 +106,8 @@ msgstr "\t--machine-readable <書式>\t機械処理可能な出力形式 (csv, j
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tDBus 無しで処理を行なう。"
 
-#, fuzzy
 msgid "\t--no-headers\t\t\tNo headers for CSV output format."
-msgstr "\t--csvout\t\t\tCSV 形式の出力を行なう。"
+msgstr "\t--no-headers\t\t\tCSV 形式での出力時、ヘッダを出力しない。"
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <ファイル>\t\t状態をファイルに保存する。"
