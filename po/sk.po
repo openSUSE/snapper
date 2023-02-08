@@ -7,9 +7,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-08 08:09+0100\n"
-"PO-Revision-Date: 2022-03-23 18:12+0000\n"
+"PO-Revision-Date: 2023-02-08 19:14+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
-"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
+"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
+"\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -79,9 +80,8 @@ msgstr "\t--extensions, -x <voľby>\tĎalšie voľby odovzdané príkazu diff."
 msgid "\t--free-space <space>\t\tTry to make space available."
 msgstr "\t--free-space <miesto>\t\tSkúsi sprístupniť miesto."
 
-#, fuzzy
 msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
-msgstr "\t--from\t\t\t\tVytvorí snímku zo zadanej snímky."
+msgstr "\t--from <číslo>\t\t\tVytvorí snímku zo zadanej snímky."
 
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <typ_súborového_systému>\t\tRučne nastaví typ súborového systému."
@@ -104,9 +104,8 @@ msgstr "\t--machine-readable <formát>\tNastaví výstupný formát čitateľný
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tBeží bez DBus."
 
-#, fuzzy
 msgid "\t--no-headers\t\t\tNo headers for CSV output format."
-msgstr "\t--csvout\t\t\tNastaví výstupný formát CSV."
+msgstr "\t--no-headers\t\t\tŽiadne hlavičky pre výstupný formát CSV."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <súbor>\t\tUloží stav do súboru."
