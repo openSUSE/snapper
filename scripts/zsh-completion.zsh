@@ -28,7 +28,7 @@ local subcommands=(
   'list:List\ snapshots'
   'create:Create\ snapshot'
   'modify:Modify\ snapshot'
-  'delete:Delete\ snapshot'
+  {delete,remove,rm}':Delete\ snapshot'
   'mount:Mount\ snapshot'
   'umount:Umount\ snapshot'
   'status:Comparing\ snapshots'
@@ -54,6 +54,9 @@ local algorithms=(
   'empty-pre-post:Deletes\ pre/post\ snapshot\ pairs\ with\ empty\ diffs'
 )
 local type=(single pre post)
+local _number=$(command snapper --csvout --no-headers --separator : list --columns number,description)
+local number=${(f)_number}
+local number_without_current=${${(f)_number}[2,-1]}
 case $words[1] in
 list-configs)
   _arguments -s -S \
@@ -64,7 +67,8 @@ create-config)
   # other distributions (except Android) have /usr/share or /usr/local/share
   _arguments -s -S \
     {--fstype,-f}'[Manually set filesystem type]:filesystem:(btrfs ext4 lvm)' \
-    {--template,-t}"[Name of config template to use]:template:(${$(echo /{usr{/local,},run/current-system/sw}/share/snapper/config-templates/*(N))##*/})"
+    {--template,-t}"[Name of config template to use]:template:(${$(echo /{usr{/local,},run/current-system/sw}/share/snapper/config-templates/*(N))##*/})" \
+    ":subvolume"
   ;;
 get-config)
   _arguments -s -S \
@@ -82,7 +86,6 @@ list)
   --columns'[Columns to show separated by comma]:columns:(config subvolume number default active type date user used-space cleanup description userdata pre-number post-number post-date)'
   ;;
 create)
-  local number=$(command snapper --csvout --no-headers --separator : list --columns number,description)
   _arguments -s -S \
   {--type,-t}'[Type for snapshot]:type:(($type))' \
   --pre-number'[Number of corresponding pre snapshot]:' \
@@ -93,47 +96,56 @@ create)
   --command'[Run command and create pre and post snapshots]: :{_command_names -e}' \
   --read-only'[Create read-only snapshot]' \
   --read-write'[Create read-write snapshot]' \
-  --from"[Create a snapshot from the specified snapshot]:number:((${(f)number}))"
+  --from"[Create a snapshot from the specified snapshot]:number:(($number))"
   ;;
 modify)
   _arguments -s -S \
     {--description,-d}'[Description for snapshot]:description' \
     {--cleanup-algorithm,-c}'[Cleanup algorithm for snapshot]:algorithms:(($algorithms))' \
-    {--userdata,-u}'[Userdata for snapshot]:userdata'
+    {--userdata,-u}'[Userdata for snapshot]:userdata' \
+    ": :_files"
   ;;
-delete)
+(delete|remove|rm))
   _arguments -s -S \
-    {--sync,-s}'[Sync after deletion]'
+    {--sync,-s}'[Sync after deletion]' \
+    "*::number without current:(($number_without_current))"
   ;;
 (u|)mount|xadiff)
-  local number=$(command snapper --csvout --no-headers --separator : list --columns number,description)
   _arguments -s -S \
-    ":number:((${(f)number}))"
+    ":number:(($number))" \
+    "*:: :_files"
     ;;
 status)
   _arguments -s -S \
-    {--output,-o}'[Save status to file]: :_files'
+    {--output,-o}'[Save status to file]: :_files' \
+    ":number:(($number))"
   ;;
 diff)
   _arguments -s -S \
     {--input,-i}'[Read files to diff from file]: :_files' \
     --diff-cmd'[Command used for comparing files]: :{_command_names -e}' \
     {--extensions,-x}'[Extra options passed to the diff command]:diff options:_diff'
+    ":number:(($number))" \
+    "*:: :_files"
   ;;
 undochange)
   _arguments -s -S \
     {--input,-i}'[Read files for which to undo changes from file]: :_files'
+    ":number:(($number))" \
+    "*:: :_files"
   ;;
 rollback)
   _arguments -s -S \
     {--print-number,-p}'[Print number of second created snapshot]' \
     {--description,-d}'[Description for snapshot]:description' \
     {--cleanup-algorithm,-c}'[Cleanup algorithm for snapshot]:algorithms:(($algorithms))' \
-    {--userdata,-u}'[Userdata for snapshot]:userdata'
+    {--userdata,-u}'[Userdata for snapshot]:userdata' \
+    ":number:(($number))"
   ;;
 cleanup)
   _arguments -s -S \
     --path'[Cleanup all configs affecting path.]: :_files' \
-    --free-space'[Try to make space available.]:space'
+    --free-space'[Try to make space available.]:space' \
+    ":algorithms:(($algorithms))"
   ;;
 esac
