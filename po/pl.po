@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-23 12:54+0100\n"
+"POT-Creation-Date: 2023-02-08 08:09+0100\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Ewelina Michalowska <ewelina.michalowska@stgambit.com>\n"
 "Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>\n"
@@ -75,7 +75,7 @@ msgstr "\t--extensions, -x <opcje>\tDodatkowe opcje przekazywane do polecenia di
 msgid "\t--free-space <space>\t\tTry to make space available."
 msgstr ""
 
-msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
+msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
 msgstr ""
 
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
@@ -98,6 +98,9 @@ msgstr ""
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tPracuj bez korzystania z systemu DBus."
+
+msgid "\t--no-headers\t\t\tNo headers for CSV output format."
+msgstr ""
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <plik>\t\tZapisz status do pliku."

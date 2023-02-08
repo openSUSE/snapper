@@ -3,11 +3,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-23 12:54+0100\n"
+"POT-Creation-Date: 2023-02-08 08:09+0100\n"
 "PO-Revision-Date: 2023-01-05 07:13+0000\n"
 "Last-Translator: Alejandro Leal <ajleal@msn.com>\n"
-"Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/"
-">\n"
+"Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -79,7 +78,8 @@ msgstr "\t--extensions, -x <opciones>\tOpciones adicionales que se pasan al coma
 msgid "\t--free-space <space>\t\tTry to make space available."
 msgstr "\t--free-space <space>\t\tIntentar liberar espacio."
 
-msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
+#, fuzzy
+msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\tCrea una instantánea a partir de la instantánea especificada."
 
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
@@ -103,6 +103,10 @@ msgstr "\t--machine-readable <formato>\tDefine un formato de salida que puede le
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tTrabajar sin DBus."
+
+#, fuzzy
+msgid "\t--no-headers\t\t\tNo headers for CSV output format."
+msgstr "\t--csvout\t\t\tEstablecer el formato de salida como CSV."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <file>\t\tGuardar estado a archivo."

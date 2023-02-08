@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-23 12:54+0100\n"
+"POT-Creation-Date: 2023-02-08 08:09+0100\n"
 "PO-Revision-Date: 2021-03-07 13:51+0000\n"
 "Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
 "Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
@@ -84,7 +84,8 @@ msgstr "\t--extensions, -x <選項>\t傳送到 diff 指令的額外選項。"
 msgid "\t--free-space <space>\t\tTry to make space available."
 msgstr "\t--free-space <空間>\t\t嘗試釋放空間。"
 
-msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
+#, fuzzy
+msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\t依據指定快照建立快照。"
 
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
@@ -109,6 +110,10 @@ msgstr "\t--machine-readable <格式>\t設定機器可讀的輸出格式 (csv、
 # SLE12
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\t不使用 DBus 操作。"
+
+#, fuzzy
+msgid "\t--no-headers\t\t\tNo headers for CSV output format."
+msgstr "\t--csvout\t\t\t設定 CSV 輸出格式。"
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <檔案>\t\t儲存狀態到檔案。"
