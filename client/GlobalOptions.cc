@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019-2020] SUSE LLC
+ * Copyright (c) [2019-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -48,6 +48,7 @@ namespace snapper
 	    + _("\t--csvout\t\t\tSet CSV output format.") + '\n'
 	    + _("\t--jsonout\t\t\tSet JSON output format.") + '\n'
 	    + _("\t--separator <separator>\t\tCharacter separator for CSV output format.") + '\n'
+	    + _("\t--no-headers\t\t\tNo headers for CSV output format.") + '\n'
 	    + _("\t--config, -c <name>\t\tSet name of config to use.") + '\n'
 	    + _("\t--no-dbus\t\t\tOperate without DBus.") + '\n'
 	    + _("\t--root, -r <path>\t\tOperate on target root (works only without DBus).") + '\n'
@@ -70,6 +71,7 @@ namespace snapper
 	    Option("csvout",		no_argument),
 	    Option("jsonout",		no_argument),
 	    Option("separator",		required_argument),
+	    Option("no-headers",	no_argument),
 	    Option("config",		required_argument,	'c'),
 	    Option("no-dbus",		no_argument),
 	    Option("root",		required_argument,	'r'),
@@ -92,6 +94,7 @@ namespace snapper
 	_table_style = table_style_value(opts);
 	_abbreviate = opts.has_option("abbreviate");
 	_output_format = output_format_value(opts);
+	_headers = !opts.has_option("no-headers");
 	_separator = separator_value(opts);
 	_config = config_value(opts);
 	_root = root_value(opts);

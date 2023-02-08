@@ -258,6 +258,12 @@
 	</listitem>
       </varlistentry>
       <varlistentry>
+	<term><option>--no-headers</option></term>
+	<listitem>
+	  <para>Suppress headers for CSV output format.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
 	<term><option>-c, --config <replaceable>name</replaceable></option></term>
 	<listitem>
 	  <para>Use specified configuration instead of the default configuration. The default

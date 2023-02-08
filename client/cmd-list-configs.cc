@@ -118,9 +118,10 @@ namespace snapper
 
 
 	void
-	output_csv(const vector<Column>& columns, const string& separator, ProxySnappers* snappers)
+	output_csv(const GlobalOptions& global_options, const vector<Column>& columns, const string& separator,
+		   ProxySnappers* snappers)
 	{
-	    CsvFormatter formatter(separator);
+	    CsvFormatter formatter(separator, global_options.headers());
 
 	    for (Column column : columns)
 		formatter.header().push_back(toString(column));
@@ -195,7 +196,7 @@ namespace snapper
 		break;
 
 	    case GlobalOptions::OutputFormat::CSV:
-		output_csv(columns, global_options.separator(), snappers);
+		output_csv(global_options, columns, global_options.separator(), snappers);
 		break;
 
 	    case GlobalOptions::OutputFormat::JSON:

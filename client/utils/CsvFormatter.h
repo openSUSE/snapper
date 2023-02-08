@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019-2020] SUSE LLC
+ * Copyright (c) [2019-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -41,7 +41,8 @@ namespace snapper
 
 	static const string default_separator;
 
-	CsvFormatter(const string& separator) : separator(separator) {}
+	CsvFormatter(const string& separator, bool show_header)
+	    : separator(separator), show_header(show_header) {}
 
 	CsvFormatter(const CsvFormatter&) = delete;
 
@@ -65,6 +66,7 @@ namespace snapper
 	string enclose_with_quotes(const string& value) const;
 
 	const string separator;
+	const bool show_header;
 
 	vector<string> _header;
 	vector<vector<string>> _rows;
