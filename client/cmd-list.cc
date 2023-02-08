@@ -634,7 +634,7 @@ namespace snapper
 		{
 		    OutputOptions output_options(global_options.utc(), true, false);
 
-		    CsvFormatter formatter(global_options.separator());
+		    CsvFormatter formatter(global_options.separator(), global_options.headers());
 
 		    for (Column column : columns)
 			formatter.header().push_back(toString(column));

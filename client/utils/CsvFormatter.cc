@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019-2020] SUSE LLC
+ * Copyright (c) [2019-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -38,7 +38,8 @@ namespace snapper
     ostream&
     operator<<(ostream& stream, const CsvFormatter& csv_formatter)
     {
-	stream << csv_formatter.csv_line(csv_formatter._header);
+	if (csv_formatter.show_header)
+	    stream << csv_formatter.csv_line(csv_formatter._header);
 
 	for (const vector<string>& row : csv_formatter._rows)
 	    stream << csv_formatter.csv_line(row);

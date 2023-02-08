@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019-2020] SUSE LLC
+ * Copyright (c) [2019-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -56,6 +56,7 @@ namespace snapper
 	bool abbreviate() const { return _abbreviate; }
 	OutputFormat output_format() const { return _output_format; }
 	string separator() const { return _separator; }
+	bool headers() const { return _headers; }
 	string config() const { return _config; }
 	string root() const { return _root; }
 	Ambit ambit() const { return _ambit; }
@@ -84,6 +85,7 @@ namespace snapper
 	bool _abbreviate;
 	OutputFormat _output_format;
 	string _separator;
+	bool _headers;
 	string _config;
 	string _root;
 	Ambit _ambit;

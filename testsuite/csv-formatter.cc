@@ -22,7 +22,7 @@ str(const CsvFormatter& formatter)
 
 BOOST_AUTO_TEST_CASE(test1)
 {
-    CsvFormatter formatter(";");
+    CsvFormatter formatter(";", true);
 
     formatter.header() = { "column1", "column2", "column3" };
 
@@ -35,6 +35,21 @@ BOOST_AUTO_TEST_CASE(test1)
 	"column1;column2;column3\n"
 	"\"value;1\";\"value\n2\";\"value\"\"3\"\n"
 	"value1;\"\"\"value2\"\"\";value3\n";
+
+    BOOST_CHECK_EQUAL(str(formatter), result);
+}
+
+
+BOOST_AUTO_TEST_CASE(test2)
+{
+    CsvFormatter formatter(CsvFormatter::default_separator, false);
+
+    formatter.rows() = {
+	{ "value1", "value2" }
+    };
+
+    string result =
+	"value1,value2\n";
 
     BOOST_CHECK_EQUAL(str(formatter), result);
 }
