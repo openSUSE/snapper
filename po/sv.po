@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-23 12:54+0100\n"
+"POT-Creation-Date: 2023-02-08 08:09+0100\n"
 "PO-Revision-Date: 2020-05-26 14:40+0000\n"
 "Last-Translator: Jonas Svensson <jonas@ekhorva.se>\n"
 "Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/sv/>\n"
@@ -80,7 +80,8 @@ msgstr "\t--extensions, -x <options>\tExtra alternativ skickades till diffkomman
 msgid "\t--free-space <space>\t\tTry to make space available."
 msgstr ""
 
-msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
+#, fuzzy
+msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\tCreate a ögonblicksbild av den specifika ögonblicksbilden."
 
 # SLE12
@@ -107,6 +108,9 @@ msgstr ""
 # SLE12
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tAnvänd utan DBus."
+
+msgid "\t--no-headers\t\t\tNo headers for CSV output format."
+msgstr ""
 
 # SLE12
 msgid "\t--output, -o <file>\t\tSave status to file."

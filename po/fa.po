@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opensuse-i 18n\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-23 12:54+0100\n"
+"POT-Creation-Date: 2023-02-08 08:09+0100\n"
 "PO-Revision-Date: 2016-11-05 14:28+0000\n"
 "Last-Translator: hayyan rostami <hayyan71@yahoo.com>\n"
 "Language-Team: Persian <https://l10n.opensuse.org/projects/snapper/master/fa/>\n"
@@ -70,7 +70,7 @@ msgstr ""
 msgid "\t--free-space <space>\t\tTry to make space available."
 msgstr ""
 
-msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
+msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
 msgstr ""
 
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
@@ -92,6 +92,9 @@ msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv,
 msgstr ""
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
+msgstr ""
+
+msgid "\t--no-headers\t\t\tNo headers for CSV output format."
 msgstr ""
 
 msgid "\t--output, -o <file>\t\tSave status to file."
