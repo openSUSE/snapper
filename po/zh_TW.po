@@ -11,7 +11,8 @@ msgstr ""
 "POT-Creation-Date: 2023-02-08 08:09+0100\n"
 "PO-Revision-Date: 2021-03-07 13:51+0000\n"
 "Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
-"Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
+"Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/"
+"master/zh_TW/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -104,7 +105,9 @@ msgstr "\t--iso\t\t\t\t以 ISO 格式顯示日期與時間。"
 msgid "\t--jsonout\t\t\tSet JSON output format."
 msgstr "\t--jsonout\t\t\t設定 JSON 輸出格式。"
 
-msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
+msgid ""
+"\t--machine-readable <format>\tSet a machine-readable output format (csv, "
+"json)."
 msgstr "\t--machine-readable <格式>\t設定機器可讀的輸出格式 (csv、json)。"
 
 # SLE12
@@ -140,7 +143,8 @@ msgstr "\t--read-only\t\t\t建立唯讀快照。"
 msgid "\t--read-write\t\t\tCreate read-write snapshot."
 msgstr "\t--read-write\t\t\t建立讀取寫入快照。"
 
-msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
+msgid ""
+"\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <路徑>\t\t在目標根目錄操作 (不使用 DBus 時才起作用)。"
 
 msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
@@ -606,9 +610,8 @@ msgstr "查詢路徑 \"%s\" 的可用空間失敗。"
 msgid "Failed to query free space."
 msgstr "查詢可用空間失敗。"
 
-#, fuzzy
 msgid "Failed to set locale."
-msgstr "無法設定地區設定。請修復您的系統。"
+msgstr "無法設定地區設定。"
 
 # SLE12
 msgid "Failure"
@@ -947,11 +950,16 @@ msgstr "無執行動作"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "root 參數只能與 no-dbus 一併使用。\n"
 
-msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgid ""
+"usage: snapper [--global-options] <command> [--command-options] [command-"
+"arguments]"
 msgstr "用法： snapper [--全域選項] <命令> [--命令選項] [命令參數]"
 
 msgid "yes"
 msgstr "是"
+
+msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
+msgstr "\t--from\t\t\t\t依據指定快照建立快照。"
 
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "未知類型的快照。"
@@ -993,31 +1001,25 @@ msgstr "是"
 #~ msgid "undoing change..."
 #~ msgstr "正在回復變更..."
 
-#~| msgid "add needs one argument"
 #~ msgid "Command 'modify' needs one argument."
 #~ msgstr "命令 'modify' 需要一個參數。"
 
 #, fuzzy
-#~| msgid "add needs one argument"
 #~ msgid "Command 'diff' needs one argument."
 #~ msgstr "add 需要一個引數"
 
 #, fuzzy
-#~| msgid "File '%s' not found on medium '%s'"
 #~ msgid "File '%s' not found in diff."
 #~ msgstr "檔案 '%s' 無法在媒體 '%s' 中找到"
 
 #, fuzzy
-#~| msgid "Rollback Support: "
 #~ msgid "  Rollback snapshots:"
 #~ msgstr "Rollback Support: "
 
 #, fuzzy
-#~| msgid "diff needs two arguments"
 #~ msgid "Command 'diff' needs two arguments."
 #~ msgstr "diff 需要兩個引數"
 
 #, fuzzy
-#~| msgid "Rollback"
 #~ msgid "rollback done"
 #~ msgstr "復原"
