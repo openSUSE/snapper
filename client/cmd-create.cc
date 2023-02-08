@@ -53,7 +53,7 @@ namespace snapper
 	     << _("\t--command <command>\t\tRun command and create pre and post snapshots.") << endl
 	     << _("\t--read-only\t\t\tCreate read-only snapshot.") << '\n'
 	     << _("\t--read-write\t\t\tCreate read-write snapshot.") << '\n'
-	     << _("\t--from\t\t\t\tCreate a snapshot from the specified snapshot.") << '\n'
+	     << _("\t--from <number>\t\t\tCreate a snapshot from the specified snapshot.") << '\n'
 	     << endl;
     }
 
