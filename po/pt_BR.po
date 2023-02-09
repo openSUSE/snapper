@@ -9,9 +9,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-08 08:09+0100\n"
-"PO-Revision-Date: 2022-04-07 16:12+0000\n"
-"Last-Translator: Luiz Fernando Ranghetti <elchevive68@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
+"PO-Revision-Date: 2023-02-09 16:14+0000\n"
+"Last-Translator: Samanta Magalhaes <samanta_texttrans@outlook.com>\n"
+"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/"
+"snapper/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -81,9 +82,10 @@ msgstr "\t--extensions, -x <opções>\tOpções adicionais passadas para o coman
 msgid "\t--free-space <space>\t\tTry to make space available."
 msgstr "\t--free-space <espaço>\t\tTentar disponibilizar o espaço."
 
-#, fuzzy
 msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
-msgstr "\t--from\t\t\t\tCrie um instantâneo a partir do instantâneo especificado."
+msgstr ""
+"\t--from <número>\t\t\tCriar um instantâneo com base no instantâneo "
+"especificado."
 
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <tipo_de_sistema_de_arquivos>\t\tDefinir o tipo de sistema de arquivos manualmente."
@@ -106,9 +108,8 @@ msgstr "\t--machine-readable <formato>\tDefina um formato de saída legível par
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tOperar sem DBus."
 
-#, fuzzy
 msgid "\t--no-headers\t\t\tNo headers for CSV output format."
-msgstr "\t--csvout\t\t\tDefina o formato de saída CSV."
+msgstr "\t--no-headers\t\t\tSem cabeçalhos para o formato de saída CSV."
 
 msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <arquivo>\t\tSalvar status em arquivo."
