@@ -851,8 +851,15 @@ namespace snapper
 	// Tests have shown that without a rescan and sync here the quota data
 	// is incorrect.
 
-	quota_rescan(general_dir.fd());
-	sync(general_dir.fd());
+	try
+	{
+	    quota_rescan(general_dir.fd());
+	    sync(general_dir.fd());
+	}
+	catch (...)
+	{
+	    SN_THROW(QuotaException("quota rescan or sync failed"));
+	}
 
 	QuotaData quota_data;
 
