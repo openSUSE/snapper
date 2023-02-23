@@ -426,8 +426,22 @@ namespace snapper
 	    struct btrfs_ioctl_quota_rescan_args args;
 	    memset(&args, 0, sizeof(args));
 
-	    if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN, &args) < 0)
+	    for (int i = 0;; ++i)
+	    {
+		if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN, &args) == 0)
+		    break;
+
+		if (errno == EINPROGRESS)
+		{
+		    if (i == 0)
+			y2war("waiting for old quota rescan to finish");
+
+		    sleep(1);
+		    continue;
+		}
+
 		throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_RESCAN) failed", errno);
+	    }
 
 	    if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN_WAIT, &args) < 0)
 		throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_WAIT_RESCAN) failed", errno);

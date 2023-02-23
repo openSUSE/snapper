@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Feb 23 11:14:58 CET 2023 - aschnell@suse.com
+
+- wait for existing btrfs quota rescans to finish (bsc#1206814)
+
+-------------------------------------------------------------------
 Mon Feb 06 10:43:33 CET 2023 - aschnell@suse.com
 
 - fix use of does_subvolume_exist() (bsc#1207901)
