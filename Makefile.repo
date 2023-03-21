@@ -11,7 +11,7 @@ endif
 PREFIX = /usr
 
 configure: all
-	./configure --prefix=$(PREFIX) --libdir=$(PREFIX)/$(LIB) --enable-selinux
+	./configure --prefix=$(PREFIX) --libdir=$(PREFIX)/$(LIB) --enable-selinux --disable-ext4
 
 all:
 	aclocal
