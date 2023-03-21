@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Mar 21 08:51:05 CET 2023 - aschnell@suse.com
+
+- enable SELinux (and allow to disable via conditional build)
+  (bsc#1209515)
+
+-------------------------------------------------------------------
 Thu Feb 23 11:14:58 CET 2023 - aschnell@suse.com
 
 - wait for existing btrfs quota rescans to finish (bsc#1206814)

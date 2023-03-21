@@ -1,7 +1,7 @@
 #
 # spec file for package snapper
 #
-# Copyright (c) 2022 SUSE LLC
+# Copyright (c) 2023 SUSE LLC
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -27,6 +27,9 @@
 %else
 %define pam_security_dir /%{_lib}/security
 %endif
+
+# Optionally build without SELinux support
+%bcond_without selinux
 
 # Optionally build with test coverage reporting
 %bcond_with coverage
@@ -95,9 +98,11 @@ BuildRequires:  libzypp(plugin:commit)
 BuildRequires:  pam-devel
 %if 0%{?fedora_version} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
 BuildRequires:  json-c-devel
-BuildRequires:  libselinux-devel
 %else
 BuildRequires:  libjson-c-devel
+%endif
+%if %{with selinux}
+BuildRequires:  libselinux-devel
 %endif
 BuildRequires:  zlib-devel
 %if %{with coverage}
@@ -131,17 +136,13 @@ export CXXFLAGS="%{optflags} -DNDEBUG"
 autoreconf -fvi
 %configure \
 	--docdir="%{_defaultdocdir}/snapper"					\
-%if %{with coverage}
-	--enable-coverage \
-%endif
+	%{?with_coverage:--enable-coverage}					\
 	--with-pam-security="%{pam_security_dir}"				\
 %if ! 0%{?suse_version}
 	--disable-rollback							\
 	--disable-btrfs-quota							\
 %endif
-%if 0%{?fedora_version} || 0%{?rhel_version}
-	--enable-selinux							\
-%endif
+	%{?with_selinux:--enable-selinux}					\
 	--disable-silent-rules --disable-ext4
 make %{?_smp_mflags}
 
