@@ -32,7 +32,6 @@ libsnapper_la_SOURCES =					\
 	SnapperDefines.h				\
 	Version.h
 
-
 if ENABLE_BTRFS
 libsnapper_la_SOURCES +=				\
 	Btrfs.cc		Btrfs.h			\
@@ -70,6 +69,9 @@ endif
 if ENABLE_BTRFS
 libsnapper_la_CPPFLAGS += $(LIBBTRFSUTIL_CFLAGS)
 libsnapper_la_LIBADD += $(LIBBTRFSUTIL_LIBS)
+endif
+if ENABLE_SELINUX
+libsnapper_la_LIBADD += -lselinux
 endif
 
 pkgincludedir = $(includedir)/snapper
