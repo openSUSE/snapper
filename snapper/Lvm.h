@@ -115,7 +115,7 @@ namespace snapper
 	const string mount_type;
 	const LvmCapabilities* caps;
 	LvmCache* cache;
-	SelinuxLabelHandle* sh;
+	SelinuxLabelHandle* selabel_handle = nullptr;
 
 	bool detectThinVolumeNames(const MtabData& mtab_data);
 	void activateSnapshot(const string& vg_name, const string& lv_name) const;

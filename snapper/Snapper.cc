@@ -26,7 +26,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <glob.h>
-#include <string.h>
+#include <cstring>
 #include <mntent.h>
 #include <sys/acl.h>
 #include <acl/libacl.h>

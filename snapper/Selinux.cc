@@ -21,7 +21,6 @@
 
 #include <cerrno>
 #include <map>
-
 #include <boost/algorithm/string.hpp>
 
 #include "snapper/AppUtil.h"
@@ -131,13 +130,14 @@ namespace snapper
     bool
     _is_selinux_enabled()
     {
-	static bool selinux_enabled, selinux_checked = false;
+	static bool selinux_enabled = false;
+	static bool selinux_checked = false;
 
 	if (!selinux_checked)
 	{
 	    selinux_enabled = (is_selinux_enabled() == 1); // may return -1 on error
 	    selinux_checked = true;
-	    y2mil("Selinux support " << (selinux_enabled ? "en" : "dis") << "abled");
+	    y2mil("Selinux support " << (selinux_enabled ? "enabled" : "disabled"));
 	}
 
 	return selinux_enabled;
@@ -153,7 +153,7 @@ namespace snapper
 	    return &handle;
 	}
 
-	return NULL;
+	return nullptr;
     }
 
 }

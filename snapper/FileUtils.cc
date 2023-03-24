@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2018-2020] SUSE LLC
+ * Copyright (c) [2018-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -23,7 +23,7 @@
 
 #include "config.h"
 
-#include <string.h>
+#include <cstring>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/mount.h>
@@ -33,12 +33,9 @@
 #include <stddef.h>
 #include <dirent.h>
 #include <unistd.h>
-#include <errno.h>
+#include <cerrno>
 #include <stdlib.h>
-#include <assert.h>
-#ifdef ENABLE_SELINUX
-#include <selinux/selinux.h>
-#endif
+#include <cassert>
 #include <algorithm>
 
 #include "snapper/FileUtils.h"
@@ -633,8 +630,7 @@ namespace snapper
 	{
 	    char *src_con = NULL;
 
-	    int fd = ::openat(dirfd, name.c_str(), O_RDONLY | O_NOFOLLOW | O_NOATIME
-			      | O_NONBLOCK | O_CLOEXEC);
+	    int fd = ::openat(dirfd, name.c_str(), O_RDONLY | O_NOFOLLOW | O_NOATIME | O_NONBLOCK | O_CLOEXEC);
 	    if (fd < 0)
 	    {
 		// symlink, detached dev node?
@@ -657,7 +653,8 @@ namespace snapper
 		    y2deb("setting new SELinux context on " << fullname() << "/" << name);
 		    if (lsetfilecon(name.c_str(), con))
 		    {
-			y2err("lsetfilecon on " << fullname() << "/" << name << " failed errno: " << errno << " (" << stringerror(errno) << ")");
+			y2err("lsetfilecon on " << fullname() << "/" << name << " failed errno: " << errno <<
+			      " (" << stringerror(errno) << ")");
 			retval = false;
 		    }
 		}
@@ -672,7 +669,8 @@ namespace snapper
 		    y2deb("setting new SELinux context on " << fullname() << "/" << name);
 		    if (::fsetfilecon(fd, con))
 		    {
-			y2err("fsetfilecon on " << fullname() << "/" << name << " failed errno: " << errno << " (" << stringerror(errno) << ")");
+			y2err("fsetfilecon on " << fullname() << "/" << name << " failed errno: " << errno <<
+			      " (" << stringerror(errno) << ")");
 			retval = false;
 		    }
 		}
@@ -683,21 +681,23 @@ namespace snapper
 	    freecon(src_con);
 	}
 #endif
+
 	return retval;
     }
 
 
     bool
-    SDir::restorecon(const string& name, SelinuxLabelHandle* sh) const
+    SDir::restorecon(const string& name, SelinuxLabelHandle* selabel_handle) const
     {
 	assert(name.find('/') == string::npos);
 	assert(name != "..");
 
 	bool retval = true;
+
 #ifdef ENABLE_SELINUX
 	if (_is_selinux_enabled())
 	{
-	    assert(sh);
+	    assert(selabel_handle);
 
 	    struct stat buf;
 	    if (stat(name, &buf, AT_SYMLINK_NOFOLLOW))
@@ -706,7 +706,7 @@ namespace snapper
 		return false;
 	    }
 
-	    char* con = sh->selabel_lookup(fullname() + "/" + name, buf.st_mode);
+	    char* con = selabel_handle->selabel_lookup(fullname() + "/" + name, buf.st_mode);
 	    if (con)
 	    {
 		retval = fsetfilecon(name, con);
@@ -719,6 +719,7 @@ namespace snapper
 	    freecon(con);
 	}
 #endif
+
 	return retval;
     }
 
@@ -746,18 +747,20 @@ namespace snapper
 	    freecon(src_con);
 	}
 #endif
+
 	return retval;
     }
 
 
     bool
-    SDir::restorecon(SelinuxLabelHandle* sh) const
+    SDir::restorecon(SelinuxLabelHandle* selabel_handle) const
     {
 	bool retval = true;
+
 #ifdef ENABLE_SELINUX
 	if (_is_selinux_enabled())
 	{
-	    assert(sh);
+	    assert(selabel_handle);
 
 	    struct stat buf;
 
@@ -767,7 +770,7 @@ namespace snapper
 		return false;
 	    }
 
-	    char* con = sh->selabel_lookup(fullname(), buf.st_mode);
+	    char* con = selabel_handle->selabel_lookup(fullname(), buf.st_mode);
 	    if (con)
 	    {
 		retval = fsetfilecon(con);
@@ -781,6 +784,7 @@ namespace snapper
 	    freecon(con);
 	}
 #endif
+
 	return retval;
     }
 
@@ -855,10 +859,11 @@ namespace snapper
 	dir.fsetfilecon(name, con);
     }
 
+
     void
-    SFile::restorecon(SelinuxLabelHandle* sh) const
+    SFile::restorecon(SelinuxLabelHandle* selabel_handle) const
     {
-	dir.restorecon(name, sh);
+	dir.restorecon(name, selabel_handle);
     }
 
 
