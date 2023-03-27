@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2022] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -206,8 +206,9 @@ namespace snapper
 
 	void syncAcl(const vector<uid_t>& uids, const vector<gid_t>& gids) const;
 
-	void syncSelinuxContexts(bool skip_snapshot_dir) const;
-	void syncSelinuxContextsInInfosDir(bool skip_snapshot_dir) const;
+	void syncSelinuxContexts(SelinuxLabelHandle* selabel_handle, bool skip_snapshot_dir) const;
+	void syncSelinuxContextsInInfosDir(SelinuxLabelHandle* selabel_handle, bool skip_snapshot_dir) const;
+
 	void syncInfoDir(SDir& dir) const;
 
 	ConfigInfo* config_info = nullptr;
@@ -218,7 +219,7 @@ namespace snapper
 
 	Snapshots snapshots;
 
-	SelinuxLabelHandle* selabel_handle = nullptr;
+	SelinuxLabelHandle* selabel_handle_unused = nullptr; // TODO remove
 
     };
 

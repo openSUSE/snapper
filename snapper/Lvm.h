@@ -74,7 +74,6 @@ namespace snapper
 	bool time_support = false;
     };
 
-    class SelinuxLabelHandle;
 
     class Lvm : public Filesystem
     {
@@ -115,7 +114,6 @@ namespace snapper
 	const string mount_type;
 	const LvmCapabilities* caps;
 	LvmCache* cache;
-	SelinuxLabelHandle* sh;
 
 	bool detectThinVolumeNames(const MtabData& mtab_data);
 	void activateSnapshot(const string& vg_name, const string& lv_name) const;
@@ -133,6 +131,5 @@ namespace snapper
     };
 
 }
-
 
 #endif

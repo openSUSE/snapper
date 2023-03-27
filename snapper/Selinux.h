@@ -69,14 +69,18 @@ namespace snapper
     class SelinuxLabelHandle : public boost::noncopyable
     {
     public:
+
+	/**
+	 * Will most likely throw if SELinux is not enabled.
+	 */
 	static SelinuxLabelHandle* get_selinux_handle();
 
 	char* selabel_lookup(const string& path, int mode);
 
-	~SelinuxLabelHandle() { selabel_close(handle); }
-
     private:
+
 	SelinuxLabelHandle();
+	~SelinuxLabelHandle() { selabel_close(handle); }
 
 	struct selabel_handle* handle;
     };

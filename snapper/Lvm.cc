@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2020-2022] SUSE LLC
+ * Copyright (c) [2020-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -23,10 +23,10 @@
 
 #include "config.h"
 
-#include <string.h>
+#include <cstring>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <errno.h>
+#include <cerrno>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
@@ -69,7 +69,7 @@ namespace snapper
     Lvm::Lvm(const string& subvolume, const string& root_prefix, const string& mount_type)
 	: Filesystem(subvolume, root_prefix), mount_type(mount_type),
 	  caps(LvmCapabilities::get_lvm_capabilities()),
-	  cache(LvmCache::get_lvm_cache()), sh(NULL)
+	  cache(LvmCache::get_lvm_cache())
     {
 	if (access(LVCREATEBIN, X_OK) != 0)
 	{
@@ -104,18 +104,6 @@ namespace snapper
 	    mount_options.push_back("nouuid");
 	    mount_options.push_back("norecovery");
 	}
-
-#ifdef ENABLE_SELINUX
-	try
-	{
-	    sh = SelinuxLabelHandle::get_selinux_handle();
-	}
-	catch (const SelinuxException& e)
-	{
-	    SN_RETHROW(e);
-	}
-#endif
-
     }
 
 
@@ -140,7 +128,7 @@ namespace snapper
 #ifdef ENABLE_SELINUX
 	if (_is_selinux_enabled())
 	{
-	    assert(sh);
+	    SelinuxLabelHandle* selabel_handle = SelinuxLabelHandle::get_selinux_handle();
 
 	    char* con = NULL;
 
@@ -148,7 +136,7 @@ namespace snapper
 	    {
 		string path(subvolume_dir.fullname() + "/.snapshots");
 
-		con = sh->selabel_lookup(path, mode);
+		con = selabel_handle->selabel_lookup(path, mode);
 		if (con)
 		{
 		    // race free mkdir with correct Selinux context preset
@@ -184,6 +172,7 @@ namespace snapper
 	    }
 	}
 #endif
+
 	createLvmConfig(subvolume_dir, mode);
     }
 

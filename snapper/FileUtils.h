@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) 2020 SUSE LLC
+ * Copyright (c) [2020-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -110,8 +110,8 @@ namespace snapper
 
 	bool fsetfilecon(const string& name, const char* con) const;
 	bool fsetfilecon(const char* con) const;
-	bool restorecon(SelinuxLabelHandle* sh) const;
-	bool restorecon(const string& name, SelinuxLabelHandle* sh) const;
+	bool restorecon(SelinuxLabelHandle* selabel_handle) const;
+	bool restorecon(const string& name, SelinuxLabelHandle* selabel_handle) const;
 
     private:
 
@@ -147,7 +147,7 @@ namespace snapper
 	ssize_t getxattr(const char* name, void* value, size_t size) const;
 
 	void fsetfilecon(const char* con) const;
-	void restorecon(SelinuxLabelHandle* sh) const;
+	void restorecon(SelinuxLabelHandle* selabel_handle) const;
 
     private:
 
