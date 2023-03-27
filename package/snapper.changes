@@ -3,6 +3,7 @@ Tue Mar 21 08:51:05 CET 2023 - aschnell@suse.com
 
 - enable SELinux (and allow to disable via conditional build)
   (bsc#1209515)
+- avoid some extra checks if SELinux is compile-time disabled
 
 -------------------------------------------------------------------
 Thu Feb 23 11:14:58 CET 2023 - aschnell@suse.com

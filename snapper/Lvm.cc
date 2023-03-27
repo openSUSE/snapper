@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2020-2022] SUSE LLC
+ * Copyright (c) [2020-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -104,18 +104,6 @@ namespace snapper
 	    mount_options.push_back("nouuid");
 	    mount_options.push_back("norecovery");
 	}
-
-#ifdef ENABLE_SELINUX
-	try
-	{
-	    selabel_handle = SelinuxLabelHandle::get_selinux_handle();
-	}
-	catch (const SelinuxException& e)
-	{
-	    SN_RETHROW(e);
-	}
-#endif
-
     }
 
 
@@ -140,7 +128,7 @@ namespace snapper
 #ifdef ENABLE_SELINUX
 	if (_is_selinux_enabled())
 	{
-	    assert(selabel_handle);
+	    SelinuxLabelHandle* selabel_handle = SelinuxLabelHandle::get_selinux_handle();
 
 	    char* con = NULL;
 
@@ -184,6 +172,7 @@ namespace snapper
 	    }
 	}
 #endif
+
 	createLvmConfig(subvolume_dir, mode);
     }
 

@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2016] Red Hat, Inc.
+ * Copyright (c) 2023 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -120,7 +121,7 @@ namespace snapper
 	else
 	{
 	    if (errno == ENOENT)
-		y2deb("Selinux context not defined for path " << path);
+		y2deb("SELinux context not defined for path " << path);
 
 	    return NULL;
 	}
@@ -137,7 +138,7 @@ namespace snapper
 	{
 	    selinux_enabled = (is_selinux_enabled() == 1); // may return -1 on error
 	    selinux_checked = true;
-	    y2mil("Selinux support " << (selinux_enabled ? "enabled" : "disabled"));
+	    y2mil("SELinux support " << (selinux_enabled ? "enabled" : "disabled"));
 	}
 
 	return selinux_enabled;
@@ -147,13 +148,9 @@ namespace snapper
     SelinuxLabelHandle*
     SelinuxLabelHandle::get_selinux_handle()
     {
-	if (_is_selinux_enabled())
-	{
-	    static SelinuxLabelHandle handle;
-	    return &handle;
-	}
+	static SelinuxLabelHandle handle;
 
-	return nullptr;
+	return &handle;
     }
 
 }

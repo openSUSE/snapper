@@ -34,7 +34,7 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <cerrno>
-#include <stdlib.h>
+#include <cstdlib>
 #include <cassert>
 #include <algorithm>
 
@@ -695,29 +695,26 @@ namespace snapper
 	bool retval = true;
 
 #ifdef ENABLE_SELINUX
-	if (_is_selinux_enabled())
+	assert(selabel_handle);
+
+	struct stat buf;
+	if (stat(name, &buf, AT_SYMLINK_NOFOLLOW))
 	{
-	    assert(selabel_handle);
-
-	    struct stat buf;
-	    if (stat(name, &buf, AT_SYMLINK_NOFOLLOW))
-	    {
-		y2err("Failed to stat " << fullname() << "/" << name);
-		return false;
-	    }
-
-	    char* con = selabel_handle->selabel_lookup(fullname() + "/" + name, buf.st_mode);
-	    if (con)
-	    {
-		retval = fsetfilecon(name, con);
-	    }
-	    else
-	    {
-		retval = false;
-	    }
-
-	    freecon(con);
+	    y2err("Failed to stat " << fullname() << "/" << name);
+	    return false;
 	}
+
+	char* con = selabel_handle->selabel_lookup(fullname() + "/" + name, buf.st_mode);
+	if (con)
+	{
+	    retval = fsetfilecon(name, con);
+	}
+	else
+	{
+	    retval = false;
+	}
+
+	freecon(con);
 #endif
 
 	return retval;
@@ -758,31 +755,28 @@ namespace snapper
 	bool retval = true;
 
 #ifdef ENABLE_SELINUX
-	if (_is_selinux_enabled())
+	assert(selabel_handle);
+
+	struct stat buf;
+
+	if (stat(&buf))
 	{
-	    assert(selabel_handle);
-
-	    struct stat buf;
-
-	    if (stat(&buf))
-	    {
-		y2err("Failed to stat " << fullname());
-		return false;
-	    }
-
-	    char* con = selabel_handle->selabel_lookup(fullname(), buf.st_mode);
-	    if (con)
-	    {
-		retval = fsetfilecon(con);
-	    }
-	    else
-	    {
-		y2war("can't get proper label for path:" << fullname());
-		retval = false;
-	    }
-
-	    freecon(con);
+	    y2err("Failed to stat " << fullname());
+	    return false;
 	}
+
+	char* con = selabel_handle->selabel_lookup(fullname(), buf.st_mode);
+	if (con)
+	{
+	    retval = fsetfilecon(con);
+	}
+	else
+	{
+	    y2war("can't get proper label for path:" << fullname());
+	    retval = false;
+	}
+
+	freecon(con);
 #endif
 
 	return retval;
