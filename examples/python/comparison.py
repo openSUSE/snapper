@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import dbus
 
@@ -17,5 +17,4 @@ snapper.CreateComparison(config_name, num_pre, num_post)
 files = snapper.GetFiles(config_name, num_pre, num_post)
 
 for file in files:
-    print file[0], file[1]
-
+    print(file[0], file[1])

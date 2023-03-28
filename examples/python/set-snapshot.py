@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import dbus
 
@@ -9,4 +9,3 @@ snapper = dbus.Interface(bus.get_object('org.opensuse.Snapper', '/org/opensuse/S
 
 
 snapper.SetSnapshot("root", 1, "test", "", { "id" : "123" })
-

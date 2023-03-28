@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import dbus
 
@@ -10,8 +10,7 @@ snapper = dbus.Interface(bus.get_object('org.opensuse.Snapper', '/org/opensuse/S
 
 config = snapper.GetConfig("root")
 
-print config[0], config[1]
+print(config[0], config[1])
 
 for k, v in config[2].items():
-    print "%s=%s" % (k, v)
-
+    print("%s=%s" % (k, v))

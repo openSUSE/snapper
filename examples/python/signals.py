@@ -1,8 +1,8 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import dbus
 from dbus.mainloop.glib import DBusGMainLoop
-from gobject import MainLoop
+from gi.repository.GLib import MainLoop
 
 
 DBusGMainLoop(set_as_default=True)
@@ -31,28 +31,27 @@ class MessageListener:
 
 
     def config_created(self, config):
-        print "ConfigCreated", config
+        print("ConfigCreated", config)
 
     def config_modified(self, config):
-        print "ConfigModified", config
+        print("ConfigModified", config)
 
     def config_deleted(self, config):
-        print "ConfigDeleted", config
+        print("ConfigDeleted", config)
 
     def snapshot_created(self, config, number):
-        print "SnapshotCreated", config, number
+        print("SnapshotCreated", config, number)
 
     def snapshot_modified(self, config, number):
-        print "SnapshotModified", config, number
+        print("SnapshotModified", config, number)
 
     def snapshots_deleted(self, config, numbers):
-        print "SnapshotsDeleted", config,
+        print("SnapshotsDeleted", config, end='')
         for number in numbers:
-            print number,
-        print
+            print("", number, end='')
+        print()
 
 
 MessageListener()
 
 MainLoop().run()
-

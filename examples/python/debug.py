@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import dbus
 
@@ -11,5 +11,4 @@ snapper = dbus.Interface(bus.get_object('org.opensuse.Snapper', '/org/opensuse/S
 lines = snapper.Debug()
 
 for line in lines:
-    print line
-
+    print(line)
