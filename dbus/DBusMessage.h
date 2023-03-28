@@ -192,8 +192,8 @@ namespace DBus
 
     public:
 
-    Unmarshaller(Message& msg);
-    ~Unmarshaller();
+	Unmarshaller(Message& msg);
+	~Unmarshaller();
 
 	void open_recurse();
 	void close_recurse();
@@ -208,8 +208,8 @@ namespace DBus
 
     public:
 
-    Marshaller(Message& msg);
-    ~Marshaller();
+	Marshaller(Message& msg);
+	~Marshaller();
 
 	void open_struct();
 	void close_struct();
@@ -252,80 +252,80 @@ namespace DBus
     template <typename Type>
     Unmarshaller& operator>>(Unmarshaller& unmarshaller, vector<Type>& data)
     {
-    if (unmarshaller.get_type() != DBUS_TYPE_ARRAY)
+	if (unmarshaller.get_type() != DBUS_TYPE_ARRAY)
 	    throw MarshallingException();
 
-    unmarshaller.open_recurse();
+	unmarshaller.open_recurse();
 
-    while (unmarshaller.get_type() != DBUS_TYPE_INVALID)
+	while (unmarshaller.get_type() != DBUS_TYPE_INVALID)
 	{
-        if (unmarshaller.get_signature() != TypeInfo<Type>::signature)
+	    if (unmarshaller.get_signature() != TypeInfo<Type>::signature)
 		throw MarshallingException();
 
 	    Type tmp;
-        unmarshaller >> tmp;
+	    unmarshaller >> tmp;
 	    data.push_back(tmp);
 	}
 
-    unmarshaller.close_recurse();
+	unmarshaller.close_recurse();
 
-    return unmarshaller;
+	return unmarshaller;
     }
 
 
     template <typename Type>
     Marshaller& operator<<(Marshaller& marshaller, const vector<Type>& data)
     {
-    marshaller.open_array(TypeInfo<Type>::signature);
+	marshaller.open_array(TypeInfo<Type>::signature);
 
 	for (typename vector<Type>::const_iterator it = data.begin(); it != data.end(); ++it)
 	{
-        marshaller << *it;
+	    marshaller << *it;
 	}
 
-    marshaller.close_array();
+	marshaller.close_array();
 
-    return marshaller;
+	return marshaller;
     }
 
 
     template <typename Type>
     Unmarshaller& operator>>(Unmarshaller& unmarshaller, list<Type>& data)
     {
-    if (unmarshaller.get_type() != DBUS_TYPE_ARRAY)
+	if (unmarshaller.get_type() != DBUS_TYPE_ARRAY)
 	    throw MarshallingException();
 
-    unmarshaller.open_recurse();
+	unmarshaller.open_recurse();
 
-    while (unmarshaller.get_type() != DBUS_TYPE_INVALID)
+	while (unmarshaller.get_type() != DBUS_TYPE_INVALID)
 	{
-        if (unmarshaller.get_signature() != TypeInfo<Type>::signature)
+	    if (unmarshaller.get_signature() != TypeInfo<Type>::signature)
 		throw MarshallingException();
 
 	    Type tmp;
-        unmarshaller >> tmp;
+	    unmarshaller >> tmp;
 	    data.push_back(tmp);
 	}
 
-    unmarshaller.close_recurse();
+	unmarshaller.close_recurse();
 
-    return unmarshaller;
+	return unmarshaller;
     }
 
 
     template <typename Type>
     Marshaller& operator<<(Marshaller& marshaller, const list<Type>& data)
     {
-    marshaller.open_array(TypeInfo<Type>::signature);
+	marshaller.open_array(TypeInfo<Type>::signature);
 
 	for (typename list<Type>::const_iterator it = data.begin(); it != data.end(); ++it)
 	{
-        marshaller << *it;
+	    marshaller << *it;
 	}
 
-    marshaller.close_array();
+	marshaller.close_array();
 
-    return marshaller;
+	return marshaller;
     }
 
 }
