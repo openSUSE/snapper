@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 from time import sleep
 import dbus
@@ -14,4 +14,3 @@ snapper.LockConfig("root")
 sleep(10)
 
 snapper.UnlockConfig("root")
-
