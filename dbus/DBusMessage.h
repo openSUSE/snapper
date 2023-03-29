@@ -30,7 +30,6 @@
 #include <ctime>
 #include <string>
 #include <vector>
-#include <list>
 #include <map>
 
 #include "snapper/Exception.h"
@@ -40,7 +39,6 @@ namespace DBus
 {
     using std::string;
     using std::vector;
-    using std::list;
     using std::map;
 
 
@@ -279,46 +277,6 @@ namespace DBus
 	marshaller.open_array(TypeInfo<Type>::signature);
 
 	for (typename vector<Type>::const_iterator it = data.begin(); it != data.end(); ++it)
-	{
-	    marshaller << *it;
-	}
-
-	marshaller.close_array();
-
-	return marshaller;
-    }
-
-
-    template <typename Type>
-    Unmarshaller& operator>>(Unmarshaller& unmarshaller, list<Type>& data)
-    {
-	if (unmarshaller.get_type() != DBUS_TYPE_ARRAY)
-	    throw MarshallingException();
-
-	unmarshaller.open_recurse();
-
-	while (unmarshaller.get_type() != DBUS_TYPE_INVALID)
-	{
-	    if (unmarshaller.get_signature() != TypeInfo<Type>::signature)
-		throw MarshallingException();
-
-	    Type tmp;
-	    unmarshaller >> tmp;
-	    data.push_back(tmp);
-	}
-
-	unmarshaller.close_recurse();
-
-	return unmarshaller;
-    }
-
-
-    template <typename Type>
-    Marshaller& operator<<(Marshaller& marshaller, const list<Type>& data)
-    {
-	marshaller.open_array(TypeInfo<Type>::signature);
-
-	for (typename list<Type>::const_iterator it = data.begin(); it != data.end(); ++it)
 	{
 	    marshaller << *it;
 	}

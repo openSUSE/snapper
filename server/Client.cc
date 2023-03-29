@@ -388,6 +388,8 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"  </interface>\n"
 	"</node>\n";
 
+    y2deb("Introspect");
+
     DBus::MessageMethodReturn reply(msg);
 
     DBus::Marshaller marshaller(reply);
@@ -566,7 +568,7 @@ Client::signal_snapshot_modified(DBus::Connection& conn, const string& config_na
 
 void
 Client::signal_snapshots_deleted(DBus::Connection& conn, const string& config_name,
-				 const list<dbus_uint32_t>& nums)
+				 const vector<dbus_uint32_t>& nums)
 {
     DBus::MessageSignal msg(PATH, INTERFACE, "SnapshotsDeleted");
 
@@ -1073,12 +1075,12 @@ void
 Client::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
-    list<dbus_uint32_t> nums;
+    vector<dbus_uint32_t> nums;
 
     DBus::Unmarshaller unmarshaller(msg);
     unmarshaller >> config_name >> nums;
 
-    y2deb("DeleteSnapshots config_name:" << config_name << " nums:" << nums);
+    y2mil("DeleteSnapshots config_name:" << config_name << " nums:" << nums);
 
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
@@ -1091,7 +1093,7 @@ Client::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
     Snapper* snapper = it1->getSnapper();
     Snapshots& snapshots = snapper->getSnapshots();
 
-    for (list<unsigned int>::const_iterator it2 = nums.begin(); it2 != nums.end(); ++it2)
+    for (vector<unsigned int>::const_iterator it2 = nums.begin(); it2 != nums.end(); ++it2)
     {
 	check_snapshot_in_use(*it1, *it2);
 
