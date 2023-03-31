@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Mar 31 09:15:31 CEST 2023 - aschnell@suse.com
+
+- use xz compression instead of bzip2 for source tar
+  (gh#openSUSE/snapper#277)
+
+-------------------------------------------------------------------
 Tue Mar 21 08:51:05 CET 2023 - aschnell@suse.com
 
 - enable SELinux (and allow to disable via conditional build)

@@ -91,7 +91,7 @@ package to the build service. For [openSUSE:Factory][]
 [xdist]: https://en.opensuse.org/openSUSE:Build_Service_cross_distribution_howto
 [Debian builds]: https://en.opensuse.org/openSUSE:Build_Service_Debian_builds
 
-- The generated bzip2 tarball has to be also placed at
+- The generated xz tarball has to be also placed at
   <https://ftp.suse.com/pub/projects/snapper/>.
 
 - When the documentation changes e.g. the man page or an important
