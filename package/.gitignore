@@ -1,4 +1,4 @@
-snapper-*.tar.bz2
+snapper-*.tar.xz
 snapper.spec
 debian.*
 *.dsc

@@ -5,13 +5,13 @@
 SUBDIRS = snapper dbus server client scripts pam data doc po examples		\
 	testsuite testsuite-real testsuite-cmp zypp-plugin
 
-AUTOMAKE_OPTIONS = foreign dist-bzip2 no-dist-gzip
+AUTOMAKE_OPTIONS = foreign dist-xz no-dist-gzip
 
 doc_DATA = AUTHORS COPYING
 
 EXTRA_DIST = $(doc_DATA) VERSION LIBVERSION
 
-snapper-$(VERSION).tar.bz2: dist-bzip2
+snapper-$(VERSION).tar.xz: dist-xz
 
 DEBIAN_FLAVOURS =	\
 	Debian_10.0	\
@@ -44,7 +44,7 @@ show-raspbian:
 	@echo "Raspbian flavors: $(RASPBIAN_FLAVOURS)"
 
 package-clean:
-	rm -f package/snapper-*.tar.bz2
+	rm -f package/snapper-*.tar.xz
 	rm -f package/debian.*
 	rm -f package/*.dsc*
 
@@ -103,7 +103,7 @@ EXTRA_TAR_OPTIONS = --format=gnu --owner=root --group=root \
 am__tar=find "$$tardir" -type f -print0 | LC_ALL=C sort -z | \
   tar -c -f - $(EXTRA_TAR_OPTIONS)
 
-package: snapper-$(VERSION).tar.bz2 package-clean
+package: snapper-$(VERSION).tar.xz package-clean
 	find dists/debian -not -name '*.in' -not -name '.*' -type f -print0 | \
 	  LC_ALL=C sort -z | \
 	  tar -c -f package/debian.tar --transform='s|dists/||' --show-transformed \
@@ -117,5 +117,5 @@ package: snapper-$(VERSION).tar.bz2 package-clean
 	for FLAV in $(UBUNTU_FLAVOURS); do cp -v package/snapper-xUbuntu.dsc.in package/snapper-$${FLAV}.dsc; done
 	for FLAV in $(RASPBIAN_FLAVOURS); do cp -v package/snapper-Raspbian.dsc.in package/snapper-$${FLAV}.dsc; done
 	rm package/snapper*.dsc.in*
-	mv snapper-$(VERSION).tar.bz2 package/
+	mv snapper-$(VERSION).tar.xz package/
 
