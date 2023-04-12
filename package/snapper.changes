@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Apr 12 13:32:34 CEST 2023 - aschnell@suse.com
+
+- fixed error message (gh#openSUSE/snapper#801)
+
+-------------------------------------------------------------------
 Fri Mar 31 09:15:31 CEST 2023 - aschnell@suse.com
 
 - use xz compression instead of bzip2 for source tar

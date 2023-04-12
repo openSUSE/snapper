@@ -407,7 +407,7 @@ namespace snapper
 	{
 	    SN_CAUGHT(e);
 
-	    SN_THROW(CreateConfigFailedException("sysconfig-file not found"));
+	    SN_THROW(CreateConfigFailedException(e.what()));
 	}
 
 	try
