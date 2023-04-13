@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Apr 13 09:25:42 CEST 2023 - aschnell@suse.com
+
+- avoid stale btrfs qgroups on transactional systems (bsc#1210151)
+
+-------------------------------------------------------------------
 Wed Apr 12 13:32:34 CEST 2023 - aschnell@suse.com
 
 - fixed error message (gh#openSUSE/snapper#801)

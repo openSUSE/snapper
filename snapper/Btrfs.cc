@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -420,13 +420,13 @@ namespace snapper
 
 	    try
 	    {
-		SDir subvolume_dir = openSubvolumeDir();
-		qgroup_destroy(subvolume_dir.fd(), calc_qgroup(0, subvolid));
+		SDir general_dir = openGeneralDir();
+		qgroup_destroy(general_dir.fd(), calc_qgroup(0, subvolid));
 	    }
 	    catch (const runtime_error& e)
 	    {
 		// Ignore that the qgroup could not be destroyed. Should not
-		// cause problems except of having unused qgroups.
+		// cause problems except of having stale qgroups.
 	    }
 
 #endif
