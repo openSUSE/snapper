@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2010-2012] Novell, Inc.
- * Copyright (c) [2020-2022] SUSE LLC
+ * Copyright (c) [2020-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -21,7 +21,7 @@
  */
 
 
-#include <string.h>
+#include <cstring>
 #include <unistd.h>
 
 #include "snapper/Exception.h"
@@ -128,10 +128,10 @@ namespace snapper
     }
 
 
-    list<const xmlNode*>
+    vector<const xmlNode*>
     getChildNodes(const xmlNode* node, const char* name)
     {
-	list<const xmlNode*> ret;
+	vector<const xmlNode*> ret;
 
 	if (node != NULL)
 	    node = node->children;

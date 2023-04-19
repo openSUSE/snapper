@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2010-2012] Novell, Inc.
+ * Copyright (c) 2023 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -26,7 +27,7 @@
 
 #include <libxml/tree.h>
 #include <string>
-#include <list>
+#include <vector>
 #include <sstream>
 #include <boost/noncopyable.hpp>
 
@@ -36,7 +37,7 @@
 namespace snapper
 {
     using std::string;
-    using std::list;
+    using std::vector;
 
 
     class XmlFile : private boost::noncopyable
@@ -71,7 +72,7 @@ namespace snapper
 
 
     const xmlNode* getChildNode(const xmlNode* node, const char* name);
-    list<const xmlNode*> getChildNodes(const xmlNode* node, const char* name);
+    vector<const xmlNode*> getChildNodes(const xmlNode* node, const char* name);
 
 
     bool getValue(const xmlNode* node, string& value);
@@ -109,9 +110,9 @@ namespace snapper
     }
 
     template<typename Type>
-    void setChildValue(xmlNode* node, const char* name, const list<Type>& values)
+    void setChildValue(xmlNode* node, const char* name, const vector<Type>& values)
     {
-	for (typename list<Type>::const_iterator it = values.begin(); it != values.end(); ++it)
+	for (typename vector<Type>::const_iterator it = values.begin(); it != values.end(); ++it)
 	    setChildValue(node, name, *it);
     }
 

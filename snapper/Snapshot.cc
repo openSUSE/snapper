@@ -300,8 +300,8 @@ namespace snapper
 
 		getChildValue(node, "cleanup", snapshot.cleanup);
 
-		const list<const xmlNode*> l = getChildNodes(node, "userdata");
-		for (list<const xmlNode*>::const_iterator it2 = l.begin(); it2 != l.end(); ++it2)
+		const vector<const xmlNode*> l = getChildNodes(node, "userdata");
+		for (vector<const xmlNode*>::const_iterator it2 = l.begin(); it2 != l.end(); ++it2)
 		{
 		    string key, value;
 		    getChildValue(*it2, "key", key);

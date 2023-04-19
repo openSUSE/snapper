@@ -82,7 +82,7 @@ SolvableMatcher::load_config(const string& cfg_filename)
 
 	const xmlNode* root = config.getRootElement();
 	const xmlNode* solvables_n = getChildNode(root, "solvables");
-	const list<const xmlNode*> solvables_l = getChildNodes(solvables_n, "solvable");
+	const vector<const xmlNode*> solvables_l = getChildNodes(solvables_n, "solvable");
 	for (const xmlNode* node : solvables_l)
 	{
 	    string pattern;
