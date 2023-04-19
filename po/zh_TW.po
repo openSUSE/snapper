@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-08 08:09+0100\n"
+"POT-Creation-Date: 2023-04-19 10:03+0200\n"
 "PO-Revision-Date: 2023-02-10 04:14+0000\n"
 "Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
-"Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/"
-"master/zh_TW/>\n"
+"Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,11 +35,12 @@ msgstr "\t--cleanup-algorithm, -c <algo>\t清理快照的演算法。"
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm、-c <演算法>\t清理快照的演算法。"
 
+#, fuzzy
 msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
 "\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
 "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date."
+"\t\t\t\t\tpre-number, post-number, post-date, read-only."
 msgstr ""
 "\t--columns <欄>\t\t要顯示的欄 (以逗號分隔)。\n"
 "\t\t\t\t\t可能的欄：config、subvolume、number、default、active、\n"
@@ -65,6 +65,10 @@ msgstr "\t--config, -c <名稱>\t\t設定要使用的設定法名稱。"
 
 msgid "\t--csvout\t\t\tSet CSV output format."
 msgstr "\t--csvout\t\t\t設定 CSV 輸出格式。"
+
+#, fuzzy
+msgid "\t--default\t\t\tSet snapshot as default snapshot."
+msgstr "作用中快照已經是預設快照。"
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <描述>\t快照的描述。"
@@ -104,9 +108,7 @@ msgstr "\t--iso\t\t\t\t以 ISO 格式顯示日期與時間。"
 msgid "\t--jsonout\t\t\tSet JSON output format."
 msgstr "\t--jsonout\t\t\t設定 JSON 輸出格式。"
 
-msgid ""
-"\t--machine-readable <format>\tSet a machine-readable output format (csv, "
-"json)."
+msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
 msgstr "\t--machine-readable <格式>\t設定機器可讀的輸出格式 (csv、json)。"
 
 # SLE12
@@ -138,11 +140,18 @@ msgstr "\t--quiet, -q\t\t\t減少一般輸出。"
 msgid "\t--read-only\t\t\tCreate read-only snapshot."
 msgstr "\t--read-only\t\t\t建立唯讀快照。"
 
+#, fuzzy
+msgid "\t--read-only\t\t\tSet snapshot read-only."
+msgstr "\t--read-only\t\t\t建立唯讀快照。"
+
 msgid "\t--read-write\t\t\tCreate read-write snapshot."
 msgstr "\t--read-write\t\t\t建立讀取寫入快照。"
 
-msgid ""
-"\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
+#, fuzzy
+msgid "\t--read-write\t\t\tSet snapshot read-write."
+msgstr "\t--read-write\t\t\t建立讀取寫入快照。"
+
+msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <路徑>\t\t在目標根目錄操作 (不使用 DBus 時才起作用)。"
 
 msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
@@ -763,6 +772,7 @@ msgstr "開啟檔案 '%s' 失敗。"
 msgid "Option --from only supported for snapshots of type single."
 msgstr "選項 --from 僅適用於單一類型的快照。"
 
+#. DBus versions of CreatePreSnapshot and CreatePostSnapshot do not pass read-only flag
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "選項 --read-write 僅適用於單一類型的快照。"
 
@@ -793,6 +803,9 @@ msgstr "之前 日期"
 #, c-format
 msgid "Quota error (%s)."
 msgstr "定額錯誤 (%s)。"
+
+msgid "Read-Only"
+msgstr ""
 
 msgid "See 'man snapper' for further instructions."
 msgstr "如需更多指示，請參閱「man snapper」。"
@@ -948,16 +961,14 @@ msgstr "無執行動作"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "root 參數只能與 no-dbus 一併使用。\n"
 
-msgid ""
-"usage: snapper [--global-options] <command> [--command-options] [command-"
-"arguments]"
+msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "用法： snapper [--全域選項] <命令> [--命令選項] [命令參數]"
 
 msgid "yes"
 msgstr "是"
 
-msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
-msgstr "\t--from\t\t\t\t依據指定快照建立快照。"
+#~ msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
+#~ msgstr "\t--from\t\t\t\t依據指定快照建立快照。"
 
 #~ msgid "Unknown type of snapshot."
 #~ msgstr "未知類型的快照。"

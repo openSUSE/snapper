@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-08 08:09+0100\n"
+"POT-Creation-Date: 2023-04-19 10:03+0200\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Ewelina Michalowska <ewelina.michalowska@stgambit.com>\n"
 "Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>\n"
@@ -39,7 +39,7 @@ msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
 "\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
 "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date."
+"\t\t\t\t\tpre-number, post-number, post-date, read-only."
 msgstr ""
 
 msgid ""
@@ -55,6 +55,9 @@ msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <nazwa>\t\tUstawienie nazwy konfiguracji do użycia."
 
 msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr ""
+
+msgid "\t--default\t\t\tSet snapshot as default snapshot."
 msgstr ""
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
@@ -123,7 +126,13 @@ msgstr "\t--quiet, -q\t\t\tWyłącz normalne wyjście."
 msgid "\t--read-only\t\t\tCreate read-only snapshot."
 msgstr ""
 
+msgid "\t--read-only\t\t\tSet snapshot read-only."
+msgstr ""
+
 msgid "\t--read-write\t\t\tCreate read-write snapshot."
+msgstr ""
+
+msgid "\t--read-write\t\t\tSet snapshot read-write."
 msgstr ""
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
@@ -703,6 +712,7 @@ msgstr "Otwieranie pliku '%s' nie powiodło się."
 msgid "Option --from only supported for snapshots of type single."
 msgstr ""
 
+#. DBus versions of CreatePreSnapshot and CreatePostSnapshot do not pass read-only flag
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr ""
 
@@ -734,6 +744,9 @@ msgstr "Przed datą"
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Błąd przydziału (%s)."
+
+msgid "Read-Only"
+msgstr ""
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Dodatkowe instrukcje można uzyskać, wydając polecenie \"man snapper\"."
