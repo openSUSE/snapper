@@ -208,14 +208,6 @@ namespace snapper
 
 
     void
-    Hooks::rollback(const string& subvolume, const Filesystem* filesystem, unsigned int old_num,
-		    unsigned int new_num)
-    {
-	rollback(Stage::POST_ACTION, subvolume, filesystem, old_num, new_num);
-    }
-
-
-    void
     Hooks::rollback(Stage stage, const string& subvolume, const Filesystem* filesystem, unsigned int old_num,
 		    unsigned int new_num)
     {

@@ -55,8 +55,6 @@ namespace snapper
 
 	static void rollback(const string& old_root, const string& new_root);
 
-	static void rollback(const string& subvolume, const Filesystem* filesystem, unsigned int old_num,
-			     unsigned int new_num) __attribute__((deprecated));
 	static void rollback(Stage stage, const string& subvolume, const Filesystem* filesystem, unsigned int old_num,
 			     unsigned int new_num);
 
