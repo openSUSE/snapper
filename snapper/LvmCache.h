@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2013] Red Hat, Inc.
+ * Copyright (c) 2023 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -22,53 +23,56 @@
 #define SNAPPER_LVM_CACHE_H
 
 #include <map>
-#include <set>
 #include <string>
 #include <vector>
 
 #include <boost/noncopyable.hpp>
 #include <boost/thread/shared_mutex.hpp>
 
+#include "snapper/Exception.h"
 
 
 namespace snapper
 {
     using std::map;
-    using std::set;
     using std::string;
     using std::vector;
 
-    class LvmCapabilities;
     class VolumeGroup;
+
 
     typedef map<string, vector<string>> vg_content_raw;
 
-    struct LvmCacheException : public std::exception
+
+    struct LvmCacheException : public Exception
     {
-	explicit LvmCacheException() throw() {}
-	virtual const char* what() const throw() override { return "lvm cache exception"; }
+	explicit LvmCacheException() : Exception("lvm cache exception") {}
     };
 
-    struct LvAttrs
+
+    class LvAttrs
     {
-	static bool extract_active(const string& raw);
-	static bool extract_readonly(const string& raw);
+    public:
 
 	LvAttrs(const vector<string>& raw);
-	LvAttrs(bool active, bool thin);
+	LvAttrs(bool active, bool read_only, bool thin);
 
 	bool active;
+	bool read_only;
 	bool thin;
+
+    private:
+
+	static bool extract_active(const string& raw);
+	static bool extract_read_only(const string& raw);
+
     };
 
 
     class LogicalVolume : boost::noncopyable
     {
     public:
-	friend class VolumeGroup;
 
-	// default constructor
-	LogicalVolume(const VolumeGroup* vg, const string& lv_name);
 	LogicalVolume(const VolumeGroup* vg, const string& lv_name, const LvAttrs& attrs);
 
 	void activate(); // upg -> excl. lock
@@ -76,20 +80,26 @@ namespace snapper
 
 	void update(); // shared, unique_lock
 
-	bool thin(); // shared
+	bool is_read_only() const; // shared
+	void set_read_only(bool read_only); // upg -> excl. lock
+
+	bool thin() const; // shared
 
 	friend std::ostream& operator<<(std::ostream& out, const LogicalVolume* cache);
 
     private:
+
+	string full_name() const;
+
 	void debug(std::ostream& out) const;
 
 	const VolumeGroup* vg;
 	const string lv_name;
-	const LvmCapabilities* caps;
 
 	LvAttrs attrs;
 
 	mutable boost::shared_mutex lv_mutex;
+
     };
 
 
@@ -105,15 +115,19 @@ namespace snapper
 	VolumeGroup(vg_content_raw& input, const string& vg_name, const string& add_lv_name);
 	~VolumeGroup();
 
-	string get_vg_name() const { return vg_name; }
+	const string& get_vg_name() const { return vg_name; }
 
 	void activate(const string& lv_name); // shared lock
 	void deactivate(const string& lv_name); // shared lock
 
+	bool is_read_only(const string& lv_name); // shared lock
+	void set_read_only(const string& lv_name, bool read_only); // shared lock
+
 	bool contains(const string& lv_name) const; // shared lock
 	bool contains_thin(const string& lv_name) const; // shared lock
 
-	void create_snapshot(const string& lv_origin_name, const string& lv_snapshot_name); // upg lock -> excl
+	void create_snapshot(const string& lv_origin_name, const string& lv_snapshot_name,
+			     bool read_only); // upg lock -> excl
 	void add_or_update(const string& lv_name); // upg lock -> excl
 
 	void remove_lv(const string& lv_name); // upg lock -> excl
@@ -121,6 +135,9 @@ namespace snapper
 	friend std::ostream& operator<<(std::ostream& out, const VolumeGroup* vg);
 
     private:
+
+	string full_name(const string& lv_name) const;
+
 	void debug(std::ostream& out) const;
 
 	const string vg_name;
@@ -128,12 +145,14 @@ namespace snapper
 	mutable boost::shared_mutex vg_mutex;
 
 	vg_content_t lv_info_map;
+
     };
 
 
     class LvmCache : public boost::noncopyable
     {
     public:
+
 	static LvmCache* get_lvm_cache();
 
 	~LvmCache();
@@ -145,11 +164,15 @@ namespace snapper
 	void activate(const string& vg_name, const string& lv_name) const;
 	void deactivate(const string& vg_name, const string& lv_name) const;
 
+	bool is_read_only(const string& vg_name, const string& lv_name) const;
+	void set_read_only(const string& vg_name, const string& lv_name, bool read_only);
+
 	bool contains(const string& vg_name, const string& lv_name) const;
 	bool contains_thin(const string& vg_name, const string& lv_name) const;
 
 	// create snapper owned snapshot
-	void create_snapshot(const string& vg_name, const string&lv_origin_name, const string& lv_snapshot_name);
+	void create_snapshot(const string& vg_name, const string&lv_origin_name,
+			     const string& lv_snapshot_name, bool read_only);
 	// used to actualise info about origin volume
 	void add_or_update(const string& vg_name, const string& lv_name);
 
@@ -157,15 +180,21 @@ namespace snapper
 	void delete_snapshot(const string& vg_name, const string& lv_name) const;
 
 	friend std::ostream& operator<<(std::ostream& out, const LvmCache* cache);
+
     private:
+
 	LvmCache() {}
 
 	// load all snapper's snapshots in vg_name VG and also add 'add_lv_name' LV
 	void add_vg(const string& vg_name, const string& include_lv_name);
 
 	map<string, VolumeGroup*> vgroups;
+
     };
 
-    std::ostream& operator<<(std::ostream& out, const LvAttrs& a);
+
+    std::ostream& operator<<(std::ostream& out, const LvAttrs& lv_attrs);
+
 }
-#endif // SNAPPER_LVM_CACHE_H
+
+#endif

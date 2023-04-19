@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2016-2022] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -311,6 +311,18 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"    <method name='DeleteSnapshots'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"      <arg name='numbers' type='au' direction='in'/>\n"
+	"    </method>\n"
+
+	"    <method name='IsSnapshotReadOnly'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='number' type='u' direction='in'/>\n"
+	"      <arg name='read-only' type='b' direction='out'/>\n"
+	"    </method>\n"
+
+	"    <method name='SetSnapshotReadOnly'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='number' type='u' direction='in'/>\n"
+	"      <arg name='read-only' type='b' direction='in'/>\n"
 	"    </method>\n"
 
 	"    <method name='GetDefaultSnapshot'>\n"
@@ -1111,6 +1123,76 @@ Client::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
+Client::is_snapshot_read_only(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    dbus_uint32_t num;
+
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> num;
+
+    y2deb("IsSnapshotReadOnly config_name:" << config_name << " num:" << num);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
+
+    Snapshots& snapshots = snapper->getSnapshots();
+
+    Snapshots::iterator snap = snapshots.find(num);
+    if (snap == snapshots.end())
+	throw IllegalSnapshotException();
+
+    bool read_only = snap->isReadOnly();
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Marshaller marshaller(reply);
+    marshaller << read_only;
+
+    conn.send(reply);
+}
+
+
+void
+Client::set_snapshot_read_only(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    dbus_uint32_t num;
+    bool read_only;
+
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> num >> read_only;
+
+    y2deb("SetSnapshotReadOnly config_name:" << config_name << " num:" << num << " read_only:" << read_only);
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
+
+    Snapshots& snapshots = snapper->getSnapshots();
+
+    Snapshots::iterator snap = snapshots.find(num);
+    if (snap == snapshots.end())
+	throw IllegalSnapshotException();
+
+    snap->setReadOnly(read_only);
+
+    DBus::MessageMethodReturn reply(msg);
+
+    conn.send(reply);
+}
+
+
+void
 Client::get_default_snapshot(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
@@ -1626,7 +1708,7 @@ Client::sync(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
-Client::debug(DBus::Connection& conn, DBus::Message& msg) const
+Client::debug(DBus::Connection& conn, DBus::Message& msg)
 {
     y2deb("Debug");
 
@@ -1700,81 +1782,61 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg) const
 void
 Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 {
+    using method_fnc = void (Client ::*)(DBus::Connection& conn, DBus::Message& msg);
+
+    static const vector<pair<const char*, method_fnc>> method_registry = {
+	{ "ListConfigs", &Client::list_configs },
+	{ "CreateConfig", &Client::create_config },
+	{ "GetConfig", &Client::get_config },
+	{ "SetConfig", &Client::set_config },
+	{ "DeleteConfig", &Client::delete_config },
+	{ "LockConfig", &Client::lock_config },
+	{ "UnlockConfig", &Client::unlock_config },
+	{ "ListSnapshots", &Client::list_snapshots },
+	{ "ListSnapshotsAtTime", &Client::list_snapshots_at_time },
+	{ "GetSnapshot", &Client::get_snapshot },
+	{ "SetSnapshot", &Client::set_snapshot },
+	{ "CreateSingleSnapshot", &Client::create_single_snapshot },
+	{ "CreateSingleSnapshotV2", &Client::create_single_snapshot_v2 },
+	{ "CreateSingleSnapshotOfDefault", &Client::create_single_snapshot_of_default },
+	{ "CreatePreSnapshot", &Client::create_pre_snapshot },
+	{ "CreatePostSnapshot", &Client::create_post_snapshot },
+	{ "DeleteSnapshots", &Client::delete_snapshots },
+	{ "IsSnapshotReadOnly", &Client::is_snapshot_read_only },
+	{ "SetSnapshotReadOnly", &Client::set_snapshot_read_only },
+	{ "GetDefaultSnapshot", &Client::get_default_snapshot },
+	{ "GetActiveSnapshot", &Client::get_active_snapshot },
+	{ "CalculateUsedSpace", &Client::calculate_used_space },
+	{ "GetUsedSpace", &Client::get_used_space },
+	{ "MountSnapshot", &Client::mount_snapshot },
+	{ "UmountSnapshot", &Client::umount_snapshot },
+	{ "GetMountPoint", &Client::get_mount_point },
+	{ "CreateComparison", &Client::create_comparison },
+	{ "DeleteComparison", &Client::delete_comparison },
+	{ "GetFiles", &Client::get_files },
+	{ "GetFilesByPipe", &Client::get_files_by_pipe },
+	{ "SetupQuota", &Client::setup_quota },
+	{ "PrepareQuota", &Client::prepare_quota },
+	{ "QueryQuota", &Client::query_quota },
+	{ "QueryFreeSpace", &Client::query_free_space },
+	{ "Sync", &Client::sync },
+	{ "Debug", &Client::debug }
+    };
+
     try
     {
-	if (msg.is_method_call(INTERFACE, "ListConfigs"))
-	    list_configs(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "CreateConfig"))
-	    create_config(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "GetConfig"))
-	    get_config(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "SetConfig"))
-	    set_config(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "DeleteConfig"))
-	    delete_config(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "LockConfig"))
-	    lock_config(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "UnlockConfig"))
-	    unlock_config(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "ListSnapshots"))
-	    list_snapshots(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "ListSnapshotsAtTime"))
-	    list_snapshots_at_time(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "GetSnapshot"))
-	    get_snapshot(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "SetSnapshot"))
-	    set_snapshot(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "CreateSingleSnapshot"))
-	    create_single_snapshot(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "CreateSingleSnapshotV2"))
-	    create_single_snapshot_v2(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "CreateSingleSnapshotOfDefault"))
-	    create_single_snapshot_of_default(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "CreatePreSnapshot"))
-	    create_pre_snapshot(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "CreatePostSnapshot"))
-	    create_post_snapshot(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "DeleteSnapshots"))
-	    delete_snapshots(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "GetDefaultSnapshot"))
-	    get_default_snapshot(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "GetActiveSnapshot"))
-	    get_active_snapshot(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "CalculateUsedSpace"))
-	    calculate_used_space(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "GetUsedSpace"))
-	    get_used_space(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "MountSnapshot"))
-	    mount_snapshot(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "UmountSnapshot"))
-	    umount_snapshot(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "GetMountPoint"))
-	    get_mount_point(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "CreateComparison"))
-	    create_comparison(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "DeleteComparison"))
-	    delete_comparison(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "GetFiles"))
-	    get_files(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "GetFilesByPipe"))
-	    get_files_by_pipe(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "SetupQuota"))
-	    setup_quota(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "PrepareQuota"))
-	    prepare_quota(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "QueryQuota"))
-	    query_quota(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "QueryFreeSpace"))
-	    query_free_space(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "Sync"))
-	    sync(conn, msg);
-	else if (msg.is_method_call(INTERFACE, "Debug"))
-	    debug(conn, msg);
-	else
+	for (const vector<pair<const char*, method_fnc>>::value_type& tmp : method_registry)
 	{
-	    DBus::MessageError reply(msg, "error.unknown_method", DBUS_ERROR_FAILED);
-	    conn.send(reply);
+	    if (msg.is_method_call(INTERFACE, tmp.first))
+	    {
+		(*this.*tmp.second)(conn, msg);
+		return;
+	    }
 	}
+
+	DBus::MessageError reply(msg, "error.unknown_method", DBUS_ERROR_FAILED);
+	conn.send(reply);
+	return;
     }
     catch (const boost::thread_interrupted&)
     {

@@ -148,6 +148,7 @@ namespace snapper
 
 	if (type != CreateType::SINGLE && !scd.read_only)
 	{
+	    // DBus versions of CreatePreSnapshot and CreatePostSnapshot do not pass read-only flag
 	    SN_THROW(OptionsException(_("Option --read-write only supported for snapshots of type single.")));
 	}
 

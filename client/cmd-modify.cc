@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -22,6 +22,8 @@
 
 
 #include <iostream>
+
+#include <snapper/Filesystem.h>
 
 #include "utils/text.h"
 #include "GlobalOptions.h"
@@ -45,6 +47,9 @@ namespace snapper
 	     << _("\t--description, -d <description>\tDescription for snapshot.") << '\n'
 	     << _("\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot.") << '\n'
 	     << _("\t--userdata, -u <userdata>\tUserdata for snapshot.") << '\n'
+	     << _("\t--read-only\t\t\tSet snapshot read-only.") << '\n'
+	     << _("\t--read-write\t\t\tSet snapshot read-write.") << '\n'
+	     << _("\t--default\t\t\tSet snapshot as default snapshot.") << '\n'
 	     << endl;
     }
 
@@ -55,7 +60,10 @@ namespace snapper
 	const vector<Option> options = {
 	    Option("description",		required_argument,	'd'),
 	    Option("cleanup-algorithm",		required_argument,	'c'),
-	    Option("userdata",			required_argument,	'u')
+	    Option("userdata",			required_argument,	'u'),
+	    Option("read-only",			no_argument),
+	    Option("read-write",		no_argument),
+	    Option("default",			no_argument)
 	};
 
 	ParsedOpts opts = get_opts.parse("modify", options);
@@ -71,20 +79,67 @@ namespace snapper
 	{
 	    ProxySnapshots::iterator snapshot = snapshots.findNum(get_opts.pop_arg());
 
+	    bool set_smd = false;
 	    SMD smd = snapshot->getSmd();
+
+	    bool set_read_only = false;
+	    bool read_only;
+
+	    bool set_default = false;
 
 	    ParsedOpts::const_iterator opt;
 
 	    if ((opt = opts.find("description")) != opts.end())
+	    {
+		set_smd = true;
 		smd.description = opt->second;
+	    }
 
 	    if ((opt = opts.find("cleanup-algorithm")) != opts.end())
+	    {
+		set_smd = true;
 		smd.cleanup = opt->second;
+	    }
 
 	    if ((opt = opts.find("userdata")) != opts.end())
+	    {
+		set_smd = true;
 		smd.userdata = read_userdata(opt->second, snapshot->getUserdata());
+	    }
 
-	    snapper->modifySnapshot(snapshot, smd);
+	    if (opts.find("read-only") != opts.end())
+	    {
+		set_read_only = true;
+		read_only = true;
+	    }
+
+	    if (opts.find("read-write") != opts.end())
+	    {
+		set_read_only = true;
+		read_only = false;
+	    }
+
+	    if (opts.find("default") != opts.end())
+	    {
+		set_default = true;
+	    }
+
+	    if (set_smd)
+	    {
+		snapper->modifySnapshot(snapshot, smd);
+	    }
+
+	    if (set_read_only)
+	    {
+		snapshot->setReadOnly(read_only);
+	    }
+
+	    if (set_default)
+	    {
+		ProxyConfig config = snapper->getConfig();
+		const Filesystem* filesystem = get_filesystem(config, global_options.root());
+		filesystem->setDefault(snapshot->getNum());
+	    }
 	}
     }
 

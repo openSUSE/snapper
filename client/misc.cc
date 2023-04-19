@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) 2020 SUSE LLC
+ * Copyright (c) [2020-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -29,9 +29,10 @@
 
 #include <snapper/AppUtil.h>
 #include <snapper/SystemCmd.h>
+#include <snapper/SnapperDefines.h>
+#include <snapper/Filesystem.h>
 
 #include "utils/text.h"
-
 #include "misc.h"
 
 
@@ -161,6 +162,32 @@ username(uid_t uid)
 	return sformat("unknown (%d)", uid);
 
     return username;
+}
+
+
+const Filesystem*
+get_filesystem(const ProxyConfig& config, const string& target_root)
+{
+    const map<string, string>& raw = config.getAllValues();
+
+    map<string, string>::const_iterator pos1 = raw.find(KEY_FSTYPE);
+    map<string, string>::const_iterator pos2 = raw.find(KEY_SUBVOLUME);
+    if (pos1 == raw.end() || pos2 == raw.end())
+    {
+	cerr << _("Failed to initialize filesystem handler.") << endl;
+	exit(EXIT_FAILURE);
+    }
+
+    try
+    {
+	return Filesystem::create(pos1->second, pos2->second, target_root);
+    }
+    catch (const InvalidConfigException& e)
+    {
+	SN_CAUGHT(e);
+	cerr << _("Failed to initialize filesystem handler.") << endl;
+	exit(EXIT_FAILURE);
+    }
 }
 
 

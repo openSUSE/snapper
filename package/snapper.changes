@@ -1,4 +1,12 @@
 -------------------------------------------------------------------
+Wed Apr 19 09:19:04 CEST 2023 - aschnell@suse.com
+
+- allow to show read-only state in list output and allow to
+  change read-only state (gh#openSUSE/snapper#804)
+- support read-only options for LVM
+- allow to set a snapshot as default (gh#openSUSE/snapper#803)
+
+-------------------------------------------------------------------
 Thu Apr 13 09:25:42 CEST 2023 - aschnell@suse.com
 
 - avoid stale btrfs qgroups on transactional systems (bsc#1210151)

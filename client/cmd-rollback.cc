@@ -25,12 +25,9 @@
 
 #include <iostream>
 
-#ifdef ENABLE_ROLLBACK
 #include <snapper/AppUtil.h>
-#include <snapper/SnapperDefines.h>
 #include <snapper/Filesystem.h>
 #include <snapper/Hooks.h>
-#endif
 
 #include "utils/text.h"
 #include "GlobalOptions.h"
@@ -45,32 +42,6 @@ namespace snapper
 
 
 #ifdef ENABLE_ROLLBACK
-
-    const Filesystem*
-    get_filesystem(const ProxyConfig& config, const string& target_root)
-    {
-	const map<string, string>& raw = config.getAllValues();
-
-	map<string, string>::const_iterator pos1 = raw.find(KEY_FSTYPE);
-	map<string, string>::const_iterator pos2 = raw.find(KEY_SUBVOLUME);
-	if (pos1 == raw.end() || pos2 == raw.end())
-	{
-	    cerr << _("Failed to initialize filesystem handler.") << endl;
-	    exit(EXIT_FAILURE);
-	}
-
-	try
-	{
-	    return Filesystem::create(pos1->second, pos2->second, target_root);
-	}
-	catch (const InvalidConfigException& e)
-	{
-	    SN_CAUGHT(e);
-	    cerr << _("Failed to initialize filesystem handler.") << endl;
-	    exit(EXIT_FAILURE);
-	}
-    }
-
 
     void
     help_rollback()

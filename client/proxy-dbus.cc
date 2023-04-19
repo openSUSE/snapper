@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2022] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -50,6 +50,20 @@ ProxySnapshotDbus::ProxySnapshotDbus(ProxySnapshotsDbus* backref, SnapshotType t
     : backref(backref), type(type), num(num), date(date), uid(uid), pre_num(pre_num),
       description(description), cleanup(cleanup), userdata(userdata)
 {
+}
+
+
+bool
+ProxySnapshotDbus::isReadOnly() const
+{
+    return command_is_snapshot_read_only(conn(), configName(), num);
+}
+
+
+void
+ProxySnapshotDbus::setReadOnly(bool read_only)
+{
+    command_set_snapshot_read_only(conn(), configName(), num, read_only);
 }
 
 

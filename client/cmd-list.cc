@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2021] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -26,9 +26,7 @@
 #include <iostream>
 #include <boost/any.hpp>
 
-#include "snapper/SnapperTmpl.h"
-#include "dbus/DBusMessage.h"
-#include "utils/HumanString.h"
+#include <snapper/SnapperTmpl.h>
 #include <snapper/BtrfsUtils.h>
 
 #include "utils/text.h"
@@ -38,6 +36,8 @@
 #include "utils/TableFormatter.h"
 #include "utils/CsvFormatter.h"
 #include "utils/JsonFormatter.h"
+#include "dbus/DBusMessage.h"
+#include "utils/HumanString.h"
 
 
 namespace snapper
@@ -59,7 +59,7 @@ namespace snapper
 	     << _("\t--columns <columns>\t\tColumns to show separated by comma.\n"
 		  "\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
 		  "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-		  "\t\t\t\t\tpre-number, post-number, post-date.") << '\n'
+		  "\t\t\t\t\tpre-number, post-number, post-date, read-only.") << '\n'
 	     << endl;
     }
 
@@ -70,7 +70,7 @@ namespace snapper
 	enum class Column
 	{
 	    CONFIG, SUBVOLUME, NUMBER, DEFAULT, ACTIVE, TYPE, DATE, USER, USED_SPACE,
-	    CLEANUP, DESCRIPTION, USERDATA, PRE_NUMBER, POST_NUMBER, POST_DATE
+	    CLEANUP, DESCRIPTION, USERDATA, PRE_NUMBER, POST_NUMBER, POST_DATE, READ_ONLY
 	};
 
 	enum class ListMode { ALL, SINGLE, PRE_POST };
@@ -380,6 +380,9 @@ namespace snapper
 
 		case Column::POST_DATE:
 		    return make_pair(_("Post Date"), TableAlign::LEFT);
+
+		case Column::READ_ONLY:
+		    return make_pair(_("Read-Only"), TableAlign::LEFT);
 	    }
 
 	    SN_THROW(Exception("invalid column value"));
@@ -472,6 +475,9 @@ namespace snapper
 
 		    return datetime(it->getDate(), output_options.utc, output_options.iso);
 		}
+
+		case Column::READ_ONLY:
+		    return snapshot.isReadOnly();
 	    }
 
 	    SN_THROW(Exception("invalid column value in value_for_as_any"));
@@ -770,7 +776,7 @@ namespace snapper
 
     const vector<string> EnumInfo<Column>::names({
 	"config", "subvolume", "number", "default", "active", "type", "date", "user", "used-space", "cleanup",
-	"description", "userdata", "pre-number", "post-number", "post-date"
+	"description", "userdata", "pre-number", "post-number", "post-date", "read-only"
     });
 
 

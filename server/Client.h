@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2016-2022] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -102,6 +102,8 @@ public:
     void create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void create_post_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void delete_snapshots(DBus::Connection& conn, DBus::Message& msg);
+    void is_snapshot_read_only(DBus::Connection& conn, DBus::Message& msg);
+    void set_snapshot_read_only(DBus::Connection& conn, DBus::Message& msg);
     void get_default_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void get_active_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void calculate_used_space(DBus::Connection& conn, DBus::Message& msg);
@@ -118,7 +120,7 @@ public:
     void query_quota(DBus::Connection& conn, DBus::Message& msg);
     void query_free_space(DBus::Connection& conn, DBus::Message& msg);
     void sync(DBus::Connection& conn, DBus::Message& msg);
-    void debug(DBus::Connection& conn, DBus::Message& msg) const;
+    void debug(DBus::Connection& conn, DBus::Message& msg);
 
     void dispatch(DBus::Connection& conn, DBus::Message& msg);
 

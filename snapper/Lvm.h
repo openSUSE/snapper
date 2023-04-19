@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
+ * Copyright (c) 2023 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -27,21 +28,21 @@
 #include <boost/thread/mutex.hpp>
 
 #include "snapper/Filesystem.h"
+#include "snapper/Exception.h"
 
 
 namespace snapper
 {
-    struct LvmActivationException : public std::exception
+
+    struct LvmActivationException : public Exception
     {
-	explicit LvmActivationException() throw() {}
-	virtual const char* what() const throw() override { return "lvm snapshot activation exception"; }
+	explicit LvmActivationException() : Exception("lvm snapshot activation exception") {}
     };
 
 
-    struct LvmDeactivatationException : public std::exception
+    struct LvmDeactivatationException : public Exception
     {
-	explicit LvmDeactivatationException() throw() {}
-	virtual const char* what() const throw() override { return "lvm snapshot deactivation exception"; }
+	explicit LvmDeactivatationException() : Exception("lvm snapshot deactivation exception") {}
     };
 
 
@@ -55,23 +56,25 @@ namespace snapper
 
     bool operator>=(const lvm_version& a, const lvm_version& b);
 
+
     class LvmCache;
+
 
     class LvmCapabilities : public boost::noncopyable
     {
     public:
+
 	static LvmCapabilities* get_lvm_capabilities();
 
-	bool get_time_support() const;
-	string get_ignoreactivationskip() const;
+	const string& get_ignoreactivationskip() const { return ignoreactivationskip; }
 
     private:
+
 	LvmCapabilities();
 
 	// empty or " -K" if lvm supports ignore activation skip flag
 	string ignoreactivationskip;
-	// true if lvm2 supports time info stored in metadata
-	bool time_support = false;
+
     };
 
 
@@ -104,6 +107,7 @@ namespace snapper
 	virtual void umountSnapshot(unsigned int num) const override;
 
 	virtual bool isSnapshotReadOnly(unsigned int num) const override;
+	virtual void setSnapshotReadOnly(unsigned int num, bool read_only) const override;
 
 	virtual bool checkSnapshot(unsigned int num) const override;
 
@@ -112,7 +116,6 @@ namespace snapper
 	mutable boost::mutex mount_mutex;
 
 	const string mount_type;
-	const LvmCapabilities* caps;
 	LvmCache* cache;
 
 	bool detectThinVolumeNames(const MtabData& mtab_data);

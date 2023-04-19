@@ -59,6 +59,7 @@ namespace snapper
 	virtual void umountSnapshot(unsigned int num) const override;
 
 	virtual bool isSnapshotReadOnly(unsigned int num) const override;
+	virtual void setSnapshotReadOnly(unsigned int num, bool read_only) const override;
 
 	virtual bool checkSnapshot(unsigned int num) const override;
 

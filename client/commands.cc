@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2016-2022] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -21,7 +21,7 @@
  */
 
 
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 
 #include "commands.h"
@@ -293,6 +293,52 @@ command_delete_snapshots(DBus::Connection& conn, const string& config_name,
     marshaller << config_name << nums;
 
     conn.send_with_reply_and_block(call);
+}
+
+
+bool
+command_is_snapshot_read_only(DBus::Connection& conn, const string& config_name, unsigned int num)
+{
+    try
+    {
+	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "IsSnapshotReadOnly");
+
+	DBus::Marshaller marshaller(call);
+	marshaller << config_name << num;
+
+	DBus::Message reply = conn.send_with_reply_and_block(call);
+
+	bool read_only;
+
+	DBus::Unmarshaller unmarshaller(reply);
+	unmarshaller >> read_only;
+
+	return read_only;
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	convert_exception(e);
+    }
+}
+
+
+void
+command_set_snapshot_read_only(DBus::Connection& conn, const string& config_name, unsigned int num,
+			       bool read_only)
+{
+    try
+    {
+	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "SetSnapshotReadOnly");
+
+	DBus::Marshaller marshaller(call);
+	marshaller << config_name << num << read_only;
+
+	conn.send_with_reply_and_block(call);
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	convert_exception(e);
+    }
 }
 
 
