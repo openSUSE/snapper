@@ -192,7 +192,7 @@ get_filesystem(const ProxyConfig& config, const string& target_root)
 
 
 Differ::Differ()
-    : command(DIFFBIN " --new-file --unified"), extensions()
+    : command(DIFFBIN " --new-file --unified")
 {
 }
 

@@ -603,7 +603,7 @@ Client::list_configs(DBus::Connection& conn, DBus::Message& msg)
     DBus::Marshaller marshaller(reply);
     marshaller.open_array(DBus::TypeInfo<ConfigInfo>::signature);
     for (MetaSnappers::const_iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
-    marshaller << it->getConfigInfo();
+	marshaller << it->getConfigInfo();
     marshaller.close_array();
 
     conn.send(reply);
@@ -1218,9 +1218,9 @@ Client::get_default_snapshot(DBus::Connection& conn, DBus::Message& msg)
     DBus::Marshaller marshaller(reply);
 
     if (tmp != snapshots.end())
-    marshaller << true << tmp->getNum();
+	marshaller << true << tmp->getNum();
     else
-    marshaller << false << (unsigned int)(0);
+	marshaller << false << (unsigned int)(0);
 
     conn.send(reply);
 }
@@ -1252,9 +1252,9 @@ Client::get_active_snapshot(DBus::Connection& conn, DBus::Message& msg)
     DBus::Marshaller marshaller(reply);
 
     if (tmp != snapshots.end())
-    marshaller << true << tmp->getNum();
+	marshaller << true << tmp->getNum();
     else
-    marshaller << false << (unsigned int)(0);
+	marshaller << false << (unsigned int)(0);
 
     conn.send(reply);
 }
@@ -1726,7 +1726,7 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg)
     {
 	std::ostringstream s;
 	s << "    pid:" << getpid();
-    marshaller << s.str();
+	marshaller << s.str();
     }
 
     marshaller << "clients:";
@@ -1742,7 +1742,7 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg)
 	    s << ", locks " << it->locks.size();
 	if (!it->comparisons.empty())
 	    s << ", comparisons " << it->comparisons.size();
-    marshaller << s.str();
+	marshaller << s.str();
     }
 
     marshaller << "backgrounds:";
@@ -1750,7 +1750,7 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg)
     {
 	std::ostringstream s;
 	s << "    name:'" << it->meta_snapper->configName() << "'";
-    marshaller << s.str();
+	marshaller << s.str();
     }
 
     marshaller << "meta-snappers:";
@@ -1766,7 +1766,7 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg)
 	    else
 		s << ", use count " << it->use_count();
 	}
-    marshaller << s.str();
+	marshaller << s.str();
     }
 
     marshaller << "compile options:";
