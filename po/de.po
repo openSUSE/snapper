@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-08 08:09+0100\n"
+"POT-Creation-Date: 2023-04-19 10:03+0200\n"
 "PO-Revision-Date: 2023-02-10 12:14+0000\n"
 "Last-Translator: Gemineo <vistatec@gemineo.de>\n"
-"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
-"\n"
+"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,11 +32,12 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tBereinigungsalgorithmus für den Schna
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tBereinigungsalgorithmus für Schnappschüsse."
 
+#, fuzzy
 msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
 "\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
 "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date."
+"\t\t\t\t\tpre-number, post-number, post-date, read-only."
 msgstr ""
 "\t--columns <Spalten>\t\tSpalten, die angezeigt werden sollen. Separiert durch Kommata.\n"
 "\t\t\t\t\tMögliche Spalten: config, subvolume, number, default, active,\n"
@@ -62,6 +62,10 @@ msgstr "\t--config, -c <Name>\t\tNamen der zu benutzenden Konfiguration einsetze
 msgid "\t--csvout\t\t\tSet CSV output format."
 msgstr "\t--csvout\t\t\tCSV-Ausgabeformat setzen."
 
+#, fuzzy
+msgid "\t--default\t\t\tSet snapshot as default snapshot."
+msgstr "Aktiver Schnappschuss ist schon Standard-Schnappschuss."
+
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <Beschreibung>\tBeschreibung des Schnappschusses."
 
@@ -81,9 +85,7 @@ msgid "\t--free-space <space>\t\tTry to make space available."
 msgstr "\t--free-space <Speicherplatz>\t\tVersuche, Speicherplatz verfügbar zu machen."
 
 msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
-msgstr ""
-"\t--from <Nummer>\t\t\tEinen Schnappschuss vom angegebenen Schnappschuss "
-"erstellen."
+msgstr "\t--from <Nummer>\t\t\tEinen Schnappschuss vom angegebenen Schnappschuss erstellen."
 
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <fstype>\t\tDateisystem-Typ manuell setzen."
@@ -130,7 +132,15 @@ msgstr "\t--quiet, -q\t\t\tNormale Ausgabe unterdrücken."
 msgid "\t--read-only\t\t\tCreate read-only snapshot."
 msgstr "\t--read-only\t\t\tEinen nur lesbaren Schnappschuss erstellen."
 
+#, fuzzy
+msgid "\t--read-only\t\t\tSet snapshot read-only."
+msgstr "\t--read-only\t\t\tEinen nur lesbaren Schnappschuss erstellen."
+
 msgid "\t--read-write\t\t\tCreate read-write snapshot."
+msgstr "\t--read-write\t\t\tEinen nur schreibbaren Schnappschuss erstellen."
+
+#, fuzzy
+msgid "\t--read-write\t\t\tSet snapshot read-write."
 msgstr "\t--read-write\t\t\tEinen nur schreibbaren Schnappschuss erstellen."
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
@@ -703,6 +713,7 @@ msgstr "Öffnen der Datei '%s' nicht möglich."
 msgid "Option --from only supported for snapshots of type single."
 msgstr "Die Option --from wird nur für Schnappschüsse vom Typ Einzeln unterstützt."
 
+#. DBus versions of CreatePreSnapshot and CreatePostSnapshot do not pass read-only flag
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Die Option --read-write wird nur für Schnappschüsse vom Typ Einzeln unterstützt."
 
@@ -733,6 +744,9 @@ msgstr "Vorher-Datum"
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Quota-Fehler (%s)."
+
+msgid "Read-Only"
+msgstr ""
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Weitere Anweisungen finden Sie in 'man snapper'."

@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-08 08:09+0100\n"
+"POT-Creation-Date: 2023-04-19 10:03+0200\n"
 "PO-Revision-Date: 2023-02-09 16:14+0000\n"
 "Last-Translator: Samanta Magalhaes <samanta_texttrans@outlook.com>\n"
-"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/"
-"snapper/master/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,11 +34,12 @@ msgstr "\t--cleanup-algorithm, -c <algoritmo>\tAlgoritmo de limpeza do instantâ
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algoritmo>\tAlgoritmo de limpeza dos instantâneos."
 
+#, fuzzy
 msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
 "\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
 "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date."
+"\t\t\t\t\tpre-number, post-number, post-date, read-only."
 msgstr ""
 "\t--columns <colunas>\t\tColunas a exibir separados por vírgula.\n"
 "\t\t\t\t\tPossíveis colunas: config, subvolume, number, default, active,\n"
@@ -64,6 +64,10 @@ msgstr "\t--config, -c <nome>\t\tNome do conjunto de configurações a utilizar.
 msgid "\t--csvout\t\t\tSet CSV output format."
 msgstr "\t--csvout\t\t\tDefina o formato de saída CSV."
 
+#, fuzzy
+msgid "\t--default\t\t\tSet snapshot as default snapshot."
+msgstr "O instantâneo ativo já é o instantâneo padrão."
+
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <descrição>\tDescrição do instantâneo."
 
@@ -83,9 +87,7 @@ msgid "\t--free-space <space>\t\tTry to make space available."
 msgstr "\t--free-space <espaço>\t\tTentar disponibilizar o espaço."
 
 msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
-msgstr ""
-"\t--from <número>\t\t\tCriar um instantâneo com base no instantâneo "
-"especificado."
+msgstr "\t--from <número>\t\t\tCriar um instantâneo com base no instantâneo especificado."
 
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <tipo_de_sistema_de_arquivos>\t\tDefinir o tipo de sistema de arquivos manualmente."
@@ -132,7 +134,15 @@ msgstr "\t--quiet, -q\t\t\tOcultar saída normal."
 msgid "\t--read-only\t\t\tCreate read-only snapshot."
 msgstr "\t--read-only\t\t\tCrie um instantâneo somente leitura."
 
+#, fuzzy
+msgid "\t--read-only\t\t\tSet snapshot read-only."
+msgstr "\t--read-only\t\t\tCrie um instantâneo somente leitura."
+
 msgid "\t--read-write\t\t\tCreate read-write snapshot."
+msgstr "\t--read-write\t\t\tCrie um instantâneo de leitura-escrita."
+
+#, fuzzy
+msgid "\t--read-write\t\t\tSet snapshot read-write."
 msgstr "\t--read-write\t\t\tCrie um instantâneo de leitura-escrita."
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
@@ -705,6 +715,7 @@ msgstr "Falha ao abrir o arquivo '%s'."
 msgid "Option --from only supported for snapshots of type single."
 msgstr "Opção --from apenas suportada para instantâneos do tipo único."
 
+#. DBus versions of CreatePreSnapshot and CreatePostSnapshot do not pass read-only flag
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Opção --read-write suportada apenas para instantâneos do tipo único."
 
@@ -735,6 +746,9 @@ msgstr "Data anterior"
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Erro de cota (%s)."
+
+msgid "Read-Only"
+msgstr ""
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Consulte \"man snapper\" para obter mais instruções."

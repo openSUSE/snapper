@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-08 08:09+0100\n"
+"POT-Creation-Date: 2023-04-19 10:03+0200\n"
 "PO-Revision-Date: 2022-05-20 11:12+0000\n"
 "Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
 "Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/id/>\n"
@@ -28,11 +28,12 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritma pembersihan untuk snapshot."
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritma pembersihan untuk snapshot."
 
+#, fuzzy
 msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
 "\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
 "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date."
+"\t\t\t\t\tpre-number, post-number, post-date, read-only."
 msgstr ""
 "\t--columns <columns>\t\tKolom untuk ditampilkan dipisahkan oleh koma.\n"
 "\t\t\t\t\tKolom yang mungkin: konfigurasi, subvolume, angka, bawaan, aktif,\n"
@@ -56,6 +57,10 @@ msgstr "\t--config, -c <nama>\t\tAtur nama konfigurasi untuk digunakan."
 
 msgid "\t--csvout\t\t\tSet CSV output format."
 msgstr "\t--csvout\t\t\tAtur format keluaran CSV."
+
+#, fuzzy
+msgid "\t--default\t\t\tSet snapshot as default snapshot."
+msgstr "Snapshot aktif sudah menjadi snapshot bawaan."
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <deskripsi>\tDeskripsi untuk snapshot."
@@ -125,7 +130,15 @@ msgstr "\t--quiet, -q\t\t\tMenekan keluaran normal."
 msgid "\t--read-only\t\t\tCreate read-only snapshot."
 msgstr "\t--read-only\t\t\tBuat snapshot hanya baca."
 
+#, fuzzy
+msgid "\t--read-only\t\t\tSet snapshot read-only."
+msgstr "\t--read-only\t\t\tBuat snapshot hanya baca."
+
 msgid "\t--read-write\t\t\tCreate read-write snapshot."
+msgstr "\t--read-write\t\t\tBuat snapshot baca-tulis."
+
+#, fuzzy
+msgid "\t--read-write\t\t\tSet snapshot read-write."
 msgstr "\t--read-write\t\t\tBuat snapshot baca-tulis."
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
@@ -698,6 +711,7 @@ msgstr "Membuka berkas '%s' gagal."
 msgid "Option --from only supported for snapshots of type single."
 msgstr "Opsi --from hanya didukung untuk snapshot dari tipe tunggal."
 
+#. DBus versions of CreatePreSnapshot and CreatePostSnapshot do not pass read-only flag
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Opsi --read-write hanya didukung untuk snapshot dari tipe tunggal."
 
@@ -728,6 +742,9 @@ msgstr "Tanggal Pra"
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Galat kuota (%s)."
+
+msgid "Read-Only"
+msgstr ""
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Lihat 'man snapper' untuk instruksi lebih lanjut."
