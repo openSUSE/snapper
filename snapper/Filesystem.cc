@@ -23,11 +23,11 @@
 
 #include "config.h"
 
-#include <string.h>
+#include <cstring>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/mount.h>
-#include <errno.h>
+#include <cerrno>
 #include <unistd.h>
 #include <mntent.h>
 #include <fcntl.h>

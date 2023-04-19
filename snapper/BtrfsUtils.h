@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -25,7 +25,7 @@
 #define SNAPPER_BTRFS_UTILS_H
 
 
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 #include <vector>
 
@@ -49,6 +49,7 @@ namespace snapper
 	bool is_subvolume(const struct stat& stat);
 
 	bool is_subvolume_read_only(int fd);
+	void set_subvolume_read_only(int fd, bool read_only);
 
 	bool does_subvolume_exist(int fd, subvolid_t id);
 

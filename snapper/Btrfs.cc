@@ -23,10 +23,10 @@
 
 #include "config.h"
 
-#include <string.h>
+#include <cstring>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <errno.h>
+#include <cerrno>
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
@@ -131,7 +131,7 @@ namespace snapper
 		case EEXIST:
 		    SN_THROW(CreateConfigFailedException("creating btrfs subvolume .snapshots failed "
 							 "since it already exists"));
-                    break;
+		    break;
 
 		default:
 		    SN_THROW(CreateConfigFailedException("creating btrfs subvolume .snapshots failed"));
@@ -463,6 +463,14 @@ namespace snapper
     {
 	SDir snapshot_dir = openSnapshotDir(num);
 	return is_subvolume_read_only(snapshot_dir.fd());
+    }
+
+
+    void
+    Btrfs::setSnapshotReadOnly(unsigned int num, bool read_only) const
+    {
+	SDir snapshot_dir = openSnapshotDir(num);
+	set_subvolume_read_only(snapshot_dir.fd(), read_only);
     }
 
 

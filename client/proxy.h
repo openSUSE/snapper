@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -100,6 +100,8 @@ public:
     unsigned int getNum() const { return impl->getNum(); }
     time_t getDate() const { return impl->getDate(); }
     uid_t getUid() const { return impl->getUid(); }
+    bool isReadOnly() const { return impl->isReadOnly(); }
+    void setReadOnly(bool read_only) { impl->setReadOnly(read_only); }
     unsigned int getPreNum() const { return impl->getPreNum(); }
     const string& getDescription() const { return impl->getDescription(); }
     const string& getCleanup() const { return impl->getCleanup(); }
@@ -130,6 +132,8 @@ public:
 	virtual unsigned int getNum() const = 0;
 	virtual time_t getDate() const = 0;
 	virtual uid_t getUid() const = 0;
+	virtual bool isReadOnly() const = 0;
+	virtual void setReadOnly(bool read_only) = 0;
 	virtual unsigned int getPreNum() const = 0;
 	virtual const string& getDescription() const = 0;
 	virtual const string& getCleanup() const = 0;

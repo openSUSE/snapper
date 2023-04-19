@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2022] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -27,7 +27,7 @@
 
 #include <time.h>
 #include <sys/types.h>
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 #include <list>
 #include <map>
@@ -105,7 +105,15 @@ namespace snapper
 	SDir openInfoDir() const;
 	SDir openSnapshotDir() const;
 
+	/**
+	 * Determine iff snapshot is read-only (only for btrfs).
+	 */
 	bool isReadOnly() const;
+
+	/**
+	 * Set snapshot read-only or read-write (only for btrfs).
+	 */
+	void setReadOnly(bool read_only);
 
 	/**
 	 * Determine iff snapshot is default (will be activated on next boot time).
@@ -148,6 +156,8 @@ namespace snapper
 
 	uid_t uid = 0;
 
+	bool read_only = true;
+
 	unsigned int pre_num = 0;	// valid only for type=POST
 
 	string description;	// likely empty for type=POST
@@ -163,6 +173,8 @@ namespace snapper
 	void createFilesystemSnapshot(unsigned int num_parent, bool read_only, bool empty) const;
 	void createFilesystemSnapshotOfDefault(bool read_only) const;
 	void deleteFilesystemSnapshot() const;
+
+	void deleteFilelists() const;
 
     };
 
@@ -273,8 +285,7 @@ namespace snapper
 	iterator createPreSnapshot(const SCD& scd);
 	iterator createPostSnapshot(const_iterator pre, const SCD& scd);
 
-	iterator createHelper(Snapshot& snapshot, const_iterator parent, bool read_only,
-			      bool empty = false);
+	iterator createHelper(Snapshot& snapshot, const_iterator parent, bool empty = false);
 
 	void modifySnapshot(iterator snapshot, const SMD& smd);
 

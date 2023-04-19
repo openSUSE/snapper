@@ -23,8 +23,8 @@
 
 #include "config.h"
 
-#include <string.h>
-#include <errno.h>
+#include <cstring>
+#include <cerrno>
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <asm/types.h>
@@ -72,19 +72,44 @@ namespace snapper
 	{
 #ifdef HAVE_LIBBTRFSUTIL
 	    enum btrfs_util_error err;
-	    bool readonly;
+	    bool read_only;
 
-	    err = btrfs_util_get_subvolume_read_only_fd(fd, &readonly);
+	    err = btrfs_util_get_subvolume_read_only_fd(fd, &read_only);
 	    if (err)
 		throw runtime_error_with_errno("btrfs_util_get_subvolume_read_only_fd() failed", errno);
 
-	    return readonly;
+	    return read_only;
 #else
 	    __u64 flags;
 	    if (ioctl(fd, BTRFS_IOC_SUBVOL_GETFLAGS, &flags) < 0)
 		throw runtime_error_with_errno("ioctl(BTRFS_IOC_SUBVOL_GETFLAGS) failed", errno);
 
 	    return flags & BTRFS_SUBVOL_RDONLY;
+#endif
+	}
+
+
+	void
+	set_subvolume_read_only(int fd, bool read_only)
+	{
+#ifdef HAVE_LIBBTRFSUTIL
+	    enum btrfs_util_error err;
+
+	    err = btrfs_util_set_subvolume_read_only_fd(fd, read_only);
+	    if (err)
+		throw runtime_error_with_errno("btrfs_util_set_subvolume_read_only_fd() failed", errno);
+#else
+	    __u64 flags;
+	    if (ioctl(fd, BTRFS_IOC_SUBVOL_GETFLAGS, &flags) < 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_SUBVOL_GETFLAGS) failed", errno);
+
+	    if (read_only)
+		flags |= BTRFS_SUBVOL_RDONLY;
+	    else
+		flags &= ~BTRFS_SUBVOL_RDONLY;
+
+	    if (ioctl(fd, BTRFS_IOC_SUBVOL_SETFLAGS, &flags) < 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_SUBVOL_SETFLAGS) failed", errno);
 #endif
 	}
 

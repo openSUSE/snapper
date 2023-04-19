@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2022] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -26,8 +26,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
-#include <errno.h>
-#include <string.h>
+#include <cerrno>
+#include <cstring>
 #include <regex>
 #include <boost/algorithm/string.hpp>
 
@@ -60,6 +60,9 @@ namespace snapper
 	    s << " pre-num:" << snapshot.pre_num;
 
 	s << " date:\"" << datetime(snapshot.date, true, true) << "\"";
+
+	if (snapshot.read_only)
+	    s << " read-only";
 
 	if (snapshot.uid != 0)
 	    s << "uid:" << snapshot.uid;
@@ -127,10 +130,25 @@ namespace snapper
     bool
     Snapshot::isReadOnly() const
     {
-	if (isCurrent())
-	    return false;
+	return read_only;
+    }
 
-	return snapper->getFilesystem()->isSnapshotReadOnly(num);
+
+    void
+    Snapshot::setReadOnly(bool read_only)
+    {
+	if (isCurrent())
+	    SN_THROW(IllegalSnapshotException());
+
+	if (Snapshot::read_only == read_only)
+	    return;
+
+	Snapshot::read_only = read_only;
+
+	snapper->getFilesystem()->setSnapshotReadOnly(num, read_only);
+
+	if (!read_only)
+	    deleteFilelists();
     }
 
 
@@ -179,6 +197,31 @@ namespace snapper
 	__builtin_unreachable();
 
 #endif
+    }
+
+
+    void
+    Snapshot::deleteFilelists() const
+    {
+	SDir info_dir = openInfoDir();
+
+	// remove all filelists in the info directory of this shapshot
+	for (const string& name : info_dir.entries(is_filelist_file))
+	{
+	    info_dir.unlink(name, 0);
+	}
+
+	// remove all filelists of the snapshot in the info directories of other snapshots
+	for (const Snapshot& snapshot : snapper->getSnapshots())
+	{
+	    if (snapshot.isCurrent())
+		continue;
+
+	    SDir tmp = snapshot.openInfoDir();
+	    string name = filelist_name(snapshot.getNum());
+	    tmp.unlink(name, 0);
+	    tmp.unlink(name + ".gz", 0);
+	}
     }
 
 
@@ -257,8 +300,8 @@ namespace snapper
 
 		getChildValue(node, "cleanup", snapshot.cleanup);
 
-		const list<const xmlNode*> l = getChildNodes(node, "userdata");
-		for (list<const xmlNode*>::const_iterator it2 = l.begin(); it2 != l.end(); ++it2)
+		const vector<const xmlNode*> l = getChildNodes(node, "userdata");
+		for (vector<const xmlNode*>::const_iterator it2 = l.begin(); it2 != l.end(); ++it2)
 		{
 		    string key, value;
 		    getChildValue(*it2, "key", key);
@@ -267,11 +310,15 @@ namespace snapper
 			snapshot.userdata[key] = value;
 		}
 
-		if (!snapper->getFilesystem()->checkSnapshot(snapshot.num))
+		const Filesystem* filesystem = snapper->getFilesystem();
+
+		if (!filesystem->checkSnapshot(snapshot.num))
 		{
 		    y2err("snapshot check failed. not adding snapshot " << *it1);
 		    continue;
 		}
+
+		snapshot.read_only = filesystem->isSnapshotReadOnly(snapshot.num);
 
 		entries.push_back(snapshot);
 	    }
@@ -366,6 +413,7 @@ namespace snapper
 	entries.clear();
 
 	Snapshot snapshot(snapper, SINGLE, 0, (time_t)(-1));
+	snapshot.read_only = false;
 	snapshot.description = "current";
 	entries.push_back(snapshot);
 
@@ -622,11 +670,12 @@ namespace snapper
 
 	Snapshot snapshot(snapper, SINGLE, nextNumber(), time(NULL));
 	snapshot.uid = scd.uid;
+	snapshot.read_only = scd.read_only;
 	snapshot.description = scd.description;
 	snapshot.cleanup = scd.cleanup;
 	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, getSnapshotCurrent(), scd.read_only, scd.empty);
+	return createHelper(snapshot, getSnapshotCurrent(), scd.empty);
     }
 
 
@@ -637,11 +686,12 @@ namespace snapper
 
 	Snapshot snapshot(snapper, SINGLE, nextNumber(), time(NULL));
 	snapshot.uid = scd.uid;
+	snapshot.read_only = scd.read_only;
 	snapshot.description = scd.description;
 	snapshot.cleanup = scd.cleanup;
 	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, parent, scd.read_only);
+	return createHelper(snapshot, parent);
     }
 
 
@@ -652,11 +702,12 @@ namespace snapper
 
 	Snapshot snapshot(snapper, SINGLE, nextNumber(), time(NULL));
 	snapshot.uid = scd.uid;
+	snapshot.read_only = scd.read_only;
 	snapshot.description = scd.description;
 	snapshot.cleanup = scd.cleanup;
 	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, end(), scd.read_only);
+	return createHelper(snapshot, end());
     }
 
 
@@ -667,11 +718,12 @@ namespace snapper
 
 	Snapshot snapshot(snapper, PRE, nextNumber(), time(NULL));
 	snapshot.uid = scd.uid;
+	snapshot.read_only = scd.read_only;
 	snapshot.description = scd.description;
 	snapshot.cleanup = scd.cleanup;
 	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, getSnapshotCurrent(), scd.read_only);
+	return createHelper(snapshot, getSnapshotCurrent());
     }
 
 
@@ -687,17 +739,17 @@ namespace snapper
 	Snapshot snapshot(snapper, POST, nextNumber(), time(NULL));
 	snapshot.pre_num = pre->getNum();
 	snapshot.uid = scd.uid;
+	snapshot.read_only = scd.read_only;
 	snapshot.description = scd.description;
 	snapshot.cleanup = scd.cleanup;
 	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, getSnapshotCurrent(), scd.read_only);
+	return createHelper(snapshot, getSnapshotCurrent());
     }
 
 
     Snapshots::iterator
-    Snapshots::createHelper(Snapshot& snapshot, const_iterator parent, bool read_only,
-			    bool empty)
+    Snapshots::createHelper(Snapshot& snapshot, const_iterator parent, bool empty)
     {
 	// parent == end indicates the btrfs default subvolume. Unclean, but
 	// adding a special snapshot like current needs too many API changes.
@@ -708,9 +760,9 @@ namespace snapper
 	try
 	{
 	    if (parent != end())
-		snapshot.createFilesystemSnapshot(parent->getNum(), read_only, empty);
+		snapshot.createFilesystemSnapshot(parent->getNum(), snapshot.read_only, empty);
 	    else
-		snapshot.createFilesystemSnapshotOfDefault(read_only);
+		snapshot.createFilesystemSnapshotOfDefault(snapshot.read_only);
 	}
 	catch (const CreateSnapshotFailedException& e)
 	{
@@ -777,29 +829,7 @@ namespace snapper
 			       *snapshot);
 
 	snapshot->deleteFilesystemSnapshot();
-
-	SDir info_dir = snapshot->openInfoDir();
-
-	info_dir.unlink("info.xml", 0);
-
-	// remove all filelists in the info directory of this shapshot
-	vector<string> tmp1 = info_dir.entries(is_filelist_file);
-	for (const string& name : tmp1)
-	{
-	    info_dir.unlink(name, 0);
-	}
-
-	// remove all filelists of the snapshot in the info directories of other snapshots
-	for (Snapshots::iterator it = begin(); it != end(); ++it)
-	{
-	    if (!it->isCurrent())
-	    {
-		SDir tmp2 = it->openInfoDir();
-		string name = filelist_name(snapshot->getNum());
-		tmp2.unlink(name, 0);
-		tmp2.unlink(name + ".gz", 0);
-	    }
-	}
+	snapshot->deleteFilelists();
 
 	SDir infos_dir = snapper->openInfosDir();
 	infos_dir.unlink(decString(snapshot->getNum()), AT_REMOVEDIR);

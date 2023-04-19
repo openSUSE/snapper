@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) 2020 SUSE LLC
+ * Copyright (c) [2020-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -27,8 +27,10 @@
 #include <snapper/Snapper.h>
 #include <snapper/AppUtil.h>
 #include <snapper/Enum.h>
+
 #include "client/utils/text.h"
 #include "client/utils/GetOpts.h"
+#include "proxy.h"
 
 
 using namespace snapper;
@@ -49,6 +51,9 @@ read_configdata(const vector<string>& v, const map<string, string>& old = map<st
 
 string
 username(uid_t uid);
+
+const Filesystem*
+get_filesystem(const ProxyConfig& config, const string& target_root);
 
 
 struct Differ

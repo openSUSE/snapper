@@ -107,7 +107,10 @@ _snapper()
             modify)
                 COMPREPLY=( $( compgen -W '--description -d
                   --cleanup-algorithm -c
-                  --userdata -u' -- "$cur" ) )
+                  --userdata -u
+                  --read-only
+                  --read-write
+                  --default' -- "$cur" ) )
                 return 0
                 ;;
             delete|remove|rm)
@@ -186,7 +189,7 @@ _snapper()
                         COMPREPLY=( $( compgen -W 'config subvolume number
                             default active type date user used-space cleanup
                             description userdata pre-number post-number
-                            post-date
+                            post-date read-only
                         ' -- "$cur" ) )
                         ;;
                 esac

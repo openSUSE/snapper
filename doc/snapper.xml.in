@@ -2,13 +2,13 @@
 <refentry id='snapper8' xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <refentryinfo>
-    <date>2022-12-22</date>
+    <date>2023-04-19</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2022-12-22</refmiscinfo>
+    <refmiscinfo class='date'>2023-04-19</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -438,7 +438,7 @@
 		<para>Select columns to show separated by comma.</para>
 		<para>Possible columns are: config, subvolume, number, default, active,
 		date, user, used-space, cleanup, description, userdata, pre-number, post-number,
-		post-date.</para>
+		post-date, read-only.</para>
 	      </listitem>
 	    </varlistentry>
 	  </variablelist>
@@ -568,6 +568,24 @@
 		<para>Set userdata for the snapshot. The key-value pairs must
 		be separated by comma and the key and value must be separated
 		by an equal sign, e.g. requestid=42,user=arthur.</para>
+	      </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><option>--read-only</option></term>
+	      <listitem>
+		<para>Set the snapshot read-only.</para>
+	      </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><option>--read-write</option></term>
+	      <listitem>
+		<para>Set the snapshot read-write.</para>
+	      </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><option>--default</option></term>
+	      <listitem>
+		<para>Set the snapshot as default snapshot. Only for btrfs.</para>
 	      </listitem>
 	    </varlistentry>
 	  </variablelist>
@@ -934,6 +952,8 @@
     </variablelist>
     <para>More actions and arguments can be added any time. Using snapper in
     the plugins is not allowed.</para>
+    <para>It is undefined whether the plugins are called from the
+    client (snapper) or server (snapperd).</para>
   </refsect1>
 
   <refsect1 id='files'>

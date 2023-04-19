@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2016-2022] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -89,6 +89,13 @@ command_create_post_snapshot(DBus::Connection& conn, const string& config_name,
 void
 command_delete_snapshots(DBus::Connection& conn, const string& config_name,
 			 const vector<unsigned int>& nums, bool verbose);
+
+bool
+command_is_snapshot_read_only(DBus::Connection& conn, const string& config_name, unsigned int num);
+
+void
+command_set_snapshot_read_only(DBus::Connection& conn, const string& config_name, unsigned int num,
+			       bool read_only);
 
 std::pair<bool, unsigned int>
 command_get_default_snapshot(DBus::Connection& conn, const string& config_name);

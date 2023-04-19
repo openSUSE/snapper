@@ -254,6 +254,13 @@ namespace snapper
     }
 
 
+    void
+    Ext4::setSnapshotReadOnly(unsigned int num, bool read_only) const
+    {
+	// TODO
+    }
+
+
     bool
     Ext4::checkSnapshot(unsigned int num) const
     {

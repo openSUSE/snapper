@@ -219,8 +219,6 @@ namespace snapper
 
 	Snapshots snapshots;
 
-	SelinuxLabelHandle* selabel_handle_unused = nullptr; // TODO remove
-
     };
 
 }
