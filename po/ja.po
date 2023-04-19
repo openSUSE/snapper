@@ -9,9 +9,10 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-19 10:03+0200\n"
-"PO-Revision-Date: 2023-02-08 15:14+0000\n"
+"PO-Revision-Date: 2023-04-19 11:14+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
+"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/"
+"ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,7 +35,6 @@ msgstr "\t--cleanup-algorithm, -c <アルゴリズム>\tスナップショット
 msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
 msgstr "\t--cleanup-algorithm, -c <アルゴリズム>\tスナップショットに対するクリーンアップアルゴリズムの指定。"
 
-#, fuzzy
 msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
 "\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
@@ -44,7 +44,7 @@ msgstr ""
 "\t--columns <列>\t\t表示する列を指定する (カンマ区切り)\n"
 "\t\t\t\t\t指定可能な列: config, subvolume, number, default, active,\n"
 "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date."
+"\t\t\t\t\tpre-number, post-number, post-date, read-only."
 
 msgid ""
 "\t--columns <columns>\t\tColumns to show separated by comma.\n"
@@ -64,9 +64,8 @@ msgstr "\t--config, -c <名前>\t\t使用する設定ファイル名を指定す
 msgid "\t--csvout\t\t\tSet CSV output format."
 msgstr "\t--csvout\t\t\tCSV 形式の出力を行なう。"
 
-#, fuzzy
 msgid "\t--default\t\t\tSet snapshot as default snapshot."
-msgstr "有効なスナップショットは既に既定のスナップショットです。"
+msgstr "\t--default\t\t\t既定のスナップショットとして設定する。"
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <説明>\tスナップショットの説明を指定する。"
@@ -134,16 +133,14 @@ msgstr "\t--quiet, -q\t\t\t通常出力される項目を省略する。"
 msgid "\t--read-only\t\t\tCreate read-only snapshot."
 msgstr "\t--read-only\t\t\t読み込み専用のスナップショットを作成する。"
 
-#, fuzzy
 msgid "\t--read-only\t\t\tSet snapshot read-only."
-msgstr "\t--read-only\t\t\t読み込み専用のスナップショットを作成する。"
+msgstr "\t--read-only\t\t\tスナップショットを読み込み専用に設定する。"
 
 msgid "\t--read-write\t\t\tCreate read-write snapshot."
 msgstr "\t--read-write\t\t\t読み書き可能なスナップショットを作成する。"
 
-#, fuzzy
 msgid "\t--read-write\t\t\tSet snapshot read-write."
-msgstr "\t--read-write\t\t\t読み書き可能なスナップショットを作成する。"
+msgstr "\t--read-write\t\t\tスナップショットを読み書き可能にする。"
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <パス>\t\t指定したルートに対して操作を行なう　(DBus を使用しない場合にのみ動作します)。"
@@ -747,7 +744,7 @@ msgid "Quota error (%s)."
 msgstr "クォータエラー (%s) 。"
 
 msgid "Read-Only"
-msgstr ""
+msgstr "読み込み専用"
 
 msgid "See 'man snapper' for further instructions."
 msgstr "詳しい手順については、「man snapper」を参照してください。"
