@@ -831,6 +831,9 @@ namespace snapper
 	snapshot->deleteFilesystemSnapshot();
 	snapshot->deleteFilelists();
 
+	SDir info_dir = snapshot->openInfoDir();
+	info_dir.unlink("info.xml", 0);
+
 	SDir infos_dir = snapper->openInfosDir();
 	infos_dir.unlink(decString(snapshot->getNum()), AT_REMOVEDIR);
 
