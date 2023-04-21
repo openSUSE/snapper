@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Apr 21 09:47:57 CEST 2023 - aschnell@suse.com
+
+- fixed deleting configs (bsc#1210716)
+
+-------------------------------------------------------------------
 Wed Apr 19 09:19:04 CEST 2023 - aschnell@suse.com
 
 - allow to show read-only state in list output and allow to
