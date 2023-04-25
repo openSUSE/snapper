@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-19 10:03+0200\n"
+"POT-Creation-Date: 2023-04-25 09:55+0200\n"
 "PO-Revision-Date: 2005-07-29 15:37+0530\n"
 "Last-Translator: \"( अमेय पाळंदे ) Ameya Palande\" <2ameya@gmail.com>\n"
 "Language-Team: Marathi <i18n@suse.de>\n"
@@ -51,6 +51,9 @@ msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr ""
 
 msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr ""
+
+msgid "\t--debug\t\t\t\tTurn on debugging."
 msgstr ""
 
 msgid "\t--default\t\t\tSet snapshot as default snapshot."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-19 10:03+0200\n"
+"POT-Creation-Date: 2023-04-25 09:55+0200\n"
 "PO-Revision-Date: 2005-11-08 12:26+8\n"
 "Last-Translator: Steve Beattie <steve@immunix.com>\n"
 "Language-Team: English\n"
@@ -47,6 +47,9 @@ msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr ""
 
 msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr ""
+
+msgid "\t--debug\t\t\t\tTurn on debugging."
 msgstr ""
 
 msgid "\t--default\t\t\tSet snapshot as default snapshot."

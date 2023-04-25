@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-19 10:03+0200\n"
+"POT-Creation-Date: 2023-04-25 09:55+0200\n"
 "PO-Revision-Date: 2020-05-02 19:50+0000\n"
 "Last-Translator: mohammad alhargan <malham1@gmail.com>\n"
 "Language-Team: Arabic <https://l10n.opensuse.org/projects/snapper/master/ar/>\n"
@@ -52,6 +52,9 @@ msgid "\t--config, -c <name>\t\tSet name of config to use."
 msgstr "\t--config, -c <name>\t\tعين اسم لتستخدمه للإعدادات."
 
 msgid "\t--csvout\t\t\tSet CSV output format."
+msgstr ""
+
+msgid "\t--debug\t\t\t\tTurn on debugging."
 msgstr ""
 
 msgid "\t--default\t\t\tSet snapshot as default snapshot."

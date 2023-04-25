@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-19 10:03+0200\n"
+"POT-Creation-Date: 2023-04-25 09:55+0200\n"
 "PO-Revision-Date: 2023-02-10 12:14+0000\n"
 "Last-Translator: Gemineo <vistatec@gemineo.de>\n"
 "Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
@@ -61,6 +61,9 @@ msgstr "\t--config, -c <Name>\t\tNamen der zu benutzenden Konfiguration einsetze
 
 msgid "\t--csvout\t\t\tSet CSV output format."
 msgstr "\t--csvout\t\t\tCSV-Ausgabeformat setzen."
+
+msgid "\t--debug\t\t\t\tTurn on debugging."
+msgstr ""
 
 #, fuzzy
 msgid "\t--default\t\t\tSet snapshot as default snapshot."
