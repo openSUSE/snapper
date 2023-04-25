@@ -92,6 +92,7 @@ Client::find_comparison(Snapper* snapper, Snapshots::const_iterator snapshot1,
     }
 
     SN_THROW(NoComparison());
+    __builtin_unreachable();
 }
 
 

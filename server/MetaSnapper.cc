@@ -157,6 +157,7 @@ MetaSnappers::find(const string& config_name)
 	    return it;
 
     SN_THROW(UnknownConfig());
+    __builtin_unreachable();
 }
 
 

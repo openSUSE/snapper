@@ -202,6 +202,7 @@ namespace DBus
 		return it;
 
 	SN_THROW(FatalException());
+	__builtin_unreachable();
     }
 
 
@@ -224,6 +225,7 @@ namespace DBus
 		return it;
 
 	SN_THROW(FatalException());
+	__builtin_unreachable();
     }
 
 
