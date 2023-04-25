@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-19 10:03+0200\n"
+"POT-Creation-Date: 2023-04-25 09:55+0200\n"
 "PO-Revision-Date: 2023-02-10 04:14+0000\n"
 "Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
 "Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
@@ -65,6 +65,9 @@ msgstr "\t--config, -c <名稱>\t\t設定要使用的設定法名稱。"
 
 msgid "\t--csvout\t\t\tSet CSV output format."
 msgstr "\t--csvout\t\t\t設定 CSV 輸出格式。"
+
+msgid "\t--debug\t\t\t\tTurn on debugging."
+msgstr ""
 
 #, fuzzy
 msgid "\t--default\t\t\tSet snapshot as default snapshot."

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-19 10:03+0200\n"
+"POT-Creation-Date: 2023-04-25 09:55+0200\n"
 "PO-Revision-Date: 2022-04-03 22:12+0000\n"
 "Last-Translator: Tommi Nieminen <software@legisign.org>\n"
 "Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
@@ -60,6 +60,9 @@ msgstr "\t--config, -c <nimi>\t\tAseta käytettävän määrityksen nimi."
 
 msgid "\t--csvout\t\t\tSet CSV output format."
 msgstr "\t--csvout\t\t\tAsettaa CSV-tulosmuodon."
+
+msgid "\t--debug\t\t\t\tTurn on debugging."
+msgstr ""
 
 #, fuzzy
 msgid "\t--default\t\t\tSet snapshot as default snapshot."

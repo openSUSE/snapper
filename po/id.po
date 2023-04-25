@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-19 10:03+0200\n"
+"POT-Creation-Date: 2023-04-25 09:55+0200\n"
 "PO-Revision-Date: 2022-05-20 11:12+0000\n"
 "Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
 "Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/id/>\n"
@@ -57,6 +57,9 @@ msgstr "\t--config, -c <nama>\t\tAtur nama konfigurasi untuk digunakan."
 
 msgid "\t--csvout\t\t\tSet CSV output format."
 msgstr "\t--csvout\t\t\tAtur format keluaran CSV."
+
+msgid "\t--debug\t\t\t\tTurn on debugging."
+msgstr ""
 
 #, fuzzy
 msgid "\t--default\t\t\tSet snapshot as default snapshot."
