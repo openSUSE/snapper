@@ -91,7 +91,7 @@ Client::find_comparison(Snapper* snapper, Snapshots::const_iterator snapshot1,
 	    return it;
     }
 
-    throw NoComparison();
+    SN_THROW(NoComparison());
 }
 
 
@@ -424,7 +424,7 @@ Client::check_permission(DBus::Connection& conn, DBus::Message& msg) const
     if (uid == 0)
 	return;
 
-    throw Permissions();
+    SN_THROW(Permissions());
 }
 
 
@@ -458,7 +458,7 @@ Client::check_permission(DBus::Connection& conn, DBus::Message& msg,
 		return;
     }
 
-    throw Permissions();
+    SN_THROW(Permissions());
 }
 
 
@@ -477,7 +477,7 @@ Client::check_lock(DBus::Connection& conn, DBus::Message& msg, const string& con
 	    continue;
 
 	if (it->has_lock(config_name))
-	    throw Lock();
+	    SN_THROW(Lock());
     }
 }
 
@@ -498,7 +498,7 @@ void
 Client::check_config_in_use(const MetaSnapper& meta_snapper) const
 {
     if (meta_snapper.use_count() != 0)
-	throw ConfigInUse();
+	SN_THROW(ConfigInUse());
 }
 
 
@@ -511,7 +511,7 @@ Client::check_snapshot_in_use(const MetaSnapper& meta_snapper, unsigned int numb
 	    it1->mounts.find(make_pair(meta_snapper.configName(), number));
 
 	if (it2 != it1->mounts.end())
-	    throw SnapshotInUse();
+	    SN_THROW(SnapshotInUse());
     }
 }
 
@@ -853,7 +853,7 @@ Client::get_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     Snapshots::iterator snap = snapshots.find(num);
     if (snap == snapshots.end())
-	throw IllegalSnapshotException();
+	SN_THROW(IllegalSnapshotException());
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -887,7 +887,7 @@ Client::set_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     Snapshots::iterator snap = snapshots.find(num);
     if (snap == snapshots.end())
-	throw IllegalSnapshotException();
+	SN_THROW(IllegalSnapshotException());
 
     snapper->modifySnapshot(snap, smd);
 
@@ -1145,7 +1145,7 @@ Client::is_snapshot_read_only(DBus::Connection& conn, DBus::Message& msg)
 
     Snapshots::iterator snap = snapshots.find(num);
     if (snap == snapshots.end())
-	throw IllegalSnapshotException();
+	SN_THROW(IllegalSnapshotException());
 
     bool read_only = snap->isReadOnly();
 
@@ -1182,7 +1182,7 @@ Client::set_snapshot_read_only(DBus::Connection& conn, DBus::Message& msg)
 
     Snapshots::iterator snap = snapshots.find(num);
     if (snap == snapshots.end())
-	throw IllegalSnapshotException();
+	SN_THROW(IllegalSnapshotException());
 
     snap->setReadOnly(read_only);
 
@@ -1309,7 +1309,7 @@ Client::get_used_space(DBus::Connection& conn, DBus::Message& msg)
 
     Snapshots::iterator snap = snapshots.find(num);
     if (snap == snapshots.end())
-	throw IllegalSnapshotException();
+	SN_THROW(IllegalSnapshotException());
 
     uint64_t used_space = snap->getUsedSpace();
 
@@ -1346,7 +1346,7 @@ Client::mount_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     Snapshots::iterator snap = snapshots.find(num);
     if (snap == snapshots.end())
-	throw IllegalSnapshotException();
+	SN_THROW(IllegalSnapshotException());
 
     snap->mountFilesystemSnapshot(user_request);
 
@@ -1388,7 +1388,7 @@ Client::umount_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     Snapshots::iterator snap = snapshots.find(num);
     if (snap == snapshots.end())
-	throw IllegalSnapshotException();
+	SN_THROW(IllegalSnapshotException());
 
     snap->umountFilesystemSnapshot(user_request);
 
@@ -1422,7 +1422,7 @@ Client::get_mount_point(DBus::Connection& conn, DBus::Message& msg)
     Snapshots& snapshots = snapper->getSnapshots();
     Snapshots::iterator snap = snapshots.find(num);
     if (snap == snapshots.end())
-	throw IllegalSnapshotException();
+	SN_THROW(IllegalSnapshotException());
 
     string mount_point = snap->snapshotDir();
 

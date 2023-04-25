@@ -35,6 +35,9 @@
 #include "snapper/Exception.h"
 
 
+using namespace snapper;
+
+
 namespace DBus
 {
     using std::string;
@@ -53,9 +56,9 @@ namespace DBus
     {
 	explicit ErrorException(const DBusError err)
 	    : Exception("dbus error exception"), err(err) {}
-	virtual ~ErrorException() throw() { dbus_error_free(&err); }
-	virtual const char* name() const throw() { return err.name; }
-	virtual const char* message() const throw() { return err.message; }
+	virtual ~ErrorException() { dbus_error_free(&err); }
+	virtual const char* name() const { return err.name; }
+	virtual const char* message() const { return err.message; }
 	DBusError err;
     };
 
@@ -129,7 +132,7 @@ namespace DBus
 	    : Message(dbus_message_new_method_return(m.get_message()), false)
 	{
 	    if (m.get_type() != DBUS_MESSAGE_TYPE_METHOD_CALL)
-		throw FatalException();
+		SN_THROW(FatalException());
 	}
 
     };
@@ -143,7 +146,7 @@ namespace DBus
 	    : Message(dbus_message_new_error(m.get_message(), error_msg, error_code), false)
 	{
 	    if (m.get_type() != DBUS_MESSAGE_TYPE_METHOD_CALL)
-		throw FatalException();
+		SN_THROW(FatalException());
 	}
 
     };
@@ -251,14 +254,14 @@ namespace DBus
     Unmarshaller& operator>>(Unmarshaller& unmarshaller, vector<Type>& data)
     {
 	if (unmarshaller.get_type() != DBUS_TYPE_ARRAY)
-	    throw MarshallingException();
+	    SN_THROW(MarshallingException());
 
 	unmarshaller.open_recurse();
 
 	while (unmarshaller.get_type() != DBUS_TYPE_INVALID)
 	{
 	    if (unmarshaller.get_signature() != TypeInfo<Type>::signature)
-		throw MarshallingException();
+		SN_THROW(MarshallingException());
 
 	    Type tmp;
 	    unmarshaller >> tmp;

@@ -44,7 +44,7 @@ namespace DBus
     operator>>(Unmarshaller& unmarshaller, FileDescriptor& data)
     {
 	if (unmarshaller.get_type() != DBUS_TYPE_UNIX_FD)
-	    throw MarshallingException();
+	    SN_THROW(MarshallingException());
 
 	int fd;
 	dbus_message_iter_get_basic(unmarshaller.top(), &fd);
@@ -60,7 +60,7 @@ namespace DBus
     {
 	const int fd = data.get_fd();
 	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_UNIX_FD, &fd))
-	    throw FatalException();
+	    SN_THROW(FatalException());
 
 	return marshaller;
     }
@@ -71,7 +71,7 @@ namespace DBus
 	int pipefd[2];
 
 	if (pipe2(pipefd, O_CLOEXEC) != 0)
-	    throw PipeException();
+	    SN_THROW(PipeException());
 
 	_read_end.set_fd(pipefd[0]);
 	_write_end.set_fd(pipefd[1]);

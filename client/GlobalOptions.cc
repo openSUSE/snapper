@@ -40,6 +40,7 @@ namespace snapper
 	return string(_("    Global options:")) + '\n'
 	    + _("\t--quiet, -q\t\t\tSuppress normal output.") + '\n'
 	    + _("\t--verbose, -v\t\t\tIncrease verbosity.") + '\n'
+	    + _("\t--debug\t\t\t\tTurn on debugging.") + '\n'
 	    + _("\t--utc\t\t\t\tDisplay dates and times in UTC.") + '\n'
 	    + _("\t--iso\t\t\t\tDisplay dates and times in ISO format.") + '\n'
 	    + _("\t--table-style, -t <style>\tTable style (integer).") + '\n'
@@ -63,6 +64,7 @@ namespace snapper
 	const vector<Option> options = {
 	    Option("quiet",		no_argument,		'q'),
 	    Option("verbose",		no_argument,		'v'),
+	    Option("debug",		no_argument),
 	    Option("utc",		no_argument),
 	    Option("iso",		no_argument),
 	    Option("table-style",	required_argument,	't'),
@@ -86,6 +88,7 @@ namespace snapper
 
 	_quiet = opts.has_option("quiet");
 	_verbose = opts.has_option("verbose");
+	_debug = opts.has_option("debug");
 	_utc = opts.has_option("utc");
 	_iso = opts.has_option("iso");
 	_no_dbus = opts.has_option("no-dbus");

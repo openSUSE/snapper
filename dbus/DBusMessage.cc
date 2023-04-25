@@ -21,8 +21,8 @@
  */
 
 
-#include <assert.h>
-#include <stdlib.h>
+#include <cassert>
+#include <cstdlib>
 
 #include "DBusMessage.h"
 
@@ -74,7 +74,7 @@ namespace DBus
     {
 	iters.push_back(new DBusMessageIter());
 	if (!dbus_message_iter_init(msg.get_message(), top()))
-	    throw FatalException();
+	    SN_THROW(FatalException());
     }
 
 
@@ -123,7 +123,7 @@ namespace DBus
     {
 	DBusMessageIter* iter2 = new DBusMessageIter();
 	if (!dbus_message_iter_open_container(top(), DBUS_TYPE_STRUCT, NULL, iter2))
-	    throw FatalException();
+	    SN_THROW(FatalException());
 	iters.push_back(iter2);
     }
 
@@ -134,7 +134,7 @@ namespace DBus
 	DBusMessageIter* iter2 = top();
 	iters.pop_back();
 	if (!dbus_message_iter_close_container(top(), iter2))
-	    throw FatalException();
+	    SN_THROW(FatalException());
 	delete iter2;
     }
 
@@ -144,7 +144,7 @@ namespace DBus
     {
 	DBusMessageIter* iter2 = new DBusMessageIter();
 	if (!dbus_message_iter_open_container(top(), DBUS_TYPE_ARRAY, signature, iter2))
-	    throw FatalException();
+	    SN_THROW(FatalException());
 	iters.push_back(iter2);
     }
 
@@ -155,7 +155,7 @@ namespace DBus
 	DBusMessageIter* iter2 = top();
 	iters.pop_back();
 	if (!dbus_message_iter_close_container(top(), iter2))
-	    throw FatalException();
+	    SN_THROW(FatalException());
 	delete iter2;
     }
 
@@ -165,7 +165,7 @@ namespace DBus
     {
 	DBusMessageIter* iter2 = new DBusMessageIter();
 	if (!dbus_message_iter_open_container(top(), DBUS_TYPE_DICT_ENTRY, 0, iter2))
-	    throw FatalException();
+	    SN_THROW(FatalException());
 	iters.push_back(iter2);
     }
 
@@ -176,7 +176,7 @@ namespace DBus
 	DBusMessageIter* iter2 = top();
 	iters.pop_back();
 	if (!dbus_message_iter_close_container(top(), iter2))
-	    throw FatalException();
+	    SN_THROW(FatalException());
 	delete iter2;
     }
 
@@ -185,7 +185,7 @@ namespace DBus
     operator>>(Unmarshaller& unmarshaller, bool& data)
     {
 	if (unmarshaller.get_type() != DBUS_TYPE_BOOLEAN)
-	    throw MarshallingException();
+	    SN_THROW(MarshallingException());
 
 	dbus_bool_t tmp;
 	dbus_message_iter_get_basic(unmarshaller.top(), &tmp);
@@ -201,7 +201,7 @@ namespace DBus
     {
 	dbus_bool_t tmp = data;
 	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_BOOLEAN, &tmp))
-	    throw FatalException();
+	    SN_THROW(FatalException());
 
 	return marshaller;
     }
@@ -211,7 +211,7 @@ namespace DBus
     operator>>(Unmarshaller& unmarshaller, dbus_uint16_t& data)
     {
 	if (unmarshaller.get_type() != DBUS_TYPE_UINT16)
-	    throw MarshallingException();
+	    SN_THROW(MarshallingException());
 
 	dbus_message_iter_get_basic(unmarshaller.top(), &data);
 	dbus_message_iter_next(unmarshaller.top());
@@ -224,7 +224,7 @@ namespace DBus
     operator<<(Marshaller& marshaller, dbus_uint16_t data)
     {
 	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_UINT16, &data))
-	    throw FatalException();
+	    SN_THROW(FatalException());
 
 	return marshaller;
     }
@@ -234,7 +234,7 @@ namespace DBus
     operator>>(Unmarshaller& unmarshaller, dbus_uint32_t& data)
     {
 	if (unmarshaller.get_type() != DBUS_TYPE_UINT32)
-	    throw MarshallingException();
+	    SN_THROW(MarshallingException());
 
 	dbus_message_iter_get_basic(unmarshaller.top(), &data);
 	dbus_message_iter_next(unmarshaller.top());
@@ -247,7 +247,7 @@ namespace DBus
     operator<<(Marshaller& marshaller, dbus_uint32_t data)
     {
 	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_UINT32, &data))
-	    throw FatalException();
+	    SN_THROW(FatalException());
 
 	return marshaller;
     }
@@ -257,7 +257,7 @@ namespace DBus
     operator>>(Unmarshaller& unmarshaller, dbus_uint64_t& data)
     {
 	if (unmarshaller.get_type() != DBUS_TYPE_UINT64)
-	    throw MarshallingException();
+	    SN_THROW(MarshallingException());
 
 	dbus_message_iter_get_basic(unmarshaller.top(), &data);
 	dbus_message_iter_next(unmarshaller.top());
@@ -270,7 +270,7 @@ namespace DBus
     operator<<(Marshaller& marshaller, dbus_uint64_t data)
     {
 	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_UINT64, &data))
-	    throw FatalException();
+	    SN_THROW(FatalException());
 
 	return marshaller;
     }
@@ -280,7 +280,7 @@ namespace DBus
     operator>>(Unmarshaller& unmarshaller, time_t& data)
     {
 	if (unmarshaller.get_type() != DBUS_TYPE_INT64)
-	    throw MarshallingException();
+	    SN_THROW(MarshallingException());
 
 	dbus_uint64_t tmp;
 	dbus_message_iter_get_basic(unmarshaller.top(), &tmp);
@@ -296,7 +296,7 @@ namespace DBus
     {
 	dbus_uint64_t tmp = data;
 	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_INT64, &tmp))
-	    throw FatalException();
+	    SN_THROW(FatalException());
 
 	return marshaller;
     }
@@ -306,7 +306,7 @@ namespace DBus
     operator<<(Marshaller& marshaller, const char* data)
     {
 	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_STRING, &data))
-	    throw FatalException();
+	    SN_THROW(FatalException());
 
 	return marshaller;
     }
@@ -322,7 +322,7 @@ namespace DBus
 	    if (*it == '\\')
 	    {
 		if (++it == in.end())
-		    throw MarshallingException();
+		    SN_THROW(MarshallingException());
 
 		if (*it == '\\')
 		{
@@ -334,7 +334,7 @@ namespace DBus
 		    for (int i = 0; i < 2; ++i)
 		    {
 			if (++it == in.end() || !isxdigit(*it))
-			    throw MarshallingException();
+			    SN_THROW(MarshallingException());
 			t1 += *it;
 		    }
 
@@ -344,7 +344,7 @@ namespace DBus
 		}
 		else
 		{
-		    throw MarshallingException();
+		    SN_THROW(MarshallingException());
 		}
 	    }
 	    else
@@ -361,7 +361,7 @@ namespace DBus
     operator>>(Unmarshaller& unmarshaller, string& data)
     {
 	if (unmarshaller.get_type() != DBUS_TYPE_STRING)
-	    throw MarshallingException();
+	    SN_THROW(MarshallingException());
 
 	const char* p = NULL;
 	dbus_message_iter_get_basic(unmarshaller.top(), &p);
@@ -405,7 +405,7 @@ namespace DBus
 	string tmp = marshaller.escape(data);
 	const char* p = tmp.c_str();
 	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_STRING, &p))
-	    throw FatalException();
+	    SN_THROW(FatalException());
 
 	return marshaller;
     }
@@ -415,14 +415,14 @@ namespace DBus
     operator>>(Unmarshaller& unmarshaller, map<string, string>& data)
     {
 	if (unmarshaller.get_type() != DBUS_TYPE_ARRAY)
-	    throw MarshallingException();
+	    SN_THROW(MarshallingException());
 
 	unmarshaller.open_recurse();
 
 	while (unmarshaller.get_type() != DBUS_TYPE_INVALID)
 	{
 	    if (unmarshaller.get_signature() != "{ss}")
-		throw MarshallingException();
+		SN_THROW(MarshallingException());
 
 	    unmarshaller.open_recurse();
 

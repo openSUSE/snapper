@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -71,6 +71,9 @@ struct Cmd
 };
 
 
+static bool log_debug = false;
+
+
 void
 log_do(LogLevel level, const string& component, const char* file, const int line, const char* func,
        const string& text)
@@ -82,7 +85,7 @@ log_do(LogLevel level, const string& component, const char* file, const int line
 bool
 log_query(LogLevel level, const string& component)
 {
-    return level == ERROR;
+    return log_debug || level == ERROR;
 }
 
 
@@ -167,6 +170,11 @@ main(int argc, char** argv)
 
 	GlobalOptions global_options(get_opts);
 
+	if (global_options.debug())
+	{
+	    log_debug = true;
+	}
+
 	if (global_options.version())
 	{
 	    cout << "snapper " << Snapper::compileVersion() << endl;
@@ -201,8 +209,12 @@ main(int argc, char** argv)
 
 	try
 	{
+	    y2mil("constructing ProxySnapper object");
+
 	    ProxySnappers snappers(global_options.no_dbus() ? ProxySnappers::createLib(global_options.root()) :
 				   ProxySnappers::createDbus());
+
+	    y2mil("executing command");
 
 	    if (cmd->needs_snapper)
 		(*cmd->cmd_func)(global_options, get_opts, &snappers, snappers.getSnapper(global_options.config()));
