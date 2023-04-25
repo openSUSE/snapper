@@ -55,15 +55,15 @@ namespace DBus
 	: Connection(type), idle_timeout(-1)
     {
 	if (pipe(wakeup_pipe) != 0)
-	    throw FatalException();
+	    SN_THROW(FatalException());
 
 	if (!dbus_connection_set_watch_functions(conn, add_watch, remove_watch, toggled_watch,
 						 this, NULL))
-	    throw FatalException();
+	    SN_THROW(FatalException());
 
 	if (!dbus_connection_set_timeout_functions(conn, add_timeout, remove_timeout,
 						   toggled_timeout, this, NULL))
-	    throw FatalException();
+	    SN_THROW(FatalException());
 
 	dbus_connection_set_wakeup_main_function(conn, wakeup_main, this, NULL);
     }
@@ -116,7 +116,7 @@ namespace DBus
 
 	    int r = poll(&pollfds[0], pollfds.size(), timeout.count());
 	    if (r == -1)
-		throw FatalException();
+		SN_THROW(FatalException());
 
 	    periodic();
 
@@ -201,7 +201,7 @@ namespace DBus
 	    if (it->dbus_watch == dbus_watch)
 		return it;
 
-	throw FatalException();
+	SN_THROW(FatalException());
     }
 
 
@@ -223,7 +223,7 @@ namespace DBus
 	    if (it->dbus_timeout == dbus_timeout)
 		return it;
 
-	throw FatalException();
+	SN_THROW(FatalException());
     }
 
 

@@ -207,6 +207,12 @@
 	</listitem>
       </varlistentry>
       <varlistentry>
+	<term><option>--debug</option></term>
+	<listitem>
+	  <para>Turn on debugging.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
 	<term><option>--utc</option></term>
 	<listitem>
 	  <para>Display dates and times in UTC. By default, local time is used.</para>

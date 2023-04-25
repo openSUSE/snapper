@@ -21,11 +21,12 @@
 
 
 #include <unistd.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <sys/types.h>
 #include <pwd.h>
 
 #include "DBusConnection.h"
+
 
 namespace DBus
 {
@@ -39,12 +40,12 @@ namespace DBus
 	if (dbus_error_is_set(&err))
 	{
 	    dbus_error_free(&err);
-	    throw FatalException();
+	    SN_THROW(FatalException());
 	}
 
 	if (!conn)
 	{
-	    throw FatalException();
+	    SN_THROW(FatalException());
 	}
     }
 
@@ -67,12 +68,12 @@ namespace DBus
 	if (dbus_error_is_set(&err))
 	{
 	    dbus_error_free(&err);
-	    throw FatalException();
+	    SN_THROW(FatalException());
 	}
 
 	if (ret != DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER)
 	{
-	    throw FatalException();
+	    SN_THROW(FatalException());
 	}
     }
 
@@ -84,7 +85,7 @@ namespace DBus
 
 	if (!dbus_connection_send(conn, m.get_message(), NULL))
 	{
-	    throw FatalException();
+	    SN_THROW(FatalException());
 	}
     }
 
@@ -101,7 +102,7 @@ namespace DBus
 								     0x7fffffff, &err);
 	if (dbus_error_is_set(&err))
 	{
-	    throw ErrorException(err);
+	    SN_THROW(ErrorException(err));
 	}
 
 	return Message(tmp, false);
@@ -120,7 +121,7 @@ namespace DBus
 	if (dbus_error_is_set(&err))
 	{
 	    dbus_error_free(&err);
-	    throw FatalException();
+	    SN_THROW(FatalException());
 	}
     }
 
@@ -137,7 +138,7 @@ namespace DBus
 	if (dbus_error_is_set(&err))
 	{
 	    dbus_error_free(&err);
-	    throw FatalException();
+	    SN_THROW(FatalException());
 	}
     }
 
@@ -158,7 +159,7 @@ namespace DBus
 	string sender = m.get_sender();
 	if (sender.empty())
 	{
-	    throw FatalException();
+	    SN_THROW(FatalException());
 	}
 
 	DBusError err;
@@ -168,7 +169,7 @@ namespace DBus
 	if (dbus_error_is_set(&err))
 	{
 	    dbus_error_free(&err);
-	    throw FatalException();
+	    SN_THROW(FatalException());
 	}
 
 	return uid;

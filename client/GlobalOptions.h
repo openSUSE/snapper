@@ -47,6 +47,7 @@ namespace snapper
 
 	bool quiet() const { return _quiet; }
 	bool verbose() const { return _verbose; }
+	bool debug() const { return _debug; }
 	bool utc() const { return _utc; }
 	bool iso() const { return _iso; }
 	bool no_dbus() const { return _no_dbus; }
@@ -76,6 +77,7 @@ namespace snapper
 
 	bool _quiet;
 	bool _verbose;
+	bool _debug;
 	bool _utc;
 	bool _iso;
 	bool _no_dbus;
