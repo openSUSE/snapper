@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2012 Novell, Inc.
+ * Copyright (c) 2023 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -39,8 +40,7 @@ namespace DBus
 	conn = dbus_bus_get(type, &err);
 	if (dbus_error_is_set(&err))
 	{
-	    dbus_error_free(&err);
-	    SN_THROW(FatalException());
+	    SN_THROW(ErrorException(&err));
 	}
 
 	if (!conn)
@@ -67,8 +67,7 @@ namespace DBus
 	int ret = dbus_bus_request_name(conn, name, flags, &err);
 	if (dbus_error_is_set(&err))
 	{
-	    dbus_error_free(&err);
-	    SN_THROW(FatalException());
+	    SN_THROW(ErrorException(&err));
 	}
 
 	if (ret != DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER)
@@ -102,7 +101,7 @@ namespace DBus
 								     0x7fffffff, &err);
 	if (dbus_error_is_set(&err))
 	{
-	    SN_THROW(ErrorException(err));
+	    SN_THROW(ErrorException(&err));
 	}
 
 	return Message(tmp, false);
@@ -168,8 +167,7 @@ namespace DBus
 	unsigned long uid = dbus_bus_get_unix_user(conn, sender.c_str(), &err);
 	if (dbus_error_is_set(&err))
 	{
-	    dbus_error_free(&err);
-	    SN_THROW(FatalException());
+	    SN_THROW(ErrorException(&err));
 	}
 
 	return uid;
