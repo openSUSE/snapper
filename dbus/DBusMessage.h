@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -54,12 +54,17 @@ namespace DBus
 
     struct ErrorException : public Exception
     {
-	explicit ErrorException(const DBusError err)
-	    : Exception("dbus error exception"), err(err) {}
-	virtual ~ErrorException() { dbus_error_free(&err); }
-	virtual const char* name() const { return err.name; }
-	virtual const char* message() const { return err.message; }
-	DBusError err;
+	explicit ErrorException(DBusError* err)
+	    : Exception("dbus error exception"), err_name(err->name), err_message(err->message)
+	{
+	    dbus_error_free(err);
+	}
+
+	const char* name() const { return err_name.c_str(); }
+	const char* message() const { return err_message.c_str(); }
+
+	const string err_name;
+	const string err_message;
     };
 
 
