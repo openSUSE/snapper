@@ -7,9 +7,10 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-04-25 09:55+0200\n"
-"PO-Revision-Date: 2023-02-10 12:14+0000\n"
-"Last-Translator: Gemineo <vistatec@gemineo.de>\n"
-"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
+"PO-Revision-Date: 2023-05-13 02:14+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
+"\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -63,11 +64,10 @@ msgid "\t--csvout\t\t\tSet CSV output format."
 msgstr "\t--csvout\t\t\tCSV-Ausgabeformat setzen."
 
 msgid "\t--debug\t\t\t\tTurn on debugging."
-msgstr ""
+msgstr "\t--debug\t\t\t\tDebugging einschalten."
 
-#, fuzzy
 msgid "\t--default\t\t\tSet snapshot as default snapshot."
-msgstr "Aktiver Schnappschuss ist schon Standard-Schnappschuss."
+msgstr "\t--default\t\t\tSchnappschuss als Standard-Schnappschuss festlegen."
 
 msgid "\t--description, -d <description>\tDescription for snapshot."
 msgstr "\t--description, -d <Beschreibung>\tBeschreibung des Schnappschusses."
@@ -135,16 +135,14 @@ msgstr "\t--quiet, -q\t\t\tNormale Ausgabe unterdrücken."
 msgid "\t--read-only\t\t\tCreate read-only snapshot."
 msgstr "\t--read-only\t\t\tEinen nur lesbaren Schnappschuss erstellen."
 
-#, fuzzy
 msgid "\t--read-only\t\t\tSet snapshot read-only."
-msgstr "\t--read-only\t\t\tEinen nur lesbaren Schnappschuss erstellen."
+msgstr "\t--read-only\t\t\tSchnappschuss auf nur Lesen einstellen."
 
 msgid "\t--read-write\t\t\tCreate read-write snapshot."
 msgstr "\t--read-write\t\t\tEinen nur schreibbaren Schnappschuss erstellen."
 
-#, fuzzy
 msgid "\t--read-write\t\t\tSet snapshot read-write."
-msgstr "\t--read-write\t\t\tEinen nur schreibbaren Schnappschuss erstellen."
+msgstr "\t--read-write\t\t\tSchnappschuss auf Schreiben-Lesen einstellen."
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
 msgstr "\t--root, -r <Pfad>\t\tAm Ziel-Root arbeiten (funktioniert nur ohne DBus)."
@@ -749,7 +747,7 @@ msgid "Quota error (%s)."
 msgstr "Quota-Fehler (%s)."
 
 msgid "Read-Only"
-msgstr ""
+msgstr "Nur Lesen"
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Weitere Anweisungen finden Sie in 'man snapper'."
