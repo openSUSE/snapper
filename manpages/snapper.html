@@ -206,6 +206,14 @@
             </dd>
             <dt>
               <span class="term">
+                <code class="option">--debug</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Turn on debugging.</p>
+            </dd>
+            <dt>
+              <span class="term">
                 <code class="option">--utc</code>
               </span>
             </dt>
@@ -270,6 +278,14 @@
             </dt>
             <dd>
               <p>Specifies the character separator for CSV output format.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">--no-headers</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Suppress headers for CSV output format.</p>
             </dd>
             <dt>
               <span class="term">
@@ -470,7 +486,7 @@
                     <p>Select columns to show separated by comma.</p>
                     <p>Possible columns are: config, subvolume, number, default, active,
 		date, user, used-space, cleanup, description, userdata, pre-number, post-number,
-		post-date.</p>
+		post-date, read-only.</p>
                   </dd>
                 </dl>
               </div>
@@ -614,6 +630,30 @@
                     <p>Set userdata for the snapshot. The key-value pairs must
 		be separated by comma and the key and value must be separated
 		by an equal sign, e.g. requestid=42,user=arthur.</p>
+                  </dd>
+                  <dt>
+                    <span class="term">
+                      <code class="option">--read-only</code>
+                    </span>
+                  </dt>
+                  <dd>
+                    <p>Set the snapshot read-only.</p>
+                  </dd>
+                  <dt>
+                    <span class="term">
+                      <code class="option">--read-write</code>
+                    </span>
+                  </dt>
+                  <dd>
+                    <p>Set the snapshot read-write.</p>
+                  </dd>
+                  <dt>
+                    <span class="term">
+                      <code class="option">--default</code>
+                    </span>
+                  </dt>
+                  <dd>
+                    <p>Set the snapshot as default snapshot. Only for btrfs.</p>
                   </dd>
                 </dl>
               </div>
@@ -935,6 +975,127 @@
         </div>
         <p>The last method can be performed by snapper, see the SYNC_ACL setting in
     <a class="citerefentry" href="snapper-configs.html"><span class="citerefentry"><span class="refentrytitle">snapper-configs</span>(5)</span></a>.</p>
+      </div>
+      <div class="refsect1">
+        <a id="plugins"></a>
+        <h2>PLUGINS</h2>
+        <p>snapper can execute external scripts after certain actions. Scripts
+    have to be placed in <code class="filename">/usr/lib/snapper/plugins</code>.
+    The name has to start with a digit, execution order is alphabetical.</p>
+        <p>The first argument of a script is the action snapper executed. The
+    following actions are defined:</p>
+        <div class="variablelist">
+          <dl class="variablelist">
+            <dt>
+              <span class="term">
+                <code class="option">create-config-pre <em class="replaceable"><code>subvolume</code></em> <em class="replaceable"><code>fstype</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Executed before a new config is created</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">create-config-post <em class="replaceable"><code>subvolume</code></em> <em class="replaceable"><code>fstype</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Executed after a new config was created</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">delete-config-pre <em class="replaceable"><code>subvolume</code></em> <em class="replaceable"><code>fstype</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Executed before a config is deleted</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">delete-config-post <em class="replaceable"><code>subvolume</code></em> <em class="replaceable"><code>fstype</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Executed after a config was deleted</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">create-snapshot-pre <em class="replaceable"><code>subvolume</code></em> <em class="replaceable"><code>fstype</code></em> <em class="replaceable"><code>snapshot-number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Executed before a new snapshot is created</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">create-snapshot-post <em class="replaceable"><code>subvolume</code></em> <em class="replaceable"><code>fstype</code></em> <em class="replaceable"><code>snapshot-number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Executed after a new snapshot was created</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">modify-snapshot-pre <em class="replaceable"><code>subvolume</code></em> <em class="replaceable"><code>fstype</code></em> <em class="replaceable"><code>snapshot-number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Executed before a snapshot is modified</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">modify-snapshot-post <em class="replaceable"><code>subvolume</code></em> <em class="replaceable"><code>fstype</code></em> <em class="replaceable"><code>snapshot-number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Executed after a snapshot was modified</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">delete-snapshot-pre <em class="replaceable"><code>subvolume</code></em> <em class="replaceable"><code>fstype</code></em> <em class="replaceable"><code>snapshot-number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Executed before a snapshot is removed</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">delete-snapshot-post <em class="replaceable"><code>subvolume</code></em> <em class="replaceable"><code>fstype</code></em> <em class="replaceable"><code>snapshot-number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Executed after a snapshot was removed</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">set-default-snapshot-pre <em class="replaceable"><code>subvolume</code></em> <em class="replaceable"><code>fstype</code></em> <em class="replaceable"><code>snapshot-number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Executed before the default snapshot is changed</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">set-default-snapshot-post <em class="replaceable"><code>subvolume</code></em> <em class="replaceable"><code>fstype</code></em> <em class="replaceable"><code>snapshot-number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Executed after the default snapshot was changed</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">rollback-post <em class="replaceable"><code>subvolume</code></em> <em class="replaceable"><code>fstype</code></em> <em class="replaceable"><code>old-snapshot-number</code></em> <em class="replaceable"><code>new-snapshot-number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Executed after a rollback was done</p>
+            </dd>
+          </dl>
+        </div>
+        <p>More actions and arguments can be added any time. Using snapper in
+    the plugins is not allowed.</p>
+        <p>It is undefined whether the plugins are called from the
+    client (snapper) or server (snapperd).</p>
       </div>
       <div class="refsect1">
         <a id="files"></a>
