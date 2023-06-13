@@ -1093,7 +1093,7 @@ Client::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
     DBus::Unmarshaller unmarshaller(msg);
     unmarshaller >> config_name >> nums;
 
-    y2mil("DeleteSnapshots config_name:" << config_name << " nums:" << nums);
+    y2deb("DeleteSnapshots config_name:" << config_name << " nums:" << nums);
 
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
