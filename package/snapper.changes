@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Jun 13 12:08:55 CEST 2023 - aschnell@suse.com
+
+- update qgroup in config info in snapperd when running setup-quota
+
+-------------------------------------------------------------------
 Fri Apr 21 09:47:57 CEST 2023 - aschnell@suse.com
 
 - fixed deleting configs (bsc#1210716)

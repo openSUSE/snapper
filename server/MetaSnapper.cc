@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2018-2022] SUSE LLC
+ * Copyright (c) [2018-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -59,6 +59,16 @@ MetaSnapper::setConfigInfo(const map<string, string>& raw)
 
     if (raw.find(KEY_ALLOW_USERS) != raw.end() || raw.find(KEY_ALLOW_GROUPS) != raw.end())
 	set_permissions();
+}
+
+
+void
+MetaSnapper::updateConfigInfo(const char* key)
+{
+    string value;
+
+    if (getSnapper()->getConfigInfo().get_value(key, value))
+	 config_info.set_value(key, value);
 }
 
 

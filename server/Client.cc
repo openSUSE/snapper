@@ -1593,6 +1593,7 @@ Client::setup_quota(DBus::Connection& conn, DBus::Message& msg)
     Snapper* snapper = it->getSnapper();
 
     snapper->setupQuota();
+    it->updateConfigInfo("QGROUP");
 
     DBus::MessageMethodReturn reply(msg);
 

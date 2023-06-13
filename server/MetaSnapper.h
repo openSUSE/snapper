@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2018-2022] SUSE LLC
+ * Copyright (c) [2018-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -53,6 +53,8 @@ public:
 
     const ConfigInfo& getConfigInfo() const { return config_info; }
     void setConfigInfo(const map<string, string>& raw);
+
+    void updateConfigInfo(const char* key);
 
     const vector<uid_t>& get_allowed_uids() const { return allowed_uids; }
     const vector<gid_t>& get_allowed_gids() const { return allowed_gids; }
