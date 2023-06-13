@@ -26,6 +26,7 @@
 #include <snapper/Log.h>
 #include <snapper/SnapperTmpl.h>
 #include <snapper/AsciiFile.h>
+#include <snapper/Version.h>
 #include <dbus/DBusMessage.h>
 #include <dbus/DBusConnection.h>
 
@@ -1773,6 +1774,7 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg)
 
     marshaller << "compile options:";
     marshaller << "    version " + string(Snapper::compileVersion());
+    marshaller << "    libversion " LIBSNAPPER_MAJOR "." LIBSNAPPER_MINOR "." LIBSNAPPER_PATCHLEVEL;
     marshaller << "    flags " + string(Snapper::compileFlags());
 
     marshaller.close_array();
