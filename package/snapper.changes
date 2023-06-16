@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Jun 16 15:38:59 CEST 2023 - aschnell@suse.com
+
+- improved responsiveness of snapperd when a btrfs quota rescan
+  is running (see bsc#1211459)
+
+-------------------------------------------------------------------
 Tue Jun 13 12:08:55 CEST 2023 - aschnell@suse.com
 
 - update qgroup in config info in snapperd when running setup-quota

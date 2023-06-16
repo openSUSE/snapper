@@ -1280,7 +1280,13 @@ Client::calculate_used_space(DBus::Connection& conn, DBus::Message& msg)
 
     Snapper* snapper = it->getSnapper();
 
+    RefHolder ref_holder(*it);
+
+    lock.unlock();
+
     snapper->calculateUsedSpace();
+
+    lock.lock();
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -1646,7 +1652,13 @@ Client::query_quota(DBus::Connection& conn, DBus::Message& msg)
 
     Snapper* snapper = it->getSnapper();
 
+    RefHolder ref_holder(*it);
+
+    lock.unlock();
+
     QuotaData quota_data = snapper->queryQuotaData();
+
+    lock.lock();
 
     DBus::MessageMethodReturn reply(msg);
 
