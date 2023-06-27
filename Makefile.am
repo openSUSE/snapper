@@ -16,6 +16,7 @@ snapper-$(VERSION).tar.xz: dist-xz
 DEBIAN_FLAVOURS =	\
 	Debian_10.0	\
 	Debian_11.0	\
+	Debian_12.0	\
 	Debian_Unstable
 
 UBUNTU_FLAVOURS =	\
