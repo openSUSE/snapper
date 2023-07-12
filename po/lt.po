@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LCN (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2017-06-02 16:57+0000\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <https://l10n.opensuse.org/projects/snapper/master/lt/>\n"
@@ -640,8 +640,8 @@ msgstr "Netinkami naudotojo meta duomenys."
 msgid "Invalid free-space value."
 msgstr "Netinkamas potomis."
 
-#, fuzzy
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "Netinkamas potomis."
 
 #, fuzzy, c-format
@@ -666,8 +666,8 @@ msgstr "Netinkamas potomis."
 msgid "Invalid table style '%s'."
 msgstr "Netinkamas lentelės stilius %d."
 
-#, fuzzy
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "Netinkami naudotojo meta duomenys."
 
 msgid "Invalid userdata."

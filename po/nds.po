@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opensuse-i 18n\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2012-11-26 14:24+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -617,7 +617,8 @@ msgstr ""
 msgid "Invalid free-space value."
 msgstr ""
 
-msgid "Invalid group."
+#, c-format
+msgid "Invalid group (%s)."
 msgstr ""
 
 #, c-format
@@ -642,7 +643,8 @@ msgstr ""
 msgid "Invalid table style '%s'."
 msgstr ""
 
-msgid "Invalid user."
+#, c-format
+msgid "Invalid user (%s)."
 msgstr ""
 
 msgid "Invalid userdata."

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2020-05-02 19:50+0000\n"
 "Last-Translator: mohammad alhargan <malham1@gmail.com>\n"
 "Language-Team: Arabic <https://l10n.opensuse.org/projects/snapper/master/ar/>\n"
@@ -631,7 +631,8 @@ msgstr "بيانات إعداد غير صالحة."
 msgid "Invalid free-space value."
 msgstr "الحجم الفرعي غير صالح."
 
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "مجموعة غير صالحة."
 
 #, fuzzy, c-format
@@ -656,7 +657,8 @@ msgstr "الحجم الفرعي غير صالح."
 msgid "Invalid table style '%s'."
 msgstr "نمط الجدول غير صالح %d."
 
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "المستخدم غير صالح."
 
 msgid "Invalid userdata."

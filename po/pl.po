@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Ewelina Michalowska <ewelina.michalowska@stgambit.com>\n"
 "Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>\n"
@@ -626,7 +626,8 @@ msgstr "Nieprawidłowe dane konfiguracyjne."
 msgid "Invalid free-space value."
 msgstr "Nieprawidłowy podwolumen."
 
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "Nieprawidłowa grupa."
 
 #, fuzzy, c-format
@@ -651,7 +652,8 @@ msgstr "Nieprawidłowy podwolumen."
 msgid "Invalid table style '%s'."
 msgstr "Nieprawidłowy styl tabeli %d."
 
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "Nieprawidłowy użytkownik."
 
 msgid "Invalid userdata."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2015-10-17 16:22+0200\n"
 "Last-Translator: Andriy Bandura <andriykopanytsia@gmail.com>\n"
 "Language-Team: Ukrainian <http://10n.opensuse.org/projects/snapper/master/uk/>\n"
@@ -632,7 +632,8 @@ msgstr "Неправильні дані конфігурації."
 msgid "Invalid free-space value."
 msgstr "Нечинний підтом."
 
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "Нечинна група."
 
 #, fuzzy, c-format
@@ -657,7 +658,8 @@ msgstr "Нечинний підтом."
 msgid "Invalid table style '%s'."
 msgstr "Непридатний стиль таблиці %d."
 
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "Неправильний користувач."
 
 msgid "Invalid userdata."

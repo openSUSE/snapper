@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: entries\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Hwajin Kim <hwajin.kim@e4net.net>\n"
 "Language-Team: Korean <https://l10n.opensuse.org/projects/snapper/master/ko/>\n"
@@ -744,7 +744,8 @@ msgid "Invalid free-space value."
 msgstr "하위 볼륨이 잘못되었습니다."
 
 # SLE12
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "잘못된 그룹입니다."
 
 #, fuzzy, c-format
@@ -774,7 +775,8 @@ msgid "Invalid table style '%s'."
 msgstr "잘못된 테이블 모양 %d 입니다."
 
 # SLE12
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "잘못된 사용자입니다."
 
 # SLE12

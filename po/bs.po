@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2002-07-23 18:27+0200\n"
 "Last-Translator: Damir Bjelobradic <Nagual@lugbih.org>\n"
 "Language-Team: Bosnian <i18n@suse.de>\n"
@@ -624,8 +624,9 @@ msgstr ""
 msgid "Invalid free-space value."
 msgstr ""
 
-msgid "Invalid group."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
+msgstr "Greška"
 
 #, c-format
 msgid "Invalid machine readable format '%s'."
@@ -649,8 +650,9 @@ msgstr ""
 msgid "Invalid table style '%s'."
 msgstr ""
 
-msgid "Invalid user."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
+msgstr "Failed to parse: %s."
 
 msgid "Invalid userdata."
 msgstr ""

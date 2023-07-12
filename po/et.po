@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: autoinst.fi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2019-12-01 20:54+0000\n"
 "Last-Translator: Jaanus Ojangu <jaanus.ojangu@gmail.com>\n"
 "Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/et/>\n"
@@ -625,7 +625,8 @@ msgstr "Vigased seadistuse andmed."
 msgid "Invalid free-space value."
 msgstr "Vigane alamosa."
 
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "Vigane grupp."
 
 #, fuzzy, c-format
@@ -650,7 +651,8 @@ msgstr "Vigane alamosa."
 msgid "Invalid table style '%s'."
 msgstr "Vigane tabeli stiil %d."
 
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "Vigane kasutaja."
 
 msgid "Invalid userdata."

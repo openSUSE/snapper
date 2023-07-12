@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2001-07-17 16:27+0200\n"
 "Last-Translator: James Ogley <ogley@suse.co.uk>\n"
 "Language-Team: English <i18n@suse.de>\n"
@@ -670,8 +670,8 @@ msgstr "Invalid issue data."
 msgid "Invalid free-space value."
 msgstr ""
 
-#, fuzzy
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "Invalid CRL reason."
 
 #, fuzzy, c-format
@@ -696,8 +696,8 @@ msgstr ""
 msgid "Invalid table style '%s'."
 msgstr "Invalid type %1."
 
-#, fuzzy
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "Invalid type %1."
 
 #, fuzzy

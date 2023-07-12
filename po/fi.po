@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2022-04-03 22:12+0000\n"
 "Last-Translator: Tommi Nieminen <software@legisign.org>\n"
 "Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
@@ -635,7 +635,8 @@ msgstr "Virheellinen määritystieto."
 msgid "Invalid free-space value."
 msgstr "Virheellinen vapaan tilan arvo."
 
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "Virheellinen ryhmä."
 
 #, c-format
@@ -660,7 +661,8 @@ msgstr "Virheellinen alitaltio."
 msgid "Invalid table style '%s'."
 msgstr "Virheellinen taulukkotyyli \"%s\"."
 
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "Virheellinen käyttäjä."
 
 msgid "Invalid userdata."

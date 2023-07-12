@@ -7,11 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2023-04-26 19:14+0000\n"
 "Last-Translator: George David Apostolidis <geoapostolidis999@gmail.com>\n"
-"Language-Team: Greek <https://l10n.opensuse.org/projects/snapper/master/el/>"
-"\n"
+"Language-Team: Greek <https://l10n.opensuse.org/projects/snapper/master/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -77,24 +76,20 @@ msgid "\t--description, -d <description>\tDescription for snapshots."
 msgstr "\t--description, -d <description>\tΠεριγραφή για τα στιγμιότυπα."
 
 msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr ""
-"\t--diff-cmd <command> Εντολή που χρησιμοποιείται για τη σύγκριση αρχείων."
+msgstr "\t--diff-cmd <command> Εντολή που χρησιμοποιείται για τη σύγκριση αρχείων."
 
 #, fuzzy
 msgid "\t--disable-used-space\t\tDisable showing used space."
 msgstr "\t--disable-filters\t\tΑπενεργοποίηση φίλτρων."
 
 msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
-msgstr ""
-"\t--extensions, -x <options> Πρόσθετες επιλογές που περνούν στην εντολή diff."
+msgstr "\t--extensions, -x <options> Πρόσθετες επιλογές που περνούν στην εντολή diff."
 
 msgid "\t--free-space <space>\t\tTry to make space available."
 msgstr "\t--free-space <space> Προσπαθήστε να κάνετε διαθέσιμο χώρο."
 
 msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
-msgstr ""
-"\t--from <αριθμός> Δημιουργήστε ένα στιγμιότυπο από το καθορισμένο "
-"στιγμιότυπο."
+msgstr "\t--from <αριθμός> Δημιουργήστε ένα στιγμιότυπο από το καθορισμένο στιγμιότυπο."
 
 msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
 msgstr "\t--fstype, -f <fstype>\t\tΟρίσετε είδος συστήματος αρχείων με το χέρι."
@@ -112,9 +107,7 @@ msgid "\t--jsonout\t\t\tSet JSON output format."
 msgstr "\t--jsonout Ορισμός μορφής εξόδου JSON."
 
 msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
-msgstr ""
-"\t--machine-readable <format> Ορίστε μια μορφή εξόδου αναγνώσιμη από μηχανή ("
-"csv, json)."
+msgstr "\t--machine-readable <format> Ορίστε μια μορφή εξόδου αναγνώσιμη από μηχανή (csv, json)."
 
 msgid "\t--no-dbus\t\t\tOperate without DBus."
 msgstr "\t--no-dbus\t\t\tΛειτουργία χωρίς το DBus."
@@ -126,8 +119,7 @@ msgid "\t--output, -o <file>\t\tSave status to file."
 msgstr "\t--output, -o <file>\t\tΑποθήκευση κατάστασης σε αρχείο."
 
 msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
-msgstr ""
-"\t--path <path> Καθαρισμός όλων των ρυθμίσεων που επηρεάζουν τη διαδρομή."
+msgstr "\t--path <path> Καθαρισμός όλων των ρυθμίσεων που επηρεάζουν τη διαδρομή."
 
 msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
 msgstr "\t--pre-number <αριθμός>\t\tΑριθμός από αντίστοιχα προ-στιγμιότυπα."
@@ -154,13 +146,10 @@ msgid "\t--read-write\t\t\tSet snapshot read-write."
 msgstr "\t--read-write Ρύθμιση στιγμιότυπου ανάγνωσης-εγγραφής."
 
 msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
-msgstr ""
-"\t--root, -r <path> Λειτουργεί στο root του στόχου (λειτουργεί μόνο χωρίς "
-"DBus)."
+msgstr "\t--root, -r <path> Λειτουργεί στο root του στόχου (λειτουργεί μόνο χωρίς DBus)."
 
 msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
-msgstr ""
-"\t--separator <separator> Διαχωριστικό χαρακτήρων για τη μορφή εξόδου CSV."
+msgstr "\t--separator <separator> Διαχωριστικό χαρακτήρων για τη μορφή εξόδου CSV."
 
 msgid "\t--sync, -s\t\t\tSync after deletion."
 msgstr "\t--sync, -s Συγχρονισμός μετά τη διαγραφή."
@@ -383,30 +372,21 @@ msgstr "B"
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr ""
-"Δεν είναι δυνατή η διαγραφή του στιγμιότυπου %d επειδή είναι το τρέχον "
-"σύστημα."
+msgstr "Δεν είναι δυνατή η διαγραφή του στιγμιότυπου %d επειδή είναι το τρέχον σύστημα."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr ""
-"Δεν είναι δυνατή η διαγραφή του στιγμιότυπου %d, καθώς είναι το στιγμιότυπο "
-"που είναι τοποθετημένο επί του παρόντος."
+msgstr "Δεν είναι δυνατή η διαγραφή του στιγμιότυπου %d, καθώς είναι το στιγμιότυπο που είναι τοποθετημένο επί του παρόντος."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
-"Δεν είναι δυνατή η διαγραφή του στιγμιότυπου %d δεδομένου ότι είναι το "
-"επόμενο προς τοποθέτηση στιγμιότυπο."
+msgstr "Δεν είναι δυνατή η διαγραφή του στιγμιότυπου %d δεδομένου ότι είναι το επόμενο προς τοποθέτηση στιγμιότυπο."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
-msgstr ""
-"Δεν είναι δυνατή η ανίχνευση της περιοχής, καθώς ο προεπιλεγμένος υποόγκος "
-"είναι άγνωστος."
+msgstr "Δεν είναι δυνατή η ανίχνευση της περιοχής, καθώς ο προεπιλεγμένος υποόγκος είναι άγνωστος."
 
 msgid "Cannot do rollback since default subvolume is unknown."
-msgstr ""
-"Δεν είναι δυνατή η επαναφορά αφού ο προεπιλεγμένος υποόγκος είναι άγνωστος."
+msgstr "Δεν είναι δυνατή η επαναφορά αφού ο προεπιλεγμένος υποόγκος είναι άγνωστος."
 
 msgid "Cleanup"
 msgstr "Εκκαθάριση"
@@ -655,7 +635,8 @@ msgstr "Μη έγκυρα δεδομένα ρυθμίσεων."
 msgid "Invalid free-space value."
 msgstr "Μη έγκυρη τιμή ελεύθερου χώρου."
 
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "Μη έγκυρη ομάδα."
 
 #, c-format
@@ -680,7 +661,8 @@ msgstr "Μη έγκυρος υποτόμος."
 msgid "Invalid table style '%s'."
 msgstr "Μη έγκυρο στυλ πίνακα '%s'."
 
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "Μη έγκυρος χρήστης."
 
 msgid "Invalid userdata."
@@ -807,14 +789,10 @@ msgid "TB"
 msgstr "TiB"
 
 msgid "The ambit can be specified manually using the --ambit option."
-msgstr ""
-"Το πεδίο εφαρμογής μπορεί να καθοριστεί χειροκίνητα χρησιμοποιώντας την "
-"επιλογή --ambit."
+msgstr "Το πεδίο εφαρμογής μπορεί να καθοριστεί χειροκίνητα χρησιμοποιώντας την επιλογή --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr ""
-"Η παραμετροποίηση 'root' δεν υπάρχει. Κατά πάσα πιθανότητα δεν έχει "
-"ρυθμιστεί το snapper."
+msgstr "Η παραμετροποίηση 'root' δεν υπάρχει. Κατά πάσα πιθανότητα δεν έχει ρυθμιστεί το snapper."
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "Αυτό μπορεί να συμβεί εάν το σύστημα δεν έχει ρυθμιστεί για επαναφορά."

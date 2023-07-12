@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2023-04-06 07:14+0000\n"
 "Last-Translator: Kristijan Fremen Velkovski <me@krisfremen.com>\n"
 "Language-Team: Macedonian <https://l10n.opensuse.org/projects/snapper/master/mk/>\n"
@@ -622,7 +622,8 @@ msgstr ""
 msgid "Invalid free-space value."
 msgstr ""
 
-msgid "Invalid group."
+#, c-format
+msgid "Invalid group (%s)."
 msgstr ""
 
 #, c-format
@@ -647,8 +648,9 @@ msgstr ""
 msgid "Invalid table style '%s'."
 msgstr ""
 
-msgid "Invalid user."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
+msgstr "Failed to parse: %s."
 
 msgid "Invalid userdata."
 msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yast memory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2004-04-05 17:37+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <i18n@suse.de>\n"
@@ -634,8 +634,8 @@ msgstr "Li sôre di sistinme di fitchî n' clope nén"
 msgid "Invalid free-space value."
 msgstr ""
 
-#, fuzzy
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "Li sôre di sistinme di fitchî n' clope nén"
 
 #, fuzzy, c-format
@@ -660,8 +660,8 @@ msgstr ""
 msgid "Invalid table style '%s'."
 msgstr "Li sôre di sistinme di fitchî n' clope nén"
 
-#, fuzzy
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "Li sôre di sistinme di fitchî n' clope nén"
 
 #, fuzzy

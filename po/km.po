@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper.km\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2011-10-24 10:40+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -661,8 +661,8 @@ msgstr "ទិន្នន័យ​ផ្សាយ​មិន​ត្រឹម
 msgid "Invalid free-space value."
 msgstr "ភាគ​រង​មិន​ត្រឹមត្រូវ ។"
 
-#, fuzzy
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "ភាគ​រង​មិន​ត្រឹមត្រូវ ។"
 
 #, fuzzy, c-format
@@ -687,8 +687,8 @@ msgstr "ភាគ​រង​មិន​ត្រឹមត្រូវ ។"
 msgid "Invalid table style '%s'."
 msgstr "រចនាប័ទ្ម​តារាង %d មិន​ត្រឹមត្រូវ ។"
 
-#, fuzzy
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "ទិន្នន័យ​អ្នក​ប្រើ​មិន​ត្រឹមត្រូវ ។"
 
 msgid "Invalid userdata."

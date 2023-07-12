@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2023-02-10 04:14+0000\n"
 "Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
 "Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
@@ -684,7 +684,8 @@ msgid "Invalid free-space value."
 msgstr "可用空間值無效。"
 
 # SLE12
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "無效的群組。"
 
 #, c-format
@@ -711,7 +712,8 @@ msgid "Invalid table style '%s'."
 msgstr "表格樣式 \"%s\" 無效。"
 
 # SLE12
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "無效的使用者。"
 
 msgid "Invalid userdata."

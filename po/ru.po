@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2022-04-16 00:13+0000\n"
 "Last-Translator: Michael <michaelbelachev@gmail.com>\n"
 "Language-Team: Russian <https://l10n.opensuse.org/projects/snapper/master/ru/>\n"
@@ -630,7 +630,8 @@ msgstr "Неверные данные конфигурации."
 msgid "Invalid free-space value."
 msgstr "Неверное значение места."
 
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "Неверная группа."
 
 #, c-format
@@ -655,7 +656,8 @@ msgstr "Неверный подтом."
 msgid "Invalid table style '%s'."
 msgstr "Неверный стиль таблицы '%s'."
 
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "Неверный пользователь."
 
 msgid "Invalid userdata."
