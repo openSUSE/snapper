@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2020-05-26 14:40+0000\n"
 "Last-Translator: Jonas Svensson <jonas@ekhorva.se>\n"
 "Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/sv/>\n"
@@ -754,7 +754,8 @@ msgid "Invalid free-space value."
 msgstr "Ogiltig undervolym."
 
 # SLE12
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "Ogiltig grupp."
 
 # SLE12
@@ -786,7 +787,8 @@ msgid "Invalid table style '%s'."
 msgstr "Ogiltig tabellstil %d."
 
 # SLE12
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "Ogiltig användare."
 
 # SLE12

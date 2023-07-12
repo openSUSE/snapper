@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2022-02-10 15:12+0000\n"
 "Last-Translator: Murat Servan Kahraman <muratservan@outlook.com>\n"
 "Language-Team: Turkish <https://l10n.opensuse.org/projects/snapper/master/tr/>\n"
@@ -702,8 +702,9 @@ msgstr "Geçersiz kullanıcı verisi."
 msgid "Invalid free-space value."
 msgstr "Geçersiz arkases."
 
-msgid "Invalid group."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
+msgstr "Geçersiz '%s' anlık görüntüsü."
 
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
@@ -728,8 +729,9 @@ msgstr "Geçersiz arkases."
 msgid "Invalid table style '%s'."
 msgstr "%d geçersiz tablo stili."
 
-msgid "Invalid user."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
+msgstr "Geçersiz kullanıcı verisi."
 
 msgid "Invalid userdata."
 msgstr "Geçersiz kullanıcı verisi."

@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opensuse-i 18n\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2016-11-05 14:28+0000\n"
 "Last-Translator: hayyan rostami <hayyan71@yahoo.com>\n"
 "Language-Team: Persian <https://l10n.opensuse.org/projects/snapper/master/fa/>\n"
@@ -614,7 +614,8 @@ msgstr ""
 msgid "Invalid free-space value."
 msgstr ""
 
-msgid "Invalid group."
+#, c-format
+msgid "Invalid group (%s)."
 msgstr ""
 
 #, c-format
@@ -639,7 +640,8 @@ msgstr ""
 msgid "Invalid table style '%s'."
 msgstr ""
 
-msgid "Invalid user."
+#, c-format
+msgid "Invalid user (%s)."
 msgstr ""
 
 msgid "Invalid userdata."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2013-10-04 18:20+0200\n"
 "Last-Translator: Olav Pettershagen <olpetter@bbnett.no>\n"
 "Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
@@ -650,8 +650,8 @@ msgstr "Ugyldige oppsettdata."
 msgid "Invalid free-space value."
 msgstr "Ugyldig undervolum."
 
-#, fuzzy
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "Ugyldig undervolum."
 
 #, fuzzy, c-format
@@ -676,8 +676,8 @@ msgstr "Ugyldig undervolum."
 msgid "Invalid table style '%s'."
 msgstr "Ugyldig tabellstil %d."
 
-#, fuzzy
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "Ugyldige brukerdata."
 
 msgid "Invalid userdata."

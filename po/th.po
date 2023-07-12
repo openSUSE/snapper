@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2008-01-04 08:58+0100\n"
 "Last-Translator: i18n@suse.de\n"
 "Language-Team: Thai <i18n@suse.de>\n"
@@ -649,8 +649,8 @@ msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งาน
 msgid "Invalid free-space value."
 msgstr ""
 
-#, fuzzy
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "พาธการสำรองข้อมูลใช้ไม่ได้"
 
 #, fuzzy, c-format
@@ -675,8 +675,8 @@ msgstr ""
 msgid "Invalid table style '%s'."
 msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งานไม่ได้"
 
-#, fuzzy
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งานไม่ได้"
 
 #, fuzzy

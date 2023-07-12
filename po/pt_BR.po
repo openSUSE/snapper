@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2023-04-27 02:14+0000\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive68@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/"
-"snapper/master/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -628,7 +627,8 @@ msgstr "Arquivo de dados de configuração inválido."
 msgid "Invalid free-space value."
 msgstr "Valor de espaço livre inválido."
 
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "Grupo inválido."
 
 #, c-format
@@ -653,7 +653,8 @@ msgstr "Subvolume inválido."
 msgid "Invalid table style '%s'."
 msgstr "Estilo de tabela inválido '%s'."
 
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "Usuário inválido."
 
 msgid "Invalid userdata."

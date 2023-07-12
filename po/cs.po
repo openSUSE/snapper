@@ -3,11 +3,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2023-05-14 19:14+0000\n"
 "Last-Translator: Aleš Kastner <alkas@volny.cz>\n"
-"Language-Team: Czech <https://l10n.opensuse.org/projects/snapper/master/cs/>"
-"\n"
+"Language-Team: Czech <https://l10n.opensuse.org/projects/snapper/master/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -648,7 +647,8 @@ msgid "Invalid free-space value."
 msgstr "Neplatná hodnota velikosti volného prostoru."
 
 # SLE12
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "Neplatná skupina."
 
 #, c-format
@@ -674,7 +674,8 @@ msgid "Invalid table style '%s'."
 msgstr "Neplatný styl tabulky %s."
 
 # SLE12
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "Neplatný uživatel."
 
 msgid "Invalid userdata."

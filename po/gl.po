@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2018-06-01 11:02+0000\n"
 "Last-Translator: Jiri Machalek <jiri.machalek@tieto.com>\n"
 "Language-Team: Galician <https://l10n.opensuse.org/projects/snapper/master/gl/>\n"
@@ -642,8 +642,9 @@ msgstr "Estilo de táboa incorrecto %d."
 msgid "Invalid free-space value."
 msgstr ""
 
-msgid "Invalid group."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
+msgstr "Estilo de táboa incorrecto %d."
 
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
@@ -667,8 +668,9 @@ msgstr ""
 msgid "Invalid table style '%s'."
 msgstr "Estilo de táboa incorrecto %d."
 
-msgid "Invalid user."
-msgstr ""
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
+msgstr "Estilo de táboa incorrecto %d."
 
 #, fuzzy
 msgid "Invalid userdata."

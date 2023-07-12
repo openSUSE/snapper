@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-25 09:55+0200\n"
+"POT-Creation-Date: 2023-07-12 09:40+0200\n"
 "PO-Revision-Date: 2011-04-16 18:13+0200\n"
 "Last-Translator: Krešimir Jozić <kjozic@gmail.com>\n"
 "Language-Team: Croatian <kde-i18n-doc@kde.org>\n"
@@ -650,8 +650,8 @@ msgstr "Nesipravan stil tablice %d."
 msgid "Invalid free-space value."
 msgstr ""
 
-#, fuzzy
-msgid "Invalid group."
+#, fuzzy, c-format
+msgid "Invalid group (%s)."
 msgstr "Neispravna vrsta %1."
 
 #, fuzzy, c-format
@@ -676,8 +676,8 @@ msgstr ""
 msgid "Invalid table style '%s'."
 msgstr "Nesipravan stil tablice %d."
 
-#, fuzzy
-msgid "Invalid user."
+#, fuzzy, c-format
+msgid "Invalid user (%s)."
 msgstr "Nesipravan stil tablice %d."
 
 #, fuzzy
