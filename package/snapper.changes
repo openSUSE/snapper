@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Jul 12 09:03:42 CEST 2023 - aschnell@suse.com
+
+- document disadvantage of using network users and order services
+  after nss-user-lookup (gh#openSUSE/snapper#823)
+
+-------------------------------------------------------------------
 Fri Jun 16 15:38:59 CEST 2023 - aschnell@suse.com
 
 - improved responsiveness of snapperd when a btrfs quota rescan
