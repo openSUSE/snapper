@@ -1987,13 +1987,13 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
     catch (const InvalidUserException& e)
     {
 	SN_CAUGHT(e);
-	DBus::MessageError reply(msg, "error.invalid_user", DBUS_ERROR_FAILED);
+	DBus::MessageError reply(msg, "error.invalid_user", e.what());
 	conn.send(reply);
     }
     catch (const InvalidGroupException& e)
     {
 	SN_CAUGHT(e);
-	DBus::MessageError reply(msg, "error.invalid_group", DBUS_ERROR_FAILED);
+	DBus::MessageError reply(msg, "error.invalid_group", e.what());
 	conn.send(reply);
     }
     catch (const QuotaException& e)

@@ -298,13 +298,13 @@ main(int argc, char** argv)
 	catch (const InvalidUserException& e)
 	{
 	    SN_CAUGHT(e);
-	    cerr << _("Invalid user.") << endl;
+	    cerr << sformat(_("Invalid user (%s)."), e.what()) << endl;
 	    exit(EXIT_FAILURE);
 	}
 	catch (const InvalidGroupException& e)
 	{
 	    SN_CAUGHT(e);
-	    cerr << _("Invalid group.") << endl;
+	    cerr << sformat(_("Invalid group (%s)."), e.what()) << endl;
 	    exit(EXIT_FAILURE);
 	}
 	catch (const QuotaException& e)
