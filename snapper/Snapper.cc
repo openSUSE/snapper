@@ -554,11 +554,11 @@ namespace snapper
 	vector<string> users;
 	if (config_info->get_value(KEY_ALLOW_USERS, users))
 	{
-	    for (vector<string>::const_iterator it = users.begin(); it != users.end(); ++it)
+	    for (const string& user : users)
 	    {
 		uid_t uid;
-		if (!get_user_uid(it->c_str(), uid))
-		    SN_THROW(InvalidUserException());
+		if (!get_user_uid(user.c_str(), uid))
+		    SN_THROW(InvalidUserException(user));
 		uids.push_back(uid);
 	    }
 	}
@@ -567,11 +567,11 @@ namespace snapper
 	vector<string> groups;
 	if (config_info->get_value(KEY_ALLOW_GROUPS, groups))
 	{
-	    for (vector<string>::const_iterator it = groups.begin(); it != groups.end(); ++it)
+	    for (const string& group : groups)
 	    {
 		gid_t gid;
-		if (!get_group_gid(it->c_str(), gid))
-		    SN_THROW(InvalidGroupException());
+		if (!get_group_gid(group.c_str(), gid))
+		    SN_THROW(InvalidGroupException(group));
 		gids.push_back(gid);
 	    }
 	}

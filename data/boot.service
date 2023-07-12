@@ -1,6 +1,7 @@
 [Unit]
 Description=Take snapper snapshot of root on boot
 ConditionPathExists=/etc/snapper/configs/root
+After=nss-user-lookup.target
 
 [Service]
 Type=oneshot

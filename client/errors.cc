@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2016-2021] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -102,10 +102,10 @@ error_description(const DBus::ErrorException& e)
 	return _("Deleting snapshot failed.");
 
     if (name == "error.invalid_user")
-	return _("Invalid user.");
+	return sformat(_("Invalid user (%s)."), e.message());
 
     if (name == "error.invalid_group")
-	return _("Invalid group.");
+	return sformat(_("Invalid group (%s)."), e.message());
 
     if (name == "error.acl_error")
 	return _("ACL error.");

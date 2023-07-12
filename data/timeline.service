@@ -1,7 +1,7 @@
-
 [Unit]
 Description=Timeline of Snapper Snapshots
 Documentation=man:snapper(8) man:snapper-configs(5)
+After=nss-user-lookup.target
 
 [Service]
 Type=simple

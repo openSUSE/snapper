@@ -2,13 +2,13 @@
 <refentry id='snapper-configs5'>
 
   <refentryinfo>
-    <date>2022-04-21</date>
+    <date>2022-07-12</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper-configs</refentrytitle>
     <manvolnum>5</manvolnum>
-    <refmiscinfo class='date'>2022-04-21</refmiscinfo>
+    <refmiscinfo class='date'>2022-07-12</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -95,6 +95,8 @@
 	  &quot;\&quot;.</para>
 	  <para>Also see the PERMISSIONS section in
 	  <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>.</para>
+	  <para>Using network users should be avoided since it can break
+	  most commands including rollback when the network does not work.</para>
 	  <para>Default value is &quot;&quot; but &quot;root&quot; is always
 	  implicitly included.</para>
 	</listitem>
@@ -108,6 +110,8 @@
 	  &quot;\&quot;.</para>
 	  <para>Also see the PERMISSIONS section in
 	  <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>.</para>
+	  <para>Using network groups should be avoided since it can break
+	  most commands including rollback when the network does not work.</para>
 	  <para>Default value is &quot;&quot;.</para>
 	</listitem>
       </varlistentry>
