@@ -7,9 +7,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-12 09:40+0200\n"
-"PO-Revision-Date: 2023-04-25 17:14+0000\n"
+"PO-Revision-Date: 2023-07-13 16:15+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
-"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
+"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
+"\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -630,9 +631,9 @@ msgstr "Neplatné konfiguračné údaje."
 msgid "Invalid free-space value."
 msgstr "Neplatná hodnota voľného miesta."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid group (%s)."
-msgstr "Neplatná skupina."
+msgstr "Neplatná skupina (%s)."
 
 #, c-format
 msgid "Invalid machine readable format '%s'."
@@ -656,9 +657,9 @@ msgstr "Neplatný podzväzok."
 msgid "Invalid table style '%s'."
 msgstr "Neplatný štýl tabuľky '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid user (%s)."
-msgstr "Neplatný používateľ."
+msgstr "Neplatný používateľ (%s)."
 
 msgid "Invalid userdata."
 msgstr "Neplatné používateľské údaje."
