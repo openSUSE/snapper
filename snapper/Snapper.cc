@@ -47,6 +47,7 @@
 #include "snapper/Exception.h"
 #include "snapper/Hooks.h"
 #include "snapper/ComparisonImpl.h"
+#include "snapper/Systemctl.h"
 #ifdef ENABLE_BTRFS
 #include "snapper/Btrfs.h"
 #include "snapper/BtrfsUtils.h"
@@ -94,7 +95,8 @@ namespace snapper
     {
 	y2mil("Snapper constructor");
 	y2mil("libsnapper version " VERSION);
-	y2mil("config_name:" << config_name << " disable_filters:" << disable_filters);
+	y2mil("config_name:" << config_name << " root_prefix:" << root_prefix <<
+	      " disable_filters:" << disable_filters);
 
 	try
 	{
@@ -120,7 +122,7 @@ namespace snapper
 #endif
 
 	bool sync_acl;
-	if (config_info->get_value(KEY_SYNC_ACL, sync_acl) && sync_acl == true)
+	if (config_info->get_value(KEY_SYNC_ACL, sync_acl) && sync_acl)
 	    syncAcl();
 
 	y2mil("subvolume:" << config_info->get_subvolume() << " filesystem:" <<
@@ -410,6 +412,8 @@ namespace snapper
 	    SN_THROW(CreateConfigFailedException(e.what()));
 	}
 
+	bool timeline_create = false;
+
 	try
 	{
 	    SysconfigFile config(template_file);
@@ -420,6 +424,8 @@ namespace snapper
 	    config.set_value(KEY_FSTYPE, filesystem->fstype());
 
 	    config.save();
+
+	    config.get_value(KEY_TIMELINE_CREATE, timeline_create);
 	}
 	catch (const Exception& e)
 	{
@@ -448,6 +454,11 @@ namespace snapper
 	    SystemCmd cmd(RMBIN " " + quote(CONFIGS_DIR "/" + config_name));
 
 	    SN_RETHROW(e);
+	}
+
+	if (timeline_create)
+	{
+	    systemctl_enable_timeline(true);
 	}
 
 	Hooks::create_config(Hooks::Stage::POST_ACTION, subvolume, filesystem.get());
@@ -523,6 +534,8 @@ namespace snapper
 	    SN_THROW(DeleteConfigFailedException("modifying sysconfig-file failed"));
 	}
 
+	// TODO potentially disable snapper-timeline.timer
+
 	Hooks::delete_config(Hooks::Stage::POST_ACTION, snapper->subvolumeDir(), snapper->getFilesystem());
     }
 
@@ -541,8 +554,24 @@ namespace snapper
 	    raw.find(KEY_SYNC_ACL) != raw.end())
 	{
 	    bool sync_acl;
-	    if (config_info->get_value(KEY_SYNC_ACL, sync_acl) && sync_acl == true)
+	    if (config_info->get_value(KEY_SYNC_ACL, sync_acl) && sync_acl)
 		syncAcl();
+	}
+
+	if (raw.find(KEY_TIMELINE_CREATE) != raw.end())
+	{
+	    bool timeline_create;
+	    if (config_info->get_value(KEY_TIMELINE_CREATE, timeline_create))
+	    {
+		if (timeline_create)
+		{
+		    systemctl_enable_timeline(true);
+		}
+		else
+		{
+		    // TODO potentially disable snapper-timeline.timer
+		}
+	    }
 	}
     }
 

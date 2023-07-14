@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2014] Novell, Inc.
- * Copyright (c) [2020-2022] SUSE LLC
+ * Copyright (c) [2020-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -47,6 +47,8 @@
 
 #define SH_BIN "/bin/sh"
 
+#define SYSTEMCTL_BIN "/usr/bin/systemctl"
+
 
 // keys from the config files
 
@@ -57,6 +59,7 @@
 #define KEY_ALLOW_GROUPS "ALLOW_GROUPS"
 #define KEY_SYNC_ACL "SYNC_ACL"
 #define KEY_COMPRESSION "COMPRESSION"
+#define KEY_TIMELINE_CREATE "TIMELINE_CREATE"
 
 
 #endif

@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Jul 14 14:05:56 CEST 2023 - aschnell@suse.com
+
+- enable snapper-timeline.timer when adjusting config using
+  snapper (gh#openSUSE/snapper#788)
+
+-------------------------------------------------------------------
 Wed Jul 12 09:03:42 CEST 2023 - aschnell@suse.com
 
 - document disadvantage of using network users and order services

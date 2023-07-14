@@ -211,6 +211,8 @@ namespace snapper
 
 	void syncInfoDir(SDir& dir) const;
 
+	// const std::string root_prefix; // TODO ABI change
+
 	ConfigInfo* config_info = nullptr;
 
 	Filesystem* filesystem = nullptr;
