@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-12 09:40+0200\n"
-"PO-Revision-Date: 2023-02-04 20:14+0000\n"
+"PO-Revision-Date: 2023-07-14 07:15+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
-"Language-Team: Georgian <https://l10n.opensuse.org/projects/snapper/master/ka/>\n"
+"Language-Team: Georgian <https://l10n.opensuse.org/projects/snapper/master/"
+"ka/>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -614,9 +615,9 @@ msgstr ""
 msgid "Invalid free-space value."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid group (%s)."
-msgstr "არასწორი ჯგუფი."
+msgstr "არასწორი ჯგუფი (%s)."
 
 #, c-format
 msgid "Invalid machine readable format '%s'."
@@ -640,9 +641,9 @@ msgstr ""
 msgid "Invalid table style '%s'."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid user (%s)."
-msgstr "არასწორი მომხმარებელი."
+msgstr "არასწორი მომხმარებელი (%s)."
 
 msgid "Invalid userdata."
 msgstr ""
