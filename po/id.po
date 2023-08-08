@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-07-12 09:40+0200\n"
-"PO-Revision-Date: 2023-05-31 16:14+0000\n"
+"PO-Revision-Date: 2023-08-08 15:15+0000\n"
 "Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
-"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/id/>\n"
+"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/"
+"id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -620,9 +621,9 @@ msgstr "Data konfigurasi tidak valid."
 msgid "Invalid free-space value."
 msgstr "Nilai ruang bebas tidak valid."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid group (%s)."
-msgstr "Grup tidak valid."
+msgstr "Grup tidak valid (%s)."
 
 #, c-format
 msgid "Invalid machine readable format '%s'."
@@ -646,9 +647,9 @@ msgstr "Subvolume tidak valid."
 msgid "Invalid table style '%s'."
 msgstr "Gaya tabel '%s' tidak valid."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid user (%s)."
-msgstr "Pengguna tidak valid."
+msgstr "Pengguna tidak valid (%s)."
 
 msgid "Invalid userdata."
 msgstr "Data pengguna tidak valid."
