@@ -405,23 +405,27 @@ namespace snapper
 	static const char letters[] = "abcdefghijklmnopqrstuvwxyz" "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	    "0123456789";
 
+	const size_t num_letters = strlen(letters);
+
 	static uint64_t value;
 
 	struct timeval tv;
 	gettimeofday(&tv, NULL);
 	value += ((uint64_t) tv.tv_usec << 16) ^ tv.tv_sec;
 
-	unsigned int attempts = 62 * 62 * 62;
+	unsigned int attempts = num_letters * num_letters * num_letters;
 
 	string::size_type length = name.size();
+
+	assert(length >= 6);
 
 	for (unsigned int count = 0; count < attempts; value += 7777, ++count)
 	{
 	    uint64_t v = value;
 	    for (string::size_type i = length - 6; i < length; ++i)
 	    {
-		name[i] = letters[v % 62];
-		v /= 62;
+		name[i] = letters[v % num_letters];
+		v /= num_letters;
 	    }
 
 	    int fd = open(name, O_RDWR | O_CREAT | O_EXCL | O_CLOEXEC, S_IRUSR | S_IWUSR);
