@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Aug 10 09:20:42 CEST 2023 - aschnell@suse.com
+
+- relax access to info.xml files (gh#openSUSE/snapper#279)
+
+-------------------------------------------------------------------
 Fri Jul 14 14:05:56 CEST 2023 - aschnell@suse.com
 
 - enable snapper-timeline.timer when adjusting config using

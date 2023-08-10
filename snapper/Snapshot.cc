@@ -556,6 +556,8 @@ namespace snapper
 	    SN_THROW(IOErrorException(sformat("SDir::mktemp failed, errno:%d (%s)", errno,
 					      stringerror(errno).c_str())));
 
+	fchmod(fd, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+
 	try
 	{
 	    xml.save(fd);

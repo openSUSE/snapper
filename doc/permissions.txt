@@ -1,0 +1,34 @@
+
+Distinguish to modi operandi:
+
+With DBus:
+
+- Access to snapshot metadata (info.xml) and filelist is takes care of
+  by snapperd.
+
+Without DBus:
+
+- In general only works when snapper is run by root.
+
+
+File and directory permissions:
+
+The .snapshots directory must be readable by those allowed to work
+with the snapper config. This is required even though the DBus
+interface is used since some operations (e.g. diff and undochange) are
+always done by snapper (not snapperd).
+
+snapper creates .snapshots with access only allowed for root.
+
+snapper can setup ACLs for access for .snapshots.
+
+
+Giving users access to work with a snapper config may allow them to
+see directory and file content in areas they would otherwise not be
+allowed to see.
+
+
+info.xml may be readable by all. Only writeable by root.
+
+filelists may be readable by all. Only writeable by root.
+
