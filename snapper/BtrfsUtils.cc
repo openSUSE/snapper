@@ -362,9 +362,20 @@ namespace snapper
 
 #endif
 
+#ifdef HAVE_LIBBTRFSUTIL
+	subvolid_t
+	get_id(int fd)
+	{
+	    enum btrfs_util_error err;
+	    subvolid_t id;
 
-#ifdef HAVE_LIBBTRFS
+	    err = btrfs_util_subvolume_id_fd(fd, &id);
+	    if (err)
+		throw runtime_error_with_errno("btrfs_util_subvolume_id_fd() failed", errno);
 
+	    return id;
+	}
+#elif defined(HAVE_LIBBTRFS)
 	subvolid_t
 	get_id(int fd)
 	{
@@ -378,8 +389,10 @@ namespace snapper
 
 	    return args.treeid;
 	}
+#endif
 
 
+#ifdef HAVE_LIBBTRFS
 	bool
 	does_subvolume_exist(int fd, subvolid_t subvolid)
 	{

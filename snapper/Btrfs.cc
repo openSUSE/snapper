@@ -402,13 +402,13 @@ namespace snapper
 
 	try
 	{
-#ifdef HAVE_LIBBTRFS
+#if defined(HAVE_LIBBTRFS) || defined(HAVE_LIBBTRFSUTIL)
 	    subvolid_t subvolid = get_id(openSnapshotDir(num).fd());
 #endif
 
 	    delete_subvolume(info_dir.fd(), "snapshot");
 
-#ifdef HAVE_LIBBTRFS
+#if defined(HAVE_LIBBTRFS) || defined(HAVE_LIBBTRFSUTIL)
 	    deleted_subvolids.push_back(subvolid);
 #endif
 
