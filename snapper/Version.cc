@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2013 Novell, Inc.
  * Copyright (c) 2023 SUSE LLC
  *
  * All Rights Reserved.
@@ -21,31 +20,16 @@
  */
 
 
-#ifndef SNAPPER_VERSION_H
-#define SNAPPER_VERSION_H
-
-
-#define LIBSNAPPER_VERSION_STRING "@LIBVERSION@"
-
-#define LIBSNAPPER_MAJOR "@LIBVERSION_MAJOR@"
-#define LIBSNAPPER_MINOR "@LIBVERSION_MINOR@"
-#define LIBSNAPPER_PATCHLEVEL "@LIBVERSION_PATCHLEVEL@"
-
-#define LIBSNAPPER_VERSION_AT_LEAST(major, minor)                                            \
-    ((LIBSNAPPER_VERSION_MAJOR > (major)) ||                                                 \
-     (LIBSNAPPER_VERSION_MAJOR == (major) && LIBSNAPPER_VERSION_MINOR >= (minor)))
+#include "snapper/Version.h"
 
 
 namespace snapper
 {
 
-    /**
-     * Return LIBSNAPPER_VERSION_STRING libsnapper was compiled with. May differ
-     * from the define (compile time vs. link time).
-     */
-    const char* get_libversion_string();
+    const char*
+    get_libversion_string()
+    {
+	return LIBSNAPPER_VERSION_STRING;
+    }
 
 }
-
-
-#endif

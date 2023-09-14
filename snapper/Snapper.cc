@@ -48,6 +48,7 @@
 #include "snapper/Hooks.h"
 #include "snapper/ComparisonImpl.h"
 #include "snapper/Systemctl.h"
+#include "snapper/Version.h"
 #ifdef ENABLE_BTRFS
 #include "snapper/Btrfs.h"
 #include "snapper/BtrfsUtils.h"
@@ -94,7 +95,8 @@ namespace snapper
 	: snapshots(this)
     {
 	y2mil("Snapper constructor");
-	y2mil("libsnapper version " VERSION);
+	y2mil("snapper version " VERSION);
+	y2mil("libsnapper version " LIBSNAPPER_VERSION_STRING);
 	y2mil("config_name:" << config_name << " root_prefix:" << root_prefix <<
 	      " disable_filters:" << disable_filters);
 
