@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) 2022 SUSE LLC
+ * Copyright (c) [2022-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -25,10 +25,10 @@
 
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <string.h>
+#include <cstring>
 #include <unistd.h>
 #include <fnmatch.h>
-#include <errno.h>
+#include <cerrno>
 #include <fcntl.h>
 #include <locale>
 #include <boost/algorithm/string.hpp>
@@ -279,7 +279,7 @@ namespace snapper
     File::createParentDirectories(const string& path) const
     {
 	string::size_type pos = path.rfind('/');
-	if (pos == string::npos)
+	if (pos == 0 || pos == string::npos)
 	    return true;
 
 	const string& leading_path = path.substr(0, pos);
