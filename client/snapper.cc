@@ -23,13 +23,14 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 #include <iostream>
 
 #include <snapper/Snapper.h>
 #include <snapper/SnapperTmpl.h>
 #include <snapper/Enum.h>
+#include <snapper/Version.h>
 
 #include "utils/text.h"
 #include "utils/Table.h"
@@ -178,6 +179,10 @@ main(int argc, char** argv)
 	if (global_options.version())
 	{
 	    cout << "snapper " << Snapper::compileVersion() << endl;
+	    cout << "libsnapper " << LIBSNAPPER_VERSION_STRING;
+	    if (strcmp(LIBSNAPPER_VERSION_STRING, get_libversion_string()) != 0)
+		cout << " (" << get_libversion_string() << ")";
+	    cout << '\n';
 	    cout << "flags " << Snapper::compileFlags() << endl;
 	    exit(EXIT_SUCCESS);
 	}

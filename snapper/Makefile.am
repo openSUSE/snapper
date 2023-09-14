@@ -31,7 +31,7 @@ libsnapper_la_SOURCES =					\
 	SnapperTmpl.h					\
 	SnapperTypes.h					\
 	SnapperDefines.h				\
-	Version.h
+	Version.cc		Version.h
 
 if ENABLE_BTRFS
 libsnapper_la_SOURCES +=				\
