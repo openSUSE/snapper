@@ -2,6 +2,7 @@
 Thu Sep 14 15:45:53 CEST 2023 - aschnell@suse.com
 
 - fixed creating files in root dir (gh#openSUSE/snapper#168)
+- version 0.10.6
 
 -------------------------------------------------------------------
 Thu Aug 10 09:20:42 CEST 2023 - aschnell@suse.com
