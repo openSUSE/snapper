@@ -13,7 +13,6 @@ CMD_BTRFS="/sbin/btrfs"
 CMD_SNAPPER="/usr/bin/snapper"
 CMD_EGREP="grep -E"
 CMD_PAM_CONFIG="/usr/sbin/pam-config"
-CMD_SED="sed"
 CMD_USERADD="useradd"
 CMD_USERDEL="userdel -r"
 CMD_CHOWN="chown"
@@ -47,7 +46,7 @@ if [ ${DRYRUN} == 0 ] ; then
 	${CMD_BTRFS} subvol create ${HOMEHOME}/${MYUSER}
 	# Create snapper config for USER
 	${CMD_SNAPPER} -c home_${MYUSER} create-config ${HOMEHOME}/${MYUSER}
-	${CMD_SED} -i -e "s/ALLOW_USERS=\"\"/ALLOW_USERS=\"${MYUSER}\"/g" ${SNAPPERCFGDIR}/home_${MYUSER}
+	${CMD_SNAPPER} -c home_${MYUSER} set-config ALLOW_USERS=${MYUSER}
 	# Create USER
 	${CMD_USERADD} ${MYUSER}
 	# Give USER skeleton files
