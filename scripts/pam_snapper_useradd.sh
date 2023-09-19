@@ -14,13 +14,15 @@ CMD_SNAPPER="/usr/bin/snapper"
 CMD_EGREP="grep -E"
 CMD_PAM_CONFIG="/usr/sbin/pam-config"
 CMD_SED="sed"
-CMD_USERADD="useradd -m"
+CMD_USERADD="useradd"
 CMD_USERDEL="userdel -r"
 CMD_CHOWN="chown"
 CMD_CHMOD="chmod"
+CMD_CPA="cp -a"
 #
 SNAPPERCFGDIR="/etc/snapper/configs"
 HOMEHOME=/home
+SKELLDIR=/etc/skel
 DRYRUN=1
 MYUSER=$1
 MYGROUP=$2
@@ -48,10 +50,12 @@ if [ ${DRYRUN} == 0 ] ; then
 	${CMD_SED} -i -e "s/ALLOW_USERS=\"\"/ALLOW_USERS=\"${MYUSER}\"/g" ${SNAPPERCFGDIR}/home_${MYUSER}
 	# Create USER
 	${CMD_USERADD} ${MYUSER}
+	# Give USER skeleton files
+	${CMD_CPA} ${SKELLDIR}/. ${HOMEHOME}/${MYUSER}
 	# yast users add username=${MYUSER} home=/home/${MYUSER} password=""
 	# !! IMPORTANT !!
 	# chown USER's home directory
-	${CMD_CHOWN} ${MYUSER}.${MYGROUP} ${HOMEHOME}/${MYUSER}
+	${CMD_CHOWN} ${MYUSER}:${MYGROUP} ${HOMEHOME}/${MYUSER}
 	${CMD_CHMOD} 755 ${HOMEHOME}/${MYUSER}/.snapshots
 else
 	echo -e "#"
