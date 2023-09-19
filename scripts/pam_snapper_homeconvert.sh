@@ -13,7 +13,6 @@ CMD_BTRFS="/sbin/btrfs"
 CMD_SNAPPER="/usr/bin/snapper"
 CMD_EGREP="grep -E"
 CMD_PAM_CONFIG="/usr/sbin/pam-config"
-CMD_SED="sed"
 CMD_USERADD="useradd -m"
 CMD_USERDEL="userdel -r"
 CMD_CHOWN="chown"
@@ -137,7 +136,7 @@ function createsnapperconfig () {
 		fi
 		echo "Create snapper configuration for user ${MYUSER}"
 		${CMD_SNAPPER} -c home_${MYUSER} create-config ${HOMEHOME}/${MYUSER}
-		${CMD_SED} -i -e "s/ALLOW_USERS=\"\"/ALLOW_USERS=\"${MYUSER}\"/g" ${SNAPPERCFGDIR}/home_${MYUSER}
+		${CMD_SNAPPER} -c home_${MYUSER} set-config ALLOW_USERS=${MYUSER}
 	fi
 	${CMD_CHMOD} 755 ${HOMEHOME}/${MYUSER}/.snapshots
 }
