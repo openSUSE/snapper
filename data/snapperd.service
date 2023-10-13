@@ -14,3 +14,4 @@ PrivateNetwork=true
 ProtectHostname=true
 RestrictAddressFamilies=AF_UNIX
 RestrictRealtime=true
+PrivateMounts=no

@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Oct 13 08:56:18 CEST 2023 - aschnell@suse.com
+
+- fix diff for lvm based configs (bsc#1216191)
+
+-------------------------------------------------------------------
 Thu Sep 14 15:45:53 CEST 2023 - aschnell@suse.com
 
 - fixed creating files in root dir (gh#openSUSE/snapper#168)

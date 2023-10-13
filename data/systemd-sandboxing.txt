@@ -14,8 +14,8 @@ ProtectKernelModules=true breaks LVM.
 
 CapabilityBoundingSet=CAP_SYS_NICE is also needed by LVM.
 
-ProtectHome=true, ProtectControlGroups=true, ProtectKernelLogs=true
-and ProtectKernelTunables=true breaks diff for LVM.
+ProtectHome=true, ProtectControlGroups=true, ProtectKernelLogs=true,
+ProtectKernelTunables=true and PrivateMounts=yes breaks diff for LVM.
 
 SystemCallFilter=@mount breaks almost everything with older systemd,
 e.g. on SLE15 SP1.
