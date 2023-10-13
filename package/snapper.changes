@@ -2,6 +2,7 @@
 Fri Oct 13 08:56:18 CEST 2023 - aschnell@suse.com
 
 - fix diff for lvm based configs (bsc#1216191)
+- make SystemCmd take vector of strings
 
 -------------------------------------------------------------------
 Thu Sep 14 15:45:53 CEST 2023 - aschnell@suse.com

@@ -72,7 +72,7 @@ namespace snapper
 
 	LvmCapabilities();
 
-	// empty or " -K" if lvm supports ignore activation skip flag
+	// empty or "--ignoreactivationskip" if lvm supports ignore activation skip flag
 	string ignoreactivationskip;
 
     };

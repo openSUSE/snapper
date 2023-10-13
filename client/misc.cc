@@ -205,7 +205,7 @@ Differ::run(const string& f1, const string& f2) const
 	tmp += " " + extensions;
     tmp += " " + quote(f1) + " " + quote(f2);
 
-    SystemCmd cmd(tmp);
+    SystemCmd cmd({ SH_BIN, "-c", tmp });
 
     for (const string& line : cmd.get_stdout())
 	cout << line << endl;

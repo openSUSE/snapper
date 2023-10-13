@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) 2022 SUSE LLC
+ * Copyright (c) [2022-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -53,10 +53,9 @@ namespace snapper
 	    std::sort(scripts.begin(), scripts.end());
 	    for (const string& script : scripts)
 	    {
-		string cmd_line = dir.fullname(script);
-		for (const string& arg : args)
-		    cmd_line += " " + quote(arg);
-		SystemCmd cmd(cmd_line);
+		SystemCmd::Args cmd_args = { dir.fullname(script) };
+		cmd_args << args;
+		SystemCmd cmd(cmd_args);
 	    }
 	}
 	catch (const Exception& e)
@@ -185,7 +184,7 @@ namespace snapper
 
 	if (subvolume == "/" && filesystem->fstype() == "btrfs" && access(GRUB_SCRIPT, X_OK) == 0)
 	{
-	    SystemCmd cmd(string(GRUB_SCRIPT) + " " + option);
+	    SystemCmd cmd({ GRUB_SCRIPT, option });
 	}
 #endif
     }
@@ -201,7 +200,7 @@ namespace snapper
 	// Fate#319108
 	if (access(ROLLBACK_SCRIPT, X_OK) == 0)
 	{
-	    SystemCmd cmd(string(ROLLBACK_SCRIPT) + " " + old_root + " " + new_root);
+	    SystemCmd cmd({ ROLLBACK_SCRIPT, old_root, new_root });
 	}
 #endif
     }

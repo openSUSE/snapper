@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2014] Novell, Inc.
- * Copyright (c) [2018-2021] SUSE LLC
+ * Copyright (c) [2018-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -25,10 +25,10 @@
 #define SNAPPER_SYSTEM_CMD_H
 
 #include <poll.h>
-#include <stdio.h>
-
+#include <cstdio>
 #include <string>
 #include <vector>
+#include <initializer_list>
 #include <boost/noncopyable.hpp>
 
 
@@ -38,26 +38,55 @@ namespace snapper
     using std::vector;
 
 
-    class SystemCmd : private boost::noncopyable
+    class SystemCmd final : private boost::noncopyable
     {
     public:
 
-	SystemCmd(const string& Command_Cv, bool log_output = true);
 
-	virtual ~SystemCmd();
+	/**
+	 * Class holding command with arguments.
+	 */
+	class Args
+	{
+	public:
+
+	    Args(std::initializer_list<string> init)
+		: values(init) {}
+
+	    const vector<string>& get_values() const { return values; }
+
+	    Args& operator<<(const char* arg) { values.push_back(arg); return *this; }
+	    Args& operator<<(const string& arg) { values.push_back(arg); return *this; }
+
+	    Args& operator<<(const vector<string>& args)
+		{ values.insert(values.end(), args.begin(), args.end()); return *this; }
+
+	private:
+
+	    vector<string> values;
+
+	};
+
+
+	SystemCmd(const Args& args, bool log_output = true);
+
+	~SystemCmd();
 
     private:
 
 	enum OutputStream { IDX_STDOUT, IDX_STDERR };
-
-	int execute(const string& Command_Cv);
 
     public:
 
 	const vector<string>& get_stdout() const { return Lines_aC[IDX_STDOUT]; }
 	const vector<string>& get_stderr() const { return Lines_aC[IDX_STDERR]; }
 
-	string cmd() const { return lastCmd; }
+	/**
+	 * Command as a simple string (without quoting of args - so only for display and
+	 * logging).
+	 */
+	string cmd() const;
+
 	int retcode() const { return Ret_i; }
 
     private:
@@ -76,7 +105,7 @@ namespace snapper
 
 	void invalidate();
 	void closeOpenFds() const;
-	int doExecute(const string& Cmd_Cv);
+	void execute();
 	bool doWait(int& Ret_ir);
 	void checkOutput();
 	void getUntilEOF(FILE* File_Cr, vector<string>& Lines_Cr, bool& NewLineSeen_br,
@@ -88,26 +117,56 @@ namespace snapper
 
 	void logOutput() const;
 
+
 	/**
-	 * Constructs the environment for the child process.
+	 * Class to tempararily hold copies for execle() and execvpe().
+	 */
+	class TmpForExec
+	{
+	public:
+
+	    TmpForExec(const vector<char*>& values) : values(values) {}
+	    ~TmpForExec();
+
+	    char* const * get() const { return &values[0]; }
+
+	private:
+
+	    vector<char*> values;
+
+	};
+
+
+	/**
+	 * Constructs the args for the child process.
 	 *
 	 * Must not be called after exec since allocating the memory
 	 * for the vector is not allowed then (in a multithreaded
 	 * program), see fork(2) and signal-safety(7). So simply call
 	 * it right before fork.
 	 */
-	vector<const char*> make_env() const;
+	TmpForExec make_args() const;
+
+	/**
+	 * Constructs the environment for the child process.
+	 *
+	 * Same not as for make_args().
+	 */
+	TmpForExec make_env() const;
+
+
+	const Args args;
+	const bool log_output;
 
 	FILE* File_aC[2];
 	vector<string> Lines_aC[2];
 	bool NewLineSeen_ab[2];
-	bool log_output;
-	string lastCmd;
-	int Ret_i;
-	int Pid_i;
+	int Ret_i = 0;
+	int Pid_i = 0;
 	struct pollfd pfds[2];
 
 	static const unsigned line_limit = 50;
+
     };
 
 
