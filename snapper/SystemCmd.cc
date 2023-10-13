@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2011] Novell, Inc.
- * Copyright (c) [2018-2021] SUSE LLC
+ * Copyright (c) [2018-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -21,12 +21,11 @@
  */
 
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <unistd.h>
-#include <errno.h>
+#include <cerrno>
 #include <fcntl.h>
 #include <sys/wait.h>
-#include <string>
 #include <boost/algorithm/string.hpp>
 
 extern char **environ;
@@ -35,6 +34,7 @@ extern char **environ;
 #include "snapper/AppUtil.h"
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
+#include "snapper/Exception.h"
 
 
 namespace snapper
@@ -42,13 +42,24 @@ namespace snapper
     using namespace std;
 
 
-    SystemCmd::SystemCmd(const string& Command_Cv, bool log_output)
-	: log_output(log_output)
-{
-    y2mil("constructor SystemCmd:\"" << Command_Cv << "\"");
-    init();
-    execute( Command_Cv );
-}
+    SystemCmd::SystemCmd(const Args& args, bool log_output)
+	: args(args), log_output(log_output)
+    {
+	y2mil("constructor SystemCmd: " << cmd());
+
+	if (args.get_values().empty())
+            SN_THROW(Exception("args empty"));
+
+	init();
+	execute();
+    }
+
+
+    string
+    SystemCmd::cmd() const
+    {
+	return boost::join(args.get_values(), " ");
+    }
 
 
 void SystemCmd::init()
@@ -78,20 +89,9 @@ SystemCmd::closeOpenFds() const
     }
 
 
-int
-SystemCmd::execute(const string& Cmd_Cv)
-{
-    y2mil("SystemCmd Executing:\"" << Cmd_Cv << "\"");
-    return doExecute(Cmd_Cv);
-}
-
-
-int
-SystemCmd::doExecute( const string& Cmd )
+    void
+    SystemCmd::execute()
     {
-    lastCmd = Cmd;
-    y2deb("Cmd:" << Cmd);
-
     StopWatch stopwatch;
 
     File_aC[IDX_STDERR] = File_aC[IDX_STDOUT] = NULL;
@@ -123,7 +123,8 @@ SystemCmd::doExecute( const string& Cmd )
 	    }
 	y2deb("sout:" << pfds[0].fd << " serr:" << pfds[1].fd);
 
-	const vector<const char*> env = make_env();
+	const TmpForExec args_p(make_args());
+	const TmpForExec env_p(make_env());
 
 	switch( (Pid_i=fork()) )
 	    {
@@ -144,9 +145,11 @@ SystemCmd::doExecute( const string& Cmd )
 		    {
 		    y2err("close child failed errno:" << errno << " (" << stringerror(errno) << ")");
 		    }
+
 		closeOpenFds();
-		Ret_i = execle(SH_BIN, SH_BIN, "-c", Cmd.c_str(), nullptr, &env[0]);
-		y2err("SHOULD NOT HAPPEN \"" SH_BIN "\" Ret:" << Ret_i);
+
+		Ret_i = execvpe(args.get_values()[0].c_str(), args_p.get(), env_p.get());
+		y2err("SHOULD NOT HAPPEN execvpe returned ret=" << Ret_i << " errno=" << errno);
 		break;
 	    case -1:
 		Ret_i = -1;
@@ -184,13 +187,12 @@ SystemCmd::doExecute( const string& Cmd )
 	}
     if( Ret_i==-127 || Ret_i==-1 )
 	{
-	y2err("system (\"" << Cmd << "\") = " << Ret_i);
+	    y2err("system (\"" << cmd() << "\") = " << Ret_i);
 	}
     checkOutput();
     y2mil("system() Returns:" << Ret_i);
     if (Ret_i != 0 && log_output)
 	logOutput();
-    return Ret_i;
     }
 
 
@@ -230,14 +232,14 @@ SystemCmd::doWait( int& Ret_ir )
 	{
 	    Ret_ir = WEXITSTATUS(Status_ii);
 	    if (Ret_ir == 126)
-		y2err("command \"" << lastCmd << "\" not executable");
+		y2err("command \"" << cmd() << "\" not executable");
 	    else if (Ret_ir == 127)
-		y2err("command \"" << lastCmd << "\" not found");
+		y2err("command \"" << cmd() << "\" not found");
 	}
 	else
 	{
 	    Ret_ir = -127;
-	    y2err("command \"" << lastCmd << "\" failed");
+	    y2err("command \"" << cmd() << "\" failed");
 	}
 	}
 
@@ -435,24 +437,47 @@ SystemCmd::logOutput() const
 }
 
 
-    vector<const char*>
+    SystemCmd::TmpForExec::~TmpForExec()
+    {
+	for (char* v : values)
+	    free(v);
+    }
+
+
+    SystemCmd::TmpForExec
+    SystemCmd::make_args() const
+    {
+	vector<char*> ret;
+
+	for (const string& v : args.get_values())
+	{
+	    ret.push_back(strdup(v.c_str()));
+	}
+
+	ret.push_back(nullptr);
+
+	return ret;
+    }
+
+
+    SystemCmd::TmpForExec
     SystemCmd::make_env() const
     {
-	vector<const char*> env;
+	vector<char*> ret;
 
 	for (char** v = environ; *v != NULL; ++v)
 	{
 	    if (strncmp(*v, "LC_ALL=", strlen("LC_ALL=")) != 0 &&
 		strncmp(*v, "LANGUAGE=", strlen("LANGUAGE=")) != 0)
-		env.push_back(*v);
+		ret.push_back(strdup(*v));
 	}
 
-	env.push_back("LC_ALL=C");
-	env.push_back("LANGUAGE=C");
+	ret.push_back(strdup("LC_ALL=C"));
+	ret.push_back(strdup("LANGUAGE=C"));
 
-	env.push_back(nullptr);
+	ret.push_back(nullptr);
 
-	return env;
+	return ret;
     }
 
 

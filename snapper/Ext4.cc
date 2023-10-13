@@ -91,7 +91,7 @@ namespace snapper
 	int r1 = mkdir((subvolume + "/.snapshots").c_str(), 0700);
 	if (r1 == 0)
 	{
-	    SystemCmd cmd1(CHATTRBIN " +x " + quote(subvolume + "/.snapshots"));
+	    SystemCmd cmd1({ CHATTRBIN, "+x", subvolume + "/.snapshots" });
 	    if (cmd1.retcode() != 0)
 		throw CreateConfigFailedException("chattr failed");
 	}
@@ -104,7 +104,7 @@ namespace snapper
 	int r2 = mkdir((subvolume + "/.snapshots/.info").c_str(), 0700);
 	if (r2 == 0)
 	{
-	    SystemCmd cmd2(CHATTRBIN " -x " + quote(subvolume + "/.snapshots/.info"));
+	    SystemCmd cmd2({ CHATTRBIN, "-x", subvolume + "/.snapshots/.info" });
 	    if (cmd2.retcode() != 0)
 		throw CreateConfigFailedException("chattr failed");
 	}
@@ -174,11 +174,11 @@ namespace snapper
 	if (num_parent != 0 || !read_only)
 	    throw std::logic_error("not implemented");
 
-	SystemCmd cmd1(TOUCHBIN " " + quote(snapshotFile(num)));
+	SystemCmd cmd1({ TOUCHBIN, snapshotFile(num) });
 	if (cmd1.retcode() != 0)
 	    throw CreateSnapshotFailedException();
 
-	SystemCmd cmd2(CHSNAPBIN " +S " + quote(snapshotFile(num)));
+	SystemCmd cmd2({ CHSNAPBIN, "+S", snapshotFile(num) });
 	if (cmd2.retcode() != 0)
 	    throw CreateSnapshotFailedException();
     }
@@ -187,7 +187,7 @@ namespace snapper
     void
     Ext4::deleteSnapshot(unsigned int num) const
     {
-	SystemCmd cmd(CHSNAPBIN " -S " + quote(snapshotFile(num)));
+	SystemCmd cmd({ CHSNAPBIN, "-S", snapshotFile(num) });
 	if (cmd.retcode() != 0)
 	    throw DeleteSnapshotFailedException();
     }
@@ -212,7 +212,7 @@ namespace snapper
 	if (isSnapshotMounted(num))
 	    return;
 
-	SystemCmd cmd1(CHSNAPBIN " +n " + quote(snapshotFile(num)));
+	SystemCmd cmd1({ CHSNAPBIN, "+n", snapshotFile(num) });
 	if (cmd1.retcode() != 0)
 	    throw MountSnapshotFailedException();
 
@@ -237,7 +237,7 @@ namespace snapper
 	// if (!umount(snapshotDir(num)))
 	// throw UmountSnapshotFailedException();
 
-	SystemCmd cmd1(CHSNAPBIN " -n " + quote(snapshotFile(num)));
+	SystemCmd cmd1({ CHSNAPBIN, "-n", snapshotFile(num) });
 	if (cmd1.retcode() != 0)
 	    throw UmountSnapshotFailedException();
 

@@ -453,7 +453,7 @@ namespace snapper
 
 	    sysconfig.save();
 
-	    SystemCmd cmd(RMBIN " " + quote(CONFIGS_DIR "/" + config_name));
+	    SystemCmd cmd({ RMBIN, "--", CONFIGS_DIR "/" + config_name });
 
 	    SN_RETHROW(e);
 	}
@@ -512,7 +512,7 @@ namespace snapper
 	    SN_THROW(DeleteConfigFailedException("deleting snapshot failed"));
 	}
 
-	SystemCmd cmd1(RMBIN " " + quote(CONFIGS_DIR "/" + config_name));
+	SystemCmd cmd1({ RMBIN, "--", CONFIGS_DIR "/" + config_name });
 	if (cmd1.retcode() != 0)
 	{
 	    SN_THROW(DeleteConfigFailedException("deleting config-file failed"));

@@ -483,7 +483,7 @@ namespace snapper
 
     LvmCapabilities::LvmCapabilities()
     {
-	SystemCmd cmd(string(LVMBIN " version"));
+	SystemCmd cmd({ LVMBIN, "version" });
 
 	if (cmd.retcode() != 0 || cmd.get_stdout().empty())
 	{
@@ -510,7 +510,7 @@ namespace snapper
 		lvm_version version(maj, min, rev);
 
 		if (version >= lvm_version(2, 2, 99))
-		    ignoreactivationskip = " -K";
+		    ignoreactivationskip = "--ignoreactivationskip";
 	    }
 	}
     }

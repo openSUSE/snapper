@@ -33,8 +33,12 @@ namespace snapper
 	// When run in a chroot system the enable command works but the start command
 	// fails (which is likely what we want).
 
-	SystemCmd cmd(SYSTEMCTL_BIN " " + string(enable ? "enable " : "disable ") +
-		      string(now ? "--now " : "") + name);
+	SystemCmd::Args cmd_args = { SYSTEMCTL_BIN, enable ? "enable" : "disable" };
+	if (now)
+	    cmd_args << "--now";
+	cmd_args << name;
+
+	SystemCmd cmd(cmd_args);
     }
 
 
