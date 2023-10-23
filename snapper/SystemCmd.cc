@@ -78,17 +78,6 @@ SystemCmd::~SystemCmd()
     }
 
 
-void
-SystemCmd::closeOpenFds() const
-    {
-    int max_fd = getdtablesize();
-    for( int fd = 3; fd < max_fd; fd++ )
-	{
-	close(fd);
-	}
-    }
-
-
     void
     SystemCmd::execute()
     {
@@ -123,38 +112,50 @@ SystemCmd::closeOpenFds() const
 	    }
 	y2deb("sout:" << pfds[0].fd << " serr:" << pfds[1].fd);
 
+	const int max_fd = getdtablesize();
+
 	const TmpForExec args_p(make_args());
 	const TmpForExec env_p(make_env());
 
 	switch( (Pid_i=fork()) )
 	    {
 	    case 0:
+	    {
+		// Do not use exit() here. Use _exit() instead.
+
+		// Only use async‐signal‐safe functions here, see fork(2) and
+		// signal-safety(7).
+
 		if( dup2( sout[1], STDOUT_FILENO )<0 )
-		    {
-		    y2err("dup2 stdout child failed errno:" << errno << " (" << stringerror(errno) << ")");
-		    }
+		    _exit(125);
 		if( dup2( serr[1], STDERR_FILENO )<0 )
-		    {
-		    y2err("dup2 stderr child failed errno:" << errno << " (" << stringerror(errno) << ")");
-		    }
+		    _exit(125);
 		if( close( sout[0] )<0 )
-		    {
-		    y2err("close child failed errno:" << errno << " (" << stringerror(errno) << ")");
-		    }
+		    _exit(125);
 		if( close( serr[0] )<0 )
-		    {
-		    y2err("close child failed errno:" << errno << " (" << stringerror(errno) << ")");
-		    }
+		    _exit(125);
 
-		closeOpenFds();
+		for (int fd = 3; fd < max_fd; ++fd)
+		    close(fd);
 
-		Ret_i = execvpe(args.get_values()[0].c_str(), args_p.get(), env_p.get());
-		y2err("SHOULD NOT HAPPEN execvpe returned ret=" << Ret_i << " errno=" << errno);
-		break;
+		execvpe(args.get_values()[0].c_str(), args_p.get(), env_p.get());
+
+		if (errno == ENOENT)
+		    _exit(127);
+		if (errno == ENOEXEC || errno == EACCES || errno == EISDIR)
+		    _exit(126);
+		_exit(125);
+	    }
+	    break;
+
 	    case -1:
+	    {
 		Ret_i = -1;
-		break;
+	    }
+	    break;
+
 	    default:
+	    {
 		if( close( sout[1] )<0 )
 		    {
 		    y2err("close parent failed errno:" << errno << " (" << stringerror(errno) << ")");
@@ -177,8 +178,8 @@ SystemCmd::closeOpenFds() const
 
 		doWait( Ret_i );
 		y2mil("stopwatch " << stopwatch << " for \"" << cmd() << "\"");
-
-		break;
+	    }
+	    break;
 	    }
 	}
     else
