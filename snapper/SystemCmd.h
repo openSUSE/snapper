@@ -25,6 +25,7 @@
 #define SNAPPER_SYSTEM_CMD_H
 
 #include <poll.h>
+#include <sys/types.h>
 #include <cstdio>
 #include <string>
 #include <vector>
@@ -158,7 +159,7 @@ namespace snapper
 	vector<string> Lines_aC[2];
 	bool NewLineSeen_ab[2];
 	int Ret_i = 0;
-	int Pid_i = 0;
+	pid_t Pid_i = 0;
 	struct pollfd pfds[2];
 
 	static const unsigned line_limit = 50;
