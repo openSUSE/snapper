@@ -26,6 +26,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <libxml/tree.h>
+#include <libxml/xmlerror.h>
 #include <string>
 #include <boost/thread.hpp>
 
