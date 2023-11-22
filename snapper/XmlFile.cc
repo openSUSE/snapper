@@ -23,6 +23,7 @@
 
 #include <cstring>
 #include <unistd.h>
+#include <libxml/parser.h>
 
 #include "snapper/Exception.h"
 #include "snapper/XmlFile.h"
