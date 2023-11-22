@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Nov 22 16:15:37 CET 2023 - aschnell@suse.com
+
+- fix building with libxml 2.12.0 (gh#openSUSE/snapper#848)
+
+-------------------------------------------------------------------
 Fri Oct 13 08:56:18 CEST 2023 - aschnell@suse.com
 
 - fix diff for lvm based configs (bsc#1216191)
