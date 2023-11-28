@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2020-05-26 14:40+0000\n"
 "Last-Translator: Jonas Svensson <jonas@ekhorva.se>\n"
 "Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/sv/>\n"
@@ -458,6 +458,11 @@ msgid "Cleanup"
 msgstr "Upprensning"
 
 # SLE12
+#, fuzzy, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr "Det gick inte att öppna filen %s."
+
+# SLE12
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Kommandot cleanup måste ha ett argument."
 
@@ -904,6 +909,11 @@ msgstr ""
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Se 'man snapper' för mer instruktioner."
+
+# SLE12
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr "Det gick inte att öppna filen %s."
 
 # SLE12
 #, c-format

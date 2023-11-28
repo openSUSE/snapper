@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2008-01-04 08:58+0100\n"
 "Last-Translator: i18n@suse.de\n"
 "Language-Team: Thai <i18n@suse.de>\n"
@@ -397,6 +397,10 @@ msgstr ""
 msgid "Cleanup"
 msgstr "ล้างค่า"
 
+#, fuzzy, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr "การสร้างระบบแฟ้มล้มเหลว"
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr ""
 
@@ -783,6 +787,10 @@ msgstr ""
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "กำลังหาข้อมูลของหน่วยความจำ..."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr "การสร้างระบบแฟ้มล้มเหลว"
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."

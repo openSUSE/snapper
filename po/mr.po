@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2005-07-29 15:37+0530\n"
 "Last-Translator: \"( अमेय पाळंदे ) Ameya Palande\" <2ameya@gmail.com>\n"
 "Language-Team: Marathi <i18n@suse.de>\n"
@@ -379,6 +379,10 @@ msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
 msgid "Cleanup"
+msgstr ""
+
+#, c-format
+msgid "Client-side plugin '%s' failed."
 msgstr ""
 
 #, fuzzy
@@ -789,6 +793,10 @@ msgstr ""
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "अधिक माहितीसाठी `%s --हेल्प' किंवा `%s --यूसेजचा' प्रयत्न करा.\n"
+
+#, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr ""
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."

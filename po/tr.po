@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2022-02-10 15:12+0000\n"
 "Last-Translator: Murat Servan Kahraman <muratservan@outlook.com>\n"
 "Language-Team: Turkish <https://l10n.opensuse.org/projects/snapper/master/tr/>\n"
@@ -430,6 +430,10 @@ msgstr ""
 msgid "Cleanup"
 msgstr "Temizle"
 
+#, fuzzy, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr "'%s ' dosyasını açma başarısız oldu."
+
 #, fuzzy
 msgid "Command 'cleanup' needs one arguments."
 msgstr "'temizle' komutu için bir argüman gereklidir."
@@ -840,6 +844,10 @@ msgstr ""
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "Daha fazla bilgi için 'Yakalayıcı yardımı'nı okumayı deneyin."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr "'%s ' dosyasını açma başarısız oldu."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2022-04-16 00:13+0000\n"
 "Last-Translator: Michael <michaelbelachev@gmail.com>\n"
 "Language-Team: Russian <https://l10n.opensuse.org/projects/snapper/master/ru/>\n"
@@ -391,6 +391,10 @@ msgstr "Невозможно выполнить откат, подтом по у
 msgid "Cleanup"
 msgstr "Очистка"
 
+#, fuzzy, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr "Сбой при открытии файла '%s'."
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Команде 'cleanup' нужен один аргумент."
 
@@ -756,6 +760,10 @@ msgstr ""
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Дополнительные инструкции см. в man snapper."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr "Сбой при открытии файла '%s'."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."

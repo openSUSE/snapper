@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2023-04-06 07:14+0000\n"
 "Last-Translator: Kristijan Fremen Velkovski <me@krisfremen.com>\n"
 "Language-Team: Macedonian <https://l10n.opensuse.org/projects/snapper/master/mk/>\n"
@@ -375,6 +375,10 @@ msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
 msgid "Cleanup"
+msgstr ""
+
+#, c-format
+msgid "Client-side plugin '%s' failed."
 msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
@@ -747,6 +751,10 @@ msgid "Read-Only"
 msgstr ""
 
 msgid "See 'man snapper' for further instructions."
+msgstr ""
+
+#, c-format
+msgid "Server-side plugin '%s' failed."
 msgstr ""
 
 #, c-format

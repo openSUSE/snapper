@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tajik openSUSE Localization\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: Tajik KDE & Software Localization - Victor Ibragimov <victor.ibragimov@gmail.com>\n"
@@ -374,6 +374,10 @@ msgstr ""
 msgid "Cleanup"
 msgstr ""
 
+#, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr ""
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr ""
 
@@ -737,6 +741,10 @@ msgid "Read-Only"
 msgstr ""
 
 msgid "See 'man snapper' for further instructions."
+msgstr ""
+
+#, c-format
+msgid "Server-side plugin '%s' failed."
 msgstr ""
 
 #, c-format

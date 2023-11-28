@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2023-05-22 00:14+0000\n"
 "Last-Translator: Javier Llorente <javier@opensuse.org>\n"
 "Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/>\n"
@@ -398,6 +398,10 @@ msgstr "No se puede revertir porque no se conoce el subvolumen por defecto."
 msgid "Cleanup"
 msgstr "Limpieza"
 
+#, fuzzy, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr "Error al abrir el archivo '%s'."
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "El comando 'cleanup' necesita un argumento."
 
@@ -784,6 +788,10 @@ msgstr "De sólo lectura"
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Consulte la página man snapper para obtener más instrucciones."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr "Error al abrir el archivo '%s'."
 
 # SLE12
 #, c-format

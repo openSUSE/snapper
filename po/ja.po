@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2023-07-12 13:15+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/"
-"ja/>\n"
+"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -390,6 +389,10 @@ msgstr "既定のサブボリュームが未知のものであるため、ロー
 msgid "Cleanup"
 msgstr "クリーンアップ"
 
+#, fuzzy, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr "ファイル '%s' を開けませんでした。"
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "'cleanup' コマンドには 1 つのパラメータが必要です。"
 
@@ -753,6 +756,10 @@ msgstr "読み込み専用"
 
 msgid "See 'man snapper' for further instructions."
 msgstr "詳しい手順については、「man snapper」を参照してください。"
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr "ファイル '%s' を開けませんでした。"
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."

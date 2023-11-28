@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2023-02-10 04:14+0000\n"
 "Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
 "Language-Team: Chinese (China) <https://l10n.opensuse.org/projects/snapper/master/zh_CN/>\n"
@@ -395,6 +395,10 @@ msgstr "无法回滚，因为默认子卷未知。"
 msgid "Cleanup"
 msgstr "清空"
 
+#, fuzzy, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr "打开文件 '%s' 失败。"
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "命令 'cleanup' 需要一个参数。"
 
@@ -758,6 +762,10 @@ msgstr ""
 
 msgid "See 'man snapper' for further instructions."
 msgstr "有关更多指导，请参见“man snapper”。"
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr "打开文件 '%s' 失败。"
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."

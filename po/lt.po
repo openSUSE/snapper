@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LCN (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2017-06-02 16:57+0000\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
 "Language-Team: Lithuanian <https://l10n.opensuse.org/projects/snapper/master/lt/>\n"
@@ -383,6 +383,10 @@ msgstr ""
 
 msgid "Cleanup"
 msgstr "Išvalymas"
+
+#, fuzzy, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr "Nepavyko atverti rinkmenos „%s“."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "„cleanup“ komandai reikia vieno argumento."
@@ -768,6 +772,10 @@ msgstr ""
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "Daugiau informacijos gausite įvykdę „snapper --help“."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr "Nepavyko atverti rinkmenos „%s“."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."

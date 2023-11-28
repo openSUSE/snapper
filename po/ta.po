@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2003-08-14 10:47+0200\n"
 "Last-Translator: xxx <yyy@example.org>\n"
 "Language-Team: Tamil <i18n@suse.de>\n"
@@ -381,6 +381,10 @@ msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
 msgid "Cleanup"
+msgstr ""
+
+#, c-format
+msgid "Client-side plugin '%s' failed."
 msgstr ""
 
 #, fuzzy
@@ -791,6 +795,10 @@ msgstr ""
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "கூடுதல் தகவலுக்கு`%s --உதவி' அல்லது`%s –பயன்பாடு'வை முயற்சிக்கவும்.\n"
+
+#, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr ""
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."

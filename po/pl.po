@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Ewelina Michalowska <ewelina.michalowska@stgambit.com>\n"
 "Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>\n"
@@ -381,6 +381,10 @@ msgstr ""
 
 msgid "Cleanup"
 msgstr "Wyczyszczono"
+
+#, fuzzy, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr "Otwieranie pliku '%s' nie powiodło się."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Polecenie  'cleanup' wymaga jednego argumentu."
@@ -755,6 +759,10 @@ msgstr ""
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Dodatkowe instrukcje można uzyskać, wydając polecenie \"man snapper\"."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr "Otwieranie pliku '%s' nie powiodło się."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
