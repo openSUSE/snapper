@@ -50,6 +50,7 @@
 namespace snapper
 {
     using std::list;
+    using std::regex;
 
 
     std::ostream& operator<<(std::ostream& s, const Snapshot& snapshot)
