@@ -30,6 +30,7 @@
 
 #include "snapper/Snapshot.h"
 #include "snapper/AsciiFile.h"
+#include "snapper/Plugins.h"
 
 
 namespace snapper
@@ -140,15 +141,27 @@ namespace snapper
 
 	Snapshots::const_iterator getSnapshotCurrent() const;
 
-	Snapshots::iterator createSingleSnapshot(const SCD& scd);
-	Snapshots::iterator createSingleSnapshot(Snapshots::const_iterator parent, const SCD& scd);
-	Snapshots::iterator createSingleSnapshotOfDefault(const SCD& scd);
-	Snapshots::iterator createPreSnapshot(const SCD& scd);
-	Snapshots::iterator createPostSnapshot(Snapshots::const_iterator pre, const SCD& scd);
+	Snapshots::iterator createSingleSnapshot(const SCD& scd) SN_DEPRECATED;
+	Snapshots::iterator createSingleSnapshot(Snapshots::const_iterator parent, const SCD& scd) SN_DEPRECATED;
+	Snapshots::iterator createSingleSnapshotOfDefault(const SCD& scd) SN_DEPRECATED;
+	Snapshots::iterator createPreSnapshot(const SCD& scd) SN_DEPRECATED;
+	Snapshots::iterator createPostSnapshot(Snapshots::const_iterator pre, const SCD& scd) SN_DEPRECATED;
 
-	void modifySnapshot(Snapshots::iterator snapshot, const SMD& smd);
+	void modifySnapshot(Snapshots::iterator snapshot, const SMD& smd) SN_DEPRECATED;
 
-	void deleteSnapshot(Snapshots::iterator snapshot);
+	void deleteSnapshot(Snapshots::iterator snapshot) SN_DEPRECATED;
+
+	Snapshots::iterator createSingleSnapshot(const SCD& scd, Plugins::Report& report);
+	Snapshots::iterator createSingleSnapshot(Snapshots::const_iterator parent, const SCD& scd,
+						 Plugins::Report& report);
+	Snapshots::iterator createSingleSnapshotOfDefault(const SCD& scd, Plugins::Report& report);
+	Snapshots::iterator createPreSnapshot(const SCD& scd, Plugins::Report& report);
+	Snapshots::iterator createPostSnapshot(Snapshots::const_iterator pre, const SCD& scd,
+					       Plugins::Report& report);
+
+	void modifySnapshot(Snapshots::iterator snapshot, const SMD& smd, Plugins::Report& report);
+
+	void deleteSnapshot(Snapshots::iterator snapshot, Plugins::Report& report);
 
 	const vector<string>& getIgnorePatterns() const { return ignore_patterns; }
 
@@ -157,8 +170,13 @@ namespace snapper
 
 	static void createConfig(const string& config_name, const string& root_prefix,
 				 const string& subvolume, const string& fstype,
-				 const string& template_name);
-	static void deleteConfig(const string& config_name, const string& root_prefix);
+				 const string& template_name) SN_DEPRECATED;
+	static void deleteConfig(const string& config_name, const string& root_prefix) SN_DEPRECATED;
+
+	static void createConfig(const string& config_name, const string& root_prefix,
+				 const string& subvolume, const string& fstype,
+				 const string& template_name, Plugins::Report& report);
+	static void deleteConfig(const string& config_name, const string& root_prefix, Plugins::Report& report);
 
 	static bool detectFstype(const string& subvolume, string& fstype);
 

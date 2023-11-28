@@ -25,6 +25,8 @@ libsnapper_la_SOURCES =					\
 	SystemCmd.cc		SystemCmd.h		\
 	AsciiFile.cc		AsciiFile.h		\
 	Acls.cc			Acls.h			\
+	Plugins.cc		Plugins.h		\
+	PluginsImpl.cc		PluginsImpl.h		\
 	Hooks.cc		Hooks.h			\
 	Systemctl.cc		Systemctl.h		\
 	Exception.cc		Exception.h		\
@@ -81,6 +83,7 @@ pkginclude_HEADERS =					\
 	Version.h					\
 	Snapper.h					\
 	Snapshot.h					\
+	Plugins.h					\
 	File.h						\
 	Comparison.h					\
 	AsciiFile.h					\

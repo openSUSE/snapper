@@ -105,8 +105,8 @@ public:
     iterator find(const string& config_name);
 
     void createConfig(const string& config_name, const string& subvolume, const string& fstype,
-		      const string& template_name);
-    void deleteConfig(iterator);
+		      const string& template_name, Plugins::Report& report);
+    void deleteConfig(iterator, Plugins::Report& report);
 
 private:
 

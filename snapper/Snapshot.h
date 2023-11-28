@@ -25,7 +25,7 @@
 #define SNAPPER_SNAPSHOT_H
 
 
-#include <time.h>
+#include <ctime>
 #include <sys/types.h>
 #include <cstdint>
 #include <string>
@@ -33,6 +33,12 @@
 #include <map>
 
 #include "snapper/Exception.h"
+#include "snapper/Plugins.h"
+
+
+#ifndef SN_DEPRECATED
+#define SN_DEPRECATED __attribute__((deprecated))
+#endif
 
 
 namespace snapper
@@ -123,7 +129,12 @@ namespace snapper
 	/**
 	 * Change default snapshot (will be activated on next boot time).
 	 */
-	void setDefault() const;
+	void setDefault() const SN_DEPRECATED;
+
+	/**
+	 * Change default snapshot (will be activated on next boot time).
+	 */
+	void setDefault(Plugins::Report& report) const;
 
 	/**
 	 * Determine iff snapshot is active (activated on last boot time).
@@ -279,17 +290,17 @@ namespace snapper
 
 	void checkUserdata(const map<string, string>& userdata) const;
 
-	iterator createSingleSnapshot(const SCD& scd);
-	iterator createSingleSnapshot(const_iterator parent, const SCD& scd);
-	iterator createSingleSnapshotOfDefault(const SCD& scd);
-	iterator createPreSnapshot(const SCD& scd);
-	iterator createPostSnapshot(const_iterator pre, const SCD& scd);
+	iterator createSingleSnapshot(const SCD& scd, Plugins::Report& report);
+	iterator createSingleSnapshot(const_iterator parent, const SCD& scd, Plugins::Report& report);
+	iterator createSingleSnapshotOfDefault(const SCD& scd, Plugins::Report& report);
+	iterator createPreSnapshot(const SCD& scd, Plugins::Report& report);
+	iterator createPostSnapshot(const_iterator pre, const SCD& scd, Plugins::Report& report);
 
-	iterator createHelper(Snapshot& snapshot, const_iterator parent, bool empty = false);
+	iterator createHelper(Snapshot& snapshot, const_iterator parent, bool empty, Plugins::Report& report);
 
-	void modifySnapshot(iterator snapshot, const SMD& smd);
+	void modifySnapshot(iterator snapshot, const SMD& smd, Plugins::Report& report);
 
-	void deleteSnapshot(iterator snapshot);
+	void deleteSnapshot(iterator snapshot, Plugins::Report& report);
 
 	unsigned int nextNumber();
 

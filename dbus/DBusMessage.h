@@ -171,6 +171,7 @@ namespace DBus
 
     template <typename Type> struct TypeInfo {};
 
+    template <> struct TypeInfo<dbus_int32_t> { static const char* signature; };
     template <> struct TypeInfo<dbus_uint32_t> { static const char* signature; };
     template <> struct TypeInfo<dbus_uint64_t> { static const char* signature; };
     template <> struct TypeInfo<string> { static const char* signature; };
@@ -236,6 +237,9 @@ namespace DBus
 
     Unmarshaller& operator>>(Unmarshaller& unmarshaller, dbus_uint16_t& data);
     Marshaller& operator<<(Marshaller& marshaller, dbus_uint16_t data);
+
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, dbus_int32_t& data);
+    Marshaller& operator<<(Marshaller& marshaller, dbus_int32_t data);
 
     Unmarshaller& operator>>(Unmarshaller& unmarshaller, dbus_uint32_t& data);
     Marshaller& operator<<(Marshaller& marshaller, dbus_uint32_t data);

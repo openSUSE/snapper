@@ -50,7 +50,8 @@ namespace snapper
 
 
     void
-    command_status(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*, ProxySnapper* snapper)
+    command_status(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*,
+		   ProxySnapper* snapper, Plugins::Report& report)
     {
 	const vector<Option> options = {
 	    Option("output",	required_argument,	'o')

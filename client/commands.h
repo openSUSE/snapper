@@ -152,5 +152,8 @@ command_query_free_space(DBus::Connection& conn, const string& config_name);
 void
 command_sync(DBus::Connection& conn, const string& config_name);
 
+vector<XReport>
+command_get_plugins_report(DBus::Connection& conn);
+
 vector<string>
 command_debug(DBus::Connection& conn);

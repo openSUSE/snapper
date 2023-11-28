@@ -705,7 +705,8 @@ namespace snapper
 
 
     void
-    command_list(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper)
+    command_list(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		 ProxySnapper* snapper, Plugins::Report& report)
     {
 	const vector<Option> options = {
 	    Option("type",			required_argument,	't'),

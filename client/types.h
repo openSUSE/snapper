@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Novell, Inc.
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -95,12 +95,21 @@ struct XFile
 };
 
 
+struct XReport
+{
+    string name;
+    vector<string> args;
+    int exit_status;
+};
+
+
 namespace DBus
 {
 
     template <> struct TypeInfo<XSnapshot> { static const char* signature; };
     template <> struct TypeInfo<XConfigInfo> { static const char* signature; };
     template <> struct TypeInfo<XFile> { static const char* signature; };
+    template <> struct TypeInfo<XReport> { static const char* signature; };
 
     Unmarshaller& operator>>(Unmarshaller& unmarshaller, XConfigInfo& data);
 
@@ -114,5 +123,7 @@ namespace DBus
     Unmarshaller& operator>>(Unmarshaller& unmarshaller, QuotaData& data);
 
     Unmarshaller& operator>>(Unmarshaller& unmarshaller, FreeSpaceData& data);
+
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, XReport& data);
 
 }

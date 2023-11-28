@@ -223,17 +223,17 @@ public:
     virtual ProxyConfig getConfig() const = 0;
     virtual void setConfig(const ProxyConfig& proxy_config) = 0;
 
-    virtual ProxySnapshots::const_iterator createSingleSnapshot(const SCD& scd) = 0;
+    virtual ProxySnapshots::const_iterator createSingleSnapshot(const SCD& scd, Plugins::Report& report) = 0;
     virtual ProxySnapshots::const_iterator createSingleSnapshot(ProxySnapshots::const_iterator parent,
-								const SCD& scd) = 0;
-    virtual ProxySnapshots::const_iterator createSingleSnapshotOfDefault(const SCD& scd) = 0;
-    virtual ProxySnapshots::const_iterator createPreSnapshot(const SCD& scd) = 0;
+								const SCD& scd, Plugins::Report& report) = 0;
+    virtual ProxySnapshots::const_iterator createSingleSnapshotOfDefault(const SCD& scd, Plugins::Report& report) = 0;
+    virtual ProxySnapshots::const_iterator createPreSnapshot(const SCD& scd, Plugins::Report& report) = 0;
     virtual ProxySnapshots::const_iterator createPostSnapshot(ProxySnapshots::const_iterator pre,
-							      const SCD& scd) = 0;
+							      const SCD& scd, Plugins::Report& report) = 0;
 
-    virtual void modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd) = 0;
+    virtual void modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd, Plugins::Report& report) = 0;
 
-    virtual void deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, bool verbose) = 0;
+    virtual void deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, bool verbose, Plugins::Report& report) = 0;
 
     virtual ProxyComparison createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs,
 					     bool mount) = 0;
@@ -265,17 +265,26 @@ public:
     static ProxySnappers createLib(const string& target_root);
 
     void createConfig(const string& config_name, const string& subvolume, const string& fstype,
-		      const string& template_name)
-	{ return impl->createConfig(config_name, subvolume, fstype, template_name); }
+		      const string& template_name, Plugins::Report& report)
+	{ return impl->createConfig(config_name, subvolume, fstype, template_name, report); }
 
-    void deleteConfig(const string& config_name)
-	{ return impl->deleteConfig(config_name); }
+    void deleteConfig(const string& config_name, Plugins::Report& report)
+	{ return impl->deleteConfig(config_name, report); }
 
     ProxySnapper* getSnapper(const string& config_name)
 	{ return impl->getSnapper(config_name); }
 
     map<string, ProxyConfig> getConfigs() const
 	{ return impl->getConfigs(); }
+
+    /**
+     * This function needs a few works: The Snapper class does not have a Plugin::Report
+     * object. The individual functions of the Snapper class have. For for proxy-lib this
+     * call is a no-op. For proxy-dbus the server is queried which has a per client
+     * Plugin::Report object.
+     */
+    Plugins::Report get_plugins_report() const
+	{ return impl->get_plugins_report(); }
 
     vector<string> debug() const
 	{ return impl->debug(); }
@@ -290,13 +299,15 @@ public:
 	virtual ~Impl() {}
 
 	virtual void createConfig(const string& config_name, const string& subvolume,
-				  const string& fstype, const string& template_name) = 0;
+				  const string& fstype, const string& template_name, Plugins::Report& report) = 0;
 
-	virtual void deleteConfig(const string& config_name) = 0;
+	virtual void deleteConfig(const string& config_name, Plugins::Report& report) = 0;
 
 	virtual ProxySnapper* getSnapper(const string& config_name) = 0;
 
 	virtual map<string, ProxyConfig> getConfigs() const = 0;
+
+	virtual Plugins::Report get_plugins_report() const = 0;
 
 	virtual vector<string> debug() const = 0;
 

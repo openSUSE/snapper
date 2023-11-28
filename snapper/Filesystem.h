@@ -31,6 +31,12 @@
 
 #include "snapper/FileUtils.h"
 #include "snapper/Compare.h"
+#include "snapper/Plugins.h"
+
+
+#ifndef SN_DEPRECATED
+#define SN_DEPRECATED __attribute__((deprecated))
+#endif
 
 
 namespace snapper
@@ -94,7 +100,8 @@ namespace snapper
 	 */
 	virtual std::pair<bool, unsigned int> getDefault() const;
 
-	virtual void setDefault(unsigned int num) const;
+	virtual void setDefault(unsigned int num) const SN_DEPRECATED;
+	virtual void setDefault(unsigned int num, Plugins::Report& report) const;
 
 	virtual std::pair<bool, unsigned int> getActive() const;
 

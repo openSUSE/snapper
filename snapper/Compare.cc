@@ -22,13 +22,13 @@
 
 #include "config.h"
 
-#include <string.h>
+#include <cstring>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <dirent.h>
 #include <unistd.h>
-#include <errno.h>
+#include <cerrno>
 #include <algorithm>
 #include <boost/thread.hpp>
 

@@ -51,7 +51,7 @@
 #include "snapper/Btrfs.h"
 #include "snapper/BtrfsUtils.h"
 #include "snapper/File.h"
-#include "snapper/Hooks.h"
+#include "snapper/PluginsImpl.h"
 #include "snapper/Snapper.h"
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"
@@ -1474,9 +1474,17 @@ namespace snapper
     void
     Btrfs::setDefault(unsigned int num) const
     {
+	Plugins::Report report;
+	setDefault(num, report);
+    }
+
+
+    void
+    Btrfs::setDefault(unsigned int num, Plugins::Report& report) const
+    {
 	try
 	{
-	    Hooks::set_default_snapshot(Hooks::Stage::PRE_ACTION, subvolume, this, num);
+	    Plugins::set_default_snapshot(Plugins::Stage::PRE_ACTION, subvolume, this, num, report);
 
 	    SDir general_dir = openGeneralDir();
 
@@ -1493,7 +1501,7 @@ namespace snapper
 		set_default_id(general_dir.fd(), id);
 	    }
 
-	    Hooks::set_default_snapshot(Hooks::Stage::POST_ACTION, subvolume, this, num);
+	    Plugins::set_default_snapshot(Plugins::Stage::POST_ACTION, subvolume, this, num, report);
 	}
 	catch (const runtime_error& e)
 	{
@@ -1554,6 +1562,13 @@ namespace snapper
     Btrfs::setDefault(unsigned int num) const
     {
 	Filesystem::setDefault(num);
+    }
+
+
+    void
+    Btrfs::setDefault(unsigned int num, Plugins::Report& report) const
+    {
+	Filesystem::setDefault(num, report);
     }
 
 

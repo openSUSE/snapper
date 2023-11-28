@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2018] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -187,6 +187,14 @@ namespace snapper
 
     void
     Filesystem::setDefault(unsigned int num) const
+    {
+	SN_THROW(UnsupportedException());
+	__builtin_unreachable();
+    }
+
+
+    void
+    Filesystem::setDefault(unsigned int num, Plugins::Report& report) const
     {
 	SN_THROW(UnsupportedException());
 	__builtin_unreachable();

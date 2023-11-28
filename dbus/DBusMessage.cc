@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Novell, Inc.
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -65,6 +65,7 @@ namespace DBus
     }
 
 
+    const char* TypeInfo<dbus_int32_t>::signature = "i";
     const char* TypeInfo<dbus_uint32_t>::signature = "u";
     const char* TypeInfo<dbus_uint64_t>::signature = "t";
     const char* TypeInfo<string>::signature = "s";
@@ -224,6 +225,29 @@ namespace DBus
     operator<<(Marshaller& marshaller, dbus_uint16_t data)
     {
 	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_UINT16, &data))
+	    SN_THROW(FatalException());
+
+	return marshaller;
+    }
+
+
+    Unmarshaller&
+    operator>>(Unmarshaller& unmarshaller, dbus_int32_t& data)
+    {
+	if (unmarshaller.get_type() != DBUS_TYPE_INT32)
+	    SN_THROW(MarshallingException());
+
+	dbus_message_iter_get_basic(unmarshaller.top(), &data);
+	dbus_message_iter_next(unmarshaller.top());
+
+	return unmarshaller;
+    }
+
+
+    Marshaller&
+    operator<<(Marshaller& marshaller, dbus_int32_t data)
+    {
+	if (!dbus_message_iter_append_basic(marshaller.top(), DBUS_TYPE_INT32, &data))
 	    SN_THROW(FatalException());
 
 	return marshaller;

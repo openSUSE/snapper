@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2013] Novell, Inc.
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -31,6 +31,7 @@ namespace DBus
     const char* TypeInfo<File>::signature = "(su)";
     const char* TypeInfo<QuotaData>::signature = "(tt)";
     const char* TypeInfo<FreeSpaceData>::signature = "(tt)";
+    const char* TypeInfo<Plugins::Report::Entry>::signature = "(sasi)";
 
 
     Marshaller&
@@ -121,6 +122,16 @@ namespace DBus
 	for (Files::const_iterator it = data.begin(); it != data.end(); ++it)
 	    marshaller << *it;
 	marshaller.close_array();
+	return marshaller;
+    }
+
+
+    Marshaller&
+    operator<<(Marshaller& marshaller, const Plugins::Report::Entry& data)
+    {
+	marshaller.open_struct();
+	marshaller << data.name << data.args << data.exit_status;
+	marshaller.close_struct();
 	return marshaller;
     }
 

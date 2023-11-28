@@ -21,6 +21,9 @@
  */
 
 
+// TODO obsolete, remove with next ABI break
+
+
 #include "config.h"
 
 #include "snapper/FileUtils.h"

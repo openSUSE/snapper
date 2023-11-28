@@ -28,7 +28,7 @@
 #define _POSIX_C_SOURCE 200809L
 #undef _GNU_SOURCE
 
-#include <string.h>
+#include <cstring>
 #include <string>
 
 

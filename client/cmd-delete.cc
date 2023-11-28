@@ -80,7 +80,8 @@ namespace snapper
 
 
     void
-    command_delete(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*, ProxySnapper* snapper)
+    command_delete(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*,
+		   ProxySnapper* snapper, Plugins::Report& report)
     {
 	const vector<Option> options = {
 	    Option("sync",	no_argument,	's')
@@ -136,7 +137,7 @@ namespace snapper
 
 	filter_undeletables(snapshots, nums);
 
-	snapper->deleteSnapshots(nums, global_options.verbose());
+	snapper->deleteSnapshots(nums, global_options.verbose(), report);
 
 	if (sync)
 	    snapper->syncFilesystem();

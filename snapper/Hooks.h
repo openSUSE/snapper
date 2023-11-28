@@ -21,6 +21,9 @@
  */
 
 
+// TODO obsolete, remove with next ABI break
+
+
 #ifndef SNAPPER_HOOKS_H
 #define SNAPPER_HOOKS_H
 
@@ -40,23 +43,23 @@ namespace snapper
 
 	enum class Stage { PRE_ACTION, POST_ACTION };
 
-	static void create_config(Stage stage, const string& subvolume, const Filesystem* filesystem);
-	static void delete_config(Stage stage, const string& subvolume, const Filesystem* filesystem);
+	static void create_config(Stage stage, const string& subvolume, const Filesystem* filesystem) SN_DEPRECATED;
+	static void delete_config(Stage stage, const string& subvolume, const Filesystem* filesystem) SN_DEPRECATED;
 
 	static void create_snapshot(Stage stage, const string& subvolume, const Filesystem* filesystem,
-				    const Snapshot& snapshot);
+				    const Snapshot& snapshot) SN_DEPRECATED;
 	static void modify_snapshot(Stage stage, const string& subvolume, const Filesystem* filesystem,
-				    const Snapshot& snapshot);
+				    const Snapshot& snapshot) SN_DEPRECATED;
 	static void delete_snapshot(Stage stage, const string& subvolume, const Filesystem* filesystem,
-				    const Snapshot& snapshot);
+				    const Snapshot& snapshot) SN_DEPRECATED;
 
 	static void set_default_snapshot(Stage stage, const string& subvolume, const Filesystem* filesystem,
-					 unsigned int num);
+					 unsigned int num) SN_DEPRECATED;
 
-	static void rollback(const string& old_root, const string& new_root);
+	static void rollback(const string& old_root, const string& new_root) SN_DEPRECATED;
 
 	static void rollback(Stage stage, const string& subvolume, const Filesystem* filesystem, unsigned int old_num,
-			     unsigned int new_num);
+			     unsigned int new_num) SN_DEPRECATED;
 
     private:
 

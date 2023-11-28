@@ -44,7 +44,8 @@ namespace snapper
 
 
     void
-    command_mount(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*, ProxySnapper* snapper)
+    command_mount(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*,
+		  ProxySnapper* snapper, Plugins::Report& report)
     {
 	get_opts.parse("mount", GetOpts::no_options);
 	if (!get_opts.has_args())

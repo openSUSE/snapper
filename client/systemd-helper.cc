@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2014-2015] Novell, Inc.
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -23,7 +23,7 @@
 
 #include "config.h"
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <iostream>
 
 #include "utils/text.h"
@@ -41,6 +41,9 @@ using namespace std;
 
 // cout and cerr are visible with 'journalctl' and 'systemctl status
 // snapper-<name>.service'.
+
+
+Plugins::Report report;
 
 
 bool
@@ -93,7 +96,7 @@ timeline(ProxySnappers* snappers, const map<string, string>& userdata)
 	scd.cleanup = "timeline";
 	scd.userdata = userdata;
 
-	if (!call_with_error_check([snapper, scd](){ snapper->createSingleSnapshot(scd); }))
+	if (!call_with_error_check([snapper, scd](){ snapper->createSingleSnapshot(scd, report); }))
 	{
 	    cerr << "timeline for '" << value.first << "' failed." << endl;
 	    ok = false;
@@ -136,7 +139,7 @@ cleanup(ProxySnappers* snappers)
 	{
 	    cout << "running number cleanup for '" << value.first << "'." << endl;
 
-	    if (!call_with_error_check([snapper](){ do_cleanup_number(snapper, false); }))
+	    if (!call_with_error_check([snapper](){ do_cleanup_number(snapper, false, report); }))
 	    {
 		cerr << "number cleanup for '" << value.first << "' failed." << endl;
 		ok = false;
@@ -147,7 +150,7 @@ cleanup(ProxySnappers* snappers)
 	{
 	    cout << "running timeline cleanup for '" << value.first << "'." << endl;
 
-	    if (!call_with_error_check([snapper](){ do_cleanup_timeline(snapper, false); }))
+	    if (!call_with_error_check([snapper](){ do_cleanup_timeline(snapper, false, report); }))
 	    {
 		cerr << "timeline cleanup for '" << value.first << "' failed." << endl;
 		ok = false;
@@ -158,7 +161,7 @@ cleanup(ProxySnappers* snappers)
 	{
 	    cout << "running empty-pre-post cleanup for '" << value.first << "'." << endl;
 
-	    if (!call_with_error_check([snapper](){ do_cleanup_empty_pre_post(snapper, false); }))
+	    if (!call_with_error_check([snapper](){ do_cleanup_empty_pre_post(snapper, false, report); }))
 	    {
 		cerr << "empty-pre-post cleanup for " << value.first << " failed." << endl;
 		ok = false;
@@ -226,6 +229,15 @@ main(int argc, char** argv)
     }))
     {
 	ok = false;
+    }
+
+    for (const Plugins::Report::Entry& entry : report.entries)
+    {
+	if (entry.exit_status != 0)
+	{
+	    cerr << "server-side plugin '" << entry.name << "' failed\n";
+	    ok = false;
+	}
     }
 
     exit(ok ? EXIT_SUCCESS : EXIT_FAILURE);

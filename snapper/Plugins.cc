@@ -1,6 +1,5 @@
 /*
- * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) 2018 SUSE LLC
+ * Copyright (c) 2023 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -21,22 +20,24 @@
  */
 
 
-#include "dbus/DBusConnection.h"
+#include "snapper/Plugins.h"
 
 
-/**
- * Translate an DBus exception to the corresponding snapper exception
- * (iff such exists). Unfinished.
- */
-void
-convert_exception(const DBus::ErrorException& e) __attribute__ ((__noreturn__));
+namespace snapper
+{
+    using namespace std;
 
 
-/**
- * Returns a string explaining the DBus exception. Function should
- * likely be removed once convert_exception is complete and used
- * everywhere.
- */
-string
-error_description(const DBus::ErrorException& e);
+    Plugins::Report::Entry::Entry(const string& name, const vector<string>& args, int exit_status)
+	: name(name), args(args), exit_status(exit_status)
+    {
+    }
 
+
+    void
+    Plugins::Report::clear()
+    {
+	entries.clear();
+    }
+
+}
