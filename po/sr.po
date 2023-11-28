@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2005-08-03 21:03+0200\n"
 "Last-Translator: Данило Шеган <danilo@gnome.org>\n"
 "Language-Team: Serbian <novell@prevod.org>\n"
@@ -378,6 +378,10 @@ msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
 msgid "Cleanup"
+msgstr ""
+
+#, c-format
+msgid "Client-side plugin '%s' failed."
 msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
@@ -761,6 +765,10 @@ msgstr ""
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "Прикупљам информације о меморији..."
+
+#, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr ""
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2004-08-09 10:24+0200\n"
 "Last-Translator: xxx <yyy@example.org>\n"
 "Language-Team: Hebrew <i18n@suse.de>\n"
@@ -371,6 +371,10 @@ msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
 msgid "Cleanup"
+msgstr ""
+
+#, c-format
+msgid "Client-side plugin '%s' failed."
 msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
@@ -743,6 +747,10 @@ msgid "Read-Only"
 msgstr ""
 
 msgid "See 'man snapper' for further instructions."
+msgstr ""
+
+#, c-format
+msgid "Server-side plugin '%s' failed."
 msgstr ""
 
 #, c-format

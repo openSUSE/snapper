@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Robert Taisz <robert.taisz@emerald.hu>\n"
 "Language-Team: Hungarian <https://l10n.opensuse.org/projects/snapper/master/hu/>\n"
@@ -394,6 +394,10 @@ msgstr ""
 
 msgid "Cleanup"
 msgstr "Tisztítás"
+
+#, fuzzy, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr "A(z) '%s' fájl megnyitása sikertelen."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "A 'cleanup' parancshoz meg kell adni egy paraméter."
@@ -787,6 +791,10 @@ msgstr ""
 
 msgid "See 'man snapper' for further instructions."
 msgstr "További útmutatásért lásd: 'man snapper'."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr "A(z) '%s' fájl megnyitása sikertelen."
 
 # SLE12
 #, c-format

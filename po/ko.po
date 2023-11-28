@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: entries\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Hwajin Kim <hwajin.kim@e4net.net>\n"
 "Language-Team: Korean <https://l10n.opensuse.org/projects/snapper/master/ko/>\n"
@@ -449,6 +449,11 @@ msgid "Cleanup"
 msgstr "정리"
 
 # SLE12
+#, fuzzy, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr "'%s' 파일을 열지 못했습니다."
+
+# SLE12
 msgid "Command 'cleanup' needs one arguments."
 msgstr "'cleanup' 명령에 하나의 인수가 필요합니다."
 
@@ -892,6 +897,11 @@ msgstr ""
 
 msgid "See 'man snapper' for further instructions."
 msgstr "추가 지침은 'man snapper'를 참조하십시오."
+
+# SLE12
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr "'%s' 파일을 열지 못했습니다."
 
 # SLE12
 #, c-format

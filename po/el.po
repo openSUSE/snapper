@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2023-04-26 19:14+0000\n"
 "Last-Translator: George David Apostolidis <geoapostolidis999@gmail.com>\n"
 "Language-Team: Greek <https://l10n.opensuse.org/projects/snapper/master/el/>\n"
@@ -391,6 +391,10 @@ msgstr "Δεν είναι δυνατή η επαναφορά αφού ο προ�
 msgid "Cleanup"
 msgstr "Εκκαθάριση"
 
+#, fuzzy, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr "Αποτυχία ανοίγματος αρχείου '%s'."
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Η εντολή 'cleanup' (εκκαθάριση) χρειάζεται μία παράμετρο."
 
@@ -764,6 +768,10 @@ msgstr "Μόνο για ανάγνωση"
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Για περισσότερες πληροφορίες δοκιμάστε 'snapper --help'."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr "Αποτυχία ανοίγματος αρχείου '%s'."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."

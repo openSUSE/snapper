@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2023-05-13 02:14+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
@@ -388,6 +388,10 @@ msgstr "Kann kein Rollback durchführen, weil das Standard-Subvolume unbekannt i
 msgid "Cleanup"
 msgstr "Bereinigen"
 
+#, fuzzy, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr "Öffnen der Datei '%s' nicht möglich."
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Befehl 'cleanup' erfordert ein Argument."
 
@@ -752,6 +756,10 @@ msgstr "Nur Lesen"
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Weitere Anweisungen finden Sie in 'man snapper'."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr "Öffnen der Datei '%s' nicht möglich."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."

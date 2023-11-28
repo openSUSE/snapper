@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper.km\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2011-10-24 10:40+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -397,6 +397,10 @@ msgstr ""
 
 msgid "Cleanup"
 msgstr "Cleanup"
+
+#, fuzzy, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បើក​ឯកសារ '%s' ។"
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "ពាក្យ​បញ្ជា 'cleanup' ត្រូវការ​អាគុយម៉ង់​មួយ។"
@@ -792,6 +796,10 @@ msgstr ""
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "ចំពោះ​ព័ត៌មាន​បន្ថែម​ សូម​អាន 'ជំនួយ​របស់​កម្មវិធី​ថត' ។"
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បើក​ឯកសារ '%s' ។"
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."

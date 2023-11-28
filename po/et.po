@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: autoinst.fi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2019-12-01 20:54+0000\n"
 "Last-Translator: Jaanus Ojangu <jaanus.ojangu@gmail.com>\n"
 "Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/et/>\n"
@@ -377,6 +377,10 @@ msgstr ""
 
 msgid "Cleanup"
 msgstr "Puhastamine"
+
+#, fuzzy, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr "Faili '%s' avamine ebaõnnestus."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Käsk 'Puhastamine' vajab ühte argumenti."
@@ -755,6 +759,10 @@ msgstr ""
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Lisateavet leiate käsuga 'man snapper' juhendist."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr "Faili '%s' avamine ebaõnnestus."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."

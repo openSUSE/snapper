@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2013-10-04 18:20+0200\n"
 "Last-Translator: Olav Pettershagen <olpetter@bbnett.no>\n"
 "Language-Team: Norwegian Bokmål <i18n-nb@lister.ping.uio.no>\n"
@@ -395,6 +395,10 @@ msgstr ""
 msgid "Cleanup"
 msgstr "Rydde opp"
 
+#, fuzzy, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr "Filen '%s' kunne ikke åpnes."
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Kommandoen 'cleanup' trenger ett argument."
 
@@ -779,6 +783,10 @@ msgstr ""
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "Forsøk 'snapper --help' for mer informasjon."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr "Filen '%s' kunne ikke åpnes."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."

@@ -3,11 +3,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-12 09:40+0200\n"
+"POT-Creation-Date: 2023-11-28 08:50+0100\n"
 "PO-Revision-Date: 2023-10-15 16:15+0000\n"
 "Last-Translator: Paolo Za <zapaolo@email.it>\n"
-"Language-Team: Italian <https://l10n.opensuse.org/projects/snapper/master/it/"
-">\n"
+"Language-Team: Italian <https://l10n.opensuse.org/projects/snapper/master/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -387,6 +386,10 @@ msgstr "Impossibile effettuare il ripristino perché il sotto-volume predefinito
 msgid "Cleanup"
 msgstr "Pulitura"
 
+#, fuzzy, c-format
+msgid "Client-side plugin '%s' failed."
+msgstr "Apertura del file '%s' fallita."
+
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Il comando 'cleanup' richiede un argomento."
 
@@ -751,6 +754,10 @@ msgstr "Sola lettura"
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Vedere 'man snapper' per ulteriori istruzioni."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed."
+msgstr "Apertura del file '%s' fallita."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
