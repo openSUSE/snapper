@@ -86,7 +86,9 @@ namespace snapper
 	virtual bool isDefault(unsigned int num) const override;
 
 	virtual std::pair<bool, unsigned int> getDefault() const override;
+
 	virtual void setDefault(unsigned int num) const override;
+	virtual void setDefault(unsigned int num, Plugins::Report& report) const override;
 
 	virtual bool isActive(unsigned int num) const override;
 

@@ -45,7 +45,7 @@
 #include "snapper/File.h"
 #include "snapper/AsciiFile.h"
 #include "snapper/Exception.h"
-#include "snapper/Hooks.h"
+#include "snapper/PluginsImpl.h"
 #include "snapper/ComparisonImpl.h"
 #include "snapper/Systemctl.h"
 #include "snapper/Version.h"
@@ -237,52 +237,108 @@ namespace snapper
     Snapshots::iterator
     Snapper::createSingleSnapshot(const SCD& scd)
     {
-	return snapshots.createSingleSnapshot(scd);
+	Plugins::Report report;
+	return createSingleSnapshot(scd, report);
     }
 
 
     Snapshots::iterator
     Snapper::createSingleSnapshot(Snapshots::const_iterator parent, const SCD& scd)
     {
-	if (parent == snapshots.end())
-	    SN_THROW(IllegalSnapshotException());
-
-	return snapshots.createSingleSnapshot(parent, scd);
+	Plugins::Report report;
+	return createSingleSnapshot(parent, scd, report);
     }
 
 
     Snapshots::iterator
     Snapper::createSingleSnapshotOfDefault(const SCD& scd)
     {
-	return snapshots.createSingleSnapshotOfDefault(scd);
+	Plugins::Report report;
+	return createSingleSnapshotOfDefault(scd, report);
     }
 
 
     Snapshots::iterator
     Snapper::createPreSnapshot(const SCD& scd)
     {
-	return snapshots.createPreSnapshot(scd);
+	Plugins::Report report;
+	return createPreSnapshot(scd, report);
     }
 
 
     Snapshots::iterator
     Snapper::createPostSnapshot(Snapshots::const_iterator pre, const SCD& scd)
     {
-	return snapshots.createPostSnapshot(pre, scd);
+	Plugins::Report report;
+	return createPostSnapshot(pre, scd, report);
     }
 
 
     void
     Snapper::modifySnapshot(Snapshots::iterator snapshot, const SMD& smd)
     {
-	snapshots.modifySnapshot(snapshot, smd);
+	Plugins::Report report;
+	modifySnapshot(snapshot, smd, report);
     }
 
 
     void
     Snapper::deleteSnapshot(Snapshots::iterator snapshot)
     {
-	snapshots.deleteSnapshot(snapshot);
+	Plugins::Report report;
+	deleteSnapshot(snapshot, report);
+    }
+
+
+    Snapshots::iterator
+    Snapper::createSingleSnapshot(const SCD& scd, Plugins::Report& report)
+    {
+	return snapshots.createSingleSnapshot(scd, report);
+    }
+
+
+    Snapshots::iterator
+    Snapper::createSingleSnapshot(Snapshots::const_iterator parent, const SCD& scd, Plugins::Report& report)
+    {
+	if (parent == snapshots.end())
+	    SN_THROW(IllegalSnapshotException());
+
+	return snapshots.createSingleSnapshot(parent, scd, report);
+    }
+
+
+    Snapshots::iterator
+    Snapper::createSingleSnapshotOfDefault(const SCD& scd, Plugins::Report& report)
+    {
+	return snapshots.createSingleSnapshotOfDefault(scd, report);
+    }
+
+
+    Snapshots::iterator
+    Snapper::createPreSnapshot(const SCD& scd, Plugins::Report& report)
+    {
+	return snapshots.createPreSnapshot(scd, report);
+    }
+
+
+    Snapshots::iterator
+    Snapper::createPostSnapshot(Snapshots::const_iterator pre, const SCD& scd, Plugins::Report& report)
+    {
+	return snapshots.createPostSnapshot(pre, scd, report);
+    }
+
+
+    void
+    Snapper::modifySnapshot(Snapshots::iterator snapshot, const SMD& smd, Plugins::Report& report)
+    {
+	snapshots.modifySnapshot(snapshot, smd, report);
+    }
+
+
+    void
+    Snapper::deleteSnapshot(Snapshots::iterator snapshot, Plugins::Report& report)
+    {
+	snapshots.deleteSnapshot(snapshot, report);
     }
 
 
@@ -337,6 +393,16 @@ namespace snapper
 			  const string& subvolume, const string& fstype,
 			  const string& template_name)
     {
+	Plugins::Report report;
+	createConfig(config_name, root_prefix, subvolume, fstype, template_name, report);
+    }
+
+
+    void
+    Snapper::createConfig(const string& config_name, const string& root_prefix,
+			  const string& subvolume, const string& fstype,
+			  const string& template_name, Plugins::Report& report)
+    {
 	y2mil("Snapper create-config");
 	y2mil("libsnapper version " VERSION);
 	y2mil("config_name:" << config_name << " subvolume:" << subvolume <<
@@ -390,7 +456,7 @@ namespace snapper
 	    SN_THROW(CreateConfigFailedException(e.what()));
 	}
 
-	Hooks::create_config(Hooks::Stage::PRE_ACTION, subvolume, filesystem.get());
+	Plugins::create_config(Plugins::Stage::PRE_ACTION, subvolume, filesystem.get(), report);
 
 	try
 	{
@@ -463,19 +529,28 @@ namespace snapper
 	    systemctl_enable_timeline(true);
 	}
 
-	Hooks::create_config(Hooks::Stage::POST_ACTION, subvolume, filesystem.get());
+	Plugins::create_config(Plugins::Stage::POST_ACTION, subvolume, filesystem.get(), report);
     }
 
 
     void
     Snapper::deleteConfig(const string& config_name, const string& root_prefix)
     {
+	Plugins::Report report;
+	deleteConfig(config_name, root_prefix, report);
+    }
+
+
+    void
+    Snapper::deleteConfig(const string& config_name, const string& root_prefix, Plugins::Report& report)
+    {
 	y2mil("Snapper delete-config");
 	y2mil("libsnapper version " VERSION);
 
 	unique_ptr<Snapper> snapper(new Snapper(config_name, root_prefix));
 
-	Hooks::delete_config(Hooks::Stage::PRE_ACTION, snapper->subvolumeDir(), snapper->getFilesystem());
+	Plugins::delete_config(Plugins::Stage::PRE_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
+			       report);
 
 	Snapshots& snapshots = snapper->getSnapshots();
 
@@ -491,7 +566,7 @@ namespace snapper
 
 	    try
 	    {
-		snapper->deleteSnapshot(tmp);
+		snapper->deleteSnapshot(tmp, report);
 	    }
 	    catch (const DeleteSnapshotFailedException& e)
 	    {
@@ -538,7 +613,8 @@ namespace snapper
 
 	// TODO potentially disable snapper-timeline.timer
 
-	Hooks::delete_config(Hooks::Stage::POST_ACTION, snapper->subvolumeDir(), snapper->getFilesystem());
+	Plugins::delete_config(Plugins::Stage::POST_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
+			       report);
     }
 
 
@@ -943,8 +1019,8 @@ namespace snapper
 
 #else
 
-        SN_THROW(QuotaException("not implemented"));
-        __builtin_unreachable();
+	SN_THROW(QuotaException("not implemented"));
+	__builtin_unreachable();
 
 #endif
     }

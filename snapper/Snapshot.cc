@@ -43,7 +43,7 @@
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/Exception.h"
-#include "snapper/Hooks.h"
+#include "snapper/PluginsImpl.h"
 #include "snapper/ComparisonImpl.h"
 
 
@@ -162,7 +162,15 @@ namespace snapper
     void
     Snapshot::setDefault() const
     {
-	snapper->getFilesystem()->setDefault(num);
+	Plugins::Report report;
+	setDefault(report);
+    }
+
+
+    void
+    Snapshot::setDefault(Plugins::Report& report) const
+    {
+	snapper->getFilesystem()->setDefault(num, report);
     }
 
 
@@ -666,7 +674,7 @@ namespace snapper
 
 
     Snapshots::iterator
-    Snapshots::createSingleSnapshot(const SCD& scd)
+    Snapshots::createSingleSnapshot(const SCD& scd, Plugins::Report& report)
     {
 	checkUserdata(scd.userdata);
 
@@ -677,12 +685,12 @@ namespace snapper
 	snapshot.cleanup = scd.cleanup;
 	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, getSnapshotCurrent(), scd.empty);
+	return createHelper(snapshot, getSnapshotCurrent(), scd.empty, report);
     }
 
 
     Snapshots::iterator
-    Snapshots::createSingleSnapshot(const_iterator parent, const SCD& scd)
+    Snapshots::createSingleSnapshot(const_iterator parent, const SCD& scd, Plugins::Report& report)
     {
 	checkUserdata(scd.userdata);
 
@@ -693,12 +701,12 @@ namespace snapper
 	snapshot.cleanup = scd.cleanup;
 	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, parent);
+	return createHelper(snapshot, parent, false, report);
     }
 
 
     Snapshots::iterator
-    Snapshots::createSingleSnapshotOfDefault(const SCD& scd)
+    Snapshots::createSingleSnapshotOfDefault(const SCD& scd, Plugins::Report& report)
     {
 	checkUserdata(scd.userdata);
 
@@ -709,12 +717,12 @@ namespace snapper
 	snapshot.cleanup = scd.cleanup;
 	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, end());
+	return createHelper(snapshot, end(), false, report);
     }
 
 
     Snapshots::iterator
-    Snapshots::createPreSnapshot(const SCD& scd)
+    Snapshots::createPreSnapshot(const SCD& scd, Plugins::Report& report)
     {
 	checkUserdata(scd.userdata);
 
@@ -725,12 +733,12 @@ namespace snapper
 	snapshot.cleanup = scd.cleanup;
 	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, getSnapshotCurrent());
+	return createHelper(snapshot, getSnapshotCurrent(), false, report);
     }
 
 
     Snapshots::iterator
-    Snapshots::createPostSnapshot(Snapshots::const_iterator pre, const SCD& scd)
+    Snapshots::createPostSnapshot(Snapshots::const_iterator pre, const SCD& scd, Plugins::Report& report)
     {
 	if (pre == entries.end() || pre->isCurrent() || pre->getType() != PRE ||
 	    findPost(pre) != entries.end())
@@ -746,18 +754,18 @@ namespace snapper
 	snapshot.cleanup = scd.cleanup;
 	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, getSnapshotCurrent());
+	return createHelper(snapshot, getSnapshotCurrent(), false, report);
     }
 
 
     Snapshots::iterator
-    Snapshots::createHelper(Snapshot& snapshot, const_iterator parent, bool empty)
+    Snapshots::createHelper(Snapshot& snapshot, const_iterator parent, bool empty, Plugins::Report& report)
     {
 	// parent == end indicates the btrfs default subvolume. Unclean, but
 	// adding a special snapshot like current needs too many API changes.
 
-	Hooks::create_snapshot(Hooks::Stage::PRE_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
-			       snapshot);
+	Plugins::create_snapshot(Plugins::Stage::PRE_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
+				 snapshot, report);
 
 	try
 	{
@@ -791,23 +799,23 @@ namespace snapper
 	    SN_RETHROW(e);
 	}
 
-	Hooks::create_snapshot(Hooks::Stage::POST_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
-			       snapshot);
+	Plugins::create_snapshot(Plugins::Stage::POST_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
+				 snapshot, report);
 
 	return entries.insert(entries.end(), snapshot);
     }
 
 
     void
-    Snapshots::modifySnapshot(iterator snapshot, const SMD& smd)
+    Snapshots::modifySnapshot(iterator snapshot, const SMD& smd, Plugins::Report& report)
     {
 	if (snapshot == entries.end() || snapshot->isCurrent())
 	    SN_THROW(IllegalSnapshotException());
 
 	checkUserdata(smd.userdata);
 
-	Hooks::modify_snapshot(Hooks::Stage::PRE_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
-			       *snapshot);
+	Plugins::modify_snapshot(Plugins::Stage::PRE_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
+				 *snapshot, report);
 
 	snapshot->description = smd.description;
 	snapshot->cleanup = smd.cleanup;
@@ -815,20 +823,20 @@ namespace snapper
 
 	snapshot->writeInfo();
 
-	Hooks::modify_snapshot(Hooks::Stage::POST_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
-			       *snapshot);
+	Plugins::modify_snapshot(Plugins::Stage::POST_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
+				 *snapshot, report);
     }
 
 
     void
-    Snapshots::deleteSnapshot(iterator snapshot)
+    Snapshots::deleteSnapshot(iterator snapshot, Plugins::Report& report)
     {
 	if (snapshot == entries.end() || snapshot->isCurrent() || snapshot->isDefault() ||
 	    snapshot->isActive())
 	    SN_THROW(IllegalSnapshotException());
 
-	Hooks::delete_snapshot(Hooks::Stage::PRE_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
-			       *snapshot);
+	Plugins::delete_snapshot(Plugins::Stage::PRE_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
+				 *snapshot, report);
 
 	snapshot->deleteFilesystemSnapshot();
 	snapshot->deleteFilelists();
@@ -839,8 +847,8 @@ namespace snapper
 	SDir infos_dir = snapper->openInfosDir();
 	infos_dir.unlink(decString(snapshot->getNum()), AT_REMOVEDIR);
 
-	Hooks::delete_snapshot(Hooks::Stage::POST_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
-			       *snapshot);
+	Plugins::delete_snapshot(Plugins::Stage::POST_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
+				 *snapshot, report);
 
 	entries.erase(snapshot);
     }
