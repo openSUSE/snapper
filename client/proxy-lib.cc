@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -85,62 +85,62 @@ ProxySnapperLib::setConfig(const ProxyConfig& proxy_config)
 
 
 ProxySnapshots::const_iterator
-ProxySnapperLib::createSingleSnapshot(const SCD& scd)
+ProxySnapperLib::createSingleSnapshot(const SCD& scd, Plugins::Report& report)
 {
-    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createSingleSnapshot(scd)));
+    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createSingleSnapshot(scd, report)));
 
     return --proxy_snapshots.end();
 }
 
 
 ProxySnapshots::const_iterator
-ProxySnapperLib::createSingleSnapshot(ProxySnapshots::const_iterator parent, const SCD& scd)
+ProxySnapperLib::createSingleSnapshot(ProxySnapshots::const_iterator parent, const SCD& scd, Plugins::Report& report)
 {
-    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createSingleSnapshot(to_lib(*parent).it, scd)));
+    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createSingleSnapshot(to_lib(*parent).it, scd, report)));
 
     return --proxy_snapshots.end();
 }
 
 
 ProxySnapshots::const_iterator
-ProxySnapperLib::createSingleSnapshotOfDefault(const SCD& scd)
+ProxySnapperLib::createSingleSnapshotOfDefault(const SCD& scd, Plugins::Report& report)
 {
-    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createSingleSnapshotOfDefault(scd)));
+    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createSingleSnapshotOfDefault(scd, report)));
 
     return --proxy_snapshots.end();
 }
 
 
 ProxySnapshots::const_iterator
-ProxySnapperLib::createPreSnapshot(const SCD& scd)
+ProxySnapperLib::createPreSnapshot(const SCD& scd, Plugins::Report& report)
 {
-    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createPreSnapshot(scd)));
+    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createPreSnapshot(scd, report)));
 
     return --proxy_snapshots.end();
 }
 
 
 ProxySnapshots::const_iterator
-ProxySnapperLib::createPostSnapshot(ProxySnapshots::const_iterator pre, const SCD& scd)
+ProxySnapperLib::createPostSnapshot(ProxySnapshots::const_iterator pre, const SCD& scd, Plugins::Report& report)
 {
-    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createPostSnapshot(to_lib(*pre).it, scd)));
+    proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createPostSnapshot(to_lib(*pre).it, scd, report)));
 
     return --proxy_snapshots.end();
 }
 
 
 void
-ProxySnapperLib::modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd)
+ProxySnapperLib::modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd, Plugins::Report& report)
 {
-    snapper->modifySnapshot(to_lib(*snapshot).it, smd);
+    snapper->modifySnapshot(to_lib(*snapshot).it, smd, report);
 }
 
 
 void
-ProxySnapperLib::deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, bool verbose)
+ProxySnapperLib::deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, bool verbose, Plugins::Report& report)
 {
     for (ProxySnapshots::iterator& snapshot : snapshots)
-	snapper->deleteSnapshot(to_lib(*snapshot).it);
+	snapper->deleteSnapshot(to_lib(*snapshot).it, report);
 
     ProxySnapshots& proxy_snapshots = getSnapshots();
     for (ProxySnapshots::iterator& proxy_snapshot : snapshots)
@@ -166,16 +166,16 @@ ProxySnapshotsLib::ProxySnapshotsLib(ProxySnapperLib* backref)
 
 void
 ProxySnappersLib::createConfig(const string& config_name, const string& subvolume,
-			       const string& fstype, const string& template_name)
+			       const string& fstype, const string& template_name, Plugins::Report& report)
 {
-    Snapper::createConfig(config_name, target_root, subvolume, fstype, template_name);
+    Snapper::createConfig(config_name, target_root, subvolume, fstype, template_name, report);
 }
 
 
 void
-ProxySnappersLib::deleteConfig(const string& config_name)
+ProxySnappersLib::deleteConfig(const string& config_name, Plugins::Report& report)
 {
-    Snapper::deleteConfig(config_name, target_root);
+    Snapper::deleteConfig(config_name, target_root, report);
 }
 
 

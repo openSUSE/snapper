@@ -110,8 +110,8 @@ public:
 
     virtual ~Cleaner() {}
 
-    void cleanup();
-    void cleanup(std::function<bool()> condition);
+    void cleanup(Plugins::Report& report);
+    void cleanup(std::function<bool()> condition, Plugins::Report& report);
 
 protected:
 
@@ -139,7 +139,7 @@ protected:
     // snapshot but which is not included in tmp.
     void filter_pre_post(ProxySnapshots& snapshots, list<ProxySnapshots::iterator>& tmp) const;
 
-    void remove(const list<ProxySnapshots::iterator>& tmp);
+    void remove(const list<ProxySnapshots::iterator>& tmp, Plugins::Report& report);
 
     // Should the cleanup with quota space be run?
     bool is_quota_aware() const;
@@ -153,8 +153,8 @@ protected:
     // Is the free space condition satisfied?
     bool is_free_satisfied() const;
 
-    void cleanup(ProxySnapshots& snapshots);
-    void cleanup(ProxySnapshots& snapshots, std::function<bool()> condition);
+    void cleanup(ProxySnapshots& snapshots, Plugins::Report& report);
+    void cleanup(ProxySnapshots& snapshots, std::function<bool()> condition, Plugins::Report& report);
 
     ProxySnapper* snapper;
 
@@ -240,11 +240,11 @@ Cleaner::filter_pre_post(ProxySnapshots& snapshots, list<ProxySnapshots::iterato
 
 
 void
-Cleaner::remove(const list<ProxySnapshots::iterator>& tmp)
+Cleaner::remove(const list<ProxySnapshots::iterator>& tmp, Plugins::Report& report)
 {
     for (list<ProxySnapshots::iterator>::const_iterator it = tmp.begin(); it != tmp.end(); ++it)
     {
-	snapper->deleteSnapshots({ *it }, verbose);
+	snapper->deleteSnapshots({ *it }, verbose, report);
     }
 }
 
@@ -334,18 +334,18 @@ Cleaner::is_free_satisfied() const
 
 
 void
-Cleaner::cleanup(ProxySnapshots& snapshots)
+Cleaner::cleanup(ProxySnapshots& snapshots, Plugins::Report& report)
 {
     list<ProxySnapshots::iterator> candidates = calculate_candidates(snapshots, Range::MAX);
 
     filter(snapshots, candidates);
 
-    remove(candidates);
+    remove(candidates, report);
 }
 
 
 void
-Cleaner::cleanup(ProxySnapshots& snapshots, std::function<bool()> condition)
+Cleaner::cleanup(ProxySnapshots& snapshots, std::function<bool()> condition, Plugins::Report& report)
 {
     while (!condition())
     {
@@ -374,7 +374,7 @@ Cleaner::cleanup(ProxySnapshots& snapshots, std::function<bool()> condition)
 
 	    if (!tmp.empty())
 	    {
-		remove(tmp);
+		remove(tmp, report);
 
 		// after removing snapshots the condition must be reevaluated
 		break;
@@ -400,7 +400,7 @@ Cleaner::cleanup(ProxySnapshots& snapshots, std::function<bool()> condition)
 
 
 void
-Cleaner::cleanup()
+Cleaner::cleanup(Plugins::Report& report)
 {
     ProxySnapshots& snapshots = snapper->getSnapshots();
 
@@ -408,7 +408,7 @@ Cleaner::cleanup()
     cout << "cleanup without condition" << '\n';
 #endif
 
-    cleanup(snapshots);
+    cleanup(snapshots, report);
 
     if (is_quota_aware())
     {
@@ -416,7 +416,7 @@ Cleaner::cleanup()
 	cout << "cleanup with quota condition" << '\n';
 #endif
 
-	cleanup(snapshots, std::bind(&Cleaner::is_quota_satisfied, this));
+	cleanup(snapshots, std::bind(&Cleaner::is_quota_satisfied, this), report);
     }
     else
     {
@@ -431,7 +431,7 @@ Cleaner::cleanup()
 	cout << "cleanup with free condition" << '\n';
 #endif
 
-	cleanup(snapshots, std::bind(&Cleaner::is_free_satisfied, this));
+	cleanup(snapshots, std::bind(&Cleaner::is_free_satisfied, this), report);
     }
     else
     {
@@ -443,7 +443,7 @@ Cleaner::cleanup()
 
 
 void
-Cleaner::cleanup(std::function<bool()> condition)
+Cleaner::cleanup(std::function<bool()> condition, Plugins::Report& report)
 {
     ProxySnapshots& snapshots = snapper->getSnapshots();
 
@@ -451,7 +451,7 @@ Cleaner::cleanup(std::function<bool()> condition)
     cout << "cleanup with user condition" << '\n';
 #endif
 
-    cleanup(snapshots, condition);
+    cleanup(snapshots, condition, report);
 }
 
 
@@ -562,20 +562,20 @@ private:
 
 
 void
-do_cleanup_number(ProxySnapper* snapper, bool verbose)
+do_cleanup_number(ProxySnapper* snapper, bool verbose, Plugins::Report& report)
 {
     NumberParameters parameters(snapper);
     NumberCleaner cleaner(snapper, verbose, parameters);
-    cleaner.cleanup();
+    cleaner.cleanup(report);
 }
 
 
 void
-do_cleanup_number(ProxySnapper* snapper, bool verbose, std::function<bool()> condition)
+do_cleanup_number(ProxySnapper* snapper, bool verbose, std::function<bool()> condition, Plugins::Report& report)
 {
     NumberParameters parameters(snapper);
     NumberCleaner cleaner(snapper, verbose, parameters);
-    cleaner.cleanup(condition);
+    cleaner.cleanup(condition, report);
 }
 
 
@@ -778,20 +778,20 @@ private:
 
 
 void
-do_cleanup_timeline(ProxySnapper* snapper, bool verbose)
+do_cleanup_timeline(ProxySnapper* snapper, bool verbose, Plugins::Report& report)
 {
     TimelineParameters parameters(snapper);
     TimelineCleaner cleaner(snapper, verbose, parameters);
-    cleaner.cleanup();
+    cleaner.cleanup(report);
 }
 
 
 void
-do_cleanup_timeline(ProxySnapper* snapper, bool verbose, std::function<bool()> condition)
+do_cleanup_timeline(ProxySnapper* snapper, bool verbose, std::function<bool()> condition, Plugins::Report& report)
 {
     TimelineParameters parameters(snapper);
     TimelineCleaner cleaner(snapper, verbose, parameters);
-    cleaner.cleanup(condition);
+    cleaner.cleanup(condition, report);
 }
 
 
@@ -852,18 +852,19 @@ private:
 
 
 void
-do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose)
+do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose, Plugins::Report& report)
 {
     EmptyPrePostParameters parameters(snapper);
     EmptyPrePostCleaner cleaner(snapper, verbose, parameters);
-    cleaner.cleanup();
+    cleaner.cleanup(report);
 }
 
 
 void
-do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose, std::function<bool()> condition)
+do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose, std::function<bool()> condition,
+			  Plugins::Report& report)
 {
     EmptyPrePostParameters parameters(snapper);
     EmptyPrePostCleaner cleaner(snapper, verbose, parameters);
-    cleaner.cleanup(condition);
+    cleaner.cleanup(condition, report);
 }

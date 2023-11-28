@@ -27,7 +27,7 @@
 
 #include <snapper/AppUtil.h>
 #include <snapper/Filesystem.h>
-#include <snapper/Hooks.h>
+#include <snapper/PluginsImpl.h>
 
 #include "utils/text.h"
 #include "GlobalOptions.h"
@@ -59,7 +59,8 @@ namespace snapper
 
 
     void
-    command_rollback(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*, ProxySnapper* snapper)
+    command_rollback(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*, ProxySnapper* snapper,
+		     Plugins::Report& report)
     {
 	const vector<Option> options = {
 	    Option("print-number",		no_argument,		'p'),
@@ -161,7 +162,7 @@ namespace snapper
 			cout << _("Creating read-only snapshot of default subvolume.") << flush;
 
 		    scd1.read_only = true;
-		    snapshot1 = snapper->createSingleSnapshotOfDefault(scd1);
+		    snapshot1 = snapper->createSingleSnapshotOfDefault(scd1, report);
 
 		    if (!global_options.quiet())
 			cout << " " << sformat(_("(Snapshot %d.)"), snapshot1->getNum()) << endl;
@@ -174,7 +175,7 @@ namespace snapper
 			scd2.description += sformat(" of #%d", active->getNum());
 
 		    scd2.read_only = false;
-		    snapshot2 = snapper->createSingleSnapshot(snapshots.getCurrent(), scd2);
+		    snapshot2 = snapper->createSingleSnapshot(snapshots.getCurrent(), scd2, report);
 
 		    if (!global_options.quiet())
 			cout << " " << sformat(_("(Snapshot %d.)"), snapshot2->getNum()) << endl;
@@ -186,7 +187,7 @@ namespace snapper
 		    if (!global_options.quiet())
 			cout << _("Creating read-only snapshot of current system.") << flush;
 
-		    snapshot1 = snapper->createSingleSnapshot(scd1);
+		    snapshot1 = snapper->createSingleSnapshot(scd1, report);
 
 		    if (!global_options.quiet())
 			cout << " " << sformat(_("(Snapshot %d.)"), snapshot1->getNum()) << endl;
@@ -198,7 +199,7 @@ namespace snapper
 			scd2.description += sformat(" of #%d", tmp->getNum());
 
 		    scd2.read_only = false;
-		    snapshot2 = snapper->createSingleSnapshot(tmp, scd2);
+		    snapshot2 = snapper->createSingleSnapshot(tmp, scd2, report);
 
 		    if (!global_options.quiet())
 			cout << " " << sformat(_("(Snapshot %d.)"), snapshot2->getNum()) << endl;
@@ -208,18 +209,18 @@ namespace snapper
 		{
 		    SMD smd = previous_default->getSmd();
 		    smd.cleanup = "number";
-		    snapper->modifySnapshot(previous_default, smd);
+		    snapper->modifySnapshot(previous_default, smd, report);
 		}
 
 		if (!global_options.quiet())
 		    cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot2->getNum()) << endl;
 
-		filesystem->setDefault(snapshot2->getNum());
+		filesystem->setDefault(snapshot2->getNum(), report);
 
-		Hooks::rollback(filesystem->snapshotDir(snapshot1->getNum()),
-				filesystem->snapshotDir(snapshot2->getNum()));
-		Hooks::rollback(Hooks::Stage::POST_ACTION, subvolume, filesystem, snapshot1->getNum(),
-				snapshot2->getNum());
+		Plugins::rollback(filesystem->snapshotDir(snapshot1->getNum()),
+				  filesystem->snapshotDir(snapshot2->getNum()), report);
+		Plugins::rollback(Plugins::Stage::POST_ACTION, subvolume, filesystem, snapshot1->getNum(),
+				  snapshot2->getNum(), report);
 
 		if (print_number)
 		    cout << snapshot2->getNum() << endl;
@@ -255,17 +256,17 @@ namespace snapper
 
 		SMD smd = snapshot->getSmd();
 		smd.cleanup = "";
-		snapper->modifySnapshot(snapshot, smd);
+		snapper->modifySnapshot(snapshot, smd, report);
 
 		if (!global_options.quiet())
 		    cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot->getNum()) << endl;
 
-		filesystem->setDefault(snapshot->getNum());
+		filesystem->setDefault(snapshot->getNum(), report);
 
-		Hooks::rollback(filesystem->snapshotDir(previous_default->getNum()),
-				filesystem->snapshotDir(snapshot->getNum()));
-		Hooks::rollback(Hooks::Stage::POST_ACTION, subvolume, filesystem, previous_default->getNum(),
-				snapshot->getNum());
+		Plugins::rollback(filesystem->snapshotDir(previous_default->getNum()),
+				  filesystem->snapshotDir(snapshot->getNum()), report);
+		Plugins::rollback(Plugins::Stage::POST_ACTION, subvolume, filesystem, previous_default->getNum(),
+				  snapshot->getNum(), report);
 	    }
 	    break;
 

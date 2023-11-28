@@ -32,13 +32,13 @@
  */
 
 void
-do_cleanup_number(ProxySnapper* snapper, bool verbose);
+do_cleanup_number(ProxySnapper* snapper, bool verbose, Plugins::Report& report);
 
 void
-do_cleanup_timeline(ProxySnapper* snapper, bool verbose);
+do_cleanup_timeline(ProxySnapper* snapper, bool verbose, Plugins::Report& report);
 
 void
-do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose);
+do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose, Plugins::Report& report);
 
 
 /*
@@ -47,10 +47,13 @@ do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose);
  */
 
 void
-do_cleanup_number(ProxySnapper* snapper, bool verbose, std::function<bool()> condition);
+do_cleanup_number(ProxySnapper* snapper, bool verbose, std::function<bool()> condition,
+		  Plugins::Report& report);
 
 void
-do_cleanup_timeline(ProxySnapper* snapper, bool verbose, std::function<bool()> condition);
+do_cleanup_timeline(ProxySnapper* snapper, bool verbose, std::function<bool()> condition,
+		    Plugins::Report& report);
 
 void
-do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose, std::function<bool()> condition);
+do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose, std::function<bool()> condition,
+			  Plugins::Report& report);

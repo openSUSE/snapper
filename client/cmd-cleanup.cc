@@ -109,26 +109,26 @@ namespace snapper
 
 
 	void
-	run_cleanup(ProxySnapper* snapper, CleanupAlgorithm cleanup_algorithm, bool verbose)
+	run_cleanup(ProxySnapper* snapper, CleanupAlgorithm cleanup_algorithm, bool verbose, Plugins::Report& report)
 	{
 	    switch (cleanup_algorithm)
 	    {
 		case CleanupAlgorithm::NUMBER:
-		    do_cleanup_number(snapper, verbose);
+		    do_cleanup_number(snapper, verbose, report);
 		    break;
 
 		case CleanupAlgorithm::TIMELINE:
-		    do_cleanup_timeline(snapper, verbose);
+		    do_cleanup_timeline(snapper, verbose, report);
 		    break;
 
 		case CleanupAlgorithm::EMPTY_PRE_POST:
-		    do_cleanup_empty_pre_post(snapper, verbose);
+		    do_cleanup_empty_pre_post(snapper, verbose, report);
 		    break;
 
 		case CleanupAlgorithm::ALL:
-		    do_cleanup_number(snapper, verbose);
-		    do_cleanup_timeline(snapper, verbose);
-		    do_cleanup_empty_pre_post(snapper, verbose);
+		    do_cleanup_number(snapper, verbose, report);
+		    do_cleanup_timeline(snapper, verbose, report);
+		    do_cleanup_empty_pre_post(snapper, verbose, report);
 		    break;
 	    }
 	}
@@ -136,7 +136,7 @@ namespace snapper
 
 	void
 	run_cleanup(ProxySnapper* snapper, CleanupAlgorithm cleanup_algorithm, bool verbose,
-		    const FreeSpaceCondition& free_space_condition)
+		    const FreeSpaceCondition& free_space_condition, Plugins::Report& report)
 	{
 	    std::function<bool()> condition = [snapper, &free_space_condition]() {
 		return free_space_condition.is_satisfied(snapper);
@@ -145,28 +145,29 @@ namespace snapper
 	    switch (cleanup_algorithm)
 	    {
 		case CleanupAlgorithm::NUMBER:
-		    do_cleanup_number(snapper, verbose, condition);
+		    do_cleanup_number(snapper, verbose, condition, report);
 		    break;
 
 		case CleanupAlgorithm::TIMELINE:
-		    do_cleanup_timeline(snapper, verbose, condition);
+		    do_cleanup_timeline(snapper, verbose, condition, report);
 		    break;
 
 		case CleanupAlgorithm::EMPTY_PRE_POST:
-		    do_cleanup_empty_pre_post(snapper, verbose, condition);
+		    do_cleanup_empty_pre_post(snapper, verbose, condition, report);
 		    break;
 
 		case CleanupAlgorithm::ALL:
-		    do_cleanup_number(snapper, verbose, condition);
-		    do_cleanup_timeline(snapper, verbose, condition);
-		    do_cleanup_empty_pre_post(snapper, verbose, condition);
+		    do_cleanup_number(snapper, verbose, condition, report);
+		    do_cleanup_timeline(snapper, verbose, condition, report);
+		    do_cleanup_empty_pre_post(snapper, verbose, condition, report);
 		    break;
 	    }
 	}
 
 
 	void
-	run_cleanup(const vector<ProxySnapper*>& snappers, CleanupAlgorithm cleanup_algorithm, bool verbose)
+	run_cleanup(const vector<ProxySnapper*>& snappers, CleanupAlgorithm cleanup_algorithm, bool verbose,
+		    Plugins::Report& report)
 	{
 	    for (ProxySnapper* snapper : snappers)
 	    {
@@ -174,14 +175,14 @@ namespace snapper
 		cout << "config " << snapper->configName() << '\n';
 #endif
 
-		run_cleanup(snapper, cleanup_algorithm, verbose);
+		run_cleanup(snapper, cleanup_algorithm, verbose, report);
 	    }
 	}
 
 
 	void
 	run_cleanup(const vector<ProxySnapper*>& snappers, CleanupAlgorithm cleanup_algorithm, bool verbose,
-		    const FreeSpaceCondition& free_space_condition)
+		    const FreeSpaceCondition& free_space_condition, Plugins::Report& report)
 	{
 	    for (ProxySnapper* snapper : snappers)
 	    {
@@ -194,7 +195,7 @@ namespace snapper
 
 		try
 		{
-		    run_cleanup(snapper, cleanup_algorithm, verbose, free_space_condition);
+		    run_cleanup(snapper, cleanup_algorithm, verbose, free_space_condition, report);
 		}
 		catch (...)
 		{
@@ -209,7 +210,8 @@ namespace snapper
 
 
     void
-    command_cleanup(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
+    command_cleanup(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		    ProxySnapper*, Plugins::Report& report)
     {
 	const vector<Option> options = {
 	    Option("path",		required_argument),
@@ -273,7 +275,7 @@ namespace snapper
 
 	    if (free_space == 0)
 	    {
-		run_cleanup(snapper, cleanup_algorithm, global_options.verbose());
+		run_cleanup(snapper, cleanup_algorithm, global_options.verbose(), report);
 	    }
 	    else
 	    {
@@ -291,7 +293,7 @@ namespace snapper
 
 		if (!free_space_condition->is_satisfied())
 		{
-		    run_cleanup(snapper, cleanup_algorithm, global_options.verbose(), *free_space_condition);
+		    run_cleanup(snapper, cleanup_algorithm, global_options.verbose(), *free_space_condition, report);
 
 		    if (!free_space_condition->is_satisfied())
 		    {
@@ -342,7 +344,7 @@ namespace snapper
 
 	    if (free_space == 0)
 	    {
-		run_cleanup(affected_snappers, cleanup_algorithm, global_options.verbose());
+		run_cleanup(affected_snappers, cleanup_algorithm, global_options.verbose(), report);
 	    }
 	    else
 	    {
@@ -361,7 +363,7 @@ namespace snapper
 		if (!free_space_condition->is_satisfied())
 		{
 		    run_cleanup(affected_snappers, cleanup_algorithm, global_options.verbose(),
-				*free_space_condition);
+				*free_space_condition, report);
 
 		    if (!free_space_condition->is_satisfied())
 		    {

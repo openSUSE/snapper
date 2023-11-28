@@ -55,7 +55,8 @@ namespace snapper
 
 
     void
-    command_modify(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*, ProxySnapper* snapper)
+    command_modify(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*,
+		   ProxySnapper* snapper, Plugins::Report& report)
     {
 	const vector<Option> options = {
 	    Option("description",		required_argument,	'd'),
@@ -126,7 +127,7 @@ namespace snapper
 
 	    if (set_smd)
 	    {
-		snapper->modifySnapshot(snapshot, smd);
+		snapper->modifySnapshot(snapshot, smd, report);
 	    }
 
 	    if (set_read_only)
@@ -138,7 +139,7 @@ namespace snapper
 	    {
 		ProxyConfig config = snapper->getConfig();
 		const Filesystem* filesystem = get_filesystem(config, global_options.root());
-		filesystem->setDefault(snapshot->getNum());
+		filesystem->setDefault(snapshot->getNum(), report);
 	    }
 	}
     }

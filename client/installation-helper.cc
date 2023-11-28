@@ -35,7 +35,7 @@
 #include <snapper/SnapperDefines.h>
 #include <snapper/Btrfs.h>
 #include <snapper/FileUtils.h>
-#include <snapper/Hooks.h>
+#include <snapper/PluginsImpl.h>
 #include "snapper/Log.h"
 
 #include "utils/GetOpts.h"
@@ -45,6 +45,9 @@
 
 using namespace snapper;
 using namespace std;
+
+
+Plugins::Report report;
 
 
 void
@@ -105,7 +108,7 @@ step1(const string& device, const string& description, const string& cleanup,
     scd.cleanup = cleanup;
     scd.userdata = userdata;
 
-    Snapshots::iterator snapshot = snapper.createSingleSnapshot(scd);
+    Snapshots::iterator snapshot = snapper.createSingleSnapshot(scd, report);
 
     cout << "again copying config-file" << endl;
 
@@ -120,7 +123,7 @@ step1(const string& device, const string& description, const string& cleanup,
 
     cout << "setting default subvolume" << endl;
 
-    snapshot->setDefault();
+    snapshot->setDefault(report);
 
     cout << "done" << endl;
 }
@@ -189,8 +192,8 @@ step4()
 
     // preconditions (maybe incomplete):
     // snapper rpms installed in chroot
-    // all programs for snapper hooks installed in chroot
-    // all preconditions for hooks satisfied
+    // all programs for snapper plugins installed in chroot
+    // all preconditions for plugins satisfied
 
     cout << "step 4" << endl;
 
@@ -214,7 +217,7 @@ step4()
 
     cout << "running external programs" << endl;
 
-    Hooks::create_config(Hooks::Stage::POST_ACTION, "/", &btrfs);
+    Plugins::create_config(Plugins::Stage::POST_ACTION, "/", &btrfs, report);
 
     cout << "done" << endl;
 }
@@ -242,13 +245,13 @@ step5(const string& root_prefix, const string& snapshot_type, unsigned int pre_n
     try
     {
         if (snapshot_type == "single") {
-            snapshot = snapper.createSingleSnapshot(scd);
+            snapshot = snapper.createSingleSnapshot(scd, report);
         } else if (snapshot_type == "pre") {
-            snapshot = snapper.createPreSnapshot(scd);
+            snapshot = snapper.createPreSnapshot(scd, report);
         } else if (snapshot_type == "post") {
             Snapshots snapshots = snapper.getSnapshots();
             Snapshots::iterator pre = snapshots.find(pre_num);
-            snapshot = snapper.createPostSnapshot(pre, scd);
+            snapshot = snapper.createPostSnapshot(pre, scd, report);
         }
     }
     catch (const runtime_error& e)

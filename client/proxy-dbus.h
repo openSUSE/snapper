@@ -125,17 +125,17 @@ public:
     virtual ProxyConfig getConfig() const override;
     virtual void setConfig(const ProxyConfig& proxy_config) override;
 
-    virtual ProxySnapshots::const_iterator createSingleSnapshot(const SCD& scd) override;
+    virtual ProxySnapshots::const_iterator createSingleSnapshot(const SCD& scd, Plugins::Report& report) override;
     virtual ProxySnapshots::const_iterator createSingleSnapshot(ProxySnapshots::const_iterator parent,
-								const SCD& scd) override;
-    virtual ProxySnapshots::const_iterator createSingleSnapshotOfDefault(const SCD& scd) override;
-    virtual ProxySnapshots::const_iterator createPreSnapshot(const SCD& scd) override;
+								const SCD& scd, Plugins::Report& report) override;
+    virtual ProxySnapshots::const_iterator createSingleSnapshotOfDefault(const SCD& scd, Plugins::Report& report) override;
+    virtual ProxySnapshots::const_iterator createPreSnapshot(const SCD& scd, Plugins::Report& report) override;
     virtual ProxySnapshots::const_iterator createPostSnapshot(ProxySnapshots::const_iterator pre,
-							      const SCD& scd) override;
+							      const SCD& scd, Plugins::Report& report) override;
 
-    virtual void modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd) override;
+    virtual void modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd, Plugins::Report& report) override;
 
-    virtual void deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, bool verbose) override;
+    virtual void deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, bool verbose, Plugins::Report& report) override;
 
     virtual ProxyComparison createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs,
 					     bool mount) override;
@@ -180,13 +180,15 @@ public:
     {}
 
     virtual void createConfig(const string& config_name, const string& subvolume,
-			      const string& fstype, const string& template_name) override;
+			      const string& fstype, const string& template_name, Plugins::Report& report) override;
 
-    virtual void deleteConfig(const string& config_name) override;
+    virtual void deleteConfig(const string& config_name, Plugins::Report& report) override;
 
     virtual ProxySnapper* getSnapper(const string& config_name) override;
 
     virtual map<string, ProxyConfig> getConfigs() const override;
+
+    virtual Plugins::Report get_plugins_report() const override;
 
     virtual vector<string> debug() const override;
 

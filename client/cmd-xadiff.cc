@@ -71,7 +71,8 @@ namespace snapper
 
 
     void
-    command_xadiff(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*, ProxySnapper* snapper)
+    command_xadiff(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*,
+		   ProxySnapper* snapper, Plugins::Report& report)
     {
 	ParsedOpts opts = get_opts.parse("xadiff", GetOpts::no_options);
 	if (get_opts.num_args() < 1)

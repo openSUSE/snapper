@@ -50,7 +50,8 @@ namespace snapper
 
 
     void
-    command_create_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
+    command_create_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+			  ProxySnapper*, Plugins::Report& report)
     {
 	const vector<Option> options = {
 	    Option("fstype",	required_argument,	'f'),
@@ -88,7 +89,7 @@ namespace snapper
 	    exit(EXIT_FAILURE);
 	}
 
-	snappers->createConfig(global_options.config(), subvolume, fstype, template_name);
+	snappers->createConfig(global_options.config(), subvolume, fstype, template_name, report);
     }
 
 }

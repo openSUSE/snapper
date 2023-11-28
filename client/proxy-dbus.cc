@@ -215,7 +215,7 @@ ProxySnapperDbus::queryFreeSpaceData() const
 
 
 ProxySnapshots::const_iterator
-ProxySnapperDbus::createSingleSnapshot(const SCD& scd)
+ProxySnapperDbus::createSingleSnapshot(const SCD& scd, Plugins::Report& report)
 {
     unsigned int num = command_create_single_snapshot(conn(), config_name, scd.description,
 						      scd.cleanup, scd.userdata);
@@ -227,7 +227,7 @@ ProxySnapperDbus::createSingleSnapshot(const SCD& scd)
 
 
 ProxySnapshots::const_iterator
-ProxySnapperDbus::createSingleSnapshot(ProxySnapshots::const_iterator parent, const SCD& scd)
+ProxySnapperDbus::createSingleSnapshot(ProxySnapshots::const_iterator parent, const SCD& scd, Plugins::Report& report)
 {
     unsigned int num = command_create_single_snapshot_v2(conn(), config_name, parent->getNum(),
 							 scd.read_only, scd.description, scd.cleanup,
@@ -240,7 +240,7 @@ ProxySnapperDbus::createSingleSnapshot(ProxySnapshots::const_iterator parent, co
 
 
 ProxySnapshots::const_iterator
-ProxySnapperDbus::createSingleSnapshotOfDefault(const SCD& scd)
+ProxySnapperDbus::createSingleSnapshotOfDefault(const SCD& scd, Plugins::Report& report)
 {
     unsigned int num = command_create_single_snapshot_of_default(conn(), config_name, scd.read_only,
 								 scd.description, scd.cleanup,
@@ -253,7 +253,7 @@ ProxySnapperDbus::createSingleSnapshotOfDefault(const SCD& scd)
 
 
 ProxySnapshots::const_iterator
-ProxySnapperDbus::createPreSnapshot(const SCD& scd)
+ProxySnapperDbus::createPreSnapshot(const SCD& scd, Plugins::Report& report)
 {
     unsigned int num = command_create_pre_snapshot(conn(), config_name, scd.description,
 						   scd.cleanup, scd.userdata);
@@ -265,7 +265,7 @@ ProxySnapperDbus::createPreSnapshot(const SCD& scd)
 
 
 ProxySnapshots::const_iterator
-ProxySnapperDbus::createPostSnapshot(ProxySnapshots::const_iterator pre, const SCD& scd)
+ProxySnapperDbus::createPostSnapshot(ProxySnapshots::const_iterator pre, const SCD& scd, Plugins::Report& report)
 {
     unsigned int num = command_create_post_snapshot(conn(), config_name, pre->getNum(),
 						    scd.description, scd.cleanup, scd.userdata);
@@ -277,14 +277,14 @@ ProxySnapperDbus::createPostSnapshot(ProxySnapshots::const_iterator pre, const S
 
 
 void
-ProxySnapperDbus::modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd)
+ProxySnapperDbus::modifySnapshot(ProxySnapshots::iterator snapshot, const SMD& smd, Plugins::Report& report)
 {
     command_set_snapshot(conn(), config_name, snapshot->getNum(), smd);
 }
 
 
 void
-ProxySnapperDbus::deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, bool verbose)
+ProxySnapperDbus::deleteSnapshots(vector<ProxySnapshots::iterator> snapshots, bool verbose, Plugins::Report& report)
 {
     vector<unsigned int> nums;
     for (const ProxySnapshots::iterator& proxy_snapshot : snapshots)
@@ -321,14 +321,14 @@ ProxySnapperDbus::conn() const
 
 void
 ProxySnappersDbus::createConfig(const string& config_name, const string& subvolume,
-				const string& fstype, const string& template_name)
+				const string& fstype, const string& template_name, Plugins::Report& report)
 {
     command_create_config(conn, config_name, subvolume, fstype, template_name);
 }
 
 
 void
-ProxySnappersDbus::deleteConfig(const string& config_name)
+ProxySnappersDbus::deleteConfig(const string& config_name, Plugins::Report& report)
 {
     command_delete_config(conn, config_name);
 }
@@ -357,6 +357,31 @@ ProxySnappersDbus::getConfigs() const
     vector<XConfigInfo> config_infos = command_list_xconfigs(conn);
     for (XConfigInfo& x : config_infos)
 	ret.emplace(make_pair(x.config_name, x.raw));
+
+    return ret;
+}
+
+
+Plugins::Report
+ProxySnappersDbus::get_plugins_report() const
+{
+    Plugins::Report ret;
+
+    try
+    {
+	for (const XReport& xreport : command_get_plugins_report(conn))
+	    ret.entries.emplace_back(xreport.name, xreport.args, xreport.exit_status);
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	SN_CAUGHT(e);
+
+	// If snapper was just updated and the old snapperd is still
+	// running it might not know the GetPluginsReport method.
+
+	if (strcmp(e.name(), "error.unknown_method") != 0)
+	    SN_RETHROW(e);
+    }
 
     return ret;
 }

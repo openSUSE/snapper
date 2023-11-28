@@ -167,7 +167,8 @@ namespace snapper
 
 
     void
-    command_list_configs(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
+    command_list_configs(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+			 ProxySnapper*, Plugins::Report& report)
     {
 	const vector<Option> options = {
 	    Option("columns",	required_argument)

@@ -26,6 +26,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
+#include <boost/algorithm/string.hpp>
 
 #include <snapper/Snapper.h>
 #include <snapper/SnapperTmpl.h>
@@ -49,7 +50,7 @@ using namespace std;
 struct Cmd
 {
     typedef void (*cmd_func_t)(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
-			       ProxySnapper* snapper);
+			       ProxySnapper* snapper, Plugins::Report& report);
 
     typedef void (*help_func_t)();
 
@@ -165,6 +166,8 @@ main(int argc, char** argv)
 	Cmd("debug", command_debug, help_debug, false)
     };
 
+    int exit_status = EXIT_SUCCESS;
+
     try
     {
 	GetOpts get_opts(argc, argv);
@@ -221,10 +224,42 @@ main(int argc, char** argv)
 
 	    y2mil("executing command");
 
+	    Plugins::Report client_report;
+
 	    if (cmd->needs_snapper)
-		(*cmd->cmd_func)(global_options, get_opts, &snappers, snappers.getSnapper(global_options.config()));
+		(*cmd->cmd_func)(global_options, get_opts, &snappers, snappers.getSnapper(global_options.config()),
+				 client_report);
 	    else
-		(*cmd->cmd_func)(global_options, get_opts, &snappers, nullptr);
+		(*cmd->cmd_func)(global_options, get_opts, &snappers, nullptr, client_report);
+
+	    Plugins::Report server_report = snappers.get_plugins_report();
+
+	    // Plugins can be started from the client or server. So we have to check both
+	    // reports.
+
+	    for (const Plugins::Report::Entry& entry : client_report.entries)
+	    {
+		y2deb("client: " << entry.name << " " << boost::join(entry.args, " ") << " exit-status: " <<
+		      entry.exit_status);
+
+		if (entry.exit_status != 0)
+		{
+		    cerr << sformat(_("Client-side plugin '%s' failed."), entry.name.c_str()) << '\n';
+		    exit_status = EXIT_FAILURE;
+		}
+	    }
+
+	    for (const Plugins::Report::Entry& entry : server_report.entries)
+	    {
+		y2deb("server: " << entry.name << " " << boost::join(entry.args, " ") << " exit-status: " <<
+		      entry.exit_status);
+
+		if (entry.exit_status != 0)
+		{
+		    cerr << sformat(_("Server-side plugin '%s' failed."), entry.name.c_str()) << '\n';
+		    exit_status = EXIT_FAILURE;
+		}
+	    }
 	}
 	catch (const DBus::ErrorException& e)
 	{
@@ -352,5 +387,6 @@ main(int argc, char** argv)
 	exit(EXIT_FAILURE);
     }
 
-    exit(EXIT_SUCCESS);
+    y2deb("exit-status: " << exit_status);
+    exit(exit_status);
 }

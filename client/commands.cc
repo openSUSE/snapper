@@ -690,6 +690,22 @@ command_sync(DBus::Connection& conn, const string& config_name)
 }
 
 
+vector<XReport>
+command_get_plugins_report(DBus::Connection& conn)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetPluginsReport");
+
+    DBus::Message reply = conn.send_with_reply_and_block(call);
+
+    vector<XReport> xreport;
+
+    DBus::Unmarshaller unmarshaller(reply);
+    unmarshaller >> xreport;
+
+    return xreport;
+}
+
+
 vector<string>
 command_debug(DBus::Connection& conn)
 {

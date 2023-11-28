@@ -67,7 +67,8 @@ namespace snapper
 
 
     void
-    command_create(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*, ProxySnapper* snapper)
+    command_create(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*,
+		   ProxySnapper* snapper, Plugins::Report& report)
     {
 	const vector<Option> options = {
 	    Option("type",			required_argument,	't'),
@@ -165,27 +166,27 @@ namespace snapper
 	switch (type)
 	{
 	    case CreateType::SINGLE: {
-		snapshot1 = snapper->createSingleSnapshot(parent, scd);
+		snapshot1 = snapper->createSingleSnapshot(parent, scd, report);
 		if (print_number)
 		    cout << snapshot1->getNum() << endl;
 	    } break;
 
 	    case CreateType::PRE: {
-		snapshot1 = snapper->createPreSnapshot(scd);
+		snapshot1 = snapper->createPreSnapshot(scd, report);
 		if (print_number)
 		    cout << snapshot1->getNum() << endl;
 	    } break;
 
 	    case CreateType::POST: {
-		snapshot2 = snapper->createPostSnapshot(snapshot1, scd);
+		snapshot2 = snapper->createPostSnapshot(snapshot1, scd, report);
 		if (print_number)
 		    cout << snapshot2->getNum() << endl;
 	    } break;
 
 	    case CreateType::PRE_POST: {
-		snapshot1 = snapper->createPreSnapshot(scd);
+		snapshot1 = snapper->createPreSnapshot(scd, report);
 		system(command.c_str());
-		snapshot2 = snapper->createPostSnapshot(snapshot1, scd);
+		snapshot2 = snapper->createPostSnapshot(snapshot1, scd, report);
 		if (print_number)
 		    cout << snapshot1->getNum() << ".." << snapshot2->getNum() << endl;
 	    } break;

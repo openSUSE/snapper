@@ -34,91 +34,104 @@ namespace snapper
     help_list_configs();
 
     void
-    command_list_configs(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*);
+    command_list_configs(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+			 ProxySnapper*, Plugins::Report& report);
 
 
     void
     help_create_config();
 
     void
-    command_create_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*);
+    command_create_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+			  ProxySnapper*, Plugins::Report& report);
 
 
     void
     help_delete_config();
 
     void
-    command_delete_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*);
+    command_delete_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+			  ProxySnapper*, Plugins::Report& report);
 
 
     void
     help_get_config();
 
     void
-    command_get_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*);
+    command_get_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		       ProxySnapper*, Plugins::Report& report);
 
 
     void
     help_set_config();
 
     void
-    command_set_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*);
+    command_set_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		       ProxySnapper*, Plugins::Report& report);
 
 
     void
     help_list();
 
     void
-    command_list(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*);
+    command_list(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		 ProxySnapper*, Plugins::Report& report);
 
 
     void
     help_create();
 
     void
-    command_create(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper);
+    command_create(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		   ProxySnapper* snapper, Plugins::Report& report);
 
 
     void
     help_modify();
 
     void
-    command_modify(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper);
+    command_modify(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		   ProxySnapper* snapper, Plugins::Report& report);
 
 
     void
     help_delete();
 
     void
-    command_delete(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper);
+    command_delete(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		   ProxySnapper* snapper, Plugins::Report& report);
 
 
     void
     help_mount();
 
     void
-    command_mount(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper);
+    command_mount(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		  ProxySnapper* snapper, Plugins::Report& report);
 
 
     void
     help_umount();
 
     void
-    command_umount(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper);
+    command_umount(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		   ProxySnapper* snapper, Plugins::Report& report);
 
 
     void
     help_status();
 
     void
-    command_status(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper);
+    command_status(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		   ProxySnapper* snapper, Plugins::Report& report);
 
 
     void
     help_diff();
 
     void
-    command_diff(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper);
+    command_diff(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		 ProxySnapper* snapper, Plugins::Report& report);
 
 
 #ifdef ENABLE_XATTRS
@@ -127,7 +140,8 @@ namespace snapper
     help_xadiff();
 
     void
-    command_xadiff(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper);
+    command_xadiff(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		   ProxySnapper* snapper, Plugins::Report& report);
 
 #endif
 
@@ -136,7 +150,8 @@ namespace snapper
     help_undochange();
 
     void
-    command_undochange(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper);
+    command_undochange(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		       ProxySnapper* snapper, Plugins::Report& report);
 
 
 #ifdef ENABLE_ROLLBACK
@@ -145,7 +160,8 @@ namespace snapper
     help_rollback();
 
     void
-    command_rollback(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper);
+    command_rollback(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		     ProxySnapper* snapper, Plugins::Report& report);
 
 #endif
 
@@ -154,7 +170,8 @@ namespace snapper
     help_setup_quota();
 
     void
-    command_setup_quota(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper);
+    command_setup_quota(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+			ProxySnapper* snapper, Plugins::Report& report);
 
 
     struct CleanupException : public Exception
@@ -167,13 +184,15 @@ namespace snapper
     help_cleanup();
 
     void
-    command_cleanup(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper);
+    command_cleanup(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		    ProxySnapper* snapper, Plugins::Report& report);
 
 
     void
     help_debug();
 
     void
-    command_debug(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper* snapper);
+    command_debug(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		  ProxySnapper* snapper, Plugins::Report& report);
 
 }

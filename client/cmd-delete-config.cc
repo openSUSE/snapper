@@ -44,7 +44,8 @@ namespace snapper
 
 
     void
-    command_delete_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers, ProxySnapper*)
+    command_delete_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+			  ProxySnapper*, Plugins::Report& report)
     {
 	get_opts.parse("delete-config", GetOpts::no_options);
 	if (get_opts.has_args())
@@ -53,7 +54,7 @@ namespace snapper
 	    exit(EXIT_FAILURE);
 	}
 
-	snappers->deleteConfig(global_options.config());
+	snappers->deleteConfig(global_options.config(), report);
     }
 
 }
