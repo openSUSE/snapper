@@ -21,9 +21,9 @@
  */
 
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <getopt.h>
-#include <signal.h>
+#include <csignal>
 #include <iostream>
 #include <string>
 

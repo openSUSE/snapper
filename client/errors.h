@@ -21,10 +21,6 @@
  */
 
 
-#include <string>
-
-using std::string;
-
 #include "dbus/DBusConnection.h"
 
 

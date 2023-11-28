@@ -18,10 +18,11 @@
  *
  */
 
+
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <errno.h>
+#include <cerrno>
 
 #include "snapper/Acls.h"
 #include "snapper/AppUtil.h"

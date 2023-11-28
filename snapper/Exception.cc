@@ -25,8 +25,8 @@
  */
 
 
-#include <string.h>
-#include <stdio.h>
+#include <cstring>
+#include <cstdio>
 #include <sstream>
 
 #include "snapper/Exception.h"

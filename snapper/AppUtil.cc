@@ -21,12 +21,12 @@
  */
 
 
-#include <errno.h>
-#include <stdarg.h>
+#include <cerrno>
+#include <cstdarg>
 #include <unistd.h>
 #include <fcntl.h>
 #include <glob.h>
-#include <string.h>
+#include <cstring>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/utsname.h>

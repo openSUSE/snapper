@@ -23,7 +23,7 @@
 
 #include <pwd.h>
 #include <unistd.h>
-#include <string.h>
+#include <cstring>
 #include <sys/types.h>
 #include <libxml/xmlerror.h>
 #include <string>
