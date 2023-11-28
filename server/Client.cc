@@ -399,6 +399,13 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"    </method>\n"
 
+	"    <method name='GetPluginsReport'>\n"
+	"      <arg name='report' type='a(sasi)' direction='out'/>\n"
+	"    </method>\n"
+
+	"    <method name='ClearPluginsReport'>\n"
+	"    </method>\n"
+
 	"  </interface>\n"
 	"</node>\n";
 
@@ -682,7 +689,7 @@ Client::create_config(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg);
 
-    meta_snappers.createConfig(config_name, subvolume, fstype, template_name);
+    meta_snappers.createConfig(config_name, subvolume, fstype, template_name, report);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -710,7 +717,7 @@ Client::delete_config(DBus::Connection& conn, DBus::Message& msg)
     check_lock(conn, msg, config_name);
     check_config_in_use(*it);
 
-    meta_snappers.deleteConfig(it);
+    meta_snappers.deleteConfig(it, report);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -891,7 +898,7 @@ Client::set_snapshot(DBus::Connection& conn, DBus::Message& msg)
     if (snap == snapshots.end())
 	SN_THROW(IllegalSnapshotException());
 
-    snapper->modifySnapshot(snap, smd);
+    snapper->modifySnapshot(snap, smd, report);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -922,7 +929,7 @@ Client::create_single_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     Snapper* snapper = it->getSnapper();
 
-    Snapshots::iterator snap1 = snapper->createSingleSnapshot(scd);
+    Snapshots::iterator snap1 = snapper->createSingleSnapshot(scd, report);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -961,7 +968,7 @@ Client::create_single_snapshot_v2(DBus::Connection& conn, DBus::Message& msg)
 
     Snapshots::iterator parent = snapshots.find(parent_num);
 
-    Snapshots::iterator snap2 = snapper->createSingleSnapshot(parent, scd);
+    Snapshots::iterator snap2 = snapper->createSingleSnapshot(parent, scd, report);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -995,7 +1002,7 @@ Client::create_single_snapshot_of_default(DBus::Connection& conn, DBus::Message&
 
     Snapper* snapper = it->getSnapper();
 
-    Snapshots::iterator snap = snapper->createSingleSnapshotOfDefault(scd);
+    Snapshots::iterator snap = snapper->createSingleSnapshotOfDefault(scd, report);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -1029,7 +1036,7 @@ Client::create_pre_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     Snapper* snapper = it->getSnapper();
 
-    Snapshots::iterator snap1 = snapper->createPreSnapshot(scd);
+    Snapshots::iterator snap1 = snapper->createPreSnapshot(scd, report);
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -1067,7 +1074,7 @@ Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
 
     Snapshots::iterator snap1 = snapshots.find(pre_num);
 
-    Snapshots::iterator snap2 = snapper->createPostSnapshot(snap1, scd);
+    Snapshots::iterator snap2 = snapper->createPostSnapshot(snap1, scd, report);
 
     bool background_comparison = true;
     it->getConfigInfo().get_value("BACKGROUND_COMPARISON", background_comparison);
@@ -1113,7 +1120,7 @@ Client::delete_snapshots(DBus::Connection& conn, DBus::Message& msg)
 
 	Snapshots::iterator snap = snapshots.find(*it2);
 
-	snapper->deleteSnapshot(snap);
+	snapper->deleteSnapshot(snap, report);
     }
 
     DBus::MessageMethodReturn reply(msg);
@@ -1708,6 +1715,8 @@ Client::sync(DBus::Connection& conn, DBus::Message& msg)
 
     y2deb("Sync config_name:" << config_name);
 
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
     MetaSnappers::iterator it = meta_snappers.find(config_name);
 
     check_permission(conn, msg, *it);
@@ -1717,6 +1726,43 @@ Client::sync(DBus::Connection& conn, DBus::Message& msg)
     snapper->syncFilesystem();
 
     DBus::MessageMethodReturn reply(msg);
+
+    conn.send(reply);
+}
+
+
+void
+Client::get_plugins_report(DBus::Connection& conn, DBus::Message& msg)
+{
+    y2deb("GetPluginsReport");
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    check_permission(conn, msg);
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Marshaller marshaller(reply);
+    marshaller << report.entries;
+
+    conn.send(reply);
+}
+
+
+void
+Client::clear_plugins_report(DBus::Connection& conn, DBus::Message& msg)
+{
+    y2deb("ClearPluginsReport");
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    check_permission(conn, msg);
+
+    DBus::MessageMethodReturn reply(msg);
+
+    report.clear();
+
+    DBus::Marshaller marshaller(reply);
 
     conn.send(reply);
 }
@@ -1836,6 +1882,8 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	{ "QueryQuota", &Client::query_quota },
 	{ "QueryFreeSpace", &Client::query_free_space },
 	{ "Sync", &Client::sync },
+	{ "GetPluginsReport", &Client::get_plugins_report },
+	{ "ClearPluginsReport", &Client::clear_plugins_report },
 	{ "Debug", &Client::debug }
     };
 

@@ -34,6 +34,7 @@
 #include <snapper/Snapper.h>
 #include <snapper/Snapshot.h>
 #include <snapper/Comparison.h>
+#include <snapper/Plugins.h>
 #include <dbus/DBusConnection.h>
 #include <dbus/DBusMessage.h>
 
@@ -120,6 +121,8 @@ public:
     void query_quota(DBus::Connection& conn, DBus::Message& msg);
     void query_free_space(DBus::Connection& conn, DBus::Message& msg);
     void sync(DBus::Connection& conn, DBus::Message& msg);
+    void get_plugins_report(DBus::Connection& conn, DBus::Message& msg);
+    void clear_plugins_report(DBus::Connection& conn, DBus::Message& msg);
     void debug(DBus::Connection& conn, DBus::Message& msg);
 
     void dispatch(DBus::Connection& conn, DBus::Message& msg);
@@ -173,6 +176,8 @@ public:
     void add_files_transfer_task(shared_ptr<FilesTransferTask> files_transfer_task);
 
     bool zombie = false;
+
+    Plugins::Report report;
 
 private:
 

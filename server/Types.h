@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Novell, Inc.
- * Copyright (c) [2016,2018] SUSE LLC
+ * Copyright (c) [2016-2023] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -22,11 +22,10 @@
 
 
 #include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <dbus/dbus.h>
-
+#include <cstdlib>
+#include <cstring>
 #include <string>
+#include <dbus/dbus.h>
 
 #include <snapper/Snapper.h>
 #include <snapper/Snapshot.h>
@@ -46,6 +45,7 @@ namespace DBus
     template <> struct TypeInfo<File> { static const char* signature; };
     template <> struct TypeInfo<QuotaData> { static const char* signature; };
     template <> struct TypeInfo<FreeSpaceData> { static const char* signature; };
+    template <> struct TypeInfo<Plugins::Report::Entry> { static const char* signature; };
 
     Marshaller& operator<<(Marshaller& marshaller, const ConfigInfo& data);
 
@@ -63,5 +63,7 @@ namespace DBus
     Marshaller& operator<<(Marshaller& marshaller, const QuotaData& data);
 
     Marshaller& operator<<(Marshaller& marshaller, const FreeSpaceData& data);
+
+    Marshaller& operator<<(Marshaller& marshaller, const Plugins::Report::Entry& data);
 
 }

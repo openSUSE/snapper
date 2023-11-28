@@ -21,7 +21,7 @@
  */
 
 
-#include <string.h>
+#include <cstring>
 #include <sys/types.h>
 #include <boost/algorithm/string.hpp>
 
@@ -172,10 +172,10 @@ MetaSnappers::find(const string& config_name)
 
 
 void
-MetaSnappers::createConfig(const string& config_name, const string& subvolume,
-			   const string& fstype, const string& template_name)
+MetaSnappers::createConfig(const string& config_name, const string& subvolume, const string& fstype,
+			   const string& template_name, Plugins::Report& report)
 {
-    Snapper::createConfig(config_name, "/", subvolume, fstype, template_name);
+    Snapper::createConfig(config_name, "/", subvolume, fstype, template_name, report);
 
     ConfigInfo config_info = Snapper::getConfig(config_name, "/");
 
@@ -184,9 +184,9 @@ MetaSnappers::createConfig(const string& config_name, const string& subvolume,
 
 
 void
-MetaSnappers::deleteConfig(iterator it)
+MetaSnappers::deleteConfig(iterator it, Plugins::Report& report)
 {
-    Snapper::deleteConfig(it->configName(), "/");
+    Snapper::deleteConfig(it->configName(), "/", report);
 
     entries.erase(it);
 }
