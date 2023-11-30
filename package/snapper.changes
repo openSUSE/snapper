@@ -2,6 +2,7 @@
 Tue Nov 28 08:22:41 CET 2023 - aschnell@suse.com
 
 - report plugin failures (gh#openSUSE/snapper#846)
+- version 0.10.7
 
 -------------------------------------------------------------------
 Wed Nov 22 16:15:37 CET 2023 - aschnell@suse.com
