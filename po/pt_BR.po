@@ -9,9 +9,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-28 08:50+0100\n"
-"PO-Revision-Date: 2023-10-04 23:15+0000\n"
+"PO-Revision-Date: 2023-12-05 21:02+0000\n"
 "Last-Translator: Luiz Fernando Ranghetti <elchevive68@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/"
+"snapper/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -389,9 +390,9 @@ msgstr "Não é possível reverter porque o subvolume padrão é desconhecido."
 msgid "Cleanup"
 msgstr "Limpeza"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Client-side plugin '%s' failed."
-msgstr "Falha ao abrir o arquivo '%s'."
+msgstr "Falha no plugin do lado do cliente '%s'."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "O comando 'cleanup' precisa de um argumento."
@@ -758,9 +759,9 @@ msgstr "Somente leitura"
 msgid "See 'man snapper' for further instructions."
 msgstr "Consulte \"man snapper\" para obter mais instruções."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Server-side plugin '%s' failed."
-msgstr "Falha ao abrir o arquivo '%s'."
+msgstr "Falha no plugin do lado do servidor '%s'."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
