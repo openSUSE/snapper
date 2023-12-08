@@ -1738,7 +1738,7 @@ Client::get_plugins_report(DBus::Connection& conn, DBus::Message& msg)
 
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
-    check_permission(conn, msg);
+    // No permission check here: The report belongs to the client.
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -1756,7 +1756,7 @@ Client::clear_plugins_report(DBus::Connection& conn, DBus::Message& msg)
 
     boost::unique_lock<boost::shared_mutex> lock(big_mutex);
 
-    check_permission(conn, msg);
+    // No permission check here: The report belongs to the client.
 
     DBus::MessageMethodReturn reply(msg);
 
