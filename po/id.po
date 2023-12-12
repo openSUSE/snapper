@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-11-28 08:50+0100\n"
-"PO-Revision-Date: 2023-12-05 15:01+0000\n"
-"Last-Translator: Arif Budiman <arifpedia@gmail.com>\n"
+"PO-Revision-Date: 2023-12-12 12:02+0000\n"
+"Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
 "Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/"
 "id/>\n"
 "Language: id\n"
@@ -386,7 +386,7 @@ msgstr "Membersihkan"
 
 #, c-format
 msgid "Client-side plugin '%s' failed."
-msgstr "Plugin sisi klien '%s' gagal."
+msgstr "Pengaya sisi klien '%s' gagal."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Perintah 'cleanup' membutuhkan satu argumen."
@@ -755,7 +755,7 @@ msgstr "Lihat 'man snapper' untuk instruksi lebih lanjut."
 
 #, c-format
 msgid "Server-side plugin '%s' failed."
-msgstr "Plugin sisi server '%s' gagal."
+msgstr "Pengaya sisi peladen '%s' gagal."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
