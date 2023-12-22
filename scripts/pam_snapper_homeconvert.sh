@@ -40,7 +40,7 @@ if [ "0$MYUSER" == "0" ]; then
 fi
 
 function is_btrfs_homehome () {
-	# Sanity-Check: ist $HOMEHOME a btrfs filesystem
+	# Sanity-Check: is $HOMEHOME a btrfs filesystem
 	${CMD_BTRFS} filesystem df ${HOMEHOME} 2>&1 > /dev/null
 	RETVAL=$?
 	if [ ${RETVAL} != 0 ]; then
