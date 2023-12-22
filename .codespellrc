@@ -1,0 +1,5 @@
+[codespell]
+skip = .git,*.pdf,*.svg,go.sum,.codespellrc,po
+check-hidden = true
+# ignore-regex = 
+ignore-words-list = childs
