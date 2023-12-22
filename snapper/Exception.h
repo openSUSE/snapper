@@ -154,17 +154,17 @@ namespace snapper
 	    : _line(0) {}
 
 	/**
-	 * Returns the source file name where the exception occured.
+	 * Returns the source file name where the exception occurred.
 	 **/
 	const std::string& file() const { return _file; }
 
 	/**
-	 * Returns the name of the function where the exception occured.
+	 * Returns the name of the function where the exception occurred.
 	 **/
 	const std::string& func() const { return _func; }
 
 	/**
-	 * Returns the source line number where the exception occured.
+	 * Returns the source line number where the exception occurred.
 	 **/
 	int line() const { return _line; }
 
@@ -233,7 +233,7 @@ namespace snapper
 
 	/**
 	 * Return the message string provided to the constructor.
-	 * Note: This is not neccessarily the complete error message.
+	 * Note: This is not necessarily the complete error message.
 	 * The whole error message is provided by asString or dumpOn.
 	 **/
 	const std::string& msg() const { return _msg; }

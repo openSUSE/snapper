@@ -69,7 +69,7 @@ endif
 # Create all the files necessary for building the package with OBS:
 #
 # - Clean up the package/ directory
-# - create a new tarball (via the depencency)
+# - create a new tarball (via the dependency)
 # - copy the content of the debian/ directory
 # - for both Debian, Ubuntu and Raspbian, generate a master .dsc.in from file with the
 #   "Files:" line for the tarball with its md5sum, file size in bytes, and name
@@ -86,7 +86,7 @@ endif
 # configure.ac) where @VERSION@ is expanded with the content of the toplevel
 # VERSION file.
 #
-# $< is the first depencency of the rule, i.e. snapper-$(VERSION).tar.gz in this case.
+# $< is the first dependency of the rule, i.e. snapper-$(VERSION).tar.gz in this case.
 
 # Build a reproducible tarball:
 # - set the file time stamps according to the latest commit

@@ -79,9 +79,9 @@ namespace snapper
 		throw runtime_error("mnt_table_replace_file failed");
 	}
 
-	struct libmnt_fs* find_target(const string& path, int directon)
+	struct libmnt_fs* find_target(const string& path, int direction)
 	{
-	    return mnt_table_find_target(table, path.c_str(), directon);
+	    return mnt_table_find_target(table, path.c_str(), direction);
 	}
 
 	struct libmnt_fs* find_target_up(const string& path, int direction);
