@@ -119,7 +119,7 @@ namespace snapper
 
 
 	/**
-	 * Class to tempararily hold copies for execle() and execvpe().
+	 * Class to temporarily hold copies for execle() and execvpe().
 	 */
 	class TmpForExec
 	{

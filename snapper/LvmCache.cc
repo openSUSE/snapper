@@ -396,7 +396,7 @@ namespace snapper
 	    throw LvmCacheException();
 	}
 
-	// wait for all invidual lv cache operations under shared vg lock to finish
+	// wait for all individual lv cache operations under shared vg lock to finish
 	boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(upg_lock);
 
 	SystemCmd cmd({ LVREMOVEBIN, "--force", full_name(lv_name) });

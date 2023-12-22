@@ -2222,7 +2222,7 @@ Client::files_transfer_worker()
 	    catch (const StreamException& e)
 	    {
 		SN_CAUGHT(e);
-		y2err("error occured during files transfer");
+		y2err("error occurred during files transfer");
 	    }
 	}
     }

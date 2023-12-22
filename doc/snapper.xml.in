@@ -1012,7 +1012,7 @@
 
   <refsect1 id='exit_status'>
     <title>EXIT STATUS</title>
-    <para>Normally the exit status is 0. If an error occured the exit status is
+    <para>Normally the exit status is 0. If an error occurred the exit status is
     1. It is also an error if the exit status of a plugin is not 0.</para>
   </refsect1>
 

@@ -214,7 +214,7 @@ namespace snapper
     {
 	SDir info_dir = openInfoDir();
 
-	// remove all filelists in the info directory of this shapshot
+	// remove all filelists in the info directory of this snapshot
 	for (const string& name : info_dir.entries(is_filelist_file))
 	{
 	    info_dir.unlink(name, 0);

@@ -675,7 +675,7 @@ namespace snapper
 
 #ifdef ENABLE_XATTRS
         /*
-         * xattributes have to be transfered as well
+         * xattributes have to be transferred as well
          * if we'are about to create new type during
          * undo!
          */

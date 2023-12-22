@@ -60,7 +60,7 @@ namespace snapper
 	AsciiFileReader(const string& name, Compression compression);
 
 	/**
-	 * Exceptions from close are ignored. Use close() explicitely.
+	 * Exceptions from close are ignored. Use close() explicitly.
 	 */
 	~AsciiFileReader();
 
@@ -86,7 +86,7 @@ namespace snapper
 	AsciiFileWriter(const string& name, Compression compression);
 
 	/**
-	 * Exceptions from close are ignored. Use close() explicitely.
+	 * Exceptions from close are ignored. Use close() explicitly.
 	 */
 	~AsciiFileWriter();
 
@@ -156,7 +156,7 @@ namespace snapper
 	SysconfigFile(const string& name);
 
 	/**
-	 * Calls save(). Exceptions from save are ignored. Use save() explicitely in
+	 * Calls save(). Exceptions from save are ignored. Use save() explicitly in
 	 * needed.
 	 */
 	virtual ~SysconfigFile();
