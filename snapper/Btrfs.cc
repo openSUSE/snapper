@@ -514,7 +514,7 @@ namespace snapper
 
 	int status;
 
-	map<string, tree_node> childs;
+	map<string, tree_node> children;
 
 	tree_node* find(const string& name);
 
@@ -540,8 +540,8 @@ namespace snapper
 	string::size_type pos = name.find('/');
 	if (pos == string::npos)
 	{
-	    iterator it = childs.find(name);
-	    if (it == childs.end())
+	    iterator it = children.find(name);
+	    if (it == children.end())
 		return NULL;
 
 	    return &it->second;
@@ -549,8 +549,8 @@ namespace snapper
 	else
 	{
 	    string a = name.substr(0, pos);
-	    iterator it = childs.find(a);
-	    if (it == childs.end())
+	    iterator it = children.find(a);
+	    if (it == children.end())
 		return NULL;
 
 	    string b = name.substr(pos + 1);
@@ -565,18 +565,18 @@ namespace snapper
 	string::size_type pos = name.find('/');
 	if (pos == string::npos)
 	{
-	    iterator it = childs.find(name);
-	    if (it == childs.end())
-		it = childs.insert(childs.end(), make_pair(name, tree_node()));
+	    iterator it = children.find(name);
+	    if (it == children.end())
+		it = children.insert(children.end(), make_pair(name, tree_node()));
 
 	    return &it->second;
 	}
 	else
 	{
 	    string a = name.substr(0, pos);
-	    iterator it = childs.find(a);
-	    if (it == childs.end())
-		it = childs.insert(childs.end(), make_pair(a, tree_node()));
+	    iterator it = children.find(a);
+	    if (it == children.end())
+		it = children.insert(children.end(), make_pair(a, tree_node()));
 
 	    string b = name.substr(pos + 1);
 	    return it->second.insert(b);
@@ -590,12 +590,12 @@ namespace snapper
 	string::size_type pos = name.find('/');
 	if (pos == string::npos)
 	{
-	    iterator it = childs.find(name);
-	    if (it == childs.end())
+	    iterator it = children.find(name);
+	    if (it == children.end())
 		return false;
 
-	    if (it->second.childs.empty())
-		childs.erase(it);
+	    if (it->second.children.empty())
+		children.erase(it);
 	    else
 		it->second.status = 0;
 
@@ -604,15 +604,15 @@ namespace snapper
 	else
 	{
 	    string a = name.substr(0, pos);
-	    iterator it = childs.find(a);
-	    if (it == childs.end())
+	    iterator it = children.find(a);
+	    if (it == children.end())
 		return false;
 
 	    string b = name.substr(pos + 1);
 	    it->second.erase(b);
 
-	    if (it->second.status == 0 && it->second.childs.empty())
-		childs.erase(it);
+	    if (it->second.status == 0 && it->second.children.empty())
+		children.erase(it);
 
 	    return true;
 	}
@@ -631,7 +631,7 @@ namespace snapper
 	    return false;
 
 	nn = insert(n);
-	swap(nn->childs, oo->childs);
+	swap(nn->children, oo->children);
 	nn->status = oo->status;
 	erase(o);
 
@@ -642,7 +642,7 @@ namespace snapper
     void
     tree_node::dump(const string& prefix) const
     {
-	for (const_iterator it = childs.begin(); it != childs.end(); ++it)
+	for (const_iterator it = children.begin(); it != children.end(); ++it)
 	{
 	    if (prefix.empty())
 	    {
@@ -721,7 +721,7 @@ namespace snapper
     void
     tree_node::check(StreamProcessor* processor, const string& prefix)
     {
-	for (iterator it = childs.begin(); it != childs.end(); ++it)
+	for (iterator it = children.begin(); it != children.end(); ++it)
 	{
 	    if (prefix.empty())
 	    {
@@ -740,7 +740,7 @@ namespace snapper
     void
     tree_node::result(cmpdirs_cb_t cb, const string& prefix) const
     {
-	for (const_iterator it = childs.begin(); it != childs.end(); ++it)
+	for (const_iterator it = children.begin(); it != children.end(); ++it)
 	{
 	    if (prefix.empty())
 	    {
@@ -914,7 +914,7 @@ namespace snapper
     merge(StreamProcessor* processor, tree_node* tmp, const string& from, const string& to,
 	  const string& prefix = "")
     {
-	for (tree_node::iterator it = tmp->childs.begin(); it != tmp->childs.end(); ++it)
+	for (tree_node::iterator it = tmp->children.begin(); it != tmp->children.end(); ++it)
 	{
 	    if (prefix.empty())
 	    {
@@ -1001,7 +1001,7 @@ namespace snapper
 	    else
 	    {
 		tree_node tmp;
-		swap(it1->childs, tmp.childs);
+		swap(it1->children, tmp.children);
 
 		processor->deleted(from);
 		processor->created(to);
