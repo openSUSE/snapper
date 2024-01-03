@@ -46,9 +46,8 @@ public:
     virtual Message dispatch(const Message&) override;
 private:
     string child_program;
-    bp::ipstream childs_out; // we read this
-    // bp::ipstream childs_err; // we read this
-    bp::opstream childs_in; // we write this
+    bp::ipstream child_out;	// we read this
+    bp::opstream child_in;	// we write this
 };
 
 
@@ -62,22 +61,18 @@ int
 ForwardingZyppPlugin::main()
 {
     bp::child c(child_program,
-		bp::std_out > childs_out,
-		// bp::std_err > childs_err,
-		bp::std_in < childs_in);
+		bp::std_out > child_out,
+		bp::std_in < child_in);
 
-    int result = ZyppPlugin::main();
-
-    //    c.wait();
-    return result;
+    return ZyppPlugin::main();
 }
 
 
 ZyppPlugin::Message
 ForwardingZyppPlugin::dispatch(const Message& msg)
 {
-    write_message(childs_in, msg);
-    return read_message(childs_out);
+    write_message(child_in, msg);
+    return read_message(child_out);
 }
 
 

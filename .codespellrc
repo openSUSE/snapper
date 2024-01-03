@@ -1,6 +1,3 @@
 # Ref: https://github.com/codespell-project/codespell#using-a-config-file
 [codespell]
-skip = .git,*.pdf,*.svg,go.sum,.codespellrc,po
-check-hidden = true
-# ignore-regex = 
-ignore-words-list = childs
+skip = po
