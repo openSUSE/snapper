@@ -87,9 +87,7 @@ namespace snapper
     }
 
 
-    Files::~Files()
-    {
-    }
+    Files::~Files() = default;
 
 
     void
