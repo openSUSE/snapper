@@ -397,9 +397,7 @@ namespace snapper
     }
 
 
-    AsciiFileReader::~AsciiFileReader()
-    {
-    }
+    AsciiFileReader::~AsciiFileReader() = default;
 
 
     bool

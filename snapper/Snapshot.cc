@@ -87,9 +87,7 @@ namespace snapper
     }
 
 
-    Snapshot::~Snapshot()
-    {
-    }
+    Snapshot::~Snapshot() = default;
 
 
     // Directory containing the actual content of the snapshot.
@@ -240,9 +238,7 @@ namespace snapper
     }
 
 
-    Snapshots::~Snapshots()
-    {
-    }
+    Snapshots::~Snapshots() = default;
 
 
     void
