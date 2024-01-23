@@ -12,6 +12,8 @@ install-data-local:
 
 	install -d -m 755 $(DESTDIR)/etc/snapper/configs
 
+	install -d -m 755 $(DESTDIR)/usr/lib/snapper/plugins
+
 	install -d -m 755 $(DESTDIR)/usr/share/snapper/config-templates
 	install -D -m 644 default-config $(DESTDIR)/usr/share/snapper/config-templates/default
 
