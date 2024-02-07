@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -28,7 +28,7 @@
 #include <string>
 #include <list>
 #include <queue>
-#include <set>
+#include <map>
 #include <boost/thread.hpp>
 
 #include <snapper/Snapper.h>
@@ -151,7 +151,7 @@ public:
 
     list<Comparison*> comparisons;
 
-    set<string> locks;
+    map<string, unsigned int> locks;
 
     map<pair<string, unsigned int>, unsigned int> mounts;
 

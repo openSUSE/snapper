@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -682,6 +682,30 @@ void
 command_sync(DBus::Connection& conn, const string& config_name)
 {
     DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "Sync");
+
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name;
+
+    conn.send_with_reply_and_block(call);
+}
+
+
+void
+command_lock_config(DBus::Connection& conn, const string& config_name)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "LockConfig");
+
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name;
+
+    conn.send_with_reply_and_block(call);
+}
+
+
+void
+command_unlock_config(DBus::Connection& conn, const string& config_name)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "UnlockConfig");
 
     DBus::Marshaller marshaller(call);
     marshaller << config_name;

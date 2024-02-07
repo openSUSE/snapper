@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -154,6 +154,9 @@ public:
     virtual FreeSpaceData queryFreeSpaceData() const override;
 
     virtual void calculateUsedSpace() const override;
+
+    virtual void lock_config() const override;
+    virtual void unlock_config() const override;
 
     DBus::Connection& conn() const;
 

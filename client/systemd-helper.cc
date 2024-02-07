@@ -80,7 +80,7 @@ timeline(ProxySnappers* snappers, const map<string, string>& userdata)
 	if (!proxy_config.is_yes("TIMELINE_CREATE"))
 	    continue;
 
-	cout << "running timeline for '" << value.first << "'." << endl;
+	cout << "Running timeline for '" << value.first << "'." << endl;
 
 	ProxySnapper* snapper = nullptr;
 
@@ -110,6 +110,8 @@ timeline(ProxySnappers* snappers, const map<string, string>& userdata)
 bool
 cleanup(ProxySnappers* snappers)
 {
+    const bool verbose = true;
+
     bool ok = true;
 
     map<string, ProxyConfig> configs = snappers->getConfigs();
@@ -124,7 +126,7 @@ cleanup(ProxySnappers* snappers)
 	if (!do_number && !do_timeline && !do_empty_pre_post)
 	    continue;
 
-	cout << "running cleanup for '" << value.first << "'." << endl;
+	cout << "Running cleanup for '" << value.first << "'." << endl;
 
 	ProxySnapper* snapper = nullptr;
 
@@ -137,9 +139,9 @@ cleanup(ProxySnappers* snappers)
 
 	if (do_number)
 	{
-	    cout << "running number cleanup for '" << value.first << "'." << endl;
+	    cout << "Running number cleanup for '" << value.first << "'." << endl;
 
-	    if (!call_with_error_check([snapper](){ do_cleanup_number(snapper, false, report); }))
+	    if (!call_with_error_check([snapper](){ do_cleanup_number(snapper, verbose, report); }))
 	    {
 		cerr << "number cleanup for '" << value.first << "' failed." << endl;
 		ok = false;
@@ -148,9 +150,9 @@ cleanup(ProxySnappers* snappers)
 
 	if (do_timeline)
 	{
-	    cout << "running timeline cleanup for '" << value.first << "'." << endl;
+	    cout << "Running timeline cleanup for '" << value.first << "'." << endl;
 
-	    if (!call_with_error_check([snapper](){ do_cleanup_timeline(snapper, false, report); }))
+	    if (!call_with_error_check([snapper](){ do_cleanup_timeline(snapper, verbose, report); }))
 	    {
 		cerr << "timeline cleanup for '" << value.first << "' failed." << endl;
 		ok = false;
@@ -159,9 +161,9 @@ cleanup(ProxySnappers* snappers)
 
 	if (do_empty_pre_post)
 	{
-	    cout << "running empty-pre-post cleanup for '" << value.first << "'." << endl;
+	    cout << "Running empty-pre-post cleanup for '" << value.first << "'." << endl;
 
-	    if (!call_with_error_check([snapper](){ do_cleanup_empty_pre_post(snapper, false, report); }))
+	    if (!call_with_error_check([snapper](){ do_cleanup_empty_pre_post(snapper, verbose, report); }))
 	    {
 		cerr << "empty-pre-post cleanup for " << value.first << " failed." << endl;
 		ok = false;

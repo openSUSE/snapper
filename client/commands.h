@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -148,6 +148,12 @@ command_query_quota(DBus::Connection& conn, const string& config_name);
 
 FreeSpaceData
 command_query_free_space(DBus::Connection& conn, const string& config_name);
+
+void
+command_lock_config(DBus::Connection& conn, const string& config_name);
+
+void
+command_unlock_config(DBus::Connection& conn, const string& config_name);
 
 void
 command_sync(DBus::Connection& conn, const string& config_name);

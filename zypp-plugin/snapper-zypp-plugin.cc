@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019-2023] SUSE LLC
+ * Copyright (c) [2019-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -97,7 +97,7 @@ SnapperZyppCommitPlugin::SnapperZyppCommitPlugin(const ProgramOptions& opts)
 ZyppCommitPlugin::Message
 SnapperZyppCommitPlugin::plugin_begin(const Message& msg)
 {
-    y2mil("PLUGINBEGIN");
+    y2mil("PLUGIN BEGIN");
 
     userdata = get_userdata(msg);
 
@@ -108,7 +108,7 @@ SnapperZyppCommitPlugin::plugin_begin(const Message& msg)
 ZyppCommitPlugin::Message
 SnapperZyppCommitPlugin::plugin_end(const Message& msg)
 {
-    y2mil("PLUGINEND");
+    y2mil("PLUGIN END");
 
     return ack();
 }
@@ -117,7 +117,7 @@ SnapperZyppCommitPlugin::plugin_end(const Message& msg)
 ZyppCommitPlugin::Message
 SnapperZyppCommitPlugin::commit_begin(const Message& msg)
 {
-    y2mil("COMMITBEGIN");
+    y2mil("COMMIT BEGIN");
 
     set<string> solvables = get_solvables(msg, Phase::BEFORE);
     y2deb("solvables: " << solvables);
@@ -128,6 +128,16 @@ SnapperZyppCommitPlugin::commit_begin(const Message& msg)
 
     if (found || important)
     {
+	try
+	{
+	    y2deb("lock config");
+	    command_lock_config(dbus_conn, snapper_cfg);
+	}
+	catch (const Exception& ex)
+	{
+	    SN_CAUGHT(ex);
+	}
+
 	userdata["important"] = important ? "yes" : "no";
 
 	try
@@ -155,7 +165,7 @@ SnapperZyppCommitPlugin::commit_begin(const Message& msg)
 ZyppCommitPlugin::Message
 SnapperZyppCommitPlugin::commit_end(const Message& msg)
 {
-    y2mil("COMMITEND");
+    y2mil("COMMIT END");
 
     if (pre_snapshot_num != 0)
     {
@@ -227,6 +237,16 @@ SnapperZyppCommitPlugin::commit_end(const Message& msg)
 	    {
 		SN_CAUGHT(ex);
 	    }
+	}
+
+	try
+	{
+	    y2deb("unlock config");
+	    command_unlock_config(dbus_conn, snapper_cfg);
+	}
+	catch (const Exception& ex)
+	{
+	    SN_CAUGHT(ex);
 	}
     }
 

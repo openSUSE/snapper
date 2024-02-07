@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2016-2021] SUSE LLC
+ * Copyright (c) [2016-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -34,6 +34,7 @@
 #include "utils/equal-date.h"
 #include "utils/HumanString.h"
 #include "cleanup.h"
+#include "locker.h"
 
 
 using namespace std;
@@ -46,9 +47,9 @@ struct Parameters
 
     virtual bool is_degenerated() const { return true; }
 
-    time_t min_age;
-    MaxUsedLimit space_limit;
-    MinFreeLimit free_limit;
+    time_t min_age = 3600;
+    MaxUsedLimit space_limit = 0.5;
+    MinFreeLimit free_limit = 0.2;
 
 
     void read(const ProxyConfig& config, const char* name, time_t& value)
@@ -92,7 +93,6 @@ operator<<(ostream& s, const Parameters& parameters)
 
 
 Parameters::Parameters(const ProxySnapper* snapper)
-    : min_age(1800), space_limit(0.5), free_limit(0.2)
 {
     ProxyConfig config = snapper->getConfig();
 
@@ -106,7 +106,7 @@ class Cleaner
 public:
 
     Cleaner(ProxySnapper* snapper, bool verbose, const Parameters& parameters)
-	: snapper(snapper), verbose(verbose), parameters(parameters) {}
+	: snapper(snapper), locker(snapper), verbose(verbose), parameters(parameters) {}
 
     virtual ~Cleaner() {}
 
@@ -157,6 +157,8 @@ protected:
     void cleanup(ProxySnapshots& snapshots, std::function<bool()> condition, Plugins::Report& report);
 
     ProxySnapper* snapper;
+
+    Locker locker;
 
     const bool verbose;
     const Parameters& parameters;
