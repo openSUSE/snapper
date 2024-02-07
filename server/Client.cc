@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -127,21 +127,23 @@ Client::delete_comparison(list<Comparison*>::iterator it)
 void
 Client::add_lock(const string& config_name)
 {
-    locks.insert(config_name);
+    locks[config_name]++;
 }
 
 
 void
 Client::remove_lock(const string& config_name)
 {
-    locks.erase(config_name);
+    map<string, unsigned int>::iterator it = locks.find(config_name);
+    if (it != locks.end() && --it->second == 0)
+	locks.erase(it);
 }
 
 
 bool
 Client::has_lock(const string& config_name) const
 {
-    return contains(locks, config_name);
+    return locks.find(config_name) != locks.end();
 }
 
 
