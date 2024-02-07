@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -252,6 +252,9 @@ public:
     virtual FreeSpaceData queryFreeSpaceData() const = 0;
 
     virtual void calculateUsedSpace() const = 0;
+
+    virtual void lock_config() const = 0;
+    virtual void unlock_config() const = 0;
 
 };
 

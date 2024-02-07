@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -78,6 +78,20 @@ uint64_t
 ProxySnapshotDbus::getUsedSpace() const
 {
     return command_get_used_space(conn(), configName(), num);
+}
+
+
+void
+ProxySnapperDbus::lock_config() const
+{
+    command_lock_config(conn(), config_name);
+}
+
+
+void
+ProxySnapperDbus::unlock_config() const
+{
+    command_unlock_config(conn(), config_name);
 }
 
 

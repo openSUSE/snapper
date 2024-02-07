@@ -43,6 +43,7 @@ snapper_SOURCES =					\
 	proxy.cc		proxy.h			\
 	proxy-dbus.cc		proxy-dbus.h		\
 	proxy-lib.cc		proxy-lib.h		\
+	locker.cc		locker.h		\
 	misc.cc			misc.h			\
 	MyFiles.cc		MyFiles.h		\
 	GlobalOptions.cc	GlobalOptions.h
@@ -64,6 +65,7 @@ systemd_helper_SOURCES =		\
 	proxy.cc	proxy.h		\
 	proxy-dbus.cc	proxy-dbus.h	\
 	proxy-lib.cc	proxy-lib.h	\
+	locker.cc	locker.h	\
 	misc.cc		misc.h
 
 systemd_helper_LDADD = libclient.la ../snapper/libsnapper.la utils/libutils.la ../dbus/libdbus.la

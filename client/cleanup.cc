@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2016-2021] SUSE LLC
+ * Copyright (c) [2016-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -34,6 +34,7 @@
 #include "utils/equal-date.h"
 #include "utils/HumanString.h"
 #include "cleanup.h"
+#include "locker.h"
 
 
 using namespace std;
@@ -106,7 +107,7 @@ class Cleaner
 public:
 
     Cleaner(ProxySnapper* snapper, bool verbose, const Parameters& parameters)
-	: snapper(snapper), verbose(verbose), parameters(parameters) {}
+	: snapper(snapper), locker(snapper), verbose(verbose), parameters(parameters) {}
 
     virtual ~Cleaner() {}
 
@@ -157,6 +158,8 @@ protected:
     void cleanup(ProxySnapshots& snapshots, std::function<bool()> condition, Plugins::Report& report);
 
     ProxySnapper* snapper;
+
+    Locker locker;
 
     const bool verbose;
     const Parameters& parameters;

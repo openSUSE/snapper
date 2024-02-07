@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -137,6 +137,9 @@ public:
     virtual FreeSpaceData queryFreeSpaceData() const override { return snapper->queryFreeSpaceData(); }
 
     virtual void calculateUsedSpace() const override { snapper->calculateUsedSpace(); }
+
+    virtual void lock_config() const override {}
+    virtual void unlock_config() const override {}
 
     std::unique_ptr<Snapper> snapper;
 

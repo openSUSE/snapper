@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -32,6 +32,7 @@
 #include "utils/text.h"
 #include "GlobalOptions.h"
 #include "proxy.h"
+#include "locker.h"
 #include "misc.h"
 #include "utils/TableFormatter.h"
 #include "utils/CsvFormatter.h"
@@ -138,6 +139,13 @@ namespace snapper
 	    bool skip_snapshot(const ProxySnapshot& snapshot, ListMode list_mode) const;
 
 	    const ProxySnapper* snapper;
+
+	private:
+
+	    Locker locker;
+
+	public:
+
 	    const ProxySnapshots& snapshots;
 
 	private:
@@ -168,8 +176,8 @@ namespace snapper
 
 
 	OutputHelper::OutputHelper(const ProxySnapper* snapper, const vector<Column>& columns)
-	    : snapper(snapper), snapshots(snapper->getSnapshots()), default_snapshot(snapshots.end()),
-	      active_snapshot(snapshots.end())
+	    : snapper(snapper), locker(snapper), snapshots(snapper->getSnapshots()),
+	      default_snapshot(snapshots.end()), active_snapshot(snapshots.end())
 	{
 	    try
 	    {

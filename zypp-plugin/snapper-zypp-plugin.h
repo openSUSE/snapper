@@ -65,7 +65,7 @@ private:
     const string snapper_cfg;
 
     DBus::Connection dbus_conn;
-    unsigned int pre_snapshot_num;
+    unsigned int pre_snapshot_num = 0;
     string snapshot_description;
     map<string, string> userdata;
 

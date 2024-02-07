@@ -10,7 +10,15 @@ snapper = dbus.Interface(bus.get_object('org.opensuse.Snapper', '/org/opensuse/S
 
 
 snapper.LockConfig("root")
+print("locked")
+
+snapper.LockConfig("root")
+snapper.UnlockConfig("root")
+print("still locked")
 
 sleep(10)
 
 snapper.UnlockConfig("root")
+print("unlocked")
+
+sleep(10)
