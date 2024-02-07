@@ -164,7 +164,7 @@
 	<listitem>
 	  <para>Minimal age for snapshots to be deleted by the number cleanup
 	  algorithm.</para>
-	  <para>Default value is &quot;1800&quot;.</para>
+	  <para>Default value is &quot;3600&quot;.</para>
 	</listitem>
       </varlistentry>
 
@@ -217,7 +217,7 @@
 	<listitem>
 	  <para>Minimal age for snapshots to be deleted by the timeline
 	  cleanup algorithm.</para>
-	  <para>Default value is &quot;1800&quot;.</para>
+	  <para>Default value is &quot;3600&quot;.</para>
 	</listitem>
       </varlistentry>
 
@@ -291,7 +291,7 @@
 	<listitem>
 	  <para>Minimal age for snapshots to be deleted by the empty-pre-post
 	  cleanup algorithm.</para>
-	  <para>Default value is &quot;1800&quot;.</para>
+	  <para>Default value is &quot;3600&quot;.</para>
 	</listitem>
       </varlistentry>
 

@@ -3,6 +3,7 @@ Wed Feb 07 11:16:40 CET 2024 - aschnell@suse.com
 
 - lock config during list and cleanup commands and in zypper plugin
   (gh#openSUSE/snapper#867)
+- increase min age for cleanup to 3600 seconds
 
 -------------------------------------------------------------------
 Fri Dec 08 09:06:30 CET 2023 - aschnell@suse.com
