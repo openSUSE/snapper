@@ -1992,6 +1992,12 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	DBus::MessageError reply(msg, "error.delete_snapshot_failed", DBUS_ERROR_FAILED);
 	conn.send(reply);
     }
+    catch (const InvalidConfigException& e)
+    {
+	SN_CAUGHT(e);
+	DBus::MessageError reply(msg, "error.invalid_config", DBUS_ERROR_FAILED);
+	conn.send(reply);
+    }
     catch (const InvalidConfigdataException& e)
     {
 	SN_CAUGHT(e);

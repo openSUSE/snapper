@@ -68,6 +68,9 @@ error_description(const DBus::ErrorException& e)
     if (name == "error.invalid_userdata")
 	return _("Invalid userdata.");
 
+    if (name == "error.invalid_config")
+	return _("Invalid config.");
+
     if (name == "error.invalid_configdata")
 	return _("Invalid configdata.");
 
