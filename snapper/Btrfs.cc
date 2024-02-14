@@ -76,7 +76,7 @@ namespace snapper
 	if (fstype == "btrfs")
 	    return new Btrfs(subvolume, root_prefix);
 
-	return NULL;
+	return nullptr;
     }
 
 

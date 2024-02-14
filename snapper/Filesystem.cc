@@ -113,10 +113,10 @@ namespace snapper
 #ifdef ENABLE_LVM
 		&Lvm::create,
 #endif
-		NULL
+		nullptr
 	};
 
-	for (const func_t* func = funcs; *func != NULL; ++func)
+	for (const func_t* func = funcs; *func != nullptr; ++func)
 	{
 	    Filesystem* fs = (*func)(fstype, subvolume, root_prefix);
 	    if (fs)
