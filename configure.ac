@@ -77,6 +77,14 @@ if test "x$with_btrfs" = "xyes"; then
 	AC_DEFINE(ENABLE_BTRFS, 1, [Enable Btrfs internal snapshots support])
 fi
 
+AC_ARG_ENABLE([bcachefs], AS_HELP_STRING([--disable-bcachefs], [Disable Bcachefs internal snapshots support]),
+		[with_bcachefs=$enableval], [with_bcachefs=yes])
+AM_CONDITIONAL(ENABLE_BCACHEFS, [test "x$with_bcachefs" = "xyes"])
+
+if test "x$with_bcachefs" = "xyes"; then
+	AC_DEFINE(ENABLE_BCACHEFS, 1, [Enable Bcachefs internal snapshots support])
+fi
+
 AC_ARG_ENABLE([ext4], AS_HELP_STRING([--disable-ext4], [Disable ext4 snapshots support]),
 		[with_ext4=$enableval], [with_ext4=yes])
 AM_CONDITIONAL(ENABLE_EXT4, [test "x$with_ext4" = "xyes"])

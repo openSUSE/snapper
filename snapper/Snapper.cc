@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -1193,6 +1193,11 @@ namespace snapper
 	    "no-"
 #endif
 	    "btrfs,"
+
+#ifndef ENABLE_BCACHEFS
+	    "no-"
+#endif
+	    "bcachefs,"
 
 #ifndef ENABLE_LVM
 	    "no-"
