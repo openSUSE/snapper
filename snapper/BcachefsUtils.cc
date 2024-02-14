@@ -22,6 +22,7 @@
 
 #include "config.h"
 
+#include <cstring>
 #include <cerrno>
 #include <sys/stat.h>
 #include <sys/ioctl.h>
@@ -77,13 +78,13 @@ namespace snapper
 	void
 	create_subvolume(int fddst, const string& name)
 	{
-	    struct bch_ioctl_subvolume args = {
-		.flags          = 0,
-		.dirfd          = (__u32) fddst,
-		.mode           = 0777,
-		.dst_ptr        = (__u64) name.c_str(),
-		.src_ptr        = 0,
-	    };
+	    struct bch_ioctl_subvolume args;
+	    memset(&args, 0, sizeof(args));
+
+	    args.flags = 0;
+	    args.dirfd = (__u32) fddst;
+	    args.mode = 0777;
+	    args.dst_ptr = (__u64) name.c_str();
 
 	    if (ioctl(fddst, BCH_IOCTL_SUBVOLUME_CREATE, &args) < 0)
 		throw runtime_error_with_errno("ioctl(BCH_IOCTL_SUBVOLUME_CREATE) failed", errno);
@@ -93,17 +94,16 @@ namespace snapper
 	void
 	create_snapshot(int fd, const string& subvolume, int fddst, const string& name, bool read_only)
 	{
-	    __u32 flags = BCH_SUBVOL_SNAPSHOT_CREATE;
-	    if (read_only)
-		flags |= BCH_SUBVOL_SNAPSHOT_RO;	// TODO does not work
+	    struct bch_ioctl_subvolume args;
+	    memset(&args, 0, sizeof(args));
 
-	    struct bch_ioctl_subvolume args = {
-		.flags          = flags,
-		.dirfd          = (__u32) fddst,
-		.mode           = 0777,
-		.dst_ptr        = (__u64) name.c_str(),
-		.src_ptr        = (__u64) subvolume.c_str(),	// TODO use fd instead of subvolume
-	    };
+	    args.flags = BCH_SUBVOL_SNAPSHOT_CREATE;
+	    if (read_only)
+		args.flags |= BCH_SUBVOL_SNAPSHOT_RO;	// TODO does not work
+	    args.dirfd = (__u32) fddst;
+	    args.mode = 0777;
+	    args.dst_ptr = (__u64) name.c_str();
+	    args.src_ptr = (__u64) subvolume.c_str();	// TODO use fd instead of subvolume
 
 	    if (ioctl(fddst, BCH_IOCTL_SUBVOLUME_CREATE, &args) < 0)
 		throw runtime_error_with_errno("ioctl(BCH_IOCTL_SUBVOLUME_CREATE) failed", errno);
@@ -113,13 +113,12 @@ namespace snapper
 	void
 	delete_subvolume(int fd, const string& name)
 	{
-	    struct bch_ioctl_subvolume args = {
-		.flags          = 0,
-		.dirfd          = (__u32) fd,
-		.mode           = 0777,
-		.dst_ptr        = (__u64) name.c_str(),
-		.src_ptr        = 0,
-	    };
+	    struct bch_ioctl_subvolume args;
+	    memset(&args, 0, sizeof(args));
+
+	    args.flags = 0;
+	    args.dirfd = (__u32) fd;
+	    args.dst_ptr = (__u64) name.c_str();
 
 	    if (ioctl(fd, BCH_IOCTL_SUBVOLUME_DESTROY, &args) < 0)
 		throw runtime_error_with_errno("ioctl(BCH_IOCTL_SUBVOLUME_DESTROY) failed", errno);
