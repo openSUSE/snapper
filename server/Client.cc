@@ -1081,7 +1081,11 @@ Client::create_post_snapshot(DBus::Connection& conn, DBus::Message& msg)
     bool background_comparison = true;
     it->getConfigInfo().get_value("BACKGROUND_COMPARISON", background_comparison);
     if (background_comparison)
-	clients.backgrounds().add_task(it, snap1, snap2);
+    {
+	// TODO isReadOnly is wrong if read-only is not supported by file system
+	if (snap1->isReadOnly() && snap2->isReadOnly())
+	    clients.backgrounds().add_task(it, snap1, snap2);
+    }
 
     DBus::MessageMethodReturn reply(msg);
 

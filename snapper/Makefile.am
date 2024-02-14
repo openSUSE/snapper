@@ -41,6 +41,12 @@ libsnapper_la_SOURCES +=				\
 	BtrfsUtils.cc		BtrfsUtils.h
 endif
 
+if ENABLE_BCACHEFS
+libsnapper_la_SOURCES +=				\
+	Bcachefs.cc		Bcachefs.h		\
+	BcachefsUtils.cc	BcachefsUtils.h
+endif
+
 if ENABLE_EXT4
 libsnapper_la_SOURCES +=				\
 	Ext4.cc			Ext4.h

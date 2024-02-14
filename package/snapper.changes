@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Feb 14 09:14:32 CET 2024 - aschnell@suse.com
+
+- added experimental bcachefs support (gh#openSUSE/snapper#858)
+
+-------------------------------------------------------------------
 Wed Feb 07 11:16:40 CET 2024 - aschnell@suse.com
 
 - lock config during list and cleanup commands and in zypper plugin

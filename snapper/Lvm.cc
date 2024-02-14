@@ -62,7 +62,7 @@ namespace snapper
 	if (regex_match(fstype, match, rx))
 	    return new Lvm(subvolume, root_prefix, match[1]);
 
-	return NULL;
+	return nullptr;
     }
 
 

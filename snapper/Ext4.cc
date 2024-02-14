@@ -50,7 +50,7 @@ namespace snapper
 	if (fstype == "ext4")
 	    return new Ext4(subvolume, root_prefix);
 
-	return NULL;
+	return nullptr;
     }
 
 

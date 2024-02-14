@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -38,6 +38,9 @@
 #include "snapper/Filesystem.h"
 #ifdef ENABLE_BTRFS
 #include "snapper/Btrfs.h"
+#endif
+#ifdef ENABLE_BCACHEFS
+#include "snapper/Bcachefs.h"
 #endif
 #ifdef ENABLE_EXT4
 #include "snapper/Ext4.h"
@@ -101,16 +104,19 @@ namespace snapper
 #ifdef ENABLE_BTRFS
 		&Btrfs::create,
 #endif
+#ifdef ENABLE_BCACHEFS
+		&Bcachefs::create,
+#endif
 #ifdef ENABLE_EXT4
 		&Ext4::create,
 #endif
 #ifdef ENABLE_LVM
 		&Lvm::create,
 #endif
-		NULL
+		nullptr
 	};
 
-	for (const func_t* func = funcs; *func != NULL; ++func)
+	for (const func_t* func = funcs; *func != nullptr; ++func)
 	{
 	    Filesystem* fs = (*func)(fstype, subvolume, root_prefix);
 	    if (fs)

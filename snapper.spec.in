@@ -143,7 +143,7 @@ autoreconf -fvi
 	--disable-btrfs-quota							\
 %endif
 	%{?with_selinux:--enable-selinux}					\
-	--disable-silent-rules --disable-ext4
+	--disable-silent-rules --disable-bcachefs --disable-ext4
 make %{?_smp_mflags}
 
 %install
