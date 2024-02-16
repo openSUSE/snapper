@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019-2020] SUSE LLC
+ * Copyright (c) [2019-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -20,6 +20,9 @@
  */
 
 
+#include <cstring>
+#include <langinfo.h>
+
 #include "client/utils/TableFormatter.h"
 
 
@@ -29,7 +32,11 @@ namespace snapper
     using namespace std;
 
 
-    const TableStyle TableFormatter::default_style = Ascii;
+    TableStyle
+    TableFormatter::default_style()
+    {
+	return strcmp(nl_langinfo(CODESET), "UTF-8") == 0 ? TableStyle::Light : TableStyle::Ascii;
+    }
 
 
     ostream&

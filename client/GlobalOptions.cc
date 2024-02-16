@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019-2023] SUSE LLC
+ * Copyright (c) [2019-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -122,7 +122,7 @@ namespace snapper
     {
 	ParsedOpts::const_iterator it = opts.find("table-style");
 	if (it == opts.end())
-	    return TableFormatter::default_style;
+	    return TableFormatter::default_style();
 
 	try
 	{
@@ -141,7 +141,7 @@ namespace snapper
 	    SN_THROW(OptionsException(error));
 	}
 
-	return TableFormatter::default_style;
+	return TableFormatter::default_style();
     }
 
 
