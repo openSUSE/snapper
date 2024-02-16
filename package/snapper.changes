@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Feb 16 08:26:41 CET 2024 - aschnell@suse.com
+
+- select table style based on codeset
+
+-------------------------------------------------------------------
 Wed Feb 14 09:14:32 CET 2024 - aschnell@suse.com
 
 - added experimental bcachefs support (gh#openSUSE/snapper#858)

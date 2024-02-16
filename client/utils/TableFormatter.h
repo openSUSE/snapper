@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019-2020] SUSE LLC
+ * Copyright (c) [2019-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -41,7 +41,7 @@ namespace snapper
 
     public:
 
-	static const TableStyle default_style;
+	static TableStyle default_style();
 
 	TableFormatter(TableStyle style) : style(style) {}
 
