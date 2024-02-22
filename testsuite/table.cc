@@ -71,3 +71,35 @@ BOOST_AUTO_TEST_CASE(test1)
 
     check(table, output);
 }
+
+
+BOOST_AUTO_TEST_CASE(test2)
+{
+    locale::global(locale("en_GB.UTF-8"));
+
+    Table table;
+    table.set_screen_width(25);
+    table.set_abbrev({ false, true });
+
+    TableHeader header;
+    header.add("Number", TableAlign::RIGHT);
+    header.add("Description");
+    table.setHeader(header);
+
+    TableRow row1;
+    row1 << "1" << "boot";
+    table.add(row1);
+
+    TableRow row2;
+    row2 << "2" << "before the system update";
+    table.add(row2);
+
+    vector<string> output = {
+	"Number | Description     ",
+	"-------+-----------------",
+	"     1 | boot            ",
+	"     2 | before the sys->"
+    };
+
+    check(table, output);
+}

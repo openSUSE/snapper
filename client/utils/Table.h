@@ -113,6 +113,7 @@ public:
   void wrap(int force_break_after = -1);
   void set_abbrev(const vector<bool>& abbrev);
   void margin(unsigned margin);
+  void set_screen_width(int screen_width) { _screen_width = screen_width; }
 
   Table ();
 
