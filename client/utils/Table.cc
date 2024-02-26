@@ -1,274 +1,404 @@
-#include <iostream>
-#include <cstring>
-#include <cstdlib>
-#include <iomanip>
-#include <boost/io/ios_state.hpp>
+/*
+ * Copyright (c) [2021-2024] SUSE LLC
+ *
+ * All Rights Reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of version 2 of the GNU General Public License as published
+ * by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, contact SUSE LLC.
+ *
+ * To contact SUSE LLC about this file by physical or electronic mail, you may
+ * find current contact information at www.suse.com.
+ */
 
-#include "console.h"
-#include "text.h"
+
+#include <langinfo.h>
+#include <cstring>
 
 #include "Table.h"
+#include "text.h"
+#include "console.h"
 
-using namespace std;
 
-
-static
-const char * lines[][3] = {
-  { "|", "-", "+"},		///< Ascii
-  // utf 8
-  { "\xE2\x94\x82", "\xE2\x94\x80", "\xE2\x94\xBC"}, ///< light
-  { "\xE2\x94\x83", "\xE2\x94\x81", "\xE2\x95\x8B"}, ///< heavy
-  { "\xE2\x95\x91", "\xE2\x95\x90", "\xE2\x95\xAC"}, ///< double
-  { "\xE2\x94\x86", "\xE2\x94\x84", "\xE2\x94\xBC"}, ///< light 3
-  { "\xE2\x94\x87", "\xE2\x94\x85", "\xE2\x94\x8B"}, ///< heavy 3
-  { "\xE2\x94\x82", "\xE2\x94\x81", "\xE2\x94\xBF"}, ///< v light, h heavy
-  { "\xE2\x94\x82", "\xE2\x95\x90", "\xE2\x95\xAA"}, ///< v light, h double
-  { "\xE2\x94\x83", "\xE2\x94\x80", "\xE2\x95\x82"}, ///< v heavy, h light
-  { "\xE2\x95\x91", "\xE2\x94\x80", "\xE2\x95\xAB"}, ///< v double, h light
-  { ":", "-", "+" },                                 ///< colon separated values
-};
-
-void TableRow::add (const string& s) {
-  _columns.push_back (s);
-}
-
-unsigned int TableRow::cols( void ) const {
-  return _columns.size();
-}
-
-// 1st implementation: no width calculation, just tabs
-void TableRow::dumbDumpTo (ostream &stream) const {
-  bool seen_first = false;
-  for (container::const_iterator i = _columns.begin (); i != _columns.end (); ++i) {
-    if (seen_first)
-      stream << '\t';
-    seen_first = true;
-
-    stream << *i;
-  }
-  stream << endl;
-}
-
-void TableRow::dumpTo (ostream &stream, const Table & parent) const
+namespace snapper
 {
-  const char * vline = parent._style != none ? lines[parent._style][0] : "";
 
-  bool seen_first = false;
-  container::const_iterator
-    i = _columns.begin (),
-    e = _columns.end ();
+    using namespace std;
 
-  stream << string(parent._margin, ' ');
-  // current position at currently printed line
-  int curpos = parent._margin;
-  // whether to break the line now in order to wrap it to screen width
-  bool do_wrap = false;
-  for (unsigned c = 0; i != e ; ++i, ++c)
-  {
-    if (seen_first)
+
+    Table::OutputInfo::OutputInfo(const Table& table)
     {
-      do_wrap =
-        // user requested wrapping
-        parent._do_wrap &&
-        // table is wider than screen
-        parent._width > parent._screen_width && (
-        // the next table column would exceed the screen size
-        curpos + (int) parent._max_width[c] + (parent._style != none ? 2 : 3) >
-          parent._screen_width ||
-        // or the user wishes to first break after the previous column
-        parent._force_break_after == (int) (c - 1));
+	// calculate hidden, default to false
 
-      if (do_wrap)
-      {
-        // start printing the next table columns to new line,
-        // indent by 2 console columns
-        stream << endl << string(parent._margin + 2, ' ');
-        curpos = parent._margin + 2; // indent == 2
-      }
-      else
-        // vertical line, padded with spaces
-        stream << ' ' << vline << ' ';
+	hidden.resize(table.header.get_columns().size());
+
+	for (size_t i = 0; i < table.visibilities.size(); ++i)
+	{
+	    if (table.visibilities[i] == Visibility::AUTO || table.visibilities[i] == Visibility::OFF)
+		hidden[i] = true;
+	}
+
+	for (const Table::Row& row : table.rows)
+	    calculate_hidden(table, row);
+
+	// calculate widths
+
+	widths = table.min_widths;
+
+	if (table.show_header)
+	    calculate_widths(table, table.header, 0);
+
+	for (const Table::Row& row : table.rows)
+	    calculate_widths(table, row, 0);
+
+	calculate_abbriviated_widths(table);
     }
-    else
-      seen_first = true;
 
-    // stream.width (widths[c]); // that does not work with multibyte chars
-    const string & s = *i;
-    unsigned int ssize = mbs_width(s);
-    if (ssize > parent._max_width[c])
+
+    void
+    Table::OutputInfo::calculate_hidden(const Table& table, const Table::Row& row)
     {
-      unsigned cutby = parent._max_width[c] - 2;
-      string cutstr = mbs_substr_by_width(s, 0, cutby);
-      stream << cutstr << string(cutby - mbs_width(cutstr), ' ') << "->";
+	const vector<string>& columns = row.get_columns();
+
+	for (size_t i = 0; i < min(columns.size(), table.visibilities.size()); ++i)
+	{
+	    if (table.visibilities[i] == Visibility::AUTO && !columns[i].empty())
+		hidden[i] = false;
+	}
+
+	for (const Table::Row& subrow : row.get_subrows())
+	    calculate_hidden(table, subrow);
     }
-    else
+
+
+    void
+    Table::OutputInfo::calculate_widths(const Table& table, const Table::Row& row, unsigned indent)
     {
-      if (parent._header.align(c) == TableAlign::LEFT)
-	stream << s << setw(parent._max_width[c] - ssize) << "";
-      else
-	stream << setw(parent._max_width[c] - ssize) << "" << s;
+	const vector<string>& columns = row.get_columns();
+
+	if (columns.size() > widths.size())
+	    widths.resize(columns.size());
+
+	for (size_t i = 0; i < columns.size(); ++i)
+	{
+	    if (hidden[i])
+		continue;
+
+	    size_t width = mbs_width(columns[i]);
+
+	    if (i == table.tree_index)
+		width += 2 * indent;
+
+	    widths[i] = max(widths[i], width);
+	}
+
+	for (const Table::Row& subrow : row.get_subrows())
+	    calculate_widths(table, subrow, indent + 1);
     }
-    curpos += parent._max_width[c] + (parent._style != none ? 2 : 3);
-  }
-  stream << endl;
-}
 
 
-void
-TableHeader::add(const string& s, TableAlign align)
-{
-  TableRow::add(s);
-  _aligns.push_back(align);
-}
-
-
-// ----------------------( Table )---------------------------------------------
-
-Table::Table()
-  : _has_header (false)
-  , _max_col (0)
-  , _max_width(1, 0)
-  , _width(0)
-  , _style (Ascii)
-  , _screen_width(snapper::get_screen_width())
-  , _margin(0)
-  , _force_break_after(-1)
-  , _do_wrap(false)
-{}
-
-void Table::add (const TableRow& tr) {
-  _rows.push_back (tr);
-  updateColWidths (tr);
-}
-
-void Table::setHeader (const TableHeader& tr) {
-  _has_header = true;
-  _header = tr;
-  updateColWidths (tr);
-}
-
-
-void
-Table::set_abbrev(const vector<bool>& abbrev)
-{
-    _abbrev_col = abbrev;
-}
-
-
-void Table::updateColWidths (const TableRow& tr) {
-  // how much columns the separators add to the width of the table
-  int sepwidth = _style == none ? 2 : 3;
-  // initialize the width to -sepwidth (the first column does not have a line
-  // on the left)
-  _width = -sepwidth;
-
-  TableRow::container::const_iterator
-    i = tr._columns.begin (),
-    e = tr._columns.end ();
-  for (unsigned c = 0; i != e; ++i, ++c) {
-    // ensure that _max_width[c] exists
-    if (_max_col < c)
+    /**
+     * Including global_indent and grid. Excluding screen_width.
+     */
+    size_t
+    Table::OutputInfo::calculate_total_width(const Table& table) const
     {
-      _max_col = c;
-      _max_width.resize (_max_col + 1);
-      _max_width[c] = 0;
+	size_t total_width = table.global_indent;
+
+	bool first = true;
+
+	for (size_t i = 0; i < widths.size(); ++i)
+	{
+	    if (hidden[i])
+		continue;
+
+	    if (first)
+		first = false;
+	    else
+		total_width += 2 + (table.show_grid ? 1 : 0);
+
+	    total_width += widths[i];
+	}
+
+	return total_width;
     }
 
-    unsigned &max = _max_width[c];
-    unsigned cur = mbs_width (*i);
 
-    if (max < cur)
-      max = cur;
+    /**
+     * So far only one column can be abbreviated.
+     */
+    void
+    Table::OutputInfo::calculate_abbriviated_widths(const Table& table)
+    {
+	size_t total_width = calculate_total_width(table);
 
-    _width += max + sepwidth;
-  }
-  _width += _margin * 2;
-}
+	if (total_width <= table.screen_width)
+	    return;
 
-void Table::dumpRule (ostream &stream) const {
-  const char * hline = _style != none ? lines[_style][1] : " ";
-  const char * cross = _style != none ? lines[_style][2] : " ";
+	size_t too_much = total_width - table.screen_width;
 
-  bool seen_first = false;
-
-  stream << string(_margin, ' ');
-  for (unsigned c = 0; c <= _max_col; ++c) {
-    if (seen_first) {
-      stream << hline << cross << hline;
+	for (size_t i = 0; i < table.abbreviates.size(); ++i)
+	{
+	    if (table.abbreviates[i])
+	    {
+		widths[i] = max(widths[i] - too_much, (size_t) 5);
+		break;
+	    }
+	}
     }
-    seen_first = true;
-    // FIXME: could use fill character if hline were a (wide) character
-    for (unsigned i = 0; i < _max_width[c]; ++i) {
-      stream << hline;
+
+
+    void
+    Table::output(std::ostream& s, const Table::Row& row, const OutputInfo& output_info, const vector<bool>& lasts) const
+    {
+	s << string(global_indent, ' ');
+
+	const vector<string>& columns = row.get_columns();
+
+	for (size_t i = 0; i < output_info.widths.size(); ++i)
+	{
+	    if (output_info.hidden[i])
+		continue;
+
+	    string column = i < columns.size() ? columns[i] : "";
+
+	    bool first = i == 0;
+	    bool last = i == output_info.widths.size() - 1;
+
+	    size_t extra = (i == tree_index) ? 2 * lasts.size() : 0;
+
+	    if (last && column.empty())
+		break;
+
+	    if (!first)
+		s << " ";
+
+	    if (i == tree_index)
+	    {
+		for (size_t tl = 0; tl < lasts.size(); ++tl)
+		{
+		    if (tl == lasts.size() - 1)
+			s << (lasts[tl] ? glyph(4) : glyph(3));
+		    else
+			s << (lasts[tl] ? glyph(6) : glyph(5));
+		}
+	    }
+
+	    size_t width = mbs_width(column);
+
+	    if (aligns[i] == Align::RIGHT)
+	    {
+		if (width < output_info.widths[i] - extra)
+		    s << string(output_info.widths[i] - width - extra, ' ');
+	    }
+
+	    if (width > output_info.widths[i] - extra)
+	    {
+		const char* ellipsis = glyph(7);
+		s << mbs_substr_by_width(column, 0, output_info.widths[i] - extra - mbs_width(ellipsis))
+		  << ellipsis;
+	    }
+	    else
+		s << column;
+
+	    if (last)
+		break;
+
+	    if (aligns[i] == Align::LEFT)
+	    {
+		if (width < output_info.widths[i] - extra)
+		    s << string(output_info.widths[i] - width - extra, ' ');
+	    }
+
+	    s << " ";
+
+	    if (show_grid)
+		s << glyph(0);
+	}
+
+	s << '\n';
+
+	const vector<Table::Row>& subrows = row.get_subrows();
+	for (size_t i = 0; i < subrows.size(); ++i)
+	{
+	    vector<bool> sub_lasts = lasts;
+	    sub_lasts.push_back(i == subrows.size() - 1);
+	    output(s, subrows[i], output_info, sub_lasts);
+	}
     }
-  }
-  stream << endl;
-}
 
-void Table::dumpTo (ostream &stream) const {
 
-  boost::io::ios_flags_saver ifs(stream);
-  stream.width(0);
+    /**
+     * Output grid line under header.
+     */
+    void
+    Table::output(std::ostream& s, const OutputInfo& output_info) const
+    {
+	s << string(global_indent, ' ');
 
-  // reset column widths for columns that can be abbreviated
-  //! \todo allow abbrev of multiple columns?
-  unsigned c = 0;
-  for (vector<bool>::const_iterator it = _abbrev_col.begin();
-      it != _abbrev_col.end() && c <= _max_col; ++it, ++c) {
-    if (*it &&
-        _width > _screen_width &&
-        // don't resize the column to less than 3, or if the resulting table
-        // would still exceed the screen width (bnc #534795)
-        _max_width[c] > 3 &&
-        _width - _screen_width < ((int) _max_width[c]) - 3) {
-      _max_width[c] -= _width - _screen_width;
-      break;
+	for (size_t i = 0; i < output_info.widths.size(); ++i)
+	{
+	    if (output_info.hidden[i])
+		continue;
+
+	    for (size_t j = 0; j < output_info.widths[i]; ++j)
+		s << glyph(1);
+
+	    if (i == output_info.widths.size() - 1)
+		break;
+
+	    s << glyph(1) << glyph(2) << glyph(1);
+	}
+
+	s << '\n';
     }
-  }
-
-  if (_has_header) {
-    _header.dumpTo (stream, *this);
-    dumpRule (stream);
-  }
-
-  container::const_iterator
-    b = _rows.begin (),
-    e = _rows.end (),
-    i;
-  for (i = b; i != e; ++i) {
-    i->dumpTo (stream, *this);
-  }
-}
-
-void Table::wrap(int force_break_after)
-{
-  if (force_break_after >= 0)
-    _force_break_after = force_break_after;
-  _do_wrap = true;
-}
 
 
-void
-Table::set_style(TableStyle st)
-{
-    if (st < _End)
-	_style = st;
-}
+    size_t
+    Table::id_to_index(Id id) const
+    {
+	for (size_t i = 0; i < ids.size(); ++i)
+	    if (ids[i] == id)
+		return i;
+
+	throw runtime_error("id not found");
+    }
 
 
-void Table::margin(unsigned margin) {
-  if (margin < (unsigned) (_screen_width/2))
-    _margin = margin;
-  // else
-  // ERR << "margin of " << margin << " is greater than half of the screen" << endl;
-}
+    string&
+    Table::Row::operator[](Id id)
+    {
+	size_t i = table.id_to_index(id);
 
-void Table::sort (unsigned by_column) {
-  if (by_column > _max_col) {
-    // ERR << "by_column >= _max_col (" << by_column << ">=" << _max_col << ")" << endl;
-    // return;
-  }
+	if (columns.size() < i + 1)
+	    columns.resize(i + 1);
 
-  TableRow::Less comp (by_column);
-  _rows.sort (comp);
+	return columns[i];
+    }
+
+
+    Style
+    Table::auto_style()
+    {
+	return strcmp(nl_langinfo(CODESET), "UTF-8") == 0 ? Style::LIGHT : Style::ASCII;
+    }
+
+
+    Table::Table()
+	: header(*this)
+    {
+	screen_width = get_screen_width();
+    }
+
+
+    Table::Table(std::initializer_list<Cell> init)
+	: Table()
+    {
+	for (const Cell& cell : init)
+	{
+	    header.add(cell.name);
+	    ids.push_back(cell.id);
+	    aligns.push_back(cell.align);
+	}
+    }
+
+
+    Table::Table(const vector<Cell>& init)
+	: Table()
+    {
+	for (const Cell& cell : init)
+	{
+	    header.add(cell.name);
+	    ids.push_back(cell.id);
+	    aligns.push_back(cell.align);
+	}
+    }
+
+
+    void
+    Table::set_min_width(Id id, size_t min_width)
+    {
+	size_t i = id_to_index(id);
+
+	if (min_widths.size() < i + 1)
+	    min_widths.resize(i + 1);
+
+	min_widths[i] = min_width;
+    }
+
+
+    void
+    Table::set_visibility(Id id, Visibility visibility)
+    {
+	size_t i = id_to_index(id);
+
+	if (visibilities.size() < i + 1)
+	    visibilities.resize(i + 1);
+
+	visibilities[i] = visibility;
+    }
+
+
+    void
+    Table::set_abbreviate(Id id, bool abbreviate)
+    {
+	size_t i = id_to_index(id);
+
+	if (abbreviates.size() < i + 1)
+	    abbreviates.resize(i + 1);
+
+	abbreviates[i] = abbreviate;
+    }
+
+
+    void
+    Table::set_tree_id(Id id)
+    {
+	tree_index = id_to_index(id);
+    }
+
+
+    std::ostream&
+    operator<<(std::ostream& s, const Table& table)
+    {
+	// calculate hidden and widths
+
+	Table::OutputInfo output_info(table);
+
+	// output header and rows
+
+	if (table.show_header)
+	    table.output(s, table.header, output_info, {});
+
+	if (table.show_header && table.show_grid)
+	    table.output(s, output_info);
+
+	for (const Table::Row& row : table.rows)
+	    table.output(s, row, output_info, {});
+
+	return s;
+    }
+
+
+    const char*
+    Table::glyph(unsigned int i) const
+    {
+	const char* glyphs[][8] = {
+	    { "|", "-", "+", "+-", "+-", "| ", "  ", "..." },	// ASCII
+	    { "│", "─", "┼", "├─", "└─", "│ ", "  ", "…" },	// LIGHT
+	    { "┃", "━", "╋", "├─", "└─", "│ ", "  ", "…" },	// HEAVY
+	    { "║", "═", "╬", "├─", "└─", "│ ", "  ", "…" },	// DOUBLE
+	};
+
+	return glyphs[(unsigned int)(style)][i];
+    }
+
 }

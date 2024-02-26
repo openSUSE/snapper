@@ -24,14 +24,12 @@ BOOST_AUTO_TEST_CASE(test1)
 {
     locale::global(locale("en_GB.UTF-8"));
 
-    TableFormatter formatter(Ascii);
+    TableFormatter formatter(Style::ASCII);
 
-    formatter.header() = {
-	{ "Number", TableAlign::RIGHT },
-	{ "Name EN", TableAlign::LEFT },
-	{ "Name DE", TableAlign::LEFT },
-	{ "Square", TableAlign::RIGHT }
-    };
+    formatter.header().push_back(Cell("Number", Id::NUMBER, Align::RIGHT));
+    formatter.header().push_back(Cell("Name EN"));
+    formatter.header().push_back(Cell("Name DE"));
+    formatter.header().push_back(Cell("Square", Align::RIGHT));
 
     formatter.rows() = {
 	{ "0", "zero", "Null", "0" },
