@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-28 08:50+0100\n"
+"POT-Creation-Date: 2024-02-26 12:27+0100\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Ewelina Michalowska <ewelina.michalowska@stgambit.com>\n"
 "Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>\n"
@@ -19,160 +19,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 3.3\n"
-
-msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
-msgstr ""
-
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tWyświetla listę migawek z wszystkich dostępnych konfiguracji."
-
-msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr ""
-
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorytm usuwania starych zrzutów."
-
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorytm czyszczenia migawek."
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
-"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date, read-only."
-msgstr ""
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: key, value.\n"
-"\t\t\t\t\tColumns are not selected when JSON format is used."
-msgstr ""
-
-msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <polecenie>\t\tWykonanie polecenia oraz utworzenie zrzutów typu pre i post."
-
-msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <nazwa>\t\tUstawienie nazwy konfiguracji do użycia."
-
-msgid "\t--csvout\t\t\tSet CSV output format."
-msgstr ""
-
-msgid "\t--debug\t\t\t\tTurn on debugging."
-msgstr ""
-
-msgid "\t--default\t\t\tSet snapshot as default snapshot."
-msgstr ""
-
-msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <opis>\tOpis zrzutu."
-
-msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr "\t--description, -d <opis>\tOpis migawek."
-
-msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr "\t--diff-cmd <polecenie>\t\tPolecenie służące do porównywania plików."
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-used-space\t\tWyłącz wyświetlanie wykorzystanego miejsca."
-
-msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
-msgstr "\t--extensions, -x <opcje>\tDodatkowe opcje przekazywane do polecenia diff."
-
-msgid "\t--free-space <space>\t\tTry to make space available."
-msgstr ""
-
-msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
-msgstr ""
-
-msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--fstype, -f <fstype>\t\tRęczne ustawienie typu systemu plików."
-
-msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <plik>\t\tCzytaj pliki, dla których można cofnąć zmiany z pliku."
-
-msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr "\t--input, -i <plik>\t\tWczytuje pliki do polecenia diff z pliku."
-
-msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr "\t--iso\t\t\t\tWyświetla datę i godzinę w formacie ISO."
-
-msgid "\t--jsonout\t\t\tSet JSON output format."
-msgstr ""
-
-msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
-msgstr ""
-
-msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr "\t--no-dbus\t\t\tPracuj bez korzystania z systemu DBus."
-
-msgid "\t--no-headers\t\t\tNo headers for CSV output format."
-msgstr ""
-
-msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <plik>\t\tZapisz status do pliku."
-
-msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
-msgstr ""
-
-msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <numer>\t\tLiczba odpowiednich zrzutów typu pre."
-
-msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tWyświetl numer tworzonego zrzutu."
-
-msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr "\t--print-number, -p\t\tWyświetlenie numeru migawki utworzonej jako druga."
-
-msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\tWyłącz normalne wyjście."
-
-msgid "\t--read-only\t\t\tCreate read-only snapshot."
-msgstr ""
-
-msgid "\t--read-only\t\t\tSet snapshot read-only."
-msgstr ""
-
-msgid "\t--read-write\t\t\tCreate read-write snapshot."
-msgstr ""
-
-msgid "\t--read-write\t\t\tSet snapshot read-write."
-msgstr ""
-
-msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
-msgstr "\t--root, -r <ścieżka>\t\tDziałanie na katalogu głównym obiektu docelowego (działa tylko bez systemu DBus)."
-
-msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
-msgstr ""
-
-msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr "\t--sync, -s\t\t\tPrzeprowadza synchronizację po usunięciu."
-
-msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <styl>\tStyl tabeli (liczba całkowita)."
-
-msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <name>\t\tNazwa szablonu konfiguracji do użycia."
-
-msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <type>\t\tRodzaj zrzutu."
-
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <type>\t\tRodzaj zrzutów do wyświetlenia."
-
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <userdata>\tDane użytkownika dla zrzutu."
-
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata, -u <dane użytkownika>\tDane użytkownika dla migawek."
-
-msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr "\t--utc\t\t\t\tWyświetla datę i godzinę w formacie UTC."
-
-msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tZwiększenie szczegółowości."
-
-msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tWyświetl wersję programu i zakończ pracę."
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <algorytm czyszczenia>"
@@ -254,11 +100,9 @@ msgstr "    Opcje dla polecenia 'create-config':"
 msgid "    Options for 'list' command:"
 msgstr "    Opcje dla polecenia 'list':"
 
-msgid ""
-"    Options for 'list-configs' command:\n"
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume.\n"
-msgstr ""
+#, fuzzy
+msgid "    Options for 'list-configs' command:"
+msgstr "    Opcje dla polecenia 'create-config':"
 
 msgid "    Options for 'modify' command:"
 msgstr "    Opcje dla polecenia 'modify':"
@@ -344,6 +188,133 @@ msgstr ""
 msgid "(Snapshot %d.)"
 msgstr "(Migawka %d.)"
 
+msgid "--abbreviate"
+msgstr ""
+
+msgid "--all-configs, -a"
+msgstr ""
+
+msgid "--ambit, -a <ambit>"
+msgstr ""
+
+#, fuzzy
+msgid "--cleanup-algorithm, -c <algo>"
+msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorytm usuwania starych zrzutów."
+
+msgid "--columns <columns>"
+msgstr ""
+
+msgid "--command <command>"
+msgstr ""
+
+msgid "--config, -c <name>"
+msgstr ""
+
+msgid "--csvout"
+msgstr ""
+
+msgid "--debug"
+msgstr ""
+
+msgid "--default"
+msgstr ""
+
+#, fuzzy
+msgid "--description, -d <description>"
+msgstr "\t--description, -d <opis>\tOpis zrzutu."
+
+msgid "--diff-cmd <command>"
+msgstr ""
+
+msgid "--disable-used-space"
+msgstr ""
+
+msgid "--extensions, -x <options>"
+msgstr ""
+
+msgid "--free-space <space>"
+msgstr ""
+
+msgid "--from <number>"
+msgstr ""
+
+msgid "--fstype, -f <fstype>"
+msgstr ""
+
+msgid "--input, -i <file>"
+msgstr ""
+
+msgid "--iso"
+msgstr ""
+
+msgid "--jsonout"
+msgstr ""
+
+#, fuzzy
+msgid "--machine-readable <format>"
+msgstr "Nieprawidłowy styl tabeli %d."
+
+msgid "--no-dbus"
+msgstr ""
+
+msgid "--no-headers"
+msgstr ""
+
+#, fuzzy
+msgid "--output, -o <file>"
+msgstr "\t--output, -o <plik>\t\tZapisz status do pliku."
+
+msgid "--path <path>"
+msgstr ""
+
+msgid "--pre-number <number>"
+msgstr ""
+
+msgid "--print-number, -p"
+msgstr ""
+
+msgid "--quiet, -q"
+msgstr ""
+
+msgid "--read-only"
+msgstr ""
+
+msgid "--read-write"
+msgstr ""
+
+msgid "--root, -r <path>"
+msgstr ""
+
+msgid "--separator <separator>"
+msgstr ""
+
+msgid "--sync, -s"
+msgstr ""
+
+#, fuzzy
+msgid "--table-style, -t <style>"
+msgstr "\t--table-style, -t <styl>\tStyl tabeli (liczba całkowita)."
+
+msgid "--template, -t <name>"
+msgstr ""
+
+#, fuzzy
+msgid "--type, -t <type>"
+msgstr "\t--type, -t <type>\t\tRodzaj zrzutu."
+
+#, fuzzy
+msgid "--userdata, -u <userdata>"
+msgstr "\t--userdata, -u <userdata>\tDane użytkownika dla zrzutu."
+
+msgid "--utc"
+msgstr ""
+
+msgid "--verbose, -v"
+msgstr ""
+
+msgid "--version"
+msgstr ""
+
 msgid "ACL error."
 msgstr "Błąd ACL."
 
@@ -351,6 +322,9 @@ msgid "Active"
 msgstr ""
 
 msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+msgid "Allow to abbreviate table columns."
 msgstr ""
 
 #, c-format
@@ -379,12 +353,29 @@ msgstr ""
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
+msgid "Character separator for CSV output format."
+msgstr ""
+
 msgid "Cleanup"
 msgstr "Wyczyszczono"
+
+#, fuzzy
+msgid "Cleanup algorithm for snapshot."
+msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorytm usuwania starych zrzutów."
+
+#, fuzzy
+msgid "Cleanup algorithm for snapshots."
+msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorytm czyszczenia migawek."
+
+msgid "Cleanup all configs affecting path."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "Otwieranie pliku '%s' nie powiodło się."
+
+msgid "Columns to show separated by comma."
+msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Polecenie  'cleanup' wymaga jednego argumentu."
@@ -453,6 +444,10 @@ msgstr "Polecenie 'undochange' wymaga co najmniej jednego argumentu."
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Polecenie 'xadiff' wymaga podania co najmniej jednego argumentu."
 
+#, fuzzy
+msgid "Command used for comparing files."
+msgstr "\t--diff-cmd <polecenie>\t\tPolecenie służące do porównywania plików."
+
 msgid "Config"
 msgstr "Konfiguracja"
 
@@ -484,6 +479,18 @@ msgstr ""
 
 msgid "Could not make enough free space available."
 msgstr ""
+
+#, fuzzy
+msgid "Create a snapshot from the specified snapshot."
+msgstr "Tworzenie migawki z migawki %d służącej do odczytu i zapisu."
+
+#, fuzzy
+msgid "Create read-only snapshot."
+msgstr "Tworzenie migawki bieżącego systemu służącej tylko do odczytu."
+
+#, fuzzy
+msgid "Create read-write snapshot."
+msgstr "Tworzenie migawki z migawki %d służącej do odczytu i zapisu."
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -528,8 +535,28 @@ msgstr[2] "Usuwanie migawek z %s:"
 msgid "Description"
 msgstr "Opis"
 
+#, fuzzy
+msgid "Description for snapshot."
+msgstr "Opis"
+
+#, fuzzy
+msgid "Description for snapshots."
+msgstr "porównanie zrzutów..."
+
 msgid "Detecting filesystem type failed."
 msgstr "Wykrywanie systemu plików nie powiodło się."
+
+#, fuzzy
+msgid "Disable showing used space."
+msgstr "\t--disable-used-space\t\tWyłącz wyświetlanie wykorzystanego miejsca."
+
+#, fuzzy
+msgid "Display dates and times in ISO format."
+msgstr "\t--iso\t\t\t\tWyświetla datę i godzinę w formacie ISO."
+
+#, fuzzy
+msgid "Display dates and times in UTC."
+msgstr "\t--utc\t\t\t\tWyświetla datę i godzinę w formacie UTC."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
@@ -553,6 +580,10 @@ msgstr "Puste dane użytkownika."
 #, c-format
 msgid "Error (%s)."
 msgstr "Błąd (%s)."
+
+#, fuzzy
+msgid "Extra options passed to the diff command."
+msgstr "\t--extensions, -x <opcje>\tDodatkowe opcje przekazywane do polecenia diff."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Inicjowanie programu obsługi systemu plików nie powiodło się."
@@ -615,6 +646,10 @@ msgstr "Identyczne zrzuty."
 msgid "Illegal snapshot."
 msgstr "Niedozwolony zrzut."
 
+#, fuzzy
+msgid "Increase verbosity."
+msgstr "\t--verbose, -v\t\t\tZwiększenie szczegółowości."
+
 #, fuzzy, c-format
 msgid "Invalid ambit '%s'."
 msgstr "Nieprawidłowy zrzut '%s'."
@@ -622,6 +657,10 @@ msgstr "Nieprawidłowy zrzut '%s'."
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "Nieprawidłowy zrzut '%s'."
+
+#, fuzzy
+msgid "Invalid config."
+msgstr "Nieprawidłowe dane konfiguracyjne."
 
 msgid "Invalid configdata."
 msgstr "Nieprawidłowe dane konfiguracyjne."
@@ -670,6 +709,10 @@ msgstr "Klucz"
 msgid "KiB"
 msgstr "KiB"
 
+#, fuzzy
+msgid "List snapshots from all accessible configs."
+msgstr "\t--all-configs, -a\t\tWyświetla listę migawek z wszystkich dostępnych konfiguracji."
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Wyświetlenie konfiguracji nie powiodło się (%s)."
@@ -682,6 +725,10 @@ msgstr ""
 #, fuzzy
 msgid "MB"
 msgstr "MiB"
+
+#, fuzzy
+msgid "Manually set filesystem type."
+msgstr "\t--fstype, -f <fstype>\t\tRęczne ustawienie typu systemu plików."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Być może zapomniano ogranicznika \"..\" między numerami migawek."
@@ -708,15 +755,40 @@ msgstr "Brak ogranicznika \"..\" między numerami migawek."
 msgid "Missing or invalid pre-number."
 msgstr "Brakujący lub błędny numer pre."
 
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+msgid "Name of config template to use."
+msgstr "\t--template, -t <name>\t\tNazwa szablonu konfiguracji do użycia."
+
 msgid "No command provided."
 msgstr "Nie podano polecenia."
+
+msgid "No headers for CSV output format."
+msgstr ""
 
 msgid "No permissions."
 msgstr "Brak uprawnień."
 
+#, fuzzy
+msgid "Number of corresponding pre snapshot."
+msgstr "\t--pre-number <numer>\t\tLiczba odpowiednich zrzutów typu pre."
+
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "Otwieranie pliku '%s' nie powiodło się."
+
+msgid "Operate in the specified ambit."
+msgstr ""
+
+#, fuzzy
+msgid "Operate on target root (works only without DBus)."
+msgstr "\t--root, -r <ścieżka>\t\tDziałanie na katalogu głównym obiektu docelowego (działa tylko bez systemu DBus)."
+
+#, fuzzy
+msgid "Operate without DBus."
+msgstr "\t--no-dbus\t\t\tPracuj bez korzystania z systemu DBus."
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr ""
@@ -750,12 +822,40 @@ msgstr "Pre #"
 msgid "Pre Date"
 msgstr "Przed datą"
 
+#, fuzzy
+msgid "Print number of created snapshot."
+msgstr "\t--print-number, -p\t\tWyświetl numer tworzonego zrzutu."
+
+#, fuzzy
+msgid "Print number of second created snapshot."
+msgstr "\t--print-number, -p\t\tWyświetlenie numeru migawki utworzonej jako druga."
+
+#, fuzzy
+msgid "Print version and exit."
+msgstr "\t--version\t\t\tWyświetl wersję programu i zakończ pracę."
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Błąd przydziału (%s)."
 
+#, fuzzy
+msgid "Read files for which to undo changes from file."
+msgstr "\t--input, -i <plik>\t\tCzytaj pliki, dla których można cofnąć zmiany z pliku."
+
+#, fuzzy
+msgid "Read files to diff from file."
+msgstr "\t--input, -i <plik>\t\tWczytuje pliki do polecenia diff z pliku."
+
 msgid "Read-Only"
 msgstr ""
+
+#, fuzzy
+msgid "Run command and create pre and post snapshots."
+msgstr "\t--command <polecenie>\t\tWykonanie polecenia oraz utworzenie zrzutów typu pre i post."
+
+#, fuzzy
+msgid "Save status to file."
+msgstr "\t--output, -o <plik>\t\tZapisz status do pliku."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Dodatkowe instrukcje można uzyskać, wydając polecenie \"man snapper\"."
@@ -763,6 +863,31 @@ msgstr "Dodatkowe instrukcje można uzyskać, wydając polecenie \"man snapper\"
 #, fuzzy, c-format
 msgid "Server-side plugin '%s' failed."
 msgstr "Otwieranie pliku '%s' nie powiodło się."
+
+msgid "Set CSV output format."
+msgstr ""
+
+msgid "Set JSON output format."
+msgstr ""
+
+#, fuzzy
+msgid "Set a machine-readable output format (csv, json)."
+msgstr "Nieprawidłowy styl tabeli %d."
+
+#, fuzzy
+msgid "Set name of config to use."
+msgstr "\t--config, -c <nazwa>\t\tUstawienie nazwy konfiguracji do użycia."
+
+msgid "Set snapshot as default snapshot."
+msgstr ""
+
+#, fuzzy
+msgid "Set snapshot read-only."
+msgstr "Tworzenie zrzutu nie powiodło się (%s)."
+
+#, fuzzy
+msgid "Set snapshot read-write."
+msgstr "Tworzenie zrzutu nie powiodło się (%s)."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
@@ -778,6 +903,14 @@ msgstr "Dany zrzut jest już używany."
 msgid "Subvolume"
 msgstr "Podwolumen"
 
+#, fuzzy
+msgid "Suppress normal output."
+msgstr "\t--quiet, -q\t\t\tWyłącz normalne wyjście."
+
+#, fuzzy
+msgid "Sync after deletion."
+msgstr "\t--sync, -s\t\t\tPrzeprowadza synchronizację po usunięciu."
+
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
 msgstr ""
@@ -786,6 +919,10 @@ msgstr ""
 #, fuzzy
 msgid "TB"
 msgstr "TiB"
+
+#, fuzzy
+msgid "Table style (integer)."
+msgstr "\t--table-style, -t <styl>\tStyl tabeli (liczba całkowita)."
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
@@ -803,8 +940,22 @@ msgstr "TiB"
 msgid "Try 'snapper --help' for more information."
 msgstr "Wypróbuj polecenie 'snapper --help', aby uzyskać więcej informacji."
 
+msgid "Try to make space available."
+msgstr ""
+
+msgid "Turn on debugging."
+msgstr ""
+
 msgid "Type"
 msgstr "Rodzaj"
+
+#, fuzzy
+msgid "Type for snapshot."
+msgstr "Nieznany rodzaj zrzutu."
+
+#, fuzzy
+msgid "Type of snapshots to list."
+msgstr "\t--type, -t <type>\t\tRodzaj zrzutów do wyświetlenia."
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -855,6 +1006,14 @@ msgstr "Dane użytkownika %s nie zawierają znaku =."
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "Dane użytkownika %s zawierają pusty klucz."
+
+#, fuzzy
+msgid "Userdata for snapshot."
+msgstr "\t--userdata, -u <userdata>\tDane użytkownika dla zrzutu."
+
+#, fuzzy
+msgid "Userdata for snapshots."
+msgstr "Identyczne zrzuty."
 
 msgid "Value"
 msgstr "Wartość"
@@ -912,8 +1071,11 @@ msgstr "Użycie: snapper [--opcje-globalne] <polecenia> [--opcje-poleceń] [argu
 msgid "yes"
 msgstr ""
 
-#~ msgid "Unknown type of snapshot."
-#~ msgstr "Nieznany rodzaj zrzutu."
+#~ msgid "\t--description, -d <description>\tDescription for snapshots."
+#~ msgstr "\t--description, -d <opis>\tOpis migawek."
+
+#~ msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
+#~ msgstr "\t--userdata, -u <dane użytkownika>\tDane użytkownika dla migawek."
 
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Nieznany rodzaj zrzutów."
@@ -935,9 +1097,6 @@ msgstr ""
 
 #~ msgid "Command failed (%s). See log for more information."
 #~ msgstr "Polecenie (%s) nie powiodło się. Więcej informacji można znaleźć w dzienniku."
-
-#~ msgid "comparing snapshots..."
-#~ msgstr "porównanie zrzutów..."
 
 #~ msgid "done"
 #~ msgstr "zrobione"

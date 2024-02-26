@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper.km\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-28 08:50+0100\n"
+"POT-Creation-Date: 2024-02-26 12:27+0100\n"
 "PO-Revision-Date: 2011-10-24 10:40+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -15,167 +15,6 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: KBabel 1.11.4\n"
 "X-Language: km-KH\n"
-
-msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
-msgstr ""
-
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr ""
-
-msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr ""
-
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <algo>\tសម្អាត​អាល់កូរីត​សម្រាប់ snapshot ។"
-
-#, fuzzy
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <algo>\tសម្អាត​អាល់កូរីត​សម្រាប់ snapshot ។"
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
-"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date, read-only."
-msgstr ""
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: key, value.\n"
-"\t\t\t\t\tColumns are not selected when JSON format is used."
-msgstr ""
-
-#, fuzzy
-msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <command>\tដំណើរការ​ពាក្យ​បញ្ជា និង​បង្កើត​រូបថត​មុន និង​ក្រោយ ។"
-
-msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <name>\t\tកំណត់​ឈ្មោះ​រចនាសម្ព័ន្ធ​ដែល​ត្រូវប្រើ ។"
-
-msgid "\t--csvout\t\t\tSet CSV output format."
-msgstr ""
-
-msgid "\t--debug\t\t\t\tTurn on debugging."
-msgstr ""
-
-msgid "\t--default\t\t\tSet snapshot as default snapshot."
-msgstr ""
-
-msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <description>\tសេចក្ដី​ពិពណ៌នា​អំពី​រូបថត ។"
-
-#, fuzzy
-msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr "\t--description, -d <description>\tសេចក្ដី​ពិពណ៌នា​អំពី​រូបថត ។"
-
-msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr ""
-
-#, fuzzy
-msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-filters\t\tបិទ​តម្រង ។"
-
-msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
-msgstr ""
-
-msgid "\t--free-space <space>\t\tTry to make space available."
-msgstr ""
-
-msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
-msgstr ""
-
-msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--fstype, -f <fstype>\t\tកំណត់​ប្រភេទ​ប្រព័ន្ធ​ឯកសារ​ដោយ​ដៃ ។"
-
-msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <file>\t\tអាន​ឯកសារ​ដែល​នឹង​មិន​ធ្វើ​ការ​ផ្លាស់ប្ដូរ​ឡើងវិញ​ពី​ឯកសារ ។"
-
-#, fuzzy
-msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr "\t--input, -i <file>\t\tអាន​ឯកសារ​ដែល​នឹង​មិន​ធ្វើ​ការ​ផ្លាស់ប្ដូរ​ឡើងវិញ​ពី​ឯកសារ ។"
-
-msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr ""
-
-msgid "\t--jsonout\t\t\tSet JSON output format."
-msgstr ""
-
-msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
-msgstr ""
-
-msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr ""
-
-msgid "\t--no-headers\t\t\tNo headers for CSV output format."
-msgstr ""
-
-msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <file>\t\tរក្សា​ទុក​ស្ថានភាព​ទៅ​ក្នុង​ឯកសារ ។"
-
-msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
-msgstr ""
-
-msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <number>\t\tចំនួន​រូបថតពី​មុន​ដែល​ត្រូវ​គ្នា​ ។"
-
-msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tបោះពុម្ព​ចំនួន​រូបថត​ដែល​បាន​បង្កើត​ ។"
-
-#, fuzzy
-msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr "\t--print-number, -p\t\tបោះពុម្ព​ចំនួន​រូបថត​ដែល​បាន​បង្កើត​ ។"
-
-msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\tលុប​ទិន្នន័យ​ធម្មតា ។"
-
-msgid "\t--read-only\t\t\tCreate read-only snapshot."
-msgstr ""
-
-msgid "\t--read-only\t\t\tSet snapshot read-only."
-msgstr ""
-
-msgid "\t--read-write\t\t\tCreate read-write snapshot."
-msgstr ""
-
-msgid "\t--read-write\t\t\tSet snapshot read-write."
-msgstr ""
-
-msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
-msgstr ""
-
-msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
-msgstr ""
-
-msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr ""
-
-msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <style>\tរចនាប័ទ្ម​តារាង​ (ចំនួន​គត់) ។"
-
-msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <name>\t\tឈ្មោះ​ពុម្ព​នៃ​ការ​កំណត់​រចនាសម្ព័ន្ធ​ដែល​ត្រូវ​ប្រើ ។"
-
-msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <type>\t\tប្រភេទ​សម្រាប់​រូបថត ។"
-
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <type>\t\tប្រភេទ​រូបថត​ត្រូវ​រាយ ។"
-
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <userdata>\tទិន្នន័យ​​អ្នក​ប្រើ​សម្រាប់ snapshot ។"
-
-#, fuzzy
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata, -u <userdata>\tទិន្នន័យ​​អ្នក​ប្រើ​សម្រាប់ snapshot ។"
-
-msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr ""
-
-msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tបង្កើន​ការ​បរិយាយ ។"
-
-msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tបោះ​ពុម្ព​កំណែ រួច​ចេញ ។"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tសម្អាត​កម្មវិធី​ថត <cleanup-algorithm>"
@@ -264,11 +103,9 @@ msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​ប�
 msgid "    Options for 'list' command:"
 msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា 'list' ៖"
 
-msgid ""
-"    Options for 'list-configs' command:\n"
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume.\n"
-msgstr ""
+#, fuzzy
+msgid "    Options for 'list-configs' command:"
+msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា 'create-config' ៖"
 
 msgid "    Options for 'modify' command:"
 msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា​ 'modify' ៖"
@@ -359,6 +196,133 @@ msgstr ""
 msgid "(Snapshot %d.)"
 msgstr "រក​មិន​ឃើញ​រូបថត '%u' ។"
 
+msgid "--abbreviate"
+msgstr ""
+
+msgid "--all-configs, -a"
+msgstr ""
+
+msgid "--ambit, -a <ambit>"
+msgstr ""
+
+#, fuzzy
+msgid "--cleanup-algorithm, -c <algo>"
+msgstr "\t--cleanup-algorithm, -c <algo>\tសម្អាត​អាល់កូរីត​សម្រាប់ snapshot ។"
+
+msgid "--columns <columns>"
+msgstr ""
+
+msgid "--command <command>"
+msgstr ""
+
+msgid "--config, -c <name>"
+msgstr ""
+
+msgid "--csvout"
+msgstr ""
+
+msgid "--debug"
+msgstr ""
+
+msgid "--default"
+msgstr ""
+
+#, fuzzy
+msgid "--description, -d <description>"
+msgstr "\t--description, -d <description>\tសេចក្ដី​ពិពណ៌នា​អំពី​រូបថត ។"
+
+msgid "--diff-cmd <command>"
+msgstr ""
+
+msgid "--disable-used-space"
+msgstr ""
+
+msgid "--extensions, -x <options>"
+msgstr ""
+
+msgid "--free-space <space>"
+msgstr ""
+
+msgid "--from <number>"
+msgstr ""
+
+msgid "--fstype, -f <fstype>"
+msgstr ""
+
+msgid "--input, -i <file>"
+msgstr ""
+
+msgid "--iso"
+msgstr ""
+
+msgid "--jsonout"
+msgstr ""
+
+#, fuzzy
+msgid "--machine-readable <format>"
+msgstr "រចនាប័ទ្ម​តារាង %d មិន​ត្រឹមត្រូវ ។"
+
+msgid "--no-dbus"
+msgstr ""
+
+msgid "--no-headers"
+msgstr ""
+
+#, fuzzy
+msgid "--output, -o <file>"
+msgstr "\t--output, -o <file>\t\tរក្សា​ទុក​ស្ថានភាព​ទៅ​ក្នុង​ឯកសារ ។"
+
+msgid "--path <path>"
+msgstr ""
+
+msgid "--pre-number <number>"
+msgstr ""
+
+msgid "--print-number, -p"
+msgstr ""
+
+msgid "--quiet, -q"
+msgstr ""
+
+msgid "--read-only"
+msgstr ""
+
+msgid "--read-write"
+msgstr ""
+
+msgid "--root, -r <path>"
+msgstr ""
+
+msgid "--separator <separator>"
+msgstr ""
+
+msgid "--sync, -s"
+msgstr ""
+
+#, fuzzy
+msgid "--table-style, -t <style>"
+msgstr "\t--table-style, -t <style>\tរចនាប័ទ្ម​តារាង​ (ចំនួន​គត់) ។"
+
+msgid "--template, -t <name>"
+msgstr ""
+
+#, fuzzy
+msgid "--type, -t <type>"
+msgstr "\t--type, -t <type>\t\tប្រភេទ​សម្រាប់​រូបថត ។"
+
+#, fuzzy
+msgid "--userdata, -u <userdata>"
+msgstr "\t--userdata, -u <userdata>\tទិន្នន័យ​​អ្នក​ប្រើ​សម្រាប់ snapshot ។"
+
+msgid "--utc"
+msgstr ""
+
+msgid "--verbose, -v"
+msgstr ""
+
+msgid "--version"
+msgstr ""
+
 #, fuzzy
 msgid "ACL error."
 msgstr "បង្កើត​កំហុស"
@@ -367,6 +331,9 @@ msgid "Active"
 msgstr ""
 
 msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+msgid "Allow to abbreviate table columns."
 msgstr ""
 
 #, c-format
@@ -395,12 +362,29 @@ msgstr ""
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
+msgid "Character separator for CSV output format."
+msgstr ""
+
 msgid "Cleanup"
 msgstr "Cleanup"
+
+#, fuzzy
+msgid "Cleanup algorithm for snapshot."
+msgstr "\t--cleanup-algorithm, -c <algo>\tសម្អាត​អាល់កូរីត​សម្រាប់ snapshot ។"
+
+#, fuzzy
+msgid "Cleanup algorithm for snapshots."
+msgstr "\t--cleanup-algorithm, -c <algo>\tសម្អាត​អាល់កូរីត​សម្រាប់ snapshot ។"
+
+msgid "Cleanup all configs affecting path."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បើក​ឯកសារ '%s' ។"
+
+msgid "Columns to show separated by comma."
+msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "ពាក្យ​បញ្ជា 'cleanup' ត្រូវការ​អាគុយម៉ង់​មួយ។"
@@ -477,6 +461,9 @@ msgstr "ពាក្យ​បញ្ជា​ 'undochange' ត្រូវកា�
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "ពាក្យ​បញ្ជា 'modify' ត្រូវការ​យ៉ាង​ហោចណាស់​អាគុយម៉ង់​មួយ ។"
 
+msgid "Command used for comparing files."
+msgstr ""
+
 msgid "Config"
 msgstr "កំណត់​រចនាសម្ព័ន្ធ"
 
@@ -510,6 +497,18 @@ msgstr ""
 
 msgid "Could not make enough free space available."
 msgstr ""
+
+#, fuzzy
+msgid "Create a snapshot from the specified snapshot."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
+
+#, fuzzy
+msgid "Create read-only snapshot."
+msgstr "%s ច្បាប់ ៖ មិនបានគាំទ្រ​នៅ​លើ​ប្រព័ន្ធ​បច្ចុប្បន្ន​ទេ ។\n"
+
+#, fuzzy
+msgid "Create read-write snapshot."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -556,8 +555,26 @@ msgstr[0] "ការ​លុប CA បាន​បរាជ័យ ៖ %1 ។"
 msgid "Description"
 msgstr "សេចក្តី​ពិពណ៌នា"
 
+#, fuzzy
+msgid "Description for snapshot."
+msgstr "សេចក្តី​ពិពណ៌នា"
+
+#, fuzzy
+msgid "Description for snapshots."
+msgstr "កំពុង​ប្រៀបធៀប​រូបថត..."
+
 msgid "Detecting filesystem type failed."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​រក​ប្រភេទ​ប្រព័ន្ធ​ឯកសារ ។"
+
+#, fuzzy
+msgid "Disable showing used space."
+msgstr "\t--disable-filters\t\tបិទ​តម្រង ។"
+
+msgid "Display dates and times in ISO format."
+msgstr ""
+
+msgid "Display dates and times in UTC."
+msgstr ""
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
@@ -583,6 +600,10 @@ msgstr "ទិន្នន័យ​អ្នក​ប្រើ​មិន​ត
 #, fuzzy, c-format
 msgid "Error (%s)."
 msgstr "កំហុស I/O"
+
+#, fuzzy
+msgid "Extra options passed to the diff command."
+msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា​ 'modify' ៖"
 
 #, fuzzy
 msgid "Failed to initialize filesystem handler."
@@ -649,6 +670,10 @@ msgstr "រូបថត​ដូចគ្នា ។"
 msgid "Illegal snapshot."
 msgstr "រូបថត​មិន​ត្រឹមត្រូវ ។"
 
+#, fuzzy
+msgid "Increase verbosity."
+msgstr "\t--verbose, -v\t\t\tបង្កើន​ការ​បរិយាយ ។"
+
 #, fuzzy, c-format
 msgid "Invalid ambit '%s'."
 msgstr "រូបថត​មិន​ត្រឹមត្រូវ '%s' ។"
@@ -656,6 +681,10 @@ msgstr "រូបថត​មិន​ត្រឹមត្រូវ '%s' ។"
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "រូបថត​មិន​ត្រឹមត្រូវ '%s' ។"
+
+#, fuzzy
+msgid "Invalid config."
+msgstr "ទិន្នន័យ​ផ្សាយ​មិន​ត្រឹមត្រូវ ។"
 
 #, fuzzy
 msgid "Invalid configdata."
@@ -706,6 +735,9 @@ msgstr "សោ ៖"
 msgid "KiB"
 msgstr ""
 
+msgid "List snapshots from all accessible configs."
+msgstr ""
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​រាយ​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
@@ -717,6 +749,10 @@ msgstr ""
 #. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
 msgid "MB"
 msgstr ""
+
+#, fuzzy
+msgid "Manually set filesystem type."
+msgstr "\t--fstype, -f <fstype>\t\tកំណត់​ប្រភេទ​ប្រព័ន្ធ​ឯកសារ​ដោយ​ដៃ ។"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr ""
@@ -743,16 +779,39 @@ msgstr ""
 msgid "Missing or invalid pre-number."
 msgstr "បាត់ ឬ​លេខ​មុន​មិន​ត្រឹមត្រូវ ។"
 
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+msgid "Name of config template to use."
+msgstr "\t--template, -t <name>\t\tឈ្មោះ​ពុម្ព​នៃ​ការ​កំណត់​រចនាសម្ព័ន្ធ​ដែល​ត្រូវ​ប្រើ ។"
+
 msgid "No command provided."
 msgstr "មិន​បាន​ផ្ដល់​ពាក្យ​បញ្ជា ។"
+
+msgid "No headers for CSV output format."
+msgstr ""
 
 #, fuzzy
 msgid "No permissions."
 msgstr "(បិទ​សិទ្ធិ​ជា​​ម្ចាស់)"
 
+#, fuzzy
+msgid "Number of corresponding pre snapshot."
+msgstr "\t--pre-number <number>\t\tចំនួន​រូបថតពី​មុន​ដែល​ត្រូវ​គ្នា​ ។"
+
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បើក​ឯកសារ '%s' ។"
+
+msgid "Operate in the specified ambit."
+msgstr ""
+
+msgid "Operate on target root (works only without DBus)."
+msgstr ""
+
+msgid "Operate without DBus."
+msgstr ""
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr ""
@@ -785,13 +844,41 @@ msgstr "លេខ​មុន"
 msgid "Pre Date"
 msgstr "កាលបរិច្ឆេទ​មុន"
 
+#, fuzzy
+msgid "Print number of created snapshot."
+msgstr "\t--print-number, -p\t\tបោះពុម្ព​ចំនួន​រូបថត​ដែល​បាន​បង្កើត​ ។"
+
+#, fuzzy
+msgid "Print number of second created snapshot."
+msgstr "\t--print-number, -p\t\tបោះពុម្ព​ចំនួន​រូបថត​ដែល​បាន​បង្កើត​ ។"
+
+#, fuzzy
+msgid "Print version and exit."
+msgstr "\t--version\t\t\tបោះ​ពុម្ព​កំណែ រួច​ចេញ ។"
+
 # error box title
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "កំហុស I/O"
 
+#, fuzzy
+msgid "Read files for which to undo changes from file."
+msgstr "\t--input, -i <file>\t\tអាន​ឯកសារ​ដែល​នឹង​មិន​ធ្វើ​ការ​ផ្លាស់ប្ដូរ​ឡើងវិញ​ពី​ឯកសារ ។"
+
+#, fuzzy
+msgid "Read files to diff from file."
+msgstr "\t--input, -i <file>\t\tអាន​ឯកសារ​ដែល​នឹង​មិន​ធ្វើ​ការ​ផ្លាស់ប្ដូរ​ឡើងវិញ​ពី​ឯកសារ ។"
+
 msgid "Read-Only"
 msgstr ""
+
+#, fuzzy
+msgid "Run command and create pre and post snapshots."
+msgstr "\t--command <command>\tដំណើរការ​ពាក្យ​បញ្ជា និង​បង្កើត​រូបថត​មុន និង​ក្រោយ ។"
+
+#, fuzzy
+msgid "Save status to file."
+msgstr "\t--output, -o <file>\t\tរក្សា​ទុក​ស្ថានភាព​ទៅ​ក្នុង​ឯកសារ ។"
 
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
@@ -800,6 +887,31 @@ msgstr "ចំពោះ​ព័ត៌មាន​បន្ថែម​ សូ�
 #, fuzzy, c-format
 msgid "Server-side plugin '%s' failed."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បើក​ឯកសារ '%s' ។"
+
+msgid "Set CSV output format."
+msgstr ""
+
+msgid "Set JSON output format."
+msgstr ""
+
+#, fuzzy
+msgid "Set a machine-readable output format (csv, json)."
+msgstr "រចនាប័ទ្ម​តារាង %d មិន​ត្រឹមត្រូវ ។"
+
+#, fuzzy
+msgid "Set name of config to use."
+msgstr "\t--config, -c <name>\t\tកំណត់​ឈ្មោះ​រចនាសម្ព័ន្ធ​ដែល​ត្រូវប្រើ ។"
+
+msgid "Set snapshot as default snapshot."
+msgstr ""
+
+#, fuzzy
+msgid "Set snapshot read-only."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
+
+#, fuzzy
+msgid "Set snapshot read-write."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
@@ -816,6 +928,13 @@ msgstr "រក​មិន​ឃើញ​ការ​កំណត់​រចន
 msgid "Subvolume"
 msgstr "ភាគ​រង"
 
+#, fuzzy
+msgid "Suppress normal output."
+msgstr "\t--quiet, -q\t\t\tលុប​ទិន្នន័យ​ធម្មតា ។"
+
+msgid "Sync after deletion."
+msgstr ""
+
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
 msgstr ""
@@ -823,6 +942,10 @@ msgstr ""
 #. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
 msgid "TB"
 msgstr ""
+
+#, fuzzy
+msgid "Table style (integer)."
+msgstr "\t--table-style, -t <style>\tរចនាប័ទ្ម​តារាង​ (ចំនួន​គត់) ។"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
@@ -841,8 +964,22 @@ msgstr ""
 msgid "Try 'snapper --help' for more information."
 msgstr "ចំពោះ​ព័ត៌មាន​បន្ថែម​ សូម​អាន 'ជំនួយ​របស់​កម្មវិធី​ថត' ។"
 
+msgid "Try to make space available."
+msgstr ""
+
+msgid "Turn on debugging."
+msgstr ""
+
 msgid "Type"
 msgstr "ប្រភេទ"
+
+#, fuzzy
+msgid "Type for snapshot."
+msgstr "មិន​ស្គាល់​ប្រភេទ​រូបថត ។"
+
+#, fuzzy
+msgid "Type of snapshots to list."
+msgstr "\t--type, -t <type>\t\tប្រភេទ​រូបថត​ត្រូវ​រាយ ។"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -895,6 +1032,14 @@ msgstr ""
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr ""
+
+#, fuzzy
+msgid "Userdata for snapshot."
+msgstr "\t--userdata, -u <userdata>\tទិន្នន័យ​​អ្នក​ប្រើ​សម្រាប់ snapshot ។"
+
+#, fuzzy
+msgid "Userdata for snapshots."
+msgstr "រូបថត​ដូចគ្នា ។"
 
 msgid "Value"
 msgstr "តម្លៃ"
@@ -952,8 +1097,13 @@ msgstr "ការ​ប្រើប្រាស់ ៖ កម្មវិធី�
 msgid "yes"
 msgstr ""
 
-#~ msgid "Unknown type of snapshot."
-#~ msgstr "មិន​ស្គាល់​ប្រភេទ​រូបថត ។"
+#, fuzzy
+#~ msgid "\t--description, -d <description>\tDescription for snapshots."
+#~ msgstr "\t--description, -d <description>\tសេចក្ដី​ពិពណ៌នា​អំពី​រូបថត ។"
+
+#, fuzzy
+#~ msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
+#~ msgstr "\t--userdata, -u <userdata>\tទិន្នន័យ​​អ្នក​ប្រើ​សម្រាប់ snapshot ។"
 
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "មិន​ស្គាល់​ប្រភេទ​រូបថត ​​។"
@@ -977,9 +1127,6 @@ msgstr ""
 
 #~ msgid "Command failed (%s). See log for more information."
 #~ msgstr "ពាក្យ​បញ្ជា​បាន​បរាជ័យ (%s) ។ ចំពោះ​ព័ត៌មាន​បន្ថែម សូម​មើល​កំណត់ហេតុ ។"
-
-#~ msgid "comparing snapshots..."
-#~ msgstr "កំពុង​ប្រៀបធៀប​រូបថត..."
 
 #~ msgid "done"
 #~ msgstr "ធ្វើរួច"
