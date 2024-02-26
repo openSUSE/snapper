@@ -26,6 +26,7 @@
 #include <snapper/AppUtil.h>
 
 #include "utils/text.h"
+#include "utils/help.h"
 #include "GlobalOptions.h"
 #include "proxy.h"
 
@@ -42,10 +43,12 @@ namespace snapper
 	cout << _("  Create config:") << '\n'
 	     << _("\tsnapper create-config <subvolume>") << '\n'
 	     << '\n'
-	     << _("    Options for 'create-config' command:") << '\n'
-	     << _("\t--fstype, -f <fstype>\t\tManually set filesystem type.") << '\n'
-	     << _("\t--template, -t <name>\t\tName of config template to use.") << '\n'
-	     << endl;
+	     << _("    Options for 'create-config' command:") << '\n';
+
+	print_options({
+	    { _("--fstype, -f <fstype>"), _("Manually set filesystem type.") },
+	    { _("--template, -t <name>"), _("Name of config template to use.") }
+	});
     }
 
 

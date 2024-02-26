@@ -41,7 +41,7 @@ namespace snapper
 	enum class OutputFormat { TABLE, CSV, JSON };
 	enum class Ambit { AUTO, CLASSIC, TRANSACTIONAL };
 
-	static string help_text();
+	static void help_global_options();
 
 	GlobalOptions(GetOpts& get_opts);
 

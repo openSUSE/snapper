@@ -26,6 +26,7 @@
 #include <snapper/AppUtil.h>
 
 #include "utils/text.h"
+#include "utils/help.h"
 #include "GlobalOptions.h"
 #include "proxy.h"
 #include "MyFiles.h"
@@ -43,9 +44,11 @@ namespace snapper
 	cout << _("  Undo changes:") << '\n'
 	     << _("\tsnapper undochange <number1>..<number2> [files]") << '\n'
 	     << '\n'
-	     << _("    Options for 'undochange' command:") << '\n'
-	     << _("\t--input, -i <file>\t\tRead files for which to undo changes from file.") << '\n'
-	     << endl;
+	     << _("    Options for 'undochange' command:") << '\n';
+
+	print_options({
+	    { _("--input, -i <file>"), _("Read files for which to undo changes from file.") }
+	});
     }
 
 

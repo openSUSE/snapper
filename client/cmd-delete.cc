@@ -26,6 +26,7 @@
 #include <snapper/AppUtil.h>
 
 #include "utils/text.h"
+#include "utils/help.h"
 #include "GlobalOptions.h"
 #include "proxy.h"
 
@@ -42,9 +43,11 @@ namespace snapper
 	cout << _("  Delete snapshot:") << '\n'
 	     << _("\tsnapper delete <number>") << '\n'
 	     << '\n'
-	     << _("    Options for 'delete' command:") << '\n'
-	     << _("\t--sync, -s\t\t\tSync after deletion.") << '\n'
-	     << endl;
+	     << _("    Options for 'delete' command:") << '\n';
+
+	print_options({
+	    { _("--sync, -s"), _("Sync after deletion.") }
+	});
     }
 
 

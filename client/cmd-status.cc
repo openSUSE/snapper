@@ -26,6 +26,7 @@
 #include <snapper/AppUtil.h>
 
 #include "utils/text.h"
+#include "utils/help.h"
 #include "GlobalOptions.h"
 #include "proxy.h"
 #include "MyFiles.h"
@@ -43,9 +44,11 @@ namespace snapper
 	cout << _("  Comparing snapshots:") << '\n'
 	     << _("\tsnapper status <number1>..<number2>") << '\n'
 	     << '\n'
-	     << _("    Options for 'status' command:") << '\n'
-	     << _("\t--output, -o <file>\t\tSave status to file.") << '\n'
-	     << endl;
+	     << _("    Options for 'status' command:") << '\n';
+
+	print_options({
+	    { _("--output, -o <file>"), _("Save status to file.") }
+	});
     }
 
 

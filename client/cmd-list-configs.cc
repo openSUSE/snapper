@@ -24,6 +24,7 @@
 #include <iostream>
 
 #include "utils/text.h"
+#include "utils/help.h"
 #include "GlobalOptions.h"
 #include "proxy.h"
 #include "misc.h"
@@ -44,10 +45,11 @@ namespace snapper
 	cout << _("  List configs:") << '\n'
 	     << _("\tsnapper list-configs") << '\n'
 	     << '\n'
-	     << _("    Options for 'list-configs' command:\n"
-		  "\t--columns <columns>\t\tColumns to show separated by comma.\n"
-		  "\t\t\t\t\tPossible columns: config, subvolume.\n")
-	     << endl;
+	     << _("    Options for 'list-configs' command:") << '\n';
+
+	print_options({
+	    { _("--columns <columns>"), _("Columns to show separated by comma.") }
+	});
     }
 
 

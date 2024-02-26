@@ -30,6 +30,7 @@
 #include <snapper/BtrfsUtils.h>
 
 #include "utils/text.h"
+#include "utils/help.h"
 #include "GlobalOptions.h"
 #include "proxy.h"
 #include "locker.h"
@@ -53,15 +54,14 @@ namespace snapper
 	cout << _("  List snapshots:") << '\n'
 	     << _("\tsnapper list") << '\n'
 	     << '\n'
-	     << _("    Options for 'list' command:") << '\n'
-	     << _("\t--type, -t <type>\t\tType of snapshots to list.") << '\n'
-	     << _("\t--disable-used-space\t\tDisable showing used space.") << '\n'
-	     << _("\t--all-configs, -a\t\tList snapshots from all accessible configs.") << '\n'
-	     << _("\t--columns <columns>\t\tColumns to show separated by comma.\n"
-		  "\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
-		  "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-		  "\t\t\t\t\tpre-number, post-number, post-date, read-only.") << '\n'
-	     << endl;
+	     << _("    Options for 'list' command:") << '\n';
+
+	print_options({
+	    { _("--type, -t <type>"), _("Type of snapshots to list.") },
+	    { _("--disable-used-space"), _("Disable showing used space.") },
+	    { _("--all-configs, -a"), _("List snapshots from all accessible configs.") },
+	    { _("--columns <columns>"), _("Columns to show separated by comma." ) }
+	});
     }
 
 
