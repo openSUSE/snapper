@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-28 08:50+0100\n"
+"POT-Creation-Date: 2024-02-26 12:27+0100\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Robert Taisz <robert.taisz@emerald.hu>\n"
 "Language-Team: Hungarian <https://l10n.opensuse.org/projects/snapper/master/hu/>\n"
@@ -14,167 +14,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.3\n"
-
-msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
-msgstr ""
-
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tA pillanatképek listázása minden elérhető konfigurációból."
-
-msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr ""
-
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <algoritmus>\tPillanatkép tisztítási algoritmus."
-
-# SLE12
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <algoritmus>\tKarbantartási algoritmus a pillanatfelvételekhez."
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
-"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date, read-only."
-msgstr ""
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: key, value.\n"
-"\t\t\t\t\tColumns are not selected when JSON format is used."
-msgstr ""
-
-msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <parancs>\t\tFuttassa a parancsot, és készítsen pillanatképet előtte, majd utána."
-
-msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <név>\t\tFelhasznált beállítás nevének megadása."
-
-msgid "\t--csvout\t\t\tSet CSV output format."
-msgstr ""
-
-msgid "\t--debug\t\t\t\tTurn on debugging."
-msgstr ""
-
-msgid "\t--default\t\t\tSet snapshot as default snapshot."
-msgstr ""
-
-msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <leírás>\tPillanatkép leírása."
-
-# SLE12
-msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr "\t--description, -d <leírás>\tPillanatfelvételekhez tartozó leírás."
-
-msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr "\t--diff-cmd <parancs>\t\tA fájlok összehasonlítására használt parancs."
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-used-space\t\tFelhasznált terület megjelenítésének letiltása."
-
-msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
-msgstr "\t--extensions, -x <beállítások>\tA diff parancsnak átadott további beállítások."
-
-msgid "\t--free-space <space>\t\tTry to make space available."
-msgstr ""
-
-msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
-msgstr ""
-
-msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--fstype, -f <fstype>\t\tFájlrendszer típusának beállítása kézzel."
-
-msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <fájl>\t\tFájlok betöltése a fájlból való visszaállításhoz."
-
-msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr "\t--input, -i <fájl>\t\tA fájlok beolvasása a diff számára egy fájlból."
-
-# SLE12
-msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr "\t--iso\t\t\t\tDátumok és időértékek megjelenítése ISO formátum szerint."
-
-msgid "\t--jsonout\t\t\tSet JSON output format."
-msgstr ""
-
-msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
-msgstr ""
-
-# SLE12
-msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr "\t--no-dbus\t\t\tDBus nélküli működés."
-
-msgid "\t--no-headers\t\t\tNo headers for CSV output format."
-msgstr ""
-
-msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <fájl>\t\tÁllapot mentése fájlba."
-
-msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
-msgstr ""
-
-msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <szám>\t\tMegelőző pillanatfelvételek megfelelő száma."
-
-msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tPillanatfelvételek számának kiírása."
-
-# SLE12
-msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr "\t--print-number, -p\t\tA másodiknak létrehozott pillanatfelvétel megjelenítési száma."
-
-msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\tNormál kimenet elhagyása."
-
-msgid "\t--read-only\t\t\tCreate read-only snapshot."
-msgstr ""
-
-msgid "\t--read-only\t\t\tSet snapshot read-only."
-msgstr ""
-
-msgid "\t--read-write\t\t\tCreate read-write snapshot."
-msgstr ""
-
-msgid "\t--read-write\t\t\tSet snapshot read-write."
-msgstr ""
-
-msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
-msgstr "\t--root, -r <elérési út>\t\tMűvelet elvégzése a cél gyökér elérési úton (csak DBus nélkül működik)."
-
-msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
-msgstr ""
-
-msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr "\t--sync, -s\t\t\tSzinkronizálás a törlés után."
-
-msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <stílus>\tTáblastílus (integer)."
-
-msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <név>\t\tFelhasznált beállítássablon neve."
-
-msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <típus>\t\tPillanatkép típusa."
-
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <típus>\t\tPillanatképtípusok listázása."
-
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <userdata>\tPillanatkép userdata."
-
-# SLE12
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata, -u <felhasználói adat>\tPillanatfelvételek felhasználói adata."
-
-# SLE12
-msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr "\t--utc\t\t\t\tDátumok és időértékek megjelenítése UTC szerint."
-
-msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tRészletesség fokozása."
-
-msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tVerzió kiírása és kilépés."
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <tisztítás-algoritmus>"
@@ -261,11 +100,9 @@ msgstr "    'create-config' parancs kapcsolói:"
 msgid "    Options for 'list' command:"
 msgstr "    'list' parancs kapcsolói:"
 
-msgid ""
-"    Options for 'list-configs' command:\n"
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume.\n"
-msgstr ""
+#, fuzzy
+msgid "    Options for 'list-configs' command:"
+msgstr "    'create-config' parancs kapcsolói:"
 
 msgid "    Options for 'modify' command:"
 msgstr "    'modify' parancs kapcsolói:"
@@ -356,6 +193,133 @@ msgstr ""
 msgid "(Snapshot %d.)"
 msgstr "(%d. pillanatkép)"
 
+msgid "--abbreviate"
+msgstr ""
+
+msgid "--all-configs, -a"
+msgstr ""
+
+msgid "--ambit, -a <ambit>"
+msgstr ""
+
+#, fuzzy
+msgid "--cleanup-algorithm, -c <algo>"
+msgstr "\t--cleanup-algorithm, -c <algoritmus>\tPillanatkép tisztítási algoritmus."
+
+msgid "--columns <columns>"
+msgstr ""
+
+msgid "--command <command>"
+msgstr ""
+
+msgid "--config, -c <name>"
+msgstr ""
+
+msgid "--csvout"
+msgstr ""
+
+msgid "--debug"
+msgstr ""
+
+msgid "--default"
+msgstr ""
+
+#, fuzzy
+msgid "--description, -d <description>"
+msgstr "\t--description, -d <leírás>\tPillanatkép leírása."
+
+msgid "--diff-cmd <command>"
+msgstr ""
+
+msgid "--disable-used-space"
+msgstr ""
+
+msgid "--extensions, -x <options>"
+msgstr ""
+
+msgid "--free-space <space>"
+msgstr ""
+
+msgid "--from <number>"
+msgstr ""
+
+msgid "--fstype, -f <fstype>"
+msgstr ""
+
+msgid "--input, -i <file>"
+msgstr ""
+
+msgid "--iso"
+msgstr ""
+
+msgid "--jsonout"
+msgstr ""
+
+#, fuzzy
+msgid "--machine-readable <format>"
+msgstr "Érvénytelen táblázatstílus: %d."
+
+msgid "--no-dbus"
+msgstr ""
+
+msgid "--no-headers"
+msgstr ""
+
+#, fuzzy
+msgid "--output, -o <file>"
+msgstr "\t--output, -o <fájl>\t\tÁllapot mentése fájlba."
+
+msgid "--path <path>"
+msgstr ""
+
+msgid "--pre-number <number>"
+msgstr ""
+
+msgid "--print-number, -p"
+msgstr ""
+
+msgid "--quiet, -q"
+msgstr ""
+
+msgid "--read-only"
+msgstr ""
+
+msgid "--read-write"
+msgstr ""
+
+msgid "--root, -r <path>"
+msgstr ""
+
+msgid "--separator <separator>"
+msgstr ""
+
+msgid "--sync, -s"
+msgstr ""
+
+#, fuzzy
+msgid "--table-style, -t <style>"
+msgstr "\t--table-style, -t <stílus>\tTáblastílus (integer)."
+
+msgid "--template, -t <name>"
+msgstr ""
+
+#, fuzzy
+msgid "--type, -t <type>"
+msgstr "\t--type, -t <típus>\t\tPillanatkép típusa."
+
+#, fuzzy
+msgid "--userdata, -u <userdata>"
+msgstr "\t--userdata, -u <userdata>\tPillanatkép userdata."
+
+msgid "--utc"
+msgstr ""
+
+msgid "--verbose, -v"
+msgstr ""
+
+msgid "--version"
+msgstr ""
+
 # SLE12
 msgid "ACL error."
 msgstr "ACL-hiba."
@@ -364,6 +328,9 @@ msgid "Active"
 msgstr ""
 
 msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+msgid "Allow to abbreviate table columns."
 msgstr ""
 
 #, c-format
@@ -392,12 +359,30 @@ msgstr ""
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
+msgid "Character separator for CSV output format."
+msgstr ""
+
 msgid "Cleanup"
 msgstr "Tisztítás"
+
+#, fuzzy
+msgid "Cleanup algorithm for snapshot."
+msgstr "\t--cleanup-algorithm, -c <algoritmus>\tPillanatkép tisztítási algoritmus."
+
+# SLE12
+#, fuzzy
+msgid "Cleanup algorithm for snapshots."
+msgstr "\t--cleanup-algorithm, -c <algoritmus>\tKarbantartási algoritmus a pillanatfelvételekhez."
+
+msgid "Cleanup all configs affecting path."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "A(z) '%s' fájl megnyitása sikertelen."
+
+msgid "Columns to show separated by comma."
+msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "A 'cleanup' parancshoz meg kell adni egy paraméter."
@@ -471,6 +456,10 @@ msgstr "A 'undochange parancshoz meg kell adni legalább egy paraméter."
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "A 'xadiff' parancshoz legalább egy argumentumot meg kell adni."
 
+#, fuzzy
+msgid "Command used for comparing files."
+msgstr "\t--diff-cmd <parancs>\t\tA fájlok összehasonlítására használt parancs."
+
 msgid "Config"
 msgstr "Beállítás"
 
@@ -505,6 +494,21 @@ msgstr ""
 
 msgid "Could not make enough free space available."
 msgstr ""
+
+# SLE12
+#, fuzzy
+msgid "Create a snapshot from the specified snapshot."
+msgstr "Csak olvasható pillanatkép létrehozása a(z) %d pillanatképről."
+
+# SLE12
+#, fuzzy
+msgid "Create read-only snapshot."
+msgstr "Csak olvasható pillanatkép létrehozása az aktuális rendszerről."
+
+# SLE12
+#, fuzzy
+msgid "Create read-write snapshot."
+msgstr "Csak olvasható pillanatkép létrehozása a(z) %d pillanatképről."
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -552,8 +556,30 @@ msgstr[1] "Pillanatképek törlése - %s:"
 msgid "Description"
 msgstr "Leírás"
 
+#, fuzzy
+msgid "Description for snapshot."
+msgstr "Leírás"
+
+#, fuzzy
+msgid "Description for snapshots."
+msgstr "pillanatképek összehasonlítása…"
+
 msgid "Detecting filesystem type failed."
 msgstr "A fájlrendszer típusának felismerése sikertelen."
+
+#, fuzzy
+msgid "Disable showing used space."
+msgstr "\t--disable-used-space\t\tFelhasznált terület megjelenítésének letiltása."
+
+# SLE12
+#, fuzzy
+msgid "Display dates and times in ISO format."
+msgstr "\t--iso\t\t\t\tDátumok és időértékek megjelenítése ISO formátum szerint."
+
+# SLE12
+#, fuzzy
+msgid "Display dates and times in UTC."
+msgstr "\t--utc\t\t\t\tDátumok és időértékek megjelenítése UTC szerint."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
@@ -579,6 +605,10 @@ msgstr "Üres felhasználói adat."
 #, c-format
 msgid "Error (%s)."
 msgstr "Hiba (%s)."
+
+#, fuzzy
+msgid "Extra options passed to the diff command."
+msgstr "\t--extensions, -x <beállítások>\tA diff parancsnak átadott további beállítások."
 
 # SLE12
 msgid "Failed to initialize filesystem handler."
@@ -643,6 +673,10 @@ msgstr "Azonos pillanatképek."
 msgid "Illegal snapshot."
 msgstr "Érvénytelen pillanatkép."
 
+#, fuzzy
+msgid "Increase verbosity."
+msgstr "\t--verbose, -v\t\t\tRészletesség fokozása."
+
 #, fuzzy, c-format
 msgid "Invalid ambit '%s'."
 msgstr "Érvénytelen pillanatkép: '%s'."
@@ -650,6 +684,11 @@ msgstr "Érvénytelen pillanatkép: '%s'."
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "Érvénytelen pillanatkép: '%s'."
+
+# SLE12
+#, fuzzy
+msgid "Invalid config."
+msgstr "Érvénytelen beállításadatok."
 
 # SLE12
 msgid "Invalid configdata."
@@ -702,6 +741,10 @@ msgstr "Kulcs"
 msgid "KiB"
 msgstr "KiB"
 
+#, fuzzy
+msgid "List snapshots from all accessible configs."
+msgstr "\t--all-configs, -a\t\tA pillanatképek listázása minden elérhető konfigurációból."
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Beállítások listázása sikertelen (%s)."
@@ -714,6 +757,10 @@ msgstr ""
 #, fuzzy
 msgid "MB"
 msgstr "MiB"
+
+#, fuzzy
+msgid "Manually set filesystem type."
+msgstr "\t--fstype, -f <fstype>\t\tFájlrendszer típusának beállítása kézzel."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Lehet, hogy elfeledkezett a pillanatképek száma közötti '..' elválasztóról."
@@ -740,15 +787,41 @@ msgstr "Hiányzik a '..' elválasztó a pillanatképek száma közül."
 msgid "Missing or invalid pre-number."
 msgstr "Hiányos vagy érvénytelen szám."
 
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+msgid "Name of config template to use."
+msgstr "\t--template, -t <név>\t\tFelhasznált beállítássablon neve."
+
 msgid "No command provided."
 msgstr "Nincs kiadva parancs."
+
+msgid "No headers for CSV output format."
+msgstr ""
 
 msgid "No permissions."
 msgstr "Nincs hozzáférés."
 
+#, fuzzy
+msgid "Number of corresponding pre snapshot."
+msgstr "\t--pre-number <szám>\t\tMegelőző pillanatfelvételek megfelelő száma."
+
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "A(z) '%s' fájl megnyitása sikertelen."
+
+msgid "Operate in the specified ambit."
+msgstr ""
+
+#, fuzzy
+msgid "Operate on target root (works only without DBus)."
+msgstr "\t--root, -r <elérési út>\t\tMűvelet elvégzése a cél gyökér elérési úton (csak DBus nélkül működik)."
+
+# SLE12
+#, fuzzy
+msgid "Operate without DBus."
+msgstr "\t--no-dbus\t\t\tDBus nélküli működés."
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr ""
@@ -782,12 +855,41 @@ msgstr "Előtti #"
 msgid "Pre Date"
 msgstr "Dátum"
 
+#, fuzzy
+msgid "Print number of created snapshot."
+msgstr "\t--print-number, -p\t\tPillanatfelvételek számának kiírása."
+
+# SLE12
+#, fuzzy
+msgid "Print number of second created snapshot."
+msgstr "\t--print-number, -p\t\tA másodiknak létrehozott pillanatfelvétel megjelenítési száma."
+
+#, fuzzy
+msgid "Print version and exit."
+msgstr "\t--version\t\t\tVerzió kiírása és kilépés."
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Kvótahiba (%s)."
 
+#, fuzzy
+msgid "Read files for which to undo changes from file."
+msgstr "\t--input, -i <fájl>\t\tFájlok betöltése a fájlból való visszaállításhoz."
+
+#, fuzzy
+msgid "Read files to diff from file."
+msgstr "\t--input, -i <fájl>\t\tA fájlok beolvasása a diff számára egy fájlból."
+
 msgid "Read-Only"
 msgstr ""
+
+#, fuzzy
+msgid "Run command and create pre and post snapshots."
+msgstr "\t--command <parancs>\t\tFuttassa a parancsot, és készítsen pillanatképet előtte, majd utána."
+
+#, fuzzy
+msgid "Save status to file."
+msgstr "\t--output, -o <fájl>\t\tÁllapot mentése fájlba."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "További útmutatásért lásd: 'man snapper'."
@@ -795,6 +897,31 @@ msgstr "További útmutatásért lásd: 'man snapper'."
 #, fuzzy, c-format
 msgid "Server-side plugin '%s' failed."
 msgstr "A(z) '%s' fájl megnyitása sikertelen."
+
+msgid "Set CSV output format."
+msgstr ""
+
+msgid "Set JSON output format."
+msgstr ""
+
+#, fuzzy
+msgid "Set a machine-readable output format (csv, json)."
+msgstr "Érvénytelen táblázatstílus: %d."
+
+#, fuzzy
+msgid "Set name of config to use."
+msgstr "\t--config, -c <név>\t\tFelhasznált beállítás nevének megadása."
+
+msgid "Set snapshot as default snapshot."
+msgstr ""
+
+#, fuzzy
+msgid "Set snapshot read-only."
+msgstr "A pillanatkép létrehozása sikertelen."
+
+#, fuzzy
+msgid "Set snapshot read-write."
+msgstr "A pillanatkép létrehozása sikertelen."
 
 # SLE12
 #, c-format
@@ -811,6 +938,14 @@ msgstr "A pillanatkép használatban van."
 msgid "Subvolume"
 msgstr "Alkötet"
 
+#, fuzzy
+msgid "Suppress normal output."
+msgstr "\t--quiet, -q\t\t\tNormál kimenet elhagyása."
+
+#, fuzzy
+msgid "Sync after deletion."
+msgstr "\t--sync, -s\t\t\tSzinkronizálás a törlés után."
+
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
 msgstr ""
@@ -819,6 +954,10 @@ msgstr ""
 #, fuzzy
 msgid "TB"
 msgstr "TiB"
+
+#, fuzzy
+msgid "Table style (integer)."
+msgstr "\t--table-style, -t <stílus>\tTáblastílus (integer)."
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
@@ -836,8 +975,22 @@ msgstr "TiB"
 msgid "Try 'snapper --help' for more information."
 msgstr "További információ a 'snapper --help' parancs segítségével érhető el."
 
+msgid "Try to make space available."
+msgstr ""
+
+msgid "Turn on debugging."
+msgstr ""
+
 msgid "Type"
 msgstr "Típus"
+
+#, fuzzy
+msgid "Type for snapshot."
+msgstr "Ismeretlen típusú pillanatkép."
+
+#, fuzzy
+msgid "Type of snapshots to list."
+msgstr "\t--type, -t <típus>\t\tPillanatképtípusok listázása."
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -891,6 +1044,14 @@ msgstr "A(z) '%s' felhasználói adatai között nem található meg a '=' jel."
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "A(z) '%s' felhasználói adatokhoz üres kulcs tartozik."
+
+#, fuzzy
+msgid "Userdata for snapshot."
+msgstr "\t--userdata, -u <userdata>\tPillanatkép userdata."
+
+#, fuzzy
+msgid "Userdata for snapshots."
+msgstr "Azonos pillanatképek."
 
 msgid "Value"
 msgstr "Érték"
@@ -948,8 +1109,13 @@ msgstr "használat: snapper [--global-options] <parancs> [--command-options] [co
 msgid "yes"
 msgstr ""
 
-#~ msgid "Unknown type of snapshot."
-#~ msgstr "Ismeretlen típusú pillanatkép."
+# SLE12
+#~ msgid "\t--description, -d <description>\tDescription for snapshots."
+#~ msgstr "\t--description, -d <leírás>\tPillanatfelvételekhez tartozó leírás."
+
+# SLE12
+#~ msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
+#~ msgstr "\t--userdata, -u <felhasználói adat>\tPillanatfelvételek felhasználói adata."
 
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Ismeretlen típusú pillanatképek."
@@ -977,9 +1143,6 @@ msgstr ""
 
 #~ msgid "Command failed (%s). See log for more information."
 #~ msgstr "A parancs végrehajtása sikertelen (%s). További információ a log fájlban található."
-
-#~ msgid "comparing snapshots..."
-#~ msgstr "pillanatképek összehasonlítása…"
 
 #~ msgid "done"
 #~ msgstr "kész"

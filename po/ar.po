@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-28 08:50+0100\n"
+"POT-Creation-Date: 2024-02-26 12:27+0100\n"
 "PO-Revision-Date: 2020-05-02 19:50+0000\n"
 "Last-Translator: mohammad alhargan <malham1@gmail.com>\n"
 "Language-Team: Arabic <https://l10n.opensuse.org/projects/snapper/master/ar/>\n"
@@ -16,165 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
 "X-Generator: Weblate 3.6.1\n"
-
-msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
-msgstr ""
-
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs، -a\t\tقائمة باللقطات من كل التكوينات التي يمكن الوصول إليها."
-
-msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr ""
-
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <algo>\tتنظيف خوارزمية اللقطة."
-
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <algo>\tتنظيف خوارزمية اللقطة."
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
-"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date, read-only."
-msgstr ""
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: key, value.\n"
-"\t\t\t\t\tColumns are not selected when JSON format is used."
-msgstr ""
-
-msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <command>\t\tتشغيل الامر وإنشاء لقطات قبل وبعد."
-
-msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <name>\t\tعين اسم لتستخدمه للإعدادات."
-
-msgid "\t--csvout\t\t\tSet CSV output format."
-msgstr ""
-
-msgid "\t--debug\t\t\t\tTurn on debugging."
-msgstr ""
-
-msgid "\t--default\t\t\tSet snapshot as default snapshot."
-msgstr ""
-
-msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <description>\tوصف اللقطة."
-
-msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr "\t--description, -d <description>\tوصف اللقطة."
-
-msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr "\t--diff-cmd <command>\t\tأمر مستخدم لمقارنة الملفات."
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-used-space\t\tتعطيل عرض المساحة المستخدمة."
-
-msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
-msgstr "\t--extensions، -x <options>\tخيارات إضافية تم تمريرها إلى أمر diff."
-
-msgid "\t--free-space <space>\t\tTry to make space available."
-msgstr ""
-
-#, fuzzy
-msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
-msgstr ""
-"\t--من\t\t\t\tقم بإنشاء لقطة من اللقطة المحددة.\n"
-"."
-
-msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--fstype, -f <fstype>\t\tتعيين اسم الملف يدوياً."
-
-msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <file>\t\tقراءة الملفات التي ترغب في التراجع عن تغييراتها."
-
-msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr "\t--input، -i <file>\t\tقراءة الملفات إلى diff عن الملف."
-
-msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr "\t--iso\t\t\t\tعرض التاريخ والوقت بصيغة ISO."
-
-msgid "\t--jsonout\t\t\tSet JSON output format."
-msgstr ""
-
-msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
-msgstr ""
-
-msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr "\t--no-dbus\t\t\tلا تعمل بدون تثبيت DBus."
-
-msgid "\t--no-headers\t\t\tNo headers for CSV output format."
-msgstr ""
-
-msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <file>\t\tحفظ الحالة إلى ملف."
-
-msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
-msgstr ""
-
-msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <number>\t\tعدد اللقطات المتطابقة لكل لقطة."
-
-msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tطباعة رقم عدد اللقطات."
-
-msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr "\t--print-number، -p\t\tطباعة رقم اللقطة عند إنشاء لقطة ثانية."
-
-msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\tوقف الانتاج الطبيعي."
-
-msgid "\t--read-only\t\t\tCreate read-only snapshot."
-msgstr "\t--للقراءة-فقط\t\t\tإنشاء لقطة للقراءة فقط."
-
-#, fuzzy
-msgid "\t--read-only\t\t\tSet snapshot read-only."
-msgstr "\t--للقراءة-فقط\t\t\tإنشاء لقطة للقراءة فقط."
-
-msgid "\t--read-write\t\t\tCreate read-write snapshot."
-msgstr "\t--قراءة-وكتابة\t\t\tإنشاء لقطة للقراءة والكتابة."
-
-#, fuzzy
-msgid "\t--read-write\t\t\tSet snapshot read-write."
-msgstr "\t--قراءة-وكتابة\t\t\tإنشاء لقطة للقراءة والكتابة."
-
-msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
-msgstr "\t--root، -r <path>\t\tالعمل على الجذر الهدف (يعمل فقط بدون DBus)."
-
-msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
-msgstr ""
-
-msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr "\t--sync، -s\t\t\tالمزامنة بعد الحذف."
-
-msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style، -t <style>\tنمط الجدول (عدد صحيح)."
-
-msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <name>\t\tاسم قالب الإعداد للاستخدام."
-
-msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <type>\t\tنوع اللقطة."
-
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <type>\t\tنوع اللقطة للقائمة."
-
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <userdata>\tمعلومات المستخدم للقطة."
-
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata، -u <userdata>\tمعلومات مستخدم اللقطة."
-
-msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr "\t--utc\t\t\t\tعرض التاريخ والوقت بصيغة UTC."
-
-msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tزيادة محتوى."
-
-msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tطباعة إصدار النسخة والخروج."
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tنضف اللملتقط <cleanup-algorithm>"
@@ -256,11 +97,9 @@ msgstr "    الأمر 'إنشاء تعديل' خيارات:"
 msgid "    Options for 'list' command:"
 msgstr "    أمر 'قائمة' خيارات:"
 
-msgid ""
-"    Options for 'list-configs' command:\n"
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume.\n"
-msgstr ""
+#, fuzzy
+msgid "    Options for 'list-configs' command:"
+msgstr "    الأمر 'إنشاء تعديل' خيارات:"
 
 msgid "    Options for 'modify' command:"
 msgstr "    أمر 'تعديل' خيارات:"
@@ -346,6 +185,133 @@ msgstr ""
 msgid "(Snapshot %d.)"
 msgstr "(لقطة %d.)"
 
+msgid "--abbreviate"
+msgstr ""
+
+msgid "--all-configs, -a"
+msgstr ""
+
+msgid "--ambit, -a <ambit>"
+msgstr ""
+
+#, fuzzy
+msgid "--cleanup-algorithm, -c <algo>"
+msgstr "\t--cleanup-algorithm, -c <algo>\tتنظيف خوارزمية اللقطة."
+
+msgid "--columns <columns>"
+msgstr ""
+
+msgid "--command <command>"
+msgstr ""
+
+msgid "--config, -c <name>"
+msgstr ""
+
+msgid "--csvout"
+msgstr ""
+
+msgid "--debug"
+msgstr ""
+
+msgid "--default"
+msgstr ""
+
+#, fuzzy
+msgid "--description, -d <description>"
+msgstr "\t--description, -d <description>\tوصف اللقطة."
+
+msgid "--diff-cmd <command>"
+msgstr ""
+
+msgid "--disable-used-space"
+msgstr ""
+
+msgid "--extensions, -x <options>"
+msgstr ""
+
+msgid "--free-space <space>"
+msgstr ""
+
+msgid "--from <number>"
+msgstr ""
+
+msgid "--fstype, -f <fstype>"
+msgstr ""
+
+msgid "--input, -i <file>"
+msgstr ""
+
+msgid "--iso"
+msgstr ""
+
+msgid "--jsonout"
+msgstr ""
+
+#, fuzzy
+msgid "--machine-readable <format>"
+msgstr "نمط الجدول غير صالح %d."
+
+msgid "--no-dbus"
+msgstr ""
+
+msgid "--no-headers"
+msgstr ""
+
+#, fuzzy
+msgid "--output, -o <file>"
+msgstr "\t--output, -o <file>\t\tحفظ الحالة إلى ملف."
+
+msgid "--path <path>"
+msgstr ""
+
+msgid "--pre-number <number>"
+msgstr ""
+
+msgid "--print-number, -p"
+msgstr ""
+
+msgid "--quiet, -q"
+msgstr ""
+
+msgid "--read-only"
+msgstr ""
+
+msgid "--read-write"
+msgstr ""
+
+msgid "--root, -r <path>"
+msgstr ""
+
+msgid "--separator <separator>"
+msgstr ""
+
+msgid "--sync, -s"
+msgstr ""
+
+#, fuzzy
+msgid "--table-style, -t <style>"
+msgstr "\t--table-style، -t <style>\tنمط الجدول (عدد صحيح)."
+
+msgid "--template, -t <name>"
+msgstr ""
+
+#, fuzzy
+msgid "--type, -t <type>"
+msgstr "\t--type, -t <type>\t\tنوع اللقطة."
+
+#, fuzzy
+msgid "--userdata, -u <userdata>"
+msgstr "\t--userdata, -u <userdata>\tمعلومات المستخدم للقطة."
+
+msgid "--utc"
+msgstr ""
+
+msgid "--verbose, -v"
+msgstr ""
+
+msgid "--version"
+msgstr ""
+
 msgid "ACL error."
 msgstr "خطأ ACL."
 
@@ -353,6 +319,9 @@ msgid "Active"
 msgstr ""
 
 msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+msgid "Allow to abbreviate table columns."
 msgstr ""
 
 #, c-format
@@ -381,12 +350,29 @@ msgstr ""
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
+msgid "Character separator for CSV output format."
+msgstr ""
+
 msgid "Cleanup"
 msgstr "تنظيف"
+
+#, fuzzy
+msgid "Cleanup algorithm for snapshot."
+msgstr "\t--cleanup-algorithm, -c <algo>\tتنظيف خوارزمية اللقطة."
+
+#, fuzzy
+msgid "Cleanup algorithm for snapshots."
+msgstr "\t--cleanup-algorithm, -c <algo>\tتنظيف خوارزمية اللقطة."
+
+msgid "Cleanup all configs affecting path."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "فتح الملف '%s' فشل."
+
+msgid "Columns to show separated by comma."
+msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "يحتاج الأمر 'تنظيف' لأحد الوسائط."
@@ -455,6 +441,10 @@ msgstr "يحتاج الأمر 'تراجع عن التغييرات' وسيطة و
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "يحتاج الأمر 'xadiff' وسيطة واحدة على الأقل."
 
+#, fuzzy
+msgid "Command used for comparing files."
+msgstr "\t--diff-cmd <command>\t\tأمر مستخدم لمقارنة الملفات."
+
 msgid "Config"
 msgstr "إعداد"
 
@@ -486,6 +476,20 @@ msgstr ""
 
 msgid "Could not make enough free space available."
 msgstr ""
+
+#, fuzzy
+msgid "Create a snapshot from the specified snapshot."
+msgstr ""
+"\t--من\t\t\t\tقم بإنشاء لقطة من اللقطة المحددة.\n"
+"."
+
+#, fuzzy
+msgid "Create read-only snapshot."
+msgstr "\t--للقراءة-فقط\t\t\tإنشاء لقطة للقراءة فقط."
+
+#, fuzzy
+msgid "Create read-write snapshot."
+msgstr "\t--قراءة-وكتابة\t\t\tإنشاء لقطة للقراءة والكتابة."
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -533,8 +537,28 @@ msgstr[5] "حذف اللقطات من %s:"
 msgid "Description"
 msgstr "الوصف"
 
+#, fuzzy
+msgid "Description for snapshot."
+msgstr "الوصف"
+
+#, fuzzy
+msgid "Description for snapshots."
+msgstr "  مقارنة لقطات:"
+
 msgid "Detecting filesystem type failed."
 msgstr "فشل الكشف عن نوع نظام الملفات."
+
+#, fuzzy
+msgid "Disable showing used space."
+msgstr "\t--disable-used-space\t\tتعطيل عرض المساحة المستخدمة."
+
+#, fuzzy
+msgid "Display dates and times in ISO format."
+msgstr "\t--iso\t\t\t\tعرض التاريخ والوقت بصيغة ISO."
+
+#, fuzzy
+msgid "Display dates and times in UTC."
+msgstr "\t--utc\t\t\t\tعرض التاريخ والوقت بصيغة UTC."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
@@ -558,6 +582,10 @@ msgstr "معلومات المستخدم خالية."
 #, c-format
 msgid "Error (%s)."
 msgstr "خطأ (%s)."
+
+#, fuzzy
+msgid "Extra options passed to the diff command."
+msgstr "\t--extensions، -x <options>\tخيارات إضافية تم تمريرها إلى أمر diff."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "فشل في تهيئة نظام معالجة الملفات."
@@ -620,6 +648,10 @@ msgstr "لقطات متطابقة."
 msgid "Illegal snapshot."
 msgstr "لقطة غير مسموح بها."
 
+#, fuzzy
+msgid "Increase verbosity."
+msgstr "\t--verbose, -v\t\t\tزيادة محتوى."
+
 #, fuzzy, c-format
 msgid "Invalid ambit '%s'."
 msgstr "لقطة غير صالحة '%s'."
@@ -627,6 +659,10 @@ msgstr "لقطة غير صالحة '%s'."
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "لقطة غير صالحة '%s'."
+
+#, fuzzy
+msgid "Invalid config."
+msgstr "بيانات إعداد غير صالحة."
 
 msgid "Invalid configdata."
 msgstr "بيانات إعداد غير صالحة."
@@ -675,6 +711,10 @@ msgstr "مفتاح"
 msgid "KiB"
 msgstr "KiB"
 
+#, fuzzy
+msgid "List snapshots from all accessible configs."
+msgstr "\t--all-configs، -a\t\tقائمة باللقطات من كل التكوينات التي يمكن الوصول إليها."
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "فشل سرد إعداد (%s)."
@@ -687,6 +727,10 @@ msgstr ""
 #, fuzzy
 msgid "MB"
 msgstr "MiB"
+
+#, fuzzy
+msgid "Manually set filesystem type."
+msgstr "\t--fstype, -f <fstype>\t\tتعيين اسم الملف يدوياً."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "ربما نسيت المحدد '..' بين أرقام اللقطة."
@@ -713,15 +757,40 @@ msgstr "المحدد '..' غير موجود بين أرقام اللقطة."
 msgid "Missing or invalid pre-number."
 msgstr "قبل-العدد مفقود أو غير صالح."
 
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+msgid "Name of config template to use."
+msgstr "\t--template, -t <name>\t\tاسم قالب الإعداد للاستخدام."
+
 msgid "No command provided."
 msgstr "لم يُقَدم أمر."
+
+msgid "No headers for CSV output format."
+msgstr ""
 
 msgid "No permissions."
 msgstr "لا توجد أذونات."
 
+#, fuzzy
+msgid "Number of corresponding pre snapshot."
+msgstr "\t--pre-number <number>\t\tعدد اللقطات المتطابقة لكل لقطة."
+
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "فتح الملف '%s' فشل."
+
+msgid "Operate in the specified ambit."
+msgstr ""
+
+#, fuzzy
+msgid "Operate on target root (works only without DBus)."
+msgstr "\t--root، -r <path>\t\tالعمل على الجذر الهدف (يعمل فقط بدون DBus)."
+
+#, fuzzy
+msgid "Operate without DBus."
+msgstr "\t--no-dbus\t\t\tلا تعمل بدون تثبيت DBus."
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr "الاختيار -- مدعوم فقط للقطات من النوع الفردي."
@@ -755,12 +824,40 @@ msgstr "ما قبل #"
 msgid "Pre Date"
 msgstr "ما قبل التاريخ"
 
+#, fuzzy
+msgid "Print number of created snapshot."
+msgstr "\t--print-number, -p\t\tطباعة رقم عدد اللقطات."
+
+#, fuzzy
+msgid "Print number of second created snapshot."
+msgstr "\t--print-number، -p\t\tطباعة رقم اللقطة عند إنشاء لقطة ثانية."
+
+#, fuzzy
+msgid "Print version and exit."
+msgstr "\t--version\t\t\tطباعة إصدار النسخة والخروج."
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "خطأ في الحصة (%s)."
 
+#, fuzzy
+msgid "Read files for which to undo changes from file."
+msgstr "\t--input, -i <file>\t\tقراءة الملفات التي ترغب في التراجع عن تغييراتها."
+
+#, fuzzy
+msgid "Read files to diff from file."
+msgstr "\t--input، -i <file>\t\tقراءة الملفات إلى diff عن الملف."
+
 msgid "Read-Only"
 msgstr ""
+
+#, fuzzy
+msgid "Run command and create pre and post snapshots."
+msgstr "\t--command <command>\t\tتشغيل الامر وإنشاء لقطات قبل وبعد."
+
+#, fuzzy
+msgid "Save status to file."
+msgstr "\t--output, -o <file>\t\tحفظ الحالة إلى ملف."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "لمزيد من التعليمات، راجع 'man snapper'."
@@ -768,6 +865,31 @@ msgstr "لمزيد من التعليمات، راجع 'man snapper'."
 #, fuzzy, c-format
 msgid "Server-side plugin '%s' failed."
 msgstr "فتح الملف '%s' فشل."
+
+msgid "Set CSV output format."
+msgstr ""
+
+msgid "Set JSON output format."
+msgstr ""
+
+#, fuzzy
+msgid "Set a machine-readable output format (csv, json)."
+msgstr "نمط الجدول غير صالح %d."
+
+#, fuzzy
+msgid "Set name of config to use."
+msgstr "\t--config, -c <name>\t\tعين اسم لتستخدمه للإعدادات."
+
+msgid "Set snapshot as default snapshot."
+msgstr ""
+
+#, fuzzy
+msgid "Set snapshot read-only."
+msgstr "\t--للقراءة-فقط\t\t\tإنشاء لقطة للقراءة فقط."
+
+#, fuzzy
+msgid "Set snapshot read-write."
+msgstr "\t--قراءة-وكتابة\t\t\tإنشاء لقطة للقراءة والكتابة."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
@@ -783,6 +905,14 @@ msgstr "اللقطة قيد الاستخدام."
 msgid "Subvolume"
 msgstr "الحجم الفرعي"
 
+#, fuzzy
+msgid "Suppress normal output."
+msgstr "\t--quiet, -q\t\t\tوقف الانتاج الطبيعي."
+
+#, fuzzy
+msgid "Sync after deletion."
+msgstr "\t--sync، -s\t\t\tالمزامنة بعد الحذف."
+
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
 msgstr ""
@@ -791,6 +921,10 @@ msgstr ""
 #, fuzzy
 msgid "TB"
 msgstr "TiB"
+
+#, fuzzy
+msgid "Table style (integer)."
+msgstr "\t--table-style، -t <style>\tنمط الجدول (عدد صحيح)."
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
@@ -808,8 +942,22 @@ msgstr "TiB"
 msgid "Try 'snapper --help' for more information."
 msgstr "جرب 'التقاط --help' لمزيد من المعلومات."
 
+msgid "Try to make space available."
+msgstr ""
+
+msgid "Turn on debugging."
+msgstr ""
+
 msgid "Type"
 msgstr "النوع"
+
+#, fuzzy
+msgid "Type for snapshot."
+msgstr "نوع اللقطة غير معروف."
+
+#, fuzzy
+msgid "Type of snapshots to list."
+msgstr "\t--type, -t <type>\t\tنوع اللقطة للقائمة."
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -860,6 +1008,14 @@ msgstr "معلومات المستخدم '%s' لا تتضمن علامة '=' في
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "معلوات المستخدم '%s' تحتوي مفاتيح خالية."
+
+#, fuzzy
+msgid "Userdata for snapshot."
+msgstr "\t--userdata, -u <userdata>\tمعلومات المستخدم للقطة."
+
+#, fuzzy
+msgid "Userdata for snapshots."
+msgstr "لقطات متطابقة."
 
 msgid "Value"
 msgstr "القيمة"
@@ -917,8 +1073,11 @@ msgstr "استخدام: اللقطة [--global-options] <command> [--command-opt
 msgid "yes"
 msgstr ""
 
-#~ msgid "Unknown type of snapshot."
-#~ msgstr "نوع اللقطة غير معروف."
+#~ msgid "\t--description, -d <description>\tDescription for snapshots."
+#~ msgstr "\t--description, -d <description>\tوصف اللقطة."
+
+#~ msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
+#~ msgstr "\t--userdata، -u <userdata>\tمعلومات مستخدم اللقطة."
 
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "نوع اللقطات غير معروف."
@@ -941,11 +1100,6 @@ msgstr ""
 
 #~ msgid "Command failed (%s). See log for more information."
 #~ msgstr "فشل أمر (%s). انظر السجل للحصول على مزيد من المعلومات."
-
-#, fuzzy
-#~| msgid "  Comparing snapshots:"
-#~ msgid "comparing snapshots..."
-#~ msgstr "  مقارنة لقطات:"
 
 #~ msgid "done"
 #~ msgstr "تم"

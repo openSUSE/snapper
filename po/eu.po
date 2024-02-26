@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-28 08:50+0100\n"
+"POT-Creation-Date: 2024-02-26 12:27+0100\n"
 "PO-Revision-Date: 2003-02-12 10:23+0100\n"
 "Last-Translator: i18n@suse.de\n"
 "Language-Team: Basque <i18n@suse.de>\n"
@@ -14,160 +14,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
-msgstr ""
-
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr ""
-
-msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr ""
-
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr ""
-
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
-msgstr ""
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
-"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date, read-only."
-msgstr ""
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: key, value.\n"
-"\t\t\t\t\tColumns are not selected when JSON format is used."
-msgstr ""
-
-msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr ""
-
-msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr ""
-
-msgid "\t--csvout\t\t\tSet CSV output format."
-msgstr ""
-
-msgid "\t--debug\t\t\t\tTurn on debugging."
-msgstr ""
-
-msgid "\t--default\t\t\tSet snapshot as default snapshot."
-msgstr ""
-
-msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr ""
-
-msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr ""
-
-msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr ""
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr ""
-
-msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
-msgstr ""
-
-msgid "\t--free-space <space>\t\tTry to make space available."
-msgstr ""
-
-msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
-msgstr ""
-
-msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr ""
-
-msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr ""
-
-msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr ""
-
-msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr ""
-
-msgid "\t--jsonout\t\t\tSet JSON output format."
-msgstr ""
-
-msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
-msgstr ""
-
-msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr ""
-
-msgid "\t--no-headers\t\t\tNo headers for CSV output format."
-msgstr ""
-
-msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr ""
-
-msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
-msgstr ""
-
-msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr ""
-
-msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr ""
-
-msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr ""
-
-msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr ""
-
-msgid "\t--read-only\t\t\tCreate read-only snapshot."
-msgstr ""
-
-msgid "\t--read-only\t\t\tSet snapshot read-only."
-msgstr ""
-
-msgid "\t--read-write\t\t\tCreate read-write snapshot."
-msgstr ""
-
-msgid "\t--read-write\t\t\tSet snapshot read-write."
-msgstr ""
-
-msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
-msgstr ""
-
-msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
-msgstr ""
-
-msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr ""
-
-msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr ""
-
-msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr ""
-
-msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr ""
-
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr ""
-
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr ""
-
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr ""
-
-msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr ""
-
-msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr ""
-
-msgid "\t--version\t\t\tPrint version and exit."
-msgstr ""
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr ""
@@ -247,10 +93,7 @@ msgstr ""
 msgid "    Options for 'list' command:"
 msgstr ""
 
-msgid ""
-"    Options for 'list-configs' command:\n"
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume.\n"
+msgid "    Options for 'list-configs' command:"
 msgstr ""
 
 msgid "    Options for 'modify' command:"
@@ -337,6 +180,126 @@ msgstr ""
 msgid "(Snapshot %d.)"
 msgstr ""
 
+msgid "--abbreviate"
+msgstr ""
+
+msgid "--all-configs, -a"
+msgstr ""
+
+msgid "--ambit, -a <ambit>"
+msgstr ""
+
+msgid "--cleanup-algorithm, -c <algo>"
+msgstr ""
+
+msgid "--columns <columns>"
+msgstr ""
+
+msgid "--command <command>"
+msgstr ""
+
+msgid "--config, -c <name>"
+msgstr ""
+
+msgid "--csvout"
+msgstr ""
+
+msgid "--debug"
+msgstr ""
+
+msgid "--default"
+msgstr ""
+
+msgid "--description, -d <description>"
+msgstr ""
+
+msgid "--diff-cmd <command>"
+msgstr ""
+
+msgid "--disable-used-space"
+msgstr ""
+
+msgid "--extensions, -x <options>"
+msgstr ""
+
+msgid "--free-space <space>"
+msgstr ""
+
+msgid "--from <number>"
+msgstr ""
+
+msgid "--fstype, -f <fstype>"
+msgstr ""
+
+msgid "--input, -i <file>"
+msgstr ""
+
+msgid "--iso"
+msgstr ""
+
+msgid "--jsonout"
+msgstr ""
+
+msgid "--machine-readable <format>"
+msgstr ""
+
+msgid "--no-dbus"
+msgstr ""
+
+msgid "--no-headers"
+msgstr ""
+
+msgid "--output, -o <file>"
+msgstr ""
+
+msgid "--path <path>"
+msgstr ""
+
+msgid "--pre-number <number>"
+msgstr ""
+
+msgid "--print-number, -p"
+msgstr ""
+
+msgid "--quiet, -q"
+msgstr ""
+
+msgid "--read-only"
+msgstr ""
+
+msgid "--read-write"
+msgstr ""
+
+msgid "--root, -r <path>"
+msgstr ""
+
+msgid "--separator <separator>"
+msgstr ""
+
+msgid "--sync, -s"
+msgstr ""
+
+msgid "--table-style, -t <style>"
+msgstr ""
+
+msgid "--template, -t <name>"
+msgstr ""
+
+msgid "--type, -t <type>"
+msgstr ""
+
+msgid "--userdata, -u <userdata>"
+msgstr ""
+
+msgid "--utc"
+msgstr ""
+
+msgid "--verbose, -v"
+msgstr ""
+
+msgid "--version"
+msgstr ""
+
 msgid "ACL error."
 msgstr ""
 
@@ -344,6 +307,9 @@ msgid "Active"
 msgstr ""
 
 msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+msgid "Allow to abbreviate table columns."
 msgstr ""
 
 #, c-format
@@ -372,11 +338,26 @@ msgstr ""
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
+msgid "Character separator for CSV output format."
+msgstr ""
+
 msgid "Cleanup"
+msgstr ""
+
+msgid "Cleanup algorithm for snapshot."
+msgstr ""
+
+msgid "Cleanup algorithm for snapshots."
+msgstr ""
+
+msgid "Cleanup all configs affecting path."
 msgstr ""
 
 #, c-format
 msgid "Client-side plugin '%s' failed."
+msgstr ""
+
+msgid "Columns to show separated by comma."
 msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
@@ -446,6 +427,9 @@ msgstr ""
 msgid "Command 'xadiff' needs at least one argument."
 msgstr ""
 
+msgid "Command used for comparing files."
+msgstr ""
+
 msgid "Config"
 msgstr ""
 
@@ -476,6 +460,15 @@ msgid "Could not make enough free space available for path '%s'."
 msgstr ""
 
 msgid "Could not make enough free space available."
+msgstr ""
+
+msgid "Create a snapshot from the specified snapshot."
+msgstr ""
+
+msgid "Create read-only snapshot."
+msgstr ""
+
+msgid "Create read-write snapshot."
 msgstr ""
 
 #, c-format
@@ -520,7 +513,22 @@ msgstr[1] ""
 msgid "Description"
 msgstr ""
 
+msgid "Description for snapshot."
+msgstr ""
+
+msgid "Description for snapshots."
+msgstr ""
+
 msgid "Detecting filesystem type failed."
+msgstr ""
+
+msgid "Disable showing used space."
+msgstr ""
+
+msgid "Display dates and times in ISO format."
+msgstr ""
+
+msgid "Display dates and times in UTC."
 msgstr ""
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
@@ -543,6 +551,9 @@ msgstr ""
 
 #, c-format
 msgid "Error (%s)."
+msgstr ""
+
+msgid "Extra options passed to the diff command."
 msgstr ""
 
 msgid "Failed to initialize filesystem handler."
@@ -603,12 +614,18 @@ msgstr ""
 msgid "Illegal snapshot."
 msgstr ""
 
+msgid "Increase verbosity."
+msgstr ""
+
 #, c-format
 msgid "Invalid ambit '%s'."
 msgstr ""
 
 #, c-format
 msgid "Invalid column '%s'."
+msgstr ""
+
+msgid "Invalid config."
 msgstr ""
 
 msgid "Invalid configdata."
@@ -657,6 +674,9 @@ msgstr ""
 msgid "KiB"
 msgstr ""
 
+msgid "List snapshots from all accessible configs."
+msgstr ""
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr ""
@@ -667,6 +687,9 @@ msgstr ""
 
 #. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
 msgid "MB"
+msgstr ""
+
+msgid "Manually set filesystem type."
 msgstr ""
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
@@ -693,14 +716,35 @@ msgstr ""
 msgid "Missing or invalid pre-number."
 msgstr ""
 
+msgid "Name"
+msgstr ""
+
+msgid "Name of config template to use."
+msgstr ""
+
 msgid "No command provided."
+msgstr ""
+
+msgid "No headers for CSV output format."
 msgstr ""
 
 msgid "No permissions."
 msgstr ""
 
+msgid "Number of corresponding pre snapshot."
+msgstr ""
+
 #, c-format
 msgid "Opening file '%s' failed."
+msgstr ""
+
+msgid "Operate in the specified ambit."
+msgstr ""
+
+msgid "Operate on target root (works only without DBus)."
+msgstr ""
+
+msgid "Operate without DBus."
 msgstr ""
 
 msgid "Option --from only supported for snapshots of type single."
@@ -734,11 +778,32 @@ msgstr ""
 msgid "Pre Date"
 msgstr ""
 
+msgid "Print number of created snapshot."
+msgstr ""
+
+msgid "Print number of second created snapshot."
+msgstr ""
+
+msgid "Print version and exit."
+msgstr ""
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr ""
 
+msgid "Read files for which to undo changes from file."
+msgstr ""
+
+msgid "Read files to diff from file."
+msgstr ""
+
 msgid "Read-Only"
+msgstr ""
+
+msgid "Run command and create pre and post snapshots."
+msgstr ""
+
+msgid "Save status to file."
 msgstr ""
 
 msgid "See 'man snapper' for further instructions."
@@ -746,6 +811,27 @@ msgstr ""
 
 #, c-format
 msgid "Server-side plugin '%s' failed."
+msgstr ""
+
+msgid "Set CSV output format."
+msgstr ""
+
+msgid "Set JSON output format."
+msgstr ""
+
+msgid "Set a machine-readable output format (csv, json)."
+msgstr ""
+
+msgid "Set name of config to use."
+msgstr ""
+
+msgid "Set snapshot as default snapshot."
+msgstr ""
+
+msgid "Set snapshot read-only."
+msgstr ""
+
+msgid "Set snapshot read-write."
 msgstr ""
 
 #, c-format
@@ -762,12 +848,21 @@ msgstr ""
 msgid "Subvolume"
 msgstr ""
 
+msgid "Suppress normal output."
+msgstr ""
+
+msgid "Sync after deletion."
+msgstr ""
+
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
 msgstr ""
 
 #. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
 msgid "TB"
+msgstr ""
+
+msgid "Table style (integer)."
 msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
@@ -786,7 +881,19 @@ msgstr ""
 msgid "Try 'snapper --help' for more information."
 msgstr ""
 
+msgid "Try to make space available."
+msgstr ""
+
+msgid "Turn on debugging."
+msgstr ""
+
 msgid "Type"
+msgstr ""
+
+msgid "Type for snapshot."
+msgstr ""
+
+msgid "Type of snapshots to list."
 msgstr ""
 
 #, c-format
@@ -837,6 +944,12 @@ msgstr ""
 
 #, c-format
 msgid "Userdata '%s' has empty key."
+msgstr ""
+
+msgid "Userdata for snapshot."
+msgstr ""
+
+msgid "Userdata for snapshots."
 msgstr ""
 
 msgid "Value"

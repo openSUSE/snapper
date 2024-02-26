@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-28 08:50+0100\n"
+"POT-Creation-Date: 2024-02-26 12:27+0100\n"
 "PO-Revision-Date: 2023-02-09 12:14+0000\n"
 "Last-Translator: Sophie Leroy <sophie@stoquart.com>\n"
 "Language-Team: French <https://l10n.opensuse.org/projects/snapper/master/fr/>\n"
@@ -14,177 +14,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 4.9.1\n"
 "X-Poedit-Language: French\n"
-
-msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
-msgstr "\t--abbreviate\t\t\tPermet d'abréger les colonnes du tableau."
-
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tRépertorie les instantanés de toutes les configurations accessibles."
-
-msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr "\t--ambit, -a contexte\t\tOpère selon le contexte spécifié."
-
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorithme de nettoyage pour l'instantané."
-
-# SLE12
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorithme de nettoyage des instantanés."
-
-#, fuzzy
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
-"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date, read-only."
-msgstr ""
-"\t--columns <colonnes>\t\tColonnes à afficher séparées par une virgule.\n"
-"\t\t\t\t\tColonnes possibles : config, subvolume, number, default, active,\n"
-"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date."
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: key, value.\n"
-"\t\t\t\t\tColumns are not selected when JSON format is used."
-msgstr ""
-"\t--columns <colonnes>\t\tColonnes à afficher séparées par une virgule.\n"
-"\t\t\t\t\tColonnes possibles : key, value.\n"
-"\t\t\t\t\tLes colonnes ne sont pas sélectionnées quand le format JSON est utilisé."
-
-msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <commande>\t\tLance la commande et crée les instantanés pre et post."
-
-msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <nom>\t\tDéfinit le nom de la configuration à utiliser."
-
-msgid "\t--csvout\t\t\tSet CSV output format."
-msgstr "\t--csvout\t\t\tDéfinit le format de sortie CSV."
-
-msgid "\t--debug\t\t\t\tTurn on debugging."
-msgstr ""
-
-#, fuzzy
-msgid "\t--default\t\t\tSet snapshot as default snapshot."
-msgstr "L'instantané actif est déjà l'instantané par défaut."
-
-msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <description>\tDescription pour l'instantané."
-
-# SLE12
-msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr "\t--description, -d <description>\tDescription des instantanés."
-
-msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr "\t--diff-cmd <commande>\t\tCommande utilisée pour comparer des fichiers."
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-used-space\t\tDésactive l'affichage de l'espace utilisé."
-
-msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
-msgstr "\t--extensions, -x <options>\tOptions supplémentaires transmises à la commande diff."
-
-msgid "\t--free-space <space>\t\tTry to make space available."
-msgstr "\t--free-space <espace>\t\tEssaye de libérer de l'espace."
-
-msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
-msgstr "\t--from <numéro>\t\t\tCrée un instantané à partir de l'instantané spécifié."
-
-msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--fstype, -f <fstype>\t\tDéfinit manuellement le type de système de fichiers."
-
-msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <fichier>\t\tLit les fichiers pour lesquels annuler les modifications à partir du fichier."
-
-msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr "\t--input, -i <fichier>\t\tLit les fichiers à comparer au fichier spécifié."
-
-# SLE12
-msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr "\t--iso\t\t\t\tAfficher la date et l'heure au format ISO."
-
-msgid "\t--jsonout\t\t\tSet JSON output format."
-msgstr "\t--jsonout\t\t\tDéfinit le format de sortie JSON."
-
-msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
-msgstr "\t--machine-readable <format>\tDéfinit un format de sortie lisible par la machine (csv, json)."
-
-msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr "\t--no-dbus\t\t\tFonctionner sans DBus."
-
-msgid "\t--no-headers\t\t\tNo headers for CSV output format."
-msgstr "\t--no-headers\t\t\tPas d'en-tête pour le format de sortie CSV."
-
-msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <fichier>\t\tSauvegarde les statuts vers le fichier."
-
-msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
-msgstr "\t--path <chemin>\t\t\tNettoie toutes les configurations affectant le chemin."
-
-msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <numéro>\t\tNuméro d'instantané pre correspondant."
-
-msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tAffiche le numéro de l'instantané créé."
-
-# SLE12
-msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr "\t--print-number, -p\t\tAffiche le numéro du deuxième instantané créé."
-
-msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\tSupprime la sortie normale."
-
-msgid "\t--read-only\t\t\tCreate read-only snapshot."
-msgstr "\t--read-only\t\t\tCrée un instantané en lecture-seule."
-
-#, fuzzy
-msgid "\t--read-only\t\t\tSet snapshot read-only."
-msgstr "\t--read-only\t\t\tCrée un instantané en lecture-seule."
-
-msgid "\t--read-write\t\t\tCreate read-write snapshot."
-msgstr "\t--read-write\t\t\tCrée un instantané en lecture-écriture."
-
-#, fuzzy
-msgid "\t--read-write\t\t\tSet snapshot read-write."
-msgstr "\t--read-write\t\t\tCrée un instantané en lecture-écriture."
-
-msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
-msgstr "\t--root, -r <chemin>\t\tPermet d'intervenir au niveau de la racine cible (fonctionne uniquement sans DBus)."
-
-msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
-msgstr "\t--separator <separator>\t\tCaractère séparateur pour le format de sortie CSV."
-
-msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr "\t--sync, -s\t\t\tEffectue une synchronisation après la suppression."
-
-msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <style>\tStyle de tableau (entier)."
-
-msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <nom>\t\tNom du modèle de configuration à utiliser."
-
-msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <type>\t\tType pour l'instantané."
-
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <type>\t\tType d'instantané à lister."
-
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <userdata>\tDonnées utilisateur pour l'instantané."
-
-# SLE12
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata, -u <userdata>\tDonnées utilisateur pour les instantanés."
-
-# SLE12
-msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr "\t--utc\t\t\t\tAfficher la date et l'heure au format UTC."
-
-msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tAugmente la verbosité."
-
-msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tAffiche la version du programme et quitte."
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <algorithme-de-nettoyage>"
@@ -265,14 +94,9 @@ msgstr "    Options pour la commande 'get-config' :"
 msgid "    Options for 'list' command:"
 msgstr "    Options pour la commande 'list' :"
 
-msgid ""
-"    Options for 'list-configs' command:\n"
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume.\n"
-msgstr ""
-"    Options pour la commande 'list-configs' :\n"
-"\t--columns <colonnes>\t\tColonnes à afficher séparées par une virgule.\n"
-"\t\t\t\t\tColonnes possibles : config, subvolume.\n"
+#, fuzzy
+msgid "    Options for 'list-configs' command:"
+msgstr "    Options pour la commande 'get-config' :"
 
 msgid "    Options for 'modify' command:"
 msgstr "    Options pour la commande 'modify' :"
@@ -361,6 +185,134 @@ msgstr "%1$s, %2$s"
 msgid "(Snapshot %d.)"
 msgstr "(Instantané %d.)"
 
+msgid "--abbreviate"
+msgstr ""
+
+msgid "--all-configs, -a"
+msgstr ""
+
+msgid "--ambit, -a <ambit>"
+msgstr ""
+
+#, fuzzy
+msgid "--cleanup-algorithm, -c <algo>"
+msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorithme de nettoyage pour l'instantané."
+
+msgid "--columns <columns>"
+msgstr ""
+
+msgid "--command <command>"
+msgstr ""
+
+msgid "--config, -c <name>"
+msgstr ""
+
+msgid "--csvout"
+msgstr ""
+
+msgid "--debug"
+msgstr ""
+
+#, fuzzy
+msgid "--default"
+msgstr "Par défaut"
+
+#, fuzzy
+msgid "--description, -d <description>"
+msgstr "\t--description, -d <description>\tDescription pour l'instantané."
+
+msgid "--diff-cmd <command>"
+msgstr ""
+
+msgid "--disable-used-space"
+msgstr ""
+
+msgid "--extensions, -x <options>"
+msgstr ""
+
+msgid "--free-space <space>"
+msgstr ""
+
+msgid "--from <number>"
+msgstr ""
+
+msgid "--fstype, -f <fstype>"
+msgstr ""
+
+msgid "--input, -i <file>"
+msgstr ""
+
+msgid "--iso"
+msgstr ""
+
+msgid "--jsonout"
+msgstr ""
+
+#, fuzzy
+msgid "--machine-readable <format>"
+msgstr "Format de sortie « %s » non valide."
+
+msgid "--no-dbus"
+msgstr ""
+
+msgid "--no-headers"
+msgstr ""
+
+#, fuzzy
+msgid "--output, -o <file>"
+msgstr "\t--output, -o <fichier>\t\tSauvegarde les statuts vers le fichier."
+
+msgid "--path <path>"
+msgstr ""
+
+msgid "--pre-number <number>"
+msgstr ""
+
+msgid "--print-number, -p"
+msgstr ""
+
+msgid "--quiet, -q"
+msgstr ""
+
+msgid "--read-only"
+msgstr ""
+
+msgid "--read-write"
+msgstr ""
+
+msgid "--root, -r <path>"
+msgstr ""
+
+msgid "--separator <separator>"
+msgstr ""
+
+msgid "--sync, -s"
+msgstr ""
+
+#, fuzzy
+msgid "--table-style, -t <style>"
+msgstr "\t--table-style, -t <style>\tStyle de tableau (entier)."
+
+msgid "--template, -t <name>"
+msgstr ""
+
+#, fuzzy
+msgid "--type, -t <type>"
+msgstr "\t--type, -t <type>\t\tType pour l'instantané."
+
+#, fuzzy
+msgid "--userdata, -u <userdata>"
+msgstr "\t--userdata, -u <userdata>\tDonnées utilisateur pour l'instantané."
+
+msgid "--utc"
+msgstr ""
+
+msgid "--verbose, -v"
+msgstr ""
+
+msgid "--version"
+msgstr ""
+
 # SLE12
 msgid "ACL error."
 msgstr "Erreur ACL."
@@ -370,6 +322,10 @@ msgstr "Actif"
 
 msgid "Active snapshot is already default snapshot."
 msgstr "L'instantané actif est déjà l'instantané par défaut."
+
+#, fuzzy
+msgid "Allow to abbreviate table columns."
+msgstr "\t--abbreviate\t\t\tPermet d'abréger les colonnes du tableau."
 
 #, c-format
 msgid "Ambit is %s."
@@ -397,12 +353,32 @@ msgstr "Impossible de détecter le contexte car le sous-volume par défaut est i
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Impossible de revenir à l'état initial car le sous-volume par défaut est inconnu."
 
+#, fuzzy
+msgid "Character separator for CSV output format."
+msgstr "\t--separator <separator>\t\tCaractère séparateur pour le format de sortie CSV."
+
 msgid "Cleanup"
 msgstr "Nettoyer"
+
+#, fuzzy
+msgid "Cleanup algorithm for snapshot."
+msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorithme de nettoyage pour l'instantané."
+
+# SLE12
+#, fuzzy
+msgid "Cleanup algorithm for snapshots."
+msgstr "\t--cleanup-algorithm, -c <algo>\tAlgorithme de nettoyage des instantanés."
+
+#, fuzzy
+msgid "Cleanup all configs affecting path."
+msgstr "\t--path <chemin>\t\t\tNettoie toutes les configurations affectant le chemin."
 
 #, fuzzy, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "Échec de l'ouverture du fichier '%s'."
+
+msgid "Columns to show separated by comma."
+msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "La commande 'cleanup' nécessite un argument."
@@ -474,6 +450,10 @@ msgstr "La commande 'undochange' nécessite au moins un argument."
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "La commande 'xadiff' nécessite au moins un argument."
 
+#, fuzzy
+msgid "Command used for comparing files."
+msgstr "\t--diff-cmd <commande>\t\tCommande utilisée pour comparer des fichiers."
+
 msgid "Config"
 msgstr "Configuration"
 
@@ -508,6 +488,18 @@ msgstr "Impossible de libérer suffisamment d'espace pour le chemin « %s »."
 
 msgid "Could not make enough free space available."
 msgstr "Impossible de libérer suffisamment d'espace."
+
+#, fuzzy
+msgid "Create a snapshot from the specified snapshot."
+msgstr "\t--from <numéro>\t\t\tCrée un instantané à partir de l'instantané spécifié."
+
+#, fuzzy
+msgid "Create read-only snapshot."
+msgstr "\t--read-only\t\t\tCrée un instantané en lecture-seule."
+
+#, fuzzy
+msgid "Create read-write snapshot."
+msgstr "\t--read-write\t\t\tCrée un instantané en lecture-écriture."
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -555,8 +547,30 @@ msgstr[1] "Suppression des instantanés de %s :"
 msgid "Description"
 msgstr "Description"
 
+#, fuzzy
+msgid "Description for snapshot."
+msgstr "Description"
+
+#, fuzzy
+msgid "Description for snapshots."
+msgstr "comparaison des instantanés..."
+
 msgid "Detecting filesystem type failed."
 msgstr "Échec de la détection du système de fichiers."
+
+#, fuzzy
+msgid "Disable showing used space."
+msgstr "\t--disable-used-space\t\tDésactive l'affichage de l'espace utilisé."
+
+# SLE12
+#, fuzzy
+msgid "Display dates and times in ISO format."
+msgstr "\t--iso\t\t\t\tAfficher la date et l'heure au format ISO."
+
+# SLE12
+#, fuzzy
+msgid "Display dates and times in UTC."
+msgstr "\t--utc\t\t\t\tAfficher la date et l'heure au format UTC."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
@@ -581,6 +595,10 @@ msgstr "Données utilisateur vides."
 #, c-format
 msgid "Error (%s)."
 msgstr "Erreur (%s)."
+
+#, fuzzy
+msgid "Extra options passed to the diff command."
+msgstr "\t--extensions, -x <options>\tOptions supplémentaires transmises à la commande diff."
 
 # SLE12
 msgid "Failed to initialize filesystem handler."
@@ -644,6 +662,10 @@ msgstr "Instantanés identiques."
 msgid "Illegal snapshot."
 msgstr "Instantané interdit."
 
+#, fuzzy
+msgid "Increase verbosity."
+msgstr "\t--verbose, -v\t\t\tAugmente la verbosité."
+
 #, c-format
 msgid "Invalid ambit '%s'."
 msgstr "Contexte « %s » non valide."
@@ -651,6 +673,10 @@ msgstr "Contexte « %s » non valide."
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "Colonne « %s » non valide."
+
+#, fuzzy
+msgid "Invalid config."
+msgstr "Données de configuration non valides."
 
 msgid "Invalid configdata."
 msgstr "Données de configuration non valides."
@@ -700,6 +726,10 @@ msgstr "Clé"
 msgid "KiB"
 msgstr "Kio"
 
+#, fuzzy
+msgid "List snapshots from all accessible configs."
+msgstr "\t--all-configs, -a\t\tRépertorie les instantanés de toutes les configurations accessibles."
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Échec du listage des configurations (%s)."
@@ -711,6 +741,10 @@ msgstr "M"
 #. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
 msgid "MB"
 msgstr "Mo"
+
+#, fuzzy
+msgid "Manually set filesystem type."
+msgstr "\t--fstype, -f <fstype>\t\tDéfinit manuellement le type de système de fichiers."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Vous avez peut-être oublié le séparateur '..' entre les numéros d'instantané."
@@ -736,15 +770,42 @@ msgstr "Le séparateur '..' est manquant entre les numéros d'instantané."
 msgid "Missing or invalid pre-number."
 msgstr "Numéro pre manquant ou invalide."
 
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+msgid "Name of config template to use."
+msgstr "\t--template, -t <nom>\t\tNom du modèle de configuration à utiliser."
+
 msgid "No command provided."
 msgstr "Aucune commande fournie."
+
+#, fuzzy
+msgid "No headers for CSV output format."
+msgstr "\t--no-headers\t\t\tPas d'en-tête pour le format de sortie CSV."
 
 msgid "No permissions."
 msgstr "Pas de permissions."
 
+#, fuzzy
+msgid "Number of corresponding pre snapshot."
+msgstr "\t--pre-number <numéro>\t\tNuméro d'instantané pre correspondant."
+
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "Échec de l'ouverture du fichier '%s'."
+
+#, fuzzy
+msgid "Operate in the specified ambit."
+msgstr "\t--ambit, -a contexte\t\tOpère selon le contexte spécifié."
+
+#, fuzzy
+msgid "Operate on target root (works only without DBus)."
+msgstr "\t--root, -r <chemin>\t\tPermet d'intervenir au niveau de la racine cible (fonctionne uniquement sans DBus)."
+
+#, fuzzy
+msgid "Operate without DBus."
+msgstr "\t--no-dbus\t\t\tFonctionner sans DBus."
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr "L'option --from n'est supportée que pour les instantanés de type single."
@@ -777,12 +838,41 @@ msgstr "Pre #"
 msgid "Pre Date"
 msgstr "Date pre"
 
+#, fuzzy
+msgid "Print number of created snapshot."
+msgstr "\t--print-number, -p\t\tAffiche le numéro de l'instantané créé."
+
+# SLE12
+#, fuzzy
+msgid "Print number of second created snapshot."
+msgstr "\t--print-number, -p\t\tAffiche le numéro du deuxième instantané créé."
+
+#, fuzzy
+msgid "Print version and exit."
+msgstr "\t--version\t\t\tAffiche la version du programme et quitte."
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Erreur de quota (%s)."
 
+#, fuzzy
+msgid "Read files for which to undo changes from file."
+msgstr "\t--input, -i <fichier>\t\tLit les fichiers pour lesquels annuler les modifications à partir du fichier."
+
+#, fuzzy
+msgid "Read files to diff from file."
+msgstr "\t--input, -i <fichier>\t\tLit les fichiers à comparer au fichier spécifié."
+
 msgid "Read-Only"
 msgstr ""
+
+#, fuzzy
+msgid "Run command and create pre and post snapshots."
+msgstr "\t--command <commande>\t\tLance la commande et crée les instantanés pre et post."
+
+#, fuzzy
+msgid "Save status to file."
+msgstr "\t--output, -o <fichier>\t\tSauvegarde les statuts vers le fichier."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Pour plus d'instructions, consultez 'man snapper'."
@@ -790,6 +880,34 @@ msgstr "Pour plus d'instructions, consultez 'man snapper'."
 #, fuzzy, c-format
 msgid "Server-side plugin '%s' failed."
 msgstr "Échec de l'ouverture du fichier '%s'."
+
+#, fuzzy
+msgid "Set CSV output format."
+msgstr "\t--csvout\t\t\tDéfinit le format de sortie CSV."
+
+#, fuzzy
+msgid "Set JSON output format."
+msgstr "\t--jsonout\t\t\tDéfinit le format de sortie JSON."
+
+#, fuzzy
+msgid "Set a machine-readable output format (csv, json)."
+msgstr "\t--machine-readable <format>\tDéfinit un format de sortie lisible par la machine (csv, json)."
+
+#, fuzzy
+msgid "Set name of config to use."
+msgstr "\t--config, -c <nom>\t\tDéfinit le nom de la configuration à utiliser."
+
+#, fuzzy
+msgid "Set snapshot as default snapshot."
+msgstr "L'instantané actif est déjà l'instantané par défaut."
+
+#, fuzzy
+msgid "Set snapshot read-only."
+msgstr "\t--read-only\t\t\tCrée un instantané en lecture-seule."
+
+#, fuzzy
+msgid "Set snapshot read-write."
+msgstr "\t--read-write\t\t\tCrée un instantané en lecture-écriture."
 
 # SLE12
 #, c-format
@@ -806,6 +924,14 @@ msgstr "Instantané en cours d'utilisation."
 msgid "Subvolume"
 msgstr "Sous-volume"
 
+#, fuzzy
+msgid "Suppress normal output."
+msgstr "\t--quiet, -q\t\t\tSupprime la sortie normale."
+
+#, fuzzy
+msgid "Sync after deletion."
+msgstr "\t--sync, -s\t\t\tEffectue une synchronisation après la suppression."
+
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
 msgstr "T"
@@ -813,6 +939,10 @@ msgstr "T"
 #. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
 msgid "TB"
 msgstr "To"
+
+#, fuzzy
+msgid "Table style (integer)."
+msgstr "\t--table-style, -t <style>\tStyle de tableau (entier)."
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Le contexte peut être spécifié manuellement en utilisant l'option --ambit."
@@ -830,8 +960,23 @@ msgstr "Tio"
 msgid "Try 'snapper --help' for more information."
 msgstr "Essayez 'snapper --help' pour plus d'informations."
 
+#, fuzzy
+msgid "Try to make space available."
+msgstr "\t--free-space <espace>\t\tEssaye de libérer de l'espace."
+
+msgid "Turn on debugging."
+msgstr ""
+
 msgid "Type"
 msgstr "Type"
+
+#, fuzzy
+msgid "Type for snapshot."
+msgstr "Type d'instantané inconnu."
+
+#, fuzzy
+msgid "Type of snapshots to list."
+msgstr "\t--type, -t <type>\t\tType d'instantané à lister."
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -885,6 +1030,14 @@ msgstr "Signe '=' manquant dans les données utilisateur '%s'."
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "Clé vide dans les données utilisateur '%s'."
+
+#, fuzzy
+msgid "Userdata for snapshot."
+msgstr "\t--userdata, -u <userdata>\tDonnées utilisateur pour l'instantané."
+
+#, fuzzy
+msgid "Userdata for snapshots."
+msgstr "Instantanés identiques."
 
 # TLABEL kinternet_2002_02_20_2255__66
 msgid "Value"
@@ -944,6 +1097,44 @@ msgstr "Utilisation : snapper [--options-globales] <commande> [--options-de-com
 msgid "yes"
 msgstr "oui"
 
+#, fuzzy
+#~ msgid ""
+#~ "\t--columns <columns>\t\tColumns to show separated by comma.\n"
+#~ "\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+#~ "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+#~ "\t\t\t\t\tpre-number, post-number, post-date, read-only."
+#~ msgstr ""
+#~ "\t--columns <colonnes>\t\tColonnes à afficher séparées par une virgule.\n"
+#~ "\t\t\t\t\tColonnes possibles : config, subvolume, number, default, active,\n"
+#~ "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+#~ "\t\t\t\t\tpre-number, post-number, post-date."
+
+#~ msgid ""
+#~ "\t--columns <columns>\t\tColumns to show separated by comma.\n"
+#~ "\t\t\t\t\tPossible columns: key, value.\n"
+#~ "\t\t\t\t\tColumns are not selected when JSON format is used."
+#~ msgstr ""
+#~ "\t--columns <colonnes>\t\tColonnes à afficher séparées par une virgule.\n"
+#~ "\t\t\t\t\tColonnes possibles : key, value.\n"
+#~ "\t\t\t\t\tLes colonnes ne sont pas sélectionnées quand le format JSON est utilisé."
+
+# SLE12
+#~ msgid "\t--description, -d <description>\tDescription for snapshots."
+#~ msgstr "\t--description, -d <description>\tDescription des instantanés."
+
+# SLE12
+#~ msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
+#~ msgstr "\t--userdata, -u <userdata>\tDonnées utilisateur pour les instantanés."
+
+#~ msgid ""
+#~ "    Options for 'list-configs' command:\n"
+#~ "\t--columns <columns>\t\tColumns to show separated by comma.\n"
+#~ "\t\t\t\t\tPossible columns: config, subvolume.\n"
+#~ msgstr ""
+#~ "    Options pour la commande 'list-configs' :\n"
+#~ "\t--columns <colonnes>\t\tColonnes à afficher séparées par une virgule.\n"
+#~ "\t\t\t\t\tColonnes possibles : config, subvolume.\n"
+
 #, c-format
 #~ msgid "Use %s, %s or %s."
 #~ msgstr "Utilisez %s, %s ou %s."
@@ -951,9 +1142,6 @@ msgstr "oui"
 #, fuzzy, c-format
 #~ msgid "Use %s, %s, %s or %s."
 #~ msgstr "Utilisez %s, %s ou %s."
-
-#~ msgid "Unknown type of snapshot."
-#~ msgstr "Type d'instantané inconnu."
 
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Type d'instantanés inconnus."
@@ -980,9 +1168,6 @@ msgstr "oui"
 
 #~ msgid "Command failed (%s). See log for more information."
 #~ msgstr "La commande a échoué (%s) Voir le log pour plus d'informations."
-
-#~ msgid "comparing snapshots..."
-#~ msgstr "comparaison des instantanés..."
 
 #~ msgid "done"
 #~ msgstr "fait"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-28 08:50+0100\n"
+"POT-Creation-Date: 2024-02-26 12:27+0100\n"
 "PO-Revision-Date: 2023-02-10 04:14+0000\n"
 "Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
 "Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
@@ -18,179 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 4.9.1\n"
-
-msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
-msgstr "\t--abbreviate\t\t\t允許使用表格各欄的縮寫。"
-
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\t列出所有可存取組態中的快照。"
-
-msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr "\t--ambit, -a ambit\t\t在指定範圍內操作。"
-
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <algo>\t清理快照的演算法。"
-
-# SLE12
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm、-c <演算法>\t清理快照的演算法。"
-
-#, fuzzy
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
-"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date, read-only."
-msgstr ""
-"\t--columns <欄>\t\t要顯示的欄 (以逗號分隔)。\n"
-"\t\t\t\t\t可能的欄：config、subvolume、number、default、active、\n"
-"\t\t\t\t\ttype、date、user、used-space、cleanup、description、userdata、\n"
-"\t\t\t\t\tpre-number、post-number、post-date。"
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: key, value.\n"
-"\t\t\t\t\tColumns are not selected when JSON format is used."
-msgstr ""
-"\t--columns <欄>\t\t要顯示的欄 (以逗號分隔)。\n"
-"\t\t\t\t\t可能的欄：key、value。\n"
-"\t\t\t\t\t如果使用 JSON 格式，將不會選取欄。"
-
-# SLE12
-msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <指令>\t\t執行指令並建立前和後快照。"
-
-msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <名稱>\t\t設定要使用的設定法名稱。"
-
-msgid "\t--csvout\t\t\tSet CSV output format."
-msgstr "\t--csvout\t\t\t設定 CSV 輸出格式。"
-
-msgid "\t--debug\t\t\t\tTurn on debugging."
-msgstr ""
-
-#, fuzzy
-msgid "\t--default\t\t\tSet snapshot as default snapshot."
-msgstr "作用中快照已經是預設快照。"
-
-msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <描述>\t快照的描述。"
-
-# SLE12
-msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr "\t--description、-d <描述>\t快照的描述。"
-
-msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr "\t--diff-cmd <指令>\t\t用於比較檔案的指令。"
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-used-space\t\t停用顯示已用空間的功能。"
-
-msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
-msgstr "\t--extensions, -x <選項>\t傳送到 diff 指令的額外選項。"
-
-msgid "\t--free-space <space>\t\tTry to make space available."
-msgstr "\t--free-space <空間>\t\t嘗試釋放空間。"
-
-msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
-msgstr "\t--from <編號>\t\t\t依據指定快照建立快照。"
-
-msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--fstype, -f <檔案系統類型>\t\t手動設定檔案系統類型。"
-
-msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <檔案>\t\t讀取要由此回復變更的檔案。"
-
-msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr "\t--input, -i <檔案>\t\t讀取檔案，以比較檔案的差異。"
-
-# SLE12
-msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr "\t--iso\t\t\t\t以 ISO 格式顯示日期與時間。"
-
-msgid "\t--jsonout\t\t\tSet JSON output format."
-msgstr "\t--jsonout\t\t\t設定 JSON 輸出格式。"
-
-msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
-msgstr "\t--machine-readable <格式>\t設定機器可讀的輸出格式 (csv、json)。"
-
-# SLE12
-msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr "\t--no-dbus\t\t\t不使用 DBus 操作。"
-
-msgid "\t--no-headers\t\t\tNo headers for CSV output format."
-msgstr "\t--no-headers\t\t\tCSV 輸出格式不含標題。"
-
-msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <檔案>\t\t儲存狀態到檔案。"
-
-msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
-msgstr "\t--path <路徑>\t\t\t清理所有影響路徑的組態。"
-
-msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <數字>\t\t之前快照的相對應數字。"
-
-msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\t印出所建立快照的數字。"
-
-# SLE12
-msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr "\t--print-number、-p\t\t列印第二個建立之快照的編號。"
-
-msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\t減少一般輸出。"
-
-msgid "\t--read-only\t\t\tCreate read-only snapshot."
-msgstr "\t--read-only\t\t\t建立唯讀快照。"
-
-#, fuzzy
-msgid "\t--read-only\t\t\tSet snapshot read-only."
-msgstr "\t--read-only\t\t\t建立唯讀快照。"
-
-msgid "\t--read-write\t\t\tCreate read-write snapshot."
-msgstr "\t--read-write\t\t\t建立讀取寫入快照。"
-
-#, fuzzy
-msgid "\t--read-write\t\t\tSet snapshot read-write."
-msgstr "\t--read-write\t\t\t建立讀取寫入快照。"
-
-msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
-msgstr "\t--root, -r <路徑>\t\t在目標根目錄操作 (不使用 DBus 時才起作用)。"
-
-msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
-msgstr "\t--separator <分隔符號>\t\tCSV 輸出格式的字元分隔符號。"
-
-msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr "\t--sync, -s\t\t\t刪除後同步。"
-
-msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <類型>\t表格類型 (整數)。"
-
-msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <名稱>\t\t要使用的設定樣本的名稱。"
-
-msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <類型>\t\t快照的類型。"
-
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <類型>\t\t要列出的快照類型。"
-
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <userdata>\t快照的使用者資料。"
-
-# SLE12
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata、-u <使用者資料>\t快照的使用者資料。"
-
-# SLE12
-msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr "\t--utc\t\t\t\t以 UTC 格式顯示日期與時間。"
-
-msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\t增加詳細結果。"
-
-msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\t印出版本並離開。"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <清理演算法>"
@@ -280,14 +107,9 @@ msgstr "    \"get-config\" 指令的選項："
 msgid "    Options for 'list' command:"
 msgstr "    'list' 命令的選項："
 
-msgid ""
-"    Options for 'list-configs' command:\n"
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume.\n"
-msgstr ""
-"    \"list-configs\" 指令的選項：\n"
-"\t--columns <欄>\t\t要顯示的欄 (以逗號分隔)。\n"
-"\t\t\t\t\t可能的欄：config、subvolume。\n"
+#, fuzzy
+msgid "    Options for 'list-configs' command:"
+msgstr "    \"get-config\" 指令的選項："
 
 msgid "    Options for 'modify' command:"
 msgstr "    'modify' 命令的選項："
@@ -380,6 +202,134 @@ msgstr "%1$s，%2$s"
 msgid "(Snapshot %d.)"
 msgstr "(快照 %d。)"
 
+msgid "--abbreviate"
+msgstr ""
+
+msgid "--all-configs, -a"
+msgstr ""
+
+msgid "--ambit, -a <ambit>"
+msgstr ""
+
+#, fuzzy
+msgid "--cleanup-algorithm, -c <algo>"
+msgstr "\t--cleanup-algorithm, -c <algo>\t清理快照的演算法。"
+
+msgid "--columns <columns>"
+msgstr ""
+
+msgid "--command <command>"
+msgstr ""
+
+msgid "--config, -c <name>"
+msgstr ""
+
+msgid "--csvout"
+msgstr ""
+
+msgid "--debug"
+msgstr ""
+
+#, fuzzy
+msgid "--default"
+msgstr "預設值"
+
+#, fuzzy
+msgid "--description, -d <description>"
+msgstr "\t--description, -d <描述>\t快照的描述。"
+
+msgid "--diff-cmd <command>"
+msgstr ""
+
+msgid "--disable-used-space"
+msgstr ""
+
+msgid "--extensions, -x <options>"
+msgstr ""
+
+msgid "--free-space <space>"
+msgstr ""
+
+msgid "--from <number>"
+msgstr ""
+
+msgid "--fstype, -f <fstype>"
+msgstr ""
+
+msgid "--input, -i <file>"
+msgstr ""
+
+msgid "--iso"
+msgstr ""
+
+msgid "--jsonout"
+msgstr ""
+
+#, fuzzy
+msgid "--machine-readable <format>"
+msgstr "機器可讀格式 \"%s\" 無效。"
+
+msgid "--no-dbus"
+msgstr ""
+
+msgid "--no-headers"
+msgstr ""
+
+#, fuzzy
+msgid "--output, -o <file>"
+msgstr "\t--output, -o <檔案>\t\t儲存狀態到檔案。"
+
+msgid "--path <path>"
+msgstr ""
+
+msgid "--pre-number <number>"
+msgstr ""
+
+msgid "--print-number, -p"
+msgstr ""
+
+msgid "--quiet, -q"
+msgstr ""
+
+msgid "--read-only"
+msgstr ""
+
+msgid "--read-write"
+msgstr ""
+
+msgid "--root, -r <path>"
+msgstr ""
+
+msgid "--separator <separator>"
+msgstr ""
+
+msgid "--sync, -s"
+msgstr ""
+
+#, fuzzy
+msgid "--table-style, -t <style>"
+msgstr "\t--table-style, -t <類型>\t表格類型 (整數)。"
+
+msgid "--template, -t <name>"
+msgstr ""
+
+#, fuzzy
+msgid "--type, -t <type>"
+msgstr "\t--type, -t <類型>\t\t快照的類型。"
+
+#, fuzzy
+msgid "--userdata, -u <userdata>"
+msgstr "\t--userdata, -u <userdata>\t快照的使用者資料。"
+
+msgid "--utc"
+msgstr ""
+
+msgid "--verbose, -v"
+msgstr ""
+
+msgid "--version"
+msgstr ""
+
 # SLE12
 msgid "ACL error."
 msgstr "ACL 錯誤。"
@@ -389,6 +339,10 @@ msgstr "作用中"
 
 msgid "Active snapshot is already default snapshot."
 msgstr "作用中快照已經是預設快照。"
+
+#, fuzzy
+msgid "Allow to abbreviate table columns."
+msgstr "\t--abbreviate\t\t\t允許使用表格各欄的縮寫。"
 
 #, c-format
 msgid "Ambit is %s."
@@ -416,12 +370,32 @@ msgstr "無法偵測範圍，因為預設子磁碟區未知。"
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "無法復原，因為預設子磁碟區未知。"
 
+#, fuzzy
+msgid "Character separator for CSV output format."
+msgstr "\t--separator <分隔符號>\t\tCSV 輸出格式的字元分隔符號。"
+
 msgid "Cleanup"
 msgstr "清理"
+
+#, fuzzy
+msgid "Cleanup algorithm for snapshot."
+msgstr "\t--cleanup-algorithm, -c <algo>\t清理快照的演算法。"
+
+# SLE12
+#, fuzzy
+msgid "Cleanup algorithm for snapshots."
+msgstr "\t--cleanup-algorithm、-c <演算法>\t清理快照的演算法。"
+
+#, fuzzy
+msgid "Cleanup all configs affecting path."
+msgstr "\t--path <路徑>\t\t\t清理所有影響路徑的組態。"
 
 #, fuzzy, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "開啟檔案 '%s' 失敗。"
+
+msgid "Columns to show separated by comma."
+msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "命令 'cleanup' 需要一個參數。"
@@ -498,6 +472,10 @@ msgstr "命令 'undochange' 需要至少一個參數。"
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "指令「xadiff」至少需要一個引數。"
 
+#, fuzzy
+msgid "Command used for comparing files."
+msgstr "\t--diff-cmd <指令>\t\t用於比較檔案的指令。"
+
 msgid "Config"
 msgstr "設定"
 
@@ -534,6 +512,18 @@ msgstr "無法為路徑 \"%s\" 釋放足夠多的可用空間。"
 
 msgid "Could not make enough free space available."
 msgstr "無法釋放足夠多的可用空間。"
+
+#, fuzzy
+msgid "Create a snapshot from the specified snapshot."
+msgstr "\t--from\t\t\t\t依據指定快照建立快照。"
+
+#, fuzzy
+msgid "Create read-only snapshot."
+msgstr "\t--read-only\t\t\t建立唯讀快照。"
+
+#, fuzzy
+msgid "Create read-write snapshot."
+msgstr "\t--read-write\t\t\t建立讀取寫入快照。"
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -582,8 +572,30 @@ msgstr[0] "從 %s 刪除快照︰"
 msgid "Description"
 msgstr "描述"
 
+#, fuzzy
+msgid "Description for snapshot."
+msgstr "描述"
+
+#, fuzzy
+msgid "Description for snapshots."
+msgstr "正在比較快照..."
+
 msgid "Detecting filesystem type failed."
 msgstr "偵測檔案系統類型失敗。"
+
+#, fuzzy
+msgid "Disable showing used space."
+msgstr "\t--disable-used-space\t\t停用顯示已用空間的功能。"
+
+# SLE12
+#, fuzzy
+msgid "Display dates and times in ISO format."
+msgstr "\t--iso\t\t\t\t以 ISO 格式顯示日期與時間。"
+
+# SLE12
+#, fuzzy
+msgid "Display dates and times in UTC."
+msgstr "\t--utc\t\t\t\t以 UTC 格式顯示日期與時間。"
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
@@ -608,6 +620,10 @@ msgstr "使用者資料空白。"
 #, c-format
 msgid "Error (%s)."
 msgstr "錯誤 (%s)。"
+
+#, fuzzy
+msgid "Extra options passed to the diff command."
+msgstr "\t--extensions, -x <選項>\t傳送到 diff 指令的額外選項。"
 
 # SLE12
 msgid "Failed to initialize filesystem handler."
@@ -671,6 +687,10 @@ msgstr "完全相同的快照。"
 msgid "Illegal snapshot."
 msgstr "快照不合法。"
 
+#, fuzzy
+msgid "Increase verbosity."
+msgstr "\t--verbose, -v\t\t\t增加詳細結果。"
+
 #, c-format
 msgid "Invalid ambit '%s'."
 msgstr "範圍 \"%s\" 無效。"
@@ -678,6 +698,11 @@ msgstr "範圍 \"%s\" 無效。"
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "欄 \"%s\" 無效。"
+
+# SLE12
+#, fuzzy
+msgid "Invalid config."
+msgstr "無效的 configdata。"
 
 # SLE12
 msgid "Invalid configdata."
@@ -731,6 +756,10 @@ msgstr "鍵"
 msgid "KiB"
 msgstr "KiB"
 
+#, fuzzy
+msgid "List snapshots from all accessible configs."
+msgstr "\t--all-configs, -a\t\t列出所有可存取組態中的快照。"
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "列出設定失敗 (%s)。"
@@ -742,6 +771,10 @@ msgstr "M"
 #. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
 msgid "MB"
 msgstr "MB"
+
+#, fuzzy
+msgid "Manually set filesystem type."
+msgstr "\t--fstype, -f <檔案系統類型>\t\t手動設定檔案系統類型。"
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "可能您忘記在快照編號之間輸入分隔符「..」。"
@@ -767,16 +800,44 @@ msgstr "快照編號之間缺少分隔符「..」。"
 msgid "Missing or invalid pre-number."
 msgstr "遺失或不適用的 之前-數字。"
 
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+msgid "Name of config template to use."
+msgstr "\t--template, -t <名稱>\t\t要使用的設定樣本的名稱。"
+
 msgid "No command provided."
 msgstr "沒有提供命令。"
+
+#, fuzzy
+msgid "No headers for CSV output format."
+msgstr "\t--no-headers\t\t\tCSV 輸出格式不含標題。"
 
 # SLE12
 msgid "No permissions."
 msgstr "無許可權。"
 
+#, fuzzy
+msgid "Number of corresponding pre snapshot."
+msgstr "\t--pre-number <數字>\t\t之前快照的相對應數字。"
+
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "開啟檔案 '%s' 失敗。"
+
+#, fuzzy
+msgid "Operate in the specified ambit."
+msgstr "\t--ambit, -a ambit\t\t在指定範圍內操作。"
+
+#, fuzzy
+msgid "Operate on target root (works only without DBus)."
+msgstr "\t--root, -r <路徑>\t\t在目標根目錄操作 (不使用 DBus 時才起作用)。"
+
+# SLE12
+#, fuzzy
+msgid "Operate without DBus."
+msgstr "\t--no-dbus\t\t\t不使用 DBus 操作。"
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr "選項 --from 僅適用於單一類型的快照。"
@@ -809,12 +870,42 @@ msgstr "之前 #"
 msgid "Pre Date"
 msgstr "之前 日期"
 
+#, fuzzy
+msgid "Print number of created snapshot."
+msgstr "\t--print-number, -p\t\t印出所建立快照的數字。"
+
+# SLE12
+#, fuzzy
+msgid "Print number of second created snapshot."
+msgstr "\t--print-number、-p\t\t列印第二個建立之快照的編號。"
+
+#, fuzzy
+msgid "Print version and exit."
+msgstr "\t--version\t\t\t印出版本並離開。"
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "定額錯誤 (%s)。"
 
+#, fuzzy
+msgid "Read files for which to undo changes from file."
+msgstr "\t--input, -i <檔案>\t\t讀取要由此回復變更的檔案。"
+
+#, fuzzy
+msgid "Read files to diff from file."
+msgstr "\t--input, -i <檔案>\t\t讀取檔案，以比較檔案的差異。"
+
 msgid "Read-Only"
 msgstr ""
+
+# SLE12
+#, fuzzy
+msgid "Run command and create pre and post snapshots."
+msgstr "\t--command <指令>\t\t執行指令並建立前和後快照。"
+
+#, fuzzy
+msgid "Save status to file."
+msgstr "\t--output, -o <檔案>\t\t儲存狀態到檔案。"
 
 msgid "See 'man snapper' for further instructions."
 msgstr "如需更多指示，請參閱「man snapper」。"
@@ -822,6 +913,34 @@ msgstr "如需更多指示，請參閱「man snapper」。"
 #, fuzzy, c-format
 msgid "Server-side plugin '%s' failed."
 msgstr "開啟檔案 '%s' 失敗。"
+
+#, fuzzy
+msgid "Set CSV output format."
+msgstr "\t--csvout\t\t\t設定 CSV 輸出格式。"
+
+#, fuzzy
+msgid "Set JSON output format."
+msgstr "\t--jsonout\t\t\t設定 JSON 輸出格式。"
+
+#, fuzzy
+msgid "Set a machine-readable output format (csv, json)."
+msgstr "\t--machine-readable <格式>\t設定機器可讀的輸出格式 (csv、json)。"
+
+#, fuzzy
+msgid "Set name of config to use."
+msgstr "\t--config, -c <名稱>\t\t設定要使用的設定法名稱。"
+
+#, fuzzy
+msgid "Set snapshot as default snapshot."
+msgstr "作用中快照已經是預設快照。"
+
+#, fuzzy
+msgid "Set snapshot read-only."
+msgstr "\t--read-only\t\t\t建立唯讀快照。"
+
+#, fuzzy
+msgid "Set snapshot read-write."
+msgstr "\t--read-write\t\t\t建立讀取寫入快照。"
 
 # SLE12
 #, c-format
@@ -840,6 +959,14 @@ msgstr "快照正在使用中。"
 msgid "Subvolume"
 msgstr "子磁碟區"
 
+#, fuzzy
+msgid "Suppress normal output."
+msgstr "\t--quiet, -q\t\t\t減少一般輸出。"
+
+#, fuzzy
+msgid "Sync after deletion."
+msgstr "\t--sync, -s\t\t\t刪除後同步。"
+
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
 msgstr "T"
@@ -847,6 +974,10 @@ msgstr "T"
 #. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
 msgid "TB"
 msgstr "TB"
+
+#, fuzzy
+msgid "Table style (integer)."
+msgstr "\t--table-style, -t <類型>\t表格類型 (整數)。"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "可以使用 --ambit 選項以手動方式指定範圍。"
@@ -865,8 +996,23 @@ msgstr "TiB"
 msgid "Try 'snapper --help' for more information."
 msgstr "請嘗試執行「snapper --help」以獲得詳細資訊。"
 
+#, fuzzy
+msgid "Try to make space available."
+msgstr "\t--free-space <空間>\t\t嘗試釋放空間。"
+
+msgid "Turn on debugging."
+msgstr ""
+
 msgid "Type"
 msgstr "類型"
+
+#, fuzzy
+msgid "Type for snapshot."
+msgstr "未知類型的快照。"
+
+#, fuzzy
+msgid "Type of snapshots to list."
+msgstr "\t--type, -t <類型>\t\t要列出的快照類型。"
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -924,6 +1070,14 @@ msgstr "使用者資料「%s」沒有包含「=」符號。"
 msgid "Userdata '%s' has empty key."
 msgstr "使用者資料「%s」的鍵為空白。"
 
+#, fuzzy
+msgid "Userdata for snapshot."
+msgstr "\t--userdata, -u <userdata>\t快照的使用者資料。"
+
+#, fuzzy
+msgid "Userdata for snapshots."
+msgstr "完全相同的快照。"
+
 msgid "Value"
 msgstr "值"
 
@@ -980,11 +1134,46 @@ msgstr "用法： snapper [--全域選項] <命令> [--命令選項] [命令參�
 msgid "yes"
 msgstr "是"
 
-#~ msgid "\t--from\t\t\t\tCreate a snapshot from the specified snapshot."
-#~ msgstr "\t--from\t\t\t\t依據指定快照建立快照。"
+#, fuzzy
+#~ msgid ""
+#~ "\t--columns <columns>\t\tColumns to show separated by comma.\n"
+#~ "\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+#~ "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+#~ "\t\t\t\t\tpre-number, post-number, post-date, read-only."
+#~ msgstr ""
+#~ "\t--columns <欄>\t\t要顯示的欄 (以逗號分隔)。\n"
+#~ "\t\t\t\t\t可能的欄：config、subvolume、number、default、active、\n"
+#~ "\t\t\t\t\ttype、date、user、used-space、cleanup、description、userdata、\n"
+#~ "\t\t\t\t\tpre-number、post-number、post-date。"
 
-#~ msgid "Unknown type of snapshot."
-#~ msgstr "未知類型的快照。"
+#~ msgid ""
+#~ "\t--columns <columns>\t\tColumns to show separated by comma.\n"
+#~ "\t\t\t\t\tPossible columns: key, value.\n"
+#~ "\t\t\t\t\tColumns are not selected when JSON format is used."
+#~ msgstr ""
+#~ "\t--columns <欄>\t\t要顯示的欄 (以逗號分隔)。\n"
+#~ "\t\t\t\t\t可能的欄：key、value。\n"
+#~ "\t\t\t\t\t如果使用 JSON 格式，將不會選取欄。"
+
+# SLE12
+#~ msgid "\t--description, -d <description>\tDescription for snapshots."
+#~ msgstr "\t--description、-d <描述>\t快照的描述。"
+
+#~ msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
+#~ msgstr "\t--from <編號>\t\t\t依據指定快照建立快照。"
+
+# SLE12
+#~ msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
+#~ msgstr "\t--userdata、-u <使用者資料>\t快照的使用者資料。"
+
+#~ msgid ""
+#~ "    Options for 'list-configs' command:\n"
+#~ "\t--columns <columns>\t\tColumns to show separated by comma.\n"
+#~ "\t\t\t\t\tPossible columns: config, subvolume.\n"
+#~ msgstr ""
+#~ "    \"list-configs\" 指令的選項：\n"
+#~ "\t--columns <欄>\t\t要顯示的欄 (以逗號分隔)。\n"
+#~ "\t\t\t\t\t可能的欄：config、subvolume。\n"
 
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "未知類型的快照。"
@@ -1010,9 +1199,6 @@ msgstr "是"
 
 #~ msgid "Command failed (%s). See log for more information."
 #~ msgstr "命令失敗 (%s)。請參閱紀錄取得詳細資訊。"
-
-#~ msgid "comparing snapshots..."
-#~ msgstr "正在比較快照..."
 
 #~ msgid "done"
 #~ msgstr "完成"

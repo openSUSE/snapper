@@ -9,178 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-28 08:50+0100\n"
+"POT-Creation-Date: 2024-02-26 12:27+0100\n"
 "PO-Revision-Date: 2023-12-02 14:02+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
-"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
-"\n"
+"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.9.1\n"
-
-msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
-msgstr "\t--abbreviate\t\t\tTabelkolommen afkorten toestaan."
-
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tMomentopnamen weergeven van alle beschikbare configuraties."
-
-msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr "\t--ambit, -a ambit\t\tIn de gespecificeerde ambit werken."
-
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <algo>\tOpschoonalgoritme voor momentopname."
-
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <algo>\tOpschoonalgoritme voor momentopnamen."
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
-"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date, read-only."
-msgstr ""
-"\t--columns <columns>\t\tTe tonen kolommen gescheiden door een komma.\n"
-"\t\t\t\t\tMogelijke kolommen: config, subvolume, number, default, active,\n"
-"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date,read-only."
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: key, value.\n"
-"\t\t\t\t\tColumns are not selected when JSON format is used."
-msgstr ""
-"\t--columns <columns>\t\tTe tonen kolommen gescheiden door een komma.\n"
-"\t\t\t\t\tMogelijke kolommen: key, value.\n"
-"\t\t\t\t\tKolommen worden niet geselecteerd wanneer JSON-formaat wordt gebruikt."
-
-msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <command>\t\tVoer opdracht uit en maak pre- en post-momentopnamen."
-
-msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <name>\t\tStel naam van te gebruiken configuratie in."
-
-msgid "\t--csvout\t\t\tSet CSV output format."
-msgstr "\t--csvout\t\t\tCSV uitvoerformaat instellen."
-
-msgid "\t--debug\t\t\t\tTurn on debugging."
-msgstr "\t--debug\t\t\t\tDebugging inschakelen."
-
-msgid "\t--default\t\t\tSet snapshot as default snapshot."
-msgstr "\t--default\t\t\tMomentopname instellen als standaard momentopname."
-
-msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <description>\tBeschrijving van momentopname."
-
-msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr "\t--description, -d <description>\tBeschrijving van momentopnamen."
-
-msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr "\t--diff-cmd <command>\t\tOpdracht gebruikt voor het vergelijken van bestanden."
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-used-space\t\tGebruikte ruimte tonen uitschakelen."
-
-msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
-msgstr "\t--extensions, -x <options>\tExtra opties doorgeven aan de opdracht diff."
-
-msgid "\t--free-space <space>\t\tTry to make space available."
-msgstr "\t--free-space <space>\t\tRuimte proberen beschikbaar te maken."
-
-msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
-msgstr "\t--from <getal>\t\t\t\tEen momentopname maken van de gespecificeerde momentopname."
-
-msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--fstype, -f <fstype>\t\tStel handmatig het type bestandssysteem in."
-
-msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <file>\t\tLees bestanden waarvoor wijzigingen ongedaan moeten worden uit bestand."
-
-msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr "\t--input, -i <file>\t\tBestanden naar diff lezen vanuit bestand."
-
-msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr "\t--iso\t\t\t\tDatums en tijd tonen in ISO-formaat."
-
-msgid "\t--jsonout\t\t\tSet JSON output format."
-msgstr "\t--jsonout\t\t\tJSON uitvoerformaat instellen."
-
-msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
-msgstr "\t--machine-readable <format>\tEen machine-leesbaar uitvoerformaat instellen (csv, json)."
-
-msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr "\t--no-dbus\t\t\tWerken zonder D-Bus."
-
-msgid "\t--no-headers\t\t\tNo headers for CSV output format."
-msgstr "\t--no-headers\t\t\tGeen koppen voor CSV uitvoerformaat instellen."
-
-msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <file>\t\tStatus opslaan in bestand."
-
-msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
-msgstr "\t--path <path>\t\t\tAlle configuraties die pad beïnvloeden opschonen."
-
-msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <number>\t\tNummer van overeenkomende eerdere momentopname."
-
-msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tToon nummer van aangemaakte momentopname."
-
-msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr "\t--print-number, -p\t\tToon nummer van tweede aangemaakte momentopname."
-
-msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\tOnderdruk normale uitvoer."
-
-msgid "\t--read-only\t\t\tCreate read-only snapshot."
-msgstr "\t--read-only\t\t\tEen alleen-lezen momentopname maken."
-
-msgid "\t--read-only\t\t\tSet snapshot read-only."
-msgstr "\t--read-only\t\t\tMomentopname als alleen-lezen instellen."
-
-msgid "\t--read-write\t\t\tCreate read-write snapshot."
-msgstr "\t--read-write\t\t\tEen lezen-schrijven momentopname maken."
-
-msgid "\t--read-write\t\t\tSet snapshot read-write."
-msgstr "\t--read-write\t\t\tMomentopname als lezen-schrijven instellen."
-
-msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
-msgstr "\t--root, -r <path>\t\tBewerking op targetroot (werkt alleen zonder D-Bus)."
-
-msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
-msgstr "\t--separator <separator>\t\tScheidingsteken voor CSV uitvoerformaat."
-
-msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr "\t--sync, -s\t\t\tSynchroniseren na verwijdering."
-
-msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <style>\tTabelstijl (geheel getal)."
-
-msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <name>\t\tNaam van te gebruiken configuratiesjabloon."
-
-msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <type>\t\tType momentopname."
-
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <type>\t\tTe tonen type momentopname."
-
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <userdata>\tGebruikersgegevens voor momentopname."
-
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata, -u <userdata>\tGebruikersgegevens voor momentopnamen."
-
-msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr "\t--utc\t\t\t\tDatums en tijden tonen in UTC."
-
-msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tHoeveelheid informatie verhogen."
-
-msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tVersie tonen en beëindigen."
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <opschoonalgoritme>"
@@ -260,14 +98,9 @@ msgstr "    Opties voor opdracht 'get-config':"
 msgid "    Options for 'list' command:"
 msgstr "    Opties voor opdracht 'list':"
 
-msgid ""
-"    Options for 'list-configs' command:\n"
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume.\n"
-msgstr ""
-"    Opties voor opdracht 'list-configs':\n"
-"\t--columns <columns>\t\tTe tonen kolommen gescheiden door een komma.\n"
-"\t\t\t\t\tMogelijke kolommen: config, subvolume.\n"
+#, fuzzy
+msgid "    Options for 'list-configs' command:"
+msgstr "    Opties voor opdracht 'get-config':"
 
 msgid "    Options for 'modify' command:"
 msgstr "    Opties voor opdracht 'modify':"
@@ -353,6 +186,135 @@ msgstr "%1$s, %2$s"
 msgid "(Snapshot %d.)"
 msgstr "(Momentopname %d.)"
 
+msgid "--abbreviate"
+msgstr ""
+
+msgid "--all-configs, -a"
+msgstr ""
+
+msgid "--ambit, -a <ambit>"
+msgstr ""
+
+#, fuzzy
+msgid "--cleanup-algorithm, -c <algo>"
+msgstr "\t--cleanup-algorithm, -c <algo>\tOpschoonalgoritme voor momentopname."
+
+msgid "--columns <columns>"
+msgstr ""
+
+msgid "--command <command>"
+msgstr ""
+
+msgid "--config, -c <name>"
+msgstr ""
+
+msgid "--csvout"
+msgstr ""
+
+msgid "--debug"
+msgstr ""
+
+#, fuzzy
+msgid "--default"
+msgstr "Standaard"
+
+#, fuzzy
+msgid "--description, -d <description>"
+msgstr "\t--description, -d <description>\tBeschrijving van momentopname."
+
+msgid "--diff-cmd <command>"
+msgstr ""
+
+msgid "--disable-used-space"
+msgstr ""
+
+msgid "--extensions, -x <options>"
+msgstr ""
+
+msgid "--free-space <space>"
+msgstr ""
+
+msgid "--from <number>"
+msgstr ""
+
+msgid "--fstype, -f <fstype>"
+msgstr ""
+
+msgid "--input, -i <file>"
+msgstr ""
+
+msgid "--iso"
+msgstr ""
+
+msgid "--jsonout"
+msgstr ""
+
+#, fuzzy
+msgid "--machine-readable <format>"
+msgstr "Ongeldig machine-leesbaar formaat '%s'."
+
+msgid "--no-dbus"
+msgstr ""
+
+msgid "--no-headers"
+msgstr ""
+
+#, fuzzy
+msgid "--output, -o <file>"
+msgstr "\t--output, -o <file>\t\tStatus opslaan in bestand."
+
+msgid "--path <path>"
+msgstr ""
+
+msgid "--pre-number <number>"
+msgstr ""
+
+msgid "--print-number, -p"
+msgstr ""
+
+msgid "--quiet, -q"
+msgstr ""
+
+#, fuzzy
+msgid "--read-only"
+msgstr "Alleen-lezen"
+
+msgid "--read-write"
+msgstr ""
+
+msgid "--root, -r <path>"
+msgstr ""
+
+msgid "--separator <separator>"
+msgstr ""
+
+msgid "--sync, -s"
+msgstr ""
+
+#, fuzzy
+msgid "--table-style, -t <style>"
+msgstr "\t--table-style, -t <style>\tTabelstijl (geheel getal)."
+
+msgid "--template, -t <name>"
+msgstr ""
+
+#, fuzzy
+msgid "--type, -t <type>"
+msgstr "\t--type, -t <type>\t\tType momentopname."
+
+#, fuzzy
+msgid "--userdata, -u <userdata>"
+msgstr "\t--userdata, -u <userdata>\tGebruikersgegevens voor momentopname."
+
+msgid "--utc"
+msgstr ""
+
+msgid "--verbose, -v"
+msgstr ""
+
+msgid "--version"
+msgstr ""
+
 # error box title
 msgid "ACL error."
 msgstr "ACL-fout."
@@ -362,6 +324,10 @@ msgstr "Actief"
 
 msgid "Active snapshot is already default snapshot."
 msgstr "Actieve momentopname is al standaard momentopname."
+
+#, fuzzy
+msgid "Allow to abbreviate table columns."
+msgstr "\t--abbreviate\t\t\tTabelkolommen afkorten toestaan."
 
 #, c-format
 msgid "Ambit is %s."
@@ -389,12 +355,31 @@ msgstr "Kan ambit niet detecteren omdat standaard subvolume onbekend is."
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Kan geen rollback doen omdat standaard subvolume onbekend is."
 
+#, fuzzy
+msgid "Character separator for CSV output format."
+msgstr "\t--separator <separator>\t\tScheidingsteken voor CSV uitvoerformaat."
+
 msgid "Cleanup"
 msgstr "Opschonen"
+
+#, fuzzy
+msgid "Cleanup algorithm for snapshot."
+msgstr "\t--cleanup-algorithm, -c <algo>\tOpschoonalgoritme voor momentopname."
+
+#, fuzzy
+msgid "Cleanup algorithm for snapshots."
+msgstr "\t--cleanup-algorithm, -c <algo>\tOpschoonalgoritme voor momentopnamen."
+
+#, fuzzy
+msgid "Cleanup all configs affecting path."
+msgstr "\t--path <path>\t\t\tAlle configuraties die pad beïnvloeden opschonen."
 
 #, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "Client-kant plug-in '%s' is mislukt."
+
+msgid "Columns to show separated by comma."
+msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Opdracht 'cleanup' heeft één argument."
@@ -463,6 +448,10 @@ msgstr "Opdracht 'undochange' heeft minstens één argument."
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Opdracht 'xadiff' heeft minstens één argument."
 
+#, fuzzy
+msgid "Command used for comparing files."
+msgstr "\t--diff-cmd <command>\t\tOpdracht gebruikt voor het vergelijken van bestanden."
+
 msgid "Config"
 msgstr "Configuratie"
 
@@ -494,6 +483,18 @@ msgstr "Kon niet genoeg vrije ruimte beschikbaar maken voor pad '%s'."
 
 msgid "Could not make enough free space available."
 msgstr "Kon niet genoeg vrije ruimte beschikbaar maken."
+
+#, fuzzy
+msgid "Create a snapshot from the specified snapshot."
+msgstr "\t--from <getal>\t\t\t\tEen momentopname maken van de gespecificeerde momentopname."
+
+#, fuzzy
+msgid "Create read-only snapshot."
+msgstr "\t--read-only\t\t\tEen alleen-lezen momentopname maken."
+
+#, fuzzy
+msgid "Create read-write snapshot."
+msgstr "\t--read-write\t\t\tEen lezen-schrijven momentopname maken."
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -537,8 +538,28 @@ msgstr[1] "Snapshots verwijderen van %s:"
 msgid "Description"
 msgstr "Beschrijving"
 
+#, fuzzy
+msgid "Description for snapshot."
+msgstr "Beschrijving"
+
+#, fuzzy
+msgid "Description for snapshots."
+msgstr "momentopnamen vergelijken..."
+
 msgid "Detecting filesystem type failed."
 msgstr "Type bestandssysteem detecteren is mislukt."
+
+#, fuzzy
+msgid "Disable showing used space."
+msgstr "\t--disable-used-space\t\tGebruikte ruimte tonen uitschakelen."
+
+#, fuzzy
+msgid "Display dates and times in ISO format."
+msgstr "\t--iso\t\t\t\tDatums en tijd tonen in ISO-formaat."
+
+#, fuzzy
+msgid "Display dates and times in UTC."
+msgstr "\t--utc\t\t\t\tDatums en tijden tonen in UTC."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
@@ -561,6 +582,10 @@ msgstr "Lege gebruikersgegevens."
 #, c-format
 msgid "Error (%s)."
 msgstr "Fout (%s)."
+
+#, fuzzy
+msgid "Extra options passed to the diff command."
+msgstr "\t--extensions, -x <options>\tExtra opties doorgeven aan de opdracht diff."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Behandelaar van bestandssysteem initialiseren is mislukt."
@@ -620,6 +645,10 @@ msgstr "Identieke momentopnamen."
 msgid "Illegal snapshot."
 msgstr "Ongeldige momentopname."
 
+#, fuzzy
+msgid "Increase verbosity."
+msgstr "\t--verbose, -v\t\t\tHoeveelheid informatie verhogen."
+
 #, c-format
 msgid "Invalid ambit '%s'."
 msgstr "Ongeldige ambit '%s'."
@@ -627,6 +656,10 @@ msgstr "Ongeldige ambit '%s'."
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "Ongeldige kolom '%s'."
+
+#, fuzzy
+msgid "Invalid config."
+msgstr "Ongeldige configuratiegegevens."
 
 msgid "Invalid configdata."
 msgstr "Ongeldige configuratiegegevens."
@@ -674,6 +707,10 @@ msgstr "Sleutel"
 msgid "KiB"
 msgstr "KiB"
 
+#, fuzzy
+msgid "List snapshots from all accessible configs."
+msgstr "\t--all-configs, -a\t\tMomentopnamen weergeven van alle beschikbare configuraties."
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Lijst maken van configuraties is mislukt (%s)."
@@ -685,6 +722,10 @@ msgstr "M"
 #. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
 msgid "MB"
 msgstr "MB"
+
+#, fuzzy
+msgid "Manually set filesystem type."
+msgstr "\t--fstype, -f <fstype>\t\tStel handmatig het type bestandssysteem in."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Misschien bent u het scheidingsteken '..' tussen de snapshotnummer vergeten."
@@ -710,15 +751,42 @@ msgstr "Scheidingsteken '..' ontbreekt tussen snapshotnummers."
 msgid "Missing or invalid pre-number."
 msgstr "Ontbrekend of ongeldig 'pre'-nummer."
 
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+msgid "Name of config template to use."
+msgstr "\t--template, -t <name>\t\tNaam van te gebruiken configuratiesjabloon."
+
 msgid "No command provided."
 msgstr "Geen opdracht opgegeven."
+
+#, fuzzy
+msgid "No headers for CSV output format."
+msgstr "\t--no-headers\t\t\tGeen koppen voor CSV uitvoerformaat instellen."
 
 msgid "No permissions."
 msgstr "Geen toegangsrechten."
 
+#, fuzzy
+msgid "Number of corresponding pre snapshot."
+msgstr "\t--pre-number <number>\t\tNummer van overeenkomende eerdere momentopname."
+
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "Openen van bestand '%s' is mislukt."
+
+#, fuzzy
+msgid "Operate in the specified ambit."
+msgstr "\t--ambit, -a ambit\t\tIn de gespecificeerde ambit werken."
+
+#, fuzzy
+msgid "Operate on target root (works only without DBus)."
+msgstr "\t--root, -r <path>\t\tBewerking op targetroot (werkt alleen zonder D-Bus)."
+
+#, fuzzy
+msgid "Operate without DBus."
+msgstr "\t--no-dbus\t\t\tWerken zonder D-Bus."
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr "Optie --from alleen ondersteund voor momentopnamen van het type single(enkelvoudig)."
@@ -751,12 +819,40 @@ msgstr "Pre #"
 msgid "Pre Date"
 msgstr "Pre-datum"
 
+#, fuzzy
+msgid "Print number of created snapshot."
+msgstr "\t--print-number, -p\t\tToon nummer van aangemaakte momentopname."
+
+#, fuzzy
+msgid "Print number of second created snapshot."
+msgstr "\t--print-number, -p\t\tToon nummer van tweede aangemaakte momentopname."
+
+#, fuzzy
+msgid "Print version and exit."
+msgstr "\t--version\t\t\tVersie tonen en beëindigen."
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Qouta-fout (%s)."
 
+#, fuzzy
+msgid "Read files for which to undo changes from file."
+msgstr "\t--input, -i <file>\t\tLees bestanden waarvoor wijzigingen ongedaan moeten worden uit bestand."
+
+#, fuzzy
+msgid "Read files to diff from file."
+msgstr "\t--input, -i <file>\t\tBestanden naar diff lezen vanuit bestand."
+
 msgid "Read-Only"
 msgstr "Alleen-lezen"
+
+#, fuzzy
+msgid "Run command and create pre and post snapshots."
+msgstr "\t--command <command>\t\tVoer opdracht uit en maak pre- en post-momentopnamen."
+
+#, fuzzy
+msgid "Save status to file."
+msgstr "\t--output, -o <file>\t\tStatus opslaan in bestand."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Zie 'man snapper' voor meer instructies."
@@ -764,6 +860,34 @@ msgstr "Zie 'man snapper' voor meer instructies."
 #, c-format
 msgid "Server-side plugin '%s' failed."
 msgstr "Server-kant plug-in '%s' is mislukt."
+
+#, fuzzy
+msgid "Set CSV output format."
+msgstr "\t--csvout\t\t\tCSV uitvoerformaat instellen."
+
+#, fuzzy
+msgid "Set JSON output format."
+msgstr "\t--jsonout\t\t\tJSON uitvoerformaat instellen."
+
+#, fuzzy
+msgid "Set a machine-readable output format (csv, json)."
+msgstr "\t--machine-readable <format>\tEen machine-leesbaar uitvoerformaat instellen (csv, json)."
+
+#, fuzzy
+msgid "Set name of config to use."
+msgstr "\t--config, -c <name>\t\tStel naam van te gebruiken configuratie in."
+
+#, fuzzy
+msgid "Set snapshot as default snapshot."
+msgstr "\t--default\t\t\tMomentopname instellen als standaard momentopname."
+
+#, fuzzy
+msgid "Set snapshot read-only."
+msgstr "\t--read-only\t\t\tMomentopname als alleen-lezen instellen."
+
+#, fuzzy
+msgid "Set snapshot read-write."
+msgstr "\t--read-write\t\t\tMomentopname als lezen-schrijven instellen."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
@@ -779,6 +903,14 @@ msgstr "Momentopname is in gebruik."
 msgid "Subvolume"
 msgstr "Subvolume"
 
+#, fuzzy
+msgid "Suppress normal output."
+msgstr "\t--quiet, -q\t\t\tOnderdruk normale uitvoer."
+
+#, fuzzy
+msgid "Sync after deletion."
+msgstr "\t--sync, -s\t\t\tSynchroniseren na verwijdering."
+
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
 msgstr "T"
@@ -786,6 +918,10 @@ msgstr "T"
 #. TRANSLATORS: symbol for "tera bytes" (best keep untranslated)
 msgid "TB"
 msgstr "TB"
+
+#, fuzzy
+msgid "Table style (integer)."
+msgstr "\t--table-style, -t <style>\tTabelstijl (geheel getal)."
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "De ambit kan handmatig worden gespecificeerd met de optie --ambit."
@@ -803,8 +939,24 @@ msgstr "TiB"
 msgid "Try 'snapper --help' for more information."
 msgstr "Probeer 'snapper --help' voor meer informatie."
 
+#, fuzzy
+msgid "Try to make space available."
+msgstr "\t--free-space <space>\t\tRuimte proberen beschikbaar te maken."
+
+#, fuzzy
+msgid "Turn on debugging."
+msgstr "\t--debug\t\t\t\tDebugging inschakelen."
+
 msgid "Type"
 msgstr "Type"
+
+#, fuzzy
+msgid "Type for snapshot."
+msgstr "Onbekend type momentopname."
+
+#, fuzzy
+msgid "Type of snapshots to list."
+msgstr "\t--type, -t <type>\t\tTe tonen type momentopname."
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -855,6 +1007,14 @@ msgstr "Gebruikersgegevens '%s' bevat geen '=' teken."
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "Gebruikersgegevens '%s' heeft een lege key."
+
+#, fuzzy
+msgid "Userdata for snapshot."
+msgstr "\t--userdata, -u <userdata>\tGebruikersgegevens voor momentopname."
+
+#, fuzzy
+msgid "Userdata for snapshots."
+msgstr "Identieke momentopnamen."
 
 msgid "Value"
 msgstr "Waarde"
@@ -910,6 +1070,41 @@ msgstr "gebruik: snapper [--global-options] <opdracht> [--commando-options] [com
 msgid "yes"
 msgstr "ja"
 
+#~ msgid ""
+#~ "\t--columns <columns>\t\tColumns to show separated by comma.\n"
+#~ "\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
+#~ "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+#~ "\t\t\t\t\tpre-number, post-number, post-date, read-only."
+#~ msgstr ""
+#~ "\t--columns <columns>\t\tTe tonen kolommen gescheiden door een komma.\n"
+#~ "\t\t\t\t\tMogelijke kolommen: config, subvolume, number, default, active,\n"
+#~ "\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
+#~ "\t\t\t\t\tpre-number, post-number, post-date,read-only."
+
+#~ msgid ""
+#~ "\t--columns <columns>\t\tColumns to show separated by comma.\n"
+#~ "\t\t\t\t\tPossible columns: key, value.\n"
+#~ "\t\t\t\t\tColumns are not selected when JSON format is used."
+#~ msgstr ""
+#~ "\t--columns <columns>\t\tTe tonen kolommen gescheiden door een komma.\n"
+#~ "\t\t\t\t\tMogelijke kolommen: key, value.\n"
+#~ "\t\t\t\t\tKolommen worden niet geselecteerd wanneer JSON-formaat wordt gebruikt."
+
+#~ msgid "\t--description, -d <description>\tDescription for snapshots."
+#~ msgstr "\t--description, -d <description>\tBeschrijving van momentopnamen."
+
+#~ msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
+#~ msgstr "\t--userdata, -u <userdata>\tGebruikersgegevens voor momentopnamen."
+
+#~ msgid ""
+#~ "    Options for 'list-configs' command:\n"
+#~ "\t--columns <columns>\t\tColumns to show separated by comma.\n"
+#~ "\t\t\t\t\tPossible columns: config, subvolume.\n"
+#~ msgstr ""
+#~ "    Opties voor opdracht 'list-configs':\n"
+#~ "\t--columns <columns>\t\tTe tonen kolommen gescheiden door een komma.\n"
+#~ "\t\t\t\t\tMogelijke kolommen: config, subvolume.\n"
+
 #, c-format
 #~ msgid "Use %s, %s or %s."
 #~ msgstr "%s, %s of %s gebruiken."
@@ -917,9 +1112,6 @@ msgstr "ja"
 #, c-format
 #~ msgid "Use %s, %s, %s or %s."
 #~ msgstr "%s, %s, %s of %s gebruiken."
-
-#~ msgid "Unknown type of snapshot."
-#~ msgstr "Onbekend type momentopname."
 
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Onbekend type momentopnamen."
@@ -942,9 +1134,6 @@ msgstr "ja"
 
 #~ msgid "Command failed (%s). See log for more information."
 #~ msgstr "Commando is mislukt (%s). Zie log voor meer informatie."
-
-#~ msgid "comparing snapshots..."
-#~ msgstr "momentopnamen vergelijken..."
 
 #~ msgid "done"
 #~ msgstr "gereed"

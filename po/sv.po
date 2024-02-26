@@ -8,199 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-28 08:50+0100\n"
+"POT-Creation-Date: 2024-02-26 12:27+0100\n"
 "PO-Revision-Date: 2023-12-06 13:02+0000\n"
 "Last-Translator: Luna  Jernberg <bittin@opensuse.org>\n"
-"Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/sv/"
-">\n"
+"Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.9.1\n"
-
-msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
-msgstr "\t--abbreviate\t\t\tTillåt att förkorta tabellkolumner."
-
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tVisa snapshots från alla tillgängliga konfig."
-
-msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr "\t--ambit, -a ambit\t\tArbeta i det angivna området."
-
-# SLE12
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <algoritm>\tUpprensningsalgoritm för ögonblicksbild."
-
-# SLE12
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <algo>\tUpprensningsalgoritm för ögonblicksbilder."
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
-"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date, read-only."
-msgstr ""
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: key, value.\n"
-"\t\t\t\t\tColumns are not selected when JSON format is used."
-msgstr ""
-
-# SLE12
-msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <kommando>\t\tKör kommandot och skapa före- och efter-ögonblicksbilder."
-
-# SLE12
-msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <namn>\t\tAnge namnet på den konfiguration som ska användas."
-
-msgid "\t--csvout\t\t\tSet CSV output format."
-msgstr "\t--csvout\t\t\tStäll in CSV som utdata format."
-
-msgid "\t--debug\t\t\t\tTurn on debugging."
-msgstr "\t--debug\t\t\t\tSlå på felsökning."
-
-msgid "\t--default\t\t\tSet snapshot as default snapshot."
-msgstr "\t--default\t\t\tStäll in ögonblicksbild som standard ögonblicksbild."
-
-# SLE12
-msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <beskrivning>\tBeskrivning av ögonblicksbild."
-
-# SLE12
-msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr "\t--description, -d <beskrivning>\tBeskrivning för ögonblicksbilder."
-
-msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr "\t--diff-cmd <command>\t\tKommandot används för att jämföra filer."
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-used-space\t\tInaktivera visning av använt utrymme."
-
-msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
-msgstr "\t--extensions, -x <options>\tExtra alternativ skickades till diffkommandot."
-
-msgid "\t--free-space <space>\t\tTry to make space available."
-msgstr "\t--free-space <space>\t\tFörsök att göra utrymme tillgängligt."
-
-msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
-msgstr ""
-"\t--from <number>\t\t\tSkapa en ögonblicksbild från den angivna "
-"ögonblicksbilden."
-
-# SLE12
-msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--fstype, -f <fstyp>\t\tAnge filsystemtyp manuellt."
-
-# SLE12
-msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <fil>\t\tLäs filer som ändringar ska ångras för från filen."
-
-msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr "\t--input, -i <file>\t\tLäs filer som ska diffa från filen."
-
-# SLE12
-msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr "\t--iso\t\t\t\tVisa datum och tider i ISO-format."
-
-msgid "\t--jsonout\t\t\tSet JSON output format."
-msgstr "\t--jsonout\t\t\tStäll in JSON som utdata format."
-
-msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
-msgstr ""
-"\t--machine-readable <format>\tStäll in ett maskinläsbart utdataformat (csv, "
-"json)."
-
-# SLE12
-msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr "\t--no-dbus\t\t\tAnvänd utan DBus."
-
-msgid "\t--no-headers\t\t\tNo headers for CSV output format."
-msgstr ""
-
-# SLE12
-msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <fil>\t\tSpara status till fil."
-
-msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
-msgstr "\t--path <path>\t\t\tRensa alla konfigurationer som påverkar sökväg."
-
-# SLE12
-msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <nummer>\t\tNummer för motsvarande för-ögonblicksbild."
-
-# SLE12
-msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tSkriv ut nummer på skapad ögonblicksbild."
-
-# SLE12
-msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr "\t--print-number, -p\t\tSkriv ut nummer för den andra skapade ögonblicksbilden."
-
-# SLE12
-msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\tUtelämna normal utmatning."
-
-msgid "\t--read-only\t\t\tCreate read-only snapshot."
-msgstr "\t--read-only\t\t\tSkapa en skrivskyddad ögonblicksbild."
-
-msgid "\t--read-only\t\t\tSet snapshot read-only."
-msgstr "\t--read-only\t\t\tStäll in ögonblicksbild skrivskyddad."
-
-msgid "\t--read-write\t\t\tCreate read-write snapshot."
-msgstr "\t--read-write\t\t\tSkapa en läs- och skrivbar ögonblicksbild."
-
-msgid "\t--read-write\t\t\tSet snapshot read-write."
-msgstr "\t--read-write\t\t\tStäll in ögonblicksbild läs och skrivbar."
-
-msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
-msgstr "\t--root, -r <path>\t\tArbeta i målroten (fungerar enbart utan DBus)."
-
-msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
-msgstr "\t--separator <separator>\t\tTeckenavgränsare för CSV-utdataformat."
-
-msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr "\t--sync, -s\t\t\tSynka efter radering."
-
-# SLE12
-msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <stil>\tTabellstil (heltal)."
-
-# SLE12
-msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <namn>\t\tNamn på konfigurationsmall att använda."
-
-# SLE12
-msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <typ>\t\tTyp för ögonblicksbild."
-
-# SLE12
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <typ>\t\tTyper av ögonblicksbilder att lista."
-
-# SLE12
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <användardata>\tAnvändardata för ögonblicksbilden."
-
-# SLE12
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata, -u <användardata>\tAnvändardata för ögonblicksbilder."
-
-# SLE12
-msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr "\t--utc\t\t\t\tVisa datum och tider i UTC."
-
-# SLE12
-msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tÖka utförligheten."
-
-# SLE12
-msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tVisa version och avsluta."
 
 # SLE12
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -304,11 +121,10 @@ msgstr "    Alternativ för kommandot 'get-config':"
 msgid "    Options for 'list' command:"
 msgstr "    Alternativ för kommandot list:"
 
-msgid ""
-"    Options for 'list-configs' command:\n"
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume.\n"
-msgstr ""
+# SLE12
+#, fuzzy
+msgid "    Options for 'list-configs' command:"
+msgstr "    Alternativ för kommandot 'get-config':"
 
 # SLE12
 msgid "    Options for 'modify' command:"
@@ -416,6 +232,142 @@ msgstr "%1$s, %2$s"
 msgid "(Snapshot %d.)"
 msgstr "(Ögonblicksbild %d.)"
 
+msgid "--abbreviate"
+msgstr ""
+
+msgid "--all-configs, -a"
+msgstr ""
+
+msgid "--ambit, -a <ambit>"
+msgstr ""
+
+# SLE12
+#, fuzzy
+msgid "--cleanup-algorithm, -c <algo>"
+msgstr "\t--cleanup-algorithm, -c <algoritm>\tUpprensningsalgoritm för ögonblicksbild."
+
+msgid "--columns <columns>"
+msgstr ""
+
+msgid "--command <command>"
+msgstr ""
+
+msgid "--config, -c <name>"
+msgstr ""
+
+msgid "--csvout"
+msgstr ""
+
+msgid "--debug"
+msgstr ""
+
+#, fuzzy
+msgid "--default"
+msgstr "Standard"
+
+# SLE12
+#, fuzzy
+msgid "--description, -d <description>"
+msgstr "\t--description, -d <beskrivning>\tBeskrivning av ögonblicksbild."
+
+msgid "--diff-cmd <command>"
+msgstr ""
+
+msgid "--disable-used-space"
+msgstr ""
+
+msgid "--extensions, -x <options>"
+msgstr ""
+
+msgid "--free-space <space>"
+msgstr ""
+
+msgid "--from <number>"
+msgstr ""
+
+msgid "--fstype, -f <fstype>"
+msgstr ""
+
+msgid "--input, -i <file>"
+msgstr ""
+
+msgid "--iso"
+msgstr ""
+
+msgid "--jsonout"
+msgstr ""
+
+# SLE12
+#, fuzzy
+msgid "--machine-readable <format>"
+msgstr "Ogiltigt maskinläsbart format '%s'."
+
+msgid "--no-dbus"
+msgstr ""
+
+msgid "--no-headers"
+msgstr ""
+
+# SLE12
+#, fuzzy
+msgid "--output, -o <file>"
+msgstr "\t--output, -o <fil>\t\tSpara status till fil."
+
+msgid "--path <path>"
+msgstr ""
+
+msgid "--pre-number <number>"
+msgstr ""
+
+msgid "--print-number, -p"
+msgstr ""
+
+msgid "--quiet, -q"
+msgstr ""
+
+#, fuzzy
+msgid "--read-only"
+msgstr "Läs-endast"
+
+msgid "--read-write"
+msgstr ""
+
+msgid "--root, -r <path>"
+msgstr ""
+
+msgid "--separator <separator>"
+msgstr ""
+
+msgid "--sync, -s"
+msgstr ""
+
+# SLE12
+#, fuzzy
+msgid "--table-style, -t <style>"
+msgstr "\t--table-style, -t <stil>\tTabellstil (heltal)."
+
+msgid "--template, -t <name>"
+msgstr ""
+
+# SLE12
+#, fuzzy
+msgid "--type, -t <type>"
+msgstr "\t--type, -t <typ>\t\tTyp för ögonblicksbild."
+
+# SLE12
+#, fuzzy
+msgid "--userdata, -u <userdata>"
+msgstr "\t--userdata, -u <användardata>\tAnvändardata för ögonblicksbilden."
+
+msgid "--utc"
+msgstr ""
+
+msgid "--verbose, -v"
+msgstr ""
+
+msgid "--version"
+msgstr ""
+
 # SLE12
 msgid "ACL error."
 msgstr "ACL-fel."
@@ -425,6 +377,10 @@ msgstr "Aktiv"
 
 msgid "Active snapshot is already default snapshot."
 msgstr "Aktiv ögonblicksbild är redan standard ögonblicksbild."
+
+#, fuzzy
+msgid "Allow to abbreviate table columns."
+msgstr "\t--abbreviate\t\t\tTillåt att förkorta tabellkolumner."
 
 #, c-format
 msgid "Ambit is %s."
@@ -453,14 +409,35 @@ msgstr "Kan inte detektera omfång eftersom standarddelvolymen är okänd."
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Kan inte rulla tillbaka eftersom standarddelvolymen är okänd."
 
+#, fuzzy
+msgid "Character separator for CSV output format."
+msgstr "\t--separator <separator>\t\tTeckenavgränsare för CSV-utdataformat."
+
 # SLE12
 msgid "Cleanup"
 msgstr "Upprensning"
 
 # SLE12
+#, fuzzy
+msgid "Cleanup algorithm for snapshot."
+msgstr "\t--cleanup-algorithm, -c <algoritm>\tUpprensningsalgoritm för ögonblicksbild."
+
+# SLE12
+#, fuzzy
+msgid "Cleanup algorithm for snapshots."
+msgstr "\t--cleanup-algorithm, -c <algo>\tUpprensningsalgoritm för ögonblicksbilder."
+
+#, fuzzy
+msgid "Cleanup all configs affecting path."
+msgstr "\t--path <path>\t\t\tRensa alla konfigurationer som påverkar sökväg."
+
+# SLE12
 #, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "Insticksprogrammet %s på klientsidan misslyckades."
+
+msgid "Columns to show separated by comma."
+msgstr ""
 
 # SLE12
 msgid "Command 'cleanup' needs one arguments."
@@ -551,6 +528,10 @@ msgstr "Kommandot undochange måste ha minst ett argument."
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Kommandot xadiff måste ha minst ett argument."
 
+#, fuzzy
+msgid "Command used for comparing files."
+msgstr "\t--diff-cmd <command>\t\tKommandot används för att jämföra filer."
+
 # SLE12
 msgid "Config"
 msgstr "Konfiguration"
@@ -585,11 +566,22 @@ msgstr "Konfigurationsdata %s har tom nyckel."
 
 #, c-format
 msgid "Could not make enough free space available for path '%s'."
-msgstr ""
-"Kunde inte göra tillräckligt med ledigt utrymme tillgängligt för sökväg '%s'."
+msgstr "Kunde inte göra tillräckligt med ledigt utrymme tillgängligt för sökväg '%s'."
 
 msgid "Could not make enough free space available."
 msgstr "Kunde inte göra tillräckligt med ledigt utrymme tillgängligt."
+
+#, fuzzy
+msgid "Create a snapshot from the specified snapshot."
+msgstr "\t--from <number>\t\t\tSkapa en ögonblicksbild från den angivna ögonblicksbilden."
+
+#, fuzzy
+msgid "Create read-only snapshot."
+msgstr "\t--read-only\t\t\tSkapa en skrivskyddad ögonblicksbild."
+
+#, fuzzy
+msgid "Create read-write snapshot."
+msgstr "\t--read-write\t\t\tSkapa en läs- och skrivbar ögonblicksbild."
 
 # SLE12
 #, c-format
@@ -642,9 +634,32 @@ msgstr[1] "Raderar snapshots från %s:"
 msgid "Description"
 msgstr "Beskrivning"
 
+#, fuzzy
+msgid "Description for snapshot."
+msgstr "Beskrivning"
+
+# SLE12
+#, fuzzy
+msgid "Description for snapshots."
+msgstr "\t--description, -d <beskrivning>\tBeskrivning för ögonblicksbilder."
+
 # SLE12
 msgid "Detecting filesystem type failed."
 msgstr "Det gick inte att identifiera filsystemstypen."
+
+#, fuzzy
+msgid "Disable showing used space."
+msgstr "\t--disable-used-space\t\tInaktivera visning av använt utrymme."
+
+# SLE12
+#, fuzzy
+msgid "Display dates and times in ISO format."
+msgstr "\t--iso\t\t\t\tVisa datum och tider i ISO-format."
+
+# SLE12
+#, fuzzy
+msgid "Display dates and times in UTC."
+msgstr "\t--utc\t\t\t\tVisa datum och tider i UTC."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
@@ -669,6 +684,10 @@ msgstr "Tomma användardata."
 #, c-format
 msgid "Error (%s)."
 msgstr "Fel (%s)."
+
+#, fuzzy
+msgid "Extra options passed to the diff command."
+msgstr "\t--extensions, -x <options>\tExtra alternativ skickades till diffkommandot."
 
 # SLE12
 msgid "Failed to initialize filesystem handler."
@@ -737,6 +756,11 @@ msgid "Illegal snapshot."
 msgstr "Otillåten ögonblicksbild."
 
 # SLE12
+#, fuzzy
+msgid "Increase verbosity."
+msgstr "\t--verbose, -v\t\t\tÖka utförligheten."
+
+# SLE12
 #, c-format
 msgid "Invalid ambit '%s'."
 msgstr "Ogiltig omfattning '%s'."
@@ -745,6 +769,11 @@ msgstr "Ogiltig omfattning '%s'."
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "Ogiltig kolumn \"%s\"."
+
+# SLE12
+#, fuzzy
+msgid "Invalid config."
+msgstr "Ogiltiga konfigurationsdata."
 
 # SLE12
 msgid "Invalid configdata."
@@ -804,6 +833,10 @@ msgstr "Nyckel"
 msgid "KiB"
 msgstr "KiB"
 
+#, fuzzy
+msgid "List snapshots from all accessible configs."
+msgstr "\t--all-configs, -a\t\tVisa snapshots från alla tillgängliga konfig."
+
 # SLE12
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -816,6 +849,11 @@ msgstr "M"
 #. TRANSLATORS: symbol for "mega bytes" (best keep untranslated)
 msgid "MB"
 msgstr "MB"
+
+# SLE12
+#, fuzzy
+msgid "Manually set filesystem type."
+msgstr "\t--fstype, -f <fstyp>\t\tAnge filsystemtyp manuellt."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Kanske glömde du avgränsaren '..' mellan snapshot-numren."
@@ -845,18 +883,48 @@ msgstr "Avgränsaren '..' saknas mellan snapshot-numren."
 msgid "Missing or invalid pre-number."
 msgstr "Före-nummer saknas eller är ogiltigt."
 
+msgid "Name"
+msgstr ""
+
+# SLE12
+#, fuzzy
+msgid "Name of config template to use."
+msgstr "\t--template, -t <namn>\t\tNamn på konfigurationsmall att använda."
+
 # SLE12
 msgid "No command provided."
 msgstr "Inget kommando angavs."
+
+#, fuzzy
+msgid "No headers for CSV output format."
+msgstr "\t--csvout\t\t\tStäll in CSV som utdata format."
 
 # SLE12
 msgid "No permissions."
 msgstr "Ingen behörighet."
 
 # SLE12
+#, fuzzy
+msgid "Number of corresponding pre snapshot."
+msgstr "\t--pre-number <nummer>\t\tNummer för motsvarande för-ögonblicksbild."
+
+# SLE12
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "Det gick inte att öppna filen %s."
+
+#, fuzzy
+msgid "Operate in the specified ambit."
+msgstr "\t--ambit, -a ambit\t\tArbeta i det angivna området."
+
+#, fuzzy
+msgid "Operate on target root (works only without DBus)."
+msgstr "\t--root, -r <path>\t\tArbeta i målroten (fungerar enbart utan DBus)."
+
+# SLE12
+#, fuzzy
+msgid "Operate without DBus."
+msgstr "\t--no-dbus\t\t\tAnvänd utan DBus."
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr "Alternativet --from stöds bara för ögonblicksbilder av typen enkel."
@@ -893,12 +961,46 @@ msgstr "Före #"
 msgid "Pre Date"
 msgstr "Före datum"
 
+# SLE12
+#, fuzzy
+msgid "Print number of created snapshot."
+msgstr "\t--print-number, -p\t\tSkriv ut nummer på skapad ögonblicksbild."
+
+# SLE12
+#, fuzzy
+msgid "Print number of second created snapshot."
+msgstr "\t--print-number, -p\t\tSkriv ut nummer för den andra skapade ögonblicksbilden."
+
+# SLE12
+#, fuzzy
+msgid "Print version and exit."
+msgstr "\t--version\t\t\tVisa version och avsluta."
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Kvotfel (%s)."
 
+# SLE12
+#, fuzzy
+msgid "Read files for which to undo changes from file."
+msgstr "\t--input, -i <fil>\t\tLäs filer som ändringar ska ångras för från filen."
+
+#, fuzzy
+msgid "Read files to diff from file."
+msgstr "\t--input, -i <file>\t\tLäs filer som ska diffa från filen."
+
 msgid "Read-Only"
 msgstr "Läs-endast"
+
+# SLE12
+#, fuzzy
+msgid "Run command and create pre and post snapshots."
+msgstr "\t--command <kommando>\t\tKör kommandot och skapa före- och efter-ögonblicksbilder."
+
+# SLE12
+#, fuzzy
+msgid "Save status to file."
+msgstr "\t--output, -o <fil>\t\tSpara status till fil."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Se 'man snapper' för mer instruktioner."
@@ -907,6 +1009,35 @@ msgstr "Se 'man snapper' för mer instruktioner."
 #, c-format
 msgid "Server-side plugin '%s' failed."
 msgstr "Insticksprogrammet %s på serversidan misslyckades."
+
+#, fuzzy
+msgid "Set CSV output format."
+msgstr "\t--csvout\t\t\tStäll in CSV som utdata format."
+
+#, fuzzy
+msgid "Set JSON output format."
+msgstr "\t--jsonout\t\t\tStäll in JSON som utdata format."
+
+#, fuzzy
+msgid "Set a machine-readable output format (csv, json)."
+msgstr "\t--machine-readable <format>\tStäll in ett maskinläsbart utdataformat (csv, json)."
+
+# SLE12
+#, fuzzy
+msgid "Set name of config to use."
+msgstr "\t--config, -c <namn>\t\tAnge namnet på den konfiguration som ska användas."
+
+#, fuzzy
+msgid "Set snapshot as default snapshot."
+msgstr "\t--default\t\t\tStäll in ögonblicksbild som standard ögonblicksbild."
+
+#, fuzzy
+msgid "Set snapshot read-only."
+msgstr "\t--read-only\t\t\tStäll in ögonblicksbild skrivskyddad."
+
+#, fuzzy
+msgid "Set snapshot read-write."
+msgstr "\t--read-write\t\t\tStäll in ögonblicksbild läs och skrivbar."
 
 # SLE12
 #, c-format
@@ -926,6 +1057,15 @@ msgstr "Ögonblicksbilden används."
 msgid "Subvolume"
 msgstr "Undervolym"
 
+# SLE12
+#, fuzzy
+msgid "Suppress normal output."
+msgstr "\t--quiet, -q\t\t\tUtelämna normal utmatning."
+
+#, fuzzy
+msgid "Sync after deletion."
+msgstr "\t--sync, -s\t\t\tSynka efter radering."
+
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
 msgstr "T"
@@ -934,6 +1074,11 @@ msgstr "T"
 msgid "TB"
 msgstr "TB"
 
+# SLE12
+#, fuzzy
+msgid "Table style (integer)."
+msgstr "\t--table-style, -t <stil>\tTabellstil (heltal)."
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Omfattningen kan specificeras manuellt med alternativet --ambit."
 
@@ -941,8 +1086,7 @@ msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Konfig. 'root' existerar inte. Troligtvis är inte snapper konfigurerad."
 
 msgid "This can happen if the system was not set up for rollback."
-msgstr ""
-"Detta kan hända om systemet inte har konfigurerats för att rullas tillbaka."
+msgstr "Detta kan hända om systemet inte har konfigurerats för att rullas tillbaka."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
@@ -952,8 +1096,26 @@ msgstr "TiB"
 msgid "Try 'snapper --help' for more information."
 msgstr "Försök med \"snapper --help\" för mer information."
 
+#, fuzzy
+msgid "Try to make space available."
+msgstr "\t--free-space <space>\t\tFörsök att göra utrymme tillgängligt."
+
+#, fuzzy
+msgid "Turn on debugging."
+msgstr "\t--debug\t\t\t\tSlå på felsökning."
+
 msgid "Type"
 msgstr "Typ"
+
+# SLE12
+#, fuzzy
+msgid "Type for snapshot."
+msgstr "Okänd typ av ögonblicksbild."
+
+# SLE12
+#, fuzzy
+msgid "Type of snapshots to list."
+msgstr "\t--type, -t <typ>\t\tTyper av ögonblicksbilder att lista."
 
 # SLE12
 #, c-format
@@ -1015,6 +1177,16 @@ msgstr "Användardata %s inkluderar inte tecknet =."
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "Användardata %s har tom nyckel."
+
+# SLE12
+#, fuzzy
+msgid "Userdata for snapshot."
+msgstr "\t--userdata, -u <användardata>\tAnvändardata för ögonblicksbilden."
+
+# SLE12
+#, fuzzy
+msgid "Userdata for snapshots."
+msgstr "Identiska ögonblicksbilder."
 
 msgid "Value"
 msgstr "Värde"
@@ -1080,8 +1252,8 @@ msgid "yes"
 msgstr "ja"
 
 # SLE12
-#~ msgid "Unknown type of snapshot."
-#~ msgstr "Okänd typ av ögonblicksbild."
+#~ msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
+#~ msgstr "\t--userdata, -u <användardata>\tAnvändardata för ögonblicksbilder."
 
 # SLE12
 #~ msgid "Unknown type of snapshots."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: autoinst.fi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-28 08:50+0100\n"
+"POT-Creation-Date: 2024-02-26 12:27+0100\n"
 "PO-Revision-Date: 2019-12-01 20:54+0000\n"
 "Last-Translator: Jaanus Ojangu <jaanus.ojangu@gmail.com>\n"
 "Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/et/>\n"
@@ -12,163 +12,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 3.6.1\n"
-
-msgid "\t--abbreviate\t\t\tAllow to abbreviate table columns."
-msgstr ""
-
-msgid "\t--all-configs, -a\t\tList snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tKõigi juurdepääsetavate konfiguratsioonide hetktõmmitse nimekiri."
-
-msgid "\t--ambit, -a ambit\t\tOperate in the specified ambit."
-msgstr ""
-
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <algo>\tPuhastusalgoritm hetktõmmise jaoks."
-
-msgid "\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <algo>\tPuhastusalgoritm hetktõmmise jaoks."
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume, number, default, active,\n"
-"\t\t\t\t\ttype, date, user, used-space, cleanup, description, userdata,\n"
-"\t\t\t\t\tpre-number, post-number, post-date, read-only."
-msgstr ""
-
-msgid ""
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: key, value.\n"
-"\t\t\t\t\tColumns are not selected when JSON format is used."
-msgstr ""
-
-msgid "\t--command <command>\t\tRun command and create pre and post snapshots."
-msgstr "\t--command <command>\t\tKäivitage käsk ja looge eel- ja järelhetketõmmis."
-
-msgid "\t--config, -c <name>\t\tSet name of config to use."
-msgstr "\t--config, -c <name>\t\tMäära seadistusele nimi."
-
-msgid "\t--csvout\t\t\tSet CSV output format."
-msgstr ""
-
-msgid "\t--debug\t\t\t\tTurn on debugging."
-msgstr ""
-
-msgid "\t--default\t\t\tSet snapshot as default snapshot."
-msgstr ""
-
-msgid "\t--description, -d <description>\tDescription for snapshot."
-msgstr "\t--description, -d <description>\tHetkekoopia kirjeldus."
-
-msgid "\t--description, -d <description>\tDescription for snapshots."
-msgstr "\t--description, -d <description>\tHetkekoopia kirjeldus."
-
-msgid "\t--diff-cmd <command>\t\tCommand used for comparing files."
-msgstr "\t--diff-cmd <command>\t\tFailide võrdlemise käsk."
-
-msgid "\t--disable-used-space\t\tDisable showing used space."
-msgstr "\t--disable-used-space\t\tEi näita kasutatud ruumi."
-
-msgid "\t--extensions, -x <options>\tExtra options passed to the diff command."
-msgstr "\t--extensions, -x <options>\tLisavalikud edastatud diff-käsule.."
-
-msgid "\t--free-space <space>\t\tTry to make space available."
-msgstr ""
-
-#, fuzzy
-msgid "\t--from <number>\t\t\tCreate a snapshot from the specified snapshot."
-msgstr "\t--from\t\t\t\tLuuakse hetketõmmis etteantud hetketõmmisest."
-
-msgid "\t--fstype, -f <fstype>\t\tManually set filesystem type."
-msgstr "\t--fstype, -f <fstype>\t\tFailisüsteemi tüübi käsitsi määramine."
-
-msgid "\t--input, -i <file>\t\tRead files for which to undo changes from file."
-msgstr "\t--input, -i <file>\t\tLoeb faile, mille muudatused failist tagasi võtta."
-
-msgid "\t--input, -i <file>\t\tRead files to diff from file."
-msgstr "\t--input, -i <file>\t\tLoeb faile erinevuste väljatoomiseks."
-
-msgid "\t--iso\t\t\t\tDisplay dates and times in ISO format."
-msgstr "\t--iso\t\t\t\tNäitab kuupäevi ja aega ISO formaadis."
-
-msgid "\t--jsonout\t\t\tSet JSON output format."
-msgstr ""
-
-msgid "\t--machine-readable <format>\tSet a machine-readable output format (csv, json)."
-msgstr ""
-
-msgid "\t--no-dbus\t\t\tOperate without DBus."
-msgstr "\t--no-dbus\t\t\tTöötab ilma DBus-ta."
-
-msgid "\t--no-headers\t\t\tNo headers for CSV output format."
-msgstr ""
-
-msgid "\t--output, -o <file>\t\tSave status to file."
-msgstr "\t--output, -o <file>\t\tOleku salvestamine faili."
-
-msgid "\t--path <path>\t\t\tCleanup all configs affecting path."
-msgstr ""
-
-msgid "\t--pre-number <number>\t\tNumber of corresponding pre snapshot."
-msgstr "\t--pre-number <number>\t\tEelneva vastava hetketõmmise number."
-
-msgid "\t--print-number, -p\t\tPrint number of created snapshot."
-msgstr "\t--print-number, -p\t\tNäitab tehtud hetketõmmiste arvu."
-
-msgid "\t--print-number, -p\t\tPrint number of second created snapshot."
-msgstr "\t--print-number, -p\t\tNäitab teisena tehtud hetketõmmiste arvu."
-
-msgid "\t--quiet, -q\t\t\tSuppress normal output."
-msgstr "\t--quiet, -q\t\t\tVaigistab normaalse väljundi."
-
-msgid "\t--read-only\t\t\tCreate read-only snapshot."
-msgstr "\t--read-only\t\t\tLoob ainult-loetava hetketõmmise."
-
-#, fuzzy
-msgid "\t--read-only\t\t\tSet snapshot read-only."
-msgstr "\t--read-only\t\t\tLoob ainult-loetava hetketõmmise."
-
-msgid "\t--read-write\t\t\tCreate read-write snapshot."
-msgstr "\t--read-write\t\t\tLoob muudetava hetketõmmise 'read-write'."
-
-#, fuzzy
-msgid "\t--read-write\t\t\tSet snapshot read-write."
-msgstr "\t--read-write\t\t\tLoob muudetava hetketõmmise 'read-write'."
-
-msgid "\t--root, -r <path>\t\tOperate on target root (works only without DBus)."
-msgstr "\t--root, -r <path>\t\tTöötab määratud juurel (töötab ainult ilma DBus-ta)."
-
-msgid "\t--separator <separator>\t\tCharacter separator for CSV output format."
-msgstr ""
-
-msgid "\t--sync, -s\t\t\tSync after deletion."
-msgstr "\t--sync, -s\t\t\tSünkroniseerimine peale kustutamist."
-
-msgid "\t--table-style, -t <style>\tTable style (integer)."
-msgstr "\t--table-style, -t <style>\tTabeli stiil (täisarvud)."
-
-msgid "\t--template, -t <name>\t\tName of config template to use."
-msgstr "\t--template, -t <name>\t\tKasutatava seadistusmalli nimi."
-
-msgid "\t--type, -t <type>\t\tType for snapshot."
-msgstr "\t--type, -t <type>\t\tHetkekoopia tüüp."
-
-msgid "\t--type, -t <type>\t\tType of snapshots to list."
-msgstr "\t--type, -t <type>\t\tNäidatavate hetketõmmiste tüüp."
-
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshot."
-msgstr "\t--userdata, -u <userdata>\tKasutaja andmed hetketõmmise jaoks."
-
-msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
-msgstr "\t--userdata, -u <userdata>\tKasutaja andmed hetketõmmiste jaoks."
-
-msgid "\t--utc\t\t\t\tDisplay dates and times in UTC."
-msgstr "\t--utc\t\t\t\tNäita kuupäevi ja kellaaegu UTC-s."
-
-msgid "\t--verbose, -v\t\t\tIncrease verbosity."
-msgstr "\t--verbose, -v\t\t\tRohkem selgitusi."
-
-msgid "\t--version\t\t\tPrint version and exit."
-msgstr "\t--version\t\t\tNäita versiooni ja välju."
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <puhastamise algoritm>"
@@ -250,11 +93,9 @@ msgstr "    Valikud 'create-config' käsule:"
 msgid "    Options for 'list' command:"
 msgstr "    Valikud 'list käsule:"
 
-msgid ""
-"    Options for 'list-configs' command:\n"
-"\t--columns <columns>\t\tColumns to show separated by comma.\n"
-"\t\t\t\t\tPossible columns: config, subvolume.\n"
-msgstr ""
+#, fuzzy
+msgid "    Options for 'list-configs' command:"
+msgstr "    Valikud 'create-config' käsule:"
 
 msgid "    Options for 'modify' command:"
 msgstr "    Valikud 'modify' käsule:"
@@ -340,6 +181,133 @@ msgstr ""
 msgid "(Snapshot %d.)"
 msgstr "(Tõmmis %d.)"
 
+msgid "--abbreviate"
+msgstr ""
+
+msgid "--all-configs, -a"
+msgstr ""
+
+msgid "--ambit, -a <ambit>"
+msgstr ""
+
+#, fuzzy
+msgid "--cleanup-algorithm, -c <algo>"
+msgstr "\t--cleanup-algorithm, -c <algo>\tPuhastusalgoritm hetktõmmise jaoks."
+
+msgid "--columns <columns>"
+msgstr ""
+
+msgid "--command <command>"
+msgstr ""
+
+msgid "--config, -c <name>"
+msgstr ""
+
+msgid "--csvout"
+msgstr ""
+
+msgid "--debug"
+msgstr ""
+
+msgid "--default"
+msgstr ""
+
+#, fuzzy
+msgid "--description, -d <description>"
+msgstr "\t--description, -d <description>\tHetkekoopia kirjeldus."
+
+msgid "--diff-cmd <command>"
+msgstr ""
+
+msgid "--disable-used-space"
+msgstr ""
+
+msgid "--extensions, -x <options>"
+msgstr ""
+
+msgid "--free-space <space>"
+msgstr ""
+
+msgid "--from <number>"
+msgstr ""
+
+msgid "--fstype, -f <fstype>"
+msgstr ""
+
+msgid "--input, -i <file>"
+msgstr ""
+
+msgid "--iso"
+msgstr ""
+
+msgid "--jsonout"
+msgstr ""
+
+#, fuzzy
+msgid "--machine-readable <format>"
+msgstr "Vigane tabeli stiil %d."
+
+msgid "--no-dbus"
+msgstr ""
+
+msgid "--no-headers"
+msgstr ""
+
+#, fuzzy
+msgid "--output, -o <file>"
+msgstr "\t--output, -o <file>\t\tOleku salvestamine faili."
+
+msgid "--path <path>"
+msgstr ""
+
+msgid "--pre-number <number>"
+msgstr ""
+
+msgid "--print-number, -p"
+msgstr ""
+
+msgid "--quiet, -q"
+msgstr ""
+
+msgid "--read-only"
+msgstr ""
+
+msgid "--read-write"
+msgstr ""
+
+msgid "--root, -r <path>"
+msgstr ""
+
+msgid "--separator <separator>"
+msgstr ""
+
+msgid "--sync, -s"
+msgstr ""
+
+#, fuzzy
+msgid "--table-style, -t <style>"
+msgstr "\t--table-style, -t <style>\tTabeli stiil (täisarvud)."
+
+msgid "--template, -t <name>"
+msgstr ""
+
+#, fuzzy
+msgid "--type, -t <type>"
+msgstr "\t--type, -t <type>\t\tHetkekoopia tüüp."
+
+#, fuzzy
+msgid "--userdata, -u <userdata>"
+msgstr "\t--userdata, -u <userdata>\tKasutaja andmed hetketõmmise jaoks."
+
+msgid "--utc"
+msgstr ""
+
+msgid "--verbose, -v"
+msgstr ""
+
+msgid "--version"
+msgstr ""
+
 msgid "ACL error."
 msgstr "ACL viga."
 
@@ -347,6 +315,9 @@ msgid "Active"
 msgstr ""
 
 msgid "Active snapshot is already default snapshot."
+msgstr ""
+
+msgid "Allow to abbreviate table columns."
 msgstr ""
 
 #, c-format
@@ -375,12 +346,29 @@ msgstr ""
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr ""
 
+msgid "Character separator for CSV output format."
+msgstr ""
+
 msgid "Cleanup"
 msgstr "Puhastamine"
+
+#, fuzzy
+msgid "Cleanup algorithm for snapshot."
+msgstr "\t--cleanup-algorithm, -c <algo>\tPuhastusalgoritm hetktõmmise jaoks."
+
+#, fuzzy
+msgid "Cleanup algorithm for snapshots."
+msgstr "\t--cleanup-algorithm, -c <algo>\tPuhastusalgoritm hetktõmmise jaoks."
+
+msgid "Cleanup all configs affecting path."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "Faili '%s' avamine ebaõnnestus."
+
+msgid "Columns to show separated by comma."
+msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Käsk 'Puhastamine' vajab ühte argumenti."
@@ -449,6 +437,10 @@ msgstr "Käsk 'undochange' vajab vähemalt ühte argumenti."
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Käsk 'xadiff' vajab vähemalt ühte argumenti."
 
+#, fuzzy
+msgid "Command used for comparing files."
+msgstr "\t--diff-cmd <command>\t\tFailide võrdlemise käsk."
+
 msgid "Config"
 msgstr "Seadistus"
 
@@ -480,6 +472,18 @@ msgstr ""
 
 msgid "Could not make enough free space available."
 msgstr ""
+
+#, fuzzy
+msgid "Create a snapshot from the specified snapshot."
+msgstr "\t--from\t\t\t\tLuuakse hetketõmmis etteantud hetketõmmisest."
+
+#, fuzzy
+msgid "Create read-only snapshot."
+msgstr "\t--read-only\t\t\tLoob ainult-loetava hetketõmmise."
+
+#, fuzzy
+msgid "Create read-write snapshot."
+msgstr "\t--read-write\t\t\tLoob muudetava hetketõmmise 'read-write'."
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -523,8 +527,28 @@ msgstr[1] "Tõmmiste kustutamine asukohast %s:"
 msgid "Description"
 msgstr "Kirjeldus"
 
+#, fuzzy
+msgid "Description for snapshot."
+msgstr "Kirjeldus"
+
+#, fuzzy
+msgid "Description for snapshots."
+msgstr "\t--description, -d <description>\tHetkekoopia kirjeldus."
+
 msgid "Detecting filesystem type failed."
 msgstr "Failisüsteemi tüübi tuvastamine ebaõnnestus."
+
+#, fuzzy
+msgid "Disable showing used space."
+msgstr "\t--disable-used-space\t\tEi näita kasutatud ruumi."
+
+#, fuzzy
+msgid "Display dates and times in ISO format."
+msgstr "\t--iso\t\t\t\tNäitab kuupäevi ja aega ISO formaadis."
+
+#, fuzzy
+msgid "Display dates and times in UTC."
+msgstr "\t--utc\t\t\t\tNäita kuupäevi ja kellaaegu UTC-s."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
@@ -549,6 +573,10 @@ msgstr "Kasutajaandmed on tühjad."
 #, c-format
 msgid "Error (%s)."
 msgstr "Viga (%s)."
+
+#, fuzzy
+msgid "Extra options passed to the diff command."
+msgstr "\t--extensions, -x <options>\tLisavalikud edastatud diff-käsule.."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Failisüsteemi seadistaja lähtestamine ebaõnnestus."
@@ -614,6 +642,10 @@ msgstr "Identsed tõmmised."
 msgid "Illegal snapshot."
 msgstr "Illegaalne tõmmis."
 
+#, fuzzy
+msgid "Increase verbosity."
+msgstr "\t--verbose, -v\t\t\tRohkem selgitusi."
+
 #, fuzzy, c-format
 msgid "Invalid ambit '%s'."
 msgstr "Vigane tõmmis '%s'."
@@ -621,6 +653,10 @@ msgstr "Vigane tõmmis '%s'."
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "Vigane tõmmis '%s'."
+
+#, fuzzy
+msgid "Invalid config."
+msgstr "Vigased seadistuse andmed."
 
 msgid "Invalid configdata."
 msgstr "Vigased seadistuse andmed."
@@ -669,6 +705,10 @@ msgstr "Võti"
 msgid "KiB"
 msgstr "KB"
 
+#, fuzzy
+msgid "List snapshots from all accessible configs."
+msgstr "\t--all-configs, -a\t\tKõigi juurdepääsetavate konfiguratsioonide hetktõmmitse nimekiri."
+
 #, c-format
 msgid "Listing configs failed (%s)."
 msgstr "Seadistusfailide loendi loomine nurjus (%s)."
@@ -681,6 +721,10 @@ msgstr ""
 #, fuzzy
 msgid "MB"
 msgstr "MB"
+
+#, fuzzy
+msgid "Manually set filesystem type."
+msgstr "\t--fstype, -f <fstype>\t\tFailisüsteemi tüübi käsitsi määramine."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Võib-olla unustasite hetktõmmiste numbrite vahel eraldaja '..'."
@@ -707,15 +751,40 @@ msgstr "Puudub eraldaja '..' hetktõmmiste numbrite vahel."
 msgid "Missing or invalid pre-number."
 msgstr "Puudub või vigane eel-number."
 
+msgid "Name"
+msgstr ""
+
+#, fuzzy
+msgid "Name of config template to use."
+msgstr "\t--template, -t <name>\t\tKasutatava seadistusmalli nimi."
+
 msgid "No command provided."
 msgstr "Käsku pole antud."
+
+msgid "No headers for CSV output format."
+msgstr ""
 
 msgid "No permissions."
 msgstr "Ligipääs puudub."
 
+#, fuzzy
+msgid "Number of corresponding pre snapshot."
+msgstr "\t--pre-number <number>\t\tEelneva vastava hetketõmmise number."
+
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "Faili '%s' avamine ebaõnnestus."
+
+msgid "Operate in the specified ambit."
+msgstr ""
+
+#, fuzzy
+msgid "Operate on target root (works only without DBus)."
+msgstr "\t--root, -r <path>\t\tTöötab määratud juurel (töötab ainult ilma DBus-ta)."
+
+#, fuzzy
+msgid "Operate without DBus."
+msgstr "\t--no-dbus\t\t\tTöötab ilma DBus-ta."
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr "Valik - toetatakse ainult hetktõmmiseid tüübiga single."
@@ -749,13 +818,41 @@ msgstr "Enne #"
 msgid "Pre Date"
 msgstr "Enne kuupäeva"
 
+#, fuzzy
+msgid "Print number of created snapshot."
+msgstr "\t--print-number, -p\t\tNäitab tehtud hetketõmmiste arvu."
+
+#, fuzzy
+msgid "Print number of second created snapshot."
+msgstr "\t--print-number, -p\t\tNäitab teisena tehtud hetketõmmiste arvu."
+
+#, fuzzy
+msgid "Print version and exit."
+msgstr "\t--version\t\t\tNäita versiooni ja välju."
+
 # error box title
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Kvoodi viga (%s)."
 
+#, fuzzy
+msgid "Read files for which to undo changes from file."
+msgstr "\t--input, -i <file>\t\tLoeb faile, mille muudatused failist tagasi võtta."
+
+#, fuzzy
+msgid "Read files to diff from file."
+msgstr "\t--input, -i <file>\t\tLoeb faile erinevuste väljatoomiseks."
+
 msgid "Read-Only"
 msgstr ""
+
+#, fuzzy
+msgid "Run command and create pre and post snapshots."
+msgstr "\t--command <command>\t\tKäivitage käsk ja looge eel- ja järelhetketõmmis."
+
+#, fuzzy
+msgid "Save status to file."
+msgstr "\t--output, -o <file>\t\tOleku salvestamine faili."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Lisateavet leiate käsuga 'man snapper' juhendist."
@@ -763,6 +860,31 @@ msgstr "Lisateavet leiate käsuga 'man snapper' juhendist."
 #, fuzzy, c-format
 msgid "Server-side plugin '%s' failed."
 msgstr "Faili '%s' avamine ebaõnnestus."
+
+msgid "Set CSV output format."
+msgstr ""
+
+msgid "Set JSON output format."
+msgstr ""
+
+#, fuzzy
+msgid "Set a machine-readable output format (csv, json)."
+msgstr "Vigane tabeli stiil %d."
+
+#, fuzzy
+msgid "Set name of config to use."
+msgstr "\t--config, -c <name>\t\tMäära seadistusele nimi."
+
+msgid "Set snapshot as default snapshot."
+msgstr ""
+
+#, fuzzy
+msgid "Set snapshot read-only."
+msgstr "\t--read-only\t\t\tLoob ainult-loetava hetketõmmise."
+
+#, fuzzy
+msgid "Set snapshot read-write."
+msgstr "\t--read-write\t\t\tLoob muudetava hetketõmmise 'read-write'."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
@@ -778,6 +900,14 @@ msgstr "Tõmmis on kasutuses."
 msgid "Subvolume"
 msgstr "Alamosa"
 
+#, fuzzy
+msgid "Suppress normal output."
+msgstr "\t--quiet, -q\t\t\tVaigistab normaalse väljundi."
+
+#, fuzzy
+msgid "Sync after deletion."
+msgstr "\t--sync, -s\t\t\tSünkroniseerimine peale kustutamist."
+
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
 msgstr ""
@@ -786,6 +916,10 @@ msgstr ""
 #, fuzzy
 msgid "TB"
 msgstr "TiB"
+
+#, fuzzy
+msgid "Table style (integer)."
+msgstr "\t--table-style, -t <style>\tTabeli stiil (täisarvud)."
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
@@ -803,8 +937,22 @@ msgstr "TiB"
 msgid "Try 'snapper --help' for more information."
 msgstr "Rohkema teabe samiseks proovi `snapper --help'."
 
+msgid "Try to make space available."
+msgstr ""
+
+msgid "Turn on debugging."
+msgstr ""
+
 msgid "Type"
 msgstr "Tüüp"
+
+#, fuzzy
+msgid "Type for snapshot."
+msgstr "Tundmatu hetktõmmise tüüp."
+
+#, fuzzy
+msgid "Type of snapshots to list."
+msgstr "\t--type, -t <type>\t\tNäidatavate hetketõmmiste tüüp."
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -855,6 +1003,14 @@ msgstr "Kasutajaandmed '%s' ei sisalda märki '='."
 #, c-format
 msgid "Userdata '%s' has empty key."
 msgstr "Kasutajaandmetes '%s' on tühi võti."
+
+#, fuzzy
+msgid "Userdata for snapshot."
+msgstr "\t--userdata, -u <userdata>\tKasutaja andmed hetketõmmise jaoks."
+
+#, fuzzy
+msgid "Userdata for snapshots."
+msgstr "Identsed tõmmised."
 
 msgid "Value"
 msgstr "Väärtus"
@@ -912,8 +1068,8 @@ msgstr "kasutage: snapper [--global-options] <command> [--command-options] [comm
 msgid "yes"
 msgstr ""
 
-#~ msgid "Unknown type of snapshot."
-#~ msgstr "Tundmatu hetktõmmise tüüp."
+#~ msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."
+#~ msgstr "\t--userdata, -u <userdata>\tKasutaja andmed hetketõmmiste jaoks."
 
 #~ msgid "Unknown type of snapshots."
 #~ msgstr "Tundmatu hetktõmmiste tüüp."
