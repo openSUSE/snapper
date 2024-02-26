@@ -21,6 +21,7 @@
 
 #include <snapper/AppUtil.h>
 
+#include "utils/help.h"
 #include "misc.h"
 #include "client/GlobalOptions.h"
 #include "client/utils/text.h"
@@ -34,27 +35,30 @@ namespace snapper
     using namespace std;
 
 
-    string
-    GlobalOptions::help_text()
+    void
+    GlobalOptions::help_global_options()
     {
-	return string(_("    Global options:")) + '\n'
-	    + _("\t--quiet, -q\t\t\tSuppress normal output.") + '\n'
-	    + _("\t--verbose, -v\t\t\tIncrease verbosity.") + '\n'
-	    + _("\t--debug\t\t\t\tTurn on debugging.") + '\n'
-	    + _("\t--utc\t\t\t\tDisplay dates and times in UTC.") + '\n'
-	    + _("\t--iso\t\t\t\tDisplay dates and times in ISO format.") + '\n'
-	    + _("\t--table-style, -t <style>\tTable style (integer).") + '\n'
-	    + _("\t--abbreviate\t\t\tAllow to abbreviate table columns.") + '\n'
-	    + _("\t--machine-readable <format>\tSet a machine-readable output format (csv, json).") + '\n'
-	    + _("\t--csvout\t\t\tSet CSV output format.") + '\n'
-	    + _("\t--jsonout\t\t\tSet JSON output format.") + '\n'
-	    + _("\t--separator <separator>\t\tCharacter separator for CSV output format.") + '\n'
-	    + _("\t--no-headers\t\t\tNo headers for CSV output format.") + '\n'
-	    + _("\t--config, -c <name>\t\tSet name of config to use.") + '\n'
-	    + _("\t--no-dbus\t\t\tOperate without DBus.") + '\n'
-	    + _("\t--root, -r <path>\t\tOperate on target root (works only without DBus).") + '\n'
-	    + _("\t--ambit, -a ambit\t\tOperate in the specified ambit.") + '\n'
-	    + _("\t--version\t\t\tPrint version and exit.") + '\n';
+	cout << _("    Global options:") << '\n';
+
+	print_options({
+	    { _("--quiet, -q"), _("Suppress normal output.") },
+	    { _("--verbose, -v"), _("Increase verbosity.") },
+	    { _("--debug"), _("Turn on debugging.") },
+	    { _("--utc"), _("Display dates and times in UTC.") },
+	    { _("--iso"), _("Display dates and times in ISO format.") },
+	    { _("--table-style, -t <style>"), _("Table style (integer).") },
+	    { _("--abbreviate"), _("Allow to abbreviate table columns.") },
+	    { _("--machine-readable <format>"), _("Set a machine-readable output format (csv, json).") },
+	    { _("--csvout"), _("Set CSV output format.") },
+	    { _("--jsonout"), _("Set JSON output format.") },
+	    { _("--separator <separator>"), _("Character separator for CSV output format.") },
+	    { _("--no-headers"), _("No headers for CSV output format.") },
+	    { _("--config, -c <name>"), _("Set name of config to use.") },
+	    { _("--no-dbus"), _("Operate without DBus.") },
+	    { _("--root, -r <path>"), _("Operate on target root (works only without DBus).") },
+	    { _("--ambit, -a <ambit>"), _("Operate in the specified ambit.") },
+	    { _("--version"), _("Print version and exit.") }
+	});
     }
 
 

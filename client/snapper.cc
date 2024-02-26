@@ -116,7 +116,7 @@ help(const vector<Cmd>& cmds, GetOpts& get_opts)
     cout << _("usage: snapper [--global-options] <command> [--command-options] [command-arguments]") << '\n'
 	 << endl;
 
-    cout << GlobalOptions::help_text() << endl;
+    GlobalOptions::help_global_options();
 
     for (const Cmd& cmd : cmds)
 	(*cmd.help_func)();

@@ -30,6 +30,7 @@
 #include <snapper/PluginsImpl.h>
 
 #include "utils/text.h"
+#include "utils/help.h"
 #include "GlobalOptions.h"
 #include "proxy.h"
 #include "misc.h"
@@ -49,12 +50,14 @@ namespace snapper
 	cout << _("  Rollback:") << '\n'
 	     << _("\tsnapper rollback [number]") << '\n'
 	     << '\n'
-	     << _("    Options for 'rollback' command:") << '\n'
-	     << _("\t--print-number, -p\t\tPrint number of second created snapshot.") << '\n'
-	     << _("\t--description, -d <description>\tDescription for snapshots.") << '\n'
-	     << _("\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshots.") << '\n'
-	     << _("\t--userdata, -u <userdata>\tUserdata for snapshots.") << '\n'
-	     << endl;
+	     << _("    Options for 'rollback' command:") << '\n';
+
+	print_options({
+	    { _("--print-number, -p"), _("Print number of second created snapshot.") },
+	    { _("--description, -d <description>"), _("Description for snapshots.") },
+	    { _("--cleanup-algorithm, -c <algo>"), _("Cleanup algorithm for snapshots.") },
+	    { _("--userdata, -u <userdata>"), _("Userdata for snapshots.") }
+	});
     }
 
 

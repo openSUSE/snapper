@@ -26,6 +26,7 @@
 #include <snapper/AppUtil.h>
 
 #include "utils/text.h"
+#include "utils/help.h"
 #include "GlobalOptions.h"
 #include "proxy.h"
 #include "misc.h"
@@ -44,11 +45,13 @@ namespace snapper
 	cout << _("  Comparing snapshots:") << '\n'
 	     << _("\tsnapper diff <number1>..<number2> [files]") << '\n'
 	     << '\n'
-	     << _("    Options for 'diff' command:") << '\n'
-	     << _("\t--input, -i <file>\t\tRead files to diff from file.") << '\n'
-	     << _("\t--diff-cmd <command>\t\tCommand used for comparing files.") << '\n'
-	     << _("\t--extensions, -x <options>\tExtra options passed to the diff command.") << '\n'
-	     << endl;
+	     << _("    Options for 'diff' command:") << '\n';
+
+	print_options({
+	    { _("--input, -i <file>"), _("Read files to diff from file.") },
+	    { _("--diff-cmd <command>"), _("Command used for comparing files.") },
+	    { _("--extensions, -x <options>"), _("Extra options passed to the diff command.") }
+	});
     }
 
 

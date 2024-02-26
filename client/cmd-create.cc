@@ -26,6 +26,7 @@
 #include <snapper/AppUtil.h>
 
 #include "utils/text.h"
+#include "utils/help.h"
 #include "GlobalOptions.h"
 #include "proxy.h"
 #include "misc.h"
@@ -43,18 +44,20 @@ namespace snapper
 	cout << _("  Create snapshot:") << '\n'
 	     << _("\tsnapper create") << '\n'
 	     << '\n'
-	     << _("    Options for 'create' command:") << '\n'
-	     << _("\t--type, -t <type>\t\tType for snapshot.") << '\n'
-	     << _("\t--pre-number <number>\t\tNumber of corresponding pre snapshot.") << '\n'
-	     << _("\t--print-number, -p\t\tPrint number of created snapshot.") << '\n'
-	     << _("\t--description, -d <description>\tDescription for snapshot.") << '\n'
-	     << _("\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot.") << '\n'
-	     << _("\t--userdata, -u <userdata>\tUserdata for snapshot.") << '\n'
-	     << _("\t--command <command>\t\tRun command and create pre and post snapshots.") << endl
-	     << _("\t--read-only\t\t\tCreate read-only snapshot.") << '\n'
-	     << _("\t--read-write\t\t\tCreate read-write snapshot.") << '\n'
-	     << _("\t--from <number>\t\t\tCreate a snapshot from the specified snapshot.") << '\n'
-	     << endl;
+	     << _("    Options for 'create' command:") << '\n';
+
+	print_options({
+	    { _("--type, -t <type>"), _("Type for snapshot.") },
+	    { _("--pre-number <number>"), _("Number of corresponding pre snapshot.") },
+	    { _("--print-number, -p"), _("Print number of created snapshot.") },
+	    { _("--description, -d <description>"), _("Description for snapshot.") },
+	    { _("--cleanup-algorithm, -c <algo>"), _("Cleanup algorithm for snapshot.") },
+	    { _("--userdata, -u <userdata>"), _("Userdata for snapshot.") },
+	    { _("--command <command>"), _("Run command and create pre and post snapshots.")},
+	    { _("--read-only"), _("Create read-only snapshot.") },
+	    { _("--read-write"), _("Create read-write snapshot.") },
+	    { _("--from <number>"), _("Create a snapshot from the specified snapshot.") }
+	});
     }
 
 

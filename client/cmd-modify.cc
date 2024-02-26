@@ -26,6 +26,7 @@
 #include <snapper/Filesystem.h>
 
 #include "utils/text.h"
+#include "utils/help.h"
 #include "GlobalOptions.h"
 #include "proxy.h"
 #include "misc.h"
@@ -43,14 +44,16 @@ namespace snapper
 	cout << _("  Modify snapshot:") << '\n'
 	     << _("\tsnapper modify <number>") << '\n'
 	     << '\n'
-	     << _("    Options for 'modify' command:") << '\n'
-	     << _("\t--description, -d <description>\tDescription for snapshot.") << '\n'
-	     << _("\t--cleanup-algorithm, -c <algo>\tCleanup algorithm for snapshot.") << '\n'
-	     << _("\t--userdata, -u <userdata>\tUserdata for snapshot.") << '\n'
-	     << _("\t--read-only\t\t\tSet snapshot read-only.") << '\n'
-	     << _("\t--read-write\t\t\tSet snapshot read-write.") << '\n'
-	     << _("\t--default\t\t\tSet snapshot as default snapshot.") << '\n'
-	     << endl;
+	     << _("    Options for 'modify' command:") << '\n';
+
+	print_options({
+	    { _("--description, -d <description>"), _("Description for snapshot.") },
+	    { _("--cleanup-algorithm, -c <algo>"), _("Cleanup algorithm for snapshot.") },
+	    { _("--userdata, -u <userdata>"), _("Userdata for snapshot.") },
+	    { _("--read-only"), _("Set snapshot read-only.") },
+	    { _("--read-write"), _("Set snapshot read-write.") },
+	    { _("--default"), _("Set snapshot as default snapshot.") },
+	});
     }
 
 

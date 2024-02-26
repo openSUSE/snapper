@@ -34,6 +34,7 @@
 
 #include "utils/HumanString.h"
 #include "utils/text.h"
+#include "utils/help.h"
 #include "GlobalOptions.h"
 #include "proxy.h"
 #include "cleanup.h"
@@ -53,10 +54,12 @@ namespace snapper
 	cout << _("  Cleanup snapshots:") << '\n'
 	     << _("\tsnapper cleanup <cleanup-algorithm>") << '\n'
 	     << '\n'
-	     << _("    Options for 'cleanup' command:") << '\n'
-	     << _("\t--path <path>\t\t\tCleanup all configs affecting path.") << '\n'
-	     << _("\t--free-space <space>\t\tTry to make space available.") << '\n'
-	     << endl;
+	     << _("    Options for 'cleanup' command:") << '\n';
+
+	print_options({
+	    { _("--path <path>"), _("Cleanup all configs affecting path.") },
+	    { _("--free-space <space>"), _("Try to make space available.") }
+	});
     }
 
 

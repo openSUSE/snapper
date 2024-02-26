@@ -24,6 +24,7 @@
 #include <iostream>
 
 #include "utils/text.h"
+#include "utils/help.h"
 #include "GlobalOptions.h"
 #include "proxy.h"
 #include "misc.h"
@@ -44,11 +45,11 @@ namespace snapper
 	cout << _("  Get config:") << '\n'
 	     << _("\tsnapper get-config") << '\n'
 	     << '\n'
-	     << _("    Options for 'get-config' command:") << '\n'
-	     << _("\t--columns <columns>\t\tColumns to show separated by comma.\n"
-		  "\t\t\t\t\tPossible columns: key, value.\n"
-		  "\t\t\t\t\tColumns are not selected when JSON format is used.") << '\n'
-	     << endl;
+	     << _("    Options for 'get-config' command:") << '\n';
+
+	print_options({
+	    { _("--columns <columns>"), _("Columns to show separated by comma.") }
+	});
     }
 
 
