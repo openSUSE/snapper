@@ -10,9 +10,10 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 12:27+0100\n"
-"PO-Revision-Date: 2023-12-02 14:02+0000\n"
+"PO-Revision-Date: 2024-02-26 16:42+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
-"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
+"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
+"\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -98,9 +99,8 @@ msgstr "    Opties voor opdracht 'get-config':"
 msgid "    Options for 'list' command:"
 msgstr "    Opties voor opdracht 'list':"
 
-#, fuzzy
 msgid "    Options for 'list-configs' command:"
-msgstr "    Opties voor opdracht 'get-config':"
+msgstr "    Opties voor opdracht 'list-config':"
 
 msgid "    Options for 'modify' command:"
 msgstr "    Opties voor opdracht 'modify':"
@@ -187,133 +187,124 @@ msgid "(Snapshot %d.)"
 msgstr "(Momentopname %d.)"
 
 msgid "--abbreviate"
-msgstr ""
+msgstr "--abbreviate"
 
 msgid "--all-configs, -a"
-msgstr ""
+msgstr "--all-configs, -a"
 
 msgid "--ambit, -a <ambit>"
-msgstr ""
+msgstr "--ambit, -a <ambit>"
 
-#, fuzzy
 msgid "--cleanup-algorithm, -c <algo>"
-msgstr "\t--cleanup-algorithm, -c <algo>\tOpschoonalgoritme voor momentopname."
+msgstr "--cleanup-algorithm, -c <algoritme>"
 
 msgid "--columns <columns>"
-msgstr ""
+msgstr "--columns <kolommen>"
 
 msgid "--command <command>"
-msgstr ""
+msgstr "--command <commando>"
 
 msgid "--config, -c <name>"
-msgstr ""
+msgstr "--config, -c <naam>"
 
 msgid "--csvout"
-msgstr ""
+msgstr "--csvout"
 
 msgid "--debug"
-msgstr ""
+msgstr "--debug"
 
-#, fuzzy
 msgid "--default"
-msgstr "Standaard"
+msgstr "--default"
 
-#, fuzzy
 msgid "--description, -d <description>"
-msgstr "\t--description, -d <description>\tBeschrijving van momentopname."
+msgstr "--description, -d <beschrijving>"
 
 msgid "--diff-cmd <command>"
-msgstr ""
+msgstr "--diff-cmd <commando>"
 
 msgid "--disable-used-space"
-msgstr ""
+msgstr "--disable-used-space"
 
 msgid "--extensions, -x <options>"
-msgstr ""
+msgstr "--extensions, -x <opties>"
 
 msgid "--free-space <space>"
-msgstr ""
+msgstr "--free-space <ruimte>"
 
 msgid "--from <number>"
-msgstr ""
+msgstr "--from <nummer>"
 
 msgid "--fstype, -f <fstype>"
-msgstr ""
+msgstr "--fstype, -f <fstype>"
 
 msgid "--input, -i <file>"
-msgstr ""
+msgstr "--input, -i <bestand>"
 
 msgid "--iso"
-msgstr ""
+msgstr "--iso"
 
 msgid "--jsonout"
-msgstr ""
+msgstr "--jsonout"
 
-#, fuzzy
 msgid "--machine-readable <format>"
-msgstr "Ongeldig machine-leesbaar formaat '%s'."
+msgstr "--machine-readable <formaat>"
 
 msgid "--no-dbus"
-msgstr ""
+msgstr "--no-dbus"
 
 msgid "--no-headers"
-msgstr ""
+msgstr "--no-headers"
 
-#, fuzzy
 msgid "--output, -o <file>"
-msgstr "\t--output, -o <file>\t\tStatus opslaan in bestand."
+msgstr "--output, -o <bestand>"
 
 msgid "--path <path>"
-msgstr ""
+msgstr "--path <pad>"
 
 msgid "--pre-number <number>"
-msgstr ""
+msgstr "--pre-number <nummer>"
 
 msgid "--print-number, -p"
-msgstr ""
+msgstr "--print-number, -p"
 
 msgid "--quiet, -q"
-msgstr ""
+msgstr "--quiet, -q"
 
-#, fuzzy
 msgid "--read-only"
-msgstr "Alleen-lezen"
+msgstr "--read-only"
 
 msgid "--read-write"
-msgstr ""
+msgstr "--read-write"
 
 msgid "--root, -r <path>"
-msgstr ""
+msgstr "--root, -r <pad>"
 
 msgid "--separator <separator>"
-msgstr ""
+msgstr "--separator <scheidingsteken>"
 
 msgid "--sync, -s"
-msgstr ""
+msgstr "--sync, -s"
 
-#, fuzzy
 msgid "--table-style, -t <style>"
-msgstr "\t--table-style, -t <style>\tTabelstijl (geheel getal)."
+msgstr "--table-style, -t <stijl>"
 
 msgid "--template, -t <name>"
-msgstr ""
+msgstr "--template, -t <naam>"
 
-#, fuzzy
 msgid "--type, -t <type>"
-msgstr "\t--type, -t <type>\t\tType momentopname."
+msgstr "--type, -t <type>"
 
-#, fuzzy
 msgid "--userdata, -u <userdata>"
-msgstr "\t--userdata, -u <userdata>\tGebruikersgegevens voor momentopname."
+msgstr "--userdata, -u <gebruikersgegevens>"
 
 msgid "--utc"
-msgstr ""
+msgstr "--utc"
 
 msgid "--verbose, -v"
-msgstr ""
+msgstr "--verbose, -v"
 
 msgid "--version"
-msgstr ""
+msgstr "--version"
 
 # error box title
 msgid "ACL error."
@@ -325,9 +316,8 @@ msgstr "Actief"
 msgid "Active snapshot is already default snapshot."
 msgstr "Actieve momentopname is al standaard momentopname."
 
-#, fuzzy
 msgid "Allow to abbreviate table columns."
-msgstr "\t--abbreviate\t\t\tTabelkolommen afkorten toestaan."
+msgstr "Tabelkolommen afkorten toestaan."
 
 #, c-format
 msgid "Ambit is %s."
@@ -355,31 +345,27 @@ msgstr "Kan ambit niet detecteren omdat standaard subvolume onbekend is."
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Kan geen rollback doen omdat standaard subvolume onbekend is."
 
-#, fuzzy
 msgid "Character separator for CSV output format."
-msgstr "\t--separator <separator>\t\tScheidingsteken voor CSV uitvoerformaat."
+msgstr "Scheidingsteken voor CSV uitvoerformaat."
 
 msgid "Cleanup"
 msgstr "Opschonen"
 
-#, fuzzy
 msgid "Cleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <algo>\tOpschoonalgoritme voor momentopname."
+msgstr "Opschoonalgoritme voor momentopname."
 
-#, fuzzy
 msgid "Cleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <algo>\tOpschoonalgoritme voor momentopnamen."
+msgstr "Opschoonalgoritme voor momentopnamen."
 
-#, fuzzy
 msgid "Cleanup all configs affecting path."
-msgstr "\t--path <path>\t\t\tAlle configuraties die pad beïnvloeden opschonen."
+msgstr "Alle configuraties die pad beïnvloeden opschonen."
 
 #, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "Client-kant plug-in '%s' is mislukt."
 
 msgid "Columns to show separated by comma."
-msgstr ""
+msgstr "Te tonen kolommen gescheiden door komma."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Opdracht 'cleanup' heeft één argument."
@@ -448,9 +434,8 @@ msgstr "Opdracht 'undochange' heeft minstens één argument."
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Opdracht 'xadiff' heeft minstens één argument."
 
-#, fuzzy
 msgid "Command used for comparing files."
-msgstr "\t--diff-cmd <command>\t\tOpdracht gebruikt voor het vergelijken van bestanden."
+msgstr "Opdracht gebruikt voor het vergelijken van bestanden."
 
 msgid "Config"
 msgstr "Configuratie"
@@ -484,17 +469,14 @@ msgstr "Kon niet genoeg vrije ruimte beschikbaar maken voor pad '%s'."
 msgid "Could not make enough free space available."
 msgstr "Kon niet genoeg vrije ruimte beschikbaar maken."
 
-#, fuzzy
 msgid "Create a snapshot from the specified snapshot."
-msgstr "\t--from <getal>\t\t\t\tEen momentopname maken van de gespecificeerde momentopname."
+msgstr "Een momentopname maken van de gespecificeerde momentopname."
 
-#, fuzzy
 msgid "Create read-only snapshot."
-msgstr "\t--read-only\t\t\tEen alleen-lezen momentopname maken."
+msgstr "Een alleen-lezen momentopname maken."
 
-#, fuzzy
 msgid "Create read-write snapshot."
-msgstr "\t--read-write\t\t\tEen lezen-schrijven momentopname maken."
+msgstr "Een lezen-schrijven momentopname maken."
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -538,28 +520,23 @@ msgstr[1] "Snapshots verwijderen van %s:"
 msgid "Description"
 msgstr "Beschrijving"
 
-#, fuzzy
 msgid "Description for snapshot."
-msgstr "Beschrijving"
+msgstr "Beschrijving van momentopname."
 
-#, fuzzy
 msgid "Description for snapshots."
-msgstr "momentopnamen vergelijken..."
+msgstr "Beschrijving van momentopnamen."
 
 msgid "Detecting filesystem type failed."
 msgstr "Type bestandssysteem detecteren is mislukt."
 
-#, fuzzy
 msgid "Disable showing used space."
-msgstr "\t--disable-used-space\t\tGebruikte ruimte tonen uitschakelen."
+msgstr "Gebruikte ruimte tonen uitschakelen."
 
-#, fuzzy
 msgid "Display dates and times in ISO format."
-msgstr "\t--iso\t\t\t\tDatums en tijd tonen in ISO-formaat."
+msgstr "Datums en tijd tonen in ISO-formaat."
 
-#, fuzzy
 msgid "Display dates and times in UTC."
-msgstr "\t--utc\t\t\t\tDatums en tijden tonen in UTC."
+msgstr "Datums en tijden tonen in UTC."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
@@ -583,9 +560,8 @@ msgstr "Lege gebruikersgegevens."
 msgid "Error (%s)."
 msgstr "Fout (%s)."
 
-#, fuzzy
 msgid "Extra options passed to the diff command."
-msgstr "\t--extensions, -x <options>\tExtra opties doorgeven aan de opdracht diff."
+msgstr "Extra opties doorgegeven aan de opdracht diff."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Behandelaar van bestandssysteem initialiseren is mislukt."
@@ -645,9 +621,8 @@ msgstr "Identieke momentopnamen."
 msgid "Illegal snapshot."
 msgstr "Ongeldige momentopname."
 
-#, fuzzy
 msgid "Increase verbosity."
-msgstr "\t--verbose, -v\t\t\tHoeveelheid informatie verhogen."
+msgstr "Hoeveelheid informatie verhogen."
 
 #, c-format
 msgid "Invalid ambit '%s'."
@@ -657,9 +632,8 @@ msgstr "Ongeldige ambit '%s'."
 msgid "Invalid column '%s'."
 msgstr "Ongeldige kolom '%s'."
 
-#, fuzzy
 msgid "Invalid config."
-msgstr "Ongeldige configuratiegegevens."
+msgstr "Ongeldige configuratie."
 
 msgid "Invalid configdata."
 msgstr "Ongeldige configuratiegegevens."
@@ -707,9 +681,8 @@ msgstr "Sleutel"
 msgid "KiB"
 msgstr "KiB"
 
-#, fuzzy
 msgid "List snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tMomentopnamen weergeven van alle beschikbare configuraties."
+msgstr "Momentopnamen weergeven van alle beschikbare configuraties."
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -723,9 +696,8 @@ msgstr "M"
 msgid "MB"
 msgstr "MB"
 
-#, fuzzy
 msgid "Manually set filesystem type."
-msgstr "\t--fstype, -f <fstype>\t\tStel handmatig het type bestandssysteem in."
+msgstr "Stel handmatig het type bestandssysteem in."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Misschien bent u het scheidingsteken '..' tussen de snapshotnummer vergeten."
@@ -752,41 +724,35 @@ msgid "Missing or invalid pre-number."
 msgstr "Ontbrekend of ongeldig 'pre'-nummer."
 
 msgid "Name"
-msgstr ""
+msgstr "Naam"
 
-#, fuzzy
 msgid "Name of config template to use."
-msgstr "\t--template, -t <name>\t\tNaam van te gebruiken configuratiesjabloon."
+msgstr "Naam van te gebruiken configuratiesjabloon."
 
 msgid "No command provided."
 msgstr "Geen opdracht opgegeven."
 
-#, fuzzy
 msgid "No headers for CSV output format."
-msgstr "\t--no-headers\t\t\tGeen koppen voor CSV uitvoerformaat instellen."
+msgstr "Geen koppen voor CSV uitvoerformaat."
 
 msgid "No permissions."
 msgstr "Geen toegangsrechten."
 
-#, fuzzy
 msgid "Number of corresponding pre snapshot."
-msgstr "\t--pre-number <number>\t\tNummer van overeenkomende eerdere momentopname."
+msgstr "Nummer van overeenkomende eerdere momentopname."
 
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "Openen van bestand '%s' is mislukt."
 
-#, fuzzy
 msgid "Operate in the specified ambit."
-msgstr "\t--ambit, -a ambit\t\tIn de gespecificeerde ambit werken."
+msgstr "In de gespecificeerde ambit werken."
 
-#, fuzzy
 msgid "Operate on target root (works only without DBus)."
-msgstr "\t--root, -r <path>\t\tBewerking op targetroot (werkt alleen zonder D-Bus)."
+msgstr "Bewerking op targetroot (werkt alleen zonder D-Bus)."
 
-#, fuzzy
 msgid "Operate without DBus."
-msgstr "\t--no-dbus\t\t\tWerken zonder D-Bus."
+msgstr "Werken zonder D-Bus."
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr "Optie --from alleen ondersteund voor momentopnamen van het type single(enkelvoudig)."
@@ -819,40 +785,33 @@ msgstr "Pre #"
 msgid "Pre Date"
 msgstr "Pre-datum"
 
-#, fuzzy
 msgid "Print number of created snapshot."
-msgstr "\t--print-number, -p\t\tToon nummer van aangemaakte momentopname."
+msgstr "Toon nummer van aangemaakte momentopname."
 
-#, fuzzy
 msgid "Print number of second created snapshot."
-msgstr "\t--print-number, -p\t\tToon nummer van tweede aangemaakte momentopname."
+msgstr "Toon nummer van tweede aangemaakte momentopname."
 
-#, fuzzy
 msgid "Print version and exit."
-msgstr "\t--version\t\t\tVersie tonen en beëindigen."
+msgstr "Versie tonen en beëindigen."
 
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Qouta-fout (%s)."
 
-#, fuzzy
 msgid "Read files for which to undo changes from file."
-msgstr "\t--input, -i <file>\t\tLees bestanden waarvoor wijzigingen ongedaan moeten worden uit bestand."
+msgstr "Lees bestanden waarvoor wijzigingen ongedaan moeten worden uit bestand."
 
-#, fuzzy
 msgid "Read files to diff from file."
-msgstr "\t--input, -i <file>\t\tBestanden naar diff lezen vanuit bestand."
+msgstr "Bestanden naar diff lezen vanuit bestand."
 
 msgid "Read-Only"
 msgstr "Alleen-lezen"
 
-#, fuzzy
 msgid "Run command and create pre and post snapshots."
-msgstr "\t--command <command>\t\tVoer opdracht uit en maak pre- en post-momentopnamen."
+msgstr "Voer opdracht uit en maak pre- en post-momentopnamen."
 
-#, fuzzy
 msgid "Save status to file."
-msgstr "\t--output, -o <file>\t\tStatus opslaan in bestand."
+msgstr "Status opslaan in bestand."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Zie 'man snapper' voor meer instructies."
@@ -861,33 +820,26 @@ msgstr "Zie 'man snapper' voor meer instructies."
 msgid "Server-side plugin '%s' failed."
 msgstr "Server-kant plug-in '%s' is mislukt."
 
-#, fuzzy
 msgid "Set CSV output format."
-msgstr "\t--csvout\t\t\tCSV uitvoerformaat instellen."
+msgstr "CSV uitvoerformaat instellen."
 
-#, fuzzy
 msgid "Set JSON output format."
-msgstr "\t--jsonout\t\t\tJSON uitvoerformaat instellen."
+msgstr "JSON uitvoerformaat instellen."
 
-#, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
-msgstr "\t--machine-readable <format>\tEen machine-leesbaar uitvoerformaat instellen (csv, json)."
+msgstr "Een machine-leesbaar uitvoerformaat instellen (csv, json)."
 
-#, fuzzy
 msgid "Set name of config to use."
-msgstr "\t--config, -c <name>\t\tStel naam van te gebruiken configuratie in."
+msgstr "Stel naam van te gebruiken configuratie in."
 
-#, fuzzy
 msgid "Set snapshot as default snapshot."
-msgstr "\t--default\t\t\tMomentopname instellen als standaard momentopname."
+msgstr "Momentopname instellen als standaard momentopname."
 
-#, fuzzy
 msgid "Set snapshot read-only."
-msgstr "\t--read-only\t\t\tMomentopname als alleen-lezen instellen."
+msgstr "Momentopname als alleen-lezen instellen."
 
-#, fuzzy
 msgid "Set snapshot read-write."
-msgstr "\t--read-write\t\t\tMomentopname als lezen-schrijven instellen."
+msgstr "Momentopname als lezen-schrijven instellen."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
@@ -903,13 +855,11 @@ msgstr "Momentopname is in gebruik."
 msgid "Subvolume"
 msgstr "Subvolume"
 
-#, fuzzy
 msgid "Suppress normal output."
-msgstr "\t--quiet, -q\t\t\tOnderdruk normale uitvoer."
+msgstr "Onderdruk normale uitvoer."
 
-#, fuzzy
 msgid "Sync after deletion."
-msgstr "\t--sync, -s\t\t\tSynchroniseren na verwijdering."
+msgstr "Synchroniseren na verwijdering."
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -919,9 +869,8 @@ msgstr "T"
 msgid "TB"
 msgstr "TB"
 
-#, fuzzy
 msgid "Table style (integer)."
-msgstr "\t--table-style, -t <style>\tTabelstijl (geheel getal)."
+msgstr "Tabelstijl (geheel getal)."
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "De ambit kan handmatig worden gespecificeerd met de optie --ambit."
@@ -939,24 +888,20 @@ msgstr "TiB"
 msgid "Try 'snapper --help' for more information."
 msgstr "Probeer 'snapper --help' voor meer informatie."
 
-#, fuzzy
 msgid "Try to make space available."
-msgstr "\t--free-space <space>\t\tRuimte proberen beschikbaar te maken."
+msgstr "Ruimte proberen beschikbaar te maken."
 
-#, fuzzy
 msgid "Turn on debugging."
-msgstr "\t--debug\t\t\t\tDebugging inschakelen."
+msgstr "Debugging inschakelen."
 
 msgid "Type"
 msgstr "Type"
 
-#, fuzzy
 msgid "Type for snapshot."
-msgstr "Onbekend type momentopname."
+msgstr "Type momentopname."
 
-#, fuzzy
 msgid "Type of snapshots to list."
-msgstr "\t--type, -t <type>\t\tTe tonen type momentopname."
+msgstr "Te tonen type momentopname."
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -1008,13 +953,11 @@ msgstr "Gebruikersgegevens '%s' bevat geen '=' teken."
 msgid "Userdata '%s' has empty key."
 msgstr "Gebruikersgegevens '%s' heeft een lege key."
 
-#, fuzzy
 msgid "Userdata for snapshot."
-msgstr "\t--userdata, -u <userdata>\tGebruikersgegevens voor momentopname."
+msgstr "Gebruikersgegevens voor momentopname."
 
-#, fuzzy
 msgid "Userdata for snapshots."
-msgstr "Identieke momentopnamen."
+msgstr "Gebruikersgegevens voor momentopnamen."
 
 msgid "Value"
 msgstr "Waarde"
