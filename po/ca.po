@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 12:27+0100\n"
-"PO-Revision-Date: 2023-12-12 12:02+0000\n"
+"PO-Revision-Date: 2024-02-26 20:42+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
-"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/>\n"
+"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/"
+">\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -91,9 +92,8 @@ msgstr "    Opcions de l'ordre get-config:"
 msgid "    Options for 'list' command:"
 msgstr "    Opcions de l'ordre list:"
 
-#, fuzzy
 msgid "    Options for 'list-configs' command:"
-msgstr "    Opcions de l'ordre get-config:"
+msgstr "    Opcions per a l'ordre list-configs:"
 
 msgid "    Options for 'modify' command:"
 msgstr "    Opcions de l'ordre modify:"
@@ -180,133 +180,124 @@ msgid "(Snapshot %d.)"
 msgstr "(Instantània %d.)"
 
 msgid "--abbreviate"
-msgstr ""
+msgstr "--abbreviate"
 
 msgid "--all-configs, -a"
-msgstr ""
+msgstr "--all-configs, -a"
 
 msgid "--ambit, -a <ambit>"
-msgstr ""
+msgstr "--ambit, -a <àmbit>"
 
-#, fuzzy
 msgid "--cleanup-algorithm, -c <algo>"
-msgstr "\t--cleanup-algorithm, -c <algorisme>\tNeteja l'algorisme per a la instantània."
+msgstr "--cleanup-algorithm, -c <algorisme>"
 
 msgid "--columns <columns>"
-msgstr ""
+msgstr "--columns <columnes>"
 
 msgid "--command <command>"
-msgstr ""
+msgstr "--command <ordre>"
 
 msgid "--config, -c <name>"
-msgstr ""
+msgstr "--config, -c <nom>"
 
 msgid "--csvout"
-msgstr ""
+msgstr "--csvout"
 
 msgid "--debug"
-msgstr ""
+msgstr "--debug"
 
-#, fuzzy
 msgid "--default"
-msgstr "Per defecte"
+msgstr "--default"
 
-#, fuzzy
 msgid "--description, -d <description>"
-msgstr "\t--description, -d <description>\tDescripció per a la instantània."
+msgstr "--description, -d <descripció>"
 
 msgid "--diff-cmd <command>"
-msgstr ""
+msgstr "--diff-cmd <ordre>"
 
 msgid "--disable-used-space"
-msgstr ""
+msgstr "--disable-used-space"
 
 msgid "--extensions, -x <options>"
-msgstr ""
+msgstr "--extensions, -x <opcions>"
 
 msgid "--free-space <space>"
-msgstr ""
+msgstr "--free-space <espai>"
 
 msgid "--from <number>"
-msgstr ""
+msgstr "--from <número>"
 
 msgid "--fstype, -f <fstype>"
-msgstr ""
+msgstr "--fstype, -f <tipus de sistema de fitxers>"
 
 msgid "--input, -i <file>"
-msgstr ""
+msgstr "--input, -i <fitxer>"
 
 msgid "--iso"
-msgstr ""
+msgstr "--iso"
 
 msgid "--jsonout"
-msgstr ""
+msgstr "--jsonout"
 
-#, fuzzy
 msgid "--machine-readable <format>"
-msgstr "Format llegible per a la màquina no vàlid: %s."
+msgstr "--machine-readable <format>"
 
 msgid "--no-dbus"
-msgstr ""
+msgstr "--no-dbus"
 
 msgid "--no-headers"
-msgstr ""
+msgstr "--no-headers"
 
-#, fuzzy
 msgid "--output, -o <file>"
-msgstr "\t--output, -o <file>\t\tDesa l'estat en un fitxer."
+msgstr "--output, -o <fitxer>"
 
 msgid "--path <path>"
-msgstr ""
+msgstr "--path <path>"
 
 msgid "--pre-number <number>"
-msgstr ""
+msgstr "--pre-number <número>"
 
 msgid "--print-number, -p"
-msgstr ""
+msgstr "--print-number, -p"
 
 msgid "--quiet, -q"
-msgstr ""
+msgstr "--quiet, -q"
 
-#, fuzzy
 msgid "--read-only"
-msgstr "Només de lectura"
+msgstr "--read-only"
 
 msgid "--read-write"
-msgstr ""
+msgstr "--read-write"
 
 msgid "--root, -r <path>"
-msgstr ""
+msgstr "--root, -r <camí>"
 
 msgid "--separator <separator>"
-msgstr ""
+msgstr "--separator <separador>"
 
 msgid "--sync, -s"
-msgstr ""
+msgstr "--sync, -s"
 
-#, fuzzy
 msgid "--table-style, -t <style>"
-msgstr "\t--table-style, -t <style>\tEstil de taula (enter)."
+msgstr "--table-style, -t <estil>"
 
 msgid "--template, -t <name>"
-msgstr ""
+msgstr "--template, -t <nom>"
 
-#, fuzzy
 msgid "--type, -t <type>"
-msgstr "\t--type, -t <type>\t\tTipus per a la instantània."
+msgstr "--type, -t <tipus>"
 
-#, fuzzy
 msgid "--userdata, -u <userdata>"
-msgstr "\t--userdata, -u <userdata>\tDades d'usuari per a la instantània."
+msgstr "--userdata, -u <dades de l'usuari>"
 
 msgid "--utc"
-msgstr ""
+msgstr "--utc"
 
 msgid "--verbose, -v"
-msgstr ""
+msgstr "--verbose, -v"
 
 msgid "--version"
-msgstr ""
+msgstr "--version"
 
 msgid "ACL error."
 msgstr "Error ACL."
@@ -317,9 +308,8 @@ msgstr "Activa"
 msgid "Active snapshot is already default snapshot."
 msgstr "La instantània activa ja és la instantània per defecte."
 
-#, fuzzy
 msgid "Allow to abbreviate table columns."
-msgstr "\t--abbreviate\t\t\tPermet abreujar les columnes de la taula."
+msgstr "Permet abreujar les columnes de la taula."
 
 #, c-format
 msgid "Ambit is %s."
@@ -347,31 +337,27 @@ msgstr "No se'n pot detectar l'àmbit ja que es desconeix el subvolum per defect
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "No es pot fer un retrocés ja que es desconeix el subvolum per defecte."
 
-#, fuzzy
 msgid "Character separator for CSV output format."
-msgstr "\t--separator <separator>\t\tSeparador de caràcters per al format de sortida CSV."
+msgstr "Separador de caràcters per al format de sortida CSV."
 
 msgid "Cleanup"
 msgstr "Neteja"
 
-#, fuzzy
 msgid "Cleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <algorisme>\tNeteja l'algorisme per a la instantània."
+msgstr "Algorisme de neteja per a la instantània."
 
-#, fuzzy
 msgid "Cleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <algorisme>\tNeteja l'algorisme per a les instantànies."
+msgstr "Algorisme de neteja per a instantànies."
 
-#, fuzzy
 msgid "Cleanup all configs affecting path."
-msgstr "\t--path <path>\t\t\tNeteja totes les configuracions que afecten el camí."
+msgstr "Neteja totes les configuracions que afecten el camí."
 
 #, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "Ha fallat el connector %s del costat del client."
 
 msgid "Columns to show separated by comma."
-msgstr ""
+msgstr "Columnes per mostrar separades per comes."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "L'ordre cleanup necessita un argument."
@@ -440,9 +426,8 @@ msgstr "L'ordre undochange necessita almenys un argument."
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "L'ordre xadiff necessita almenys un argument."
 
-#, fuzzy
 msgid "Command used for comparing files."
-msgstr "\t--diff-cmd <command>\t\tOrdre per comparar fitxers."
+msgstr "Ordre usat per comparar fitxers."
 
 msgid "Config"
 msgstr "Configuració"
@@ -476,9 +461,8 @@ msgstr "No s'ha pogut fer prou espai disponible per al camí %s."
 msgid "Could not make enough free space available."
 msgstr "No s'ha pogut fer prou espai disponible."
 
-#, fuzzy
 msgid "Create a snapshot from the specified snapshot."
-msgstr "\t--from <número>\t\t\tCrea una instantània a partir d'una instantània específica."
+msgstr "Crea una instantània a partir d'una instantània específica."
 
 #, fuzzy
 msgid "Create read-only snapshot."
