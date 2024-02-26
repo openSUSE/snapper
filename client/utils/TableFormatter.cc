@@ -20,9 +20,6 @@
  */
 
 
-#include <cstring>
-#include <langinfo.h>
-
 #include "client/utils/TableFormatter.h"
 
 
@@ -32,30 +29,19 @@ namespace snapper
     using namespace std;
 
 
-    TableStyle
-    TableFormatter::default_style()
-    {
-	return strcmp(nl_langinfo(CODESET), "UTF-8") == 0 ? TableStyle::Light : TableStyle::Ascii;
-    }
-
-
     ostream&
     operator<<(ostream& stream, const TableFormatter& table_formatter)
     {
-	Table table;
+	Table table(table_formatter._header);
+
 	table.set_style(table_formatter.style);
 
-	TableHeader table_header;
-
-	for (const pair<string, TableAlign>& column : table_formatter._header)
-	    table_header.add(column.first, column.second);
-
-	table.setHeader(table_header);
-	table.set_abbrev(table_formatter._abbrev);
+	for (Id id : table_formatter._abbrev)
+	    table.set_abbreviate(id, true);
 
 	for (const vector<string>& row : table_formatter._rows)
 	{
-	    TableRow table_row;
+	    Table::Row table_row(table);
 
 	    for (const string& value : row)
 		table_row.add(value);

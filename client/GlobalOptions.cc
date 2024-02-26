@@ -117,31 +117,31 @@ namespace snapper
     }
 
 
-    TableStyle
+    Style
     GlobalOptions::table_style_value(const ParsedOpts& opts) const
     {
 	ParsedOpts::const_iterator it = opts.find("table-style");
 	if (it == opts.end())
-	    return TableFormatter::default_style();
+	    return TableFormatter::auto_style();
 
 	try
 	{
 	    unsigned long value = stoul(it->second);
 
-	    if (value >= Table::numStyles)
+	    if (value >= Table::num_styles)
 		throw exception();
 
-	    return (TableStyle)(value);
+	    return (Style)(value);
 	}
 	catch (const exception&)
 	{
 	    string error = sformat(_("Invalid table style '%s'."), it->second.c_str()) + '\n' +
-		sformat(_("Use an integer number from %d to %d."), 0, Table::numStyles - 1);
+		sformat(_("Use an integer number from %d to %d."), 0, Table::num_styles - 1);
 
 	    SN_THROW(OptionsException(error));
 	}
 
-	return TableFormatter::default_style();
+	return TableFormatter::auto_style();
     }
 
 

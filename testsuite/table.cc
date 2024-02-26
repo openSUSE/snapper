@@ -12,13 +12,14 @@
 
 
 using namespace std;
+using namespace snapper;
 
 
 void
 check(const Table& table, const vector<string>& output)
 {
     ostringstream tmp;
-    tmp << setw(42) << table;
+    tmp << table;
     string lhs = tmp.str();
 
     string rhs = accumulate(output.begin(), output.end(), (string)(""),
@@ -32,32 +33,23 @@ BOOST_AUTO_TEST_CASE(test1)
 {
     locale::global(locale("en_GB.UTF-8"));
 
-    Table table;
+    Table table({
+	Cell("Number", Id::NUMBER, Align::RIGHT), Cell("Name EN"), Cell("Name DE"),
+	Cell("Square", Align::RIGHT)
+    });
 
-    TableHeader header;
-    header.add("Number", TableAlign::RIGHT);
-    header.add("Name EN");
-    header.add("Name DE");
-    header.add("Square", TableAlign::RIGHT);
-    table.setHeader(header);
+    table.set_style(Style::ASCII);
 
-    TableRow row1;
-    row1.add("0");
-    row1.add("zero");
-    row1.add("Null");
-    row1.add("0");
+    Table::Row row1(table, { "0", "zero", "Null", "0" });
     table.add(row1);
 
-    TableRow row2;
-    row2 << "1" << "one" << "Eins" << "1";
+    Table::Row row2(table, { "1", "one", "Eins", "1" });
     table.add(row2);
 
-    TableRow row3;
-    row3 << "5" << "five" << "Fünf" << "25";
+    Table::Row row3(table, { "5", "five", "Fünf", "25" });
     table.add(row3);
 
-    TableRow row4;
-    row4 << "12" << "twelve" << "Zwölf" << "144";
+    Table::Row row4(table, { "12", "twelve", "Zwölf", "144" });
     table.add(row4);
 
     vector<string> output = {
@@ -75,30 +67,27 @@ BOOST_AUTO_TEST_CASE(test1)
 
 BOOST_AUTO_TEST_CASE(test2)
 {
-    locale::global(locale("en_GB.UTF-8"));
+    Table table({ Cell("Number", Align::RIGHT), Cell("Description", Id::DESCRIPTION) });
 
-    Table table;
+    table.set_style(Style::LIGHT);
     table.set_screen_width(25);
-    table.set_abbrev({ false, true });
+    table.set_abbreviate(Id::DESCRIPTION, true);
 
-    TableHeader header;
-    header.add("Number", TableAlign::RIGHT);
-    header.add("Description");
-    table.setHeader(header);
-
-    TableRow row1;
-    row1 << "1" << "boot";
+    Table::Row row1(table, { "1", "boot" });
     table.add(row1);
 
-    TableRow row2;
-    row2 << "2" << "before the system update";
+    Table::Row row2(table, { "2", "before the system update" });
     table.add(row2);
 
+    Table::Row row3(table, { "3", "läuft schön rund" });
+    table.add(row3);
+
     vector<string> output = {
-	"Number | Description     ",
-	"-------+-----------------",
-	"     1 | boot            ",
-	"     2 | before the sys->"
+	"Number │ Description",
+	"───────┼─────────────────",
+	"     1 │ boot",
+	"     2 │ before the syst…",
+	"     3 │ läuft schön rund"
     };
 
     check(table, output);

@@ -333,64 +333,64 @@ namespace snapper
 	}
 
 
-	pair<string, TableAlign>
+	Cell
 	header_for(ListMode list_mode, Column column)
 	{
 	    switch (column)
 	    {
 		case Column::CONFIG:
-		    return make_pair(_("Config"), TableAlign::LEFT);
+		    return Cell(_("Config"));
 
 		case Column::SUBVOLUME:
-		    return make_pair(_("Subvolume"), TableAlign::LEFT);
+		    return Cell(_("Subvolume"));
 
 		case Column::NUMBER:
 		    if (list_mode != ListMode::PRE_POST)
-			return make_pair(_("#"), TableAlign::RIGHT);
+			return Cell(_("#"), Id::NUMBER, Align::RIGHT);
 		    else
-			return make_pair(_("Pre #"), TableAlign::RIGHT);
+			return Cell(_("Pre #"), Id::NUMBER, Align::RIGHT);
 
 		case Column::DEFAULT:
-		    return make_pair(_("Default"), TableAlign::LEFT);
+		    return Cell(_("Default"));
 
 		case Column::ACTIVE:
-		    return make_pair(_("Active"), TableAlign::LEFT);
+		    return Cell(_("Active"));
 
 		case Column::TYPE:
-		    return make_pair(_("Type"), TableAlign::LEFT);
+		    return Cell(_("Type"), Id::TYPE);
 
 		case Column::DATE:
 		    if (list_mode != ListMode::PRE_POST)
-			return make_pair(_("Date"), TableAlign::LEFT);
+			return Cell(_("Date"));
 		    else
-			return make_pair(_("Pre Date"), TableAlign::LEFT);
+			return Cell(_("Pre Date"));
 
 		case Column::USER:
-		    return make_pair(_("User"), TableAlign::LEFT);
+		    return Cell(_("User"));
 
 		case Column::USED_SPACE:
-		    return make_pair(_("Used Space"), TableAlign::RIGHT);;
+		    return Cell(_("Used Space"), Align::RIGHT);;
 
 		case Column::CLEANUP:
-		    return make_pair(_("Cleanup"), TableAlign::LEFT);
+		    return Cell(_("Cleanup"));
 
 		case Column::DESCRIPTION:
-		    return make_pair(_("Description"), TableAlign::LEFT);
+		    return Cell(_("Description"), Id::DESCRIPTION);
 
 		case Column::USERDATA:
-		    return make_pair(_("Userdata"), TableAlign::LEFT);
+		    return Cell(_("Userdata"), Id::USERDATA);
 
 		case Column::PRE_NUMBER:
-		    return make_pair(_("Pre #"), TableAlign::RIGHT);
+		    return Cell(_("Pre #"), Id::PRE_NUMBER, Align::RIGHT);
 
 		case Column::POST_NUMBER:
-		    return make_pair(_("Post #"), TableAlign::RIGHT);
+		    return Cell(_("Post #"), Id::POST_NUMBER, Align::RIGHT);
 
 		case Column::POST_DATE:
-		    return make_pair(_("Post Date"), TableAlign::LEFT);
+		    return Cell(_("Post Date"));
 
 		case Column::READ_ONLY:
-		    return make_pair(_("Read-Only"), TableAlign::LEFT);
+		    return Cell(_("Read-Only"));
 	    }
 
 	    SN_THROW(Exception("invalid column value"));
@@ -614,8 +614,9 @@ namespace snapper
 				continue;
 
 			    formatter.header().push_back(header_for(list_mode, column));
-			    formatter.abbrev().push_back(global_options.abbreviate() &&
-							 column == Column::DESCRIPTION);
+
+			    if (global_options.abbreviate())
+				formatter.abbrev().push_back(Id::DESCRIPTION);
 			}
 
 			for (const ProxySnapshot& snapshot : output_helper.snapshots)

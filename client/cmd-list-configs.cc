@@ -60,16 +60,16 @@ namespace snapper
 	};
 
 
-	pair<string, TableAlign>
+	Cell
 	header_for(Column column)
 	{
 	    switch (column)
 	    {
 		case Column::CONFIG:
-		    return make_pair(_("Config"), TableAlign::LEFT);
+		    return Cell(_("Config"));
 
 		case Column::SUBVOLUME:
-		    return make_pair(_("Subvolume"), TableAlign::LEFT);
+		    return Cell(_("Subvolume"));
 	    }
 
 	    SN_THROW(Exception("invalid column value"));
@@ -95,7 +95,7 @@ namespace snapper
 
 
 	void
-	output_table(const vector<Column>& columns, TableStyle style, ProxySnappers* snappers)
+	output_table(const vector<Column>& columns, Style style, ProxySnappers* snappers)
 	{
 	    TableFormatter formatter(style);
 

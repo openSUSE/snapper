@@ -53,7 +53,7 @@ namespace snapper
 	bool no_dbus() const { return _no_dbus; }
 	bool version() const { return _version; }
 	bool help() const { return _help; }
-	TableStyle table_style() const { return _table_style; }
+	Style table_style() const { return _table_style; }
 	bool abbreviate() const { return _abbreviate; }
 	OutputFormat output_format() const { return _output_format; }
 	string separator() const { return _separator; }
@@ -68,7 +68,7 @@ namespace snapper
 
 	void check_options(const ParsedOpts& parsed_opts) const;
 
-	TableStyle table_style_value(const ParsedOpts& parsed_opts) const;
+	Style table_style_value(const ParsedOpts& parsed_opts) const;
 	OutputFormat output_format_value(const ParsedOpts& parsed_opts) const;
 	string separator_value(const ParsedOpts& parsed_opts) const;
 	string config_value(const ParsedOpts& parsed_opts) const;
@@ -83,7 +83,7 @@ namespace snapper
 	bool _no_dbus;
 	bool _version;
 	bool _help;
-	TableStyle _table_style;
+	Style _table_style;
 	bool _abbreviate;
 	OutputFormat _output_format;
 	string _separator;
