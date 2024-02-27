@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 12:27+0100\n"
-"PO-Revision-Date: 2024-02-26 20:42+0000\n"
+"PO-Revision-Date: 2024-02-27 11:42+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
 "Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/"
 ">\n"
@@ -464,13 +464,11 @@ msgstr "No s'ha pogut fer prou espai disponible."
 msgid "Create a snapshot from the specified snapshot."
 msgstr "Crea una instantània a partir d'una instantània específica."
 
-#, fuzzy
 msgid "Create read-only snapshot."
-msgstr "\t--read-only\t\t\tCrea una instantània només de lectura."
+msgstr "Crea una instantània només de lectura."
 
-#, fuzzy
 msgid "Create read-write snapshot."
-msgstr "\t--read-write\t\t\tCrea una instantània de lectura i d'escriptura."
+msgstr "Crea una instantània de lectura i d'escriptura."
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -514,28 +512,23 @@ msgstr[1] "Suprimint les instantànies de %s:"
 msgid "Description"
 msgstr "Descripció"
 
-#, fuzzy
 msgid "Description for snapshot."
-msgstr "Descripció"
+msgstr "Descripció per a la instantània."
 
-#, fuzzy
 msgid "Description for snapshots."
-msgstr "\t--description, -d <description>\tDescripció per a instantànies."
+msgstr "Descripció per a instantànies."
 
 msgid "Detecting filesystem type failed."
 msgstr "Ha fallat la detecció del tipus de sistema de fitxers."
 
-#, fuzzy
 msgid "Disable showing used space."
-msgstr "\t--disable-used-space\t\tInhabilita mostrar l'espai usat."
+msgstr "Inhabilita mostrar l'espai usat."
 
-#, fuzzy
 msgid "Display dates and times in ISO format."
-msgstr "\t--iso\t\t\t\tMostra les dates i les hores en format ISO."
+msgstr "Mostra les dates i les hores en format ISO."
 
-#, fuzzy
 msgid "Display dates and times in UTC."
-msgstr "\t--utc\t\t\t\tMostra dates i hores en UTC."
+msgstr "Mostra dates i hores en UTC."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
@@ -559,9 +552,8 @@ msgstr "Dades d'usuari buides."
 msgid "Error (%s)."
 msgstr "Error (%s)."
 
-#, fuzzy
 msgid "Extra options passed to the diff command."
-msgstr "\t--extensions, -x <options>\tOpcions extres passades a l'ordre diff."
+msgstr "Opcions extres passades a l'ordre diff."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Ha fallat l'inici del manejador de sistemes de fitxers."
@@ -621,9 +613,8 @@ msgstr "Instantànies idèntiques."
 msgid "Illegal snapshot."
 msgstr "Instantània il·legal."
 
-#, fuzzy
 msgid "Increase verbosity."
-msgstr "\t--verbose, -v\t\t\tIncrementa'n la mostra de detalls."
+msgstr "Incrementa'n la mostra de detalls."
 
 #, c-format
 msgid "Invalid ambit '%s'."
@@ -633,9 +624,8 @@ msgstr "Àmbit no vàlid: %s."
 msgid "Invalid column '%s'."
 msgstr "Columna no vàlida: %s."
 
-#, fuzzy
 msgid "Invalid config."
-msgstr "Dades de configuració no vàlides."
+msgstr "Configuració no vàlida."
 
 msgid "Invalid configdata."
 msgstr "Dades de configuració no vàlides."
@@ -684,9 +674,8 @@ msgstr "Clau"
 msgid "KiB"
 msgstr "KiB"
 
-#, fuzzy
 msgid "List snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tLlista les instantànies des de totes les configuracions accessibles."
+msgstr "Llista les instantànies des de totes les configuracions accessibles."
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -700,9 +689,8 @@ msgstr "M"
 msgid "MB"
 msgstr "MB"
 
-#, fuzzy
 msgid "Manually set filesystem type."
-msgstr "\t--fstype, -f <fstype>\t\tEstableix el sistema de fitxers manualment."
+msgstr "Estableix el sistema de fitxers manualment."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Potser heu oblidat el delimitador \"..\" entre els números d'instantània."
@@ -729,41 +717,35 @@ msgid "Missing or invalid pre-number."
 msgstr "Número de Pre inexistent o no vàlid."
 
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
-#, fuzzy
 msgid "Name of config template to use."
-msgstr "\t--template, -t <name>\t\tNom de la plantilla config per usar."
+msgstr "Nom de la plantilla de configuració per usar."
 
 msgid "No command provided."
 msgstr "No s'ha determinat cap ordre."
 
-#, fuzzy
 msgid "No headers for CSV output format."
-msgstr "\t--no-headers\t\t\tSense capçaleres per al format de sortida CSV."
+msgstr "Sense capçaleres per al format de sortida CSV."
 
 msgid "No permissions."
 msgstr "Sense permisos."
 
-#, fuzzy
 msgid "Number of corresponding pre snapshot."
-msgstr "\t--pre-number <number>\t\tNúmero de la preinstantània corresponent."
+msgstr "Número de la preinstantània corresponent."
 
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "Ha fallat obrir el fitxer %s."
 
-#, fuzzy
 msgid "Operate in the specified ambit."
-msgstr "\t--ambit, -a ambit\t\tOpera a l'àmbit especificat."
+msgstr "Opera a l'àmbit especificat."
 
-#, fuzzy
 msgid "Operate on target root (works only without DBus)."
-msgstr "\t--root, -r <path>\t\tOpera a l'arrel de destinació (només funciona sense DBus)."
+msgstr "Opera a l'arrel de destinació (només funciona sense DBus)."
 
-#, fuzzy
 msgid "Operate without DBus."
-msgstr "\t--no-dbus\t\t\tOpera sense DBus."
+msgstr "Opera sense DBus."
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr "L'opció --from només s'admet per a les instantànies de tipus simple."
@@ -796,40 +778,33 @@ msgstr "Pre #"
 msgid "Pre Date"
 msgstr "Data Pre"
 
-#, fuzzy
 msgid "Print number of created snapshot."
-msgstr "\t--print-number, -p\t\tImprimeix el número de la instantània creada."
+msgstr "Imprimeix el número de la instantània creada."
 
-#, fuzzy
 msgid "Print number of second created snapshot."
-msgstr "\t--print-number, -p\t\tImprimeix el número de la segona instantània creada."
+msgstr "Imprimeix el número de la segona instantània creada."
 
-#, fuzzy
 msgid "Print version and exit."
-msgstr "\t--version\t\t\tImprimeix la versió i surt."
+msgstr "Imprimeix la versió i surt."
 
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Error de quota (%s)."
 
-#, fuzzy
 msgid "Read files for which to undo changes from file."
-msgstr "\t--input, -i <file>\t\tLlegeix els fitxers per als quals desfer els canvis des del fitxer."
+msgstr "Llegeix els fitxers per als quals desfer els canvis des del fitxer."
 
-#, fuzzy
 msgid "Read files to diff from file."
-msgstr "\t--input, -i <file>\t\tLlegeix els fitxers que diff del fitxer."
+msgstr "Llegeix els fitxers per a diff des del fitxer."
 
 msgid "Read-Only"
 msgstr "Només de lectura"
 
-#, fuzzy
 msgid "Run command and create pre and post snapshots."
-msgstr "\t--command <ordre>\t\tExecuta l'ordre i crea les instantànies pre i post."
+msgstr "Executa l'ordre i crea les instantànies pre i post."
 
-#, fuzzy
 msgid "Save status to file."
-msgstr "\t--output, -o <file>\t\tDesa l'estat en un fitxer."
+msgstr "Desa'n l'estat en un fitxer."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Vegeu \"man snapper\" per a més informació."
@@ -838,33 +813,26 @@ msgstr "Vegeu \"man snapper\" per a més informació."
 msgid "Server-side plugin '%s' failed."
 msgstr "Ha fallat el connector %s del costat del servidor."
 
-#, fuzzy
 msgid "Set CSV output format."
-msgstr "\t--csvout\t\t\tEstableix el format de sortida CSV."
+msgstr "Estableix el format de sortida CSV."
 
-#, fuzzy
 msgid "Set JSON output format."
-msgstr "\t--jsonout\t\t\tEstableix el format de sortida JSON."
+msgstr "Estableix el format de sortida JSON."
 
-#, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
-msgstr "\t--machine-readable <format>\tEstableix un format de sortida llegible per a la màquina (csv, json)."
+msgstr "Estableix un format de sortida llegible per la màquina (csv, json)."
 
-#, fuzzy
 msgid "Set name of config to use."
-msgstr "\t--config, -c <name>\t\tEstableix el nom de config a usar."
+msgstr "Estableix el nom de configuració a usar."
 
-#, fuzzy
 msgid "Set snapshot as default snapshot."
-msgstr "\t--default\t\t\tEstableix la instantània com a instantània predeterminada."
+msgstr "Estableix la instantània com a instantània predeterminada."
 
-#, fuzzy
 msgid "Set snapshot read-only."
-msgstr "\t--read-only\t\t\tEstableix la instantània com a només de lectura."
+msgstr "Estableix la instantània com a només de lectura."
 
-#, fuzzy
 msgid "Set snapshot read-write."
-msgstr "\t--read-write\t\t\tEstableix la instantània com a lectura i escriptura."
+msgstr "Estableix la instantània com a lectura i escriptura."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
@@ -880,13 +848,11 @@ msgstr "La instantània s'usa."
 msgid "Subvolume"
 msgstr "Subvolum"
 
-#, fuzzy
 msgid "Suppress normal output."
-msgstr "\t--quiet, -q\t\t\tSuprimeix la sortida normal."
+msgstr "Suprimeix la sortida normal."
 
-#, fuzzy
 msgid "Sync after deletion."
-msgstr "\t--sync, -s\t\t\tSincronitza després d'una supressió."
+msgstr "Sincronitza després d'una supressió."
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -896,9 +862,8 @@ msgstr "T"
 msgid "TB"
 msgstr "TB"
 
-#, fuzzy
 msgid "Table style (integer)."
-msgstr "\t--table-style, -t <style>\tEstil de taula (enter)."
+msgstr "Estil de taula (enter)."
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "L'àmbit es pot especificar manualment usant l'opció --ambit."
@@ -916,24 +881,20 @@ msgstr "TiB"
 msgid "Try 'snapper --help' for more information."
 msgstr "Proveu 'snapper --help' per a més informació."
 
-#, fuzzy
 msgid "Try to make space available."
-msgstr "\t--free-space <space>\t\tIntenta fer espai disponible."
+msgstr "Intenta fer espai disponible."
 
-#, fuzzy
 msgid "Turn on debugging."
-msgstr "\t--debug\t\t\t\tHabilita la depuració."
+msgstr "Activa la depuració."
 
 msgid "Type"
 msgstr "Tipus"
 
-#, fuzzy
 msgid "Type for snapshot."
-msgstr "Tipus d'instantània desconegut."
+msgstr "Tipus per a la instantània."
 
-#, fuzzy
 msgid "Type of snapshots to list."
-msgstr "\t--type, -t <type>\t\tTipus d'instantànies a llistar."
+msgstr "Tipus d'instantànies per llistar."
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -985,13 +946,11 @@ msgstr "Les dades d'usuari %s no inclouen el signe =."
 msgid "Userdata '%s' has empty key."
 msgstr "Les dades d'usuari %s tenen una clau buida."
 
-#, fuzzy
 msgid "Userdata for snapshot."
-msgstr "\t--userdata, -u <userdata>\tDades d'usuari per a la instantània."
+msgstr "Dades d'usuari per a la instantània."
 
-#, fuzzy
 msgid "Userdata for snapshots."
-msgstr "Instantànies idèntiques."
+msgstr "Dades d'usuari per a les instantànies."
 
 msgid "Value"
 msgstr "Valor"
