@@ -46,7 +46,7 @@ namespace snapper
     {
 	cout << _("  Comparing snapshots extended attributes:") << '\n'
 	     << _("\tsnapper xadiff <number1>..<number2> [files]") << '\n'
-	     << endl;
+	     << '\n';
     }
 
 

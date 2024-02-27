@@ -39,7 +39,7 @@ namespace snapper
     {
 	cout << _("  Mount snapshot:") << '\n'
 	     << _("\tsnapper mount <number>") << '\n'
-	     << endl;
+	     << '\n';
     }
 
 
