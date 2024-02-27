@@ -39,7 +39,7 @@ namespace snapper
     {
 	cout << _("  Umount snapshot:") << '\n'
 	     << _("\tsnapper umount <number>") << '\n'
-	     << endl;
+	     << '\n';
     }
 
 

@@ -39,7 +39,7 @@ namespace snapper
     {
 	cout << _("  Delete config:") << '\n'
 	     << _("\tsnapper delete-config") << '\n'
-	     << endl;
+	     << '\n';
     }
 
 

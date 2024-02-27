@@ -40,7 +40,7 @@ namespace snapper
     {
 	cout << _("  Set config:") << '\n'
 	     << _("\tsnapper set-config <configdata>") << '\n'
-	     << endl;
+	     << '\n';
     }
 
 

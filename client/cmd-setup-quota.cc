@@ -39,7 +39,7 @@ namespace snapper
     {
 	cout << _("  Setup quota:") << '\n'
 	     << _("\tsnapper setup-quota") << '\n'
-	     << endl;
+	     << '\n';
     }
 
 
