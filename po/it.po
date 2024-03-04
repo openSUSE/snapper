@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 12:27+0100\n"
-"PO-Revision-Date: 2024-03-01 11:42+0000\n"
+"PO-Revision-Date: 2024-03-04 13:42+0000\n"
 "Last-Translator: Davide Aiello <davide.aiello@novilingulists.com>\n"
 "Language-Team: Italian <https://l10n.opensuse.org/projects/snapper/master/it/"
 ">\n"
@@ -201,15 +201,12 @@ msgstr "--command <comando>"
 msgid "--config, -c <name>"
 msgstr "--config, -c <nome>"
 
-#, fuzzy
 msgid "--csvout"
 msgstr "--csvout"
 
-#, fuzzy
 msgid "--debug"
 msgstr "--debug"
 
-#, fuzzy
 msgid "--default"
 msgstr "--default"
 
@@ -219,7 +216,6 @@ msgstr "--description, -d <descrizione>"
 msgid "--diff-cmd <command>"
 msgstr "--diff-cmd <comando>"
 
-#, fuzzy
 msgid "--disable-used-space"
 msgstr "--disable-used-space"
 
@@ -235,30 +231,24 @@ msgstr "--from <numero>"
 msgid "--fstype, -f <fstype>"
 msgstr "--fstype, -f <tipo file system>"
 
-#, fuzzy
 msgid "--input, -i <file>"
 msgstr "--input, -i <file>"
 
-#, fuzzy
 msgid "--iso"
 msgstr "--iso"
 
-#, fuzzy
 msgid "--jsonout"
 msgstr "--jsonout"
 
 msgid "--machine-readable <format>"
 msgstr "--machine-readable <formato>"
 
-#, fuzzy
 msgid "--no-dbus"
 msgstr "--no-dbus"
 
-#, fuzzy
 msgid "--no-headers"
 msgstr "--no-headers"
 
-#, fuzzy
 msgid "--output, -o <file>"
 msgstr "--output, -o <file>"
 
@@ -268,19 +258,15 @@ msgstr "--path <percorso>"
 msgid "--pre-number <number>"
 msgstr "--pre-number <numero>"
 
-#, fuzzy
 msgid "--print-number, -p"
 msgstr "--print-number, -p"
 
-#, fuzzy
 msgid "--quiet, -q"
 msgstr "--quiet, -q"
 
-#, fuzzy
 msgid "--read-only"
 msgstr "--read-only"
 
-#, fuzzy
 msgid "--read-write"
 msgstr "--read-write"
 
@@ -290,7 +276,6 @@ msgstr "--root, -r <percorso>"
 msgid "--separator <separator>"
 msgstr "--separator <separatore>"
 
-#, fuzzy
 msgid "--sync, -s"
 msgstr "--sync, -s"
 
@@ -306,15 +291,12 @@ msgstr "--type, -t <tipo>"
 msgid "--userdata, -u <userdata>"
 msgstr "--userdata, -u <dati utente>"
 
-#, fuzzy
 msgid "--utc"
 msgstr "--utc"
 
-#, fuzzy
 msgid "--verbose, -v"
 msgstr "--verbose, -v"
 
-#, fuzzy
 msgid "--version"
 msgstr "--version"
 
