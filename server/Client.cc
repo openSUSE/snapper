@@ -1840,6 +1840,7 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg)
     marshaller << "    version " + string(Snapper::compileVersion());
     marshaller << "    libversion " LIBSNAPPER_MAJOR "." LIBSNAPPER_MINOR "." LIBSNAPPER_PATCHLEVEL;
     marshaller << "    flags " + string(Snapper::compileFlags());
+    marshaller << "    CONF_DIR " CONF_DIR;
 
     marshaller.close_array();
 
