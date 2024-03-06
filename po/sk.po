@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 12:27+0100\n"
-"PO-Revision-Date: 2024-02-27 22:42+0000\n"
+"PO-Revision-Date: 2024-03-06 19:42+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
 "\n"
@@ -96,9 +96,8 @@ msgstr "    Voľby pre príkaz 'get-config':"
 msgid "    Options for 'list' command:"
 msgstr "    Voľby pre príkaz 'list':"
 
-#, fuzzy
 msgid "    Options for 'list-configs' command:"
-msgstr "    Voľby pre príkaz 'get-config':"
+msgstr "    Voľby pre príkaz 'list-configs':"
 
 msgid "    Options for 'modify' command:"
 msgstr "    Voľby pre príkaz 'modify':"
@@ -185,10 +184,10 @@ msgid "(Snapshot %d.)"
 msgstr "(Snímka %d.)"
 
 msgid "--abbreviate"
-msgstr ""
+msgstr "--abbreviate"
 
 msgid "--all-configs, -a"
-msgstr ""
+msgstr "--all-configs, -a"
 
 msgid "--ambit, -a <ambit>"
 msgstr ""
