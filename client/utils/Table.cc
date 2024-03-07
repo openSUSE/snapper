@@ -34,6 +34,20 @@ namespace snapper
     using namespace std;
 
 
+    struct Table::OutputInfo
+    {
+	OutputInfo(const Table& table);
+
+	void calculate_hidden(const Table& table, const Table::Row& row);
+	void calculate_widths(const Table& table, const Table::Row& row, unsigned indent);
+	size_t calculate_total_width(const Table& table) const;
+	void calculate_abbriviated_widths(const Table& table);
+
+	vector<bool> hidden;
+	vector<size_t> widths;
+    };
+
+
     Table::OutputInfo::OutputInfo(const Table& table)
     {
 	// calculate hidden, default to false
@@ -157,7 +171,7 @@ namespace snapper
 
 
     void
-    Table::output(std::ostream& s, const Table::Row& row, const OutputInfo& output_info, const vector<bool>& lasts) const
+    Table::output(std::ostream& s, const OutputInfo& output_info, const Table::Row& row, const vector<bool>& lasts) const
     {
 	s << string(global_indent, ' ');
 
@@ -231,7 +245,7 @@ namespace snapper
 	{
 	    vector<bool> sub_lasts = lasts;
 	    sub_lasts.push_back(i == subrows.size() - 1);
-	    output(s, subrows[i], output_info, sub_lasts);
+	    output(s, output_info, subrows[i], sub_lasts);
 	}
     }
 
@@ -387,13 +401,13 @@ namespace snapper
 	// output header and rows
 
 	if (table.show_header)
-	    table.output(s, table.header, output_info, {});
+	    table.output(s, output_info, table.header, {});
 
 	if (table.show_header && table.show_grid)
 	    table.output(s, output_info);
 
 	for (const Table::Row& row : table.rows)
-	    table.output(s, row, output_info, {});
+	    table.output(s, output_info, row, {});
 
 	return s;
     }

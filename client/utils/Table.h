@@ -177,20 +177,9 @@ namespace snapper
 
 	size_t id_to_index(Id id) const;
 
-	struct OutputInfo
-	{
-	    OutputInfo(const Table& table);
+	struct OutputInfo;
 
-	    void calculate_hidden(const Table& table, const Table::Row& row);
-	    void calculate_widths(const Table& table, const Table::Row& row, unsigned indent);
-	    size_t calculate_total_width(const Table& table) const;
-	    void calculate_abbriviated_widths(const Table& table);
-
-	    vector<bool> hidden;
-	    vector<size_t> widths;
-	};
-
-	void output(std::ostream& s, const Table::Row& row, const OutputInfo& output_info,
+	void output(std::ostream& s, const OutputInfo& output_info, const Table::Row& row,
 		    const vector<bool>& lasts) const;
 
 	void output(std::ostream& s, const OutputInfo& output_info) const;
