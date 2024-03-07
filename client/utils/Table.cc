@@ -43,21 +43,29 @@ namespace snapper
 	size_t calculate_total_width(const Table& table) const;
 	void calculate_abbriviated_widths(const Table& table);
 
-	vector<bool> hidden;
-	vector<size_t> widths;
+	struct ColumnVars
+	{
+	    bool hidden = false;
+	    size_t width = 0;
+	};
+
+	vector<ColumnVars> column_vars;
     };
 
 
     Table::OutputInfo::OutputInfo(const Table& table)
     {
+	if (table.column_params.size() != table.header.get_columns().size())
+	    throw runtime_error("column_params.size != header.size");
+
+	column_vars.resize(table.header.get_columns().size());
+
 	// calculate hidden, default to false
 
-	hidden.resize(table.header.get_columns().size());
-
-	for (size_t i = 0; i < table.visibilities.size(); ++i)
+	for (size_t idx = 0; idx < table.column_params.size(); ++idx)
 	{
-	    if (table.visibilities[i] == Visibility::AUTO || table.visibilities[i] == Visibility::OFF)
-		hidden[i] = true;
+	    if (table.column_params[idx].visibility == Visibility::AUTO || table.column_params[idx].visibility == Visibility::OFF)
+		column_vars[idx].hidden = true;
 	}
 
 	for (const Table::Row& row : table.rows)
@@ -65,7 +73,8 @@ namespace snapper
 
 	// calculate widths
 
-	widths = table.min_widths;
+	for (size_t idx = 0; idx < table.column_params.size(); ++idx)
+	    column_vars[idx].width = table.column_params[idx].min_width;
 
 	if (table.show_header)
 	    calculate_widths(table, table.header, 0);
@@ -82,10 +91,13 @@ namespace snapper
     {
 	const vector<string>& columns = row.get_columns();
 
-	for (size_t i = 0; i < min(columns.size(), table.visibilities.size()); ++i)
+	if (columns.size() > table.column_params.size())
+	    throw runtime_error("too many columns");
+
+	for (size_t idx = 0; idx < columns.size(); ++idx)
 	{
-	    if (table.visibilities[i] == Visibility::AUTO && !columns[i].empty())
-		hidden[i] = false;
+	    if (table.column_params[idx].visibility == Visibility::AUTO && !columns[idx].empty())
+		column_vars[idx].hidden = false;
 	}
 
 	for (const Table::Row& subrow : row.get_subrows())
@@ -98,20 +110,17 @@ namespace snapper
     {
 	const vector<string>& columns = row.get_columns();
 
-	if (columns.size() > widths.size())
-	    widths.resize(columns.size());
-
-	for (size_t i = 0; i < columns.size(); ++i)
+	for (size_t idx = 0; idx < columns.size(); ++idx)
 	{
-	    if (hidden[i])
+	    if (column_vars[idx].hidden)
 		continue;
 
-	    size_t width = mbs_width(columns[i]);
+	    size_t width = mbs_width(columns[idx]);
 
-	    if (i == table.tree_index)
+	    if (idx == table.tree_idx)
 		width += 2 * indent;
 
-	    widths[i] = max(widths[i], width);
+	    column_vars[idx].width = max(column_vars[idx].width, width);
 	}
 
 	for (const Table::Row& subrow : row.get_subrows())
@@ -129,9 +138,9 @@ namespace snapper
 
 	bool first = true;
 
-	for (size_t i = 0; i < widths.size(); ++i)
+	for (size_t idx = 0; idx < column_vars.size(); ++idx)
 	{
-	    if (hidden[i])
+	    if (column_vars[idx].hidden)
 		continue;
 
 	    if (first)
@@ -139,7 +148,7 @@ namespace snapper
 	    else
 		total_width += 2 + (table.show_grid ? 1 : 0);
 
-	    total_width += widths[i];
+	    total_width += column_vars[idx].width;
 	}
 
 	return total_width;
@@ -159,11 +168,11 @@ namespace snapper
 
 	size_t too_much = total_width - table.screen_width;
 
-	for (size_t i = 0; i < table.abbreviates.size(); ++i)
+	for (size_t idx = 0; idx < table.column_params.size(); ++idx)
 	{
-	    if (table.abbreviates[i])
+	    if (table.column_params[idx].abbreviate)
 	    {
-		widths[i] = max(widths[i] - too_much, (size_t) 5);
+		column_vars[idx].width = max(column_vars[idx].width - too_much, (size_t) 5);
 		break;
 	    }
 	}
@@ -177,17 +186,17 @@ namespace snapper
 
 	const vector<string>& columns = row.get_columns();
 
-	for (size_t i = 0; i < output_info.widths.size(); ++i)
+	for (size_t idx = 0; idx < output_info.column_vars.size(); ++idx)
 	{
-	    if (output_info.hidden[i])
+	    if (output_info.column_vars[idx].hidden)
 		continue;
 
-	    string column = i < columns.size() ? columns[i] : "";
+	    string column = idx < columns.size() ? columns[idx] : "";
 
-	    bool first = i == 0;
-	    bool last = i == output_info.widths.size() - 1;
+	    bool first = idx == 0;
+	    bool last = idx == output_info.column_vars.size() - 1;
 
-	    size_t extra = (i == tree_index) ? 2 * lasts.size() : 0;
+	    size_t extra = (idx == tree_idx) ? 2 * lasts.size() : 0;
 
 	    if (last && column.empty())
 		break;
@@ -195,7 +204,7 @@ namespace snapper
 	    if (!first)
 		s << " ";
 
-	    if (i == tree_index)
+	    if (idx == tree_idx)
 	    {
 		for (size_t tl = 0; tl < lasts.size(); ++tl)
 		{
@@ -208,16 +217,16 @@ namespace snapper
 
 	    size_t width = mbs_width(column);
 
-	    if (aligns[i] == Align::RIGHT)
+	    if (column_params[idx].align == Align::RIGHT)
 	    {
-		if (width < output_info.widths[i] - extra)
-		    s << string(output_info.widths[i] - width - extra, ' ');
+		if (width < output_info.column_vars[idx].width - extra)
+		    s << string(output_info.column_vars[idx].width - width - extra, ' ');
 	    }
 
-	    if (width > output_info.widths[i] - extra)
+	    if (width > output_info.column_vars[idx].width - extra)
 	    {
 		const char* ellipsis = glyph(7);
-		s << mbs_substr_by_width(column, 0, output_info.widths[i] - extra - mbs_width(ellipsis))
+		s << mbs_substr_by_width(column, 0, output_info.column_vars[idx].width - extra - mbs_width(ellipsis))
 		  << ellipsis;
 	    }
 	    else
@@ -226,10 +235,10 @@ namespace snapper
 	    if (last)
 		break;
 
-	    if (aligns[i] == Align::LEFT)
+	    if (column_params[idx].align == Align::LEFT)
 	    {
-		if (width < output_info.widths[i] - extra)
-		    s << string(output_info.widths[i] - width - extra, ' ');
+		if (width < output_info.column_vars[idx].width - extra)
+		    s << string(output_info.column_vars[idx].width - width - extra, ' ');
 	    }
 
 	    s << " ";
@@ -258,15 +267,15 @@ namespace snapper
     {
 	s << string(global_indent, ' ');
 
-	for (size_t i = 0; i < output_info.widths.size(); ++i)
+	for (size_t idx = 0; idx < output_info.column_vars.size(); ++idx)
 	{
-	    if (output_info.hidden[i])
+	    if (output_info.column_vars[idx].hidden)
 		continue;
 
-	    for (size_t j = 0; j < output_info.widths[i]; ++j)
+	    for (size_t j = 0; j < output_info.column_vars[idx].width; ++j)
 		s << glyph(1);
 
-	    if (i == output_info.widths.size() - 1)
+	    if (idx == output_info.column_vars.size() - 1)
 		break;
 
 	    s << glyph(1) << glyph(2) << glyph(1);
@@ -279,8 +288,8 @@ namespace snapper
     bool
     Table::has_id(Id id) const
     {
-	for (size_t i = 0; i < ids.size(); ++i)
-	    if (ids[i] == id)
+	for (size_t idx = 0; idx < column_params.size(); ++idx)
+	    if (column_params[idx].id == id)
 		return true;
 
 	return false;
@@ -288,11 +297,11 @@ namespace snapper
 
 
     size_t
-    Table::id_to_index(Id id) const
+    Table::id_to_idx(Id id) const
     {
-	for (size_t i = 0; i < ids.size(); ++i)
-	    if (ids[i] == id)
-		return i;
+	for (size_t idx = 0; idx < column_params.size(); ++idx)
+	    if (column_params[idx].id == id)
+		return idx;
 
 	throw runtime_error("id not found");
     }
@@ -301,12 +310,12 @@ namespace snapper
     string&
     Table::Row::operator[](Id id)
     {
-	size_t i = table.id_to_index(id);
+	size_t idx = table.id_to_idx(id);
 
-	if (columns.size() < i + 1)
-	    columns.resize(i + 1);
+	if (columns.size() < idx + 1)
+	    columns.resize(idx + 1);
 
-	return columns[i];
+	return columns[idx];
     }
 
 
@@ -330,8 +339,7 @@ namespace snapper
 	for (const Cell& cell : init)
 	{
 	    header.add(cell.name);
-	    ids.push_back(cell.id);
-	    aligns.push_back(cell.align);
+	    column_params.emplace_back(cell.id, cell.align);
 	}
     }
 
@@ -342,8 +350,7 @@ namespace snapper
 	for (const Cell& cell : init)
 	{
 	    header.add(cell.name);
-	    ids.push_back(cell.id);
-	    aligns.push_back(cell.align);
+	    column_params.emplace_back(cell.id, cell.align);
 	}
     }
 
@@ -351,43 +358,31 @@ namespace snapper
     void
     Table::set_min_width(Id id, size_t min_width)
     {
-	size_t i = id_to_index(id);
-
-	if (min_widths.size() < i + 1)
-	    min_widths.resize(i + 1);
-
-	min_widths[i] = min_width;
+	size_t idx = id_to_idx(id);
+	column_params[idx].min_width = min_width;
     }
 
 
     void
     Table::set_visibility(Id id, Visibility visibility)
     {
-	size_t i = id_to_index(id);
-
-	if (visibilities.size() < i + 1)
-	    visibilities.resize(i + 1);
-
-	visibilities[i] = visibility;
+	size_t idx = id_to_idx(id);
+	column_params[idx].visibility = visibility;
     }
 
 
     void
     Table::set_abbreviate(Id id, bool abbreviate)
     {
-	size_t i = id_to_index(id);
-
-	if (abbreviates.size() < i + 1)
-	    abbreviates.resize(i + 1);
-
-	abbreviates[i] = abbreviate;
+	size_t idx = id_to_idx(id);
+	column_params[idx].abbreviate = abbreviate;
     }
 
 
     void
     Table::set_tree_id(Id id)
     {
-	tree_index = id_to_index(id);
+	tree_idx = id_to_idx(id);
     }
 
 
