@@ -141,6 +141,8 @@ namespace snapper
 
 	const vector<Row> get_rows() const { return rows; }
 
+	bool has_id(Id id) const;
+
 	void set_show_header(bool show_header) { Table::show_header = show_header; }
 	void set_show_grid(bool show_grid) { Table::show_grid = show_grid; }
 	void set_style(Style style) { Table::style = style; }

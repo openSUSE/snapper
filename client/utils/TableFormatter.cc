@@ -37,7 +37,8 @@ namespace snapper
 	table.set_style(table_formatter.style);
 
 	for (Id id : table_formatter._abbrev)
-	    table.set_abbreviate(id, true);
+	    if (table.has_id(id))
+		table.set_abbreviate(id, true);
 
 	for (const vector<string>& row : table_formatter._rows)
 	{

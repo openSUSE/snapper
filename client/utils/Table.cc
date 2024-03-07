@@ -262,6 +262,17 @@ namespace snapper
     }
 
 
+    bool
+    Table::has_id(Id id) const
+    {
+	for (size_t i = 0; i < ids.size(); ++i)
+	    if (ids[i] == id)
+		return true;
+
+	return false;
+    }
+
+
     size_t
     Table::id_to_index(Id id) const
     {
