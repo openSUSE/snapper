@@ -167,15 +167,22 @@ namespace snapper
 	Style style = Style::ASCII;
 	size_t global_indent = 0;
 	size_t screen_width = -1;
+	size_t tree_idx = 0;
 
-	vector<Align> aligns;
-	vector<Id> ids;
-	vector<size_t> min_widths;
-	vector<Visibility> visibilities;
-	vector<bool> abbreviates;
-	size_t tree_index = 0;
+	struct ColumnParams
+	{
+	    ColumnParams(Id id, Align align) : id(id), align(align) {}
 
-	size_t id_to_index(Id id) const;
+	    Id id = Id::NONE;
+	    Align align = Align::LEFT;
+	    size_t min_width = 0;
+	    Visibility visibility = Visibility::ON;
+	    bool abbreviate = false;
+	};
+
+	vector<ColumnParams> column_params;
+
+	size_t id_to_idx(Id id) const;
 
 	struct OutputInfo;
 

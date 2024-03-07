@@ -31,6 +31,42 @@ check(const Table& table, const vector<string>& output)
 
 BOOST_AUTO_TEST_CASE(test1)
 {
+    Table table({ "A", "B" });
+
+    table.set_style(Style::LIGHT);
+
+    Table::Row row1(table, { "a" });
+    table.add(row1);
+
+    Table::Row row2(table, { "a", "b" });
+    table.add(row2);
+
+    vector<string> output = {
+	"A │ B",
+	"──┼──",
+	"a │",
+	"a │ b"
+    };
+
+    check(table, output);
+}
+
+
+BOOST_AUTO_TEST_CASE(test2)
+{
+    Table table({ "A", "B" });
+
+    Table::Row row1(table, { "a", "b", "c" });
+    table.add(row1);
+
+    BOOST_CHECK_EXCEPTION({ ostringstream tmp; tmp << table; }, runtime_error, [](const exception& e) {
+        return strcmp(e.what(), "too many columns") == 0;
+    });
+}
+
+
+BOOST_AUTO_TEST_CASE(test3)
+{
     locale::global(locale("en_GB.UTF-8"));
 
     Table table({
@@ -65,7 +101,7 @@ BOOST_AUTO_TEST_CASE(test1)
 }
 
 
-BOOST_AUTO_TEST_CASE(test2)
+BOOST_AUTO_TEST_CASE(test4)
 {
     Table table({ Cell("Number", Align::RIGHT), Cell("Description", Id::DESCRIPTION) });
 
