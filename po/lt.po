@@ -10,36 +10,40 @@ msgstr ""
 "Project-Id-Version: LCN (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 12:27+0100\n"
-"PO-Revision-Date: 2017-06-02 16:57+0000\n"
+"PO-Revision-Date: 2024-03-09 22:42+0000\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
-"Language-Team: Lithuanian <https://l10n.opensuse.org/projects/snapper/master/lt/>\n"
+"Language-Team: Lithuanian <https://l10n.opensuse.org/projects/snapper/master/"
+"lt/>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3);\n"
-"X-Generator: Weblate 2.6\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 0 : n%10>=2 && (n%100<10 || n"
+"%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3;\n"
+"X-Generator: Weblate 4.9.1\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
-msgstr ""
+msgstr "\tsnapper cleanup <valymo-algoritmas>"
 
+#, fuzzy
 msgid "\tsnapper create"
-msgstr ""
+msgstr "\tsnapper create"
 
 msgid "\tsnapper create-config <subvolume>"
-msgstr ""
+msgstr "\tsnapper create-config <potomis>"
 
 msgid "\tsnapper delete <number>"
-msgstr ""
+msgstr "\tsnapper delete <numeris>"
 
+#, fuzzy
 msgid "\tsnapper delete-config"
-msgstr ""
+msgstr "\tsnapper delete-config"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
-msgstr ""
+msgstr "\tsnapper diff <1 numeris>..<2 numberis> [rinkmenos]"
 
 msgid "\tsnapper get-config"
-msgstr ""
+msgstr "\tsnapper get-config"
 
 msgid "\tsnapper list"
 msgstr ""
