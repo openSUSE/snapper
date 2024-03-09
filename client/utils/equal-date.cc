@@ -49,6 +49,13 @@ equal_year(const struct tm& tmp1, const struct tm& tmp2)
 
 
 bool
+equal_quarter(const struct tm& tmp1, const struct tm& tmp2)
+{
+    return equal_year(tmp1, tmp2) && (tmp1.tm_mon / 3) == (tmp2.tm_mon / 3);
+}
+
+
+bool
 equal_month(const struct tm& tmp1, const struct tm& tmp2)
 {
     return equal_year(tmp1, tmp2) && tmp1.tm_mon == tmp2.tm_mon;

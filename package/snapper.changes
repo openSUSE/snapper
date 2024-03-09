@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Sat  9 Mar 09:44:17 GMT 2024 - infinity0@pwned.gg
+
+- add support for quarterly snapshots
+
+-------------------------------------------------------------------
 Fri Feb 16 08:26:41 CET 2024 - aschnell@suse.com
 
 - select table style based on codeset

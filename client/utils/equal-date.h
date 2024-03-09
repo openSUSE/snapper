@@ -31,6 +31,9 @@ bool
 equal_year(const struct tm& tmp1, const struct tm& tmp2);
 
 bool
+equal_quarter(const struct tm& tmp1, const struct tm& tmp2);
+
+bool
 equal_month(const struct tm& tmp1, const struct tm& tmp2);
 
 bool
