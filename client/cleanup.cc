@@ -591,6 +591,7 @@ struct TimelineParameters : public Parameters
     Range limit_daily;
     Range limit_monthly;
     Range limit_weekly;
+    Range limit_quarterly;
     Range limit_yearly;
 };
 
@@ -603,13 +604,14 @@ operator<<(ostream& s, const TimelineParameters& parameters)
 	     << "limit-daily:" << parameters.limit_daily << '\n'
 	     << "limit-weekly:" << parameters.limit_weekly << '\n'
 	     << "limit-monthly:" << parameters.limit_monthly << '\n'
+	     << "limit-quarterly:" << parameters.limit_quarterly << '\n'
 	     << "limit-yearly:" << parameters.limit_yearly;
 }
 
 
 TimelineParameters::TimelineParameters(const ProxySnapper* snapper)
     : Parameters(snapper), limit_hourly(10), limit_daily(10), limit_monthly(10),
-      limit_weekly(0), limit_yearly(10)
+      limit_weekly(0), limit_quarterly(0), limit_yearly(10)
 {
     ProxyConfig config = snapper->getConfig();
 
@@ -619,6 +621,7 @@ TimelineParameters::TimelineParameters(const ProxySnapper* snapper)
     read(config, "TIMELINE_LIMIT_DAILY", limit_daily);
     read(config, "TIMELINE_LIMIT_WEEKLY", limit_weekly);
     read(config, "TIMELINE_LIMIT_MONTHLY", limit_monthly);
+    read(config, "TIMELINE_LIMIT_QUARTERLY", limit_quarterly);
     read(config, "TIMELINE_LIMIT_YEARLY", limit_yearly);
 
 #ifdef VERBOSE_LOGGING
@@ -632,7 +635,7 @@ TimelineParameters::is_degenerated() const
 {
     return limit_hourly.is_degenerated() && limit_daily.is_degenerated() &&
 	limit_monthly.is_degenerated() && limit_weekly.is_degenerated() &&
-	limit_yearly.is_degenerated();
+	limit_quarterly.is_degenerated() && limit_yearly.is_degenerated();
 }
 
 
@@ -681,6 +684,14 @@ private:
 		    ProxySnapshots::const_iterator it1)
     {
 	return is_first(first, last, it1, equal_year);
+    }
+
+    bool
+    is_first_quarterly(list<ProxySnapshots::iterator>::const_iterator first,
+		    list<ProxySnapshots::iterator>::const_iterator last,
+		    ProxySnapshots::const_iterator it1)
+    {
+	return is_first(first, last, it1, equal_quarter);
     }
 
     bool
@@ -733,6 +744,7 @@ private:
 	size_t num_daily = 0;
 	size_t num_weekly = 0;
 	size_t num_monthly = 0;
+	size_t num_quarterly = 0;
 	size_t num_yearly = 0;
 
 	list<ProxySnapshots::iterator>::iterator it = ret.begin();
@@ -758,6 +770,11 @@ private:
 	    if (num_monthly < parameters.limit_monthly.value(value) && is_first_monthly(it, ret.end(), *it))
 	    {
 		++num_monthly;
+		keep = true;
+	    }
+	    if (num_quarterly < parameters.limit_quarterly.value(value) && is_first_quarterly(it, ret.end(), *it))
+	    {
+		++num_quarterly;
 		keep = true;
 	    }
 	    if (num_yearly < parameters.limit_yearly.value(value) && is_first_yearly(it, ret.end(), *it))

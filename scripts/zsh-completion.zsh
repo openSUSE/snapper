@@ -50,7 +50,7 @@ fi
 local curcontext=${curcontext%:*:*}:snapper-$words[1]:
 local algorithms=(
   'number:Deletes\ old\ snapshots\ when\ a\ certain\ number\ of\ snapshots\ is\ reached'
-  'timeline:Deletes\ old\ snapshots\ but\ keeps\ a\ number\ of\ hourly,\ daily,\ weekly,\ monthly\ and\ yearly\ snapshots'
+  'timeline:Deletes\ old\ snapshots\ but\ keeps\ a\ number\ of\ hourly,\ daily,\ weekly,\ monthly,\ quarterly\ and\ yearly\ snapshots'
   'empty-pre-post:Deletes\ pre/post\ snapshot\ pairs\ with\ empty\ diffs'
 )
 local type=(single pre post)

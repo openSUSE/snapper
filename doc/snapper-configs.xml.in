@@ -267,6 +267,17 @@
       </varlistentry>
 
       <varlistentry>
+	<term><option>TIMELINE_LIMIT_QUARTERLY=<replaceable>number</replaceable> or
+	<replaceable>range</replaceable></option></term>
+	<listitem>
+	  <para>Defines how many quarterly snapshots the timeline cleanup
+	  algorithm should keep. A quarterly snapshot is the first snapshot in a quarter. The
+	  youngest quarterly snapshots will be kept.</para>
+	  <para>Default value is &quot;0&quot;.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
 	<term><option>TIMELINE_LIMIT_YEARLY=<replaceable>number</replaceable> or
 	<replaceable>range</replaceable></option></term>
 	<listitem>

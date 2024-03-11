@@ -127,7 +127,7 @@
 	  <glossterm>timeline</glossterm>
 	  <glossdef>
 	    <para>Deletes old snapshots but keeps a number of hourly, daily,
-	    weekly, monthly and yearly snapshots.</para>
+	    weekly, monthly, quarterly and yearly snapshots.</para>
 	  </glossdef>
 	</glossentry>
 	<glossentry>
