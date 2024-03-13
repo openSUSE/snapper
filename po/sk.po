@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 12:27+0100\n"
-"PO-Revision-Date: 2024-03-06 19:42+0000\n"
+"PO-Revision-Date: 2024-03-13 19:42+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
 "\n"
@@ -190,7 +190,7 @@ msgid "--all-configs, -a"
 msgstr "--all-configs, -a"
 
 msgid "--ambit, -a <ambit>"
-msgstr ""
+msgstr "--ambit, -a <ambit>"
 
 msgid "--cleanup-algorithm, -c <algo>"
 msgstr "--cleanup-algorithm, -c <algo>"
@@ -210,9 +210,8 @@ msgstr ""
 msgid "--debug"
 msgstr ""
 
-#, fuzzy
 msgid "--default"
-msgstr "Predvolené"
+msgstr "--default"
 
 msgid "--description, -d <description>"
 msgstr "--description, -d <popis>"
@@ -268,9 +267,8 @@ msgstr ""
 msgid "--quiet, -q"
 msgstr ""
 
-#, fuzzy
 msgid "--read-only"
-msgstr "Len na čítanie"
+msgstr "--read-only"
 
 msgid "--read-write"
 msgstr ""
@@ -314,9 +312,8 @@ msgstr "Aktívne"
 msgid "Active snapshot is already default snapshot."
 msgstr "Aktívna snímka je už predvolená snímka."
 
-#, fuzzy
 msgid "Allow to abbreviate table columns."
-msgstr "\t--abbreviate\t\t\tUmožňuje skrátenie stĺpcov tabuľky."
+msgstr "Umožňuje skrátenie stĺpcov tabuľky."
 
 #, c-format
 msgid "Ambit is %s."
@@ -344,24 +341,20 @@ msgstr "Nie je možné zistiť oblasť, pretože predvolený podzväzok nie je z
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Nie je možné vykonať návrat späť, pretože predvolený podzväzok nie je známy."
 
-#, fuzzy
 msgid "Character separator for CSV output format."
-msgstr "\t--separator <oddeľovač>\t\tOddeľovač znakov pre výstupný formát CSV."
+msgstr "Oddeľovač znakov pre výstupný formát CSV."
 
 msgid "Cleanup"
 msgstr "Upratovanie"
 
-#, fuzzy
 msgid "Cleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <algo>\tUpratovací algoritmus pre snímku."
+msgstr "Upratovací algoritmus pre snímku."
 
-#, fuzzy
 msgid "Cleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <algo>\t\tUpratovací algoritmus pre snímky."
+msgstr "Upratovací algoritmus pre snímky."
 
-#, fuzzy
 msgid "Cleanup all configs affecting path."
-msgstr "\t--path <cesta>\t\t\tVyčistí všetky konfigurácie ovplyvňujúce cestu."
+msgstr "Vymaže všetky konfigurácie ovplyvňujúce cestu."
 
 #, c-format
 msgid "Client-side plugin '%s' failed."
@@ -437,9 +430,8 @@ msgstr "Príkaz 'undochange' potrebuje aspoň jeden argument."
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Príkaz 'xadiff' potrebuje aspoň jeden argument."
 
-#, fuzzy
 msgid "Command used for comparing files."
-msgstr "\t--diff-cmd <command>\tPríkaz slúži na porovnávanie súborov."
+msgstr "Príkaz slúži na porovnávanie súborov."
 
 msgid "Config"
 msgstr "Konfigurácia"
@@ -473,9 +465,8 @@ msgstr "Nepodarilo sa sprístupniť dostatok voľného miesta pre cestu '%s'."
 msgid "Could not make enough free space available."
 msgstr "Nepodarilo sa sprístupniť dostatok voľného miesta."
 
-#, fuzzy
 msgid "Create a snapshot from the specified snapshot."
-msgstr "\t--from <číslo>\t\t\tVytvorí snímku zo zadanej snímky."
+msgstr "Vytvorí snímku zo zadanej snímky."
 
 #, fuzzy
 msgid "Create read-only snapshot."
