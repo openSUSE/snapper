@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 12:27+0100\n"
-"PO-Revision-Date: 2024-03-13 19:42+0000\n"
+"PO-Revision-Date: 2024-03-14 19:42+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
 "\n"
@@ -196,19 +196,19 @@ msgid "--cleanup-algorithm, -c <algo>"
 msgstr "--cleanup-algorithm, -c <algo>"
 
 msgid "--columns <columns>"
-msgstr ""
+msgstr "--columns <stĺpce>"
 
 msgid "--command <command>"
-msgstr ""
+msgstr "--command <príkaz>"
 
 msgid "--config, -c <name>"
-msgstr ""
+msgstr "--config, -c <názov>"
 
 msgid "--csvout"
-msgstr ""
+msgstr "--csvout"
 
 msgid "--debug"
-msgstr ""
+msgstr "--debug"
 
 msgid "--default"
 msgstr "--default"
@@ -217,19 +217,19 @@ msgid "--description, -d <description>"
 msgstr "--description, -d <popis>"
 
 msgid "--diff-cmd <command>"
-msgstr ""
+msgstr "--diff-cmd <príkaz>"
 
 msgid "--disable-used-space"
-msgstr ""
+msgstr "--disable-used-space"
 
 msgid "--extensions, -x <options>"
-msgstr ""
+msgstr "--extensions, -x <voľby>"
 
 msgid "--free-space <space>"
-msgstr ""
+msgstr "--free-space <miesto>"
 
 msgid "--from <number>"
-msgstr ""
+msgstr "--from <číslo>"
 
 msgid "--fstype, -f <fstype>"
 msgstr ""
@@ -468,13 +468,11 @@ msgstr "Nepodarilo sa sprístupniť dostatok voľného miesta."
 msgid "Create a snapshot from the specified snapshot."
 msgstr "Vytvorí snímku zo zadanej snímky."
 
-#, fuzzy
 msgid "Create read-only snapshot."
-msgstr "\t--read-only\t\t\tVytvorí snímku len na čítanie."
+msgstr "Vytvorí snímku len na čítanie."
 
-#, fuzzy
 msgid "Create read-write snapshot."
-msgstr "\t--read-write\t\t\tVytvorí snímku na čítanie a zápis."
+msgstr "Vytvorí snímku na čítanie a zápis."
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -522,24 +520,20 @@ msgstr "Popis"
 msgid "Description for snapshot."
 msgstr "Popis snímky."
 
-#, fuzzy
 msgid "Description for snapshots."
-msgstr "\t--description, -d <popis>\tPopis pre snímky."
+msgstr "Popis pre snímky."
 
 msgid "Detecting filesystem type failed."
 msgstr "Detekcia typu súborového systému zlyhala."
 
-#, fuzzy
 msgid "Disable showing used space."
-msgstr "\t--disable-used-space\t\tZakázať ukazovanie použitého miesta."
+msgstr "Zakázať ukazovanie použitého miesta."
 
-#, fuzzy
 msgid "Display dates and times in ISO format."
-msgstr "\t--iso\t\t\t\tZobrazí dátumy a časy vo formáte ISO."
+msgstr "Zobrazí dátumy a časy vo formáte ISO."
 
-#, fuzzy
 msgid "Display dates and times in UTC."
-msgstr "\t--utc\t\t\t\tZobrazí dátumy a časy v UTC."
+msgstr "Zobrazí dátumy a časy v UTC."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
@@ -564,9 +558,8 @@ msgstr "Prázdne používateľské údaje."
 msgid "Error (%s)."
 msgstr "Chyba (%s)."
 
-#, fuzzy
 msgid "Extra options passed to the diff command."
-msgstr "\t--extensions, -x <voľby>\tĎalšie voľby odovzdané príkazu diff."
+msgstr "Ďalšie voľby odovzdané príkazu diff."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Zlyhala inicializácia obslužného programu systému súborov."
@@ -629,9 +622,8 @@ msgstr "Totožné snímky."
 msgid "Illegal snapshot."
 msgstr "Nepovolená snímka."
 
-#, fuzzy
 msgid "Increase verbosity."
-msgstr "\t--verbose, -v\t\t\tZvýši podrobnosť."
+msgstr "Zvýši podrobnosť."
 
 #, c-format
 msgid "Invalid ambit '%s'."
@@ -641,9 +633,8 @@ msgstr "Neplatná oblasť '%s'."
 msgid "Invalid column '%s'."
 msgstr "Neplatný stĺpec '%s'."
 
-#, fuzzy
 msgid "Invalid config."
-msgstr "Neplatné konfiguračné údaje."
+msgstr "Neplatná konfigurácia."
 
 msgid "Invalid configdata."
 msgstr "Neplatné konfiguračné údaje."
@@ -692,9 +683,8 @@ msgstr "Kľúč"
 msgid "KiB"
 msgstr "KiB"
 
-#, fuzzy
 msgid "List snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tZoznam snímok zo všetkých dostupných konfigurácií."
+msgstr "Zoznam snímok zo všetkých dostupných konfigurácií."
 
 # %s is either BOOTP or DHCP
 #, c-format
@@ -709,9 +699,8 @@ msgstr "M"
 msgid "MB"
 msgstr "MB"
 
-#, fuzzy
 msgid "Manually set filesystem type."
-msgstr "\t--fstype, -f <typ_súborového_systému>\t\tRučne nastaví typ súborového systému."
+msgstr "Ručne nastaví typ súborového systému."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Možno, že ste zabudli oddeľovač '..' medzi číslami snímok."
@@ -740,39 +729,33 @@ msgstr "Chýbajúce alebo neplatné číslo pred."
 msgid "Name"
 msgstr ""
 
-#, fuzzy
 msgid "Name of config template to use."
-msgstr "\t--template, -t <name>\t\tNázov konfiguračnej šablóny, ktorá sa použije."
+msgstr "Názov konfiguračnej šablóny, ktorá sa použije."
 
 msgid "No command provided."
 msgstr "Nebol zadaný žiadny príkaz."
 
-#, fuzzy
 msgid "No headers for CSV output format."
-msgstr "\t--no-headers\t\t\tŽiadne hlavičky pre výstupný formát CSV."
+msgstr "Žiadne hlavičky pre výstupný formát CSV."
 
 msgid "No permissions."
 msgstr "Žiadne práva."
 
-#, fuzzy
 msgid "Number of corresponding pre snapshot."
-msgstr "\t--pre-number <číslo>\t\tČíslo zodpovedajúce snímke pred."
+msgstr "Číslo zodpovedajúce snímke pred."
 
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "Otvorenie súboru '%s' zlyhalo."
 
-#, fuzzy
 msgid "Operate in the specified ambit."
-msgstr "\t--ambit, -a oblasť\t\tPracujte v stanovenej oblasti."
+msgstr "Pracujte v stanovenej oblasti."
 
-#, fuzzy
 msgid "Operate on target root (works only without DBus)."
-msgstr "\t--root, -r <cesta>\t\tBeží na cieľovom správcovi systému root (funguje len bez DBus)."
+msgstr "Pracuje na cieľovom root (funguje len bez DBus)."
 
-#, fuzzy
 msgid "Operate without DBus."
-msgstr "\t--no-dbus\t\t\tBeží bez DBus."
+msgstr "Pracuje bez DBus."
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr "Voľba --from podporovaná iba pre snímky typu single."
@@ -805,17 +788,14 @@ msgstr "Pred #"
 msgid "Pre Date"
 msgstr "Dátum pred"
 
-#, fuzzy
 msgid "Print number of created snapshot."
-msgstr "\t--print-number, -p\t\tVypíše číslo vytvorenej snímky."
+msgstr "Vypíše číslo vytvorenej snímky."
 
-#, fuzzy
 msgid "Print number of second created snapshot."
-msgstr "\t--print-number, -p\t\tVypíše číslo druhej vytvorenej snímky."
+msgstr "Vypíše číslo druhej vytvorenej snímky."
 
-#, fuzzy
 msgid "Print version and exit."
-msgstr "\t--version\t\t\tVypíše verziu a skončí."
+msgstr "Vypíše verziu a skončí."
 
 # error box title
 #, c-format
