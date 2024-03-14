@@ -615,8 +615,12 @@ namespace snapper
 
 			    formatter.header().push_back(header_for(list_mode, column));
 
+			    formatter.trim().push_back(Id::NUMBER);
+			    formatter.trim().push_back(Id::PRE_NUMBER);
+			    formatter.trim().push_back(Id::POST_NUMBER);
+
 			    if (global_options.abbreviate())
-				formatter.abbrev().push_back(Id::DESCRIPTION);
+				formatter.abbreviate().push_back(Id::DESCRIPTION);
 			}
 
 			for (const ProxySnapshot& snapshot : output_helper.snapshots)

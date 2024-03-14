@@ -39,14 +39,18 @@ namespace snapper
 	OutputInfo(const Table& table);
 
 	void calculate_hidden(const Table& table, const Table::Row& row);
-	void calculate_widths(const Table& table, const Table::Row& row, unsigned indent);
+	void calculate_trims(const Table& table, const Table::Row& row);
+	void calculate_widths(const Table& table, const Table::Row& row, bool is_header, unsigned indent);
 	size_t calculate_total_width(const Table& table) const;
 	void calculate_abbriviated_widths(const Table& table);
+
+	string trimmed(const string& s, Align align, size_t trim) const;
 
 	struct ColumnVars
 	{
 	    bool hidden = false;
 	    size_t width = 0;
+	    size_t trim = -1;
 	};
 
 	vector<ColumnVars> column_vars;
@@ -71,16 +75,21 @@ namespace snapper
 	for (const Table::Row& row : table.rows)
 	    calculate_hidden(table, row);
 
+	// calculate trims
+
+	for (const Table::Row& row : table.rows)
+	    calculate_trims(table, row);
+
 	// calculate widths
 
 	for (size_t idx = 0; idx < table.column_params.size(); ++idx)
 	    column_vars[idx].width = table.column_params[idx].min_width;
 
 	if (table.show_header)
-	    calculate_widths(table, table.header, 0);
+	    calculate_widths(table, table.header, true, 0);
 
 	for (const Table::Row& row : table.rows)
-	    calculate_widths(table, row, 0);
+	    calculate_widths(table, row, false, 0);
 
 	calculate_abbriviated_widths(table);
     }
@@ -106,7 +115,67 @@ namespace snapper
 
 
     void
-    Table::OutputInfo::calculate_widths(const Table& table, const Table::Row& row, unsigned indent)
+    Table::OutputInfo::calculate_trims(const Table& table, const Table::Row& row)
+    {
+	const vector<string>& columns = row.get_columns();
+
+	for (size_t idx = 0; idx < columns.size(); ++idx)
+	{
+	    if (!table.column_params[idx].trim || column_vars[idx].hidden)
+		continue;
+
+	    if (column_vars[idx].trim == 0)
+		continue;
+
+	    const string& column = columns[idx];
+	    if (column.empty())
+		continue;
+
+	    size_t trim = 0;
+
+	    switch (table.column_params[idx].align)
+	    {
+		case Align::RIGHT:
+		    trim = column.size() - column.find_last_not_of(" ") - 1;
+		    break;
+
+		case Align::LEFT:
+		    trim = column.find_first_not_of(" ");
+		    break;
+	    }
+
+	    column_vars[idx].trim = min(column_vars[idx].trim, trim);
+	}
+
+	for (const Table::Row& subrow : row.get_subrows())
+	    calculate_trims(table, subrow);
+    }
+
+
+    string
+    Table::OutputInfo::trimmed(const string& s, Align align, size_t trim) const
+    {
+	string ret = s;
+
+	switch (align)
+	{
+	    case Align::RIGHT:
+		if (ret.size() >= trim)
+		    ret.erase(ret.size() - trim, trim);
+		break;
+
+	    case Align::LEFT:
+		if (ret.size() >= trim)
+		    ret.erase(0, trim);
+		break;
+	}
+
+	return ret;
+    }
+
+
+    void
+    Table::OutputInfo::calculate_widths(const Table& table, const Table::Row& row, bool is_header, unsigned indent)
     {
 	const vector<string>& columns = row.get_columns();
 
@@ -115,7 +184,12 @@ namespace snapper
 	    if (column_vars[idx].hidden)
 		continue;
 
-	    size_t width = mbs_width(columns[idx]);
+	    string column = columns[idx];
+
+	    if (!is_header && table.column_params[idx].trim)
+		column = trimmed(column, table.column_params[idx].align, column_vars[idx].trim);
+
+	    size_t width = mbs_width(column);
 
 	    if (idx == table.tree_idx)
 		width += 2 * indent;
@@ -124,7 +198,7 @@ namespace snapper
 	}
 
 	for (const Table::Row& subrow : row.get_subrows())
-	    calculate_widths(table, subrow, indent + 1);
+	    calculate_widths(table, subrow, false, indent + 1);
     }
 
 
@@ -180,7 +254,8 @@ namespace snapper
 
 
     void
-    Table::output(std::ostream& s, const OutputInfo& output_info, const Table::Row& row, const vector<bool>& lasts) const
+    Table::output(std::ostream& s, const OutputInfo& output_info, const Table::Row& row, bool is_header,
+		  const vector<bool>& lasts) const
     {
 	s << string(global_indent, ' ');
 
@@ -192,6 +267,9 @@ namespace snapper
 		continue;
 
 	    string column = idx < columns.size() ? columns[idx] : "";
+
+	    if (!is_header && column_params[idx].trim)
+		column = output_info.trimmed(column, column_params[idx].align, output_info.column_vars[idx].trim);
 
 	    bool first = idx == 0;
 	    bool last = idx == output_info.column_vars.size() - 1;
@@ -254,7 +332,7 @@ namespace snapper
 	{
 	    vector<bool> sub_lasts = lasts;
 	    sub_lasts.push_back(i == subrows.size() - 1);
-	    output(s, output_info, subrows[i], sub_lasts);
+	    output(s, output_info, subrows[i], false, sub_lasts);
 	}
     }
 
@@ -380,6 +458,14 @@ namespace snapper
 
 
     void
+    Table::set_trim(Id id, bool trim)
+    {
+	size_t idx = id_to_idx(id);
+	column_params[idx].trim = trim;
+    }
+
+
+    void
     Table::set_tree_id(Id id)
     {
 	tree_idx = id_to_idx(id);
@@ -396,13 +482,13 @@ namespace snapper
 	// output header and rows
 
 	if (table.show_header)
-	    table.output(s, output_info, table.header, {});
+	    table.output(s, output_info, table.header, true, {});
 
 	if (table.show_header && table.show_grid)
 	    table.output(s, output_info);
 
 	for (const Table::Row& row : table.rows)
-	    table.output(s, output_info, row, {});
+	    table.output(s, output_info, row, false, {});
 
 	return s;
     }

@@ -50,7 +50,8 @@ namespace snapper
 	TableFormatter& operator=(const TableFormatter&) = delete;
 
 	vector<Cell>& header() { return _header; }
-	vector<Id>& abbrev() { return _abbrev; }
+	vector<Id>& abbreviate() { return _abbreviate; }
+	vector<Id>& trim() { return _trim; }
 	vector<vector<string>>& rows() { return _rows; }
 
 	friend ostream& operator<<(ostream& stream, const TableFormatter& table_formatter);
@@ -60,7 +61,8 @@ namespace snapper
 	const Style style;
 
 	vector<Cell> _header;
-	vector<Id> _abbrev;
+	vector<Id> _abbreviate;
+	vector<Id> _trim;
 	vector<vector<string>> _rows;
 
     };
