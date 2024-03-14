@@ -148,9 +148,17 @@ namespace snapper
 	void set_style(Style style) { Table::style = style; }
 	void set_global_indent(size_t global_indent) { Table::global_indent = global_indent; }
 	void set_screen_width(size_t screen_width) { Table::screen_width = screen_width; }
+
 	void set_min_width(Id id, size_t min_width);
 	void set_visibility(Id id, Visibility visibility);
 	void set_abbreviate(Id id, bool abbreviate);
+
+	/**
+	 * Allow to trim a column without breaking alignment by removing the same amount of
+	 * spaces from all rols (excluding the header).
+	 */
+	void set_trim(Id id, bool trim);
+
 	void set_tree_id(Id id);
 
 	friend std::ostream& operator<<(std::ostream& s, const Table& Table);
@@ -178,6 +186,7 @@ namespace snapper
 	    size_t min_width = 0;
 	    Visibility visibility = Visibility::ON;
 	    bool abbreviate = false;
+	    bool trim = false;
 	};
 
 	vector<ColumnParams> column_params;
@@ -186,7 +195,7 @@ namespace snapper
 
 	struct OutputInfo;
 
-	void output(std::ostream& s, const OutputInfo& output_info, const Table::Row& row,
+	void output(std::ostream& s, const OutputInfo& output_info, const Table::Row& row, bool is_header,
 		    const vector<bool>& lasts) const;
 
 	void output(std::ostream& s, const OutputInfo& output_info) const;

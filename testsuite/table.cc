@@ -128,3 +128,80 @@ BOOST_AUTO_TEST_CASE(test4)
 
     check(table, output);
 }
+
+
+BOOST_AUTO_TEST_CASE(test5)
+{
+    Table table({ Cell("#", Id::NUMBER, Align::RIGHT), Cell("Description", Id::DESCRIPTION) });
+
+    table.set_style(Style::LIGHT);
+    table.set_trim(Id::NUMBER, true);
+
+    Table::Row row1(table, { "1 ", "boot" });
+    table.add(row1);
+
+    Table::Row row2(table, { "2 " });
+    table.add(row2);
+
+    Table::Row row3(table, { "3 " });
+    table.add(row3);
+
+    vector<string> output = {
+	"# │ Description",
+	"──┼────────────",
+	"1 │ boot",
+	"2 │",
+	"3 │"
+    };
+
+    check(table, output);
+}
+
+
+BOOST_AUTO_TEST_CASE(test6)
+{
+    Table table({ Cell("#", Id::NUMBER, Align::RIGHT), Cell("Description", Id::DESCRIPTION) });
+
+    table.set_style(Style::LIGHT);
+    table.set_trim(Id::NUMBER, true);
+
+    Table::Row row1(table, { "1 ", "boot" });
+    table.add(row1);
+
+    Table::Row row2(table, { "2+" });
+    table.add(row2);
+
+    Table::Row row3(table, { "3 " });
+    table.add(row3);
+
+    vector<string> output = {
+	" # │ Description",
+	"───┼────────────",
+	"1  │ boot",
+	"2+ │",
+	"3  │"
+    };
+
+    check(table, output);
+}
+
+
+BOOST_AUTO_TEST_CASE(test7)
+{
+    Table table({ Cell("#", Id::NUMBER, Align::RIGHT), Cell("Description", Id::DESCRIPTION) });
+
+    table.set_style(Style::LIGHT);
+    table.set_trim(Id::NUMBER, true);
+    table.set_trim(Id::DESCRIPTION, true);
+
+    Table::Row row1(table, { "" });
+    table.add(row1);
+
+    vector<string> output = {
+	"# │ Description",
+	"──┼────────────",
+	"  │",
+    };
+
+    check(table, output);
+}
