@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 12:27+0100\n"
-"PO-Revision-Date: 2024-03-14 19:42+0000\n"
+"PO-Revision-Date: 2024-03-16 15:42+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
 "\n"
@@ -232,61 +232,61 @@ msgid "--from <number>"
 msgstr "--from <číslo>"
 
 msgid "--fstype, -f <fstype>"
-msgstr ""
+msgstr "--fstype, -f <fstype>"
 
 msgid "--input, -i <file>"
-msgstr ""
+msgstr "--input, -i <súbor>"
 
 msgid "--iso"
-msgstr ""
+msgstr "--iso"
 
 msgid "--jsonout"
-msgstr ""
+msgstr "--jsonout"
 
 msgid "--machine-readable <format>"
 msgstr "--machine-readable <formát>"
 
 msgid "--no-dbus"
-msgstr ""
+msgstr "--no-dbus"
 
 msgid "--no-headers"
-msgstr ""
+msgstr "--no-headers"
 
 msgid "--output, -o <file>"
 msgstr "--output, -o <súbor>"
 
 msgid "--path <path>"
-msgstr ""
+msgstr "--path <cesta>"
 
 msgid "--pre-number <number>"
-msgstr ""
+msgstr "--pre-number <číslo>"
 
 msgid "--print-number, -p"
-msgstr ""
+msgstr "--print-number, -p"
 
 msgid "--quiet, -q"
-msgstr ""
+msgstr "--quiet, -q"
 
 msgid "--read-only"
 msgstr "--read-only"
 
 msgid "--read-write"
-msgstr ""
+msgstr "--read-write"
 
 msgid "--root, -r <path>"
-msgstr ""
+msgstr "--root, -r <cesta>"
 
 msgid "--separator <separator>"
-msgstr ""
+msgstr "--separator <oddeľovač>"
 
 msgid "--sync, -s"
-msgstr ""
+msgstr "--sync, -s"
 
 msgid "--table-style, -t <style>"
 msgstr "--table-style, -t <štýl>"
 
 msgid "--template, -t <name>"
-msgstr ""
+msgstr "--template, -t <názov>"
 
 msgid "--type, -t <type>"
 msgstr "--type, -t <type>"
@@ -295,13 +295,13 @@ msgid "--userdata, -u <userdata>"
 msgstr "--userdata, -u <používateľské_údaje>"
 
 msgid "--utc"
-msgstr ""
+msgstr "--utc"
 
 msgid "--verbose, -v"
-msgstr ""
+msgstr "--verbose, -v"
 
 msgid "--version"
-msgstr ""
+msgstr "--version"
 
 msgid "ACL error."
 msgstr "ACL chyba."
@@ -361,7 +361,7 @@ msgid "Client-side plugin '%s' failed."
 msgstr "Zásuvný modul '%s' na strane klienta zlyhal."
 
 msgid "Columns to show separated by comma."
-msgstr ""
+msgstr "Stĺpce na zobrazenie oddelené čiarkou."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Príkaz 'cleanup' potrebuje jeden argument."
@@ -727,7 +727,7 @@ msgid "Missing or invalid pre-number."
 msgstr "Chýbajúce alebo neplatné číslo pred."
 
 msgid "Name"
-msgstr ""
+msgstr "Názov"
 
 msgid "Name of config template to use."
 msgstr "Názov konfiguračnej šablóny, ktorá sa použije."
@@ -802,24 +802,20 @@ msgstr "Vypíše verziu a skončí."
 msgid "Quota error (%s)."
 msgstr "Chyba kvóty (%s)."
 
-#, fuzzy
 msgid "Read files for which to undo changes from file."
-msgstr "\t--input, -i <súbor>\t\tČíta súbory, pre ktoré vráti späť zmeny zo súboru."
+msgstr "Číta súbory, pre ktoré sa majú vrátiť späť zmeny zo súboru."
 
-#, fuzzy
 msgid "Read files to diff from file."
-msgstr "\t--input, -i <súbor>\t\tČíta súbory pre príkaz diff zo súboru."
+msgstr "Číta súbory pre diff zo súboru."
 
 msgid "Read-Only"
 msgstr "Len na čítanie"
 
-#, fuzzy
 msgid "Run command and create pre and post snapshots."
-msgstr "\t--command <príkaz>\t\tSpustí príkaz a vytvorí snímky pred a po snímky."
+msgstr "Spustí príkaz a vytvorí snímky pred a po."
 
-#, fuzzy
 msgid "Save status to file."
-msgstr "\t--output, -o <súbor>\t\tUloží stav do súboru."
+msgstr "Uloží stav do súboru."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Viac informácií nájdete na 'man snapper'."
@@ -828,33 +824,26 @@ msgstr "Viac informácií nájdete na 'man snapper'."
 msgid "Server-side plugin '%s' failed."
 msgstr "Zásuvný modul '%s' na strane servera zlyhal."
 
-#, fuzzy
 msgid "Set CSV output format."
-msgstr "\t--csvout\t\t\tNastaví výstupný formát CSV."
+msgstr "Nastaví výstupný formát CSV."
 
-#, fuzzy
 msgid "Set JSON output format."
-msgstr "\t--jsonout\t\t\tNastaví výstupný formát JSON."
+msgstr "Nastaví výstupný formát JSON."
 
-#, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
-msgstr "\t--machine-readable <formát>\tNastaví výstupný formát čitateľný strojom (csv, json)."
+msgstr "Nastaví strojovo čitateľný výstupný formát (csv, json)."
 
-#, fuzzy
 msgid "Set name of config to use."
-msgstr "\t--config, -c <name>\t\tNastaví názov konfigurácie, ktorá sa použije."
+msgstr "Nastaví názov konfigurácie, ktorá sa použije."
 
-#, fuzzy
 msgid "Set snapshot as default snapshot."
-msgstr "\t--default\t\t\tNastaví snímku ako predvolenú snímku."
+msgstr "Nastaví snímku ako predvolenú snímku."
 
-#, fuzzy
 msgid "Set snapshot read-only."
-msgstr "\t--read-only\t\t\tNastaví snímku len na čítanie."
+msgstr "Nastaví snímku len na čítanie."
 
-#, fuzzy
 msgid "Set snapshot read-write."
-msgstr "\t--read-write\t\t\tNastaví snímku na čítanie a zápis."
+msgstr "Nastaví snímku na čítanie a zápis."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
@@ -870,13 +859,11 @@ msgstr "Snímka sa používa."
 msgid "Subvolume"
 msgstr "Podzväzok"
 
-#, fuzzy
 msgid "Suppress normal output."
-msgstr "\t--quiet, -q\t\t\tPotlačí normálny výstup."
+msgstr "Potlačí normálny výstup."
 
-#, fuzzy
 msgid "Sync after deletion."
-msgstr "\t--sync, -s\t\t\tSynchronizácia po zmazaní."
+msgstr "Synchronizácia po zmazaní."
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -886,9 +873,8 @@ msgstr "T"
 msgid "TB"
 msgstr "TB"
 
-#, fuzzy
 msgid "Table style (integer)."
-msgstr "\t--table-style, -t <štýl>\tŠtýl tabuľky (celé číslo)."
+msgstr "Štýl tabuľky (celé číslo)."
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Oblasť je možné zadať manuálne pomocou voľby --ambit."
@@ -906,24 +892,20 @@ msgstr "TiB"
 msgid "Try 'snapper --help' for more information."
 msgstr "Skúste 'snapper --help' pre viac informácií."
 
-#, fuzzy
 msgid "Try to make space available."
-msgstr "\t--free-space <miesto>\t\tSkúsi sprístupniť miesto."
+msgstr "Skúsi sprístupniť miesto."
 
-#, fuzzy
 msgid "Turn on debugging."
-msgstr "\t--debug\t\t\t\tZapne sa ladenie."
+msgstr "Zapne sa ladenie."
 
 msgid "Type"
 msgstr "Typ"
 
-#, fuzzy
 msgid "Type for snapshot."
-msgstr "Neznámy typ snímky."
+msgstr "Typ pre snímku."
 
-#, fuzzy
 msgid "Type of snapshots to list."
-msgstr "\t--type, -t <typ>\t\tTyp snímok pre výpis."
+msgstr "Typ snímok pre výpis."
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -975,13 +957,11 @@ msgstr "Používateľské údaje '%s' nezahŕňajú znamienko '='."
 msgid "Userdata '%s' has empty key."
 msgstr "Používateľské údaje '%s' majú prázdny kľúč."
 
-#, fuzzy
 msgid "Userdata for snapshot."
-msgstr "\t--userdata, -u <používateľské-údaje>\tPoužívateľské údaje pre snímku."
+msgstr "Používateľské údaje pre snímku."
 
-#, fuzzy
 msgid "Userdata for snapshots."
-msgstr "Totožné snímky."
+msgstr "Používateľské údaje pre snímky."
 
 msgid "Value"
 msgstr "Hodnota"
