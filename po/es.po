@@ -110,7 +110,7 @@ msgid "    Options for 'undochange' command:"
 msgstr "    Opciones para el comando 'undochange':"
 
 msgid "  Cleanup snapshots:"
-msgstr "  Limpieza de imágenes:"
+msgstr "  Limpieza de instantáneas:"
 
 msgid "  Comparing snapshots extended attributes:"
 msgstr "  Comparar los atributos extendidos de las instantáneas:"
@@ -122,13 +122,13 @@ msgid "  Create config:"
 msgstr "  Crear configuración:"
 
 msgid "  Create snapshot:"
-msgstr "  Crear imagen:"
+msgstr "  Crear instantánea:"
 
 msgid "  Delete config:"
 msgstr "  Borrar configuración:"
 
 msgid "  Delete snapshot:"
-msgstr "  Borrar imagen:"
+msgstr "  Borrar instantánea:"
 
 msgid "  Get config:"
 msgstr "  Obtener configuración:"
@@ -137,13 +137,13 @@ msgid "  List configs:"
 msgstr "  Listar configuraciones:"
 
 msgid "  List snapshots:"
-msgstr "  Listar imágenes:"
+msgstr "  Listar instantáneas:"
 
 msgid "  Modify snapshot:"
-msgstr "  Modificar imagen:"
+msgstr "  Modificar instantánea:"
 
 msgid "  Mount snapshot:"
-msgstr "  Montar imagen:"
+msgstr "  Montar instantánea:"
 
 # SLE12
 msgid "  Rollback:"
@@ -156,7 +156,7 @@ msgid "  Setup quota:"
 msgstr "  Configurar cuotas:"
 
 msgid "  Umount snapshot:"
-msgstr "  Desmontar imagen:"
+msgstr "  Desmontar instantánea:"
 
 msgid "  Undo changes:"
 msgstr "  Deshacer cambios:"
@@ -326,15 +326,15 @@ msgstr "B"
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr "No se puede borrar la imagen %d porque es el sistema actual."
+msgstr "No se puede borrar la instantánea %d porque es el sistema actual."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr "No se puede borrar la imagen %d porque es la imagen montada en estos momentos."
+msgstr "No se puede borrar la instantánea %d porque es la instantánea montada en estos momentos."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr "No se puede borrar la imagen %d porque es la siguiente imagen que se va a montar."
+msgstr "No se puede borrar la instantánea %d porque es la siguiente instantánea que se va a montar."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr "No se puede detectar el ámbito porque no se conoce el subvolumen por defecto."
@@ -502,7 +502,7 @@ msgid "Creating read-write snapshot of snapshot %d."
 msgstr "Creando instantánea de solo lectura de la instantánea %d."
 
 msgid "Creating snapshot failed."
-msgstr "Error al crear la imagen."
+msgstr "Error al crear la instantánea."
 
 msgid "Date"
 msgstr "Fecha"
@@ -515,7 +515,7 @@ msgid "Deleting config failed (%s)."
 msgstr "Fallo al borrar la configuración (%s)."
 
 msgid "Deleting snapshot failed."
-msgstr "Error al eliminar la imagen."
+msgstr "Error al eliminar la instantánea."
 
 #, c-format
 msgid "Deleting snapshot from %s:"
@@ -636,10 +636,10 @@ msgid "IO error (%s)."
 msgstr "Error de E/S (%s)."
 
 msgid "Identical snapshots."
-msgstr "Imágenes idénticas."
+msgstr "Instantánaes idénticas."
 
 msgid "Illegal snapshot."
-msgstr "Imagen no válida."
+msgstr "Instantánea no válida."
 
 msgid "Increase verbosity."
 msgstr "Aumenta la verbosidad."
@@ -668,18 +668,18 @@ msgstr "Grupo no válido (%s)."
 
 #, c-format
 msgid "Invalid machine readable format '%s'."
-msgstr "Formato que puede leer el equipo %s no válido."
+msgstr "Formato inválido para la lectura/interpretación por la máquina '%s'."
 
 #, c-format
 msgid "Invalid path '%s'."
-msgstr "Vía %s no válida."
+msgstr "Ruta de acceso inválida '%s'."
 
 #, c-format
 msgid "Invalid snapshot '%s'."
-msgstr "Imagen '%s' no válida."
+msgstr "Instantánea no válida '%s'."
 
 msgid "Invalid snapshots."
-msgstr "Imágenes inválidas."
+msgstr "Instantáneas inválidas."
 
 msgid "Invalid subvolume."
 msgstr "Subvolumen inválido."
@@ -704,9 +704,7 @@ msgid "KiB"
 msgstr "KiB"
 
 msgid "List snapshots from all accessible configs."
-msgstr ""
-"Muestra las instantáneas de todas las configuraciones a las que se puede "
-"acceder."
+msgstr "Listar instantáneas de todas las configuraciones accesibles."
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -724,7 +722,7 @@ msgid "Manually set filesystem type."
 msgstr "Establece manualmente el tipo de sistema de archivos."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
-msgstr "Puede que haya olvidado indica el delimitador '..' entre los números de las instantáneas."
+msgstr "Posiblemente haya olvidado indicar el delimitador '..' entre los números de instantáneas."
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
@@ -732,7 +730,7 @@ msgstr "MiB"
 
 #, c-format
 msgid "Missing argument for command option '%s'."
-msgstr "Falta un argumento para el opción de comando '%s'."
+msgstr "Falta un argumento para la opción de comando '%s'."
 
 #, c-format
 msgid "Missing argument for global option '%s'."
@@ -754,16 +752,16 @@ msgid "Name of config template to use."
 msgstr "Nombre de la plantilla de configuración que se debe usar."
 
 msgid "No command provided."
-msgstr "Ningún comando especificado."
+msgstr "Ningún comando fue introducido."
 
 msgid "No headers for CSV output format."
-msgstr "No se usarán encabezados en el formato de salida CSV."
+msgstr "Sin encabezados para el formato CSV de salida."
 
 msgid "No permissions."
 msgstr "Sin permisos."
 
 msgid "Number of corresponding pre snapshot."
-msgstr "Número de la instantánea previa correspondiente."
+msgstr "Número de la preinstantánea correspondiente."
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -843,7 +841,7 @@ msgstr "Consulte la página man snapper para obtener más instrucciones."
 
 #, c-format
 msgid "Server-side plugin '%s' failed."
-msgstr "Error del complemento %s en el servidor."
+msgstr "La extensión del lado del servidor '%s' ha experimentado un error."
 
 msgid "Set CSV output format."
 msgstr "Establece el formato de salida CSV."
@@ -852,19 +850,19 @@ msgid "Set JSON output format."
 msgstr "Establece el formato de salida JSON."
 
 msgid "Set a machine-readable output format (csv, json)."
-msgstr "Define un formato de salida que puede leer el equipo (csv, json)."
+msgstr "Establecer un formato de salida legible por el equipo (csv, json)."
 
 msgid "Set name of config to use."
-msgstr "Define el nombre de la configuración que se debe usar."
+msgstr "Establecer el nombre de la configuración que se debe usar."
 
 msgid "Set snapshot as default snapshot."
-msgstr "Define la instantánea como instantánea por defecto."
+msgstr "Establecer instantánea como instantánea predeterminada."
 
 msgid "Set snapshot read-only."
-msgstr "Define la instantánea como de solo lectura."
+msgstr "Establecer instantánea en modo de solo lectura."
 
 msgid "Set snapshot read-write."
-msgstr "Define la instantánea como de lectura-escritura."
+msgstr "Establecer la instantánea en modo de lectura-escritura."
 
 # SLE12
 #, c-format
@@ -873,7 +871,7 @@ msgstr "Definiendo subvolumen por defecto en instantánea %d."
 
 #, c-format
 msgid "Snapshot '%u' not found."
-msgstr "Imagen '%u' no encontrada."
+msgstr "Instantánea '%u' no encontrada."
 
 # supongo que snapshot es el nombre de un soft, por lo que lo dejo sin traducir.
 msgid "Snapshot is in use."
@@ -883,10 +881,10 @@ msgid "Subvolume"
 msgstr "Subvolumen"
 
 msgid "Suppress normal output."
-msgstr "Elimina la salida normal."
+msgstr "Desactivar la salida normal."
 
 msgid "Sync after deletion."
-msgstr "Realiza una sincronización después de suprimir."
+msgstr "Sincronizar tras eliminación."
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
