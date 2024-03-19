@@ -75,10 +75,13 @@ namespace snapper
 	    SN_THROW(IOErrorException("fdopen"));
 	}
 
+	errno = 0;
+
 	if (xmlDocFormatDump(f, doc, 1) == -1)
 	{
 	    fclose(f);
-	    SN_THROW(IOErrorException("xmlDocFormatDump failed"));
+	    SN_THROW(IOErrorException(sformat("xmlDocFormatDump failed, errno:%d (%s)", errno,
+					      stringerror(errno).c_str())));
 	}
 
 	fflush(f);
