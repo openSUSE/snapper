@@ -4,8 +4,9 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 12:27+0100\n"
-"PO-Revision-Date: 2024-03-01 23:42+0000\n"
-"Last-Translator: Antonio Simón <antonio@trans-mission.com>\n"
+"PO-Revision-Date: 2024-03-19 18:42+0000\n"
+"Last-Translator: Christian Medina von Levetzow <cmedinavonlevetzow@gmail.com>"
+"\n"
 "Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/"
 ">\n"
 "Language: es\n"
@@ -122,13 +123,13 @@ msgid "  Create config:"
 msgstr "  Crear configuración:"
 
 msgid "  Create snapshot:"
-msgstr "  Crear imagen:"
+msgstr "  Crear instantánea:"
 
 msgid "  Delete config:"
 msgstr "  Borrar configuración:"
 
 msgid "  Delete snapshot:"
-msgstr "  Borrar imagen:"
+msgstr "  Borrar instantánea:"
 
 msgid "  Get config:"
 msgstr "  Obtener configuración:"
@@ -140,10 +141,10 @@ msgid "  List snapshots:"
 msgstr "  Listar imágenes:"
 
 msgid "  Modify snapshot:"
-msgstr "  Modificar imagen:"
+msgstr "  Modificar instantánea:"
 
 msgid "  Mount snapshot:"
-msgstr "  Montar imagen:"
+msgstr "  Montar instantánea:"
 
 # SLE12
 msgid "  Rollback:"
@@ -156,7 +157,7 @@ msgid "  Setup quota:"
 msgstr "  Configurar cuotas:"
 
 msgid "  Umount snapshot:"
-msgstr "  Desmontar imagen:"
+msgstr "  Desmontar instantánea:"
 
 msgid "  Undo changes:"
 msgstr "  Deshacer cambios:"
@@ -326,7 +327,7 @@ msgstr "B"
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr "No se puede borrar la imagen %d porque es el sistema actual."
+msgstr "No se puede borrar la instantánea %d porque es el sistema actual."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
