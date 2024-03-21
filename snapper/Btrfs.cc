@@ -433,7 +433,7 @@ namespace snapper
 	}
 	catch (const runtime_error& e)
 	{
-	    y2err("delete snapshot failed, " << e.what());
+	    y2err("delete snapshot " << info_dir.fullname() << "/snapshot failed, " << e.what());
 	    SN_THROW(DeleteSnapshotFailedException());
 	}
     }

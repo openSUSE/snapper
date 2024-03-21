@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Mar 21 10:46:08 CET 2024 - aschnell@suse.com
+
+- improved log message (see gh#openSUSE/snapper#866)
+
+-------------------------------------------------------------------
 Tue Mar 19 14:58:12 CET 2024 - aschnell@suse.com
 
 - improved error message (gh#openSUSE/snapper#864)
