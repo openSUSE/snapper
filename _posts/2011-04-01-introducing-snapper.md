@@ -106,5 +106,5 @@ wiki page or a man-page for snapper.
 For the time being there is no dedicated mailing-list so just use
 opensuse-factory@opensuse.org.
 
-_Origionally posted on
+_Originally posted on
 [lizards.opensuse.org](https://lizards.opensuse.org/2011/04/01/introducing-snapper/)._

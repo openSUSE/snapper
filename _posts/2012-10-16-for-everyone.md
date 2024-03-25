@@ -47,5 +47,5 @@ project.
 So long and see you at the [openSUSE
 Conference](http://conference.opensuse.org/) 2012 in Prague.
 
-_Origionally posted on
+_Originally posted on
 [lizards.opensuse.org](https://lizards.opensuse.org/2012/10/16/snapper-for-everyone/)._

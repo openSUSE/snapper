@@ -82,5 +82,5 @@ post   | 2 | 1     | Tue 24 Jul 2012 15:49:51 CEST |         |             |
 
 So now you can use snapper even if you don’t trust btrfs. Feedback is welcomed.
 
-_Origionally posted on
+_Originally posted on
 [lizards.opensuse.org](https://lizards.opensuse.org/2012/07/25/snapper-lvm/)._
