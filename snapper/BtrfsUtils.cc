@@ -473,6 +473,8 @@ namespace snapper
 		{
 		    y2war("waiting for old quota rescan to finish");
 
+		    sleep(1);	// avoid excessive logging (gh#openSUSE/snapper#892)
+
 		    if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN_WAIT, &args) < 0)
 			throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_WAIT_RESCAN) failed", errno);
 

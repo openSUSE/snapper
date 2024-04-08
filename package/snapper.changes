@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Apr 08 08:54:07 CEST 2024 - aschnell@suse.com
+
+- avoid excessive logging (gh#openSUSE/snapper#892)
+
+-------------------------------------------------------------------
 Thu Mar 21 10:46:08 CET 2024 - aschnell@suse.com
 
 - improved log message (see gh#openSUSE/snapper#866)
