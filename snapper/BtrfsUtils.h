@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -81,8 +81,10 @@ namespace snapper
 	void qgroup_assign(int fd, qgroup_t src, qgroup_t dst);
 	void qgroup_remove(int fd, qgroup_t src, qgroup_t dst);
 
+	bool does_qgroup_exist(int fd, qgroup_t qgroup);
 	qgroup_t qgroup_find_free(int fd, uint64_t level);
 
+	vector<qgroup_t> qgroup_query_relations(int fd, qgroup_t qgroup);
 	vector<qgroup_t> qgroup_query_children(int fd, qgroup_t parent);
 
 	struct QGroupUsage

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -203,6 +203,8 @@ namespace snapper
 		throw runtime_error_with_errno("ioctl(BTRFS_IOC_SNAP_CREATE_V2) failed", errno);
 
 #endif
+
+	    // no read-only nor qgroup handling below
 
 	    struct btrfs_ioctl_vol_args args;
 	    memset(&args, 0, sizeof(args));
@@ -599,16 +601,18 @@ namespace snapper
 
 	struct TreeSearchOpts
 	{
-	    TreeSearchOpts(__u32 type) : min_offset(0), max_offset(-1), min_type(type), max_type(type) {}
+	    TreeSearchOpts(__u32 type) : min_type(type), max_type(type) {}
 
-	    __u64 min_offset;
-	    __u64 max_offset;
+	    __u64 min_offset = 0;
+	    __u64 max_offset = -1;
 
 	    __u32 min_type;
 	    __u32 max_type;
 
 	    std::function<void(const struct btrfs_ioctl_search_args& args,
-			       const struct btrfs_ioctl_search_header& sh)> callback;
+			       const struct btrfs_ioctl_search_header& sh)> callback =
+		[](const struct btrfs_ioctl_search_args& args,
+		   const struct btrfs_ioctl_search_header& sh){};
 	};
 
 
@@ -679,6 +683,24 @@ namespace snapper
 	}
 
 
+	bool
+	does_qgroup_exist(int fd, qgroup_t qgroup)
+	{
+	    TreeSearchOpts tree_search_opts(BTRFS_QGROUP_INFO_KEY);
+	    tree_search_opts.min_offset = tree_search_opts.max_offset = qgroup;
+
+	    try
+	    {
+		return qgroups_tree_search(fd, tree_search_opts) > 0;
+	    }
+	    catch (const std::runtime_error& e)
+	    {
+		// happens when quota is disabled
+		return false;
+	    }
+	}
+
+
 	qgroup_t
 	qgroup_find_free(int fd, uint64_t level)
 	{
@@ -711,12 +733,12 @@ namespace snapper
 
 
 	vector<qgroup_t>
-	qgroup_query_children(int fd, qgroup_t parent)
+	qgroup_query_relations(int fd, qgroup_t qgroup)
 	{
 	    vector<qgroup_t> ret;
 
 	    TreeSearchOpts tree_search_opts(BTRFS_QGROUP_RELATION_KEY);
-	    tree_search_opts.min_offset = tree_search_opts.max_offset = parent;
+	    tree_search_opts.min_offset = tree_search_opts.max_offset = qgroup;
 	    tree_search_opts.callback = [&ret](const struct btrfs_ioctl_search_args& args,
 					       const struct btrfs_ioctl_search_header& sh)
 	    {
@@ -724,6 +746,25 @@ namespace snapper
 	    };
 
 	    qgroups_tree_search(fd, tree_search_opts);
+
+	    return ret;
+	}
+
+
+	vector<qgroup_t>
+	qgroup_query_children(int fd, qgroup_t parent)
+	{
+	    uint64_t level = get_level(parent);
+	    if (level == 0)
+		return {};
+
+	    --level;
+
+	    vector<qgroup_t> ret = qgroup_query_relations(fd, parent);
+
+	    ret.erase(remove_if(ret.begin(), ret.end(),
+		[level](qgroup_t qgroup){ return level != get_level(qgroup); }
+	    ), ret.end());
 
 	    return ret;
 	}
