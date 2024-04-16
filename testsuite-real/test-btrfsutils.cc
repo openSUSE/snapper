@@ -7,9 +7,9 @@
  */
 
 
-#include <errno.h>
+#include <cerrno>
 #include <fcntl.h>
-#include <string.h>
+#include <cstring>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -61,6 +61,12 @@ main()
 
     if (false)
     {
+	cout << does_qgroup_exist(fd, parse_qgroup("1/0")) << '\n';
+    }
+
+
+    if (false)
+    {
 	qgroup_create(fd, parse_qgroup("1/0"));
     }
 
@@ -107,6 +113,17 @@ main()
 
     if (false)
     {
+	cout << "qgroup_query_relations" << endl;
+
+	vector<qgroup_t> relations = qgroup_query_relations(fd, parse_qgroup("1/0"));
+	for (qgroup_t relation : relations)
+	    cout << format_qgroup(relation) << " ";
+	cout << endl;
+    }
+
+
+    if (false)
+    {
 	cout << "qgroup_query_children" << endl;
 
 	vector<qgroup_t> children = qgroup_query_children(fd, parse_qgroup("1/0"));
@@ -114,6 +131,7 @@ main()
 	    cout << format_qgroup(child) << " ";
 	cout << endl;
     }
+
 
     close(fd);
 }

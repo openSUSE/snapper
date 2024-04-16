@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -102,6 +102,19 @@ namespace snapper
 	    {
 		y2err("failed to parse qgroup '" << qgroup_str << "'");
 		SN_THROW(InvalidConfigException());
+	    }
+
+	    if (get_level(qgroup) == 0)
+	    {
+		y2err("invalid level of qgroup '" << qgroup_str << "'");
+		SN_THROW(InvalidConfigException());
+	    }
+
+	    SDir general_dir = openGeneralDir();
+	    if (!does_qgroup_exist(general_dir.fd(), qgroup))
+	    {
+		y2err("qgroup '" << qgroup_str << "' does not exist");
+		qgroup = no_qgroup;
 	    }
 	}
 	else
