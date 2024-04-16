@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Apr 16 17:59:58 CEST 2024 - aschnell@suse.com
+
+- disable qgroup if it does not exist to avoid failure creating
+  snapshots with kernel 6.8.4 (gh#openSUSE/snapper#894)
+
+-------------------------------------------------------------------
 Mon Apr 08 08:54:07 CEST 2024 - aschnell@suse.com
 
 - avoid excessive logging (gh#openSUSE/snapper#892)
