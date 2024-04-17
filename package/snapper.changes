@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Apr 17 17:03:40 CEST 2024 - aschnell@suse.com
+
+- reverted some parts of PR#884 to fix build in obs
+
+-------------------------------------------------------------------
 Wed Apr 17 15:00:13 CEST 2024 - aschnell@suse.com
 
 - run cleanup service every hour (gh#openSUSE/snapper#885)
