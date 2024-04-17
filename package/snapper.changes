@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Apr 17 15:00:13 CEST 2024 - aschnell@suse.com
+
+- run cleanup service every hour (gh#openSUSE/snapper#885)
+
+-------------------------------------------------------------------
 Tue Apr 16 17:59:58 CEST 2024 - aschnell@suse.com
 
 - disable qgroup if it does not exist to avoid failure creating

@@ -31,11 +31,13 @@ UBUNTU_FLAVOURS =	\
 	xUbuntu_22.04	\
 	xUbuntu_22.10	\
 	xUbuntu_23.04	\
-	xUbuntu_23.10
+	xUbuntu_23.10	\
+	xUbuntu_24.04
 
 RASPBIAN_FLAVOURS =	\
 	Raspbian_10	\
-	Raspbian_11
+	Raspbian_11	\
+	Raspbian_12
 
 show-debian:
 	@echo "Debian flavors: $(DEBIAN_FLAVOURS)"

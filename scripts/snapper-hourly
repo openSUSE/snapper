@@ -17,7 +17,7 @@ fi
 
 
 #
-# run snapper for all configs
+# run snapper timeline for all configs
 #
 for CONFIG in $SNAPPER_CONFIGS ; do
 
@@ -27,6 +27,31 @@ for CONFIG in $SNAPPER_CONFIGS ; do
 
     if [ "$TIMELINE_CREATE" = "yes" ] ; then
 	snapper --config=$CONFIG --quiet create --description="timeline" --cleanup-algorithm="timeline"
+    fi
+
+done
+
+#
+# run snapper cleanup for all configs
+#
+for CONFIG in $SNAPPER_CONFIGS ; do
+
+    NUMBER_CLEANUP="no"
+    TIMELINE_CLEANUP="no"
+    EMPTY_PRE_POST_CLEANUP="no"
+
+    . /etc/snapper/configs/$CONFIG
+
+    if [ "$NUMBER_CLEANUP" = "yes" ] ; then
+	snapper --config=$CONFIG --quiet cleanup number
+    fi
+
+    if [ "$TIMELINE_CLEANUP" = "yes" ] ; then
+	snapper --config=$CONFIG --quiet cleanup timeline
+    fi
+
+    if [ "$EMPTY_PRE_POST_CLEANUP" = "yes" ] ; then
+	snapper --config=$CONFIG --quiet cleanup empty-pre-post
     fi
 
 done
