@@ -18,12 +18,6 @@ version=$2
 # will not need this.
 
 if [ "$action" = upgrade ]; then
-  # move /etc/cron.daily/snapper/suse.de-snapper to the correct location
-  if [ -e /etc/cron.daily/snapper/suse.de-snapper ]; then
-    mv /etc/cron.daily/snapper/suse.de-snapper /etc/cron.daily/snapper.cron
-    rm -rf /etc/cron.daily/snapper
-    mv /etc/cron.daily/snapper.cron /etc/cron.daily/snapper
-  fi
   # move /etc/cron.hourly/snapper/suse.de-snapper to the correct location
   if [ -e /etc/cron.hourly/snapper/suse.de-snapper ]; then
     mv /etc/cron.hourly/snapper/suse.de-snapper /etc/cron.hourly/snapper.cron

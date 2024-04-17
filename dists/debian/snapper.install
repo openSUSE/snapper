@@ -1,4 +1,3 @@
-etc/cron.daily/snapper
 etc/cron.hourly/snapper
 etc/logrotate.d/snapper
 usr/bin/snapper

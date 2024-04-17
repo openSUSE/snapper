@@ -23,4 +23,3 @@ override_dh_auto_install:
 	dh_auto_install
 	install -D -m 644 data/sysconfig.snapper $$(pwd)/debian/tmp/etc/sysconfig/snapper
 	mv $$(pwd)/debian/tmp/etc/cron.hourly/suse.de-snapper $$(pwd)/debian/tmp/etc/cron.hourly/snapper
-	mv $$(pwd)/debian/tmp/etc/cron.daily/suse.de-snapper $$(pwd)/debian/tmp/etc/cron.daily/snapper

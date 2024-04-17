@@ -150,7 +150,6 @@ make %{?_smp_mflags}
 %make_install
 rm -f "%{buildroot}/%{_libdir}"/*.la "%{buildroot}/%{pam_security_dir}/pam_snapper.la"
 rm -f %{buildroot}/etc/cron.hourly/suse.de-snapper
-rm -f %{buildroot}/etc/cron.daily/suse.de-snapper
 
 %if 0%{?suse_version}
 install -D -m 644 data/sysconfig.snapper "%{buildroot}%{_fillupdir}/sysconfig.snapper"
@@ -185,10 +184,6 @@ test -f /etc/logrotate.d/snapper.rpmsave && mv -v /etc/logrotate.d/snapper.rpmsa
 if [ -f /etc/cron.hourly/suse.de-snapper ]; then
  systemctl preset snapper-timeline.timer || :
  systemctl is-enabled -q snapper-timeline.timer && systemctl start snapper-timeline.timer || :
-fi
-if [ -f /etc/cron.daily/suse.de-snapper ]; then
- systemctl preset snapper-cleanup.timer || :
- systemctl is-enabled -q snapper-cleanup.timer && systemctl start snapper-cleanup.timer || :
 fi
 %service_add_post snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer snapperd.service
 %endif
