@@ -80,6 +80,7 @@ public:
 
     string getSubvolume() const;
 
+    // Return whether the key was found. If the key was not found then value is unchanged.
     bool getValue(const string& key, string& value) const;
 
     bool is_yes(const char* key) const;
