@@ -183,7 +183,13 @@ cleanup(ProxySnappers* snappers)
 
 		SystemCmd cmd({ BTRFS_BIN, "qgroup", "clear-stale", subvolume });
 		if (cmd.retcode() != 0)
+		{
+		    // This fails more often than not since qgroups of just deleted
+		    // subvolume are busy. So do not set an error code here. Still log the
+		    // failure to help people understand this stuff.
+
 		    cerr << "'btrfs qgroup clear-stale " << subvolume << "' failed." << endl;
+		}
 	    }
 	}
     }
