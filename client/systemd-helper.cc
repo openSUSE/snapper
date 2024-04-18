@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2014-2015] Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -25,6 +25,9 @@
 
 #include <cstdlib>
 #include <iostream>
+
+#include <snapper/SystemCmd.h>
+#include <snapper/SnapperDefines.h>
 
 #include "utils/text.h"
 #include "utils/GetOpts.h"
@@ -167,6 +170,20 @@ cleanup(ProxySnappers* snappers)
 	    {
 		cerr << "empty-pre-post cleanup for " << value.first << " failed." << endl;
 		ok = false;
+	    }
+	}
+
+	string fstype;
+	if (proxy_config.getValue(KEY_FSTYPE, fstype) && fstype == "btrfs")
+	{
+	    string subvolume;
+	    if (proxy_config.getValue(KEY_SUBVOLUME, subvolume))
+	    {
+		cout << "Running 'btrfs qgroup clear-stale " << subvolume << "'." << endl;
+
+		SystemCmd cmd({ BTRFS_BIN, "qgroup", "clear-stale", subvolume });
+		if (cmd.retcode() != 0)
+		    cerr << "'btrfs qgroup clear-stale " << subvolume << "' failed." << endl;
 	    }
 	}
     }

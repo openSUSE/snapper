@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2014] Novell, Inc.
- * Copyright (c) [2020-2023] SUSE LLC
+ * Copyright (c) [2020-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -46,6 +46,8 @@
 // commands
 
 #define SH_BIN "/bin/sh"
+
+#define BTRFS_BIN "/usr/sbin/btrfs"
 
 #define SYSTEMCTL_BIN "/usr/bin/systemctl"
 
