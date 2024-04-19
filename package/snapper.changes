@@ -2,6 +2,7 @@
 Thu Apr 18 15:03:31 CEST 2024 - aschnell@suse.com
 
 - async cleanup of stale btrfs qgroups (bsc#1222847)
+- version 0.11.0
 
 -------------------------------------------------------------------
 Wed Apr 17 17:03:40 CEST 2024 - aschnell@suse.com
