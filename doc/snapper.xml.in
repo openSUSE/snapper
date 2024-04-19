@@ -2,13 +2,13 @@
 <refentry id='snapper8' xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <refentryinfo>
-    <date>2023-11-28</date>
+    <date>2024-04-18</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2023-11-28</refmiscinfo>
+    <refmiscinfo class='date'>2024-04-18</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -143,7 +143,7 @@
       the filesystem above a limit. For the first condition quota must be
       setup, see command setup-quota. Additional the NUMBER_LIMIT and
       TIMELINE_LIMIT variables in the config file must have ranges (min- and
-      max-value). The algorithms will then make two passes:
+      max-value). The algorithms will then make two passes:</para>
 
       <orderedlist>
 	<listitem>
@@ -156,15 +156,18 @@
 	</listitem>
       </orderedlist>
 
-      The limit for the used space can be configured via the
+      <para>The limit for the used space can be configured via the
       SPACE_LIMIT variable. Note: Only snapshots that have a cleanup
       algorithm set are taken into account when calculating the space
-      used by snapshots.
+      used by snapshots.</para>
 
-      The limit for the free space can be configured via the
-      FREE_LIMIT variable.
+      <para>The limit for the free space can be configured via the
+      FREE_LIMIT variable.</para>
 
-      </para>
+      <para>Note: Since the cleanup is performed asynchronous from
+      creating snapshots the observed snapshots can differ from the
+      expected snapshots according to the limits. Also btrfs stale
+      qgroups can exist temporarily.</para>
 
     </refsect2>
 
