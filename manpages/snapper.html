@@ -105,7 +105,7 @@
           <a id="cleanup_algorithms"></a>
           <h3>Cleanup Algorithms</h3>
           <p>Snapper provides several algorithms to clean up old snapshots. The
-      algorithms are executed in a daily cronjob or systemd timer. This can be configured in the
+      algorithms are executed in an hourly cronjob or systemd timer. This can be configured in the
       corresponding configurations files along with parameters for every
       algorithm.</p>
           <div class="glosslist">
@@ -122,7 +122,7 @@
               </dt>
               <dd class="glossdef">
                 <p>Deletes old snapshots but keeps a number of hourly, daily,
-	    weekly, monthly and yearly snapshots.</p>
+	    weekly, monthly, quarterly and yearly snapshots.</p>
               </dd>
               <dt>
                 <span class="glossterm">empty-pre-post</span>
@@ -137,9 +137,7 @@
       the filesystem above a limit. For the first condition quota must be
       setup, see command setup-quota. Additional the NUMBER_LIMIT and
       TIMELINE_LIMIT variables in the config file must have ranges (min- and
-      max-value). The algorithms will then make two passes:
-
-      </p>
+      max-value). The algorithms will then make two passes:</p>
           <div class="orderedlist">
             <ol class="orderedlist" type="1">
               <li class="listitem">
@@ -152,17 +150,16 @@
               </li>
             </ol>
           </div>
-          <p>
-
-      The limit for the used space can be configured via the
+          <p>The limit for the used space can be configured via the
       SPACE_LIMIT variable. Note: Only snapshots that have a cleanup
       algorithm set are taken into account when calculating the space
-      used by snapshots.
-
-      The limit for the free space can be configured via the
-      FREE_LIMIT variable.
-
-      </p>
+      used by snapshots.</p>
+          <p>The limit for the free space can be configured via the
+      FREE_LIMIT variable.</p>
+          <p>Note: Since the cleanup is performed asynchronous from
+      creating snapshots the observed snapshots can differ from the
+      expected snapshots according to the limits. Also btrfs stale
+      qgroups can exist temporarily.</p>
         </div>
         <div class="refsect2">
           <a id="filters"></a>
@@ -1160,6 +1157,12 @@
             </dd>
           </dl>
         </div>
+      </div>
+      <div class="refsect1">
+        <a id="exit_status"></a>
+        <h2>EXIT STATUS</h2>
+        <p>Normally the exit status is 0. If an error occurred the exit status is
+    1. It is also an error if the exit status of a plugin is not 0.</p>
       </div>
       <div class="refsect1">
         <a id="notes"></a>

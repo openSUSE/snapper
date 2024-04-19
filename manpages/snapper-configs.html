@@ -98,6 +98,8 @@
 	  "\".</p>
               <p>Also see the PERMISSIONS section in
 	  <a class="citerefentry" href="snapper.html"><span class="citerefentry"><span class="refentrytitle">snapper</span>(8)</span></a>.</p>
+              <p>Using network users should be avoided since it can break
+	  most commands including rollback when the network does not work.</p>
               <p>Default value is "" but "root" is always
 	  implicitly included.</p>
             </dd>
@@ -112,6 +114,8 @@
 	  "\".</p>
               <p>Also see the PERMISSIONS section in
 	  <a class="citerefentry" href="snapper.html"><span class="citerefentry"><span class="refentrytitle">snapper</span>(8)</span></a>.</p>
+              <p>Using network groups should be avoided since it can break
+	  most commands including rollback when the network does not work.</p>
               <p>Default value is "".</p>
             </dd>
             <dt>
@@ -169,7 +173,7 @@
             <dd>
               <p>Minimal age for snapshots to be deleted by the number cleanup
 	  algorithm.</p>
-              <p>Default value is "1800".</p>
+              <p>Default value is "3600".</p>
             </dd>
             <dt>
               <span class="term">
@@ -227,7 +231,7 @@
             <dd>
               <p>Minimal age for snapshots to be deleted by the timeline
 	  cleanup algorithm.</p>
-              <p>Default value is "1800".</p>
+              <p>Default value is "3600".</p>
             </dd>
             <dt>
               <span class="term">
@@ -280,6 +284,18 @@
             </dd>
             <dt>
               <span class="term">
+                <code class="option">TIMELINE_LIMIT_QUARTERLY=<em class="replaceable"><code>number</code></em> or
+	<em class="replaceable"><code>range</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Defines how many quarterly snapshots the timeline cleanup
+	  algorithm should keep. A quarterly snapshot is the first snapshot in a quarter. The
+	  youngest quarterly snapshots will be kept.</p>
+              <p>Default value is "0".</p>
+            </dd>
+            <dt>
+              <span class="term">
                 <code class="option">TIMELINE_LIMIT_YEARLY=<em class="replaceable"><code>number</code></em> or
 	<em class="replaceable"><code>range</code></em></code>
               </span>
@@ -308,7 +324,7 @@
             <dd>
               <p>Minimal age for snapshots to be deleted by the empty-pre-post
 	  cleanup algorithm.</p>
-              <p>Default value is "1800".</p>
+              <p>Default value is "3600".</p>
             </dd>
           </dl>
         </div>
