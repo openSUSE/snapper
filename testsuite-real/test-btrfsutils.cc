@@ -43,6 +43,21 @@ main()
 
     if (false)
     {
+	int fddst = open("/btrfs/snaps", O_NOATIME);
+	if (fddst < 0)
+	{
+	    cerr << "open failed (" << strerror(errno) << ")" << endl;
+	    return EXIT_FAILURE;
+	}
+
+	create_snapshot(fd, fddst, "snap1", true, parse_qgroup("1/0"));
+
+	close(fddst);
+    }
+
+
+    if (false)
+    {
 	quota_enable(fd);
     }
 
