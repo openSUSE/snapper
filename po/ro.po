@@ -15,18 +15,20 @@ msgstr ""
 "Project-Id-Version: OpenSUSE\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 12:27+0100\n"
-"PO-Revision-Date: 2011-11-01 00:08-0700\n"
-"Last-Translator: Alexandru Szasz <alexxed@gmail.com>\n"
-"Language-Team: Romanian <LL@li.org>\n"
+"PO-Revision-Date: 2024-04-29 20:43+0000\n"
+"Last-Translator: Coleasa Nicolae <nicolaefericitu@duck.com>\n"
+"Language-Team: Romanian <https://l10n.opensuse.org/projects/snapper/master/"
+"ro/>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Narro 2.0 on http://tradu.softwareliber.ro\n"
-"Plural-Forms:  nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
+"X-Generator: Weblate 4.9.1\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
-msgstr ""
+msgstr "\tsnapper cleanup <algoritm de curățare>"
 
 msgid "\tsnapper create"
 msgstr "\tsnapper create"
@@ -35,14 +37,14 @@ msgid "\tsnapper create-config <subvolume>"
 msgstr ""
 
 msgid "\tsnapper delete <number>"
-msgstr ""
+msgstr "\tsnapper delete <număr>"
 
 #, fuzzy
 msgid "\tsnapper delete-config"
 msgstr "\tsnapper list-configs"
 
 msgid "\tsnapper diff <number1>..<number2> [files]"
-msgstr ""
+msgstr "\tsnapper diff <numărul1>..<numărul2> [fișiere]"
 
 #, fuzzy
 msgid "\tsnapper get-config"
@@ -58,11 +60,10 @@ msgid "\tsnapper modify <number>"
 msgstr "\tsnapper modify <număr>"
 
 msgid "\tsnapper mount <number>"
-msgstr ""
+msgstr "\tsnapper mount <număr>"
 
-#, fuzzy
 msgid "\tsnapper rollback [number]"
-msgstr "\tsnapper modify <număr>"
+msgstr "\tsnapper rollback [numărul]"
 
 #, fuzzy
 msgid "\tsnapper set-config <configdata>"
@@ -73,17 +74,16 @@ msgid "\tsnapper setup-quota"
 msgstr "\tsnapper list-configs"
 
 msgid "\tsnapper status <number1>..<number2>"
-msgstr ""
+msgstr "\tsnapper status <numărul1>..<numărul2>"
 
 msgid "\tsnapper umount <number>"
-msgstr ""
+msgstr "\tsnapper umount <numărul>"
 
 msgid "\tsnapper undochange <number1>..<number2> [files]"
 msgstr ""
 
-#, fuzzy
 msgid "\tsnapper xadiff <number1>..<number2> [files]"
-msgstr "\tsnapper modify <număr>"
+msgstr "\tsnapper xadiff <numărul1>..<numărul2> [fișiere]"
 
 msgid "    Global options:"
 msgstr "    Opțiuni globale:"
@@ -102,9 +102,8 @@ msgstr ""
 msgid "    Options for 'delete' command:"
 msgstr "    Opțiuni pentru comanda 'create':"
 
-#, fuzzy
 msgid "    Options for 'diff' command:"
-msgstr "    Opțiuni pentru comanda 'modify':"
+msgstr "    Opțiuni pentru comanda 'diff':"
 
 #, fuzzy
 msgid "    Options for 'get-config' command:"
@@ -164,7 +163,7 @@ msgid "  List snapshots:"
 msgstr "  Listează configurațiile:"
 
 msgid "  Modify snapshot:"
-msgstr ""
+msgstr "  Modificați instantaneul:"
 
 msgid "  Mount snapshot:"
 msgstr ""
@@ -217,7 +216,7 @@ msgid "--ambit, -a <ambit>"
 msgstr ""
 
 msgid "--cleanup-algorithm, -c <algo>"
-msgstr ""
+msgstr "--cleanup-algorithm, -c <algoritm>"
 
 msgid "--columns <columns>"
 msgstr ""
@@ -317,7 +316,7 @@ msgid "--type, -t <type>"
 msgstr ""
 
 msgid "--userdata, -u <userdata>"
-msgstr ""
+msgstr "--userdata, -u <date utilizator>"
 
 msgid "--utc"
 msgstr ""
@@ -349,13 +348,16 @@ msgstr ""
 msgid "B"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr "Ștergerea CA a eșuat: %1."
+msgstr ""
+"Nu se poate șterge instantaneul %d, deoarece acesta este sistemul curent."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
 msgstr ""
+"Nu se poate șterge instantaneul %d, deoarece este instantaneul montat în "
+"prezent."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
@@ -374,10 +376,10 @@ msgid "Cleanup"
 msgstr "Curățenie"
 
 msgid "Cleanup algorithm for snapshot."
-msgstr ""
+msgstr "Algoritm de curățare pentru instantaneu."
 
 msgid "Cleanup algorithm for snapshots."
-msgstr ""
+msgstr "Algoritm de curățare pentru instantanee."
 
 msgid "Cleanup all configs affecting path."
 msgstr ""
@@ -428,9 +430,8 @@ msgstr "Comanda 'help' nu acceptă argumente."
 msgid "Command 'list-configs' does not take arguments."
 msgstr "Comanda 'help' nu acceptă argumente."
 
-#, fuzzy
 msgid "Command 'modify' needs at least one argument."
-msgstr "get necesită cel puțin un argument"
+msgstr "Comanda 'modify' are nevoie de cel puțin un argument."
 
 msgid "Command 'mount' needs at least one argument."
 msgstr ""
@@ -522,14 +523,14 @@ msgid "Creating config failed (%s)."
 msgstr "Crearea configurației a eșuat (%s)."
 
 msgid "Creating read-only snapshot of current system."
-msgstr ""
+msgstr "Crearea unui instantaneu numai pentru citire a sistemului curent."
 
 #, fuzzy
 msgid "Creating read-only snapshot of default subvolume."
 msgstr "Crearea configurației a eșuat (%s)."
 
 msgid "Creating read-write snapshot of current subvolume."
-msgstr ""
+msgstr "Crearea unui instantaneu de citire-scriere a subvolumului curent."
 
 #, fuzzy, c-format
 msgid "Creating read-write snapshot of snapshot %d."
@@ -598,18 +599,16 @@ msgstr ""
 msgid "Empty configdata."
 msgstr "Date de emitere invalide."
 
-#, fuzzy
 msgid "Empty userdata."
-msgstr "Date de emitere invalide."
+msgstr "Date utilizator goale."
 
 # error box title
 #, fuzzy, c-format
 msgid "Error (%s)."
 msgstr "Eroare I/O"
 
-#, fuzzy
 msgid "Extra options passed to the diff command."
-msgstr "    Opțiuni pentru comanda 'modify':"
+msgstr "Opțiuni suplimentare transmise comenzii diff."
 
 msgid "Failed to initialize filesystem handler."
 msgstr ""
@@ -727,9 +726,8 @@ msgstr "Date de emitere invalide."
 msgid "Invalid user (%s)."
 msgstr "Date de emitere invalide."
 
-#, fuzzy
 msgid "Invalid userdata."
-msgstr "Date de emitere invalide."
+msgstr "Date utilizator nevalide."
 
 #, fuzzy
 msgid "Key"
@@ -975,7 +973,7 @@ msgstr ""
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
-msgstr ""
+msgstr "Algoritm de curățare necunoscut '%s'."
 
 #, c-format
 msgid "Unknown command '%s'."
@@ -1014,32 +1012,29 @@ msgstr ""
 msgid "User"
 msgstr "Nume de utilizator"
 
-#, fuzzy
 msgid "Userdata"
-msgstr "Nume de utilizator"
+msgstr "Date utilizator"
 
 #, c-format
 msgid "Userdata '%s' does not include '=' sign."
-msgstr ""
+msgstr "Datele utilizatorului '%s' nu includ semnul '='."
 
 #, c-format
 msgid "Userdata '%s' has empty key."
-msgstr ""
+msgstr "Datele utilizatorului '%s' au o cheie goală."
 
-#, fuzzy
 msgid "Userdata for snapshot."
-msgstr "Ștergerea CA a eșuat: %1."
+msgstr "Datele utilizatorului pentru instantaneu."
 
-#, fuzzy
 msgid "Userdata for snapshots."
-msgstr "  Listează configurațiile:"
+msgstr "Datele utilizatorului pentru instantanee."
 
 msgid "Value"
 msgstr "Valoare"
 
 #, c-format
 msgid "create:%d modify:%d delete:%d"
-msgstr ""
+msgstr "creare:%d modificare:%d ștergere:%d"
 
 #, c-format
 msgid "creating %s"
@@ -1059,7 +1054,7 @@ msgstr ""
 
 #, c-format
 msgid "failed to modify %s"
-msgstr ""
+msgstr "nu s-a reușit modificarea %s"
 
 #. TRANSLATORS: symbol for "kilo" (best keep untranslated)
 msgid "k"
@@ -1071,7 +1066,7 @@ msgstr ""
 
 #, c-format
 msgid "modifying %s"
-msgstr ""
+msgstr "modificarea %s"
 
 msgid "no"
 msgstr ""
