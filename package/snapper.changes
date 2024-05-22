@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed May 22 17:21:18 CEST 2024 - aschnell@suse.com
+
+- fixed error message (gh#openSUSE/snapper#907)
+
+-------------------------------------------------------------------
 Thu Apr 18 15:03:31 CEST 2024 - aschnell@suse.com
 
 - async cleanup of stale btrfs qgroups (bsc#1222847)
