@@ -265,9 +265,11 @@ namespace snapper
 	    SN_THROW(OptionsException(_("Command 'cleanup' needs one arguments.")));
 	}
 
-	if (!toValue(get_opts.pop_arg(), cleanup_algorithm, false))
+	const char* arg = get_opts.pop_arg();
+
+	if (!toValue(arg, cleanup_algorithm, false))
 	{
-	    string error = sformat(_("Unknown cleanup algorithm '%s'."), opt->second.c_str()) + '\n' +
+	    string error = sformat(_("Unknown cleanup algorithm '%s'."), arg) + '\n' +
 		possible_enum_values<CleanupAlgorithm>();
 	    SN_THROW(OptionsException(error));
 	}
