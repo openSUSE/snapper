@@ -34,6 +34,7 @@
 #include "snapper/File.h"
 #include "snapper/Snapper.h"
 #include "snapper/SnapperTmpl.h"
+#include "snapper/SnapperDefines.h"
 
 #include "snapper/Acls.h"
 #include "snapper/Exception.h"
@@ -72,7 +73,7 @@ namespace snapper
 
 	try
 	{
-	    create_subvolume(subvolume_dir.fd(), ".snapshots");
+	    create_subvolume(subvolume_dir.fd(), SNAPSHOTS_NAME);
 	}
 	catch (const runtime_error_with_errno& e)
 	{
@@ -90,7 +91,7 @@ namespace snapper
 	    }
 	}
 
-	SFile x(subvolume_dir, ".snapshots");
+	SFile x(subvolume_dir, SNAPSHOTS_NAME);
 
 #ifdef ENABLE_SELINUX
 	try
@@ -119,7 +120,7 @@ namespace snapper
 
 	try
 	{
-	    delete_subvolume(subvolume_dir.fd(), ".snapshots");
+	    delete_subvolume(subvolume_dir.fd(), SNAPSHOTS_NAME);
 	}
 	catch (const runtime_error& e)
 	{
@@ -132,8 +133,8 @@ namespace snapper
     string
     Bcachefs::snapshotDir(unsigned int num) const
     {
-	return (subvolume == "/" ? "" : subvolume) + "/.snapshots/" + decString(num) +
-	    "/snapshot";
+	return (subvolume == "/" ? "" : subvolume) + "/" SNAPSHOTS_NAME "/" + decString(num) +
+	    "/" SNAPSHOT_NAME;
     }
 
 
@@ -161,7 +162,7 @@ namespace snapper
     Bcachefs::openInfosDir() const
     {
 	SDir subvolume_dir = openSubvolumeDir();
-	SDir infos_dir(subvolume_dir, ".snapshots");
+	SDir infos_dir(subvolume_dir, SNAPSHOTS_NAME);
 
 	struct stat stat;
 	if (infos_dir.stat(&stat) != 0)
@@ -200,7 +201,7 @@ namespace snapper
     Bcachefs::openSnapshotDir(unsigned int num) const
     {
 	SDir info_dir = openInfoDir(num);
-	SDir snapshot_dir(info_dir, "snapshot");
+	SDir snapshot_dir(info_dir, SNAPSHOT_NAME);
 
 	return snapshot_dir;
     }
@@ -218,9 +219,9 @@ namespace snapper
 	    try
 	    {
 		if (empty)
-		    create_subvolume(info_dir.fd(), "snapshot");
+		    create_subvolume(info_dir.fd(), SNAPSHOT_NAME);
 		else
-		    create_snapshot(subvolume_dir.fd(), subvolume, info_dir.fd(), "snapshot", read_only);
+		    create_snapshot(subvolume_dir.fd(), subvolume, info_dir.fd(), SNAPSHOT_NAME, read_only);
 	    }
 	    catch (const runtime_error& e)
 	    {
@@ -235,7 +236,7 @@ namespace snapper
 
 	    try
 	    {
-		create_snapshot(snapshot_dir.fd(), subvolume, info_dir.fd(), "snapshot", read_only);
+		create_snapshot(snapshot_dir.fd(), subvolume, info_dir.fd(), SNAPSHOT_NAME, read_only);
 	    }
 	    catch (const runtime_error& e)
 	    {
@@ -253,7 +254,7 @@ namespace snapper
 
 	try
 	{
-	    delete_subvolume(info_dir.fd(), "snapshot");
+	    delete_subvolume(info_dir.fd(), SNAPSHOT_NAME);
 	}
 	catch (const runtime_error& e)
 	{
@@ -306,7 +307,7 @@ namespace snapper
 	    SDir info_dir = openInfoDir(num);
 
 	    struct stat stat;
-	    int r = info_dir.stat("snapshot", &stat, AT_SYMLINK_NOFOLLOW);
+	    int r = info_dir.stat(SNAPSHOT_NAME, &stat, AT_SYMLINK_NOFOLLOW);
 	    return r == 0 && is_subvolume(stat);
 	}
 	catch (const IOErrorException& e)

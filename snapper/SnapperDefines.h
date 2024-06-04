@@ -43,6 +43,13 @@
 #define DEV_MAPPER_DIR "/dev/mapper"
 
 
+// parts of the path of snapshots
+// "/.snapshots/42/snapshot/" = "/SNAPSHOTS_NAME/42/snapshot/"
+
+#define SNAPSHOTS_NAME ".snapshots"
+#define SNAPSHOT_NAME "snapshot"
+
+
 // commands
 
 #define SH_BIN "/bin/sh"

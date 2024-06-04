@@ -133,7 +133,7 @@ namespace snapper
 
 	try
 	{
-	    create_subvolume(subvolume_dir.fd(), ".snapshots");
+	    create_subvolume(subvolume_dir.fd(), SNAPSHOTS_NAME);
 	}
 	catch (const runtime_error_with_errno& e)
 	{
@@ -151,7 +151,7 @@ namespace snapper
 	    }
 	}
 
-	SFile x(subvolume_dir, ".snapshots");
+	SFile x(subvolume_dir, SNAPSHOTS_NAME);
 #ifdef ENABLE_SELINUX
 	try
 	{
@@ -179,7 +179,7 @@ namespace snapper
 #ifdef ENABLE_ROLLBACK
 	if (subvolume == "/")
 	{
-	    subvolume_dir.umount(".snapshots");
+	    subvolume_dir.umount(SNAPSHOTS_NAME);
 
 	    removeFromFstab();
 	}
@@ -187,7 +187,7 @@ namespace snapper
 
 	try
 	{
-	    delete_subvolume(subvolume_dir.fd(), ".snapshots");
+	    delete_subvolume(subvolume_dir.fd(), SNAPSHOTS_NAME);
 	}
 	catch (const runtime_error& e)
 	{
@@ -238,8 +238,8 @@ namespace snapper
     string
     Btrfs::snapshotDir(unsigned int num) const
     {
-	return (subvolume == "/" ? "" : subvolume) + "/.snapshots/" + decString(num) +
-	    "/snapshot";
+	return (subvolume == "/" ? "" : subvolume) + "/" SNAPSHOTS_NAME "/" + decString(num) +
+	    "/" SNAPSHOT_NAME;
     }
 
 
@@ -267,7 +267,7 @@ namespace snapper
     Btrfs::openInfosDir() const
     {
 	SDir subvolume_dir = openSubvolumeDir();
-	SDir infos_dir(subvolume_dir, ".snapshots");
+	SDir infos_dir(subvolume_dir, SNAPSHOTS_NAME);
 
 	struct stat stat;
 	if (infos_dir.stat(&stat) != 0)
@@ -306,7 +306,7 @@ namespace snapper
     Btrfs::openSnapshotDir(unsigned int num) const
     {
 	SDir info_dir = openInfoDir(num);
-	SDir snapshot_dir(info_dir, "snapshot");
+	SDir snapshot_dir(info_dir, SNAPSHOT_NAME);
 
 	return snapshot_dir;
     }
@@ -331,9 +331,9 @@ namespace snapper
 	    try
 	    {
 		if (empty)
-		    create_subvolume(info_dir.fd(), "snapshot");
+		    create_subvolume(info_dir.fd(), SNAPSHOT_NAME);
 		else
-		    create_snapshot(subvolume_dir.fd(), info_dir.fd(), "snapshot", read_only,
+		    create_snapshot(subvolume_dir.fd(), info_dir.fd(), SNAPSHOT_NAME, read_only,
 				    quota ? qgroup : no_qgroup);
 	    }
 	    catch (const runtime_error& e)
@@ -349,7 +349,7 @@ namespace snapper
 
 	    try
 	    {
-		create_snapshot(snapshot_dir.fd(), info_dir.fd(), "snapshot", read_only,
+		create_snapshot(snapshot_dir.fd(), info_dir.fd(), SNAPSHOT_NAME, read_only,
 				quota ? qgroup : no_qgroup);
 	    }
 	    catch (const runtime_error& e)
@@ -387,7 +387,7 @@ namespace snapper
 
 	try
 	{
-	    create_snapshot(tmp_mount_dir.fd(), info_dir.fd(), "snapshot", read_only,
+	    create_snapshot(tmp_mount_dir.fd(), info_dir.fd(), SNAPSHOT_NAME, read_only,
 			    quota ? qgroup : no_qgroup);
 	}
 	catch (const runtime_error& e)
@@ -419,7 +419,7 @@ namespace snapper
 	    subvolid_t subvolid = get_id(openSnapshotDir(num).fd());
 #endif
 
-	    delete_subvolume(info_dir.fd(), "snapshot");
+	    delete_subvolume(info_dir.fd(), SNAPSHOT_NAME);
 
 #if defined(HAVE_LIBBTRFS) || defined(HAVE_LIBBTRFSUTIL)
 	    deleted_subvolids.push_back(subvolid);
@@ -427,7 +427,7 @@ namespace snapper
 	}
 	catch (const runtime_error& e)
 	{
-	    y2err("delete snapshot " << info_dir.fullname() << "/snapshot failed, " << e.what());
+	    y2err("delete snapshot " << info_dir.fullname() << "/" SNAPSHOT_NAME " failed, " << e.what());
 	    SN_THROW(DeleteSnapshotFailedException());
 	}
     }
@@ -476,7 +476,7 @@ namespace snapper
 	    SDir info_dir = openInfoDir(num);
 
 	    struct stat stat;
-	    int r = info_dir.stat("snapshot", &stat, AT_SYMLINK_NOFOLLOW);
+	    int r = info_dir.stat(SNAPSHOT_NAME, &stat, AT_SYMLINK_NOFOLLOW);
 	    return r == 0 && is_subvolume(stat);
 	}
 	catch (const IOErrorException& e)
@@ -1614,7 +1614,7 @@ namespace snapper
 	string subvol_option = default_subvolume_name;
 	if (!subvol_option.empty())
 	    subvol_option += "/";
-	subvol_option += ".snapshots";
+	subvol_option += SNAPSHOTS_NAME;
 
 	MntTable mnt_table(root_prefix);
 	mnt_table.parse_fstab();
@@ -1627,7 +1627,7 @@ namespace snapper
 	if (!snapshots)
 	    throw runtime_error("mnt_copy_fs failed");
 
-	mnt_fs_set_target(snapshots, "/.snapshots");
+	mnt_fs_set_target(snapshots, "/" SNAPSHOTS_NAME);
 
 	char* options = mnt_fs_strdup_options(snapshots);
 	mnt_optstr_remove_option(&options, "defaults");
@@ -1646,7 +1646,7 @@ namespace snapper
 	MntTable mnt_table(root_prefix);
 	mnt_table.parse_fstab();
 
-	string mountpoint = (subvolume == "/" ? "" : subvolume) +  "/.snapshots";
+	string mountpoint = (subvolume == "/" ? "" : subvolume) +  "/" SNAPSHOTS_NAME;
 	libmnt_fs* snapshots = mnt_table.find_target(mountpoint, MNT_ITER_FORWARD);
 	if (!snapshots)
 	    return;

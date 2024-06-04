@@ -109,7 +109,7 @@ namespace snapper
     void
     Lvm::createLvmConfig(const SDir& subvolume_dir, int mode) const
     {
-	int r1 = subvolume_dir.mkdir(".snapshots", mode);
+	int r1 = subvolume_dir.mkdir(SNAPSHOTS_NAME, mode);
 	if (r1 != 0 && errno != EEXIST)
 	{
 	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
@@ -133,7 +133,7 @@ namespace snapper
 
 	    try
 	    {
-		string path(subvolume_dir.fullname() + "/.snapshots");
+		string path(subvolume_dir.fullname() + "/" SNAPSHOTS_NAME);
 
 		con = selabel_handle->selabel_lookup(path, mode);
 		if (con)
@@ -182,7 +182,7 @@ namespace snapper
     {
 	SDir subvolume_dir = openSubvolumeDir();
 
-	int r1 = subvolume_dir.unlink(".snapshots", AT_REMOVEDIR);
+	int r1 = subvolume_dir.unlink(SNAPSHOTS_NAME, AT_REMOVEDIR);
 	if (r1 != 0)
 	{
 	    y2err("rmdir failed errno:" << errno << " (" << strerror(errno) << ")");
@@ -194,8 +194,8 @@ namespace snapper
     string
     Lvm::snapshotDir(unsigned int num) const
     {
-	return (subvolume == "/" ? "" : subvolume) + "/.snapshots/" + decString(num) +
-	    "/snapshot";
+	return (subvolume == "/" ? "" : subvolume) + "/" SNAPSHOTS_NAME "/" + decString(num) +
+	    "/" SNAPSHOT_NAME;
     }
 
 
@@ -203,7 +203,7 @@ namespace snapper
     Lvm::openInfosDir() const
     {
 	SDir subvolume_dir = openSubvolumeDir();
-	SDir infos_dir(subvolume_dir, ".snapshots");
+	SDir infos_dir(subvolume_dir, SNAPSHOTS_NAME);
 
 	struct stat stat;
 	if (infos_dir.stat(&stat) != 0)
@@ -237,7 +237,7 @@ namespace snapper
     Lvm::openSnapshotDir(unsigned int num) const
     {
 	SDir info_dir = openInfoDir(num);
-	SDir snapshot_dir(info_dir, "snapshot");
+	SDir snapshot_dir(info_dir, SNAPSHOT_NAME);
 
 	return snapshot_dir;
     }
@@ -258,7 +258,7 @@ namespace snapper
 	    SN_THROW(UnsupportedException());
 
 	SDir info_dir = openInfoDir(num);
-	int r1 = info_dir.mkdir("snapshot", 0755);
+	int r1 = info_dir.mkdir(SNAPSHOT_NAME, 0755);
 	if (r1 != 0 && errno != EEXIST)
 	{
 	    y2err("mkdir failed errno:" << errno << " (" << strerror(errno) << ")");
@@ -293,7 +293,7 @@ namespace snapper
 	}
 
 	SDir info_dir = openInfoDir(num);
-	info_dir.unlink("snapshot", AT_REMOVEDIR);
+	info_dir.unlink(SNAPSHOT_NAME, AT_REMOVEDIR);
 
 	SDir infos_dir = openInfosDir();
 	infos_dir.unlink(decString(num), AT_REMOVEDIR);
@@ -347,7 +347,7 @@ namespace snapper
 	{
 	    SDir info_dir = openInfoDir(num);
 
-	    if (!umount(info_dir, "snapshot"))
+	    if (!umount(info_dir, SNAPSHOT_NAME))
 		SN_THROW(UmountSnapshotFailedException());
 	}
 
