@@ -149,11 +149,11 @@ step2(const string& device, const string& root_prefix, const string& default_sub
     string subvol_option = default_subvolume_name;
     if (!subvol_option.empty())
 	subvol_option += "/";
-    subvol_option += ".snapshots";
+    subvol_option += SNAPSHOTS_NAME;
 
-    mkdir((root_prefix + "/.snapshots").c_str(), 0777);
+    mkdir((root_prefix + "/" SNAPSHOTS_NAME).c_str(), 0777);
 
-    SDir s_dir(root_prefix + "/.snapshots");
+    SDir s_dir(root_prefix + "/" SNAPSHOTS_NAME);
     if (!s_dir.mount(device, "btrfs", 0, "subvol=" + subvol_option))
     {
 	cerr << "mounting .snapshots failed" << endl;

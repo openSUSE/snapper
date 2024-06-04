@@ -39,6 +39,7 @@
 #include "snapper/Exception.h"
 #include "snapper/XAttributes.h"
 #include "snapper/Acls.h"
+#include "snapper/SnapperDefines.h"
 
 
 namespace snapper
@@ -259,7 +260,7 @@ namespace snapper
     bool
     filter(const string& name)
     {
-	if (name == "/.snapshots")
+	if (name == "/" SNAPSHOTS_NAME)
 	    return true;
 
 	return false;

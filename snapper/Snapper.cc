@@ -1033,7 +1033,7 @@ namespace snapper
 	try
 	{
 	    SDir subvol_dir = openSubvolumeDir();
-	    SDir infos_dir(subvol_dir, ".snapshots");
+	    SDir infos_dir(subvol_dir, SNAPSHOTS_NAME);
 
 	    if (infos_dir.restorecon(selabel_handle))
 	    {
@@ -1080,7 +1080,7 @@ namespace snapper
 
 	    if (!skip_snapshot_dir)
 	    {
-		SFile snapshot_dir(info_dir, "snapshot");
+		SFile snapshot_dir(info_dir, SNAPSHOT_NAME);
 		snapshot_dir.restorecon(selabel_handle);
 	    }
 

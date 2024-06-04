@@ -88,10 +88,10 @@ namespace snapper
     void
     Ext4::createConfig() const
     {
-	int r1 = mkdir((subvolume + "/.snapshots").c_str(), 0700);
+	int r1 = mkdir((subvolume + "/" SNAPSHOTS_NAME).c_str(), 0700);
 	if (r1 == 0)
 	{
-	    SystemCmd cmd1({ CHATTRBIN, "+x", subvolume + "/.snapshots" });
+	    SystemCmd cmd1({ CHATTRBIN, "+x", subvolume + "/" SNAPSHOTS_NAME });
 	    if (cmd1.retcode() != 0)
 		throw CreateConfigFailedException("chattr failed");
 	}
@@ -101,10 +101,10 @@ namespace snapper
 	    throw CreateConfigFailedException("mkdir failed");
 	}
 
-	int r2 = mkdir((subvolume + "/.snapshots/.info").c_str(), 0700);
+	int r2 = mkdir((subvolume + "/" SNAPSHOTS_NAME "/.info").c_str(), 0700);
 	if (r2 == 0)
 	{
-	    SystemCmd cmd2({ CHATTRBIN, "-x", subvolume + "/.snapshots/.info" });
+	    SystemCmd cmd2({ CHATTRBIN, "-x", subvolume + "/" SNAPSHOTS_NAME "/.info" });
 	    if (cmd2.retcode() != 0)
 		throw CreateConfigFailedException("chattr failed");
 	}
@@ -119,14 +119,14 @@ namespace snapper
     void
     Ext4::deleteConfig() const
     {
-	int r1 = rmdir((subvolume + "/.snapshots/.info").c_str());
+	int r1 = rmdir((subvolume + "/" SNAPSHOTS_NAME "/.info").c_str());
 	if (r1 != 0)
 	{
 	    y2err("rmdir failed errno:" << errno << " (" << stringerror(errno) << ")");
 	    throw DeleteConfigFailedException("rmdir failed");
 	}
 
-	int r2 = rmdir((subvolume + "/.snapshots").c_str());
+	int r2 = rmdir((subvolume + "/" SNAPSHOTS_NAME).c_str());
 	if (r2 != 0)
 	{
 	    y2err("rmdir failed errno:" << errno << " (" << stringerror(errno) << ")");
@@ -145,7 +145,7 @@ namespace snapper
     string
     Ext4::snapshotFile(unsigned int num) const
     {
-	return (subvolume == "/" ? "" : subvolume) + "/.snapshots/" + decString(num);
+	return (subvolume == "/" ? "" : subvolume) + "/" SNAPSHOTS_NAME "/" + decString(num);
     }
 
 
