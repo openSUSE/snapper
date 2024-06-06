@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 12:27+0100\n"
-"PO-Revision-Date: 2024-06-04 00:46+0000\n"
+"PO-Revision-Date: 2024-06-07 01:46+0000\n"
 "Last-Translator: Rajasekaran Karunanithi <rajasekaran86@gmail.com>\n"
 "Language-Team: Tamil <https://l10n.opensuse.org/projects/snapper/master/ta/>"
 "\n"
@@ -462,7 +462,7 @@ msgid "Command 'xadiff' needs at least one argument."
 msgstr "get-க்கு குறைந்தபட்சம் ஒரு பயனிலை தேவை"
 
 msgid "Command used for comparing files."
-msgstr ""
+msgstr "கோப்புகளை ஒப்பிடுவதற்குப் பயன்படுத்தப்படும் கட்டளை."
 
 #, fuzzy
 msgid "Config"
@@ -497,7 +497,7 @@ msgid "Could not make enough free space available for path '%s'."
 msgstr ""
 
 msgid "Could not make enough free space available."
-msgstr ""
+msgstr "போதுமான இடவசதி கிடைக்கச் செய்ய முடியவில்லை."
 
 #, fuzzy
 msgid "Create a snapshot from the specified snapshot."
@@ -533,12 +533,11 @@ msgstr "உள்ளமைவு கோப்புகள் விளக்க�
 msgid "Creating snapshot failed."
 msgstr "உள்ளமைவு கோப்புகள் விளக்கப்படுகின்றன..."
 
-#, fuzzy
 msgid "Date"
-msgstr "துவக்கத்திற்குப்பின்"
+msgstr "தேதி"
 
 msgid "Default"
-msgstr ""
+msgstr "இயல்புநிலை"
 
 #, fuzzy, c-format
 msgid "Deleting config failed (%s)."
@@ -565,16 +564,16 @@ msgid "Description for snapshots."
 msgstr ""
 
 msgid "Detecting filesystem type failed."
-msgstr ""
+msgstr "கோப்பு முறைமை வகையைக் கண்டறிவதில் தோல்வி."
 
 msgid "Disable showing used space."
-msgstr ""
+msgstr "பயன்படுத்திய இடத்தைக் காட்டுவதை முடக்கு."
 
 msgid "Display dates and times in ISO format."
-msgstr ""
+msgstr "ISO வடிவத்தில் தேதிகள் மற்றும் நேரங்களைக் காண்பி."
 
 msgid "Display dates and times in UTC."
-msgstr ""
+msgstr "UTC இல் தேதிகள் மற்றும் நேரங்களைக் காண்பி."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
