@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-26 12:27+0100\n"
-"PO-Revision-Date: 2024-02-27 11:42+0000\n"
+"PO-Revision-Date: 2024-06-06 10:46+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
 "Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/"
 ">\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9.1\n"
+"X-Generator: Weblate 5.5.5\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tneteja de l'snapper <cleanup-algorithm>"
@@ -601,11 +601,11 @@ msgstr "GiB"
 
 #, c-format
 msgid "IO Error (%s)."
-msgstr "Error d'IO (%s)."
+msgstr "Error d'E/S (%s)."
 
 #, c-format
 msgid "IO error (%s)."
-msgstr "Error d'IO (%s)."
+msgstr "Error d'E/S (%s)."
 
 msgid "Identical snapshots."
 msgstr "Instantànies idèntiques."
