@@ -36,7 +36,7 @@ cmp(const string& fstype, const string& subvolume, unsigned int num1, unsigned i
     double t1;
 
     {
-	StopWatch sw1;
+	Stopwatch sw1;
 
 #if 1
 	cmpdirs_cb_t cb1 = helper(result1);
@@ -58,7 +58,7 @@ cmp(const string& fstype, const string& subvolume, unsigned int num1, unsigned i
     double t2;
 
     {
-	StopWatch sw2;
+	Stopwatch sw2;
 
 #if 1
 	cmpdirs_cb_t cb2 = helper(result2);

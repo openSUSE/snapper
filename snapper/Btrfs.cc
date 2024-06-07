@@ -1361,7 +1361,7 @@ namespace snapper
 
 	try
 	{
-	    StopWatch stopwatch;
+	    Stopwatch stopwatch;
 
 	    const SDir subvolume(openSubvolumeDir());
 
