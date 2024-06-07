@@ -81,7 +81,7 @@ SystemCmd::~SystemCmd()
     void
     SystemCmd::execute()
     {
-    StopWatch stopwatch;
+    Stopwatch stopwatch;
 
     File_aC[IDX_STDERR] = File_aC[IDX_STDOUT] = NULL;
     invalidate();

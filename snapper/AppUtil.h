@@ -119,15 +119,15 @@ namespace snapper
     vector<gid_t> getgrouplist(const char* username, gid_t gid);
 
 
-    class StopWatch
+    class Stopwatch
     {
     public:
 
-	StopWatch();
+	Stopwatch();
 
 	double read() const;
 
-	friend std::ostream& operator<<(std::ostream& s, const StopWatch& sw);
+	friend std::ostream& operator<<(std::ostream& s, const Stopwatch& sopwatch);
 
     protected:
 
