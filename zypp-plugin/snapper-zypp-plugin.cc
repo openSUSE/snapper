@@ -151,6 +151,8 @@ SnapperZyppCommitPlugin::commit_begin(const Message& msg)
 	{
 	    SN_CAUGHT(ex);
 	    y2err(error_description(ex));
+	    y2err(ex.name());
+	    y2err(ex.message());
 	}
 	catch (const Exception& ex)
 	{
@@ -193,6 +195,8 @@ SnapperZyppCommitPlugin::commit_end(const Message& msg)
 	    {
 		SN_CAUGHT(ex);
 		y2err(error_description(ex));
+		y2err(ex.name());
+		y2err(ex.message());
 	    }
 	    catch (const Exception& ex)
 	    {
@@ -212,6 +216,8 @@ SnapperZyppCommitPlugin::commit_end(const Message& msg)
 	    {
 		SN_CAUGHT(ex);
 		y2err(error_description(ex));
+		y2err(ex.name());
+		y2err(ex.message());
 	    }
 	    catch (const Exception& ex)
 	    {
@@ -232,6 +238,8 @@ SnapperZyppCommitPlugin::commit_end(const Message& msg)
 	    {
 		SN_CAUGHT(ex);
 		y2err(error_description(ex));
+		y2err(ex.name());
+		y2err(ex.message());
 	    }
 	    catch (const Exception& ex)
 	    {
