@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019-2020] SUSE LLC
+ * Copyright (c) [2019-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -20,42 +20,41 @@
  */
 
 
-#include <iostream>
-#include <boost/algorithm/string/trim.hpp>
+#ifndef SNAPPER_STOMP_H
+#define SNAPPER_STOMP_H
+
+
+#include <istream>
+#include <ostream>
 #include <string>
-#include <regex>
-
-using namespace std;
+#include <map>
 
 
-#include "zypp-plugin.h"
+/**
+ * A tiny STOMP (https://stomp.github.io/) implementation.
+ */
 
-
-int
-ZyppPlugin::main()
+namespace Stomp
 {
-    while (true)
+
+    struct Message
     {
-	Message msg = read_message(pin);
-	if (pin.eof())
-	    break;
+	std::string command;
+	std::map<std::string, std::string> headers;
+	std::string body;
+    };
 
-	Message reply = dispatch(msg);
-	write_message(pout, reply);
-    }
 
-    return 0;
+    Message read_message(std::istream& is);
+    void write_message(std::ostream& os, const Message& msg);
+
+    Message ack();
+    Message nack();
+
+    std::string escape_header(const std::string& in);
+    std::string unescape_header(const std::string& in);
+
 }
 
 
-ZyppPlugin::Message
-ZyppPlugin::dispatch(const Message& msg)
-{
-    if (msg.command == "_DISCONNECT")
-	return ack();
-
-    Message a;
-    a.command = "_ENOMETHOD";
-    a.headers["Command"] = msg.command;
-    return a;
-}
+#endif

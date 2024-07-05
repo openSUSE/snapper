@@ -231,6 +231,8 @@ AC_CONFIG_FILES([
 	testsuite/Makefile
 	testsuite-real/Makefile
 	testsuite-cmp/Makefile
+	stomp/Makefile
+	stomp/testsuite/Makefile
 	zypp-plugin/Makefile
 	zypp-plugin/testsuite/Makefile
 	package/snapper.spec:snapper.spec.in

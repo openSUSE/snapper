@@ -24,8 +24,8 @@
 
 
 #include <iostream>
-#include <map>
-#include <string>
+
+#include "../stomp/Stomp.h"
 
 
 class ZyppPlugin
@@ -34,12 +34,7 @@ public:
 
     // Plugin message aka frame
     // https://doc.opensuse.org/projects/libzypp/SLE12SP2/zypp-plugins.html
-    struct Message
-    {
-	std::string command;
-	std::map<std::string, std::string> headers;
-	std::string body;
-    };
+    using Message = Stomp::Message;
 
     /// Where the protocol reads from
     std::istream& pin;
@@ -50,26 +45,22 @@ public:
 	: pin(in), pout(out)
     {}
 
-    virtual ~ZyppPlugin() {}
+    virtual ~ZyppPlugin() = default;
 
     virtual int main();
 
 protected:
 
-    Message read_message(std::istream& is) const;
-    void write_message(std::ostream& os, const Message& msg) const;
+    Message read_message(std::istream& is) const { return Stomp::read_message(is); }
+    void write_message(std::ostream& os, const Message& msg) const { Stomp::write_message(os, msg); }
 
     /// Handle a message and return a reply.
     // Derived classes must override it.
     // The base acks a _DISCONNECT and replies _ENOMETHOD to everything else.
     virtual Message dispatch(const Message& msg) = 0;
 
-    Message ack() const
-    {
-	Message a;
-	a.command = "ACK";
-	return a;
-    }
+    Message ack() const { return Stomp::ack(); }
+
 };
 
 #endif
