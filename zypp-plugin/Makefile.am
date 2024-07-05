@@ -21,6 +21,7 @@ snapper_zypp_plugin_LDADD = \
 	../client/libclient.la \
 	../snapper/libsnapper.la \
 	../dbus/libdbus.la \
+	../stomp/libstomp.la \
 	$(JSONC_LIBS)
 
 check_PROGRAMS = solvable-matcher.test forwarding-zypp-plugin
@@ -31,6 +32,7 @@ forwarding_zypp_plugin_SOURCES = \
 
 forwarding_zypp_plugin_LDADD = \
 	../snapper/libsnapper.la \
+	../stomp/libstomp.la \
 	-lboost_system \
 	-lpthread
 
@@ -42,6 +44,7 @@ solvable_matcher_test_SOURCES = \
 
 solvable_matcher_test_LDADD = \
 	../snapper/libsnapper.la \
+	../stomp/libstomp.la \
 	$(XML2_LIBS) \
 	-lboost_unit_test_framework
 

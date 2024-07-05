@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Jul 05 16:03:42 CEST 2024 - aschnell@suse.com
+
+- handle content-length of stomp in zypper plugin
+  (gh#openSUSE/snapper#918)
+
+-------------------------------------------------------------------
 Wed May 22 17:21:18 CEST 2024 - aschnell@suse.com
 
 - fixed error message (gh#openSUSE/snapper#907)
