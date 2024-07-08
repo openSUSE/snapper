@@ -20,7 +20,6 @@
  */
 
 
-#include <iostream>
 #include <regex>
 
 
@@ -48,6 +47,7 @@ namespace Stomp
 	{
 	    string line;
 	    getline(is, line);
+	    line = strip_cr(line);
 
 	    if (state == State::Start)
 	    {
@@ -147,6 +147,18 @@ namespace Stomp
 	Message msg;
 	msg.command = "NACK";
 	return msg;
+    }
+
+
+    std::string
+    strip_cr(const std::string& in)
+    {
+	string::size_type length = in.size();
+
+	if (length > 0 && in[length - 1] == '\r')
+	    return in.substr(0, length - 1);
+
+	return in;
     }
 
 

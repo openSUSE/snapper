@@ -213,6 +213,7 @@ AC_CONFIG_FILES([
 	examples/c/Makefile
 	examples/c++-lib/Makefile
 	dbus/Makefile
+	dbus/testsuite/Makefile
 	server/Makefile
 	client/Makefile
 	client/utils/Makefile
