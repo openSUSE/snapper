@@ -51,6 +51,8 @@ namespace Stomp
     Message ack();
     Message nack();
 
+    std::string strip_cr(const std::string& in);
+
     std::string escape_header(const std::string& in);
     std::string unescape_header(const std::string& in);
 
