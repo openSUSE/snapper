@@ -36,11 +36,6 @@ public:
     // https://doc.opensuse.org/projects/libzypp/SLE12SP2/zypp-plugins.html
     using Message = Stomp::Message;
 
-    /// Where the protocol reads from
-    std::istream& pin;
-    /// Where the protocol writes to
-    std::ostream& pout;
-
     ZyppPlugin(std::istream& in = std::cin, std::ostream& out = std::cout)
 	: pin(in), pout(out)
     {}
@@ -50,6 +45,11 @@ public:
     virtual int main();
 
 protected:
+
+    /// Where the protocol reads from
+    std::istream& pin;
+    /// Where the protocol writes to
+    std::ostream& pout;
 
     Message read_message(std::istream& is) const { return Stomp::read_message(is); }
     void write_message(std::ostream& os, const Message& msg) const { Stomp::write_message(os, msg); }
