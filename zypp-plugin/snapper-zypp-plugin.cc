@@ -24,7 +24,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include <iostream>
 #include <map>
 #include <set>
 #include <string>
