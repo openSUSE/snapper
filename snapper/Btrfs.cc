@@ -1646,7 +1646,7 @@ namespace snapper
 	MntTable mnt_table(root_prefix);
 	mnt_table.parse_fstab();
 
-	string mountpoint = (subvolume == "/" ? "" : subvolume) +  "/" SNAPSHOTS_NAME;
+	string mountpoint = (subvolume == "/" ? "" : subvolume) + "/" SNAPSHOTS_NAME;
 	libmnt_fs* snapshots = mnt_table.find_target(mountpoint, MNT_ITER_FORWARD);
 	if (!snapshots)
 	    return;
