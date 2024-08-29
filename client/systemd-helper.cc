@@ -179,16 +179,18 @@ cleanup(ProxySnappers* snappers)
 	    string subvolume;
 	    if (proxy_config.getValue(KEY_SUBVOLUME, subvolume))
 	    {
-		cout << "Running 'btrfs qgroup clear-stale " << subvolume << "'." << endl;
+		string general_dir = (subvolume == "/" ? "" : subvolume) + "/" SNAPSHOTS_NAME;
 
-		SystemCmd cmd({ BTRFS_BIN, "qgroup", "clear-stale", subvolume });
+		cout << "Running 'btrfs qgroup clear-stale " << general_dir << "'." << endl;
+
+		SystemCmd cmd({ BTRFS_BIN, "qgroup", "clear-stale", general_dir });
 		if (cmd.retcode() != 0)
 		{
 		    // This fails more often than not since qgroups of just deleted
 		    // subvolume are busy. So do not set an error code here. Still log the
 		    // failure to help people understand this stuff.
 
-		    cerr << "'btrfs qgroup clear-stale " << subvolume << "' failed." << endl;
+		    cerr << "'btrfs qgroup clear-stale " << general_dir << "' failed." << endl;
 		}
 	    }
 	}
