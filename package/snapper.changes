@@ -2,6 +2,7 @@
 Thu Aug 29 17:42:35 CEST 2024 - aschnell@suse.com
 
 - use .snapshots dir for 'btrfs qgroup clear-stale' (bsc#1229904)
+- version 0.11.2
 
 -------------------------------------------------------------------
 Fri Jul 05 16:03:42 CEST 2024 - aschnell@suse.com
