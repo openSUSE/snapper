@@ -36,9 +36,9 @@
 #include "utils/text.h"
 #include "utils/Table.h"
 #include "utils/GetOpts.h"
+#include "proxy/errors.h"
+#include "proxy/proxy.h"
 
-#include "errors.h"
-#include "proxy.h"
 #include "GlobalOptions.h"
 #include "cmd.h"
 

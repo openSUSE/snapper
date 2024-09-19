@@ -26,7 +26,7 @@
 
 #include "commands.h"
 #include "errors.h"
-#include "utils/text.h"
+#include "../utils/text.h"
 #include "dbus/DBusPipe.h"
 #include "snapper/AppUtil.h"
 

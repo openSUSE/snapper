@@ -31,10 +31,10 @@
 
 #include "utils/text.h"
 #include "utils/GetOpts.h"
+#include "proxy/proxy.h"
+#include "proxy/errors.h"
 
-#include "proxy.h"
 #include "cleanup.h"
-#include "errors.h"
 #include "misc.h"
 
 

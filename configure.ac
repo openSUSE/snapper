@@ -217,6 +217,7 @@ AC_CONFIG_FILES([
 	server/Makefile
 	client/Makefile
 	client/utils/Makefile
+	client/proxy/Makefile
 	scripts/Makefile
 	pam/Makefile
 	data/Makefile

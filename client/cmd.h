@@ -23,7 +23,7 @@
 
 #include "config.h"
 
-#include "proxy.h"
+#include "proxy/proxy.h"
 #include "GlobalOptions.h"
 
 

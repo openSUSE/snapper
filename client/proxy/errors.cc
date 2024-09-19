@@ -24,7 +24,7 @@
 #include <snapper/AppUtil.h>
 #include <snapper/Snapper.h>
 
-#include "utils/text.h"
+#include "../utils/text.h"
 
 #include "errors.h"
 

@@ -20,7 +20,7 @@
  */
 
 
-#include "proxy.h"
+#include "proxy/proxy.h"
 
 
 namespace snapper

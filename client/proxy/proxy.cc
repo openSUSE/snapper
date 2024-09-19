@@ -27,7 +27,7 @@
 #include <snapper/AppUtil.h>
 #include <snapper/SnapperDefines.h>
 
-#include "utils/text.h"
+#include "../utils/text.h"
 #include "proxy.h"
 
 
