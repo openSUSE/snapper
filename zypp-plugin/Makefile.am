@@ -9,7 +9,7 @@ if HAVE_ZYPP
 plugindir = /usr/lib/zypp/plugins/commit
 plugin_PROGRAMS = snapper-zypp-plugin
 
-AM_CPPFLAGS = $(DBUS_CFLAGS) $(XML2_CFLAGS) $(JSONC_CFLAGS)
+AM_CPPFLAGS = $(DBUS_CFLAGS) $(XML2_CFLAGS) $(JSON_C_CFLAGS)
 
 snapper_zypp_plugin_SOURCES = \
 	snapper-zypp-plugin.cc snapper-zypp-plugin.h \
@@ -22,7 +22,7 @@ snapper_zypp_plugin_LDADD = \
 	../snapper/libsnapper.la \
 	../dbus/libdbus.la \
 	../stomp/libstomp.la \
-	$(JSONC_LIBS)
+	$(JSON_C_LIBS)
 
 check_PROGRAMS = solvable-matcher.test forwarding-zypp-plugin
 
