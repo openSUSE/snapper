@@ -33,8 +33,8 @@
 #include "utils/Limit.h"
 #include "utils/equal-date.h"
 #include "utils/HumanString.h"
+#include "proxy/locker.h"
 #include "cleanup.h"
-#include "locker.h"
 
 
 using namespace std;

@@ -31,7 +31,6 @@ snapper_SOURCES =					\
 	cmd-cleanup.cc					\
 	cmd-debug.cc					\
 	cleanup.cc		cleanup.h		\
-	locker.cc		locker.h		\
 	misc.cc			misc.h			\
 	MyFiles.cc		MyFiles.h		\
 	GlobalOptions.cc	GlobalOptions.h
@@ -51,7 +50,6 @@ libexec_PROGRAMS = systemd-helper
 systemd_helper_SOURCES =		\
 	systemd-helper.cc		\
 	cleanup.cc	cleanup.h	\
-	locker.cc	locker.h	\
 	misc.cc		misc.h
 
 systemd_helper_LDADD = 			\
