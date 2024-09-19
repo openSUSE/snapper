@@ -23,7 +23,7 @@
 
 #include <functional>
 
-#include "proxy.h"
+#include "proxy/proxy.h"
 
 
 /*

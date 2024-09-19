@@ -30,7 +30,7 @@
 
 #include "client/utils/text.h"
 #include "client/utils/GetOpts.h"
-#include "proxy.h"
+#include "proxy/proxy.h"
 
 
 using namespace snapper;

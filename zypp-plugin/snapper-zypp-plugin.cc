@@ -39,8 +39,8 @@
 #include "dbus/DBusConnection.h"
 #include "snapper/Exception.h"
 #include "snapper/Log.h"
-#include "client/commands.h"
-#include "client/errors.h"
+#include "client/proxy/commands.h"
+#include "client/proxy/errors.h"
 
 #include "snapper-zypp-plugin.h"
 

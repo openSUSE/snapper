@@ -18,7 +18,7 @@ snapper_zypp_plugin_SOURCES = \
 	zypp-plugin.cc zypp-plugin.h
 
 snapper_zypp_plugin_LDADD = \
-	../client/libclient.la \
+	../client/proxy/libclient.la \
 	../snapper/libsnapper.la \
 	../dbus/libdbus.la \
 	../stomp/libstomp.la \

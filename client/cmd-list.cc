@@ -31,8 +31,8 @@
 
 #include "utils/text.h"
 #include "utils/help.h"
+#include "proxy/proxy.h"
 #include "GlobalOptions.h"
-#include "proxy.h"
 #include "locker.h"
 #include "misc.h"
 #include "utils/TableFormatter.h"

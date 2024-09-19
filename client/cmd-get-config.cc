@@ -25,8 +25,8 @@
 
 #include "utils/text.h"
 #include "utils/help.h"
+#include "proxy/proxy.h"
 #include "GlobalOptions.h"
-#include "proxy.h"
 #include "misc.h"
 #include "utils/TableFormatter.h"
 #include "utils/CsvFormatter.h"
