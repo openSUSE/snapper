@@ -18,4 +18,5 @@ libclient_la_LIBADD = 			\
 libproxy_la_SOURCES =			\
 	proxy.cc	proxy.h		\
 	proxy-dbus.cc	proxy-dbus.h	\
-	proxy-lib.cc	proxy-lib.h
+	proxy-lib.cc	proxy-lib.h	\
+	locker.cc	locker.h
