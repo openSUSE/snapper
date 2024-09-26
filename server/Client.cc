@@ -1828,6 +1828,8 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg)
 	if (it->is_loaded())
 	{
 	    s << ", loaded";
+	    if (it->is_locked(clients))
+		s << ", locked";
 	    if (it->use_count() == 0)
 		s << ", unused for " << duration_cast<milliseconds>(it->unused_for()).count() << "ms";
 	    else
