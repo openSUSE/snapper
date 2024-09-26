@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2018-2023] SUSE LLC
+ * Copyright (c) [2018-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -30,6 +30,7 @@
 #include <snapper/SnapperDefines.h>
 
 #include "MetaSnapper.h"
+#include "Client.h"
 
 
 MetaSnappers meta_snappers;
@@ -126,6 +127,17 @@ MetaSnapper::unload()
 {
     delete snapper;
     snapper = nullptr;
+}
+
+
+bool
+MetaSnapper::is_locked(const Clients& clients) const
+{
+    for (const Client& client : clients)
+	if (client.has_lock(configName()))
+	    return true;
+
+    return false;
 }
 
 

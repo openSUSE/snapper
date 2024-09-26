@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2018-2023] SUSE LLC
+ * Copyright (c) [2018-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -36,6 +36,9 @@ using namespace std;
 using namespace snapper;
 
 
+class Clients;
+
+
 struct UnknownConfig : public Exception
 {
     explicit UnknownConfig() : Exception("unknown config") {}
@@ -64,6 +67,8 @@ public:
     bool is_equal(const Snapper* s) { return snapper && snapper == s; }
     bool is_loaded() const { return snapper; }
     void unload();
+
+    bool is_locked(const Clients& clients) const;
 
 private:
 
