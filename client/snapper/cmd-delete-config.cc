@@ -23,10 +23,9 @@
 
 #include <iostream>
 
-#include "utils/text.h"
-#include "proxy/proxy.h"
+#include "../utils/text.h"
+#include "../proxy/proxy.h"
 #include "GlobalOptions.h"
-#include "misc.h"
 
 
 namespace snapper
@@ -36,28 +35,26 @@ namespace snapper
 
 
     void
-    help_set_config()
+    help_delete_config()
     {
-	cout << _("  Set config:") << '\n'
-	     << _("\tsnapper set-config <configdata>") << '\n'
+	cout << _("  Delete config:") << '\n'
+	     << _("\tsnapper delete-config") << '\n'
 	     << '\n';
     }
 
 
     void
-    command_set_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*,
-		       ProxySnapper* snapper, Plugins::Report& report)
+    command_delete_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+			  ProxySnapper*, Plugins::Report& report)
     {
-	get_opts.parse("set-config", GetOpts::no_options);
-	if (!get_opts.has_args())
+	get_opts.parse("delete-config", GetOpts::no_options);
+	if (get_opts.has_args())
 	{
-	    cerr << _("Command 'set-config' needs at least one argument.") << endl;
+	    cerr << _("Command 'delete-config' does not take arguments.") << endl;
 	    exit(EXIT_FAILURE);
 	}
 
-	ProxyConfig config(read_configdata(get_opts.get_args()));
-
-	snapper->setConfig(config);
+	snappers->deleteConfig(global_options.config(), report);
     }
 
 }

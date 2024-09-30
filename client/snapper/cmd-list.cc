@@ -29,17 +29,17 @@
 #include <snapper/SnapperTmpl.h>
 #include <snapper/BtrfsUtils.h>
 
-#include "utils/text.h"
-#include "utils/help.h"
-#include "proxy/proxy.h"
-#include "proxy/locker.h"
+#include "../utils/text.h"
+#include "../utils/help.h"
+#include "../proxy/proxy.h"
+#include "../proxy/locker.h"
 #include "GlobalOptions.h"
-#include "misc.h"
-#include "utils/TableFormatter.h"
-#include "utils/CsvFormatter.h"
-#include "utils/JsonFormatter.h"
+#include "../misc.h"
+#include "../utils/TableFormatter.h"
+#include "../utils/CsvFormatter.h"
+#include "../utils/JsonFormatter.h"
 #include "dbus/DBusMessage.h"
-#include "utils/HumanString.h"
+#include "../utils/HumanString.h"
 
 
 namespace snapper

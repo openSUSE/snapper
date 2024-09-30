@@ -23,14 +23,14 @@
 
 #include <iostream>
 
-#include "utils/text.h"
-#include "utils/help.h"
-#include "proxy/proxy.h"
+#include "../utils/text.h"
+#include "../utils/help.h"
+#include "../proxy/proxy.h"
 #include "GlobalOptions.h"
-#include "misc.h"
-#include "utils/TableFormatter.h"
-#include "utils/CsvFormatter.h"
-#include "utils/JsonFormatter.h"
+#include "../misc.h"
+#include "../utils/TableFormatter.h"
+#include "../utils/CsvFormatter.h"
+#include "../utils/JsonFormatter.h"
 
 
 namespace snapper
@@ -40,12 +40,12 @@ namespace snapper
 
 
     void
-    help_get_config()
+    help_list_configs()
     {
-	cout << _("  Get config:") << '\n'
-	     << _("\tsnapper get-config") << '\n'
+	cout << _("  List configs:") << '\n'
+	     << _("\tsnapper list-configs") << '\n'
 	     << '\n'
-	     << _("    Options for 'get-config' command:") << '\n';
+	     << _("    Options for 'list-configs' command:") << '\n';
 
 	print_options({
 	    { _("--columns <columns>"), _("Columns to show separated by comma.") }
@@ -58,7 +58,7 @@ namespace snapper
 
 	enum class Column
 	{
-	    KEY, VALUE
+	    CONFIG, SUBVOLUME
 	};
 
 
@@ -67,11 +67,11 @@ namespace snapper
 	{
 	    switch (column)
 	    {
-		case Column::KEY:
-		    return Cell(_("Key"));
+		case Column::CONFIG:
+		    return Cell(_("Config"));
 
-		case Column::VALUE:
-		    return Cell(_("Value"));
+		case Column::SUBVOLUME:
+		    return Cell(_("Subvolume"));
 	    }
 
 	    SN_THROW(Exception("invalid column value"));
@@ -80,15 +80,15 @@ namespace snapper
 
 
 	string
-	value_for_as_string(Column column, const pair<const string, string>& value)
+	value_for_as_string(Column column, const pair<const string, ProxyConfig>& value)
 	{
 	    switch (column)
 	    {
-		case Column::KEY:
+		case Column::CONFIG:
 		    return value.first;
 
-		case Column::VALUE:
-		    return value.second;
+		case Column::SUBVOLUME:
+		    return value.second.getSubvolume();
 	    }
 
 	    SN_THROW(Exception("invalid column value"));
@@ -97,15 +97,15 @@ namespace snapper
 
 
 	void
-	output_table(const vector<Column>& columns, Style style, ProxySnapper* snapper)
+	output_table(const vector<Column>& columns, Style style, ProxySnappers* snappers)
 	{
 	    TableFormatter formatter(style);
 
 	    for (Column column : columns)
 		formatter.header().push_back(header_for(column));
 
-	    ProxyConfig config = snapper->getConfig();
-	    for (const map<string, string>::value_type& value : config.getAllValues())
+	    map<string, ProxyConfig> configs = snappers->getConfigs();
+	    for (const map<string, ProxyConfig>::value_type& value : configs)
 	    {
 		vector<string> row;
 
@@ -121,15 +121,15 @@ namespace snapper
 
 	void
 	output_csv(const GlobalOptions& global_options, const vector<Column>& columns, const string& separator,
-		   ProxySnapper* snapper)
+		   ProxySnappers* snappers)
 	{
 	    CsvFormatter formatter(separator, global_options.headers());
 
 	    for (Column column : columns)
 		formatter.header().push_back(toString(column));
 
-	    ProxyConfig config = snapper->getConfig();
-	    for (const map<string, string>::value_type& value : config.getAllValues())
+	    map<string, ProxyConfig> configs = snappers->getConfigs();
+	    for (const map<string, ProxyConfig>::value_type& value : configs)
 	    {
 		vector<string> row;
 
@@ -144,15 +144,22 @@ namespace snapper
 
 
 	void
-	output_json(const vector<Column>& columns, ProxySnapper* snapper)
+	output_json(const vector<Column>& columns, ProxySnappers* snappers)
 	{
 	    JsonFormatter formatter;
 
-	    ProxyConfig config = snapper->getConfig();
-	    for (const map<string, string>::value_type& value : config.getAllValues())
+	    json_object* json_configs = json_object_new_array();
+	    json_object_object_add(formatter.root(), "configs", json_configs);
+
+	    map<string, ProxyConfig> configs = snappers->getConfigs();
+	    for (const map<string, ProxyConfig>::value_type& value : configs)
 	    {
-		json_object_object_add(formatter.root(), value_for_as_string(Column::KEY, value).c_str(),
-				       json_object_new_string(value_for_as_string(Column::VALUE, value).c_str()));
+		json_object* json_config = json_object_new_object();
+		json_object_array_add(json_configs, json_config);
+
+		for (const Column& column : columns)
+		    json_object_object_add(json_config, toString(column).c_str(),
+					   json_object_new_string(value_for_as_string(column, value).c_str()));
 	    }
 
 	    cout << formatter;
@@ -162,16 +169,16 @@ namespace snapper
 
 
     void
-    command_get_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*,
-		       ProxySnapper* snapper, Plugins::Report& report)
+    command_list_configs(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+			 ProxySnapper*, Plugins::Report& report)
     {
 	const vector<Option> options = {
 	    Option("columns",	required_argument)
 	};
 
-	ParsedOpts opts = get_opts.parse("get-config", options);
+	ParsedOpts opts = get_opts.parse("list-configs", options);
 
-	vector<Column> columns = { Column::KEY, Column::VALUE };
+	vector<Column> columns = { Column::CONFIG, Column::SUBVOLUME };
 
 	ParsedOpts::const_iterator opt;
 
@@ -182,21 +189,21 @@ namespace snapper
 
 	if (get_opts.has_args())
 	{
-	    SN_THROW(OptionsException(_("Command 'get-config' does not take arguments.")));
+	    SN_THROW(OptionsException(_("Command 'list-configs' does not take arguments.")));
 	}
 
 	switch (global_options.output_format())
 	{
 	    case GlobalOptions::OutputFormat::TABLE:
-		output_table(columns, global_options.table_style(), snapper);
+		output_table(columns, global_options.table_style(), snappers);
 		break;
 
 	    case GlobalOptions::OutputFormat::CSV:
-		output_csv(global_options, columns, global_options.separator(), snapper);
+		output_csv(global_options, columns, global_options.separator(), snappers);
 		break;
 
 	    case GlobalOptions::OutputFormat::JSON:
-		output_json(columns, snapper);
+		output_json(columns, snappers);
 		break;
 	}
     }
@@ -204,6 +211,6 @@ namespace snapper
 
     template <> struct EnumInfo<Column> { static const vector<string> names; };
 
-    const vector<string> EnumInfo<Column>::names({ "key", "value" });
+    const vector<string> EnumInfo<Column>::names({ "config", "subvolume" });
 
 }

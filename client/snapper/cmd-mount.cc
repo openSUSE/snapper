@@ -23,8 +23,8 @@
 
 #include <iostream>
 
-#include "utils/text.h"
-#include "proxy/proxy.h"
+#include "../utils/text.h"
+#include "../proxy/proxy.h"
 #include "GlobalOptions.h"
 
 
@@ -35,22 +35,22 @@ namespace snapper
 
 
     void
-    help_umount()
+    help_mount()
     {
-	cout << _("  Umount snapshot:") << '\n'
-	     << _("\tsnapper umount <number>") << '\n'
+	cout << _("  Mount snapshot:") << '\n'
+	     << _("\tsnapper mount <number>") << '\n'
 	     << '\n';
     }
 
 
     void
-    command_umount(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*,
-		   ProxySnapper* snapper, Plugins::Report& report)
+    command_mount(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*,
+		  ProxySnapper* snapper, Plugins::Report& report)
     {
-	get_opts.parse("umount", GetOpts::no_options);
+	get_opts.parse("mount", GetOpts::no_options);
 	if (!get_opts.has_args())
 	{
-	    cerr << _("Command 'umount' needs at least one argument.") << endl;
+	    cerr << _("Command 'mount' needs at least one argument.") << endl;
 	    exit(EXIT_FAILURE);
 	}
 
@@ -59,7 +59,7 @@ namespace snapper
 	while (get_opts.has_args())
 	{
 	    ProxySnapshots::const_iterator snapshot = snapshots.findNum(get_opts.pop_arg());
-	    snapshot->umountFilesystemSnapshot(true);
+	    snapshot->mountFilesystemSnapshot(true);
 	}
     }
 

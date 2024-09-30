@@ -23,8 +23,8 @@
 
 #include <iostream>
 
-#include "utils/text.h"
-#include "proxy/proxy.h"
+#include "../utils/text.h"
+#include "../proxy/proxy.h"
 #include "GlobalOptions.h"
 
 
@@ -35,26 +35,24 @@ namespace snapper
 
 
     void
-    help_setup_quota()
+    help_debug()
     {
-	cout << _("  Setup quota:") << '\n'
-	     << _("\tsnapper setup-quota") << '\n'
-	     << '\n';
     }
 
 
     void
-    command_setup_quota(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*,
-			ProxySnapper* snapper, Plugins::Report& report)
+    command_debug(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+		  ProxySnapper*, Plugins::Report& report)
     {
-	ParsedOpts opts = get_opts.parse("setup-quota", GetOpts::no_options);
-	if (get_opts.num_args() != 0)
+	get_opts.parse("debug", GetOpts::no_options);
+	if (get_opts.has_args())
 	{
-	    cerr << _("Command 'setup-quota' does not take arguments.") << endl;
+	    cerr << _("Command 'debug' does not take arguments.") << endl;
 	    exit(EXIT_FAILURE);
 	}
 
-	snapper->setupQuota();
+	for (const string& line : snappers->debug())
+	    cout << line << endl;
     }
 
 }

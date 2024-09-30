@@ -27,8 +27,8 @@
 
 #include <snapper/XAttributes.h>
 
-#include "utils/text.h"
-#include "proxy/proxy.h"
+#include "../utils/text.h"
+#include "../proxy/proxy.h"
 #include "GlobalOptions.h"
 #include "MyFiles.h"
 

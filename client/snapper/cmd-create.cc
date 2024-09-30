@@ -25,11 +25,11 @@
 
 #include <snapper/AppUtil.h>
 
-#include "utils/text.h"
-#include "utils/help.h"
-#include "proxy/proxy.h"
+#include "../utils/text.h"
+#include "../utils/help.h"
+#include "../proxy/proxy.h"
 #include "GlobalOptions.h"
-#include "misc.h"
+#include "../misc.h"
 
 
 namespace snapper

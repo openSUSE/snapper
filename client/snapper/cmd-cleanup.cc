@@ -32,13 +32,13 @@
 #endif
 #include <snapper/FileUtils.h>
 
-#include "utils/HumanString.h"
-#include "utils/text.h"
-#include "utils/help.h"
-#include "proxy/proxy.h"
+#include "../utils/HumanString.h"
+#include "../utils/text.h"
+#include "../utils/help.h"
+#include "../proxy/proxy.h"
 #include "GlobalOptions.h"
-#include "cleanup.h"
-#include "misc.h"
+#include "../cleanup.h"
+#include "../misc.h"
 #include "cmd.h"
 
 
