@@ -38,9 +38,9 @@
 #include <snapper/PluginsImpl.h>
 #include "snapper/Log.h"
 
-#include "utils/GetOpts.h"
+#include "../utils/GetOpts.h"
 
-#include "misc.h"
+#include "../misc.h"
 
 
 using namespace snapper;

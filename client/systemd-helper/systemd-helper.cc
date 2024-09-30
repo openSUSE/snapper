@@ -29,13 +29,13 @@
 #include <snapper/SystemCmd.h>
 #include <snapper/SnapperDefines.h>
 
-#include "utils/text.h"
-#include "utils/GetOpts.h"
-#include "proxy/proxy.h"
-#include "proxy/errors.h"
+#include "../utils/text.h"
+#include "../utils/GetOpts.h"
+#include "../proxy/proxy.h"
+#include "../proxy/errors.h"
 
-#include "cleanup.h"
-#include "misc.h"
+#include "../cleanup.h"
+#include "../misc.h"
 
 
 using namespace snapper;
