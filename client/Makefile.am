@@ -2,7 +2,7 @@
 # Makefile.am for snapper/client
 #
 
-SUBDIRS = utils proxy
+SUBDIRS = utils proxy mksubvolume
 
 AM_CPPFLAGS = -I$(top_srcdir) $(DBUS_CFLAGS)
 
@@ -68,16 +68,5 @@ installation_helper_SOURCES =		\
 	misc.cc		misc.h
 
 installation_helper_LDADD = ../snapper/libsnapper.la utils/libutils.la
-
-if ENABLE_ROLLBACK
-
-sbin_PROGRAMS = mksubvolume
-
-mksubvolume_SOURCES =			\
-	mksubvolume.cc
-
-mksubvolume_LDADD = ../snapper/libsnapper.la utils/libutils.la
-
-endif
 
 endif

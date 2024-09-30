@@ -34,7 +34,7 @@
 #include "snapper/BtrfsUtils.h"
 #include "snapper/AppUtil.h"
 #include "snapper/MntTable.h"
-#include "utils/GetOpts.h"
+#include "../utils/GetOpts.h"
 
 
 using namespace snapper;
