@@ -2,7 +2,7 @@
 # Makefile.am for snapper/client
 #
 
-SUBDIRS = utils proxy mksubvolume
+SUBDIRS = utils proxy mksubvolume installation-helper systemd-helper
 
 AM_CPPFLAGS = -I$(top_srcdir) $(DBUS_CFLAGS)
 
@@ -42,31 +42,3 @@ snapper_LDADD = 			\
 	utils/libutils.la		\
 	../dbus/libdbus.la		\
 	$(JSON_C_LIBS)
-
-libexecdir = /usr/lib/snapper
-
-libexec_PROGRAMS = systemd-helper
-
-systemd_helper_SOURCES =		\
-	systemd-helper.cc		\
-	cleanup.cc	cleanup.h	\
-	misc.cc		misc.h
-
-systemd_helper_LDADD = 			\
-	proxy/libproxy.la 		\
-	proxy/libclient.la 		\
-	../snapper/libsnapper.la	\
-	utils/libutils.la		\
-	../dbus/libdbus.la
-
-if ENABLE_BTRFS
-
-libexec_PROGRAMS += installation-helper
-
-installation_helper_SOURCES =		\
-	installation-helper.cc		\
-	misc.cc		misc.h
-
-installation_helper_LDADD = ../snapper/libsnapper.la utils/libutils.la
-
-endif

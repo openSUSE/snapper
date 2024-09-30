@@ -219,6 +219,8 @@ AC_CONFIG_FILES([
 	client/utils/Makefile
 	client/proxy/Makefile
 	client/mksubvolume/Makefile
+	client/installation-helper/Makefile
+	client/systemd-helper/Makefile
 	scripts/Makefile
 	pam/Makefile
 	data/Makefile
