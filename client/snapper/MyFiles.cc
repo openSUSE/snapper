@@ -23,8 +23,8 @@
 
 #include <iostream>
 
-#include "proxy/proxy.h"
-#include "utils/text.h"
+#include "../proxy/proxy.h"
+#include "../utils/text.h"
 #include "GlobalOptions.h"
 
 #include <snapper/AppUtil.h>

@@ -23,8 +23,8 @@
 
 #include <iostream>
 
-#include "utils/text.h"
-#include "proxy/proxy.h"
+#include "../utils/text.h"
+#include "../proxy/proxy.h"
 #include "GlobalOptions.h"
 
 
@@ -35,32 +35,26 @@ namespace snapper
 
 
     void
-    help_mount()
+    help_setup_quota()
     {
-	cout << _("  Mount snapshot:") << '\n'
-	     << _("\tsnapper mount <number>") << '\n'
+	cout << _("  Setup quota:") << '\n'
+	     << _("\tsnapper setup-quota") << '\n'
 	     << '\n';
     }
 
 
     void
-    command_mount(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*,
-		  ProxySnapper* snapper, Plugins::Report& report)
+    command_setup_quota(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*,
+			ProxySnapper* snapper, Plugins::Report& report)
     {
-	get_opts.parse("mount", GetOpts::no_options);
-	if (!get_opts.has_args())
+	ParsedOpts opts = get_opts.parse("setup-quota", GetOpts::no_options);
+	if (get_opts.num_args() != 0)
 	{
-	    cerr << _("Command 'mount' needs at least one argument.") << endl;
+	    cerr << _("Command 'setup-quota' does not take arguments.") << endl;
 	    exit(EXIT_FAILURE);
 	}
 
-	const ProxySnapshots& snapshots = snapper->getSnapshots();
-
-	while (get_opts.has_args())
-	{
-	    ProxySnapshots::const_iterator snapshot = snapshots.findNum(get_opts.pop_arg());
-	    snapshot->mountFilesystemSnapshot(true);
-	}
+	snapper->setupQuota();
     }
 
 }

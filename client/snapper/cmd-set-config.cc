@@ -21,23 +21,43 @@
  */
 
 
-#include <functional>
+#include <iostream>
 
-#include <snapper/File.h>
-
-#include "utils/GetOpts.h"
+#include "../utils/text.h"
+#include "../proxy/proxy.h"
+#include "GlobalOptions.h"
+#include "../misc.h"
 
 
 namespace snapper
 {
 
-    struct MyFiles : public Files
+    using namespace std;
+
+
+    void
+    help_set_config()
     {
+	cout << _("  Set config:") << '\n'
+	     << _("\tsnapper set-config <configdata>") << '\n'
+	     << '\n';
+    }
 
-	MyFiles(const Files& files) : Files(files) {}
 
-	void bulk_process(FILE* file, GetOpts& get_opts, std::function<void(File& file)> callback);
+    void
+    command_set_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers*,
+		       ProxySnapper* snapper, Plugins::Report& report)
+    {
+	get_opts.parse("set-config", GetOpts::no_options);
+	if (!get_opts.has_args())
+	{
+	    cerr << _("Command 'set-config' needs at least one argument.") << endl;
+	    exit(EXIT_FAILURE);
+	}
 
-    };
+	ProxyConfig config(read_configdata(get_opts.get_args()));
+
+	snapper->setConfig(config);
+    }
 
 }

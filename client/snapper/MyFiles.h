@@ -21,40 +21,23 @@
  */
 
 
-#include <iostream>
+#include <functional>
 
-#include "utils/text.h"
-#include "proxy/proxy.h"
-#include "GlobalOptions.h"
+#include <snapper/File.h>
+
+#include "../utils/GetOpts.h"
 
 
 namespace snapper
 {
 
-    using namespace std;
-
-
-    void
-    help_delete_config()
+    struct MyFiles : public Files
     {
-	cout << _("  Delete config:") << '\n'
-	     << _("\tsnapper delete-config") << '\n'
-	     << '\n';
-    }
 
+	MyFiles(const Files& files) : Files(files) {}
 
-    void
-    command_delete_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
-			  ProxySnapper*, Plugins::Report& report)
-    {
-	get_opts.parse("delete-config", GetOpts::no_options);
-	if (get_opts.has_args())
-	{
-	    cerr << _("Command 'delete-config' does not take arguments.") << endl;
-	    exit(EXIT_FAILURE);
-	}
+	void bulk_process(FILE* file, GetOpts& get_opts, std::function<void(File& file)> callback);
 
-	snappers->deleteConfig(global_options.config(), report);
-    }
+    };
 
 }

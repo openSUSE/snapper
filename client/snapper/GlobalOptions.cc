@@ -21,9 +21,9 @@
 
 #include <snapper/AppUtil.h>
 
-#include "utils/help.h"
-#include "misc.h"
-#include "client/GlobalOptions.h"
+#include "../utils/help.h"
+#include "../misc.h"
+#include "GlobalOptions.h"
 #include "client/utils/text.h"
 #include "client/utils/TableFormatter.h"
 #include "client/utils/CsvFormatter.h"
