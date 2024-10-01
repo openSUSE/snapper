@@ -52,6 +52,7 @@ namespace snapper
 	vector<Cell>& header() { return _header; }
 	vector<Id>& abbreviate() { return _abbreviate; }
 	vector<Id>& trim() { return _trim; }
+	vector<Id>& auto_visibility() { return _auto_visibility; }
 	vector<vector<string>>& rows() { return _rows; }
 
 	friend ostream& operator<<(ostream& stream, const TableFormatter& table_formatter);
@@ -63,6 +64,7 @@ namespace snapper
 	vector<Cell> _header;
 	vector<Id> _abbreviate;
 	vector<Id> _trim;
+	vector<Id> _auto_visibility;
 	vector<vector<string>> _rows;
 
     };

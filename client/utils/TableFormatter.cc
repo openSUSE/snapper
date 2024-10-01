@@ -44,6 +44,10 @@ namespace snapper
 	    if (table.has_id(id))
 		table.set_trim(id, true);
 
+	for (Id id : table_formatter._auto_visibility)
+	    if (table.has_id(id))
+		table.set_visibility(id, Visibility::AUTO);
+
 	for (const vector<string>& row : table_formatter._rows)
 	{
 	    Table::Row table_row(table);
