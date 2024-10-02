@@ -55,8 +55,7 @@ struct Cmd
     typedef void (*help_func_t)();
 
     Cmd(const string& name, cmd_func_t cmd_func, help_func_t help_func, bool needs_snapper)
-	: name(name), aliases(), cmd_func(cmd_func), help_func(help_func),
-	  needs_snapper(needs_snapper)
+	: name(name), cmd_func(cmd_func), help_func(help_func), needs_snapper(needs_snapper)
     {}
 
     Cmd(const string& name, const vector<string>& aliases, cmd_func_t cmd_func,
