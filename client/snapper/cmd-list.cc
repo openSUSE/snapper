@@ -38,6 +38,7 @@
 #include "../utils/TableFormatter.h"
 #include "../utils/CsvFormatter.h"
 #include "../utils/JsonFormatter.h"
+#include "../utils/OutputOptions.h"
 #include "dbus/DBusMessage.h"
 #include "../utils/HumanString.h"
 
@@ -75,24 +76,6 @@ namespace snapper
 	};
 
 	enum class ListMode { ALL, SINGLE, PRE_POST };
-
-
-	/**
-	 * Just a collection of some variables defining the output.
-	 */
-	class OutputOptions
-	{
-	public:
-
-	    OutputOptions(bool utc, bool iso, bool human)
-		: utc(utc), iso(iso), human(human)
-	    {
-	    }
-
-	    const bool utc;
-	    const bool iso;
-	    const bool human;
-	};
 
 
 	/**
