@@ -32,7 +32,8 @@ UBUNTU_FLAVOURS =	\
 	xUbuntu_22.10	\
 	xUbuntu_23.04	\
 	xUbuntu_23.10	\
-	xUbuntu_24.04
+	xUbuntu_24.04	\
+	xUbuntu_24.10
 
 RASPBIAN_FLAVOURS =	\
 	Raspbian_10	\

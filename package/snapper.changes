@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Oct 11 10:34:42 CEST 2024 - aschnell@suse.com
+
+- generate dsc file for Ubuntu 24.10
+
+-------------------------------------------------------------------
 Thu Aug 29 17:42:35 CEST 2024 - aschnell@suse.com
 
 - use .snapshots dir for 'btrfs qgroup clear-stale' (bsc#1229904)
