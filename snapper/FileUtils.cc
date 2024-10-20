@@ -387,9 +387,9 @@ namespace snapper
     std::pair<unsigned long long, unsigned long long>
     SDir::statvfs() const
     {
-	struct statvfs64 fsbuf;
-	if (fstatvfs64(dirfd, &fsbuf) != 0)
-	    SN_THROW(IOErrorException(sformat("statvfs64 failed path:%s errno:%d (%s)", base_path.c_str(),
+	struct statvfs fsbuf;
+	if (fstatvfs(dirfd, &fsbuf) != 0)
+	    SN_THROW(IOErrorException(sformat("statvfs failed path:%s errno:%d (%s)", base_path.c_str(),
 					      errno, stringerror(errno).c_str())));
 
 	// f_bavail is used (not f_bfree) since df seems to do the
