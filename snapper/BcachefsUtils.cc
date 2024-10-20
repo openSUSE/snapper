@@ -24,6 +24,7 @@
 
 #include <cstring>
 #include <cerrno>
+#include <linux/types.h>
 #include <sys/stat.h>
 #include <sys/ioctl.h>
 
