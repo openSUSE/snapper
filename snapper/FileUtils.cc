@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2018-2023] SUSE LLC
+ * Copyright (c) [2018-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -388,6 +388,10 @@ namespace snapper
     SDir::statvfs() const
     {
 	struct statvfs fsbuf;
+
+	static_assert(sizeof(fsbuf.f_blocks) == 8);
+	static_assert(sizeof(fsbuf.f_bavail) == 8);
+
 	if (fstatvfs(dirfd, &fsbuf) != 0)
 	    SN_THROW(IOErrorException(sformat("statvfs failed path:%s errno:%d (%s)", base_path.c_str(),
 					      errno, stringerror(errno).c_str())));
