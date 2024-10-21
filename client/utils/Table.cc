@@ -53,6 +53,8 @@ namespace snapper
 	    size_t trim = -1;
 	};
 
+	size_t last_visible_idx = 0;
+
 	vector<ColumnVars> column_vars;
     };
 
@@ -92,6 +94,12 @@ namespace snapper
 	    calculate_widths(table, row, false, 0);
 
 	calculate_abbriviated_widths(table);
+
+	// calculate last visible idx
+
+	for (size_t idx = 0; idx < column_vars.size(); ++idx)
+	    if (!column_vars[idx].hidden)
+		last_visible_idx = idx;
     }
 
 
@@ -272,7 +280,7 @@ namespace snapper
 		column = output_info.trimmed(column, column_params[idx].align, output_info.column_vars[idx].trim);
 
 	    bool first = idx == 0;
-	    bool last = idx == output_info.column_vars.size() - 1;
+	    bool last = idx == output_info.last_visible_idx;
 
 	    size_t extra = (idx == tree_idx) ? 2 * lasts.size() : 0;
 
@@ -353,7 +361,7 @@ namespace snapper
 	    for (size_t j = 0; j < output_info.column_vars[idx].width; ++j)
 		s << glyph(1);
 
-	    if (idx == output_info.column_vars.size() - 1)
+	    if (idx == output_info.last_visible_idx)
 		break;
 
 	    s << glyph(1) << glyph(2) << glyph(1);

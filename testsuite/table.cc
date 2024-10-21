@@ -205,3 +205,23 @@ BOOST_AUTO_TEST_CASE(test7)
 
     check(table, output);
 }
+
+
+BOOST_AUTO_TEST_CASE(test8)
+{
+    Table table({ "A", "B", Cell("Number", Id::NUMBER, Align::RIGHT) });
+
+    table.set_style(Style::LIGHT);
+    table.set_visibility(Id::NUMBER, Visibility::AUTO);
+
+    Table::Row row1(table, { "a", "b", "" });
+    table.add(row1);
+
+    vector<string> output = {
+	"A │ B",
+	"──┼──",
+	"a │ b"
+    };
+
+    check(table, output);
+}
