@@ -698,7 +698,7 @@ namespace snapper
 	snapshot.cleanup = scd.cleanup;
 	snapshot.userdata = scd.userdata;
 
-	return createHelper(snapshot, parent, false, report);
+	return createHelper(snapshot, parent, scd.empty, report);
     }
 
 

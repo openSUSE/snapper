@@ -56,7 +56,8 @@ namespace snapper
 	    { _("--command <command>"), _("Run command and create pre and post snapshots.")},
 	    { _("--read-only"), _("Create read-only snapshot.") },
 	    { _("--read-write"), _("Create read-write snapshot.") },
-	    { _("--from <number>"), _("Create a snapshot from the specified snapshot.") }
+	    { _("--from <number>"), _("Create a snapshot from the specified snapshot.") },
+	    { _("--empty"), _("Create an empty snapshot.") }
 	});
     }
 
@@ -83,7 +84,8 @@ namespace snapper
 	    Option("command",			required_argument),
 	    Option("read-only",			no_argument),
 	    Option("read-write",		no_argument),
-	    Option("from",			required_argument)
+	    Option("from",			required_argument),
+	    Option("empty",			no_argument)
 	};
 
 	ParsedOpts opts = get_opts.parse("create", options);
@@ -139,6 +141,9 @@ namespace snapper
 
 	if ((opt = opts.find("from")) != opts.end())
 	    parent = snapshots.findNum(opt->second);
+
+	if ((opt = opts.find("empty")) != opts.end())
+	    scd.empty = true;
 
 	if (type == CreateType::POST && snapshot1 == snapshots.end())
 	{
