@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Oct 25 08:48:46 CEST 2024 - aschnell@suse.com
+
+- support creating empty snapshots (gh#openSUSE/snapper#944)
+
+-------------------------------------------------------------------
 Fri Oct 11 10:34:42 CEST 2024 - aschnell@suse.com
 
 - generate dsc file for Ubuntu 24.10
