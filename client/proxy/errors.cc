@@ -29,9 +29,8 @@
 #include "errors.h"
 
 
-using namespace std;
-using namespace snapper;
-
+namespace snapper
+{
 
 void
 convert_exception(const DBus::ErrorException& e)
@@ -120,4 +119,6 @@ error_description(const DBus::ErrorException& e)
 	return sformat(_("Free space error (%s)."), e.message());
 
     return sformat(_("Failure (%s)."), name.c_str());
+}
+
 }

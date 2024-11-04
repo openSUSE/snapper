@@ -21,7 +21,15 @@
  */
 
 
+#include <string>
+
 #include "dbus/DBusConnection.h"
+
+
+namespace snapper
+{
+
+    using std::string;
 
 
 /**
@@ -40,3 +48,4 @@ convert_exception(const DBus::ErrorException& e) __attribute__ ((__noreturn__));
 string
 error_description(const DBus::ErrorException& e);
 
+}
