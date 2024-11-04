@@ -31,6 +31,9 @@
 #include "proxy.h"
 
 
+namespace snapper
+{
+
 using namespace std;
 
 
@@ -206,4 +209,6 @@ ProxySnapshots::findPost(const_iterator pre) const
     }
 
     return end();
+}
+
 }

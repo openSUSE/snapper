@@ -26,6 +26,9 @@
 #include "proxy/proxy.h"
 
 
+namespace snapper
+{
+
 /*
  * The following three functions do the cleanup based on the conditionals defined in the
  * config, that are hard limit, quota and free space.
@@ -57,3 +60,5 @@ do_cleanup_timeline(ProxySnapper* snapper, bool verbose, std::function<bool()> c
 void
 do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose, std::function<bool()> condition,
 			  Plugins::Report& report);
+
+}

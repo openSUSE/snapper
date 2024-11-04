@@ -30,12 +30,16 @@
 #include "dbus/DBusPipe.h"
 #include "snapper/AppUtil.h"
 
-using namespace std;
-
 
 #define SERVICE "org.opensuse.Snapper"
 #define OBJECT "/org/opensuse/Snapper"
 #define INTERFACE "org.opensuse.Snapper"
+
+
+namespace snapper
+{
+
+using namespace std;
 
 
 vector<XConfigInfo>
@@ -743,4 +747,6 @@ command_debug(DBus::Connection& conn)
     unmarshaller >> lines;
 
     return lines;
+}
+
 }

@@ -30,6 +30,9 @@
 #include <snapper/Comparison.h>
 
 
+namespace snapper
+{
+
 class ProxySnapshotLib : public ProxySnapshot::Impl
 {
 
@@ -203,5 +206,6 @@ private:
 const ProxySnapshotLib&
 to_lib(const ProxySnapshot& proxy_snapshot);
 
+}
 
 #endif

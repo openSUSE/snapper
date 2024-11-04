@@ -21,16 +21,11 @@
  */
 
 
-#include <string>
-#include <vector>
-#include <map>
-
-using std::string;
-using std::vector;
-using std::map;
-
 #include "types.h"
 
+
+namespace snapper
+{
 
 vector<XConfigInfo>
 command_list_xconfigs(DBus::Connection& conn);
@@ -163,3 +158,5 @@ command_get_plugins_report(DBus::Connection& conn);
 
 vector<string>
 command_debug(DBus::Connection& conn);
+
+}
