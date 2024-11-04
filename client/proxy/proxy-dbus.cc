@@ -25,6 +25,9 @@
 #include "../utils/text.h"
 
 
+namespace snapper
+{
+
 using namespace std;
 
 
@@ -486,4 +489,6 @@ ProxySnappers
 ProxySnappers::createDbus()
 {
     return ProxySnappers(new ProxySnappersDbus());
+}
+
 }

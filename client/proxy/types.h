@@ -25,10 +25,6 @@
 #include <vector>
 #include <map>
 
-using std::string;
-using std::vector;
-using std::map;
-
 #include "dbus/DBusMessage.h"
 #include "dbus/DBusConnection.h"
 #include "snapper/Snapshot.h"
@@ -36,7 +32,13 @@ using std::map;
 #include "snapper/SnapperTmpl.h"
 #include "snapper/Snapper.h"
 
-using namespace snapper;
+
+namespace snapper
+{
+
+using std::string;
+using std::vector;
+using std::map;
 
 
 struct XConfigInfo
@@ -101,6 +103,8 @@ struct XReport
     vector<string> args;
     int exit_status;
 };
+
+}
 
 
 namespace DBus

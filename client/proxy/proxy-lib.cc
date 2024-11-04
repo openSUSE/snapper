@@ -23,6 +23,9 @@
 #include "proxy-lib.h"
 
 
+namespace snapper
+{
+
 using namespace std;
 
 
@@ -227,4 +230,6 @@ const ProxySnapshotLib&
 to_lib(const ProxySnapshot& proxy_snapshot)
 {
     return dynamic_cast<const ProxySnapshotLib&>(proxy_snapshot.get_impl());
+}
+
 }

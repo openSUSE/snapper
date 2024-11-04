@@ -34,8 +34,8 @@
 #include <snapper/File.h>
 
 
-using namespace snapper;
-
+namespace snapper
+{
 
 /**
  * The proxy classes here allow clients, so far only the snapper command line
@@ -359,6 +359,8 @@ private:
     std::unique_ptr<Impl> impl;
 
 };
+
+}
 
 
 #endif

@@ -30,6 +30,9 @@
 #include "proxy.h"
 
 
+namespace snapper
+{
+
 class ProxySnapshotDbus;
 class ProxySnapshotsDbus;
 class ProxySnapperDbus;
@@ -228,6 +231,8 @@ private:
     Files files;
 
 };
+
+}
 
 
 #endif

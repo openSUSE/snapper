@@ -31,7 +31,7 @@
 #include <boost/algorithm/string.hpp>
 
 #include <json.h>
-// a collision with client/errors.h
+// a collision with client/proxy/errors.h
 #ifdef error_description
 #undef error_description
 #endif

@@ -33,9 +33,8 @@
 #include "proxy/proxy.h"
 
 
-using namespace snapper;
-using namespace std;
-
+namespace snapper
+{
 
 unsigned int
 read_num(const string& str);
@@ -66,9 +65,6 @@ struct Differ
     string extensions;
 };
 
-
-namespace snapper
-{
 
     /**
      * Return a string listing the possible enum values. E.g. "Use auto, classic or

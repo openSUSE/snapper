@@ -37,6 +37,9 @@
 #include "cleanup.h"
 
 
+namespace snapper
+{
+
 using namespace std;
 
 
@@ -886,4 +889,6 @@ do_cleanup_empty_pre_post(ProxySnapper* snapper, bool verbose, std::function<boo
     EmptyPrePostParameters parameters(snapper);
     EmptyPrePostCleaner cleaner(snapper, verbose, parameters);
     cleaner.cleanup(condition, report);
+}
+
 }

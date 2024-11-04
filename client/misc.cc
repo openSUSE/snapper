@@ -36,6 +36,9 @@
 #include "misc.h"
 
 
+namespace snapper
+{
+
 unsigned int
 read_num(const string& str)
 {
@@ -212,4 +215,6 @@ Differ::run(const string& f1, const string& f2) const
 
     for (const string& line : cmd.get_stderr())
 	cerr << line << endl;
+}
+
 }
