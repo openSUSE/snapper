@@ -222,6 +222,7 @@ AC_CONFIG_FILES([
 	client/mksubvolume/Makefile
 	client/installation-helper/Makefile
 	client/systemd-helper/Makefile
+	client/snbk/Makefile
 	scripts/Makefile
 	pam/Makefile
 	data/Makefile
@@ -229,6 +230,8 @@ AC_CONFIG_FILES([
 	doc/snapper.xml:doc/snapper.xml.in
 	doc/snapperd.xml:doc/snapperd.xml.in
 	doc/snapper-configs.xml:doc/snapper-configs.xml.in
+	doc/snbk.xml:doc/snbk.xml.in
+	doc/snapper-backup-configs.xml:doc/snapper-backup-configs.xml.in
 	doc/snapper-zypp-plugin.xml:doc/snapper-zypp-plugin.xml.in
 	doc/snapper-zypp-plugin.conf.xml:doc/snapper-zypp-plugin.conf.xml.in
 	doc/pam_snapper.xml:doc/pam_snapper.xml.in

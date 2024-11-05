@@ -19,6 +19,6 @@ libutils_la_SOURCES =					\
 	TableFormatter.cc   	TableFormatter.h	\
 	CsvFormatter.cc	    	CsvFormatter.h		\
 	JsonFormatter.cc    	JsonFormatter.h		\
-	OutputOptions.h
+	OutputOptions.cc	OutputOptions.h
 
 libutils_la_LIBADD = ../../snapper/libsnapper.la -ltinfo

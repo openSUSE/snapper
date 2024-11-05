@@ -1,0 +1,11 @@
+
+[Unit]
+Description=Backup of Snapper Snapshots
+Documentation=man:snbk(5)
+
+[Timer]
+OnCalendar=hourly
+
+[Install]
+WantedBy=timers.target
+

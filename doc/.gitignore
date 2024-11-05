@@ -1,6 +1,8 @@
 snapper.xml
 snapperd.xml
 snapper-configs.xml
+snbk.xml
+snapper-backup-configs.xml
 snapper-zypp-plugin.xml
 snapper-zypp-plugin.conf.xml
 pam_snapper.xml
@@ -8,6 +10,8 @@ mksubvolume.xml
 snapper.8
 snapperd.8
 snapper-configs.5
+snbk.8
+snapper-backup-configs.5
 snapper-zypp-plugin.8
 snapper-zypp-plugin.conf.5
 pam_snapper.8
@@ -15,6 +19,8 @@ mksubvolume.8
 snapper.html
 snapperd.html
 snapper-configs.html
+snbk.html
+snapper-backup-configs.html
 snapper-zypp-plugin.html
 snapper-zypp-plugin.conf.html
 pam_snapper.html

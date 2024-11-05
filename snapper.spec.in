@@ -224,7 +224,8 @@ test -f /etc/logrotate.d/snapper.rpmsave && mv -v /etc/logrotate.d/snapper.rpmsa
 %else
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
 %endif
-%{_unitdir}/snapper*.*
+%{_unitdir}/snapper-{timeline,cleanup,boot}.*
+%{_unitdir}/snapperd.service
 %if 0%{?suse_version} <= 1500
 %dir %{_datadir}/dbus-1/system.d
 %endif
@@ -341,10 +342,27 @@ for i in zypp-plugin.conf ; do
     test -f /etc/snapper/${i}.rpmsave && mv -v /etc/snapper/${i}.rpmsave /etc/snapper/${i} ||:
 done
 
+%package -n snapper-backup
+Requires:       snapper = %version
+Summary:        A backup program for snapper
+Group:          System/Packages
+
+%description -n snapper-backup
+A backup program for snapshots created by snapper.
+
+%files -n snapper-backup
+%{_sbindir}/snbk
+%dir %{_sysconfdir}/snapper/backup-configs
+%dir %{_sysconfdir}/snapper/certs
+%{_unitdir}/snapper-{backup}.*
+%{_mandir}/*/snbk.8*
+%{_mandir}/*/snapper-backup-configs.5*
+
 %package -n pam_snapper
 Requires:       pam
 Requires:       snapper = %version
 Summary:        PAM module for calling snapper
+Requires:       util-linux-systemd
 Group:          System/Packages
 
 %description -n pam_snapper

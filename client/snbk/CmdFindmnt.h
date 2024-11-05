@@ -1,6 +1,5 @@
 /*
- * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2024] SUSE LLC
+ * Copyright (c) 2024 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -21,43 +20,45 @@
  */
 
 
-#include <string>
-#include <boost/any.hpp>
-#include <json-c/json.h>
+#ifndef SNAPPER_CMD_FINDMNT_H
+#define SNAPPER_CMD_FINDMNT_H
+
+
+#include "Shell.h"
 
 
 namespace snapper
 {
 
     using std::string;
+    using std::vector;
 
 
     /**
-     * Just a collection of some variables defining the output.
+     * Class to probe for mount points: Call "findmnt --target <path>".
      */
-    class OutputOptions
+    class CmdFindmnt
     {
     public:
 
-	OutputOptions(bool utc, bool iso, bool human)
-	    : utc(utc), iso(iso), human(human)
-	{
-	}
+	CmdFindmnt(const Shell& shell, const string& path);
 
-	const bool utc;
-	const bool iso;
-	const bool human;
+	const string& get_source() const { return source; }
+	const string& get_target() const { return target; }
+
+	friend std::ostream& operator<<(std::ostream& s, const CmdFindmnt& cmd_findmnt);
+
+    private:
+
+	void parse_json(const vector<string>& lines);
+
+	const string path;
+
+	string source;
+	string target;
 
     };
 
-
-    // TODO extend functions and use in client/snapper
-
-    string
-    any_to_string(const OutputOptions& output_options, const boost::any& value);
-
-
-    json_object*
-    any_to_json(const OutputOptions& output_options, const boost::any& value);
-
 }
+
+#endif

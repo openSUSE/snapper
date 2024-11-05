@@ -30,6 +30,7 @@
 #define SYSCONFIG_FILE CONF_DIR "/snapper"
 
 #define CONFIGS_DIR "/etc/snapper/configs"
+#define BACKUP_CONFIGS_DIR "/etc/snapper/backup-configs"
 
 #define ETC_CONFIG_TEMPLATE_DIR "/etc/snapper/config-templates"
 #define USR_CONFIG_TEMPLATE_DIR "/usr/share/snapper/config-templates"
@@ -53,10 +54,21 @@
 // commands
 
 #define SH_BIN "/bin/sh"
+#define SSH_BIN "/usr/bin/ssh"
 
 #define BTRFS_BIN "/usr/sbin/btrfs"
 
 #define SYSTEMCTL_BIN "/usr/bin/systemctl"
+
+#define FINDMNT_BIN "/usr/bin/findmnt"
+#define REALPATH_BIN "/usr/bin/realpath"
+
+#define CP_BIN "/usr/bin/cp"
+#define SCP_BIN "/usr/bin/scp"
+#define MKDIR_BIN "/usr/bin/mkdir"
+
+#define RM_BIN "/usr/bin/rm"
+#define RMDIR_BIN "/usr/bin/rmdir"
 
 
 // keys from the config files
@@ -69,6 +81,11 @@
 #define KEY_SYNC_ACL "SYNC_ACL"
 #define KEY_COMPRESSION "COMPRESSION"
 #define KEY_TIMELINE_CREATE "TIMELINE_CREATE"
+
+
+// regexes
+
+#define UUID_REGEX "[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"
 
 
 #endif
