@@ -1055,6 +1055,7 @@
     <para>
       <citerefentry><refentrytitle>snapper-configs</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
       <citerefentry><refentrytitle>snapper-zypp-plugin</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>snbk</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
       <citerefentry><refentrytitle>pam_snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
       <citerefentry role="nolink"><refentrytitle>btrfs</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
       <citerefentry role="nolink"><refentrytitle>lvm</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
