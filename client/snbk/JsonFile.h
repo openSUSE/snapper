@@ -1,6 +1,5 @@
 /*
- * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2024] SUSE LLC
+ * Copyright (c) [2017-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -21,43 +20,58 @@
  */
 
 
-#include <string>
-#include <boost/any.hpp>
+#ifndef SNAPPER_JSON_FILE_H
+#define SNAPPER_JSON_FILE_H
+
+
 #include <json-c/json.h>
+#include <string>
+#include <vector>
+#include <boost/noncopyable.hpp>
 
 
 namespace snapper
 {
 
     using std::string;
+    using std::vector;
 
 
-    /**
-     * Just a collection of some variables defining the output.
+    /*
+     * The user might expect more use of const here but in the end it does not work out
+     * since json_object_get_string does not take a const (likely due to reference
+     * counting).
      */
-    class OutputOptions
+
+
+    class JsonFile : private boost::noncopyable
     {
+
     public:
 
-	OutputOptions(bool utc, bool iso, bool human)
-	    : utc(utc), iso(iso), human(human)
-	{
-	}
+	JsonFile(const vector<string>& lines);
 
-	const bool utc;
-	const bool iso;
-	const bool human;
+	JsonFile(const string& filename);
+
+	~JsonFile();
+
+	json_object* get_root() { return root; }
+
+    private:
+
+	json_object* root = nullptr;
 
     };
 
 
-    // TODO extend functions and use in client/snapper
-
-    string
-    any_to_string(const OutputOptions& output_options, const boost::any& value);
+    template<typename Type> bool
+    get_child_value(json_object* parent, const char* name, Type& value);
 
 
-    json_object*
-    any_to_json(const OutputOptions& output_options, const boost::any& value);
+    bool
+    get_child_nodes(json_object* parent, const char* name, vector<json_object*>& children);
 
 }
+
+
+#endif

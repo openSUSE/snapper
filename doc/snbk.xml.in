@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<refentry id='snbk8' xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <refentryinfo>
+    <date>2024-11-05</date>
+  </refentryinfo>
+
+  <refmeta>
+    <refentrytitle>snbk</refentrytitle>
+    <manvolnum>8</manvolnum>
+    <refmiscinfo class='date'>2024-11-05</refmiscinfo>
+    <refmiscinfo class='version'>@VERSION@</refmiscinfo>
+    <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
+  </refmeta>
+
+  <refnamediv>
+    <refname>snbk</refname>
+    <refpurpose>Command-line program to backup snapshots of snapper</refpurpose>
+  </refnamediv>
+
+  <refsynopsisdiv id='synopsis'>
+    <cmdsynopsis>
+      <command>snbk</command>
+      <arg choice='opt'><replaceable>--global-opts</replaceable></arg>
+      <arg choice='plain'><replaceable>command</replaceable></arg>
+      <arg choice='opt'><replaceable>command-arguments</replaceable></arg>
+    </cmdsynopsis>
+    <cmdsynopsis>
+      <command>snbk</command>
+      <arg choice='req'>--help</arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+
+  <refsect1 id='description'>
+    <title>DESCRIPTION</title>
+    <para>Snbk is a command-line program to backup snapshot of snapper. It can
+    transfer and delete backup snapshots on local and remote btrfs filesystems.</para>
+  </refsect1>
+
+  <refsect1 id='concepts'>
+    <title>CONCEPTS</title>
+
+    <refsect2 id='backup-configurations'>
+      <title>Backup Configurations</title>
+      <para>For each snapper config there can be several backup
+      configs. Each backup config defines backups of the snapper snapshots at
+      one location, either local or remote, see
+      <citerefentry><refentrytitle>snapper-backup-configs</refentrytitle><manvolnum>5</manvolnum></citerefentry>
+      for possible settings.</para>
+    </refsect2>
+
+    <refsect2 id='snapshot-statuses'>
+      <title>Snapshot Statuses</title>
+
+      <para>Each snapshot has a status on the source and on the
+      target. Possible values for the source are:</para>
+
+      <glosslist>
+        <glossentry>
+          <glossterm>(empty)</glossterm>
+          <glossdef>
+	    <para>The snapshot is missing and thus considered obsolete
+	    on the target. It will be deleted on the target by the next delete
+	    command.</para>
+	  </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>read-only</glossterm>
+          <glossdef>
+	    <para>The snapshot is read-only.</para>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>read-write</glossterm>
+          <glossdef>
+	    <para>The snapshot is read-write and thus cannot be backed-up.</para>
+          </glossdef>
+        </glossentry>
+      </glosslist>
+
+      <para>Possible values for the target are:</para>
+      <glosslist>
+        <glossentry>
+          <glossterm>(empty)</glossterm>
+          <glossdef>
+	    <para>The snapshot is missing. If the source snapshot is
+	    read-only it will be transferred to the target by the
+	    next transfer command.</para>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>valid</glossterm>
+          <glossdef>
+	    <para>The snapshot is valid. That implies it is read-only.</para>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>invalid</glossterm>
+          <glossdef>
+	    <para>The snapshot is invalid. Either the received UUID is
+	    wrong or it is read-write. That can happen if the transfer
+	    was interrupted. The next transfer command will try to
+	    transfer the snapshot again.</para>
+          </glossdef>
+        </glossentry>
+      </glosslist>
+    </refsect2>
+
+  </refsect1>
+
+  <refsect1 id='global_options'>
+    <title>GLOBAL OPTIONS</title>
+    <variablelist>
+      <varlistentry>
+	<term><option>-q, --quiet</option></term>
+	<listitem>
+	  <para>Suppress normal output. Error messages will still be printed, though.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>-v, --verbose</option></term>
+	<listitem>
+	  <para>Increase verbosity.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--debug</option></term>
+	<listitem>
+	  <para>Turn on debugging.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--utc</option></term>
+	<listitem>
+	  <para>Display dates and times in UTC. By default, local time is used.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--iso</option></term>
+	<listitem>
+	  <para>Display dates and times in ISO format. ISO format is always used for machine-readable
+	  outputs.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>-t, --table-style <replaceable>style</replaceable></option></term>
+	<listitem>
+	  <para>Specifies table style. Table style is identified by an integer number.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--machine-readable <replaceable>format</replaceable></option></term>
+	<listitem>
+	  <para>Specifies a machine-readable output format. Possible options are csv and json.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--csvout</option></term>
+	<listitem>
+	  <para>Sets CSV output format. See
+	  <link xlink:href="https://tools.ietf.org/html/rfc4180">RFC 4180</link>
+	  for the details, except lines end with a LF, not CR+LF.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--jsonout</option></term>
+	<listitem>
+	  <para>Sets JSON output format.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--separator <replaceable>character</replaceable></option></term>
+	<listitem>
+	  <para>Specifies the character separator for CSV output format.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--no-headers</option></term>
+	<listitem>
+	  <para>Suppress headers for CSV output format.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>-b, --backup-config <replaceable>name</replaceable></option></term>
+	<listitem>
+	  <para>Use specified configuration instead of all configurations.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--no-dbus</option></term>
+	<listitem>
+	  <para>Operate without a DBus connection.</para>
+	  <para>Use with caution.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--target-mode <replaceable>name</replaceable></option></term>
+	<listitem>
+	  <para>Only operate on backup configs with the specified target mode.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--automatic</option></term>
+	<listitem>
+	  <para>Only operate on backup configs which have the
+	  automatic flag set.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--version</option></term>
+	<listitem>
+	  <para>Print version and exit.</para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='commands'>
+    <title>COMMANDS</title>
+
+    <para>Snbk provides a number of <emphasis>commands</emphasis>. Each
+    command accepts the options listed in the <link
+    linkend='global_options'>GLOBAL OPTIONS</link> section. These options
+    must be specified <emphasis>before</emphasis> the command name. In
+    addition, many commands have specific arguments, which are listed in
+    this section. These command-specific arguments must be specified
+    <emphasis>after</emphasis> the name of the command.</para>
+
+    <variablelist>
+
+      <varlistentry>
+	<term><option>help</option></term>
+	<listitem>
+	  <para>Show short help text.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>list-configs</option></term>
+	<listitem>
+	  <para>List available configurations.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>list (ls)</option></term>
+	<listitem>
+	  <para>List snapshots.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>transfer [<replaceable>number</replaceable>]</option></term>
+	<listitem>
+	  <para>Transfer all missing snapshots or the specified
+	  snapshot to the target.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>delete (remove|rm) [<replaceable>number</replaceable>]</option></term>
+	<listitem>
+	  <para>Delete all obsolete snapshots or the specified
+	  snapshot from the target.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>transfer-and-delete</option></term>
+	<listitem>
+	  <para>Combines transfer and delete.</para>
+	</listitem>
+      </varlistentry>
+
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='restore'>
+    <title>RESTORE</title>
+    <para>So far a restore has to be done manually. There are several
+    methods to do a restore, e.g. the backup can be mounted and then
+    copied or rsync can be used. Here we provide an example on how to use
+    btrfs send and receive to restore a snapshot on the source
+    system. In general using btrfs send and receive is a bit
+    tricky.</para>
+    <para>When using target-mode local:
+      <programlisting>
+# mkdir /.snapshots/42
+# cp /backups/root/42/info.xml /.snapshots/42/
+# btrfs send /backups/root/42/snapshot | btrfs receive /.snapshots/42
+      </programlisting>
+      When using target-mode ssh-push:
+      <programlisting>
+# mkdir /.snapshots/42
+# scp backups.example.com:/backups/eberich/root/42/info.xml /.snapshots/42
+# ssh backups.example.com btrfs send /backups/eberich/root/42/snapshot | btrfs receive /.snapshots/42
+      </programlisting>
+    </para>
+    <para>If the system was reinstalled it is unfortunately in general
+    not possibly to simply use the restored snapshot as the new default
+    snapshot since some files, e.g. /etc/fstab, likely need
+    modifications. Also unfortunately for other subvolumes than root a
+    rollback is not supported.</para>
+    <para>If there are snapshots on the source to speed up the
+    operation you can also use the -p option for btrfs send.</para>
+  </refsect1>
+
+  <refsect1 id='notes'>
+    <title>NOTES</title>
+    <para>The content of snapshots transferred must not be changed on
+    the source system. Normally this is ensured since the snapshots are
+    read-only. But it is possible to change snapshots to read-write. This
+    can cause error during transfers in the future.</para>
+  </refsect1>
+
+  <refsect1 id='permissions'>
+    <title>PERMISSIONS</title>
+    <para>Since the target-mode ssh-push needs root permissions on the
+    target it is recommended to use a dedicated machine or container
+    as a target.</para>
+  </refsect1>
+
+  <refsect1 id='files'>
+    <title>FILES</title>
+    <variablelist>
+      <varlistentry>
+	<term><filename>/etc/snapper/backup-configs</filename></term>
+	<listitem>
+	  <para>Directory containing configuration files.</para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='exit_status'>
+    <title>EXIT STATUS</title>
+    <para>Normally the exit status is 0. If an error occurred the exit
+    status is 1.</para>
+  </refsect1>
+
+  <refsect1 id='homepage'>
+    <title>HOMEPAGE</title>
+    <para><ulink url='http://snapper.io/'>http://snapper.io/</ulink></para>
+  </refsect1>
+
+  <refsect1 id='authors'>
+    <title>AUTHORS</title>
+    <para>Arvin Schnell <email>aschnell@suse.com</email></para>
+  </refsect1>
+
+  <refsect1 id='see_also'>
+    <title>SEE ALSO</title>
+    <para>
+      <citerefentry><refentrytitle>snapper-backup-configs</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+      <citerefentry role="nolink"><refentrytitle>btrfs-send</refentrytitle><manvolnum>8</manvolnum></citerefentry>
+    </para>
+  </refsect1>
+
+</refentry>

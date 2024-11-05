@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<refentry id='snapper-backup-configs5'>
+
+  <refentryinfo>
+    <date>2024-11-05</date>
+  </refentryinfo>
+
+  <refmeta>
+    <refentrytitle>snapper-backup-configs</refentrytitle>
+    <manvolnum>5</manvolnum>
+    <refmiscinfo class='date'>2024-11-05</refmiscinfo>
+    <refmiscinfo class='version'>@VERSION@</refmiscinfo>
+    <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
+  </refmeta>
+
+  <refnamediv>
+    <refname>snapper-backup-configs</refname>
+    <refpurpose>Configuration files for snapper backup configs</refpurpose>
+  </refnamediv>
+
+  <refsect1 id='description'>
+    <title>DESCRIPTION</title>
+    <para>Each file <filename>/etc/snapper/backup-configs/*.json</filename> describes a
+    snapper backup config.</para>
+    <para>The file uses JSON syntax containing a single object with
+    key-value pairs.</para>
+  </refsect1>
+
+  <refsect1 id='key-value-pairs'>
+    <title>KEY VALUE PAIRS</title>
+
+    <para>The following is a list of keys that can be present in the
+    configuration file.</para>
+
+    <variablelist>
+      <varlistentry>
+	<term><option>config</option></term>
+        <listitem>
+          <para>Name of the snapper config.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>target-mode</option></term>
+	<listitem>
+	  <para>Either local or ssh-push.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>source-path</option></term>
+	<listitem>
+	  <para>Path of the subvolume or mount point.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>target-path</option></term>
+	<listitem>
+	  <para>Path of the subvolume or mount point.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>automatic</option></term>
+	<listitem>
+	  <para>Boolean for enabling automatic transfer and delete
+	  for the backup config using a systemd timer service.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>ssh-host</option></term>
+	<listitem>
+	  <para>Name of the target host. Required for target mode
+	  ssh-push.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>ssh-port</option></term>
+	<listitem>
+	  <para>Port of the target host. Optional for target mode
+	  ssh-push.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>ssh-user</option></term>
+	<listitem>
+	  <para>User on the target host. Optional for target mode
+	  ssh-push.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>ssh-identity</option></term>
+	<listitem>
+	  <para>An ssh-identity to access the host without requiring a
+	  password or passphrase. Optional for target mode ssh-push.</para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 id='examples'>
+    <title>EXAMPLES</title>
+    <para>An example backup config for local backups:
+    <programlisting>
+{
+    "config": "root",
+    "target-mode": "local",
+    "automatic": true,
+    "source-path": "/",
+    "target-path": "/backups/root"
+}
+    </programlisting>
+    </para>
+
+    <para>An example backup config for remote backups via ssh-push:
+    <programlisting>
+{
+    "config": "root",
+    "target-mode": "ssh-push",
+    "automatic": false,
+    "source-path": "/",
+    "target-path": "/backups/eberich/root",
+    "ssh-host": "backups.example.com",
+    "ssh-identity": "/etc/snapper/certs/id_ecdsa"
+}
+    </programlisting>
+    </para>
+  </refsect1>
+
+  <refsect1 id='homepage'>
+    <title>HOMEPAGE</title>
+    <para><ulink url='http://snapper.io/'>http://snapper.io/</ulink></para>
+  </refsect1>
+
+  <refsect1 id='authors'>
+    <title>AUTHORS</title>
+    <para>Arvin Schnell <email>aschnell@suse.com</email></para>
+  </refsect1>
+
+  <refsect1 id='see_also'>
+    <title>SEE ALSO</title>
+    <para>
+      <citerefentry><refentrytitle>snbk</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+      <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>
+    </para>
+  </refsect1>
+
+</refentry>

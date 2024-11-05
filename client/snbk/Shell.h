@@ -1,6 +1,5 @@
 /*
- * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2024] SUSE LLC
+ * Copyright (c) 2024 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -21,43 +20,42 @@
  */
 
 
+#ifndef SNAPPER_SHELL_H
+#define SNAPPER_SHELL_H
+
+
 #include <string>
-#include <boost/any.hpp>
-#include <json-c/json.h>
+#include <vector>
+
+#include "snapper/SystemCmd.h"
 
 
 namespace snapper
 {
 
     using std::string;
+    using std::vector;
 
 
-    /**
-     * Just a collection of some variables defining the output.
-     */
-    class OutputOptions
+    struct Shell
     {
-    public:
-
-	OutputOptions(bool utc, bool iso, bool human)
-	    : utc(utc), iso(iso), human(human)
+	enum class Mode
 	{
-	}
+	    DIRECT, SSH
+	};
 
-	const bool utc;
-	const bool iso;
-	const bool human;
-
+	Mode mode = Mode::DIRECT;
+	vector<string> ssh_options;
     };
 
 
-    // TODO extend functions and use in client/snapper
-
-    string
-    any_to_string(const OutputOptions& output_options, const boost::any& value);
+    SystemCmd::Args
+    shellify(const Shell& shell, const SystemCmd::Args& args);
 
 
-    json_object*
-    any_to_json(const OutputOptions& output_options, const boost::any& value);
+    SystemCmd::Args
+    shellify_pipe(const SystemCmd::Args& args1, const Shell& shell2, const SystemCmd::Args& args2);
 
 }
+
+#endif
