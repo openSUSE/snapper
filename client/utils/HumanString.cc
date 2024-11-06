@@ -55,7 +55,7 @@ namespace snapper
     vector<string>
     get_all_suffixes(int i, bool all = true, bool classic = false)
     {
-	auto _ = [classic](const char* msg) { return classic ? msg : ::_(msg); };
+	auto _ = [classic](const char* msg) { return classic ? msg : snapper::_(msg); };
 
 	vector<string> ret;
 

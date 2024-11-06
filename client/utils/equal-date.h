@@ -20,6 +20,8 @@
  */
 
 
+namespace snapper
+{
 
 bool
 equal_year(const struct tm& tmp1, const struct tm& tmp2);
@@ -39,3 +41,4 @@ equal_day(const struct tm& tmp1, const struct tm& tmp2);
 bool
 equal_hour(const struct tm& tmp1, const struct tm& tmp2);
 
+}

@@ -11,6 +11,10 @@
 #include <string>
 #include <iosfwd>
 
+
+namespace snapper
+{
+
 const char* _(const char* msgid) __attribute__ ((format_arg(1)));
 
 const char* _(const char* msgid, const char* msgid_plural, unsigned long int n)
@@ -29,4 +33,6 @@ std::string mbs_substr_by_width(
     std::string::size_type pos,
     std::string::size_type n = std::string::npos);
 
-#endif /* ZYPPER_UTILS_TEXT_H_ */
+}
+
+#endif

@@ -12,6 +12,10 @@
 
 #include "text.h"
 
+
+namespace snapper
+{
+
 using namespace std;
 
 
@@ -159,4 +163,6 @@ std::string mbs_substr_by_width(
   if (eptr == sptr)
     return string();
   return string(sptr, eptr - sptr);
+}
+
 }
