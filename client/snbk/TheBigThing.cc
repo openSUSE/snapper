@@ -249,9 +249,6 @@ namespace snapper
 	if (verbose)
 	    cout << _("Probing source snapshots.") << endl;
 
-	if (backup_config.source_path != snapper->getConfig().getSubvolume())
-	    SN_THROW(Exception(_("Path mismatch.")));
-
 	const ProxySnapshots& source_snapshots = snapper->getSnapshots();
 
 	if (verbose)
