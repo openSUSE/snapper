@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-07 08:23+0100\n"
-"PO-Revision-Date: 2024-06-06 10:46+0000\n"
+"PO-Revision-Date: 2024-11-07 13:48+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
-"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/>\n"
+"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/"
+">\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.8.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tneteja de l'snapper <cleanup-algorithm>"
@@ -175,54 +176,53 @@ msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 msgid "'btrfs send | btrfs receive' failed."
-msgstr ""
+msgstr "La funció btrfs send | btrfs receive ha fallat."
 
 msgid "'btrfs subvolume delete' failed."
-msgstr ""
+msgstr "La funció de suprimir el subvolum Btrfs ha fallat."
 
-#, fuzzy
 msgid "'cp info.xml' failed."
-msgstr "Ha fallat obrir el fitxer %s."
+msgstr "Ha fallat cp info.xml."
 
 msgid "'mkdir' failed."
-msgstr ""
+msgstr "Ha fallat mkdir."
 
 msgid "'rm info.xml' failed."
-msgstr ""
+msgstr "Ha fallat rm info.xml."
 
 msgid "'rmdir' failed."
-msgstr ""
+msgstr "Ha fallat rmdir."
 
 msgid "'scp info.xml' failed."
-msgstr ""
+msgstr "Ha fallat scp info.xml."
 
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Instantània %d.)"
 
 msgid "(Source) Creation Time"
-msgstr ""
+msgstr "(Origen) Hora de creació"
 
 msgid "(Source) Parent UUID"
-msgstr ""
+msgstr "(Origen) UUID pare"
 
 msgid "(Source) Received UUID"
-msgstr ""
+msgstr "(Origen) UUID rebut"
 
 msgid "(Source) UUID"
-msgstr ""
+msgstr "(Origen) UUID"
 
 msgid "(Target) Creation Time"
-msgstr ""
+msgstr "(Destinació) Hora de creació"
 
 msgid "(Target) Parent UUID"
-msgstr ""
+msgstr "(Destinació) UUID pare"
 
 msgid "(Target) Received UUID"
-msgstr ""
+msgstr "(Destinació) UUID rebut"
 
 msgid "(Target) UUID"
-msgstr ""
+msgstr "(Destinació) UUID"
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -234,11 +234,10 @@ msgid "--ambit, -a <ambit>"
 msgstr "--ambit, -a <àmbit>"
 
 msgid "--automatic"
-msgstr ""
+msgstr "--automatic"
 
-#, fuzzy
 msgid "--backup-config, -b <name>"
-msgstr "--config, -c <nom>"
+msgstr "--backup-config, -b <nom>"
 
 msgid "--cleanup-algorithm, -c <algo>"
 msgstr "--cleanup-algorithm, -c <algorisme>"
@@ -271,7 +270,7 @@ msgid "--disable-used-space"
 msgstr "--disable-used-space"
 
 msgid "--empty"
-msgstr ""
+msgstr "--empty"
 
 msgid "--extensions, -x <options>"
 msgstr "--extensions, -x <opcions>"
@@ -337,7 +336,7 @@ msgid "--table-style, -t <style>"
 msgstr "--table-style, -t <estil>"
 
 msgid "--target-mode <target-mode>"
-msgstr ""
+msgstr "--target-mode <mode de destinació>"
 
 msgid "--template, -t <name>"
 msgstr "--template, -t <nom>"
@@ -374,7 +373,7 @@ msgid "Ambit is %s."
 msgstr "L'àmbit és %s."
 
 msgid "Automatic"
-msgstr ""
+msgstr "Automàtic"
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -478,9 +477,8 @@ msgstr "L'ordre setup-quota no pot tenir arguments."
 msgid "Command 'status' needs one argument."
 msgstr "L'ordre status necessita almenys un argument."
 
-#, fuzzy
 msgid "Command 'transfer-and-delete' does not take arguments."
-msgstr "L'ordre create no pot tenir arguments."
+msgstr "L'ordre transfer-and-delete no accepta arguments."
 
 msgid "Command 'umount' needs at least one argument."
 msgstr "L'ordre umount necessita almenys un argument."
@@ -529,9 +527,8 @@ msgstr "No s'ha pogut fer prou espai disponible."
 msgid "Create a snapshot from the specified snapshot."
 msgstr "Crea una instantània a partir d'una instantània específica."
 
-#, fuzzy
 msgid "Create an empty snapshot."
-msgstr "Crea una instantània només de lectura."
+msgstr "Crea una instantània buida."
 
 msgid "Create read-only snapshot."
 msgstr "Crea una instantània només de lectura."
@@ -565,17 +562,16 @@ msgstr "Data"
 msgid "Default"
 msgstr "Per defecte"
 
-#, fuzzy
 msgid "Delete:"
-msgstr "  Suprimeix config.:"
+msgstr "Suprimeix:"
 
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Ha fallat la supressió de config (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting snapshot %d."
-msgstr "Ha fallat suprimir la instantània."
+msgstr "Suprimint la instantània %d."
 
 msgid "Deleting snapshot failed."
 msgstr "Ha fallat suprimir la instantània."
@@ -639,9 +635,8 @@ msgstr "Ha fallat l'inici del manejador de sistemes de fitxers."
 msgid "Failed to parse '%s'."
 msgstr "Ha fallat analitzar %s."
 
-#, fuzzy
 msgid "Failed to parse number."
-msgstr "Ha fallat analitzar %s."
+msgstr "Ha fallat analitzar el número."
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -680,9 +675,8 @@ msgstr "GB"
 msgid "GiB"
 msgstr "GiB"
 
-#, fuzzy
 msgid "Global options:"
-msgstr "    Opcions globals:"
+msgstr "Opcions globals:"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -737,9 +731,9 @@ msgstr "Instantània no vàlida: %s."
 msgid "Invalid snapshots."
 msgstr "Instantànies no vàlides."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid subvolume path '%s' on target."
-msgstr "Subvolum no vàlid."
+msgstr "El camí de subvolum %s no és vàlid a la destinació."
 
 msgid "Invalid subvolume."
 msgstr "Subvolum no vàlid."
@@ -748,9 +742,9 @@ msgstr "Subvolum no vàlid."
 msgid "Invalid table style '%s'."
 msgstr "Estil de taula no vàlid: %s."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid target mode '%s'."
-msgstr "Estil de taula no vàlid: %s."
+msgstr "El mode de destinació %s no és vàlid."
 
 #, c-format
 msgid "Invalid user (%s)."
@@ -767,15 +761,14 @@ msgstr "Clau"
 msgid "KiB"
 msgstr "KiB"
 
-#, fuzzy
 msgid "List configs:"
-msgstr "  Llista configs:"
+msgstr "Llista de configuracions:"
 
 msgid "List snapshots from all accessible configs."
 msgstr "Llista les instantànies des de totes les configuracions accessibles."
 
 msgid "List:"
-msgstr ""
+msgstr "Llista:"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -823,7 +816,7 @@ msgid "Name of config template to use."
 msgstr "Nom de la plantilla de configuració per usar."
 
 msgid "No backup configs found."
-msgstr ""
+msgstr "No s'ha trobat cap configuració de còpia de seguretat."
 
 msgid "No command provided."
 msgstr "No s'ha determinat cap ordre."
@@ -838,10 +831,10 @@ msgid "Number of corresponding pre snapshot."
 msgstr "Número de la preinstantània corresponent."
 
 msgid "Only use backup-config with automatic set."
-msgstr ""
+msgstr "Usa només backup-config amb configuració automàtica."
 
 msgid "Only use backup-config with specified target-mode."
-msgstr ""
+msgstr "Usa només backup-config amb el mode de destinació especificat."
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -872,7 +865,7 @@ msgid "PB"
 msgstr "PB"
 
 msgid "Path mismatch between backup-config and config."
-msgstr ""
+msgstr "No hi ha coincidència de camí entre backup-config i config."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -899,21 +892,17 @@ msgstr "Imprimeix el número de la segona instantània creada."
 msgid "Print version and exit."
 msgstr "Imprimeix la versió i surt."
 
-#, fuzzy
 msgid "Probing extra information for source snapshots."
-msgstr "Descripció per a instantànies."
+msgstr "Cercant informació addicional per a les instantànies d'origen."
 
-#, fuzzy
 msgid "Probing extra information for target snapshots."
-msgstr "Descripció per a instantànies."
+msgstr "Cercant informació addicional per a instantànies de destinació."
 
-#, fuzzy
 msgid "Probing source snapshots."
-msgstr "Descripció per a instantànies."
+msgstr "Sondant de les instantànies d'origen."
 
-#, fuzzy
 msgid "Probing target snapshots."
-msgstr "Descripció per a instantànies."
+msgstr "Sondant les instantànies de destinació."
 
 #, c-format
 msgid "Quota error (%s)."
@@ -935,62 +924,86 @@ msgstr "Executa l'ordre i crea les instantànies pre i post."
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
 msgstr[0] ""
+"L'execució de la supressió ha fallat per a %d d'%ld configuració de còpia de "
+"seguretat."
 msgstr[1] ""
+"L'execució de la supressió ha fallat per a %d de %ld configuracions de còpia "
+"de seguretat."
 
 #, c-format
 msgid "Running delete for backup config '%s' failed."
 msgstr ""
+"Ha fallat l'execució de la supressió de la configuració de còpia de "
+"seguretat %s."
 
 #, c-format
 msgid "Running delete for backup config '%s'."
-msgstr ""
+msgstr "Executant la supressió de la configuració de còpia de seguretat %s."
 
 #, c-format
 msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
 msgstr[0] ""
+"Ha fallat l'execució de la llista per a %d d'%ld configuració de còpia de "
+"seguretat."
 msgstr[1] ""
+"Ha fallat l'execució de la llista per a %d de %ld configuracions de còpia de "
+"seguretat."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
 msgstr[0] ""
+"Ha fallat l'execució de la transferència i la supressió per a %d d'%ld "
+"configuració de còpia de seguretat."
 msgstr[1] ""
+"Ha fallat l'execució de la transferència i la supressió per a %d de %ld "
+"configuracions de còpia de seguretat."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
 msgstr ""
+"Ha fallat l'execució de la transferència i la supressió de la configuració "
+"de còpia de seguretat %s."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s'."
 msgstr ""
+"Executant la transferència i la supressió de la configuració de còpia de "
+"seguretat %s."
 
 #, c-format
 msgid "Running transfer failed for %d of %ld backup config."
 msgid_plural "Running transfer failed for %d of %ld backup configs."
 msgstr[0] ""
+"Ha fallat l'execució de la transferència per a %d d'%ld configuració de "
+"còpia de seguretat."
 msgstr[1] ""
+"Ha fallat l'execució de la transferència per a %d de %ld configuracions de "
+"còpia de seguretat."
 
 #, c-format
 msgid "Running transfer for backup config '%s' failed."
 msgstr ""
+"Ha fallat l'execució de la transferència per a la configuració de còpia de "
+"seguretat %s."
 
 #, c-format
 msgid "Running transfer for backup config '%s'."
 msgstr ""
+"Executant la transferència per a la configuració de còpia de seguretat %s."
 
 msgid "SSH Host"
-msgstr ""
+msgstr "Amfitrió SSH"
 
 msgid "SSH Identity"
-msgstr ""
+msgstr "Identitat SSH"
 
 msgid "SSH Port"
-msgstr ""
+msgstr "Port SSH"
 
-#, fuzzy
 msgid "SSH User"
-msgstr "Usuari"
+msgstr "Usuari SSH"
 
 msgid "Save status to file."
 msgstr "Desa'n l'estat en un fitxer."
@@ -1011,9 +1024,8 @@ msgstr "Estableix el format de sortida JSON."
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Estableix un format de sortida llegible per la màquina (csv, json)."
 
-#, fuzzy
 msgid "Set name of backup-config to use."
-msgstr "Estableix el nom de configuració a usar."
+msgstr "Estableix el nom de la configuració de còpia de seguretat per usar."
 
 msgid "Set name of config to use."
 msgstr "Estableix el nom de configuració a usar."
@@ -1035,30 +1047,27 @@ msgstr "Establint el subvolum per defecte a la instantània %d."
 msgid "Snapshot '%u' not found."
 msgstr "No s'ha trobat la instantània %u."
 
-#, fuzzy
 msgid "Snapshot already on target."
-msgstr "Estableix la instantània com a només de lectura."
+msgstr "La instantània ja és a la destinació."
 
 msgid "Snapshot is in use."
 msgstr "La instantània s'usa."
 
-#, fuzzy
 msgid "Snapshot not on source."
-msgstr "La instantània s'usa."
+msgstr "La instantània no és a la destinació."
 
-#, fuzzy
 msgid "Snapshot not on target."
-msgstr "No s'ha trobat la instantània %u."
+msgstr "La instantània no és a la destinació."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Snapshot number %d not found."
-msgstr "No s'ha trobat la instantània %u."
+msgstr "No s'ha trobat la instantània número %d."
 
 msgid "Source Path"
-msgstr ""
+msgstr "Camí de l'origen"
 
 msgid "Source State"
-msgstr ""
+msgstr "Estat de l'origen"
 
 msgid "Subvolume"
 msgstr "Subvolum"
@@ -1081,13 +1090,13 @@ msgid "Table style (integer)."
 msgstr "Estil de taula (enter)."
 
 msgid "Target Mode"
-msgstr ""
+msgstr "Mode de destinació"
 
 msgid "Target Path"
-msgstr ""
+msgstr "Camí de destinació"
 
 msgid "Target State"
-msgstr ""
+msgstr "Estat de la destinació"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "L'àmbit es pot especificar manualment usant l'opció --ambit."
@@ -1103,21 +1112,20 @@ msgid "TiB"
 msgstr "TiB"
 
 msgid "Transfer and delete:"
-msgstr ""
+msgstr "Transferència i supressió:"
 
 msgid "Transfer:"
-msgstr ""
+msgstr "Transferència:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Transferring snapshot %d."
-msgstr "Ha fallat la creació de la instantània."
+msgstr "Transferint la instantània %d."
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Proveu 'snapper --help' per a més informació."
 
-#, fuzzy
 msgid "Try 'snbk --help' for more information."
-msgstr "Proveu 'snapper --help' per a més informació."
+msgstr "Proveu snbk --help per a més informació."
 
 msgid "Try to make space available."
 msgstr "Intenta fer espai disponible."
@@ -1238,30 +1246,26 @@ msgstr "Res a fer"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "L'argument d'arrel només es pot usar juntament amb no-dbus.\n"
 
-#, fuzzy
 msgid "snbk delete [numbers]"
-msgstr "\tsnapper delete <número>"
+msgstr "snbk delete [números]"
 
-#, fuzzy
 msgid "snbk list"
-msgstr "\tsnapper llista"
+msgstr "snbk list"
 
-#, fuzzy
 msgid "snbk list-configs"
-msgstr "\tsnapper list-configs"
+msgstr "snbk list-configs"
 
 msgid "snbk transfer [numbers]"
-msgstr ""
+msgstr "snbk transfer [números]"
 
 msgid "snbk transfer-and-delete"
-msgstr ""
+msgstr "snbk transfer-and-delete"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "ús: snapper [--global-options] <command> [--command-options] [command-arguments]"
 
-#, fuzzy
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
-msgstr "ús: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr "ús: snbk [--opcions globals] <ordre> [arguments de l'ordre]"
 
 msgid "yes"
 msgstr "sí"
