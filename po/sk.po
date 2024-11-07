@@ -7,15 +7,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-07 08:23+0100\n"
-"PO-Revision-Date: 2024-03-16 15:42+0000\n"
+"PO-Revision-Date: 2024-11-07 17:48+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
-"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
+"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
+"\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.9.1\n"
+"X-Generator: Weblate 5.8.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <upratovací-algoritmus>"
@@ -569,17 +570,16 @@ msgstr "Dátum"
 msgid "Default"
 msgstr "Predvolené"
 
-#, fuzzy
 msgid "Delete:"
-msgstr "  Vymazať konfiguráciu:"
+msgstr "Vymazať"
 
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Vymazanie konfigurácie zlyhalo (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting snapshot %d."
-msgstr "Vymazanie snímky zlyhalo."
+msgstr "Vymazanie snímky %d."
 
 msgid "Deleting snapshot failed."
 msgstr "Vymazanie snímky zlyhalo."
@@ -687,9 +687,8 @@ msgstr "GB"
 msgid "GiB"
 msgstr "GiB"
 
-#, fuzzy
 msgid "Global options:"
-msgstr "    Globálne voľby:"
+msgstr "Globálne možnosti:"
 
 # error box title
 #, c-format
@@ -746,9 +745,9 @@ msgstr "Neplatná snímka '%s'."
 msgid "Invalid snapshots."
 msgstr "Neplatné snímky."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid subvolume path '%s' on target."
-msgstr "Neplatný podzväzok."
+msgstr "Neplatná cesta k podzväzku '%s' na cieli."
 
 msgid "Invalid subvolume."
 msgstr "Neplatný podzväzok."
