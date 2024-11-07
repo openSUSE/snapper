@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 12:27+0100\n"
+"POT-Creation-Date: 2024-11-07 08:23+0100\n"
 "PO-Revision-Date: 2020-05-02 19:50+0000\n"
 "Last-Translator: mohammad alhargan <malham1@gmail.com>\n"
 "Language-Team: Arabic <https://l10n.opensuse.org/projects/snapper/master/ar/>\n"
@@ -181,9 +181,55 @@ msgstr ""
 msgid "%1$s, %2$s"
 msgstr ""
 
+msgid "'btrfs send | btrfs receive' failed."
+msgstr ""
+
+msgid "'btrfs subvolume delete' failed."
+msgstr ""
+
+#, fuzzy
+msgid "'cp info.xml' failed."
+msgstr "فتح الملف '%s' فشل."
+
+msgid "'mkdir' failed."
+msgstr ""
+
+msgid "'rm info.xml' failed."
+msgstr ""
+
+msgid "'rmdir' failed."
+msgstr ""
+
+msgid "'scp info.xml' failed."
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(لقطة %d.)"
+
+msgid "(Source) Creation Time"
+msgstr ""
+
+msgid "(Source) Parent UUID"
+msgstr ""
+
+msgid "(Source) Received UUID"
+msgstr ""
+
+msgid "(Source) UUID"
+msgstr ""
+
+msgid "(Target) Creation Time"
+msgstr ""
+
+msgid "(Target) Parent UUID"
+msgstr ""
+
+msgid "(Target) Received UUID"
+msgstr ""
+
+msgid "(Target) UUID"
+msgstr ""
 
 msgid "--abbreviate"
 msgstr ""
@@ -192,6 +238,12 @@ msgid "--all-configs, -a"
 msgstr ""
 
 msgid "--ambit, -a <ambit>"
+msgstr ""
+
+msgid "--automatic"
+msgstr ""
+
+msgid "--backup-config, -b <name>"
 msgstr ""
 
 #, fuzzy
@@ -224,6 +276,9 @@ msgid "--diff-cmd <command>"
 msgstr ""
 
 msgid "--disable-used-space"
+msgstr ""
+
+msgid "--empty"
 msgstr ""
 
 msgid "--extensions, -x <options>"
@@ -292,6 +347,9 @@ msgstr ""
 msgid "--table-style, -t <style>"
 msgstr "\t--table-style، -t <style>\tنمط الجدول (عدد صحيح)."
 
+msgid "--target-mode <target-mode>"
+msgstr ""
+
 msgid "--template, -t <name>"
 msgstr ""
 
@@ -326,6 +384,9 @@ msgstr ""
 
 #, c-format
 msgid "Ambit is %s."
+msgstr ""
+
+msgid "Automatic"
 msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
@@ -432,6 +493,10 @@ msgstr "لا يدعم الأمر 'setup-quota' وسيطات."
 msgid "Command 'status' needs one argument."
 msgstr "يحتاج الأمر 'الحالة' لأحد الوسائط."
 
+#, fuzzy
+msgid "Command 'transfer-and-delete' does not take arguments."
+msgstr "لا يأخذ الأمر 'إنشاء' الوسائط."
+
 msgid "Command 'umount' needs at least one argument."
 msgstr "يحتاج الأمر 'umount' وسيطة واحدة على الأقل."
 
@@ -484,6 +549,10 @@ msgstr ""
 "."
 
 #, fuzzy
+msgid "Create an empty snapshot."
+msgstr "\t--للقراءة-فقط\t\t\tإنشاء لقطة للقراءة فقط."
+
+#, fuzzy
 msgid "Create read-only snapshot."
 msgstr "\t--للقراءة-فقط\t\t\tإنشاء لقطة للقراءة فقط."
 
@@ -517,9 +586,17 @@ msgstr "التاريخ"
 msgid "Default"
 msgstr ""
 
+#, fuzzy
+msgid "Delete:"
+msgstr "حذف %1\n"
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "فشل حذف الإعداد (%s)."
+
+#, fuzzy, c-format
+msgid "Deleting snapshot %d."
+msgstr "فشل حذف اللقطة."
 
 msgid "Deleting snapshot failed."
 msgstr "فشل حذف اللقطة."
@@ -594,6 +671,10 @@ msgstr "فشل في تهيئة نظام معالجة الملفات."
 msgid "Failed to parse '%s'."
 msgstr "فشل في إنشاء %s"
 
+#, fuzzy
+msgid "Failed to parse number."
+msgstr "فشل في إنشاء %s"
+
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr ""
@@ -633,6 +714,10 @@ msgstr "GiB"
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
+
+#, fuzzy
+msgid "Global options:"
+msgstr "    خيارات عالمية:"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -690,11 +775,19 @@ msgstr "لقطة غير صالحة '%s'."
 msgid "Invalid snapshots."
 msgstr "لقطات غير صالح."
 
+#, fuzzy, c-format
+msgid "Invalid subvolume path '%s' on target."
+msgstr "الحجم الفرعي غير صالح."
+
 msgid "Invalid subvolume."
 msgstr "الحجم الفرعي غير صالح."
 
 #, fuzzy, c-format
 msgid "Invalid table style '%s'."
+msgstr "نمط الجدول غير صالح %d."
+
+#, fuzzy, c-format
+msgid "Invalid target mode '%s'."
 msgstr "نمط الجدول غير صالح %d."
 
 #, fuzzy, c-format
@@ -712,8 +805,15 @@ msgid "KiB"
 msgstr "KiB"
 
 #, fuzzy
+msgid "List configs:"
+msgstr "  قائمة إعدادات:"
+
+#, fuzzy
 msgid "List snapshots from all accessible configs."
 msgstr "\t--all-configs، -a\t\tقائمة باللقطات من كل التكوينات التي يمكن الوصول إليها."
+
+msgid "List:"
+msgstr ""
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -764,6 +864,9 @@ msgstr ""
 msgid "Name of config template to use."
 msgstr "\t--template, -t <name>\t\tاسم قالب الإعداد للاستخدام."
 
+msgid "No backup configs found."
+msgstr ""
+
 msgid "No command provided."
 msgstr "لم يُقَدم أمر."
 
@@ -776,6 +879,12 @@ msgstr "لا توجد أذونات."
 #, fuzzy
 msgid "Number of corresponding pre snapshot."
 msgstr "\t--pre-number <number>\t\tعدد اللقطات المتطابقة لكل لقطة."
+
+msgid "Only use backup-config with automatic set."
+msgstr ""
+
+msgid "Only use backup-config with specified target-mode."
+msgstr ""
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -808,6 +917,9 @@ msgstr ""
 msgid "PB"
 msgstr "PiB"
 
+msgid "Path mismatch between backup-config and config."
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -836,6 +948,22 @@ msgstr "\t--print-number، -p\t\tطباعة رقم اللقطة عند إنشا�
 msgid "Print version and exit."
 msgstr "\t--version\t\t\tطباعة إصدار النسخة والخروج."
 
+#, fuzzy
+msgid "Probing extra information for source snapshots."
+msgstr "  مقارنة لقطات:"
+
+#, fuzzy
+msgid "Probing extra information for target snapshots."
+msgstr "  مقارنة لقطات:"
+
+#, fuzzy
+msgid "Probing source snapshots."
+msgstr "  مقارنة لقطات:"
+
+#, fuzzy
+msgid "Probing target snapshots."
+msgstr "  مقارنة لقطات:"
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "خطأ في الحصة (%s)."
@@ -854,6 +982,83 @@ msgstr ""
 #, fuzzy
 msgid "Run command and create pre and post snapshots."
 msgstr "\t--command <command>\t\tتشغيل الامر وإنشاء لقطات قبل وبعد."
+
+#, c-format
+msgid "Running delete failed for %d of %ld backup config."
+msgid_plural "Running delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#, c-format
+msgid "Running delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running list failed for %d of %ld backup config."
+msgid_plural "Running list failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#, c-format
+msgid "Running transfer and delete failed for %d of %ld backup config."
+msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running transfer failed for %d of %ld backup config."
+msgid_plural "Running transfer failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#, c-format
+msgid "Running transfer for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer for backup config '%s'."
+msgstr ""
+
+msgid "SSH Host"
+msgstr ""
+
+msgid "SSH Identity"
+msgstr ""
+
+msgid "SSH Port"
+msgstr ""
+
+#, fuzzy
+msgid "SSH User"
+msgstr "مستخدم"
 
 #, fuzzy
 msgid "Save status to file."
@@ -875,6 +1080,10 @@ msgstr ""
 #, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "نمط الجدول غير صالح %d."
+
+#, fuzzy
+msgid "Set name of backup-config to use."
+msgstr "\t--config, -c <name>\t\tعين اسم لتستخدمه للإعدادات."
 
 #, fuzzy
 msgid "Set name of config to use."
@@ -899,8 +1108,30 @@ msgstr "الإعداد الافتراضي للحجم الفرعي للقطة %d.
 msgid "Snapshot '%u' not found."
 msgstr "اللقطة '%u' لم يتم العثور على."
 
+#, fuzzy
+msgid "Snapshot already on target."
+msgstr "\t--للقراءة-فقط\t\t\tإنشاء لقطة للقراءة فقط."
+
 msgid "Snapshot is in use."
 msgstr "اللقطة قيد الاستخدام."
+
+#, fuzzy
+msgid "Snapshot not on source."
+msgstr "اللقطة قيد الاستخدام."
+
+#, fuzzy
+msgid "Snapshot not on target."
+msgstr "اللقطة '%u' لم يتم العثور على."
+
+#, fuzzy, c-format
+msgid "Snapshot number %d not found."
+msgstr "اللقطة '%u' لم يتم العثور على."
+
+msgid "Source Path"
+msgstr ""
+
+msgid "Source State"
+msgstr ""
 
 msgid "Subvolume"
 msgstr "الحجم الفرعي"
@@ -926,6 +1157,15 @@ msgstr "TiB"
 msgid "Table style (integer)."
 msgstr "\t--table-style، -t <style>\tنمط الجدول (عدد صحيح)."
 
+msgid "Target Mode"
+msgstr ""
+
+msgid "Target Path"
+msgstr ""
+
+msgid "Target State"
+msgstr ""
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
@@ -939,7 +1179,21 @@ msgstr ""
 msgid "TiB"
 msgstr "TiB"
 
+msgid "Transfer and delete:"
+msgstr ""
+
+msgid "Transfer:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Transferring snapshot %d."
+msgstr "فشل إنشاء اللقطة."
+
 msgid "Try 'snapper --help' for more information."
+msgstr "جرب 'التقاط --help' لمزيد من المعلومات."
+
+#, fuzzy
+msgid "Try 'snbk --help' for more information."
 msgstr "جرب 'التقاط --help' لمزيد من المعلومات."
 
 msgid "Try to make space available."
@@ -1067,7 +1321,29 @@ msgstr "لا يوجد ما يمكن فعله"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "يمكن استخدام الوسيطة الجذر فقط في حالة عدم وجود dbus."
 
+#, fuzzy
+msgid "snbk delete [numbers]"
+msgstr "\tحذف ملتقط<number>"
+
+#, fuzzy
+msgid "snbk list"
+msgstr "\tقائمة الملتقط"
+
+#, fuzzy
+msgid "snbk list-configs"
+msgstr "\tقائمة الملتقط-إعداد"
+
+msgid "snbk transfer [numbers]"
+msgstr ""
+
+msgid "snbk transfer-and-delete"
+msgstr ""
+
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr "استخدام: اللقطة [--global-options] <command> [--command-options] [أمر-وسائط]"
+
+#, fuzzy
+msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "استخدام: اللقطة [--global-options] <command> [--command-options] [أمر-وسائط]"
 
 msgid "yes"
@@ -1142,9 +1418,6 @@ msgstr ""
 
 #~ msgid "Restoring Files..."
 #~ msgstr "تتم الآن استعادة الملفات..."
-
-#~ msgid "Deleted %1\n"
-#~ msgstr "حذف %1\n"
 
 #~ msgid "%1 skipped\n"
 #~ msgstr "%1 تخطي\n"

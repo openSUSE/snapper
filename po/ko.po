@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: entries\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 12:27+0100\n"
+"POT-Creation-Date: 2024-11-07 08:23+0100\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Hwajin Kim <hwajin.kim@e4net.net>\n"
 "Language-Team: Korean <https://l10n.opensuse.org/projects/snapper/master/ko/>\n"
@@ -223,10 +223,57 @@ msgstr ""
 msgid "%1$s, %2$s"
 msgstr ""
 
+msgid "'btrfs send | btrfs receive' failed."
+msgstr ""
+
+msgid "'btrfs subvolume delete' failed."
+msgstr ""
+
+# SLE12
+#, fuzzy
+msgid "'cp info.xml' failed."
+msgstr "'%s' 파일을 열지 못했습니다."
+
+msgid "'mkdir' failed."
+msgstr ""
+
+msgid "'rm info.xml' failed."
+msgstr ""
+
+msgid "'rmdir' failed."
+msgstr ""
+
+msgid "'scp info.xml' failed."
+msgstr ""
+
 # SLE12
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(스냅샷 %d)"
+
+msgid "(Source) Creation Time"
+msgstr ""
+
+msgid "(Source) Parent UUID"
+msgstr ""
+
+msgid "(Source) Received UUID"
+msgstr ""
+
+msgid "(Source) UUID"
+msgstr ""
+
+msgid "(Target) Creation Time"
+msgstr ""
+
+msgid "(Target) Parent UUID"
+msgstr ""
+
+msgid "(Target) Received UUID"
+msgstr ""
+
+msgid "(Target) UUID"
+msgstr ""
 
 msgid "--abbreviate"
 msgstr ""
@@ -235,6 +282,12 @@ msgid "--all-configs, -a"
 msgstr ""
 
 msgid "--ambit, -a <ambit>"
+msgstr ""
+
+msgid "--automatic"
+msgstr ""
+
+msgid "--backup-config, -b <name>"
 msgstr ""
 
 # SLE12
@@ -269,6 +322,9 @@ msgid "--diff-cmd <command>"
 msgstr ""
 
 msgid "--disable-used-space"
+msgstr ""
+
+msgid "--empty"
 msgstr ""
 
 msgid "--extensions, -x <options>"
@@ -339,6 +395,9 @@ msgstr ""
 msgid "--table-style, -t <style>"
 msgstr "\t--table-style, -t <style>\t테이블 스타일(정수)."
 
+msgid "--target-mode <target-mode>"
+msgstr ""
+
 msgid "--template, -t <name>"
 msgstr ""
 
@@ -376,6 +435,9 @@ msgstr ""
 
 #, c-format
 msgid "Ambit is %s."
+msgstr ""
+
+msgid "Automatic"
 msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
@@ -507,6 +569,11 @@ msgid "Command 'status' needs one argument."
 msgstr "'status' 명령에 하나의 인수가 필요합니다."
 
 # SLE12
+#, fuzzy
+msgid "Command 'transfer-and-delete' does not take arguments."
+msgstr "'create' 명령은 인수를 사용하지 않습니다."
+
+# SLE12
 msgid "Command 'umount' needs at least one argument."
 msgstr "'umount' 명령에 하나 이상의 인수가 필요합니다."
 
@@ -568,6 +635,11 @@ msgstr "스냅샷 %d의 읽기 쓰기 스냅샷을 생성합니다."
 
 # SLE12
 #, fuzzy
+msgid "Create an empty snapshot."
+msgstr "현재 시스템의 읽기 전용 스냅샷을 생성합니다."
+
+# SLE12
+#, fuzzy
 msgid "Create read-only snapshot."
 msgstr "현재 시스템의 읽기 전용 스냅샷을 생성합니다."
 
@@ -610,9 +682,19 @@ msgid "Default"
 msgstr ""
 
 # SLE12
+#, fuzzy
+msgid "Delete:"
+msgstr "  구성 삭제:"
+
+# SLE12
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "구성을 삭제하지 못했습니다(%s)."
+
+# SLE12
+#, fuzzy, c-format
+msgid "Deleting snapshot %d."
+msgstr "스냅샷을 삭제하지 못했습니다."
 
 # SLE12
 msgid "Deleting snapshot failed."
@@ -691,6 +773,11 @@ msgstr "파일 시스템 처리기를 초기화하지 못했습니다."
 msgid "Failed to parse '%s'."
 msgstr "%s 생성에 실패"
 
+# SLE12
+#, fuzzy
+msgid "Failed to parse number."
+msgstr "%s 생성에 실패"
+
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr ""
@@ -734,6 +821,11 @@ msgstr "GiB"
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
+
+# SLE12
+#, fuzzy
+msgid "Global options:"
+msgstr "    전역 옵션:"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -804,11 +896,20 @@ msgid "Invalid snapshots."
 msgstr "스냅샷이 잘못되었습니다."
 
 # SLE12
+#, fuzzy, c-format
+msgid "Invalid subvolume path '%s' on target."
+msgstr "하위 볼륨이 잘못되었습니다."
+
+# SLE12
 msgid "Invalid subvolume."
 msgstr "하위 볼륨이 잘못되었습니다."
 
 #, fuzzy, c-format
 msgid "Invalid table style '%s'."
+msgstr "잘못된 테이블 모양 %d 입니다."
+
+#, fuzzy, c-format
+msgid "Invalid target mode '%s'."
 msgstr "잘못된 테이블 모양 %d 입니다."
 
 # SLE12
@@ -828,9 +929,17 @@ msgstr "키"
 msgid "KiB"
 msgstr "KiB"
 
+# SLE12
+#, fuzzy
+msgid "List configs:"
+msgstr "  구성 나열:"
+
 #, fuzzy
 msgid "List snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\t액세스 가능한 구성의 스냅샷을 모두 나열합니다."
+
+msgid "List:"
+msgstr ""
 
 # SLE12
 #, c-format
@@ -888,6 +997,9 @@ msgstr ""
 msgid "Name of config template to use."
 msgstr "\t--template, -t <name>\t\t사용할 구성 템플릿의 이름."
 
+msgid "No backup configs found."
+msgstr ""
+
 # SLE12
 msgid "No command provided."
 msgstr "제공된 명령이 없습니다."
@@ -903,6 +1015,12 @@ msgstr "권한 없음."
 #, fuzzy
 msgid "Number of corresponding pre snapshot."
 msgstr "\t--pre-number <number>\t\t해당되는 사전 스냅샷 수."
+
+msgid "Only use backup-config with automatic set."
+msgstr ""
+
+msgid "Only use backup-config with specified target-mode."
+msgstr ""
 
 # SLE12
 #, c-format
@@ -936,6 +1054,9 @@ msgstr ""
 #, fuzzy
 msgid "PB"
 msgstr "PiB"
+
+msgid "Path mismatch between backup-config and config."
+msgstr ""
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -972,6 +1093,26 @@ msgstr "\t--print-number, -p\t\t두 번째로 생성된 스냅샷의 번호를 �
 msgid "Print version and exit."
 msgstr "\t--version\t\t\t버전을 인쇄하고 종료합니다."
 
+# SLE12
+#, fuzzy
+msgid "Probing extra information for source snapshots."
+msgstr "\t--description, -d <description>\t스냅샷에 대한 설명입니다."
+
+# SLE12
+#, fuzzy
+msgid "Probing extra information for target snapshots."
+msgstr "\t--description, -d <description>\t스냅샷에 대한 설명입니다."
+
+# SLE12
+#, fuzzy
+msgid "Probing source snapshots."
+msgstr "\t--description, -d <description>\t스냅샷에 대한 설명입니다."
+
+# SLE12
+#, fuzzy
+msgid "Probing target snapshots."
+msgstr "\t--description, -d <description>\t스냅샷에 대한 설명입니다."
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "할당량 오류입니다(%s)."
@@ -992,6 +1133,64 @@ msgstr ""
 #, fuzzy
 msgid "Run command and create pre and post snapshots."
 msgstr "\t--command <command>\t\t명령을 실행하고 사전 및 사후 스냅샷을 생성합니다."
+
+#, c-format
+msgid "Running delete failed for %d of %ld backup config."
+msgid_plural "Running delete failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running list failed for %d of %ld backup config."
+msgid_plural "Running list failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running transfer and delete failed for %d of %ld backup config."
+msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running transfer failed for %d of %ld backup config."
+msgid_plural "Running transfer failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running transfer for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer for backup config '%s'."
+msgstr ""
+
+msgid "SSH Host"
+msgstr ""
+
+msgid "SSH Identity"
+msgstr ""
+
+msgid "SSH Port"
+msgstr ""
+
+# SLE12
+#, fuzzy
+msgid "SSH User"
+msgstr "사용자"
 
 # SLE12
 #, fuzzy
@@ -1015,6 +1214,11 @@ msgstr ""
 #, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "잘못된 테이블 모양 %d 입니다."
+
+# SLE12
+#, fuzzy
+msgid "Set name of backup-config to use."
+msgstr "\t--config, -c <name>\t\t사용할 구성의 이름을 설정합니다."
 
 # SLE12
 #, fuzzy
@@ -1045,8 +1249,34 @@ msgid "Snapshot '%u' not found."
 msgstr "'%u' 스냅샷을 찾을 수 없습니다."
 
 # SLE12
+#, fuzzy
+msgid "Snapshot already on target."
+msgstr "스냅샷을 생성하지 못했습니다."
+
+# SLE12
 msgid "Snapshot is in use."
 msgstr "스냅샷이 사용 중입니다."
+
+# SLE12
+#, fuzzy
+msgid "Snapshot not on source."
+msgstr "스냅샷이 사용 중입니다."
+
+# SLE12
+#, fuzzy
+msgid "Snapshot not on target."
+msgstr "'%u' 스냅샷을 찾을 수 없습니다."
+
+# SLE12
+#, fuzzy, c-format
+msgid "Snapshot number %d not found."
+msgstr "'%u' 스냅샷을 찾을 수 없습니다."
+
+msgid "Source Path"
+msgstr ""
+
+msgid "Source State"
+msgstr ""
 
 # SLE12
 msgid "Subvolume"
@@ -1075,6 +1305,15 @@ msgstr "TiB"
 msgid "Table style (integer)."
 msgstr "\t--table-style, -t <style>\t테이블 스타일(정수)."
 
+msgid "Target Mode"
+msgstr ""
+
+msgid "Target Path"
+msgstr ""
+
+msgid "Target State"
+msgstr ""
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
@@ -1088,8 +1327,24 @@ msgstr ""
 msgid "TiB"
 msgstr "TiB"
 
+msgid "Transfer and delete:"
+msgstr ""
+
+msgid "Transfer:"
+msgstr ""
+
+# SLE12
+#, fuzzy, c-format
+msgid "Transferring snapshot %d."
+msgstr "스냅샷을 생성하지 못했습니다."
+
 # SLE12
 msgid "Try 'snapper --help' for more information."
+msgstr "자세한 내용을 보려면 'snapper --help'를 실행하십시오."
+
+# SLE12
+#, fuzzy
+msgid "Try 'snbk --help' for more information."
 msgstr "자세한 내용을 보려면 'snapper --help'를 실행하십시오."
 
 msgid "Try to make space available."
@@ -1241,7 +1496,33 @@ msgid "root argument can be used only together with no-dbus.\n"
 msgstr "루트 인수는 no-dbus와 함께 사용해야 합니다."
 
 # SLE12
+#, fuzzy
+msgid "snbk delete [numbers]"
+msgstr "\tsnapper delete <number>"
+
+# SLE12
+#, fuzzy
+msgid "snbk list"
+msgstr "\tsnapper list"
+
+# SLE12
+#, fuzzy
+msgid "snbk list-configs"
+msgstr "\tsnapper list-configs"
+
+msgid "snbk transfer [numbers]"
+msgstr ""
+
+msgid "snbk transfer-and-delete"
+msgstr ""
+
+# SLE12
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr "사용법: snapper [--global-options] <command> [--command-options] [command-arguments]"
+
+# SLE12
+#, fuzzy
+msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "사용법: snapper [--global-options] <command> [--command-options] [command-arguments]"
 
 msgid "yes"

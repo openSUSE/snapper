@@ -9,17 +9,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LCN (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 12:27+0100\n"
+"POT-Creation-Date: 2024-11-07 08:23+0100\n"
 "PO-Revision-Date: 2024-03-09 22:42+0000\n"
 "Last-Translator: Mindaugas Baranauskas <opensuse.lietuviu.kalba@gmail.com>\n"
-"Language-Team: Lithuanian <https://l10n.opensuse.org/projects/snapper/master/"
-"lt/>\n"
+"Language-Team: Lithuanian <https://l10n.opensuse.org/projects/snapper/master/lt/>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 0 : n%10>=2 && (n%100<10 || n"
-"%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : n%10==0 || (n%100>10 && n%100<20) ? 2 : 3;\n"
 "X-Generator: Weblate 4.9.1\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -188,9 +186,55 @@ msgstr ""
 msgid "%1$s, %2$s"
 msgstr ""
 
+msgid "'btrfs send | btrfs receive' failed."
+msgstr ""
+
+msgid "'btrfs subvolume delete' failed."
+msgstr ""
+
+#, fuzzy
+msgid "'cp info.xml' failed."
+msgstr "Nepavyko atverti rinkmenos „%s“."
+
+msgid "'mkdir' failed."
+msgstr ""
+
+msgid "'rm info.xml' failed."
+msgstr ""
+
+msgid "'rmdir' failed."
+msgstr ""
+
+msgid "'scp info.xml' failed."
+msgstr ""
+
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "Rinkmena „%s“ nerasta."
+
+msgid "(Source) Creation Time"
+msgstr ""
+
+msgid "(Source) Parent UUID"
+msgstr ""
+
+msgid "(Source) Received UUID"
+msgstr ""
+
+msgid "(Source) UUID"
+msgstr ""
+
+msgid "(Target) Creation Time"
+msgstr ""
+
+msgid "(Target) Parent UUID"
+msgstr ""
+
+msgid "(Target) Received UUID"
+msgstr ""
+
+msgid "(Target) UUID"
+msgstr ""
 
 msgid "--abbreviate"
 msgstr ""
@@ -199,6 +243,12 @@ msgid "--all-configs, -a"
 msgstr ""
 
 msgid "--ambit, -a <ambit>"
+msgstr ""
+
+msgid "--automatic"
+msgstr ""
+
+msgid "--backup-config, -b <name>"
 msgstr ""
 
 msgid "--cleanup-algorithm, -c <algo>"
@@ -229,6 +279,9 @@ msgid "--diff-cmd <command>"
 msgstr ""
 
 msgid "--disable-used-space"
+msgstr ""
+
+msgid "--empty"
 msgstr ""
 
 msgid "--extensions, -x <options>"
@@ -295,6 +348,9 @@ msgstr ""
 msgid "--table-style, -t <style>"
 msgstr ""
 
+msgid "--target-mode <target-mode>"
+msgstr ""
+
 msgid "--template, -t <name>"
 msgstr ""
 
@@ -328,6 +384,9 @@ msgstr ""
 
 #, c-format
 msgid "Ambit is %s."
+msgstr ""
+
+msgid "Automatic"
 msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
@@ -441,6 +500,10 @@ msgid "Command 'status' needs one argument."
 msgstr ""
 
 #, fuzzy
+msgid "Command 'transfer-and-delete' does not take arguments."
+msgstr "„create-config“ komandai reikia vieno argumento."
+
+#, fuzzy
 msgid "Command 'umount' needs at least one argument."
 msgstr "„diff“ komandai reikia bent vieno argumento."
 
@@ -491,6 +554,10 @@ msgid "Create a snapshot from the specified snapshot."
 msgstr "Klaida kuriant momentinę kopiją."
 
 #, fuzzy
+msgid "Create an empty snapshot."
+msgstr "  Momentinės kopijos sukūrimas:"
+
+#, fuzzy
 msgid "Create read-only snapshot."
 msgstr "  Momentinės kopijos sukūrimas:"
 
@@ -525,9 +592,16 @@ msgstr "Data"
 msgid "Default"
 msgstr ""
 
+msgid "Delete:"
+msgstr ""
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Deleting snapshot %d."
+msgstr "Klaida bandant pašalinti momentinę kopiją."
 
 msgid "Deleting snapshot failed."
 msgstr "Klaida bandant pašalinti momentinę kopiją."
@@ -597,6 +671,10 @@ msgstr ""
 msgid "Failed to parse '%s'."
 msgstr "nepavyko sukurti %s"
 
+#, fuzzy
+msgid "Failed to parse number."
+msgstr "nepavyko sukurti %s"
+
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr ""
@@ -635,6 +713,10 @@ msgstr ""
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
+
+#, fuzzy
+msgid "Global options:"
+msgstr "    Visuotinės parinktys:"
 
 #, fuzzy, c-format
 msgid "IO Error (%s)."
@@ -693,11 +775,19 @@ msgstr "Netinkama momentinė kopija „%s“."
 msgid "Invalid snapshots."
 msgstr "Netinkamos momentinės kopijos."
 
+#, fuzzy, c-format
+msgid "Invalid subvolume path '%s' on target."
+msgstr "Netinkamas potomis."
+
 msgid "Invalid subvolume."
 msgstr "Netinkamas potomis."
 
 #, fuzzy, c-format
 msgid "Invalid table style '%s'."
+msgstr "Netinkamas lentelės stilius %d."
+
+#, fuzzy, c-format
+msgid "Invalid target mode '%s'."
 msgstr "Netinkamas lentelės stilius %d."
 
 #, fuzzy, c-format
@@ -715,8 +805,15 @@ msgid "KiB"
 msgstr ""
 
 #, fuzzy
+msgid "List configs:"
+msgstr "  Momentinių kopijų sąrašas:"
+
+#, fuzzy
 msgid "List snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tpateikti visų prieinamų momentinių kopijų sąrašą."
+
+msgid "List:"
+msgstr ""
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -765,6 +862,9 @@ msgstr ""
 msgid "Name of config template to use."
 msgstr ""
 
+msgid "No backup configs found."
+msgstr ""
+
 msgid "No command provided."
 msgstr "Nepateikta jokia komanda."
 
@@ -775,6 +875,12 @@ msgid "No permissions."
 msgstr "Nėra leidimų."
 
 msgid "Number of corresponding pre snapshot."
+msgstr ""
+
+msgid "Only use backup-config with automatic set."
+msgstr ""
+
+msgid "Only use backup-config with specified target-mode."
 msgstr ""
 
 #, c-format
@@ -805,6 +911,9 @@ msgstr ""
 msgid "PB"
 msgstr ""
 
+msgid "Path mismatch between backup-config and config."
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr ""
@@ -831,6 +940,22 @@ msgstr ""
 msgid "Print version and exit."
 msgstr ""
 
+#, fuzzy
+msgid "Probing extra information for source snapshots."
+msgstr "lyginamos momentinės kopijos..."
+
+#, fuzzy
+msgid "Probing extra information for target snapshots."
+msgstr "lyginamos momentinės kopijos..."
+
+#, fuzzy
+msgid "Probing source snapshots."
+msgstr "lyginamos momentinės kopijos..."
+
+#, fuzzy
+msgid "Probing target snapshots."
+msgstr "lyginamos momentinės kopijos..."
+
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "Skaitymo/rašymo klaida."
@@ -846,6 +971,75 @@ msgstr ""
 
 msgid "Run command and create pre and post snapshots."
 msgstr ""
+
+#, c-format
+msgid "Running delete failed for %d of %ld backup config."
+msgid_plural "Running delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#, c-format
+msgid "Running delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running list failed for %d of %ld backup config."
+msgid_plural "Running list failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#, c-format
+msgid "Running transfer and delete failed for %d of %ld backup config."
+msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running transfer failed for %d of %ld backup config."
+msgid_plural "Running transfer failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+
+#, c-format
+msgid "Running transfer for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer for backup config '%s'."
+msgstr ""
+
+msgid "SSH Host"
+msgstr ""
+
+msgid "SSH Identity"
+msgstr ""
+
+msgid "SSH Port"
+msgstr ""
+
+#, fuzzy
+msgid "SSH User"
+msgstr "Naudotojas"
 
 msgid "Save status to file."
 msgstr ""
@@ -867,6 +1061,9 @@ msgstr ""
 #, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Netinkamas lentelės stilius %d."
+
+msgid "Set name of backup-config to use."
+msgstr ""
 
 msgid "Set name of config to use."
 msgstr ""
@@ -890,8 +1087,30 @@ msgstr ""
 msgid "Snapshot '%u' not found."
 msgstr "Rinkmena „%s“ nerasta."
 
+#, fuzzy
+msgid "Snapshot already on target."
+msgstr "Klaida kuriant momentinę kopiją."
+
 msgid "Snapshot is in use."
 msgstr "Momentinė kopija naudojama."
+
+#, fuzzy
+msgid "Snapshot not on source."
+msgstr "Momentinė kopija naudojama."
+
+#, fuzzy
+msgid "Snapshot not on target."
+msgstr "Rinkmena „%s“ nerasta."
+
+#, fuzzy, c-format
+msgid "Snapshot number %d not found."
+msgstr "Rinkmena „%s“ nerasta."
+
+msgid "Source Path"
+msgstr ""
+
+msgid "Source State"
+msgstr ""
 
 msgid "Subvolume"
 msgstr "Potomis"
@@ -913,6 +1132,15 @@ msgstr ""
 msgid "Table style (integer)."
 msgstr ""
 
+msgid "Target Mode"
+msgstr ""
+
+msgid "Target Path"
+msgstr ""
+
+msgid "Target State"
+msgstr ""
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
@@ -926,7 +1154,21 @@ msgstr ""
 msgid "TiB"
 msgstr ""
 
+msgid "Transfer and delete:"
+msgstr ""
+
+msgid "Transfer:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Transferring snapshot %d."
+msgstr "Klaida kuriant momentinę kopiją."
+
 msgid "Try 'snapper --help' for more information."
+msgstr "Daugiau informacijos gausite įvykdę „snapper --help“."
+
+#, fuzzy
+msgid "Try 'snbk --help' for more information."
 msgstr "Daugiau informacijos gausite įvykdę „snapper --help“."
 
 msgid "Try to make space available."
@@ -1053,7 +1295,28 @@ msgstr "nėra ką daryti"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Daugiau informacijos gausite įvykdę „snapper --help“."
 
+#, fuzzy
+msgid "snbk delete [numbers]"
+msgstr "\tsnapper delete <numeris>"
+
+msgid "snbk list"
+msgstr ""
+
+#, fuzzy
+msgid "snbk list-configs"
+msgstr "  Momentinių kopijų sąrašas:"
+
+msgid "snbk transfer [numbers]"
+msgstr ""
+
+msgid "snbk transfer-and-delete"
+msgstr ""
+
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr "naudojimas: snapper [--visuotinės-parinktys] <komanda> [--komandos-parinktys] [komandos-argumentai]"
+
+#, fuzzy
+msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "naudojimas: snapper [--visuotinės-parinktys] <komanda> [--komandos-parinktys] [komandos-argumentai]"
 
 msgid "yes"

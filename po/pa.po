@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 12:27+0100\n"
+"POT-Creation-Date: 2024-11-07 08:23+0100\n"
 "PO-Revision-Date: 2005-08-15 12:20+0530\n"
 "Last-Translator: Amanpreet Singh Alam <amanpreetalam@yahoo.com>\n"
 "Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
@@ -200,8 +200,53 @@ msgstr ""
 msgid "%1$s, %2$s"
 msgstr ""
 
+msgid "'btrfs send | btrfs receive' failed."
+msgstr ""
+
+msgid "'btrfs subvolume delete' failed."
+msgstr ""
+
+msgid "'cp info.xml' failed."
+msgstr ""
+
+msgid "'mkdir' failed."
+msgstr ""
+
+msgid "'rm info.xml' failed."
+msgstr ""
+
+msgid "'rmdir' failed."
+msgstr ""
+
+msgid "'scp info.xml' failed."
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
+msgstr ""
+
+msgid "(Source) Creation Time"
+msgstr ""
+
+msgid "(Source) Parent UUID"
+msgstr ""
+
+msgid "(Source) Received UUID"
+msgstr ""
+
+msgid "(Source) UUID"
+msgstr ""
+
+msgid "(Target) Creation Time"
+msgstr ""
+
+msgid "(Target) Parent UUID"
+msgstr ""
+
+msgid "(Target) Received UUID"
+msgstr ""
+
+msgid "(Target) UUID"
 msgstr ""
 
 msgid "--abbreviate"
@@ -211,6 +256,12 @@ msgid "--all-configs, -a"
 msgstr ""
 
 msgid "--ambit, -a <ambit>"
+msgstr ""
+
+msgid "--automatic"
+msgstr ""
+
+msgid "--backup-config, -b <name>"
 msgstr ""
 
 msgid "--cleanup-algorithm, -c <algo>"
@@ -241,6 +292,9 @@ msgid "--diff-cmd <command>"
 msgstr ""
 
 msgid "--disable-used-space"
+msgstr ""
+
+msgid "--empty"
 msgstr ""
 
 msgid "--extensions, -x <options>"
@@ -307,6 +361,9 @@ msgstr ""
 msgid "--table-style, -t <style>"
 msgstr ""
 
+msgid "--target-mode <target-mode>"
+msgstr ""
+
 msgid "--template, -t <name>"
 msgstr ""
 
@@ -339,6 +396,9 @@ msgstr ""
 
 #, c-format
 msgid "Ambit is %s."
+msgstr ""
+
+msgid "Automatic"
 msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
@@ -462,6 +522,10 @@ msgid "Command 'status' needs one argument."
 msgstr "ਇੱਕ ਆਰਗੂਮਿੰਟ ਦੀ ਲੋੜ ਹੈ"
 
 #, fuzzy
+msgid "Command 'transfer-and-delete' does not take arguments."
+msgstr "create ਲਈ ਘੱਟੋ-ਘੱਟ 3 ਆਰਗੂਮਿੰਟ ਚਾਹੀਦੇ ਹਨ"
+
+#, fuzzy
 msgid "Command 'umount' needs at least one argument."
 msgstr "get ਨੂੰ ਘੱਟੋ-ਘੱਟ ਇੱਕ ਆਰਗੂਮਿੰਟ ਲੋੜੀਦਾ ਹੈ"
 
@@ -515,6 +579,10 @@ msgid "Create a snapshot from the specified snapshot."
 msgstr ""
 
 #, fuzzy
+msgid "Create an empty snapshot."
+msgstr "ਬਣਾਇਆ ਗਿਆ: "
+
+#, fuzzy
 msgid "Create read-only snapshot."
 msgstr "ਬਣਾਇਆ ਗਿਆ: "
 
@@ -550,9 +618,19 @@ msgstr "ਮਿਤੀ: %1"
 msgid "Default"
 msgstr ""
 
+#, fuzzy
+msgid "Delete:"
+msgstr ""
+"%s - PAM ਸੰਰਚਨਾ ਫਾਇਲਾਂ ਬਣਾਓ।\n"
+"\n"
+
 #, fuzzy, c-format
 msgid "Deleting config failed (%s)."
 msgstr "ਸੰਰਚਨਾ ਫਾਇਲ ਪਾਰਸ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ..."
+
+#, fuzzy, c-format
+msgid "Deleting snapshot %d."
+msgstr "CA ਹਟਾਉਣਾ ਫੇਲ੍ਹ ਹੋਇਆ: %1"
 
 #, fuzzy
 msgid "Deleting snapshot failed."
@@ -619,6 +697,10 @@ msgstr ""
 msgid "Failed to parse '%s'."
 msgstr "ਪਾਰਸ ਕਰਨ ਦੌਰਾਨ ਫੇਲ੍ਹ: %s।"
 
+#, fuzzy
+msgid "Failed to parse number."
+msgstr "ਪਾਰਸ ਕਰਨ ਦੌਰਾਨ ਫੇਲ੍ਹ: %s।"
+
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr ""
@@ -659,6 +741,10 @@ msgstr ""
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
+
+#, fuzzy
+msgid "Global options:"
+msgstr "ਅਣਜਾਣ ਗਲੋਬਲ ਚੋਣ "
 
 # error box title
 #, fuzzy, c-format
@@ -718,11 +804,19 @@ msgstr "ਗਲਤ ਕਿਸਮ %1 ਹੈ।"
 msgid "Invalid snapshots."
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Invalid subvolume path '%s' on target."
+msgstr "ਗਲਤ ਕਿਸਮ %1 ਹੈ।"
+
 msgid "Invalid subvolume."
 msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid table style '%s'."
+msgstr "ਗਲਤ ਕਿਸਮ %1 ਹੈ।"
+
+#, fuzzy, c-format
+msgid "Invalid target mode '%s'."
 msgstr "ਗਲਤ ਕਿਸਮ %1 ਹੈ।"
 
 #, fuzzy, c-format
@@ -741,7 +835,16 @@ msgstr "ਕੀਨੀਆ"
 msgid "KiB"
 msgstr ""
 
+#, fuzzy
+msgid "List configs:"
+msgstr ""
+"%s - PAM ਸੰਰਚਨਾ ਫਾਇਲਾਂ ਬਣਾਓ।\n"
+"\n"
+
 msgid "List snapshots from all accessible configs."
+msgstr ""
+
+msgid "List:"
 msgstr ""
 
 #, fuzzy, c-format
@@ -790,6 +893,9 @@ msgstr ""
 msgid "Name of config template to use."
 msgstr ""
 
+msgid "No backup configs found."
+msgstr ""
+
 #, fuzzy
 msgid "No command provided."
 msgstr "ਕੋਈ ਕਮਾਂਡ ਨਹੀਂ ਦਿੱਤੀ"
@@ -802,6 +908,12 @@ msgid "No permissions."
 msgstr "ਅਧਿਕਾਰ ਪਾਬੰਦੀ ਹੈ"
 
 msgid "Number of corresponding pre snapshot."
+msgstr ""
+
+msgid "Only use backup-config with automatic set."
+msgstr ""
+
+msgid "Only use backup-config with specified target-mode."
 msgstr ""
 
 #, c-format
@@ -830,6 +942,9 @@ msgstr ""
 
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
 msgid "PB"
+msgstr ""
+
+msgid "Path mismatch between backup-config and config."
 msgstr ""
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
@@ -862,6 +977,21 @@ msgstr ""
 msgid "Print version and exit."
 msgstr "ਪਰੋਗਰਾਮ ਵਰਜਨ ਵੇਖੋ ਅਤੇ ਬੰਦ ਕਰੋ"
 
+msgid "Probing extra information for source snapshots."
+msgstr ""
+
+#, fuzzy
+msgid "Probing extra information for target snapshots."
+msgstr "ਬਣਾਇਆ ਗਿਆ: "
+
+#, fuzzy
+msgid "Probing source snapshots."
+msgstr "ਬਣਾਇਆ ਗਿਆ: "
+
+#, fuzzy
+msgid "Probing target snapshots."
+msgstr "ਅਣਜਾਣ ਕਿਸਮ ਹੈ।"
+
 # error box title
 #, fuzzy, c-format
 msgid "Quota error (%s)."
@@ -877,6 +1007,66 @@ msgid "Read-Only"
 msgstr ""
 
 msgid "Run command and create pre and post snapshots."
+msgstr ""
+
+#, c-format
+msgid "Running delete failed for %d of %ld backup config."
+msgid_plural "Running delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running list failed for %d of %ld backup config."
+msgid_plural "Running list failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete failed for %d of %ld backup config."
+msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running transfer failed for %d of %ld backup config."
+msgid_plural "Running transfer failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer for backup config '%s'."
+msgstr ""
+
+msgid "SSH Host"
+msgstr ""
+
+msgid "SSH Identity"
+msgstr ""
+
+msgid "SSH Port"
+msgstr ""
+
+msgid "SSH User"
 msgstr ""
 
 msgid "Save status to file."
@@ -900,6 +1090,9 @@ msgstr ""
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "ਗਲਤ ਕਿਸਮ %1 ਹੈ।"
 
+msgid "Set name of backup-config to use."
+msgstr ""
+
 msgid "Set name of config to use."
 msgstr ""
 
@@ -922,7 +1115,29 @@ msgstr ""
 msgid "Snapshot '%u' not found."
 msgstr "%s '%s' ਨਹੀਂ ਲੱਭੀ"
 
+#, fuzzy
+msgid "Snapshot already on target."
+msgstr "ਸੰਰਚਨਾ ਫਾਇਲ ਪਾਰਸ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ..."
+
 msgid "Snapshot is in use."
+msgstr ""
+
+#, fuzzy
+msgid "Snapshot not on source."
+msgstr "%s '%s' ਨਹੀਂ ਲੱਭੀ"
+
+#, fuzzy
+msgid "Snapshot not on target."
+msgstr "%s '%s' ਨਹੀਂ ਲੱਭੀ"
+
+#, fuzzy, c-format
+msgid "Snapshot number %d not found."
+msgstr "%s '%s' ਨਹੀਂ ਲੱਭੀ"
+
+msgid "Source Path"
+msgstr ""
+
+msgid "Source State"
 msgstr ""
 
 msgid "Subvolume"
@@ -945,6 +1160,15 @@ msgstr ""
 msgid "Table style (integer)."
 msgstr ""
 
+msgid "Target Mode"
+msgstr ""
+
+msgid "Target Path"
+msgstr ""
+
+msgid "Target State"
+msgstr ""
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
@@ -958,8 +1182,22 @@ msgstr ""
 msgid "TiB"
 msgstr ""
 
+msgid "Transfer and delete:"
+msgstr ""
+
+msgid "Transfer:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Transferring snapshot %d."
+msgstr "ਸੰਰਚਨਾ ਫਾਇਲ ਪਾਰਸ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ..."
+
 #, fuzzy
 msgid "Try 'snapper --help' for more information."
+msgstr "ਹੋਰ ਜਾਣਕਾਰੀ ਲਈ `%s --help' ਜਾਂ `%s --usage' ਨੂੰ ਵੇਖੋ।\n"
+
+#, fuzzy
+msgid "Try 'snbk --help' for more information."
 msgstr "ਹੋਰ ਜਾਣਕਾਰੀ ਲਈ `%s --help' ਜਾਂ `%s --usage' ਨੂੰ ਵੇਖੋ।\n"
 
 msgid "Try to make space available."
@@ -1088,7 +1326,28 @@ msgstr "ਕੁਝ ਵੀ ਨਹੀਂ ਹੈ।"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "ਹੋਰ ਜਾਣਕਾਰੀ ਲਈ `%s --help' ਜਾਂ `%s --usage' ਨੂੰ ਵੇਖੋ।\n"
 
+msgid "snbk delete [numbers]"
+msgstr ""
+
+msgid "snbk list"
+msgstr ""
+
+#, fuzzy
+msgid "snbk list-configs"
+msgstr ""
+"%s - PAM ਸੰਰਚਨਾ ਫਾਇਲਾਂ ਬਣਾਓ।\n"
+"\n"
+
+msgid "snbk transfer [numbers]"
+msgstr ""
+
+msgid "snbk transfer-and-delete"
+msgstr ""
+
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr ""
+
+msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr ""
 
 msgid "yes"

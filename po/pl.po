@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 12:27+0100\n"
+"POT-Creation-Date: 2024-11-07 08:23+0100\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Ewelina Michalowska <ewelina.michalowska@stgambit.com>\n"
 "Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>\n"
@@ -184,9 +184,55 @@ msgstr ""
 msgid "%1$s, %2$s"
 msgstr ""
 
+msgid "'btrfs send | btrfs receive' failed."
+msgstr ""
+
+msgid "'btrfs subvolume delete' failed."
+msgstr ""
+
+#, fuzzy
+msgid "'cp info.xml' failed."
+msgstr "Otwieranie pliku '%s' nie powiodło się."
+
+msgid "'mkdir' failed."
+msgstr ""
+
+msgid "'rm info.xml' failed."
+msgstr ""
+
+msgid "'rmdir' failed."
+msgstr ""
+
+msgid "'scp info.xml' failed."
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Migawka %d.)"
+
+msgid "(Source) Creation Time"
+msgstr ""
+
+msgid "(Source) Parent UUID"
+msgstr ""
+
+msgid "(Source) Received UUID"
+msgstr ""
+
+msgid "(Source) UUID"
+msgstr ""
+
+msgid "(Target) Creation Time"
+msgstr ""
+
+msgid "(Target) Parent UUID"
+msgstr ""
+
+msgid "(Target) Received UUID"
+msgstr ""
+
+msgid "(Target) UUID"
+msgstr ""
 
 msgid "--abbreviate"
 msgstr ""
@@ -195,6 +241,12 @@ msgid "--all-configs, -a"
 msgstr ""
 
 msgid "--ambit, -a <ambit>"
+msgstr ""
+
+msgid "--automatic"
+msgstr ""
+
+msgid "--backup-config, -b <name>"
 msgstr ""
 
 #, fuzzy
@@ -227,6 +279,9 @@ msgid "--diff-cmd <command>"
 msgstr ""
 
 msgid "--disable-used-space"
+msgstr ""
+
+msgid "--empty"
 msgstr ""
 
 msgid "--extensions, -x <options>"
@@ -295,6 +350,9 @@ msgstr ""
 msgid "--table-style, -t <style>"
 msgstr "\t--table-style, -t <styl>\tStyl tabeli (liczba całkowita)."
 
+msgid "--target-mode <target-mode>"
+msgstr ""
+
 msgid "--template, -t <name>"
 msgstr ""
 
@@ -329,6 +387,9 @@ msgstr ""
 
 #, c-format
 msgid "Ambit is %s."
+msgstr ""
+
+msgid "Automatic"
 msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
@@ -435,6 +496,10 @@ msgstr "Polecenie setup-quota nie przyjmuje argumentów."
 msgid "Command 'status' needs one argument."
 msgstr "Polecenie 'status' wymaga jednego argumentu."
 
+#, fuzzy
+msgid "Command 'transfer-and-delete' does not take arguments."
+msgstr "Polecenie 'create' nie przyjmuje argumentów."
+
 msgid "Command 'umount' needs at least one argument."
 msgstr "Polecenie unmount wymaga co najmniej jednego argumentu."
 
@@ -485,6 +550,10 @@ msgid "Create a snapshot from the specified snapshot."
 msgstr "Tworzenie migawki z migawki %d służącej do odczytu i zapisu."
 
 #, fuzzy
+msgid "Create an empty snapshot."
+msgstr "Tworzenie migawki bieżącego systemu służącej tylko do odczytu."
+
+#, fuzzy
 msgid "Create read-only snapshot."
 msgstr "Tworzenie migawki bieżącego systemu służącej tylko do odczytu."
 
@@ -518,9 +587,17 @@ msgstr "Data"
 msgid "Default"
 msgstr ""
 
+#, fuzzy
+msgid "Delete:"
+msgstr "  Usuwanie konfiguracji:"
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Usuwanie konfiguracji nie powiodło się (%s)."
+
+#, fuzzy, c-format
+msgid "Deleting snapshot %d."
+msgstr "Usuwanie zrzutu nie powiodło się (%s)."
 
 msgid "Deleting snapshot failed."
 msgstr "Usuwanie zrzutu nie powiodło się (%s)."
@@ -592,6 +669,10 @@ msgstr "Inicjowanie programu obsługi systemu plików nie powiodło się."
 msgid "Failed to parse '%s'."
 msgstr "nie udało się utworzyć %s"
 
+#, fuzzy
+msgid "Failed to parse number."
+msgstr "nie udało się utworzyć %s"
+
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr ""
@@ -631,6 +712,10 @@ msgstr "GiB"
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
+
+#, fuzzy
+msgid "Global options:"
+msgstr "    Opcje globalne:"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -688,11 +773,19 @@ msgstr "Nieprawidłowy zrzut '%s'."
 msgid "Invalid snapshots."
 msgstr "Nieprawidłowe zrzuty."
 
+#, fuzzy, c-format
+msgid "Invalid subvolume path '%s' on target."
+msgstr "Nieprawidłowy podwolumen."
+
 msgid "Invalid subvolume."
 msgstr "Nieprawidłowy podwolumen."
 
 #, fuzzy, c-format
 msgid "Invalid table style '%s'."
+msgstr "Nieprawidłowy styl tabeli %d."
+
+#, fuzzy, c-format
+msgid "Invalid target mode '%s'."
 msgstr "Nieprawidłowy styl tabeli %d."
 
 #, fuzzy, c-format
@@ -710,8 +803,15 @@ msgid "KiB"
 msgstr "KiB"
 
 #, fuzzy
+msgid "List configs:"
+msgstr "  Lista konfiguracji:"
+
+#, fuzzy
 msgid "List snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tWyświetla listę migawek z wszystkich dostępnych konfiguracji."
+
+msgid "List:"
+msgstr ""
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -762,6 +862,9 @@ msgstr ""
 msgid "Name of config template to use."
 msgstr "\t--template, -t <name>\t\tNazwa szablonu konfiguracji do użycia."
 
+msgid "No backup configs found."
+msgstr ""
+
 msgid "No command provided."
 msgstr "Nie podano polecenia."
 
@@ -774,6 +877,12 @@ msgstr "Brak uprawnień."
 #, fuzzy
 msgid "Number of corresponding pre snapshot."
 msgstr "\t--pre-number <numer>\t\tLiczba odpowiednich zrzutów typu pre."
+
+msgid "Only use backup-config with automatic set."
+msgstr ""
+
+msgid "Only use backup-config with specified target-mode."
+msgstr ""
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -806,6 +915,9 @@ msgstr ""
 msgid "PB"
 msgstr "PiB"
 
+msgid "Path mismatch between backup-config and config."
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -834,6 +946,22 @@ msgstr "\t--print-number, -p\t\tWyświetlenie numeru migawki utworzonej jako dru
 msgid "Print version and exit."
 msgstr "\t--version\t\t\tWyświetl wersję programu i zakończ pracę."
 
+#, fuzzy
+msgid "Probing extra information for source snapshots."
+msgstr "porównanie zrzutów..."
+
+#, fuzzy
+msgid "Probing extra information for target snapshots."
+msgstr "porównanie zrzutów..."
+
+#, fuzzy
+msgid "Probing source snapshots."
+msgstr "porównanie zrzutów..."
+
+#, fuzzy
+msgid "Probing target snapshots."
+msgstr "porównanie zrzutów..."
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Błąd przydziału (%s)."
@@ -852,6 +980,71 @@ msgstr ""
 #, fuzzy
 msgid "Run command and create pre and post snapshots."
 msgstr "\t--command <polecenie>\t\tWykonanie polecenia oraz utworzenie zrzutów typu pre i post."
+
+#, c-format
+msgid "Running delete failed for %d of %ld backup config."
+msgid_plural "Running delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgid "Running delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running list failed for %d of %ld backup config."
+msgid_plural "Running list failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgid "Running transfer and delete failed for %d of %ld backup config."
+msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running transfer failed for %d of %ld backup config."
+msgid_plural "Running transfer failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgid "Running transfer for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer for backup config '%s'."
+msgstr ""
+
+msgid "SSH Host"
+msgstr ""
+
+msgid "SSH Identity"
+msgstr ""
+
+msgid "SSH Port"
+msgstr ""
+
+#, fuzzy
+msgid "SSH User"
+msgstr "Użytkownik"
 
 #, fuzzy
 msgid "Save status to file."
@@ -873,6 +1066,10 @@ msgstr ""
 #, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Nieprawidłowy styl tabeli %d."
+
+#, fuzzy
+msgid "Set name of backup-config to use."
+msgstr "\t--config, -c <nazwa>\t\tUstawienie nazwy konfiguracji do użycia."
 
 #, fuzzy
 msgid "Set name of config to use."
@@ -897,8 +1094,30 @@ msgstr "Ustawianie domyślnego podwolumenu na migawkę %d."
 msgid "Snapshot '%u' not found."
 msgstr "Nie znaleziono zrzutu '%u'."
 
+#, fuzzy
+msgid "Snapshot already on target."
+msgstr "Tworzenie zrzutu nie powiodło się (%s)."
+
 msgid "Snapshot is in use."
 msgstr "Dany zrzut jest już używany."
+
+#, fuzzy
+msgid "Snapshot not on source."
+msgstr "Dany zrzut jest już używany."
+
+#, fuzzy
+msgid "Snapshot not on target."
+msgstr "Nie znaleziono zrzutu '%u'."
+
+#, fuzzy, c-format
+msgid "Snapshot number %d not found."
+msgstr "Nie znaleziono zrzutu '%u'."
+
+msgid "Source Path"
+msgstr ""
+
+msgid "Source State"
+msgstr ""
 
 msgid "Subvolume"
 msgstr "Podwolumen"
@@ -924,6 +1143,15 @@ msgstr "TiB"
 msgid "Table style (integer)."
 msgstr "\t--table-style, -t <styl>\tStyl tabeli (liczba całkowita)."
 
+msgid "Target Mode"
+msgstr ""
+
+msgid "Target Path"
+msgstr ""
+
+msgid "Target State"
+msgstr ""
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
@@ -937,7 +1165,21 @@ msgstr ""
 msgid "TiB"
 msgstr "TiB"
 
+msgid "Transfer and delete:"
+msgstr ""
+
+msgid "Transfer:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Transferring snapshot %d."
+msgstr "Tworzenie zrzutu nie powiodło się (%s)."
+
 msgid "Try 'snapper --help' for more information."
+msgstr "Wypróbuj polecenie 'snapper --help', aby uzyskać więcej informacji."
+
+#, fuzzy
+msgid "Try 'snbk --help' for more information."
 msgstr "Wypróbuj polecenie 'snapper --help', aby uzyskać więcej informacji."
 
 msgid "Try to make space available."
@@ -1065,7 +1307,29 @@ msgstr "nie ma nic do zrobienia"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "argumentu root można użyć tylko razem z parametrem no-dbus."
 
+#, fuzzy
+msgid "snbk delete [numbers]"
+msgstr "\tsnapper delete <numer>"
+
+#, fuzzy
+msgid "snbk list"
+msgstr "\tsnapper list"
+
+#, fuzzy
+msgid "snbk list-configs"
+msgstr "\tsnapper list-configs"
+
+msgid "snbk transfer [numbers]"
+msgstr ""
+
+msgid "snbk transfer-and-delete"
+msgstr ""
+
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr "Użycie: snapper [--opcje-globalne] <polecenia> [--opcje-poleceń] [argumenty-polecenia]"
+
+#, fuzzy
+msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "Użycie: snapper [--opcje-globalne] <polecenia> [--opcje-poleceń] [argumenty-polecenia]"
 
 msgid "yes"

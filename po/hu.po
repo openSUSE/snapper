@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 12:27+0100\n"
+"POT-Creation-Date: 2024-11-07 08:23+0100\n"
 "PO-Revision-Date: 2019-03-01 20:28+0000\n"
 "Last-Translator: Robert Taisz <robert.taisz@emerald.hu>\n"
 "Language-Team: Hungarian <https://l10n.opensuse.org/projects/snapper/master/hu/>\n"
@@ -188,10 +188,56 @@ msgstr ""
 msgid "%1$s, %2$s"
 msgstr ""
 
+msgid "'btrfs send | btrfs receive' failed."
+msgstr ""
+
+msgid "'btrfs subvolume delete' failed."
+msgstr ""
+
+#, fuzzy
+msgid "'cp info.xml' failed."
+msgstr "A(z) '%s' fájl megnyitása sikertelen."
+
+msgid "'mkdir' failed."
+msgstr ""
+
+msgid "'rm info.xml' failed."
+msgstr ""
+
+msgid "'rmdir' failed."
+msgstr ""
+
+msgid "'scp info.xml' failed."
+msgstr ""
+
 # SLE12
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(%d. pillanatkép)"
+
+msgid "(Source) Creation Time"
+msgstr ""
+
+msgid "(Source) Parent UUID"
+msgstr ""
+
+msgid "(Source) Received UUID"
+msgstr ""
+
+msgid "(Source) UUID"
+msgstr ""
+
+msgid "(Target) Creation Time"
+msgstr ""
+
+msgid "(Target) Parent UUID"
+msgstr ""
+
+msgid "(Target) Received UUID"
+msgstr ""
+
+msgid "(Target) UUID"
+msgstr ""
 
 msgid "--abbreviate"
 msgstr ""
@@ -200,6 +246,12 @@ msgid "--all-configs, -a"
 msgstr ""
 
 msgid "--ambit, -a <ambit>"
+msgstr ""
+
+msgid "--automatic"
+msgstr ""
+
+msgid "--backup-config, -b <name>"
 msgstr ""
 
 #, fuzzy
@@ -232,6 +284,9 @@ msgid "--diff-cmd <command>"
 msgstr ""
 
 msgid "--disable-used-space"
+msgstr ""
+
+msgid "--empty"
 msgstr ""
 
 msgid "--extensions, -x <options>"
@@ -300,6 +355,9 @@ msgstr ""
 msgid "--table-style, -t <style>"
 msgstr "\t--table-style, -t <stílus>\tTáblastílus (integer)."
 
+msgid "--target-mode <target-mode>"
+msgstr ""
+
 msgid "--template, -t <name>"
 msgstr ""
 
@@ -335,6 +393,9 @@ msgstr ""
 
 #, c-format
 msgid "Ambit is %s."
+msgstr ""
+
+msgid "Automatic"
 msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
@@ -446,6 +507,10 @@ msgstr "A 'setup-quota' parancs nem értelmezi a paramétereket."
 msgid "Command 'status' needs one argument."
 msgstr "A 'status' parancshoz meg kell adni egy paraméter."
 
+#, fuzzy
+msgid "Command 'transfer-and-delete' does not take arguments."
+msgstr "A 'create' parancs nem értelmezi a paramétereket."
+
 msgid "Command 'umount' needs at least one argument."
 msgstr "Az 'umount' parancshoz meg kell adni legalább egy paramétert."
 
@@ -502,6 +567,11 @@ msgstr "Csak olvasható pillanatkép létrehozása a(z) %d pillanatképről."
 
 # SLE12
 #, fuzzy
+msgid "Create an empty snapshot."
+msgstr "Csak olvasható pillanatkép létrehozása az aktuális rendszerről."
+
+# SLE12
+#, fuzzy
 msgid "Create read-only snapshot."
 msgstr "Csak olvasható pillanatkép létrehozása az aktuális rendszerről."
 
@@ -540,9 +610,17 @@ msgstr "Dátum"
 msgid "Default"
 msgstr ""
 
+#, fuzzy
+msgid "Delete:"
+msgstr "  Beállítás törlése:"
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "A beállítás törlése sikertelen (%s)."
+
+#, fuzzy, c-format
+msgid "Deleting snapshot %d."
+msgstr "A pillanatkép törlése sikertelen."
 
 msgid "Deleting snapshot failed."
 msgstr "A pillanatkép törlése sikertelen."
@@ -618,6 +696,10 @@ msgstr "Nem sikerült inicializálni a fájlrendszer kezelőjét."
 msgid "Failed to parse '%s'."
 msgstr "a(z) %s létrehozása sikertelen"
 
+#, fuzzy
+msgid "Failed to parse number."
+msgstr "a(z) %s létrehozása sikertelen"
+
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr ""
@@ -658,6 +740,10 @@ msgstr "GiB"
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
+
+#, fuzzy
+msgid "Global options:"
+msgstr "    Globális kapcsolói:"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -718,11 +804,19 @@ msgstr "Érvénytelen pillanatkép: '%s'."
 msgid "Invalid snapshots."
 msgstr "Érvénytelen pillanatképek."
 
+#, fuzzy, c-format
+msgid "Invalid subvolume path '%s' on target."
+msgstr "Érvénytelen alkötetek."
+
 msgid "Invalid subvolume."
 msgstr "Érvénytelen alkötetek."
 
 #, fuzzy, c-format
 msgid "Invalid table style '%s'."
+msgstr "Érvénytelen táblázatstílus: %d."
+
+#, fuzzy, c-format
+msgid "Invalid target mode '%s'."
 msgstr "Érvénytelen táblázatstílus: %d."
 
 # SLE12
@@ -742,8 +836,15 @@ msgid "KiB"
 msgstr "KiB"
 
 #, fuzzy
+msgid "List configs:"
+msgstr "  Beállítások listázása:"
+
+#, fuzzy
 msgid "List snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tA pillanatképek listázása minden elérhető konfigurációból."
+
+msgid "List:"
+msgstr ""
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -794,6 +895,9 @@ msgstr ""
 msgid "Name of config template to use."
 msgstr "\t--template, -t <név>\t\tFelhasznált beállítássablon neve."
 
+msgid "No backup configs found."
+msgstr ""
+
 msgid "No command provided."
 msgstr "Nincs kiadva parancs."
 
@@ -806,6 +910,12 @@ msgstr "Nincs hozzáférés."
 #, fuzzy
 msgid "Number of corresponding pre snapshot."
 msgstr "\t--pre-number <szám>\t\tMegelőző pillanatfelvételek megfelelő száma."
+
+msgid "Only use backup-config with automatic set."
+msgstr ""
+
+msgid "Only use backup-config with specified target-mode."
+msgstr ""
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -839,6 +949,9 @@ msgstr ""
 msgid "PB"
 msgstr "PiB"
 
+msgid "Path mismatch between backup-config and config."
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -868,6 +981,22 @@ msgstr "\t--print-number, -p\t\tA másodiknak létrehozott pillanatfelvétel meg
 msgid "Print version and exit."
 msgstr "\t--version\t\t\tVerzió kiírása és kilépés."
 
+#, fuzzy
+msgid "Probing extra information for source snapshots."
+msgstr "pillanatképek összehasonlítása…"
+
+#, fuzzy
+msgid "Probing extra information for target snapshots."
+msgstr "pillanatképek összehasonlítása…"
+
+#, fuzzy
+msgid "Probing source snapshots."
+msgstr "pillanatképek összehasonlítása…"
+
+#, fuzzy
+msgid "Probing target snapshots."
+msgstr "pillanatképek összehasonlítása…"
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Kvótahiba (%s)."
@@ -886,6 +1015,67 @@ msgstr ""
 #, fuzzy
 msgid "Run command and create pre and post snapshots."
 msgstr "\t--command <parancs>\t\tFuttassa a parancsot, és készítsen pillanatképet előtte, majd utána."
+
+#, c-format
+msgid "Running delete failed for %d of %ld backup config."
+msgid_plural "Running delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running list failed for %d of %ld backup config."
+msgid_plural "Running list failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete failed for %d of %ld backup config."
+msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running transfer failed for %d of %ld backup config."
+msgid_plural "Running transfer failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer for backup config '%s'."
+msgstr ""
+
+msgid "SSH Host"
+msgstr ""
+
+msgid "SSH Identity"
+msgstr ""
+
+msgid "SSH Port"
+msgstr ""
+
+#, fuzzy
+msgid "SSH User"
+msgstr "Felhasználó"
 
 #, fuzzy
 msgid "Save status to file."
@@ -907,6 +1097,10 @@ msgstr ""
 #, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Érvénytelen táblázatstílus: %d."
+
+#, fuzzy
+msgid "Set name of backup-config to use."
+msgstr "\t--config, -c <név>\t\tFelhasznált beállítás nevének megadása."
 
 #, fuzzy
 msgid "Set name of config to use."
@@ -932,8 +1126,30 @@ msgstr "A(z) %d pillanatkép alapértelmezett alkötetének beállítása."
 msgid "Snapshot '%u' not found."
 msgstr "A(z) '%u' pillanatkép nem található."
 
+#, fuzzy
+msgid "Snapshot already on target."
+msgstr "A pillanatkép létrehozása sikertelen."
+
 msgid "Snapshot is in use."
 msgstr "A pillanatkép használatban van."
+
+#, fuzzy
+msgid "Snapshot not on source."
+msgstr "A pillanatkép használatban van."
+
+#, fuzzy
+msgid "Snapshot not on target."
+msgstr "A(z) '%u' pillanatkép nem található."
+
+#, fuzzy, c-format
+msgid "Snapshot number %d not found."
+msgstr "A(z) '%u' pillanatkép nem található."
+
+msgid "Source Path"
+msgstr ""
+
+msgid "Source State"
+msgstr ""
 
 msgid "Subvolume"
 msgstr "Alkötet"
@@ -959,6 +1175,15 @@ msgstr "TiB"
 msgid "Table style (integer)."
 msgstr "\t--table-style, -t <stílus>\tTáblastílus (integer)."
 
+msgid "Target Mode"
+msgstr ""
+
+msgid "Target Path"
+msgstr ""
+
+msgid "Target State"
+msgstr ""
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
@@ -972,7 +1197,21 @@ msgstr ""
 msgid "TiB"
 msgstr "TiB"
 
+msgid "Transfer and delete:"
+msgstr ""
+
+msgid "Transfer:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Transferring snapshot %d."
+msgstr "A pillanatkép létrehozása sikertelen."
+
 msgid "Try 'snapper --help' for more information."
+msgstr "További információ a 'snapper --help' parancs segítségével érhető el."
+
+#, fuzzy
+msgid "Try 'snbk --help' for more information."
 msgstr "További információ a 'snapper --help' parancs segítségével érhető el."
 
 msgid "Try to make space available."
@@ -1103,7 +1342,29 @@ msgstr "nincs teendő"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "A root argumentum csak a no-dbus beállítással együtt használható."
 
+#, fuzzy
+msgid "snbk delete [numbers]"
+msgstr "\tsnapper delete <szám>"
+
+#, fuzzy
+msgid "snbk list"
+msgstr "\tsnapper list"
+
+#, fuzzy
+msgid "snbk list-configs"
+msgstr "\tsnapper list-configs"
+
+msgid "snbk transfer [numbers]"
+msgstr ""
+
+msgid "snbk transfer-and-delete"
+msgstr ""
+
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr "használat: snapper [--global-options] <parancs> [--command-options] [command-arguments]"
+
+#, fuzzy
+msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "használat: snapper [--global-options] <parancs> [--command-options] [command-arguments]"
 
 msgid "yes"

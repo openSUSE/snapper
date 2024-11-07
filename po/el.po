@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 12:27+0100\n"
+"POT-Creation-Date: 2024-11-07 08:23+0100\n"
 "PO-Revision-Date: 2023-04-26 19:14+0000\n"
 "Last-Translator: George David Apostolidis <geoapostolidis999@gmail.com>\n"
 "Language-Team: Greek <https://l10n.opensuse.org/projects/snapper/master/el/>\n"
@@ -182,9 +182,55 @@ msgstr "%1$s ή %2$s"
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
+msgid "'btrfs send | btrfs receive' failed."
+msgstr ""
+
+msgid "'btrfs subvolume delete' failed."
+msgstr ""
+
+#, fuzzy
+msgid "'cp info.xml' failed."
+msgstr "Αποτυχία ανοίγματος αρχείου '%s'."
+
+msgid "'mkdir' failed."
+msgstr ""
+
+msgid "'rm info.xml' failed."
+msgstr ""
+
+msgid "'rmdir' failed."
+msgstr ""
+
+msgid "'scp info.xml' failed."
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Στιγμιότυπο %d.)"
+
+msgid "(Source) Creation Time"
+msgstr ""
+
+msgid "(Source) Parent UUID"
+msgstr ""
+
+msgid "(Source) Received UUID"
+msgstr ""
+
+msgid "(Source) UUID"
+msgstr ""
+
+msgid "(Target) Creation Time"
+msgstr ""
+
+msgid "(Target) Parent UUID"
+msgstr ""
+
+msgid "(Target) Received UUID"
+msgstr ""
+
+msgid "(Target) UUID"
+msgstr ""
 
 msgid "--abbreviate"
 msgstr ""
@@ -193,6 +239,12 @@ msgid "--all-configs, -a"
 msgstr ""
 
 msgid "--ambit, -a <ambit>"
+msgstr ""
+
+msgid "--automatic"
+msgstr ""
+
+msgid "--backup-config, -b <name>"
 msgstr ""
 
 #, fuzzy
@@ -226,6 +278,9 @@ msgid "--diff-cmd <command>"
 msgstr ""
 
 msgid "--disable-used-space"
+msgstr ""
+
+msgid "--empty"
 msgstr ""
 
 msgid "--extensions, -x <options>"
@@ -295,6 +350,9 @@ msgstr ""
 msgid "--table-style, -t <style>"
 msgstr "\t--table-style, -t <style>\tΣτύλ πίνακα (ακέραιος)."
 
+msgid "--target-mode <target-mode>"
+msgstr ""
+
 msgid "--template, -t <name>"
 msgstr ""
 
@@ -331,6 +389,9 @@ msgstr "\t--abbreviate Επιτρέπει τη σύντμηση των στηλ�
 #, c-format
 msgid "Ambit is %s."
 msgstr "Το Ambit είναι %s."
+
+msgid "Automatic"
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -438,6 +499,10 @@ msgstr "Η εντολή 'help' δεν δέχεται παραμέτρους."
 msgid "Command 'status' needs one argument."
 msgstr "Η εντολή 'status' χρειάζεται μία παράμετρο."
 
+#, fuzzy
+msgid "Command 'transfer-and-delete' does not take arguments."
+msgstr "Η εντολή 'create' δεν δέχεται παραμέτρους."
+
 msgid "Command 'umount' needs at least one argument."
 msgstr "Η εντολή 'mount' χρειάζεται τουλάχιστον μία παράμετρο."
 
@@ -488,6 +553,10 @@ msgid "Create a snapshot from the specified snapshot."
 msgstr "\t--from <αριθμός> Δημιουργήστε ένα στιγμιότυπο από το καθορισμένο στιγμιότυπο."
 
 #, fuzzy
+msgid "Create an empty snapshot."
+msgstr "\t--read-only Δημιουργία στιγμιότυπου μόνο για ανάγνωση."
+
+#, fuzzy
 msgid "Create read-only snapshot."
 msgstr "\t--read-only Δημιουργία στιγμιότυπου μόνο για ανάγνωση."
 
@@ -521,9 +590,17 @@ msgstr "Ημερομηνία"
 msgid "Default"
 msgstr "Προεπιλογή"
 
+#, fuzzy
+msgid "Delete:"
+msgstr "  Διαγραφή ρυθμίσεων:"
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Αποτυχία διαγραφής ρυθμίσεων (%s)."
+
+#, fuzzy, c-format
+msgid "Deleting snapshot %d."
+msgstr "Η διαγραφή στιγμιότυπου απέτυχε."
 
 msgid "Deleting snapshot failed."
 msgstr "Η διαγραφή στιγμιότυπου απέτυχε."
@@ -595,6 +672,10 @@ msgstr "Αποτυχία αρχικοποίησης χειριστή συστή�
 msgid "Failed to parse '%s'."
 msgstr "Απέτυχε η ανάλυση του '%s'."
 
+#, fuzzy
+msgid "Failed to parse number."
+msgstr "Απέτυχε η ανάλυση του '%s'."
+
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr "Απέτυχε η αναζήτηση ελεύθερου χώρου για τη διαδρομή '%s'."
@@ -633,6 +714,10 @@ msgstr "GiB"
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
+
+#, fuzzy
+msgid "Global options:"
+msgstr "    Γενικές Επιλογές:"
 
 # error box title
 #, c-format
@@ -691,11 +776,19 @@ msgstr "Μη έγκυρο στιγμιότυπο '%s'."
 msgid "Invalid snapshots."
 msgstr "Μη έγκυρα στιγμιότυπα."
 
+#, fuzzy, c-format
+msgid "Invalid subvolume path '%s' on target."
+msgstr "Μη έγκυρος υποτόμος."
+
 msgid "Invalid subvolume."
 msgstr "Μη έγκυρος υποτόμος."
 
 #, c-format
 msgid "Invalid table style '%s'."
+msgstr "Μη έγκυρο στυλ πίνακα '%s'."
+
+#, fuzzy, c-format
+msgid "Invalid target mode '%s'."
 msgstr "Μη έγκυρο στυλ πίνακα '%s'."
 
 #, fuzzy, c-format
@@ -713,8 +806,15 @@ msgid "KiB"
 msgstr "KiB"
 
 #, fuzzy
+msgid "List configs:"
+msgstr "  Εμφάνιση ρυθμίσεων:"
+
+#, fuzzy
 msgid "List snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tΕμφανίζει τα στιγμιότυπα από όλες τις προσβάσιμες ρυθμίσεις."
+
+msgid "List:"
+msgstr ""
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -764,6 +864,9 @@ msgstr ""
 msgid "Name of config template to use."
 msgstr "\t--template, -t <name>\t\tΌνομα προτύπου ρυθμίσεων προς χρήση."
 
+msgid "No backup configs found."
+msgstr ""
+
 msgid "No command provided."
 msgstr "Δεν δόθηκε εντολή."
 
@@ -777,6 +880,12 @@ msgstr "Χωρίς Δικαιώματα."
 #, fuzzy
 msgid "Number of corresponding pre snapshot."
 msgstr "\t--pre-number <αριθμός>\t\tΑριθμός από αντίστοιχα προ-στιγμιότυπα."
+
+msgid "Only use backup-config with automatic set."
+msgstr ""
+
+msgid "Only use backup-config with specified target-mode."
+msgstr ""
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -810,6 +919,9 @@ msgstr "P"
 msgid "PB"
 msgstr "PiB"
 
+msgid "Path mismatch between backup-config and config."
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -838,6 +950,22 @@ msgstr "\t--print-number, -p\t\tΕμφάνιση αριθμού του δευτ�
 msgid "Print version and exit."
 msgstr "\t--version\t\t\tΕμφάνιση έκδοσης και έξοδος."
 
+#, fuzzy
+msgid "Probing extra information for source snapshots."
+msgstr "Σύγκριση στιγμιοτύπων..."
+
+#, fuzzy
+msgid "Probing extra information for target snapshots."
+msgstr "Σύγκριση στιγμιοτύπων..."
+
+#, fuzzy
+msgid "Probing source snapshots."
+msgstr "Σύγκριση στιγμιοτύπων..."
+
+#, fuzzy
+msgid "Probing target snapshots."
+msgstr "Σύγκριση στιγμιοτύπων..."
+
 # error box title
 #, c-format
 msgid "Quota error (%s)."
@@ -857,6 +985,67 @@ msgstr "Μόνο για ανάγνωση"
 #, fuzzy
 msgid "Run command and create pre and post snapshots."
 msgstr "\t--command <command>\tΕκτέλεση εντολής και δημιουργία στιγμιότυπου πριν και μετά."
+
+#, c-format
+msgid "Running delete failed for %d of %ld backup config."
+msgid_plural "Running delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running list failed for %d of %ld backup config."
+msgid_plural "Running list failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete failed for %d of %ld backup config."
+msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running transfer failed for %d of %ld backup config."
+msgid_plural "Running transfer failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer for backup config '%s'."
+msgstr ""
+
+msgid "SSH Host"
+msgstr ""
+
+msgid "SSH Identity"
+msgstr ""
+
+msgid "SSH Port"
+msgstr ""
+
+#, fuzzy
+msgid "SSH User"
+msgstr "Χρήστης"
 
 #, fuzzy
 msgid "Save status to file."
@@ -882,6 +1071,10 @@ msgid "Set a machine-readable output format (csv, json)."
 msgstr "\t--machine-readable <format> Ορίστε μια μορφή εξόδου αναγνώσιμη από μηχανή (csv, json)."
 
 #, fuzzy
+msgid "Set name of backup-config to use."
+msgstr "\t--config, -c <name>\t\tΟρίσετε το όνομα του αρχείου ρυθμίσεων που θα χρησιμοποιηθεί."
+
+#, fuzzy
 msgid "Set name of config to use."
 msgstr "\t--config, -c <name>\t\tΟρίσετε το όνομα του αρχείου ρυθμίσεων που θα χρησιμοποιηθεί."
 
@@ -905,8 +1098,30 @@ msgstr "Ορισμός προεπιλεγμένου υποτόμου στο στ
 msgid "Snapshot '%u' not found."
 msgstr "Δεν βρέθηκε στιγμιότυπο '%u'."
 
+#, fuzzy
+msgid "Snapshot already on target."
+msgstr "\t--read-only Ορίστε το στιγμιότυπο μόνο για ανάγνωση."
+
 msgid "Snapshot is in use."
 msgstr "Το στιγμιότυπο είναι σε χρήση."
+
+#, fuzzy
+msgid "Snapshot not on source."
+msgstr "Το στιγμιότυπο είναι σε χρήση."
+
+#, fuzzy
+msgid "Snapshot not on target."
+msgstr "Δεν βρέθηκε στιγμιότυπο '%u'."
+
+#, fuzzy, c-format
+msgid "Snapshot number %d not found."
+msgstr "Δεν βρέθηκε στιγμιότυπο '%u'."
+
+msgid "Source Path"
+msgstr ""
+
+msgid "Source State"
+msgstr ""
 
 msgid "Subvolume"
 msgstr "Υποτόμος"
@@ -932,6 +1147,15 @@ msgstr "TiB"
 msgid "Table style (integer)."
 msgstr "\t--table-style, -t <style>\tΣτύλ πίνακα (ακέραιος)."
 
+msgid "Target Mode"
+msgstr ""
+
+msgid "Target Path"
+msgstr ""
+
+msgid "Target State"
+msgstr ""
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Το πεδίο εφαρμογής μπορεί να καθοριστεί χειροκίνητα χρησιμοποιώντας την επιλογή --ambit."
 
@@ -945,7 +1169,21 @@ msgstr "Αυτό μπορεί να συμβεί εάν το σύστημα δε�
 msgid "TiB"
 msgstr "TiB"
 
+msgid "Transfer and delete:"
+msgstr ""
+
+msgid "Transfer:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Transferring snapshot %d."
+msgstr "Αποτυχία δημιουργίας στιγμιοτύπου."
+
 msgid "Try 'snapper --help' for more information."
+msgstr "Για περισσότερες πληροφορίες δοκιμάστε 'snapper --help'."
+
+#, fuzzy
+msgid "Try 'snbk --help' for more information."
 msgstr "Για περισσότερες πληροφορίες δοκιμάστε 'snapper --help'."
 
 #, fuzzy
@@ -1073,7 +1311,29 @@ msgstr "τίποτα για να γίνει"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Το όρισμα root μπορεί να χρησιμοποιηθεί μόνο μαζί με το no-dbus.\n"
 
+#, fuzzy
+msgid "snbk delete [numbers]"
+msgstr "\tsnapper delete <number>"
+
+#, fuzzy
+msgid "snbk list"
+msgstr "\tsnapper list"
+
+#, fuzzy
+msgid "snbk list-configs"
+msgstr "\tsnapper list-configs"
+
+msgid "snbk transfer [numbers]"
+msgstr ""
+
+msgid "snbk transfer-and-delete"
+msgstr ""
+
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr "χρήση: snapper [--global-options] <command> [--command-options] [command-arguments]"
+
+#, fuzzy
+msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "χρήση: snapper [--global-options] <command> [--command-options] [command-arguments]"
 
 msgid "yes"

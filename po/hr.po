@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 12:27+0100\n"
+"POT-Creation-Date: 2024-11-07 08:23+0100\n"
 "PO-Revision-Date: 2011-04-16 18:13+0200\n"
 "Last-Translator: Krešimir Jozić <kjozic@gmail.com>\n"
 "Language-Team: Croatian <kde-i18n-doc@kde.org>\n"
@@ -184,9 +184,55 @@ msgstr ""
 msgid "%1$s, %2$s"
 msgstr ""
 
+msgid "'btrfs send | btrfs receive' failed."
+msgstr ""
+
+msgid "'btrfs subvolume delete' failed."
+msgstr ""
+
+#, fuzzy
+msgid "'cp info.xml' failed."
+msgstr "Otvaranje datoteke '%s' nije uspjelo."
+
+msgid "'mkdir' failed."
+msgstr ""
+
+msgid "'rm info.xml' failed."
+msgstr ""
+
+msgid "'rmdir' failed."
+msgstr ""
+
+msgid "'scp info.xml' failed."
+msgstr ""
+
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "%s '%s' nije pronađen."
+
+msgid "(Source) Creation Time"
+msgstr ""
+
+msgid "(Source) Parent UUID"
+msgstr ""
+
+msgid "(Source) Received UUID"
+msgstr ""
+
+msgid "(Source) UUID"
+msgstr ""
+
+msgid "(Target) Creation Time"
+msgstr ""
+
+msgid "(Target) Parent UUID"
+msgstr ""
+
+msgid "(Target) Received UUID"
+msgstr ""
+
+msgid "(Target) UUID"
+msgstr ""
 
 msgid "--abbreviate"
 msgstr ""
@@ -195,6 +241,12 @@ msgid "--all-configs, -a"
 msgstr ""
 
 msgid "--ambit, -a <ambit>"
+msgstr ""
+
+msgid "--automatic"
+msgstr ""
+
+msgid "--backup-config, -b <name>"
 msgstr ""
 
 msgid "--cleanup-algorithm, -c <algo>"
@@ -225,6 +277,9 @@ msgid "--diff-cmd <command>"
 msgstr ""
 
 msgid "--disable-used-space"
+msgstr ""
+
+msgid "--empty"
 msgstr ""
 
 msgid "--extensions, -x <options>"
@@ -291,6 +346,9 @@ msgstr ""
 msgid "--table-style, -t <style>"
 msgstr ""
 
+msgid "--target-mode <target-mode>"
+msgstr ""
+
 msgid "--template, -t <name>"
 msgstr ""
 
@@ -324,6 +382,9 @@ msgstr ""
 
 #, c-format
 msgid "Ambit is %s."
+msgstr ""
+
+msgid "Automatic"
 msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
@@ -441,6 +502,10 @@ msgid "Command 'status' needs one argument."
 msgstr "Naredba 'cleanup' treba jedan argument."
 
 #, fuzzy
+msgid "Command 'transfer-and-delete' does not take arguments."
+msgstr "Naredba 'cleanup' treba jedan argument."
+
+#, fuzzy
 msgid "Command 'umount' needs at least one argument."
 msgstr "Naredba 'cleanup' treba jedan argument."
 
@@ -494,6 +559,10 @@ msgid "Create a snapshot from the specified snapshot."
 msgstr ""
 
 #, fuzzy
+msgid "Create an empty snapshot."
+msgstr "Nesipravan stil tablice %d."
+
+#, fuzzy
 msgid "Create read-only snapshot."
 msgstr "Nesipravan stil tablice %d."
 
@@ -527,8 +596,16 @@ msgstr "Datum: %1"
 msgid "Default"
 msgstr ""
 
+#, fuzzy
+msgid "Delete:"
+msgstr "Obriši vezu"
+
 #, fuzzy, c-format
 msgid "Deleting config failed (%s)."
+msgstr "%s postavke nisu uspjele."
+
+#, fuzzy, c-format
+msgid "Deleting snapshot %d."
 msgstr "%s postavke nisu uspjele."
 
 #, fuzzy
@@ -599,6 +676,10 @@ msgstr ""
 msgid "Failed to parse '%s'."
 msgstr "Ne mogu napraviti alias %s -> %s\n"
 
+#, fuzzy
+msgid "Failed to parse number."
+msgstr "Ne mogu napraviti alias %s -> %s\n"
+
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr ""
@@ -636,6 +717,9 @@ msgstr ""
 
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
+msgstr ""
+
+msgid "Global options:"
 msgstr ""
 
 #, fuzzy, c-format
@@ -694,11 +778,19 @@ msgstr "Nesipravan stil tablice %d."
 msgid "Invalid snapshots."
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Invalid subvolume path '%s' on target."
+msgstr "Nesipravan stil tablice %d."
+
 msgid "Invalid subvolume."
 msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid table style '%s'."
+msgstr "Nesipravan stil tablice %d."
+
+#, fuzzy, c-format
+msgid "Invalid target mode '%s'."
 msgstr "Nesipravan stil tablice %d."
 
 #, fuzzy, c-format
@@ -718,7 +810,14 @@ msgstr "Kenija"
 msgid "KiB"
 msgstr ""
 
+#, fuzzy
+msgid "List configs:"
+msgstr "Obriši vezu"
+
 msgid "List snapshots from all accessible configs."
+msgstr ""
+
+msgid "List:"
 msgstr ""
 
 #, fuzzy, c-format
@@ -768,6 +867,9 @@ msgstr ""
 msgid "Name of config template to use."
 msgstr ""
 
+msgid "No backup configs found."
+msgstr ""
+
 msgid "No command provided."
 msgstr ""
 
@@ -778,6 +880,12 @@ msgid "No permissions."
 msgstr ""
 
 msgid "Number of corresponding pre snapshot."
+msgstr ""
+
+msgid "Only use backup-config with automatic set."
+msgstr ""
+
+msgid "Only use backup-config with specified target-mode."
 msgstr ""
 
 #, c-format
@@ -808,6 +916,9 @@ msgstr ""
 msgid "PB"
 msgstr ""
 
+msgid "Path mismatch between backup-config and config."
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr ""
@@ -835,6 +946,20 @@ msgstr ""
 msgid "Print version and exit."
 msgstr ""
 
+msgid "Probing extra information for source snapshots."
+msgstr ""
+
+msgid "Probing extra information for target snapshots."
+msgstr ""
+
+#, fuzzy
+msgid "Probing source snapshots."
+msgstr "Opis"
+
+#, fuzzy
+msgid "Probing target snapshots."
+msgstr "Nepoznata vrsta."
+
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "Ulazno/izlazna pogreška"
@@ -850,6 +975,71 @@ msgstr ""
 
 msgid "Run command and create pre and post snapshots."
 msgstr ""
+
+#, c-format
+msgid "Running delete failed for %d of %ld backup config."
+msgid_plural "Running delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgid "Running delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running list failed for %d of %ld backup config."
+msgid_plural "Running list failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgid "Running transfer and delete failed for %d of %ld backup config."
+msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running transfer failed for %d of %ld backup config."
+msgid_plural "Running transfer failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgid "Running transfer for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer for backup config '%s'."
+msgstr ""
+
+msgid "SSH Host"
+msgstr ""
+
+msgid "SSH Identity"
+msgstr ""
+
+msgid "SSH Port"
+msgstr ""
+
+#, fuzzy
+msgid "SSH User"
+msgstr "Korisničko ime"
 
 msgid "Save status to file."
 msgstr ""
@@ -870,6 +1060,9 @@ msgstr ""
 #, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Nesipravan stil tablice %d."
+
+msgid "Set name of backup-config to use."
+msgstr ""
 
 msgid "Set name of config to use."
 msgstr ""
@@ -894,8 +1087,30 @@ msgid "Snapshot '%u' not found."
 msgstr "%s '%s' nije pronađen."
 
 #, fuzzy
+msgid "Snapshot already on target."
+msgstr "%s postavke nisu uspjele."
+
+#, fuzzy
 msgid "Snapshot is in use."
 msgstr "'%s' nije pronađeno."
+
+#, fuzzy
+msgid "Snapshot not on source."
+msgstr "'%s' nije pronađeno."
+
+#, fuzzy
+msgid "Snapshot not on target."
+msgstr "%s '%s' nije pronađen."
+
+#, fuzzy, c-format
+msgid "Snapshot number %d not found."
+msgstr "%s '%s' nije pronađen."
+
+msgid "Source Path"
+msgstr ""
+
+msgid "Source State"
+msgstr ""
 
 msgid "Subvolume"
 msgstr ""
@@ -917,6 +1132,15 @@ msgstr ""
 msgid "Table style (integer)."
 msgstr ""
 
+msgid "Target Mode"
+msgstr ""
+
+msgid "Target Path"
+msgstr ""
+
+msgid "Target State"
+msgstr ""
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
@@ -930,7 +1154,20 @@ msgstr ""
 msgid "TiB"
 msgstr ""
 
+msgid "Transfer and delete:"
+msgstr ""
+
+msgid "Transfer:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Transferring snapshot %d."
+msgstr "%s postavke nisu uspjele."
+
 msgid "Try 'snapper --help' for more information."
+msgstr ""
+
+msgid "Try 'snbk --help' for more information."
 msgstr ""
 
 msgid "Try to make space available."
@@ -1060,7 +1297,26 @@ msgstr "Nema ništa za napraviti."
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr ""
 
+msgid "snbk delete [numbers]"
+msgstr ""
+
+msgid "snbk list"
+msgstr ""
+
+#, fuzzy
+msgid "snbk list-configs"
+msgstr "Obriši vezu"
+
+msgid "snbk transfer [numbers]"
+msgstr ""
+
+msgid "snbk transfer-and-delete"
+msgstr ""
+
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr ""
+
+msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr ""
 
 msgid "yes"
