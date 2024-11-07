@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 12:27+0100\n"
+"POT-Creation-Date: 2024-11-07 08:23+0100\n"
 "PO-Revision-Date: 2023-12-12 12:02+0000\n"
 "Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
 "Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/id/>\n"
@@ -175,9 +175,55 @@ msgstr "%1$s atau %2$s"
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
+msgid "'btrfs send | btrfs receive' failed."
+msgstr ""
+
+msgid "'btrfs subvolume delete' failed."
+msgstr ""
+
+#, fuzzy
+msgid "'cp info.xml' failed."
+msgstr "Membuka berkas '%s' gagal."
+
+msgid "'mkdir' failed."
+msgstr ""
+
+msgid "'rm info.xml' failed."
+msgstr ""
+
+msgid "'rmdir' failed."
+msgstr ""
+
+msgid "'scp info.xml' failed."
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Snapshot %d.)"
+
+msgid "(Source) Creation Time"
+msgstr ""
+
+msgid "(Source) Parent UUID"
+msgstr ""
+
+msgid "(Source) Received UUID"
+msgstr ""
+
+msgid "(Source) UUID"
+msgstr ""
+
+msgid "(Target) Creation Time"
+msgstr ""
+
+msgid "(Target) Parent UUID"
+msgstr ""
+
+msgid "(Target) Received UUID"
+msgstr ""
+
+msgid "(Target) UUID"
+msgstr ""
 
 msgid "--abbreviate"
 msgstr ""
@@ -186,6 +232,12 @@ msgid "--all-configs, -a"
 msgstr ""
 
 msgid "--ambit, -a <ambit>"
+msgstr ""
+
+msgid "--automatic"
+msgstr ""
+
+msgid "--backup-config, -b <name>"
 msgstr ""
 
 #, fuzzy
@@ -219,6 +271,9 @@ msgid "--diff-cmd <command>"
 msgstr ""
 
 msgid "--disable-used-space"
+msgstr ""
+
+msgid "--empty"
 msgstr ""
 
 msgid "--extensions, -x <options>"
@@ -288,6 +343,9 @@ msgstr ""
 msgid "--table-style, -t <style>"
 msgstr "\t--table-style, -t <gaya>\tGaya tabel (bilangan bulat)."
 
+msgid "--target-mode <target-mode>"
+msgstr ""
+
 msgid "--template, -t <name>"
 msgstr ""
 
@@ -324,6 +382,9 @@ msgstr "\t--abbreviate\t\t\tIzinkan untuk menyingkat kolom tabel."
 #, c-format
 msgid "Ambit is %s."
 msgstr "Ambit adalah %s."
+
+msgid "Automatic"
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -431,6 +492,10 @@ msgstr "Perintah 'setup-quota' tidak mengambil argumen."
 msgid "Command 'status' needs one argument."
 msgstr "Perintah 'status' membutuhkan satu argumen."
 
+#, fuzzy
+msgid "Command 'transfer-and-delete' does not take arguments."
+msgstr "Perintah 'create' tidak mengambil argumen."
+
 msgid "Command 'umount' needs at least one argument."
 msgstr "Perintah 'unmount' membutuhkan setidaknya satu argumen."
 
@@ -481,6 +546,10 @@ msgid "Create a snapshot from the specified snapshot."
 msgstr "\t--from <number>\t\t\tBuat snapshot dari snapshot yang ditentukan."
 
 #, fuzzy
+msgid "Create an empty snapshot."
+msgstr "\t--read-only\t\t\tBuat snapshot hanya baca."
+
+#, fuzzy
 msgid "Create read-only snapshot."
 msgstr "\t--read-only\t\t\tBuat snapshot hanya baca."
 
@@ -514,9 +583,17 @@ msgstr "Tanggal"
 msgid "Default"
 msgstr "Bawaan"
 
+#, fuzzy
+msgid "Delete:"
+msgstr "  Hapus konfigurasi:"
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Gagal menghapus konfigurasi (%s)."
+
+#, fuzzy, c-format
+msgid "Deleting snapshot %d."
+msgstr "Gagal menghapus snapshot."
 
 msgid "Deleting snapshot failed."
 msgstr "Gagal menghapus snapshot."
@@ -585,6 +662,10 @@ msgstr "Gagal menginisialisasi penangan sistem berkas."
 msgid "Failed to parse '%s'."
 msgstr "Gagal mengurai '%s'."
 
+#, fuzzy
+msgid "Failed to parse number."
+msgstr "Gagal mengurai '%s'."
+
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr "Gagal meminta ruang bebas untuk path '%s'."
@@ -621,6 +702,10 @@ msgstr "GB"
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
+
+#, fuzzy
+msgid "Global options:"
+msgstr "    Opsi global:"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -677,11 +762,19 @@ msgstr "Snapshot '%s' tidak valid."
 msgid "Invalid snapshots."
 msgstr "Snapshot tidak valid."
 
+#, fuzzy, c-format
+msgid "Invalid subvolume path '%s' on target."
+msgstr "Subvolume tidak valid."
+
 msgid "Invalid subvolume."
 msgstr "Subvolume tidak valid."
 
 #, c-format
 msgid "Invalid table style '%s'."
+msgstr "Gaya tabel '%s' tidak valid."
+
+#, fuzzy, c-format
+msgid "Invalid target mode '%s'."
 msgstr "Gaya tabel '%s' tidak valid."
 
 #, c-format
@@ -700,8 +793,15 @@ msgid "KiB"
 msgstr "KiB"
 
 #, fuzzy
+msgid "List configs:"
+msgstr "  Daftar config:"
+
+#, fuzzy
 msgid "List snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tDaftar snapshot dari semua config yang dapat diakses."
+
+msgid "List:"
+msgstr ""
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -750,6 +850,9 @@ msgstr ""
 msgid "Name of config template to use."
 msgstr "\t--template, -t <nama>\t\tNama templat konfigurasi untuk digunakan."
 
+msgid "No backup configs found."
+msgstr ""
+
 msgid "No command provided."
 msgstr "Tidak ada perintah yang tersedia."
 
@@ -763,6 +866,12 @@ msgstr "Tidak ada izin."
 #, fuzzy
 msgid "Number of corresponding pre snapshot."
 msgstr "\t--pre-number <nomor>\t\tJumlah snapshot pra yang sesuai."
+
+msgid "Only use backup-config with automatic set."
+msgstr ""
+
+msgid "Only use backup-config with specified target-mode."
+msgstr ""
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -795,6 +904,9 @@ msgstr "P"
 msgid "PB"
 msgstr "PB"
 
+msgid "Path mismatch between backup-config and config."
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -823,6 +935,22 @@ msgstr "\t--print-number, -p\t\tCetak jumlah snapshot kedua yang dibuat."
 msgid "Print version and exit."
 msgstr "\t--version\t\t\tCetak versi dan keluar."
 
+#, fuzzy
+msgid "Probing extra information for source snapshots."
+msgstr "\t--description, -d <deskripsi>\tDeskripsi untuk snapshot."
+
+#, fuzzy
+msgid "Probing extra information for target snapshots."
+msgstr "\t--description, -d <deskripsi>\tDeskripsi untuk snapshot."
+
+#, fuzzy
+msgid "Probing source snapshots."
+msgstr "\t--description, -d <deskripsi>\tDeskripsi untuk snapshot."
+
+#, fuzzy
+msgid "Probing target snapshots."
+msgstr "\t--description, -d <deskripsi>\tDeskripsi untuk snapshot."
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Galat kuota (%s)."
@@ -841,6 +969,63 @@ msgstr "Hanya-Baca"
 #, fuzzy
 msgid "Run command and create pre and post snapshots."
 msgstr "\t--command <perintah>\tJalankan perintah dan buat pre dan pos snapshot."
+
+#, c-format
+msgid "Running delete failed for %d of %ld backup config."
+msgid_plural "Running delete failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running list failed for %d of %ld backup config."
+msgid_plural "Running list failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running transfer and delete failed for %d of %ld backup config."
+msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running transfer failed for %d of %ld backup config."
+msgid_plural "Running transfer failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running transfer for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer for backup config '%s'."
+msgstr ""
+
+msgid "SSH Host"
+msgstr ""
+
+msgid "SSH Identity"
+msgstr ""
+
+msgid "SSH Port"
+msgstr ""
+
+#, fuzzy
+msgid "SSH User"
+msgstr "Pengguna"
 
 #, fuzzy
 msgid "Save status to file."
@@ -866,6 +1051,10 @@ msgid "Set a machine-readable output format (csv, json)."
 msgstr "\t--machine-readable <format>\\Atur format keluaran yang dapat dibaca mesin (csv, json)."
 
 #, fuzzy
+msgid "Set name of backup-config to use."
+msgstr "\t--config, -c <nama>\t\tAtur nama konfigurasi untuk digunakan."
+
+#, fuzzy
 msgid "Set name of config to use."
 msgstr "\t--config, -c <nama>\t\tAtur nama konfigurasi untuk digunakan."
 
@@ -889,8 +1078,30 @@ msgstr "Mengatur subvolume bawaan ke snapshot %d."
 msgid "Snapshot '%u' not found."
 msgstr "Snapshot '%u' tidak ditemukan."
 
+#, fuzzy
+msgid "Snapshot already on target."
+msgstr "\t--read-only\t\t\tAtur snapshot hanya-baca."
+
 msgid "Snapshot is in use."
 msgstr "Snapshot sedang digunakan."
+
+#, fuzzy
+msgid "Snapshot not on source."
+msgstr "Snapshot sedang digunakan."
+
+#, fuzzy
+msgid "Snapshot not on target."
+msgstr "Snapshot '%u' tidak ditemukan."
+
+#, fuzzy, c-format
+msgid "Snapshot number %d not found."
+msgstr "Snapshot '%u' tidak ditemukan."
+
+msgid "Source Path"
+msgstr ""
+
+msgid "Source State"
+msgstr ""
 
 msgid "Subvolume"
 msgstr "Subvolume"
@@ -915,6 +1126,15 @@ msgstr "TB"
 msgid "Table style (integer)."
 msgstr "\t--table-style, -t <gaya>\tGaya tabel (bilangan bulat)."
 
+msgid "Target Mode"
+msgstr ""
+
+msgid "Target Path"
+msgstr ""
+
+msgid "Target State"
+msgstr ""
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Ambit dapat ditentukan secara manual menggunakan opsi--ambit."
 
@@ -928,7 +1148,21 @@ msgstr "Hal ini dapat terjadi jika sistem tidak diatur untuk rollback."
 msgid "TiB"
 msgstr "TiB"
 
+msgid "Transfer and delete:"
+msgstr ""
+
+msgid "Transfer:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Transferring snapshot %d."
+msgstr "Gagal membuat snapshot."
+
 msgid "Try 'snapper --help' for more information."
+msgstr "Coba 'snapper --help' untuk informasi lebih lanjut."
+
+#, fuzzy
+msgid "Try 'snbk --help' for more information."
 msgstr "Coba 'snapper --help' untuk informasi lebih lanjut."
 
 #, fuzzy
@@ -1056,7 +1290,29 @@ msgstr "tidak ada yang dilakukan"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "argumen root dapat digunakan hanya bersama-sama dengan no-dbus.\n"
 
+#, fuzzy
+msgid "snbk delete [numbers]"
+msgstr "\tsnapper delete <nomor>"
+
+#, fuzzy
+msgid "snbk list"
+msgstr "\tsnapper list"
+
+#, fuzzy
+msgid "snbk list-configs"
+msgstr "\tsnapper list-configs"
+
+msgid "snbk transfer [numbers]"
+msgstr ""
+
+msgid "snbk transfer-and-delete"
+msgstr ""
+
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr "penggunaan: snapper [--global-options] <command> [--command-options] [command-arguments]"
+
+#, fuzzy
+msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "penggunaan: snapper [--global-options] <command> [--command-options] [command-arguments]"
 
 msgid "yes"

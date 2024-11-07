@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 12:27+0100\n"
+"POT-Creation-Date: 2024-11-07 08:23+0100\n"
 "PO-Revision-Date: 2019-10-15 22:53+0000\n"
 "Last-Translator: scootergrisen <scootergrisen@gmail.com>\n"
 "Language-Team: Danish <https://l10n.opensuse.org/projects/snapper/master/da/>\n"
@@ -181,9 +181,55 @@ msgstr ""
 msgid "%1$s, %2$s"
 msgstr ""
 
+msgid "'btrfs send | btrfs receive' failed."
+msgstr ""
+
+msgid "'btrfs subvolume delete' failed."
+msgstr ""
+
+#, fuzzy
+msgid "'cp info.xml' failed."
+msgstr "Åbning af filen \"%s\" mislykkedes."
+
+msgid "'mkdir' failed."
+msgstr ""
+
+msgid "'rm info.xml' failed."
+msgstr ""
+
+msgid "'rmdir' failed."
+msgstr ""
+
+msgid "'scp info.xml' failed."
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Øjebliksbillede %d.)"
+
+msgid "(Source) Creation Time"
+msgstr ""
+
+msgid "(Source) Parent UUID"
+msgstr ""
+
+msgid "(Source) Received UUID"
+msgstr ""
+
+msgid "(Source) UUID"
+msgstr ""
+
+msgid "(Target) Creation Time"
+msgstr ""
+
+msgid "(Target) Parent UUID"
+msgstr ""
+
+msgid "(Target) Received UUID"
+msgstr ""
+
+msgid "(Target) UUID"
+msgstr ""
 
 msgid "--abbreviate"
 msgstr ""
@@ -192,6 +238,12 @@ msgid "--all-configs, -a"
 msgstr ""
 
 msgid "--ambit, -a <ambit>"
+msgstr ""
+
+msgid "--automatic"
+msgstr ""
+
+msgid "--backup-config, -b <name>"
 msgstr ""
 
 #, fuzzy
@@ -224,6 +276,9 @@ msgid "--diff-cmd <command>"
 msgstr ""
 
 msgid "--disable-used-space"
+msgstr ""
+
+msgid "--empty"
 msgstr ""
 
 msgid "--extensions, -x <options>"
@@ -292,6 +347,9 @@ msgstr ""
 msgid "--table-style, -t <style>"
 msgstr "\t--table-style, -t <stil>\tTabelstil (heltal)."
 
+msgid "--target-mode <target-mode>"
+msgstr ""
+
 msgid "--template, -t <name>"
 msgstr ""
 
@@ -326,6 +384,9 @@ msgstr ""
 
 #, c-format
 msgid "Ambit is %s."
+msgstr ""
+
+msgid "Automatic"
 msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
@@ -432,6 +493,10 @@ msgstr "Kommandoen 'setup-quota' modtager ikke argumenter."
 msgid "Command 'status' needs one argument."
 msgstr "Kommandoen \"status\" kræver et argument."
 
+#, fuzzy
+msgid "Command 'transfer-and-delete' does not take arguments."
+msgstr "Kommandoen \"create\" tager ikke argumenter."
+
 msgid "Command 'umount' needs at least one argument."
 msgstr "Kommandoen \"umount\" kræver mindst ét argument."
 
@@ -482,6 +547,10 @@ msgid "Create a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\tOpret et øjebliksbillede fra det angivne øjebliksbillede."
 
 #, fuzzy
+msgid "Create an empty snapshot."
+msgstr "\t--read-only\t\t\tOpret skrivebeskyttet øjebliksbillede."
+
+#, fuzzy
 msgid "Create read-only snapshot."
 msgstr "\t--read-only\t\t\tOpret skrivebeskyttet øjebliksbillede."
 
@@ -515,9 +584,17 @@ msgstr "Dato"
 msgid "Default"
 msgstr ""
 
+#, fuzzy
+msgid "Delete:"
+msgstr "  Slet konfiguration:"
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Sletning af konfiguration mislykkedes (%s)."
+
+#, fuzzy, c-format
+msgid "Deleting snapshot %d."
+msgstr "Sletning af øjebliksbillede mislykkedes."
 
 msgid "Deleting snapshot failed."
 msgstr "Sletning af øjebliksbillede mislykkedes."
@@ -589,6 +666,10 @@ msgstr "Kunne ikke initialisere filsystemhåndtering."
 msgid "Failed to parse '%s'."
 msgstr "kunne ikke oprette %s"
 
+#, fuzzy
+msgid "Failed to parse number."
+msgstr "kunne ikke oprette %s"
+
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr ""
@@ -629,6 +710,10 @@ msgstr "GiB"
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
+
+#, fuzzy
+msgid "Global options:"
+msgstr "    Globale tilvalg:"
 
 # error box title
 #, c-format
@@ -688,11 +773,19 @@ msgstr "Ugyldigt øjebliksbillede \"%s\"."
 msgid "Invalid snapshots."
 msgstr "Ugyldige øjebliksbilleder."
 
+#, fuzzy, c-format
+msgid "Invalid subvolume path '%s' on target."
+msgstr "Ugyldigt underdiskområde."
+
 msgid "Invalid subvolume."
 msgstr "Ugyldigt underdiskområde."
 
 #, fuzzy, c-format
 msgid "Invalid table style '%s'."
+msgstr "Ugyldig tabelstil %d."
+
+#, fuzzy, c-format
+msgid "Invalid target mode '%s'."
 msgstr "Ugyldig tabelstil %d."
 
 #, fuzzy, c-format
@@ -710,8 +803,15 @@ msgid "KiB"
 msgstr "KiB"
 
 #, fuzzy
+msgid "List configs:"
+msgstr "  Oplist konfigurationer:"
+
+#, fuzzy
 msgid "List snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tOplist øjebliksbilleder fra alle tilgængelige konfigurationer."
+
+msgid "List:"
+msgstr ""
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -762,6 +862,9 @@ msgstr ""
 msgid "Name of config template to use."
 msgstr "\t--template, -t <name>\t\tNavn på konfigurationsskabelon der skal bruges."
 
+msgid "No backup configs found."
+msgstr ""
+
 msgid "No command provided."
 msgstr "Ingen kommando givet."
 
@@ -774,6 +877,12 @@ msgstr "Ingen rettigheder."
 #, fuzzy
 msgid "Number of corresponding pre snapshot."
 msgstr "\t--pre-number <nummer>\t\tAntal tilsvarende præ-øjebliksbillede."
+
+msgid "Only use backup-config with automatic set."
+msgstr ""
+
+msgid "Only use backup-config with specified target-mode."
+msgstr ""
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -806,6 +915,9 @@ msgstr ""
 msgid "PB"
 msgstr "PiB"
 
+msgid "Path mismatch between backup-config and config."
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -834,6 +946,22 @@ msgstr "\t--print-number, -p\t\tSkriv nummer for andet oprettet øjebliksbillede
 msgid "Print version and exit."
 msgstr "\t--version\t\t\tSkriv version og afslut."
 
+#, fuzzy
+msgid "Probing extra information for source snapshots."
+msgstr "sammenligninger øjebliksbilleder..."
+
+#, fuzzy
+msgid "Probing extra information for target snapshots."
+msgstr "sammenligninger øjebliksbilleder..."
+
+#, fuzzy
+msgid "Probing source snapshots."
+msgstr "sammenligninger øjebliksbilleder..."
+
+#, fuzzy
+msgid "Probing target snapshots."
+msgstr "sammenligninger øjebliksbilleder..."
+
 # error box title
 #, c-format
 msgid "Quota error (%s)."
@@ -853,6 +981,67 @@ msgstr ""
 #, fuzzy
 msgid "Run command and create pre and post snapshots."
 msgstr "\t--command <kommando>\tKør kommando og opret præ- og post-øjebliksbilleder."
+
+#, c-format
+msgid "Running delete failed for %d of %ld backup config."
+msgid_plural "Running delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running list failed for %d of %ld backup config."
+msgid_plural "Running list failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete failed for %d of %ld backup config."
+msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running transfer failed for %d of %ld backup config."
+msgid_plural "Running transfer failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer for backup config '%s'."
+msgstr ""
+
+msgid "SSH Host"
+msgstr ""
+
+msgid "SSH Identity"
+msgstr ""
+
+msgid "SSH Port"
+msgstr ""
+
+#, fuzzy
+msgid "SSH User"
+msgstr "Bruger"
 
 #, fuzzy
 msgid "Save status to file."
@@ -874,6 +1063,10 @@ msgstr ""
 #, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Ugyldig tabelstil %d."
+
+#, fuzzy
+msgid "Set name of backup-config to use."
+msgstr "\t--config, -c <navn>\t\tAngiv navn på konfiguration der skal bruges."
 
 #, fuzzy
 msgid "Set name of config to use."
@@ -898,8 +1091,30 @@ msgstr "Angiver standard underdiskområde som øjebliksbillede %d."
 msgid "Snapshot '%u' not found."
 msgstr "Øjebliksbilledet \"%u\" blev ikke fundet."
 
+#, fuzzy
+msgid "Snapshot already on target."
+msgstr "\t--read-only\t\t\tOpret skrivebeskyttet øjebliksbillede."
+
 msgid "Snapshot is in use."
 msgstr "Øjebliksbilledet er i brug."
+
+#, fuzzy
+msgid "Snapshot not on source."
+msgstr "Øjebliksbilledet er i brug."
+
+#, fuzzy
+msgid "Snapshot not on target."
+msgstr "Øjebliksbilledet \"%u\" blev ikke fundet."
+
+#, fuzzy, c-format
+msgid "Snapshot number %d not found."
+msgstr "Øjebliksbilledet \"%u\" blev ikke fundet."
+
+msgid "Source Path"
+msgstr ""
+
+msgid "Source State"
+msgstr ""
 
 msgid "Subvolume"
 msgstr "Underdiskområde"
@@ -925,6 +1140,15 @@ msgstr "TiB"
 msgid "Table style (integer)."
 msgstr "\t--table-style, -t <stil>\tTabelstil (heltal)."
 
+msgid "Target Mode"
+msgstr ""
+
+msgid "Target Path"
+msgstr ""
+
+msgid "Target State"
+msgstr ""
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
@@ -938,7 +1162,21 @@ msgstr ""
 msgid "TiB"
 msgstr "TiB"
 
+msgid "Transfer and delete:"
+msgstr ""
+
+msgid "Transfer:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Transferring snapshot %d."
+msgstr "Oprettelse af øjebliksbillede mislykkedes."
+
 msgid "Try 'snapper --help' for more information."
+msgstr "Prøv \"snapper --help\" for at få mere information."
+
+#, fuzzy
+msgid "Try 'snbk --help' for more information."
 msgstr "Prøv \"snapper --help\" for at få mere information."
 
 msgid "Try to make space available."
@@ -1066,7 +1304,29 @@ msgstr "intet at gøre"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "root-argumentet kan kun bruges sammen med no-dbus."
 
+#, fuzzy
+msgid "snbk delete [numbers]"
+msgstr "\tsnapper delete <nummer>"
+
+#, fuzzy
+msgid "snbk list"
+msgstr "\tsnapper list"
+
+#, fuzzy
+msgid "snbk list-configs"
+msgstr "\tsnapper list-configs"
+
+msgid "snbk transfer [numbers]"
+msgstr ""
+
+msgid "snbk transfer-and-delete"
+msgstr ""
+
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr "brug: snapper [--globale-tilvalg] <kommando> [--kommando-tilvalg] [kommando-argumenter]"
+
+#, fuzzy
+msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "brug: snapper [--globale-tilvalg] <kommando> [--kommando-tilvalg] [kommando-argumenter]"
 
 msgid "yes"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 12:27+0100\n"
+"POT-Creation-Date: 2024-11-07 08:23+0100\n"
 "PO-Revision-Date: 2017-10-29 20:52+0000\n"
 "Last-Translator: strahil nikolov <hunter86_bg@yahoo.com>\n"
 "Language-Team: Bulgarian <https://l10n.opensuse.org/projects/snapper/master/bg/>\n"
@@ -190,9 +190,54 @@ msgstr ""
 msgid "%1$s, %2$s"
 msgstr ""
 
+msgid "'btrfs send | btrfs receive' failed."
+msgstr ""
+
+msgid "'btrfs subvolume delete' failed."
+msgstr ""
+
+msgid "'cp info.xml' failed."
+msgstr ""
+
+msgid "'mkdir' failed."
+msgstr ""
+
+msgid "'rm info.xml' failed."
+msgstr ""
+
+msgid "'rmdir' failed."
+msgstr ""
+
+msgid "'scp info.xml' failed."
+msgstr ""
+
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "Хостът %s не бе открит."
+
+msgid "(Source) Creation Time"
+msgstr ""
+
+msgid "(Source) Parent UUID"
+msgstr ""
+
+msgid "(Source) Received UUID"
+msgstr ""
+
+msgid "(Source) UUID"
+msgstr ""
+
+msgid "(Target) Creation Time"
+msgstr ""
+
+msgid "(Target) Parent UUID"
+msgstr ""
+
+msgid "(Target) Received UUID"
+msgstr ""
+
+msgid "(Target) UUID"
+msgstr ""
 
 msgid "--abbreviate"
 msgstr ""
@@ -201,6 +246,12 @@ msgid "--all-configs, -a"
 msgstr ""
 
 msgid "--ambit, -a <ambit>"
+msgstr ""
+
+msgid "--automatic"
+msgstr ""
+
+msgid "--backup-config, -b <name>"
 msgstr ""
 
 msgid "--cleanup-algorithm, -c <algo>"
@@ -231,6 +282,9 @@ msgid "--diff-cmd <command>"
 msgstr ""
 
 msgid "--disable-used-space"
+msgstr ""
+
+msgid "--empty"
 msgstr ""
 
 msgid "--extensions, -x <options>"
@@ -297,6 +351,9 @@ msgstr ""
 msgid "--table-style, -t <style>"
 msgstr ""
 
+msgid "--target-mode <target-mode>"
+msgstr ""
+
 msgid "--template, -t <name>"
 msgstr ""
 
@@ -331,6 +388,9 @@ msgstr ""
 
 #, c-format
 msgid "Ambit is %s."
+msgstr ""
+
+msgid "Automatic"
 msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
@@ -438,6 +498,9 @@ msgstr ""
 msgid "Command 'status' needs one argument."
 msgstr ""
 
+msgid "Command 'transfer-and-delete' does not take arguments."
+msgstr ""
+
 msgid "Command 'umount' needs at least one argument."
 msgstr ""
 
@@ -490,6 +553,11 @@ msgstr ""
 
 # %s is either BOOTP or DHCP
 #, fuzzy
+msgid "Create an empty snapshot."
+msgstr "Настройването чрез %s бе неуспешно."
+
+# %s is either BOOTP or DHCP
+#, fuzzy
 msgid "Create read-only snapshot."
 msgstr "Настройването чрез %s бе неуспешно."
 
@@ -523,9 +591,20 @@ msgstr "Имена на машините"
 msgid "Default"
 msgstr ""
 
+#, fuzzy
+msgid "Delete:"
+msgstr ""
+"%s - създаване на файлове с настройки за PAM\n"
+"\n"
+
 # %s is either BOOTP or DHCP
 #, fuzzy, c-format
 msgid "Deleting config failed (%s)."
+msgstr "Настройването чрез %s бе неуспешно."
+
+# %s is either BOOTP or DHCP
+#, fuzzy, c-format
+msgid "Deleting snapshot %d."
 msgstr "Настройването чрез %s бе неуспешно."
 
 # %s is either BOOTP or DHCP
@@ -597,6 +676,10 @@ msgstr ""
 msgid "Failed to parse '%s'."
 msgstr "Неуспешно зареждане на модула \"%s\"."
 
+#, fuzzy
+msgid "Failed to parse number."
+msgstr "Неуспешно зареждане на модула \"%s\"."
+
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr ""
@@ -637,6 +720,10 @@ msgstr ""
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
+
+#, fuzzy
+msgid "Global options:"
+msgstr "Глобални настройки на модула:\n"
 
 # error box title
 #, fuzzy, c-format
@@ -697,11 +784,19 @@ msgstr ""
 msgid "Invalid snapshots."
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Invalid subvolume path '%s' on target."
+msgstr "Невалиден вход."
+
 msgid "Invalid subvolume."
 msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid table style '%s'."
+msgstr "Невалиден вход."
+
+#, fuzzy, c-format
+msgid "Invalid target mode '%s'."
 msgstr "Невалиден вход."
 
 #, fuzzy, c-format
@@ -721,8 +816,17 @@ msgid "KiB"
 msgstr ""
 
 #, fuzzy
+msgid "List configs:"
+msgstr ""
+"%s - създаване на файлове с настройки за PAM\n"
+"\n"
+
+#, fuzzy
 msgid "List snapshots from all accessible configs."
 msgstr "\t--all-configs, -a Покажи всички снапшоти от всички достъпни конфигурационни файлове."
+
+msgid "List:"
+msgstr ""
 
 # %s is either BOOTP or DHCP
 #, fuzzy, c-format
@@ -771,6 +875,9 @@ msgstr ""
 msgid "Name of config template to use."
 msgstr ""
 
+msgid "No backup configs found."
+msgstr ""
+
 #, fuzzy
 msgid "No command provided."
 msgstr "Никой не доставя %s"
@@ -783,6 +890,12 @@ msgid "No permissions."
 msgstr "Без VJ компресия"
 
 msgid "Number of corresponding pre snapshot."
+msgstr ""
+
+msgid "Only use backup-config with automatic set."
+msgstr ""
+
+msgid "Only use backup-config with specified target-mode."
 msgstr ""
 
 #, c-format
@@ -813,6 +926,9 @@ msgstr ""
 msgid "PB"
 msgstr ""
 
+msgid "Path mismatch between backup-config and config."
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr ""
@@ -841,6 +957,20 @@ msgstr ""
 msgid "Print version and exit."
 msgstr ""
 
+msgid "Probing extra information for source snapshots."
+msgstr ""
+
+msgid "Probing extra information for target snapshots."
+msgstr ""
+
+#, fuzzy
+msgid "Probing source snapshots."
+msgstr "Описание"
+
+#, fuzzy
+msgid "Probing target snapshots."
+msgstr "Неизвестно мрежово състояние"
+
 # error box title
 #, fuzzy, c-format
 msgid "Quota error (%s)."
@@ -856,6 +986,66 @@ msgid "Read-Only"
 msgstr ""
 
 msgid "Run command and create pre and post snapshots."
+msgstr ""
+
+#, c-format
+msgid "Running delete failed for %d of %ld backup config."
+msgid_plural "Running delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running list failed for %d of %ld backup config."
+msgid_plural "Running list failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete failed for %d of %ld backup config."
+msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running transfer failed for %d of %ld backup config."
+msgid_plural "Running transfer failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer for backup config '%s'."
+msgstr ""
+
+msgid "SSH Host"
+msgstr ""
+
+msgid "SSH Identity"
+msgstr ""
+
+msgid "SSH Port"
+msgstr ""
+
+msgid "SSH User"
 msgstr ""
 
 msgid "Save status to file."
@@ -878,6 +1068,9 @@ msgstr ""
 #, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Невалиден вход."
+
+msgid "Set name of backup-config to use."
+msgstr ""
 
 msgid "Set name of config to use."
 msgstr ""
@@ -903,9 +1096,32 @@ msgstr ""
 msgid "Snapshot '%u' not found."
 msgstr "Хостът %s не бе открит."
 
+# %s is either BOOTP or DHCP
+#, fuzzy
+msgid "Snapshot already on target."
+msgstr "Настройването чрез %s бе неуспешно."
+
 #, fuzzy
 msgid "Snapshot is in use."
 msgstr "Хостът %s не бе открит."
+
+#, fuzzy
+msgid "Snapshot not on source."
+msgstr "Хостът %s не бе открит."
+
+#, fuzzy
+msgid "Snapshot not on target."
+msgstr "Хостът %s не бе открит."
+
+#, fuzzy, c-format
+msgid "Snapshot number %d not found."
+msgstr "Хостът %s не бе открит."
+
+msgid "Source Path"
+msgstr ""
+
+msgid "Source State"
+msgstr ""
 
 msgid "Subvolume"
 msgstr ""
@@ -927,6 +1143,15 @@ msgstr ""
 msgid "Table style (integer)."
 msgstr ""
 
+msgid "Target Mode"
+msgstr ""
+
+msgid "Target Path"
+msgstr ""
+
+msgid "Target State"
+msgstr ""
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
@@ -940,8 +1165,23 @@ msgstr ""
 msgid "TiB"
 msgstr ""
 
+msgid "Transfer and delete:"
+msgstr ""
+
+msgid "Transfer:"
+msgstr ""
+
+# %s is either BOOTP or DHCP
+#, fuzzy, c-format
+msgid "Transferring snapshot %d."
+msgstr "Настройването чрез %s бе неуспешно."
+
 #, fuzzy
 msgid "Try 'snapper --help' for more information."
+msgstr "За повече информация опитайте  `%s --help' или`%s --usage'.\n"
+
+#, fuzzy
+msgid "Try 'snbk --help' for more information."
 msgstr "За повече информация опитайте  `%s --help' или`%s --usage'.\n"
 
 msgid "Try to make space available."
@@ -1072,7 +1312,28 @@ msgstr "без действие"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "За повече информация опитайте  `%s --help' или`%s --usage'.\n"
 
+msgid "snbk delete [numbers]"
+msgstr ""
+
+msgid "snbk list"
+msgstr ""
+
+#, fuzzy
+msgid "snbk list-configs"
+msgstr ""
+"%s - създаване на файлове с настройки за PAM\n"
+"\n"
+
+msgid "snbk transfer [numbers]"
+msgstr ""
+
+msgid "snbk transfer-and-delete"
+msgstr ""
+
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr ""
+
+msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr ""
 
 msgid "yes"

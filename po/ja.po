@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 12:27+0100\n"
+"POT-Creation-Date: 2024-11-07 08:23+0100\n"
 "PO-Revision-Date: 2024-02-27 01:42+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/"
-"ja/>\n"
+"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -181,9 +180,55 @@ msgstr "%1$s または %2$s"
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
+msgid "'btrfs send | btrfs receive' failed."
+msgstr ""
+
+msgid "'btrfs subvolume delete' failed."
+msgstr ""
+
+#, fuzzy
+msgid "'cp info.xml' failed."
+msgstr "ファイル '%s' を開けませんでした。"
+
+msgid "'mkdir' failed."
+msgstr ""
+
+msgid "'rm info.xml' failed."
+msgstr ""
+
+msgid "'rmdir' failed."
+msgstr ""
+
+msgid "'scp info.xml' failed."
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(スナップショット %d)"
+
+msgid "(Source) Creation Time"
+msgstr ""
+
+msgid "(Source) Parent UUID"
+msgstr ""
+
+msgid "(Source) Received UUID"
+msgstr ""
+
+msgid "(Source) UUID"
+msgstr ""
+
+msgid "(Target) Creation Time"
+msgstr ""
+
+msgid "(Target) Parent UUID"
+msgstr ""
+
+msgid "(Target) Received UUID"
+msgstr ""
+
+msgid "(Target) UUID"
+msgstr ""
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -193,6 +238,13 @@ msgstr "--all-configs, -a"
 
 msgid "--ambit, -a <ambit>"
 msgstr "--ambit, -a <領域>"
+
+msgid "--automatic"
+msgstr ""
+
+#, fuzzy
+msgid "--backup-config, -b <name>"
+msgstr "--config, -c <名前>"
 
 msgid "--cleanup-algorithm, -c <algo>"
 msgstr "--cleanup-algorithm, -c <アルゴリズム>"
@@ -223,6 +275,9 @@ msgstr "--diff-cmd <コマンド>"
 
 msgid "--disable-used-space"
 msgstr "--disable-used-space"
+
+msgid "--empty"
+msgstr ""
 
 msgid "--extensions, -x <options>"
 msgstr "--extensions, -x <オプション>"
@@ -287,6 +342,9 @@ msgstr "--sync, -s"
 msgid "--table-style, -t <style>"
 msgstr "--table-style, -t <形式>"
 
+msgid "--target-mode <target-mode>"
+msgstr ""
+
 msgid "--template, -t <name>"
 msgstr "--template, -t <名前>"
 
@@ -320,6 +378,9 @@ msgstr "表内の列に対して省略を許可します。"
 #, c-format
 msgid "Ambit is %s."
 msgstr "領域は %s です。"
+
+msgid "Automatic"
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -423,6 +484,10 @@ msgstr "'setup-quota' コマンドにはパラメータはありません。"
 msgid "Command 'status' needs one argument."
 msgstr "'status' コマンドには 1 つのパラメータが必要です。"
 
+#, fuzzy
+msgid "Command 'transfer-and-delete' does not take arguments."
+msgstr "'create' コマンドにはパラメータはありません。"
+
 msgid "Command 'umount' needs at least one argument."
 msgstr "'umount' コマンドには少なくとも 1 つのパラメータが必要です。"
 
@@ -470,6 +535,10 @@ msgstr "十分な空き容量を確保できませんでした。"
 msgid "Create a snapshot from the specified snapshot."
 msgstr "指定したスナップショットから新しいスナップショットを作成します。"
 
+#, fuzzy
+msgid "Create an empty snapshot."
+msgstr "読み込み専用のスナップショットを作成します。"
+
 msgid "Create read-only snapshot."
 msgstr "読み込み専用のスナップショットを作成します。"
 
@@ -502,9 +571,17 @@ msgstr "日付"
 msgid "Default"
 msgstr "既定"
 
+#, fuzzy
+msgid "Delete:"
+msgstr "  設定の削除:"
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "設定の削除に失敗しました (%s)。"
+
+#, fuzzy, c-format
+msgid "Deleting snapshot %d."
+msgstr "スナップショットの削除に失敗しました。"
 
 msgid "Deleting snapshot failed."
 msgstr "スナップショットの削除に失敗しました。"
@@ -567,6 +644,10 @@ msgstr "ファイルシステムハンドラの準備に失敗しました。"
 msgid "Failed to parse '%s'."
 msgstr "'%s' の処理に失敗しました。"
 
+#, fuzzy
+msgid "Failed to parse number."
+msgstr "'%s' の処理に失敗しました。"
+
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr "パス '%s' に対する空き容量の問い合わせに失敗しました。"
@@ -603,6 +684,10 @@ msgstr "GB"
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
+
+#, fuzzy
+msgid "Global options:"
+msgstr "    グローバルオプション:"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -657,11 +742,19 @@ msgstr "スナップショットが正しくありません ('%s') 。"
 msgid "Invalid snapshots."
 msgstr "スナップショットが正しくありません。"
 
+#, fuzzy, c-format
+msgid "Invalid subvolume path '%s' on target."
+msgstr "サブボリュームが正しくありません。"
+
 msgid "Invalid subvolume."
 msgstr "サブボリュームが正しくありません。"
 
 #, c-format
 msgid "Invalid table style '%s'."
+msgstr "表のスタイル '%s' が正しくありません。"
+
+#, fuzzy, c-format
+msgid "Invalid target mode '%s'."
 msgstr "表のスタイル '%s' が正しくありません。"
 
 #, c-format
@@ -678,8 +771,15 @@ msgstr "キー"
 msgid "KiB"
 msgstr "KiB"
 
+#, fuzzy
+msgid "List configs:"
+msgstr "  設定の一覧表示:"
+
 msgid "List snapshots from all accessible configs."
 msgstr "アクセス可能なすべての設定からのスナップショットを一覧表示します。"
+
+msgid "List:"
+msgstr ""
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -726,6 +826,9 @@ msgstr "名前"
 msgid "Name of config template to use."
 msgstr "使用する設定の雛型を指定します。"
 
+msgid "No backup configs found."
+msgstr ""
+
 msgid "No command provided."
 msgstr "コマンドが指定されていません。"
 
@@ -737,6 +840,12 @@ msgstr "許可がありません。"
 
 msgid "Number of corresponding pre snapshot."
 msgstr "事前スナップショットの番号を指定します。"
+
+msgid "Only use backup-config with automatic set."
+msgstr ""
+
+msgid "Only use backup-config with specified target-mode."
+msgstr ""
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -766,6 +875,9 @@ msgstr "P"
 msgid "PB"
 msgstr "PB"
 
+msgid "Path mismatch between backup-config and config."
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -791,6 +903,22 @@ msgstr "作成したスナップショットの数を表示します。"
 msgid "Print version and exit."
 msgstr "バージョンを表示して終了します。"
 
+#, fuzzy
+msgid "Probing extra information for source snapshots."
+msgstr "スナップショットに対する説明を指定します。"
+
+#, fuzzy
+msgid "Probing extra information for target snapshots."
+msgstr "スナップショットに対する説明を指定します。"
+
+#, fuzzy
+msgid "Probing source snapshots."
+msgstr "スナップショットに対する説明を指定します。"
+
+#, fuzzy
+msgid "Probing target snapshots."
+msgstr "スナップショットに対する説明を指定します。"
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "クォータエラー (%s) 。"
@@ -806,6 +934,63 @@ msgstr "読み込み専用"
 
 msgid "Run command and create pre and post snapshots."
 msgstr "指定したコマンドを実行し、その前後にスナップショットを採取します。"
+
+#, c-format
+msgid "Running delete failed for %d of %ld backup config."
+msgid_plural "Running delete failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running list failed for %d of %ld backup config."
+msgid_plural "Running list failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running transfer and delete failed for %d of %ld backup config."
+msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running transfer failed for %d of %ld backup config."
+msgid_plural "Running transfer failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running transfer for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer for backup config '%s'."
+msgstr ""
+
+msgid "SSH Host"
+msgstr ""
+
+msgid "SSH Identity"
+msgstr ""
+
+msgid "SSH Port"
+msgstr ""
+
+#, fuzzy
+msgid "SSH User"
+msgstr "ユーザ"
 
 msgid "Save status to file."
 msgstr "状態をファイルに保存します。"
@@ -825,6 +1010,10 @@ msgstr "JSON 形式で出力します。"
 
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "機械処理可能な出力形式 (csv, json) を設定します。"
+
+#, fuzzy
+msgid "Set name of backup-config to use."
+msgstr "使用する設定ファイル名を指定します。"
 
 msgid "Set name of config to use."
 msgstr "使用する設定ファイル名を指定します。"
@@ -846,8 +1035,30 @@ msgstr "スナップショット %d に対して既定のサブボリューム�
 msgid "Snapshot '%u' not found."
 msgstr "スナップショット '%u' が見つかりません。"
 
+#, fuzzy
+msgid "Snapshot already on target."
+msgstr "スナップショットを読み込み専用に設定します。"
+
 msgid "Snapshot is in use."
 msgstr "スナップショットは使用中です。"
+
+#, fuzzy
+msgid "Snapshot not on source."
+msgstr "スナップショットは使用中です。"
+
+#, fuzzy
+msgid "Snapshot not on target."
+msgstr "スナップショット '%u' が見つかりません。"
+
+#, fuzzy, c-format
+msgid "Snapshot number %d not found."
+msgstr "スナップショット '%u' が見つかりません。"
+
+msgid "Source Path"
+msgstr ""
+
+msgid "Source State"
+msgstr ""
 
 msgid "Subvolume"
 msgstr "サブボリューム"
@@ -869,6 +1080,15 @@ msgstr "TB"
 msgid "Table style (integer)."
 msgstr "表の形式 (整数) を指定します。"
 
+msgid "Target Mode"
+msgstr ""
+
+msgid "Target Path"
+msgstr ""
+
+msgid "Target State"
+msgstr ""
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "領域を指定したい場合は、 --ambit オプションをお使いください。"
 
@@ -882,7 +1102,21 @@ msgstr "この問題は、システム側でロールバックの設定がされ
 msgid "TiB"
 msgstr "TiB"
 
+msgid "Transfer and delete:"
+msgstr ""
+
+msgid "Transfer:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Transferring snapshot %d."
+msgstr "スナップショットの作成に失敗しました。"
+
 msgid "Try 'snapper --help' for more information."
+msgstr "詳しくは 'snapper --help' コマンドをご利用ください。"
+
+#, fuzzy
+msgid "Try 'snbk --help' for more information."
 msgstr "詳しくは 'snapper --help' コマンドをご利用ください。"
 
 msgid "Try to make space available."
@@ -1004,7 +1238,29 @@ msgstr "何もすることがありません"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "root パラメータは no-dbus をあわせて指定した場合にのみ使用できます。\n"
 
+#, fuzzy
+msgid "snbk delete [numbers]"
+msgstr "\tsnapper delete <番号>"
+
+#, fuzzy
+msgid "snbk list"
+msgstr "\tsnapper list"
+
+#, fuzzy
+msgid "snbk list-configs"
+msgstr "\tsnapper list-configs"
+
+msgid "snbk transfer [numbers]"
+msgstr ""
+
+msgid "snbk transfer-and-delete"
+msgstr ""
+
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr "usage: snapper [グローバルオプション] <コマンド> [コマンドオプション] [コマンドパラメータ]"
+
+#, fuzzy
+msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "usage: snapper [グローバルオプション] <コマンド> [コマンドオプション] [コマンドパラメータ]"
 
 msgid "yes"

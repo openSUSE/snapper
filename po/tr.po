@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 12:27+0100\n"
+"POT-Creation-Date: 2024-11-07 08:23+0100\n"
 "PO-Revision-Date: 2022-02-10 15:12+0000\n"
 "Last-Translator: Murat Servan Kahraman <muratservan@outlook.com>\n"
 "Language-Team: Turkish <https://l10n.opensuse.org/projects/snapper/master/tr/>\n"
@@ -223,8 +223,54 @@ msgstr ""
 msgid "%1$s, %2$s"
 msgstr ""
 
+msgid "'btrfs send | btrfs receive' failed."
+msgstr ""
+
+msgid "'btrfs subvolume delete' failed."
+msgstr ""
+
+#, fuzzy
+msgid "'cp info.xml' failed."
+msgstr "'%s ' dosyasını açma başarısız oldu."
+
+msgid "'mkdir' failed."
+msgstr ""
+
+msgid "'rm info.xml' failed."
+msgstr ""
+
+msgid "'rmdir' failed."
+msgstr ""
+
+msgid "'scp info.xml' failed."
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
+msgstr ""
+
+msgid "(Source) Creation Time"
+msgstr ""
+
+msgid "(Source) Parent UUID"
+msgstr ""
+
+msgid "(Source) Received UUID"
+msgstr ""
+
+msgid "(Source) UUID"
+msgstr ""
+
+msgid "(Target) Creation Time"
+msgstr ""
+
+msgid "(Target) Parent UUID"
+msgstr ""
+
+msgid "(Target) Received UUID"
+msgstr ""
+
+msgid "(Target) UUID"
 msgstr ""
 
 msgid "--abbreviate"
@@ -234,6 +280,12 @@ msgid "--all-configs, -a"
 msgstr ""
 
 msgid "--ambit, -a <ambit>"
+msgstr ""
+
+msgid "--automatic"
+msgstr ""
+
+msgid "--backup-config, -b <name>"
 msgstr ""
 
 #, fuzzy
@@ -267,6 +319,9 @@ msgid "--diff-cmd <command>"
 msgstr ""
 
 msgid "--disable-used-space"
+msgstr ""
+
+msgid "--empty"
 msgstr ""
 
 msgid "--extensions, -x <options>"
@@ -335,6 +390,9 @@ msgstr ""
 msgid "--table-style, -t <style>"
 msgstr "\t--table-style, -t <style>\tTablo stili (tamsayı)."
 
+msgid "--target-mode <target-mode>"
+msgstr ""
+
 msgid "--template, -t <name>"
 msgstr ""
 
@@ -369,6 +427,9 @@ msgstr ""
 
 #, c-format
 msgid "Ambit is %s."
+msgstr ""
+
+msgid "Automatic"
 msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
@@ -492,6 +553,10 @@ msgid "Command 'status' needs one argument."
 msgstr "'statü' komutu için bir argüman gereklidir."
 
 #, fuzzy
+msgid "Command 'transfer-and-delete' does not take arguments."
+msgstr "'oluştur' komutu argüman almamaktadır."
+
+#, fuzzy
 msgid "Command 'umount' needs at least one argument."
 msgstr "'çerçevele' komutu için en az bir argüman gereklidir."
 
@@ -545,6 +610,10 @@ msgid "Create a snapshot from the specified snapshot."
 msgstr ""
 
 #, fuzzy
+msgid "Create an empty snapshot."
+msgstr "Mevcut sistemin salt-okunur anlık görüntüsü oluşturuluyor."
+
+#, fuzzy
 msgid "Create read-only snapshot."
 msgstr "Mevcut sistemin salt-okunur anlık görüntüsü oluşturuluyor."
 
@@ -581,8 +650,17 @@ msgstr "Tarih"
 msgid "Default"
 msgstr "Varsayılan"
 
+# clients/inst_custom_part.ycp:2940
+#, fuzzy
+msgid "Delete:"
+msgstr " Yapılandırma oluştur: "
+
 #, fuzzy, c-format
 msgid "Deleting config failed (%s)."
+msgstr "Yapılandırma oluşturma başarısız oldu (%s)."
+
+#, fuzzy, c-format
+msgid "Deleting snapshot %d."
 msgstr "Yapılandırma oluşturma başarısız oldu (%s)."
 
 #, fuzzy
@@ -653,6 +731,10 @@ msgstr ""
 msgid "Failed to parse '%s'."
 msgstr "%s oluşturma başarısız oldu"
 
+#, fuzzy
+msgid "Failed to parse number."
+msgstr "%s oluşturma başarısız oldu"
+
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr ""
@@ -692,6 +774,10 @@ msgstr "GB"
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
+
+#, fuzzy
+msgid "Global options:"
+msgstr "    Evrensel seçenekler:"
 
 # include/ui/common_messages.ycp:95
 #, fuzzy, c-format
@@ -754,12 +840,20 @@ msgstr "Geçersiz '%s' anlık görüntüsü."
 msgid "Invalid snapshots."
 msgstr "Geçersiz anlık görüntüler."
 
+#, fuzzy, c-format
+msgid "Invalid subvolume path '%s' on target."
+msgstr "Geçersiz arkases."
+
 #, fuzzy
 msgid "Invalid subvolume."
 msgstr "Geçersiz arkases."
 
 #, fuzzy, c-format
 msgid "Invalid table style '%s'."
+msgstr "%d geçersiz tablo stili."
+
+#, fuzzy, c-format
+msgid "Invalid target mode '%s'."
 msgstr "%d geçersiz tablo stili."
 
 #, fuzzy, c-format
@@ -778,7 +872,14 @@ msgstr "Kenya"
 msgid "KiB"
 msgstr "KiB"
 
+#, fuzzy
+msgid "List configs:"
+msgstr "  Yapılandırmayı listele:"
+
 msgid "List snapshots from all accessible configs."
+msgstr ""
+
+msgid "List:"
 msgstr ""
 
 #, c-format
@@ -831,6 +932,9 @@ msgstr ""
 msgid "Name of config template to use."
 msgstr "\t--şablon, -t <name>\t\tKullanmak için yapılandırma şablonu ismi."
 
+msgid "No backup configs found."
+msgstr ""
+
 msgid "No command provided."
 msgstr "Komut sağlanmadı."
 
@@ -843,6 +947,12 @@ msgstr ""
 #, fuzzy
 msgid "Number of corresponding pre snapshot."
 msgstr "\t--ön-numara <number>\t\tİlgili önceki anlık görüntü numarası."
+
+msgid "Only use backup-config with automatic set."
+msgstr ""
+
+msgid "Only use backup-config with specified target-mode."
+msgstr ""
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -871,6 +981,9 @@ msgstr "P"
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
 msgid "PB"
 msgstr "PB"
+
+msgid "Path mismatch between backup-config and config."
+msgstr ""
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -904,6 +1017,22 @@ msgstr "\t--print-number, -p\t\tOluşturulan anlık görüntünün numarasını 
 msgid "Print version and exit."
 msgstr "\t--version\t\t\tSürümü yazdır ve çık."
 
+#, fuzzy
+msgid "Probing extra information for source snapshots."
+msgstr "Anlık görüntüler karşılaştırılıyor..."
+
+#, fuzzy
+msgid "Probing extra information for target snapshots."
+msgstr "Anlık görüntüler karşılaştırılıyor..."
+
+#, fuzzy
+msgid "Probing source snapshots."
+msgstr "Anlık görüntüler karşılaştırılıyor..."
+
+#, fuzzy
+msgid "Probing target snapshots."
+msgstr "Anlık görüntüler karşılaştırılıyor..."
+
 # include/ui/common_messages.ycp:95
 #, fuzzy, c-format
 msgid "Quota error (%s)."
@@ -922,6 +1051,67 @@ msgstr ""
 
 msgid "Run command and create pre and post snapshots."
 msgstr ""
+
+#, c-format
+msgid "Running delete failed for %d of %ld backup config."
+msgid_plural "Running delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running list failed for %d of %ld backup config."
+msgid_plural "Running list failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete failed for %d of %ld backup config."
+msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running transfer failed for %d of %ld backup config."
+msgid_plural "Running transfer failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer for backup config '%s'."
+msgstr ""
+
+msgid "SSH Host"
+msgstr ""
+
+msgid "SSH Identity"
+msgstr ""
+
+msgid "SSH Port"
+msgstr ""
+
+#, fuzzy
+msgid "SSH User"
+msgstr "Kullanıcı verisi"
 
 #, fuzzy
 msgid "Save status to file."
@@ -946,6 +1136,10 @@ msgid "Set a machine-readable output format (csv, json)."
 msgstr "%d geçersiz tablo stili."
 
 #, fuzzy
+msgid "Set name of backup-config to use."
+msgstr "\t--config, -c <name>\t\tKullanmak için yapılandırma ismini ayarla."
+
+#, fuzzy
 msgid "Set name of config to use."
 msgstr "\t--config, -c <name>\t\tKullanmak için yapılandırma ismini ayarla."
 
@@ -968,8 +1162,30 @@ msgstr ""
 msgid "Snapshot '%u' not found."
 msgstr "'%u' anlık görüntüsü bulunamadı."
 
+#, fuzzy
+msgid "Snapshot already on target."
+msgstr "Yapılandırma oluşturma başarısız oldu (%s)."
+
 msgid "Snapshot is in use."
 msgstr "Anlık görüntü kullanımda."
+
+#, fuzzy
+msgid "Snapshot not on source."
+msgstr "Anlık görüntü kullanımda."
+
+#, fuzzy
+msgid "Snapshot not on target."
+msgstr "'%u' anlık görüntüsü bulunamadı."
+
+#, fuzzy, c-format
+msgid "Snapshot number %d not found."
+msgstr "'%u' anlık görüntüsü bulunamadı."
+
+msgid "Source Path"
+msgstr ""
+
+msgid "Source State"
+msgstr ""
 
 #, fuzzy
 msgid "Subvolume"
@@ -994,6 +1210,15 @@ msgstr "TB"
 msgid "Table style (integer)."
 msgstr "\t--table-style, -t <style>\tTablo stili (tamsayı)."
 
+msgid "Target Mode"
+msgstr ""
+
+msgid "Target Path"
+msgstr ""
+
+msgid "Target State"
+msgstr ""
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
@@ -1007,8 +1232,22 @@ msgstr ""
 msgid "TiB"
 msgstr "TiB"
 
+msgid "Transfer and delete:"
+msgstr ""
+
+msgid "Transfer:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Transferring snapshot %d."
+msgstr "Yapılandırma oluşturma başarısız oldu (%s)."
+
 #, fuzzy
 msgid "Try 'snapper --help' for more information."
+msgstr "Daha fazla bilgi için 'Yakalayıcı yardımı'nı okumayı deneyin."
+
+#, fuzzy
+msgid "Try 'snbk --help' for more information."
 msgstr "Daha fazla bilgi için 'Yakalayıcı yardımı'nı okumayı deneyin."
 
 msgid "Try to make space available."
@@ -1139,7 +1378,29 @@ msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Daha fazla bilgi için 'Yakalayıcı yardımı'nı okumayı deneyin."
 
 #, fuzzy
+msgid "snbk delete [numbers]"
+msgstr "\tyakalayıcı silme <number>"
+
+#, fuzzy
+msgid "snbk list"
+msgstr "\tyakalayıcı listele"
+
+#, fuzzy
+msgid "snbk list-configs"
+msgstr "\tyakalayıcı yapılandırmayı listele"
+
+msgid "snbk transfer [numbers]"
+msgstr ""
+
+msgid "snbk transfer-and-delete"
+msgstr ""
+
+#, fuzzy
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr "kullanım: yakalayıcı  [--global-options] <command> [--command-options] [command-arguments]"
+
+#, fuzzy
+msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "kullanım: yakalayıcı  [--global-options] <command> [--command-options] [command-arguments]"
 
 msgid "yes"

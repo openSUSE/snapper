@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 12:27+0100\n"
+"POT-Creation-Date: 2024-11-07 08:23+0100\n"
 "PO-Revision-Date: 2008-01-04 08:58+0100\n"
 "Last-Translator: i18n@suse.de\n"
 "Language-Team: Thai <i18n@suse.de>\n"
@@ -197,9 +197,55 @@ msgstr ""
 msgid "%1$s, %2$s"
 msgstr ""
 
+msgid "'btrfs send | btrfs receive' failed."
+msgstr ""
+
+msgid "'btrfs subvolume delete' failed."
+msgstr ""
+
+#, fuzzy
+msgid "'cp info.xml' failed."
+msgstr "การสร้างระบบแฟ้มล้มเหลว"
+
+msgid "'mkdir' failed."
+msgstr ""
+
+msgid "'rm info.xml' failed."
+msgstr ""
+
+msgid "'rmdir' failed."
+msgstr ""
+
+msgid "'scp info.xml' failed."
+msgstr ""
+
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "ไม่พบรายการบูตระบบ %1"
+
+msgid "(Source) Creation Time"
+msgstr ""
+
+msgid "(Source) Parent UUID"
+msgstr ""
+
+msgid "(Source) Received UUID"
+msgstr ""
+
+msgid "(Source) UUID"
+msgstr ""
+
+msgid "(Target) Creation Time"
+msgstr ""
+
+msgid "(Target) Parent UUID"
+msgstr ""
+
+msgid "(Target) Received UUID"
+msgstr ""
+
+msgid "(Target) UUID"
+msgstr ""
 
 msgid "--abbreviate"
 msgstr ""
@@ -208,6 +254,12 @@ msgid "--all-configs, -a"
 msgstr ""
 
 msgid "--ambit, -a <ambit>"
+msgstr ""
+
+msgid "--automatic"
+msgstr ""
+
+msgid "--backup-config, -b <name>"
 msgstr ""
 
 msgid "--cleanup-algorithm, -c <algo>"
@@ -238,6 +290,9 @@ msgid "--diff-cmd <command>"
 msgstr ""
 
 msgid "--disable-used-space"
+msgstr ""
+
+msgid "--empty"
 msgstr ""
 
 msgid "--extensions, -x <options>"
@@ -304,6 +359,9 @@ msgstr ""
 msgid "--table-style, -t <style>"
 msgstr ""
 
+msgid "--target-mode <target-mode>"
+msgstr ""
+
 msgid "--template, -t <name>"
 msgstr ""
 
@@ -337,6 +395,9 @@ msgstr ""
 
 #, c-format
 msgid "Ambit is %s."
+msgstr ""
+
+msgid "Automatic"
 msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
@@ -444,6 +505,9 @@ msgstr ""
 msgid "Command 'status' needs one argument."
 msgstr ""
 
+msgid "Command 'transfer-and-delete' does not take arguments."
+msgstr ""
+
 msgid "Command 'umount' needs at least one argument."
 msgstr ""
 
@@ -496,6 +560,10 @@ msgid "Create a snapshot from the specified snapshot."
 msgstr "การสร้างระบบแฟ้มล้มเหลว"
 
 #, fuzzy
+msgid "Create an empty snapshot."
+msgstr "ไม่ต้องสร้างการสำรองข้อมูล"
+
+#, fuzzy
 msgid "Create read-only snapshot."
 msgstr "ไม่ต้องสร้างการสำรองข้อมูล"
 
@@ -532,8 +600,16 @@ msgstr "วันที่ปัจจุบัน"
 msgid "Default"
 msgstr ""
 
+#, fuzzy
+msgid "Delete:"
+msgstr "การปรับแต่งตัวสร้างซีดี"
+
 #, fuzzy, c-format
 msgid "Deleting config failed (%s)."
+msgstr "การสร้างระบบแฟ้มล้มเหลว"
+
+#, fuzzy, c-format
+msgid "Deleting snapshot %d."
 msgstr "การสร้างระบบแฟ้มล้มเหลว"
 
 #, fuzzy
@@ -604,6 +680,10 @@ msgstr "ล้มเหลวในการเริ่มเรียกใช
 msgid "Failed to parse '%s'."
 msgstr "ล้มเหลวในการคืนค่าส่วน MBR ของฮาร์ดดิสก์"
 
+#, fuzzy
+msgid "Failed to parse number."
+msgstr "ล้มเหลวในการคืนค่าส่วน MBR ของฮาร์ดดิสก์"
+
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr ""
@@ -642,6 +722,10 @@ msgstr ""
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
+
+#, fuzzy
+msgid "Global options:"
+msgstr "ตัวเลือกทั่วไป"
 
 #, fuzzy, c-format
 msgid "IO Error (%s)."
@@ -699,11 +783,19 @@ msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งาน
 msgid "Invalid snapshots."
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Invalid subvolume path '%s' on target."
+msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งานไม่ได้"
+
 msgid "Invalid subvolume."
 msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid table style '%s'."
+msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งานไม่ได้"
+
+#, fuzzy, c-format
+msgid "Invalid target mode '%s'."
 msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งานไม่ได้"
 
 #, fuzzy, c-format
@@ -721,7 +813,14 @@ msgstr "คีย์"
 msgid "KiB"
 msgstr ""
 
+#, fuzzy
+msgid "List configs:"
+msgstr "แสดงรายการที่ปรับแต่งไว้แล้ว"
+
 msgid "List snapshots from all accessible configs."
+msgstr ""
+
+msgid "List:"
 msgstr ""
 
 #, fuzzy, c-format
@@ -771,6 +870,9 @@ msgstr ""
 msgid "Name of config template to use."
 msgstr ""
 
+msgid "No backup configs found."
+msgstr ""
+
 msgid "No command provided."
 msgstr ""
 
@@ -782,6 +884,12 @@ msgid "No permissions."
 msgstr "สิทธิ์ที่อนุญาตในการบูตระบบ"
 
 msgid "Number of corresponding pre snapshot."
+msgstr ""
+
+msgid "Only use backup-config with automatic set."
+msgstr ""
+
+msgid "Only use backup-config with specified target-mode."
 msgstr ""
 
 #, fuzzy, c-format
@@ -810,6 +918,9 @@ msgstr ""
 
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
 msgid "PB"
+msgstr ""
+
+msgid "Path mismatch between backup-config and config."
 msgstr ""
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
@@ -842,6 +953,21 @@ msgstr ""
 msgid "Print version and exit."
 msgstr ""
 
+msgid "Probing extra information for source snapshots."
+msgstr ""
+
+#, fuzzy
+msgid "Probing extra information for target snapshots."
+msgstr "ไม่ต้องสร้างการสำรองข้อมูล"
+
+#, fuzzy
+msgid "Probing source snapshots."
+msgstr "ไม่ต้องสร้างการสำรองข้อมูล"
+
+#, fuzzy
+msgid "Probing target snapshots."
+msgstr "ไม่รู้จักชนิด"
+
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "ผิดพลาด"
@@ -857,6 +983,63 @@ msgstr ""
 
 msgid "Run command and create pre and post snapshots."
 msgstr ""
+
+#, c-format
+msgid "Running delete failed for %d of %ld backup config."
+msgid_plural "Running delete failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running list failed for %d of %ld backup config."
+msgid_plural "Running list failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running transfer and delete failed for %d of %ld backup config."
+msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running transfer failed for %d of %ld backup config."
+msgid_plural "Running transfer failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running transfer for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer for backup config '%s'."
+msgstr ""
+
+msgid "SSH Host"
+msgstr ""
+
+msgid "SSH Identity"
+msgstr ""
+
+msgid "SSH Port"
+msgstr ""
+
+#, fuzzy
+msgid "SSH User"
+msgstr "ผู้ใช้"
 
 msgid "Save status to file."
 msgstr ""
@@ -878,6 +1061,9 @@ msgstr ""
 #, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งานไม่ได้"
+
+msgid "Set name of backup-config to use."
+msgstr ""
 
 msgid "Set name of config to use."
 msgstr ""
@@ -902,8 +1088,30 @@ msgid "Snapshot '%u' not found."
 msgstr "ไม่พบรายการบูตระบบ %1"
 
 #, fuzzy
+msgid "Snapshot already on target."
+msgstr "การสร้างระบบแฟ้มล้มเหลว"
+
+#, fuzzy
 msgid "Snapshot is in use."
 msgstr "ไม่พบรายการบูตระบบ %1"
+
+#, fuzzy
+msgid "Snapshot not on source."
+msgstr "ไม่พบรายการบูตระบบ %1"
+
+#, fuzzy
+msgid "Snapshot not on target."
+msgstr "ไม่พบรายการบูตระบบ %1"
+
+#, fuzzy, c-format
+msgid "Snapshot number %d not found."
+msgstr "ไม่พบรายการบูตระบบ %1"
+
+msgid "Source Path"
+msgstr ""
+
+msgid "Source State"
+msgstr ""
 
 #, fuzzy
 msgid "Subvolume"
@@ -926,6 +1134,15 @@ msgstr ""
 msgid "Table style (integer)."
 msgstr ""
 
+msgid "Target Mode"
+msgstr ""
+
+msgid "Target Path"
+msgstr ""
+
+msgid "Target State"
+msgstr ""
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
@@ -939,8 +1156,22 @@ msgstr ""
 msgid "TiB"
 msgstr ""
 
+msgid "Transfer and delete:"
+msgstr ""
+
+msgid "Transfer:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Transferring snapshot %d."
+msgstr "การสร้างระบบแฟ้มล้มเหลว"
+
 #, fuzzy
 msgid "Try 'snapper --help' for more information."
+msgstr "กำลังหาข้อมูลของหน่วยความจำ..."
+
+#, fuzzy
+msgid "Try 'snbk --help' for more information."
 msgstr "กำลังหาข้อมูลของหน่วยความจำ..."
 
 msgid "Try to make space available."
@@ -1070,7 +1301,26 @@ msgstr "ไม่มีอะไรต้องทำ"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "กำลังหาข้อมูลของหน่วยความจำ..."
 
+msgid "snbk delete [numbers]"
+msgstr ""
+
+msgid "snbk list"
+msgstr ""
+
+#, fuzzy
+msgid "snbk list-configs"
+msgstr "แสดงรายการที่ปรับแต่งไว้แล้ว"
+
+msgid "snbk transfer [numbers]"
+msgstr ""
+
+msgid "snbk transfer-and-delete"
+msgstr ""
+
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr ""
+
+msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr ""
 
 msgid "yes"

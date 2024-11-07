@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: installation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 12:27+0100\n"
+"POT-Creation-Date: 2024-11-07 08:23+0100\n"
 "PO-Revision-Date: 2016-04-19 09:51+0000\n"
 "Last-Translator: Shane Wims <shane.wims@microfocus.com>\n"
 "Language-Team: Zulu <http://l10n.opensuse.org/projects/snapper/master/zu/>\n"
@@ -181,9 +181,54 @@ msgstr ""
 msgid "%1$s, %2$s"
 msgstr ""
 
+msgid "'btrfs send | btrfs receive' failed."
+msgstr ""
+
+msgid "'btrfs subvolume delete' failed."
+msgstr ""
+
+msgid "'cp info.xml' failed."
+msgstr ""
+
+msgid "'mkdir' failed."
+msgstr ""
+
+msgid "'rm info.xml' failed."
+msgstr ""
+
+msgid "'rmdir' failed."
+msgstr ""
+
+msgid "'scp info.xml' failed."
+msgstr ""
+
 #, fuzzy, c-format
 msgid "(Snapshot %d.)"
 msgstr "Isiphakeli %s asizange sitholakale."
+
+msgid "(Source) Creation Time"
+msgstr ""
+
+msgid "(Source) Parent UUID"
+msgstr ""
+
+msgid "(Source) Received UUID"
+msgstr ""
+
+msgid "(Source) UUID"
+msgstr ""
+
+msgid "(Target) Creation Time"
+msgstr ""
+
+msgid "(Target) Parent UUID"
+msgstr ""
+
+msgid "(Target) Received UUID"
+msgstr ""
+
+msgid "(Target) UUID"
+msgstr ""
 
 msgid "--abbreviate"
 msgstr ""
@@ -192,6 +237,12 @@ msgid "--all-configs, -a"
 msgstr ""
 
 msgid "--ambit, -a <ambit>"
+msgstr ""
+
+msgid "--automatic"
+msgstr ""
+
+msgid "--backup-config, -b <name>"
 msgstr ""
 
 msgid "--cleanup-algorithm, -c <algo>"
@@ -222,6 +273,9 @@ msgid "--diff-cmd <command>"
 msgstr ""
 
 msgid "--disable-used-space"
+msgstr ""
+
+msgid "--empty"
 msgstr ""
 
 msgid "--extensions, -x <options>"
@@ -288,6 +342,9 @@ msgstr ""
 msgid "--table-style, -t <style>"
 msgstr ""
 
+msgid "--target-mode <target-mode>"
+msgstr ""
+
 msgid "--template, -t <name>"
 msgstr ""
 
@@ -321,6 +378,9 @@ msgstr ""
 
 #, c-format
 msgid "Ambit is %s."
+msgstr ""
+
+msgid "Automatic"
 msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
@@ -446,6 +506,10 @@ msgid "Command 'status' needs one argument."
 msgstr "u-nezela udinga i-argument eyodwa"
 
 #, fuzzy
+msgid "Command 'transfer-and-delete' does not take arguments."
+msgstr "u-akha udinga okungenani ama-argument angu-3"
+
+#, fuzzy
 msgid "Command 'umount' needs at least one argument."
 msgstr "u-thola udinga okungenani i-argument eyodwa"
 
@@ -500,6 +564,10 @@ msgid "Create a snapshot from the specified snapshot."
 msgstr "Inqunta amafayela okuhlela..."
 
 #, fuzzy
+msgid "Create an empty snapshot."
+msgstr "Inqunta amafayela okuhlela..."
+
+#, fuzzy
 msgid "Create read-only snapshot."
 msgstr "Inqunta amafayela okuhlela..."
 
@@ -536,9 +604,16 @@ msgstr "Usuku: %1"
 msgid "Default"
 msgstr ""
 
+msgid "Delete:"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Inqunta amafayela okuhlela..."
+
+#, fuzzy, c-format
+msgid "Deleting snapshot %d."
+msgstr "Ukususa i-CA kuhlulekile: %1."
 
 #, fuzzy
 msgid "Deleting snapshot failed."
@@ -607,6 +682,10 @@ msgstr ""
 msgid "Failed to parse '%s'."
 msgstr "Failed to parse: %s."
 
+#, fuzzy
+msgid "Failed to parse number."
+msgstr "Failed to parse: %s."
+
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr ""
@@ -647,6 +726,10 @@ msgstr ""
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr ""
+
+#, fuzzy
+msgid "Global options:"
+msgstr "Okukhethwa kukho kwembulunga yonke okungaziwa"
 
 # error box title
 #, fuzzy, c-format
@@ -706,11 +789,19 @@ msgstr "Akunanjongo %1."
 msgid "Invalid snapshots."
 msgstr ""
 
+#, fuzzy, c-format
+msgid "Invalid subvolume path '%s' on target."
+msgstr "Akunanjongo %1."
+
 msgid "Invalid subvolume."
 msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid table style '%s'."
+msgstr "Akunanjongo %1."
+
+#, fuzzy, c-format
+msgid "Invalid target mode '%s'."
 msgstr "Akunanjongo %1."
 
 #, fuzzy, c-format
@@ -729,9 +820,15 @@ msgstr "Kenya"
 msgid "KiB"
 msgstr ""
 
+msgid "List configs:"
+msgstr ""
+
 #, fuzzy
 msgid "List snapshots from all accessible configs."
 msgstr "\t-- all-configs, -a\t\tList snapshots from accessible configs."
+
+msgid "List:"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Listing configs failed (%s)."
@@ -779,6 +876,9 @@ msgstr ""
 msgid "Name of config template to use."
 msgstr ""
 
+msgid "No backup configs found."
+msgstr ""
+
 #, fuzzy
 msgid "No command provided."
 msgstr "Ayikho ikhomandi enikeziwe"
@@ -791,6 +891,12 @@ msgid "No permissions."
 msgstr "Izimvume zinqatshiwe"
 
 msgid "Number of corresponding pre snapshot."
+msgstr ""
+
+msgid "Only use backup-config with automatic set."
+msgstr ""
+
+msgid "Only use backup-config with specified target-mode."
 msgstr ""
 
 #, c-format
@@ -821,6 +927,9 @@ msgstr ""
 msgid "PB"
 msgstr ""
 
+msgid "Path mismatch between backup-config and config."
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr ""
@@ -849,6 +958,20 @@ msgstr ""
 msgid "Print version and exit."
 msgstr ""
 
+msgid "Probing extra information for source snapshots."
+msgstr ""
+
+msgid "Probing extra information for target snapshots."
+msgstr ""
+
+#, fuzzy
+msgid "Probing source snapshots."
+msgstr "Incazelo"
+
+#, fuzzy
+msgid "Probing target snapshots."
+msgstr "Uhlobo olungaziwa."
+
 # error box title
 #, fuzzy, c-format
 msgid "Quota error (%s)."
@@ -864,6 +987,66 @@ msgid "Read-Only"
 msgstr ""
 
 msgid "Run command and create pre and post snapshots."
+msgstr ""
+
+#, c-format
+msgid "Running delete failed for %d of %ld backup config."
+msgid_plural "Running delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running list failed for %d of %ld backup config."
+msgid_plural "Running list failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete failed for %d of %ld backup config."
+msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running transfer failed for %d of %ld backup config."
+msgid_plural "Running transfer failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer for backup config '%s'."
+msgstr ""
+
+msgid "SSH Host"
+msgstr ""
+
+msgid "SSH Identity"
+msgstr ""
+
+msgid "SSH Port"
+msgstr ""
+
+msgid "SSH User"
 msgstr ""
 
 msgid "Save status to file."
@@ -886,6 +1069,9 @@ msgstr ""
 #, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Akunanjongo %1."
+
+msgid "Set name of backup-config to use."
+msgstr ""
 
 msgid "Set name of config to use."
 msgstr ""
@@ -910,8 +1096,30 @@ msgid "Snapshot '%u' not found."
 msgstr "Isiphakeli %s asizange sitholakale."
 
 #, fuzzy
+msgid "Snapshot already on target."
+msgstr "Inqunta amafayela okuhlela..."
+
+#, fuzzy
 msgid "Snapshot is in use."
 msgstr "Isiphakeli %s asizange sitholakale."
+
+#, fuzzy
+msgid "Snapshot not on source."
+msgstr "Isiphakeli %s asizange sitholakale."
+
+#, fuzzy
+msgid "Snapshot not on target."
+msgstr "Isiphakeli %s asizange sitholakale."
+
+#, fuzzy, c-format
+msgid "Snapshot number %d not found."
+msgstr "Isiphakeli %s asizange sitholakale."
+
+msgid "Source Path"
+msgstr ""
+
+msgid "Source State"
+msgstr ""
 
 msgid "Subvolume"
 msgstr ""
@@ -933,6 +1141,15 @@ msgstr ""
 msgid "Table style (integer)."
 msgstr ""
 
+msgid "Target Mode"
+msgstr ""
+
+msgid "Target Path"
+msgstr ""
+
+msgid "Target State"
+msgstr ""
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
@@ -946,8 +1163,22 @@ msgstr ""
 msgid "TiB"
 msgstr ""
 
+msgid "Transfer and delete:"
+msgstr ""
+
+msgid "Transfer:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Transferring snapshot %d."
+msgstr "Inqunta amafayela okuhlela..."
+
 #, fuzzy
 msgid "Try 'snapper --help' for more information."
+msgstr "Zama `%s --usizo' noma `%s –ukusetshenziswa' kokwaziswa okwengeziwe.\n"
+
+#, fuzzy
+msgid "Try 'snbk --help' for more information."
 msgstr "Zama `%s --usizo' noma `%s –ukusetshenziswa' kokwaziswa okwengeziwe.\n"
 
 msgid "Try to make space available."
@@ -1077,7 +1308,25 @@ msgstr "Akukho okuzokwenziwa."
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Zama `%s --usizo' noma `%s –ukusetshenziswa' kokwaziswa okwengeziwe.\n"
 
+msgid "snbk delete [numbers]"
+msgstr ""
+
+msgid "snbk list"
+msgstr ""
+
+msgid "snbk list-configs"
+msgstr ""
+
+msgid "snbk transfer [numbers]"
+msgstr ""
+
+msgid "snbk transfer-and-delete"
+msgstr ""
+
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr ""
+
+msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr ""
 
 msgid "yes"

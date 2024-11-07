@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 12:27+0100\n"
+"POT-Creation-Date: 2024-11-07 08:23+0100\n"
 "PO-Revision-Date: 2024-02-21 11:42+0000\n"
 "Last-Translator: Tommi Nieminen <software@legisign.org>\n"
 "Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
@@ -178,9 +178,55 @@ msgstr "%1$s tai %2$s"
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
+msgid "'btrfs send | btrfs receive' failed."
+msgstr ""
+
+msgid "'btrfs subvolume delete' failed."
+msgstr ""
+
+#, fuzzy
+msgid "'cp info.xml' failed."
+msgstr "Tiedoston \"%s\" avaaminen epäonnistui."
+
+msgid "'mkdir' failed."
+msgstr ""
+
+msgid "'rm info.xml' failed."
+msgstr ""
+
+msgid "'rmdir' failed."
+msgstr ""
+
+msgid "'scp info.xml' failed."
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Tilannekuva %d.)"
+
+msgid "(Source) Creation Time"
+msgstr ""
+
+msgid "(Source) Parent UUID"
+msgstr ""
+
+msgid "(Source) Received UUID"
+msgstr ""
+
+msgid "(Source) UUID"
+msgstr ""
+
+msgid "(Target) Creation Time"
+msgstr ""
+
+msgid "(Target) Parent UUID"
+msgstr ""
+
+msgid "(Target) Received UUID"
+msgstr ""
+
+msgid "(Target) UUID"
+msgstr ""
 
 msgid "--abbreviate"
 msgstr ""
@@ -189,6 +235,12 @@ msgid "--all-configs, -a"
 msgstr ""
 
 msgid "--ambit, -a <ambit>"
+msgstr ""
+
+msgid "--automatic"
+msgstr ""
+
+msgid "--backup-config, -b <name>"
 msgstr ""
 
 #, fuzzy
@@ -222,6 +274,9 @@ msgid "--diff-cmd <command>"
 msgstr ""
 
 msgid "--disable-used-space"
+msgstr ""
+
+msgid "--empty"
 msgstr ""
 
 msgid "--extensions, -x <options>"
@@ -291,6 +346,9 @@ msgstr ""
 msgid "--table-style, -t <style>"
 msgstr "\t--table-style, -t <tyyli>\tTaulukon tyyli (kokonaisluku)."
 
+msgid "--target-mode <target-mode>"
+msgstr ""
+
 msgid "--template, -t <name>"
 msgstr ""
 
@@ -328,6 +386,9 @@ msgstr "\t--abbreviate\t\t\tSalli lyhentää taulukon sarakkeita."
 #, c-format
 msgid "Ambit is %s."
 msgstr "Alue on %s."
+
+msgid "Automatic"
+msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -435,6 +496,10 @@ msgstr "”setup-quota”-komento ei hyväksy parametreja."
 msgid "Command 'status' needs one argument."
 msgstr "”status”-komento vaatii yhden parametrin."
 
+#, fuzzy
+msgid "Command 'transfer-and-delete' does not take arguments."
+msgstr "”create”-komento ei hyväksy parametreja."
+
 msgid "Command 'umount' needs at least one argument."
 msgstr "”umount”-komento vaatii vähintään yhden parametrin."
 
@@ -485,6 +550,10 @@ msgid "Create a snapshot from the specified snapshot."
 msgstr "\t--from <luku>\t\t\tLuo annetusta tilannekuvasta uusi tilannekuva."
 
 #, fuzzy
+msgid "Create an empty snapshot."
+msgstr "\t--read-only\t\t\tLuo tilannekuva vain luku -muodossa."
+
+#, fuzzy
 msgid "Create read-only snapshot."
 msgstr "\t--read-only\t\t\tLuo tilannekuva vain luku -muodossa."
 
@@ -518,9 +587,17 @@ msgstr "Päiväys"
 msgid "Default"
 msgstr "Oletus"
 
+#, fuzzy
+msgid "Delete:"
+msgstr "  Poista määritys:"
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Määrityksen poistaminen epäonnistui (%s)."
+
+#, fuzzy, c-format
+msgid "Deleting snapshot %d."
+msgstr "Tilannekuvan poistaminen epäonnistui."
 
 msgid "Deleting snapshot failed."
 msgstr "Tilannekuvan poistaminen epäonnistui."
@@ -591,6 +668,10 @@ msgstr "Tiedostojärjestelmäkäsittelyn alustus epäonnistui."
 msgid "Failed to parse '%s'."
 msgstr "\"%s\" luominen epäonnistui."
 
+#, fuzzy
+msgid "Failed to parse number."
+msgstr "\"%s\" luominen epäonnistui."
+
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr "Vapaan tilan kysely sijainnista ”%s” epäonnistui."
@@ -628,6 +709,10 @@ msgstr "Gt"
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GiB"
+
+#, fuzzy
+msgid "Global options:"
+msgstr "    Yleisvalitsimet:"
 
 # error box title
 #, c-format
@@ -686,11 +771,19 @@ msgstr "Virheellinen tilannekuva \"%s\"."
 msgid "Invalid snapshots."
 msgstr "Virheellisiä tilannekuvia."
 
+#, fuzzy, c-format
+msgid "Invalid subvolume path '%s' on target."
+msgstr "Virheellinen alitaltio."
+
 msgid "Invalid subvolume."
 msgstr "Virheellinen alitaltio."
 
 #, c-format
 msgid "Invalid table style '%s'."
+msgstr "Virheellinen taulukkotyyli \"%s\"."
+
+#, fuzzy, c-format
+msgid "Invalid target mode '%s'."
 msgstr "Virheellinen taulukkotyyli \"%s\"."
 
 #, c-format
@@ -708,8 +801,15 @@ msgid "KiB"
 msgstr "KiB"
 
 #, fuzzy
+msgid "List configs:"
+msgstr "  Luettele määritykset:"
+
+#, fuzzy
 msgid "List snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tLuettele tilannekuvia kaikista käytettävissä olevista kokoonpanoista."
+
+msgid "List:"
+msgstr ""
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -758,6 +858,9 @@ msgstr ""
 msgid "Name of config template to use."
 msgstr "\t--template, -t <nimi>\t\tKäytettävän määritysmallin nimi."
 
+msgid "No backup configs found."
+msgstr ""
+
 msgid "No command provided."
 msgstr "Komentoa ei annettu."
 
@@ -771,6 +874,12 @@ msgstr "Ei käyttöoikeuksia."
 #, fuzzy
 msgid "Number of corresponding pre snapshot."
 msgstr "\t--pre-number <numero>\t\tVastaavan ennen-tilannekuvan numero."
+
+msgid "Only use backup-config with automatic set."
+msgstr ""
+
+msgid "Only use backup-config with specified target-mode."
+msgstr ""
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -803,6 +912,9 @@ msgstr "P"
 msgid "PB"
 msgstr "Pt"
 
+msgid "Path mismatch between backup-config and config."
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -831,6 +943,22 @@ msgstr "\t--print-number, -p\t\tTulosta jälkimmäisen luodun tilannekuvan numer
 msgid "Print version and exit."
 msgstr "\t--version\t\t\tTulosta versio ja lopeta."
 
+#, fuzzy
+msgid "Probing extra information for source snapshots."
+msgstr "verrataan tilannevedoksia..."
+
+#, fuzzy
+msgid "Probing extra information for target snapshots."
+msgstr "verrataan tilannevedoksia..."
+
+#, fuzzy
+msgid "Probing source snapshots."
+msgstr "verrataan tilannevedoksia..."
+
+#, fuzzy
+msgid "Probing target snapshots."
+msgstr "verrataan tilannevedoksia..."
+
 # error box title
 #, c-format
 msgid "Quota error (%s)."
@@ -850,6 +978,67 @@ msgstr "Vain luku"
 #, fuzzy
 msgid "Run command and create pre and post snapshots."
 msgstr "\t--command <komento>\t\tSuorita komento ja luo ennen- ja jälkeen-tilannekuvat."
+
+#, c-format
+msgid "Running delete failed for %d of %ld backup config."
+msgid_plural "Running delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running list failed for %d of %ld backup config."
+msgid_plural "Running list failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete failed for %d of %ld backup config."
+msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running transfer failed for %d of %ld backup config."
+msgid_plural "Running transfer failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer for backup config '%s'."
+msgstr ""
+
+msgid "SSH Host"
+msgstr ""
+
+msgid "SSH Identity"
+msgstr ""
+
+msgid "SSH Port"
+msgstr ""
+
+#, fuzzy
+msgid "SSH User"
+msgstr "Käyttäjä"
 
 #, fuzzy
 msgid "Save status to file."
@@ -875,6 +1064,10 @@ msgid "Set a machine-readable output format (csv, json)."
 msgstr "\t--machine-readable <format>\tAsttaa koneluettavan tulosmuodon (CSV, JSON)."
 
 #, fuzzy
+msgid "Set name of backup-config to use."
+msgstr "\t--config, -c <nimi>\t\tAseta käytettävän määrityksen nimi."
+
+#, fuzzy
 msgid "Set name of config to use."
 msgstr "\t--config, -c <nimi>\t\tAseta käytettävän määrityksen nimi."
 
@@ -898,8 +1091,30 @@ msgstr "Asetetaan oletusalitaltio tilannekuvalle %d."
 msgid "Snapshot '%u' not found."
 msgstr "Tilannekuvaa \"%u\" ei löytynyt."
 
+#, fuzzy
+msgid "Snapshot already on target."
+msgstr "\t--read-only\t\t\tLuo vain luettava tilannekuva."
+
 msgid "Snapshot is in use."
 msgstr "Tilannekuva on käytössä."
+
+#, fuzzy
+msgid "Snapshot not on source."
+msgstr "Tilannekuva on käytössä."
+
+#, fuzzy
+msgid "Snapshot not on target."
+msgstr "Tilannekuvaa \"%u\" ei löytynyt."
+
+#, fuzzy, c-format
+msgid "Snapshot number %d not found."
+msgstr "Tilannekuvaa \"%u\" ei löytynyt."
+
+msgid "Source Path"
+msgstr ""
+
+msgid "Source State"
+msgstr ""
 
 msgid "Subvolume"
 msgstr "Alitaltio"
@@ -924,6 +1139,15 @@ msgstr "Tt"
 msgid "Table style (integer)."
 msgstr "\t--table-style, -t <tyyli>\tTaulukon tyyli (kokonaisluku)."
 
+msgid "Target Mode"
+msgstr ""
+
+msgid "Target Path"
+msgstr ""
+
+msgid "Target State"
+msgstr ""
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Alueen voi määrittää itse --ambit-valitsimella."
 
@@ -937,7 +1161,21 @@ msgstr "Näin voi käydä, ellei järjestelmää ole asetettu palautusta varten.
 msgid "TiB"
 msgstr "TiB"
 
+msgid "Transfer and delete:"
+msgstr ""
+
+msgid "Transfer:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Transferring snapshot %d."
+msgstr "Tilannekuvan luominen epäonnistui."
+
 msgid "Try 'snapper --help' for more information."
+msgstr "Kokeile ”snapper --help” saadaksesi lisätietoa."
+
+#, fuzzy
+msgid "Try 'snbk --help' for more information."
 msgstr "Kokeile ”snapper --help” saadaksesi lisätietoa."
 
 #, fuzzy
@@ -1065,7 +1303,29 @@ msgstr "ei mitään tehtävää"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "root parametria voidaan käyttää vain yhdessä no-dbus-valitsimen kanssa.\n"
 
+#, fuzzy
+msgid "snbk delete [numbers]"
+msgstr "\tsnapper delete <numero>"
+
+#, fuzzy
+msgid "snbk list"
+msgstr "\tsnapper list"
+
+#, fuzzy
+msgid "snbk list-configs"
+msgstr "\tsnapper list-configs"
+
+msgid "snbk transfer [numbers]"
+msgstr ""
+
+msgid "snbk transfer-and-delete"
+msgstr ""
+
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr "käyttö: snapper [--yleisvalitsimet] <komento> [--komennon-valitsimet] [komennon-parametrit]"
+
+#, fuzzy
+msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "käyttö: snapper [--yleisvalitsimet] <komento> [--komennon-valitsimet] [komennon-parametrit]"
 
 msgid "yes"

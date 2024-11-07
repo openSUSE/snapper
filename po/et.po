@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: autoinst.fi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 12:27+0100\n"
+"POT-Creation-Date: 2024-11-07 08:23+0100\n"
 "PO-Revision-Date: 2019-12-01 20:54+0000\n"
 "Last-Translator: Jaanus Ojangu <jaanus.ojangu@gmail.com>\n"
 "Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/et/>\n"
@@ -177,9 +177,55 @@ msgstr ""
 msgid "%1$s, %2$s"
 msgstr ""
 
+msgid "'btrfs send | btrfs receive' failed."
+msgstr ""
+
+msgid "'btrfs subvolume delete' failed."
+msgstr ""
+
+#, fuzzy
+msgid "'cp info.xml' failed."
+msgstr "Faili '%s' avamine ebaõnnestus."
+
+msgid "'mkdir' failed."
+msgstr ""
+
+msgid "'rm info.xml' failed."
+msgstr ""
+
+msgid "'rmdir' failed."
+msgstr ""
+
+msgid "'scp info.xml' failed."
+msgstr ""
+
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Tõmmis %d.)"
+
+msgid "(Source) Creation Time"
+msgstr ""
+
+msgid "(Source) Parent UUID"
+msgstr ""
+
+msgid "(Source) Received UUID"
+msgstr ""
+
+msgid "(Source) UUID"
+msgstr ""
+
+msgid "(Target) Creation Time"
+msgstr ""
+
+msgid "(Target) Parent UUID"
+msgstr ""
+
+msgid "(Target) Received UUID"
+msgstr ""
+
+msgid "(Target) UUID"
+msgstr ""
 
 msgid "--abbreviate"
 msgstr ""
@@ -188,6 +234,12 @@ msgid "--all-configs, -a"
 msgstr ""
 
 msgid "--ambit, -a <ambit>"
+msgstr ""
+
+msgid "--automatic"
+msgstr ""
+
+msgid "--backup-config, -b <name>"
 msgstr ""
 
 #, fuzzy
@@ -220,6 +272,9 @@ msgid "--diff-cmd <command>"
 msgstr ""
 
 msgid "--disable-used-space"
+msgstr ""
+
+msgid "--empty"
 msgstr ""
 
 msgid "--extensions, -x <options>"
@@ -288,6 +343,9 @@ msgstr ""
 msgid "--table-style, -t <style>"
 msgstr "\t--table-style, -t <style>\tTabeli stiil (täisarvud)."
 
+msgid "--target-mode <target-mode>"
+msgstr ""
+
 msgid "--template, -t <name>"
 msgstr ""
 
@@ -322,6 +380,9 @@ msgstr ""
 
 #, c-format
 msgid "Ambit is %s."
+msgstr ""
+
+msgid "Automatic"
 msgstr ""
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
@@ -428,6 +489,10 @@ msgstr "Käsk 'setup-quota' ei kasuta argumente."
 msgid "Command 'status' needs one argument."
 msgstr "Käsk 'status' vajab ühte argumenti."
 
+#, fuzzy
+msgid "Command 'transfer-and-delete' does not take arguments."
+msgstr "Käsk 'create' ei vaja argumente."
+
 msgid "Command 'umount' needs at least one argument."
 msgstr "Käsk 'umount' vajab vähemalt ühte argumenti."
 
@@ -478,6 +543,10 @@ msgid "Create a snapshot from the specified snapshot."
 msgstr "\t--from\t\t\t\tLuuakse hetketõmmis etteantud hetketõmmisest."
 
 #, fuzzy
+msgid "Create an empty snapshot."
+msgstr "\t--read-only\t\t\tLoob ainult-loetava hetketõmmise."
+
+#, fuzzy
 msgid "Create read-only snapshot."
 msgstr "\t--read-only\t\t\tLoob ainult-loetava hetketõmmise."
 
@@ -511,9 +580,17 @@ msgstr "Kuupäev"
 msgid "Default"
 msgstr ""
 
+#, fuzzy
+msgid "Delete:"
+msgstr "  Kustuta seaded:"
+
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Seadistuse kustutamine nurjus (%s)."
+
+#, fuzzy, c-format
+msgid "Deleting snapshot %d."
+msgstr "Tõmmis kustutamine nurjus."
 
 msgid "Deleting snapshot failed."
 msgstr "Tõmmis kustutamine nurjus."
@@ -585,6 +662,10 @@ msgstr "Failisüsteemi seadistaja lähtestamine ebaõnnestus."
 msgid "Failed to parse '%s'."
 msgstr "loomine nurjus: %s"
 
+#, fuzzy
+msgid "Failed to parse number."
+msgstr "loomine nurjus: %s"
+
 #, c-format
 msgid "Failed to query free space for path '%s'."
 msgstr ""
@@ -625,6 +706,10 @@ msgstr "GB"
 #. TRANSLATORS: symbol for "gibi bytes" (best keep untranslated)
 msgid "GiB"
 msgstr "GB"
+
+#, fuzzy
+msgid "Global options:"
+msgstr "    Globaalsed valikud:"
 
 # error box title
 #, c-format
@@ -684,11 +769,19 @@ msgstr "Vigane tõmmis '%s'."
 msgid "Invalid snapshots."
 msgstr "Vigane tõmmis."
 
+#, fuzzy, c-format
+msgid "Invalid subvolume path '%s' on target."
+msgstr "Vigane alamosa."
+
 msgid "Invalid subvolume."
 msgstr "Vigane alamosa."
 
 #, fuzzy, c-format
 msgid "Invalid table style '%s'."
+msgstr "Vigane tabeli stiil %d."
+
+#, fuzzy, c-format
+msgid "Invalid target mode '%s'."
 msgstr "Vigane tabeli stiil %d."
 
 #, fuzzy, c-format
@@ -706,8 +799,15 @@ msgid "KiB"
 msgstr "KB"
 
 #, fuzzy
+msgid "List configs:"
+msgstr "  Seadete loetelu:"
+
+#, fuzzy
 msgid "List snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tKõigi juurdepääsetavate konfiguratsioonide hetktõmmitse nimekiri."
+
+msgid "List:"
+msgstr ""
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -758,6 +858,9 @@ msgstr ""
 msgid "Name of config template to use."
 msgstr "\t--template, -t <name>\t\tKasutatava seadistusmalli nimi."
 
+msgid "No backup configs found."
+msgstr ""
+
 msgid "No command provided."
 msgstr "Käsku pole antud."
 
@@ -770,6 +873,12 @@ msgstr "Ligipääs puudub."
 #, fuzzy
 msgid "Number of corresponding pre snapshot."
 msgstr "\t--pre-number <number>\t\tEelneva vastava hetketõmmise number."
+
+msgid "Only use backup-config with automatic set."
+msgstr ""
+
+msgid "Only use backup-config with specified target-mode."
+msgstr ""
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -802,6 +911,9 @@ msgstr ""
 msgid "PB"
 msgstr "PB"
 
+msgid "Path mismatch between backup-config and config."
+msgstr ""
+
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PB"
@@ -830,6 +942,22 @@ msgstr "\t--print-number, -p\t\tNäitab teisena tehtud hetketõmmiste arvu."
 msgid "Print version and exit."
 msgstr "\t--version\t\t\tNäita versiooni ja välju."
 
+#, fuzzy
+msgid "Probing extra information for source snapshots."
+msgstr "\t--description, -d <description>\tHetkekoopia kirjeldus."
+
+#, fuzzy
+msgid "Probing extra information for target snapshots."
+msgstr "\t--description, -d <description>\tHetkekoopia kirjeldus."
+
+#, fuzzy
+msgid "Probing source snapshots."
+msgstr "\t--description, -d <description>\tHetkekoopia kirjeldus."
+
+#, fuzzy
+msgid "Probing target snapshots."
+msgstr "\t--description, -d <description>\tHetkekoopia kirjeldus."
+
 # error box title
 #, c-format
 msgid "Quota error (%s)."
@@ -849,6 +977,67 @@ msgstr ""
 #, fuzzy
 msgid "Run command and create pre and post snapshots."
 msgstr "\t--command <command>\t\tKäivitage käsk ja looge eel- ja järelhetketõmmis."
+
+#, c-format
+msgid "Running delete failed for %d of %ld backup config."
+msgid_plural "Running delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running list failed for %d of %ld backup config."
+msgid_plural "Running list failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete failed for %d of %ld backup config."
+msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer and delete for backup config '%s'."
+msgstr ""
+
+#, c-format
+msgid "Running transfer failed for %d of %ld backup config."
+msgid_plural "Running transfer failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running transfer for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running transfer for backup config '%s'."
+msgstr ""
+
+msgid "SSH Host"
+msgstr ""
+
+msgid "SSH Identity"
+msgstr ""
+
+msgid "SSH Port"
+msgstr ""
+
+#, fuzzy
+msgid "SSH User"
+msgstr "Kasutaja"
 
 #, fuzzy
 msgid "Save status to file."
@@ -870,6 +1059,10 @@ msgstr ""
 #, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Vigane tabeli stiil %d."
+
+#, fuzzy
+msgid "Set name of backup-config to use."
+msgstr "\t--config, -c <name>\t\tMäära seadistusele nimi."
 
 #, fuzzy
 msgid "Set name of config to use."
@@ -894,8 +1087,30 @@ msgstr "Seatakse vaikimisi alamosad hetketõmmisele %d."
 msgid "Snapshot '%u' not found."
 msgstr "Tõmmist '%u' ei leita."
 
+#, fuzzy
+msgid "Snapshot already on target."
+msgstr "\t--read-only\t\t\tLoob ainult-loetava hetketõmmise."
+
 msgid "Snapshot is in use."
 msgstr "Tõmmis on kasutuses."
+
+#, fuzzy
+msgid "Snapshot not on source."
+msgstr "Tõmmis on kasutuses."
+
+#, fuzzy
+msgid "Snapshot not on target."
+msgstr "Tõmmist '%u' ei leita."
+
+#, fuzzy, c-format
+msgid "Snapshot number %d not found."
+msgstr "Tõmmist '%u' ei leita."
+
+msgid "Source Path"
+msgstr ""
+
+msgid "Source State"
+msgstr ""
 
 msgid "Subvolume"
 msgstr "Alamosa"
@@ -921,6 +1136,15 @@ msgstr "TiB"
 msgid "Table style (integer)."
 msgstr "\t--table-style, -t <style>\tTabeli stiil (täisarvud)."
 
+msgid "Target Mode"
+msgstr ""
+
+msgid "Target Path"
+msgstr ""
+
+msgid "Target State"
+msgstr ""
+
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
@@ -934,7 +1158,21 @@ msgstr ""
 msgid "TiB"
 msgstr "TiB"
 
+msgid "Transfer and delete:"
+msgstr ""
+
+msgid "Transfer:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Transferring snapshot %d."
+msgstr "Hetktõmmise loomine nurjus."
+
 msgid "Try 'snapper --help' for more information."
+msgstr "Rohkema teabe samiseks proovi `snapper --help'."
+
+#, fuzzy
+msgid "Try 'snbk --help' for more information."
 msgstr "Rohkema teabe samiseks proovi `snapper --help'."
 
 msgid "Try to make space available."
@@ -1062,7 +1300,29 @@ msgstr "midagi pole teha"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "juur argumenti saab kasutada ainult koos no-dbus-ga."
 
+#, fuzzy
+msgid "snbk delete [numbers]"
+msgstr "\tsnapper kustutamine <number>"
+
+#, fuzzy
+msgid "snbk list"
+msgstr "\tsnapper loetelu"
+
+#, fuzzy
+msgid "snbk list-configs"
+msgstr "\tsnapper seadete loetelu"
+
+msgid "snbk transfer [numbers]"
+msgstr ""
+
+msgid "snbk transfer-and-delete"
+msgstr ""
+
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr "kasutage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+
+#, fuzzy
+msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "kasutage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 
 msgid "yes"
