@@ -353,7 +353,10 @@
     <para>
       <citerefentry><refentrytitle>snapper-backup-configs</refentrytitle><manvolnum>5</manvolnum></citerefentry>,
       <citerefentry><refentrytitle>snapper</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
-      <citerefentry role="nolink"><refentrytitle>btrfs-send</refentrytitle><manvolnum>8</manvolnum></citerefentry>
+      <citerefentry role="nolink"><refentrytitle>btrfs-send</refentrytitle><manvolnum>8</manvolnum></citerefentry>,
+      <citerefentry role="nolink"><refentrytitle>btrfs-receive</refentrytitle><manvolnum>8</manvolnum></citerefentry>
+      <citerefentry role="nolink"><refentrytitle>rsync</refentrytitle><manvolnum>1</manvolnum></citerefentry>,
+      <citerefentry role="nolink"><refentrytitle>sshfs</refentrytitle><manvolnum>1</manvolnum></citerefentry>
     </para>
   </refsect1>
 
