@@ -7,15 +7,16 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-07 08:23+0100\n"
-"PO-Revision-Date: 2024-02-29 15:42+0000\n"
-"Last-Translator: Gemineo <vistatec@gemineo.de>\n"
-"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
+"PO-Revision-Date: 2024-11-07 17:48+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
+"\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9.1\n"
+"X-Generator: Weblate 5.8.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <Bereinigungsalgorithmus>"
@@ -179,54 +180,53 @@ msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 msgid "'btrfs send | btrfs receive' failed."
-msgstr ""
+msgstr "'btrfs send | btrfs receive' fehlgeschlagen."
 
 msgid "'btrfs subvolume delete' failed."
-msgstr ""
+msgstr "'btrfs subvolume delete' fehlgeschlagen."
 
-#, fuzzy
 msgid "'cp info.xml' failed."
-msgstr "Öffnen der Datei '%s' nicht möglich."
+msgstr "'cp info.xml' fehlgeschlagen."
 
 msgid "'mkdir' failed."
-msgstr ""
+msgstr "'mkdir' fehlgeschlagen."
 
 msgid "'rm info.xml' failed."
-msgstr ""
+msgstr "'rm info.xml' fehlgeschlagen."
 
 msgid "'rmdir' failed."
-msgstr ""
+msgstr "'rmdir' fehlgeschlagen."
 
 msgid "'scp info.xml' failed."
-msgstr ""
+msgstr "'scp info.xml' fehlgeschlagen."
 
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Schnappschuss %d.)"
 
 msgid "(Source) Creation Time"
-msgstr ""
+msgstr "(Quelle) Erstellungszeit"
 
 msgid "(Source) Parent UUID"
-msgstr ""
+msgstr "(Quelle) Übergeordnete UUID"
 
 msgid "(Source) Received UUID"
-msgstr ""
+msgstr "(Quelle) Empfangene UUID"
 
 msgid "(Source) UUID"
-msgstr ""
+msgstr "(Quelle) UUID"
 
 msgid "(Target) Creation Time"
-msgstr ""
+msgstr "(Ziel) Erstellungszeit"
 
 msgid "(Target) Parent UUID"
-msgstr ""
+msgstr "(Ziel) Übergeordnete UUID"
 
 msgid "(Target) Received UUID"
-msgstr ""
+msgstr "(Ziel) Empfangene UUID"
 
 msgid "(Target) UUID"
-msgstr ""
+msgstr "(Ziel) UUID"
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -238,11 +238,10 @@ msgid "--ambit, -a <ambit>"
 msgstr "--ambit, -a <Anwendungsbereich>"
 
 msgid "--automatic"
-msgstr ""
+msgstr "--automatic"
 
-#, fuzzy
 msgid "--backup-config, -b <name>"
-msgstr "--config, -c <Name>"
+msgstr "--backup-config, -b <Name>"
 
 msgid "--cleanup-algorithm, -c <algo>"
 msgstr "--cleanup-algorithm, -c <Algorithmus>"
@@ -275,7 +274,7 @@ msgid "--disable-used-space"
 msgstr "--disable-used-space"
 
 msgid "--empty"
-msgstr ""
+msgstr "--empty"
 
 msgid "--extensions, -x <options>"
 msgstr "--extensions, -x <Optionen>"
@@ -341,7 +340,7 @@ msgid "--table-style, -t <style>"
 msgstr "--table-style, -t <Stil>"
 
 msgid "--target-mode <target-mode>"
-msgstr ""
+msgstr "--target-mode <Zielmodus>"
 
 msgid "--template, -t <name>"
 msgstr "--template, -t <Name>"
@@ -378,7 +377,7 @@ msgid "Ambit is %s."
 msgstr "Anwendungsbereich ist %s."
 
 msgid "Automatic"
-msgstr ""
+msgstr "Automatisch"
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -482,9 +481,8 @@ msgstr "Befehl 'setup-quota' akzeptiert keine Argumente."
 msgid "Command 'status' needs one argument."
 msgstr "Befehl 'status' benötigt ein Argument."
 
-#, fuzzy
 msgid "Command 'transfer-and-delete' does not take arguments."
-msgstr "Befehl 'create' akzeptiert keine Argumente."
+msgstr "Befehl 'transfer-and-delete' akzeptiert keine Argumente."
 
 msgid "Command 'umount' needs at least one argument."
 msgstr "Befehl 'umount' benötigt mindestens ein Argument."
@@ -533,9 +531,8 @@ msgstr "Konnte nicht genügend freien Speicher verfügbar machen."
 msgid "Create a snapshot from the specified snapshot."
 msgstr "Einen Schnappschuss vom angegebenen Schnappschuss erstellen."
 
-#, fuzzy
 msgid "Create an empty snapshot."
-msgstr "Einen nur lesbaren Schnappschuss erstellen."
+msgstr "Einen leeren Schnappschuss erstellen."
 
 msgid "Create read-only snapshot."
 msgstr "Einen nur lesbaren Schnappschuss erstellen."
@@ -569,17 +566,16 @@ msgstr "Datum"
 msgid "Default"
 msgstr "Standard"
 
-#, fuzzy
 msgid "Delete:"
-msgstr "  Konfiguration löschen:"
+msgstr "Löschen:"
 
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Das Löschen der Konfiguration ist fehlgeschlagen (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting snapshot %d."
-msgstr "Fehler beim Löschen des Schnappschusses."
+msgstr "Schnappschuss %d löschen."
 
 msgid "Deleting snapshot failed."
 msgstr "Fehler beim Löschen des Schnappschusses."
@@ -643,9 +639,8 @@ msgstr "Initialisierung des Dateisystem-Handlers fehlgeschlagen."
 msgid "Failed to parse '%s'."
 msgstr "'%s' kann nicht geparst werden."
 
-#, fuzzy
 msgid "Failed to parse number."
-msgstr "'%s' kann nicht geparst werden."
+msgstr "Nummer konnte nicht geparst werden."
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -684,9 +679,8 @@ msgstr "GB"
 msgid "GiB"
 msgstr "GiB"
 
-#, fuzzy
 msgid "Global options:"
-msgstr "    Globale Optionen:"
+msgstr "Globale Optionen:"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -741,9 +735,9 @@ msgstr "Ungültiger Schnappschuss '%s'."
 msgid "Invalid snapshots."
 msgstr "Ungültige Schnappschüsse."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid subvolume path '%s' on target."
-msgstr "Ungültiges Subvolumen."
+msgstr ""
 
 msgid "Invalid subvolume."
 msgstr "Ungültiges Subvolumen."
@@ -752,9 +746,9 @@ msgstr "Ungültiges Subvolumen."
 msgid "Invalid table style '%s'."
 msgstr "Ungültiger Tabellenstil '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid target mode '%s'."
-msgstr "Ungültiger Tabellenstil '%s'."
+msgstr "Ungültiger Zielmodus '%s'."
 
 #, c-format
 msgid "Invalid user (%s)."
@@ -770,15 +764,14 @@ msgstr "Schlüssel"
 msgid "KiB"
 msgstr "KiB"
 
-#, fuzzy
 msgid "List configs:"
-msgstr "  Konfigurationen anzeigen:"
+msgstr "Konfigurationen auflisten:"
 
 msgid "List snapshots from all accessible configs."
 msgstr "Snapshots von allen verfügbaren Konfigurationen auflisten."
 
 msgid "List:"
-msgstr ""
+msgstr "Liste:"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -826,7 +819,7 @@ msgid "Name of config template to use."
 msgstr "Name der zu verwendenden Konfigurationsvorlage."
 
 msgid "No backup configs found."
-msgstr ""
+msgstr "Keine Sicherungskonfigurationen gefunden."
 
 msgid "No command provided."
 msgstr "Es wurde kein Befehl angegeben."
@@ -983,17 +976,16 @@ msgid "Running transfer for backup config '%s'."
 msgstr ""
 
 msgid "SSH Host"
-msgstr ""
+msgstr "SSH-Host"
 
 msgid "SSH Identity"
-msgstr ""
+msgstr "SSH-Identität"
 
 msgid "SSH Port"
-msgstr ""
+msgstr "SSH-Port"
 
-#, fuzzy
 msgid "SSH User"
-msgstr "Benutzer"
+msgstr "SSH-Benutzer"
 
 msgid "Save status to file."
 msgstr "Status in Datei speichern."
@@ -1038,27 +1030,24 @@ msgstr "Einstellung des Standard-Subvolumes zu Schnappschuss %d."
 msgid "Snapshot '%u' not found."
 msgstr "Schnappschuss '%u' wurde nicht gefunden."
 
-#, fuzzy
 msgid "Snapshot already on target."
-msgstr "Schnappschuss als schreibgeschützt festlegen."
+msgstr "Schnappschuss bereits auf dem Ziel."
 
 msgid "Snapshot is in use."
 msgstr "Der Schnappschuss ist in Benutzung."
 
-#, fuzzy
 msgid "Snapshot not on source."
-msgstr "Der Schnappschuss ist in Benutzung."
+msgstr "Schnappschuss nicht auf Quelle."
 
-#, fuzzy
 msgid "Snapshot not on target."
-msgstr "Schnappschuss '%u' wurde nicht gefunden."
+msgstr "Schnappschuss nicht auf Ziel."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Snapshot number %d not found."
-msgstr "Schnappschuss '%u' wurde nicht gefunden."
+msgstr "Schnappschussnummer %d nicht gefunden."
 
 msgid "Source Path"
-msgstr ""
+msgstr "Quellpfad"
 
 msgid "Source State"
 msgstr ""
@@ -1084,10 +1073,10 @@ msgid "Table style (integer)."
 msgstr "Tabellenart (Ganzzahl)."
 
 msgid "Target Mode"
-msgstr ""
+msgstr "Zielmodus"
 
 msgid "Target Path"
-msgstr ""
+msgstr "Zielpfad"
 
 msgid "Target State"
 msgstr ""
@@ -1106,21 +1095,20 @@ msgid "TiB"
 msgstr "TiB"
 
 msgid "Transfer and delete:"
-msgstr ""
+msgstr "Übertragen und löschen:"
 
 msgid "Transfer:"
-msgstr ""
+msgstr "Übertragen:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Transferring snapshot %d."
-msgstr "Das Erstellen eines Schnappschusses ist fehlgeschlagen."
+msgstr "Schnappschuss %d wird übertragen."
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Versuchen Sie 'snapper --help' für weitere Informationen."
 
-#, fuzzy
 msgid "Try 'snbk --help' for more information."
-msgstr "Versuchen Sie 'snapper --help' für weitere Informationen."
+msgstr "Versuchen Sie 'snbk --help' für weitere Informationen."
 
 msgid "Try to make space available."
 msgstr "Versuchen, Speicherplatz verfügbar zu machen."
@@ -1241,30 +1229,26 @@ msgstr "keine auszuführenden Aktionen"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Root-Argument kann nur zusammen mit no-dbus verwendet werden.\n"
 
-#, fuzzy
 msgid "snbk delete [numbers]"
-msgstr "\tsnapper delete <Nummer>"
+msgstr "snbk delete [Nummern]"
 
-#, fuzzy
 msgid "snbk list"
-msgstr "\tsnapper list"
+msgstr "snbk list"
 
-#, fuzzy
 msgid "snbk list-configs"
-msgstr "\tsnapper list-configs"
+msgstr "snbk list-configs"
 
 msgid "snbk transfer [numbers]"
-msgstr ""
+msgstr "snbk transfer [Nummern]"
 
 msgid "snbk transfer-and-delete"
-msgstr ""
+msgstr "snbk transfer-and-delete"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "Aufruf: snapper [--Globale-Optionen] <Befehl> [--Befehlsoptionen] [Befehlsargumente]"
 
-#, fuzzy
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
-msgstr "Aufruf: snapper [--Globale-Optionen] <Befehl> [--Befehlsoptionen] [Befehlsargumente]"
+msgstr "Aufruf: snbk [--Globale-Optionen] <Befehl> [Befehlsargumente]"
 
 msgid "yes"
 msgstr "ja"
