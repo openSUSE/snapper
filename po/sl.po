@@ -9,15 +9,17 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-07 08:23+0100\n"
-"PO-Revision-Date: 2024-06-13 17:46+0000\n"
+"PO-Revision-Date: 2024-11-07 20:48+0000\n"
 "Last-Translator: Jure Repinc <jlp@holodeck1.com>\n"
-"Language-Team: Slovenian <https://l10n.opensuse.org/projects/snapper/master/sl/>\n"
+"Language-Team: Slovenian <https://l10n.opensuse.org/projects/snapper/master/"
+"sl/>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
-"X-Generator: Weblate 5.5.5\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.8.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <algoritem_čiščenja>"
@@ -181,54 +183,53 @@ msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 msgid "'btrfs send | btrfs receive' failed."
-msgstr ""
+msgstr "Ukaz »btrfs send« ali » btrfs receive« ni uspel."
 
 msgid "'btrfs subvolume delete' failed."
-msgstr ""
+msgstr "Ukaz »btrfs subvolume delete« ni uspel."
 
-#, fuzzy
 msgid "'cp info.xml' failed."
-msgstr "Odpiranje datoteke »%s« ni uspelo."
+msgstr "Ukaz »cp info.xml« ni uspel."
 
 msgid "'mkdir' failed."
-msgstr ""
+msgstr "Ukaz »mkdir« ni uspel."
 
 msgid "'rm info.xml' failed."
-msgstr ""
+msgstr "Ukaz »rm info.xml« ni uspel."
 
 msgid "'rmdir' failed."
-msgstr ""
+msgstr "Ukaz »rmdir« ni uspel."
 
 msgid "'scp info.xml' failed."
-msgstr ""
+msgstr "Ukaz »scp info.xml« ni uspel."
 
 #, c-format
 msgid "(Snapshot %d.)"
-msgstr "(posnetek %d.)"
+msgstr "(Posnetek %d.)"
 
 msgid "(Source) Creation Time"
-msgstr ""
+msgstr "(Vir) čas ustvaritve"
 
 msgid "(Source) Parent UUID"
-msgstr ""
+msgstr "(Vir) nadrejeni UUID"
 
 msgid "(Source) Received UUID"
-msgstr ""
+msgstr "(Vir) prejeti UUID"
 
 msgid "(Source) UUID"
-msgstr ""
+msgstr "(Vir) UUID"
 
 msgid "(Target) Creation Time"
-msgstr ""
+msgstr "(Cilj) čas ustvaritve"
 
 msgid "(Target) Parent UUID"
-msgstr ""
+msgstr "(Cilj) nadrejeni UUID"
 
 msgid "(Target) Received UUID"
-msgstr ""
+msgstr "(Cilj) prejeti UUID"
 
 msgid "(Target) UUID"
-msgstr ""
+msgstr "(Cilj) UUID"
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -240,11 +241,10 @@ msgid "--ambit, -a <ambit>"
 msgstr "--ambit, -a <ambit>"
 
 msgid "--automatic"
-msgstr ""
+msgstr "--automatic"
 
-#, fuzzy
 msgid "--backup-config, -b <name>"
-msgstr "--config, -c <ime>"
+msgstr "--backup-config, -b <ime>"
 
 msgid "--cleanup-algorithm, -c <algo>"
 msgstr "--cleanup-algorithm, -c <algoritem>"
@@ -277,7 +277,7 @@ msgid "--disable-used-space"
 msgstr "--disable-used-space"
 
 msgid "--empty"
-msgstr ""
+msgstr "--empty"
 
 msgid "--extensions, -x <options>"
 msgstr "--extensions, -x <možnosti>"
@@ -343,7 +343,7 @@ msgid "--table-style, -t <style>"
 msgstr "--table-style, -t <slog>"
 
 msgid "--target-mode <target-mode>"
-msgstr ""
+msgstr "--target-mode <način-za-cilj>"
 
 msgid "--template, -t <name>"
 msgstr "--template, -t <ime>"
@@ -381,7 +381,7 @@ msgid "Ambit is %s."
 msgstr "Ambit je %s."
 
 msgid "Automatic"
-msgstr ""
+msgstr "Samodejno"
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -486,9 +486,8 @@ msgstr "Ukaz »setup-quota« ne potrebuje argumentov."
 msgid "Command 'status' needs one argument."
 msgstr "Ukaz »status« potrebuje en argument."
 
-#, fuzzy
 msgid "Command 'transfer-and-delete' does not take arguments."
-msgstr "Ukaz »create« ne potrebuje argumentov."
+msgstr "Ukaz »transfer-and-delete« ne potrebuje argumentov."
 
 msgid "Command 'umount' needs at least one argument."
 msgstr "Ukaz »umount« potrebuje vsaj en argument."
@@ -538,9 +537,8 @@ msgid "Create a snapshot from the specified snapshot."
 msgstr "Ustvari posnetek iz navedenega posnetka."
 
 # %s is either BOOTP or DHCP
-#, fuzzy
 msgid "Create an empty snapshot."
-msgstr "Ustvari posnetek samo za branje."
+msgstr "Ustvari prazen posnetek."
 
 # %s is either BOOTP or DHCP
 msgid "Create read-only snapshot."
@@ -575,9 +573,8 @@ msgstr "Datum"
 msgid "Default"
 msgstr "Privzeti"
 
-#, fuzzy
 msgid "Delete:"
-msgstr "  Brisanje nastavitev:"
+msgstr "Izbris:"
 
 # %s is either BOOTP or DHCP
 #, c-format
@@ -585,9 +582,9 @@ msgid "Deleting config failed (%s)."
 msgstr "Brisanje nastavitev ni uspelo (%s)."
 
 # %s is either BOOTP or DHCP
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting snapshot %d."
-msgstr "Brisanje posnetka ni uspelo."
+msgstr "Brisanje posnetka %d."
 
 # %s is either BOOTP or DHCP
 msgid "Deleting snapshot failed."
@@ -656,9 +653,8 @@ msgstr "Pripravljanje ročnika za datotečni sistem ni uspelo."
 msgid "Failed to parse '%s'."
 msgstr "Razčlenjevanje »%s« ni uspelo."
 
-#, fuzzy
 msgid "Failed to parse number."
-msgstr "Razčlenjevanje »%s« ni uspelo."
+msgstr "Razčlenjevanje številke ni uspelo."
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -698,9 +694,8 @@ msgstr "GB"
 msgid "GiB"
 msgstr "GiB"
 
-#, fuzzy
 msgid "Global options:"
-msgstr "    Splošne možnosti:"
+msgstr "Splošne možnosti:"
 
 # error box title
 #, c-format
@@ -758,9 +753,9 @@ msgstr "Neveljaven posnetek »%s«."
 msgid "Invalid snapshots."
 msgstr "Neveljavni posnetki."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid subvolume path '%s' on target."
-msgstr "Neveljaven podnosilec."
+msgstr "Neveljavna pot podnosilca »%s« na cilju."
 
 msgid "Invalid subvolume."
 msgstr "Neveljaven podnosilec."
@@ -769,9 +764,9 @@ msgstr "Neveljaven podnosilec."
 msgid "Invalid table style '%s'."
 msgstr "Neveljaven slog razpredelnice »%s«."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid target mode '%s'."
-msgstr "Neveljaven slog razpredelnice »%s«."
+msgstr "Neveljaven način cilja »%s«."
 
 #, c-format
 msgid "Invalid user (%s)."
@@ -788,15 +783,14 @@ msgstr "Ključ"
 msgid "KiB"
 msgstr "KiB"
 
-#, fuzzy
 msgid "List configs:"
-msgstr "  Izpisovanje seznama nastavitev:"
+msgstr "Izpis nastavitev:"
 
 msgid "List snapshots from all accessible configs."
 msgstr "Izpiše posnetke iz vseh dostopnih nastavitev."
 
 msgid "List:"
-msgstr ""
+msgstr "Izpis:"
 
 # %s is either BOOTP or DHCP
 #, c-format
@@ -845,7 +839,7 @@ msgid "Name of config template to use."
 msgstr "Ime predloge nastavitev, ki bo uporabljena."
 
 msgid "No backup configs found."
-msgstr ""
+msgstr "Najdena ni bila nobena varnostna kopija nastavitev."
 
 msgid "No command provided."
 msgstr "Naveden ni bil noben ukaz."
@@ -860,10 +854,10 @@ msgid "Number of corresponding pre snapshot."
 msgstr "Številka ustreznega pred-posnetka."
 
 msgid "Only use backup-config with automatic set."
-msgstr ""
+msgstr "Uporabite »backup-config« samo skupaj z »automatic«."
 
 msgid "Only use backup-config with specified target-mode."
-msgstr ""
+msgstr "Uporabite »backup-config« samo skupaj z navedbo »target-mode«."
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -894,7 +888,7 @@ msgid "PB"
 msgstr "PB"
 
 msgid "Path mismatch between backup-config and config."
-msgstr ""
+msgstr "Neujemanje poti med »backup-config« in »config«."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -921,21 +915,17 @@ msgstr "Izpiše številko drugega ustvarjenega posnetka."
 msgid "Print version and exit."
 msgstr "Izpiše številko in konča."
 
-#, fuzzy
 msgid "Probing extra information for source snapshots."
-msgstr "Opis posnetkov."
+msgstr "Ugotavljanje dodatnih podatkov za izvorne posnetke."
 
-#, fuzzy
 msgid "Probing extra information for target snapshots."
-msgstr "Opis posnetkov."
+msgstr "Ugotavljanje dodatnih podatkov za ciljne posnetke."
 
-#, fuzzy
 msgid "Probing source snapshots."
-msgstr "Opis posnetkov."
+msgstr "Ugotavljanje izvornih posnetkov."
 
-#, fuzzy
 msgid "Probing target snapshots."
-msgstr "Opis posnetkov."
+msgstr "Ugotavljanje ciljnih posnetkov."
 
 # error box title
 #, c-format
