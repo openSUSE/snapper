@@ -9,7 +9,6 @@
 #define ZYPPER_UTILS_TEXT_H_
 
 #include <string>
-#include <iosfwd>
 
 
 namespace snapper
