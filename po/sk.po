@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-07 08:23+0100\n"
-"PO-Revision-Date: 2024-11-07 17:48+0000\n"
+"PO-Revision-Date: 2024-11-07 20:48+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
 "\n"
@@ -180,23 +180,23 @@ msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 msgid "'btrfs send | btrfs receive' failed."
-msgstr ""
+msgstr "'btrfs send | btrfs receive' zlyhalo."
 
 msgid "'btrfs subvolume delete' failed."
-msgstr ""
+msgstr "'btrfs subvolume delete' zlyhalo."
 
 #, fuzzy
 msgid "'cp info.xml' failed."
 msgstr "Otvorenie súboru '%s' zlyhalo."
 
 msgid "'mkdir' failed."
-msgstr ""
+msgstr "'mkdir' zlyhalo."
 
 msgid "'rm info.xml' failed."
-msgstr ""
+msgstr "'rm info.xml' zlyhalo."
 
 msgid "'rmdir' failed."
-msgstr ""
+msgstr "'rmdir' zlyhalo."
 
 msgid "'scp info.xml' failed."
 msgstr ""
@@ -571,7 +571,7 @@ msgid "Default"
 msgstr "Predvolené"
 
 msgid "Delete:"
-msgstr "Vymazať"
+msgstr "Vymazať:"
 
 #, c-format
 msgid "Deleting config failed (%s)."
@@ -775,9 +775,8 @@ msgstr "Kľúč"
 msgid "KiB"
 msgstr "KiB"
 
-#, fuzzy
 msgid "List configs:"
-msgstr "  Zoznam konfigurácií:"
+msgstr "Zoznam konfigurácií:"
 
 msgid "List snapshots from all accessible configs."
 msgstr "Zoznam snímok zo všetkých dostupných konfigurácií."
@@ -1064,9 +1063,9 @@ msgstr "Snímka sa používa."
 msgid "Snapshot not on target."
 msgstr "Snímka '%u' nebola nájdená."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Snapshot number %d not found."
-msgstr "Snímka '%u' nebola nájdená."
+msgstr "Číslo snímky %d nebolo nájdené."
 
 msgid "Source Path"
 msgstr ""
@@ -1122,9 +1121,9 @@ msgstr ""
 msgid "Transfer:"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Transferring snapshot %d."
-msgstr "Vytvorenie snímky zlyhalo."
+msgstr "Prenášanie snímky %d."
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Skúste 'snapper --help' pre viac informácií."
