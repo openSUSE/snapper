@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-07 08:23+0100\n"
-"PO-Revision-Date: 2024-11-07 20:48+0000\n"
+"PO-Revision-Date: 2024-11-10 17:48+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
 "\n"
@@ -185,9 +185,8 @@ msgstr "'btrfs send | btrfs receive' zlyhalo."
 msgid "'btrfs subvolume delete' failed."
 msgstr "'btrfs subvolume delete' zlyhalo."
 
-#, fuzzy
 msgid "'cp info.xml' failed."
-msgstr "Otvorenie súboru '%s' zlyhalo."
+msgstr "'cp info.xml' zlyhalo."
 
 msgid "'mkdir' failed."
 msgstr "'mkdir' zlyhalo."
@@ -241,9 +240,8 @@ msgstr "--ambit, -a <ambit>"
 msgid "--automatic"
 msgstr ""
 
-#, fuzzy
 msgid "--backup-config, -b <name>"
-msgstr "--config, -c <názov>"
+msgstr "--backup-config, -b <názov>"
 
 msgid "--cleanup-algorithm, -c <algo>"
 msgstr "--cleanup-algorithm, -c <algo>"
@@ -483,9 +481,8 @@ msgstr "Príkaz 'setup-quota' nepodporuje argumenty."
 msgid "Command 'status' needs one argument."
 msgstr "Príkaz 'status' potrebuje jeden argument."
 
-#, fuzzy
 msgid "Command 'transfer-and-delete' does not take arguments."
-msgstr "Príkaz 'create' neprijíma argumenty."
+msgstr "Príkaz 'transfer-and-delete' neprijíma argumenty."
 
 msgid "Command 'umount' needs at least one argument."
 msgstr "Príkaz 'umount' potrebuje aspoň jeden argument."
@@ -534,9 +531,8 @@ msgstr "Nepodarilo sa sprístupniť dostatok voľného miesta."
 msgid "Create a snapshot from the specified snapshot."
 msgstr "Vytvorí snímku zo zadanej snímky."
 
-#, fuzzy
 msgid "Create an empty snapshot."
-msgstr "Vytvorí snímku len na čítanie."
+msgstr "Vytvorí prázdnu snímku."
 
 msgid "Create read-only snapshot."
 msgstr "Vytvorí snímku len na čítanie."
@@ -645,9 +641,8 @@ msgstr "Zlyhala inicializácia obslužného programu systému súborov."
 msgid "Failed to parse '%s'."
 msgstr "Nepodarilo sa analyzovať '%s'."
 
-#, fuzzy
 msgid "Failed to parse number."
-msgstr "Nepodarilo sa analyzovať '%s'."
+msgstr "Nepodarilo sa analyzovať číslo."
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -756,9 +751,9 @@ msgstr "Neplatný podzväzok."
 msgid "Invalid table style '%s'."
 msgstr "Neplatný štýl tabuľky '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid target mode '%s'."
-msgstr "Neplatný štýl tabuľky '%s'."
+msgstr "Neplatný cieľový režim '%s'."
 
 #, c-format
 msgid "Invalid user (%s)."
@@ -907,21 +902,17 @@ msgstr "Vypíše číslo druhej vytvorenej snímky."
 msgid "Print version and exit."
 msgstr "Vypíše verziu a skončí."
 
-#, fuzzy
 msgid "Probing extra information for source snapshots."
-msgstr "Popis pre snímky."
+msgstr "Zisťovanie dodatočných informácií pre zdrojové snímky."
 
-#, fuzzy
 msgid "Probing extra information for target snapshots."
-msgstr "Popis pre snímky."
+msgstr "Zisťovanie dodatočných informácií pre cieľové snímky."
 
-#, fuzzy
 msgid "Probing source snapshots."
-msgstr "Popis pre snímky."
+msgstr "Zisťovanie zdrojových snímok."
 
-#, fuzzy
 msgid "Probing target snapshots."
-msgstr "Popis pre snímky."
+msgstr "Zisťovanie cieľových snímok."
 
 # error box title
 #, c-format
@@ -1001,9 +992,8 @@ msgstr ""
 msgid "SSH Port"
 msgstr ""
 
-#, fuzzy
 msgid "SSH User"
-msgstr "Používateľ"
+msgstr "SSH používateľ"
 
 msgid "Save status to file."
 msgstr "Uloží stav do súboru."
@@ -1024,9 +1014,8 @@ msgstr "Nastaví výstupný formát JSON."
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Nastaví strojovo čitateľný výstupný formát (csv, json)."
 
-#, fuzzy
 msgid "Set name of backup-config to use."
-msgstr "Nastaví názov konfigurácie, ktorá sa použije."
+msgstr "Nastaví názov konfigurácie zálohovania, ktorá sa použije."
 
 msgid "Set name of config to use."
 msgstr "Nastaví názov konfigurácie, ktorá sa použije."
@@ -1048,20 +1037,17 @@ msgstr "Nastavenie predvoleného podzväzku pre snímku %d."
 msgid "Snapshot '%u' not found."
 msgstr "Snímka '%u' nebola nájdená."
 
-#, fuzzy
 msgid "Snapshot already on target."
-msgstr "Nastaví snímku len na čítanie."
+msgstr "Snímka je už na cieli."
 
 msgid "Snapshot is in use."
 msgstr "Snímka sa používa."
 
-#, fuzzy
 msgid "Snapshot not on source."
-msgstr "Snímka sa používa."
+msgstr "Snímka nie je na zdroji."
 
-#, fuzzy
 msgid "Snapshot not on target."
-msgstr "Snímka '%u' nebola nájdená."
+msgstr "Snímka nie je na cieli."
 
 #, c-format
 msgid "Snapshot number %d not found."
@@ -1128,9 +1114,8 @@ msgstr "Prenášanie snímky %d."
 msgid "Try 'snapper --help' for more information."
 msgstr "Skúste 'snapper --help' pre viac informácií."
 
-#, fuzzy
 msgid "Try 'snbk --help' for more information."
-msgstr "Skúste 'snapper --help' pre viac informácií."
+msgstr "Skúste 'snbk --help' pre viac informácií."
 
 msgid "Try to make space available."
 msgstr "Skúsi sprístupniť miesto."
@@ -1251,17 +1236,14 @@ msgstr "nie je čo vykonať"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Argument root možno použiť len spoločne s no-dbus.\n"
 
-#, fuzzy
 msgid "snbk delete [numbers]"
-msgstr "\tsnapper delete <číslo>"
+msgstr "snbk delete [čísla]"
 
-#, fuzzy
 msgid "snbk list"
-msgstr "\tsnapper list"
+msgstr "snbk list"
 
-#, fuzzy
 msgid "snbk list-configs"
-msgstr "\tsnapper list-configs"
+msgstr "snbk list-configs"
 
 msgid "snbk transfer [numbers]"
 msgstr ""
@@ -1272,9 +1254,10 @@ msgstr ""
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "použitie: snapper [--globálne-voľby] <príkaz> [--voľby-príkazu] [argumenty-príkazu]"
 
-#, fuzzy
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
-msgstr "použitie: snapper [--globálne-voľby] <príkaz> [--voľby-príkazu] [argumenty-príkazu]"
+msgstr ""
+"použitie: snbk [--globálne-voľby] <príkaz> [--voľby-príkazu] [argumenty-"
+"príkazu]"
 
 msgid "yes"
 msgstr "áno"
