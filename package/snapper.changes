@@ -2,6 +2,7 @@
 Tue Nov 05 10:50:50 CET 2024 - aschnell@suse.com
 
 - provide backup program for btrfs snapshots
+- version 0.12.0
 
 -------------------------------------------------------------------
 Fri Oct 25 08:48:46 CEST 2024 - aschnell@suse.com
