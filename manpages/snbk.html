@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>snbk</title>
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+  </head>
+  <body>
+    <div class="refentry">
+      <a id="snbk8"></a>
+      <div class="titlepage"></div>
+      <div class="refnamediv">
+        <h2>Name</h2>
+        <p>snbk — Command-line program to backup snapshots of snapper</p>
+      </div>
+      <div class="refsynopsisdiv">
+        <a id="synopsis"></a>
+        <h2>Synopsis</h2>
+        <div class="cmdsynopsis">
+          <p><code class="command">snbk</code>  [<em class="replaceable"><code>--global-opts</code></em>]  <em class="replaceable"><code>command</code></em>  [<em class="replaceable"><code>command-arguments</code></em>]</p>
+        </div>
+        <div class="cmdsynopsis">
+          <p><code class="command">snbk</code>  {--help}</p>
+        </div>
+      </div>
+      <div class="refsect1">
+        <a id="description"></a>
+        <h2>DESCRIPTION</h2>
+        <p>Snbk is a command-line program to backup snapshot of snapper. It can
+    transfer and delete backup snapshots on local and remote btrfs filesystems.</p>
+      </div>
+      <div class="refsect1">
+        <a id="concepts"></a>
+        <h2>CONCEPTS</h2>
+        <div class="refsect2">
+          <a id="backup-configurations"></a>
+          <h3>Backup Configurations</h3>
+          <p>For each snapper config there can be several backup
+      configs. Each backup config defines backups of the snapper snapshots at
+      one location, either local or remote, see
+      <a class="citerefentry" href="snapper-backup-configs.html"><span class="citerefentry"><span class="refentrytitle">snapper-backup-configs</span>(5)</span></a>
+      for possible settings.</p>
+        </div>
+        <div class="refsect2">
+          <a id="snapshot-statuses"></a>
+          <h3>Snapshot Statuses</h3>
+          <p>Each snapshot has a status on the source and on the
+      target. Possible values for the source are:</p>
+          <div class="glosslist">
+            <dl>
+              <dt>
+                <span class="glossterm">(empty)</span>
+              </dt>
+              <dd class="glossdef">
+                <p>The snapshot is missing and thus considered obsolete
+	    on the target. It will be deleted on the target by the next delete
+	    command.</p>
+              </dd>
+              <dt>
+                <span class="glossterm">read-only</span>
+              </dt>
+              <dd class="glossdef">
+                <p>The snapshot is read-only.</p>
+              </dd>
+              <dt>
+                <span class="glossterm">read-write</span>
+              </dt>
+              <dd class="glossdef">
+                <p>The snapshot is read-write and thus cannot be backed-up.</p>
+              </dd>
+            </dl>
+          </div>
+          <p>Possible values for the target are:</p>
+          <div class="glosslist">
+            <dl>
+              <dt>
+                <span class="glossterm">(empty)</span>
+              </dt>
+              <dd class="glossdef">
+                <p>The snapshot is missing. If the source snapshot is
+	    read-only it will be transferred to the target by the
+	    next transfer command.</p>
+              </dd>
+              <dt>
+                <span class="glossterm">valid</span>
+              </dt>
+              <dd class="glossdef">
+                <p>The snapshot is valid. That implies it is read-only.</p>
+              </dd>
+              <dt>
+                <span class="glossterm">invalid</span>
+              </dt>
+              <dd class="glossdef">
+                <p>The snapshot is invalid. Either the received UUID is
+	    wrong or it is read-write. That can happen if the transfer
+	    was interrupted. The next transfer command will try to
+	    transfer the snapshot again.</p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="refsect1">
+        <a id="global_options"></a>
+        <h2>GLOBAL OPTIONS</h2>
+        <div class="variablelist">
+          <dl class="variablelist">
+            <dt>
+              <span class="term">
+                <code class="option">-q, --quiet</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Suppress normal output. Error messages will still be printed, though.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">-v, --verbose</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Increase verbosity.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">--debug</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Turn on debugging.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">--utc</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Display dates and times in UTC. By default, local time is used.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">--iso</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Display dates and times in ISO format. ISO format is always used for machine-readable
+	  outputs.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">-t, --table-style <em class="replaceable"><code>style</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Specifies table style. Table style is identified by an integer number.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">--machine-readable <em class="replaceable"><code>format</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Specifies a machine-readable output format. Possible options are csv and json.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">--csvout</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Sets CSV output format. See
+	  <a class="link" href="https://tools.ietf.org/html/rfc4180" target="_top">RFC 4180</a>
+	  for the details, except lines end with a LF, not CR+LF.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">--jsonout</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Sets JSON output format.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">--separator <em class="replaceable"><code>character</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Specifies the character separator for CSV output format.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">--no-headers</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Suppress headers for CSV output format.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">-b, --backup-config <em class="replaceable"><code>name</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Use specified configuration instead of all configurations.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">--no-dbus</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Operate without a DBus connection.</p>
+              <p>Use with caution.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">--target-mode <em class="replaceable"><code>name</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Only operate on backup configs with the specified target mode.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">--automatic</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Only operate on backup configs which have the
+	  automatic flag set.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">--version</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Print version and exit.</p>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="refsect1">
+        <a id="commands"></a>
+        <h2>COMMANDS</h2>
+        <p>Snbk provides a number of <span class="emphasis"><em>commands</em></span>. Each
+    command accepts the options listed in the <a class="link" href="#global_options" title="GLOBAL OPTIONS">GLOBAL OPTIONS</a> section. These options
+    must be specified <span class="emphasis"><em>before</em></span> the command name. In
+    addition, many commands have specific arguments, which are listed in
+    this section. These command-specific arguments must be specified
+    <span class="emphasis"><em>after</em></span> the name of the command.</p>
+        <div class="variablelist">
+          <dl class="variablelist">
+            <dt>
+              <span class="term">
+                <code class="option">help</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Show short help text.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">list-configs</code>
+              </span>
+            </dt>
+            <dd>
+              <p>List available configurations.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">list (ls)</code>
+              </span>
+            </dt>
+            <dd>
+              <p>List snapshots.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">transfer [<em class="replaceable"><code>number</code></em>]</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Transfer all missing snapshots or the specified
+	  snapshot to the target.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">delete (remove|rm) [<em class="replaceable"><code>number</code></em>]</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Delete all obsolete snapshots or the specified
+	  snapshot from the target.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">transfer-and-delete</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Combines transfer and delete.</p>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="refsect1">
+        <a id="restore"></a>
+        <h2>RESTORE</h2>
+        <p>So far a restore has to be done manually. There are several
+    methods to do a restore, e.g. the backup can be mounted and then
+    copied or rsync can be used. Here we provide an example on how to use
+    btrfs send and receive to restore a snapshot on the source
+    system. In general using btrfs send and receive is a bit
+    tricky.</p>
+        <p>When using target-mode local:
+      </p>
+        <pre class="programlisting">
+# mkdir /.snapshots/42
+# cp /backups/root/42/info.xml /.snapshots/42/
+# btrfs send /backups/root/42/snapshot | btrfs receive /.snapshots/42
+      </pre>
+        <p>
+      When using target-mode ssh-push:
+      </p>
+        <pre class="programlisting">
+# mkdir /.snapshots/42
+# scp backups.example.com:/backups/eberich/root/42/info.xml /.snapshots/42
+# ssh backups.example.com btrfs send /backups/eberich/root/42/snapshot | btrfs receive /.snapshots/42
+      </pre>
+        <p>
+    </p>
+        <p>If the system was reinstalled it is unfortunately in general
+    not possibly to simply use the restored snapshot as the new default
+    snapshot since some files, e.g. /etc/fstab, likely need
+    modifications. Also unfortunately for other subvolumes than root a
+    rollback is not supported.</p>
+        <p>If there are snapshots on the source to speed up the
+    operation you can also use the -p option for btrfs send.</p>
+      </div>
+      <div class="refsect1">
+        <a id="notes"></a>
+        <h2>NOTES</h2>
+        <p>The content of snapshots transferred must not be changed on
+    the source system. Normally this is ensured since the snapshots are
+    read-only. But it is possible to change snapshots to read-write. This
+    can cause error during transfers in the future.</p>
+      </div>
+      <div class="refsect1">
+        <a id="permissions"></a>
+        <h2>PERMISSIONS</h2>
+        <p>Since the target-mode ssh-push needs root permissions on the
+    target it is recommended to use a dedicated machine or container
+    as a target.</p>
+      </div>
+      <div class="refsect1">
+        <a id="files"></a>
+        <h2>FILES</h2>
+        <div class="variablelist">
+          <dl class="variablelist">
+            <dt>
+              <span class="term">
+                <code class="filename">/etc/snapper/backup-configs</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Directory containing configuration files.</p>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="refsect1">
+        <a id="exit_status"></a>
+        <h2>EXIT STATUS</h2>
+        <p>Normally the exit status is 0. If an error occurred the exit
+    status is 1.</p>
+      </div>
+      <div class="refsect1">
+        <a id="homepage"></a>
+        <h2>HOMEPAGE</h2>
+        <p>
+          <a class="ulink" href="http://snapper.io/" target="_top">http://snapper.io/</a>
+        </p>
+      </div>
+      <div class="refsect1">
+        <a id="authors"></a>
+        <h2>AUTHORS</h2>
+        <p>Arvin Schnell <code class="email">&lt;<a class="email" href="mailto:aschnell@suse.com">aschnell@suse.com</a>&gt;</code></p>
+      </div>
+      <div class="refsect1">
+        <a id="see_also"></a>
+        <h2>SEE ALSO</h2>
+        <p>
+      <a class="citerefentry" href="snapper-backup-configs.html"><span class="citerefentry"><span class="refentrytitle">snapper-backup-configs</span>(5)</span></a>,
+      <a class="citerefentry" href="snapper.html"><span class="citerefentry"><span class="refentrytitle">snapper</span>(8)</span></a>,
+      <span class="citerefentry"><span class="refentrytitle">btrfs-send</span>(8)</span>,
+      <span class="citerefentry"><span class="refentrytitle">btrfs-receive</span>(8)</span>
+      <span class="citerefentry"><span class="refentrytitle">rsync</span>(1)</span>,
+      <span class="citerefentry"><span class="refentrytitle">sshfs</span>(1)</span>
+    </p>
+      </div>
+    </div>
+  </body>
+</html>

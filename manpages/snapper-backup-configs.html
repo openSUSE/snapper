@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>snapper-backup-configs</title>
+    <meta name="generator" content="DocBook XSL Stylesheets Vsnapshot" />
+  </head>
+  <body>
+    <div class="refentry">
+      <a id="snapper-backup-configs5"></a>
+      <div class="titlepage"></div>
+      <div class="refnamediv">
+        <h2>Name</h2>
+        <p>snapper-backup-configs — Configuration files for snapper backup configs</p>
+      </div>
+      <div class="refsect1">
+        <a id="description"></a>
+        <h2>DESCRIPTION</h2>
+        <p>Each file <code class="filename">/etc/snapper/backup-configs/*.json</code> describes a
+    snapper backup config.</p>
+        <p>The file uses JSON syntax containing a single object with
+    key-value pairs.</p>
+      </div>
+      <div class="refsect1">
+        <a id="key-value-pairs"></a>
+        <h2>KEY VALUE PAIRS</h2>
+        <p>The following is a list of keys that can be present in the
+    configuration file.</p>
+        <div class="variablelist">
+          <dl class="variablelist">
+            <dt>
+              <span class="term">
+                <code class="option">config</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Name of the snapper config.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">target-mode</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Either local or ssh-push.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">source-path</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Path of the subvolume or mount point.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">target-path</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Path of the subvolume or mount point.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">automatic</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Boolean for enabling automatic transfer and delete
+	  for the backup config using a systemd timer service.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">ssh-host</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Name of the target host. Required for target mode
+	  ssh-push.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">ssh-port</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Port of the target host. Optional for target mode
+	  ssh-push.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">ssh-user</code>
+              </span>
+            </dt>
+            <dd>
+              <p>User on the target host. Optional for target mode
+	  ssh-push.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">ssh-identity</code>
+              </span>
+            </dt>
+            <dd>
+              <p>An ssh-identity to access the host without requiring a
+	  password or passphrase. Optional for target mode ssh-push.</p>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="refsect1">
+        <a id="examples"></a>
+        <h2>EXAMPLES</h2>
+        <p>An example backup config for local backups:
+    </p>
+        <pre class="programlisting">
+{
+    "config": "root",
+    "target-mode": "local",
+    "automatic": true,
+    "source-path": "/",
+    "target-path": "/backups/root"
+}
+    </pre>
+        <p>
+    </p>
+        <p>An example backup config for remote backups via ssh-push:
+    </p>
+        <pre class="programlisting">
+{
+    "config": "root",
+    "target-mode": "ssh-push",
+    "automatic": false,
+    "source-path": "/",
+    "target-path": "/backups/eberich/root",
+    "ssh-host": "backups.example.com",
+    "ssh-identity": "/etc/snapper/certs/id_ecdsa"
+}
+    </pre>
+        <p>
+    </p>
+      </div>
+      <div class="refsect1">
+        <a id="homepage"></a>
+        <h2>HOMEPAGE</h2>
+        <p>
+          <a class="ulink" href="http://snapper.io/" target="_top">http://snapper.io/</a>
+        </p>
+      </div>
+      <div class="refsect1">
+        <a id="authors"></a>
+        <h2>AUTHORS</h2>
+        <p>Arvin Schnell <code class="email">&lt;<a class="email" href="mailto:aschnell@suse.com">aschnell@suse.com</a>&gt;</code></p>
+      </div>
+      <div class="refsect1">
+        <a id="see_also"></a>
+        <h2>SEE ALSO</h2>
+        <p>
+      <a class="citerefentry" href="snbk.html"><span class="citerefentry"><span class="refentrytitle">snbk</span>(8)</span></a>,
+      <a class="citerefentry" href="snapper.html"><span class="citerefentry"><span class="refentrytitle">snapper</span>(8)</span></a>
+    </p>
+      </div>
+    </div>
+  </body>
+</html>
