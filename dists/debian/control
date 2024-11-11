@@ -13,6 +13,14 @@ Depends: ${shlibs:Depends}
 Description: snapper
  This package contains snapper, a tool for filesystem snapshot management.
 
+Package: snapper-backup
+Priority: optional
+Section: admin
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: snapper-backup
+ This package contains snbk, a tool for backups of snapper snapshots.
+
 Package: libsnapper
 Priority: optional
 Section: libs
