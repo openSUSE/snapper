@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-07 08:23+0100\n"
-"PO-Revision-Date: 2024-11-10 17:48+0000\n"
+"PO-Revision-Date: 2024-11-13 17:48+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
 "\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 5.8.2\n"
+"X-Generator: Weblate 5.8.3\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <upratovací-algoritmus>"
@@ -198,35 +198,35 @@ msgid "'rmdir' failed."
 msgstr "'rmdir' zlyhalo."
 
 msgid "'scp info.xml' failed."
-msgstr ""
+msgstr "'scp info.xml' zlyhalo."
 
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Snímka %d.)"
 
 msgid "(Source) Creation Time"
-msgstr ""
+msgstr "(Zdroj) Čas vytvorenia"
 
 msgid "(Source) Parent UUID"
-msgstr ""
+msgstr "(Zdroj) Nadradené UUID"
 
 msgid "(Source) Received UUID"
-msgstr ""
+msgstr "(Zdroj) Prijaté UUID"
 
 msgid "(Source) UUID"
-msgstr ""
+msgstr "(Zdroj) UUID"
 
 msgid "(Target) Creation Time"
-msgstr ""
+msgstr "(Cieľ) Čas vytvorenia"
 
 msgid "(Target) Parent UUID"
-msgstr ""
+msgstr "(Cieľ) Nadradené UUID"
 
 msgid "(Target) Received UUID"
-msgstr ""
+msgstr "(Cieľ) Prijaté UUID"
 
 msgid "(Target) UUID"
-msgstr ""
+msgstr "(Cieľ) UUID"
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -238,7 +238,7 @@ msgid "--ambit, -a <ambit>"
 msgstr "--ambit, -a <ambit>"
 
 msgid "--automatic"
-msgstr ""
+msgstr "--automatic"
 
 msgid "--backup-config, -b <name>"
 msgstr "--backup-config, -b <názov>"
