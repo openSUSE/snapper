@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-07 08:23+0100\n"
-"PO-Revision-Date: 2024-11-13 17:48+0000\n"
+"PO-Revision-Date: 2024-11-14 17:48+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
 "\n"
@@ -274,7 +274,7 @@ msgid "--disable-used-space"
 msgstr "--disable-used-space"
 
 msgid "--empty"
-msgstr ""
+msgstr "--empty"
 
 msgid "--extensions, -x <options>"
 msgstr "--extensions, -x <voľby>"
@@ -340,7 +340,7 @@ msgid "--table-style, -t <style>"
 msgstr "--table-style, -t <štýl>"
 
 msgid "--target-mode <target-mode>"
-msgstr ""
+msgstr "--target-mode <cieľový-režim>"
 
 msgid "--template, -t <name>"
 msgstr "--template, -t <názov>"
@@ -377,7 +377,7 @@ msgid "Ambit is %s."
 msgstr "Oblasť je %s."
 
 msgid "Automatic"
-msgstr ""
+msgstr "Automatické"
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -777,7 +777,7 @@ msgid "List snapshots from all accessible configs."
 msgstr "Zoznam snímok zo všetkých dostupných konfigurácií."
 
 msgid "List:"
-msgstr ""
+msgstr "Zoznam:"
 
 # %s is either BOOTP or DHCP
 #, c-format
@@ -826,7 +826,7 @@ msgid "Name of config template to use."
 msgstr "Názov konfiguračnej šablóny, ktorá sa použije."
 
 msgid "No backup configs found."
-msgstr ""
+msgstr "Nenašli sa žiadne záložné konfigurácie."
 
 msgid "No command provided."
 msgstr "Nebol zadaný žiadny príkaz."
@@ -841,10 +841,10 @@ msgid "Number of corresponding pre snapshot."
 msgstr "Číslo zodpovedajúce snímke pred."
 
 msgid "Only use backup-config with automatic set."
-msgstr ""
+msgstr "Použiť záložnú konfiguráciu len s automatickým nastavením."
 
 msgid "Only use backup-config with specified target-mode."
-msgstr ""
+msgstr "Použiť záložnú konfiguráciu len so zadaným cieľovým režimom."
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -875,7 +875,7 @@ msgid "PB"
 msgstr "PB"
 
 msgid "Path mismatch between backup-config and config."
-msgstr ""
+msgstr "Nesúlad ciest medzi záložnou konfiguráciou a konfiguráciou."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -934,13 +934,13 @@ msgstr "Spustí príkaz a vytvorí snímky pred a po."
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Spustenie vymazávania zlyhalo pre %d z %ld záložnej konfigurácie."
+msgstr[1] "Spustenie vymazávania zlyhalo pre %d zo %ld záložných konfigurácií."
+msgstr[2] "Spustenie vymazávania zlyhalo pre %d zo %ld záložných konfigurácií."
 
 #, c-format
 msgid "Running delete for backup config '%s' failed."
-msgstr ""
+msgstr "Spustenie vymazávania pre záložnú konfiguráciu '%s' zlyhalo."
 
 #, c-format
 msgid "Running delete for backup config '%s'."
