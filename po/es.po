@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-07 08:23+0100\n"
-"PO-Revision-Date: 2024-03-19 18:42+0000\n"
-"Last-Translator: Christian Medina von Levetzow <cmedinavonlevetzow@gmail.com>\n"
-"Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/>\n"
+"PO-Revision-Date: 2024-11-15 12:48+0000\n"
+"Last-Translator: \"Marina J. Donis\" <marinajdonis@gmail.com>\n"
+"Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/"
+">\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9.1\n"
+"X-Generator: Weblate 5.8.3\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <algoritmo-de-limpieza>"
@@ -178,26 +179,25 @@ msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 msgid "'btrfs send | btrfs receive' failed."
-msgstr ""
+msgstr "'btrfs send | btrfs receive' ha fallado."
 
 msgid "'btrfs subvolume delete' failed."
-msgstr ""
+msgstr "'btrfs subvolume delete' ha fallado."
 
-#, fuzzy
 msgid "'cp info.xml' failed."
-msgstr "Error al abrir el archivo '%s'."
+msgstr "'cp info.xml' ha fallado."
 
 msgid "'mkdir' failed."
-msgstr ""
+msgstr "'mkdir' ha fallado."
 
 msgid "'rm info.xml' failed."
-msgstr ""
+msgstr "'rm info.xml' ha fallado."
 
 msgid "'rmdir' failed."
-msgstr ""
+msgstr "'rmdir' ha fallado."
 
 msgid "'scp info.xml' failed."
-msgstr ""
+msgstr "'scp info.xml' ha fallado."
 
 # SLE12
 #, c-format
@@ -205,28 +205,28 @@ msgid "(Snapshot %d.)"
 msgstr "(Instantánea %d.)"
 
 msgid "(Source) Creation Time"
-msgstr ""
+msgstr "(Origen) Hora de creación"
 
 msgid "(Source) Parent UUID"
-msgstr ""
+msgstr "(Origen) UUID Padre"
 
 msgid "(Source) Received UUID"
-msgstr ""
+msgstr "(Origen) UUID Recibido"
 
 msgid "(Source) UUID"
-msgstr ""
+msgstr "(Origen) UUID"
 
 msgid "(Target) Creation Time"
-msgstr ""
+msgstr "(Destino) Hora de creación"
 
 msgid "(Target) Parent UUID"
-msgstr ""
+msgstr "(Destino) UUID Padre"
 
 msgid "(Target) Received UUID"
-msgstr ""
+msgstr "(Destino) UUID Recibido"
 
 msgid "(Target) UUID"
-msgstr ""
+msgstr "(Destino) UUID"
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -238,11 +238,10 @@ msgid "--ambit, -a <ambit>"
 msgstr "--ambit, -a <ámbito>"
 
 msgid "--automatic"
-msgstr ""
+msgstr "--automatic"
 
-#, fuzzy
 msgid "--backup-config, -b <name>"
-msgstr "--config, -c <nombre>"
+msgstr "--backup-config, -b <nombre>"
 
 msgid "--cleanup-algorithm, -c <algo>"
 msgstr "--cleanup-algorithm, -c <algoritmo>"
@@ -275,7 +274,7 @@ msgid "--disable-used-space"
 msgstr "--disable-used-space"
 
 msgid "--empty"
-msgstr ""
+msgstr "--empty"
 
 msgid "--extensions, -x <options>"
 msgstr "--extensions, -x <opciones>"
@@ -341,7 +340,7 @@ msgid "--table-style, -t <style>"
 msgstr "--table-style, -t <estilo>"
 
 msgid "--target-mode <target-mode>"
-msgstr ""
+msgstr "--target-mode <modo-destino>"
 
 msgid "--template, -t <name>"
 msgstr "--template, -t <nombre>"
@@ -379,7 +378,7 @@ msgid "Ambit is %s."
 msgstr "El ámbito es %s."
 
 msgid "Automatic"
-msgstr ""
+msgstr "Automático"
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -486,9 +485,8 @@ msgstr "El comando 'setup-quota' no tiene argumentos."
 msgid "Command 'status' needs one argument."
 msgstr "El comando 'status' necesita un argumento."
 
-#, fuzzy
 msgid "Command 'transfer-and-delete' does not take arguments."
-msgstr "El comando 'create' no tiene argumentos."
+msgstr "El comando 'transfer-and-delete' no toma argumentos."
 
 msgid "Command 'umount' needs at least one argument."
 msgstr "El comando 'unmount' necesita al menos un argumento."
@@ -539,9 +537,8 @@ msgstr "No es posible crear espacio libre suficiente."
 msgid "Create a snapshot from the specified snapshot."
 msgstr "Crea una instantánea a partir de la instantánea especificada."
 
-#, fuzzy
 msgid "Create an empty snapshot."
-msgstr "Crea una instantánea de solo lectura."
+msgstr "Crea una instantánea vacía."
 
 msgid "Create read-only snapshot."
 msgstr "Crea una instantánea de solo lectura."
@@ -579,17 +576,16 @@ msgstr "Fecha"
 msgid "Default"
 msgstr "Por defecto"
 
-#, fuzzy
 msgid "Delete:"
-msgstr "  Borrar configuración:"
+msgstr "Borrar:"
 
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Fallo al borrar la configuración (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting snapshot %d."
-msgstr "Error al eliminar la imagen."
+msgstr "Eliminando instantánea %d."
 
 msgid "Deleting snapshot failed."
 msgstr "Error al eliminar la imagen."
