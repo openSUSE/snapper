@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-07 08:23+0100\n"
-"PO-Revision-Date: 2023-12-12 12:02+0000\n"
-"Last-Translator: Kukuh Syafaat <syafaatkukuh@gmail.com>\n"
-"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/id/>\n"
+"PO-Revision-Date: 2024-11-17 03:48+0000\n"
+"Last-Translator: Arif Budiman <arifpedia@gmail.com>\n"
+"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/"
+"id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.9.1\n"
+"X-Generator: Weblate 5.8.3\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <algoritma-pembersihan>"
@@ -91,9 +92,8 @@ msgstr "    Opsi untuk perintah 'get-config':"
 msgid "    Options for 'list' command:"
 msgstr "    Opsi untuk perintah 'list':"
 
-#, fuzzy
 msgid "    Options for 'list-configs' command:"
-msgstr "    Opsi untuk perintah 'get-config':"
+msgstr "    Opsi untuk perintah 'list-configs':"
 
 msgid "    Options for 'modify' command:"
 msgstr "    Opsi untuk perintah 'modify':"
@@ -176,195 +176,185 @@ msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 msgid "'btrfs send | btrfs receive' failed."
-msgstr ""
+msgstr "'btrfs send | btrfs receive' gagal."
 
 msgid "'btrfs subvolume delete' failed."
-msgstr ""
+msgstr "'btrfs subvolume delete' gagal."
 
-#, fuzzy
 msgid "'cp info.xml' failed."
-msgstr "Membuka berkas '%s' gagal."
+msgstr "'cp info.xml' gagal."
 
 msgid "'mkdir' failed."
-msgstr ""
+msgstr "'mkdir' gagal."
 
 msgid "'rm info.xml' failed."
-msgstr ""
+msgstr "'rm info.xml' gagal."
 
 msgid "'rmdir' failed."
-msgstr ""
+msgstr "'rmdir' gagal."
 
 msgid "'scp info.xml' failed."
-msgstr ""
+msgstr "'scp info.xml' gagal."
 
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Snapshot %d.)"
 
 msgid "(Source) Creation Time"
-msgstr ""
+msgstr "(Sumber) Waktu Pembuatan"
 
 msgid "(Source) Parent UUID"
-msgstr ""
+msgstr "(Sumber) UUID Induk"
 
 msgid "(Source) Received UUID"
-msgstr ""
+msgstr "(Sumber) Menerima UUID"
 
 msgid "(Source) UUID"
-msgstr ""
+msgstr "(Source) UUID"
 
 msgid "(Target) Creation Time"
-msgstr ""
+msgstr "(Target) Waktu Pembuatan"
 
 msgid "(Target) Parent UUID"
-msgstr ""
+msgstr "(Target) Parent UUID"
 
 msgid "(Target) Received UUID"
-msgstr ""
+msgstr "(Target) Menerima UUID"
 
 msgid "(Target) UUID"
-msgstr ""
+msgstr "(Target) UUID"
 
 msgid "--abbreviate"
-msgstr ""
+msgstr "--abbreviate"
 
 msgid "--all-configs, -a"
-msgstr ""
+msgstr "--all-configs, -a"
 
 msgid "--ambit, -a <ambit>"
-msgstr ""
+msgstr "--ambit, -a <ambit>"
 
 msgid "--automatic"
-msgstr ""
+msgstr "--automatic"
 
 msgid "--backup-config, -b <name>"
-msgstr ""
+msgstr "--backup-config, -b <nama>"
 
-#, fuzzy
 msgid "--cleanup-algorithm, -c <algo>"
-msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritma pembersihan untuk snapshot."
+msgstr "--cleanup-algorithm, -c <algo>"
 
 msgid "--columns <columns>"
-msgstr ""
+msgstr "--columns <kolom>"
 
 msgid "--command <command>"
-msgstr ""
+msgstr "--command <perintah>"
 
 msgid "--config, -c <name>"
-msgstr ""
+msgstr "--config, -c <nama>"
 
 msgid "--csvout"
-msgstr ""
+msgstr "--csvout"
 
 msgid "--debug"
-msgstr ""
+msgstr "--debug"
 
-#, fuzzy
 msgid "--default"
-msgstr "Bawaan"
+msgstr "--default"
 
-#, fuzzy
 msgid "--description, -d <description>"
-msgstr "\t--description, -d <deskripsi>\tDeskripsi untuk snapshot."
+msgstr "--description, -d <deskripsi>"
 
 msgid "--diff-cmd <command>"
-msgstr ""
+msgstr "--diff-cmd <perintah>"
 
 msgid "--disable-used-space"
-msgstr ""
+msgstr "--disable-used-space"
 
 msgid "--empty"
-msgstr ""
+msgstr "--empty"
 
 msgid "--extensions, -x <options>"
-msgstr ""
+msgstr "--extensions, -x <opsi>"
 
 msgid "--free-space <space>"
-msgstr ""
+msgstr "--free-space <space>"
 
 msgid "--from <number>"
-msgstr ""
+msgstr "--from <nomor>"
 
 msgid "--fstype, -f <fstype>"
-msgstr ""
+msgstr "--fstype, -f <fstype>"
 
 msgid "--input, -i <file>"
-msgstr ""
+msgstr "--input, -i <file>"
 
 msgid "--iso"
-msgstr ""
+msgstr "--iso"
 
 msgid "--jsonout"
-msgstr ""
+msgstr "--jsonout"
 
-#, fuzzy
 msgid "--machine-readable <format>"
-msgstr "Format '%s' yang dapat dibaca mesin tidak valid."
+msgstr "--machine-readable <format>"
 
 msgid "--no-dbus"
-msgstr ""
+msgstr "--no-dbus"
 
 msgid "--no-headers"
-msgstr ""
+msgstr "--no-headers"
 
-#, fuzzy
 msgid "--output, -o <file>"
-msgstr "\t--output, -o <berkas>\t\tSimpan status ke berkas."
+msgstr "--output, -o <file>"
 
 msgid "--path <path>"
-msgstr ""
+msgstr "--path <path>"
 
 msgid "--pre-number <number>"
-msgstr ""
+msgstr "--pre-number <nomor>"
 
 msgid "--print-number, -p"
-msgstr ""
+msgstr "--print-number, -p"
 
 msgid "--quiet, -q"
-msgstr ""
+msgstr "--quiet, -q"
 
-#, fuzzy
 msgid "--read-only"
-msgstr "Hanya-Baca"
+msgstr "--read-only"
 
 msgid "--read-write"
-msgstr ""
+msgstr "--read-write"
 
 msgid "--root, -r <path>"
-msgstr ""
+msgstr "--root, -r <path>"
 
 msgid "--separator <separator>"
-msgstr ""
+msgstr "--separator <separator>"
 
 msgid "--sync, -s"
-msgstr ""
+msgstr "--sync, -s"
 
-#, fuzzy
 msgid "--table-style, -t <style>"
-msgstr "\t--table-style, -t <gaya>\tGaya tabel (bilangan bulat)."
+msgstr "--table-style, -t <style>"
 
 msgid "--target-mode <target-mode>"
-msgstr ""
+msgstr "--target-mode <target-mode>"
 
 msgid "--template, -t <name>"
-msgstr ""
+msgstr "--template, -t <nama>"
 
-#, fuzzy
 msgid "--type, -t <type>"
-msgstr "\t--type, -t <jenis>\t\tJenis snapshot."
+msgstr "--type, -t <type>"
 
-#, fuzzy
 msgid "--userdata, -u <userdata>"
-msgstr "\t--userdata, -u <userdata>\tUserdata untuk snapshot."
+msgstr "--userdata, -u <userdata>"
 
 msgid "--utc"
-msgstr ""
+msgstr "--utc"
 
 msgid "--verbose, -v"
-msgstr ""
+msgstr "--verbose, -v"
 
 msgid "--version"
-msgstr ""
+msgstr "--version"
 
 msgid "ACL error."
 msgstr "Galat ACL."
@@ -375,16 +365,15 @@ msgstr "Aktif"
 msgid "Active snapshot is already default snapshot."
 msgstr "Snapshot aktif sudah menjadi snapshot bawaan."
 
-#, fuzzy
 msgid "Allow to abbreviate table columns."
-msgstr "\t--abbreviate\t\t\tIzinkan untuk menyingkat kolom tabel."
+msgstr "Memungkinkan untuk menyingkat kolom tabel."
 
 #, c-format
 msgid "Ambit is %s."
 msgstr "Ambit adalah %s."
 
 msgid "Automatic"
-msgstr ""
+msgstr "Otomatis"
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -408,31 +397,27 @@ msgstr "Tidak dapat mendeteksi ambit sejak subvolume bawaan tidak diketahui."
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Tidak dapat melakukan rollback karena subvolume bawaan tidak diketahui."
 
-#, fuzzy
 msgid "Character separator for CSV output format."
-msgstr "\t--separator <separator>\t\tPemisah karakter untuk format keluaran CSV."
+msgstr "Pemisah karakter untuk format output CSV."
 
 msgid "Cleanup"
 msgstr "Membersihkan"
 
-#, fuzzy
 msgid "Cleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritma pembersihan untuk snapshot."
+msgstr "Algoritma pembersihan untuk snapshot."
 
-#, fuzzy
 msgid "Cleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <algo>\tAlgoritma pembersihan untuk snapshot."
+msgstr "Algoritme pembersihan untuk snapshot."
 
-#, fuzzy
 msgid "Cleanup all configs affecting path."
-msgstr "\t--path <path>\t\tBersihkan semua konfigurasi yang mempengaruhi path."
+msgstr "Bersihkan semua konfigurasi yang mempengaruhi jalur."
 
 #, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "Pengaya sisi klien '%s' gagal."
 
 msgid "Columns to show separated by comma."
-msgstr ""
+msgstr "Kolom yang akan ditampilkan dipisahkan dengan koma."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Perintah 'cleanup' membutuhkan satu argumen."
@@ -492,9 +477,8 @@ msgstr "Perintah 'setup-quota' tidak mengambil argumen."
 msgid "Command 'status' needs one argument."
 msgstr "Perintah 'status' membutuhkan satu argumen."
 
-#, fuzzy
 msgid "Command 'transfer-and-delete' does not take arguments."
-msgstr "Perintah 'create' tidak mengambil argumen."
+msgstr "Perintah ' transfer-and-delete ' tidak menerima argumen."
 
 msgid "Command 'umount' needs at least one argument."
 msgstr "Perintah 'unmount' membutuhkan setidaknya satu argumen."
@@ -505,9 +489,8 @@ msgstr "Perintah 'undochange' membutuhkan setidaknya satu argumen."
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Perintah 'xadiff' membutuhkan setidaknya satu argumen."
 
-#, fuzzy
 msgid "Command used for comparing files."
-msgstr "\t--diff-cmd <perintah>\t\tPerintah yang digunakan untuk membandingkan berkas."
+msgstr "Perintah yang digunakan untuk membandingkan file."
 
 msgid "Config"
 msgstr "Config"
@@ -541,21 +524,17 @@ msgstr "Tidak dapat menyediakan cukup ruang bebas untuk path '%s'."
 msgid "Could not make enough free space available."
 msgstr "Tidak dapat menyediakan cukup ruang bebas."
 
-#, fuzzy
 msgid "Create a snapshot from the specified snapshot."
-msgstr "\t--from <number>\t\t\tBuat snapshot dari snapshot yang ditentukan."
+msgstr "Membuat snapshot dari snapshot yang ditentukan."
 
-#, fuzzy
 msgid "Create an empty snapshot."
-msgstr "\t--read-only\t\t\tBuat snapshot hanya baca."
+msgstr "Membuat snapshot kosong."
 
-#, fuzzy
 msgid "Create read-only snapshot."
-msgstr "\t--read-only\t\t\tBuat snapshot hanya baca."
+msgstr "Membuat snapshot hanya-baca."
 
-#, fuzzy
 msgid "Create read-write snapshot."
-msgstr "\t--read-write\t\t\tBuat snapshot baca-tulis."
+msgstr "Membuat snapshot baca-tulis."
 
 #, c-format
 msgid "Creating config failed (%s)."
@@ -583,17 +562,16 @@ msgstr "Tanggal"
 msgid "Default"
 msgstr "Bawaan"
 
-#, fuzzy
 msgid "Delete:"
-msgstr "  Hapus konfigurasi:"
+msgstr "Hapus:"
 
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Gagal menghapus konfigurasi (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting snapshot %d."
-msgstr "Gagal menghapus snapshot."
+msgstr "Menghapus snapshot %d."
 
 msgid "Deleting snapshot failed."
 msgstr "Gagal menghapus snapshot."
@@ -606,28 +584,23 @@ msgstr[0] "Menghapus snapshot dari %s:"
 msgid "Description"
 msgstr "Deskripsi"
 
-#, fuzzy
 msgid "Description for snapshot."
-msgstr "Deskripsi"
+msgstr "Deskripsi untuk snapshot."
 
-#, fuzzy
 msgid "Description for snapshots."
-msgstr "\t--description, -d <deskripsi>\tDeskripsi untuk snapshot."
+msgstr "Deskripsi untuk snapshot."
 
 msgid "Detecting filesystem type failed."
 msgstr "Gagal mendeteksi jenis sistem berkas."
 
-#, fuzzy
 msgid "Disable showing used space."
-msgstr "\t--disable-used-space\t\tNonaktifkan menampilkan ruang yang digunakan."
+msgstr "Nonaktifkan tampilan ruang yang digunakan."
 
-#, fuzzy
 msgid "Display dates and times in ISO format."
-msgstr "\t--iso\t\t\t\tTampilkan tanggal dan waktu dalam format ISO."
+msgstr "Menampilkan tanggal dan waktu dalam format ISO."
 
-#, fuzzy
 msgid "Display dates and times in UTC."
-msgstr "\t--utc\t\t\t\tTampilkan tanggal dan waktu dalam UTC."
+msgstr "Menampilkan tanggal dan waktu dalam UTC."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
@@ -651,9 +624,8 @@ msgstr "Data pengguna kosong."
 msgid "Error (%s)."
 msgstr "Galat (%s)."
 
-#, fuzzy
 msgid "Extra options passed to the diff command."
-msgstr "\t--extensions, -x <opsi>\tOpsi tambahan diteruskan ke perintah diff."
+msgstr "Opsi tambahan diteruskan ke perintah diff."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Gagal menginisialisasi penangan sistem berkas."
@@ -662,9 +634,8 @@ msgstr "Gagal menginisialisasi penangan sistem berkas."
 msgid "Failed to parse '%s'."
 msgstr "Gagal mengurai '%s'."
 
-#, fuzzy
 msgid "Failed to parse number."
-msgstr "Gagal mengurai '%s'."
+msgstr "Gagal mengurai nomor."
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -703,9 +674,8 @@ msgstr "GB"
 msgid "GiB"
 msgstr "GiB"
 
-#, fuzzy
 msgid "Global options:"
-msgstr "    Opsi global:"
+msgstr "Opsi global:"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -721,9 +691,8 @@ msgstr "Snapshot identik."
 msgid "Illegal snapshot."
 msgstr "Snapshot ilegal."
 
-#, fuzzy
 msgid "Increase verbosity."
-msgstr "\t--verbose, -v\t\t\tMeningkatkan verbositas."
+msgstr "Tingkatkan verbositas."
 
 #, c-format
 msgid "Invalid ambit '%s'."
@@ -733,9 +702,8 @@ msgstr "Ambit '%s' tidak valid."
 msgid "Invalid column '%s'."
 msgstr "Kolom '%s' tidak valid."
 
-#, fuzzy
 msgid "Invalid config."
-msgstr "Data konfigurasi tidak valid."
+msgstr "Konfigurasi tidak valid."
 
 msgid "Invalid configdata."
 msgstr "Data konfigurasi tidak valid."
@@ -762,9 +730,9 @@ msgstr "Snapshot '%s' tidak valid."
 msgid "Invalid snapshots."
 msgstr "Snapshot tidak valid."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid subvolume path '%s' on target."
-msgstr "Subvolume tidak valid."
+msgstr "Jalur subvolume '%s' yang tidak valid pada target."
 
 msgid "Invalid subvolume."
 msgstr "Subvolume tidak valid."
@@ -773,9 +741,9 @@ msgstr "Subvolume tidak valid."
 msgid "Invalid table style '%s'."
 msgstr "Gaya tabel '%s' tidak valid."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid target mode '%s'."
-msgstr "Gaya tabel '%s' tidak valid."
+msgstr "Mode target '%s' tidak valid."
 
 #, c-format
 msgid "Invalid user (%s)."
@@ -792,16 +760,14 @@ msgstr "Kunci"
 msgid "KiB"
 msgstr "KiB"
 
-#, fuzzy
 msgid "List configs:"
-msgstr "  Daftar config:"
+msgstr "Daftar konfigurasi:"
 
-#, fuzzy
 msgid "List snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tDaftar snapshot dari semua config yang dapat diakses."
+msgstr "Buat daftar snapshot dari semua konfigurasi yang dapat diakses."
 
 msgid "List:"
-msgstr ""
+msgstr "Daftar:"
 
 #, c-format
 msgid "Listing configs failed (%s)."
