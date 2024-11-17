@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-07 08:23+0100\n"
-"PO-Revision-Date: 2024-11-14 17:48+0000\n"
+"PO-Revision-Date: 2024-11-17 14:48+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
 "\n"
@@ -944,53 +944,56 @@ msgstr "Spustenie vymazávania pre záložnú konfiguráciu '%s' zlyhalo."
 
 #, c-format
 msgid "Running delete for backup config '%s'."
-msgstr ""
+msgstr "Spustenie vymazávania pre záložnú konfiguráciu '%s'."
 
 #, c-format
 msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Spustenie výpisu zoznamu zlyhalo pre %d z %ld záložnej konfigurácie."
+msgstr[1] "Spustenie výpisu zoznamu zlyhalo pre %d z %ld záložných konfigurácií."
+msgstr[2] "Spustenie výpisu zoznamu zlyhalo pre %d z %ld záložných konfigurácií."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
 msgstr[0] ""
+"Spustenie prenosu a vymazania zlyhalo pre %d z %ld záložnej konfigurácie."
 msgstr[1] ""
+"Spustenie prenosu a vymazania zlyhalo pre %d z %ld záložných konfigurácií."
 msgstr[2] ""
+"Spustenie prenosu a vymazania zlyhalo pre %d z %ld záložných konfigurácií."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
-msgstr ""
+msgstr "Spustenie prenosu a vymazania pre záložnú konfiguráciu '%s' zlyhalo."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s'."
-msgstr ""
+msgstr "Spustenie prenosu a vymazania pre záložnú konfiguráciu '%s'."
 
 #, c-format
 msgid "Running transfer failed for %d of %ld backup config."
 msgid_plural "Running transfer failed for %d of %ld backup configs."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Spustenie prenosu zlyhalo pre %d z %ld záložnej konfigurácie."
+msgstr[1] "Spustenie prenosu zlyhalo pre %d z %ld záložných konfigurácií."
+msgstr[2] "Spustenie prenosu zlyhalo pre %d z %ld záložných konfigurácií."
 
 #, c-format
 msgid "Running transfer for backup config '%s' failed."
-msgstr ""
+msgstr "Spustenie prenosu pre záložnú konfiguráciu '%s' zlyhalo."
 
 #, c-format
 msgid "Running transfer for backup config '%s'."
-msgstr ""
+msgstr "Spustenie prenosu pre záložnú konfiguráciu '%s'."
 
 msgid "SSH Host"
-msgstr ""
+msgstr "SSH hostiteľ"
 
 msgid "SSH Identity"
-msgstr ""
+msgstr "SSH identita"
 
 msgid "SSH Port"
-msgstr ""
+msgstr "SSH port"
 
 msgid "SSH User"
 msgstr "SSH používateľ"
@@ -1054,10 +1057,10 @@ msgid "Snapshot number %d not found."
 msgstr "Číslo snímky %d nebolo nájdené."
 
 msgid "Source Path"
-msgstr ""
+msgstr "Cesta zdroja"
 
 msgid "Source State"
-msgstr ""
+msgstr "Stav zdroja"
 
 msgid "Subvolume"
 msgstr "Podzväzok"
@@ -1080,13 +1083,13 @@ msgid "Table style (integer)."
 msgstr "Štýl tabuľky (celé číslo)."
 
 msgid "Target Mode"
-msgstr ""
+msgstr "Režim cieľa"
 
 msgid "Target Path"
-msgstr ""
+msgstr "Cesta cieľa"
 
 msgid "Target State"
-msgstr ""
+msgstr "Stav cieľa"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Oblasť je možné zadať manuálne pomocou voľby --ambit."
@@ -1102,10 +1105,10 @@ msgid "TiB"
 msgstr "TiB"
 
 msgid "Transfer and delete:"
-msgstr ""
+msgstr "Prenos a vymazanie:"
 
 msgid "Transfer:"
-msgstr ""
+msgstr "Prenos:"
 
 #, c-format
 msgid "Transferring snapshot %d."
@@ -1246,10 +1249,10 @@ msgid "snbk list-configs"
 msgstr "snbk list-configs"
 
 msgid "snbk transfer [numbers]"
-msgstr ""
+msgstr "snbk transfer [čísla]"
 
 msgid "snbk transfer-and-delete"
-msgstr ""
+msgstr "snbk transfer-and-delete"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "použitie: snapper [--globálne-voľby] <príkaz> [--voľby-príkazu] [argumenty-príkazu]"
