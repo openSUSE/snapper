@@ -6,15 +6,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-07 08:23+0100\n"
-"PO-Revision-Date: 2024-02-21 11:42+0000\n"
-"Last-Translator: Tommi Nieminen <software@legisign.org>\n"
-"Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
+"PO-Revision-Date: 2024-11-23 21:48+0000\n"
+"Last-Translator: Rantala <toni.rantala@protonmail.com>\n"
+"Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/"
+">\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9.1\n"
+"X-Generator: Weblate 5.8.4\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper puhdistus <puhdistus-algoritmi>"
@@ -179,7 +180,7 @@ msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 msgid "'btrfs send | btrfs receive' failed."
-msgstr ""
+msgstr "'btrfs lähetä | btrfs vastaanota' epäonnistui."
 
 msgid "'btrfs subvolume delete' failed."
 msgstr ""
@@ -189,44 +190,44 @@ msgid "'cp info.xml' failed."
 msgstr "Tiedoston \"%s\" avaaminen epäonnistui."
 
 msgid "'mkdir' failed."
-msgstr ""
+msgstr "'mkdir' epäonnistui."
 
 msgid "'rm info.xml' failed."
-msgstr ""
+msgstr "'rm info.xml' epäonnistui."
 
 msgid "'rmdir' failed."
-msgstr ""
+msgstr "'rmdir' epäonnistui."
 
 msgid "'scp info.xml' failed."
-msgstr ""
+msgstr "'scp info.xml' epäonnistui."
 
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Tilannekuva %d.)"
 
 msgid "(Source) Creation Time"
-msgstr ""
+msgstr "(Lähde) Luontiaika"
 
 msgid "(Source) Parent UUID"
 msgstr ""
 
 msgid "(Source) Received UUID"
-msgstr ""
+msgstr "(Lähde) Vastaanotettu UUID"
 
 msgid "(Source) UUID"
-msgstr ""
+msgstr "(Lähde) UUID"
 
 msgid "(Target) Creation Time"
-msgstr ""
+msgstr "(Kohde) Luontiaika"
 
 msgid "(Target) Parent UUID"
 msgstr ""
 
 msgid "(Target) Received UUID"
-msgstr ""
+msgstr "(Kohde) Vastaanotettu UUID"
 
 msgid "(Target) UUID"
-msgstr ""
+msgstr "(Kohde) UUID"
 
 msgid "--abbreviate"
 msgstr ""
@@ -238,20 +239,19 @@ msgid "--ambit, -a <ambit>"
 msgstr ""
 
 msgid "--automatic"
-msgstr ""
+msgstr "--automaattinen"
 
 msgid "--backup-config, -b <name>"
 msgstr ""
 
-#, fuzzy
 msgid "--cleanup-algorithm, -c <algo>"
-msgstr "\t--cleanup-algorithm, -c <algo>\tTilannekuvan puhdistusalgoritmi."
+msgstr "--cleanup-algorithm, -c <algoritmi>"
 
 msgid "--columns <columns>"
 msgstr ""
 
 msgid "--command <command>"
-msgstr ""
+msgstr "--komento <komento>"
 
 msgid "--config, -c <name>"
 msgstr ""
@@ -277,7 +277,7 @@ msgid "--disable-used-space"
 msgstr ""
 
 msgid "--empty"
-msgstr ""
+msgstr "--tyhjä"
 
 msgid "--extensions, -x <options>"
 msgstr ""
@@ -388,7 +388,7 @@ msgid "Ambit is %s."
 msgstr "Alue on %s."
 
 msgid "Automatic"
-msgstr ""
+msgstr "Automaattinen"
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -587,17 +587,16 @@ msgstr "Päiväys"
 msgid "Default"
 msgstr "Oletus"
 
-#, fuzzy
 msgid "Delete:"
-msgstr "  Poista määritys:"
+msgstr "Poista määritys:"
 
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Määrityksen poistaminen epäonnistui (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting snapshot %d."
-msgstr "Tilannekuvan poistaminen epäonnistui."
+msgstr "Tilannekuvan %d poistaminen epäonnistui."
 
 msgid "Deleting snapshot failed."
 msgstr "Tilannekuvan poistaminen epäonnistui."
@@ -710,9 +709,8 @@ msgstr "Gt"
 msgid "GiB"
 msgstr "GiB"
 
-#, fuzzy
 msgid "Global options:"
-msgstr "    Yleisvalitsimet:"
+msgstr "Yleisvalitsimet:"
 
 # error box title
 #, c-format
@@ -771,9 +769,9 @@ msgstr "Virheellinen tilannekuva \"%s\"."
 msgid "Invalid snapshots."
 msgstr "Virheellisiä tilannekuvia."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid subvolume path '%s' on target."
-msgstr "Virheellinen alitaltio."
+msgstr "Virheellinen alitaltio '%s'."
 
 msgid "Invalid subvolume."
 msgstr "Virheellinen alitaltio."
@@ -800,16 +798,15 @@ msgstr "Avain"
 msgid "KiB"
 msgstr "KiB"
 
-#, fuzzy
 msgid "List configs:"
-msgstr "  Luettele määritykset:"
+msgstr "Luettele määritykset:"
 
 #, fuzzy
 msgid "List snapshots from all accessible configs."
 msgstr "\t--all-configs, -a\t\tLuettele tilannekuvia kaikista käytettävissä olevista kokoonpanoista."
 
 msgid "List:"
-msgstr ""
+msgstr "Lista:"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -852,7 +849,7 @@ msgid "Missing or invalid pre-number."
 msgstr "Puuttuva tai virheellinen ennen-numero."
 
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 
 #, fuzzy
 msgid "Name of config template to use."
@@ -1028,13 +1025,13 @@ msgid "Running transfer for backup config '%s'."
 msgstr ""
 
 msgid "SSH Host"
-msgstr ""
+msgstr "SSH isäntä"
 
 msgid "SSH Identity"
-msgstr ""
+msgstr "SSH identiteetti"
 
 msgid "SSH Port"
-msgstr ""
+msgstr "SSH portti"
 
 #, fuzzy
 msgid "SSH User"
@@ -1106,15 +1103,15 @@ msgstr "Tilannekuva on käytössä."
 msgid "Snapshot not on target."
 msgstr "Tilannekuvaa \"%u\" ei löytynyt."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Snapshot number %d not found."
-msgstr "Tilannekuvaa \"%u\" ei löytynyt."
+msgstr "Tilannekuvaa %d ei löytynyt."
 
 msgid "Source Path"
-msgstr ""
+msgstr "Lähdepolku"
 
 msgid "Source State"
-msgstr ""
+msgstr "Lähteen tila"
 
 msgid "Subvolume"
 msgstr "Alitaltio"
@@ -1140,13 +1137,13 @@ msgid "Table style (integer)."
 msgstr "\t--table-style, -t <tyyli>\tTaulukon tyyli (kokonaisluku)."
 
 msgid "Target Mode"
-msgstr ""
+msgstr "Kohteen tila"
 
 msgid "Target Path"
-msgstr ""
+msgstr "Kohteen polku"
 
 msgid "Target State"
-msgstr ""
+msgstr "Kohteen tila"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Alueen voi määrittää itse --ambit-valitsimella."
@@ -1162,14 +1159,14 @@ msgid "TiB"
 msgstr "TiB"
 
 msgid "Transfer and delete:"
-msgstr ""
+msgstr "Siirrä ja poista:"
 
 msgid "Transfer:"
-msgstr ""
+msgstr "Siirrä:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Transferring snapshot %d."
-msgstr "Tilannekuvan luominen epäonnistui."
+msgstr "Siirretään tilannekuvaa %d."
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Kokeile ”snapper --help” saadaksesi lisätietoa."
