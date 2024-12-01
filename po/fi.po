@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-07 08:23+0100\n"
-"PO-Revision-Date: 2024-11-30 09:48+0000\n"
+"PO-Revision-Date: 2024-12-01 09:48+0000\n"
 "Last-Translator: Tommi Nieminen <software@legisign.org>\n"
 "Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/"
 ">\n"
@@ -838,26 +838,23 @@ msgid "Number of corresponding pre snapshot."
 msgstr "Vastaavan ennen-tilannekuvan numero."
 
 msgid "Only use backup-config with automatic set."
-msgstr ""
+msgstr "Käytä backup-configia vain automaattisen joukon kanssa."
 
 msgid "Only use backup-config with specified target-mode."
-msgstr ""
+msgstr "Käytä backup-configia vain määritetyn kohdetavan kanssa."
 
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "Tiedoston \"%s\" avaaminen epäonnistui."
 
-#, fuzzy
 msgid "Operate in the specified ambit."
-msgstr "\t--ambit, -a ambit\t\tToimi ilmoitetulla tilalla."
+msgstr "Toimi määritetyllä alalla."
 
-#, fuzzy
 msgid "Operate on target root (works only without DBus)."
-msgstr "\t--root, -r <sijainti>\t\tToimi asetetussa juuressa (toimii vain ilman DBusia)."
+msgstr "Toimi kohdejuuressa (toimii vain DBusitta)."
 
-#, fuzzy
 msgid "Operate without DBus."
-msgstr "\t--no-dbus\t\t\tToimi ilman DBusia."
+msgstr "Toimi DBusitta."
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr "Vaihtoehto --tuettu vain yksittäisille tilannekuville."
@@ -875,7 +872,7 @@ msgid "PB"
 msgstr "Pt"
 
 msgid "Path mismatch between backup-config and config."
-msgstr ""
+msgstr "Sijaintiristiriita backup-configin ja configin välillä."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -893,101 +890,91 @@ msgstr "Ennen-#"
 msgid "Pre Date"
 msgstr "Ennen-päiväys"
 
-#, fuzzy
 msgid "Print number of created snapshot."
-msgstr "\t--print-number, -p\t\tTulosta luodun tilannekuvan numero."
+msgstr "Tulosta luodun tilannekuvan numero."
 
-#, fuzzy
 msgid "Print number of second created snapshot."
-msgstr "\t--print-number, -p\t\tTulosta jälkimmäisen luodun tilannekuvan numero."
+msgstr "Tulosta luoduista tilannekuvista jälkimmäisen numero."
 
-#, fuzzy
 msgid "Print version and exit."
-msgstr "\t--version\t\t\tTulosta versio ja lopeta."
+msgstr "Tulosta versio ja lopeta."
 
-#, fuzzy
 msgid "Probing extra information for source snapshots."
-msgstr "verrataan tilannevedoksia..."
+msgstr "Etsitään lähdetilannekuville lisätietoa."
 
-#, fuzzy
 msgid "Probing extra information for target snapshots."
-msgstr "verrataan tilannevedoksia..."
+msgstr "Etsitään kohdetilannekuville lisätietoa."
 
-#, fuzzy
 msgid "Probing source snapshots."
-msgstr "verrataan tilannevedoksia..."
+msgstr "Etsitään lähdetilannekuvia."
 
-#, fuzzy
 msgid "Probing target snapshots."
-msgstr "verrataan tilannevedoksia..."
+msgstr "Etsitään kohdetilannekuvia."
 
 # error box title
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Tilarajoitusvirhe (%s)."
 
-#, fuzzy
 msgid "Read files for which to undo changes from file."
-msgstr "\t--input, -i <tiedosto>\t\tLue tiedostot, joista tehdään peruutusmuutokset tiedostoon."
+msgstr "Lue tiedostosta tiedostot, joiden muutokset kumotaan."
 
-#, fuzzy
 msgid "Read files to diff from file."
-msgstr "\t--input, -i <tiedosto>\t\tLue tiedostot, joita tiedostoon verrataan."
+msgstr "Lue tiedostosta verrattavat tiedostot."
 
 msgid "Read-Only"
 msgstr "Vain luku"
 
-#, fuzzy
 msgid "Run command and create pre and post snapshots."
-msgstr "\t--command <komento>\t\tSuorita komento ja luo ennen- ja jälkeen-tilannekuvat."
+msgstr "Suorita komento ja luo ennen- ja jälkeen-tilannekuvat."
 
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Poistaminen epäonnistui %d/%ld varmuuskopiomääritykselle."
+msgstr[1] "Poistaminen epäonnistui %d/%ld varmuuskopiomääritykselle."
 
 #, c-format
 msgid "Running delete for backup config '%s' failed."
-msgstr ""
+msgstr "Poistaminen epäonnistui varmuuskopiomääritykselle ”%s”."
 
 #, c-format
 msgid "Running delete for backup config '%s'."
-msgstr ""
+msgstr "Suoritetaan poistoa varmuuskopiomääritykselle ”%s”."
 
 #, c-format
 msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Luettelointi epäonnistui %d/%ld varmuuskopiomääritykselle."
+msgstr[1] "Luettelointi epäonnistui %d/%ld varmuuskopiomääritykselle."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Siirto ja poisto epäonnistuivat %d/%ld varmuuskopiomäärityksellä."
+msgstr[1] "Siirto ja poisto epäonnistuivat %d/%ld varmuuskopiomäärityksellä."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
-msgstr ""
+msgstr "Siirto ja poisto epäonnistuivat varmuuskopiomääritykselle ”%s”."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s'."
-msgstr ""
+msgstr "Suoritetaan siirtoa ja poistoa varmuuskopiomääritykselle ”%s”."
 
 #, c-format
 msgid "Running transfer failed for %d of %ld backup config."
 msgid_plural "Running transfer failed for %d of %ld backup configs."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Siirto epäonnistui %d/%ld varmuuskopiomääritykselle."
+msgstr[1] "Siirto epäonnistui %d/%ld varmuuskopiomääritykselle."
 
 #, c-format
 msgid "Running transfer for backup config '%s' failed."
-msgstr ""
+msgstr "Siirto epäonnistui varmuuskopiomääritykselle ”%s”."
 
 #, c-format
 msgid "Running transfer for backup config '%s'."
-msgstr ""
+msgstr "Suoritetaan siirtoa varmuuskopiomääritykselle ”%s”."
 
 msgid "SSH Host"
 msgstr "SSH isäntä"
@@ -998,13 +985,11 @@ msgstr "SSH identiteetti"
 msgid "SSH Port"
 msgstr "SSH portti"
 
-#, fuzzy
 msgid "SSH User"
-msgstr "Käyttäjä"
+msgstr "SSH-käyttäjä"
 
-#, fuzzy
 msgid "Save status to file."
-msgstr "\t--output, -o <tiedosto>\t\tTallenna tilatieto tiedostoon."
+msgstr "Tallenna tila tiedostoon."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Lisää ohjeita: ”man snapper”."
@@ -1013,37 +998,29 @@ msgstr "Lisää ohjeita: ”man snapper”."
 msgid "Server-side plugin '%s' failed."
 msgstr "Palvelinpuolen liitännäinen ”%s” epäonnistui."
 
-#, fuzzy
 msgid "Set CSV output format."
-msgstr "\t--csvout\t\t\tAsettaa CSV-tulosmuodon."
+msgstr "Aseta tulosmuodoksi CSV."
 
-#, fuzzy
 msgid "Set JSON output format."
-msgstr "\t--jsonout\t\t\tAsettaa JSON-tulosmuodon."
+msgstr "Aseta tulosmuodoksi JSON."
 
-#, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
-msgstr "\t--machine-readable <format>\tAsttaa koneluettavan tulosmuodon (CSV, JSON)."
+msgstr "Aseta koneluettava tulosmuoto (CSV, JSON)."
 
-#, fuzzy
 msgid "Set name of backup-config to use."
-msgstr "\t--config, -c <nimi>\t\tAseta käytettävän määrityksen nimi."
+msgstr "Aseta käytettävän varmuuskopiomäärityksen nimi."
 
-#, fuzzy
 msgid "Set name of config to use."
-msgstr "\t--config, -c <nimi>\t\tAseta käytettävän määrityksen nimi."
+msgstr "Aseta käytettävän määrityksen nimi."
 
-#, fuzzy
 msgid "Set snapshot as default snapshot."
-msgstr "\t--default\t\t\tAseta tilannekuva oletukseksi."
+msgstr "Aseta tilannekuva oletukseksi."
 
-#, fuzzy
 msgid "Set snapshot read-only."
-msgstr "\t--read-only\t\t\tLuo vain luettava tilannekuva."
+msgstr "Aseta tilannekuva vain luettavaksi."
 
-#, fuzzy
 msgid "Set snapshot read-write."
-msgstr "\t--read-write\t\t\tAseta tilannekuva luettavaksi ja kirjoitettavaksi."
+msgstr "Aseta tilannekuva luettavaksi ja kirjoitettavaksi."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
@@ -1053,20 +1030,17 @@ msgstr "Asetetaan oletusalitaltio tilannekuvalle %d."
 msgid "Snapshot '%u' not found."
 msgstr "Tilannekuvaa \"%u\" ei löytynyt."
 
-#, fuzzy
 msgid "Snapshot already on target."
-msgstr "\t--read-only\t\t\tLuo vain luettava tilannekuva."
+msgstr "Tilannekuva on jo kohteessa."
 
 msgid "Snapshot is in use."
 msgstr "Tilannekuva on käytössä."
 
-#, fuzzy
 msgid "Snapshot not on source."
-msgstr "Tilannekuva on käytössä."
+msgstr "Tilannekuvaa ei ole lähteessä."
 
-#, fuzzy
 msgid "Snapshot not on target."
-msgstr "Tilannekuvaa \"%u\" ei löytynyt."
+msgstr "Tilannekuvaa ei ole kohteessa."
 
 #, c-format
 msgid "Snapshot number %d not found."
@@ -1081,13 +1055,11 @@ msgstr "Lähteen tila"
 msgid "Subvolume"
 msgstr "Alitaltio"
 
-#, fuzzy
 msgid "Suppress normal output."
-msgstr "\t--quiet, -q\t\t\tJätä pois tavallinen tuloste."
+msgstr "Jätä pois tavallinen tuloste."
 
-#, fuzzy
 msgid "Sync after deletion."
-msgstr "\t--sync, -s\t\t\tTahdista poistamisen jälkeen."
+msgstr "Tahdista poistamisen jälkeen."
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -1097,9 +1069,8 @@ msgstr "T"
 msgid "TB"
 msgstr "Tt"
 
-#, fuzzy
 msgid "Table style (integer)."
-msgstr "\t--table-style, -t <tyyli>\tTaulukon tyyli (kokonaisluku)."
+msgstr "Taulukon tyyli (kokonaisluku)."
 
 msgid "Target Mode"
 msgstr "Kohteen tila"
@@ -1136,28 +1107,23 @@ msgstr "Siirretään tilannekuvaa %d."
 msgid "Try 'snapper --help' for more information."
 msgstr "Kokeile ”snapper --help” saadaksesi lisätietoa."
 
-#, fuzzy
 msgid "Try 'snbk --help' for more information."
-msgstr "Kokeile ”snapper --help” saadaksesi lisätietoa."
+msgstr "Lisätietoa saa komennolla ”snbk --help”."
 
-#, fuzzy
 msgid "Try to make space available."
-msgstr "\t--free-space <tila>\t\tYritä vapauttaa tilaa."
+msgstr "Yritä vapauttaa tilaa."
 
-#, fuzzy
 msgid "Turn on debugging."
-msgstr "\t--debug\t\t\t\tOta käyttöön vianjäljitys."
+msgstr "Ota käyttöön vianjäljitys."
 
 msgid "Type"
 msgstr "Tyyppi"
 
-#, fuzzy
 msgid "Type for snapshot."
-msgstr "Tuntematon tilannevedostyyppi."
+msgstr "Tilannekuvan tyyppi."
 
-#, fuzzy
 msgid "Type of snapshots to list."
-msgstr "\t--type, -t <tyyppi>\t\tLueteltavien tilannekuvien tyyppi."
+msgstr "Lueteltavien tilannekuvien tyyppi."
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -1209,13 +1175,11 @@ msgstr "Käyttäjätieto '%s' ei sisällä '=' merkkiä."
 msgid "Userdata '%s' has empty key."
 msgstr "Käyttäjätiedossa '%s' on tyhjä avain."
 
-#, fuzzy
 msgid "Userdata for snapshot."
-msgstr "\t--userdata, -u <käyttäjätieto>\tTilannekuvan käyttäjätiedot."
+msgstr "Tilannekuvan käyttäjätiedot."
 
-#, fuzzy
 msgid "Userdata for snapshots."
-msgstr "Identtinen tilannekuva."
+msgstr "Tilannekuvien käyttäjätiedot."
 
 msgid "Value"
 msgstr "Arvo"
@@ -1265,30 +1229,26 @@ msgstr "ei mitään tehtävää"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "root parametria voidaan käyttää vain yhdessä no-dbus-valitsimen kanssa.\n"
 
-#, fuzzy
 msgid "snbk delete [numbers]"
-msgstr "\tsnapper delete <numero>"
+msgstr "snbk delete [numerot]"
 
-#, fuzzy
 msgid "snbk list"
-msgstr "\tsnapper list"
+msgstr "snbk list"
 
-#, fuzzy
 msgid "snbk list-configs"
-msgstr "\tsnapper list-configs"
+msgstr "snbk list-configs"
 
 msgid "snbk transfer [numbers]"
-msgstr ""
+msgstr "snbk transfer [numerot]"
 
 msgid "snbk transfer-and-delete"
-msgstr ""
+msgstr "snbk transfer-and-delete"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "käyttö: snapper [--yleisvalitsimet] <komento> [--komennon-valitsimet] [komennon-parametrit]"
 
-#, fuzzy
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
-msgstr "käyttö: snapper [--yleisvalitsimet] <komento> [--komennon-valitsimet] [komennon-parametrit]"
+msgstr "käyttö: snbk [--global-options] <komento> [komennon-parametrit]"
 
 msgid "yes"
 msgstr "kyllä"
