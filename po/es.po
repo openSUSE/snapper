@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-11-07 08:23+0100\n"
-"PO-Revision-Date: 2024-11-15 12:48+0000\n"
+"PO-Revision-Date: 2024-12-12 14:48+0000\n"
 "Last-Translator: \"Marina J. Donis\" <marinajdonis@gmail.com>\n"
 "Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/"
 ">\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8.3\n"
+"X-Generator: Weblate 5.8.4\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <algoritmo-de-limpieza>"
@@ -662,9 +662,8 @@ msgstr "Error al analizar %s."
 # clients/lan_nfs_write.ycp:78
 # include/nfs/nfs_write.ycp:54
 # modules/Nfs.ycp:163
-#, fuzzy
 msgid "Failed to parse number."
-msgstr "Error al analizar %s."
+msgstr "No se pudo análizar el número."
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -708,9 +707,8 @@ msgstr "GB"
 msgid "GiB"
 msgstr "GiB"
 
-#, fuzzy
 msgid "Global options:"
-msgstr "    Opciones Globales:"
+msgstr "Opciones Globales:"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -796,15 +794,14 @@ msgstr "Clave"
 msgid "KiB"
 msgstr "KiB"
 
-#, fuzzy
 msgid "List configs:"
-msgstr "  Listar configuraciones:"
+msgstr "Listar configuraciones:"
 
 msgid "List snapshots from all accessible configs."
 msgstr "Muestra las instantáneas de todas las configuraciones a las que se puede acceder."
 
 msgid "List:"
-msgstr ""
+msgstr "Lista:"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -852,7 +849,7 @@ msgid "Name of config template to use."
 msgstr "Nombre de la plantilla de configuración que se debe usar."
 
 msgid "No backup configs found."
-msgstr ""
+msgstr "No se econtraron configuraciones de respaldo."
 
 msgid "No command provided."
 msgstr "Ningún comando especificado."
@@ -867,10 +864,11 @@ msgid "Number of corresponding pre snapshot."
 msgstr "Número de la instantánea previa correspondiente."
 
 msgid "Only use backup-config with automatic set."
-msgstr ""
+msgstr "Sólo usar configuraciones de respaldo con set automático."
 
 msgid "Only use backup-config with specified target-mode."
 msgstr ""
+"Sólo usar configuración de respaldo con el modo de destino especificado."
 
 #, c-format
 msgid "Opening file '%s' failed."
