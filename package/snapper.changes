@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Dec 02 16:51:50 CET 2024 - aschnell@suse.com
+
+- added new workflow using only two steps to installation-helper
+  (gh#openSUSE/snapper#944)
+
+-------------------------------------------------------------------
 Tue Nov 05 10:50:50 CET 2024 - aschnell@suse.com
 
 - provide backup program for btrfs snapshots

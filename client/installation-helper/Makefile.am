@@ -2,7 +2,7 @@
 # Makefile.am for snapper/client/installation-helper
 #
 
-AM_CPPFLAGS = -I$(top_srcdir)
+AM_CPPFLAGS = -I$(top_srcdir) $(XML2_CFLAGS)
 
 libexecdir = /usr/lib/snapper
 

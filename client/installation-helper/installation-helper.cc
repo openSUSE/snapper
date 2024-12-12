@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 Novell, Inc.
- * Copyright (c) [2018-2022] SUSE LLC
+ * Copyright (c) [2018-2024] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -25,10 +25,10 @@
 
 #include <cstdlib>
 #include <unistd.h>
+#include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <iostream>
-#include <boost/algorithm/string.hpp>
 
 #include <snapper/Snapper.h>
 #include <snapper/AppUtil.h>
@@ -37,6 +37,7 @@
 #include <snapper/FileUtils.h>
 #include <snapper/PluginsImpl.h>
 #include "snapper/Log.h"
+#include "snapper/XmlFile.h"
 
 #include "../utils/GetOpts.h"
 
@@ -265,6 +266,239 @@ step5(const string& root_prefix, const string& snapshot_type, unsigned int pre_n
 }
 
 
+// Without the rollback support of libsnapper some btrfs utils are undefined.
+#ifdef ENABLE_ROLLBACK
+
+
+bool
+step_filesystem(const string& root_prefix)
+{
+    // create subvolume /<root-prefix>/.snapshots
+
+    cout << "creating btrfs subvolume /<root-prefix>/.snapshots" << endl;
+
+    try
+    {
+	int fd = open(prepend_root_prefix(root_prefix, "/").c_str(),
+		      O_RDONLY | O_NOATIME | O_CLOEXEC);
+	if (fd < 0)
+	    SN_THROW(Exception("open failed"));
+
+	create_subvolume(fd, ".snapshots");
+
+	close(fd);
+    }
+    catch (const exception& e)
+    {
+	cerr << "creating /<root-prefix>/.snapshots failed" << endl;
+
+	return false;
+    }
+
+    // create /<root-prefix>/.snapshots/1
+
+    cout << "creating directory /<root-prefix>/.snapshots/1" << endl;
+
+    try
+    {
+	if (mkdir(prepend_root_prefix(root_prefix, "/.snapshots/1").c_str(), 0777) != 0)
+	    SN_THROW(Exception("mkdir failed"));
+    }
+    catch (const exception& e)
+    {
+	cerr << "creating /<root-prefix>/.snapshots/1 failed" << endl;
+
+	return false;
+    }
+
+    // create btrfs subvolume /<root-prefix>/.snapshots/1/snapshot
+
+    cout << "creating btrfs subvolume /<root-prefix>/.snapshots/1/snapshot" << endl;
+
+    try
+    {
+	int fd = open(prepend_root_prefix(root_prefix, "/.snapshots/1").c_str(),
+		      O_RDONLY | O_NOATIME | O_CLOEXEC);
+	if (fd < 0)
+	    SN_THROW(Exception("open failed"));
+
+	create_subvolume(fd, "snapshot");
+
+	close(fd);
+    }
+    catch (const exception& e)
+    {
+	cerr << "creating /<root-prefix>/.snapshots/1/snapshot failed" << endl;
+
+	return false;
+    }
+
+    // set default btrfs subvolume to /<root-prefix>/.snapshots/1/snapshot
+
+    cout << "setting default btrfs subvolume to /<root-prefix>/.snapshots/1/snapshot" << endl;
+
+    try
+    {
+	int fd = open(prepend_root_prefix(root_prefix, "/.snapshots/1/snapshot").c_str(),
+		      O_RDONLY | O_NOATIME | O_CLOEXEC);
+	if (fd < 0)
+	    SN_THROW(Exception("open failed"));
+
+	subvolid_t id = get_id(fd);
+
+	set_default_id(fd, id);
+
+	close(fd);
+    }
+    catch (const exception& e)
+    {
+	cerr << "setting default subvolume failed" << endl;
+
+	return false;
+    }
+
+    // create /<root-prefix>/.snapshots/1/snapshot/.snapshots
+
+    cout << "creating directory /<root-prefix>/.snapshots/1/snapshot/.snapshots" << endl;
+
+    try
+    {
+	if (mkdir(prepend_root_prefix(root_prefix, "/.snapshots/1/snapshot/.snapshots").c_str(), 0777) != 0)
+	    SN_THROW(Exception("mkdir failed"));
+    }
+    catch (const exception& e)
+    {
+	cerr << "creating /<root-prefix>/.snapshots/1/snapshot/.snapshots failed" << endl;
+
+	return false;
+    }
+
+    return true;
+}
+
+
+bool
+step_config(const string& root_prefix, const string& description, const string& cleanup,
+	    const map<string, string>& userdata)
+{
+    // create directories
+
+    cout << "creating directories in /<root-prefix>" << endl;
+
+    mkdir(prepend_root_prefix(root_prefix, "/etc").c_str(), 0777);
+    mkdir(prepend_root_prefix(root_prefix, "/etc/sysconfig").c_str(), 0777);
+    mkdir(prepend_root_prefix(root_prefix, "/etc/snapper").c_str(), 0777);
+    mkdir(prepend_root_prefix(root_prefix, "/etc/snapper/configs").c_str(), 0777);
+
+    // create snapper sysconfig /<root-prefix>/etc/sysconfig/snapper
+
+    cout << "creating snapper sysconfig /<root-prefix>/etc/sysconfig/snapper" << endl;
+
+    try
+    {
+	/*
+	SysconfigFile sysconfig;	// TODO, add in class SysconfigFile
+
+	sysconfig.set_name(prepend_root_prefix(root_prefix, SYSCONFIG_FILE));
+
+	sysconfig.set_value("SNAPPER_CONFIGS", "root");
+
+	sysconfig.save();
+	*/
+
+	AsciiFileWriter sysconfig(prepend_root_prefix(root_prefix, SYSCONFIG_FILE), Compression::NONE);
+
+	sysconfig.write_line("SNAPPER_CONFIGS=\"root\"");
+
+	sysconfig.close();
+    }
+    catch (const Exception& e)
+    {
+	cerr << "setup of /<root-prefix>/etc/sysconfig/snapper failed, "
+	     << e.what() << endl;
+
+	return false;
+    }
+
+    // create snapper config /<root-prefix>/etc/snapper/configs/root
+
+    cout << "creating snapper config /<root-prefix>/etc/snapper/configs/root" << endl;
+
+    try
+    {
+	string template_file = locate_file("default", ETC_CONFIG_TEMPLATE_DIR, USR_CONFIG_TEMPLATE_DIR);
+
+	SysconfigFile config(template_file);
+
+	config.set_name(prepend_root_prefix(root_prefix, CONFIGS_DIR "/root"));
+
+	config.set_value(KEY_SUBVOLUME, "/");
+	config.set_value(KEY_FSTYPE, "btrfs");
+
+	config.save();
+    }
+    catch (const Exception& e)
+    {
+	cerr << "setup of /<root-prefix>/etc/snapper/configs/root failed, "
+	     << e.what() << endl;
+
+	return false;
+    }
+
+    // create info file /<root-prefix>/.snapshots/1/info.xml
+
+    cout << "creating snapper info file /<root-prefix>/.snapshots/1/info.xml" << endl;
+
+    try
+    {
+	XmlFile xml;
+	xmlNode* node = xmlNewNode("snapshot");
+	xml.setRootElement(node);
+
+	setChildValue(node, "type", toString(SINGLE));
+
+	setChildValue(node, "num", 1);
+
+	setChildValue(node, "date", datetime(time(NULL), true, true));
+
+	if (!description.empty())
+	    setChildValue(node, "description", description);
+
+	if (!cleanup.empty())
+	    setChildValue(node, "cleanup", cleanup);
+
+	for (const map<string, string>::value_type& tmp : userdata)
+	{
+	    xmlNode* userdata_node = xmlNewChild(node, "userdata");
+	    setChildValue(userdata_node, "key", tmp.first);
+	    setChildValue(userdata_node, "value", tmp.second);
+	}
+
+	int fd = open(prepend_root_prefix(root_prefix, "/.snapshots/1/info.xml").c_str(),
+		      O_RDWR | O_CREAT | O_CLOEXEC, 0666);
+	if (fd < 0)
+	    SN_THROW(Exception("open failed"));
+
+	fchmod(fd, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+
+	xml.save(fd);
+    }
+    catch (const Exception& e)
+    {
+	SN_CAUGHT(e);
+
+	cerr << "setup of /<root-prefix>/.snapshots/1/info.xml failed, "
+	     << e.what() << endl;
+
+	return false;
+    }
+
+    return true;
+}
+
+#endif
+
+
 void
 log_do(LogLevel level, const string& component, const char* file, const int line, const char* func,
        const string& text)
@@ -362,4 +596,14 @@ main(int argc, char** argv)
 	step4();
     else if (step == "5")
 	return step5(root_prefix, snapshot_type, pre_num, description, cleanup, userdata) ? EXIT_SUCCESS : EXIT_FAILURE;
+
+#ifdef ENABLE_ROLLBACK
+
+    else if (step == "filesystem")
+	return step_filesystem(root_prefix) ? EXIT_SUCCESS : EXIT_FAILURE;
+    else if (step == "config")
+	return step_config(root_prefix, description, cleanup, userdata) ? EXIT_SUCCESS : EXIT_FAILURE;
+
+#endif
+
 }
