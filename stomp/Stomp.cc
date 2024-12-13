@@ -22,15 +22,14 @@
 
 #include <regex>
 
-
-using namespace std;
-
-
 #include "Stomp.h"
 
 
 namespace Stomp
 {
+
+    using namespace std;
+
 
     Message
     read_message(istream& is)
@@ -108,7 +107,7 @@ namespace Stomp
 		    if (key == "content-length")
 		    {
 			has_content_length = true;
-			content_length = std::stol(value.c_str());
+			content_length = stol(value.c_str());
 		    }
 
 		    msg.headers[key] = value;
@@ -150,8 +149,8 @@ namespace Stomp
     }
 
 
-    std::string
-    strip_cr(const std::string& in)
+    string
+    strip_cr(const string& in)
     {
 	string::size_type length = in.size();
 
@@ -162,8 +161,8 @@ namespace Stomp
     }
 
 
-    std::string
-    escape_header(const std::string& in)
+    string
+    escape_header(const string& in)
     {
 	string out;
 
@@ -189,8 +188,8 @@ namespace Stomp
     }
 
 
-    std::string
-    unescape_header(const std::string& in)
+    string
+    unescape_header(const string& in)
     {
 	string out;
 
