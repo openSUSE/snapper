@@ -3,11 +3,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 08:23+0100\n"
+"POT-Creation-Date: 2024-12-16 09:59+0100\n"
 "PO-Revision-Date: 2024-12-12 14:48+0000\n"
 "Last-Translator: \"Marina J. Donis\" <marinajdonis@gmail.com>\n"
-"Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/"
-">\n"
+"Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -867,8 +866,7 @@ msgid "Only use backup-config with automatic set."
 msgstr "Sólo usar configuraciones de respaldo con set automático."
 
 msgid "Only use backup-config with specified target-mode."
-msgstr ""
-"Sólo usar configuración de respaldo con el modo de destino especificado."
+msgstr "Sólo usar configuración de respaldo con el modo de destino especificado."
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -898,7 +896,8 @@ msgstr "P"
 msgid "PB"
 msgstr "PB"
 
-msgid "Path mismatch between backup-config and config."
+#, c-format
+msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
 msgstr ""
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)

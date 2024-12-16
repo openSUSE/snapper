@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yast memory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 08:23+0100\n"
+"POT-Creation-Date: 2024-12-16 09:59+0100\n"
 "PO-Revision-Date: 2004-04-05 17:37+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <i18n@suse.de>\n"
@@ -899,7 +899,8 @@ msgstr ""
 msgid "PB"
 msgstr ""
 
-msgid "Path mismatch between backup-config and config."
+#, c-format
+msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
 msgstr ""
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 08:23+0100\n"
+"POT-Creation-Date: 2024-12-16 09:59+0100\n"
 "PO-Revision-Date: 2017-10-29 20:52+0000\n"
 "Last-Translator: strahil nikolov <hunter86_bg@yahoo.com>\n"
 "Language-Team: Bulgarian <https://l10n.opensuse.org/projects/snapper/master/bg/>\n"
@@ -926,7 +926,8 @@ msgstr ""
 msgid "PB"
 msgstr ""
 
-msgid "Path mismatch between backup-config and config."
+#, c-format
+msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
 msgstr ""
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
