@@ -9,15 +9,17 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-16 09:59+0100\n"
-"PO-Revision-Date: 2024-11-07 20:48+0000\n"
+"PO-Revision-Date: 2024-12-16 13:48+0000\n"
 "Last-Translator: Jure Repinc <jlp@holodeck1.com>\n"
-"Language-Team: Slovenian <https://l10n.opensuse.org/projects/snapper/master/sl/>\n"
+"Language-Team: Slovenian <https://l10n.opensuse.org/projects/snapper/master/"
+"sl/>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
-"X-Generator: Weblate 5.8.2\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.8.4\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <algoritem_čiščenja>"
@@ -885,9 +887,11 @@ msgstr "P"
 msgid "PB"
 msgstr "PB"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr "Neujemanje poti med »backup-config« in »config«."
+msgstr ""
+"Neujemanje poti med »source-path« v »backup-config« in podnosilcem v "
+"nastavitvah za snapper (»%s« in »%s«)."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -947,70 +951,105 @@ msgstr "Zažene ukaz in ustvari posnetka pred in po."
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
 msgstr[0] ""
+"Izvajanje brisanja je spodletelo za %d od %ld nastavitve varnostnega "
+"kopiranja."
 msgstr[1] ""
+"Izvajanje brisanja je spodletelo za %d od %ld nastavitev varnostnega "
+"kopiranja."
 msgstr[2] ""
+"Izvajanje brisanja je spodletelo za %d od %ld nastavitev varnostnega "
+"kopiranja."
 msgstr[3] ""
+"Izvajanje brisanja je spodletelo za %d od %ld nastavitev varnostnega "
+"kopiranja."
 
 #, c-format
 msgid "Running delete for backup config '%s' failed."
 msgstr ""
+"Izvajanje brisanja za nastavitev varnostnega kopiranja »%s« je spodletelo."
 
 #, c-format
 msgid "Running delete for backup config '%s'."
-msgstr ""
+msgstr "Izvajanje brisanja za nastavitev varnostnega kopiranja »%s«."
 
 #, c-format
 msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
 msgstr[0] ""
+"Izvajanje izpisovanja je spodletelo za %d od %ld nastavitve varnostnega "
+"kopiranja."
 msgstr[1] ""
+"Izvajanje izpisovanja je spodletelo za %d od %ld nastavitev varnostnega "
+"kopiranja."
 msgstr[2] ""
+"Izvajanje izpisovanja je spodletelo za %d od %ld nastavitev varnostnega "
+"kopiranja."
 msgstr[3] ""
+"Izvajanje izpisovanja je spodletelo za %d od %ld nastavitev varnostnega "
+"kopiranja."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
 msgstr[0] ""
+"Izvajanje prenosa in brisanja je spodletelo za %d od %ld nastavitve "
+"varnostnega kopiranja."
 msgstr[1] ""
+"Izvajanje prenosa in brisanja je spodletelo za %d od %ld nastavitev "
+"varnostnega kopiranja."
 msgstr[2] ""
+"Izvajanje prenosa in brisanja je spodletelo za %d od %ld nastavitev "
+"varnostnega kopiranja."
 msgstr[3] ""
+"Izvajanje prenosa in brisanja je spodletelo za %d od %ld nastavitev "
+"varnostnega kopiranja."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
 msgstr ""
+"Izvajanje prenosa in brisanja za nastavitve varnostnega kopiranja »%s« je "
+"spodletelo."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s'."
-msgstr ""
+msgstr "Izvajanje prenosa in brisanja za nastavitve varnostnega kopiranja »%s«."
 
 #, c-format
 msgid "Running transfer failed for %d of %ld backup config."
 msgid_plural "Running transfer failed for %d of %ld backup configs."
 msgstr[0] ""
+"Izvajanje prenosa je spodletelo za %d od %ld nastavitve varnostnega "
+"kopiranja."
 msgstr[1] ""
+"Izvajanje prenosa je spodletelo za %d od %ld nastavitev varnostnega "
+"kopiranja."
 msgstr[2] ""
+"Izvajanje prenosa je spodletelo za %d od %ld nastavitev varnostnega "
+"kopiranja."
 msgstr[3] ""
+"Izvajanje prenosa je spodletelo za %d od %ld nastavitev varnostnega "
+"kopiranja."
 
 #, c-format
 msgid "Running transfer for backup config '%s' failed."
 msgstr ""
+"Izvajanje prenosa za nastavitve varnostnega kopiranja »%s« je spodletelo."
 
 #, c-format
 msgid "Running transfer for backup config '%s'."
-msgstr ""
+msgstr "Izvajanje prenosa za nastavitve varnostnega kopiranja »%s«."
 
 msgid "SSH Host"
-msgstr ""
+msgstr "Gostitelj SSH"
 
 msgid "SSH Identity"
-msgstr ""
+msgstr "Istovetnost SSH"
 
 msgid "SSH Port"
-msgstr ""
+msgstr "Vrata SSH"
 
-#, fuzzy
 msgid "SSH User"
-msgstr "Uporabnik"
+msgstr "Uporabnik SSH"
 
 msgid "Save status to file."
 msgstr "Shrani stanje v datoteko."
@@ -1031,9 +1070,8 @@ msgstr "Nastavi izpis v obliki JSON."
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Nastavi računalniško berljivo obliko izpisa (csv, json)."
 
-#, fuzzy
 msgid "Set name of backup-config to use."
-msgstr "Nastavi ime nastavitev, ki bodo uporabljene."
+msgstr "Nastavi ime nastavitev varnostnega kopiranja, ki bodo uporabljene."
 
 msgid "Set name of config to use."
 msgstr "Nastavi ime nastavitev, ki bodo uporabljene."
@@ -1058,30 +1096,27 @@ msgid "Snapshot '%u' not found."
 msgstr "Posnetek »%u« ni najden."
 
 # %s is either BOOTP or DHCP
-#, fuzzy
 msgid "Snapshot already on target."
-msgstr "Nastavi posnetek samo za branje."
+msgstr "Posnetek je že na ciljnem mestu."
 
 msgid "Snapshot is in use."
 msgstr "Posnetek je v uporabi."
 
-#, fuzzy
 msgid "Snapshot not on source."
-msgstr "Posnetek je v uporabi."
+msgstr "Posnetka ni na izvornem mestu."
 
-#, fuzzy
 msgid "Snapshot not on target."
-msgstr "Posnetek »%u« ni najden."
+msgstr "Posnetka ni na ciljnem mestu."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Snapshot number %d not found."
-msgstr "Posnetek »%u« ni najden."
+msgstr "Posnetek s številko »%d« ni najden."
 
 msgid "Source Path"
-msgstr ""
+msgstr "Izvorna pot"
 
 msgid "Source State"
-msgstr ""
+msgstr "Izvorno stanje"
 
 msgid "Subvolume"
 msgstr "Podnosilec"
@@ -1104,13 +1139,13 @@ msgid "Table style (integer)."
 msgstr "Slog razpredelnice (celo število)."
 
 msgid "Target Mode"
-msgstr ""
+msgstr "Ciljni način"
 
 msgid "Target Path"
-msgstr ""
+msgstr "Ciljna pot"
 
 msgid "Target State"
-msgstr ""
+msgstr "Ciljno stanje"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Ambit lahko določite ročno z uporabo možnosti »--ambit«."
@@ -1126,21 +1161,20 @@ msgid "TiB"
 msgstr "TiB"
 
 msgid "Transfer and delete:"
-msgstr ""
+msgstr "Prenos in izbris:"
 
 msgid "Transfer:"
-msgstr ""
+msgstr "Prenos:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Transferring snapshot %d."
-msgstr "Ustvarjanje posnetka ni uspelo."
+msgstr "Prenašanje posnetka %d."
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Za dodatne informacije poskusite z ukazom »snapper --help«."
 
-#, fuzzy
 msgid "Try 'snbk --help' for more information."
-msgstr "Za dodatne informacije poskusite z ukazom »snapper --help«."
+msgstr "Za dodatne informacije poskusite z ukazom »snbk --help«."
 
 msgid "Try to make space available."
 msgstr "Poskusi sprostiti prostor na disku."
@@ -1264,30 +1298,26 @@ msgstr "ničesar ni za storiti"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Argument »root« se lahko uporablja samo skupaj z »no-dbus«.\n"
 
-#, fuzzy
 msgid "snbk delete [numbers]"
-msgstr "\tsnapper delete <številka>"
+msgstr "snbk delete [številke]"
 
-#, fuzzy
 msgid "snbk list"
-msgstr "\tsnapper list"
+msgstr "snbk list"
 
-#, fuzzy
 msgid "snbk list-configs"
-msgstr "\tsnapper list-configs"
+msgstr "snbk list-configs"
 
 msgid "snbk transfer [numbers]"
-msgstr ""
+msgstr "snbk transfer [številke]"
 
 msgid "snbk transfer-and-delete"
-msgstr ""
+msgstr "snbk transfer-and-delete"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "uporaba: snapper [--splošne-možnosti] <ukaz> [--ukazne-možnosti] [ukazni-argumenti]"
 
-#, fuzzy
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
-msgstr "uporaba: snapper [--splošne-možnosti] <ukaz> [--ukazne-možnosti] [ukazni-argumenti]"
+msgstr "uporaba: snbk [--splošne-možnosti] <ukaz> [ukazni-argumenti]"
 
 msgid "yes"
 msgstr "da"
