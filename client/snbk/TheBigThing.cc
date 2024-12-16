@@ -230,7 +230,12 @@ namespace snapper
 	: snapper(snappers->getSnapper(backup_config.config)), locker(snapper)
     {
 	if (backup_config.source_path != snapper->getConfig().getSubvolume())
-	    SN_THROW(Exception(_("Path mismatch between backup-config and config.")));
+	{
+	    string error = sformat(_("Path mismatch between source-path of backup-config and subvolume of "
+				     "snapper config ('%s' vs. '%s')."), backup_config.source_path.c_str(),
+				   snapper->getConfig().getSubvolume().c_str());
+	    SN_THROW(Exception(error));
+	}
 
 	probe_source(backup_config, verbose);
 	probe_target(backup_config, verbose);
