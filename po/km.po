@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper.km\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 08:23+0100\n"
+"POT-Creation-Date: 2024-12-16 09:59+0100\n"
 "PO-Revision-Date: 2011-10-24 10:40+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -937,7 +937,8 @@ msgstr ""
 msgid "PB"
 msgstr ""
 
-msgid "Path mismatch between backup-config and config."
+#, c-format
+msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
 msgstr ""
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)

@@ -9,11 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-07 08:23+0100\n"
+"POT-Creation-Date: 2024-12-16 09:59+0100\n"
 "PO-Revision-Date: 2024-11-08 14:48+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
-"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
-"\n"
+"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -841,8 +840,7 @@ msgid "Only use backup-config with automatic set."
 msgstr "Alleen configuratie van reservekopieën met automatische set gebruiken."
 
 msgid "Only use backup-config with specified target-mode."
-msgstr ""
-"Alleen reservekopieconfiguratie met gespecificeerde doelmodus gebruiken."
+msgstr "Alleen reservekopieconfiguratie met gespecificeerde doelmodus gebruiken."
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -872,7 +870,8 @@ msgstr "P"
 msgid "PB"
 msgstr "PB"
 
-msgid "Path mismatch between backup-config and config."
+#, fuzzy, c-format
+msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
 msgstr "Pad in reservekopieconfiguratie en configuratie komen niet overeen."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
@@ -931,17 +930,12 @@ msgstr "Voer opdracht uit en maak pre- en post-momentopnamen."
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
-msgstr[0] ""
-"Uitvoeren van verwijderen voor %d van %ld reservekopieconfiguratie is "
-"mislukt."
-msgstr[1] ""
-"Uitvoeren van verwijderen voor %d van %ld reservekopieconfiguraties is "
-"mislukt."
+msgstr[0] "Uitvoeren van verwijderen voor %d van %ld reservekopieconfiguratie is mislukt."
+msgstr[1] "Uitvoeren van verwijderen voor %d van %ld reservekopieconfiguraties is mislukt."
 
 #, c-format
 msgid "Running delete for backup config '%s' failed."
-msgstr ""
-"Uitvoeren van verwijderen voor reservekopieconfiguratie '%s' is mislukt."
+msgstr "Uitvoeren van verwijderen voor reservekopieconfiguratie '%s' is mislukt."
 
 #, c-format
 msgid "Running delete for backup config '%s'."
@@ -950,48 +944,32 @@ msgstr "Uitvoeren van verwijderen voor reservekopieconfiguratie '%s'."
 #, c-format
 msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
-msgstr[0] ""
-"Uitvoeren van lijst maken voor %d van %ld reservekopieconfiguratie is "
-"mislukt."
-msgstr[1] ""
-"Uitvoeren van lijst maken voor %d van %ld reservekopieconfiguraties is "
-"mislukt."
+msgstr[0] "Uitvoeren van lijst maken voor %d van %ld reservekopieconfiguratie is mislukt."
+msgstr[1] "Uitvoeren van lijst maken voor %d van %ld reservekopieconfiguraties is mislukt."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
-msgstr[0] ""
-"Uitvoeren van overbrengen en verwijderen voor %d van %ld "
-"reservekopieconfiguratie is mislukt."
-msgstr[1] ""
-"Uitvoeren van overbrengen en verwijderen voor %d van %ld "
-"reservekopieconfiguraties is mislukt."
+msgstr[0] "Uitvoeren van overbrengen en verwijderen voor %d van %ld reservekopieconfiguratie is mislukt."
+msgstr[1] "Uitvoeren van overbrengen en verwijderen voor %d van %ld reservekopieconfiguraties is mislukt."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
-msgstr ""
-"Uitvoeren van overbrengen en verwijderen voor reservekopieconfiguratie '%s' "
-"is mislukt."
+msgstr "Uitvoeren van overbrengen en verwijderen voor reservekopieconfiguratie '%s' is mislukt."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s'."
-msgstr ""
-"Uitvoeren van overbrengen en verwijderen voor reservekopieconfiguratie '%s'."
+msgstr "Uitvoeren van overbrengen en verwijderen voor reservekopieconfiguratie '%s'."
 
 #, c-format
 msgid "Running transfer failed for %d of %ld backup config."
 msgid_plural "Running transfer failed for %d of %ld backup configs."
-msgstr[0] ""
-"Uitvoeren van overbrengen voor %d van %ld reservekopieconfiguratie is "
-"mislukt."
-msgstr[1] ""
-"Uitvoeren van overbrengen voor %d van %ld reservekopieconfiguraties is "
-"mislukt."
+msgstr[0] "Uitvoeren van overbrengen voor %d van %ld reservekopieconfiguratie is mislukt."
+msgstr[1] "Uitvoeren van overbrengen voor %d van %ld reservekopieconfiguraties is mislukt."
 
 #, c-format
 msgid "Running transfer for backup config '%s' failed."
-msgstr ""
-"Uitvoeren van overbrengen voor reservekopieconfiguratie '%s' is mislukt."
+msgstr "Uitvoeren van overbrengen voor reservekopieconfiguratie '%s' is mislukt."
 
 #, c-format
 msgid "Running transfer for backup config '%s'."
