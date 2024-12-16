@@ -50,14 +50,15 @@
       <varlistentry>
 	<term><option>source-path</option></term>
 	<listitem>
-	  <para>Path of the subvolume or mount point.</para>
+	  <para>Path of the source subvolume. This must match the
+	  subvolume of the corresponding snapper config.</para>
 	</listitem>
       </varlistentry>
 
       <varlistentry>
 	<term><option>target-path</option></term>
 	<listitem>
-	  <para>Path of the subvolume or mount point.</para>
+	  <para>Path of the target subvolume or mount point.</para>
 	</listitem>
       </varlistentry>
 
