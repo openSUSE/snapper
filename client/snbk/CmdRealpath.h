@@ -41,7 +41,7 @@ namespace snapper
     {
     public:
 
-	CmdRealpath(const Shell& shell, const string& path);
+	CmdRealpath(const string& realpath_bin, const Shell& shell, const string& path);
 
 	const string& get_realpath() const { return realpath; }
 

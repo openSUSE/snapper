@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Dec 17 09:14:46 CET 2024 - aschnell@suse.com
+
+- make some binary paths used in snbk configurable
+  (gh#openSUSE/snapper#970)
+
+-------------------------------------------------------------------
 Mon Dec 02 16:51:50 CET 2024 - aschnell@suse.com
 
 - added new workflow using only two steps to installation-helper

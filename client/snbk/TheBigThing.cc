@@ -267,7 +267,7 @@ namespace snapper
 
 	    // Query additional information (uuids, read-only) from btrfs.
 
-	    CmdBtrfsSubvolumeShow extra(shell_source, backup_config.source_path + "/" SNAPSHOTS_NAME "/" +
+	    CmdBtrfsSubvolumeShow extra(BTRFS_BIN, shell_source, backup_config.source_path + "/" SNAPSHOTS_NAME "/" +
 					to_string(num) + "/" SNAPSHOT_NAME);
 
 	    TheBigThing the_big_thing(num);
@@ -297,10 +297,10 @@ namespace snapper
 	// In case the target-path is a symbolic link (or includes things like "/../") we
 	// need a lookup for the realpath first.
 
-	CmdRealpath cmd_realpath(shell_target, backup_config.target_path);
+	CmdRealpath cmd_realpath(backup_config.target_realpath_bin, shell_target, backup_config.target_path);
 	const string target_path = cmd_realpath.get_realpath();
 
-	CmdFindmnt cmd_findmnt(shell_target, target_path);
+	CmdFindmnt cmd_findmnt(backup_config.target_findmnt_bin, shell_target, target_path);
 	const string mount_point = cmd_findmnt.get_target();
 
 	if (target_path.size() < mount_point.size())
@@ -309,7 +309,7 @@ namespace snapper
 	if (!boost::starts_with(target_path, mount_point))
 	    SN_THROW(Exception("unsupported target-path setup"));
 
-	CmdBtrfsSubvolumeList target_snapshots(shell_target, mount_point);
+	CmdBtrfsSubvolumeList target_snapshots(backup_config.target_btrfs_bin, shell_target, mount_point);
 
 	string start;
 	if (target_path != mount_point)
@@ -339,7 +339,7 @@ namespace snapper
 
 	    // Query additional information (receive-uuid, read-only) from btrfs.
 
-	    CmdBtrfsSubvolumeShow y(shell_target, target_path + "/" + path);
+	    CmdBtrfsSubvolumeShow y(backup_config.target_btrfs_bin, shell_target, target_path + "/" + path);
 
 	    bool is_read_only = y.is_read_only();
 	    if (!is_read_only)

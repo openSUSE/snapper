@@ -46,7 +46,7 @@ namespace snapper
 	static const long top_level_id = 5;
 	static const long unknown_id = -1;
 
-	CmdBtrfsSubvolumeList(const Shell& shell, const string& mount_point);
+	CmdBtrfsSubvolumeList(const string& btrfs_bin, const Shell& shell, const string& mount_point);
 
 	/**
 	 * Entry for every subvolume (unfortunately except the top-level).
@@ -93,7 +93,7 @@ namespace snapper
     {
     public:
 
-	CmdBtrfsSubvolumeShow(const Shell& shell, const string& mount_point);
+	CmdBtrfsSubvolumeShow(const string& btrfs_bin, const Shell& shell, const string& mount_point);
 
 	const string& get_uuid() const { return uuid; }
 	const string& get_parent_uuid() const { return parent_uuid; }

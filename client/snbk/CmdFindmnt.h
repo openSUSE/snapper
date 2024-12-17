@@ -41,7 +41,7 @@ namespace snapper
     {
     public:
 
-	CmdFindmnt(const Shell& shell, const string& path);
+	CmdFindmnt(const string& findmnt_bin, const Shell& shell, const string& path);
 
 	const string& get_source() const { return source; }
 	const string& get_target() const { return target; }

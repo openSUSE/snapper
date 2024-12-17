@@ -39,9 +39,9 @@ namespace snapper
     using namespace std;
 
 
-    CmdBtrfsSubvolumeList::CmdBtrfsSubvolumeList(const Shell& shell, const string& mount_point)
+    CmdBtrfsSubvolumeList::CmdBtrfsSubvolumeList(const string& btrfs_bin, const Shell& shell, const string& mount_point)
     {
-	SystemCmd::Args cmd_args = { BTRFS_BIN, "subvolume", "list", "-a", "-puqR", mount_point };
+	SystemCmd::Args cmd_args = { btrfs_bin, "subvolume", "list", "-a", "-puqR", mount_point };
 	SystemCmd cmd(shellify(shell, cmd_args));
 
 	if (cmd.retcode() != 0)
@@ -157,9 +157,9 @@ namespace snapper
     }
 
 
-    CmdBtrfsSubvolumeShow::CmdBtrfsSubvolumeShow(const Shell& shell, const string& mount_point)
+    CmdBtrfsSubvolumeShow::CmdBtrfsSubvolumeShow(const string& btrfs_bin, const Shell& shell, const string& mount_point)
     {
-	SystemCmd::Args cmd_args = { BTRFS_BIN, "subvolume", "show", mount_point };
+	SystemCmd::Args cmd_args = { btrfs_bin, "subvolume", "show", mount_point };
 	SystemCmd cmd(shellify(shell, cmd_args));
 
 	if (cmd.retcode() != 0)

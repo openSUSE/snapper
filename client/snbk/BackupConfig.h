@@ -27,6 +27,7 @@
 #include <vector>
 
 #include <snapper/Enum.h>
+#include <snapper/SnapperDefines.h>
 
 #include "Shell.h"
 
@@ -67,6 +68,10 @@ namespace snapper
 
 	Shell get_source_shell() const;
 	Shell get_target_shell() const;
+
+	string target_btrfs_bin = BTRFS_BIN;
+	string target_realpath_bin = REALPATH_BIN;
+	string target_findmnt_bin = FINDMNT_BIN;
 
     private:
 
