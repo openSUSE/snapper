@@ -51,24 +51,15 @@
 #define SNAPSHOT_NAME "snapshot"
 
 
-// commands
+// commands - more in configure.ac
 
 #define SH_BIN "/bin/sh"
 #define SSH_BIN "/usr/bin/ssh"
 
-#define BTRFS_BIN "/usr/sbin/btrfs"
-
 #define SYSTEMCTL_BIN "/usr/bin/systemctl"
 
-#define FINDMNT_BIN "/usr/bin/findmnt"
-#define REALPATH_BIN "/usr/bin/realpath"
-
-#define CP_BIN "/usr/bin/cp"
 #define SCP_BIN "/usr/bin/scp"
 #define MKDIR_BIN "/usr/bin/mkdir"
-
-#define RM_BIN "/usr/bin/rm"
-#define RMDIR_BIN "/usr/bin/rmdir"
 
 
 // keys from the config files

@@ -70,19 +70,19 @@ namespace snapper
 	: Filesystem(subvolume, root_prefix), mount_type(mount_type),
 	  cache(LvmCache::get_lvm_cache())
     {
-	if (access(LVCREATEBIN, X_OK) != 0)
+	if (access(LVCREATE_BIN, X_OK) != 0)
 	{
-	    SN_THROW(ProgramNotInstalledException(LVCREATEBIN " not installed"));
+	    SN_THROW(ProgramNotInstalledException(LVCREATE_BIN " not installed"));
 	}
 
-	if (access(LVSBIN, X_OK) != 0)
+	if (access(LVS_BIN, X_OK) != 0)
 	{
-	    SN_THROW(ProgramNotInstalledException(LVSBIN " not installed"));
+	    SN_THROW(ProgramNotInstalledException(LVS_BIN " not installed"));
 	}
 
-	if (access(LVCHANGEBIN, X_OK) != 0)
+	if (access(LVCHANGE_BIN, X_OK) != 0)
 	{
-	    SN_THROW(ProgramNotInstalledException(LVCHANGEBIN " not installed"));
+	    SN_THROW(ProgramNotInstalledException(LVCHANGE_BIN " not installed"));
 	}
 
 	bool found = false;
@@ -483,7 +483,7 @@ namespace snapper
 
     LvmCapabilities::LvmCapabilities()
     {
-	SystemCmd cmd({ LVMBIN, "version" });
+	SystemCmd cmd({ LVM_BIN, "version" });
 
 	if (cmd.retcode() != 0 || cmd.get_stdout().empty())
 	{
