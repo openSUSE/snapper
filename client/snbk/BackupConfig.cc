@@ -69,6 +69,10 @@ namespace snapper
 	    get_child_value(json_file.get_root(), "ssh-user", ssh_user);
 	    get_child_value(json_file.get_root(), "ssh-identity", ssh_identity);
 	}
+
+	get_child_value(json_file.get_root(), "target-btrfs-bin", target_btrfs_bin);
+	get_child_value(json_file.get_root(), "target-realpath-bin", target_realpath_bin);
+	get_child_value(json_file.get_root(), "target-findmnt-bin", target_findmnt_bin);
     }
 
 

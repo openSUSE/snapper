@@ -2,13 +2,13 @@
 <refentry id='snapper-backup-configs5'>
 
   <refentryinfo>
-    <date>2024-11-05</date>
+    <date>2024-12-17</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper-backup-configs</refentrytitle>
     <manvolnum>5</manvolnum>
-    <refmiscinfo class='date'>2024-11-05</refmiscinfo>
+    <refmiscinfo class='date'>2024-12-17</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -101,6 +101,28 @@
 	  password or passphrase. Optional for target mode ssh-push.</para>
 	</listitem>
       </varlistentry>
+
+      <varlistentry>
+	<term><option>target-btrfs-bin</option></term>
+	<listitem>
+	  <para>Location of the btrfs binary on the target. Optional.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>target-realpath-bin</option></term>
+	<listitem>
+	  <para>Location of the realpath binary on the target. Optional.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>target-findmnt-bin</option></term>
+	<listitem>
+	  <para>Location of the findmnt binary on the target. Optional.</para>
+	</listitem>
+      </varlistentry>
+
     </variablelist>
   </refsect1>
 

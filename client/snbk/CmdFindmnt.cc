@@ -32,10 +32,10 @@
 namespace snapper
 {
 
-    CmdFindmnt::CmdFindmnt(const Shell& shell, const string& path)
+    CmdFindmnt::CmdFindmnt(const string& findmnt_bin, const Shell& shell, const string& path)
 	: path(path)
     {
-	SystemCmd::Args cmd_args = { FINDMNT_BIN, "--json", "--target", path };
+	SystemCmd::Args cmd_args = { findmnt_bin, "--json", "--target", path };
 	SystemCmd cmd(shellify(shell, cmd_args));
 
 	if (cmd.retcode() != 0)
