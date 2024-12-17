@@ -91,7 +91,7 @@ namespace snapper
 	{
 	    boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(upg_lock);
 
-	    SystemCmd::Args cmd_args = { LVCHANGEBIN };
+	    SystemCmd::Args cmd_args = { LVCHANGE_BIN };
 	    if (!caps->get_ignoreactivationskip().empty())
 		cmd_args << caps->get_ignoreactivationskip();
 	    cmd_args << "--activate" << "y" << full_name();
@@ -125,7 +125,7 @@ namespace snapper
 	{
 	    boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(upg_lock);
 
-	    SystemCmd cmd({ LVCHANGEBIN, "--activate", "n", full_name() });
+	    SystemCmd cmd({ LVCHANGE_BIN, "--activate", "n", full_name() });
 	    if (cmd.retcode() != 0)
 	    {
 		y2err("lvm cache: " << full_name() << " deactivation failed!");
@@ -144,7 +144,7 @@ namespace snapper
     {
 	boost::unique_lock<boost::shared_mutex> unique_lock(lv_mutex);
 
-	SystemCmd cmd({ LVSBIN, "--noheadings", "--options", "lv_attr,segtype", full_name() });
+	SystemCmd cmd({ LVS_BIN, "--noheadings", "--options", "lv_attr,segtype", full_name() });
 	if (cmd.retcode() != 0 || cmd.get_stdout().empty())
 	{
 	    y2err("lvm cache: failed to get info about " << full_name());
@@ -186,7 +186,7 @@ namespace snapper
 	{
 	    boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(upg_lock);
 
-	    SystemCmd cmd({ LVCHANGEBIN, "--permission", read_only ? "r" : "rw", full_name() });
+	    SystemCmd cmd({ LVCHANGE_BIN, "--permission", read_only ? "r" : "rw", full_name() });
 	    if (cmd.retcode() != 0)
 	    {
 		y2err("lvm cache: " << full_name() << " setting permission failed!");
@@ -339,7 +339,7 @@ namespace snapper
 
 	boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(upg_lock);
 
-	SystemCmd cmd({ LVCREATEBIN, "--permission", read_only ? "r" : "rw", "--snapshot",
+	SystemCmd cmd({ LVCREATE_BIN, "--permission", read_only ? "r" : "rw", "--snapshot",
 		"--name", lv_snapshot_name, full_name(lv_origin_name) });
 
 	if (cmd.retcode() != 0)
@@ -363,7 +363,7 @@ namespace snapper
 	}
 	else
 	{
-	    SystemCmd cmd({ LVSBIN, "--noheadings", "--options", "lv_attr,segtype", full_name(lv_name) });
+	    SystemCmd cmd({ LVS_BIN, "--noheadings", "--options", "lv_attr,segtype", full_name(lv_name) });
 	    if (cmd.retcode() != 0 || cmd.get_stdout().empty())
 	    {
 		y2err("lvm cache: failed to get info about " << full_name(lv_name));
@@ -399,7 +399,7 @@ namespace snapper
 	// wait for all individual lv cache operations under shared vg lock to finish
 	boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(upg_lock);
 
-	SystemCmd cmd({ LVREMOVEBIN, "--force", full_name(lv_name) });
+	SystemCmd cmd({ LVREMOVE_BIN, "--force", full_name(lv_name) });
 	if (cmd.retcode() != 0)
 	    throw LvmCacheException();
 
@@ -552,7 +552,7 @@ namespace snapper
     void
     LvmCache::add_vg(const string& vg_name, const string& include_lv_name)
     {
-	SystemCmd cmd({ LVSBIN, "--noheadings", "--options", "lv_name,lv_attr,segtype", vg_name });
+	SystemCmd cmd({ LVS_BIN, "--noheadings", "--options", "lv_name,lv_attr,segtype", vg_name });
 	if (cmd.retcode() != 0)
 	{
 	    y2err("lvm cache: failed to get info about VG " << vg_name);

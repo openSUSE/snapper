@@ -20,6 +20,8 @@
  */
 
 
+#include "config.h"
+
 #include <iostream>
 #include <regex>
 #include <boost/algorithm/string/predicate.hpp>

@@ -23,11 +23,12 @@
 #define SNAPPER_BACKUP_CONFIG_H
 
 
+#include "config.h"
+
 #include <string>
 #include <vector>
 
 #include <snapper/Enum.h>
-#include <snapper/SnapperDefines.h>
 
 #include "Shell.h"
 
