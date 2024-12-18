@@ -57,14 +57,14 @@ namespace snapper
     Ext4::Ext4(const string& subvolume, const string& root_prefix)
 	: Filesystem(subvolume, root_prefix)
     {
-	if (access(CHSNAPBIN, X_OK) != 0)
+	if (access(CHSNAP_BIN, X_OK) != 0)
 	{
-	    throw ProgramNotInstalledException(CHSNAPBIN " not installed");
+	    throw ProgramNotInstalledException(CHSNAP_BIN " not installed");
 	}
 
-	if (access(CHATTRBIN, X_OK) != 0)
+	if (access(CHATTR_BIN, X_OK) != 0)
 	{
-	    throw ProgramNotInstalledException(CHATTRBIN " not installed");
+	    throw ProgramNotInstalledException(CHATTR_BIN " not installed");
 	}
 
 	bool found = false;
@@ -91,7 +91,7 @@ namespace snapper
 	int r1 = mkdir((subvolume + "/" SNAPSHOTS_NAME).c_str(), 0700);
 	if (r1 == 0)
 	{
-	    SystemCmd cmd1({ CHATTRBIN, "+x", subvolume + "/" SNAPSHOTS_NAME });
+	    SystemCmd cmd1({ CHATTR_BIN, "+x", subvolume + "/" SNAPSHOTS_NAME });
 	    if (cmd1.retcode() != 0)
 		throw CreateConfigFailedException("chattr failed");
 	}
@@ -104,7 +104,7 @@ namespace snapper
 	int r2 = mkdir((subvolume + "/" SNAPSHOTS_NAME "/.info").c_str(), 0700);
 	if (r2 == 0)
 	{
-	    SystemCmd cmd2({ CHATTRBIN, "-x", subvolume + "/" SNAPSHOTS_NAME "/.info" });
+	    SystemCmd cmd2({ CHATTR_BIN, "-x", subvolume + "/" SNAPSHOTS_NAME "/.info" });
 	    if (cmd2.retcode() != 0)
 		throw CreateConfigFailedException("chattr failed");
 	}
@@ -174,11 +174,11 @@ namespace snapper
 	if (num_parent != 0 || !read_only)
 	    throw std::logic_error("not implemented");
 
-	SystemCmd cmd1({ TOUCHBIN, snapshotFile(num) });
+	SystemCmd cmd1({ TOUCH_BIN, snapshotFile(num) });
 	if (cmd1.retcode() != 0)
 	    throw CreateSnapshotFailedException();
 
-	SystemCmd cmd2({ CHSNAPBIN, "+S", snapshotFile(num) });
+	SystemCmd cmd2({ CHSNAP_BIN, "+S", snapshotFile(num) });
 	if (cmd2.retcode() != 0)
 	    throw CreateSnapshotFailedException();
     }
@@ -187,7 +187,7 @@ namespace snapper
     void
     Ext4::deleteSnapshot(unsigned int num) const
     {
-	SystemCmd cmd({ CHSNAPBIN, "-S", snapshotFile(num) });
+	SystemCmd cmd({ CHSNAP_BIN, "-S", snapshotFile(num) });
 	if (cmd.retcode() != 0)
 	    throw DeleteSnapshotFailedException();
     }
@@ -212,7 +212,7 @@ namespace snapper
 	if (isSnapshotMounted(num))
 	    return;
 
-	SystemCmd cmd1({ CHSNAPBIN, "+n", snapshotFile(num) });
+	SystemCmd cmd1({ CHSNAP_BIN, "+n", snapshotFile(num) });
 	if (cmd1.retcode() != 0)
 	    throw MountSnapshotFailedException();
 
@@ -237,7 +237,7 @@ namespace snapper
 	// if (!umount(snapshotDir(num)))
 	// throw UmountSnapshotFailedException();
 
-	SystemCmd cmd1({ CHSNAPBIN, "-n", snapshotFile(num) });
+	SystemCmd cmd1({ CHSNAP_BIN, "-n", snapshotFile(num) });
 	if (cmd1.retcode() != 0)
 	    throw UmountSnapshotFailedException();
 
