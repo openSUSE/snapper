@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-16 09:59+0100\n"
-"PO-Revision-Date: 2024-11-17 03:48+0000\n"
+"PO-Revision-Date: 2025-01-01 11:50+0000\n"
 "Last-Translator: Arif Budiman <arifpedia@gmail.com>\n"
-"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/id/>\n"
+"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/"
+"id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.8.3\n"
+"X-Generator: Weblate 5.9.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <algoritma-pembersihan>"
@@ -780,9 +781,8 @@ msgstr "M"
 msgid "MB"
 msgstr "MB"
 
-#, fuzzy
 msgid "Manually set filesystem type."
-msgstr "\t--fstype, -f <fstype>\t\tSecara manual mengatur jenis sistem berkas."
+msgstr "Mengatur tipe sistem file secara manual."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Mungkin Anda lupa pembatas '..' di antara nomor snapshot."
@@ -809,50 +809,44 @@ msgid "Missing or invalid pre-number."
 msgstr "Pra-nomor tidak ada atau tidak valid."
 
 msgid "Name"
-msgstr ""
+msgstr "Nama"
 
-#, fuzzy
 msgid "Name of config template to use."
-msgstr "\t--template, -t <nama>\t\tNama templat konfigurasi untuk digunakan."
+msgstr "Nama templat konfigurasi yang akan digunakan."
 
 msgid "No backup configs found."
-msgstr ""
+msgstr "Konfigurasi cadangan tidak ditemukan."
 
 msgid "No command provided."
 msgstr "Tidak ada perintah yang tersedia."
 
-#, fuzzy
 msgid "No headers for CSV output format."
-msgstr "\t--no-headers\t\t\tTidak ada tajuk untuk format keluaran CSV."
+msgstr "Tidak ada header untuk format output CSV."
 
 msgid "No permissions."
 msgstr "Tidak ada izin."
 
-#, fuzzy
 msgid "Number of corresponding pre snapshot."
-msgstr "\t--pre-number <nomor>\t\tJumlah snapshot pra yang sesuai."
+msgstr "Jumlah pra snapshot yang sesuai."
 
 msgid "Only use backup-config with automatic set."
-msgstr ""
+msgstr "Hanya gunakan backup-config dengan pengaturan otomatis."
 
 msgid "Only use backup-config with specified target-mode."
-msgstr ""
+msgstr "Hanya gunakan backup-config dengan mode-target yang ditentukan."
 
 #, c-format
 msgid "Opening file '%s' failed."
 msgstr "Membuka berkas '%s' gagal."
 
-#, fuzzy
 msgid "Operate in the specified ambit."
-msgstr "\t--ambit, -a ambit\t\tOperasikan dalam ruang yang ditentukan."
+msgstr "Beroperasi dalam lingkup yang ditentukan."
 
-#, fuzzy
 msgid "Operate on target root (works only without DBus)."
-msgstr "\t--root, -r <path>\t\tBeroperasi pada root target (hanya bekerja tanpa DBus)."
+msgstr "Beroperasi pada root target (hanya berfungsi tanpa DBus)."
 
-#, fuzzy
 msgid "Operate without DBus."
-msgstr "\t--no-dbus\t\t\tOperasikan tanpa DBus."
+msgstr "Beroperasi tanpa DBus."
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr "Opsi --from hanya didukung untuk snapshot dari tipe tunggal."
@@ -872,6 +866,8 @@ msgstr "PB"
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
 msgstr ""
+"Ketidakcocokan jalur antara jalur sumber dari backup-config dan subvolume "
+"dari snapper config ('%s' vs '%s')."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -889,25 +885,20 @@ msgstr "Pra #"
 msgid "Pre Date"
 msgstr "Tanggal Pra"
 
-#, fuzzy
 msgid "Print number of created snapshot."
-msgstr "\t--print-number, -p\t\tCetak jumlah snapshot yang dibuat."
+msgstr "Mencetak nomor snapshot yang dibuat."
 
-#, fuzzy
 msgid "Print number of second created snapshot."
-msgstr "\t--print-number, -p\t\tCetak jumlah snapshot kedua yang dibuat."
+msgstr "Mencetak nomor snapshot kedua yang dibuat."
 
-#, fuzzy
 msgid "Print version and exit."
-msgstr "\t--version\t\t\tCetak versi dan keluar."
+msgstr "Cetak versi dan keluar."
 
-#, fuzzy
 msgid "Probing extra information for source snapshots."
-msgstr "\t--description, -d <deskripsi>\tDeskripsi untuk snapshot."
+msgstr "Menggali informasi tambahan untuk snapshot sumber."
 
-#, fuzzy
 msgid "Probing extra information for target snapshots."
-msgstr "\t--description, -d <deskripsi>\tDeskripsi untuk snapshot."
+msgstr "Menggali informasi tambahan untuk snapshot target."
 
 #, fuzzy
 msgid "Probing source snapshots."
