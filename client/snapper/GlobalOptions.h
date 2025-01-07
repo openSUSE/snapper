@@ -56,10 +56,10 @@ namespace snapper
 	Style table_style() const { return _table_style; }
 	bool abbreviate() const { return _abbreviate; }
 	OutputFormat output_format() const { return _output_format; }
-	string separator() const { return _separator; }
+	const string& separator() const { return _separator; }
 	bool headers() const { return _headers; }
-	string config() const { return _config; }
-	string root() const { return _root; }
+	const string& config() const { return _config; }
+	const string& root() const { return _root; }
 	Ambit ambit() const { return _ambit; }
 
 	void set_ambit(Ambit ambit) { _ambit = ambit; }
