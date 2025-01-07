@@ -50,7 +50,7 @@ namespace snapper
 	bool quiet() const { return _quiet; }
 	bool verbose() const { return _verbose; }
 	bool debug() const { return _debug; }
-	boost::optional<BackupConfig::TargetMode> target_mode() { return _target_mode; }
+	const boost::optional<BackupConfig::TargetMode>& target_mode() { return _target_mode; }
 	bool automatic() const { return _automatic; }
 	bool utc() const { return _utc; }
 	bool iso() const { return _iso; }
@@ -59,9 +59,9 @@ namespace snapper
 	bool help() const { return _help; }
 	Style table_style() const { return _table_style; }
 	OutputFormat output_format() const { return _output_format; }
-	string separator() const { return _separator; }
+	const string& separator() const { return _separator; }
 	bool headers() const { return _headers; }
-	boost::optional<string> backup_config() const { return _backup_config; }
+	const boost::optional<string>& backup_config() const { return _backup_config; }
 
     private:
 
