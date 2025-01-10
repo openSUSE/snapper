@@ -51,7 +51,8 @@
               </span>
             </dt>
             <dd>
-              <p>Path of the subvolume or mount point.</p>
+              <p>Path of the source subvolume. This must match the
+	  subvolume of the corresponding snapper config.</p>
             </dd>
             <dt>
               <span class="term">
@@ -59,7 +60,7 @@
               </span>
             </dt>
             <dd>
-              <p>Path of the subvolume or mount point.</p>
+              <p>Path of the target subvolume or mount point.</p>
             </dd>
             <dt>
               <span class="term">
@@ -105,6 +106,30 @@
             <dd>
               <p>An ssh-identity to access the host without requiring a
 	  password or passphrase. Optional for target mode ssh-push.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">target-btrfs-bin</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Location of the btrfs binary on the target. Optional.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">target-realpath-bin</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Location of the realpath binary on the target. Optional.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">target-findmnt-bin</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Location of the findmnt binary on the target. Optional.</p>
             </dd>
           </dl>
         </div>
