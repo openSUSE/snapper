@@ -103,7 +103,7 @@ namespace snapper
 	    string::size_type pos6 = line.find(" received_uuid ");
 	    if (pos6 == string::npos)
 		SN_THROW(Exception("could not find 'received_uuid' in 'btrfs subvolume list' output"));
-	    line.substr(pos6 + strlen(" received_uuid ")) >> entry.parent_uuid;
+	    line.substr(pos6 + strlen(" received_uuid ")) >> entry.received_uuid;
 	    if (entry.received_uuid == "-")
 		entry.received_uuid = "";
 
