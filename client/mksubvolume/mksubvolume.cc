@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2015-2020] SUSE LLC
+ * Copyright (c) [2015-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -24,7 +24,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <ext2fs/ext2_fs.h>
+#include <linux/fs.h>
 #include <fcntl.h>
 #include <sys/ioctl.h>
 
@@ -285,16 +285,16 @@ do_set_cow_flag()
 
     unsigned long flags = 0;
 
-    if (ioctl(fd, EXT2_IOC_GETFLAGS, &flags) == -1)
-	throw runtime_error_with_errno("ioctl(EXT2_IOC_GETFLAGS) failed", errno);
+    if (ioctl(fd, FS_IOC_GETFLAGS, &flags) == -1)
+	throw runtime_error_with_errno("ioctl(FS_IOC_GETFLAGS) failed", errno);
 
     if (set_nocow)
 	flags |= FS_NOCOW_FL;
     else
 	flags &= ~FS_NOCOW_FL;
 
-    if (ioctl(fd, EXT2_IOC_SETFLAGS, &flags) == -1)
-	throw runtime_error_with_errno("ioctl(EXT2_IOC_SETFLAGS) failed", errno);
+    if (ioctl(fd, FS_IOC_SETFLAGS, &flags) == -1)
+	throw runtime_error_with_errno("ioctl(FS_IOC_SETFLAGS) failed", errno);
 }
 
 

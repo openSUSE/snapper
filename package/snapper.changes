@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Jan 17 07:07:43 CET 2025 - aschnell@suse.com
+
+- avoid build dependency e2fsprogs-devel
+
+-------------------------------------------------------------------
 Tue Dec 17 09:14:46 CET 2024 - aschnell@suse.com
 
 - make some binary paths used in snbk configurable

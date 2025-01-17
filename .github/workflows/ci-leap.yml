@@ -10,7 +10,7 @@ jobs:
     steps:
 
     - name: Install additional packages
-      run: zypper --non-interactive in --no-recommends autoconf automake dbus-1-devel docbook-xsl-stylesheets e2fsprogs-devel gcc-c++ gettext-runtime glibc-locale gzip libacl-devel libboost_system-devel libboost_test-devel libboost_thread-devel libbtrfs-devel libjson-c-devel libmount-devel libtool libxml2-devel libxslt make pam-devel xz
+      run: zypper --non-interactive in --no-recommends autoconf automake dbus-1-devel docbook-xsl-stylesheets gcc-c++ gettext-runtime glibc-locale gzip libacl-devel libboost_system-devel libboost_test-devel libboost_thread-devel libbtrfs-devel libjson-c-devel libmount-devel libtool libxml2-devel libxslt make pam-devel xz
 
     - name: List installed packages
       run: rpm -qa | sort
