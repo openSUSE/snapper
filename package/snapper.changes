@@ -88,7 +88,7 @@ Tue Mar 19 14:58:12 CET 2024 - aschnell@suse.com
 - improved error message (gh#openSUSE/snapper#864)
 
 -------------------------------------------------------------------
-Sat  9 Mar 09:44:17 GMT 2024 - infinity0@pwned.gg
+Sat Mar 09 09:44:17 GMT 2024 - infinity0@pwned.gg
 
 - add support for quarterly snapshots
 
