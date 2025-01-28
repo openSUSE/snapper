@@ -65,7 +65,7 @@
 	<replaceable>size</replaceable></option></term>
 	<listitem>
 	  <para>Limit of the filesystems space the snapshots should
-	  use. Either a fraction of the whole filesystem for an
+	  use. Either a fraction of the whole filesystem or an
 	  absolute value. An absolute value must use the C locale.</para>
 	  <para>Only supported for btrfs.</para>
 	  <para>Default value is &quot;0.5&quot;.</para>
@@ -79,7 +79,7 @@
 	<replaceable>size</replaceable></option></term>
 	<listitem>
 	  <para>Limit of the filesystem space that should be
-	  free. Either a fraction of the whole filesystem for an absolute
+	  free. Either a fraction of the whole filesystem or an absolute
 	  value. An absolute value must use the C locale.</para>
 	  <para>Only supported for btrfs.</para>
 	  <para>Default value is &quot;0.2&quot;.</para>
