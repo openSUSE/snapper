@@ -39,6 +39,9 @@ namespace Stomp
 
     struct Message
     {
+	Message() {}
+	Message(const std::string& command) : command(command) {}
+
 	std::string command;
 	std::map<std::string, std::string> headers;
 	std::string body;
