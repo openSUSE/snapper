@@ -58,8 +58,7 @@ namespace Stomp
 
 		if (regex_match(line, rx_command))
 		{
-		    msg = Message();
-		    msg.command = line;
+		    msg = Message(line);
 		    state = State::Headers;
 		}
 		else
@@ -134,18 +133,14 @@ namespace Stomp
     Message
     ack()
     {
-	Message msg;
-	msg.command = "ACK";
-	return msg;
+	return Message("ACK");
     }
 
 
     Message
     nack()
     {
-	Message msg;
-	msg.command = "NACK";
-	return msg;
+	return Message("NACK");
     }
 
 

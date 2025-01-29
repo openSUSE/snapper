@@ -49,8 +49,7 @@ ZyppPlugin::dispatch(const Message& msg)
     if (msg.command == "_DISCONNECT")
 	return ack();
 
-    Message a;
-    a.command = "_ENOMETHOD";
-    a.headers["Command"] = msg.command;
-    return a;
+    Message reply("_ENOMETHOD");
+    reply.headers["Command"] = msg.command;
+    return reply;
 }

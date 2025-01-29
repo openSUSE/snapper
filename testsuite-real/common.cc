@@ -96,6 +96,7 @@ check_xa_undo_statistics(unsigned int xaNumCreate, unsigned xaNumReplace, unsign
 }
 #endif
 
+
 void
 undo()
 {
