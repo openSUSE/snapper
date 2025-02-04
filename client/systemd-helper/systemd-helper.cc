@@ -181,16 +181,24 @@ cleanup(ProxySnappers* snappers)
 	    {
 		string general_dir = (subvolume == "/" ? "" : subvolume) + "/" SNAPSHOTS_NAME;
 
-		cout << "Running 'btrfs qgroup clear-stale " << general_dir << "'." << endl;
+		// Workaround for missing 'btrfs quota
+		// status'. /sys/fs/btrfs/<fsid>/qgroups is not available on all
+		// maintained kernels (only since 5.9).
 
-		SystemCmd cmd({ BTRFS_BIN, "qgroup", "clear-stale", general_dir });
-		if (cmd.retcode() != 0)
+		SystemCmd cmd1({ BTRFS_BIN, "qgroup", "show", general_dir });
+		if (cmd1.retcode() == 0)
 		{
-		    // This fails more often than not since qgroups of just deleted
-		    // subvolume are busy. So do not set an error code here. Still log the
-		    // failure to help people understand this stuff.
+		    cout << "Running 'btrfs qgroup clear-stale " << general_dir << "'." << endl;
 
-		    cerr << "'btrfs qgroup clear-stale " << general_dir << "' failed." << endl;
+		    SystemCmd cmd2({ BTRFS_BIN, "qgroup", "clear-stale", general_dir });
+		    if (cmd2.retcode() != 0)
+		    {
+			// This fails more often than not since qgroups of just deleted
+			// subvolume are busy. So do not set an error code here. Still log the
+			// failure to help people understand this stuff.
+
+			cerr << "'btrfs qgroup clear-stale " << general_dir << "' failed." << endl;
+		    }
 		}
 	    }
 	}
