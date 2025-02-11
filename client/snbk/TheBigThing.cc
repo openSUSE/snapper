@@ -73,7 +73,7 @@ namespace snapper
 
 	// Create directory on target.
 
-	SystemCmd::Args cmd1_args = { MKDIR_BIN, backup_config.target_path + "/" + to_string(num) };
+	SystemCmd::Args cmd1_args = { MKDIR_BIN, "--", backup_config.target_path + "/" + num_string };
 	SystemCmd cmd1(shellify(backup_config.get_target_shell(), cmd1_args));
 	if (cmd1.retcode() != 0)
 	{
@@ -92,8 +92,8 @@ namespace snapper
 	{
 	    case BackupConfig::TargetMode::LOCAL:
 	    {
-		SystemCmd::Args cmd2_args = { CP_BIN, backup_config.source_path + "/" SNAPSHOTS_NAME "/" +
-		    to_string(num) + "/info.xml", backup_config.target_path + "/" + to_string(num) + "/" };
+		SystemCmd::Args cmd2_args = { CP_BIN, "--", backup_config.source_path + "/" SNAPSHOTS_NAME "/" +
+		    num_string + "/info.xml", backup_config.target_path + "/" + num_string + "/" };
 		SystemCmd cmd2(shellify(backup_config.get_target_shell(), cmd2_args));
 		if (cmd2.retcode() != 0)
 		{
@@ -142,9 +142,9 @@ namespace snapper
 	if (it1 != the_big_things.end())
 	    cmd3a_args << "-p" << backup_config.source_path + "/" SNAPSHOTS_NAME "/" +
 		to_string(it1->num) + "/" SNAPSHOT_NAME;
-	cmd3a_args << backup_config.source_path + "/" SNAPSHOTS_NAME "/" + to_string(num) + "/" SNAPSHOT_NAME;
+	cmd3a_args << "--" << backup_config.source_path + "/" SNAPSHOTS_NAME "/" + num_string + "/" SNAPSHOT_NAME;
 
-	SystemCmd::Args cmd3b_args = { BTRFS_BIN, "receive", backup_config.target_path + "/" + to_string(num) };
+	SystemCmd::Args cmd3b_args = { BTRFS_BIN, "receive", "--", backup_config.target_path + "/" + num_string };
 
 	y2deb("source: " << cmd3a_args.get_values());
 	y2deb("target: " << cmd3b_args.get_values());
@@ -174,10 +174,12 @@ namespace snapper
 	if (target_state == TargetState::MISSING)
 	    SN_THROW(Exception(_("Snapshot not on target.")));
 
+	const string num_string = to_string(num);
+
 	// Delete snapshot on target.
 
-	SystemCmd::Args cmd1_args = { BTRFS_BIN, "subvolume", "delete", backup_config.target_path + "/" +
-	    to_string(num) + "/" SNAPSHOT_NAME };
+	SystemCmd::Args cmd1_args = { BTRFS_BIN, "subvolume", "delete", "--", backup_config.target_path + "/" +
+	    num_string + "/" SNAPSHOT_NAME };
 	SystemCmd cmd1(shellify(backup_config.get_target_shell(), cmd1_args));
 	if (cmd1.retcode() != 0)
 	{
@@ -192,7 +194,7 @@ namespace snapper
 
 	// Remove info.xml on target.
 
-	SystemCmd::Args cmd2_args = { RM_BIN, backup_config.target_path + "/" + to_string(num) + "/info.xml" };
+	SystemCmd::Args cmd2_args = { RM_BIN, "--", backup_config.target_path + "/" + num_string + "/info.xml" };
 	SystemCmd cmd2(shellify(backup_config.get_target_shell(), cmd2_args));
 	if (cmd2.retcode() != 0)
 	{
@@ -207,7 +209,7 @@ namespace snapper
 
 	// Remove directory on target.
 
-	SystemCmd::Args cmd3_args = { RMDIR_BIN, backup_config.target_path + "/" + to_string(num) };
+	SystemCmd::Args cmd3_args = { RMDIR_BIN, "--", backup_config.target_path + "/" + num_string };
 	SystemCmd cmd3(shellify(backup_config.get_target_shell(), cmd3_args));
 	if (cmd3.retcode() != 0)
 	{
