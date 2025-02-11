@@ -69,6 +69,8 @@ namespace snapper
 	if (target_state != TargetState::MISSING)
 	    SN_THROW(Exception(_("Snapshot already on target.")));
 
+	const string num_string = to_string(num);
+
 	// Create directory on target.
 
 	SystemCmd::Args cmd1_args = { MKDIR_BIN, backup_config.target_path + "/" + to_string(num) };
@@ -113,9 +115,10 @@ namespace snapper
 		    cmd2_args << "-P" << to_string(backup_config.ssh_port);
 		if (!backup_config.ssh_identity.empty())
 		    cmd2_args << "-i" << backup_config.ssh_identity;
-		cmd2_args << backup_config.source_path + "/" SNAPSHOTS_NAME "/" + to_string(num) + "/info.xml"
-			  << (backup_config.ssh_user.empty() ? "" : "a") + backup_config.ssh_host + ":" +
-		    backup_config.target_path + "/" + to_string(num) + "/";
+		cmd2_args << "--" << backup_config.source_path + "/" SNAPSHOTS_NAME "/" + num_string +
+		    "/info.xml" << (backup_config.ssh_user.empty() ? "" : backup_config.ssh_user + "@") +
+		    backup_config.ssh_host + ":" + backup_config.target_path + "/" + num_string + "/";
+
 		SystemCmd cmd2(cmd2_args);
 		if (cmd2.retcode() != 0)
 		{
