@@ -44,26 +44,26 @@ namespace snapper
 	JsonFile json_file(BACKUP_CONFIGS_DIR "/" + name + ".json");
 
 	if (!get_child_value(json_file.get_root(), "config", config))
-	    SN_THROW(Exception("config entry not found in file"));
+	    SN_THROW(Exception(sformat("config entry not found in '%s'", name.c_str())));
 
 	string tmp1;
 	if (!get_child_value(json_file.get_root(), "target-mode", tmp1))
-	    SN_THROW(Exception("target-mode entry not found in file"));
+	    SN_THROW(Exception(sformat("target-mode entry not found in '%s'", name.c_str())));
 	if (!toValue(tmp1, target_mode, false))
-	    SN_THROW(Exception("unknown target-mode"));
+	    SN_THROW(Exception(sformat("unknown target-mode '%s' in '%s'", tmp1.c_str(), name.c_str())));
 
 	if (!get_child_value(json_file.get_root(), "source-path", source_path))
-	    SN_THROW(Exception("source-path entry not found in file"));
+	    SN_THROW(Exception(sformat("source-path entry not found in '%s'", name.c_str())));
 
 	if (!get_child_value(json_file.get_root(), "target-path", target_path))
-	    SN_THROW(Exception("target-path entry not found in file"));
+	    SN_THROW(Exception(sformat("target-path entry not found in '%s'", name.c_str())));
 
 	get_child_value(json_file.get_root(), "automatic", automatic);
 
 	if (target_mode == TargetMode::SSH_PUSH)
 	{
 	    if (!get_child_value(json_file.get_root(), "ssh-host", ssh_host))
-		SN_THROW(Exception("ssh-host entry not found in file"));
+		SN_THROW(Exception(sformat("ssh-host entry not found in '%s'", name.c_str())));
 
 	    get_child_value(json_file.get_root(), "ssh-port", ssh_port);
 	    get_child_value(json_file.get_root(), "ssh-user", ssh_user);
