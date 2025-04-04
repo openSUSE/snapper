@@ -215,7 +215,8 @@ namespace snapper
 	// remove all filelists in the info directory of this snapshot
 	for (const string& name : info_dir.entries(is_filelist_file))
 	{
-	    info_dir.unlink(name, 0);
+	    if (info_dir.unlink(name) < 0)
+		y2err("unlink '" << name << "' failed errno: " << errno << " (" << stringerror(errno) << ")");
 	}
 
 	// remove all filelists of the snapshot in the info directories of other snapshots
@@ -226,8 +227,11 @@ namespace snapper
 
 	    SDir tmp = snapshot.openInfoDir();
 	    string name = filelist_name(snapshot.getNum());
-	    tmp.unlink(name, 0);
-	    tmp.unlink(name + ".gz", 0);
+
+	    if (tmp.unlink(name) < 0 && errno != ENOENT)
+		y2err("unlink '" << name << "' failed errno: " << errno << " (" << stringerror(errno) << ")");
+	    if (tmp.unlink(name + ".gz") < 0 && errno != ENOENT)
+		y2err("unlink '" << name << ".gz' failed errno: " << errno << " (" << stringerror(errno) << ")");
 	}
     }
 
@@ -571,7 +575,7 @@ namespace snapper
 	{
 	    SN_CAUGHT(e);
 
-	    info_dir.unlink(tmp_name, 0);
+	    info_dir.unlink(tmp_name);
 
 	    SN_RETHROW(e);
 	}
@@ -776,7 +780,7 @@ namespace snapper
 	    SN_CAUGHT(e);
 
 	    SDir infos_dir = snapper->openInfosDir();
-	    infos_dir.unlink(decString(snapshot.getNum()), AT_REMOVEDIR);
+	    infos_dir.rmdir(decString(snapshot.getNum()));
 
 	    SN_RETHROW(e);
 	}
@@ -791,7 +795,7 @@ namespace snapper
 
 	    snapshot.deleteFilesystemSnapshot();
 	    SDir infos_dir = snapper->openInfosDir();
-	    infos_dir.unlink(decString(snapshot.getNum()), AT_REMOVEDIR);
+	    infos_dir.rmdir(decString(snapshot.getNum()));
 
 	    SN_RETHROW(e);
 	}
@@ -839,10 +843,12 @@ namespace snapper
 	snapshot->deleteFilelists();
 
 	SDir info_dir = snapshot->openInfoDir();
-	info_dir.unlink("info.xml", 0);
+	if (info_dir.unlink("info.xml") < 0)
+	    y2err("unlink 'info.xml' failed errno: " << errno << " (" << stringerror(errno) << ")");
 
 	SDir infos_dir = snapper->openInfosDir();
-	infos_dir.unlink(decString(snapshot->getNum()), AT_REMOVEDIR);
+	if (infos_dir.rmdir(decString(snapshot->getNum())) < 0)
+	    y2err("rmdir '" << snapshot->getNum() << "' failed errno: " << errno << " (" << stringerror(errno) << ")");
 
 	Plugins::delete_snapshot(Plugins::Stage::POST_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
 				 *snapshot, report);

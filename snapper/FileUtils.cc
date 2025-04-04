@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2018-2024] SUSE LLC
+ * Copyright (c) [2018-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -30,7 +30,7 @@
 #include <sys/xattr.h>
 #include <sys/statvfs.h>
 #include <fcntl.h>
-#include <stddef.h>
+#include <cstddef>
 #include <dirent.h>
 #include <unistd.h>
 #include <cerrno>
@@ -335,12 +335,22 @@ namespace snapper
 
 
     int
-    SDir::unlink(const string& name, int flags) const
+    SDir::rmdir(const string& name) const
     {
 	assert(name.find('/') == string::npos);
 	assert(name != "..");
 
-	return ::unlinkat(dirfd, name.c_str(), flags);
+	return ::unlinkat(dirfd, name.c_str(), AT_REMOVEDIR);
+    }
+
+
+    int
+    SDir::unlink(const string& name) const
+    {
+	assert(name.find('/') == string::npos);
+	assert(name != "..");
+
+	return ::unlinkat(dirfd, name.c_str(), 0);
     }
 
 
@@ -880,8 +890,8 @@ namespace snapper
 
     TmpDir::~TmpDir()
     {
-	if (base_dir.unlink(name, AT_REMOVEDIR) != 0)
-	    y2err("unlink failed, errno:" << errno);
+	if (base_dir.rmdir(name) != 0)
+	    y2err("rmdir failed, errno:" << errno << " (" << stringerror(errno) << ")");
     }
 
 
