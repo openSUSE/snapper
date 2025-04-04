@@ -366,7 +366,7 @@ namespace snapper
 	{
 	    SN_CAUGHT(e);
 
-	    info_dir.unlink(tmp_name, 0);
+	    info_dir.unlink(tmp_name);
 
 	    return false;
 	}

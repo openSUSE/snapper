@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2020-2023] SUSE LLC
+ * Copyright (c) [2020-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -26,6 +26,7 @@
 
 
 #include <fcntl.h>
+#include <sys/types.h>
 #include <string>
 #include <vector>
 #include <functional>
@@ -87,7 +88,8 @@ namespace snapper
 	int open(const string& name, int flags, mode_t mode) const;
 	ssize_t readlink(const string& name, string& buf) const;
 	int mkdir(const string& name, mode_t mode) const;
-	int unlink(const string& name, int flags) const;
+	int rmdir(const string& name) const;
+	int unlink(const string& name) const;
 	int chmod(const string& name, mode_t mode, int flags) const;
 	int chown(const string& name, uid_t owner, gid_t group, int flags) const;
 	int rename(const string& oldname, const string& newname) const;

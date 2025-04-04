@@ -182,10 +182,10 @@ namespace snapper
     {
 	SDir subvolume_dir = openSubvolumeDir();
 
-	int r1 = subvolume_dir.unlink(SNAPSHOTS_NAME, AT_REMOVEDIR);
+	int r1 = subvolume_dir.rmdir(SNAPSHOTS_NAME);
 	if (r1 != 0)
 	{
-	    y2err("rmdir failed errno:" << errno << " (" << strerror(errno) << ")");
+	    y2err("rmdir '" SNAPSHOTS_NAME "' failed errno:" << errno << " (" << strerror(errno) << ")");
 	    SN_THROW(DeleteConfigFailedException("rmdir failed"));
 	}
     }
@@ -293,10 +293,12 @@ namespace snapper
 	}
 
 	SDir info_dir = openInfoDir(num);
-	info_dir.unlink(SNAPSHOT_NAME, AT_REMOVEDIR);
+	if (info_dir.rmdir(SNAPSHOT_NAME) < 0)
+	     y2err("rmdir '" SNAPSHOT_NAME "' failed errno: " << errno << " (" << stringerror(errno) << ")");
 
 	SDir infos_dir = openInfosDir();
-	infos_dir.unlink(decString(num), AT_REMOVEDIR);
+	if (infos_dir.rmdir(decString(num)) < 0)
+	     y2err("rmdir '" << num << "' failed errno: " << errno << " (" << stringerror(errno) << ")");
     }
 
 
