@@ -144,7 +144,8 @@ namespace snapper
 		to_string(it1->num) + "/" SNAPSHOT_NAME;
 	cmd3a_args << "--" << backup_config.source_path + "/" SNAPSHOTS_NAME "/" + num_string + "/" SNAPSHOT_NAME;
 
-	SystemCmd::Args cmd3b_args = { BTRFS_BIN, "receive", "--", backup_config.target_path + "/" + num_string };
+	SystemCmd::Args cmd3b_args = { backup_config.target_btrfs_bin, "receive", "--",
+	    backup_config.target_path + "/" + num_string };
 
 	y2deb("source: " << cmd3a_args.get_values());
 	y2deb("target: " << cmd3b_args.get_values());
@@ -178,8 +179,8 @@ namespace snapper
 
 	// Delete snapshot on target.
 
-	SystemCmd::Args cmd1_args = { BTRFS_BIN, "subvolume", "delete", "--", backup_config.target_path + "/" +
-	    num_string + "/" SNAPSHOT_NAME };
+	SystemCmd::Args cmd1_args = { backup_config.target_btrfs_bin, "subvolume", "delete", "--",
+	    backup_config.target_path + "/" + num_string + "/" SNAPSHOT_NAME };
 	SystemCmd cmd1(shellify(backup_config.get_target_shell(), cmd1_args));
 	if (cmd1.retcode() != 0)
 	{

@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Apr 07 10:05:23 CEST 2025 - aschnell@suse.com
+
+- use correct btrfs binary for target commands in snbk
+  (gh#openSUSE/snapper#998)
+
+-------------------------------------------------------------------
 Tue Feb 04 10:10:41 CET 2025 - aschnell@suse.com
 
 - avoid running 'btrfs qgroup clear-stale' if quota is disabled
