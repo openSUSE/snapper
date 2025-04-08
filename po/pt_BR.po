@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-16 09:59+0100\n"
-"PO-Revision-Date: 2024-03-01 18:42+0000\n"
+"PO-Revision-Date: 2025-04-08 14:56+0000\n"
 "Last-Translator: Samanta Magalhaes <samanta_texttrans@outlook.com>\n"
-"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/"
+"snapper/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.9.1\n"
+"X-Generator: Weblate 5.10.3\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <algoritmo de limpeza>"
@@ -181,54 +182,53 @@ msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 msgid "'btrfs send | btrfs receive' failed."
-msgstr ""
+msgstr "Falha em 'btrfs send | btrfs receive'."
 
 msgid "'btrfs subvolume delete' failed."
-msgstr ""
+msgstr "Falha em 'btrfs subvolume delete'."
 
-#, fuzzy
 msgid "'cp info.xml' failed."
-msgstr "Falha ao abrir o arquivo '%s'."
+msgstr "Falha em 'cp info.xml'."
 
 msgid "'mkdir' failed."
-msgstr ""
+msgstr "Falha em 'mkdir'."
 
 msgid "'rm info.xml' failed."
-msgstr ""
+msgstr "Falha em 'rm info.xml'."
 
 msgid "'rmdir' failed."
-msgstr ""
+msgstr "Falha em 'rmdir'."
 
 msgid "'scp info.xml' failed."
-msgstr ""
+msgstr "Falha em 'scp info.xml'."
 
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Instantâneo %d.)"
 
 msgid "(Source) Creation Time"
-msgstr ""
+msgstr "(Origem) Horário de Criação"
 
 msgid "(Source) Parent UUID"
-msgstr ""
+msgstr "(Origem) UUID Pai"
 
 msgid "(Source) Received UUID"
-msgstr ""
+msgstr "(Origem) UUID Recebido"
 
 msgid "(Source) UUID"
-msgstr ""
+msgstr "(Origem) UUID"
 
 msgid "(Target) Creation Time"
-msgstr ""
+msgstr "(Destino) Horário de Criação"
 
 msgid "(Target) Parent UUID"
-msgstr ""
+msgstr "(Destino) UUID Pai"
 
 msgid "(Target) Received UUID"
-msgstr ""
+msgstr "(Destino) UUID Recebido"
 
 msgid "(Target) UUID"
-msgstr ""
+msgstr "(Destino) UUID"
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -240,11 +240,10 @@ msgid "--ambit, -a <ambit>"
 msgstr "--ambit, -a <âmbito>"
 
 msgid "--automatic"
-msgstr ""
+msgstr "--automatic"
 
-#, fuzzy
 msgid "--backup-config, -b <name>"
-msgstr "--config, -c <nome>"
+msgstr "--backup-config, -b <nome>"
 
 msgid "--cleanup-algorithm, -c <algo>"
 msgstr "--cleanup-algorithm, -c <algo>"
@@ -277,7 +276,7 @@ msgid "--disable-used-space"
 msgstr "--disable-used-space"
 
 msgid "--empty"
-msgstr ""
+msgstr "--empty"
 
 msgid "--extensions, -x <options>"
 msgstr "--extensions, -x <opções>"
@@ -343,7 +342,7 @@ msgid "--table-style, -t <style>"
 msgstr "--table-style, -t <estilo>"
 
 msgid "--target-mode <target-mode>"
-msgstr ""
+msgstr "--target-mode <modo-destino>"
 
 msgid "--template, -t <name>"
 msgstr "--template, -t <nome>"
@@ -380,7 +379,7 @@ msgid "Ambit is %s."
 msgstr "O âmbito é %s."
 
 msgid "Automatic"
-msgstr ""
+msgstr "Automático"
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -484,9 +483,8 @@ msgstr "O comando 'setup-quota' não aceita argumentos."
 msgid "Command 'status' needs one argument."
 msgstr "O comando 'status' precisa de um argumento."
 
-#, fuzzy
 msgid "Command 'transfer-and-delete' does not take arguments."
-msgstr "O comando 'create' não aceita argumentos."
+msgstr "O comando 'transfer-and-delete' não aceita argumentos."
 
 msgid "Command 'umount' needs at least one argument."
 msgstr "O comando 'umount' precisa de, no mínimo, um argumento."
@@ -535,9 +533,8 @@ msgstr "Não foi possível disponibilizar espaço livre suficiente."
 msgid "Create a snapshot from the specified snapshot."
 msgstr "Criar um instantâneo com base no instantâneo especificado."
 
-#, fuzzy
 msgid "Create an empty snapshot."
-msgstr "Criar um instantâneo somente leitura."
+msgstr "Crie um instantâneo vazio."
 
 msgid "Create read-only snapshot."
 msgstr "Criar um instantâneo somente leitura."
@@ -571,17 +568,16 @@ msgstr "Data"
 msgid "Default"
 msgstr "Padrão"
 
-#, fuzzy
 msgid "Delete:"
-msgstr "  Excluir configuração:"
+msgstr "Excluir:"
 
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Falha ao excluir a configuração (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting snapshot %d."
-msgstr "Falha ao remover o instantâneo."
+msgstr "Excluindo o instantâneo %d."
 
 msgid "Deleting snapshot failed."
 msgstr "Falha ao remover o instantâneo."
@@ -645,9 +641,8 @@ msgstr "Falha ao inicializar o manipulador do sistema de arquivos."
 msgid "Failed to parse '%s'."
 msgstr "Falhou ao analisar '%s'."
 
-#, fuzzy
 msgid "Failed to parse number."
-msgstr "Falhou ao analisar '%s'."
+msgstr "Falha ao analisar número."
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -686,9 +681,8 @@ msgstr "GB"
 msgid "GiB"
 msgstr "GiB"
 
-#, fuzzy
 msgid "Global options:"
-msgstr "    Opções globais:"
+msgstr "Opções globais:"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -743,9 +737,9 @@ msgstr "Instantâneo inválido '%s'."
 msgid "Invalid snapshots."
 msgstr "Instantâneo inválido."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid subvolume path '%s' on target."
-msgstr "Subvolume inválido."
+msgstr "Caminho do subvolume '%s' inválido no destino."
 
 msgid "Invalid subvolume."
 msgstr "Subvolume inválido."
@@ -754,9 +748,9 @@ msgstr "Subvolume inválido."
 msgid "Invalid table style '%s'."
 msgstr "Estilo de tabela inválido '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid target mode '%s'."
-msgstr "Estilo de tabela inválido '%s'."
+msgstr "Modo de destino inválido '%s'."
 
 #, c-format
 msgid "Invalid user (%s)."
@@ -772,15 +766,14 @@ msgstr "Chave"
 msgid "KiB"
 msgstr "KiB"
 
-#, fuzzy
 msgid "List configs:"
-msgstr "  Listar configurações:"
+msgstr "Listar configurações:"
 
 msgid "List snapshots from all accessible configs."
 msgstr "Listar os instantâneos de todas as configurações acessíveis."
 
 msgid "List:"
-msgstr ""
+msgstr "Lista:"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -828,7 +821,7 @@ msgid "Name of config template to use."
 msgstr "Nome do modelo de configuração que será usado."
 
 msgid "No backup configs found."
-msgstr ""
+msgstr "Nenhuma configuração de backup encontrada."
 
 msgid "No command provided."
 msgstr "Nenhum comando fornecido."
@@ -843,10 +836,10 @@ msgid "Number of corresponding pre snapshot."
 msgstr "Número do pré-instantâneo correspondente."
 
 msgid "Only use backup-config with automatic set."
-msgstr ""
+msgstr "Apenas use backup-config com a definição automática."
 
 msgid "Only use backup-config with specified target-mode."
-msgstr ""
+msgstr "Apenas use backup-config com target-mode especificado."
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -879,6 +872,8 @@ msgstr "PB"
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
 msgstr ""
+"Divergência de caminhos entre source-path de backup-config e o subvolume de "
+"snapper config ('%s' em relação a '%s')."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
