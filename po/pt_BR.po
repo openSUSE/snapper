@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-16 09:59+0100\n"
-"PO-Revision-Date: 2025-04-08 19:56+0000\n"
+"PO-Revision-Date: 2025-04-08 23:56+0000\n"
 "Last-Translator: Samanta Magalhaes <samanta_texttrans@outlook.com>\n"
 "Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/"
 "snapper/master/pt_BR/>\n"
@@ -900,21 +900,17 @@ msgstr "Número de impressão do segundo instantâneo criado."
 msgid "Print version and exit."
 msgstr "Imprimir versão e sair."
 
-#, fuzzy
 msgid "Probing extra information for source snapshots."
-msgstr "Descrição dos instantâneos."
+msgstr "Investigando informações extras referentes aos instantâneos de origem."
 
-#, fuzzy
 msgid "Probing extra information for target snapshots."
-msgstr "Descrição dos instantâneos."
+msgstr "Investigando informações extras referentes aos instantâneos de destino."
 
-#, fuzzy
 msgid "Probing source snapshots."
-msgstr "Descrição dos instantâneos."
+msgstr "Investigando instantâneos de origem."
 
-#, fuzzy
 msgid "Probing target snapshots."
-msgstr "Descrição dos instantâneos."
+msgstr "Investigando instantâneos de destino."
 
 #, c-format
 msgid "Quota error (%s)."
@@ -935,63 +931,64 @@ msgstr "Executar o comando e criar pré e pós-instantâneos."
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Falha ao executar exclusão de %d de %ld config de backup."
+msgstr[1] "Falha ao executar exclusão de %d de %ld configs de backup."
 
 #, c-format
 msgid "Running delete for backup config '%s' failed."
-msgstr ""
+msgstr "Falha ao executar exclusão de config de backup '%s'."
 
 #, c-format
 msgid "Running delete for backup config '%s'."
-msgstr ""
+msgstr "Executando exclusão de config de backup '%s'."
 
 #, c-format
 msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Falha ao executar lista para %d de %ld config de backup."
+msgstr[1] "Falha ao executar lista para %d de %ld configs de backup."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
 msgstr[0] ""
+"Falha ao executar transferência e exclusão para %d de %ld config de backup."
 msgstr[1] ""
+"Falha ao executar transferência e exclusão para %d de %ld configs de backup."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
-msgstr ""
+msgstr "Falha ao executar transferência e exclusão de config de backup '%s'."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s'."
-msgstr ""
+msgstr "Executando transferência e exclusão de config de backup '%s'."
 
 #, c-format
 msgid "Running transfer failed for %d of %ld backup config."
 msgid_plural "Running transfer failed for %d of %ld backup configs."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Falha ao executar transferência para %d de %ld config de backup."
+msgstr[1] "Falha ao executar transferência para %d de %ld configs de backup."
 
 #, c-format
 msgid "Running transfer for backup config '%s' failed."
-msgstr ""
+msgstr "Falha ao executar transferência para config de backup '%s'."
 
 #, c-format
 msgid "Running transfer for backup config '%s'."
-msgstr ""
+msgstr "Executando transferência para config de backup '%s'."
 
 msgid "SSH Host"
-msgstr ""
+msgstr "Host SSH"
 
 msgid "SSH Identity"
-msgstr ""
+msgstr "Identidade SSH"
 
 msgid "SSH Port"
-msgstr ""
+msgstr "Porta SSH"
 
-#, fuzzy
 msgid "SSH User"
-msgstr "Usuário"
+msgstr "Usuário SSH"
 
 msgid "Save status to file."
 msgstr "Salvar status em arquivo."
@@ -1012,9 +1009,8 @@ msgstr "Definir o formato de saída JSON."
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Definir um formato de saída legível para máquina (csv, json)."
 
-#, fuzzy
 msgid "Set name of backup-config to use."
-msgstr "Definir o nome da configuração que será usada."
+msgstr "Defina o nome da configuração de backup que será usada."
 
 msgid "Set name of config to use."
 msgstr "Definir o nome da configuração que será usada."
@@ -1036,30 +1032,27 @@ msgstr "Configurando o subvolume padrão para o instantâneo %d."
 msgid "Snapshot '%u' not found."
 msgstr "Instantâneo '%u' não encontrado."
 
-#, fuzzy
 msgid "Snapshot already on target."
-msgstr "Definir instantâneo como somente leitura."
+msgstr "Instantâneo já consta no destino."
 
 msgid "Snapshot is in use."
 msgstr "O instantâneo está em uso."
 
-#, fuzzy
 msgid "Snapshot not on source."
-msgstr "O instantâneo está em uso."
+msgstr "Instantâneo não consta na origem."
 
-#, fuzzy
 msgid "Snapshot not on target."
-msgstr "Instantâneo '%u' não encontrado."
+msgstr "Instantâneo não consta no destino."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Snapshot number %d not found."
-msgstr "Instantâneo '%u' não encontrado."
+msgstr "Número do instantâneo %d não encontrado."
 
 msgid "Source Path"
-msgstr ""
+msgstr "Caminho de Origem"
 
 msgid "Source State"
-msgstr ""
+msgstr "Estado de Origem"
 
 msgid "Subvolume"
 msgstr "Subvolume"
@@ -1082,13 +1075,13 @@ msgid "Table style (integer)."
 msgstr "Estilo da tabela (inteiro)."
 
 msgid "Target Mode"
-msgstr ""
+msgstr "Modo de Destino"
 
 msgid "Target Path"
-msgstr ""
+msgstr "Caminho de Destino"
 
 msgid "Target State"
-msgstr ""
+msgstr "Estado de Destino"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "O âmbito pode ser especificado manualmente usando a opção --ambit."
@@ -1104,21 +1097,20 @@ msgid "TiB"
 msgstr "TiB"
 
 msgid "Transfer and delete:"
-msgstr ""
+msgstr "Transferir e excluir:"
 
 msgid "Transfer:"
-msgstr ""
+msgstr "Transferir:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Transferring snapshot %d."
-msgstr "Falha ao criar o instantâneo."
+msgstr "Transferindo o instantâneo %d."
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Tente 'snapper --help' para obter mais informações."
 
-#, fuzzy
 msgid "Try 'snbk --help' for more information."
-msgstr "Tente 'snapper --help' para obter mais informações."
+msgstr "Tente 'snbk --help' para obter mais informações."
 
 msgid "Try to make space available."
 msgstr "Tentar disponibilizar o espaço."
@@ -1239,13 +1231,11 @@ msgstr "nada a fazer"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "O argumento raiz pode ser usado apenas junto com o no-dbus.\n"
 
-#, fuzzy
 msgid "snbk delete [numbers]"
-msgstr "\tsnapper delete <número>"
+msgstr "snbk delete [números]"
 
-#, fuzzy
 msgid "snbk list"
-msgstr "\tsnapper list"
+msgstr "snbk list"
 
 msgid "snbk list-configs"
 msgstr "snbk list-configs"
