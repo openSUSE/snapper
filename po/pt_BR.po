@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-16 09:59+0100\n"
-"PO-Revision-Date: 2025-04-08 14:56+0000\n"
+"PO-Revision-Date: 2025-04-08 19:56+0000\n"
 "Last-Translator: Samanta Magalhaes <samanta_texttrans@outlook.com>\n"
 "Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/"
 "snapper/master/pt_BR/>\n"
@@ -1247,22 +1247,20 @@ msgstr "\tsnapper delete <número>"
 msgid "snbk list"
 msgstr "\tsnapper list"
 
-#, fuzzy
 msgid "snbk list-configs"
-msgstr "\tsnapper list-configs"
+msgstr "snbk list-configs"
 
 msgid "snbk transfer [numbers]"
-msgstr ""
+msgstr "snbk transfer [números]"
 
 msgid "snbk transfer-and-delete"
-msgstr ""
+msgstr "snbk transfer-and-delete"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "uso: snapper [--opções-globais] <comando> [--opções-do-comando] [argumentos]"
 
-#, fuzzy
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
-msgstr "uso: snapper [--opções-globais] <comando> [--opções-do-comando] [argumentos]"
+msgstr "uso: snbk [--global-options] <comando> [command-arguments]"
 
 msgid "yes"
 msgstr "sim"
