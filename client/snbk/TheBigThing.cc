@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 SUSE LLC
+ * Copyright (c) [2024-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -73,7 +73,8 @@ namespace snapper
 
 	// Create directory on target.
 
-	SystemCmd::Args cmd1_args = { MKDIR_BIN, "--", backup_config.target_path + "/" + num_string };
+	SystemCmd::Args cmd1_args = { backup_config.target_mkdir_bin, "--", backup_config.target_path + "/" +
+	    num_string };
 	SystemCmd cmd1(shellify(backup_config.get_target_shell(), cmd1_args));
 	if (cmd1.retcode() != 0)
 	{
@@ -195,7 +196,8 @@ namespace snapper
 
 	// Remove info.xml on target.
 
-	SystemCmd::Args cmd2_args = { RM_BIN, "--", backup_config.target_path + "/" + num_string + "/info.xml" };
+	SystemCmd::Args cmd2_args = { backup_config.target_rm_bin, "--", backup_config.target_path + "/" + num_string +
+	    "/info.xml" };
 	SystemCmd cmd2(shellify(backup_config.get_target_shell(), cmd2_args));
 	if (cmd2.retcode() != 0)
 	{
@@ -210,7 +212,8 @@ namespace snapper
 
 	// Remove directory on target.
 
-	SystemCmd::Args cmd3_args = { RMDIR_BIN, "--", backup_config.target_path + "/" + num_string };
+	SystemCmd::Args cmd3_args = { backup_config.target_rmdir_bin, "--", backup_config.target_path + "/" +
+	    num_string };
 	SystemCmd cmd3(shellify(backup_config.get_target_shell(), cmd3_args));
 	if (cmd3.retcode() != 0)
 	{
