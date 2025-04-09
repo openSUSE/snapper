@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 SUSE LLC
+ * Copyright (c) [2024-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -71,8 +71,11 @@ namespace snapper
 	Shell get_target_shell() const;
 
 	string target_btrfs_bin = BTRFS_BIN;
-	string target_realpath_bin = REALPATH_BIN;
 	string target_findmnt_bin = FINDMNT_BIN;
+	string target_mkdir_bin = MKDIR_BIN;
+	string target_realpath_bin = REALPATH_BIN;
+	string target_rm_bin = RM_BIN;
+	string target_rmdir_bin = RMDIR_BIN;
 
     private:
 
