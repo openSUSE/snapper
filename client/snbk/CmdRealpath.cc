@@ -34,7 +34,7 @@ namespace snapper
     CmdRealpath::CmdRealpath(const string& realpath_bin, const Shell& shell, const string& path)
 	: path(path)
     {
-	SystemCmd::Args cmd_args = { realpath_bin, "--", path };
+	SystemCmd::Args cmd_args = { realpath_bin, "--canonicalize-existing", "--", path };
 	SystemCmd cmd(shellify(shell, cmd_args));
 
 	if (cmd.retcode() != 0)
