@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [ "$#" -lt 3 ]; then
+    echo "Usage: $0 <group> [subcommand] [options] -- /backup/..."
+    exit 1
+fi
+
+# Check "end of options" delimiter
+
+delimiter_arg="${@: -2:1}"
+
+if [[ "$delimiter_arg" != -- ]]; then
+    echo "Error: 'end of options' delimiter missing."
+    exit 1
+fi
+
+# Check path
+
+path_arg="${@: -1:1}"
+
+if ! path=$(realpath --canonicalize-existing "$path_arg"); then
+    echo "Error: Could not resolve the path '$path_arg'."
+    exit 1
+fi
+
+if [[ "$path" != /backup* ]]; then
+    echo "Error: The resolved path '$path' does not start with '/backup'."
+    exit 1
+fi
+
+exec sudo /usr/sbin/btrfs "$@"
