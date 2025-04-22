@@ -10,7 +10,7 @@ jobs:
     steps:
 
     - name: Install additional packages
-      run: dnf -y install acl autoconf automake boost-devel btrfs-progs-devel dbus-devel diffutils docbook-style-xsl gcc-c++ gettext glibc-langpack-de glibc-langpack-fr glibc-langpack-en json-c-devel libacl-devel libmount-devel libtool libxml2-devel libxslt make ncurses-devel pam-devel xz
+      run: dnf -y install acl autoconf automake awk boost-devel btrfs-progs-devel dbus-devel diffutils docbook-style-xsl gcc-c++ gettext glibc-langpack-de glibc-langpack-fr glibc-langpack-en json-c-devel libacl-devel libmount-devel libtool libxml2-devel libxslt make ncurses-devel pam-devel xz
 
     - name: List installed packages
       run: rpm -qa | sort
