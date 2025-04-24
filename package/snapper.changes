@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Apr 24 12:20:13 CEST 2025 - aschnell@suse.com
+
+- pick boost process v1 when compiling with boost 1.88 or higher
+
+-------------------------------------------------------------------
 Mon Apr 07 10:05:23 CEST 2025 - aschnell@suse.com
 
 - use correct btrfs binary for target commands in snbk
