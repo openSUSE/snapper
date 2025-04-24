@@ -92,7 +92,7 @@ ProxySnapperLib::createSingleSnapshot(const SCD& scd, Plugins::Report& report)
 {
     proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createSingleSnapshot(scd, report)));
 
-    return --proxy_snapshots.end();
+    return prev(proxy_snapshots.end());
 }
 
 
@@ -101,7 +101,7 @@ ProxySnapperLib::createSingleSnapshot(ProxySnapshots::const_iterator parent, con
 {
     proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createSingleSnapshot(to_lib(*parent).it, scd, report)));
 
-    return --proxy_snapshots.end();
+    return prev(proxy_snapshots.end());
 }
 
 
@@ -110,7 +110,7 @@ ProxySnapperLib::createSingleSnapshotOfDefault(const SCD& scd, Plugins::Report& 
 {
     proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createSingleSnapshotOfDefault(scd, report)));
 
-    return --proxy_snapshots.end();
+    return prev(proxy_snapshots.end());
 }
 
 
@@ -119,7 +119,7 @@ ProxySnapperLib::createPreSnapshot(const SCD& scd, Plugins::Report& report)
 {
     proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createPreSnapshot(scd, report)));
 
-    return --proxy_snapshots.end();
+    return prev(proxy_snapshots.end());
 }
 
 
@@ -128,7 +128,7 @@ ProxySnapperLib::createPostSnapshot(ProxySnapshots::const_iterator pre, const SC
 {
     proxy_snapshots.emplace_back(new ProxySnapshotLib(snapper->createPostSnapshot(to_lib(*pre).it, scd, report)));
 
-    return --proxy_snapshots.end();
+    return prev(proxy_snapshots.end());
 }
 
 

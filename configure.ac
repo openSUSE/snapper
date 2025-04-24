@@ -63,7 +63,7 @@ AC_DEFINE_UNQUOTED([RMDIR_BIN], ["$RMDIR_BIN"], [Path of rmdir program.])
 AC_DEFINE_UNQUOTED([TOUCH_BIN], ["$TOUCH_BIN"], [Path of touch program.])
 
 CFLAGS="${CFLAGS} -std=c99 -Wall -Wextra -Wformat -Wmissing-prototypes -Wno-unused-parameter"
-CXXFLAGS="${CXXFLAGS} -std=c++11 -Wall -Wextra -Wformat -Wnon-virtual-dtor -Wno-unused-parameter -Wsuggest-override"
+CXXFLAGS="${CXXFLAGS} -std=c++14 -Wall -Wextra -Wformat -Wnon-virtual-dtor -Wno-unused-parameter -Wsuggest-override"
 
 SYSCONFIG=/etc/sysconfig
 

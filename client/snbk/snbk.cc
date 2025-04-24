@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 SUSE LLC
+ * Copyright (c) [2024-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -21,6 +21,7 @@
 
 
 #include <iostream>
+#include <memory>
 
 #include "snapper/Logger.h"
 #include <snapper/SnapperTmpl.h>
@@ -213,8 +214,8 @@ main(int argc, char** argv)
 
 	    if (cmd->needs_snapper)
 	    {
-		snappers.reset(new ProxySnappers(global_options.no_dbus() ? ProxySnappers::createLib("/") :
-						 ProxySnappers::createDbus()));
+		snappers = make_unique<ProxySnappers>(global_options.no_dbus() ? ProxySnappers::createLib("/") :
+						      ProxySnappers::createDbus());
 	    }
 
 	    (*cmd->cmd_func)(global_options, get_opts, backup_configs, snappers.get());
