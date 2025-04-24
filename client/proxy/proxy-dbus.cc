@@ -239,7 +239,7 @@ ProxySnapperDbus::createSingleSnapshot(const SCD& scd, Plugins::Report& report)
 
     proxy_snapshots.emplace_back(new ProxySnapshotDbus(&proxy_snapshots, num));
 
-    return --proxy_snapshots.end();
+    return prev(proxy_snapshots.end());
 }
 
 
@@ -252,7 +252,7 @@ ProxySnapperDbus::createSingleSnapshot(ProxySnapshots::const_iterator parent, co
 
     proxy_snapshots.emplace_back(new ProxySnapshotDbus(&proxy_snapshots, num));
 
-    return --proxy_snapshots.end();
+    return prev(proxy_snapshots.end());
 }
 
 
@@ -265,7 +265,7 @@ ProxySnapperDbus::createSingleSnapshotOfDefault(const SCD& scd, Plugins::Report&
 
     proxy_snapshots.emplace_back(new ProxySnapshotDbus(&proxy_snapshots, num));
 
-    return --proxy_snapshots.end();
+    return prev(proxy_snapshots.end());
 }
 
 
@@ -277,7 +277,7 @@ ProxySnapperDbus::createPreSnapshot(const SCD& scd, Plugins::Report& report)
 
     proxy_snapshots.emplace_back(new ProxySnapshotDbus(&proxy_snapshots, num));
 
-    return --proxy_snapshots.end();
+    return prev(proxy_snapshots.end());
 }
 
 
@@ -289,7 +289,7 @@ ProxySnapperDbus::createPostSnapshot(ProxySnapshots::const_iterator pre, const S
 
     proxy_snapshots.emplace_back(new ProxySnapshotDbus(&proxy_snapshots, num));
 
-    return --proxy_snapshots.end();
+    return prev(proxy_snapshots.end());
 }
 
 
