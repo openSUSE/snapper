@@ -157,7 +157,8 @@
       <varlistentry>
 	<term><option>--csvout</option></term>
 	<listitem>
-	  <para>Sets CSV output format. See
+	  <para>Sets CSV output format. For some commands the CSV output
+	  contains more information than the default table output. See
 	  <link xlink:href="https://tools.ietf.org/html/rfc4180">RFC 4180</link>
 	  for the details, except lines end with a LF, not CR+LF.</para>
 	</listitem>
@@ -165,7 +166,8 @@
       <varlistentry>
 	<term><option>--jsonout</option></term>
 	<listitem>
-	  <para>Sets JSON output format.</para>
+	  <para>Sets JSON output format. For some commands the JSON output
+	  contains more information than the default table output.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
