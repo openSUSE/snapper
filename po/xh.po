@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: base\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 09:59+0100\n"
+"POT-Creation-Date: 2025-04-25 11:00+0200\n"
 "PO-Revision-Date: 2006-11-03 14:26\n"
 "Last-Translator: Novell Language <language@novell.com>\n"
 "Language-Team: Novell Language <language@novell.com>\n"
@@ -1147,6 +1147,24 @@ msgid "Target Path"
 msgstr ""
 
 msgid "Target State"
+msgstr ""
+
+msgid "Target btrfs bin"
+msgstr ""
+
+msgid "Target findmnt Bin"
+msgstr ""
+
+msgid "Target mkdir bin"
+msgstr ""
+
+msgid "Target realpath bin"
+msgstr ""
+
+msgid "Target rm bin"
+msgstr ""
+
+msgid "Target rmdir bin"
 msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."

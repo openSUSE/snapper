@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 09:59+0100\n"
+"POT-Creation-Date: 2025-04-25 11:00+0200\n"
 "PO-Revision-Date: 2025-04-08 23:56+0000\n"
 "Last-Translator: Samanta Magalhaes <samanta_texttrans@outlook.com>\n"
-"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/"
-"snapper/master/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -871,9 +870,7 @@ msgstr "PB"
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr ""
-"Divergência de caminhos entre source-path de backup-config e o subvolume de "
-"snapper config ('%s' em relação a '%s')."
+msgstr "Divergência de caminhos entre source-path de backup-config e o subvolume de snapper config ('%s' em relação a '%s')."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -951,10 +948,8 @@ msgstr[1] "Falha ao executar lista para %d de %ld configs de backup."
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
-msgstr[0] ""
-"Falha ao executar transferência e exclusão para %d de %ld config de backup."
-msgstr[1] ""
-"Falha ao executar transferência e exclusão para %d de %ld configs de backup."
+msgstr[0] "Falha ao executar transferência e exclusão para %d de %ld config de backup."
+msgstr[1] "Falha ao executar transferência e exclusão para %d de %ld configs de backup."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
@@ -1082,6 +1077,25 @@ msgstr "Caminho de Destino"
 
 msgid "Target State"
 msgstr "Estado de Destino"
+
+msgid "Target btrfs bin"
+msgstr ""
+
+msgid "Target findmnt Bin"
+msgstr ""
+
+msgid "Target mkdir bin"
+msgstr ""
+
+#, fuzzy
+msgid "Target realpath bin"
+msgstr "Caminho de Destino"
+
+msgid "Target rm bin"
+msgstr ""
+
+msgid "Target rmdir bin"
+msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "O âmbito pode ser especificado manualmente usando a opção --ambit."

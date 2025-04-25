@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 09:59+0100\n"
+"POT-Creation-Date: 2025-04-25 11:00+0200\n"
 "PO-Revision-Date: 2025-04-10 11:56+0000\n"
 "Last-Translator: Gemineo <vistatec@gemineo.de>\n"
-"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
-"\n"
+"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -869,9 +868,7 @@ msgstr "PB"
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr ""
-"Der Quellpfad der Backup-Konfiguration unterscheidet sich von dem des "
-"Subvolumes der Snapper-Konfiguration ('%s' vs. '%s')."
+msgstr "Der Quellpfad der Backup-Konfiguration unterscheidet sich von dem des Subvolumes der Snapper-Konfiguration ('%s' vs. '%s')."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -929,10 +926,8 @@ msgstr "Befehl ausführen und Vorher- und Nachher-Schnappschuss erstellen."
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
-msgstr[0] ""
-"Löschen konnte für %d von %ld Backup-Konfiguration nicht ausgeführt werden."
-msgstr[1] ""
-"Löschen konnte für %d von %ld Backup-Konfigurationen nicht ausgeführt werden."
+msgstr[0] "Löschen konnte für %d von %ld Backup-Konfiguration nicht ausgeführt werden."
+msgstr[1] "Löschen konnte für %d von %ld Backup-Konfigurationen nicht ausgeführt werden."
 
 #, c-format
 msgid "Running delete for backup config '%s' failed."
@@ -945,26 +940,18 @@ msgstr "Löschen wird für Backup-Konfiguration '%s' ausgeführt."
 #, c-format
 msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
-msgstr[0] ""
-"Liste konnte nicht für %d von %ld Backup-Konfiguration ausgeführt werden."
-msgstr[1] ""
-"Liste konnte nicht für %d von %ld Backup-Konfigurationen ausgeführt werden."
+msgstr[0] "Liste konnte nicht für %d von %ld Backup-Konfiguration ausgeführt werden."
+msgstr[1] "Liste konnte nicht für %d von %ld Backup-Konfigurationen ausgeführt werden."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
-msgstr[0] ""
-"Übertragen und Löschen konnte nicht für %d von %ld Backup-Konfiguration "
-"ausgeführt werden."
-msgstr[1] ""
-"Übertragen und Löschen konnte nicht für %d von %ld Backup-Konfigurationen "
-"ausgeführt werden."
+msgstr[0] "Übertragen und Löschen konnte nicht für %d von %ld Backup-Konfiguration ausgeführt werden."
+msgstr[1] "Übertragen und Löschen konnte nicht für %d von %ld Backup-Konfigurationen ausgeführt werden."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
-msgstr ""
-"Übertragen und Löschen konnte nicht für Backup-Konfiguration '%s' ausgeführt "
-"werden."
+msgstr "Übertragen und Löschen konnte nicht für Backup-Konfiguration '%s' ausgeführt werden."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s'."
@@ -973,17 +960,12 @@ msgstr "Übertragen und Löschen wird für Backup-Konfiguration '%s' ausgeführt
 #, c-format
 msgid "Running transfer failed for %d of %ld backup config."
 msgid_plural "Running transfer failed for %d of %ld backup configs."
-msgstr[0] ""
-"Übertragen konnte nicht für %d von %ld Backup-Konfiguration ausgeführt "
-"werden."
-msgstr[1] ""
-"Übertragen konnte nicht für %d von %ld Backup-Konfigurationen ausgeführt "
-"werden."
+msgstr[0] "Übertragen konnte nicht für %d von %ld Backup-Konfiguration ausgeführt werden."
+msgstr[1] "Übertragen konnte nicht für %d von %ld Backup-Konfigurationen ausgeführt werden."
 
 #, c-format
 msgid "Running transfer for backup config '%s' failed."
-msgstr ""
-"Übertragen konnte nicht für Backup-Konfiguration '%s' ausgeführt werden."
+msgstr "Übertragen konnte nicht für Backup-Konfiguration '%s' ausgeführt werden."
 
 #, c-format
 msgid "Running transfer for backup config '%s'."
@@ -1093,6 +1075,25 @@ msgstr "Zielpfad"
 
 msgid "Target State"
 msgstr "Zielstatus"
+
+msgid "Target btrfs bin"
+msgstr ""
+
+msgid "Target findmnt Bin"
+msgstr ""
+
+msgid "Target mkdir bin"
+msgstr ""
+
+#, fuzzy
+msgid "Target realpath bin"
+msgstr "Zielpfad"
+
+msgid "Target rm bin"
+msgstr ""
+
+msgid "Target rmdir bin"
+msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Der Anwendungsbereich kann manuell durch die Verwendung der Option --ambit angegeben werden."

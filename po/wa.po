@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: yast memory\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 09:59+0100\n"
+"POT-Creation-Date: 2025-04-25 11:00+0200\n"
 "PO-Revision-Date: 2004-04-05 17:37+0200\n"
 "Last-Translator: Jean Cayron <jean.cayron@gmail.com>\n"
 "Language-Team: Walloon <i18n@suse.de>\n"
@@ -1121,6 +1121,24 @@ msgid "Target Path"
 msgstr ""
 
 msgid "Target State"
+msgstr ""
+
+msgid "Target btrfs bin"
+msgstr ""
+
+msgid "Target findmnt Bin"
+msgstr ""
+
+msgid "Target mkdir bin"
+msgstr ""
+
+msgid "Target realpath bin"
+msgstr ""
+
+msgid "Target rm bin"
+msgstr ""
+
+msgid "Target rmdir bin"
 msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."

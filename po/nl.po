@@ -9,11 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 09:59+0100\n"
+"POT-Creation-Date: 2025-04-25 11:00+0200\n"
 "PO-Revision-Date: 2024-12-17 15:50+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
-"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
-"\n"
+"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -873,9 +872,7 @@ msgstr "PB"
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr ""
-"Paden in bronpad van reservekopieconfiguratie en subvolume van configuratie "
-"van snapper ('%s' vs. '%s') komen niet overeen."
+msgstr "Paden in bronpad van reservekopieconfiguratie en subvolume van configuratie van snapper ('%s' vs. '%s') komen niet overeen."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -1082,6 +1079,25 @@ msgstr "Pad van doel"
 
 msgid "Target State"
 msgstr "Status van doel"
+
+msgid "Target btrfs bin"
+msgstr ""
+
+msgid "Target findmnt Bin"
+msgstr ""
+
+msgid "Target mkdir bin"
+msgstr ""
+
+#, fuzzy
+msgid "Target realpath bin"
+msgstr "Pad van doel"
+
+msgid "Target rm bin"
+msgstr ""
+
+msgid "Target rmdir bin"
+msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "De ambit kan handmatig worden gespecificeerd met de optie --ambit."

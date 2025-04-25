@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 09:59+0100\n"
+"POT-Creation-Date: 2025-04-25 11:00+0200\n"
 "PO-Revision-Date: 2003-09-23 10:33+0200\n"
 "Last-Translator: Kevin Donnelly <kevin@dotmon.com>\n"
 "Language-Team: Welsh <i18n@suse.de>\n"
@@ -1104,6 +1104,24 @@ msgid "Target Path"
 msgstr ""
 
 msgid "Target State"
+msgstr ""
+
+msgid "Target btrfs bin"
+msgstr ""
+
+msgid "Target findmnt Bin"
+msgstr ""
+
+msgid "Target mkdir bin"
+msgstr ""
+
+msgid "Target realpath bin"
+msgstr ""
+
+msgid "Target rm bin"
+msgstr ""
+
+msgid "Target rmdir bin"
 msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
