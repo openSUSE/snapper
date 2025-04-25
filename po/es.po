@@ -3,11 +3,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 09:59+0100\n"
+"POT-Creation-Date: 2025-04-25 11:00+0200\n"
 "PO-Revision-Date: 2025-03-07 12:56+0000\n"
 "Last-Translator: \"Marina J. Donis\" <marinajdonis@gmail.com>\n"
-"Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/"
-">\n"
+"Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -899,9 +898,7 @@ msgstr "PB"
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr ""
-"No hay coincidencia entre la ruta de origen de la configuración de respaldo "
-"y el subvolumen de configuración de snapper ('%s' vs. '%s')."
+msgstr "No hay coincidencia entre la ruta de origen de la configuración de respaldo y el subvolumen de configuración de snapper ('%s' vs. '%s')."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -980,17 +977,12 @@ msgstr[1] "La lista de ejecución falló para %d de %ld configuraciones de respa
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
-msgstr[0] ""
-"La transferencia y eliminación falló para %d de %ld configuración de "
-"respaldo."
-msgstr[1] ""
-"La transferencia y eliminación falló para %d de %ld configuraciones de "
-"respaldo."
+msgstr[0] "La transferencia y eliminación falló para %d de %ld configuración de respaldo."
+msgstr[1] "La transferencia y eliminación falló para %d de %ld configuraciones de respaldo."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
-msgstr ""
-"La transferencia y eliminación de la configuración de respaldo '%s' falló."
+msgstr "La transferencia y eliminación de la configuración de respaldo '%s' falló."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s'."
@@ -1117,6 +1109,25 @@ msgstr "Ruta de Destino"
 
 msgid "Target State"
 msgstr "Estado de Destino"
+
+msgid "Target btrfs bin"
+msgstr ""
+
+msgid "Target findmnt Bin"
+msgstr ""
+
+msgid "Target mkdir bin"
+msgstr ""
+
+#, fuzzy
+msgid "Target realpath bin"
+msgstr "Ruta de Destino"
+
+msgid "Target rm bin"
+msgstr ""
+
+msgid "Target rmdir bin"
+msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "El ámbito se puede especificar manualmente con la opción --ambit."

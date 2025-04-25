@@ -3,11 +3,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 09:59+0100\n"
+"POT-Creation-Date: 2025-04-25 11:00+0200\n"
 "PO-Revision-Date: 2025-04-08 14:56+0000\n"
 "Last-Translator: Davide Aiello <davide.aiello@novilingulists.com>\n"
-"Language-Team: Italian <https://l10n.opensuse.org/projects/snapper/master/it/"
-">\n"
+"Language-Team: Italian <https://l10n.opensuse.org/projects/snapper/master/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -867,9 +866,7 @@ msgstr "PB"
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr ""
-"Mancata corrispondenza dei percorsi tra source-path di backup-config e il "
-"sottovolume della configurazione snapper ('%s' rispetto a '%s')."
+msgstr "Mancata corrispondenza dei percorsi tra source-path di backup-config e il sottovolume della configurazione snapper ('%s' rispetto a '%s')."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -897,13 +894,10 @@ msgid "Print version and exit."
 msgstr "Stampa la versione ed esce."
 
 msgid "Probing extra information for source snapshots."
-msgstr ""
-"Rilevamento delle informazioni supplementari delle istantanee di origine."
+msgstr "Rilevamento delle informazioni supplementari delle istantanee di origine."
 
 msgid "Probing extra information for target snapshots."
-msgstr ""
-"Rilevamento delle informazioni supplementari delle istantanee di "
-"destinazione."
+msgstr "Rilevamento delle informazioni supplementari delle istantanee di destinazione."
 
 msgid "Probing source snapshots."
 msgstr "Rilevamento delle istantanee di origine."
@@ -930,17 +924,12 @@ msgstr "Lancia il comando e crea snapshot precedenti e successive."
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
-msgstr[0] ""
-"Esecuzione dell'eliminazione non riuscita per %d di %ld configurazione di "
-"backup."
-msgstr[1] ""
-"Esecuzione dell'eliminazione non riuscita per %d di %ld configurazioni di "
-"backup."
+msgstr[0] "Esecuzione dell'eliminazione non riuscita per %d di %ld configurazione di backup."
+msgstr[1] "Esecuzione dell'eliminazione non riuscita per %d di %ld configurazioni di backup."
 
 #, c-format
 msgid "Running delete for backup config '%s' failed."
-msgstr ""
-"Esecuzione dell'eliminazione non riuscita per configurazione di backup '%s'."
+msgstr "Esecuzione dell'eliminazione non riuscita per configurazione di backup '%s'."
 
 #, c-format
 msgid "Running delete for backup config '%s'."
@@ -949,47 +938,32 @@ msgstr "Esecuzione dell'eliminazione per configurazione di backup '%s'."
 #, c-format
 msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
-msgstr[0] ""
-"Esecuzione dell'elenco non riuscita per %d di %ld configurazione di backup."
-msgstr[1] ""
-"Esecuzione dell'elenco non riuscita per %d di %ld configurazioni di backup."
+msgstr[0] "Esecuzione dell'elenco non riuscita per %d di %ld configurazione di backup."
+msgstr[1] "Esecuzione dell'elenco non riuscita per %d di %ld configurazioni di backup."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
-msgstr[0] ""
-"Esecuzione del trasferimento non riuscita per %d di %ld configurazione di "
-"backup."
-msgstr[1] ""
-"Esecuzione del trasferimento non riuscita per %d di %ld configurazioni di "
-"backup."
+msgstr[0] "Esecuzione del trasferimento non riuscita per %d di %ld configurazione di backup."
+msgstr[1] "Esecuzione del trasferimento non riuscita per %d di %ld configurazioni di backup."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
-msgstr ""
-"Esecuzione del trasferimento e dell'eliminazione non riuscita per "
-"configurazione di backup '%s'."
+msgstr "Esecuzione del trasferimento e dell'eliminazione non riuscita per configurazione di backup '%s'."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s'."
-msgstr ""
-"Esecuzione del trasferimento e dell'eliminazione per configurazione di "
-"backup '%s'."
+msgstr "Esecuzione del trasferimento e dell'eliminazione per configurazione di backup '%s'."
 
 #, c-format
 msgid "Running transfer failed for %d of %ld backup config."
 msgid_plural "Running transfer failed for %d of %ld backup configs."
-msgstr[0] ""
-"Esecuzione del trasferimento non riuscita per %d di %ld configurazione di "
-"backup."
-msgstr[1] ""
-"Esecuzione del trasferimento non riuscita per %d di %ld configurazioni di "
-"backup."
+msgstr[0] "Esecuzione del trasferimento non riuscita per %d di %ld configurazione di backup."
+msgstr[1] "Esecuzione del trasferimento non riuscita per %d di %ld configurazioni di backup."
 
 #, c-format
 msgid "Running transfer for backup config '%s' failed."
-msgstr ""
-"Esecuzione del trasferimento non riuscita per configurazione di backup '%s'."
+msgstr "Esecuzione del trasferimento non riuscita per configurazione di backup '%s'."
 
 #, c-format
 msgid "Running transfer for backup config '%s'."
@@ -1099,6 +1073,25 @@ msgstr "Percorso di destinazione"
 
 msgid "Target State"
 msgstr "Stato di destinazione"
+
+msgid "Target btrfs bin"
+msgstr ""
+
+msgid "Target findmnt Bin"
+msgstr ""
+
+msgid "Target mkdir bin"
+msgstr ""
+
+#, fuzzy
+msgid "Target realpath bin"
+msgstr "Percorso di destinazione"
+
+msgid "Target rm bin"
+msgstr ""
+
+msgid "Target rmdir bin"
+msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "L'ambito può essere specificato manualmente usando l'opzione --ambit."

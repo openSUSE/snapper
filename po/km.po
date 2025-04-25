@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper.km\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-16 09:59+0100\n"
+"POT-Creation-Date: 2025-04-25 11:00+0200\n"
 "PO-Revision-Date: 2011-10-24 10:40+0700\n"
 "Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer <support@khmeros.info>\n"
@@ -1166,6 +1166,24 @@ msgid "Target Path"
 msgstr ""
 
 msgid "Target State"
+msgstr ""
+
+msgid "Target btrfs bin"
+msgstr ""
+
+msgid "Target findmnt Bin"
+msgstr ""
+
+msgid "Target mkdir bin"
+msgstr ""
+
+msgid "Target realpath bin"
+msgstr ""
+
+msgid "Target rm bin"
+msgstr ""
+
+msgid "Target rmdir bin"
 msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
