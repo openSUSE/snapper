@@ -4,15 +4,17 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-25 11:00+0200\n"
-"PO-Revision-Date: 2024-04-25 09:43+0000\n"
+"PO-Revision-Date: 2025-05-08 10:59+0000\n"
 "Last-Translator: Aleksey Fedorov <Aleksejfedorov963@gmail.com>\n"
-"Language-Team: Russian <https://l10n.opensuse.org/projects/snapper/master/ru/>\n"
+"Language-Team: Russian <https://l10n.opensuse.org/projects/snapper/master/ru/"
+">\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.9.1\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.11.4\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <алгоритм очистки>"
@@ -69,7 +71,7 @@ msgid "\tsnapper xadiff <number1>..<number2> [files]"
 msgstr "\tsnapper xadiff <число1>..<число2> [файлы]"
 
 msgid "    Global options:"
-msgstr "    Общие параметры:"
+msgstr "    Глобальные опции:"
 
 msgid "    Options for 'cleanup' command:"
 msgstr "    Опции команды 'cleanup':"
@@ -81,7 +83,7 @@ msgid "    Options for 'create-config' command:"
 msgstr "    Опции команды 'create-config':"
 
 msgid "    Options for 'delete' command:"
-msgstr "    Параметры для команды delete:"
+msgstr "    Опции команды delete:"
 
 msgid "    Options for 'diff' command:"
 msgstr "    Опции команды 'diff':"
@@ -176,54 +178,53 @@ msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 msgid "'btrfs send | btrfs receive' failed."
-msgstr ""
+msgstr "Сбой 'btrfs send | btrfs receive'."
 
 msgid "'btrfs subvolume delete' failed."
-msgstr ""
+msgstr "Сбой 'btrfs subvolume delete'."
 
-#, fuzzy
 msgid "'cp info.xml' failed."
-msgstr "Сбой при открытии файла '%s'."
+msgstr "Сбой 'cp info.xml'."
 
 msgid "'mkdir' failed."
-msgstr ""
+msgstr "Сбой 'mkdir'."
 
 msgid "'rm info.xml' failed."
-msgstr ""
+msgstr "Сбой 'rm info.xml'."
 
 msgid "'rmdir' failed."
-msgstr ""
+msgstr "Сбой 'rmdir'."
 
 msgid "'scp info.xml' failed."
-msgstr ""
+msgstr "Сбой 'scp info.xml'."
 
 #, c-format
 msgid "(Snapshot %d.)"
 msgstr "(Снимок %d.)"
 
 msgid "(Source) Creation Time"
-msgstr ""
+msgstr "(Источник) Время создания"
 
 msgid "(Source) Parent UUID"
-msgstr ""
+msgstr "(Источник) Родительский UUID"
 
 msgid "(Source) Received UUID"
-msgstr ""
+msgstr "(Источник) Полученный UUID"
 
 msgid "(Source) UUID"
-msgstr ""
+msgstr "(Источник) UUID"
 
 msgid "(Target) Creation Time"
-msgstr ""
+msgstr "(Цель) Время создания"
 
 msgid "(Target) Parent UUID"
-msgstr ""
+msgstr "(Цель) Родительский UUID"
 
 msgid "(Target) Received UUID"
-msgstr ""
+msgstr "(Цель) Полученный UUID"
 
 msgid "(Target) UUID"
-msgstr ""
+msgstr "(Цель) UUID"
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -235,11 +236,10 @@ msgid "--ambit, -a <ambit>"
 msgstr "--ambit, -a <пределы>"
 
 msgid "--automatic"
-msgstr ""
+msgstr "--automatic"
 
-#, fuzzy
 msgid "--backup-config, -b <name>"
-msgstr "--config, -c <имя>"
+msgstr "--backup-config, -b <имя>"
 
 msgid "--cleanup-algorithm, -c <algo>"
 msgstr "--cleanup-algorithm, -c <алгоритм>"
@@ -272,7 +272,7 @@ msgid "--disable-used-space"
 msgstr "--disable-used-space"
 
 msgid "--empty"
-msgstr ""
+msgstr "--empty"
 
 msgid "--extensions, -x <options>"
 msgstr "--extensions, -x <опции>"
@@ -338,7 +338,7 @@ msgid "--table-style, -t <style>"
 msgstr "--table-style, -t <стиль>"
 
 msgid "--target-mode <target-mode>"
-msgstr ""
+msgstr "--target-mode <target-mode >"
 
 msgid "--template, -t <name>"
 msgstr "--template, -t <имя>"
@@ -376,7 +376,7 @@ msgid "Ambit is %s."
 msgstr "Область %s."
 
 msgid "Automatic"
-msgstr ""
+msgstr "Автоматически"
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -480,9 +480,8 @@ msgstr "Команде 'setup-quota' не нужны аргументы."
 msgid "Command 'status' needs one argument."
 msgstr "Команде 'status' нужен один аргумент."
 
-#, fuzzy
 msgid "Command 'transfer-and-delete' does not take arguments."
-msgstr "Команде 'create' не нужны аргументы."
+msgstr "Команде 'transfer-and-delete' не нужны аргументы."
 
 msgid "Command 'umount' needs at least one argument."
 msgstr "Команде 'umount' нужен хотя бы один аргумент."
@@ -531,9 +530,8 @@ msgstr "Невозможно освободить достаточно мест�
 msgid "Create a snapshot from the specified snapshot."
 msgstr "Создать снимок из указанного снимка."
 
-#, fuzzy
 msgid "Create an empty snapshot."
-msgstr "Создать снимок только для чтения."
+msgstr "Создать пустой снимок."
 
 msgid "Create read-only snapshot."
 msgstr "Создать снимок только для чтения."
@@ -567,17 +565,16 @@ msgstr "Дата"
 msgid "Default"
 msgstr "По умолчанию"
 
-#, fuzzy
 msgid "Delete:"
-msgstr "  Удалить конфигурацию:"
+msgstr "Удаление:"
 
 #, c-format
 msgid "Deleting config failed (%s)."
 msgstr "Сбой при удалении конфигурации (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting snapshot %d."
-msgstr "Не удалось удалить снимок."
+msgstr "Удаление снимка %d."
 
 msgid "Deleting snapshot failed."
 msgstr "Не удалось удалить снимок."
@@ -642,9 +639,8 @@ msgstr "Не удалось инициализировать обработчи�
 msgid "Failed to parse '%s'."
 msgstr "сбой при разборе «%s»."
 
-#, fuzzy
 msgid "Failed to parse number."
-msgstr "сбой при разборе «%s»."
+msgstr "Не удалось разобрать число."
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -683,9 +679,8 @@ msgstr "ГБ"
 msgid "GiB"
 msgstr "ГиБ"
 
-#, fuzzy
 msgid "Global options:"
-msgstr "    Общие параметры:"
+msgstr "Глобальные опции:"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -740,9 +735,9 @@ msgstr "Неверный снимок '%s'."
 msgid "Invalid snapshots."
 msgstr "Неверные снимки."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid subvolume path '%s' on target."
-msgstr "Неверный подтом."
+msgstr "Неверный путь к подтому '%s' на цели."
 
 msgid "Invalid subvolume."
 msgstr "Неверный подтом."
@@ -751,9 +746,9 @@ msgstr "Неверный подтом."
 msgid "Invalid table style '%s'."
 msgstr "Неверный стиль таблицы '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid target mode '%s'."
-msgstr "Неверный стиль таблицы '%s'."
+msgstr "Неверный режим target-mode '%s'."
 
 #, c-format
 msgid "Invalid user (%s)."
@@ -769,15 +764,14 @@ msgstr "Ключ"
 msgid "KiB"
 msgstr "КиБ"
 
-#, fuzzy
 msgid "List configs:"
-msgstr "  Список конфигураций:"
+msgstr "Список конфигураций:"
 
 msgid "List snapshots from all accessible configs."
 msgstr "Список снимков из всех доступных конфигураций."
 
 msgid "List:"
-msgstr ""
+msgstr "Список:"
 
 #, c-format
 msgid "Listing configs failed (%s)."
@@ -825,7 +819,7 @@ msgid "Name of config template to use."
 msgstr "Имя используемого шаблона конфигурации."
 
 msgid "No backup configs found."
-msgstr ""
+msgstr "Резервные конфигурации не найдены."
 
 msgid "No command provided."
 msgstr "Не указана команда."
@@ -840,10 +834,10 @@ msgid "Number of corresponding pre snapshot."
 msgstr "Номер соответствующего предварительного снимка."
 
 msgid "Only use backup-config with automatic set."
-msgstr ""
+msgstr "Использовать backup-config только при автоматической настройке."
 
 msgid "Only use backup-config with specified target-mode."
-msgstr ""
+msgstr "Использовать backup-config только с указанным режимом target-mode."
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -876,6 +870,8 @@ msgstr "ПБ"
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
 msgstr ""
+"Несоответствие пути между исходным путём конфигурации backup-config и "
+"подтомом конфигурации snapper ('%s' против '%s')."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -902,21 +898,17 @@ msgstr "Вывести номер второго созданного снимк
 msgid "Print version and exit."
 msgstr "Вывести версию программы и выйти."
 
-#, fuzzy
 msgid "Probing extra information for source snapshots."
-msgstr "Описание для снимков."
+msgstr "Запрос дополнительной информации для исходных снимков."
 
-#, fuzzy
 msgid "Probing extra information for target snapshots."
-msgstr "Описание для снимков."
+msgstr "Запрос дополнительной информации для целевых снимков."
 
-#, fuzzy
 msgid "Probing source snapshots."
-msgstr "Описание для снимков."
+msgstr "Проверка снимков источника."
 
-#, fuzzy
 msgid "Probing target snapshots."
-msgstr "Описание для снимков."
+msgstr "Проверка целевых снимков."
 
 #, c-format
 msgid "Quota error (%s)."
@@ -937,67 +929,69 @@ msgstr "Запустить команду и создать пре- и пост-
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Не удалось выполнить удаление %d из %ld резервной конфигурации."
+msgstr[1] "Не удалось выполнить удаление %d из %ld резервных конфигураций."
+msgstr[2] "Не удалось выполнить удаление %d из %ld резервных конфигураций."
 
 #, c-format
 msgid "Running delete for backup config '%s' failed."
-msgstr ""
+msgstr "Сбой удаления резервной конфигурации '%s'."
 
 #, c-format
 msgid "Running delete for backup config '%s'."
-msgstr ""
+msgstr "Выполняется удаление резервной конфигурации '%s'."
 
 #, c-format
 msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Не удалось вывести список %d из %ld резервной конфигурации."
+msgstr[1] "Не удалось вывести список %d из %ld резервных конфигураций."
+msgstr[2] "Не удалось вывести список %d из %ld резервных конфигураций."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
 msgstr[0] ""
+"Не удалось выполнить перенос и удаление %d из %ld резервной конфигурации."
 msgstr[1] ""
+"Не удалось выполнить перенос и удаление %d из %ld резервных конфигураций."
 msgstr[2] ""
+"Не удалось выполнить перенос и удаление %d из %ld резервных конфигураций."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
-msgstr ""
+msgstr "Сбой переноса и удаления резервной конфигурации '%s'."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s'."
-msgstr ""
+msgstr "Выполнение переноса и удаления резервной конфигурации '%s'."
 
 #, c-format
 msgid "Running transfer failed for %d of %ld backup config."
 msgid_plural "Running transfer failed for %d of %ld backup configs."
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "Не удалось выполнить перенос %d из %ld резервной конфигурации."
+msgstr[1] "Не удалось выполнить перенос %d из %ld резервных конфигураций."
+msgstr[2] "Не удалось выполнить перенос %d из %ld резервных конфигураций."
 
 #, c-format
 msgid "Running transfer for backup config '%s' failed."
-msgstr ""
+msgstr "Сбой переноса резервной конфигурации '%s'."
 
 #, c-format
 msgid "Running transfer for backup config '%s'."
-msgstr ""
+msgstr "Выполнение переноса резервной конфигурации '%s'."
 
 msgid "SSH Host"
-msgstr ""
+msgstr "SSH-хост"
 
 msgid "SSH Identity"
-msgstr ""
+msgstr "SSH-идентификация"
 
 msgid "SSH Port"
-msgstr ""
+msgstr "SSH-порт"
 
-#, fuzzy
 msgid "SSH User"
-msgstr "Пользователь"
+msgstr "Пользователь SSH"
 
 msgid "Save status to file."
 msgstr "Сохранить статус в файл."
@@ -1018,9 +1012,8 @@ msgstr "Задать формат вывода JSON."
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Задать машиночитаемый формат вывода (csv, json)."
 
-#, fuzzy
 msgid "Set name of backup-config to use."
-msgstr "Имя используемой конфигурации."
+msgstr "Задать имя используемой конфигурации backup-config."
 
 msgid "Set name of config to use."
 msgstr "Имя используемой конфигурации."
@@ -1042,30 +1035,27 @@ msgstr "Назначение снимка %d подтомом по умолча�
 msgid "Snapshot '%u' not found."
 msgstr "Снимок '%u' не найден."
 
-#, fuzzy
 msgid "Snapshot already on target."
-msgstr "Создать снимок только для чтения."
+msgstr "Цель снимка уже задана."
 
 msgid "Snapshot is in use."
 msgstr "Снимок уже используется."
 
-#, fuzzy
 msgid "Snapshot not on source."
-msgstr "Снимок уже используется."
+msgstr "Снимок не на источнике."
 
-#, fuzzy
 msgid "Snapshot not on target."
-msgstr "Снимок '%u' не найден."
+msgstr "Цель снимка не задана."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Snapshot number %d not found."
-msgstr "Снимок '%u' не найден."
+msgstr "Снимок с номером %d не найден."
 
 msgid "Source Path"
-msgstr ""
+msgstr "Путь источника"
 
 msgid "Source State"
-msgstr ""
+msgstr "Состояние источника"
 
 msgid "Subvolume"
 msgstr "Субтом"
@@ -1088,31 +1078,31 @@ msgid "Table style (integer)."
 msgstr "Стиль таблицы (целое число)."
 
 msgid "Target Mode"
-msgstr ""
+msgstr "Режим цели (Target Mode)"
 
 msgid "Target Path"
-msgstr ""
+msgstr "Путь цели"
 
 msgid "Target State"
-msgstr ""
+msgstr "Состояние цели"
 
 msgid "Target btrfs bin"
-msgstr ""
+msgstr "Цель: бинарный файл btrfs"
 
 msgid "Target findmnt Bin"
-msgstr ""
+msgstr "Цель: бинарный файл findmnt"
 
 msgid "Target mkdir bin"
-msgstr ""
+msgstr "Цель: бинарный файл mkdir"
 
 msgid "Target realpath bin"
-msgstr ""
+msgstr "Цель: бинарный файл realpath"
 
 msgid "Target rm bin"
-msgstr ""
+msgstr "Цель: бинарный файл rm"
 
 msgid "Target rmdir bin"
-msgstr ""
+msgstr "Цель: бинарный файл rmdir"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Область можно указать вручную с помощью параметра --ambit."
@@ -1128,21 +1118,21 @@ msgid "TiB"
 msgstr "ТиБ"
 
 msgid "Transfer and delete:"
-msgstr ""
+msgstr "Перенос и удаление:"
 
 msgid "Transfer:"
-msgstr ""
+msgstr "Перенос:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Transferring snapshot %d."
-msgstr "Не удалось сделать снимок."
+msgstr "Перенос снимка %d."
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Больше сведений можно найти в 'snapper --help'."
 
-#, fuzzy
 msgid "Try 'snbk --help' for more information."
-msgstr "Больше сведений можно найти в 'snapper --help'."
+msgstr ""
+"Попробуйте выполнить 'snbk --help' для получения дополнительной информации."
 
 msgid "Try to make space available."
 msgstr "Попытаться освободить место."
@@ -1263,30 +1253,29 @@ msgstr "нечего выполнять"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Аргумент root можно использовать только вместе с no-dbus.\n"
 
-#, fuzzy
 msgid "snbk delete [numbers]"
-msgstr "\tsnapper delete <число>"
+msgstr "snbk delete [числа]"
 
-#, fuzzy
 msgid "snbk list"
-msgstr "\tsnаpper list"
+msgstr "snbk list"
 
-#, fuzzy
 msgid "snbk list-configs"
-msgstr "\tsnаpper list-configs"
+msgstr "snbk list-configs"
 
 msgid "snbk transfer [numbers]"
-msgstr ""
+msgstr "snbk transfer [числа]"
 
 msgid "snbk transfer-and-delete"
-msgstr ""
+msgstr "snbk transfer-and-delete"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "использование: snapper [--общие-параметры] <команда> [--опции-команды] [аргументы-команды]"
+msgstr ""
+"использование: snapper [--глобальные-опции] <команда> [--опции-команды] "
+"[аргументы-команды]"
 
-#, fuzzy
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
-msgstr "использование: snapper [--общие-параметры] <команда> [--опции-команды] [аргументы-команды]"
+msgstr ""
+"Использование: snbk [--глобальные-опции] <команда> [командные-аргументы]"
 
 msgid "yes"
 msgstr "да"
