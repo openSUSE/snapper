@@ -31,8 +31,7 @@ snapshot 0 to the next free number (e.g. 11) and set it read-only,
 Although all of this is not yet implemented in snapper you can try
 this workflow now. A simply Python program for doing the rollback is
 provided at
-[https://github.com/openSUSE/snapper/blob/master/scripts/rollback-home]
-(https://github.com/openSUSE/snapper/blob/master/scripts/rollback-home).
+[https://github.com/openSUSE/snapper/blob/master/scripts/rollback-home](https://github.com/openSUSE/snapper/blob/master/scripts/rollback-home).
 
 Creating the initial setup is a bit tricky since it requires an
 intermediate step:
