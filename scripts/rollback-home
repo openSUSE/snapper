@@ -1,0 +1,104 @@
+#!/usr/bin/python3
+
+# Read http://snapper.io/2025/05/16/rollback-any.html and understand
+# the setup before using this program.
+
+
+import subprocess
+import re
+import datetime
+import argparse
+
+
+subvolume = "/home"
+
+
+def parse_options():
+
+    parser = argparse.ArgumentParser(description = "rollabck home")
+    parser.add_argument("number", type = int, help = "rollback to number")
+
+    args = parser.parse_args()
+
+    return args.number
+
+
+def find_next_number():
+
+    next_number = 1
+
+    cmd = subprocess.run([ "btrfs", "subvolume", "list", subvolume ], stdout = subprocess.PIPE)
+
+    tmp = cmd.stdout.rstrip().decode("utf-8")
+
+    pattern = f"^@\\{subvolume}\\/\\.snapshots\\/(\\d+)\\/snapshot$"
+
+    for tmp1 in tmp.split('\n'):
+        tmp2 = tmp1.split(' ')
+        tmp3 = tmp2[8]
+
+        match = re.search(pattern, tmp3)
+
+        if match:
+            tmp4 = int(match.group(1)) + 1
+            if tmp4 > next_number:
+                next_number = tmp4
+
+    print("next number is", next_number)
+
+    return next_number
+
+
+def write_info(number):
+
+    template = """<?xml version="1.0"?>
+<snapshot>
+  <type>single</type>
+  <num>{number}</num>
+  <date>{date}</date>
+  <description>rollback backup</description>
+</snapshot>
+"""
+
+    data = {
+        "number": number,
+        "date": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+    }
+
+    filename = subvolume + "/.snapshots/" + str(number) + "/info.xml"
+
+    with open(filename, "w") as f:
+        f.write(template.format(**data))
+
+
+def step_rename():
+
+    next_number = find_next_number()
+
+    subprocess.run([ "mkdir", subvolume + "/.snapshots/" + str(next_number) ])
+
+    subprocess.run([ "mv", subvolume + "/.snapshots/0/snapshot",
+                     subvolume + "/.snapshots/" + str(next_number) + "/snapshot" ])
+
+    subprocess.run([ "btrfs", "property", "set",
+                     subvolume + "/.snapshots/" + str(next_number) + "/snapshot", "ro", "true" ])
+
+    write_info(next_number)
+
+
+def step_new_zero(number):
+
+    subprocess.run([ "btrfs", "subvolume", "snapshot",
+                     subvolume + "/.snapshots/" + str(number) + "/snapshot",
+                     subvolume + "/.snapshots/0/snapshot" ])
+
+
+try:
+    number = parse_options()
+except SystemExit:
+    pass
+
+print("rollback to", number)
+
+step_rename()
+step_new_zero(number)
