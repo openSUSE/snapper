@@ -7,15 +7,16 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-25 11:00+0200\n"
-"PO-Revision-Date: 2025-04-10 11:56+0000\n"
-"Last-Translator: Gemineo <vistatec@gemineo.de>\n"
-"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
+"PO-Revision-Date: 2025-05-18 09:59+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
+"\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.11.4\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <Bereinigungsalgorithmus>"
@@ -747,7 +748,7 @@ msgstr "Ungültiger Tabellenstil '%s'."
 
 #, c-format
 msgid "Invalid target mode '%s'."
-msgstr "Ungültiger Zielmodus '%s'."
+msgstr "Ungültiger Zielmodus ‚%s‘."
 
 #, c-format
 msgid "Invalid user (%s)."
@@ -1035,7 +1036,7 @@ msgid "Snapshot not on source."
 msgstr "Schnappschuss nicht auf Quelle."
 
 msgid "Snapshot not on target."
-msgstr "Schnappschuss nicht auf Ziel."
+msgstr "Schnappschuss nicht auf dem Ziel."
 
 #, c-format
 msgid "Snapshot number %d not found."
@@ -1085,9 +1086,8 @@ msgstr ""
 msgid "Target mkdir bin"
 msgstr ""
 
-#, fuzzy
 msgid "Target realpath bin"
-msgstr "Zielpfad"
+msgstr ""
 
 msgid "Target rm bin"
 msgstr ""
