@@ -1,6 +1,6 @@
 
 [Unit]
-Description=Daily Cleanup of Snapper Snapshots
+Description=Hourly Cleanup of Snapper Snapshots
 Documentation=man:snapper(8) man:snapper-configs(5)
 
 [Timer]
