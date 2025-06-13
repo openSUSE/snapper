@@ -191,8 +191,8 @@
 	<listitem>
 	  <para>Defines whether hourly snapshots should be created.</para>
 	  <para>Together with the timeline cleanup algorithm this will create
-	  a collection of snapshots with more snapshots is the near past and
-	  less snapshots in the far past.</para>
+	  a collection of snapshots with more snapshots in the recent past and
+	  fewer snapshots in the far past.</para>
 	  <para>Default value is &quot;no&quot;.</para>
 	</listitem>
       </varlistentry>
