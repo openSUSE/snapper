@@ -31,7 +31,7 @@
     <title>DESCRIPTION</title>
     <para>Mksubvolume is a command-line program to create a btrfs subvolume
     including adding a fstab entry and mounting the subvolume at
-    <replaceable>path</replaceable>.</para>
+    the absolute path <replaceable>path</replaceable>.</para>
   </refsect1>
 
   <refsect1 id='global_options'>
