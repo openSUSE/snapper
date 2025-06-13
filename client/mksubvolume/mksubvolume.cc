@@ -353,7 +353,7 @@ find_filesystem(MntTable& mnt_table)
 string
 get_abs_subvol_path(string subvolume)
 {
-    if(!boost::starts_with(subvolume, "/"))
+    if (!boost::starts_with(subvolume, "/"))
 	subvolume.insert(0, "/");
     return subvolume;
 }
@@ -521,7 +521,7 @@ void usage() __attribute__ ((__noreturn__));
 void
 usage()
 {
-    cerr << "usage: [--nocow] [--verbose] target" << endl;
+    cerr << "usage: [--nocow] [--verbose] path" << endl;
     exit(EXIT_FAILURE);
 }
 
@@ -552,6 +552,9 @@ main(int argc, char** argv)
 	    usage();
 
 	target = get_opts.pop_arg();
+
+	if (!boost::starts_with(target, "/"))
+	    SN_THROW(OptionsException("path does not start with '/'"));
     }
     catch (const OptionsException& e)
     {

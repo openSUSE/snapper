@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Jun 13 11:52:02 CEST 2025 - aschnell@suse.com
+
+- check that path for mksubvolume is an absolute path
+  (gh#openSUSE/snapper#1016)
+
+-------------------------------------------------------------------
 Thu Apr 24 12:20:13 CEST 2025 - aschnell@suse.com
 
 - pick boost process v1 when compiling with boost 1.88 or higher
