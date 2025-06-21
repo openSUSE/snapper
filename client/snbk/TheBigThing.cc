@@ -326,6 +326,11 @@ namespace snapper
 	if (target_path != mount_point)
 	    start = target_path.substr(mount_point.size() + 1) + "/";
 
+	static const regex subvol_regex("\\[(.*?)\\]");
+	smatch subvol;
+	if (regex_search(cmd_findmnt.get_source(), subvol, subvol_regex))
+		start = subvol[1].str().substr(1) + "/" + start;
+
 	if (verbose)
 	    cout << _("Probing extra information for target snapshots.") << endl;
 
