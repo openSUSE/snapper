@@ -5,9 +5,6 @@ TODOs (at least):
 
 - ioctl for snapshot creation takes path instead of fd
 
-- read-only snapshots not supported by bcachefs
-  - background comparison started anyway
-
 - check if a directory is a snapshot
 
 - get ioctl defines from a header file or use a library
