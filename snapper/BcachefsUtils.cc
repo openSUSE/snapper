@@ -100,7 +100,7 @@ namespace snapper
 
 	    args.flags = BCH_SUBVOL_SNAPSHOT_CREATE;
 	    if (read_only)
-		args.flags |= BCH_SUBVOL_SNAPSHOT_RO;	// TODO does not work
+		args.flags |= BCH_SUBVOL_SNAPSHOT_RO;
 	    args.dirfd = (__u32) fddst;
 	    args.mode = 0777;
 	    args.dst_ptr = (__u64) name.c_str();
