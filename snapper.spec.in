@@ -114,6 +114,7 @@ Requires:       systemd
 Recommends:     logrotate snapper-zypp-plugin
 Supplements:    btrfsprogs
 %endif
+Recommends:     %{name}-lang
 
 %description
 This package contains snapper, a tool for filesystem snapshot management.
@@ -203,7 +204,7 @@ test -f /etc/logrotate.d/snapper.rpmsave && mv -v /etc/logrotate.d/snapper.rpmsa
 %service_del_postun snapper-boot.service snapper-boot.timer snapper-cleanup.service snapper-cleanup.timer snapper-timeline.service snapper-timeline.timer snapperd.service
 %endif
 
-%files -f snapper.lang
+%files
 %defattr(-,root,root)
 %{_bindir}/snapper
 %{_sbindir}/snapperd
@@ -236,6 +237,18 @@ test -f /etc/logrotate.d/snapper.rpmsave && mv -v /etc/logrotate.d/snapper.rpmsa
 %dir %{_datadir}/zsh
 %dir %{_datadir}/zsh/site-functions
 %{_datadir}/zsh/site-functions/_snapper
+
+%package lang
+Summary:        Languages for package %{name}
+Group:          System/Localization
+Supplements:    %{name}
+Provides:       %{name}-lang-all = %{version}
+BuildArch:      noarch
+
+%description lang
+Provides translations to the package %{name}
+
+%files lang -f snapper.lang
 
 %package -n libsnapper@LIBVERSION_MAJOR@
 Summary:        Library for filesystem snapshot management
@@ -349,6 +362,7 @@ done
 Requires:       snapper = %version
 Summary:        A backup program for snapper
 Group:          System/Packages
+Recommends:     %{name}-lang
 
 %description -n snapper-backup
 A backup program for snapshots created by snapper.
