@@ -234,6 +234,7 @@ AC_CONFIG_FILES([
 	client/systemd-helper/Makefile
 	client/snbk/Makefile
 	scripts/Makefile
+	scripts/completion/Makefile
 	pam/Makefile
 	data/Makefile
 	doc/Makefile

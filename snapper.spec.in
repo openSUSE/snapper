@@ -1,7 +1,7 @@
 #
 # spec file for package snapper
 #
-# Copyright (c) 2023 SUSE LLC
+# Copyright (c) 2025 SUSE LLC
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -230,8 +230,12 @@ test -f /etc/logrotate.d/snapper.rpmsave && mv -v /etc/logrotate.d/snapper.rpmsa
 %endif
 %{_datadir}/dbus-1/system.d/org.opensuse.Snapper.conf
 %{_datadir}/dbus-1/system-services/org.opensuse.Snapper.service
-%{_datadir}/bash-completion
-%{_datadir}/zsh
+%dir %{_datadir}/bash-completion
+%dir %{_datadir}/bash-completion/completions/
+%{_datadir}/bash-completion/completions/snapper
+%dir %{_datadir}/zsh
+%dir %{_datadir}/zsh/site-functions
+%{_datadir}/zsh/site-functions/_snapper
 
 %package -n libsnapper@LIBVERSION_MAJOR@
 Summary:        Library for filesystem snapshot management
@@ -356,6 +360,9 @@ A backup program for snapshots created by snapper.
 %{_unitdir}/snapper-{backup}.*
 %{_mandir}/*/snbk.8*
 %{_mandir}/*/snapper-backup-configs.5*
+%dir %{_datadir}/bash-completion
+%dir %{_datadir}/bash-completion/completions
+%{_datadir}/bash-completion/completions/snbk
 
 %package -n pam_snapper
 Requires:       pam
