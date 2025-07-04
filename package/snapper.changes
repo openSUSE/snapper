@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Jul 04 12:52:34 CEST 2025 - aschnell@suse.com
+
+- split off lang package
+
+-------------------------------------------------------------------
 Fri Jun 13 11:52:02 CEST 2025 - aschnell@suse.com
 
 - check that path for mksubvolume is an absolute path
