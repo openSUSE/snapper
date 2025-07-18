@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2022-2023] SUSE LLC
+ * Copyright (c) [2022-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#include <boost/algorithm/string.hpp>
+
 #include "snapper/FileUtils.h"
 #include "snapper/Filesystem.h"
 #include "snapper/PluginsImpl.h"
@@ -30,6 +32,7 @@
 #include "snapper/SnapperDefines.h"
 #include "snapper/Exception.h"
 #include "snapper/Snapshot.h"
+#include "snapper/Log.h"
 
 
 namespace snapper
@@ -57,10 +60,25 @@ namespace snapper
 	    for (const string& script : scripts)
 	    {
 		string fullname = dir.fullname(script);
+
 		SystemCmd::Args cmd_args = { fullname };
 		cmd_args << args;
 		SystemCmd cmd(cmd_args);
+
 		report.entries.emplace_back(fullname, args, cmd.retcode());
+
+		y2mil("result of " << fullname << " " << boost::join(args, " "));
+
+		for (const string& line : cmd.get_stdout())
+		    y2mil("stdout: " << line);
+
+		for (const string& line : cmd.get_stderr())
+		    y2mil("stderr: " << line);
+
+		if (cmd.retcode() != 0)
+		    y2err("return code: " << cmd.retcode());
+		else
+		    y2mil("return code: " << cmd.retcode());
 	    }
 	}
 	catch (const Exception& e)
