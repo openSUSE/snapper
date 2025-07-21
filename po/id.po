@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-25 11:00+0200\n"
-"PO-Revision-Date: 2025-07-06 16:59+0000\n"
+"PO-Revision-Date: 2025-07-21 02:11+0000\n"
 "Last-Translator: Arif Budiman <arifpedia@gmail.com>\n"
 "Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/"
 "id/>\n"
@@ -898,32 +898,27 @@ msgstr "Menggali informasi tambahan untuk snapshot sumber."
 msgid "Probing extra information for target snapshots."
 msgstr "Menggali informasi tambahan untuk snapshot target."
 
-#, fuzzy
 msgid "Probing source snapshots."
-msgstr "\t--description, -d <deskripsi>\tDeskripsi untuk snapshot."
+msgstr "Memeriksa snapshot sumber."
 
-#, fuzzy
 msgid "Probing target snapshots."
-msgstr "\t--description, -d <deskripsi>\tDeskripsi untuk snapshot."
+msgstr "Memeriksa snapshot target."
 
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Galat kuota (%s)."
 
-#, fuzzy
 msgid "Read files for which to undo changes from file."
-msgstr "\t--input, -i <berkas>\t\tBaca berkas untuk membatalkan perubahan dari berkas."
+msgstr "Baca berkas yang akan dibatalkan perubahannya dari berkas."
 
-#, fuzzy
 msgid "Read files to diff from file."
-msgstr "\t--input, -i <berkas>\t\tBaca berkas diff dari berkas."
+msgstr "Baca berkas untuk membandingkan dari berkas."
 
 msgid "Read-Only"
 msgstr "Hanya-Baca"
 
-#, fuzzy
 msgid "Run command and create pre and post snapshots."
-msgstr "\t--command <perintah>\tJalankan perintah dan buat pre dan pos snapshot."
+msgstr "Jalankan perintah dan buat snapshot sebelum dan setelah."
 
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
@@ -978,13 +973,11 @@ msgstr "Identitas SSH"
 msgid "SSH Port"
 msgstr "Port SSH"
 
-#, fuzzy
 msgid "SSH User"
-msgstr "Pengguna"
+msgstr "Pengguna SSH"
 
-#, fuzzy
 msgid "Save status to file."
-msgstr "\t--output, -o <berkas>\t\tSimpan status ke berkas."
+msgstr "Simpan status ke berkas."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Lihat 'man snapper' untuk instruksi lebih lanjut."
@@ -993,37 +986,29 @@ msgstr "Lihat 'man snapper' untuk instruksi lebih lanjut."
 msgid "Server-side plugin '%s' failed."
 msgstr "Pengaya sisi peladen '%s' gagal."
 
-#, fuzzy
 msgid "Set CSV output format."
-msgstr "\t--csvout\t\t\tAtur format keluaran CSV."
+msgstr "Atur format keluaran CSV."
 
-#, fuzzy
 msgid "Set JSON output format."
-msgstr "\t--jsonout\t\t\tAtur format keluaran JSON."
+msgstr "Atur format keluaran JSON."
 
-#, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
-msgstr "\t--machine-readable <format>\\Atur format keluaran yang dapat dibaca mesin (csv, json)."
+msgstr "Atur format keluaran yang dapat dibaca oleh mesin (csv, json)."
 
-#, fuzzy
 msgid "Set name of backup-config to use."
-msgstr "\t--config, -c <nama>\t\tAtur nama konfigurasi untuk digunakan."
+msgstr "Atur nama konfigurasi cadangan (backup-config) yang akan digunakan."
 
-#, fuzzy
 msgid "Set name of config to use."
-msgstr "\t--config, -c <nama>\t\tAtur nama konfigurasi untuk digunakan."
+msgstr "Atur nama konfigurasi yang akan digunakan."
 
-#, fuzzy
 msgid "Set snapshot as default snapshot."
-msgstr "\t--default\t\t\tTetapkan snapshot sebagai snapshot bawaan."
+msgstr "Atur snapshot sebagai snapshot default."
 
-#, fuzzy
 msgid "Set snapshot read-only."
-msgstr "\t--read-only\t\t\tAtur snapshot hanya-baca."
+msgstr "Atur snapshot menjadi hanya-baca."
 
-#, fuzzy
 msgid "Set snapshot read-write."
-msgstr "\t--read-write\t\t\tAtur snapshot baca-tulis."
+msgstr "Atur snapshot baca-tulis."
 
 #, c-format
 msgid "Setting default subvolume to snapshot %d."
@@ -1033,41 +1018,36 @@ msgstr "Mengatur subvolume bawaan ke snapshot %d."
 msgid "Snapshot '%u' not found."
 msgstr "Snapshot '%u' tidak ditemukan."
 
-#, fuzzy
 msgid "Snapshot already on target."
-msgstr "\t--read-only\t\t\tAtur snapshot hanya-baca."
+msgstr "Snapshot sudah sesuai target."
 
 msgid "Snapshot is in use."
 msgstr "Snapshot sedang digunakan."
 
-#, fuzzy
 msgid "Snapshot not on source."
-msgstr "Snapshot sedang digunakan."
+msgstr "Snapshot tidak ada di sumber."
 
-#, fuzzy
 msgid "Snapshot not on target."
-msgstr "Snapshot '%u' tidak ditemukan."
+msgstr "Snapshot tidak ada di target."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Snapshot number %d not found."
-msgstr "Snapshot '%u' tidak ditemukan."
+msgstr "Snapshot nomor %d tidak ditemukan."
 
 msgid "Source Path"
 msgstr "Jalur Sumber"
 
 msgid "Source State"
-msgstr ""
+msgstr "Status Awal"
 
 msgid "Subvolume"
 msgstr "Subvolume"
 
-#, fuzzy
 msgid "Suppress normal output."
-msgstr "\t--quiet, -q\t\t\tMenekan keluaran normal."
+msgstr "Menekan keluaran normal."
 
-#, fuzzy
 msgid "Sync after deletion."
-msgstr "\t--sync, -s\t\t\tSinkronkan setelah penghapusan."
+msgstr "Sinkronisasi setelah penghapusan."
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -1077,9 +1057,8 @@ msgstr "T"
 msgid "TB"
 msgstr "TB"
 
-#, fuzzy
 msgid "Table style (integer)."
-msgstr "\t--table-style, -t <gaya>\tGaya tabel (bilangan bulat)."
+msgstr "Gaya tabel (bilangan bulat)."
 
 msgid "Target Mode"
 msgstr "Mode Target"
@@ -1088,26 +1067,25 @@ msgid "Target Path"
 msgstr "Jalur Tujuan"
 
 msgid "Target State"
-msgstr ""
+msgstr "Status Target"
 
 msgid "Target btrfs bin"
-msgstr ""
+msgstr "Bin btrfs target"
 
 msgid "Target findmnt Bin"
-msgstr ""
+msgstr "Bin findmnt target"
 
 msgid "Target mkdir bin"
-msgstr ""
+msgstr "Bin mkdir target"
 
-#, fuzzy
 msgid "Target realpath bin"
-msgstr "(Target) Waktu Pembuatan"
+msgstr "Bin realpath target"
 
 msgid "Target rm bin"
-msgstr ""
+msgstr "Bin rm target"
 
 msgid "Target rmdir bin"
-msgstr ""
+msgstr "Bin rmdir target"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Ambit dapat ditentukan secara manual menggunakan opsi--ambit."
@@ -1123,40 +1101,35 @@ msgid "TiB"
 msgstr "TiB"
 
 msgid "Transfer and delete:"
-msgstr ""
+msgstr "Transfer dan hapus:"
 
 msgid "Transfer:"
-msgstr ""
+msgstr "Transfer:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Transferring snapshot %d."
-msgstr "Gagal membuat snapshot."
+msgstr "Mentransfer snapshot %d."
 
 msgid "Try 'snapper --help' for more information."
 msgstr "Coba 'snapper --help' untuk informasi lebih lanjut."
 
-#, fuzzy
 msgid "Try 'snbk --help' for more information."
-msgstr "Coba 'snapper --help' untuk informasi lebih lanjut."
+msgstr "Coba 'snbk --help' untuk informasi lebih lanjut."
 
-#, fuzzy
 msgid "Try to make space available."
-msgstr "\t--free-space <space>\t\tCobalah untuk membuat ruang tersedia."
+msgstr "Cobalah untuk menyediakan ruang yang tersedia."
 
-#, fuzzy
 msgid "Turn on debugging."
-msgstr "\t--debug\t\t\t\tAktifkan proses awakutu."
+msgstr "Aktifkan debugging."
 
 msgid "Type"
 msgstr "Jenis"
 
-#, fuzzy
 msgid "Type for snapshot."
-msgstr "Jenis snapshot tidak dikenal."
+msgstr "Tipe untuk snapshot."
 
-#, fuzzy
 msgid "Type of snapshots to list."
-msgstr "\t--type, -t <jenis>\t\tJenis snapshot yang ada dalam daftar."
+msgstr "Tipe snapshot yang akan ditampilkan."
 
 #, c-format
 msgid "Unknown cleanup algorithm '%s'."
@@ -1208,13 +1181,11 @@ msgstr "Data pengguna '%s' tidak membawa tanda '='."
 msgid "Userdata '%s' has empty key."
 msgstr "Data pengguna '%s' mempunyai kunci kosong."
 
-#, fuzzy
 msgid "Userdata for snapshot."
-msgstr "\t--userdata, -u <userdata>\tUserdata untuk snapshot."
+msgstr "Data pengguna untuk snapshot."
 
-#, fuzzy
 msgid "Userdata for snapshots."
-msgstr "Snapshot identik."
+msgstr "Data pengguna untuk snapshot."
 
 msgid "Value"
 msgstr "Nilai"
@@ -1264,30 +1235,26 @@ msgstr "tidak ada yang dilakukan"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "argumen root dapat digunakan hanya bersama-sama dengan no-dbus.\n"
 
-#, fuzzy
 msgid "snbk delete [numbers]"
-msgstr "\tsnapper delete <nomor>"
+msgstr "snbk delete [angka]"
 
-#, fuzzy
 msgid "snbk list"
-msgstr "\tsnapper list"
+msgstr "snbk list"
 
-#, fuzzy
 msgid "snbk list-configs"
-msgstr "\tsnapper list-configs"
+msgstr "snbk list-configs"
 
 msgid "snbk transfer [numbers]"
-msgstr ""
+msgstr "snbk transfer [angka]"
 
 msgid "snbk transfer-and-delete"
-msgstr ""
+msgstr "transfer-dan-hapus snbk"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "penggunaan: snapper [--global-options] <command> [--command-options] [command-arguments]"
 
-#, fuzzy
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
-msgstr "penggunaan: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr "penggunaan: snbk [--global-options] <command> [command-arguments]"
 
 msgid "yes"
 msgstr "ya"
