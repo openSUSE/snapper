@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-25 11:00+0200\n"
-"PO-Revision-Date: 2025-06-18 11:59+0000\n"
-"Last-Translator: Gemineo <vistatec@gemineo.de>\n"
+"PO-Revision-Date: 2025-07-22 14:59+0000\n"
+"Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
 "\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.1\n"
+"X-Generator: Weblate 5.12.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <Bereinigungsalgorithmus>"
@@ -464,7 +464,9 @@ msgstr "Befehl 'mount' benötigt mindestens ein Argument."
 
 #, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr "Befehl 'rollback' kann nicht für ein nicht-root-Subvolume %s verwendet werden."
+msgstr ""
+"Befehl 'rollback' kann nicht für ein nicht-root-Subvolume %s verwendet "
+"werden."
 
 msgid "Command 'rollback' only available for btrfs."
 msgstr "Befehl 'rollback' nur für Btrfs verfügbar."
@@ -551,7 +553,8 @@ msgid "Creating read-only snapshot of default subvolume."
 msgstr "Nur-Lesen-Schnappschuss des Standard-Subvolumes erstellen."
 
 msgid "Creating read-write snapshot of current subvolume."
-msgstr "Lesen-Schreiben-Schnappschuss des derzeit laufenden Subvolumes erstellen."
+msgstr ""
+"Lesen-Schreiben-Schnappschuss des derzeit laufenden Subvolumes erstellen."
 
 #, c-format
 msgid "Creating read-write snapshot of snapshot %d."
@@ -789,7 +792,9 @@ msgid "Manually set filesystem type."
 msgstr "Dateisystem-Typ manuell festlegen."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
-msgstr "Sie haben möglicherweise das Trennzeichen \"..\" zwischen den Snapshot-Nummern vergessen."
+msgstr ""
+"Sie haben möglicherweise das Trennzeichen \"..\" zwischen den Snapshot-"
+"Nummern vergessen."
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
@@ -853,11 +858,14 @@ msgid "Operate without DBus."
 msgstr "Ohne DBus arbeiten."
 
 msgid "Option --from only supported for snapshots of type single."
-msgstr "Die Option --from wird nur für Schnappschüsse vom Typ Einzeln unterstützt."
+msgstr ""
+"Die Option --from wird nur für Schnappschüsse vom Typ Einzeln unterstützt."
 
 #. DBus versions of CreatePreSnapshot and CreatePostSnapshot do not pass read-only flag
 msgid "Option --read-write only supported for snapshots of type single."
-msgstr "Die Option --read-write wird nur für Schnappschüsse vom Typ Einzeln unterstützt."
+msgstr ""
+"Die Option --read-write wird nur für Schnappschüsse vom Typ Einzeln "
+"unterstützt."
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
@@ -913,7 +921,8 @@ msgid "Quota error (%s)."
 msgstr "Quota-Fehler (%s)."
 
 msgid "Read files for which to undo changes from file."
-msgstr "Dateien, für die Änderungen zurückgenommen werden sollen, aus Datei lesen."
+msgstr ""
+"Dateien, für die Änderungen zurückgenommen werden sollen, aus Datei lesen."
 
 msgid "Read files to diff from file."
 msgstr "Dateien lesen zur Unterscheidung von der Datei."
@@ -1096,13 +1105,18 @@ msgid "Target rmdir bin"
 msgstr "rmdir-Ziel-Bin"
 
 msgid "The ambit can be specified manually using the --ambit option."
-msgstr "Der Anwendungsbereich kann manuell durch die Verwendung der Option --ambit angegeben werden."
+msgstr ""
+"Der Anwendungsbereich kann manuell durch die Verwendung der Option --ambit "
+"angegeben werden."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr "Die Konfiguration \"Root\" ist nicht vorhanden. Snapper ist wahrscheinlich nicht konfiguriert."
+msgstr ""
+"Die Konfiguration \"Root\" ist nicht vorhanden. Snapper ist wahrscheinlich "
+"nicht konfiguriert."
 
 msgid "This can happen if the system was not set up for rollback."
-msgstr "Das kann passieren, wenn das System nicht für Rollbacks eingerichtet wurde."
+msgstr ""
+"Das kann passieren, wenn das System nicht für Rollbacks eingerichtet wurde."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
@@ -1259,7 +1273,9 @@ msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "Aufruf: snapper [--Globale-Optionen] <Befehl> [--Befehlsoptionen] [Befehlsargumente]"
+msgstr ""
+"Aufruf: snapper [--Globale-Optionen] <Befehl> [--Befehlsoptionen] "
+"[Befehlsargumente]"
 
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "Aufruf: snbk [--Globale-Optionen] <Befehl> [Befehlsargumente]"
