@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-25 11:00+0200\n"
-"PO-Revision-Date: 2025-06-12 01:59+0000\n"
-"Last-Translator: Samanta Magalhaes <samanta_texttrans@outlook.com>\n"
+"PO-Revision-Date: 2025-07-22 15:00+0000\n"
+"Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/"
 "snapper/master/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.11.4\n"
+"X-Generator: Weblate 5.12.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <algoritmo de limpeza>"
@@ -391,14 +391,19 @@ msgstr "Não é possível excluir o instantâneo %d, pois ele é o sistema atual
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr "Não é possível excluir o instantâneo %d, pois ele é o instantâneo atualmente montado."
+msgstr ""
+"Não é possível excluir o instantâneo %d, pois ele é o instantâneo atualmente "
+"montado."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr "Não é possível excluir o instantâneo %d, pois ele é o próximo a ser montado instantâneo."
+msgstr ""
+"Não é possível excluir o instantâneo %d, pois ele é o próximo a ser montado "
+"instantâneo."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
-msgstr "Não é possível detectar o âmbito porque o subvolume padrão é desconhecido."
+msgstr ""
+"Não é possível detectar o âmbito porque o subvolume padrão é desconhecido."
 
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Não é possível reverter porque o subvolume padrão é desconhecido."
@@ -525,7 +530,8 @@ msgstr "O dado de configuração tem a chave '%s' vazia."
 
 #, c-format
 msgid "Could not make enough free space available for path '%s'."
-msgstr "Não foi possível disponibilizar espaço livre suficiente para o caminho '%s'."
+msgstr ""
+"Não foi possível disponibilizar espaço livre suficiente para o caminho '%s'."
 
 msgid "Could not make enough free space available."
 msgstr "Não foi possível disponibilizar espaço livre suficiente."
@@ -791,7 +797,9 @@ msgid "Manually set filesystem type."
 msgstr "Definir o tipo de sistema de arquivos manualmente."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
-msgstr "Talvez você não tenha incluído o delimitador '..' entre os números dos instantâneos."
+msgstr ""
+"Talvez você não tenha incluído o delimitador '..' entre os números dos "
+"instantâneos."
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
@@ -1101,7 +1109,9 @@ msgid "The ambit can be specified manually using the --ambit option."
 msgstr "O âmbito pode ser especificado manualmente usando a opção --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr "A configuração \"root\" não existe. Provavelmente, o snapper não está configurado."
+msgstr ""
+"A configuração \"root\" não existe. Provavelmente, o snapper não está "
+"configurado."
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "Isso pode acontecer se o sistema não foi configurado para reversão."
@@ -1261,7 +1271,8 @@ msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "uso: snapper [--opções-globais] <comando> [--opções-do-comando] [argumentos]"
+msgstr ""
+"uso: snapper [--opções-globais] <comando> [--opções-do-comando] [argumentos]"
 
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "uso: snbk [--global-options] <comando> [command-arguments]"
