@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-25 11:00+0200\n"
-"PO-Revision-Date: 2025-04-26 04:59+0000\n"
-"Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
+"PO-Revision-Date: 2025-07-22 14:59+0000\n"
+"Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/"
 "ja/>\n"
 "Language: ja\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.11.1\n"
+"X-Generator: Weblate 5.12.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <クリーンアップアルゴリズム>"
@@ -387,7 +387,8 @@ msgstr "B"
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr "スナップショット %d は現在動作中のシステムそのものであるため、削除できません。"
+msgstr "スナップショット %d "
+"は現在動作中のシステムそのものであるため、削除できません。"
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
@@ -395,7 +396,8 @@ msgstr "スナップショット %d は現在マウントされているため�
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr "スナップショット %d は次回マウントされるスナップショットであるため、削除できません。"
+msgstr "スナップショット %d "
+"は次回マウントされるスナップショットであるため、削除できません。"
 
 msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr "既定のサブボリュームが未知のものであるため、領域を検出できません。"
@@ -848,17 +850,20 @@ msgid "Operate in the specified ambit."
 msgstr "指定した領域内で処理を行います。"
 
 msgid "Operate on target root (works only without DBus)."
-msgstr "指定したルートに対して操作を行います (DBus を使用しない場合にのみ動作します) 。"
+msgstr "指定したルートに対して操作を行います (DBus を使用しない場合にのみ動作します) "
+"。"
 
 msgid "Operate without DBus."
 msgstr "DBus 無しで処理を行います。"
 
 msgid "Option --from only supported for snapshots of type single."
-msgstr "--from オプションは、種類が single (単一) であるスナップショットにのみ対応しています。"
+msgstr "--from オプションは、種類が single (単一) "
+"であるスナップショットにのみ対応しています。"
 
 #. DBus versions of CreatePreSnapshot and CreatePostSnapshot do not pass read-only flag
 msgid "Option --read-write only supported for snapshots of type single."
-msgstr "--read-write オプションは、種類が single (単一) であるスナップショットにのみ対応しています。"
+msgstr "--read-write オプションは、種類が single (単一) "
+"であるスナップショットにのみ対応しています。"
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
@@ -870,7 +875,8 @@ msgstr "PB"
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr "backup-config のソースパスと snapper 設定のサブボリュームとの間でパスが整合しません ('%s' と '%s') 。"
+msgstr "backup-config のソースパスと snapper "
+"設定のサブボリュームとの間でパスが整合しません ('%s' と '%s') 。"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -1256,7 +1262,8 @@ msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "usage: snapper [グローバルオプション] <コマンド> [コマンドオプション] [コマンドパラメータ]"
+msgstr "usage: snapper [グローバルオプション] <コマンド> [コマンドオプション] "
+"[コマンドパラメータ]"
 
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "usage: snbk [グローバルオプション] <コマンド> [コマンドオプション]"
