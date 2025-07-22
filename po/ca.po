@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-25 11:00+0200\n"
-"PO-Revision-Date: 2025-06-02 19:59+0000\n"
-"Last-Translator: David Medina <medipas@gmail.com>\n"
+"PO-Revision-Date: 2025-07-22 14:59+0000\n"
+"Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/"
 ">\n"
 "Language: ca\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.11.4\n"
+"X-Generator: Weblate 5.12.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tneteja de l'snapper <cleanup-algorithm>"
@@ -381,18 +381,24 @@ msgstr "B"
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr "No es pot suprimir la instantània %d, ja que correspon al sistema actual."
+msgstr ""
+"No es pot suprimir la instantània %d, ja que correspon al sistema actual."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr "No es pot suprimir la instantània %d, ja que correspon a la instantània muntada actualment."
+msgstr ""
+"No es pot suprimir la instantània %d, ja que correspon a la instantània "
+"muntada actualment."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr "No es pot suprimir la instantània %d, ja que és la propera instantània per muntar."
+msgstr ""
+"No es pot suprimir la instantània %d, ja que és la propera instantània per "
+"muntar."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
-msgstr "No se'n pot detectar l'àmbit ja que es desconeix el subvolum per defecte."
+msgstr ""
+"No se'n pot detectar l'àmbit ja que es desconeix el subvolum per defecte."
 
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "No es pot fer un retrocés ja que es desconeix el subvolum per defecte."
@@ -786,7 +792,8 @@ msgid "Manually set filesystem type."
 msgstr "Estableix el sistema de fitxers manualment."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
-msgstr "Potser heu oblidat el delimitador \"..\" entre els números d'instantània."
+msgstr ""
+"Potser heu oblidat el delimitador \"..\" entre els números d'instantània."
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
@@ -854,7 +861,8 @@ msgstr "L'opció --from només s'admet per a les instantànies de tipus simple."
 
 #. DBus versions of CreatePreSnapshot and CreatePostSnapshot do not pass read-only flag
 msgid "Option --read-write only supported for snapshots of type single."
-msgstr "L'opció --read-write només s'admet per a les instantànies de tipus simple."
+msgstr ""
+"L'opció --read-write només s'admet per a les instantànies de tipus simple."
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
@@ -866,7 +874,9 @@ msgstr "PB"
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr "No hi ha coincidència de camí entre el camí d'origen de la configuració de còpia de seguretat i el subvolum de la configuració de l'snapper (%s vs. %s)."
+msgstr ""
+"No hi ha coincidència de camí entre el camí d'origen de la configuració de "
+"còpia de seguretat i el subvolum de la configuració de l'snapper (%s vs. %s)."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -924,12 +934,18 @@ msgstr "Executa l'ordre i crea les instantànies pre i post."
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
-msgstr[0] "L'execució de la supressió ha fallat per a %d d'%ld configuració de còpia de seguretat."
-msgstr[1] "L'execució de la supressió ha fallat per a %d de %ld configuracions de còpia de seguretat."
+msgstr[0] ""
+"L'execució de la supressió ha fallat per a %d d'%ld configuració de còpia de "
+"seguretat."
+msgstr[1] ""
+"L'execució de la supressió ha fallat per a %d de %ld configuracions de còpia "
+"de seguretat."
 
 #, c-format
 msgid "Running delete for backup config '%s' failed."
-msgstr "Ha fallat l'execució de la supressió de la configuració de còpia de seguretat %s."
+msgstr ""
+"Ha fallat l'execució de la supressió de la configuració de còpia de "
+"seguretat %s."
 
 #, c-format
 msgid "Running delete for backup config '%s'."
@@ -938,36 +954,55 @@ msgstr "Executant la supressió de la configuració de còpia de seguretat %s."
 #, c-format
 msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
-msgstr[0] "Ha fallat l'execució de la llista per a %d d'%ld configuració de còpia de seguretat."
-msgstr[1] "Ha fallat l'execució de la llista per a %d de %ld configuracions de còpia de seguretat."
+msgstr[0] ""
+"Ha fallat l'execució de la llista per a %d d'%ld configuració de còpia de "
+"seguretat."
+msgstr[1] ""
+"Ha fallat l'execució de la llista per a %d de %ld configuracions de còpia de "
+"seguretat."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
-msgstr[0] "Ha fallat l'execució de la transferència i la supressió per a %d d'%ld configuració de còpia de seguretat."
-msgstr[1] "Ha fallat l'execució de la transferència i la supressió per a %d de %ld configuracions de còpia de seguretat."
+msgstr[0] ""
+"Ha fallat l'execució de la transferència i la supressió per a %d d'%ld "
+"configuració de còpia de seguretat."
+msgstr[1] ""
+"Ha fallat l'execució de la transferència i la supressió per a %d de %ld "
+"configuracions de còpia de seguretat."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
-msgstr "Ha fallat l'execució de la transferència i la supressió de la configuració de còpia de seguretat %s."
+msgstr ""
+"Ha fallat l'execució de la transferència i la supressió de la configuració "
+"de còpia de seguretat %s."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s'."
-msgstr "Executant la transferència i la supressió de la configuració de còpia de seguretat %s."
+msgstr ""
+"Executant la transferència i la supressió de la configuració de còpia de "
+"seguretat %s."
 
 #, c-format
 msgid "Running transfer failed for %d of %ld backup config."
 msgid_plural "Running transfer failed for %d of %ld backup configs."
-msgstr[0] "Ha fallat l'execució de la transferència per a %d d'%ld configuració de còpia de seguretat."
-msgstr[1] "Ha fallat l'execució de la transferència per a %d de %ld configuracions de còpia de seguretat."
+msgstr[0] ""
+"Ha fallat l'execució de la transferència per a %d d'%ld configuració de "
+"còpia de seguretat."
+msgstr[1] ""
+"Ha fallat l'execució de la transferència per a %d de %ld configuracions de "
+"còpia de seguretat."
 
 #, c-format
 msgid "Running transfer for backup config '%s' failed."
-msgstr "Ha fallat l'execució de la transferència per a la configuració de còpia de seguretat %s."
+msgstr ""
+"Ha fallat l'execució de la transferència per a la configuració de còpia de "
+"seguretat %s."
 
 #, c-format
 msgid "Running transfer for backup config '%s'."
-msgstr "Executant la transferència per a la configuració de còpia de seguretat %s."
+msgstr ""
+"Executant la transferència per a la configuració de còpia de seguretat %s."
 
 msgid "SSH Host"
 msgstr "Amfitrió SSH"
@@ -1096,7 +1131,8 @@ msgid "The ambit can be specified manually using the --ambit option."
 msgstr "L'àmbit es pot especificar manualment usant l'opció --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr "La configuració d'arrel no existeix. Potser l'snapper no està configurat."
+msgstr ""
+"La configuració d'arrel no existeix. Potser l'snapper no està configurat."
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "Això pot succeir si el sistema no s'ha configurat per al retrocés."
@@ -1256,7 +1292,9 @@ msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "ús: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr ""
+"ús: snapper [--global-options] <command> [--command-options] "
+"[command-arguments]"
 
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "ús: snbk [--opcions globals] <ordre> [arguments de l'ordre]"
