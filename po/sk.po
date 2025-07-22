@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-25 11:00+0200\n"
-"PO-Revision-Date: 2025-04-26 10:16+0000\n"
-"Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
+"PO-Revision-Date: 2025-07-22 15:00+0000\n"
+"Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
 "\n"
 "Language: sk\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 5.11.1\n"
+"X-Generator: Weblate 5.12.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <upratovací-algoritmus>"
@@ -393,13 +393,15 @@ msgstr "Nemožno zmazať snímku %d, pretože je to aktuálne pripojená snímka
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr "Nemožno zmazať snímku %d, pretože je to nasledujúca snímka na pripojenie."
+msgstr ""
+"Nemožno zmazať snímku %d, pretože je to nasledujúca snímka na pripojenie."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr "Nie je možné zistiť oblasť, pretože predvolený podzväzok nie je známy."
 
 msgid "Cannot do rollback since default subvolume is unknown."
-msgstr "Nie je možné vykonať návrat späť, pretože predvolený podzväzok nie je známy."
+msgstr ""
+"Nie je možné vykonať návrat späť, pretože predvolený podzväzok nie je známy."
 
 msgid "Character separator for CSV output format."
 msgstr "Oddeľovač znakov pre výstupný formát CSV."
@@ -876,7 +878,9 @@ msgstr "PB"
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr "Nesúlad ciest medzi zdrojovou cestou záložnej konfigurácie a podzväzkom konfigurácie snapper ('%s' vs. '%s')."
+msgstr ""
+"Nesúlad ciest medzi zdrojovou cestou záložnej konfigurácie a podzväzkom "
+"konfigurácie snapper ('%s' vs. '%s')."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -957,9 +961,12 @@ msgstr[2] "Spustenie výpisu zoznamu zlyhalo pre %d z %ld záložných konfigur�
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
-msgstr[0] "Spustenie prenosu a vymazania zlyhalo pre %d z %ld záložnej konfigurácie."
-msgstr[1] "Spustenie prenosu a vymazania zlyhalo pre %d z %ld záložných konfigurácií."
-msgstr[2] "Spustenie prenosu a vymazania zlyhalo pre %d z %ld záložných konfigurácií."
+msgstr[0] ""
+"Spustenie prenosu a vymazania zlyhalo pre %d z %ld záložnej konfigurácie."
+msgstr[1] ""
+"Spustenie prenosu a vymazania zlyhalo pre %d z %ld záložných konfigurácií."
+msgstr[2] ""
+"Spustenie prenosu a vymazania zlyhalo pre %d z %ld záložných konfigurácií."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
@@ -1111,7 +1118,8 @@ msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Oblasť je možné zadať manuálne pomocou voľby --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr "Konfigurácia 'root' neexistuje. Pravdepodobne nie je snapper nakonfigurovaný."
+msgstr ""
+"Konfigurácia 'root' neexistuje. Pravdepodobne nie je snapper nakonfigurovaný."
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "To sa môže stať, ak systém nebol nastavený na vrátenie sa späť."
@@ -1271,10 +1279,14 @@ msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "použitie: snapper [--globálne-voľby] <príkaz> [--voľby-príkazu] [argumenty-príkazu]"
+msgstr ""
+"použitie: snapper [--globálne-voľby] <príkaz> [--voľby-príkazu] "
+"[argumenty-príkazu]"
 
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
-msgstr "použitie: snbk [--globálne-voľby] <príkaz> [--voľby-príkazu] [argumenty-príkazu]"
+msgstr ""
+"použitie: snbk [--globálne-voľby] <príkaz> [--voľby-príkazu] "
+"[argumenty-príkazu]"
 
 msgid "yes"
 msgstr "áno"
