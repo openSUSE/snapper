@@ -41,8 +41,10 @@ setup()
 void
 cleanup()
 {
-    sh->deleteSnapshot(second);
-    sh->deleteSnapshot(first);
+    Plugins::Report report;
+
+    sh->deleteSnapshot(second, report);
+    sh->deleteSnapshot(first, report);
     delete sh;
 }
 
@@ -54,7 +56,9 @@ first_snapshot()
     scd.description = CONFIG;
     scd.cleanup = "number";
 
-    first = sh->createPreSnapshot(scd);
+    Plugins::Report report;
+
+    first = sh->createPreSnapshot(scd, report);
 }
 
 
@@ -65,7 +69,9 @@ second_snapshot()
     scd.description = CONFIG;
     scd.cleanup = "number";
 
-    second = sh->createPostSnapshot(first, scd);
+    Plugins::Report report;
+
+    second = sh->createPostSnapshot(first, scd, report);
 }
 
 

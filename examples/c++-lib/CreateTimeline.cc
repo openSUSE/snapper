@@ -23,8 +23,10 @@ delete_all()
 	if (!it->isCurrent())
 	    tmp.push_back(it);
 
+    Plugins::Report report;
+
     for (vector<Snapshots::iterator>::iterator it = tmp.begin(); it != tmp.end(); ++it)
-	snapper.deleteSnapshot(*it);
+	snapper.deleteSnapshot(*it, report);
 }
 
 
@@ -32,6 +34,8 @@ void
 create_timeline()
 {
     Snapper snapper("testsuite", "/");
+
+    Plugins::Report report;
 
     time_t t = time(NULL) - 100 * 24*60*60;
     while (t < time(NULL))
@@ -41,9 +45,9 @@ create_timeline()
 	scd.description = "testsuite";
 	scd.cleanup = "timeline";
 
-	Snapshots::iterator snapshot = snapper.createSingleSnapshot(scd);
+	Snapshots::iterator snapshot = snapper.createSingleSnapshot(scd, report);
 	// snapshot->setDate(t);
-	snapper.modifySnapshot(snapshot, scd);
+	snapper.modifySnapshot(snapshot, scd, report);
 
 	t += 60*60;
     }
