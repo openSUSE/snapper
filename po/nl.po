@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-25 11:00+0200\n"
-"PO-Revision-Date: 2025-04-26 16:51+0000\n"
-"Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
+"PO-Revision-Date: 2025-07-22 15:00+0000\n"
+"Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
 "\n"
 "Language: nl\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.11.1\n"
+"X-Generator: Weblate 5.12.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <opschoonalgoritme>"
@@ -393,11 +393,15 @@ msgstr "Kan momentopname %d niet verwijderen omdat deze het huidige systeem is."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr "Kan momentopname %d niet verwijderen omdat deze de huidige aangekoppelde momentopname is."
+msgstr ""
+"Kan momentopname %d niet verwijderen omdat deze de huidige aangekoppelde "
+"momentopname is."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr "Kan momentopname %d niet verwijderen omdat deze de volgende aan te koppelen momentopname is."
+msgstr ""
+"Kan momentopname %d niet verwijderen omdat deze de volgende aan te koppelen "
+"momentopname is."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr "Kan ambit niet detecteren omdat standaard subvolume onbekend is."
@@ -468,7 +472,8 @@ msgstr "Opdracht 'mount' heeft minstens één argument."
 
 #, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr "Opdracht 'rollback' kan niet gebruikt worden op een niet-root subvolume %s."
+msgstr ""
+"Opdracht 'rollback' kan niet gebruikt worden op een niet-root subvolume %s."
 
 msgid "Command 'rollback' only available for btrfs."
 msgstr "Opdracht 'rollback' is alleen beschikbaar voor btrfs."
@@ -793,7 +798,8 @@ msgid "Manually set filesystem type."
 msgstr "Stel handmatig het type bestandssysteem in."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
-msgstr "Misschien bent u het scheidingsteken '..' tussen de snapshotnummer vergeten."
+msgstr ""
+"Misschien bent u het scheidingsteken '..' tussen de snapshotnummer vergeten."
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
@@ -841,7 +847,8 @@ msgid "Only use backup-config with automatic set."
 msgstr "Alleen configuratie van reservekopieën met automatische set gebruiken."
 
 msgid "Only use backup-config with specified target-mode."
-msgstr "Alleen reservekopieconfiguratie met gespecificeerde doelmodus gebruiken."
+msgstr ""
+"Alleen reservekopieconfiguratie met gespecificeerde doelmodus gebruiken."
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -857,11 +864,15 @@ msgid "Operate without DBus."
 msgstr "Werken zonder D-Bus."
 
 msgid "Option --from only supported for snapshots of type single."
-msgstr "Optie --from alleen ondersteund voor momentopnamen van het type single(enkelvoudig)."
+msgstr ""
+"Optie --from alleen ondersteund voor momentopnamen van het type "
+"single(enkelvoudig)."
 
 #. DBus versions of CreatePreSnapshot and CreatePostSnapshot do not pass read-only flag
 msgid "Option --read-write only supported for snapshots of type single."
-msgstr "Optie --read-write alleen ondersteund voor momentopnamen van het type single(enkelvoudig)."
+msgstr ""
+"Optie --read-write alleen ondersteund voor momentopnamen van het type "
+"single(enkelvoudig)."
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
@@ -873,7 +884,9 @@ msgstr "PB"
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr "Paden in bronpad van reservekopieconfiguratie en subvolume van configuratie van snapper ('%s' vs. '%s') komen niet overeen."
+msgstr ""
+"Paden in bronpad van reservekopieconfiguratie en subvolume van configuratie "
+"van snapper ('%s' vs. '%s') komen niet overeen."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -931,12 +944,17 @@ msgstr "Voer opdracht uit en maak pre- en post-momentopnamen."
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
-msgstr[0] "Uitvoeren van verwijderen voor %d van %ld reservekopieconfiguratie is mislukt."
-msgstr[1] "Uitvoeren van verwijderen voor %d van %ld reservekopieconfiguraties is mislukt."
+msgstr[0] ""
+"Uitvoeren van verwijderen voor %d van %ld reservekopieconfiguratie is "
+"mislukt."
+msgstr[1] ""
+"Uitvoeren van verwijderen voor %d van %ld reservekopieconfiguraties is "
+"mislukt."
 
 #, c-format
 msgid "Running delete for backup config '%s' failed."
-msgstr "Uitvoeren van verwijderen voor reservekopieconfiguratie '%s' is mislukt."
+msgstr ""
+"Uitvoeren van verwijderen voor reservekopieconfiguratie '%s' is mislukt."
 
 #, c-format
 msgid "Running delete for backup config '%s'."
@@ -945,32 +963,48 @@ msgstr "Uitvoeren van verwijderen voor reservekopieconfiguratie '%s'."
 #, c-format
 msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
-msgstr[0] "Uitvoeren van lijst maken voor %d van %ld reservekopieconfiguratie is mislukt."
-msgstr[1] "Uitvoeren van lijst maken voor %d van %ld reservekopieconfiguraties is mislukt."
+msgstr[0] ""
+"Uitvoeren van lijst maken voor %d van %ld reservekopieconfiguratie is "
+"mislukt."
+msgstr[1] ""
+"Uitvoeren van lijst maken voor %d van %ld reservekopieconfiguraties is "
+"mislukt."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
-msgstr[0] "Uitvoeren van overbrengen en verwijderen voor %d van %ld reservekopieconfiguratie is mislukt."
-msgstr[1] "Uitvoeren van overbrengen en verwijderen voor %d van %ld reservekopieconfiguraties is mislukt."
+msgstr[0] ""
+"Uitvoeren van overbrengen en verwijderen voor %d van %ld "
+"reservekopieconfiguratie is mislukt."
+msgstr[1] ""
+"Uitvoeren van overbrengen en verwijderen voor %d van %ld "
+"reservekopieconfiguraties is mislukt."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
-msgstr "Uitvoeren van overbrengen en verwijderen voor reservekopieconfiguratie '%s' is mislukt."
+msgstr ""
+"Uitvoeren van overbrengen en verwijderen voor reservekopieconfiguratie '%s' "
+"is mislukt."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s'."
-msgstr "Uitvoeren van overbrengen en verwijderen voor reservekopieconfiguratie '%s'."
+msgstr ""
+"Uitvoeren van overbrengen en verwijderen voor reservekopieconfiguratie '%s'."
 
 #, c-format
 msgid "Running transfer failed for %d of %ld backup config."
 msgid_plural "Running transfer failed for %d of %ld backup configs."
-msgstr[0] "Uitvoeren van overbrengen voor %d van %ld reservekopieconfiguratie is mislukt."
-msgstr[1] "Uitvoeren van overbrengen voor %d van %ld reservekopieconfiguraties is mislukt."
+msgstr[0] ""
+"Uitvoeren van overbrengen voor %d van %ld reservekopieconfiguratie is "
+"mislukt."
+msgstr[1] ""
+"Uitvoeren van overbrengen voor %d van %ld reservekopieconfiguraties is "
+"mislukt."
 
 #, c-format
 msgid "Running transfer for backup config '%s' failed."
-msgstr "Uitvoeren van overbrengen voor reservekopieconfiguratie '%s' is mislukt."
+msgstr ""
+"Uitvoeren van overbrengen voor reservekopieconfiguratie '%s' is mislukt."
 
 #, c-format
 msgid "Running transfer for backup config '%s'."
@@ -1103,7 +1137,9 @@ msgid "The ambit can be specified manually using the --ambit option."
 msgstr "De ambit kan handmatig worden gespecificeerd met de optie --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr "De 'root' van de configuratie bestaat niet. Waarschijnlijk is snapper niet geconfigureerd."
+msgstr ""
+"De 'root' van de configuratie bestaat niet. Waarschijnlijk is snapper niet "
+"geconfigureerd."
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "Dit kan geburen als het systeem niet is opgezet voor rollback."
@@ -1263,7 +1299,9 @@ msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "gebruik: snapper [--global-options] <opdracht> [--commando-options] [commando-arguments]"
+msgstr ""
+"gebruik: snapper [--global-options] <opdracht> [--commando-options] "
+"[commando-arguments]"
 
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "gebruik: snbk [--global-options] <opdracht> [opdrachtargumenten]"
