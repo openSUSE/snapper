@@ -19,7 +19,9 @@ main(int argc, char** argv)
     scd.description = "test";
     scd.cleanup = "number";
 
-    sh->createSingleSnapshot(scd);
+    Plugins::Report report;
+
+    sh->createSingleSnapshot(scd, report);
 
     delete sh;
 
