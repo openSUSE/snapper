@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: autoinst.fi\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-25 11:00+0200\n"
-"PO-Revision-Date: 2019-12-01 20:54+0000\n"
-"Last-Translator: Jaanus Ojangu <jaanus.ojangu@gmail.com>\n"
-"Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/et/>\n"
+"PO-Revision-Date: 2025-07-22 15:00+0000\n"
+"Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
+"Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/"
+"et/>\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.6.1\n"
+"X-Generator: Weblate 5.12.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <puhastamise algoritm>"
@@ -395,7 +396,9 @@ msgstr "Tõmmist %d ei saa kustutada, kuna see on töösolev süsteem."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr "Hetktõmmist %d ei saa kustutada, kuna see on töös olev süsteemi haagitud tõmmis."
+msgstr ""
+"Hetktõmmist %d ei saa kustutada, kuna see on töös olev süsteemi haagitud "
+"tõmmis."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
@@ -900,7 +903,8 @@ msgstr "Valik - toetatakse ainult hetktõmmiseid tüübiga single."
 
 #. DBus versions of CreatePreSnapshot and CreatePostSnapshot do not pass read-only flag
 msgid "Option --read-write only supported for snapshots of type single."
-msgstr "Valik - muutmist toetatakse ainult hetktõmmiste tüübiga ühekordne jaoks."
+msgstr ""
+"Valik - muutmist toetatakse ainult hetktõmmiste tüübiga ühekordne jaoks."
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
@@ -1338,7 +1342,9 @@ msgid "snbk transfer-and-delete"
 msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "kasutage: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr ""
+"kasutage: snapper [--global-options] <command> [--command-options] "
+"[command-arguments]"
 
 #, fuzzy
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
