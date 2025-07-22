@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-25 11:00+0200\n"
-"PO-Revision-Date: 2025-07-21 04:59+0000\n"
-"Last-Translator: Arif Budiman <arifpedia@gmail.com>\n"
+"PO-Revision-Date: 2025-07-22 15:00+0000\n"
+"Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/"
 "id/>\n"
 "Language: id\n"
@@ -385,11 +385,15 @@ msgstr "Tidak dapat menghapus snapshot %d karena ini adalah sistem saat ini."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr "Tidak dapat menghapus snapshot %d karena ini adalah snapshot yang dipasang saat ini."
+msgstr ""
+"Tidak dapat menghapus snapshot %d karena ini adalah snapshot yang dipasang "
+"saat ini."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr "Tidak dapat menghapus snapshot %d karena ini adalah snapshot yang dipasang selanjutnya."
+msgstr ""
+"Tidak dapat menghapus snapshot %d karena ini adalah snapshot yang dipasang "
+"selanjutnya."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr "Tidak dapat mendeteksi ambit sejak subvolume bawaan tidak diketahui."
@@ -865,7 +869,9 @@ msgstr "PB"
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr "Ketidakcocokan jalur antara jalur sumber dari backup-config dan subvolume dari snapper config ('%s' vs '%s')."
+msgstr ""
+"Ketidakcocokan jalur antara jalur sumber dari backup-config dan subvolume "
+"dari snapper config ('%s' vs '%s')."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -1251,7 +1257,9 @@ msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr "penggunaan: snapper [--global-options] <command> [--command-options] [command-arguments]"
+msgstr ""
+"penggunaan: snapper [--global-options] <command> [--command-options] "
+"[command-arguments]"
 
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "penggunaan: snbk [--global-options] <command> [command-arguments]"
