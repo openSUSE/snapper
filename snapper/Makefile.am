@@ -27,7 +27,6 @@ libsnapper_la_SOURCES =					\
 	Acls.cc			Acls.h			\
 	Plugins.cc		Plugins.h		\
 	PluginsImpl.cc		PluginsImpl.h		\
-	Hooks.cc		Hooks.h			\
 	Systemctl.cc		Systemctl.h		\
 	Exception.cc		Exception.h		\
 	SnapperTmpl.h					\

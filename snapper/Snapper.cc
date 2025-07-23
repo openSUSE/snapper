@@ -234,62 +234,6 @@ namespace snapper
 
 
     Snapshots::iterator
-    Snapper::createSingleSnapshot(const SCD& scd)
-    {
-	Plugins::Report report;
-	return createSingleSnapshot(scd, report);
-    }
-
-
-    Snapshots::iterator
-    Snapper::createSingleSnapshot(Snapshots::const_iterator parent, const SCD& scd)
-    {
-	Plugins::Report report;
-	return createSingleSnapshot(parent, scd, report);
-    }
-
-
-    Snapshots::iterator
-    Snapper::createSingleSnapshotOfDefault(const SCD& scd)
-    {
-	Plugins::Report report;
-	return createSingleSnapshotOfDefault(scd, report);
-    }
-
-
-    Snapshots::iterator
-    Snapper::createPreSnapshot(const SCD& scd)
-    {
-	Plugins::Report report;
-	return createPreSnapshot(scd, report);
-    }
-
-
-    Snapshots::iterator
-    Snapper::createPostSnapshot(Snapshots::const_iterator pre, const SCD& scd)
-    {
-	Plugins::Report report;
-	return createPostSnapshot(pre, scd, report);
-    }
-
-
-    void
-    Snapper::modifySnapshot(Snapshots::iterator snapshot, const SMD& smd)
-    {
-	Plugins::Report report;
-	modifySnapshot(snapshot, smd, report);
-    }
-
-
-    void
-    Snapper::deleteSnapshot(Snapshots::iterator snapshot)
-    {
-	Plugins::Report report;
-	deleteSnapshot(snapshot, report);
-    }
-
-
-    Snapshots::iterator
     Snapper::createSingleSnapshot(const SCD& scd, Plugins::Report& report)
     {
 	return snapshots.createSingleSnapshot(scd, report);
@@ -384,16 +328,6 @@ namespace snapper
 	}
 
 	return config_infos;
-    }
-
-
-    void
-    Snapper::createConfig(const string& config_name, const string& root_prefix,
-			  const string& subvolume, const string& fstype,
-			  const string& template_name)
-    {
-	Plugins::Report report;
-	createConfig(config_name, root_prefix, subvolume, fstype, template_name, report);
     }
 
 
@@ -529,14 +463,6 @@ namespace snapper
 	}
 
 	Plugins::create_config(Plugins::Stage::POST_ACTION, subvolume, filesystem.get(), report);
-    }
-
-
-    void
-    Snapper::deleteConfig(const string& config_name, const string& root_prefix)
-    {
-	Plugins::Report report;
-	deleteConfig(config_name, root_prefix, report);
     }
 
 

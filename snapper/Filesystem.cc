@@ -192,14 +192,6 @@ namespace snapper
 
 
     void
-    Filesystem::setDefault(unsigned int num) const
-    {
-	SN_THROW(UnsupportedException());
-	__builtin_unreachable();
-    }
-
-
-    void
     Filesystem::setDefault(unsigned int num, Plugins::Report& report) const
     {
 	SN_THROW(UnsupportedException());
