@@ -1466,14 +1466,6 @@ namespace snapper
 
 
     void
-    Btrfs::setDefault(unsigned int num) const
-    {
-	Plugins::Report report;
-	setDefault(num, report);
-    }
-
-
-    void
     Btrfs::setDefault(unsigned int num, Plugins::Report& report) const
     {
 	try
@@ -1549,13 +1541,6 @@ namespace snapper
     Btrfs::getDefault() const
     {
 	return Filesystem::getDefault();
-    }
-
-
-    void
-    Btrfs::setDefault(unsigned int num) const
-    {
-	Filesystem::setDefault(num);
     }
 
 

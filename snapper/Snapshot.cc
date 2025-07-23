@@ -159,14 +159,6 @@ namespace snapper
 
 
     void
-    Snapshot::setDefault() const
-    {
-	Plugins::Report report;
-	setDefault(report);
-    }
-
-
-    void
     Snapshot::setDefault(Plugins::Report& report) const
     {
 	snapper->getFilesystem()->setDefault(num, report);

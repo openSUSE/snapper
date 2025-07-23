@@ -36,11 +36,6 @@
 #include "snapper/Plugins.h"
 
 
-#ifndef SN_DEPRECATED
-#define SN_DEPRECATED __attribute__((deprecated))
-#endif
-
-
 namespace snapper
 {
     using std::string;
@@ -125,11 +120,6 @@ namespace snapper
 	 * Determine iff snapshot is default (will be activated on next boot time).
 	 */
 	bool isDefault() const;
-
-	/**
-	 * Change default snapshot (will be activated on next boot time).
-	 */
-	void setDefault() const SN_DEPRECATED;
 
 	/**
 	 * Change default snapshot (will be activated on next boot time).

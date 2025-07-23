@@ -2,6 +2,7 @@
 Wed Jul 23 10:35:22 CEST 2025 - aschnell@suse.com
 
 - allow to send log to system logger (gh#openSUSE/snapper#1030)
+- removed deprecated functions
 
 -------------------------------------------------------------------
 Fri Jul 04 12:52:34 CEST 2025 - aschnell@suse.com

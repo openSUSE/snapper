@@ -141,16 +141,6 @@ namespace snapper
 
 	Snapshots::const_iterator getSnapshotCurrent() const;
 
-	Snapshots::iterator createSingleSnapshot(const SCD& scd) SN_DEPRECATED;
-	Snapshots::iterator createSingleSnapshot(Snapshots::const_iterator parent, const SCD& scd) SN_DEPRECATED;
-	Snapshots::iterator createSingleSnapshotOfDefault(const SCD& scd) SN_DEPRECATED;
-	Snapshots::iterator createPreSnapshot(const SCD& scd) SN_DEPRECATED;
-	Snapshots::iterator createPostSnapshot(Snapshots::const_iterator pre, const SCD& scd) SN_DEPRECATED;
-
-	void modifySnapshot(Snapshots::iterator snapshot, const SMD& smd) SN_DEPRECATED;
-
-	void deleteSnapshot(Snapshots::iterator snapshot) SN_DEPRECATED;
-
 	Snapshots::iterator createSingleSnapshot(const SCD& scd, Plugins::Report& report);
 	Snapshots::iterator createSingleSnapshot(Snapshots::const_iterator parent, const SCD& scd,
 						 Plugins::Report& report);
@@ -167,11 +157,6 @@ namespace snapper
 
 	static ConfigInfo getConfig(const string& config_name, const string& root_prefix);
 	static list<ConfigInfo> getConfigs(const string& root_prefix);
-
-	static void createConfig(const string& config_name, const string& root_prefix,
-				 const string& subvolume, const string& fstype,
-				 const string& template_name) SN_DEPRECATED;
-	static void deleteConfig(const string& config_name, const string& root_prefix) SN_DEPRECATED;
 
 	static void createConfig(const string& config_name, const string& root_prefix,
 				 const string& subvolume, const string& fstype,
