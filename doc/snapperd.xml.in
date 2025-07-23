@@ -2,13 +2,13 @@
 <refentry id='snapperd8'>
 
   <refentryinfo>
-    <date>2012-10-15</date>
+    <date>2025-07-23</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapperd</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2012-10-15</refmiscinfo>
+    <refmiscinfo class='date'>2025-07-23</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -27,6 +27,25 @@
   <refsect1 id='description'>
     <title>DESCRIPTION</title>
     <para>Snapperd is a DBus daemon for snapper and not for direct use by the user.</para>
+  </refsect1>
+
+  <refsect1 id='options'>
+    <title>OPTIONS</title>
+    <variablelist>
+      <varlistentry>
+	<term><option>--logger-type  <replaceable>type</replaceable></option></term>
+	<listitem>
+	  <para>Set the logger type. Possible values are none, stdout,
+	  logfile and syslog.</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>--debug</option></term>
+	<listitem>
+	  <para>Turn on debugging.</para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
   </refsect1>
 
   <refsect1 id='homepage'>

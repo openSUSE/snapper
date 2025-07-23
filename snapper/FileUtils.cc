@@ -40,7 +40,7 @@
 
 #include "snapper/FileUtils.h"
 #include "snapper/AppUtil.h"
-#include "snapper/Log.h"
+#include "snapper/LoggerImpl.h"
 #include "snapper/Exception.h"
 #ifdef ENABLE_SELINUX
 #include "snapper/Selinux.h"

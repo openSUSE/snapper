@@ -34,7 +34,7 @@
 #include <asm/types.h>
 #include <boost/algorithm/string.hpp>
 
-#include "snapper/Log.h"
+#include "snapper/LoggerImpl.h"
 #include "snapper/Filesystem.h"
 #ifdef ENABLE_BTRFS
 #include "snapper/Btrfs.h"

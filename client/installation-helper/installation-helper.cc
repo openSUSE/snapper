@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 Novell, Inc.
- * Copyright (c) [2018-2024] SUSE LLC
+ * Copyright (c) [2018-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -36,7 +36,7 @@
 #include <snapper/Btrfs.h>
 #include <snapper/FileUtils.h>
 #include <snapper/PluginsImpl.h>
-#include "snapper/Log.h"
+#include "snapper/Logger.h"
 #include "snapper/XmlFile.h"
 
 #include "../utils/GetOpts.h"
@@ -499,28 +499,12 @@ step_config(const string& root_prefix, const string& description, const string& 
 #endif
 
 
-void
-log_do(LogLevel level, const string& component, const char* file, const int line, const char* func,
-       const string& text)
-{
-    cerr << text << endl;
-}
-
-
-bool
-log_query(LogLevel level, const string& component)
-{
-    return level == ERROR;
-}
-
-
 int
 main(int argc, char** argv)
 {
     setlocale(LC_ALL, "");
 
-    setLogDo(&log_do);
-    setLogQuery(&log_query);
+    set_logger(get_stdout_logger());
 
     string step;
     string device;

@@ -29,7 +29,7 @@
 #include <algorithm>
 #include <exception>
 
-#include "snapper/Log.h"
+#include "snapper/LoggerImpl.h"
 #include "snapper/Snapshot.h"
 
 

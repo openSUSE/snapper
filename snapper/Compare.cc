@@ -32,7 +32,7 @@
 #include <algorithm>
 #include <boost/thread.hpp>
 
-#include "snapper/Log.h"
+#include "snapper/LoggerImpl.h"
 #include "snapper/AppUtil.h"
 #include "snapper/File.h"
 #include "snapper/Compare.h"

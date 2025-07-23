@@ -19,8 +19,8 @@ libsnapper_la_SOURCES =					\
 	AppUtil2.cc					\
 	FileUtils.cc		FileUtils.h		\
 	XAttributes.cc		XAttributes.h		\
-	Log.cc			Log.h			\
 	Logger.cc		Logger.h		\
+	LoggerImpl.cc		LoggerImpl.h		\
 	Compare.cc		Compare.h		\
 	SystemCmd.cc		SystemCmd.h		\
 	AsciiFile.cc		AsciiFile.h		\

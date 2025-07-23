@@ -24,7 +24,7 @@
 #include <sys/time.h>
 #include <sys/resource.h>
 
-#include <snapper/Log.h>
+#include <snapper/LoggerImpl.h>
 #include <snapper/Comparison.h>
 
 #include "MetaSnapper.h"

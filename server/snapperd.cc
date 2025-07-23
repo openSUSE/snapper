@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2018-2022] SUSE LLC
+ * Copyright (c) [2018-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -22,12 +22,14 @@
 
 
 #include <cstdlib>
+#include <syslog.h>
 #include <getopt.h>
 #include <csignal>
 #include <iostream>
 #include <string>
 
-#include <snapper/Log.h>
+#include <snapper/Logger.h>
+#include <snapper/Enum.h>
 #include <dbus/DBusMainLoop.h>
 
 #include "MetaSnapper.h"
@@ -39,10 +41,20 @@
 using namespace std;
 
 
+namespace snapper
+{
+
+    template <> struct EnumInfo<LoggerType> { static const std::vector<std::string> names; };
+
+    const vector<string> EnumInfo<LoggerType>::names({ "none", "stdout", "logfile", "syslog" });
+
+}
+
+
 const seconds idle_time(60);
 const seconds snapper_cleanup_time(30);
 
-bool log_stdout = false;
+LoggerType logger_type = LoggerType::LOGFILE;
 bool log_debug = false;
 
 
@@ -68,7 +80,7 @@ private:
 
 
 MyMainLoop::MyMainLoop(DBusBusType type)
-    : MainLoop(type), backgrounds(), clients(backgrounds)
+    : MainLoop(type), clients(backgrounds)
 {
 }
 
@@ -176,21 +188,6 @@ MyMainLoop::periodic_timeout()
 }
 
 
-void
-log_do(LogLevel level, const string& component, const char* file, const int line, const char* func,
-       const string& text)
-{
-    cout << text << endl;
-}
-
-
-bool
-log_query(LogLevel level, const string& component)
-{
-    return log_debug || level != DEBUG;
-}
-
-
 void usage() __attribute__ ((__noreturn__));
 
 void
@@ -206,12 +203,12 @@ void help() __attribute__ ((__noreturn__));
 void
 help()
 {
-    cout << "usage: snapperd [--options]" << endl
-	 << endl;
+    cout << "usage: snapperd [--options]" "\n"
+	 << "\n";
 
-    cout << "    Options:" << endl
-	 << "\t--stdout, -s\t\t\tLog to stdout." << endl
-	 << "\t--debug, -d\t\t\tTurn on debugging." << endl
+    cout << "    Options:" "\n"
+	 << "\t--logger-type <type>\t\tSet logger type." "\n"
+	 << "\t--debug, -d\t\t\tTurn on debugging." "\n"
 	 << endl;
 
     exit(EXIT_SUCCESS);
@@ -223,6 +220,7 @@ main(int argc, char** argv)
 {
     const struct option options[] = {
 	{ "stdout",		no_argument,		0,	's' },
+	{ "logger-type",	required_argument,	0,	'l' },
 	{ "debug",		no_argument,		0,	'd' },
 	{ "help",		no_argument,		0,	'h' },
 	{ 0, 0, 0, 0 }
@@ -231,15 +229,25 @@ main(int argc, char** argv)
     while (true)
     {
 	int option_index = 0;
-	int c = getopt_long(argc, argv, "+sdh", options, &option_index);
+	int c = getopt_long(argc, argv, "+sl:dh", options, &option_index);
 	if (c == -1)
 	    break;
 
 	switch (c)
 	{
 	    case 's':
-		log_stdout = true;
+		logger_type = LoggerType::STDOUT;
 		break;
+
+	    case 'l':
+	    {
+		if (!toValue(optarg, logger_type, false))
+		{
+		    cerr << "unknown logger-type" "\n";
+		    usage();
+		}
+	    }
+	    break;
 
 	    case 'd':
 		log_debug = true;
@@ -255,22 +263,34 @@ main(int argc, char** argv)
 
     if (optind < argc)
     {
-	cerr << "snapperd: unrecognized option '" << argv[optind] << "'" << endl;
+	cerr << "snapperd: unrecognized option '" << argv[optind] << "'" "\n";
 	usage();
     }
 
     umask(0027);
 
-    if (!log_stdout)
+    switch (logger_type)
     {
-	initDefaultLogger();
-	setLogQuery(&log_query);
+	case LoggerType::NONE:
+	    break;
+
+	case LoggerType::STDOUT:
+	    set_logger(get_stdout_logger());
+	    break;
+
+	case LoggerType::LOGFILE:
+	    set_logger(get_logfile_logger());
+	    break;
+
+	case LoggerType::SYSLOG:
+	    set_logger(get_syslog_logger("snapperd", LOG_PID, LOG_DAEMON));
+	    break;
     }
+
+    if (log_debug)
+	set_logger_tresshold(LogLevel::DEBUG);
     else
-    {
-	setLogDo(&log_do);
-	setLogQuery(&log_query);
-    }
+	set_logger_tresshold(LogLevel::MILESTONE);
 
     signal(SIGPIPE, SIG_IGN);
 

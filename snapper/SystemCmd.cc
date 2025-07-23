@@ -30,7 +30,7 @@
 
 extern char **environ;
 
-#include "snapper/Log.h"
+#include "snapper/LoggerImpl.h"
 #include "snapper/AppUtil.h"
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"

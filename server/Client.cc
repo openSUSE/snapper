@@ -23,7 +23,7 @@
 
 #include "config.h"
 
-#include <snapper/Log.h>
+#include <snapper/LoggerImpl.h>
 #include <snapper/SnapperTmpl.h>
 #include <snapper/AsciiFile.h>
 #include <snapper/Version.h>

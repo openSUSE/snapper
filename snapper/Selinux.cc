@@ -26,7 +26,7 @@
 
 #include "snapper/AppUtil.h"
 #include "snapper/AsciiFile.h"
-#include "snapper/Log.h"
+#include "snapper/LoggerImpl.h"
 #include "snapper/Selinux.h"
 
 namespace snapper

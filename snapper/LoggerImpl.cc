@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2004-2012] Novell, Inc.
+ * Copyright (c) 2025 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -20,8 +21,7 @@
  */
 
 
-#include "snapper/Log.h"
-#include "snapper/AppUtil.h"
+#include "snapper/LoggerImpl.h"
 
 
 namespace snapper
@@ -29,19 +29,21 @@ namespace snapper
     using namespace std;
 
 
-    // Intentionally leaving this behind as a mem leak (bsc#940154)
-    const string* component = new string("libsnapper");
-
-
     bool
-    testLogLevel(LogLevel level)
+    query_log_level(LogLevel log_level)
     {
-	return callLogQuery(level, *component);
+	Logger* logger = get_logger();
+	if (logger)
+	{
+	    return logger->test(log_level);
+	}
+
+	return false;
     }
 
 
     void
-    prepareLogStream(ostringstream& stream)
+    prepare_log_stream(ostringstream& stream)
     {
 	stream.imbue(std::locale::classic());
 	stream.setf(std::ios::boolalpha);
@@ -50,19 +52,34 @@ namespace snapper
 
 
     ostringstream*
-    logStreamOpen()
+    open_log_stream()
     {
 	std::ostringstream* stream = new ostringstream;
-	prepareLogStream(*stream);
+	prepare_log_stream(*stream);
 	return stream;
     }
 
 
     void
-    logStreamClose(LogLevel level, const char* file, unsigned line, const char* func,
-		   ostringstream* stream)
+    close_log_stream(LogLevel log_level, const char* file, unsigned int line, const char* func,
+		     ostringstream* stream)
     {
-	callLogDo(level, *component, file, line, func, stream->str());
+	Logger* logger = get_logger();
+	if (logger)
+	{
+	    string content = stream->str();
+	    string::size_type pos1 = 0;
+	    while (true)
+	    {
+		string::size_type pos2 = content.find('\n', pos1);
+		if (pos2 != string::npos || pos1 != content.length())
+		    logger->write(log_level, file, line, func, content.substr(pos1, pos2 - pos1));
+		if (pos2 == string::npos)
+		    break;
+		pos1 = pos2 + 1;
+	    }
+	}
+
 	delete stream;
 	stream = nullptr;
     }

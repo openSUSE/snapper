@@ -32,7 +32,7 @@
 #include "snapper/SnapperDefines.h"
 #include "snapper/Exception.h"
 #include "snapper/Snapshot.h"
-#include "snapper/Log.h"
+#include "snapper/LoggerImpl.h"
 
 
 namespace snapper

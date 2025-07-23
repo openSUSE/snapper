@@ -38,7 +38,7 @@
 
 #include "dbus/DBusConnection.h"
 #include "snapper/Exception.h"
-#include "snapper/Log.h"
+#include "snapper/LoggerImpl.h"
 #include "client/proxy/commands.h"
 #include "client/proxy/errors.h"
 
@@ -426,37 +426,20 @@ SnapperZyppCommitPlugin::match_solvables(const set<string>& solvables, bool& fou
 }
 
 
-static bool log_debug = false;
-
-
-static bool
-simple_log_query(LogLevel level, const string& component)
-{
-    return log_debug || level != DEBUG;
-}
-
-
-static void
-simple_log_do(LogLevel level, const string& component, const char* file, int line,
-	      const char* func, const string& text)
-{
-    static const char* ln[4] = { "DEB", "MIL", "WAR", "ERR" };
-
-    cerr << ln[level] << ' ' << text << endl;
-}
-
-
 int
 main()
 {
-    setLogQuery(simple_log_query);
-    setLogDo(simple_log_do);
+    set_logger(get_stdout_logger());
 
     if (getenv("SNAPPER_ZYPP_PLUGIN_DEBUG"))
     {
 	y2mil("enabling debug logging of snapper-zypp-plugin");
 
-	log_debug = true;
+	set_logger_tresshold(LogLevel::DEBUG);
+    }
+    else
+    {
+	set_logger_tresshold(LogLevel::MILESTONE);
     }
 
     if (getenv("DISABLE_SNAPPER_ZYPP_PLUGIN"))

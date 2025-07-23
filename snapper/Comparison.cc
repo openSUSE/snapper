@@ -32,7 +32,7 @@
 
 #include "snapper/Comparison.h"
 #include "snapper/Snapper.h"
-#include "snapper/Log.h"
+#include "snapper/LoggerImpl.h"
 #include "snapper/File.h"
 #include "snapper/Exception.h"
 #include "snapper/Compare.h"

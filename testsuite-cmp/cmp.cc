@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "snapper/Log.h"
+#include "snapper/LoggerImpl.h"
 #include "snapper/AppUtil.h"
 #include "snapper/File.h"
 #include "snapper/Filesystem.h"

@@ -25,7 +25,7 @@
 #include <fnmatch.h>
 #include <regex>
 #include "snapper/XmlFile.h"
-#include "snapper/Log.h"
+#include "snapper/LoggerImpl.h"
 
 using namespace std;
 using namespace snapper;

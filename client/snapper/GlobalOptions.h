@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019-2023] SUSE LLC
+ * Copyright (c) [2019-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -25,6 +25,7 @@
 #include <string>
 
 #include <snapper/Enum.h>
+#include <snapper/Logger.h>
 
 #include "client/utils/GetOpts.h"
 #include "client/utils/Table.h"
@@ -47,6 +48,7 @@ namespace snapper
 
 	bool quiet() const { return _quiet; }
 	bool verbose() const { return _verbose; }
+	LoggerType logger_type() const { return _logger_type; }
 	bool debug() const { return _debug; }
 	bool utc() const { return _utc; }
 	bool iso() const { return _iso; }
@@ -68,6 +70,7 @@ namespace snapper
 
 	void check_options(const ParsedOpts& parsed_opts) const;
 
+	LoggerType logger_type_value(const ParsedOpts& parsed_opts) const;
 	Style table_style_value(const ParsedOpts& parsed_opts) const;
 	OutputFormat output_format_value(const ParsedOpts& parsed_opts) const;
 	string separator_value(const ParsedOpts& parsed_opts) const;
@@ -77,6 +80,7 @@ namespace snapper
 
 	bool _quiet;
 	bool _verbose;
+	LoggerType _logger_type = LoggerType::STDOUT;
 	bool _debug;
 	bool _utc;
 	bool _iso;
@@ -94,6 +98,8 @@ namespace snapper
 
     };
 
+
+    template <> struct EnumInfo<LoggerType> { static const std::vector<std::string> names; };
 
     template <> struct EnumInfo<GlobalOptions::OutputFormat> { static const vector<string> names; };
 

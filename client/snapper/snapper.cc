@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -25,6 +25,7 @@
 
 #include <cstdlib>
 #include <cstring>
+#include <syslog.h>
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 
@@ -32,6 +33,7 @@
 #include <snapper/SnapperTmpl.h>
 #include <snapper/Enum.h>
 #include <snapper/Version.h>
+#include <snapper/Logger.h>
 
 #include "../utils/text.h"
 #include "../utils/Table.h"
@@ -70,24 +72,6 @@ struct Cmd
     const help_func_t help_func;
     const bool needs_snapper;
 };
-
-
-static bool log_debug = false;
-
-
-void
-log_do(LogLevel level, const string& component, const char* file, const int line, const char* func,
-       const string& text)
-{
-    cerr << text << endl;
-}
-
-
-bool
-log_query(LogLevel level, const string& component)
-{
-    return log_debug || level == ERROR;
-}
 
 
 void usage() __attribute__ ((__noreturn__));
@@ -136,9 +120,6 @@ main(int argc, char** argv)
 	cerr << _("Failed to set locale.") << endl;
     }
 
-    setLogDo(&log_do);
-    setLogQuery(&log_query);
-
     const vector<Cmd> cmds = {
 	Cmd("list-configs", command_list_configs, help_list_configs, false),
 	Cmd("create-config", command_create_config, help_create_config, false),
@@ -173,10 +154,26 @@ main(int argc, char** argv)
 
 	GlobalOptions global_options(get_opts);
 
-	if (global_options.debug())
+	switch (global_options.logger_type())
 	{
-	    log_debug = true;
+	    case LoggerType::NONE:
+		break;
+
+	    case LoggerType::STDOUT:
+		set_logger(get_stdout_logger());
+		break;
+
+	    case LoggerType::LOGFILE:
+		set_logger(get_logfile_logger());
+		break;
+
+	    case LoggerType::SYSLOG:
+		set_logger(get_syslog_logger("snapper", LOG_PID, LOG_USER));
+		break;
 	}
+
+	if (global_options.debug())
+	    set_logger_tresshold(LogLevel::DEBUG);
 
 	if (global_options.version())
 	{

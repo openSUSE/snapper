@@ -12,7 +12,7 @@ echo 1..1
 TEST="1 - It complains about malformed XML in config file"
 STDERR=$(test_empty_messages | runit zypp-plugin-malformed.conf 2>&1 >/dev/null || :)
 echo "$STDERR"
-if [[ ! "$STDERR" =~ parser\ error ]]; then
+if [[ ! "$STDERR" =~ 'THROW: xmlReadFile failed' ]]; then
     echo -n "not "
 fi
 echo "ok $TEST"
