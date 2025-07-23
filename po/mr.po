@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 11:00+0200\n"
+"POT-Creation-Date: 2025-07-23 11:53+0200\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Marathi <https://l10n.opensuse.org/projects/snapper/master/mr/"
-">\n"
+"Language-Team: Marathi <https://l10n.opensuse.org/projects/snapper/master/mr/>\n"
 "Language: mr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -299,6 +298,9 @@ msgid "--iso"
 msgstr ""
 
 msgid "--jsonout"
+msgstr ""
+
+msgid "--logger-type <type>"
 msgstr ""
 
 #, fuzzy
@@ -773,6 +775,10 @@ msgid "Invalid group (%s)."
 msgstr "अवैध CRL कारण"
 
 #, fuzzy, c-format
+msgid "Invalid logger-type '%s'."
+msgstr "अवैध प्रकार %1."
+
+#, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "अवैध प्रकार %1."
 
@@ -1066,6 +1072,9 @@ msgstr ""
 #, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "अवैध प्रकार %1."
+
+msgid "Set logger type."
+msgstr ""
 
 msgid "Set name of backup-config to use."
 msgstr ""

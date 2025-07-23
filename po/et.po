@@ -2,11 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: autoinst.fi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 11:00+0200\n"
+"POT-Creation-Date: 2025-07-23 11:53+0200\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/"
-"et/>\n"
+"Language-Team: Estonian <https://l10n.opensuse.org/projects/snapper/master/et/>\n"
 "Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -300,6 +299,10 @@ msgid "--jsonout"
 msgstr ""
 
 #, fuzzy
+msgid "--logger-type <type>"
+msgstr "\t--type, -t <type>\t\tHetkekoopia tüüp."
+
+#, fuzzy
 msgid "--machine-readable <format>"
 msgstr "Vigane tabeli stiil %d."
 
@@ -396,9 +399,7 @@ msgstr "Tõmmist %d ei saa kustutada, kuna see on töösolev süsteem."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr ""
-"Hetktõmmist %d ei saa kustutada, kuna see on töös olev süsteemi haagitud "
-"tõmmis."
+msgstr "Hetktõmmist %d ei saa kustutada, kuna see on töös olev süsteemi haagitud tõmmis."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
@@ -758,6 +759,10 @@ msgid "Invalid group (%s)."
 msgstr "Vigane grupp."
 
 #, fuzzy, c-format
+msgid "Invalid logger-type '%s'."
+msgstr "Vigane tabeli stiil %d."
+
+#, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Vigane tabeli stiil %d."
 
@@ -903,8 +908,7 @@ msgstr "Valik - toetatakse ainult hetktõmmiseid tüübiga single."
 
 #. DBus versions of CreatePreSnapshot and CreatePostSnapshot do not pass read-only flag
 msgid "Option --read-write only supported for snapshots of type single."
-msgstr ""
-"Valik - muutmist toetatakse ainult hetktõmmiste tüübiga ühekordne jaoks."
+msgstr "Valik - muutmist toetatakse ainult hetktõmmiste tüübiga ühekordne jaoks."
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
@@ -1064,6 +1068,9 @@ msgstr ""
 #, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Vigane tabeli stiil %d."
+
+msgid "Set logger type."
+msgstr ""
 
 #, fuzzy
 msgid "Set name of backup-config to use."
@@ -1342,9 +1349,7 @@ msgid "snbk transfer-and-delete"
 msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr ""
-"kasutage: snapper [--global-options] <command> [--command-options] "
-"[command-arguments]"
+msgstr "kasutage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 
 #, fuzzy
 msgid "usage: snbk [--global-options] <command> [command-arguments]"

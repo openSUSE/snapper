@@ -7,11 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 11:00+0200\n"
+"POT-Creation-Date: 2025-07-23 11:53+0200\n"
 "PO-Revision-Date: 2025-07-22 14:59+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Greek <https://l10n.opensuse.org/projects/snapper/master/el/>"
-"\n"
+"Language-Team: Greek <https://l10n.opensuse.org/projects/snapper/master/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -306,6 +305,10 @@ msgid "--jsonout"
 msgstr ""
 
 #, fuzzy
+msgid "--logger-type <type>"
+msgstr "\t--type, -t <type>\t\tΤύπος στιγμιοτύπου."
+
+#, fuzzy
 msgid "--machine-readable <format>"
 msgstr "Μη έγκυρη μορφή αναγνώσιμης μηχανής '%s'."
 
@@ -400,30 +403,21 @@ msgstr "B"
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr ""
-"Δεν είναι δυνατή η διαγραφή του στιγμιότυπου %d επειδή είναι το τρέχον "
-"σύστημα."
+msgstr "Δεν είναι δυνατή η διαγραφή του στιγμιότυπου %d επειδή είναι το τρέχον σύστημα."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr ""
-"Δεν είναι δυνατή η διαγραφή του στιγμιότυπου %d, καθώς είναι το στιγμιότυπο "
-"που είναι τοποθετημένο επί του παρόντος."
+msgstr "Δεν είναι δυνατή η διαγραφή του στιγμιότυπου %d, καθώς είναι το στιγμιότυπο που είναι τοποθετημένο επί του παρόντος."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
-"Δεν είναι δυνατή η διαγραφή του στιγμιότυπου %d δεδομένου ότι είναι το "
-"επόμενο προς τοποθέτηση στιγμιότυπο."
+msgstr "Δεν είναι δυνατή η διαγραφή του στιγμιότυπου %d δεδομένου ότι είναι το επόμενο προς τοποθέτηση στιγμιότυπο."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
-msgstr ""
-"Δεν είναι δυνατή η ανίχνευση της περιοχής, καθώς ο προεπιλεγμένος υποόγκος "
-"είναι άγνωστος."
+msgstr "Δεν είναι δυνατή η ανίχνευση της περιοχής, καθώς ο προεπιλεγμένος υποόγκος είναι άγνωστος."
 
 msgid "Cannot do rollback since default subvolume is unknown."
-msgstr ""
-"Δεν είναι δυνατή η επαναφορά αφού ο προεπιλεγμένος υποόγκος είναι άγνωστος."
+msgstr "Δεν είναι δυνατή η επαναφορά αφού ο προεπιλεγμένος υποόγκος είναι άγνωστος."
 
 #, fuzzy
 msgid "Character separator for CSV output format."
@@ -771,6 +765,10 @@ msgstr "Μη έγκυρη τιμή ελεύθερου χώρου."
 msgid "Invalid group (%s)."
 msgstr "Μη έγκυρη ομάδα."
 
+#, fuzzy, c-format
+msgid "Invalid logger-type '%s'."
+msgstr "Μη έγκυρο στυλ πίνακα '%s'."
+
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Μη έγκυρη μορφή αναγνώσιμης μηχανής '%s'."
@@ -1081,6 +1079,9 @@ msgstr "\t--jsonout Ορισμός μορφής εξόδου JSON."
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "\t--machine-readable <format> Ορίστε μια μορφή εξόδου αναγνώσιμη από μηχανή (csv, json)."
 
+msgid "Set logger type."
+msgstr ""
+
 #, fuzzy
 msgid "Set name of backup-config to use."
 msgstr "\t--config, -c <name>\t\tΟρίσετε το όνομα του αρχείου ρυθμίσεων που θα χρησιμοποιηθεί."
@@ -1186,14 +1187,10 @@ msgid "Target rmdir bin"
 msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
-msgstr ""
-"Το πεδίο εφαρμογής μπορεί να καθοριστεί χειροκίνητα χρησιμοποιώντας την "
-"επιλογή --ambit."
+msgstr "Το πεδίο εφαρμογής μπορεί να καθοριστεί χειροκίνητα χρησιμοποιώντας την επιλογή --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr ""
-"Η παραμετροποίηση 'root' δεν υπάρχει. Κατά πάσα πιθανότητα δεν έχει "
-"ρυθμιστεί το snapper."
+msgstr "Η παραμετροποίηση 'root' δεν υπάρχει. Κατά πάσα πιθανότητα δεν έχει ρυθμιστεί το snapper."
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "Αυτό μπορεί να συμβεί εάν το σύστημα δεν έχει ρυθμιστεί για επαναφορά."
@@ -1363,9 +1360,7 @@ msgid "snbk transfer-and-delete"
 msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr ""
-"χρήση: snapper [--global-options] <command> [--command-options] "
-"[command-arguments]"
+msgstr "χρήση: snapper [--global-options] <command> [--command-options] [command-arguments]"
 
 #, fuzzy
 msgid "usage: snbk [--global-options] <command> [command-arguments]"

@@ -2,11 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: entries\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 11:00+0200\n"
+"POT-Creation-Date: 2025-07-23 11:53+0200\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Korean <https://l10n.opensuse.org/projects/snapper/master/ko/>"
-"\n"
+"Language-Team: Korean <https://l10n.opensuse.org/projects/snapper/master/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -348,6 +347,11 @@ msgstr ""
 
 msgid "--jsonout"
 msgstr ""
+
+# SLE12
+#, fuzzy
+msgid "--logger-type <type>"
+msgstr "\t--type, -t <type>\t\t스냅샷 유형."
 
 #, fuzzy
 msgid "--machine-readable <format>"
@@ -879,6 +883,10 @@ msgid "Invalid group (%s)."
 msgstr "잘못된 그룹입니다."
 
 #, fuzzy, c-format
+msgid "Invalid logger-type '%s'."
+msgstr "잘못된 테이블 모양 %d 입니다."
+
+#, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "잘못된 테이블 모양 %d 입니다."
 
@@ -1217,6 +1225,9 @@ msgstr ""
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "잘못된 테이블 모양 %d 입니다."
 
+msgid "Set logger type."
+msgstr ""
+
 # SLE12
 #, fuzzy
 msgid "Set name of backup-config to use."
@@ -1538,9 +1549,7 @@ msgstr ""
 
 # SLE12
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr ""
-"사용법: snapper [--global-options] <command> [--command-options] "
-"[command-arguments]"
+msgstr "사용법: snapper [--global-options] <command> [--command-options] [command-arguments]"
 
 # SLE12
 #, fuzzy

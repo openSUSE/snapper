@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 11:00+0200\n"
+"POT-Creation-Date: 2025-07-23 11:53+0200\n"
 "PO-Revision-Date: 2025-07-22 14:59+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Danish <https://l10n.opensuse.org/projects/snapper/master/da/>"
-"\n"
+"Language-Team: Danish <https://l10n.opensuse.org/projects/snapper/master/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -304,6 +303,10 @@ msgid "--jsonout"
 msgstr ""
 
 #, fuzzy
+msgid "--logger-type <type>"
+msgstr "\t--type, -t <type>\t\tType af øjebliksbillede."
+
+#, fuzzy
 msgid "--machine-readable <format>"
 msgstr "Ugyldig tabelstil %d."
 
@@ -396,20 +399,15 @@ msgstr "B"
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr ""
-"Kan ikke slette øjebliksbilledet %d, eftersom det er det nuværende system."
+msgstr "Kan ikke slette øjebliksbilledet %d, eftersom det er det nuværende system."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr ""
-"Kan ikke slette øjebliksbilledet %d, eftersom det er det nuværende monteret "
-"system."
+msgstr "Kan ikke slette øjebliksbilledet %d, eftersom det er det nuværende monteret system."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
-"Kan ikke slette øjebliksbilledet %d, eftersom det er det øjebliksbillede der "
-"skal monteres næste gang."
+msgstr "Kan ikke slette øjebliksbilledet %d, eftersom det er det øjebliksbillede der skal monteres næste gang."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr ""
@@ -482,9 +480,7 @@ msgstr "Kommandoen \"mount\" kræver mindst ét argument."
 
 #, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr ""
-"Kommandoen 'rollback' kan ikke bruges på et underdiskområde som ikke er root "
-"%s."
+msgstr "Kommandoen 'rollback' kan ikke bruges på et underdiskområde som ikke er root %s."
 
 msgid "Command 'rollback' only available for btrfs."
 msgstr "Kommandoen \"rollback\" er kun tilgængelig med btrfs."
@@ -574,8 +570,7 @@ msgid "Creating read-only snapshot of current system."
 msgstr "Oprettelse af skrivebeskyttet øjebliksbillede af det aktuelle system."
 
 msgid "Creating read-only snapshot of default subvolume."
-msgstr ""
-"Oprettelse af skrivebeskyttet øjebliksbillede af standard underdiskområde."
+msgstr "Oprettelse af skrivebeskyttet øjebliksbillede af standard underdiskområde."
 
 msgid "Creating read-write snapshot of current subvolume."
 msgstr "Oprettelse af læse-skrive-øjebliksbillede af aktuelt underdiskområde."
@@ -768,6 +763,10 @@ msgid "Invalid group (%s)."
 msgstr "Ugyldig gruppe."
 
 #, fuzzy, c-format
+msgid "Invalid logger-type '%s'."
+msgstr "Ugyldig tabelstil %d."
+
+#, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Ugyldig tabelstil %d."
 
@@ -913,8 +912,7 @@ msgstr "Tilvalget --from understøttes kun af øjebliksbilleder af typen enkelt.
 
 #. DBus versions of CreatePreSnapshot and CreatePostSnapshot do not pass read-only flag
 msgid "Option --read-write only supported for snapshots of type single."
-msgstr ""
-"Tilvalget --read-write understøttes kun af øjebliksbilleder af typen enkelt."
+msgstr "Tilvalget --read-write understøttes kun af øjebliksbilleder af typen enkelt."
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
@@ -1075,6 +1073,9 @@ msgstr ""
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Ugyldig tabelstil %d."
 
+msgid "Set logger type."
+msgstr ""
+
 #, fuzzy
 msgid "Set name of backup-config to use."
 msgstr "\t--config, -c <navn>\t\tAngiv navn på konfiguration der skal bruges."
@@ -1182,9 +1183,7 @@ msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr ""
-"Konfigurationen 'root' findes ikke. Snapper er sandsynligvis ikke "
-"konfigureret."
+msgstr "Konfigurationen 'root' findes ikke. Snapper er sandsynligvis ikke konfigureret."
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr ""
@@ -1354,9 +1353,7 @@ msgid "snbk transfer-and-delete"
 msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr ""
-"brug: snapper [--globale-tilvalg] <kommando> [--kommando-tilvalg] "
-"[kommando-argumenter]"
+msgstr "brug: snapper [--globale-tilvalg] <kommando> [--kommando-tilvalg] [kommando-argumenter]"
 
 #, fuzzy
 msgid "usage: snbk [--global-options] <command> [command-arguments]"

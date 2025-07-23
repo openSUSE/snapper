@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 11:00+0200\n"
+"POT-Creation-Date: 2025-07-23 11:53+0200\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
-"\n"
+"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -297,6 +296,10 @@ msgstr "--iso"
 msgid "--jsonout"
 msgstr "--jsonout"
 
+#, fuzzy
+msgid "--logger-type <type>"
+msgstr "--type, -t <type>"
+
 msgid "--machine-readable <format>"
 msgstr "--machine-readable <formát>"
 
@@ -393,15 +396,13 @@ msgstr "Nemožno zmazať snímku %d, pretože je to aktuálne pripojená snímka
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
-"Nemožno zmazať snímku %d, pretože je to nasledujúca snímka na pripojenie."
+msgstr "Nemožno zmazať snímku %d, pretože je to nasledujúca snímka na pripojenie."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr "Nie je možné zistiť oblasť, pretože predvolený podzväzok nie je známy."
 
 msgid "Cannot do rollback since default subvolume is unknown."
-msgstr ""
-"Nie je možné vykonať návrat späť, pretože predvolený podzväzok nie je známy."
+msgstr "Nie je možné vykonať návrat späť, pretože predvolený podzväzok nie je známy."
 
 msgid "Character separator for CSV output format."
 msgstr "Oddeľovač znakov pre výstupný formát CSV."
@@ -727,6 +728,10 @@ msgstr "Neplatná hodnota voľného miesta."
 msgid "Invalid group (%s)."
 msgstr "Neplatná skupina (%s)."
 
+#, fuzzy, c-format
+msgid "Invalid logger-type '%s'."
+msgstr "Neplatný štýl tabuľky '%s'."
+
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Neplatný formát čitateľný strojom '%s'."
@@ -878,9 +883,7 @@ msgstr "PB"
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr ""
-"Nesúlad ciest medzi zdrojovou cestou záložnej konfigurácie a podzväzkom "
-"konfigurácie snapper ('%s' vs. '%s')."
+msgstr "Nesúlad ciest medzi zdrojovou cestou záložnej konfigurácie a podzväzkom konfigurácie snapper ('%s' vs. '%s')."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -961,12 +964,9 @@ msgstr[2] "Spustenie výpisu zoznamu zlyhalo pre %d z %ld záložných konfigur�
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
-msgstr[0] ""
-"Spustenie prenosu a vymazania zlyhalo pre %d z %ld záložnej konfigurácie."
-msgstr[1] ""
-"Spustenie prenosu a vymazania zlyhalo pre %d z %ld záložných konfigurácií."
-msgstr[2] ""
-"Spustenie prenosu a vymazania zlyhalo pre %d z %ld záložných konfigurácií."
+msgstr[0] "Spustenie prenosu a vymazania zlyhalo pre %d z %ld záložnej konfigurácie."
+msgstr[1] "Spustenie prenosu a vymazania zlyhalo pre %d z %ld záložných konfigurácií."
+msgstr[2] "Spustenie prenosu a vymazania zlyhalo pre %d z %ld záložných konfigurácií."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
@@ -1021,6 +1021,9 @@ msgstr "Nastaví výstupný formát JSON."
 
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Nastaví strojovo čitateľný výstupný formát (csv, json)."
+
+msgid "Set logger type."
+msgstr ""
 
 msgid "Set name of backup-config to use."
 msgstr "Nastaví názov konfigurácie zálohovania, ktorá sa použije."
@@ -1118,8 +1121,7 @@ msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Oblasť je možné zadať manuálne pomocou voľby --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr ""
-"Konfigurácia 'root' neexistuje. Pravdepodobne nie je snapper nakonfigurovaný."
+msgstr "Konfigurácia 'root' neexistuje. Pravdepodobne nie je snapper nakonfigurovaný."
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "To sa môže stať, ak systém nebol nastavený na vrátenie sa späť."
@@ -1279,14 +1281,10 @@ msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr ""
-"použitie: snapper [--globálne-voľby] <príkaz> [--voľby-príkazu] "
-"[argumenty-príkazu]"
+msgstr "použitie: snapper [--globálne-voľby] <príkaz> [--voľby-príkazu] [argumenty-príkazu]"
 
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
-msgstr ""
-"použitie: snbk [--globálne-voľby] <príkaz> [--voľby-príkazu] "
-"[argumenty-príkazu]"
+msgstr "použitie: snbk [--globálne-voľby] <príkaz> [--voľby-príkazu] [argumenty-príkazu]"
 
 msgid "yes"
 msgstr "áno"

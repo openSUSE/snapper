@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opensuse-i 18n\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 11:00+0200\n"
+"POT-Creation-Date: 2025-07-23 11:53+0200\n"
 "PO-Revision-Date: 2012-11-26 14:24+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -295,6 +295,9 @@ msgid "--iso"
 msgstr ""
 
 msgid "--jsonout"
+msgstr ""
+
+msgid "--logger-type <type>"
 msgstr ""
 
 msgid "--machine-readable <format>"
@@ -722,6 +725,10 @@ msgid "Invalid group (%s)."
 msgstr ""
 
 #, c-format
+msgid "Invalid logger-type '%s'."
+msgstr ""
+
+#, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr ""
 
@@ -1006,6 +1013,9 @@ msgid "Set JSON output format."
 msgstr ""
 
 msgid "Set a machine-readable output format (csv, json)."
+msgstr ""
+
+msgid "Set logger type."
 msgstr ""
 
 msgid "Set name of backup-config to use."

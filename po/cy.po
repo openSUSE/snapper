@@ -2,17 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 11:00+0200\n"
+"POT-Creation-Date: 2025-07-23 11:53+0200\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Welsh <https://l10n.opensuse.org/projects/snapper/master/cy/>"
-"\n"
+"Language-Team: Welsh <https://l10n.opensuse.org/projects/snapper/master/cy/>\n"
 "Language: cy\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=5; plural=(n == 0 ? 0 : n == 1 ? 1 : n < 6 ? 2 : n == "
-"6 ? 3 : 4);\n"
+"Plural-Forms: nplurals=5; plural=(n == 0 ? 0 : n == 1 ? 1 : n < 6 ? 2 : n == 6 ? 3 : 4);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -292,6 +290,9 @@ msgid "--iso"
 msgstr ""
 
 msgid "--jsonout"
+msgstr ""
+
+msgid "--logger-type <type>"
 msgstr ""
 
 msgid "--machine-readable <format>"
@@ -735,6 +736,10 @@ msgstr ""
 msgid "Invalid group (%s)."
 msgstr "Gwall"
 
+#, fuzzy, c-format
+msgid "Invalid logger-type '%s'."
+msgstr "Gwall"
+
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr ""
@@ -1030,6 +1035,9 @@ msgid "Set JSON output format."
 msgstr ""
 
 msgid "Set a machine-readable output format (csv, json)."
+msgstr ""
+
+msgid "Set logger type."
 msgstr ""
 
 msgid "Set name of backup-config to use."

@@ -2,11 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 11:00+0200\n"
+"POT-Creation-Date: 2025-07-23 11:53+0200\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Georgian <https://l10n.opensuse.org/projects/snapper/master/"
-"ka/>\n"
+"Language-Team: Georgian <https://l10n.opensuse.org/projects/snapper/master/ka/>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -292,6 +291,9 @@ msgid "--iso"
 msgstr ""
 
 msgid "--jsonout"
+msgstr ""
+
+msgid "--logger-type <type>"
 msgstr ""
 
 msgid "--machine-readable <format>"
@@ -721,6 +723,10 @@ msgstr ""
 msgid "Invalid group (%s)."
 msgstr "არასწორი ჯგუფი (%s)."
 
+#, fuzzy, c-format
+msgid "Invalid logger-type '%s'."
+msgstr "არასწორი ჯგუფი (%s)."
+
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr ""
@@ -1002,6 +1008,9 @@ msgid "Set JSON output format."
 msgstr ""
 
 msgid "Set a machine-readable output format (csv, json)."
+msgstr ""
+
+msgid "Set logger type."
 msgstr ""
 
 msgid "Set name of backup-config to use."
