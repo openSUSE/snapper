@@ -5,11 +5,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 11:00+0200\n"
+"POT-Creation-Date: 2025-07-23 11:53+0200\n"
 "PO-Revision-Date: 2025-07-22 14:59+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/"
-">\n"
+"Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -296,6 +295,10 @@ msgstr "--iso"
 msgid "--jsonout"
 msgstr "--jsonout"
 
+#, fuzzy
+msgid "--logger-type <type>"
+msgstr "--type, -t <tyyppi>"
+
 msgid "--machine-readable <format>"
 msgstr "--machine-readable <muoto>"
 
@@ -399,8 +402,7 @@ msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr "Aluetta ei voi tunnistaa, koska oletusalitaltio on tuntematon."
 
 msgid "Cannot do rollback since default subvolume is unknown."
-msgstr ""
-"Palautusta (rollback) ei voi tehdä, koska oletusalitaltio on tuntematon."
+msgstr "Palautusta (rollback) ei voi tehdä, koska oletusalitaltio on tuntematon."
 
 msgid "Character separator for CSV output format."
 msgstr "CSV-tulosmuodon merkkierotin."
@@ -725,6 +727,10 @@ msgstr "Virheellinen vapaan tilan arvo."
 msgid "Invalid group (%s)."
 msgstr "Virheellinen ryhmä (%s)."
 
+#, fuzzy, c-format
+msgid "Invalid logger-type '%s'."
+msgstr "Virheellinen taulukkotyyli \"%s\"."
+
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Virheellinen tietokoneen formaatti \"%s\"."
@@ -862,8 +868,7 @@ msgstr "Vaihtoehto --tuettu vain yksittäisille tilannekuville."
 
 #. DBus versions of CreatePreSnapshot and CreatePostSnapshot do not pass read-only flag
 msgid "Option --read-write only supported for snapshots of type single."
-msgstr ""
-"Vaihtoehto --luku ja kirjoitus tuettu vain yksittäisille tilannekuville."
+msgstr "Vaihtoehto --luku ja kirjoitus tuettu vain yksittäisille tilannekuville."
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
@@ -1009,6 +1014,9 @@ msgstr "Aseta tulosmuodoksi JSON."
 
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Aseta koneluettava tulosmuoto (CSV, JSON)."
+
+msgid "Set logger type."
+msgstr ""
 
 msgid "Set name of backup-config to use."
 msgstr "Aseta käytettävän varmuuskopiomäärityksen nimi."
@@ -1249,8 +1257,7 @@ msgid "nothing to do"
 msgstr "ei mitään tehtävää"
 
 msgid "root argument can be used only together with no-dbus.\n"
-msgstr ""
-"root parametria voidaan käyttää vain yhdessä no-dbus-valitsimen kanssa.\n"
+msgstr "root parametria voidaan käyttää vain yhdessä no-dbus-valitsimen kanssa.\n"
 
 msgid "snbk delete [numbers]"
 msgstr "snbk delete [numerot]"
@@ -1268,9 +1275,7 @@ msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr ""
-"käyttö: snapper [--yleisvalitsimet] <komento> [--komennon-valitsimet] "
-"[komennon-parametrit]"
+msgstr "käyttö: snapper [--yleisvalitsimet] <komento> [--komennon-valitsimet] [komennon-parametrit]"
 
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "käyttö: snbk [--global-options] <komento> [komennon-parametrit]"

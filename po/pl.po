@@ -9,17 +9,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 11:00+0200\n"
+"POT-Creation-Date: 2025-07-23 11:53+0200\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>"
-"\n"
+"Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 5.12.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -308,6 +306,10 @@ msgid "--jsonout"
 msgstr ""
 
 #, fuzzy
+msgid "--logger-type <type>"
+msgstr "\t--type, -t <type>\t\tRodzaj zrzutu."
+
+#, fuzzy
 msgid "--machine-readable <format>"
 msgstr "Nieprawidłowy styl tabeli %d."
 
@@ -404,14 +406,11 @@ msgstr "Nie można usunąć migawki %d, ponieważ to jest bieżący system."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr ""
-"Nie można usunąć migawki %d, ponieważ to jest aktualnie zamontowana migawka."
+msgstr "Nie można usunąć migawki %d, ponieważ to jest aktualnie zamontowana migawka."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
-"Nie można usunąć migawki %d, ponieważ to jest migawka następna w kolejności "
-"do zamontowania."
+msgstr "Nie można usunąć migawki %d, ponieważ to jest migawka następna w kolejności do zamontowania."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr ""
@@ -484,16 +483,13 @@ msgstr "Polecenie 'mount' wymaga co najmniej jednego argumentu."
 
 #, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr ""
-"Polecenia rollback nie można użyć w przypadku podwoluminu %s, ponieważ nie "
-"jest on podwoluminem głównym."
+msgstr "Polecenia rollback nie można użyć w przypadku podwoluminu %s, ponieważ nie jest on podwoluminem głównym."
 
 msgid "Command 'rollback' only available for btrfs."
 msgstr "Polecenie \"rollback\" jest dostępne tylko w systemie plików btrfs."
 
 msgid "Command 'rollback' takes either one or no argument."
-msgstr ""
-"Polecenie \"rollback\" może mieć jeden parametr lub wcale go nie zawierać."
+msgstr "Polecenie \"rollback\" może mieć jeden parametr lub wcale go nie zawierać."
 
 msgid "Command 'set-config' needs at least one argument."
 msgstr "Polecenie 'set-config' wymaga podania co najmniej jednego argumentu."
@@ -765,6 +761,10 @@ msgstr "Nieprawidłowy podwolumen."
 #, fuzzy, c-format
 msgid "Invalid group (%s)."
 msgstr "Nieprawidłowa grupa."
+
+#, fuzzy, c-format
+msgid "Invalid logger-type '%s'."
+msgstr "Nieprawidłowy styl tabeli %d."
 
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
@@ -1076,6 +1076,9 @@ msgstr ""
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Nieprawidłowy styl tabeli %d."
 
+msgid "Set logger type."
+msgstr ""
+
 #, fuzzy
 msgid "Set name of backup-config to use."
 msgstr "\t--config, -c <nazwa>\t\tUstawienie nazwy konfiguracji do użycia."
@@ -1183,9 +1186,7 @@ msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr ""
-"Folder główny konfiguracji nie istnieje. Narzędzie snapper prawdopodobnie "
-"nie jest skonfigurowane."
+msgstr "Folder główny konfiguracji nie istnieje. Narzędzie snapper prawdopodobnie nie jest skonfigurowane."
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr ""
@@ -1355,9 +1356,7 @@ msgid "snbk transfer-and-delete"
 msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr ""
-"Użycie: snapper [--opcje-globalne] <polecenia> [--opcje-poleceń] "
-"[argumenty-polecenia]"
+msgstr "Użycie: snapper [--opcje-globalne] <polecenia> [--opcje-poleceń] [argumenty-polecenia]"
 
 #, fuzzy
 msgid "usage: snbk [--global-options] <command> [command-arguments]"

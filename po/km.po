@@ -4,11 +4,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper.km\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 11:00+0200\n"
+"POT-Creation-Date: 2025-07-23 11:53+0200\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Khmer (Central) <https://l10n.opensuse.org/projects/snapper/"
-"master/km/>\n"
+"Language-Team: Khmer (Central) <https://l10n.opensuse.org/projects/snapper/master/km/>\n"
 "Language: km\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -70,8 +69,7 @@ msgid "\tsnapper umount <number>"
 msgstr "\tអាន់ម៉ោន​កម្មវិធី​ថត <number>"
 
 msgid "\tsnapper undochange <number1>..<number2> [files]"
-msgstr ""
-"\tមិន​ធ្វើ​ការ​ផ្លាស់ប្ដូរ​កម្មវិធី​ថត​ឡើង​វិញ <number1>..<number2> [files]"
+msgstr "\tមិន​ធ្វើ​ការ​ផ្លាស់ប្ដូរ​កម្មវិធី​ថត​ឡើង​វិញ <number1>..<number2> [files]"
 
 #, fuzzy
 msgid "\tsnapper xadiff <number1>..<number2> [files]"
@@ -314,6 +312,10 @@ msgstr ""
 
 msgid "--jsonout"
 msgstr ""
+
+#, fuzzy
+msgid "--logger-type <type>"
+msgstr "\t--type, -t <type>\t\tប្រភេទ​សម្រាប់​រូបថត ។"
 
 #, fuzzy
 msgid "--machine-readable <format>"
@@ -786,6 +788,10 @@ msgid "Invalid group (%s)."
 msgstr "ភាគ​រង​មិន​ត្រឹមត្រូវ ។"
 
 #, fuzzy, c-format
+msgid "Invalid logger-type '%s'."
+msgstr "រចនាប័ទ្ម​តារាង %d មិន​ត្រឹមត្រូវ ។"
+
+#, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "រចនាប័ទ្ម​តារាង %d មិន​ត្រឹមត្រូវ ។"
 
@@ -1086,6 +1092,9 @@ msgstr ""
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "រចនាប័ទ្ម​តារាង %d មិន​ត្រឹមត្រូវ ។"
 
+msgid "Set logger type."
+msgstr ""
+
 #, fuzzy
 msgid "Set name of backup-config to use."
 msgstr "\t--config, -c <name>\t\tកំណត់​ឈ្មោះ​រចនាសម្ព័ន្ធ​ដែល​ត្រូវប្រើ ។"
@@ -1365,9 +1374,7 @@ msgid "snbk transfer-and-delete"
 msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr ""
-"ការ​ប្រើប្រាស់ ៖ កម្មវិធី​ថតរូប [--global-options] <command> [--command-options] "
-"[command-arguments]"
+msgstr "ការ​ប្រើប្រាស់ ៖ កម្មវិធី​ថតរូប [--global-options] <command> [--command-options] [command-arguments]"
 
 #, fuzzy
 msgid "usage: snbk [--global-options] <command> [command-arguments]"

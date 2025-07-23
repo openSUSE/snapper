@@ -3,11 +3,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 11:00+0200\n"
+"POT-Creation-Date: 2025-07-23 11:53+0200\n"
 "PO-Revision-Date: 2025-07-22 14:59+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Czech <https://l10n.opensuse.org/projects/snapper/master/cs/>"
-"\n"
+"Language-Team: Czech <https://l10n.opensuse.org/projects/snapper/master/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -299,6 +298,10 @@ msgstr "--iso"
 
 msgid "--jsonout"
 msgstr "--jsonout"
+
+#, fuzzy
+msgid "--logger-type <type>"
+msgstr "--type, -t <typ>"
 
 msgid "--machine-readable <format>"
 msgstr "--machine-readable <formát>"
@@ -746,6 +749,10 @@ msgstr "Neplatná hodnota velikosti volného prostoru."
 msgid "Invalid group (%s)."
 msgstr "Neplatná skupina (%s)."
 
+#, fuzzy, c-format
+msgid "Invalid logger-type '%s'."
+msgstr "Neplatný styl tabulky %s."
+
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Neplatný strojově čitelný formát '%s'."
@@ -1041,6 +1048,9 @@ msgstr "Nastaví výstupní formát JSON."
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Nastaví strojově čitelný výstupní formát (csv, json)."
 
+msgid "Set logger type."
+msgstr ""
+
 #, fuzzy
 msgid "Set name of backup-config to use."
 msgstr "Nastaví název konfigurace k použití."
@@ -1142,9 +1152,7 @@ msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Ambit lze určit ručně volbou --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr ""
-"Účet root konfigurace neexistuje. Nástroj Snapper pravděpodobně není "
-"nakonfigurován."
+msgstr "Účet root konfigurace neexistuje. Nástroj Snapper pravděpodobně není nakonfigurován."
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "Může to nastat, není-li systém nastaven pro rollback."
@@ -1311,8 +1319,7 @@ msgid "snbk transfer-and-delete"
 msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr ""
-"Použití: snapper [--obecné-volby] <příkaz> [--volby-příkazu] [argumenty]"
+msgstr "Použití: snapper [--obecné-volby] <příkaz> [--volby-příkazu] [argumenty]"
 
 #, fuzzy
 msgid "usage: snbk [--global-options] <command> [command-arguments]"

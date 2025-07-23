@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 11:00+0200\n"
+"POT-Creation-Date: 2025-07-23 11:53+0200\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Thai <https://l10n.opensuse.org/projects/snapper/master/th/>\n"
@@ -315,6 +315,9 @@ msgid "--iso"
 msgstr ""
 
 msgid "--jsonout"
+msgstr ""
+
+msgid "--logger-type <type>"
 msgstr ""
 
 #, fuzzy
@@ -770,6 +773,10 @@ msgid "Invalid group (%s)."
 msgstr "พาธการสำรองข้อมูลใช้ไม่ได้"
 
 #, fuzzy, c-format
+msgid "Invalid logger-type '%s'."
+msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งานไม่ได้"
+
+#, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งานไม่ได้"
 
@@ -1063,6 +1070,9 @@ msgstr ""
 #, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "ไดเรกทอรีปลายทาง (%1) ใช้งานไม่ได้"
+
+msgid "Set logger type."
+msgstr ""
 
 msgid "Set name of backup-config to use."
 msgstr ""

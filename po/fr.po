@@ -3,11 +3,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 11:00+0200\n"
+"POT-Creation-Date: 2025-07-23 11:53+0200\n"
 "PO-Revision-Date: 2025-07-22 14:59+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: French <https://l10n.opensuse.org/projects/snapper/master/fr/>"
-"\n"
+"Language-Team: French <https://l10n.opensuse.org/projects/snapper/master/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -299,6 +298,10 @@ msgstr "--iso"
 msgid "--jsonout"
 msgstr "--jsonout"
 
+#, fuzzy
+msgid "--logger-type <type>"
+msgstr "--type, -t <type>"
+
 msgid "--machine-readable <format>"
 msgstr "--machine-readable <format>"
 
@@ -388,29 +391,21 @@ msgstr "o"
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the current system."
-msgstr ""
-"Impossible de supprimer l'instantané %d puisqu'il s'agit du système actuel."
+msgstr "Impossible de supprimer l'instantané %d puisqu'il s'agit du système actuel."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the currently mounted snapshot."
-msgstr ""
-"Impossible de supprimer l'instantané %d puisqu'il s'agit de l'instantané "
-"actuellement monté."
+msgstr "Impossible de supprimer l'instantané %d puisqu'il s'agit de l'instantané actuellement monté."
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
-"Impossible de supprimer l'instantané %d puisqu'il s'agit du prochain "
-"instantané à monter."
+msgstr "Impossible de supprimer l'instantané %d puisqu'il s'agit du prochain instantané à monter."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
-msgstr ""
-"Impossible de détecter le contexte car le sous-volume par défaut est inconnu."
+msgstr "Impossible de détecter le contexte car le sous-volume par défaut est inconnu."
 
 msgid "Cannot do rollback since default subvolume is unknown."
-msgstr ""
-"Impossible de revenir à l'état initial car le sous-volume par défaut est "
-"inconnu."
+msgstr "Impossible de revenir à l'état initial car le sous-volume par défaut est inconnu."
 
 msgid "Character separator for CSV output format."
 msgstr "Séparateur de caractères pour format de sortie CSV."
@@ -477,9 +472,7 @@ msgstr "La commande 'mount' nécessite au moins un argument."
 # SLE12
 #, c-format
 msgid "Command 'rollback' cannot be used on a non-root subvolume %s."
-msgstr ""
-"La commande 'rollback' ne peut pas être utilisée sur un sous-volume non-"
-"racine %s."
+msgstr "La commande 'rollback' ne peut pas être utilisée sur un sous-volume non-racine %s."
 
 # SLE12
 msgid "Command 'rollback' only available for btrfs."
@@ -754,6 +747,10 @@ msgstr "Valeur d'espace à libérer non valide."
 msgid "Invalid group (%s)."
 msgstr "Groupe non valide (%s)."
 
+#, fuzzy, c-format
+msgid "Invalid logger-type '%s'."
+msgstr "Style de table « %s » non valide."
+
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Format de sortie « %s » non valide."
@@ -824,8 +821,7 @@ msgid "Manually set filesystem type."
 msgstr "Définit manuellement le type de système de fichiers."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
-msgstr ""
-"Vous avez peut-être oublié le séparateur '..' entre les numéros d'instantané."
+msgstr "Vous avez peut-être oublié le séparateur '..' entre les numéros d'instantané."
 
 #. TRANSLATORS: symbol for "mebi bytes" (best keep untranslated)
 msgid "MiB"
@@ -889,14 +885,11 @@ msgid "Operate without DBus."
 msgstr "Fonctionne sans DBus."
 
 msgid "Option --from only supported for snapshots of type single."
-msgstr ""
-"L'option --from n'est supportée que pour les instantanés de type single."
+msgstr "L'option --from n'est supportée que pour les instantanés de type single."
 
 #. DBus versions of CreatePreSnapshot and CreatePostSnapshot do not pass read-only flag
 msgid "Option --read-write only supported for snapshots of type single."
-msgstr ""
-"L'option --read-write n'est supportée que pour les instantanés de type "
-"single."
+msgstr "L'option --read-write n'est supportée que pour les instantanés de type single."
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
@@ -937,12 +930,10 @@ msgid "Print version and exit."
 msgstr "Imprime la version et ferme le programme."
 
 msgid "Probing extra information for source snapshots."
-msgstr ""
-"Recherche d'informations supplémentaires pour les instantanés de source."
+msgstr "Recherche d'informations supplémentaires pour les instantanés de source."
 
 msgid "Probing extra information for target snapshots."
-msgstr ""
-"Recherche d'informations supplémentaires pour les instantanés de destination."
+msgstr "Recherche d'informations supplémentaires pour les instantanés de destination."
 
 msgid "Probing source snapshots."
 msgstr "Sondage des instantanés de la source."
@@ -969,18 +960,12 @@ msgstr "Exécute la commande et crée les instantanés préalables et postérieu
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
-msgstr[0] ""
-"L'exécution de la suppression a échoué pour %d de %ld configuration de "
-"sauvegarde."
-msgstr[1] ""
-"L'exécution de la suppression a échoué pour %d de %ld configurations de "
-"sauvegarde."
+msgstr[0] "L'exécution de la suppression a échoué pour %d de %ld configuration de sauvegarde."
+msgstr[1] "L'exécution de la suppression a échoué pour %d de %ld configurations de sauvegarde."
 
 #, c-format
 msgid "Running delete for backup config '%s' failed."
-msgstr ""
-"L'exécution de la suppression de la configuration de sauvegarde '%s' a "
-"échoué."
+msgstr "L'exécution de la suppression de la configuration de sauvegarde '%s' a échoué."
 
 #, c-format
 msgid "Running delete for backup config '%s'."
@@ -989,47 +974,32 @@ msgstr "Exécution de la suppression de la configuration de sauvegarde '%s'."
 #, c-format
 msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
-msgstr[0] ""
-"L'exécution de la liste a échoué pour %d de %ld configuration de sauvegarde."
-msgstr[1] ""
-"L'exécution de la liste a échoué pour %d de %ld configurations de sauvegarde."
+msgstr[0] "L'exécution de la liste a échoué pour %d de %ld configuration de sauvegarde."
+msgstr[1] "L'exécution de la liste a échoué pour %d de %ld configurations de sauvegarde."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
-msgstr[0] ""
-"L'exécution du transfert et de la suppression a échoué pour %d de %ld "
-"configuration de sauvegarde."
-msgstr[1] ""
-"L'exécution du transfert et de la suppression a échoué pour %d de %ld "
-"cconfigurations de sauvegarde."
+msgstr[0] "L'exécution du transfert et de la suppression a échoué pour %d de %ld configuration de sauvegarde."
+msgstr[1] "L'exécution du transfert et de la suppression a échoué pour %d de %ld cconfigurations de sauvegarde."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
-msgstr ""
-"L'exécution du transfert et de la suppression de la configuration de "
-"sauvegarde '%s' a échoué."
+msgstr "L'exécution du transfert et de la suppression de la configuration de sauvegarde '%s' a échoué."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s'."
-msgstr ""
-"Exécution du transfert et de la suppression pour la configuration de "
-"sauvegarde '%s'."
+msgstr "Exécution du transfert et de la suppression pour la configuration de sauvegarde '%s'."
 
 #, c-format
 msgid "Running transfer failed for %d of %ld backup config."
 msgid_plural "Running transfer failed for %d of %ld backup configs."
-msgstr[0] ""
-"Échec du transfert en cours d'exécution pour %d de %ld configuration de "
-"sauvegarde."
-msgstr[1] ""
-"Échec du transfert en cours d'exécution pour %d de %ld configurations de "
-"sauvegarde."
+msgstr[0] "Échec du transfert en cours d'exécution pour %d de %ld configuration de sauvegarde."
+msgstr[1] "Échec du transfert en cours d'exécution pour %d de %ld configurations de sauvegarde."
 
 #, c-format
 msgid "Running transfer for backup config '%s' failed."
-msgstr ""
-"L'exécution du transfert de la configuration de sauvegarde '%s' a échoué."
+msgstr "L'exécution du transfert de la configuration de sauvegarde '%s' a échoué."
 
 #, c-format
 msgid "Running transfer for backup config '%s'."
@@ -1065,6 +1035,9 @@ msgstr "Définit le format de sortie JSON."
 
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "Définit un format de sortie lisible par la machine (CSV, JSON)."
+
+msgid "Set logger type."
+msgstr ""
 
 msgid "Set name of backup-config to use."
 msgstr "Définir le nom de la configuration de sauvegarde à utiliser."
@@ -1163,14 +1136,10 @@ msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Le contexte peut être spécifié manuellement à l'aide de l'option --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
-msgstr ""
-"La configuration 'root' n'existe pas. Snapper n'est probablement pas "
-"configuré."
+msgstr "La configuration 'root' n'existe pas. Snapper n'est probablement pas configuré."
 
 msgid "This can happen if the system was not set up for rollback."
-msgstr ""
-"Cela peut arriver si le système n'a pas été configuré pour le retour à "
-"l'état initial."
+msgstr "Cela peut arriver si le système n'a pas été configuré pour le retour à l'état initial."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
@@ -1316,8 +1285,7 @@ msgid "nothing to do"
 msgstr "Rien à faire"
 
 msgid "root argument can be used only together with no-dbus.\n"
-msgstr ""
-"L'argument root peut uniquement être utilisé en association avec no-dbus.\n"
+msgstr "L'argument root peut uniquement être utilisé en association avec no-dbus.\n"
 
 msgid "snbk delete [numbers]"
 msgstr "snbk delete [numéros]"
@@ -1335,13 +1303,10 @@ msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr ""
-"Utilisation : snapper [--options-globales] <commande> [--options-de-commande]"
-" [arguments-de-commande]"
+msgstr "Utilisation : snapper [--options-globales] <commande> [--options-de-commande] [arguments-de-commande]"
 
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
-msgstr ""
-"Utilisation : snbk [--global-options] <commande> [arguments-de-commande]"
+msgstr "Utilisation : snbk [--global-options] <commande> [arguments-de-commande]"
 
 msgid "yes"
 msgstr "oui"

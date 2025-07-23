@@ -9,11 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-25 11:00+0200\n"
+"POT-Creation-Date: 2025-07-23 11:53+0200\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Chinese (China) <https://l10n.opensuse.org/projects/snapper/"
-"master/zh_CN/>\n"
+"Language-Team: Chinese (China) <https://l10n.opensuse.org/projects/snapper/master/zh_CN/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -299,6 +298,10 @@ msgstr "--iso"
 
 msgid "--jsonout"
 msgstr "--jsonout"
+
+#, fuzzy
+msgid "--logger-type <type>"
+msgstr "--type、-t <类型>"
 
 msgid "--machine-readable <format>"
 msgstr "--machine-readable <格式>"
@@ -723,6 +726,10 @@ msgstr "可用空间值无效。"
 msgid "Invalid group (%s)."
 msgstr "组 (%s) 无效。"
 
+#, fuzzy, c-format
+msgid "Invalid logger-type '%s'."
+msgstr "表格样式 \"%s\" 无效。"
+
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "计算机可读格式 \"%s\" 无效。"
@@ -1001,6 +1008,9 @@ msgstr "设置 JSON 输出格式。"
 
 msgid "Set a machine-readable output format (csv, json)."
 msgstr "设置计算机可读的输出格式（csv、json）。"
+
+msgid "Set logger type."
+msgstr ""
 
 msgid "Set name of backup-config to use."
 msgstr "设置要使用的备份配置名称。"
