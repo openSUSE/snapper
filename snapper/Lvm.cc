@@ -34,7 +34,7 @@
 #include <regex>
 #include <boost/algorithm/string.hpp>
 
-#include "snapper/Log.h"
+#include "snapper/LoggerImpl.h"
 #include "snapper/Filesystem.h"
 #include "snapper/Lvm.h"
 #include "snapper/LvmUtils.h"

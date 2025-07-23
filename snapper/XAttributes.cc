@@ -33,7 +33,7 @@
 
 #include "snapper/AppUtil.h"
 #include "snapper/Exception.h"
-#include "snapper/Log.h"
+#include "snapper/LoggerImpl.h"
 #include "snapper/XAttributes.h"
 #include "snapper/Acls.h"
 #include "snapper/SnapperTmpl.h"

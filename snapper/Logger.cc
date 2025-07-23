@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2013] Novell, Inc.
- * Copyright (c) [2018-2020] SUSE LLC
+ * Copyright (c) [2018-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -22,18 +22,17 @@
 
 
 #include <pwd.h>
+#include <fcntl.h>
 #include <unistd.h>
+#include <syslog.h>
 #include <cstring>
 #include <sys/types.h>
-#include <libxml/xmlerror.h>
 #include <string>
+#include <iostream>
 #include <boost/thread.hpp>
 
-#include "snapper/Log.h"
+#include "snapper/LoggerImpl.h"
 #include "snapper/AppUtil.h"
-
-
-#define LOG_FILENAME "/var/log/snapper.log"
 
 
 namespace snapper
@@ -41,135 +40,229 @@ namespace snapper
     using namespace std;
 
 
+    typedef typename underlying_type<LogLevel>::type log_level_underlying_type;
+
+
+    // Unfortunately we face the static deinitialization order fiasco here: Destructors of
+    // global objects may use logging functions and could be run after the destructors of
+    // the logging functions have been run. Mitigated simply by using the "no destruction"
+    // rule.
+
+
     namespace
     {
 
-	struct LoggerData
-	{
-	    LoggerData() : filename(LOG_FILENAME), mutex() {}
+	Logger* current_logger = nullptr;
 
-	    string filename;
-	    boost::mutex mutex;
-	};
-
-
-	// Use pointer to avoid a global destructor. Otherwise other global
-	// destructors using logging can cause errors.
-
-	LoggerData* logger_data = new LoggerData();
+	LogLevel log_level_tresshold = LogLevel::ERROR;
 
     }
 
 
-    LogDo log_do = NULL;
-    LogQuery log_query = NULL;
-
-
-    void
-    setLogDo(LogDo new_log_do)
+    Logger*
+    get_logger()
     {
-	log_do = new_log_do;
+	return current_logger;
     }
 
 
     void
-    setLogQuery(LogQuery new_log_query)
+    set_logger(Logger* logger)
     {
-	log_query = new_log_query;
+	current_logger = logger;
     }
 
 
-    static void
-    simple_log_do(LogLevel level, const string& component, const char* file, int line,
-		  const char* func, const string& text)
+    LogLevel
+    get_logger_tresshold()
     {
-	static const char* ln[4] = { "DEB", "MIL", "WAR", "ERR" };
-
-	string prefix = sformat("%s %s libsnapper(%d) %s(%s):%d", datetime(time(0), false, true).c_str(),
-				ln[level], getpid(), file, func, line);
-
-	boost::lock_guard<boost::mutex> lock(logger_data->mutex);
-
-	FILE* f = fopen(logger_data->filename.c_str(), "ae");
-	if (f)
-	{
-	    string tmp = text;
-
-	    string::size_type pos1 = 0;
-
-	    while (true)
-	    {
-		string::size_type pos2 = tmp.find('\n', pos1);
-
-		if (pos2 != string::npos || pos1 != tmp.length())
-		    fprintf(f, "%s - %s\n", prefix.c_str(), tmp.substr(pos1, pos2 - pos1).c_str());
-
-		if (pos2 == string::npos)
-		    break;
-
-		pos1 = pos2 + 1;
-	    }
-
-	    fclose(f);
-	}
-    }
-
-
-    static bool
-    simple_log_query(LogLevel level, const string& component)
-    {
-	return level != DEBUG;
+	return log_level_tresshold;
     }
 
 
     void
-    callLogDo(LogLevel level, const string& component, const char* file, int line,
-	      const char* func, const string& text)
+    set_logger_tresshold(LogLevel tresshold)
     {
-	if (log_do)
-	    (log_do)(level, component, file, line, func, text);
-	else
-	    simple_log_do(level, component, file, line, func, text);
+	log_level_tresshold = tresshold;
     }
 
 
     bool
-    callLogQuery(LogLevel level, const string& component)
+    Logger::test(LogLevel log_level)
     {
-	if (log_query)
-	    return (log_query)(level, component);
-	else
-	    return simple_log_query(level, component);
+	return log_level >= log_level_tresshold;
     }
 
 
-    void
-    xml_error_func(void* ctx, const char* msg, ...)
+    class StdoutLogger : public Logger
     {
+
+    public:
+
+	virtual void write(LogLevel log_level, const string& file, int line, const string& function,
+			   const string& content) override;
+
+    };
+
+
+    void
+    StdoutLogger::write(LogLevel log_level, const string& file, int line, const string& function,
+			const string& content)
+    {
+	cerr << datetime(time(nullptr), false, false) << " <" << static_cast<log_level_underlying_type>(log_level)
+	     << "> " << file << "(" << function << "):" << line << " " << content << endl;
     }
 
-    xmlGenericErrorFunc xml_error_func_ptr = &xml_error_func;
 
-
-    void
-    initDefaultLogger()
+    Logger*
+    get_stdout_logger()
     {
-	logger_data->filename = LOG_FILENAME;
+	static StdoutLogger stdout_logger;
 
+	return &stdout_logger;
+    }
+
+
+    class LogfileLogger : public Logger
+    {
+
+    public:
+
+	LogfileLogger();
+	virtual ~LogfileLogger();
+
+	virtual void write(LogLevel log_level, const string& file, int line, const string& function,
+			   const string& content) override;
+
+    private:
+
+	struct Data
+	{
+	    string filename;
+	    boost::mutex mutex;
+	};
+
+	Data* data = nullptr;
+
+    };
+
+
+    LogfileLogger::LogfileLogger()
+	: data(new Data)
+    {
 	if (geteuid())
 	{
 	    string dir;
-
 	    if (get_uid_dir(geteuid(), dir))
-	    {
-		logger_data->filename = dir + "/.snapper.log";
-	    }
+		data->filename = dir + "/.snapper.log";
+	}
+	else
+	{
+	    data->filename = "/var/log/snapper.log";
+	}
+    }
+
+
+    LogfileLogger::~LogfileLogger()
+    {
+	// data is not deleted to avoid static deinitialization order fiasco
+    }
+
+
+    void
+    LogfileLogger::write(LogLevel log_level, const string& file, int line, const string& function,
+			 const string& content)
+    {
+	boost::lock_guard<boost::mutex> lock(data->mutex);
+
+	int fd = open(data->filename.c_str(), O_WRONLY | O_APPEND | O_CREAT | O_CLOEXEC, 0640);
+	if (fd < 0)
+	    return;
+
+	FILE* f = fdopen(fd, "ae");
+	if (!f)
+	{
+	    close(fd);
+	    return;
 	}
 
-	log_do = NULL;
-	log_query = NULL;
+	fprintf(f, "%s <%d> %s(%s):%d %s\n", datetime(time(nullptr), false, false).c_str(),
+		static_cast<log_level_underlying_type>(log_level), file.c_str(), function.c_str(),
+		line, content.c_str());
 
-	initGenericErrorDefaultFunc(&xml_error_func_ptr);
+	fclose(f);
+    }
+
+
+    Logger*
+    get_logfile_logger()
+    {
+	static LogfileLogger logfile_logger;
+
+	return &logfile_logger;
+    }
+
+
+    class SyslogLogger : public Logger
+    {
+
+    public:
+
+	SyslogLogger(const char* ident, int option, int facility);
+	~SyslogLogger();
+
+	virtual void write(LogLevel log_level, const string& file, int line, const string& function,
+			   const string& content) override;
+
+    };
+
+
+    SyslogLogger::SyslogLogger(const char* ident, int option, int facility)
+    {
+	openlog(ident, option, facility);
+    }
+
+
+    SyslogLogger::~SyslogLogger()
+    {
+	// closelog is not called to avoid static deinitialization order fiasco
+    }
+
+
+    void
+    SyslogLogger::write(LogLevel log_level, const string& file, int line, const string& function,
+			const string& content)
+    {
+	int priority = 0;
+
+	switch (log_level)
+	{
+	    case LogLevel::DEBUG:     priority = LOG_DEBUG;   break;
+	    case LogLevel::MILESTONE: priority = LOG_NOTICE;  break;
+	    case LogLevel::WARNING:   priority = LOG_WARNING; break;
+	    case LogLevel::ERROR:     priority = LOG_ERR;     break;
+	}
+
+	syslog(priority, "%s", content.c_str());
+    }
+
+
+    Logger*
+    get_syslog_logger(const char* ident, int option, int facility)
+    {
+	static SyslogLogger syslog_logger(ident, option, facility);
+
+	return &syslog_logger;
+    }
+
+
+    void
+    test_logger()
+    {
+	y2deb("logger test debug");
+	y2mil("logger test milestone");
+	y2war("logger test warning");
+	y2err("logger test error");
     }
 
 }

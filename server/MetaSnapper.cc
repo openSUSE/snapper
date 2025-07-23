@@ -25,7 +25,7 @@
 #include <sys/types.h>
 #include <boost/algorithm/string.hpp>
 
-#include <snapper/Log.h>
+#include <snapper/LoggerImpl.h>
 #include <snapper/AppUtil.h>
 #include <snapper/SnapperDefines.h>
 

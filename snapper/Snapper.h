@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -229,7 +229,8 @@ namespace snapper
 
 	void syncInfoDir(SDir& dir) const;
 
-	// const std::string root_prefix; // TODO ABI change
+	const std::string config_name;
+	const std::string root_prefix;
 
 	ConfigInfo* config_info = nullptr;
 

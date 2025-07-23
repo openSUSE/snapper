@@ -26,7 +26,7 @@
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/Exception.h"
-#include "snapper/Log.h"
+#include "snapper/LoggerImpl.h"
 
 
 namespace snapper

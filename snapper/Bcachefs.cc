@@ -28,7 +28,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-#include "snapper/Log.h"
+#include "snapper/LoggerImpl.h"
 #include "snapper/Bcachefs.h"
 #include "snapper/BcachefsUtils.h"
 #include "snapper/File.h"

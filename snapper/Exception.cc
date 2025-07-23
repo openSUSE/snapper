@@ -31,8 +31,7 @@
 
 #include "snapper/Exception.h"
 #include "snapper/AppUtil.h"
-#include "snapper/Log.h"
-#include "snapper/Logger.h"
+#include "snapper/LoggerImpl.h"
 
 
 namespace snapper
@@ -120,7 +119,7 @@ namespace snapper
     Exception::log(const Exception& exception, const CodeLocation& location,
 		   const char* const prefix)
     {
-	y2log_op(WARNING, location.file().c_str(), location.line(),
+	y2log_op(LogLevel::WARNING, location.file().c_str(), location.line(),
 		 location.func().c_str(), string(prefix) + " " + exception.asString());
     }
 

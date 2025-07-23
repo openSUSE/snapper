@@ -39,7 +39,7 @@
 #include <boost/io/ios_state.hpp>
 #include <boost/scoped_array.hpp>
 
-#include "snapper/Log.h"
+#include "snapper/LoggerImpl.h"
 #include "snapper/AppUtil.h"
 
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019-2024] SUSE LLC
+ * Copyright (c) [2019-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -43,6 +43,7 @@ namespace snapper
 	print_options({
 	    { _("--quiet, -q"), _("Suppress normal output.") },
 	    { _("--verbose, -v"), _("Increase verbosity.") },
+	    { _("--logger-type <type>"), _("Set logger type.") },
 	    { _("--debug"), _("Turn on debugging.") },
 	    { _("--utc"), _("Display dates and times in UTC.") },
 	    { _("--iso"), _("Display dates and times in ISO format.") },
@@ -68,6 +69,7 @@ namespace snapper
 	const vector<Option> options = {
 	    Option("quiet",		no_argument,		'q'),
 	    Option("verbose",		no_argument,		'v'),
+	    Option("logger-type",	required_argument),
 	    Option("debug",		no_argument),
 	    Option("utc",		no_argument),
 	    Option("iso",		no_argument),
@@ -92,6 +94,7 @@ namespace snapper
 
 	_quiet = opts.has_option("quiet");
 	_verbose = opts.has_option("verbose");
+	_logger_type = logger_type_value(opts);
 	_debug = opts.has_option("debug");
 	_utc = opts.has_option("utc");
 	_iso = opts.has_option("iso");
@@ -175,6 +178,27 @@ namespace snapper
     }
 
 
+    LoggerType
+    GlobalOptions::logger_type_value(const ParsedOpts& opts) const
+    {
+	ParsedOpts::const_iterator it = opts.find("logger-type");
+	if (it == opts.end())
+	    return LoggerType::STDOUT;
+
+	LoggerType logger_type;
+
+	if (!toValue(it->second, logger_type, false))
+	{
+	    string error = sformat(_("Invalid logger-type '%s'."), it->second.c_str()) + '\n' +
+		possible_enum_values<LoggerType>();
+
+	    SN_THROW(OptionsException(error));
+	}
+
+	return logger_type;
+    }
+
+
     string
     GlobalOptions::separator_value(const ParsedOpts& opts) const
     {
@@ -227,6 +251,8 @@ namespace snapper
 	return ambit;
     }
 
+
+    const vector<string> EnumInfo<LoggerType>::names({ "none", "stdout", "logfile", "syslog" });
 
     const vector<string> EnumInfo<GlobalOptions::OutputFormat>::names({ "table", "csv", "json" });
 

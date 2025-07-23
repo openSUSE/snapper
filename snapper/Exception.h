@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2015-2023] SUSE LLC
+ * Copyright (c) [2015-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -384,19 +384,24 @@ namespace snapper
 	explicit XAttributesException() : Exception("XAttributes error") {}
     };
 
+
     struct InvalidUserException : public Exception
     {
-	explicit InvalidUserException() __attribute__((deprecated)) : Exception("invalid user") {}
-	explicit InvalidUserException(const std::string& user) : Exception("invalid user '" + user + "'") {}
-	// TODO save user
+	explicit InvalidUserException(const std::string& user)
+	    : Exception("invalid user '" + user + "'"), user(user) {}
+
+	const std::string user;
     };
+
 
     struct InvalidGroupException : public Exception
     {
-	explicit InvalidGroupException() __attribute__((deprecated)) : Exception("invalid group") {}
-	explicit InvalidGroupException(const std::string& group) : Exception("invalid group '" + group + "'") {}
-	// TODO save group
+	explicit InvalidGroupException(const std::string& group)
+	    : Exception("invalid group '" + group + "'"), group(group) {}
+
+	const std::string group;
     };
+
 
     struct UnsupportedException : public Exception
     {

@@ -65,24 +65,6 @@ struct Cmd
 };
 
 
-static bool log_debug = false;
-
-
-void
-log_do(LogLevel level, const string& component, const char* file, const int line, const char* func,
-       const string& text)
-{
-    cerr << text << endl;
-}
-
-
-bool
-log_query(LogLevel level, const string& component)
-{
-    return log_debug || level == ERROR;
-}
-
-
 void help() __attribute__ ((__noreturn__));
 
 
@@ -137,8 +119,7 @@ main(int argc, char** argv)
 	cerr << _("Failed to set locale.") << endl;
     }
 
-    setLogDo(&log_do);
-    setLogQuery(&log_query);
+    set_logger(get_stdout_logger());
 
     const vector<Cmd> cmds = {
 	Cmd("list-configs", command_list_configs, help_list_configs, false),
@@ -155,9 +136,7 @@ main(int argc, char** argv)
 	GlobalOptions global_options(get_opts);
 
 	if (global_options.debug())
-	{
-	    log_debug = true;
-	}
+	    set_logger_tresshold(LogLevel::DEBUG);
 
 	if (global_options.version())
 	{

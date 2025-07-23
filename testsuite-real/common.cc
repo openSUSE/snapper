@@ -7,7 +7,7 @@
 #include <snapper/Comparison.h>
 #include <snapper/File.h>
 #include <snapper/SnapperDefines.h>
-#include <snapper/Log.h>
+#include <snapper/Logger.h>
 
 
 extern char* program_invocation_short_name;
@@ -32,7 +32,8 @@ setup()
     system("/usr/bin/find " SUBVOLUME " -mindepth 1 -maxdepth 1 -not -path " SUBVOLUME "/.snapshots "
 	   "-exec rm -r {} \\;");
 
-    initDefaultLogger();
+    set_logger(get_stdout_logger());
+    set_logger_tresshold(LogLevel::DEBUG);
 
     sh = new Snapper(CONFIG, "/");
 }
