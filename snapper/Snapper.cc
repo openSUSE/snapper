@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2024] SUSE LLC
+ * Copyright (c) [2016-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -92,13 +92,12 @@ namespace snapper
 
 
     Snapper::Snapper(const string& config_name, const string& root_prefix, bool disable_filters)
-	: snapshots(this)
+	: config_name(config_name), root_prefix(root_prefix), snapshots(this)
     {
-	y2mil("Snapper constructor");
+	y2mil("Snapper constructor '" << config_name << "'");
 	y2mil("snapper version " VERSION);
 	y2mil("libsnapper version " LIBSNAPPER_VERSION_STRING);
-	y2mil("config_name:" << config_name << " root_prefix:" << root_prefix <<
-	      " disable_filters:" << disable_filters);
+	y2mil("root-prefix:" << root_prefix << " disable-filters:" << disable_filters);
 
 	try
 	{
@@ -139,7 +138,7 @@ namespace snapper
 
     Snapper::~Snapper()
     {
-	y2mil("Snapper destructor");
+	y2mil("Snapper destructor '" << config_name << "'");
 
 	for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); ++it)
 	{
