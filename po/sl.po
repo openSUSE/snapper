@@ -9,14 +9,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-23 11:53+0200\n"
-"PO-Revision-Date: 2025-07-22 15:00+0000\n"
-"Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Slovenian <https://l10n.opensuse.org/projects/snapper/master/sl/>\n"
+"PO-Revision-Date: 2025-07-23 23:59+0000\n"
+"Last-Translator: Jure Repinc <jlp@holodeck1.com>\n"
+"Language-Team: Slovenian <https://l10n.opensuse.org/projects/snapper/master/"
+"sl/>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Generator: Weblate 5.12.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -298,9 +300,8 @@ msgstr "--iso"
 msgid "--jsonout"
 msgstr "--jsonout"
 
-#, fuzzy
 msgid "--logger-type <type>"
-msgstr "--type, -t <vrsta>"
+msgstr "--logger-type <vrsta>"
 
 msgid "--machine-readable <format>"
 msgstr "--machine-readable <oblika>"
@@ -740,9 +741,9 @@ msgstr "Neveljavna vrednost razpoložljivega prostora."
 msgid "Invalid group (%s)."
 msgstr "Neveljavna skupina (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid logger-type '%s'."
-msgstr "Neveljaven slog razpredelnice »%s«."
+msgstr "Neveljavna vrsta »%s« za logger-type."
 
 #, c-format
 msgid "Invalid machine readable format '%s'."
@@ -1039,7 +1040,7 @@ msgid "Set a machine-readable output format (csv, json)."
 msgstr "Nastavi računalniško berljivo obliko izpisa (csv, json)."
 
 msgid "Set logger type."
-msgstr ""
+msgstr "Nastavi vrsto dnevnika."
 
 msgid "Set name of backup-config to use."
 msgstr "Nastavi ime nastavitev varnostnega kopiranja, ki bodo uporabljene."
