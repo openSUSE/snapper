@@ -156,7 +156,7 @@ namespace snapper
 	SysconfigFile(const string& name);
 
 	/**
-	 * Calls save(). Exceptions from save are ignored. Use save() explicitly in
+	 * Calls save(). Exceptions from save are ignored. Use save() explicitly if
 	 * needed.
 	 */
 	virtual ~SysconfigFile();
