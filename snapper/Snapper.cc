@@ -63,34 +63,6 @@ namespace snapper
     using namespace std;
 
 
-    ConfigInfo::ConfigInfo(const string& config_name, const string& root_prefix)
-	: SysconfigFile(prepend_root_prefix(root_prefix, CONFIGS_DIR "/" + config_name)),
-	  config_name(config_name), subvolume("/")
-    {
-	if (!get_value(KEY_SUBVOLUME, subvolume))
-	    SN_THROW(InvalidConfigException());
-    }
-
-
-    void
-    ConfigInfo::check_key(const string& key) const
-    {
-	if (key == KEY_SUBVOLUME || key == KEY_FSTYPE)
-	    SN_THROW(InvalidConfigdataException());
-
-	try
-	{
-	    SysconfigFile::check_key(key);
-	}
-	catch (const InvalidKeyException& e)
-	{
-	    SN_CAUGHT(e);
-
-	    SN_THROW(InvalidConfigdataException());
-	}
-    }
-
-
     Snapper::Snapper(const string& config_name, const string& root_prefix, bool disable_filters)
 	: config_name(config_name), root_prefix(root_prefix), snapshots(this)
     {
@@ -101,7 +73,7 @@ namespace snapper
 
 	try
 	{
-	    config_info = new ConfigInfo(config_name, root_prefix);
+	    config_info = make_unique<ConfigInfo>(config_name, root_prefix);
 	}
 	catch (const Exception& e)
 	{
@@ -154,9 +126,6 @@ namespace snapper
 
 	delete filesystem;
 	filesystem = nullptr;
-
-	delete config_info;
-	config_info = nullptr;
     }
 
 
