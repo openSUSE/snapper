@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-23 11:53+0200\n"
-"PO-Revision-Date: 2025-07-22 14:59+0000\n"
-"Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/>\n"
+"PO-Revision-Date: 2025-07-24 09:59+0000\n"
+"Last-Translator: David Medina <medipas@gmail.com>\n"
+"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/"
+">\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -292,9 +293,8 @@ msgstr "--iso"
 msgid "--jsonout"
 msgstr "--jsonout"
 
-#, fuzzy
 msgid "--logger-type <type>"
-msgstr "--type, -t <tipus>"
+msgstr "--logger-type <tipus>"
 
 msgid "--machine-readable <format>"
 msgstr "--machine-readable <format>"
@@ -719,9 +719,9 @@ msgstr "Valor d'espai disponible no vàlid."
 msgid "Invalid group (%s)."
 msgstr "Grup no vàlid (%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid logger-type '%s'."
-msgstr "Estil de taula no vàlid: %s."
+msgstr "Tipus de registre no vàlid: %s."
 
 #, c-format
 msgid "Invalid machine readable format '%s'."
@@ -1008,7 +1008,7 @@ msgid "Set a machine-readable output format (csv, json)."
 msgstr "Estableix un format de sortida llegible per la màquina (csv, json)."
 
 msgid "Set logger type."
-msgstr ""
+msgstr "Estableix el tipus de registre."
 
 msgid "Set name of backup-config to use."
 msgstr "Estableix el nom de la configuració de còpia de seguretat per usar."
