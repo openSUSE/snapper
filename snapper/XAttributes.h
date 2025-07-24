@@ -22,7 +22,7 @@
 #define SNAPPER_XATTRIBUTES_H
 
 
-#include <stdint.h>
+#include <cstdint>
 #include <map>
 #include <vector>
 #include <string>
