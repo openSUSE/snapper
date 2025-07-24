@@ -25,42 +25,21 @@
 #define SNAPPER_SNAPPER_H
 
 
+#include <memory>
 #include <vector>
 #include <boost/noncopyable.hpp>
 
 #include "snapper/Snapshot.h"
-#include "snapper/AsciiFile.h"
 #include "snapper/Plugins.h"
+#include "snapper/ConfigInfo.h"
 
 
 namespace snapper
 {
-    using std::vector;
-
 
     class Filesystem;
     class SDir;
     class SelinuxLabelHandle;
-
-
-    class ConfigInfo : public SysconfigFile
-    {
-    public:
-
-	explicit ConfigInfo(const string& config_name, const string& root_prefix);
-
-	const string& get_config_name() const { return config_name; }
-	const string& get_subvolume() const { return subvolume; }
-
-	virtual void check_key(const string& key) const override;
-
-    private:
-
-	const string config_name;
-
-	string subvolume;
-
-    };
 
 
     struct ConfigNotFoundException : public Exception
@@ -217,7 +196,7 @@ namespace snapper
 	const std::string config_name;
 	const std::string root_prefix;
 
-	ConfigInfo* config_info = nullptr;
+	std::unique_ptr<ConfigInfo> config_info;
 
 	Filesystem* filesystem = nullptr;
 

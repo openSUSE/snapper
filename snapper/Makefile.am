@@ -7,6 +7,7 @@ AM_CXXFLAGS = -D_FILE_OFFSET_BITS=64
 lib_LTLIBRARIES = libsnapper.la
 
 libsnapper_la_SOURCES =					\
+	ConfigInfo.cc		ConfigInfo.h		\
 	Snapper.cc		Snapper.h		\
 	Snapshot.cc		Snapshot.h		\
 	Comparison.cc		Comparison.h		\
@@ -86,6 +87,7 @@ pkgincludedir = $(includedir)/snapper
 
 pkginclude_HEADERS =					\
 	Version.h					\
+	ConfigInfo.h					\
 	Snapper.h					\
 	Snapshot.h					\
 	Plugins.h					\
