@@ -23,7 +23,6 @@
 
 #include <cstring>
 #include <sys/types.h>
-#include <boost/algorithm/string.hpp>
 
 #include <snapper/LoggerImpl.h>
 #include <snapper/AppUtil.h>

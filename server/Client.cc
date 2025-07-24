@@ -25,7 +25,6 @@
 
 #include <snapper/LoggerImpl.h>
 #include <snapper/SnapperTmpl.h>
-#include <snapper/AsciiFile.h>
 #include <snapper/Version.h>
 #include <dbus/DBusMessage.h>
 #include <dbus/DBusConnection.h>
