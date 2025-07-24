@@ -7,9 +7,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-23 11:53+0200\n"
-"PO-Revision-Date: 2025-07-22 15:00+0000\n"
-"Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
+"PO-Revision-Date: 2025-07-24 16:59+0000\n"
+"Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
+"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
+"\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -296,9 +297,8 @@ msgstr "--iso"
 msgid "--jsonout"
 msgstr "--jsonout"
 
-#, fuzzy
 msgid "--logger-type <type>"
-msgstr "--type, -t <type>"
+msgstr "--logger-type <typ>"
 
 msgid "--machine-readable <format>"
 msgstr "--machine-readable <formát>"
@@ -728,9 +728,9 @@ msgstr "Neplatná hodnota voľného miesta."
 msgid "Invalid group (%s)."
 msgstr "Neplatná skupina (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid logger-type '%s'."
-msgstr "Neplatný štýl tabuľky '%s'."
+msgstr "Neplatný logger-type '%s'."
 
 #, c-format
 msgid "Invalid machine readable format '%s'."
@@ -1023,7 +1023,7 @@ msgid "Set a machine-readable output format (csv, json)."
 msgstr "Nastaví strojovo čitateľný výstupný formát (csv, json)."
 
 msgid "Set logger type."
-msgstr ""
+msgstr "Nastaví logger typ."
 
 msgid "Set name of backup-config to use."
 msgstr "Nastaví názov konfigurácie zálohovania, ktorá sa použije."
