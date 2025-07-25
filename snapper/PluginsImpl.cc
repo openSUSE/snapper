@@ -25,7 +25,6 @@
 
 #include <boost/algorithm/string.hpp>
 
-#include "snapper/FileUtils.h"
 #include "snapper/Filesystem.h"
 #include "snapper/PluginsImpl.h"
 #include "snapper/SystemCmd.h"
@@ -228,7 +227,6 @@ namespace snapper
 		break;
 	}
     }
-
 
 
     void
