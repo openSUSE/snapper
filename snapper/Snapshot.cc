@@ -486,7 +486,7 @@ namespace snapper
 
 
     unsigned int
-    Snapshots::nextNumber()
+    Snapshots::nextNumber() const
     {
 	unsigned int num = entries.empty() ? 0 : entries.rbegin()->num;
 

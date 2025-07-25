@@ -292,7 +292,7 @@ namespace snapper
 
 	void deleteSnapshot(iterator snapshot, Plugins::Report& report);
 
-	unsigned int nextNumber();
+	unsigned int nextNumber() const;
 
 	const Snapper* snapper;
 
