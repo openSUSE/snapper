@@ -365,10 +365,10 @@ namespace snapper
 	switch (compression)
 	{
 	    case Compression::NONE:
-		return unique_ptr<Impl::None>(new Impl::None(t));
+		return make_unique<Impl::None>(t);
 
 	    case Compression::GZIP:
-		return unique_ptr<Impl::Gzip>(new Impl::Gzip(t));
+		return make_unique<Impl::Gzip>(t);
 
 	    case Compression::ZSTD:
 		break;
@@ -851,10 +851,10 @@ namespace snapper
 	switch (compression)
 	{
 	    case Compression::NONE:
-		return unique_ptr<Impl::None>(new Impl::None(t));
+		return make_unique<Impl::None>(t);
 
 	    case Compression::GZIP:
-		return unique_ptr<Impl::Gzip>(new Impl::Gzip(t));
+		return make_unique<Impl::Gzip>(t);
 
 	    case Compression::ZSTD:
 		break;

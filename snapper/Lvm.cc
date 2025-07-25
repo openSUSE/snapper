@@ -53,14 +53,14 @@ namespace snapper
     using namespace std;
 
 
-    Filesystem*
+    std::unique_ptr<Filesystem>
     Lvm::create(const string& fstype, const string& subvolume, const string& root_prefix)
     {
 	static const regex rx("lvm\\(([_a-z0-9]+)\\)", regex::extended);
 	smatch match;
 
 	if (regex_match(fstype, match, rx))
-	    return new Lvm(subvolume, root_prefix, match[1]);
+	    return std::make_unique<Lvm>(subvolume, root_prefix, match[1]);
 
 	return nullptr;
     }

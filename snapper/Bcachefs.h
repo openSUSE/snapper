@@ -34,8 +34,8 @@ namespace snapper
     {
     public:
 
-	static Filesystem* create(const string& fstype, const string& subvolume,
-				  const string& root_prefix);
+	static std::unique_ptr<Filesystem> create(const string& fstype, const string& subvolume,
+						  const string& root_prefix);
 
 	Bcachefs(const string& subvolume, const string& root_prefix);
 

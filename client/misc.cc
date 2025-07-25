@@ -168,7 +168,7 @@ username(uid_t uid)
 }
 
 
-const Filesystem*
+    unique_ptr<const Filesystem>
 get_filesystem(const ProxyConfig& config, const string& target_root)
 {
     const map<string, string>& raw = config.getAllValues();

@@ -44,11 +44,11 @@
 namespace snapper
 {
 
-    Filesystem*
+    std::unique_ptr<Filesystem>
     Ext4::create(const string& fstype, const string& subvolume, const string& root_prefix)
     {
 	if (fstype == "ext4")
-	    return new Ext4(subvolume, root_prefix);
+	    return std::make_unique<Ext4>(subvolume, root_prefix);
 
 	return nullptr;
     }

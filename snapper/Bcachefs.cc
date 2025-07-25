@@ -50,11 +50,11 @@ namespace snapper
     using namespace BcachefsUtils;
 
 
-    Filesystem*
+    std::unique_ptr<Filesystem>
     Bcachefs::create(const string& fstype, const string& subvolume, const string& root_prefix)
     {
 	if (fstype == "bcachefs")
-	    return new Bcachefs(subvolume, root_prefix);
+	    return std::make_unique<Bcachefs>(subvolume, root_prefix);
 
 	return nullptr;
     }

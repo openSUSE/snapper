@@ -28,6 +28,7 @@
 #include <string>
 #include <vector>
 #include <utility>
+#include <memory>
 
 #include "snapper/FileUtils.h"
 #include "snapper/Compare.h"
@@ -52,8 +53,9 @@ namespace snapper
 	    : subvolume(subvolume), root_prefix(root_prefix) {}
 	virtual ~Filesystem() {}
 
-	static Filesystem* create(const string& fstype, const string& subvolume, const string& root_prefix);
-	static Filesystem* create(const ConfigInfo& config_info, const string& root_prefix);
+	static std::unique_ptr<Filesystem> create(const string& fstype, const string& subvolume,
+						  const string& root_prefix);
+	static std::unique_ptr<Filesystem> create(const ConfigInfo& config_info, const string& root_prefix);
 
 	virtual void evalConfigInfo(const ConfigInfo& config_info) {}
 

@@ -69,11 +69,11 @@ namespace snapper
     using namespace std;
 
 
-    Filesystem*
+    std::unique_ptr<Filesystem>
     Btrfs::create(const string& fstype, const string& subvolume, const string& root_prefix)
     {
 	if (fstype == "btrfs")
-	    return new Btrfs(subvolume, root_prefix);
+	    return std::make_unique<Btrfs>(subvolume, root_prefix);
 
 	return nullptr;
     }

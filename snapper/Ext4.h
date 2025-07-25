@@ -34,8 +34,8 @@ namespace snapper
     {
     public:
 
-	static Filesystem* create(const string& fstype, const string& subvolume,
-				  const string& root_prefix);
+	static std::unique_ptr<Filesystem> create(const string& fstype, const string& subvolume,
+						  const string& root_prefix);
 
 	Ext4(const string& subvolume, const string& root_prefix);
 
