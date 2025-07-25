@@ -4,14 +4,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-23 11:53+0200\n"
-"PO-Revision-Date: 2025-07-22 15:00+0000\n"
-"Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Russian <https://l10n.opensuse.org/projects/snapper/master/ru/>\n"
+"PO-Revision-Date: 2025-07-25 19:59+0000\n"
+"Last-Translator: Aleksey Fedorov <Aleksejfedorov963@gmail.com>\n"
+"Language-Team: Russian <https://l10n.opensuse.org/projects/snapper/master/ru/"
+">\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 5.12.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -293,9 +295,8 @@ msgstr "--iso"
 msgid "--jsonout"
 msgstr "--jsonout"
 
-#, fuzzy
 msgid "--logger-type <type>"
-msgstr "--type, -t <тип>"
+msgstr "--logger-type <тип>"
 
 msgid "--machine-readable <format>"
 msgstr "--machine-readable <формат>"
@@ -722,9 +723,9 @@ msgstr "Неверное значение места."
 msgid "Invalid group (%s)."
 msgstr "Неверная группа (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid logger-type '%s'."
-msgstr "Неверный стиль таблицы '%s'."
+msgstr "Недопустимый тип логгера: «%s»."
 
 #, c-format
 msgid "Invalid machine readable format '%s'."
@@ -1014,7 +1015,7 @@ msgid "Set a machine-readable output format (csv, json)."
 msgstr "Задать машиночитаемый формат вывода (csv, json)."
 
 msgid "Set logger type."
-msgstr ""
+msgstr "Задать тип логгера."
 
 msgid "Set name of backup-config to use."
 msgstr "Задать имя используемой конфигурации backup-config."
