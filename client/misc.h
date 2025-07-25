@@ -51,8 +51,8 @@ read_configdata(const vector<string>& v, const map<string, string>& old = map<st
 string
 username(uid_t uid);
 
-const Filesystem*
-get_filesystem(const ProxyConfig& config, const string& target_root);
+    unique_ptr<const Filesystem>
+    get_filesystem(const ProxyConfig& config, const string& target_root);
 
 
 struct Differ

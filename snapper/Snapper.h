@@ -144,10 +144,10 @@ namespace snapper
 
 	static bool detectFstype(const string& subvolume, string& fstype);
 
-	const Filesystem* getFilesystem() const { return filesystem; }
-
 	const ConfigInfo& getConfigInfo() { return *config_info; }
 	void setConfigInfo(const map<string, string>& raw);
+
+	const Filesystem* getFilesystem() const { return filesystem.get(); }
 
 	void syncAcl() const;
 
@@ -198,7 +198,7 @@ namespace snapper
 
 	std::unique_ptr<ConfigInfo> config_info;
 
-	Filesystem* filesystem = nullptr;
+	std::unique_ptr<Filesystem> filesystem;
 
 	vector<string> ignore_patterns;
 

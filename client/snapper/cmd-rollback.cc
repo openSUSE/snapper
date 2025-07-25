@@ -111,7 +111,7 @@ namespace snapper
 
 	ProxyConfig config = snapper->getConfig();
 
-	const Filesystem* filesystem = get_filesystem(config, global_options.root());
+	unique_ptr<const Filesystem> filesystem = get_filesystem(config, global_options.root());
 	if (filesystem->fstype() != "btrfs")
 	{
 	    cerr << _("Command 'rollback' only available for btrfs.") << endl;
@@ -222,8 +222,8 @@ namespace snapper
 
 		Plugins::rollback(filesystem->snapshotDir(snapshot1->getNum()),
 				  filesystem->snapshotDir(snapshot2->getNum()), report);
-		Plugins::rollback(Plugins::Stage::POST_ACTION, subvolume, filesystem, snapshot1->getNum(),
-				  snapshot2->getNum(), report);
+		Plugins::rollback(Plugins::Stage::POST_ACTION, subvolume, filesystem.get(),
+				  snapshot1->getNum(), snapshot2->getNum(), report);
 
 		if (print_number)
 		    cout << snapshot2->getNum() << endl;
@@ -268,8 +268,8 @@ namespace snapper
 
 		Plugins::rollback(filesystem->snapshotDir(previous_default->getNum()),
 				  filesystem->snapshotDir(snapshot->getNum()), report);
-		Plugins::rollback(Plugins::Stage::POST_ACTION, subvolume, filesystem, previous_default->getNum(),
-				  snapshot->getNum(), report);
+		Plugins::rollback(Plugins::Stage::POST_ACTION, subvolume, filesystem.get(),
+				  previous_default->getNum(), snapshot->getNum(), report);
 	    }
 	    break;
 

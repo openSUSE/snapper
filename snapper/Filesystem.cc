@@ -94,11 +94,11 @@ namespace snapper
     }
 
 
-    Filesystem*
+    std::unique_ptr<Filesystem>
     Filesystem::create(const string& fstype, const string& subvolume, const string& root_prefix)
     {
-	typedef Filesystem* (*func_t)(const string& fstype, const string& subvolume,
-				      const string& root_prefix);
+	typedef std::unique_ptr<Filesystem> (*func_t)(const string& fstype, const string& subvolume,
+						      const string& root_prefix);
 
 	static const func_t funcs[] = {
 #ifdef ENABLE_BTRFS
@@ -118,7 +118,7 @@ namespace snapper
 
 	for (const func_t* func = funcs; *func != nullptr; ++func)
 	{
-	    Filesystem* fs = (*func)(fstype, subvolume, root_prefix);
+	    std::unique_ptr<Filesystem> fs = (*func)(fstype, subvolume, root_prefix);
 	    if (fs)
 		return fs;
 	}
@@ -129,13 +129,13 @@ namespace snapper
     }
 
 
-    Filesystem*
+    std::unique_ptr<Filesystem>
     Filesystem::create(const ConfigInfo& config_info, const string& root_prefix)
     {
 	string fstype = "btrfs";
 	config_info.get_value(KEY_FSTYPE, fstype);
 
-	Filesystem* fs = create(fstype, config_info.get_subvolume(), root_prefix);
+	std::unique_ptr<Filesystem> fs = create(fstype, config_info.get_subvolume(), root_prefix);
 
 	fs->evalConfigInfo(config_info);
 

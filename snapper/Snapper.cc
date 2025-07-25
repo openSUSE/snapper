@@ -123,9 +123,6 @@ namespace snapper
 		SN_CAUGHT(e);
 	    }
 	}
-
-	delete filesystem;
-	filesystem = nullptr;
     }
 
 
@@ -343,7 +340,7 @@ namespace snapper
 	unique_ptr<Filesystem> filesystem;
 	try
 	{
-	    filesystem.reset(Filesystem::create(fstype, subvolume, ""));
+	    filesystem = Filesystem::create(fstype, subvolume, "");
 	}
 	catch (const InvalidConfigException& e)
 	{
@@ -441,7 +438,7 @@ namespace snapper
 	y2mil("Snapper delete-config");
 	y2mil("libsnapper version " VERSION);
 
-	unique_ptr<Snapper> snapper(new Snapper(config_name, root_prefix));
+	unique_ptr<Snapper> snapper = make_unique<Snapper>(config_name, root_prefix);
 
 	Plugins::delete_config(Plugins::Stage::PRE_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
 			       report);
