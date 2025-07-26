@@ -7,9 +7,10 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-23 11:53+0200\n"
-"PO-Revision-Date: 2025-07-22 14:59+0000\n"
-"Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
+"PO-Revision-Date: 2025-07-27 00:59+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
+"\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -296,9 +297,8 @@ msgstr "--iso"
 msgid "--jsonout"
 msgstr "--jsonout"
 
-#, fuzzy
 msgid "--logger-type <type>"
-msgstr "--type, -t <Typ>"
+msgstr "--logger-type <Typ>"
 
 msgid "--machine-readable <format>"
 msgstr "--machine-readable <Format>"
@@ -723,9 +723,9 @@ msgstr "Ungültiger Freier Speicher Wert."
 msgid "Invalid group (%s)."
 msgstr "Ungültige Gruppe (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid logger-type '%s'."
-msgstr "Ungültiger Tabellenstil '%s'."
+msgstr "Ungültiger logger-Typ ‚%s‘."
 
 #, c-format
 msgid "Invalid machine readable format '%s'."
@@ -1011,7 +1011,7 @@ msgid "Set a machine-readable output format (csv, json)."
 msgstr "Ein Maschinen-lesbares Ausgabeformat (csv, json) festlegen."
 
 msgid "Set logger type."
-msgstr ""
+msgstr "logger-Typ festlegen."
 
 msgid "Set name of backup-config to use."
 msgstr "Lege den Namen der zu verwendenden Konfiguration fest."
