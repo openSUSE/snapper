@@ -49,7 +49,7 @@ class MetaSnapper : public RefCounter
 {
 public:
 
-    MetaSnapper(ConfigInfo& config_info);
+    MetaSnapper(const ConfigInfo& config_info);
     ~MetaSnapper();
 
     const string& configName() const { return config_info.get_config_name(); }
