@@ -35,7 +35,7 @@
 MetaSnappers meta_snappers;
 
 
-MetaSnapper::MetaSnapper(ConfigInfo& config_info)
+MetaSnapper::MetaSnapper(const ConfigInfo& config_info)
     : config_info(config_info)
 {
     set_permissions();

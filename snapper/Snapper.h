@@ -144,7 +144,7 @@ namespace snapper
 
 	static bool detectFstype(const string& subvolume, string& fstype);
 
-	const ConfigInfo& getConfigInfo() { return *config_info; }
+	const ConfigInfo& getConfigInfo() const { return *config_info; }
 	void setConfigInfo(const map<string, string>& raw);
 
 	const Filesystem* getFilesystem() const { return filesystem.get(); }
