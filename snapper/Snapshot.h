@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -124,7 +124,7 @@ namespace snapper
 	/**
 	 * Change default snapshot (will be activated on next boot time).
 	 */
-	void setDefault(Plugins::Report& report) const;
+	void setDefault(Plugins::Report& report);
 
 	/**
 	 * Determine iff snapshot is active (activated on last boot time).

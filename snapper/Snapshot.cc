@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -159,7 +159,7 @@ namespace snapper
 
 
     void
-    Snapshot::setDefault(Plugins::Report& report) const
+    Snapshot::setDefault(Plugins::Report& report)
     {
 	snapper->getFilesystem()->setDefault(num, report);
     }
