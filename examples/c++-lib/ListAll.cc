@@ -10,11 +10,11 @@ using namespace std;
 int
 main(int argc, char** argv)
 {
-    list<ConfigInfo> c = Snapper::getConfigs("/");
+    list<ConfigInfo> config_infos = Snapper::getConfigs("/");
 
     list<Snapper*> sh;
 
-    for (list<ConfigInfo>::const_iterator it = c.begin(); it != c.end(); ++it)
+    for (list<ConfigInfo>::const_iterator it = config_infos.begin(); it != config_infos.end(); ++it)
 	sh.push_back(new Snapper(it->get_config_name(), "/"));
 
     for (list<Snapper*>::const_iterator it = sh.begin(); it != sh.end(); ++it)

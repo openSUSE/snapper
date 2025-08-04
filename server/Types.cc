@@ -78,8 +78,8 @@ namespace DBus
     operator<<(Marshaller& marshaller, const Snapshots& data)
     {
 	marshaller.open_array(TypeInfo<Snapshot>::signature);
-	for (Snapshots::const_iterator it = data.begin(); it != data.end(); ++it)
-	    marshaller << *it;
+	for (const Snapshot& snapshot : data)
+	    marshaller << snapshot;
 	marshaller.close_array();
 	return marshaller;
     }
@@ -119,8 +119,8 @@ namespace DBus
     operator<<(Marshaller& marshaller, const Files& data)
     {
 	marshaller.open_array(TypeInfo<File>::signature);
-	for (Files::const_iterator it = data.begin(); it != data.end(); ++it)
-	    marshaller << *it;
+	for (const File& file : data)
+	    marshaller << file;
 	marshaller.close_array();
 	return marshaller;
     }

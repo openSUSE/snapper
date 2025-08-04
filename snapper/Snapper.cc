@@ -112,11 +112,11 @@ namespace snapper
     {
 	y2mil("Snapper destructor '" << config_name << "'");
 
-	for (Snapshots::iterator it = snapshots.begin(); it != snapshots.end(); ++it)
+	for (const Snapshot& snapshot : snapshots)
 	{
 	    try
 	    {
-		it->handleUmountFilesystemSnapshot();
+		snapshot.handleUmountFilesystemSnapshot();
 	    }
 	    catch (const UmountSnapshotFailedException& e)
 	    {
@@ -317,10 +317,10 @@ namespace snapper
 	    SN_THROW(CreateConfigFailedException("illegal subvolume"));
 	}
 
-	list<ConfigInfo> configs = getConfigs(root_prefix);
-	for (list<ConfigInfo>::const_iterator it = configs.begin(); it != configs.end(); ++it)
+	list<ConfigInfo> config_infos = getConfigs(root_prefix);
+	for (const ConfigInfo& config_info : config_infos)
 	{
-	    if (it->get_subvolume() == subvolume)
+	    if (config_info.get_subvolume() == subvolume)
 	    {
 		SN_THROW(CreateConfigFailedException("subvolume already covered"));
 	    }
