@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-23 11:53+0200\n"
-"PO-Revision-Date: 2025-07-23 23:59+0000\n"
-"Last-Translator: Leonart <leonartprime@gmail.com>\n"
+"PO-Revision-Date: 2025-08-04 14:59+0000\n"
+"Last-Translator: Sophie Leroy <sophie@stoquart.com>\n"
 "Language-Team: French <https://l10n.opensuse.org/projects/snapper/master/fr/>"
 "\n"
 "Language: fr\n"
@@ -299,9 +299,8 @@ msgstr "--iso"
 msgid "--jsonout"
 msgstr "--jsonout"
 
-#, fuzzy
 msgid "--logger-type <type>"
-msgstr "--type, -t <type>"
+msgstr "--logger-type <type>"
 
 msgid "--machine-readable <format>"
 msgstr "--machine-readable <format>"
@@ -748,9 +747,9 @@ msgstr "Valeur d'espace à libérer non valide."
 msgid "Invalid group (%s)."
 msgstr "Groupe non valide (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid logger-type '%s'."
-msgstr "Style de table « %s » non valide."
+msgstr "Type de journalisation '%s' non valide."
 
 #, c-format
 msgid "Invalid machine readable format '%s'."
@@ -1038,7 +1037,7 @@ msgid "Set a machine-readable output format (csv, json)."
 msgstr "Définit un format de sortie lisible par la machine (CSV, JSON)."
 
 msgid "Set logger type."
-msgstr "Définir un type de journalisation."
+msgstr "Définit un type de journalisation."
 
 msgid "Set name of backup-config to use."
 msgstr "Définir le nom de la configuration de sauvegarde à utiliser."
