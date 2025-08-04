@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Aug 04 17:00:45 CEST 2025 - Arvin Schnell <aschnell@suse.com>
+
+- fixed memory leak in DBus Marshalling
+
+-------------------------------------------------------------------
 Wed Jul 23 10:35:22 CEST 2025 - aschnell@suse.com
 
 - allow to send log to system logger (gh#openSUSE/snapper#1030)

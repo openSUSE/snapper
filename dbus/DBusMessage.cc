@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -71,6 +71,19 @@ namespace DBus
     const char* TypeInfo<string>::signature = "s";
 
 
+    string
+    Marshalling::get_signature()
+    {
+	char* tmp = dbus_message_iter_get_signature(top());
+	if (!tmp)
+	    SN_THROW(FatalException());
+
+	string sig = tmp;
+	dbus_free(tmp);
+	return sig;
+    }
+
+
     Unmarshaller::Unmarshaller(Message& msg)
     {
 	iters.push_back(new DBusMessageIter());
@@ -118,6 +131,7 @@ namespace DBus
 	iters.pop_back();
 	assert(iters.empty());
     }
+
 
     void
     Marshaller::open_struct()
