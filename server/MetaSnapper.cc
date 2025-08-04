@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2018-2024] SUSE LLC
+ * Copyright (c) [2018-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -44,8 +44,6 @@ MetaSnapper::MetaSnapper(const ConfigInfo& config_info)
 
 MetaSnapper::~MetaSnapper()
 {
-    delete snapper;
-    snapper = nullptr;
 }
 
 
@@ -113,19 +111,18 @@ Snapper*
 MetaSnapper::getSnapper()
 {
     if (!snapper)
-	snapper = new Snapper(config_info.get_config_name(), "/");
+	snapper = make_unique<Snapper>(config_info.get_config_name(), "/");
 
     update_use_time();
 
-    return snapper;
+    return snapper.get();
 }
 
 
 void
 MetaSnapper::unload()
 {
-    delete snapper;
-    snapper = nullptr;
+    snapper.reset();
 }
 
 

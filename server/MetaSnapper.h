@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2018-2024] SUSE LLC
+ * Copyright (c) [2018-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -64,8 +64,8 @@ public:
 
     Snapper* getSnapper();
 
-    bool is_equal(const Snapper* s) { return snapper && snapper == s; }
-    bool is_loaded() const { return snapper; }
+    bool is_equal(const Snapper* s) const { return is_loaded() && snapper.get() == s; }
+    bool is_loaded() const { return (bool) snapper; }
     void unload();
 
     bool is_locked(const Clients& clients) const;
@@ -76,7 +76,7 @@ private:
 
     ConfigInfo config_info;
 
-    Snapper* snapper = nullptr;
+    unique_ptr<Snapper> snapper;
 
     vector<uid_t> allowed_uids;
     vector<gid_t> allowed_gids;
