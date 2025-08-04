@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -185,7 +185,7 @@ namespace DBus
 	DBusMessageIter* top() { return iters.back(); }
 
 	int get_type() { return dbus_message_iter_get_arg_type(top()); }
-	string get_signature() { return dbus_message_iter_get_signature(top()); }
+	string get_signature();
 
     protected:
 
