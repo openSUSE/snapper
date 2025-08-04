@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2016-2024] SUSE LLC
+ * Copyright (c) [2016-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -612,8 +612,9 @@ Client::list_configs(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::Marshaller marshaller(reply);
     marshaller.open_array(DBus::TypeInfo<ConfigInfo>::signature);
-    for (MetaSnappers::const_iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
-	marshaller << it->getConfigInfo();
+    for (const MetaSnapper& meta_snapper : meta_snappers)
+	marshaller << meta_snapper.getConfigInfo();
+
     marshaller.close_array();
 
     conn.send(reply);
@@ -830,10 +831,10 @@ Client::list_snapshots_at_time(DBus::Connection& conn, DBus::Message& msg)
     DBus::Marshaller marshaller(reply);
 
     marshaller.open_array(DBus::TypeInfo<Snapshot>::signature);
-    for (Snapshots::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
+    for (const Snapshot& snapshot : snapshots)
     {
-	if (it->getDate() >= begin && it->getDate() <= end)
-	    marshaller << *it;
+	if (snapshot.getDate() >= begin && snapshot.getDate() <= end)
+	    marshaller << snapshot;
     }
     marshaller.close_array();
 
@@ -1154,7 +1155,6 @@ Client::is_snapshot_read_only(DBus::Connection& conn, DBus::Message& msg)
     check_permission(conn, msg, *it);
 
     Snapper* snapper = it->getSnapper();
-
     Snapshots& snapshots = snapper->getSnapshots();
 
     Snapshots::iterator snap = snapshots.find(num);
@@ -1191,7 +1191,6 @@ Client::set_snapshot_read_only(DBus::Connection& conn, DBus::Message& msg)
     check_permission(conn, msg, *it);
 
     Snapper* snapper = it->getSnapper();
-
     Snapshots& snapshots = snapper->getSnapshots();
 
     Snapshots::iterator snap = snapshots.find(num);
@@ -1324,7 +1323,6 @@ Client::get_used_space(DBus::Connection& conn, DBus::Message& msg)
     check_permission(conn, msg, *it);
 
     Snapper* snapper = it->getSnapper();
-
     Snapshots& snapshots = snapper->getSnapshots();
 
     Snapshots::iterator snap = snapshots.find(num);
@@ -1482,6 +1480,7 @@ Client::create_comparison(DBus::Connection& conn, DBus::Message& msg)
     lock.unlock();
 
     Comparison* comparison = new Comparison(snapper, snapshot1, snapshot2, false);
+    dbus_uint32_t num_files = comparison->getFiles().size();
 
     lock.lock();
 
@@ -1492,7 +1491,6 @@ Client::create_comparison(DBus::Connection& conn, DBus::Message& msg)
     DBus::MessageMethodReturn reply(msg);
 
     DBus::Marshaller marshaller(reply);
-    dbus_uint32_t num_files = comparison->getFiles().size();
     marshaller << num_files;
 
     conn.send(reply);
