@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2016-2024] SUSE LLC
+ * Copyright (c) [2016-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -612,8 +612,9 @@ Client::list_configs(DBus::Connection& conn, DBus::Message& msg)
 
     DBus::Marshaller marshaller(reply);
     marshaller.open_array(DBus::TypeInfo<ConfigInfo>::signature);
-    for (MetaSnappers::const_iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
-	marshaller << it->getConfigInfo();
+    for (const MetaSnapper& meta_snapper : meta_snappers)
+	marshaller << meta_snapper.getConfigInfo();
+
     marshaller.close_array();
 
     conn.send(reply);
@@ -830,10 +831,10 @@ Client::list_snapshots_at_time(DBus::Connection& conn, DBus::Message& msg)
     DBus::Marshaller marshaller(reply);
 
     marshaller.open_array(DBus::TypeInfo<Snapshot>::signature);
-    for (Snapshots::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
+    for (const Snapshot& snapshot : snapshots)
     {
-	if (it->getDate() >= begin && it->getDate() <= end)
-	    marshaller << *it;
+	if (snapshot.getDate() >= begin && snapshot.getDate() <= end)
+	    marshaller << snapshot;
     }
     marshaller.close_array();
 
@@ -1154,7 +1155,6 @@ Client::is_snapshot_read_only(DBus::Connection& conn, DBus::Message& msg)
     check_permission(conn, msg, *it);
 
     Snapper* snapper = it->getSnapper();
-
     Snapshots& snapshots = snapper->getSnapshots();
 
     Snapshots::iterator snap = snapshots.find(num);
@@ -1191,7 +1191,6 @@ Client::set_snapshot_read_only(DBus::Connection& conn, DBus::Message& msg)
     check_permission(conn, msg, *it);
 
     Snapper* snapper = it->getSnapper();
-
     Snapshots& snapshots = snapper->getSnapshots();
 
     Snapshots::iterator snap = snapshots.find(num);
@@ -1324,7 +1323,6 @@ Client::get_used_space(DBus::Connection& conn, DBus::Message& msg)
     check_permission(conn, msg, *it);
 
     Snapper* snapper = it->getSnapper();
-
     Snapshots& snapshots = snapper->getSnapshots();
 
     Snapshots::iterator snap = snapshots.find(num);
@@ -1482,6 +1480,7 @@ Client::create_comparison(DBus::Connection& conn, DBus::Message& msg)
     lock.unlock();
 
     Comparison* comparison = new Comparison(snapper, snapshot1, snapshot2, false);
+    dbus_uint32_t num_files = comparison->getFiles().size();
 
     lock.lock();
 
@@ -1492,7 +1491,6 @@ Client::create_comparison(DBus::Connection& conn, DBus::Message& msg)
     DBus::MessageMethodReturn reply(msg);
 
     DBus::Marshaller marshaller(reply);
-    dbus_uint32_t num_files = comparison->getFiles().size();
     marshaller << num_files;
 
     conn.send(reply);
@@ -1796,43 +1794,43 @@ Client::debug(DBus::Connection& conn, DBus::Message& msg)
     }
 
     marshaller << "clients:";
-    for (Clients::const_iterator it = clients.begin(); it != clients.end(); ++it)
+    for (const Client& client : clients)
     {
 	std::ostringstream s;
-	s << "    name:'" << it->name << "', uid:" << it->uid;
-	if (&*it == this)
+	s << "    name:'" << client.name << "', uid:" << client.uid;
+	if (&client == this)
 	    s << ", myself";
-	if (it->zombie)
+	if (client.zombie)
 	    s << ", zombie";
-	if (!it->locks.empty())
-	    s << ", locks " << it->locks.size();
-	if (!it->comparisons.empty())
-	    s << ", comparisons " << it->comparisons.size();
+	if (!client.locks.empty())
+	    s << ", locks " << client.locks.size();
+	if (!client.comparisons.empty())
+	    s << ", comparisons " << client.comparisons.size();
 	marshaller << s.str();
     }
 
     marshaller << "backgrounds:";
-    for (Backgrounds::const_iterator it = clients.backgrounds().begin(); it != clients.backgrounds().end(); ++it)
+    for (const Backgrounds::Task& task : clients.backgrounds())
     {
 	std::ostringstream s;
-	s << "    name:'" << it->meta_snapper->configName() << "'";
+	s << "    name:'" << task.meta_snapper->configName() << "'";
 	marshaller << s.str();
     }
 
     marshaller << "meta-snappers:";
-    for (MetaSnappers::const_iterator it = meta_snappers.begin(); it != meta_snappers.end(); ++it)
+    for (const MetaSnapper& meta_snapper : meta_snappers)
     {
 	std::ostringstream s;
-	s << "    name:'" << it->configName() << "'";
-	if (it->is_loaded())
+	s << "    name:'" << meta_snapper.configName() << "'";
+	if (meta_snapper.is_loaded())
 	{
 	    s << ", loaded";
-	    if (it->is_locked(clients))
+	    if (meta_snapper.is_locked(clients))
 		s << ", locked";
-	    if (it->use_count() == 0)
-		s << ", unused for " << duration_cast<milliseconds>(it->unused_for()).count() << "ms";
+	    if (meta_snapper.use_count() == 0)
+		s << ", unused for " << duration_cast<milliseconds>(meta_snapper.unused_for()).count() << "ms";
 	    else
-		s << ", use count " << it->use_count();
+		s << ", use count " << meta_snapper.use_count();
 	}
 	marshaller << s.str();
     }

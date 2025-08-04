@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2024] SUSE LLC
+ * Copyright (c) [2016-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -103,7 +103,7 @@ class ProxySnapperLib : public ProxySnapper
 public:
 
     ProxySnapperLib(const string& config_name, const string& target_root)
-	: snapper(new Snapper(config_name, target_root)), proxy_snapshots(this)
+	: snapper(std::make_unique<Snapper>(config_name, target_root)), proxy_snapshots(this)
     {}
 
     virtual const string& configName() const override { return snapper->configName(); }
