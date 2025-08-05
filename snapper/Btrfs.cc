@@ -767,12 +767,15 @@ namespace snapper
     bool
     StreamProcessor::get_root_id(const string& path, u64* root_id)
     {
-	struct subvol_info* si;
-	si = subvol_uuid_search(&sus, 0, NULL, 0, path.c_str(), subvol_search_by_path);
+	struct subvol_info* si = subvol_uuid_search(&sus, 0, NULL, 0, path.c_str(), subvol_search_by_path);
 	if (!si)
 	    return false;
 
 	*root_id = si->root_id;
+
+	free(si->path);
+	free(si);
+
 	return true;
     }
 
