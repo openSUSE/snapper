@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2016-2024] SUSE LLC
+ * Copyright (c) [2016-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -130,14 +130,14 @@ public:
     Client(const string& name, uid_t uid, const Clients& clients);
     ~Client();
 
-    list<Comparison*>::iterator find_comparison(Snapper* snapper, unsigned int number1,
-						unsigned int number2);
+    list<Comparison>::iterator find_comparison(Snapper* snapper, unsigned int number1,
+					       unsigned int number2);
 
-    list<Comparison*>::iterator find_comparison(Snapper* snapper,
-						Snapshots::const_iterator snapshot1,
-						Snapshots::const_iterator snapshot2);
+    list<Comparison>::iterator find_comparison(Snapper* snapper,
+					       Snapshots::const_iterator snapshot1,
+					       Snapshots::const_iterator snapshot2);
 
-    void delete_comparison(list<Comparison*>::iterator);
+    void delete_comparison(Comparison& comparison);
 
     void add_lock(const string& config_name);
     void remove_lock(const string& config_name);
@@ -149,7 +149,7 @@ public:
     const string name;
     const uid_t uid;
 
-    list<Comparison*> comparisons;
+    list<Comparison> comparisons;
 
     map<string, unsigned int> locks;
 

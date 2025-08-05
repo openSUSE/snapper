@@ -55,9 +55,9 @@ Client::~Client()
     if (files_transfer_thread.joinable())
 	files_transfer_thread.join();
 
-    for (list<Comparison*>::iterator it = comparisons.begin(); it != comparisons.end(); ++it)
+    for (Comparison& comparison : comparisons)
     {
-	delete_comparison(it);
+	delete_comparison(comparison);
     }
 
     for (map<pair<string, unsigned int>, unsigned int>::iterator it1 = mounts.begin();
@@ -80,14 +80,14 @@ Client::~Client()
 }
 
 
-list<Comparison*>::iterator
+list<Comparison>::iterator
 Client::find_comparison(Snapper* snapper, Snapshots::const_iterator snapshot1,
 			Snapshots::const_iterator snapshot2)
 {
-    for (list<Comparison*>::iterator it = comparisons.begin(); it != comparisons.end(); ++it)
+    for (list<Comparison>::iterator it = comparisons.begin(); it != comparisons.end(); ++it)
     {
-	if ((*it)->getSnapper() == snapper && (*it)->getSnapshot1() == snapshot1 &&
-	    (*it)->getSnapshot2() == snapshot2)
+	if (it->getSnapper() == snapper && it->getSnapshot1() == snapshot1 &&
+	    it->getSnapshot2() == snapshot2)
 	    return it;
     }
 
@@ -96,7 +96,7 @@ Client::find_comparison(Snapper* snapper, Snapshots::const_iterator snapshot1,
 }
 
 
-list<Comparison*>::iterator
+list<Comparison>::iterator
 Client::find_comparison(Snapper* snapper, unsigned int number1, unsigned int number2)
 {
     Snapshots& snapshots = snapper->getSnapshots();
@@ -108,18 +108,20 @@ Client::find_comparison(Snapper* snapper, unsigned int number1, unsigned int num
 
 
 void
-Client::delete_comparison(list<Comparison*>::iterator it)
+Client::delete_comparison(Comparison& comparison)
 {
-    const Snapper* s = (*it)->getSnapper();
+    // TODO: function name is misleading
 
-    for (MetaSnappers::iterator it2 = meta_snappers.begin(); it2 != meta_snappers.end(); ++it2)
+    // TODO: a class MetaComparison with integrated RefCounter would be cool to avoid this
+    // function entirely
+
+    const Snapper* snapper = comparison.getSnapper();
+
+    for (MetaSnapper& meta_snapper : meta_snappers)
     {
-	if (it2->is_equal(s))
-	    it2->dec_use_count();
+	if (meta_snapper.is_equal(snapper))
+	    meta_snapper.dec_use_count();
     }
-
-    delete *it;
-    *it = nullptr;
 }
 
 
@@ -1479,12 +1481,12 @@ Client::create_comparison(DBus::Connection& conn, DBus::Message& msg)
 
     lock.unlock();
 
-    Comparison* comparison = new Comparison(snapper, snapshot1, snapshot2, false);
-    dbus_uint32_t num_files = comparison->getFiles().size();
+    Comparison comparison(snapper, snapshot1, snapshot2, false);
+    dbus_uint32_t num_files = comparison.getFiles().size();
 
     lock.lock();
 
-    comparisons.push_back(comparison);
+    comparisons.push_back(std::move(comparison));
 
     it->inc_use_count();
 
@@ -1514,9 +1516,9 @@ Client::delete_comparison(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    list<Comparison*>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
+    list<Comparison>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
 
-    delete_comparison(it2);
+    delete_comparison(*it2);
     comparisons.erase(it2);
 
     DBus::MessageMethodReturn reply(msg);
@@ -1542,9 +1544,9 @@ Client::get_files(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    list<Comparison*>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
+    list<Comparison>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
 
-    const Files& files = (*it2)->getFiles();
+    const Files& files = it2->getFiles();
 
     DBus::MessageMethodReturn reply(msg);
 
@@ -1572,9 +1574,9 @@ Client::get_files_by_pipe(DBus::Connection& conn, DBus::Message& msg)
 
     check_permission(conn, msg, *it);
 
-    list<Comparison*>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
+    list<Comparison>::iterator it2 = find_comparison(it->getSnapper(), num1, num2);
 
-    const Files& files = (*it2)->getFiles();
+    const Files& files = it2->getFiles();
 
     DBus::MessageMethodReturn reply(msg);
 
