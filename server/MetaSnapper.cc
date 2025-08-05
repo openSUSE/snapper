@@ -152,10 +152,8 @@ MetaSnappers::init()
 {
     list<ConfigInfo> config_infos = Snapper::getConfigs("/");
 
-    for (list<ConfigInfo>::iterator it = config_infos.begin(); it != config_infos.end(); ++it)
-    {
-	entries.emplace_back(*it);
-    }
+    for (const ConfigInfo& config_info : config_infos)
+	entries.emplace_back(config_info);
 }
 
 
