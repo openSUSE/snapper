@@ -1,5 +1,5 @@
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <iostream>
 
 #include <snapper/Snapper.h>
@@ -7,18 +7,16 @@
 using namespace snapper;
 using namespace std;
 
+
 int
 main(int argc, char** argv)
 {
-    Snapper* sh = new Snapper("root", "/");
+    Snapper snapper("root", "/");
 
-    const Snapshots& snapshots = sh->getSnapshots();
-    for (Snapshots::const_iterator it = snapshots.begin(); it != snapshots.end(); ++it)
-    {
-	cout << *it << endl;
-    }
+    const Snapshots& snapshots = snapper.getSnapshots();
 
-    delete sh;
+    for (const Snapshot& snapshot : snapshots)
+	cout << snapshot << '\n';
 
     exit(EXIT_SUCCESS);
 }

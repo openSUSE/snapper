@@ -1,5 +1,5 @@
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <iostream>
 
 #include <snapper/Compare.h>
