@@ -86,7 +86,7 @@ namespace DBus
 
     Unmarshaller::Unmarshaller(Message& msg)
     {
-	iters.push_back(new DBusMessageIter());
+	iters.emplace_back();
 	if (!dbus_message_iter_init(msg.get_message(), top()))
 	    SN_THROW(FatalException());
     }
@@ -94,7 +94,6 @@ namespace DBus
 
     Unmarshaller::~Unmarshaller()
     {
-	delete iters.back();
 	iters.pop_back();
 	assert(iters.empty());
     }
@@ -103,16 +102,14 @@ namespace DBus
     void
     Unmarshaller::open_recurse()
     {
-	DBusMessageIter* iter2 = new DBusMessageIter();
-	dbus_message_iter_recurse(top(), iter2);
-	iters.push_back(iter2);
+	iters.emplace_back();
+	dbus_message_iter_recurse(second(), top());
     }
 
 
     void
     Unmarshaller::close_recurse()
     {
-	delete iters.back();
 	iters.pop_back();
 	dbus_message_iter_next(top());
     }
@@ -120,14 +117,13 @@ namespace DBus
 
     Marshaller::Marshaller(Message& msg)
     {
-	iters.push_back(new DBusMessageIter());
+	iters.emplace_back();
 	dbus_message_iter_init_append(msg.get_message(), top());
     }
 
 
     Marshaller::~Marshaller()
     {
-	delete iters.back();
 	iters.pop_back();
 	assert(iters.empty());
     }
@@ -136,63 +132,54 @@ namespace DBus
     void
     Marshaller::open_struct()
     {
-	DBusMessageIter* iter2 = new DBusMessageIter();
-	if (!dbus_message_iter_open_container(top(), DBUS_TYPE_STRUCT, NULL, iter2))
+	iters.emplace_back();
+	if (!dbus_message_iter_open_container(second(), DBUS_TYPE_STRUCT, NULL, top()))
 	    SN_THROW(FatalException());
-	iters.push_back(iter2);
     }
 
 
     void
     Marshaller::close_struct()
     {
-	DBusMessageIter* iter2 = top();
-	iters.pop_back();
-	if (!dbus_message_iter_close_container(top(), iter2))
+	if (!dbus_message_iter_close_container(second(), top()))
 	    SN_THROW(FatalException());
-	delete iter2;
+	iters.pop_back();
     }
 
 
     void
     Marshaller::open_array(const char* signature)
     {
-	DBusMessageIter* iter2 = new DBusMessageIter();
-	if (!dbus_message_iter_open_container(top(), DBUS_TYPE_ARRAY, signature, iter2))
+	iters.emplace_back();
+	if (!dbus_message_iter_open_container(second(), DBUS_TYPE_ARRAY, signature, top()))
 	    SN_THROW(FatalException());
-	iters.push_back(iter2);
     }
 
 
     void
     Marshaller::close_array()
     {
-	DBusMessageIter* iter2 = top();
-	iters.pop_back();
-	if (!dbus_message_iter_close_container(top(), iter2))
+	if (!dbus_message_iter_close_container(second(), top()))
 	    SN_THROW(FatalException());
-	delete iter2;
+	iters.pop_back();
     }
 
 
     void
     Marshaller::open_dict_entry()
     {
-	DBusMessageIter* iter2 = new DBusMessageIter();
-	if (!dbus_message_iter_open_container(top(), DBUS_TYPE_DICT_ENTRY, 0, iter2))
+	iters.emplace_back();
+	if (!dbus_message_iter_open_container(second(), DBUS_TYPE_DICT_ENTRY, NULL, top()))
 	    SN_THROW(FatalException());
-	iters.push_back(iter2);
     }
 
 
     void
     Marshaller::close_dict_entry()
     {
-	DBusMessageIter* iter2 = top();
-	iters.pop_back();
-	if (!dbus_message_iter_close_container(top(), iter2))
+	if (!dbus_message_iter_close_container(second(), top()))
 	    SN_THROW(FatalException());
-	delete iter2;
+	iters.pop_back();
     }
 
 
@@ -482,11 +469,11 @@ namespace DBus
     {
 	marshaller.open_array("{ss}");
 
-	for (map<string, string>::const_iterator it = data.begin(); it != data.end() ; ++it)
+	for (const map<string, string>::value_type& value : data)
 	{
 	    marshaller.open_dict_entry();
 
-	    marshaller << it->first << it->second;
+	    marshaller << value.first << value.second;
 
 	    marshaller.close_dict_entry();
 	}

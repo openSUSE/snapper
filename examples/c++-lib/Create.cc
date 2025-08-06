@@ -1,7 +1,5 @@
 
-#include <unistd.h>
-#include <sys/types.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <iostream>
 
 #include <snapper/Snapper.h>
@@ -9,10 +7,11 @@
 using namespace snapper;
 using namespace std;
 
+
 int
 main(int argc, char** argv)
 {
-    Snapper* sh = new Snapper("root", "/");
+    Snapper snapper("root", "/");
 
     SCD scd;
     scd.uid = getuid();
@@ -21,9 +20,7 @@ main(int argc, char** argv)
 
     Plugins::Report report;
 
-    sh->createSingleSnapshot(scd, report);
-
-    delete sh;
+    snapper.createSingleSnapshot(scd, report);
 
     exit(EXIT_SUCCESS);
 }

@@ -177,19 +177,26 @@ namespace DBus
     template <> struct TypeInfo<string> { static const char* signature; };
 
 
+    // Note: mashalling functions below are not exception safe: If an FatalException is
+    // thrown the internal state may be broken afterwards.
+
+
     class Marshalling
     {
 
     public:
 
-	DBusMessageIter* top() { return iters.back(); }
+	DBusMessageIter* top() { return &iters.back(); }
+	DBusMessageIter* second() { return &iters[iters.size() - 2]; }
 
 	int get_type() { return dbus_message_iter_get_arg_type(top()); }
 	string get_signature();
 
     protected:
 
-	vector<DBusMessageIter*> iters;
+	// According to the DBus documentation DBusMessageIter can be copied by assignment
+	// or memcpy(). So we are fine even if the vector gets resized.
+	vector<DBusMessageIter> iters;
 
     };
 
@@ -288,9 +295,9 @@ namespace DBus
     {
 	marshaller.open_array(TypeInfo<Type>::signature);
 
-	for (typename vector<Type>::const_iterator it = data.begin(); it != data.end(); ++it)
+	for (const Type& value : data)
 	{
-	    marshaller << *it;
+	    marshaller << value;
 	}
 
 	marshaller.close_array();
