@@ -232,9 +232,8 @@ namespace DBus
     dbus_bool_t
     MainLoop::add_watch(DBusWatch* dbus_watch, void* data)
     {
-	Watch tmp(dbus_watch);
 	MainLoop* s = static_cast<MainLoop*>(data);
-	s->watches.push_back(tmp);
+	s->watches.emplace_back(dbus_watch);
 	return true;
     }
 
@@ -260,9 +259,8 @@ namespace DBus
     dbus_bool_t
     MainLoop::add_timeout(DBusTimeout* dbus_timeout, void* data)
     {
-	Timeout tmp(dbus_timeout);
 	MainLoop* s = static_cast<MainLoop*>(data);
-	s->timeouts.push_back(tmp);
+	s->timeouts.emplace_back(dbus_timeout);
 	return true;
     }
 
