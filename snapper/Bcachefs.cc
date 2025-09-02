@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 SUSE LLC
+ * Copyright (c) [2024-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -35,7 +35,7 @@
 #include "snapper/Snapper.h"
 #include "snapper/SnapperTmpl.h"
 #include "snapper/SnapperDefines.h"
-
+#include "snapper/PluginsImpl.h"
 #include "snapper/Acls.h"
 #include "snapper/Exception.h"
 #ifdef ENABLE_SELINUX
@@ -292,10 +292,14 @@ namespace snapper
 
 
     void
-    Bcachefs::setSnapshotReadOnly(unsigned int num, bool read_only) const
+    Bcachefs::setSnapshotReadOnly(unsigned int num, bool read_only, Plugins::Report& report) const
     {
+	Plugins::set_read_only(Plugins::Stage::PRE_ACTION, subvolume, this, num, report);
+
 	SDir snapshot_dir = openSnapshotDir(num);
 	set_subvolume_read_only(snapshot_dir.fd(), read_only);
+
+	Plugins::set_read_only(Plugins::Stage::POST_ACTION, subvolume, this, num, report);
     }
 
 

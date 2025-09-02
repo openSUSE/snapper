@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -135,7 +135,7 @@ namespace snapper
 
 	    if (set_read_only)
 	    {
-		snapshot->setReadOnly(read_only);
+		snapshot->setReadOnly(read_only, report);
 	    }
 
 	    if (set_default)

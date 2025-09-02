@@ -107,14 +107,14 @@ namespace snapper
 	SDir openSnapshotDir() const;
 
 	/**
-	 * Determine iff snapshot is read-only (only for btrfs).
+	 * Determine iff snapshot is read-only (may not be supported by all file system types).
 	 */
 	bool isReadOnly() const;
 
 	/**
-	 * Set snapshot read-only or read-write (only for btrfs).
+	 * Set snapshot read-only or read-write (may not be supported by all file system types).
 	 */
-	void setReadOnly(bool read_only);
+	void setReadOnly(bool read_only, Plugins::Report& report);
 
 	/**
 	 * Determine iff snapshot is default (will be activated on next boot time).

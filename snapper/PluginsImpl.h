@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2022-2023] SUSE LLC
+ * Copyright (c) [2022-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -51,6 +51,9 @@ namespace snapper
 			     const Snapshot& snapshot, Report& report);
 	void delete_snapshot(Stage stage, const string& subvolume, const Filesystem* filesystem,
 			     const Snapshot& snapshot, Report& report);
+
+	void set_read_only(Stage stage, const string& subvolume, const Filesystem* filesystem,
+			   unsigned int num, Report& report);
 
 	void set_default_snapshot(Stage stage, const string& subvolume, const Filesystem* filesystem,
 				  unsigned int num, Report& report);

@@ -2,13 +2,13 @@
 <refentry id='snapper8' xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <refentryinfo>
-    <date>2025-07-23</date>
+    <date>2025-09-02</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2025-07-23</refmiscinfo>
+    <refmiscinfo class='date'>2025-09-02</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -952,6 +952,18 @@
 	<term><option>delete-snapshot-post <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
 	<listitem>
 	  <para>Executed after a snapshot was removed</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>set-read-only-pre <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<listitem>
+	  <para>Executed before a snapshot is set read-only or read-write</para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><option>set-read-only-post <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
+	<listitem>
+	  <para>Executed after  a snapshot is set read-only or read-write</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
