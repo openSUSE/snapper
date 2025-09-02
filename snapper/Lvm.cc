@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2020-2023] SUSE LLC
+ * Copyright (c) [2020-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -43,6 +43,7 @@
 #include "snapper/SystemCmd.h"
 #include "snapper/SnapperDefines.h"
 #include "snapper/LvmCache.h"
+#include "snapper/PluginsImpl.h"
 #ifdef ENABLE_SELINUX
 #include "snapper/Selinux.h"
 #endif
@@ -383,11 +384,15 @@ namespace snapper
 
 
     void
-    Lvm::setSnapshotReadOnly(unsigned int num, bool read_only) const
+    Lvm::setSnapshotReadOnly(unsigned int num, bool read_only, Plugins::Report& report) const
     {
 	try
 	{
+	    Plugins::set_read_only(Plugins::Stage::PRE_ACTION, subvolume, this, num, report);
+
 	    cache->set_read_only(vg_name, snapshotLvName(num), read_only);
+
+	    Plugins::set_read_only(Plugins::Stage::POST_ACTION, subvolume, this, num, report);
 	}
 	catch (const LvmCacheException& e)
 	{

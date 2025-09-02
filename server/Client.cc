@@ -1199,7 +1199,7 @@ Client::set_snapshot_read_only(DBus::Connection& conn, DBus::Message& msg)
     if (snap == snapshots.end())
 	SN_THROW(IllegalSnapshotException());
 
-    snap->setReadOnly(read_only);
+    snap->setReadOnly(read_only, report);
 
     DBus::MessageMethodReturn reply(msg);
 

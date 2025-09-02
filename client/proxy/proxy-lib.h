@@ -47,7 +47,7 @@ public:
     virtual time_t getDate() const override { return it->getDate(); }
     virtual uid_t getUid() const override { return it->getUid(); }
     virtual bool isReadOnly() const override { return it->isReadOnly(); }
-    virtual void setReadOnly(bool read_only) override { it->setReadOnly(read_only); }
+    virtual void setReadOnly(bool read_only, Plugins::Report& report) override { it->setReadOnly(read_only, report); }
     virtual unsigned int getPreNum() const override { return it->getPreNum(); }
     virtual const string& getDescription() const override { return it->getDescription(); }
     virtual const string& getCleanup() const override { return it->getCleanup(); }

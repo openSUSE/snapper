@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2023] SUSE LLC
+ * Copyright (c) [2016-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -81,7 +81,7 @@ namespace snapper
 	virtual void umountSnapshot(unsigned int num) const = 0;
 
 	virtual bool isSnapshotReadOnly(unsigned int num) const = 0;
-	virtual void setSnapshotReadOnly(unsigned int num, bool read_only) const = 0;
+	virtual void setSnapshotReadOnly(unsigned int num, bool read_only, Plugins::Report& report) const = 0;
 
 	virtual bool checkSnapshot(unsigned int num) const = 0;
 

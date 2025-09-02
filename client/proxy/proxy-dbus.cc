@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2024] SUSE LLC
+ * Copyright (c) [2016-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -64,7 +64,7 @@ ProxySnapshotDbus::isReadOnly() const
 
 
 void
-ProxySnapshotDbus::setReadOnly(bool read_only)
+ProxySnapshotDbus::setReadOnly(bool read_only, Plugins::Report& report)
 {
     command_set_snapshot_read_only(conn(), configName(), num, read_only);
 }

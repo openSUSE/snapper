@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2016-2024] SUSE LLC
+ * Copyright (c) [2016-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -59,7 +59,7 @@ public:
     virtual time_t getDate() const override { return date; }
     virtual uid_t getUid() const override { return uid; }
     virtual bool isReadOnly() const override;
-    virtual void setReadOnly(bool read_only) override;
+    virtual void setReadOnly(bool read_only, Plugins::Report& report) override;
     virtual unsigned int getPreNum() const override { return pre_num; }
     virtual const string& getDescription() const override { return description; }
     virtual const string& getCleanup() const override { return cleanup; }

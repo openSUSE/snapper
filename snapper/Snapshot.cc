@@ -134,7 +134,7 @@ namespace snapper
 
 
     void
-    Snapshot::setReadOnly(bool read_only)
+    Snapshot::setReadOnly(bool read_only, Plugins::Report& report)
     {
 	if (isCurrent())
 	    SN_THROW(IllegalSnapshotException());
@@ -144,7 +144,7 @@ namespace snapper
 
 	Snapshot::read_only = read_only;
 
-	snapper->getFilesystem()->setSnapshotReadOnly(num, read_only);
+	snapper->getFilesystem()->setSnapshotReadOnly(num, read_only, report);
 
 	if (!read_only)
 	    deleteFilelists();

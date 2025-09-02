@@ -209,6 +209,26 @@ namespace snapper
 
 
     void
+    Plugins::set_read_only(Stage stage, const string& subvolume, const Filesystem* filesystem,
+			   unsigned int num, Report& report)
+    {
+	switch (stage)
+	{
+	    case Stage::PRE_ACTION:
+		run_scripts({ "set-read-only-pre", subvolume, filesystem->fstype(),
+			std::to_string(num) }, report);
+		break;
+
+	    case Stage::POST_ACTION:
+		grub(subvolume, filesystem, "--enable", report);
+		run_scripts({ "set-read-only-post", subvolume, filesystem->fstype(),
+			std::to_string(num) }, report);
+		break;
+	}
+    }
+
+
+    void
     Plugins::set_default_snapshot(Stage stage, const string& subvolume, const Filesystem* filesystem,
 				  unsigned int num, Report& report)
     {
