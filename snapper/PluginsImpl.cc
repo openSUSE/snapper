@@ -220,7 +220,7 @@ namespace snapper
 		break;
 
 	    case Stage::POST_ACTION:
-		grub(subvolume, filesystem, "--enable", report);
+		grub(subvolume, filesystem, "--refresh", report);
 		run_scripts({ "set-read-only-post", subvolume, filesystem->fstype(),
 			std::to_string(num) }, report);
 		break;
