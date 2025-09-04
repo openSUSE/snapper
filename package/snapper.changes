@@ -843,7 +843,6 @@ Tue Sep 22 14:55:10 CEST 2015 - shundhammer@suse.de
 - version 0.2.9
 
 -------------------------------------------------------------------
-
 Tue Sep 22 12:20:28 CEST 2015 - aschnell@suse.com
 
 - added program to create btrfs subvolume suitable for systems
