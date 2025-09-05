@@ -43,7 +43,6 @@ Group:          System/Packages
 URL:            http://snapper.io/
 Source:         snapper-%{version}.tar.xz
 %if 0%{?suse_version}
-BuildRequires:  libboost_system-devel
 BuildRequires:  libboost_thread-devel
 BuildRequires:  libboost_test-devel
 %else

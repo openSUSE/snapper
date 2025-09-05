@@ -3,7 +3,6 @@
 #
 
 AM_CPPFLAGS = -I$(top_srcdir)
-AM_LDFLAGS = -lboost_system
 
 LDADD = ../snapper/libsnapper.la
 

@@ -10,7 +10,7 @@ jobs:
     steps:
 
     - name: Install additional packages
-      run: apt-get update && apt-get install -y --no-install-recommends acl-dev autoconf automake docbook-xsl g++ gettext libboost-dev libboost-system-dev libboost-test-dev libboost-thread-dev libbtrfs-dev libdbus-1-dev libjson-c-dev libmount-dev libpam-dev libtool libxml2-dev libz-dev locales-all make ncurses-dev xsltproc xz-utils
+      run: apt-get update && apt-get install -y --no-install-recommends acl-dev autoconf automake docbook-xsl g++ gettext libboost-dev libboost-test-dev libboost-thread-dev libbtrfs-dev libdbus-1-dev libjson-c-dev libmount-dev libpam-dev libtool libxml2-dev libz-dev locales-all make ncurses-dev xsltproc xz-utils
 
     - name: List installed packages
       run: apt list --installed | sort

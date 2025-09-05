@@ -16,4 +16,4 @@ snapperd_SOURCES =					\
 	FilesTransferTask.cc	FilesTransferTask.h
 
 snapperd_LDADD = ../snapper/libsnapper.la ../dbus/libdbus.la -lrt
-snapperd_LDFLAGS = -lboost_system -lboost_thread -lpthread
+snapperd_LDFLAGS = -lboost_thread -lpthread
