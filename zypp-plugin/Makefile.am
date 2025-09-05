@@ -33,7 +33,6 @@ forwarding_zypp_plugin_SOURCES = \
 forwarding_zypp_plugin_LDADD = \
 	../snapper/libsnapper.la \
 	../stomp/libstomp.la \
-	-lboost_system \
 	-lpthread
 
 TESTS = solvable-matcher.test
