@@ -255,7 +255,7 @@ namespace snapper
 
 
     void
-    Ext4::setSnapshotReadOnly(unsigned int num, bool read_only) const
+    Ext4::setSnapshotReadOnly(unsigned int num, bool read_only, Plugins::Report& report) const
     {
 	// TODO
     }
