@@ -14,17 +14,12 @@ EXTRA_DIST = $(doc_DATA) VERSION LIBVERSION
 snapper-$(VERSION).tar.xz: dist-xz
 
 DEBIAN_FLAVOURS =	\
-	Debian_10.0	\
 	Debian_11.0	\
 	Debian_12.0	\
 	Debian_13.0	\
 	Debian_Unstable
 
 UBUNTU_FLAVOURS =	\
-	xUbuntu_18.04	\
-	xUbuntu_18.10	\
-	xUbuntu_19.04	\
-	xUbuntu_19.10	\
 	xUbuntu_20.04	\
 	xUbuntu_20.10	\
 	xUbuntu_21.04	\
@@ -39,7 +34,6 @@ UBUNTU_FLAVOURS =	\
 	xUbuntu_25.10
 
 RASPBIAN_FLAVOURS =	\
-	Raspbian_10	\
 	Raspbian_11	\
 	Raspbian_12	\
 	Raspbian_13
