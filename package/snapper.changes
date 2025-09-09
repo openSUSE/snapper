@@ -2,6 +2,7 @@
 Fri Sep 05 12:52:07 CEST 2025 - aschnell@suse.com
 
 - do not link with stub libboost_system
+- version 0.13.0
 
 -------------------------------------------------------------------
 Tue Sep 02 14:29:41 CEST 2025 - aschnell@suse.com
