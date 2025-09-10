@@ -20,6 +20,8 @@
  */
 
 
+#include <cassert>
+
 #include "RefCounter.h"
 
 
