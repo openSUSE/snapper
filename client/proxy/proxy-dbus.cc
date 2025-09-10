@@ -20,6 +20,8 @@
  */
 
 
+#include <cstring>
+
 #include "proxy-dbus.h"
 #include "commands.h"
 #include "../utils/text.h"
