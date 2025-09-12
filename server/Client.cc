@@ -23,6 +23,8 @@
 
 #include "config.h"
 
+#include <cassert>
+
 #include <snapper/LoggerImpl.h>
 #include <snapper/SnapperTmpl.h>
 #include <snapper/Version.h>
