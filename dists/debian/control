@@ -2,7 +2,7 @@ Source: snapper
 Priority: optional
 Section: admin
 Maintainer: Arvin Schnell <aschnell@suse.com>
-Build-Depends: debhelper (>= 4.1.16), g++, libboost-dev, libboost-thread-dev, libboost-test-dev, libxml2-dev, libz-dev, libdbus-1-dev, libpam-dev, xsltproc, docbook-xsl
+Build-Depends: debhelper (>= 4.1.16), btrfs-progs, g++, libboost-dev, libboost-thread-dev, libboost-test-dev, libxml2-dev, libz-dev, libdbus-1-dev, libpam-dev, xsltproc, docbook-xsl
 Homepage: http://en.opensuse.org/Portal:Snapper
 
 Package: snapper

@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Sep 24 16:12:34 CEST 2025 - aschnell@suse.com
+
+- detect correct path of btrfs binary on Debian and derivatives
+  (gh#openSUSE/snapper#1057)
+
+-------------------------------------------------------------------
 Fri Sep 05 12:52:07 CEST 2025 - aschnell@suse.com
 
 - do not link with stub libboost_system
