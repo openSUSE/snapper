@@ -4,7 +4,7 @@ Version: @VERSION@-1
 Binary: snapper
 Maintainer: Arvin Schnell <aschnell@suse.com>
 Architecture: any
-Build-Depends: debhelper (>= 4.1.16), acl-dev, dbus, g++, libboost-dev, libboost-thread-dev, libboost-test-dev, libxml2-dev, libz-dev, libdbus-1-dev, libjson-c-dev, libpam-dev, xsltproc, docbook-xsl, language-pack-en, language-pack-de, language-pack-fr, ncurses-dev
+Build-Depends: debhelper (>= 4.1.16), acl-dev, btrfs-progs, dbus, g++, libboost-dev, libboost-thread-dev, libboost-test-dev, libxml2-dev, libz-dev, libdbus-1-dev, libjson-c-dev, libpam-dev, xsltproc, docbook-xsl, language-pack-en, language-pack-de, language-pack-fr, ncurses-dev
 #
 # The 'Files' line is generated during 'make package':
 # Files:
