@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 SUSE LLC
+ * Copyright (c) [2024-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -29,6 +29,8 @@
 #include "../proxy/proxy.h"
 #include "../proxy/locker.h"
 
+#include "CmdBtrfs.h"
+
 
 namespace snapper
 {
@@ -52,7 +54,7 @@ namespace snapper
 
 	TheBigThing(unsigned int num) : num(num) {}
 
-	void transfer(const BackupConfig& backup_config, const TheBigThings& the_big_things, bool quiet);
+	void transfer(const BackupConfig& backup_config, TheBigThings& the_big_things, bool quiet);
 
 	void remove(const BackupConfig& backup_config, bool quiet);
 
@@ -109,6 +111,9 @@ namespace snapper
 	 * Detect a suitable parent for btrfs send. Return end() iff none is found.
 	 */
 	const_iterator find_send_parent(const TheBigThing& the_big_thing) const;
+
+	CmdBtrfsVersion source_btrfs_version;
+	CmdBtrfsVersion target_btrfs_version;
 
     private:
 

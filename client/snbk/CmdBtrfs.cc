@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2015] Novell, Inc.
- * Copyright (c) [2017-2024] SUSE LLC
+ * Copyright (c) [2017-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -21,6 +21,7 @@
  */
 
 
+#include <sys/utsname.h>
 #include <cstring>
 #include <regex>
 #include <boost/algorithm/string.hpp>
@@ -257,6 +258,90 @@ namespace snapper
 	s  << '\n';
 
 	return s;
+    }
+
+
+    void
+    CmdBtrfsVersion::query_version()
+    {
+	if (did_set_version)
+	    return;
+
+	SystemCmd::Args cmd_args = { btrfs_bin, "--version" };
+	SystemCmd cmd(shellify(shell, cmd_args));
+
+	if (cmd.retcode() != 0)
+	{
+	    y2err("command '" << cmd.cmd() << "' failed: " << cmd.retcode());
+	    for (const string& tmp : cmd.get_stdout())
+		y2err(tmp);
+	    for (const string& tmp : cmd.get_stderr())
+		y2err(tmp);
+
+	    SN_THROW(Exception("'btrfs --version' failed"));
+	}
+
+	parse_version(cmd.get_stdout()[0]);
+    }
+
+
+    void
+    CmdBtrfsVersion::parse_version(const string& version)
+    {
+	// example versions: "5.14 " (yes, with a trailing space), "6.0", "6.0.2"
+	const regex version_rx("btrfs-progs v([0-9]+)\\.([0-9]+)(\\.([0-9]+))?( )*", regex::extended);
+
+	smatch match;
+
+	if (!regex_match(version, match, version_rx))
+	    SN_THROW(Exception("failed to parse btrfs version '" + version + "'"));
+
+	major = stoi(match[1]);
+	minor = stoi(match[2]);
+	patchlevel = match[4].length() == 0 ? 0 : stoi(match[4]);
+
+	y2mil("major:" << major << " minor:" << minor << " patchlevel:" << patchlevel);
+
+	did_set_version = true;
+    }
+
+
+    int
+    CmdBtrfsVersion::supported_proto()
+    {
+	query_version();
+
+	if (major >= 6)
+	    return 2;
+
+	return 1;
+    }
+
+
+    int
+    Uname::supported_proto()
+    {
+	const regex release_rx("^([0-9]+)\\.([0-9]+).*", regex::extended);
+
+	struct utsname buffer;
+
+	if (uname(&buffer) < 0)
+	    SN_THROW(Exception("syscall uname failed"));
+
+	cmatch match;
+
+	if (!regex_match(buffer.release, match, release_rx))
+	    SN_THROW(Exception("failed to parse uname release '" + string(buffer.release) + "'"));
+
+	int major = stoi(match[1]);
+	int minor = stoi(match[2]);
+
+	y2mil("major:" << major << " minor:" << minor);
+
+	if (major >= 6)
+	    return 2;
+
+	return 1;
     }
 
 }

@@ -20,7 +20,7 @@
  */
 
 
-#include <stdio.h>
+#include <cstdio>
 #include <sys/stat.h>
 #include <functional>
 #include <memory>
@@ -182,6 +182,28 @@ namespace snapper
 	    return false;
 
 	value = json_object_get_int(child);
+
+	return true;
+    }
+
+
+    bool
+    get_child_nodes(json_object* parent, const char* name, vector<string>& values)
+    {
+	vector<json_object*> children;
+
+	if (!get_child_nodes(parent, name, children))
+	    return false;
+
+	values.clear();
+
+	for (json_object* child : children)
+	{
+	    if (!json_object_is_type(child, json_type_string))
+		return false;
+
+	    values.push_back(json_object_get_string(child));
+	}
 
 	return true;
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2017-2024] SUSE LLC
+ * Copyright (c) [2017-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -67,6 +67,9 @@ namespace snapper
     template<typename Type> bool
     get_child_value(json_object* parent, const char* name, Type& value);
 
+
+    bool
+    get_child_nodes(json_object* parent, const char* name, vector<string>& values);
 
     bool
     get_child_nodes(json_object* parent, const char* name, vector<json_object*>& children);
