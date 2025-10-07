@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 SUSE LLC
+ * Copyright (c) [2024-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -69,6 +69,10 @@ namespace snapper
 	    get_child_value(json_file.get_root(), "ssh-user", ssh_user);
 	    get_child_value(json_file.get_root(), "ssh-identity", ssh_identity);
 	}
+
+	get_child_value(json_file.get_root(), "send-compressed-data", send_compressed_data);
+	get_child_nodes(json_file.get_root(), "send-options", send_options);
+	get_child_nodes(json_file.get_root(), "receive-options", receive_options);
 
 	get_child_value(json_file.get_root(), "target-btrfs-bin", target_btrfs_bin);
 	get_child_value(json_file.get_root(), "target-findmnt-bin", target_findmnt_bin);

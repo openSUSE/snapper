@@ -57,7 +57,7 @@ namespace snapper
 
 
     void
-    TheBigThing::transfer(const BackupConfig& backup_config, const TheBigThings& the_big_things,
+    TheBigThing::transfer(const BackupConfig& backup_config, TheBigThings& the_big_things,
 			  bool quiet)
     {
 	if (!quiet)
@@ -137,16 +137,29 @@ namespace snapper
 
 	// Copy snapshot to target.
 
+	const int proto = std::min({
+	    Uname::supported_proto(),
+	    the_big_things.source_btrfs_version.supported_proto(),
+	    the_big_things.target_btrfs_version.supported_proto()
+	});
+
 	TheBigThings::const_iterator it1 = the_big_things.find_send_parent(*this);
 
 	SystemCmd::Args cmd3a_args = { BTRFS_BIN, "send" };
+	if (proto >= 2)
+	    cmd3a_args << "--proto" << to_string(proto);
+	if (backup_config.send_compressed_data && proto >= 2)
+	    cmd3a_args << "--compressed-data";
+	cmd3a_args << backup_config.send_options;
+
 	if (it1 != the_big_things.end())
 	    cmd3a_args << "-p" << backup_config.source_path + "/" SNAPSHOTS_NAME "/" +
 		to_string(it1->num) + "/" SNAPSHOT_NAME;
 	cmd3a_args << "--" << backup_config.source_path + "/" SNAPSHOTS_NAME "/" + num_string + "/" SNAPSHOT_NAME;
 
-	SystemCmd::Args cmd3b_args = { backup_config.target_btrfs_bin, "receive", "--",
-	    backup_config.target_path + "/" + num_string };
+	SystemCmd::Args cmd3b_args = { backup_config.target_btrfs_bin, "receive" };
+	cmd3b_args << backup_config.receive_options;
+	cmd3b_args << "--" << backup_config.target_path + "/" + num_string;
 
 	y2deb("source: " << cmd3a_args.get_values());
 	y2deb("target: " << cmd3b_args.get_values());
@@ -238,7 +251,9 @@ namespace snapper
 
 
     TheBigThings::TheBigThings(const BackupConfig& backup_config, ProxySnappers* snappers, bool verbose)
-	: snapper(snappers->getSnapper(backup_config.config)), locker(snapper)
+	: source_btrfs_version(BTRFS_BIN, backup_config.get_source_shell()),
+	  target_btrfs_version(backup_config.target_btrfs_bin, backup_config.get_target_shell()),
+	  snapper(snappers->getSnapper(backup_config.config)), locker(snapper)
     {
 	if (backup_config.source_path != snapper->getConfig().getSubvolume())
 	{

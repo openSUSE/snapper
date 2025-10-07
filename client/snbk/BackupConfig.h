@@ -70,6 +70,10 @@ namespace snapper
 	Shell get_source_shell() const;
 	Shell get_target_shell() const;
 
+	bool send_compressed_data = true;
+	vector<string> send_options;
+	vector<string> receive_options;
+
 	string target_btrfs_bin = BTRFS_BIN;
 	string target_findmnt_bin = FINDMNT_BIN;
 	string target_mkdir_bin = MKDIR_BIN;

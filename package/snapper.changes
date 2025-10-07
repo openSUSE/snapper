@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Oct 07 14:42:16 CEST 2025 - aschnell@suse.com
+
+- support sending compressed data in snbk
+  (gh#openSUSE/snapper#1059)
+
+-------------------------------------------------------------------
 Wed Sep 24 16:12:34 CEST 2025 - aschnell@suse.com
 
 - detect correct path of btrfs binary on Debian and derivatives
