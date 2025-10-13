@@ -34,8 +34,7 @@
 #include "../utils/text.h"
 
 #include "CmdBtrfs.h"
-#include "CmdFindmnt.h"
-#include "CmdRealpath.h"
+#include "CmdLs.h"
 #include "BackupConfig.h"
 #include "TheBigThing.h"
 
@@ -71,10 +70,10 @@ namespace snapper
 
 	const string num_string = to_string(num);
 
-	// Create directory on target.
+	// Create directory on target. No failure if it already exists (option --parents).
 
-	SystemCmd::Args cmd1_args = { backup_config.target_mkdir_bin, "--", backup_config.target_path + "/" +
-	    num_string };
+	SystemCmd::Args cmd1_args = { backup_config.target_mkdir_bin, "--parents", "--", backup_config.target_path +
+	    "/" + num_string };
 	SystemCmd cmd1(shellify(backup_config.get_target_shell(), cmd1_args));
 	if (cmd1.retcode() != 0)
 	{
@@ -320,112 +319,94 @@ namespace snapper
 	if (verbose)
 	    cout << _("Probing target snapshots.") << endl;
 
-	// In case the target-path is a symbolic link (or includes things like "/../") we
-	// need a lookup for the realpath first.
+	/* Using 'btrfs subvolume list' instead of 'ls' is much more complicated. */
 
-	CmdRealpath cmd_realpath(backup_config.target_realpath_bin, shell_target, backup_config.target_path);
-	const string target_path = cmd_realpath.get_realpath();
-
-	CmdFindmnt cmd_findmnt(backup_config.target_findmnt_bin, shell_target, target_path);
-	const string mount_point = cmd_findmnt.get_target();
-
-	if (target_path.size() < mount_point.size())
-	    SN_THROW(Exception("unsupported target-path setup"));
-
-	if (!boost::starts_with(target_path, mount_point))
-	    SN_THROW(Exception("unsupported target-path setup"));
-
-	CmdBtrfsSubvolumeList target_snapshots(backup_config.target_btrfs_bin, shell_target, mount_point);
-
-	string start;
-	if (target_path != mount_point)
-	    start = target_path.substr(mount_point.size() + 1) + "/";
-
-	static const regex subvol_regex("\\[(.*?)\\]");
-	smatch subvol;
-	if (regex_search(cmd_findmnt.get_source(), subvol, subvol_regex))
-		start = subvol[1].str().substr(1) + "/" + start;
+	CmdLs cmd_ls(backup_config.target_ls_bin, shell_target, backup_config.target_path);
 
 	if (verbose)
 	    cout << _("Probing extra information for target snapshots.") << endl;
 
-	static const regex num_regex("([0-9]+)/snapshot", regex::extended);
+	static const regex num_regex("[0-9]+", regex::extended);
 
-	for (const CmdBtrfsSubvolumeList::Entry& target_snapshot : target_snapshots)
+	for (const string& num_string : cmd_ls)
 	{
-	    if (!boost::starts_with(target_snapshot.path, start))
-		continue;
-
-	    string path = target_snapshot.path.substr(start.size());
-
-	    smatch match;
-
-	    if (!regex_match(path, match, num_regex))
+	    if (!regex_match(num_string, num_regex))
 	    {
-		string error = sformat(_("Invalid subvolume path '%s' on target."), path.c_str());
+		string error = sformat(_("Invalid subvolume path '%s' on target."), num_string.c_str());
 		SN_THROW(Exception(error));
 	    }
 
-	    unsigned int num = stoi(match[1]);
+	    unsigned int num = stoi(num_string);
+	    vector<TheBigThing>::iterator it = find(num);
 
 	    // Query additional information (receive-uuid, read-only) from btrfs.
 
-	    CmdBtrfsSubvolumeShow y(backup_config.target_btrfs_bin, shell_target, target_path + "/" + path);
-
-	    bool is_read_only = y.is_read_only();
-	    if (!is_read_only)
+	    try
 	    {
-		y2deb(num << " not read-only, maybe interrupted transfer");
-	    }
+		CmdBtrfsSubvolumeShow extra(backup_config.target_btrfs_bin, shell_target, backup_config.target_path +
+					    "/" + num_string + "/" SNAPSHOT_NAME);
 
-	    vector<TheBigThing>::iterator it = find(num);
-	    if (it != end())
-	    {
-		// Wrong receive-uuid can happen when a snapshots is transferred, then removed
-		// and a new one with the same number is generated.
-
-		// When a snapshot is restored using btrfs send and receive the received
-		// uuid of the source is identical to the received uuid of the target -
-		// not the uuid of the target. In that case the target is also valid.
-
-		bool correct_uuid = false;
-
-		if (!y.get_received_uuid().empty())
+		bool is_read_only = extra.is_read_only();
+		if (!is_read_only)
 		{
-		    if (it->source_uuid == y.get_received_uuid())
-			correct_uuid = true;
-		    else if (it->source_received_uuid == y.get_received_uuid())
-			correct_uuid = true;
-
-		    if (!correct_uuid)
-		    {
-			y2deb(num << " wrong uuid, maybe snapshot number reuse");
-		    }
+		    y2deb(num << " not read-only, maybe interrupted transfer");
 		}
 
-		if (correct_uuid && is_read_only)
-		    it->target_state = TheBigThing::TargetState::VALID;
+		if (it != end())
+		{
+		    // Wrong receive-uuid can happen when a snapshots is transferred, then removed
+		    // and a new one with the same number is generated.
+
+		    // When a snapshot is restored using btrfs send and receive the received
+		    // uuid of the source is identical to the received uuid of the target -
+		    // not the uuid of the target. In that case the target is also valid.
+
+		    bool correct_uuid = false;
+
+		    if (!extra.get_received_uuid().empty())
+		    {
+			if (it->source_uuid == extra.get_received_uuid())
+			    correct_uuid = true;
+			else if (it->source_received_uuid == extra.get_received_uuid())
+			    correct_uuid = true;
+
+			if (!correct_uuid)
+			{
+			    y2deb(num << " wrong uuid, maybe snapshot number reuse");
+			}
+		    }
+
+		    if (correct_uuid && is_read_only)
+			it->target_state = TheBigThing::TargetState::VALID;
+		    else
+			it->target_state = TheBigThing::TargetState::INVALID;
+		}
 		else
-		    it->target_state = TheBigThing::TargetState::INVALID;
+		{
+		    TheBigThing the_big_thing(num);
+
+		    // Cannot check received-uuid so assume valid.
+
+		    if (is_read_only)
+			the_big_thing.target_state = TheBigThing::TargetState::VALID;
+		    else
+			the_big_thing.target_state = TheBigThing::TargetState::INVALID;
+
+		    it = the_big_things.insert(the_big_things.end(), the_big_thing);
+		}
+
+		it->target_uuid = extra.get_uuid();
+		it->target_parent_uuid = extra.get_parent_uuid();
+		it->target_received_uuid = extra.get_received_uuid();
+		it->target_creation_time = extra.get_creation_time();
 	    }
-	    else
+	    catch (const Exception& e)
 	    {
-		TheBigThing the_big_thing(num);
+		SN_CAUGHT(e);
 
-		// Cannot check received-uuid so assume valid.
-
-		if (is_read_only)
-		    the_big_thing.target_state = TheBigThing::TargetState::VALID;
-		else
-		    the_big_thing.target_state = TheBigThing::TargetState::INVALID;
-
-		it = the_big_things.insert(the_big_things.end(), the_big_thing);
+		// target_state is plain and simply missing or the snapshot is not even in
+		// the list.
 	    }
-
-	    it->target_uuid = y.get_uuid();
-	    it->target_parent_uuid = y.get_parent_uuid();
-	    it->target_received_uuid = y.get_received_uuid();
-	    it->target_creation_time = y.get_creation_time();
 	}
     }
 

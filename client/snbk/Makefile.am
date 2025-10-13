@@ -19,8 +19,7 @@ snbk_SOURCES = 						\
 	GlobalOptions.cc	GlobalOptions.h		\
 	Shell.cc		Shell.h			\
 	CmdBtrfs.cc		CmdBtrfs.h		\
-	CmdFindmnt.cc		CmdFindmnt.h		\
-	CmdRealpath.cc		CmdRealpath.h		\
+	CmdLs.cc		CmdLs.h			\
 	JsonFile.cc		JsonFile.h
 
 snbk_LDADD =				\

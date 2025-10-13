@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Mon Oct 13 08:43:43 CEST 2025 - aschnell@suse.com
+
+- redesigned target snapshot detection in snbk
+  (gh#openSUSE/snapper#1061)
+
+-------------------------------------------------------------------
 Tue Oct 07 14:42:16 CEST 2025 - aschnell@suse.com
 
 - support sending compressed data in snbk
