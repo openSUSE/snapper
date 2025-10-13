@@ -75,9 +75,8 @@ namespace snapper
 	get_child_nodes(json_file.get_root(), "receive-options", receive_options);
 
 	get_child_value(json_file.get_root(), "target-btrfs-bin", target_btrfs_bin);
-	get_child_value(json_file.get_root(), "target-findmnt-bin", target_findmnt_bin);
+	get_child_value(json_file.get_root(), "target-ls-bin", target_ls_bin);
 	get_child_value(json_file.get_root(), "target-mkdir-bin", target_mkdir_bin);
-	get_child_value(json_file.get_root(), "target-realpath-bin", target_realpath_bin);
 	get_child_value(json_file.get_root(), "target-rm-bin", target_rm_bin);
 	get_child_value(json_file.get_root(), "target-rmdir-bin", target_rmdir_bin);
     }

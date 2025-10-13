@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2024 SUSE LLC
+ * Copyright (c) [2004-2015] Novell, Inc.
+ * Copyright (c) [2016-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -20,8 +21,8 @@
  */
 
 
-#ifndef SNAPPER_CMD_FINDMNT_H
-#define SNAPPER_CMD_FINDMNT_H
+#ifndef SNAPPER_CMD_LS_H
+#define SNAPPER_CMD_LS_H
 
 
 #include "Shell.h"
@@ -29,33 +30,33 @@
 
 namespace snapper
 {
-
     using std::string;
     using std::vector;
 
 
     /**
-     * Class to probe for mount points: Call "findmnt --target <path>".
+     * A sequence of file names found in a pathname.
      */
-    class CmdFindmnt
+    class CmdLs
     {
     public:
 
-	CmdFindmnt(const string& findmnt_bin, const Shell& shell, const string& path);
+	CmdLs(const string& ls_bin, const Shell& shell, const string& path);
 
-	const string& get_source() const { return source; }
-	const string& get_target() const { return target; }
+	typedef vector<string>::const_iterator const_iterator;
 
-	friend std::ostream& operator<<(std::ostream& s, const CmdFindmnt& cmd_findmnt);
+	const_iterator begin() const { return entries.begin(); }
+	const_iterator end() const { return entries.end(); }
+
+	friend std::ostream& operator<<(std::ostream& s, const CmdLs& cmd_ls);
 
     private:
 
-	void parse_json(const vector<string>& lines);
+	void parse(const vector<string>& lines);
 
 	const string path;
 
-	string source;
-	string target;
+	vector<string> entries;
 
     };
 

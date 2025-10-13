@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2024 SUSE LLC
+ * Copyright (c) [2004-2015] Novell, Inc.
+ * Copyright (c) [2016-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -20,21 +21,20 @@
  */
 
 
-#include "CmdRealpath.h"
-
+#include "snapper/SnapperTmpl.h"
 #include "snapper/SystemCmd.h"
-#include "snapper/SnapperDefines.h"
 #include "snapper/Exception.h"
 #include "snapper/LoggerImpl.h"
+#include "CmdLs.h"
 
 
 namespace snapper
 {
 
-    CmdRealpath::CmdRealpath(const string& realpath_bin, const Shell& shell, const string& path)
+    CmdLs::CmdLs(const string& ls_bin, const Shell& shell, const string& path)
 	: path(path)
     {
-	SystemCmd::Args cmd_args = { realpath_bin, "--canonicalize-existing", "--", path };
+	SystemCmd::Args cmd_args = { ls_bin, "-1", "--sort=none", path };
 	SystemCmd cmd(shellify(shell, cmd_args));
 
 	if (cmd.retcode() != 0)
@@ -45,29 +45,26 @@ namespace snapper
 	    for (const string& tmp : cmd.get_stderr())
 		y2err(tmp);
 
-	    SN_THROW(Exception("'realpath' failed"));
+	    SN_THROW(Exception("'ls' failed"));
 	}
 
 	parse(cmd.get_stdout());
-    }
-
-
-    void
-    CmdRealpath::parse(const vector<string>& lines)
-    {
-	if (lines.size() != 1)
-	    SN_THROW(Exception("failed to parse output of 'realpath'"));
-
-	realpath = lines[0];
 
 	y2mil(*this);
     }
 
 
-    std::ostream&
-    operator<<(std::ostream& s, const CmdRealpath& cmd_realpath)
+    void
+    CmdLs::parse(const vector<string>& lines)
     {
-	s << "path:" << cmd_realpath.path << " realpath:" << cmd_realpath.realpath;
+	entries = lines;
+    }
+
+
+    std::ostream&
+    operator<<(std::ostream& s, const CmdLs& cms_ls)
+    {
+	s << "path:" << cms_ls.path << " entries:" << cms_ls.entries << '\n';
 
 	return s;
     }

@@ -54,8 +54,8 @@ namespace snapper
 	enum class Column
 	{
 	    NAME, CONFIG, TARGET_MODE, AUTOMATIC, SOURCE_PATH, TARGET_PATH, SSH_HOST,
-	    SSH_USER, SSH_PORT, SSH_IDENTITY, TARGET_BTRFS_BIN, TARGET_FINDMNT_BIN,
-	    TARGET_MKDIR_BIN, TARGET_REALPATH_BIN, TARGET_RM_BIN, TARGET_RMDIR_BIN
+	    SSH_USER, SSH_PORT, SSH_IDENTITY, TARGET_BTRFS_BIN, TARGET_LS_BIN,
+	    TARGET_MKDIR_BIN, TARGET_RM_BIN, TARGET_RMDIR_BIN
 	};
 
 
@@ -97,14 +97,11 @@ namespace snapper
 		case Column::TARGET_BTRFS_BIN:
 		    return Cell(_("Target btrfs bin"));
 
-		case Column::TARGET_FINDMNT_BIN:
-		    return Cell(_("Target findmnt Bin"));
+		case Column::TARGET_LS_BIN:
+		    return Cell(_("Target ls Bin"));
 
 		case Column::TARGET_MKDIR_BIN:
 		    return Cell(_("Target mkdir bin"));
-
-		case Column::TARGET_REALPATH_BIN:
-		    return Cell(_("Target realpath bin"));
 
 		case Column::TARGET_RM_BIN:
 		    return Cell(_("Target rm bin"));
@@ -164,14 +161,11 @@ namespace snapper
 		case Column::TARGET_BTRFS_BIN:
 		    return backup_config.target_btrfs_bin;
 
-		case Column::TARGET_FINDMNT_BIN:
-		    return backup_config.target_findmnt_bin;
+		case Column::TARGET_LS_BIN:
+		    return backup_config.target_ls_bin;
 
 		case Column::TARGET_MKDIR_BIN:
 		    return backup_config.target_mkdir_bin;
-
-		case Column::TARGET_REALPATH_BIN:
-		    return backup_config.target_realpath_bin;
 
 		case Column::TARGET_RM_BIN:
 		    return backup_config.target_rm_bin;
@@ -302,8 +296,8 @@ namespace snapper
 	const vector<Column> all_columns = { Column::NAME, Column::CONFIG, Column::TARGET_MODE,
 	    Column::AUTOMATIC, Column::SOURCE_PATH, Column::TARGET_PATH, Column::SSH_HOST,
 	    Column::SSH_USER, Column::SSH_PORT, Column::SSH_IDENTITY, Column::TARGET_BTRFS_BIN,
-	    Column::TARGET_FINDMNT_BIN, Column::TARGET_MKDIR_BIN, Column::TARGET_REALPATH_BIN,
-	    Column::TARGET_RM_BIN, Column::TARGET_RMDIR_BIN
+	    Column::TARGET_LS_BIN, Column::TARGET_MKDIR_BIN, Column::TARGET_RM_BIN,
+	    Column::TARGET_RMDIR_BIN
 	};
 
 	switch (global_options.output_format())
@@ -327,8 +321,8 @@ namespace snapper
 
     const vector<string> EnumInfo<Column>::names({
 	"name", "config", "target-mode", "automatic", "source-path", "target-path", "ssh-host",
-	"ssh-user", "ssh-port", "ssh-identity", "target-btrfs-bin", "target-findmnt-bin",
-	"target-mkdir-bin", "target-realpath-bin", "target-rm-bin", "target-rmdir-bin"
+	"ssh-user", "ssh-port", "ssh-identity", "target-btrfs-bin", "target-ls-bin",
+	"target-mkdir-bin", "target-rm-bin", "target-rmdir-bin"
     });
 
 }
