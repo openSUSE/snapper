@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019-2024] SUSE LLC
+ * Copyright (c) [2019-2025] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -20,7 +20,7 @@
  */
 
 
-#include <stdlib.h>
+#include <cstdlib>
 #include <sys/types.h>
 #include <unistd.h>
 
@@ -451,6 +451,16 @@ main()
     }
 
     ProgramOptions options;
-    SnapperZyppCommitPlugin plugin(options);
-    return plugin.main();
+
+    try
+    {
+	SnapperZyppCommitPlugin plugin(options);
+	return plugin.main();
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	SN_CAUGHT(e);
+	y2err("failure (" << e.message() << ")");
+	return EXIT_FAILURE;
+    }
 }
