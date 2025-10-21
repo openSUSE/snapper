@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Oct 21 12:57:50 CEST 2025 - aschnell@suse.com
+
+- handle DBus connection error in snapper-zypp-plugin
+
+-------------------------------------------------------------------
 Mon Oct 13 08:43:43 CEST 2025 - aschnell@suse.com
 
 - redesigned target snapshot detection in snbk
