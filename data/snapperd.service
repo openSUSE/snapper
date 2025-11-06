@@ -7,7 +7,7 @@ Type=dbus
 BusName=org.opensuse.Snapper
 ExecStart=/usr/sbin/snapperd
 
-CapabilityBoundingSet=CAP_DAC_OVERRIDE CAP_FOWNER CAP_CHOWN CAP_FSETID CAP_SETFCAP CAP_SYS_ADMIN CAP_SYS_MODULE CAP_IPC_LOCK CAP_SYS_NICE
+CapabilityBoundingSet=CAP_DAC_OVERRIDE CAP_FOWNER CAP_CHOWN CAP_FSETID CAP_SETFCAP CAP_SYS_ADMIN CAP_SYS_MODULE CAP_IPC_LOCK CAP_SYS_NICE CAP_SYS_CHROOT
 LockPersonality=true
 NoNewPrivileges=false
 PrivateNetwork=true

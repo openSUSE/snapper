@@ -7,7 +7,7 @@ After=nss-user-lookup.target
 Type=oneshot
 ExecStart=/usr/bin/snapper --config root create --cleanup-algorithm number --description "boot"
 
-CapabilityBoundingSet=CAP_DAC_OVERRIDE CAP_FOWNER CAP_CHOWN CAP_FSETID CAP_SETFCAP CAP_SYS_ADMIN CAP_SYS_MODULE CAP_IPC_LOCK CAP_SYS_NICE
+CapabilityBoundingSet=CAP_DAC_OVERRIDE CAP_FOWNER CAP_CHOWN CAP_FSETID CAP_SETFCAP CAP_SYS_ADMIN CAP_SYS_MODULE CAP_IPC_LOCK CAP_SYS_NICE CAP_SYS_CHROOT
 LockPersonality=true
 NoNewPrivileges=false
 PrivateNetwork=true
