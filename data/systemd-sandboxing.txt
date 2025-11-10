@@ -25,7 +25,8 @@ CapabilityBoundingSet=CAP_FOWNER is needed if for home directories.
 CapabilityBoundingSet=CAP_DAC_OVERRIDE is needed for directory
 comparison (in some cases) - but not if using btrfs send/receive.
 
-Finally do not forget the plugins.
+Finally do not forget the plugins. For those systemd overrides are
+likely a good idea to extend capabilities.
 
 Have a lot of fun...
 
