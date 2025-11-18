@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Nov 18 10:23:16 CET 2025 - aschnell@suse.com
+
+- add CAP_MKNOD in snapper-backup.service
+  (gh#openSUSE/snapper#1067)
+
+-------------------------------------------------------------------
 Tue Oct 21 12:57:50 CEST 2025 - aschnell@suse.com
 
 - handle DBus connection error in snapper-zypp-plugin
