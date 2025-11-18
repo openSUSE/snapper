@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tajik openSUSE Localization\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-23 11:53+0200\n"
+"POT-Creation-Date: 2025-10-13 14:35+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Victor Ibragimov <victor.ibragimov@gmail.com>\n"
 "Language-Team: Tajik KDE & Software Localization - Victor Ibragimov <victor.ibragimov@gmail.com>\n"
@@ -1086,13 +1086,10 @@ msgstr ""
 msgid "Target btrfs bin"
 msgstr ""
 
-msgid "Target findmnt Bin"
+msgid "Target ls Bin"
 msgstr ""
 
 msgid "Target mkdir bin"
-msgstr ""
-
-msgid "Target realpath bin"
 msgstr ""
 
 msgid "Target rm bin"

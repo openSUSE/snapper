@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-23 11:53+0200\n"
+"POT-Creation-Date: 2025-10-13 14:35+0200\n"
 "PO-Revision-Date: 2025-07-22 14:59+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
@@ -1095,15 +1095,12 @@ msgstr "Kohteen tila"
 msgid "Target btrfs bin"
 msgstr ""
 
-msgid "Target findmnt Bin"
-msgstr ""
+#, fuzzy
+msgid "Target ls Bin"
+msgstr "Kohteen polku"
 
 msgid "Target mkdir bin"
 msgstr ""
-
-#, fuzzy
-msgid "Target realpath bin"
-msgstr "Kohteen polku"
 
 msgid "Target rm bin"
 msgstr ""

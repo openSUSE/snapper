@@ -9,11 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-23 11:53+0200\n"
+"POT-Creation-Date: 2025-10-13 14:35+0200\n"
 "PO-Revision-Date: 2025-07-24 09:59+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
-"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
-"\n"
+"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1094,14 +1093,12 @@ msgstr "Status van doel"
 msgid "Target btrfs bin"
 msgstr "Doel btrfs bin"
 
-msgid "Target findmnt Bin"
-msgstr "Doel findmnt Bin"
+#, fuzzy
+msgid "Target ls Bin"
+msgstr "Doel rm bin"
 
 msgid "Target mkdir bin"
 msgstr "Doel mkdir bin"
-
-msgid "Target realpath bin"
-msgstr "Doel realpath bin"
 
 msgid "Target rm bin"
 msgstr "Doel rm bin"
@@ -1280,6 +1277,12 @@ msgstr "gebruik: snbk [--global-options] <opdracht> [opdrachtargumenten]"
 
 msgid "yes"
 msgstr "ja"
+
+#~ msgid "Target findmnt Bin"
+#~ msgstr "Doel findmnt Bin"
+
+#~ msgid "Target realpath bin"
+#~ msgstr "Doel realpath bin"
 
 #~ msgid ""
 #~ "\t--columns <columns>\t\tColumns to show separated by comma.\n"
