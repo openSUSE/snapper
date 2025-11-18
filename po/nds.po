@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opensuse-i 18n\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-23 11:53+0200\n"
+"POT-Creation-Date: 2025-10-13 14:35+0200\n"
 "PO-Revision-Date: 2012-11-26 14:24+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1095,13 +1095,10 @@ msgstr ""
 msgid "Target btrfs bin"
 msgstr ""
 
-msgid "Target findmnt Bin"
+msgid "Target ls Bin"
 msgstr ""
 
 msgid "Target mkdir bin"
-msgstr ""
-
-msgid "Target realpath bin"
 msgstr ""
 
 msgid "Target rm bin"

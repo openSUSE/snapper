@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-23 11:53+0200\n"
+"POT-Creation-Date: 2025-10-13 14:35+0200\n"
 "PO-Revision-Date: 2025-08-01 14:59+0000\n"
 "Last-Translator: Gemineo <vistatec@gemineo.de>\n"
-"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
-"\n"
+"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1090,14 +1089,12 @@ msgstr "Zielstatus"
 msgid "Target btrfs bin"
 msgstr "btrfs-Ziel-Bin"
 
-msgid "Target findmnt Bin"
-msgstr "findmnt-Ziel-Bin"
+#, fuzzy
+msgid "Target ls Bin"
+msgstr "rm-Ziel-Bin"
 
 msgid "Target mkdir bin"
 msgstr "mkdir-Ziel-Bin"
-
-msgid "Target realpath bin"
-msgstr "realpath-Ziel-Bin"
 
 msgid "Target rm bin"
 msgstr "rm-Ziel-Bin"
@@ -1276,6 +1273,12 @@ msgstr "Aufruf: snbk [--Globale-Optionen] <Befehl> [Befehlsargumente]"
 
 msgid "yes"
 msgstr "ja"
+
+#~ msgid "Target findmnt Bin"
+#~ msgstr "findmnt-Ziel-Bin"
+
+#~ msgid "Target realpath bin"
+#~ msgstr "realpath-Ziel-Bin"
 
 #, fuzzy
 #~ msgid ""

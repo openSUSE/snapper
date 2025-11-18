@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-23 11:53+0200\n"
+"POT-Creation-Date: 2025-10-13 14:35+0200\n"
 "PO-Revision-Date: 2025-07-24 16:59+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
-"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
-"\n"
+"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1102,14 +1101,12 @@ msgstr "Stav cieľa"
 msgid "Target btrfs bin"
 msgstr "Cieľový btrfs bin"
 
-msgid "Target findmnt Bin"
-msgstr "Cieľový findmnt Bin"
+#, fuzzy
+msgid "Target ls Bin"
+msgstr "Cieľový rm bin"
 
 msgid "Target mkdir bin"
 msgstr "Cieľový mkdir bin"
-
-msgid "Target realpath bin"
-msgstr "Cieľový realpath bin"
 
 msgid "Target rm bin"
 msgstr "Cieľový rm bin"
@@ -1288,6 +1285,12 @@ msgstr "použitie: snbk [--globálne-voľby] <príkaz> [--voľby-príkazu] [argu
 
 msgid "yes"
 msgstr "áno"
+
+#~ msgid "Target findmnt Bin"
+#~ msgstr "Cieľový findmnt Bin"
+
+#~ msgid "Target realpath bin"
+#~ msgstr "Cieľový realpath bin"
 
 #~ msgid ""
 #~ "\t--columns <columns>\t\tColumns to show separated by comma.\n"

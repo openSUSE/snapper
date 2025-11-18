@@ -8,17 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-23 11:53+0200\n"
+"POT-Creation-Date: 2025-10-13 14:35+0200\n"
 "PO-Revision-Date: 2025-07-23 23:59+0000\n"
 "Last-Translator: Jure Repinc <jlp@holodeck1.com>\n"
-"Language-Team: Slovenian <https://l10n.opensuse.org/projects/snapper/master/"
-"sl/>\n"
+"Language-Team: Slovenian <https://l10n.opensuse.org/projects/snapper/master/sl/>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
 "X-Generator: Weblate 5.12.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -1122,14 +1120,12 @@ msgstr "Ciljno stanje"
 msgid "Target btrfs bin"
 msgstr "Ciljna izvršljiva datoteka btrfs"
 
-msgid "Target findmnt Bin"
-msgstr "Ciljna izvršljiva datoteka findmnt"
+#, fuzzy
+msgid "Target ls Bin"
+msgstr "Ciljna izvršljiva datoteka rm"
 
 msgid "Target mkdir bin"
 msgstr "Ciljna izvršljiva datoteka mkdir"
-
-msgid "Target realpath bin"
-msgstr "Ciljna izvršljiva datoteka realpath"
 
 msgid "Target rm bin"
 msgstr "Ciljna izvršljiva datoteka rm"
@@ -1311,6 +1307,12 @@ msgstr "uporaba: snbk [--splošne-možnosti] <ukaz> [ukazni-argumenti]"
 
 msgid "yes"
 msgstr "da"
+
+#~ msgid "Target findmnt Bin"
+#~ msgstr "Ciljna izvršljiva datoteka findmnt"
+
+#~ msgid "Target realpath bin"
+#~ msgstr "Ciljna izvršljiva datoteka realpath"
 
 #, fuzzy
 #~ msgid "Unknown file."

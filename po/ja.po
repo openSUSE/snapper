@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-23 11:53+0200\n"
+"POT-Creation-Date: 2025-10-13 14:35+0200\n"
 "PO-Revision-Date: 2025-07-24 06:59+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/"
-"ja/>\n"
+"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1087,14 +1086,12 @@ msgstr "ターゲット状態"
 msgid "Target btrfs bin"
 msgstr "ターゲット btrfs バイナリ"
 
-msgid "Target findmnt Bin"
-msgstr "ターゲット findmnt バイナリ"
+#, fuzzy
+msgid "Target ls Bin"
+msgstr "ターゲット rm バイナリ"
 
 msgid "Target mkdir bin"
 msgstr "ターゲット mkdir バイナリ"
-
-msgid "Target realpath bin"
-msgstr "ターゲット realpath バイナリ"
 
 msgid "Target rm bin"
 msgstr "ターゲット rm バイナリ"
@@ -1273,6 +1270,12 @@ msgstr "usage: snbk [グローバルオプション] <コマンド> [コマン�
 
 msgid "yes"
 msgstr "はい"
+
+#~ msgid "Target findmnt Bin"
+#~ msgstr "ターゲット findmnt バイナリ"
+
+#~ msgid "Target realpath bin"
+#~ msgstr "ターゲット realpath バイナリ"
 
 #~ msgid ""
 #~ "\t--columns <columns>\t\tColumns to show separated by comma.\n"
