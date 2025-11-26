@@ -10,15 +10,17 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-13 14:35+0200\n"
-"PO-Revision-Date: 2025-07-22 15:00+0000\n"
-"Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>\n"
+"PO-Revision-Date: 2025-11-26 23:04+0000\n"
+"Last-Translator: Szymon Scholz <raspherdev@pm.me>\n"
+"Language-Team: Polish <https://l10n.opensuse.org/projects/snapper/master/pl/>"
+"\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.12.2\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && "
+"(n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.14.3\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <algorytm czyszczenia>"
@@ -77,9 +79,8 @@ msgstr "\tsnapper xadiff <numer1>..<numer2> [pliki]"
 msgid "    Global options:"
 msgstr "    Opcje globalne:"
 
-#, fuzzy
 msgid "    Options for 'cleanup' command:"
-msgstr "    Opcje dla polecenia 'create':"
+msgstr "    Opcje dla polecenia 'cleanup':"
 
 msgid "    Options for 'create' command:"
 msgstr "    Opcje dla polecenia 'create':"
@@ -93,16 +94,14 @@ msgstr "    Opcje polecenia \"delete\":"
 msgid "    Options for 'diff' command:"
 msgstr "    Opcje polecenia \"diff\":"
 
-#, fuzzy
 msgid "    Options for 'get-config' command:"
-msgstr "    Opcje dla polecenia 'create-config':"
+msgstr "    Opcje dla polecenia 'get-config':"
 
 msgid "    Options for 'list' command:"
 msgstr "    Opcje dla polecenia 'list':"
 
-#, fuzzy
 msgid "    Options for 'list-configs' command:"
-msgstr "    Opcje dla polecenia 'create-config':"
+msgstr "    Opcje dla polecenia 'list-configs':"
 
 msgid "    Options for 'modify' command:"
 msgstr "    Opcje dla polecenia 'modify':"
@@ -175,27 +174,26 @@ msgstr "#"
 #. %2$s is replaced by second value
 #, c-format
 msgid "%1$s or %2$s"
-msgstr ""
+msgstr "%1$s lub %2$s"
 
 #. TRANSLATORS: used to construct list of values
 #. %1$s is replaced by first value
 #. %2$s is replaced by second value
 #, c-format
 msgid "%1$s, %2$s"
-msgstr ""
+msgstr "%1$s, %2$s"
 
 msgid "'btrfs send | btrfs receive' failed."
-msgstr ""
+msgstr "'btrfs send | btrfs receive' nie powiodło się."
 
 msgid "'btrfs subvolume delete' failed."
-msgstr ""
+msgstr "'btrfs subvolume delete' nie powiodło się."
 
-#, fuzzy
 msgid "'cp info.xml' failed."
-msgstr "Otwieranie pliku '%s' nie powiodło się."
+msgstr "'cp info.xml' nie powiodło się."
 
 msgid "'mkdir' failed."
-msgstr ""
+msgstr "'mkdir' nie powiodło się."
 
 msgid "'rm info.xml' failed."
 msgstr ""
