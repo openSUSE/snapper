@@ -516,4 +516,56 @@ namespace snapper
 	return end();
     }
 
+    TheBigThings::const_iterator
+    TheBigThings::find_restore_parent(const TheBigThing& the_big_thing) const
+    {
+	typedef vector<TheBigThing>::const_reverse_iterator const_reverse_iterator;
+
+	// Find the direct parent or a previous snapshots with the same parent UUID (more
+	// a sibling).
+
+	for (const_reverse_iterator it1 = the_big_things.rbegin();
+	     it1 != the_big_things.rend(); ++it1)
+	{
+	    if (it1->num >= the_big_thing.num)
+		continue;
+
+	    if (it1->source_state != TheBigThing::SourceState::READ_ONLY ||
+		it1->target_state != TheBigThing::TargetState::VALID)
+		continue;
+
+	    if (it1->target_uuid == the_big_thing.target_parent_uuid)
+		return (it1 + 1).base();
+
+	    if (it1->target_parent_uuid == the_big_thing.target_parent_uuid)
+		return (it1 + 1).base();
+	}
+
+	// Find the nearest previous snapshot to use as the send parent,
+	// reducing disk usage.
+
+	int distance = std::numeric_limits<int>::max();
+	TheBigThings::const_iterator parent = end();
+
+	for (const_reverse_iterator it1 = the_big_things.rbegin();
+	     it1 != the_big_things.rend(); ++it1)
+	{
+	    if (it1->num >= the_big_thing.num)
+		continue;
+
+	    if (it1->source_state != TheBigThing::SourceState::READ_ONLY ||
+		it1->target_state != TheBigThing::TargetState::VALID)
+		continue;
+
+	    int tmp_dist = std::abs((int)it1->num - (int)the_big_thing.num);
+	    if (tmp_dist < distance)
+	    {
+		distance = tmp_dist;
+		parent = (it1 + 1).base();
+	    }
+	}
+
+	return parent;
+    }
+
 }

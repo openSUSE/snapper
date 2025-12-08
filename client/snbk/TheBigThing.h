@@ -111,6 +111,7 @@ namespace snapper
 	 * Detect a suitable parent for btrfs send. Return end() iff none is found.
 	 */
 	const_iterator find_send_parent(const TheBigThing& the_big_thing) const;
+	const_iterator find_restore_parent(const TheBigThing& the_big_thing) const;
 
 	CmdBtrfsVersion source_btrfs_version;
 	CmdBtrfsVersion target_btrfs_version;
