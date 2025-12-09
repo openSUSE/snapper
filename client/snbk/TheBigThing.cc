@@ -163,7 +163,8 @@ namespace snapper
 	y2deb("source: " << cmd3a_args.get_values());
 	y2deb("target: " << cmd3b_args.get_values());
 
-	SystemCmd cmd3(shellify_pipe(cmd3a_args, backup_config.get_target_shell(), cmd3b_args));
+	SystemCmd cmd3(shellify_pipe(backup_config.get_source_shell(), cmd3a_args,
+				     backup_config.get_target_shell(), cmd3b_args));
 	if (cmd3.retcode() != 0)
 	{
 	    y2err("command '" << cmd3.cmd() << "' failed: " << cmd3.retcode());
