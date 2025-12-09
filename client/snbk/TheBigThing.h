@@ -55,6 +55,7 @@ namespace snapper
 	TheBigThing(unsigned int num) : num(num) {}
 
 	void transfer(const BackupConfig& backup_config, TheBigThings& the_big_things, bool quiet);
+	void restore(const BackupConfig& backup_config, TheBigThings& the_big_things, bool quiet);
 
 	void remove(const BackupConfig& backup_config, bool quiet);
 
