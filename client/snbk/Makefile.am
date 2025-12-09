@@ -12,6 +12,7 @@ snbk_SOURCES = 						\
 	cmd-list-configs.cc				\
 	cmd-list.cc					\
 	cmd-transfer.cc					\
+	cmd-restore.cc					\
 	cmd-delete.cc					\
 	cmd-transfer-and-delete.cc			\
 	BackupConfig.cc		BackupConfig.h		\
