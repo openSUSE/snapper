@@ -94,6 +94,7 @@ namespace snapper
 	TheBigThings(const BackupConfig& backup_config, ProxySnappers* snappers, bool verbose);
 
 	void transfer(const BackupConfig& backup_config, bool quiet, bool verbose);
+	void restore(const BackupConfig& backup_config, bool quiet, bool verbose);
 
 	void remove(const BackupConfig& backup_config, bool quiet, bool verbose);
 

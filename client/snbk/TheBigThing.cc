@@ -563,6 +563,20 @@ namespace snapper
 
 
     void
+    TheBigThings::restore(const BackupConfig& backup_config, bool quiet, bool verbose)
+    {
+	for (TheBigThing& the_big_thing : the_big_things)
+	{
+	    if (the_big_thing.target_state == TheBigThing::TargetState::VALID &&
+		the_big_thing.source_state == TheBigThing::SourceState::MISSING)
+	    {
+		the_big_thing.restore(backup_config, *this, quiet);
+	    }
+	}
+    }
+
+
+    void
     TheBigThings::remove(const BackupConfig& backup_config, bool quiet, bool verbose)
     {
 	for (TheBigThing& the_big_thing : the_big_things)
