@@ -25,6 +25,7 @@
 
 #include <iostream>
 
+#include <client/snapper/cmd.h>
 #include <snapper/AppUtil.h>
 
 #include "../utils/text.h"
@@ -205,8 +206,7 @@ namespace snapper
 		if (WIFEXITED(status)) {
 		    int const exit_status = WEXITSTATUS(status);
 		    if (exit_status != 0) {
-			// TODO(epg): Can we have snapper itself exit with this status?
-			SN_THROW(Exception(sformat("%s exited %d", command.c_str(), exit_status)));
+			SN_THROW(CommandException(exit_status));
 		    }
 		} else {
 		    SN_THROW(Exception(sformat("%s killed with %d", command.c_str(), WTERMSIG(status))));
