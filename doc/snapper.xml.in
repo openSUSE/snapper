@@ -535,7 +535,10 @@
 	    <varlistentry>
 	      <term><option>--command</option> <replaceable>command</replaceable></term>
 	      <listitem>
-		<para>Create a pre and post snapshot and run command in between.</para>
+		<para>Create a pre and post snapshot and run command in between.  If snapper is
+		unable to execute the command at all, it does not take the post snapshot.  If the
+		command exits with a non-zero exit code, snapper takes the post snapshot and exits 1
+		to indicate the failure.</para>
 	      </listitem>
 	    </varlistentry>
 	    <varlistentry>

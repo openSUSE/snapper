@@ -21,6 +21,8 @@
  */
 
 
+#include <sys/wait.h>
+
 #include <iostream>
 
 #include <snapper/AppUtil.h>
@@ -193,10 +195,22 @@ namespace snapper
 
 	    case CreateType::PRE_POST: {
 		snapshot1 = snapper->createPreSnapshot(scd, report);
-		system(command.c_str());
+		int const status = system(command.c_str());
+		if (status == -1) {
+		    throw runtime_error_with_errno("open failed", errno);
+		}
 		snapshot2 = snapper->createPostSnapshot(snapshot1, scd, report);
 		if (print_number)
 		    cout << snapshot1->getNum() << ".." << snapshot2->getNum() << endl;
+		if (WIFEXITED(status)) {
+		    int const exit_status = WEXITSTATUS(status);
+		    if (exit_status != 0) {
+			// TODO(epg): Can we have snapper itself exit with this status?
+			SN_THROW(Exception(sformat("%s exited %d", command.c_str(), exit_status)));
+		    }
+		} else {
+		    SN_THROW(Exception(sformat("%s killed with %d", command.c_str(), WTERMSIG(status))));
+		}
 	    } break;
 	}
     }
