@@ -9,7 +9,7 @@ if HAVE_ZYPP
 plugindir = /usr/lib/zypp/plugins/commit
 plugin_PROGRAMS = snapper-zypp-plugin
 
-AM_CPPFLAGS = $(DBUS_CFLAGS) $(XML2_CFLAGS) $(JSON_C_CFLAGS)
+AM_CPPFLAGS = $(DBUS_CFLAGS) $(XML2_CFLAGS) $(JSON_C_CFLAGS) -I$(top_srcdir)
 
 snapper_zypp_plugin_SOURCES = \
 	snapper-zypp-plugin.cc snapper-zypp-plugin.h \
