@@ -7,10 +7,21 @@ jobs:
     runs-on: ubuntu-latest
     container: opensuse/tumbleweed
 
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [gcc, clang]
+
     steps:
 
     - name: Install additional packages
-      run: zypper --non-interactive in --no-recommends autoconf automake dbus-1-devel docbook-xsl-stylesheets gcc-c++ gettext-runtime glibc-locale libacl-devel libboost_test-devel libboost_thread-devel libbtrfs-devel libbtrfsutil-devel libjson-c-devel libmount-devel libtool libxml2-devel libxslt make pam-devel xz
+      run: |
+        if [ "${{ matrix.compiler }}" = "gcc" ]; then
+          zypper --non-interactive install --no-recommends gcc-c++
+        elif [ "${{ matrix.compiler }}" = "clang" ]; then
+          zypper --non-interactive install --no-recommends clang
+        fi
+        zypper --non-interactive install --no-recommends autoconf automake dbus-1-devel docbook-xsl-stylesheets gettext-runtime glibc-locale libacl-devel libboost_test-devel libboost_thread-devel libbtrfs-devel libbtrfsutil-devel libjson-c-devel libmount-devel libtool libxml2-devel libxslt make pam-devel xz
 
     - name: List installed packages
       run: rpm -qa | sort
@@ -19,7 +30,15 @@ jobs:
       uses: actions/checkout@v1
 
     - name: Configure
-      run: make -f Makefile.repo
+      run: |
+        if [ "${{ matrix.compiler }}" = "gcc" ]; then
+          export CC=gcc
+          export CXX=g++
+        elif [ "${{ matrix.compiler }}" = "clang" ]; then
+          export CC=clang
+          export CXX=clang++
+        fi
+        make -f Makefile.repo
 
     - name: Compile
       run: make -j 2
