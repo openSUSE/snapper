@@ -45,6 +45,9 @@ namespace snapper
     {
 	cout << "  " << _("Restore:") << '\n'
 	     << "\t" << _("snbk restore [numbers]") << '\n'
+	     << '\n'
+	     << "\t" << _("Notice: Restart the `snapperd` service to make the restored "
+			  "snapshots visible immediately.") << '\n'
 	     << '\n';
     }
 
