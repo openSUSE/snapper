@@ -46,7 +46,10 @@ namespace snapper
 	cout << "  " << _("Restore:") << '\n'
 	     << "\t" << _("snbk restore [numbers]") << '\n'
 	     << '\n'
-	     << "\t" << _("Notice: Restart the `snapperd` service to make the restored "
+	     << "\t" << _("Notice:") << '\n'
+	     << "\t" << _("- A backup-config must be specified to run this command.")
+		     << '\n'
+	     << "\t" << _("- Restart the `snapperd` service to make the restored "
 			  "snapshots visible immediately.") << '\n'
 	     << '\n';
     }
@@ -70,6 +73,12 @@ namespace snapper
 		SN_THROW(Exception(_("Failed to parse number.")));
 
 	    nums.push_back(stoi(arg));
+	}
+
+	if (backup_configs.size() != 1)
+	{
+	    SN_THROW(OptionsException(_("A backup-config must be specified to run this "
+					"command.")));
 	}
 
 	unsigned int errors = 0;

@@ -263,8 +263,9 @@
 	<term><option>restore [<replaceable>number</replaceable>]</option></term>
 	<listitem>
 	  <para>Restore all missing snapshots or the specified snapshot back to the
-	  source. A restart of the `snapperd` service is required to make the restored
-	  snapshots visible immediately.</para>
+	  source. A backup config must be specified to run this command. A restart of the
+	  `snapperd` service is required to make the restored snapshots visible
+	  immediately.</para>
 	</listitem>
       </varlistentry>
 
