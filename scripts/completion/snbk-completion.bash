@@ -30,6 +30,7 @@ _snbk()
         "list-configs"
         "list" "ls"
         "transfer"
+	"restore"
 	"delete"
 	"transfer-and-delete")
 

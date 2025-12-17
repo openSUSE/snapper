@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Dec 17 12:57:19 UTC 2025 - Cheng-Ling Lai <jamesljlster@gmail.com>
+
+- Add snapshots restoring support to snbk
+  (gh#openSUSE/snapper#1072)
+
+-------------------------------------------------------------------
 Tue Nov 18 10:23:16 CET 2025 - aschnell@suse.com
 
 - add CAP_MKNOD in snapper-backup.service

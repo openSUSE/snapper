@@ -54,7 +54,8 @@ namespace snapper
 
 
     SystemCmd::Args
-    shellify_pipe(const SystemCmd::Args& args1, const Shell& shell2, const SystemCmd::Args& args2);
+    shellify_pipe(const Shell& shell1, const SystemCmd::Args& args1,
+		  const Shell& shell2, const SystemCmd::Args& args2);
 
 }
 

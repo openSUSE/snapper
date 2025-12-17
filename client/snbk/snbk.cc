@@ -125,6 +125,7 @@ main(int argc, char** argv)
 	Cmd("list-configs", command_list_configs, help_list_configs, false),
 	Cmd("list", { "ls" }, command_list, help_list, true),
 	Cmd("transfer", command_transfer, help_transfer, true),
+	Cmd("restore", command_restore, help_restore, true),
 	Cmd("delete", { "remove", "rm" }, command_delete, help_delete, true),
 	Cmd("transfer-and-delete", command_transfer_and_delete, help_transfer_and_delete, true),
     };

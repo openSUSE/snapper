@@ -54,6 +54,14 @@ namespace snapper
 
 
     void
+    help_restore();
+
+    void
+    command_restore(const GlobalOptions& global_options, GetOpts& get_opts, BackupConfigs& backup_configs,
+		     ProxySnappers* snappers);
+
+
+    void
     help_delete();
 
     void

@@ -163,7 +163,8 @@ namespace snapper
 	y2deb("source: " << cmd3a_args.get_values());
 	y2deb("target: " << cmd3b_args.get_values());
 
-	SystemCmd cmd3(shellify_pipe(cmd3a_args, backup_config.get_target_shell(), cmd3b_args));
+	SystemCmd cmd3(shellify_pipe(backup_config.get_source_shell(), cmd3a_args,
+				     backup_config.get_target_shell(), cmd3b_args));
 	if (cmd3.retcode() != 0)
 	{
 	    y2err("command '" << cmd3.cmd() << "' failed: " << cmd3.retcode());
@@ -176,6 +177,135 @@ namespace snapper
 	}
 
 	target_state = TargetState::VALID;
+    }
+
+
+    void
+    TheBigThing::restore(const BackupConfig& backup_config, TheBigThings& the_big_things,
+			 bool quiet)
+    {
+	if (!quiet)
+	    cout << sformat(_("Restoring snapshot %d."), num) << '\n';
+
+	if (target_state == TargetState::MISSING)
+	    SN_THROW(Exception(_("Snapshot not on target.")));
+
+	if (source_state != SourceState::MISSING)
+	    SN_THROW(Exception(_("Snapshot already on source.")));
+
+	const string num_string = to_string(num);
+
+	const string source_snapshot_dir =
+	    backup_config.source_path + "/" SNAPSHOTS_NAME "/" + num_string;
+	const string target_snapshot_dir = backup_config.target_path + "/" + num_string;
+
+	// Create directory on source. No failure if it already exists (option --parents).
+
+	SystemCmd::Args cmd1_args = { MKDIR_BIN, "--parents", "--", source_snapshot_dir };
+	SystemCmd cmd1(shellify(backup_config.get_source_shell(), cmd1_args));
+	if (cmd1.retcode() != 0)
+	{
+	    y2err("command '" << cmd1.cmd() << "' failed: " << cmd1.retcode());
+	    for (const string& tmp : cmd1.get_stdout())
+		y2err(tmp);
+	    for (const string& tmp : cmd1.get_stderr())
+		y2err(tmp);
+
+	    SN_THROW(Exception(_("'mkdir' failed.")));
+	}
+
+	// Copy info.xml to source.
+
+	switch (backup_config.target_mode)
+	{
+	    case BackupConfig::TargetMode::LOCAL:
+	    {
+		SystemCmd::Args cmd2_args = {
+		    CP_BIN, "--", target_snapshot_dir + "/info.xml", source_snapshot_dir
+		};
+		SystemCmd cmd2(shellify(backup_config.get_target_shell(), cmd2_args));
+		if (cmd2.retcode() != 0)
+		{
+		    y2err("command '" << cmd2.cmd() << "' failed: " << cmd2.retcode());
+		    for (const string& tmp : cmd2.get_stdout())
+			y2err(tmp);
+		    for (const string& tmp : cmd2.get_stderr())
+			y2err(tmp);
+
+		    SN_THROW(Exception(_("'cp info.xml' failed.")));
+		}
+	    }
+	    break;
+
+	    case BackupConfig::TargetMode::SSH_PUSH:
+	    {
+		SystemCmd::Args cmd2_args = { SCP_BIN };
+		if (backup_config.ssh_port != 0)
+		    cmd2_args << "-P" << to_string(backup_config.ssh_port);
+		if (!backup_config.ssh_identity.empty())
+		    cmd2_args << "-i" << backup_config.ssh_identity;
+		cmd2_args << "--" <<
+		    (backup_config.ssh_user.empty() ? "" : backup_config.ssh_user + "@") +
+		    backup_config.ssh_host + ":" + target_snapshot_dir + "/info.xml"
+		    << source_snapshot_dir;
+
+		SystemCmd cmd2(cmd2_args);
+		if (cmd2.retcode() != 0)
+		{
+		    y2err("command '" << cmd2.cmd() << "' failed: " << cmd2.retcode());
+		    for (const string& tmp : cmd2.get_stdout())
+			y2err(tmp);
+		    for (const string& tmp : cmd2.get_stderr())
+			y2err(tmp);
+
+		    SN_THROW(Exception(_("'scp info.xml' failed.")));
+		}
+	    }
+	    break;
+	}
+
+	// Copy snapshot to target.
+
+	const int proto = std::min({
+	    Uname::supported_proto(),
+	    the_big_things.source_btrfs_version.supported_proto(),
+	    the_big_things.target_btrfs_version.supported_proto()
+	});
+
+	TheBigThings::const_iterator it1 = the_big_things.find_restore_parent(*this);
+
+	SystemCmd::Args cmd3a_args = { backup_config.target_btrfs_bin, "send" };
+	if (proto >= 2)
+	    cmd3a_args << "--proto" << to_string(proto);
+	if (backup_config.send_compressed_data && proto >= 2)
+	    cmd3a_args << "--compressed-data";
+	cmd3a_args << backup_config.send_options;
+
+	if (it1 != the_big_things.end())
+	    cmd3a_args << "-p" << backup_config.target_path + "/" + to_string(it1->num) +
+	    "/" SNAPSHOT_NAME;
+	cmd3a_args << "--" << target_snapshot_dir + "/" SNAPSHOT_NAME;
+
+	SystemCmd::Args cmd3b_args = { BTRFS_BIN, "receive" };
+	cmd3b_args << backup_config.receive_options << "--" << source_snapshot_dir;
+
+	y2deb("source: " << cmd3a_args.get_values());
+	y2deb("target: " << cmd3b_args.get_values());
+
+	SystemCmd cmd3(shellify_pipe(backup_config.get_target_shell(), cmd3a_args,
+				     backup_config.get_source_shell(), cmd3b_args));
+	if (cmd3.retcode() != 0)
+	{
+	    y2err("command '" << cmd3.cmd() << "' failed: " << cmd3.retcode());
+	    for (const string& tmp : cmd3.get_stdout())
+		y2err(tmp);
+	    for (const string& tmp : cmd3.get_stderr())
+		y2err(tmp);
+
+	    SN_THROW(Exception(_("'btrfs send | btrfs receive' failed.")));
+	}
+
+	source_state = SourceState::READ_ONLY;
     }
 
 
@@ -433,6 +563,20 @@ namespace snapper
 
 
     void
+    TheBigThings::restore(const BackupConfig& backup_config, bool quiet, bool verbose)
+    {
+	for (TheBigThing& the_big_thing : the_big_things)
+	{
+	    if (the_big_thing.target_state == TheBigThing::TargetState::VALID &&
+		the_big_thing.source_state == TheBigThing::SourceState::MISSING)
+	    {
+		the_big_thing.restore(backup_config, *this, quiet);
+	    }
+	}
+    }
+
+
+    void
     TheBigThings::remove(const BackupConfig& backup_config, bool quiet, bool verbose)
     {
 	for (TheBigThing& the_big_thing : the_big_things)
@@ -514,6 +658,58 @@ namespace snapper
 	}
 
 	return end();
+    }
+
+    TheBigThings::const_iterator
+    TheBigThings::find_restore_parent(const TheBigThing& the_big_thing) const
+    {
+	typedef vector<TheBigThing>::const_reverse_iterator const_reverse_iterator;
+
+	// Find the direct parent or a previous snapshots with the same parent UUID (more
+	// a sibling).
+
+	for (const_reverse_iterator it1 = the_big_things.rbegin();
+	     it1 != the_big_things.rend(); ++it1)
+	{
+	    if (it1->num >= the_big_thing.num)
+		continue;
+
+	    if (it1->source_state != TheBigThing::SourceState::READ_ONLY ||
+		it1->target_state != TheBigThing::TargetState::VALID)
+		continue;
+
+	    if (it1->target_uuid == the_big_thing.target_parent_uuid)
+		return (it1 + 1).base();
+
+	    if (it1->target_parent_uuid == the_big_thing.target_parent_uuid)
+		return (it1 + 1).base();
+	}
+
+	// Find the nearest previous snapshot to use as the send parent,
+	// reducing disk usage.
+
+	int distance = std::numeric_limits<int>::max();
+	TheBigThings::const_iterator parent = end();
+
+	for (const_reverse_iterator it1 = the_big_things.rbegin();
+	     it1 != the_big_things.rend(); ++it1)
+	{
+	    if (it1->num >= the_big_thing.num)
+		continue;
+
+	    if (it1->source_state != TheBigThing::SourceState::READ_ONLY ||
+		it1->target_state != TheBigThing::TargetState::VALID)
+		continue;
+
+	    int tmp_dist = std::abs((int)it1->num - (int)the_big_thing.num);
+	    if (tmp_dist < distance)
+	    {
+		distance = tmp_dist;
+		parent = (it1 + 1).base();
+	    }
+	}
+
+	return parent;
     }
 
 }

@@ -55,6 +55,7 @@ namespace snapper
 	TheBigThing(unsigned int num) : num(num) {}
 
 	void transfer(const BackupConfig& backup_config, TheBigThings& the_big_things, bool quiet);
+	void restore(const BackupConfig& backup_config, TheBigThings& the_big_things, bool quiet);
 
 	void remove(const BackupConfig& backup_config, bool quiet);
 
@@ -93,6 +94,7 @@ namespace snapper
 	TheBigThings(const BackupConfig& backup_config, ProxySnappers* snappers, bool verbose);
 
 	void transfer(const BackupConfig& backup_config, bool quiet, bool verbose);
+	void restore(const BackupConfig& backup_config, bool quiet, bool verbose);
 
 	void remove(const BackupConfig& backup_config, bool quiet, bool verbose);
 
@@ -111,6 +113,7 @@ namespace snapper
 	 * Detect a suitable parent for btrfs send. Return end() iff none is found.
 	 */
 	const_iterator find_send_parent(const TheBigThing& the_big_thing) const;
+	const_iterator find_restore_parent(const TheBigThing& the_big_thing) const;
 
 	CmdBtrfsVersion source_btrfs_version;
 	CmdBtrfsVersion target_btrfs_version;
