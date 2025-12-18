@@ -2,13 +2,13 @@
 <refentry id='snbk8' xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <refentryinfo>
-    <date>2024-11-05</date>
+    <date>2025-12-18</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snbk</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2024-11-05</refmiscinfo>
+    <refmiscinfo class='date'>2025-12-18</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -289,12 +289,12 @@
 
   <refsect1 id='restore'>
     <title>RESTORE</title>
-    <para>So far a restore has to be done manually. There are several
-    methods to do a restore, e.g. the backup can be mounted and then
-    copied or rsync can be used. Here we provide an example on how to use
-    btrfs send and receive to restore a snapshot on the source
-    system. In general using btrfs send and receive is a bit
-    tricky.</para>
+    <para>Snapshots can be restored using the restore command. There
+    are more methods to do a restore, e.g. the backup can be mounted and
+    then copied or rsync can be used.</para>
+    <para>Here we provide an example on how to manually use btrfs send
+    and receive to restore a snapshot on the source system. In general
+    using btrfs send and receive is a bit tricky.</para>
     <para>When using target-mode local:
       <programlisting>
 # mkdir /.snapshots/42

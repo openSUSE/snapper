@@ -136,11 +136,7 @@ namespace snapper
 
 	// Copy snapshot to target.
 
-	const int proto = std::min({
-	    Uname::supported_proto(),
-	    the_big_things.source_btrfs_version.supported_proto(),
-	    the_big_things.target_btrfs_version.supported_proto()
-	});
+	const int proto = the_big_things.proto();
 
 	TheBigThings::const_iterator it1 = the_big_things.find_send_parent(*this);
 
@@ -187,7 +183,7 @@ namespace snapper
 	if (!quiet)
 	    cout << sformat(_("Restoring snapshot %d."), num) << '\n';
 
-	if (target_state == TargetState::MISSING)
+	if (target_state != TargetState::VALID)
 	    SN_THROW(Exception(_("Snapshot not on target.")));
 
 	if (source_state != SourceState::MISSING)
@@ -266,11 +262,7 @@ namespace snapper
 
 	// Copy snapshot to target.
 
-	const int proto = std::min({
-	    Uname::supported_proto(),
-	    the_big_things.source_btrfs_version.supported_proto(),
-	    the_big_things.target_btrfs_version.supported_proto()
-	});
+	const int proto = the_big_things.proto();
 
 	TheBigThings::const_iterator it1 = the_big_things.find_restore_parent(*this);
 
@@ -369,6 +361,17 @@ namespace snapper
 	}
 
 	target_state = TargetState::MISSING;
+    }
+
+
+    int
+    TheBigThings::proto()
+    {
+	return std::min({
+	    Uname::supported_proto(),
+	    source_btrfs_version.supported_proto(),
+	    target_btrfs_version.supported_proto()
+	});
     }
 
 

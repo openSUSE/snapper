@@ -118,6 +118,8 @@ namespace snapper
 	CmdBtrfsVersion source_btrfs_version;
 	CmdBtrfsVersion target_btrfs_version;
 
+	int proto();
+
     private:
 
 	const ProxySnapper* snapper;
