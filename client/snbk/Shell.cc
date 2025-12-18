@@ -57,9 +57,11 @@ namespace snapper
 	}
 
 
-	string wrap_shell_args(const Shell& shell, const SystemCmd::Args& args)
+	string
+	wrap_shell_args(const Shell& shell, const SystemCmd::Args& args)
 	{
-	    string tmp = quote(args);
+	    const string tmp = quote(args);
+
 	    switch (shell.mode)
 	    {
 		case Shell::Mode::DIRECT:
@@ -98,6 +100,7 @@ namespace snapper
 	SN_THROW(Exception("invalid shell mode"));
 	__builtin_unreachable();
     }
+
 
     SystemCmd::Args
     shellify_pipe(const Shell& shell1, const SystemCmd::Args& args1,
