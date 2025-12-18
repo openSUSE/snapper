@@ -183,7 +183,7 @@ namespace snapper
 	if (!quiet)
 	    cout << sformat(_("Restoring snapshot %d."), num) << '\n';
 
-	if (target_state == TargetState::MISSING)
+	if (target_state != TargetState::VALID)
 	    SN_THROW(Exception(_("Snapshot not on target.")));
 
 	if (source_state != SourceState::MISSING)
