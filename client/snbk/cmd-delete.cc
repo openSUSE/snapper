@@ -31,6 +31,7 @@
 #include "BackupConfig.h"
 #include "GlobalOptions.h"
 #include "TheBigThing.h"
+#include "utils.h"
 
 
 namespace snapper
@@ -52,21 +53,9 @@ namespace snapper
     command_delete(const GlobalOptions& global_options, GetOpts& get_opts, BackupConfigs& backup_configs,
 		   ProxySnappers* snappers)
     {
-	static const regex num_regex("[0-9]+", regex::extended);
-
 	ParsedOpts opts = get_opts.parse("delete", GetOpts::no_options);
 
-	vector<unsigned int> nums;
-
-	while (get_opts.has_args())
-	{
-	    string arg = get_opts.pop_arg();
-
-	    if (!regex_match(arg, num_regex))
-		SN_THROW(Exception(_("Failed to parse number.")));
-
-	    nums.push_back(stoi(arg));
-	}
+	vector<unsigned int> nums = parse_nums(get_opts);
 
 	unsigned int errors = 0;
 
