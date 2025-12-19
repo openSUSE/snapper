@@ -21,7 +21,8 @@ snbk_SOURCES = 						\
 	Shell.cc		Shell.h			\
 	CmdBtrfs.cc		CmdBtrfs.h		\
 	CmdLs.cc		CmdLs.h			\
-	JsonFile.cc		JsonFile.h
+	JsonFile.cc		JsonFile.h		\
+	utils.cc		utils.h
 
 snbk_LDADD =				\
 	../../snapper/libsnapper.la	\
