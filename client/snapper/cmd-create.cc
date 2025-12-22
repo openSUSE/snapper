@@ -198,7 +198,7 @@ namespace snapper
 		snapshot1 = snapper->createPreSnapshot(scd, report);
 		int const status = system(command.c_str());
 		if (status == -1) {
-		    throw runtime_error_with_errno("open failed", errno);
+		    throw runtime_error_with_errno("fork failed", errno);
 		}
 		snapshot2 = snapper->createPostSnapshot(snapshot1, scd, report);
 		if (print_number)
