@@ -3,6 +3,7 @@
 #
 
 AM_CXXFLAGS = -D_FILE_OFFSET_BITS=64
+INCLUDES = -I$(top_srcdir)
 
 lib_LTLIBRARIES = libsnapper.la
 

@@ -19,10 +19,10 @@ man_MANS += mksubvolume.8
 endif
 
 .xml.5: .xml
-	$(XSLTPROC) --nonet manpages.xsl $<
+	$(XSLTPROC) --nonet $(srcdir)/manpages.xsl $<
 
 .xml.8: .xml
-	$(XSLTPROC) --nonet manpages.xsl $<
+	$(XSLTPROC) --nonet $(srcdir)/manpages.xsl $<
 
 html: $(man_MANS:%.5=%.html) $(man_MANS:%.8=%.html)
 
