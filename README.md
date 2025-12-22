@@ -27,7 +27,7 @@ sudo zypper install -t pattern SDK-C-C++
 # install the basic development environment (openSUSE)
 sudo zypper install -t pattern devel_C_C++
 # install the extra packages for snapper development (both SLE and openSUSE)
-sudo zypper install git libmount-devel dbus-1-devel libacl-devel \
+sudo zypper install git libmount-devel dbus-1-devel libacl-devel libboost_thread-devel libjson-c-devel \
   docbook-xsl-stylesheets libxml2-devel libbtrfs-devel
 ```
 
