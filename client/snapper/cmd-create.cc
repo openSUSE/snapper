@@ -23,6 +23,7 @@
 
 #include <sys/wait.h>
 
+#include <cassert>
 #include <iostream>
 
 #include <client/snapper/cmd.h>
@@ -208,8 +209,13 @@ namespace snapper
 		    if (exit_status != 0) {
 			SN_THROW(CommandException(exit_status));
 		    }
-		} else {
+		} else if (WIFSIGNALED(status)) {
 		    SN_THROW(Exception(sformat("%s killed with %d", command.c_str(), WTERMSIG(status))));
+		} else {
+		    // For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+		    string error = sformat(_("%s got STOP or CONT signal and may still be running"),
+					   command.c_str());
+		    SN_THROW(Exception(error));
 		}
 	    } break;
 	}
