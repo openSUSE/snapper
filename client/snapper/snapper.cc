@@ -368,6 +368,11 @@ main(int argc, char** argv)
 	    cerr << e.what() << endl;
 	    exit(EXIT_FAILURE);
 	}
+	catch (const CommandException& e)
+	{
+	    SN_CAUGHT(e);
+	    exit(e.exit_status);
+	}
 	catch (const Exception& e)
 	{
 	    SN_CAUGHT(e);

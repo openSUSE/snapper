@@ -21,8 +21,12 @@
  */
 
 
+#include <sys/wait.h>
+
+#include <cassert>
 #include <iostream>
 
+#include <client/snapper/cmd.h>
 #include <snapper/AppUtil.h>
 
 #include "../utils/text.h"
@@ -193,10 +197,26 @@ namespace snapper
 
 	    case CreateType::PRE_POST: {
 		snapshot1 = snapper->createPreSnapshot(scd, report);
-		system(command.c_str());
+		int const status = system(command.c_str());
+		if (status == -1) {
+		    throw runtime_error_with_errno("fork failed", errno);
+		}
 		snapshot2 = snapper->createPostSnapshot(snapshot1, scd, report);
 		if (print_number)
 		    cout << snapshot1->getNum() << ".." << snapshot2->getNum() << endl;
+		if (WIFEXITED(status)) {
+		    int const exit_status = WEXITSTATUS(status);
+		    if (exit_status != 0) {
+			SN_THROW(CommandException(exit_status));
+		    }
+		} else if (WIFSIGNALED(status)) {
+		    SN_THROW(Exception(sformat("%s killed with %d", command.c_str(), WTERMSIG(status))));
+		} else {
+		    // For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+		    string error = sformat(_("%s got STOP or CONT signal and may still be running"),
+					   command.c_str());
+		    SN_THROW(Exception(error));
+		}
 	    } break;
 	}
     }
