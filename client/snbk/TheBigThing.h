@@ -30,6 +30,7 @@
 #include "../proxy/locker.h"
 
 #include "CmdBtrfs.h"
+#include "TreeView.h"
 
 
 namespace snapper
@@ -109,16 +110,52 @@ namespace snapper
 
 	iterator find(unsigned int num);
 
-	/**
-	 * Detect a suitable parent for btrfs send. Return end() iff none is found.
-	 */
-	const_iterator find_send_parent(const TheBigThing& the_big_thing) const;
-	const_iterator find_restore_parent(const TheBigThing& the_big_thing) const;
-
 	CmdBtrfsVersion source_btrfs_version;
 	CmdBtrfsVersion target_btrfs_version;
 
 	int proto();
+
+	/** A base class for constructing a node from an iterator. */
+	class BaseNode : public TreeView::ProxyNode
+	{
+	    public:
+		BaseNode(const TheBigThings::const_iterator& it) : it(it) {}
+		unsigned int get_number() const override;
+		bool is_valid() const override;
+
+	    protected:
+		TheBigThings::const_iterator it;
+
+	};
+
+	/**
+	 * Specialized class for source nodes.
+	 * (Used when sending snapshots from source to target.)
+	 */
+	class SourceNode : public BaseNode
+	{
+	    public:
+		SourceNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
+
+		string get_uuid() const override;
+		string get_parent_uuid() const override;
+	};
+
+	/**
+	 * Specialized class for target nodes.
+	 * (Used when sending snapshots from target to source.)
+	 */
+	class TargetNode : public BaseNode
+	{
+	    public:
+		TargetNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
+
+		string get_uuid() const override;
+		string get_parent_uuid() const override;
+	};
+
+	TreeView source_tree;
+	TreeView target_tree;
 
     private:
 
