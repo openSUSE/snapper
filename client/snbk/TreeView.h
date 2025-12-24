@@ -89,6 +89,7 @@ namespace snapper
 		    node(node), distance(distance) {}
 	    };
 
+	    TreeView();
 	    TreeView(const vector<shared_ptr<ProxyNode>>& nodes);
 
 	    /**

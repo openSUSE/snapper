@@ -141,11 +141,10 @@ namespace snapper
     bool TreeView::VirtualNode::is_valid() const { return false; }
 
 
-    TreeView::TreeView(const vector<shared_ptr<ProxyNode>>& nodes)
-    {
-	// Construct the virtual root node.
-	this->virtual_root = make_shared<VirtualNode>("virtual_root");
+    TreeView::TreeView() : virtual_root(make_shared<VirtualNode>("virtual_root")) {}
 
+    TreeView::TreeView(const vector<shared_ptr<ProxyNode>>& nodes) : TreeView()
+    {
 	// Construct a sorted container of source nodes in descending order.
 	set<shared_ptr<ProxyNode>, NodePtrComparator> sorted_nodes;
 	for (const shared_ptr<ProxyNode>& node : nodes)
