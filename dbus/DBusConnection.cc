@@ -42,6 +42,7 @@ namespace DBus
 	{
 	    SN_THROW(ErrorException(&err));
 	}
+	dbus_connection_set_exit_on_disconnect(conn, false);
 
 	if (!conn)
 	{
@@ -146,7 +147,14 @@ namespace DBus
     Connection::pop_message()
     {
 	boost::lock_guard<boost::mutex> lock(mutex);
-	return dbus_connection_pop_message(conn);
+	DBusMessage* tmp = dbus_connection_pop_message(conn);
+	if (tmp &&
+	    strcmp(dbus_message_get_interface(tmp), DBUS_INTERFACE_LOCAL) == 0 &&
+	    strcmp(dbus_message_get_member(tmp), "Disconnected") == 0)
+	{
+	    throw FatalException();
+	}
+	return tmp;
     }
 
 
