@@ -291,7 +291,7 @@ namespace snapper
 	    }
 	}
 
-	return boost::optional<TreeView::SearchResult>();
+	return boost::none;
     }
 
     void TreeView::set_parent(const shared_ptr<TreeView::ProxyNode>& node,
