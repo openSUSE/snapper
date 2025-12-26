@@ -115,45 +115,10 @@ namespace snapper
 
 	int proto();
 
-	/** A base class for constructing a node from an iterator. */
-	class BaseNode : public TreeView::ProxyNode
-	{
-	    public:
-		BaseNode(const TheBigThings::const_iterator& it) : it(it) {}
-		unsigned int get_number() const override;
-		bool is_valid() const override;
-
-	    protected:
-		TheBigThings::const_iterator it;
-
-	};
-
 	/**
-	 * Specialized class for source nodes.
-	 * (Used when sending snapshots from source to target.)
+	 * Helper objects for finding a suitable Btrfs send parent when transferring and
+	 * restoring snapshots.
 	 */
-	class SourceNode : public BaseNode
-	{
-	    public:
-		SourceNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
-
-		string get_uuid() const override;
-		string get_parent_uuid() const override;
-	};
-
-	/**
-	 * Specialized class for target nodes.
-	 * (Used when sending snapshots from target to source.)
-	 */
-	class TargetNode : public BaseNode
-	{
-	    public:
-		TargetNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
-
-		string get_uuid() const override;
-		string get_parent_uuid() const override;
-	};
-
 	TreeView source_tree;
 	TreeView target_tree;
 

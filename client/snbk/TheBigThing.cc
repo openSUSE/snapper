@@ -44,6 +44,58 @@ namespace snapper
 
     namespace
     {
+	/** A base class for constructing a node from an iterator. */
+	class BaseNode : public TreeView::ProxyNode
+	{
+	    public:
+		BaseNode(const TheBigThings::const_iterator& it) : it(it) {}
+		unsigned int get_number() const override { return this->it->num; }
+
+		bool is_valid() const override
+		{
+		    return (
+			this->it->source_state == TheBigThing::SourceState::READ_ONLY &&
+			this->it->target_state == TheBigThing::TargetState::VALID
+		    );
+		}
+
+	    protected:
+		TheBigThings::const_iterator it;
+
+	};
+
+	/**
+	 * Specialized class for source nodes.
+	 * (Used when sending snapshots from source to target.)
+	 */
+	class SourceNode : public BaseNode
+	{
+	    public:
+		SourceNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
+		string get_uuid() const override { return this->it->source_uuid; }
+
+		string get_parent_uuid() const override
+		{
+		    return this->it->source_parent_uuid;
+		}
+	};
+
+	/**
+	 * Specialized class for target nodes.
+	 * (Used when sending snapshots from target to source.)
+	 */
+	class TargetNode : public BaseNode
+	{
+	    public:
+		TargetNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
+		string get_uuid() const override { return this->it->target_uuid; }
+
+		string get_parent_uuid() const override
+		{
+		    return this->it->target_parent_uuid;
+		}
+	};
+
 
 	template <typename NodeType>
 	vector<shared_ptr<TreeView::ProxyNode>>
@@ -419,8 +471,8 @@ namespace snapper
 	sort(the_big_things.begin(), the_big_things.end());
 
 	// Construct tree for finding Btrfs send parent
-	source_tree = TreeView(make_nodes<TheBigThings::SourceNode>(*this));
-	target_tree = TreeView(make_nodes<TheBigThings::TargetNode>(*this));
+	source_tree = TreeView(make_nodes<SourceNode>(*this));
+	target_tree = TreeView(make_nodes<TargetNode>(*this));
     }
 
 
@@ -626,32 +678,6 @@ namespace snapper
 	return find_if(begin(), end(), [num](const TheBigThing& the_big_thing) {
 	    return the_big_thing.num == num;
 	});
-    }
-
-
-    unsigned int TheBigThings::BaseNode::get_number() const
-    {
-	return this->it->num;
-    }
-
-    bool TheBigThings::BaseNode::is_valid() const
-    {
-	return (
-	    this->it->source_state == TheBigThing::SourceState::READ_ONLY &&
-	    this->it->target_state == TheBigThing::TargetState::VALID
-	);
-    }
-
-    string TheBigThings::SourceNode::get_uuid() const { return this->it->source_uuid; }
-    string TheBigThings::SourceNode::get_parent_uuid() const
-    {
-	return this->it->source_parent_uuid;
-    }
-
-    string TheBigThings::TargetNode::get_uuid() const { return this->it->target_uuid; }
-    string TheBigThings::TargetNode::get_parent_uuid() const
-    {
-	return this->it->target_parent_uuid;
     }
 
 }
