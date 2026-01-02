@@ -2,13 +2,13 @@
 <refentry id='snapper8' xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <refentryinfo>
-    <date>2025-09-02</date>
+    <date>2026-01-02</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2025-09-02</refmiscinfo>
+    <refmiscinfo class='date'>2026-01-02</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -386,10 +386,11 @@
       <varlistentry>
 	<term><option>delete-config</option></term>
 	<listitem>
-	  <para>Delete a configuration for a filesystem or subvolume. For this
-	  command you will likely need to global option
-	  <option>--config</option>, see <link linkend='global_options'>GLOBAL
-	  OPTIONS</link> and <link linkend="concepts">CONCEPTS.</link></para>
+	  <para>Delete a configuration for a filesystem or subvolume
+	  including all snapshots. For this command you will likely need to
+	  global option <option>--config</option>, see <link
+	  linkend='global_options'>GLOBAL OPTIONS</link> and <link
+	  linkend="concepts">CONCEPTS.</link></para>
 	</listitem>
       </varlistentry>
 
