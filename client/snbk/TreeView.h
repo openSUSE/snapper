@@ -35,109 +35,113 @@
 
 namespace snapper
 {
-    using std::string;
     using std::shared_ptr;
+    using std::string;
     using std::vector;
 
 
     class TreeView
     {
+    public:
+
+	/** The type of the parent node. */
+	enum class ParentType
+	{
+	    NONE,           /** Not yet specified. */
+	    DIRECT_PARENT,  /** An explicit parent Btrfs subvolume is specified. */
+	    IMPLICIT_PARENT /** Manually assigned. */
+	};
+
+	/** Proxy class to the nodes (snapshots). */
+	class ProxyNode
+	{
 	public:
 
-	    /** The type of the parent node. */
-	    enum class ParentType {
-		NONE,		  /** Not yet specified. */
-		DIRECT_PARENT,	  /** An explicit parent Btrfs subvolume is specified. */
-		IMPLICIT_PARENT	  /** Manually assigned. */
-	    };
+	    virtual ~ProxyNode() = default;
 
-	    /** Proxy class to the nodes (snapshots). */
-	    class ProxyNode
+	    /** Get the node number (snapshot number). */
+	    virtual unsigned int get_number() const = 0;
+
+	    /** Get the UUID on the sender side. */
+	    virtual string get_uuid() const = 0;
+
+	    /** Get the parent UUID on the sender side. */
+	    virtual string get_parent_uuid() const = 0;
+
+	    /** Determine whether the node can be used as a Btrfs send parent. */
+	    virtual bool is_valid() const = 0;
+
+	    /** Provided for ordering. This affects the priority of sibling nodes. */
+	    virtual bool operator<(const ProxyNode& other) const;
+
+	    ParentType parent_type = ParentType::NONE;
+	    shared_ptr<ProxyNode> parent;
+	    vector<shared_ptr<ProxyNode>> children;
+	};
+
+	struct SearchResult
+	{
+	    shared_ptr<ProxyNode> node;
+	    unsigned int distance;
+
+	    SearchResult(const shared_ptr<ProxyNode>& node, unsigned int distance)
+	        : node(node), distance(distance)
 	    {
-		public:
-		    virtual ~ProxyNode() = default;
+	    }
+	};
 
-		    /** Get the node number (snapshot number). */
-		    virtual unsigned int get_number() const = 0;
+	TreeView();
+	TreeView(const vector<shared_ptr<ProxyNode>>& nodes);
 
-		    /** Get the UUID on the sender side. */
-		    virtual string get_uuid() const = 0;
+	/**
+	 * Member functions that find the nearest valid node to use as a Btrfs‑send
+	 * parent.
+	 */
+	boost::optional<SearchResult>
+	find_nearest_valid_node(const string& start_uuid) const;
+	boost::optional<SearchResult>
+	find_nearest_valid_node(const shared_ptr<ProxyNode>& start_node) const;
 
-		    /** Get the parent UUID on the sender side. */
-		    virtual string get_parent_uuid() const = 0;
+	/**
+	 * A static function that sets the parent relationship for the given two nodes.
+	 */
+	static void set_parent(const shared_ptr<ProxyNode>& node,
+	                       const shared_ptr<ProxyNode>& parent,
+	                       ParentType parent_type);
 
-		    /** Determine whether the node can be used as a Btrfs send parent. */
-		    virtual bool is_valid() const = 0;
+	/** Functions that print the tree graph in Mermaid language. */
+	static void print_graph_mermaid(const shared_ptr<ProxyNode>& node,
+	                                const string& graph_type = "LR");
+	void print_graph_mermaid(const string& graph_type = "LR") const;
 
-		    /**
-		     * Provided for ordering.
-		     * This affects the priority of sibling nodes.
-		     */
-		    virtual bool operator < (const ProxyNode& other) const;
+    protected:
 
-		    ParentType parent_type = ParentType::NONE;
-		    shared_ptr<ProxyNode> parent;
-		    vector<shared_ptr<ProxyNode>> children;
-	    };
+	/** Virtual node for Btrfs subvolumes that are not managed by snapper. */
+	class VirtualNode : public ProxyNode
+	{
+	public:
 
-	    struct SearchResult
-	    {
-		shared_ptr<ProxyNode> node;
-		unsigned int distance;
+	    VirtualNode(const string& uuid);
 
-		SearchResult(const shared_ptr<ProxyNode>& node, unsigned int distance) :
-		    node(node), distance(distance) {}
-	    };
-
-	    TreeView();
-	    TreeView(const vector<shared_ptr<ProxyNode>>& nodes);
-
-	    /**
-	     * Member functions that find the nearest valid node to use as a
-	     * Btrfs‑send parent.
-	     */
-	    boost::optional<SearchResult> find_nearest_valid_node(
-		const string& start_uuid) const;
-	    boost::optional<SearchResult> find_nearest_valid_node(
-		const shared_ptr<ProxyNode>& start_node) const;
-
-	    /**
-	     * A static function that sets the parent relationship for the given two
-	     * nodes.
-	     */
-	    static void set_parent(const shared_ptr<ProxyNode>& node,
-				   const shared_ptr<ProxyNode>& parent,
-				   ParentType parent_type);
-
-	    /** Functions that print the tree graph in Mermaid language. */
-	    static void print_graph_mermaid(const shared_ptr<ProxyNode>& node,
-				            const string& graph_type = "LR");
-	    void print_graph_mermaid(const string& graph_type = "LR") const;
+	    unsigned int get_number() const override;
+	    string get_uuid() const override;
+	    string get_parent_uuid() const override;
+	    bool is_valid() const override;
 
 	protected:
 
-	    /** Virtual node for Btrfs subvolumes that are not managed by snapper. */
-	    class VirtualNode : public ProxyNode
-	    {
-		public:
-		    VirtualNode(const string& uuid);
+	    string uuid;
+	};
 
-		    unsigned int get_number() const override;
-		    string get_uuid() const override;
-		    string get_parent_uuid() const override;
-		    bool is_valid() const override;
-
-		protected:
-		    string uuid;
-	    };
-
-	    shared_ptr<ProxyNode> virtual_root;
-	    std::map<string, shared_ptr<ProxyNode>> lookup;
+	shared_ptr<ProxyNode> virtual_root;
+	std::map<string, shared_ptr<ProxyNode>> lookup;
     };
 
-    template <> struct EnumInfo<TreeView::ParentType> {
+    template <> struct EnumInfo<TreeView::ParentType>
+    {
 	static const vector<string> names;
     };
-}
+
+} // namespace snapper
 
 #endif

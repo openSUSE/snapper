@@ -47,21 +47,20 @@ namespace snapper
 	/** A base class for constructing a node from an iterator. */
 	class BaseNode : public TreeView::ProxyNode
 	{
-	    public:
-		BaseNode(const TheBigThings::const_iterator& it) : it(it) {}
-		unsigned int get_number() const override { return this->it->num; }
+	public:
 
-		bool is_valid() const override
-		{
-		    return (
-			this->it->source_state == TheBigThing::SourceState::READ_ONLY &&
-			this->it->target_state == TheBigThing::TargetState::VALID
-		    );
-		}
+	    BaseNode(const TheBigThings::const_iterator& it) : it(it) {}
+	    unsigned int get_number() const override { return this->it->num; }
 
-	    protected:
-		TheBigThings::const_iterator it;
+	    bool is_valid() const override
+	    {
+		return (this->it->source_state == TheBigThing::SourceState::READ_ONLY &&
+		        this->it->target_state == TheBigThing::TargetState::VALID);
+	    }
 
+	protected:
+
+	    TheBigThings::const_iterator it;
 	};
 
 	/**
@@ -70,14 +69,15 @@ namespace snapper
 	 */
 	class SourceNode : public BaseNode
 	{
-	    public:
-		SourceNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
-		string get_uuid() const override { return this->it->source_uuid; }
+	public:
 
-		string get_parent_uuid() const override
-		{
-		    return this->it->source_parent_uuid;
-		}
+	    SourceNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
+	    string get_uuid() const override { return this->it->source_uuid; }
+
+	    string get_parent_uuid() const override
+	    {
+		return this->it->source_parent_uuid;
+	    }
 	};
 
 	/**
@@ -86,14 +86,15 @@ namespace snapper
 	 */
 	class TargetNode : public BaseNode
 	{
-	    public:
-		TargetNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
-		string get_uuid() const override { return this->it->target_uuid; }
+	public:
 
-		string get_parent_uuid() const override
-		{
-		    return this->it->target_parent_uuid;
-		}
+	    TargetNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
+	    string get_uuid() const override { return this->it->target_uuid; }
+
+	    string get_parent_uuid() const override
+	    {
+		return this->it->target_parent_uuid;
+	    }
 	};
 
 
