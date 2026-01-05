@@ -195,4 +195,14 @@ namespace snapper
     command_debug(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
 		  ProxySnapper* snapper, Plugins::Report& report);
 
+    struct CommandException : public Exception
+    {
+	explicit CommandException(int exit_status)
+	    : Exception(),
+	      exit_status(exit_status)
+	{}
+
+	const int exit_status;
+    };
+
 }
