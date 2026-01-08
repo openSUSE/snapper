@@ -29,12 +29,9 @@
 #include <boost/optional.hpp>
 
 #include <snapper/AppUtil.h>
-#include <snapper/SnapperTmpl.h>
 
 #include "../utils/text.h"
 
-#include "BackupConfig.h"
-#include "TheBigThing.h"
 #include "TreeView.h"
 
 
