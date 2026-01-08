@@ -130,7 +130,7 @@ namespace snapper
 
 	protected:
 
-	    string uuid;
+	    const string uuid;
 	};
 
 	shared_ptr<ProxyNode> virtual_root;

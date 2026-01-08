@@ -155,7 +155,7 @@ namespace snapper
     }
 
 
-    TreeView::VirtualNode::VirtualNode(const string& uuid) { this->uuid = uuid; }
+    TreeView::VirtualNode::VirtualNode(const string& uuid) : uuid(uuid) {}
     unsigned int TreeView::VirtualNode::get_number() const { return virtual_node_num; }
     string TreeView::VirtualNode::get_uuid() const { return uuid; }
     string TreeView::VirtualNode::get_parent_uuid() const { return ""; }
