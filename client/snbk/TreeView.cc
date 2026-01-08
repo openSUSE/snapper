@@ -151,13 +151,13 @@ namespace snapper
     bool TreeView::ProxyNode::operator < (const ProxyNode& other) const
     {
 	// A node with a greater number (more recent) has a higher priority.
-	return this->get_number() > other.get_number();
+	return get_number() > other.get_number();
     }
 
 
     TreeView::VirtualNode::VirtualNode(const string& uuid) { this->uuid = uuid; }
     unsigned int TreeView::VirtualNode::get_number() const { return virtual_node_num; }
-    string TreeView::VirtualNode::get_uuid() const { return this->uuid; }
+    string TreeView::VirtualNode::get_uuid() const { return uuid; }
     string TreeView::VirtualNode::get_parent_uuid() const { return ""; }
     bool TreeView::VirtualNode::is_valid() const { return false; }
 
@@ -179,7 +179,7 @@ namespace snapper
 	// Construct lookup table.
 	for (const shared_ptr<ProxyNode>& node : sorted_nodes)
 	{
-	    this->lookup[node->get_uuid()] = node;
+	    lookup[node->get_uuid()] = node;
 	}
 
 	// Construct virtual nodes for unmanaged parent Btrfs subvolumes.
@@ -188,15 +188,14 @@ namespace snapper
 	    string uuid = node->get_parent_uuid();
 	    if (!uuid.empty())
 	    {
-		if (this->lookup.find(uuid) == this->lookup.end())
+		if (lookup.find(uuid) == lookup.end())
 		{
 		    // Create a virtual node and insert it into the lookup table.
 		    shared_ptr<ProxyNode> node = make_shared<TreeView::VirtualNode>(uuid);
-		    this->lookup[uuid] = node;
+		    lookup[uuid] = node;
 
 		    // Make it an implicit child of the virtual root.
-		    this->set_parent(node, this->virtual_root,
-				     TreeView::ParentType::IMPLICIT_PARENT);
+		    set_parent(node, virtual_root, TreeView::ParentType::IMPLICIT_PARENT);
 
 		    y2deb("Added virtual node for unmanaged Btrfs subvolume: " << uuid);
 		}
@@ -212,13 +211,12 @@ namespace snapper
 	    {
 		// If the parent UUID is missing, add the node as a child of the virtual
 		// root to prevent orphaned nodes.
-		this->set_parent(node, this->virtual_root,
-				 TreeView::ParentType::IMPLICIT_PARENT);
+		set_parent(node, virtual_root, TreeView::ParentType::IMPLICIT_PARENT);
 	    }
 	    else
 	    {
-		auto pair = this->lookup.find(parent_uuid);
-		if (pair == this->lookup.end())
+		auto pair = lookup.find(parent_uuid);
+		if (pair == lookup.end())
 		{
 		    string error =
 			sformat(_("Parent node %s not found."), parent_uuid.c_str());
@@ -226,8 +224,7 @@ namespace snapper
 		}
 		else
 		{
-		    this->set_parent(node, pair->second,
-				     TreeView::ParentType::DIRECT_PARENT);
+		    set_parent(node, pair->second, TreeView::ParentType::DIRECT_PARENT);
 		}
 	    }
 	}
@@ -236,10 +233,10 @@ namespace snapper
     boost::optional<TreeView::SearchResult>
     TreeView::find_nearest_valid_node(const string& start_uuid) const
     {
-	auto pair = this->lookup.find(start_uuid);
-	if (pair != this->lookup.end())
+	auto pair = lookup.find(start_uuid);
+	if (pair != lookup.end())
 	{
-	    return this->find_nearest_valid_node(pair->second);
+	    return find_nearest_valid_node(pair->second);
 	}
 
 	SN_THROW(Exception(
@@ -314,7 +311,7 @@ namespace snapper
 
     void TreeView::print_graph_mermaid(const string& graph_type) const
     {
-	TreeView::print_graph_mermaid(this->virtual_root, graph_type);
+	TreeView::print_graph_mermaid(virtual_root, graph_type);
     }
 
 

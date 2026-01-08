@@ -50,12 +50,12 @@ namespace snapper
 	public:
 
 	    BaseNode(const TheBigThings::const_iterator& it) : it(it) {}
-	    unsigned int get_number() const override { return this->it->num; }
+	    unsigned int get_number() const override { return it->num; }
 
 	    bool is_valid() const override
 	    {
-		return (this->it->source_state == TheBigThing::SourceState::READ_ONLY &&
-		        this->it->target_state == TheBigThing::TargetState::VALID);
+		return (it->source_state == TheBigThing::SourceState::READ_ONLY &&
+		        it->target_state == TheBigThing::TargetState::VALID);
 	    }
 
 	protected:
@@ -72,12 +72,8 @@ namespace snapper
 	public:
 
 	    SourceNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
-	    string get_uuid() const override { return this->it->source_uuid; }
-
-	    string get_parent_uuid() const override
-	    {
-		return this->it->source_parent_uuid;
-	    }
+	    string get_uuid() const override { return it->source_uuid; }
+	    string get_parent_uuid() const override { return it->source_parent_uuid; }
 	};
 
 	/**
@@ -89,12 +85,8 @@ namespace snapper
 	public:
 
 	    TargetNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
-	    string get_uuid() const override { return this->it->target_uuid; }
-
-	    string get_parent_uuid() const override
-	    {
-		return this->it->target_parent_uuid;
-	    }
+	    string get_uuid() const override { return it->target_uuid; }
+	    string get_parent_uuid() const override { return it->target_parent_uuid; }
 	};
 
 
@@ -218,8 +210,7 @@ namespace snapper
 	    cmd3a_args << "--compressed-data";
 	cmd3a_args << backup_config.send_options;
 
-	if (auto parent =
-		the_big_things.source_tree.find_nearest_valid_node(this->source_uuid))
+	if (auto parent = the_big_things.source_tree.find_nearest_valid_node(source_uuid))
 	    cmd3a_args << "-p" << backup_config.source_path + "/" SNAPSHOTS_NAME "/" +
 		to_string(parent->node->get_number()) + "/" SNAPSHOT_NAME;
 	cmd3a_args << "--" << backup_config.source_path + "/" SNAPSHOTS_NAME "/" + num_string + "/" SNAPSHOT_NAME;
@@ -343,8 +334,7 @@ namespace snapper
 	    cmd3a_args << "--compressed-data";
 	cmd3a_args << backup_config.send_options;
 
-	if (auto parent =
-		the_big_things.target_tree.find_nearest_valid_node(this->target_uuid))
+	if (auto parent = the_big_things.target_tree.find_nearest_valid_node(target_uuid))
 	    cmd3a_args << "-p" << backup_config.target_path + "/" +
 	    to_string(parent->node->get_number()) + "/" SNAPSHOT_NAME;
 	cmd3a_args << "--" << target_snapshot_dir + "/" SNAPSHOT_NAME;
