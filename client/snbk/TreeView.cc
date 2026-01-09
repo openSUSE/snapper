@@ -102,7 +102,7 @@ namespace snapper
 
 	void print_graph_mermaid_recursive(const shared_ptr<TreeView::ProxyNode>& node)
 	{
-	    cout << "    " << get_node_declaration(node) << endl;
+	    cout << "    " << get_node_declaration(node) << '\n';
 
 	    for (const shared_ptr<TreeView::ProxyNode>& child : node->children)
 	    {
@@ -123,7 +123,7 @@ namespace snapper
 
 		cout << "    "
 		     << get_node_name(node) << " " << link << " " << get_node_name(child)
-		     << endl;
+		     << '\n';
 
 		print_graph_mermaid_recursive(child);
 	    }
@@ -295,10 +295,10 @@ namespace snapper
     void TreeView::print_graph_mermaid(const shared_ptr<ProxyNode>& node,
 				       const string& graph_type)
     {
-	cout << "```mermaid" << endl;
-	cout << "graph " << graph_type << endl;
+	cout << "```mermaid" << '\n';
+	cout << "graph " << graph_type << '\n';
 	print_graph_mermaid_recursive(node);
-	cout << "```" << endl;
+	cout << "```" << '\n';
     }
 
     void TreeView::print_graph_mermaid(const string& graph_type) const
