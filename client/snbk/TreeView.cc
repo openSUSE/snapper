@@ -267,15 +267,11 @@ namespace snapper
 	    }
 
 	    // Append the parent and child nodes to the search queue.
-	    vector<shared_ptr<ProxyNode>> new_candidates;
+	    vector<shared_ptr<ProxyNode>> new_candidates = current.node->children;
 	    if (const shared_ptr<ProxyNode>& tmp_node = current.node->parent)
 	    {
-		new_candidates.push_back(tmp_node);
+		new_candidates.insert(new_candidates.begin(), tmp_node);
 	    }
-
-	    new_candidates.insert(new_candidates.end(),
-				  current.node->children.begin(),
-				  current.node->children.end());
 
 	    for (const shared_ptr<ProxyNode>& node : new_candidates)
 	    {
