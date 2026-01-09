@@ -42,6 +42,78 @@
 namespace snapper
 {
 
+    namespace
+    {
+	/** A base class for constructing a node from an iterator. */
+	class BaseNode : public TreeView::ProxyNode
+	{
+	public:
+
+	    BaseNode(const TheBigThings::const_iterator& it) : it(it) {}
+	    unsigned int get_number() const override { return it->num; }
+	    bool is_virtual() const override { return false; }
+
+	    bool is_valid() const override
+	    {
+		return (it->source_state == TheBigThing::SourceState::READ_ONLY &&
+		        it->target_state == TheBigThing::TargetState::VALID);
+	    }
+
+	protected:
+
+	    const TheBigThings::const_iterator it;
+	};
+
+	/**
+	 * Specialized class for source nodes.
+	 * (Used when sending snapshots from source to target.)
+	 */
+	class SourceNode : public BaseNode
+	{
+	public:
+
+	    SourceNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
+	    const string& get_uuid() const override { return it->source_uuid; }
+	    const string& get_parent_uuid() const override
+	    {
+		return it->source_parent_uuid;
+	    }
+	};
+
+	/**
+	 * Specialized class for target nodes.
+	 * (Used when sending snapshots from target to source.)
+	 */
+	class TargetNode : public BaseNode
+	{
+	public:
+
+	    TargetNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
+	    const string& get_uuid() const override { return it->target_uuid; }
+	    const string& get_parent_uuid() const override
+	    {
+		return it->target_parent_uuid;
+	    }
+	};
+
+
+	template <typename NodeType>
+	vector<shared_ptr<TreeView::ProxyNode>>
+	make_nodes(const TheBigThings& the_big_things)
+	{
+	    vector<shared_ptr<TreeView::ProxyNode>> nodes;
+	    for (TheBigThings::const_iterator it = the_big_things.begin();
+		 it != the_big_things.end(); ++it)
+	    {
+		nodes.push_back(std::make_shared<NodeType>(it));
+	    }
+
+	    return nodes;
+	}
+
+    }
+
+
     using namespace std;
 
 
@@ -138,8 +210,6 @@ namespace snapper
 
 	const int proto = the_big_things.proto();
 
-	TheBigThings::const_iterator it1 = the_big_things.find_send_parent(*this);
-
 	SystemCmd::Args cmd3a_args = { BTRFS_BIN, "send" };
 	if (proto >= 2)
 	    cmd3a_args << "--proto" << to_string(proto);
@@ -147,9 +217,9 @@ namespace snapper
 	    cmd3a_args << "--compressed-data";
 	cmd3a_args << backup_config.send_options;
 
-	if (it1 != the_big_things.end())
+	if (auto parent = the_big_things.source_tree.find_nearest_valid_node(source_uuid))
 	    cmd3a_args << "-p" << backup_config.source_path + "/" SNAPSHOTS_NAME "/" +
-		to_string(it1->num) + "/" SNAPSHOT_NAME;
+		to_string(parent->node->get_number()) + "/" SNAPSHOT_NAME;
 	cmd3a_args << "--" << backup_config.source_path + "/" SNAPSHOTS_NAME "/" + num_string + "/" SNAPSHOT_NAME;
 
 	SystemCmd::Args cmd3b_args = { backup_config.target_btrfs_bin, "receive" };
@@ -264,8 +334,6 @@ namespace snapper
 
 	const int proto = the_big_things.proto();
 
-	TheBigThings::const_iterator it1 = the_big_things.find_restore_parent(*this);
-
 	SystemCmd::Args cmd3a_args = { backup_config.target_btrfs_bin, "send" };
 	if (proto >= 2)
 	    cmd3a_args << "--proto" << to_string(proto);
@@ -273,9 +341,9 @@ namespace snapper
 	    cmd3a_args << "--compressed-data";
 	cmd3a_args << backup_config.send_options;
 
-	if (it1 != the_big_things.end())
-	    cmd3a_args << "-p" << backup_config.target_path + "/" + to_string(it1->num) +
-	    "/" SNAPSHOT_NAME;
+	if (auto parent = the_big_things.target_tree.find_nearest_valid_node(target_uuid))
+	    cmd3a_args << "-p" << backup_config.target_path + "/" +
+	    to_string(parent->node->get_number()) + "/" SNAPSHOT_NAME;
 	cmd3a_args << "--" << target_snapshot_dir + "/" SNAPSHOT_NAME;
 
 	SystemCmd::Args cmd3b_args = { BTRFS_BIN, "receive" };
@@ -399,6 +467,10 @@ namespace snapper
 	probe_target(backup_config, verbose);
 
 	sort(the_big_things.begin(), the_big_things.end());
+
+	// Construct tree for finding Btrfs send parent
+	source_tree = TreeView(make_nodes<SourceNode>(*this));
+	target_tree = TreeView(make_nodes<TargetNode>(*this));
     }
 
 
@@ -604,115 +676,6 @@ namespace snapper
 	return find_if(begin(), end(), [num](const TheBigThing& the_big_thing) {
 	    return the_big_thing.num == num;
 	});
-    }
-
-
-    TheBigThings::const_iterator
-    TheBigThings::find_send_parent(const TheBigThing& the_big_thing) const
-    {
-	typedef vector<TheBigThing>::const_reverse_iterator const_reverse_iterator;
-
-	// Find the direct parent or a previous snapshots with the same parent UUID (more
-	// a sibling).
-
-	for (const_reverse_iterator it1 = the_big_things.rbegin(); it1 != the_big_things.rend(); ++it1)
-	{
-	    if (it1->num >= the_big_thing.num)
-		continue;
-
-	    if (it1->source_state != TheBigThing::SourceState::READ_ONLY ||
-		it1->target_state != TheBigThing::TargetState::VALID)
-		continue;
-
-	    if (it1->source_uuid == the_big_thing.source_parent_uuid)
-		// base() is a bit surprising, compensate that
-		return (it1 + 1).base();
-
-	    if (it1->source_parent_uuid == the_big_thing.source_parent_uuid)
-		return (it1 + 1).base();
-	}
-
-	// Find the direct parent of the direct parent. This case can happen after a
-	// rollback.
-
-	for (const_reverse_iterator it1 = the_big_things.rbegin(); it1 != the_big_things.rend(); ++it1)
-	{
-	    if (it1->num >= the_big_thing.num)
-		continue;
-
-	    // Here the direct parent itself might be read-write and thus not available on
-	    // the target at all.
-
-	    if (it1->source_uuid == the_big_thing.source_parent_uuid)
-	    {
-		for (const_reverse_iterator it2 = the_big_things.rbegin(); it2 != the_big_things.rend(); ++it2)
-		{
-		    if (it2->num >= it1->num)
-			continue;
-
-		    if (it2->source_state != TheBigThing::SourceState::READ_ONLY ||
-			it2->target_state != TheBigThing::TargetState::VALID)
-			continue;
-
-		    if (it2->source_uuid == it1->source_parent_uuid)
-			return (it2 + 1).base();
-		}
-	    }
-	}
-
-	return end();
-    }
-
-    TheBigThings::const_iterator
-    TheBigThings::find_restore_parent(const TheBigThing& the_big_thing) const
-    {
-	typedef vector<TheBigThing>::const_reverse_iterator const_reverse_iterator;
-
-	// Find the direct parent or a previous snapshots with the same parent UUID (more
-	// a sibling).
-
-	for (const_reverse_iterator it1 = the_big_things.rbegin();
-	     it1 != the_big_things.rend(); ++it1)
-	{
-	    if (it1->num >= the_big_thing.num)
-		continue;
-
-	    if (it1->source_state != TheBigThing::SourceState::READ_ONLY ||
-		it1->target_state != TheBigThing::TargetState::VALID)
-		continue;
-
-	    if (it1->target_uuid == the_big_thing.target_parent_uuid)
-		return (it1 + 1).base();
-
-	    if (it1->target_parent_uuid == the_big_thing.target_parent_uuid)
-		return (it1 + 1).base();
-	}
-
-	// Find the nearest previous snapshot to use as the send parent,
-	// reducing disk usage.
-
-	int distance = std::numeric_limits<int>::max();
-	TheBigThings::const_iterator parent = end();
-
-	for (const_reverse_iterator it1 = the_big_things.rbegin();
-	     it1 != the_big_things.rend(); ++it1)
-	{
-	    if (it1->num >= the_big_thing.num)
-		continue;
-
-	    if (it1->source_state != TheBigThing::SourceState::READ_ONLY ||
-		it1->target_state != TheBigThing::TargetState::VALID)
-		continue;
-
-	    int tmp_dist = std::abs((int)it1->num - (int)the_big_thing.num);
-	    if (tmp_dist < distance)
-	    {
-		distance = tmp_dist;
-		parent = (it1 + 1).base();
-	    }
-	}
-
-	return parent;
     }
 
 }
