@@ -193,11 +193,13 @@ namespace snapper
 		if (lookup.find(uuid) == lookup.end())
 		{
 		    // Create a virtual node and insert it into the lookup table.
-		    shared_ptr<ProxyNode> node = make_shared<TreeView::VirtualNode>(uuid);
-		    lookup[uuid] = node;
+		    shared_ptr<ProxyNode> tmp_node =
+		        make_shared<TreeView::VirtualNode>(uuid);
+		    lookup[uuid] = tmp_node;
 
 		    // Make it an implicit child of the virtual root.
-		    set_parent(node, virtual_root, TreeView::ParentType::IMPLICIT_PARENT);
+		    set_parent(tmp_node, virtual_root,
+		               TreeView::ParentType::IMPLICIT_PARENT);
 
 		    y2deb("Added virtual node for unmanaged Btrfs subvolume: " << uuid);
 		}
