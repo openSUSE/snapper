@@ -44,11 +44,6 @@ namespace snapper
 
     namespace
     {
-
-	// A constant number used for virtual nodes.
-	// Assume that there won't be so many snapshots.
-	constexpr unsigned int virtual_node_num = numeric_limits<unsigned int>::max();
-
 	// Comparator for shared pointers to nodes.
 	struct NodePtrComparator
 	{
@@ -61,7 +56,7 @@ namespace snapper
 
 	string get_node_name(const shared_ptr<TreeView::ProxyNode>& node)
 	{
-	    if (node->get_number() == virtual_node_num)
+	    if (node->is_virtual())
 	    {
 		// Use the object's address as the node name to avoid name collisions.
 		stringstream ss;
@@ -79,7 +74,7 @@ namespace snapper
 	{
 	    // Get the node's properties.
 	    vector<string> properties;
-	    if (node->get_number() == virtual_node_num)
+	    if (node->is_virtual())
 	    {
 		properties.push_back("virtual");
 	    }
@@ -153,9 +148,17 @@ namespace snapper
 
 
     TreeView::VirtualNode::VirtualNode(const string& uuid) : uuid(uuid) {}
-    unsigned int TreeView::VirtualNode::get_number() const { return virtual_node_num; }
+
+    unsigned int TreeView::VirtualNode::get_number() const
+    {
+	// A constant number used for virtual nodes.
+	// Assume that there won't be so many snapshots.
+	return numeric_limits<unsigned int>::max();
+    }
+
     string TreeView::VirtualNode::get_uuid() const { return uuid; }
     string TreeView::VirtualNode::get_parent_uuid() const { return ""; }
+    bool TreeView::VirtualNode::is_virtual() const { return true; }
     bool TreeView::VirtualNode::is_valid() const { return false; }
 
 

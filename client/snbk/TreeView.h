@@ -71,6 +71,12 @@ namespace snapper
 	    /** Determine whether the node can be used as a Btrfs send parent. */
 	    virtual bool is_valid() const = 0;
 
+	    /**
+	     * Determine whether the node is a virtual node. If a Btrfs subvolume is not
+	     * managed by Snapper, the corresponding node is considered virtual.
+	     */
+	    virtual bool is_virtual() const = 0;
+
 	    /** Provided for ordering. This affects the priority of sibling nodes. */
 	    virtual bool operator<(const ProxyNode& other) const;
 
@@ -126,6 +132,7 @@ namespace snapper
 	    unsigned int get_number() const override;
 	    string get_uuid() const override;
 	    string get_parent_uuid() const override;
+	    bool is_virtual() const override;
 	    bool is_valid() const override;
 
 	protected:

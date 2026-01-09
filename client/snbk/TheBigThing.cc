@@ -51,6 +51,7 @@ namespace snapper
 
 	    BaseNode(const TheBigThings::const_iterator& it) : it(it) {}
 	    unsigned int get_number() const override { return it->num; }
+	    bool is_virtual() const override { return false; }
 
 	    bool is_valid() const override
 	    {
