@@ -26,6 +26,7 @@
 #include <unordered_set>
 #include <vector>
 
+#include <boost/algorithm/string.hpp>
 #include <boost/optional.hpp>
 
 #include <snapper/AppUtil.h>
@@ -91,16 +92,7 @@ namespace snapper
 
 	    if (!properties.empty())
 	    {
-		ss << " - ";
-		for (vector<string>::const_iterator it = properties.begin();
-		     it != properties.end(); ++it)
-		{
-		    ss << *it;
-		    if (it + 1 != properties.end())
-		    {
-			ss << ", ";
-		    }
-		}
+		ss << " - " << boost::join(properties, ", ");
 	    }
 
 	    ss << "]";
