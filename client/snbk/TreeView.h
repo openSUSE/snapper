@@ -99,28 +99,14 @@ namespace snapper
 	TreeView();
 	TreeView(const vector<shared_ptr<ProxyNode>>& nodes);
 
-	/**
-	 * Member functions that find the nearest valid node to use as a Btrfs‑send
-	 * parent.
-	 */
+	/** Find the nearest valid node to use as a Btrfs‑send parent. */
 	boost::optional<SearchResult>
 	find_nearest_valid_node(const string& start_uuid) const;
-	boost::optional<SearchResult>
-	find_nearest_valid_node(const shared_ptr<ProxyNode>& start_node) const;
 
-	/**
-	 * A static function that sets the parent relationship for the given two nodes.
-	 */
-	static void set_parent(const shared_ptr<ProxyNode>& node,
-	                       const shared_ptr<ProxyNode>& parent,
-	                       ParentType parent_type);
-
-	/** Functions that print the tree graph in Mermaid language. */
-	static void print_graph_mermaid(const shared_ptr<ProxyNode>& node,
-	                                const string& graph_type = "LR");
+	/** Print the tree graph in Mermaid language. */
 	void print_graph_mermaid(const string& graph_type = "LR") const;
 
-    protected:
+    private:
 
 	/** Virtual node for Btrfs subvolumes that are not managed by snapper. */
 	class VirtualNode : public ProxyNode
@@ -135,11 +121,29 @@ namespace snapper
 	    bool is_virtual() const override;
 	    bool is_valid() const override;
 
-	protected:
+	private:
 
 	    const string uuid;
 	    const string parent_uuid;
 	};
+
+	/**
+	 * Find the nearest valid node to use as a Btrfs‑send parent, starting from the
+	 * given node.
+	 */
+	boost::optional<SearchResult>
+	find_nearest_valid_node(const shared_ptr<ProxyNode>& start_node) const;
+
+	/** Print the tree graph in Mermaid language, starting from the given node. */
+	static void print_graph_mermaid(const shared_ptr<ProxyNode>& node,
+	                                const string& graph_type = "LR");
+
+	/**
+	 * A static function that sets the parent relationship for the given two nodes.
+	 */
+	static void set_parent(const shared_ptr<ProxyNode>& node,
+	                       const shared_ptr<ProxyNode>& parent,
+	                       ParentType parent_type);
 
 	shared_ptr<ProxyNode> virtual_root;
 	std::map<string, shared_ptr<ProxyNode>> lookup;
