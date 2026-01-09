@@ -73,8 +73,11 @@ namespace snapper
 	public:
 
 	    SourceNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
-	    string get_uuid() const override { return it->source_uuid; }
-	    string get_parent_uuid() const override { return it->source_parent_uuid; }
+	    const string& get_uuid() const override { return it->source_uuid; }
+	    const string& get_parent_uuid() const override
+	    {
+		return it->source_parent_uuid;
+	    }
 	};
 
 	/**
@@ -86,8 +89,11 @@ namespace snapper
 	public:
 
 	    TargetNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
-	    string get_uuid() const override { return it->target_uuid; }
-	    string get_parent_uuid() const override { return it->target_parent_uuid; }
+	    const string& get_uuid() const override { return it->target_uuid; }
+	    const string& get_parent_uuid() const override
+	    {
+		return it->target_parent_uuid;
+	    }
 	};
 
 

@@ -147,7 +147,9 @@ namespace snapper
     }
 
 
-    TreeView::VirtualNode::VirtualNode(const string& uuid) : uuid(uuid) {}
+    TreeView::VirtualNode::VirtualNode(const string& uuid) : uuid(uuid), parent_uuid("")
+    {
+    }
 
     unsigned int TreeView::VirtualNode::get_number() const
     {
@@ -156,8 +158,8 @@ namespace snapper
 	return numeric_limits<unsigned int>::max();
     }
 
-    string TreeView::VirtualNode::get_uuid() const { return uuid; }
-    string TreeView::VirtualNode::get_parent_uuid() const { return ""; }
+    const string& TreeView::VirtualNode::get_uuid() const { return uuid; }
+    const string& TreeView::VirtualNode::get_parent_uuid() const { return parent_uuid; }
     bool TreeView::VirtualNode::is_virtual() const { return true; }
     bool TreeView::VirtualNode::is_valid() const { return false; }
 

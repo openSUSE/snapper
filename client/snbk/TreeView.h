@@ -63,10 +63,10 @@ namespace snapper
 	    virtual unsigned int get_number() const = 0;
 
 	    /** Get the UUID on the sender side. */
-	    virtual string get_uuid() const = 0;
+	    virtual const string& get_uuid() const = 0;
 
 	    /** Get the parent UUID on the sender side. */
-	    virtual string get_parent_uuid() const = 0;
+	    virtual const string& get_parent_uuid() const = 0;
 
 	    /** Determine whether the node can be used as a Btrfs send parent. */
 	    virtual bool is_valid() const = 0;
@@ -130,14 +130,15 @@ namespace snapper
 	    VirtualNode(const string& uuid);
 
 	    unsigned int get_number() const override;
-	    string get_uuid() const override;
-	    string get_parent_uuid() const override;
+	    const string& get_uuid() const override;
+	    const string& get_parent_uuid() const override;
 	    bool is_virtual() const override;
 	    bool is_valid() const override;
 
 	protected:
 
 	    const string uuid;
+	    const string parent_uuid;
 	};
 
 	shared_ptr<ProxyNode> virtual_root;
