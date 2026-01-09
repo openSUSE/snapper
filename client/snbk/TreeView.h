@@ -103,8 +103,8 @@ namespace snapper
 	boost::optional<SearchResult>
 	find_nearest_valid_node(const string& start_uuid) const;
 
-	/** Print the tree graph in Mermaid language. */
-	void print_graph_mermaid(const string& graph_type = "LR") const;
+	/** Print the tree graph in Graphviz DOT Language. */
+	void print_graph_graphviz(const string& rankdir = "LR") const;
 
     private:
 
@@ -134,9 +134,11 @@ namespace snapper
 	boost::optional<SearchResult>
 	find_nearest_valid_node(const shared_ptr<ProxyNode>& start_node) const;
 
-	/** Print the tree graph in Mermaid language, starting from the given node. */
-	static void print_graph_mermaid(const shared_ptr<ProxyNode>& node,
-	                                const string& graph_type = "LR");
+	/**
+	 * Print the tree graph in Graphviz DOT Language, starting from the given node.
+	 */
+	static void print_graph_graphviz(const shared_ptr<ProxyNode>& node,
+	                                 const string& rankdir = "LR");
 
 	/**
 	 * A static function that sets the parent relationship for the given two nodes.

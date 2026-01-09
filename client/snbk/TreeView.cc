@@ -71,6 +71,13 @@ namespace snapper
 	    }
 	}
 
+	string get_node_id(const shared_ptr<TreeView::ProxyNode>& node)
+	{
+	    // Graphviz node IDs cannot start with a digit.
+	    // Prefix the name with “n” to guarantee a valid identifier.
+	    return "n" + get_node_name(node);
+	}
+
 	string get_node_declaration(const shared_ptr<TreeView::ProxyNode>& node)
 	{
 	    // Get the node's properties.
@@ -86,46 +93,44 @@ namespace snapper
 	    }
 
 	    // Compose the node declaration.
-	    stringstream ss;
-	    ss << get_node_name(node);
-	    ss << "[" << get_node_name(node);
-
+	    string label = get_node_name(node);
 	    if (!properties.empty())
 	    {
-		ss << " - " << boost::join(properties, ", ");
+		label = label + "\\n" + boost::join(properties, ", ");
 	    }
 
-	    ss << "]";
-
-	    return ss.str();
+	    return sformat(_("%s [ label=\"%s\", style=\"%s\", shape=\"box\"]"),
+	                   get_node_id(node).c_str(), label.c_str(),
+	                   node->is_virtual() ? "dashed" : "");
 	}
 
-	void print_graph_mermaid_recursive(const shared_ptr<TreeView::ProxyNode>& node)
+	void print_graph_graphviz_recursive(const shared_ptr<TreeView::ProxyNode>& node)
 	{
 	    cout << "    " << get_node_declaration(node) << '\n';
 
 	    for (const shared_ptr<TreeView::ProxyNode>& child : node->children)
 	    {
-		string link;
+		const char* link_style = nullptr;
 		switch (child->parent_type)
 		{
 		    case TreeView::ParentType::DIRECT_PARENT:
-			link = "-->";
+			link_style = "";
 			break;
 
 		    case TreeView::ParentType::IMPLICIT_PARENT:
-			link = "-.->";
+			link_style = "dashed";
 			break;
 
 		    case TreeView::ParentType::NONE:
 			SN_THROW(Exception("Invalid parent type."));
 		}
 
-		cout << "    "
-		     << get_node_name(node) << " " << link << " " << get_node_name(child)
+		cout << sformat(_("    %s -> %s [style=\"%s\"]"),
+		                get_node_id(node).c_str(), get_node_id(child).c_str(),
+		                link_style)
 		     << '\n';
 
-		print_graph_mermaid_recursive(child);
+		print_graph_graphviz_recursive(child);
 	    }
 	}
 
@@ -292,18 +297,18 @@ namespace snapper
 	node->parent_type = parent_type;
     }
 
-    void TreeView::print_graph_mermaid(const shared_ptr<ProxyNode>& node,
-				       const string& graph_type)
+    void TreeView::print_graph_graphviz(const shared_ptr<ProxyNode>& node,
+                                        const string& rankdir)
     {
-	cout << "```mermaid" << '\n';
-	cout << "graph " << graph_type << '\n';
-	print_graph_mermaid_recursive(node);
-	cout << "```" << '\n';
+	cout << "digraph {" << '\n';
+	cout << sformat(_("    rankdir=\"%s\"\n"), rankdir.c_str());
+	print_graph_graphviz_recursive(node);
+	cout << "}" << '\n';
     }
 
-    void TreeView::print_graph_mermaid(const string& graph_type) const
+    void TreeView::print_graph_graphviz(const string& rankdir) const
     {
-	TreeView::print_graph_mermaid(virtual_root, graph_type);
+	TreeView::print_graph_graphviz(virtual_root, rankdir);
     }
 
 
