@@ -60,7 +60,7 @@ namespace snapper
 
 	protected:
 
-	    TheBigThings::const_iterator it;
+	    const TheBigThings::const_iterator it;
 	};
 
 	/**
