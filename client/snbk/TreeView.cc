@@ -61,6 +61,7 @@ namespace snapper
 	    {
 		// Use the object's address as the node name to avoid name collisions.
 		stringstream ss;
+		ss.imbue(locale::classic());
 		ss << node;
 		return ss.str();
 	    }
