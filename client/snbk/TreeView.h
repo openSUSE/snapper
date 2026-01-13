@@ -87,10 +87,10 @@ namespace snapper
 
 	struct SearchResult
 	{
-	    shared_ptr<ProxyNode> node;
+	    const ProxyNode* node;
 	    unsigned int distance;
 
-	    SearchResult(const shared_ptr<ProxyNode>& node, unsigned int distance)
+	    SearchResult(const ProxyNode* node, unsigned int distance)
 	        : node(node), distance(distance)
 	    {
 	    }

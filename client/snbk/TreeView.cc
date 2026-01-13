@@ -45,17 +45,6 @@ namespace snapper
 
     namespace
     {
-	struct SearchCandidate
-	{
-	    const TreeView::ProxyNode* node;
-	    unsigned int distance;
-
-	    SearchCandidate(const TreeView::ProxyNode* node, unsigned int distance)
-	        : node(node), distance(distance)
-	    {
-	    }
-	};
-
 	// Comparator for shared pointers to nodes.
 	struct NodePtrComparator
 	{
@@ -259,24 +248,22 @@ namespace snapper
     boost::optional<TreeView::SearchResult>
     TreeView::find_nearest_valid_node(const ProxyNode* start_node) const
     {
-	queue<SearchCandidate> nodes_to_visit;
+	queue<SearchResult> nodes_to_visit;
 	unordered_set<string> visited;
 
-	nodes_to_visit.push(SearchCandidate(start_node, 0));
+	nodes_to_visit.push(SearchResult(start_node, 0));
 	visited.insert(start_node->get_uuid());
 
 	while (!nodes_to_visit.empty())
 	{
-	    SearchCandidate current = nodes_to_visit.front();
+	    SearchResult current = nodes_to_visit.front();
 	    nodes_to_visit.pop();
 
 	    // Return the current search result if the distance is > 0
 	    // (i.e., not the start node) and it is valid.
 	    if (current.distance > 0 && current.node->is_valid())
 	    {
-		return SearchResult(
-		    // Ensure the result holds ownership of the node.
-		    lookup.find(current.node->get_uuid())->second, current.distance);
+		return current;
 	    }
 
 	    // Append the parent and child nodes to the search queue.
@@ -291,7 +278,7 @@ namespace snapper
 		if (!visited.count(node->get_uuid()))
 		{
 		    visited.insert(node->get_uuid());
-		    nodes_to_visit.push(SearchCandidate(node, current.distance + 1));
+		    nodes_to_visit.push(SearchResult(node, current.distance + 1));
 		}
 	    }
 	}
