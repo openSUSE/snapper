@@ -176,10 +176,10 @@ namespace snapper
 	    }
 	}
 
-	// Construct lookup table.
+	// Insert and take ownership of external nodes into the pool.
 	for (const shared_ptr<ProxyNode>& node : sorted_nodes)
 	{
-	    lookup[node->get_uuid()] = node;
+	    pool[node->get_uuid()] = node;
 	}
 
 	// Construct virtual nodes for unmanaged parent Btrfs subvolumes.
@@ -188,11 +188,11 @@ namespace snapper
 	    string uuid = node->get_parent_uuid();
 	    if (!uuid.empty())
 	    {
-		if (lookup.find(uuid) == lookup.end())
+		if (pool.find(uuid) == pool.end())
 		{
-		    // Create a virtual node and insert it into the lookup table.
+		    // Create a virtual node and insert it into the pool.
 		    shared_ptr<ProxyNode> tmp_node = make_shared<VirtualNode>(uuid);
-		    lookup[uuid] = tmp_node;
+		    pool[uuid] = tmp_node;
 
 		    // Make it an implicit child of the virtual root.
 		    set_parent(tmp_node.get(), virtual_root.get(),
@@ -216,8 +216,8 @@ namespace snapper
 	    }
 	    else
 	    {
-		auto pair = lookup.find(parent_uuid);
-		if (pair == lookup.end())
+		auto pair = pool.find(parent_uuid);
+		if (pair == pool.end())
 		{
 		    string error =
 			sformat(_("Parent node %s not found."), parent_uuid.c_str());
@@ -234,8 +234,8 @@ namespace snapper
     boost::optional<TreeView::SearchResult>
     TreeView::find_nearest_valid_node(const string& start_uuid) const
     {
-	auto pair = lookup.find(start_uuid);
-	if (pair != lookup.end())
+	auto pair = pool.find(start_uuid);
+	if (pair != pool.end())
 	{
 	    return find_nearest_valid_node(pair->second.get());
 	}

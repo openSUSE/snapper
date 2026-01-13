@@ -146,8 +146,12 @@ namespace snapper
 	static void set_parent(ProxyNode* node, ProxyNode* parent,
 	                       ParentType parent_type);
 
+	/**
+	 * A pool that stores and owns all nodes, including both real and virtual nodes.
+	 */
+	std::map<string, shared_ptr<ProxyNode>> pool;
+
 	shared_ptr<ProxyNode> virtual_root;
-	std::map<string, shared_ptr<ProxyNode>> lookup;
     };
 
     template <> struct EnumInfo<TreeView::ParentType>
