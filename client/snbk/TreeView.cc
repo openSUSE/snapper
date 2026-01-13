@@ -45,6 +45,17 @@ namespace snapper
 
     namespace
     {
+	struct SearchCandidate
+	{
+	    const TreeView::ProxyNode* node;
+	    unsigned int distance;
+
+	    SearchCandidate(const TreeView::ProxyNode* node, unsigned int distance)
+	        : node(node), distance(distance)
+	    {
+	    }
+	};
+
 	// Comparator for shared pointers to nodes.
 	struct NodePtrComparator
 	{
@@ -55,7 +66,7 @@ namespace snapper
 	    }
 	};
 
-	string get_node_name(const shared_ptr<TreeView::ProxyNode>& node)
+	string get_node_name(const TreeView::ProxyNode* node)
 	{
 	    if (node->is_virtual())
 	    {
@@ -72,14 +83,14 @@ namespace snapper
 	    }
 	}
 
-	string get_node_id(const shared_ptr<TreeView::ProxyNode>& node)
+	string get_node_id(const TreeView::ProxyNode* node)
 	{
 	    // Graphviz node IDs cannot start with a digit.
 	    // Prefix the name with “n” to guarantee a valid identifier.
 	    return "n" + get_node_name(node);
 	}
 
-	string get_node_declaration(const shared_ptr<TreeView::ProxyNode>& node)
+	string get_node_declaration(const TreeView::ProxyNode* node)
 	{
 	    // Get the node's properties.
 	    vector<string> properties;
@@ -105,11 +116,11 @@ namespace snapper
 	                   node->is_virtual() ? "dashed" : "");
 	}
 
-	void print_graph_graphviz_recursive(const shared_ptr<TreeView::ProxyNode>& node)
+	void print_graph_graphviz_recursive(const TreeView::ProxyNode* node)
 	{
 	    cout << "    " << get_node_declaration(node) << '\n';
 
-	    for (const shared_ptr<TreeView::ProxyNode>& child : node->children)
+	    for (const TreeView::ProxyNode* child : node->children)
 	    {
 		const char* link_style = nullptr;
 		switch (child->parent_type)
@@ -196,8 +207,8 @@ namespace snapper
 		    lookup[uuid] = tmp_node;
 
 		    // Make it an implicit child of the virtual root.
-		    set_parent(tmp_node, virtual_root,
-		               TreeView::ParentType::IMPLICIT_PARENT);
+		    set_parent(tmp_node.get(), virtual_root.get(),
+		               ParentType::IMPLICIT_PARENT);
 
 		    y2deb("Added virtual node for unmanaged Btrfs subvolume: " << uuid);
 		}
@@ -213,7 +224,7 @@ namespace snapper
 	    {
 		// If the parent UUID is missing, add the node as a child of the virtual
 		// root to prevent orphaned nodes.
-		set_parent(node, virtual_root, TreeView::ParentType::IMPLICIT_PARENT);
+		set_parent(node.get(), virtual_root.get(), ParentType::IMPLICIT_PARENT);
 	    }
 	    else
 	    {
@@ -226,7 +237,7 @@ namespace snapper
 		}
 		else
 		{
-		    set_parent(node, pair->second, TreeView::ParentType::DIRECT_PARENT);
+		    set_parent(node.get(), pair->second.get(), ParentType::DIRECT_PARENT);
 		}
 	    }
 	}
@@ -238,7 +249,7 @@ namespace snapper
 	auto pair = lookup.find(start_uuid);
 	if (pair != lookup.end())
 	{
-	    return find_nearest_valid_node(pair->second);
+	    return find_nearest_valid_node(pair->second.get());
 	}
 
 	SN_THROW(Exception(
@@ -247,41 +258,41 @@ namespace snapper
     }
 
     boost::optional<TreeView::SearchResult>
-    TreeView::find_nearest_valid_node(const shared_ptr<TreeView::ProxyNode>& start_node)
-    const
+    TreeView::find_nearest_valid_node(const ProxyNode* start_node) const
     {
-	queue<TreeView::SearchResult> nodes_to_visit;
+	queue<SearchCandidate> nodes_to_visit;
 	unordered_set<string> visited;
 
-	nodes_to_visit.push(TreeView::SearchResult(start_node, 0));
+	nodes_to_visit.push(SearchCandidate(start_node, 0));
 	visited.insert(start_node->get_uuid());
 
 	while (!nodes_to_visit.empty())
 	{
-	    TreeView::SearchResult current = nodes_to_visit.front();
+	    SearchCandidate current = nodes_to_visit.front();
 	    nodes_to_visit.pop();
 
 	    // Return the current search result if the distance is > 0
 	    // (i.e., not the start node) and it is valid.
 	    if (current.distance > 0 && current.node->is_valid())
 	    {
-		return current;
+		return SearchResult(
+		    // Ensure the result holds ownership of the node.
+		    lookup.find(current.node->get_uuid())->second, current.distance);
 	    }
 
 	    // Append the parent and child nodes to the search queue.
-	    vector<shared_ptr<ProxyNode>> new_candidates = current.node->children;
-	    if (const shared_ptr<ProxyNode>& tmp_node = current.node->parent)
+	    vector<const ProxyNode*> new_candidates = current.node->children;
+	    if (const ProxyNode* tmp_node = current.node->parent)
 	    {
 		new_candidates.insert(new_candidates.begin(), tmp_node);
 	    }
 
-	    for (const shared_ptr<ProxyNode>& node : new_candidates)
+	    for (const ProxyNode* node : new_candidates)
 	    {
 		if (!visited.count(node->get_uuid()))
 		{
 		    visited.insert(node->get_uuid());
-		    nodes_to_visit.push(
-			TreeView::SearchResult(node, current.distance + 1));
+		    nodes_to_visit.push(SearchCandidate(node, current.distance + 1));
 		}
 	    }
 	}
@@ -289,17 +300,14 @@ namespace snapper
 	return boost::none;
     }
 
-    void TreeView::set_parent(const shared_ptr<TreeView::ProxyNode>& node,
-			      const shared_ptr<TreeView::ProxyNode>& parent,
-			      TreeView::ParentType parent_type)
+    void TreeView::set_parent(ProxyNode* node, ProxyNode* parent, ParentType parent_type)
     {
 	parent->children.push_back(node);
 	node->parent = parent;
 	node->parent_type = parent_type;
     }
 
-    void TreeView::print_graph_graphviz(const shared_ptr<ProxyNode>& node,
-                                        const string& rankdir)
+    void TreeView::print_graph_graphviz(const ProxyNode* node, const string& rankdir)
     {
 	cout << "digraph {" << '\n';
 	cout << sformat(_("    rankdir=\"%s\"\n"), rankdir.c_str());
@@ -309,7 +317,7 @@ namespace snapper
 
     void TreeView::print_graph_graphviz(const string& rankdir) const
     {
-	TreeView::print_graph_graphviz(virtual_root, rankdir);
+	TreeView::print_graph_graphviz(virtual_root.get(), rankdir);
     }
 
 

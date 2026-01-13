@@ -81,8 +81,8 @@ namespace snapper
 	    virtual bool operator<(const ProxyNode& other) const;
 
 	    ParentType parent_type = ParentType::NONE;
-	    shared_ptr<ProxyNode> parent;
-	    vector<shared_ptr<ProxyNode>> children;
+	    const ProxyNode* parent = nullptr;
+	    vector<const ProxyNode*> children;
 	};
 
 	struct SearchResult
@@ -132,19 +132,18 @@ namespace snapper
 	 * given node.
 	 */
 	boost::optional<SearchResult>
-	find_nearest_valid_node(const shared_ptr<ProxyNode>& start_node) const;
+	find_nearest_valid_node(const ProxyNode* start_node) const;
 
 	/**
 	 * Print the tree graph in Graphviz DOT Language, starting from the given node.
 	 */
-	static void print_graph_graphviz(const shared_ptr<ProxyNode>& node,
+	static void print_graph_graphviz(const ProxyNode* node,
 	                                 const string& rankdir = "LR");
 
 	/**
 	 * A static function that sets the parent relationship for the given two nodes.
 	 */
-	static void set_parent(const shared_ptr<ProxyNode>& node,
-	                       const shared_ptr<ProxyNode>& parent,
+	static void set_parent(ProxyNode* node, ProxyNode* parent,
 	                       ParentType parent_type);
 
 	shared_ptr<ProxyNode> virtual_root;
