@@ -202,8 +202,7 @@ namespace snapper
 		if (lookup.find(uuid) == lookup.end())
 		{
 		    // Create a virtual node and insert it into the lookup table.
-		    shared_ptr<ProxyNode> tmp_node =
-		        make_shared<TreeView::VirtualNode>(uuid);
+		    shared_ptr<ProxyNode> tmp_node = make_shared<VirtualNode>(uuid);
 		    lookup[uuid] = tmp_node;
 
 		    // Make it an implicit child of the virtual root.
