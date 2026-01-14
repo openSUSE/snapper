@@ -30,6 +30,7 @@
 #include "../proxy/locker.h"
 
 #include "CmdBtrfs.h"
+#include "TreeView.h"
 
 
 namespace snapper
@@ -109,16 +110,17 @@ namespace snapper
 
 	iterator find(unsigned int num);
 
-	/**
-	 * Detect a suitable parent for btrfs send. Return end() iff none is found.
-	 */
-	const_iterator find_send_parent(const TheBigThing& the_big_thing) const;
-	const_iterator find_restore_parent(const TheBigThing& the_big_thing) const;
-
 	CmdBtrfsVersion source_btrfs_version;
 	CmdBtrfsVersion target_btrfs_version;
 
 	int proto();
+
+	/**
+	 * Helper objects for finding a suitable Btrfs send parent when transferring and
+	 * restoring snapshots.
+	 */
+	TreeView source_tree;
+	TreeView target_tree;
 
     private:
 
