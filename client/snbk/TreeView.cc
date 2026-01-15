@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2024-2025] SUSE LLC
+ * Copyright (c) [2024-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -293,15 +293,15 @@ namespace snapper
 	node->parent_type = parent_type;
     }
 
-    void TreeView::print_graph_graphviz(const ProxyNode* node, const string& rankdir)
+    void TreeView::print_graph_graphviz(const ProxyNode* node, const Rankdir& rankdir)
     {
 	cout << "digraph {" << '\n';
-	cout << sformat(_("    rankdir=\"%s\"\n"), rankdir.c_str());
+	cout << sformat(_("    rankdir=\"%s\"\n"), toString(rankdir).c_str());
 	print_graph_graphviz_recursive(node);
 	cout << "}" << '\n';
     }
 
-    void TreeView::print_graph_graphviz(const string& rankdir) const
+    void TreeView::print_graph_graphviz(const Rankdir& rankdir) const
     {
 	TreeView::print_graph_graphviz(virtual_root.get(), rankdir);
     }
@@ -309,6 +309,13 @@ namespace snapper
 
     const vector<string> EnumInfo<TreeView::ParentType>::names({
 	"none", "direct-parent", "implicit-parent"
+    });
+
+    const vector<string> EnumInfo<TreeView::Rankdir>::names({
+        "TB",
+        "LR",
+        "BT",
+        "RL",
     });
 
 }

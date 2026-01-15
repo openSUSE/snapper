@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2024] SUSE LLC
+ * Copyright (c) [2016-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -75,5 +75,11 @@ namespace snapper
     void
     command_transfer_and_delete(const GlobalOptions& global_options, GetOpts& get_opts, BackupConfigs& backup_configs,
 				ProxySnappers* snappers);
+
+
+    void help_visualize();
+
+    void command_visualize(const GlobalOptions& global_options, GetOpts& get_opts,
+                           BackupConfigs& backup_configs, ProxySnappers* snappers);
 
 }
