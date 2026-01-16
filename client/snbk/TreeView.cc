@@ -100,7 +100,7 @@ namespace snapper
 		label = label + "\\n" + boost::join(properties, ", ");
 	    }
 
-	    return sformat(_("%s [ label=\"%s\", style=\"%s\", shape=\"box\"]"),
+	    return sformat("%s [ label=\"%s\", style=\"%s\", shape=\"box\"]",
 	                   get_node_id(node).c_str(), label.c_str(),
 	                   node->is_virtual() ? "dashed" : "");
 	}
@@ -126,9 +126,8 @@ namespace snapper
 			SN_THROW(Exception("Invalid parent type."));
 		}
 
-		cout << sformat(_("    %s -> %s [style=\"%s\"]"),
-		                get_node_id(node).c_str(), get_node_id(child).c_str(),
-		                link_style)
+		cout << sformat("    %s -> %s [style=\"%s\"]", get_node_id(node).c_str(),
+		                get_node_id(child).c_str(), link_style)
 		     << '\n';
 
 		print_graph_graphviz_recursive(child);
@@ -296,7 +295,7 @@ namespace snapper
     void TreeView::print_graph_graphviz(const ProxyNode* node, const Rankdir rankdir)
     {
 	cout << "digraph {" << '\n';
-	cout << sformat(_("    rankdir=\"%s\"\n"), toString(rankdir).c_str());
+	cout << sformat("    rankdir=\"%s\"\n", toString(rankdir).c_str());
 	print_graph_graphviz_recursive(node);
 	cout << "}" << '\n';
     }
