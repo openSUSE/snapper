@@ -128,6 +128,7 @@ main(int argc, char** argv)
 	Cmd("restore", command_restore, help_restore, true),
 	Cmd("delete", { "remove", "rm" }, command_delete, help_delete, true),
 	Cmd("transfer-and-delete", command_transfer_and_delete, help_transfer_and_delete, true),
+	Cmd("visualize", command_visualize, help_visualize, true),
     };
 
     try

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2024-2025] SUSE LLC
+ * Copyright (c) [2024-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -50,6 +50,15 @@ namespace snapper
 	    NONE,           /** Not yet specified. */
 	    DIRECT_PARENT,  /** An explicit parent Btrfs subvolume is specified. */
 	    IMPLICIT_PARENT /** Manually assigned. */
+	};
+
+	/** Direction to draw directed graphs (Graphviz rankdir attribute). */
+	enum class Rankdir
+	{
+	    TB,
+	    LR,
+	    BT,
+	    RL
 	};
 
 	/** Proxy class to the nodes (snapshots). */
@@ -104,7 +113,7 @@ namespace snapper
 	find_nearest_valid_node(const string& start_uuid) const;
 
 	/** Print the tree graph in Graphviz DOT Language. */
-	void print_graph_graphviz(const string& rankdir = "LR") const;
+	void print_graph_graphviz(const Rankdir rankdir = Rankdir::LR) const;
 
     private:
 
@@ -138,7 +147,7 @@ namespace snapper
 	 * Print the tree graph in Graphviz DOT Language, starting from the given node.
 	 */
 	static void print_graph_graphviz(const ProxyNode* node,
-	                                 const string& rankdir = "LR");
+	                                 const Rankdir rankdir = Rankdir::LR);
 
 	/**
 	 * A static function that sets the parent relationship for the given two nodes.
@@ -155,6 +164,11 @@ namespace snapper
     };
 
     template <> struct EnumInfo<TreeView::ParentType>
+    {
+	static const vector<string> names;
+    };
+
+    template <> struct EnumInfo<TreeView::Rankdir>
     {
 	static const vector<string> names;
     };

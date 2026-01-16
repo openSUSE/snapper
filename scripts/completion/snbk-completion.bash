@@ -32,7 +32,8 @@ _snbk()
         "transfer"
 	"restore"
 	"delete"
-	"transfer-and-delete")
+	"transfer-and-delete"
+	"visualize")
 
     local command i
     for (( i=0; i < ${#words[@]}-1; i++ )); do
@@ -69,8 +70,31 @@ _snbk()
     # supported options per command
     if [[ "$cur" == -* ]]; then
         case $command in
+            visualize)
+                COMPREPLY=( $( compgen -W '--rankdir -r' -- "$cur" ) )
+                return 0
+                ;;
             *)
                 COMPREPLY=( $( compgen -W "$GLOBAL_SNBK_OPTIONS" -- "$cur" ) )
+                return 0
+                ;;
+        esac
+    fi
+
+    # specific command arguments
+    if [[ -n $command ]]; then
+        case $command in
+            visualize)
+                case "$prev" in
+                    --rankdir|-r)
+                        COMPREPLY=( $( compgen -W 'TB LR BT RL' -- "$cur" ) )
+                        ;;
+                    source-tree|target-tree)
+                        ;;
+                    *)
+                        COMPREPLY=( $( compgen -W 'source-tree target-tree' -- "$cur" ) )
+                        ;;
+                esac
                 return 0
                 ;;
         esac
