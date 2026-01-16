@@ -293,7 +293,7 @@ namespace snapper
 	node->parent_type = parent_type;
     }
 
-    void TreeView::print_graph_graphviz(const ProxyNode* node, const Rankdir& rankdir)
+    void TreeView::print_graph_graphviz(const ProxyNode* node, const Rankdir rankdir)
     {
 	cout << "digraph {" << '\n';
 	cout << sformat(_("    rankdir=\"%s\"\n"), toString(rankdir).c_str());
@@ -301,7 +301,7 @@ namespace snapper
 	cout << "}" << '\n';
     }
 
-    void TreeView::print_graph_graphviz(const Rankdir& rankdir) const
+    void TreeView::print_graph_graphviz(const Rankdir rankdir) const
     {
 	TreeView::print_graph_graphviz(virtual_root.get(), rankdir);
     }

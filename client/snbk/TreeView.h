@@ -113,7 +113,7 @@ namespace snapper
 	find_nearest_valid_node(const string& start_uuid) const;
 
 	/** Print the tree graph in Graphviz DOT Language. */
-	void print_graph_graphviz(const Rankdir& rankdir = Rankdir::LR) const;
+	void print_graph_graphviz(const Rankdir rankdir = Rankdir::LR) const;
 
     private:
 
@@ -147,7 +147,7 @@ namespace snapper
 	 * Print the tree graph in Graphviz DOT Language, starting from the given node.
 	 */
 	static void print_graph_graphviz(const ProxyNode* node,
-	                                 const Rankdir& rankdir = Rankdir::LR);
+	                                 const Rankdir rankdir = Rankdir::LR);
 
 	/**
 	 * A static function that sets the parent relationship for the given two nodes.
