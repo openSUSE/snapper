@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2024-2025] SUSE LLC
+ * Copyright (c) [2024-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -58,8 +58,6 @@ namespace snapper
 		return (it->source_state == TheBigThing::SourceState::READ_ONLY &&
 		        it->target_state == TheBigThing::TargetState::VALID);
 	    }
-
-	protected:
 
 	    const TheBigThings::const_iterator it;
 	};
@@ -127,26 +125,14 @@ namespace snapper
     });
 
 
-    void
-    TheBigThing::transfer(const BackupConfig& backup_config, TheBigThings& the_big_things,
-			  bool quiet)
+    void TheBigThing::copy(const BackupConfig& backup_config,
+                           TheBigThings& the_big_things, const CopySpec& src_spec,
+                           const CopySpec& dst_spec)
     {
-	if (!quiet)
-	    cout << sformat(_("Transferring snapshot %d."), num) << '\n';
-
-	if (source_state == SourceState::MISSING)
-	    SN_THROW(Exception(_("Snapshot not on source.")));
-
-	if (target_state != TargetState::MISSING)
-	    SN_THROW(Exception(_("Snapshot already on target.")));
-
-	const string num_string = to_string(num);
-
-	// Create directory on target. No failure if it already exists (option --parents).
-
-	SystemCmd::Args cmd1_args = { backup_config.target_mkdir_bin, "--parents", "--", backup_config.target_path +
-	    "/" + num_string };
-	SystemCmd cmd1(shellify(backup_config.get_target_shell(), cmd1_args));
+	// Create the snapshot directory on the destination.
+	SystemCmd::Args cmd1_args = { dst_spec.mkdir_bin, "--parents", "--",
+	                              dst_spec.snapshot_dir };
+	SystemCmd cmd1(shellify(dst_spec.shell, cmd1_args));
 	if (cmd1.retcode() != 0)
 	{
 	    y2err("command '" << cmd1.cmd() << "' failed: " << cmd1.retcode());
@@ -158,15 +144,15 @@ namespace snapper
 	    SN_THROW(Exception(_("'mkdir' failed.")));
 	}
 
-	// Copy info.xml to target.
-
+	// Copy info.xml to the destination.
 	switch (backup_config.target_mode)
 	{
 	    case BackupConfig::TargetMode::LOCAL:
 	    {
-		SystemCmd::Args cmd2_args = { CP_BIN, "--", backup_config.source_path + "/" SNAPSHOTS_NAME "/" +
-		    num_string + "/info.xml", backup_config.target_path + "/" + num_string + "/" };
-		SystemCmd cmd2(shellify(backup_config.get_target_shell(), cmd2_args));
+		SystemCmd::Args cmd2_args = { CP_BIN, "--",
+		                              src_spec.snapshot_dir + "/info.xml",
+		                              dst_spec.snapshot_dir + "/" };
+		SystemCmd cmd2(shellify(src_spec.shell, cmd2_args));
 		if (cmd2.retcode() != 0)
 		{
 		    y2err("command '" << cmd2.cmd() << "' failed: " << cmd2.retcode());
@@ -187,9 +173,9 @@ namespace snapper
 		    cmd2_args << "-P" << to_string(backup_config.ssh_port);
 		if (!backup_config.ssh_identity.empty())
 		    cmd2_args << "-i" << backup_config.ssh_identity;
-		cmd2_args << "--" << backup_config.source_path + "/" SNAPSHOTS_NAME "/" + num_string +
-		    "/info.xml" << (backup_config.ssh_user.empty() ? "" : backup_config.ssh_user + "@") +
-		    backup_config.ssh_host + ":" + backup_config.target_path + "/" + num_string + "/";
+		cmd2_args << "--"
+		          << src_spec.remote_host + src_spec.snapshot_dir + "/info.xml"
+		          << dst_spec.remote_host + dst_spec.snapshot_dir + "/";
 
 		SystemCmd cmd2(cmd2_args);
 		if (cmd2.retcode() != 0)
@@ -204,33 +190,33 @@ namespace snapper
 		}
 	    }
 	    break;
-	}
+	};
 
-	// Copy snapshot to target.
-
+	// Copy snapshot to the destination.
 	const int proto = the_big_things.proto();
 
-	SystemCmd::Args cmd3a_args = { BTRFS_BIN, "send" };
+	SystemCmd::Args cmd3a_args = { src_spec.btrfs_bin, "send" };
 	if (proto >= 2)
 	    cmd3a_args << "--proto" << to_string(proto);
 	if (backup_config.send_compressed_data && proto >= 2)
 	    cmd3a_args << "--compressed-data";
 	cmd3a_args << backup_config.send_options;
 
-	if (auto parent = the_big_things.source_tree.find_nearest_valid_node(source_uuid))
-	    cmd3a_args << "-p" << backup_config.source_path + "/" SNAPSHOTS_NAME "/" +
-		to_string(parent->node->get_number()) + "/" SNAPSHOT_NAME;
-	cmd3a_args << "--" << backup_config.source_path + "/" SNAPSHOTS_NAME "/" + num_string + "/" SNAPSHOT_NAME;
+	if (!src_spec.parent_subvol_path.empty())
+	{
+	    cmd3a_args << "-p" << src_spec.parent_subvol_path;
+	}
+	cmd3a_args << "--" << src_spec.snapshot_dir + "/" SNAPSHOT_NAME;
 
-	SystemCmd::Args cmd3b_args = { backup_config.target_btrfs_bin, "receive" };
+	SystemCmd::Args cmd3b_args = { dst_spec.btrfs_bin, "receive" };
 	cmd3b_args << backup_config.receive_options;
-	cmd3b_args << "--" << backup_config.target_path + "/" + num_string;
+	cmd3b_args << "--" << dst_spec.snapshot_dir;
 
 	y2deb("source: " << cmd3a_args.get_values());
-	y2deb("target: " << cmd3b_args.get_values());
+	y2deb("destination: " << cmd3b_args.get_values());
 
-	SystemCmd cmd3(shellify_pipe(backup_config.get_source_shell(), cmd3a_args,
-				     backup_config.get_target_shell(), cmd3b_args));
+	SystemCmd cmd3(
+	    shellify_pipe(src_spec.shell, cmd3a_args, dst_spec.shell, cmd3b_args));
 	if (cmd3.retcode() != 0)
 	{
 	    y2err("command '" << cmd3.cmd() << "' failed: " << cmd3.retcode());
@@ -241,6 +227,27 @@ namespace snapper
 
 	    SN_THROW(Exception(_("'btrfs send | btrfs receive' failed.")));
 	}
+    }
+
+    void
+    TheBigThing::transfer(const BackupConfig& backup_config, TheBigThings& the_big_things,
+			  bool quiet)
+    {
+	if (!quiet)
+	    cout << sformat(_("Transferring snapshot %d."), num) << '\n';
+
+	if (source_state == SourceState::MISSING)
+	    SN_THROW(Exception(_("Snapshot not on source.")));
+
+	if (target_state != TargetState::MISSING)
+	    SN_THROW(Exception(_("Snapshot already on target.")));
+
+	// Copy the snapshot from the source to the target
+	CopySpec src_spec, dst_spec;
+	make_copy_spec(backup_config, the_big_things, src_spec, dst_spec,
+	               CopyMode::SOURCE_TO_TARGET);
+
+	copy(backup_config, the_big_things, src_spec, dst_spec);
 
 	target_state = TargetState::VALID;
     }
@@ -259,111 +266,12 @@ namespace snapper
 	if (source_state != SourceState::MISSING)
 	    SN_THROW(Exception(_("Snapshot already on source.")));
 
-	const string num_string = to_string(num);
+	// Copy the snapshot from the target to the source
+	CopySpec src_spec, dst_spec;
+	make_copy_spec(backup_config, the_big_things, src_spec, dst_spec,
+	               CopyMode::TARGET_TO_SOURCE);
 
-	const string source_snapshot_dir =
-	    backup_config.source_path + "/" SNAPSHOTS_NAME "/" + num_string;
-	const string target_snapshot_dir = backup_config.target_path + "/" + num_string;
-
-	// Create directory on source. No failure if it already exists (option --parents).
-
-	SystemCmd::Args cmd1_args = { MKDIR_BIN, "--parents", "--", source_snapshot_dir };
-	SystemCmd cmd1(shellify(backup_config.get_source_shell(), cmd1_args));
-	if (cmd1.retcode() != 0)
-	{
-	    y2err("command '" << cmd1.cmd() << "' failed: " << cmd1.retcode());
-	    for (const string& tmp : cmd1.get_stdout())
-		y2err(tmp);
-	    for (const string& tmp : cmd1.get_stderr())
-		y2err(tmp);
-
-	    SN_THROW(Exception(_("'mkdir' failed.")));
-	}
-
-	// Copy info.xml to source.
-
-	switch (backup_config.target_mode)
-	{
-	    case BackupConfig::TargetMode::LOCAL:
-	    {
-		SystemCmd::Args cmd2_args = {
-		    CP_BIN, "--", target_snapshot_dir + "/info.xml", source_snapshot_dir
-		};
-		SystemCmd cmd2(shellify(backup_config.get_target_shell(), cmd2_args));
-		if (cmd2.retcode() != 0)
-		{
-		    y2err("command '" << cmd2.cmd() << "' failed: " << cmd2.retcode());
-		    for (const string& tmp : cmd2.get_stdout())
-			y2err(tmp);
-		    for (const string& tmp : cmd2.get_stderr())
-			y2err(tmp);
-
-		    SN_THROW(Exception(_("'cp info.xml' failed.")));
-		}
-	    }
-	    break;
-
-	    case BackupConfig::TargetMode::SSH_PUSH:
-	    {
-		SystemCmd::Args cmd2_args = { SCP_BIN };
-		if (backup_config.ssh_port != 0)
-		    cmd2_args << "-P" << to_string(backup_config.ssh_port);
-		if (!backup_config.ssh_identity.empty())
-		    cmd2_args << "-i" << backup_config.ssh_identity;
-		cmd2_args << "--" <<
-		    (backup_config.ssh_user.empty() ? "" : backup_config.ssh_user + "@") +
-		    backup_config.ssh_host + ":" + target_snapshot_dir + "/info.xml"
-		    << source_snapshot_dir;
-
-		SystemCmd cmd2(cmd2_args);
-		if (cmd2.retcode() != 0)
-		{
-		    y2err("command '" << cmd2.cmd() << "' failed: " << cmd2.retcode());
-		    for (const string& tmp : cmd2.get_stdout())
-			y2err(tmp);
-		    for (const string& tmp : cmd2.get_stderr())
-			y2err(tmp);
-
-		    SN_THROW(Exception(_("'scp info.xml' failed.")));
-		}
-	    }
-	    break;
-	}
-
-	// Copy snapshot to target.
-
-	const int proto = the_big_things.proto();
-
-	SystemCmd::Args cmd3a_args = { backup_config.target_btrfs_bin, "send" };
-	if (proto >= 2)
-	    cmd3a_args << "--proto" << to_string(proto);
-	if (backup_config.send_compressed_data && proto >= 2)
-	    cmd3a_args << "--compressed-data";
-	cmd3a_args << backup_config.send_options;
-
-	if (auto parent = the_big_things.target_tree.find_nearest_valid_node(target_uuid))
-	    cmd3a_args << "-p" << backup_config.target_path + "/" +
-	    to_string(parent->node->get_number()) + "/" SNAPSHOT_NAME;
-	cmd3a_args << "--" << target_snapshot_dir + "/" SNAPSHOT_NAME;
-
-	SystemCmd::Args cmd3b_args = { BTRFS_BIN, "receive" };
-	cmd3b_args << backup_config.receive_options << "--" << source_snapshot_dir;
-
-	y2deb("source: " << cmd3a_args.get_values());
-	y2deb("target: " << cmd3b_args.get_values());
-
-	SystemCmd cmd3(shellify_pipe(backup_config.get_target_shell(), cmd3a_args,
-				     backup_config.get_source_shell(), cmd3b_args));
-	if (cmd3.retcode() != 0)
-	{
-	    y2err("command '" << cmd3.cmd() << "' failed: " << cmd3.retcode());
-	    for (const string& tmp : cmd3.get_stdout())
-		y2err(tmp);
-	    for (const string& tmp : cmd3.get_stderr())
-		y2err(tmp);
-
-	    SN_THROW(Exception(_("'btrfs send | btrfs receive' failed.")));
-	}
+	copy(backup_config, the_big_things, src_spec, dst_spec);
 
 	source_state = SourceState::READ_ONLY;
     }
@@ -429,6 +337,83 @@ namespace snapper
 	}
 
 	target_state = TargetState::MISSING;
+    }
+
+    void TheBigThing::make_copy_spec(const BackupConfig& backup_config,
+                                     const TheBigThings& the_big_things,
+                                     CopySpec& src_spec, CopySpec& dst_spec,
+                                     CopyMode copy_mode)
+    {
+	CopySpec spec_source; // Copy specification for the snapshot on the source.
+	spec_source.shell = backup_config.get_source_shell();
+	spec_source.mkdir_bin = MKDIR_BIN;
+	spec_source.btrfs_bin = BTRFS_BIN;
+	spec_source.snapshot_dir = source_snapshot_dir(backup_config);
+
+	CopySpec spec_target; // Copy specification for the snapshot on the target.
+	spec_target.shell = backup_config.get_target_shell();
+	spec_target.mkdir_bin = backup_config.target_mkdir_bin;
+	spec_target.btrfs_bin = backup_config.target_btrfs_bin;
+	spec_target.snapshot_dir = target_snapshot_dir(backup_config);
+
+	// Resolve the remote host when using SSH push.
+	if (backup_config.target_mode == BackupConfig::TargetMode::SSH_PUSH)
+	{
+	    spec_target.remote_host =
+	        (backup_config.ssh_user.empty() ? "" : backup_config.ssh_user + "@") +
+	        backup_config.ssh_host + ":";
+	}
+
+	switch (copy_mode)
+	{
+	    case CopyMode::SOURCE_TO_TARGET:
+
+		// Resolve Btrfs send parent.
+		if (auto parent =
+		        the_big_things.source_tree.find_nearest_valid_node(source_uuid))
+		{
+		    const BaseNode* parent_node =
+		        static_cast<const BaseNode*>(parent->node);
+		    spec_source.parent_subvol_path =
+		        parent_node->it->source_snapshot_dir(backup_config) +
+		        "/" SNAPSHOT_NAME;
+		}
+
+		// Assign copy specification.
+		src_spec = spec_source; // Snapshot on the source as the copy source.
+		dst_spec = spec_target; // Backup target as the copy destination.
+
+		break;
+
+	    case CopyMode::TARGET_TO_SOURCE:
+
+		// Resolve Btrfs send parent
+		if (auto parent =
+		        the_big_things.target_tree.find_nearest_valid_node(target_uuid))
+		{
+		    const BaseNode* parent_node =
+		        static_cast<const BaseNode*>(parent->node);
+		    spec_target.parent_subvol_path =
+		        parent_node->it->target_snapshot_dir(backup_config) +
+		        "/" SNAPSHOT_NAME;
+		}
+
+		// Assign copy specification
+		src_spec = spec_target; // Snapshot on the target as the copy source.
+		dst_spec = spec_source; // Backup source as the copy destination.
+
+		break;
+	};
+    }
+
+    string TheBigThing::source_snapshot_dir(const BackupConfig& backup_config) const
+    {
+	return backup_config.source_path + "/" SNAPSHOTS_NAME "/" + to_string(num);
+    }
+
+    string TheBigThing::target_snapshot_dir(const BackupConfig& backup_config) const
+    {
+	return backup_config.target_path + "/" + to_string(num);
     }
 
 

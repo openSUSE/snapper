@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2024-2025] SUSE LLC
+ * Copyright (c) [2024-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -53,12 +53,50 @@ namespace snapper
 	enum class SourceState { MISSING, READ_ONLY, READ_WRITE };
 	enum class TargetState { MISSING, VALID, INVALID };
 
+	/** Snapshot copy mode. */
+	enum class CopyMode
+	{
+	    /** Copy the snapshot from the source to the target (i.e., transfer). */
+	    SOURCE_TO_TARGET,
+
+	    /** Copy the snapshots from the target to the source (i.e., restore). */
+	    TARGET_TO_SOURCE
+	};
+
+	/**
+	 * Specification for the copy source or the copy destination.
+	 * The `source` here is different from the backup `source`. A copy source can be
+	 * either a snapshot on the backup source or the backup target.
+	 */
+	struct CopySpec
+	{
+	    Shell shell;
+	    string mkdir_bin;
+	    string btrfs_bin;
+	    string remote_host;
+	    string snapshot_dir;
+	    string parent_subvol_path;
+	};
+
 	TheBigThing(unsigned int num) : num(num) {}
 
+	void copy(const BackupConfig& backup_config, TheBigThings& the_big_things,
+	          const CopySpec& src_spec, const CopySpec& dst_spec);
 	void transfer(const BackupConfig& backup_config, TheBigThings& the_big_things, bool quiet);
 	void restore(const BackupConfig& backup_config, TheBigThings& the_big_things, bool quiet);
 
 	void remove(const BackupConfig& backup_config, bool quiet);
+
+	/**
+	 * Create specifications (assigned by reference) for the copy source and the copy
+	 * destination according to the specified `copy_mode`.
+	 */
+	void make_copy_spec(const BackupConfig& backup_config,
+	                    const TheBigThings& the_big_things, CopySpec& src_spec,
+	                    CopySpec& dst_spec, CopyMode copy_mode);
+
+	string source_snapshot_dir(const BackupConfig& backup_config) const;
+	string target_snapshot_dir(const BackupConfig& backup_config) const;
 
 	unsigned int num;
 	time_t date = 0;	// as reported by snapper
