@@ -24,6 +24,7 @@
 
 
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "../proxy/proxy.h"
@@ -37,6 +38,7 @@ namespace snapper
 {
 
     using std::string;
+    using std::pair;
     using std::vector;
 
 
@@ -81,19 +83,20 @@ namespace snapper
 	TheBigThing(unsigned int num) : num(num) {}
 
 	void copy(const BackupConfig& backup_config, TheBigThings& the_big_things,
-	          const CopySpec& src_spec, const CopySpec& dst_spec);
+	          const pair<CopySpec, CopySpec>& copy_spec);
 	void transfer(const BackupConfig& backup_config, TheBigThings& the_big_things, bool quiet);
 	void restore(const BackupConfig& backup_config, TheBigThings& the_big_things, bool quiet);
 
 	void remove(const BackupConfig& backup_config, bool quiet);
 
 	/**
-	 * Create specifications (assigned by reference) for the copy source and the copy
-	 * destination according to the specified `copy_mode`.
+	 * Create specifications for the copy source and the copy destination according to
+	 * the specified `copy_mode`. The function returns a pair containing the source
+	 * and destination copy specifications.
 	 */
-	void make_copy_spec(const BackupConfig& backup_config,
-	                    const TheBigThings& the_big_things, CopySpec& src_spec,
-	                    CopySpec& dst_spec, CopyMode copy_mode);
+	pair<CopySpec, CopySpec> make_copy_spec(const BackupConfig& backup_config,
+	                                        const TheBigThings& the_big_things,
+	                                        CopyMode copy_mode);
 
 	string source_snapshot_dir(const BackupConfig& backup_config) const;
 	string target_snapshot_dir(const BackupConfig& backup_config) const;

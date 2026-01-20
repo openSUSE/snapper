@@ -126,9 +126,13 @@ namespace snapper
 
 
     void TheBigThing::copy(const BackupConfig& backup_config,
-                           TheBigThings& the_big_things, const CopySpec& src_spec,
-                           const CopySpec& dst_spec)
+                           TheBigThings& the_big_things,
+                           const pair<CopySpec, CopySpec>& copy_spec)
     {
+	// Unpack copy specification
+	CopySpec src_spec, dst_spec;
+	tie(src_spec, dst_spec) = copy_spec;
+
 	// Create the snapshot directory on the destination.
 	SystemCmd::Args cmd1_args = { dst_spec.mkdir_bin, "--parents", "--",
 	                              dst_spec.snapshot_dir };
@@ -243,11 +247,8 @@ namespace snapper
 	    SN_THROW(Exception(_("Snapshot already on target.")));
 
 	// Copy the snapshot from the source to the target
-	CopySpec src_spec, dst_spec;
-	make_copy_spec(backup_config, the_big_things, src_spec, dst_spec,
-	               CopyMode::SOURCE_TO_TARGET);
-
-	copy(backup_config, the_big_things, src_spec, dst_spec);
+	copy(backup_config, the_big_things,
+	     make_copy_spec(backup_config, the_big_things, CopyMode::SOURCE_TO_TARGET));
 
 	target_state = TargetState::VALID;
     }
@@ -267,11 +268,8 @@ namespace snapper
 	    SN_THROW(Exception(_("Snapshot already on source.")));
 
 	// Copy the snapshot from the target to the source
-	CopySpec src_spec, dst_spec;
-	make_copy_spec(backup_config, the_big_things, src_spec, dst_spec,
-	               CopyMode::TARGET_TO_SOURCE);
-
-	copy(backup_config, the_big_things, src_spec, dst_spec);
+	copy(backup_config, the_big_things,
+	     make_copy_spec(backup_config, the_big_things, CopyMode::TARGET_TO_SOURCE));
 
 	source_state = SourceState::READ_ONLY;
     }
@@ -339,10 +337,9 @@ namespace snapper
 	target_state = TargetState::MISSING;
     }
 
-    void TheBigThing::make_copy_spec(const BackupConfig& backup_config,
-                                     const TheBigThings& the_big_things,
-                                     CopySpec& src_spec, CopySpec& dst_spec,
-                                     CopyMode copy_mode)
+    pair<TheBigThing::CopySpec, TheBigThing::CopySpec>
+    TheBigThing::make_copy_spec(const BackupConfig& backup_config,
+                                const TheBigThings& the_big_things, CopyMode copy_mode)
     {
 	CopySpec spec_source; // Copy specification for the snapshot on the source.
 	spec_source.shell = backup_config.get_source_shell();
@@ -379,11 +376,11 @@ namespace snapper
 		        "/" SNAPSHOT_NAME;
 		}
 
-		// Assign copy specification.
-		src_spec = spec_source; // Snapshot on the source as the copy source.
-		dst_spec = spec_target; // Backup target as the copy destination.
-
-		break;
+		// Return copy specification.
+		return {
+		    spec_source, // Snapshot on the source as the copy source.,
+		    spec_target  // Backup target as the copy destination.
+		};
 
 	    case CopyMode::TARGET_TO_SOURCE:
 
@@ -398,12 +395,15 @@ namespace snapper
 		        "/" SNAPSHOT_NAME;
 		}
 
-		// Assign copy specification
-		src_spec = spec_target; // Snapshot on the target as the copy source.
-		dst_spec = spec_source; // Backup source as the copy destination.
-
-		break;
+		// Return copy specification
+		return {
+		    spec_target, // Snapshot on the target as the copy source.
+		    spec_source  // Backup source as the copy destination.
+		};
 	};
+
+	SN_THROW(Exception("invalid copy mode"));
+	__builtin_unreachable();
     }
 
     string TheBigThing::source_snapshot_dir(const BackupConfig& backup_config) const
