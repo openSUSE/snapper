@@ -41,6 +41,7 @@
 
 namespace snapper
 {
+    using namespace std;
 
     namespace
     {
@@ -58,6 +59,8 @@ namespace snapper
 		return (it->source_state == TheBigThing::SourceState::READ_ONLY &&
 		        it->target_state == TheBigThing::TargetState::VALID);
 	    }
+
+	protected:
 
 	    const TheBigThings::const_iterator it;
 	};
@@ -109,10 +112,19 @@ namespace snapper
 	    return nodes;
 	}
 
+	const string source_snapshot_dir(const BackupConfig& backup_config,
+	                                 unsigned int num)
+	{
+	    return backup_config.source_path + "/" SNAPSHOTS_NAME "/" + to_string(num);
+	}
+
+	const string target_snapshot_dir(const BackupConfig& backup_config,
+	                                 unsigned int num)
+	{
+	    return backup_config.target_path + "/" + to_string(num);
+	}
+
     }
-
-
-    using namespace std;
 
 
     const vector<string> EnumInfo<TheBigThing::SourceState>::names({
@@ -346,13 +358,13 @@ namespace snapper
 	spec_source.shell = backup_config.get_source_shell();
 	spec_source.mkdir_bin = MKDIR_BIN;
 	spec_source.btrfs_bin = BTRFS_BIN;
-	spec_source.snapshot_dir = source_snapshot_dir(backup_config);
+	spec_source.snapshot_dir = source_snapshot_dir(backup_config, num);
 
 	CopySpec spec_target; // Copy specification for the snapshot on the target.
 	spec_target.shell = backup_config.get_target_shell();
 	spec_target.mkdir_bin = backup_config.target_mkdir_bin;
 	spec_target.btrfs_bin = backup_config.target_btrfs_bin;
-	spec_target.snapshot_dir = target_snapshot_dir(backup_config);
+	spec_target.snapshot_dir = target_snapshot_dir(backup_config, num);
 
 	// Resolve the remote host when using SSH push.
 	if (backup_config.target_mode == BackupConfig::TargetMode::SSH_PUSH)
@@ -370,10 +382,8 @@ namespace snapper
 		if (auto parent =
 		        the_big_things.source_tree.find_nearest_valid_node(source_uuid))
 		{
-		    const BaseNode* parent_node =
-		        static_cast<const BaseNode*>(parent->node);
 		    spec_source.parent_subvol_path =
-		        parent_node->it->source_snapshot_dir(backup_config) +
+		        source_snapshot_dir(backup_config, parent->node->get_number()) +
 		        "/" SNAPSHOT_NAME;
 		}
 
@@ -389,10 +399,8 @@ namespace snapper
 		if (auto parent =
 		        the_big_things.target_tree.find_nearest_valid_node(target_uuid))
 		{
-		    const BaseNode* parent_node =
-		        static_cast<const BaseNode*>(parent->node);
 		    spec_target.parent_subvol_path =
-		        parent_node->it->target_snapshot_dir(backup_config) +
+		        target_snapshot_dir(backup_config, parent->node->get_number()) +
 		        "/" SNAPSHOT_NAME;
 		}
 
@@ -405,16 +413,6 @@ namespace snapper
 
 	SN_THROW(Exception("invalid copy mode"));
 	__builtin_unreachable();
-    }
-
-    string TheBigThing::source_snapshot_dir(const BackupConfig& backup_config) const
-    {
-	return backup_config.source_path + "/" SNAPSHOTS_NAME "/" + to_string(num);
-    }
-
-    string TheBigThing::target_snapshot_dir(const BackupConfig& backup_config) const
-    {
-	return backup_config.target_path + "/" + to_string(num);
     }
 
 

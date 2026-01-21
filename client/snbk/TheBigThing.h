@@ -55,6 +55,31 @@ namespace snapper
 	enum class SourceState { MISSING, READ_ONLY, READ_WRITE };
 	enum class TargetState { MISSING, VALID, INVALID };
 
+	TheBigThing(unsigned int num) : num(num) {}
+
+	void transfer(const BackupConfig& backup_config, TheBigThings& the_big_things, bool quiet);
+	void restore(const BackupConfig& backup_config, TheBigThings& the_big_things, bool quiet);
+
+	void remove(const BackupConfig& backup_config, bool quiet);
+
+	unsigned int num;
+	time_t date = 0;	// as reported by snapper
+
+	SourceState source_state = SourceState::MISSING;
+	TargetState target_state = TargetState::MISSING;
+
+	string source_uuid;
+	string source_parent_uuid;
+	string source_received_uuid;
+	string source_creation_time;
+
+	string target_uuid;
+	string target_parent_uuid;
+	string target_received_uuid;
+	string target_creation_time;
+
+    private:
+
 	/** Snapshot copy mode. */
 	enum class CopyMode
 	{
@@ -80,15 +105,6 @@ namespace snapper
 	    string parent_subvol_path;
 	};
 
-	TheBigThing(unsigned int num) : num(num) {}
-
-	void copy(const BackupConfig& backup_config, TheBigThings& the_big_things,
-	          const pair<CopySpec, CopySpec>& copy_specs);
-	void transfer(const BackupConfig& backup_config, TheBigThings& the_big_things, bool quiet);
-	void restore(const BackupConfig& backup_config, TheBigThings& the_big_things, bool quiet);
-
-	void remove(const BackupConfig& backup_config, bool quiet);
-
 	/**
 	 * Create specifications for the copy source and the copy destination according to
 	 * the specified `copy_mode`. The function returns a pair containing the source
@@ -98,24 +114,8 @@ namespace snapper
 	make_copy_specs(const BackupConfig& backup_config,
 	                const TheBigThings& the_big_things, CopyMode copy_mode) const;
 
-	string source_snapshot_dir(const BackupConfig& backup_config) const;
-	string target_snapshot_dir(const BackupConfig& backup_config) const;
-
-	unsigned int num;
-	time_t date = 0;	// as reported by snapper
-
-	SourceState source_state = SourceState::MISSING;
-	TargetState target_state = TargetState::MISSING;
-
-	string source_uuid;
-	string source_parent_uuid;
-	string source_received_uuid;
-	string source_creation_time;
-
-	string target_uuid;
-	string target_parent_uuid;
-	string target_received_uuid;
-	string target_creation_time;
+	void copy(const BackupConfig& backup_config, TheBigThings& the_big_things,
+	          const pair<CopySpec, CopySpec>& copy_specs);
 
     };
 
