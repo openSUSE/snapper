@@ -127,11 +127,11 @@ namespace snapper
 
     void TheBigThing::copy(const BackupConfig& backup_config,
                            TheBigThings& the_big_things,
-                           const pair<CopySpec, CopySpec>& copy_spec)
+                           const pair<CopySpec, CopySpec>& copy_specs)
     {
 	// Unpack copy specification
-	CopySpec src_spec, dst_spec;
-	tie(src_spec, dst_spec) = copy_spec;
+	const CopySpec& src_spec = copy_specs.first;
+	const CopySpec& dst_spec = copy_specs.second;
 
 	// Create the snapshot directory on the destination.
 	SystemCmd::Args cmd1_args = { dst_spec.mkdir_bin, "--parents", "--",
@@ -248,7 +248,7 @@ namespace snapper
 
 	// Copy the snapshot from the source to the target
 	copy(backup_config, the_big_things,
-	     make_copy_spec(backup_config, the_big_things, CopyMode::SOURCE_TO_TARGET));
+	     make_copy_specs(backup_config, the_big_things, CopyMode::SOURCE_TO_TARGET));
 
 	target_state = TargetState::VALID;
     }
@@ -269,7 +269,7 @@ namespace snapper
 
 	// Copy the snapshot from the target to the source
 	copy(backup_config, the_big_things,
-	     make_copy_spec(backup_config, the_big_things, CopyMode::TARGET_TO_SOURCE));
+	     make_copy_specs(backup_config, the_big_things, CopyMode::TARGET_TO_SOURCE));
 
 	source_state = SourceState::READ_ONLY;
     }
@@ -337,9 +337,10 @@ namespace snapper
 	target_state = TargetState::MISSING;
     }
 
-    pair<TheBigThing::CopySpec, TheBigThing::CopySpec>
-    TheBigThing::make_copy_spec(const BackupConfig& backup_config,
-                                const TheBigThings& the_big_things, CopyMode copy_mode)
+    const pair<TheBigThing::CopySpec, TheBigThing::CopySpec>
+    TheBigThing::make_copy_specs(const BackupConfig& backup_config,
+                                 const TheBigThings& the_big_things,
+                                 CopyMode copy_mode) const
     {
 	CopySpec spec_source; // Copy specification for the snapshot on the source.
 	spec_source.shell = backup_config.get_source_shell();

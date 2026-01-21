@@ -83,7 +83,7 @@ namespace snapper
 	TheBigThing(unsigned int num) : num(num) {}
 
 	void copy(const BackupConfig& backup_config, TheBigThings& the_big_things,
-	          const pair<CopySpec, CopySpec>& copy_spec);
+	          const pair<CopySpec, CopySpec>& copy_specs);
 	void transfer(const BackupConfig& backup_config, TheBigThings& the_big_things, bool quiet);
 	void restore(const BackupConfig& backup_config, TheBigThings& the_big_things, bool quiet);
 
@@ -94,9 +94,9 @@ namespace snapper
 	 * the specified `copy_mode`. The function returns a pair containing the source
 	 * and destination copy specifications.
 	 */
-	pair<CopySpec, CopySpec> make_copy_spec(const BackupConfig& backup_config,
-	                                        const TheBigThings& the_big_things,
-	                                        CopyMode copy_mode);
+	const pair<CopySpec, CopySpec> make_copy_specs(const BackupConfig& backup_config,
+	                                               const TheBigThings& the_big_things,
+	                                               CopyMode copy_mode) const;
 
 	string source_snapshot_dir(const BackupConfig& backup_config) const;
 	string target_snapshot_dir(const BackupConfig& backup_config) const;
