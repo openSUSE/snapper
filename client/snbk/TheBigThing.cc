@@ -337,7 +337,7 @@ namespace snapper
 	target_state = TargetState::MISSING;
     }
 
-    const pair<TheBigThing::CopySpec, TheBigThing::CopySpec>
+    const pair<const TheBigThing::CopySpec, const TheBigThing::CopySpec>
     TheBigThing::make_copy_specs(const BackupConfig& backup_config,
                                  const TheBigThings& the_big_things,
                                  CopyMode copy_mode) const
