@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2024-2025] SUSE LLC
+ * Copyright (c) [2024-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -24,6 +24,7 @@
 
 
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "../proxy/proxy.h"
@@ -37,6 +38,7 @@ namespace snapper
 {
 
     using std::string;
+    using std::pair;
     using std::vector;
 
 
@@ -75,6 +77,45 @@ namespace snapper
 	string target_parent_uuid;
 	string target_received_uuid;
 	string target_creation_time;
+
+    private:
+
+	/** Snapshot copy mode. */
+	enum class CopyMode
+	{
+	    /** Copy the snapshot from the source to the target (i.e., transfer). */
+	    SOURCE_TO_TARGET,
+
+	    /** Copy the snapshots from the target to the source (i.e., restore). */
+	    TARGET_TO_SOURCE
+	};
+
+	/**
+	 * Specification for the copy source or the copy destination.
+	 * The `source` here is different from the backup `source`. A copy source can be
+	 * either a snapshot on the backup source or the backup target.
+	 */
+	struct CopySpec
+	{
+	    Shell shell;
+	    string mkdir_bin;
+	    string btrfs_bin;
+	    string remote_host;
+	    string snapshot_dir;
+	    string parent_subvol_path;
+	};
+
+	/**
+	 * Create specifications for the copy source and the copy destination according to
+	 * the specified `copy_mode`. The function returns a pair containing the source
+	 * and destination copy specifications.
+	 */
+	const pair<const CopySpec, const CopySpec>
+	make_copy_specs(const BackupConfig& backup_config,
+	                const TheBigThings& the_big_things, CopyMode copy_mode) const;
+
+	void copy(const BackupConfig& backup_config, TheBigThings& the_big_things,
+	          const pair<CopySpec, CopySpec>& copy_specs);
 
     };
 
