@@ -146,7 +146,7 @@ namespace snapper
 	const CopySpec& dst_spec = copy_specs.second;
 
 	// Create the snapshot directory on the destination.
-	SystemCmd::Args cmd1_args = { dst_spec.mkdir_bin, "--parents", "--",
+	SystemCmd::Args cmd1_args = { dst_spec.mkdir_bin, "-p", "--",
 	                              dst_spec.snapshot_dir };
 	SystemCmd cmd1(shellify(dst_spec.shell, cmd1_args));
 	if (cmd1.retcode() != 0)
