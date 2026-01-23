@@ -110,9 +110,9 @@ namespace snapper
 	 * the specified `copy_mode`. The function returns a pair containing the source
 	 * and destination copy specifications.
 	 */
-	const pair<const CopySpec, const CopySpec>
-	make_copy_specs(const BackupConfig& backup_config,
-	                const TheBigThings& the_big_things, CopyMode copy_mode) const;
+	pair<CopySpec, CopySpec> make_copy_specs(const BackupConfig& backup_config,
+	                                         const TheBigThings& the_big_things,
+	                                         CopyMode copy_mode) const;
 
 	void copy(const BackupConfig& backup_config, TheBigThings& the_big_things,
 	          const pair<CopySpec, CopySpec>& copy_specs);

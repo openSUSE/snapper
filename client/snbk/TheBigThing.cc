@@ -111,14 +111,12 @@ namespace snapper
 	    return nodes;
 	}
 
-	const string source_snapshot_dir(const BackupConfig& backup_config,
-	                                 unsigned int num)
+	string source_snapshot_dir(const BackupConfig& backup_config, unsigned int num)
 	{
 	    return backup_config.source_path + "/" SNAPSHOTS_NAME "/" + to_string(num);
 	}
 
-	const string target_snapshot_dir(const BackupConfig& backup_config,
-	                                 unsigned int num)
+	string target_snapshot_dir(const BackupConfig& backup_config, unsigned int num)
 	{
 	    return backup_config.target_path + "/" + to_string(num);
 	}
@@ -348,7 +346,7 @@ namespace snapper
 	target_state = TargetState::MISSING;
     }
 
-    const pair<const TheBigThing::CopySpec, const TheBigThing::CopySpec>
+    pair<TheBigThing::CopySpec, TheBigThing::CopySpec>
     TheBigThing::make_copy_specs(const BackupConfig& backup_config,
                                  const TheBigThings& the_big_things,
                                  CopyMode copy_mode) const

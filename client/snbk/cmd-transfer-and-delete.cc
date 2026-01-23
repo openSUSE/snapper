@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 SUSE LLC
+ * Copyright (c) [2024-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -22,18 +22,76 @@
 
 #include <iostream>
 
-#include <snapper/AppUtil.h>
-
-#include "../proxy/errors.h"
 #include "../utils/text.h"
 
-#include "BackupConfig.h"
-#include "GlobalOptions.h"
-#include "TheBigThing.h"
+#include "utils.h"
 
 
 namespace snapper
 {
+    namespace
+    {
+	class SnapshotTransferAndDelete : public SnapshotOperation
+	{
+	public:
+
+	    SnapshotTransferAndDelete(const GlobalOptions& global_options,
+	                              GetOpts& get_opts,
+	                              const BackupConfigs& backup_configs,
+	                              ProxySnappers* snappers)
+	        : SnapshotOperation(global_options, get_opts, backup_configs, snappers)
+	    {
+	    }
+
+	protected:
+
+	    const char* command() const override { return "transfer-and-delete"; }
+
+	    void prerequisite() const override
+	    {
+		if (get_opts.has_args())
+		{
+		    SN_THROW(OptionsException(
+		        _("Command 'transfer-and-delete' does not take arguments.")));
+		}
+	    }
+
+	    void run_all(TheBigThings& the_big_things, const BackupConfig& backup_config,
+	                 bool quiet, bool verbose) const override
+	    {
+		the_big_things.transfer(backup_config, global_options.quiet(),
+		                        global_options.quiet());
+		the_big_things.remove(backup_config, global_options.quiet(),
+		                      global_options.quiet());
+	    }
+
+	    void run_single(TheBigThing& the_big_thing, const BackupConfig& backup_config,
+	                    TheBigThings& the_big_things, bool quiet) const override
+	    {
+		SN_THROW(Exception(_("Command 'transfer-and-delete' does not support "
+		                     "operating on a single snapshot.")));
+	    }
+
+	    const char* msg_running() const override
+	    {
+		return _("Running transfer and delete for backup config '%s'.");
+	    }
+
+	    const char* msg_failed() const override
+	    {
+		return _("Running transfer and delete for backup config '%s' failed.");
+	    }
+
+	    const char* msg_error_summary() const override
+	    {
+		return _(
+		    "Running transfer and delete failed for %d of %ld backup config.",
+		    "Running transfer and delete failed for %d of %ld backup configs.",
+		    backup_configs.size());
+	    }
+	};
+
+    } // namespace
 
     using namespace std;
 
@@ -51,57 +109,9 @@ namespace snapper
     command_transfer_and_delete(const GlobalOptions& global_options, GetOpts& get_opts, BackupConfigs& backup_configs,
 				ProxySnappers* snappers)
     {
-	ParsedOpts opts = get_opts.parse("transfer-and-delete", GetOpts::no_options);
-
-	if (get_opts.has_args())
-	{
-	    SN_THROW(OptionsException(_("Command 'transfer-and-delete' does not take arguments.")));
-	}
-
-	unsigned int errors = 0;
-
-	for (const BackupConfig& backup_config : backup_configs)
-	{
-	    if (!global_options.quiet())
-		cout << sformat(_("Running transfer and delete for backup config '%s'."),
-				backup_config.name.c_str()) << endl;
-
-	    try
-	    {
-		TheBigThings the_big_things(backup_config, snappers, global_options.verbose());
-
-		the_big_things.transfer(backup_config, global_options.quiet(), global_options.quiet());
-		the_big_things.remove(backup_config, global_options.quiet(), global_options.quiet());
-	    }
-	    catch (const DBus::ErrorException& e)
-	    {
-		SN_CAUGHT(e);
-
-		cerr << error_description(e) << endl;
-
-		++errors;
-	    }
-	    catch (const Exception& e)
-	    {
-		SN_CAUGHT(e);
-
-		cerr << e.what() << '\n';
-
-		cerr << sformat(_("Running transfer and delete for backup config '%s' failed."),
-				backup_config.name.c_str()) << endl;
-
-		++errors;
-	    }
-	}
-
-	if (errors != 0)
-	{
-	    string error = sformat(_("Running transfer and delete failed for %d of %ld backup config.",
-				     "Running transfer and delete failed for %d of %ld backup configs.",
-				     backup_configs.size()), errors, backup_configs.size());
-
-	    SN_THROW(Exception(error));
-	}
+	SnapshotTransferAndDelete snapshot_operation(global_options, get_opts,
+	                                             backup_configs, snappers);
+	snapshot_operation();
     }
 
 }
