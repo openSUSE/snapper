@@ -106,8 +106,8 @@ namespace snapper
 
 
     void
-    command_transfer_and_delete(const GlobalOptions& global_options, GetOpts& get_opts, BackupConfigs& backup_configs,
-				ProxySnappers* snappers)
+    command_transfer_and_delete(const GlobalOptions& global_options, GetOpts& get_opts,
+				const BackupConfigs& backup_configs, ProxySnappers* snappers)
     {
 	SnapshotTransferAndDelete snapshot_operation(global_options, get_opts,
 	                                             backup_configs, snappers);

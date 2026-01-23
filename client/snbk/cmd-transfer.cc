@@ -90,7 +90,7 @@ namespace snapper
 
 
     void
-    command_transfer(const GlobalOptions& global_options, GetOpts& get_opts, BackupConfigs& backup_configs,
+    command_transfer(const GlobalOptions& global_options, GetOpts& get_opts, const BackupConfigs& backup_configs,
 		     ProxySnappers* snappers)
     {
 	SnapshotTransfer snapshot_operation(global_options, get_opts, backup_configs,
