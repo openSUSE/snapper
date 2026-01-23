@@ -79,7 +79,7 @@ namespace snapper
     }
 
     void command_visualize(const GlobalOptions& global_options, GetOpts& get_opts,
-                           BackupConfigs& backup_configs, ProxySnappers* snappers)
+                           const BackupConfigs& backup_configs, ProxySnappers* snappers)
     {
 	// Drawing a graph for multiple backup configs is not supported.
 	if (backup_configs.size() != 1)
@@ -88,7 +88,7 @@ namespace snapper
 	                                "command.")));
 	}
 
-	BackupConfig& backup_config = backup_configs.front();
+	const BackupConfig& backup_config = backup_configs.front();
 
 	// Check and parse arguments
 	const vector<Option> options = { Option("rankdir", required_argument, 'r') };

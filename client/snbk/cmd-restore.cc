@@ -106,7 +106,7 @@ namespace snapper
 
     void
     command_restore(const GlobalOptions& global_options, GetOpts& get_opts,
-		    BackupConfigs& backup_configs, ProxySnappers* snappers)
+		    const BackupConfigs& backup_configs, ProxySnappers* snappers)
     {
 	SnapshotRestore snapshot_operation(global_options, get_opts, backup_configs,
 	                                   snappers);

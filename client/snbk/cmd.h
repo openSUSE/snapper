@@ -33,7 +33,7 @@ namespace snapper
     help_list_configs();
 
     void
-    command_list_configs(const GlobalOptions& global_options, GetOpts& get_opts, BackupConfigs& backup_configs,
+    command_list_configs(const GlobalOptions& global_options, GetOpts& get_opts, const BackupConfigs& backup_configs,
 			 ProxySnappers* snappers);
 
 
@@ -41,7 +41,7 @@ namespace snapper
     help_list();
 
     void
-    command_list(const GlobalOptions& global_options, GetOpts& get_opts, BackupConfigs& backup_configs,
+    command_list(const GlobalOptions& global_options, GetOpts& get_opts, const BackupConfigs& backup_configs,
 		 ProxySnappers* snappers);
 
 
@@ -49,7 +49,7 @@ namespace snapper
     help_transfer();
 
     void
-    command_transfer(const GlobalOptions& global_options, GetOpts& get_opts, BackupConfigs& backup_configs,
+    command_transfer(const GlobalOptions& global_options, GetOpts& get_opts, const BackupConfigs& backup_configs,
 		     ProxySnappers* snappers);
 
 
@@ -57,7 +57,7 @@ namespace snapper
     help_restore();
 
     void
-    command_restore(const GlobalOptions& global_options, GetOpts& get_opts, BackupConfigs& backup_configs,
+    command_restore(const GlobalOptions& global_options, GetOpts& get_opts, const BackupConfigs& backup_configs,
 		     ProxySnappers* snappers);
 
 
@@ -65,7 +65,7 @@ namespace snapper
     help_delete();
 
     void
-    command_delete(const GlobalOptions& global_options, GetOpts& get_opts, BackupConfigs& backup_configs,
+    command_delete(const GlobalOptions& global_options, GetOpts& get_opts, const BackupConfigs& backup_configs,
 		   ProxySnappers* snappers);
 
 
@@ -73,13 +73,13 @@ namespace snapper
     help_transfer_and_delete();
 
     void
-    command_transfer_and_delete(const GlobalOptions& global_options, GetOpts& get_opts, BackupConfigs& backup_configs,
-				ProxySnappers* snappers);
+    command_transfer_and_delete(const GlobalOptions& global_options, GetOpts& get_opts,
+				const BackupConfigs& backup_configs, ProxySnappers* snappers);
 
 
     void help_visualize();
 
     void command_visualize(const GlobalOptions& global_options, GetOpts& get_opts,
-                           BackupConfigs& backup_configs, ProxySnappers* snappers);
+                           const BackupConfigs& backup_configs, ProxySnappers* snappers);
 
 }

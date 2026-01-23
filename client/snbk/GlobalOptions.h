@@ -50,7 +50,7 @@ namespace snapper
 	bool quiet() const { return _quiet; }
 	bool verbose() const { return _verbose; }
 	bool debug() const { return _debug; }
-	const boost::optional<BackupConfig::TargetMode>& target_mode() { return _target_mode; }
+	const boost::optional<BackupConfig::TargetMode>& target_mode() const { return _target_mode; }
 	bool automatic() const { return _automatic; }
 	bool utc() const { return _utc; }
 	bool iso() const { return _iso; }

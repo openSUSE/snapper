@@ -354,7 +354,7 @@ namespace snapper
 
 
     void
-    command_list(const GlobalOptions& global_options, GetOpts& get_opts, BackupConfigs& backup_configs,
+    command_list(const GlobalOptions& global_options, GetOpts& get_opts, const BackupConfigs& backup_configs,
 		 ProxySnappers* snappers)
     {
 	ParsedOpts opts = get_opts.parse("list", GetOpts::no_options);

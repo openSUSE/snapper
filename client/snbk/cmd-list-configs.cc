@@ -279,7 +279,7 @@ namespace snapper
 
 
     void
-    command_list_configs(const GlobalOptions& global_options, GetOpts& get_opts, BackupConfigs& backup_configs,
+    command_list_configs(const GlobalOptions& global_options, GetOpts& get_opts, const BackupConfigs& backup_configs,
 			 ProxySnappers* snappers)
     {
 	ParsedOpts opts = get_opts.parse("list-configs", GetOpts::no_options);

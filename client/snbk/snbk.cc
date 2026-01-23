@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2024-2025] SUSE LLC
+ * Copyright (c) [2024-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -42,10 +42,10 @@ using namespace snapper;
 
 struct Cmd
 {
-    typedef void (*cmd_func_t)(const GlobalOptions& global_options, GetOpts& get_opts,
-			       BackupConfigs& backup_configs, ProxySnappers* snappers);
+    using cmd_func_t = void (*)(const GlobalOptions& global_options, GetOpts& get_opts,
+				const BackupConfigs& backup_configs, ProxySnappers* snappers);
 
-    typedef void (*help_func_t)();
+    using help_func_t = void (*)();
 
     Cmd(const string& name, cmd_func_t cmd_func, help_func_t help_func, bool needs_snapper)
 	: name(name), cmd_func(cmd_func), help_func(help_func), needs_snapper(needs_snapper)
@@ -91,7 +91,7 @@ help(const vector<Cmd>& cmds, GetOpts& get_opts)
 
 
 vector<string>
-get_backup_configs(const GlobalOptions& global_options, const Cmd* cmd)
+get_backup_config_names(const GlobalOptions& global_options, const Cmd* cmd)
 {
     if (cmd->name == "list-configs")
 	return read_backup_config_names();
@@ -104,6 +104,29 @@ get_backup_configs(const GlobalOptions& global_options, const Cmd* cmd)
 	SN_THROW(Exception(_("No backup configs found.")));
 
     return names;
+}
+
+
+BackupConfigs
+get_backup_configs(const GlobalOptions& global_options, const vector<string>& names)
+{
+    BackupConfigs backup_configs;
+
+    for (const string& name : names)
+    {
+	BackupConfig backup_config(name);
+
+	if (global_options.target_mode() &&
+	    backup_config.target_mode != global_options.target_mode().value())
+	    continue;
+
+	if (global_options.automatic() && !backup_config.automatic)
+	    continue;
+
+	backup_configs.push_back(backup_config);
+    }
+
+    return backup_configs;
 }
 
 
@@ -173,23 +196,8 @@ main(int argc, char** argv)
 
 	try
 	{
-	    const vector<string> names = get_backup_configs(global_options, &*cmd);
-
-	    BackupConfigs backup_configs;
-
-	    for (const string& name : names)
-	    {
-		BackupConfig backup_config(name);
-
-		if (global_options.target_mode() &&
-		    backup_config.target_mode != global_options.target_mode().value())
-		    continue;
-
-		if (global_options.automatic() && !backup_config.automatic)
-		    continue;
-
-		backup_configs.push_back(backup_config);
-	    }
+	    const vector<string> names = get_backup_config_names(global_options, &*cmd);
+	    const BackupConfigs backup_configs = get_backup_configs(global_options, names);
 
 	    unique_ptr<ProxySnappers> snappers;
 
