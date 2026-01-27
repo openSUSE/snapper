@@ -50,13 +50,14 @@ namespace snapper
 	public:
 
 	    BaseNode(const TheBigThings::const_iterator& it) : it(it) {}
+
 	    unsigned int get_number() const override { return it->num; }
 	    bool is_virtual() const override { return false; }
 
 	    bool is_valid() const override
 	    {
-		return (it->source_state == TheBigThing::SourceState::READ_ONLY &&
-		        it->target_state == TheBigThing::TargetState::VALID);
+		return it->source_state == TheBigThing::SourceState::READ_ONLY &&
+		       it->target_state == TheBigThing::TargetState::VALID;
 	    }
 
 	protected:
@@ -73,11 +74,9 @@ namespace snapper
 	public:
 
 	    SourceNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
+
 	    const string& get_uuid() const override { return it->source_uuid; }
-	    const string& get_parent_uuid() const override
-	    {
-		return it->source_parent_uuid;
-	    }
+	    const string& get_parent_uuid() const override { return it->source_parent_uuid; }
 	};
 
 	/**
@@ -89,11 +88,9 @@ namespace snapper
 	public:
 
 	    TargetNode(const TheBigThings::const_iterator& it) : BaseNode(it) {}
+
 	    const string& get_uuid() const override { return it->target_uuid; }
-	    const string& get_parent_uuid() const override
-	    {
-		return it->target_parent_uuid;
-	    }
+	    const string& get_parent_uuid() const override { return it->target_parent_uuid; }
 	};
 
 
@@ -102,6 +99,7 @@ namespace snapper
 	make_nodes(const TheBigThings& the_big_things)
 	{
 	    vector<shared_ptr<TreeView::ProxyNode>> nodes;
+
 	    for (TheBigThings::const_iterator it = the_big_things.begin();
 		 it != the_big_things.end(); ++it)
 	    {
@@ -134,8 +132,8 @@ namespace snapper
     });
 
 
-    void TheBigThing::copy(const BackupConfig& backup_config,
-                           TheBigThings& the_big_things,
+    void
+    TheBigThing::copy(const BackupConfig& backup_config, TheBigThings& the_big_things,
                            const pair<CopySpec, CopySpec>& copy_specs)
     {
 	// Unpack copy specification
@@ -242,6 +240,7 @@ namespace snapper
 	}
     }
 
+
     void
     TheBigThing::transfer(const BackupConfig& backup_config, TheBigThings& the_big_things,
 			  bool quiet)
@@ -346,9 +345,9 @@ namespace snapper
 	target_state = TargetState::MISSING;
     }
 
+
     pair<TheBigThing::CopySpec, TheBigThing::CopySpec>
-    TheBigThing::make_copy_specs(const BackupConfig& backup_config,
-                                 const TheBigThings& the_big_things,
+    TheBigThing::make_copy_specs(const BackupConfig& backup_config, const TheBigThings& the_big_things,
                                  CopyMode copy_mode) const
     {
 	CopySpec spec_source; // Copy specification for the snapshot on the source.
