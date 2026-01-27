@@ -111,12 +111,12 @@ namespace snapper
     }
 
 
-    boost::optional<BackupConfig::TargetMode>
+    std::optional<BackupConfig::TargetMode>
     GlobalOptions::only_target_mode_value(const ParsedOpts& opts) const
     {
 	ParsedOpts::const_iterator it = opts.find("target-mode");
 	if (it == opts.end())
-	    return boost::optional<BackupConfig::TargetMode>();
+	    return std::optional<BackupConfig::TargetMode>();
 
 	BackupConfig::TargetMode target_mode;
 
@@ -195,12 +195,12 @@ namespace snapper
     }
 
 
-    boost::optional<string>
+    std::optional<string>
     GlobalOptions::backup_config_value(const ParsedOpts& opts) const
     {
 	ParsedOpts::const_iterator it = opts.find("backup-config");
 	if (it == opts.end())
-	    return boost::optional<string>();
+	    return std::optional<string>();
 
 	return it->second;
     }

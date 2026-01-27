@@ -24,7 +24,7 @@
 
 
 #include <string>
-#include <boost/optional.hpp>
+#include <optional>
 
 #include <snapper/Enum.h>
 
@@ -50,7 +50,7 @@ namespace snapper
 	bool quiet() const { return _quiet; }
 	bool verbose() const { return _verbose; }
 	bool debug() const { return _debug; }
-	const boost::optional<BackupConfig::TargetMode>& target_mode() const { return _target_mode; }
+	const std::optional<BackupConfig::TargetMode>& target_mode() const { return _target_mode; }
 	bool automatic() const { return _automatic; }
 	bool utc() const { return _utc; }
 	bool iso() const { return _iso; }
@@ -61,22 +61,22 @@ namespace snapper
 	OutputFormat output_format() const { return _output_format; }
 	const string& separator() const { return _separator; }
 	bool headers() const { return _headers; }
-	const boost::optional<string>& backup_config() const { return _backup_config; }
+	const std::optional<string>& backup_config() const { return _backup_config; }
 
     private:
 
 	void check_options(const ParsedOpts& parsed_opts) const;
 
-	boost::optional<BackupConfig::TargetMode> only_target_mode_value(const ParsedOpts& parsed_opts) const;
+	std::optional<BackupConfig::TargetMode> only_target_mode_value(const ParsedOpts& parsed_opts) const;
 	Style table_style_value(const ParsedOpts& parsed_opts) const;
 	OutputFormat output_format_value(const ParsedOpts& parsed_opts) const;
 	string separator_value(const ParsedOpts& parsed_opts) const;
-	boost::optional<string> backup_config_value(const ParsedOpts& parsed_opts) const;
+	std::optional<string> backup_config_value(const ParsedOpts& parsed_opts) const;
 
 	bool _quiet;
 	bool _verbose;
 	bool _debug;
-	boost::optional<BackupConfig::TargetMode> _target_mode;
+	std::optional<BackupConfig::TargetMode> _target_mode;
 	bool _automatic;
 	bool _utc;
 	bool _iso;
@@ -87,7 +87,7 @@ namespace snapper
 	OutputFormat _output_format;
 	string _separator;
 	bool _headers;
-	boost::optional<string> _backup_config;
+	std::optional<string> _backup_config;
 
     };
 
