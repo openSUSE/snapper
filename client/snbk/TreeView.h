@@ -27,8 +27,7 @@
 #include <memory>
 #include <string>
 #include <vector>
-
-#include <boost/optional.hpp>
+#include <optional>
 
 #include <snapper/Enum.h>
 
@@ -109,7 +108,7 @@ namespace snapper
 	TreeView(const vector<shared_ptr<ProxyNode>>& nodes);
 
 	/** Find the nearest valid node to use as a Btrfs‑send parent. */
-	boost::optional<SearchResult>
+	std::optional<SearchResult>
 	find_nearest_valid_node(const string& start_uuid) const;
 
 	/** Print the tree graph in Graphviz DOT Language. */
@@ -140,7 +139,7 @@ namespace snapper
 	 * Find the nearest valid node to use as a Btrfs‑send parent, starting from the
 	 * given node.
 	 */
-	boost::optional<SearchResult>
+	std::optional<SearchResult>
 	find_nearest_valid_node(const ProxyNode* start_node) const;
 
 	/**

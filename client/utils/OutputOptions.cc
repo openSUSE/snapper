@@ -35,7 +35,7 @@ namespace snapper
 
 
     string
-    any_to_string(const OutputOptions& output_options, const boost::any& value)
+    any_to_string(const OutputOptions& output_options, const std::any& value)
     {
 	if (value.type() == typeid(nullptr_t))
 	{
@@ -45,19 +45,19 @@ namespace snapper
 	if (value.type() == typeid(bool))
 	{
 	    if (output_options.human)
-		return boost::any_cast<bool>(value) ? _("yes") : _("no");
+		return std::any_cast<bool>(value) ? _("yes") : _("no");
 	    else
-		return boost::any_cast<bool>(value) ? "yes" : "no";
+		return std::any_cast<bool>(value) ? "yes" : "no";
 	}
 
 	if (value.type() == typeid(unsigned int))
 	{
-	    return to_string(boost::any_cast<unsigned int>(value));
+	    return to_string(std::any_cast<unsigned int>(value));
 	}
 
 	if (value.type() == typeid(string))
 	{
-	    return boost::any_cast<string>(value).c_str();
+	    return std::any_cast<string>(value).c_str();
 	}
 
 	SN_THROW(Exception("invalid type in any_to_string"));
@@ -66,7 +66,7 @@ namespace snapper
 
 
     json_object*
-    any_to_json(const OutputOptions& output_options, const boost::any& value)
+    any_to_json(const OutputOptions& output_options, const std::any& value)
     {
 	if (value.type() == typeid(nullptr_t))
 	{
@@ -75,17 +75,17 @@ namespace snapper
 
 	if (value.type() == typeid(bool))
 	{
-	    return json_object_new_boolean(boost::any_cast<bool>(value));
+	    return json_object_new_boolean(std::any_cast<bool>(value));
 	}
 
 	if (value.type() == typeid(unsigned int))
 	{
-	    return json_object_new_int(boost::any_cast<unsigned int>(value));
+	    return json_object_new_int(std::any_cast<unsigned int>(value));
 	}
 
 	if (value.type() == typeid(string))
 	{
-	    return json_object_new_string(boost::any_cast<string>(value).c_str());
+	    return json_object_new_string(std::any_cast<string>(value).c_str());
 	}
 
 	SN_THROW(Exception("invalid type in any_to_json"));

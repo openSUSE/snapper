@@ -284,7 +284,7 @@ namespace snapper
 	    }
 	    else
 	    {
-		boost::optional<FreeSpaceCondition> free_space_condition;
+		std::optional<FreeSpaceCondition> free_space_condition;
 
 		try
 		{
@@ -353,7 +353,7 @@ namespace snapper
 	    }
 	    else
 	    {
-		boost::optional<FreeSpaceCondition> free_space_condition;
+		std::optional<FreeSpaceCondition> free_space_condition;
 
 		try
 		{

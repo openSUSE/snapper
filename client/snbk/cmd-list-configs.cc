@@ -115,7 +115,7 @@ namespace snapper
 	}
 
 
-	boost::any
+	std::any
 	value_for_as_any(Column column, const BackupConfig& backup_config)
 	{
 	    switch (column)

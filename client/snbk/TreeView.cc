@@ -27,7 +27,6 @@
 #include <vector>
 
 #include <boost/algorithm/string.hpp>
-#include <boost/optional.hpp>
 
 #include <snapper/AppUtil.h>
 
@@ -230,7 +229,8 @@ namespace snapper
 	}
     }
 
-    boost::optional<TreeView::SearchResult>
+
+    std::optional<TreeView::SearchResult>
     TreeView::find_nearest_valid_node(const string& start_uuid) const
     {
 	auto pair = pool.find(start_uuid);
@@ -244,7 +244,8 @@ namespace snapper
 	__builtin_unreachable();
     }
 
-    boost::optional<TreeView::SearchResult>
+
+    std::optional<TreeView::SearchResult>
     TreeView::find_nearest_valid_node(const ProxyNode* start_node) const
     {
 	queue<SearchResult> nodes_to_visit;
@@ -282,7 +283,7 @@ namespace snapper
 	    }
 	}
 
-	return boost::none;
+	return std::nullopt;
     }
 
     void TreeView::set_parent(ProxyNode* node, ProxyNode* parent, ParentType parent_type)
