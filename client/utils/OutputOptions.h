@@ -22,7 +22,7 @@
 
 
 #include <string>
-#include <boost/any.hpp>
+#include <any>
 #include <json-c/json.h>
 
 
@@ -54,10 +54,10 @@ namespace snapper
     // TODO extend functions and use in client/snapper
 
     string
-    any_to_string(const OutputOptions& output_options, const boost::any& value);
+    any_to_string(const OutputOptions& output_options, const std::any& value);
 
 
     json_object*
-    any_to_json(const OutputOptions& output_options, const boost::any& value);
+    any_to_json(const OutputOptions& output_options, const std::any& value);
 
 }

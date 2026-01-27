@@ -24,7 +24,7 @@
 #include "config.h"
 
 #include <iostream>
-#include <boost/any.hpp>
+#include <any>
 
 #include <snapper/SnapperTmpl.h>
 #include <snapper/BtrfsUtils.h>
@@ -381,7 +381,7 @@ namespace snapper
 	}
 
 
-	boost::any
+	std::any
 	value_for_as_any(const OutputOptions& output_options, const OutputHelper& output_helper, Column column,
 			 const ProxySnapshot& snapshot)
 	{
@@ -480,7 +480,7 @@ namespace snapper
 	value_for_as_string(const OutputOptions& output_options, const OutputHelper& output_helper,
 			    Column column, const ProxySnapshot& snapshot)
 	{
-	    boost::any value = value_for_as_any(output_options, output_helper, column, snapshot);
+	    std::any value = value_for_as_any(output_options, output_helper, column, snapshot);
 
 	    if (value.type() == typeid(nullptr_t))
 	    {
@@ -488,26 +488,26 @@ namespace snapper
 	    }
 	    else if (value.type() == typeid(unsigned int))
 	    {
-		return decString(boost::any_cast<unsigned int>(value));
+		return decString(std::any_cast<unsigned int>(value));
 	    }
 	    else if (value.type() == typeid(bool))
 	    {
 		if (output_options.human)
-		    return boost::any_cast<bool>(value) ? _("yes") : _("no");
+		    return std::any_cast<bool>(value) ? _("yes") : _("no");
 		else
-		    return boost::any_cast<bool>(value) ? "yes" : "no";
+		    return std::any_cast<bool>(value) ? "yes" : "no";
 	    }
 	    else if (value.type() == typeid(string))
 	    {
-		return boost::any_cast<string>(value).c_str();
+		return std::any_cast<string>(value).c_str();
 	    }
 	    else if (value.type() == typeid(uint64_t))
 	    {
-		return decString(boost::any_cast<uint64_t>(value));
+		return decString(std::any_cast<uint64_t>(value));
 	    }
 	    else if (value.type() == typeid(map<string, string>))
 	    {
-		return show_userdata(boost::any_cast<map<string, string>>(value));
+		return show_userdata(std::any_cast<map<string, string>>(value));
 	    }
 
 	    SN_THROW(Exception("invalid column type in value_for_as_string"));
@@ -519,7 +519,7 @@ namespace snapper
 	value_for_as_json(const OutputOptions& output_options, const OutputHelper& output_helper,
 			  Column column, const ProxySnapshot& snapshot)
 	{
-	    boost::any value = value_for_as_any(output_options, output_helper, column, snapshot);
+	    std::any value = value_for_as_any(output_options, output_helper, column, snapshot);
 
 	    if (value.type() == typeid(nullptr_t))
 	    {
@@ -527,27 +527,27 @@ namespace snapper
 	    }
 	    else if (value.type() == typeid(unsigned int))
 	    {
-		return json_object_new_int(boost::any_cast<unsigned int>(value));
+		return json_object_new_int(std::any_cast<unsigned int>(value));
 	    }
 	    else if (value.type() == typeid(bool))
 	    {
-		return json_object_new_boolean(boost::any_cast<bool>(value));
+		return json_object_new_boolean(std::any_cast<bool>(value));
 	    }
 	    else if (value.type() == typeid(string))
 	    {
-		return json_object_new_string(boost::any_cast<string>(value).c_str());
+		return json_object_new_string(std::any_cast<string>(value).c_str());
 	    }
 	    else if (value.type() == typeid(uint64_t))
 	    {
 #if JSON_C_VERSION_NUM >= ((0 << 16) | (14 << 8) | 0)
-		return json_object_new_uint64(boost::any_cast<uint64_t>(value));
+		return json_object_new_uint64(std::any_cast<uint64_t>(value));
 #else
-		return json_object_new_int64(boost::any_cast<uint64_t>(value));
+		return json_object_new_int64(std::any_cast<uint64_t>(value));
 #endif
 	    }
 	    else if (value.type() == typeid(map<string, string>))
 	    {
-		map<string, string> tmp = boost::any_cast<map<string, string>>(value);
+		map<string, string> tmp = std::any_cast<map<string, string>>(value);
 		if (tmp.empty())
 		    return nullptr;
 

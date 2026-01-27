@@ -120,7 +120,7 @@ namespace snapper
 	}
 
 
-	boost::any
+	std::any
 	value_for_as_any(const OutputOptions& output_options, Column column, const BackupConfig& backup_config,
 			 const TheBigThing& the_big_thing)
 	{
