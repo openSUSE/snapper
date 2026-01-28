@@ -57,28 +57,26 @@ namespace snapper
     });
 
 
-    void help_visualize()
+    void
+    help_visualize()
     {
 	cout << "  " << _("Produce a specific graph in Graphviz DOT format:") << '\n'
 	     << "\t" << _("snbk visualize <mode>") << '\n'
 	     << "\n"
 	     << "\t" << _("Supported modes:") << '\n'
-	     << "\t"
-	     << _("- source-tree: Produce a tree diagram of the snapshots on the source.")
+	     << "\t" << _("- source-tree: Produce a tree diagram of the snapshots on the source.") << '\n'
+	     << "\t" << _("- target-tree: Produce a tree diagram of the snapshots on the target.") << '\n'
 	     << '\n'
-	     << "\t"
-	     << _("- target-tree: Produce a tree diagram of the snapshots on the target.")
-	     << '\n'
-	     << '\n'
-	     << _("    Options for the 'visualize' command:") << '\n';
+	     << "    " << _("Options for the 'visualize' command:") << '\n';
 
 	print_options({
-	    { _("--rankdir, -r"),
-	      _("The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'.") },
+	    { _("--rankdir, -r"), _("The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'.") },
 	});
     }
 
-    void command_visualize(const GlobalOptions& global_options, GetOpts& get_opts,
+
+    void
+    command_visualize(const GlobalOptions& global_options, GetOpts& get_opts,
                            const BackupConfigs& backup_configs, ProxySnappers* snappers)
     {
 	// Drawing a graph for multiple backup configs is not supported.
@@ -88,10 +86,11 @@ namespace snapper
 	                                "command.")));
 	}
 
-	const BackupConfig& backup_config = backup_configs.front();
-
 	// Check and parse arguments
-	const vector<Option> options = { Option("rankdir", required_argument, 'r') };
+	const vector<Option> options = {
+	    Option("rankdir",	required_argument,	'r')
+	};
+
 	ParsedOpts opts = get_opts.parse("visualize", options);
 	if (get_opts.num_args() != 1)
 	{
@@ -120,7 +119,9 @@ namespace snapper
 	}
 
 	// Execute command
+	const BackupConfig& backup_config = backup_configs.front();
 	TheBigThings the_big_things(backup_config, snappers, false);
+
 	switch (mode)
 	{
 	    case Mode::SOURCE_TREE:

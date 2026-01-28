@@ -96,8 +96,7 @@ namespace snapper
 	     << "\t" << _("snbk restore [numbers]") << '\n'
 	     << '\n'
 	     << "\t" << _("Notice:") << '\n'
-	     << "\t" << _("- A backup-config must be specified to run this command.")
-		     << '\n'
+	     << "\t" << _("- A backup-config must be specified to run this command.") << '\n'
 	     << "\t" << _("- Restart the `snapperd` service to make the restored "
 			  "snapshots visible immediately.") << '\n'
 	     << '\n';
