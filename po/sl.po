@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-13 14:35+0200\n"
+"POT-Creation-Date: 2026-01-28 14:27+0100\n"
 "PO-Revision-Date: 2025-07-23 23:59+0000\n"
 "Last-Translator: Jure Repinc <jlp@holodeck1.com>\n"
 "Language-Team: Slovenian <https://l10n.opensuse.org/projects/snapper/master/sl/>\n"
@@ -180,6 +180,20 @@ msgstr "%1$s ali %2$s"
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s continued"
+msgstr ""
+
+#, c-format
+msgid "%s killed by signal %d"
+msgstr ""
+
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s stopped"
+msgstr ""
+
 msgid "'btrfs send | btrfs receive' failed."
 msgstr "Ukaz »btrfs send« ali » btrfs receive« ni uspel."
 
@@ -228,6 +242,19 @@ msgstr "(Cilj) prejeti UUID"
 
 msgid "(Target) UUID"
 msgstr "(Cilj) UUID"
+
+#, fuzzy
+msgid "- A backup-config must be specified to run this command."
+msgstr "Uporabite »backup-config« samo skupaj z navedbo »target-mode«."
+
+msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
+msgstr ""
+
+msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
+msgstr ""
+
+msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
+msgstr ""
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -325,6 +352,9 @@ msgstr "--print-number, -p"
 msgid "--quiet, -q"
 msgstr "--quiet, -q"
 
+msgid "--rankdir, -r"
+msgstr ""
+
 msgid "--read-only"
 msgstr "--read-only"
 
@@ -363,6 +393,10 @@ msgstr "--verbose, -v"
 
 msgid "--version"
 msgstr "--version"
+
+#, fuzzy
+msgid "A backup-config must be specified to run this command."
+msgstr "Uporabite »backup-config« samo skupaj z navedbo »target-mode«."
 
 # error box title
 msgid "ACL error."
@@ -406,6 +440,10 @@ msgstr "Ambita ni moč zaznati, ker privzeti podnosilec ni znan."
 
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Povrnitve ni moč izvesti, ker privzeti podnosilec ni znan."
+
+#, c-format
+msgid "Cannot find the node of UUID %s"
+msgstr ""
 
 msgid "Character separator for CSV output format."
 msgstr "Ločilni znak za obliko izpisa CSV."
@@ -487,6 +525,10 @@ msgstr "Ukaz »setup-quota« ne potrebuje argumentov."
 msgid "Command 'status' needs one argument."
 msgstr "Ukaz »status« potrebuje en argument."
 
+#, fuzzy
+msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
+msgstr "Ukaz »transfer-and-delete« ne potrebuje argumentov."
+
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "Ukaz »transfer-and-delete« ne potrebuje argumentov."
 
@@ -495,6 +537,10 @@ msgstr "Ukaz »umount« potrebuje vsaj en argument."
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Ukaz »undochange« potrebuje vsaj en argument."
+
+#, fuzzy
+msgid "Command 'visualize' needs one argument."
+msgstr "Ukaz »status« potrebuje en argument."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Ukaz »xadiff« potrebuje vsaj en argument."
@@ -855,6 +901,9 @@ msgstr "Brez glav za izhodno obliko CSV."
 msgid "No permissions."
 msgstr "Brez dovoljenj."
 
+msgid "Notice:"
+msgstr ""
+
 msgid "Number of corresponding pre snapshot."
 msgstr "Številka ustreznega pred-posnetka."
 
@@ -884,6 +933,10 @@ msgstr "Možnost »--from« je podprta samo za posnetke vrste »enojni«."
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Možnost »--read-write« je podprta samo za posnetke vrste »enojni«."
 
+#, fuzzy
+msgid "Options for the 'visualize' command:"
+msgstr "    Možnosti za ukaz »list«:"
+
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
 msgstr "P"
@@ -891,6 +944,10 @@ msgstr "P"
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
 msgid "PB"
 msgstr "PB"
+
+#, fuzzy, c-format
+msgid "Parent node %s not found."
+msgstr "Datoteka »%s« ni najdena."
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
@@ -933,6 +990,9 @@ msgstr "Ugotavljanje izvornih posnetkov."
 msgid "Probing target snapshots."
 msgstr "Ugotavljanje ciljnih posnetkov."
 
+msgid "Produce a specific graph in Graphviz DOT format:"
+msgstr ""
+
 # error box title
 #, c-format
 msgid "Quota error (%s)."
@@ -946,6 +1006,14 @@ msgstr "Prebere datoteke v diff iz datoteke."
 
 msgid "Read-Only"
 msgstr "Samo za branje"
+
+msgid "Restore:"
+msgstr ""
+
+# %s is either BOOTP or DHCP
+#, fuzzy, c-format
+msgid "Restoring snapshot %d."
+msgstr "Brisanje posnetka %d."
 
 msgid "Run command and create pre and post snapshots."
 msgstr "Zažene ukaz in ustvari posnetka pred in po."
@@ -973,6 +1041,22 @@ msgstr[0] "Izvajanje izpisovanja je spodletelo za %d od %ld nastavitve varnostne
 msgstr[1] "Izvajanje izpisovanja je spodletelo za %d od %ld nastavitev varnostnega kopiranja."
 msgstr[2] "Izvajanje izpisovanja je spodletelo za %d od %ld nastavitev varnostnega kopiranja."
 msgstr[3] "Izvajanje izpisovanja je spodletelo za %d od %ld nastavitev varnostnega kopiranja."
+
+#, fuzzy, c-format
+msgid "Running restore failed for %d of %ld backup config."
+msgid_plural "Running restore failed for %d of %ld backup configs."
+msgstr[0] "Izvajanje brisanja je spodletelo za %d od %ld nastavitve varnostnega kopiranja."
+msgstr[1] "Izvajanje brisanja je spodletelo za %d od %ld nastavitev varnostnega kopiranja."
+msgstr[2] "Izvajanje brisanja je spodletelo za %d od %ld nastavitev varnostnega kopiranja."
+msgstr[3] "Izvajanje brisanja je spodletelo za %d od %ld nastavitev varnostnega kopiranja."
+
+#, fuzzy, c-format
+msgid "Running restore for backup config '%s' failed."
+msgstr "Izvajanje brisanja za nastavitev varnostnega kopiranja »%s« je spodletelo."
+
+#, fuzzy, c-format
+msgid "Running restore for backup config '%s'."
+msgstr "Izvajanje brisanja za nastavitev varnostnega kopiranja »%s«."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
@@ -1066,6 +1150,11 @@ msgid "Snapshot '%u' not found."
 msgstr "Posnetek »%u« ni najden."
 
 # %s is either BOOTP or DHCP
+#, fuzzy
+msgid "Snapshot already on source."
+msgstr "Posnetek je že na ciljnem mestu."
+
+# %s is either BOOTP or DHCP
 msgid "Snapshot already on target."
 msgstr "Posnetek je že na ciljnem mestu."
 
@@ -1090,6 +1179,9 @@ msgstr "Izvorno stanje"
 
 msgid "Subvolume"
 msgstr "Podnosilec"
+
+msgid "Supported modes:"
+msgstr ""
 
 msgid "Suppress normal output."
 msgstr "Skrij običajen izhod."
@@ -1132,6 +1224,9 @@ msgstr "Ciljna izvršljiva datoteka rm"
 
 msgid "Target rmdir bin"
 msgstr "Ciljna izvršljiva datoteka rmdir"
+
+msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
+msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Ambit lahko določite ročno z uporabo možnosti »--ambit«."
@@ -1193,9 +1288,17 @@ msgstr "Neznane nastavitve."
 msgid "Unknown global option '%s'."
 msgstr "Neznana splošna možnost »%s«."
 
+#, fuzzy, c-format
+msgid "Unknown mode '%s'."
+msgstr "Neznana vrsta »%s«."
+
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Neznana možnost »%s« za ukaz »%s«."
+
+#, fuzzy, c-format
+msgid "Unknown rankdir '%s'."
+msgstr "Neznan ukaz »%s«."
 
 #, c-format
 msgid "Unknown type '%s'."
@@ -1293,11 +1396,18 @@ msgstr "snbk list"
 msgid "snbk list-configs"
 msgstr "snbk list-configs"
 
+#, fuzzy
+msgid "snbk restore [numbers]"
+msgstr "snbk delete [številke]"
+
 msgid "snbk transfer [numbers]"
 msgstr "snbk transfer [številke]"
 
 msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
+
+msgid "snbk visualize <mode>"
+msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "uporaba: snapper [--splošne-možnosti] <ukaz> [--ukazne-možnosti] [ukazni-argumenti]"

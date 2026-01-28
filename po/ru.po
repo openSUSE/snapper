@@ -3,17 +3,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-13 14:35+0200\n"
+"POT-Creation-Date: 2026-01-28 14:27+0100\n"
 "PO-Revision-Date: 2025-12-11 17:04+0000\n"
 "Last-Translator: Aleksey Fedorov <Aleksejfedorov963@gmail.com>\n"
-"Language-Team: Russian <https://l10n.opensuse.org/projects/snapper/master/ru/"
-">\n"
+"Language-Team: Russian <https://l10n.opensuse.org/projects/snapper/master/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 5.14.3\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -177,6 +175,20 @@ msgstr "%1$s или %2$s"
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s continued"
+msgstr ""
+
+#, c-format
+msgid "%s killed by signal %d"
+msgstr ""
+
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s stopped"
+msgstr ""
+
 msgid "'btrfs send | btrfs receive' failed."
 msgstr "Сбой 'btrfs send | btrfs receive'."
 
@@ -225,6 +237,19 @@ msgstr "(Цель) Полученный UUID"
 
 msgid "(Target) UUID"
 msgstr "(Цель) UUID"
+
+#, fuzzy
+msgid "- A backup-config must be specified to run this command."
+msgstr "Использовать backup-config только с указанным режимом target-mode."
+
+msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
+msgstr ""
+
+msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
+msgstr ""
+
+msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
+msgstr ""
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -322,6 +347,9 @@ msgstr "--print-number, -p"
 msgid "--quiet, -q"
 msgstr "--quiet, -q"
 
+msgid "--rankdir, -r"
+msgstr ""
+
 msgid "--read-only"
 msgstr "--read-only"
 
@@ -360,6 +388,10 @@ msgstr "--verbose, -v"
 
 msgid "--version"
 msgstr "--version"
+
+#, fuzzy
+msgid "A backup-config must be specified to run this command."
+msgstr "Использовать backup-config только с указанным режимом target-mode."
 
 # error box title
 msgid "ACL error."
@@ -402,6 +434,10 @@ msgstr "Невозможно определить область, посколь
 
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Невозможно выполнить откат, подтом по умолчанию неизвестен."
+
+#, c-format
+msgid "Cannot find the node of UUID %s"
+msgstr ""
 
 msgid "Character separator for CSV output format."
 msgstr "Символ-разделитель для формата вывода CSV."
@@ -483,6 +519,10 @@ msgstr "Команде 'setup-quota' не нужны аргументы."
 msgid "Command 'status' needs one argument."
 msgstr "Команде 'status' нужен один аргумент."
 
+#, fuzzy
+msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
+msgstr "Команде 'transfer-and-delete' не нужны аргументы."
+
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "Команде 'transfer-and-delete' не нужны аргументы."
 
@@ -491,6 +531,10 @@ msgstr "Команде 'umount' нужен хотя бы один аргумен
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Команде 'undochange' нужен хотя бы один аргумент."
+
+#, fuzzy
+msgid "Command 'visualize' needs one argument."
+msgstr "Команде 'status' нужен один аргумент."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Команде 'xadiff' нужен хотя бы один аргумент."
@@ -837,6 +881,9 @@ msgstr "Отсутствие заголовков для выходного фо
 msgid "No permissions."
 msgstr "Нет прав."
 
+msgid "Notice:"
+msgstr ""
+
 msgid "Number of corresponding pre snapshot."
 msgstr "Номер соответствующего предварительного снимка."
 
@@ -866,6 +913,10 @@ msgstr "Параметр --from поддерживается только для
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Параметр --read-write поддерживается только для одиночных снимков."
 
+#, fuzzy
+msgid "Options for the 'visualize' command:"
+msgstr "    Опции команды 'list':"
+
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
 msgstr "П"
@@ -873,6 +924,10 @@ msgstr "П"
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
 msgid "PB"
 msgstr "ПБ"
+
+#, fuzzy, c-format
+msgid "Parent node %s not found."
+msgstr "Файл '%s' не найден."
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
@@ -915,6 +970,9 @@ msgstr "Проверка снимков источника."
 msgid "Probing target snapshots."
 msgstr "Проверка целевых снимков."
 
+msgid "Produce a specific graph in Graphviz DOT format:"
+msgstr ""
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Ошибка квоты (%s)."
@@ -927,6 +985,13 @@ msgstr "Чтение файлов в diff из файла."
 
 msgid "Read-Only"
 msgstr "Только-чтение"
+
+msgid "Restore:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Restoring snapshot %d."
+msgstr "Удаление снимка %d."
 
 msgid "Run command and create pre and post snapshots."
 msgstr "Запустить команду и создать пре- и пост-снимок."
@@ -952,6 +1017,21 @@ msgid_plural "Running list failed for %d of %ld backup configs."
 msgstr[0] "Не удалось вывести список %d из %ld резервной конфигурации."
 msgstr[1] "Не удалось вывести список %d из %ld резервных конфигураций."
 msgstr[2] "Не удалось вывести список %d из %ld резервных конфигураций."
+
+#, fuzzy, c-format
+msgid "Running restore failed for %d of %ld backup config."
+msgid_plural "Running restore failed for %d of %ld backup configs."
+msgstr[0] "Не удалось выполнить удаление %d из %ld резервной конфигурации."
+msgstr[1] "Не удалось выполнить удаление %d из %ld резервных конфигураций."
+msgstr[2] "Не удалось выполнить удаление %d из %ld резервных конфигураций."
+
+#, fuzzy, c-format
+msgid "Running restore for backup config '%s' failed."
+msgstr "Сбой удаления резервной конфигурации '%s'."
+
+#, fuzzy, c-format
+msgid "Running restore for backup config '%s'."
+msgstr "Выполняется удаление резервной конфигурации '%s'."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
@@ -1040,6 +1120,10 @@ msgstr "Назначение снимка %d подтомом по умолча�
 msgid "Snapshot '%u' not found."
 msgstr "Снимок '%u' не найден."
 
+#, fuzzy
+msgid "Snapshot already on source."
+msgstr "Цель снимка уже задана."
+
 msgid "Snapshot already on target."
 msgstr "Цель снимка уже задана."
 
@@ -1064,6 +1148,9 @@ msgstr "Состояние источника"
 
 msgid "Subvolume"
 msgstr "Субтом"
+
+msgid "Supported modes:"
+msgstr ""
 
 msgid "Suppress normal output."
 msgstr "Подавить нормальный вывод."
@@ -1105,6 +1192,9 @@ msgstr "Цель: бинарный файл rm"
 
 msgid "Target rmdir bin"
 msgstr "Цель: бинарный файл rmdir"
+
+msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
+msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Область можно указать вручную с помощью параметра --ambit."
@@ -1165,9 +1255,17 @@ msgstr "Неизвестная конфигурация."
 msgid "Unknown global option '%s'."
 msgstr "Неизвестная опция '%s'."
 
+#, fuzzy, c-format
+msgid "Unknown mode '%s'."
+msgstr "Неизвестный тип '%s'."
+
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Неизвестная опция '%s' для команды '%s'."
+
+#, fuzzy, c-format
+msgid "Unknown rankdir '%s'."
+msgstr "Неизвестная команда '%s'."
 
 #, c-format
 msgid "Unknown type '%s'."
@@ -1263,11 +1361,18 @@ msgstr "snbk list"
 msgid "snbk list-configs"
 msgstr "snbk list-configs"
 
+#, fuzzy
+msgid "snbk restore [numbers]"
+msgstr "snbk delete [числа]"
+
 msgid "snbk transfer [numbers]"
 msgstr "snbk transfer [числа]"
 
 msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
+
+msgid "snbk visualize <mode>"
+msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "использование: snapper [--глобальные-опции] <команда> [--опции-команды] [аргументы-команды]"

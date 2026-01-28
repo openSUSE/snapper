@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-13 14:35+0200\n"
+"POT-Creation-Date: 2026-01-28 14:27+0100\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Gujarati <https://l10n.opensuse.org/projects/snapper/master/gu/>\n"
@@ -181,6 +181,20 @@ msgstr ""
 msgid "%1$s, %2$s"
 msgstr ""
 
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s continued"
+msgstr ""
+
+#, c-format
+msgid "%s killed by signal %d"
+msgstr ""
+
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s stopped"
+msgstr ""
+
 msgid "'btrfs send | btrfs receive' failed."
 msgstr ""
 
@@ -228,6 +242,18 @@ msgid "(Target) Received UUID"
 msgstr ""
 
 msgid "(Target) UUID"
+msgstr ""
+
+msgid "- A backup-config must be specified to run this command."
+msgstr ""
+
+msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
+msgstr ""
+
+msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
+msgstr ""
+
+msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
 msgstr ""
 
 msgid "--abbreviate"
@@ -327,6 +353,9 @@ msgstr ""
 msgid "--quiet, -q"
 msgstr ""
 
+msgid "--rankdir, -r"
+msgstr ""
+
 msgid "--read-only"
 msgstr ""
 
@@ -364,6 +393,9 @@ msgid "--verbose, -v"
 msgstr ""
 
 msgid "--version"
+msgstr ""
+
+msgid "A backup-config must be specified to run this command."
 msgstr ""
 
 #, fuzzy
@@ -406,6 +438,10 @@ msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr ""
 
 msgid "Cannot do rollback since default subvolume is unknown."
+msgstr ""
+
+#, c-format
+msgid "Cannot find the node of UUID %s"
 msgstr ""
 
 msgid "Character separator for CSV output format."
@@ -509,6 +545,10 @@ msgid "Command 'status' needs one argument."
 msgstr "ઉમેરોને એક આર્ગ્યુમેન્ટની જરૂર છે"
 
 #, fuzzy
+msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
+msgstr "બનાવોને ઓછામાં ઓછા 3 આર્ગ્યુમેન્ટસની જરૂર છે"
+
+#, fuzzy
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "બનાવોને ઓછામાં ઓછા 3 આર્ગ્યુમેન્ટસની જરૂર છે"
 
@@ -519,6 +559,10 @@ msgstr "મેળવોને ઓછામાં ઓછા એક આર્ગ�
 #, fuzzy
 msgid "Command 'undochange' needs at least one argument."
 msgstr "મેળવોને ઓછામાં ઓછા એક આર્ગ્યુમેન્ટની જરૂર છે"
+
+#, fuzzy
+msgid "Command 'visualize' needs one argument."
+msgstr "ઉમેરોને એક આર્ગ્યુમેન્ટની જરૂર છે"
 
 #, fuzzy
 msgid "Command 'xadiff' needs at least one argument."
@@ -892,6 +936,9 @@ msgstr ""
 msgid "No permissions."
 msgstr " મંજૂરીઓ નકારાઇ "
 
+msgid "Notice:"
+msgstr ""
+
 msgid "Number of corresponding pre snapshot."
 msgstr ""
 
@@ -921,6 +968,9 @@ msgstr ""
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr ""
 
+msgid "Options for the 'visualize' command:"
+msgstr ""
+
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
 msgstr ""
@@ -928,6 +978,10 @@ msgstr ""
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
 msgid "PB"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Parent node %s not found."
+msgstr "રિપોસીટરીમાં ફાઈલ %1 મળી નહીં."
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
@@ -975,6 +1029,9 @@ msgstr "વર્ણન"
 msgid "Probing target snapshots."
 msgstr "અપરિચિત પ્રકાર."
 
+msgid "Produce a specific graph in Graphviz DOT format:"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Quota error (%s)."
 msgstr "I/O ભૂલ"
@@ -987,6 +1044,13 @@ msgstr ""
 
 msgid "Read-Only"
 msgstr ""
+
+msgid "Restore:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Restoring snapshot %d."
+msgstr "CA ડીલીટ કરવાનું નિષ્ફળ: %1."
 
 msgid "Run command and create pre and post snapshots."
 msgstr ""
@@ -1010,6 +1074,20 @@ msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
 msgstr[0] ""
 msgstr[1] ""
+
+#, c-format
+msgid "Running restore failed for %d of %ld backup config."
+msgid_plural "Running restore failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running restore for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running restore for backup config '%s'."
+msgstr ""
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
@@ -1101,6 +1179,10 @@ msgid "Snapshot '%u' not found."
 msgstr "%s હોસ્ટ મળ્યું નથી."
 
 #, fuzzy
+msgid "Snapshot already on source."
+msgstr "કન્ફિગ્યુરેશન ફાઈલોમાં પાર્સ થઈ રહ્યું છે..."
+
+#, fuzzy
 msgid "Snapshot already on target."
 msgstr "કન્ફિગ્યુરેશન ફાઈલોમાં પાર્સ થઈ રહ્યું છે..."
 
@@ -1127,6 +1209,9 @@ msgid "Source State"
 msgstr ""
 
 msgid "Subvolume"
+msgstr ""
+
+msgid "Supported modes:"
 msgstr ""
 
 msgid "Suppress normal output."
@@ -1168,6 +1253,9 @@ msgid "Target rm bin"
 msgstr ""
 
 msgid "Target rmdir bin"
+msgstr ""
+
+msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
 msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
@@ -1235,8 +1323,16 @@ msgid "Unknown global option '%s'."
 msgstr "અજાણ્યો વૈશ્વિક વિકલ્પ"
 
 #, fuzzy, c-format
+msgid "Unknown mode '%s'."
+msgstr "અજાણ્યો કમાન્ડ"
+
+#, fuzzy, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "અજાણ્યો એક્સપોર્ટ કમાન્ડ"
+
+#, fuzzy, c-format
+msgid "Unknown rankdir '%s'."
+msgstr "અજાણ્યો કમાન્ડ"
 
 #, fuzzy, c-format
 msgid "Unknown type '%s'."
@@ -1337,10 +1433,16 @@ msgstr ""
 msgid "snbk list-configs"
 msgstr ""
 
+msgid "snbk restore [numbers]"
+msgstr ""
+
 msgid "snbk transfer [numbers]"
 msgstr ""
 
 msgid "snbk transfer-and-delete"
+msgstr ""
+
+msgid "snbk visualize <mode>"
 msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"

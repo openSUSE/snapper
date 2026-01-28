@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-13 14:35+0200\n"
+"POT-Creation-Date: 2026-01-28 14:27+0100\n"
 "PO-Revision-Date: 2025-08-05 05:59+0000\n"
 "Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
 "Language-Team: Chinese (China) <https://l10n.opensuse.org/projects/snapper/master/zh_CN/>\n"
@@ -181,6 +181,20 @@ msgstr "%1$s 或 %2$s"
 msgid "%1$s, %2$s"
 msgstr "%1$s，%2$s"
 
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s continued"
+msgstr ""
+
+#, c-format
+msgid "%s killed by signal %d"
+msgstr ""
+
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s stopped"
+msgstr ""
+
 msgid "'btrfs send | btrfs receive' failed."
 msgstr "'btrfs send | btrfs receive' 失败。"
 
@@ -229,6 +243,19 @@ msgstr "（目标）收到的 UUID"
 
 msgid "(Target) UUID"
 msgstr "（目标）UUID"
+
+#, fuzzy
+msgid "- A backup-config must be specified to run this command."
+msgstr "仅在指定的目标模式下使用备份配置。"
+
+msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
+msgstr ""
+
+msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
+msgstr ""
+
+msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
+msgstr ""
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -326,6 +353,9 @@ msgstr "--print-number、-p"
 msgid "--quiet, -q"
 msgstr "--quiet、-q"
 
+msgid "--rankdir, -r"
+msgstr ""
+
 msgid "--read-only"
 msgstr "--read-only"
 
@@ -364,6 +394,10 @@ msgstr "--verbose、-v"
 
 msgid "--version"
 msgstr "--version"
+
+#, fuzzy
+msgid "A backup-config must be specified to run this command."
+msgstr "仅在指定的目标模式下使用备份配置。"
 
 # error box title
 msgid "ACL error."
@@ -406,6 +440,10 @@ msgstr "无法检测范围，因为默认子卷未知。"
 
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "无法回滚，因为默认子卷未知。"
+
+#, c-format
+msgid "Cannot find the node of UUID %s"
+msgstr ""
 
 msgid "Character separator for CSV output format."
 msgstr "CSV 输出格式的字符分隔符。"
@@ -487,6 +525,10 @@ msgstr "命令“setup-quota”不需要参数。"
 msgid "Command 'status' needs one argument."
 msgstr "命令 'status' 需要一个参数。"
 
+#, fuzzy
+msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
+msgstr "命令 'transfer-and-delete' 不接受参数。"
+
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "命令 'transfer-and-delete' 不接受参数。"
 
@@ -495,6 +537,10 @@ msgstr "命令“unmount”至少需要一个参数。"
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "命令 'undochange' 需要至少一个参数。"
+
+#, fuzzy
+msgid "Command 'visualize' needs one argument."
+msgstr "命令 'status' 需要一个参数。"
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "命令 'xadiff' 需要至少一个参数。"
@@ -839,6 +885,9 @@ msgstr "CSV 输出格式不含标题。"
 msgid "No permissions."
 msgstr "无权限。"
 
+msgid "Notice:"
+msgstr ""
+
 msgid "Number of corresponding pre snapshot."
 msgstr "相关前期快照的编号。"
 
@@ -868,6 +917,10 @@ msgstr "选项 --from 仅适用于单一类型的快照。"
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "选项 --read-write 仅适用于单一类型的快照。"
 
+#, fuzzy
+msgid "Options for the 'visualize' command:"
+msgstr "    'list' 命令的选项："
+
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
 msgstr "P"
@@ -875,6 +928,10 @@ msgstr "P"
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
 msgid "PB"
 msgstr "PB"
+
+#, fuzzy, c-format
+msgid "Parent node %s not found."
+msgstr "未找到文件 '%s'。"
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
@@ -917,6 +974,9 @@ msgstr "正在探测来源快照。"
 msgid "Probing target snapshots."
 msgstr "正在探测目标快照。"
 
+msgid "Produce a specific graph in Graphviz DOT format:"
+msgstr ""
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "定额错误 (%s)。"
@@ -929,6 +989,13 @@ msgstr "读取要与指定文件比较差异的文件。"
 
 msgid "Read-Only"
 msgstr "只读"
+
+msgid "Restore:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Restoring snapshot %d."
+msgstr "正在删除快照 %d。"
 
 msgid "Run command and create pre and post snapshots."
 msgstr "运行命令并创建前期和后期快照。"
@@ -950,6 +1017,19 @@ msgstr "正在针对备份配置 '%s' 执行删除操作。"
 msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
 msgstr[0] "针对 %d 个备份配置（共 %ld 个）执行的列出操作失败。"
+
+#, fuzzy, c-format
+msgid "Running restore failed for %d of %ld backup config."
+msgid_plural "Running restore failed for %d of %ld backup configs."
+msgstr[0] "针对 %d 个备份配置（共 %ld 个）执行的删除操作失败。"
+
+#, fuzzy, c-format
+msgid "Running restore for backup config '%s' failed."
+msgstr "针对备份配置 '%s' 执行的删除操作失败。"
+
+#, fuzzy, c-format
+msgid "Running restore for backup config '%s'."
+msgstr "正在针对备份配置 '%s' 执行删除操作。"
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
@@ -1034,6 +1114,10 @@ msgstr "正在设置默认子卷为快照 %d。"
 msgid "Snapshot '%u' not found."
 msgstr "未找到快照 '%u'。"
 
+#, fuzzy
+msgid "Snapshot already on source."
+msgstr "目标中已存在该快照。"
+
 msgid "Snapshot already on target."
 msgstr "目标中已存在该快照。"
 
@@ -1058,6 +1142,9 @@ msgstr "来源状态"
 
 msgid "Subvolume"
 msgstr "子卷"
+
+msgid "Supported modes:"
+msgstr ""
 
 msgid "Suppress normal output."
 msgstr "不显示正常输出。"
@@ -1100,6 +1187,9 @@ msgstr "目标 rm bin"
 
 msgid "Target rmdir bin"
 msgstr "目标 rmdir bin"
+
+msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
+msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "可以使用 --ambit 选项手动指定范围。"
@@ -1160,9 +1250,17 @@ msgstr "未知配置。"
 msgid "Unknown global option '%s'."
 msgstr "未知的全局选项 '%s'。"
 
+#, fuzzy, c-format
+msgid "Unknown mode '%s'."
+msgstr "未知类型 \"%s\"。"
+
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "未知的选项 '%s' 用于命令 '%s'。"
+
+#, fuzzy, c-format
+msgid "Unknown rankdir '%s'."
+msgstr "未知命令 '%s'。"
 
 #, c-format
 msgid "Unknown type '%s'."
@@ -1258,11 +1356,18 @@ msgstr "snbk list"
 msgid "snbk list-configs"
 msgstr "snbk list-configs"
 
+#, fuzzy
+msgid "snbk restore [numbers]"
+msgstr "snbk delete [编号]"
+
 msgid "snbk transfer [numbers]"
 msgstr "snbk transfer [编号]"
 
 msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
+
+msgid "snbk visualize <mode>"
+msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "用法：snapper [--全局选项] <命令> [--命令选项] [命令参数]"
