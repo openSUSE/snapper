@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-13 14:35+0200\n"
+"POT-Creation-Date: 2026-01-28 14:27+0100\n"
 "PO-Revision-Date: 2025-08-01 17:59+0000\n"
 "Last-Translator: Davide Aiello <davide.aiello@novilingulists.com>\n"
 "Language-Team: Italian <https://l10n.opensuse.org/projects/snapper/master/it/>\n"
@@ -175,6 +175,20 @@ msgstr "%1$s o %2$s"
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s continued"
+msgstr ""
+
+#, c-format
+msgid "%s killed by signal %d"
+msgstr ""
+
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s stopped"
+msgstr ""
+
 msgid "'btrfs send | btrfs receive' failed."
 msgstr "'btrfs send | btrfs receive' non riuscito."
 
@@ -223,6 +237,19 @@ msgstr "(Destinazione) UUID ricevuto"
 
 msgid "(Target) UUID"
 msgstr "(Destinazione) UUID"
+
+#, fuzzy
+msgid "- A backup-config must be specified to run this command."
+msgstr "Usare solo backup-config con target-mode specificata."
+
+msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
+msgstr ""
+
+msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
+msgstr ""
+
+msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
+msgstr ""
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -320,6 +347,9 @@ msgstr "--print-number, -p"
 msgid "--quiet, -q"
 msgstr "--quiet, -q"
 
+msgid "--rankdir, -r"
+msgstr ""
+
 msgid "--read-only"
 msgstr "--read-only"
 
@@ -358,6 +388,10 @@ msgstr "--verbose, -v"
 
 msgid "--version"
 msgstr "--version"
+
+#, fuzzy
+msgid "A backup-config must be specified to run this command."
+msgstr "Usare solo backup-config con target-mode specificata."
 
 # error box title
 msgid "ACL error."
@@ -400,6 +434,10 @@ msgstr "Impossibile rilevare l'ambito perché il sotto-volume è sconosciuto."
 
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Impossibile effettuare il ripristino perché il sotto-volume predefinito è sconosciuto."
+
+#, c-format
+msgid "Cannot find the node of UUID %s"
+msgstr ""
 
 msgid "Character separator for CSV output format."
 msgstr "Separatore di carattere per formato di output CSV."
@@ -481,6 +519,10 @@ msgstr "Il comando 'setup-quota' non prevede argomenti."
 msgid "Command 'status' needs one argument."
 msgstr "Il comando 'status' richiede un argomento."
 
+#, fuzzy
+msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
+msgstr "Il comando 'transfer-and-delete' non richiede argomenti."
+
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "Il comando 'transfer-and-delete' non richiede argomenti."
 
@@ -489,6 +531,10 @@ msgstr "Il comando 'mount' richiede almeno un argomento."
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Il comando 'undochange' richiede almeno un argomento."
+
+#, fuzzy
+msgid "Command 'visualize' needs one argument."
+msgstr "Il comando 'status' richiede un argomento."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Il comando 'xadiff' richiede almeno un argomento."
@@ -834,6 +880,9 @@ msgstr "Nessuna intestazione per il formato di output CSV."
 msgid "No permissions."
 msgstr "Permessi mancanti."
 
+msgid "Notice:"
+msgstr ""
+
 msgid "Number of corresponding pre snapshot."
 msgstr "Numero della pre-istantanea corrispondente."
 
@@ -863,6 +912,10 @@ msgstr "Opzione --from supportata solo per istantanee di tipo singolo."
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Opzione --read-write supportata solo per istantanee di tipo singolo."
 
+#, fuzzy
+msgid "Options for the 'visualize' command:"
+msgstr "    Opzioni per il comando 'list':"
+
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
 msgstr "P"
@@ -870,6 +923,10 @@ msgstr "P"
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
 msgid "PB"
 msgstr "PB"
+
+#, fuzzy, c-format
+msgid "Parent node %s not found."
+msgstr "File '%s' non trovato."
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
@@ -912,6 +969,9 @@ msgstr "Rilevamento delle istantanee di origine."
 msgid "Probing target snapshots."
 msgstr "Rilevamento delle istantanee di destinazione."
 
+msgid "Produce a specific graph in Graphviz DOT format:"
+msgstr ""
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Errore di quota (%s)."
@@ -924,6 +984,13 @@ msgstr "Legge i file in diff dal file."
 
 msgid "Read-Only"
 msgstr "Sola lettura"
+
+msgid "Restore:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Restoring snapshot %d."
+msgstr "Eliminazione dell'istantanea %d."
 
 msgid "Run command and create pre and post snapshots."
 msgstr "Lancia il comando e crea snapshot precedenti e successive."
@@ -947,6 +1014,20 @@ msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
 msgstr[0] "Esecuzione dell'elenco non riuscita per %d di %ld configurazione di backup."
 msgstr[1] "Esecuzione dell'elenco non riuscita per %d di %ld configurazioni di backup."
+
+#, fuzzy, c-format
+msgid "Running restore failed for %d of %ld backup config."
+msgid_plural "Running restore failed for %d of %ld backup configs."
+msgstr[0] "Esecuzione dell'eliminazione non riuscita per %d di %ld configurazione di backup."
+msgstr[1] "Esecuzione dell'eliminazione non riuscita per %d di %ld configurazioni di backup."
+
+#, fuzzy, c-format
+msgid "Running restore for backup config '%s' failed."
+msgstr "Esecuzione dell'eliminazione non riuscita per configurazione di backup '%s'."
+
+#, fuzzy, c-format
+msgid "Running restore for backup config '%s'."
+msgstr "Esecuzione dell'eliminazione per configurazione di backup '%s'."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
@@ -1033,6 +1114,10 @@ msgstr "Impostazione del sottovolume predefinito all'istantanea %d."
 msgid "Snapshot '%u' not found."
 msgstr "Istantanea '%u' non trovata."
 
+#, fuzzy
+msgid "Snapshot already on source."
+msgstr "L'istantanea è già nella destinazione."
+
 msgid "Snapshot already on target."
 msgstr "L'istantanea è già nella destinazione."
 
@@ -1057,6 +1142,9 @@ msgstr "Stato di origine"
 
 msgid "Subvolume"
 msgstr "Sottovolume"
+
+msgid "Supported modes:"
+msgstr ""
 
 msgid "Suppress normal output."
 msgstr "Sopprime l'output normale."
@@ -1099,6 +1187,9 @@ msgstr "Bin rm di destinazione"
 
 msgid "Target rmdir bin"
 msgstr "Bin rmdir di destinazione"
+
+msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
+msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "L'ambito può essere specificato manualmente usando l'opzione --ambit."
@@ -1159,9 +1250,17 @@ msgstr "Configurazione sconosciuta."
 msgid "Unknown global option '%s'."
 msgstr "Opzione globale '%s' sconosciuta."
 
+#, fuzzy, c-format
+msgid "Unknown mode '%s'."
+msgstr "Tipo '%s' sconosciuto."
+
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Opzione '%s' sconosciuta per il comando '%s'."
+
+#, fuzzy, c-format
+msgid "Unknown rankdir '%s'."
+msgstr "Comando '%s' sconosciuto."
 
 #, c-format
 msgid "Unknown type '%s'."
@@ -1257,11 +1356,18 @@ msgstr "snbk list"
 msgid "snbk list-configs"
 msgstr "snbk list-configs"
 
+#, fuzzy
+msgid "snbk restore [numbers]"
+msgstr "snbk delete [numeri]"
+
 msgid "snbk transfer [numbers]"
 msgstr "snbk transfer [numeri]"
 
 msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
+
+msgid "snbk visualize <mode>"
+msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "uso: snapper [--opzioni-globali] <comando> [--opzioni-del-comando] [argomenti-del-comando]"

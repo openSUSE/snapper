@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: entries\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-13 14:35+0200\n"
+"POT-Creation-Date: 2026-01-28 14:27+0100\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Korean <https://l10n.opensuse.org/projects/snapper/master/ko/>\n"
@@ -223,6 +223,20 @@ msgstr ""
 msgid "%1$s, %2$s"
 msgstr ""
 
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s continued"
+msgstr ""
+
+#, c-format
+msgid "%s killed by signal %d"
+msgstr ""
+
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s stopped"
+msgstr ""
+
 msgid "'btrfs send | btrfs receive' failed."
 msgstr ""
 
@@ -273,6 +287,18 @@ msgid "(Target) Received UUID"
 msgstr ""
 
 msgid "(Target) UUID"
+msgstr ""
+
+msgid "- A backup-config must be specified to run this command."
+msgstr ""
+
+msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
+msgstr ""
+
+msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
+msgstr ""
+
+msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
 msgstr ""
 
 msgid "--abbreviate"
@@ -380,6 +406,9 @@ msgstr ""
 msgid "--quiet, -q"
 msgstr ""
 
+msgid "--rankdir, -r"
+msgstr ""
+
 msgid "--read-only"
 msgstr ""
 
@@ -425,6 +454,9 @@ msgstr ""
 msgid "--version"
 msgstr ""
 
+msgid "A backup-config must be specified to run this command."
+msgstr ""
+
 # SLE12
 msgid "ACL error."
 msgstr "ACL 오류입니다."
@@ -466,6 +498,10 @@ msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr ""
 
 msgid "Cannot do rollback since default subvolume is unknown."
+msgstr ""
+
+#, c-format
+msgid "Cannot find the node of UUID %s"
 msgstr ""
 
 msgid "Character separator for CSV output format."
@@ -575,6 +611,11 @@ msgstr "'status' 명령에 하나의 인수가 필요합니다."
 
 # SLE12
 #, fuzzy
+msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
+msgstr "'create' 명령은 인수를 사용하지 않습니다."
+
+# SLE12
+#, fuzzy
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "'create' 명령은 인수를 사용하지 않습니다."
 
@@ -585,6 +626,11 @@ msgstr "'umount' 명령에 하나 이상의 인수가 필요합니다."
 # SLE12
 msgid "Command 'undochange' needs at least one argument."
 msgstr "'undochange' 명령에 하나 이상의 인수가 필요합니다."
+
+# SLE12
+#, fuzzy
+msgid "Command 'visualize' needs one argument."
+msgstr "'status' 명령에 하나의 인수가 필요합니다."
 
 # SLE12
 msgid "Command 'xadiff' needs at least one argument."
@@ -1020,6 +1066,9 @@ msgstr ""
 msgid "No permissions."
 msgstr "권한 없음."
 
+msgid "Notice:"
+msgstr ""
+
 # SLE12
 #, fuzzy
 msgid "Number of corresponding pre snapshot."
@@ -1055,6 +1104,11 @@ msgstr ""
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr ""
 
+# SLE12
+#, fuzzy
+msgid "Options for the 'visualize' command:"
+msgstr "    'list' 명령에 대한 옵션:"
+
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
 msgstr ""
@@ -1063,6 +1117,11 @@ msgstr ""
 #, fuzzy
 msgid "PB"
 msgstr "PiB"
+
+# SLE12
+#, fuzzy, c-format
+msgid "Parent node %s not found."
+msgstr "'%s' 파일을 찾을 수 없습니다."
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
@@ -1123,6 +1182,9 @@ msgstr "\t--description, -d <description>\t스냅샷에 대한 설명입니다."
 msgid "Probing target snapshots."
 msgstr "\t--description, -d <description>\t스냅샷에 대한 설명입니다."
 
+msgid "Produce a specific graph in Graphviz DOT format:"
+msgstr ""
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "할당량 오류입니다(%s)."
@@ -1138,6 +1200,14 @@ msgstr "\t--input, -i <file>\t\tdiff from 파일로 파일을 읽습니다."
 
 msgid "Read-Only"
 msgstr ""
+
+msgid "Restore:"
+msgstr ""
+
+# SLE12
+#, fuzzy, c-format
+msgid "Restoring snapshot %d."
+msgstr "스냅샷을 삭제하지 못했습니다."
 
 # SLE12
 #, fuzzy
@@ -1161,6 +1231,19 @@ msgstr ""
 msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
 msgstr[0] ""
+
+#, c-format
+msgid "Running restore failed for %d of %ld backup config."
+msgid_plural "Running restore failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running restore for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running restore for backup config '%s'."
+msgstr ""
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
@@ -1263,6 +1346,11 @@ msgstr "'%u' 스냅샷을 찾을 수 없습니다."
 
 # SLE12
 #, fuzzy
+msgid "Snapshot already on source."
+msgstr "스냅샷을 생성하지 못했습니다."
+
+# SLE12
+#, fuzzy
 msgid "Snapshot already on target."
 msgstr "스냅샷을 생성하지 못했습니다."
 
@@ -1294,6 +1382,9 @@ msgstr ""
 # SLE12
 msgid "Subvolume"
 msgstr "하위 볼륨"
+
+msgid "Supported modes:"
+msgstr ""
 
 # SLE12
 #, fuzzy
@@ -1340,6 +1431,9 @@ msgid "Target rm bin"
 msgstr ""
 
 msgid "Target rmdir bin"
+msgstr ""
+
+msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
 msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
@@ -1414,9 +1508,19 @@ msgid "Unknown global option '%s'."
 msgstr "알 수 없는 전역 옵션 '%s'."
 
 # SLE12
+#, fuzzy, c-format
+msgid "Unknown mode '%s'."
+msgstr "알 수 없는 명령 '%s'."
+
+# SLE12
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "알 수 없는 옵션 '%s' - '%s' 명령."
+
+# SLE12
+#, fuzzy, c-format
+msgid "Unknown rankdir '%s'."
+msgstr "알 수 없는 명령 '%s'."
 
 # SLE12
 #, fuzzy, c-format
@@ -1538,10 +1642,18 @@ msgstr "\tsnapper list"
 msgid "snbk list-configs"
 msgstr "\tsnapper list-configs"
 
+# SLE12
+#, fuzzy
+msgid "snbk restore [numbers]"
+msgstr "\tsnapper delete <number>"
+
 msgid "snbk transfer [numbers]"
 msgstr ""
 
 msgid "snbk transfer-and-delete"
+msgstr ""
+
+msgid "snbk visualize <mode>"
 msgstr ""
 
 # SLE12

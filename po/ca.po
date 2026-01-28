@@ -2,11 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-13 14:35+0200\n"
+"POT-Creation-Date: 2026-01-28 14:27+0100\n"
 "PO-Revision-Date: 2025-11-19 11:04+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
-"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/"
-">\n"
+"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -175,6 +174,20 @@ msgstr "%1$s o %2$s"
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s continued"
+msgstr ""
+
+#, c-format
+msgid "%s killed by signal %d"
+msgstr ""
+
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s stopped"
+msgstr ""
+
 msgid "'btrfs send | btrfs receive' failed."
 msgstr "La funció btrfs send | btrfs receive ha fallat."
 
@@ -223,6 +236,19 @@ msgstr "(Destinació) UUID rebut"
 
 msgid "(Target) UUID"
 msgstr "(Destinació) UUID"
+
+#, fuzzy
+msgid "- A backup-config must be specified to run this command."
+msgstr "Usa només backup-config amb el mode de destinació especificat."
+
+msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
+msgstr ""
+
+msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
+msgstr ""
+
+msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
+msgstr ""
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -320,6 +346,9 @@ msgstr "--print-number, -p"
 msgid "--quiet, -q"
 msgstr "--quiet, -q"
 
+msgid "--rankdir, -r"
+msgstr ""
+
 msgid "--read-only"
 msgstr "--read-only"
 
@@ -358,6 +387,10 @@ msgstr "--verbose, -v"
 
 msgid "--version"
 msgstr "--version"
+
+#, fuzzy
+msgid "A backup-config must be specified to run this command."
+msgstr "Usa només backup-config amb el mode de destinació especificat."
 
 msgid "ACL error."
 msgstr "Error ACL."
@@ -399,6 +432,10 @@ msgstr "No se'n pot detectar l'àmbit ja que es desconeix el subvolum per defect
 
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "No es pot fer un retrocés ja que es desconeix el subvolum per defecte."
+
+#, c-format
+msgid "Cannot find the node of UUID %s"
+msgstr ""
 
 msgid "Character separator for CSV output format."
 msgstr "Separador de caràcters per al format de sortida CSV."
@@ -480,6 +517,10 @@ msgstr "L'ordre setup-quota no pot tenir arguments."
 msgid "Command 'status' needs one argument."
 msgstr "L'ordre status necessita almenys un argument."
 
+#, fuzzy
+msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
+msgstr "L'ordre transfer-and-delete no accepta arguments."
+
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "L'ordre transfer-and-delete no accepta arguments."
 
@@ -488,6 +529,10 @@ msgstr "L'ordre umount necessita almenys un argument."
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "L'ordre undochange necessita almenys un argument."
+
+#, fuzzy
+msgid "Command 'visualize' needs one argument."
+msgstr "L'ordre status necessita almenys un argument."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "L'ordre xadiff necessita almenys un argument."
@@ -834,6 +879,9 @@ msgstr "Sense capçaleres per al format de sortida CSV."
 msgid "No permissions."
 msgstr "Sense permisos."
 
+msgid "Notice:"
+msgstr ""
+
 msgid "Number of corresponding pre snapshot."
 msgstr "Número de la preinstantània corresponent."
 
@@ -863,6 +911,10 @@ msgstr "L'opció --from només s'admet per a les instantànies de tipus simple."
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "L'opció --read-write només s'admet per a les instantànies de tipus simple."
 
+#, fuzzy
+msgid "Options for the 'visualize' command:"
+msgstr "    Opcions de l'ordre list:"
+
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
 msgstr "P"
@@ -870,6 +922,10 @@ msgstr "P"
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
 msgid "PB"
 msgstr "PB"
+
+#, fuzzy, c-format
+msgid "Parent node %s not found."
+msgstr "No s'ha trobat el fitxer %s."
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
@@ -912,6 +968,9 @@ msgstr "Sondant de les instantànies d'origen."
 msgid "Probing target snapshots."
 msgstr "Sondant les instantànies de destinació."
 
+msgid "Produce a specific graph in Graphviz DOT format:"
+msgstr ""
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Error de quota (%s)."
@@ -924,6 +983,13 @@ msgstr "Llegeix els fitxers per a diff des del fitxer."
 
 msgid "Read-Only"
 msgstr "Només de lectura"
+
+msgid "Restore:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Restoring snapshot %d."
+msgstr "Suprimint la instantània %d."
 
 msgid "Run command and create pre and post snapshots."
 msgstr "Executa l'ordre i crea les instantànies pre i post."
@@ -947,6 +1013,20 @@ msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
 msgstr[0] "Ha fallat l'execució de la llista per a %d d'%ld configuració de còpia de seguretat."
 msgstr[1] "Ha fallat l'execució de la llista per a %d de %ld configuracions de còpia de seguretat."
+
+#, fuzzy, c-format
+msgid "Running restore failed for %d of %ld backup config."
+msgid_plural "Running restore failed for %d of %ld backup configs."
+msgstr[0] "L'execució de la supressió ha fallat per a %d d'%ld configuració de còpia de seguretat."
+msgstr[1] "L'execució de la supressió ha fallat per a %d de %ld configuracions de còpia de seguretat."
+
+#, fuzzy, c-format
+msgid "Running restore for backup config '%s' failed."
+msgstr "Ha fallat l'execució de la supressió de la configuració de còpia de seguretat %s."
+
+#, fuzzy, c-format
+msgid "Running restore for backup config '%s'."
+msgstr "Executant la supressió de la configuració de còpia de seguretat %s."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
@@ -1033,6 +1113,10 @@ msgstr "Establint el subvolum per defecte a la instantània %d."
 msgid "Snapshot '%u' not found."
 msgstr "No s'ha trobat la instantània %u."
 
+#, fuzzy
+msgid "Snapshot already on source."
+msgstr "La instantània ja és a la destinació."
+
 msgid "Snapshot already on target."
 msgstr "La instantània ja és a la destinació."
 
@@ -1057,6 +1141,9 @@ msgstr "Estat de l'origen"
 
 msgid "Subvolume"
 msgstr "Subvolum"
+
+msgid "Supported modes:"
+msgstr ""
 
 msgid "Suppress normal output."
 msgstr "Suprimeix la sortida normal."
@@ -1098,6 +1185,9 @@ msgstr "Destinació d'rm bin"
 
 msgid "Target rmdir bin"
 msgstr "Destinació d'rmdir bin"
+
+msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
+msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "L'àmbit es pot especificar manualment usant l'opció --ambit."
@@ -1158,9 +1248,17 @@ msgstr "Configuració desconeguda."
 msgid "Unknown global option '%s'."
 msgstr "Opció global desconeguda: %s."
 
+#, fuzzy, c-format
+msgid "Unknown mode '%s'."
+msgstr "Tipus desconegut: %s."
+
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Opció desconeguda %s per a l'ordre %s."
+
+#, fuzzy, c-format
+msgid "Unknown rankdir '%s'."
+msgstr "Ordre desconeguda: %s."
 
 #, c-format
 msgid "Unknown type '%s'."
@@ -1256,11 +1354,18 @@ msgstr "snbk list"
 msgid "snbk list-configs"
 msgstr "snbk list-configs"
 
+#, fuzzy
+msgid "snbk restore [numbers]"
+msgstr "snbk delete [números]"
+
 msgid "snbk transfer [numbers]"
 msgstr "snbk transfer [números]"
 
 msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
+
+msgid "snbk visualize <mode>"
+msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "ús: snapper [--global-options] <command> [--command-options] [command-arguments]"

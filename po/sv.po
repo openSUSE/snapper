@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-13 14:35+0200\n"
+"POT-Creation-Date: 2026-01-28 14:27+0100\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/sv/>\n"
@@ -227,6 +227,20 @@ msgstr "%1$s eller %2$s"
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s continued"
+msgstr ""
+
+#, c-format
+msgid "%s killed by signal %d"
+msgstr ""
+
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s stopped"
+msgstr ""
+
 msgid "'btrfs send | btrfs receive' failed."
 msgstr ""
 
@@ -277,6 +291,18 @@ msgid "(Target) Received UUID"
 msgstr ""
 
 msgid "(Target) UUID"
+msgstr ""
+
+msgid "- A backup-config must be specified to run this command."
+msgstr ""
+
+msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
+msgstr ""
+
+msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
+msgstr ""
+
+msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
 msgstr ""
 
 msgid "--abbreviate"
@@ -386,6 +412,9 @@ msgstr ""
 msgid "--quiet, -q"
 msgstr ""
 
+msgid "--rankdir, -r"
+msgstr ""
+
 #, fuzzy
 msgid "--read-only"
 msgstr "Läs-endast"
@@ -432,6 +461,9 @@ msgstr ""
 msgid "--version"
 msgstr ""
 
+msgid "A backup-config must be specified to run this command."
+msgstr ""
+
 # SLE12
 msgid "ACL error."
 msgstr "ACL-fel."
@@ -475,6 +507,10 @@ msgstr "Kan inte detektera omfång eftersom standarddelvolymen är okänd."
 
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "Kan inte rulla tillbaka eftersom standarddelvolymen är okänd."
+
+#, c-format
+msgid "Cannot find the node of UUID %s"
+msgstr ""
 
 #, fuzzy
 msgid "Character separator for CSV output format."
@@ -585,6 +621,11 @@ msgstr "Kommandot status måste ha ett argument."
 
 # SLE12
 #, fuzzy
+msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
+msgstr "Kommandot create tar inga argument."
+
+# SLE12
+#, fuzzy
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "Kommandot create tar inga argument."
 
@@ -595,6 +636,11 @@ msgstr "Kommandot \"umount\" måste ha minst ett argument."
 # SLE12
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Kommandot undochange måste ha minst ett argument."
+
+# SLE12
+#, fuzzy
+msgid "Command 'visualize' needs one argument."
+msgstr "Kommandot status måste ha ett argument."
 
 # SLE12
 msgid "Command 'xadiff' needs at least one argument."
@@ -1025,6 +1071,9 @@ msgstr "\t--csvout\t\t\tStäll in CSV som utdata format."
 msgid "No permissions."
 msgstr "Ingen behörighet."
 
+msgid "Notice:"
+msgstr ""
+
 # SLE12
 #, fuzzy
 msgid "Number of corresponding pre snapshot."
@@ -1061,6 +1110,11 @@ msgstr "Alternativet --from stöds bara för ögonblicksbilder av typen enkel."
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Alternativet --read-write stöds bara för ögonblicksbilder av typen enkel."
 
+# SLE12
+#, fuzzy
+msgid "Options for the 'visualize' command:"
+msgstr "    Alternativ för kommandot list:"
+
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
 msgstr "P"
@@ -1068,6 +1122,11 @@ msgstr "P"
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
 msgid "PB"
 msgstr "PB"
+
+# SLE12
+#, fuzzy, c-format
+msgid "Parent node %s not found."
+msgstr "Filen %s hittades inte."
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
@@ -1128,6 +1187,9 @@ msgstr "\t--description, -d <beskrivning>\tBeskrivning för ögonblicksbilder."
 msgid "Probing target snapshots."
 msgstr "\t--description, -d <beskrivning>\tBeskrivning för ögonblicksbilder."
 
+msgid "Produce a specific graph in Graphviz DOT format:"
+msgstr ""
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Kvotfel (%s)."
@@ -1143,6 +1205,14 @@ msgstr "\t--input, -i <file>\t\tLäs filer som ska diffa från filen."
 
 msgid "Read-Only"
 msgstr "Läs-endast"
+
+msgid "Restore:"
+msgstr ""
+
+# SLE12
+#, fuzzy, c-format
+msgid "Restoring snapshot %d."
+msgstr "Det gick inte att ta bort ögonblicksbilden."
 
 # SLE12
 #, fuzzy
@@ -1168,6 +1238,20 @@ msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
 msgstr[0] ""
 msgstr[1] ""
+
+#, c-format
+msgid "Running restore failed for %d of %ld backup config."
+msgid_plural "Running restore failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running restore for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running restore for backup config '%s'."
+msgstr ""
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
@@ -1272,6 +1356,10 @@ msgid "Snapshot '%u' not found."
 msgstr "Ögonblicksbilden %u hittades inte."
 
 #, fuzzy
+msgid "Snapshot already on source."
+msgstr "\t--read-only\t\t\tStäll in ögonblicksbild skrivskyddad."
+
+#, fuzzy
 msgid "Snapshot already on target."
 msgstr "\t--read-only\t\t\tStäll in ögonblicksbild skrivskyddad."
 
@@ -1303,6 +1391,9 @@ msgstr ""
 # SLE12
 msgid "Subvolume"
 msgstr "Undervolym"
+
+msgid "Supported modes:"
+msgstr ""
 
 # SLE12
 #, fuzzy
@@ -1348,6 +1439,9 @@ msgid "Target rm bin"
 msgstr ""
 
 msgid "Target rmdir bin"
+msgstr ""
+
+msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
 msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
@@ -1424,9 +1518,19 @@ msgid "Unknown global option '%s'."
 msgstr "Okänt globalt alternativ %s."
 
 # SLE12
+#, fuzzy, c-format
+msgid "Unknown mode '%s'."
+msgstr "Okänd typ '%s'."
+
+# SLE12
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Alternativet %s för kommandot %s är okänt."
+
+# SLE12
+#, fuzzy, c-format
+msgid "Unknown rankdir '%s'."
+msgstr "Kommandot %s är okänt."
 
 # SLE12
 #, c-format
@@ -1546,10 +1650,18 @@ msgstr "\tsnapper list"
 msgid "snbk list-configs"
 msgstr "\tsnapper list-configs"
 
+# SLE12
+#, fuzzy
+msgid "snbk restore [numbers]"
+msgstr "\tsnapper delete <nummer>"
+
 msgid "snbk transfer [numbers]"
 msgstr ""
 
 msgid "snbk transfer-and-delete"
+msgstr ""
+
+msgid "snbk visualize <mode>"
 msgstr ""
 
 # SLE12

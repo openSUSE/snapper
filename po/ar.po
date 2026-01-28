@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-13 14:35+0200\n"
+"POT-Creation-Date: 2026-01-28 14:27+0100\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Arabic <https://l10n.opensuse.org/projects/snapper/master/ar/>\n"
@@ -181,6 +181,20 @@ msgstr ""
 msgid "%1$s, %2$s"
 msgstr ""
 
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s continued"
+msgstr ""
+
+#, c-format
+msgid "%s killed by signal %d"
+msgstr ""
+
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, fuzzy, c-format
+msgid "%s stopped"
+msgstr "%1 تخطي\n"
+
 msgid "'btrfs send | btrfs receive' failed."
 msgstr ""
 
@@ -229,6 +243,18 @@ msgid "(Target) Received UUID"
 msgstr ""
 
 msgid "(Target) UUID"
+msgstr ""
+
+msgid "- A backup-config must be specified to run this command."
+msgstr ""
+
+msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
+msgstr ""
+
+msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
+msgstr ""
+
+msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
 msgstr ""
 
 msgid "--abbreviate"
@@ -332,6 +358,9 @@ msgstr ""
 msgid "--quiet, -q"
 msgstr ""
 
+msgid "--rankdir, -r"
+msgstr ""
+
 msgid "--read-only"
 msgstr ""
 
@@ -374,6 +403,9 @@ msgstr ""
 msgid "--version"
 msgstr ""
 
+msgid "A backup-config must be specified to run this command."
+msgstr ""
+
 msgid "ACL error."
 msgstr "خطأ ACL."
 
@@ -413,6 +445,10 @@ msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr ""
 
 msgid "Cannot do rollback since default subvolume is unknown."
+msgstr ""
+
+#, c-format
+msgid "Cannot find the node of UUID %s"
 msgstr ""
 
 msgid "Character separator for CSV output format."
@@ -498,6 +534,10 @@ msgid "Command 'status' needs one argument."
 msgstr "يحتاج الأمر 'الحالة' لأحد الوسائط."
 
 #, fuzzy
+msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
+msgstr "لا يأخذ الأمر 'إنشاء' الوسائط."
+
+#, fuzzy
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "لا يأخذ الأمر 'إنشاء' الوسائط."
 
@@ -506,6 +546,10 @@ msgstr "يحتاج الأمر 'umount' وسيطة واحدة على الأقل."
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "يحتاج الأمر 'تراجع عن التغييرات' وسيطة واحدة على الأقل."
+
+#, fuzzy
+msgid "Command 'visualize' needs one argument."
+msgstr "يحتاج الأمر 'الحالة' لأحد الوسائط."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "يحتاج الأمر 'xadiff' وسيطة واحدة على الأقل."
@@ -884,6 +928,9 @@ msgstr ""
 msgid "No permissions."
 msgstr "لا توجد أذونات."
 
+msgid "Notice:"
+msgstr ""
+
 #, fuzzy
 msgid "Number of corresponding pre snapshot."
 msgstr "\t--pre-number <number>\t\tعدد اللقطات المتطابقة لكل لقطة."
@@ -916,6 +963,10 @@ msgstr "الاختيار -- مدعوم فقط للقطات من النوع ال�
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "الاختيار --القراءة والكتابة مدعومة فقط للقطات من النوع المفرد."
 
+#, fuzzy
+msgid "Options for the 'visualize' command:"
+msgstr "    أمر 'قائمة' خيارات:"
+
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
 msgstr ""
@@ -924,6 +975,10 @@ msgstr ""
 #, fuzzy
 msgid "PB"
 msgstr "PiB"
+
+#, fuzzy, c-format
+msgid "Parent node %s not found."
+msgstr "الملف '%s' غير موجود."
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
@@ -973,6 +1028,9 @@ msgstr "  مقارنة لقطات:"
 msgid "Probing target snapshots."
 msgstr "  مقارنة لقطات:"
 
+msgid "Produce a specific graph in Graphviz DOT format:"
+msgstr ""
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "خطأ في الحصة (%s)."
@@ -987,6 +1045,14 @@ msgstr "\t--input، -i <file>\t\tقراءة الملفات إلى diff عن ال
 
 msgid "Read-Only"
 msgstr ""
+
+#, fuzzy
+msgid "Restore:"
+msgstr "استعادة"
+
+#, fuzzy, c-format
+msgid "Restoring snapshot %d."
+msgstr "فشل حذف اللقطة."
 
 #, fuzzy
 msgid "Run command and create pre and post snapshots."
@@ -1019,6 +1085,24 @@ msgstr[2] ""
 msgstr[3] ""
 msgstr[4] ""
 msgstr[5] ""
+
+#, c-format
+msgid "Running restore failed for %d of %ld backup config."
+msgid_plural "Running restore failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+#, c-format
+msgid "Running restore for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running restore for backup config '%s'."
+msgstr ""
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
@@ -1121,6 +1205,10 @@ msgid "Snapshot '%u' not found."
 msgstr "اللقطة '%u' لم يتم العثور على."
 
 #, fuzzy
+msgid "Snapshot already on source."
+msgstr "\t--للقراءة-فقط\t\t\tإنشاء لقطة للقراءة فقط."
+
+#, fuzzy
 msgid "Snapshot already on target."
 msgstr "\t--للقراءة-فقط\t\t\tإنشاء لقطة للقراءة فقط."
 
@@ -1147,6 +1235,9 @@ msgstr ""
 
 msgid "Subvolume"
 msgstr "الحجم الفرعي"
+
+msgid "Supported modes:"
+msgstr ""
 
 #, fuzzy
 msgid "Suppress normal output."
@@ -1191,6 +1282,9 @@ msgid "Target rm bin"
 msgstr ""
 
 msgid "Target rmdir bin"
+msgstr ""
+
+msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
 msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
@@ -1255,9 +1349,17 @@ msgstr "إعداد غير معروف."
 msgid "Unknown global option '%s'."
 msgstr "الخيار العالمي غير معروف '%s'."
 
+#, fuzzy, c-format
+msgid "Unknown mode '%s'."
+msgstr "أمر غير معروف '%s'."
+
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "خيار غير معروف '%s' للأمر '%s'."
+
+#, fuzzy, c-format
+msgid "Unknown rankdir '%s'."
+msgstr "أمر غير معروف '%s'."
 
 #, fuzzy, c-format
 msgid "Unknown type '%s'."
@@ -1360,10 +1462,17 @@ msgstr "\tقائمة الملتقط"
 msgid "snbk list-configs"
 msgstr "\tقائمة الملتقط-إعداد"
 
+#, fuzzy
+msgid "snbk restore [numbers]"
+msgstr "\tحذف ملتقط<number>"
+
 msgid "snbk transfer [numbers]"
 msgstr ""
 
 msgid "snbk transfer-and-delete"
+msgstr ""
+
+msgid "snbk visualize <mode>"
 msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
@@ -1446,9 +1555,6 @@ msgstr ""
 #~ msgid "Restoring Files..."
 #~ msgstr "تتم الآن استعادة الملفات..."
 
-#~ msgid "%1 skipped\n"
-#~ msgstr "%1 تخطي\n"
-
 #~ msgid "Snapshots"
 #~ msgstr "اللقطات"
 
@@ -1493,9 +1599,6 @@ msgstr ""
 
 #~ msgid "R&estore from First"
 #~ msgstr "استعادة من الأول"
-
-#~ msgid "Restore"
-#~ msgstr "استعادة"
 
 #~ msgid "Res&tore from Second"
 #~ msgstr "استعادة من الثاني"

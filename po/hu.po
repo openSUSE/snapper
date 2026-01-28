@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-13 14:35+0200\n"
+"POT-Creation-Date: 2026-01-28 14:27+0100\n"
 "PO-Revision-Date: 2025-07-22 14:59+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Hungarian <https://l10n.opensuse.org/projects/snapper/master/hu/>\n"
@@ -188,6 +188,20 @@ msgstr ""
 msgid "%1$s, %2$s"
 msgstr ""
 
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s continued"
+msgstr ""
+
+#, c-format
+msgid "%s killed by signal %d"
+msgstr ""
+
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s stopped"
+msgstr ""
+
 msgid "'btrfs send | btrfs receive' failed."
 msgstr ""
 
@@ -237,6 +251,18 @@ msgid "(Target) Received UUID"
 msgstr ""
 
 msgid "(Target) UUID"
+msgstr ""
+
+msgid "- A backup-config must be specified to run this command."
+msgstr ""
+
+msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
+msgstr ""
+
+msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
+msgstr ""
+
+msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
 msgstr ""
 
 msgid "--abbreviate"
@@ -340,6 +366,9 @@ msgstr ""
 msgid "--quiet, -q"
 msgstr ""
 
+msgid "--rankdir, -r"
+msgstr ""
+
 msgid "--read-only"
 msgstr ""
 
@@ -382,6 +411,9 @@ msgstr ""
 msgid "--version"
 msgstr ""
 
+msgid "A backup-config must be specified to run this command."
+msgstr ""
+
 # SLE12
 msgid "ACL error."
 msgstr "ACL-hiba."
@@ -422,6 +454,10 @@ msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr ""
 
 msgid "Cannot do rollback since default subvolume is unknown."
+msgstr ""
+
+#, c-format
+msgid "Cannot find the node of UUID %s"
 msgstr ""
 
 msgid "Character separator for CSV output format."
@@ -512,6 +548,10 @@ msgid "Command 'status' needs one argument."
 msgstr "A 'status' parancshoz meg kell adni egy paraméter."
 
 #, fuzzy
+msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
+msgstr "A 'create' parancs nem értelmezi a paramétereket."
+
+#, fuzzy
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "A 'create' parancs nem értelmezi a paramétereket."
 
@@ -520,6 +560,10 @@ msgstr "Az 'umount' parancshoz meg kell adni legalább egy paramétert."
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "A 'undochange parancshoz meg kell adni legalább egy paraméter."
+
+#, fuzzy
+msgid "Command 'visualize' needs one argument."
+msgstr "A 'status' parancshoz meg kell adni egy paraméter."
 
 # SLE12
 msgid "Command 'xadiff' needs at least one argument."
@@ -915,6 +959,9 @@ msgstr ""
 msgid "No permissions."
 msgstr "Nincs hozzáférés."
 
+msgid "Notice:"
+msgstr ""
+
 #, fuzzy
 msgid "Number of corresponding pre snapshot."
 msgstr "\t--pre-number <szám>\t\tMegelőző pillanatfelvételek megfelelő száma."
@@ -948,6 +995,10 @@ msgstr ""
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr ""
 
+#, fuzzy
+msgid "Options for the 'visualize' command:"
+msgstr "    'list' parancs kapcsolói:"
+
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
 msgstr ""
@@ -956,6 +1007,10 @@ msgstr ""
 #, fuzzy
 msgid "PB"
 msgstr "PiB"
+
+#, fuzzy, c-format
+msgid "Parent node %s not found."
+msgstr "A(z) '%s' fájl nem található."
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
@@ -1006,6 +1061,9 @@ msgstr "pillanatképek összehasonlítása…"
 msgid "Probing target snapshots."
 msgstr "pillanatképek összehasonlítása…"
 
+msgid "Produce a specific graph in Graphviz DOT format:"
+msgstr ""
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Kvótahiba (%s)."
@@ -1020,6 +1078,13 @@ msgstr "\t--input, -i <fájl>\t\tA fájlok beolvasása a diff számára egy fáj
 
 msgid "Read-Only"
 msgstr ""
+
+msgid "Restore:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Restoring snapshot %d."
+msgstr "A pillanatkép törlése sikertelen."
 
 #, fuzzy
 msgid "Run command and create pre and post snapshots."
@@ -1044,6 +1109,20 @@ msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
 msgstr[0] ""
 msgstr[1] ""
+
+#, c-format
+msgid "Running restore failed for %d of %ld backup config."
+msgid_plural "Running restore failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running restore for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running restore for backup config '%s'."
+msgstr ""
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
@@ -1139,6 +1218,10 @@ msgid "Snapshot '%u' not found."
 msgstr "A(z) '%u' pillanatkép nem található."
 
 #, fuzzy
+msgid "Snapshot already on source."
+msgstr "A pillanatkép létrehozása sikertelen."
+
+#, fuzzy
 msgid "Snapshot already on target."
 msgstr "A pillanatkép létrehozása sikertelen."
 
@@ -1165,6 +1248,9 @@ msgstr ""
 
 msgid "Subvolume"
 msgstr "Alkötet"
+
+msgid "Supported modes:"
+msgstr ""
 
 #, fuzzy
 msgid "Suppress normal output."
@@ -1209,6 +1295,9 @@ msgid "Target rm bin"
 msgstr ""
 
 msgid "Target rmdir bin"
+msgstr ""
+
+msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
 msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
@@ -1273,9 +1362,17 @@ msgstr "Ismeretlen beállítás."
 msgid "Unknown global option '%s'."
 msgstr "Ismeretlen globális kapcsoló: '%s'."
 
+#, fuzzy, c-format
+msgid "Unknown mode '%s'."
+msgstr "Ismeretlen parancs: '%s'."
+
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Ismeretlen '%s' kapcsoló a(z) '%s' parancshoz."
+
+#, fuzzy, c-format
+msgid "Unknown rankdir '%s'."
+msgstr "Ismeretlen parancs: '%s'."
 
 #, fuzzy, c-format
 msgid "Unknown type '%s'."
@@ -1381,10 +1478,17 @@ msgstr "\tsnapper list"
 msgid "snbk list-configs"
 msgstr "\tsnapper list-configs"
 
+#, fuzzy
+msgid "snbk restore [numbers]"
+msgstr "\tsnapper delete <szám>"
+
 msgid "snbk transfer [numbers]"
 msgstr ""
 
 msgid "snbk transfer-and-delete"
+msgstr ""
+
+msgid "snbk visualize <mode>"
 msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"

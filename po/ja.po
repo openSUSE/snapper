@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-13 14:35+0200\n"
+"POT-Creation-Date: 2026-01-28 14:27+0100\n"
 "PO-Revision-Date: 2025-11-19 04:04+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/"
-"ja/>\n"
+"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -181,6 +180,20 @@ msgstr "%1$s または %2$s"
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s continued"
+msgstr ""
+
+#, c-format
+msgid "%s killed by signal %d"
+msgstr ""
+
+#. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
+#, c-format
+msgid "%s stopped"
+msgstr ""
+
 msgid "'btrfs send | btrfs receive' failed."
 msgstr "'btrfs send | btrfs receive' が失敗しました。"
 
@@ -229,6 +242,19 @@ msgstr "(ターゲット) 受信した UUID"
 
 msgid "(Target) UUID"
 msgstr "(ターゲット) UUID"
+
+#, fuzzy
+msgid "- A backup-config must be specified to run this command."
+msgstr "指定したターゲットモードの backup-config のみを使用します。"
+
+msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
+msgstr ""
+
+msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
+msgstr ""
+
+msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
+msgstr ""
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -326,6 +352,9 @@ msgstr "--print-number, -p"
 msgid "--quiet, -q"
 msgstr "--quiet, -q"
 
+msgid "--rankdir, -r"
+msgstr ""
+
 msgid "--read-only"
 msgstr "--read-only"
 
@@ -364,6 +393,10 @@ msgstr "--verbose, -v"
 
 msgid "--version"
 msgstr "--version"
+
+#, fuzzy
+msgid "A backup-config must be specified to run this command."
+msgstr "指定したターゲットモードの backup-config のみを使用します。"
 
 msgid "ACL error."
 msgstr "ACL エラーです。"
@@ -405,6 +438,10 @@ msgstr "既定のサブボリュームが未知のものであるため、領域
 
 msgid "Cannot do rollback since default subvolume is unknown."
 msgstr "既定のサブボリュームが未知のものであるため、ロールバックできません。"
+
+#, c-format
+msgid "Cannot find the node of UUID %s"
+msgstr ""
 
 msgid "Character separator for CSV output format."
 msgstr "CSV 出力での区切り文字を指定します。"
@@ -486,6 +523,10 @@ msgstr "'setup-quota' コマンドにはパラメータはありません。"
 msgid "Command 'status' needs one argument."
 msgstr "'status' コマンドには 1 つのパラメータが必要です。"
 
+#, fuzzy
+msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
+msgstr "'transfer-and-delete' コマンドにはパラメータはありません。"
+
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "'transfer-and-delete' コマンドにはパラメータはありません。"
 
@@ -494,6 +535,10 @@ msgstr "'umount' コマンドには少なくとも 1 つのパラメータが必
 
 msgid "Command 'undochange' needs at least one argument."
 msgstr "'undochange' コマンドには少なくとも 1 つのパラメータが必要です。"
+
+#, fuzzy
+msgid "Command 'visualize' needs one argument."
+msgstr "'status' コマンドには 1 つのパラメータが必要です。"
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "'xadiff' コマンドには少なくとも 1 つのパラメータが必要です。"
@@ -838,6 +883,9 @@ msgstr "CSV 形式での出力時にヘッダを出力しないようにしま�
 msgid "No permissions."
 msgstr "許可がありません。"
 
+msgid "Notice:"
+msgstr ""
+
 msgid "Number of corresponding pre snapshot."
 msgstr "事前スナップショットの番号を指定します。"
 
@@ -867,6 +915,10 @@ msgstr "--from オプションは、種類が single (単一) であるスナッ
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "--read-write オプションは、種類が single (単一) であるスナップショットにのみ対応しています。"
 
+#, fuzzy
+msgid "Options for the 'visualize' command:"
+msgstr "    'list' コマンドに対するオプション:"
+
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
 msgstr "P"
@@ -874,6 +926,10 @@ msgstr "P"
 #. TRANSLATORS: symbol for "peta bytes" (best keep untranslated)
 msgid "PB"
 msgstr "PB"
+
+#, fuzzy, c-format
+msgid "Parent node %s not found."
+msgstr "'%s' というファイルが見つかりません。"
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
@@ -916,6 +972,9 @@ msgstr "ソーススナップショットを検出しています。"
 msgid "Probing target snapshots."
 msgstr "ターゲットスナップショットを検出しています。"
 
+msgid "Produce a specific graph in Graphviz DOT format:"
+msgstr ""
+
 #, c-format
 msgid "Quota error (%s)."
 msgstr "クォータエラー (%s) 。"
@@ -928,6 +987,13 @@ msgstr "指定したファイルから diff へファイルを読み込みます
 
 msgid "Read-Only"
 msgstr "読み込み専用"
+
+msgid "Restore:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Restoring snapshot %d."
+msgstr "スナップショット %d を削除しています。"
 
 msgid "Run command and create pre and post snapshots."
 msgstr "指定したコマンドを実行し、その前後にスナップショットを採取します。"
@@ -949,6 +1015,19 @@ msgstr "バックアップ設定 '%s' を削除しています。"
 msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
 msgstr[0] "%d / %ld 個のバックアップ設定の一覧に失敗しました。"
+
+#, fuzzy, c-format
+msgid "Running restore failed for %d of %ld backup config."
+msgid_plural "Running restore failed for %d of %ld backup configs."
+msgstr[0] "%d / %ld 個のバックアップ設定の削除に失敗しました。"
+
+#, fuzzy, c-format
+msgid "Running restore for backup config '%s' failed."
+msgstr "バックアップ設定 '%s' の削除処理が失敗しました。"
+
+#, fuzzy, c-format
+msgid "Running restore for backup config '%s'."
+msgstr "バックアップ設定 '%s' を削除しています。"
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
@@ -1033,6 +1112,10 @@ msgstr "スナップショット %d に対して既定のサブボリューム�
 msgid "Snapshot '%u' not found."
 msgstr "スナップショット '%u' が見つかりません。"
 
+#, fuzzy
+msgid "Snapshot already on source."
+msgstr "ターゲット側に既にスナップショットが存在しています。"
+
 msgid "Snapshot already on target."
 msgstr "ターゲット側に既にスナップショットが存在しています。"
 
@@ -1057,6 +1140,9 @@ msgstr "ソース状態"
 
 msgid "Subvolume"
 msgstr "サブボリューム"
+
+msgid "Supported modes:"
+msgstr ""
 
 msgid "Suppress normal output."
 msgstr "通常出力される項目を省略します。"
@@ -1098,6 +1184,9 @@ msgstr "ターゲット rm バイナリ"
 
 msgid "Target rmdir bin"
 msgstr "ターゲット rmdir バイナリ"
+
+msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
+msgstr ""
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "領域を指定したい場合は、 --ambit オプションをお使いください。"
@@ -1158,9 +1247,17 @@ msgstr "不明な設定です。"
 msgid "Unknown global option '%s'."
 msgstr "不明なグローバルオプション '%s' です。"
 
+#, fuzzy, c-format
+msgid "Unknown mode '%s'."
+msgstr "不明なタイプ '%s' です。"
+
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "不明なオプション '%s' です (コマンド '%s') 。"
+
+#, fuzzy, c-format
+msgid "Unknown rankdir '%s'."
+msgstr "不明なコマンド '%s' です。"
 
 #, c-format
 msgid "Unknown type '%s'."
@@ -1256,11 +1353,18 @@ msgstr "snbk list"
 msgid "snbk list-configs"
 msgstr "snbk list-configs"
 
+#, fuzzy
+msgid "snbk restore [numbers]"
+msgstr "snbk delete [番号]"
+
 msgid "snbk transfer [numbers]"
 msgstr "snbk transfer [番号]"
 
 msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
+
+msgid "snbk visualize <mode>"
+msgstr ""
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "usage: snapper [グローバルオプション] <コマンド> [コマンドオプション] [コマンドパラメータ]"
