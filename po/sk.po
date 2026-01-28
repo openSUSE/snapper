@@ -7,15 +7,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-28 14:27+0100\n"
-"PO-Revision-Date: 2025-11-18 19:04+0000\n"
+"PO-Revision-Date: 2026-01-28 19:04+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
-"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
+"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
+"\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 5.14.3\n"
+"X-Generator: Weblate 5.15.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <upratovací-algoritmus>"
@@ -181,16 +182,16 @@ msgstr "%1$s, %2$s"
 #. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
 #, c-format
 msgid "%s continued"
-msgstr ""
+msgstr "%s pokračovalo"
 
 #, c-format
 msgid "%s killed by signal %d"
-msgstr ""
+msgstr "%s zabité signálom %d"
 
 #. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
 #, c-format
 msgid "%s stopped"
-msgstr ""
+msgstr "%s zastavené"
 
 msgid "'btrfs send | btrfs receive' failed."
 msgstr "'btrfs send | btrfs receive' zlyhalo."
@@ -241,18 +242,18 @@ msgstr "(Cieľ) Prijaté UUID"
 msgid "(Target) UUID"
 msgstr "(Cieľ) UUID"
 
-#, fuzzy
 msgid "- A backup-config must be specified to run this command."
-msgstr "Použiť záložnú konfiguráciu len so zadaným cieľovým režimom."
+msgstr "- Na spustenie tohto príkazu je potrebné zadať záložnú konfiguráciu."
 
 msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
 msgstr ""
+"- Reštartujte službu `snapperd`, aby boli obnovené snímky ihneď viditeľné."
 
 msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
-msgstr ""
+msgstr "- source-tree: Vytvorí stromový diagram snímok na zdroji."
 
 msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
-msgstr ""
+msgstr "- target-tree: Vytvorí stromový diagram snímok na cieli."
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -351,7 +352,7 @@ msgid "--quiet, -q"
 msgstr "--quiet, -q"
 
 msgid "--rankdir, -r"
-msgstr ""
+msgstr "--rankdir, -r"
 
 msgid "--read-only"
 msgstr "--read-only"
@@ -392,9 +393,8 @@ msgstr "--verbose, -v"
 msgid "--version"
 msgstr "--version"
 
-#, fuzzy
 msgid "A backup-config must be specified to run this command."
-msgstr "Použiť záložnú konfiguráciu len so zadaným cieľovým režimom."
+msgstr "Na spustenie tohto príkazu je potrebné zadať záložnú konfiguráciu."
 
 msgid "ACL error."
 msgstr "ACL chyba."
@@ -439,7 +439,7 @@ msgstr "Nie je možné vykonať návrat späť, pretože predvolený podzväzok 
 
 #, c-format
 msgid "Cannot find the node of UUID %s"
-msgstr ""
+msgstr "Nemožno nájsť uzol UUID %s"
 
 msgid "Character separator for CSV output format."
 msgstr "Oddeľovač znakov pre výstupný formát CSV."
@@ -521,9 +521,8 @@ msgstr "Príkaz 'setup-quota' nepodporuje argumenty."
 msgid "Command 'status' needs one argument."
 msgstr "Príkaz 'status' potrebuje jeden argument."
 
-#, fuzzy
 msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
-msgstr "Príkaz 'transfer-and-delete' neprijíma argumenty."
+msgstr "Príkaz 'transfer-and-delete' nepodporuje operácie s jednou snímkou."
 
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "Príkaz 'transfer-and-delete' neprijíma argumenty."
@@ -534,9 +533,8 @@ msgstr "Príkaz 'umount' potrebuje aspoň jeden argument."
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Príkaz 'undochange' potrebuje aspoň jeden argument."
 
-#, fuzzy
 msgid "Command 'visualize' needs one argument."
-msgstr "Príkaz 'status' potrebuje jeden argument."
+msgstr "Príkaz 'visualize' potrebuje jeden argument."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Príkaz 'xadiff' potrebuje aspoň jeden argument."
@@ -890,7 +888,7 @@ msgid "No permissions."
 msgstr "Žiadne práva."
 
 msgid "Notice:"
-msgstr ""
+msgstr "Oznámenie:"
 
 msgid "Number of corresponding pre snapshot."
 msgstr "Číslo zodpovedajúce snímke pred."
@@ -921,9 +919,8 @@ msgstr "Voľba --from podporovaná iba pre snímky typu single."
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Voľba --read-write podporovaná iba pre snímky typu single."
 
-#, fuzzy
 msgid "Options for the 'visualize' command:"
-msgstr "    Voľby pre príkaz 'list':"
+msgstr "Voľby pre príkaz 'visualize':"
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
@@ -933,9 +930,9 @@ msgstr "P"
 msgid "PB"
 msgstr "PB"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Parent node %s not found."
-msgstr "Súbor '%s' nebol nájdený."
+msgstr "Nadradený uzol '%s' nebol nájdený."
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
@@ -979,7 +976,7 @@ msgid "Probing target snapshots."
 msgstr "Zisťovanie cieľových snímok."
 
 msgid "Produce a specific graph in Graphviz DOT format:"
-msgstr ""
+msgstr "Vytvorí určitý graf vo formáte Graphviz DOT:"
 
 # error box title
 #, c-format
@@ -996,11 +993,11 @@ msgid "Read-Only"
 msgstr "Len na čítanie"
 
 msgid "Restore:"
-msgstr ""
+msgstr "Obnoviť:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Restoring snapshot %d."
-msgstr "Vymazanie snímky %d."
+msgstr "Obnovenie snímky %d."
 
 msgid "Run command and create pre and post snapshots."
 msgstr "Spustí príkaz a vytvorí snímky pred a po."
