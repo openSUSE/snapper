@@ -7,15 +7,16 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-28 14:27+0100\n"
-"PO-Revision-Date: 2025-12-01 00:04+0000\n"
+"PO-Revision-Date: 2026-01-29 00:04+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
-"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
+"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
+"\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14.3\n"
+"X-Generator: Weblate 5.15.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <Bereinigungsalgorithmus>"
@@ -181,16 +182,16 @@ msgstr "%1$s, %2$s"
 #. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
 #, c-format
 msgid "%s continued"
-msgstr ""
+msgstr "%s fortgesetzt"
 
 #, c-format
 msgid "%s killed by signal %d"
-msgstr ""
+msgstr "%s durch Signal %d abgewürgt"
 
 #. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
 #, c-format
 msgid "%s stopped"
-msgstr ""
+msgstr "%s gestoppt"
 
 msgid "'btrfs send | btrfs receive' failed."
 msgstr "'btrfs send | btrfs receive' fehlgeschlagen."
@@ -241,12 +242,15 @@ msgstr "(Ziel) Empfangene UUID"
 msgid "(Target) UUID"
 msgstr "(Ziel) UUID"
 
-#, fuzzy
 msgid "- A backup-config must be specified to run this command."
-msgstr "Verwende die Backup-Konfiguration nur mit angegebenenem Zielmodus."
+msgstr ""
+"- Um diesen Befehl auszuführen, muss eine Sicherungskonfiguration angegeben "
+"werden."
 
 msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
 msgstr ""
+"- Starten Sie den Dienst `snapperd` neu, damit die wiederhergestellten "
+"Schnappschüsse sofort sichtbar werden."
 
 msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
 msgstr ""
@@ -392,9 +396,10 @@ msgstr "--verbose, -v"
 msgid "--version"
 msgstr "--version"
 
-#, fuzzy
 msgid "A backup-config must be specified to run this command."
-msgstr "Verwende die Backup-Konfiguration nur mit angegebenenem Zielmodus."
+msgstr ""
+"Um diesen Befehl auszuführen, muss eine Sicherungskonfiguration angegeben "
+"werden."
 
 msgid "ACL error."
 msgstr "ACL-Fehler."
@@ -521,9 +526,10 @@ msgstr "Befehl 'setup-quota' akzeptiert keine Argumente."
 msgid "Command 'status' needs one argument."
 msgstr "Befehl 'status' benötigt ein Argument."
 
-#, fuzzy
 msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
-msgstr "Befehl 'transfer-and-delete' akzeptiert keine Argumente."
+msgstr ""
+"Der Befehl ‚transfer-and-delete‘ unterstützt keine Vorgänge auf einem "
+"einzelnen Schnappschuss."
 
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "Befehl 'transfer-and-delete' akzeptiert keine Argumente."
@@ -534,9 +540,8 @@ msgstr "Befehl 'umount' benötigt mindestens ein Argument."
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Befehl 'undochange' benötigt mindestens ein Argument."
 
-#, fuzzy
 msgid "Command 'visualize' needs one argument."
-msgstr "Befehl 'status' benötigt ein Argument."
+msgstr "Befehl ‚visualize‘ benötigt ein Argument."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Befehl 'xadiff' benötigt mindestens ein Argument."
@@ -883,7 +888,7 @@ msgid "No permissions."
 msgstr "Keine Berechtigungen."
 
 msgid "Notice:"
-msgstr ""
+msgstr "Hinweis:"
 
 msgid "Number of corresponding pre snapshot."
 msgstr "Nummer des zugehörigen Vorher-Schnappschusses."
@@ -914,9 +919,8 @@ msgstr "Die Option --from wird nur für Schnappschüsse vom Typ Einzeln unterst�
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Die Option --read-write wird nur für Schnappschüsse vom Typ Einzeln unterstützt."
 
-#, fuzzy
 msgid "Options for the 'visualize' command:"
-msgstr "    Optionen für den Befehl 'list':"
+msgstr "Optionen für den Befehl ‚visualize‘:"
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
@@ -926,9 +930,9 @@ msgstr "P"
 msgid "PB"
 msgstr "PB"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Parent node %s not found."
-msgstr "Datei '%s' wurde nicht gefunden."
+msgstr "Übergeordneter Knoten %s nicht gefunden."
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
@@ -988,11 +992,11 @@ msgid "Read-Only"
 msgstr "Nur Lesen"
 
 msgid "Restore:"
-msgstr ""
+msgstr "Wiederherstellen:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Restoring snapshot %d."
-msgstr "Schnappschuss %d löschen."
+msgstr "Schnappschuss %d wiederherstellen."
 
 msgid "Run command and create pre and post snapshots."
 msgstr "Befehl ausführen und Vorher- und Nachher-Schnappschuss erstellen."
@@ -1116,9 +1120,8 @@ msgstr "Einstellung des Standard-Subvolumes zu Schnappschuss %d."
 msgid "Snapshot '%u' not found."
 msgstr "Schnappschuss '%u' wurde nicht gefunden."
 
-#, fuzzy
 msgid "Snapshot already on source."
-msgstr "Schnappschuss bereits auf dem Ziel."
+msgstr "Schnappschuss bereits auf der Quelle."
 
 msgid "Snapshot already on target."
 msgstr "Schnappschuss bereits auf dem Ziel."
@@ -1146,7 +1149,7 @@ msgid "Subvolume"
 msgstr "Subvolumen"
 
 msgid "Supported modes:"
-msgstr ""
+msgstr "Unterstützte Modi:"
 
 msgid "Suppress normal output."
 msgstr "Normale Ausgabe unterdrücken."
@@ -1251,17 +1254,17 @@ msgstr "Unbekannte Konfiguration."
 msgid "Unknown global option '%s'."
 msgstr "Unbekannte globale Option '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown mode '%s'."
-msgstr "Unbekannter Typ '%s'."
+msgstr "Unbekannter Modus ‚%s‘."
 
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Unbekannte Option '%s' für Befehl '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown rankdir '%s'."
-msgstr "Unbekannter Befehl '%s'."
+msgstr ""
 
 #, c-format
 msgid "Unknown type '%s'."
@@ -1357,9 +1360,8 @@ msgstr "snbk list"
 msgid "snbk list-configs"
 msgstr "snbk list-configs"
 
-#, fuzzy
 msgid "snbk restore [numbers]"
-msgstr "snbk delete [Nummern]"
+msgstr "snbk restore [Zahlen]"
 
 msgid "snbk transfer [numbers]"
 msgstr "snbk transfer [Nummern]"
@@ -1368,7 +1370,7 @@ msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
 
 msgid "snbk visualize <mode>"
-msgstr ""
+msgstr "snbk visualize <Modus>"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "Aufruf: snapper [--Globale-Optionen] <Befehl> [--Befehlsoptionen] [Befehlsargumente]"
