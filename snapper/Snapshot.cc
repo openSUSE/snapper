@@ -29,7 +29,6 @@
 #include <cerrno>
 #include <cstring>
 #include <regex>
-#include <boost/algorithm/string.hpp>
 
 #include "snapper/Snapshot.h"
 #include "snapper/Snapper.h"
