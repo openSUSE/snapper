@@ -25,8 +25,6 @@
 #define SNAPPER_META_SNAPPER_H
 
 
-#include <boost/thread.hpp>
-
 #include <snapper/Snapper.h>
 
 #include "RefCounter.h"
