@@ -10,15 +10,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-28 14:27+0100\n"
-"PO-Revision-Date: 2025-11-19 11:04+0000\n"
+"PO-Revision-Date: 2026-01-29 14:04+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
-"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
+"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
+"\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14.3\n"
+"X-Generator: Weblate 5.15.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <opschoonalgoritme>"
@@ -184,16 +185,16 @@ msgstr "%1$s, %2$s"
 #. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
 #, c-format
 msgid "%s continued"
-msgstr ""
+msgstr "%s voortgezet"
 
 #, c-format
 msgid "%s killed by signal %d"
-msgstr ""
+msgstr "%s door signaal %d afgebroken"
 
 #. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
 #, c-format
 msgid "%s stopped"
-msgstr ""
+msgstr "%s gestopt"
 
 msgid "'btrfs send | btrfs receive' failed."
 msgstr "'btrfs verzenden | btrfs ontvangen' is mislukt."
@@ -244,18 +245,23 @@ msgstr "(Doel) ontvangen UUID"
 msgid "(Target) UUID"
 msgstr "(Doel) UUID"
 
-#, fuzzy
 msgid "- A backup-config must be specified to run this command."
-msgstr "Alleen reservekopieconfiguratie met gespecificeerde doelmodus gebruiken."
+msgstr ""
+"Een reservekopieconfiguratie met gespecificeerd zijn om dit commando uit te "
+"voeren."
 
 msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
 msgstr ""
+"- Herstart de service `snapperd`om de herstelde momentopnamen onmiddellijk "
+"zichtbaar te maken."
 
 msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
 msgstr ""
+"- source-tree: produceer een boomdiagram van de momentopname op de bron."
 
 msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
 msgstr ""
+"- target-tree: produceer een boomdiagram van de momentopnamen op het doel."
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -354,7 +360,7 @@ msgid "--quiet, -q"
 msgstr "--quiet, -q"
 
 msgid "--rankdir, -r"
-msgstr ""
+msgstr "--rankdir, -r"
 
 msgid "--read-only"
 msgstr "--read-only"
@@ -395,9 +401,10 @@ msgstr "--verbose, -v"
 msgid "--version"
 msgstr "--version"
 
-#, fuzzy
 msgid "A backup-config must be specified to run this command."
-msgstr "Alleen reservekopieconfiguratie met gespecificeerde doelmodus gebruiken."
+msgstr ""
+"Een reservekopieconfiguratie moet gespecificeerd zijn om dit commando uit te "
+"voeren."
 
 # error box title
 msgid "ACL error."
@@ -443,7 +450,7 @@ msgstr "Kan geen rollback doen omdat standaard subvolume onbekend is."
 
 #, c-format
 msgid "Cannot find the node of UUID %s"
-msgstr ""
+msgstr "Kan de node van UUID %s niet vinden"
 
 msgid "Character separator for CSV output format."
 msgstr "Scheidingsteken voor CSV uitvoerformaat."
@@ -525,9 +532,10 @@ msgstr "Opdracht 'setup-quota' heeft geen argumenten."
 msgid "Command 'status' needs one argument."
 msgstr "Opdracht 'status' heeft één argument."
 
-#, fuzzy
 msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
-msgstr "Opdracht 'transfer-and-delete' heeft geen argumenten."
+msgstr ""
+"Opdracht 'transfer-and-delete' ondersteunt het werken op een enkele "
+"momentopname niet."
 
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "Opdracht 'transfer-and-delete' heeft geen argumenten."
@@ -538,9 +546,8 @@ msgstr "Opdracht 'umount' heeft minstens één argument."
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Opdracht 'undochange' heeft minstens één argument."
 
-#, fuzzy
 msgid "Command 'visualize' needs one argument."
-msgstr "Opdracht 'status' heeft één argument."
+msgstr "Opdracht 'visualize' heeft één argument nodig."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Opdracht 'xadiff' heeft minstens één argument."
@@ -887,7 +894,7 @@ msgid "No permissions."
 msgstr "Geen toegangsrechten."
 
 msgid "Notice:"
-msgstr ""
+msgstr "Opmerking:"
 
 msgid "Number of corresponding pre snapshot."
 msgstr "Nummer van overeenkomende eerdere momentopname."
@@ -918,9 +925,8 @@ msgstr "Optie --from alleen ondersteund voor momentopnamen van het type single(e
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Optie --read-write alleen ondersteund voor momentopnamen van het type single(enkelvoudig)."
 
-#, fuzzy
 msgid "Options for the 'visualize' command:"
-msgstr "    Opties voor opdracht 'list':"
+msgstr "Opties voor de opdracht 'visualize':"
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
@@ -930,9 +936,9 @@ msgstr "P"
 msgid "PB"
 msgstr "PB"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Parent node %s not found."
-msgstr "Bestand '%s' niet gevonden."
+msgstr "Oudernode %s niet gevonden."
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
@@ -976,7 +982,7 @@ msgid "Probing target snapshots."
 msgstr "Aftasten van momentopnamen van doel."
 
 msgid "Produce a specific graph in Graphviz DOT format:"
-msgstr ""
+msgstr "Produceer een specifieke grafiek in Graphviz DOT-formaat:"
 
 #, c-format
 msgid "Quota error (%s)."
@@ -992,11 +998,11 @@ msgid "Read-Only"
 msgstr "Alleen-lezen"
 
 msgid "Restore:"
-msgstr ""
+msgstr "Herstellen:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Restoring snapshot %d."
-msgstr "Momentopname %d verwijderen."
+msgstr "Momentopname %d herstellen."
 
 msgid "Run command and create pre and post snapshots."
 msgstr "Voer opdracht uit en maak pre- en post-momentopnamen."
@@ -1021,19 +1027,22 @@ msgid_plural "Running list failed for %d of %ld backup configs."
 msgstr[0] "Uitvoeren van lijst maken voor %d van %ld reservekopieconfiguratie is mislukt."
 msgstr[1] "Uitvoeren van lijst maken voor %d van %ld reservekopieconfiguraties is mislukt."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running restore failed for %d of %ld backup config."
 msgid_plural "Running restore failed for %d of %ld backup configs."
-msgstr[0] "Uitvoeren van verwijderen voor %d van %ld reservekopieconfiguratie is mislukt."
-msgstr[1] "Uitvoeren van verwijderen voor %d van %ld reservekopieconfiguraties is mislukt."
+msgstr[0] ""
+"Uitvoeren van herstellen voor %d van %ld reservekopieconfiguratie is mislukt."
+msgstr[1] ""
+"Uitvoeren van herstellen voor %d van %ld reservekopieconfiguraties is "
+"mislukt."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running restore for backup config '%s' failed."
-msgstr "Uitvoeren van verwijderen voor reservekopieconfiguratie '%s' is mislukt."
+msgstr "Uitvoeren van herstellen voor reservekopieconfiguratie '%s' is mislukt."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running restore for backup config '%s'."
-msgstr "Uitvoeren van verwijderen voor reservekopieconfiguratie '%s'."
+msgstr "Uitvoeren van herstellen voor reservekopieconfiguratie '%s'."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
@@ -1120,9 +1129,8 @@ msgstr "Standaard subvolume instellen naar momentopname %d."
 msgid "Snapshot '%u' not found."
 msgstr "Momentopname '%u' niet gevonden."
 
-#, fuzzy
 msgid "Snapshot already on source."
-msgstr "Momentopname is al op doel."
+msgstr "Momentopname is al op de bron."
 
 msgid "Snapshot already on target."
 msgstr "Momentopname is al op doel."
@@ -1150,7 +1158,7 @@ msgid "Subvolume"
 msgstr "Subvolume"
 
 msgid "Supported modes:"
-msgstr ""
+msgstr "Ondersteunde modi:"
 
 msgid "Suppress normal output."
 msgstr "Onderdruk normale uitvoer."
@@ -1194,7 +1202,7 @@ msgid "Target rmdir bin"
 msgstr "Doel rmdir bin"
 
 msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
-msgstr ""
+msgstr "Het 'rankdir' diagramattribuut van Graphviz is standaard 'LR'."
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "De ambit kan handmatig worden gespecificeerd met de optie --ambit."
@@ -1255,17 +1263,17 @@ msgstr "Onbekende configuratie."
 msgid "Unknown global option '%s'."
 msgstr "Onbekende globale optie '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown mode '%s'."
-msgstr "Onbekend type '%s'."
+msgstr "Onbekend modus '%s'."
 
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Onbekende optie '%s' voor opdracht '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown rankdir '%s'."
-msgstr "Onbekende opdracht '%s'."
+msgstr "Onbekende rankdir '%s'."
 
 #, c-format
 msgid "Unknown type '%s'."
@@ -1361,9 +1369,8 @@ msgstr "snbk list"
 msgid "snbk list-configs"
 msgstr "snbk list-configs"
 
-#, fuzzy
 msgid "snbk restore [numbers]"
-msgstr "snbk delete [nummers]"
+msgstr "snbk herstellen [nummers]"
 
 msgid "snbk transfer [numbers]"
 msgstr "snbk transfer [nummers]"
@@ -1372,7 +1379,7 @@ msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
 
 msgid "snbk visualize <mode>"
-msgstr ""
+msgstr "snbk visualiseren <modus>"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "gebruik: snapper [--global-options] <opdracht> [--commando-options] [commando-arguments]"
