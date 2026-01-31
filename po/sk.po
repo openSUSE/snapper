@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-28 14:27+0100\n"
-"PO-Revision-Date: 2026-01-28 19:04+0000\n"
+"PO-Revision-Date: 2026-01-31 20:04+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
 "Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
 "\n"
@@ -1024,20 +1024,20 @@ msgstr[0] "Spustenie výpisu zoznamu zlyhalo pre %d z %ld záložnej konfigurác
 msgstr[1] "Spustenie výpisu zoznamu zlyhalo pre %d z %ld záložných konfigurácií."
 msgstr[2] "Spustenie výpisu zoznamu zlyhalo pre %d z %ld záložných konfigurácií."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running restore failed for %d of %ld backup config."
 msgid_plural "Running restore failed for %d of %ld backup configs."
-msgstr[0] "Spustenie vymazávania zlyhalo pre %d z %ld záložnej konfigurácie."
-msgstr[1] "Spustenie vymazávania zlyhalo pre %d zo %ld záložných konfigurácií."
-msgstr[2] "Spustenie vymazávania zlyhalo pre %d zo %ld záložných konfigurácií."
+msgstr[0] "Spustenie obnovy zlyhalo pre %d z %ld záložnej konfigurácie."
+msgstr[1] "Spustenie obnovy zlyhalo pre %d z %ld záložných konfigurácií."
+msgstr[2] "Spustenie obnovy zlyhalo pre %d z %ld záložných konfigurácií."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running restore for backup config '%s' failed."
-msgstr "Spustenie vymazávania pre záložnú konfiguráciu '%s' zlyhalo."
+msgstr "Spustenie obnovy pre záložnú konfiguráciu '%s' zlyhalo."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running restore for backup config '%s'."
-msgstr "Spustenie vymazávania pre záložnú konfiguráciu '%s'."
+msgstr "Spustenie obnovy pre záložnú konfiguráciu '%s'."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
@@ -1126,9 +1126,8 @@ msgstr "Nastavenie predvoleného podzväzku pre snímku %d."
 msgid "Snapshot '%u' not found."
 msgstr "Snímka '%u' nebola nájdená."
 
-#, fuzzy
 msgid "Snapshot already on source."
-msgstr "Snímka je už na cieli."
+msgstr "Snímka je už na zdroji."
 
 msgid "Snapshot already on target."
 msgstr "Snímka je už na cieli."
@@ -1156,7 +1155,7 @@ msgid "Subvolume"
 msgstr "Podzväzok"
 
 msgid "Supported modes:"
-msgstr ""
+msgstr "Podporované režimy:"
 
 msgid "Suppress normal output."
 msgstr "Potlačí normálny výstup."
@@ -1201,6 +1200,7 @@ msgstr "Cieľový rmdir bin"
 
 msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
 msgstr ""
+"Atribút diagramu 'rankdir' aplikácie Graphviz. Predvolené nastavenie je 'LR'."
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Oblasť je možné zadať manuálne pomocou voľby --ambit."
@@ -1261,17 +1261,17 @@ msgstr "Neznáma Konfigurácia."
 msgid "Unknown global option '%s'."
 msgstr "Neznáma globálna voľba '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown mode '%s'."
-msgstr "Neznámy typ '%s'."
+msgstr "Neznámy režim '%s'."
 
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Neznáma voľba '%s' pre príkaz '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown rankdir '%s'."
-msgstr "Neznámy príkaz '%s'."
+msgstr "Neznámy rankdir '%s'."
 
 #, c-format
 msgid "Unknown type '%s'."
@@ -1367,9 +1367,8 @@ msgstr "snbk list"
 msgid "snbk list-configs"
 msgstr "snbk list-configs"
 
-#, fuzzy
 msgid "snbk restore [numbers]"
-msgstr "snbk delete [čísla]"
+msgstr "snbk restore [čísla]"
 
 msgid "snbk transfer [numbers]"
 msgstr "snbk transfer [čísla]"
@@ -1378,7 +1377,7 @@ msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
 
 msgid "snbk visualize <mode>"
-msgstr ""
+msgstr "snbk visualize <režim>"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "použitie: snapper [--globálne-voľby] <príkaz> [--voľby-príkazu] [argumenty-príkazu]"
