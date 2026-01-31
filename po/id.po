@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-28 14:27+0100\n"
-"PO-Revision-Date: 2025-09-03 14:59+0000\n"
+"PO-Revision-Date: 2026-01-31 05:04+0000\n"
 "Last-Translator: Arif Budiman <arifpedia@gmail.com>\n"
-"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/id/>\n"
+"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/"
+"id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.13\n"
+"X-Generator: Weblate 5.15.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <algoritma-pembersihan>"
@@ -177,16 +178,16 @@ msgstr "%1$s, %2$s"
 #. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
 #, c-format
 msgid "%s continued"
-msgstr ""
+msgstr "%s dilanjutkan"
 
 #, c-format
 msgid "%s killed by signal %d"
-msgstr ""
+msgstr "%s dimatikan oleh sinyal %d"
 
 #. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
 #, c-format
 msgid "%s stopped"
-msgstr ""
+msgstr "%s dihentikan"
 
 msgid "'btrfs send | btrfs receive' failed."
 msgstr "'btrfs send | btrfs receive' gagal."
@@ -237,18 +238,19 @@ msgstr "(Target) Menerima UUID"
 msgid "(Target) UUID"
 msgstr "(Target) UUID"
 
-#, fuzzy
 msgid "- A backup-config must be specified to run this command."
-msgstr "Hanya gunakan backup-config dengan mode-target yang ditentukan."
+msgstr "- backup-config harus ditentukan untuk menjalankan perintah ini."
 
 msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
 msgstr ""
+"- Mulai ulang layanan `snapperd` agar snapshot yang dipulihkan segera "
+"terlihat."
 
 msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
-msgstr ""
+msgstr "- source-tree: Menghasilkan diagram pohon snapshot pada sumber."
 
 msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
-msgstr ""
+msgstr "- target-tree: Menghasilkan diagram pohon snapshot pada target."
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -347,7 +349,7 @@ msgid "--quiet, -q"
 msgstr "--quiet, -q"
 
 msgid "--rankdir, -r"
-msgstr ""
+msgstr "--rankdir, -r"
 
 msgid "--read-only"
 msgstr "--read-only"
@@ -388,9 +390,8 @@ msgstr "--verbose, -v"
 msgid "--version"
 msgstr "--version"
 
-#, fuzzy
 msgid "A backup-config must be specified to run this command."
-msgstr "Hanya gunakan backup-config dengan mode-target yang ditentukan."
+msgstr "backup-config harus ditentukan untuk menjalankan perintah ini."
 
 msgid "ACL error."
 msgstr "Galat ACL."
@@ -435,7 +436,7 @@ msgstr "Tidak dapat melakukan rollback karena subvolume bawaan tidak diketahui."
 
 #, c-format
 msgid "Cannot find the node of UUID %s"
-msgstr ""
+msgstr "Tidak dapat menemukan node untuk UUID %s"
 
 msgid "Character separator for CSV output format."
 msgstr "Pemisah karakter untuk format output CSV."
@@ -517,9 +518,10 @@ msgstr "Perintah 'setup-quota' tidak mengambil argumen."
 msgid "Command 'status' needs one argument."
 msgstr "Perintah 'status' membutuhkan satu argumen."
 
-#, fuzzy
 msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
-msgstr "Perintah ' transfer-and-delete ' tidak menerima argumen."
+msgstr ""
+"Perintah 'transfer-and-delete' tidak mendukung operasi pada satu snapshot "
+"saja."
 
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "Perintah ' transfer-and-delete ' tidak menerima argumen."
@@ -530,9 +532,8 @@ msgstr "Perintah 'unmount' membutuhkan setidaknya satu argumen."
 msgid "Command 'undochange' needs at least one argument."
 msgstr "Perintah 'undochange' membutuhkan setidaknya satu argumen."
 
-#, fuzzy
 msgid "Command 'visualize' needs one argument."
-msgstr "Perintah 'status' membutuhkan satu argumen."
+msgstr "Perintah 'visualize' memerlukan satu argumen."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Perintah 'xadiff' membutuhkan setidaknya satu argumen."
@@ -879,7 +880,7 @@ msgid "No permissions."
 msgstr "Tidak ada izin."
 
 msgid "Notice:"
-msgstr ""
+msgstr "Pemberitahuan:"
 
 msgid "Number of corresponding pre snapshot."
 msgstr "Jumlah pra snapshot yang sesuai."
@@ -910,9 +911,8 @@ msgstr "Opsi --from hanya didukung untuk snapshot dari tipe tunggal."
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Opsi --read-write hanya didukung untuk snapshot dari tipe tunggal."
 
-#, fuzzy
 msgid "Options for the 'visualize' command:"
-msgstr "    Opsi untuk perintah 'list':"
+msgstr "Opsi untuk perintah 'visualize':"
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
@@ -922,9 +922,9 @@ msgstr "P"
 msgid "PB"
 msgstr "PB"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Parent node %s not found."
-msgstr "Berkas '%s' tidak ditemukan."
+msgstr "Node induk %s tidak ditemukan."
 
 #, c-format
 msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
@@ -968,7 +968,7 @@ msgid "Probing target snapshots."
 msgstr "Memeriksa snapshot target."
 
 msgid "Produce a specific graph in Graphviz DOT format:"
-msgstr ""
+msgstr "Hasilkan grafik tertentu dalam format Graphviz DOT:"
 
 #, c-format
 msgid "Quota error (%s)."
@@ -984,11 +984,11 @@ msgid "Read-Only"
 msgstr "Hanya-Baca"
 
 msgid "Restore:"
-msgstr ""
+msgstr "Pulihkan:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Restoring snapshot %d."
-msgstr "Menghapus snapshot %d."
+msgstr "Memulihkan snapshot %d."
 
 msgid "Run command and create pre and post snapshots."
 msgstr "Jalankan perintah dan buat snapshot sebelum dan setelah."
@@ -1011,18 +1011,18 @@ msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
 msgstr[0] "Proses menampilkan daftar gagal untuk %d dari %ld konfig cadangan."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running restore failed for %d of %ld backup config."
 msgid_plural "Running restore failed for %d of %ld backup configs."
-msgstr[0] "Proses penghapusan gagal untuk %d dari %ld konfig cadangan."
+msgstr[0] "Menjalankan pemulihan gagal untuk %d dari %ld konfigurasi cadangan."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running restore for backup config '%s' failed."
-msgstr "Proses penghapusan konfig cadangan '%s'. gagal."
+msgstr "Menjalankan pemulihan untuk konfigurasi cadangan '%s' gagal."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running restore for backup config '%s'."
-msgstr "Proses penghapusan konfig cadangan '%s'."
+msgstr "Menjalankan pemulihan untuk konfigurasi cadangan '%s'."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
@@ -1107,9 +1107,8 @@ msgstr "Mengatur subvolume bawaan ke snapshot %d."
 msgid "Snapshot '%u' not found."
 msgstr "Snapshot '%u' tidak ditemukan."
 
-#, fuzzy
 msgid "Snapshot already on source."
-msgstr "Snapshot sudah sesuai target."
+msgstr "Snapshot sudah ada pada sumber."
 
 msgid "Snapshot already on target."
 msgstr "Snapshot sudah sesuai target."
@@ -1137,7 +1136,7 @@ msgid "Subvolume"
 msgstr "Subvolume"
 
 msgid "Supported modes:"
-msgstr ""
+msgstr "Mode yang didukung:"
 
 msgid "Suppress normal output."
 msgstr "Menekan keluaran normal."
@@ -1168,9 +1167,8 @@ msgstr "Status Target"
 msgid "Target btrfs bin"
 msgstr "Bin btrfs target"
 
-#, fuzzy
 msgid "Target ls Bin"
-msgstr "Bin rm target"
+msgstr "Target ls Bin"
 
 msgid "Target mkdir bin"
 msgstr "Bin mkdir target"
@@ -1182,7 +1180,7 @@ msgid "Target rmdir bin"
 msgstr "Bin rmdir target"
 
 msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
-msgstr ""
+msgstr "Atribut diagram 'rankdir' milik Graphviz. Default adalah 'LR'."
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Ambit dapat ditentukan secara manual menggunakan opsi--ambit."
@@ -1243,17 +1241,17 @@ msgstr "Konfigurasi tidak dikenal."
 msgid "Unknown global option '%s'."
 msgstr "Opsi global tidak dikenal '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown mode '%s'."
-msgstr "Tipe '%s' tidak dikenal."
+msgstr "Mode '%s' tidak dikenal."
 
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Opsi tidak dikenal '%s' untuk perintah '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown rankdir '%s'."
-msgstr "Perintah '%s' tidak dikenal."
+msgstr "rankdir '%s' tidak dikenal."
 
 #, c-format
 msgid "Unknown type '%s'."
@@ -1349,9 +1347,8 @@ msgstr "snbk list"
 msgid "snbk list-configs"
 msgstr "snbk list-configs"
 
-#, fuzzy
 msgid "snbk restore [numbers]"
-msgstr "snbk delete [angka]"
+msgstr "snbk restore [angka]"
 
 msgid "snbk transfer [numbers]"
 msgstr "snbk transfer [angka]"
@@ -1360,7 +1357,7 @@ msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
 
 msgid "snbk visualize <mode>"
-msgstr ""
+msgstr "snbk visualize <mode>"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "penggunaan: snapper [--global-options] <command> [--command-options] [command-arguments]"
