@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-01-28 14:27+0100\n"
-"PO-Revision-Date: 2025-07-22 15:00+0000\n"
-"Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Georgian <https://l10n.opensuse.org/projects/snapper/master/ka/>\n"
+"PO-Revision-Date: 2026-02-01 04:04+0000\n"
+"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"Language-Team: Georgian <https://l10n.opensuse.org/projects/snapper/master/"
+"ka/>\n"
 "Language: ka\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.15.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr ""
@@ -282,9 +283,8 @@ msgstr ""
 msgid "--debug"
 msgstr ""
 
-#, fuzzy
 msgid "--default"
-msgstr "ნაგულისხმები"
+msgstr "--default"
 
 msgid "--description, -d <description>"
 msgstr ""
@@ -751,9 +751,8 @@ msgstr ""
 msgid "Invalid column '%s'."
 msgstr ""
 
-#, fuzzy
 msgid "Invalid config."
-msgstr "უცნობი კონფიგურაცია."
+msgstr "არასწორი კონფიგურაცია."
 
 msgid "Invalid configdata."
 msgstr ""
@@ -765,9 +764,9 @@ msgstr ""
 msgid "Invalid group (%s)."
 msgstr "არასწორი ჯგუფი (%s)."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid logger-type '%s'."
-msgstr "არასწორი ჯგუფი (%s)."
+msgstr "უცნობი logger-type '%s'."
 
 #, c-format
 msgid "Invalid machine readable format '%s'."
@@ -795,9 +794,9 @@ msgstr ""
 msgid "Invalid table style '%s'."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid target mode '%s'."
-msgstr "არასწორი ჯგუფი (%s)."
+msgstr "უცნობი სამიზნე რეჟიმი '%s'."
 
 #, c-format
 msgid "Invalid user (%s)."
@@ -961,13 +960,11 @@ msgstr ""
 msgid "Probing extra information for target snapshots."
 msgstr ""
 
-#, fuzzy
 msgid "Probing source snapshots."
-msgstr "აღწერა სწრაფი ასლისთვის."
+msgstr "წყარო სწრაფი ასლების ზონდირება."
 
-#, fuzzy
 msgid "Probing target snapshots."
-msgstr "აღწერა სწრაფი ასლისთვის."
+msgstr "სამიზნე სწრაფი ასლების ზონდირება."
 
 msgid "Produce a specific graph in Graphviz DOT format:"
 msgstr ""
@@ -989,9 +986,9 @@ msgstr ""
 msgid "Restore:"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Restoring snapshot %d."
-msgstr "იშლება სწრაფი ასლი %d."
+msgstr "მიმდინარეობს სწრაფი ასლი %d-ის აღდგენა."
 
 msgid "Run command and create pre and post snapshots."
 msgstr ""
@@ -1062,9 +1059,8 @@ msgstr ""
 msgid "SSH Port"
 msgstr ""
 
-#, fuzzy
 msgid "SSH User"
-msgstr "მომხმარებელი"
+msgstr "SSH მომხმარებელი"
 
 msgid "Save status to file."
 msgstr ""
@@ -1245,17 +1241,17 @@ msgstr "უცნობი კონფიგურაცია."
 msgid "Unknown global option '%s'."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown mode '%s'."
-msgstr "უცნობი კონფიგურაცია."
+msgstr "უცნობი რეჟიმი '%s'."
 
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown rankdir '%s'."
-msgstr "უცნობი კონფიგურაცია."
+msgstr "უცნობი rankdir '%s'."
 
 #, c-format
 msgid "Unknown type '%s'."
@@ -1345,13 +1341,11 @@ msgstr ""
 msgid "snbk delete [numbers]"
 msgstr ""
 
-#, fuzzy
 msgid "snbk list"
-msgstr "\tsnapper list"
+msgstr "snbk list"
 
-#, fuzzy
 msgid "snbk list-configs"
-msgstr "\tsnapper list-configs"
+msgstr "snbk list-configs"
 
 msgid "snbk restore [numbers]"
 msgstr ""
