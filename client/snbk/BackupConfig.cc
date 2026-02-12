@@ -76,6 +76,7 @@ namespace snapper
 	get_child_value(json_file.get_root(), "target-mkdir-bin", target_mkdir_bin);
 	get_child_value(json_file.get_root(), "target-rm-bin", target_rm_bin);
 	get_child_value(json_file.get_root(), "target-rmdir-bin", target_rmdir_bin);
+	get_child_value(json_file.get_root(), "target-sha256sum-bin", target_sha256sum_bin);
     }
 
 
