@@ -34,6 +34,7 @@
 
 #include "CmdBtrfs.h"
 #include "CmdLs.h"
+#include "CmdFileHash.h"
 #include "BackupConfig.h"
 #include "TheBigThing.h"
 
@@ -57,7 +58,8 @@ namespace snapper
 	    bool is_valid() const override
 	    {
 		return it->source_state == TheBigThing::SourceState::READ_ONLY &&
-		       it->target_state == TheBigThing::TargetState::VALID;
+		       (it->target_state == TheBigThing::TargetState::VALID ||
+		        it->target_state == TheBigThing::TargetState::LEGACY);
 	    }
 
 	protected:
@@ -129,7 +131,7 @@ namespace snapper
 
 
     const vector<string> EnumInfo<TheBigThing::TargetState>::names({
-	"missing", "valid", "invalid"
+	"missing", "valid", "invalid", "legacy"
     });
 
 
@@ -156,53 +158,8 @@ namespace snapper
 	    SN_THROW(Exception(_("'mkdir' failed.")));
 	}
 
-	// Copy info.xml to the destination.
-	switch (backup_config.target_mode)
-	{
-	    case BackupConfig::TargetMode::LOCAL:
-	    {
-		SystemCmd::Args cmd2_args = { CP_BIN, "--",
-		                              src_spec.snapshot_dir + "/info.xml",
-		                              dst_spec.snapshot_dir + "/" };
-		SystemCmd cmd2(shellify(src_spec.shell, cmd2_args));
-		if (cmd2.retcode() != 0)
-		{
-		    y2err("command '" << cmd2.cmd() << "' failed: " << cmd2.retcode());
-		    for (const string& tmp : cmd2.get_stdout())
-			y2err(tmp);
-		    for (const string& tmp : cmd2.get_stderr())
-			y2err(tmp);
-
-		    SN_THROW(Exception(_("'cp info.xml' failed.")));
-		}
-	    }
-	    break;
-
-	    case BackupConfig::TargetMode::SSH_PUSH:
-	    {
-		SystemCmd::Args cmd2_args = { SCP_BIN };
-		if (backup_config.ssh_port != 0)
-		    cmd2_args << "-P" << to_string(backup_config.ssh_port);
-		if (!backup_config.ssh_identity.empty())
-		    cmd2_args << "-i" << backup_config.ssh_identity;
-		cmd2_args << "--"
-		          << src_spec.remote_host + src_spec.snapshot_dir + "/info.xml"
-		          << dst_spec.remote_host + dst_spec.snapshot_dir + "/";
-
-		SystemCmd cmd2(cmd2_args);
-		if (cmd2.retcode() != 0)
-		{
-		    y2err("command '" << cmd2.cmd() << "' failed: " << cmd2.retcode());
-		    for (const string& tmp : cmd2.get_stdout())
-			y2err(tmp);
-		    for (const string& tmp : cmd2.get_stderr())
-			y2err(tmp);
-
-		    SN_THROW(Exception(_("'scp info.xml' failed.")));
-		}
-	    }
-	    break;
-	};
+	// Copy snapshot metadata to the destination
+	copy_metadata(backup_config, the_big_things, copy_specs);
 
 	// Copy snapshot to the destination.
 	const int proto = the_big_things.proto();
@@ -243,23 +200,96 @@ namespace snapper
 
 
     void
+    TheBigThing::copy_metadata(const BackupConfig& backup_config,
+                               TheBigThings& the_big_things,
+                               const pair<CopySpec, CopySpec>& copy_specs)
+    {
+	// Unpack copy specification
+	const CopySpec& src_spec = copy_specs.first;
+	const CopySpec& dst_spec = copy_specs.second;
+
+	// Copy info.xml to the destination.
+	switch (backup_config.target_mode)
+	{
+	    case BackupConfig::TargetMode::LOCAL:
+	    {
+		SystemCmd::Args cmd_args = { CP_BIN, "--",
+		                             src_spec.snapshot_dir + "/info.xml",
+		                             dst_spec.snapshot_dir + "/" };
+		SystemCmd cmd(shellify(src_spec.shell, cmd_args));
+		if (cmd.retcode() != 0)
+		{
+		    y2err("command '" << cmd.cmd() << "' failed: " << cmd.retcode());
+		    for (const string& tmp : cmd.get_stdout())
+			y2err(tmp);
+		    for (const string& tmp : cmd.get_stderr())
+			y2err(tmp);
+
+		    SN_THROW(Exception(_("'cp info.xml' failed.")));
+		}
+	    }
+	    break;
+
+	    case BackupConfig::TargetMode::SSH_PUSH:
+	    {
+		SystemCmd::Args cmd_args = { SCP_BIN };
+		if (backup_config.ssh_port != 0)
+		    cmd_args << "-P" << to_string(backup_config.ssh_port);
+		if (!backup_config.ssh_identity.empty())
+		    cmd_args << "-i" << backup_config.ssh_identity;
+		cmd_args << "--"
+		         << src_spec.remote_host + src_spec.snapshot_dir + "/info.xml"
+		         << dst_spec.remote_host + dst_spec.snapshot_dir + "/";
+
+		SystemCmd cmd(cmd_args);
+		if (cmd.retcode() != 0)
+		{
+		    y2err("command '" << cmd.cmd() << "' failed: " << cmd.retcode());
+		    for (const string& tmp : cmd.get_stdout())
+			y2err(tmp);
+		    for (const string& tmp : cmd.get_stderr())
+			y2err(tmp);
+
+		    SN_THROW(Exception(_("'scp info.xml' failed.")));
+		}
+	    }
+	    break;
+	};
+    }
+
+
+    void
     TheBigThing::transfer(const BackupConfig& backup_config, TheBigThings& the_big_things,
 			  bool quiet)
     {
-	if (!quiet)
-	    cout << sformat(_("Transferring snapshot %d."), num) << '\n';
-
 	if (source_state == SourceState::MISSING)
 	    SN_THROW(Exception(_("Snapshot not on source.")));
 	else if (source_state == SourceState::READ_WRITE)
 	    SN_THROW(Exception(_("Cannot transfer a read-write snapshot.")));
 
-	if (target_state != TargetState::MISSING)
-	    SN_THROW(Exception(_("Snapshot already on target.")));
+	auto copy_specs =
+	    make_copy_specs(backup_config, the_big_things, CopyMode::SOURCE_TO_TARGET);
+	switch (target_state)
+	{
+	    case TargetState::INVALID:
+	    case TargetState::VALID:
+		SN_THROW(Exception(_("Snapshot already on target.")));
+		__builtin_unreachable();
 
-	// Copy the snapshot from the source to the target
-	copy(backup_config, the_big_things,
-	     make_copy_specs(backup_config, the_big_things, CopyMode::SOURCE_TO_TARGET));
+	    case TargetState::MISSING:
+		// Copy the snapshot from the source to the target
+		if (!quiet)
+		    cout << sformat(_("Transferring snapshot %d."), num) << '\n';
+		copy(backup_config, the_big_things, copy_specs);
+		break;
+
+	    case TargetState::LEGACY:
+		// Overwrite the snapshot metadata on the target
+		if (!quiet)
+		    cout << sformat(_("Updating metadata of snapshot %d."), num) << '\n';
+		copy_metadata(backup_config, the_big_things, copy_specs);
+		break;
+	}
 
 	target_state = TargetState::VALID;
     }
@@ -486,6 +516,11 @@ namespace snapper
 	    the_big_thing.source_received_uuid = extra.get_received_uuid();
 	    the_big_thing.source_creation_time = extra.get_creation_time();
 
+	    // Find the hash of info.xml
+	    CmdFileHash cmd_filehash(shell_source, SHA256SUM_BIN,
+	                             source_snapshot_dir(snapper, num) + "/info.xml");
+	    the_big_thing.source_meta_hash = cmd_filehash.get_hash();
+
 	    the_big_things.push_back(the_big_thing);
 	}
     }
@@ -581,6 +616,19 @@ namespace snapper
 		it->target_parent_uuid = extra.get_parent_uuid();
 		it->target_received_uuid = extra.get_received_uuid();
 		it->target_creation_time = extra.get_creation_time();
+
+		// Find the hash of info.xml
+		CmdFileHash cmd_filehash(shell_target, backup_config.target_sha256sum_bin,
+		                         target_snapshot_dir(backup_config, num) +
+		                             "/info.xml");
+		it->target_meta_hash = cmd_filehash.get_hash();
+
+		if (it->source_state == TheBigThing::SourceState::READ_ONLY &&
+		    it->target_state == TheBigThing::TargetState::VALID &&
+		    it->source_meta_hash != it->target_meta_hash)
+		{
+		    it->target_state = TheBigThing::TargetState::LEGACY;
+		}
 	    }
 	    catch (const Exception& e)
 	    {
@@ -605,7 +653,8 @@ namespace snapper
 		    the_big_thing.remove(backup_config, quiet);
 		}
 
-		if (the_big_thing.target_state == TheBigThing::TargetState::MISSING)
+		if (the_big_thing.target_state == TheBigThing::TargetState::MISSING ||
+		    the_big_thing.target_state == TheBigThing::TargetState::LEGACY)
 		{
 		    the_big_thing.transfer(backup_config, *this, quiet);
 		}
