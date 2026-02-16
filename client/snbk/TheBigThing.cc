@@ -302,11 +302,11 @@ namespace snapper
 	if (!quiet)
 	    cout << sformat(_("Restoring snapshot %d."), num) << '\n';
 
-	if (target_state != TargetState::VALID)
-	    SN_THROW(Exception(_("Snapshot not on target.")));
-
 	if (source_state != SourceState::MISSING)
 	    SN_THROW(Exception(_("Snapshot already on source.")));
+
+	if (target_state != TargetState::VALID)
+	    SN_THROW(Exception(_("Snapshot not on target.")));
 
 	// Copy the snapshot from the target to the source
 	copy(backup_config, the_big_things,
