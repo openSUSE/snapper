@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 14:27+0100\n"
+"POT-Creation-Date: 2026-02-07 04:10+0100\n"
 "PO-Revision-Date: 2025-07-22 14:59+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Hungarian <https://l10n.opensuse.org/projects/snapper/master/hu/>\n"
@@ -459,6 +459,11 @@ msgstr ""
 #, c-format
 msgid "Cannot find the node of UUID %s"
 msgstr ""
+
+# SLE12
+#, fuzzy
+msgid "Cannot transfer a read-write snapshot."
+msgstr "Csak olvasható pillanatkép létrehozása a(z) %d pillanatképről."
 
 msgid "Character separator for CSV output format."
 msgstr ""
@@ -1012,10 +1017,6 @@ msgstr "PiB"
 msgid "Parent node %s not found."
 msgstr "A(z) '%s' fájl nem található."
 
-#, c-format
-msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr ""
-
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -1239,9 +1240,6 @@ msgstr "A(z) '%u' pillanatkép nem található."
 #, fuzzy, c-format
 msgid "Snapshot number %d not found."
 msgstr "A(z) '%u' pillanatkép nem található."
-
-msgid "Source Path"
-msgstr ""
 
 msgid "Source State"
 msgstr ""

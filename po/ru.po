@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 14:27+0100\n"
+"POT-Creation-Date: 2026-02-07 04:10+0100\n"
 "PO-Revision-Date: 2025-12-11 17:04+0000\n"
 "Last-Translator: Aleksey Fedorov <Aleksejfedorov963@gmail.com>\n"
 "Language-Team: Russian <https://l10n.opensuse.org/projects/snapper/master/ru/>\n"
@@ -438,6 +438,10 @@ msgstr "Невозможно выполнить откат, подтом по у
 #, c-format
 msgid "Cannot find the node of UUID %s"
 msgstr ""
+
+#, fuzzy
+msgid "Cannot transfer a read-write snapshot."
+msgstr "Создать снимок для чтения/записи."
 
 msgid "Character separator for CSV output format."
 msgstr "Символ-разделитель для формата вывода CSV."
@@ -929,10 +933,6 @@ msgstr "ПБ"
 msgid "Parent node %s not found."
 msgstr "Файл '%s' не найден."
 
-#, c-format
-msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr "Несоответствие пути между исходным путём конфигурации backup-config и подтомом конфигурации snapper ('%s' против '%s')."
-
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "ПиБ"
@@ -1139,9 +1139,6 @@ msgstr "Цель снимка не задана."
 #, c-format
 msgid "Snapshot number %d not found."
 msgstr "Снимок с номером %d не найден."
-
-msgid "Source Path"
-msgstr "Путь источника"
 
 msgid "Source State"
 msgstr "Состояние источника"
@@ -1382,6 +1379,13 @@ msgstr "Использование: snbk [--глобальные-опции] <к
 
 msgid "yes"
 msgstr "да"
+
+#, c-format
+#~ msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
+#~ msgstr "Несоответствие пути между исходным путём конфигурации backup-config и подтомом конфигурации snapper ('%s' против '%s')."
+
+#~ msgid "Source Path"
+#~ msgstr "Путь источника"
 
 #~ msgid "Target findmnt Bin"
 #~ msgstr "Цель: бинарный файл findmnt"

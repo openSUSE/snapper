@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 14:27+0100\n"
+"POT-Creation-Date: 2026-02-07 04:10+0100\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Serbian <https://l10n.opensuse.org/projects/snapper/master/sr/>\n"
@@ -442,6 +442,10 @@ msgstr ""
 #, c-format
 msgid "Cannot find the node of UUID %s"
 msgstr ""
+
+#, fuzzy
+msgid "Cannot transfer a read-write snapshot."
+msgstr "DBI Execution failed: %s."
 
 msgid "Character separator for CSV output format."
 msgstr ""
@@ -953,10 +957,6 @@ msgstr ""
 msgid "Parent node %s not found."
 msgstr ""
 
-#, c-format
-msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr ""
-
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr ""
@@ -1169,9 +1169,6 @@ msgstr ""
 
 #, c-format
 msgid "Snapshot number %d not found."
-msgstr ""
-
-msgid "Source Path"
 msgstr ""
 
 msgid "Source State"

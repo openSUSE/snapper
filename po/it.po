@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 14:27+0100\n"
+"POT-Creation-Date: 2026-02-07 04:10+0100\n"
 "PO-Revision-Date: 2025-08-01 17:59+0000\n"
 "Last-Translator: Davide Aiello <davide.aiello@novilingulists.com>\n"
 "Language-Team: Italian <https://l10n.opensuse.org/projects/snapper/master/it/>\n"
@@ -438,6 +438,10 @@ msgstr "Impossibile effettuare il ripristino perché il sotto-volume predefinito
 #, c-format
 msgid "Cannot find the node of UUID %s"
 msgstr ""
+
+#, fuzzy
+msgid "Cannot transfer a read-write snapshot."
+msgstr "Crea snapshot in lettura-scrittura."
 
 msgid "Character separator for CSV output format."
 msgstr "Separatore di carattere per formato di output CSV."
@@ -928,10 +932,6 @@ msgstr "PB"
 msgid "Parent node %s not found."
 msgstr "File '%s' non trovato."
 
-#, c-format
-msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr "Mancata corrispondenza dei percorsi tra source-path di backup-config e il sottovolume della configurazione snapper ('%s' rispetto a '%s')."
-
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -1133,9 +1133,6 @@ msgstr "L'istantanea non è nella destinazione."
 #, c-format
 msgid "Snapshot number %d not found."
 msgstr "Numero di istantanea %d non trovato."
-
-msgid "Source Path"
-msgstr "Percorso di origine"
 
 msgid "Source State"
 msgstr "Stato di origine"
@@ -1377,6 +1374,13 @@ msgstr "uso: snbk [--global-options] <comando> [command-arguments]"
 
 msgid "yes"
 msgstr "sì"
+
+#, c-format
+#~ msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
+#~ msgstr "Mancata corrispondenza dei percorsi tra source-path di backup-config e il sottovolume della configurazione snapper ('%s' rispetto a '%s')."
+
+#~ msgid "Source Path"
+#~ msgstr "Percorso di origine"
 
 #~ msgid "Target findmnt Bin"
 #~ msgstr "Bin findmnt di destinazione"

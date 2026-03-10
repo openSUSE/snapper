@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 14:27+0100\n"
+"POT-Creation-Date: 2026-02-07 04:10+0100\n"
 "PO-Revision-Date: 2026-02-25 05:04+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
-"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
-"\n"
+"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -243,22 +242,16 @@ msgid "(Target) UUID"
 msgstr "(Ziel) UUID"
 
 msgid "- A backup-config must be specified to run this command."
-msgstr ""
-"- Um diesen Befehl auszuführen, muss eine Sicherungskonfiguration angegeben "
-"werden."
+msgstr "- Um diesen Befehl auszuführen, muss eine Sicherungskonfiguration angegeben werden."
 
 msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
-msgstr ""
-"- Starten Sie den Dienst `snapperd` neu, damit die wiederhergestellten "
-"Schnappschüsse sofort sichtbar werden."
+msgstr "- Starten Sie den Dienst `snapperd` neu, damit die wiederhergestellten Schnappschüsse sofort sichtbar werden."
 
 msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
-msgstr ""
-"- source-tree: Erstellt ein Baumdiagramm der Schnappschüsse auf der Quelle."
+msgstr "- source-tree: Erstellt ein Baumdiagramm der Schnappschüsse auf der Quelle."
 
 msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
-msgstr ""
-"- target-tree: Erstellt ein Baumdiagramm der Schnappschüsse auf dem Ziel."
+msgstr "- target-tree: Erstellt ein Baumdiagramm der Schnappschüsse auf dem Ziel."
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -399,9 +392,7 @@ msgid "--version"
 msgstr "--version"
 
 msgid "A backup-config must be specified to run this command."
-msgstr ""
-"Um diesen Befehl auszuführen, muss eine Sicherungskonfiguration angegeben "
-"werden."
+msgstr "Um diesen Befehl auszuführen, muss eine Sicherungskonfiguration angegeben werden."
 
 msgid "ACL error."
 msgstr "ACL-Fehler."
@@ -447,6 +438,10 @@ msgstr "Kann kein Rollback durchführen, weil das Standard-Subvolume unbekannt i
 #, c-format
 msgid "Cannot find the node of UUID %s"
 msgstr ""
+
+#, fuzzy
+msgid "Cannot transfer a read-write snapshot."
+msgstr "Einen nur schreibbaren Schnappschuss erstellen."
 
 msgid "Character separator for CSV output format."
 msgstr "Zeichen-Separator für CSV-Ausgabeformat."
@@ -529,9 +524,7 @@ msgid "Command 'status' needs one argument."
 msgstr "Befehl 'status' benötigt ein Argument."
 
 msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
-msgstr ""
-"Der Befehl ‚transfer-and-delete‘ unterstützt keine Vorgänge auf einem "
-"einzelnen Schnappschuss."
+msgstr "Der Befehl ‚transfer-and-delete‘ unterstützt keine Vorgänge auf einem einzelnen Schnappschuss."
 
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "Befehl 'transfer-and-delete' akzeptiert keine Argumente."
@@ -936,10 +929,6 @@ msgstr "PB"
 msgid "Parent node %s not found."
 msgstr "Übergeordneter Knoten %s nicht gefunden."
 
-#, c-format
-msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr "Der Quellpfad der Backup-Konfiguration unterscheidet sich von dem des Subvolumes der Snapper-Konfiguration ('%s' vs. '%s')."
-
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -1140,9 +1129,6 @@ msgstr "Schnappschuss nicht auf dem Ziel."
 #, c-format
 msgid "Snapshot number %d not found."
 msgstr "Schnappschussnummer %d nicht gefunden."
-
-msgid "Source Path"
-msgstr "Quellpfad"
 
 msgid "Source State"
 msgstr "Quellstatus"
@@ -1382,6 +1368,13 @@ msgstr "Aufruf: snbk [--Globale-Optionen] <Befehl> [Befehlsargumente]"
 
 msgid "yes"
 msgstr "ja"
+
+#, c-format
+#~ msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
+#~ msgstr "Der Quellpfad der Backup-Konfiguration unterscheidet sich von dem des Subvolumes der Snapper-Konfiguration ('%s' vs. '%s')."
+
+#~ msgid "Source Path"
+#~ msgstr "Quellpfad"
 
 #~ msgid "Target findmnt Bin"
 #~ msgstr "findmnt-Ziel-Bin"

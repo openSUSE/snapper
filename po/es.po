@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 14:27+0100\n"
+"POT-Creation-Date: 2026-02-07 04:10+0100\n"
 "PO-Revision-Date: 2025-08-03 17:59+0000\n"
 "Last-Translator: Antonio Simón <antonio@trans-mission.com>\n"
 "Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/>\n"
@@ -441,6 +441,10 @@ msgstr "No se puede revertir porque no se conoce el subvolumen por defecto."
 #, c-format
 msgid "Cannot find the node of UUID %s"
 msgstr ""
+
+#, fuzzy
+msgid "Cannot transfer a read-write snapshot."
+msgstr "Crea una instantánea de lectura-escritura."
 
 msgid "Character separator for CSV output format."
 msgstr "Separador de caracteres para el formato de salida CSV."
@@ -960,10 +964,6 @@ msgstr "PB"
 msgid "Parent node %s not found."
 msgstr "No se ha encontrado el archivo '%s'."
 
-#, c-format
-msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr "No hay coincidencia entre la ruta de origen de la configuración de respaldo y el subvolumen de configuración de snapper ('%s' vs. '%s')."
-
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -1169,9 +1169,6 @@ msgstr "La instantánea no está en el destino."
 #, c-format
 msgid "Snapshot number %d not found."
 msgstr "Instantánea número %d no encontrada."
-
-msgid "Source Path"
-msgstr "Ruta Origen"
 
 msgid "Source State"
 msgstr "Estado de Origen"
@@ -1420,6 +1417,13 @@ msgstr "uso: snbk [--opciones-globales] <comando> [argumentos-comando]"
 
 msgid "yes"
 msgstr "sí"
+
+#, c-format
+#~ msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
+#~ msgstr "No hay coincidencia entre la ruta de origen de la configuración de respaldo y el subvolumen de configuración de snapper ('%s' vs. '%s')."
+
+#~ msgid "Source Path"
+#~ msgstr "Ruta Origen"
 
 #~ msgid "Target findmnt Bin"
 #~ msgstr "Destino de bin de findmnt"

@@ -2,11 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 14:27+0100\n"
+"POT-Creation-Date: 2026-02-07 04:10+0100\n"
 "PO-Revision-Date: 2026-01-31 05:04+0000\n"
 "Last-Translator: Arif Budiman <arifpedia@gmail.com>\n"
-"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/"
-"id/>\n"
+"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -242,9 +241,7 @@ msgid "- A backup-config must be specified to run this command."
 msgstr "- backup-config harus ditentukan untuk menjalankan perintah ini."
 
 msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
-msgstr ""
-"- Mulai ulang layanan `snapperd` agar snapshot yang dipulihkan segera "
-"terlihat."
+msgstr "- Mulai ulang layanan `snapperd` agar snapshot yang dipulihkan segera terlihat."
 
 msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
 msgstr "- source-tree: Menghasilkan diagram pohon snapshot pada sumber."
@@ -438,6 +435,10 @@ msgstr "Tidak dapat melakukan rollback karena subvolume bawaan tidak diketahui."
 msgid "Cannot find the node of UUID %s"
 msgstr "Tidak dapat menemukan node untuk UUID %s"
 
+#, fuzzy
+msgid "Cannot transfer a read-write snapshot."
+msgstr "Membuat snapshot baca-tulis."
+
 msgid "Character separator for CSV output format."
 msgstr "Pemisah karakter untuk format output CSV."
 
@@ -519,9 +520,7 @@ msgid "Command 'status' needs one argument."
 msgstr "Perintah 'status' membutuhkan satu argumen."
 
 msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
-msgstr ""
-"Perintah 'transfer-and-delete' tidak mendukung operasi pada satu snapshot "
-"saja."
+msgstr "Perintah 'transfer-and-delete' tidak mendukung operasi pada satu snapshot saja."
 
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "Perintah ' transfer-and-delete ' tidak menerima argumen."
@@ -926,10 +925,6 @@ msgstr "PB"
 msgid "Parent node %s not found."
 msgstr "Node induk %s tidak ditemukan."
 
-#, c-format
-msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr "Ketidakcocokan jalur antara jalur sumber dari backup-config dan subvolume dari snapper config ('%s' vs '%s')."
-
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -1125,9 +1120,6 @@ msgstr "Snapshot tidak ada di target."
 #, c-format
 msgid "Snapshot number %d not found."
 msgstr "Snapshot nomor %d tidak ditemukan."
-
-msgid "Source Path"
-msgstr "Jalur Sumber"
 
 msgid "Source State"
 msgstr "Status Awal"
@@ -1367,6 +1359,13 @@ msgstr "penggunaan: snbk [--global-options] <command> [command-arguments]"
 
 msgid "yes"
 msgstr "ya"
+
+#, c-format
+#~ msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
+#~ msgstr "Ketidakcocokan jalur antara jalur sumber dari backup-config dan subvolume dari snapper config ('%s' vs '%s')."
+
+#~ msgid "Source Path"
+#~ msgstr "Jalur Sumber"
 
 #~ msgid "Target findmnt Bin"
 #~ msgstr "Bin findmnt target"
