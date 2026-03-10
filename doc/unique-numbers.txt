@@ -1,0 +1,10 @@
+With snapper 0.13.1 the snapshot numbers should be all-time unique in
+that even after deleting a snapshot the number is not reused for new
+snapshots.
+
+This is basically done by 1. keeping the directory if the snapshot
+with the highest number is removed and 2. also looking at empty
+directories when finding the number for the next snapshot.
+
+As a consequence there can temporarily be empty directories in the
+infos directories.

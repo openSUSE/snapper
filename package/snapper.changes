@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Mar 10 10:55:15 CET 2026 - aschnell@suse.com
+
+- implement all-time unique snapshot numbers
+  (gh#openSUSE/snapper#131)
+
+-------------------------------------------------------------------
 Wed Dec 17 12:57:19 UTC 2025 - Cheng-Ling Lai <jamesljlster@gmail.com>
 
 - Add snapshots restoring support to snbk
