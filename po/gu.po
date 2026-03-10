@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 14:27+0100\n"
+"POT-Creation-Date: 2026-02-07 04:10+0100\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Gujarati <https://l10n.opensuse.org/projects/snapper/master/gu/>\n"
@@ -443,6 +443,10 @@ msgstr ""
 #, c-format
 msgid "Cannot find the node of UUID %s"
 msgstr ""
+
+#, fuzzy
+msgid "Cannot transfer a read-write snapshot."
+msgstr "કન્ફિગ્યુરેશન ફાઈલોમાં પાર્સ થઈ રહ્યું છે..."
 
 msgid "Character separator for CSV output format."
 msgstr ""
@@ -983,10 +987,6 @@ msgstr ""
 msgid "Parent node %s not found."
 msgstr "રિપોસીટરીમાં ફાઈલ %1 મળી નહીં."
 
-#, c-format
-msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr ""
-
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr ""
@@ -1201,9 +1201,6 @@ msgstr "%s હોસ્ટ મળ્યું નથી."
 #, fuzzy, c-format
 msgid "Snapshot number %d not found."
 msgstr "%s હોસ્ટ મળ્યું નથી."
-
-msgid "Source Path"
-msgstr ""
 
 msgid "Source State"
 msgstr ""

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 14:27+0100\n"
+"POT-Creation-Date: 2026-02-07 04:10+0100\n"
 "PO-Revision-Date: 2025-07-22 14:59+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
@@ -441,6 +441,10 @@ msgstr "Palautusta (rollback) ei voi tehdä, koska oletusalitaltio on tuntematon
 #, c-format
 msgid "Cannot find the node of UUID %s"
 msgstr ""
+
+#, fuzzy
+msgid "Cannot transfer a read-write snapshot."
+msgstr "Luo luettava ja kirjoitettava tilannekuva."
 
 msgid "Character separator for CSV output format."
 msgstr "CSV-tulosmuodon merkkierotin."
@@ -935,10 +939,6 @@ msgstr "Pt"
 msgid "Parent node %s not found."
 msgstr "Tiedostoa \"%s\" ei löytynyt."
 
-#, fuzzy, c-format
-msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr "Sijaintiristiriita backup-configin ja configin välillä."
-
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -1141,9 +1141,6 @@ msgstr "Tilannekuvaa ei ole kohteessa."
 #, c-format
 msgid "Snapshot number %d not found."
 msgstr "Tilannekuvaa %d ei löytynyt."
-
-msgid "Source Path"
-msgstr "Lähdepolku"
 
 msgid "Source State"
 msgstr "Lähteen tila"
@@ -1385,6 +1382,13 @@ msgstr "käyttö: snbk [--global-options] <komento> [komennon-parametrit]"
 
 msgid "yes"
 msgstr "kyllä"
+
+#, fuzzy, c-format
+#~ msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
+#~ msgstr "Sijaintiristiriita backup-configin ja configin välillä."
+
+#~ msgid "Source Path"
+#~ msgstr "Lähdepolku"
 
 #~ msgid ""
 #~ "\t--columns <columns>\t\tColumns to show separated by comma.\n"

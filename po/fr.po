@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 14:27+0100\n"
+"POT-Creation-Date: 2026-02-07 04:10+0100\n"
 "PO-Revision-Date: 2025-08-04 14:59+0000\n"
 "Last-Translator: Sophie Leroy <sophie@stoquart.com>\n"
 "Language-Team: French <https://l10n.opensuse.org/projects/snapper/master/fr/>\n"
@@ -443,6 +443,10 @@ msgstr "Impossible de revenir à l'état initial car le sous-volume par défaut 
 #, c-format
 msgid "Cannot find the node of UUID %s"
 msgstr ""
+
+#, fuzzy
+msgid "Cannot transfer a read-write snapshot."
+msgstr "Crée un instantané en lecture-écriture."
 
 msgid "Character separator for CSV output format."
 msgstr "Séparateur de caractères pour format de sortie CSV."
@@ -955,10 +959,6 @@ msgstr "Po"
 msgid "Parent node %s not found."
 msgstr "Fichier '%s' introuvable."
 
-#, c-format
-msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr "Discordance des chemins d'accès entre le chemin source de la configuration de sauvegarde (backup-config) et le sous-volume de la configuration de snapper ('%s' et '%s')."
-
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "Pio"
@@ -1162,9 +1162,6 @@ msgstr "L'instantané n'est pas sur la destination."
 #, c-format
 msgid "Snapshot number %d not found."
 msgstr "L'instantané numéro %d n'a pas été trouvé."
-
-msgid "Source Path"
-msgstr "Chemin de la source"
 
 msgid "Source State"
 msgstr "État de la source"
@@ -1413,6 +1410,13 @@ msgstr "Utilisation : snbk [--global-options] <commande> [arguments-de-commande]
 
 msgid "yes"
 msgstr "oui"
+
+#, c-format
+#~ msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
+#~ msgstr "Discordance des chemins d'accès entre le chemin source de la configuration de sauvegarde (backup-config) et le sous-volume de la configuration de snapper ('%s' et '%s')."
+
+#~ msgid "Source Path"
+#~ msgstr "Chemin de la source"
 
 #~ msgid "Target findmnt Bin"
 #~ msgstr "Bin findmnt cible"

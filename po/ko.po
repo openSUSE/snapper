@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: entries\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 14:27+0100\n"
+"POT-Creation-Date: 2026-02-07 04:10+0100\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Korean <https://l10n.opensuse.org/projects/snapper/master/ko/>\n"
@@ -503,6 +503,11 @@ msgstr ""
 #, c-format
 msgid "Cannot find the node of UUID %s"
 msgstr ""
+
+# SLE12
+#, fuzzy
+msgid "Cannot transfer a read-write snapshot."
+msgstr "스냅샷 %d의 읽기 쓰기 스냅샷을 생성합니다."
 
 msgid "Character separator for CSV output format."
 msgstr ""
@@ -1123,10 +1128,6 @@ msgstr "PiB"
 msgid "Parent node %s not found."
 msgstr "'%s' 파일을 찾을 수 없습니다."
 
-#, c-format
-msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr ""
-
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -1372,9 +1373,6 @@ msgstr "'%u' 스냅샷을 찾을 수 없습니다."
 #, fuzzy, c-format
 msgid "Snapshot number %d not found."
 msgstr "'%u' 스냅샷을 찾을 수 없습니다."
-
-msgid "Source Path"
-msgstr ""
 
 msgid "Source State"
 msgstr ""

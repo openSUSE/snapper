@@ -9,11 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 14:27+0100\n"
+"POT-Creation-Date: 2026-02-07 04:10+0100\n"
 "PO-Revision-Date: 2026-01-29 14:04+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
-"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
-"\n"
+"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -246,22 +245,16 @@ msgid "(Target) UUID"
 msgstr "(Doel) UUID"
 
 msgid "- A backup-config must be specified to run this command."
-msgstr ""
-"Een reservekopieconfiguratie met gespecificeerd zijn om dit commando uit te "
-"voeren."
+msgstr "Een reservekopieconfiguratie met gespecificeerd zijn om dit commando uit te voeren."
 
 msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
-msgstr ""
-"- Herstart de service `snapperd`om de herstelde momentopnamen onmiddellijk "
-"zichtbaar te maken."
+msgstr "- Herstart de service `snapperd`om de herstelde momentopnamen onmiddellijk zichtbaar te maken."
 
 msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
-msgstr ""
-"- source-tree: produceer een boomdiagram van de momentopname op de bron."
+msgstr "- source-tree: produceer een boomdiagram van de momentopname op de bron."
 
 msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
-msgstr ""
-"- target-tree: produceer een boomdiagram van de momentopnamen op het doel."
+msgstr "- target-tree: produceer een boomdiagram van de momentopnamen op het doel."
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -402,9 +395,7 @@ msgid "--version"
 msgstr "--version"
 
 msgid "A backup-config must be specified to run this command."
-msgstr ""
-"Een reservekopieconfiguratie moet gespecificeerd zijn om dit commando uit te "
-"voeren."
+msgstr "Een reservekopieconfiguratie moet gespecificeerd zijn om dit commando uit te voeren."
 
 # error box title
 msgid "ACL error."
@@ -451,6 +442,10 @@ msgstr "Kan geen rollback doen omdat standaard subvolume onbekend is."
 #, c-format
 msgid "Cannot find the node of UUID %s"
 msgstr "Kan de node van UUID %s niet vinden"
+
+#, fuzzy
+msgid "Cannot transfer a read-write snapshot."
+msgstr "Een lezen-schrijven momentopname maken."
 
 msgid "Character separator for CSV output format."
 msgstr "Scheidingsteken voor CSV uitvoerformaat."
@@ -533,9 +528,7 @@ msgid "Command 'status' needs one argument."
 msgstr "Opdracht 'status' heeft één argument."
 
 msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
-msgstr ""
-"Opdracht 'transfer-and-delete' ondersteunt het werken op een enkele "
-"momentopname niet."
+msgstr "Opdracht 'transfer-and-delete' ondersteunt het werken op een enkele momentopname niet."
 
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "Opdracht 'transfer-and-delete' heeft geen argumenten."
@@ -940,10 +933,6 @@ msgstr "PB"
 msgid "Parent node %s not found."
 msgstr "Oudernode %s niet gevonden."
 
-#, c-format
-msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr "Paden in bronpad van reservekopieconfiguratie en subvolume van configuratie van snapper ('%s' vs. '%s') komen niet overeen."
-
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -1030,11 +1019,8 @@ msgstr[1] "Uitvoeren van lijst maken voor %d van %ld reservekopieconfiguraties i
 #, c-format
 msgid "Running restore failed for %d of %ld backup config."
 msgid_plural "Running restore failed for %d of %ld backup configs."
-msgstr[0] ""
-"Uitvoeren van herstellen voor %d van %ld reservekopieconfiguratie is mislukt."
-msgstr[1] ""
-"Uitvoeren van herstellen voor %d van %ld reservekopieconfiguraties is "
-"mislukt."
+msgstr[0] "Uitvoeren van herstellen voor %d van %ld reservekopieconfiguratie is mislukt."
+msgstr[1] "Uitvoeren van herstellen voor %d van %ld reservekopieconfiguraties is mislukt."
 
 #, c-format
 msgid "Running restore for backup config '%s' failed."
@@ -1147,9 +1133,6 @@ msgstr "Momentopname is niet op doel."
 #, c-format
 msgid "Snapshot number %d not found."
 msgstr "Momentopnamenummer %d niet gevonden."
-
-msgid "Source Path"
-msgstr "Pad van bron"
 
 msgid "Source State"
 msgstr "Status van bron"
@@ -1389,6 +1372,13 @@ msgstr "gebruik: snbk [--global-options] <opdracht> [opdrachtargumenten]"
 
 msgid "yes"
 msgstr "ja"
+
+#, c-format
+#~ msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
+#~ msgstr "Paden in bronpad van reservekopieconfiguratie en subvolume van configuratie van snapper ('%s' vs. '%s') komen niet overeen."
+
+#~ msgid "Source Path"
+#~ msgstr "Pad van bron"
 
 #~ msgid "Target findmnt Bin"
 #~ msgstr "Doel findmnt Bin"

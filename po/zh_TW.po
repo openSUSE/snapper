@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-28 14:27+0100\n"
+"POT-Creation-Date: 2026-02-07 04:10+0100\n"
 "PO-Revision-Date: 2025-08-05 05:59+0000\n"
 "Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
 "Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
@@ -460,6 +460,10 @@ msgstr "無法復原，因為預設子磁碟區未知。"
 #, c-format
 msgid "Cannot find the node of UUID %s"
 msgstr ""
+
+#, fuzzy
+msgid "Cannot transfer a read-write snapshot."
+msgstr "建立讀寫快照。"
 
 msgid "Character separator for CSV output format."
 msgstr "CSV 輸出格式的字元分隔符。"
@@ -988,10 +992,6 @@ msgstr "PB"
 msgid "Parent node %s not found."
 msgstr "檔案 '%s' 找不到。"
 
-#, c-format
-msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
-msgstr "備份組態的來源路徑與 snapper 組態的子磁碟區路徑 ('%s' 與 '%s')不符。"
-
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
 msgstr "PiB"
@@ -1195,9 +1195,6 @@ msgstr "目標中不存在該快照。"
 #, c-format
 msgid "Snapshot number %d not found."
 msgstr "未找到編號為 %d 的快照。"
-
-msgid "Source Path"
-msgstr "來源路徑"
 
 msgid "Source State"
 msgstr "來源狀態"
@@ -1453,6 +1450,13 @@ msgstr "用法：snbk [--全域選項] <指令> [指令引數]"
 
 msgid "yes"
 msgstr "是"
+
+#, c-format
+#~ msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
+#~ msgstr "備份組態的來源路徑與 snapper 組態的子磁碟區路徑 ('%s' 與 '%s')不符。"
+
+#~ msgid "Source Path"
+#~ msgstr "來源路徑"
 
 #~ msgid "Target findmnt Bin"
 #~ msgstr "目標 findmnt Bin"
