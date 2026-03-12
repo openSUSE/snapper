@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Mar 12 13:48:06 CET 2026 - Arvin Schnell <aschnell@suse.com>
+
+- enable sharing of ssh sessions (gh#openSUSE/snapper#1087)
+
+-------------------------------------------------------------------
 Tue Mar 10 10:55:15 CET 2026 - aschnell@suse.com
 
 - implement all-time unique snapshot numbers
