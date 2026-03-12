@@ -64,13 +64,12 @@ namespace snapper
     }
 
 
-    const string& CmdMetaHash::get_hash(unsigned int num) const
+    string CmdMetaHash::get_hash(unsigned int num) const
     {
 	auto pair = lookup.find(num);
 	if (pair == lookup.end())
 	{
-	    string error = sformat(_("Meta hash of snapshot %d not found."), num);
-	    SN_THROW(Exception(error));
+	    return "";
 	}
 
 	return pair->second;

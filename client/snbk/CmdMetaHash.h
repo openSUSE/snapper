@@ -44,7 +44,7 @@ namespace snapper
 	CmdMetaHash(const Shell& shell, const string& chksum_bin, const string& sh_bin,
 	            const string& path);
 
-	const string& get_hash(unsigned int num) const;
+	string get_hash(unsigned int num) const;
 
 	friend std::ostream& operator<<(std::ostream& s, const CmdMetaHash& cmd_metahash);
 
