@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2024-2025] SUSE LLC
+ * Copyright (c) [2024-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -65,6 +65,7 @@ namespace snapper
 	unsigned int ssh_port = 0;
 	string ssh_user;
 	string ssh_identity;
+	bool ssh_master_control = true;
 
 	Shell get_source_shell() const;
 	Shell get_target_shell() const;

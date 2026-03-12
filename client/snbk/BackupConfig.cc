@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2024-2025] SUSE LLC
+ * Copyright (c) [2024-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -116,6 +116,10 @@ namespace snapper
 
 	if (!ssh_identity.empty())
 	    options.insert(options.end(), { "-i", ssh_identity });
+
+	if (ssh_master_control)
+	    options.insert(options.end(), { "-o", "ControlMaster=auto", "-o", "ControlPath=\"~/.ssh/snbk-%C\"",
+		"-o", "ControlPersist=30s" });
 
 	return options;
     }
