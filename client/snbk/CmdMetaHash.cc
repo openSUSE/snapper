@@ -90,8 +90,8 @@ namespace snapper
 		SN_THROW(Exception(_("Invalid hash output format.")));
 	    }
 
-	    const string& hash = parts.front();
-	    const string& path = parts.back();
+	    const string& hash = parts[0];
+	    const string& path = parts[1];
 
 	    // Split the path into components
 	    vector<string> comps;
