@@ -41,6 +41,7 @@ AC_PATH_PROG([LVS_BIN], [lvs], [/sbin/lvs])
 AC_PATH_PROG([MKDIR_BIN], [mkdir], [/bin/mkdir])
 AC_PATH_PROG([RM_BIN], [rm], [/bin/rm])
 AC_PATH_PROG([RMDIR_BIN], [rmdir], [/bin/rmdir])
+AC_PATH_PROG([SHA256SUM_BIN], [sha256sum], [/usr/bin/sha256sum])
 AC_PATH_PROG([TOUCH_BIN], [touch], [/usr/bin/touch])
 
 AC_DEFINE_UNQUOTED([BTRFS_BIN], ["$BTRFS_BIN"], [Path of btrfs program.])
@@ -58,6 +59,7 @@ AC_DEFINE_UNQUOTED([LVS_BIN], ["$LVS_BIN"], [Path of lvs program.])
 AC_DEFINE_UNQUOTED([MKDIR_BIN], ["$MKDIR_BIN"], [Path of mkdir program.])
 AC_DEFINE_UNQUOTED([RM_BIN], ["$RM_BIN"], [Path of rm program.])
 AC_DEFINE_UNQUOTED([RMDIR_BIN], ["$RMDIR_BIN"], [Path of rmdir program.])
+AC_DEFINE_UNQUOTED([SHA256SUM_BIN], ["$SHA256SUM_BIN"], [Path of sha256sum program.])
 AC_DEFINE_UNQUOTED([TOUCH_BIN], ["$TOUCH_BIN"], [Path of touch program.])
 
 CFLAGS="${CFLAGS} -std=c99 -Wall -Wextra -Wformat -Wmissing-prototypes -Wno-unused-parameter"
