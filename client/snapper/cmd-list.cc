@@ -28,6 +28,7 @@
 
 #include <snapper/SnapperTmpl.h>
 #include <snapper/BtrfsUtils.h>
+#include <snapper/AppUtil.h>
 
 #include "../utils/text.h"
 #include "../utils/help.h"
@@ -87,7 +88,8 @@ namespace snapper
 	{
 	public:
 
-	    OutputHelper(const ProxySnapper* snapper, const vector<Column>& columns);
+	    OutputHelper(const ProxySnapper* snapper, const vector<Column>& columns,
+			 const string& root_prefix);
 
 	    bool is_default(const ProxySnapshot& snapshot) const
 	    {
@@ -135,6 +137,7 @@ namespace snapper
 
 	    ProxySnapshots::const_iterator default_snapshot;
 	    ProxySnapshots::const_iterator active_snapshot;
+	    string root_prefix;
 
 	    bool used_space_broken = true;
 
@@ -158,9 +161,11 @@ namespace snapper
 #endif
 
 
-	OutputHelper::OutputHelper(const ProxySnapper* snapper, const vector<Column>& columns)
+	OutputHelper::OutputHelper(const ProxySnapper* snapper, const vector<Column>& columns,
+				   const string& root_prefix)
 	    : snapper(snapper), locker(snapper), snapshots(snapper->getSnapshots()),
-	      default_snapshot(snapshots.end()), active_snapshot(snapshots.end())
+	      default_snapshot(snapshots.end()), active_snapshot(snapshots.end()),
+	      root_prefix(root_prefix)
 	{
 	    try
 	    {
@@ -184,7 +189,7 @@ namespace snapper
 
 	    if (find(columns.begin(), columns.end(), Column::USED_SPACE) != columns.end())
 	    {
-		string subvolume = snapper->getConfig().getSubvolume();
+		string subvolume = prepend_root_prefix(root_prefix, snapper->getConfig().getSubvolume());
 
 #ifdef ENABLE_BTRFS
 
@@ -587,7 +592,7 @@ namespace snapper
 				 << snapper->getConfig().getSubvolume() << endl;
 			}
 
-			OutputHelper output_helper(snapper, columns);
+			OutputHelper output_helper(snapper, columns, global_options.root());
 
 			TableFormatter formatter(global_options.table_style());
 
@@ -643,7 +648,7 @@ namespace snapper
 
 		    for (const ProxySnapper* snapper : snappers)
 		    {
-			OutputHelper output_helper(snapper, columns);
+			OutputHelper output_helper(snapper, columns, global_options.root());
 
 			for (const ProxySnapshot& snapshot : output_helper.snapshots)
 			{
@@ -675,7 +680,7 @@ namespace snapper
 			json_object* json_config = json_object_new_array();
 			json_object_object_add(formatter.root(), snapper->configName().c_str(), json_config);
 
-			OutputHelper output_helper(snapper, columns);
+			OutputHelper output_helper(snapper, columns, global_options.root());
 
 			for (const ProxySnapshot& snapshot : output_helper.snapshots)
 			{
