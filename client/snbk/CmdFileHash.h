@@ -34,13 +34,15 @@ namespace snapper
 
     /**
      * Find the hash of the file at the given path.
-     * If an error occurs, the hash is set to an empty string.
+     * If `allow_failure` is `true`, errors are ignored and the hash is set to an empty
+     * string.
      */
     class CmdFileHash
     {
     public:
 
-	CmdFileHash(const Shell& shell, const string& chksum_bin, const string& path);
+	CmdFileHash(const Shell& shell, const string& chksum_bin, const string& path,
+	            bool allow_failure);
 
 	const string& get_hash() const;
 
@@ -50,8 +52,6 @@ namespace snapper
 
 	const string path;
 	string hash;
-
-	void parse(const std::vector<string>& lines);
     };
 
 

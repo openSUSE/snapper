@@ -22,6 +22,7 @@
 
 #include <boost/algorithm/string.hpp>
 
+#include <snapper/AppUtil.h>
 #include <snapper/Exception.h>
 #include <snapper/LoggerImpl.h>
 #include <snapper/SystemCmd.h>
@@ -36,23 +37,59 @@ namespace snapper
 
 
     CmdFileHash::CmdFileHash(const Shell& shell, const string& chksum_bin,
-                             const string& path)
+                             const string& path, bool allow_failure)
         : path(path)
     {
 	SystemCmd::Args cmd_args = { chksum_bin, "--", path };
 	SystemCmd cmd(shellify(shell, cmd_args));
 
-	if (cmd.retcode() != 0)
+	try
 	{
-	    y2err("command '" << cmd.cmd() << "' failed: " << cmd.retcode());
-	    for (const string& tmp : cmd.get_stdout())
-		y2err(tmp);
-	    for (const string& tmp : cmd.get_stderr())
-		y2err(tmp);
+	    if (cmd.retcode() != 0)
+	    {
+		y2err("command '" << cmd.cmd() << "' failed: " << cmd.retcode());
+		for (const string& tmp : cmd.get_stdout())
+		    y2err(tmp);
+		for (const string& tmp : cmd.get_stderr())
+		    y2err(tmp);
+
+		SN_THROW(Exception(_("Failed to compute file hash.")));
+	    }
+	    else
+	    {
+		// Check if the hash utility returns 1 line exactly
+		vector<string> cmd_outputs = cmd.get_stdout();
+		if (cmd_outputs.size() != 1)
+		{
+		    y2err(sformat("Expected 1 line, but %lu lines were received from %s.",
+		                  cmd_outputs.size(), chksum_bin.c_str()));
+		    SN_THROW(Exception(_("Unexpected output from the hash utility.")));
+		}
+
+		// Parse the hash output
+		vector<string> parts;
+		const string& line = cmd_outputs[0];
+		boost::split(parts, line, boost::is_any_of(" "),
+		             boost::token_compress_on);
+		if (parts.size() != 2)
+		{
+		    y2err("Invalid hash string: " << line);
+		    SN_THROW(Exception(_("Invalid hash output format.")));
+		}
+
+		hash = parts[0];
+	    }
 	}
-	else
+	catch (const Exception& e)
 	{
-	    parse(cmd.get_stdout());
+	    if (!allow_failure)
+	    {
+		SN_THROW(e);
+	    }
+	    else
+	    {
+		y2err(e);
+	    }
 	}
 
 	y2mil(*this);
@@ -60,24 +97,6 @@ namespace snapper
 
 
     const string& CmdFileHash::get_hash() const { return hash; }
-
-    void CmdFileHash::parse(const vector<string>& lines)
-    {
-	for (const string& line : lines)
-	{
-	    vector<string> parts;
-	    boost::split(parts, line, boost::is_any_of(" "), boost::token_compress_on);
-	    if (parts.size() != 2)
-	    {
-		y2err("Invalid hash string: " << line);
-		SN_THROW(Exception(_("Invalid hash output format.")));
-	    }
-
-	    hash = parts[0];
-	    break;
-	}
-    }
-
 
     std::ostream& operator<<(std::ostream& s, const CmdFileHash& cmd_filehash)
     {

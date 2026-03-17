@@ -518,7 +518,8 @@ namespace snapper
 
 	    // Find the hash of info.xml
 	    CmdFileHash cmd_filehash(shell_source, SHA256SUM_BIN,
-	                             source_snapshot_dir(snapper, num) + "/info.xml");
+	                             source_snapshot_dir(snapper, num) + "/info.xml",
+	                             false);
 	    the_big_thing.source_meta_hash = cmd_filehash.get_hash();
 
 	    the_big_things.push_back(the_big_thing);
@@ -618,9 +619,9 @@ namespace snapper
 		it->target_creation_time = extra.get_creation_time();
 
 		// Find the hash of info.xml
-		CmdFileHash cmd_filehash(shell_target, backup_config.target_sha256sum_bin,
-		                         target_snapshot_dir(backup_config, num) +
-		                             "/info.xml");
+		CmdFileHash cmd_filehash(
+		    shell_target, backup_config.target_sha256sum_bin,
+		    target_snapshot_dir(backup_config, num) + "/info.xml", true);
 		it->target_meta_hash = cmd_filehash.get_hash();
 
 		if (it->source_state == TheBigThing::SourceState::READ_ONLY &&
