@@ -22,6 +22,7 @@ snbk_SOURCES = 						\
 	Shell.cc		Shell.h			\
 	CmdBtrfs.cc		CmdBtrfs.h		\
 	CmdLs.cc		CmdLs.h			\
+	CmdFileHash.cc		CmdFileHash.h		\
 	JsonFile.cc		JsonFile.h		\
 	utils.cc		utils.h			\
 	TreeView.cc		TreeView.h

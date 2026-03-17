@@ -103,6 +103,14 @@
 	    transfer the snapshot again.</para>
           </glossdef>
         </glossentry>
+	<glossentry>
+	  <glossterm>legacy</glossterm>
+	  <glossdef>
+	    <para>The snapshot is valid, but the source snapshot's metadata has changed
+	    since the transfer. The next transfer command will update the snapshot's
+	    metadata on the target.</para>
+	  </glossdef>
+	</glossentry>
       </glosslist>
     </refsect2>
 

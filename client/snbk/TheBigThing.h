@@ -53,7 +53,18 @@ namespace snapper
 	// snapshots on target are always read-only if valid
 
 	enum class SourceState { MISSING, READ_ONLY, READ_WRITE };
-	enum class TargetState { MISSING, VALID, INVALID };
+	enum class TargetState
+	{
+	    MISSING,
+	    VALID,
+	    INVALID,
+
+	    /**
+	     * Indicates that the snapshot has been transferred to the target, but the
+	     * source snapshot's metadata has changed since the transfer.
+	     */
+	    LEGACY
+	};
 
 	TheBigThing(unsigned int num) : num(num) {}
 
@@ -72,11 +83,13 @@ namespace snapper
 	string source_parent_uuid;
 	string source_received_uuid;
 	string source_creation_time;
+	string source_meta_hash;
 
 	string target_uuid;
 	string target_parent_uuid;
 	string target_received_uuid;
 	string target_creation_time;
+	string target_meta_hash;
 
     private:
 
@@ -116,6 +129,9 @@ namespace snapper
 
 	void copy(const BackupConfig& backup_config, TheBigThings& the_big_things,
 	          const pair<CopySpec, CopySpec>& copy_specs);
+	void copy_metadata(const BackupConfig& backup_config,
+	                   TheBigThings& the_big_things,
+	                   const pair<CopySpec, CopySpec>& copy_specs);
 
     };
 
