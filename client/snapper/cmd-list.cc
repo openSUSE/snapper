@@ -135,9 +135,10 @@ namespace snapper
 
 	private:
 
+	    const string root_prefix;
+
 	    ProxySnapshots::const_iterator default_snapshot;
 	    ProxySnapshots::const_iterator active_snapshot;
-	    string root_prefix;
 
 	    bool used_space_broken = true;
 
@@ -164,8 +165,8 @@ namespace snapper
 	OutputHelper::OutputHelper(const ProxySnapper* snapper, const vector<Column>& columns,
 				   const string& root_prefix)
 	    : snapper(snapper), locker(snapper), snapshots(snapper->getSnapshots()),
-	      default_snapshot(snapshots.end()), active_snapshot(snapshots.end()),
-	      root_prefix(root_prefix)
+	      root_prefix(root_prefix), default_snapshot(snapshots.end()),
+	      active_snapshot(snapshots.end())
 	{
 	    try
 	    {
