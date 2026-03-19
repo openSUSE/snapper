@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2025-08-04 14:59+0000\n"
 "Last-Translator: Sophie Leroy <sophie@stoquart.com>\n"
 "Language-Team: French <https://l10n.opensuse.org/projects/snapper/master/fr/>\n"
@@ -702,6 +702,11 @@ msgstr "Erreur (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "Options supplémentaires transmises à la commande diff."
 
+# TLABEL nfs_2002_01_04_0147__3
+#, fuzzy
+msgid "Failed to compute checksum."
+msgstr "Échec de traitement du nombre."
+
 # SLE12
 msgid "Failed to initialize filesystem handler."
 msgstr "Échec de l'initialisation du gestionnaire de système de fichiers."
@@ -778,6 +783,10 @@ msgstr "Augmente la verbosité."
 msgid "Invalid ambit '%s'."
 msgstr "Contexte « %s » non valide."
 
+#, fuzzy
+msgid "Invalid checksum output format."
+msgstr "Définit le format de sortie CSV."
+
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "Colonne « %s » non valide."
@@ -803,6 +812,9 @@ msgstr "Type de journalisation '%s' non valide."
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Format de sortie « %s » non valide."
+
+msgid "Invalid number of lines in checksum output."
+msgstr ""
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -1291,6 +1303,11 @@ msgstr "Commande '%s' inconnue."
 #, c-format
 msgid "Unknown type '%s'."
 msgstr "Type « %s » inconnu."
+
+# SLE12
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "Création d'un instantané en lecture-écriture de l'instantané %d."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Gujarati <https://l10n.opensuse.org/projects/snapper/master/gu/>\n"
@@ -725,6 +725,10 @@ msgstr "I/O ભૂલ"
 msgid "Extra options passed to the diff command."
 msgstr ""
 
+#, fuzzy
+msgid "Failed to compute checksum."
+msgstr "Failed to parse: %s."
+
 msgid "Failed to initialize filesystem handler."
 msgstr ""
 
@@ -802,6 +806,9 @@ msgstr ""
 msgid "Invalid ambit '%s'."
 msgstr "અમાન્ય પ્રકાર %1."
 
+msgid "Invalid checksum output format."
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "અમાન્ય પ્રકાર %1."
@@ -828,6 +835,9 @@ msgstr "અમાન્ય પ્રકાર %1."
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "અમાન્ય પ્રકાર %1."
+
+msgid "Invalid number of lines in checksum output."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid path '%s'."
@@ -1334,6 +1344,10 @@ msgstr "અજાણ્યો કમાન્ડ"
 #, fuzzy, c-format
 msgid "Unknown type '%s'."
 msgstr "અજાણ્યો કમાન્ડ"
+
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "કન્ફિગ્યુરેશન ફાઈલોમાં પાર્સ થઈ રહ્યું છે..."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values

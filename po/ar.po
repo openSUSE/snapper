@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Arabic <https://l10n.opensuse.org/projects/snapper/master/ar/>\n"
@@ -716,6 +716,10 @@ msgstr "خطأ (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "\t--extensions، -x <options>\tخيارات إضافية تم تمريرها إلى أمر diff."
 
+#, fuzzy
+msgid "Failed to compute checksum."
+msgstr "فشل في إنشاء %s"
+
 msgid "Failed to initialize filesystem handler."
 msgstr "فشل في تهيئة نظام معالجة الملفات."
 
@@ -793,6 +797,9 @@ msgstr "\t--verbose, -v\t\t\tزيادة محتوى."
 msgid "Invalid ambit '%s'."
 msgstr "لقطة غير صالحة '%s'."
 
+msgid "Invalid checksum output format."
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "لقطة غير صالحة '%s'."
@@ -819,6 +826,9 @@ msgstr "نمط الجدول غير صالح %d."
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "نمط الجدول غير صالح %d."
+
+msgid "Invalid number of lines in checksum output."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid path '%s'."
@@ -1361,6 +1371,10 @@ msgstr "أمر غير معروف '%s'."
 #, fuzzy, c-format
 msgid "Unknown type '%s'."
 msgstr "أمر غير معروف '%s'."
+
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "إنشاء لقطة للقراءة والكتابة من اللقطة %d."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values

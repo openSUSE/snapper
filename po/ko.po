@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: entries\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Korean <https://l10n.opensuse.org/projects/snapper/master/ko/>\n"
@@ -821,6 +821,11 @@ msgid "Extra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tdiff 명령에 전달되는 추가 옵션입니다."
 
 # SLE12
+#, fuzzy
+msgid "Failed to compute checksum."
+msgstr "%s 생성에 실패"
+
+# SLE12
 msgid "Failed to initialize filesystem handler."
 msgstr "파일 시스템 처리기를 초기화하지 못했습니다."
 
@@ -909,6 +914,9 @@ msgstr "\t--verbose, -v\t\t\t자세한 표시 수준을 증가시킵니다."
 msgid "Invalid ambit '%s'."
 msgstr "'%s' 스냅샷이 잘못되었습니다."
 
+msgid "Invalid checksum output format."
+msgstr ""
+
 # SLE12
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
@@ -940,6 +948,9 @@ msgstr "잘못된 테이블 모양 %d 입니다."
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "잘못된 테이블 모양 %d 입니다."
+
+msgid "Invalid number of lines in checksum output."
+msgstr ""
 
 # SLE12
 #, fuzzy, c-format
@@ -1524,6 +1535,11 @@ msgstr "알 수 없는 명령 '%s'."
 #, fuzzy, c-format
 msgid "Unknown type '%s'."
 msgstr "알 수 없는 명령 '%s'."
+
+# SLE12
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "스냅샷 %d의 읽기 쓰기 스냅샷을 생성합니다."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values

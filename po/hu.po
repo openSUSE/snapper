@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2025-07-22 14:59+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Hungarian <https://l10n.opensuse.org/projects/snapper/master/hu/>\n"
@@ -741,6 +741,10 @@ msgstr "Hiba (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "\t--extensions, -x <beállítások>\tA diff parancsnak átadott további beállítások."
 
+#, fuzzy
+msgid "Failed to compute checksum."
+msgstr "a(z) %s létrehozása sikertelen"
+
 # SLE12
 msgid "Failed to initialize filesystem handler."
 msgstr "Nem sikerült inicializálni a fájlrendszer kezelőjét."
@@ -820,6 +824,9 @@ msgstr "\t--verbose, -v\t\t\tRészletesség fokozása."
 msgid "Invalid ambit '%s'."
 msgstr "Érvénytelen pillanatkép: '%s'."
 
+msgid "Invalid checksum output format."
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "Érvénytelen pillanatkép: '%s'."
@@ -849,6 +856,9 @@ msgstr "Érvénytelen táblázatstílus: %d."
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Érvénytelen táblázatstílus: %d."
+
+msgid "Invalid number of lines in checksum output."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid path '%s'."
@@ -1375,6 +1385,11 @@ msgstr "Ismeretlen parancs: '%s'."
 #, fuzzy, c-format
 msgid "Unknown type '%s'."
 msgstr "Ismeretlen parancs: '%s'."
+
+# SLE12
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "Csak olvasható pillanatkép létrehozása a(z) %d pillanatképről."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values

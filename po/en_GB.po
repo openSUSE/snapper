@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: English (United Kingdom) <https://l10n.opensuse.org/projects/snapper/master/en_GB/>\n"
@@ -743,6 +743,10 @@ msgstr "I/O Error"
 msgid "Extra options passed to the diff command."
 msgstr ""
 
+#, fuzzy
+msgid "Failed to compute checksum."
+msgstr "Failed to parse: %s."
+
 msgid "Failed to initialize filesystem handler."
 msgstr ""
 
@@ -822,6 +826,9 @@ msgstr ""
 msgid "Invalid ambit '%s'."
 msgstr "Invalid type %1."
 
+msgid "Invalid checksum output format."
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "Invalid type %1."
@@ -848,6 +855,9 @@ msgstr "Invalid type %1."
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Invalid type %1."
+
+msgid "Invalid number of lines in checksum output."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid path '%s'."
@@ -1360,6 +1370,10 @@ msgstr "Unknown command '%s'"
 #, fuzzy, c-format
 msgid "Unknown type '%s'."
 msgstr "Unknown command '%s'"
+
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "Parsing configuration files..."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values

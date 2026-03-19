@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper.km\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Khmer (Central) <https://l10n.opensuse.org/projects/snapper/master/km/>\n"
@@ -735,6 +735,10 @@ msgid "Extra options passed to the diff command."
 msgstr "    ជម្រើស​សម្រាប់​ពាក្យ​បញ្ជា​ 'modify' ៖"
 
 #, fuzzy
+msgid "Failed to compute checksum."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត %s"
+
+#, fuzzy
 msgid "Failed to initialize filesystem handler."
 msgstr "បាន​បរាជ័យ​ក្នុងកា​រដំឡើង​កម្មវិធី​គ្រប់គ្រង​ឯកសារ"
 
@@ -815,6 +819,9 @@ msgstr "\t--verbose, -v\t\t\tបង្កើន​ការ​បរិយាយ
 msgid "Invalid ambit '%s'."
 msgstr "រូបថត​មិន​ត្រឹមត្រូវ '%s' ។"
 
+msgid "Invalid checksum output format."
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "រូបថត​មិន​ត្រឹមត្រូវ '%s' ។"
@@ -842,6 +849,9 @@ msgstr "រចនាប័ទ្ម​តារាង %d មិន​ត្រ�
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "រចនាប័ទ្ម​តារាង %d មិន​ត្រឹមត្រូវ ។"
+
+msgid "Invalid number of lines in checksum output."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid path '%s'."
@@ -1358,6 +1368,10 @@ msgstr "មិន​ស្គាល់​ពាក្យ​បញ្ជា '%s' 
 #, fuzzy, c-format
 msgid "Unknown type '%s'."
 msgstr "មិន​ស្គាល់​ពាក្យ​បញ្ជា '%s' ។"
+
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​ការ​កំណត់​រចនាសម្ព័ន្ធ (%s) ។"
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values

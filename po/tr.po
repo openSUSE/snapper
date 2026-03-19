@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Turkish <https://l10n.opensuse.org/projects/snapper/master/tr/>\n"
@@ -777,6 +777,10 @@ msgstr "Giriş/Çıkış hatası"
 msgid "Extra options passed to the diff command."
 msgstr "    'değiştir' komutu için seçenekler:"
 
+#, fuzzy
+msgid "Failed to compute checksum."
+msgstr "%s oluşturma başarısız oldu"
+
 msgid "Failed to initialize filesystem handler."
 msgstr ""
 
@@ -858,6 +862,9 @@ msgstr "\t--verbose, -v\t\t\tAyrıntıyı arttır."
 msgid "Invalid ambit '%s'."
 msgstr "Geçersiz '%s' anlık görüntüsü."
 
+msgid "Invalid checksum output format."
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "Geçersiz '%s' anlık görüntüsü."
@@ -885,6 +892,9 @@ msgstr "%d geçersiz tablo stili."
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "%d geçersiz tablo stili."
+
+msgid "Invalid number of lines in checksum output."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid path '%s'."
@@ -1412,6 +1422,10 @@ msgstr "'Bilinmeyen komut '%s'."
 #, fuzzy, c-format
 msgid "Unknown type '%s'."
 msgstr "'Bilinmeyen komut '%s'."
+
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "\t--kullanıcıverisi, -u <userdata>\tAnlık görüntü için kullanıcı verisi."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Hebrew <https://l10n.opensuse.org/projects/snapper/master/he/>\n"
@@ -686,6 +686,10 @@ msgstr "שגיאה"
 msgid "Extra options passed to the diff command."
 msgstr ""
 
+#, fuzzy
+msgid "Failed to compute checksum."
+msgstr "Failed to parse: %s."
+
 msgid "Failed to initialize filesystem handler."
 msgstr ""
 
@@ -761,6 +765,9 @@ msgstr ""
 msgid "Invalid ambit '%s'."
 msgstr ""
 
+msgid "Invalid checksum output format."
+msgstr ""
+
 #, c-format
 msgid "Invalid column '%s'."
 msgstr ""
@@ -785,6 +792,9 @@ msgstr "שגיאה"
 
 #, c-format
 msgid "Invalid machine readable format '%s'."
+msgstr ""
+
+msgid "Invalid number of lines in checksum output."
 msgstr ""
 
 #, c-format
@@ -1277,6 +1287,10 @@ msgstr "לא ידוע"
 #, fuzzy, c-format
 msgid "Unknown type '%s'."
 msgstr "לא ידוע"
+
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "DBI Execution failed: %s."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values

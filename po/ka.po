@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2026-02-01 04:04+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://l10n.opensuse.org/projects/snapper/master/ka/>\n"
@@ -675,6 +675,9 @@ msgstr ""
 msgid "Extra options passed to the diff command."
 msgstr ""
 
+msgid "Failed to compute checksum."
+msgstr ""
+
 msgid "Failed to initialize filesystem handler."
 msgstr ""
 
@@ -749,6 +752,9 @@ msgstr ""
 msgid "Invalid ambit '%s'."
 msgstr ""
 
+msgid "Invalid checksum output format."
+msgstr ""
+
 #, c-format
 msgid "Invalid column '%s'."
 msgstr ""
@@ -772,6 +778,9 @@ msgstr "უცნობი logger-type '%s'."
 
 #, c-format
 msgid "Invalid machine readable format '%s'."
+msgstr ""
+
+msgid "Invalid number of lines in checksum output."
 msgstr ""
 
 #, c-format
@@ -1251,6 +1260,10 @@ msgstr "უცნობი rankdir '%s'."
 #, c-format
 msgid "Unknown type '%s'."
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "იშლება სწრაფი ასლი %d."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values

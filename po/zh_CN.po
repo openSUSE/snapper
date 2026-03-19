@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2025-08-05 05:59+0000\n"
 "Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
 "Language-Team: Chinese (China) <https://l10n.opensuse.org/projects/snapper/master/zh_CN/>\n"
@@ -687,6 +687,10 @@ msgstr "错误 (%s)。"
 msgid "Extra options passed to the diff command."
 msgstr "传递到 diff 命令的额外选项。"
 
+#, fuzzy
+msgid "Failed to compute checksum."
+msgstr "分析编号失败。"
+
 msgid "Failed to initialize filesystem handler."
 msgstr "初始化文件系统处理器失败。"
 
@@ -758,6 +762,10 @@ msgstr "增加消息的详细程度。"
 msgid "Invalid ambit '%s'."
 msgstr "范围 \"%s\" 无效。"
 
+#, fuzzy
+msgid "Invalid checksum output format."
+msgstr "设置 CSV 输出格式。"
+
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "列 \"%s\" 无效。"
@@ -782,6 +790,9 @@ msgstr "logger-type '%s' 无效。"
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "计算机可读格式 \"%s\" 无效。"
+
+msgid "Invalid number of lines in checksum output."
+msgstr ""
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -1262,6 +1273,10 @@ msgstr "未知命令 '%s'。"
 #, c-format
 msgid "Unknown type '%s'."
 msgstr "未知类型 \"%s\"。"
+
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "正在创建快照 %d 的读写快照。"
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
