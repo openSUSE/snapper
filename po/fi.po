@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2025-07-22 14:59+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
@@ -686,6 +686,10 @@ msgstr "Virhe (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "diff-komennolle välitettävät lisävalinnat."
 
+#, fuzzy
+msgid "Failed to compute checksum."
+msgstr "Lukua ei voitu jäsentää."
+
 msgid "Failed to initialize filesystem handler."
 msgstr "Tiedostojärjestelmäkäsittelyn alustus epäonnistui."
 
@@ -760,6 +764,10 @@ msgstr "Lisää yksityiskohtaisuutta."
 msgid "Invalid ambit '%s'."
 msgstr "Virheellinen alue \"%s\"."
 
+#, fuzzy
+msgid "Invalid checksum output format."
+msgstr "Aseta tulosmuodoksi CSV."
+
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "Virheellinen sarake \"%s\"."
@@ -784,6 +792,9 @@ msgstr "Virheellinen taulukkotyyli \"%s\"."
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Virheellinen tietokoneen formaatti \"%s\"."
+
+msgid "Invalid number of lines in checksum output."
+msgstr ""
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -1270,6 +1281,10 @@ msgstr "Tuntematon komento \"%s\"."
 #, c-format
 msgid "Unknown type '%s'."
 msgstr "Tuntematon tyyppi \"%s\"."
+
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "Luodaan tilannekuvasta %d kirjoitettavissa olevaa tilannekuvaa."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values

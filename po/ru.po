@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2025-12-11 17:04+0000\n"
 "Last-Translator: Aleksey Fedorov <Aleksejfedorov963@gmail.com>\n"
 "Language-Team: Russian <https://l10n.opensuse.org/projects/snapper/master/ru/>\n"
@@ -683,6 +683,10 @@ msgstr "Ошибка (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "Дополнительные опции, переданные в команду diff."
 
+#, fuzzy
+msgid "Failed to compute checksum."
+msgstr "Не удалось разобрать число."
+
 msgid "Failed to initialize filesystem handler."
 msgstr "Не удалось инициализировать обработчик файловой системы."
 
@@ -754,6 +758,10 @@ msgstr "Увеличить детальность вывода."
 msgid "Invalid ambit '%s'."
 msgstr "Неверная область '%s'."
 
+#, fuzzy
+msgid "Invalid checksum output format."
+msgstr "Задать формат вывода CSV."
+
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "Неверный столбец '%s'."
@@ -778,6 +786,9 @@ msgstr "Недопустимый тип логгера: «%s»."
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Неверный машиночитаемый формат '%s'."
+
+msgid "Invalid number of lines in checksum output."
+msgstr ""
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -1267,6 +1278,10 @@ msgstr "Неизвестная команда '%s'."
 #, c-format
 msgid "Unknown type '%s'."
 msgstr "Неизвестный тип '%s'."
+
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "Создание снимка %d для чтения-записи."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values

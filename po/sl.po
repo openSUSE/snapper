@@ -8,17 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2026-03-10 19:04+0000\n"
 "Last-Translator: Jure Repinc <jlp@holodeck1.com>\n"
-"Language-Team: Slovenian <https://l10n.opensuse.org/projects/snapper/master/"
-"sl/>\n"
+"Language-Team: Slovenian <https://l10n.opensuse.org/projects/snapper/master/sl/>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
 "X-Generator: Weblate 5.16.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -249,9 +247,7 @@ msgid "- A backup-config must be specified to run this command."
 msgstr "- Za zagon tega ukaza morate določiti »backup-config«."
 
 msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
-msgstr ""
-"- Da bodo obnovljeni posnetki vidni takoj, znova zaženite storitev »snapperd"
-"«."
+msgstr "- Da bodo obnovljeni posnetki vidni takoj, znova zaženite storitev »snapperd«."
 
 msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
 msgstr "- source-tree: izdela drevesni diagram posnetkov na viru."
@@ -696,6 +692,10 @@ msgstr "Napaka (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "Dodatne možnosti, ki se posredujejo ukazu diff."
 
+#, fuzzy
+msgid "Failed to compute checksum."
+msgstr "Razčlenjevanje številke ni uspelo."
+
 msgid "Failed to initialize filesystem handler."
 msgstr "Pripravljanje ročnika za datotečni sistem ni uspelo."
 
@@ -771,6 +771,10 @@ msgstr "Poveča količino izpisa."
 msgid "Invalid ambit '%s'."
 msgstr "Neveljaven ambit »%s«."
 
+#, fuzzy
+msgid "Invalid checksum output format."
+msgstr "Nastavi izpis v obliki CSV."
+
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "Neveljaven stolpec »%s«."
@@ -795,6 +799,9 @@ msgstr "Neveljavna vrsta »%s« za logger-type."
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Neveljavna računalniško berljiva oblika »%s«."
+
+msgid "Invalid number of lines in checksum output."
+msgstr ""
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -1043,23 +1050,14 @@ msgstr[3] "Izvajanje izpisovanja je spodletelo za %d od %ld nastavitev varnostne
 #, c-format
 msgid "Running restore failed for %d of %ld backup config."
 msgid_plural "Running restore failed for %d of %ld backup configs."
-msgstr[0] ""
-"Izvajanje obnavljanja je spodletelo za %d od %ld nastavitve varnostnega "
-"kopiranja."
-msgstr[1] ""
-"Izvajanje obnavljanja je spodletelo za %d od %ld nastavitev varnostnega "
-"kopiranja."
-msgstr[2] ""
-"Izvajanje obnavljanja je spodletelo za %d od %ld nastavitev varnostnega "
-"kopiranja."
-msgstr[3] ""
-"Izvajanje obnavljanja je spodletelo za %d od %ld nastavitev varnostnega "
-"kopiranja."
+msgstr[0] "Izvajanje obnavljanja je spodletelo za %d od %ld nastavitve varnostnega kopiranja."
+msgstr[1] "Izvajanje obnavljanja je spodletelo za %d od %ld nastavitev varnostnega kopiranja."
+msgstr[2] "Izvajanje obnavljanja je spodletelo za %d od %ld nastavitev varnostnega kopiranja."
+msgstr[3] "Izvajanje obnavljanja je spodletelo za %d od %ld nastavitev varnostnega kopiranja."
 
 #, c-format
 msgid "Running restore for backup config '%s' failed."
-msgstr ""
-"Izvajanje obnavljanja za nastavitev varnostnega kopiranja »%s« je spodletelo."
+msgstr "Izvajanje obnavljanja za nastavitev varnostnega kopiranja »%s« je spodletelo."
 
 #, c-format
 msgid "Running restore for backup config '%s'."
@@ -1305,6 +1303,10 @@ msgstr "Neznana lastnost rankdir »%s«."
 #, c-format
 msgid "Unknown type '%s'."
 msgstr "Neznana vrsta »%s«."
+
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "Ustvarjanje posnetka za branje in pisanje iz posnetka %d."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values

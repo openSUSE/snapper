@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/sv/>\n"
@@ -826,6 +826,11 @@ msgid "Extra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tExtra alternativ skickades till diffkommandot."
 
 # SLE12
+#, fuzzy
+msgid "Failed to compute checksum."
+msgstr "Misslyckades att tolka '%s'"
+
+# SLE12
 msgid "Failed to initialize filesystem handler."
 msgstr "Det gick inte att initiera filsystemhanteraren."
 
@@ -911,6 +916,10 @@ msgstr "\t--verbose, -v\t\t\tÖka utförligheten."
 msgid "Invalid ambit '%s'."
 msgstr "Ogiltig omfattning '%s'."
 
+#, fuzzy
+msgid "Invalid checksum output format."
+msgstr "\t--csvout\t\t\tStäll in CSV som utdata format."
+
 # SLE12
 #, c-format
 msgid "Invalid column '%s'."
@@ -943,6 +952,9 @@ msgstr "Ogiltig tabellstil '%s'"
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Ogiltigt maskinläsbart format '%s'."
+
+msgid "Invalid number of lines in checksum output."
+msgstr ""
 
 # SLE12
 #, c-format
@@ -1533,6 +1545,11 @@ msgstr "Kommandot %s är okänt."
 #, c-format
 msgid "Unknown type '%s'."
 msgstr "Okänd typ '%s'."
+
+# SLE12
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "Skapar ögonblicksbild med läs- och skrivrättigheter av ögonblicksbilden %d."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values

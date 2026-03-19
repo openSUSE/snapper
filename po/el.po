@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2026-02-24 00:04+0000\n"
 "Last-Translator: Efstathios Iosifidis <eiosifidis@yandex.com>\n"
 "Language-Team: Greek <https://l10n.opensuse.org/projects/snapper/master/el/>\n"
@@ -683,6 +683,10 @@ msgstr "Σφάλμα (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "Πρόσθετες επιλογές που μεταβιβάζονται στην εντολή diff."
 
+#, fuzzy
+msgid "Failed to compute checksum."
+msgstr "Αποτυχία ανάλυσης αριθμού."
+
 msgid "Failed to initialize filesystem handler."
 msgstr "Αποτυχία αρχικοποίησης χειριστή συστήματος αρχείων."
 
@@ -757,6 +761,10 @@ msgstr "Αύξηση επιπέδου λεπτομέρειας (verbosity)."
 msgid "Invalid ambit '%s'."
 msgstr "Μη έγκυρο στιγμιότυπο '%s'."
 
+#, fuzzy
+msgid "Invalid checksum output format."
+msgstr "Ορισμός μορφής εξόδου σε CSV."
+
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "Μη έγκυρη στήλη '%s'."
@@ -781,6 +789,9 @@ msgstr "Μη έγκυρος τύπος καταγραφέα '%s'."
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Μη έγκυρη μορφή αναγνώσιμης μηχανής '%s'."
+
+msgid "Invalid number of lines in checksum output."
+msgstr ""
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -1264,6 +1275,10 @@ msgstr "Άγνωστο rankdir '%s'."
 #, c-format
 msgid "Unknown type '%s'."
 msgstr "Άγνωστος τύπος '%s'."
+
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "Δημιουργία στιγμιοτύπου μόνο για ανάγνωση του στιγμιοτύπου %d."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values

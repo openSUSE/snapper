@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Ukrainian <https://l10n.opensuse.org/projects/snapper/master/uk/>\n"
@@ -714,6 +714,10 @@ msgstr "Помилка вводу/виводу (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tДодаткові параметри, передані у команду diff."
 
+#, fuzzy
+msgid "Failed to compute checksum."
+msgstr "не вдалося створити %s"
+
 msgid "Failed to initialize filesystem handler."
 msgstr "Не вдалося ініціалізувати обробник файлової системи."
 
@@ -794,6 +798,9 @@ msgstr "\t--verbose-v\t\t\tЗбільшити детальність вивод�
 msgid "Invalid ambit '%s'."
 msgstr "Неправильний знімок '%s'."
 
+msgid "Invalid checksum output format."
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "Неправильний знімок '%s'."
@@ -820,6 +827,9 @@ msgstr "Непридатний стиль таблиці %d."
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Непридатний стиль таблиці %d."
+
+msgid "Invalid number of lines in checksum output."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid path '%s'."
@@ -1344,6 +1354,10 @@ msgstr "Невідома команда '%s'."
 #, fuzzy, c-format
 msgid "Unknown type '%s'."
 msgstr "Невідома команда '%s'."
+
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "Створення знімка %d для читання-запису."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values

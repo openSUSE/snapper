@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-07 04:10+0100\n"
+"POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Hindi <https://l10n.opensuse.org/projects/snapper/master/hi/>\n"
@@ -724,6 +724,10 @@ msgstr "I/O त्रुटि"
 msgid "Extra options passed to the diff command."
 msgstr ""
 
+#, fuzzy
+msgid "Failed to compute checksum."
+msgstr "%s बनाने में विफल"
+
 msgid "Failed to initialize filesystem handler."
 msgstr ""
 
@@ -801,6 +805,9 @@ msgstr ""
 msgid "Invalid ambit '%s'."
 msgstr "अमान्य प्रकार %1।"
 
+msgid "Invalid checksum output format."
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "अमान्य प्रकार %1।"
@@ -827,6 +834,9 @@ msgstr "अमान्य प्रकार %1।"
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "अमान्य प्रकार %1।"
+
+msgid "Invalid number of lines in checksum output."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid path '%s'."
@@ -1335,6 +1345,10 @@ msgstr "अनंजान"
 #, fuzzy, c-format
 msgid "Unknown type '%s'."
 msgstr "अनंजान"
+
+#, fuzzy, c-format
+msgid "Updating metadata of snapshot %d."
+msgstr "पार्सिंग समरूपण फाइलें..."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
