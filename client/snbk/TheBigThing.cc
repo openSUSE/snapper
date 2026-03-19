@@ -34,7 +34,7 @@
 
 #include "CmdBtrfs.h"
 #include "CmdLs.h"
-#include "CmdFileHash.h"
+#include "CmdChecksum.h"
 #include "BackupConfig.h"
 #include "TheBigThing.h"
 
@@ -516,11 +516,10 @@ namespace snapper
 	    the_big_thing.source_received_uuid = extra.get_received_uuid();
 	    the_big_thing.source_creation_time = extra.get_creation_time();
 
-	    // Find the hash of info.xml
-	    CmdFileHash cmd_filehash(shell_source, SHA256SUM_BIN,
-	                             source_snapshot_dir(snapper, num) + "/info.xml",
-	                             false);
-	    the_big_thing.source_meta_hash = cmd_filehash.get_hash();
+	    // Get the checksum of info.xml.
+	    CmdChecksum cmd_checksum(shell_source, SHA256SUM_BIN,
+				     source_snapshot_dir(snapper, num) + "/info.xml");
+	    the_big_thing.source_meta_checksum = cmd_checksum.get_checksum();
 
 	    the_big_things.push_back(the_big_thing);
 	}
@@ -618,15 +617,23 @@ namespace snapper
 		it->target_received_uuid = extra.get_received_uuid();
 		it->target_creation_time = extra.get_creation_time();
 
-		// Find the hash of info.xml
-		CmdFileHash cmd_filehash(
-		    shell_target, backup_config.target_sha256sum_bin,
-		    target_snapshot_dir(backup_config, num) + "/info.xml", true);
-		it->target_meta_hash = cmd_filehash.get_hash();
+		try
+		{
+		    // Get the checksum of info.xml.
+		    CmdChecksum cmd_checksum(shell_target, backup_config.target_sha256sum_bin,
+					     target_snapshot_dir(backup_config, num) + "/info.xml");
+		    it->target_meta_checksum = cmd_checksum.get_checksum();
+		}
+		catch (const Exception& e)
+		{
+		    SN_CAUGHT(e);
+
+		    // keep checksum empty
+		}
 
 		if (it->source_state == TheBigThing::SourceState::READ_ONLY &&
 		    it->target_state == TheBigThing::TargetState::VALID &&
-		    it->source_meta_hash != it->target_meta_hash)
+		    it->source_meta_checksum != it->target_meta_checksum)
 		{
 		    it->target_state = TheBigThing::TargetState::LEGACY;
 		}
