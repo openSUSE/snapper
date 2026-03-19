@@ -20,8 +20,8 @@
  */
 
 
-#ifndef SNAPPER_CMD_FILE_HASH_H
-#define SNAPPER_CMD_FILE_HASH_H
+#ifndef SNAPPER_CMD_CHECKSUM_H
+#define SNAPPER_CMD_CHECKSUM_H
 
 
 #include "Shell.h"
@@ -33,25 +33,25 @@ namespace snapper
 
 
     /**
-     * Find the hash of the file at the given path.
-     * If `allow_failure` is `true`, errors are ignored and the hash is set to an empty
-     * string.
+     * Get the checksum (e.g. sha256sum) of the file at the given path.
      */
-    class CmdFileHash
+    class CmdChecksum
     {
     public:
 
-	CmdFileHash(const Shell& shell, const string& chksum_bin, const string& path,
-	            bool allow_failure);
+	CmdChecksum(const Shell& shell, const string& checksum_bin, const string& path);
 
-	const string& get_hash() const;
+	const string& get_checksum() const { return checksum; }
 
-	friend std::ostream& operator<<(std::ostream& s, const CmdFileHash& cmd_filehash);
+	friend std::ostream& operator<<(std::ostream& s, const CmdChecksum& cmd_checksum);
 
     private:
 
+	void parse(const vector<string>& lines);
+
 	const string path;
-	string hash;
+	string checksum;
+
     };
 
 

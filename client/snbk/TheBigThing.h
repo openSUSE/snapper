@@ -83,13 +83,13 @@ namespace snapper
 	string source_parent_uuid;
 	string source_received_uuid;
 	string source_creation_time;
-	string source_meta_hash;
+	string source_meta_checksum;
 
 	string target_uuid;
 	string target_parent_uuid;
 	string target_received_uuid;
 	string target_creation_time;
-	string target_meta_hash;
+	string target_meta_checksum;
 
     private:
 
