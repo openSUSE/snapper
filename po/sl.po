@@ -9,14 +9,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-19 12:28+0100\n"
-"PO-Revision-Date: 2026-03-10 19:04+0000\n"
+"PO-Revision-Date: 2026-03-19 21:04+0000\n"
 "Last-Translator: Jure Repinc <jlp@holodeck1.com>\n"
-"Language-Team: Slovenian <https://l10n.opensuse.org/projects/snapper/master/sl/>\n"
+"Language-Team: Slovenian <https://l10n.opensuse.org/projects/snapper/master/"
+"sl/>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Generator: Weblate 5.16.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -692,9 +694,8 @@ msgstr "Napaka (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "Dodatne možnosti, ki se posredujejo ukazu diff."
 
-#, fuzzy
 msgid "Failed to compute checksum."
-msgstr "Razčlenjevanje številke ni uspelo."
+msgstr "Izračun nadzorne vsote ni uspel."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Pripravljanje ročnika za datotečni sistem ni uspelo."
@@ -771,9 +772,8 @@ msgstr "Poveča količino izpisa."
 msgid "Invalid ambit '%s'."
 msgstr "Neveljaven ambit »%s«."
 
-#, fuzzy
 msgid "Invalid checksum output format."
-msgstr "Nastavi izpis v obliki CSV."
+msgstr "Neveljavna izhodna oblika nadzorne vsote."
 
 #, c-format
 msgid "Invalid column '%s'."
@@ -801,7 +801,7 @@ msgid "Invalid machine readable format '%s'."
 msgstr "Neveljavna računalniško berljiva oblika »%s«."
 
 msgid "Invalid number of lines in checksum output."
-msgstr ""
+msgstr "Neveljavno število vrstic v izhodu nadzornih vsot."
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -1304,9 +1304,9 @@ msgstr "Neznana lastnost rankdir »%s«."
 msgid "Unknown type '%s'."
 msgstr "Neznana vrsta »%s«."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Updating metadata of snapshot %d."
-msgstr "Ustvarjanje posnetka za branje in pisanje iz posnetka %d."
+msgstr "Posodabljanje metapodatkov posnetka %d."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
