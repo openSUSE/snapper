@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-19 12:28+0100\n"
-"PO-Revision-Date: 2026-03-11 12:04+0000\n"
+"PO-Revision-Date: 2026-03-20 10:04+0000\n"
 "Last-Translator: David Medina <medipas@gmail.com>\n"
-"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/ca/>\n"
+"Language-Team: Catalan <https://l10n.opensuse.org/projects/snapper/master/"
+"ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -675,9 +676,8 @@ msgstr "Error (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "Opcions extres passades a l'ordre diff."
 
-#, fuzzy
 msgid "Failed to compute checksum."
-msgstr "Ha fallat analitzar el número."
+msgstr "Ha fallat calcular la suma de verificació."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Ha fallat l'inici del manejador de sistemes de fitxers."
@@ -750,9 +750,8 @@ msgstr "Incrementa'n la mostra de detalls."
 msgid "Invalid ambit '%s'."
 msgstr "Àmbit no vàlid: %s."
 
-#, fuzzy
 msgid "Invalid checksum output format."
-msgstr "Estableix el format de sortida CSV."
+msgstr "Format de sortida de la suma de verificació no vàlid."
 
 #, c-format
 msgid "Invalid column '%s'."
@@ -780,7 +779,7 @@ msgid "Invalid machine readable format '%s'."
 msgstr "Format llegible per a la màquina no vàlid: %s."
 
 msgid "Invalid number of lines in checksum output."
-msgstr ""
+msgstr "Nombre de línies no vàlid a la sortida de la suma de verificació."
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -1265,9 +1264,9 @@ msgstr "Directori de classificació desconegut: %s."
 msgid "Unknown type '%s'."
 msgstr "Tipus desconegut: %s."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Updating metadata of snapshot %d."
-msgstr "Creant una instantània de lectura-escriptura de la instantània %d."
+msgstr "Actualitzant les metadades de la instantània %d."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
