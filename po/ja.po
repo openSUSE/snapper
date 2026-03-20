@@ -9,9 +9,10 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-19 12:28+0100\n"
-"PO-Revision-Date: 2026-03-11 05:04+0000\n"
+"PO-Revision-Date: 2026-03-20 03:04+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
+"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/"
+"ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -680,9 +681,8 @@ msgstr "エラー (%s) 。"
 msgid "Extra options passed to the diff command."
 msgstr "diffコマンドに渡す追加オプションを指定します。"
 
-#, fuzzy
 msgid "Failed to compute checksum."
-msgstr "数値の解釈に失敗しました。"
+msgstr "チェックサムの計算に失敗しました。"
 
 msgid "Failed to initialize filesystem handler."
 msgstr "ファイルシステムハンドラの準備に失敗しました。"
@@ -755,9 +755,8 @@ msgstr "より詳しい出力を行ないます。"
 msgid "Invalid ambit '%s'."
 msgstr "領域 '%s' が正しくありません。"
 
-#, fuzzy
 msgid "Invalid checksum output format."
-msgstr "CSV 形式で出力します。"
+msgstr "チェックサムの出力形式が正しくありません。"
 
 #, c-format
 msgid "Invalid column '%s'."
@@ -785,7 +784,7 @@ msgid "Invalid machine readable format '%s'."
 msgstr "機械処理可能な形式の指定 '%s' が正しくありません。"
 
 msgid "Invalid number of lines in checksum output."
-msgstr ""
+msgstr "チェックサム出力の行数が正しくありません。"
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -1264,9 +1263,9 @@ msgstr "不明な rankdir '%s' です。"
 msgid "Unknown type '%s'."
 msgstr "不明なタイプ '%s' です。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Updating metadata of snapshot %d."
-msgstr "スナップショット %d に対して読み書き可能なスナップショットを作成しています。"
+msgstr "スナップショット %d のメタデータを更新しています。"
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
