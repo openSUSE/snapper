@@ -10,9 +10,10 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-19 12:28+0100\n"
-"PO-Revision-Date: 2026-03-11 12:04+0000\n"
+"PO-Revision-Date: 2026-03-20 10:04+0000\n"
 "Last-Translator: Freek de Kruijf <freek@opensuse.org>\n"
-"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>\n"
+"Language-Team: Dutch <https://l10n.opensuse.org/projects/snapper/master/nl/>"
+"\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -683,9 +684,8 @@ msgstr "Fout (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "Extra opties doorgegeven aan de opdracht diff."
 
-#, fuzzy
 msgid "Failed to compute checksum."
-msgstr "Nummer ontleden is mislukt."
+msgstr "Berekenen van controlesom is mislukt."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Behandelaar van bestandssysteem initialiseren is mislukt."
@@ -758,9 +758,8 @@ msgstr "Hoeveelheid informatie verhogen."
 msgid "Invalid ambit '%s'."
 msgstr "Ongeldige ambit '%s'."
 
-#, fuzzy
 msgid "Invalid checksum output format."
-msgstr "CSV uitvoerformaat instellen."
+msgstr "Ongeldig uitvoerformaat van controlesom."
 
 #, c-format
 msgid "Invalid column '%s'."
@@ -788,7 +787,7 @@ msgid "Invalid machine readable format '%s'."
 msgstr "Ongeldig machine-leesbaar formaat '%s'."
 
 msgid "Invalid number of lines in checksum output."
-msgstr ""
+msgstr "Ongeldig aantal regels in uitvoer van controlesom."
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -1272,9 +1271,9 @@ msgstr "Onbekende rankdir '%s'."
 msgid "Unknown type '%s'."
 msgstr "Onbekend type '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Updating metadata of snapshot %d."
-msgstr "Bezig lezen-schrijven momentopname van momentopname %d te maken."
+msgstr "Bijwerken van metagegevens van momentopname %d."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
