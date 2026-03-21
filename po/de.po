@@ -7,15 +7,16 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-19 12:28+0100\n"
-"PO-Revision-Date: 2026-02-25 05:04+0000\n"
+"PO-Revision-Date: 2026-03-21 15:04+0000\n"
 "Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
-"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>\n"
+"Language-Team: German <https://l10n.opensuse.org/projects/snapper/master/de/>"
+"\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16\n"
+"X-Generator: Weblate 5.16.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <Bereinigungsalgorithmus>"
@@ -680,9 +681,8 @@ msgstr "Fehler (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "Extra Optionen, die an den diff-Befehl übergeben wurden."
 
-#, fuzzy
 msgid "Failed to compute checksum."
-msgstr "Nummer konnte nicht geparst werden."
+msgstr "Berechnung der Prüfsumme fehlgeschlagen."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Initialisierung des Dateisystem-Handlers fehlgeschlagen."
@@ -755,9 +755,8 @@ msgstr "Gesprächigkeit erhöhen."
 msgid "Invalid ambit '%s'."
 msgstr "Ungültiger Anwendungsbereich '%s'."
 
-#, fuzzy
 msgid "Invalid checksum output format."
-msgstr "CSV-Ausgabeformat festlegen."
+msgstr "Ungültiges Ausgabeformat für die Prüfsumme."
 
 #, c-format
 msgid "Invalid column '%s'."
@@ -785,7 +784,7 @@ msgid "Invalid machine readable format '%s'."
 msgstr "Ungültiges maschinenlesbares Format '%s'."
 
 msgid "Invalid number of lines in checksum output."
-msgstr ""
+msgstr "Ungültige Zeilenanzahl in der Prüfsummenausgabe."
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -978,7 +977,7 @@ msgid "Probing target snapshots."
 msgstr "Test der Zielschnappschüsse."
 
 msgid "Produce a specific graph in Graphviz DOT format:"
-msgstr ""
+msgstr "Ein bestimmtes Diagramm im Graphviz-DOT-Format erstellen:"
 
 #, c-format
 msgid "Quota error (%s)."
@@ -1269,9 +1268,9 @@ msgstr ""
 msgid "Unknown type '%s'."
 msgstr "Unbekannter Typ '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Updating metadata of snapshot %d."
-msgstr "Lesen-Schreiben-Schnappschuss des Schnappschusses %d erstellen."
+msgstr "Metadaten von Schnappschuss %d werden aktualisiert."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
