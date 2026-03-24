@@ -28,7 +28,6 @@
 #include <fcntl.h>
 #include <cerrno>
 #include <cstring>
-#include <regex>
 
 #include "snapper/Snapshot.h"
 #include "snapper/Snapper.h"
@@ -49,7 +48,6 @@
 namespace snapper
 {
     using std::list;
-    using std::regex;
 
 
     std::ostream& operator<<(std::ostream& s, const Snapshot& snapshot)
@@ -236,24 +234,12 @@ namespace snapper
     Snapshots::~Snapshots() = default;
 
 
-    static bool
-    number_entries(unsigned char type, const char* name)
-    {
-	// Snapshot '0' is internal and not saved on disks. So simply ignore directories
-	// starting with '0'.
-
-	static const regex rx_num("[1-9][0-9]*", regex::extended);
-
-	return regex_match(name, rx_num);
-    }
-
-
     void
     Snapshots::read()
     {
 	SDir infos_dir = snapper->openInfosDir();
 
-	for (const string& info : infos_dir.entries(number_entries))
+	for (const string& info : infos_dir.entries(SDir::number_entries))
 	{
 	    try
 	    {
@@ -505,7 +491,7 @@ namespace snapper
 	// Numbers of directories (and files) found in infos-dir.
 
 	vector<unsigned int> nums;
-	for (const string& tmp : infos_dir.entries(number_entries))
+	for (const string& tmp : infos_dir.entries(SDir::number_entries))
 	    nums.push_back(stoi(tmp));
 
 	// Set num to next available free number. All entries should also be included in

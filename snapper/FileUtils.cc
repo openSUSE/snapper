@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2018-2025] SUSE LLC
+ * Copyright (c) [2018-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -37,6 +37,7 @@
 #include <cstdlib>
 #include <cassert>
 #include <algorithm>
+#include <regex>
 
 #include "snapper/FileUtils.h"
 #include "snapper/AppUtil.h"
@@ -165,10 +166,22 @@ namespace snapper
     }
 
 
-    static bool
-    all_entries(unsigned char type, const char* name)
+    bool
+    SDir::all_entries(unsigned char type, const char* name)
     {
 	return true;
+    }
+
+
+    bool
+    SDir::number_entries(unsigned char type, const char* name)
+    {
+	// Snapshot '0' is internal and not saved on disks. So simply ignore directories
+	// starting with '0'.
+
+	static const regex rx_num("[1-9][0-9]*", regex::extended);
+
+	return regex_match(name, rx_num);
     }
 
 
