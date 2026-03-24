@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2014] Novell, Inc.
- * Copyright (c) [2020-2025] SUSE LLC
+ * Copyright (c) [2020-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -74,6 +74,9 @@ namespace snapper
 
 	// Type is not supported by all file system types, see readdir(3).
 	typedef std::function<bool(unsigned char type, const char* name)> entries_pred_t;
+
+	static bool all_entries(unsigned char type, const char* name);
+	static bool number_entries(unsigned char type, const char* name);
 
 	// The order of the result of the entries functions is undefined.
 	vector<string> entries() const;

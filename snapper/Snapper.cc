@@ -467,6 +467,14 @@ namespace snapper
 	    }
 	}
 
+	// Since we want all-time unique snapshot numbers there might be empty
+	// directories.
+
+	SDir infos_dir = snapper->openInfosDir();
+
+	for (const string& tmp : infos_dir.entries(SDir::number_entries))
+	    infos_dir.rmdir(tmp);
+
 	try
 	{
 	    snapper->getFilesystem()->deleteConfig();
