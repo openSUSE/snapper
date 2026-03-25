@@ -66,9 +66,16 @@ namespace snapper
 
 	virtual string snapshotDir(unsigned int num) const = 0;
 
+	// e.g. /test
 	virtual SDir openSubvolumeDir() const;
+
+	// e.g. /test/.snapshots
 	virtual SDir openInfosDir() const = 0;
+
+	// e.g. /test/.snapshots/42
 	virtual SDir openInfoDir(unsigned int num) const;
+
+	// e.g. /test/.snapshots/42/snapshot
 	virtual SDir openSnapshotDir(unsigned int num) const = 0;
 
 	virtual void createSnapshot(unsigned int num, unsigned int num_parent, bool read_only,
