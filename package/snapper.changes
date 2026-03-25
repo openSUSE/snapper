@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Mar 25 15:18:15 CET 2026 - Arvin Schnell <aschnell@suse.com>
+
+- fix deleting LVM configs in case of empty directories
+  (bsc#1260410)
+
+-------------------------------------------------------------------
 Thu Mar 12 13:48:06 CET 2026 - Arvin Schnell <aschnell@suse.com>
 
 - enable sharing of ssh sessions (gh#openSUSE/snapper#1087)
