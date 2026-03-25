@@ -470,10 +470,15 @@ namespace snapper
 	// Since we want all-time unique snapshot numbers there might be empty
 	// directories.
 
-	SDir infos_dir = snapper->openInfosDir();
+	{
+	    SDir infos_dir = snapper->openInfosDir();
 
-	for (const string& tmp : infos_dir.entries(SDir::number_entries))
-	    infos_dir.rmdir(tmp);
+	    for (const string& tmp : infos_dir.entries(SDir::number_entries))
+		infos_dir.rmdir(tmp);
+
+	    // call ~SDir - although rmdir below (deleteConfig in LVM case) works on a
+	    // busy directory - better save than sorry
+	}
 
 	try
 	{
