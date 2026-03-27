@@ -8,7 +8,7 @@ Running SRT can be dangerous! srt provides a text interface to easily choose a s
 
 **All files created since the date of the chosen snapshot will be deleted!**
 
-Use the Dry Run mode to preview what files would be deleted if you restore to the chosen snapshots state. You should always use Dry Run mode first. I cannot be held resposible for any loss of data or damage caused by running this program. You run SRT entirely at your own risk.
+Use the Dry Run mode to preview what files would be deleted if you restore to the chosen snapshots state. You should always use Dry Run mode first. I cannot be held responsible for any loss of data or damage caused by running this program. You run SRT entirely at your own risk.
 
 Quit any browsers and stop any other running programs before running this script locally.
 
@@ -16,7 +16,7 @@ Quit any browsers and stop any other running programs before running this script
 
 I was a happy ZFS user for several years before I tried BTRFS and one of my favourite ZFS features is filesystem snapshots. ZFS has snapshots of datasets whereas BTRFS has snapshots of subvolumes but there are differences in how subvols and datasets are handled and how snapper reverts snapshots compared to ZFS.
 
-When I started using BTRFS I wanted to be able to revert snapper snapshots, at least of user home directories, in a very similar way to how the `zfs rollback` command works but unfortunately the `snapper rollback` command does not work in a similar manner to zfs rollback. snapper also has an `undochange` subcommand which is closer to what I wanted but I think its confusing for users because it undoes changes between two snapshots instead of reverting to one. In many cases this would require using rsync to work out what would happen wheh using `snapper undochange`.
+When I started using BTRFS I wanted to be able to revert snapper snapshots, at least of user home directories, in a very similar way to how the `zfs rollback` command works but unfortunately the `snapper rollback` command does not work in a similar manner to zfs rollback. snapper also has an `undochange` subcommand which is closer to what I wanted but I think its confusing for users because it undoes changes between two snapshots instead of reverting to one. In many cases this would require using rsync to work out what would happen when using `snapper undochange`.
 
 I was unable to find a program to use alongside snapper that made it easy to restore users home directories to a previous snapshot state. I don't want a new snapshot or subvol to be created when I do a rollback which is why I wrote srt, to effectively rollback without having to deal with handling more subvols or trying to work out what result undochange might give me.
 
