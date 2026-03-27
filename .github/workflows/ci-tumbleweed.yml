@@ -21,7 +21,7 @@ jobs:
         elif [ "${{ matrix.compiler }}" = "clang" ]; then
           zypper --non-interactive install --no-recommends clang
         fi
-        zypper --non-interactive install --no-recommends autoconf automake dbus-1-devel docbook-xsl-stylesheets gettext-runtime glibc-locale libacl-devel libboost_test-devel libboost_thread-devel libbtrfs-devel libbtrfsutil-devel libjson-c-devel libmount-devel libtool libxml2-devel libxslt make pam-devel xz
+        zypper --non-interactive install --no-recommends autoconf automake dbus-1-devel docbook-xsl-stylesheets gettext-runtime glibc-locale libacl-devel libboost_test-devel libboost_thread-devel libbtrfs-devel libbtrfsutil-devel libjson-c-devel libmount-devel libtool libxml2-devel libxslt make ncurses-devel pam-devel xz
 
     - name: List installed packages
       run: rpm -qa | sort
