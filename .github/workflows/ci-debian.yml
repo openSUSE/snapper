@@ -16,7 +16,7 @@ jobs:
       run: apt list --installed | sort
 
     - name: Git checkout
-      uses: actions/checkout@v1
+      uses: actions/checkout@v6
 
     - name: Configure
       run: make -f Makefile.repo

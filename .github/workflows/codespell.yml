@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Codespell
-        # third-party so better use commit shasum (here of v2)
-        uses: codespell-project/actions-codespell@94259cd8be02ad2903ba34a22d9c13de21a74461
+        # third-party so better use commit shasum (here of v2.2)
+        uses: codespell-project/actions-codespell@8f01853be192eb0f849a5c7d721450e7a467c579
