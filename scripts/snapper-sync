@@ -1,0 +1,64 @@
+#!/bin/sh
+
+set -eu
+
+# Check for the required binaries
+check_binary() {
+  command -v "$1" >/dev/null 2>&1 || {
+    echo >&2 "Error: '$1' is required but not found in PATH."
+    exit 1
+  }
+}
+
+check_binary jq
+check_binary mkdir
+check_binary snapper
+check_binary snbk
+
+# Construct a list of dictionaries containing the necessary snapshot information,
+# including the name of the backup-config, the name of the source-config, and the snapshot
+# number
+config_mapping=$(
+  snbk --machine-readable json list-configs |
+  jq -r '."backup-configs" | map({key: .name, value: .config}) | from_entries'
+)
+
+if outputs=$(snbk --machine-readable json list); then
+  snapshots=$(
+    echo $outputs |
+    jq --argjson config_mapping "$config_mapping" '
+      .snapshots | . |= map(. + {config: $config_mapping[.name]})
+    '
+  )
+else
+  echo >&2 "Error: 'snbk list' failed with exit status $?"
+  exit 1
+fi
+
+# Create the snapshot placeholder with the highest number if missing
+echo "$config_mapping" | jq -r 'keys[]' | while read -r backup_config; do
+
+  # Query the name of source-config for the currently processed backup-config
+  source_config=$(echo "$config_mapping" | jq -r ".[\"$backup_config\"]")
+
+  # Query the highest snapshot number across backup-configs with the same source-config
+  max_num=$(
+    echo "$snapshots" |
+    jq -r "[.[] | select(.config == \"$source_config\")] | max_by(.number) | .number"
+  )
+
+  # Query the source subvolume path
+  subvol_path=$(
+    snapper --machine-readable json -c "$source_config" get-config | jq -r '.SUBVOLUME'
+  )
+
+  # Check and make the snapshot placeholder with the highest number
+  target_path="$subvol_path/.snapshots/$max_num"
+  if [ -d "$target_path" ]; then
+    echo "$target_path exists."
+  else
+    mkdir "$target_path"
+    echo "$target_path created."
+  fi
+
+done

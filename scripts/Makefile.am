@@ -16,7 +16,8 @@ pam_snapper_SCRIPTS =			\
 
 endif
 
-EXTRA_DIST = snapper-hourly $(pam_snapper_SCRIPTS)
+EXTRA_DIST = snapper-hourly snapper-sync $(pam_snapper_SCRIPTS)
 
 install-data-local:
 	install -D snapper-hourly $(DESTDIR)/etc/cron.hourly/suse.de-snapper
+	install -D snapper-sync $(DESTDIR)/usr/sbin
