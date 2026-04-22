@@ -203,6 +203,15 @@
             </dd>
             <dt>
               <span class="term">
+                <code class="option">--logger-type  <em class="replaceable"><code>type</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Set the logger type. Possible values are none, stdout,
+	  logfile and syslog.</p>
+            </dd>
+            <dt>
+              <span class="term">
                 <code class="option">--debug</code>
               </span>
             </dt>
@@ -407,10 +416,9 @@
               </span>
             </dt>
             <dd>
-              <p>Delete a configuration for a filesystem or subvolume. For this
-	  command you will likely need to global option
-	  <code class="option">--config</code>, see <a class="link" href="#global_options" title="GLOBAL OPTIONS">GLOBAL
-	  OPTIONS</a> and <a class="link" href="#concepts" title="CONCEPTS">CONCEPTS.</a></p>
+              <p>Delete a configuration for a filesystem or subvolume
+	  including all snapshots. For this command you will likely need to
+	  global option <code class="option">--config</code>, see <a class="link" href="#global_options" title="GLOBAL OPTIONS">GLOBAL OPTIONS</a> and <a class="link" href="#concepts" title="CONCEPTS">CONCEPTS.</a></p>
             </dd>
             <dt>
               <span class="term">
@@ -571,7 +579,10 @@
                     <span class="term"><code class="option">--command</code> <em class="replaceable"><code>command</code></em></span>
                   </dt>
                   <dd>
-                    <p>Create a pre and post snapshot and run command in between.</p>
+                    <p>Create a pre and post snapshot and run command in between.  If snapper is
+		unable to execute the command at all, it does not take the post snapshot.  If the
+		command exits with a non-zero exit code, snapper takes the post snapshot and exits
+		with that same exit code.</p>
                   </dd>
                   <dt>
                     <span class="term">
@@ -1071,6 +1082,22 @@
             </dt>
             <dd>
               <p>Executed after a snapshot was removed</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">set-read-only-pre <em class="replaceable"><code>subvolume</code></em> <em class="replaceable"><code>fstype</code></em> <em class="replaceable"><code>snapshot-number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Executed before a snapshot is set read-only or read-write</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">set-read-only-post <em class="replaceable"><code>subvolume</code></em> <em class="replaceable"><code>fstype</code></em> <em class="replaceable"><code>snapshot-number</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Executed after  a snapshot is set read-only or read-write</p>
             </dd>
             <dt>
               <span class="term">

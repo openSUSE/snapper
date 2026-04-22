@@ -109,6 +109,36 @@
             </dd>
             <dt>
               <span class="term">
+                <code class="option">send-compressed-data</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Per default snbk will add the option --compressed-data iff
+	  supported by the source and target system. This can be disable by
+	  setting this value to false.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">send-options</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Extra options for the btrfs send command as an array
+	  of strings. Optional.</p>
+              <p>Per default snbk automatically adds --proto and --compressed-data
+	  iff supported by both the source and target.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">receive-options</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Extra options for the btrfs receive command as an
+	  array of strings. Optional.</p>
+            </dd>
+            <dt>
+              <span class="term">
                 <code class="option">target-btrfs-bin</code>
               </span>
             </dt>
@@ -118,11 +148,11 @@
             </dd>
             <dt>
               <span class="term">
-                <code class="option">target-findmnt-bin</code>
+                <code class="option">target-ls-bin</code>
               </span>
             </dt>
             <dd>
-              <p>Location of the findmnt binary on the target. Can also
+              <p>Location of the ls binary on the target. Can also
 	  be used to install wrapper scripts. Optional.</p>
             </dd>
             <dt>
@@ -132,15 +162,6 @@
             </dt>
             <dd>
               <p>Location of the mkdir binary on the target. Can also
-	  be used to install wrapper scripts. Optional.</p>
-            </dd>
-            <dt>
-              <span class="term">
-                <code class="option">target-realpath-bin</code>
-              </span>
-            </dt>
-            <dd>
-              <p>Location of the realpath binary on the target. Can also
 	  be used to install wrapper scripts. Optional.</p>
             </dd>
             <dt>

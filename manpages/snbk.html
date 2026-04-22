@@ -97,8 +97,44 @@
 	    was interrupted. The next transfer command will try to
 	    transfer the snapshot again.</p>
               </dd>
+              <dt>
+                <span class="glossterm">legacy</span>
+              </dt>
+              <dd class="glossdef">
+                <p>The snapshot is valid, but the source snapshot's metadata has changed
+	    since the transfer. The next transfer command will update the snapshot's
+	    metadata on the target.</p>
+              </dd>
             </dl>
           </div>
+        </div>
+        <div class="refsect2">
+          <a id="visualization"></a>
+          <h3>Visualization</h3>
+          <p>
+	Snbk provides a <span class="emphasis"><em>visualize</em></span> command for producing graphs in
+	Graphviz DOT format for visualization purposes. Currently, producing tree diagrams
+	for snapshots on both the source and the target is supported. The command output
+	can be piped to the Graphviz tools to generate an image.
+      </p>
+          <p>
+	Here is an example of producing a tree diagram for snapshots on the source side
+	with the 'root' backup config:
+	</p>
+          <pre class="programlisting">
+# snbk -b root visualize source-tree | dot -T png -o root-source-tree.png
+	</pre>
+          <p>
+      </p>
+          <p>
+	In the tree diagram for snapshots, a node has the properties
+	<span class="emphasis"><em>virtual</em></span> and <span class="emphasis"><em>valid</em></span>. A virtual node means
+	the corresponding Btrfs subvolume is not managed by a Snapper snapshot. A valid
+	node means the node exists on both the source and target sides, and can be used as
+	a valid Btrfs send parent to reduce disk usage during snapshot transfer or
+	restoration. The root node of the diagram is a specialized virtual node, which is
+	not a Btrfs subvolume, representing the Btrfs filesystem on the source or target.
+      </p>
         </div>
       </div>
       <div class="refsect1">
@@ -169,7 +205,8 @@
               </span>
             </dt>
             <dd>
-              <p>Sets CSV output format. See
+              <p>Sets CSV output format. For some commands the CSV output
+	  contains more information than the default table output. See
 	  <a class="link" href="https://tools.ietf.org/html/rfc4180" target="_top">RFC 4180</a>
 	  for the details, except lines end with a LF, not CR+LF.</p>
             </dd>
@@ -179,7 +216,8 @@
               </span>
             </dt>
             <dd>
-              <p>Sets JSON output format.</p>
+              <p>Sets JSON output format. For some commands the JSON output
+	  contains more information than the default table output.</p>
             </dd>
             <dt>
               <span class="term">
@@ -288,6 +326,17 @@
             </dd>
             <dt>
               <span class="term">
+                <code class="option">restore [<em class="replaceable"><code>number</code></em>]</code>
+              </span>
+            </dt>
+            <dd>
+              <p>Restore all missing snapshots or the specified snapshot back to the
+	  source. A backup config must be specified to run this command. A restart of the
+	  `snapperd` service is required to make the restored snapshots visible
+	  immediately.</p>
+            </dd>
+            <dt>
+              <span class="term">
                 <code class="option">delete (remove|rm) [<em class="replaceable"><code>number</code></em>]</code>
               </span>
             </dt>
@@ -303,18 +352,59 @@
             <dd>
               <p>Combines transfer and delete.</p>
             </dd>
+            <dt>
+              <span class="term">
+                <code class="option">visualize [options] <em class="replaceable"><code>mode</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>
+	    Produce a Graphviz graph with the specified <em class="replaceable"><code>mode</code></em>.
+	    See <a class="link" href="#visualization" title="Visualization">Visualization</a> for more detail.
+	  </p>
+              <div class="variablelist">
+                <dl class="variablelist">
+                  <dt>
+                    <span class="term">
+		<code class="option">-r, --rankdir</code> <em class="replaceable"><code>rankdir</code></em>
+	      </span>
+                  </dt>
+                  <dd>
+                    <p>
+		  The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'.
+		</p>
+                  </dd>
+                  <dt>
+                    <span class="term">
+                      <code class="option">source-tree</code>
+                    </span>
+                  </dt>
+                  <dd>
+                    <p>Produce a tree diagram of the snapshots on the source.</p>
+                  </dd>
+                  <dt>
+                    <span class="term">
+                      <code class="option">target-tree</code>
+                    </span>
+                  </dt>
+                  <dd>
+                    <p>Produce a tree diagram of the snapshots on the target.</p>
+                  </dd>
+                </dl>
+              </div>
+            </dd>
           </dl>
         </div>
       </div>
       <div class="refsect1">
         <a id="restore"></a>
         <h2>RESTORE</h2>
-        <p>So far a restore has to be done manually. There are several
-    methods to do a restore, e.g. the backup can be mounted and then
-    copied or rsync can be used. Here we provide an example on how to use
-    btrfs send and receive to restore a snapshot on the source
-    system. In general using btrfs send and receive is a bit
-    tricky.</p>
+        <p>Snapshots can be restored using the restore command. There
+    are more methods to do a restore, e.g. the backup can be mounted and
+    then copied or rsync can be used.</p>
+        <p>Here we provide an example on how to manually use btrfs send
+    and receive to restore a snapshot on the source system. In general
+    using btrfs send and receive is a bit tricky.</p>
         <p>When using target-mode local:
       </p>
         <pre class="programlisting">
