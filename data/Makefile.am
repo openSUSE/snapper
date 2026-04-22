@@ -6,7 +6,7 @@ EXTRA_DIST = sysconfig.snapper base.txt lvm.txt x11.txt snapper.logrotate	\
 	default-config org.opensuse.Snapper.conf org.opensuse.Snapper.service	\
 	zypp-plugin.conf timeline.service timeline.timer cleanup.service	\
 	cleanup.timer boot.service boot.timer backup.service backup.timer	\
-	snapperd.service
+	snapperd.service snapper-sync.service 10-snapper-sync-override.conf
 
 install-data-local:
 	install -D -m 644 snapper.logrotate $(DESTDIR)/etc/logrotate.d/snapper
@@ -38,6 +38,9 @@ if ENABLE_SYSTEMD
 	install -D -m 644 backup.service $(DESTDIR)/usr/lib/systemd/system/snapper-backup.service
 	install -D -m 644 backup.timer $(DESTDIR)/usr/lib/systemd/system/snapper-backup.timer
 	install -D -m 644 snapperd.service $(DESTDIR)/usr/lib/systemd/system/snapperd.service
+	install -D -m 644 snapper-sync.service $(DESTDIR)/usr/lib/systemd/system/snapper-sync.service
+	install -D -m 644 10-snapper-sync-override.conf $(DESTDIR)/usr/lib/systemd/system/snapper-boot.timer.d/10-snapper-sync-override.conf
+	install -D -m 644 10-snapper-sync-override.conf $(DESTDIR)/usr/lib/systemd/system/snapper-timeline.timer.d/10-snapper-sync-override.conf
 endif
 
 if HAVE_ZYPP
