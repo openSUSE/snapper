@@ -2,13 +2,13 @@
 <refentry id='snbk8' xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <refentryinfo>
-    <date>2026-01-16</date>
+    <date>2026-04-23</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snbk</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2026-01-16</refmiscinfo>
+    <refmiscinfo class='date'>2026-04-23</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -138,6 +138,67 @@
 	restoration. The root node of the diagram is a specialized virtual node, which is
 	not a Btrfs subvolume, representing the Btrfs filesystem on the source or target.
       </para>
+    </refsect2>
+
+    <refsect2 id='snapshot-number-sync'>
+      <title>Highest Snapshot Number Synchronization</title>
+
+      <para>To avoid reusing snapshot numbers, 'snapperd' keeps the highest snapshot
+      folder (whether it is an empty snapshot or not) in <filename>.snapshots</filename>
+      directory, ensuring snapshot numbers remain unique at all times.
+      However, when performing a restore using various methods, the state of the highest
+      snapshot number may vary:</para>
+
+      <itemizedlist>
+	<listitem>
+	  <para>Synchronized: The latest backed-up snapshot is restored to
+	  <filename>.snapshots</filename> using `snbk restore` or manual Btrfs
+	  send-receive.
+	  In this case, the highest snapshot number is synchronized.
+	  'snapperd' creates snapshots with numbers greater than the restored snapshot,
+	  preventing snapshot number collisions.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>Legacy: A restore is made with a previous but not the latest backed-up
+	  snapshot.
+	  In this case, the state of the highest snapshot number is not valid.
+	  'snapperd' would create snapshots with numbers lower than the latest backed-up
+	  snapshot.
+	  This could invalidate the backed-up snapshots created later than the restored
+	  snapshot, and these invalid backed-up snapshots might be removed during the
+	  automatic Snapper backup process.
+	</para>
+	</listitem>
+	<listitem>
+	  <para>Legacy: When using a virtualization platform and the system is restored
+	  from a virtual machine backup.
+	  In this case, depending on the timing of the VM backup creation, the state of
+	  the highest snapshot number might not be synchronized.
+	  Snapshot number collisions might occur when 'snapperd' creates snapshots after
+	  the VM boots up.
+	  </para>
+	</listitem>
+
+      </itemizedlist>
+
+      <para>To avoid snapshot number collisions, The Snapper Backup package provides a
+      'snapper-sync' script, which can be triggered by `snapper-sync.service`, to
+      synchronize the highest snapshot number across the source and backup target devices.
+      Please consider enabling `snapper-sync.service` if any scenario related to 'Legacy'
+      might occur in your environment.
+
+      If any custom systemd timer or service is configured, please consider adding
+      the following directives:
+
+	<programlisting>
+[Unit]
+After=snapper-sync.service
+	</programlisting>
+
+      This ensures systemd schedules the custom unit to run after the highest snapshot
+      number synchronization.</para>
+
     </refsect2>
 
   </refsect1>
