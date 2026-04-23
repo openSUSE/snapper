@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-19 12:28+0100\n"
-"PO-Revision-Date: 2025-07-22 15:00+0000\n"
-"Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
-"Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/sv/>\n"
+"PO-Revision-Date: 2026-04-23 12:04+0000\n"
+"Last-Translator: Luna  Jernberg <bittin@opensuse.org>\n"
+"Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/"
+"sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.17\n"
 
 # SLE12
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -122,9 +123,8 @@ msgid "    Options for 'list' command:"
 msgstr "    Alternativ för kommandot list:"
 
 # SLE12
-#, fuzzy
 msgid "    Options for 'list-configs' command:"
-msgstr "    Alternativ för kommandot 'get-config':"
+msgstr "    Alternativ för 'list-configs' kommandot:"
 
 # SLE12
 msgid "    Options for 'modify' command:"
@@ -230,39 +230,38 @@ msgstr "%1$s, %2$s"
 #. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
 #, c-format
 msgid "%s continued"
-msgstr ""
+msgstr "%s fortsatt"
 
 #, c-format
 msgid "%s killed by signal %d"
-msgstr ""
+msgstr "%s dödad av signal %d"
 
 #. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
 #, c-format
 msgid "%s stopped"
-msgstr ""
+msgstr "%s stoppad"
 
 msgid "'btrfs send | btrfs receive' failed."
-msgstr ""
+msgstr "'btrfs send | btrfs receive' misslyckades."
 
 msgid "'btrfs subvolume delete' failed."
-msgstr ""
+msgstr "'btrfs subvolume delete' misslyckades."
 
 # SLE12
-#, fuzzy
 msgid "'cp info.xml' failed."
-msgstr "Det gick inte att öppna filen %s."
+msgstr "'cp info.xml' misslyckades."
 
 msgid "'mkdir' failed."
-msgstr ""
+msgstr "'mkdir' misslyckades."
 
 msgid "'rm info.xml' failed."
-msgstr ""
+msgstr "'rm info.xml' misslyckades."
 
 msgid "'rmdir' failed."
-msgstr ""
+msgstr "'rmdir' misslyckades."
 
 msgid "'scp info.xml' failed."
-msgstr ""
+msgstr "'scp info.xml' misslyckades."
 
 # SLE12
 #, c-format
@@ -270,34 +269,36 @@ msgid "(Snapshot %d.)"
 msgstr "(Ögonblicksbild %d.)"
 
 msgid "(Source) Creation Time"
-msgstr ""
+msgstr "(Källa) Skapandetid"
 
 msgid "(Source) Parent UUID"
-msgstr ""
+msgstr "(Källa) Överordnat UUID"
 
 msgid "(Source) Received UUID"
-msgstr ""
+msgstr "(Källa) Mottaget UUID"
 
 msgid "(Source) UUID"
-msgstr ""
+msgstr "(Källa) UUID"
 
 msgid "(Target) Creation Time"
-msgstr ""
+msgstr "(Mål) Skapandetid"
 
 msgid "(Target) Parent UUID"
-msgstr ""
+msgstr "(Mål) Överordnat UUID"
 
 msgid "(Target) Received UUID"
-msgstr ""
+msgstr "(Mål) Mottaget UUID"
 
 msgid "(Target) UUID"
-msgstr ""
+msgstr "(Mål) UUID"
 
 msgid "- A backup-config must be specified to run this command."
-msgstr ""
+msgstr "- En backup-konfiguration måste anges för att köra det här kommandot."
 
 msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
 msgstr ""
+"- Starta om `snapperd`-tjänsten för att göra de återställda "
+"ögonblicksavbilderna synliga omedelbart."
 
 msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
 msgstr ""
@@ -306,163 +307,153 @@ msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
 msgstr ""
 
 msgid "--abbreviate"
-msgstr ""
+msgstr "--abbreviate"
 
 msgid "--all-configs, -a"
-msgstr ""
+msgstr "--all-configs, -a"
 
 msgid "--ambit, -a <ambit>"
-msgstr ""
+msgstr "--ambit, -a <ambit>"
 
 msgid "--automatic"
-msgstr ""
+msgstr "--automatic"
 
 msgid "--backup-config, -b <name>"
-msgstr ""
+msgstr "--backup-config, -b <namn>"
 
 # SLE12
-#, fuzzy
 msgid "--cleanup-algorithm, -c <algo>"
-msgstr "\t--cleanup-algorithm, -c <algoritm>\tUpprensningsalgoritm för ögonblicksbild."
+msgstr "--cleanup-algorithm, -c <algoritm>"
 
 msgid "--columns <columns>"
-msgstr ""
+msgstr "--columns <kolumner>"
 
 msgid "--command <command>"
-msgstr ""
+msgstr "--command <kommando>"
 
 msgid "--config, -c <name>"
-msgstr ""
+msgstr "--config, -c <namn>"
 
 msgid "--csvout"
-msgstr ""
+msgstr "--csvout"
 
 msgid "--debug"
-msgstr ""
+msgstr "--debug"
 
-#, fuzzy
 msgid "--default"
-msgstr "Standard"
+msgstr "--default"
 
 # SLE12
-#, fuzzy
 msgid "--description, -d <description>"
-msgstr "\t--description, -d <beskrivning>\tBeskrivning av ögonblicksbild."
+msgstr "--description, -d <beskrivning>"
 
 msgid "--diff-cmd <command>"
-msgstr ""
+msgstr "--diff-cmd <kommando>"
 
 msgid "--disable-used-space"
-msgstr ""
+msgstr "--disable-used-space"
 
 msgid "--empty"
-msgstr ""
+msgstr "--empty"
 
 msgid "--extensions, -x <options>"
-msgstr ""
+msgstr "--extensions, -x <alternativ>"
 
 msgid "--free-space <space>"
-msgstr ""
+msgstr "--free-space <plats>"
 
 msgid "--from <number>"
-msgstr ""
+msgstr "--from <nummer>"
 
 msgid "--fstype, -f <fstype>"
-msgstr ""
+msgstr "--fstype, -f <filsystem typ>"
 
 msgid "--input, -i <file>"
-msgstr ""
+msgstr "--input, -i <fil>"
 
 msgid "--iso"
-msgstr ""
+msgstr "--iso"
 
 msgid "--jsonout"
-msgstr ""
+msgstr "--jsonout"
 
 # SLE12
-#, fuzzy
 msgid "--logger-type <type>"
-msgstr "\t--type, -t <typ>\t\tTyp för ögonblicksbild."
+msgstr "--logger-type <typ>"
 
 # SLE12
-#, fuzzy
 msgid "--machine-readable <format>"
-msgstr "Ogiltigt maskinläsbart format '%s'."
+msgstr "--machine-readable <format>"
 
 msgid "--no-dbus"
-msgstr ""
+msgstr "--no-dbus"
 
 msgid "--no-headers"
-msgstr ""
+msgstr "--no-headers"
 
 # SLE12
-#, fuzzy
 msgid "--output, -o <file>"
-msgstr "\t--output, -o <fil>\t\tSpara status till fil."
+msgstr "--output, -o <fil>"
 
 msgid "--path <path>"
-msgstr ""
+msgstr "--path <sökväg>"
 
 msgid "--pre-number <number>"
-msgstr ""
+msgstr "--pre-number <nummer>"
 
 msgid "--print-number, -p"
-msgstr ""
+msgstr "--print-number, -p"
 
 msgid "--quiet, -q"
-msgstr ""
+msgstr "--quiet, -q"
 
 msgid "--rankdir, -r"
-msgstr ""
+msgstr "--rankdir, -r"
 
-#, fuzzy
 msgid "--read-only"
-msgstr "Läs-endast"
+msgstr "--read-only"
 
 msgid "--read-write"
-msgstr ""
+msgstr "--read-write"
 
 msgid "--root, -r <path>"
-msgstr ""
+msgstr "--root, -r <sökväg>"
 
 msgid "--separator <separator>"
-msgstr ""
+msgstr "--separator <separator>"
 
 msgid "--sync, -s"
-msgstr ""
+msgstr "--sync, -s"
 
 # SLE12
-#, fuzzy
 msgid "--table-style, -t <style>"
-msgstr "\t--table-style, -t <stil>\tTabellstil (heltal)."
+msgstr "--table-style, -t <stil>"
 
 msgid "--target-mode <target-mode>"
-msgstr ""
+msgstr "--target-mode <mål-läge>"
 
 msgid "--template, -t <name>"
-msgstr ""
+msgstr "--template, -t <namn>"
 
 # SLE12
-#, fuzzy
 msgid "--type, -t <type>"
-msgstr "\t--type, -t <typ>\t\tTyp för ögonblicksbild."
+msgstr "--type, -t <typ>"
 
 # SLE12
-#, fuzzy
 msgid "--userdata, -u <userdata>"
-msgstr "\t--userdata, -u <användardata>\tAnvändardata för ögonblicksbilden."
+msgstr "--userdata, -u <användardata>"
 
 msgid "--utc"
-msgstr ""
+msgstr "--utc"
 
 msgid "--verbose, -v"
-msgstr ""
+msgstr "--verbose, -v"
 
 msgid "--version"
-msgstr ""
+msgstr "--version"
 
 msgid "A backup-config must be specified to run this command."
-msgstr ""
+msgstr "En backup konfiguration måste anges för att köra det här kommandot."
 
 # SLE12
 msgid "ACL error."
@@ -474,16 +465,15 @@ msgstr "Aktiv"
 msgid "Active snapshot is already default snapshot."
 msgstr "Aktiv ögonblicksbild är redan standard ögonblicksbild."
 
-#, fuzzy
 msgid "Allow to abbreviate table columns."
-msgstr "\t--abbreviate\t\t\tTillåt att förkorta tabellkolumner."
+msgstr "Tillåt förkortning av tabellkolumner."
 
 #, c-format
 msgid "Ambit is %s."
 msgstr "Omfattning är %s."
 
 msgid "Automatic"
-msgstr ""
+msgstr "Automatisk"
 
 #. TRANSLATORS: symbol for "bytes" (best keep untranslated)
 msgid "B"
@@ -510,33 +500,28 @@ msgstr "Kan inte rulla tillbaka eftersom standarddelvolymen är okänd."
 
 #, c-format
 msgid "Cannot find the node of UUID %s"
-msgstr ""
+msgstr "Kan inte hitta noden för UUID %s"
 
-#, fuzzy
 msgid "Cannot transfer a read-write snapshot."
-msgstr "\t--read-write\t\t\tSkapa en läs- och skrivbar ögonblicksbild."
+msgstr "Kan inte överföra en läs och skriv-ögonblicksavbild."
 
-#, fuzzy
 msgid "Character separator for CSV output format."
-msgstr "\t--separator <separator>\t\tTeckenavgränsare för CSV-utdataformat."
+msgstr "Teckenavgränsare för CSV-utdataformat."
 
 # SLE12
 msgid "Cleanup"
 msgstr "Upprensning"
 
 # SLE12
-#, fuzzy
 msgid "Cleanup algorithm for snapshot."
-msgstr "\t--cleanup-algorithm, -c <algoritm>\tUpprensningsalgoritm för ögonblicksbild."
+msgstr "Upprensningsalgoritm för ögonblicksavbild."
 
 # SLE12
-#, fuzzy
 msgid "Cleanup algorithm for snapshots."
-msgstr "\t--cleanup-algorithm, -c <algo>\tUpprensningsalgoritm för ögonblicksbilder."
+msgstr "Upprensningsalgoritm för ögonblicksavbilder."
 
-#, fuzzy
 msgid "Cleanup all configs affecting path."
-msgstr "\t--path <path>\t\t\tRensa alla konfigurationer som påverkar sökväg."
+msgstr "Rensa alla konfigurationer som påverkar sökväg."
 
 # SLE12
 #, c-format
@@ -544,7 +529,7 @@ msgid "Client-side plugin '%s' failed."
 msgstr "Insticksprogrammet %s på klientsidan misslyckades."
 
 msgid "Columns to show separated by comma."
-msgstr ""
+msgstr "Kolumner som ska visas separerade med kommatecken."
 
 # SLE12
 msgid "Command 'cleanup' needs one arguments."
@@ -624,14 +609,14 @@ msgid "Command 'status' needs one argument."
 msgstr "Kommandot status måste ha ett argument."
 
 # SLE12
-#, fuzzy
 msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
-msgstr "Kommandot create tar inga argument."
+msgstr ""
+"Kommandot 'transfer-and-delete' stöder inte bearbetning med en enskild "
+"ögonblicksavbild."
 
 # SLE12
-#, fuzzy
 msgid "Command 'transfer-and-delete' does not take arguments."
-msgstr "Kommandot create tar inga argument."
+msgstr "Kommandot 'transfer-and-delete' tar inga argument."
 
 # SLE12
 msgid "Command 'umount' needs at least one argument."
@@ -642,17 +627,15 @@ msgid "Command 'undochange' needs at least one argument."
 msgstr "Kommandot undochange måste ha minst ett argument."
 
 # SLE12
-#, fuzzy
 msgid "Command 'visualize' needs one argument."
-msgstr "Kommandot status måste ha ett argument."
+msgstr "Kommandot 'visualize' måste ha ett argument."
 
 # SLE12
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "Kommandot xadiff måste ha minst ett argument."
 
-#, fuzzy
 msgid "Command used for comparing files."
-msgstr "\t--diff-cmd <command>\t\tKommandot används för att jämföra filer."
+msgstr "Kommando som används för att jämföra filer."
 
 # SLE12
 msgid "Config"
@@ -693,21 +676,17 @@ msgstr "Kunde inte göra tillräckligt med ledigt utrymme tillgängligt för sö
 msgid "Could not make enough free space available."
 msgstr "Kunde inte göra tillräckligt med ledigt utrymme tillgängligt."
 
-#, fuzzy
 msgid "Create a snapshot from the specified snapshot."
-msgstr "\t--from <number>\t\t\tSkapa en ögonblicksbild från den angivna ögonblicksbilden."
+msgstr "Skapa en ögonblicksavbild från den angivna ögonblicksavbilden."
 
-#, fuzzy
 msgid "Create an empty snapshot."
-msgstr "\t--read-only\t\t\tSkapa en skrivskyddad ögonblicksbild."
+msgstr "Skapa en tom ögonblicksavbild."
 
-#, fuzzy
 msgid "Create read-only snapshot."
-msgstr "\t--read-only\t\t\tSkapa en skrivskyddad ögonblicksbild."
+msgstr "Skapa en läs-endast ögonblicksavbild."
 
-#, fuzzy
 msgid "Create read-write snapshot."
-msgstr "\t--read-write\t\t\tSkapa en läs- och skrivbar ögonblicksbild."
+msgstr "Skapa en läs och skrivbar ögonblicksavbild."
 
 # SLE12
 #, c-format
@@ -743,9 +722,8 @@ msgid "Default"
 msgstr "Standard"
 
 # SLE12
-#, fuzzy
 msgid "Delete:"
-msgstr "  Ta bort konfiguration:"
+msgstr "Ta bort:"
 
 # SLE12
 #, c-format
@@ -753,9 +731,9 @@ msgid "Deleting config failed (%s)."
 msgstr "Det gick inte att ta bort konfigurationen (%s)."
 
 # SLE12
-#, fuzzy, c-format
+#, c-format
 msgid "Deleting snapshot %d."
-msgstr "Det gick inte att ta bort ögonblicksbilden."
+msgstr "Tar bort ögonblicksavbild %d."
 
 # SLE12
 msgid "Deleting snapshot failed."
@@ -770,32 +748,27 @@ msgstr[1] "Raderar snapshots från %s:"
 msgid "Description"
 msgstr "Beskrivning"
 
-#, fuzzy
 msgid "Description for snapshot."
-msgstr "Beskrivning"
+msgstr "Beskrivning av ögonblicksavbild."
 
 # SLE12
-#, fuzzy
 msgid "Description for snapshots."
-msgstr "\t--description, -d <beskrivning>\tBeskrivning för ögonblicksbilder."
+msgstr "Beskrivning för ögonblicksavbilder."
 
 # SLE12
 msgid "Detecting filesystem type failed."
 msgstr "Det gick inte att identifiera filsystemstypen."
 
-#, fuzzy
 msgid "Disable showing used space."
-msgstr "\t--disable-used-space\t\tInaktivera visning av använt utrymme."
+msgstr "Inaktivera visning av använt utrymme."
 
 # SLE12
-#, fuzzy
 msgid "Display dates and times in ISO format."
-msgstr "\t--iso\t\t\t\tVisa datum och tider i ISO-format."
+msgstr "Visa datum och tider i ISO-format."
 
 # SLE12
-#, fuzzy
 msgid "Display dates and times in UTC."
-msgstr "\t--utc\t\t\t\tVisa datum och tider i UTC."
+msgstr "Visa datum och tider i UTC."
 
 #. TRANSLATORS: symbol for "exa" (best keep untranslated)
 msgid "E"
@@ -821,14 +794,12 @@ msgstr "Tomma användardata."
 msgid "Error (%s)."
 msgstr "Fel (%s)."
 
-#, fuzzy
 msgid "Extra options passed to the diff command."
-msgstr "\t--extensions, -x <options>\tExtra alternativ skickades till diffkommandot."
+msgstr "Extra alternativ skickades till diffkommandot."
 
 # SLE12
-#, fuzzy
 msgid "Failed to compute checksum."
-msgstr "Misslyckades att tolka '%s'"
+msgstr "Misslyckades med att beräkna kontrollsumma."
 
 # SLE12
 msgid "Failed to initialize filesystem handler."
@@ -840,9 +811,8 @@ msgid "Failed to parse '%s'."
 msgstr "Misslyckades att tolka '%s'"
 
 # SLE12
-#, fuzzy
 msgid "Failed to parse number."
-msgstr "Misslyckades att tolka '%s'"
+msgstr "Misslyckades med att analysera nummer."
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -886,9 +856,8 @@ msgid "GiB"
 msgstr "GiB"
 
 # SLE12
-#, fuzzy
 msgid "Global options:"
-msgstr "    Globala alternativ:"
+msgstr "Globala alternativ:"
 
 #, c-format
 msgid "IO Error (%s)."
@@ -907,18 +876,16 @@ msgid "Illegal snapshot."
 msgstr "Otillåten ögonblicksbild."
 
 # SLE12
-#, fuzzy
 msgid "Increase verbosity."
-msgstr "\t--verbose, -v\t\t\tÖka utförligheten."
+msgstr "Öka utförligheten."
 
 # SLE12
 #, c-format
 msgid "Invalid ambit '%s'."
 msgstr "Ogiltig omfattning '%s'."
 
-#, fuzzy
 msgid "Invalid checksum output format."
-msgstr "\t--csvout\t\t\tStäll in CSV som utdata format."
+msgstr "Ogiltigt utdataformat för kontrollsumma."
 
 # SLE12
 #, c-format
@@ -926,9 +893,8 @@ msgid "Invalid column '%s'."
 msgstr "Ogiltig kolumn \"%s\"."
 
 # SLE12
-#, fuzzy
 msgid "Invalid config."
-msgstr "Ogiltiga konfigurationsdata."
+msgstr "Ogiltig konfiguration."
 
 # SLE12
 msgid "Invalid configdata."
@@ -954,7 +920,7 @@ msgid "Invalid machine readable format '%s'."
 msgstr "Ogiltigt maskinläsbart format '%s'."
 
 msgid "Invalid number of lines in checksum output."
-msgstr ""
+msgstr "Ogiltigt antal rader i kontrollsummans utdata."
 
 # SLE12
 #, c-format
@@ -971,9 +937,9 @@ msgid "Invalid snapshots."
 msgstr "Ogiltiga ögonblicksbilder."
 
 # SLE12
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid subvolume path '%s' on target."
-msgstr "Ogiltig undervolym."
+msgstr "Ogiltig undervolym sökväg '%s' på mål."
 
 # SLE12
 msgid "Invalid subvolume."
@@ -985,9 +951,9 @@ msgid "Invalid table style '%s'."
 msgstr "Ogiltig tabellstil '%s'"
 
 # SLE12
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid target mode '%s'."
-msgstr "Ogiltig tabellstil '%s'"
+msgstr "Ogiltigt mål läge '%s'."
 
 # SLE12
 #, c-format
@@ -1007,16 +973,14 @@ msgid "KiB"
 msgstr "KiB"
 
 # SLE12
-#, fuzzy
 msgid "List configs:"
-msgstr "  Lista konfigurationer:"
+msgstr "Lista konfigurationer:"
 
-#, fuzzy
 msgid "List snapshots from all accessible configs."
-msgstr "\t--all-configs, -a\t\tVisa snapshots från alla tillgängliga konfig."
+msgstr "Lista ögonblicksavbilder från alla tillgängliga konfigurationer."
 
 msgid "List:"
-msgstr ""
+msgstr "Lista:"
 
 # SLE12
 #, c-format
@@ -1032,9 +996,8 @@ msgid "MB"
 msgstr "MB"
 
 # SLE12
-#, fuzzy
 msgid "Manually set filesystem type."
-msgstr "\t--fstype, -f <fstyp>\t\tAnge filsystemtyp manuellt."
+msgstr "Ange filsystemtyp manuellt."
 
 msgid "Maybe you forgot the delimiter '..' between the snapshot numbers."
 msgstr "Kanske glömde du avgränsaren '..' mellan snapshot-numren."
@@ -1065,12 +1028,11 @@ msgid "Missing or invalid pre-number."
 msgstr "Före-nummer saknas eller är ogiltigt."
 
 msgid "Name"
-msgstr ""
+msgstr "Namn"
 
 # SLE12
-#, fuzzy
 msgid "Name of config template to use."
-msgstr "\t--template, -t <namn>\t\tNamn på konfigurationsmall att använda."
+msgstr "Namn på konfigurationsmall att använda."
 
 msgid "No backup configs found."
 msgstr ""
@@ -1079,9 +1041,8 @@ msgstr ""
 msgid "No command provided."
 msgstr "Inget kommando angavs."
 
-#, fuzzy
 msgid "No headers for CSV output format."
-msgstr "\t--csvout\t\t\tStäll in CSV som utdata format."
+msgstr "Inga rubriker för CSV-utdataformat."
 
 # SLE12
 msgid "No permissions."
@@ -1106,18 +1067,15 @@ msgstr ""
 msgid "Opening file '%s' failed."
 msgstr "Det gick inte att öppna filen %s."
 
-#, fuzzy
 msgid "Operate in the specified ambit."
-msgstr "\t--ambit, -a ambit\t\tArbeta i det angivna området."
+msgstr "Arbeta i det angivna området."
 
-#, fuzzy
 msgid "Operate on target root (works only without DBus)."
-msgstr "\t--root, -r <path>\t\tArbeta i målroten (fungerar enbart utan DBus)."
+msgstr "Arbeta i målroten (fungerar enbart utan DBus)."
 
 # SLE12
-#, fuzzy
 msgid "Operate without DBus."
-msgstr "\t--no-dbus\t\t\tAnvänd utan DBus."
+msgstr "Manövrera utan DBus."
 
 msgid "Option --from only supported for snapshots of type single."
 msgstr "Alternativet --from stöds bara för ögonblicksbilder av typen enkel."
@@ -1127,9 +1085,8 @@ msgid "Option --read-write only supported for snapshots of type single."
 msgstr "Alternativet --read-write stöds bara för ögonblicksbilder av typen enkel."
 
 # SLE12
-#, fuzzy
 msgid "Options for the 'visualize' command:"
-msgstr "    Alternativ för kommandot list:"
+msgstr "Alternativ för 'visualize' kommandot:"
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
@@ -1140,9 +1097,9 @@ msgid "PB"
 msgstr "PB"
 
 # SLE12
-#, fuzzy, c-format
+#, c-format
 msgid "Parent node %s not found."
-msgstr "Filen %s hittades inte."
+msgstr "Föräldernoden %s hittades inte."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -1165,19 +1122,16 @@ msgid "Pre Date"
 msgstr "Före datum"
 
 # SLE12
-#, fuzzy
 msgid "Print number of created snapshot."
-msgstr "\t--print-number, -p\t\tSkriv ut nummer på skapad ögonblicksbild."
+msgstr "Skriv ut nummer på skapade ögonblicksavbilder."
 
 # SLE12
-#, fuzzy
 msgid "Print number of second created snapshot."
-msgstr "\t--print-number, -p\t\tSkriv ut nummer för den andra skapade ögonblicksbilden."
+msgstr "Skriv ut nummer för den andra skapade ögonblicksavbilden."
 
 # SLE12
-#, fuzzy
 msgid "Print version and exit."
-msgstr "\t--version\t\t\tVisa version och avsluta."
+msgstr "Skriv ut version och avsluta."
 
 # SLE12
 #, fuzzy
@@ -1200,36 +1154,33 @@ msgid "Probing target snapshots."
 msgstr "\t--description, -d <beskrivning>\tBeskrivning för ögonblicksbilder."
 
 msgid "Produce a specific graph in Graphviz DOT format:"
-msgstr ""
+msgstr "Producera en specifik graf i Graphviz DOT-format:"
 
 #, c-format
 msgid "Quota error (%s)."
 msgstr "Kvotfel (%s)."
 
 # SLE12
-#, fuzzy
 msgid "Read files for which to undo changes from file."
-msgstr "\t--input, -i <fil>\t\tLäs filer som ändringar ska ångras för från filen."
+msgstr "Läs filer som ändringar ska ångras för från filen."
 
-#, fuzzy
 msgid "Read files to diff from file."
-msgstr "\t--input, -i <file>\t\tLäs filer som ska diffa från filen."
+msgstr "Läs filer som ska diffa från filen."
 
 msgid "Read-Only"
 msgstr "Läs-endast"
 
 msgid "Restore:"
-msgstr ""
+msgstr "Återställ:"
 
 # SLE12
-#, fuzzy, c-format
+#, c-format
 msgid "Restoring snapshot %d."
-msgstr "Det gick inte att ta bort ögonblicksbilden."
+msgstr "Återställer ögonblicksavbild %d."
 
 # SLE12
-#, fuzzy
 msgid "Run command and create pre and post snapshots."
-msgstr "\t--command <kommando>\t\tKör kommandot och skapa före- och efter-ögonblicksbilder."
+msgstr "Kör kommandot och skapa före och efter-ögonblicksavbilder."
 
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
@@ -1294,23 +1245,21 @@ msgid "Running transfer for backup config '%s'."
 msgstr ""
 
 msgid "SSH Host"
-msgstr ""
+msgstr "SSH värd"
 
 msgid "SSH Identity"
-msgstr ""
+msgstr "SSH-identitet"
 
 msgid "SSH Port"
-msgstr ""
+msgstr "SSH port"
 
 # SLE12
-#, fuzzy
 msgid "SSH User"
-msgstr "Användare"
+msgstr "SSH användare"
 
 # SLE12
-#, fuzzy
 msgid "Save status to file."
-msgstr "\t--output, -o <fil>\t\tSpara status till fil."
+msgstr "Spara status till fil."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Se 'man snapper' för mer instruktioner."
@@ -1320,17 +1269,14 @@ msgstr "Se 'man snapper' för mer instruktioner."
 msgid "Server-side plugin '%s' failed."
 msgstr "Insticksprogrammet %s på serversidan misslyckades."
 
-#, fuzzy
 msgid "Set CSV output format."
-msgstr "\t--csvout\t\t\tStäll in CSV som utdata format."
+msgstr "Ställ in CSV som utdata format."
 
-#, fuzzy
 msgid "Set JSON output format."
-msgstr "\t--jsonout\t\t\tStäll in JSON som utdata format."
+msgstr "Ställ in JSON som utdata format."
 
-#, fuzzy
 msgid "Set a machine-readable output format (csv, json)."
-msgstr "\t--machine-readable <format>\tStäll in ett maskinläsbart utdataformat (csv, json)."
+msgstr "Ställ in ett maskinläsbart utdataformat (csv, json)."
 
 msgid "Set logger type."
 msgstr ""
@@ -1341,21 +1287,17 @@ msgid "Set name of backup-config to use."
 msgstr "\t--config, -c <namn>\t\tAnge namnet på den konfiguration som ska användas."
 
 # SLE12
-#, fuzzy
 msgid "Set name of config to use."
-msgstr "\t--config, -c <namn>\t\tAnge namnet på den konfiguration som ska användas."
+msgstr "Ange namnet på den konfiguration som ska användas."
 
-#, fuzzy
 msgid "Set snapshot as default snapshot."
-msgstr "\t--default\t\t\tStäll in ögonblicksbild som standard ögonblicksbild."
+msgstr "Ställ in ögonblicksavbild som standard ögonblicksavbild."
 
-#, fuzzy
 msgid "Set snapshot read-only."
-msgstr "\t--read-only\t\t\tStäll in ögonblicksbild skrivskyddad."
+msgstr "Ställ in ögonblicksavbild som skrivskyddad."
 
-#, fuzzy
 msgid "Set snapshot read-write."
-msgstr "\t--read-write\t\t\tStäll in ögonblicksbild läs och skrivbar."
+msgstr "Ställ in ögonblicksavbild som läs och skrivbar."
 
 # SLE12
 #, c-format
@@ -1390,9 +1332,9 @@ msgid "Snapshot not on target."
 msgstr "Ögonblicksbilden %u hittades inte."
 
 # SLE12
-#, fuzzy, c-format
+#, c-format
 msgid "Snapshot number %d not found."
-msgstr "Ögonblicksbilden %u hittades inte."
+msgstr "Ögonblicksavbild nummer %d hittades inte."
 
 msgid "Source State"
 msgstr ""
@@ -1402,16 +1344,14 @@ msgid "Subvolume"
 msgstr "Undervolym"
 
 msgid "Supported modes:"
-msgstr ""
+msgstr "Lägen som stöds:"
 
 # SLE12
-#, fuzzy
 msgid "Suppress normal output."
-msgstr "\t--quiet, -q\t\t\tUtelämna normal utmatning."
+msgstr "Utelämna normal utmatning."
 
-#, fuzzy
 msgid "Sync after deletion."
-msgstr "\t--sync, -s\t\t\tSynka efter radering."
+msgstr "Synka efter radering."
 
 #. TRANSLATORS: symbol for "tera" (best keep untranslated)
 msgid "T"
@@ -1422,36 +1362,35 @@ msgid "TB"
 msgstr "TB"
 
 # SLE12
-#, fuzzy
 msgid "Table style (integer)."
-msgstr "\t--table-style, -t <stil>\tTabellstil (heltal)."
+msgstr "Tabellstil (heltal)."
 
 msgid "Target Mode"
-msgstr ""
+msgstr "Mål läge"
 
 msgid "Target Path"
-msgstr ""
+msgstr "Mål sökväg"
 
 msgid "Target State"
-msgstr ""
+msgstr "Mål tillstånd"
 
 msgid "Target btrfs bin"
-msgstr ""
+msgstr "Mål btrfs binär"
 
 msgid "Target ls Bin"
-msgstr ""
+msgstr "Mål ls binär"
 
 msgid "Target mkdir bin"
-msgstr ""
+msgstr "Mål mkdir binär"
 
 msgid "Target rm bin"
-msgstr ""
+msgstr "Mål rm binär"
 
 msgid "Target rmdir bin"
-msgstr ""
+msgstr "Mål rmdir binär"
 
 msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
-msgstr ""
+msgstr "Diagramattributet 'rankdir' för Graphviz. Standardvärdet är 'LR'."
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Omfattningen kan specificeras manuellt med alternativet --ambit."
@@ -1467,45 +1406,40 @@ msgid "TiB"
 msgstr "TiB"
 
 msgid "Transfer and delete:"
-msgstr ""
+msgstr "Överför och radera:"
 
 msgid "Transfer:"
-msgstr ""
+msgstr "Överför:"
 
 # SLE12
-#, fuzzy, c-format
+#, c-format
 msgid "Transferring snapshot %d."
-msgstr "Det gick inte att skapa någon ögonblicksbild."
+msgstr "Överför ögonblicksavbild %d."
 
 # SLE12
 msgid "Try 'snapper --help' for more information."
 msgstr "Försök med \"snapper --help\" för mer information."
 
 # SLE12
-#, fuzzy
 msgid "Try 'snbk --help' for more information."
-msgstr "Försök med \"snapper --help\" för mer information."
+msgstr "Försök med 'snbk --help' för mer information."
 
-#, fuzzy
 msgid "Try to make space available."
-msgstr "\t--free-space <space>\t\tFörsök att göra utrymme tillgängligt."
+msgstr "Försök att göra utrymme tillgängligt."
 
-#, fuzzy
 msgid "Turn on debugging."
-msgstr "\t--debug\t\t\t\tSlå på felsökning."
+msgstr "Slå på felsökning."
 
 msgid "Type"
 msgstr "Typ"
 
 # SLE12
-#, fuzzy
 msgid "Type for snapshot."
-msgstr "Okänd typ av ögonblicksbild."
+msgstr "Typ av ögonblicksavbild."
 
 # SLE12
-#, fuzzy
 msgid "Type of snapshots to list."
-msgstr "\t--type, -t <typ>\t\tTyper av ögonblicksbilder att lista."
+msgstr "Typer av ögonblicksavbilder att lista."
 
 # SLE12
 #, c-format
@@ -1527,9 +1461,9 @@ msgid "Unknown global option '%s'."
 msgstr "Okänt globalt alternativ %s."
 
 # SLE12
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown mode '%s'."
-msgstr "Okänd typ '%s'."
+msgstr "Okänt läge '%s'."
 
 # SLE12
 #, c-format
@@ -1537,9 +1471,9 @@ msgid "Unknown option '%s' for command '%s'."
 msgstr "Alternativet %s för kommandot %s är okänt."
 
 # SLE12
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown rankdir '%s'."
-msgstr "Kommandot %s är okänt."
+msgstr "Okänt rankdir '%s'."
 
 # SLE12
 #, c-format
@@ -1547,9 +1481,9 @@ msgid "Unknown type '%s'."
 msgstr "Okänd typ '%s'."
 
 # SLE12
-#, fuzzy, c-format
+#, c-format
 msgid "Updating metadata of snapshot %d."
-msgstr "Skapar ögonblicksbild med läs- och skrivrättigheter av ögonblicksbilden %d."
+msgstr "Uppdaterar metadata för ögonblicksavbilden %d."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
@@ -1584,14 +1518,12 @@ msgid "Userdata '%s' has empty key."
 msgstr "Användardata %s har tom nyckel."
 
 # SLE12
-#, fuzzy
 msgid "Userdata for snapshot."
-msgstr "\t--userdata, -u <användardata>\tAnvändardata för ögonblicksbilden."
+msgstr "Användardata för ögonblicksavbilden."
 
 # SLE12
-#, fuzzy
 msgid "Userdata for snapshots."
-msgstr "Identiska ögonblicksbilder."
+msgstr "Användardata för ögonblicksavbilder."
 
 msgid "Value"
 msgstr "Värde"
@@ -1650,42 +1582,37 @@ msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Rot-argument kan endast användas tillsammans med no-dbus.\n"
 
 # SLE12
-#, fuzzy
 msgid "snbk delete [numbers]"
-msgstr "\tsnapper delete <nummer>"
+msgstr "snbk delete [nummer]"
 
 # SLE12
-#, fuzzy
 msgid "snbk list"
-msgstr "\tsnapper list"
+msgstr "snbk list"
 
 # SLE12
-#, fuzzy
 msgid "snbk list-configs"
-msgstr "\tsnapper list-configs"
+msgstr "snbk list-configs"
 
 # SLE12
-#, fuzzy
 msgid "snbk restore [numbers]"
-msgstr "\tsnapper delete <nummer>"
+msgstr "snbk restore [nummer]"
 
 msgid "snbk transfer [numbers]"
-msgstr ""
+msgstr "snbk transfer [nummer]"
 
 msgid "snbk transfer-and-delete"
-msgstr ""
+msgstr "snbk transfer-and-delete"
 
 msgid "snbk visualize <mode>"
-msgstr ""
+msgstr "snbk visualize <läge>"
 
 # SLE12
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "usage: snapper [--globala alternativ] <kommando> [--kommandoalternativ] [kommandoargument]"
 
 # SLE12
-#, fuzzy
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
-msgstr "usage: snapper [--globala alternativ] <kommando> [--kommandoalternativ] [kommandoargument]"
+msgstr "användning: snbk [--globala alternativ] <kommando> [kommandoargument]"
 
 msgid "yes"
 msgstr "ja"
