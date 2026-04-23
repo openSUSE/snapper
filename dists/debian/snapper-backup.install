@@ -2,4 +2,8 @@ etc/snapper/backup-configs
 etc/snapper/certs
 usr/lib/systemd/system/snapper-backup.service
 usr/lib/systemd/system/snapper-backup.timer
+usr/lib/systemd/system/snapper-sync.service
+usr/lib/systemd/system/snapper-boot.timer.d/10-snapper-sync-override.conf
+usr/lib/systemd/system/snapper-timeline.timer.d/10-snapper-sync-override.conf
 usr/sbin/snbk
+usr/sbin/snapper-sync

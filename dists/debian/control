@@ -17,7 +17,7 @@ Package: snapper-backup
 Priority: optional
 Section: admin
 Architecture: any
-Depends: ${shlibs:Depends}
+Depends: ${shlibs:Depends}, jq
 Description: snapper-backup
  This package contains snbk, a tool for backups of snapper snapshots.
 
