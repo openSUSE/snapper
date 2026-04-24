@@ -1,6 +1,6 @@
 [Unit]
 Description=Snapper Highest Snapshot Number Synchronization
-Documentation=man:snapper(8)
+Documentation=man:snbk(8)
 After=snapperd.service
 Requires=snapperd.service
 
