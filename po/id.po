@@ -3,15 +3,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-19 12:28+0100\n"
-"PO-Revision-Date: 2026-01-31 05:04+0000\n"
+"PO-Revision-Date: 2026-04-25 08:04+0000\n"
 "Last-Translator: Arif Budiman <arifpedia@gmail.com>\n"
-"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/id/>\n"
+"Language-Team: Indonesian <https://l10n.opensuse.org/projects/snapper/master/"
+"id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.15.2\n"
+"X-Generator: Weblate 5.17\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <algoritma-pembersihan>"
@@ -435,9 +436,8 @@ msgstr "Tidak dapat melakukan rollback karena subvolume bawaan tidak diketahui."
 msgid "Cannot find the node of UUID %s"
 msgstr "Tidak dapat menemukan node untuk UUID %s"
 
-#, fuzzy
 msgid "Cannot transfer a read-write snapshot."
-msgstr "Membuat snapshot baca-tulis."
+msgstr "Tidak dapat mentransfer snapshot baca-tulis."
 
 msgid "Character separator for CSV output format."
 msgstr "Pemisah karakter untuk format output CSV."
@@ -675,9 +675,8 @@ msgstr "Galat (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "Opsi tambahan diteruskan ke perintah diff."
 
-#, fuzzy
 msgid "Failed to compute checksum."
-msgstr "Gagal mengurai nomor."
+msgstr "Gagal menghitung checksum."
 
 msgid "Failed to initialize filesystem handler."
 msgstr "Gagal menginisialisasi penangan sistem berkas."
@@ -750,9 +749,8 @@ msgstr "Tingkatkan verbositas."
 msgid "Invalid ambit '%s'."
 msgstr "Ambit '%s' tidak valid."
 
-#, fuzzy
 msgid "Invalid checksum output format."
-msgstr "Atur format keluaran CSV."
+msgstr "Format keluaran checksum tidak valid."
 
 #, c-format
 msgid "Invalid column '%s'."
@@ -780,7 +778,7 @@ msgid "Invalid machine readable format '%s'."
 msgstr "Format '%s' yang dapat dibaca mesin tidak valid."
 
 msgid "Invalid number of lines in checksum output."
-msgstr ""
+msgstr "Jumlah baris dalam keluaran checksum tidak valid."
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -1260,9 +1258,9 @@ msgstr "rankdir '%s' tidak dikenal."
 msgid "Unknown type '%s'."
 msgstr "Tipe '%s' tidak dikenal."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Updating metadata of snapshot %d."
-msgstr "Membuat snapshot baca-tulis dari snapshot %d."
+msgstr "Memperbarui metadata snapshot %d."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
