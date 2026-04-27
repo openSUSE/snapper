@@ -375,7 +375,9 @@ A backup program for snapshots created by snapper.
 %dir %{_sysconfdir}/snapper/certs
 %{_unitdir}/snapper-{backup}.*
 %{_unitdir}/snapper-sync.service
+%{_unitdir}/snapper-boot.timer.d
 %{_unitdir}/snapper-boot.timer.d/10-snapper-sync-override.conf
+%{_unitdir}/snapper-timeline.timer.d
 %{_unitdir}/snapper-timeline.timer.d/10-snapper-sync-override.conf
 %{_mandir}/*/snbk.8*
 %{_mandir}/*/snapper-backup-configs.5*
