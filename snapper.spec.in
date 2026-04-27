@@ -224,7 +224,7 @@ test -f /etc/logrotate.d/snapper.rpmsave && mv -v /etc/logrotate.d/snapper.rpmsa
 %else
 %config(noreplace) %{_sysconfdir}/logrotate.d/snapper
 %endif
-%{_unitdir}/snapper-{timeline,cleanup,boot}.*
+%{_unitdir}/snapper-{timeline,cleanup,boot}.{service,timer}
 %{_unitdir}/snapperd.service
 %if 0%{?suse_version} <= 1500
 %dir %{_datadir}/dbus-1/system.d
@@ -360,6 +360,7 @@ done
 
 %package -n snapper-backup
 Requires:       snapper = %version
+Requires:       jq
 Summary:        A backup program for snapper
 Group:          System/Packages
 Recommends:     %{name}-lang
@@ -369,9 +370,15 @@ A backup program for snapshots created by snapper.
 
 %files -n snapper-backup
 %{_sbindir}/snbk
+%{_sbindir}/snapper-sync
 %dir %{_sysconfdir}/snapper/backup-configs
 %dir %{_sysconfdir}/snapper/certs
 %{_unitdir}/snapper-{backup}.*
+%{_unitdir}/snapper-sync.service
+%{_unitdir}/snapper-boot.timer.d
+%{_unitdir}/snapper-boot.timer.d/10-snapper-sync-override.conf
+%{_unitdir}/snapper-timeline.timer.d
+%{_unitdir}/snapper-timeline.timer.d/10-snapper-sync-override.conf
 %{_mandir}/*/snbk.8*
 %{_mandir}/*/snapper-backup-configs.5*
 %dir %{_datadir}/bash-completion
