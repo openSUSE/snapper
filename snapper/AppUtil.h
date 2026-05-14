@@ -103,6 +103,12 @@ namespace snapper
      */
     RollbackMethod detect_rollback_method(const string& mount_point, string& subvol_name);
 
+    /**
+     * Return the named subvolume that mount_point is mounted with (e.g. "@root"),
+     * or an empty string if it uses the btrfs default subvolume id instead.
+     */
+    string get_subvol_name(const string& mount_point);
+
 #endif
 
 

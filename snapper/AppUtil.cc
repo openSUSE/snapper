@@ -285,6 +285,15 @@ namespace snapper
 	return detect_rollback_method_from_options(mtab_data.options, subvol_name);
     }
 
+
+    string
+    get_subvol_name(const string& mount_point)
+    {
+	string name;
+	detect_rollback_method(mount_point, name);
+	return name;
+    }
+
 #endif
 
 

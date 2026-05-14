@@ -28,6 +28,7 @@
 #include <snapper/AppUtil.h>
 #include <snapper/Filesystem.h>
 #include <snapper/PluginsImpl.h>
+#include <snapper/SnapperDefines.h>
 
 #include "../utils/text.h"
 #include "../utils/help.h"
@@ -43,6 +44,42 @@ namespace snapper
 
 
 #ifdef ENABLE_ROLLBACK
+
+    static RollbackMethod
+    resolve_rollback_method(const ProxyConfig& config, const string& subvolume,
+			    string& subvol_name)
+    {
+	string method_str;
+	if (!config.getValue(KEY_ROLLBACK_METHOD, method_str) || method_str.empty())
+	    method_str = "auto";
+
+	if (method_str == "set-default")
+	{
+	    subvol_name.clear();
+	    return RollbackMethod::SET_DEFAULT;
+	}
+
+	if (method_str == "subvol-rename")
+	{
+	    subvol_name = get_subvol_name(subvolume);
+	    if (subvol_name.empty())
+	    {
+		cerr << _("ROLLBACK_METHOD is 'subvol-rename' but root is not mounted "
+			  "with a named subvolume.") << endl;
+		exit(EXIT_FAILURE);
+	    }
+	    return RollbackMethod::SUBVOL_RENAME;
+	}
+
+	if (method_str != "auto")
+	{
+	    cerr << sformat(_("Unknown ROLLBACK_METHOD '%s'."), method_str.c_str()) << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	return detect_rollback_method(subvolume, subvol_name);
+    }
+
 
     void
     help_rollback()
@@ -124,6 +161,23 @@ namespace snapper
 	    cerr << sformat(_("Command 'rollback' cannot be used on a non-root subvolume %s."),
 			    subvolume.c_str()) << endl;
 	    exit(EXIT_FAILURE);
+	}
+
+	string subvol_name;
+	RollbackMethod rollback_method = resolve_rollback_method(config, subvolume, subvol_name);
+
+	if (!global_options.quiet())
+	{
+	    switch (rollback_method)
+	    {
+		case RollbackMethod::SET_DEFAULT:
+		    cout << _("Rollback method is set-default.") << endl;
+		    break;
+		case RollbackMethod::SUBVOL_RENAME:
+		    cout << sformat(_("Rollback method is subvol-rename (subvolume '%s')."),
+				    subvol_name.c_str()) << endl;
+		    break;
+	    }
 	}
 
 	ProxySnapshots& snapshots = snapper->getSnapshots();
@@ -218,7 +272,15 @@ namespace snapper
 		if (!global_options.quiet())
 		    cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot2->getNum()) << endl;
 
-		filesystem->setDefault(snapshot2->getNum(), report);
+		switch (rollback_method)
+		{
+		    case RollbackMethod::SET_DEFAULT:
+			filesystem->setDefault(snapshot2->getNum(), report);
+			break;
+		    case RollbackMethod::SUBVOL_RENAME:
+			cerr << _("Rollback method 'subvol-rename' is not yet implemented.") << endl;
+			exit(EXIT_FAILURE);
+		}
 
 		Plugins::rollback(filesystem->snapshotDir(snapshot1->getNum()),
 				  filesystem->snapshotDir(snapshot2->getNum()), report);
@@ -264,7 +326,15 @@ namespace snapper
 		if (!global_options.quiet())
 		    cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot->getNum()) << endl;
 
-		filesystem->setDefault(snapshot->getNum(), report);
+		switch (rollback_method)
+		{
+		    case RollbackMethod::SET_DEFAULT:
+			filesystem->setDefault(snapshot->getNum(), report);
+			break;
+		    case RollbackMethod::SUBVOL_RENAME:
+			cerr << _("Rollback method 'subvol-rename' is not yet implemented.") << endl;
+			exit(EXIT_FAILURE);
+		}
 
 		Plugins::rollback(filesystem->snapshotDir(previous_default->getNum()),
 				  filesystem->snapshotDir(snapshot->getNum()), report);
