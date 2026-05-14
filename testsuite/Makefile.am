@@ -9,7 +9,8 @@ LDADD = ../snapper/libsnapper.la ../dbus/libdbus.la -lboost_unit_test_framework
 check_PROGRAMS = sysconfig-get1.test dirname1.test basename1.test 		\
 	equal-date.test cmp-lt.test humanstring.test uuid.test			\
 	table.test table-formatter.test csv-formatter.test json-formatter.test	\
-	getopts.test scan-datetime.test root-prefix.test range.test limit.test
+	getopts.test scan-datetime.test root-prefix.test range.test limit.test	\
+	rename-exchange.test
 
 if ENABLE_BTRFS_QUOTA
 check_PROGRAMS += qgroup1.test

@@ -55,5 +55,7 @@ test -x xattrs2 && run xattrs2
 test -x xattrs3 && run xattrs3
 test -x xattrs4 && run xattrs4
 
+test -x rollback-subvol-rename && run rollback-subvol-rename
+
 echo "1..$COUNT" # TAP test plan
 $SUCCESS

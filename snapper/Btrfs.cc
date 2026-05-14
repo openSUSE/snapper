@@ -1502,6 +1502,83 @@ namespace snapper
     }
 
 
+    void
+    Btrfs::rollbackSubvolRename(unsigned int num, const string& subvol_name,
+				Plugins::Report& report) const
+    {
+	try
+	{
+	    Plugins::set_default_snapshot(Plugins::Stage::PRE_ACTION, subvolume, this, num, report);
+
+	    bool found = false;
+	    MtabData mtab_data;
+	    if (!getMtabData(subvolume, found, mtab_data) || !found)
+	    {
+		y2err("failed to find device for subvolume " << subvolume);
+		SN_THROW(IOErrorException("rollback failed: cannot find mounted device"));
+	    }
+
+	    // Mount the btrfs top-level (subvolid=5) - named subvolumes live here
+	    SDir infos_dir = openInfosDir();
+	    TmpMount tmp_mount(infos_dir, mtab_data.device, "tmp-mnt-XXXXXX", "btrfs", 0,
+			      "subvolid=5");
+
+	    SDir toplevel(infos_dir, tmp_mount.getName());
+
+	    const string incoming = subvol_name + ".incoming";
+	    const string rollback_name = subvol_name + ".rollback." + decString(num);
+
+	    // Remove stale .incoming from a previous failed attempt
+	    {
+		struct stat st;
+		if (toplevel.stat(incoming, &st, AT_SYMLINK_NOFOLLOW) == 0)
+		{
+		    y2war("removing stale subvolume " << incoming);
+		    delete_subvolume(toplevel.fd(), incoming);
+		}
+	    }
+
+	    // Create a read-write snapshot of the rollback target as <subvol_name>.incoming
+	    SDir snapshot_dir = openSnapshotDir(num);
+	    try
+	    {
+		create_snapshot(snapshot_dir.fd(), toplevel.fd(), incoming, false,
+				qgroup);
+	    }
+	    catch (const runtime_error& e)
+	    {
+		y2err("create snapshot failed, " << e.what());
+		SN_THROW(IOErrorException(string("rollback failed: ") + e.what()));
+	    }
+
+	    // Atomically swap <subvol_name> and <subvol_name>.incoming
+	    if (toplevel.exchange(subvol_name, incoming) != 0)
+	    {
+		// Clean up the incoming subvolume we just created
+		try { delete_subvolume(toplevel.fd(), incoming); } catch (...) {}
+		SN_THROW(IOErrorException(string("rollback failed: exchange(") +
+					  subvol_name + ", " + incoming +
+					  ") failed: " + stringerror(errno) +
+					  " -- kernel may not support RENAME_EXCHANGE on btrfs"));
+	    }
+
+	    // Rename old root to <subvol_name>.rollback.<num> for preservation
+	    if (toplevel.rename(incoming, rollback_name) != 0)
+	    {
+		y2war("failed to rename old root " << incoming << " to " << rollback_name
+		      << ": " << stringerror(errno));
+		// Non-fatal: the swap succeeded, the old root is just named .incoming
+	    }
+
+	    Plugins::set_default_snapshot(Plugins::Stage::POST_ACTION, subvolume, this, num, report);
+	}
+	catch (const runtime_error& e)
+	{
+	    SN_THROW(IOErrorException(string("rollback failed, ") + e.what()));
+	}
+    }
+
+
     std::pair<bool, unsigned int>
     Btrfs::getActive() const
     {

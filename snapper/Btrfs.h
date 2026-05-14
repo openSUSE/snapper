@@ -89,6 +89,9 @@ namespace snapper
 
 	virtual void setDefault(unsigned int num, Plugins::Report& report) const override;
 
+	void rollbackSubvolRename(unsigned int num, const std::string& subvol_name,
+				  Plugins::Report& report) const;
+
 	virtual bool isActive(unsigned int num) const override;
 
 	virtual std::pair<bool, unsigned int> getActive() const override;
