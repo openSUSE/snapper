@@ -21,6 +21,8 @@
  */
 
 
+#include "config.h"
+
 #include <cerrno>
 #include <cstdarg>
 #include <unistd.h>
@@ -41,6 +43,7 @@
 
 #include "snapper/LoggerImpl.h"
 #include "snapper/AppUtil.h"
+#include "snapper/Exception.h"
 
 
 namespace snapper
@@ -237,6 +240,52 @@ namespace snapper
 
 	return true;
     }
+
+
+#ifdef ENABLE_ROLLBACK
+
+    RollbackMethod
+    detect_rollback_method_from_options(const vector<string>& options, string& subvol_name)
+    {
+	static const string prefix = "subvol=";
+	static const string id_prefix = "subvolid=";
+
+	for (const string& opt : options)
+	{
+	    // Skip "subvolid=" - it looks like "subvol=" but is not a named subvolume
+	    if (opt.compare(0, id_prefix.size(), id_prefix) == 0)
+		continue;
+
+	    if (opt.compare(0, prefix.size(), prefix) == 0)
+	    {
+		string value = opt.substr(prefix.size());
+		if (!value.empty() && value != "/")
+		{
+		    subvol_name = value;
+		    return RollbackMethod::SUBVOL_RENAME;
+		}
+		break;
+	    }
+	}
+
+	subvol_name.clear();
+	return RollbackMethod::SET_DEFAULT;
+    }
+
+
+    RollbackMethod
+    detect_rollback_method(const string& mount_point, string& subvol_name)
+    {
+	bool found = false;
+	MtabData mtab_data;
+
+	if (!getMtabData(mount_point, found, mtab_data) || !found)
+	    SN_THROW(IOErrorException("failed to find mount point " + mount_point + " in /proc/mounts"));
+
+	return detect_rollback_method_from_options(mtab_data.options, subvol_name);
+    }
+
+#endif
 
 
     string
