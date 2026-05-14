@@ -15,6 +15,10 @@ if ENABLE_BTRFS_QUOTA
 check_PROGRAMS += qgroup1.test
 endif
 
+if ENABLE_ROLLBACK
+check_PROGRAMS += rollback-method.test
+endif
+
 if ENABLE_LVM
 check_PROGRAMS += lvm-utils.test
 endif

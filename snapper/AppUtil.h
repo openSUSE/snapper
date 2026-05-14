@@ -83,6 +83,29 @@ namespace snapper
     bool getMtabData(const string& mount_point, bool& found, MtabData& mtab_data);
 
 
+#ifdef ENABLE_ROLLBACK
+
+    enum class RollbackMethod { SET_DEFAULT, SUBVOL_RENAME };
+
+    /**
+     * Determine rollback method from already-parsed mount options.
+     * If a "subvol=" option is present and its value is not "/",
+     * returns SUBVOL_RENAME and sets subvol_name to the subvolume name.
+     * Otherwise returns SET_DEFAULT and clears subvol_name.
+     * Separated from I/O so it can be unit-tested without /proc/mounts.
+     */
+    RollbackMethod detect_rollback_method_from_options(const vector<string>& options,
+                                                       string& subvol_name);
+
+    /**
+     * Determine rollback method by reading mount options for mount_point
+     * from /proc/mounts. Delegates to detect_rollback_method_from_options.
+     */
+    RollbackMethod detect_rollback_method(const string& mount_point, string& subvol_name);
+
+#endif
+
+
     template<class StreamType>
     void classic(StreamType& stream)
     {
