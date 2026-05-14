@@ -25,6 +25,7 @@
 
 #include <cstdio>
 #include <cstring>
+#include <sys/syscall.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/mount.h>

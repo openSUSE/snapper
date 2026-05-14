@@ -26,6 +26,7 @@
 #include <iostream>
 
 #include <snapper/AppUtil.h>
+#include <snapper/Btrfs.h>
 #include <snapper/Filesystem.h>
 #include <snapper/PluginsImpl.h>
 #include <snapper/SnapperDefines.h>
@@ -278,8 +279,13 @@ namespace snapper
 			filesystem->setDefault(snapshot2->getNum(), report);
 			break;
 		    case RollbackMethod::SUBVOL_RENAME:
-			cerr << _("Rollback method 'subvol-rename' is not yet implemented.") << endl;
-			exit(EXIT_FAILURE);
+		    {
+			const Btrfs* btrfs = dynamic_cast<const Btrfs*>(filesystem.get());
+			if (!btrfs)
+			    SN_THROW(LogicErrorException("subvol-rename requires btrfs filesystem"));
+			btrfs->rollbackSubvolRename(snapshot2->getNum(), subvol_name, report);
+			break;
+		    }
 		}
 
 		Plugins::rollback(filesystem->snapshotDir(snapshot1->getNum()),
@@ -332,8 +338,13 @@ namespace snapper
 			filesystem->setDefault(snapshot->getNum(), report);
 			break;
 		    case RollbackMethod::SUBVOL_RENAME:
-			cerr << _("Rollback method 'subvol-rename' is not yet implemented.") << endl;
-			exit(EXIT_FAILURE);
+		    {
+			const Btrfs* btrfs = dynamic_cast<const Btrfs*>(filesystem.get());
+			if (!btrfs)
+			    SN_THROW(LogicErrorException("subvol-rename requires btrfs filesystem"));
+			btrfs->rollbackSubvolRename(snapshot->getNum(), subvol_name, report);
+			break;
+		    }
 		}
 
 		Plugins::rollback(filesystem->snapshotDir(previous_default->getNum()),
