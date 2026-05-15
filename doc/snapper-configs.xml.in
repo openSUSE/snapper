@@ -60,6 +60,50 @@
 	</listitem>
       </varlistentry>
 
+      <varlistentry>
+	<term><option>ROLLBACK_METHOD=<replaceable>value</replaceable></option></term>
+	<listitem>
+	  <para>Controls how <command>snapper rollback</command> switches the
+	  active root subvolume. Only relevant for btrfs root configurations.</para>
+	  <para>Possible values:</para>
+	  <variablelist>
+	    <varlistentry>
+	      <term><option>auto</option></term>
+	      <listitem>
+		<para>Detect the rollback method from the current mount options in
+		<filename>/proc/mounts</filename>. If the root filesystem is mounted
+		with a named subvolume (e.g. <option>subvol=@root</option>), the
+		<option>subvol-rename</option> method is used. Otherwise
+		<option>set-default</option> is used. This is the default.</para>
+	      </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><option>set-default</option></term>
+	      <listitem>
+		<para>Set the btrfs default subvolume id. Works when the bootloader
+		or fstab relies on the btrfs default subvolume, i.e. no
+		<option>subvol=</option> mount option is used.</para>
+	      </listitem>
+	    </varlistentry>
+	    <varlistentry>
+	      <term><option>subvol-rename</option></term>
+	      <listitem>
+		<para>Atomically swap the named root subvolume using
+		<citerefentry><refentrytitle>renameat2</refentrytitle><manvolnum>2</manvolnum></citerefentry>
+		with <option>RENAME_EXCHANGE</option>. A read-write copy of the
+		rollback target is created as
+		<filename><replaceable>subvol</replaceable>.incoming</filename>,
+		then swapped with the current root. The old root is preserved as
+		<filename><replaceable>subvol</replaceable>.rollback.<replaceable>N</replaceable></filename>.
+		Requires Linux 3.17 or later. Use this when fstab contains
+		<option>subvol=@root</option> or similar.</para>
+	      </listitem>
+	    </varlistentry>
+	  </variablelist>
+	  <para>Only supported for btrfs. Default value is &quot;auto&quot;.</para>
+	</listitem>
+      </varlistentry>
+
       <varlistentry>	<term><option>SPACE_LIMIT=<replaceable>float</replaceable> or
 	<replaceable>size</replaceable></option></term>
 	<listitem>

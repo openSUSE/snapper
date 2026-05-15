@@ -37,6 +37,7 @@
 #include <sys/sendfile.h>
 #include <dirent.h>
 #include <mntent.h>
+#include <regex>
 #include <boost/algorithm/string.hpp>
 #include <boost/io/ios_state.hpp>
 #include <boost/scoped_array.hpp>
@@ -247,24 +248,15 @@ namespace snapper
     RollbackMethod
     detect_rollback_method_from_options(const vector<string>& options, string& subvol_name)
     {
-	static const string prefix = "subvol=";
-	static const string id_prefix = "subvolid=";
+	static const regex re("^subvol=/?(\\S+)$");
 
 	for (const string& opt : options)
 	{
-	    // Skip "subvolid=" - it looks like "subvol=" but is not a named subvolume
-	    if (opt.compare(0, id_prefix.size(), id_prefix) == 0)
-		continue;
-
-	    if (opt.compare(0, prefix.size(), prefix) == 0)
+	    smatch m;
+	    if (regex_match(opt, m, re) && m[1].str() != "/")
 	    {
-		string value = opt.substr(prefix.size());
-		if (!value.empty() && value != "/")
-		{
-		    subvol_name = value;
-		    return RollbackMethod::SUBVOL_RENAME;
-		}
-		break;
+		subvol_name = m[1].str();
+		return RollbackMethod::SUBVOL_RENAME;
 	    }
 	}
 

@@ -1506,6 +1506,11 @@ namespace snapper
     Btrfs::rollbackSubvolRename(unsigned int num, const string& subvol_name,
 				Plugins::Report& report) const
     {
+	if (subvol_name.find('/') != string::npos)
+	    SN_THROW(IOErrorException("rollback failed: nested subvolume path '" + subvol_name +
+				     "' is not supported for subvol-rename rollback; set "
+				     "ROLLBACK_METHOD=set-default or use a top-level subvolume"));
+
 	try
 	{
 	    Plugins::set_default_snapshot(Plugins::Stage::PRE_ACTION, subvolume, this, num, report);
@@ -1528,13 +1533,26 @@ namespace snapper
 	    const string incoming = subvol_name + ".incoming";
 	    const string rollback_name = subvol_name + ".rollback." + decString(num);
 
-	    // Remove stale .incoming from a previous failed attempt
+	    // If a previous rollback completed the rename_exchange but failed to move
+	    // .incoming to .rollback.N, that .incoming subvolume is the old running root
+	    // (still mounted by subvolume ID). Deleting it risks corruption during the
+	    // next unmount sequence. Rename it instead, using its btrfs subvolume ID as
+	    // suffix — guaranteed unique across the filesystem.
 	    {
 		struct stat st;
 		if (toplevel.stat(incoming, &st, AT_SYMLINK_NOFOLLOW) == 0)
 		{
-		    y2war("removing stale subvolume " << incoming);
-		    delete_subvolume(toplevel.fd(), incoming);
+		    SDir incoming_dir(toplevel, incoming);
+		    const subvolid_t svid = get_id(incoming_dir.fd());
+		    const string rescued = subvol_name + ".rollback.svid." + decString(svid);
+		    y2war("stale " << incoming << " found; renaming to " << rescued
+			  << " rather than deleting (may be a previously running root)");
+		    if (toplevel.rename(incoming, rescued) != 0)
+		    {
+			y2err("failed to rename " << incoming << " to " << rescued
+			      << ": " << stringerror(errno));
+			SN_THROW(IOErrorException("rollback failed: cannot move aside stale " + incoming));
+		    }
 		}
 	    }
 
@@ -1562,12 +1580,28 @@ namespace snapper
 					  " -- kernel may not support RENAME_EXCHANGE on btrfs"));
 	    }
 
-	    // Rename old root to <subvol_name>.rollback.<num> for preservation
+	    // Rename old root to <subvol_name>.rollback.<num> for preservation.
+	    // If that name already exists (e.g. rolling back to the same snapshot twice),
+	    // fall back to a subvolume-ID-based name which is guaranteed unique.
 	    if (toplevel.rename(incoming, rollback_name) != 0)
 	    {
-		y2war("failed to rename old root " << incoming << " to " << rollback_name
-		      << ": " << stringerror(errno));
-		// Non-fatal: the swap succeeded, the old root is just named .incoming
+		bool rescued = false;
+		if (errno == EEXIST || errno == ENOTEMPTY)
+		{
+		    SDir incoming_dir(toplevel, incoming);
+		    const string alt_name = subvol_name + ".rollback.svid." +
+					    decString(get_id(incoming_dir.fd()));
+		    y2war("rename old root " << incoming << " to " << rollback_name
+			  << " failed (already exists); trying " << alt_name);
+		    if (toplevel.rename(incoming, alt_name) == 0)
+			rescued = true;
+		}
+		if (!rescued)
+		{
+		    y2war("failed to rename old root " << incoming << " to " << rollback_name
+			  << ": " << stringerror(errno)
+			  << " -- old root preserved as " << incoming);
+		}
 	    }
 
 	    Plugins::set_default_snapshot(Plugins::Stage::POST_ACTION, subvolume, this, num, report);
