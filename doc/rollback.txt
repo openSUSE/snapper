@@ -1,0 +1,53 @@
+Btrfs Rollback Methods
+======================
+
+Snapper supports two methods for switching the active root subvolume
+during a rollback. The method is controlled by ROLLBACK_METHOD in the
+snapper config (see snapper-configs(5)).
+
+
+set-default
+-----------
+
+Sets the btrfs default subvolume ID via BTRFS_IOC_DEFAULT_SUBVOL. This
+works when the bootloader or fstab does not specify a subvol= mount
+option and instead relies on the btrfs default subvolume.
+
+This is the traditional snapper rollback behavior.
+
+
+subvol-rename
+-------------
+
+Atomically swaps the named root subvolume using renameat2(2) with
+RENAME_EXCHANGE. This is required when fstab (or the bootloader) mounts
+the root filesystem with an explicit subvol= option such as subvol=@root,
+because in that case the btrfs default subvolume ID is ignored.
+
+The sequence is:
+
+  1. A read-write copy of the rollback target snapshot is created as
+     <subvol>.incoming (e.g. @root.incoming).
+
+  2. renameat2(RENAME_EXCHANGE) atomically swaps <subvol>.incoming with
+     the current root subvolume (e.g. @root). There is no point in time
+     where @root does not exist.
+
+  3. The displaced root is moved to <subvol>.rollback.<N>, preserving
+     the old root for recovery.
+
+Renaming a mounted btrfs subvolume is safe: the kernel tracks mounts by
+subvolume ID, not by name, so the running system is unaffected. Requires
+Linux 3.17 or later for renameat2(RENAME_EXCHANGE) support.
+
+
+auto (default)
+--------------
+
+Snapper inspects /proc/mounts to determine which method applies:
+
+- If the root filesystem is mounted with a named subvol= option
+  (any value other than "/"), subvol-rename is used.
+- Otherwise set-default is used.
+
+This means no manual configuration is needed on most systems.
