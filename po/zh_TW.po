@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-19 12:28+0100\n"
-"PO-Revision-Date: 2025-08-05 05:59+0000\n"
-"Last-Translator: Grace Yu <grace.yu@excel-gits.com>\n"
-"Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/master/zh_TW/>\n"
+"PO-Revision-Date: 2026-05-15 11:12+0000\n"
+"Last-Translator: Emily Dong <Emily.Dong@excel-gits.com>\n"
+"Language-Team: Chinese (Taiwan) <https://l10n.opensuse.org/projects/snapper/"
+"master/zh_TW/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.17.1\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <清理演算法>"
@@ -199,16 +200,16 @@ msgstr "%1$s，%2$s"
 #. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
 #, c-format
 msgid "%s continued"
-msgstr ""
+msgstr "%s 已繼續"
 
 #, c-format
 msgid "%s killed by signal %d"
-msgstr ""
+msgstr "%s 被訊號 %d 強行終止"
 
 #. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
 #, c-format
 msgid "%s stopped"
-msgstr ""
+msgstr "%s 已停止"
 
 msgid "'btrfs send | btrfs receive' failed."
 msgstr "'btrfs send | btrfs receive' 失敗。"
@@ -260,18 +261,17 @@ msgstr "(目標) 收到的 UUID"
 msgid "(Target) UUID"
 msgstr "(目標) UUID"
 
-#, fuzzy
 msgid "- A backup-config must be specified to run this command."
-msgstr "僅在指定的目標模式下使用備份組態。"
+msgstr "- 必須指定備份組態才能執行此指令。"
 
 msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
-msgstr ""
+msgstr "- 重新啟動 `snapperd` 服務，以使還原的快照立即生效。"
 
 msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
-msgstr ""
+msgstr "- source-tree：產生來源端快照的樹狀結構圖。"
 
 msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
-msgstr ""
+msgstr "- target-tree：產生目標端快照的樹狀結構圖。"
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -370,7 +370,7 @@ msgid "--quiet, -q"
 msgstr "--quiet、-q"
 
 msgid "--rankdir, -r"
-msgstr ""
+msgstr "--rankdir、-r"
 
 msgid "--read-only"
 msgstr "--read-only"
@@ -411,9 +411,8 @@ msgstr "--verbose、-v"
 msgid "--version"
 msgstr "--version"
 
-#, fuzzy
 msgid "A backup-config must be specified to run this command."
-msgstr "僅在指定的目標模式下使用備份組態。"
+msgstr "必須指定備份組態才能執行此指令。"
 
 # SLE12
 msgid "ACL error."
@@ -459,11 +458,10 @@ msgstr "無法復原，因為預設子磁碟區未知。"
 
 #, c-format
 msgid "Cannot find the node of UUID %s"
-msgstr ""
+msgstr "找不到 UUID %s 對應的節點"
 
-#, fuzzy
 msgid "Cannot transfer a read-write snapshot."
-msgstr "建立讀寫快照。"
+msgstr "無法傳輸讀取寫入快照。"
 
 msgid "Character separator for CSV output format."
 msgstr "CSV 輸出格式的字元分隔符。"
@@ -553,9 +551,8 @@ msgstr "指令「setup-quota」不需要引數。"
 msgid "Command 'status' needs one argument."
 msgstr "命令 'status' 需要一個參數。"
 
-#, fuzzy
 msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
-msgstr "指令 'transfer-and-delete' 不接受引數。"
+msgstr "指令 \"transfer-and-delete\" 不支援對單個快照執行操作。"
 
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "指令 'transfer-and-delete' 不接受引數。"
@@ -566,9 +563,8 @@ msgstr "指令「umount」至少需要一個引數。"
 msgid "Command 'undochange' needs at least one argument."
 msgstr "命令 'undochange' 需要至少一個參數。"
 
-#, fuzzy
 msgid "Command 'visualize' needs one argument."
-msgstr "命令 'status' 需要一個參數。"
+msgstr "指令 \"visualize\" 需要一個引數。"
 
 # SLE12
 msgid "Command 'xadiff' needs at least one argument."
@@ -728,9 +724,8 @@ msgstr "錯誤 (%s)。"
 msgid "Extra options passed to the diff command."
 msgstr "傳送到 diff 指令的額外選項。"
 
-#, fuzzy
 msgid "Failed to compute checksum."
-msgstr "剖析編號失敗。"
+msgstr "檢查總數計算失敗。"
 
 # SLE12
 msgid "Failed to initialize filesystem handler."
@@ -807,9 +802,8 @@ msgstr "顯示更詳細的訊息。"
 msgid "Invalid ambit '%s'."
 msgstr "範圍 \"%s\" 無效。"
 
-#, fuzzy
 msgid "Invalid checksum output format."
-msgstr "設定 CSV 輸出格式。"
+msgstr "檢查總數輸出格式無效。"
 
 #, c-format
 msgid "Invalid column '%s'."
@@ -841,7 +835,7 @@ msgid "Invalid machine readable format '%s'."
 msgstr "機器可讀格式 \"%s\" 無效。"
 
 msgid "Invalid number of lines in checksum output."
-msgstr ""
+msgstr "檢查總數輸出中的列數無效。"
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -955,7 +949,7 @@ msgid "No permissions."
 msgstr "無許可權。"
 
 msgid "Notice:"
-msgstr ""
+msgstr "備註："
 
 msgid "Number of corresponding pre snapshot."
 msgstr "對應前快照的編號。"
@@ -987,9 +981,8 @@ msgstr "選項 --from 僅適用於單一類型的快照。"
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "選項 --read-write 僅適用於單一類型的快照。"
 
-#, fuzzy
 msgid "Options for the 'visualize' command:"
-msgstr "    'list' 命令的選項："
+msgstr "\"visualize\" 指令選項："
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
@@ -999,9 +992,9 @@ msgstr "P"
 msgid "PB"
 msgstr "PB"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Parent node %s not found."
-msgstr "檔案 '%s' 找不到。"
+msgstr "未找到父節點 %s。"
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -1042,7 +1035,7 @@ msgid "Probing target snapshots."
 msgstr "正在查探目標快照。"
 
 msgid "Produce a specific graph in Graphviz DOT format:"
-msgstr ""
+msgstr "以 Graphviz DOT 格式產生特定圖表："
 
 #, c-format
 msgid "Quota error (%s)."
@@ -1058,12 +1051,12 @@ msgid "Read-Only"
 msgstr "唯讀"
 
 msgid "Restore:"
-msgstr ""
+msgstr "還原："
 
 # SLE12
-#, fuzzy, c-format
+#, c-format
 msgid "Restoring snapshot %d."
-msgstr "正在刪除快照 %d。"
+msgstr "正在還原快照 %d。"
 
 # SLE12
 msgid "Run command and create pre and post snapshots."
@@ -1087,18 +1080,18 @@ msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
 msgstr[0] "針對 %d 個備份組態 (共 %ld 個) 執行的列出操作失敗。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running restore failed for %d of %ld backup config."
 msgid_plural "Running restore failed for %d of %ld backup configs."
-msgstr[0] "針對 %d 個備份組態 (共 %ld 個) 執行的刪除操作失敗。"
+msgstr[0] "針對 %d 個備份組態 (共 %ld 個) 的還原操作失敗。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running restore for backup config '%s' failed."
-msgstr "針對備份組態 '%s' 執行的刪除操作失敗。"
+msgstr "針對備份組態 \"%s\" 執行的還原操作失敗。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running restore for backup config '%s'."
-msgstr "正在針對備份組態 '%s' 執行刪除操作。"
+msgstr "正在針對備份組態 \"%s\" 執行還原操作。"
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
@@ -1185,9 +1178,8 @@ msgstr "正在將預設子磁碟區設定為快照 %d。"
 msgid "Snapshot '%u' not found."
 msgstr "快照 '%u' 找不到。"
 
-#, fuzzy
 msgid "Snapshot already on source."
-msgstr "目標中已存在該快照。"
+msgstr "來源端已存在快照。"
 
 msgid "Snapshot already on target."
 msgstr "目標中已存在該快照。"
@@ -1215,7 +1207,7 @@ msgid "Subvolume"
 msgstr "子磁碟區"
 
 msgid "Supported modes:"
-msgstr ""
+msgstr "支援的模式："
 
 msgid "Suppress normal output."
 msgstr "不顯示一般輸出。"
@@ -1246,9 +1238,8 @@ msgstr "目標狀態"
 msgid "Target btrfs bin"
 msgstr "目標 btrfs bin"
 
-#, fuzzy
 msgid "Target ls Bin"
-msgstr "目標 rm bin"
+msgstr "目標 ls Bin"
 
 msgid "Target mkdir bin"
 msgstr "目標 mkdir bin"
@@ -1260,7 +1251,7 @@ msgid "Target rmdir bin"
 msgstr "目標 rmdir bin"
 
 msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
-msgstr ""
+msgstr "Graphviz 的 \"rankdir\" 圖表屬性。預設為 \"LR\"。"
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "可以使用 --ambit 選項以手動方式指定範圍。"
@@ -1325,26 +1316,26 @@ msgstr "未知的組態檔。"
 msgid "Unknown global option '%s'."
 msgstr "未知的全域選項 '%s'。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown mode '%s'."
-msgstr "未知類型 \"%s\"。"
+msgstr "未知模式 \"%s\"。"
 
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "未知選項 '%s'，命令 '%s'。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown rankdir '%s'."
-msgstr "未知的命令 '%s'。"
+msgstr "未知 rankdir \"%s\"。"
 
 #, c-format
 msgid "Unknown type '%s'."
 msgstr "未知類型 \"%s\"。"
 
 # SLE12
-#, fuzzy, c-format
+#, c-format
 msgid "Updating metadata of snapshot %d."
-msgstr "正在建立快照 %d 的讀寫快照。"
+msgstr "正在更新快照 %d 的中繼資料。"
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
@@ -1445,9 +1436,8 @@ msgstr "snbk list"
 msgid "snbk list-configs"
 msgstr "snbk list-configs"
 
-#, fuzzy
 msgid "snbk restore [numbers]"
-msgstr "snbk delete [編號]"
+msgstr "snbk restore [編號]"
 
 msgid "snbk transfer [numbers]"
 msgstr "snbk transfer [編號]"
@@ -1456,7 +1446,7 @@ msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
 
 msgid "snbk visualize <mode>"
-msgstr ""
+msgstr "snbk visualize <模式>"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "用法： snapper [--全域選項] <命令> [--命令選項] [命令參數]"
