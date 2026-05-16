@@ -5,7 +5,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-19 12:28+0100\n"
 "PO-Revision-Date: 2026-05-16 13:12+0000\n"
-"Last-Translator: Javier Llorente <javier@opensuse.org>\n"
+"Last-Translator: Antonio Simón <antonio@trans-mission.com>\n"
 "Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/"
 "es/>\n"
 "Language: es\n"
@@ -448,11 +448,10 @@ msgstr "No se puede revertir porque no se conoce el subvolumen por defecto."
 
 #, c-format
 msgid "Cannot find the node of UUID %s"
-msgstr ""
+msgstr "No se encuentra el nodo del UUID %s"
 
-#, fuzzy
 msgid "Cannot transfer a read-write snapshot."
-msgstr "Crea una instantánea de lectura-escritura."
+msgstr "No se puede transferir una instantánea de lectura-escritura."
 
 msgid "Character separator for CSV output format."
 msgstr "Separador de caracteres para el formato de salida CSV."
@@ -537,12 +536,13 @@ msgstr "El comando 'setup-quota' no tiene argumentos."
 msgid "Command 'status' needs one argument."
 msgstr "El comando 'status' necesita un argumento."
 
-#, fuzzy
 msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
-msgstr "El comando 'transfer-and-delete' no toma argumentos."
+msgstr ""
+"El comando \"transfer-and-delete\" no admite el funcionamiento en una única "
+"instantánea."
 
 msgid "Command 'transfer-and-delete' does not take arguments."
-msgstr "El comando 'transfer-and-delete' no acepta argumentos."
+msgstr "El comando \"transfer-and-delete\" no acepta argumentos."
 
 msgid "Command 'umount' needs at least one argument."
 msgstr "El comando 'unmount' necesita al menos un argumento."
@@ -550,9 +550,8 @@ msgstr "El comando 'unmount' necesita al menos un argumento."
 msgid "Command 'undochange' needs at least one argument."
 msgstr "El comando 'undochange' necesita al menos un argumento."
 
-#, fuzzy
 msgid "Command 'visualize' needs one argument."
-msgstr "El comando 'status' necesita un argumento."
+msgstr "El comando \"visualize\" necesita un argumento."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "El comando \"xadiff\" requiere al menos un argumento."
@@ -710,9 +709,8 @@ msgstr "Opciones adicionales que se pasan al comando diff."
 # clients/lan_nfs_write.ycp:78
 # include/nfs/nfs_write.ycp:54
 # modules/Nfs.ycp:163
-#, fuzzy
 msgid "Failed to compute checksum."
-msgstr "No se pudo análizar el número."
+msgstr "Error al calcular la suma de comprobación."
 
 # SLE12
 msgid "Failed to initialize filesystem handler."
@@ -799,9 +797,8 @@ msgstr "Aumenta la verbosidad."
 msgid "Invalid ambit '%s'."
 msgstr "Ámbito %s no válido."
 
-#, fuzzy
 msgid "Invalid checksum output format."
-msgstr "Establece el formato de salida CSV."
+msgstr "El formato de salida de la suma de comprobación no es válido."
 
 #, c-format
 msgid "Invalid column '%s'."
@@ -831,6 +828,7 @@ msgstr "Formato que puede leer el equipo %s no válido."
 
 msgid "Invalid number of lines in checksum output."
 msgstr ""
+"El número de líneas del resultado de la suma de comprobación no es válido."
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -856,7 +854,7 @@ msgstr "Estilo de tabla %s no válido."
 
 #, c-format
 msgid "Invalid target mode '%s'."
-msgstr "Modo de destino '%s' no válido."
+msgstr "Modo de destino \"%s\" no válido."
 
 # SLE12
 #, c-format
@@ -940,7 +938,7 @@ msgid "No permissions."
 msgstr "Sin permisos."
 
 msgid "Notice:"
-msgstr ""
+msgstr "Aviso:"
 
 msgid "Number of corresponding pre snapshot."
 msgstr "Número de la instantánea previa correspondiente."
@@ -950,7 +948,7 @@ msgstr "Sólo usar configuraciones de respaldo con set automático."
 
 msgid "Only use backup-config with specified target-mode."
 msgstr ""
-"Sólo usar configuración de copia de seguridad con el modo especificado de "
+"Solo usar configuración de copia de seguridad con el modo especificado de "
 "destino."
 
 #, c-format
@@ -973,9 +971,8 @@ msgstr "La opción --from solo se admite para instantáneas de tipo single."
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "La opción --read-write solo se admite para instantáneas de tipo single."
 
-#, fuzzy
 msgid "Options for the 'visualize' command:"
-msgstr "    Opciones para el comando 'list':"
+msgstr "Opciones para el comando \"visualize\":"
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
@@ -1066,11 +1063,11 @@ msgstr[1] ""
 #, c-format
 msgid "Running delete for backup config '%s' failed."
 msgstr ""
-"La eliminación de la configuración de copia de seguridad '%s' ha fallado."
+"La eliminación de la configuración de copia de seguridad \"%s\" ha fallado."
 
 #, c-format
 msgid "Running delete for backup config '%s'."
-msgstr "Eliminando la configuración de copia de seguridad '%s'."
+msgstr "Eliminando la configuración de copia de seguridad \"%s\"."
 
 #, c-format
 msgid "Running list failed for %d of %ld backup config."
@@ -1115,11 +1112,12 @@ msgstr[1] ""
 msgid "Running transfer and delete for backup config '%s' failed."
 msgstr ""
 "La transferencia y eliminación de la configuración de copia de seguridad "
-"'%s' ha fallado."
+"\"%s\" ha fallado."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s'."
-msgstr "Transfiriendo y eliminando la configuración de copia de seguridad '%s'."
+msgstr ""
+"Transfiriendo y eliminando la configuración de copia de seguridad \"%s\"."
 
 #, c-format
 msgid "Running transfer failed for %d of %ld backup config."
@@ -1128,8 +1126,8 @@ msgstr[0] ""
 "La transferencia en curso ha fallado para %d de %ld de la configuración de "
 "copia de seguridad."
 msgstr[1] ""
-"La transferencia ha fallado para %d de %ld de la configuraciones de copias "
-"de seguridad."
+"La transferencia en curso ha fallado para %d de %ld de las configuraciones "
+"de copias de seguridad."
 
 #, c-format
 msgid "Running transfer for backup config '%s' failed."
@@ -1139,7 +1137,7 @@ msgstr ""
 
 #, c-format
 msgid "Running transfer for backup config '%s'."
-msgstr "Transfiriendo la configuración de la copia de seguridad '%s'."
+msgstr "Transfiriendo la configuración de la copia de seguridad \"%s\"."
 
 msgid "SSH Host"
 msgstr "Host SSH"
