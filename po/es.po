@@ -1133,11 +1133,13 @@ msgstr[1] ""
 
 #, c-format
 msgid "Running transfer for backup config '%s' failed."
-msgstr "La transferencia de la configuración de respaldo '%s' falló."
+msgstr ""
+"La transferencia en curso para la configuración de la copia de seguridad "
+"'%s' ha fallado."
 
 #, c-format
 msgid "Running transfer for backup config '%s'."
-msgstr "Transfiriendo la configuración de respaldo '%s'."
+msgstr "Transfiriendo la configuración de la copia de seguridad '%s'."
 
 msgid "SSH Host"
 msgstr "Host SSH"
