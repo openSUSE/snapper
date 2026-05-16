@@ -1075,8 +1075,12 @@ msgstr "Eliminando la configuración de copia de seguridad '%s'."
 #, c-format
 msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
-msgstr[0] "La lista de ejecución falló para %d de %ld configuración de respaldo."
-msgstr[1] "La lista de ejecución falló para %d de %ld configuraciones de respaldo."
+msgstr[0] ""
+"La lista de ejecución ha fallado para %d de %ld de la configuración de copia "
+"de seguridad."
+msgstr[1] ""
+"La lista de ejecución ha fallado para %d de %ld de las configuraciones de "
+"copias de seguridad."
 
 #, c-format
 msgid "Running restore failed for %d of %ld backup config."
@@ -1100,12 +1104,18 @@ msgstr "Ejecutando la restauración para la configuración de respaldo '%s'."
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
-msgstr[0] "La transferencia y eliminación falló para %d de %ld configuración de respaldo."
-msgstr[1] "La transferencia y eliminación falló para %d de %ld configuraciones de respaldo."
+msgstr[0] ""
+"La transferencia y eliminación ha fallado para %d de %ld de la configuración "
+"de copia de seguridad."
+msgstr[1] ""
+"La transferencia y eliminación ha fallado para %d de %ld de las "
+"configuraciones de copias de seguridad."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
-msgstr "La transferencia y eliminación de la configuración de respaldo '%s' falló."
+msgstr ""
+"La transferencia y eliminación de la configuración de copia de seguridad "
+"'%s' ha fallado."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s'."
