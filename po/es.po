@@ -949,7 +949,9 @@ msgid "Only use backup-config with automatic set."
 msgstr "Sólo usar configuraciones de respaldo con set automático."
 
 msgid "Only use backup-config with specified target-mode."
-msgstr "Sólo usar configuración de respaldo con el modo de destino especificado."
+msgstr ""
+"Sólo usar configuración de copia de seguridad con el modo especificado de "
+"destino."
 
 #, c-format
 msgid "Opening file '%s' failed."
