@@ -731,11 +731,11 @@ msgstr "Error al analizar %s."
 # include/nfs/nfs_write.ycp:54
 # modules/Nfs.ycp:163
 msgid "Failed to parse number."
-msgstr "No se pudo análizar el número."
+msgstr "No se ha podido analizar el número."
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
-msgstr "Error al consultar el espacio disponible para la vía \"%s\"."
+msgstr "Error al consultar el espacio disponible de la ruta \"%s\"."
 
 # clients/lan_nfs_write.ycp:78
 # clients/lan_nfs_write.ycp:78
@@ -856,7 +856,7 @@ msgstr "Estilo de tabla %s no válido."
 
 #, c-format
 msgid "Invalid target mode '%s'."
-msgstr "Modo de destino '%s' inválido."
+msgstr "Modo de destino '%s' no válido."
 
 # SLE12
 #, c-format
