@@ -1119,7 +1119,7 @@ msgstr ""
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s'."
-msgstr "Transfiriendo y eliminando la configuración de respaldo '%s'."
+msgstr "Transfiriendo y eliminando la configuración de copia de seguridad '%s'."
 
 #, c-format
 msgid "Running transfer failed for %d of %ld backup config."
