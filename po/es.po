@@ -1056,12 +1056,17 @@ msgstr "Ejecuta el comando y crea instantáneas previas y posteriores."
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
-msgstr[0] "La eliminación falló para %d de %ld configuración de respaldo."
-msgstr[1] "La eliminación falló para %d de %ld configuraciones de respaldo."
+msgstr[0] ""
+"La eliminación ha fallado para %d de %ld de la configuración de copia de "
+"seguridad."
+msgstr[1] ""
+"La eliminación ha fallado para %d de %ld de las configuraciones de copias de "
+"seguridad."
 
 #, c-format
 msgid "Running delete for backup config '%s' failed."
-msgstr "La eliminación de la configuración de respaldo '%s' falló."
+msgstr ""
+"La eliminación de la configuración de copia de seguridad '%s' ha fallado."
 
 #, c-format
 msgid "Running delete for backup config '%s'."
