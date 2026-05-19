@@ -4,15 +4,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-03-19 12:28+0100\n"
-"PO-Revision-Date: 2025-08-04 14:59+0000\n"
+"PO-Revision-Date: 2026-05-19 10:12+0000\n"
 "Last-Translator: Sophie Leroy <sophie@stoquart.com>\n"
-"Language-Team: French <https://l10n.opensuse.org/projects/snapper/master/fr/>\n"
+"Language-Team: French <https://l10n.opensuse.org/projects/snapper/master/fr/>"
+"\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 2026.5\n"
 "X-Poedit-Language: French\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -182,16 +183,16 @@ msgstr "%1$s, %2$s"
 #. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
 #, c-format
 msgid "%s continued"
-msgstr ""
+msgstr "Suite de %s"
 
 #, c-format
 msgid "%s killed by signal %d"
-msgstr ""
+msgstr "%s a été tué par le signal %d"
 
 #. For system(3), only WIFEXITED or WIFSIGNALED should be possible.
 #, c-format
 msgid "%s stopped"
-msgstr ""
+msgstr "%s arrêté"
 
 msgid "'btrfs send | btrfs receive' failed."
 msgstr "'btrfs send | btrfs receive' a échoué."
@@ -243,18 +244,22 @@ msgstr "(Déstination) UUID reçue"
 msgid "(Target) UUID"
 msgstr "(Déstination) UUID"
 
-#, fuzzy
 msgid "- A backup-config must be specified to run this command."
-msgstr "N'utiliser backup-config qu'avec le mode destination spécifié."
+msgstr ""
+"- Une configuration de sauvegarde (backup-config) doit être spécifiée pour "
+"exécuter cette commande."
 
 msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
 msgstr ""
+"- Redémarrez le service snapperd pour que les instantanés restaurés soient "
+"visibles immédiatement."
 
 msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
 msgstr ""
+"- source-tree : produit une arborescences des instantanés sur la source."
 
 msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
-msgstr ""
+msgstr "- target-tree : produit une arborescence des instantanés sur la cible."
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -353,7 +358,7 @@ msgid "--quiet, -q"
 msgstr "--quiet, -q"
 
 msgid "--rankdir, -r"
-msgstr ""
+msgstr "--rankdir, -r"
 
 msgid "--read-only"
 msgstr "--read-only"
@@ -394,9 +399,10 @@ msgstr "--verbose, -v"
 msgid "--version"
 msgstr "--version"
 
-#, fuzzy
 msgid "A backup-config must be specified to run this command."
-msgstr "N'utiliser backup-config qu'avec le mode destination spécifié."
+msgstr ""
+"Une configuration de sauvegarde (backup-config) doit être spécifiée pour "
+"exécuter cette commande."
 
 # SLE12
 msgid "ACL error."
@@ -442,11 +448,10 @@ msgstr "Impossible de revenir à l'état initial car le sous-volume par défaut 
 
 #, c-format
 msgid "Cannot find the node of UUID %s"
-msgstr ""
+msgstr "Le noeud de l'UUID %s est introuvable"
 
-#, fuzzy
 msgid "Cannot transfer a read-write snapshot."
-msgstr "Crée un instantané en lecture-écriture."
+msgstr "Impossible de transférer un instantané en lecture-écriture."
 
 msgid "Character separator for CSV output format."
 msgstr "Séparateur de caractères pour format de sortie CSV."
@@ -532,9 +537,10 @@ msgstr "La commande 'setup-quota' n'accepte aucun argument."
 msgid "Command 'status' needs one argument."
 msgstr "La commande 'status' nécessite un argument."
 
-#, fuzzy
 msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
-msgstr "La commande « transfert et suppression » ne prend pas d'arguments."
+msgstr ""
+"La commande 'transfer-and-delete' ne prend pas en charge le fonctionnement "
+"sur un seul instantané."
 
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "La commande « transfert et suppression » ne prend pas d'arguments."
@@ -545,9 +551,8 @@ msgstr "La commande 'umount' nécessite au moins un argument."
 msgid "Command 'undochange' needs at least one argument."
 msgstr "La commande 'undochange' nécessite au moins un argument."
 
-#, fuzzy
 msgid "Command 'visualize' needs one argument."
-msgstr "La commande 'status' nécessite un argument."
+msgstr "La commande 'visualize' nécessite un argument unique."
 
 msgid "Command 'xadiff' needs at least one argument."
 msgstr "La commande 'xadiff' nécessite au moins un argument."
@@ -703,9 +708,8 @@ msgid "Extra options passed to the diff command."
 msgstr "Options supplémentaires transmises à la commande diff."
 
 # TLABEL nfs_2002_01_04_0147__3
-#, fuzzy
 msgid "Failed to compute checksum."
-msgstr "Échec de traitement du nombre."
+msgstr "Échec du calcul de la somme de contrôle."
 
 # SLE12
 msgid "Failed to initialize filesystem handler."
@@ -783,9 +787,8 @@ msgstr "Augmente la verbosité."
 msgid "Invalid ambit '%s'."
 msgstr "Contexte « %s » non valide."
 
-#, fuzzy
 msgid "Invalid checksum output format."
-msgstr "Définit le format de sortie CSV."
+msgstr "Format de sortie de la somme de contrôle non valide."
 
 #, c-format
 msgid "Invalid column '%s'."
@@ -814,7 +817,7 @@ msgid "Invalid machine readable format '%s'."
 msgstr "Format de sortie « %s » non valide."
 
 msgid "Invalid number of lines in checksum output."
-msgstr ""
+msgstr "Nombre de lignes non valide dans la sortie de la somme de contrôle."
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -924,7 +927,7 @@ msgid "No permissions."
 msgstr "Pas de permissions."
 
 msgid "Notice:"
-msgstr ""
+msgstr "Remarque :"
 
 msgid "Number of corresponding pre snapshot."
 msgstr "Numéro du précédent instantané correspondant."
@@ -955,9 +958,8 @@ msgstr "L'option --from n'est supportée que pour les instantanés de type singl
 msgid "Option --read-write only supported for snapshots of type single."
 msgstr "L'option --read-write n'est supportée que pour les instantanés de type single."
 
-#, fuzzy
 msgid "Options for the 'visualize' command:"
-msgstr "    Options pour la commande 'list' :"
+msgstr "Options de la commande 'visualize' :"
 
 #. TRANSLATORS: symbol for "peta" (best keep untranslated)
 msgid "P"
@@ -967,9 +969,9 @@ msgstr "P"
 msgid "PB"
 msgstr "Po"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Parent node %s not found."
-msgstr "Fichier '%s' introuvable."
+msgstr "Noeud parent '%s' introuvable."
 
 #. TRANSLATORS: symbol for "pebi bytes" (best keep untranslated)
 msgid "PiB"
@@ -1010,7 +1012,7 @@ msgid "Probing target snapshots."
 msgstr "Sonder les instantanés de la destination."
 
 msgid "Produce a specific graph in Graphviz DOT format:"
-msgstr ""
+msgstr "Produire un graphique spécifique au format Graphviz DOT :"
 
 #, c-format
 msgid "Quota error (%s)."
@@ -1026,11 +1028,11 @@ msgid "Read-Only"
 msgstr "Lecture seule"
 
 msgid "Restore:"
-msgstr ""
+msgstr "Restaurer :"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Restoring snapshot %d."
-msgstr "Suppression de l'instantané %d."
+msgstr "Restauration de l'instantané %d."
 
 msgid "Run command and create pre and post snapshots."
 msgstr "Exécute la commande et crée les instantanés préalables et postérieurs."
@@ -1055,19 +1057,25 @@ msgid_plural "Running list failed for %d of %ld backup configs."
 msgstr[0] "L'exécution de la liste a échoué pour %d de %ld configuration de sauvegarde."
 msgstr[1] "L'exécution de la liste a échoué pour %d de %ld configurations de sauvegarde."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running restore failed for %d of %ld backup config."
 msgid_plural "Running restore failed for %d of %ld backup configs."
-msgstr[0] "L'exécution de la suppression a échoué pour %d de %ld configuration de sauvegarde."
-msgstr[1] "L'exécution de la suppression a échoué pour %d de %ld configurations de sauvegarde."
+msgstr[0] ""
+"L'exécution de la restauration a échoué pour %d configuration de sauvegarde "
+"sur %ld."
+msgstr[1] ""
+"L'exécution de la restauration a échoué pour %d configurations de sauvegarde "
+"sur %ld."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running restore for backup config '%s' failed."
-msgstr "L'exécution de la suppression de la configuration de sauvegarde '%s' a échoué."
+msgstr ""
+"L'exécution de la restauration de la configuration de sauvegarde '%s' a "
+"échoué."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running restore for backup config '%s'."
-msgstr "Exécution de la suppression de la configuration de sauvegarde '%s'."
+msgstr "Exécution de la restauration de la configuration de sauvegarde '%s'."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
@@ -1155,9 +1163,8 @@ msgstr "Définition du sous-volume par défaut sur l'instantané %d."
 msgid "Snapshot '%u' not found."
 msgstr "Instantané '%u' non trouvé."
 
-#, fuzzy
 msgid "Snapshot already on source."
-msgstr "L'nstantané est déjà sur la destination."
+msgstr "L'instantané est déjà sur la source."
 
 msgid "Snapshot already on target."
 msgstr "L'nstantané est déjà sur la destination."
@@ -1182,7 +1189,7 @@ msgid "Subvolume"
 msgstr "Sous-volume"
 
 msgid "Supported modes:"
-msgstr ""
+msgstr "Modes pris en charge :"
 
 msgid "Suppress normal output."
 msgstr "Supprime la sortie normale."
@@ -1213,9 +1220,8 @@ msgstr "État de la destination"
 msgid "Target btrfs bin"
 msgstr "Bin btrfs cible"
 
-#, fuzzy
 msgid "Target ls Bin"
-msgstr "bin rm cible"
+msgstr "La cible est Bin"
 
 msgid "Target mkdir bin"
 msgstr "bin mkdir cible"
@@ -1228,6 +1234,7 @@ msgstr "Bin rmdir cible"
 
 msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
 msgstr ""
+"Attribut de diagramme 'rankdir' de Graphviz. La valeur par défaut est 'LR'."
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "Le contexte peut être spécifié manuellement à l'aide de l'option --ambit."
@@ -1288,26 +1295,26 @@ msgstr "Configuration inconnue."
 msgid "Unknown global option '%s'."
 msgstr "Option globale '%s' inconnue."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown mode '%s'."
-msgstr "Type « %s » inconnu."
+msgstr "Mode '%s' inconnu."
 
 #, c-format
 msgid "Unknown option '%s' for command '%s'."
 msgstr "Option '%s' inconnue pour la commande '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown rankdir '%s'."
-msgstr "Commande '%s' inconnue."
+msgstr "rankdir '%s' inconnu."
 
 #, c-format
 msgid "Unknown type '%s'."
 msgstr "Type « %s » inconnu."
 
 # SLE12
-#, fuzzy, c-format
+#, c-format
 msgid "Updating metadata of snapshot %d."
-msgstr "Création d'un instantané en lecture-écriture de l'instantané %d."
+msgstr "Mise à jour des médadonnées de l'instantané %d."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
@@ -1406,9 +1413,8 @@ msgstr "snbk list"
 msgid "snbk list-configs"
 msgstr "snbk list-configs"
 
-#, fuzzy
 msgid "snbk restore [numbers]"
-msgstr "snbk delete [numéros]"
+msgstr "snbk restore [nombres]"
 
 msgid "snbk transfer [numbers]"
 msgstr "snbk transfer [numéros]"
@@ -1417,7 +1423,7 @@ msgid "snbk transfer-and-delete"
 msgstr "snbk transfer-and-delete"
 
 msgid "snbk visualize <mode>"
-msgstr ""
+msgstr "snbk visualize <mode>"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
 msgstr "Utilisation : snapper [--options-globales] <commande> [--options-de-commande] [arguments-de-commande]"
