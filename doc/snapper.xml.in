@@ -141,7 +141,7 @@
       <para>The number and timeline cleanup algorithms can also try to
       keep the space used by snapshots below a limit and the free space of
       the filesystem above a limit. For the first condition quota must be
-      setup, see command setup-quota. Additional the NUMBER_LIMIT and
+      setup, see command setup-quota. Additionally the NUMBER_LIMIT and
       TIMELINE_LIMIT variables in the config file must have ranges (min- and
       max-value). The algorithms will then make two passes:</para>
 
@@ -164,7 +164,7 @@
       <para>The limit for the free space can be configured via the
       FREE_LIMIT variable.</para>
 
-      <para>Note: Since the cleanup is performed asynchronous from
+      <para>Note: Since the cleanup is performed asynchronously from
       creating snapshots the observed snapshots can differ from the
       expected snapshots according to the limits. Also btrfs stale
       qgroups can exist temporarily.</para>
@@ -440,7 +440,7 @@
 	      <listitem>
 		<para>Disable display of used space.</para>
 		<para>Calculating the used space needs some time. Thus
-		this option can speedup the listing.</para>
+		this option can speed up the listing.</para>
 	      </listitem>
 	    </varlistentry>
 	    <varlistentry>
@@ -683,7 +683,7 @@
 	    </listitem>
 	    <listitem>
 	      <para>A "<computeroutput>p</computeroutput>" means the permissions
-	      are have changed.</para>
+	      have changed.</para>
 	    </listitem>
 	    <listitem>
 	      <para>An "<computeroutput>u</computeroutput>" means the user
@@ -967,7 +967,7 @@
       <varlistentry>
 	<term><option>set-read-only-post <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
 	<listitem>
-	  <para>Executed after  a snapshot is set read-only or read-write</para>
+	  <para>Executed after a snapshot is set read-only or read-write</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
@@ -1052,7 +1052,7 @@
   <refsect1 id='notes'>
     <title>NOTES</title>
     <para>There is no mechanism to ensure consistency of the files while a
-    snapshot it made. E.g. the files of a database can be inconsistent while
+    snapshot is made. E.g. the files of a database can be inconsistent while
     the database is running.</para>
 
     <para>Consistency after undochange is not guaranteed. E.g. when the
