@@ -54,7 +54,7 @@
       <varlistentry>
 	<term><option>QGROUP=<replaceable>qgroup</replaceable></option></term>
 	<listitem>
-	  <para>The btrfs quota group used for space aware cleanup
+	  <para>The btrfs quota group used for space-aware cleanup
 	  algorithms.</para>
 	  <para>Only supported for btrfs.</para>
 	</listitem>
@@ -135,7 +135,7 @@
       <varlistentry>
 	<term><option>COMPRESSION=<replaceable>algorithm</replaceable></option></term>
 	<listitem>
-	  <para>Defines the compression algorithm used for saving file
+	  <para>Defines the compression algorithm used for saving the file
 	  list. Allowed values are &quot;none&quot; and
 	  &quot;gzip&quot;. Depending on the installed libraries, some
 	  compression algorithms might not be available.</para>

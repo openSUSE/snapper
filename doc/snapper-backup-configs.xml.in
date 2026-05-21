@@ -106,7 +106,7 @@
 	<term><option>send-compressed-data</option></term>
 	<listitem>
 	  <para>Per default snbk will add the option --compressed-data iff
-	  supported by the source and target system. This can be disable by
+	  supported by the source and target system. This can be disabled by
 	  setting this value to false.</para>
 	</listitem>
       </varlistentry>

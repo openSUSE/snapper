@@ -33,7 +33,7 @@
 
   <refsect1 id='description'>
     <title>DESCRIPTION</title>
-    <para>Snbk is a command-line program to backup snapshot of snapper. It can
+    <para>Snbk is a command-line program to backup snapshots of snapper. It can
     transfer and delete backup snapshots on local and remote btrfs filesystems.</para>
   </refsect1>
 
@@ -438,7 +438,7 @@ After=snapper-sync.service
       </programlisting>
     </para>
     <para>If the system was reinstalled it is unfortunately in general
-    not possibly to simply use the restored snapshot as the new default
+    not possible to simply use the restored snapshot as the new default
     snapshot since some files, e.g. /etc/fstab, likely need
     modifications. Also unfortunately for other subvolumes than root a
     rollback is not supported.</para>
