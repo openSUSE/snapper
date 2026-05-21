@@ -8,7 +8,7 @@ So far snapper only supports rollback for the root subvolume. The
 reason is that rollback works by setting the btrfs default subvolume
 and that obviously only exists once per btrfs file system.
 
-But occasionally user wish to rollback also other subvolumes, e.g.
+But occasionally users wish to rollback also other subvolumes, e.g.
 /home. Recently I was made aware of the possibility to rollback by
 renaming snapshots instead of setting the default subvolume.
 
@@ -29,7 +29,7 @@ snapshot 0 to the next free number (e.g. 11) and set it read-only,
 2. create a read-write snapshot of 10 as 0 and 3. reboot. That's it.
 
 Although all of this is not yet implemented in snapper you can try
-this workflow now. A simply Python program for doing the rollback is
+this workflow now. A simple Python program for doing the rollback is
 provided at
 [https://github.com/openSUSE/snapper/blob/master/scripts/rollback-home](https://github.com/openSUSE/snapper/blob/master/scripts/rollback-home).
 
@@ -56,10 +56,10 @@ UUID=[...]  /home/.snapshots  btrfs  subvol=/@/home/.snapshots  0 0
 
 Then mount /home and /home/.snapshots or reboot.
 
-Once disadvantage of the rename instead of setting the default
+One disadvantage of the rename instead of setting the default
 subvolume is that for a short period the snapshot 0 does not
-exists. So in case of failures the system could be left in a broken
+exist. So in case of failures the system could be left in a broken
 state. Long-term using renameat2 with RENAME_EXCHANGE should solve
 that.
 
-Feedback is appreciate.
+Feedback is appreciated.

@@ -4,7 +4,7 @@ author: Arvin Schnell
 layout: post
 ---
 
-Users have long requested the possibility to cleanup snapshot based on disk
+Users have long requested the possibility to cleanup snapshots based on disk
 usage. Finally the btrfs quota support looks mature enough for usage in
 snapper so we were able to implement that desire in snapper.
 
@@ -29,7 +29,7 @@ parent qgroup tells us how much space all snapshots use. Snapper will watch
 this value and try to keep it below a user-defined limit.
 
 When you install your openSUSE system with YaST the space aware cleanup will
-be enabled for the root filesystem. Here are the required steps for manually
+be enabled for the root filesystem. Here are the required steps for manual
 setup:
 
 ~~~
@@ -47,7 +47,7 @@ QGROUP | 1/0
 [...]
 ~~~
 
-Then we allow the number cleanup algorithm to delete all except of the last
+Then we allow the number cleanup algorithm to delete all except the last
 two number snapshots and the last four important number snapshots to satisfy
 the space limit:
 

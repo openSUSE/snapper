@@ -4,13 +4,20 @@ author: José Iván López González
 layout: post
 ---
 
-Third-party programs and scripts (e.g., YaST) parse the output of the *snapper* CLI commands to get some information. For example, to find out the number of all pre and post snapshots, scripts can run the following:
+Third-party programs and scripts (e.g., YaST) parse the output of the
+*snapper* CLI commands to get some information. For example, to find
+out the number of all pre and post snapshots, scripts can run the
+following:
 
 ~~~
 snapper list | awk '/pre/||/post/{print $3}'
 ~~~
 
-The output from *snapper list* command is a table intended to be read by humans, not by scripts. This could make difficult to parse snapper outputs. But even worse, every change in this table (e.g., adding a new column or changing the format of their values) could ruin scripts that relied on the previous version.
+The output from *snapper list* command is a table intended to be read
+by humans, not by scripts. This could make it difficult to parse
+snapper outputs. But even worse, every change in this table (e.g.,
+adding a new column or changing the format of their values) could ruin
+scripts that relied on the previous version.
 
 ~~~
 snapper --iso list --disable-used-space
@@ -23,11 +30,22 @@ snapper --iso list --disable-used-space
 4  | post   |     3 | 2019-10-15 13:07:41 | root | number  |                       | important=no
 ~~~
 
-All that could make quite error prone to work with *snapper* CLI output and, for that reason, *snapper* now offers some new options to use CSV or JSON for lists.
+All that could make it quite error prone to work with *snapper* CLI
+output and, for that reason, *snapper* now offers some new options to
+use CSV or JSON for lists.
 
-Now, the following new global options can be used with *snapper* CLI: *--machine-readable*, *--csvout*, *--jsonout* and *--separator*. Option *--machine-readable* requires an argument, and accepted values are *csv* and *json*. *--csvout* and *--jsonout* are only shortcuts for *--machine-readable csv* and *--machine-readable json* respectively. In case that *--machine-readable csv* or *--csvout* is used, the *--separator* option can be indicated to set another CSV char separator.
+Now, the following new global options can be used with *snapper* CLI:
+*--machine-readable*, *--csvout*, *--jsonout* and
+*--separator*. Option *--machine-readable* requires an argument, and
+accepted values are *csv* and *json*. *--csvout* and *--jsonout* are
+only shortcuts for *--machine-readable csv* and *--machine-readable
+json* respectively. In case that *--machine-readable csv* or
+*--csvout* is used, the *--separator* option can be indicated to set
+another CSV char separator.
 
-These new options only affect to the CLI commands that generate a table as result, that is: *snapper list*, *snapper list-configs* and *snapper get-config*. Here some usage examples:
+These new options only affect the CLI commands that generate a table
+as result, that is: *snapper list*, *snapper list-configs* and
+*snapper get-config*. Here are some usage examples:
 
 ~~~
 snapper --csvout --separator \; list
@@ -80,7 +98,11 @@ snapper --jsonout --separator \; list --type single
 }
 ~~~
 
-Moreover, those three commands (*list*, *list-configs* and *get-config*) also accept a new *--columns* option to filter and sort the columns to show (indicating column names separated by comma). The list of possible columns for each command is documented in the *snapper* help:
+Moreover, those three commands (*list*, *list-configs* and
+*get-config*) also accept a new *--columns* option to filter and sort
+the columns to show (indicating column names separated by comma). The
+list of possible columns for each command is documented in the
+*snapper* help:
 
 ~~~
 snapper --csvout list --columns number,type,pre-number
@@ -96,7 +118,9 @@ number,type,pre-number
 8,post,7
 ~~~
 
-Thanks to these new options, now scripts can obtain an easy-to-parse and invariant *snapper* output. For example, extracting the number of all pre and post snapshots can be performed by the following script:
+Thanks to these new options, now scripts can obtain an easy-to-parse
+and invariant *snapper* output. For example, extracting the number of
+all pre and post snapshots can be performed by the following script:
 
 ~~~
 snapper --csvout list --columns number,type | awk 'BEGIN {FS=","} /pre/||/post/ {print $1}'

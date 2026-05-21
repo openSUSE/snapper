@@ -51,7 +51,7 @@ single | 4 |       | Wed Mar 30 15:00:01 2011 | timeline | timeline
 Snapshot #0 always refers to the current system. Snapshot #2 and #3
 were created by YaST. Snapshot #4 was created by an hourly cronjob.
 
-Getting the list of modified files between to snapshots is easy:
+Getting the list of modified files between two snapshots is easy:
 
 ~~~
 # snapper diff 2 3
@@ -92,7 +92,7 @@ Finally yast2-snapper provides a YaST UI for snapper.
 #### Testing
 
 Playing with snapper should only be done on test machines. Both btrfs
-and snapper are not finished and included known bugs. Here is a
+and snapper are not finished and include known bugs. Here is a
 [step-by-step
 manual](https://en.opensuse.org/openSUSE:Snapper_install) for
 installing and configuring snapper for openSUSE 11.4.

@@ -4,17 +4,17 @@ author: Arvin Schnell
 layout: post
 ---
 
-For btrfs there are some special snapshots: Once the snapshot
-currently mounted and the snapshot that will be mounted next time
-unless a specific snapshot is selected in grub.
+For btrfs there are some special snapshots: One is the snapshot
+currently mounted and another is the snapshot that will be mounted
+next time unless a specific snapshot is selected in grub.
 
-Now snapper informs the user about these special snapshot in the
+Now snapper informs the user about these special snapshots in the
 output of "snapper list": A "-" after the snapshot number indicates
 that the snapshot is the currently mounted snapshot and a "+"
 indicates that the snapshot will be mounted next time. If both
 conditions apply a "*" is displayed.
 
-Following is a tour to see how the special snapshot change during a
+Following is a tour to see how the special snapshots change during a
 rollback.
 
 Right after installation snapshot #1 is both the currently mounted and
@@ -46,7 +46,7 @@ Now we can ruin our system. The special snapshots do not change here:
 
 Reboot now without further actions will show that the system is indeed
 ruined. In order to boot correctly we can select to boot from snapshot
-#3 in grub. Now the special snapshot have changed:
+#3 in grub. Now the special snapshots have changed:
 
 ~~~
 # snapper --iso ls --disable-used-space
