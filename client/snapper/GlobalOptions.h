@@ -24,6 +24,7 @@
 
 #include <string>
 
+#include <snapper/AppUtil.h>
 #include <snapper/Enum.h>
 #include <snapper/Logger.h>
 
@@ -40,7 +41,6 @@ namespace snapper
     public:
 
 	enum class OutputFormat { TABLE, CSV, JSON };
-	enum class Ambit { AUTO, CLASSIC, TRANSACTIONAL };
 
 	static void help_global_options();
 
@@ -103,7 +103,7 @@ namespace snapper
 
     template <> struct EnumInfo<GlobalOptions::OutputFormat> { static const vector<string> names; };
 
-    template <> struct EnumInfo<GlobalOptions::Ambit> { static const vector<string> names; };
+    template <> struct EnumInfo<Ambit> { static const vector<string> names; };
 
 }
 
