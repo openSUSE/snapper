@@ -1,24 +1,5 @@
 
-/*
- * Integration test for Btrfs::rollbackSubvolRename().
- *
- * Requires:
- *   - root privileges
- *   - a btrfs filesystem mounted at /testsuite (see setup-and-run-all)
- *   - snapper config "testsuite" pointing at /testsuite
- *
- * What it tests:
- *   1. Creates a named subvolume @root on the top-level btrfs
- *   2. Creates a snapper snapshot of it
- *   3. Calls rollbackSubvolRename() to swap the snapshot into @root
- *   4. Verifies @root now contains the snapshot content
- *   5. Verifies the old @root is preserved as @root.rollback.<N>
- *   6. Cleans up
- *
- * NOTE: This test operates on a real btrfs filesystem and requires root.
- * Run only in a scratch environment. See README.md.
- */
-
+#include "config.h"
 
 #include <cerrno>
 #include <cstring>
@@ -28,6 +9,7 @@
 #include <unistd.h>
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "snapper/AppUtil.h"
 #include "snapper/Btrfs.h"
@@ -60,6 +42,220 @@ run(const string& cmd)
 }
 
 
+static string
+find_device(const string& mount_point)
+{
+    FILE* fp = popen(("findmnt -n -o SOURCE " + mount_point).c_str(), "r");
+    if (!fp) die("findmnt failed");
+    char buf[256];
+    string dev;
+    if (fgets(buf, sizeof(buf), fp))
+    {
+	dev = buf;
+	while (!dev.empty() && dev.back() == '\n')
+	    dev.pop_back();
+    }
+    pclose(fp);
+    if (dev.empty()) die("cannot find device for " + mount_point);
+    return dev;
+}
+
+
+static void
+check(bool cond, const string& msg)
+{
+    if (!cond)
+    {
+	cerr << "FAIL: " << msg << endl;
+	exit(EXIT_FAILURE);
+    }
+}
+
+
+static void
+cleanup_subvol(SDir& parent, const char* name)
+{
+    struct stat st;
+    if (parent.stat(name, &st, AT_SYMLINK_NOFOLLOW) == 0)
+    {
+	try { delete_subvolume(parent.fd(), name); }
+	catch (...) {}
+    }
+}
+
+
+static void
+create_marker(SDir& parent, const char* name)
+{
+    int fd = parent.open(name, O_CREAT | O_WRONLY, 0644);
+    if (fd < 0) die(string("create ") + name);
+    close(fd);
+}
+
+
+static bool
+has_marker(SDir& parent, const char* name)
+{
+    struct stat st;
+    return parent.stat(name, &st, AT_SYMLINK_NOFOLLOW) == 0;
+}
+
+
+static void
+test_exchange_swaps_subvolume(SDir& top)
+{
+    cleanup_subvol(top, "@root");
+    cleanup_subvol(top, "@root.snap");
+    cleanup_subvol(top, "@root.incoming");
+    cleanup_subvol(top, "@root.rollback.1");
+
+    create_subvolume(top.fd(), "@root");
+    {
+	SDir root_sv(top, "@root");
+	create_marker(root_sv, "original-marker");
+    }
+
+    {
+	SDir root_sv(top, "@root");
+	create_snapshot(root_sv.fd(), top.fd(), "@root.snap", true, no_qgroup);
+    }
+
+    {
+	SDir root_sv(top, "@root");
+	create_marker(root_sv, "post-snapshot-marker");
+    }
+
+    {
+	SDir snap(top, "@root.snap");
+	create_snapshot(snap.fd(), top.fd(), "@root.incoming", false, no_qgroup);
+    }
+
+    check(top.exchange("@root", "@root.incoming") == 0,
+	  "exchange failed");
+
+    check(top.rename("@root.incoming", "@root.rollback.1") == 0,
+	  "rename old root failed");
+
+    {
+	SDir new_root(top, "@root");
+	check(has_marker(new_root, "original-marker"),
+	      "@root missing original-marker after rollback");
+	check(!has_marker(new_root, "post-snapshot-marker"),
+	      "@root still contains post-snapshot-marker after rollback");
+    }
+
+    {
+	SDir old_root(top, "@root.rollback.1");
+	check(has_marker(old_root, "original-marker"),
+	      "@root.rollback.1 missing original-marker");
+	check(has_marker(old_root, "post-snapshot-marker"),
+	      "@root.rollback.1 missing post-snapshot-marker");
+    }
+
+    cout << "ok: rename-exchange-swaps-subvolume" << endl;
+
+    cleanup_subvol(top, "@root.snap");
+    cleanup_subvol(top, "@root");
+    cleanup_subvol(top, "@root.rollback.1");
+}
+
+
+static void
+test_rollback_name_collision_uses_subvolid_fallback(SDir& top)
+{
+    cleanup_subvol(top, "@root");
+    cleanup_subvol(top, "@root.snap");
+    cleanup_subvol(top, "@root.incoming");
+    cleanup_subvol(top, "@root.rollback.1");
+
+    create_subvolume(top.fd(), "@root");
+
+    {
+	SDir root_sv(top, "@root");
+	create_snapshot(root_sv.fd(), top.fd(), "@root.snap", true, no_qgroup);
+    }
+
+    {
+	SDir root_sv(top, "@root");
+	create_marker(root_sv, "post-snapshot-marker");
+    }
+
+    {
+	SDir snap(top, "@root.snap");
+	create_snapshot(snap.fd(), top.fd(), "@root.incoming", false, no_qgroup);
+    }
+
+    check(top.exchange("@root", "@root.incoming") == 0,
+	  "exchange failed");
+
+    create_subvolume(top.fd(), "@root.rollback.1");
+
+    subvolid_t svid;
+    {
+	SDir incoming_dir(top, "@root.incoming");
+	svid = get_id(incoming_dir.fd());
+    }
+    const string alt_name = "@root.rollback.svid." + decString(svid);
+
+    check(top.rename("@root.incoming", "@root.rollback.1") != 0,
+	  "rename to @root.rollback.1 succeeded but it already existed");
+
+    check(errno == EEXIST || errno == ENOTEMPTY,
+	  string("expected EEXIST/ENOTEMPTY, got ") + strerror(errno));
+
+    check(top.rename("@root.incoming", alt_name) == 0,
+	  "fallback rename to " + alt_name + " failed");
+
+    {
+	SDir rescued(top, alt_name);
+	check(has_marker(rescued, "post-snapshot-marker"),
+	      alt_name + " missing post-snapshot-marker");
+    }
+
+    {
+	SDir new_root(top, "@root");
+	check(!has_marker(new_root, "post-snapshot-marker"),
+	      "@root still contains post-snapshot-marker after rollback");
+    }
+
+    cout << "ok: rollback-name-collision-uses-subvolid-fallback (" << alt_name << ")" << endl;
+
+    cleanup_subvol(top, "@root.snap");
+    cleanup_subvol(top, "@root");
+    cleanup_subvol(top, "@root.rollback.1");
+    cleanup_subvol(top, alt_name.c_str());
+}
+
+
+static void
+test_detect_method_strips_kernel_leading_slash(SDir& top, const string& device,
+					       const string& sv_name)
+{
+    const string mnt_point = MNT + "/detect-test";
+
+    create_subvolume(top.fd(), sv_name.c_str());
+
+    run("mkdir -p " + mnt_point);
+    run("mount -o subvol=" + sv_name + " " + device + " " + mnt_point);
+
+    RollbackMethod method = detect_rollback_method(mnt_point);
+    string detected = get_subvol_name(mnt_point);
+
+    run("umount " + mnt_point);
+    run("rmdir " + mnt_point);
+    delete_subvolume(top.fd(), sv_name.c_str());
+
+    check(method == RollbackMethod::SUBVOL_RENAME,
+	  "detect_rollback_method for subvol=" + sv_name + " returned SET_DEFAULT");
+
+    check(detected == sv_name,
+	  "get_subvol_name for subvol=" + sv_name +
+	  " returned '" + detected + "', expected '" + sv_name + "'");
+
+    cout << "ok: detect-method-strips-leading-slash subvol=" << sv_name << endl;
+}
+
+
 int
 main()
 {
@@ -69,172 +265,20 @@ main()
 	return EXIT_FAILURE;
     }
 
-    // Mount the top-level btrfs (subvolid=5) so we can create named subvolumes
+    const string device = find_device(MNT);
+
     run("mkdir -p " + TOP);
-    run("mount -o subvolid=5 " + MNT + " " + TOP);
+    run("mount -o subvolid=5 " + device + " " + TOP);
 
-    SDir top(TOP);
-
-    // Clean up any leftover state from a previous run
-    for (const char* name : { "@root", "@root.incoming", "@root.rollback.1" })
     {
-	struct stat st;
-	if (top.stat(name, &st, AT_SYMLINK_NOFOLLOW) == 0)
-	{
-	    try { BtrfsUtils::delete_subvolume(top.fd(), name); }
-	    catch (...) {}
-	}
-    }
+	SDir top(TOP);
 
-    // 1. Create @root subvolume with a sentinel file
-    BtrfsUtils::create_subvolume(top.fd(), "@root");
-    {
-	SDir root_sv(top, "@root");
-	int fd = root_sv.open("original-marker", O_CREAT | O_WRONLY, 0644);
-	if (fd < 0) die("create original-marker");
-	close(fd);
-    }
+	test_exchange_swaps_subvolume(top);
+	test_rollback_name_collision_uses_subvolid_fallback(top);
 
-    // 2. Create a snapshot of @root as .snapshots/1/snapshot
-    //    (simulate what snapper would have created)
-    run("mkdir -p " + TOP + "/@root/.snapshots/1");
-    {
-	SDir root_sv(top, "@root");
-	SDir info_dir(SDir(top, "@root"), ".snapshots/1");
-	BtrfsUtils::create_snapshot(root_sv.fd(), info_dir.fd(), "snapshot", true, no_qgroup);
-    }
-
-    // 3. Call rollbackSubvolRename via the Btrfs class
-    //    We construct directly since we're testing the method in isolation
-    Btrfs btrfs("/", "");
-    Plugins::Report report;
-
-    // NOTE: rollbackSubvolRename() mounts the top-level internally via getMtabData.
-    // Since this test already has the top-level mounted, we validate the rename
-    // logic directly using SDir::exchange instead, which is what
-    // rollbackSubvolRename() delegates to.
-    //
-    // Full end-to-end testing of rollbackSubvolRename() requires the system to
-    // actually be booted with subvol=@root in fstab. The unit test for
-    // exchange (testsuite/rename-exchange.cc) covers the atomic swap.
-    // Here we verify the subvolume setup that rollbackSubvolRename() depends on.
-
-    // Simulate what rollbackSubvolRename does:
-    // create rw snapshot of target as @root.incoming
-    {
-	SDir snap(SDir(top, "@root"), ".snapshots/1/snapshot");
-	BtrfsUtils::create_snapshot(snap.fd(), top.fd(), "@root.incoming", false, no_qgroup);
-    }
-
-    // atomic exchange
-    if (top.exchange("@root", "@root.incoming") != 0)
-	die("exchange failed");
-
-    // rename old root to @root.rollback.1
-    if (top.rename("@root.incoming", "@root.rollback.1") != 0)
-	die("rename old root failed");
-
-    // 4. Verify @root now has no original-marker (it came from the snapshot)
-    {
-	SDir new_root(top, "@root");
-	if (new_root.stat("original-marker", nullptr, AT_SYMLINK_NOFOLLOW) == 0)
-	{
-	    cerr << "FAIL: @root still contains original-marker after rollback" << endl;
-	    exit(EXIT_FAILURE);
-	}
-    }
-
-    // 5. Verify old root is preserved with original-marker
-    {
-	SDir old_root(top, "@root.rollback.1");
-	struct stat st;
-	if (old_root.stat("original-marker", &st, AT_SYMLINK_NOFOLLOW) != 0)
-	{
-	    cerr << "FAIL: @root.rollback.1 does not contain original-marker" << endl;
-	    exit(EXIT_FAILURE);
-	}
-    }
-
-    cout << "ok: rollback-subvol-rename" << endl;
-
-    // Cleanup after test 1
-    try { BtrfsUtils::delete_subvolume(SDir(top, "@root").fd(), "1/snapshot"); } catch (...) {}
-    try { BtrfsUtils::delete_subvolume(top.fd(), "@root/.snapshots/1"); } catch (...) {}
-    try { BtrfsUtils::delete_subvolume(top.fd(), "@root"); } catch (...) {}
-    try { BtrfsUtils::delete_subvolume(top.fd(), "@root.rollback.1"); } catch (...) {}
-
-    // Test 2: rollback_name collision — .rollback.N already exists
-    // Verify the subvolid-based fallback name is used instead.
-    {
-	// Create @root with a sentinel file
-	BtrfsUtils::create_subvolume(top.fd(), "@root");
-	{
-	    SDir root_sv(top, "@root");
-	    int fd = root_sv.open("original-marker", O_CREAT | O_WRONLY, 0644);
-	    if (fd < 0) die("create original-marker (test 2)");
-	    close(fd);
-	}
-
-	// Create a snapshot and the incoming copy
-	run("mkdir -p " + TOP + "/@root/.snapshots/1");
-	{
-	    SDir root_sv(top, "@root");
-	    SDir info_dir(SDir(top, "@root"), ".snapshots/1");
-	    BtrfsUtils::create_snapshot(root_sv.fd(), info_dir.fd(), "snapshot", true, no_qgroup);
-	}
-	{
-	    SDir snap(SDir(top, "@root"), ".snapshots/1/snapshot");
-	    BtrfsUtils::create_snapshot(snap.fd(), top.fd(), "@root.incoming", false, no_qgroup);
-	}
-
-	// Exchange
-	if (top.rename_exchange("@root", "@root.incoming") != 0)
-	    die("rename_exchange failed (test 2)");
-
-	// Simulate collision: create @root.rollback.1 so the normal rename would fail
-	BtrfsUtils::create_subvolume(top.fd(), "@root.rollback.1");
-
-	// Get subvolid of @root.incoming (old root) before rename
-	subvolid_t svid;
-	{
-	    SDir incoming_dir(top, "@root.incoming");
-	    svid = BtrfsUtils::get_id(incoming_dir.fd());
-	}
-	const string alt_name = "@root.rollback.svid." + decString(svid);
-
-	// The normal rename should fail; fall back to subvolid-based name
-	if (top.rename("@root.incoming", "@root.rollback.1") == 0)
-	{
-	    cerr << "FAIL: rename to @root.rollback.1 succeeded but it already existed" << endl;
-	    exit(EXIT_FAILURE);
-	}
-	if (errno != EEXIST && errno != ENOTEMPTY)
-	{
-	    cerr << "FAIL: expected EEXIST/ENOTEMPTY, got " << strerror(errno) << endl;
-	    exit(EXIT_FAILURE);
-	}
-	if (top.rename("@root.incoming", alt_name) != 0)
-	    die("fallback rename to " + alt_name + " failed (test 2)");
-
-	// Verify old root preserved under alt_name
-	{
-	    SDir rescued(top, alt_name);
-	    struct stat st;
-	    if (rescued.stat("original-marker", &st, AT_SYMLINK_NOFOLLOW) != 0)
-	    {
-		cerr << "FAIL: " << alt_name << " does not contain original-marker" << endl;
-		exit(EXIT_FAILURE);
-	    }
-	}
-
-	cout << "ok: rollback-subvol-rename-collision (fallback to " << alt_name << ")" << endl;
-
-	// Cleanup test 2
-	try { BtrfsUtils::delete_subvolume(SDir(top, "@root").fd(), "1/snapshot"); } catch (...) {}
-	try { BtrfsUtils::delete_subvolume(top.fd(), "@root/.snapshots/1"); } catch (...) {}
-	try { BtrfsUtils::delete_subvolume(top.fd(), "@root"); } catch (...) {}
-	try { BtrfsUtils::delete_subvolume(top.fd(), "@root.rollback.1"); } catch (...) {}
-	try { BtrfsUtils::delete_subvolume(top.fd(), alt_name); } catch (...) {}
+	const vector<string> subvol_names = { "@root", "root", "@rootfs", "@" };
+	for (const string& name : subvol_names)
+	    test_detect_method_strips_kernel_leading_slash(top, device, name);
     }
 
     run("umount " + TOP);

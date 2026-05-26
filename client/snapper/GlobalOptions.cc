@@ -232,7 +232,7 @@ namespace snapper
     }
 
 
-    GlobalOptions::Ambit
+    Ambit
     GlobalOptions::ambit_value(const ParsedOpts& opts) const
     {
 	ParsedOpts::const_iterator it = opts.find("ambit");
@@ -256,6 +256,6 @@ namespace snapper
 
     const vector<string> EnumInfo<GlobalOptions::OutputFormat>::names({ "table", "csv", "json" });
 
-    const vector<string> EnumInfo<GlobalOptions::Ambit>::names({ "auto", "classic", "transactional" });
+    const vector<string> EnumInfo<Ambit>::names({ "auto", "classic", "transactional" });
 
 }
