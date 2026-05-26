@@ -78,7 +78,12 @@ namespace snapper
 	    exit(EXIT_FAILURE);
 	}
 
-	return detect_rollback_method(subvolume, subvol_name);
+	RollbackMethod method = detect_rollback_method(subvolume);
+	if (method == RollbackMethod::SUBVOL_RENAME)
+	    subvol_name = get_subvol_name(subvolume);
+	else
+	    subvol_name.clear();
+	return method;
     }
 
 
@@ -156,6 +161,10 @@ namespace snapper
 	    exit(EXIT_FAILURE);
 	}
 
+	const Btrfs* btrfs = dynamic_cast<const Btrfs*>(filesystem.get());
+	if (!btrfs)
+	    SN_THROW(LogicErrorException("filesystem is btrfs but cast failed"));
+
 	const string subvolume = config.getSubvolume();
 	if (subvolume != "/")
 	{
@@ -185,20 +194,22 @@ namespace snapper
 
 	ProxySnapshots::iterator previous_default = snapshots.getDefault();
 
-	if (global_options.ambit() == GlobalOptions::Ambit::AUTO)
+	if (global_options.ambit() == Ambit::AUTO)
 	{
-	    if (previous_default == snapshots.end())
+	    SubvolumeMode mode = SubvolumeMode::UNKNOWN;
+	    if (previous_default != snapshots.end())
+		mode = filesystem->isSnapshotReadOnly(previous_default->getNum())
+		    ? SubvolumeMode::READ_ONLY : SubvolumeMode::READ_WRITE;
+
+	    Ambit ambit = detect_ambit(rollback_method, mode);
+	    if (ambit == Ambit::AUTO)
 	    {
 		cerr << _("Cannot detect ambit since default subvolume is unknown.") << '\n'
 		     << _("This can happen if the system was not set up for rollback.") << '\n'
 		     << _("The ambit can be specified manually using the --ambit option.") << endl;
 		exit(EXIT_FAILURE);
 	    }
-
-	    if (filesystem->isSnapshotReadOnly(previous_default->getNum()))
-		global_options.set_ambit(GlobalOptions::Ambit::TRANSACTIONAL);
-	    else
-		global_options.set_ambit(GlobalOptions::Ambit::CLASSIC);
+	    global_options.set_ambit(ambit);
 	}
 
 	if (!global_options.quiet())
@@ -209,7 +220,7 @@ namespace snapper
 
 	switch (global_options.ambit())
 	{
-	    case GlobalOptions::Ambit::CLASSIC:
+	    case Ambit::CLASSIC:
 	    {
 		ProxySnapshots::const_iterator snapshot1 = snapshots.end();
 		ProxySnapshots::const_iterator snapshot2 = snapshots.end();
@@ -279,13 +290,8 @@ namespace snapper
 			filesystem->setDefault(snapshot2->getNum(), report);
 			break;
 		    case RollbackMethod::SUBVOL_RENAME:
-		    {
-			const Btrfs* btrfs = dynamic_cast<const Btrfs*>(filesystem.get());
-			if (!btrfs)
-			    SN_THROW(LogicErrorException("subvol-rename requires btrfs filesystem"));
 			btrfs->rollbackSubvolRename(snapshot2->getNum(), subvol_name, report);
 			break;
-		    }
 		}
 
 		Plugins::rollback(filesystem->snapshotDir(snapshot1->getNum()),
@@ -298,7 +304,7 @@ namespace snapper
 	    }
 	    break;
 
-	    case GlobalOptions::Ambit::TRANSACTIONAL:
+	    case Ambit::TRANSACTIONAL:
 	    {
 		// see bsc #1172273
 
@@ -338,13 +344,8 @@ namespace snapper
 			filesystem->setDefault(snapshot->getNum(), report);
 			break;
 		    case RollbackMethod::SUBVOL_RENAME:
-		    {
-			const Btrfs* btrfs = dynamic_cast<const Btrfs*>(filesystem.get());
-			if (!btrfs)
-			    SN_THROW(LogicErrorException("subvol-rename requires btrfs filesystem"));
 			btrfs->rollbackSubvolRename(snapshot->getNum(), subvol_name, report);
 			break;
-		    }
 		}
 
 		Plugins::rollback(filesystem->snapshotDir(previous_default->getNum()),
@@ -354,7 +355,7 @@ namespace snapper
 	    }
 	    break;
 
-	    case GlobalOptions::Ambit::AUTO:
+	    case Ambit::AUTO:
 	    {
 		cerr << "internal error: ambit is auto" << endl;
 		exit(EXIT_FAILURE);
