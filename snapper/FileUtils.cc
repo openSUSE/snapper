@@ -23,6 +23,7 @@
 
 #include "config.h"
 
+#include <cstdio>
 #include <cstring>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -348,22 +349,12 @@ namespace snapper
 
 
     int
-    SDir::rmdir(const string& name) const
+    SDir::unlink(const string& name, int flags) const
     {
 	assert(name.find('/') == string::npos);
 	assert(name != "..");
 
-	return ::unlinkat(dirfd, name.c_str(), AT_REMOVEDIR);
-    }
-
-
-    int
-    SDir::unlink(const string& name) const
-    {
-	assert(name.find('/') == string::npos);
-	assert(name != "..");
-
-	return ::unlinkat(dirfd, name.c_str(), 0);
+	return ::unlinkat(dirfd, name.c_str(), flags);
     }
 
 
@@ -388,7 +379,7 @@ namespace snapper
 
 
     int
-    SDir::rename(const string& oldname, const string& newname) const
+    SDir::rename(const string& oldname, const string& newname, int flags) const
     {
 	assert(oldname.find('/') == string::npos);
 	assert(oldname != "..");
@@ -396,7 +387,7 @@ namespace snapper
 	assert(newname.find('/') == string::npos);
 	assert(newname != "..");
 
-	return ::renameat(dirfd, oldname.c_str(), dirfd, newname.c_str());
+	return ::renameat2(dirfd, oldname.c_str(), dirfd, newname.c_str(), flags);
     }
 
 
