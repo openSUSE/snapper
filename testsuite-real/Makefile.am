@@ -23,7 +23,7 @@ endif
 
 if ENABLE_ROLLBACK
 test_PROGRAMS += rollback-subvol-rename
-rollback_subvol_rename_SOURCES = rollback-subvol-rename.cc
+rollback_subvol_rename_SOURCES = rollback-subvol-rename.cc ../client/snapper/rollback-method.cc
 endif
 
 if HAVE_XATTRS

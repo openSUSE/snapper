@@ -6,7 +6,7 @@
 #include <boost/test/data/monomorphic.hpp>
 
 #include "config.h"
-#include <snapper/AppUtil.h>
+#include "client/snapper/rollback-method.h"
 
 using namespace std;
 using namespace snapper;
