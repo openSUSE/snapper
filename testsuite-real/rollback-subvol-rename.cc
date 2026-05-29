@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 
-#include "snapper/AppUtil.h"
+#include "client/snapper/rollback-method.h"
 #include "snapper/Btrfs.h"
 #include "snapper/BtrfsUtils.h"
 #include "snapper/FileUtils.h"

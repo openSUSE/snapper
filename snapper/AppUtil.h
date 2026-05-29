@@ -83,38 +83,6 @@ namespace snapper
     bool getMtabData(const string& mount_point, bool& found, MtabData& mtab_data);
 
 
-    enum class Ambit { AUTO, CLASSIC, TRANSACTIONAL };
-
-#ifdef ENABLE_ROLLBACK
-
-    enum class RollbackMethod { SET_DEFAULT, SUBVOL_RENAME };
-
-    /**
-     * Determine rollback method from already-parsed mount options.
-     * Returns SUBVOL_RENAME only for a top-level named subvolume (no slashes).
-     * Separated from I/O so it can be unit-tested without /proc/mounts.
-     */
-    RollbackMethod detect_rollback_method_from_options(const vector<string>& options);
-
-    /**
-     * Determine rollback method by reading mount options for mount_point
-     * from /proc/mounts. Delegates to detect_rollback_method_from_options.
-     */
-    RollbackMethod detect_rollback_method(const string& mount_point);
-
-    /**
-     * Return the named subvolume that mount_point is mounted with (e.g. "@root"),
-     * or an empty string if it uses the btrfs default subvolume id instead.
-     */
-    string get_subvol_name(const string& mount_point);
-
-    enum class SubvolumeMode { UNKNOWN, READ_WRITE, READ_ONLY };
-
-    Ambit detect_ambit(RollbackMethod method, SubvolumeMode mode);
-
-#endif
-
-
     template<class StreamType>
     void classic(StreamType& stream)
     {

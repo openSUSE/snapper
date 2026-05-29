@@ -32,7 +32,8 @@ snapper_SOURCES =					\
 	../cleanup.cc		../cleanup.h		\
 	../misc.cc		../misc.h		\
 	MyFiles.cc		MyFiles.h		\
-	GlobalOptions.cc	GlobalOptions.h
+	GlobalOptions.cc	GlobalOptions.h		\
+	rollback-method.cc	rollback-method.h
 
 snapper_LDADD = 			\
 	../proxy/libproxy.la		\
