@@ -26,6 +26,8 @@
 
 #include <snapper/AppUtil.h>
 #include <snapper/Enum.h>
+
+#include "rollback-method.h"
 #include <snapper/Logger.h>
 
 #include "client/utils/GetOpts.h"

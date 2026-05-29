@@ -35,6 +35,7 @@
 #include "../utils/help.h"
 #include "../proxy/proxy.h"
 #include "GlobalOptions.h"
+#include "rollback-method.h"
 #include "../misc.h"
 
 

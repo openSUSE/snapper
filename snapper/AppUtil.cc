@@ -37,7 +37,6 @@
 #include <sys/sendfile.h>
 #include <dirent.h>
 #include <mntent.h>
-#include <regex>
 #include <boost/algorithm/string.hpp>
 #include <boost/io/ios_state.hpp>
 #include <boost/scoped_array.hpp>
@@ -241,78 +240,6 @@ namespace snapper
 
 	return true;
     }
-
-
-#ifdef ENABLE_ROLLBACK
-
-    static string
-    subvol_name_from_options(const vector<string>& options)
-    {
-	static const regex re("^subvol=/?(\\S+)$");
-
-	for (const string& opt : options)
-	{
-	    smatch m;
-	    if (regex_match(opt, m, re) && m[1].str() != "/")
-		return m[1].str();
-	}
-
-	return "";
-    }
-
-
-    RollbackMethod
-    detect_rollback_method_from_options(const vector<string>& options)
-    {
-	string name = subvol_name_from_options(options);
-	return (!name.empty() && name.find('/') == string::npos)
-	    ? RollbackMethod::SUBVOL_RENAME : RollbackMethod::SET_DEFAULT;
-    }
-
-
-    RollbackMethod
-    detect_rollback_method(const string& mount_point)
-    {
-	bool found = false;
-	MtabData mtab_data;
-
-	if (!getMtabData(mount_point, found, mtab_data) || !found)
-	    SN_THROW(IOErrorException("failed to find mount point " + mount_point + " in /proc/mounts"));
-
-	return detect_rollback_method_from_options(mtab_data.options);
-    }
-
-
-    string
-    get_subvol_name(const string& mount_point)
-    {
-	bool found = false;
-	MtabData mtab_data;
-
-	if (!getMtabData(mount_point, found, mtab_data) || !found)
-	    return "";
-
-	return subvol_name_from_options(mtab_data.options);
-    }
-
-
-    Ambit
-    detect_ambit(RollbackMethod method, SubvolumeMode mode)
-    {
-	if (method == RollbackMethod::SUBVOL_RENAME)
-	    return Ambit::CLASSIC;
-
-	switch (mode)
-	{
-	    case SubvolumeMode::UNKNOWN:    return Ambit::AUTO;
-	    case SubvolumeMode::READ_ONLY:  return Ambit::TRANSACTIONAL;
-	    case SubvolumeMode::READ_WRITE: return Ambit::CLASSIC;
-	}
-
-	return Ambit::AUTO;
-    }
-
-#endif
 
 
     string
