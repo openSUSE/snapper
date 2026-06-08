@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2018-2025] SUSE LLC
+ * Copyright (c) [2018-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -113,7 +113,21 @@ MyMainLoop::method_call(DBus::Message& msg)
 	{
 	    y2deb("client connected invisible '" << name << "'");
 	    add_client_match(name);
-	    client = clients.add(name, get_unix_userid(msg));
+
+	    uid_t uid = -1;
+
+	    try
+	    {
+		uid = get_unix_userid(msg);
+	    }
+	    catch (const Exception& e)
+	    {
+		SN_CAUGHT(e);
+		y2err("failed to get uid of client");
+		return;
+	    }
+
+	    client = clients.add(name, uid);
 	    set_idle_timeout(seconds(-1));
 	}
 

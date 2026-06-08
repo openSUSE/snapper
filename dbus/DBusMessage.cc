@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Novell, Inc.
- * Copyright (c) [2016-2025] SUSE LLC
+ * Copyright (c) [2016-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -62,6 +62,46 @@ namespace DBus
 	    dbus_message_ref(msg);
 	}
 	return *this;
+    }
+
+
+    string
+    Message::get_member() const
+    {
+	const char* member = dbus_message_get_member(msg);
+	return member ? member : "";
+    }
+
+
+    string
+    Message::get_sender() const
+    {
+	const char* sender = dbus_message_get_sender(msg);
+	return sender ? sender : "";
+    }
+
+
+    string
+    Message::get_path() const
+    {
+	const char* path = dbus_message_get_path(msg);
+	return path ? path : "";
+    }
+
+
+    string
+    Message::get_interface() const
+    {
+	const char* interface = dbus_message_get_interface(msg);
+	return interface ? interface : "";
+    }
+
+
+    string
+    Message::get_error_name() const
+    {
+	const char* error_name = dbus_message_get_error_name(msg);
+	return error_name ? error_name : "";
     }
 
 
