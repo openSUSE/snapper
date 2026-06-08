@@ -155,7 +155,7 @@ namespace DBus
     {
 	boost::lock_guard<boost::mutex> lock(mutex);
 
-	const string sender = msg.get_sender();
+	const string sender = m.get_sender();
 	if (sender.empty())
 	{
 	    SN_THROW(FatalException());
