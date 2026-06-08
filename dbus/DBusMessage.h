@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Novell, Inc.
- * Copyright (c) [2016-2025] SUSE LLC
+ * Copyright (c) [2016-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -93,11 +93,12 @@ namespace DBus
 	DBusMessage* get_message() { return msg; }
 
 	int get_type() const { return dbus_message_get_type(msg); }
-	string get_member() const { return dbus_message_get_member(msg); }
-	string get_sender() const { return dbus_message_get_sender(msg); }
-	string get_path() const { return dbus_message_get_path(msg); }
-	string get_interface() const { return dbus_message_get_interface(msg); }
-	string get_error_name() const { return dbus_message_get_error_name(msg); }
+
+	string get_member() const;
+	string get_sender() const;
+	string get_path() const;
+	string get_interface() const;
+	string get_error_name() const;
 
 	bool is_method_call(const char* interface, const char* method) const
 	{
