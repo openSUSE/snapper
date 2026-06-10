@@ -124,6 +124,10 @@ MyMainLoop::method_call(DBus::Message& msg)
 	    {
 		SN_CAUGHT(e);
 		y2err("failed to get uid of client");
+
+		DBus::MessageError reply(msg, "error.no_permissions", DBUS_ERROR_FAILED);
+		send(reply);
+
 		return;
 	    }
 
