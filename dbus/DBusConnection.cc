@@ -146,6 +146,7 @@ namespace DBus
     Connection::pop_message()
     {
 	boost::lock_guard<boost::mutex> lock(mutex);
+
 	return dbus_connection_pop_message(conn);
     }
 

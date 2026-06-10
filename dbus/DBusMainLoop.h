@@ -20,8 +20,8 @@
  */
 
 
-#ifndef SNAPPER_DBUSMAINLOOP_H
-#define SNAPPER_DBUSMAINLOOP_H
+#ifndef SNAPPER_DBUS_MAIN_LOOP_H
+#define SNAPPER_DBUS_MAIN_LOOP_H
 
 
 #include <dbus/dbus.h>
@@ -64,9 +64,9 @@ namespace DBus
 	    Watch(DBusWatch* dbus_watch);
 
 	    DBusWatch* dbus_watch;
-	    bool enabled;
-	    int fd;
-	    short events;
+	    bool enabled = false;
+	    int fd = -1;
+	    short events = 0;
 	};
 
 	struct Timeout
@@ -74,8 +74,8 @@ namespace DBus
 	    Timeout(DBusTimeout* dbus_timeout);
 
 	    DBusTimeout* dbus_timeout;
-	    bool enabled;
-	    int interval;
+	    bool enabled = false;
+	    int interval = 0;
 	};
 
 	vector<Watch> watches;

@@ -30,7 +30,7 @@ namespace DBus
 {
 
     MainLoop::Watch::Watch(DBusWatch* dbus_watch)
-	: dbus_watch(dbus_watch), enabled(false), fd(-1), events(0)
+	: dbus_watch(dbus_watch)
     {
 	enabled = dbus_watch_get_enabled(dbus_watch);
 	fd = dbus_watch_get_unix_fd(dbus_watch);
@@ -44,7 +44,7 @@ namespace DBus
 
 
     MainLoop::Timeout::Timeout(DBusTimeout* dbus_timeout)
-	: dbus_timeout(dbus_timeout), enabled(false), interval(0)
+	: dbus_timeout(dbus_timeout)
     {
 	enabled = dbus_timeout_get_enabled(dbus_timeout);
 	interval = dbus_timeout_get_interval(dbus_timeout);

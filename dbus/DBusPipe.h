@@ -19,8 +19,8 @@
  */
 
 
-#ifndef SNAPPER_DBUSPIPE_H
-#define SNAPPER_DBUSPIPE_H
+#ifndef SNAPPER_DBUS_PIPE_H
+#define SNAPPER_DBUS_PIPE_H
 
 
 #include <boost/noncopyable.hpp>

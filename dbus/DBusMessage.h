@@ -21,8 +21,8 @@
  */
 
 
-#ifndef SNAPPER_DBUSMESSAGE_H
-#define SNAPPER_DBUSMESSAGE_H
+#ifndef SNAPPER_DBUS_MESSAGE_H
+#define SNAPPER_DBUS_MESSAGE_H
 
 
 #include <dbus/dbus.h>
