@@ -20,8 +20,8 @@
  */
 
 
-#ifndef SNAPPER_DBUSCONNECTION_H
-#define SNAPPER_DBUSCONNECTION_H
+#ifndef SNAPPER_DBUS_CONNECTION_H
+#define SNAPPER_DBUS_CONNECTION_H
 
 
 #include <dbus/dbus.h>
