@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Jun 10 09:13:13 CEST 2026 - Arvin Schnell <aschnell@suse.com>
+
+- improve error handling if uid of client cannot be detected
+  (see bsc#1265853)
+
+-------------------------------------------------------------------
 Fri 24 Apr 05:05:24 UTC 2026 - Cheng-Ling Lai <jameslai.tech@gmail.com>
 
 - Add snapper-sync to synchronize the highest snapshot number
