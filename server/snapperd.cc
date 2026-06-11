@@ -312,47 +312,47 @@ main(int argc, char** argv)
 
     signal(SIGPIPE, SIG_IGN);
 
-    dbus_threads_init_default();
-
-    MyMainLoop mainloop(DBUS_BUS_SYSTEM);
-
-    mainloop.set_idle_timeout(idle_time);
-
-    y2mil("Requesting DBus name");
-
     try
     {
+	dbus_threads_init_default();
+
+	MyMainLoop mainloop(DBUS_BUS_SYSTEM);
+
+	mainloop.set_idle_timeout(idle_time);
+
+	y2mil("Requesting DBus name");
+
 	mainloop.request_name(SERVICE, DBUS_NAME_FLAG_REPLACE_EXISTING);
+
+	y2mil("Loading snapper configs");
+
+	try
+	{
+	    meta_snappers.init();
+	}
+	catch (const Exception& e)
+	{
+	    SN_CAUGHT(e);
+
+	    y2err("Failed to load snapper configs");
+
+	    return EXIT_FAILURE;
+	}
+
+	y2mil("Listening for method calls and signals");
+
+	mainloop.run();
+
+	y2mil("Exiting");
+
+	meta_snappers.unload();
     }
     catch (const Exception& e)
     {
 	SN_CAUGHT(e);
-
-	y2err("Failed to request DBus name");
 
 	return EXIT_FAILURE;
     }
-
-    y2mil("Loading snapper configs");
-
-    try
-    {
-	meta_snappers.init();
-    }
-    catch (const Exception& e)
-    {
-	SN_CAUGHT(e);
-
-	y2err("Failed to load snapper configs");
-    }
-
-    y2mil("Listening for method calls and signals");
-
-    mainloop.run();
-
-    y2mil("Exiting");
-
-    meta_snappers.unload();
 
     return EXIT_SUCCESS;
 }

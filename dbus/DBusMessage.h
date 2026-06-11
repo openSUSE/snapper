@@ -77,6 +77,7 @@ namespace DBus
     struct FatalException : public Exception
     {
 	explicit FatalException() : Exception("dbus fatal exception") {}
+	explicit FatalException(const string& msg) : Exception("dbus fatal exception: " + msg) {}
     };
 
 
