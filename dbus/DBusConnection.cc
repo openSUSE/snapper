@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2012 Novell, Inc.
- * Copyright (c) 2023 SUSE LLC
+ * Copyright (c) [2023-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -45,8 +45,10 @@ namespace DBus
 
 	if (!conn)
 	{
-	    SN_THROW(FatalException());
+	    SN_THROW(FatalException("dbus_bus_get() returned null"));
 	}
+
+	dbus_connection_set_exit_on_disconnect(conn, false);
     }
 
 
@@ -72,7 +74,7 @@ namespace DBus
 
 	if (ret != DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER)
 	{
-	    SN_THROW(FatalException());
+	    SN_THROW(FatalException("dbus_bus_request_name() failed"));
 	}
     }
 
@@ -84,7 +86,7 @@ namespace DBus
 
 	if (!dbus_connection_send(conn, m.get_message(), NULL))
 	{
-	    SN_THROW(FatalException());
+	    SN_THROW(FatalException("dbus_connection_send() failed"));
 	}
     }
 
@@ -120,7 +122,7 @@ namespace DBus
 	if (dbus_error_is_set(&err))
 	{
 	    dbus_error_free(&err);
-	    SN_THROW(FatalException());
+	    SN_THROW(FatalException("dbus_bus_add_match() failed"));
 	}
     }
 
@@ -137,7 +139,7 @@ namespace DBus
 	if (dbus_error_is_set(&err))
 	{
 	    dbus_error_free(&err);
-	    SN_THROW(FatalException());
+	    SN_THROW(FatalException("dbus_bus_remove_match() failed"));
 	}
     }
 
@@ -147,7 +149,20 @@ namespace DBus
     {
 	boost::lock_guard<boost::mutex> lock(mutex);
 
-	return dbus_connection_pop_message(conn);
+	DBusMessage* msg = dbus_connection_pop_message(conn);
+
+	// Being disconnected by dbus can be simulated with something like "strace -e
+	// fault=recvmsg:error=ECONNRESET:when=10+ /usr/sbin/snapperd --logger-type
+	// stdout".
+
+	if (msg &&
+	    strcmp(dbus_message_get_interface(msg), DBUS_INTERFACE_LOCAL) == 0 &&
+	    strcmp(dbus_message_get_member(msg), "Disconnected") == 0)
+	{
+	    throw FatalException("disconnected from dbus");
+	}
+
+	return msg;
     }
 
 
@@ -159,7 +174,7 @@ namespace DBus
 	const string sender = m.get_sender();
 	if (sender.empty())
 	{
-	    SN_THROW(FatalException());
+	    SN_THROW(FatalException("get_sender() returned empty sender"));
 	}
 
 	DBusError err;
