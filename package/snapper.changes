@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Jun 12 09:47:19 CEST 2026 - Arvin Schnell <aschnell@suse.com>
+
+- add dependencies to dbus in service files (see bsc#1265853)
+
+-------------------------------------------------------------------
 Thu Jun 11 10:21:28 CEST 2026 - Arvin Schnell <aschnell@suse.com>
 
 - improved error handling when disconnected by dbus (see

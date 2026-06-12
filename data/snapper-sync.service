@@ -1,8 +1,8 @@
 [Unit]
 Description=Snapper Highest Snapshot Number Synchronization
 Documentation=man:snbk(8)
-After=snapperd.service
-Requires=snapperd.service
+Requires=dbus.service
+After=dbus.service
 
 [Service]
 Type=oneshot
