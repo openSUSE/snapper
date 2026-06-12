@@ -1,6 +1,9 @@
 [Unit]
 Description=Backup of Snapper Snapshots
 Documentation=man:snbk(8)
+Requires=dbus.service
+After=dbus.service
+Requires=nss-user-lookup.target
 After=nss-user-lookup.target
 
 [Service]
