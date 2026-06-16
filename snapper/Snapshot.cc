@@ -859,10 +859,13 @@ namespace snapper
 	if (info_dir.unlink("info.xml") < 0)
 	    y2err("unlink 'info.xml' failed errno: " << errno << " (" << stringerror(errno) << ")");
 
-	// We want all-time unique snapshot numbers. So keep directory of snapshot with
+	// If want all-time unique snapshot numbers keep directory of snapshot with
 	// highest number.
 
-	if (snapshot->num != entries.rbegin()->num)
+	bool unique_numbers = true;
+	snapper->getConfigInfo().get_value("UNIQUE_NUMBERS", unique_numbers);
+
+	if (!unique_numbers || snapshot->num != entries.rbegin()->num)
 	{
 	    SDir infos_dir = snapper->openInfosDir();
 	    if (infos_dir.rmdir(decString(snapshot->getNum())) < 0)
