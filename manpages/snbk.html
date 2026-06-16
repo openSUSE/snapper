@@ -27,7 +27,7 @@
       <div class="refsect1">
         <a id="description"></a>
         <h2>DESCRIPTION</h2>
-        <p>Snbk is a command-line program to backup snapshot of snapper. It can
+        <p>Snbk is a command-line program to backup snapshots of snapper. It can
     transfer and delete backup snapshots on local and remote btrfs filesystems.</p>
       </div>
       <div class="refsect1">
@@ -135,6 +135,66 @@
 	restoration. The root node of the diagram is a specialized virtual node, which is
 	not a Btrfs subvolume, representing the Btrfs filesystem on the source or target.
       </p>
+        </div>
+        <div class="refsect2">
+          <a id="snapshot-number-sync"></a>
+          <h3>Highest Snapshot Number Synchronization</h3>
+          <p>To avoid reusing snapshot numbers, 'snapperd' keeps the highest snapshot
+      folder (whether it is an empty snapshot or not) in <code class="filename">.snapshots</code>
+      directory, ensuring snapshot numbers remain unique at all times.
+      However, when performing a restore using various methods, the state of the highest
+      snapshot number may vary:</p>
+          <div class="itemizedlist">
+            <ul class="itemizedlist" style="list-style-type: disc; ">
+              <li class="listitem">
+                <p>Synchronized: The latest backed-up snapshot is restored to
+	  <code class="filename">.snapshots</code> using `snbk restore` or manual Btrfs
+	  send-receive.
+	  In this case, the highest snapshot number is synchronized.
+	  'snapperd' creates snapshots with numbers greater than the restored snapshot,
+	  preventing snapshot number collisions.
+	  </p>
+              </li>
+              <li class="listitem">
+                <p>Legacy: A restore is made with a previous but not the latest backed-up
+	  snapshot.
+	  In this case, the state of the highest snapshot number is not valid.
+	  'snapperd' would create snapshots with numbers lower than the latest backed-up
+	  snapshot.
+	  This could invalidate the backed-up snapshots created later than the restored
+	  snapshot, and these invalid backed-up snapshots might be removed during the
+	  automatic Snapper backup process.
+	</p>
+              </li>
+              <li class="listitem">
+                <p>Legacy: When using a virtualization platform and the system is restored
+	  from a virtual machine backup.
+	  In this case, depending on the timing of the VM backup creation, the state of
+	  the highest snapshot number might not be synchronized.
+	  Snapshot number collisions might occur when 'snapperd' creates snapshots after
+	  the VM boots up.
+	  </p>
+              </li>
+            </ul>
+          </div>
+          <p>To avoid snapshot number collisions, The Snapper Backup package provides a
+      'snapper-sync' script, which can be triggered by `snapper-sync.service`, to
+      synchronize the highest snapshot number across the source and backup target devices.
+      Please consider enabling `snapper-sync.service` if any scenario related to 'Legacy'
+      might occur in your environment.
+
+      If any custom systemd timer or service is configured, please consider adding
+      the following directives:
+
+	</p>
+          <pre class="programlisting">
+[Unit]
+After=snapper-sync.service
+	</pre>
+          <p>
+
+      This ensures systemd schedules the custom unit to run after the highest snapshot
+      number synchronization.</p>
         </div>
       </div>
       <div class="refsect1">
@@ -423,7 +483,7 @@
         <p>
     </p>
         <p>If the system was reinstalled it is unfortunately in general
-    not possibly to simply use the restored snapshot as the new default
+    not possible to simply use the restored snapshot as the new default
     snapshot since some files, e.g. /etc/fstab, likely need
     modifications. Also unfortunately for other subvolumes than root a
     rollback is not supported.</p>

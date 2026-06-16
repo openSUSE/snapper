@@ -135,7 +135,7 @@
           <p>The number and timeline cleanup algorithms can also try to
       keep the space used by snapshots below a limit and the free space of
       the filesystem above a limit. For the first condition quota must be
-      setup, see command setup-quota. Additional the NUMBER_LIMIT and
+      setup, see command setup-quota. Additionally the NUMBER_LIMIT and
       TIMELINE_LIMIT variables in the config file must have ranges (min- and
       max-value). The algorithms will then make two passes:</p>
           <div class="orderedlist">
@@ -156,7 +156,7 @@
       used by snapshots.</p>
           <p>The limit for the free space can be configured via the
       FREE_LIMIT variable.</p>
-          <p>Note: Since the cleanup is performed asynchronous from
+          <p>Note: Since the cleanup is performed asynchronously from
       creating snapshots the observed snapshots can differ from the
       expected snapshots according to the limits. Also btrfs stale
       qgroups can exist temporarily.</p>
@@ -474,7 +474,7 @@
                   <dd>
                     <p>Disable display of used space.</p>
                     <p>Calculating the used space needs some time. Thus
-		this option can speedup the listing.</p>
+		this option can speed up the listing.</p>
                   </dd>
                   <dt>
                     <span class="term">
@@ -752,7 +752,7 @@
                   </li>
                   <li class="listitem">
                     <p>A "<code class="computeroutput">p</code>" means the permissions
-	      are have changed.</p>
+	      have changed.</p>
                   </li>
                   <li class="listitem">
                     <p>An "<code class="computeroutput">u</code>" means the user
@@ -1097,7 +1097,7 @@
               </span>
             </dt>
             <dd>
-              <p>Executed after  a snapshot is set read-only or read-write</p>
+              <p>Executed after a snapshot is set read-only or read-write</p>
             </dd>
             <dt>
               <span class="term">
@@ -1127,6 +1127,8 @@
         </div>
         <p>More actions and arguments can be added any time. Using snapper in
     the plugins is not allowed.</p>
+        <p>Ensure plugins execute within a few seconds. Slow-running plugins
+    block the primary interface and degrade user experience.</p>
         <p>It is undefined whether the plugins are called from the
     client (snapper) or server (snapperd).</p>
       </div>
@@ -1204,7 +1206,7 @@
         <a id="notes"></a>
         <h2>NOTES</h2>
         <p>There is no mechanism to ensure consistency of the files while a
-    snapshot it made. E.g. the files of a database can be inconsistent while
+    snapshot is made. E.g. the files of a database can be inconsistent while
     the database is running.</p>
         <p>Consistency after undochange is not guaranteed. E.g. when the
     creation of a user is undone, there might still exist files from that

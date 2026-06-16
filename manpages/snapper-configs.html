@@ -54,7 +54,7 @@
               </span>
             </dt>
             <dd>
-              <p>The btrfs quota group used for space aware cleanup
+              <p>The btrfs quota group used for space-aware cleanup
 	  algorithms.</p>
               <p>Only supported for btrfs.</p>
             </dd>
@@ -82,6 +82,17 @@
               <p>Only supported for btrfs.</p>
               <p>Default value is "0.2" (20% of the filesystem).</p>
               <p>New in version 0.8.0, absolute value new in version 0.9.0.</p>
+            </dd>
+            <dt>
+              <span class="term">
+                <code class="option">UNIQUE_NUMBERS=<em class="replaceable"><code>boolean</code></em></code>
+              </span>
+            </dt>
+            <dd>
+              <p>Whether snapshot numbers should be all-time unique. If set to
+	  yes, snapshot numbers are not reused even after snapshots are deleted.</p>
+              <p>Default value is "yes".</p>
+              <p>New in version 0.13.2.</p>
             </dd>
             <dt>
               <span class="term">
@@ -144,7 +155,7 @@
               </span>
             </dt>
             <dd>
-              <p>Defines the compression algorithm used for saving file
+              <p>Defines the compression algorithm used for saving the file
 	  list. Allowed values are "none" and
 	  "gzip". Depending on the installed libraries, some
 	  compression algorithms might not be available.</p>
