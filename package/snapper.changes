@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Jun 16 10:40:03 CEST 2026 - Arvin Schnell <aschnell@suse.com>
+
+- allow to disable all-time unique snapshot numbers (see
+  bsc#1268225)
+
+-------------------------------------------------------------------
 Fri Jun 12 09:47:19 CEST 2026 - Arvin Schnell <aschnell@suse.com>
 
 - add dependencies to dbus in service files (see bsc#1265853)

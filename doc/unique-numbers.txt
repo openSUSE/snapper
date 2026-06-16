@@ -8,3 +8,6 @@ directories when finding the number for the next snapshot.
 
 As a consequence there can temporarily be empty directories in the
 infos directories.
+
+This behavior can be disabled by setting UNIQUE_NUMBERS="no" in the
+configuration.
