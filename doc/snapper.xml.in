@@ -992,7 +992,8 @@
     <para>More actions and arguments can be added any time. Using snapper in
     the plugins is not allowed.</para>
     <para>Ensure plugins execute within a few seconds. Slow-running plugins
-    block the primary interface and degrade user experience.</para>
+    block the primary interface and degrade user experience and can even
+    cause timeouts (e.g. causing zypper to kill the snapper plugin).</para>
     <para>It is undefined whether the plugins are called from the
     client (snapper) or server (snapperd).</para>
   </refsect1>
