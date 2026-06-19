@@ -64,10 +64,13 @@ namespace snapper
 	glob_t globbuf;
 	if (glob(path.c_str(), flags, 0, &globbuf) == 0)
 	{
-	    for (char** p = globbuf.gl_pathv; *p != 0; p++)
-		ret.push_back(*p);
+	    ret.reserve(globbuf.gl_pathc);
+
+	    for (char** p = globbuf.gl_pathv; *p != 0; ++p)
+		ret.emplace_back(*p);
+
+	    globfree(&globbuf);
 	}
-	globfree (&globbuf);
 
 	return ret;
     }
