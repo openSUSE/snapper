@@ -371,6 +371,10 @@ static int cdbus_create_snapshot( const char *snapper_conf, createmode_t createm
 		dbus_error_free( &err );
 	}
 
+        if ( conn == NULL ) {
+        return -EINVAL;
+	}
+
 	DBusMessage *req_msg;
 	int ret = cdbus_create_snap_pack( snapper_conf, createmode, cleanup, num_user_data,
 					  user_data, snapshot_num_in, &req_msg );
