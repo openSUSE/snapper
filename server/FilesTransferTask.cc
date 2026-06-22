@@ -33,7 +33,7 @@ FilesTransferTask::FilesTransferTask(const Files& files)
 void
 FilesTransferTask::run()
 {
-    FILE* fout = fdopen(get_write_end().get_fd(), "w");
+    FILE* fout = get_write_end().fdopen("w");
     if (!fout)
 	SN_THROW(StreamException());
 
