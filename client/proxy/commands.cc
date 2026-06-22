@@ -554,7 +554,7 @@ command_get_xfiles_by_pipe(DBus::Connection& conn, const string& config_name, un
 
     vector<XFile> files;
 
-    FILE* fin = fdopen(fd.get_fd(), "r");
+    FILE* fin = fd.fdopen("r");
     if (!fin)
 	SN_THROW(IOErrorException("reading pipe failed, fdopen failed: " + stringerror(errno)));
 

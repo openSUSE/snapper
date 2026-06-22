@@ -44,6 +44,8 @@ namespace DBus
 	int get_fd() const { return _fd; }
 	void set_fd(int fd) { _fd = fd; }
 
+	FILE* fdopen(const char* mode);
+
     private:
 
 	int _fd = -1;

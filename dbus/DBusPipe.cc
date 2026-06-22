@@ -65,6 +65,14 @@ namespace DBus
 	return marshaller;
     }
 
+    FILE*
+    FileDescriptor::fdopen(const char* mode)
+    {
+        FILE* ret = ::fdopen(_fd, mode);
+        if (ret)
+            _fd = -1;
+        return ret;
+    }
 
     Pipe::Pipe()
     {
