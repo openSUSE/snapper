@@ -107,7 +107,7 @@ namespace snapper
     vector<string>
     BackupConfig::ssh_options() const
     {
-	vector<string> options = { ssh_host };
+	vector<string> options;
 
 	if (ssh_port != 0)
 	    options.insert(options.end(), { "-p", to_string(ssh_port) });
@@ -121,6 +121,9 @@ namespace snapper
 	if (ssh_master_control)
 	    options.insert(options.end(), { "-o", "ControlMaster=auto", "-o", "ControlPath=\"~/.ssh/snbk-%C\"",
 		"-o", "ControlPersist=30s" });
+
+	// The target host must be the final argument before the command string execution block
+	options.push_back(ssh_host);
 
 	return options;
     }
