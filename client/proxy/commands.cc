@@ -594,7 +594,6 @@ command_get_xfiles_by_pipe(DBus::Connection& conn, const string& config_name, un
     if (fclose(fin) != 0)
 	SN_THROW(IOErrorException("reading pipe failed, fclose failed: " + stringerror(errno)));
 
-
     return files;
 }
 
