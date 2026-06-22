@@ -44,6 +44,9 @@ namespace DBus
 	int get_fd() const { return _fd; }
 	void set_fd(int fd) { _fd = fd; }
 
+	/*
+	 * Also transfers ownership of fd to FILE iff the call is successful.
+	 */
 	FILE* fdopen(const char* mode);
 
     private:
