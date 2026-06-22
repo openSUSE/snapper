@@ -24,7 +24,6 @@
 
 #include "Stomp.h"
 
-
 namespace Stomp
 {
 
@@ -106,7 +105,35 @@ namespace Stomp
 		    if (key == "content-length")
 		    {
 			has_content_length = true;
-			content_length = stol(value.c_str());
+
+			if (value.empty())
+			{
+			    throw runtime_error("stomp error: empty content-length value");
+			}
+
+			try
+			{
+			    size_t parsed_chars = 0;
+			    long long parsed_length = stoll(value, &parsed_chars);
+
+			    // 1. Check if there are trailing unparsed characters (e.g., "100abc")
+			    // 2. Reject negative integer limits
+			    // 3. Explicitly reject negative signs to enforce pure digits
+			    if (parsed_chars < value.size() || parsed_length < 0 || value[0] == '-')
+			    {
+				throw runtime_error("stomp error: invalid content-length value '" + value + "'");
+			    }
+
+			    content_length = static_cast<ssize_t>(parsed_length);
+			}
+			catch (const invalid_argument&)
+			{
+			    throw runtime_error("stomp error: invalid content-length syntax");
+			}
+			catch (const out_of_range&)
+			{
+			    throw runtime_error("stomp error: content-length value out of range");
+			}
 		    }
 
 		    msg.headers[key] = value;
@@ -116,7 +143,6 @@ namespace Stomp
 
 	throw runtime_error("stomp error: expected a message, got a part of it");
     }
-
 
     void
     write_message(ostream& os, const Message& msg)
