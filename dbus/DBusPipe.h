@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 Red Hat, Inc.
- * Copyright (c) 2022 SUSE LLC
+ * Copyright (c) [2022-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -31,23 +31,23 @@
 namespace DBus
 {
 
+    /*
+     * Minimalistic RAII for a file descriptor.
+     */
     class FileDescriptor : boost::noncopyable
     {
     public:
 
 	FileDescriptor() = default;
-	FileDescriptor(int fd) : _fd(fd) {}
 	~FileDescriptor() { close(); }
 
 	void close();
 
-	int get_fd() const { return _fd; }
-	void set_fd(int fd) { _fd = fd; }
+	friend class File;
+	friend class Pipe;
 
-	/*
-	 * Also transfers ownership of fd to FILE iff the call is successful.
-	 */
-	FILE* fdopen(const char* mode);
+	friend Unmarshaller& operator>>(Unmarshaller& marshaller, FileDescriptor& data);
+	friend Marshaller& operator<<(Marshaller& marshaller, const FileDescriptor& data);
 
     private:
 
@@ -56,8 +56,29 @@ namespace DBus
     };
 
 
-    Unmarshaller& operator>>(Unmarshaller& marshaller, FileDescriptor& data);
-    Marshaller& operator<<(Marshaller& marshaller, const FileDescriptor& data);
+    /*
+     * Minimalistic RAII for a FILE*.
+     */
+    class File
+    {
+    public:
+
+	File(FileDescriptor& fd, const char* mode);
+	~File() { close(); }
+
+	ssize_t getline(char** lineptr, size_t* n);
+	int printf(const char* format, ...);
+	int eof() { return feof(_file); }
+	int flush() { return fflush(_file); }
+	int close();
+
+	explicit operator bool() const { return _file; }
+
+    private:
+
+	FILE* _file = nullptr;
+
+    };
 
 
     struct PipeException : public Exception
