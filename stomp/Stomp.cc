@@ -145,8 +145,21 @@ namespace Stomp
     write_message(ostream& os, const Message& msg)
     {
 	os << msg.command << '\n';
+	
+	bool has_content_length = false;
 	for (auto it : msg.headers)
+	{
+	    if (it.first == "content-length")
+		has_content_length = true;
 	    os << escape_header(it.first) << ':' << escape_header(it.second) << '\n';
+	}
+
+	// Inject content-length header if body contains binary/NUL data
+	if (!has_content_length && msg.body.find('\0') != string::npos)
+	{
+	    os << "content-length:" << msg.body.size() << '\n';
+	}
+
 	os << '\n';
 	os << msg.body << '\0';
 	os.flush();
