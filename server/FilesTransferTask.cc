@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015 Red Hat, Inc.
- * Copyright (c) 2022 SUSE LLC
+ * Copyright (c) [2022-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -33,19 +33,19 @@ FilesTransferTask::FilesTransferTask(const Files& files)
 void
 FilesTransferTask::run()
 {
-    FILE* fout = get_write_end().fdopen("w");
+    DBus::File fout(get_write_end(), "w");
     if (!fout)
 	SN_THROW(StreamException());
 
     for (const File& file : files)
     {
-	if (fprintf(fout, "%s %d\n", DBus::Pipe::escape(file.getName()).c_str(), file.getPreToPostStatus()) < 4)
+	if (fout.printf("%s %d\n", DBus::Pipe::escape(file.getName()).c_str(), file.getPreToPostStatus()) < 4)
 	    SN_THROW(StreamException());
     }
 
-    if (fflush(fout) != 0)
+    if (fout.flush() != 0)
 	SN_THROW(StreamException());
 
-    if (fclose(fout) != 0)
+    if (fout.close() != 0)
 	SN_THROW(StreamException());
 }

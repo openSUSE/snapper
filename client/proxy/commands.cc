@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2012-2015] Novell, Inc.
- * Copyright (c) [2016-2024] SUSE LLC
+ * Copyright (c) [2016-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -554,7 +554,7 @@ command_get_xfiles_by_pipe(DBus::Connection& conn, const string& config_name, un
 
     vector<XFile> files;
 
-    FILE* fin = fd.fdopen("r");
+    DBus::File fin(fd, "r");
     if (!fin)
 	SN_THROW(IOErrorException("reading pipe failed, fdopen failed: " + stringerror(errno)));
 
@@ -563,10 +563,10 @@ command_get_xfiles_by_pipe(DBus::Connection& conn, const string& config_name, un
 
     while (true)
     {
-	ssize_t n = getline(&buffer, &len, fin);
+	ssize_t n = fin.getline(&buffer, &len);
 	if (n == -1)
 	{
-	    if (feof(fin) != 0)
+	    if (fin.eof() != 0)
 		break;
 
 	    SN_THROW(IOErrorException("reading pipe failed, getline failed: " + stringerror(errno)));
@@ -591,7 +591,7 @@ command_get_xfiles_by_pipe(DBus::Connection& conn, const string& config_name, un
 
     free(buffer);
 
-    if (fclose(fin) != 0)
+    if (fin.close() != 0)
 	SN_THROW(IOErrorException("reading pipe failed, fclose failed: " + stringerror(errno)));
 
     return files;
