@@ -1,5 +1,5 @@
 /*
- * Copyright (c) [2019-2024] SUSE LLC
+ * Copyright (c) [2019-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -23,6 +23,7 @@
 #include <regex>
 
 #include "Stomp.h"
+
 
 namespace Stomp
 {
@@ -106,11 +107,6 @@ namespace Stomp
 		    {
 			has_content_length = true;
 
-			if (value.empty())
-			{
-			    throw runtime_error("stomp error: empty content-length value");
-			}
-
 			try
 			{
 			    size_t parsed_chars = 0;
@@ -128,7 +124,7 @@ namespace Stomp
 			}
 			catch (const invalid_argument&)
 			{
-			    throw runtime_error("stomp error: invalid content-length syntax");
+			    throw runtime_error("stomp error: invalid content-length syntax '" + value + "'");
 			}
 			catch (const out_of_range&)
 			{
@@ -143,6 +139,7 @@ namespace Stomp
 
 	throw runtime_error("stomp error: expected a message, got a part of it");
     }
+
 
     void
     write_message(ostream& os, const Message& msg)
