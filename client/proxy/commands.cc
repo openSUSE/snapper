@@ -569,6 +569,7 @@ command_get_xfiles_by_pipe(DBus::Connection& conn, const string& config_name, un
 	    if (fin.eof() != 0)
 		break;
 
+	    free(buffer);
 	    SN_THROW(IOErrorException("reading pipe failed, getline failed: " + stringerror(errno)));
 	}
 
@@ -579,7 +580,10 @@ command_get_xfiles_by_pipe(DBus::Connection& conn, const string& config_name, un
 
 	string::size_type pos1 = line.find(" ");
 	if (pos1 == string::npos)
+	{
+	    free(buffer);
 	    SN_THROW(IOErrorException("reading pipe failed, parse error"));
+	}
 
 	string::size_type pos2 = line.find(" ", pos1 + 1);
 
