@@ -21,6 +21,7 @@
 
 
 #include <regex>
+#include <limits>
 
 #include "Stomp.h"
 
@@ -29,6 +30,38 @@ namespace Stomp
 {
 
     using namespace std;
+
+
+    ssize_t
+    parse_content_length(const string& str)
+    {
+	try
+	{
+	    size_t pos = 0;
+	    long long ret = stoll(str, &pos);
+
+	    // Check if there are trailing unparsed characters (e.g., "100abc")
+	    if (pos < str.size())
+	    {
+		throw runtime_error("stomp error: invalid content-length value '" + str + "'");
+	    }
+
+	    if (ret < 0 || ret > std::numeric_limits<ssize_t>::max())
+	    {
+		throw runtime_error("stomp error: content-length value out of range '" + str + "'");
+	    }
+
+	    return static_cast<ssize_t>(ret);
+	}
+	catch (const invalid_argument&)
+	{
+	    throw runtime_error("stomp error: invalid content-length syntax '" + str + "'");
+	}
+	catch (const out_of_range&)
+	{
+	    throw runtime_error("stomp error: content-length value out of range'" + str + "'");
+	}
+    }
 
 
     Message
@@ -106,30 +139,7 @@ namespace Stomp
 		    if (key == "content-length")
 		    {
 			has_content_length = true;
-
-			try
-			{
-			    size_t parsed_chars = 0;
-			    long long parsed_length = stoll(value, &parsed_chars);
-
-			    // 1. Check if there are trailing unparsed characters (e.g., "100abc")
-			    // 2. Reject negative integer limits
-			    // 3. Explicitly reject negative signs to enforce pure digits
-			    if (parsed_chars < value.size() || parsed_length < 0 || value[0] == '-')
-			    {
-				throw runtime_error("stomp error: invalid content-length value '" + value + "'");
-			    }
-
-			    content_length = static_cast<ssize_t>(parsed_length);
-			}
-			catch (const invalid_argument&)
-			{
-			    throw runtime_error("stomp error: invalid content-length syntax '" + value + "'");
-			}
-			catch (const out_of_range&)
-			{
-			    throw runtime_error("stomp error: content-length value out of range");
-			}
+			content_length = parse_content_length(value);
 		    }
 
 		    msg.headers[key] = value;

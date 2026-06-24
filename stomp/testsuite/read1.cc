@@ -130,3 +130,16 @@ BOOST_AUTO_TEST_CASE(error3)
 	return strcmp(e.what(), "stomp error: invalid content-length value '5a'") == 0;
     });
 }
+
+
+BOOST_AUTO_TEST_CASE(error4)
+{
+    // invalid negative content-lenght value
+
+    istringstream s1("HELLO\nkey:value\ncontent-length:-5\n\nWORLD" + null);
+    istream s2(s1.rdbuf());
+
+    BOOST_CHECK_EXCEPTION(read_message(s2), exception, [](const exception& e) {
+        return strcmp(e.what(), "stomp error: content-length value out of range '-5'") == 0;
+    });
+}
