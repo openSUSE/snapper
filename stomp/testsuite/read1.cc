@@ -106,19 +106,44 @@ BOOST_AUTO_TEST_CASE(error1)
 
 BOOST_AUTO_TEST_CASE(error2)
 {
+    // missing \0 at frame end
+
+    istringstream s1("HELLO\nkey:value\ncontent-length:5\n\nWORLD");
+    istream s2(s1.rdbuf());
+
+    BOOST_CHECK_EXCEPTION(read_message(s2), exception, [](const exception& e) {
+        return strcmp(e.what(), "stomp error: missing \\0 at frame end") == 0;
+    });
+}
+
+
+BOOST_AUTO_TEST_CASE(error3)
+{
+    // truncated body
+
+    istringstream s1("HELLO\nkey:value\ncontent-length:50000\n\nWORLD" + null);
+    istream s2(s1.rdbuf());
+
+    BOOST_CHECK_EXCEPTION(read_message(s2), exception, [](const exception& e) {
+        return strcmp(e.what(), "stomp error: premature end of body") == 0;
+    });
+}
+
+
+BOOST_AUTO_TEST_CASE(error4)
+{
     // empty content-lenght value
 
     istringstream s1("HELLO\nkey:value\ncontent-length:\n\nWORLD" + null);
     istream s2(s1.rdbuf());
 
     BOOST_CHECK_EXCEPTION(read_message(s2), exception, [](const exception& e) {
-	cout << e.what() << '\n';
 	return strcmp(e.what(), "stomp error: invalid content-length syntax ''") == 0;
     });
 }
 
 
-BOOST_AUTO_TEST_CASE(error3)
+BOOST_AUTO_TEST_CASE(error5)
 {
     // invalid content-lenght value
 
@@ -126,13 +151,12 @@ BOOST_AUTO_TEST_CASE(error3)
     istream s2(s1.rdbuf());
 
     BOOST_CHECK_EXCEPTION(read_message(s2), exception, [](const exception& e) {
-	cout << e.what() << '\n';
 	return strcmp(e.what(), "stomp error: invalid content-length value '5a'") == 0;
     });
 }
 
 
-BOOST_AUTO_TEST_CASE(error4)
+BOOST_AUTO_TEST_CASE(error6)
 {
     // invalid negative content-lenght value
 

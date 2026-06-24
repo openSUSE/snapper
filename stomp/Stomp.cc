@@ -111,13 +111,16 @@ namespace Stomp
 			{
 			    vector<char> buf(content_length);
 			    is.read(buf.data(), content_length);
+			    if (!is)
+				throw runtime_error("stomp error: premature end of body");
+
 			    msg.body.assign(buf.data(), content_length);
 			}
 
 			// still read the \0 that terminates the frame
 			char buf2 = '-';
 			is.read(&buf2, 1);
-			if (buf2 != '\0')
+			if (!is || buf2 != '\0')
 			    throw runtime_error("stomp error: missing \\0 at frame end");
 		    }
 		    else
