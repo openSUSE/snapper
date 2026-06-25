@@ -356,51 +356,52 @@ SnapperZyppCommitPlugin::get_solvables(const Message& msg, Phase phase) const
     // {"TransactionStepList":[{"type":"?","stage":"?","solvable":{"n":"mypackage"}}]}
     // https://doc.opensuse.org/projects/libzypp/SLE12SP2/plugin-commit.html
     json_object* steps = object_get(zypp, "TransactionStepList");
-    if (!steps)
-	return result;
-
-    if (json_object_get_type(steps) == json_type_array)
+    if (steps)
     {
-	size_t len = json_object_array_length(steps);
-	for (size_t i = 0; i < len; ++i)
+	if (json_object_get_type(steps) == json_type_array)
 	{
-	    json_object* step = json_object_array_get_idx(steps, i);
-	    bool have_type = json_object_object_get_ex(step, "type", NULL);
-	    bool have_stage = json_object_object_get_ex(step, "stage", NULL);
-	    if (have_type && (phase == Phase::BEFORE || have_stage))
+	    size_t len = json_object_array_length(steps);
+	    for (size_t i = 0; i < len; ++i)
 	    {
-		json_object* solvable = object_get(step, "solvable");
-		if (!solvable)
+		json_object* step = json_object_array_get_idx(steps, i);
+		bool have_type = json_object_object_get_ex(step, "type", NULL);
+		bool have_stage = json_object_object_get_ex(step, "stage", NULL);
+		if (have_type && (phase == Phase::BEFORE || have_stage))
 		{
-		    y2err("in item #" << i);
-		    continue;
-		}
+		    json_object* solvable = object_get(step, "solvable");
+		    if (!solvable)
+		    {
+			y2err("in item #" << i);
+			continue;
+		    }
 
-		json_object* name = object_get(solvable, "n");
-		if (!name)
-		{
-		    y2err("in item #" << i);
-		    continue;
-		}
+		    json_object* name = object_get(solvable, "n");
+		    if (!name)
+		    {
+			y2err("in item #" << i);
+			continue;
+		    }
 
-		if (json_object_get_type(name) != json_type_string)
-		{
-		    y2err("\"n\" is not a string");
-		    y2err("in item #" << i);
-		    continue;
-		}
-		else
-		{
-		    const char* prize = json_object_get_string(name);
-		    result.insert(prize);
+		    if (json_object_get_type(name) != json_type_string)
+		    {
+			y2err("\"n\" is not a string");
+			y2err("in item #" << i);
+			continue;
+		    }
+		    else
+		    {
+			const char* prize = json_object_get_string(name);
+			result.insert(prize);
+		    }
 		}
 	    }
 	}
     }
 
+    json_object_put(zypp);
+
     return result;
 }
-
 
 void
 SnapperZyppCommitPlugin::match_solvables(const set<string>& solvables, bool& found, bool& important) const
