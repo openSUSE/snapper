@@ -50,11 +50,11 @@ namespace snapper
      *	44   {
      *	45	 try
      *	46	 {
-     *	47	     SN_THROW(Exception("Something bad happened."));
+     *	47	      SN_THROW(Exception("Something bad happened."));
      *	48	 }
      *	49	 catch (const Exception& exception)
      *	50	 {
-     *	51	     SN_RETHROW(exception);
+     *	51	      SN_RETHROW(exception);
      *	52	 }
      *	53   }
      *	54   catch (const Exception& exception)
@@ -367,6 +367,11 @@ namespace snapper
     struct IOErrorException : public Exception
     {
 	explicit IOErrorException(const std::string& msg) : Exception(msg) {}
+    };
+
+    struct ComparisonFailedException : public Exception
+    {
+	explicit ComparisonFailedException(const std::string& msg) : Exception(msg) {}
     };
 
     struct AclException : public IOErrorException

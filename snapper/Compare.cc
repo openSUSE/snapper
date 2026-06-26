@@ -191,7 +191,7 @@ namespace snapper
          * utilities, right?
          *
          * if ((stat1.st_ctime == stat2.st_ctime))
-         *      return status;
+         * return status;
          *
          */
 
@@ -279,7 +279,10 @@ namespace snapper
 	    cb(path + "/" + *it, status);
 
 	    struct stat stat;
-	    dir.stat(*it, &stat, AT_SYMLINK_NOFOLLOW);
+	    if (dir.stat(*it, &stat, AT_SYMLINK_NOFOLLOW) != 0)
+	    {
+		SN_THROW(ComparisonFailedException("stat failed path: " + dir.fullname() + "/" + *it));
+	    }
 	    if (S_ISDIR(stat.st_mode))
 		listSubdirs(SDir(dir, *it), path + "/" + *it, status, cb);
 	}
@@ -370,7 +373,10 @@ namespace snapper
 	    else if (first1 == last1)
 	    {
 		struct stat stat2;
-		dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW); // TODO error check
+		if (dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW) != 0)
+		{
+		    SN_THROW(ComparisonFailedException("stat failed path: " + dir2.fullname() + "/" + *first2));
+		}
 
 		if (stat2.st_dev == cmp_data.dev2)
 		    lonesome(dir2, path, *first2, stat2, CREATED, cmp_data.cb);
@@ -380,7 +386,10 @@ namespace snapper
 	    else if (first2 == last2)
 	    {
 		struct stat stat1;
-		dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW); // TODO error check
+		if (dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW) != 0)
+		{
+		    SN_THROW(ComparisonFailedException("stat failed path: " + dir1.fullname() + "/" + *first1));
+		}
 
 		if (stat1.st_dev == cmp_data.dev1)
 		    lonesome(dir1, path, *first1, stat1, DELETED, cmp_data.cb);
@@ -390,7 +399,10 @@ namespace snapper
 	    else if (*first2 < *first1)
 	    {
 		struct stat stat2;
-		dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW); // TODO error check
+		if (dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW) != 0)
+		{
+		    SN_THROW(ComparisonFailedException("stat failed path: " + dir2.fullname() + "/" + *first2));
+		}
 
 		if (stat2.st_dev == cmp_data.dev2)
 		    lonesome(dir2, path, *first2, stat2, CREATED, cmp_data.cb);
@@ -400,7 +412,10 @@ namespace snapper
 	    else if (*first1 < *first2)
 	    {
 		struct stat stat1;
-		dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW); // TODO error check
+		if (dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW) != 0)
+		{
+		    SN_THROW(ComparisonFailedException("stat failed path: " + dir1.fullname() + "/" + *first1));
+		}
 
 		if (stat1.st_dev == cmp_data.dev1)
 		    lonesome(dir1, path, *first1, stat1, DELETED, cmp_data.cb);
@@ -413,10 +428,12 @@ namespace snapper
 		    SN_THROW(LogicErrorException());
 
 		struct stat stat1;
-		dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW); // TODO error check
+		if (dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW) != 0)
+		    SN_THROW(ComparisonFailedException("stat failed path: " + dir1.fullname() + "/" + *first1));
 
 		struct stat stat2;
-		dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW); // TODO error check
+		if (dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW) != 0)
+		    SN_THROW(ComparisonFailedException("stat failed path: " + dir2.fullname() + "/" + *first2));
 
 		twosome(cmp_data, dir1, dir2, path, *first1, stat1, stat2);
 		++first1;

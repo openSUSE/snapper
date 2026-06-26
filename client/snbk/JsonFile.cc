@@ -24,6 +24,7 @@
 #include <sys/stat.h>
 #include <functional>
 #include <memory>
+#include <limits>
 
 #include "snapper/Exception.h"
 #include "snapper/AppUtil.h"
@@ -181,7 +182,13 @@ namespace snapper
 	if (!json_object_is_type(child, json_type_int) && !json_object_is_type(child, json_type_string))
 	    return false;
 
-	value = json_object_get_int(child);
+	int64_t val64 = json_object_get_int64(child);
+	if (val64 < 0 || val64 > std::numeric_limits<unsigned int>::max())
+	{
+	    SN_THROW(Exception(sformat("Value out of bounds for unsigned int key '%s'", name)));
+	}
+
+	value = (unsigned int)val64;
 
 	return true;
     }
