@@ -403,6 +403,7 @@ SnapperZyppCommitPlugin::get_solvables(const Message& msg, Phase phase) const
     return result;
 }
 
+
 void
 SnapperZyppCommitPlugin::match_solvables(const set<string>& solvables, bool& found, bool& important) const
 {
