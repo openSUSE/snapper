@@ -252,7 +252,7 @@ namespace snapper
 	    SN_THROW(IOErrorException("stat failed path:" + file1.fullname()));
 
 	if (r2 != 0)
-	    SN_THROW(IOErrorException("lstat failed path:" + file2.fullname()));
+	    SN_THROW(IOErrorException("stat failed path:" + file2.fullname()));
 
 	return cmpFiles(file1, stat1, file2, stat2);
     }
