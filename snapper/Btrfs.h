@@ -99,7 +99,8 @@ namespace snapper
 
     private:
 
-	qgroup_t qgroup;
+	qgroup_t qgroup = no_qgroup;
+	bool special_cmp = true;
 
 	mutable vector<subvolid_t> deleted_subvolids;
 

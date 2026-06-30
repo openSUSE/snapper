@@ -1,5 +1,6 @@
 /*
  * Copyright (c) [2011-2013] Novell, Inc.
+ * Copyright (c) 2026 SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -47,7 +48,7 @@ namespace snapper
     using namespace std;
 
 
-    bool
+    static bool
     cmpFilesContentReg(const SFile& file1, const struct stat& stat1, const SFile& file2,
 		       const struct stat& stat2)
     {
@@ -127,7 +128,7 @@ namespace snapper
     }
 
 
-    bool
+    static bool
     cmpFilesContentLnk(const SFile& file1, const struct stat& stat1, const SFile& file2,
 		       const struct stat& stat2)
     {
@@ -154,7 +155,7 @@ namespace snapper
     }
 
 
-    bool
+    static bool
     cmpFilesContent(const SFile& file1, const struct stat& stat1, const SFile& file2,
 		    const struct stat& stat2)
     {
@@ -175,7 +176,7 @@ namespace snapper
     }
 
 
-    unsigned int
+    static unsigned int
     cmpFiles(const SFile& file1, const struct stat& stat1, const SFile& file2,
 	     const struct stat& stat2)
     {
@@ -257,7 +258,7 @@ namespace snapper
     }
 
 
-    bool
+    static bool
     filter(const string& name)
     {
 	if (name == "/" SNAPSHOTS_NAME)
@@ -267,7 +268,7 @@ namespace snapper
     }
 
 
-    void
+    static void
     listSubdirs(const SDir& dir, const string& path, unsigned int status, cmpdirs_cb_t cb)
     {
 	boost::this_thread::interruption_point();
@@ -279,7 +280,9 @@ namespace snapper
 	    cb(path + "/" + *it, status);
 
 	    struct stat stat;
-	    dir.stat(*it, &stat, AT_SYMLINK_NOFOLLOW);
+	    if (dir.stat(*it, &stat, AT_SYMLINK_NOFOLLOW) != 0)
+		SN_THROW(IOErrorException("stat failed path: " + dir.fullname() + "/" + *it));
+
 	    if (S_ISDIR(stat.st_mode))
 		listSubdirs(SDir(dir, *it), path + "/" + *it, status, cb);
 	}
@@ -295,11 +298,11 @@ namespace snapper
     };
 
 
-    void
+    static void
     cmpDirsWorker(const CmpData& cmp_data, const SDir& dir1, const SDir& dir2, const string& path);
 
 
-    void
+    static void
     lonesome(const SDir& dir, const string& path, const string& name, const struct stat& stat,
 	     unsigned int status, cmpdirs_cb_t cb)
     {
@@ -310,7 +313,7 @@ namespace snapper
     }
 
 
-    void
+    static void
     twosome(const CmpData& cmp_data, const SDir& dir1, const SDir& dir2, const string& path,
 	    const string& name, const struct stat& stat1, const struct stat& stat2)
     {
@@ -342,7 +345,7 @@ namespace snapper
     }
 
 
-    void
+    static void
     cmpDirsWorker(const CmpData& cmp_data, const SDir& dir1, const SDir& dir2, const string& path)
     {
 	boost::this_thread::interruption_point();
@@ -370,7 +373,8 @@ namespace snapper
 	    else if (first1 == last1)
 	    {
 		struct stat stat2;
-		dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW); // TODO error check
+		if (dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW) != 0)
+		    SN_THROW(IOErrorException("stat failed path: " + dir2.fullname() + "/" + *first2));
 
 		if (stat2.st_dev == cmp_data.dev2)
 		    lonesome(dir2, path, *first2, stat2, CREATED, cmp_data.cb);
@@ -380,7 +384,8 @@ namespace snapper
 	    else if (first2 == last2)
 	    {
 		struct stat stat1;
-		dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW); // TODO error check
+		if (dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW) != 0)
+		    SN_THROW(IOErrorException("stat failed path: " + dir1.fullname() + "/" + *first1));
 
 		if (stat1.st_dev == cmp_data.dev1)
 		    lonesome(dir1, path, *first1, stat1, DELETED, cmp_data.cb);
@@ -390,7 +395,8 @@ namespace snapper
 	    else if (*first2 < *first1)
 	    {
 		struct stat stat2;
-		dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW); // TODO error check
+		if (dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW) != 0)
+		    SN_THROW(IOErrorException("stat failed path: " + dir2.fullname() + "/" + *first2));
 
 		if (stat2.st_dev == cmp_data.dev2)
 		    lonesome(dir2, path, *first2, stat2, CREATED, cmp_data.cb);
@@ -400,7 +406,8 @@ namespace snapper
 	    else if (*first1 < *first2)
 	    {
 		struct stat stat1;
-		dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW); // TODO error check
+		if (dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW) != 0)
+		    SN_THROW(IOErrorException("stat failed path: " + dir1.fullname() + "/" + *first1));
 
 		if (stat1.st_dev == cmp_data.dev1)
 		    lonesome(dir1, path, *first1, stat1, DELETED, cmp_data.cb);
@@ -413,10 +420,12 @@ namespace snapper
 		    SN_THROW(LogicErrorException());
 
 		struct stat stat1;
-		dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW); // TODO error check
+		if (dir1.stat(*first1, &stat1, AT_SYMLINK_NOFOLLOW) != 0)
+		    SN_THROW(IOErrorException("stat failed path: " + dir1.fullname() + "/" + *first1));
 
 		struct stat stat2;
-		dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW); // TODO error check
+		if (dir2.stat(*first2, &stat2, AT_SYMLINK_NOFOLLOW) != 0)
+		    SN_THROW(IOErrorException("stat failed path: " + dir2.fullname() + "/" + *first2));
 
 		twosome(cmp_data, dir1, dir2, path, *first1, stat1, stat2);
 		++first1;
@@ -432,14 +441,12 @@ namespace snapper
 	y2mil("path1:" << dir1.fullname() << " path2:" << dir2.fullname());
 
 	struct stat stat1;
-	int r1 = dir1.stat(&stat1);
-	if (r1 != 0)
+	if (dir1.stat(&stat1) != 0)
 	    SN_THROW(IOErrorException(sformat("stat failed path:%s errno:%d",
 					      dir1.fullname().c_str(), errno)));
 
 	struct stat stat2;
-	int r2 = dir2.stat(&stat2);
-	if (r2 != 0)
+	if (dir2.stat(&stat2) != 0)
 	    SN_THROW(IOErrorException(sformat("stat failed path:%s errno:%d",
 					      dir2.fullname().c_str(), errno)));
 
@@ -459,8 +466,8 @@ namespace snapper
     unsigned int
     cmpFilesXattrs(const SFile& file1, const SFile& file2)
     {
-        try
-        {
+	try
+	{
 	    XAttributes xa(file1);
 	    XAttributes xb(file2);
 
@@ -479,11 +486,11 @@ namespace snapper
 
 		return status;
 	    }
-        }
+	}
 	catch (const XAttributesException& e)
-        {
+	{
 	    y2err("extended attributes or ACL compare failed");
-	    return (XATTRS | ACL);
+	    return XATTRS | ACL;
 	}
     }
 
