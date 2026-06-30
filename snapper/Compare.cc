@@ -48,7 +48,7 @@ namespace snapper
     using namespace std;
 
 
-    bool
+    static bool
     cmpFilesContentReg(const SFile& file1, const struct stat& stat1, const SFile& file2,
 		       const struct stat& stat2)
     {
@@ -128,7 +128,7 @@ namespace snapper
     }
 
 
-    bool
+    static bool
     cmpFilesContentLnk(const SFile& file1, const struct stat& stat1, const SFile& file2,
 		       const struct stat& stat2)
     {
@@ -155,7 +155,7 @@ namespace snapper
     }
 
 
-    bool
+    static bool
     cmpFilesContent(const SFile& file1, const struct stat& stat1, const SFile& file2,
 		    const struct stat& stat2)
     {
@@ -176,7 +176,7 @@ namespace snapper
     }
 
 
-    unsigned int
+    static unsigned int
     cmpFiles(const SFile& file1, const struct stat& stat1, const SFile& file2,
 	     const struct stat& stat2)
     {
@@ -258,7 +258,7 @@ namespace snapper
     }
 
 
-    bool
+    static bool
     filter(const string& name)
     {
 	if (name == "/" SNAPSHOTS_NAME)
@@ -268,7 +268,7 @@ namespace snapper
     }
 
 
-    void
+    static void
     listSubdirs(const SDir& dir, const string& path, unsigned int status, cmpdirs_cb_t cb)
     {
 	boost::this_thread::interruption_point();
@@ -298,11 +298,11 @@ namespace snapper
     };
 
 
-    void
+    static void
     cmpDirsWorker(const CmpData& cmp_data, const SDir& dir1, const SDir& dir2, const string& path);
 
 
-    void
+    static void
     lonesome(const SDir& dir, const string& path, const string& name, const struct stat& stat,
 	     unsigned int status, cmpdirs_cb_t cb)
     {
@@ -313,7 +313,7 @@ namespace snapper
     }
 
 
-    void
+    static void
     twosome(const CmpData& cmp_data, const SDir& dir1, const SDir& dir2, const string& path,
 	    const string& name, const struct stat& stat1, const struct stat& stat2)
     {
@@ -345,7 +345,7 @@ namespace snapper
     }
 
 
-    void
+    static void
     cmpDirsWorker(const CmpData& cmp_data, const SDir& dir1, const SDir& dir2, const string& path)
     {
 	boost::this_thread::interruption_point();
