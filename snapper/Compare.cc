@@ -441,14 +441,12 @@ namespace snapper
 	y2mil("path1:" << dir1.fullname() << " path2:" << dir2.fullname());
 
 	struct stat stat1;
-	int r1 = dir1.stat(&stat1);
-	if (r1 != 0)
+	if (dir1.stat(&stat1) != 0)
 	    SN_THROW(IOErrorException(sformat("stat failed path:%s errno:%d",
 					      dir1.fullname().c_str(), errno)));
 
 	struct stat stat2;
-	int r2 = dir2.stat(&stat2);
-	if (r2 != 0)
+	if (dir2.stat(&stat2) != 0)
 	    SN_THROW(IOErrorException(sformat("stat failed path:%s errno:%d",
 					      dir2.fullname().c_str(), errno)));
 
@@ -468,8 +466,8 @@ namespace snapper
     unsigned int
     cmpFilesXattrs(const SFile& file1, const SFile& file2)
     {
-        try
-        {
+	try
+	{
 	    XAttributes xa(file1);
 	    XAttributes xb(file2);
 
@@ -488,11 +486,11 @@ namespace snapper
 
 		return status;
 	    }
-        }
+	}
 	catch (const XAttributesException& e)
-        {
+	{
 	    y2err("extended attributes or ACL compare failed");
-	    return (XATTRS | ACL);
+	    return XATTRS | ACL;
 	}
     }
 
