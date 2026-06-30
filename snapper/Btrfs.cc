@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2025] SUSE LLC
+ * Copyright (c) [2016-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -80,7 +80,7 @@ namespace snapper
 
 
     Btrfs::Btrfs(const string& subvolume, const string& root_prefix)
-	: Filesystem(subvolume, root_prefix), qgroup(no_qgroup)
+	: Filesystem(subvolume, root_prefix)
     {
     }
 
@@ -122,6 +122,8 @@ namespace snapper
 	}
 
 #endif
+
+	config_info.get_value("SPECIAL_CMP", special_cmp);
     }
 
 
@@ -1363,24 +1365,33 @@ namespace snapper
     void
     Btrfs::cmpDirs(const SDir& dir1, const SDir& dir2, cmpdirs_cb_t cb) const
     {
-	y2mil("special btrfs cmpDirs");
-
-	try
+	if (special_cmp)
 	{
-	    Stopwatch stopwatch;
+	    y2mil("special btrfs cmpDirs");
 
-	    const SDir subvolume(openSubvolumeDir());
+	    try
+	    {
+		Stopwatch stopwatch;
 
-	    StreamProcessor processor(subvolume, dir1, dir2);
+		const SDir subvolume(openSubvolumeDir());
 
-	    processor.process(cb);
+		StreamProcessor processor(subvolume, dir1, dir2);
 
-	    y2mil("stopwatch " << stopwatch << " for comparing directories");
+		processor.process(cb);
+
+		y2mil("stopwatch " << stopwatch << " for comparing directories");
+	    }
+	    catch (const Exception& e)
+	    {
+		y2err("special btrfs cmpDirs failed, " << e.what());
+		y2mil("cmpDirs fallback");
+
+		snapper::cmpDirs(dir1, dir2, cb);
+	    }
 	}
-	catch (const Exception& e)
+	else
 	{
-	    y2err("special btrfs cmpDirs failed, " << e.what());
-	    y2mil("cmpDirs fallback");
+	    y2mil("generic cmpDirs");
 
 	    snapper::cmpDirs(dir1, dir2, cb);
 	}
