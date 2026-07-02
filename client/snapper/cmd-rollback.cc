@@ -26,13 +26,16 @@
 #include <iostream>
 
 #include <snapper/AppUtil.h>
+#include <snapper/Btrfs.h>
 #include <snapper/Filesystem.h>
 #include <snapper/PluginsImpl.h>
+#include <snapper/SnapperDefines.h>
 
 #include "../utils/text.h"
 #include "../utils/help.h"
 #include "../proxy/proxy.h"
 #include "GlobalOptions.h"
+#include "rollback-method.h"
 #include "../misc.h"
 
 
@@ -43,6 +46,47 @@ namespace snapper
 
 
 #ifdef ENABLE_ROLLBACK
+
+    static RollbackMethod
+    resolve_rollback_method(const ProxyConfig& config, const string& subvolume,
+			    string& subvol_name)
+    {
+	string method_str;
+	if (!config.getValue(KEY_ROLLBACK_METHOD, method_str) || method_str.empty())
+	    method_str = "auto";
+
+	if (method_str == "set-default")
+	{
+	    subvol_name.clear();
+	    return RollbackMethod::SET_DEFAULT;
+	}
+
+	if (method_str == "subvol-rename")
+	{
+	    subvol_name = get_subvol_name(subvolume);
+	    if (subvol_name.empty())
+	    {
+		cerr << _("ROLLBACK_METHOD is 'subvol-rename' but root is not mounted "
+			  "with a named subvolume.") << endl;
+		exit(EXIT_FAILURE);
+	    }
+	    return RollbackMethod::SUBVOL_RENAME;
+	}
+
+	if (method_str != "auto")
+	{
+	    cerr << sformat(_("Unknown ROLLBACK_METHOD '%s'."), method_str.c_str()) << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	RollbackMethod method = detect_rollback_method(subvolume);
+	if (method == RollbackMethod::SUBVOL_RENAME)
+	    subvol_name = get_subvol_name(subvolume);
+	else
+	    subvol_name.clear();
+	return method;
+    }
+
 
     void
     help_rollback()
@@ -118,6 +162,10 @@ namespace snapper
 	    exit(EXIT_FAILURE);
 	}
 
+	const Btrfs* btrfs = dynamic_cast<const Btrfs*>(filesystem.get());
+	if (!btrfs)
+	    SN_THROW(LogicErrorException("filesystem is btrfs but cast failed"));
+
 	const string subvolume = config.getSubvolume();
 	if (subvolume != "/")
 	{
@@ -126,24 +174,43 @@ namespace snapper
 	    exit(EXIT_FAILURE);
 	}
 
+	string subvol_name;
+	RollbackMethod rollback_method = resolve_rollback_method(config, subvolume, subvol_name);
+
+	if (!global_options.quiet())
+	{
+	    switch (rollback_method)
+	    {
+		case RollbackMethod::SET_DEFAULT:
+		    cout << _("Rollback method is set-default.") << endl;
+		    break;
+		case RollbackMethod::SUBVOL_RENAME:
+		    cout << sformat(_("Rollback method is subvol-rename (subvolume '%s')."),
+				    subvol_name.c_str()) << endl;
+		    break;
+	    }
+	}
+
 	ProxySnapshots& snapshots = snapper->getSnapshots();
 
 	ProxySnapshots::iterator previous_default = snapshots.getDefault();
 
-	if (global_options.ambit() == GlobalOptions::Ambit::AUTO)
+	if (global_options.ambit() == Ambit::AUTO)
 	{
-	    if (previous_default == snapshots.end())
+	    SubvolumeMode mode = SubvolumeMode::UNKNOWN;
+	    if (previous_default != snapshots.end())
+		mode = filesystem->isSnapshotReadOnly(previous_default->getNum())
+		    ? SubvolumeMode::READ_ONLY : SubvolumeMode::READ_WRITE;
+
+	    Ambit ambit = detect_ambit(rollback_method, mode);
+	    if (ambit == Ambit::AUTO)
 	    {
 		cerr << _("Cannot detect ambit since default subvolume is unknown.") << '\n'
 		     << _("This can happen if the system was not set up for rollback.") << '\n'
 		     << _("The ambit can be specified manually using the --ambit option.") << endl;
 		exit(EXIT_FAILURE);
 	    }
-
-	    if (filesystem->isSnapshotReadOnly(previous_default->getNum()))
-		global_options.set_ambit(GlobalOptions::Ambit::TRANSACTIONAL);
-	    else
-		global_options.set_ambit(GlobalOptions::Ambit::CLASSIC);
+	    global_options.set_ambit(ambit);
 	}
 
 	if (!global_options.quiet())
@@ -154,7 +221,7 @@ namespace snapper
 
 	switch (global_options.ambit())
 	{
-	    case GlobalOptions::Ambit::CLASSIC:
+	    case Ambit::CLASSIC:
 	    {
 		ProxySnapshots::const_iterator snapshot1 = snapshots.end();
 		ProxySnapshots::const_iterator snapshot2 = snapshots.end();
@@ -218,7 +285,15 @@ namespace snapper
 		if (!global_options.quiet())
 		    cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot2->getNum()) << endl;
 
-		filesystem->setDefault(snapshot2->getNum(), report);
+		switch (rollback_method)
+		{
+		    case RollbackMethod::SET_DEFAULT:
+			filesystem->setDefault(snapshot2->getNum(), report);
+			break;
+		    case RollbackMethod::SUBVOL_RENAME:
+			btrfs->rollbackSubvolRename(snapshot2->getNum(), subvol_name, report);
+			break;
+		}
 
 		Plugins::rollback(filesystem->snapshotDir(snapshot1->getNum()),
 				  filesystem->snapshotDir(snapshot2->getNum()), report);
@@ -230,7 +305,7 @@ namespace snapper
 	    }
 	    break;
 
-	    case GlobalOptions::Ambit::TRANSACTIONAL:
+	    case Ambit::TRANSACTIONAL:
 	    {
 		// see bsc #1172273
 
@@ -264,7 +339,15 @@ namespace snapper
 		if (!global_options.quiet())
 		    cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot->getNum()) << endl;
 
-		filesystem->setDefault(snapshot->getNum(), report);
+		switch (rollback_method)
+		{
+		    case RollbackMethod::SET_DEFAULT:
+			filesystem->setDefault(snapshot->getNum(), report);
+			break;
+		    case RollbackMethod::SUBVOL_RENAME:
+			btrfs->rollbackSubvolRename(snapshot->getNum(), subvol_name, report);
+			break;
+		}
 
 		Plugins::rollback(filesystem->snapshotDir(previous_default->getNum()),
 				  filesystem->snapshotDir(snapshot->getNum()), report);
@@ -273,7 +356,7 @@ namespace snapper
 	    }
 	    break;
 
-	    case GlobalOptions::Ambit::AUTO:
+	    case Ambit::AUTO:
 	    {
 		cerr << "internal error: ambit is auto" << endl;
 		exit(EXIT_FAILURE);

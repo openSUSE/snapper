@@ -774,6 +774,14 @@
 	  </itemizedlist>
 	  <para>Rollback is only supported with btrfs and requires a properly
 	  configured system.</para>
+	  <para>The method used to activate the rollback target at next boot depends
+	  on the <option>ROLLBACK_METHOD</option> configuration variable (see
+	  <citerefentry><refentrytitle>snapper-configs</refentrytitle><manvolnum>5</manvolnum></citerefentry>).
+	  With <option>auto</option> (the default), the method is detected from
+	  <filename>/proc/mounts</filename>: systems using a named subvolume
+	  (e.g. <option>subvol=@root</option> in fstab) will use atomic subvolume
+	  renaming, while systems relying on the btrfs default subvolume will use
+	  the traditional <option>set-default</option> approach.</para>
 	  <variablelist>
 	    <varlistentry>
 	      <term><option>-p, --print-number</option></term>

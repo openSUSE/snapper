@@ -21,6 +21,8 @@
  */
 
 
+#include "config.h"
+
 #include <cerrno>
 #include <cstdarg>
 #include <unistd.h>
@@ -41,6 +43,7 @@
 
 #include "snapper/LoggerImpl.h"
 #include "snapper/AppUtil.h"
+#include "snapper/Exception.h"
 
 
 namespace snapper

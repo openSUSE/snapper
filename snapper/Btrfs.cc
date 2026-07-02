@@ -1513,6 +1513,117 @@ namespace snapper
     }
 
 
+    void
+    Btrfs::rollbackSubvolRename(unsigned int num, const string& subvol_name,
+				Plugins::Report& report) const
+    {
+	if (subvol_name.find('/') != string::npos)
+	    SN_THROW(IOErrorException("rollback failed: nested subvolume path '" + subvol_name +
+				     "' is not supported for subvol-rename rollback; set "
+				     "ROLLBACK_METHOD=set-default or use a top-level subvolume"));
+
+	try
+	{
+	    Plugins::set_default_snapshot(Plugins::Stage::PRE_ACTION, subvolume, this, num, report);
+
+	    bool found = false;
+	    MtabData mtab_data;
+	    if (!getMtabData(subvolume, found, mtab_data) || !found)
+	    {
+		y2err("failed to find device for subvolume " << subvolume);
+		SN_THROW(IOErrorException("rollback failed: cannot find mounted device"));
+	    }
+
+	    // Mount the btrfs top-level (subvolid=5) - named subvolumes live here
+	    SDir infos_dir = openInfosDir();
+	    TmpMount tmp_mount(infos_dir, mtab_data.device, "tmp-mnt-XXXXXX", "btrfs", 0,
+			      "subvolid=5");
+
+	    SDir toplevel(infos_dir, tmp_mount.getName());
+
+	    const string incoming = subvol_name + ".incoming";
+	    const string rollback_name = subvol_name + ".rollback." + decString(num);
+
+	    // If a previous rollback completed the rename_exchange but failed to move
+	    // .incoming to .rollback.N, that .incoming subvolume is the old running root
+	    // (still mounted by subvolume ID). Deleting it risks corruption during the
+	    // next unmount sequence. Rename it instead, using its btrfs subvolume ID as
+	    // suffix — guaranteed unique across the filesystem.
+	    {
+		struct stat st;
+		if (toplevel.stat(incoming, &st, AT_SYMLINK_NOFOLLOW) == 0)
+		{
+		    SDir incoming_dir(toplevel, incoming);
+		    const subvolid_t svid = get_id(incoming_dir.fd());
+		    const string rescued = subvol_name + ".rollback.svid." + decString(svid);
+		    y2war("stale " << incoming << " found; renaming to " << rescued
+			  << " rather than deleting (may be a previously running root)");
+		    if (toplevel.rename(incoming, rescued) != 0)
+		    {
+			y2err("failed to rename " << incoming << " to " << rescued
+			      << ": " << stringerror(errno));
+			SN_THROW(IOErrorException("rollback failed: cannot move aside stale " + incoming));
+		    }
+		}
+	    }
+
+	    // Create a read-write snapshot of the rollback target as <subvol_name>.incoming
+	    SDir snapshot_dir = openSnapshotDir(num);
+	    try
+	    {
+		create_snapshot(snapshot_dir.fd(), toplevel.fd(), incoming, false,
+				qgroup);
+	    }
+	    catch (const runtime_error& e)
+	    {
+		y2err("create snapshot failed, " << e.what());
+		SN_THROW(IOErrorException(string("rollback failed: ") + e.what()));
+	    }
+
+	    // Atomically swap <subvol_name> and <subvol_name>.incoming
+	    if (toplevel.exchange(subvol_name, incoming) != 0)
+	    {
+		// Clean up the incoming subvolume we just created
+		try { delete_subvolume(toplevel.fd(), incoming); } catch (...) {}
+		SN_THROW(IOErrorException(string("rollback failed: exchange(") +
+					  subvol_name + ", " + incoming +
+					  ") failed: " + stringerror(errno) +
+					  " -- kernel may not support RENAME_EXCHANGE on btrfs"));
+	    }
+
+	    // Rename old root to <subvol_name>.rollback.<num> for preservation.
+	    // If that name already exists (e.g. rolling back to the same snapshot twice),
+	    // fall back to a subvolume-ID-based name which is guaranteed unique.
+	    if (toplevel.rename(incoming, rollback_name) != 0)
+	    {
+		bool rescued = false;
+		if (errno == EEXIST || errno == ENOTEMPTY)
+		{
+		    SDir incoming_dir(toplevel, incoming);
+		    const string alt_name = subvol_name + ".rollback.svid." +
+					    decString(get_id(incoming_dir.fd()));
+		    y2war("rename old root " << incoming << " to " << rollback_name
+			  << " failed (already exists); trying " << alt_name);
+		    if (toplevel.rename(incoming, alt_name) == 0)
+			rescued = true;
+		}
+		if (!rescued)
+		{
+		    y2war("failed to rename old root " << incoming << " to " << rollback_name
+			  << ": " << stringerror(errno)
+			  << " -- old root preserved as " << incoming);
+		}
+	    }
+
+	    Plugins::set_default_snapshot(Plugins::Stage::POST_ACTION, subvolume, this, num, report);
+	}
+	catch (const runtime_error& e)
+	{
+	    SN_THROW(IOErrorException(string("rollback failed, ") + e.what()));
+	}
+    }
+
+
     std::pair<bool, unsigned int>
     Btrfs::getActive() const
     {
