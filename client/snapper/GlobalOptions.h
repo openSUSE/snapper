@@ -26,8 +26,6 @@
 
 #include <snapper/AppUtil.h>
 #include <snapper/Enum.h>
-
-#include "rollback-method.h"
 #include <snapper/Logger.h>
 
 #include "client/utils/GetOpts.h"
@@ -43,6 +41,11 @@ namespace snapper
     public:
 
 	enum class OutputFormat { TABLE, CSV, JSON };
+
+	// AUTO, CLASSIC and TRANSACTIONAL can be selected via --ambit. SUBVOL_RENAME
+	// is selected only by ROLLBACK_METHOD (see resolve_ambit) and describes a
+	// classic rollback performed by renaming the named root subvolume.
+	enum class Ambit { AUTO, CLASSIC, TRANSACTIONAL, SUBVOL_RENAME };
 
 	static void help_global_options();
 
@@ -105,7 +108,7 @@ namespace snapper
 
     template <> struct EnumInfo<GlobalOptions::OutputFormat> { static const vector<string> names; };
 
-    template <> struct EnumInfo<Ambit> { static const vector<string> names; };
+    template <> struct EnumInfo<GlobalOptions::Ambit> { static const vector<string> names; };
 
 }
 
