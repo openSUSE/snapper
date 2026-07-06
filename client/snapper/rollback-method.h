@@ -26,31 +26,27 @@
 #include <string>
 #include <vector>
 
+#include "client/snapper/GlobalOptions.h"
+
 
 namespace snapper
 {
     using std::string;
     using std::vector;
 
-
-    enum class Ambit { AUTO, CLASSIC, TRANSACTIONAL };
-
 #ifdef ENABLE_ROLLBACK
 
-    enum class RollbackMethod { SET_DEFAULT, SUBVOL_RENAME };
+    using Ambit = GlobalOptions::Ambit;
+
+    enum class SubvolumeMode { UNKNOWN, READ_WRITE, READ_ONLY };
 
     /**
-     * Determine rollback method from already-parsed mount options.
-     * Returns SUBVOL_RENAME only for a top-level named subvolume (no slashes).
-     * Separated from I/O so it can be unit-tested without /proc/mounts.
+     * Return the named subvolume from already-parsed mount options (e.g. "@root"),
+     * or an empty string if mounted by the btrfs default subvolume id. The name
+     * may contain slashes for a nested subvolume. Separated from I/O so it can be
+     * unit-tested without /proc/mounts.
      */
-    RollbackMethod detect_rollback_method_from_options(const vector<string>& options);
-
-    /**
-     * Determine rollback method by reading mount options for mount_point
-     * from /proc/mounts. Delegates to detect_rollback_method_from_options.
-     */
-    RollbackMethod detect_rollback_method(const string& mount_point);
+    string subvol_name_from_options(const vector<string>& options);
 
     /**
      * Return the named subvolume that mount_point is mounted with (e.g. "@root"),
@@ -58,9 +54,22 @@ namespace snapper
      */
     string get_subvol_name(const string& mount_point);
 
-    enum class SubvolumeMode { UNKNOWN, READ_WRITE, READ_ONLY };
+    /**
+     * Whether the configured ROLLBACK_METHOD and the root mount select the
+     * subvolume-rename mechanism. rollback_method is the ROLLBACK_METHOD value
+     * ("auto"/""/"set-default"/"subvol-rename"), subvol_name the named root
+     * subvolume ("" when mounted by default subvolume id). Throws for an unknown
+     * ROLLBACK_METHOD or when subvol-rename is requested without a top-level
+     * named subvolume.
+     */
+    bool use_subvol_rename(const string& rollback_method, const string& subvol_name);
 
-    Ambit detect_ambit(RollbackMethod method, SubvolumeMode mode);
+    /**
+     * Ambit for the set-default mechanism: an explicit --ambit (cli_ambit) wins,
+     * otherwise it is derived from the read-only/-write state of the current
+     * default snapshot (mode). Returns AUTO when it cannot be determined.
+     */
+    Ambit classic_or_transactional(Ambit cli_ambit, SubvolumeMode mode);
 
 #endif
 

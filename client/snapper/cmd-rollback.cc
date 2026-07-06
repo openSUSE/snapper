@@ -47,47 +47,6 @@ namespace snapper
 
 #ifdef ENABLE_ROLLBACK
 
-    static RollbackMethod
-    resolve_rollback_method(const ProxyConfig& config, const string& subvolume,
-			    string& subvol_name)
-    {
-	string method_str;
-	if (!config.getValue(KEY_ROLLBACK_METHOD, method_str) || method_str.empty())
-	    method_str = "auto";
-
-	if (method_str == "set-default")
-	{
-	    subvol_name.clear();
-	    return RollbackMethod::SET_DEFAULT;
-	}
-
-	if (method_str == "subvol-rename")
-	{
-	    subvol_name = get_subvol_name(subvolume);
-	    if (subvol_name.empty())
-	    {
-		cerr << _("ROLLBACK_METHOD is 'subvol-rename' but root is not mounted "
-			  "with a named subvolume.") << endl;
-		exit(EXIT_FAILURE);
-	    }
-	    return RollbackMethod::SUBVOL_RENAME;
-	}
-
-	if (method_str != "auto")
-	{
-	    cerr << sformat(_("Unknown ROLLBACK_METHOD '%s'."), method_str.c_str()) << endl;
-	    exit(EXIT_FAILURE);
-	}
-
-	RollbackMethod method = detect_rollback_method(subvolume);
-	if (method == RollbackMethod::SUBVOL_RENAME)
-	    subvol_name = get_subvol_name(subvolume);
-	else
-	    subvol_name.clear();
-	return method;
-    }
-
-
     void
     help_rollback()
     {
@@ -174,47 +133,40 @@ namespace snapper
 	    exit(EXIT_FAILURE);
 	}
 
-	string subvol_name;
-	RollbackMethod rollback_method = resolve_rollback_method(config, subvolume, subvol_name);
-
-	if (!global_options.quiet())
-	{
-	    switch (rollback_method)
-	    {
-		case RollbackMethod::SET_DEFAULT:
-		    cout << _("Rollback method is set-default.") << endl;
-		    break;
-		case RollbackMethod::SUBVOL_RENAME:
-		    cout << sformat(_("Rollback method is subvol-rename (subvolume '%s')."),
-				    subvol_name.c_str()) << endl;
-		    break;
-	    }
-	}
-
 	ProxySnapshots& snapshots = snapper->getSnapshots();
 
 	ProxySnapshots::iterator previous_default = snapshots.getDefault();
 
-	if (global_options.ambit() == Ambit::AUTO)
-	{
-	    SubvolumeMode mode = SubvolumeMode::UNKNOWN;
-	    if (previous_default != snapshots.end())
-		mode = filesystem->isSnapshotReadOnly(previous_default->getNum())
-		    ? SubvolumeMode::READ_ONLY : SubvolumeMode::READ_WRITE;
+	const string subvol_name = get_subvol_name(subvolume);
 
-	    Ambit ambit = detect_ambit(rollback_method, mode);
-	    if (ambit == Ambit::AUTO)
-	    {
-		cerr << _("Cannot detect ambit since default subvolume is unknown.") << '\n'
-		     << _("This can happen if the system was not set up for rollback.") << '\n'
-		     << _("The ambit can be specified manually using the --ambit option.") << endl;
-		exit(EXIT_FAILURE);
-	    }
-	    global_options.set_ambit(ambit);
+	string rollback_method;
+	config.getValue(KEY_ROLLBACK_METHOD, rollback_method);
+
+	SubvolumeMode mode = SubvolumeMode::UNKNOWN;
+	if (previous_default != snapshots.end())
+	    mode = filesystem->isSnapshotReadOnly(previous_default->getNum())
+		? SubvolumeMode::READ_ONLY : SubvolumeMode::READ_WRITE;
+
+	Ambit ambit = use_subvol_rename(rollback_method, subvol_name)
+	    ? Ambit::SUBVOL_RENAME
+	    : classic_or_transactional(global_options.ambit(), mode);
+	if (ambit == Ambit::AUTO)
+	{
+	    cerr << _("Cannot detect ambit since default subvolume is unknown.") << '\n'
+		 << _("This can happen if the system was not set up for rollback.") << '\n'
+		 << _("The ambit can be specified manually using the --ambit option.") << endl;
+	    exit(EXIT_FAILURE);
 	}
+	global_options.set_ambit(ambit);
 
 	if (!global_options.quiet())
-	    cout << sformat(_("Ambit is %s."), toString(global_options.ambit()).c_str()) << endl;
+	{
+	    if (ambit == Ambit::SUBVOL_RENAME)
+		cout << sformat(_("Ambit is subvol-rename (subvolume '%s')."),
+				subvol_name.c_str()) << endl;
+	    else
+		cout << sformat(_("Ambit is %s."), toString(ambit).c_str()) << endl;
+	}
 
 	if (previous_default != snapshots.end() && scd1.description == default_description1)
 	    scd1.description += sformat(" of #%d", previous_default->getNum());
@@ -222,6 +174,7 @@ namespace snapper
 	switch (global_options.ambit())
 	{
 	    case Ambit::CLASSIC:
+	    case Ambit::SUBVOL_RENAME:
 	    {
 		ProxySnapshots::const_iterator snapshot1 = snapshots.end();
 		ProxySnapshots::const_iterator snapshot2 = snapshots.end();
@@ -285,15 +238,10 @@ namespace snapper
 		if (!global_options.quiet())
 		    cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot2->getNum()) << endl;
 
-		switch (rollback_method)
-		{
-		    case RollbackMethod::SET_DEFAULT:
-			filesystem->setDefault(snapshot2->getNum(), report);
-			break;
-		    case RollbackMethod::SUBVOL_RENAME:
-			btrfs->rollbackSubvolRename(snapshot2->getNum(), subvol_name, report);
-			break;
-		}
+		if (global_options.ambit() == Ambit::SUBVOL_RENAME)
+		    btrfs->rollbackSubvolRename(snapshot2->getNum(), subvol_name, report);
+		else
+		    filesystem->setDefault(snapshot2->getNum(), report);
 
 		Plugins::rollback(filesystem->snapshotDir(snapshot1->getNum()),
 				  filesystem->snapshotDir(snapshot2->getNum()), report);
@@ -339,15 +287,9 @@ namespace snapper
 		if (!global_options.quiet())
 		    cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot->getNum()) << endl;
 
-		switch (rollback_method)
-		{
-		    case RollbackMethod::SET_DEFAULT:
-			filesystem->setDefault(snapshot->getNum(), report);
-			break;
-		    case RollbackMethod::SUBVOL_RENAME:
-			btrfs->rollbackSubvolRename(snapshot->getNum(), subvol_name, report);
-			break;
-		}
+		// a transactional system is mounted by default subvolume id, so
+		// the rollback is always performed with set-default.
+		filesystem->setDefault(snapshot->getNum(), report);
 
 		Plugins::rollback(filesystem->snapshotDir(previous_default->getNum()),
 				  filesystem->snapshotDir(snapshot->getNum()), report);

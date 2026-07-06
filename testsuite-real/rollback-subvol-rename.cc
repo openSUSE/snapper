@@ -238,19 +238,19 @@ test_detect_method_strips_kernel_leading_slash(SDir& top, const string& device,
     run("mkdir -p " + mnt_point);
     run("mount -o subvol=" + sv_name + " " + device + " " + mnt_point);
 
-    RollbackMethod method = detect_rollback_method(mnt_point);
-    string detected = get_subvol_name(mnt_point);
+    string subvol_name = get_subvol_name(mnt_point);
+    bool rename = use_subvol_rename("auto", subvol_name);
 
     run("umount " + mnt_point);
     run("rmdir " + mnt_point);
     delete_subvolume(top.fd(), sv_name.c_str());
 
-    check(method == RollbackMethod::SUBVOL_RENAME,
-	  "detect_rollback_method for subvol=" + sv_name + " returned SET_DEFAULT");
+    check(rename,
+	  "use_subvol_rename for subvol=" + sv_name + " did not select subvol-rename");
 
-    check(detected == sv_name,
+    check(subvol_name == sv_name,
 	  "get_subvol_name for subvol=" + sv_name +
-	  " returned '" + detected + "', expected '" + sv_name + "'");
+	  " returned '" + subvol_name + "', expected '" + sv_name + "'");
 
     cout << "ok: detect-method-strips-leading-slash subvol=" << sv_name << endl;
 }

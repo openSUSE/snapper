@@ -50,7 +50,7 @@ getopts_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
 
 rollback_method_test_SOURCES = rollback-method-test.cc ../client/snapper/rollback-method.cc
 rollback_method_test_CPPFLAGS = $(AM_CPPFLAGS)
-rollback_method_test_LDADD = -lboost_unit_test_framework ../snapper/libsnapper.la
+rollback_method_test_LDADD = -lboost_unit_test_framework ../snapper/libsnapper.la ../client/utils/libutils.la
 
 lvm_utils_test_LDADD = -lboost_unit_test_framework ../snapper/libsnapper.la
 
