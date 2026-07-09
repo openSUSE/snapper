@@ -239,14 +239,15 @@ test_detect_method_strips_kernel_leading_slash(SDir& top, const string& device,
     run("mount -o subvol=" + sv_name + " " + device + " " + mnt_point);
 
     string subvol_name = get_subvol_name(mnt_point);
-    bool rename = use_subvol_rename("auto", subvol_name);
+    bool rename = determine_ambit(Ambit::AUTO, subvol_name, SubvolumeMode::UNKNOWN) ==
+	Ambit::SUBVOL_RENAME;
 
     run("umount " + mnt_point);
     run("rmdir " + mnt_point);
     delete_subvolume(top.fd(), sv_name.c_str());
 
     check(rename,
-	  "use_subvol_rename for subvol=" + sv_name + " did not select subvol-rename");
+	  "determine_ambit for subvol=" + sv_name + " did not select subvol-rename");
 
     check(subvol_name == sv_name,
 	  "get_subvol_name for subvol=" + sv_name +
