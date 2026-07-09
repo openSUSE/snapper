@@ -84,35 +84,27 @@ namespace snapper
     }
 
 
-    bool
-    use_subvol_rename(const string& rollback_method, const string& subvol_name)
+    Ambit
+    determine_ambit(Ambit cli_ambit, const string& subvol_name, SubvolumeMode mode)
     {
-	const bool renameable = is_renameable_subvol(subvol_name);
-
-	if (rollback_method == "set-default")
-	    return false;
-
-	if (rollback_method == "subvol-rename")
+	// an explicit --ambit wins
+	if (cli_ambit == Ambit::SUBVOL_RENAME)
 	{
-	    if (!renameable)
-		SN_THROW(Exception(_("ROLLBACK_METHOD is 'subvol-rename' but root is not "
+	    if (!is_renameable_subvol(subvol_name))
+		SN_THROW(Exception(_("Ambit is 'subvol-rename' but root is not "
 				     "mounted with a top-level named subvolume.")));
-	    return true;
+	    return cli_ambit;
 	}
 
-	if (rollback_method.empty() || rollback_method == "auto")
-	    return renameable;
-
-	SN_THROW(Exception(sformat(_("Unknown ROLLBACK_METHOD '%s'."), rollback_method.c_str())));
-    }
-
-
-    Ambit
-    classic_or_transactional(Ambit cli_ambit, SubvolumeMode mode)
-    {
-	if (cli_ambit == Ambit::CLASSIC || cli_ambit == Ambit::TRANSACTIONAL)
+	if (cli_ambit != Ambit::AUTO)
 	    return cli_ambit;
 
+	// a system mounting root by a top-level named subvolume needs the rename
+	// mechanism since the btrfs default subvolume id is ignored at boot
+	if (is_renameable_subvol(subvol_name))
+	    return Ambit::SUBVOL_RENAME;
+
+	// otherwise derive from the read-only/-write state of the default snapshot
 	switch (mode)
 	{
 	    case SubvolumeMode::READ_ONLY:  return Ambit::TRANSACTIONAL;

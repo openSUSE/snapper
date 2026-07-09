@@ -55,21 +55,15 @@ namespace snapper
     string get_subvol_name(const string& mount_point);
 
     /**
-     * Whether the configured ROLLBACK_METHOD and the root mount select the
-     * subvolume-rename mechanism. rollback_method is the ROLLBACK_METHOD value
-     * ("auto"/""/"set-default"/"subvol-rename"), subvol_name the named root
-     * subvolume ("" when mounted by default subvolume id). Throws for an unknown
-     * ROLLBACK_METHOD or when subvol-rename is requested without a top-level
-     * named subvolume.
+     * Determine the effective ambit for the rollback. An explicit --ambit
+     * (cli_ambit) wins; SUBVOL_RENAME is validated against the root mount and
+     * throws when root is not mounted with a top-level named subvolume. With
+     * AUTO, a top-level named root subvolume (subvol_name, "" when mounted by
+     * default subvolume id) selects SUBVOL_RENAME, otherwise the ambit is
+     * derived from the read-only/-write state of the current default snapshot
+     * (mode). Returns AUTO when it cannot be determined.
      */
-    bool use_subvol_rename(const string& rollback_method, const string& subvol_name);
-
-    /**
-     * Ambit for the set-default mechanism: an explicit --ambit (cli_ambit) wins,
-     * otherwise it is derived from the read-only/-write state of the current
-     * default snapshot (mode). Returns AUTO when it cannot be determined.
-     */
-    Ambit classic_or_transactional(Ambit cli_ambit, SubvolumeMode mode);
+    Ambit determine_ambit(Ambit cli_ambit, const string& subvol_name, SubvolumeMode mode);
 
 #endif
 

@@ -1,13 +1,14 @@
 Btrfs Rollback Methods
 ======================
 
-Snapper supports two methods for switching the active root subvolume
-during a rollback. The method is controlled by ROLLBACK_METHOD in the
-snapper config (see snapper-configs(5)).
+Snapper supports two mechanisms for switching the active root subvolume
+during a rollback. The mechanism is selected by the ambit (see the
+--ambit option in snapper(8)); with the default of auto it is detected
+from the system.
 
 
-set-default
------------
+classic and transactional (set-default)
+---------------------------------------
 
 Sets the btrfs default subvolume ID via BTRFS_IOC_DEFAULT_SUBVOL. This
 works when the bootloader or fstab does not specify a subvol= mount
@@ -44,10 +45,14 @@ Linux 3.17 or later for renameat2(RENAME_EXCHANGE) support.
 auto (default)
 --------------
 
-Snapper inspects /proc/mounts to determine which method applies:
+Snapper inspects the system to determine the ambit:
 
-- If the root filesystem is mounted with a named subvol= option
-  (any value other than "/"), subvol-rename is used.
-- Otherwise set-default is used.
+- If the root filesystem is mounted with a top-level named subvol=
+  option in /proc/mounts (any value other than "/"), subvol-rename is
+  used.
+- Otherwise the ambit is classic or transactional, depending on the
+  read-only/-write state of the default subvolume, and set-default is
+  used.
 
-This means no manual configuration is needed on most systems.
+An explicit --ambit always wins over the detection. This means no manual
+configuration is needed on most systems.

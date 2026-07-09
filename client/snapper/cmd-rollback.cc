@@ -29,7 +29,6 @@
 #include <snapper/Btrfs.h>
 #include <snapper/Filesystem.h>
 #include <snapper/PluginsImpl.h>
-#include <snapper/SnapperDefines.h>
 
 #include "../utils/text.h"
 #include "../utils/help.h"
@@ -139,17 +138,12 @@ namespace snapper
 
 	const string subvol_name = get_subvol_name(subvolume);
 
-	string rollback_method;
-	config.getValue(KEY_ROLLBACK_METHOD, rollback_method);
-
 	SubvolumeMode mode = SubvolumeMode::UNKNOWN;
 	if (previous_default != snapshots.end())
 	    mode = filesystem->isSnapshotReadOnly(previous_default->getNum())
 		? SubvolumeMode::READ_ONLY : SubvolumeMode::READ_WRITE;
 
-	Ambit ambit = use_subvol_rename(rollback_method, subvol_name)
-	    ? Ambit::SUBVOL_RENAME
-	    : classic_or_transactional(global_options.ambit(), mode);
+	Ambit ambit = determine_ambit(global_options.ambit(), subvol_name, mode);
 	if (ambit == Ambit::AUTO)
 	{
 	    cerr << _("Cannot detect ambit since default subvolume is unknown.") << '\n'
@@ -162,7 +156,7 @@ namespace snapper
 	if (!global_options.quiet())
 	{
 	    if (ambit == Ambit::SUBVOL_RENAME)
-		cout << sformat(_("Ambit is subvol-rename (subvolume '%s')."),
+		cout << sformat(_("Ambit is %s (subvolume '%s')."), toString(ambit).c_str(),
 				subvol_name.c_str()) << endl;
 	    else
 		cout << sformat(_("Ambit is %s."), toString(ambit).c_str()) << endl;

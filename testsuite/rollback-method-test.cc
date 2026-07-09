@@ -49,91 +49,70 @@ BOOST_DATA_TEST_CASE(subvol_name, boost::unit_test::data::make(subvol_cases), c)
 }
 
 
-// --- mechanism: use_subvol_rename ---------------------------------------------
+// --- determine_ambit -----------------------------------------------------------
 
-struct MechanismCase
-{
-    const char* label;
-    const char* rollback_method;	// value of ROLLBACK_METHOD
-    const char* subvol_name;		// named root subvolume ("" = default subvol id)
-    bool expected;
-};
-
-
-ostream& operator<<(ostream& os, const MechanismCase& c)
-{
-    return os << c.label;
-}
-
-
-const MechanismCase mechanism_cases[] = {
-    // auto (and the empty default) select rename only for a top-level named subvolume
-    { "auto_named",        "auto", "@root",      true },
-    { "empty_named",       "",     "@root",      true },
-    { "auto_default",      "auto", "",           false },
-    { "auto_nested",       "auto", "root/@root", false },
-
-    // set-default forces the default-subvol-id mechanism even on a named mount
-    { "setdefault_named",  "set-default", "@root", false },
-    { "setdefault_default","set-default", "",      false },
-
-    // subvol-rename forces rename on a top-level named subvolume
-    { "rename_named",      "subvol-rename", "@root", true },
-};
-
-
-BOOST_DATA_TEST_CASE(mechanism, boost::unit_test::data::make(mechanism_cases), c)
-{
-    BOOST_CHECK_EQUAL(use_subvol_rename(c.rollback_method, c.subvol_name), c.expected);
-}
-
-
-// subvol-rename requested where it cannot work must be rejected
-BOOST_AUTO_TEST_CASE(mechanism_rejects_rename_without_named_subvolume)
-{
-    BOOST_CHECK_THROW(use_subvol_rename("subvol-rename", ""), Exception);
-    BOOST_CHECK_THROW(use_subvol_rename("subvol-rename", "root/@root"), Exception);
-}
-
-
-// an unknown ROLLBACK_METHOD value must be rejected
-BOOST_AUTO_TEST_CASE(mechanism_rejects_unknown_method)
-{
-    BOOST_CHECK_THROW(use_subvol_rename("bogus", ""), Exception);
-}
-
-
-// --- semantic: classic_or_transactional ---------------------------------------
-
-struct SemanticCase
+struct AmbitCase
 {
     const char* label;
     Ambit cli_ambit;			// --ambit (AUTO if not given)
+    const char* subvol_name;		// named root subvolume ("" = default subvol id)
     SubvolumeMode mode;			// read-only/-write state of default snapshot
     Ambit expected;
 };
 
 
-ostream& operator<<(ostream& os, const SemanticCase& c)
+ostream& operator<<(ostream& os, const AmbitCase& c)
 {
     return os << c.label;
 }
 
 
-const SemanticCase semantic_cases[] = {
-    // auto: derive from the read-only/-write state of the default snapshot
-    { "auto_rw",           Ambit::AUTO,          SubvolumeMode::READ_WRITE, Ambit::CLASSIC },
-    { "auto_ro",           Ambit::AUTO,          SubvolumeMode::READ_ONLY,  Ambit::TRANSACTIONAL },
-    { "auto_unknown",      Ambit::AUTO,          SubvolumeMode::UNKNOWN,    Ambit::AUTO },
+const AmbitCase ambit_cases[] = {
+    // auto: a top-level named root subvolume selects subvol-rename
+    { "auto_named",         Ambit::AUTO, "@root",      SubvolumeMode::READ_WRITE, Ambit::SUBVOL_RENAME },
+    { "auto_named_ro",      Ambit::AUTO, "@root",      SubvolumeMode::READ_ONLY,  Ambit::SUBVOL_RENAME },
+    { "auto_named_unknown", Ambit::AUTO, "@root",      SubvolumeMode::UNKNOWN,    Ambit::SUBVOL_RENAME },
 
-    // explicit --ambit overrides mode detection
-    { "cli_classic",       Ambit::CLASSIC,       SubvolumeMode::UNKNOWN,    Ambit::CLASSIC },
-    { "cli_transactional", Ambit::TRANSACTIONAL, SubvolumeMode::READ_WRITE, Ambit::TRANSACTIONAL },
-    { "cli_over_ro",       Ambit::CLASSIC,       SubvolumeMode::READ_ONLY,  Ambit::CLASSIC },
+    // auto: otherwise derive from the read-only/-write state of the default snapshot
+    { "auto_rw",            Ambit::AUTO, "",           SubvolumeMode::READ_WRITE, Ambit::CLASSIC },
+    { "auto_ro",            Ambit::AUTO, "",           SubvolumeMode::READ_ONLY,  Ambit::TRANSACTIONAL },
+    { "auto_unknown",       Ambit::AUTO, "",           SubvolumeMode::UNKNOWN,    Ambit::AUTO },
+
+    // auto: a nested subvolume cannot be renamed and falls back to set-default
+    { "auto_nested_rw",     Ambit::AUTO, "root/@root", SubvolumeMode::READ_WRITE, Ambit::CLASSIC },
+    { "auto_nested_ro",     Ambit::AUTO, "root/@root", SubvolumeMode::READ_ONLY,  Ambit::TRANSACTIONAL },
+
+    // an explicit --ambit wins over any detection
+    { "cli_classic",              Ambit::CLASSIC,       "",      SubvolumeMode::UNKNOWN,    Ambit::CLASSIC },
+    { "cli_classic_over_ro",      Ambit::CLASSIC,       "",      SubvolumeMode::READ_ONLY,  Ambit::CLASSIC },
+    { "cli_classic_over_named",   Ambit::CLASSIC,       "@root", SubvolumeMode::READ_WRITE, Ambit::CLASSIC },
+    { "cli_trans_over_rw",        Ambit::TRANSACTIONAL, "",      SubvolumeMode::READ_WRITE, Ambit::TRANSACTIONAL },
+    { "cli_trans_over_named",     Ambit::TRANSACTIONAL, "@root", SubvolumeMode::READ_WRITE, Ambit::TRANSACTIONAL },
+    { "cli_rename_named",         Ambit::SUBVOL_RENAME, "@root", SubvolumeMode::UNKNOWN,    Ambit::SUBVOL_RENAME },
+    { "cli_rename_named_ro",      Ambit::SUBVOL_RENAME, "@root", SubvolumeMode::READ_ONLY,  Ambit::SUBVOL_RENAME },
 };
 
 
-BOOST_DATA_TEST_CASE(semantic, boost::unit_test::data::make(semantic_cases), c)
+BOOST_DATA_TEST_CASE(ambit, boost::unit_test::data::make(ambit_cases), c)
 {
-    BOOST_CHECK(classic_or_transactional(c.cli_ambit, c.mode) == c.expected);
+    BOOST_CHECK(determine_ambit(c.cli_ambit, c.subvol_name, c.mode) == c.expected);
+}
+
+
+// subvol-rename requested where it cannot work must be rejected
+BOOST_AUTO_TEST_CASE(rejects_rename_without_named_subvolume)
+{
+    BOOST_CHECK_THROW(determine_ambit(Ambit::SUBVOL_RENAME, "", SubvolumeMode::READ_WRITE), Exception);
+    BOOST_CHECK_THROW(determine_ambit(Ambit::SUBVOL_RENAME, "root/@root", SubvolumeMode::READ_WRITE),
+		      Exception);
+}
+
+
+// every Ambit value must have a name (keeps the enum and EnumInfo names in sync)
+BOOST_AUTO_TEST_CASE(ambit_names_complete)
+{
+    BOOST_CHECK_EQUAL(toString(Ambit::AUTO), "auto");
+    BOOST_CHECK_EQUAL(toString(Ambit::CLASSIC), "classic");
+    BOOST_CHECK_EQUAL(toString(Ambit::TRANSACTIONAL), "transactional");
+    BOOST_CHECK_EQUAL(toString(Ambit::SUBVOL_RENAME), "subvol-rename");
 }

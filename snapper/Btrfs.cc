@@ -1519,8 +1519,8 @@ namespace snapper
     {
 	if (subvol_name.find('/') != string::npos)
 	    SN_THROW(IOErrorException("rollback failed: nested subvolume path '" + subvol_name +
-				     "' is not supported for subvol-rename rollback; set "
-				     "ROLLBACK_METHOD=set-default or use a top-level subvolume"));
+				     "' is not supported for subvol-rename rollback; use "
+				     "--ambit classic or a top-level subvolume"));
 
 	try
 	{

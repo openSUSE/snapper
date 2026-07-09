@@ -48,7 +48,8 @@ json_formatter_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils
 
 getopts_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
 
-rollback_method_test_SOURCES = rollback-method-test.cc ../client/snapper/rollback-method.cc
+rollback_method_test_SOURCES = rollback-method-test.cc ../client/snapper/rollback-method.cc \
+	../client/snapper/GlobalOptions.cc
 rollback_method_test_CPPFLAGS = $(AM_CPPFLAGS)
 rollback_method_test_LDADD = -lboost_unit_test_framework ../snapper/libsnapper.la ../client/utils/libutils.la
 
