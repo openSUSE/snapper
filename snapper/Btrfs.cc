@@ -1594,6 +1594,34 @@ namespace snapper
 					  " -- kernel may not support RENAME_EXCHANGE on btrfs"));
 	    }
 
+	    // A btrfs snapshot does not include nested subvolumes: on layouts
+	    // where the .snapshots subvolume lives inside the root subvolume the
+	    // new root only contains an empty stub directory. Move the .snapshots
+	    // subvolume from the old root into the new root, otherwise all
+	    // snapshots would be orphaned in the renamed-away old root. The
+	    // running /.snapshots mount stays valid since the kernel tracks it by
+	    // subvolume id.
+	    {
+		SDir old_root(toplevel, incoming);
+		SDir new_root(toplevel, subvol_name);
+
+		struct stat st;
+		if (old_root.stat(SNAPSHOTS_NAME, &st, AT_SYMLINK_NOFOLLOW) == 0 &&
+		    is_subvolume(st))
+		{
+		    if (new_root.rmdir(SNAPSHOTS_NAME) != 0 && errno != ENOENT)
+		    {
+			y2err("cannot remove " << SNAPSHOTS_NAME << " stub from new root: "
+			      << stringerror(errno) << " -- snapshots remain in the old root");
+		    }
+		    else if (old_root.rename(SNAPSHOTS_NAME, new_root, SNAPSHOTS_NAME) != 0)
+		    {
+			y2err("cannot move " << SNAPSHOTS_NAME << " subvolume to new root: "
+			      << stringerror(errno) << " -- snapshots remain in the old root");
+		    }
+		}
+	    }
+
 	    // Rename old root to <subvol_name>.rollback.<num> for preservation.
 	    // If that name already exists (e.g. rolling back to the same snapshot twice),
 	    // fall back to a subvolume-ID-based name which is guaranteed unique.
