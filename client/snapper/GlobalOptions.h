@@ -43,7 +43,7 @@ namespace snapper
 
 	// SUBVOL_RENAME describes a classic rollback performed by renaming the
 	// named root subvolume instead of setting the default subvolume id (see
-	// determine_ambit in rollback-method.h).
+	// determine_ambit in ambit.h).
 	enum class Ambit { AUTO, CLASSIC, TRANSACTIONAL, SUBVOL_RENAME };
 
 	static void help_global_options();

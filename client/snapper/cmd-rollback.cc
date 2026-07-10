@@ -26,7 +26,6 @@
 #include <iostream>
 
 #include <snapper/AppUtil.h>
-#include <snapper/Btrfs.h>
 #include <snapper/Filesystem.h>
 #include <snapper/PluginsImpl.h>
 
@@ -34,7 +33,7 @@
 #include "../utils/help.h"
 #include "../proxy/proxy.h"
 #include "GlobalOptions.h"
-#include "rollback-method.h"
+#include "ambit.h"
 #include "../misc.h"
 
 
@@ -120,10 +119,6 @@ namespace snapper
 	    exit(EXIT_FAILURE);
 	}
 
-	const Btrfs* btrfs = dynamic_cast<const Btrfs*>(filesystem.get());
-	if (!btrfs)
-	    SN_THROW(LogicErrorException("filesystem is btrfs but cast failed"));
-
 	const string subvolume = config.getSubvolume();
 	if (subvolume != "/")
 	{
@@ -138,8 +133,9 @@ namespace snapper
 
 	const string subvol_name = get_subvol_name(subvolume);
 
+	// the mode only matters with --ambit auto (see determine_ambit)
 	SubvolumeMode mode = SubvolumeMode::UNKNOWN;
-	if (previous_default != snapshots.end())
+	if (global_options.ambit() == Ambit::AUTO && previous_default != snapshots.end())
 	    mode = filesystem->isSnapshotReadOnly(previous_default->getNum())
 		? SubvolumeMode::READ_ONLY : SubvolumeMode::READ_WRITE;
 
@@ -152,6 +148,11 @@ namespace snapper
 	    exit(EXIT_FAILURE);
 	}
 	global_options.set_ambit(ambit);
+
+	if (set_default_ineffective(ambit, subvol_name))
+	    cerr << sformat(_("Warning: The root filesystem is mounted with subvol=%s so setting "
+			      "the default subvolume will not take effect on the next boot."),
+			    subvol_name.c_str()) << endl;
 
 	if (!global_options.quiet())
 	{
@@ -232,8 +233,8 @@ namespace snapper
 		if (!global_options.quiet())
 		    cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot2->getNum()) << endl;
 
-		if (global_options.ambit() == Ambit::SUBVOL_RENAME)
-		    btrfs->rollbackSubvolRename(snapshot2->getNum(), subvol_name, report);
+		if (ambit == Ambit::SUBVOL_RENAME)
+		    filesystem->rollbackSubvolRename(snapshot2->getNum(), subvol_name, report);
 		else
 		    filesystem->setDefault(snapshot2->getNum(), report);
 

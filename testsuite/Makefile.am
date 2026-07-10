@@ -17,7 +17,7 @@ check_PROGRAMS += qgroup1.test
 endif
 
 if ENABLE_ROLLBACK
-check_PROGRAMS += rollback-method.test
+check_PROGRAMS += ambit.test
 endif
 
 if ENABLE_LVM
@@ -48,10 +48,10 @@ json_formatter_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils
 
 getopts_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
 
-rollback_method_test_SOURCES = rollback-method-test.cc ../client/snapper/rollback-method.cc \
+ambit_test_SOURCES = ambit-test.cc ../client/snapper/ambit.cc \
 	../client/snapper/GlobalOptions.cc
-rollback_method_test_CPPFLAGS = $(AM_CPPFLAGS)
-rollback_method_test_LDADD = -lboost_unit_test_framework ../snapper/libsnapper.la ../client/utils/libutils.la
+ambit_test_CPPFLAGS = $(AM_CPPFLAGS)
+ambit_test_LDADD = -lboost_unit_test_framework ../snapper/libsnapper.la ../client/utils/libutils.la
 
 lvm_utils_test_LDADD = -lboost_unit_test_framework ../snapper/libsnapper.la
 
