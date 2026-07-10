@@ -79,3 +79,33 @@ BOOST_AUTO_TEST_CASE(exchange_nonexistent_fails)
 
     rmdir((tmp.path + "/a").c_str());
 }
+
+
+BOOST_AUTO_TEST_CASE(rename_moves_dir_between_directories)
+{
+    TestTmpDir tmp;
+
+    // /a/sub with a sentinel file is moved into /b
+    BOOST_REQUIRE(mkdir((tmp.path + "/a").c_str(), 0755) == 0);
+    BOOST_REQUIRE(mkdir((tmp.path + "/b").c_str(), 0755) == 0);
+    BOOST_REQUIRE(mkdir((tmp.path + "/a/sub").c_str(), 0755) == 0);
+
+    int fd = open((tmp.path + "/a/sub/marker").c_str(), O_CREAT | O_WRONLY, 0644);
+    BOOST_REQUIRE(fd >= 0);
+    close(fd);
+
+    {
+	SDir a(tmp.path + "/a");
+	SDir b(tmp.path + "/b");
+
+	int ret = a.rename("sub", b, "sub");
+	BOOST_REQUIRE_EQUAL(ret, 0);
+    }
+
+    BOOST_CHECK_EQUAL(access((tmp.path + "/b/sub/marker").c_str(), F_OK), 0);
+    BOOST_CHECK(access((tmp.path + "/a/sub").c_str(), F_OK) != 0);
+
+    // clean up
+    unlink((tmp.path + "/b/sub/marker").c_str());
+    rmdir((tmp.path + "/b/sub").c_str());
+}

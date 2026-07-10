@@ -227,6 +227,66 @@ test_rollback_name_collision_uses_subvolid_fallback(SDir& top)
 }
 
 
+// A btrfs snapshot only contains an empty stub directory where a nested
+// subvolume is: verify the stub can be replaced by the old root's .snapshots
+// subvolume with a cross-directory rename, as Btrfs::rollbackSubvolRename does.
+static void
+test_nested_snapshots_subvol_migrates(SDir& top)
+{
+    cleanup_subvol(top, "@root.snap");
+    cleanup_subvol(top, "@root.incoming");
+    cleanup_subvol(top, "@root");
+
+    create_subvolume(top.fd(), "@root");
+    {
+	SDir root_sv(top, "@root");
+	create_subvolume(root_sv.fd(), ".snapshots");
+	SDir snapshots(root_sv, ".snapshots");
+	create_marker(snapshots, "history-marker");
+    }
+
+    {
+	SDir root_sv(top, "@root");
+	create_snapshot(root_sv.fd(), top.fd(), "@root.snap", true, no_qgroup);
+    }
+
+    {
+	SDir snap(top, "@root.snap");
+	create_snapshot(snap.fd(), top.fd(), "@root.incoming", false, no_qgroup);
+    }
+
+    check(top.exchange("@root", "@root.incoming") == 0, "exchange failed");
+
+    {
+	SDir new_root(top, "@root");
+	SDir old_root(top, "@root.incoming");
+
+	struct stat st;
+	check(new_root.stat(".snapshots", &st, AT_SYMLINK_NOFOLLOW) == 0,
+	      "stub .snapshots missing in new root");
+	check(!is_subvolume(st), "stub .snapshots is unexpectedly a subvolume");
+
+	check(new_root.rmdir(".snapshots") == 0, "cannot remove stub .snapshots");
+	check(old_root.rename(".snapshots", new_root, ".snapshots") == 0,
+	      "cannot move .snapshots into new root");
+
+	SDir snapshots(new_root, ".snapshots");
+	check(has_marker(snapshots, "history-marker"),
+	      ".snapshots content lost after migration");
+    }
+
+    {
+	SDir new_root(top, "@root");
+	try { delete_subvolume(new_root.fd(), ".snapshots"); } catch (...) {}
+    }
+    cleanup_subvol(top, "@root.snap");
+    cleanup_subvol(top, "@root.incoming");
+    cleanup_subvol(top, "@root");
+
+    cout << "ok: nested-snapshots-subvol-migrates" << endl;
+}
+
+
 static void
 test_detect_method_strips_kernel_leading_slash(SDir& top, const string& device,
 					       const string& sv_name)
@@ -276,6 +336,7 @@ main()
 
 	test_exchange_swaps_subvolume(top);
 	test_rollback_name_collision_uses_subvolid_fallback(top);
+	test_nested_snapshots_subvol_migrates(top);
 
 	const vector<string> subvol_names = { "@root", "root", "@rootfs", "@" };
 	for (const string& name : subvol_names)
