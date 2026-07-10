@@ -48,8 +48,8 @@ auto (default)
 Snapper inspects the system to determine the ambit:
 
 - If the root filesystem is mounted with a top-level named subvol=
-  option in /proc/mounts (any value other than "/"), subvol-rename is
-  used.
+  option in /proc/mounts (a single path component such as "@root" -
+  not "/" and not a nested path), subvol-rename is used.
 - Otherwise the ambit is classic or transactional, depending on the
   read-only/-write state of the default subvolume, and set-default is
   used.

@@ -20,8 +20,8 @@
  */
 
 
-#ifndef SNAPPER_ROLLBACK_METHOD_H
-#define SNAPPER_ROLLBACK_METHOD_H
+#ifndef SNAPPER_AMBIT_H
+#define SNAPPER_AMBIT_H
 
 #include <string>
 #include <vector>
@@ -64,6 +64,16 @@ namespace snapper
      * (mode). Returns AUTO when it cannot be determined.
      */
     Ambit determine_ambit(Ambit cli_ambit, const string& subvol_name, SubvolumeMode mode);
+
+    /**
+     * Whether a rollback with the given ambit sets the default subvolume id
+     * while root is mounted with a top-level subvol= name (subvol_name) - the
+     * kernel then ignores the default subvolume id and the rollback has no
+     * effect on the next boot. Used to warn when an explicit --ambit conflicts
+     * with the root mount. False for a nested name, which the kernel also
+     * shows for a mount by the default subvolume id.
+     */
+    bool set_default_ineffective(Ambit ambit, const string& subvol_name);
 
 #endif
 

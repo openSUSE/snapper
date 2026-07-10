@@ -106,6 +106,13 @@ namespace snapper
 
 	virtual void setDefault(unsigned int num, Plugins::Report& report) const;
 
+	/**
+	 * Rollback by atomically swapping the named root subvolume with a
+	 * read-write copy of snapshot num. Currently only available for btrfs.
+	 */
+	virtual void rollbackSubvolRename(unsigned int num, const string& subvol_name,
+					  Plugins::Report& report) const;
+
 	virtual std::pair<bool, unsigned int> getActive() const;
 
 	virtual bool isActive(unsigned int num) const;

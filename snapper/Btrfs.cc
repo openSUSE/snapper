@@ -1517,6 +1517,9 @@ namespace snapper
     Btrfs::rollbackSubvolRename(unsigned int num, const string& subvol_name,
 				Plugins::Report& report) const
     {
+	// The client never selects subvol-rename for a nested name (see
+	// is_renameable_subvol in client/snapper/ambit.cc) but this method must
+	// protect itself: the SDir operations below require single-component names.
 	if (subvol_name.find('/') != string::npos)
 	    SN_THROW(IOErrorException("rollback failed: nested subvolume path '" + subvol_name +
 				     "' is not supported for subvol-rename rollback; use "

@@ -1,12 +1,12 @@
 #define BOOST_TEST_DYN_LINK
-#define BOOST_TEST_MODULE rollback_method
+#define BOOST_TEST_MODULE ambit
 
 #include <boost/test/unit_test.hpp>
 #include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>
 
 #include "config.h"
-#include "client/snapper/rollback-method.h"
+#include "client/snapper/ambit.h"
 
 using namespace std;
 using namespace snapper;
@@ -115,4 +115,49 @@ BOOST_AUTO_TEST_CASE(ambit_names_complete)
     BOOST_CHECK_EQUAL(toString(Ambit::CLASSIC), "classic");
     BOOST_CHECK_EQUAL(toString(Ambit::TRANSACTIONAL), "transactional");
     BOOST_CHECK_EQUAL(toString(Ambit::SUBVOL_RENAME), "subvol-rename");
+}
+
+
+// --- set_default_ineffective ----------------------------------------------------
+
+struct IneffectiveCase
+{
+    const char* label;
+    Ambit ambit;			// effective ambit of the rollback
+    const char* subvol_name;		// named root subvolume ("" = default subvol id)
+    bool expected;
+};
+
+
+ostream& operator<<(ostream& os, const IneffectiveCase& c)
+{
+    return os << c.label;
+}
+
+
+const IneffectiveCase ineffective_cases[] = {
+    // set-default on a mount by a top-level subvol= name has no effect on the
+    // next boot
+    { "classic_named",         Ambit::CLASSIC,       "@root",      true },
+    { "transactional_named",   Ambit::TRANSACTIONAL, "@root",      true },
+
+    // no warning for a nested name: /proc/mounts also shows the resolved path
+    // when mounted by the default subvolume id (e.g. on Tumbleweed), so a
+    // nested name is no evidence of a by-name mount - set-default is the
+    // normal working setup there
+    { "classic_nested",        Ambit::CLASSIC,       "root/@root",              false },
+    { "classic_tumbleweed",    Ambit::CLASSIC,       "@/.snapshots/1/snapshot", false },
+
+    // set-default works when mounted by the default subvolume id
+    { "classic_default",       Ambit::CLASSIC,       "",           false },
+    { "transactional_default", Ambit::TRANSACTIONAL, "",           false },
+
+    // subvol-rename does not use set-default at all
+    { "rename_named",          Ambit::SUBVOL_RENAME, "@root",      false },
+};
+
+
+BOOST_DATA_TEST_CASE(ineffective, boost::unit_test::data::make(ineffective_cases), c)
+{
+    BOOST_CHECK_EQUAL(set_default_ineffective(c.ambit, c.subvol_name), c.expected);
 }

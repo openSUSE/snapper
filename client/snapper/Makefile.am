@@ -33,7 +33,7 @@ snapper_SOURCES =					\
 	../misc.cc		../misc.h		\
 	MyFiles.cc		MyFiles.h		\
 	GlobalOptions.cc	GlobalOptions.h		\
-	rollback-method.cc	rollback-method.h
+	ambit.cc		ambit.h
 
 snapper_LDADD = 			\
 	../proxy/libproxy.la		\

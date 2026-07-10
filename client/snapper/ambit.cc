@@ -22,7 +22,7 @@
 
 #include "config.h"
 
-#include "rollback-method.h"
+#include "ambit.h"
 
 #include <regex>
 
@@ -75,6 +75,7 @@ namespace snapper
 
 	// A subvolume can only be swapped by name when it is a single top-level
 	// component; nested names (containing a slash) fall back to set-default.
+	// Btrfs::rollbackSubvolRename enforces the same rule for its callers.
 	bool
 	is_renameable_subvol(const string& subvol_name)
 	{
@@ -113,6 +114,17 @@ namespace snapper
 	}
 
 	return Ambit::AUTO;
+    }
+
+
+    bool
+    set_default_ineffective(Ambit ambit, const string& subvol_name)
+    {
+	// Only a top-level name indicates a by-name mount: for a mount by the
+	// default subvolume id the kernel shows the resolved (nested) path in
+	// /proc/mounts, where set-default works as intended.
+	return (ambit == Ambit::CLASSIC || ambit == Ambit::TRANSACTIONAL) &&
+	    is_renameable_subvol(subvol_name);
     }
 
 #endif
