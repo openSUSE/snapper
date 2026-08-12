@@ -27,6 +27,7 @@ snbk_SOURCES = 						\
 	JsonFile.cc		JsonFile.h		\
 	utils.cc		utils.h			\
 	TreeView.cc		TreeView.h		\
+	proxy-snbk.cc		proxy-snbk.h		\
 	../misc.cc		../misc.h
 
 snbk_LDADD =				\
