@@ -20,6 +20,8 @@
  */
 
 
+#include "../utils/text.h"
+
 #include "proxy-snbk.h"
 
 
@@ -38,6 +40,21 @@ namespace snapper
 	    if (it->target_state == TheBigThing::TargetState::VALID ||
 	        it->target_state == TheBigThing::TargetState::LEGACY)
 		proxy_snapshots.emplace_back(new ProxySnapshotSnbk(it));
+	}
+    }
+
+    void SnbkCleanable::delete_snapshots(vector<ProxySnapshots::iterator> snapshots,
+                                         bool verbose, Plugins::Report& report) const
+    {
+	for (ProxySnapshots::iterator proxy_it : snapshots)
+	{
+	    TheBigThings::iterator it = the_big_things.find(proxy_it->getNum());
+	    if (it == the_big_things.end())
+	    {
+		SN_THROW(Exception(_("Cannot find the snapshot to delete.")));
+	    }
+
+	    it->remove(backup_config, verbose);
 	}
     }
 

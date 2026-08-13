@@ -28,7 +28,8 @@ snbk_SOURCES = 						\
 	utils.cc		utils.h			\
 	TreeView.cc		TreeView.h		\
 	proxy-snbk.cc		proxy-snbk.h		\
-	../misc.cc		../misc.h
+	../misc.cc		../misc.h		\
+	../cleanup.cc		../cleanup.h
 
 snbk_LDADD =				\
 	../../snapper/libsnapper.la	\

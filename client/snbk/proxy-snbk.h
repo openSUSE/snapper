@@ -25,8 +25,10 @@
 
 #include <snapper/Exception.h>
 
-#include <../proxy/proxy.h>
+#include "../cleanup.h"
+#include "../proxy/proxy.h"
 
+#include "BackupConfig.h"
 #include "TheBigThing.h"
 
 
@@ -118,6 +120,81 @@ namespace snapper
 	/** snbk doesn't have active snapshots. */
 	virtual iterator getActive() override { return end(); };
 	virtual const_iterator getActive() const override { return end(); };
+    };
+
+
+    class SnbkCleanable : public ProxyCleanable
+    {
+    public:
+
+	SnbkCleanable(const BackupConfig& backup_config, TheBigThings& the_big_things)
+	    : backup_config(backup_config), the_big_things(the_big_things),
+	      snapshots(ProxySnapshotsSnbk(the_big_things)) {};
+
+	virtual ProxySnapshots& get_snapshots() override { return snapshots; }
+
+	virtual void delete_snapshots(vector<ProxySnapshots::iterator> snapshots,
+	                              bool verbose,
+	                              Plugins::Report& report) const override;
+
+	virtual void prepare_quota() const override
+	{
+	    SN_THROW(QuotaException("Quota is not implemented in 'snbk'."));
+	    __builtin_unreachable();
+	}
+
+	virtual QuotaData query_quota_data() const override
+	{
+	    SN_THROW(UnsupportedException());
+	    __builtin_unreachable();
+	}
+
+	virtual FreeSpaceData query_free_space_data() const override
+	{
+	    SN_THROW(UnsupportedException());
+	    __builtin_unreachable();
+	}
+
+	virtual ProxyComparison create_comparison(const ProxySnapshot& lhs,
+	                                          const ProxySnapshot& rhs,
+	                                          bool mount) const override
+	{
+	    SN_THROW(UnsupportedException());
+	    __builtin_unreachable();
+	}
+
+    private:
+
+	const BackupConfig& backup_config;
+	TheBigThings& the_big_things;
+
+	ProxySnapshotsSnbk snapshots;
+    };
+
+
+    class SnbkCleanup : public CleanupOperation
+    {
+    public:
+
+	SnbkCleanup(const BackupConfig& backup_config, TheBigThings& the_big_things)
+	    : retention_policy(ProxyConfig(backup_config.retention_config)),
+	      cleanable(SnbkCleanable(backup_config, the_big_things))
+	{
+	}
+
+	virtual const ProxyConfig& get_config() const override
+	{
+	    return retention_policy;
+	}
+
+    protected:
+
+	virtual ProxyCleanable& get_cleanable() override { return cleanable; }
+
+    private:
+
+	ProxyConfig retention_policy;
+	SnbkCleanable cleanable;
     };
 
 
