@@ -92,6 +92,7 @@ namespace snapper
 	    exit(EXIT_FAILURE);
 	}
 
+	// An empty --input file is still an explicit selection and must not mean all files.
 	bool selected = file || get_opts.num_args() > 0;
 	vector<string> filenames = MyFiles::get_requested_files(file, get_opts);
 

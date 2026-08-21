@@ -98,6 +98,7 @@ namespace snapper
 	pair<ProxySnapshots::const_iterator, ProxySnapshots::const_iterator> range =
 	    snapshots.findNums(get_opts.pop_arg());
 
+	// An empty --input file is still an explicit selection and must not mean all files.
 	bool selected = file || get_opts.num_args() > 0;
 	vector<string> filenames = MyFiles::get_requested_files(file, get_opts);
 
