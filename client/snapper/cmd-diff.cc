@@ -98,11 +98,16 @@ namespace snapper
 	pair<ProxySnapshots::const_iterator, ProxySnapshots::const_iterator> range =
 	    snapshots.findNums(get_opts.pop_arg());
 
-	ProxyComparison comparison = snapper->createComparison(*range.first, *range.second, true);
+	bool selected = file || get_opts.num_args() > 0;
+	vector<string> filenames = MyFiles::get_requested_files(file, get_opts);
+
+	ProxyComparison comparison = selected ?
+	    snapper->createComparison(*range.first, *range.second, true, filenames) :
+	    snapper->createComparison(*range.first, *range.second, true);
 
 	MyFiles files(comparison.getFiles());
 
-	files.bulk_process(file, get_opts, [differ](const File& file) {
+	files.bulk_process(filenames, !selected, [differ](const File& file) {
 	    differ.run(file.getAbsolutePath(LOC_PRE), file.getAbsolutePath(LOC_POST));
 	});
     }

@@ -41,8 +41,6 @@ namespace snapper
 	void bulk_process(const vector<string>& filenames, bool all,
 			  std::function<void(File& file)> callback);
 
-	void bulk_process(FILE* file, GetOpts& get_opts, std::function<void(File& file)> callback);
-
     };
 
 }

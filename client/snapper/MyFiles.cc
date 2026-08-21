@@ -101,12 +101,4 @@ namespace snapper
 	}
     }
 
-
-    void
-    MyFiles::bulk_process(FILE* file, GetOpts& get_opts, std::function<void(File& file)> callback)
-    {
-	bool all = !file && get_opts.num_args() == 0;
-	bulk_process(get_requested_files(file, get_opts), all, callback);
-    }
-
 }
