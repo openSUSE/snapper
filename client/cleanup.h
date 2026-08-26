@@ -20,6 +20,9 @@
  * find current contact information at www.novell.com.
  */
 
+#ifndef SNAPPER_CLEANUP_H
+#define SNAPPER_CLEANUP_H
+
 
 #include <functional>
 
@@ -181,3 +184,6 @@ namespace snapper
 
 
 } // namespace snapper
+
+
+#endif
