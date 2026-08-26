@@ -66,8 +66,6 @@ namespace snapper
     namespace
     {
 
-	enum class CleanupAlgorithm { ALL, NUMBER, TIMELINE, EMPTY_PRE_POST };
-
 	class FreeSpaceCondition
 	{
 	public:
@@ -383,9 +381,5 @@ namespace snapper
 	}
     }
 
-
-    template <> struct EnumInfo<CleanupAlgorithm> { static const vector<string> names; };
-
-    const vector<string> EnumInfo<CleanupAlgorithm>::names({ "all", "number", "timeline", "empty-pre-post" });
 
 }

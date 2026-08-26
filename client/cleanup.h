@@ -23,12 +23,27 @@
 
 #include <functional>
 
+#include <snapper/Enum.h>
+
 #include "proxy/locker.h"
 #include "proxy/proxy.h"
 
 
 namespace snapper
 {
+
+    enum class CleanupAlgorithm
+    {
+	ALL,
+	NUMBER,
+	TIMELINE,
+	EMPTY_PRE_POST
+    };
+
+    template <> struct EnumInfo<CleanupAlgorithm>
+    {
+	static const vector<string> names;
+    };
 
 
     /**

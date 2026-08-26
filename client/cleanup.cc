@@ -42,6 +42,9 @@ namespace snapper
 using namespace std;
 
 
+const vector<string> EnumInfo<CleanupAlgorithm>::names({ "all", "number", "timeline", "empty-pre-post" });
+
+
 struct Parameters
 {
     Parameters(const ProxyConfig& config);
