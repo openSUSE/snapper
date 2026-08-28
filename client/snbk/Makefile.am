@@ -17,6 +17,7 @@ snbk_SOURCES = 						\
 	cmd-delete.cc					\
 	cmd-transfer-and-delete.cc			\
 	cmd-visualize.cc				\
+	cmd-cleanup.cc					\
 	BackupConfig.cc		BackupConfig.h		\
 	TheBigThing.cc		TheBigThing.h		\
 	GlobalOptions.cc	GlobalOptions.h		\
