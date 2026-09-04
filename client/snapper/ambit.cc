@@ -118,7 +118,7 @@ namespace snapper
 
 
     bool
-    set_default_ineffective(Ambit ambit, const string& subvol_name)
+    is_set_default_ineffective(Ambit ambit, const string& subvol_name)
     {
 	// Only a top-level name indicates a by-name mount: for a mount by the
 	// default subvolume id the kernel shows the resolved (nested) path in

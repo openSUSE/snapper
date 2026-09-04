@@ -149,7 +149,7 @@ namespace snapper
 	}
 	global_options.set_ambit(ambit);
 
-	if (set_default_ineffective(ambit, subvol_name))
+	if (is_set_default_ineffective(ambit, subvol_name))
 	    cerr << sformat(_("Warning: The root filesystem is mounted with subvol=%s so setting "
 			      "the default subvolume will not take effect on the next boot."),
 			    subvol_name.c_str()) << endl;
