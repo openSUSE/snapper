@@ -1710,6 +1710,14 @@ namespace snapper
     }
 
 
+    void
+    Btrfs::rollbackSubvolRename(unsigned int num, const string& subvol_name,
+				Plugins::Report& report) const
+    {
+	Filesystem::rollbackSubvolRename(num, subvol_name, report);
+    }
+
+
     std::pair<bool, unsigned int>
     Btrfs::getActive() const
     {
