@@ -1598,9 +1598,7 @@ namespace snapper
 	    // where the .snapshots subvolume lives inside the root subvolume the
 	    // new root only contains an empty stub directory. Move the .snapshots
 	    // subvolume from the old root into the new root, otherwise all
-	    // snapshots would be orphaned in the renamed-away old root. The
-	    // running /.snapshots mount stays valid since the kernel tracks it by
-	    // subvolume id.
+	    // snapshots would be orphaned in the renamed-away old root.
 	    {
 		SDir old_root(toplevel, incoming);
 		SDir new_root(toplevel, subvol_name);
@@ -1609,6 +1607,7 @@ namespace snapper
 		if (old_root.stat(SNAPSHOTS_NAME, &st, AT_SYMLINK_NOFOLLOW) == 0 &&
 		    is_subvolume(st))
 		{
+		    bool moved = false;
 		    if (new_root.rmdir(SNAPSHOTS_NAME) != 0 && errno != ENOENT)
 		    {
 			y2err("cannot remove " << SNAPSHOTS_NAME << " stub from new root: "
@@ -1618,6 +1617,40 @@ namespace snapper
 		    {
 			y2err("cannot move " << SNAPSHOTS_NAME << " subvolume to new root: "
 			      << stringerror(errno) << " -- snapshots remain in the old root");
+		    }
+		    else
+		    {
+			moved = true;
+		    }
+
+		    // The move just unhooked .snapshots from the still-mounted old
+		    // root (the running system, reached by subvolume id, not by the
+		    // name we exchanged), so /.snapshots no longer resolves and
+		    // snapper would stop working until the reboot swaps in the new
+		    // root. Mount the .snapshots subvolume back onto the running root
+		    // by its (unchanged) subvolume id so snapper keeps working in the
+		    // meantime; this mount does not survive the reboot, where the new
+		    // root provides /.snapshots as a nested subvolume again.
+		    if (moved)
+		    {
+			try
+			{
+			    SDir new_root_snapshots(new_root, SNAPSHOTS_NAME);
+			    const subvolid_t snapshots_id = get_id(new_root_snapshots.fd());
+
+			    SDir subvolume_dir = openSubvolumeDir();
+			    subvolume_dir.mkdir(SNAPSHOTS_NAME, 0750);
+			    SDir running_snapshots(subvolume_dir, SNAPSHOTS_NAME);
+			    if (!running_snapshots.mount(mtab_data.device, "btrfs", 0,
+							 "subvolid=" + decString(snapshots_id)))
+				y2err("failed to remount " << SNAPSHOTS_NAME << " on the running "
+				      "root -- snapper works again after reboot");
+			}
+			catch (const runtime_error& e)
+			{
+			    y2err("failed to remount " << SNAPSHOTS_NAME << " on the running root: "
+				  << e.what() << " -- snapper works again after reboot");
+			}
 		    }
 		}
 	    }
