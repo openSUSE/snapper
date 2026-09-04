@@ -111,7 +111,7 @@ namespace snapper
 	 * read-write copy of snapshot num. Currently only available for btrfs.
 	 */
 	virtual void rollbackSubvolRename(unsigned int num, const string& subvol_name,
-					  Plugins::Report& report) const;
+					  unsigned int backup_limit, Plugins::Report& report) const;
 
 	virtual std::pair<bool, unsigned int> getActive() const;
 

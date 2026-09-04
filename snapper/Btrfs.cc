@@ -125,24 +125,6 @@ namespace snapper
 #endif
 
 	config_info.get_value("SPECIAL_CMP", special_cmp);
-
-	string rollback_backup_limit_str;
-	if (config_info.get_value("ROLLBACK_BACKUP_LIMIT", rollback_backup_limit_str) &&
-	    !rollback_backup_limit_str.empty())
-	{
-	    try
-	    {
-		rollback_backup_limit = stoul(rollback_backup_limit_str);
-	    }
-	    catch (const std::exception& e)
-	    {
-		// Keep the safe default (0 = keep all) rather than breaking all
-		// operations on the config over a malformed value.
-		y2err("failed to parse ROLLBACK_BACKUP_LIMIT '" << rollback_backup_limit_str
-		      << "', keeping all rollback backups");
-		rollback_backup_limit = 0;
-	    }
-	}
     }
 
 
@@ -1588,7 +1570,7 @@ namespace snapper
 
     void
     Btrfs::rollbackSubvolRename(unsigned int num, const string& subvol_name,
-				Plugins::Report& report) const
+				unsigned int backup_limit, Plugins::Report& report) const
     {
 	// The client never selects subvol-rename for a nested name (see
 	// is_renameable_subvol in client/snapper/ambit.cc) but this method must
@@ -1752,10 +1734,10 @@ namespace snapper
 		}
 	    }
 
-	    // Enforce the configured retention (ROLLBACK_BACKUP_LIMIT). The
-	    // default of 0 keeps every backup; the backup just created is the
-	    // newest and is never removed.
-	    prune_rollback_backups(toplevel, subvol_name, rollback_backup_limit);
+	    // Enforce the configured retention (ROLLBACK_BACKUP_LIMIT, passed in
+	    // by the caller). 0 keeps every backup; the backup just created is
+	    // the newest and is never removed.
+	    prune_rollback_backups(toplevel, subvol_name, backup_limit);
 
 	    Plugins::set_default_snapshot(Plugins::Stage::POST_ACTION, subvolume, this, num, report);
 	}
@@ -1823,9 +1805,9 @@ namespace snapper
 
     void
     Btrfs::rollbackSubvolRename(unsigned int num, const string& subvol_name,
-				Plugins::Report& report) const
+				unsigned int backup_limit, Plugins::Report& report) const
     {
-	Filesystem::rollbackSubvolRename(num, subvol_name, report);
+	Filesystem::rollbackSubvolRename(num, subvol_name, backup_limit, report);
     }
 
 

@@ -133,6 +133,27 @@ namespace snapper
 
 	const string subvol_name = get_subvol_name(subvolume);
 
+	// Retention limit for the <subvol>.rollback.* backups a subvol-rename
+	// rollback leaves behind. get_filesystem() builds the handler without
+	// evaluating the config, so read the value here and pass it in. Empty or
+	// unparsable keeps all backups (0).
+	unsigned int rollback_backup_limit = 0;
+	string rollback_backup_limit_str;
+	if (config.getValue("ROLLBACK_BACKUP_LIMIT", rollback_backup_limit_str) &&
+	    !rollback_backup_limit_str.empty())
+	{
+	    try
+	    {
+		rollback_backup_limit = std::stoul(rollback_backup_limit_str);
+	    }
+	    catch (const std::exception&)
+	    {
+		cerr << sformat(_("Ignoring invalid ROLLBACK_BACKUP_LIMIT value '%s'."),
+				rollback_backup_limit_str.c_str()) << endl;
+		rollback_backup_limit = 0;
+	    }
+	}
+
 	// the mode only matters with --ambit auto (see determine_ambit)
 	SubvolumeMode mode = SubvolumeMode::UNKNOWN;
 	if (global_options.ambit() == Ambit::AUTO && previous_default != snapshots.end())
@@ -234,7 +255,8 @@ namespace snapper
 		    cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot2->getNum()) << endl;
 
 		if (ambit == Ambit::SUBVOL_RENAME)
-		    filesystem->rollbackSubvolRename(snapshot2->getNum(), subvol_name, report);
+		    filesystem->rollbackSubvolRename(snapshot2->getNum(), subvol_name,
+						     rollback_backup_limit, report);
 		else
 		    filesystem->setDefault(snapshot2->getNum(), report);
 
