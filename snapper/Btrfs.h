@@ -105,6 +105,11 @@ namespace snapper
 	qgroup_t qgroup = no_qgroup;
 	bool special_cmp = true;
 
+	// Maximum number of <subvol>.rollback.* backup subvolumes kept by a
+	// subvol-rename rollback. 0 (the default) keeps all of them, matching
+	// snapper's behaviour of never deleting anything unless configured.
+	unsigned int rollback_backup_limit = 0;
+
 	mutable vector<subvolid_t> deleted_subvolids;
 
 	void addToFstabHelper(const string& default_subvolume_name) const;
@@ -117,6 +122,25 @@ namespace snapper
 	std::pair<bool, unsigned int> idToNum(int fd, subvolid_t id) const;
 
     };
+
+
+#ifdef ENABLE_ROLLBACK
+
+    /**
+     * Delete old <subvol_name>.rollback.* backup subvolumes left behind by
+     * Btrfs::rollbackSubvolRename, keeping the 'keep' most recent ones. Recency
+     * is the btrfs subvolume id, which increases with every rollback, so the
+     * highest ids are the newest backups (including the one just created, which
+     * is therefore never deleted). keep == 0 keeps all backups. Backups are
+     * deleted recursively so nested subvolumes (e.g. var/lib/portables) are
+     * removed too. Best-effort: individual failures are logged, not thrown.
+     *
+     * 'toplevel' must be the btrfs top-level (subvolid 5) where the named root
+     * subvolumes live. Declared here so it can be unit-tested directly.
+     */
+    void prune_rollback_backups(SDir& toplevel, const string& subvol_name, unsigned int keep);
+
+#endif
 
 }
 
