@@ -41,6 +41,7 @@
 #include <btrfs/send.h>
 #include <btrfs/send-stream.h>
 #include <btrfs/send-utils.h>
+#include <algorithm>
 #include <boost/thread.hpp>
 #endif
 #include <regex>
@@ -124,6 +125,24 @@ namespace snapper
 #endif
 
 	config_info.get_value("SPECIAL_CMP", special_cmp);
+
+	string rollback_backup_limit_str;
+	if (config_info.get_value("ROLLBACK_BACKUP_LIMIT", rollback_backup_limit_str) &&
+	    !rollback_backup_limit_str.empty())
+	{
+	    try
+	    {
+		rollback_backup_limit = stoul(rollback_backup_limit_str);
+	    }
+	    catch (const std::exception& e)
+	    {
+		// Keep the safe default (0 = keep all) rather than breaking all
+		// operations on the config over a malformed value.
+		y2err("failed to parse ROLLBACK_BACKUP_LIMIT '" << rollback_backup_limit_str
+		      << "', keeping all rollback backups");
+		rollback_backup_limit = 0;
+	    }
+	}
     }
 
 
@@ -1514,6 +1533,60 @@ namespace snapper
 
 
     void
+    prune_rollback_backups(SDir& toplevel, const string& subvol_name, unsigned int keep)
+    {
+	if (keep == 0)
+	    return;
+
+	const string prefix = subvol_name + ".rollback.";
+
+	// Collect the rollback backup subvolumes together with their btrfs ids.
+	vector<pair<subvolid_t, string>> backups;
+	for (const string& name : toplevel.entries([&prefix](unsigned char, const char* n) {
+	    return strncmp(n, prefix.c_str(), prefix.size()) == 0;
+	}))
+	{
+	    struct stat st;
+	    if (toplevel.stat(name, &st, AT_SYMLINK_NOFOLLOW) != 0 || !is_subvolume(st))
+		continue;
+
+	    try
+	    {
+		SDir backup_dir(toplevel, name);
+		backups.emplace_back(get_id(backup_dir.fd()), name);
+	    }
+	    catch (const runtime_error& e)
+	    {
+		y2war("cannot inspect rollback backup " << name << ": " << e.what());
+	    }
+	}
+
+	if (backups.size() <= keep)
+	    return;
+
+	// Ascending by btrfs id, so the oldest backups sort first. Ids increase
+	// with every rollback, so the newest backup (the one just created) sorts
+	// last and is always kept.
+	sort(backups.begin(), backups.end());
+
+	const size_t to_delete = backups.size() - keep;
+	for (size_t i = 0; i < to_delete; ++i)
+	{
+	    const string& name = backups[i].second;
+	    try
+	    {
+		y2mil("pruning old rollback backup " << name << " (keeping " << keep << ")");
+		delete_subvolume(toplevel.fd(), name, true);
+	    }
+	    catch (const runtime_error& e)
+	    {
+		y2war("failed to prune rollback backup " << name << ": " << e.what());
+	    }
+	}
+    }
+
+
+    void
     Btrfs::rollbackSubvolRename(unsigned int num, const string& subvol_name,
 				Plugins::Report& report) const
     {
@@ -1678,6 +1751,11 @@ namespace snapper
 			  << " -- old root preserved as " << incoming);
 		}
 	    }
+
+	    // Enforce the configured retention (ROLLBACK_BACKUP_LIMIT). The
+	    // default of 0 keeps every backup; the backup just created is the
+	    // newest and is never removed.
+	    prune_rollback_backups(toplevel, subvol_name, rollback_backup_limit);
 
 	    Plugins::set_default_snapshot(Plugins::Stage::POST_ACTION, subvolume, this, num, report);
 	}

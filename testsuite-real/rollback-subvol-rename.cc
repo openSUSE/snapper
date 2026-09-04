@@ -287,6 +287,55 @@ test_nested_snapshots_subvol_migrates(SDir& top)
 }
 
 
+// Btrfs::rollbackSubvolRename preserves each old root as <subvol>.rollback.*.
+// With ROLLBACK_BACKUP_LIMIT set, prune_rollback_backups keeps only the most
+// recent ones and deletes older backups recursively (they contain nested
+// subvolumes such as var/lib/portables).
+static void
+test_prune_keeps_recent_backups(SDir& top)
+{
+    for (const char* n : { "@root.rollback.1", "@root.rollback.2", "@root.rollback.3" })
+    {
+	// recursive: an earlier failed run may have left a nested subvolume
+	try { delete_subvolume(top.fd(), n, true); } catch (...) {}
+    }
+
+    // Create three backups oldest-to-newest so their btrfs ids increase with
+    // creation order (prune orders by id).
+    create_subvolume(top.fd(), "@root.rollback.1");
+    {
+	// a nested subvolume inside the oldest backup: a non-recursive delete
+	// would fail with ENOTEMPTY, so this proves the recursive delete.
+	SDir b1(top, "@root.rollback.1");
+	create_subvolume(b1.fd(), "nested");
+    }
+    create_subvolume(top.fd(), "@root.rollback.2");
+    create_subvolume(top.fd(), "@root.rollback.3");
+
+    // Keep the 2 most recent; the oldest (.1, with its nested subvolume) goes.
+    prune_rollback_backups(top, "@root", 2);
+
+    struct stat st;
+    check(top.stat("@root.rollback.1", &st, AT_SYMLINK_NOFOLLOW) != 0,
+	  "oldest backup @root.rollback.1 not pruned (recursive delete of nested subvolume failed?)");
+    check(top.stat("@root.rollback.2", &st, AT_SYMLINK_NOFOLLOW) == 0,
+	  "@root.rollback.2 pruned but should be kept");
+    check(top.stat("@root.rollback.3", &st, AT_SYMLINK_NOFOLLOW) == 0,
+	  "newest backup @root.rollback.3 pruned but should be kept");
+
+    // keep == 0 (the default) must keep everything.
+    prune_rollback_backups(top, "@root", 0);
+    check(top.stat("@root.rollback.2", &st, AT_SYMLINK_NOFOLLOW) == 0 &&
+	  top.stat("@root.rollback.3", &st, AT_SYMLINK_NOFOLLOW) == 0,
+	  "keep == 0 must not delete any backup");
+
+    cout << "ok: prune-keeps-recent-backups" << endl;
+
+    try { delete_subvolume(top.fd(), "@root.rollback.2", true); } catch (...) {}
+    try { delete_subvolume(top.fd(), "@root.rollback.3", true); } catch (...) {}
+}
+
+
 static void
 test_detect_method_strips_kernel_leading_slash(SDir& top, const string& device,
 					       const string& sv_name)
@@ -337,6 +386,7 @@ main()
 	test_exchange_swaps_subvolume(top);
 	test_rollback_name_collision_uses_subvolid_fallback(top);
 	test_nested_snapshots_subvol_migrates(top);
+	test_prune_keeps_recent_backups(top);
 
 	const vector<string> subvol_names = { "@root", "root", "@rootfs", "@" };
 	for (const string& name : subvol_names)

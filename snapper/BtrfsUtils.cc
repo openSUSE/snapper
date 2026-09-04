@@ -218,15 +218,21 @@ namespace snapper
 
 
 	void
-	delete_subvolume(int fd, const string& name)
+	delete_subvolume(int fd, const string& name, bool recursive)
 	{
 #ifdef HAVE_LIBBTRFSUTIL
 	    enum btrfs_util_error err;
 
-	    err = btrfs_util_delete_subvolume_fd(fd, name.c_str(), 0);
+	    int flags = recursive ? BTRFS_UTIL_DELETE_SUBVOLUME_RECURSIVE : 0;
+	    err = btrfs_util_delete_subvolume_fd(fd, name.c_str(), flags);
 	    if (err)
 		throw runtime_error_with_errno("btrfs_util_delete_subvolume_fd() failed", errno);
 #else
+	    // The ioctl interface cannot delete nested subvolumes; a recursive
+	    // request degrades to a plain delete which fails with ENOTEMPTY if
+	    // the subvolume still contains nested subvolumes.
+	    (void) recursive;
+
 	    struct btrfs_ioctl_vol_args args;
 	    memset(&args, 0, sizeof(args));
 
