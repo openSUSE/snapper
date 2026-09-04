@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_CASE(ambit_names_complete)
 }
 
 
-// --- set_default_ineffective ----------------------------------------------------
+// --- is_set_default_ineffective -------------------------------------------------
 
 struct IneffectiveCase
 {
@@ -159,5 +159,5 @@ const IneffectiveCase ineffective_cases[] = {
 
 BOOST_DATA_TEST_CASE(ineffective, boost::unit_test::data::make(ineffective_cases), c)
 {
-    BOOST_CHECK_EQUAL(set_default_ineffective(c.ambit, c.subvol_name), c.expected);
+    BOOST_CHECK_EQUAL(is_set_default_ineffective(c.ambit, c.subvol_name), c.expected);
 }

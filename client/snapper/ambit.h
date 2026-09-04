@@ -73,7 +73,7 @@ namespace snapper
      * with the root mount. False for a nested name, which the kernel also
      * shows for a mount by the default subvolume id.
      */
-    bool set_default_ineffective(Ambit ambit, const string& subvol_name);
+    bool is_set_default_ineffective(Ambit ambit, const string& subvol_name);
 
 #endif
 
