@@ -90,7 +90,7 @@ namespace snapper
 	virtual void setDefault(unsigned int num, Plugins::Report& report) const override;
 
 	virtual void rollbackSubvolRename(unsigned int num, const std::string& subvol_name,
-					  Plugins::Report& report) const override;
+					  unsigned int backup_limit, Plugins::Report& report) const override;
 
 	virtual bool isActive(unsigned int num) const override;
 
@@ -104,11 +104,6 @@ namespace snapper
 
 	qgroup_t qgroup = no_qgroup;
 	bool special_cmp = true;
-
-	// Maximum number of <subvol>.rollback.* backup subvolumes kept by a
-	// subvol-rename rollback. 0 (the default) keeps all of them, matching
-	// snapper's behaviour of never deleting anything unless configured.
-	unsigned int rollback_backup_limit = 0;
 
 	mutable vector<subvolid_t> deleted_subvolids;
 
