@@ -56,7 +56,7 @@ namespace snapper
 	void create_subvolume(int fddst, const string& name);
 	void create_snapshot(int fd, int fddst, const string& name, bool read_only,
 			     qgroup_t qgroup);
-	void delete_subvolume(int fd, const string& name);
+	void delete_subvolume(int fd, const string& name, bool recursive = false);
 
 	void set_default_id(int fd, subvolid_t id);
 	subvolid_t get_default_id(int fd);

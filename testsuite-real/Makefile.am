@@ -21,6 +21,12 @@ if ENABLE_BTRFS
 test_PROGRAMS += test-btrfsutils
 endif
 
+if ENABLE_ROLLBACK
+test_PROGRAMS += rollback-subvol-rename
+rollback_subvol_rename_SOURCES = rollback-subvol-rename.cc ../client/snapper/ambit.cc
+rollback_subvol_rename_LDADD = ../snapper/libsnapper.la ../client/utils/libutils.la
+endif
+
 if HAVE_XATTRS
 test_PROGRAMS += xattrs1 xattrs2 xattrs3 xattrs4
 endif

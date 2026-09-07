@@ -41,6 +41,7 @@
 #include <btrfs/send.h>
 #include <btrfs/send-stream.h>
 #include <btrfs/send-utils.h>
+#include <algorithm>
 #include <boost/thread.hpp>
 #endif
 #include <regex>
@@ -370,6 +371,18 @@ namespace snapper
 	SDir subvolume_dir = openSubvolumeDir();
 	subvolid_t id = get_default_id(subvolume_dir.fd());
 	string name = get_subvolume(subvolume_dir.fd(), id);
+
+	// On subvol-rename systems the btrfs default subvolume is the top-level
+	// (id 5), whose path is empty: the booted root is a named subvolume
+	// reached via subvol= in fstab, not by being the btrfs default. Mounting
+	// "subvol=" (empty) fails with EINVAL, so fall back to the currently
+	// mounted subvolume, which is what the system actually boots and is the
+	// correct restore point for a no-argument rollback.
+	if (name.empty())
+	{
+	    id = get_id(subvolume_dir.fd());
+	    name = get_subvolume(subvolume_dir.fd(), id);
+	}
 
 	bool found = false;
 	MtabData mtab_data;
@@ -1513,6 +1526,240 @@ namespace snapper
     }
 
 
+    void
+    prune_rollback_backups(SDir& toplevel, const string& subvol_name, unsigned int keep)
+    {
+	if (keep == 0)
+	    return;
+
+	const string prefix = subvol_name + ".rollback.";
+
+	// Collect the rollback backup subvolumes together with their btrfs ids.
+	vector<pair<subvolid_t, string>> backups;
+	for (const string& name : toplevel.entries([&prefix](unsigned char, const char* n) {
+	    return strncmp(n, prefix.c_str(), prefix.size()) == 0;
+	}))
+	{
+	    struct stat st;
+	    if (toplevel.stat(name, &st, AT_SYMLINK_NOFOLLOW) != 0 || !is_subvolume(st))
+		continue;
+
+	    try
+	    {
+		SDir backup_dir(toplevel, name);
+		backups.emplace_back(get_id(backup_dir.fd()), name);
+	    }
+	    catch (const runtime_error& e)
+	    {
+		y2war("cannot inspect rollback backup " << name << ": " << e.what());
+	    }
+	}
+
+	if (backups.size() <= keep)
+	    return;
+
+	// Ascending by btrfs id, so the oldest backups sort first. Ids increase
+	// with every rollback, so the newest backup (the one just created) sorts
+	// last and is always kept.
+	sort(backups.begin(), backups.end());
+
+	const size_t to_delete = backups.size() - keep;
+	for (size_t i = 0; i < to_delete; ++i)
+	{
+	    const string& name = backups[i].second;
+	    try
+	    {
+		y2mil("pruning old rollback backup " << name << " (keeping " << keep << ")");
+		delete_subvolume(toplevel.fd(), name, true);
+	    }
+	    catch (const runtime_error& e)
+	    {
+		y2war("failed to prune rollback backup " << name << ": " << e.what());
+	    }
+	}
+    }
+
+
+    void
+    Btrfs::rollbackSubvolRename(unsigned int num, const string& subvol_name,
+				unsigned int backup_limit, Plugins::Report& report) const
+    {
+	// The client never selects subvol-rename for a nested name (see
+	// is_renameable_subvol in client/snapper/ambit.cc) but this method must
+	// protect itself: the SDir operations below require single-component names.
+	if (subvol_name.find('/') != string::npos)
+	    SN_THROW(IOErrorException("rollback failed: nested subvolume path '" + subvol_name +
+				     "' is not supported for subvol-rename rollback; use "
+				     "--ambit classic or a top-level subvolume"));
+
+	try
+	{
+	    Plugins::set_default_snapshot(Plugins::Stage::PRE_ACTION, subvolume, this, num, report);
+
+	    bool found = false;
+	    MtabData mtab_data;
+	    if (!getMtabData(subvolume, found, mtab_data) || !found)
+	    {
+		y2err("failed to find device for subvolume " << subvolume);
+		SN_THROW(IOErrorException("rollback failed: cannot find mounted device"));
+	    }
+
+	    // Mount the btrfs top-level (subvolid=5) - named subvolumes live here
+	    SDir infos_dir = openInfosDir();
+	    TmpMount tmp_mount(infos_dir, mtab_data.device, "tmp-mnt-XXXXXX", "btrfs", 0,
+			      "subvolid=5");
+
+	    SDir toplevel(infos_dir, tmp_mount.getName());
+
+	    const string incoming = subvol_name + ".incoming";
+	    const string rollback_name = subvol_name + ".rollback." + decString(num);
+
+	    // If a previous rollback completed the rename_exchange but failed to move
+	    // .incoming to .rollback.N, that .incoming subvolume is the old running root
+	    // (still mounted by subvolume ID). Deleting it risks corruption during the
+	    // next unmount sequence. Rename it instead, using its btrfs subvolume ID as
+	    // suffix — guaranteed unique across the filesystem.
+	    {
+		struct stat st;
+		if (toplevel.stat(incoming, &st, AT_SYMLINK_NOFOLLOW) == 0)
+		{
+		    SDir incoming_dir(toplevel, incoming);
+		    const subvolid_t svid = get_id(incoming_dir.fd());
+		    const string rescued = subvol_name + ".rollback.svid." + decString(svid);
+		    y2war("stale " << incoming << " found; renaming to " << rescued
+			  << " rather than deleting (may be a previously running root)");
+		    if (toplevel.rename(incoming, rescued) != 0)
+		    {
+			y2err("failed to rename " << incoming << " to " << rescued
+			      << ": " << stringerror(errno));
+			SN_THROW(IOErrorException("rollback failed: cannot move aside stale " + incoming));
+		    }
+		}
+	    }
+
+	    // Create a read-write snapshot of the rollback target as <subvol_name>.incoming
+	    SDir snapshot_dir = openSnapshotDir(num);
+	    try
+	    {
+		create_snapshot(snapshot_dir.fd(), toplevel.fd(), incoming, false,
+				qgroup);
+	    }
+	    catch (const runtime_error& e)
+	    {
+		y2err("create snapshot failed, " << e.what());
+		SN_THROW(IOErrorException(string("rollback failed: ") + e.what()));
+	    }
+
+	    // Atomically swap <subvol_name> and <subvol_name>.incoming
+	    if (toplevel.exchange(subvol_name, incoming) != 0)
+	    {
+		// Clean up the incoming subvolume we just created
+		try { delete_subvolume(toplevel.fd(), incoming); } catch (...) {}
+		SN_THROW(IOErrorException(string("rollback failed: exchange(") +
+					  subvol_name + ", " + incoming +
+					  ") failed: " + stringerror(errno) +
+					  " -- kernel may not support RENAME_EXCHANGE on btrfs"));
+	    }
+
+	    // A btrfs snapshot does not include nested subvolumes: on layouts
+	    // where the .snapshots subvolume lives inside the root subvolume the
+	    // new root only contains an empty stub directory. Move the .snapshots
+	    // subvolume from the old root into the new root, otherwise all
+	    // snapshots would be orphaned in the renamed-away old root.
+	    {
+		SDir old_root(toplevel, incoming);
+		SDir new_root(toplevel, subvol_name);
+
+		struct stat st;
+		if (old_root.stat(SNAPSHOTS_NAME, &st, AT_SYMLINK_NOFOLLOW) == 0 &&
+		    is_subvolume(st))
+		{
+		    bool moved = false;
+		    if (new_root.rmdir(SNAPSHOTS_NAME) != 0 && errno != ENOENT)
+		    {
+			y2err("cannot remove " << SNAPSHOTS_NAME << " stub from new root: "
+			      << stringerror(errno) << " -- snapshots remain in the old root");
+		    }
+		    else if (old_root.rename(SNAPSHOTS_NAME, new_root, SNAPSHOTS_NAME) != 0)
+		    {
+			y2err("cannot move " << SNAPSHOTS_NAME << " subvolume to new root: "
+			      << stringerror(errno) << " -- snapshots remain in the old root");
+		    }
+		    else
+		    {
+			moved = true;
+		    }
+
+		    // The move just unhooked .snapshots from the still-mounted old
+		    // root (the running system, reached by subvolume id, not by the
+		    // name we exchanged), so /.snapshots no longer resolves and
+		    // snapper would stop working until the reboot swaps in the new
+		    // root. Mount the .snapshots subvolume back onto the running root
+		    // by its (unchanged) subvolume id so snapper keeps working in the
+		    // meantime; this mount does not survive the reboot, where the new
+		    // root provides /.snapshots as a nested subvolume again.
+		    if (moved)
+		    {
+			try
+			{
+			    SDir new_root_snapshots(new_root, SNAPSHOTS_NAME);
+			    const subvolid_t snapshots_id = get_id(new_root_snapshots.fd());
+
+			    SDir subvolume_dir = openSubvolumeDir();
+			    subvolume_dir.mkdir(SNAPSHOTS_NAME, 0750);
+			    SDir running_snapshots(subvolume_dir, SNAPSHOTS_NAME);
+			    if (!running_snapshots.mount(mtab_data.device, "btrfs", 0,
+							 "subvolid=" + decString(snapshots_id)))
+				y2err("failed to remount " << SNAPSHOTS_NAME << " on the running "
+				      "root -- snapper works again after reboot");
+			}
+			catch (const runtime_error& e)
+			{
+			    y2err("failed to remount " << SNAPSHOTS_NAME << " on the running root: "
+				  << e.what() << " -- snapper works again after reboot");
+			}
+		    }
+		}
+	    }
+
+	    // Rename old root to <subvol_name>.rollback.<num> for preservation.
+	    // If that name already exists (e.g. rolling back to the same snapshot twice),
+	    // fall back to a subvolume-ID-based name which is guaranteed unique.
+	    if (toplevel.rename(incoming, rollback_name) != 0)
+	    {
+		bool rescued = false;
+		if (errno == EEXIST || errno == ENOTEMPTY)
+		{
+		    SDir incoming_dir(toplevel, incoming);
+		    const string alt_name = subvol_name + ".rollback.svid." +
+					    decString(get_id(incoming_dir.fd()));
+		    y2war("rename old root " << incoming << " to " << rollback_name
+			  << " failed (already exists); trying " << alt_name);
+		    if (toplevel.rename(incoming, alt_name) == 0)
+			rescued = true;
+		}
+		if (!rescued)
+		{
+		    y2war("failed to rename old root " << incoming << " to " << rollback_name
+			  << ": " << stringerror(errno)
+			  << " -- old root preserved as " << incoming);
+		}
+	    }
+
+	    // Enforce the configured retention (ROLLBACK_BACKUP_LIMIT, passed in
+	    // by the caller). 0 keeps every backup; the backup just created is
+	    // the newest and is never removed.
+	    prune_rollback_backups(toplevel, subvol_name, backup_limit);
+
+	    Plugins::set_default_snapshot(Plugins::Stage::POST_ACTION, subvolume, this, num, report);
+	}
+	catch (const runtime_error& e)
+	{
+	    SN_THROW(IOErrorException(string("rollback failed, ") + e.what()));
+	}
+    }
+
+
     std::pair<bool, unsigned int>
     Btrfs::getActive() const
     {
@@ -1565,6 +1812,14 @@ namespace snapper
     Btrfs::setDefault(unsigned int num, Plugins::Report& report) const
     {
 	Filesystem::setDefault(num, report);
+    }
+
+
+    void
+    Btrfs::rollbackSubvolRename(unsigned int num, const string& subvol_name,
+				unsigned int backup_limit, Plugins::Report& report) const
+    {
+	Filesystem::rollbackSubvolRename(num, subvol_name, backup_limit, report);
     }
 
 

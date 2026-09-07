@@ -14,7 +14,7 @@ local options=(
   {--config,-c}'[Set name of config to use]:config:('${(f)$(command snapper --csvout --no-headers list-configs --columns config)}')'
 	--no-dbus'[Operate without DBus]'
 	{--root,-r}'[Operate on target root (works only without DBus)]: :_dirs'
-	{--ambit,-a}'[Operate in the specified ambit]:ambit:(auto classic transactional)'
+	{--ambit,-a}'[Operate in the specified ambit]:ambit:(auto classic transactional subvol-rename)'
 	"(- : *)"{--help,-h}'[Prints help information]'
 	"(- : *)"--version'[Print version and exit]'
 )

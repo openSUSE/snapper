@@ -103,6 +103,7 @@ namespace snapper
 	int chown(const string& name, uid_t owner, gid_t group, int flags) const;
 
 	int rename(const string& oldname, const string& newname, int flags = 0) const;
+	int rename(const string& oldname, const SDir& new_dir, const string& newname, int flags = 0) const;
 	int exchange(const string& oldname, const string& newname) const
 	    { return rename(oldname, newname, RENAME_EXCHANGE); }
 

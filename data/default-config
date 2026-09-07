@@ -10,6 +10,12 @@ FSTYPE="btrfs"
 QGROUP=""
 
 
+# maximum number of old root subvolumes kept as recovery backups after a
+# subvol-rename rollback (btrfs named-subvolume layouts). Empty keeps all
+# backups (the default); older ones are only removed once a limit is set here.
+ROLLBACK_BACKUP_LIMIT=""
+
+
 # fraction or absolute size of the filesystems space the snapshots may use
 SPACE_LIMIT="0.5"
 

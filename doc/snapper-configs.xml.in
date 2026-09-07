@@ -60,6 +60,21 @@
 	</listitem>
       </varlistentry>
 
+      <varlistentry>
+	<term><option>ROLLBACK_BACKUP_LIMIT=<replaceable>number</replaceable></option></term>
+	<listitem>
+	  <para>On btrfs named-subvolume layouts (e.g. Fedora, Debian) a
+	  rollback exchanges the root subvolume and keeps the previous root as
+	  a <filename><replaceable>subvolume</replaceable>.rollback.<replaceable>N</replaceable></filename>
+	  subvolume so it remains available for recovery. This option limits how
+	  many of these backups are kept: after a rollback the oldest backups
+	  beyond the limit are deleted. An empty value (the default) keeps all
+	  backups, consistent with snapper deleting nothing unless configured;
+	  the backup created by the current rollback is never deleted.</para>
+	  <para>Only supported for btrfs.</para>
+	</listitem>
+      </varlistentry>
+
       <varlistentry>	<term><option>SPACE_LIMIT=<replaceable>float</replaceable> or
 	<replaceable>size</replaceable></option></term>
 	<listitem>

@@ -304,7 +304,8 @@
 	<term><option>-a, --ambit <replaceable>ambit</replaceable></option></term>
 	<listitem>
 	  <para>Operate in the specified ambit. Can be used to override the ambit detection.
-	  Allowed ambits are auto, classic and transactional.</para>
+	  Allowed ambits are auto, classic, transactional and subvol-rename. See the
+	  rollback command for details.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
@@ -774,6 +775,21 @@
 	  </itemizedlist>
 	  <para>Rollback is only supported with btrfs and requires a properly
 	  configured system.</para>
+	  <para>How the rollback target is activated for the next boot depends on
+	  the ambit (see the <option>--ambit</option> option). With
+	  <option>auto</option> (the default) the ambit is detected: systems
+	  mounting the root filesystem with a named subvolume (e.g.
+	  <option>subvol=@root</option> in fstab, detected from
+	  <filename>/proc/mounts</filename>) use the
+	  <option>subvol-rename</option> ambit, where the named root subvolume is
+	  atomically swapped with a read-write copy of the rollback target using
+	  <citerefentry><refentrytitle>renameat2</refentrytitle><manvolnum>2</manvolnum></citerefentry>
+	  with <option>RENAME_EXCHANGE</option> (requires Linux 3.17 or later); the
+	  old root is preserved as
+	  <filename><replaceable>subvol</replaceable>.rollback.<replaceable>N</replaceable></filename>.
+	  Otherwise the ambit is classic or transactional depending on the
+	  read-write state of the default subvolume and the btrfs default
+	  subvolume is set.</para>
 	  <variablelist>
 	    <varlistentry>
 	      <term><option>-p, --print-number</option></term>

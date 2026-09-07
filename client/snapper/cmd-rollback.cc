@@ -33,6 +33,7 @@
 #include "../utils/help.h"
 #include "../proxy/proxy.h"
 #include "GlobalOptions.h"
+#include "ambit.h"
 #include "../misc.h"
 
 
@@ -130,31 +131,66 @@ namespace snapper
 
 	ProxySnapshots::iterator previous_default = snapshots.getDefault();
 
-	if (global_options.ambit() == GlobalOptions::Ambit::AUTO)
-	{
-	    if (previous_default == snapshots.end())
-	    {
-		cerr << _("Cannot detect ambit since default subvolume is unknown.") << '\n'
-		     << _("This can happen if the system was not set up for rollback.") << '\n'
-		     << _("The ambit can be specified manually using the --ambit option.") << endl;
-		exit(EXIT_FAILURE);
-	    }
+	const string subvol_name = get_subvol_name(subvolume);
 
-	    if (filesystem->isSnapshotReadOnly(previous_default->getNum()))
-		global_options.set_ambit(GlobalOptions::Ambit::TRANSACTIONAL);
-	    else
-		global_options.set_ambit(GlobalOptions::Ambit::CLASSIC);
+	// Retention limit for the <subvol>.rollback.* backups a subvol-rename
+	// rollback leaves behind. get_filesystem() builds the handler without
+	// evaluating the config, so read the value here and pass it in. Empty or
+	// unparsable keeps all backups (0).
+	unsigned int rollback_backup_limit = 0;
+	string rollback_backup_limit_str;
+	if (config.getValue("ROLLBACK_BACKUP_LIMIT", rollback_backup_limit_str) &&
+	    !rollback_backup_limit_str.empty())
+	{
+	    try
+	    {
+		rollback_backup_limit = std::stoul(rollback_backup_limit_str);
+	    }
+	    catch (const std::exception&)
+	    {
+		cerr << sformat(_("Ignoring invalid ROLLBACK_BACKUP_LIMIT value '%s'."),
+				rollback_backup_limit_str.c_str()) << endl;
+		rollback_backup_limit = 0;
+	    }
 	}
 
+	// the mode only matters with --ambit auto (see determine_ambit)
+	SubvolumeMode mode = SubvolumeMode::UNKNOWN;
+	if (global_options.ambit() == Ambit::AUTO && previous_default != snapshots.end())
+	    mode = filesystem->isSnapshotReadOnly(previous_default->getNum())
+		? SubvolumeMode::READ_ONLY : SubvolumeMode::READ_WRITE;
+
+	Ambit ambit = determine_ambit(global_options.ambit(), subvol_name, mode);
+	if (ambit == Ambit::AUTO)
+	{
+	    cerr << _("Cannot detect ambit since default subvolume is unknown.") << '\n'
+		 << _("This can happen if the system was not set up for rollback.") << '\n'
+		 << _("The ambit can be specified manually using the --ambit option.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+	global_options.set_ambit(ambit);
+
+	if (is_set_default_ineffective(ambit, subvol_name))
+	    cerr << sformat(_("Warning: The root filesystem is mounted with subvol=%s so setting "
+			      "the default subvolume will not take effect on the next boot."),
+			    subvol_name.c_str()) << endl;
+
 	if (!global_options.quiet())
-	    cout << sformat(_("Ambit is %s."), toString(global_options.ambit()).c_str()) << endl;
+	{
+	    if (ambit == Ambit::SUBVOL_RENAME)
+		cout << sformat(_("Ambit is %s (subvolume '%s')."), toString(ambit).c_str(),
+				subvol_name.c_str()) << endl;
+	    else
+		cout << sformat(_("Ambit is %s."), toString(ambit).c_str()) << endl;
+	}
 
 	if (previous_default != snapshots.end() && scd1.description == default_description1)
 	    scd1.description += sformat(" of #%d", previous_default->getNum());
 
 	switch (global_options.ambit())
 	{
-	    case GlobalOptions::Ambit::CLASSIC:
+	    case Ambit::CLASSIC:
+	    case Ambit::SUBVOL_RENAME:
 	    {
 		ProxySnapshots::const_iterator snapshot1 = snapshots.end();
 		ProxySnapshots::const_iterator snapshot2 = snapshots.end();
@@ -218,7 +254,11 @@ namespace snapper
 		if (!global_options.quiet())
 		    cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot2->getNum()) << endl;
 
-		filesystem->setDefault(snapshot2->getNum(), report);
+		if (ambit == Ambit::SUBVOL_RENAME)
+		    filesystem->rollbackSubvolRename(snapshot2->getNum(), subvol_name,
+						     rollback_backup_limit, report);
+		else
+		    filesystem->setDefault(snapshot2->getNum(), report);
 
 		Plugins::rollback(filesystem->snapshotDir(snapshot1->getNum()),
 				  filesystem->snapshotDir(snapshot2->getNum()), report);
@@ -230,7 +270,7 @@ namespace snapper
 	    }
 	    break;
 
-	    case GlobalOptions::Ambit::TRANSACTIONAL:
+	    case Ambit::TRANSACTIONAL:
 	    {
 		// see bsc #1172273
 
@@ -264,6 +304,8 @@ namespace snapper
 		if (!global_options.quiet())
 		    cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot->getNum()) << endl;
 
+		// a transactional system is mounted by default subvolume id, so
+		// the rollback is always performed with set-default.
 		filesystem->setDefault(snapshot->getNum(), report);
 
 		Plugins::rollback(filesystem->snapshotDir(previous_default->getNum()),
@@ -273,7 +315,7 @@ namespace snapper
 	    }
 	    break;
 
-	    case GlobalOptions::Ambit::AUTO:
+	    case Ambit::AUTO:
 	    {
 		cerr << "internal error: ambit is auto" << endl;
 		exit(EXIT_FAILURE);

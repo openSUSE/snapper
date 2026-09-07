@@ -17,5 +17,6 @@ xattrs1
 xattrs2
 xattrs3
 xattrs4
+rollback-subvol-rename
 test-btrfsutils
 ug-tests
