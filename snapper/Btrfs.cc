@@ -372,6 +372,18 @@ namespace snapper
 	subvolid_t id = get_default_id(subvolume_dir.fd());
 	string name = get_subvolume(subvolume_dir.fd(), id);
 
+	// On subvol-rename systems the btrfs default subvolume is the top-level
+	// (id 5), whose path is empty: the booted root is a named subvolume
+	// reached via subvol= in fstab, not by being the btrfs default. Mounting
+	// "subvol=" (empty) fails with EINVAL, so fall back to the currently
+	// mounted subvolume, which is what the system actually boots and is the
+	// correct restore point for a no-argument rollback.
+	if (name.empty())
+	{
+	    id = get_id(subvolume_dir.fd());
+	    name = get_subvolume(subvolume_dir.fd(), id);
+	}
+
 	bool found = false;
 	MtabData mtab_data;
 	if (!getMtabData(subvolume, found, mtab_data))
