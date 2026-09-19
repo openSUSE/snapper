@@ -7,13 +7,18 @@ FSTYPE="btrfs"
 
 
 # btrfs qgroup for space aware cleanup algorithms
+# WARNING: The use of Btrfs quota groups is discouraged. Enabling them may
+# severely impact system performance. Use at your own risk!
 QGROUP=""
 
 
 # fraction or absolute size of the filesystems space the snapshots may use
+# NOTE: This setting requires `QGROUP=` to be set.
 SPACE_LIMIT="0.5"
 
 # fraction or absolute size of the filesystems space that should be free
+# NOTE: This setting is only effective if the `TIMELINE_LIMIT_*=` settings are
+# ranges.
 FREE_LIMIT="0.2"
 
 
@@ -52,6 +57,9 @@ TIMELINE_CREATE="yes"
 TIMELINE_CLEANUP="yes"
 
 # limits for timeline cleanup
+# NOTE: These values take precedence over `SPACE_LIMIT=` and `FREE_LIMIT=`. Even
+# if those limits are exceeded, the number of snapshots specified here will be
+# kept.
 TIMELINE_MIN_AGE="3600"
 TIMELINE_LIMIT_HOURLY="10"
 TIMELINE_LIMIT_DAILY="10"
