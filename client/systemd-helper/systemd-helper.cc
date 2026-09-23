@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2014-2015] Novell, Inc.
- * Copyright (c) [2016-2024] SUSE LLC
+ * Copyright (c) [2016-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -140,11 +140,13 @@ cleanup(ProxySnappers* snappers)
 	    continue;
 	}
 
+	SnapperCleanup cleanup(snapper);
+
 	if (do_number)
 	{
 	    cout << "Running number cleanup for '" << value.first << "'." << endl;
 
-	    if (!call_with_error_check([snapper](){ do_cleanup_number(snapper, verbose, report); }))
+	    if (!call_with_error_check([&cleanup](){ cleanup.do_cleanup_number(verbose, report); }))
 	    {
 		cerr << "number cleanup for '" << value.first << "' failed." << endl;
 		ok = false;
@@ -155,7 +157,7 @@ cleanup(ProxySnappers* snappers)
 	{
 	    cout << "Running timeline cleanup for '" << value.first << "'." << endl;
 
-	    if (!call_with_error_check([snapper](){ do_cleanup_timeline(snapper, verbose, report); }))
+	    if (!call_with_error_check([&cleanup](){ cleanup.do_cleanup_timeline(verbose, report); }))
 	    {
 		cerr << "timeline cleanup for '" << value.first << "' failed." << endl;
 		ok = false;
@@ -166,7 +168,7 @@ cleanup(ProxySnappers* snappers)
 	{
 	    cout << "Running empty-pre-post cleanup for '" << value.first << "'." << endl;
 
-	    if (!call_with_error_check([snapper](){ do_cleanup_empty_pre_post(snapper, verbose, report); }))
+	    if (!call_with_error_check([&cleanup](){ cleanup.do_cleanup_empty_pre_post(verbose, report); }))
 	    {
 		cerr << "empty-pre-post cleanup for " << value.first << " failed." << endl;
 		ok = false;

@@ -17,6 +17,7 @@ snbk_SOURCES = 						\
 	cmd-delete.cc					\
 	cmd-transfer-and-delete.cc			\
 	cmd-visualize.cc				\
+	cmd-cleanup.cc					\
 	BackupConfig.cc		BackupConfig.h		\
 	TheBigThing.cc		TheBigThing.h		\
 	GlobalOptions.cc	GlobalOptions.h		\
@@ -27,7 +28,9 @@ snbk_SOURCES = 						\
 	JsonFile.cc		JsonFile.h		\
 	utils.cc		utils.h			\
 	TreeView.cc		TreeView.h		\
-	../misc.cc		../misc.h
+	proxy-snbk.cc		proxy-snbk.h		\
+	../misc.cc		../misc.h		\
+	../cleanup.cc		../cleanup.h
 
 snbk_LDADD =				\
 	../../snapper/libsnapper.la	\

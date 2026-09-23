@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 SUSE LLC
+ * Copyright (c) [2024-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -66,7 +66,7 @@ namespace snapper
 	{
 	    NAME, NUMBER, DATE, SOURCE_STATE, SOURCE_UUID, SOURCE_PARENT_UUID, SOURCE_RECEIVED_UUID,
 	    SOURCE_CREATION_TIME, TARGET_STATE, TARGET_UUID, TARGET_PARENT_UUID, TARGET_RECEIVED_UUID,
-	    TARGET_CREATION_TIME
+	    TARGET_CREATION_TIME, CLEANUP
 	};
 
 
@@ -113,6 +113,9 @@ namespace snapper
 
 		case Column::TARGET_CREATION_TIME:
 		    return Cell(_("(Target) Creation Time"));
+
+		case Column::CLEANUP:
+		    return Cell(_("Cleanup Algorithm"));
 	    }
 
 	    SN_THROW(Exception("invalid column value"));
@@ -185,6 +188,9 @@ namespace snapper
 
 		case Column::TARGET_CREATION_TIME:
 		    return the_big_thing.target_creation_time;
+
+		case Column::CLEANUP:
+		    return the_big_thing.meta.cleanup;
 	    }
 
 	    SN_THROW(Exception("invalid column value"));
@@ -359,7 +365,8 @@ namespace snapper
     {
 	ParsedOpts opts = get_opts.parse("list", GetOpts::no_options);
 
-	vector<Column> columns = { Column::NUMBER, Column::DATE, Column::SOURCE_STATE, Column::TARGET_STATE };
+	vector<Column> columns = { Column::NUMBER, Column::DATE, Column::SOURCE_STATE, Column::TARGET_STATE,
+				   Column::CLEANUP };
 
 	if (global_options.output_format() != GlobalOptions::OutputFormat::TABLE)
 	    columns.insert(columns.begin(), Column::NAME);
@@ -391,7 +398,7 @@ namespace snapper
     const vector<string> EnumInfo<Column>::names({
 	"name", "number", "date", "source-state", "source-uuid", "source-parent-uuid", "source-received-uuid",
 	"source-creation-time", "target-state", "target-uuid", "target-parent-uuid", "target-received-uuid",
-	"target-creation-time"
+	"target-creation-time", "cleanup"
     });
 
 }
