@@ -33,7 +33,6 @@
 
     <variablelist>
       <varlistentry>
-
 	<term><option>SUBVOLUME=<replaceable>path</replaceable></option></term>
 	<listitem>
 	  <para>Path of the subvolume or mount point.</para>
@@ -60,10 +59,16 @@
 	</listitem>
       </varlistentry>
 
-      <varlistentry>	<term><option>SPACE_LIMIT=<replaceable>float</replaceable> or
+      <varlistentry>
+	<term><option>SPACE_LIMIT=<replaceable>float</replaceable> or
 	<replaceable>size</replaceable></option></term>
 	<listitem>
-	  <para>Threshold for the maximum space snapshots should use on the filesystem. When snapshots exceed this limit (either as a fraction of the whole filesystem or an absolute value), snapper will remove older snapshots during cleanup operations. An absolute value must use the C locale.</para>
+	  <para>Threshold for the maximum space snapshots should use
+	  on the filesystem. When snapshots exceed this limit (either
+	  as a fraction of the whole filesystem or an absolute value),
+	  snapper will remove older snapshots within the allowed ranges
+	  during cleanup operations. An absolute value must use the C
+	  locale.</para>
 	  <para>Only supported for btrfs.</para>
 	  <para>Default value is &quot;0.5&quot; (50% of the filesystem).</para>
 	  <para>New in version 0.3.0, absolute value new in version
@@ -71,10 +76,16 @@
 	</listitem>
       </varlistentry>
 
-      <varlistentry>	<term><option>FREE_LIMIT=<replaceable>float</replaceable> or
+      <varlistentry>
+	<term><option>FREE_LIMIT=<replaceable>float</replaceable> or
 	<replaceable>size</replaceable></option></term>
 	<listitem>
-	  <para>Threshold for the minimum free space that should remain on the filesystem. When free space falls below this limit (either as a fraction of the whole filesystem or an absolute value), snapper will remove older snapshots during cleanup operations to reclaim space. An absolute value must use the C locale.</para>
+	  <para>Threshold for the minimum free space that should
+	  remain on the filesystem. When free space falls below this
+	  limit (either as a fraction of the whole filesystem or an
+	  absolute value), snapper will remove older snapshots within
+	  the allowed ranges during cleanup operations to reclaim
+	  space. An absolute value must use the C locale.</para>
 	  <para>Only supported for btrfs.</para>
 	  <para>Default value is &quot;0.2&quot; (20% of the filesystem).</para>
 	  <para>New in version 0.8.0, absolute value new in version 0.9.0.</para>

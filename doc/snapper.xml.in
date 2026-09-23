@@ -164,6 +164,11 @@
       <para>The limit for the free space can be configured via the
       FREE_LIMIT variable.</para>
 
+      <para>Note: No snapper cleanup algorithm guarantees that the
+      file system does not become full. To prevent space issues, users
+      should regularly check file system usage manually or set up
+      third-party monitoring.</para>
+
       <para>Note: Since the cleanup is performed asynchronously from
       creating snapshots the observed snapshots can differ from the
       expected snapshots according to the limits. Also btrfs stale
