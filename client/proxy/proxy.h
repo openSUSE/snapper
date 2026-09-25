@@ -239,6 +239,9 @@ public:
     virtual ProxyComparison createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs,
 					     bool mount) = 0;
 
+    virtual ProxyComparison createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs,
+					     bool mount, const vector<string>& filenames) = 0;
+
     virtual void syncFilesystem() const = 0;
 
     virtual ProxySnapshots& getSnapshots() = 0;

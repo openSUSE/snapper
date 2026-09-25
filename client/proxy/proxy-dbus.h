@@ -143,6 +143,9 @@ public:
     virtual ProxyComparison createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs,
 					     bool mount) override;
 
+    virtual ProxyComparison createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs,
+					     bool mount, const vector<string>& filenames) override;
+
     virtual void syncFilesystem() const override;
 
     virtual ProxySnapshots& getSnapshots() override { return proxy_snapshots; }
@@ -212,6 +215,9 @@ public:
     ProxyComparisonDbus(ProxySnapperDbus* backref, const ProxySnapshot& lhs,
 			const ProxySnapshot& rhs, bool mount);
 
+    ProxyComparisonDbus(ProxySnapperDbus* backref, const ProxySnapshot& lhs,
+			const ProxySnapshot& rhs, bool mount, const vector<string>& filenames);
+
     ~ProxyComparisonDbus();
 
     virtual const Files& getFiles() const override { return files; }
@@ -221,6 +227,9 @@ public:
 
 private:
 
+    void mountSnapshots();
+    void cleanup() noexcept;
+
     ProxySnapperDbus* backref;
 
     const ProxySnapshot& lhs;
@@ -229,6 +238,10 @@ private:
     FilePaths file_paths;
 
     Files files;
+
+    bool server_comparison;
+    bool lhs_mounted;
+    bool rhs_mounted;
 
 };
 

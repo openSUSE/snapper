@@ -92,11 +92,17 @@ namespace snapper
 	    exit(EXIT_FAILURE);
 	}
 
-	ProxyComparison comparison = snapper->createComparison(*range.first, *range.second, true);
+	// An empty --input file is still an explicit selection and must not mean all files.
+	bool selected = file || get_opts.num_args() > 0;
+	vector<string> filenames = MyFiles::get_requested_files(file, get_opts);
+
+	ProxyComparison comparison = selected ?
+	    snapper->createComparison(*range.first, *range.second, true, filenames) :
+	    snapper->createComparison(*range.first, *range.second, true);
 
 	MyFiles files(comparison.getFiles());
 
-	files.bulk_process(file, get_opts, [](File& file) {
+	files.bulk_process(filenames, !selected, [](File& file) {
 	    file.setUndo(true);
 	});
 

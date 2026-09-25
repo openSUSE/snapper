@@ -132,6 +132,11 @@ vector<XFile>
 command_get_xfiles_by_pipe(DBus::Connection& conn, const string& config_name, unsigned int number1,
 			   unsigned int number2);
 
+vector<XFile>
+command_get_xfiles_for_paths(DBus::Connection& conn, const string& config_name,
+			     unsigned int number1, unsigned int number2,
+			     const vector<string>& filenames);
+
 void
 command_setup_quota(DBus::Connection& conn, const string& config_name);
 

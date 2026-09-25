@@ -126,6 +126,9 @@ public:
     virtual ProxyComparison createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs,
 					     bool mount) override;
 
+    virtual ProxyComparison createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs,
+					     bool mount, const vector<string>& filenames) override;
+
     virtual void syncFilesystem() const override { snapper->syncFilesystem(); }
 
     virtual ProxySnapshots& getSnapshots() override { return proxy_snapshots; }
@@ -191,6 +194,9 @@ public:
 
     ProxyComparisonLib(ProxySnapperLib* proxy_snapper, const ProxySnapshot& lhs,
 		       const ProxySnapshot& rhs, bool mount);
+
+    ProxyComparisonLib(ProxySnapperLib* proxy_snapper, const ProxySnapshot& lhs,
+		       const ProxySnapshot& rhs, bool mount, const vector<string>& filenames);
 
     virtual const Files& getFiles() const override { return comparison->getFiles(); }
 
