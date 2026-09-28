@@ -1,4 +1,7 @@
 
+# This file should not be edited manually.
+
+
 # subvolume to snapshot
 SUBVOLUME="/"
 
