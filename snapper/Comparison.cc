@@ -70,6 +70,41 @@ namespace snapper
     }
 
 
+    Comparison::Comparison(const Snapper* snapper, Snapshots::const_iterator snapshot1,
+			   Snapshots::const_iterator snapshot2, bool mount,
+			   const vector<string>& filenames)
+	: snapper(snapper), snapshot1(snapshot1), snapshot2(snapshot2), mount(mount),
+	  files(&file_paths)
+    {
+	if (snapshot1 == snapper->getSnapshots().end() ||
+	    snapshot2 == snapper->getSnapshots().end() ||
+	    snapshot1 == snapshot2)
+	    SN_THROW(IllegalSnapshotException());
+
+	y2mil("num1:" << snapshot1->getNum() << " num2:" << snapshot2->getNum() <<
+	      " selected files:" << filenames.size());
+
+	file_paths.system_path = snapper->subvolumeDir();
+	file_paths.pre_path = snapshot1->snapshotDir();
+	file_paths.post_path = snapshot2->snapshotDir();
+
+	do_mount();
+
+	try
+	{
+	    files = compareFiles(&file_paths, filenames, snapper->getIgnorePatterns());
+	}
+	catch (...)
+	{
+	    do_umount();
+	    throw;
+	}
+
+	if (!mount)
+	    do_umount();
+    }
+
+
     Comparison::~Comparison()
     {
 	if (mount)
@@ -120,18 +155,57 @@ namespace snapper
     {
 	if (!getSnapshot1()->isCurrent())
 	    getSnapshot1()->mountFilesystemSnapshot(false);
-	if (!getSnapshot2()->isCurrent())
-	    getSnapshot2()->mountFilesystemSnapshot(false);
+
+	try
+	{
+	    if (!getSnapshot2()->isCurrent())
+		getSnapshot2()->mountFilesystemSnapshot(false);
+	}
+	catch (...)
+	{
+	    if (!getSnapshot1()->isCurrent())
+	    {
+		try
+		{
+		    getSnapshot1()->umountFilesystemSnapshot(false);
+		}
+		catch (const Exception& e)
+		{
+		    SN_CAUGHT(e);
+		}
+	    }
+
+	    throw;
+	}
     }
 
 
     void
-    Comparison::do_umount() const
+    Comparison::do_umount() const noexcept
     {
-	if (!getSnapshot1()->isCurrent())
-	    getSnapshot1()->umountFilesystemSnapshot(false);
 	if (!getSnapshot2()->isCurrent())
-	    getSnapshot2()->umountFilesystemSnapshot(false);
+	{
+	    try
+	    {
+		getSnapshot2()->umountFilesystemSnapshot(false);
+	    }
+	    catch (const Exception& e)
+	    {
+		SN_CAUGHT(e);
+	    }
+	}
+
+	if (!getSnapshot1()->isCurrent())
+	{
+	    try
+	    {
+		getSnapshot1()->umountFilesystemSnapshot(false);
+	    }
+	    catch (const Exception& e)
+	    {
+		SN_CAUGHT(e);
+	    }
+	}
     }
 
 

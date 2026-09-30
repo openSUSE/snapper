@@ -602,6 +602,27 @@ command_get_xfiles_by_pipe(DBus::Connection& conn, const string& config_name, un
 }
 
 
+vector<XFile>
+command_get_xfiles_for_paths(DBus::Connection& conn, const string& config_name,
+			     unsigned int number1, unsigned int number2,
+			     const vector<string>& filenames)
+{
+    DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "GetFilesForPaths");
+
+    DBus::Marshaller marshaller(call);
+    marshaller << config_name << number1 << number2 << filenames;
+
+    DBus::Message reply = conn.send_with_reply_and_block(call);
+
+    vector<XFile> files;
+
+    DBus::Unmarshaller unmarshaller(reply);
+    unmarshaller >> files;
+
+    return files;
+}
+
+
 void
 command_setup_quota(DBus::Connection& conn, const string& config_name)
 {

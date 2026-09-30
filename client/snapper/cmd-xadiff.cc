@@ -86,11 +86,16 @@ namespace snapper
 	pair<ProxySnapshots::const_iterator, ProxySnapshots::const_iterator> range =
 	    snapshots.findNums(get_opts.pop_arg());
 
-	ProxyComparison comparison = snapper->createComparison(*range.first, *range.second, true);
+	bool selected = get_opts.num_args() > 0;
+	vector<string> filenames = MyFiles::get_requested_files(NULL, get_opts);
+
+	ProxyComparison comparison = selected ?
+	    snapper->createComparison(*range.first, *range.second, true, filenames) :
+	    snapper->createComparison(*range.first, *range.second, true);
 
 	MyFiles files(comparison.getFiles());
 
-	if (get_opts.num_args() == 0)
+	if (!selected)
 	{
 	    for (Files::const_iterator it1 = files.begin(); it1 != files.end(); ++it1)
 		if (it1->getPreToPostStatus() & XATTRS)
@@ -98,10 +103,8 @@ namespace snapper
 	}
 	else
 	{
-	    while (get_opts.num_args() > 0)
+	    for (const string& name : filenames)
 	    {
-		string name = get_opts.pop_arg();
-
 		Files::const_iterator it1 = files.findAbsolutePath(name);
 		if (it1 == files.end())
 		    continue;

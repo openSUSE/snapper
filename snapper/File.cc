@@ -31,6 +31,8 @@
 #include <cerrno>
 #include <fcntl.h>
 #include <locale>
+#include <memory>
+#include <set>
 #include <boost/algorithm/string.hpp>
 
 #include "snapper/File.h"
@@ -88,6 +90,155 @@ namespace snapper
 
 
     Files::~Files() = default;
+
+
+    static bool
+    relative_filename(const string& system_path, const string& filename, string& relative)
+    {
+	if (filename.empty() || filename[0] != '/')
+	    return false;
+
+	if (system_path == "/")
+	{
+	    relative = filename;
+	}
+	else
+	{
+	    if (filename.size() <= system_path.size() ||
+		filename.compare(0, system_path.size(), system_path) != 0 ||
+		filename[system_path.size()] != '/')
+		return false;
+
+	    relative = filename.substr(system_path.size());
+	}
+
+	if (relative.size() <= 1 || relative.back() == '/')
+	    return false;
+
+	string::size_type begin = 1;
+	while (begin < relative.size())
+	{
+	    string::size_type end = relative.find('/', begin);
+	    string component = relative.substr(begin, end - begin);
+
+	    if (component.empty() || component == "." || component == "..")
+		return false;
+
+	    if (end == string::npos)
+		break;
+
+	    begin = end + 1;
+	}
+
+	return true;
+    }
+
+
+    static std::unique_ptr<SDir>
+    open_parent(const SDir& root, const string& relative)
+    {
+	std::unique_ptr<SDir> current = std::make_unique<SDir>(root);
+
+	string parent = dirname(relative);
+	if (parent == "/")
+	    return current;
+
+	string::size_type begin = 1;
+	while (begin < parent.size())
+	{
+	    string::size_type end = parent.find('/', begin);
+	    string component = parent.substr(begin, end - begin);
+
+	    struct stat statbuf;
+	    if (current->stat(component, &statbuf, AT_SYMLINK_NOFOLLOW) != 0)
+	    {
+		if (errno == ENOENT || errno == ENOTDIR)
+		    return nullptr;
+
+		SN_THROW(IOErrorException(sformat("stat failed path:%s errno:%d (%s)",
+					      current->fullname(component).c_str(), errno,
+					      stringerror(errno).c_str())));
+		return nullptr;
+	    }
+
+	    if (!S_ISDIR(statbuf.st_mode))
+		return nullptr;
+
+	    current = std::make_unique<SDir>(*current, component);
+
+	    if (end == string::npos)
+		break;
+
+	    begin = end + 1;
+	}
+
+	return current;
+    }
+
+
+    static bool
+    file_exists(const std::unique_ptr<SDir>& parent, const string& name)
+    {
+	if (!parent)
+	    return false;
+
+	struct stat statbuf;
+	if (parent->stat(name, &statbuf, AT_SYMLINK_NOFOLLOW) == 0)
+	    return true;
+
+	if (errno == ENOENT || errno == ENOTDIR)
+	    return false;
+
+	SN_THROW(IOErrorException(sformat("stat failed path:%s errno:%d (%s)",
+				      parent->fullname(name).c_str(), errno,
+				      stringerror(errno).c_str())));
+	return false;
+    }
+
+
+    Files
+    compareFiles(const FilePaths* file_paths, const vector<string>& filenames,
+		 const vector<string>& ignore_patterns)
+    {
+	SDir pre_dir(file_paths->pre_path);
+	SDir post_dir(file_paths->post_path);
+
+	std::set<string> relative_filenames;
+	for (const string& filename : filenames)
+	{
+	    string relative;
+	    if (relative_filename(file_paths->system_path, filename, relative))
+		relative_filenames.insert(relative);
+	}
+
+	vector<File> entries;
+	entries.reserve(relative_filenames.size());
+
+	for (const string& relative : relative_filenames)
+	{
+	    string name = basename(relative);
+	    std::unique_ptr<SDir> pre_parent = open_parent(pre_dir, relative);
+	    std::unique_ptr<SDir> post_parent = open_parent(post_dir, relative);
+
+	    bool pre_exists = file_exists(pre_parent, name);
+	    bool post_exists = file_exists(post_parent, name);
+
+	    unsigned int status = 0;
+	    if (!pre_exists && post_exists)
+		status = CREATED;
+	    else if (pre_exists && !post_exists)
+		status = DELETED;
+	    else if (pre_exists && post_exists)
+		status = cmpFiles(SFile(*pre_parent, name), SFile(*post_parent, name));
+
+	    if (status != 0)
+		entries.emplace_back(file_paths, relative, status);
+	}
+
+	Files files(file_paths, entries);
+	files.filter(ignore_patterns);
+	return files;
+    }
 
 
     void
