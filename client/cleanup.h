@@ -57,7 +57,7 @@ namespace snapper
     {
     public:
 
-	virtual ~ProxyCleanable() {}
+	virtual ~ProxyCleanable() = default;
 
 	virtual ProxySnapshots& get_snapshots() = 0;
 	virtual void delete_snapshots(vector<ProxySnapshots::iterator> snapshots,
@@ -78,7 +78,7 @@ namespace snapper
     {
     public:
 
-	virtual ~CleanupOperation() {}
+	virtual ~CleanupOperation() = default;
 
 	/*
 	 * The following three functions do the cleanup based on the conditionals defined
