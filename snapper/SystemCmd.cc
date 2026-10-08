@@ -123,7 +123,7 @@ SystemCmd::~SystemCmd()
 	    {
 		// Do not use exit() here. Use _exit() instead.
 
-		// Only use async‐signal‐safe functions here, see fork(2) and
+		// Only use async-signal-safe functions here, see fork(2) and
 		// signal-safety(7).
 
 		if( dup2( sout[1], STDOUT_FILENO )<0 )
