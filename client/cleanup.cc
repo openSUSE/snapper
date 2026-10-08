@@ -48,7 +48,7 @@ const vector<string> EnumInfo<CleanupAlgorithm>::names({ "all", "number", "timel
 struct Parameters
 {
     Parameters(const ProxyConfig& config);
-    virtual ~Parameters() {}
+    virtual ~Parameters() = default;
 
     virtual bool is_degenerated() const { return true; }
 
@@ -57,7 +57,7 @@ struct Parameters
     MinFreeLimit free_limit = 0.2;
 
 
-    void read(const char* name, time_t& value) const
+    void read(const ProxyConfig& config, const char* name, time_t& value) const
     {
 	const map<string, string>& raw = config.getAllValues();
 	map<string, string>::const_iterator pos = raw.find(name);
@@ -67,7 +67,7 @@ struct Parameters
 
 
     template<typename Type>
-    void read(const char* name, Type& value) const
+    void read(const ProxyConfig& config, const char* name, Type& value) const
     {
 	const map<string, string>& raw = config.getAllValues();
 	map<string, string>::const_iterator pos = raw.find(name);
@@ -86,9 +86,6 @@ struct Parameters
 	}
     }
 
-    protected:
-
-	const ProxyConfig& config;
 };
 
 
@@ -101,10 +98,10 @@ operator<<(ostream& s, const Parameters& parameters)
 }
 
 
-Parameters::Parameters(const ProxyConfig& config) : config(config)
+Parameters::Parameters(const ProxyConfig& config)
 {
-    read("SPACE_LIMIT", space_limit);
-    read("FREE_LIMIT", free_limit);
+    read(config, "SPACE_LIMIT", space_limit);
+    read(config, "FREE_LIMIT", free_limit);
 }
 
 
@@ -115,7 +112,7 @@ public:
     Cleaner(ProxyCleanable& cleanable, bool verbose, const Parameters& parameters)
 	: cleanable(cleanable), verbose(verbose), parameters(parameters) {}
 
-    virtual ~Cleaner() {}
+    virtual ~Cleaner() = default;
 
     void cleanup(Plugins::Report& report);
     void cleanup(std::function<bool()> condition, Plugins::Report& report);
@@ -468,8 +465,8 @@ struct NumberParameters : public Parameters
 
     bool is_degenerated() const override;
 
-    Range limit;
-    Range limit_important;
+    Range limit = 50;
+    Range limit_important = 10;
 };
 
 
@@ -483,12 +480,12 @@ operator<<(ostream& s, const NumberParameters& parameters)
 
 
 NumberParameters::NumberParameters(const ProxyConfig& config)
-    : Parameters(config), limit(50), limit_important(10)
+    : Parameters(config)
 {
-    read("NUMBER_MIN_AGE", min_age);
+    read(config, "NUMBER_MIN_AGE", min_age);
 
-    read("NUMBER_LIMIT", limit);
-    read("NUMBER_LIMIT_IMPORTANT", limit_important);
+    read(config, "NUMBER_LIMIT", limit);
+    read(config, "NUMBER_LIMIT_IMPORTANT", limit_important);
 
 #ifdef VERBOSE_LOGGING
     cout << *this << '\n';
@@ -590,12 +587,12 @@ struct TimelineParameters : public Parameters
 
     bool is_degenerated() const override;
 
-    Range limit_hourly;
-    Range limit_daily;
-    Range limit_monthly;
-    Range limit_weekly;
-    Range limit_quarterly;
-    Range limit_yearly;
+    Range limit_hourly = 10;
+    Range limit_daily = 10;
+    Range limit_monthly = 10;
+    Range limit_weekly = 0;
+    Range limit_quarterly = 0;
+    Range limit_yearly = 10;
 };
 
 
@@ -613,17 +610,16 @@ operator<<(ostream& s, const TimelineParameters& parameters)
 
 
 TimelineParameters::TimelineParameters(const ProxyConfig& config)
-    : Parameters(config), limit_hourly(10), limit_daily(10), limit_monthly(10),
-      limit_weekly(0), limit_quarterly(0), limit_yearly(10)
+    : Parameters(config)
 {
-    read("TIMELINE_MIN_AGE", min_age);
+    read(config, "TIMELINE_MIN_AGE", min_age);
 
-    read("TIMELINE_LIMIT_HOURLY", limit_hourly);
-    read("TIMELINE_LIMIT_DAILY", limit_daily);
-    read("TIMELINE_LIMIT_WEEKLY", limit_weekly);
-    read("TIMELINE_LIMIT_MONTHLY", limit_monthly);
-    read("TIMELINE_LIMIT_QUARTERLY", limit_quarterly);
-    read("TIMELINE_LIMIT_YEARLY", limit_yearly);
+    read(config, "TIMELINE_LIMIT_HOURLY", limit_hourly);
+    read(config, "TIMELINE_LIMIT_DAILY", limit_daily);
+    read(config, "TIMELINE_LIMIT_WEEKLY", limit_weekly);
+    read(config, "TIMELINE_LIMIT_MONTHLY", limit_monthly);
+    read(config, "TIMELINE_LIMIT_QUARTERLY", limit_quarterly);
+    read(config, "TIMELINE_LIMIT_YEARLY", limit_yearly);
 
 #ifdef VERBOSE_LOGGING
     cout << *this << '\n';
@@ -824,7 +820,7 @@ struct EmptyPrePostParameters : public Parameters
 EmptyPrePostParameters::EmptyPrePostParameters(const ProxyConfig& config)
     : Parameters(config)
 {
-    read("EMPTY_PRE_POST_MIN_AGE", min_age);
+    read(config, "EMPTY_PRE_POST_MIN_AGE", min_age);
 
 #ifdef VERBOSE_LOGGING
     cout << *this << '\n';
