@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -66,8 +66,6 @@ namespace snapper
     namespace
     {
 
-	enum class CleanupAlgorithm { ALL, NUMBER, TIMELINE, EMPTY_PRE_POST };
-
 	class FreeSpaceCondition
 	{
 	public:
@@ -114,24 +112,25 @@ namespace snapper
 	void
 	run_cleanup(ProxySnapper* snapper, CleanupAlgorithm cleanup_algorithm, bool verbose, Plugins::Report& report)
 	{
+	    SnapperCleanup cleanup(snapper);
 	    switch (cleanup_algorithm)
 	    {
 		case CleanupAlgorithm::NUMBER:
-		    do_cleanup_number(snapper, verbose, report);
+		    cleanup.do_cleanup_number(verbose, report);
 		    break;
 
 		case CleanupAlgorithm::TIMELINE:
-		    do_cleanup_timeline(snapper, verbose, report);
+		    cleanup.do_cleanup_timeline(verbose, report);
 		    break;
 
 		case CleanupAlgorithm::EMPTY_PRE_POST:
-		    do_cleanup_empty_pre_post(snapper, verbose, report);
+		    cleanup.do_cleanup_empty_pre_post(verbose, report);
 		    break;
 
 		case CleanupAlgorithm::ALL:
-		    do_cleanup_number(snapper, verbose, report);
-		    do_cleanup_timeline(snapper, verbose, report);
-		    do_cleanup_empty_pre_post(snapper, verbose, report);
+		    cleanup.do_cleanup_number(verbose, report);
+		    cleanup.do_cleanup_timeline(verbose, report);
+		    cleanup.do_cleanup_empty_pre_post(verbose, report);
 		    break;
 	    }
 	}
@@ -145,24 +144,25 @@ namespace snapper
 		return free_space_condition.is_satisfied(snapper);
 	    };
 
+	    SnapperCleanup cleanup(snapper);
 	    switch (cleanup_algorithm)
 	    {
 		case CleanupAlgorithm::NUMBER:
-		    do_cleanup_number(snapper, verbose, condition, report);
+		    cleanup.do_cleanup_number(verbose, condition, report);
 		    break;
 
 		case CleanupAlgorithm::TIMELINE:
-		    do_cleanup_timeline(snapper, verbose, condition, report);
+		    cleanup.do_cleanup_timeline(verbose, condition, report);
 		    break;
 
 		case CleanupAlgorithm::EMPTY_PRE_POST:
-		    do_cleanup_empty_pre_post(snapper, verbose, condition, report);
+		    cleanup.do_cleanup_empty_pre_post(verbose, condition, report);
 		    break;
 
 		case CleanupAlgorithm::ALL:
-		    do_cleanup_number(snapper, verbose, condition, report);
-		    do_cleanup_timeline(snapper, verbose, condition, report);
-		    do_cleanup_empty_pre_post(snapper, verbose, condition, report);
+		    cleanup.do_cleanup_number(verbose, condition, report);
+		    cleanup.do_cleanup_timeline(verbose, condition, report);
+		    cleanup.do_cleanup_empty_pre_post(verbose, condition, report);
 		    break;
 	    }
 	}
@@ -381,9 +381,5 @@ namespace snapper
 	}
     }
 
-
-    template <> struct EnumInfo<CleanupAlgorithm> { static const vector<string> names; };
-
-    const vector<string> EnumInfo<CleanupAlgorithm>::names({ "all", "number", "timeline", "empty-pre-post" });
 
 }

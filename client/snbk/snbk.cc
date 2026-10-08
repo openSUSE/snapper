@@ -152,6 +152,7 @@ main(int argc, char** argv)
 	Cmd("delete", { "remove", "rm" }, command_delete, help_delete, true),
 	Cmd("transfer-and-delete", command_transfer_and_delete, help_transfer_and_delete, true),
 	Cmd("visualize", command_visualize, help_visualize, true),
+	Cmd("cleanup", command_cleanup, help_cleanup, true),
     };
 
     try
