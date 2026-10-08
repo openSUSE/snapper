@@ -107,7 +107,7 @@ namespace snapper
 	TreeView();
 	TreeView(const vector<shared_ptr<ProxyNode>>& nodes);
 
-	/** Find the nearest valid node to use as a Btrfs‑send parent. */
+	/** Find the nearest valid node to use as a Btrfs-send parent. */
 	std::optional<SearchResult>
 	find_nearest_valid_node(const string& start_uuid) const;
 
@@ -136,7 +136,7 @@ namespace snapper
 	};
 
 	/**
-	 * Find the nearest valid node to use as a Btrfs‑send parent, starting from the
+	 * Find the nearest valid node to use as a Btrfs-send parent, starting from the
 	 * given node.
 	 */
 	std::optional<SearchResult>

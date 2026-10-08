@@ -141,14 +141,14 @@ namespace snapper
 	/**
 	 * Constructs the args for the child process.
 	 *
-	 * Not async‐signal‐safe, see fork(2) and signal-safety(7).
+	 * Not async-signal-safe, see fork(2) and signal-safety(7).
 	 */
 	TmpForExec make_args() const;
 
 	/**
 	 * Constructs the environment for the child process.
 	 *
-	 * Not async‐signal‐safe, see fork(2) and signal-safety(7).
+	 * Not async-signal-safe, see fork(2) and signal-safety(7).
 	 */
 	TmpForExec make_env() const;
 
