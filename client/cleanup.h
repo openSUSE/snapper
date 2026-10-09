@@ -178,7 +178,7 @@ namespace snapper
 
     private:
 
-	ProxyConfig config;
+	const ProxyConfig config;
 	SnapperCleanable cleanable;
     };
 
