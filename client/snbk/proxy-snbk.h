@@ -193,7 +193,7 @@ namespace snapper
 
     private:
 
-	ProxyConfig retention_policy;
+	const ProxyConfig retention_policy;
 	SnbkCleanable cleanable;
     };
 
