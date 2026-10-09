@@ -6,11 +6,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 12:28+0100\n"
+"POT-Creation-Date: 2026-10-09 10:15+0200\n"
 "PO-Revision-Date: 2026-03-19 18:04+0000\n"
 "Last-Translator: Ferdinand Galko <galko.ferdinand@gmail.com>\n"
-"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>"
-"\n"
+"Language-Team: Slovak <https://l10n.opensuse.org/projects/snapper/master/sk/>\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -440,6 +439,10 @@ msgstr "Nie je možné vykonať návrat späť, pretože predvolený podzväzok 
 msgid "Cannot find the node of UUID %s"
 msgstr "Nemožno nájsť uzol UUID %s"
 
+#, fuzzy
+msgid "Cannot find the snapshot to delete."
+msgstr "Nemožno nájsť uzol UUID %s"
+
 msgid "Cannot transfer a read-write snapshot."
 msgstr "Nie je možné preniesť snímku na čítanie a zápis."
 
@@ -448,6 +451,10 @@ msgstr "Oddeľovač znakov pre výstupný formát CSV."
 
 msgid "Cleanup"
 msgstr "Upratovanie"
+
+#, fuzzy
+msgid "Cleanup Algorithm"
+msgstr "Upratovací algoritmus pre snímku."
 
 msgid "Cleanup algorithm for snapshot."
 msgstr "Upratovací algoritmus pre snímku."
@@ -458,12 +465,20 @@ msgstr "Upratovací algoritmus pre snímky."
 msgid "Cleanup all configs affecting path."
 msgstr "Vymaže všetky konfigurácie ovplyvňujúce cestu."
 
+#, fuzzy
+msgid "Cleanup:"
+msgstr "Upratovanie"
+
 #, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "Zásuvný modul '%s' na strane klienta zlyhal."
 
 msgid "Columns to show separated by comma."
 msgstr "Stĺpce na zobrazenie oddelené čiarkou."
+
+#, fuzzy
+msgid "Command 'cleanup' needs one argument."
+msgstr "Príkaz 'cleanup' potrebuje jeden argument."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Príkaz 'cleanup' potrebuje jeden argument."
@@ -682,11 +697,12 @@ msgstr "Chyba (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "Ďalšie voľby odovzdané príkazu diff."
 
-msgid "Failed to compute checksum."
-msgstr "Zlyhal výpočet kontrolného súčtu."
-
 msgid "Failed to initialize filesystem handler."
 msgstr "Zlyhala inicializácia obslužného programu systému súborov."
+
+#, fuzzy
+msgid "Failed to load info.xml."
+msgstr "Zlyhalo nastavenie lokalizácie."
 
 #, c-format
 msgid "Failed to parse '%s'."
@@ -694,6 +710,9 @@ msgstr "Nepodarilo sa analyzovať '%s'."
 
 msgid "Failed to parse number."
 msgstr "Nepodarilo sa analyzovať číslo."
+
+msgid "Failed to parse the date attribute from `info.xml`"
+msgstr ""
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -759,9 +778,6 @@ msgstr "Zvýši podrobnosť."
 msgid "Invalid ambit '%s'."
 msgstr "Neplatná oblasť '%s'."
 
-msgid "Invalid checksum output format."
-msgstr "Neplatný formát výstupu kontrolného súčtu."
-
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "Neplatný stĺpec '%s'."
@@ -786,9 +802,6 @@ msgstr "Neplatný logger-type '%s'."
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Neplatný formát čitateľný strojom '%s'."
-
-msgid "Invalid number of lines in checksum output."
-msgstr "Neplatný počet riadkov vo výstupe kontrolného súčtu."
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -904,6 +917,10 @@ msgstr "Oznámenie:"
 msgid "Number of corresponding pre snapshot."
 msgstr "Číslo zodpovedajúce snímke pred."
 
+#, fuzzy
+msgid "One or more server-side plugins have failed."
+msgstr "Zásuvný modul '%s' na strane servera zlyhal."
+
 msgid "Only use backup-config with automatic set."
 msgstr "Použiť záložnú konfiguráciu len s automatickým nastavením."
 
@@ -1009,6 +1026,21 @@ msgstr "Obnovenie snímky %d."
 msgid "Run command and create pre and post snapshots."
 msgstr "Spustí príkaz a vytvorí snímky pred a po."
 
+#, fuzzy, c-format
+msgid "Running cleanup failed for %d of %ld backup config."
+msgid_plural "Running cleanup failed for %d of %ld backup configs."
+msgstr[0] "Spustenie vymazávania zlyhalo pre %d z %ld záložnej konfigurácie."
+msgstr[1] "Spustenie vymazávania zlyhalo pre %d zo %ld záložných konfigurácií."
+msgstr[2] "Spustenie vymazávania zlyhalo pre %d zo %ld záložných konfigurácií."
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s' failed."
+msgstr "Spustenie vymazávania pre záložnú konfiguráciu '%s' zlyhalo."
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s'."
+msgstr "Spustenie vymazávania pre záložnú konfiguráciu '%s'."
+
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
@@ -1093,6 +1125,10 @@ msgstr "Uloží stav do súboru."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Viac informácií nájdete na 'man snapper'."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed"
+msgstr "Zásuvný modul '%s' na strane servera zlyhal."
 
 #, c-format
 msgid "Server-side plugin '%s' failed."
@@ -1210,6 +1246,12 @@ msgstr "Oblasť je možné zadať manuálne pomocou voľby --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Konfigurácia 'root' neexistuje. Pravdepodobne nie je snapper nakonfigurovaný."
+
+msgid "The content of info.xml is empty."
+msgstr ""
+
+msgid "The type attribute is missing from `info.xml`."
+msgstr ""
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "To sa môže stať, ak systém nebol nastavený na vrátenie sa späť."
@@ -1365,6 +1407,10 @@ msgstr "nie je čo vykonať"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Argument root možno použiť len spoločne s no-dbus.\n"
 
+#, fuzzy
+msgid "snbk cleanup <cleanup-algorithm>"
+msgstr "\tsnapper cleanup <upratovací-algoritmus>"
+
 msgid "snbk delete [numbers]"
 msgstr "snbk delete [čísla]"
 
@@ -1394,6 +1440,15 @@ msgstr "použitie: snbk [--globálne-voľby] <príkaz> [--voľby-príkazu] [argu
 
 msgid "yes"
 msgstr "áno"
+
+#~ msgid "Failed to compute checksum."
+#~ msgstr "Zlyhal výpočet kontrolného súčtu."
+
+#~ msgid "Invalid checksum output format."
+#~ msgstr "Neplatný formát výstupu kontrolného súčtu."
+
+#~ msgid "Invalid number of lines in checksum output."
+#~ msgstr "Neplatný počet riadkov vo výstupe kontrolného súčtu."
 
 #, c-format
 #~ msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: entries\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 12:28+0100\n"
+"POT-Creation-Date: 2026-10-09 10:15+0200\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Korean <https://l10n.opensuse.org/projects/snapper/master/ko/>\n"
@@ -506,6 +506,11 @@ msgstr ""
 
 # SLE12
 #, fuzzy
+msgid "Cannot find the snapshot to delete."
+msgstr "스냅샷을 생성하지 못했습니다."
+
+# SLE12
+#, fuzzy
 msgid "Cannot transfer a read-write snapshot."
 msgstr "스냅샷 %d의 읽기 쓰기 스냅샷을 생성합니다."
 
@@ -515,6 +520,11 @@ msgstr ""
 # SLE12
 msgid "Cleanup"
 msgstr "정리"
+
+# SLE12
+#, fuzzy
+msgid "Cleanup Algorithm"
+msgstr "\t--cleanup-algorithm, -c <algo>\t스냅샷에 대한 정리 알고리즘."
 
 # SLE12
 #, fuzzy
@@ -530,12 +540,22 @@ msgid "Cleanup all configs affecting path."
 msgstr ""
 
 # SLE12
+#, fuzzy
+msgid "Cleanup:"
+msgstr "정리"
+
+# SLE12
 #, fuzzy, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "'%s' 파일을 열지 못했습니다."
 
 msgid "Columns to show separated by comma."
 msgstr ""
+
+# SLE12
+#, fuzzy
+msgid "Command 'cleanup' needs one argument."
+msgstr "'cleanup' 명령에 하나의 인수가 필요합니다."
 
 # SLE12
 msgid "Command 'cleanup' needs one arguments."
@@ -821,13 +841,12 @@ msgid "Extra options passed to the diff command."
 msgstr "\t--extensions, -x <options>\tdiff 명령에 전달되는 추가 옵션입니다."
 
 # SLE12
-#, fuzzy
-msgid "Failed to compute checksum."
-msgstr "%s 생성에 실패"
-
-# SLE12
 msgid "Failed to initialize filesystem handler."
 msgstr "파일 시스템 처리기를 초기화하지 못했습니다."
+
+#, fuzzy
+msgid "Failed to load info.xml."
+msgstr "로케일을 설정하지 못했습니다. 시스템을 수정하십시오."
 
 # SLE12
 #, fuzzy, c-format
@@ -838,6 +857,9 @@ msgstr "%s 생성에 실패"
 #, fuzzy
 msgid "Failed to parse number."
 msgstr "%s 생성에 실패"
+
+msgid "Failed to parse the date attribute from `info.xml`"
+msgstr ""
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -914,9 +936,6 @@ msgstr "\t--verbose, -v\t\t\t자세한 표시 수준을 증가시킵니다."
 msgid "Invalid ambit '%s'."
 msgstr "'%s' 스냅샷이 잘못되었습니다."
 
-msgid "Invalid checksum output format."
-msgstr ""
-
 # SLE12
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
@@ -948,9 +967,6 @@ msgstr "잘못된 테이블 모양 %d 입니다."
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "잘못된 테이블 모양 %d 입니다."
-
-msgid "Invalid number of lines in checksum output."
-msgstr ""
 
 # SLE12
 #, fuzzy, c-format
@@ -1090,6 +1106,11 @@ msgstr ""
 msgid "Number of corresponding pre snapshot."
 msgstr "\t--pre-number <number>\t\t해당되는 사전 스냅샷 수."
 
+# SLE12
+#, fuzzy
+msgid "One or more server-side plugins have failed."
+msgstr "'%s' 파일을 열지 못했습니다."
+
 msgid "Only use backup-config with automatic set."
 msgstr ""
 
@@ -1227,6 +1248,20 @@ msgid "Run command and create pre and post snapshots."
 msgstr "\t--command <command>\t\t명령을 실행하고 사전 및 사후 스냅샷을 생성합니다."
 
 #, c-format
+msgid "Running cleanup failed for %d of %ld backup config."
+msgid_plural "Running cleanup failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running cleanup for backup config '%s' failed."
+msgstr ""
+
+# SLE12
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s'."
+msgstr "알 수 없는 정리 알고리즘 '%s'입니다."
+
+#, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
 msgstr[0] ""
@@ -1304,6 +1339,11 @@ msgstr "\t--output, -o <file>\t\t상태를 파일에 저장합니다."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "추가 지침은 'man snapper'를 참조하십시오."
+
+# SLE12
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed"
+msgstr "'%s' 파일을 열지 못했습니다."
 
 # SLE12
 #, fuzzy, c-format
@@ -1450,6 +1490,12 @@ msgstr ""
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "'root' 구성이 존재하지 않습니다. 스냅퍼가 구성되지 않았을 수 있습니다."
+
+msgid "The content of info.xml is empty."
+msgstr ""
+
+msgid "The type attribute is missing from `info.xml`."
+msgstr ""
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr ""
@@ -1643,6 +1689,11 @@ msgstr "루트 인수는 no-dbus와 함께 사용해야 합니다."
 
 # SLE12
 #, fuzzy
+msgid "snbk cleanup <cleanup-algorithm>"
+msgstr "\tsnapper cleanup <cleanup-algorithm>"
+
+# SLE12
+#, fuzzy
 msgid "snbk delete [numbers]"
 msgstr "\tsnapper delete <number>"
 
@@ -1681,6 +1732,11 @@ msgstr "사용법: snapper [--global-options] <command> [--command-options] [com
 
 msgid "yes"
 msgstr ""
+
+# SLE12
+#, fuzzy
+#~ msgid "Failed to compute checksum."
+#~ msgstr "%s 생성에 실패"
 
 # SLE12
 #~ msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."

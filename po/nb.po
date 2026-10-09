@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 12:28+0100\n"
+"POT-Creation-Date: 2026-10-09 10:15+0200\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Norwegian Bokmål <https://l10n.opensuse.org/projects/snapper/master/nb_NO/>\n"
@@ -461,6 +461,10 @@ msgid "Cannot find the node of UUID %s"
 msgstr ""
 
 #, fuzzy
+msgid "Cannot find the snapshot to delete."
+msgstr "Diskbilde kunne ikke opprettes."
+
+#, fuzzy
 msgid "Cannot transfer a read-write snapshot."
 msgstr "Diskbilde kunne ikke opprettes."
 
@@ -469,6 +473,10 @@ msgstr ""
 
 msgid "Cleanup"
 msgstr "Rydde opp"
+
+#, fuzzy
+msgid "Cleanup Algorithm"
+msgstr "\t--cleanup-algorithm, -c <algo>\tOppryddingsalgoritme for øyeblikksbilde."
 
 #, fuzzy
 msgid "Cleanup algorithm for snapshot."
@@ -481,12 +489,20 @@ msgstr "\t--cleanup-algorithm, -c <algo>\tOppryddingsalgoritme for øyeblikksbil
 msgid "Cleanup all configs affecting path."
 msgstr ""
 
+#, fuzzy
+msgid "Cleanup:"
+msgstr "Rydde opp"
+
 #, fuzzy, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "Filen '%s' kunne ikke åpnes."
 
 msgid "Columns to show separated by comma."
 msgstr ""
+
+#, fuzzy
+msgid "Command 'cleanup' needs one argument."
+msgstr "Kommandoen 'cleanup' trenger ett argument."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Kommandoen 'cleanup' trenger ett argument."
@@ -725,12 +741,12 @@ msgid "Extra options passed to the diff command."
 msgstr "    Valg for 'modify'-kommandoen:"
 
 #, fuzzy
-msgid "Failed to compute checksum."
-msgstr "kunne ikke opprette %s"
-
-#, fuzzy
 msgid "Failed to initialize filesystem handler."
 msgstr "Kunne ikke install filhåndterer"
+
+#, fuzzy
+msgid "Failed to load info.xml."
+msgstr "kunne ikke opprette %s"
 
 #, fuzzy, c-format
 msgid "Failed to parse '%s'."
@@ -739,6 +755,9 @@ msgstr "kunne ikke opprette %s"
 #, fuzzy
 msgid "Failed to parse number."
 msgstr "kunne ikke opprette %s"
+
+msgid "Failed to parse the date attribute from `info.xml`"
+msgstr ""
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -809,9 +828,6 @@ msgstr "\t--verbose, -v\t\t\tVis mer informasjon."
 msgid "Invalid ambit '%s'."
 msgstr "Ugyldig øyeblikksbilde '%s'."
 
-msgid "Invalid checksum output format."
-msgstr ""
-
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "Ugyldig øyeblikksbilde '%s'."
@@ -838,9 +854,6 @@ msgstr "Ugyldig tabellstil %d."
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Ugyldig tabellstil %d."
-
-msgid "Invalid number of lines in checksum output."
-msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid path '%s'."
@@ -958,6 +971,10 @@ msgstr ""
 #, fuzzy
 msgid "Number of corresponding pre snapshot."
 msgstr "\t--pre-number <antall>\t\tAntall samsvarende før øyeblikksbilde."
+
+#, fuzzy
+msgid "One or more server-side plugins have failed."
+msgstr "Filen '%s' kunne ikke åpnes."
 
 msgid "Only use backup-config with automatic set."
 msgstr ""
@@ -1077,6 +1094,20 @@ msgid "Run command and create pre and post snapshots."
 msgstr "\t--command <kommando>\tKjør kommandoen og opprette før- og etter-øyeblikksbilder."
 
 #, c-format
+msgid "Running cleanup failed for %d of %ld backup config."
+msgid_plural "Running cleanup failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running cleanup for backup config '%s' failed."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s'."
+msgstr "Ukjent oppryddingsalgoritme '%s'."
+
+#, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
 msgstr[0] ""
@@ -1158,6 +1189,10 @@ msgstr "\t--output, -o <fil>\t\tLagre status i fil."
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "Forsøk 'snapper --help' for mer informasjon."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed"
+msgstr "Filen '%s' kunne ikke åpnes."
 
 #, fuzzy, c-format
 msgid "Server-side plugin '%s' failed."
@@ -1285,6 +1320,12 @@ msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+msgid "The content of info.xml is empty."
+msgstr ""
+
+msgid "The type attribute is missing from `info.xml`."
 msgstr ""
 
 msgid "This can happen if the system was not set up for rollback."
@@ -1448,6 +1489,10 @@ msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Forsøk 'snapper --help' for mer informasjon."
 
 #, fuzzy
+msgid "snbk cleanup <cleanup-algorithm>"
+msgstr "\tsnapper cleanup <oppryddingsalgoritme>"
+
+#, fuzzy
 msgid "snbk delete [numbers]"
 msgstr "\tsnapper delete <nummer>"
 
@@ -1481,6 +1526,10 @@ msgstr "bruk: snapper [--globale valg] <kommando> [--kommandovalg] [kommandoargu
 
 msgid "yes"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Failed to compute checksum."
+#~ msgstr "kunne ikke opprette %s"
 
 #, fuzzy
 #~ msgid "\t--description, -d <description>\tDescription for snapshots."

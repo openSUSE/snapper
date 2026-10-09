@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 12:28+0100\n"
+"POT-Creation-Date: 2026-10-09 10:15+0200\n"
 "PO-Revision-Date: 2026-02-01 04:04+0000\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <https://l10n.opensuse.org/projects/snapper/master/ka/>\n"
@@ -435,6 +435,9 @@ msgstr ""
 msgid "Cannot find the node of UUID %s"
 msgstr ""
 
+msgid "Cannot find the snapshot to delete."
+msgstr ""
+
 msgid "Cannot transfer a read-write snapshot."
 msgstr ""
 
@@ -443,6 +446,9 @@ msgstr ""
 
 msgid "Cleanup"
 msgstr "გასუფთავება"
+
+msgid "Cleanup Algorithm"
+msgstr ""
 
 msgid "Cleanup algorithm for snapshot."
 msgstr ""
@@ -453,11 +459,18 @@ msgstr ""
 msgid "Cleanup all configs affecting path."
 msgstr ""
 
+#, fuzzy
+msgid "Cleanup:"
+msgstr "გასუფთავება"
+
 #, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr ""
 
 msgid "Columns to show separated by comma."
+msgstr ""
+
+msgid "Command 'cleanup' needs one argument."
 msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
@@ -675,10 +688,10 @@ msgstr ""
 msgid "Extra options passed to the diff command."
 msgstr ""
 
-msgid "Failed to compute checksum."
+msgid "Failed to initialize filesystem handler."
 msgstr ""
 
-msgid "Failed to initialize filesystem handler."
+msgid "Failed to load info.xml."
 msgstr ""
 
 #, c-format
@@ -686,6 +699,9 @@ msgid "Failed to parse '%s'."
 msgstr ""
 
 msgid "Failed to parse number."
+msgstr ""
+
+msgid "Failed to parse the date attribute from `info.xml`"
 msgstr ""
 
 #, c-format
@@ -752,9 +768,6 @@ msgstr ""
 msgid "Invalid ambit '%s'."
 msgstr ""
 
-msgid "Invalid checksum output format."
-msgstr ""
-
 #, c-format
 msgid "Invalid column '%s'."
 msgstr ""
@@ -778,9 +791,6 @@ msgstr "უცნობი logger-type '%s'."
 
 #, c-format
 msgid "Invalid machine readable format '%s'."
-msgstr ""
-
-msgid "Invalid number of lines in checksum output."
 msgstr ""
 
 #, c-format
@@ -895,6 +905,9 @@ msgstr ""
 msgid "Number of corresponding pre snapshot."
 msgstr ""
 
+msgid "One or more server-side plugins have failed."
+msgstr ""
+
 msgid "Only use backup-config with automatic set."
 msgstr ""
 
@@ -1001,6 +1014,19 @@ msgid "Run command and create pre and post snapshots."
 msgstr ""
 
 #, c-format
+msgid "Running cleanup failed for %d of %ld backup config."
+msgid_plural "Running cleanup failed for %d of %ld backup configs."
+msgstr[0] ""
+
+#, c-format
+msgid "Running cleanup for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running cleanup for backup config '%s'."
+msgstr ""
+
+#, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
 msgstr[0] ""
@@ -1073,6 +1099,10 @@ msgid "Save status to file."
 msgstr ""
 
 msgid "See 'man snapper' for further instructions."
+msgstr ""
+
+#, c-format
+msgid "Server-side plugin '%s' failed"
 msgstr ""
 
 #, c-format
@@ -1190,6 +1220,12 @@ msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+msgid "The content of info.xml is empty."
+msgstr ""
+
+msgid "The type attribute is missing from `info.xml`."
 msgstr ""
 
 msgid "This can happen if the system was not set up for rollback."
@@ -1344,6 +1380,9 @@ msgid "nothing to do"
 msgstr "გასაკეთებელი არაფერია"
 
 msgid "root argument can be used only together with no-dbus.\n"
+msgstr ""
+
+msgid "snbk cleanup <cleanup-algorithm>"
 msgstr ""
 
 msgid "snbk delete [numbers]"

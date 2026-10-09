@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 12:28+0100\n"
+"POT-Creation-Date: 2026-10-09 10:15+0200\n"
 "PO-Revision-Date: 2026-08-19 23:13+0000\n"
 "Last-Translator: Bone NI <bounkirdni@gmail.com>\n"
 "Language-Team: Lao <https://l10n.opensuse.org/projects/snapper/master/lo/>\n"
@@ -241,8 +241,7 @@ msgid "- A backup-config must be specified to run this command."
 msgstr "- ຕ້ອງກຳນົດ backup-config ເພື່ອລັນຄຳສັ່ງນີ້."
 
 msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
-msgstr ""
-"- ເລີ່ມການບໍລິການ `snapperd` ໃໝ່ເພື່ອໃຫ້ເຫັນສະນັບຊັອດທີ່ກູ້ຄືນມາໄດ້ທັນທີ."
+msgstr "- ເລີ່ມການບໍລິການ `snapperd` ໃໝ່ເພື່ອໃຫ້ເຫັນສະນັບຊັອດທີ່ກູ້ຄືນມາໄດ້ທັນທີ."
 
 msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
 msgstr "- source-tree: ສ້າງແຜນຜັງແບບຕົ້ນໄມ້ຂອງສະນັບຊັອດຢູ່ຕົ້ນທາງ."
@@ -424,8 +423,7 @@ msgstr "ບໍ່ສາມາດລຶບສະນັບຊັອດ %d ໄດ�
 
 #, c-format
 msgid "Cannot delete snapshot %d since it is the next to be mounted snapshot."
-msgstr ""
-"ບໍ່ສາມາດລຶບສະນັບຊັອດ %d ໄດ້ ເພາະມັນແມ່ນສະນັບຊັອດທີ່ຈະຖືກເມົາທ໌ໃນຄັ້ງຕໍ່ໄປ."
+msgstr "ບໍ່ສາມາດລຶບສະນັບຊັອດ %d ໄດ້ ເພາະມັນແມ່ນສະນັບຊັອດທີ່ຈະຖືກເມົາທ໌ໃນຄັ້ງຕໍ່ໄປ."
 
 msgid "Cannot detect ambit since default subvolume is unknown."
 msgstr "ບໍ່ສາມາດກວດຫາຂອບເຂດໄດ້ ເພາະບໍ່ຮູ້ຈັກຊັບວໍລຸມເລີ່ມຕົ້ນ."
@@ -437,6 +435,10 @@ msgstr "ບໍ່ສາມາດຍ້ອນກັບ (rollback) ໄດ້ ເ�
 msgid "Cannot find the node of UUID %s"
 msgstr "ບໍ່ພົບໂນດ (node) ຂອງ UUID %s"
 
+#, fuzzy
+msgid "Cannot find the snapshot to delete."
+msgstr "ບໍ່ພົບໂນດ (node) ຂອງ UUID %s"
+
 msgid "Cannot transfer a read-write snapshot."
 msgstr ""
 
@@ -445,6 +447,10 @@ msgstr "ຕົວອັກສອນຂັ້ນສຳລັບຮູບແບບ
 
 msgid "Cleanup"
 msgstr "ອະນາໄມ"
+
+#, fuzzy
+msgid "Cleanup Algorithm"
+msgstr "ຂັ້ນຕອນວິທີການອະນາໄມສຳລັບສະນັບຊັອດ."
 
 msgid "Cleanup algorithm for snapshot."
 msgstr "ຂັ້ນຕອນວິທີການອະນາໄມສຳລັບສະນັບຊັອດ."
@@ -455,12 +461,20 @@ msgstr "ຂັ້ນຕອນວິທີການອະນາໄມສຳລັ
 msgid "Cleanup all configs affecting path."
 msgstr "ອະນາໄມທຸກການຕັ້ງຄ່າທີ່ມີຜົນຕໍ່ເສັ້ນທາງ."
 
+#, fuzzy
+msgid "Cleanup:"
+msgstr "ອະນາໄມ"
+
 #, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "ປລັກອິນຝັ່ງໄຄເອັນ (Client) '%s' ຫຼົ້ມເຫຼວ."
 
 msgid "Columns to show separated by comma."
 msgstr "ຖັນທີ່ຈະສະແດງ ໂດຍຂັ້ນດ້ວຍຈຸດ."
+
+#, fuzzy
+msgid "Command 'cleanup' needs one argument."
+msgstr "ຄຳສັ່ງ 'cleanup' ຕ້ອງການໜຶ່ງອາຄິວເມນ (argument)."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "ຄຳສັ່ງ 'cleanup' ຕ້ອງການໜຶ່ງອາຄິວເມນ (argument)."
@@ -677,17 +691,20 @@ msgstr "ຂໍ້ຜິດພາດ (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "ຕົວເລືອກເສີມທີ່ສົ່ງໄປໃຫ້ຄຳສັ່ງ diff."
 
-msgid "Failed to compute checksum."
-msgstr ""
-
 msgid "Failed to initialize filesystem handler."
 msgstr "ການເລີ່ມຕົ້ນຕົວຈັດການລະບົບໄຟລ໌ຫຼົ້ມເຫຼວ."
+
+msgid "Failed to load info.xml."
+msgstr ""
 
 #, c-format
 msgid "Failed to parse '%s'."
 msgstr ""
 
 msgid "Failed to parse number."
+msgstr ""
+
+msgid "Failed to parse the date attribute from `info.xml`"
 msgstr ""
 
 #, c-format
@@ -751,9 +768,6 @@ msgstr "ສະແດງລາຍລະອຽດເພີ່ມຂຶ້ນ."
 msgid "Invalid ambit '%s'."
 msgstr "ຂອບເຂດ '%s' ບໍ່ຖືກຕ້ອງ."
 
-msgid "Invalid checksum output format."
-msgstr "ຮູບແບບຜົນໄດ້ຮັບ checksum ບໍ່ຖືກຕ້ອງ."
-
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "ຖັນ '%s' ບໍ່ຖືກຕ້ອງ."
@@ -778,9 +792,6 @@ msgstr ""
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "ຮູບແບບທີ່ເຄື່ອງອ່ານໄດ້ '%s' ບໍ່ຖືກຕ້ອງ."
-
-msgid "Invalid number of lines in checksum output."
-msgstr "ຈຳນວນແຖວໃນຜົນໄດ້ຮັບ checksum ບໍ່ຖືກຕ້ອງ."
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -894,6 +905,10 @@ msgstr "ແຈ້ງເຕືອນ:"
 msgid "Number of corresponding pre snapshot."
 msgstr "ຕົວເລກຂອງສະນັບຊັອດກ່ອນໜ້າທີ່ກ່ຽວຂ້ອງ."
 
+#, fuzzy
+msgid "One or more server-side plugins have failed."
+msgstr "ປລັກອິນຝັ່ງເຊີບເວີ (Server) '%s' ຫຼົ້ມເຫຼວ."
+
 msgid "Only use backup-config with automatic set."
 msgstr "ໃຊ້ backup-config ກັບການຕັ້ງຄ່າອັດຕະໂນມັດເທົ່ານັ້ນ."
 
@@ -998,6 +1013,20 @@ msgstr ""
 msgid "Run command and create pre and post snapshots."
 msgstr "ລັນຄຳສັ່ງ ແລະ ສ້າງສະນັບຊັອດກ່ອນ ແລະ ຫຼັງ."
 
+#, fuzzy, c-format
+msgid "Running cleanup failed for %d of %ld backup config."
+msgid_plural "Running cleanup failed for %d of %ld backup configs."
+msgstr[0] "ການລຶບລົ້ມເຫຼວສຳລັບ %d ຈາກ %ld ການຕັ້ງຄ່າການສຳຮອງຂໍ້ມູນ."
+msgstr[1] "ການລຶບ %d ຈາກ %ld ການຕັ້ງຄ່າການສຳຮອງຂໍ້ມູນ ຫຼົ້ມເຫຼວ."
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s' failed."
+msgstr "ການລຶບສຳລັບການຕັ້ງຄ່າສຳຮອງ '%s' ຫຼົ້ມເຫຼວ."
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s'."
+msgstr "ກຳລັງລຶບການຕັ້ງຄ່າສຳຮອງ '%s'."
+
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
@@ -1077,6 +1106,10 @@ msgstr "ບັນທຶກສະຖານະໃສ່ໄຟລ໌."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "ເບິ່ງ 'man snapper' ສຳລັບຄຳແນະນຳເພີ່ມເຕີມ."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed"
+msgstr "ປລັກອິນຝັ່ງເຊີບເວີ (Server) '%s' ຫຼົ້ມເຫຼວ."
 
 #, c-format
 msgid "Server-side plugin '%s' failed."
@@ -1195,9 +1228,14 @@ msgstr "ສາມາດລະບຸຂອບເຂດ (ambit) ດ້ວຍຕົ
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "ການຕັ້ງຄ່າ 'root' ບໍ່ມີຢູ່. ອາດເປັນຍ້ອນຍັງບໍ່ໄດ້ຕັ້ງຄ່າ snapper."
 
-msgid "This can happen if the system was not set up for rollback."
+msgid "The content of info.xml is empty."
 msgstr ""
-"ອັນນີ້ອາດຈະເກີດຂຶ້ນຖ້າລະບົບບໍ່ໄດ້ຖືກຕັ້ງຄ່າໄວ້ສຳລັບການຍ້ອນກັບ (rollback)."
+
+msgid "The type attribute is missing from `info.xml`."
+msgstr ""
+
+msgid "This can happen if the system was not set up for rollback."
+msgstr "ອັນນີ້ອາດຈະເກີດຂຶ້ນຖ້າລະບົບບໍ່ໄດ້ຖືກຕັ້ງຄ່າໄວ້ສຳລັບການຍ້ອນກັບ (rollback)."
 
 #. TRANSLATORS: symbol for "tebi bytes" (best keep untranslated)
 msgid "TiB"
@@ -1350,6 +1388,10 @@ msgstr "ບໍ່ມີຫຍັງຕ້ອງເຮັດ"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "ອາຄິວເມນ root ສາມາດໃຊ້ຮ່ວມກັບ no-dbus ເທົ່ານັ້ນ.\n"
 
+#, fuzzy
+msgid "snbk cleanup <cleanup-algorithm>"
+msgstr "\tsnapper cleanup <ຂັ້ນຕອນວິທີ-ການ-ອະນາໄມ>"
+
 msgid "snbk delete [numbers]"
 msgstr "snbk delete [ຕົວເລກ]"
 
@@ -1372,14 +1414,19 @@ msgid "snbk visualize <mode>"
 msgstr "snbk visualize <ໂໝດ>"
 
 msgid "usage: snapper [--global-options] <command> [--command-options] [command-arguments]"
-msgstr ""
-"ວິທີໃຊ້: snapper [--ຕົວເລືອກທົ່ວໄປ] <ຄຳສັ່ງ> [--ຕົວເລືອກຄຳສັ່ງ] [ອາຄິວເມນຂອງຄຳສັ່ງ]"
+msgstr "ວິທີໃຊ້: snapper [--ຕົວເລືອກທົ່ວໄປ] <ຄຳສັ່ງ> [--ຕົວເລືອກຄຳສັ່ງ] [ອາຄິວເມນຂອງຄຳສັ່ງ]"
 
 msgid "usage: snbk [--global-options] <command> [command-arguments]"
 msgstr "ວິທີໃຊ້: snbk [--ຕົວເລືອກທົ່ວໄປ] <ຄຳສັ່ງ> [ອາຄິວເມນຂອງຄຳສັ່ງ]"
 
 msgid "yes"
 msgstr "ແມ່ນ"
+
+#~ msgid "Invalid checksum output format."
+#~ msgstr "ຮູບແບບຜົນໄດ້ຮັບ checksum ບໍ່ຖືກຕ້ອງ."
+
+#~ msgid "Invalid number of lines in checksum output."
+#~ msgstr "ຈຳນວນແຖວໃນຜົນໄດ້ຮັບ checksum ບໍ່ຖືກຕ້ອງ."
 
 #, fuzzy
 #~ msgid "Quota failure (%s)."

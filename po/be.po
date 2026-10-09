@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YaST (@memory@)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 12:28+0100\n"
+"POT-Creation-Date: 2026-10-09 10:15+0200\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Belarusian <https://l10n.opensuse.org/projects/snapper/master/be/>\n"
@@ -445,6 +445,9 @@ msgstr ""
 msgid "Cannot find the node of UUID %s"
 msgstr ""
 
+msgid "Cannot find the snapshot to delete."
+msgstr ""
+
 #, fuzzy
 msgid "Cannot transfer a read-write snapshot."
 msgstr "Падрыхтоўка дыскаў..."
@@ -454,6 +457,10 @@ msgstr ""
 
 msgid "Cleanup"
 msgstr ""
+
+#, fuzzy
+msgid "Cleanup Algorithm"
+msgstr "Падрыхтоўка дыскаў..."
 
 msgid "Cleanup algorithm for snapshot."
 msgstr ""
@@ -465,11 +472,17 @@ msgstr "Падрыхтоўка дыскаў..."
 msgid "Cleanup all configs affecting path."
 msgstr ""
 
+msgid "Cleanup:"
+msgstr ""
+
 #, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr ""
 
 msgid "Columns to show separated by comma."
+msgstr ""
+
+msgid "Command 'cleanup' needs one argument."
 msgstr ""
 
 msgid "Command 'cleanup' needs one arguments."
@@ -695,12 +708,12 @@ msgstr "Памылка"
 msgid "Extra options passed to the diff command."
 msgstr ""
 
-#, fuzzy
-msgid "Failed to compute checksum."
-msgstr "Падрыхтоўка дыскаў..."
-
 msgid "Failed to initialize filesystem handler."
 msgstr ""
+
+#, fuzzy
+msgid "Failed to load info.xml."
+msgstr "Падрыхтоўка дыскаў..."
 
 #, fuzzy, c-format
 msgid "Failed to parse '%s'."
@@ -709,6 +722,9 @@ msgstr "Падрыхтоўка дыскаў..."
 #, fuzzy
 msgid "Failed to parse number."
 msgstr "Падрыхтоўка дыскаў..."
+
+msgid "Failed to parse the date attribute from `info.xml`"
+msgstr ""
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -777,9 +793,6 @@ msgstr ""
 msgid "Invalid ambit '%s'."
 msgstr "Падрыхтоўка дыскаў..."
 
-msgid "Invalid checksum output format."
-msgstr ""
-
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "Падрыхтоўка дыскаў..."
@@ -806,9 +819,6 @@ msgstr "Падрыхтоўка дыскаў..."
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Падрыхтоўка дыскаў..."
-
-msgid "Invalid number of lines in checksum output."
-msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid path '%s'."
@@ -924,6 +934,9 @@ msgstr ""
 msgid "Number of corresponding pre snapshot."
 msgstr ""
 
+msgid "One or more server-side plugins have failed."
+msgstr ""
+
 msgid "Only use backup-config with automatic set."
 msgstr ""
 
@@ -1033,6 +1046,21 @@ msgid "Run command and create pre and post snapshots."
 msgstr ""
 
 #, c-format
+msgid "Running cleanup failed for %d of %ld backup config."
+msgid_plural "Running cleanup failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgid "Running cleanup for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running cleanup for backup config '%s'."
+msgstr ""
+
+#, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
 msgstr[0] ""
@@ -1115,6 +1143,10 @@ msgid "Save status to file."
 msgstr ""
 
 msgid "See 'man snapper' for further instructions."
+msgstr ""
+
+#, c-format
+msgid "Server-side plugin '%s' failed"
 msgstr ""
 
 #, c-format
@@ -1238,6 +1270,12 @@ msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+msgid "The content of info.xml is empty."
+msgstr ""
+
+msgid "The type attribute is missing from `info.xml`."
 msgstr ""
 
 msgid "This can happen if the system was not set up for rollback."
@@ -1399,6 +1437,9 @@ msgstr ""
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr ""
 
+msgid "snbk cleanup <cleanup-algorithm>"
+msgstr ""
+
 msgid "snbk delete [numbers]"
 msgstr ""
 
@@ -1428,6 +1469,10 @@ msgstr ""
 
 msgid "yes"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Failed to compute checksum."
+#~ msgstr "Падрыхтоўка дыскаў..."
 
 #, fuzzy
 #~ msgid "Unknown file."

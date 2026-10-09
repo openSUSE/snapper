@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 12:28+0100\n"
+"POT-Creation-Date: 2026-10-09 10:15+0200\n"
 "PO-Revision-Date: 2025-07-22 14:59+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Finnish <https://l10n.opensuse.org/projects/snapper/master/fi/>\n"
@@ -443,6 +443,10 @@ msgid "Cannot find the node of UUID %s"
 msgstr ""
 
 #, fuzzy
+msgid "Cannot find the snapshot to delete."
+msgstr "Tilannekuvan luominen epäonnistui."
+
+#, fuzzy
 msgid "Cannot transfer a read-write snapshot."
 msgstr "Luo luettava ja kirjoitettava tilannekuva."
 
@@ -451,6 +455,10 @@ msgstr "CSV-tulosmuodon merkkierotin."
 
 msgid "Cleanup"
 msgstr "Puhdistus"
+
+#, fuzzy
+msgid "Cleanup Algorithm"
+msgstr "Tilannekuvan puhdistusalgoritmi."
 
 msgid "Cleanup algorithm for snapshot."
 msgstr "Tilannekuvan puhdistusalgoritmi."
@@ -461,12 +469,20 @@ msgstr "Tilannekuvan puhdistusalgoritmi."
 msgid "Cleanup all configs affecting path."
 msgstr "Siivoa kaikki sijaintiin vaikuttavat määritykset."
 
+#, fuzzy
+msgid "Cleanup:"
+msgstr "Puhdistus"
+
 #, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "Asiakaspuolen liitännäinen ”%s” epäonnistui."
 
 msgid "Columns to show separated by comma."
 msgstr "Näytettävät sarakkeet pilkuin erotettuna."
+
+#, fuzzy
+msgid "Command 'cleanup' needs one argument."
+msgstr "\"cleanup\"-komento vaatii yhden parametrin."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "\"cleanup\"-komento vaatii yhden parametrin."
@@ -686,12 +702,12 @@ msgstr "Virhe (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "diff-komennolle välitettävät lisävalinnat."
 
-#, fuzzy
-msgid "Failed to compute checksum."
-msgstr "Lukua ei voitu jäsentää."
-
 msgid "Failed to initialize filesystem handler."
 msgstr "Tiedostojärjestelmäkäsittelyn alustus epäonnistui."
+
+#, fuzzy
+msgid "Failed to load info.xml."
+msgstr "Maa-asetuksen asettaminen epäonnistui."
 
 #, c-format
 msgid "Failed to parse '%s'."
@@ -699,6 +715,9 @@ msgstr "\"%s\" luominen epäonnistui."
 
 msgid "Failed to parse number."
 msgstr "Lukua ei voitu jäsentää."
+
+msgid "Failed to parse the date attribute from `info.xml`"
+msgstr ""
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -764,10 +783,6 @@ msgstr "Lisää yksityiskohtaisuutta."
 msgid "Invalid ambit '%s'."
 msgstr "Virheellinen alue \"%s\"."
 
-#, fuzzy
-msgid "Invalid checksum output format."
-msgstr "Aseta tulosmuodoksi CSV."
-
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "Virheellinen sarake \"%s\"."
@@ -792,9 +807,6 @@ msgstr "Virheellinen taulukkotyyli \"%s\"."
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Virheellinen tietokoneen formaatti \"%s\"."
-
-msgid "Invalid number of lines in checksum output."
-msgstr ""
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -908,6 +920,10 @@ msgstr ""
 msgid "Number of corresponding pre snapshot."
 msgstr "Vastaavan ennen-tilannekuvan numero."
 
+#, fuzzy
+msgid "One or more server-side plugins have failed."
+msgstr "Palvelinpuolen liitännäinen ”%s” epäonnistui."
+
 msgid "Only use backup-config with automatic set."
 msgstr "Käytä backup-configia vain automaattisen joukon kanssa."
 
@@ -1014,6 +1030,20 @@ msgstr "Tilannekuvan %d poistaminen epäonnistui."
 msgid "Run command and create pre and post snapshots."
 msgstr "Suorita komento ja luo ennen- ja jälkeen-tilannekuvat."
 
+#, fuzzy, c-format
+msgid "Running cleanup failed for %d of %ld backup config."
+msgid_plural "Running cleanup failed for %d of %ld backup configs."
+msgstr[0] "Poistaminen epäonnistui %d/%ld varmuuskopiomääritykselle."
+msgstr[1] "Poistaminen epäonnistui %d/%ld varmuuskopiomääritykselle."
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s' failed."
+msgstr "Poistaminen epäonnistui varmuuskopiomääritykselle ”%s”."
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s'."
+msgstr "Suoritetaan poistoa varmuuskopiomääritykselle ”%s”."
+
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
@@ -1093,6 +1123,10 @@ msgstr "Tallenna tila tiedostoon."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Lisää ohjeita: ”man snapper”."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed"
+msgstr "Palvelinpuolen liitännäinen ”%s” epäonnistui."
 
 #, c-format
 msgid "Server-side plugin '%s' failed."
@@ -1212,6 +1246,12 @@ msgstr "Alueen voi määrittää itse --ambit-valitsimella."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "\"root\"-määritys puuttuu. Luultavasti snapperia ei ole määritetty."
+
+msgid "The content of info.xml is empty."
+msgstr ""
+
+msgid "The type attribute is missing from `info.xml`."
+msgstr ""
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "Näin voi käydä, ellei järjestelmää ole asetettu palautusta varten."
@@ -1367,6 +1407,10 @@ msgstr "ei mitään tehtävää"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "root parametria voidaan käyttää vain yhdessä no-dbus-valitsimen kanssa.\n"
 
+#, fuzzy
+msgid "snbk cleanup <cleanup-algorithm>"
+msgstr "\tsnapper puhdistus <puhdistus-algoritmi>"
+
 msgid "snbk delete [numbers]"
 msgstr "snbk delete [numerot]"
 
@@ -1397,6 +1441,14 @@ msgstr "käyttö: snbk [--global-options] <komento> [komennon-parametrit]"
 
 msgid "yes"
 msgstr "kyllä"
+
+#, fuzzy
+#~ msgid "Failed to compute checksum."
+#~ msgstr "Lukua ei voitu jäsentää."
+
+#, fuzzy
+#~ msgid "Invalid checksum output format."
+#~ msgstr "Aseta tulosmuodoksi CSV."
 
 #, fuzzy, c-format
 #~ msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."

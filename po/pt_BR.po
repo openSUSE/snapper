@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 12:28+0100\n"
+"POT-Creation-Date: 2026-10-09 10:15+0200\n"
 "PO-Revision-Date: 2026-05-18 16:12+0000\n"
 "Last-Translator: Samanta Magalhaes <samanta_texttrans@outlook.com>\n"
-"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/"
-"snapper/master/pt_BR/>\n"
+"Language-Team: Portuguese (Brazil) <https://l10n.opensuse.org/projects/snapper/master/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -248,17 +247,13 @@ msgid "- A backup-config must be specified to run this command."
 msgstr "- É necessário especificar backup-config para executar este comando."
 
 msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
-msgstr ""
-"- Reinicie o serviço `snapperd` para tornar os instantâneos restaurados "
-"imediatamente visíveis."
+msgstr "- Reinicie o serviço `snapperd` para tornar os instantâneos restaurados imediatamente visíveis."
 
 msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
-msgstr ""
-"- source-tree: Produzir um diagrama de árvore dos instantâneos na origem."
+msgstr "- source-tree: Produzir um diagrama de árvore dos instantâneos na origem."
 
 msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
-msgstr ""
-"- target-tree: Produzir um diagrama de árvore dos instantâneos no destino."
+msgstr "- target-tree: Produzir um diagrama de árvore dos instantâneos no destino."
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -446,6 +441,10 @@ msgstr "Não é possível reverter porque o subvolume padrão é desconhecido."
 msgid "Cannot find the node of UUID %s"
 msgstr "Impossível localizar o nó do UUID %s"
 
+#, fuzzy
+msgid "Cannot find the snapshot to delete."
+msgstr "Impossível localizar o nó do UUID %s"
+
 msgid "Cannot transfer a read-write snapshot."
 msgstr "Impossível transferir um instantâneo de leitura-gravação."
 
@@ -454,6 +453,10 @@ msgstr "Separador de caracteres para o formato de saída CSV."
 
 msgid "Cleanup"
 msgstr "Limpeza"
+
+#, fuzzy
+msgid "Cleanup Algorithm"
+msgstr "Algoritmo de limpeza do instantâneo."
 
 msgid "Cleanup algorithm for snapshot."
 msgstr "Algoritmo de limpeza do instantâneo."
@@ -464,12 +467,20 @@ msgstr "Algoritmo de limpeza dos instantâneos."
 msgid "Cleanup all configs affecting path."
 msgstr "Limpar todas as configurações que afetam o caminho."
 
+#, fuzzy
+msgid "Cleanup:"
+msgstr "Limpeza"
+
 #, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "Falha no plugin do lado do cliente '%s'."
 
 msgid "Columns to show separated by comma."
 msgstr "Colunas que serão mostradas separadas por vírgula."
+
+#, fuzzy
+msgid "Command 'cleanup' needs one argument."
+msgstr "O comando 'cleanup' precisa de um argumento."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "O comando 'cleanup' precisa de um argumento."
@@ -530,8 +541,7 @@ msgid "Command 'status' needs one argument."
 msgstr "O comando 'status' precisa de um argumento."
 
 msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
-msgstr ""
-"O comando 'transfer-and-delete' não suporta operação em um único instantâneo."
+msgstr "O comando 'transfer-and-delete' não suporta operação em um único instantâneo."
 
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "O comando 'transfer-and-delete' não aceita argumentos."
@@ -687,11 +697,12 @@ msgstr "Erro (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "Opções adicionais passadas para o comando diff."
 
-msgid "Failed to compute checksum."
-msgstr "Falha ao calcular soma de verificação."
-
 msgid "Failed to initialize filesystem handler."
 msgstr "Falha ao inicializar o manipulador do sistema de arquivos."
+
+#, fuzzy
+msgid "Failed to load info.xml."
+msgstr "Falha ao configurar o idioma."
 
 #, c-format
 msgid "Failed to parse '%s'."
@@ -699,6 +710,9 @@ msgstr "Falhou ao analisar '%s'."
 
 msgid "Failed to parse number."
 msgstr "Falha ao analisar número."
+
+msgid "Failed to parse the date attribute from `info.xml`"
+msgstr ""
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -761,9 +775,6 @@ msgstr "Aumentar detalhamento."
 msgid "Invalid ambit '%s'."
 msgstr "Âmbito inválido '%s'."
 
-msgid "Invalid checksum output format."
-msgstr "Formato de saída da soma de verificação inválido."
-
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "Coluna inválida '%s'."
@@ -788,9 +799,6 @@ msgstr "Tipo de registrador inválido '%s'."
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Formato legível para máquina inválido '%s'."
-
-msgid "Invalid number of lines in checksum output."
-msgstr "Número inválido de linhas na saída da soma de verificação."
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -904,6 +912,10 @@ msgstr "Aviso:"
 msgid "Number of corresponding pre snapshot."
 msgstr "Número do pré-instantâneo correspondente."
 
+#, fuzzy
+msgid "One or more server-side plugins have failed."
+msgstr "Falha no plugin do lado do servidor '%s'."
+
 msgid "Only use backup-config with automatic set."
 msgstr "Apenas use backup-config com a definição automática."
 
@@ -1008,6 +1020,20 @@ msgstr "Restaurando o instantâneo %d."
 msgid "Run command and create pre and post snapshots."
 msgstr "Executar o comando e criar pré e pós-instantâneos."
 
+#, fuzzy, c-format
+msgid "Running cleanup failed for %d of %ld backup config."
+msgid_plural "Running cleanup failed for %d of %ld backup configs."
+msgstr[0] "Falha ao executar exclusão de %d de %ld config de backup."
+msgstr[1] "Falha ao executar exclusão de %d de %ld configs de backup."
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s' failed."
+msgstr "Falha ao executar exclusão de config de backup '%s'."
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s'."
+msgstr "Executando exclusão de config de backup '%s'."
+
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
@@ -1087,6 +1113,10 @@ msgstr "Salvar status em arquivo."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Consulte \"man snapper\" para obter mais instruções."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed"
+msgstr "Falha no plugin do lado do servidor '%s'."
 
 #, c-format
 msgid "Server-side plugin '%s' failed."
@@ -1204,6 +1234,12 @@ msgstr "O âmbito pode ser especificado manualmente usando a opção --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "A configuração \"root\" não existe. Provavelmente, o snapper não está configurado."
+
+msgid "The content of info.xml is empty."
+msgstr ""
+
+msgid "The type attribute is missing from `info.xml`."
+msgstr ""
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "Isso pode acontecer se o sistema não foi configurado para reversão."
@@ -1359,6 +1395,10 @@ msgstr "nada a fazer"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "O argumento raiz pode ser usado apenas junto com o no-dbus.\n"
 
+#, fuzzy
+msgid "snbk cleanup <cleanup-algorithm>"
+msgstr "\tsnapper cleanup <algoritmo de limpeza>"
+
 msgid "snbk delete [numbers]"
 msgstr "snbk delete [números]"
 
@@ -1388,6 +1428,15 @@ msgstr "uso: snbk [--global-options] <comando> [command-arguments]"
 
 msgid "yes"
 msgstr "sim"
+
+#~ msgid "Failed to compute checksum."
+#~ msgstr "Falha ao calcular soma de verificação."
+
+#~ msgid "Invalid checksum output format."
+#~ msgstr "Formato de saída da soma de verificação inválido."
+
+#~ msgid "Invalid number of lines in checksum output."
+#~ msgstr "Número inválido de linhas na saída da soma de verificação."
 
 #, c-format
 #~ msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."
