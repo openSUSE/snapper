@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 12:28+0100\n"
+"POT-Creation-Date: 2026-10-09 10:15+0200\n"
 "PO-Revision-Date: 2025-07-22 14:59+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Czech <https://l10n.opensuse.org/projects/snapper/master/cs/>\n"
@@ -445,6 +445,10 @@ msgid "Cannot find the node of UUID %s"
 msgstr ""
 
 #, fuzzy
+msgid "Cannot find the snapshot to delete."
+msgstr "Vytváření snímku selhalo."
+
+#, fuzzy
 msgid "Cannot transfer a read-write snapshot."
 msgstr "Vytvoří snímek pro čtení i zápis."
 
@@ -453,6 +457,10 @@ msgstr "Oddělovací znak pro výstupní formát CSV."
 
 msgid "Cleanup"
 msgstr "Úklid"
+
+#, fuzzy
+msgid "Cleanup Algorithm"
+msgstr "Úklidový algoritmus snímku."
 
 msgid "Cleanup algorithm for snapshot."
 msgstr "Úklidový algoritmus snímku."
@@ -464,12 +472,20 @@ msgstr "Úklidový algoritmus snímků."
 msgid "Cleanup all configs affecting path."
 msgstr "Vymaže všechny konfigurace ovlivňující cestu."
 
+#, fuzzy
+msgid "Cleanup:"
+msgstr "Úklid"
+
 #, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "Zásuvný modul '%s' na straně klienta selhal."
 
 msgid "Columns to show separated by comma."
 msgstr "Sloupce k zobrazení, oddělené čárkami."
+
+#, fuzzy
+msgid "Command 'cleanup' needs one argument."
+msgstr "Příkaz 'cleanup' vyžaduje jeden argument."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Příkaz 'cleanup' vyžaduje jeden argument."
@@ -704,13 +720,13 @@ msgstr "Chyba (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "Další možnosti předané příkazu diff."
 
-#, fuzzy
-msgid "Failed to compute checksum."
-msgstr "Chyba při analýze '%s'."
-
 # SLE12
 msgid "Failed to initialize filesystem handler."
 msgstr "Obslužný program systému souborů se nepodařilo inicializovat."
+
+#, fuzzy
+msgid "Failed to load info.xml."
+msgstr "Selhalo nastavení lokalizace."
 
 #, c-format
 msgid "Failed to parse '%s'."
@@ -719,6 +735,9 @@ msgstr "Chyba při analýze '%s'."
 #, fuzzy
 msgid "Failed to parse number."
 msgstr "Chyba při analýze '%s'."
+
+msgid "Failed to parse the date attribute from `info.xml`"
+msgstr ""
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -783,10 +802,6 @@ msgstr "Podrobnější výpis."
 msgid "Invalid ambit '%s'."
 msgstr "Neplatná oblast '%s'."
 
-#, fuzzy
-msgid "Invalid checksum output format."
-msgstr "Nastaví výstupní formát CSV."
-
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "Neplatný sloupec '%s'."
@@ -812,9 +827,6 @@ msgstr "Neplatný styl tabulky %s."
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Neplatný strojově čitelný formát '%s'."
-
-msgid "Invalid number of lines in checksum output."
-msgstr ""
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -930,6 +942,10 @@ msgstr ""
 msgid "Number of corresponding pre snapshot."
 msgstr "Číslo odpovídajícího předsnímku."
 
+#, fuzzy
+msgid "One or more server-side plugins have failed."
+msgstr "Zásuvný modul '%s' na straně serveru selhal."
+
 msgid "Only use backup-config with automatic set."
 msgstr ""
 
@@ -1041,6 +1057,21 @@ msgid "Run command and create pre and post snapshots."
 msgstr "Spustit příkaz a vytvořit snímky před a po."
 
 #, c-format
+msgid "Running cleanup failed for %d of %ld backup config."
+msgid_plural "Running cleanup failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgid "Running cleanup for backup config '%s' failed."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s'."
+msgstr "Neznámý úklidový algoritmus '%s'."
+
+#, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
 msgstr[0] ""
@@ -1125,6 +1156,10 @@ msgstr "Uloží stav do souboru."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Další informace naleznete v popisu příkazu man snapper."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed"
+msgstr "Zásuvný modul '%s' na straně serveru selhal."
 
 #, c-format
 msgid "Server-side plugin '%s' failed."
@@ -1248,6 +1283,12 @@ msgstr "Ambit lze určit ručně volbou --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Účet root konfigurace neexistuje. Nástroj Snapper pravděpodobně není nakonfigurován."
+
+msgid "The content of info.xml is empty."
+msgstr ""
+
+msgid "The type attribute is missing from `info.xml`."
+msgstr ""
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "Může to nastat, není-li systém nastaven pro rollback."
@@ -1409,6 +1450,10 @@ msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Argument root lze použít pouze společně s argumentem no-dbus.\n"
 
 #, fuzzy
+msgid "snbk cleanup <cleanup-algorithm>"
+msgstr "\tsnapper cleanup <úklidový_algoritmus>"
+
+#, fuzzy
 msgid "snbk delete [numbers]"
 msgstr "\tsnapper delete <číslo>"
 
@@ -1442,6 +1487,14 @@ msgstr "Použití: snapper [--obecné-volby] <příkaz> [--volby-příkazu] [arg
 
 msgid "yes"
 msgstr "ano"
+
+#, fuzzy
+#~ msgid "Failed to compute checksum."
+#~ msgstr "Chyba při analýze '%s'."
+
+#, fuzzy
+#~ msgid "Invalid checksum output format."
+#~ msgstr "Nastaví výstupní formát CSV."
 
 #~ msgid ""
 #~ "\t--columns <columns>\t\tColumns to show separated by comma.\n"

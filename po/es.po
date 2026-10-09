@@ -3,11 +3,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 12:28+0100\n"
+"POT-Creation-Date: 2026-10-09 10:15+0200\n"
 "PO-Revision-Date: 2026-07-07 16:12+0000\n"
 "Last-Translator: Javier Llorente <javier@opensuse.org>\n"
-"Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/"
-"es/>\n"
+"Language-Team: Spanish <https://l10n.opensuse.org/projects/snapper/master/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -243,22 +242,16 @@ msgid "(Target) UUID"
 msgstr "(Destino) UUID"
 
 msgid "- A backup-config must be specified to run this command."
-msgstr ""
-"- Una configuración de respaldo debe ser especificada para correr este "
-"comando."
+msgstr "- Una configuración de respaldo debe ser especificada para correr este comando."
 
 msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
-msgstr ""
-"- Reinicie el servicio `snapperd` para hacer que las instantáneas "
-"recuperadas sean visibles inmediatamente."
+msgstr "- Reinicie el servicio `snapperd` para hacer que las instantáneas recuperadas sean visibles inmediatamente."
 
 msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
-msgstr ""
-"- source-tree: Genera un diagrama de árbol de las instantáneas en el origen."
+msgstr "- source-tree: Genera un diagrama de árbol de las instantáneas en el origen."
 
 msgid "- target-tree: Produce a tree diagram of the snapshots on the target."
-msgstr ""
-"- target-tree: Genera un diagrama de árbol de las instantáneas en el destino."
+msgstr "- target-tree: Genera un diagrama de árbol de las instantáneas en el destino."
 
 msgid "--abbreviate"
 msgstr "--abbreviate"
@@ -399,9 +392,7 @@ msgid "--version"
 msgstr "--version"
 
 msgid "A backup-config must be specified to run this command."
-msgstr ""
-"Para ejecutar este comando, es necesario especificar una configuración de "
-"copia de seguridad."
+msgstr "Para ejecutar este comando, es necesario especificar una configuración de copia de seguridad."
 
 # SLE12
 msgid "ACL error."
@@ -449,6 +440,10 @@ msgstr "No se puede revertir porque no se conoce el subvolumen por defecto."
 msgid "Cannot find the node of UUID %s"
 msgstr "No se encuentra el nodo del UUID %s"
 
+#, fuzzy
+msgid "Cannot find the snapshot to delete."
+msgstr "No se encuentra el nodo del UUID %s"
+
 msgid "Cannot transfer a read-write snapshot."
 msgstr "No se puede transferir una instantánea de lectura-escritura."
 
@@ -457,6 +452,10 @@ msgstr "Separador de caracteres para el formato de salida CSV."
 
 msgid "Cleanup"
 msgstr "Limpieza"
+
+#, fuzzy
+msgid "Cleanup Algorithm"
+msgstr "Algoritmo de limpieza para la instantánea."
 
 msgid "Cleanup algorithm for snapshot."
 msgstr "Algoritmo de limpieza para la instantánea."
@@ -468,12 +467,20 @@ msgstr "Algoritmo de limpieza para las instantáneas."
 msgid "Cleanup all configs affecting path."
 msgstr "Limpia todas las configuraciones que afectan a la vía."
 
+#, fuzzy
+msgid "Cleanup:"
+msgstr "Limpieza"
+
 #, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "Error en el complemento %s del cliente."
 
 msgid "Columns to show separated by comma."
 msgstr "Columnas que se deben mostrar separadas por comas."
+
+#, fuzzy
+msgid "Command 'cleanup' needs one argument."
+msgstr "El comando 'cleanup' necesita un argumento."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "El comando 'cleanup' necesita un argumento."
@@ -536,9 +543,7 @@ msgid "Command 'status' needs one argument."
 msgstr "El comando 'status' necesita un argumento."
 
 msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
-msgstr ""
-"El comando \"transfer-and-delete\" no admite el funcionamiento en una única "
-"instantánea."
+msgstr "El comando \"transfer-and-delete\" no admite el funcionamiento en una única instantánea."
 
 msgid "Command 'transfer-and-delete' does not take arguments."
 msgstr "El comando \"transfer-and-delete\" no acepta argumentos."
@@ -704,16 +709,13 @@ msgstr "Error (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "Opciones adicionales que se pasan al comando diff."
 
-# clients/lan_nfs_write.ycp:78
-# clients/lan_nfs_write.ycp:78
-# include/nfs/nfs_write.ycp:54
-# modules/Nfs.ycp:163
-msgid "Failed to compute checksum."
-msgstr "Error al calcular la suma de comprobación."
-
 # SLE12
 msgid "Failed to initialize filesystem handler."
 msgstr "Error al inicializar el gestor del sistema de archivos."
+
+#, fuzzy
+msgid "Failed to load info.xml."
+msgstr "Error al establecer la configuración regional."
 
 # clients/lan_nfs_write.ycp:78
 # clients/lan_nfs_write.ycp:78
@@ -729,6 +731,9 @@ msgstr "Error al analizar %s."
 # modules/Nfs.ycp:163
 msgid "Failed to parse number."
 msgstr "No se ha podido analizar el número."
+
+msgid "Failed to parse the date attribute from `info.xml`"
+msgstr ""
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -796,9 +801,6 @@ msgstr "Aumenta la verbosidad."
 msgid "Invalid ambit '%s'."
 msgstr "Ámbito %s no válido."
 
-msgid "Invalid checksum output format."
-msgstr "El formato de salida de la suma de comprobación no es válido."
-
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "Columna %s no válida."
@@ -824,10 +826,6 @@ msgstr "logger-type %s no válido."
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Formato que puede leer el equipo %s no válido."
-
-msgid "Invalid number of lines in checksum output."
-msgstr ""
-"El número de líneas del resultado de la suma de comprobación no es válido."
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -942,13 +940,15 @@ msgstr "Aviso:"
 msgid "Number of corresponding pre snapshot."
 msgstr "Número de la instantánea previa correspondiente."
 
+#, fuzzy
+msgid "One or more server-side plugins have failed."
+msgstr "Error del complemento %s en el servidor."
+
 msgid "Only use backup-config with automatic set."
 msgstr "Sólo usar configuraciones de respaldo con set automático."
 
 msgid "Only use backup-config with specified target-mode."
-msgstr ""
-"Solo usar configuración de copia de seguridad con el modo especificado de "
-"destino."
+msgstr "Solo usar configuración de copia de seguridad con el modo especificado de destino."
 
 #, c-format
 msgid "Opening file '%s' failed."
@@ -1049,20 +1049,29 @@ msgstr "Restaurando instantánea %d."
 msgid "Run command and create pre and post snapshots."
 msgstr "Ejecuta el comando y crea instantáneas previas y posteriores."
 
+#, fuzzy, c-format
+msgid "Running cleanup failed for %d of %ld backup config."
+msgid_plural "Running cleanup failed for %d of %ld backup configs."
+msgstr[0] "La eliminación ha fallado para %d de %ld de la configuración de copia de seguridad."
+msgstr[1] "La eliminación ha fallado para %d de %ld de las configuraciones de copias de seguridad."
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s' failed."
+msgstr "La eliminación de la configuración de copia de seguridad \"%s\" ha fallado."
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s'."
+msgstr "Eliminando la configuración de copia de seguridad \"%s\"."
+
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
-msgstr[0] ""
-"La eliminación ha fallado para %d de %ld de la configuración de copia de "
-"seguridad."
-msgstr[1] ""
-"La eliminación ha fallado para %d de %ld de las configuraciones de copias de "
-"seguridad."
+msgstr[0] "La eliminación ha fallado para %d de %ld de la configuración de copia de seguridad."
+msgstr[1] "La eliminación ha fallado para %d de %ld de las configuraciones de copias de seguridad."
 
 #, c-format
 msgid "Running delete for backup config '%s' failed."
-msgstr ""
-"La eliminación de la configuración de copia de seguridad \"%s\" ha fallado."
+msgstr "La eliminación de la configuración de copia de seguridad \"%s\" ha fallado."
 
 #, c-format
 msgid "Running delete for backup config '%s'."
@@ -1071,70 +1080,46 @@ msgstr "Eliminando la configuración de copia de seguridad \"%s\"."
 #, c-format
 msgid "Running list failed for %d of %ld backup config."
 msgid_plural "Running list failed for %d of %ld backup configs."
-msgstr[0] ""
-"La lista de ejecución ha fallado para %d de %ld de la configuración de copia "
-"de seguridad."
-msgstr[1] ""
-"La lista de ejecución ha fallado para %d de %ld de las configuraciones de "
-"copias de seguridad."
+msgstr[0] "La lista de ejecución ha fallado para %d de %ld de la configuración de copia de seguridad."
+msgstr[1] "La lista de ejecución ha fallado para %d de %ld de las configuraciones de copias de seguridad."
 
 #, c-format
 msgid "Running restore failed for %d of %ld backup config."
 msgid_plural "Running restore failed for %d of %ld backup configs."
-msgstr[0] ""
-"Se ha producido un error al restaurar %d de %ld de la configuración de la "
-"copia de seguridad."
-msgstr[1] ""
-"Se ha producido un error al restaurar %d de %ld de las configuraciones de "
-"las copias de seguridad."
+msgstr[0] "Se ha producido un error al restaurar %d de %ld de la configuración de la copia de seguridad."
+msgstr[1] "Se ha producido un error al restaurar %d de %ld de las configuraciones de las copias de seguridad."
 
 #, c-format
 msgid "Running restore for backup config '%s' failed."
-msgstr ""
-"Se ha producido un error al ejecutar la restauración de la configuración de "
-"la copia de seguridad '%s'."
+msgstr "Se ha producido un error al ejecutar la restauración de la configuración de la copia de seguridad '%s'."
 
 #, c-format
 msgid "Running restore for backup config '%s'."
-msgstr ""
-"Ejecutando la restauración de la configuración de la copia de seguridad '%s'."
+msgstr "Ejecutando la restauración de la configuración de la copia de seguridad '%s'."
 
 #, c-format
 msgid "Running transfer and delete failed for %d of %ld backup config."
 msgid_plural "Running transfer and delete failed for %d of %ld backup configs."
-msgstr[0] ""
-"La transferencia y eliminación ha fallado para %d de %ld de la configuración "
-"de copia de seguridad."
-msgstr[1] ""
-"La transferencia y eliminación ha fallado para %d de %ld de las "
-"configuraciones de copias de seguridad."
+msgstr[0] "La transferencia y eliminación ha fallado para %d de %ld de la configuración de copia de seguridad."
+msgstr[1] "La transferencia y eliminación ha fallado para %d de %ld de las configuraciones de copias de seguridad."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s' failed."
-msgstr ""
-"La transferencia y eliminación de la configuración de copia de seguridad "
-"\"%s\" ha fallado."
+msgstr "La transferencia y eliminación de la configuración de copia de seguridad \"%s\" ha fallado."
 
 #, c-format
 msgid "Running transfer and delete for backup config '%s'."
-msgstr ""
-"Transfiriendo y eliminando la configuración de copia de seguridad \"%s\"."
+msgstr "Transfiriendo y eliminando la configuración de copia de seguridad \"%s\"."
 
 #, c-format
 msgid "Running transfer failed for %d of %ld backup config."
 msgid_plural "Running transfer failed for %d of %ld backup configs."
-msgstr[0] ""
-"La transferencia en curso ha fallado para %d de %ld de la configuración de "
-"copia de seguridad."
-msgstr[1] ""
-"La transferencia en curso ha fallado para %d de %ld de las configuraciones "
-"de copias de seguridad."
+msgstr[0] "La transferencia en curso ha fallado para %d de %ld de la configuración de copia de seguridad."
+msgstr[1] "La transferencia en curso ha fallado para %d de %ld de las configuraciones de copias de seguridad."
 
 #, c-format
 msgid "Running transfer for backup config '%s' failed."
-msgstr ""
-"La transferencia en curso para la configuración de la copia de seguridad "
-"'%s' ha fallado."
+msgstr "La transferencia en curso para la configuración de la copia de seguridad '%s' ha fallado."
 
 #, c-format
 msgid "Running transfer for backup config '%s'."
@@ -1157,6 +1142,10 @@ msgstr "Guarda el estado en un archivo."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Consulte la página man snapper para obtener más instrucciones."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed"
+msgstr "Error del complemento %s en el servidor."
 
 #, c-format
 msgid "Server-side plugin '%s' failed."
@@ -1270,15 +1259,19 @@ msgid "Target rmdir bin"
 msgstr "Destino de bin de rmdir"
 
 msgid "The 'rankdir' diagram attribute of Graphviz. Defaults to 'LR'."
-msgstr ""
-"El atributo 'rankdir' del diagrama de Graphviz. El valor predeterminado es "
-"'LR'."
+msgstr "El atributo 'rankdir' del diagrama de Graphviz. El valor predeterminado es 'LR'."
 
 msgid "The ambit can be specified manually using the --ambit option."
 msgstr "El ámbito se puede especificar manualmente con la opción --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "La raíz de configuración no existe. Es probable que snapper no se haya configurado."
+
+msgid "The content of info.xml is empty."
+msgstr ""
+
+msgid "The type attribute is missing from `info.xml`."
+msgstr ""
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "Esto puede suceder si el sistema no se ha configurado para la reversión."
@@ -1442,6 +1435,10 @@ msgstr "no hay nada que hacer"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "El argumento root solo se puede usar junto con no-dbus.\n"
 
+#, fuzzy
+msgid "snbk cleanup <cleanup-algorithm>"
+msgstr "\tsnapper cleanup <algoritmo-de-limpieza>"
+
 msgid "snbk delete [numbers]"
 msgstr "snbk delete [números]"
 
@@ -1471,6 +1468,19 @@ msgstr "uso: snbk [--opciones-globales] <comando> [argumentos-comando]"
 
 msgid "yes"
 msgstr "sí"
+
+# clients/lan_nfs_write.ycp:78
+# clients/lan_nfs_write.ycp:78
+# include/nfs/nfs_write.ycp:54
+# modules/Nfs.ycp:163
+#~ msgid "Failed to compute checksum."
+#~ msgstr "Error al calcular la suma de comprobación."
+
+#~ msgid "Invalid checksum output format."
+#~ msgstr "El formato de salida de la suma de comprobación no es válido."
+
+#~ msgid "Invalid number of lines in checksum output."
+#~ msgstr "El número de líneas del resultado de la suma de comprobación no es válido."
 
 #, c-format
 #~ msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."

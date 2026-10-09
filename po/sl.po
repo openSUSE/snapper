@@ -8,17 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 12:28+0100\n"
+"POT-Creation-Date: 2026-10-09 10:15+0200\n"
 "PO-Revision-Date: 2026-03-19 21:04+0000\n"
 "Last-Translator: Jure Repinc <jlp@holodeck1.com>\n"
-"Language-Team: Slovenian <https://l10n.opensuse.org/projects/snapper/master/"
-"sl/>\n"
+"Language-Team: Slovenian <https://l10n.opensuse.org/projects/snapper/master/sl/>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;\n"
 "X-Generator: Weblate 5.16.2\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -445,6 +443,10 @@ msgstr "Povrnitve ni moč izvesti, ker privzeti podnosilec ni znan."
 msgid "Cannot find the node of UUID %s"
 msgstr "Ni moč najti vozišča z določilnikom UUID %s"
 
+#, fuzzy
+msgid "Cannot find the snapshot to delete."
+msgstr "Ni moč najti vozišča z določilnikom UUID %s"
+
 msgid "Cannot transfer a read-write snapshot."
 msgstr "Posnetka za branje in pisanje ni moč prenesti."
 
@@ -453,6 +455,10 @@ msgstr "Ločilni znak za obliko izpisa CSV."
 
 msgid "Cleanup"
 msgstr "Čiščenje"
+
+#, fuzzy
+msgid "Cleanup Algorithm"
+msgstr "Algoritem za čiščenje posnetka."
 
 msgid "Cleanup algorithm for snapshot."
 msgstr "Algoritem za čiščenje posnetka."
@@ -463,12 +469,20 @@ msgstr "Algoritem za čiščenje posnetkov."
 msgid "Cleanup all configs affecting path."
 msgstr "Čiščenje vseh nastavitev, ki vplivajo na pot."
 
+#, fuzzy
+msgid "Cleanup:"
+msgstr "Čiščenje"
+
 #, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "Vstavek »%s« na strani odjemalca ni uspel."
 
 msgid "Columns to show separated by comma."
 msgstr "Stolpci za prikaz, ločeni z vejico."
+
+#, fuzzy
+msgid "Command 'cleanup' needs one argument."
+msgstr "Ukaz »cleanup« potrebuje en argument."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Ukaz »cleanup« potrebuje en argument."
@@ -694,11 +708,12 @@ msgstr "Napaka (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "Dodatne možnosti, ki se posredujejo ukazu diff."
 
-msgid "Failed to compute checksum."
-msgstr "Izračun nadzorne vsote ni uspel."
-
 msgid "Failed to initialize filesystem handler."
 msgstr "Pripravljanje ročnika za datotečni sistem ni uspelo."
+
+#, fuzzy
+msgid "Failed to load info.xml."
+msgstr "Nastavitev jezika ni uspela."
 
 #, c-format
 msgid "Failed to parse '%s'."
@@ -706,6 +721,9 @@ msgstr "Razčlenjevanje »%s« ni uspelo."
 
 msgid "Failed to parse number."
 msgstr "Razčlenjevanje številke ni uspelo."
+
+msgid "Failed to parse the date attribute from `info.xml`"
+msgstr ""
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -772,9 +790,6 @@ msgstr "Poveča količino izpisa."
 msgid "Invalid ambit '%s'."
 msgstr "Neveljaven ambit »%s«."
 
-msgid "Invalid checksum output format."
-msgstr "Neveljavna izhodna oblika nadzorne vsote."
-
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "Neveljaven stolpec »%s«."
@@ -799,9 +814,6 @@ msgstr "Neveljavna vrsta »%s« za logger-type."
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Neveljavna računalniško berljiva oblika »%s«."
-
-msgid "Invalid number of lines in checksum output."
-msgstr "Neveljavno število vrstic v izhodu nadzornih vsot."
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -917,6 +929,10 @@ msgstr "Opomba:"
 msgid "Number of corresponding pre snapshot."
 msgstr "Številka ustreznega pred-posnetka."
 
+#, fuzzy
+msgid "One or more server-side plugins have failed."
+msgstr "Vstavek »%s« na strani strežnika ni uspel."
+
 msgid "Only use backup-config with automatic set."
 msgstr "Uporabite »backup-config« samo skupaj z »automatic«."
 
@@ -1023,6 +1039,22 @@ msgstr "Obnavljanje posnetka %d."
 msgid "Run command and create pre and post snapshots."
 msgstr "Zažene ukaz in ustvari posnetka pred in po."
 
+#, fuzzy, c-format
+msgid "Running cleanup failed for %d of %ld backup config."
+msgid_plural "Running cleanup failed for %d of %ld backup configs."
+msgstr[0] "Izvajanje brisanja je spodletelo za %d od %ld nastavitve varnostnega kopiranja."
+msgstr[1] "Izvajanje brisanja je spodletelo za %d od %ld nastavitev varnostnega kopiranja."
+msgstr[2] "Izvajanje brisanja je spodletelo za %d od %ld nastavitev varnostnega kopiranja."
+msgstr[3] "Izvajanje brisanja je spodletelo za %d od %ld nastavitev varnostnega kopiranja."
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s' failed."
+msgstr "Izvajanje brisanja za nastavitev varnostnega kopiranja »%s« je spodletelo."
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s'."
+msgstr "Izvajanje brisanja za nastavitev varnostnega kopiranja »%s«."
+
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
@@ -1112,6 +1144,10 @@ msgstr "Shrani stanje v datoteko."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Za nadaljnja navodila si oglejte »man snapper«."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed"
+msgstr "Vstavek »%s« na strani strežnika ni uspel."
 
 #, c-format
 msgid "Server-side plugin '%s' failed."
@@ -1233,6 +1269,12 @@ msgstr "Ambit lahko določite ročno z uporabo možnosti »--ambit«."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Nastavitve »root« ne obstajajo. Najverjetneje snapper še ni nastavljen."
+
+msgid "The content of info.xml is empty."
+msgstr ""
+
+msgid "The type attribute is missing from `info.xml`."
+msgstr ""
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "To se lahko zgodi, če sistem ni bil nastavljen za povrnitev."
@@ -1391,6 +1433,10 @@ msgstr "ničesar ni za storiti"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Argument »root« se lahko uporablja samo skupaj z »no-dbus«.\n"
 
+#, fuzzy
+msgid "snbk cleanup <cleanup-algorithm>"
+msgstr "\tsnapper cleanup <algoritem_čiščenja>"
+
 msgid "snbk delete [numbers]"
 msgstr "snbk delete [številke]"
 
@@ -1420,6 +1466,15 @@ msgstr "uporaba: snbk [--splošne-možnosti] <ukaz> [ukazni-argumenti]"
 
 msgid "yes"
 msgstr "da"
+
+#~ msgid "Failed to compute checksum."
+#~ msgstr "Izračun nadzorne vsote ni uspel."
+
+#~ msgid "Invalid checksum output format."
+#~ msgstr "Neveljavna izhodna oblika nadzorne vsote."
+
+#~ msgid "Invalid number of lines in checksum output."
+#~ msgstr "Neveljavno število vrstic v izhodu nadzornih vsot."
 
 #, c-format
 #~ msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."

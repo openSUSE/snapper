@@ -9,11 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 12:28+0100\n"
+"POT-Creation-Date: 2026-10-09 10:15+0200\n"
 "PO-Revision-Date: 2026-05-15 11:12+0000\n"
 "Last-Translator: Emily Dong <Emily.Dong@excel-gits.com>\n"
-"Language-Team: Chinese (China) <https://l10n.opensuse.org/projects/snapper/"
-"master/zh_CN/>\n"
+"Language-Team: Chinese (China) <https://l10n.opensuse.org/projects/snapper/master/zh_CN/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -444,6 +443,10 @@ msgstr "无法回滚，因为默认子卷未知。"
 msgid "Cannot find the node of UUID %s"
 msgstr "找不到 UUID %s 对应的节点"
 
+#, fuzzy
+msgid "Cannot find the snapshot to delete."
+msgstr "找不到 UUID %s 对应的节点"
+
 msgid "Cannot transfer a read-write snapshot."
 msgstr "无法传输可读写快照。"
 
@@ -452,6 +455,10 @@ msgstr "CSV 输出格式的字符分隔符。"
 
 msgid "Cleanup"
 msgstr "清空"
+
+#, fuzzy
+msgid "Cleanup Algorithm"
+msgstr "快照的清理算法。"
 
 msgid "Cleanup algorithm for snapshot."
 msgstr "快照的清理算法。"
@@ -462,12 +469,20 @@ msgstr "快照的清理算法。"
 msgid "Cleanup all configs affecting path."
 msgstr "清理所有影响路径的配置。"
 
+#, fuzzy
+msgid "Cleanup:"
+msgstr "清空"
+
 #, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "客户端插件 \"%s\" 失败。"
 
 msgid "Columns to show separated by comma."
 msgstr "要显示的列（按逗号分隔）。"
+
+#, fuzzy
+msgid "Command 'cleanup' needs one argument."
+msgstr "命令 'cleanup' 需要一个参数。"
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "命令 'cleanup' 需要一个参数。"
@@ -683,11 +698,12 @@ msgstr "错误 (%s)。"
 msgid "Extra options passed to the diff command."
 msgstr "传递到 diff 命令的额外选项。"
 
-msgid "Failed to compute checksum."
-msgstr "校验和计算失败。"
-
 msgid "Failed to initialize filesystem handler."
 msgstr "初始化文件系统处理器失败。"
+
+#, fuzzy
+msgid "Failed to load info.xml."
+msgstr "无法设置区域设置。"
 
 #, c-format
 msgid "Failed to parse '%s'."
@@ -695,6 +711,9 @@ msgstr "分析 \"%s\" 失败。"
 
 msgid "Failed to parse number."
 msgstr "分析编号失败。"
+
+msgid "Failed to parse the date attribute from `info.xml`"
+msgstr ""
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -757,9 +776,6 @@ msgstr "增加消息的详细程度。"
 msgid "Invalid ambit '%s'."
 msgstr "范围 \"%s\" 无效。"
 
-msgid "Invalid checksum output format."
-msgstr "校验和输出格式无效。"
-
 #, c-format
 msgid "Invalid column '%s'."
 msgstr "列 \"%s\" 无效。"
@@ -784,9 +800,6 @@ msgstr "logger-type '%s' 无效。"
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "计算机可读格式 \"%s\" 无效。"
-
-msgid "Invalid number of lines in checksum output."
-msgstr "校验和输出中的行数无效。"
 
 #, c-format
 msgid "Invalid path '%s'."
@@ -900,6 +913,10 @@ msgstr "备注："
 msgid "Number of corresponding pre snapshot."
 msgstr "相关前期快照的编号。"
 
+#, fuzzy
+msgid "One or more server-side plugins have failed."
+msgstr "服务器端插件 \"%s\" 失败。"
+
 msgid "Only use backup-config with automatic set."
 msgstr "仅在设置了自动模式时使用备份配置。"
 
@@ -1004,6 +1021,19 @@ msgstr "正在恢复快照 %d。"
 msgid "Run command and create pre and post snapshots."
 msgstr "运行命令并创建前期和后期快照。"
 
+#, fuzzy, c-format
+msgid "Running cleanup failed for %d of %ld backup config."
+msgid_plural "Running cleanup failed for %d of %ld backup configs."
+msgstr[0] "针对 %d 个备份配置（共 %ld 个）执行的删除操作失败。"
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s' failed."
+msgstr "针对备份配置 '%s' 执行的删除操作失败。"
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s'."
+msgstr "正在针对备份配置 '%s' 执行删除操作。"
+
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
@@ -1078,6 +1108,10 @@ msgstr "将状态保存到文件。"
 
 msgid "See 'man snapper' for further instructions."
 msgstr "有关更多指导，请参见“man snapper”。"
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed"
+msgstr "服务器端插件 \"%s\" 失败。"
 
 #, c-format
 msgid "Server-side plugin '%s' failed."
@@ -1195,6 +1229,12 @@ msgstr "可以使用 --ambit 选项手动指定范围。"
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "配置“root”不存在。snapper 可能未配置。"
+
+msgid "The content of info.xml is empty."
+msgstr ""
+
+msgid "The type attribute is missing from `info.xml`."
+msgstr ""
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "如果系统未设置为回滚，就可能发生此情况。"
@@ -1350,6 +1390,10 @@ msgstr "无事可做"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "root 参数只能与 no-dbus 一起使用。\n"
 
+#, fuzzy
+msgid "snbk cleanup <cleanup-algorithm>"
+msgstr "\tsnapper cleanup <清理算法>"
+
 msgid "snbk delete [numbers]"
 msgstr "snbk delete [编号]"
 
@@ -1379,6 +1423,15 @@ msgstr "用法：snbk [--全局选项] <命令> [命令参数]"
 
 msgid "yes"
 msgstr "是"
+
+#~ msgid "Failed to compute checksum."
+#~ msgstr "校验和计算失败。"
+
+#~ msgid "Invalid checksum output format."
+#~ msgstr "校验和输出格式无效。"
+
+#~ msgid "Invalid number of lines in checksum output."
+#~ msgstr "校验和输出中的行数无效。"
 
 #, c-format
 #~ msgid "Path mismatch between source-path of backup-config and subvolume of snapper config ('%s' vs. '%s')."

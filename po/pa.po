@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 12:28+0100\n"
+"POT-Creation-Date: 2026-10-09 10:15+0200\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Punjabi <https://l10n.opensuse.org/projects/snapper/master/pa/>\n"
@@ -463,6 +463,10 @@ msgid "Cannot find the node of UUID %s"
 msgstr ""
 
 #, fuzzy
+msgid "Cannot find the snapshot to delete."
+msgstr "ਸੰਰਚਨਾ ਫਾਇਲ ਪਾਰਸ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ..."
+
+#, fuzzy
 msgid "Cannot transfer a read-write snapshot."
 msgstr "ਬਣਾਇਆ ਗਿਆ: "
 
@@ -472,6 +476,10 @@ msgstr ""
 #, fuzzy
 msgid "Cleanup"
 msgstr "ਸਫ਼ਾਈ ਕੀਤੀ"
+
+#, fuzzy
+msgid "Cleanup Algorithm"
+msgstr "ਅਣਜਾਣ ਕਮਾਂਡ '%s'"
 
 #, fuzzy
 msgid "Cleanup algorithm for snapshot."
@@ -484,12 +492,20 @@ msgstr "ਅਣਜਾਣ ਕਮਾਂਡ '%s'"
 msgid "Cleanup all configs affecting path."
 msgstr ""
 
+#, fuzzy
+msgid "Cleanup:"
+msgstr "ਸਫ਼ਾਈ ਕੀਤੀ"
+
 #, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr ""
 
 msgid "Columns to show separated by comma."
 msgstr ""
+
+#, fuzzy
+msgid "Command 'cleanup' needs one argument."
+msgstr "ਇੱਕ ਆਰਗੂਮਿੰਟ ਦੀ ਲੋੜ ਹੈ"
 
 #, fuzzy
 msgid "Command 'cleanup' needs one arguments."
@@ -741,12 +757,12 @@ msgstr "I/O ਗਲਤੀ"
 msgid "Extra options passed to the diff command."
 msgstr ""
 
-#, fuzzy
-msgid "Failed to compute checksum."
-msgstr "ਪਾਰਸ ਕਰਨ ਦੌਰਾਨ ਫੇਲ੍ਹ: %s।"
-
 msgid "Failed to initialize filesystem handler."
 msgstr ""
+
+#, fuzzy
+msgid "Failed to load info.xml."
+msgstr "ਪਾਰਸ ਕਰਨ ਦੌਰਾਨ ਫੇਲ੍ਹ: %s।"
 
 #, fuzzy, c-format
 msgid "Failed to parse '%s'."
@@ -755,6 +771,9 @@ msgstr "ਪਾਰਸ ਕਰਨ ਦੌਰਾਨ ਫੇਲ੍ਹ: %s।"
 #, fuzzy
 msgid "Failed to parse number."
 msgstr "ਪਾਰਸ ਕਰਨ ਦੌਰਾਨ ਫੇਲ੍ਹ: %s।"
+
+msgid "Failed to parse the date attribute from `info.xml`"
+msgstr ""
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -825,9 +844,6 @@ msgstr ""
 msgid "Invalid ambit '%s'."
 msgstr "ਗਲਤ ਕਿਸਮ %1 ਹੈ।"
 
-msgid "Invalid checksum output format."
-msgstr ""
-
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "ਗਲਤ ਕਿਸਮ %1 ਹੈ।"
@@ -854,9 +870,6 @@ msgstr "ਗਲਤ ਕਿਸਮ %1 ਹੈ।"
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "ਗਲਤ ਕਿਸਮ %1 ਹੈ।"
-
-msgid "Invalid number of lines in checksum output."
-msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid path '%s'."
@@ -978,6 +991,9 @@ msgstr ""
 msgid "Number of corresponding pre snapshot."
 msgstr ""
 
+msgid "One or more server-side plugins have failed."
+msgstr ""
+
 msgid "Only use backup-config with automatic set."
 msgstr ""
 
@@ -1092,6 +1108,20 @@ msgid "Run command and create pre and post snapshots."
 msgstr ""
 
 #, c-format
+msgid "Running cleanup failed for %d of %ld backup config."
+msgid_plural "Running cleanup failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running cleanup for backup config '%s' failed."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s'."
+msgstr "ਅਣਜਾਣ ਕਮਾਂਡ '%s'"
+
+#, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
 msgstr[0] ""
@@ -1171,6 +1201,10 @@ msgstr ""
 #, fuzzy
 msgid "See 'man snapper' for further instructions."
 msgstr "ਹੋਰ ਜਾਣਕਾਰੀ ਲਈ `%s --help' ਜਾਂ `%s --usage' ਨੂੰ ਵੇਖੋ।\n"
+
+#, c-format
+msgid "Server-side plugin '%s' failed"
+msgstr ""
 
 #, c-format
 msgid "Server-side plugin '%s' failed."
@@ -1294,6 +1328,12 @@ msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+msgid "The content of info.xml is empty."
+msgstr ""
+
+msgid "The type attribute is missing from `info.xml`."
 msgstr ""
 
 msgid "This can happen if the system was not set up for rollback."
@@ -1459,6 +1499,10 @@ msgstr "ਕੁਝ ਵੀ ਨਹੀਂ ਹੈ।"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "ਹੋਰ ਜਾਣਕਾਰੀ ਲਈ `%s --help' ਜਾਂ `%s --usage' ਨੂੰ ਵੇਖੋ।\n"
 
+#, fuzzy
+msgid "snbk cleanup <cleanup-algorithm>"
+msgstr "ਅਣਜਾਣ ਕਮਾਂਡ '%s'"
+
 msgid "snbk delete [numbers]"
 msgstr ""
 
@@ -1491,6 +1535,10 @@ msgstr ""
 
 msgid "yes"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Failed to compute checksum."
+#~ msgstr "ਪਾਰਸ ਕਰਨ ਦੌਰਾਨ ਫੇਲ੍ਹ: %s।"
 
 #, fuzzy
 #~ msgid "Command '%s' does not work without DBus."

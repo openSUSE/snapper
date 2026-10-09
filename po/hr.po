@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 12:28+0100\n"
+"POT-Creation-Date: 2026-10-09 10:15+0200\n"
 "PO-Revision-Date: 2025-07-22 15:00+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Croatian <https://l10n.opensuse.org/projects/snapper/master/hr/>\n"
@@ -448,6 +448,9 @@ msgstr ""
 msgid "Cannot find the node of UUID %s"
 msgstr ""
 
+msgid "Cannot find the snapshot to delete."
+msgstr ""
+
 #, fuzzy
 msgid "Cannot transfer a read-write snapshot."
 msgstr "Nesipravan stil tablice %d."
@@ -456,6 +459,9 @@ msgid "Character separator for CSV output format."
 msgstr ""
 
 msgid "Cleanup"
+msgstr ""
+
+msgid "Cleanup Algorithm"
 msgstr ""
 
 msgid "Cleanup algorithm for snapshot."
@@ -467,12 +473,19 @@ msgstr ""
 msgid "Cleanup all configs affecting path."
 msgstr ""
 
+msgid "Cleanup:"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "Otvaranje datoteke '%s' nije uspjelo."
 
 msgid "Columns to show separated by comma."
 msgstr ""
+
+#, fuzzy
+msgid "Command 'cleanup' needs one argument."
+msgstr "Naredba 'cleanup' treba jedan argument."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Naredba 'cleanup' treba jedan argument."
@@ -720,12 +733,12 @@ msgstr "Ulazno/izlazna pogreška"
 msgid "Extra options passed to the diff command."
 msgstr ""
 
-#, fuzzy
-msgid "Failed to compute checksum."
-msgstr "Ne mogu napraviti alias %s -> %s\n"
-
 msgid "Failed to initialize filesystem handler."
 msgstr ""
+
+#, fuzzy
+msgid "Failed to load info.xml."
+msgstr "Ne mogu napraviti alias %s -> %s\n"
 
 #, fuzzy, c-format
 msgid "Failed to parse '%s'."
@@ -734,6 +747,9 @@ msgstr "Ne mogu napraviti alias %s -> %s\n"
 #, fuzzy
 msgid "Failed to parse number."
 msgstr "Ne mogu napraviti alias %s -> %s\n"
+
+msgid "Failed to parse the date attribute from `info.xml`"
+msgstr ""
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -799,9 +815,6 @@ msgstr ""
 msgid "Invalid ambit '%s'."
 msgstr "Nesipravan stil tablice %d."
 
-msgid "Invalid checksum output format."
-msgstr ""
-
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "Nesipravan stil tablice %d."
@@ -828,9 +841,6 @@ msgstr "Nesipravan stil tablice %d."
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Nesipravan stil tablice %d."
-
-msgid "Invalid number of lines in checksum output."
-msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid path '%s'."
@@ -950,6 +960,10 @@ msgstr ""
 msgid "Number of corresponding pre snapshot."
 msgstr ""
 
+#, fuzzy
+msgid "One or more server-side plugins have failed."
+msgstr "Otvaranje datoteke '%s' nije uspjelo."
+
 msgid "Only use backup-config with automatic set."
 msgstr ""
 
@@ -1059,6 +1073,21 @@ msgid "Run command and create pre and post snapshots."
 msgstr ""
 
 #, c-format
+msgid "Running cleanup failed for %d of %ld backup config."
+msgid_plural "Running cleanup failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#, c-format
+msgid "Running cleanup for backup config '%s' failed."
+msgstr ""
+
+#, c-format
+msgid "Running cleanup for backup config '%s'."
+msgstr ""
+
+#, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
 msgstr[0] ""
@@ -1143,6 +1172,10 @@ msgstr ""
 
 msgid "See 'man snapper' for further instructions."
 msgstr ""
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed"
+msgstr "Otvaranje datoteke '%s' nije uspjelo."
 
 #, fuzzy, c-format
 msgid "Server-side plugin '%s' failed."
@@ -1267,6 +1300,12 @@ msgid "The ambit can be specified manually using the --ambit option."
 msgstr ""
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
+msgstr ""
+
+msgid "The content of info.xml is empty."
+msgstr ""
+
+msgid "The type attribute is missing from `info.xml`."
 msgstr ""
 
 msgid "This can happen if the system was not set up for rollback."
@@ -1431,6 +1470,9 @@ msgstr "Nema ništa za napraviti."
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr ""
 
+msgid "snbk cleanup <cleanup-algorithm>"
+msgstr ""
+
 msgid "snbk delete [numbers]"
 msgstr ""
 
@@ -1461,6 +1503,10 @@ msgstr ""
 
 msgid "yes"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Failed to compute checksum."
+#~ msgstr "Ne mogu napraviti alias %s -> %s\n"
 
 #, fuzzy
 #~ msgid "Command '%s' does not work without DBus."

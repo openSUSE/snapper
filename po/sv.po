@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 12:28+0100\n"
+"POT-Creation-Date: 2026-10-09 10:15+0200\n"
 "PO-Revision-Date: 2026-04-23 12:04+0000\n"
 "Last-Translator: Luna  Jernberg <bittin@opensuse.org>\n"
-"Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/"
-"sv/>\n"
+"Language-Team: Swedish <https://l10n.opensuse.org/projects/snapper/master/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -296,9 +295,7 @@ msgid "- A backup-config must be specified to run this command."
 msgstr "- En backup-konfiguration måste anges för att köra det här kommandot."
 
 msgid "- Restart the `snapperd` service to make the restored snapshots visible immediately."
-msgstr ""
-"- Starta om `snapperd`-tjänsten för att göra de återställda "
-"ögonblicksavbilderna synliga omedelbart."
+msgstr "- Starta om `snapperd`-tjänsten för att göra de återställda ögonblicksavbilderna synliga omedelbart."
 
 msgid "- source-tree: Produce a tree diagram of the snapshots on the source."
 msgstr ""
@@ -502,6 +499,10 @@ msgstr "Kan inte rulla tillbaka eftersom standarddelvolymen är okänd."
 msgid "Cannot find the node of UUID %s"
 msgstr "Kan inte hitta noden för UUID %s"
 
+#, fuzzy
+msgid "Cannot find the snapshot to delete."
+msgstr "Kan inte hitta noden för UUID %s"
+
 msgid "Cannot transfer a read-write snapshot."
 msgstr "Kan inte överföra en läs och skriv-ögonblicksavbild."
 
@@ -511,6 +512,11 @@ msgstr "Teckenavgränsare för CSV-utdataformat."
 # SLE12
 msgid "Cleanup"
 msgstr "Upprensning"
+
+# SLE12
+#, fuzzy
+msgid "Cleanup Algorithm"
+msgstr "Upprensningsalgoritm för ögonblicksavbild."
 
 # SLE12
 msgid "Cleanup algorithm for snapshot."
@@ -524,12 +530,22 @@ msgid "Cleanup all configs affecting path."
 msgstr "Rensa alla konfigurationer som påverkar sökväg."
 
 # SLE12
+#, fuzzy
+msgid "Cleanup:"
+msgstr "Upprensning"
+
+# SLE12
 #, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "Insticksprogrammet %s på klientsidan misslyckades."
 
 msgid "Columns to show separated by comma."
 msgstr "Kolumner som ska visas separerade med kommatecken."
+
+# SLE12
+#, fuzzy
+msgid "Command 'cleanup' needs one argument."
+msgstr "Kommandot cleanup måste ha ett argument."
 
 # SLE12
 msgid "Command 'cleanup' needs one arguments."
@@ -610,9 +626,7 @@ msgstr "Kommandot status måste ha ett argument."
 
 # SLE12
 msgid "Command 'transfer-and-delete' does not support operating on a single snapshot."
-msgstr ""
-"Kommandot 'transfer-and-delete' stöder inte bearbetning med en enskild "
-"ögonblicksavbild."
+msgstr "Kommandot 'transfer-and-delete' stöder inte bearbetning med en enskild ögonblicksavbild."
 
 # SLE12
 msgid "Command 'transfer-and-delete' does not take arguments."
@@ -798,12 +812,12 @@ msgid "Extra options passed to the diff command."
 msgstr "Extra alternativ skickades till diffkommandot."
 
 # SLE12
-msgid "Failed to compute checksum."
-msgstr "Misslyckades med att beräkna kontrollsumma."
-
-# SLE12
 msgid "Failed to initialize filesystem handler."
 msgstr "Det gick inte att initiera filsystemhanteraren."
+
+#, fuzzy
+msgid "Failed to load info.xml."
+msgstr "Misslyckades med att ställa in plats."
 
 # SLE12
 #, c-format
@@ -813,6 +827,9 @@ msgstr "Misslyckades att tolka '%s'"
 # SLE12
 msgid "Failed to parse number."
 msgstr "Misslyckades med att analysera nummer."
+
+msgid "Failed to parse the date attribute from `info.xml`"
+msgstr ""
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -884,9 +901,6 @@ msgstr "Öka utförligheten."
 msgid "Invalid ambit '%s'."
 msgstr "Ogiltig omfattning '%s'."
 
-msgid "Invalid checksum output format."
-msgstr "Ogiltigt utdataformat för kontrollsumma."
-
 # SLE12
 #, c-format
 msgid "Invalid column '%s'."
@@ -918,9 +932,6 @@ msgstr "Ogiltig tabellstil '%s'"
 #, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Ogiltigt maskinläsbart format '%s'."
-
-msgid "Invalid number of lines in checksum output."
-msgstr "Ogiltigt antal rader i kontrollsummans utdata."
 
 # SLE12
 #, c-format
@@ -1056,6 +1067,11 @@ msgstr ""
 msgid "Number of corresponding pre snapshot."
 msgstr "\t--pre-number <nummer>\t\tNummer för motsvarande för-ögonblicksbild."
 
+# SLE12
+#, fuzzy
+msgid "One or more server-side plugins have failed."
+msgstr "Insticksprogrammet %s på serversidan misslyckades."
+
 msgid "Only use backup-config with automatic set."
 msgstr ""
 
@@ -1183,6 +1199,21 @@ msgid "Run command and create pre and post snapshots."
 msgstr "Kör kommandot och skapa före och efter-ögonblicksavbilder."
 
 #, c-format
+msgid "Running cleanup failed for %d of %ld backup config."
+msgid_plural "Running cleanup failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running cleanup for backup config '%s' failed."
+msgstr ""
+
+# SLE12
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s'."
+msgstr "Okänd upprensningsalgoritm \"%s\"."
+
+#, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
 msgstr[0] ""
@@ -1263,6 +1294,11 @@ msgstr "Spara status till fil."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "Se 'man snapper' för mer instruktioner."
+
+# SLE12
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed"
+msgstr "Insticksprogrammet %s på serversidan misslyckades."
 
 # SLE12
 #, c-format
@@ -1397,6 +1433,12 @@ msgstr "Omfattningen kan specificeras manuellt med alternativet --ambit."
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Konfig. 'root' existerar inte. Troligtvis är inte snapper konfigurerad."
+
+msgid "The content of info.xml is empty."
+msgstr ""
+
+msgid "The type attribute is missing from `info.xml`."
+msgstr ""
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "Detta kan hända om systemet inte har konfigurerats för att rullas tillbaka."
@@ -1582,6 +1624,11 @@ msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Rot-argument kan endast användas tillsammans med no-dbus.\n"
 
 # SLE12
+#, fuzzy
+msgid "snbk cleanup <cleanup-algorithm>"
+msgstr "\tsnapper cleanup <upprensningsalgoritm>"
+
+# SLE12
 msgid "snbk delete [numbers]"
 msgstr "snbk delete [nummer]"
 
@@ -1616,6 +1663,16 @@ msgstr "användning: snbk [--globala alternativ] <kommando> [kommandoargument]"
 
 msgid "yes"
 msgstr "ja"
+
+# SLE12
+#~ msgid "Failed to compute checksum."
+#~ msgstr "Misslyckades med att beräkna kontrollsumma."
+
+#~ msgid "Invalid checksum output format."
+#~ msgstr "Ogiltigt utdataformat för kontrollsumma."
+
+#~ msgid "Invalid number of lines in checksum output."
+#~ msgstr "Ogiltigt antal rader i kontrollsummans utdata."
 
 # SLE12
 #~ msgid "\t--userdata, -u <userdata>\tUserdata for snapshots."

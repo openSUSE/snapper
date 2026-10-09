@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-19 12:28+0100\n"
+"POT-Creation-Date: 2026-10-09 10:15+0200\n"
 "PO-Revision-Date: 2025-07-22 14:59+0000\n"
 "Last-Translator: Julia Faltenbacher <julia.faltenbacher@suse.com>\n"
 "Language-Team: Hungarian <https://l10n.opensuse.org/projects/snapper/master/hu/>\n"
@@ -460,6 +460,10 @@ msgstr ""
 msgid "Cannot find the node of UUID %s"
 msgstr ""
 
+#, fuzzy
+msgid "Cannot find the snapshot to delete."
+msgstr "A pillanatkép létrehozása sikertelen."
+
 # SLE12
 #, fuzzy
 msgid "Cannot transfer a read-write snapshot."
@@ -470,6 +474,10 @@ msgstr ""
 
 msgid "Cleanup"
 msgstr "Tisztítás"
+
+#, fuzzy
+msgid "Cleanup Algorithm"
+msgstr "\t--cleanup-algorithm, -c <algoritmus>\tPillanatkép tisztítási algoritmus."
 
 #, fuzzy
 msgid "Cleanup algorithm for snapshot."
@@ -483,12 +491,20 @@ msgstr "\t--cleanup-algorithm, -c <algoritmus>\tKarbantartási algoritmus a pill
 msgid "Cleanup all configs affecting path."
 msgstr ""
 
+#, fuzzy
+msgid "Cleanup:"
+msgstr "Tisztítás"
+
 #, fuzzy, c-format
 msgid "Client-side plugin '%s' failed."
 msgstr "A(z) '%s' fájl megnyitása sikertelen."
 
 msgid "Columns to show separated by comma."
 msgstr ""
+
+#, fuzzy
+msgid "Command 'cleanup' needs one argument."
+msgstr "A 'cleanup' parancshoz meg kell adni egy paraméter."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "A 'cleanup' parancshoz meg kell adni egy paraméter."
@@ -741,13 +757,13 @@ msgstr "Hiba (%s)."
 msgid "Extra options passed to the diff command."
 msgstr "\t--extensions, -x <beállítások>\tA diff parancsnak átadott további beállítások."
 
-#, fuzzy
-msgid "Failed to compute checksum."
-msgstr "a(z) %s létrehozása sikertelen"
-
 # SLE12
 msgid "Failed to initialize filesystem handler."
 msgstr "Nem sikerült inicializálni a fájlrendszer kezelőjét."
+
+#, fuzzy
+msgid "Failed to load info.xml."
+msgstr "Nem sikerült a területi beállítás megadása. Javítsa ki a rendszert."
 
 #, fuzzy, c-format
 msgid "Failed to parse '%s'."
@@ -756,6 +772,9 @@ msgstr "a(z) %s létrehozása sikertelen"
 #, fuzzy
 msgid "Failed to parse number."
 msgstr "a(z) %s létrehozása sikertelen"
+
+msgid "Failed to parse the date attribute from `info.xml`"
+msgstr ""
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -824,9 +843,6 @@ msgstr "\t--verbose, -v\t\t\tRészletesség fokozása."
 msgid "Invalid ambit '%s'."
 msgstr "Érvénytelen pillanatkép: '%s'."
 
-msgid "Invalid checksum output format."
-msgstr ""
-
 #, fuzzy, c-format
 msgid "Invalid column '%s'."
 msgstr "Érvénytelen pillanatkép: '%s'."
@@ -856,9 +872,6 @@ msgstr "Érvénytelen táblázatstílus: %d."
 #, fuzzy, c-format
 msgid "Invalid machine readable format '%s'."
 msgstr "Érvénytelen táblázatstílus: %d."
-
-msgid "Invalid number of lines in checksum output."
-msgstr ""
 
 #, fuzzy, c-format
 msgid "Invalid path '%s'."
@@ -981,6 +994,10 @@ msgstr ""
 msgid "Number of corresponding pre snapshot."
 msgstr "\t--pre-number <szám>\t\tMegelőző pillanatfelvételek megfelelő száma."
 
+#, fuzzy
+msgid "One or more server-side plugins have failed."
+msgstr "A(z) '%s' fájl megnyitása sikertelen."
+
 msgid "Only use backup-config with automatic set."
 msgstr ""
 
@@ -1102,6 +1119,20 @@ msgid "Run command and create pre and post snapshots."
 msgstr "\t--command <parancs>\t\tFuttassa a parancsot, és készítsen pillanatképet előtte, majd utána."
 
 #, c-format
+msgid "Running cleanup failed for %d of %ld backup config."
+msgid_plural "Running cleanup failed for %d of %ld backup configs."
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "Running cleanup for backup config '%s' failed."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Running cleanup for backup config '%s'."
+msgstr "Ismeretlen tisztító algoritmus: '%s'."
+
+#, c-format
 msgid "Running delete failed for %d of %ld backup config."
 msgid_plural "Running delete failed for %d of %ld backup configs."
 msgstr[0] ""
@@ -1182,6 +1213,10 @@ msgstr "\t--output, -o <fájl>\t\tÁllapot mentése fájlba."
 
 msgid "See 'man snapper' for further instructions."
 msgstr "További útmutatásért lásd: 'man snapper'."
+
+#, fuzzy, c-format
+msgid "Server-side plugin '%s' failed"
+msgstr "A(z) '%s' fájl megnyitása sikertelen."
 
 #, fuzzy, c-format
 msgid "Server-side plugin '%s' failed."
@@ -1313,6 +1348,12 @@ msgstr ""
 
 msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "A 'root' konfiguráció nem létezik. A snapper valószínűleg nincs konfigurálva."
+
+msgid "The content of info.xml is empty."
+msgstr ""
+
+msgid "The type attribute is missing from `info.xml`."
+msgstr ""
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr ""
@@ -1480,6 +1521,10 @@ msgid "root argument can be used only together with no-dbus.\n"
 msgstr "A root argumentum csak a no-dbus beállítással együtt használható."
 
 #, fuzzy
+msgid "snbk cleanup <cleanup-algorithm>"
+msgstr "\tsnapper cleanup <tisztítás-algoritmus>"
+
+#, fuzzy
 msgid "snbk delete [numbers]"
 msgstr "\tsnapper delete <szám>"
 
@@ -1513,6 +1558,10 @@ msgstr "használat: snapper [--global-options] <parancs> [--command-options] [co
 
 msgid "yes"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Failed to compute checksum."
+#~ msgstr "a(z) %s létrehozása sikertelen"
 
 # SLE12
 #~ msgid "\t--description, -d <description>\tDescription for snapshots."
