@@ -9,15 +9,16 @@ msgstr ""
 "Project-Id-Version: snapper\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-09 10:15+0200\n"
-"PO-Revision-Date: 2026-03-20 03:04+0000\n"
+"PO-Revision-Date: 2026-10-10 11:13+0000\n"
 "Last-Translator: Yasuhiko Kamata <belphegor@belbel.or.jp>\n"
-"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/ja/>\n"
+"Language-Team: Japanese <https://l10n.opensuse.org/projects/snapper/master/"
+"ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.16.2\n"
+"X-Generator: Weblate 2026.10.1\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <クリーンアップアルゴリズム>"
@@ -441,9 +442,8 @@ msgstr "既定のサブボリュームが未知のものであるため、ロー
 msgid "Cannot find the node of UUID %s"
 msgstr "UUID %s のノードが見つかりません"
 
-#, fuzzy
 msgid "Cannot find the snapshot to delete."
-msgstr "UUID %s のノードが見つかりません"
+msgstr "削除すべきスナップショットが見つかりません。"
 
 msgid "Cannot transfer a read-write snapshot."
 msgstr "読み書き可能なスナップショットを転送できません。"
@@ -454,9 +454,8 @@ msgstr "CSV 出力での区切り文字を指定します。"
 msgid "Cleanup"
 msgstr "クリーンアップ"
 
-#, fuzzy
 msgid "Cleanup Algorithm"
-msgstr "スナップショットに対するクリーンアップアルゴリズムを指定します。"
+msgstr "クリーンアップアルゴリズム"
 
 msgid "Cleanup algorithm for snapshot."
 msgstr "スナップショットに対するクリーンアップアルゴリズムを指定します。"
@@ -467,9 +466,8 @@ msgstr "スナップショットに対するクリーンアップアルゴリズ
 msgid "Cleanup all configs affecting path."
 msgstr "指定したパスに関わる全ての設定をクリーンアップします。"
 
-#, fuzzy
 msgid "Cleanup:"
-msgstr "クリーンアップ"
+msgstr "クリーンアップ:"
 
 #, c-format
 msgid "Client-side plugin '%s' failed."
@@ -478,7 +476,6 @@ msgstr "クライアント側のプラグイン '%s' が失敗しました。"
 msgid "Columns to show separated by comma."
 msgstr "カンマ区切りで表示すべき列を指定します。"
 
-#, fuzzy
 msgid "Command 'cleanup' needs one argument."
 msgstr "'cleanup' コマンドには 1 つのパラメータが必要です。"
 
@@ -699,9 +696,8 @@ msgstr "diffコマンドに渡す追加オプションを指定します。"
 msgid "Failed to initialize filesystem handler."
 msgstr "ファイルシステムハンドラの準備に失敗しました。"
 
-#, fuzzy
 msgid "Failed to load info.xml."
-msgstr "ロケールの設定に失敗しました。"
+msgstr "info.xml の読み込みに失敗しました。"
 
 #, c-format
 msgid "Failed to parse '%s'."
@@ -711,7 +707,7 @@ msgid "Failed to parse number."
 msgstr "数値の解釈に失敗しました。"
 
 msgid "Failed to parse the date attribute from `info.xml`"
-msgstr ""
+msgstr "`info.xml` 内の日時属性の処理に失敗しました"
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -911,9 +907,8 @@ msgstr "注意:"
 msgid "Number of corresponding pre snapshot."
 msgstr "事前スナップショットの番号を指定します。"
 
-#, fuzzy
 msgid "One or more server-side plugins have failed."
-msgstr "サーバ側のプラグイン '%s' が失敗しました。"
+msgstr "1 つもしくは複数のサーバ側プラグインが失敗しました。"
 
 msgid "Only use backup-config with automatic set."
 msgstr "自動設定のある backup-config のみを使用します。"
@@ -1019,18 +1014,18 @@ msgstr "スナップショット %d を復元しています。"
 msgid "Run command and create pre and post snapshots."
 msgstr "指定したコマンドを実行し、その前後にスナップショットを採取します。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running cleanup failed for %d of %ld backup config."
 msgid_plural "Running cleanup failed for %d of %ld backup configs."
-msgstr[0] "%d / %ld 個のバックアップ設定の削除に失敗しました。"
+msgstr[0] "%d / %ld 個のバックアップ設定のクリーンアップ実行に失敗しました。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running cleanup for backup config '%s' failed."
-msgstr "バックアップ設定 '%s' の削除処理が失敗しました。"
+msgstr "バックアップ設定 '%s' のクリーンアップ処理実行に失敗しました。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running cleanup for backup config '%s'."
-msgstr "バックアップ設定 '%s' を削除しています。"
+msgstr "バックアップ設定 '%s' をクリーンアップしています。"
 
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
@@ -1107,9 +1102,9 @@ msgstr "状態をファイルに保存します。"
 msgid "See 'man snapper' for further instructions."
 msgstr "詳しい手順については、「man snapper」を参照してください。"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Server-side plugin '%s' failed"
-msgstr "サーバ側のプラグイン '%s' が失敗しました。"
+msgstr "サーバ側のプラグイン '%s' が失敗しました"
 
 #, c-format
 msgid "Server-side plugin '%s' failed."
@@ -1229,10 +1224,10 @@ msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "設定 'root' が存在していません。 snapper が設定されていない可能性があります。"
 
 msgid "The content of info.xml is empty."
-msgstr ""
+msgstr "info.xml の内容がありません。"
 
 msgid "The type attribute is missing from `info.xml`."
-msgstr ""
+msgstr "`info.xml` 内に type 属性がありません。"
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "この問題は、システム側でロールバックの設定がされていない場合に発生します。"
@@ -1388,9 +1383,8 @@ msgstr "何もすることがありません"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "root パラメータは no-dbus をあわせて指定した場合にのみ使用できます。\n"
 
-#, fuzzy
 msgid "snbk cleanup <cleanup-algorithm>"
-msgstr "\tsnapper cleanup <クリーンアップアルゴリズム>"
+msgstr "snbk cleanup <クリーンアップアルゴリズム>"
 
 msgid "snbk delete [numbers]"
 msgstr "snbk delete [番号]"
