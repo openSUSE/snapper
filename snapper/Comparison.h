@@ -46,6 +46,14 @@ namespace snapper
 	Comparison(const Snapper* snapper, Snapshots::const_iterator snapshot1,
 		   Snapshots::const_iterator snapshot2, bool mount);
 
+	/**
+	 * Create a comparison containing only the explicitly requested absolute
+	 * filenames, without walking the complete snapshot trees.
+	 */
+	Comparison(const Snapper* snapper, Snapshots::const_iterator snapshot1,
+		   Snapshots::const_iterator snapshot2, bool mount,
+		   const vector<string>& filenames);
+
 	~Comparison();
 
 	const Snapper* getSnapper() const { return snapper; }
@@ -89,7 +97,7 @@ namespace snapper
 	void filter();
 
 	void do_mount() const;
-	void do_umount() const;
+	void do_umount() const noexcept;
 
 	const Snapper* snapper;
 

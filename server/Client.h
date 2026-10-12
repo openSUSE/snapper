@@ -116,6 +116,7 @@ public:
     void delete_comparison(DBus::Connection& conn, DBus::Message& msg);
     void get_files(DBus::Connection& conn, DBus::Message& msg);
     void get_files_by_pipe(DBus::Connection& conn, DBus::Message& msg);
+    void get_files_for_paths(DBus::Connection& conn, DBus::Message& msg);
     void setup_quota(DBus::Connection& conn, DBus::Message& msg);
     void prepare_quota(DBus::Connection& conn, DBus::Message& msg);
     void query_quota(DBus::Connection& conn, DBus::Message& msg);

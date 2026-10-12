@@ -179,6 +179,8 @@ namespace snapper
     public:
 
 	friend class Comparison;
+	friend Files compareFiles(const FilePaths* file_paths, const vector<string>& filenames,
+				  const vector<string>& ignore_patterns);
 
 	Files(const FilePaths* file_paths);
 	Files(const FilePaths* file_paths, const vector<File>& entries);
@@ -229,6 +231,18 @@ namespace snapper
 	vector<File> entries;
 
     };
+
+
+    /**
+     * Compare only the explicitly requested absolute filenames.
+     *
+     * Unlike Comparison this does not walk the complete snapshot trees. The
+     * paths in the returned Files object still refer to file_paths, so that
+     * the normal undo machinery can be used unchanged.
+     */
+    Files
+    compareFiles(const FilePaths* file_paths, const vector<string>& filenames,
+		 const vector<string>& ignore_patterns);
 
 
     string

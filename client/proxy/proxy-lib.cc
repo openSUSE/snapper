@@ -158,6 +158,14 @@ ProxySnapperLib::createComparison(const ProxySnapshot& lhs, const ProxySnapshot&
 }
 
 
+ProxyComparison
+ProxySnapperLib::createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs, bool mount,
+				  const vector<string>& filenames)
+{
+    return ProxyComparison(new ProxyComparisonLib(this, lhs, rhs, mount, filenames));
+}
+
+
 ProxySnapshotsLib::ProxySnapshotsLib(ProxySnapperLib* backref)
     : backref(backref)
 {
@@ -216,6 +224,16 @@ ProxyComparisonLib::ProxyComparisonLib(ProxySnapperLib* proxy_snapper, const Pro
 {
     comparison.reset(new Comparison(proxy_snapper->snapper.get(), to_lib(lhs).it, to_lib(rhs).it,
 				    mount));
+}
+
+
+ProxyComparisonLib::ProxyComparisonLib(ProxySnapperLib* proxy_snapper, const ProxySnapshot& lhs,
+				       const ProxySnapshot& rhs, bool mount,
+				       const vector<string>& filenames)
+    : proxy_snapper(proxy_snapper)
+{
+    comparison.reset(new Comparison(proxy_snapper->snapper.get(), to_lib(lhs).it, to_lib(rhs).it,
+				    mount, filenames));
 }
 
 

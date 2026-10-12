@@ -65,6 +65,13 @@ The following two commands require a successful CreateComparison in advance.
 method GetFiles config-name number1 number2 -> list(filename status)
 method GetFilesByPipe config-name number1 number2 -> fd
 
+method GetFilesForPaths config-name number1 number2 paths -> list(filename status)
+
+GetFilesForPaths compares only the supplied absolute paths and does not require
+CreateComparison. It is intended for operations such as undochange where the
+caller has explicitly selected files and a complete tree comparison would be
+unnecessarily expensive.
+
 Filenames do not include the subvolume.
 
 GetFilesByPipe returns a file descriptor from which the client can

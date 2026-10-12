@@ -400,6 +400,14 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"      <arg name='fd' type='h' direction='out'/>\n"
 	"    </method>\n"
 
+	"    <method name='GetFilesForPaths'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='number1' type='u' direction='in'/>\n"
+	"      <arg name='number2' type='u' direction='in'/>\n"
+	"      <arg name='paths' type='as' direction='in'/>\n"
+	"      <arg name='files' type='a(su)' direction='out'/>\n"
+	"    </method>\n"
+
 	"    <method name='Sync'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"    </method>\n"
@@ -1596,6 +1604,45 @@ Client::get_files_by_pipe(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
+Client::get_files_for_paths(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    dbus_uint32_t num1, num2;
+    vector<string> filenames;
+
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name >> num1 >> num2 >> filenames;
+
+    y2deb("GetFilesForPaths config_name:" << config_name << " num1:" << num1 <<
+	  " num2:" << num2 << " paths:" << filenames.size());
+
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+
+    check_permission(conn, msg, *it);
+
+    Snapper* snapper = it->getSnapper();
+    Snapshots& snapshots = snapper->getSnapshots();
+    Snapshots::const_iterator snapshot1 = snapshots.find(num1);
+    Snapshots::const_iterator snapshot2 = snapshots.find(num2);
+
+    RefHolder ref_holder(*it);
+
+    lock.unlock();
+
+    Comparison comparison(snapper, snapshot1, snapshot2, false, filenames);
+
+    DBus::MessageMethodReturn reply(msg);
+
+    DBus::Marshaller marshaller(reply);
+    marshaller << comparison.getFiles();
+
+    conn.send(reply);
+}
+
+
+void
 Client::setup_quota(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
@@ -1887,6 +1934,7 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	{ "DeleteComparison", &Client::delete_comparison },
 	{ "GetFiles", &Client::get_files },
 	{ "GetFilesByPipe", &Client::get_files_by_pipe },
+	{ "GetFilesForPaths", &Client::get_files_for_paths },
 	{ "SetupQuota", &Client::setup_quota },
 	{ "PrepareQuota", &Client::prepare_quota },
 	{ "QueryQuota", &Client::query_quota },
