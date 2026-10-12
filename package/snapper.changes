@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Oct 12 20:17:00 UTC 2026 - rlysleepynick <hirohiro239@outlook.jp>
+
+- added fish completion
+
+-------------------------------------------------------------------
 Tue Jun 16 10:40:03 CEST 2026 - Arvin Schnell <aschnell@suse.com>
 
 - allow to disable all-time unique snapshot numbers (see
