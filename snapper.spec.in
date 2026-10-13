@@ -232,12 +232,49 @@ test -f /etc/logrotate.d/snapper.rpmsave && mv -v /etc/logrotate.d/snapper.rpmsa
 %endif
 %{_datadir}/dbus-1/system.d/org.opensuse.Snapper.conf
 %{_datadir}/dbus-1/system-services/org.opensuse.Snapper.service
+
+%package bash-completion
+Summary:        Bash completion for %{name}
+Group:          System/Shells
+Supplements:    (%{name} = %{version} and bash-completion)
+Requires:       %{name} = %version
+Requires:       bash-completion
+BuildArch:      noarch
+
+%description bash-completion
+Bash command line completion for %{name}
+
+%files bash-completion
 %dir %{_datadir}/bash-completion
 %dir %{_datadir}/bash-completion/completions/
 %{_datadir}/bash-completion/completions/snapper
+
+%package zsh-completion
+Summary:        Zsh completion for %{name}
+Group:          System/Shells
+Supplements:    (%{name} = %{version} and zsh)
+Requires:       %{name} = %version
+BuildArch:      noarch
+
+%description zsh-completion
+Zsh command line completion for %{name}
+
+%files zsh-completion
 %dir %{_datadir}/zsh
 %dir %{_datadir}/zsh/site-functions
 %{_datadir}/zsh/site-functions/_snapper
+
+%package fish-completion
+Summary:        Fish completion for %{name}
+Group:          System/Shells
+Supplements:    (%{name} = %{version} and fish)
+Requires:       %{name} = %version
+BuildArch:      noarch
+
+%description fish-completion
+Fish command line completion for %{name}
+
+%files fish-completion
 %dir %{_datadir}/fish
 %dir %{_datadir}/fish/vendor_completions.d
 %{_datadir}/fish/vendor_completions.d/snapper.fish
