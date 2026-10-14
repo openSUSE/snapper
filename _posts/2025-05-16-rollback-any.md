@@ -24,9 +24,9 @@ startup. In /etc/fstab we use:
 UUID=[...]  /home  btrfs  subvol=/@/home/.snapshots/0/snapshot  0 0
 ~~~
 
-If we want to rollback to e.g. snapshot 10 we basically 1. rename
+If we want to rollback to e.g. snapshot 10 we basically 1\. rename
 snapshot 0 to the next free number (e.g. 11) and set it read-only,
-2. create a read-write snapshot of 10 as 0 and 3. reboot. That's it.
+2\. create a read-write snapshot of 10 as 0 and 3\. reboot. That's it.
 
 Although all of this is not yet implemented in snapper you can try
 this workflow now. A simple Python program for doing the rollback is
