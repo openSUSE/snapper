@@ -4,15 +4,17 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-09 10:15+0200\n"
-"PO-Revision-Date: 2026-08-06 03:13+0000\n"
+"PO-Revision-Date: 2026-10-15 16:13+0000\n"
 "Last-Translator: Andrei Stepanov <adem4ik@gmail.com>\n"
-"Language-Team: Russian <https://l10n.opensuse.org/projects/snapper/master/ru/>\n"
+"Language-Team: Russian <https://l10n.opensuse.org/projects/snapper/master/"
+"ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 2026.8\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 2026.10.1\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
 msgstr "\tsnapper cleanup <алгоритм очистки>"
@@ -437,9 +439,8 @@ msgstr "Невозможно выполнить откат, подтом по у
 msgid "Cannot find the node of UUID %s"
 msgstr "Не удаётся найти узел с UUID %s"
 
-#, fuzzy
 msgid "Cannot find the snapshot to delete."
-msgstr "Не удаётся найти узел с UUID %s"
+msgstr "Не удаётся найти снимок для удаления."
 
 msgid "Cannot transfer a read-write snapshot."
 msgstr "Нельзя перенести снимок для чтения/записи."
@@ -450,9 +451,8 @@ msgstr "Символ-разделитель для формата вывода C
 msgid "Cleanup"
 msgstr "Очистка"
 
-#, fuzzy
 msgid "Cleanup Algorithm"
-msgstr "Алгоритм очистки для снимка."
+msgstr "Алгоритм очистки"
 
 msgid "Cleanup algorithm for snapshot."
 msgstr "Алгоритм очистки для снимка."
@@ -463,9 +463,8 @@ msgstr "Алгоритм очистки для снимков."
 msgid "Cleanup all configs affecting path."
 msgstr "Сбросить настройки, влияющие на путь."
 
-#, fuzzy
 msgid "Cleanup:"
-msgstr "Очистка"
+msgstr "Очистка:"
 
 #, c-format
 msgid "Client-side plugin '%s' failed."
@@ -474,9 +473,8 @@ msgstr "Сбой плагина '%s' со стороны клиента."
 msgid "Columns to show separated by comma."
 msgstr "Колонки для отображения, разделенные запятой."
 
-#, fuzzy
 msgid "Command 'cleanup' needs one argument."
-msgstr "Команде 'cleanup' нужен один аргумент."
+msgstr "Команде «cleanup» нужен один аргумент."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Команде 'cleanup' нужен один аргумент."
@@ -697,9 +695,8 @@ msgstr "Дополнительные опции, переданные в ком�
 msgid "Failed to initialize filesystem handler."
 msgstr "Не удалось инициализировать обработчик файловой системы."
 
-#, fuzzy
 msgid "Failed to load info.xml."
-msgstr "Сбой указания локали."
+msgstr "Не удалось загрузить info.xml."
 
 #, c-format
 msgid "Failed to parse '%s'."
@@ -709,7 +706,7 @@ msgid "Failed to parse number."
 msgstr "Не удалось разобрать число."
 
 msgid "Failed to parse the date attribute from `info.xml`"
-msgstr ""
+msgstr "Не удалось разобрать атрибут даты из `info.xml`"
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -909,9 +906,8 @@ msgstr "Примечание:"
 msgid "Number of corresponding pre snapshot."
 msgstr "Номер соответствующего предварительного снимка."
 
-#, fuzzy
 msgid "One or more server-side plugins have failed."
-msgstr "Сбой плагина '%s' на стороне сервера."
+msgstr "Один или несколько серверных плагинов завершились сбоем."
 
 msgid "Only use backup-config with automatic set."
 msgstr "Использовать backup-config только при автоматической настройке."
@@ -1017,20 +1013,20 @@ msgstr "Восстановление снимка %d."
 msgid "Run command and create pre and post snapshots."
 msgstr "Запустить команду и создать пре- и пост-снимок."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running cleanup failed for %d of %ld backup config."
 msgid_plural "Running cleanup failed for %d of %ld backup configs."
-msgstr[0] "Не удалось выполнить удаление %d из %ld резервной конфигурации."
-msgstr[1] "Не удалось выполнить удаление %d из %ld резервных конфигураций."
-msgstr[2] "Не удалось выполнить удаление %d из %ld резервных конфигураций."
+msgstr[0] "Не удалось выполнить очистку для %d из %ld резервной конфигурации."
+msgstr[1] "Не удалось выполнить очистку для %d из %ld резервных конфигураций."
+msgstr[2] "Не удалось выполнить очистку для %d из %ld резервных конфигураций."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running cleanup for backup config '%s' failed."
-msgstr "Сбой удаления резервной конфигурации '%s'."
+msgstr "Не удалось выполнить очистку для резервной конфигурации «%s»."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running cleanup for backup config '%s'."
-msgstr "Выполняется удаление резервной конфигурации '%s'."
+msgstr "Выполняется очистка для резервной конфигурации «%s»."
 
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
@@ -1117,9 +1113,9 @@ msgstr "Сохранить статус в файл."
 msgid "See 'man snapper' for further instructions."
 msgstr "Дополнительные инструкции см. в man snapper."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Server-side plugin '%s' failed"
-msgstr "Сбой плагина '%s' на стороне сервера."
+msgstr "Сбой серверного плагина '%s'"
 
 #, c-format
 msgid "Server-side plugin '%s' failed."
@@ -1239,10 +1235,10 @@ msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Конфигурация root не существует. Вероятно, snapper не настроен."
 
 msgid "The content of info.xml is empty."
-msgstr ""
+msgstr "Содержимое info.xml пусто."
 
 msgid "The type attribute is missing from `info.xml`."
-msgstr ""
+msgstr "В `info.xml` отсутствует атрибут type."
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "Это может произойти, если система не настроена для отката."
@@ -1398,9 +1394,8 @@ msgstr "нечего выполнять"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Аргумент root можно использовать только вместе с no-dbus.\n"
 
-#, fuzzy
 msgid "snbk cleanup <cleanup-algorithm>"
-msgstr "\tsnapper cleanup <алгоритм очистки>"
+msgstr "snbk cleanup <алгоритм-очистки>"
 
 msgid "snbk delete [numbers]"
 msgstr "snbk delete [числа]"
