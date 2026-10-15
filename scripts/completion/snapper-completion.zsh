@@ -54,7 +54,7 @@ local algorithms=(
   'empty-pre-post:Deletes\ pre/post\ snapshot\ pairs\ with\ empty\ diffs'
 )
 local type=(single pre post)
-local _number=$(command snapper --csvout --no-headers --separator : list --columns number,description)
+local _number=$(command snapper --csvout --no-headers list --columns number)
 local number=${(f)_number}
 local number_without_current=${${(f)_number}[2,-1]}
 case $words[1] in
@@ -124,13 +124,13 @@ diff)
   _arguments -s -S \
     {--input,-i}'[Read files to diff from file]: :_files' \
     --diff-cmd'[Command used for comparing files]: :{_command_names -e}' \
-    {--extensions,-x}'[Extra options passed to the diff command]:diff options:_diff'
+    {--extensions,-x}'[Extra options passed to the diff command]:diff options:_diff' \
     ":number:(($number))" \
     "*:: :_files"
   ;;
 undochange)
   _arguments -s -S \
-    {--input,-i}'[Read files for which to undo changes from file]: :_files'
+    {--input,-i}'[Read files for which to undo changes from file]: :_files' \
     ":number:(($number))" \
     "*:: :_files"
   ;;
