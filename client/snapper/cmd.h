@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2020] SUSE LLC
+ * Copyright (c) [2016-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -68,6 +68,14 @@ namespace snapper
     void
     command_set_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
 		       ProxySnapper*, Plugins::Report& report);
+
+
+    void
+    help_lock_config();
+
+    void
+    command_lock_config(GlobalOptions& global_options, GetOpts& get_opts, ProxySnappers* snappers,
+			ProxySnapper* snapper, Plugins::Report& report);
 
 
     void

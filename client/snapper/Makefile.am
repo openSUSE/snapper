@@ -14,6 +14,7 @@ snapper_SOURCES =					\
 	cmd-delete-config.cc				\
 	cmd-get-config.cc				\
 	cmd-set-config.cc				\
+	cmd-lock-config.cc				\
 	cmd-list.cc					\
 	cmd-create.cc					\
 	cmd-modify.cc					\
