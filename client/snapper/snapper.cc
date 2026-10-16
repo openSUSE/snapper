@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2025] SUSE LLC
+ * Copyright (c) [2016-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -126,6 +126,7 @@ main(int argc, char** argv)
 	Cmd("delete-config", command_delete_config, help_delete_config, false),
 	Cmd("get-config", command_get_config, help_get_config, true),
 	Cmd("set-config", command_set_config, help_set_config, true),
+	Cmd("lock-config", command_lock_config, help_lock_config, true),
 	Cmd("list", { "ls" }, command_list, help_list, false),
 	Cmd("create", command_create, help_create, true),
 	Cmd("modify", command_modify, help_modify, true),
