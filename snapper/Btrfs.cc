@@ -1672,7 +1672,7 @@ namespace snapper
 
 	// Inspect the root subvolume via the btrfs top-level: paths in the
 	// running root may have other filesystems mounted over them.
-	TopLevelMount top_level(subvolume, openInfosDir());
+	TopLevelMount top_level(prepend_root_prefix(root_prefix, subvolume), openInfosDir());
 
 	SDir root_dir(top_level.dir, subvol_name);
 	return NestedSubvolumes(root_dir).check_empty(root_dir);
@@ -1696,7 +1696,7 @@ namespace snapper
 	    Plugins::set_default_snapshot(Plugins::Stage::PRE_ACTION, subvolume, this, num, report);
 
 	    // Mount the btrfs top-level (subvolid=5) - named subvolumes live here
-	    TopLevelMount top_level(subvolume, openInfosDir());
+	    TopLevelMount top_level(prepend_root_prefix(root_prefix, subvolume), openInfosDir());
 	    SDir& toplevel = top_level.dir;
 
 	    // The subvolume the running system is mounted from: after rollbacks
