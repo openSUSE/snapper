@@ -107,6 +107,15 @@ namespace snapper
 	virtual void setDefault(unsigned int num, Plugins::Report& report) const;
 
 	/**
+	 * Check whether a rollback by swapping the named root subvolume is
+	 * possible: throws if a subvolume nested in it (other than .snapshots)
+	 * holds data, which would only be reachable in the old root afterwards.
+	 * Returns the empty nested subvolumes, whose paths the rollback frees.
+	 * Currently only available for btrfs.
+	 */
+	virtual vector<string> checkRollbackSubvolRename(const string& subvol_name) const;
+
+	/**
 	 * Rollback by atomically swapping the named root subvolume with a
 	 * read-write copy of snapshot num. Currently only available for btrfs.
 	 */

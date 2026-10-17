@@ -184,6 +184,12 @@ namespace snapper
 		cout << sformat(_("Ambit is %s."), toString(ambit).c_str()) << endl;
 	}
 
+	// Refuse a subvol-rename rollback before any snapshot is created if a
+	// nested subvolume holds data the new root would not have.
+	vector<string> empty_nested;
+	if (ambit == Ambit::SUBVOL_RENAME)
+	    empty_nested = filesystem->checkRollbackSubvolRename(subvol_name);
+
 	if (previous_default != snapshots.end() && scd1.description == default_description1)
 	    scd1.description += sformat(" of #%d", previous_default->getNum());
 
@@ -255,10 +261,24 @@ namespace snapper
 		    cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot2->getNum()) << endl;
 
 		if (ambit == Ambit::SUBVOL_RENAME)
+		{
 		    filesystem->rollbackSubvolRename(snapshot2->getNum(), subvol_name,
 						     rollback_backup_limit, report);
+
+		    if (!global_options.quiet() && !empty_nested.empty())
+		    {
+			string paths;
+			for (const string& path : empty_nested)
+			    paths += (paths.empty() ? "/" : ", /") + path;
+			cout << sformat(_("Not part of the rollback: the empty nested subvolumes %s "
+					  "stay in the old root and start out empty."),
+					paths.c_str()) << endl;
+		    }
+		}
 		else
+		{
 		    filesystem->setDefault(snapshot2->getNum(), report);
+		}
 
 		Plugins::rollback(filesystem->snapshotDir(snapshot1->getNum()),
 				  filesystem->snapshotDir(snapshot2->getNum()), report);

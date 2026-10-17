@@ -199,6 +199,14 @@ namespace snapper
     }
 
 
+    vector<string>
+    Filesystem::checkRollbackSubvolRename(const string& subvol_name) const
+    {
+	SN_THROW(UnsupportedException());
+	__builtin_unreachable();
+    }
+
+
     void
     Filesystem::rollbackSubvolRename(unsigned int num, const string& subvol_name,
 				     unsigned int backup_limit, Plugins::Report& report) const

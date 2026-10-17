@@ -50,6 +50,7 @@
 #include "snapper/LoggerImpl.h"
 #include "snapper/Btrfs.h"
 #include "snapper/BtrfsUtils.h"
+#include "snapper/BtrfsNested.h"
 #include "snapper/File.h"
 #include "snapper/PluginsImpl.h"
 #include "snapper/Snapper.h"
@@ -1568,6 +1569,30 @@ namespace snapper
     }
 
 
+    vector<string>
+    Btrfs::checkRollbackSubvolRename(const string& subvol_name) const
+    {
+	if (subvol_name.find('/') != string::npos)
+	    SN_THROW(IOErrorException("rollback failed: nested subvolume path '" + subvol_name +
+				     "' is not supported for subvol-rename rollback"));
+
+	bool found = false;
+	MtabData mtab_data;
+	if (!getMtabData(subvolume, found, mtab_data) || !found)
+	    SN_THROW(IOErrorException("rollback failed: cannot find mounted device"));
+
+	// Inspect the root subvolume via the btrfs top-level: paths in the
+	// running root may have other filesystems mounted over them.
+	SDir infos_dir = openInfosDir();
+	TmpMount tmp_mount(infos_dir, mtab_data.device, "tmp-mnt-XXXXXX", "btrfs", 0,
+			   "subvolid=5");
+	SDir toplevel(infos_dir, tmp_mount.getName());
+
+	SDir root_dir(toplevel, subvol_name);
+	return NestedSubvolumes(root_dir).check_empty(root_dir);
+    }
+
+
     void
     Btrfs::rollbackSubvolRename(unsigned int num, const string& subvol_name,
 				unsigned int backup_limit, Plugins::Report& report) const
@@ -1625,6 +1650,11 @@ namespace snapper
 		}
 	    }
 
+	    // Nested subvolumes of the current root, see BtrfsNested.h. The
+	    // client checked them before creating any snapshot; they are checked
+	    // again right before the exchange.
+	    const NestedSubvolumes nested{SDir(toplevel, subvol_name)};
+
 	    // Create a read-write snapshot of the rollback target as <subvol_name>.incoming
 	    SDir snapshot_dir = openSnapshotDir(num);
 	    try
@@ -1638,6 +1668,16 @@ namespace snapper
 		SN_THROW(IOErrorException(string("rollback failed: ") + e.what()));
 	    }
 
+	    try
+	    {
+		nested.check_empty(SDir(toplevel, subvol_name));
+	    }
+	    catch (const Exception& e)
+	    {
+		try { delete_subvolume(toplevel.fd(), incoming); } catch (...) {}
+		throw;
+	    }
+
 	    // Atomically swap <subvol_name> and <subvol_name>.incoming
 	    if (toplevel.exchange(subvol_name, incoming) != 0)
 	    {
@@ -1649,63 +1689,40 @@ namespace snapper
 					  " -- kernel may not support RENAME_EXCHANGE on btrfs"));
 	    }
 
-	    // A btrfs snapshot does not include nested subvolumes: on layouts
-	    // where the .snapshots subvolume lives inside the root subvolume the
-	    // new root only contains an empty stub directory. Move the .snapshots
-	    // subvolume from the old root into the new root, otherwise all
-	    // snapshots would be orphaned in the renamed-away old root.
+	    // A btrfs snapshot does not include nested subvolumes, the new root
+	    // only holds placeholders for them: move .snapshots into it and free
+	    // the paths of the other (empty) ones.
 	    {
 		SDir old_root(toplevel, incoming);
 		SDir new_root(toplevel, subvol_name);
 
-		struct stat st;
-		if (old_root.stat(SNAPSHOTS_NAME, &st, AT_SYMLINK_NOFOLLOW) == 0 &&
-		    is_subvolume(st))
+		// Moving .snapshots unhooks it from the still-mounted old root
+		// (the running system, reached by subvolume id, not by the name
+		// we exchanged), so /.snapshots no longer resolves and snapper
+		// would stop working until the reboot swaps in the new root.
+		// Mount the .snapshots subvolume back onto the running root by
+		// its (unchanged) subvolume id so snapper keeps working in the
+		// meantime; this mount does not survive the reboot, where the new
+		// root provides /.snapshots as a nested subvolume again.
+		if (nested.apply(old_root, new_root))
 		{
-		    bool moved = false;
-		    if (new_root.rmdir(SNAPSHOTS_NAME) != 0 && errno != ENOENT)
+		    try
 		    {
-			y2err("cannot remove " << SNAPSHOTS_NAME << " stub from new root: "
-			      << stringerror(errno) << " -- snapshots remain in the old root");
-		    }
-		    else if (old_root.rename(SNAPSHOTS_NAME, new_root, SNAPSHOTS_NAME) != 0)
-		    {
-			y2err("cannot move " << SNAPSHOTS_NAME << " subvolume to new root: "
-			      << stringerror(errno) << " -- snapshots remain in the old root");
-		    }
-		    else
-		    {
-			moved = true;
-		    }
+			SDir new_root_snapshots(new_root, SNAPSHOTS_NAME);
+			const subvolid_t snapshots_id = get_id(new_root_snapshots.fd());
 
-		    // The move just unhooked .snapshots from the still-mounted old
-		    // root (the running system, reached by subvolume id, not by the
-		    // name we exchanged), so /.snapshots no longer resolves and
-		    // snapper would stop working until the reboot swaps in the new
-		    // root. Mount the .snapshots subvolume back onto the running root
-		    // by its (unchanged) subvolume id so snapper keeps working in the
-		    // meantime; this mount does not survive the reboot, where the new
-		    // root provides /.snapshots as a nested subvolume again.
-		    if (moved)
+			SDir subvolume_dir = openSubvolumeDir();
+			subvolume_dir.mkdir(SNAPSHOTS_NAME, 0750);
+			SDir running_snapshots(subvolume_dir, SNAPSHOTS_NAME);
+			if (!running_snapshots.mount(mtab_data.device, "btrfs", 0,
+						     "subvolid=" + decString(snapshots_id)))
+			    y2err("failed to remount " << SNAPSHOTS_NAME << " on the running "
+				  "root -- snapper works again after reboot");
+		    }
+		    catch (const std::exception& e)
 		    {
-			try
-			{
-			    SDir new_root_snapshots(new_root, SNAPSHOTS_NAME);
-			    const subvolid_t snapshots_id = get_id(new_root_snapshots.fd());
-
-			    SDir subvolume_dir = openSubvolumeDir();
-			    subvolume_dir.mkdir(SNAPSHOTS_NAME, 0750);
-			    SDir running_snapshots(subvolume_dir, SNAPSHOTS_NAME);
-			    if (!running_snapshots.mount(mtab_data.device, "btrfs", 0,
-							 "subvolid=" + decString(snapshots_id)))
-				y2err("failed to remount " << SNAPSHOTS_NAME << " on the running "
-				      "root -- snapper works again after reboot");
-			}
-			catch (const runtime_error& e)
-			{
-			    y2err("failed to remount " << SNAPSHOTS_NAME << " on the running root: "
-				  << e.what() << " -- snapper works again after reboot");
-			}
+			y2err("failed to remount " << SNAPSHOTS_NAME << " on the running root: "
+			      << e.what() << " -- snapper works again after reboot");
 		    }
 		}
 	    }
@@ -1800,6 +1817,13 @@ namespace snapper
     Btrfs::setDefault(unsigned int num, Plugins::Report& report) const
     {
 	Filesystem::setDefault(num, report);
+    }
+
+
+    vector<string>
+    Btrfs::checkRollbackSubvolRename(const string& subvol_name) const
+    {
+	return Filesystem::checkRollbackSubvolRename(subvol_name);
     }
 
 

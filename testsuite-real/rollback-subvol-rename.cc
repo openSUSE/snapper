@@ -7,6 +7,8 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <linux/btrfs_tree.h>
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -14,6 +16,7 @@
 #include "client/snapper/ambit.h"
 #include "snapper/Btrfs.h"
 #include "snapper/BtrfsUtils.h"
+#include "snapper/BtrfsNested.h"
 #include "snapper/FileUtils.h"
 #include "snapper/SnapperTmpl.h"
 
@@ -336,6 +339,263 @@ test_prune_keeps_recent_backups(SDir& top)
 }
 
 
+// Opens the directory at the relative path (e.g. "var/lib") below parent.
+static SDir
+open_path(const SDir& parent, const string& path)
+{
+    SDir dir = parent;
+    string::size_type pos = 0;
+    while (pos < path.size())
+    {
+	string::size_type end = path.find('/', pos);
+	if (end == string::npos)
+	    end = path.size();
+	dir = SDir(dir, path.substr(pos, end - pos));
+	pos = end + 1;
+    }
+    return dir;
+}
+
+
+// Creates the directories of the relative path below parent, like mkdir -p.
+static void
+mkdirs(const SDir& parent, const string& path)
+{
+    SDir dir = parent;
+    string::size_type pos = 0;
+    while (pos < path.size())
+    {
+	string::size_type end = path.find('/', pos);
+	if (end == string::npos)
+	    end = path.size();
+	const string name = path.substr(pos, end - pos);
+	dir.mkdir(name, 0755);
+	dir = SDir(dir, name);
+	pos = end + 1;
+    }
+}
+
+
+// Creates a subvolume at the relative path (e.g. "var/lib/machines") below
+// parent, creating the directories leading to it.
+static void
+create_nested(const SDir& parent, const string& path)
+{
+    const string::size_type slash = path.rfind('/');
+    if (slash == string::npos)
+    {
+	create_subvolume(parent.fd(), path);
+	return;
+    }
+    mkdirs(parent, path.substr(0, slash));
+    SDir dir = open_path(parent, path.substr(0, slash));
+    create_subvolume(dir.fd(), path.substr(slash + 1));
+}
+
+
+static ino_t
+inode_at(const SDir& parent, const string& path)
+{
+    const string::size_type slash = path.rfind('/');
+    SDir dir = slash == string::npos ? parent : open_path(parent, path.substr(0, slash));
+    struct stat st;
+    if (dir.stat(slash == string::npos ? path : path.substr(slash + 1), &st,
+		 AT_SYMLINK_NOFOLLOW) != 0)
+	return 0;
+    return st.st_ino;
+}
+
+
+// Builds @root with the nested subvolumes of a stock Fedora install.
+static void
+create_nested_root(SDir& top)
+{
+    for (const char* n : { "@root", "@root.snap", "@root.incoming" })
+	try { delete_subvolume(top.fd(), n, true); } catch (...) {}
+
+    create_subvolume(top.fd(), "@root");
+    SDir root_sv(top, "@root");
+    create_nested(root_sv, ".snapshots");
+    create_nested(root_sv, ".snapshots/1");	// plain directory, as snapper does
+    create_nested(root_sv, ".snapshots/1/snapshot");
+    create_nested(root_sv, "var/lib/machines");
+    create_nested(root_sv, "var/lib/machines/inner");
+    create_nested(root_sv, "var/lib/portables");
+    mkdirs(root_sv, "opt");
+}
+
+
+static void
+cleanup_nested_root(SDir& top)
+{
+    for (const char* n : { "@root", "@root.snap", "@root.incoming" })
+	try { delete_subvolume(top.fd(), n, true); } catch (...) {}
+}
+
+
+// Only the subvolumes nested directly in the root count: one inside another
+// nested subvolume (e.g. a snapshot in .snapshots) moves along with it.
+static void
+test_nested_inventory(SDir& top)
+{
+    create_nested_root(top);
+
+    vector<string> paths;
+    {
+	SDir root_sv(top, "@root");
+	paths = NestedSubvolumes(root_sv).paths();
+    }
+    sort(paths.begin(), paths.end());
+
+    const vector<string> expected = { ".snapshots", "var/lib/machines", "var/lib/portables" };
+    string got;
+    for (const string& path : paths)
+	got += " " + path;
+    check(paths == expected, "nested subvolume inventory is" + got);
+
+    cleanup_nested_root(top);
+
+    cout << "ok: nested-inventory" << endl;
+}
+
+
+// Empty nested subvolumes and the content of .snapshots do not block the
+// rollback; a nested subvolume with data does, naming its path.
+static void
+test_nested_check_empty(SDir& top)
+{
+    create_nested_root(top);
+
+    SDir root_sv(top, "@root");
+    {
+	SDir snapshots(root_sv, ".snapshots");
+	create_marker(snapshots, "history-marker");
+    }
+    {
+	SDir machines = open_path(root_sv, "var/lib/machines");
+	delete_subvolume(machines.fd(), "inner");
+    }
+
+    NestedSubvolumes nested(root_sv);
+
+    bool threw = false;
+    try { nested.check_empty(root_sv); }
+    catch (const std::exception& e) { threw = true; cerr << e.what() << endl; }
+    check(!threw, "check_empty refused empty nested subvolumes");
+
+    {
+	SDir portables = open_path(root_sv, "var/lib/portables");
+	create_marker(portables, "image.raw");
+    }
+
+    string what;
+    try { nested.check_empty(root_sv); }
+    catch (const std::exception& e) { what = e.what(); }
+    check(!what.empty(), "check_empty accepted a nested subvolume with data");
+    check(what.find("var/lib/portables") != string::npos,
+	  "check_empty error does not name var/lib/portables: " + what);
+    check(what.find("var/lib/machines") == string::npos,
+	  "check_empty error names the empty var/lib/machines: " + what);
+
+    cleanup_nested_root(top);
+
+    cout << "ok: nested-check-empty" << endl;
+}
+
+
+// After the exchange the new root has placeholders where the nested
+// subvolumes were: .snapshots moves in, the other placeholders go away.
+static void
+test_nested_apply(SDir& top)
+{
+    create_nested_root(top);
+
+    {
+	SDir root_sv(top, "@root");
+	SDir machines = open_path(root_sv, "var/lib/machines");
+	delete_subvolume(machines.fd(), "inner");
+
+	SDir snapshots(root_sv, ".snapshots");
+	create_marker(snapshots, "history-marker");
+
+	// a plain directory with data in the target snapshot ...
+	mkdirs(root_sv, "srv/data");
+	SDir data = open_path(root_sv, "srv/data");
+	create_marker(data, "kept-marker");
+    }
+
+    {
+	SDir root_sv(top, "@root");
+	create_snapshot(root_sv.fd(), top.fd(), "@root.snap", true, no_qgroup);
+    }
+
+    {
+	SDir root_sv(top, "@root");
+
+	// ... that became a subvolume afterwards: the new root keeps the
+	// directory of the target snapshot.
+	SDir srv(root_sv, "srv");
+	SDir data(srv, "data");
+	data.unlink("kept-marker", 0);
+	srv.rmdir("data");
+	create_subvolume(srv.fd(), "data");
+
+	// a nested subvolume created after the target snapshot: no entry at
+	// all in the new root
+	create_nested(root_sv, "var/lib/late");
+    }
+
+    {
+	SDir snap(top, "@root.snap");
+	create_snapshot(snap.fd(), top.fd(), "@root.incoming", false, no_qgroup);
+    }
+
+    {
+	SDir root_sv(top, "@root");
+	NestedSubvolumes nested(root_sv);
+
+	check(top.exchange("@root", "@root.incoming") == 0, "exchange failed");
+
+	SDir new_root(top, "@root");
+	SDir old_root(top, "@root.incoming");
+
+	check(inode_at(new_root, "var/lib/machines") == BTRFS_EMPTY_SUBVOL_DIR_OBJECTID,
+	      "test setup: var/lib/machines is no placeholder in the new root");
+
+	check(nested.apply(old_root, new_root), "apply did not move .snapshots");
+
+	check(inode_at(new_root, ".snapshots") == BTRFS_FIRST_FREE_OBJECTID,
+	      ".snapshots is not a subvolume in the new root");
+	{
+	    SDir snapshots(new_root, ".snapshots");
+	    check(has_marker(snapshots, "history-marker"), ".snapshots content lost");
+	}
+
+	check(inode_at(new_root, "var/lib/machines") == 0,
+	      "placeholder var/lib/machines not removed from the new root");
+	check(inode_at(new_root, "var/lib/portables") == 0,
+	      "placeholder var/lib/portables not removed from the new root");
+	check(inode_at(new_root, "var/lib/late") == 0,
+	      "var/lib/late unexpectedly in the new root");
+	check(inode_at(new_root, "var/lib") != 0, "var/lib missing in the new root");
+
+	{
+	    SDir data = open_path(new_root, "srv/data");
+	    check(has_marker(data, "kept-marker"),
+		  "directory srv/data of the target snapshot was changed");
+	}
+
+	check(inode_at(old_root, "var/lib/machines") == BTRFS_FIRST_FREE_OBJECTID,
+	      "var/lib/machines no longer in the old root");
+	check(inode_at(old_root, ".snapshots") == 0, ".snapshots still in the old root");
+    }
+
+    cleanup_nested_root(top);
+
+    cout << "ok: nested-apply" << endl;
+}
+
+
 static void
 test_detect_method_strips_kernel_leading_slash(SDir& top, const string& device,
 					       const string& sv_name)
@@ -387,6 +647,9 @@ main()
 	test_rollback_name_collision_uses_subvolid_fallback(top);
 	test_nested_snapshots_subvol_migrates(top);
 	test_prune_keeps_recent_backups(top);
+	test_nested_inventory(top);
+	test_nested_check_empty(top);
+	test_nested_apply(top);
 
 	const vector<string> subvol_names = { "@root", "root", "@rootfs", "@" };
 	for (const string& name : subvol_names)

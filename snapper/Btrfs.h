@@ -89,6 +89,8 @@ namespace snapper
 
 	virtual void setDefault(unsigned int num, Plugins::Report& report) const override;
 
+	virtual vector<string> checkRollbackSubvolRename(const string& subvol_name) const override;
+
 	virtual void rollbackSubvolRename(unsigned int num, const std::string& subvol_name,
 					  unsigned int backup_limit, Plugins::Report& report) const override;
 
