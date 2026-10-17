@@ -85,6 +85,7 @@ namespace snapper
 	qgroup_t qgroup_find_free(int fd, uint64_t level);
 
 	vector<qgroup_t> qgroup_query_relations(int fd, qgroup_t qgroup);
+	vector<qgroup_t> qgroup_query_parents(int fd, qgroup_t qgroup);
 	vector<qgroup_t> qgroup_query_children(int fd, qgroup_t parent);
 
 	struct QGroupUsage
