@@ -95,6 +95,8 @@ namespace snapper
 	    uint64_t exclusive_compressed = 0;
 	};
 
+	void quota_rescan_if_needed(int fd);
+
 	QGroupUsage qgroup_query_usage(int fd, qgroup_t qgroup);
 
 	void sync(int fd);
