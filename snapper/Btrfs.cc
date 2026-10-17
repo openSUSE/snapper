@@ -330,44 +330,60 @@ namespace snapper
 	SDir subvolume_dir = openSubvolumeDir();
 	const int fd = general_dir.fd();
 	const qgroup_t source = calc_qgroup(0, get_id(subvolume_dir.fd()));
-	vector<qgroup_t> source_parents = qgroup_query_parents(fd, source);
-	vector<qgroup_t> snapshot_parents = qgroup_query_parents(fd, qgroup);
-
-	if (source_parents.size() == 1 && source_parents == snapshot_parents)
+	for (unsigned int attempt = 0; attempt < 64; ++attempt)
 	{
-	    vector<qgroup_t> members = qgroup_query_relations(fd, source_parents.front());
-	    sort(members.begin(), members.end());
-	    vector<qgroup_t> expected{ source, qgroup };
-	    sort(expected.begin(), expected.end());
-	    if (members == expected)
-		return;
-	}
+	    vector<qgroup_t> source_parents = qgroup_query_parents(fd, source);
+	    vector<qgroup_t> snapshot_parents = qgroup_query_parents(fd, qgroup);
 
-	if (source_parents.size() + snapshot_parents.size() == 1)
-	{
-	    const bool source_is_missing = source_parents.empty();
-	    const qgroup_t tracker = source_is_missing ? snapshot_parents.front() :
-						    source_parents.front();
-	    const qgroup_t existing_member = source_is_missing ? qgroup : source;
-	    const qgroup_t missing_member = source_is_missing ? source : qgroup;
-	    vector<qgroup_t> members = qgroup_query_children(fd, tracker);
-
-	    if (get_level(tracker) == 2 && members == vector<qgroup_t>{ existing_member })
+	    if (source_parents.size() == 1 && source_parents == snapshot_parents)
 	    {
-		qgroup_assign(fd, missing_member, tracker);
-		quota_rescan_if_needed(fd);
-		return;
+		vector<qgroup_t> members = qgroup_query_relations(fd, source_parents.front());
+		sort(members.begin(), members.end());
+		vector<qgroup_t> expected{ source, qgroup };
+		sort(expected.begin(), expected.end());
+		if (members == expected)
+		    return;
 	    }
+
+	    if (source_parents.size() + snapshot_parents.size() == 1)
+	    {
+		const bool source_is_missing = source_parents.empty();
+		const qgroup_t tracker = source_is_missing ? snapshot_parents.front() :
+						    source_parents.front();
+		const qgroup_t existing_member = source_is_missing ? qgroup : source;
+		const qgroup_t missing_member = source_is_missing ? source : qgroup;
+		vector<qgroup_t> members = qgroup_query_children(fd, tracker);
+
+		if (get_level(tracker) == 2 && members == vector<qgroup_t>{ existing_member })
+		{
+		    qgroup_assign(fd, missing_member, tracker);
+		    quota_rescan_if_needed(fd);
+		    return;
+		}
+	    }
+
+	    if (!source_parents.empty() || !snapshot_parents.empty())
+		return;
+
+	    const qgroup_t tracker = qgroup_find_free(fd, 2);
+	    try
+	    {
+		qgroup_create(fd, tracker);
+	    }
+	    catch (const runtime_error_with_errno& e)
+	    {
+		if (e.error_number != EEXIST)
+		    throw;
+		continue;
+	    }
+
+	    qgroup_assign(fd, qgroup, tracker);
+	    qgroup_assign(fd, source, tracker);
+	    quota_rescan_if_needed(fd);
+	    return;
 	}
 
-	if (!source_parents.empty() || !snapshot_parents.empty())
-	    return;
-
-	const qgroup_t tracker = qgroup_find_free(fd, 2);
-	qgroup_create(fd, tracker);
-	qgroup_assign(fd, qgroup, tracker);
-	qgroup_assign(fd, source, tracker);
-	quota_rescan_if_needed(fd);
+	SN_THROW(IOErrorException("could not allocate a qgroup tracker after repeated concurrent collisions"));
 	}
 
 
