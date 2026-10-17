@@ -106,6 +106,7 @@ namespace snapper
 
 	void addToFstabHelper(const string& default_subvolume_name) const;
 	void removeFromFstabHelper() const;
+	void prepareQGroupTracking() const;
 
 	/**
 	 * Find the snapper snapshot number corresponding to the btrfs
