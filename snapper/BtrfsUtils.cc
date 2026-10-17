@@ -821,7 +821,10 @@ namespace snapper
 	    const bool inconsistent = !found_status ||
 		(flags & BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT);
 	    if (!scan_running && !inconsistent)
+	    {
+		sync(fd);
 		return;
+	    }
 
 	    if (!scan_running)
 	    {

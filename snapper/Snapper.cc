@@ -824,8 +824,7 @@ namespace snapper
 	{
 	    SDir general_dir = btrfs->openGeneralDir();
 
-	    quota_rescan(general_dir.fd());
-	    sync(general_dir.fd());
+	    quota_rescan_if_needed(general_dir.fd());
 	}
 	catch (...)
 	{
