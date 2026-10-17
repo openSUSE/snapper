@@ -342,7 +342,10 @@ namespace snapper
 		vector<qgroup_t> expected{ source, qgroup };
 		sort(expected.begin(), expected.end());
 		if (members == expected)
+		{
+		    quota_rescan_if_needed(fd);
 		    return;
+		}
 	    }
 
 	    if (source_parents.size() + snapshot_parents.size() == 1)
@@ -352,7 +355,7 @@ namespace snapper
 						    source_parents.front();
 		const qgroup_t existing_member = source_is_missing ? qgroup : source;
 		const qgroup_t missing_member = source_is_missing ? source : qgroup;
-		vector<qgroup_t> members = qgroup_query_children(fd, tracker);
+		vector<qgroup_t> members = qgroup_query_relations(fd, tracker);
 
 		if (get_level(tracker) == 2 && members == vector<qgroup_t>{ existing_member })
 		{
