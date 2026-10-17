@@ -256,6 +256,7 @@ namespace snapper
 
     const vector<string> EnumInfo<GlobalOptions::OutputFormat>::names({ "table", "csv", "json" });
 
-    const vector<string> EnumInfo<GlobalOptions::Ambit>::names({ "auto", "classic", "transactional" });
+    const vector<string> EnumInfo<GlobalOptions::Ambit>::names({ "auto", "classic", "transactional",
+								  "subvol-rename" });
 
 }

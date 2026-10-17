@@ -9,10 +9,15 @@ LDADD = ../snapper/libsnapper.la ../dbus/libdbus.la -lboost_unit_test_framework
 check_PROGRAMS = sysconfig-get1.test sysconfig-crlf.test dirname1.test basename1.test 		\
 	equal-date.test cmp-lt.test humanstring.test uuid.test			\
 	table.test table-formatter.test csv-formatter.test json-formatter.test	\
-	getopts.test scan-datetime.test root-prefix.test range.test limit.test
+	getopts.test scan-datetime.test root-prefix.test range.test limit.test	\
+	rename-exchange.test
 
 if ENABLE_BTRFS_QUOTA
 check_PROGRAMS += qgroup1.test
+endif
+
+if ENABLE_ROLLBACK
+check_PROGRAMS += ambit.test
 endif
 
 if ENABLE_LVM
@@ -42,6 +47,11 @@ csv_formatter_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.
 json_formatter_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la $(JSON_C_LIBS)
 
 getopts_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
+
+ambit_test_SOURCES = ambit-test.cc ../client/snapper/ambit.cc \
+	../client/snapper/GlobalOptions.cc
+ambit_test_CPPFLAGS = $(AM_CPPFLAGS)
+ambit_test_LDADD = -lboost_unit_test_framework ../snapper/libsnapper.la ../client/utils/libutils.la
 
 lvm_utils_test_LDADD = -lboost_unit_test_framework ../snapper/libsnapper.la
 

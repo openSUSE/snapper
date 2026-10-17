@@ -7,6 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     container: fedora
 
+    strategy:
+      fail-fast: false
+      matrix:
+        rollback: [enable, disable]
+
     steps:
 
     - name: Install additional packages
@@ -19,7 +24,11 @@ jobs:
       uses: actions/checkout@v6
 
     - name: Configure
-      run: make -f Makefile.repo
+      run: |
+        make -f Makefile.repo
+        if [ "${{ matrix.rollback }}" = "disable" ]; then
+          eval ./configure $(./config.status --config) --disable-rollback
+        fi
 
     - name: Compile
       run: make -j 2
