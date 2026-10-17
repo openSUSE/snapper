@@ -754,6 +754,27 @@ namespace snapper
 
 
 	vector<qgroup_t>
+	qgroup_query_parents(int fd, qgroup_t qgroup)
+	{
+	    vector<qgroup_t> ret;
+
+	    TreeSearchOpts tree_search_opts(BTRFS_QGROUP_RELATION_KEY);
+	    tree_search_opts.min_offset = 0;
+	    tree_search_opts.max_offset = -1;
+	    tree_search_opts.callback = [&ret, qgroup](const struct btrfs_ioctl_search_args& args,
+						       const struct btrfs_ioctl_search_header& sh)
+	    {
+		if (sh.objectid == qgroup && get_level(sh.offset) > get_level(qgroup))
+		    ret.push_back(sh.offset);
+	    };
+
+	    qgroups_tree_search(fd, tree_search_opts);
+
+	    return ret;
+	}
+
+
+	vector<qgroup_t>
 	qgroup_query_children(int fd, qgroup_t parent)
 	{
 	    uint64_t level = get_level(parent);
