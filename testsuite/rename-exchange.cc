@@ -109,3 +109,41 @@ BOOST_AUTO_TEST_CASE(rename_moves_dir_between_directories)
     unlink((tmp.path + "/b/sub/marker").c_str());
     rmdir((tmp.path + "/b/sub").c_str());
 }
+
+
+BOOST_AUTO_TEST_CASE(exchange_across_directories)
+{
+    TestTmpDir tmp;
+
+    // /a/x holds a-marker, /b/y holds b-marker; an atomic cross-directory
+    // exchange must swap them: afterwards /a/x holds b-marker and /b/y holds
+    // a-marker. Needs the flags parameter on the cross-directory rename overload.
+    BOOST_REQUIRE(mkdir((tmp.path + "/a").c_str(), 0755) == 0);
+    BOOST_REQUIRE(mkdir((tmp.path + "/b").c_str(), 0755) == 0);
+    BOOST_REQUIRE(mkdir((tmp.path + "/a/x").c_str(), 0755) == 0);
+    BOOST_REQUIRE(mkdir((tmp.path + "/b/y").c_str(), 0755) == 0);
+
+    int fa = open((tmp.path + "/a/x/a-marker").c_str(), O_CREAT | O_WRONLY, 0644);
+    BOOST_REQUIRE(fa >= 0);
+    close(fa);
+    int fb = open((tmp.path + "/b/y/b-marker").c_str(), O_CREAT | O_WRONLY, 0644);
+    BOOST_REQUIRE(fb >= 0);
+    close(fb);
+
+    {
+	SDir a(tmp.path + "/a");
+	SDir b(tmp.path + "/b");
+
+	int ret = a.rename("x", b, "y", RENAME_EXCHANGE);
+	BOOST_REQUIRE_EQUAL(ret, 0);
+    }
+
+    BOOST_CHECK_EQUAL(access((tmp.path + "/a/x/b-marker").c_str(), F_OK), 0);
+    BOOST_CHECK_EQUAL(access((tmp.path + "/b/y/a-marker").c_str(), F_OK), 0);
+
+    // clean up
+    unlink((tmp.path + "/a/x/b-marker").c_str());
+    unlink((tmp.path + "/b/y/a-marker").c_str());
+    rmdir((tmp.path + "/a/x").c_str());
+    rmdir((tmp.path + "/b/y").c_str());
+}
