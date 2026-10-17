@@ -34,12 +34,72 @@ The sequence is:
      the current root subvolume (e.g. @root). There is no point in time
      where @root does not exist.
 
-  3. The displaced root is moved to <subvol>.rollback.<N>, preserving
-     the old root for recovery.
+  3. Subvolumes nested in the root subvolume are handled, see below.
+
+  4. The displaced root is moved to <subvol>.rollback.<N>, preserving
+     the old root for recovery. With ROLLBACK_BACKUP_LIMIT set, the
+     oldest of these backups beyond the limit are deleted.
 
 Renaming a mounted btrfs subvolume is safe: the kernel tracks mounts by
 subvolume ID, not by name, so the running system is unaffected. Requires
 Linux 3.17 or later for renameat2(RENAME_EXCHANGE) support.
+
+The read-write copy that becomes the root is not added to the snapshot
+qgroup (QGROUP), like the new default in a classic rollback: only
+snapshots with a cleanup algorithm belong there.
+
+
+Nested subvolumes
+-----------------
+
+A btrfs snapshot does not include subvolumes nested in the snapshotted
+subvolume. Where one was, the snapshot only holds a placeholder: an
+empty directory in which nothing can be created until it is removed.
+So after the exchange the nested subvolumes are still in the old root,
+and the new root has placeholders at their paths. They are handled by
+this rule:
+
+  .snapshots  moved into the new root, and mounted again by subvolume ID
+              on the running system so snapper keeps working until the
+              reboot
+
+  empty       the placeholder is removed from the new root, so the path
+              can be recreated, e.g. var/lib/portables and
+              var/lib/machines by systemd-tmpfiles at boot; the empty
+              subvolume stays in the old root
+
+  not empty   the rollback is refused before anything is changed, since
+              the data would only be reachable in the old root; such
+              subvolumes should be top-level subvolumes mounted via fstab
+              (like /home), or be emptied
+
+Layouts that keep these subvolumes outside the root subvolume, e.g. with
+a separate /var subvolume, only have .snapshots nested in the root.
+
+The same applies to a classic rollback, where the new default subvolume
+is a snapshot too; it is not handled there.
+
+
+Plugins
+-------
+
+The subvol-rename ambit runs the same plugins as a classic rollback.
+set-default-snapshot-pre and set-default-snapshot-post are run around
+the exchange with the number of the snapshot whose copy becomes the
+root, i.e. the snapshot booted next, although the btrfs default
+subvolume is not changed. rollback-pre and rollback-post get the numbers
+of the backup snapshot and of the new snapshot, as for classic.
+
+
+Limitations
+-----------
+
+On many named-subvolume layouts /boot (or the EFI system partition
+holding the kernel images) is not part of the root subvolume, so a
+rollback does not change the installed kernels. After a rollback past a
+kernel update the boot loader may start a kernel whose modules are
+missing in the new root (/usr/lib/modules/<version>). A rollback-post
+plugin can adjust the boot entries.
 
 
 auto (default)

@@ -795,6 +795,14 @@
 	  Otherwise the ambit is classic or transactional depending on the
 	  read-write state of the default subvolume and the btrfs default
 	  subvolume is set.</para>
+	  <para>With the <option>subvol-rename</option> ambit, subvolumes nested
+	  in the root subvolume are not part of the rollback since a btrfs
+	  snapshot does not include them: <filename>.snapshots</filename> is moved
+	  into the new root, the paths of empty nested subvolumes are freed so
+	  they can be recreated (e.g. by systemd-tmpfiles), and the rollback is
+	  refused if a nested subvolume contains data. See
+	  <filename>rollback.txt</filename> in the snapper documentation for
+	  details.</para>
 	  <variablelist>
 	    <varlistentry>
 	      <term><option>-p, --print-number</option></term>
@@ -994,7 +1002,11 @@
       <varlistentry>
 	<term><option>set-default-snapshot-pre <replaceable>subvolume</replaceable> <replaceable>fstype</replaceable> <replaceable>snapshot-number</replaceable></option></term>
 	<listitem>
-	  <para>Executed before the default snapshot is changed</para>
+	  <para>Executed before the default snapshot is changed. With the
+	  subvol-rename ambit of a rollback the default snapshot is the snapshot
+	  whose copy becomes the root subvolume, although the btrfs default
+	  subvolume is not changed; rollback-post is the more specific hook
+	  there.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
