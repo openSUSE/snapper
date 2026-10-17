@@ -258,7 +258,14 @@ namespace snapper
 		}
 
 		if (!global_options.quiet())
-		    cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot2->getNum()) << endl;
+		{
+		    if (ambit == Ambit::SUBVOL_RENAME)
+			cout << sformat(_("Replacing subvolume '%s' with a copy of snapshot %d."),
+					subvol_name.c_str(), snapshot2->getNum()) << endl;
+		    else
+			cout << sformat(_("Setting default subvolume to snapshot %d."),
+					snapshot2->getNum()) << endl;
+		}
 
 		if (ambit == Ambit::SUBVOL_RENAME)
 		{
