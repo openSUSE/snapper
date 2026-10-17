@@ -1569,6 +1569,44 @@ namespace snapper
     }
 
 
+    namespace
+    {
+
+	// The btrfs top-level (subvolid=5) of the filesystem of subvolume,
+	// where the named root subvolumes live, mounted temporarily in the
+	// infos directory for as long as the object lives. The members are
+	// initialized in declaration order and destroyed in reverse order, so
+	// the unmount happens before infos_dir is released.
+	struct TopLevelMount
+	{
+	    TopLevelMount(const string& subvolume, const SDir& infos_dir)
+		: device(find_device(subvolume)), infos_dir(infos_dir),
+		  tmp_mount(this->infos_dir, device, "tmp-mnt-XXXXXX", "btrfs", 0, "subvolid=5"),
+		  dir(this->infos_dir, tmp_mount.getName())
+	    {
+	    }
+
+	    static string find_device(const string& subvolume)
+	    {
+		bool found = false;
+		MtabData mtab_data;
+		if (!getMtabData(subvolume, found, mtab_data) || !found)
+		{
+		    y2err("failed to find device for subvolume " << subvolume);
+		    SN_THROW(IOErrorException("rollback failed: cannot find mounted device"));
+		}
+		return mtab_data.device;
+	    }
+
+	    const string device;
+	    SDir infos_dir;
+	    TmpMount tmp_mount;
+	    SDir dir;
+	};
+
+    }
+
+
     vector<string>
     Btrfs::checkRollbackSubvolRename(const string& subvol_name) const
     {
@@ -1576,19 +1614,11 @@ namespace snapper
 	    SN_THROW(IOErrorException("rollback failed: nested subvolume path '" + subvol_name +
 				     "' is not supported for subvol-rename rollback"));
 
-	bool found = false;
-	MtabData mtab_data;
-	if (!getMtabData(subvolume, found, mtab_data) || !found)
-	    SN_THROW(IOErrorException("rollback failed: cannot find mounted device"));
-
 	// Inspect the root subvolume via the btrfs top-level: paths in the
 	// running root may have other filesystems mounted over them.
-	SDir infos_dir = openInfosDir();
-	TmpMount tmp_mount(infos_dir, mtab_data.device, "tmp-mnt-XXXXXX", "btrfs", 0,
-			   "subvolid=5");
-	SDir toplevel(infos_dir, tmp_mount.getName());
+	TopLevelMount top_level(subvolume, openInfosDir());
 
-	SDir root_dir(toplevel, subvol_name);
+	SDir root_dir(top_level.dir, subvol_name);
 	return NestedSubvolumes(root_dir).check_empty(root_dir);
     }
 
@@ -1609,20 +1639,9 @@ namespace snapper
 	{
 	    Plugins::set_default_snapshot(Plugins::Stage::PRE_ACTION, subvolume, this, num, report);
 
-	    bool found = false;
-	    MtabData mtab_data;
-	    if (!getMtabData(subvolume, found, mtab_data) || !found)
-	    {
-		y2err("failed to find device for subvolume " << subvolume);
-		SN_THROW(IOErrorException("rollback failed: cannot find mounted device"));
-	    }
-
 	    // Mount the btrfs top-level (subvolid=5) - named subvolumes live here
-	    SDir infos_dir = openInfosDir();
-	    TmpMount tmp_mount(infos_dir, mtab_data.device, "tmp-mnt-XXXXXX", "btrfs", 0,
-			      "subvolid=5");
-
-	    SDir toplevel(infos_dir, tmp_mount.getName());
+	    TopLevelMount top_level(subvolume, openInfosDir());
+	    SDir& toplevel = top_level.dir;
 
 	    const string incoming = subvol_name + ".incoming";
 	    const string rollback_name = subvol_name + ".rollback." + decString(num);
@@ -1714,7 +1733,7 @@ namespace snapper
 			SDir subvolume_dir = openSubvolumeDir();
 			subvolume_dir.mkdir(SNAPSHOTS_NAME, 0750);
 			SDir running_snapshots(subvolume_dir, SNAPSHOTS_NAME);
-			if (!running_snapshots.mount(mtab_data.device, "btrfs", 0,
+			if (!running_snapshots.mount(top_level.device, "btrfs", 0,
 						     "subvolid=" + decString(snapshots_id)))
 			    y2err("failed to remount " << SNAPSHOTS_NAME << " on the running "
 				  "root -- snapper works again after reboot");
