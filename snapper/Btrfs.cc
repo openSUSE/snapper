@@ -1791,8 +1791,10 @@ namespace snapper
 		// Mount the .snapshots subvolume back onto the running root by
 		// its (unchanged) subvolume id so snapper keeps working in the
 		// meantime; this mount does not survive the reboot, where the new
-		// root provides /.snapshots as a nested subvolume again.
-		if (nested.apply(old_root, new_root))
+		// root provides /.snapshots as a nested subvolume again. Not for a
+		// system at another root prefix, which is not running.
+		const bool running_system = root_prefix.empty() || root_prefix == "/";
+		if (nested.apply(old_root, new_root) && running_system)
 		{
 		    try
 		    {
