@@ -855,13 +855,9 @@ namespace snapper
 
 	SDir general_dir = btrfs->openGeneralDir();
 
-	// Tests have shown that without a rescan and sync here the quota data
-	// is incorrect.
-
 	try
 	{
-	    quota_rescan(general_dir.fd());
-	    sync(general_dir.fd());
+	    quota_rescan_if_needed(general_dir.fd());
 	}
 	catch (...)
 	{

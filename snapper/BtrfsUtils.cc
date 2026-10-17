@@ -34,8 +34,10 @@
 #ifdef HAVE_LIBBTRFS
 #include <btrfs/ioctl.h>
 #include <btrfs/send-utils.h>
+#include <btrfs/ctree.h>
 #else
 #include <linux/btrfs.h>
+#include <linux/btrfs_tree.h>
 #endif
 #ifdef HAVE_LIBBTRFSUTIL
 #include <btrfsutil.h>
@@ -767,6 +769,51 @@ namespace snapper
 	    ), ret.end());
 
 	    return ret;
+	}
+
+
+	void
+	quota_rescan_if_needed(int fd)
+	{
+	    bool found_status = false;
+	    uint64_t flags = 0;
+
+	    TreeSearchOpts tree_search_opts(BTRFS_QGROUP_STATUS_KEY);
+	    tree_search_opts.min_offset = tree_search_opts.max_offset = 0;
+	    tree_search_opts.callback = [&found_status, &flags](
+		const struct btrfs_ioctl_search_args& args,
+		const struct btrfs_ioctl_search_header& sh)
+	    {
+		if (sh.objectid != 0 || sh.offset != 0 ||
+		    sh.len < sizeof(struct btrfs_qgroup_status_item))
+		    return;
+
+		struct btrfs_qgroup_status_item status;
+		memcpy(&status, args.buf + sizeof(sh), sizeof(status));
+		flags = le64_to_cpu(status.flags);
+		found_status = true;
+	    };
+
+	    qgroups_tree_search(fd, tree_search_opts);
+	    const bool scan_running = found_status &&
+		(flags & BTRFS_QGROUP_STATUS_FLAG_RESCAN);
+	    const bool inconsistent = !found_status ||
+		(flags & BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT);
+	    if (!scan_running && !inconsistent)
+		return;
+
+	    if (!scan_running)
+	    {
+		struct btrfs_ioctl_quota_rescan_args args = {};
+		if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN, &args) < 0 && errno != EINPROGRESS)
+		    throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_RESCAN) failed", errno);
+	    }
+
+	    struct btrfs_ioctl_quota_rescan_args args = {};
+	    if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN_WAIT, &args) < 0)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_RESCAN_WAIT) failed", errno);
+
+	    sync(fd);
 	}
 
 
