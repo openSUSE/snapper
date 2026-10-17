@@ -316,7 +316,7 @@ test_prune_keeps_recent_backups(SDir& top)
     create_subvolume(top.fd(), "@root.rollback.3");
 
     // Keep the 2 most recent; the oldest (.1, with its nested subvolume) goes.
-    prune_rollback_backups(top, "@root", 2);
+    prune_rollback_backups(top, "@root", 2, 0);
 
     struct stat st;
     check(top.stat("@root.rollback.1", &st, AT_SYMLINK_NOFOLLOW) != 0,
@@ -327,7 +327,7 @@ test_prune_keeps_recent_backups(SDir& top)
 	  "newest backup @root.rollback.3 pruned but should be kept");
 
     // keep == 0 (the default) must keep everything.
-    prune_rollback_backups(top, "@root", 0);
+    prune_rollback_backups(top, "@root", 0, 0);
     check(top.stat("@root.rollback.2", &st, AT_SYMLINK_NOFOLLOW) == 0 &&
 	  top.stat("@root.rollback.3", &st, AT_SYMLINK_NOFOLLOW) == 0,
 	  "keep == 0 must not delete any backup");
@@ -336,6 +336,90 @@ test_prune_keeps_recent_backups(SDir& top)
 
     try { delete_subvolume(top.fd(), "@root.rollback.2", true); } catch (...) {}
     try { delete_subvolume(top.fd(), "@root.rollback.3", true); } catch (...) {}
+}
+
+
+// The running root is never deleted but counts towards the limit: normally it
+// is the newest backup, after two rollbacks without a reboot an older one.
+static void
+test_prune_keeps_running_root(SDir& top)
+{
+    for (const char* n : { "@root.rollback.1", "@root.rollback.2", "@root.rollback.3" })
+	try { delete_subvolume(top.fd(), n, true); } catch (...) {}
+
+    create_subvolume(top.fd(), "@root.rollback.1");
+    create_subvolume(top.fd(), "@root.rollback.2");
+    create_subvolume(top.fd(), "@root.rollback.3");
+
+    subvolid_t running;
+    {
+	SDir running_dir(top, "@root.rollback.1");
+	running = get_id(running_dir.fd());
+    }
+
+    prune_rollback_backups(top, "@root", 1, running);
+
+    struct stat st;
+    check(top.stat("@root.rollback.1", &st, AT_SYMLINK_NOFOLLOW) == 0,
+	  "running root @root.rollback.1 was pruned");
+    check(top.stat("@root.rollback.2", &st, AT_SYMLINK_NOFOLLOW) != 0 &&
+	  top.stat("@root.rollback.3", &st, AT_SYMLINK_NOFOLLOW) != 0,
+	  "the running root does not count towards the limit");
+
+    // the normal case: the running root is the newest backup
+    create_subvolume(top.fd(), "@root.rollback.4");
+    create_subvolume(top.fd(), "@root.rollback.5");
+    {
+	SDir running_dir(top, "@root.rollback.5");
+	running = get_id(running_dir.fd());
+    }
+    prune_rollback_backups(top, "@root", 2, running);
+    check(top.stat("@root.rollback.1", &st, AT_SYMLINK_NOFOLLOW) != 0 &&
+	  top.stat("@root.rollback.4", &st, AT_SYMLINK_NOFOLLOW) == 0 &&
+	  top.stat("@root.rollback.5", &st, AT_SYMLINK_NOFOLLOW) == 0,
+	  "limit 2 with the running root as newest backup does not keep exactly 4 and 5");
+
+    cout << "ok: prune-keeps-running-root" << endl;
+
+    for (const char* n : { "@root.rollback.4", "@root.rollback.5" })
+	try { delete_subvolume(top.fd(), n, true); } catch (...) {}
+}
+
+
+// A backup that still holds the .snapshots subvolume (moving it into the new
+// root failed) holds all snapshots: the prune must never delete it.
+static void
+test_prune_keeps_backup_with_snapshots(SDir& top)
+{
+    for (const char* n : { "@root.rollback.1", "@root.rollback.2", "@root.rollback.3" })
+	try { delete_subvolume(top.fd(), n, true); } catch (...) {}
+
+    create_subvolume(top.fd(), "@root.rollback.1");
+    {
+	SDir b1(top, "@root.rollback.1");
+	create_subvolume(b1.fd(), ".snapshots");
+	SDir snapshots(b1, ".snapshots");
+	snapshots.mkdir("1", 0755);
+	SDir one(snapshots, "1");
+	create_subvolume(one.fd(), "snapshot");
+    }
+    create_subvolume(top.fd(), "@root.rollback.2");
+    create_subvolume(top.fd(), "@root.rollback.3");
+
+    prune_rollback_backups(top, "@root", 1, 0);
+
+    struct stat st;
+    check(top.stat("@root.rollback.1", &st, AT_SYMLINK_NOFOLLOW) == 0,
+	  "backup @root.rollback.1 holding .snapshots was pruned");
+
+    // it counts towards the limit (1), so the others go
+    check(top.stat("@root.rollback.2", &st, AT_SYMLINK_NOFOLLOW) != 0 &&
+	  top.stat("@root.rollback.3", &st, AT_SYMLINK_NOFOLLOW) != 0,
+	  "the backup holding .snapshots does not count towards the limit");
+
+    cout << "ok: prune-keeps-backup-with-snapshots" << endl;
+
+    try { delete_subvolume(top.fd(), "@root.rollback.1", true); } catch (...) {}
 }
 
 
@@ -647,6 +731,8 @@ main()
 	test_rollback_name_collision_uses_subvolid_fallback(top);
 	test_nested_snapshots_subvol_migrates(top);
 	test_prune_keeps_recent_backups(top);
+	test_prune_keeps_running_root(top);
+	test_prune_keeps_backup_with_snapshots(top);
 	test_nested_inventory(top);
 	test_nested_check_empty(top);
 	test_nested_apply(top);

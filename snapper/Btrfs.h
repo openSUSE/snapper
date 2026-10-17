@@ -131,15 +131,18 @@ namespace snapper
      * Delete old <subvol_name>.rollback.* backup subvolumes left behind by
      * Btrfs::rollbackSubvolRename, keeping the 'keep' most recent ones. Recency
      * is the btrfs subvolume id, which increases with every rollback, so the
-     * highest ids are the newest backups (including the one just created, which
-     * is therefore never deleted). keep == 0 keeps all backups. Backups are
+     * highest ids are the newest backups. keep == 0 keeps all backups. Backups are
      * deleted recursively so nested subvolumes (e.g. var/lib/portables) are
-     * removed too. Best-effort: individual failures are logged, not thrown.
+     * removed too. Never deleted, but counted towards 'keep', are the backup
+     * with the id 'running' (the running root, 0 for none; normally the backup
+     * just created) and backups still holding a .snapshots subvolume.
+     * Best-effort: individual failures are logged, not thrown.
      *
      * 'toplevel' must be the btrfs top-level (subvolid 5) where the named root
      * subvolumes live. Declared here so it can be unit-tested directly.
      */
-    void prune_rollback_backups(SDir& toplevel, const string& subvol_name, unsigned int keep);
+    void prune_rollback_backups(SDir& toplevel, const string& subvol_name, unsigned int keep,
+				subvolid_t running);
 
 
     /**

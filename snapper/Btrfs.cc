@@ -1536,15 +1536,24 @@ namespace snapper
 
 
     void
-    prune_rollback_backups(SDir& toplevel, const string& subvol_name, unsigned int keep)
+    prune_rollback_backups(SDir& toplevel, const string& subvol_name, unsigned int keep,
+			   subvolid_t running)
     {
 	if (keep == 0)
 	    return;
 
 	const string prefix = subvol_name + ".rollback.";
 
-	// Collect the rollback backup subvolumes together with their btrfs ids.
-	vector<pair<subvolid_t, string>> backups;
+	// Collect the rollback backup subvolumes with their btrfs ids and whether
+	// they must never be deleted.
+	struct Backup
+	{
+	    subvolid_t id;
+	    string name;
+	    bool kept;
+	};
+
+	vector<Backup> backups;
 	for (const string& name : toplevel.entries([&prefix](unsigned char, const char* n) {
 	    return strncmp(n, prefix.c_str(), prefix.size()) == 0;
 	}))
@@ -1556,9 +1565,24 @@ namespace snapper
 	    try
 	    {
 		SDir backup_dir(toplevel, name);
-		backups.emplace_back(get_id(backup_dir.fd()), name);
+		const subvolid_t id = get_id(backup_dir.fd());
+
+		// The running root: normally the backup just created, after
+		// rollbacks without a reboot in between an older one.
+		bool kept = id == running;
+
+		// If moving .snapshots into the new root failed it is still in here,
+		// together with all snapshots.
+		if (backup_dir.stat(SNAPSHOTS_NAME, &st, AT_SYMLINK_NOFOLLOW) == 0 &&
+		    is_subvolume(st))
+		{
+		    y2war("keeping rollback backup " << name << ", it holds " SNAPSHOTS_NAME);
+		    kept = true;
+		}
+
+		backups.push_back({ id, name, kept });
 	    }
-	    catch (const runtime_error& e)
+	    catch (const std::exception& e)
 	    {
 		y2war("cannot inspect rollback backup " << name << ": " << e.what());
 	    }
@@ -1567,24 +1591,33 @@ namespace snapper
 	if (backups.size() <= keep)
 	    return;
 
-	// Ascending by btrfs id, so the oldest backups sort first. Ids increase
-	// with every rollback, so the newest backup (the one just created) sorts
-	// last and is always kept.
-	sort(backups.begin(), backups.end());
+	// Ascending by btrfs id, so the oldest backups sort first: delete the
+	// oldest ones that may be deleted until 'keep' are left, the kept ones
+	// count towards that.
+	sort(backups.begin(), backups.end(), [](const Backup& a, const Backup& b) {
+	    return a.id < b.id;
+	});
 
-	const size_t to_delete = backups.size() - keep;
-	for (size_t i = 0; i < to_delete; ++i)
+	size_t to_delete = backups.size() - keep;
+	for (const Backup& backup : backups)
 	{
-	    const string& name = backups[i].second;
+	    if (to_delete == 0)
+		break;
+
+	    if (backup.kept)
+		continue;
+
 	    try
 	    {
-		y2mil("pruning old rollback backup " << name << " (keeping " << keep << ")");
-		delete_subvolume(toplevel.fd(), name, true);
+		y2mil("pruning old rollback backup " << backup.name << " (keeping " << keep << ")");
+		delete_subvolume(toplevel.fd(), backup.name, true);
 	    }
-	    catch (const runtime_error& e)
+	    catch (const std::exception& e)
 	    {
-		y2war("failed to prune rollback backup " << name << ": " << e.what());
+		y2war("failed to prune rollback backup " << backup.name << ": " << e.what());
 	    }
+
+	    --to_delete;
 	}
     }
 
@@ -1665,6 +1698,10 @@ namespace snapper
 	    // Mount the btrfs top-level (subvolid=5) - named subvolumes live here
 	    TopLevelMount top_level(subvolume, openInfosDir());
 	    SDir& toplevel = top_level.dir;
+
+	    // The subvolume the running system is mounted from: after rollbacks
+	    // without a reboot in between it is an older backup, never pruned.
+	    const subvolid_t running = get_id(openSubvolumeDir().fd());
 
 	    const string incoming = subvol_name + ".incoming";
 	    const string rollback_name = subvol_name + ".rollback." + decString(num);
@@ -1796,10 +1833,10 @@ namespace snapper
 	    }
 
 	    // Enforce the configured retention (ROLLBACK_BACKUP_LIMIT, validated
-	    // by checkRollbackSubvolRename). 0 keeps every backup; the backup just
-	    // created is the newest and is never removed.
+	    // by checkRollbackSubvolRename). 0 keeps every backup; the running
+	    // root, normally the backup just created, is never removed.
 	    prune_rollback_backups(toplevel, subvol_name,
-				   parse_rollback_backup_limit(rollback_backup_limit));
+				   parse_rollback_backup_limit(rollback_backup_limit), running);
 
 	    Plugins::set_default_snapshot(Plugins::Stage::POST_ACTION, subvolume, this, num, report);
 	}
