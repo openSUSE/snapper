@@ -24,16 +24,16 @@
 
 #include "ambit.h"
 
-#include <regex>
+#include <cctype>
+#include <fstream>
+#include <sstream>
 
 #include <snapper/AppUtil.h>
+#include <snapper/MntTable.h>
 #include <snapper/Exception.h>
 
 #include "../utils/text.h"
 
-using std::regex;
-using std::smatch;
-using std::regex_match;
 
 
 namespace snapper
@@ -41,32 +41,183 @@ namespace snapper
 
 #ifdef ENABLE_ROLLBACK
 
-    string
-    subvol_name_from_options(const vector<string>& options)
+    namespace
     {
-	static const regex re("^subvol=/?(\\S+)$");
 
-	for (const string& opt : options)
+	vector<string>
+	split_options(const string& options)
 	{
-	    smatch m;
-	    if (regex_match(opt, m, re) && m[1].str() != "/")
-		return m[1].str();
+	    vector<string> ret;
+	    std::istringstream stream(options);
+	    for (string option; std::getline(stream, option, ',');)
+		if (!option.empty())
+		    ret.push_back(option);
+	    return ret;
 	}
 
-	return "";
+
+	// value of the subvol= option without leading slash, "" if there is none
+	string
+	subvol_option(const vector<string>& options)
+	{
+	    string ret;
+	    for (const string& option : options)
+	    {
+		if (option.compare(0, 7, "subvol=") == 0)
+		{
+		    const string::size_type pos = option.find_first_not_of('/', 7);
+		    ret = pos == string::npos ? "" : option.substr(pos);
+		}
+	    }
+	    return ret;
+	}
+
+
+	bool
+	has_subvolid_option(const vector<string>& options)
+	{
+	    for (const string& option : options)
+		if (option.compare(0, 9, "subvolid=") == 0)
+		    return true;
+	    return false;
+	}
+
     }
 
 
-    string
-    get_subvol_name(const string& mount_point)
+    vector<string>
+    rootflags_from_cmdline(const string& cmdline)
     {
-	bool found = false;
-	MtabData mtab_data;
+	vector<string> ret;
 
-	if (!getMtabData(mount_point, found, mtab_data) || !found)
-	    return "";
+	// words separated by whitespace, double quotes group and are dropped
+	string word;
+	bool quoted = false, in_word = false;
+	// Several rootflags= are joined, as systemd's fstab-generator does in the
+	// initrd (the kernel itself only takes the last one).
+	auto end_word = [&]() {
+	    if (in_word && word.compare(0, 10, "rootflags=") == 0)
+	    {
+		const vector<string> options = split_options(word.substr(10));
+		ret.insert(ret.end(), options.begin(), options.end());
+	    }
+	    word.clear();
+	    in_word = false;
+	};
 
-	return subvol_name_from_options(mtab_data.options);
+	for (char c : cmdline)
+	{
+	    if (c == '"')
+	    {
+		quoted = !quoted;
+		in_word = true;
+	    }
+	    else if (!quoted && isspace(static_cast<unsigned char>(c)))
+	    {
+		end_word();
+	    }
+	    else
+	    {
+		word += c;
+		in_word = true;
+	    }
+	}
+	end_word();
+
+	return ret;
+    }
+
+
+    namespace
+    {
+
+	bool
+	is_top_level(const string& subvol)
+	{
+	    return !subvol.empty() && subvol.find('/') == string::npos;
+	}
+
+    }
+
+
+    BootRoot
+    boot_root_from(const vector<string>& rootflags, const vector<string>& fstab_options,
+		   const string& running_subvol)
+    {
+	BootRoot boot;
+
+	const string cmdline_subvol = subvol_option(rootflags);
+	const bool cmdline_subvolid = has_subvolid_option(rootflags);
+	const string fstab_subvol = subvol_option(fstab_options);
+	const bool fstab_subvolid = has_subvolid_option(fstab_options);
+
+	if (is_top_level(cmdline_subvol))
+	{
+	    // The command line decides at boot. If fstab names another subvolume
+	    // this is not the normal boot (e.g. a backup booted by hand), so which
+	    // one boots next is unknown.
+	    if (is_top_level(fstab_subvol) && fstab_subvol != cmdline_subvol)
+		boot.unsupported = sformat(_("The system was booted with subvol=%s but fstab "
+					     "mounts subvol=%s. Boot the system normally "
+					     "before a rollback."), cmdline_subvol.c_str(),
+					   fstab_subvol.c_str());
+	    else
+		boot.subvol = cmdline_subvol;
+	}
+	else if (cmdline_subvolid && cmdline_subvol.empty())
+	{
+	    // Booted by id: a one-off boot of a snapshot, fstab then describes the
+	    // normal boot, or the normal root itself pinned by id.
+	    if (is_top_level(fstab_subvol) && running_subvol == fstab_subvol)
+		boot.unsupported = _("The kernel command line mounts the root filesystem "
+				     "with subvolid=, so a rollback cannot change which "
+				     "subvolume boots.");
+	    else if (is_top_level(fstab_subvol))
+		boot.subvol = fstab_subvol;
+	}
+	else if (is_top_level(fstab_subvol))
+	{
+	    // no name on the command line, or the nested name of a booted snapshot
+	    boot.subvol = fstab_subvol;
+	}
+
+	if (boot.subvol.empty() && boot.unsupported.empty())
+	{
+	    if (!fstab_subvol.empty() && !is_top_level(fstab_subvol))
+		boot.unsupported = sformat(_("fstab mounts the root filesystem with the nested "
+					     "subvol=%s, which a rollback cannot replace."),
+					   fstab_subvol.c_str());
+	    else if (fstab_subvol.empty() && fstab_subvolid)
+		boot.unsupported = _("The root filesystem is mounted with subvolid= in fstab, "
+				     "so a rollback cannot change which subvolume boots.");
+	}
+
+	boot.stale_subvolid = !boot.subvol.empty() && fstab_subvolid;
+
+	return boot;
+    }
+
+
+    BootRoot
+    get_boot_root(const string& root_prefix)
+    {
+	// The kernel command line and the running root belong to the running
+	// system, not to a system at another root prefix (e.g. mounted from a
+	// rescue system).
+	vector<string> rootflags;
+	string running_subvol;
+	if (root_prefix.empty() || root_prefix == "/")
+	{
+	    std::ifstream proc_cmdline("/proc/cmdline");
+	    rootflags = rootflags_from_cmdline(string(std::istreambuf_iterator<char>(proc_cmdline), {}));
+
+	    bool found = false;
+	    MtabData mtab_data;
+	    if (getMtabData("/", found, mtab_data) && found)
+		running_subvol = subvol_option(mtab_data.options);
+	}
+
+	return boot_root_from(rootflags, fstab_options(root_prefix, "/"), running_subvol);
     }
 
 
@@ -92,8 +243,8 @@ namespace snapper
 	if (cli_ambit == Ambit::SUBVOL_RENAME)
 	{
 	    if (!is_renameable_subvol(subvol_name))
-		SN_THROW(Exception(_("Ambit is 'subvol-rename' but root is not "
-				     "mounted with a top-level named subvolume.")));
+		SN_THROW(Exception(_("Ambit is 'subvol-rename' but the system does not "
+				     "boot a top-level named root subvolume.")));
 	    return cli_ambit;
 	}
 
@@ -120,9 +271,8 @@ namespace snapper
     bool
     is_set_default_ineffective(Ambit ambit, const string& subvol_name)
     {
-	// Only a top-level name indicates a by-name mount: for a mount by the
-	// default subvolume id the kernel shows the resolved (nested) path in
-	// /proc/mounts, where set-default works as intended.
+	// subvol_name comes from the boot configuration, where a nested name
+	// was already refused (see boot_root_from)
 	return (ambit == Ambit::CLASSIC || ambit == Ambit::TRANSACTIONAL) &&
 	    is_renameable_subvol(subvol_name);
     }

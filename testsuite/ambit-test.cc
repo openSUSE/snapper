@@ -2,6 +2,8 @@
 #define BOOST_TEST_MODULE ambit
 
 #include <boost/test/unit_test.hpp>
+#include <fstream>
+#include <cstdlib>
 #include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>
 
@@ -12,40 +14,121 @@ using namespace std;
 using namespace snapper;
 
 
-// --- subvolume name parsing ---------------------------------------------------
+// --- rootflags of the kernel command line ------------------------------------
 
-struct SubvolCase
+struct CmdlineCase
 {
     const char* label;
-    vector<string> opts;
-    const char* expected_name;
+    const char* cmdline;
+    vector<string> expected;
 };
 
 
-ostream& operator<<(ostream& os, const SubvolCase& c)
+ostream& operator<<(ostream& os, const CmdlineCase& c)
 {
     return os << c.label;
 }
 
 
-const SubvolCase subvol_cases[] = {
-    { "named_subvol",         { "rw", "relatime", "subvol=@root", "subvolid=256" },     "@root" },
-    { "root_subvol",          { "rw", "relatime", "subvol=/", "subvolid=5" },           "" },
-    { "no_subvol_option",     { "rw", "relatime", "subvolid=256" },                     "" },
-    { "at_sign_only",         { "rw", "subvol=@" },                                     "@" },
-    { "nested_subvol",        { "rw", "subvol=root/@root" },                            "root/@root" },
-    { "empty_options",        { },                                                      "" },
-    { "leading_slash_named",  { "rw", "relatime", "subvol=/@rootfs", "subvolid=256" },  "@rootfs" },
-    { "leading_slash_at",     { "rw", "relatime", "subvol=/@root", "subvolid=256" },    "@root" },
-    { "plain_name_no_at",     { "rw", "relatime", "subvol=root", "subvolid=256" },      "root" },
-    { "leading_slash_plain",  { "rw", "relatime", "subvol=/root", "subvolid=256" },     "root" },
-    { "tumbleweed_nested",    { "rw", "subvol=/@/.snapshots/1/snapshot" },              "@/.snapshots/1/snapshot" },
+const CmdlineCase cmdline_cases[] = {
+    { "fedora",        "BOOT_IMAGE=(hd0,gpt2)/vmlinuz root=UUID=x ro rootflags=subvol=root rhgb",
+                       { "subvol=root" } },
+    { "several_flags", "root=UUID=x rootflags=subvol=@,compress=zstd:1", { "subvol=@", "compress=zstd:1" } },
+    { "quoted",        "root=UUID=x rootflags=\"subvol=@\" quiet", { "subvol=@" } },
+    // several are joined, as systemd's fstab-generator does in the initrd
+    { "joined",        "rootflags=subvol=a root=UUID=x rootflags=subvol=b", { "subvol=a", "subvol=b" } },
+    { "arch",          "BOOT_IMAGE=/@/boot/vmlinuz-linux root=UUID=x rw rootflags=subvol=@ "
+                       "net.ifnames=0 rootflags=compress=zstd:1 console=ttyS0,115200",
+                       { "subvol=@", "compress=zstd:1" } },
+    { "none",          "root=UUID=x ro quiet", { } },
+    { "trailing_newline", "root=UUID=x rootflags=subvol=@\n", { "subvol=@" } },
+    { "empty",         "", { } },
 };
 
 
-BOOST_DATA_TEST_CASE(subvol_name, boost::unit_test::data::make(subvol_cases), c)
+BOOST_DATA_TEST_CASE(cmdline_rootflags, boost::unit_test::data::make(cmdline_cases), c)
 {
-    BOOST_CHECK_EQUAL(subvol_name_from_options(c.opts), string(c.expected_name));
+    const vector<string> got = rootflags_from_cmdline(c.cmdline);
+    BOOST_CHECK_EQUAL_COLLECTIONS(got.begin(), got.end(), c.expected.begin(), c.expected.end());
+}
+
+
+// --- the root subvolume the system boots -----------------------------------
+
+struct BootCase
+{
+    const char* label;
+    vector<string> rootflags;		// from the kernel command line
+    vector<string> fstab;		// options of the fstab entry for /
+    const char* running;		// current name of the running root (/proc/mounts)
+    const char* subvol;			// expected top-level name, "" = by default id
+    bool unsupported;			// no rollback method changes what boots
+    bool stale_subvolid;
+};
+
+
+ostream& operator<<(ostream& os, const BootCase& c)
+{
+    return os << c.label;
+}
+
+
+const BootCase boot_cases[] = {
+    // the cmdline decides at boot, fstab mirrors it
+    { "fedora",              { "subvol=root" }, { "subvol=root", "compress=zstd:1" }, "root", "root", false, false },
+    { "debian",              { "subvol=@rootfs" }, { "defaults", "subvol=@rootfs" }, "@rootfs", "@rootfs", false, false },
+    { "leading_slash",       { "subvol=/@" }, { }, "@", "@", false, false },
+    { "arch",                { "subvol=@", "compress=zstd:1" }, { "rw", "subvol=/@" }, "@", "@", false, false },
+    // after a rollback without a reboot the running root has another name
+    { "renamed_running_root", { "subvol=root" }, { "subvol=root" }, "root.rollback.5", "root", false, false },
+    // booted by the default subvolume id
+    { "tumbleweed",          { }, { "defaults" }, "@/.snapshots/1/snapshot", "", false, false },
+    { "tumbleweed_snapshot", { "subvol=@/.snapshots/7/snapshot" }, { "defaults" }, "@/.snapshots/7/snapshot", "", false, false },
+    // a one-off boot of a snapshot (by id or by nested name): fstab has the normal root
+    { "snapshot_by_id",      { "subvolid=271" }, { "subvol=@root" }, "@root/.snapshots/7/snapshot", "@root", false, false },
+    { "snapshot_by_name",    { "subvol=@/.snapshots/7/snapshot" }, { "subvol=@" }, "@/.snapshots/7/snapshot", "@", false, false },
+    { "fstab_only",          { }, { "subvol=@" }, "@", "@", false, false },
+    // fstab additionally pins the id (e.g. written by genfstab): stale after a rename
+    { "genfstab",            { "subvol=/@" }, { "rw", "subvolid=256", "subvol=/@" }, "@", "@", false, true },
+    { "fstab_id_cmdline_name", { "subvol=root" }, { "subvolid=257" }, "root", "root", false, true },
+    // pinned by id only: no rollback method changes what boots
+    { "subvolid_only_fstab", { }, { "subvolid=256" }, "@", "", true, false },
+    { "subvolid_only_both",  { "subvolid=256" }, { "subvolid=256" }, "@", "", true, false },
+    // the cmdline pins the normal root by id permanently (not a snapshot boot)
+    { "cmdline_pins_root_by_id", { "subvolid=256" }, { "subvol=@" }, "@", "", true, false },
+    // cmdline and fstab name different subvolumes, e.g. a backup booted by hand:
+    // which one boots next is unknown
+    { "booted_backup_by_name", { "subvol=@.rollback.5" }, { "subvol=@" }, "@.rollback.5", "", true, false },
+    { "cmdline_fstab_differ", { "subvol=@new" }, { "subvol=@old" }, "@new", "", true, false },
+    // the root is mounted by a nested name: neither a rename nor set-default
+    // changes what boots
+    { "nested_in_fstab",     { }, { "subvol=@/root" }, "@/root", "", true, false },
+    { "nested_both",         { "subvol=@/root" }, { "subvol=@/root" }, "@/root", "", true, false },
+};
+
+
+BOOST_DATA_TEST_CASE(boot_root, boost::unit_test::data::make(boot_cases), c)
+{
+    const BootRoot boot = boot_root_from(c.rootflags, c.fstab, c.running);
+    BOOST_CHECK_EQUAL(boot.subvol, string(c.subvol));
+    BOOST_CHECK_EQUAL(!boot.unsupported.empty(), c.unsupported);
+    BOOST_CHECK_EQUAL(boot.stale_subvolid, c.stale_subvolid);
+}
+
+
+// fstab is read with libmount, so escaped characters in options are decoded
+BOOST_AUTO_TEST_CASE(boot_root_fstab_escapes)
+{
+    char tmpl[] = "/tmp/ambit-test-XXXXXX";
+    const string root = mkdtemp(tmpl);
+    BOOST_REQUIRE_EQUAL(system(("mkdir -p " + root + "/etc").c_str()), 0);
+    std::ofstream(root + "/etc/fstab") << "# comment\n"
+	"UUID=1234 / btrfs subvol=@my\\040root,compress=zstd:1 0 0\n";
+
+    const BootRoot boot = get_boot_root(root);
+    BOOST_CHECK_EQUAL(boot.subvol, "@my root");
+
+    BOOST_CHECK_EQUAL(system(("rm -rf " + root).c_str()), 0);
 }
 
 

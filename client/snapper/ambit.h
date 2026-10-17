@@ -41,25 +41,54 @@ namespace snapper
     enum class SubvolumeMode { UNKNOWN, READ_WRITE, READ_ONLY };
 
     /**
-     * Return the named subvolume from already-parsed mount options (e.g. "@root"),
-     * or an empty string if mounted by the btrfs default subvolume id. The name
-     * may contain slashes for a nested subvolume. Separated from I/O so it can be
-     * unit-tested without /proc/mounts.
+     * Options of all rootflags= of a kernel command line (e.g. the content of
+     * /proc/cmdline) joined, with surrounding quotes removed.
      */
-    string subvol_name_from_options(const vector<string>& options);
+    vector<string> rootflags_from_cmdline(const string& cmdline);
 
     /**
-     * Return the named subvolume that mount_point is mounted with (e.g. "@root"),
-     * or an empty string if it uses the btrfs default subvolume id instead.
+     * The root subvolume the system boots, from the boot configuration (not
+     * from /proc/mounts, which shows the running root under its current name,
+     * e.g. <subvol>.rollback.N after a rollback without a reboot, or a booted
+     * snapshot).
      */
-    string get_subvol_name(const string& mount_point);
+    struct BootRoot
+    {
+	// top-level name the root is mounted by, "" when booted by the btrfs
+	// default subvolume id
+	string subvol;
+
+	// why no rollback method changes what boots, "" if one can
+	string unsupported;
+
+	// fstab also has subvolid=, which no longer matches after a rename
+	bool stale_subvolid = false;
+    };
+
+    /**
+     * Determine the BootRoot from the rootflags of the kernel command line, the
+     * options of the fstab entry for / and the current name of the running
+     * root (from /proc/mounts). The command line decides at boot; a one-off
+     * boot of a snapshot (by subvolid= or a nested name) falls back to fstab,
+     * which describes the normal boot. Unsupported when command line and fstab
+     * name different subvolumes, when the normal root is pinned by subvolid=,
+     * or when it is mounted by a nested name.
+     */
+    BootRoot boot_root_from(const vector<string>& rootflags, const vector<string>& fstab_options,
+			    const string& running_subvol);
+
+    /**
+     * Determine the BootRoot of the system at root_prefix from /proc/cmdline and
+     * <root_prefix>/etc/fstab.
+     */
+    BootRoot get_boot_root(const string& root_prefix);
 
     /**
      * Determine the effective ambit for the rollback. An explicit --ambit
-     * (cli_ambit) wins; SUBVOL_RENAME is validated against the root mount and
-     * throws when root is not mounted with a top-level named subvolume. With
-     * AUTO, a top-level named root subvolume (subvol_name, "" when mounted by
-     * default subvolume id) selects SUBVOL_RENAME, otherwise the ambit is
+     * (cli_ambit) wins; SUBVOL_RENAME is validated against the boot root and
+     * throws when the system does not boot a top-level named subvolume. With
+     * AUTO, a top-level named boot root (subvol_name, "" when booted by the
+     * default subvolume id, see BootRoot) selects SUBVOL_RENAME, otherwise the ambit is
      * derived from the read-only/-write state of the current default snapshot
      * (mode). Returns AUTO when it cannot be determined.
      */
@@ -67,11 +96,10 @@ namespace snapper
 
     /**
      * Whether a rollback with the given ambit sets the default subvolume id
-     * while root is mounted with a top-level subvol= name (subvol_name) - the
-     * kernel then ignores the default subvolume id and the rollback has no
-     * effect on the next boot. Used to warn when an explicit --ambit conflicts
-     * with the root mount. False for a nested name, which the kernel also
-     * shows for a mount by the default subvolume id.
+     * while the system boots a top-level subvol= name (subvol_name, see
+     * BootRoot) - the kernel then ignores the default subvolume id and the
+     * rollback has no effect on the next boot. Used to warn when an explicit
+     * --ambit conflicts with the boot configuration.
      */
     bool is_set_default_ineffective(Ambit ambit, const string& subvol_name);
 

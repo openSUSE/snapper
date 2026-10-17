@@ -107,12 +107,22 @@ auto (default)
 
 Snapper inspects the system to determine the ambit:
 
-- If the root filesystem is mounted with a top-level named subvol=
-  option in /proc/mounts (a single path component such as "@root" -
-  not "/" and not a nested path), subvol-rename is used.
-- Otherwise the ambit is classic or transactional, depending on the
-  read-only/-write state of the default subvolume, and set-default is
-  used.
+- If the system boots a top-level named subvolume (a single path
+  component such as "@root"), subvol-rename is used. The name comes from
+  the boot configuration: rootflags=subvol= on the kernel command line,
+  which decides at boot, or, for a one-off boot of a snapshot (by
+  subvolid= or a nested name), subvol= of the / entry in /etc/fstab, which
+  describes the normal boot. /proc/mounts is not used for this: it shows
+  the running root under its current name, which after a rollback without
+  a reboot is <subvol>.rollback.<N>.
+- Otherwise, when booting by the btrfs default subvolume id, the ambit is
+  classic or transactional, depending on the read-only/-write state of
+  the default subvolume, and set-default is used.
+- The rollback is refused when neither method changes what boots: the
+  root pinned by subvolid=, mounted by a nested name, or the kernel
+  command line and fstab naming different subvolumes. A subvolid= next
+  to subvol= in fstab (as older genfstab versions write it) is reported,
+  since it no longer matches after the rename.
 
 An explicit --ambit always wins over the detection. This means no manual
 configuration is needed on most systems.

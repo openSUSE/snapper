@@ -680,36 +680,6 @@ test_nested_apply(SDir& top)
 }
 
 
-static void
-test_detect_method_strips_kernel_leading_slash(SDir& top, const string& device,
-					       const string& sv_name)
-{
-    const string mnt_point = MNT + "/detect-test";
-
-    create_subvolume(top.fd(), sv_name.c_str());
-
-    run("mkdir -p " + mnt_point);
-    run("mount -o subvol=" + sv_name + " " + device + " " + mnt_point);
-
-    string subvol_name = get_subvol_name(mnt_point);
-    bool rename = determine_ambit(Ambit::AUTO, subvol_name, SubvolumeMode::UNKNOWN) ==
-	Ambit::SUBVOL_RENAME;
-
-    run("umount " + mnt_point);
-    run("rmdir " + mnt_point);
-    delete_subvolume(top.fd(), sv_name.c_str());
-
-    check(rename,
-	  "determine_ambit for subvol=" + sv_name + " did not select subvol-rename");
-
-    check(subvol_name == sv_name,
-	  "get_subvol_name for subvol=" + sv_name +
-	  " returned '" + subvol_name + "', expected '" + sv_name + "'");
-
-    cout << "ok: detect-method-strips-leading-slash subvol=" << sv_name << endl;
-}
-
-
 int
 main()
 {
@@ -737,9 +707,6 @@ main()
 	test_nested_check_empty(top);
 	test_nested_apply(top);
 
-	const vector<string> subvol_names = { "@root", "root", "@rootfs", "@" };
-	for (const string& name : subvol_names)
-	    test_detect_method_strips_kernel_leading_slash(top, device, name);
     }
 
     run("umount " + TOP);

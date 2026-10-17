@@ -21,6 +21,9 @@
 
 
 #include "snapper/MntTable.h"
+#include "snapper/LoggerImpl.h"
+
+#include <sstream>
 
 
 namespace snapper
@@ -45,6 +48,34 @@ namespace snapper
 
 	    tmp = dirname(tmp);
 	}
+    }
+
+
+    vector<string>
+    fstab_options(const string& root_prefix, const string& mount_point)
+    {
+	vector<string> ret;
+
+	try
+	{
+	    MntTable mnt_table(root_prefix);
+	    mnt_table.parse_fstab();
+
+	    libmnt_fs* fs = mnt_table.find_target(mount_point, MNT_ITER_BACKWARD);
+	    if (!fs || !mnt_fs_get_options(fs))
+		return ret;
+
+	    std::istringstream stream(mnt_fs_get_options(fs));
+	    for (string option; std::getline(stream, option, ',');)
+		if (!option.empty())
+		    ret.push_back(option);
+	}
+	catch (const runtime_error& e)
+	{
+	    y2war("cannot read fstab below '" << root_prefix << "': " << e.what());
+	}
+
+	return ret;
     }
 
 }

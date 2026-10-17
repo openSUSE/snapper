@@ -132,7 +132,16 @@ namespace snapper
 
 	ProxySnapshots::iterator previous_default = snapshots.getDefault();
 
-	const string subvol_name = get_subvol_name(subvolume);
+	// The subvolume the next boot mounts, from the boot configuration: after a
+	// rollback without a reboot, or when booted from a snapshot, /proc/mounts
+	// shows a different subvolume than the one that boots.
+	const BootRoot boot_root = get_boot_root(global_options.root());
+	if (!boot_root.unsupported.empty())
+	{
+	    cerr << boot_root.unsupported << endl;
+	    exit(EXIT_FAILURE);
+	}
+	const string& subvol_name = boot_root.subvol;
 
 	// the mode only matters with --ambit auto (see determine_ambit)
 	SubvolumeMode mode = SubvolumeMode::UNKNOWN;
@@ -154,6 +163,10 @@ namespace snapper
 	    cerr << sformat(_("Warning: The root filesystem is mounted with subvol=%s so setting "
 			      "the default subvolume will not take effect on the next boot."),
 			    subvol_name.c_str()) << endl;
+
+	if (ambit == Ambit::SUBVOL_RENAME && boot_root.stale_subvolid)
+	    cerr << _("Warning: fstab also mounts the root filesystem with subvolid=, which no "
+		      "longer matches after the rollback. It should be removed from fstab.") << endl;
 
 	if (!global_options.quiet())
 	{

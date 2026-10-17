@@ -783,9 +783,10 @@
 	  <para>How the rollback target is activated for the next boot depends on
 	  the ambit (see the <option>--ambit</option> option). With
 	  <option>auto</option> (the default) the ambit is detected: systems
-	  mounting the root filesystem with a named subvolume (e.g.
-	  <option>subvol=@root</option> in fstab, detected from
-	  <filename>/proc/mounts</filename>) use the
+	  booting a named root subvolume (<option>rootflags=subvol=@root</option>
+	  on the kernel command line, or <option>subvol=@root</option> for
+	  <filename>/</filename> in <filename>/etc/fstab</filename> when booted
+	  from a snapshot) use the
 	  <option>subvol-rename</option> ambit, where the named root subvolume is
 	  atomically swapped with a read-write copy of the rollback target using
 	  <citerefentry><refentrytitle>renameat2</refentrytitle><manvolnum>2</manvolnum></citerefentry>

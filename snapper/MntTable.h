@@ -25,6 +25,7 @@
 #include <libmount/libmount.h>
 
 #include <string>
+#include <vector>
 #include <stdexcept>
 
 #include "snapper/AppUtil.h"
@@ -109,5 +110,13 @@ namespace snapper
 
 	struct libmnt_table* table;
     };
+
+
+    /**
+     * The options of the last entry for mount_point in the fstab below
+     * root_prefix, read with libmount (so escaped characters are decoded).
+     * Empty if there is no such entry or no fstab.
+     */
+    vector<string> fstab_options(const string& root_prefix, const string& mount_point);
 
 }
