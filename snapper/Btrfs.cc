@@ -1762,17 +1762,24 @@ namespace snapper
 	    // Atomically swap <subvol_name> and <subvol_name>.incoming
 	    if (toplevel.exchange(subvol_name, incoming) != 0)
 	    {
+		const int exchange_errno = errno;
+
 		// Clean up the incoming subvolume we just created
 		try { delete_subvolume(toplevel.fd(), incoming); } catch (...) {}
 		SN_THROW(IOErrorException(string("rollback failed: exchange(") +
 					  subvol_name + ", " + incoming +
-					  ") failed: " + stringerror(errno) +
+					  ") failed: " + stringerror(exchange_errno) +
 					  " -- kernel may not support RENAME_EXCHANGE on btrfs"));
 	    }
+
+	    // With the exchange the rollback took effect. Everything after it is
+	    // best effort: a failure is logged, and the remaining steps and the
+	    // post plugins still run.
 
 	    // A btrfs snapshot does not include nested subvolumes, the new root
 	    // only holds placeholders for them: move .snapshots into it and free
 	    // the paths of the other (empty) ones.
+	    try
 	    {
 		SDir old_root(toplevel, incoming);
 		SDir new_root(toplevel, subvol_name);
@@ -1807,36 +1814,56 @@ namespace snapper
 		    }
 		}
 	    }
+	    catch (const std::exception& e)
+	    {
+		y2err("failed to handle the nested subvolumes: " << e.what());
+	    }
 
 	    // Rename old root to <subvol_name>.rollback.<num> for preservation.
 	    // If that name already exists (e.g. rolling back to the same snapshot twice),
 	    // fall back to a subvolume-ID-based name which is guaranteed unique.
-	    if (toplevel.rename(incoming, rollback_name) != 0)
+	    // Left as <subvol_name>.incoming on failure, which the next rollback
+	    // preserves.
+	    try
 	    {
-		bool rescued = false;
-		if (errno == EEXIST || errno == ENOTEMPTY)
+		if (toplevel.rename(incoming, rollback_name) != 0)
 		{
-		    SDir incoming_dir(toplevel, incoming);
-		    const string alt_name = subvol_name + ".rollback.svid." +
-					    decString(get_id(incoming_dir.fd()));
-		    y2war("rename old root " << incoming << " to " << rollback_name
-			  << " failed (already exists); trying " << alt_name);
-		    if (toplevel.rename(incoming, alt_name) == 0)
-			rescued = true;
+		    bool rescued = false;
+		    if (errno == EEXIST || errno == ENOTEMPTY)
+		    {
+			SDir incoming_dir(toplevel, incoming);
+			const string alt_name = subvol_name + ".rollback.svid." +
+						decString(get_id(incoming_dir.fd()));
+			y2war("rename old root " << incoming << " to " << rollback_name
+			      << " failed (already exists); trying " << alt_name);
+			if (toplevel.rename(incoming, alt_name) == 0)
+			    rescued = true;
+		    }
+		    if (!rescued)
+		    {
+			y2war("failed to rename old root " << incoming << " to " << rollback_name
+			      << ": " << stringerror(errno)
+			      << " -- old root preserved as " << incoming);
+		    }
 		}
-		if (!rescued)
-		{
-		    y2war("failed to rename old root " << incoming << " to " << rollback_name
-			  << ": " << stringerror(errno)
-			  << " -- old root preserved as " << incoming);
-		}
+	    }
+	    catch (const std::exception& e)
+	    {
+		y2err("failed to rename the old root " << incoming << ": " << e.what());
 	    }
 
 	    // Enforce the configured retention (ROLLBACK_BACKUP_LIMIT, validated
 	    // by checkRollbackSubvolRename). 0 keeps every backup; the running
 	    // root, normally the backup just created, is never removed.
-	    prune_rollback_backups(toplevel, subvol_name,
-				   parse_rollback_backup_limit(rollback_backup_limit), running);
+	    try
+	    {
+		prune_rollback_backups(toplevel, subvol_name,
+				       parse_rollback_backup_limit(rollback_backup_limit), running);
+	    }
+	    catch (const std::exception& e)
+	    {
+		y2err("failed to prune the rollback backups: " << e.what());
+	    }
 
 	    Plugins::set_default_snapshot(Plugins::Stage::POST_ACTION, subvolume, this, num, report);
 	}
