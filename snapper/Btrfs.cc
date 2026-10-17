@@ -1674,12 +1674,14 @@ namespace snapper
 	    // again right before the exchange.
 	    const NestedSubvolumes nested{SDir(toplevel, subvol_name)};
 
-	    // Create a read-write snapshot of the rollback target as <subvol_name>.incoming
+	    // Create a read-write snapshot of the rollback target as <subvol_name>.incoming.
+	    // It becomes the root, no snapshot snapper may clean up, so it must not
+	    // be in the snapshot qgroup (only snapshots with a cleanup algorithm are).
 	    SDir snapshot_dir = openSnapshotDir(num);
 	    try
 	    {
 		create_snapshot(snapshot_dir.fd(), toplevel.fd(), incoming, false,
-				qgroup);
+				no_qgroup);
 	    }
 	    catch (const runtime_error& e)
 	    {
