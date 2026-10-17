@@ -123,6 +123,7 @@ Snapper inspects the system to determine the ambit:
   command line and fstab naming different subvolumes. A subvolid= next
   to subvol= in fstab (as older genfstab versions write it) is reported,
   since it no longer matches after the rename.
+- subvol-rename requires snapper built with libbtrfsutil.
 
 An explicit --ambit always wins over the detection. This means no manual
 configuration is needed on most systems.

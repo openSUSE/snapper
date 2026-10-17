@@ -54,7 +54,7 @@ namespace snapper
      *
      * Distributions that keep such subvolumes outside the root subvolume (e.g.
      * a separate /var) have none but .snapshots, so the rest is never used.
-     * Without libbtrfsutil only a nested .snapshots is recognized.
+     * Requires libbtrfsutil, the constructor throws without it.
      */
     class NestedSubvolumes
     {

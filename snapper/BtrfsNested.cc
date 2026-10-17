@@ -105,11 +105,10 @@ namespace snapper
 
 	btrfs_util_destroy_subvolume_iterator(iter);
 #else
-	// without libbtrfsutil only a nested .snapshots is recognized
-	struct stat st;
-	if (root_dir.stat(SNAPSHOTS_NAME, &st, AT_SYMLINK_NOFOLLOW) == 0 &&
-	    st.st_ino == BTRFS_FIRST_FREE_OBJECTID)
-	    nested.push_back(SNAPSHOTS_NAME);
+	// Without it the nested subvolumes cannot be listed (nor deleted
+	// recursively when pruning), so the rule cannot be applied.
+	SN_THROW(IOErrorException("rollback refused: the subvol-rename ambit requires "
+				  "snapper built with libbtrfsutil"));
 #endif
 
 	string paths;

@@ -680,6 +680,38 @@ test_nested_apply(SDir& top)
 }
 
 
+#ifndef HAVE_LIBBTRFSUTIL
+
+// Without libbtrfsutil the nested subvolumes cannot be listed (nor deleted
+// recursively), so the subvol-rename rollback must be refused.
+static void
+test_nested_requires_libbtrfsutil(SDir& top)
+{
+    try { delete_subvolume(top.fd(), "@root"); } catch (...) {}
+    create_subvolume(top.fd(), "@root");
+
+    string what;
+    try
+    {
+	SDir root_sv(top, "@root");
+	NestedSubvolumes nested(root_sv);
+    }
+    catch (const std::exception& e)
+    {
+	what = e.what();
+    }
+
+    try { delete_subvolume(top.fd(), "@root"); } catch (...) {}
+
+    check(what.find("libbtrfsutil") != string::npos,
+	  "NestedSubvolumes without libbtrfsutil did not refuse: '" + what + "'");
+
+    cout << "ok: nested-requires-libbtrfsutil" << endl;
+}
+
+#endif
+
+
 int
 main()
 {
@@ -700,12 +732,18 @@ main()
 	test_exchange_swaps_subvolume(top);
 	test_rollback_name_collision_uses_subvolid_fallback(top);
 	test_nested_snapshots_subvol_migrates(top);
+#ifdef HAVE_LIBBTRFSUTIL
+	// the prune deletes recursively and the nested subvolume handling lists
+	// them, both only with libbtrfsutil (without, the rollback is refused)
 	test_prune_keeps_recent_backups(top);
 	test_prune_keeps_running_root(top);
 	test_prune_keeps_backup_with_snapshots(top);
 	test_nested_inventory(top);
 	test_nested_check_empty(top);
 	test_nested_apply(top);
+#else
+	test_nested_requires_libbtrfsutil(top);
+#endif
 
     }
 
