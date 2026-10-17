@@ -17,7 +17,7 @@ check_PROGRAMS += qgroup1.test
 endif
 
 if ENABLE_ROLLBACK
-check_PROGRAMS += ambit.test
+check_PROGRAMS += ambit.test rollback-backup-limit.test
 endif
 
 if ENABLE_LVM
@@ -54,6 +54,8 @@ ambit_test_CPPFLAGS = $(AM_CPPFLAGS)
 ambit_test_LDADD = -lboost_unit_test_framework ../snapper/libsnapper.la ../client/utils/libutils.la
 
 lvm_utils_test_LDADD = -lboost_unit_test_framework ../snapper/libsnapper.la
+
+rollback_backup_limit_test_LDADD = -lboost_unit_test_framework ../snapper/libsnapper.la
 
 range_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
 

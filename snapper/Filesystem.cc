@@ -209,7 +209,7 @@ namespace snapper
 
     void
     Filesystem::rollbackSubvolRename(unsigned int num, const string& subvol_name,
-				     unsigned int backup_limit, Plugins::Report& report) const
+				     Plugins::Report& report) const
     {
 	SN_THROW(UnsupportedException());
 	__builtin_unreachable();

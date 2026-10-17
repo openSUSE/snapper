@@ -126,6 +126,8 @@ namespace snapper
 #endif
 
 	config_info.get_value("SPECIAL_CMP", special_cmp);
+
+	config_info.get_value("ROLLBACK_BACKUP_LIMIT", rollback_backup_limit);
     }
 
 
@@ -1515,6 +1517,24 @@ namespace snapper
     }
 
 
+    unsigned int
+    parse_rollback_backup_limit(const string& value)
+    {
+	if (value.empty())
+	    return 0;
+
+	// digits only (std::stoul also takes "-1", " 3" and "10abc") and few
+	// enough to fit
+	if (value.size() > 9 || value.find_first_not_of("0123456789") != string::npos)
+	{
+	    y2err("invalid ROLLBACK_BACKUP_LIMIT '" << value << "'");
+	    SN_THROW(InvalidConfigException());
+	}
+
+	return std::stoul(value);
+    }
+
+
     void
     prune_rollback_backups(SDir& toplevel, const string& subvol_name, unsigned int keep)
     {
@@ -1614,6 +1634,9 @@ namespace snapper
 	    SN_THROW(IOErrorException("rollback failed: nested subvolume path '" + subvol_name +
 				     "' is not supported for subvol-rename rollback"));
 
+	// the rollback uses it, so refuse an invalid value before any change
+	parse_rollback_backup_limit(rollback_backup_limit);
+
 	// Inspect the root subvolume via the btrfs top-level: paths in the
 	// running root may have other filesystems mounted over them.
 	TopLevelMount top_level(subvolume, openInfosDir());
@@ -1625,7 +1648,7 @@ namespace snapper
 
     void
     Btrfs::rollbackSubvolRename(unsigned int num, const string& subvol_name,
-				unsigned int backup_limit, Plugins::Report& report) const
+				Plugins::Report& report) const
     {
 	// The client never selects subvol-rename for a nested name (see
 	// is_renameable_subvol in client/snapper/ambit.cc) but this method must
@@ -1772,10 +1795,11 @@ namespace snapper
 		}
 	    }
 
-	    // Enforce the configured retention (ROLLBACK_BACKUP_LIMIT, passed in
-	    // by the caller). 0 keeps every backup; the backup just created is
-	    // the newest and is never removed.
-	    prune_rollback_backups(toplevel, subvol_name, backup_limit);
+	    // Enforce the configured retention (ROLLBACK_BACKUP_LIMIT, validated
+	    // by checkRollbackSubvolRename). 0 keeps every backup; the backup just
+	    // created is the newest and is never removed.
+	    prune_rollback_backups(toplevel, subvol_name,
+				   parse_rollback_backup_limit(rollback_backup_limit));
 
 	    Plugins::set_default_snapshot(Plugins::Stage::POST_ACTION, subvolume, this, num, report);
 	}
@@ -1850,9 +1874,9 @@ namespace snapper
 
     void
     Btrfs::rollbackSubvolRename(unsigned int num, const string& subvol_name,
-				unsigned int backup_limit, Plugins::Report& report) const
+				Plugins::Report& report) const
     {
-	Filesystem::rollbackSubvolRename(num, subvol_name, backup_limit, report);
+	Filesystem::rollbackSubvolRename(num, subvol_name, report);
     }
 
 

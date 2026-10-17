@@ -31,6 +31,7 @@
 #include <snapper/SystemCmd.h>
 #include <snapper/SnapperDefines.h>
 #include <snapper/Filesystem.h>
+#include <snapper/ConfigInfo.h>
 
 #include "utils/text.h"
 #include "misc.h"
@@ -169,21 +170,13 @@ username(uid_t uid)
 
 
     unique_ptr<const Filesystem>
-get_filesystem(const ProxyConfig& config, const string& target_root)
+get_filesystem(const string& config_name, const string& target_root)
 {
-    const map<string, string>& raw = config.getAllValues();
-
-    map<string, string>::const_iterator pos1 = raw.find(KEY_FSTYPE);
-    map<string, string>::const_iterator pos2 = raw.find(KEY_SUBVOLUME);
-    if (pos1 == raw.end() || pos2 == raw.end())
-    {
-	cerr << _("Failed to initialize filesystem handler.") << endl;
-	exit(EXIT_FAILURE);
-    }
-
+    // Built from the config file, like in the library, so the filesystem
+    // evaluates its settings (e.g. QGROUP, ROLLBACK_BACKUP_LIMIT).
     try
     {
-	return Filesystem::create(pos1->second, pos2->second, target_root);
+	return Filesystem::create(ConfigInfo(config_name, target_root), target_root);
     }
     catch (const InvalidConfigException& e)
     {

@@ -52,7 +52,7 @@ string
 username(uid_t uid);
 
     unique_ptr<const Filesystem>
-    get_filesystem(const ProxyConfig& config, const string& target_root);
+    get_filesystem(const string& config_name, const string& target_root);
 
 
 struct Differ

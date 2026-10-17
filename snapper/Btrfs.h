@@ -92,7 +92,7 @@ namespace snapper
 	virtual vector<string> checkRollbackSubvolRename(const string& subvol_name) const override;
 
 	virtual void rollbackSubvolRename(unsigned int num, const std::string& subvol_name,
-					  unsigned int backup_limit, Plugins::Report& report) const override;
+					  Plugins::Report& report) const override;
 
 	virtual bool isActive(unsigned int num) const override;
 
@@ -106,6 +106,10 @@ namespace snapper
 
 	qgroup_t qgroup = no_qgroup;
 	bool special_cmp = true;
+
+	// ROLLBACK_BACKUP_LIMIT as configured; only parsed by the subvol-rename
+	// rollback, so an invalid value does not affect other commands
+	string rollback_backup_limit;
 
 	mutable vector<subvolid_t> deleted_subvolids;
 
@@ -136,6 +140,13 @@ namespace snapper
      * subvolumes live. Declared here so it can be unit-tested directly.
      */
     void prune_rollback_backups(SDir& toplevel, const string& subvol_name, unsigned int keep);
+
+
+    /**
+     * Parse ROLLBACK_BACKUP_LIMIT: empty keeps all backups (0), otherwise a
+     * non-negative number. Throws InvalidConfigException for anything else.
+     */
+    unsigned int parse_rollback_backup_limit(const string& value);
 
 #endif
 

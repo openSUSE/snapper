@@ -112,7 +112,8 @@ namespace snapper
 
 	ProxyConfig config = snapper->getConfig();
 
-	unique_ptr<const Filesystem> filesystem = get_filesystem(config, global_options.root());
+	unique_ptr<const Filesystem> filesystem = get_filesystem(snapper->configName(),
+								 global_options.root());
 	if (filesystem->fstype() != "btrfs")
 	{
 	    cerr << _("Command 'rollback' only available for btrfs.") << endl;
@@ -132,27 +133,6 @@ namespace snapper
 	ProxySnapshots::iterator previous_default = snapshots.getDefault();
 
 	const string subvol_name = get_subvol_name(subvolume);
-
-	// Retention limit for the <subvol>.rollback.* backups a subvol-rename
-	// rollback leaves behind. get_filesystem() builds the handler without
-	// evaluating the config, so read the value here and pass it in. Empty or
-	// unparsable keeps all backups (0).
-	unsigned int rollback_backup_limit = 0;
-	string rollback_backup_limit_str;
-	if (config.getValue("ROLLBACK_BACKUP_LIMIT", rollback_backup_limit_str) &&
-	    !rollback_backup_limit_str.empty())
-	{
-	    try
-	    {
-		rollback_backup_limit = std::stoul(rollback_backup_limit_str);
-	    }
-	    catch (const std::exception&)
-	    {
-		cerr << sformat(_("Ignoring invalid ROLLBACK_BACKUP_LIMIT value '%s'."),
-				rollback_backup_limit_str.c_str()) << endl;
-		rollback_backup_limit = 0;
-	    }
-	}
 
 	// the mode only matters with --ambit auto (see determine_ambit)
 	SubvolumeMode mode = SubvolumeMode::UNKNOWN;
@@ -269,8 +249,7 @@ namespace snapper
 
 		if (ambit == Ambit::SUBVOL_RENAME)
 		{
-		    filesystem->rollbackSubvolRename(snapshot2->getNum(), subvol_name,
-						     rollback_backup_limit, report);
+		    filesystem->rollbackSubvolRename(snapshot2->getNum(), subvol_name, report);
 
 		    if (!global_options.quiet() && !empty_nested.empty())
 		    {
