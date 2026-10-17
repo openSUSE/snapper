@@ -196,11 +196,25 @@ namespace snapper
 
 		if (get_opts.num_args() == 0)
 		{
-		    if (!global_options.quiet())
-			cout << _("Creating read-only snapshot of default subvolume.") << flush;
-
 		    scd1.read_only = true;
-		    snapshot1 = snapper->createSingleSnapshotOfDefault(scd1, report);
+
+		    // On subvol-rename the system boots the named root subvolume, not
+		    // the btrfs default subvolume, which may be the top-level or an
+		    // old snapshot: back up the current system instead.
+		    if (ambit == Ambit::SUBVOL_RENAME)
+		    {
+			if (!global_options.quiet())
+			    cout << _("Creating read-only snapshot of current system.") << flush;
+
+			snapshot1 = snapper->createSingleSnapshot(scd1, report);
+		    }
+		    else
+		    {
+			if (!global_options.quiet())
+			    cout << _("Creating read-only snapshot of default subvolume.") << flush;
+
+			snapshot1 = snapper->createSingleSnapshotOfDefault(scd1, report);
+		    }
 
 		    if (!global_options.quiet())
 			cout << " " << sformat(_("(Snapshot %d.)"), snapshot1->getNum()) << endl;
