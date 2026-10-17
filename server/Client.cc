@@ -347,6 +347,14 @@ Client::introspect(DBus::Connection& conn, DBus::Message& msg)
 	"    <method name='CalculateUsedSpace'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
 	"    </method>\n"
+	"    <method name='CalculateUsedSpaceStatus'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='stale' type='b' direction='out'/>\n"
+	"    </method>\n"
+	"    <method name='QueryQuotaStatus'>\n"
+	"      <arg name='config-name' type='s' direction='in'/>\n"
+	"      <arg name='quota-status' type='(ttb)' direction='out'/>\n"
+	"    </method>\n"
 
 	"    <method name='GetUsedSpace'>\n"
 	"      <arg name='config-name' type='s' direction='in'/>\n"
@@ -1310,6 +1318,27 @@ Client::calculate_used_space(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
+Client::calculate_used_space_status(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name;
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+    check_permission(conn, msg, *it);
+    Snapper* snapper = it->getSnapper();
+    RefHolder ref_holder(*it);
+    lock.unlock();
+    bool stale = snapper->calculateUsedSpaceStatus();
+    lock.lock();
+    DBus::MessageMethodReturn reply(msg);
+    DBus::Marshaller marshaller(reply);
+    marshaller << stale;
+    conn.send(reply);
+}
+
+
+void
 Client::get_used_space(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
@@ -1684,6 +1713,27 @@ Client::query_quota(DBus::Connection& conn, DBus::Message& msg)
 
 
 void
+Client::query_quota_status(DBus::Connection& conn, DBus::Message& msg)
+{
+    string config_name;
+    DBus::Unmarshaller unmarshaller(msg);
+    unmarshaller >> config_name;
+    boost::unique_lock<boost::shared_mutex> lock(big_mutex);
+    MetaSnappers::iterator it = meta_snappers.find(config_name);
+    check_permission(conn, msg, *it);
+    Snapper* snapper = it->getSnapper();
+    RefHolder ref_holder(*it);
+    lock.unlock();
+    QuotaDataStatus status = snapper->queryQuotaDataStatus();
+    lock.lock();
+    DBus::MessageMethodReturn reply(msg);
+    DBus::Marshaller marshaller(reply);
+    marshaller << status;
+    conn.send(reply);
+}
+
+
+void
 Client::query_free_space(DBus::Connection& conn, DBus::Message& msg)
 {
     string config_name;
@@ -1879,6 +1929,7 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	{ "GetDefaultSnapshot", &Client::get_default_snapshot },
 	{ "GetActiveSnapshot", &Client::get_active_snapshot },
 	{ "CalculateUsedSpace", &Client::calculate_used_space },
+	{ "CalculateUsedSpaceStatus", &Client::calculate_used_space_status },
 	{ "GetUsedSpace", &Client::get_used_space },
 	{ "MountSnapshot", &Client::mount_snapshot },
 	{ "UmountSnapshot", &Client::umount_snapshot },
@@ -1890,6 +1941,7 @@ Client::dispatch(DBus::Connection& conn, DBus::Message& msg)
 	{ "SetupQuota", &Client::setup_quota },
 	{ "PrepareQuota", &Client::prepare_quota },
 	{ "QueryQuota", &Client::query_quota },
+	{ "QueryQuotaStatus", &Client::query_quota_status },
 	{ "QueryFreeSpace", &Client::query_free_space },
 	{ "Sync", &Client::sync },
 	{ "GetPluginsReport", &Client::get_plugins_report },

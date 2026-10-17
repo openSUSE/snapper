@@ -94,6 +94,12 @@ namespace snapper
 	uint64_t used;
     };
 
+    struct QuotaDataStatus
+    {
+	QuotaData data{};
+	bool stale = false;
+    };
+
     struct FreeSpaceData
     {
 	uint64_t size;
@@ -158,6 +164,7 @@ namespace snapper
 	void prepareQuota() const;
 
 	QuotaData queryQuotaData() const;
+	QuotaDataStatus queryQuotaDataStatus() const;
 
 	FreeSpaceData queryFreeSpaceData() const;
 
@@ -167,6 +174,7 @@ namespace snapper
 	 * is triggered.
 	 */
 	void calculateUsedSpace() const;
+	bool calculateUsedSpaceStatus() const;
 
 	/**
 	 * Return the compression algorithm set in the config file or a fallback. Also

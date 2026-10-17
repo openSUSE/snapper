@@ -64,6 +64,7 @@ namespace snapper
 	                              bool verbose, Plugins::Report& report) const = 0;
 	virtual void prepare_quota() const = 0;
 	virtual QuotaData query_quota_data() const = 0;
+	virtual QuotaDataStatus query_quota_data_status() const = 0;
 	virtual FreeSpaceData query_free_space_data() const = 0;
 	virtual ProxyComparison create_comparison(const ProxySnapshot& lhs,
 	                                          const ProxySnapshot& rhs,
@@ -138,6 +139,11 @@ namespace snapper
 	virtual QuotaData query_quota_data() const override
 	{
 	    return snapper->queryQuotaData();
+	}
+
+	virtual QuotaDataStatus query_quota_data_status() const override
+	{
+	    return snapper->queryQuotaDataStatus();
 	}
 
 	virtual FreeSpaceData query_free_space_data() const override

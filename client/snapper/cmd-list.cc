@@ -149,6 +149,7 @@ namespace snapper
 	     * is broken.
 	     */
 	    static map<Uuid, bool> used_space_broken_by_uuid;
+	    static map<Uuid, bool> used_space_stale_by_uuid;
 
 #endif
 
@@ -158,6 +159,7 @@ namespace snapper
 #ifdef ENABLE_BTRFS
 
 	map<Uuid, bool> OutputHelper::used_space_broken_by_uuid;
+	map<Uuid, bool> OutputHelper::used_space_stale_by_uuid;
 
 #endif
 
@@ -202,13 +204,19 @@ namespace snapper
 		    if (pos != used_space_broken_by_uuid.end())
 		    {
 			used_space_broken = pos->second;
+			map<Uuid, bool>::const_iterator stale_pos = used_space_stale_by_uuid.find(uuid);
+			if (stale_pos != used_space_stale_by_uuid.end() && stale_pos->second)
+			    cerr << "qgroup data is inconsistent; displaying last-known used-space values" << endl;
 		    }
 		    else
 		    {
 			try
 			{
-			    snapper->calculateUsedSpace();
+			    bool stale = snapper->calculateUsedSpaceStatus();
 			    used_space_broken = used_space_broken_by_uuid[uuid] = false;
+			    used_space_stale_by_uuid[uuid] = stale;
+			    if (stale)
+				cerr << "qgroup data is inconsistent; displaying last-known used-space values" << endl;
 			}
 			catch (const QuotaException& e)
 			{

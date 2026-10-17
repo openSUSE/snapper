@@ -12,7 +12,7 @@ check_PROGRAMS = sysconfig-get1.test sysconfig-crlf.test dirname1.test basename1
 	getopts.test scan-datetime.test root-prefix.test range.test limit.test
 
 if ENABLE_BTRFS_QUOTA
-check_PROGRAMS += qgroup1.test
+check_PROGRAMS += qgroup1.test qgroup-rescan-limiter.test
 endif
 
 if ENABLE_LVM

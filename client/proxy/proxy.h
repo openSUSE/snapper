@@ -250,9 +250,13 @@ public:
 
     virtual QuotaData queryQuotaData() const = 0;
 
+    virtual QuotaDataStatus queryQuotaDataStatus() const = 0;
+
     virtual FreeSpaceData queryFreeSpaceData() const = 0;
 
     virtual void calculateUsedSpace() const = 0;
+
+    virtual bool calculateUsedSpaceStatus() const = 0;
 
     virtual void lock_config() const = 0;
     virtual void unlock_config() const = 0;

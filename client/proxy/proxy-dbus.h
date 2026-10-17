@@ -154,9 +154,13 @@ public:
 
     virtual QuotaData queryQuotaData() const override;
 
+    virtual QuotaDataStatus queryQuotaDataStatus() const override;
+
     virtual FreeSpaceData queryFreeSpaceData() const override;
 
     virtual void calculateUsedSpace() const override;
+
+    virtual bool calculateUsedSpaceStatus() const override;
 
     virtual void lock_config() const override;
     virtual void unlock_config() const override;

@@ -49,6 +49,7 @@
 #include "snapper/LoggerImpl.h"
 #include "snapper/Btrfs.h"
 #include "snapper/BtrfsUtils.h"
+#include "QGroupRescanLimiter.h"
 #include "snapper/File.h"
 #include "snapper/PluginsImpl.h"
 #include "snapper/Snapper.h"
@@ -119,6 +120,17 @@ namespace snapper
 	else
 	{
 	    qgroup = no_qgroup;
+	}
+
+	config_info.get_value("QGROUP_RESCAN_WINDOW", qgroup_rescan_window);
+	try
+	{
+	    QGroupRescanLimiter::validate_window(qgroup_rescan_window);
+	}
+	catch (const runtime_error& e)
+	{
+	    y2err("failed to parse qgroup rescan window '" << qgroup_rescan_window << "': " << e.what());
+	    SN_THROW(InvalidConfigException());
 	}
 
 #endif
@@ -320,11 +332,11 @@ namespace snapper
     }
 
 
-	void
+	QGroupRescanResult
 	Btrfs::prepareQGroupTracking() const
 	{
 	if (qgroup == no_qgroup)
-	    return;
+	    return QGroupRescanResult::Consistent;
 
 	SDir general_dir = openGeneralDir();
 	SDir subvolume_dir = openSubvolumeDir();
@@ -343,8 +355,7 @@ namespace snapper
 		sort(expected.begin(), expected.end());
 		if (members == expected)
 		{
-		    quota_rescan_if_needed(fd);
-		    return;
+		    return quota_rescan_if_needed(fd, qgroup_rescan_window);
 		}
 	    }
 
@@ -360,13 +371,12 @@ namespace snapper
 		if (get_level(tracker) == 2 && members == vector<qgroup_t>{ existing_member })
 		{
 		    qgroup_assign(fd, missing_member, tracker);
-		    quota_rescan_if_needed(fd);
-		    return;
+		    return quota_rescan_if_needed(fd, qgroup_rescan_window);
 		}
 	    }
 
 	    if (!source_parents.empty() || !snapshot_parents.empty())
-		return;
+		return QGroupRescanResult::Consistent;
 
 	    const qgroup_t tracker = qgroup_find_free(fd, 2);
 	    try
@@ -382,11 +392,11 @@ namespace snapper
 
 	    qgroup_assign(fd, qgroup, tracker);
 	    qgroup_assign(fd, source, tracker);
-	    quota_rescan_if_needed(fd);
-	    return;
+	    return quota_rescan_if_needed(fd, qgroup_rescan_window);
 	}
 
 	SN_THROW(IOErrorException("could not allocate a qgroup tracker after repeated concurrent collisions"));
+	return QGroupRescanResult::Deferred;
 	}
 
 
@@ -401,8 +411,10 @@ namespace snapper
 
 	    try
 	    {
-		if (quota && !empty)
-		    prepareQGroupTracking();
+		if (quota && !empty &&
+		    prepareQGroupTracking() == QGroupRescanResult::Deferred)
+		    y2war("creating snapshot while qgroup accounting remains inconsistent; "
+			  "automatic rescan is rate-limited");
 
 		if (empty)
 		    create_subvolume(info_dir.fd(), SNAPSHOT_NAME);

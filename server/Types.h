@@ -44,6 +44,7 @@ namespace DBus
     template <> struct TypeInfo<Snapshot> { static const char* signature; };
     template <> struct TypeInfo<File> { static const char* signature; };
     template <> struct TypeInfo<QuotaData> { static const char* signature; };
+    template <> struct TypeInfo<QuotaDataStatus> { static const char* signature; };
     template <> struct TypeInfo<FreeSpaceData> { static const char* signature; };
     template <> struct TypeInfo<Plugins::Report::Entry> { static const char* signature; };
 
@@ -61,6 +62,7 @@ namespace DBus
     Marshaller& operator<<(Marshaller& marshaller, const Files& data);
 
     Marshaller& operator<<(Marshaller& marshaller, const QuotaData& data);
+    Marshaller& operator<<(Marshaller& marshaller, const QuotaDataStatus& data);
 
     Marshaller& operator<<(Marshaller& marshaller, const FreeSpaceData& data);
 

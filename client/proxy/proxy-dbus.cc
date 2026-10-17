@@ -79,6 +79,13 @@ ProxySnapperDbus::calculateUsedSpace() const
 }
 
 
+bool
+ProxySnapperDbus::calculateUsedSpaceStatus() const
+{
+    return command_calculate_used_space_status(conn(), config_name);
+}
+
+
 uint64_t
 ProxySnapshotDbus::getUsedSpace() const
 {
@@ -223,6 +230,13 @@ QuotaData
 ProxySnapperDbus::queryQuotaData() const
 {
     return command_query_quota(conn(), config_name);
+}
+
+
+QuotaDataStatus
+ProxySnapperDbus::queryQuotaDataStatus() const
+{
+    return command_query_quota_status(conn(), config_name);
 }
 
 

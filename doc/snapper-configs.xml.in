@@ -60,6 +60,21 @@
       </varlistentry>
 
       <varlistentry>
+	<term><option>QGROUP_RESCAN_WINDOW=<replaceable>HH:MM-HH:MM</replaceable></option></term>
+	<listitem>
+	  <para>Local-time window in which Snapper may start an automatic
+	  Btrfs qgroup rescan. The start is inclusive and the end is exclusive;
+	  windows may cross midnight. The default value
+	  &quot;00:00-24:00&quot; allows rescans at any time. Automatic rescans are
+	  also limited to one per Btrfs filesystem in each rolling 24-hour period.
+	  When multiple Snapper configurations share a filesystem, configure the
+	  same window in each one: the configuration initiating a rescan determines
+	  its allowed window.</para>
+	  <para>Only supported for btrfs.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
 	<term><option>SPACE_LIMIT=<replaceable>float</replaceable> or
 	<replaceable>size</replaceable></option></term>
 	<listitem>

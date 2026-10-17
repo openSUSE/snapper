@@ -149,6 +149,12 @@ namespace snapper
 	    __builtin_unreachable();
 	}
 
+	virtual QuotaDataStatus query_quota_data_status() const override
+	{
+	    SN_THROW(UnsupportedException());
+	    __builtin_unreachable();
+	}
+
 	virtual FreeSpaceData query_free_space_data() const override
 	{
 	    SN_THROW(UnsupportedException());

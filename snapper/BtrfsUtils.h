@@ -96,7 +96,15 @@ namespace snapper
 	    uint64_t exclusive_compressed = 0;
 	};
 
-	void quota_rescan_if_needed(int fd);
+	enum class QGroupRescanResult
+	{
+	    Consistent,
+	    Rescanned,
+	    Deferred
+	};
+
+	QGroupRescanResult quota_rescan_if_needed(
+	    int fd, const string& daily_window = "00:00-24:00");
 
 	QGroupUsage qgroup_query_usage(int fd, qgroup_t qgroup);
 

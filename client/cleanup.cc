@@ -278,7 +278,11 @@ Cleaner::is_quota_aware() const
 bool
 Cleaner::is_quota_satisfied() const
 {
-    QuotaData quota_data = cleanable.query_quota_data();
+    QuotaDataStatus quota_status = cleanable.query_quota_data_status();
+    if (quota_status.stale)
+	SN_THROW(QuotaException("qgroup quota counters are stale; quota cleanup deferred"));
+
+    QuotaData quota_data = quota_status.data;
 
     if (quota_data.size == 0)
 	return true;
@@ -420,7 +424,16 @@ Cleaner::cleanup(Plugins::Report& report)
 	cout << "cleanup with quota condition" << '\n';
 #endif
 
-	cleanup(snapshots, std::bind(&Cleaner::is_quota_satisfied, this), report);
+    try
+    {
+        cleanup(snapshots, std::bind(&Cleaner::is_quota_satisfied, this), report);
+    }
+    catch (const QuotaException& e)
+    {
+        SN_CAUGHT(e);
+
+        cerr << "quota cleanup skipped (" << e.what() << ")" << endl;
+    }
     }
     else
     {

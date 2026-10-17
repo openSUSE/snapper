@@ -87,6 +87,16 @@ namespace DBus
 
 
     Unmarshaller&
+    operator>>(Unmarshaller& unmarshaller, QuotaDataStatus& data)
+    {
+	unmarshaller.open_recurse();
+	unmarshaller >> data.data.size >> data.data.used >> data.stale;
+	unmarshaller.close_recurse();
+	return unmarshaller;
+    }
+
+
+    Unmarshaller&
     operator>>(Unmarshaller& unmarshaller, FreeSpaceData& data)
     {
 	unmarshaller.open_recurse();

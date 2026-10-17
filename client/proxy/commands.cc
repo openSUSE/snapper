@@ -419,6 +419,41 @@ command_calculate_used_space(DBus::Connection& conn, const string& config_name)
 }
 
 
+bool
+command_calculate_used_space_status(DBus::Connection& conn, const string& config_name)
+{
+    try
+    {
+	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "CalculateUsedSpaceStatus");
+	DBus::Marshaller marshaller(call);
+	marshaller << config_name;
+	DBus::Message reply = conn.send_with_reply_and_block(call);
+	bool stale;
+	DBus::Unmarshaller unmarshaller(reply);
+	unmarshaller >> stale;
+	return stale;
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	if (strcmp(e.name(), "error.unknown_method") == 0)
+	{
+	    try
+	    {
+		command_calculate_used_space(conn, config_name);
+		return false;
+	    }
+	    catch (const QuotaException& quota_error)
+	    {
+		if (string(quota_error.what()).find("automatic rescan is deferred") != string::npos)
+		    return true;
+		throw;
+	    }
+	}
+	convert_exception(e);
+    }
+}
+
+
 uint64_t
 command_get_used_space(DBus::Connection& conn, const string& config_name, unsigned int num)
 {
@@ -654,6 +689,34 @@ command_query_quota(DBus::Connection& conn, const string& config_name)
     }
     catch (const DBus::ErrorException& e)
     {
+	convert_exception(e);
+    }
+}
+
+
+QuotaDataStatus
+command_query_quota_status(DBus::Connection& conn, const string& config_name)
+{
+    try
+    {
+	DBus::MessageMethodCall call(SERVICE, OBJECT, INTERFACE, "QueryQuotaStatus");
+	DBus::Marshaller marshaller(call);
+	marshaller << config_name;
+	DBus::Message reply = conn.send_with_reply_and_block(call);
+	QuotaDataStatus status;
+	DBus::Unmarshaller unmarshaller(reply);
+	unmarshaller >> status;
+	return status;
+    }
+    catch (const DBus::ErrorException& e)
+    {
+	if (strcmp(e.name(), "error.unknown_method") == 0)
+	{
+	    QuotaDataStatus status;
+	    status.data = command_query_quota(conn, config_name);
+	    status.stale = false;
+	    return status;
+	}
 	convert_exception(e);
     }
 }

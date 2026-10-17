@@ -43,11 +43,14 @@
 #include <btrfsutil.h>
 #endif
 #include <algorithm>
+#include <ctime>
 #include <functional>
+#include <sstream>
 
 #include "snapper/LoggerImpl.h"
 #include "snapper/AppUtil.h"
 #include "snapper/BtrfsUtils.h"
+#include "QGroupRescanLimiter.h"
 
 
 namespace snapper
@@ -793,8 +796,8 @@ namespace snapper
 	}
 
 
-	void
-	quota_rescan_if_needed(int fd)
+	static void
+	read_qgroup_rescan_status(int fd, bool& scan_running, bool& inconsistent)
 	{
 	    bool found_status = false;
 	    uint64_t flags = 0;
@@ -816,28 +819,132 @@ namespace snapper
 	    };
 
 	    qgroups_tree_search(fd, tree_search_opts);
-	    const bool scan_running = found_status &&
+	    scan_running = found_status &&
 		(flags & BTRFS_QGROUP_STATUS_FLAG_RESCAN);
-	    const bool inconsistent = !found_status ||
+	    inconsistent = !found_status ||
 		(flags & BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT);
-	    if (!scan_running && !inconsistent)
-	    {
-		sync(fd);
-		return;
-	    }
+	}
 
-	    if (!scan_running)
-	    {
-		struct btrfs_ioctl_quota_rescan_args args = {};
-		if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN, &args) < 0 && errno != EINPROGRESS)
-		    throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_RESCAN) failed", errno);
-	    }
 
+	static QGroupRescanResult
+	wait_for_qgroup_rescan(int fd)
+	{
 	    struct btrfs_ioctl_quota_rescan_args args = {};
 	    if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN_WAIT, &args) < 0)
 		throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_RESCAN_WAIT) failed", errno);
 
 	    sync(fd);
+
+	    return QGroupRescanResult::Rescanned;
+	}
+
+
+	static QGroupRescanResult
+	wait_for_and_record_qgroup_rescan(int fd, const string& filesystem_uuid,
+					 const string& daily_window)
+	{
+	    time_t next_allowed = 0;
+	    bool state_recorded = false;
+	    try
+	    {
+		QGroupRescanLimiter limiter;
+		state_recorded = limiter.reserve(filesystem_uuid, time(nullptr), next_allowed,
+						 daily_window, true);
+	    }
+	    catch (const std::exception& e)
+	    {
+		y2war("could not record active qgroup rescan in limiter state: " << e.what());
+	    }
+
+	    QGroupRescanResult result = wait_for_qgroup_rescan(fd);
+	    if (!state_recorded)
+	    {
+		try
+		{
+		    QGroupRescanLimiter limiter;
+		    state_recorded = limiter.reserve(filesystem_uuid, time(nullptr), next_allowed,
+						     daily_window, true);
+		}
+		catch (const std::exception& e)
+		{
+		    y2err("could not persist completed qgroup rescan in limiter state: " << e.what());
+		}
+	    }
+	    return state_recorded ? result : QGroupRescanResult::Deferred;
+	}
+
+
+	static string
+	format_qgroup_rescan_time(time_t value)
+	{
+	    struct tm local_time;
+	    char formatted[64];
+	    if (localtime_r(&value, &local_time) == nullptr ||
+		strftime(formatted, sizeof(formatted), "%Y-%m-%d %H:%M:%S %Z", &local_time) == 0)
+		return "unknown time";
+
+	    return formatted;
+	}
+
+
+	QGroupRescanResult
+	quota_rescan_if_needed(int fd, const string& daily_window)
+	{
+	    bool scan_running = false;
+	    bool inconsistent = false;
+	    read_qgroup_rescan_status(fd, scan_running, inconsistent);
+	    if (!scan_running && !inconsistent)
+	    {
+		sync(fd);
+		return QGroupRescanResult::Consistent;
+	    }
+
+	    std::ostringstream filesystem_uuid;
+	    filesystem_uuid << get_uuid(fd);
+	    if (scan_running)
+	    {
+		// A scan started outside this call still consumes the automatic
+		// rescan window. Reserve before waiting so another Snapper process
+		// cannot immediately launch a second scan when this one completes.
+	    return wait_for_and_record_qgroup_rescan(fd, filesystem_uuid.str(), daily_window);
+	    }
+
+	    time_t next_allowed = 0;
+	    bool reserved = false;
+	    try
+	    {
+		QGroupRescanLimiter limiter;
+		reserved = limiter.reserve(filesystem_uuid.str(), time(nullptr), next_allowed,
+					   daily_window);
+	    }
+	    catch (const std::exception& e)
+	    {
+		y2err("could not reserve qgroup rescan: " << e.what());
+		return QGroupRescanResult::Deferred;
+	    }
+	    if (!reserved)
+	    {
+		read_qgroup_rescan_status(fd, scan_running, inconsistent);
+		if (scan_running)
+		{
+		    return wait_for_and_record_qgroup_rescan(fd, filesystem_uuid.str(), daily_window);
+		}
+		if (!inconsistent)
+		{
+		    sync(fd);
+		    return QGroupRescanResult::Consistent;
+		}
+		y2war("qgroup data is inconsistent; automatic rescan deferred until " <<
+		      format_qgroup_rescan_time(next_allowed) << " (window " << daily_window <<
+		      "; at most one rescan per filesystem per 24 hours)");
+		return QGroupRescanResult::Deferred;
+	    }
+
+	    struct btrfs_ioctl_quota_rescan_args args = {};
+	    if (ioctl(fd, BTRFS_IOC_QUOTA_RESCAN, &args) < 0 && errno != EINPROGRESS)
+		throw runtime_error_with_errno("ioctl(BTRFS_IOC_QUOTA_RESCAN) failed", errno);
+
+	    return wait_for_qgroup_rescan(fd);
 	}
 
 

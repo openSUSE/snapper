@@ -101,6 +101,9 @@ command_get_active_snapshot(DBus::Connection& conn, const string& config_name);
 void
 command_calculate_used_space(DBus::Connection& conn, const string& config_name);
 
+bool
+command_calculate_used_space_status(DBus::Connection& conn, const string& config_name);
+
 uint64_t
 command_get_used_space(DBus::Connection& conn, const string& config_name, unsigned int num);
 
@@ -140,6 +143,9 @@ command_prepare_quota(DBus::Connection& conn, const string& config_name);
 
 QuotaData
 command_query_quota(DBus::Connection& conn, const string& config_name);
+
+QuotaDataStatus
+command_query_quota_status(DBus::Connection& conn, const string& config_name);
 
 FreeSpaceData
 command_query_free_space(DBus::Connection& conn, const string& config_name);

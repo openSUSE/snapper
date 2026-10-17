@@ -125,6 +125,7 @@ namespace DBus
     Unmarshaller& operator>>(Unmarshaller& unmarshaller, XFile& data);
 
     Unmarshaller& operator>>(Unmarshaller& unmarshaller, QuotaData& data);
+    Unmarshaller& operator>>(Unmarshaller& unmarshaller, QuotaDataStatus& data);
 
     Unmarshaller& operator>>(Unmarshaller& unmarshaller, FreeSpaceData& data);
 

@@ -12,6 +12,9 @@ FSTYPE="btrfs"
 # btrfs qgroup for space aware cleanup algorithms
 QGROUP=""
 
+# local time window for automatic qgroup rescans (HH:MM-HH:MM)
+QGROUP_RESCAN_WINDOW="00:00-24:00"
+
 
 # fraction or absolute size of the filesystems space the snapshots may use
 SPACE_LIMIT="0.5"

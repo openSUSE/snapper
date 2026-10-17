@@ -108,6 +108,7 @@ public:
     void get_default_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void get_active_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void calculate_used_space(DBus::Connection& conn, DBus::Message& msg);
+    void calculate_used_space_status(DBus::Connection& conn, DBus::Message& msg);
     void get_used_space(DBus::Connection& conn, DBus::Message& msg);
     void mount_snapshot(DBus::Connection& conn, DBus::Message& msg);
     void umount_snapshot(DBus::Connection& conn, DBus::Message& msg);
@@ -119,6 +120,7 @@ public:
     void setup_quota(DBus::Connection& conn, DBus::Message& msg);
     void prepare_quota(DBus::Connection& conn, DBus::Message& msg);
     void query_quota(DBus::Connection& conn, DBus::Message& msg);
+    void query_quota_status(DBus::Connection& conn, DBus::Message& msg);
     void query_free_space(DBus::Connection& conn, DBus::Message& msg);
     void sync(DBus::Connection& conn, DBus::Message& msg);
     void get_plugins_report(DBus::Connection& conn, DBus::Message& msg);

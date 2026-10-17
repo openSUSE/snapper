@@ -30,6 +30,7 @@ namespace DBus
     const char* TypeInfo<Snapshot>::signature = "(uquxussa{ss})";
     const char* TypeInfo<File>::signature = "(su)";
     const char* TypeInfo<QuotaData>::signature = "(tt)";
+    const char* TypeInfo<QuotaDataStatus>::signature = "(ttb)";
     const char* TypeInfo<FreeSpaceData>::signature = "(tt)";
     const char* TypeInfo<Plugins::Report::Entry>::signature = "(sasi)";
 
@@ -100,6 +101,16 @@ namespace DBus
     {
 	marshaller.open_struct();
 	marshaller << data.size << data.used;
+	marshaller.close_struct();
+	return marshaller;
+    }
+
+
+    Marshaller&
+    operator<<(Marshaller& marshaller, const QuotaDataStatus& data)
+    {
+	marshaller.open_struct();
+	marshaller << data.data.size << data.data.used << data.stale;
 	marshaller.close_struct();
 	return marshaller;
     }

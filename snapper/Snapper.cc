@@ -814,22 +814,34 @@ namespace snapper
     void
     Snapper::calculateUsedSpace() const
     {
+	if (calculateUsedSpaceStatus())
+	    y2war("qgroup data is inconsistent; automatic rescan is deferred by its configured window or 24-hour limit");
+    }
+
+
+    bool
+    Snapper::calculateUsedSpaceStatus() const
+    {
 #ifdef ENABLE_BTRFS_QUOTA
 
 	const Btrfs* btrfs = dynamic_cast<const Btrfs*>(getFilesystem());
 	if (!btrfs)
 	    SN_THROW(QuotaException("quota only supported with btrfs"));
 
+	QGroupRescanResult rescan_result;
+	string daily_window = "00:00-24:00";
+	config_info->get_value("QGROUP_RESCAN_WINDOW", daily_window);
 	try
 	{
 	    SDir general_dir = btrfs->openGeneralDir();
 
-	    quota_rescan_if_needed(general_dir.fd());
+	    rescan_result = quota_rescan_if_needed(general_dir.fd(), daily_window);
 	}
 	catch (...)
 	{
 	    SN_THROW(QuotaException("quota rescan or sync failed"));
 	}
+	return rescan_result == QGroupRescanResult::Deferred;
 
 #else
 
@@ -843,6 +855,16 @@ namespace snapper
     QuotaData
     Snapper::queryQuotaData() const
     {
+	QuotaDataStatus status = queryQuotaDataStatus();
+	if (status.stale)
+	    y2war("returning last-known qgroup quota values because the automatic rescan is deferred");
+	return status.data;
+    }
+
+
+    QuotaDataStatus
+    Snapper::queryQuotaDataStatus() const
+    {
 #ifdef ENABLE_BTRFS_QUOTA
 
 	const Btrfs* btrfs = dynamic_cast<const Btrfs*>(getFilesystem());
@@ -854,16 +876,20 @@ namespace snapper
 
 	SDir general_dir = btrfs->openGeneralDir();
 
+	QGroupRescanResult rescan_result;
+	string daily_window = "00:00-24:00";
+	config_info->get_value("QGROUP_RESCAN_WINDOW", daily_window);
 	try
 	{
-	    quota_rescan_if_needed(general_dir.fd());
+	    rescan_result = quota_rescan_if_needed(general_dir.fd(), daily_window);
 	}
 	catch (...)
 	{
 	    SN_THROW(QuotaException("quota rescan or sync failed"));
 	}
-
-	QuotaData quota_data;
+	QuotaDataStatus status;
+	status.stale = rescan_result == QGroupRescanResult::Deferred;
+	QuotaData& quota_data = status.data;
 
 	std::tie(quota_data.size, std::ignore) = general_dir.statvfs();
 
@@ -873,9 +899,13 @@ namespace snapper
 	y2mil("size:" << quota_data.size << " used:" << quota_data.used);
 
 	if (quota_data.used > quota_data.size)
-	    SN_THROW(QuotaException("impossible quota values"));
+	{
+	    if (!status.stale)
+		SN_THROW(QuotaException("impossible quota values"));
+	    y2war("stale qgroup quota usage exceeds the filesystem size; returning the last-known values");
+	}
 
-	return quota_data;
+	return status;
 
 #else
 

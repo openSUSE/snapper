@@ -137,9 +137,13 @@ public:
 
     virtual QuotaData queryQuotaData() const override { return snapper->queryQuotaData(); }
 
+    virtual QuotaDataStatus queryQuotaDataStatus() const override { return snapper->queryQuotaDataStatus(); }
+
     virtual FreeSpaceData queryFreeSpaceData() const override { return snapper->queryFreeSpaceData(); }
 
     virtual void calculateUsedSpace() const override { snapper->calculateUsedSpace(); }
+
+    virtual bool calculateUsedSpaceStatus() const override { return snapper->calculateUsedSpaceStatus(); }
 
     virtual void lock_config() const override {}
     virtual void unlock_config() const override {}

@@ -100,13 +100,14 @@ namespace snapper
     private:
 
 	qgroup_t qgroup = no_qgroup;
+	string qgroup_rescan_window = "00:00-24:00";
 	bool special_cmp = true;
 
 	mutable vector<subvolid_t> deleted_subvolids;
 
 	void addToFstabHelper(const string& default_subvolume_name) const;
 	void removeFromFstabHelper() const;
-	void prepareQGroupTracking() const;
+	QGroupRescanResult prepareQGroupTracking() const;
 
 	/**
 	 * Find the snapper snapshot number corresponding to the btrfs
