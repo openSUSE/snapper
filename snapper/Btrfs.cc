@@ -320,9 +320,9 @@ namespace snapper
     }
 
 
-    void
-    Btrfs::prepareQGroupTracking() const
-    {
+	void
+	Btrfs::prepareQGroupTracking() const
+	{
 	if (qgroup == no_qgroup)
 	    return;
 
@@ -387,7 +387,7 @@ namespace snapper
 	}
 
 	SN_THROW(IOErrorException("could not allocate a qgroup tracker after repeated concurrent collisions"));
-    }
+	}
 
 
     void
