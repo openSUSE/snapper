@@ -893,7 +893,8 @@ namespace snapper
 	QGroupRescanResult
 	quota_rescan_if_needed(int fd, const string& root_prefix,
 					 const string& daily_window,
-					 const string& hold_file)
+					 const string& hold_file,
+					 bool daily_limit)
 	{
 	    bool scan_running = false;
 	    bool inconsistent = false;
@@ -931,19 +932,21 @@ namespace snapper
 
 		    string configured_window = "00:00-24:00";
 		    string configured_hold_file;
+		    bool configured_daily_limit = true;
 		    config.get_value("QGROUP_RESCAN_WINDOW", configured_window);
 		    config.get_value("QGROUP_RESCAN_HOLD_FILE", configured_hold_file);
+		    config.get_value("QGROUP_RESCAN_DAILY_LIMIT", configured_daily_limit);
 		    QGroupRescanLimiter::validate_window(configured_window);
 
 		    std::ostringstream configured_uuid;
 		    configured_uuid << get_uuid(prepend_root_prefix(root_prefix,
 							 config.get_subvolume()));
 		    policies.push_back({configured_uuid.str(), configured_window,
-					configured_hold_file});
+					configured_hold_file, configured_daily_limit});
 		}
 
 		if (!shared_policy_matches(policies, filesystem_uuid.str(), daily_window,
-					   hold_file))
+					   hold_file, daily_limit))
 		{
 		    y2err("qgroup rescan policy differs across Snapper configs for this filesystem; "
 			  "refusing to start a rescan");
@@ -982,7 +985,7 @@ namespace snapper
 	    {
 		QGroupRescanLimiter limiter;
 		reserved = limiter.reserve(filesystem_uuid.str(), time(nullptr), next_allowed,
-					   daily_window);
+					   daily_window, false, daily_limit);
 	    }
 	    catch (const std::exception& e)
 	    {

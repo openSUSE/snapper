@@ -67,19 +67,21 @@ BOOST_AUTO_TEST_CASE(test_shared_qgroup_rescan_policy_must_match_per_filesystem)
     const std::string window = "05:00-21:00";
     const std::string hold = "/run/snapper/qgroup-rescan-hold-until";
 
-    BOOST_CHECK(shared_policy_matches({{filesystem_a, window, hold}}, filesystem_a,
-                                      window, hold));
-    BOOST_CHECK(shared_policy_matches({{filesystem_a, window, hold},
-                                       {filesystem_b, "00:00-24:00", ""}},
-                                      filesystem_a, window, hold));
-    BOOST_CHECK(!shared_policy_matches({{filesystem_a, window, hold},
-                                        {filesystem_a, "00:00-24:00", hold}},
-                                       filesystem_a, window, hold));
-    BOOST_CHECK(!shared_policy_matches({{filesystem_a, window, hold},
-                                        {filesystem_a, window, "/run/other-hold"}},
-                                       filesystem_a, window, hold));
-    BOOST_CHECK(!shared_policy_matches({{filesystem_b, window, hold}}, filesystem_a,
-                                       window, hold));
+    BOOST_CHECK(shared_policy_matches({{filesystem_a, window, hold, true}}, filesystem_a,
+                                      window, hold, true));
+    BOOST_CHECK(shared_policy_matches({{filesystem_a, window, hold, true},
+                                       {filesystem_b, "00:00-24:00", "", true}},
+                                      filesystem_a, window, hold, true));
+    BOOST_CHECK(!shared_policy_matches({{filesystem_a, window, hold, true},
+                                        {filesystem_a, "00:00-24:00", hold, true}},
+                                       filesystem_a, window, hold, true));
+    BOOST_CHECK(!shared_policy_matches({{filesystem_a, window, hold, true},
+                                        {filesystem_a, window, "/run/other-hold", true}},
+                                       filesystem_a, window, hold, true));
+    BOOST_CHECK(!shared_policy_matches({{filesystem_b, window, hold, true}}, filesystem_a,
+                                       window, hold, true));
+    BOOST_CHECK(!shared_policy_matches({{filesystem_a, window, hold, false}}, filesystem_a,
+                                       window, hold, true));
 }
 
 
@@ -327,6 +329,14 @@ BOOST_AUTO_TEST_CASE(test_active_rescan_refreshes_filesystem_cooldown)
     BOOST_CHECK(!limiter.reserve(filesystem_uuid, 1002, next_allowed));
     BOOST_CHECK_EQUAL(next_allowed, 1002 + QGroupRescanLimiter::interval);
 
+    const std::string filesystem_unlimited =
+        "21234567-89ab-cdef-0123-456789abcdef";
+    BOOST_CHECK(limiter.reserve(filesystem_unlimited, 1000, next_allowed,
+                                "00:00-24:00", false, false));
+    BOOST_CHECK(limiter.reserve(filesystem_unlimited, 1001, next_allowed,
+                                "00:00-24:00", false, false));
+
     remove_state_file(state_dir, filesystem_uuid);
+    remove_state_file(state_dir, filesystem_unlimited);
     BOOST_CHECK_EQUAL(rmdir(state_dir), 0);
 }

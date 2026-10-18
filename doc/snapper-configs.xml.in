@@ -65,12 +65,24 @@
 	  <para>Local-time window in which Snapper may start an automatic
 	  Btrfs qgroup rescan. The start is inclusive and the end is exclusive;
 	  windows may cross midnight. The default value
-	  &quot;00:00-24:00&quot; allows rescans at any time. Automatic rescans are
-	  also limited to one per Btrfs filesystem in each rolling 24-hour period.
-	  When multiple Snapper configurations with qgroups share a filesystem,
-	  configure the same window and hold-file path in each one. Before starting
+	  &quot;00:00-24:00&quot; allows rescans at any time. The optional rolling
+	  24-hour limit is controlled by QGROUP_RESCAN_DAILY_LIMIT. When multiple
+	  Snapper configurations with qgroups share a filesystem, configure the same
+	  window, hold-file path, and daily-limit setting in each one. Before starting
 	  a new rescan, Snapper checks those configurations; if their policies differ
 	  or cannot be verified, the rescan is deferred.</para>
+	  <para>Only supported for btrfs.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>QGROUP_RESCAN_DAILY_LIMIT=<replaceable>yes|no</replaceable></option></term>
+	<listitem>
+	  <para>Whether automatic Btrfs qgroup rescans are limited to one per
+	  filesystem in each rolling 24-hour period. The default is &quot;yes&quot;.
+	  Set to &quot;no&quot; to allow repeated rescans while investigating
+	  inconsistent qgroup accounting. Snapper configurations with qgroups on
+	  the same filesystem must use the same value.</para>
 	  <para>Only supported for btrfs.</para>
 	</listitem>
       </varlistentry>

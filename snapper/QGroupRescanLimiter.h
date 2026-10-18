@@ -23,12 +23,14 @@ namespace snapper
 	std::string filesystem_uuid;
 	std::string daily_window;
 	std::string hold_file;
+	bool daily_limit;
     };
 
     bool shared_policy_matches(const std::vector<QGroupRescanPolicy>& policies,
 			       const std::string& filesystem_uuid,
 			       const std::string& daily_window,
-			       const std::string& hold_file);
+			       const std::string& hold_file,
+				bool daily_limit);
 
     class QGroupRescanLimiter
     {
@@ -48,7 +50,8 @@ namespace snapper
 	bool reserve(const std::string& filesystem_uuid, time_t now,
 		     time_t& next_allowed,
 		     const std::string& daily_window = "00:00-24:00",
-		     bool active_scan = false) const;
+		     bool active_scan = false,
+		     bool daily_limit = true) const;
 	// Return true when the configured epoch hold file contains a deadline
 	// later than now. An empty path disables the hold.
 	static bool hold_active(const std::string& hold_file, time_t now,

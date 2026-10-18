@@ -133,6 +133,7 @@ namespace snapper
 	    SN_THROW(InvalidConfigException());
 	}
 	config_info.get_value("QGROUP_RESCAN_HOLD_FILE", qgroup_rescan_hold_file);
+	config_info.get_value("QGROUP_RESCAN_DAILY_LIMIT", qgroup_rescan_daily_limit);
 	if (!qgroup_rescan_hold_file.empty() && qgroup_rescan_hold_file[0] != '/')
 	{
 	    y2err("qgroup rescan hold file must be an absolute path");
@@ -362,7 +363,7 @@ namespace snapper
 		if (members == expected)
 		{
 			return quota_rescan_if_needed(fd, root_prefix, qgroup_rescan_window,
-						      qgroup_rescan_hold_file);
+						      qgroup_rescan_hold_file, qgroup_rescan_daily_limit);
 		}
 	    }
 
@@ -379,7 +380,7 @@ namespace snapper
 		{
 		    qgroup_assign(fd, missing_member, tracker);
 			return quota_rescan_if_needed(fd, root_prefix, qgroup_rescan_window,
-						      qgroup_rescan_hold_file);
+						      qgroup_rescan_hold_file, qgroup_rescan_daily_limit);
 		}
 	    }
 
@@ -401,7 +402,7 @@ namespace snapper
 	    qgroup_assign(fd, qgroup, tracker);
 	    qgroup_assign(fd, source, tracker);
 	    return quota_rescan_if_needed(fd, root_prefix, qgroup_rescan_window,
-					  qgroup_rescan_hold_file);
+					  qgroup_rescan_hold_file, qgroup_rescan_daily_limit);
 	}
 
 	SN_THROW(IOErrorException("could not allocate a qgroup tracker after repeated concurrent collisions"));

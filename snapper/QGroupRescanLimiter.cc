@@ -183,7 +183,8 @@ namespace snapper
     bool
     QGroupRescanLimiter::reserve(const std::string& filesystem_uuid, time_t now,
 				 time_t& next_allowed, const std::string& daily_window,
-				 bool active_scan) const
+				 bool active_scan,
+				 bool daily_limit) const
     {
 	if (!valid_uuid(filesystem_uuid))
 	    throw std::runtime_error("invalid Btrfs filesystem UUID for qgroup rescan state");
@@ -237,7 +238,7 @@ namespace snapper
 	else if (errno != ENOENT)
 	    throw runtime_error_with_errno("openat(qgroup rescan state) failed", errno);
 
-	const bool cooldown_active = last_start > 0 &&
+	const bool cooldown_active = daily_limit && last_start > 0 &&
 	    (now < last_start || static_cast<int64_t>(now) - last_start < interval);
 	if (!active_scan && cooldown_active)
 	{
@@ -359,7 +360,8 @@ namespace snapper
     shared_policy_matches(const std::vector<QGroupRescanPolicy>& policies,
 			  const std::string& filesystem_uuid,
 			  const std::string& daily_window,
-			  const std::string& hold_file)
+			  const std::string& hold_file,
+			  bool daily_limit)
     {
 	bool found = false;
 	for (const QGroupRescanPolicy& policy : policies)
@@ -367,7 +369,8 @@ namespace snapper
 	    if (policy.filesystem_uuid != filesystem_uuid)
 		continue;
 	    found = true;
-	    if (policy.daily_window != daily_window || policy.hold_file != hold_file)
+	    if (policy.daily_window != daily_window || policy.hold_file != hold_file ||
+		policy.daily_limit != daily_limit)
 		return false;
 	}
 	return found;

@@ -831,14 +831,16 @@ namespace snapper
 	QGroupRescanResult rescan_result;
 	string daily_window = "00:00-24:00";
 	string hold_file;
+	bool daily_limit = true;
 	config_info->get_value("QGROUP_RESCAN_WINDOW", daily_window);
 	config_info->get_value("QGROUP_RESCAN_HOLD_FILE", hold_file);
+	config_info->get_value("QGROUP_RESCAN_DAILY_LIMIT", daily_limit);
 	try
 	{
 	    SDir general_dir = btrfs->openGeneralDir();
 
 	    rescan_result = quota_rescan_if_needed(general_dir.fd(), root_prefix,
-						      daily_window, hold_file);
+						      daily_window, hold_file, daily_limit);
 	}
 	catch (...)
 	{
@@ -882,12 +884,14 @@ namespace snapper
 	QGroupRescanResult rescan_result;
 	string daily_window = "00:00-24:00";
 	string hold_file;
+	bool daily_limit = true;
 	config_info->get_value("QGROUP_RESCAN_WINDOW", daily_window);
 	config_info->get_value("QGROUP_RESCAN_HOLD_FILE", hold_file);
+	config_info->get_value("QGROUP_RESCAN_DAILY_LIMIT", daily_limit);
 	try
 	{
 	    rescan_result = quota_rescan_if_needed(general_dir.fd(), root_prefix,
-						      daily_window, hold_file);
+						      daily_window, hold_file, daily_limit);
 	}
 	catch (...)
 	{
