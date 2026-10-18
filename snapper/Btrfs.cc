@@ -1794,6 +1794,20 @@ namespace snapper
 	    // best effort: a failure is logged and reported, and the remaining
 	    // steps and the post plugins still run.
 
+	    // Where snapper only knows fstab (e.g. with --root) the system may
+	    // also boot by the default subvolume id: let it name the new root.
+	    try
+	    {
+		if (get_default_id(toplevel.fd()) == get_id(SDir(toplevel, incoming).fd()))
+		    set_default_id(toplevel.fd(), get_id(SDir(toplevel, subvol_name).fd()));
+	    }
+	    catch (const std::exception& e)
+	    {
+		y2err("failed to set the default subvolume: " << e.what());
+		warnings.push_back(string("cannot set the default subvolume, which names the old "
+					  "root, to the new root: ") + e.what());
+	    }
+
 	    // Free the paths of the other (empty) nested subvolumes.
 	    try
 	    {

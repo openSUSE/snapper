@@ -35,7 +35,9 @@ The sequence is:
   2. renameat2(RENAME_EXCHANGE) atomically swaps <subvol>.incoming with
      the current root subvolume (e.g. @root). There is no point in time
      where @root does not exist. With the exchange the rollback takes
-     effect; if it fails, .snapshots is moved back.
+     effect; if it fails, .snapshots is moved back. If the btrfs default
+     subvolume named the old root, it is set to the new root, so a boot
+     by the default subvolume id gets the new root too.
 
   3. The other subvolumes nested in the root subvolume are handled, see
      below.
