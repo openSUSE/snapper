@@ -295,6 +295,11 @@ namespace snapper
 
 		if (ambit == Ambit::SUBVOL_RENAME)
 		{
+		    // before the copy of snapshot2 becomes the root, so that the
+		    // changes of the rollback script to it boot
+		    Plugins::rollback(filesystem->snapshotDir(snapshot1->getNum()),
+				      filesystem->snapshotDir(snapshot2->getNum()), report);
+
 		    const vector<string> warnings =
 			filesystem->rollbackSubvolRename(snapshot2->getNum(), subvol_name, report);
 
@@ -315,10 +320,11 @@ namespace snapper
 		else
 		{
 		    filesystem->setDefault(snapshot2->getNum(), report);
+
+		    Plugins::rollback(filesystem->snapshotDir(snapshot1->getNum()),
+				      filesystem->snapshotDir(snapshot2->getNum()), report);
 		}
 
-		Plugins::rollback(filesystem->snapshotDir(snapshot1->getNum()),
-				  filesystem->snapshotDir(snapshot2->getNum()), report);
 		Plugins::rollback(Plugins::Stage::POST_ACTION, subvolume, filesystem.get(),
 				  snapshot1->getNum(), snapshot2->getNum(), report);
 

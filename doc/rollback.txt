@@ -102,8 +102,11 @@ The subvol-rename ambit runs the same plugins as a classic rollback.
 set-default-snapshot-pre and set-default-snapshot-post are run around
 the exchange with the number of the snapshot whose copy becomes the
 root, i.e. the snapshot booted next, although the btrfs default
-subvolume is not changed. rollback-pre and rollback-post get the numbers
-of the backup snapshot and of the new snapshot, as for classic.
+subvolume is not changed. rollback and rollback-post get the numbers of
+the backup snapshot and of the new snapshot, as for classic. The
+rollback script /usr/lib/snapper/plugins/rollback, which gets the paths
+of both snapshots, runs before the copy is made, so its changes to the
+new snapshot are part of the new root.
 
 
 Limitations
