@@ -70,10 +70,19 @@ namespace snapper
 	// naming each one. Returns the empty ones.
 	vector<string> check_empty(const SDir& root_dir) const;
 
-	// After the exchange: move .snapshots from old_root into new_root and
-	// remove the placeholders of the other nested subvolumes from
-	// new_root. Returns whether .snapshots was moved.
-	bool apply(const SDir& old_root, const SDir& new_root) const;
+	// Whether .snapshots is one of them.
+	bool has_snapshots() const;
+
+	// Move .snapshots from from_root into to_root, replacing its
+	// placeholder there: before the exchange into the copy of the target
+	// (and back if the exchange fails). Throws if it cannot be moved,
+	// e.g. when it is mounted (EBUSY), leaving it in from_root.
+	void move_snapshots(const SDir& from_root, const SDir& to_root) const;
+
+	// After the exchange: remove the placeholders of the other nested
+	// subvolumes from new_root. Returns a message for each one that could
+	// not be removed.
+	vector<string> remove_placeholders(const SDir& new_root) const;
 
     private:
 

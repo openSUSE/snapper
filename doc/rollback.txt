@@ -28,17 +28,24 @@ because in that case the btrfs default subvolume ID is ignored.
 The sequence is:
 
   1. A read-write copy of the rollback target snapshot is created as
-     <subvol>.incoming (e.g. @root.incoming).
+     <subvol>.incoming (e.g. @root.incoming), and .snapshots is moved
+     into it (see below). If that fails, e.g. because .snapshots is
+     mounted, the copy is deleted and the rollback is refused.
 
   2. renameat2(RENAME_EXCHANGE) atomically swaps <subvol>.incoming with
      the current root subvolume (e.g. @root). There is no point in time
-     where @root does not exist.
+     where @root does not exist. With the exchange the rollback takes
+     effect; if it fails, .snapshots is moved back.
 
-  3. Subvolumes nested in the root subvolume are handled, see below.
+  3. The other subvolumes nested in the root subvolume are handled, see
+     below.
 
   4. The displaced root is moved to <subvol>.rollback.<N>, preserving
      the old root for recovery. With ROLLBACK_BACKUP_LIMIT set, the
      oldest of these backups beyond the limit are deleted.
+
+Steps 3 and 4 are best effort: a failure is reported as a warning, and
+the remaining steps and the post plugins still run.
 
 Renaming a mounted btrfs subvolume is safe: the kernel tracks mounts by
 subvolume ID, not by name, so the running system is unaffected. Requires
@@ -55,13 +62,13 @@ Nested subvolumes
 A btrfs snapshot does not include subvolumes nested in the snapshotted
 subvolume. Where one was, the snapshot only holds a placeholder: an
 empty directory in which nothing can be created until it is removed.
-So after the exchange the nested subvolumes are still in the old root,
-and the new root has placeholders at their paths. They are handled by
-this rule:
+So the nested subvolumes stay in the old root, and the new root has
+placeholders at their paths. They are handled by this rule:
 
-  .snapshots  moved into the new root, and mounted again by subvolume ID
-              on the running system so snapper keeps working until the
-              reboot
+  .snapshots  moved into the new root before the exchange, and mounted
+              again by subvolume ID on the running system so snapper
+              keeps working until the reboot; a .snapshots nested in the
+              root must not be mounted separately for the rollback
 
   empty       the placeholder is removed from the new root, so the path
               can be recreated, e.g. var/lib/portables and

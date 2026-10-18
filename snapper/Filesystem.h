@@ -118,9 +118,11 @@ namespace snapper
 	/**
 	 * Rollback by atomically swapping the named root subvolume with a
 	 * read-write copy of snapshot num. Currently only available for btrfs.
+	 * Returns a message for each best-effort step after the exchange that
+	 * failed (the rollback took effect nonetheless).
 	 */
-	virtual void rollbackSubvolRename(unsigned int num, const string& subvol_name,
-					  Plugins::Report& report) const;
+	virtual vector<string> rollbackSubvolRename(unsigned int num, const string& subvol_name,
+						    Plugins::Report& report) const;
 
 	virtual std::pair<bool, unsigned int> getActive() const;
 

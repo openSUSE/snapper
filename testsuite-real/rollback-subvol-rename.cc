@@ -586,8 +586,9 @@ test_nested_check_empty(SDir& top)
 }
 
 
-// After the exchange the new root has placeholders where the nested
-// subvolumes were: .snapshots moves in, the other placeholders go away.
+// The copy of the target has placeholders where the nested subvolumes were:
+// .snapshots moves in before the exchange, the other placeholders go away
+// after it.
 static void
 test_nested_apply(SDir& top)
 {
@@ -637,6 +638,8 @@ test_nested_apply(SDir& top)
 	SDir root_sv(top, "@root");
 	NestedSubvolumes nested(root_sv);
 
+	check(nested.has_snapshots(), "has_snapshots is false");
+	nested.move_snapshots(root_sv, SDir(top, "@root.incoming"));
 	check(top.exchange("@root", "@root.incoming") == 0, "exchange failed");
 
 	SDir new_root(top, "@root");
@@ -645,7 +648,7 @@ test_nested_apply(SDir& top)
 	check(inode_at(new_root, "var/lib/machines") == BTRFS_EMPTY_SUBVOL_DIR_OBJECTID,
 	      "test setup: var/lib/machines is no placeholder in the new root");
 
-	check(nested.apply(old_root, new_root), "apply did not move .snapshots");
+	check(nested.remove_placeholders(new_root).empty(), "remove_placeholders failed");
 
 	check(inode_at(new_root, ".snapshots") == BTRFS_FIRST_FREE_OBJECTID,
 	      ".snapshots is not a subvolume in the new root");
@@ -676,6 +679,72 @@ test_nested_apply(SDir& top)
     cleanup_nested_root(top);
 
     cout << "ok: nested-apply" << endl;
+}
+
+
+// A mounted .snapshots cannot be renamed (EBUSY): the move fails before the
+// exchange, naming the reason, with .snapshots still in the root.
+static void
+test_nested_move_snapshots_mounted(SDir& top)
+{
+    create_nested_root(top);
+    {
+	SDir root_sv(top, "@root");
+	create_snapshot(root_sv.fd(), top.fd(), "@root.incoming", false, no_qgroup);
+    }
+
+    const string snapshots = TOP + "/@root/.snapshots";
+    run("mount --bind " + snapshots + " " + snapshots);
+    string what;
+    {
+	SDir root_sv(top, "@root");
+	try { NestedSubvolumes(root_sv).move_snapshots(root_sv, SDir(top, "@root.incoming")); }
+	catch (const std::exception& e) { what = e.what(); }
+    }
+    run("umount " + snapshots);
+
+    check(what.find("mounted") != string::npos, "move of a mounted .snapshots: '" + what + "'");
+    {
+	SDir root_sv(top, "@root");
+	check(inode_at(root_sv, ".snapshots") == BTRFS_FIRST_FREE_OBJECTID,
+	      ".snapshots left the root");
+    }
+
+    cleanup_nested_root(top);
+
+    cout << "ok: nested-move-snapshots-mounted" << endl;
+}
+
+
+// A placeholder that cannot be removed is reported, naming the path: here
+// its parent directory is immutable.
+static void
+test_nested_placeholder_failure(SDir& top)
+{
+    create_nested_root(top);
+    {
+	SDir root_sv(top, "@root");
+	create_snapshot(root_sv.fd(), top.fd(), "@root.incoming", false, no_qgroup);
+    }
+
+    const string var_lib = TOP + "/@root.incoming/var/lib";
+    run("chattr +i " + var_lib);
+    vector<string> failed;
+    {
+	SDir root_sv(top, "@root");
+	failed = NestedSubvolumes(root_sv).remove_placeholders(SDir(top, "@root.incoming"));
+    }
+    run("chattr -i " + var_lib);
+
+    string got;
+    for (const string& msg : failed)
+	got += " [" + msg + "]";
+    check(failed.size() == 2 && got.find("/var/lib/machines") != string::npos &&
+	  got.find("/var/lib/portables") != string::npos, "failed placeholders:" + got);
+
+    cleanup_nested_root(top);
+
+    cout << "ok: nested-placeholder-failure" << endl;
 }
 
 
@@ -740,6 +809,8 @@ main()
 	test_nested_inventory(top);
 	test_nested_check_empty(top);
 	test_nested_apply(top);
+	test_nested_move_snapshots_mounted(top);
+	test_nested_placeholder_failure(top);
 #else
 	test_nested_requires_libbtrfsutil(top);
 #endif

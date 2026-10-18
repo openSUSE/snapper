@@ -91,8 +91,8 @@ namespace snapper
 
 	virtual vector<string> checkRollbackSubvolRename(const string& subvol_name) const override;
 
-	virtual void rollbackSubvolRename(unsigned int num, const std::string& subvol_name,
-					  Plugins::Report& report) const override;
+	virtual vector<string> rollbackSubvolRename(unsigned int num, const std::string& subvol_name,
+						    Plugins::Report& report) const override;
 
 	virtual bool isActive(unsigned int num) const override;
 

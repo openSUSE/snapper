@@ -291,7 +291,12 @@ namespace snapper
 
 		if (ambit == Ambit::SUBVOL_RENAME)
 		{
-		    filesystem->rollbackSubvolRename(snapshot2->getNum(), subvol_name, report);
+		    const vector<string> warnings =
+			filesystem->rollbackSubvolRename(snapshot2->getNum(), subvol_name, report);
+
+		    // the rollback took effect, but a step after the exchange failed
+		    for (const string& warning : warnings)
+			cerr << sformat(_("Warning: %s"), warning.c_str()) << endl;
 
 		    if (!global_options.quiet() && !empty_nested.empty())
 		    {

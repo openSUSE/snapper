@@ -148,25 +148,48 @@ namespace snapper
 
 
     bool
-    NestedSubvolumes::apply(const SDir& old_root, const SDir& new_root) const
+    NestedSubvolumes::has_snapshots() const
     {
-	bool moved = false;
+	for (const string& path : nested)
+	    if (path == SNAPSHOTS_NAME)
+		return true;
+	return false;
+    }
+
+
+    void
+    NestedSubvolumes::move_snapshots(const SDir& from_root, const SDir& to_root) const
+    {
+	if (!has_snapshots())
+	    return;
+
+	// the placeholder, or nothing if the target predates .snapshots
+	if (to_root.rmdir(SNAPSHOTS_NAME) != 0 && errno != ENOENT)
+	    SN_THROW(IOErrorException("rollback refused, cannot remove the " SNAPSHOTS_NAME
+				      " placeholder from the new root: " + stringerror(errno)));
+
+	if (from_root.rename(SNAPSHOTS_NAME, to_root, SNAPSHOTS_NAME) != 0)
+	{
+	    const int rename_errno = errno;
+	    SN_THROW(IOErrorException("rollback refused, cannot move " SNAPSHOTS_NAME
+				      " into the new root: " + stringerror(rename_errno) +
+				      (rename_errno == EBUSY ? "; it is mounted, unmount it for "
+				       "the rollback (it stays reachable as nested subvolume)" : "")));
+	}
+
+	y2mil("moved " SNAPSHOTS_NAME " into the new root");
+    }
+
+
+    vector<string>
+    NestedSubvolumes::remove_placeholders(const SDir& new_root) const
+    {
+	vector<string> failed;
 
 	for (const string& path : nested)
 	{
 	    if (path == SNAPSHOTS_NAME)
-	    {
-		if (new_root.rmdir(SNAPSHOTS_NAME) != 0 && errno != ENOENT)
-		    y2err("cannot remove " SNAPSHOTS_NAME " placeholder from new root: " <<
-			  stringerror(errno) << " -- snapshots remain in the old root");
-		else if (old_root.rename(SNAPSHOTS_NAME, new_root, SNAPSHOTS_NAME) != 0)
-		    y2err("cannot move " SNAPSHOTS_NAME " subvolume to new root: " <<
-			  stringerror(errno) << " -- snapshots remain in the old root");
-		else
-		    moved = true;
-
 		continue;
-	    }
 
 	    // Only a placeholder is removed: the target snapshot may predate the
 	    // nested subvolume (no entry, or a plain directory of its own).
@@ -184,10 +207,17 @@ namespace snapper
 		    continue;
 
 		if (parent.rmdir(name) != 0)
-		    y2war("cannot remove placeholder " << path << " from new root: " <<
-			  stringerror(errno));
+		{
+		    const string msg = "cannot remove the placeholder of the nested subvolume /" +
+			path + " from the new root: " + stringerror(errno) + "; nothing can be "
+			"created there until it is removed with rmdir";
+		    y2war(msg);
+		    failed.push_back(msg);
+		}
 		else
+		{
 		    y2mil("removed placeholder " << path << " from new root");
+		}
 	    }
 	    catch (const Exception& e)
 	    {
@@ -195,7 +225,7 @@ namespace snapper
 	    }
 	}
 
-	return moved;
+	return failed;
     }
 
 }

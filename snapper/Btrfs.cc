@@ -1679,10 +1679,12 @@ namespace snapper
     }
 
 
-    void
+    vector<string>
     Btrfs::rollbackSubvolRename(unsigned int num, const string& subvol_name,
 				Plugins::Report& report) const
     {
+	vector<string> warnings;
+
 	// The client never selects subvol-rename for a nested name (see
 	// is_renameable_subvol in client/snapper/ambit.cc) but this method must
 	// protect itself: the SDir operations below require single-component names.
@@ -1749,9 +1751,14 @@ namespace snapper
 		SN_THROW(IOErrorException(string("rollback failed: ") + e.what()));
 	    }
 
+	    // A btrfs snapshot does not include nested subvolumes, the copy only
+	    // holds placeholders for them. Move .snapshots into it before the
+	    // exchange, so a failure (e.g. EBUSY when it is mounted) refuses the
+	    // rollback with the root untouched.
 	    try
 	    {
 		nested.check_empty(SDir(toplevel, subvol_name));
+		nested.move_snapshots(SDir(toplevel, subvol_name), SDir(toplevel, incoming));
 	    }
 	    catch (const Exception& e)
 	    {
@@ -1763,62 +1770,77 @@ namespace snapper
 	    if (toplevel.exchange(subvol_name, incoming) != 0)
 	    {
 		const int exchange_errno = errno;
+		const string error = string("rollback failed: exchange(") + subvol_name + ", " +
+		    incoming + ") failed: " + stringerror(exchange_errno) +
+		    " -- kernel may not support RENAME_EXCHANGE on btrfs";
 
-		// Clean up the incoming subvolume we just created
+		// Move .snapshots back and clean up the incoming subvolume we
+		// just created, but never delete it with the snapshots inside.
+		try
+		{
+		    nested.move_snapshots(SDir(toplevel, incoming), SDir(toplevel, subvol_name));
+		}
+		catch (const Exception& e)
+		{
+		    SN_THROW(IOErrorException(error + "; " SNAPSHOTS_NAME " is left in " + incoming +
+					      ": " + e.what()));
+		}
+
 		try { delete_subvolume(toplevel.fd(), incoming); } catch (...) {}
-		SN_THROW(IOErrorException(string("rollback failed: exchange(") +
-					  subvol_name + ", " + incoming +
-					  ") failed: " + stringerror(exchange_errno) +
-					  " -- kernel may not support RENAME_EXCHANGE on btrfs"));
+		SN_THROW(IOErrorException(error));
 	    }
 
 	    // With the exchange the rollback took effect. Everything after it is
-	    // best effort: a failure is logged, and the remaining steps and the
-	    // post plugins still run.
+	    // best effort: a failure is logged and reported, and the remaining
+	    // steps and the post plugins still run.
 
-	    // A btrfs snapshot does not include nested subvolumes, the new root
-	    // only holds placeholders for them: move .snapshots into it and free
-	    // the paths of the other (empty) ones.
+	    // Free the paths of the other (empty) nested subvolumes.
 	    try
 	    {
-		SDir old_root(toplevel, incoming);
-		SDir new_root(toplevel, subvol_name);
-
-		// Moving .snapshots unhooks it from the still-mounted old root
-		// (the running system, reached by subvolume id, not by the name
-		// we exchanged), so /.snapshots no longer resolves and snapper
-		// would stop working until the reboot swaps in the new root.
-		// Mount the .snapshots subvolume back onto the running root by
-		// its (unchanged) subvolume id so snapper keeps working in the
-		// meantime; this mount does not survive the reboot, where the new
-		// root provides /.snapshots as a nested subvolume again. Not for a
-		// system at another root prefix, which is not running.
-		const bool running_system = root_prefix.empty() || root_prefix == "/";
-		if (nested.apply(old_root, new_root) && running_system)
-		{
-		    try
-		    {
-			SDir new_root_snapshots(new_root, SNAPSHOTS_NAME);
-			const subvolid_t snapshots_id = get_id(new_root_snapshots.fd());
-
-			SDir subvolume_dir = openSubvolumeDir();
-			subvolume_dir.mkdir(SNAPSHOTS_NAME, 0750);
-			SDir running_snapshots(subvolume_dir, SNAPSHOTS_NAME);
-			if (!running_snapshots.mount(top_level.device, "btrfs", 0,
-						     "subvolid=" + decString(snapshots_id)))
-			    y2err("failed to remount " << SNAPSHOTS_NAME << " on the running "
-				  "root -- snapper works again after reboot");
-		    }
-		    catch (const std::exception& e)
-		    {
-			y2err("failed to remount " << SNAPSHOTS_NAME << " on the running root: "
-			      << e.what() << " -- snapper works again after reboot");
-		    }
-		}
+		const vector<string> failed = nested.remove_placeholders(SDir(toplevel, subvol_name));
+		warnings.insert(warnings.end(), failed.begin(), failed.end());
 	    }
 	    catch (const std::exception& e)
 	    {
-		y2err("failed to handle the nested subvolumes: " << e.what());
+		y2err("failed to remove the placeholders: " << e.what());
+		warnings.push_back(string("cannot remove the placeholders of the nested "
+					  "subvolumes from the new root: ") + e.what());
+	    }
+
+	    // Moving .snapshots unhooked it from the still-mounted old root (the
+	    // running system, reached by subvolume id, not by the name we
+	    // exchanged), so /.snapshots no longer resolves and snapper would
+	    // stop working until the reboot swaps in the new root. Mount the
+	    // .snapshots subvolume back onto the running root by its (unchanged)
+	    // subvolume id so snapper keeps working in the meantime; this mount
+	    // does not survive the reboot, where the new root provides
+	    // /.snapshots as a nested subvolume again. Not for a system at
+	    // another root prefix, which is not running.
+	    const bool running_system = root_prefix.empty() || root_prefix == "/";
+	    if (nested.has_snapshots() && running_system)
+	    {
+		const string failed = "cannot mount " SNAPSHOTS_NAME " on the running root, "
+		    "snapper sees the snapshots again after the reboot";
+		try
+		{
+		    SDir new_root_snapshots(SDir(toplevel, subvol_name), SNAPSHOTS_NAME);
+		    const subvolid_t snapshots_id = get_id(new_root_snapshots.fd());
+
+		    SDir subvolume_dir = openSubvolumeDir();
+		    subvolume_dir.mkdir(SNAPSHOTS_NAME, 0750);
+		    SDir running_snapshots(subvolume_dir, SNAPSHOTS_NAME);
+		    if (!running_snapshots.mount(top_level.device, "btrfs", 0,
+						 "subvolid=" + decString(snapshots_id)))
+		    {
+			y2err(failed);
+			warnings.push_back(failed);
+		    }
+		}
+		catch (const std::exception& e)
+		{
+		    y2err(failed << ": " << e.what());
+		    warnings.push_back(failed + ": " + e.what());
+		}
 	    }
 
 	    // Rename old root to <subvol_name>.rollback.<num> for preservation.
@@ -1830,8 +1852,9 @@ namespace snapper
 	    {
 		if (toplevel.rename(incoming, rollback_name) != 0)
 		{
+		    const int rename_errno = errno;
 		    bool rescued = false;
-		    if (errno == EEXIST || errno == ENOTEMPTY)
+		    if (rename_errno == EEXIST || rename_errno == ENOTEMPTY)
 		    {
 			SDir incoming_dir(toplevel, incoming);
 			const string alt_name = subvol_name + ".rollback.svid." +
@@ -1843,15 +1866,19 @@ namespace snapper
 		    }
 		    if (!rescued)
 		    {
-			y2war("failed to rename old root " << incoming << " to " << rollback_name
-			      << ": " << stringerror(errno)
-			      << " -- old root preserved as " << incoming);
+			const string failed = "cannot rename the old root " + incoming + " to " +
+			    rollback_name + ": " + stringerror(rename_errno) + "; it is kept as " +
+			    incoming;
+			y2war(failed);
+			warnings.push_back(failed);
 		    }
 		}
 	    }
 	    catch (const std::exception& e)
 	    {
 		y2err("failed to rename the old root " << incoming << ": " << e.what());
+		warnings.push_back("cannot rename the old root " + incoming + ": " + e.what() +
+				   "; it is kept as " + incoming);
 	    }
 
 	    // Enforce the configured retention (ROLLBACK_BACKUP_LIMIT, validated
@@ -1865,6 +1892,7 @@ namespace snapper
 	    catch (const std::exception& e)
 	    {
 		y2err("failed to prune the rollback backups: " << e.what());
+		warnings.push_back(string("cannot delete old rollback backups: ") + e.what());
 	    }
 
 	    Plugins::set_default_snapshot(Plugins::Stage::POST_ACTION, subvolume, this, num, report);
@@ -1873,6 +1901,8 @@ namespace snapper
 	{
 	    SN_THROW(IOErrorException(string("rollback failed, ") + e.what()));
 	}
+
+	return warnings;
     }
 
 
@@ -1938,11 +1968,11 @@ namespace snapper
     }
 
 
-    void
+    vector<string>
     Btrfs::rollbackSubvolRename(unsigned int num, const string& subvol_name,
 				Plugins::Report& report) const
     {
-	Filesystem::rollbackSubvolRename(num, subvol_name, report);
+	return Filesystem::rollbackSubvolRename(num, subvol_name, report);
     }
 
 

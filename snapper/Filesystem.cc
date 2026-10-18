@@ -207,7 +207,7 @@ namespace snapper
     }
 
 
-    void
+    vector<string>
     Filesystem::rollbackSubvolRename(unsigned int num, const string& subvol_name,
 				     Plugins::Report& report) const
     {
