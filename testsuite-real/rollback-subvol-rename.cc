@@ -13,7 +13,6 @@
 #include <string>
 #include <vector>
 
-#include "client/snapper/ambit.h"
 #include "snapper/Btrfs.h"
 #include "snapper/BtrfsUtils.h"
 #include "snapper/BtrfsNested.h"

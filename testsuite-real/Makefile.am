@@ -23,8 +23,8 @@ endif
 
 if ENABLE_ROLLBACK
 test_PROGRAMS += rollback-subvol-rename
-rollback_subvol_rename_SOURCES = rollback-subvol-rename.cc ../client/snapper/ambit.cc
-rollback_subvol_rename_LDADD = ../snapper/libsnapper.la ../client/utils/libutils.la
+rollback_subvol_rename_SOURCES = rollback-subvol-rename.cc
+rollback_subvol_rename_LDADD = ../snapper/libsnapper.la
 endif
 
 if HAVE_XATTRS

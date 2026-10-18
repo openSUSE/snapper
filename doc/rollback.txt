@@ -114,15 +114,23 @@ Snapper inspects the system to determine the ambit:
   subvolid= or a nested name), subvol= of the / entry in /etc/fstab, which
   describes the normal boot. /proc/mounts is not used for this: it shows
   the running root under its current name, which after a rollback without
-  a reboot is <subvol>.rollback.<N>.
-- Otherwise, when booting by the btrfs default subvolume id, the ambit is
-  classic or transactional, depending on the read-only/-write state of
-  the default subvolume, and set-default is used.
-- The rollback is refused when neither method changes what boots: the
-  root pinned by subvolid=, mounted by a nested name, or the kernel
-  command line and fstab naming different subvolumes. A subvolid= next
-  to subvol= in fstab (as older genfstab versions write it) is reported,
-  since it no longer matches after the rename.
+  a reboot is <subvol>.rollback.<N>. With --root the kernel command line
+  belongs to the running system, so the name comes from the fstab of the
+  target system.
+- Otherwise the kernel mounts the btrfs default subvolume, whatever fstab
+  names (fstab is then only used to remount /): the ambit is classic or
+  transactional, depending on the read-only/-write state of the default
+  subvolume, and set-default is used.
+- On a named-subvolume layout the rollback is refused when neither method
+  changes what boots, or the system would not boot afterwards: the root
+  pinned by subvolid= on the kernel command line (alone, or next to
+  subvol=, where the kernel refuses the mismatch once the subvolume is
+  renamed), mounted by a nested name, or the kernel command line and
+  fstab naming different subvolumes. A subvolid= next to subvol= in
+  fstab (as older genfstab versions write it) is reported, since it no
+  longer matches after the rename; fstab is only used to remount / then.
+  On a default subvolume layout the rollback works as without the rename
+  method.
 - subvol-rename requires snapper built with libbtrfsutil.
 
 An explicit --ambit always wins over the detection. This means no manual

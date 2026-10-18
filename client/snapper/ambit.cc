@@ -141,53 +141,74 @@ namespace snapper
 
 
     BootRoot
-    boot_root_from(const vector<string>& rootflags, const vector<string>& fstab_options,
-		   const string& running_subvol)
+    boot_root_from(const std::optional<vector<string>>& rootflags,
+		   const vector<string>& fstab_options, const string& running_subvol)
     {
 	BootRoot boot;
 
-	const string cmdline_subvol = subvol_option(rootflags);
-	const bool cmdline_subvolid = has_subvolid_option(rootflags);
 	const string fstab_subvol = subvol_option(fstab_options);
 	const bool fstab_subvolid = has_subvolid_option(fstab_options);
 
-	if (is_top_level(cmdline_subvol))
+	// Whether fstab tells what the normal boot mounts: for a one-off boot of
+	// a snapshot and for an unknown command line. Otherwise the command line
+	// decides, and without subvol= or subvolid= the kernel mounts the btrfs
+	// default subvolume (fstab is then only used to remount /).
+	bool use_fstab = !rootflags;
+
+	if (rootflags)
 	{
-	    // The command line decides at boot. If fstab names another subvolume
-	    // this is not the normal boot (e.g. a backup booted by hand), so which
-	    // one boots next is unknown.
-	    if (is_top_level(fstab_subvol) && fstab_subvol != cmdline_subvol)
-		boot.unsupported = sformat(_("The system was booted with subvol=%s but fstab "
-					     "mounts subvol=%s. Boot the system normally "
-					     "before a rollback."), cmdline_subvol.c_str(),
-					   fstab_subvol.c_str());
-	    else
-		boot.subvol = cmdline_subvol;
-	}
-	else if (cmdline_subvolid && cmdline_subvol.empty())
-	{
-	    // Booted by id: a one-off boot of a snapshot, fstab then describes the
-	    // normal boot, or the normal root itself pinned by id.
-	    if (is_top_level(fstab_subvol) && running_subvol == fstab_subvol)
-		boot.unsupported = _("The kernel command line mounts the root filesystem "
-				     "with subvolid=, so a rollback cannot change which "
-				     "subvolume boots.");
-	    else if (is_top_level(fstab_subvol))
-		boot.subvol = fstab_subvol;
-	}
-	else if (is_top_level(fstab_subvol))
-	{
-	    // no name on the command line, or the nested name of a booted snapshot
-	    boot.subvol = fstab_subvol;
+	    const string cmdline_subvol = subvol_option(*rootflags);
+	    const bool cmdline_subvolid = has_subvolid_option(*rootflags);
+
+	    if (is_top_level(cmdline_subvol))
+	    {
+		// The kernel refuses a subvolid= that does not match subvol=,
+		// which after a rename names the old root. If fstab names another
+		// subvolume this is not the normal boot (e.g. a backup booted by
+		// hand), so which one boots next is unknown.
+		if (cmdline_subvolid)
+		    boot.unsupported = sformat(_("The kernel command line mounts the root "
+						 "filesystem with subvol=%s and subvolid=, which "
+						 "would not match after the rollback and the system "
+						 "would not boot. Remove subvolid= from the kernel "
+						 "command line."), cmdline_subvol.c_str());
+		else if (is_top_level(fstab_subvol) && fstab_subvol != cmdline_subvol)
+		    boot.unsupported = sformat(_("The system was booted with subvol=%s but fstab "
+						 "mounts subvol=%s. Boot the system normally "
+						 "before a rollback."), cmdline_subvol.c_str(),
+					       fstab_subvol.c_str());
+		else
+		    boot.subvol = cmdline_subvol;
+	    }
+	    else if (!cmdline_subvol.empty())
+	    {
+		// the nested name of a booted snapshot
+		use_fstab = true;
+	    }
+	    else if (cmdline_subvolid)
+	    {
+		// Booted by id: a one-off boot of a snapshot, fstab then describes
+		// the normal boot, or the normal root itself pinned by id. Without
+		// any name in fstab it is a default subvolume layout, set-default
+		// is used as without the rename method.
+		if (is_top_level(fstab_subvol) && running_subvol == fstab_subvol)
+		    boot.unsupported = _("The kernel command line mounts the root filesystem "
+					 "with subvolid=, so a rollback cannot change which "
+					 "subvolume boots.");
+		else
+		    use_fstab = !fstab_subvol.empty() || fstab_subvolid;
+	    }
 	}
 
-	if (boot.subvol.empty() && boot.unsupported.empty())
+	if (use_fstab)
 	{
-	    if (!fstab_subvol.empty() && !is_top_level(fstab_subvol))
+	    if (is_top_level(fstab_subvol))
+		boot.subvol = fstab_subvol;
+	    else if (!fstab_subvol.empty())
 		boot.unsupported = sformat(_("fstab mounts the root filesystem with the nested "
 					     "subvol=%s, which a rollback cannot replace."),
 					   fstab_subvol.c_str());
-	    else if (fstab_subvol.empty() && fstab_subvolid)
+	    else if (fstab_subvolid)
 		boot.unsupported = _("The root filesystem is mounted with subvolid= in fstab, "
 				     "so a rollback cannot change which subvolume boots.");
 	}
@@ -204,7 +225,7 @@ namespace snapper
 	// The kernel command line and the running root belong to the running
 	// system, not to a system at another root prefix (e.g. mounted from a
 	// rescue system).
-	vector<string> rootflags;
+	std::optional<vector<string>> rootflags;
 	string running_subvol;
 	if (root_prefix.empty() || root_prefix == "/")
 	{

@@ -4,6 +4,7 @@
 #include <boost/test/unit_test.hpp>
 #include <fstream>
 #include <cstdlib>
+#include <optional>
 #include <boost/test/data/test_case.hpp>
 #include <boost/test/data/monomorphic.hpp>
 
@@ -55,10 +56,16 @@ BOOST_DATA_TEST_CASE(cmdline_rootflags, boost::unit_test::data::make(cmdline_cas
 
 // --- the root subvolume the system boots -----------------------------------
 
+// The expected values follow from what the next boot mounts: the kernel mounts
+// the root with the rootflags of the command line (subvol=, else subvolid=,
+// else the btrfs default subvolume). fstab only tells which subvolume the
+// normal boot mounts when the command line is a one-off (a snapshot booted by
+// subvolid= or a nested name) or unknown (a system at another root prefix).
+
 struct BootCase
 {
     const char* label;
-    vector<string> rootflags;		// from the kernel command line
+    optional<vector<string>> rootflags;	// from the kernel command line, nullopt = unknown
     vector<string> fstab;		// options of the fstab entry for /
     const char* running;		// current name of the running root (/proc/mounts)
     const char* subvol;			// expected top-level name, "" = by default id
@@ -73,37 +80,64 @@ ostream& operator<<(ostream& os, const BootCase& c)
 }
 
 
+using flags = vector<string>;
+
+
 const BootCase boot_cases[] = {
-    // the cmdline decides at boot, fstab mirrors it
-    { "fedora",              { "subvol=root" }, { "subvol=root", "compress=zstd:1" }, "root", "root", false, false },
-    { "debian",              { "subvol=@rootfs" }, { "defaults", "subvol=@rootfs" }, "@rootfs", "@rootfs", false, false },
-    { "leading_slash",       { "subvol=/@" }, { }, "@", "@", false, false },
-    { "arch",                { "subvol=@", "compress=zstd:1" }, { "rw", "subvol=/@" }, "@", "@", false, false },
+    // the cmdline names the root, fstab mirrors it
+    { "fedora",              flags{ "subvol=root" }, { "subvol=root", "compress=zstd:1" }, "root", "root", false, false },
+    { "debian",              flags{ "subvol=@rootfs" }, { "defaults", "subvol=@rootfs" }, "@rootfs", "@rootfs", false, false },
+    { "leading_slash",       flags{ "subvol=/@" }, { }, "@", "@", false, false },
+    { "arch",                flags{ "subvol=@", "compress=zstd:1" }, { "rw", "subvol=/@" }, "@", "@", false, false },
     // after a rollback without a reboot the running root has another name
-    { "renamed_running_root", { "subvol=root" }, { "subvol=root" }, "root.rollback.5", "root", false, false },
-    // booted by the default subvolume id
-    { "tumbleweed",          { }, { "defaults" }, "@/.snapshots/1/snapshot", "", false, false },
-    { "tumbleweed_snapshot", { "subvol=@/.snapshots/7/snapshot" }, { "defaults" }, "@/.snapshots/7/snapshot", "", false, false },
+    { "renamed_running_root", flags{ "subvol=root" }, { "subvol=root" }, "root.rollback.5", "root", false, false },
+
+    // no subvol= or subvolid= on the cmdline: the kernel mounts the btrfs
+    // default subvolume, whatever fstab says (fstab is only used to remount)
+    { "tumbleweed",          flags{ }, { "defaults" }, "@/.snapshots/1/snapshot", "", false, false },
+    { "cmdline_without_subvol", flags{ }, { "subvol=@" }, "@", "", false, false },
+    { "cmdline_other_flags_only", flags{ "compress=zstd:1" }, { "subvol=@" }, "@", "", false, false },
+    { "cmdline_without_subvol_fstab_id", flags{ }, { "subvolid=256" }, "@", "", false, false },
+    { "cmdline_without_subvol_fstab_nested", flags{ }, { "subvol=@/root" }, "@/root", "", false, false },
+
     // a one-off boot of a snapshot (by id or by nested name): fstab has the normal root
-    { "snapshot_by_id",      { "subvolid=271" }, { "subvol=@root" }, "@root/.snapshots/7/snapshot", "@root", false, false },
-    { "snapshot_by_name",    { "subvol=@/.snapshots/7/snapshot" }, { "subvol=@" }, "@/.snapshots/7/snapshot", "@", false, false },
-    { "fstab_only",          { }, { "subvol=@" }, "@", "@", false, false },
-    // fstab additionally pins the id (e.g. written by genfstab): stale after a rename
-    { "genfstab",            { "subvol=/@" }, { "rw", "subvolid=256", "subvol=/@" }, "@", "@", false, true },
-    { "fstab_id_cmdline_name", { "subvol=root" }, { "subvolid=257" }, "root", "root", false, true },
-    // pinned by id only: no rollback method changes what boots
-    { "subvolid_only_fstab", { }, { "subvolid=256" }, "@", "", true, false },
-    { "subvolid_only_both",  { "subvolid=256" }, { "subvolid=256" }, "@", "", true, false },
+    { "tumbleweed_snapshot", flags{ "subvol=@/.snapshots/7/snapshot" }, { "defaults" }, "@/.snapshots/7/snapshot", "", false, false },
+    { "snapshot_by_id",      flags{ "subvolid=271" }, { "subvol=@root" }, "@root/.snapshots/7/snapshot", "@root", false, false },
+    { "snapshot_by_name",    flags{ "subvol=@/.snapshots/7/snapshot" }, { "subvol=@" }, "@/.snapshots/7/snapshot", "@", false, false },
+    { "snapshot_by_name_fstab_id", flags{ "subvol=@/.snapshots/7/snapshot" }, { "subvol=@", "subvolid=256" }, "@/.snapshots/7/snapshot", "@", false, true },
+    // by id on a default subvolume layout: set-default, as without the rename method
+    { "by_id_fstab_without_subvol", flags{ "subvolid=264" }, { "defaults" }, "@/.snapshots/1/snapshot", "", false, false },
+
+    // fstab additionally pins the id (e.g. written by genfstab): stale after a
+    // rename, but only used to remount /
+    { "genfstab",            flags{ "subvol=/@" }, { "rw", "subvolid=256", "subvol=/@" }, "@", "@", false, true },
+    { "fstab_id_cmdline_name", flags{ "subvol=root" }, { "subvolid=257" }, "root", "root", false, true },
+
+    // the cmdline pins the id next to the name: after a rename the id names
+    // the old root and the kernel refuses the mismatch, the system would not boot
+    { "cmdline_name_and_id", flags{ "subvol=@", "subvolid=256" }, { "subvol=@" }, "@", "", true, false },
+    { "cmdline_name_and_id_joined", flags{ "subvol=@", "compress=zstd:1", "subvolid=256" }, { "subvol=@" }, "@", "", true, false },
+
     // the cmdline pins the normal root by id permanently (not a snapshot boot)
-    { "cmdline_pins_root_by_id", { "subvolid=256" }, { "subvol=@" }, "@", "", true, false },
+    { "cmdline_pins_root_by_id", flags{ "subvolid=256" }, { "subvol=@" }, "@", "", true, false },
+    // pinned by id with no name anywhere: which subvolume the normal boot mounts is unknown
+    { "subvolid_only_both",  flags{ "subvolid=256" }, { "subvolid=256" }, "@", "", true, false },
+    { "snapshot_by_name_fstab_only_id", flags{ "subvol=@/.snapshots/7/snapshot" }, { "subvolid=256" }, "@/.snapshots/7/snapshot", "", true, false },
     // cmdline and fstab name different subvolumes, e.g. a backup booted by hand:
     // which one boots next is unknown
-    { "booted_backup_by_name", { "subvol=@.rollback.5" }, { "subvol=@" }, "@.rollback.5", "", true, false },
-    { "cmdline_fstab_differ", { "subvol=@new" }, { "subvol=@old" }, "@new", "", true, false },
-    // the root is mounted by a nested name: neither a rename nor set-default
-    // changes what boots
-    { "nested_in_fstab",     { }, { "subvol=@/root" }, "@/root", "", true, false },
-    { "nested_both",         { "subvol=@/root" }, { "subvol=@/root" }, "@/root", "", true, false },
+    { "booted_backup_by_name", flags{ "subvol=@.rollback.5" }, { "subvol=@" }, "@.rollback.5", "", true, false },
+    { "cmdline_fstab_differ", flags{ "subvol=@new" }, { "subvol=@old" }, "@new", "", true, false },
+    // a snapshot booted by a nested name with a nested fstab name: neither a
+    // rename nor set-default changes what boots
+    { "nested_both",         flags{ "subvol=@/root" }, { "subvol=@/root" }, "@/root", "", true, false },
+
+    // a system at another root prefix: the cmdline is the running system's,
+    // only the target's fstab is known
+    { "other_root_named",    nullopt, { "subvol=@" }, "", "@", false, false },
+    { "other_root_genfstab", nullopt, { "subvol=@", "subvolid=256" }, "", "@", false, true },
+    { "other_root_default",  nullopt, { "defaults" }, "", "", false, false },
+    { "other_root_nested",   nullopt, { "subvol=@/root" }, "", "", true, false },
+    { "other_root_id_only",  nullopt, { "subvolid=256" }, "", "", true, false },
 };
 
 

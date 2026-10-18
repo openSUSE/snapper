@@ -23,6 +23,7 @@
 #ifndef SNAPPER_AMBIT_H
 #define SNAPPER_AMBIT_H
 
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -66,16 +67,20 @@ namespace snapper
     };
 
     /**
-     * Determine the BootRoot from the rootflags of the kernel command line, the
-     * options of the fstab entry for / and the current name of the running
-     * root (from /proc/mounts). The command line decides at boot; a one-off
-     * boot of a snapshot (by subvolid= or a nested name) falls back to fstab,
-     * which describes the normal boot. Unsupported when command line and fstab
-     * name different subvolumes, when the normal root is pinned by subvolid=,
-     * or when it is mounted by a nested name.
+     * Determine the BootRoot from the rootflags of the kernel command line
+     * (nullopt when unknown, for a system at another root prefix), the options
+     * of the fstab entry for / and the current name of the running root (from
+     * /proc/mounts). The command line decides at boot: without subvol= or
+     * subvolid= the btrfs default subvolume boots. A one-off boot of a
+     * snapshot (by subvolid= or a nested name) and an unknown command line
+     * fall back to fstab, which describes the normal boot. Unsupported when
+     * command line and fstab name different subvolumes, when the command line
+     * pins the root by subvolid= (also next to subvol=, which no longer
+     * matches after a rename), or when the normal root is mounted by a nested
+     * name.
      */
-    BootRoot boot_root_from(const vector<string>& rootflags, const vector<string>& fstab_options,
-			    const string& running_subvol);
+    BootRoot boot_root_from(const std::optional<vector<string>>& rootflags,
+			    const vector<string>& fstab_options, const string& running_subvol);
 
     /**
      * Determine the BootRoot of the system at root_prefix from /proc/cmdline and
