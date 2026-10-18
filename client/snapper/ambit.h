@@ -41,17 +41,13 @@ namespace snapper
 
     enum class SubvolumeMode { UNKNOWN, READ_WRITE, READ_ONLY };
 
-    /**
-     * Options of all rootflags= of a kernel command line (e.g. the content of
-     * /proc/cmdline) joined, with surrounding quotes removed.
-     */
+    // options of all rootflags= of a kernel command line, joined
     vector<string> rootflags_from_cmdline(const string& cmdline);
 
     /**
-     * The root subvolume the system boots, from the boot configuration (not
-     * from /proc/mounts, which shows the running root under its current name,
-     * e.g. <subvol>.rollback.N after a rollback without a reboot, or a booted
-     * snapshot).
+     * The root subvolume the next boot mounts, from the boot configuration:
+     * /proc/mounts shows the running root under its current name, e.g.
+     * <subvol>.rollback.N after a rollback without a reboot.
      */
     struct BootRoot
     {
@@ -59,7 +55,7 @@ namespace snapper
 	// default subvolume id
 	string subvol;
 
-	// why no rollback method changes what boots, "" if one can
+	// reason to refuse the rollback, "" if none
 	string unsupported;
 
 	// fstab also has subvolid=, which no longer matches after a rename
@@ -67,46 +63,22 @@ namespace snapper
     };
 
     /**
-     * Determine the BootRoot from the rootflags of the kernel command line
-     * (nullopt when unknown, for a system at another root prefix), the options
-     * of the fstab entry for / and the current name of the running root (from
-     * /proc/mounts). The command line decides at boot: without subvol= or
-     * subvolid= the btrfs default subvolume boots. A one-off boot of a
-     * snapshot (by subvolid= or a nested name) and an unknown command line
-     * fall back to fstab, which describes the normal boot. Unsupported when
-     * command line and fstab name different subvolumes, when the command line
-     * pins the root by subvolid= (also next to subvol=, which no longer
-     * matches after a rename), or when the normal root is mounted by a nested
-     * name.
+     * rootflags is nullopt when the kernel command line is unknown (another
+     * root prefix, a chroot). The rules are described in doc/rollback.txt.
      */
     BootRoot boot_root_from(const std::optional<vector<string>>& rootflags,
 			    const vector<string>& fstab_options, const string& running_subvol);
 
-    /**
-     * Determine the BootRoot of the system at root_prefix from /proc/cmdline
-     * (only for the running system, not for another root prefix or in a
-     * chroot) and <root_prefix>/etc/fstab.
-     */
+    // from /proc/cmdline (running system only) and <root_prefix>/etc/fstab
     BootRoot get_boot_root(const string& root_prefix);
 
     /**
-     * Determine the effective ambit for the rollback. An explicit --ambit
-     * (cli_ambit) wins; SUBVOL_RENAME is validated against the boot root and
-     * throws when the system does not boot a top-level named subvolume. With
-     * AUTO, a top-level named boot root (subvol_name, "" when booted by the
-     * default subvolume id, see BootRoot) selects SUBVOL_RENAME, otherwise the ambit is
-     * derived from the read-only/-write state of the current default snapshot
-     * (mode). Returns AUTO when it cannot be determined.
+     * An explicit cli_ambit wins (SUBVOL_RENAME throws if subvol_name is not
+     * a top-level name). Returns AUTO when it cannot be determined.
      */
     Ambit determine_ambit(Ambit cli_ambit, const string& subvol_name, SubvolumeMode mode);
 
-    /**
-     * Whether a rollback with the given ambit sets the default subvolume id
-     * while the system boots a top-level subvol= name (subvol_name, see
-     * BootRoot) - the kernel then ignores the default subvolume id and the
-     * rollback has no effect on the next boot. Used to warn when an explicit
-     * --ambit conflicts with the boot configuration.
-     */
+    // set-default has no effect when the root is mounted by a top-level name
     bool is_set_default_ineffective(Ambit ambit, const string& subvol_name);
 
 #endif

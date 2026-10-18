@@ -43,8 +43,7 @@ namespace snapper
     namespace
     {
 
-	// Opens the directory at the relative path (e.g. "var/lib") below
-	// parent, one component at a time since SDir only takes plain names.
+	// one component at a time, SDir only takes plain names
 	SDir
 	open_relative(const SDir& parent, const string& path)
 	{
@@ -75,9 +74,8 @@ namespace snapper
 	    SN_THROW(IOErrorException("cannot list nested subvolumes: " +
 				      string(btrfs_util_strerror(err))));
 
-	// The iterator returns parents before their children, so a path below
-	// one already collected is nested deeper (e.g. a snapshot in
-	// .snapshots) and moves along with its parent.
+	// parents come first; deeper ones (e.g. snapshots in .snapshots) move
+	// along with their parent
 	while (true)
 	{
 	    char* tmp;
@@ -105,8 +103,7 @@ namespace snapper
 
 	btrfs_util_destroy_subvolume_iterator(iter);
 #else
-	// Without it the nested subvolumes cannot be listed (nor deleted
-	// recursively when pruning), so the rule cannot be applied.
+	// nested subvolumes can neither be listed nor deleted recursively
 	SN_THROW(IOErrorException("rollback refused: the subvol-rename ambit requires "
 				  "snapper built with libbtrfsutil"));
 #endif
@@ -135,8 +132,7 @@ namespace snapper
 		not_empty += (not_empty.empty() ? "/" : ", /") + path;
 	}
 
-	// Data written after this check behaves like any other change made
-	// after a rollback: it ends up in the old root.
+	// data written after this check ends up in the old root, like any change
 	if (!not_empty.empty())
 	    SN_THROW(IOErrorException("rollback refused, data in nested subvolumes would only "
 				      "be reachable in the old root after the rollback: " +
@@ -191,8 +187,7 @@ namespace snapper
 	    if (path == SNAPSHOTS_NAME)
 		continue;
 
-	    // Only a placeholder is removed: the target snapshot may predate the
-	    // nested subvolume (no entry, or a plain directory of its own).
+	    // the target may predate the subvolume (no entry, or a directory)
 	    const string::size_type slash = path.rfind('/');
 	    const string name = slash == string::npos ? path : path.substr(slash + 1);
 

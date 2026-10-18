@@ -228,9 +228,7 @@ namespace snapper
 	    if (err)
 		throw runtime_error_with_errno("btrfs_util_delete_subvolume_fd() failed", errno);
 #else
-	    // The ioctl interface cannot delete nested subvolumes; a recursive
-	    // request degrades to a plain delete which fails with ENOTEMPTY if
-	    // the subvolume still contains nested subvolumes.
+	    // the ioctl cannot delete recursively, ENOTEMPTY with nested subvolumes
 	    (void) recursive;
 
 	    struct btrfs_ioctl_vol_args args;

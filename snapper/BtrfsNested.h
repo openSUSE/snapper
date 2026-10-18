@@ -38,50 +38,30 @@ namespace snapper
 
 
     /*
-     * Subvolumes nested in the root subvolume, as handled by a subvol-rename
-     * rollback (see doc/rollback.txt).
-     *
-     * A btrfs snapshot does not include nested subvolumes: where one was, the
-     * snapshot only holds a placeholder (inode BTRFS_EMPTY_SUBVOL_DIR_OBJECTID)
-     * that nothing can be created in. After the rollback the nested subvolumes
-     * stay in the old root. The rules:
-     *
-     *   .snapshots  moved into the new root, so the snapshots stay usable
-     *   empty       placeholder removed from the new root, so the path can be
-     *               recreated (e.g. by systemd-tmpfiles at boot)
-     *   not empty   the rollback is refused, since the data would only be
-     *               reachable in the old root
-     *
-     * Distributions that keep such subvolumes outside the root subvolume (e.g.
-     * a separate /var) have none but .snapshots, so the rest is never used.
-     * Requires libbtrfsutil, the constructor throws without it.
+     * Subvolumes nested in the root subvolume. A btrfs snapshot only holds a
+     * placeholder (inode BTRFS_EMPTY_SUBVOL_DIR_OBJECTID) for them, so they
+     * stay in the old root: .snapshots is moved, empty ones are freed, ones
+     * with data refuse the rollback (see doc/rollback.txt). Requires
+     * libbtrfsutil, the constructor throws without it.
      */
     class NestedSubvolumes
     {
     public:
 
-	// Inventory of the subvolumes nested directly in the subvolume of
-	// root_dir, as paths relative to it (e.g. "var/lib/machines").
+	// paths relative to root_dir, e.g. "var/lib/machines"
 	explicit NestedSubvolumes(const SDir& root_dir);
 
 	const vector<string>& paths() const { return nested; }
 
-	// Throws if a nested subvolume other than .snapshots is not empty,
-	// naming each one. Returns the empty ones.
+	// throws naming the ones with data (besides .snapshots), returns the empty ones
 	vector<string> check_empty(const SDir& root_dir) const;
 
-	// Whether .snapshots is one of them.
 	bool has_snapshots() const;
 
-	// Move .snapshots from from_root into to_root, replacing its
-	// placeholder there: before the exchange into the copy of the target
-	// (and back if the exchange fails). Throws if it cannot be moved,
-	// e.g. when it is mounted (EBUSY), leaving it in from_root.
+	// throws if it cannot be moved (e.g. EBUSY when mounted), leaving it in from_root
 	void move_snapshots(const SDir& from_root, const SDir& to_root) const;
 
-	// After the exchange: remove the placeholders of the other nested
-	// subvolumes from new_root. Returns a message for each one that could
-	// not be removed.
+	// returns a message for each placeholder that could not be removed
 	vector<string> remove_placeholders(const SDir& new_root) const;
 
     private:

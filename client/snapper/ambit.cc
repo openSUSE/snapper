@@ -57,8 +57,7 @@ namespace snapper
 	}
 
 
-	// value of the subvol= option without leading and trailing slashes, "/"
-	// for the top-level (subvol=/), "" if there is none
+	// without the slashes around it, "/" for the top-level, "" if none
 	string
 	subvol_option(const vector<string>& options)
 	{
@@ -93,11 +92,10 @@ namespace snapper
     {
 	vector<string> ret;
 
-	// words separated by whitespace, double quotes group and are dropped
+	// double quotes group words; several rootflags= are joined as by
+	// systemd's fstab-generator (the kernel itself takes only the last one)
 	string word;
 	bool quoted = false, in_word = false;
-	// Several rootflags= are joined, as systemd's fstab-generator does in the
-	// initrd (the kernel itself only takes the last one).
 	auto end_word = [&]() {
 	    if (in_word && word.compare(0, 10, "rootflags=") == 0)
 	    {
@@ -134,9 +132,7 @@ namespace snapper
     namespace
     {
 
-	// A subvolume can only be swapped by name when it is a single top-level
-	// component; nested names (containing a slash) fall back to set-default.
-	// Btrfs::rollbackSubvolRename enforces the same rule for its callers.
+	// only such a name can be swapped (as in Btrfs::rollbackSubvolRename)
 	bool
 	is_top_level(const string& subvol)
 	{
@@ -155,10 +151,9 @@ namespace snapper
 	const string fstab_subvol = subvol_option(fstab_options);
 	const bool fstab_subvolid = has_subvolid_option(fstab_options);
 
-	// Whether fstab tells what the normal boot mounts: for a one-off boot of
-	// a snapshot and for an unknown command line. Otherwise the command line
-	// decides, and without subvol= or subvolid= the kernel mounts the btrfs
-	// default subvolume (fstab is then only used to remount /).
+	// fstab only describes the normal boot for a one-off boot of a snapshot
+	// or an unknown command line; otherwise the kernel mounts what the
+	// command line says, the btrfs default without subvol= or subvolid=
 	bool use_fstab = !rootflags;
 
 	const string top_level_root = _("The root filesystem is mounted from the top-level "
@@ -175,10 +170,9 @@ namespace snapper
 	    }
 	    else if (is_top_level(cmdline_subvol))
 	    {
-		// The kernel refuses a subvolid= that does not match subvol=,
-		// which after a rename names the old root. If fstab names another
-		// subvolume this is not the normal boot (e.g. a backup booted by
-		// hand), so which one boots next is unknown.
+		// The kernel refuses a subvolid= that does not match subvol=, and
+		// after the rename it names the old root. Another name in fstab
+		// means a backup booted by hand, the next boot is unknown.
 		if (cmdline_subvolid)
 		    boot.unsupported = sformat(_("The kernel command line mounts the root "
 						 "filesystem with subvol=%s and subvolid=, which "
@@ -200,10 +194,8 @@ namespace snapper
 	    }
 	    else if (cmdline_subvolid)
 	    {
-		// Booted by id: a one-off boot of a snapshot, fstab then describes
-		// the normal boot, or the normal root itself pinned by id. Without
-		// any name in fstab it is a default subvolume layout, set-default
-		// is used as without the rename method.
+		// a one-off boot of a snapshot, or the normal root pinned by id;
+		// without a name in fstab a default subvolume layout
 		if (is_top_level(fstab_subvol) && running_subvol == fstab_subvol)
 		    boot.unsupported = _("The kernel command line mounts the root filesystem "
 					 "with subvolid=, so a rollback cannot change which "
@@ -252,9 +244,7 @@ namespace snapper
     BootRoot
     get_boot_root(const string& root_prefix)
     {
-	// The kernel command line and the running root belong to the running
-	// system, not to a system at another root prefix or in a chroot (e.g.
-	// from a rescue system).
+	// both belong to the running system, not to another root prefix or chroot
 	std::optional<vector<string>> rootflags;
 	string running_subvol;
 	if ((root_prefix.empty() || root_prefix == "/") && !in_chroot())
@@ -275,7 +265,6 @@ namespace snapper
     Ambit
     determine_ambit(Ambit cli_ambit, const string& subvol_name, SubvolumeMode mode)
     {
-	// an explicit --ambit wins
 	if (cli_ambit == Ambit::SUBVOL_RENAME)
 	{
 	    if (!is_top_level(subvol_name))
@@ -287,12 +276,10 @@ namespace snapper
 	if (cli_ambit != Ambit::AUTO)
 	    return cli_ambit;
 
-	// a system mounting root by a top-level named subvolume needs the rename
-	// mechanism since the btrfs default subvolume id is ignored at boot
+	// the btrfs default subvolume id is ignored when booting by name
 	if (is_top_level(subvol_name))
 	    return Ambit::SUBVOL_RENAME;
 
-	// otherwise derive from the read-only/-write state of the default snapshot
 	switch (mode)
 	{
 	    case SubvolumeMode::READ_ONLY:  return Ambit::TRANSACTIONAL;
@@ -307,8 +294,7 @@ namespace snapper
     bool
     is_set_default_ineffective(Ambit ambit, const string& subvol_name)
     {
-	// subvol_name comes from the boot configuration, where a nested name
-	// was already refused (see boot_root_from)
+	// a nested name was already refused in boot_root_from
 	return (ambit == Ambit::CLASSIC || ambit == Ambit::TRANSACTIONAL) &&
 	    is_top_level(subvol_name);
     }

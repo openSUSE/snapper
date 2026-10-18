@@ -172,8 +172,7 @@ username(uid_t uid)
     unique_ptr<const Filesystem>
 get_filesystem(const string& config_name, const string& target_root)
 {
-    // Built from the config file, like in the library, so the filesystem
-    // evaluates its settings (e.g. QGROUP, ROLLBACK_BACKUP_LIMIT).
+    // from the config file, so the filesystem reads e.g. ROLLBACK_BACKUP_LIMIT
     try
     {
 	return Filesystem::create(ConfigInfo(config_name, target_root), target_root);

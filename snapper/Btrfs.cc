@@ -1544,8 +1544,6 @@ namespace snapper
 
 	const string prefix = subvol_name + ".rollback.";
 
-	// Collect the rollback backup subvolumes with their btrfs ids and whether
-	// they must never be deleted.
 	struct Backup
 	{
 	    subvolid_t id;
@@ -1567,12 +1565,10 @@ namespace snapper
 		SDir backup_dir(toplevel, name);
 		const subvolid_t id = get_id(backup_dir.fd());
 
-		// The running root: normally the backup just created, after
-		// rollbacks without a reboot in between an older one.
+		// the running root is an older backup after rollbacks without a
+		// reboot, and a backup can still hold .snapshots
 		bool kept = id == running;
 
-		// If moving .snapshots into the new root failed it is still in here,
-		// together with all snapshots.
 		if (backup_dir.stat(SNAPSHOTS_NAME, &st, AT_SYMLINK_NOFOLLOW) == 0 &&
 		    is_subvolume(st))
 		{
@@ -1591,9 +1587,7 @@ namespace snapper
 	if (backups.size() <= keep)
 	    return;
 
-	// Ascending by btrfs id, so the oldest backups sort first: delete the
-	// oldest ones that may be deleted until 'keep' are left, the kept ones
-	// count towards that.
+	// oldest first (btrfs ids increase); the kept ones count towards 'keep'
 	sort(backups.begin(), backups.end(), [](const Backup& a, const Backup& b) {
 	    return a.id < b.id;
 	});
@@ -1625,11 +1619,9 @@ namespace snapper
     namespace
     {
 
-	// The btrfs top-level (subvolid=5) of the filesystem of subvolume,
-	// where the named root subvolumes live, mounted temporarily in the
-	// infos directory for as long as the object lives. The members are
-	// initialized in declaration order and destroyed in reverse order, so
-	// the unmount happens before infos_dir is released.
+	// The btrfs top-level, where the named root subvolumes live, mounted in
+	// the infos directory while the object lives. Members are destroyed in
+	// reverse declaration order, so the unmount comes before infos_dir.
 	struct TopLevelMount
 	{
 	    TopLevelMount(const string& subvolume, const SDir& infos_dir)
@@ -1670,8 +1662,7 @@ namespace snapper
 	// the rollback uses it, so refuse an invalid value before any change
 	parse_rollback_backup_limit(rollback_backup_limit);
 
-	// Inspect the root subvolume via the btrfs top-level: paths in the
-	// running root may have other filesystems mounted over them.
+	// via the top-level: paths in the running root may be mounted over
 	TopLevelMount top_level(prepend_root_prefix(root_prefix, subvolume), openInfosDir());
 
 	SDir root_dir(top_level.dir, subvol_name);
@@ -1685,9 +1676,7 @@ namespace snapper
     {
 	vector<string> warnings;
 
-	// The client never selects subvol-rename for a nested name (see
-	// is_top_level in client/snapper/ambit.cc) but this method must
-	// protect itself: the SDir operations below require single-component names.
+	// the SDir operations below take single path components only
 	if (subvol_name.empty() || subvol_name.find('/') != string::npos)
 	    SN_THROW(IOErrorException("rollback failed: nested subvolume path '" + subvol_name +
 				     "' is not supported for subvol-rename rollback; use "
@@ -1697,22 +1686,17 @@ namespace snapper
 	{
 	    Plugins::set_default_snapshot(Plugins::Stage::PRE_ACTION, subvolume, this, num, report);
 
-	    // Mount the btrfs top-level (subvolid=5) - named subvolumes live here
 	    TopLevelMount top_level(prepend_root_prefix(root_prefix, subvolume), openInfosDir());
 	    SDir& toplevel = top_level.dir;
 
-	    // The subvolume the running system is mounted from: after rollbacks
-	    // without a reboot in between it is an older backup, never pruned.
+	    // after rollbacks without a reboot an older backup, never pruned
 	    const subvolid_t running = get_id(openSubvolumeDir().fd());
 
 	    const string incoming = subvol_name + ".incoming";
 	    const string rollback_name = subvol_name + ".rollback." + decString(num);
 
-	    // If a previous rollback completed the rename_exchange but failed to move
-	    // .incoming to .rollback.N, that .incoming subvolume is the old running root
-	    // (still mounted by subvolume ID). Deleting it risks corruption during the
-	    // next unmount sequence. Rename it instead, using its btrfs subvolume ID as
-	    // suffix — guaranteed unique across the filesystem.
+	    // A stale .incoming can be the old root of a rollback whose rename
+	    // failed, possibly still running: keep it under a unique name.
 	    {
 		struct stat st;
 		if (toplevel.stat(incoming, &st, AT_SYMLINK_NOFOLLOW) == 0)
@@ -1731,14 +1715,11 @@ namespace snapper
 		}
 	    }
 
-	    // Nested subvolumes of the current root, see BtrfsNested.h. The
-	    // client checked them before creating any snapshot; they are checked
-	    // again right before the exchange.
+	    // checked by the client before any snapshot, again before the exchange
 	    const NestedSubvolumes nested{SDir(toplevel, subvol_name)};
 
-	    // Create a read-write snapshot of the rollback target as <subvol_name>.incoming.
-	    // It becomes the root, no snapshot snapper may clean up, so it must not
-	    // be in the snapshot qgroup (only snapshots with a cleanup algorithm are).
+	    // not in the snapshot qgroup: it becomes the root, not a snapshot that
+	    // cleanup may delete
 	    SDir snapshot_dir = openSnapshotDir(num);
 	    try
 	    {
@@ -1751,10 +1732,8 @@ namespace snapper
 		SN_THROW(IOErrorException(string("rollback failed: ") + e.what()));
 	    }
 
-	    // A btrfs snapshot does not include nested subvolumes, the copy only
-	    // holds placeholders for them. Move .snapshots into it before the
-	    // exchange, so a failure (e.g. EBUSY when it is mounted) refuses the
-	    // rollback with the root untouched.
+	    // before the exchange, so a failure (e.g. EBUSY when .snapshots is
+	    // mounted) refuses the rollback with the root untouched
 	    try
 	    {
 		nested.check_empty(SDir(toplevel, subvol_name));
@@ -1766,7 +1745,6 @@ namespace snapper
 		throw;
 	    }
 
-	    // Atomically swap <subvol_name> and <subvol_name>.incoming
 	    if (toplevel.exchange(subvol_name, incoming) != 0)
 	    {
 		const int exchange_errno = errno;
@@ -1774,8 +1752,7 @@ namespace snapper
 		    incoming + ") failed: " + stringerror(exchange_errno) +
 		    " -- kernel may not support RENAME_EXCHANGE on btrfs";
 
-		// Move .snapshots back and clean up the incoming subvolume we
-		// just created, but never delete it with the snapshots inside.
+		// never delete .incoming with the snapshots inside
 		try
 		{
 		    nested.move_snapshots(SDir(toplevel, incoming), SDir(toplevel, subvol_name));
@@ -1790,12 +1767,11 @@ namespace snapper
 		SN_THROW(IOErrorException(error));
 	    }
 
-	    // With the exchange the rollback took effect. Everything after it is
-	    // best effort: a failure is logged and reported, and the remaining
-	    // steps and the post plugins still run.
+	    // The rollback took effect. The rest is best effort: failures are
+	    // reported, and the remaining steps and the post plugins still run.
 
-	    // Where snapper only knows fstab (e.g. with --root) the system may
-	    // also boot by the default subvolume id: let it name the new root.
+	    // where only fstab was known (e.g. --root) the system may also boot
+	    // by the default subvolume id
 	    try
 	    {
 		if (get_default_id(toplevel.fd()) == get_id(SDir(toplevel, incoming).fd()))
@@ -1808,7 +1784,6 @@ namespace snapper
 					  "root, to the new root: ") + e.what());
 	    }
 
-	    // Free the paths of the other (empty) nested subvolumes.
 	    try
 	    {
 		const vector<string> failed = nested.remove_placeholders(SDir(toplevel, subvol_name));
@@ -1821,15 +1796,9 @@ namespace snapper
 					  "subvolumes from the new root: ") + e.what());
 	    }
 
-	    // Moving .snapshots unhooked it from the still-mounted old root (the
-	    // running system, reached by subvolume id, not by the name we
-	    // exchanged), so /.snapshots no longer resolves and snapper would
-	    // stop working until the reboot swaps in the new root. Mount the
-	    // .snapshots subvolume back onto the running root by its (unchanged)
-	    // subvolume id so snapper keeps working in the meantime; this mount
-	    // does not survive the reboot, where the new root provides
-	    // /.snapshots as a nested subvolume again. Not for a system at
-	    // another root prefix, which is not running.
+	    // .snapshots left the still running old root: mount it there by id
+	    // so snapper keeps working until the reboot (not for another root
+	    // prefix, which is not running)
 	    const bool running_system = root_prefix.empty() || root_prefix == "/";
 	    if (nested.has_snapshots() && running_system)
 	    {
@@ -1859,11 +1828,8 @@ namespace snapper
 		}
 	    }
 
-	    // Rename old root to <subvol_name>.rollback.<num> for preservation.
-	    // If that name already exists (e.g. rolling back to the same snapshot twice),
-	    // fall back to a subvolume-ID-based name which is guaranteed unique.
-	    // Left as <subvol_name>.incoming on failure, which the next rollback
-	    // preserves.
+	    // the id is unique if the name exists (the same snapshot rolled back
+	    // to twice); a remaining .incoming is kept by the next rollback
 	    try
 	    {
 		if (toplevel.rename(incoming, rollback_name) != 0)
@@ -1897,9 +1863,6 @@ namespace snapper
 				   "; it is kept as " + incoming);
 	    }
 
-	    // Enforce the configured retention (ROLLBACK_BACKUP_LIMIT, validated
-	    // by checkRollbackSubvolRename). 0 keeps every backup; the running
-	    // root, normally the backup just created, is never removed.
 	    try
 	    {
 		prune_rollback_backups(toplevel, subvol_name,

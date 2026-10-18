@@ -132,9 +132,6 @@ namespace snapper
 
 	ProxySnapshots::iterator previous_default = snapshots.getDefault();
 
-	// The subvolume the next boot mounts, from the boot configuration: after a
-	// rollback without a reboot, or when booted from a snapshot, /proc/mounts
-	// shows a different subvolume than the one that boots.
 	const BootRoot boot_root = get_boot_root(global_options.root());
 	if (!boot_root.unsupported.empty())
 	{
@@ -168,10 +165,9 @@ namespace snapper
 	}
 	global_options.set_ambit(ambit);
 
-	// The btrfs default subvolume has no role when booting by name: it is the
-	// top-level or some unrelated snapshot. Its counterpart is the read-write
-	// copy the root being replaced was made from, which labels the backup and
-	// gets a cleanup algorithm as in classic.
+	// The btrfs default subvolume is unrelated when booting by name. Its
+	// counterpart is the read-write copy the root was made from: it labels
+	// the backup and gets a cleanup algorithm as in classic.
 	if (ambit == Ambit::SUBVOL_RENAME)
 	{
 	    const std::pair<bool, unsigned int> origin = filesystem->getOrigin(subvol_name);
@@ -196,8 +192,7 @@ namespace snapper
 		cout << sformat(_("Ambit is %s."), toString(ambit).c_str()) << endl;
 	}
 
-	// Refuse a subvol-rename rollback before any snapshot is created if a
-	// nested subvolume holds data the new root would not have.
+	// before any snapshot is created
 	vector<string> empty_nested;
 	if (ambit == Ambit::SUBVOL_RENAME)
 	    empty_nested = filesystem->checkRollbackSubvolRename(subvol_name);
@@ -217,9 +212,7 @@ namespace snapper
 		{
 		    scd1.read_only = true;
 
-		    // On subvol-rename the system boots the named root subvolume, not
-		    // the btrfs default subvolume, which may be the top-level or an
-		    // old snapshot: back up the current system instead.
+		    // the btrfs default is unrelated when booting by name
 		    if (ambit == Ambit::SUBVOL_RENAME)
 		    {
 			if (!global_options.quiet())
@@ -295,15 +288,13 @@ namespace snapper
 
 		if (ambit == Ambit::SUBVOL_RENAME)
 		{
-		    // before the copy of snapshot2 becomes the root, so that the
-		    // changes of the rollback script to it boot
+		    // before snapshot2 is copied, so the script's changes boot
 		    Plugins::rollback(filesystem->snapshotDir(snapshot1->getNum()),
 				      filesystem->snapshotDir(snapshot2->getNum()), report);
 
 		    const vector<string> warnings =
 			filesystem->rollbackSubvolRename(snapshot2->getNum(), subvol_name, report);
 
-		    // the rollback took effect, but a step after the exchange failed
 		    for (const string& warning : warnings)
 			cerr << sformat(_("Warning: %s"), warning.c_str()) << endl;
 
@@ -317,8 +308,7 @@ namespace snapper
 					paths.c_str()) << endl;
 		    }
 
-		    // grub-mkconfig, and dracut's hostonly command line of a UKI,
-		    // take the root subvolume from the running root
+		    // grub-mkconfig and dracut's hostonly cmdline take the running root
 		    if (!global_options.quiet())
 			cout << _("Reboot soon: until then the old root is running under a new name, "
 				  "and regenerating the boot loader configuration (e.g. update-grub, "
@@ -375,8 +365,7 @@ namespace snapper
 		if (!global_options.quiet())
 		    cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot->getNum()) << endl;
 
-		// a transactional system is mounted by default subvolume id, so
-		// the rollback is always performed with set-default.
+		// a transactional system boots by default subvolume id
 		filesystem->setDefault(snapshot->getNum(), report);
 
 		Plugins::rollback(filesystem->snapshotDir(previous_default->getNum()),

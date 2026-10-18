@@ -109,8 +109,7 @@ namespace snapper
 	qgroup_t qgroup = no_qgroup;
 	bool special_cmp = true;
 
-	// ROLLBACK_BACKUP_LIMIT as configured; only parsed by the subvol-rename
-	// rollback, so an invalid value does not affect other commands
+	// parsed only by the rollback, so an invalid value affects nothing else
 	string rollback_backup_limit;
 
 	mutable vector<subvolid_t> deleted_subvolids;
@@ -130,27 +129,16 @@ namespace snapper
 #ifdef ENABLE_ROLLBACK
 
     /**
-     * Delete old <subvol_name>.rollback.* backup subvolumes left behind by
-     * Btrfs::rollbackSubvolRename, keeping the 'keep' most recent ones. Recency
-     * is the btrfs subvolume id, which increases with every rollback, so the
-     * highest ids are the newest backups. keep == 0 keeps all backups. Backups are
-     * deleted recursively so nested subvolumes (e.g. var/lib/portables) are
-     * removed too. Never deleted, but counted towards 'keep', are the backup
-     * with the id 'running' (the running root, 0 for none; normally the backup
-     * just created) and backups still holding a .snapshots subvolume.
-     * Best-effort: individual failures are logged, not thrown.
-     *
-     * 'toplevel' must be the btrfs top-level (subvolid 5) where the named root
-     * subvolumes live. Declared here so it can be unit-tested directly.
+     * Delete the oldest <subvol_name>.rollback.* backups in the btrfs top-level
+     * until 'keep' are left (0 keeps all). The running root and backups holding
+     * .snapshots are never deleted but count towards 'keep'. Failures are only
+     * logged. Declared here for the tests.
      */
     void prune_rollback_backups(SDir& toplevel, const string& subvol_name, unsigned int keep,
 				subvolid_t running);
 
 
-    /**
-     * Parse ROLLBACK_BACKUP_LIMIT: empty keeps all backups (0), otherwise a
-     * non-negative number. Throws InvalidConfigException for anything else.
-     */
+    // empty is 0; throws InvalidConfigException for a value that is not a number
     unsigned int parse_rollback_backup_limit(const string& value);
 
 #endif

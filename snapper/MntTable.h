@@ -112,11 +112,7 @@ namespace snapper
     };
 
 
-    /**
-     * The options of the last entry for mount_point in the fstab below
-     * root_prefix, read with libmount (so escaped characters are decoded).
-     * Empty if there is no such entry or no fstab.
-     */
+    // options of the last fstab entry for mount_point, empty if none
     vector<string> fstab_options(const string& root_prefix, const string& mount_point);
 
 }
