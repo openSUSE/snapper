@@ -27,6 +27,7 @@
 #include <cctype>
 #include <fstream>
 #include <sstream>
+#include <sys/stat.h>
 
 #include <snapper/AppUtil.h>
 #include <snapper/MntTable.h>
@@ -233,15 +234,30 @@ namespace snapper
     }
 
 
+    namespace
+    {
+
+	// as systemd's running_in_chroot(): / is not the root of pid 1
+	bool
+	in_chroot()
+	{
+	    struct stat root, init_root;
+	    return stat("/", &root) == 0 && stat("/proc/1/root", &init_root) == 0 &&
+		(root.st_dev != init_root.st_dev || root.st_ino != init_root.st_ino);
+	}
+
+    }
+
+
     BootRoot
     get_boot_root(const string& root_prefix)
     {
 	// The kernel command line and the running root belong to the running
-	// system, not to a system at another root prefix (e.g. mounted from a
-	// rescue system).
+	// system, not to a system at another root prefix or in a chroot (e.g.
+	// from a rescue system).
 	std::optional<vector<string>> rootflags;
 	string running_subvol;
-	if (root_prefix.empty() || root_prefix == "/")
+	if ((root_prefix.empty() || root_prefix == "/") && !in_chroot())
 	{
 	    std::ifstream proc_cmdline("/proc/cmdline");
 	    rootflags = rootflags_from_cmdline(string(std::istreambuf_iterator<char>(proc_cmdline), {}));

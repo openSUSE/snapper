@@ -137,9 +137,9 @@ Snapper inspects the system to determine the ambit:
   subvolid= or a nested name), subvol= of the / entry in /etc/fstab, which
   describes the normal boot. /proc/mounts is not used for this: it shows
   the running root under its current name, which after a rollback without
-  a reboot is <subvol>.rollback.<N>. With --root the kernel command line
-  belongs to the running system, so the name comes from the fstab of the
-  target system.
+  a reboot is <subvol>.rollback.<N>. With --root or in a chroot the
+  kernel command line belongs to the running system, so the name comes
+  from the fstab of the target system.
 - Otherwise the kernel mounts the btrfs default subvolume, whatever fstab
   names (fstab is then only used to remount /): the ambit is classic or
   transactional, depending on the read-only/-write state of the default

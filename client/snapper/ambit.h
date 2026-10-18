@@ -83,8 +83,9 @@ namespace snapper
 			    const vector<string>& fstab_options, const string& running_subvol);
 
     /**
-     * Determine the BootRoot of the system at root_prefix from /proc/cmdline and
-     * <root_prefix>/etc/fstab.
+     * Determine the BootRoot of the system at root_prefix from /proc/cmdline
+     * (only for the running system, not for another root prefix or in a
+     * chroot) and <root_prefix>/etc/fstab.
      */
     BootRoot get_boot_root(const string& root_prefix);
 
