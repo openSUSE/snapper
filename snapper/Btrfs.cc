@@ -1843,7 +1843,9 @@ namespace snapper
 		    SDir subvolume_dir = openSubvolumeDir();
 		    subvolume_dir.mkdir(SNAPSHOTS_NAME, 0750);
 		    SDir running_snapshots(subvolume_dir, SNAPSHOTS_NAME);
-		    if (!running_snapshots.mount(top_level.device, "btrfs", 0,
+		    // still mounted from a rollback without a reboot in between
+		    if (get_id(running_snapshots.fd()) != snapshots_id &&
+			!running_snapshots.mount(top_level.device, "btrfs", 0,
 						 "subvolid=" + decString(snapshots_id)))
 		    {
 			y2err(failed);
