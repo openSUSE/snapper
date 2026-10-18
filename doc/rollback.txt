@@ -119,6 +119,18 @@ kernel update the boot loader may start a kernel whose modules are
 missing in the new root (/usr/lib/modules/<version>). A rollback-post
 plugin can adjust the boot entries.
 
+Until the reboot the old root keeps running as <subvol>.rollback.<N>.
+grub-mkconfig (update-grub, which Debian and Ubuntu also run on kernel
+updates) takes rootflags=subvol= from the running root, so regenerating
+the boot loader configuration before the reboot boots the old root
+again. The same applies to a UKI whose command line is taken from the
+running root, e.g. by dracut --uefi with hostonly_cmdline and no
+/etc/kernel/cmdline. kernel-install, ukify and mkinitcpio take the
+command line from /etc/kernel/cmdline or /proc/cmdline and are not
+affected. Reboot soon after a rollback; a rollback-post plugin that
+adjusts the boot entries must not regenerate them from the running
+system.
+
 A .snapshots nested in the root subvolume is only a placeholder in a
 booted snapshot, so snapper cannot read its configuration there. Before
 a rollback from a booted snapshot, mount it (mount -o

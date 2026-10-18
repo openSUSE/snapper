@@ -316,6 +316,14 @@ namespace snapper
 					  "stay in the old root and start out empty."),
 					paths.c_str()) << endl;
 		    }
+
+		    // grub-mkconfig, and dracut's hostonly command line of a UKI,
+		    // take the root subvolume from the running root
+		    if (!global_options.quiet())
+			cout << _("Reboot soon: until then the old root is running under a new name, "
+				  "and regenerating the boot loader configuration (e.g. update-grub, "
+				  "also run by kernel updates) or a UKI from the running system would "
+				  "boot it again.") << endl;
 		}
 		else
 		{
