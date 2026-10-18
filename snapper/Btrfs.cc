@@ -385,7 +385,8 @@ namespace snapper
 	    }
 
 	    if (!source_parents.empty() || !snapshot_parents.empty())
-		return QGroupRescanResult::Consistent;
+		return quota_rescan_if_needed(fd, root_prefix, qgroup_rescan_window,
+					      qgroup_rescan_hold_file, qgroup_rescan_daily_limit);
 
 	    const qgroup_t tracker = qgroup_find_free(fd, 2);
 	    try
@@ -445,6 +446,11 @@ namespace snapper
 
 	    try
 	    {
+		if (quota && !empty &&
+		    prepareQGroupTracking() == QGroupRescanResult::Deferred)
+		    y2war("creating snapshot while qgroup accounting remains inconsistent; "
+			  "automatic rescan is rate-limited");
+
 		create_snapshot(snapshot_dir.fd(), info_dir.fd(), SNAPSHOT_NAME, read_only,
 				quota ? qgroup : no_qgroup);
 	    }
