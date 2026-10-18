@@ -1923,6 +1923,32 @@ namespace snapper
 
 
     std::pair<bool, unsigned int>
+    Btrfs::getOrigin(const string& subvol_name) const
+    {
+	// btrfs records the subvolume a snapshot was made of as its parent
+	try
+	{
+	    TopLevelMount top_level(prepend_root_prefix(root_prefix, subvolume), openInfosDir());
+	    const Uuid parent = get_subvolume_uuids(SDir(top_level.dir, subvol_name).fd()).second;
+
+	    for (const string& name : openInfosDir().entries(SDir::number_entries))
+	    {
+		const unsigned int num = stoi(name);
+		if (checkSnapshot(num) &&
+		    get_subvolume_uuids(openSnapshotDir(num).fd()).first == parent)
+		    return make_pair(true, num);
+	    }
+	}
+	catch (const std::exception& e)
+	{
+	    y2err("cannot find the origin of " << subvol_name << ": " << e.what());
+	}
+
+	return make_pair(false, 0);
+    }
+
+
+    std::pair<bool, unsigned int>
     Btrfs::getActive() const
     {
 	SDir subvolume_dir = openSubvolumeDir();
@@ -1989,6 +2015,13 @@ namespace snapper
 				Plugins::Report& report) const
     {
 	return Filesystem::rollbackSubvolRename(num, subvol_name, report);
+    }
+
+
+    std::pair<bool, unsigned int>
+    Btrfs::getOrigin(const string& subvol_name) const
+    {
+	return Filesystem::getOrigin(subvol_name);
     }
 
 

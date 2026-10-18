@@ -217,6 +217,14 @@ namespace snapper
 
 
     std::pair<bool, unsigned int>
+    Filesystem::getOrigin(const string& subvol_name) const
+    {
+	SN_THROW(UnsupportedException());
+	__builtin_unreachable();
+    }
+
+
+    std::pair<bool, unsigned int>
     Filesystem::getActive() const
     {
 	return std::make_pair(false, 0);

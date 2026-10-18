@@ -851,6 +851,25 @@ namespace snapper
 	    return BtrfsUtils::get_uuid(fd);
 	}
 
+
+	std::pair<Uuid, Uuid>
+	get_subvolume_uuids(int fd)
+	{
+#ifdef HAVE_LIBBTRFSUTIL
+	    struct btrfs_util_subvolume_info info;
+	    if (btrfs_util_subvolume_info_fd(fd, 0, &info) != BTRFS_UTIL_OK)
+		throw runtime_error_with_errno("btrfs_util_subvolume_info_fd() failed", errno);
+
+	    std::pair<Uuid, Uuid> ret;
+	    std::copy(std::begin(info.uuid), std::end(info.uuid), std::begin(ret.first.value));
+	    std::copy(std::begin(info.parent_uuid), std::end(info.parent_uuid),
+		      std::begin(ret.second.value));
+	    return ret;
+#else
+	    throw std::runtime_error("get_subvolume_uuids() requires libbtrfsutil");
+#endif
+	}
+
     }
 
 }

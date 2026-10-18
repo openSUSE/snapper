@@ -27,6 +27,7 @@
 
 #include <cstdint>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "snapper/AppUtil.h"
@@ -102,6 +103,10 @@ namespace snapper
 	Uuid get_uuid(int fd);
 
 	Uuid get_uuid(const string& path);
+
+	// UUID of the subvolume of fd and of the subvolume it is a snapshot of
+	// (all zero if none). Requires libbtrfsutil.
+	std::pair<Uuid, Uuid> get_subvolume_uuids(int fd);
 
     }
 

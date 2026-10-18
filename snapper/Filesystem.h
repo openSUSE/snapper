@@ -124,6 +124,13 @@ namespace snapper
 	virtual vector<string> rollbackSubvolRename(unsigned int num, const string& subvol_name,
 						    Plugins::Report& report) const;
 
+	/**
+	 * The snapshot the named root subvolume is a copy of, i.e. the
+	 * read-write copy made by its subvol-rename rollback. Currently only
+	 * available for btrfs.
+	 */
+	virtual std::pair<bool, unsigned int> getOrigin(const string& subvol_name) const;
+
 	virtual std::pair<bool, unsigned int> getActive() const;
 
 	virtual bool isActive(unsigned int num) const;

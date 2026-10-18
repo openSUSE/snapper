@@ -53,6 +53,12 @@ Renaming a mounted btrfs subvolume is safe: the kernel tracks mounts by
 subvolume ID, not by name, so the running system is unaffected. Requires
 Linux 3.17 or later for renameat2(RENAME_EXCHANGE) support.
 
+The read-write snapshot ("writable copy") the root is copied from keeps no
+cleanup algorithm, like the new default in a classic rollback. At the
+next rollback it gets the number cleanup algorithm, as the previous
+default does in classic; snapper finds it as the snapshot the root
+subvolume is a snapshot of (its btrfs parent UUID).
+
 The read-write copy that becomes the root is not added to the snapshot
 qgroup (QGROUP), like the new default in a classic rollback: only
 snapshots with a cleanup algorithm belong there.

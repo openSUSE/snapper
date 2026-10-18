@@ -169,10 +169,14 @@ namespace snapper
 	global_options.set_ambit(ambit);
 
 	// The btrfs default subvolume has no role when booting by name: it is the
-	// top-level or some unrelated snapshot, not the root being replaced, so it
-	// must neither label the backup nor get a cleanup algorithm.
+	// top-level or some unrelated snapshot. Its counterpart is the read-write
+	// copy the root being replaced was made from, which labels the backup and
+	// gets a cleanup algorithm as in classic.
 	if (ambit == Ambit::SUBVOL_RENAME)
-	    previous_default = snapshots.end();
+	{
+	    const std::pair<bool, unsigned int> origin = filesystem->getOrigin(subvol_name);
+	    previous_default = origin.first ? snapshots.find(origin.second) : snapshots.end();
+	}
 
 	if (is_set_default_ineffective(ambit, subvol_name))
 	    cerr << sformat(_("Warning: The root filesystem is mounted with subvol=%s so setting "
