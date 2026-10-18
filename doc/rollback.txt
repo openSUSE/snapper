@@ -119,6 +119,11 @@ kernel update the boot loader may start a kernel whose modules are
 missing in the new root (/usr/lib/modules/<version>). A rollback-post
 plugin can adjust the boot entries.
 
+A .snapshots nested in the root subvolume is only a placeholder in a
+booted snapshot, so snapper cannot read its configuration there. Before
+a rollback from a booted snapshot, mount it (mount -o
+subvol=<subvol>/.snapshots <device> /.snapshots).
+
 
 auto (default)
 --------------
