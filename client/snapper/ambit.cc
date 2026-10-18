@@ -56,7 +56,8 @@ namespace snapper
 	}
 
 
-	// value of the subvol= option without leading slash, "" if there is none
+	// value of the subvol= option without leading and trailing slashes, "/"
+	// for the top-level (subvol=/), "" if there is none
 	string
 	subvol_option(const vector<string>& options)
 	{
@@ -65,8 +66,9 @@ namespace snapper
 	    {
 		if (option.compare(0, 7, "subvol=") == 0)
 		{
-		    const string::size_type pos = option.find_first_not_of('/', 7);
-		    ret = pos == string::npos ? "" : option.substr(pos);
+		    const string::size_type first = option.find_first_not_of('/', 7);
+		    ret = first == string::npos ? "/" :
+			option.substr(first, option.find_last_not_of('/') - first + 1);
 		}
 	    }
 	    return ret;
@@ -158,12 +160,19 @@ namespace snapper
 	// default subvolume (fstab is then only used to remount /).
 	bool use_fstab = !rootflags;
 
+	const string top_level_root = _("The root filesystem is mounted from the top-level "
+					"subvolume (subvol=/), which a rollback cannot replace.");
+
 	if (rootflags)
 	{
 	    const string cmdline_subvol = subvol_option(*rootflags);
 	    const bool cmdline_subvolid = has_subvolid_option(*rootflags);
 
-	    if (is_top_level(cmdline_subvol))
+	    if (cmdline_subvol == "/")
+	    {
+		boot.unsupported = top_level_root;
+	    }
+	    else if (is_top_level(cmdline_subvol))
 	    {
 		// The kernel refuses a subvolid= that does not match subvol=,
 		// which after a rename names the old root. If fstab names another
@@ -205,7 +214,9 @@ namespace snapper
 
 	if (use_fstab)
 	{
-	    if (is_top_level(fstab_subvol))
+	    if (fstab_subvol == "/")
+		boot.unsupported = top_level_root;
+	    else if (is_top_level(fstab_subvol))
 		boot.subvol = fstab_subvol;
 	    else if (!fstab_subvol.empty())
 		boot.unsupported = sformat(_("fstab mounts the root filesystem with the nested "

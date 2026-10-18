@@ -88,6 +88,11 @@ const BootCase boot_cases[] = {
     { "fedora",              flags{ "subvol=root" }, { "subvol=root", "compress=zstd:1" }, "root", "root", false, false },
     { "debian",              flags{ "subvol=@rootfs" }, { "defaults", "subvol=@rootfs" }, "@rootfs", "@rootfs", false, false },
     { "leading_slash",       flags{ "subvol=/@" }, { }, "@", "@", false, false },
+    { "trailing_slash",      flags{ "subvol=@/" }, { "subvol=/@/" }, "@", "@", false, false },
+    // the kernel mounts the top-level with subvol=/, neither a rename nor
+    // set-default changes that
+    { "cmdline_top_level",   flags{ "subvol=/" }, { "subvol=/" }, "", "", true, false },
+    { "other_root_top_level", nullopt, { "subvol=/" }, "", "", true, false },
     { "arch",                flags{ "subvol=@", "compress=zstd:1" }, { "rw", "subvol=/@" }, "@", "@", false, false },
     // after a rollback without a reboot the running root has another name
     { "renamed_running_root", flags{ "subvol=root" }, { "subvol=root" }, "root.rollback.5", "root", false, false },
