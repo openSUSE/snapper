@@ -51,7 +51,7 @@ the remaining steps and the post plugins still run.
 
 Renaming a mounted btrfs subvolume is safe: the kernel tracks mounts by
 subvolume ID, not by name, so the running system is unaffected. Requires
-Linux 3.17 or later for renameat2(RENAME_EXCHANGE) support.
+Linux 4.7 or later for renameat2(RENAME_EXCHANGE) support on btrfs.
 
 The read-write snapshot ("writable copy") the root is copied from keeps no
 cleanup algorithm, like the new default in a classic rollback. At the
