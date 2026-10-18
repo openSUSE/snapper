@@ -101,6 +101,7 @@ namespace snapper
 
 	qgroup_t qgroup = no_qgroup;
 	string qgroup_rescan_window = "00:00-24:00";
+	string qgroup_rescan_hold_file;
 	bool special_cmp = true;
 
 	mutable vector<subvolid_t> deleted_subvolids;

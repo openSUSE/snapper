@@ -815,7 +815,7 @@ namespace snapper
     Snapper::calculateUsedSpace() const
     {
 	if (calculateUsedSpaceStatus())
-	    y2war("qgroup data is inconsistent; automatic rescan is deferred by its configured window or 24-hour limit");
+	    y2war("qgroup data is inconsistent; automatic rescan is deferred by its configured hold, window, or 24-hour limit");
     }
 
 
@@ -830,12 +830,15 @@ namespace snapper
 
 	QGroupRescanResult rescan_result;
 	string daily_window = "00:00-24:00";
+	string hold_file;
 	config_info->get_value("QGROUP_RESCAN_WINDOW", daily_window);
+	config_info->get_value("QGROUP_RESCAN_HOLD_FILE", hold_file);
 	try
 	{
 	    SDir general_dir = btrfs->openGeneralDir();
 
-	    rescan_result = quota_rescan_if_needed(general_dir.fd(), daily_window);
+	    rescan_result = quota_rescan_if_needed(general_dir.fd(), root_prefix,
+						      daily_window, hold_file);
 	}
 	catch (...)
 	{
@@ -878,10 +881,13 @@ namespace snapper
 
 	QGroupRescanResult rescan_result;
 	string daily_window = "00:00-24:00";
+	string hold_file;
 	config_info->get_value("QGROUP_RESCAN_WINDOW", daily_window);
+	config_info->get_value("QGROUP_RESCAN_HOLD_FILE", hold_file);
 	try
 	{
-	    rescan_result = quota_rescan_if_needed(general_dir.fd(), daily_window);
+	    rescan_result = quota_rescan_if_needed(general_dir.fd(), root_prefix,
+						      daily_window, hold_file);
 	}
 	catch (...)
 	{

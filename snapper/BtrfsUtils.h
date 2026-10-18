@@ -104,7 +104,9 @@ namespace snapper
 	};
 
 	QGroupRescanResult quota_rescan_if_needed(
-	    int fd, const string& daily_window = "00:00-24:00");
+				int fd, const string& root_prefix,
+				const string& daily_window = "00:00-24:00",
+				const string& hold_file = "");
 
 	QGroupUsage qgroup_query_usage(int fd, qgroup_t qgroup);
 

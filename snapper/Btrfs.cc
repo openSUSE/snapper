@@ -132,6 +132,12 @@ namespace snapper
 	    y2err("failed to parse qgroup rescan window '" << qgroup_rescan_window << "': " << e.what());
 	    SN_THROW(InvalidConfigException());
 	}
+	config_info.get_value("QGROUP_RESCAN_HOLD_FILE", qgroup_rescan_hold_file);
+	if (!qgroup_rescan_hold_file.empty() && qgroup_rescan_hold_file[0] != '/')
+	{
+	    y2err("qgroup rescan hold file must be an absolute path");
+	    SN_THROW(InvalidConfigException());
+	}
 
 #endif
 
@@ -332,9 +338,9 @@ namespace snapper
     }
 
 
-	QGroupRescanResult
-	Btrfs::prepareQGroupTracking() const
-	{
+    QGroupRescanResult
+    Btrfs::prepareQGroupTracking() const
+    {
 	if (qgroup == no_qgroup)
 	    return QGroupRescanResult::Consistent;
 
@@ -355,7 +361,8 @@ namespace snapper
 		sort(expected.begin(), expected.end());
 		if (members == expected)
 		{
-		    return quota_rescan_if_needed(fd, qgroup_rescan_window);
+			return quota_rescan_if_needed(fd, root_prefix, qgroup_rescan_window,
+						      qgroup_rescan_hold_file);
 		}
 	    }
 
@@ -371,7 +378,8 @@ namespace snapper
 		if (get_level(tracker) == 2 && members == vector<qgroup_t>{ existing_member })
 		{
 		    qgroup_assign(fd, missing_member, tracker);
-		    return quota_rescan_if_needed(fd, qgroup_rescan_window);
+			return quota_rescan_if_needed(fd, root_prefix, qgroup_rescan_window,
+						      qgroup_rescan_hold_file);
 		}
 	    }
 
@@ -392,12 +400,13 @@ namespace snapper
 
 	    qgroup_assign(fd, qgroup, tracker);
 	    qgroup_assign(fd, source, tracker);
-	    return quota_rescan_if_needed(fd, qgroup_rescan_window);
+	    return quota_rescan_if_needed(fd, root_prefix, qgroup_rescan_window,
+					  qgroup_rescan_hold_file);
 	}
 
 	SN_THROW(IOErrorException("could not allocate a qgroup tracker after repeated concurrent collisions"));
 	return QGroupRescanResult::Deferred;
-	}
+    }
 
 
     void

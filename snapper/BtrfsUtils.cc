@@ -50,6 +50,9 @@
 #include "snapper/LoggerImpl.h"
 #include "snapper/AppUtil.h"
 #include "snapper/BtrfsUtils.h"
+#include "snapper/AsciiFile.h"
+#include "snapper/ConfigInfo.h"
+#include "snapper/SnapperDefines.h"
 #include "QGroupRescanLimiter.h"
 
 
@@ -888,7 +891,9 @@ namespace snapper
 
 
 	QGroupRescanResult
-	quota_rescan_if_needed(int fd, const string& daily_window)
+	quota_rescan_if_needed(int fd, const string& root_prefix,
+					 const string& daily_window,
+					 const string& hold_file)
 	{
 	    bool scan_running = false;
 	    bool inconsistent = false;
@@ -906,7 +911,69 @@ namespace snapper
 		// A scan started outside this call still consumes the automatic
 		// rescan window. Reserve before waiting so another Snapper process
 		// cannot immediately launch a second scan when this one completes.
-	    return wait_for_and_record_qgroup_rescan(fd, filesystem_uuid.str(), daily_window);
+		return wait_for_and_record_qgroup_rescan(fd, filesystem_uuid.str(), daily_window);
+	    }
+
+	    try
+	    {
+		SysconfigFile sysconfig(prepend_root_prefix(root_prefix, SYSCONFIG_FILE));
+		vector<string> config_names;
+		if (!sysconfig.get_value("SNAPPER_CONFIGS", config_names))
+		    throw std::runtime_error("SNAPPER_CONFIGS is unavailable");
+
+		vector<QGroupRescanPolicy> policies;
+		for (const string& config_name : config_names)
+		{
+		    ConfigInfo config(config_name, root_prefix);
+		    string qgroup;
+		    if (!config.get_value("QGROUP", qgroup) || qgroup.empty())
+			continue;
+
+		    string configured_window = "00:00-24:00";
+		    string configured_hold_file;
+		    config.get_value("QGROUP_RESCAN_WINDOW", configured_window);
+		    config.get_value("QGROUP_RESCAN_HOLD_FILE", configured_hold_file);
+		    QGroupRescanLimiter::validate_window(configured_window);
+
+		    std::ostringstream configured_uuid;
+		    configured_uuid << get_uuid(prepend_root_prefix(root_prefix,
+							 config.get_subvolume()));
+		    policies.push_back({configured_uuid.str(), configured_window,
+					configured_hold_file});
+		}
+
+		if (!shared_policy_matches(policies, filesystem_uuid.str(), daily_window,
+					   hold_file))
+		{
+		    y2err("qgroup rescan policy differs across Snapper configs for this filesystem; "
+			  "refusing to start a rescan");
+		    return QGroupRescanResult::Deferred;
+		}
+	    }
+	    catch (const std::exception& e)
+	    {
+		y2err("could not verify shared qgroup rescan policy; refusing to start a rescan: "
+		      << e.what());
+		return QGroupRescanResult::Deferred;
+	    }
+
+	    if (!hold_file.empty())
+	    {
+		time_t hold_until = 0;
+		try
+		{
+		    if (QGroupRescanLimiter::hold_active(hold_file, time(nullptr), hold_until))
+		    {
+			y2war("qgroup data is inconsistent; automatic rescan deferred by hold file until "
+			      << format_qgroup_rescan_time(hold_until));
+			return QGroupRescanResult::Deferred;
+		    }
+		}
+		catch (const std::exception& e)
+		{
+		    y2err("could not read qgroup rescan hold file; refusing to start a rescan: " << e.what());
+		    return QGroupRescanResult::Deferred;
+		}
 	    }
 
 	    time_t next_allowed = 0;

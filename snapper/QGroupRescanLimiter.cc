@@ -307,10 +307,77 @@ namespace snapper
     }
 
 
-	void
-	QGroupRescanLimiter::validate_window(const std::string& daily_window)
+    bool
+    QGroupRescanLimiter::hold_active(const std::string& hold_file, time_t now,
+					 time_t& hold_until)
+    {
+	    hold_until = 0;
+	    if (hold_file.empty())
+		return false;
+	    if (hold_file[0] != '/')
+		throw std::runtime_error("qgroup rescan hold file must be an absolute path");
+	    if (now < 0)
+		throw std::runtime_error("invalid time for qgroup rescan hold");
+
+	    FileDescriptor holdfd(open(hold_file.c_str(), O_RDONLY | O_CLOEXEC |
+					   O_NOFOLLOW | O_NONBLOCK));
+	    if (holdfd.get() < 0)
+	    {
+		if (errno == ENOENT)
+		    return false;
+		throw runtime_error_with_errno("open(qgroup rescan hold) failed", errno);
+	    }
+
+	    struct stat st;
+	    if (fstat(holdfd.get(), &st) < 0)
+		throw runtime_error_with_errno("fstat(qgroup rescan hold) failed", errno);
+	    if (!S_ISREG(st.st_mode) || (st.st_mode & 0022) != 0)
+		throw std::runtime_error("unsafe qgroup rescan hold file type or mode");
+
+	    char contents[64] = {};
+	    const ssize_t bytes = pread(holdfd.get(), contents, sizeof(contents), 0);
+	    if (bytes < 0)
+		throw runtime_error_with_errno("read(qgroup rescan hold) failed", errno);
+	    if (bytes == 0 || bytes == static_cast<ssize_t>(sizeof(contents)))
+		throw std::runtime_error("invalid qgroup rescan hold deadline");
+
+	    std::istringstream input(std::string(contents, bytes));
+	    int64_t parsed = 0;
+	    if (!(input >> parsed) || parsed < 0 ||
+		parsed > static_cast<int64_t>(std::numeric_limits<time_t>::max()))
+		throw std::runtime_error("invalid qgroup rescan hold deadline");
+	    input >> std::ws;
+	    if (!input.eof())
+		throw std::runtime_error("invalid qgroup rescan hold deadline");
+
+	    hold_until = static_cast<time_t>(parsed);
+	    return hold_until > now;
+    }
+
+
+    bool
+    shared_policy_matches(const std::vector<QGroupRescanPolicy>& policies,
+			  const std::string& filesystem_uuid,
+			  const std::string& daily_window,
+			  const std::string& hold_file)
+    {
+	bool found = false;
+	for (const QGroupRescanPolicy& policy : policies)
 	{
-	    (void)parse_window(daily_window);
+	    if (policy.filesystem_uuid != filesystem_uuid)
+		continue;
+	    found = true;
+	    if (policy.daily_window != daily_window || policy.hold_file != hold_file)
+		return false;
 	}
+	return found;
+    }
+
+
+    void
+    QGroupRescanLimiter::validate_window(const std::string& daily_window)
+    {
+	    (void)parse_window(daily_window);
+    }
 
 }

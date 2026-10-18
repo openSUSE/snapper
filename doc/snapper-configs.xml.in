@@ -67,9 +67,24 @@
 	  windows may cross midnight. The default value
 	  &quot;00:00-24:00&quot; allows rescans at any time. Automatic rescans are
 	  also limited to one per Btrfs filesystem in each rolling 24-hour period.
-	  When multiple Snapper configurations share a filesystem, configure the
-	  same window in each one: the configuration initiating a rescan determines
-	  its allowed window.</para>
+	  When multiple Snapper configurations with qgroups share a filesystem,
+	  configure the same window and hold-file path in each one. Before starting
+	  a new rescan, Snapper checks those configurations; if their policies differ
+	  or cannot be verified, the rescan is deferred.</para>
+	  <para>Only supported for btrfs.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>QGROUP_RESCAN_HOLD_FILE=<replaceable>path</replaceable></option></term>
+	<listitem>
+	  <para>Optional absolute path to a file containing a Unix epoch deadline.
+	  While the deadline is in the future, Snapper will not start a new
+	  automatic Btrfs qgroup rescan for this configuration. An already-running
+	  scan is still waited for. A missing file disables the hold; an unreadable,
+	  malformed, or unsafe file defers the rescan. Configurations with qgroups
+	  sharing a filesystem must use the same hold-file path; Snapper defers a new
+	  rescan if the configured paths differ or cannot be verified.</para>
 	  <para>Only supported for btrfs.</para>
 	</listitem>
       </varlistentry>
