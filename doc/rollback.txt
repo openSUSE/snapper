@@ -133,5 +133,6 @@ Snapper inspects the system to determine the ambit:
   method.
 - subvol-rename requires snapper built with libbtrfsutil.
 
-An explicit --ambit always wins over the detection. This means no manual
-configuration is needed on most systems.
+The detection means no manual configuration is needed on most systems.
+An explicit --ambit always wins over it: with --ambit classic or
+transactional a reason to refuse is only reported as a warning.

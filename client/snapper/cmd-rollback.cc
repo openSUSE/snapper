@@ -138,8 +138,17 @@ namespace snapper
 	const BootRoot boot_root = get_boot_root(global_options.root());
 	if (!boot_root.unsupported.empty())
 	{
-	    cerr << boot_root.unsupported << endl;
-	    exit(EXIT_FAILURE);
+	    // an explicit set-default ambit wins, as without the rename method
+	    if (global_options.ambit() == Ambit::CLASSIC ||
+		global_options.ambit() == Ambit::TRANSACTIONAL)
+	    {
+		cerr << sformat(_("Warning: %s"), boot_root.unsupported.c_str()) << endl;
+	    }
+	    else
+	    {
+		cerr << boot_root.unsupported << endl;
+		exit(EXIT_FAILURE);
+	    }
 	}
 	const string& subvol_name = boot_root.subvol;
 
