@@ -67,8 +67,8 @@
 	  a <filename><replaceable>subvolume</replaceable>.rollback.<replaceable>N</replaceable></filename>
 	  subvolume so it remains available for recovery. This option limits how
 	  many of these backups are kept: after a rollback the oldest backups
-	  beyond the limit are deleted. An empty value (the default) keeps all
-	  backups, consistent with snapper deleting nothing unless configured;
+	  beyond the limit are deleted. An empty value (the default) or 0 keeps
+	  all backups, consistent with snapper deleting nothing unless configured;
 	  the backup of the running system (normally the one created by the
 	  current rollback) is never deleted. Any
 	  other value than a non-negative number is a configuration error that

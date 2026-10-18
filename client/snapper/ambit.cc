@@ -131,6 +131,9 @@ namespace snapper
     namespace
     {
 
+	// A subvolume can only be swapped by name when it is a single top-level
+	// component; nested names (containing a slash) fall back to set-default.
+	// Btrfs::rollbackSubvolRename enforces the same rule for its callers.
 	bool
 	is_top_level(const string& subvol)
 	{
@@ -242,28 +245,13 @@ namespace snapper
     }
 
 
-    namespace
-    {
-
-	// A subvolume can only be swapped by name when it is a single top-level
-	// component; nested names (containing a slash) fall back to set-default.
-	// Btrfs::rollbackSubvolRename enforces the same rule for its callers.
-	bool
-	is_renameable_subvol(const string& subvol_name)
-	{
-	    return !subvol_name.empty() && subvol_name.find('/') == string::npos;
-	}
-
-    }
-
-
     Ambit
     determine_ambit(Ambit cli_ambit, const string& subvol_name, SubvolumeMode mode)
     {
 	// an explicit --ambit wins
 	if (cli_ambit == Ambit::SUBVOL_RENAME)
 	{
-	    if (!is_renameable_subvol(subvol_name))
+	    if (!is_top_level(subvol_name))
 		SN_THROW(Exception(_("Ambit is 'subvol-rename' but the system does not "
 				     "boot a top-level named root subvolume.")));
 	    return cli_ambit;
@@ -274,7 +262,7 @@ namespace snapper
 
 	// a system mounting root by a top-level named subvolume needs the rename
 	// mechanism since the btrfs default subvolume id is ignored at boot
-	if (is_renameable_subvol(subvol_name))
+	if (is_top_level(subvol_name))
 	    return Ambit::SUBVOL_RENAME;
 
 	// otherwise derive from the read-only/-write state of the default snapshot
@@ -295,7 +283,7 @@ namespace snapper
 	// subvol_name comes from the boot configuration, where a nested name
 	// was already refused (see boot_root_from)
 	return (ambit == Ambit::CLASSIC || ambit == Ambit::TRANSACTIONAL) &&
-	    is_renameable_subvol(subvol_name);
+	    is_top_level(subvol_name);
     }
 
 #endif
