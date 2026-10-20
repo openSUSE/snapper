@@ -65,6 +65,10 @@ _snbk()
             COMPREPLY=( $( compgen -W 'csv json' -- "$cur" ) )
             return 0
             ;;
+	--target-mode)
+            COMPREPLY=( $( compgen -W 'local ssh-push' -- "$cur" ) )
+            return 0
+            ;;
     esac
 
     # supported options per command
