@@ -2,7 +2,7 @@
 <refentry id='snapper-backup-configs5'>
 
   <refentryinfo>
-    <date>2025-10-13</date>
+    <date>2026-10-20</date>
   </refentryinfo>
 
   <refmeta>
@@ -44,14 +44,6 @@
 	<term><option>target-mode</option></term>
 	<listitem>
 	  <para>Either local or ssh-push.</para>
-	</listitem>
-      </varlistentry>
-
-      <varlistentry>
-	<term><option>source-path</option></term>
-	<listitem>
-	  <para>Path of the source subvolume. This must match the
-	  subvolume of the corresponding snapper config.</para>
 	</listitem>
       </varlistentry>
 
@@ -180,7 +172,6 @@
     "config": "root",
     "target-mode": "local",
     "automatic": true,
-    "source-path": "/",
     "target-path": "/backups/root"
 }
     </programlisting>
@@ -192,7 +183,6 @@
     "config": "root",
     "target-mode": "ssh-push",
     "automatic": false,
-    "source-path": "/",
     "target-path": "/backups/eberich/root",
     "ssh-host": "backups.example.com",
     "ssh-identity": "/etc/snapper/certs/id_ecdsa"
