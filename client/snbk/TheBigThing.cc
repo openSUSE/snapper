@@ -136,7 +136,7 @@ namespace snapper
 
     void
     TheBigThing::copy(const BackupConfig& backup_config, TheBigThings& the_big_things,
-                           const pair<CopySpec, CopySpec>& copy_specs)
+		      const pair<CopySpec, CopySpec>& copy_specs)
     {
 	// Unpack copy specification
 	const CopySpec& src_spec = copy_specs.first;
@@ -183,8 +183,7 @@ namespace snapper
 	y2deb("source: " << cmd3a_args.get_values());
 	y2deb("destination: " << cmd3b_args.get_values());
 
-	SystemCmd cmd3(
-	    shellify_pipe(src_spec.shell, cmd3a_args, dst_spec.shell, cmd3b_args));
+	SystemCmd cmd3(shellify_pipe(src_spec.shell, cmd3a_args, dst_spec.shell, cmd3b_args));
 	if (cmd3.retcode() != 0)
 	{
 	    y2err("command '" << cmd3.cmd() << "' failed: " << cmd3.retcode());
@@ -199,8 +198,7 @@ namespace snapper
 
 
     void
-    TheBigThing::copy_metadata(const BackupConfig& backup_config,
-                               TheBigThings& the_big_things,
+    TheBigThing::copy_metadata(const BackupConfig& backup_config, TheBigThings& the_big_things,
                                const pair<CopySpec, CopySpec>& copy_specs)
     {
 	// Unpack copy specification
@@ -407,8 +405,7 @@ namespace snapper
 	    case CopyMode::SOURCE_TO_TARGET:
 
 		// Resolve Btrfs send parent.
-		if (auto parent =
-		        the_big_things.source_tree.find_nearest_valid_node(source_uuid))
+		if (auto parent = the_big_things.source_tree.find_nearest_valid_node(source_uuid))
 		{
 		    spec_source.parent_subvol_path =
 		        source_snapshot_dir(the_big_things.snapper,
@@ -425,11 +422,10 @@ namespace snapper
 	    case CopyMode::TARGET_TO_SOURCE:
 
 		// Resolve Btrfs send parent
-		if (auto parent =
-		        the_big_things.target_tree.find_nearest_valid_node(target_uuid))
+		if (auto parent = the_big_things.target_tree.find_nearest_valid_node(target_uuid))
 		{
 		    spec_target.parent_subvol_path =
-		        target_snapshot_dir(backup_config, parent->node->get_number()) +
+			target_snapshot_dir(backup_config, parent->node->get_number()) +
 		        "/" SNAPSHOT_NAME;
 		}
 
@@ -620,11 +616,10 @@ namespace snapper
 		{
 		    // Get the checksum of info.xml, and get metadata required for the
 		    // cleanup algorithms.
-		    CmdMetaParse cmd_metaparse(shell_target,
-		                               target_snapshot_dir(backup_config, num),
-		                               backup_config.target_cat_bin);
-		    it->target_meta_checksum = cmd_metaparse.get_checksum();
-		    it->meta = cmd_metaparse.get_meta();
+		    CmdMetaParse cmd_meta_parse(shell_target, target_snapshot_dir(backup_config, num),
+						backup_config.target_cat_bin);
+		    it->target_meta_checksum = cmd_meta_parse.get_checksum();
+		    it->meta = cmd_meta_parse.get_meta();
 		}
 		catch (const Exception& e)
 		{

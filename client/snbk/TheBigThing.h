@@ -131,8 +131,7 @@ namespace snapper
 
 	void copy(const BackupConfig& backup_config, TheBigThings& the_big_things,
 	          const pair<CopySpec, CopySpec>& copy_specs);
-	void copy_metadata(const BackupConfig& backup_config,
-	                   TheBigThings& the_big_things,
+	void copy_metadata(const BackupConfig& backup_config, TheBigThings& the_big_things,
 	                   const pair<CopySpec, CopySpec>& copy_specs);
 
     };
