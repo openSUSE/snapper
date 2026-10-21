@@ -40,7 +40,9 @@ namespace snapper
     public:
 
 	enum class OutputFormat { TABLE, CSV, JSON };
-	enum class Ambit { AUTO, CLASSIC, TRANSACTIONAL };
+
+	// SUBVOL_RENAME: classic, but by renaming the root subvolume
+	enum class Ambit { AUTO, CLASSIC, TRANSACTIONAL, SUBVOL_RENAME };
 
 	static void help_global_options();
 

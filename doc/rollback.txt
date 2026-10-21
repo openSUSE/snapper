@@ -1,0 +1,174 @@
+Btrfs Rollback Methods
+======================
+
+Snapper supports two mechanisms for switching the active root subvolume
+during a rollback. The mechanism is selected by the ambit (see the
+--ambit option in snapper(8)); with the default of auto it is detected
+from the system.
+
+
+classic and transactional (set-default)
+---------------------------------------
+
+Sets the btrfs default subvolume ID via BTRFS_IOC_DEFAULT_SUBVOL. This
+works when the bootloader or fstab does not specify a subvol= mount
+option and instead relies on the btrfs default subvolume.
+
+This is the traditional snapper rollback behavior.
+
+
+subvol-rename
+-------------
+
+Atomically swaps the named root subvolume using renameat2(2) with
+RENAME_EXCHANGE. This is required when fstab (or the bootloader) mounts
+the root filesystem with an explicit subvol= option such as subvol=@root,
+because in that case the btrfs default subvolume ID is ignored.
+
+The sequence is:
+
+  1. A read-write copy of the rollback target snapshot is created as
+     <subvol>.incoming (e.g. @root.incoming), and .snapshots is moved
+     into it (see below). If that fails, e.g. because .snapshots is
+     mounted, the copy is deleted and the rollback is refused.
+
+  2. renameat2(RENAME_EXCHANGE) atomically swaps <subvol>.incoming with
+     the current root subvolume (e.g. @root). There is no point in time
+     where @root does not exist. With the exchange the rollback takes
+     effect; if it fails, .snapshots is moved back. If the btrfs default
+     subvolume named the old root, it is set to the new root, so a boot
+     by the default subvolume id gets the new root too.
+
+  3. The other subvolumes nested in the root subvolume are handled, see
+     below.
+
+  4. The displaced root is moved to <subvol>.rollback.<N>, preserving
+     the old root for recovery. With ROLLBACK_BACKUP_LIMIT set, the
+     oldest of these backups beyond the limit are deleted.
+
+Steps 3 and 4 are best effort: a failure is reported as a warning, and
+the remaining steps and the post plugins still run.
+
+Renaming a mounted btrfs subvolume is safe: the kernel tracks mounts by
+subvolume ID, not by name, so the running system is unaffected. Requires
+Linux 4.7 or later for renameat2(RENAME_EXCHANGE) support on btrfs.
+
+The read-write snapshot ("writable copy") the root is copied from keeps no
+cleanup algorithm, like the new default in a classic rollback. At the
+next rollback it gets the number cleanup algorithm, as the previous
+default does in classic; snapper finds it as the snapshot the root
+subvolume is a snapshot of (its btrfs parent UUID).
+
+The read-write copy that becomes the root is not added to the snapshot
+qgroup (QGROUP), like the new default in a classic rollback: only
+snapshots with a cleanup algorithm belong there.
+
+
+Nested subvolumes
+-----------------
+
+A btrfs snapshot does not include subvolumes nested in the snapshotted
+subvolume. Where one was, the snapshot only holds a placeholder: an
+empty directory in which nothing can be created until it is removed.
+So the nested subvolumes stay in the old root, and the new root has
+placeholders at their paths. They are handled by this rule:
+
+  .snapshots  moved into the new root before the exchange, and mounted
+              again by subvolume ID on the running system so snapper
+              keeps working until the reboot; a .snapshots nested in the
+              root must not be mounted separately for the rollback
+
+  empty       the placeholder is removed from the new root, so the path
+              can be recreated, e.g. var/lib/portables and
+              var/lib/machines by systemd-tmpfiles at boot; the empty
+              subvolume stays in the old root
+
+  not empty   the rollback is refused before anything is changed, since
+              the data would only be reachable in the old root; such
+              subvolumes should be top-level subvolumes mounted via fstab
+              (like /home), or be emptied
+
+Layouts that keep these subvolumes outside the root subvolume, e.g. with
+a separate /var subvolume, only have .snapshots nested in the root.
+
+The same applies to a classic rollback, where the new default subvolume
+is a snapshot too; it is not handled there.
+
+
+Plugins
+-------
+
+The subvol-rename ambit runs the same plugins as a classic rollback.
+set-default-snapshot-pre and set-default-snapshot-post are run around
+the exchange with the number of the snapshot whose copy becomes the
+root, i.e. the snapshot booted next, although the btrfs default
+subvolume is not changed. rollback and rollback-post get the numbers of
+the backup snapshot and of the new snapshot, as for classic. The
+rollback script /usr/lib/snapper/plugins/rollback, which gets the paths
+of both snapshots, runs before the copy is made, so its changes to the
+new snapshot are part of the new root.
+
+
+Limitations
+-----------
+
+On many named-subvolume layouts /boot (or the EFI system partition
+holding the kernel images) is not part of the root subvolume, so a
+rollback does not change the installed kernels. After a rollback past a
+kernel update the boot loader may start a kernel whose modules are
+missing in the new root (/usr/lib/modules/<version>). A rollback-post
+plugin can adjust the boot entries.
+
+Until the reboot the old root keeps running as <subvol>.rollback.<N>.
+grub-mkconfig (update-grub, which Debian and Ubuntu also run on kernel
+updates) takes rootflags=subvol= from the running root, so regenerating
+the boot loader configuration before the reboot boots the old root
+again. The same applies to a UKI whose command line is taken from the
+running root, e.g. by dracut --uefi with hostonly_cmdline and no
+/etc/kernel/cmdline. kernel-install, ukify and mkinitcpio take the
+command line from /etc/kernel/cmdline or /proc/cmdline and are not
+affected. Reboot soon after a rollback; a rollback-post plugin that
+adjusts the boot entries must not regenerate them from the running
+system.
+
+A .snapshots nested in the root subvolume is only a placeholder in a
+booted snapshot, so snapper cannot read its configuration there. Before
+a rollback from a booted snapshot, mount it (mount -o
+subvol=<subvol>/.snapshots <device> /.snapshots).
+
+
+auto (default)
+--------------
+
+Snapper inspects the system to determine the ambit:
+
+- If the system boots a top-level named subvolume (a single path
+  component such as "@root"), subvol-rename is used. The name comes from
+  the boot configuration: rootflags=subvol= on the kernel command line,
+  which decides at boot, or, for a one-off boot of a snapshot (by
+  subvolid= or a nested name), subvol= of the / entry in /etc/fstab, which
+  describes the normal boot. /proc/mounts is not used for this: it shows
+  the running root under its current name, which after a rollback without
+  a reboot is <subvol>.rollback.<N>. With --root or in a chroot the
+  kernel command line belongs to the running system, so the name comes
+  from the fstab of the target system.
+- Otherwise the kernel mounts the btrfs default subvolume, whatever fstab
+  names (fstab is then only used to remount /): the ambit is classic or
+  transactional, depending on the read-only/-write state of the default
+  subvolume, and set-default is used.
+- On a named-subvolume layout the rollback is refused when neither method
+  changes what boots, or the system would not boot afterwards: the root
+  pinned by subvolid= on the kernel command line (alone, or next to
+  subvol=, where the kernel refuses the mismatch once the subvolume is
+  renamed), mounted by a nested name or from the top-level subvolume
+  (subvol=/), or the kernel command line and fstab naming different
+  subvolumes. A subvolid= next to subvol= in fstab (as older genfstab
+  versions write it) is reported, since it no longer matches after the
+  rename; fstab is only used to remount / then.
+  On a default subvolume layout the rollback works as without the rename
+  method.
+- subvol-rename requires snapper built with libbtrfsutil.
+
+The detection means no manual configuration is needed on most systems.
+An explicit --ambit always wins over it: with --ambit classic or
+transactional a reason to refuse is only reported as a warning.

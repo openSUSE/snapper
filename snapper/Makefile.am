@@ -39,7 +39,8 @@ libsnapper_la_SOURCES =					\
 if ENABLE_BTRFS
 libsnapper_la_SOURCES +=				\
 	Btrfs.cc		Btrfs.h			\
-	BtrfsUtils.cc		BtrfsUtils.h
+	BtrfsUtils.cc		BtrfsUtils.h		\
+	BtrfsNested.cc		BtrfsNested.h
 endif
 
 if ENABLE_BCACHEFS

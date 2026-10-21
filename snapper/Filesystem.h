@@ -106,6 +106,22 @@ namespace snapper
 
 	virtual void setDefault(unsigned int num, Plugins::Report& report) const;
 
+	/**
+	 * For the subvol-rename rollback (btrfs only): throws if a nested
+	 * subvolume holds data, returns the empty ones.
+	 */
+	virtual vector<string> checkRollbackSubvolRename(const string& subvol_name) const;
+
+	/**
+	 * Swaps the named root subvolume with a copy of snapshot num (btrfs
+	 * only). Returns a message for each failed step after the swap.
+	 */
+	virtual vector<string> rollbackSubvolRename(unsigned int num, const string& subvol_name,
+						    Plugins::Report& report) const;
+
+	// the snapshot the named root subvolume is a copy of (btrfs only)
+	virtual std::pair<bool, unsigned int> getOrigin(const string& subvol_name) const;
+
 	virtual std::pair<bool, unsigned int> getActive() const;
 
 	virtual bool isActive(unsigned int num) const;

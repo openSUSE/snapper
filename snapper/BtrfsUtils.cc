@@ -218,15 +218,19 @@ namespace snapper
 
 
 	void
-	delete_subvolume(int fd, const string& name)
+	delete_subvolume(int fd, const string& name, bool recursive)
 	{
 #ifdef HAVE_LIBBTRFSUTIL
 	    enum btrfs_util_error err;
 
-	    err = btrfs_util_delete_subvolume_fd(fd, name.c_str(), 0);
+	    int flags = recursive ? BTRFS_UTIL_DELETE_SUBVOLUME_RECURSIVE : 0;
+	    err = btrfs_util_delete_subvolume_fd(fd, name.c_str(), flags);
 	    if (err)
 		throw runtime_error_with_errno("btrfs_util_delete_subvolume_fd() failed", errno);
 #else
+	    // the ioctl cannot delete recursively, ENOTEMPTY with nested subvolumes
+	    (void) recursive;
+
 	    struct btrfs_ioctl_vol_args args;
 	    memset(&args, 0, sizeof(args));
 
@@ -843,6 +847,25 @@ namespace snapper
 	    FdCloser fd_closer(fd);
 
 	    return BtrfsUtils::get_uuid(fd);
+	}
+
+
+	std::pair<Uuid, Uuid>
+	get_subvolume_uuids(int fd)
+	{
+#ifdef HAVE_LIBBTRFSUTIL
+	    struct btrfs_util_subvolume_info info;
+	    if (btrfs_util_subvolume_info_fd(fd, 0, &info) != BTRFS_UTIL_OK)
+		throw runtime_error_with_errno("btrfs_util_subvolume_info_fd() failed", errno);
+
+	    std::pair<Uuid, Uuid> ret;
+	    std::copy(std::begin(info.uuid), std::end(info.uuid), std::begin(ret.first.value));
+	    std::copy(std::begin(info.parent_uuid), std::end(info.parent_uuid),
+		      std::begin(ret.second.value));
+	    return ret;
+#else
+	    throw std::runtime_error("get_subvolume_uuids() requires libbtrfsutil");
+#endif
 	}
 
     }

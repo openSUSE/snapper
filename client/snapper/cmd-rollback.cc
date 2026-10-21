@@ -33,6 +33,7 @@
 #include "../utils/help.h"
 #include "../proxy/proxy.h"
 #include "GlobalOptions.h"
+#include "ambit.h"
 #include "../misc.h"
 
 
@@ -111,7 +112,8 @@ namespace snapper
 
 	ProxyConfig config = snapper->getConfig();
 
-	unique_ptr<const Filesystem> filesystem = get_filesystem(config, global_options.root());
+	unique_ptr<const Filesystem> filesystem = get_filesystem(snapper->configName(),
+								 global_options.root());
 	if (filesystem->fstype() != "btrfs")
 	{
 	    cerr << _("Command 'rollback' only available for btrfs.") << endl;
@@ -130,42 +132,101 @@ namespace snapper
 
 	ProxySnapshots::iterator previous_default = snapshots.getDefault();
 
-	if (global_options.ambit() == GlobalOptions::Ambit::AUTO)
+	const BootRoot boot_root = get_boot_root(global_options.root());
+	if (!boot_root.unsupported.empty())
 	{
-	    if (previous_default == snapshots.end())
+	    // an explicit set-default ambit wins, as without the rename method
+	    if (global_options.ambit() == Ambit::CLASSIC ||
+		global_options.ambit() == Ambit::TRANSACTIONAL)
 	    {
-		cerr << _("Cannot detect ambit since default subvolume is unknown.") << '\n'
-		     << _("This can happen if the system was not set up for rollback.") << '\n'
-		     << _("The ambit can be specified manually using the --ambit option.") << endl;
+		cerr << sformat(_("Warning: %s"), boot_root.unsupported.c_str()) << endl;
+	    }
+	    else
+	    {
+		cerr << boot_root.unsupported << endl;
 		exit(EXIT_FAILURE);
 	    }
+	}
+	const string& subvol_name = boot_root.subvol;
 
-	    if (filesystem->isSnapshotReadOnly(previous_default->getNum()))
-		global_options.set_ambit(GlobalOptions::Ambit::TRANSACTIONAL);
-	    else
-		global_options.set_ambit(GlobalOptions::Ambit::CLASSIC);
+	// the mode only matters with --ambit auto (see determine_ambit)
+	SubvolumeMode mode = SubvolumeMode::UNKNOWN;
+	if (global_options.ambit() == Ambit::AUTO && previous_default != snapshots.end())
+	    mode = filesystem->isSnapshotReadOnly(previous_default->getNum())
+		? SubvolumeMode::READ_ONLY : SubvolumeMode::READ_WRITE;
+
+	Ambit ambit = determine_ambit(global_options.ambit(), subvol_name, mode);
+	if (ambit == Ambit::AUTO)
+	{
+	    cerr << _("Cannot detect ambit since default subvolume is unknown.") << '\n'
+		 << _("This can happen if the system was not set up for rollback.") << '\n'
+		 << _("The ambit can be specified manually using the --ambit option.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+	global_options.set_ambit(ambit);
+
+	// The btrfs default subvolume is unrelated when booting by name. Its
+	// counterpart is the read-write copy the root was made from: it labels
+	// the backup and gets a cleanup algorithm as in classic.
+	if (ambit == Ambit::SUBVOL_RENAME)
+	{
+	    const std::pair<bool, unsigned int> origin = filesystem->getOrigin(subvol_name);
+	    previous_default = origin.first ? snapshots.find(origin.second) : snapshots.end();
 	}
 
+	if (is_set_default_ineffective(ambit, subvol_name))
+	    cerr << sformat(_("Warning: The root filesystem is mounted with subvol=%s so setting "
+			      "the default subvolume will not take effect on the next boot."),
+			    subvol_name.c_str()) << endl;
+
+	if (ambit == Ambit::SUBVOL_RENAME && boot_root.stale_subvolid)
+	    cerr << _("Warning: fstab also mounts the root filesystem with subvolid=, which no "
+		      "longer matches after the rollback. It should be removed from fstab.") << endl;
+
 	if (!global_options.quiet())
-	    cout << sformat(_("Ambit is %s."), toString(global_options.ambit()).c_str()) << endl;
+	{
+	    if (ambit == Ambit::SUBVOL_RENAME)
+		cout << sformat(_("Ambit is %s (subvolume '%s')."), toString(ambit).c_str(),
+				subvol_name.c_str()) << endl;
+	    else
+		cout << sformat(_("Ambit is %s."), toString(ambit).c_str()) << endl;
+	}
+
+	// before any snapshot is created
+	vector<string> empty_nested;
+	if (ambit == Ambit::SUBVOL_RENAME)
+	    empty_nested = filesystem->checkRollbackSubvolRename(subvol_name);
 
 	if (previous_default != snapshots.end() && scd1.description == default_description1)
 	    scd1.description += sformat(" of #%d", previous_default->getNum());
 
 	switch (global_options.ambit())
 	{
-	    case GlobalOptions::Ambit::CLASSIC:
+	    case Ambit::CLASSIC:
+	    case Ambit::SUBVOL_RENAME:
 	    {
 		ProxySnapshots::const_iterator snapshot1 = snapshots.end();
 		ProxySnapshots::const_iterator snapshot2 = snapshots.end();
 
 		if (get_opts.num_args() == 0)
 		{
-		    if (!global_options.quiet())
-			cout << _("Creating read-only snapshot of default subvolume.") << flush;
-
 		    scd1.read_only = true;
-		    snapshot1 = snapper->createSingleSnapshotOfDefault(scd1, report);
+
+		    // the btrfs default is unrelated when booting by name
+		    if (ambit == Ambit::SUBVOL_RENAME)
+		    {
+			if (!global_options.quiet())
+			    cout << _("Creating read-only snapshot of current system.") << flush;
+
+			snapshot1 = snapper->createSingleSnapshot(scd1, report);
+		    }
+		    else
+		    {
+			if (!global_options.quiet())
+			    cout << _("Creating read-only snapshot of default subvolume.") << flush;
+
+			snapshot1 = snapper->createSingleSnapshotOfDefault(scd1, report);
+		    }
 
 		    if (!global_options.quiet())
 			cout << " " << sformat(_("(Snapshot %d.)"), snapshot1->getNum()) << endl;
@@ -216,12 +277,52 @@ namespace snapper
 		}
 
 		if (!global_options.quiet())
-		    cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot2->getNum()) << endl;
+		{
+		    if (ambit == Ambit::SUBVOL_RENAME)
+			cout << sformat(_("Replacing subvolume '%s' with a copy of snapshot %d."),
+					subvol_name.c_str(), snapshot2->getNum()) << endl;
+		    else
+			cout << sformat(_("Setting default subvolume to snapshot %d."),
+					snapshot2->getNum()) << endl;
+		}
 
-		filesystem->setDefault(snapshot2->getNum(), report);
+		if (ambit == Ambit::SUBVOL_RENAME)
+		{
+		    // before snapshot2 is copied, so the script's changes boot
+		    Plugins::rollback(filesystem->snapshotDir(snapshot1->getNum()),
+				      filesystem->snapshotDir(snapshot2->getNum()), report);
 
-		Plugins::rollback(filesystem->snapshotDir(snapshot1->getNum()),
-				  filesystem->snapshotDir(snapshot2->getNum()), report);
+		    const vector<string> warnings =
+			filesystem->rollbackSubvolRename(snapshot2->getNum(), subvol_name, report);
+
+		    for (const string& warning : warnings)
+			cerr << sformat(_("Warning: %s"), warning.c_str()) << endl;
+
+		    if (!global_options.quiet() && !empty_nested.empty())
+		    {
+			string paths;
+			for (const string& path : empty_nested)
+			    paths += (paths.empty() ? "/" : ", /") + path;
+			cout << sformat(_("Not part of the rollback: the empty nested subvolumes %s "
+					  "stay in the old root and start out empty."),
+					paths.c_str()) << endl;
+		    }
+
+		    // grub-mkconfig and dracut's hostonly cmdline take the running root
+		    if (!global_options.quiet())
+			cout << _("Reboot soon: until then the old root is running under a new name, "
+				  "and regenerating the boot loader configuration (e.g. update-grub, "
+				  "also run by kernel updates) or a UKI from the running system would "
+				  "boot it again.") << endl;
+		}
+		else
+		{
+		    filesystem->setDefault(snapshot2->getNum(), report);
+
+		    Plugins::rollback(filesystem->snapshotDir(snapshot1->getNum()),
+				      filesystem->snapshotDir(snapshot2->getNum()), report);
+		}
+
 		Plugins::rollback(Plugins::Stage::POST_ACTION, subvolume, filesystem.get(),
 				  snapshot1->getNum(), snapshot2->getNum(), report);
 
@@ -230,7 +331,7 @@ namespace snapper
 	    }
 	    break;
 
-	    case GlobalOptions::Ambit::TRANSACTIONAL:
+	    case Ambit::TRANSACTIONAL:
 	    {
 		// see bsc #1172273
 
@@ -264,6 +365,7 @@ namespace snapper
 		if (!global_options.quiet())
 		    cout << sformat(_("Setting default subvolume to snapshot %d."), snapshot->getNum()) << endl;
 
+		// a transactional system boots by default subvolume id
 		filesystem->setDefault(snapshot->getNum(), report);
 
 		Plugins::rollback(filesystem->snapshotDir(previous_default->getNum()),
@@ -273,7 +375,7 @@ namespace snapper
 	    }
 	    break;
 
-	    case GlobalOptions::Ambit::AUTO:
+	    case Ambit::AUTO:
 	    {
 		cerr << "internal error: ambit is auto" << endl;
 		exit(EXIT_FAILURE);

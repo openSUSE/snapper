@@ -140,8 +140,8 @@ namespace snapper
 
 	    if (set_default)
 	    {
-		ProxyConfig config = snapper->getConfig();
-		unique_ptr<const Filesystem> filesystem = get_filesystem(config, global_options.root());
+		unique_ptr<const Filesystem> filesystem = get_filesystem(snapper->configName(),
+									 global_options.root());
 		filesystem->setDefault(snapshot->getNum(), report);
 	    }
 	}

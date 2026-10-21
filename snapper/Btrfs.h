@@ -89,6 +89,13 @@ namespace snapper
 
 	virtual void setDefault(unsigned int num, Plugins::Report& report) const override;
 
+	virtual vector<string> checkRollbackSubvolRename(const string& subvol_name) const override;
+
+	virtual vector<string> rollbackSubvolRename(unsigned int num, const std::string& subvol_name,
+						    Plugins::Report& report) const override;
+
+	virtual std::pair<bool, unsigned int> getOrigin(const string& subvol_name) const override;
+
 	virtual bool isActive(unsigned int num) const override;
 
 	virtual std::pair<bool, unsigned int> getActive() const override;
@@ -102,6 +109,9 @@ namespace snapper
 	qgroup_t qgroup = no_qgroup;
 	bool special_cmp = true;
 
+	// parsed only by the rollback, so an invalid value affects nothing else
+	string rollback_backup_limit;
+
 	mutable vector<subvolid_t> deleted_subvolids;
 
 	void addToFstabHelper(const string& default_subvolume_name) const;
@@ -114,6 +124,24 @@ namespace snapper
 	std::pair<bool, unsigned int> idToNum(int fd, subvolid_t id) const;
 
     };
+
+
+#ifdef ENABLE_ROLLBACK
+
+    /**
+     * Delete the oldest <subvol_name>.rollback.* backups in the btrfs top-level
+     * until 'keep' are left (0 keeps all). The running root and backups holding
+     * .snapshots are never deleted but count towards 'keep'. Failures are only
+     * logged. Declared here for the tests.
+     */
+    void prune_rollback_backups(SDir& toplevel, const string& subvol_name, unsigned int keep,
+				subvolid_t running);
+
+
+    // empty is 0; throws InvalidConfigException for a value that is not a number
+    unsigned int parse_rollback_backup_limit(const string& value);
+
+#endif
 
 }
 
