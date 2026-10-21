@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Oct 21 16:32:25 CEST 2026 - Arvin Schnell <aschnell@suse.com>
+
+- added support for target-mode ssh-pull in snbk
+  (gh#openSUSE/snapper#1185)
+
+-------------------------------------------------------------------
 Mon Oct 12 20:17:00 UTC 2026 - rlysleepynick <hirohiro239@outlook.jp>
 
 - added fish completion (gh#openSUSE/snapper#1195)

@@ -34,6 +34,7 @@
 
 #include "CmdBtrfs.h"
 #include "CmdLs.h"
+#include "CmdSnapper.h"
 #include "BackupConfig.h"
 #include "TheBigThing.h"
 
@@ -110,10 +111,12 @@ namespace snapper
 	    return nodes;
 	}
 
-	string source_snapshot_dir(const ProxySnapper* snapper, unsigned int num)
+	string source_snapshot_dir(const string& source_path, unsigned int num)
 	{
-	    return snapper->getConfig().getSubvolume() + "/" SNAPSHOTS_NAME "/" +
-	           to_string(num);
+	    if (source_path == "/")
+		return "/" SNAPSHOTS_NAME "/" + to_string(num);
+	    else
+		return source_path + "/" SNAPSHOTS_NAME "/" + to_string(num);
 	}
 
 	string target_snapshot_dir(const BackupConfig& backup_config, unsigned int num)
@@ -228,6 +231,7 @@ namespace snapper
 	    break;
 
 	    case BackupConfig::TargetMode::SSH_PUSH:
+	    case BackupConfig::TargetMode::SSH_PULL:
 	    {
 		SystemCmd::Args cmd_args = { SCP_BIN };
 		if (backup_config.ssh_port != 0)
@@ -383,9 +387,9 @@ namespace snapper
 	CopySpec spec_source;	// Copy specification for the snapshot on the source. Why mkdir on the
 				// source? Restore!
 	spec_source.shell = backup_config.get_source_shell();
-	spec_source.mkdir_bin = MKDIR_BIN;
-	spec_source.btrfs_bin = BTRFS_BIN;
-	spec_source.snapshot_dir = source_snapshot_dir(the_big_things.snapper, num);
+	spec_source.mkdir_bin = backup_config.source_mkdir_bin;
+	spec_source.btrfs_bin = backup_config.source_btrfs_bin;
+	spec_source.snapshot_dir = source_snapshot_dir(the_big_things.get_source_path(), num);
 
 	CopySpec spec_target; // Copy specification for the snapshot on the target.
 	spec_target.shell = backup_config.get_target_shell();
@@ -400,6 +404,12 @@ namespace snapper
 	        (backup_config.ssh_user.empty() ? "" : backup_config.ssh_user + "@") +
 	        backup_config.ssh_host + ":";
 	}
+	else if (backup_config.target_mode == BackupConfig::TargetMode::SSH_PULL)
+	{
+	    spec_source.remote_host =
+	        (backup_config.ssh_user.empty() ? "" : backup_config.ssh_user + "@") +
+	        backup_config.ssh_host + ":";
+	}
 
 	switch (copy_mode)
 	{
@@ -409,8 +419,7 @@ namespace snapper
 		if (const auto& parent = the_big_things.source_tree.find_nearest_valid_node(source_uuid))
 		{
 		    spec_source.parent_subvol_path =
-		        source_snapshot_dir(the_big_things.snapper,
-		                            parent->node->get_number()) +
+			source_snapshot_dir(the_big_things.get_source_path(), parent->node->get_number()) +
 		        "/" SNAPSHOT_NAME;
 		}
 
@@ -463,8 +472,23 @@ namespace snapper
     TheBigThings::TheBigThings(const BackupConfig& backup_config, ProxySnappers* snappers, bool verbose)
 	: source_btrfs_version(BTRFS_BIN, backup_config.get_source_shell()),
 	  target_btrfs_version(backup_config.target_btrfs_bin, backup_config.get_target_shell()),
-	  snapper(snappers->getSnapper(backup_config.config)), locker(snapper)
+	  snapper(backup_config.is_local_source() ? snappers->getSnapper(backup_config.config) : nullptr),
+	  my_locker(snapper)
     {
+	if (backup_config.is_local_source())
+	{
+	    source_path = snapper->getConfig().getSubvolume();
+	}
+	else
+	{
+	    const Shell shell_source = backup_config.get_source_shell();
+
+	    const CmdSnapperGetConfig cmd_snapper_get_config(backup_config.source_snapper_bin, shell_source,
+							     backup_config.config);
+
+	    source_path = cmd_snapper_get_config.get_subvolume();
+	}
+
 	probe_source(backup_config, verbose);
 	probe_target(backup_config, verbose);
 
@@ -481,43 +505,88 @@ namespace snapper
     {
 	const Shell shell_source = backup_config.get_source_shell();
 
-	// Query snapshots on source from snapperd.
-
 	if (verbose)
 	    cout << _("Probing source snapshots.") << endl;
 
-	const ProxySnapshots& source_snapshots = snapper->getSnapshots();
-
-	if (verbose)
-	    cout << _("Probing extra information for source snapshots.") << endl;
-
-	for (const ProxySnapshot& source_snapshot : source_snapshots)
+	switch (backup_config.target_mode)
 	{
-	    unsigned int num = source_snapshot.getNum();
-	    if (num == 0)
-		continue;
+	    case BackupConfig::TargetMode::LOCAL:
+	    case BackupConfig::TargetMode::SSH_PUSH:
+	    {
+		// Query snapshots on source from snapperd.
 
-	    // Query additional information (uuids, read-only) from btrfs.
+		const ProxySnapshots& source_snapshots = snapper->getSnapshots();
 
-	    CmdBtrfsSubvolumeShow extra(BTRFS_BIN, shell_source,
-	                                source_snapshot_dir(snapper, num) +
-	                                    "/" SNAPSHOT_NAME);
+		if (verbose)
+		    cout << _("Probing extra information for source snapshots.") << endl;
 
-	    TheBigThing the_big_thing(num);
-	    the_big_thing.meta.date = source_snapshot.getDate();
-	    the_big_thing.source_state = extra.is_read_only() ? TheBigThing::SourceState::READ_ONLY :
-		TheBigThing::SourceState::READ_WRITE;
-	    the_big_thing.source_uuid = extra.get_uuid();
-	    the_big_thing.source_parent_uuid = extra.get_parent_uuid();
-	    the_big_thing.source_received_uuid = extra.get_received_uuid();
-	    the_big_thing.source_creation_time = extra.get_creation_time();
+		for (const ProxySnapshot& source_snapshot : source_snapshots)
+		{
+		    unsigned int num = source_snapshot.getNum();
+		    if (num == 0)
+			continue;
 
-	    // Get the checksum of info.xml.
-	    CmdMetaParse cmd_metaparse(shell_source, source_snapshot_dir(snapper, num),
-	                               CAT_BIN);
-	    the_big_thing.source_meta_checksum = cmd_metaparse.get_checksum();
+		    // Query additional information (uuids, read-only) from btrfs.
 
-	    the_big_things.push_back(the_big_thing);
+		    CmdBtrfsSubvolumeShow extra(BTRFS_BIN, shell_source, source_snapshot_dir(source_path, num) +
+						"/" SNAPSHOT_NAME);
+
+		    TheBigThing the_big_thing(num);
+		    the_big_thing.meta.date = source_snapshot.getDate();
+		    the_big_thing.source_state = extra.is_read_only() ? TheBigThing::SourceState::READ_ONLY :
+			TheBigThing::SourceState::READ_WRITE;
+		    the_big_thing.source_uuid = extra.get_uuid();
+		    the_big_thing.source_parent_uuid = extra.get_parent_uuid();
+		    the_big_thing.source_received_uuid = extra.get_received_uuid();
+		    the_big_thing.source_creation_time = extra.get_creation_time();
+
+		    // Get the checksum of info.xml.
+		    CmdMetaParse cmd_meta_parse(shell_source, source_snapshot_dir(source_path, num),
+						backup_config.source_cat_bin);
+		    the_big_thing.source_meta_checksum = cmd_meta_parse.get_checksum();
+
+		    the_big_things.push_back(the_big_thing);
+		}
+	    }
+	    break;
+
+	    case BackupConfig::TargetMode::SSH_PULL:
+	    {
+		// Query snapshots on source from snapper.
+
+		CmdSnapperList cmd_snapper_list(backup_config.source_snapper_bin, shell_source, backup_config.config);
+
+		if (verbose)
+		    cout << _("Probing extra information for source snapshots.") << endl;
+
+		for (const CmdSnapperList::Entry& entry : cmd_snapper_list)
+		{
+		    if (entry.number == 0)
+			continue;
+
+		    // Query additional information (uuids, read-only) from btrfs.
+
+		    CmdBtrfsSubvolumeShow extra(BTRFS_BIN, shell_source, source_snapshot_dir(source_path, entry.number) +
+						"/" SNAPSHOT_NAME);
+
+		    TheBigThing the_big_thing(entry.number);
+		    the_big_thing.meta.date = entry.date;
+		    the_big_thing.source_state = extra.is_read_only() ? TheBigThing::SourceState::READ_ONLY :
+			TheBigThing::SourceState::READ_WRITE;
+		    the_big_thing.source_uuid = extra.get_uuid();
+		    the_big_thing.source_parent_uuid = extra.get_parent_uuid();
+		    the_big_thing.source_received_uuid = extra.get_received_uuid();
+		    the_big_thing.source_creation_time = extra.get_creation_time();
+
+		    // Get the checksum of info.xml.
+		    CmdMetaParse cmd_meta_parse(shell_source, source_snapshot_dir(source_path, entry.number),
+						backup_config.source_cat_bin);
+		    the_big_thing.source_meta_checksum = cmd_meta_parse.get_checksum();
+
+		    the_big_things.push_back(the_big_thing);
+		}
+	    }
+	    break;
 	}
     }
 
@@ -708,6 +777,24 @@ namespace snapper
 	return find_if(begin(), end(), [num](const TheBigThing& the_big_thing) {
 	    return the_big_thing.num == num;
 	});
+    }
+
+
+    MyLocker::MyLocker(const ProxySnapper* snapper)
+    {
+	if (snapper)
+	{
+	    locker = std::make_optional<Locker>(snapper);
+	}
+	else
+	{
+	    // TODO before release: ssh 'snapper lock-config'
+	}
+    }
+
+
+    MyLocker::~MyLocker()
+    {
     }
 
 }

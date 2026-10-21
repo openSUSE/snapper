@@ -47,6 +47,21 @@ namespace snapper
     class TheBigThings;
 
 
+    class MyLocker
+    {
+    public:
+
+	MyLocker(const ProxySnapper* snapper);
+	~MyLocker();
+
+    private:
+
+	std::optional<Locker> locker;
+
+    };
+
+
+
     class TheBigThing
     {
     public:
@@ -180,11 +195,15 @@ namespace snapper
 	TreeView source_tree;
 	TreeView target_tree;
 
-	const ProxySnapper* snapper;
+	const string& get_source_path() const { return source_path; }
 
     private:
 
-	const Locker locker;
+	const ProxySnapper* snapper; // null for target mode ssh-pull
+
+	const MyLocker my_locker;
+
+	string source_path;
 
 	vector<TheBigThing> the_big_things;
 

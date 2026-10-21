@@ -35,7 +35,7 @@ namespace snapper
     using namespace std;
 
 
-    const vector<string> EnumInfo<BackupConfig::TargetMode>::names({ "local", "ssh-push" });
+    const vector<string> EnumInfo<BackupConfig::TargetMode>::names({ "local", "ssh-push", "ssh-pull" });
 
     const vector<string> EnumInfo<BackupConfig::RetentionPolicy>::names({ "default", "custom" });
 
@@ -59,7 +59,7 @@ namespace snapper
 
 	get_child_value(json_file.get_root(), "automatic", automatic);
 
-	if (target_mode == TargetMode::SSH_PUSH)
+	if (target_mode == TargetMode::SSH_PUSH || target_mode == TargetMode::SSH_PULL)
 	{
 	    if (!get_child_value(json_file.get_root(), "ssh-host", ssh_host))
 		SN_THROW(Exception(sformat("ssh-host entry not found in '%s'", name.c_str())));
@@ -72,6 +72,11 @@ namespace snapper
 	get_child_value(json_file.get_root(), "send-compressed-data", send_compressed_data);
 	get_child_nodes(json_file.get_root(), "send-options", send_options);
 	get_child_nodes(json_file.get_root(), "receive-options", receive_options);
+
+	get_child_value(json_file.get_root(), "source-btrfs-bin", source_btrfs_bin);
+	get_child_value(json_file.get_root(), "source-cat-bin", source_cat_bin);
+	get_child_value(json_file.get_root(), "source-mkdir-bin", source_mkdir_bin);
+	get_child_value(json_file.get_root(), "source-snapper-bin", source_snapper_bin);
 
 	get_child_value(json_file.get_root(), "target-btrfs-bin", target_btrfs_bin);
 	get_child_value(json_file.get_root(), "target-cat-bin", target_cat_bin);
@@ -92,10 +97,52 @@ namespace snapper
     }
 
 
+    bool
+    BackupConfig::is_local_source() const
+    {
+	switch (target_mode)
+	{
+	    case TargetMode::LOCAL:
+	    case TargetMode::SSH_PUSH:
+		return true;
+
+	    case TargetMode::SSH_PULL:
+		return false;
+	}
+
+	SN_THROW(Exception("invalid target-mode"));
+	__builtin_unreachable();
+    }
+
+
+    bool
+    BackupConfig::is_local_target() const
+    {
+	switch (target_mode)
+	{
+	    case TargetMode::LOCAL:
+	    case TargetMode::SSH_PULL:
+		return true;
+
+	    case TargetMode::SSH_PUSH:
+		return false;
+	}
+
+	SN_THROW(Exception("invalid target-mode"));
+	__builtin_unreachable();
+    }
+
+
     Shell
     BackupConfig::get_source_shell() const
     {
 	Shell source_shell;
+
+	if (target_mode == TargetMode::SSH_PULL)
+	{
+	    source_shell.mode = Shell::Mode::SSH;
+	    source_shell.ssh_options = ssh_options();
+	}
 
 	return source_shell;
     }
