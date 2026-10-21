@@ -264,8 +264,8 @@ namespace snapper
 	else if (source_state == SourceState::READ_WRITE)
 	    SN_THROW(Exception(_("Cannot transfer a read-write snapshot.")));
 
-	auto copy_specs =
-	    make_copy_specs(backup_config, the_big_things, CopyMode::SOURCE_TO_TARGET);
+	const pair<CopySpec, CopySpec> copy_specs = make_copy_specs(backup_config, the_big_things,
+								    CopyMode::SOURCE_TO_TARGET);
 	switch (target_state)
 	{
 	    case TargetState::INVALID:
@@ -378,9 +378,10 @@ namespace snapper
 
     pair<TheBigThing::CopySpec, TheBigThing::CopySpec>
     TheBigThing::make_copy_specs(const BackupConfig& backup_config, const TheBigThings& the_big_things,
-                                 CopyMode copy_mode) const
+				 CopyMode copy_mode) const
     {
-	CopySpec spec_source; // Copy specification for the snapshot on the source.
+	CopySpec spec_source;	// Copy specification for the snapshot on the source. Why mkdir on the
+				// source? Restore!
 	spec_source.shell = backup_config.get_source_shell();
 	spec_source.mkdir_bin = MKDIR_BIN;
 	spec_source.btrfs_bin = BTRFS_BIN;
@@ -405,7 +406,7 @@ namespace snapper
 	    case CopyMode::SOURCE_TO_TARGET:
 
 		// Resolve Btrfs send parent.
-		if (auto parent = the_big_things.source_tree.find_nearest_valid_node(source_uuid))
+		if (const auto& parent = the_big_things.source_tree.find_nearest_valid_node(source_uuid))
 		{
 		    spec_source.parent_subvol_path =
 		        source_snapshot_dir(the_big_things.snapper,
@@ -422,7 +423,7 @@ namespace snapper
 	    case CopyMode::TARGET_TO_SOURCE:
 
 		// Resolve Btrfs send parent
-		if (auto parent = the_big_things.target_tree.find_nearest_valid_node(target_uuid))
+		if (const auto& parent = the_big_things.target_tree.find_nearest_valid_node(target_uuid))
 		{
 		    spec_target.parent_subvol_path =
 			target_snapshot_dir(backup_config, parent->node->get_number()) +
