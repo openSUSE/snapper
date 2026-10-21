@@ -22,6 +22,7 @@ snbk_SOURCES = 						\
 	TheBigThing.cc		TheBigThing.h		\
 	GlobalOptions.cc	GlobalOptions.h		\
 	Shell.cc		Shell.h			\
+	CmdSnapper.cc		CmdSnapper.h		\
 	CmdBtrfs.cc		CmdBtrfs.h		\
 	CmdLs.cc		CmdLs.h			\
 	CmdMetaParse.cc		CmdMetaParse.h		\

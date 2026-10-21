@@ -43,7 +43,7 @@
       <varlistentry>
 	<term><option>target-mode</option></term>
 	<listitem>
-	  <para>Either local or ssh-push.</para>
+	  <para>Either local, ssh-push or ssh-pull.</para>
 	</listitem>
       </varlistentry>
 
@@ -66,7 +66,7 @@
 	<term><option>ssh-host</option></term>
 	<listitem>
 	  <para>Name of the target host. Required for target mode
-	  ssh-push.</para>
+	  ssh-push and ssh-pull.</para>
 	</listitem>
       </varlistentry>
 
@@ -74,7 +74,7 @@
 	<term><option>ssh-port</option></term>
 	<listitem>
 	  <para>Port of the target host. Optional for target mode
-	  ssh-push.</para>
+	  ssh-push and ssh-pull.</para>
 	</listitem>
       </varlistentry>
 
@@ -82,7 +82,7 @@
 	<term><option>ssh-user</option></term>
 	<listitem>
 	  <para>User on the target host. Optional for target mode
-	  ssh-push.</para>
+	  ssh-push and ssh-pull.</para>
 	</listitem>
       </varlistentry>
 
@@ -90,7 +90,8 @@
 	<term><option>ssh-identity</option></term>
 	<listitem>
 	  <para>An ssh-identity to access the host without requiring a
-	  password or passphrase. Optional for target mode ssh-push.</para>
+	  password or passphrase. Optional for target mode ssh-push
+	  and ssh-pull.</para>
 	</listitem>
       </varlistentry>
 
@@ -122,9 +123,49 @@
       </varlistentry>
 
       <varlistentry>
+	<term><option>source-btrfs-bin</option></term>
+	<listitem>
+	  <para>Location of the btrfs binary on the source. Can also
+	  be used to install wrapper scripts. Optional.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>source-cat-bin</option></term>
+	<listitem>
+	  <para>Location of the cat binary on the source. Can also
+	  be used to install wrapper scripts. Optional.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>source-mkdir-bin</option></term>
+	<listitem>
+	  <para>Location of the mkdir binary on the source. Can also
+	  be used to install wrapper scripts. Optional.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>source-snapper-bin</option></term>
+	<listitem>
+	  <para>Location of the snapper binary on the source. Can also
+	  be used to install wrapper scripts. Optional.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
 	<term><option>target-btrfs-bin</option></term>
 	<listitem>
 	  <para>Location of the btrfs binary on the target. Can also
+	  be used to install wrapper scripts. Optional.</para>
+	</listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><option>target-cat-bin</option></term>
+	<listitem>
+	  <para>Location of the cat binary on the target. Can also
 	  be used to install wrapper scripts. Optional.</para>
 	</listitem>
       </varlistentry>
@@ -185,6 +226,19 @@
     "automatic": false,
     "target-path": "/backups/eberich/root",
     "ssh-host": "backups.example.com",
+    "ssh-identity": "/etc/snapper/certs/id_ecdsa"
+}
+    </programlisting>
+    </para>
+
+    <para>An example backup config for remote backups via ssh-pull:
+    <programlisting>
+{
+    "config": "root",
+    "target-mode": "ssh-pull",
+    "automatic": false,
+    "target-path": "/backups/eberich/root",
+    "ssh-host": "eberich.example.com",
     "ssh-identity": "/etc/snapper/certs/id_ecdsa"
 }
     </programlisting>

@@ -66,7 +66,7 @@ _snbk()
             return 0
             ;;
 	--target-mode)
-            COMPREPLY=( $( compgen -W 'local ssh-push' -- "$cur" ) )
+            COMPREPLY=( $( compgen -W 'local ssh-push ssh-pull' -- "$cur" ) )
             return 0
             ;;
     esac

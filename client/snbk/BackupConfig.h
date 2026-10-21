@@ -48,7 +48,7 @@ namespace snapper
 
 	enum class TargetMode
 	{
-	    LOCAL, SSH_PUSH
+	    LOCAL, SSH_PUSH, SSH_PULL
 	};
 
 	enum class RetentionPolicy
@@ -78,6 +78,9 @@ namespace snapper
 
 	TargetMode target_mode = TargetMode::LOCAL;
 
+	bool is_local_source() const;
+	bool is_local_target() const;
+
 	string target_path;
 
 	bool automatic = false;
@@ -94,6 +97,11 @@ namespace snapper
 	bool send_compressed_data = true;
 	vector<string> send_options;
 	vector<string> receive_options;
+
+	string source_btrfs_bin = BTRFS_BIN;
+	string source_cat_bin = CAT_BIN;
+	string source_mkdir_bin = MKDIR_BIN;
+	string source_snapper_bin = SNAPPER_BIN;
 
 	string target_btrfs_bin = BTRFS_BIN;
 	string target_cat_bin = CAT_BIN;

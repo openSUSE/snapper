@@ -21,6 +21,7 @@
 
 
 #include <iostream>
+#include <algorithm>
 #include <memory>
 
 #include "snapper/Logger.h"
@@ -202,7 +203,10 @@ main(int argc, char** argv)
 
 	    unique_ptr<ProxySnappers> snappers;
 
-	    if (cmd->needs_snapper)
+	    const bool needs_local_snapper = std::any_of(backup_configs.begin(), backup_configs.end(),
+		[](const BackupConfig& backup_config) { return backup_config.is_local_source(); });
+
+	    if (cmd->needs_snapper && needs_local_snapper)
 	    {
 		snappers = make_unique<ProxySnappers>(global_options.no_dbus() ? ProxySnappers::createLib("/") :
 						      ProxySnappers::createDbus());
