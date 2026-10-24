@@ -9,10 +9,13 @@
 #include <fstream>
 #include <string>
 #include <system_error>
+#include <cerrno>
+#include <fcntl.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
 #include <snapper/File.h>
+#include <snapper/FileUtils.h>
 #include <snapper/IgnorePatterns.h>
 
 using namespace snapper;
@@ -182,6 +185,31 @@ BOOST_AUTO_TEST_CASE(read_ignore_patterns_with_etc_precedence)
     BOOST_CHECK(find(patterns.begin(), patterns.end(), "/from-usr") == patterns.end());
     BOOST_CHECK(find(patterns.begin(), patterns.end(), "/etc-only") != patterns.end());
     BOOST_CHECK(find(patterns.begin(), patterns.end(), "/usr-only") != patterns.end());
+}
+
+
+BOOST_AUTO_TEST_CASE(noatime_is_best_effort)
+{
+    int direct = open("/etc", O_RDONLY | O_NOATIME | O_CLOEXEC);
+    if (direct >= 0)
+    {
+	close(direct);
+	BOOST_TEST_MESSAGE("O_NOATIME is permitted; fallback cannot be exercised");
+	return;
+    }
+
+    if (errno != EPERM)
+    {
+	BOOST_TEST_MESSAGE("O_NOATIME did not fail with EPERM; fallback cannot be exercised");
+	return;
+    }
+
+    SDir etc("/etc");
+    int fd = etc.open("passwd", O_RDONLY | O_NOATIME | O_CLOEXEC);
+    BOOST_REQUIRE(fd >= 0);
+    close(fd);
+
+    BOOST_CHECK(etc.listxattr("passwd", nullptr, 0) >= 0);
 }
 
 

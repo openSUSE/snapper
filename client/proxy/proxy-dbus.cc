@@ -21,8 +21,6 @@
 
 
 #include <cstring>
-#include <unistd.h>
-
 #include "proxy-dbus.h"
 #include "commands.h"
 #include "../utils/text.h"
@@ -330,22 +328,7 @@ ProxyComparison
 ProxySnapperDbus::createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs, bool mount,
 				   const vector<string>& filenames)
 {
-    // SDir uses O_NOATIME. Even users allowed by snapperd can lack CAP_FOWNER for
-    // root-owned snapshot directories, so keep their existing daemon-side behaviour.
-    if (geteuid() != 0)
-	return createComparison(lhs, rhs, mount);
-
-    try
-    {
-	return ProxyComparison(new ProxyComparisonDbus(this, lhs, rhs, mount, filenames));
-    }
-    catch (const IOErrorException& e)
-    {
-	SN_CAUGHT(e);
-
-	// Preserve the previous behaviour if the local comparison cannot read a selected path.
-	return createComparison(lhs, rhs, mount);
-    }
+    return ProxyComparison(new ProxyComparisonDbus(this, lhs, rhs, mount, filenames));
 }
 
 
