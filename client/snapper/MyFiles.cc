@@ -36,9 +36,11 @@
 namespace snapper
 {
 
-    void
-    MyFiles::bulk_process(FILE* file, GetOpts& get_opts, std::function<void(File& file)> callback)
+    vector<string>
+    MyFiles::get_requested_files(FILE* file, GetOpts& get_opts)
     {
+	vector<string> filenames;
+
 	if (file)
 	{
 	    AsciiFileReader asciifile(file, Compression::NONE);
@@ -61,39 +63,41 @@ namespace snapper
 		    name.erase(0, pos + 1);
 		}
 
-		Files::iterator it = findAbsolutePath(name);
-		if (it == end())
-		{
-		    cerr << sformat(_("File '%s' not found."), name.c_str()) << endl;
-		    exit(EXIT_FAILURE);
-		}
-
-		callback(*it);
+		filenames.push_back(name);
 	    }
 	}
 	else
 	{
-	    if (get_opts.num_args() == 0)
-	    {
-		for (Files::iterator it = begin(); it != end(); ++it)
-		    callback(*it);
-	    }
-	    else
-	    {
-		while (get_opts.num_args() > 0)
-		{
-		    string name = get_opts.pop_arg();
+	    while (get_opts.num_args() > 0)
+		filenames.push_back(get_opts.pop_arg());
+	}
 
-		    Files::iterator it = findAbsolutePath(name);
-		    if (it == end())
-		    {
-			cerr << sformat(_("File '%s' not found."), name.c_str()) << endl;
-			exit(EXIT_FAILURE);
-		    }
+	return filenames;
+    }
 
-		    callback(*it);
-		}
+
+    void
+    MyFiles::bulk_process(const vector<string>& filenames, bool all,
+			  std::function<void(File& file)> callback)
+    {
+	if (all)
+	{
+	    for (Files::iterator it = begin(); it != end(); ++it)
+		callback(*it);
+
+	    return;
+	}
+
+	for (const string& name : filenames)
+	{
+	    Files::iterator it = findAbsolutePath(name);
+	    if (it == end())
+	    {
+		cerr << sformat(_("File '%s' not found."), name.c_str()) << endl;
+		exit(EXIT_FAILURE);
 	    }
+
+	    callback(*it);
 	}
     }
 

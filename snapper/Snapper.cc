@@ -35,6 +35,7 @@
 #include <boost/algorithm/string.hpp>
 
 #include "snapper/Snapper.h"
+#include "snapper/IgnorePatterns.h"
 #include "snapper/Comparison.h"
 #include "snapper/AppUtil.h"
 #include "snapper/Enum.h"
@@ -129,8 +130,28 @@ namespace snapper
     void
     Snapper::loadIgnorePatterns()
     {
-	const vector<string> etc_files = glob(ETC_FILTERS_DIR "/*.txt", GLOB_NOSORT);
-	const vector<string> usr_files = glob(USR_FILTERS_DIR "/*.txt", GLOB_NOSORT);
+	ignore_patterns = readIgnorePatterns();
+
+	y2mil("number of ignore patterns:" << ignore_patterns.size());
+    }
+
+
+    vector<string>
+    readIgnorePatterns()
+    {
+	return detail::readIgnorePatterns(ETC_FILTERS_DIR, USR_FILTERS_DIR);
+    }
+
+
+    namespace detail
+    {
+
+    vector<string>
+    readIgnorePatterns(const string& etc_filters_dir, const string& usr_filters_dir)
+    {
+	const vector<string> etc_files = glob(etc_filters_dir + "/*.txt", GLOB_NOSORT);
+	const vector<string> usr_files = glob(usr_filters_dir + "/*.txt", GLOB_NOSORT);
+	vector<string> patterns;
 
 	// all files from /etc
 	vector<string> files = etc_files;
@@ -156,7 +177,7 @@ namespace snapper
 		string line;
 		while (ascii_file_reader.read_line(line))
 		    if (!line.empty())
-			ignore_patterns.push_back(line);
+			patterns.push_back(line);
 
 		ascii_file_reader.close();
 	    }
@@ -166,7 +187,9 @@ namespace snapper
 	    }
 	}
 
-	y2mil("number of ignore patterns:" << ignore_patterns.size());
+	return patterns;
+    }
+
     }
 
 

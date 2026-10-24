@@ -54,13 +54,35 @@ namespace snapper
     using namespace std;
 
 
+    static int
+    open_noatime(const char* pathname, int flags)
+    {
+	int fd = ::open(pathname, flags);
+	if (fd < 0 && errno == EPERM && (flags & O_NOATIME))
+	    fd = ::open(pathname, flags & ~O_NOATIME);
+
+	return fd;
+    }
+
+
+    static int
+    openat_noatime(int dirfd, const char* pathname, int flags)
+    {
+	int fd = ::openat(dirfd, pathname, flags);
+	if (fd < 0 && errno == EPERM && (flags & O_NOATIME))
+	    fd = ::openat(dirfd, pathname, flags & ~O_NOATIME);
+
+	return fd;
+    }
+
+
     boost::mutex SDir::cwd_mutex;
 
 
     SDir::SDir(const string& base_path)
 	: base_path(base_path), path()
     {
-	dirfd = ::open(base_path.c_str(), O_RDONLY | O_NOATIME | O_CLOEXEC);
+	dirfd = open_noatime(base_path.c_str(), O_RDONLY | O_NOATIME | O_CLOEXEC);
 	if (dirfd < 0)
 	    SN_THROW(IOErrorException(sformat("open failed path:%s errno:%d (%s)", base_path.c_str(),
 					      errno, stringerror(errno).c_str())));
@@ -83,7 +105,8 @@ namespace snapper
 	assert(name.find('/') == string::npos);
 	assert(name != "..");
 
-	dirfd = ::openat(dir.dirfd, name.c_str(), O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
+	dirfd = openat_noatime(dir.dirfd, name.c_str(),
+				 O_RDONLY | O_NOFOLLOW | O_NOATIME | O_CLOEXEC);
 	if (dirfd < 0)
 	{
 	    string failed_path = dir.fullname() + "/" + name;
@@ -310,7 +333,7 @@ namespace snapper
 	assert(name.find('/') == string::npos);
 	assert(name != "..");
 
-	return ::openat(dirfd, name.c_str(), flags);
+	return openat_noatime(dirfd, name.c_str(), flags);
     }
 
 
@@ -503,8 +526,8 @@ namespace snapper
 	assert(path.find('/') == string::npos);
 	assert(path != "..");
 
-	int fd = ::openat(dirfd, path.c_str(), O_RDONLY | O_NOFOLLOW | O_NONBLOCK | O_NOATIME |
-			  O_CLOEXEC);
+	int fd = openat_noatime(dirfd, path.c_str(), O_RDONLY | O_NOFOLLOW | O_NONBLOCK |
+			       O_NOATIME | O_CLOEXEC);
 	if (fd >= 0)
 	{
 	    ssize_t r1 = ::flistxattr(fd, list, size);
@@ -539,8 +562,8 @@ namespace snapper
 	assert(path.find('/') == string::npos);
 	assert(path != "..");
 
-	int fd = ::openat(dirfd, path.c_str(), O_RDONLY | O_NOFOLLOW | O_NONBLOCK | O_NOATIME |
-			  O_CLOEXEC);
+	int fd = openat_noatime(dirfd, path.c_str(), O_RDONLY | O_NOFOLLOW | O_NONBLOCK |
+			       O_NOATIME | O_CLOEXEC);
 	if (fd >= 0)
 	{
 	    ssize_t r1 = ::fgetxattr(fd, name, value, size);

@@ -21,10 +21,10 @@
 
 
 #include <cstring>
-
 #include "proxy-dbus.h"
 #include "commands.h"
 #include "../utils/text.h"
+#include "snapper/IgnorePatterns.h"
 
 
 namespace snapper
@@ -324,6 +324,14 @@ ProxySnapperDbus::createComparison(const ProxySnapshot& lhs, const ProxySnapshot
 }
 
 
+ProxyComparison
+ProxySnapperDbus::createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs, bool mount,
+				   const vector<string>& filenames)
+{
+    return ProxyComparison(new ProxyComparisonDbus(this, lhs, rhs, mount, filenames));
+}
+
+
 void
 ProxySnapperDbus::syncFilesystem() const
 {
@@ -415,61 +423,148 @@ ProxySnappersDbus::debug() const
 
 ProxyComparisonDbus::ProxyComparisonDbus(ProxySnapperDbus* backref, const ProxySnapshot& lhs,
 					 const ProxySnapshot& rhs, bool mount)
-    : backref(backref), lhs(lhs), rhs(rhs), files(&file_paths)
+    : backref(backref), lhs(lhs), rhs(rhs), files(&file_paths), server_comparison(false),
+      lhs_mounted(false), rhs_mounted(false)
 {
-    command_create_comparison(conn(), configName(), lhs.getNum(), rhs.getNum());
-
-    file_paths.system_path = command_get_mount_point(backref->conn(), backref->config_name, 0);
-
-    if (mount)
-    {
-	if (!lhs.isCurrent())
-	    file_paths.pre_path = command_mount_snapshot(backref->conn(), backref->config_name,
-							 lhs.getNum(), false);
-	else
-	    file_paths.pre_path = file_paths.system_path;
-
-	if (!rhs.isCurrent())
-	    file_paths.post_path = command_mount_snapshot(backref->conn(), backref->config_name,
-							  rhs.getNum(), false);
-	else
-	    file_paths.post_path = file_paths.system_path;
-    }
-
-    vector<XFile> tmp1;
-
     try
     {
-	tmp1 = command_get_xfiles_by_pipe(backref->conn(), backref->config_name, lhs.getNum(),
-					  rhs.getNum());
+	command_create_comparison(conn(), configName(), lhs.getNum(), rhs.getNum());
+	server_comparison = true;
+
+	file_paths.system_path = command_get_mount_point(conn(), configName(), 0);
+
+	if (mount)
+	    mountSnapshots();
+
+	vector<XFile> tmp1;
+
+	try
+	{
+	    tmp1 = command_get_xfiles_by_pipe(conn(), configName(), lhs.getNum(), rhs.getNum());
+	}
+	catch (const DBus::ErrorException& e)
+	{
+	    SN_CAUGHT(e);
+
+	    // If snapper was just updated and the old snapperd is still running it might not
+	    // know the GetFilesByPipe method.
+
+	    if (strcmp(e.name(), "error.unknown_method") != 0)
+		SN_RETHROW(e);
+
+	    tmp1 = command_get_xfiles(conn(), configName(), lhs.getNum(), rhs.getNum());
+	}
+
+	vector<File> tmp2;
+	tmp2.reserve(tmp1.size());
+
+	for (const XFile& xfile : tmp1)
+	    tmp2.emplace_back(&file_paths, xfile.name, xfile.status);
+
+	files = Files(&file_paths, tmp2);
     }
-    catch (const DBus::ErrorException& e)
+    catch (...)
     {
-	SN_CAUGHT(e);
+	cleanup();
+	throw;
+    }
+}
 
-	// If snapper was just updated and the old snapperd is still running it might not
-	// know the GetFilesByPipe method.
 
-	if (strcmp(e.name(), "error.unknown_method") != 0)
-	    SN_RETHROW(e);
+ProxyComparisonDbus::ProxyComparisonDbus(ProxySnapperDbus* backref, const ProxySnapshot& lhs,
+					 const ProxySnapshot& rhs, bool mount,
+					 const vector<string>& filenames)
+    : backref(backref), lhs(lhs), rhs(rhs), files(&file_paths), server_comparison(false),
+      lhs_mounted(false), rhs_mounted(false)
+{
+    try
+    {
+	file_paths.system_path = command_get_mount_point(conn(), configName(), 0);
+	mountSnapshots();
+	files = compareFiles(&file_paths, filenames, readIgnorePatterns());
 
-	tmp1 = command_get_xfiles(backref->conn(), backref->config_name, lhs.getNum(),
-				  rhs.getNum());
+	if (!mount)
+	    cleanup();
+    }
+    catch (...)
+    {
+	cleanup();
+	throw;
+    }
+}
+
+
+void
+ProxyComparisonDbus::mountSnapshots()
+{
+    if (!lhs.isCurrent())
+    {
+	file_paths.pre_path = command_mount_snapshot(conn(), configName(), lhs.getNum(), false);
+	lhs_mounted = true;
+    }
+    else
+	file_paths.pre_path = file_paths.system_path;
+
+    if (!rhs.isCurrent())
+    {
+	file_paths.post_path = command_mount_snapshot(conn(), configName(), rhs.getNum(), false);
+	rhs_mounted = true;
+    }
+    else
+	file_paths.post_path = file_paths.system_path;
+}
+
+
+void
+ProxyComparisonDbus::cleanup() noexcept
+{
+    if (rhs_mounted)
+    {
+	try
+	{
+	    command_umount_snapshot(conn(), configName(), rhs.getNum(), false);
+	}
+	catch (const Exception& e)
+	{
+	    SN_CAUGHT(e);
+	}
+
+	rhs_mounted = false;
     }
 
-    vector<File> tmp2;
-    tmp2.reserve(tmp1.size());
+    if (lhs_mounted)
+    {
+	try
+	{
+	    command_umount_snapshot(conn(), configName(), lhs.getNum(), false);
+	}
+	catch (const Exception& e)
+	{
+	    SN_CAUGHT(e);
+	}
 
-    for (const XFile& xfile : tmp1)
-	tmp2.emplace_back(&file_paths, xfile.name, xfile.status);
+	lhs_mounted = false;
+    }
 
-    files = Files(&file_paths, tmp2);
+    if (server_comparison)
+    {
+	try
+	{
+	    command_delete_comparison(conn(), configName(), lhs.getNum(), rhs.getNum());
+	}
+	catch (const Exception& e)
+	{
+	    SN_CAUGHT(e);
+	}
+
+	server_comparison = false;
+    }
 }
 
 
 ProxyComparisonDbus::~ProxyComparisonDbus()
 {
-    command_delete_comparison(conn(), configName(), lhs.getNum(), rhs.getNum());
+    cleanup();
 }
 
 
