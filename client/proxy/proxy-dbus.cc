@@ -21,10 +21,12 @@
 
 
 #include <cstring>
+#include <unistd.h>
 
 #include "proxy-dbus.h"
 #include "commands.h"
 #include "../utils/text.h"
+#include "snapper/IgnorePatterns.h"
 
 
 namespace snapper
@@ -328,6 +330,11 @@ ProxyComparison
 ProxySnapperDbus::createComparison(const ProxySnapshot& lhs, const ProxySnapshot& rhs, bool mount,
 				   const vector<string>& filenames)
 {
+    // SDir uses O_NOATIME. Even users allowed by snapperd can lack CAP_FOWNER for
+    // root-owned snapshot directories, so keep their existing daemon-side behaviour.
+    if (geteuid() != 0)
+	return createComparison(lhs, rhs, mount);
+
     try
     {
 	return ProxyComparison(new ProxyComparisonDbus(this, lhs, rhs, mount, filenames));
@@ -336,8 +343,7 @@ ProxySnapperDbus::createComparison(const ProxySnapshot& lhs, const ProxySnapshot
     {
 	SN_CAUGHT(e);
 
-	// Opening snapshot directories locally can fail for unprivileged users, e.g. due to
-	// O_NOATIME. Preserve the previous behaviour by falling back to a server comparison.
+	// Preserve the previous behaviour if the local comparison cannot read a selected path.
 	return createComparison(lhs, rhs, mount);
     }
 }
@@ -491,51 +497,11 @@ ProxyComparisonDbus::ProxyComparisonDbus(ProxySnapperDbus* backref, const ProxyS
     try
     {
 	file_paths.system_path = command_get_mount_point(conn(), configName(), 0);
+	mountSnapshots();
+	files = compareFiles(&file_paths, filenames, readIgnorePatterns());
 
-	vector<XFile> tmp1;
-
-	try
-	{
-	    tmp1 = command_get_xfiles_for_paths(conn(), configName(), lhs.getNum(), rhs.getNum(),
-					       filenames);
-	}
-	catch (const DBus::ErrorException& e)
-	{
-	    SN_CAUGHT(e);
-
-	    // Keep a new client usable while an old snapperd is still running. The fallback is
-	    // functionally identical but performs the complete comparison.
-	    if (strcmp(e.name(), "error.unknown_method") != 0)
-		SN_RETHROW(e);
-
-	    command_create_comparison(conn(), configName(), lhs.getNum(), rhs.getNum());
-	    server_comparison = true;
-
-	    try
-	    {
-		tmp1 = command_get_xfiles_by_pipe(conn(), configName(), lhs.getNum(), rhs.getNum());
-	    }
-	    catch (const DBus::ErrorException& e2)
-	    {
-		SN_CAUGHT(e2);
-
-		if (strcmp(e2.name(), "error.unknown_method") != 0)
-		    SN_RETHROW(e2);
-
-		tmp1 = command_get_xfiles(conn(), configName(), lhs.getNum(), rhs.getNum());
-	    }
-	}
-
-	if (mount)
-	    mountSnapshots();
-
-	vector<File> tmp2;
-	tmp2.reserve(tmp1.size());
-
-	for (const XFile& xfile : tmp1)
-	    tmp2.emplace_back(&file_paths, xfile.name, xfile.status);
-
-	files = Files(&file_paths, tmp2);
+	if (!mount)
+	    cleanup();
     }
     catch (...)
     {

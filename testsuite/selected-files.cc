@@ -3,6 +3,7 @@
 
 #include <boost/test/unit_test.hpp>
 
+#include <algorithm>
 #include <chrono>
 #include <filesystem>
 #include <fstream>
@@ -12,6 +13,7 @@
 #include <unistd.h>
 
 #include <snapper/File.h>
+#include <snapper/IgnorePatterns.h>
 
 using namespace snapper;
 using namespace std;
@@ -127,6 +129,59 @@ BOOST_AUTO_TEST_CASE(compare_selected_files)
 
     Files ignored = compareFiles(&paths, { tree.system + "/created" }, { "/created" });
     BOOST_CHECK(ignored.empty());
+}
+
+
+BOOST_AUTO_TEST_CASE(compare_empty_selection)
+{
+    TestTree tree;
+
+    tree.write(tree.pre, "/modified", "before");
+    tree.write(tree.post, "/modified", "after");
+
+    FilePaths paths = tree.paths();
+    Files files = compareFiles(&paths, {}, {});
+
+    BOOST_CHECK(files.empty());
+}
+
+
+BOOST_AUTO_TEST_CASE(selected_directory_is_not_recursive)
+{
+    TestTree tree;
+
+    tree.write(tree.pre, "/directory/modified", "before");
+    tree.write(tree.post, "/directory/modified", "after");
+    filesystem::last_write_time(tree.post + "/directory",
+	filesystem::last_write_time(tree.pre + "/directory"));
+
+    FilePaths paths = tree.paths();
+    Files files = compareFiles(&paths, { tree.system + "/directory" }, {});
+
+    BOOST_CHECK(files.empty());
+}
+
+
+BOOST_AUTO_TEST_CASE(read_ignore_patterns_with_etc_precedence)
+{
+    TestTree tree;
+
+    const string etc = tree.root + "/etc-filters";
+    const string usr = tree.root + "/usr-filters";
+    filesystem::create_directories(etc);
+    filesystem::create_directories(usr);
+
+    tree.write(etc, "/shared.txt", "/from-etc\n");
+    tree.write(usr, "/shared.txt", "/from-usr\n");
+    tree.write(etc, "/etc-only.txt", "/etc-only\n");
+    tree.write(usr, "/usr-only.txt", "/usr-only\n");
+
+    vector<string> patterns = detail::readIgnorePatterns(etc, usr);
+
+    BOOST_CHECK(find(patterns.begin(), patterns.end(), "/from-etc") != patterns.end());
+    BOOST_CHECK(find(patterns.begin(), patterns.end(), "/from-usr") == patterns.end());
+    BOOST_CHECK(find(patterns.begin(), patterns.end(), "/etc-only") != patterns.end());
+    BOOST_CHECK(find(patterns.begin(), patterns.end(), "/usr-only") != patterns.end());
 }
 
 

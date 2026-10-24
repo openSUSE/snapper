@@ -9,7 +9,7 @@ lib_LTLIBRARIES = libsnapper.la
 
 libsnapper_la_SOURCES =					\
 	ConfigInfo.cc		ConfigInfo.h		\
-	Snapper.cc		Snapper.h		\
+	Snapper.cc		Snapper.h		IgnorePatterns.h	\
 	Snapshot.cc		Snapshot.h		\
 	Comparison.cc		Comparison.h		\
 	ComparisonImpl.cc	ComparisonImpl.h	\

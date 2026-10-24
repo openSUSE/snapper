@@ -1,0 +1,92 @@
+#!/bin/bash
+
+set -e
+set -u
+
+CFG=testsuite
+MNT=/$CFG
+
+# The snapper client and snapperd always use the system bus. Run both against a
+# private bus so this test neither depends on nor interferes with the host bus.
+if [ "${SNAPPER_TEST_PRIVATE_BUS:-}" != "1" ]; then
+    exec dbus-run-session -- env SNAPPER_TEST_PRIVATE_BUS=1 "$0"
+fi
+
+export DBUS_SYSTEM_BUS_ADDRESS="$DBUS_SESSION_BUS_ADDRESS"
+
+TMPDIR=$(mktemp -d /tmp/snapper-selected-files-dbus-XXXXXX)
+DAEMON_LOG=$TMPDIR/snapperd.log
+DIFF_OUTPUT=$TMPDIR/diff.out
+UNDO_OUTPUT=$TMPDIR/undo.out
+SNAPPERD_PID=
+
+cleanup()
+{
+    status=$?
+    trap - EXIT INT TERM
+
+    if [ -n "$SNAPPERD_PID" ]; then
+	kill "$SNAPPERD_PID" 2>/dev/null || true
+	wait "$SNAPPERD_PID" 2>/dev/null || true
+    fi
+
+    if [ "$status" = "0" ]; then
+	rm -rf "$TMPDIR"
+    else
+	echo "selected-files D-Bus test artifacts: $TMPDIR" >&2
+    fi
+
+    exit "$status"
+}
+
+trap cleanup EXIT INT TERM
+
+snapperd --logger-type stdout --debug >"$DAEMON_LOG" 2>&1 &
+SNAPPERD_PID=$!
+
+ready=false
+for unused in $(seq 1 50); do
+    if snapper --config="$CFG" get-config >/dev/null 2>&1; then
+	ready=true
+	break
+    fi
+
+    sleep 0.1
+done
+
+if [ "$ready" != "true" ]; then
+    echo "snapperd did not become ready" >&2
+    cat "$DAEMON_LOG" >&2
+    exit 1
+fi
+
+printf 'before\n' >"$MNT/selected"
+printf 'before\n' >"$MNT/unrelated"
+
+SNAPSHOT=$(snapper --config="$CFG" create --print-number --read-only \
+    --description="selected-files D-Bus test")
+
+printf 'after selected\n' >"$MNT/selected"
+printf 'after unrelated\n' >"$MNT/unrelated"
+
+snapper --config="$CFG" diff "$SNAPSHOT..0" "$MNT/selected" >"$DIFF_OUTPUT"
+
+grep -q -- '^-before$' "$DIFF_OUTPUT"
+grep -q -- '^+after selected$' "$DIFF_OUTPUT"
+
+snapper --config="$CFG" undochange "$SNAPSHOT..0" "$MNT/selected" >"$UNDO_OUTPUT"
+
+grep -q '^create:0 modify:1 delete:0$' "$UNDO_OUTPUT"
+cmp "$MNT/.snapshots/$SNAPSHOT/snapshot/selected" "$MNT/selected"
+grep -q '^after unrelated$' "$MNT/unrelated"
+
+# Both selected-file operations must mount the requested snapshot for their
+# client-side comparison without asking snapperd to build a complete one.
+test "$(grep -c "MountSnapshot config_name:$CFG num:$SNAPSHOT user_request:false" "$DAEMON_LOG")" = "2"
+if grep -q "CreateComparison config_name:$CFG " "$DAEMON_LOG"; then
+    echo "selected-file command fell back to a complete comparison" >&2
+    exit 1
+fi
+
+snapper --config="$CFG" delete "$SNAPSHOT"
+rm -f "$MNT/selected" "$MNT/unrelated"

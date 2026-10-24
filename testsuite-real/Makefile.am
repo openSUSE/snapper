@@ -11,7 +11,7 @@ LDADD = ../snapper/libsnapper.la
 testdir = $(libdir)/snapper/testsuite
 
 test_DATA = CAUTION
-test_SCRIPTS = run-all setup-and-run-all
+test_SCRIPTS = run-all setup-and-run-all selected-files-dbus
 
 test_PROGRAMS = simple1 permissions1 permissions2 permissions3 owner1 owner2	\
 	owner3 directory1 missing-directory1 error1 error2 error4 ug-tests	\
