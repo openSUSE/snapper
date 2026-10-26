@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: @PACKAGE@\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-10-09 10:15+0200\n"
-"PO-Revision-Date: 2026-02-24 00:04+0000\n"
-"Last-Translator: Efstathios Iosifidis <eiosifidis@yandex.com>\n"
-"Language-Team: Greek <https://l10n.opensuse.org/projects/snapper/master/el/>\n"
+"PO-Revision-Date: 2026-10-26 20:13+0000\n"
+"Last-Translator: Efstathios Iosifidis <eiosifidis@gmail.com>\n"
+"Language-Team: Greek <https://l10n.opensuse.org/projects/snapper/master/el/>"
+"\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.16\n"
+"X-Generator: Weblate 2026.10.1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 msgid "\tsnapper cleanup <cleanup-algorithm>"
@@ -441,13 +442,11 @@ msgstr "Δεν είναι δυνατή η επαναφορά αφού ο προ�
 msgid "Cannot find the node of UUID %s"
 msgstr "Αδυναμία εύρεσης του κόμβου με UUID %s"
 
-#, fuzzy
 msgid "Cannot find the snapshot to delete."
-msgstr "Αδυναμία εύρεσης του κόμβου με UUID %s"
+msgstr "Αδυναμία εύρεσης του στιγμιοτύπου προς διαγραφή."
 
-#, fuzzy
 msgid "Cannot transfer a read-write snapshot."
-msgstr "Δημιουργία στιγμιοτύπου ανάγνωσης-γραφής."
+msgstr "Αδυναμία μεταφοράς στιγμιοτύπου ανάγνωσης-εγγραφής."
 
 msgid "Character separator for CSV output format."
 msgstr "Διαχωριστικό χαρακτήρων για τη μορφή εξόδου CSV."
@@ -455,9 +454,8 @@ msgstr "Διαχωριστικό χαρακτήρων για τη μορφή ε�
 msgid "Cleanup"
 msgstr "Εκκαθάριση"
 
-#, fuzzy
 msgid "Cleanup Algorithm"
-msgstr "Αλγόριθμος εκκαθάρισης για το στιγμιότυπο."
+msgstr "Αλγόριθμος εκκαθάρισης"
 
 msgid "Cleanup algorithm for snapshot."
 msgstr "Αλγόριθμος εκκαθάρισης για το στιγμιότυπο."
@@ -468,9 +466,8 @@ msgstr "Αλγόριθμος εκκαθάρισης για τα στιγμιότ
 msgid "Cleanup all configs affecting path."
 msgstr "Εκκαθάριση όλων των ρυθμίσεων που επηρεάζουν τη διαδρομή."
 
-#, fuzzy
 msgid "Cleanup:"
-msgstr "Εκκαθάριση"
+msgstr "Εκκαθάριση:"
 
 #, c-format
 msgid "Client-side plugin '%s' failed."
@@ -479,9 +476,8 @@ msgstr "Το πρόσθετο ' %s' στην πλευρά του πελάτη α
 msgid "Columns to show separated by comma."
 msgstr "Στήλες προς εμφάνιση διαχωρισμένες με κόμμα."
 
-#, fuzzy
 msgid "Command 'cleanup' needs one argument."
-msgstr "Η εντολή 'cleanup' (εκκαθάριση) χρειάζεται μία παράμετρο."
+msgstr "Η εντολή 'cleanup' χρειάζεται μία παράμετρο."
 
 msgid "Command 'cleanup' needs one arguments."
 msgstr "Η εντολή 'cleanup' (εκκαθάριση) χρειάζεται μία παράμετρο."
@@ -702,9 +698,8 @@ msgstr "Πρόσθετες επιλογές που μεταβιβάζονται 
 msgid "Failed to initialize filesystem handler."
 msgstr "Αποτυχία αρχικοποίησης χειριστή συστήματος αρχείων."
 
-#, fuzzy
 msgid "Failed to load info.xml."
-msgstr "Απέτυχε να οριστεί η τοπική γλώσσα."
+msgstr "Αποτυχία φόρτωσης του info.xml."
 
 #, c-format
 msgid "Failed to parse '%s'."
@@ -714,7 +709,7 @@ msgid "Failed to parse number."
 msgstr "Αποτυχία ανάλυσης αριθμού."
 
 msgid "Failed to parse the date attribute from `info.xml`"
-msgstr ""
+msgstr "Αποτυχία ανάλυσης του γνωρίσματος ημερομηνίας από το `info.xml`"
 
 #, c-format
 msgid "Failed to query free space for path '%s'."
@@ -917,9 +912,8 @@ msgstr "Σημείωση:"
 msgid "Number of corresponding pre snapshot."
 msgstr "Αριθμός του αντίστοιχου προ-στιγμιοτύπου (pre snapshot)."
 
-#, fuzzy
 msgid "One or more server-side plugins have failed."
-msgstr "Το πρόσθετο '%s' στην πλευρά του διακομιστή απέτυχε."
+msgstr "Ένα ή περισσότερα πρόσθετα στην πλευρά του διακομιστή απέτυχαν."
 
 msgid "Only use backup-config with automatic set."
 msgstr "Χρήση του backup-config μόνο με αυτόματο ορισμό."
@@ -1026,19 +1020,24 @@ msgstr "Επαναφορά στιγμιοτύπου %d."
 msgid "Run command and create pre and post snapshots."
 msgstr "Εκτέλεση εντολής και δημιουργία προ και μετά στιγμιοτύπων."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running cleanup failed for %d of %ld backup config."
 msgid_plural "Running cleanup failed for %d of %ld backup configs."
-msgstr[0] "Η εκτέλεση της διαγραφής απέτυχε για %d από %ld ρύθμιση αντιγράφου ασφαλείας."
-msgstr[1] "Η εκτέλεση της διαγραφής απέτυχε για %d από %ld ρυθμίσεις αντιγράφων ασφαλείας."
+msgstr[0] ""
+"Η εκτέλεση της εκκαθάρισης απέτυχε για %d από %ld ρύθμιση αντιγράφου "
+"ασφαλείας."
+msgstr[1] ""
+"Η εκτέλεση της εκκαθάρισης απέτυχε για %d από %ld ρυθμίσεις αντιγράφων "
+"ασφαλείας."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running cleanup for backup config '%s' failed."
-msgstr "Η εκτέλεση διαγραφής για τη ρύθμιση αντιγράφου ασφαλείας '%s' απέτυχε."
+msgstr ""
+"Η εκτέλεση εκκαθάρισης για τη ρύθμιση αντιγράφου ασφαλείας '%s' απέτυχε."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Running cleanup for backup config '%s'."
-msgstr "Εκτέλεση διαγραφής για τη ρύθμιση αντιγράφου ασφαλείας '%s'."
+msgstr "Εκτέλεση εκκαθάρισης για τη ρύθμιση αντιγράφου ασφαλείας '%s'."
 
 #, c-format
 msgid "Running delete failed for %d of %ld backup config."
@@ -1120,9 +1119,9 @@ msgstr "Αποθήκευση κατάστασης σε αρχείο."
 msgid "See 'man snapper' for further instructions."
 msgstr "Για περισσότερες πληροφορίες δοκιμάστε 'snapper --help'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Server-side plugin '%s' failed"
-msgstr "Το πρόσθετο '%s' στην πλευρά του διακομιστή απέτυχε."
+msgstr "Το πρόσθετο '%s' στην πλευρά του διακομιστή απέτυχε"
 
 #, c-format
 msgid "Server-side plugin '%s' failed."
@@ -1242,10 +1241,10 @@ msgid "The config 'root' does not exist. Likely snapper is not configured."
 msgstr "Η παραμετροποίηση 'root' δεν υπάρχει. Κατά πάσα πιθανότητα δεν έχει ρυθμιστεί το snapper."
 
 msgid "The content of info.xml is empty."
-msgstr ""
+msgstr "Το περιεχόμενο του info.xml είναι κενό."
 
 msgid "The type attribute is missing from `info.xml`."
-msgstr ""
+msgstr "Λείπει το γνώρισμα type από το `info.xml`."
 
 msgid "This can happen if the system was not set up for rollback."
 msgstr "Αυτό μπορεί να συμβεί εάν το σύστημα δεν έχει ρυθμιστεί για επαναφορά."
@@ -1316,9 +1315,9 @@ msgstr "Άγνωστο rankdir '%s'."
 msgid "Unknown type '%s'."
 msgstr "Άγνωστος τύπος '%s'."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Updating metadata of snapshot %d."
-msgstr "Δημιουργία στιγμιοτύπου μόνο για ανάγνωση του στιγμιοτύπου %d."
+msgstr "Ενημέρωση μεταδεδομένων του στιγμιοτύπου %d."
 
 #. TRANSLATORS: a list of possible values
 #. %1$s is replaced by list of possible values
@@ -1401,9 +1400,8 @@ msgstr "τίποτα για να γίνει"
 msgid "root argument can be used only together with no-dbus.\n"
 msgstr "Το όρισμα root μπορεί να χρησιμοποιηθεί μόνο μαζί με το no-dbus.\n"
 
-#, fuzzy
 msgid "snbk cleanup <cleanup-algorithm>"
-msgstr "\tsnapper cleanup <cleanup-algorithm>"
+msgstr "snbk cleanup <cleanup-algorithm>"
 
 msgid "snbk delete [numbers]"
 msgstr "snbk delete [αριθμοί]"
