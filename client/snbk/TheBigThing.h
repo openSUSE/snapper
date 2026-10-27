@@ -24,8 +24,9 @@
 
 
 #include <string>
-#include <utility>
 #include <vector>
+#include <memory>
+#include <utility>
 
 #include "../proxy/proxy.h"
 #include "../proxy/locker.h"
@@ -51,12 +52,12 @@ namespace snapper
     {
     public:
 
-	MyLocker(const ProxySnapper* snapper);
+	MyLocker(const BackupConfig& backup_config, const ProxySnapper* snapper);
 	~MyLocker();
 
     private:
 
-	std::optional<Locker> locker;
+	std::unique_ptr<Locker> locker;
 
     };
 
