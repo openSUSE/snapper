@@ -473,7 +473,7 @@ namespace snapper
 	: source_btrfs_version(BTRFS_BIN, backup_config.get_source_shell()),
 	  target_btrfs_version(backup_config.target_btrfs_bin, backup_config.get_target_shell()),
 	  snapper(backup_config.is_local_source() ? snappers->getSnapper(backup_config.config) : nullptr),
-	  my_locker(snapper)
+	  my_locker(backup_config, snapper)
     {
 	if (backup_config.is_local_source())
 	{
@@ -780,11 +780,11 @@ namespace snapper
     }
 
 
-    MyLocker::MyLocker(const ProxySnapper* snapper)
+    MyLocker::MyLocker(const BackupConfig& backup_config, const ProxySnapper* snapper)
     {
 	if (snapper)
 	{
-	    locker = std::make_optional<Locker>(snapper);
+	    locker = std::make_unique<Locker>(snapper);
 	}
 	else
 	{
