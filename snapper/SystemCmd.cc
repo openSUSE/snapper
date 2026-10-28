@@ -21,7 +21,6 @@
  */
 
 
-#include <cstdio>
 #include <cstdlib>
 #include <unistd.h>
 #include <cerrno>
@@ -40,40 +39,128 @@ extern char **environ;
 #include "snapper/Exception.h"
 
 
+#define SYSCALL_FAILED(SYSCALL_MSG) \
+    SN_THROW(Exception(Exception::strErrno(errno, SYSCALL_MSG)))
+
+
+// See man bash
+// Since all commands are started via a shell, only the shell's return value is returned.
+#define SHELL_RET_COMMAND_NOT_EXECUTABLE	126
+#define SHELL_RET_COMMAND_NOT_FOUND		127
+#define SHELL_RET_SIGNAL			128
+
+
 namespace snapper
 {
     using namespace std;
 
 
-    // TODO cleanup implementation, use RAII everywhere, tiny testsuite
-
-
     namespace
     {
 
-	/**
-	 * Class to temporarily hold copies for execvpe().
-	 */
-	class TmpForExec
+	class FileDescriptor : boost::noncopyable
 	{
 	public:
 
-	    TmpForExec(const vector<char*>& values) : values(values) {}
-	    ~TmpForExec();
+	    ~FileDescriptor() { if (fd >= 0) close(); }
 
-	    char* const* get() const { return &values[0]; }
+	    int close();
 
-	private:
-
-	    vector<char*> values;
+	    int fd = -1;
 
 	};
 
 
-	TmpForExec::~TmpForExec()
+	int
+	FileDescriptor::close()
 	{
-	    for (char* v : values)
-		free(v);
+	    int ret = ::close(fd);
+	    fd = -1;
+	    return ret;
+	}
+
+
+	class Pipe : boost::noncopyable
+	{
+	public:
+
+	    Pipe(int flags = O_CLOEXEC);
+
+	    FileDescriptor read_end;
+	    FileDescriptor write_end;
+
+	};
+
+
+	Pipe::Pipe(int flags)
+	{
+	    int pipefd[2];
+
+	    if (pipe2(pipefd, flags) != 0)
+		SYSCALL_FAILED("pipe2 failed");
+
+	    read_end.fd = pipefd[0];
+	    write_end.fd = pipefd[1];
+	}
+
+
+	/**
+	 * Struct to hold information about failures of the child between fork and exec. The
+	 * struct is passed via a pipe from the client to the parent. The information is so
+	 * far only used for logging.
+	 */
+	struct ChildFailureInfo
+	{
+	    int cmdnum = 0;
+	    int errnum = 0;
+	};
+
+
+	/**
+	 * RAII for pid of child.
+	 */
+	class Child : boost::noncopyable
+	{
+	public:
+
+	    ~Child()
+	    {
+		if (pid != -1)
+		    waitpid(NULL);
+	    }
+
+	    int get_pid() const { return pid; }
+
+	    int fork();
+	    int waitpid(int* wstatus);
+
+	private:
+
+	    int pid = -1;
+
+	};
+
+
+	int
+	Child::fork()
+	{
+	    pid = ::fork();
+	    return pid;
+	}
+
+
+	int
+	Child::waitpid(int* wstatus)
+	{
+	    int ret = TEMP_FAILURE_RETRY(::waitpid(pid, wstatus, 0));
+
+	    // Since waitpid is called with options = 0 the child is dead if waitpid
+	    // does not report an error.
+
+	    if (ret != -1)
+		pid = -1;
+
+	    return ret;
 	}
 
     }
@@ -81,67 +168,443 @@ namespace snapper
 
     class SystemCmd::Impl
     {
-
     public:
 
-	Impl(const Args& args, bool log_output)
-	    : args(args), log_output(log_output)
-	{
-	}
-
-	enum OutputStream { IDX_STDOUT, IDX_STDERR };
-
-	const Args args;
-	const bool log_output;
-
-	static const unsigned line_limit = 50;
+	Impl(const Args& args, bool log_output);
 
 	string cmd() const;
 
-	bool start();
-	bool doWait(int& Ret_ir);
-	void wait();
-	bool check_status();
-	void finish(int status);
-	void checkOutput();
-	void getUntilEOF(FILE* File_Cr, vector<string>& Lines_Cr, bool& NewLineSeen_br,
-			 bool Stderr_bv);
-	void extractNewline(const string& Buf_ti, int Cnt_ii, bool& NewLineSeen_br,
-			    string& Text_Cr, vector<string>& Lines_Cr);
-	void addLine(const string& Text_Cv, vector<string>& Lines_Cr);
-	void close_stdin();
-	void logOutput() const;
-	unsigned numLines(OutputStream Idx_ii) const;
-	string getLine(unsigned Num_iv, OutputStream Idx_ii) const;
-	bool is_running();
-	int retcode() const { return Ret_i; }
+	const vector<string>& stdout() const { return stdout_lines; }
+	const vector<string>& stderr() const { return stderr_lines; }
 
-	const vector<string>& get_stdout() const { return Lines_aC[IDX_STDOUT]; }
-	const vector<string>& get_stderr() const { return Lines_aC[IDX_STDERR]; }
+	int retcode() const { return child_retcode; }
+
+	void step_fork_and_exec();
+	void step_poll();
+	void step_wait();
+
+    private:
+
+	void read_stdout();
+	void read_stderr();
+
+	void fill_buffer(const char* name, int fd, string& buffer, vector<string>& lines) const;
+	void split_buffer(const char* name, string& buffer, vector<string>& lines, bool finito = false) const;
+	void add_line(const char* name, const string& line, vector<string>& lines) const;
+
+	void log_output_summary() const;
 
 	/**
 	 * Constructs the args for the child process.
 	 *
 	 * Not async-signal-safe, see fork(2) and signal-safety(7).
 	 */
-	TmpForExec make_args() const;
+	vector<const char*> make_args() const;
 
 	/**
 	 * Constructs the environment for the child process.
 	 *
 	 * Not async-signal-safe, see fork(2) and signal-safety(7).
 	 */
-	TmpForExec make_env() const;
+	vector<const char*> make_env() const;
 
-	FILE* File_aC[2] = { NULL, NULL };
-	vector<string> Lines_aC[2];
-	bool NewLineSeen_ab[2] = { true, true };
-	int Ret_i = 0;
-	pid_t Pid_i = 0;
-	int sin_fd = -1;
-	struct pollfd pfds[2];
+	const Args args;
+	const bool log_output;
+
+	static constexpr unsigned int line_limit = 50;
+
+	// Child must be places before Pipe! Otherwise in async mode stdin is not closed
+	// before waitpid and the destructor hangs.
+
+	vector<string> envs;
+
+	Child child;
+
+	Pipe stdin_pipe;
+	Pipe stdout_pipe;
+	Pipe stderr_pipe;
+
+	struct pollfd pollfds[2];
+
+	string stdout_buffer;
+	string stderr_buffer;
+
+	vector<string> stdout_lines;
+	vector<string> stderr_lines;
+
+	int child_retcode = 0;
 
     };
+
+
+    SystemCmd::Impl::Impl(const Args& args, bool log_output)
+	: args(args), log_output(log_output)
+    {
+	for (char** v = environ; *v != nullptr; ++v)
+	{
+	    if (strncmp(*v, "LC_ALL=", strlen("LC_ALL=")) != 0 &&
+		strncmp(*v, "LANGUAGE=", strlen("LANGUAGE=")) != 0)
+		envs.push_back(*v);
+	}
+
+	envs.push_back("LC_ALL=C");
+	envs.push_back("LANGUAGE=C");
+    }
+
+
+    string
+    SystemCmd::Impl::cmd() const
+    {
+	return boost::join(args.get_values(), " ");
+    }
+
+
+    void
+    SystemCmd::Impl::step_fork_and_exec()
+    {
+	y2deb("step fork and exec");
+
+	if (fcntl(stdin_pipe.write_end.fd, F_SETFL, O_NONBLOCK) != 0)
+	    SYSCALL_FAILED("fcntl stdin O_NONBLOCK failed");
+
+	if (fcntl(stdout_pipe.read_end.fd, F_SETFL, O_NONBLOCK) != 0)
+	    SYSCALL_FAILED("fcntl stdout O_NONBLOCK failed");
+
+	if (fcntl(stderr_pipe.read_end.fd, F_SETFL, O_NONBLOCK) != 0)
+	    SYSCALL_FAILED("fcntl stderr O_NONBLOCK failed");
+
+	Pipe child_failure_info_pipe;
+
+	const int max_fd = getdtablesize();
+
+	const vector<const char*> args_p(make_args());
+	const vector<const char*> env_p(make_env());
+
+	child.fork();
+	if (child.get_pid() == -1)
+	    SYSCALL_FAILED("fork failed");
+
+	if (child.get_pid() == 0)
+	{
+	    // child process
+
+	    // Do not use exit() here. Use _exit() instead. Thus no destructors are
+	    // called.
+
+	    // Only use async-signal-safe functions here, see fork(2) and
+	    // signal-safety(7).
+
+	    if (dup2(stdin_pipe.read_end.fd, STDIN_FILENO) < 0)
+		_exit(125);
+	    if (stdin_pipe.write_end.close() != 0)
+		_exit(125);
+
+	    if (dup2(stdout_pipe.write_end.fd, STDOUT_FILENO) < 0)
+		_exit(125);
+	    if (stdout_pipe.read_end.close() != 0)
+		_exit(125);
+
+	    if (dup2(stderr_pipe.write_end.fd, STDERR_FILENO) < 0)
+		_exit(125);
+	    if (stderr_pipe.read_end.close() != 0)
+		_exit(125);
+
+	    if (child_failure_info_pipe.read_end.close() != 0)
+		_exit(125);
+
+	    // Unfortunately close_range(2) is still too new. It is also not mentioned in
+	    // signal-safety(7). We use CLOEXEC here since child_failure_info_pipe must
+	    // not yet be closed.
+
+	    for (int fd = 3; fd < max_fd; ++fd)
+		fcntl(fd, F_SETFD, FD_CLOEXEC);
+
+	    // The const_casts below should be fine since the exec functions do not modify
+	    // "pointers and the strings to which those arrays point". Assume that also
+	    // applies to GNU execvpe.
+	    // https://pubs.opengroup.org/onlinepubs/9699919799/functions/exec.html
+
+	    execvpe(args.get_values()[0].c_str(), const_cast<char* const*>(args_p.data()),
+		    const_cast<char* const*>(env_p.data()));
+
+	    // If we get here the exec has failed. Depending on errno we return an
+	    // error code like the shell does ('sh -c ...').
+
+	    ChildFailureInfo child_failure_info { 1, errno };
+	    int write_ret = TEMP_FAILURE_RETRY(write(child_failure_info_pipe.write_end.fd,
+						     &child_failure_info, sizeof(child_failure_info)));
+	    if (write_ret != sizeof(child_failure_info))
+		_exit(125);
+	    if (child_failure_info_pipe.write_end.close() != 0)
+		_exit(125);
+
+	    if (errno == ENOENT)
+		_exit(SHELL_RET_COMMAND_NOT_FOUND);
+	    if (errno == ENOEXEC || errno == EACCES || errno == EISDIR)
+		_exit(SHELL_RET_COMMAND_NOT_EXECUTABLE);
+	    _exit(125);
+	}
+
+	// parent process
+
+	y2mil("child.pid:" << child.get_pid());
+
+	if (stdin_pipe.read_end.close() != 0)
+	    SYSCALL_FAILED("close stdin in parent failed");
+
+	if (stdout_pipe.write_end.close() != 0)
+	    SYSCALL_FAILED("close stdout in parent failed");
+
+	if (stderr_pipe.write_end.close() != 0)
+	    SYSCALL_FAILED("close stderr in parent failed");
+
+	if (child_failure_info_pipe.write_end.close() != 0)
+	    SYSCALL_FAILED("close child_failure_info_pipe failed");
+
+	// Read ChildFailureInfo. If the exec in the child succeeded the pipe
+	// was closed (due to CLOEXEC) and reading fails. If the exec in the
+	// child failed the information was written to the pipe and can be
+	// used here in the parent.
+
+	ChildFailureInfo child_failure_info;
+	int read_ret = TEMP_FAILURE_RETRY(read(child_failure_info_pipe.read_end.fd, &child_failure_info,
+					       sizeof(child_failure_info)));
+	if (read_ret < 0)
+	    SYSCALL_FAILED("read child_failure_info");
+
+	if (read_ret == sizeof(child_failure_info))
+	{
+	    y2err("exec failed: " << child_failure_info.errnum);
+	}
+
+	if (child_failure_info_pipe.read_end.close() != 0)
+	    SYSCALL_FAILED("close child_failure_info_pipe failed");
+    }
+
+
+    void
+    SystemCmd::Impl::step_poll()
+    {
+	stdin_pipe.write_end.close();
+
+	pollfds[0].events = POLLIN;
+	pollfds[0].fd = stdout_pipe.read_end.fd;
+
+	pollfds[1].events = POLLIN;
+	pollfds[1].fd = stderr_pipe.read_end.fd;
+
+	while (pollfds[0].fd != -1 || pollfds[1].fd != -1)
+	{
+	    y2deb("pollfds[0].fd:" << pollfds[0].fd << " pollfds[1].fd:" << pollfds[1].fd);
+
+	    int poll_ret = TEMP_FAILURE_RETRY(poll(pollfds, 2, -1));
+	    if (poll_ret < 0)
+		SYSCALL_FAILED("poll failed");
+
+	    if (poll_ret > 0)
+	    {
+		y2deb("pollfds[0].revents:" << pollfds[0].revents << " pollfds[1].revents:" << pollfds[1].revents);
+
+		if (pollfds[0].revents & POLLIN)
+		    read_stdout();
+		if (pollfds[0].revents & POLLHUP)
+		    pollfds[0].fd = -1;
+
+		if (pollfds[1].revents & POLLIN)
+		    read_stderr();
+		if (pollfds[1].revents & POLLHUP)
+		    pollfds[1].fd = -1;
+	    }
+	}
+
+	stdout_pipe.read_end.close();
+	split_buffer("stdout", stdout_buffer, stdout_lines, true);
+	if (stdout_lines.size() >= line_limit)
+	    y2mil("stdout lines:" << stdout_lines.size());
+
+	stderr_pipe.read_end.close();
+	split_buffer("stderr", stderr_buffer, stderr_lines, true);
+	if (stderr_lines.size() >= line_limit)
+	    y2mil("stderr lines:" << stderr_lines.size());
+    }
+
+
+    void
+    SystemCmd::Impl::step_wait()
+    {
+	y2deb("step wait");
+
+	int wstatus = 0;
+	int waitpid_ret = child.waitpid(&wstatus);
+	if (waitpid_ret < 0)
+	    SYSCALL_FAILED("waitpid failed");
+
+	y2deb("waitpid_ret:" << waitpid_ret << " wstatus:" << wstatus);
+
+	if (WIFEXITED(wstatus))
+	{
+	    child_retcode = WEXITSTATUS(wstatus);
+
+	    if (child_retcode == SHELL_RET_COMMAND_NOT_EXECUTABLE)
+		y2err("command \"" << cmd() << "\" not executable");
+	    else if (child_retcode == SHELL_RET_COMMAND_NOT_FOUND)
+		y2err("command \"" << cmd() << "\" not found");
+	    else if (child_retcode > SHELL_RET_SIGNAL)
+		y2err("command \"" << cmd() << "\" caught signal");
+	}
+	else if (WIFSIGNALED(wstatus))
+	{
+	    child_retcode = -127;
+	    y2err("command \"" << cmd() << "\" caught signal");
+	}
+	else
+	{
+	    child_retcode = -127;
+	    y2err("command \"" << cmd() << "\" failed");
+	}
+
+	y2mil("child_retcode:" << child_retcode);
+
+	if (child_retcode != 0 && log_output)
+	    log_output_summary();
+    }
+
+
+    void
+    SystemCmd::Impl::read_stdout()
+    {
+	fill_buffer("stdout", stdout_pipe.read_end.fd, stdout_buffer, stdout_lines);
+    }
+
+
+    void
+    SystemCmd::Impl::read_stderr()
+    {
+	fill_buffer("stderr", stderr_pipe.read_end.fd, stderr_buffer, stderr_lines);
+    }
+
+
+    void
+    SystemCmd::Impl::fill_buffer(const char* name, int fd, string& buffer, vector<string>& lines) const
+    {
+	// We need a loop here to read all data from fd since poll can set POLLIN and
+	// POLLHUP at the same time. Otherwise we can loose data.
+
+	char buffer2[1024];
+
+	while (true)
+	{
+	    ssize_t read_ret = TEMP_FAILURE_RETRY(read(fd, buffer2, sizeof(buffer2)));
+	    if (read_ret < 0)
+	    {
+		if (errno == EAGAIN)
+		    break;
+
+		SYSCALL_FAILED("read failed");
+	    }
+
+	    buffer.append(buffer2, read_ret);
+
+	    split_buffer(name, buffer, lines);
+
+	    if ((size_t)(read_ret) < sizeof(buffer2))
+		break;
+	}
+    }
+
+
+    void
+    SystemCmd::Impl::split_buffer(const char* name, string& buffer, vector<string>& lines, bool finito) const
+    {
+	while (true)
+	{
+	    string::size_type pos = buffer.find('\n');
+	    if (pos == string::npos)
+		break;
+
+	    add_line(name, buffer.substr(0, pos), lines);
+	    buffer.erase(0, pos + 1);
+	}
+
+	if (finito && !buffer.empty())
+	    add_line(name, buffer, lines);
+    }
+
+
+    void
+    SystemCmd::Impl::add_line(const char* name, const string& line, vector<string>& lines) const
+    {
+	if (log_output)
+	{
+	    if (lines.size() < line_limit)
+		y2mil("line " << name << "[" << lines.size() << "] '" << line << "'");
+	    else
+		y2deb("line " << name << "[" << lines.size() << "] '" << line << "'");
+	}
+
+	lines.push_back(line);
+    }
+
+
+    void
+    SystemCmd::Impl::log_output_summary() const
+    {
+	if (stderr_lines.size() <= line_limit)
+	{
+	    for (const string& line : stderr_lines)
+		y2mil("stderr:" << line);
+	}
+	else
+	{
+	    for (size_t i = 0; i < line_limit / 2; ++i)
+		y2mil("stderr:" << stderr_lines[i]);
+	    y2mil("stderr omitting lines");
+	    for (size_t i = stderr_lines.size() - line_limit / 2; i < stderr_lines.size(); ++i)
+		y2mil("stderr:" << stderr_lines[i]);
+	}
+
+	if (stdout_lines.size() <= line_limit)
+	{
+	    for (const string& line : stdout_lines)
+		y2mil("stdout:" << line);
+	}
+	else
+	{
+	    for (size_t i = 0; i < line_limit / 2; ++i)
+		y2mil("stdout:" << stdout_lines[i]);
+	    y2mil("stdout omitting lines");
+	    for (size_t i = stdout_lines.size() - line_limit / 2; i < stdout_lines.size(); ++i)
+		y2mil("stdout:" << stdout_lines[i]);
+	}
+    }
+
+
+    vector<const char*>
+    SystemCmd::Impl::make_args() const
+    {
+	vector<const char*> args_p;
+	args_p.reserve(args.get_values().size() + 1);
+
+	for (const string& v : args.get_values())
+	    args_p.push_back(v.c_str());
+	args_p.push_back(nullptr);
+
+	return args_p;
+    }
+
+
+    vector<const char*>
+    SystemCmd::Impl::make_env() const
+    {
+	vector<const char*> envs_p;
+	envs_p.reserve(envs.size() + 1);
+
+	for (const string& v : envs)
+	    envs_p.push_back(v.c_str());
+	envs_p.push_back(nullptr);
+
+	return envs_p;
+    }
 
 
     SystemCmd::SystemCmd(const Args& args, bool log_output)
@@ -164,564 +627,24 @@ namespace snapper
 	    {
 		Stopwatch stopwatch;
 
-		if (impl->start())
-		{
-		    impl->wait();
-		    y2mil("stopwatch " << stopwatch << " for \"" << cmd() << "\"");
-		}
-		else
-		{
-		    impl->Ret_i = -1;
-		    y2err("system (\"" << cmd() << "\") = " << impl->Ret_i);
-		}
+		impl->step_fork_and_exec();
+		impl->step_poll();
+		impl->step_wait();
+
+		y2mil("stopwatch " << stopwatch << " for \"" << cmd() << "\"");
 	    }
 	    break;
 
 	    case StartMode::ASYNC:
 	    {
-		impl->start();
+		impl->step_fork_and_exec();
 	    }
 	    break;
 	}
     }
 
 
-    SystemCmd::~SystemCmd()
-    {
-	impl->close_stdin();
-
-	if (impl->File_aC[Impl::IDX_STDOUT])
-	    fclose(impl->File_aC[Impl::IDX_STDOUT]);
-	if (impl->File_aC[Impl::IDX_STDERR])
-	    fclose(impl->File_aC[Impl::IDX_STDERR]);
-
-	if (impl->Pid_i > 0)
-	{
-	    int status = 0;
-	    if (waitpid(impl->Pid_i, &status, WNOHANG) == 0)
-	    {
-		kill(impl->Pid_i, SIGTERM);
-		waitpid(impl->Pid_i, nullptr, 0);
-	    }
-	    impl->Pid_i = 0;
-	}
-    }
-
-
-    string
-    SystemCmd::Impl::cmd() const
-    {
-	return boost::join(args.get_values(), " ");
-    }
-
-
-    bool
-    SystemCmd::Impl::start()
-    {
-	int sin[2] = { -1, -1 };
-	int sout[2] = { -1, -1 };
-	int serr[2] = { -1, -1 };
-
-	bool ok_bi = true;
-
-	if (pipe(sin) < 0)
-	{
-	    y2err("pipe stdin creation failed errno:" << errno << " (" << stringerror(errno) << ")");
-	    ok_bi = false;
-	}
-	if (ok_bi && pipe(sout) < 0)
-	{
-	    y2err("pipe stdout creation failed errno:" << errno << " (" << stringerror(errno) << ")");
-	    ok_bi = false;
-	}
-	if (ok_bi && pipe(serr) < 0)
-	{
-	    y2err("pipe stderr creation failed errno:" << errno << " (" << stringerror(errno) << ")");
-	    ok_bi = false;
-	}
-
-	if (!ok_bi)
-	{
-	    if (sin[0] >= 0) { close(sin[0]); close(sin[1]); }
-	    if (sout[0] >= 0) { close(sout[0]); close(sout[1]); }
-	    if (serr[0] >= 0) { close(serr[0]); close(serr[1]); }
-	    Ret_i = -1;
-	    return false;
-	}
-
-	pfds[0].fd = sout[0];
-	pfds[0].events = POLLIN;
-	if (fcntl(pfds[0].fd, F_SETFL, O_NONBLOCK) < 0)
-	{
-	    y2err("fcntl O_NONBLOCK failed errno:" << errno << " (" << stringerror(errno) << ")");
-	}
-	pfds[1].fd = serr[0];
-	pfds[1].events = POLLIN;
-	if (fcntl(pfds[1].fd, F_SETFL, O_NONBLOCK) < 0)
-	{
-	    y2err("fcntl O_NONBLOCK failed errno:" << errno << " (" << stringerror(errno) << ")");
-	}
-	y2deb("sout:" << pfds[0].fd << " serr:" << pfds[1].fd);
-
-	const int max_fd = getdtablesize();
-
-	const TmpForExec args_p(make_args());
-	const TmpForExec env_p(make_env());
-
-	switch ((Pid_i = fork()))
-	{
-	    case 0:
-	    {
-		// Do not use exit() here. Use _exit() instead.
-
-		// Only use async-signal-safe functions here, see fork(2) and
-		// signal-safety(7).
-
-		if (dup2(sin[0], STDIN_FILENO) < 0)
-		    _exit(125);
-		if (dup2(sout[1], STDOUT_FILENO) < 0)
-		    _exit(125);
-		if (dup2(serr[1], STDERR_FILENO) < 0)
-		    _exit(125);
-
-		if (close(sin[0]) < 0)
-		    _exit(125);
-		if (close(sin[1]) < 0)
-		    _exit(125);
-		if (close(sout[0]) < 0)
-		    _exit(125);
-		if (close(sout[1]) < 0)
-		    _exit(125);
-		if (close(serr[0]) < 0)
-		    _exit(125);
-		if (close(serr[1]) < 0)
-		    _exit(125);
-
-		for (int fd = 3; fd < max_fd; ++fd)
-		    close(fd);
-
-		execvpe(args.get_values()[0].c_str(), args_p.get(), env_p.get());
-
-		if (errno == ENOENT)
-		    _exit(127);
-		if (errno == ENOEXEC || errno == EACCES || errno == EISDIR)
-		    _exit(126);
-		_exit(125);
-	    }
-	    break;
-
-	    case -1:
-	    {
-		close(sin[0]);
-		close(sin[1]);
-		close(sout[0]);
-		close(sout[1]);
-		close(serr[0]);
-		close(serr[1]);
-		Ret_i = -1;
-		y2err("fork failed errno:" << errno << " (" << stringerror(errno) << ")");
-		return false;
-	    }
-	    break;
-
-	    default:
-	    {
-		close(sin[0]);
-		sin_fd = sin[1];
-
-		if (close(sout[1]) < 0)
-		    y2err("close parent failed errno:" << errno << " (" << stringerror(errno) << ")");
-		if (close(serr[1]) < 0)
-		    y2err("close parent failed errno:" << errno << " (" << stringerror(errno) << ")");
-
-		Ret_i = 0;
-		File_aC[IDX_STDOUT] = fdopen(sout[0], "r");
-		if (File_aC[IDX_STDOUT] == NULL)
-		    y2err("fdopen stdout failed errno:" << errno << " (" << stringerror(errno) << ")");
-
-		File_aC[IDX_STDERR] = fdopen(serr[0], "r");
-		if (File_aC[IDX_STDERR] == NULL)
-		    y2err("fdopen stderr failed errno:" << errno << " (" << stringerror(errno) << ")");
-
-		return true;
-	    }
-	    break;
-	}
-
-	return false;
-    }
-
-
-    void
-    SystemCmd::Impl::finish(int status)
-    {
-	checkOutput();
-
-	if (File_aC[IDX_STDOUT])
-	{
-	    fclose(File_aC[IDX_STDOUT]);
-	    File_aC[IDX_STDOUT] = NULL;
-	    pfds[0].fd = -1;
-	}
-	if (File_aC[IDX_STDERR])
-	{
-	    fclose(File_aC[IDX_STDERR]);
-	    File_aC[IDX_STDERR] = NULL;
-	    pfds[1].fd = -1;
-	}
-
-	close_stdin();
-
-	if (WIFEXITED(status))
-	{
-	    Ret_i = WEXITSTATUS(status);
-	    if (Ret_i == 126)
-		y2err("command \"" << cmd() << "\" not executable");
-	    else if (Ret_i == 127)
-		y2err("command \"" << cmd() << "\" not found");
-	}
-	else
-	{
-	    Ret_i = -127;
-	    y2err("command \"" << cmd() << "\" failed");
-	}
-
-	y2mil("system() Returns:" << Ret_i);
-	if (Ret_i != 0 && log_output)
-	    logOutput();
-
-	Pid_i = 0;
-    }
-
-
-    bool
-    SystemCmd::Impl::check_status()
-    {
-	if (Pid_i <= 0)
-	    return false;
-
-	int status = 0;
-	int wait_ret = waitpid(Pid_i, &status, WNOHANG);
-	if (wait_ret == 0)
-	{
-	    return true;
-	}
-	else if (wait_ret > 0)
-	{
-	    finish(status);
-	    return false;
-	}
-	else
-	{
-	    if (errno == ECHILD)
-	    {
-		finish(0);
-	    }
-	    else
-	    {
-		y2err("waitpid failed errno:" << errno << " (" << stringerror(errno) << ")");
-	    }
-	    return false;
-	}
-    }
-
-
-    bool
-    SystemCmd::Impl::doWait(int& Ret_ir)
-    {
-	if (Pid_i <= 0)
-	{
-	    Ret_ir = Ret_i;
-	    return true;
-	}
-
-	int Wait_ii = 0;
-	int Status_ii = 0;
-
-	do
-	{
-	    y2deb("[0] fd:" << pfds[0].fd << " ev:" << hex << (unsigned)(pfds[0].events) << dec << " "
-		  "[1] fd:" << pfds[1].fd << " ev:" << hex << (unsigned)(pfds[1].events));
-	    int sel = poll(pfds, 2, 1000);
-	    if (sel < 0)
-	    {
-		if (errno != EINTR)
-		    y2err("poll failed errno:" << errno << " (" << stringerror(errno) << ")");
-	    }
-	    y2deb("poll ret:" << sel);
-	    if (sel > 0)
-	    {
-		checkOutput();
-	    }
-	    Wait_ii = waitpid(Pid_i, &Status_ii, WNOHANG);
-	    y2deb("Wait ret:" << Wait_ii);
-	}
-	while (Wait_ii == 0);
-
-	if (Wait_ii > 0)
-	{
-	    finish(Status_ii);
-	    Ret_ir = Ret_i;
-	}
-	else
-	{
-	    Ret_ir = -127;
-	    Ret_i = -127;
-	    Pid_i = 0;
-	    y2err("command \"" << cmd() << "\" failed");
-	}
-
-	y2deb("Wait:" << Wait_ii << " stat:" << Status_ii << " Ret:" << Ret_ir);
-	return Wait_ii > 0;
-    }
-
-
-    void
-    SystemCmd::Impl::wait()
-    {
-	if (Pid_i <= 0)
-	    return;
-
-	close_stdin();
-	doWait(Ret_i);
-    }
-
-
-    bool
-    SystemCmd::Impl::is_running()
-    {
-	if (Pid_i <= 0)
-	    return false;
-
-	check_status();
-	return Pid_i > 0;
-    }
-
-
-    void
-    SystemCmd::Impl::close_stdin()
-    {
-	if (sin_fd >= 0)
-	{
-	    close(sin_fd);
-	    sin_fd = -1;
-	}
-    }
-
-
-    void
-    SystemCmd::Impl::checkOutput()
-    {
-	y2deb("NewLine out:" << NewLineSeen_ab[IDX_STDOUT] << " err:" << NewLineSeen_ab[IDX_STDERR]);
-	if (File_aC[IDX_STDOUT])
-	    getUntilEOF(File_aC[IDX_STDOUT], Lines_aC[IDX_STDOUT], NewLineSeen_ab[IDX_STDOUT], false);
-	if (File_aC[IDX_STDERR])
-	    getUntilEOF(File_aC[IDX_STDERR], Lines_aC[IDX_STDERR], NewLineSeen_ab[IDX_STDERR], true);
-	y2deb("NewLine out:" << NewLineSeen_ab[IDX_STDOUT] << " err:" << NewLineSeen_ab[IDX_STDERR]);
-    }
-
-
-    unsigned
-    SystemCmd::Impl::numLines(OutputStream Idx_iv) const
-    {
-	unsigned Ret_ii;
-
-	if (Idx_iv > 1)
-	{
-	    y2err("invalid index " << Idx_iv);
-	}
-	Ret_ii = Lines_aC[Idx_iv].size();
-	y2deb("ret:" << Ret_ii);
-	return Ret_ii;
-    }
-
-
-    string
-    SystemCmd::Impl::getLine(unsigned Nr_iv, OutputStream Idx_iv) const
-    {
-	string ret;
-
-	if (Idx_iv > 1)
-	{
-	    y2err("invalid index " << Idx_iv);
-	}
-	if (Nr_iv < Lines_aC[Idx_iv].size())
-	{
-	    ret = Lines_aC[Idx_iv][Nr_iv];
-	}
-
-	return ret;
-    }
-
-
-#define BUF_LEN 256
-
-    void
-    SystemCmd::Impl::getUntilEOF(FILE* File_Cr, vector<string>& Lines_Cr, bool& NewLine_br,
-				 bool Stderr_bv)
-    {
-	size_t old_size = Lines_Cr.size();
-	char Buf_ti[BUF_LEN];
-	int Cnt_ii;
-	int Char_ii;
-	string Text_Ci;
-
-	clearerr(File_Cr);
-	Cnt_ii = 0;
-	Char_ii = EOF;
-	while ((Char_ii = fgetc(File_Cr)) != EOF)
-	{
-	    Buf_ti[Cnt_ii++] = Char_ii;
-	    if (Cnt_ii == sizeof(Buf_ti) - 1)
-	    {
-		Buf_ti[Cnt_ii] = 0;
-		extractNewline(Buf_ti, Cnt_ii, NewLine_br, Text_Ci, Lines_Cr);
-		Cnt_ii = 0;
-	    }
-	    Char_ii = EOF;
-	}
-	if (Cnt_ii > 0)
-	{
-	    Buf_ti[Cnt_ii] = 0;
-	    extractNewline(Buf_ti, Cnt_ii, NewLine_br, Text_Ci, Lines_Cr);
-	}
-	if (Text_Ci.length() > 0)
-	{
-	    if (NewLine_br)
-	    {
-		addLine(Text_Ci, Lines_Cr);
-	    }
-	    else
-	    {
-		Lines_Cr[Lines_Cr.size() - 1] += Text_Ci;
-	    }
-	    NewLine_br = false;
-	}
-	else
-	{
-	    NewLine_br = true;
-	}
-	y2deb("Text_Ci:" << Text_Ci << " NewLine:" << NewLine_br);
-	if (old_size != Lines_Cr.size())
-	{
-	    y2mil("pid:" << Pid_i << " added lines:" << Lines_Cr.size() - old_size << " stderr:" << Stderr_bv);
-	}
-    }
-
-
-    void
-    SystemCmd::Impl::extractNewline(const string& Buf_ti, int Cnt_iv, bool& NewLine_br,
-				    string& Text_Cr, vector<string>& Lines_Cr)
-    {
-	string::size_type Idx_ii;
-
-	Text_Cr += Buf_ti;
-	while ((Idx_ii = Text_Cr.find('\n')) != string::npos)
-	{
-	    if (!NewLine_br)
-	    {
-		Lines_Cr[Lines_Cr.size() - 1] += Text_Cr.substr(0, Idx_ii);
-	    }
-	    else
-	    {
-		addLine(Text_Cr.substr(0, Idx_ii), Lines_Cr);
-	    }
-	    Text_Cr.erase(0, Idx_ii + 1);
-	    NewLine_br = true;
-	}
-	y2deb("Text_Ci:" << Text_Cr << " NewLine:" << NewLine_br);
-    }
-
-
-    void
-    SystemCmd::Impl::addLine(const string& Text_Cv, vector<string>& Lines_Cr)
-    {
-	if (log_output)
-	{
-	    if (Lines_Cr.size() < line_limit)
-	    {
-		y2mil("Adding Line " << Lines_Cr.size() + 1 << " \"" << Text_Cv << "\"");
-	    }
-	    else
-	    {
-		y2deb("Adding Line " << Lines_Cr.size() + 1 << " \"" << Text_Cv << "\"");
-	    }
-	}
-
-	Lines_Cr.push_back(Text_Cv);
-    }
-
-
-    void
-    SystemCmd::Impl::logOutput() const
-    {
-	unsigned lines = numLines(IDX_STDERR);
-	if (lines <= line_limit)
-	{
-	    for (unsigned i = 0; i < lines; ++i)
-		y2mil("stderr:" << getLine(i, IDX_STDERR));
-	}
-	else
-	{
-	    for (unsigned i = 0; i < line_limit / 2; ++i)
-		y2mil("stderr:" << getLine(i, IDX_STDERR));
-	    y2mil("stderr omitting lines");
-	    for (unsigned i = lines - line_limit / 2; i < lines; ++i)
-		y2mil("stderr:" << getLine(i, IDX_STDERR));
-	}
-
-	lines = numLines(IDX_STDOUT);
-	if (lines <= line_limit)
-	{
-	    for (unsigned i = 0; i < lines; ++i)
-		y2mil("stdout:" << getLine(i, IDX_STDOUT));
-	}
-	else
-	{
-	    for (unsigned i = 0; i < line_limit / 2; ++i)
-		y2mil("stdout:" << getLine(i, IDX_STDOUT));
-	    y2mil("stdout omitting lines");
-	    for (unsigned i = lines - line_limit / 2; i < lines; ++i)
-		y2mil("stdout:" << getLine(i, IDX_STDOUT));
-	}
-    }
-
-
-    TmpForExec
-    SystemCmd::Impl::make_args() const
-    {
-	vector<char*> ret;
-
-	for (const string& v : args.get_values())
-	{
-	    ret.push_back(strdup(v.c_str()));
-	}
-
-	ret.push_back(nullptr);
-
-	return ret;
-    }
-
-
-    TmpForExec
-    SystemCmd::Impl::make_env() const
-    {
-	vector<char*> ret;
-
-	for (char** v = environ; *v != NULL; ++v)
-	{
-	    if (strncmp(*v, "LC_ALL=", strlen("LC_ALL=")) != 0 &&
-		strncmp(*v, "LANGUAGE=", strlen("LANGUAGE=")) != 0)
-		ret.push_back(strdup(*v));
-	}
-
-	ret.push_back(strdup("LC_ALL=C"));
-	ret.push_back(strdup("LANGUAGE=C"));
-
-	ret.push_back(nullptr);
-
-	return ret;
-    }
+    SystemCmd::~SystemCmd() = default;
 
 
     string
@@ -732,16 +655,16 @@ namespace snapper
 
 
     const vector<string>&
-    SystemCmd::get_stdout() const
+    SystemCmd::stdout() const
     {
-	return impl->get_stdout();
+	return impl->stdout();
     }
 
 
     const vector<string>&
-    SystemCmd::get_stderr() const
+    SystemCmd::stderr() const
     {
-	return impl->get_stderr();
+	return impl->stderr();
     }
 
 

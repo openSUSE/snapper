@@ -210,10 +210,10 @@ Differ::run(const string& f1, const string& f2) const
 
     SystemCmd cmd({ SH_BIN, "-c", tmp });
 
-    for (const string& line : cmd.get_stdout())
+    for (const string& line : cmd.stdout())
 	cout << line << endl;
 
-    for (const string& line : cmd.get_stderr())
+    for (const string& line : cmd.stderr())
 	cerr << line << endl;
 }
 

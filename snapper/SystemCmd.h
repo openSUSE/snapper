@@ -90,8 +90,8 @@ namespace snapper
 	 */
 	string cmd() const;
 
-	const vector<string>& get_stdout() const;
-	const vector<string>& get_stderr() const;
+	const vector<string>& stdout() const;
+	const vector<string>& stderr() const;
 
 	int retcode() const;
 

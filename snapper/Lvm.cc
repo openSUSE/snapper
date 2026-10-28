@@ -492,7 +492,7 @@ namespace snapper
     {
 	SystemCmd cmd({ LVM_BIN, "version" });
 
-	if (cmd.retcode() != 0 || cmd.get_stdout().empty())
+	if (cmd.retcode() != 0 || cmd.stdout().empty())
 	{
 	    y2war("Couldn't get LVM version info");
 	}
@@ -502,7 +502,7 @@ namespace snapper
 				  regex::extended);
 	    smatch match;
 
-	    if (!regex_search(cmd.get_stdout().front(), match, rx))
+	    if (!regex_search(cmd.stdout().front(), match, rx))
 	    {
 		y2war("LVM version format didn't match");
 	    }
