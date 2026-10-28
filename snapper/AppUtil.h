@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2015] Novell, Inc.
- * Copyright (c) [2020-2021] SUSE LLC
+ * Copyright (c) [2020-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -45,6 +45,11 @@ namespace snapper
     using std::map;
     using std::vector;
 
+
+    /**
+     * An improved usleep implementation. Takes care of EINTR.
+     */
+    int usleep(useconds_t usec);
 
     bool checkDir(const string& Path_Cv);
 

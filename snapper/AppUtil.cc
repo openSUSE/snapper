@@ -27,6 +27,7 @@
 #include <fcntl.h>
 #include <glob.h>
 #include <cstring>
+#include <time.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/utsname.h>
@@ -46,6 +47,27 @@
 namespace snapper
 {
     using namespace std;
+
+
+    int
+    usleep(useconds_t usec)
+    {
+	struct timespec duration {
+	    .tv_sec = usec / 1000000,
+	    .tv_nsec = (usec % 1000000) * 1000
+	};
+
+	while (true)
+	{
+	    struct timespec rem;
+	    int ret = nanosleep(&duration, &rem);
+
+	    if (ret == -1 && errno == EINTR)
+		duration = rem;
+	    else
+		return ret;
+	}
+    }
 
 
     bool

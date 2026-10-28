@@ -58,6 +58,7 @@ namespace snapper
     private:
 
 	std::unique_ptr<Locker> locker;
+	std::unique_ptr<SystemCmd> system_cmd;
 
     };
 
