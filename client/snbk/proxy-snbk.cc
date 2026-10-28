@@ -44,8 +44,10 @@ namespace snapper
     }
 
     void SnbkCleanable::delete_snapshots(vector<ProxySnapshots::iterator> snapshots,
-                                         bool verbose, Plugins::Report& report) const
+                                         bool verbose, Plugins::Report& report)
     {
+	ProxyCleanable::delete_snapshots(snapshots, verbose, report);
+
 	for (ProxySnapshots::iterator proxy_it : snapshots)
 	{
 	    TheBigThings::iterator it = the_big_things.find(proxy_it->getNum());

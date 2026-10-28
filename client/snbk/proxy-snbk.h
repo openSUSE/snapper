@@ -23,6 +23,8 @@
 #define SNAPPER_PROXY_SNBK_H
 
 
+#include <unordered_set>
+
 #include <snapper/Exception.h>
 
 #include "../cleanup.h"
@@ -134,8 +136,7 @@ namespace snapper
 	virtual ProxySnapshots& get_snapshots() override { return snapshots; }
 
 	virtual void delete_snapshots(vector<ProxySnapshots::iterator> snapshots,
-	                              bool verbose,
-	                              Plugins::Report& report) const override;
+	                              bool verbose, Plugins::Report& report) override;
 
 	virtual void prepare_quota() const override
 	{
