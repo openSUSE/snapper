@@ -802,6 +802,9 @@ namespace snapper
     MyLocker::~MyLocker()
     {
 	// Destructors take care of everything as it's supposed to be.
+
+	// For the external 'snapper lock-config', SystemCmd closes stdin so snapper gets
+	// EOF and exits.
     }
 
 }
