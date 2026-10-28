@@ -92,9 +92,9 @@ namespace snapper
 			const ProxyConfig& proxy_config = cleanup.get_config();
 
 			if (proxy_config.is_yes("NUMBER_CLEANUP"))
-			    cleanup.do_cleanup_number(global_options.verbose(), report);
+			    cleanup.do_cleanup_number(global_options.quiet(), report);
 			if (proxy_config.is_yes("TIMELINE_CLEANUP"))
-			    cleanup.do_cleanup_timeline(global_options.verbose(), report);
+			    cleanup.do_cleanup_timeline(global_options.quiet(), report);
 		    }
 		    break;
 
