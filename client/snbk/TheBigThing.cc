@@ -152,9 +152,9 @@ namespace snapper
 	if (cmd1.retcode() != 0)
 	{
 	    y2err("command '" << cmd1.cmd() << "' failed: " << cmd1.retcode());
-	    for (const string& tmp : cmd1.get_stdout())
+	    for (const string& tmp : cmd1.stdout())
 		y2err(tmp);
-	    for (const string& tmp : cmd1.get_stderr())
+	    for (const string& tmp : cmd1.stderr())
 		y2err(tmp);
 
 	    SN_THROW(Exception(_("'mkdir' failed.")));
@@ -190,9 +190,9 @@ namespace snapper
 	if (cmd3.retcode() != 0)
 	{
 	    y2err("command '" << cmd3.cmd() << "' failed: " << cmd3.retcode());
-	    for (const string& tmp : cmd3.get_stdout())
+	    for (const string& tmp : cmd3.stdout())
 		y2err(tmp);
-	    for (const string& tmp : cmd3.get_stderr())
+	    for (const string& tmp : cmd3.stderr())
 		y2err(tmp);
 
 	    SN_THROW(Exception(_("'btrfs send | btrfs receive' failed.")));
@@ -220,9 +220,9 @@ namespace snapper
 		if (cmd.retcode() != 0)
 		{
 		    y2err("command '" << cmd.cmd() << "' failed: " << cmd.retcode());
-		    for (const string& tmp : cmd.get_stdout())
+		    for (const string& tmp : cmd.stdout())
 			y2err(tmp);
-		    for (const string& tmp : cmd.get_stderr())
+		    for (const string& tmp : cmd.stderr())
 			y2err(tmp);
 
 		    SN_THROW(Exception(_("'cp info.xml' failed.")));
@@ -246,9 +246,9 @@ namespace snapper
 		if (cmd.retcode() != 0)
 		{
 		    y2err("command '" << cmd.cmd() << "' failed: " << cmd.retcode());
-		    for (const string& tmp : cmd.get_stdout())
+		    for (const string& tmp : cmd.stdout())
 			y2err(tmp);
-		    for (const string& tmp : cmd.get_stderr())
+		    for (const string& tmp : cmd.stderr())
 			y2err(tmp);
 
 		    SN_THROW(Exception(_("'scp info.xml' failed.")));
@@ -336,9 +336,9 @@ namespace snapper
 	if (cmd1.retcode() != 0)
 	{
 	    y2err("command '" << cmd1.cmd() << "' failed: " << cmd1.retcode());
-	    for (const string& tmp : cmd1.get_stdout())
+	    for (const string& tmp : cmd1.stdout())
 		y2err(tmp);
-	    for (const string& tmp : cmd1.get_stderr())
+	    for (const string& tmp : cmd1.stderr())
 		y2err(tmp);
 
 	    SN_THROW(Exception(_("'btrfs subvolume delete' failed.")));
@@ -352,9 +352,9 @@ namespace snapper
 	if (cmd2.retcode() != 0)
 	{
 	    y2err("command '" << cmd2.cmd() << "' failed: " << cmd2.retcode());
-	    for (const string& tmp : cmd2.get_stdout())
+	    for (const string& tmp : cmd2.stdout())
 		y2err(tmp);
-	    for (const string& tmp : cmd2.get_stderr())
+	    for (const string& tmp : cmd2.stderr())
 		y2err(tmp);
 
 	    SN_THROW(Exception(_("'rm info.xml' failed.")));
@@ -368,9 +368,9 @@ namespace snapper
 	if (cmd3.retcode() != 0)
 	{
 	    y2err("command '" << cmd3.cmd() << "' failed: " << cmd3.retcode());
-	    for (const string& tmp : cmd3.get_stdout())
+	    for (const string& tmp : cmd3.stdout())
 		y2err(tmp);
-	    for (const string& tmp : cmd3.get_stderr())
+	    for (const string& tmp : cmd3.stderr())
 		y2err(tmp);
 
 	    SN_THROW(Exception(_("'rmdir' failed.")));

@@ -68,10 +68,10 @@ namespace snapper
 
 		y2mil("result of " << fullname << " " << boost::join(args, " "));
 
-		for (const string& line : cmd.get_stdout())
+		for (const string& line : cmd.stdout())
 		    y2mil("stdout: " << line);
 
-		for (const string& line : cmd.get_stderr())
+		for (const string& line : cmd.stderr())
 		    y2mil("stderr: " << line);
 
 		if (cmd.retcode() != 0)

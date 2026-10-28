@@ -40,15 +40,15 @@ namespace snapper
 	if (cmd.retcode() != 0)
 	{
 	    y2err("command '" << cmd.cmd() << "' failed: " << cmd.retcode());
-	    for (const string& tmp : cmd.get_stdout())
+	    for (const string& tmp : cmd.stdout())
 		y2err(tmp);
-	    for (const string& tmp : cmd.get_stderr())
+	    for (const string& tmp : cmd.stderr())
 		y2err(tmp);
 
 	    SN_THROW(Exception("'ls' failed"));
 	}
 
-	parse(cmd.get_stdout());
+	parse(cmd.stdout());
 
 	y2mil(*this);
     }
