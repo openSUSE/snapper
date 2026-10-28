@@ -339,6 +339,38 @@ namespace snapper
 	    }
 	    catch (const runtime_error& e)
 	    {
+		if (quota && qgroup != no_qgroup && !empty)
+		{
+		    y2war("create snapshot with qgroup failed, " << e.what() << ", retrying without qgroup");
+		    try
+		    {
+			create_snapshot(subvolume_dir.fd(), info_dir.fd(), SNAPSHOT_NAME, read_only,
+					no_qgroup);
+
+			// Snapshot succeeded without qgroup inheritance. Try to assign
+			// the qgroup post-hoc so quota tracking is not lost entirely.
+			try
+			{
+			    SDir snapshot_dir = openSnapshotDir(num);
+			    subvolid_t subvolid = get_id(snapshot_dir.fd());
+			    qgroup_t level0 = calc_qgroup(0, subvolid);
+			    qgroup_assign(info_dir.fd(), level0, qgroup);
+			    y2mil("post-hoc qgroup assign succeeded for snapshot " << num);
+			}
+			catch (const runtime_error& e3)
+			{
+			    y2war("post-hoc qgroup assign failed, " << e3.what()
+				  << ", snapshot created but quota tracking may be incomplete");
+			}
+
+			return;
+		    }
+		    catch (const runtime_error& e2)
+		    {
+			y2err("create snapshot without qgroup also failed, " << e2.what());
+		    }
+		}
+
 		y2err("create snapshot failed, " << e.what());
 		SN_THROW(CreateSnapshotFailedException());
 	    }
@@ -355,6 +387,38 @@ namespace snapper
 	    }
 	    catch (const runtime_error& e)
 	    {
+		if (quota && qgroup != no_qgroup)
+		{
+		    y2war("create snapshot with qgroup failed, " << e.what() << ", retrying without qgroup");
+		    try
+		    {
+			create_snapshot(snapshot_dir.fd(), info_dir.fd(), SNAPSHOT_NAME, read_only,
+					no_qgroup);
+
+			// Snapshot succeeded without qgroup inheritance. Try to assign
+			// the qgroup post-hoc so quota tracking is not lost entirely.
+			try
+			{
+			    SDir new_snapshot_dir = openSnapshotDir(num);
+			    subvolid_t subvolid = get_id(new_snapshot_dir.fd());
+			    qgroup_t level0 = calc_qgroup(0, subvolid);
+			    qgroup_assign(info_dir.fd(), level0, qgroup);
+			    y2mil("post-hoc qgroup assign succeeded for snapshot " << num);
+			}
+			catch (const runtime_error& e3)
+			{
+			    y2war("post-hoc qgroup assign failed, " << e3.what()
+				  << ", snapshot created but quota tracking may be incomplete");
+			}
+
+			return;
+		    }
+		    catch (const runtime_error& e2)
+		    {
+			y2err("create snapshot without qgroup also failed, " << e2.what());
+		    }
+		}
+
 		y2err("create snapshot failed, " << e.what());
 		SN_THROW(CreateSnapshotFailedException());
 	    }
@@ -393,6 +457,38 @@ namespace snapper
 	}
 	catch (const runtime_error& e)
 	{
+	    if (quota && qgroup != no_qgroup)
+	    {
+		y2war("create snapshot with qgroup failed, " << e.what() << ", retrying without qgroup");
+		try
+		{
+		    create_snapshot(tmp_mount_dir.fd(), info_dir.fd(), SNAPSHOT_NAME, read_only,
+				    no_qgroup);
+
+		    // Snapshot succeeded without qgroup inheritance. Try to assign
+		    // the qgroup post-hoc so quota tracking is not lost entirely.
+		    try
+		    {
+			SDir snapshot_dir = openSnapshotDir(num);
+			subvolid_t subvolid = get_id(snapshot_dir.fd());
+			qgroup_t level0 = calc_qgroup(0, subvolid);
+			qgroup_assign(info_dir.fd(), level0, qgroup);
+			y2mil("post-hoc qgroup assign succeeded for snapshot " << num);
+		    }
+		    catch (const runtime_error& e3)
+		    {
+			y2war("post-hoc qgroup assign failed, " << e3.what()
+			      << ", snapshot created but quota tracking may be incomplete");
+		    }
+
+		    return;
+		}
+		catch (const runtime_error& e2)
+		{
+		    y2err("create snapshot without qgroup also failed, " << e2.what());
+		}
+	    }
+
 	    y2err("create snapshot failed, " << e.what());
 	    SN_THROW(CreateSnapshotFailedException());
 	}
