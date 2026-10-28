@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2014] Novell, Inc.
- * Copyright (c) [2018-2023] SUSE LLC
+ * Copyright (c) [2018-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -24,12 +24,10 @@
 #ifndef SNAPPER_SYSTEM_CMD_H
 #define SNAPPER_SYSTEM_CMD_H
 
-#include <poll.h>
-#include <sys/types.h>
-#include <cstdio>
 #include <string>
 #include <string_view>
 #include <vector>
+#include <memory>
 #include <initializer_list>
 #include <boost/noncopyable.hpp>
 
@@ -44,6 +42,16 @@ namespace snapper
     class SystemCmd final : private boost::noncopyable
     {
     public:
+
+
+	/**
+	 * Mode for starting the process.
+	 */
+	enum class StartMode
+	{
+	    SYNC,   // start and wait for completion
+	    ASYNC   // start without waiting for completion
+	};
 
 
 	/**
@@ -72,16 +80,9 @@ namespace snapper
 
 	SystemCmd(const Args& args, bool log_output = true);
 
+	SystemCmd(const Args& args, StartMode mode, bool log_output = true);
+
 	~SystemCmd();
-
-    private:
-
-	enum OutputStream { IDX_STDOUT, IDX_STDERR };
-
-    public:
-
-	const vector<string>& get_stdout() const { return Lines_aC[IDX_STDOUT]; }
-	const vector<string>& get_stderr() const { return Lines_aC[IDX_STDERR]; }
 
 	/**
 	 * Command as a simple string (without quoting of args - so only for display and
@@ -89,14 +90,10 @@ namespace snapper
 	 */
 	string cmd() const;
 
-	int retcode() const { return Ret_i; }
+	const vector<string>& get_stdout() const;
+	const vector<string>& get_stderr() const;
 
-    private:
-
-	unsigned numLines(OutputStream Idx_ii = IDX_STDOUT) const;
-	string getLine(unsigned Num_iv, OutputStream Idx_ii = IDX_STDOUT) const;
-
-    public:
+	int retcode() const;
 
 	/**
 	 * Quotes and protects a single string for shell execution.
@@ -105,65 +102,9 @@ namespace snapper
 
     private:
 
-	void invalidate();
-	void execute();
-	bool doWait(int& Ret_ir);
-	void checkOutput();
-	void getUntilEOF(FILE* File_Cr, vector<string>& Lines_Cr, bool& NewLineSeen_br,
-			 bool Stderr_bv);
-	void extractNewline(const string& Buf_ti, int Cnt_ii, bool& NewLineSeen_br,
-			    string& Text_Cr, vector<string>& Lines_Cr);
-	void addLine(const string& Text_Cv, vector<string>& Lines_Cr);
-	void init();
+	class Impl;
 
-	void logOutput() const;
-
-
-	/**
-	 * Class to temporarily hold copies for execle() and execvpe().
-	 */
-	class TmpForExec
-	{
-	public:
-
-	    TmpForExec(const vector<char*>& values) : values(values) {}
-	    ~TmpForExec();
-
-	    char* const * get() const { return &values[0]; }
-
-	private:
-
-	    vector<char*> values;
-
-	};
-
-
-	/**
-	 * Constructs the args for the child process.
-	 *
-	 * Not async-signal-safe, see fork(2) and signal-safety(7).
-	 */
-	TmpForExec make_args() const;
-
-	/**
-	 * Constructs the environment for the child process.
-	 *
-	 * Not async-signal-safe, see fork(2) and signal-safety(7).
-	 */
-	TmpForExec make_env() const;
-
-
-	const Args args;
-	const bool log_output;
-
-	FILE* File_aC[2];
-	vector<string> Lines_aC[2];
-	bool NewLineSeen_ab[2];
-	int Ret_i = 0;
-	pid_t Pid_i = 0;
-	struct pollfd pfds[2];
-
-	static const unsigned line_limit = 50;
+	std::unique_ptr<Impl> impl;
 
     };
 

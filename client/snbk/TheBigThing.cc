@@ -788,13 +788,20 @@ namespace snapper
 	}
 	else
 	{
-	    // TODO before release: ssh 'snapper lock-config'
+	    SystemCmd::Args cmd_args = { backup_config.source_snapper_bin, "--config", backup_config.config,
+		"lock-config" };
+
+	    system_cmd = std::make_unique<SystemCmd>(shellify(backup_config.get_source_shell(), cmd_args),
+						     SystemCmd::StartMode::ASYNC);
+
+	    usleep(2500000);	// give ssh and snapper time to take lock
 	}
     }
 
 
     MyLocker::~MyLocker()
     {
+	// Destructors take care of everything as it's supposed to be.
     }
 
 }
