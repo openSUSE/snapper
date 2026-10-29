@@ -5,12 +5,12 @@ layout: post
 ---
 
 Snapper's backup tool snbk uses btrfs send and receive to replicate
-snapshots to other filesystems. so far, snbk supported two target
+snapshots to other filesystems. So far, snbk supported two target
 modes: "local" and "ssh-push".
 
 In "ssh-push" mode, the system containing the source snapshots
 initiates the transfer and connects to a remote backup server over
-ssh. This method has a drawback: if a source machine is compromised,
+ssh. This method has a drawback: if the source machine is compromised,
 the attacker has ssh access to the backup server, potentially putting
 existing backups at risk.
 
