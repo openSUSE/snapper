@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2004-2015] Novell, Inc.
- * Copyright (c) [2016-2021] SUSE LLC
+ * Copyright (c) [2016-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -27,7 +27,6 @@
 #include <fcntl.h>
 #include <glob.h>
 #include <cstring>
-#include <time.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/utsname.h>
@@ -49,23 +48,20 @@ namespace snapper
     using namespace std;
 
 
-    int
-    usleep(useconds_t usec)
+    bool
+    sleep(unsigned int seconds)
     {
-	struct timespec duration {
-	    .tv_sec = usec / 1000000,
-	    .tv_nsec = (usec % 1000000) * 1000
-	};
+	struct timespec deadline;
+	if (clock_gettime(CLOCK_MONOTONIC, &deadline) == -1)
+	    return false;
+
+	deadline.tv_sec += seconds;
 
 	while (true)
 	{
-	    struct timespec rem;
-	    int ret = nanosleep(&duration, &rem);
-
-	    if (ret == -1 && errno == EINTR)
-		duration = rem;
-	    else
-		return ret;
+	    int ret = clock_nanosleep(CLOCK_MONOTONIC, TIMER_ABSTIME, &deadline, NULL);
+	    if (ret != EINTR)
+		return ret == 0;
 	}
     }
 

@@ -794,7 +794,7 @@ namespace snapper
 	    system_cmd = std::make_unique<SystemCmd>(shellify(backup_config.get_source_shell(), cmd_args),
 						     SystemCmd::StartMode::ASYNC);
 
-	    usleep(2500000);	// give ssh and snapper time to take lock
+	    sleep(2);		// give ssh and snapper time to take lock
 	}
     }
 

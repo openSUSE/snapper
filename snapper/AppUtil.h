@@ -24,6 +24,7 @@
 #ifndef SNAPPER_APP_UTIL_H
 #define SNAPPER_APP_UTIL_H
 
+#include <ctime>
 #include <sys/time.h>
 #include <sys/types.h>
 #include <pwd.h>
@@ -47,9 +48,10 @@ namespace snapper
 
 
     /**
-     * An improved usleep implementation. Takes care of EINTR.
+     * An improved sleep implementation. Takes care of EINTR. Returns false in case of
+     * errors.
      */
-    int usleep(useconds_t usec);
+    bool sleep(unsigned int seconds);
 
     bool checkDir(const string& Path_Cv);
 
