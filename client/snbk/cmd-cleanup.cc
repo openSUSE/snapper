@@ -89,17 +89,42 @@ namespace snapper
 		    case BackupConfig::RetentionPolicy::CUSTOM:
 		    {
 			SnbkCleanup cleanup(backup_config, the_big_things);
-			const ProxyConfig& proxy_config = cleanup.get_config();
 
-			if (proxy_config.is_yes("NUMBER_CLEANUP"))
-			    cleanup.do_cleanup_number(global_options.quiet(), report);
-			if (proxy_config.is_yes("TIMELINE_CLEANUP"))
-			    cleanup.do_cleanup_timeline(global_options.quiet(), report);
+			switch (cleanup_algorithm)
+			{
+			    case CleanupAlgorithm::NUMBER:
+				cleanup.do_cleanup_number(global_options.quiet(), report);
+				break;
+
+			    case CleanupAlgorithm::TIMELINE:
+				cleanup.do_cleanup_timeline(global_options.quiet(),
+				                            report);
+				break;
+
+			    case CleanupAlgorithm::EMPTY_PRE_POST:
+				SN_THROW(Exception(
+				    sformat(_("The '%s' cleanup algorithm is not yet "
+				              "implemented for snbk."),
+				            toString(cleanup_algorithm).c_str())));
+				break;
+
+			    case CleanupAlgorithm::ALL:
+				cleanup.do_cleanup_number(global_options.quiet(), report);
+				cleanup.do_cleanup_timeline(global_options.quiet(),
+				                            report);
+				break;
+			}
 		    }
 		    break;
 
 		    case BackupConfig::RetentionPolicy::DEFAULT:
 		    {
+			if (cleanup_algorithm != CleanupAlgorithm::ALL)
+			    SN_THROW(Exception(
+			        sformat(_("Only '%s' cleanup algorithm is supported "
+				          "using the default retention policy."),
+				        toString(CleanupAlgorithm::ALL).c_str())));
+
 			the_big_things.remove(backup_config, global_options.quiet(),
 			                      global_options.quiet());
 		    }
