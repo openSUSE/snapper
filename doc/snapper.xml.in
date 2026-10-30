@@ -30,6 +30,11 @@
       <command>snapper</command>
       <arg choice='req'>--help</arg>
     </cmdsynopsis>
+    <cmdsynopsis>
+      <command>snapper</command>
+      <arg choice='plain'><replaceable>command</replaceable></arg>
+      <arg choice='req'>--help</arg>
+    </cmdsynopsis>
   </refsynopsisdiv>
 
   <refsect1 id='description'>
@@ -332,6 +337,10 @@
     section. These command-specific options must be specified
     <emphasis>after</emphasis> the name of the command and
     <emphasis>before</emphasis> any of the command arguments.</para>
+
+    <para>The help of a single command is shown by specifying
+    <option>--help</option> as the only argument after the name of the
+    command.</para>
 
     <variablelist>
 

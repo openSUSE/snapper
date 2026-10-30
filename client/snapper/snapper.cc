@@ -212,6 +212,14 @@ main(int argc, char** argv)
 	    exit(EXIT_FAILURE);
 	}
 
+	// Show the help of the command without connecting to DBus or loading a config.
+
+	if (get_opts.num_args() == 1 && get_opts.get_args()[0] == "--help")
+	{
+	    (*cmd->help_func)();
+	    exit(EXIT_SUCCESS);
+	}
+
 	try
 	{
 	    y2mil("constructing ProxySnapper object");
