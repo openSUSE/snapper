@@ -2,13 +2,13 @@
 <refentry id='snbk8' xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <refentryinfo>
-    <date>2026-04-23</date>
+    <date>2026-11-04</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snbk</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2026-04-23</refmiscinfo>
+    <refmiscinfo class='date'>2026-11-04</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -28,6 +28,7 @@
     <cmdsynopsis>
       <command>snbk</command>
       <arg choice='req'>--help</arg>
+      <arg choice='plain'><replaceable>[command]</replaceable></arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 
@@ -324,13 +325,6 @@ After=snapper-sync.service
     <emphasis>after</emphasis> the name of the command.</para>
 
     <variablelist>
-
-      <varlistentry>
-	<term><option>help</option></term>
-	<listitem>
-	  <para>Show short help text.</para>
-	</listitem>
-      </varlistentry>
 
       <varlistentry>
 	<term><option>list-configs</option></term>

@@ -92,17 +92,28 @@ help(const vector<Cmd>& cmds, GetOpts& get_opts)
     get_opts.parse("help", GetOpts::no_options);
     if (get_opts.has_args())
     {
-	cerr << _("Command 'help' does not take arguments.") << endl;
-	exit(EXIT_FAILURE);
+	const char* command = get_opts.pop_arg();
+
+	vector<Cmd>::const_iterator cmd = find_cmd(cmds, command);
+	if (cmd == cmds.end())
+	{
+	    cerr << sformat(_("Unknown command '%s'."), command) << endl
+		 << _("Try 'snapper --help' for more information.") << endl;
+	    exit(EXIT_FAILURE);
+	}
+
+	(*cmd->help_func)();
     }
+    else
+    {
+	cout << _("usage: snapper [--global-options] <command> [--command-options] [command-arguments]") << '\n'
+	     << endl;
 
-    cout << _("usage: snapper [--global-options] <command> [--command-options] [command-arguments]") << '\n'
-	 << endl;
+	GlobalOptions::help_global_options();
 
-    GlobalOptions::help_global_options();
-
-    for (const Cmd& cmd : cmds)
-	(*cmd.help_func)();
+	for (const Cmd& cmd : cmds)
+	    (*cmd.help_func)();
+    }
 
     exit(EXIT_SUCCESS);
 }
@@ -201,10 +212,7 @@ main(int argc, char** argv)
 
 	const char* command = get_opts.pop_arg();
 
-	vector<Cmd>::const_iterator cmd = cmds.begin();
-	while (cmd != cmds.end() && (cmd->name != command && !contains(cmd->aliases, command)))
-	    ++cmd;
-
+	vector<Cmd>::const_iterator cmd = find_cmd(cmds, command);
 	if (cmd == cmds.end())
 	{
 	    cerr << sformat(_("Unknown command '%s'."), command) << endl
