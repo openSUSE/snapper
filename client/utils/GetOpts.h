@@ -109,6 +109,18 @@ namespace snapper
 
     };
 
+
+    template<typename Cmd>
+    typename vector<Cmd>::const_iterator
+    find_cmd(const vector<Cmd>& cmds, const char* command)
+    {
+	typename vector<Cmd>::const_iterator cmd = cmds.begin();
+	while (cmd != cmds.end() && (cmd->name != command && !contains(cmd->aliases, command)))
+	    ++cmd;
+
+	return cmd;
+    }
+
 }
 
 #endif

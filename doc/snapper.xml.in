@@ -2,13 +2,13 @@
 <refentry id='snapper8' xmlns:xlink="http://www.w3.org/1999/xlink">
 
   <refentryinfo>
-    <date>2026-01-02</date>
+    <date>2026-11-04</date>
   </refentryinfo>
 
   <refmeta>
     <refentrytitle>snapper</refentrytitle>
     <manvolnum>8</manvolnum>
-    <refmiscinfo class='date'>2026-01-02</refmiscinfo>
+    <refmiscinfo class='date'>2026-11-04</refmiscinfo>
     <refmiscinfo class='version'>@VERSION@</refmiscinfo>
     <refmiscinfo class='manual'>Filesystem Snapshot Management</refmiscinfo>
   </refmeta>
@@ -29,6 +29,7 @@
     <cmdsynopsis>
       <command>snapper</command>
       <arg choice='req'>--help</arg>
+      <arg choice='plain'><replaceable>[command]</replaceable></arg>
     </cmdsynopsis>
   </refsynopsisdiv>
 
@@ -334,13 +335,6 @@
     <emphasis>before</emphasis> any of the command arguments.</para>
 
     <variablelist>
-
-      <varlistentry>
-	<term><option>help</option></term>
-	<listitem>
-	  <para>Show short help text.</para>
-	</listitem>
-      </varlistentry>
 
       <varlistentry>
 	<term><option>list-configs [options]</option></term>
