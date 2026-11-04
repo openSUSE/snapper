@@ -72,6 +72,8 @@ namespace snapper
 	    SN_THROW(Exception(_("The content of info.xml is empty.")));
 	}
 
+	static_assert(SHA256_DIGEST_LENGTH > 0);
+
 	unsigned char hash[SHA256_DIGEST_LENGTH];
 	SHA256(reinterpret_cast<const unsigned char*>(content.c_str()), content.length(), hash);
 
