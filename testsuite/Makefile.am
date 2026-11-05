@@ -10,7 +10,7 @@ check_PROGRAMS = sysconfig-get1.test sysconfig-crlf.test dirname1.test basename1
 	equal-date.test cmp-lt.test humanstring.test uuid.test			\
 	table.test table-formatter.test csv-formatter.test json-formatter.test	\
 	getopts.test scan-datetime.test root-prefix.test range.test limit.test	\
-	systemcmd.test
+	systemcmd.test command-help.test
 
 if ENABLE_BTRFS_QUOTA
 check_PROGRAMS += qgroup1.test
@@ -51,3 +51,5 @@ range_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
 limit_test_LDADD = -lboost_unit_test_framework ../client/utils/libutils.la
 
 systemcmd_test_LDADD = -lboost_unit_test_framework ../snapper/libsnapper.la
+
+command_help_test_LDADD = -lboost_unit_test_framework ../snapper/libsnapper.la
