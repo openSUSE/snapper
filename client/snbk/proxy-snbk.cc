@@ -29,23 +29,32 @@ namespace snapper
 {
 
 
-    ProxySnapshotsSnbk::ProxySnapshotsSnbk(const TheBigThings& the_big_things)
+    ProxySnapshotsSnbk::ProxySnapshotsSnbk(const TheBigThings& the_big_things,
+                                           bool include_missing)
     {
 	for (TheBigThings::const_iterator it = the_big_things.begin();
 	     it != the_big_things.end(); ++it)
 	{
-	    // Only add valid and legacy snapshots to the list. The missing snapshots are
-	    // managed by snapper, and the invalid snapshots should be fixed before
-	    // cleanup.
+	    // Add snapshots in valid and legacy states. Snapshots in the missing state
+	    // are optionally added for transfer-and-cleanup emulation purpose. Invalid
+	    // snapshots are not included, as they should be fixed before cleanup.
 	    if (it->target_state == TheBigThing::TargetState::VALID ||
-	        it->target_state == TheBigThing::TargetState::LEGACY)
+	        it->target_state == TheBigThing::TargetState::LEGACY ||
+	        (include_missing &&
+	         it->target_state == TheBigThing::TargetState::MISSING))
 		proxy_snapshots.emplace_back(new ProxySnapshotSnbk(it));
 	}
     }
 
     void SnbkCleanable::delete_snapshots(vector<ProxySnapshots::iterator> snapshots,
-                                         bool verbose, Plugins::Report& report) const
+                                         bool verbose, Plugins::Report& report)
     {
+	ProxyCleanable::delete_snapshots(snapshots, verbose, report);
+
+	// Skip actual snapshot deletion in emulation mode.
+	if (emulation)
+	    return;
+
 	for (ProxySnapshots::iterator proxy_it : snapshots)
 	{
 	    TheBigThings::iterator it = the_big_things.find(proxy_it->getNum());
