@@ -112,8 +112,23 @@ Backgrounds::worker()
 	    Task task = tasks.front();
 	    lock.unlock();
 
-	    const Snapper* snapper = task.meta_snapper->getSnapper();
-	    Comparison comparison(snapper, task.snapshot1, task.snapshot2, false);
+	    try
+	    {
+		const Snapper* snapper = task.meta_snapper->getSnapper();
+		Comparison comparison(snapper, task.snapshot1, task.snapshot2, false);
+	    }
+	    catch (const Exception& e)
+	    {
+		// The comparison is only an optimization. A failure, e.g. an
+		// unreadable file, must not terminate the daemon.
+		SN_CAUGHT(e);
+		y2err("background comparison failed");
+	    }
+	    catch (const exception& e)
+	    {
+		y2err("background comparison failed (" << e.what() << ")");
+	    }
+
 	    task.meta_snapper->dec_use_count();
 
 	    lock.lock();
