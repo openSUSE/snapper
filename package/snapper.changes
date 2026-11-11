@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Nov 10 15:30:00 CET 2026 - Asish Kumar <officialasishkumar@gmail.com>
+
+- do not terminate snapperd if a background comparison fails
+  (gh#openSUSE/snapper#1218)
+
+-------------------------------------------------------------------
 Thu Oct 22 04:02:29 UTC 2026 - rlysleepynick <hirohiro239@outlook.jp>
 
 - fix fish subcommands completion after options with arguments (e.g. -c)
