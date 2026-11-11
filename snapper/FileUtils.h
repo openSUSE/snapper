@@ -84,9 +84,9 @@ namespace snapper
 	vector<string> entries_recursive() const;
 	vector<string> entries_recursive(entries_pred_t pred) const;
 
-	int stat(struct stat* buf) const;
+	[[nodiscard]] int stat(struct stat* buf) const;
 
-	int stat(const string& name, struct stat* buf, int flags) const;
+	[[nodiscard]] int stat(const string& name, struct stat* buf, int flags) const;
 
 	int open(const string& name, int flags) const;
 	int open(const string& name, int flags, mode_t mode) const;
@@ -115,8 +115,8 @@ namespace snapper
 	// Query size and free.
 	std::pair<unsigned long long, unsigned long long> statvfs() const;
 
-	int mktemp(string& name) const;
-	bool mkdtemp(string& name) const;
+	[[nodiscard]] int mktemp(string& name) const;
+	[[nodiscard]] bool mkdtemp(string& name) const;
 
 	bool xaSupported() const;
 
