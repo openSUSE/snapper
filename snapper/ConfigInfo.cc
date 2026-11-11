@@ -28,6 +28,7 @@
 #include "snapper/SnapperDefines.h"
 #include "snapper/AppUtil.h"
 #include "snapper/Snapper.h"
+#include "snapper/SnapperTmpl.h"
 
 
 namespace snapper
@@ -60,6 +61,37 @@ namespace snapper
 
 	    SN_THROW(InvalidConfigdataException());
 	}
+    }
+
+
+    static bool
+    is_boolean_key(const string& key)
+    {
+	static const vector<string> boolean_keys = {
+	    "BACKGROUND_COMPARISON", "EMPTY_PRE_POST_CLEANUP", "NUMBER_CLEANUP", "SPECIAL_CMP",
+	    KEY_SYNC_ACL, "TIMELINE_CLEANUP", KEY_TIMELINE_CREATE, "UNIQUE_NUMBERS"
+	};
+
+	return contains(boolean_keys, key);
+    }
+
+
+    void
+    ConfigInfo::check_key_value(const string& key, const string& value) const
+    {
+	check_key(key);
+
+	if (is_boolean_key(key) && value != "yes" && value != "no")
+	    SN_THROW(InvalidConfigdataException());
+    }
+
+
+    void
+    ConfigInfo::set_value(const string& key, const string& value)
+    {
+	check_key_value(key, value);
+
+	SysconfigFile::set_value(key, value);
     }
 
 }

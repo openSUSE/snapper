@@ -42,6 +42,16 @@ namespace snapper
 
 	virtual void check_key(const std::string& key) const override;
 
+	/**
+	 * Checks the key and the value. Throws InvalidConfigdataException if
+	 * either is invalid. So far only the values of boolean keys are checked:
+	 * they must be "yes" or "no".
+	 */
+	void check_key_value(const std::string& key, const std::string& value) const;
+
+	using SysconfigFile::set_value;
+	virtual void set_value(const std::string& key, const std::string& value) override;
+
     private:
 
 	const std::string config_name;

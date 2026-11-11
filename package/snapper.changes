@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Wed Nov 11 12:45:00 CET 2026 - Asish Kumar <officialasishkumar@gmail.com>
+
+- reject invalid boolean values in set-config and do not apply
+  any setting if one key or value is invalid
+  (gh#openSUSE/snapper#631)
+
+-------------------------------------------------------------------
 Tue Nov 10 15:30:00 CET 2026 - Asish Kumar <officialasishkumar@gmail.com>
 
 - do not terminate snapperd if a background comparison fails

@@ -418,7 +418,8 @@
 	  <replaceable>configdata</replaceable> are a list of key-value-pairs separated
 	  by spaces and the key and value must be separated by an equal sign,
 	  e.g. "NUMBER_CLEANUP=yes NUMBER_LIMIT=10". The value of SUBVOLUME and FSTYPE
-	  cannot be changed.</para>
+	  cannot be changed. Boolean values must be "yes" or "no". If any key or value
+	  is invalid, no setting is changed.</para>
 	</listitem>
       </varlistentry>
 

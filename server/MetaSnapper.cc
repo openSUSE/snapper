@@ -50,6 +50,10 @@ MetaSnapper::~MetaSnapper()
 void
 MetaSnapper::setConfigInfo(const map<string, string>& raw)
 {
+    // check all values before modifying anything to avoid partial changes
+    for (map<string, string>::const_iterator it = raw.begin(); it != raw.end(); ++it)
+	config_info.check_key_value(it->first, it->second);
+
     for (map<string, string>::const_iterator it = raw.begin(); it != raw.end(); ++it)
 	config_info.set_value(it->first, it->second);
 
