@@ -272,7 +272,9 @@ namespace snapper
 	    ret.push_back(*it1);
 
 	    struct stat buf;
-	    stat(*it1, &buf, AT_SYMLINK_NOFOLLOW);
+	    if (stat(*it1, &buf, AT_SYMLINK_NOFOLLOW) != 0)
+		SN_THROW(IOErrorException("stat failed path: " + fullname() + "/" + *it1));
+
 	    if (S_ISDIR(buf.st_mode))
 	    {
 		vector<string> b = SDir(*this, *it1).entries_recursive();
