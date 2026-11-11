@@ -138,18 +138,15 @@ namespace snapper
 	}
 	catch (const runtime_error_with_errno& e)
 	{
-	    y2err("create subvolume failed, " << e.what());
-
-	    switch (e.error_number)
+	    if (e.error_number != EEXIST)
 	    {
-		case EEXIST:
-		    SN_THROW(CreateConfigFailedException("creating btrfs subvolume .snapshots failed "
-							 "since it already exists"));
-		    break;
-
-		default:
-		    SN_THROW(CreateConfigFailedException("creating btrfs subvolume .snapshots failed"));
+		y2err("create subvolume failed, " << e.what());
+		SN_THROW(CreateConfigFailedException("creating btrfs subvolume .snapshots failed"));
 	    }
+
+	    y2mil(".snapshots already exists");
+
+	    checkExistingSnapshotsDir(subvolume_dir);
 	}
 
 	SFile x(subvolume_dir, SNAPSHOTS_NAME);
@@ -169,6 +166,56 @@ namespace snapper
 	struct stat stat;
 	if (x.stat(&stat, 0) == 0)
 	    x.chmod(stat.st_mode & ~0027, 0);
+    }
+
+
+    void
+    Btrfs::checkExistingSnapshotsDir(const SDir& subvolume_dir) const
+    {
+	// An existing .snapshots, e.g. a subvolume created in advance and mounted
+	// at .snapshots, is only used if it is an empty btrfs subvolume owned by
+	// root on the same btrfs as the subvolume. Snapshots cannot be created
+	// across btrfs filesystems.
+
+	struct stat stat;
+	if (subvolume_dir.stat(SNAPSHOTS_NAME, &stat, AT_SYMLINK_NOFOLLOW) != 0 || !is_subvolume(stat))
+	{
+	    y2err(".snapshots is not a btrfs subvolume");
+	    SN_THROW(CreateConfigFailedException(".snapshots already exists but is not a btrfs "
+						 "subvolume"));
+	}
+
+	SDir snapshots_dir(subvolume_dir, SNAPSHOTS_NAME);
+
+	bool same_btrfs = false;
+
+	try
+	{
+	    same_btrfs = get_uuid(snapshots_dir.fd()) == get_uuid(subvolume_dir.fd());
+	}
+	catch (const runtime_error& e)
+	{
+	    y2err("get uuid failed, " << e.what());
+	}
+
+	if (!same_btrfs)
+	{
+	    y2err(".snapshots is not on the same btrfs");
+	    SN_THROW(CreateConfigFailedException(".snapshots already exists but is not on the same "
+						 "btrfs"));
+	}
+
+	if (stat.st_uid != 0)
+	{
+	    y2err(".snapshots must have owner root");
+	    SN_THROW(CreateConfigFailedException(".snapshots already exists but is not owned by root"));
+	}
+
+	if (!snapshots_dir.entries().empty())
+	{
+	    y2err(".snapshots is not empty");
+	    SN_THROW(CreateConfigFailedException(".snapshots already exists but is not empty"));
+	}
     }
 
 
