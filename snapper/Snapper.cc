@@ -297,6 +297,25 @@ namespace snapper
     }
 
 
+    static void
+    undo_create_config(const string& config_name)
+    {
+	// Used if creating the config fails after the config was added to the sysconfig
+	// file. Otherwise the config could neither be created nor deleted afterwards.
+
+	SysconfigFile sysconfig(SYSCONFIG_FILE);
+	vector<string> config_names;
+	sysconfig.get_value("SNAPPER_CONFIGS", config_names);
+	config_names.erase(remove(config_names.begin(), config_names.end(), config_name),
+			   config_names.end());
+	sysconfig.set_value("SNAPPER_CONFIGS", config_names);
+
+	sysconfig.save();
+
+	SystemCmd cmd({ RM_BIN, "--", CONFIGS_DIR "/" + config_name });
+    }
+
+
     void
     Snapper::createConfig(const string& config_name, const string& root_prefix,
 			  const string& subvolume, const string& fstype,
@@ -398,7 +417,9 @@ namespace snapper
 	{
 	    SN_CAUGHT(e);
 
-	    SN_THROW(CreateConfigFailedException("modifying config failed"));
+	    undo_create_config(config_name);
+
+	    SN_THROW(CreateConfigFailedException(e.what()));
 	}
 
 	try
@@ -409,16 +430,7 @@ namespace snapper
 	{
 	    SN_CAUGHT(e);
 
-	    SysconfigFile sysconfig(SYSCONFIG_FILE);
-	    vector<string> config_names;
-	    sysconfig.get_value("SNAPPER_CONFIGS", config_names);
-	    config_names.erase(remove(config_names.begin(), config_names.end(), config_name),
-			       config_names.end());
-	    sysconfig.set_value("SNAPPER_CONFIGS", config_names);
-
-	    sysconfig.save();
-
-	    SystemCmd cmd({ RM_BIN, "--", CONFIGS_DIR "/" + config_name });
+	    undo_create_config(config_name);
 
 	    SN_RETHROW(e);
 	}
