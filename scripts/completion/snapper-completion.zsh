@@ -82,7 +82,7 @@ list)
   _arguments -s -S \
   {--type,-t}'[Type of snapshots to list]:type:(($type))' \
   --disable-used-space'[Disable showing used space]' \
-  {--all,-a-configs}'[List snapshots from all accessible configs]' \
+  {--all-configs,-a}'[List snapshots from all accessible configs]' \
   --columns'[Columns to show separated by comma]:columns:(config subvolume number default active type date user used-space cleanup description userdata pre-number post-number post-date read-only)'
   ;;
 create)
