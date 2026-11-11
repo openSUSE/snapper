@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Wed Nov 11 16:30:00 CET 2026 - Asish Kumar <officialasishkumar@gmail.com>
+
+- remove the config from SNAPPER_CONFIGS and report the reason if
+  create-config fails to write the config file
+  (gh#openSUSE/snapper#533)
+
+-------------------------------------------------------------------
 Tue Nov 10 15:30:00 CET 2026 - Asish Kumar <officialasishkumar@gmail.com>
 
 - do not terminate snapperd if a background comparison fails
