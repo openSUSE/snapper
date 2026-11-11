@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Nov 11 16:00:00 CET 2026 - Asish Kumar <officialasishkumar@gmail.com>
+
+- allow create-config to use an existing empty .snapshots btrfs
+  subvolume (gh#openSUSE/snapper#521)
+
+-------------------------------------------------------------------
 Tue Nov 10 15:30:00 CET 2026 - Asish Kumar <officialasishkumar@gmail.com>
 
 - do not terminate snapperd if a background comparison fails

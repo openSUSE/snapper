@@ -361,6 +361,11 @@
 	  <link linkend='global_options'>GLOBAL OPTIONS</link> and
 	  <link linkend="concepts">CONCEPTS.</link></para>
 
+	  <para>For btrfs, snapper creates the subvolume .snapshots in the
+	  subvolume. If .snapshots already exists, snapper uses it if it is an
+	  empty btrfs subvolume owned by root on the same btrfs, e.g. a subvolume
+	  mounted at .snapshots. Otherwise the command fails.</para>
+
 	  <variablelist>
 	    <varlistentry>
 	      <term><option>-f, --fstype</option> <replaceable>fstype</replaceable></term>

@@ -108,6 +108,12 @@ namespace snapper
 	void removeFromFstabHelper() const;
 
 	/**
+	 * Check whether an existing .snapshots can be used by createConfig.
+	 * Throws CreateConfigFailedException if not.
+	 */
+	void checkExistingSnapshotsDir(const SDir& subvolume_dir) const;
+
+	/**
 	 * Find the snapper snapshot number corresponding to the btrfs
 	 * subvol id.
 	 */
