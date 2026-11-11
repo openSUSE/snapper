@@ -432,6 +432,57 @@ namespace snapper
     }
 
 
+    static bool
+    is_timeline_create_used(const string& root_prefix)
+    {
+	SysconfigFile sysconfig(prepend_root_prefix(root_prefix, SYSCONFIG_FILE));
+	vector<string> config_names;
+	sysconfig.get_value("SNAPPER_CONFIGS", config_names);
+
+	for (const string& config_name : config_names)
+	{
+	    ConfigInfo config_info = Snapper::getConfig(config_name, root_prefix);
+
+	    bool timeline_create;
+	    if (config_info.get_value(KEY_TIMELINE_CREATE, timeline_create) && timeline_create)
+		return true;
+	}
+
+	return false;
+    }
+
+
+    static void
+    disable_timeline_if_unused(const string& root_prefix)
+    {
+	// systemctl works on the running system and not on the root prefix. So the
+	// configs of the root prefix tell nothing about the timer of the running
+	// system.
+
+	if (!root_prefix.empty() && root_prefix != "/")
+	    return;
+
+	// Only disable snapper-timeline.timer if it is known that no config has
+	// TIMELINE_CREATE enabled. Unlike Snapper::getConfigs() configs that cannot
+	// be read are not ignored since they might have TIMELINE_CREATE enabled.
+
+	try
+	{
+	    if (is_timeline_create_used(root_prefix))
+		return;
+	}
+	catch (const Exception& e)
+	{
+	    SN_CAUGHT(e);
+
+	    y2err("checking for configs with timeline failed, not disabling snapper-timeline.timer");
+	    return;
+	}
+
+	systemctl_enable_timeline(false);
+    }
+
+
     void
     Snapper::deleteConfig(const string& config_name, const string& root_prefix, Plugins::Report& report)
     {
@@ -439,6 +490,9 @@ namespace snapper
 	y2mil("libsnapper version " VERSION);
 
 	unique_ptr<Snapper> snapper = make_unique<Snapper>(config_name, root_prefix);
+
+	bool timeline_create = false;
+	snapper->getConfigInfo().get_value(KEY_TIMELINE_CREATE, timeline_create);
 
 	Plugins::delete_config(Plugins::Stage::PRE_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
 			       report);
@@ -515,7 +569,10 @@ namespace snapper
 	    SN_THROW(DeleteConfigFailedException("modifying sysconfig-file failed"));
 	}
 
-	// TODO potentially disable snapper-timeline.timer
+	if (timeline_create)
+	{
+	    disable_timeline_if_unused(root_prefix);
+	}
 
 	Plugins::delete_config(Plugins::Stage::POST_ACTION, snapper->subvolumeDir(), snapper->getFilesystem(),
 			       report);
@@ -551,7 +608,7 @@ namespace snapper
 		}
 		else
 		{
-		    // TODO potentially disable snapper-timeline.timer
+		    disable_timeline_if_unused(root_prefix);
 		}
 	    }
 	}
