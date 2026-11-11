@@ -49,6 +49,9 @@ namespace snapper
 	 */
 	void check_key_value(const std::string& key, const std::string& value) const;
 
+	// Overriding one set_value() overload hides the other overloads of the
+	// base class (bool, const char*, vector<string>). Bring them back so
+	// they stay callable on ConfigInfo.
 	using SysconfigFile::set_value;
 	virtual void set_value(const std::string& key, const std::string& value) override;
 
