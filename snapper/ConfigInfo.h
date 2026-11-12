@@ -1,6 +1,6 @@
 /*
  * Copyright (c) [2011-2015] Novell, Inc.
- * Copyright (c) [2016-2025] SUSE LLC
+ * Copyright (c) [2016-2026] SUSE LLC
  *
  * All Rights Reserved.
  *
@@ -53,6 +53,7 @@ namespace snapper
 	// base class (bool, const char*, vector<string>). Bring them back so
 	// they stay callable on ConfigInfo.
 	using SysconfigFile::set_value;
+
 	virtual void set_value(const std::string& key, const std::string& value) override;
 
     private:
