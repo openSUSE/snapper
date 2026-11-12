@@ -114,7 +114,8 @@
       <para>Snapper provides several algorithms to clean up old snapshots. The
       algorithms are executed in an hourly cronjob or systemd timer. This can be configured in the
       corresponding configurations files along with parameters for every
-      algorithm.</para>
+      algorithm. The cleanup command runs the requested algorithm even if it
+      is disabled in the configuration file.</para>
 
       <glosslist>
 	<glossentry>
@@ -138,6 +139,19 @@
 	  </glossdef>
 	</glossentry>
       </glosslist>
+
+      <para>The number cleanup algorithm only considers snapshots with the
+      cleanup algorithm number and the timeline cleanup algorithm only
+      snapshots with the cleanup algorithm timeline. The cleanup algorithm of a
+      snapshot is set when the snapshot is created and can be changed with the
+      modify command. Snapshots without a cleanup algorithm are never deleted by
+      these two algorithms.</para>
+
+      <para>In contrast the empty-pre-post cleanup algorithm considers all
+      pre/post snapshot pairs independent of their cleanup algorithm. Thus
+      pre/post snapshot pairs without a cleanup algorithm are also deleted if
+      their diff is empty. To keep such pairs set EMPTY_PRE_POST_CLEANUP to
+      "no" in the config file.</para>
 
       <para>The number and timeline cleanup algorithms can also try to
       keep the space used by snapshots below a limit and the free space of
