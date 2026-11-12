@@ -63,17 +63,56 @@ BOOST_AUTO_TEST_CASE(boolean_values)
 }
 
 
+BOOST_AUTO_TEST_CASE(number_values)
+{
+    create_config();
+
+    ConfigInfo config_info("test", ROOT_PREFIX);
+
+    string tmp_string;
+
+    config_info.set_value("NUMBER_MIN_AGE", "4000");
+    BOOST_CHECK(config_info.get_value("NUMBER_MIN_AGE", tmp_string));
+    BOOST_CHECK_EQUAL(tmp_string, "4000");
+
+    BOOST_CHECK_THROW(config_info.set_value("NUMBER_MIN_AGE", ""), InvalidConfigdataException);
+    BOOST_CHECK_THROW(config_info.set_value("NUMBER_MIN_AGE", "4000s"), InvalidConfigdataException);
+}
+
+
+BOOST_AUTO_TEST_CASE(range_values)
+{
+    create_config();
+
+    ConfigInfo config_info("test", ROOT_PREFIX);
+
+    string tmp_string;
+
+    config_info.set_value("NUMBER_LIMIT", "25");
+    BOOST_CHECK(config_info.get_value("NUMBER_LIMIT", tmp_string));
+    BOOST_CHECK_EQUAL(tmp_string, "25");
+
+    config_info.set_value("NUMBER_LIMIT", "25-50");
+    BOOST_CHECK(config_info.get_value("NUMBER_LIMIT", tmp_string));
+    BOOST_CHECK_EQUAL(tmp_string, "25-50");
+
+    BOOST_CHECK_THROW(config_info.set_value("NUMBER_LIMIT", ""), InvalidConfigdataException);
+    BOOST_CHECK_THROW(config_info.set_value("NUMBER_LIMIT", "15-"), InvalidConfigdataException);
+    BOOST_CHECK_THROW(config_info.set_value("NUMBER_LIMIT", "-40"), InvalidConfigdataException);
+}
+
+
 BOOST_AUTO_TEST_CASE(other_values)
 {
     create_config();
 
     ConfigInfo config_info("test", ROOT_PREFIX);
 
-    config_info.set_value("NUMBER_LIMIT", "2-10");
+    config_info.set_value("ALLOW_USERS", "linux tux");
 
     string tmp_string;
-    BOOST_CHECK(config_info.get_value("NUMBER_LIMIT", tmp_string));
-    BOOST_CHECK_EQUAL(tmp_string, "2-10");
+    BOOST_CHECK(config_info.get_value("ALLOW_USERS", tmp_string));
+    BOOST_CHECK_EQUAL(tmp_string, "linux tux");
 }
 
 
@@ -88,6 +127,7 @@ BOOST_AUTO_TEST_CASE(check_key_value)
     BOOST_CHECK_NO_THROW(config_info.check_key_value("ALLOW_USERS", "Tux"));
 
     BOOST_CHECK_THROW(config_info.check_key_value("SYNC_ACL", "YES"), InvalidConfigdataException);
+    BOOST_CHECK_THROW(config_info.check_key_value("NUMBER_LIMIT", "25+"), InvalidConfigdataException);
     BOOST_CHECK_THROW(config_info.check_key_value("number_cleanup", "yes"), InvalidConfigdataException);
     BOOST_CHECK_THROW(config_info.check_key_value("SUBVOLUME", "/home"), InvalidConfigdataException);
 }
