@@ -77,6 +77,14 @@ namespace snapper
 				const BackupConfigs& backup_configs, ProxySnappers* snappers);
 
 
+    void
+    help_transfer_and_cleanup();
+
+    void
+    command_transfer_and_cleanup(const GlobalOptions& global_options, GetOpts& get_opts,
+				 const BackupConfigs& backup_configs, ProxySnappers* snappers);
+
+
     void help_visualize();
 
     void command_visualize(const GlobalOptions& global_options, GetOpts& get_opts,

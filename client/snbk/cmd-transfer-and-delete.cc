@@ -24,74 +24,12 @@
 
 #include "../utils/text.h"
 
-#include "utils.h"
+#include "GlobalOptions.h"
+#include "cmd.h"
 
 
 namespace snapper
 {
-    namespace
-    {
-	class SnapshotTransferAndDelete : public SnapshotOperation
-	{
-	public:
-
-	    SnapshotTransferAndDelete(const GlobalOptions& global_options,
-	                              GetOpts& get_opts,
-	                              const BackupConfigs& backup_configs,
-	                              ProxySnappers* snappers)
-	        : SnapshotOperation(global_options, get_opts, backup_configs, snappers)
-	    {
-	    }
-
-	protected:
-
-	    const char* command() const override { return "transfer-and-delete"; }
-
-	    void prerequisite() const override
-	    {
-		if (get_opts.has_args())
-		{
-		    SN_THROW(OptionsException(
-		        _("Command 'transfer-and-delete' does not take arguments.")));
-		}
-	    }
-
-	    void run_all(TheBigThings& the_big_things, const BackupConfig& backup_config,
-	                 bool quiet, bool verbose) const override
-	    {
-		the_big_things.transfer(backup_config, global_options.quiet(),
-		                        global_options.quiet());
-		the_big_things.remove(backup_config, global_options.quiet(),
-		                      global_options.quiet());
-	    }
-
-	    void run_single(TheBigThing& the_big_thing, const BackupConfig& backup_config,
-	                    TheBigThings& the_big_things, bool quiet) const override
-	    {
-		SN_THROW(Exception(_("Command 'transfer-and-delete' does not support "
-		                     "operating on a single snapshot.")));
-	    }
-
-	    const char* msg_running() const override
-	    {
-		return _("Running transfer and delete for backup config '%s'.");
-	    }
-
-	    const char* msg_failed() const override
-	    {
-		return _("Running transfer and delete for backup config '%s' failed.");
-	    }
-
-	    const char* msg_error_summary() const override
-	    {
-		return _(
-		    "Running transfer and delete failed for %d of %ld backup config.",
-		    "Running transfer and delete failed for %d of %ld backup configs.",
-		    backup_configs.size());
-	    }
-	};
-
-    } // namespace
 
     using namespace std;
 
@@ -101,6 +39,9 @@ namespace snapper
     {
 	cout << "  " << _("Transfer and delete:") << '\n'
 	     << "\t" << _("snbk transfer-and-delete") << '\n'
+	     << '\n'
+	     << "\t" << _("A backward-compatibility alias for 'transfer-and-cleanup'.")
+	     << '\n'
 	     << '\n';
     }
 
@@ -109,9 +50,15 @@ namespace snapper
     command_transfer_and_delete(const GlobalOptions& global_options, GetOpts& get_opts,
 				const BackupConfigs& backup_configs, ProxySnappers* snappers)
     {
-	SnapshotTransferAndDelete snapshot_operation(global_options, get_opts,
-	                                             backup_configs, snappers);
-	snapshot_operation();
+	const char* warning_msg =
+	    _("The 'transfer-and-delete' command has been renamed to "
+	      "'transfer-and-cleanup' and may be removed in the future. Please use the "
+	      "'transfer-and-cleanup' command instead.");
+
+	cout << _("WARNING: ") << warning_msg << '\n' << '\n';
+	y2war(warning_msg);
+
+	command_transfer_and_cleanup(global_options, get_opts, backup_configs, snappers);
     }
 
 }
