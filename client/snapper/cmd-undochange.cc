@@ -47,7 +47,8 @@ namespace snapper
 	     << _("    Options for 'undochange' command:") << '\n';
 
 	print_options({
-	    { _("--input, -i <file>"), _("Read files for which to undo changes from file.") }
+	    { _("--input, -i <file>"), _("Read files for which to undo changes from file.") },
+	    { _("--recursive"), _("Also undo changes of files below the given directories.") }
 	});
     }
 
@@ -57,7 +58,8 @@ namespace snapper
 		       ProxySnapper* snapper, Plugins::Report& report)
     {
 	const vector<Option> options = {
-	    Option("input",		required_argument,	'i')
+	    Option("input",		required_argument,	'i'),
+	    Option("recursive",		no_argument)
 	};
 
 	ParsedOpts opts = get_opts.parse("undochange", options);
@@ -86,6 +88,8 @@ namespace snapper
 	    }
 	}
 
+	bool recursive = opts.has_option("recursive");
+
 	if (range.first->isCurrent())
 	{
 	    cerr << _("Invalid snapshots.") << endl;
@@ -96,7 +100,7 @@ namespace snapper
 
 	MyFiles files(comparison.getFiles());
 
-	files.bulk_process(file, get_opts, [](File& file) {
+	files.bulk_process(file, get_opts, recursive, [](File& file) {
 	    file.setUndo(true);
 	});
 

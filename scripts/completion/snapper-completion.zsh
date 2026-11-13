@@ -131,6 +131,7 @@ diff)
 undochange)
   _arguments -s -S \
     {--input,-i}'[Read files for which to undo changes from file]: :_files' \
+    --recursive'[Also undo changes of files below the given directories]' \
     ":number:(($number))" \
     "*:: :_files"
   ;;

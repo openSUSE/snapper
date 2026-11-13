@@ -131,7 +131,7 @@ _snapper()
                 ;;
             undochange)
                 COMPREPLY=( $( compgen -W '--input -i
-                    ' -- "$cur" ) )
+                    --recursive' -- "$cur" ) )
                 return 0
                 ;;
             rollback)
