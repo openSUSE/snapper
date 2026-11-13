@@ -763,6 +763,14 @@
 		<para>Read files for which to undo changes from file <replaceable>file</replaceable>.</para>
 	      </listitem>
 	    </varlistentry>
+	    <varlistentry>
+	      <term><option>--recursive</option></term>
+	      <listitem>
+		<para>Also undo changes of all files below the given
+		directories. Without this option only the changes of the given
+		files and directories themselves are undone.</para>
+	      </listitem>
+	    </varlistentry>
 	  </variablelist>
 	</listitem>
       </varlistentry>

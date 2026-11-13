@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Fri Nov 13 10:30:00 CET 2026 - Asish Kumar <officialasishkumar@gmail.com>
+
+- added option --recursive to undochange command to also undo the
+  changes of all files below the given directories
+  (gh#openSUSE/snapper#575)
+
+-------------------------------------------------------------------
 Wed Nov 11 12:45:00 CET 2026 - Asish Kumar <officialasishkumar@gmail.com>
 
 - reject invalid boolean values in set-config and do not apply

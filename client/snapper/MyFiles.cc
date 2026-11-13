@@ -22,6 +22,7 @@
 
 
 #include <iostream>
+#include <boost/algorithm/string.hpp>
 
 #include "../proxy/proxy.h"
 #include "../utils/text.h"
@@ -37,7 +38,8 @@ namespace snapper
 {
 
     void
-    MyFiles::bulk_process(FILE* file, GetOpts& get_opts, std::function<void(File& file)> callback)
+    MyFiles::bulk_process(FILE* file, GetOpts& get_opts, bool recursive,
+			  std::function<void(File& file)> callback)
     {
 	if (file)
 	{
@@ -61,14 +63,7 @@ namespace snapper
 		    name.erase(0, pos + 1);
 		}
 
-		Files::iterator it = findAbsolutePath(name);
-		if (it == end())
-		{
-		    cerr << sformat(_("File '%s' not found."), name.c_str()) << endl;
-		    exit(EXIT_FAILURE);
-		}
-
-		callback(*it);
+		process(name, recursive, callback);
 	    }
 	}
 	else
@@ -84,16 +79,58 @@ namespace snapper
 		{
 		    string name = get_opts.pop_arg();
 
-		    Files::iterator it = findAbsolutePath(name);
-		    if (it == end())
-		    {
-			cerr << sformat(_("File '%s' not found."), name.c_str()) << endl;
-			exit(EXIT_FAILURE);
-		    }
-
-		    callback(*it);
+		    process(name, recursive, callback);
 		}
 	    }
+	}
+    }
+
+
+    void
+    MyFiles::process(const string& name, bool recursive, std::function<void(File& file)> callback)
+    {
+	if (!recursive)
+	{
+	    Files::iterator it = findAbsolutePath(name);
+	    if (it == end())
+	    {
+		cerr << sformat(_("File '%s' not found."), name.c_str()) << endl;
+		exit(EXIT_FAILURE);
+	    }
+
+	    callback(*it);
+	    return;
+	}
+
+	// Strip trailing slashes so that e.g. "/etc/" matches "/etc" and the
+	// files below it.
+
+	string path = name;
+	while (path.size() > 1 && boost::ends_with(path, "/"))
+	    path.pop_back();
+
+	bool found = false;
+
+	if (!path.empty())
+	{
+	    const string prefix = path == "/" ? path : path + "/";
+
+	    for (Files::iterator it = begin(); it != end(); ++it)
+	    {
+		const string absolute_path = it->getAbsolutePath(LOC_SYSTEM);
+
+		if (absolute_path == path || boost::starts_with(absolute_path, prefix))
+		{
+		    callback(*it);
+		    found = true;
+		}
+	    }
+	}
+
+	if (!found)
+	{
+	    cerr << sformat(_("File '%s' not found."), name.c_str()) << endl;
+	    exit(EXIT_FAILURE);
 	}
     }
 

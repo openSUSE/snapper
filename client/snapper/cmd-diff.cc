@@ -102,7 +102,7 @@ namespace snapper
 
 	MyFiles files(comparison.getFiles());
 
-	files.bulk_process(file, get_opts, [differ](const File& file) {
+	files.bulk_process(file, get_opts, false, [differ](const File& file) {
 	    differ.run(file.getAbsolutePath(LOC_PRE), file.getAbsolutePath(LOC_POST));
 	});
     }
