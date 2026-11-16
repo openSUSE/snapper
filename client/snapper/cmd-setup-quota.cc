@@ -23,6 +23,8 @@
 
 #include <iostream>
 
+#include <snapper/AppUtil.h>
+
 #include "../utils/text.h"
 #include "../proxy/proxy.h"
 #include "GlobalOptions.h"
@@ -50,8 +52,7 @@ namespace snapper
 	ParsedOpts opts = get_opts.parse("setup-quota", GetOpts::no_options);
 	if (get_opts.num_args() != 0)
 	{
-	    cerr << _("Command 'setup-quota' does not take arguments.") << endl;
-	    exit(EXIT_FAILURE);
+	    SN_THROW(OptionsException(_("Command 'setup-quota' does not take arguments.")));
 	}
 
 	snapper->setupQuota();

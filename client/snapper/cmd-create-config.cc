@@ -64,15 +64,13 @@ namespace snapper
 	ParsedOpts opts = get_opts.parse("create-config", options);
 	if (get_opts.num_args() != 1)
 	{
-	    cerr << _("Command 'create-config' needs one argument.") << endl;
-	    exit(EXIT_FAILURE);
+	    SN_THROW(OptionsException(_("Command 'create-config' needs one argument.")));
 	}
 
 	string subvolume = realpath(get_opts.pop_arg());
 	if (subvolume.empty())
 	{
-	    cerr << _("Invalid subvolume.") << endl;
-	    exit(EXIT_FAILURE);
+	    SN_THROW(OptionsException(_("Invalid subvolume.")));
 	}
 
 	string fstype = "";

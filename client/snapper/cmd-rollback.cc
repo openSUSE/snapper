@@ -75,8 +75,7 @@ namespace snapper
 	ParsedOpts opts = get_opts.parse("rollback", options);
 	if (get_opts.has_args() && get_opts.num_args() != 1)
 	{
-	    cerr << _("Command 'rollback' takes either one or no argument.") << endl;
-	    exit(EXIT_FAILURE);
+	    SN_THROW(OptionsException(_("Command 'rollback' takes either one or no argument.")));
 	}
 
 	const string default_description1 = "rollback backup";

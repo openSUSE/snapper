@@ -23,6 +23,8 @@
 
 #include <iostream>
 
+#include <snapper/AppUtil.h>
+
 #include "../utils/text.h"
 #include "../proxy/proxy.h"
 #include "GlobalOptions.h"
@@ -50,8 +52,7 @@ namespace snapper
 	get_opts.parse("delete-config", GetOpts::no_options);
 	if (get_opts.has_args())
 	{
-	    cerr << _("Command 'delete-config' does not take arguments.") << endl;
-	    exit(EXIT_FAILURE);
+	    SN_THROW(OptionsException(_("Command 'delete-config' does not take arguments.")));
 	}
 
 	snappers->deleteConfig(global_options.config(), report);

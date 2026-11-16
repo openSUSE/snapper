@@ -63,15 +63,15 @@ namespace snapper
 	ParsedOpts opts = get_opts.parse("status", options);
 	if (get_opts.num_args() != 1)
 	{
-	    cerr << _("Command 'status' needs one argument.") << endl;
+	    string error = _("Command 'status' needs one argument.");
 
 	    if (get_opts.num_args() == 2)
 	    {
-		cerr << _("Maybe you forgot the delimiter '..' between the snapshot numbers.") << endl
-		     << _("See 'man snapper' for further instructions.") << endl;
+		error += '\n' + string(_("Maybe you forgot the delimiter '..' between the snapshot numbers.")) +
+		    '\n' + string(_("See 'man snapper' for further instructions."));
 	    }
 
-	    exit(EXIT_FAILURE);
+	    SN_THROW(OptionsException(error));
 	}
 
 	ParsedOpts::const_iterator opt;
