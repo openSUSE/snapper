@@ -4,6 +4,13 @@ Wed Nov 11 12:45:00 CET 2026 - Asish Kumar <officialasishkumar@gmail.com>
 - reject invalid boolean values in set-config and do not apply
   any setting if one key or value is invalid
   (gh#openSUSE/snapper#631)
+  
+-------------------------------------------------------------------
+Wed Nov 11 12:00:00 CET 2026 - Asish Kumar <officialasishkumar@gmail.com>
+
+- disable snapper-timeline.timer when no config has TIMELINE_CREATE
+  enabled anymore after adjusting or deleting a config using snapper
+  (gh#openSUSE/snapper#788)
 
 -------------------------------------------------------------------
 Tue Nov 10 15:30:00 CET 2026 - Asish Kumar <officialasishkumar@gmail.com>

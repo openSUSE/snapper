@@ -214,6 +214,14 @@
 	  <para>Together with the timeline cleanup algorithm this will create
 	  a collection of snapshots with more snapshots in the recent past and
 	  fewer snapshots in the far past.</para>
+	  <para>The hourly snapshots are created by the systemd timer
+	  <filename>snapper-timeline.timer</filename>. When a config with
+	  TIMELINE_CREATE set to &quot;yes&quot; is created or TIMELINE_CREATE is
+	  set to &quot;yes&quot; using snapper, the timer is enabled. When
+	  TIMELINE_CREATE is set to &quot;no&quot; using snapper or a config with
+	  TIMELINE_CREATE set to &quot;yes&quot; is deleted, the timer is disabled
+	  unless another config still has TIMELINE_CREATE set to
+	  &quot;yes&quot;.</para>
 	  <para>Default value is &quot;no&quot;.</para>
 	</listitem>
       </varlistentry>
