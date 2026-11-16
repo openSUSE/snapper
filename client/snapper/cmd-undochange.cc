@@ -23,6 +23,7 @@
 
 #include <iostream>
 
+#include <client/snapper/cmd.h>
 #include <snapper/AppUtil.h>
 
 #include "../utils/text.h"
@@ -112,6 +113,8 @@ namespace snapper
 
 	vector<UndoStep> undo_steps = files.getUndoSteps();
 
+	bool error = false;
+
 	for (vector<UndoStep>::const_iterator it1 = undo_steps.begin(); it1 != undo_steps.end(); ++it1)
 	{
 	    vector<File>::iterator it2 = files.find(it1->name);
@@ -145,6 +148,8 @@ namespace snapper
 
 	    if (!it2->doUndo())
 	    {
+		error = true;
+
 		switch (it1->action)
 		{
 		    case CREATE:
@@ -159,6 +164,9 @@ namespace snapper
 		}
 	    }
 	}
+
+	if (error)
+	    SN_THROW(CommandException(EXIT_FAILURE));
     }
 
 }
