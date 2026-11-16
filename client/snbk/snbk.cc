@@ -27,6 +27,7 @@
 #include "snapper/Logger.h"
 #include <snapper/SnapperTmpl.h>
 #include <snapper/Enum.h>
+#include <snapper/AppUtil.h>
 #include "snapper/SnapperDefines.h"
 
 #include "../utils/text.h"
@@ -80,9 +81,7 @@ help(const vector<Cmd>& cmds, GetOpts& get_opts)
 	vector<Cmd>::const_iterator cmd = find_cmd(cmds, command);
 	if (cmd == cmds.end())
 	{
-	    cerr << sformat(_("Unknown command '%s'."), command) << endl
-		 << _("Try 'snbk --help' for more information.") << endl;
-	    exit(EXIT_FAILURE);
+	    SN_THROW(OptionsException(sformat(_("Unknown command '%s'."), command)));
 	}
 
 	(*cmd->help_func)();
@@ -189,9 +188,7 @@ main(int argc, char** argv)
 
 	if (!get_opts.has_args())
 	{
-	    cerr << _("No command provided.") << endl
-		 << _("Try 'snbk --help' for more information.") << endl;
-	    exit(EXIT_FAILURE);
+	    SN_THROW(OptionsException(_("No command provided.")));
 	}
 
 	const char* command = get_opts.pop_arg();
@@ -199,9 +196,7 @@ main(int argc, char** argv)
 	vector<Cmd>::const_iterator cmd = find_cmd(cmds, command);
 	if (cmd == cmds.end())
 	{
-	    cerr << sformat(_("Unknown command '%s'."), command) << endl
-		 << _("Try 'snbk --help' for more information.") << endl;
-	    exit(EXIT_FAILURE);
+	    SN_THROW(OptionsException(sformat(_("Unknown command '%s'."), command)));
 	}
 
 	try

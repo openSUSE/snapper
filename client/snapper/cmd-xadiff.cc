@@ -25,6 +25,7 @@
 
 #include <iostream>
 
+#include <snapper/AppUtil.h>
 #include <snapper/XAttributes.h>
 
 #include "../utils/text.h"
@@ -77,8 +78,7 @@ namespace snapper
 	ParsedOpts opts = get_opts.parse("xadiff", GetOpts::no_options);
 	if (get_opts.num_args() < 1)
 	{
-	    cerr << _("Command 'xadiff' needs at least one argument.") << endl;
-	    exit(EXIT_FAILURE);
+	    SN_THROW(OptionsException(_("Command 'xadiff' needs at least one argument.")));
 	}
 
 	ProxySnapshots& snapshots = snapper->getSnapshots();

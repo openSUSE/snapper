@@ -63,8 +63,7 @@ namespace snapper
 	ParsedOpts opts = get_opts.parse("undochange", options);
 	if (get_opts.num_args() < 1)
 	{
-	    cerr << _("Command 'undochange' needs at least one argument.") << endl;
-	    exit(EXIT_FAILURE);
+	    SN_THROW(OptionsException(_("Command 'undochange' needs at least one argument.")));
 	}
 
 	ProxySnapshots& snapshots = snapper->getSnapshots();

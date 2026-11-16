@@ -23,6 +23,8 @@
 
 #include <iostream>
 
+#include <snapper/AppUtil.h>
+
 #include "../utils/text.h"
 #include "../proxy/proxy.h"
 #include "GlobalOptions.h"
@@ -47,8 +49,7 @@ namespace snapper
 	get_opts.parse("debug", GetOpts::no_options);
 	if (get_opts.has_args())
 	{
-	    cerr << _("Command 'debug' does not take arguments.") << endl;
-	    exit(EXIT_FAILURE);
+	    SN_THROW(OptionsException(_("Command 'debug' does not take arguments.")));
 	}
 
 	for (const string& line : snappers->debug())
