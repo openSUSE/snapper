@@ -4,3 +4,4 @@
 *.trs
 sysconfig-crlf.txt
 test-suite.log
+config-info.root
