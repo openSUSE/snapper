@@ -23,6 +23,7 @@
 
 #include <iostream>
 
+#include <client/snapper/cmd.h>
 #include <snapper/AppUtil.h>
 
 #include "../utils/text.h"
@@ -166,7 +167,7 @@ namespace snapper
 	}
 
 	if (error)
-	    exit(EXIT_FAILURE);
+	    SN_THROW(CommandException(EXIT_FAILURE));
     }
 
 }
