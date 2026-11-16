@@ -25,11 +25,26 @@
 
 
 #include <functional>
+#include <unordered_set>
 
 #include <snapper/Enum.h>
 
 #include "proxy/locker.h"
 #include "proxy/proxy.h"
+
+
+namespace std
+{
+    /**
+     * Hash function required by the unordered set used in `ProxyCleanable`.
+     */
+    template <> struct hash<snapper::ProxySnapshots::const_iterator>
+    {
+	std::size_t operator()(const snapper::ProxySnapshots::const_iterator& it) const
+	{ return hash<unsigned int>()(it->getNum()); }
+    };
+
+} // namespace std
 
 
 namespace snapper
@@ -60,14 +75,25 @@ namespace snapper
 	virtual ~ProxyCleanable() = default;
 
 	virtual ProxySnapshots& get_snapshots() = 0;
+
+	/**
+	 * This function provides a basic implementation for storing the iterators to
+	 * snapshots that have been requested for deletion. The list of snapshots to
+	 * delete can be retrieved from the `snapshots_deleted` member variable. This
+	 * mechanism can be used when the actual snapshot deletion should be deferred.
+	 */
 	virtual void delete_snapshots(vector<ProxySnapshots::iterator> snapshots,
-	                              bool verbose, Plugins::Report& report) const = 0;
+	                              bool verbose, Plugins::Report& report)
+	{ snapshots_deleted.insert(snapshots.begin(), snapshots.end()); }
+
 	virtual void prepare_quota() const = 0;
 	virtual QuotaData query_quota_data() const = 0;
 	virtual FreeSpaceData query_free_space_data() const = 0;
 	virtual ProxyComparison create_comparison(const ProxySnapshot& lhs,
 	                                          const ProxySnapshot& rhs,
 	                                          bool mount) const = 0;
+
+	std::unordered_set<ProxySnapshots::const_iterator> snapshots_deleted;
     };
 
 
@@ -127,9 +153,9 @@ namespace snapper
 	}
 
 	virtual void delete_snapshots(vector<ProxySnapshots::iterator> snapshots,
-	                              bool verbose,
-	                              Plugins::Report& report) const override
+	                              bool verbose, Plugins::Report& report) override
 	{
+	    ProxyCleanable::delete_snapshots(snapshots, verbose, report);
 	    snapper->deleteSnapshots(snapshots, verbose, report);
 	}
 

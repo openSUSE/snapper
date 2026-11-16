@@ -107,11 +107,19 @@ namespace snapper
     };
 
 
+    /**
+     * This class is designed to run cleanup algorithms.
+     *
+     * When `include_missing` is enabled, read-only snapshots that have not yet been
+     * transferred to the target device are also listed. Please refer to the
+     * `SnbkCleanable` documentation for details.
+     */
     class ProxySnapshotsSnbk : public ProxySnapshots
     {
     public:
 
-	ProxySnapshotsSnbk(const TheBigThings& the_big_things);
+	ProxySnapshotsSnbk(const TheBigThings& the_big_things,
+	                   bool include_missing = false);
 
 	/** snbk doesn't have default snapshots. */
 	virtual iterator getDefault() override { return end(); };
@@ -123,19 +131,31 @@ namespace snapper
     };
 
 
+    /**
+     * This class implements `ProxyCleanable` for snbk.
+     *
+     * When `emulation` is enabled, read-only snapshots that have not yet been transferred
+     * to the target device are also included in the snapshot list, and the
+     * `delete_snapshots` method bypasses the actual snapshot deletion in this mode. This
+     * behavior is required by the `transfer-and-cleanup` command. To avoid transferring
+     * snapshots that will be removed immediately after cleanup, the
+     * `transfer-and-cleanup` command defers snapshot transfer and deletion until the
+     * cleanup algorithms decide which snapshots to keep and which to delete.
+     */
     class SnbkCleanable : public ProxyCleanable
     {
     public:
 
-	SnbkCleanable(const BackupConfig& backup_config, TheBigThings& the_big_things)
+	SnbkCleanable(const BackupConfig& backup_config, TheBigThings& the_big_things,
+	              bool emulation = false)
 	    : backup_config(backup_config), the_big_things(the_big_things),
-	      snapshots(ProxySnapshotsSnbk(the_big_things)) {};
+	      snapshots(ProxySnapshotsSnbk(the_big_things, emulation)),
+	      emulation(emulation) {};
 
 	virtual ProxySnapshots& get_snapshots() override { return snapshots; }
 
 	virtual void delete_snapshots(vector<ProxySnapshots::iterator> snapshots,
-	                              bool verbose,
-	                              Plugins::Report& report) const override;
+	                              bool verbose, Plugins::Report& report) override;
 
 	virtual void prepare_quota() const override
 	{
@@ -169,16 +189,25 @@ namespace snapper
 	TheBigThings& the_big_things;
 
 	ProxySnapshotsSnbk snapshots;
+
+	const bool emulation;
     };
 
 
+    /**
+     * This class implements `CleanupOperation` for snbk.
+     *
+     * The `emulation` argument is designed for the `transfer-and-cleanup` command. Please
+     * refer to the `SnbkCleanable` documentation for more details.
+     */
     class SnbkCleanup : public CleanupOperation
     {
     public:
 
-	SnbkCleanup(const BackupConfig& backup_config, TheBigThings& the_big_things)
+	SnbkCleanup(const BackupConfig& backup_config, TheBigThings& the_big_things,
+	            bool emulation = false)
 	    : retention_policy(ProxyConfig(backup_config.retention_config)),
-	      cleanable(SnbkCleanable(backup_config, the_big_things))
+	      cleanable(SnbkCleanable(backup_config, the_big_things, emulation))
 	{
 	}
 
@@ -186,8 +215,6 @@ namespace snapper
 	{
 	    return retention_policy;
 	}
-
-    protected:
 
 	virtual ProxyCleanable& get_cleanable() override { return cleanable; }
 
