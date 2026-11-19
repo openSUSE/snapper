@@ -340,6 +340,14 @@ namespace snapper
 		    if (!createLink(fs.st_uid, fs.st_gid))
 			return false;
 		} break;
+
+		case S_IFCHR:
+		case S_IFBLK:
+		case S_IFIFO:
+		case S_IFSOCK: {
+		    if (!createSpecialFile(fs.st_mode, fs.st_rdev, fs.st_uid, fs.st_gid))
+			return false;
+		} break;
 	    }
 	}
 
@@ -453,6 +461,38 @@ namespace snapper
 
 
     bool
+    File::createSpecialFile(mode_t mode, dev_t rdev, uid_t owner, gid_t group) const
+    {
+	// Creates character and block devices, FIFOs and sockets. The
+	// permissions are set after the owner since chown may clear the setuid
+	// and setgid bits.
+
+	if (mknod(getAbsolutePath(LOC_SYSTEM).c_str(), mode & S_IFMT, rdev) != 0)
+	{
+	    y2err("mknod failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno <<
+		  " (" << stringerror(errno) << ")");
+	    return false;
+	}
+
+	if (chown(getAbsolutePath(LOC_SYSTEM).c_str(), owner, group) != 0)
+	{
+	    y2err("chown failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno <<
+		  " (" << stringerror(errno) << ")");
+	    return false;
+	}
+
+	if (chmod(getAbsolutePath(LOC_SYSTEM).c_str(), mode) != 0)
+	{
+	    y2err("chmod failed path:" << getAbsolutePath(LOC_SYSTEM) << " errno:" << errno <<
+		  " (" << stringerror(errno) << ")");
+	    return false;
+	}
+
+	return true;
+    }
+
+
+    bool
     File::deleteAllTypes() const
     {
 	struct stat fs;
@@ -470,7 +510,11 @@ namespace snapper
 		} break;
 
 		case S_IFREG:
-		case S_IFLNK: {
+		case S_IFLNK:
+		case S_IFCHR:
+		case S_IFBLK:
+		case S_IFIFO:
+		case S_IFSOCK: {
 		    if (unlink(getAbsolutePath(LOC_SYSTEM).c_str()) != 0)
 		    {
 			y2err("unlink failed path:" << getAbsolutePath(LOC_SYSTEM) <<

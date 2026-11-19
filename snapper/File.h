@@ -144,6 +144,7 @@ namespace snapper
 	bool createDirectory(mode_t mode, uid_t owner, gid_t group) const;
 	bool createFile(mode_t mode, uid_t owner, gid_t group) const;
 	bool createLink(uid_t owner, gid_t group) const;
+	bool createSpecialFile(mode_t mode, dev_t rdev, uid_t owner, gid_t group) const;
 
 	bool deleteAllTypes() const;
 
