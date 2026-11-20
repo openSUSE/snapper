@@ -182,7 +182,7 @@ _snapper()
                 esac
                 return 0
                 ;;
-            list)
+            list|ls)
                 case "$prev" in
                     --type|-t)  
                         COMPREPLY=( $( compgen -W 'all single pre-post
