@@ -5,10 +5,11 @@ local options=(
 	{--verbose,-v}'[Increase verbosity]'
 	--utc'[Display dates and times in UTC]'
 	--iso'[Display dates and times in ISO format]'
-	{--table-style,-t}'[Table style (integer)]:style:({0..11})'
+	{--table-style,-t}'[Table style (integer)]:style:({0..3})'
 	--abbreviate'[Allow to abbreviate table columns]'
 	--machine-readable'[Set a machine-readable output format]:format:(csv json)'
-	--csvout --no-headers'[Set CSV output format]'
+	--csvout'[Set CSV output format]'
+	--no-headers'[No headers for CSV output format]'
 	--jsonout'[Set JSON output format]'
 	--separator'[Character separator for CSV output format]:separator'
   {--config,-c}'[Set name of config to use]:config:('${(f)$(command snapper --csvout --no-headers list-configs --columns config)}')'
@@ -25,7 +26,7 @@ local subcommands=(
   'delete-config:Delete\ config'
   'get-config:Get\ config'
   'set-config:Set\ config'
-  'list:List\ snapshots'
+  {list,ls}':List\ snapshots'
   'create:Create\ snapshot'
   'modify:Modify\ snapshot'
   {delete,remove,rm}':Delete\ snapshot'
@@ -40,7 +41,7 @@ local subcommands=(
   'cleanup:Cleanup\ snapshots'
 )
 
-_arguments -s -S $options \
+_arguments -s -S -A "-*" $options \
   ": :(($subcommands))" \
 	"*:: :->option-or-argument"
 
@@ -78,9 +79,9 @@ set-config)
   _arguments -s -S \
     ":configdata"
   ;;
-list)
+(list|ls))
   _arguments -s -S \
-  {--type,-t}'[Type of snapshots to list]:type:(($type))' \
+  {--type,-t}'[Type of snapshots to list]:type:(all single pre-post)' \
   --disable-used-space'[Disable showing used space]' \
   {--all-configs,-a}'[List snapshots from all accessible configs]' \
   --columns'[Columns to show separated by comma]:columns:(config subvolume number default active type date user used-space cleanup description userdata pre-number post-number post-date read-only)'
@@ -96,14 +97,18 @@ create)
   --command'[Run command and create pre and post snapshots]: :{_command_names -e}' \
   --read-only'[Create read-only snapshot]' \
   --read-write'[Create read-write snapshot]' \
-  --from"[Create a snapshot from the specified snapshot]:number:(($number))"
+  --from"[Create a snapshot from the specified snapshot]:number:(($number))" \
+  --empty'[Create an empty snapshot]'
   ;;
 modify)
   _arguments -s -S \
     {--description,-d}'[Description for snapshot]:description' \
     {--cleanup-algorithm,-c}'[Cleanup algorithm for snapshot]:algorithms:(($algorithms))' \
     {--userdata,-u}'[Userdata for snapshot]:userdata' \
-    ": :_files"
+    --read-only'[Set snapshot read-only]' \
+    --read-write'[Set snapshot read-write]' \
+    --default'[Set snapshot as default snapshot]' \
+    "*:number:(($number))"
   ;;
 (delete|remove|rm))
   _arguments -s -S \
@@ -146,6 +151,6 @@ cleanup)
   _arguments -s -S \
     --path'[Cleanup all configs affecting path.]: :_files' \
     --free-space'[Try to make space available.]:space' \
-    ":algorithms:(($algorithms))"
+    ":algorithms:((all:Runs\ all\ cleanup\ algorithms $algorithms))"
   ;;
 esac
