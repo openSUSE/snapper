@@ -17,6 +17,7 @@ _snapper()
         --csvout
         --jsonout
         --separator
+        --no-headers
         -c --config
         --no-dbus
         -r --root
@@ -46,29 +47,32 @@ _snapper()
         fi
     done
 
-    # Global options autocomplete
-    case $prev in
-        --version|--help)
-            return 0
-            ;;
-        --config|-c)
-            local configs=()
-            # Get basenames of config files in "$configdir"
-            for configfile in "$configdir"/*; do
-                configs+=("${configfile##*/}")
-            done
-            COMPREPLY=( $( compgen -W "${configs[*]}" -- "$cur" ) )
-            return 0
-            ;;
-        --machine-readable)
-            COMPREPLY=( $( compgen -W 'csv json' -- "$cur" ) )
-            return 0
-            ;;
-        --root|-r)
-            COMPREPLY=( $( compgen -f -- "$cur" ) )
-            return 0
-            ;;
-    esac
+    # Global options autocomplete. Only done before the command since some
+    # command options use the same short options, e.g. -c.
+    if [[ -z $command ]]; then
+        case $prev in
+            --version|--help)
+                return 0
+                ;;
+            --config|-c)
+                local configs=()
+                # Get basenames of config files in "$configdir"
+                for configfile in "$configdir"/*; do
+                    configs+=("${configfile##*/}")
+                done
+                COMPREPLY=( $( compgen -W "${configs[*]}" -- "$cur" ) )
+                return 0
+                ;;
+            --machine-readable)
+                COMPREPLY=( $( compgen -W 'csv json' -- "$cur" ) )
+                return 0
+                ;;
+            --root|-r)
+                COMPREPLY=( $( compgen -f -- "$cur" ) )
+                return 0
+                ;;
+        esac
+    fi
 
     # supported options per command
     if [[ "$cur" == -* ]]; then
@@ -101,7 +105,8 @@ _snapper()
                   --command
                   --read-only
                   --read-write
-                  --from' -- "$cur" ) )
+                  --from
+                  --empty' -- "$cur" ) )
                 return 0
                 ;;
             modify)
@@ -179,7 +184,7 @@ _snapper()
                 esac
                 return 0
                 ;;
-            list)
+            list|ls)
                 case "$prev" in
                     --type|-t)  
                         COMPREPLY=( $( compgen -W 'all single pre-post
@@ -231,13 +236,13 @@ _snapper()
                 ;;
             cleanup)
                 case "$prev" in
-                    empty-pre-post|timeline|number)
+                    all|empty-pre-post|timeline|number)
                         ;;
                     --path)
                         COMPREPLY=( $( compgen -f -- "$cur" ) ) 
                         ;;
                     *)
-                        COMPREPLY=( $( compgen -W 'empty-pre-post timeline number
+                        COMPREPLY=( $( compgen -W 'all empty-pre-post timeline number
                         ' -- "$cur" ) )
                         ;;
                 esac
