@@ -105,6 +105,9 @@ modify)
     {--description,-d}'[Description for snapshot]:description' \
     {--cleanup-algorithm,-c}'[Cleanup algorithm for snapshot]:algorithms:(($algorithms))' \
     {--userdata,-u}'[Userdata for snapshot]:userdata' \
+    --read-only'[Set snapshot read-only]' \
+    --read-write'[Set snapshot read-write]' \
+    --default'[Set snapshot as default snapshot]' \
     ": :_files"
   ;;
 (delete|remove|rm))
