@@ -151,6 +151,6 @@ cleanup)
   _arguments -s -S \
     --path'[Cleanup all configs affecting path.]: :_files' \
     --free-space'[Try to make space available.]:space' \
-    ":algorithms:(($algorithms))"
+    ":algorithms:((all:Runs\ all\ cleanup\ algorithms $algorithms))"
   ;;
 esac
