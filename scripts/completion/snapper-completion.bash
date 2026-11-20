@@ -104,7 +104,8 @@ _snapper()
                   --command
                   --read-only
                   --read-write
-                  --from' -- "$cur" ) )
+                  --from
+                  --empty' -- "$cur" ) )
                 return 0
                 ;;
             modify)
