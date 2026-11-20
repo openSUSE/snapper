@@ -41,7 +41,7 @@ local subcommands=(
   'cleanup:Cleanup\ snapshots'
 )
 
-_arguments -s -S $options \
+_arguments -s -S -A "-*" $options \
   ": :(($subcommands))" \
 	"*:: :->option-or-argument"
 
