@@ -108,7 +108,7 @@ modify)
     --read-only'[Set snapshot read-only]' \
     --read-write'[Set snapshot read-write]' \
     --default'[Set snapshot as default snapshot]' \
-    ": :_files"
+    "*:number:(($number))"
   ;;
 (delete|remove|rm))
   _arguments -s -S \
