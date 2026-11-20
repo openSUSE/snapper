@@ -46,29 +46,32 @@ _snapper()
         fi
     done
 
-    # Global options autocomplete
-    case $prev in
-        --version|--help)
-            return 0
-            ;;
-        --config|-c)
-            local configs=()
-            # Get basenames of config files in "$configdir"
-            for configfile in "$configdir"/*; do
-                configs+=("${configfile##*/}")
-            done
-            COMPREPLY=( $( compgen -W "${configs[*]}" -- "$cur" ) )
-            return 0
-            ;;
-        --machine-readable)
-            COMPREPLY=( $( compgen -W 'csv json' -- "$cur" ) )
-            return 0
-            ;;
-        --root|-r)
-            COMPREPLY=( $( compgen -f -- "$cur" ) )
-            return 0
-            ;;
-    esac
+    # Global options autocomplete. Only done before the command since some
+    # command options use the same short options, e.g. -c.
+    if [[ -z $command ]]; then
+        case $prev in
+            --version|--help)
+                return 0
+                ;;
+            --config|-c)
+                local configs=()
+                # Get basenames of config files in "$configdir"
+                for configfile in "$configdir"/*; do
+                    configs+=("${configfile##*/}")
+                done
+                COMPREPLY=( $( compgen -W "${configs[*]}" -- "$cur" ) )
+                return 0
+                ;;
+            --machine-readable)
+                COMPREPLY=( $( compgen -W 'csv json' -- "$cur" ) )
+                return 0
+                ;;
+            --root|-r)
+                COMPREPLY=( $( compgen -f -- "$cur" ) )
+                return 0
+                ;;
+        esac
+    fi
 
     # supported options per command
     if [[ "$cur" == -* ]]; then
