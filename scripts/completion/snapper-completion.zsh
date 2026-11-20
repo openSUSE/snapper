@@ -26,7 +26,7 @@ local subcommands=(
   'delete-config:Delete\ config'
   'get-config:Get\ config'
   'set-config:Set\ config'
-  'list:List\ snapshots'
+  {list,ls}':List\ snapshots'
   'create:Create\ snapshot'
   'modify:Modify\ snapshot'
   {delete,remove,rm}':Delete\ snapshot'
@@ -79,7 +79,7 @@ set-config)
   _arguments -s -S \
     ":configdata"
   ;;
-list)
+(list|ls))
   _arguments -s -S \
   {--type,-t}'[Type of snapshots to list]:type:(all single pre-post)' \
   --disable-used-space'[Disable showing used space]' \
