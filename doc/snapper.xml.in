@@ -258,7 +258,9 @@
       <varlistentry>
 	<term><option>-t, --table-style <replaceable>style</replaceable></option></term>
 	<listitem>
-	  <para>Specifies table style. Table style is identified by an integer number.</para>
+	  <para>Specifies table style. Table style is identified by an integer number.
+	  Possible values are 0 (ASCII), 1 (light), 2 (heavy) and 3 (double). Without
+	  this option light is used if the locale uses UTF-8 and ASCII otherwise.</para>
 	</listitem>
       </varlistentry>
       <varlistentry>
