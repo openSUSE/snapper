@@ -97,7 +97,8 @@ create)
   --command'[Run command and create pre and post snapshots]: :{_command_names -e}' \
   --read-only'[Create read-only snapshot]' \
   --read-write'[Create read-write snapshot]' \
-  --from"[Create a snapshot from the specified snapshot]:number:(($number))"
+  --from"[Create a snapshot from the specified snapshot]:number:(($number))" \
+  --empty'[Create an empty snapshot]'
   ;;
 modify)
   _arguments -s -S \
