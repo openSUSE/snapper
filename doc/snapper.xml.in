@@ -468,8 +468,8 @@
 	      <listitem>
 		<para>Select columns to show separated by comma.</para>
 		<para>Possible columns are: config, subvolume, number, default, active,
-		date, user, used-space, cleanup, description, userdata, pre-number, post-number,
-		post-date, read-only.</para>
+		type, date, user, used-space, cleanup, description, userdata, pre-number,
+		post-number, post-date, read-only.</para>
 	      </listitem>
 	    </varlistentry>
 	  </variablelist>
