@@ -236,13 +236,13 @@ _snapper()
                 ;;
             cleanup)
                 case "$prev" in
-                    empty-pre-post|timeline|number)
+                    all|empty-pre-post|timeline|number)
                         ;;
                     --path)
                         COMPREPLY=( $( compgen -f -- "$cur" ) ) 
                         ;;
                     *)
-                        COMPREPLY=( $( compgen -W 'empty-pre-post timeline number
+                        COMPREPLY=( $( compgen -W 'all empty-pre-post timeline number
                         ' -- "$cur" ) )
                         ;;
                 esac
