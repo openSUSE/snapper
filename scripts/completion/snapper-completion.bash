@@ -17,6 +17,7 @@ _snapper()
         --csvout
         --jsonout
         --separator
+        --no-headers
         -c --config
         --no-dbus
         -r --root
