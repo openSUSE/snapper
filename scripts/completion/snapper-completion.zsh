@@ -5,7 +5,7 @@ local options=(
 	{--verbose,-v}'[Increase verbosity]'
 	--utc'[Display dates and times in UTC]'
 	--iso'[Display dates and times in ISO format]'
-	{--table-style,-t}'[Table style (integer)]:style:({0..11})'
+	{--table-style,-t}'[Table style (integer)]:style:({0..3})'
 	--abbreviate'[Allow to abbreviate table columns]'
 	--machine-readable'[Set a machine-readable output format]:format:(csv json)'
 	--csvout --no-headers'[Set CSV output format]'
