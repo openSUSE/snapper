@@ -115,6 +115,9 @@ namespace snapper
 	{
 	    const string prefix = path == "/" ? path : path + "/";
 
+	    // The sort order does not keep the files below a directory together,
+	    // e.g. "/etc-old" sorts between "/etc" and "/etc/a", so check all files.
+
 	    for (Files::iterator it = begin(); it != end(); ++it)
 	    {
 		const string absolute_path = it->getAbsolutePath(LOC_SYSTEM);
