@@ -36,7 +36,17 @@ namespace snapper
 
 	MyFiles(const Files& files) : Files(files) {}
 
-	void bulk_process(FILE* file, GetOpts& get_opts, std::function<void(File& file)> callback);
+	/**
+	 * Calls callback for the files given in file or as arguments, or for all
+	 * files if neither is given. If recursive is true, callback is also called
+	 * for all files below the given paths.
+	 */
+	void bulk_process(FILE* file, GetOpts& get_opts, bool recursive,
+			  std::function<void(File& file)> callback);
+
+    private:
+
+	void process(const string& name, bool recursive, std::function<void(File& file)> callback);
 
     };
 
