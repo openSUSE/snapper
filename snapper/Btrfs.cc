@@ -867,9 +867,13 @@ namespace snapper
     int
     process_mknod(const char* path, u64 mode, u64 dev, void* user)
     {
+	StreamProcessor* processor = (StreamProcessor*) user;
+
 #ifdef DEBUG_PROCESS
 	y2deb("mknod path:'" << path << "'");
 #endif
+
+	processor->created(path);
 
 	return 0;
     }
@@ -878,9 +882,13 @@ namespace snapper
     int
     process_mkfifo(const char* path, void* user)
     {
+	StreamProcessor* processor = (StreamProcessor*) user;
+
 #ifdef DEBUG_PROCESS
 	y2deb("mkfifo path:'" << path << "'");
 #endif
+
+	processor->created(path);
 
 	return 0;
     }
@@ -889,9 +897,13 @@ namespace snapper
     int
     process_mksock(const char* path, void* user)
     {
+	StreamProcessor* processor = (StreamProcessor*) user;
+
 #ifdef DEBUG_PROCESS
 	y2deb("mksock path:'" << path << "'");
 #endif
+
+	processor->created(path);
 
 	return 0;
     }

@@ -46,6 +46,8 @@ run directory1
 
 run missing-directory1
 
+run special-files1
+
 run error1
 run error2
 run error4

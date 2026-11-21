@@ -14,8 +14,8 @@ test_DATA = CAUTION
 test_SCRIPTS = run-all setup-and-run-all
 
 test_PROGRAMS = simple1 permissions1 permissions2 permissions3 owner1 owner2	\
-	owner3 directory1 missing-directory1 error1 error2 error4 ug-tests	\
-	ascii-file
+	owner3 directory1 missing-directory1 special-files1 error1 error2	\
+	error4 ug-tests ascii-file
 
 if ENABLE_BTRFS
 test_PROGRAMS += test-btrfsutils
@@ -38,6 +38,8 @@ owner3_SOURCES = owner3.cc common.h common.cc
 directory1_SOURCES = directory1.cc common.h common.cc
 
 missing_directory1_SOURCES = missing-directory1.cc common.h common.cc
+
+special_files1_SOURCES = special-files1.cc common.h common.cc
 
 error1_SOURCES = error1.cc common.h common.cc
 error2_SOURCES = error2.cc common.h common.cc
