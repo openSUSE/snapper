@@ -54,11 +54,6 @@
 // commands - more in configure.ac
 
 #define SH_BIN "/bin/sh"
-#define SSH_BIN "/usr/bin/ssh"
-
-#define SYSTEMCTL_BIN "/usr/bin/systemctl"
-
-#define SCP_BIN "/usr/bin/scp"
 
 
 // keys from the config files

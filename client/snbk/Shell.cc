@@ -20,6 +20,8 @@
  */
 
 
+#include "config.h"
+
 #include "snapper/SnapperDefines.h"
 #include "snapper/Exception.h"
 
