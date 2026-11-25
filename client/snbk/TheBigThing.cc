@@ -544,6 +544,7 @@ namespace snapper
 		    CmdMetaParse cmd_meta_parse(shell_source, source_snapshot_dir(source_path, num),
 						backup_config.source_cat_bin);
 		    the_big_thing.source_meta_checksum = cmd_meta_parse.get_checksum();
+		    the_big_thing.meta = cmd_meta_parse.get_meta();
 
 		    the_big_things.push_back(the_big_thing);
 		}

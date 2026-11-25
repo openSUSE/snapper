@@ -9,7 +9,7 @@ After=nss-user-lookup.target
 [Service]
 Type=simple
 WorkingDirectory=/root
-ExecStart=/usr/sbin/snbk --verbose --automatic transfer-and-delete
+ExecStart=/usr/sbin/snbk --verbose --automatic transfer-and-cleanup
 
 CapabilityBoundingSet=CAP_DAC_OVERRIDE CAP_FOWNER CAP_CHOWN CAP_FSETID CAP_SETFCAP CAP_SYS_ADMIN CAP_SYS_MODULE CAP_IPC_LOCK CAP_SYS_NICE CAP_MKNOD
 LockPersonality=true
