@@ -470,7 +470,7 @@ namespace snapper
 
 
     TheBigThings::TheBigThings(const BackupConfig& backup_config, ProxySnappers* snappers, bool verbose)
-	: source_btrfs_version(BTRFS_BIN, backup_config.get_source_shell()),
+	: source_btrfs_version(backup_config.source_btrfs_bin, backup_config.get_source_shell()),
 	  target_btrfs_version(backup_config.target_btrfs_bin, backup_config.get_target_shell()),
 	  snapper(backup_config.is_local_source() ? snappers->getSnapper(backup_config.config) : nullptr),
 	  my_locker(backup_config, snapper)
@@ -528,8 +528,8 @@ namespace snapper
 
 		    // Query additional information (uuids, read-only) from btrfs.
 
-		    CmdBtrfsSubvolumeShow extra(BTRFS_BIN, shell_source, source_snapshot_dir(source_path, num) +
-						"/" SNAPSHOT_NAME);
+		    CmdBtrfsSubvolumeShow extra(backup_config.source_btrfs_bin, shell_source,
+						source_snapshot_dir(source_path, num) + "/" SNAPSHOT_NAME);
 
 		    TheBigThing the_big_thing(num);
 		    the_big_thing.meta.date = source_snapshot.getDate();
@@ -566,8 +566,8 @@ namespace snapper
 
 		    // Query additional information (uuids, read-only) from btrfs.
 
-		    CmdBtrfsSubvolumeShow extra(BTRFS_BIN, shell_source, source_snapshot_dir(source_path, entry.number) +
-						"/" SNAPSHOT_NAME);
+		    CmdBtrfsSubvolumeShow extra(backup_config.source_btrfs_bin, shell_source,
+						source_snapshot_dir(source_path, entry.number) + "/" SNAPSHOT_NAME);
 
 		    TheBigThing the_big_thing(entry.number);
 		    the_big_thing.meta.date = entry.date;

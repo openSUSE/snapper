@@ -73,6 +73,24 @@ namespace snapper
 	get_child_nodes(json_file.get_root(), "send-options", send_options);
 	get_child_nodes(json_file.get_root(), "receive-options", receive_options);
 
+	if (!is_local_source())
+	{
+	    source_btrfs_bin = "btrfs";
+	    source_cat_bin = "cat";
+	    source_mkdir_bin = "mkdir";
+	    source_snapper_bin = "snapper";
+	}
+
+	if (!is_local_target())
+	{
+	    target_btrfs_bin = "btrfs";
+	    target_cat_bin = "cat";
+	    target_ls_bin = "ls";
+	    target_mkdir_bin = "mkdir";
+	    target_rm_bin = "rm";
+	    target_rmdir_bin = "rmdir";
+	}
+
 	get_child_value(json_file.get_root(), "source-btrfs-bin", source_btrfs_bin);
 	get_child_value(json_file.get_root(), "source-cat-bin", source_cat_bin);
 	get_child_value(json_file.get_root(), "source-mkdir-bin", source_mkdir_bin);

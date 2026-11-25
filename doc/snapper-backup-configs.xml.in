@@ -24,6 +24,12 @@
     snapper backup config.</para>
     <para>The file uses JSON syntax containing a single object with
     key-value pairs.</para>
+    <para>Commands run locally default to the paths selected when Snapper was
+    built. Commands run over SSH default to names resolved using the remote
+    shell's <envar>PATH</envar>. This applies to target commands in ssh-push
+    mode and source commands in ssh-pull mode. Use the corresponding
+    <literal>source-*-bin</literal> or <literal>target-*-bin</literal> options to
+    override these defaults.</para>
   </refsect1>
 
   <refsect1 id='key-value-pairs'>
