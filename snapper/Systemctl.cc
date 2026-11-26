@@ -20,8 +20,9 @@
  */
 
 
+#include "config.h"
+
 #include "snapper/SystemCmd.h"
-#include "snapper/SnapperDefines.h"
 
 
 namespace snapper
