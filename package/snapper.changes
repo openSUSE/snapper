@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Thu Nov 26 08:50:00 UTC 2026 - Rithull Raj Kallat <rithullkallat@opensuse.org>
+
+- install missing systemd timer and service units and helpers in
+  Debian package (gh#openSUSE/snapper#1029)
+
+-------------------------------------------------------------------
 Fri Nov 13 10:30:00 CET 2026 - Asish Kumar <officialasishkumar@gmail.com>
 
 - added option --recursive to undochange command to also undo the
