@@ -8,4 +8,12 @@ usr/share/locale/*/LC_MESSAGES/snapper.mo
 usr/share/bash-completion/completions/snapper
 usr/share/zsh/site-functions/_snapper
 usr/share/fish/vendor_completions.d/snapper.fish
+usr/lib/snapper/systemd-helper
+usr/lib/snapper/installation-helper
 usr/lib/systemd/system/snapperd.service
+usr/lib/systemd/system/snapper-timeline.service
+usr/lib/systemd/system/snapper-timeline.timer
+usr/lib/systemd/system/snapper-cleanup.service
+usr/lib/systemd/system/snapper-cleanup.timer
+usr/lib/systemd/system/snapper-boot.service
+usr/lib/systemd/system/snapper-boot.timer
