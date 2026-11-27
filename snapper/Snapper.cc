@@ -860,7 +860,7 @@ namespace snapper
 	}
 	catch (const runtime_error& e)
 	{
-	    SN_THROW(QuotaException("preparing quota failed"));
+	    SN_THROW(QuotaException(sformat("preparing quota failed, %s", e.what())));
 	}
 
 #else

@@ -80,6 +80,7 @@ namespace snapper
     struct QuotaException : public Exception
     {
 	explicit QuotaException(const char* msg) : Exception(msg) {}
+	explicit QuotaException(const std::string& msg) : Exception(msg) {}
     };
 
     struct FreeSpaceException : public Exception

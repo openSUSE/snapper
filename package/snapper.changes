@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Nov 27 15:38:00 UTC 2026 - Rithull Raj Kallat <rithullkallat@opensuse.org>
+
+- report reason when preparing quota fails (gh#openSUSE/snapper#564)
+
+-------------------------------------------------------------------
 Thu Nov 26 08:50:00 UTC 2026 - Rithull Raj Kallat <rithullkallat@opensuse.org>
 
 - install missing systemd timer and service units and helpers in
